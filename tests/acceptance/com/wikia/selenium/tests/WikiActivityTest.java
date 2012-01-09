@@ -70,21 +70,21 @@ public class WikiActivityTest extends BaseTest {
 		assertFalse(session().isElementPresent("//section[contains(@class,'WikiaActivityModule')]//li[5]"));
 	}
 
-	@Test(groups={"oasis","CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEditingArticleByUser() throws Exception{
 		
 		session().open("index.php?title=Special:Random");
 		String content = "Lorem ipsum " + (new Date()).toString();
 		editArticle(WIKIACTIVITY_ARTICLE_ONE, content);
-	    session().open("index.php?title=Special:Random");
+		session().open("index.php?title=Special:Random");
 		assertTrue(session().isElementPresent("//a[@data-id='wikiactivity']"));
 		session().click("//a[@data-id='wikiactivity']");
 		waitForElement("//ul[@id='myhome-activityfeed']");
-        assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
+		assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
 		assertEquals(WIKIACTIVITY_ARTICLE_ONE, session().getText("//ul[@id='myhome-activityfeed']/li[1]//a"));
 	}
 	
-	@Test(groups={"oasis","CI"})
+	@Test(groups={"CI", "verified"})
 	public void testEditingArticleByAnonymousUserAndLoggedUser() throws Exception{
 		
 		session().open("index.php?title=Special:Random");
@@ -99,19 +99,19 @@ public class WikiActivityTest extends BaseTest {
 		assertTrue(session().isElementPresent("//a[@data-id='wikiactivity']"));
 		session().click("//a[@data-id='wikiactivity']");
 		waitForElement("//ul[@id='myhome-activityfeed']");
-        assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
-        
+		assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
+
 		assertEquals(WIKIACTIVITY_ARTICLE_ONE, session().getText("//ul[@id='myhome-activityfeed']/li[1]//a"));
 		assertEquals(WIKIACTIVITY_ARTICLE_ONE, session().getText("//ul[@id='myhome-activityfeed']/li[2]//a"));
 	}
 	
- 	@Test(groups={"oasis","CI"})
+	@Test(groups={"CI", "verified"})
 	public void testFollowingPagesFiltres() throws Exception{
-	 		
+			
 		openAndWait("index.php?title=Special:Random");
 		String content = "Lorem ipsum " + (new Date()).toString();
 		loginAsRegular();
-	    session().click("link=My preferences");
+		session().click("link=My preferences");
 		waitForElement("//ul[@id='preftoc']");
 		session().click("//ul[@id='preftoc']/li[6]/a");
 		
@@ -126,11 +126,10 @@ public class WikiActivityTest extends BaseTest {
 		openAndWait("index.php?title=Special:Random");
 		clickAndWait("//a[@data-id='wikiactivity']");
 		waitForElement("//ul[@id='myhome-activityfeed']");
-        assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
+		assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
 		clickAndWait("//header[@id='WikiaPageHeader']/h2/nav//li[@class='watchlist']/a");
 		waitForElement("//input[@id='wikiactivity-default-view-switch']");
 		assertEquals(WIKIACTIVITY_ARTICLE_SIX, session().getText("//ul[@id='myhome-activityfeed']/li[1]//a"));
-        
 
 		session().click("link=My preferences");
 		waitForElement("//ul[@id='preftoc']");
@@ -144,7 +143,7 @@ public class WikiActivityTest extends BaseTest {
 		editArticle(WIKIACTIVITY_ARTICLE_FOUR, content);
 		clickAndWait("//a[@data-id='wikiactivity']");
 		waitForElement("//ul[@id='myhome-activityfeed']");
-        assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
+		assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
 		clickAndWait("//header[@id='WikiaPageHeader']/h2/nav//li[@class='watchlist']/a");
 		waitForElement("//input[@id='wikiactivity-default-view-switch']");
 		assertFalse(session().getText("//ul[@id='myhome-activityfeed']/li[1]//a").equals(WIKIACTIVITY_ARTICLE_FOUR));

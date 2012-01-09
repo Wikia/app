@@ -154,7 +154,7 @@ public class EditPageBaseTest extends BaseTest {
 		String diffContent = session().getText("//section[@id='EditPageDialog']//table[@class='diff']" +
 				"//td[@class='diff-deletedline']/div/span");
 		assertTrue(diffContent.contains(content));
-		assertTrue(diffContent.contains("QATests"));
+		assertTrue(diffContent.contains("QATests") || diffContent.contains("Wikia"));
 		assertTrue(session().isElementPresent("//section[@id='EditPageDialog']//table[@class='diff']" +
 			"//td[@class='diff-addedline']/div/span[text()='foo']"));
 
@@ -169,10 +169,6 @@ public class EditPageBaseTest extends BaseTest {
 	 * TODO: https://wikia.fogbugz.com/default.asp?4261
 	 */
 	protected void checkCaptcha() throws Exception {
-		// notice bar
-		assertTrue(session().isElementPresent("//section[@id='EditPage']//div[@class='editpage-notices']/ul/li"));
-		assertFalse(session().isVisible("//section[@id='EditPage']//div[@class='editpage-notices-html']/div[@id='mw-anon-edit-warning']"));
-
 		// trigger the captcha by trying to add an external link
 		String externalLink = "http://foo" + Integer.toString(new Random().nextInt(42)) + ".net";
 
@@ -180,11 +176,8 @@ public class EditPageBaseTest extends BaseTest {
 		doEdit(externalLink);
 		clickAndWait("wpSave");
 
-		// notice bar
-		assertTrue(session().isElementPresent("//section[@id='EditPage']//div[@class='editpage-notices']/ul/li"));
-		assertTrue(session().isElementPresent("//section[@id='EditPage']//div[@class='editpage-notices-html']/div[@id='mw-anon-edit-warning']"));
-
 		// captcha modal
+		waitForElement("//section[@id='HiddenFieldsDialog']//img[contains(@src,'Captcha')]");
 		assertTrue(session().isVisible("//section[@id='HiddenFieldsDialog']//img[contains(@src,'Captcha')]"));
 		assertTrue(session().isElementPresent("//section[@id='HiddenFieldsDialog']//input[@name='wpCaptchaId']"));
 		assertTrue(session().isVisible("//section[@id='HiddenFieldsDialog']//input[@name='wpCaptchaWord']"));
