@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.*;
 
 public class WikiFeaturesTest extends BaseTest {
 
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testWikiFeaturesPage() throws Exception {
 
 		// not login
@@ -23,14 +23,14 @@ public class WikiFeaturesTest extends BaseTest {
 
 		assertEquals(session().getText("//*[@id='WikiFeatures']/h2[1]"), "Features");
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/p[1]"));
-		assertEquals(session().getText("//*[@id='WikiFeatures']/h2[2]"), "Wikia Labs");
+		assertEquals(session().getText("//*[@id='WikiFeatures']/h2[2]"), "Labs");
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/p[2]"));
 
 		assertFalse(session().isElementPresent("//section[@id='WikiFeatures']/ul[@class='features']/li[@class='feature']/div[@class='actions']/span[contains(@class,'slider')]"));
 
 		assertTrue(session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/div[@class='active-on']").matches("Active on[\\s\\S]*wikis$"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/button[@class='secondary feedback']"));
-		assertEquals(session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/button[@class='secondary feedback']"), "Give feedback");
+		assertEquals(session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/button[@class='secondary feedback']"), "Give Feedback");
 
 		session().click("css=button.secondary.feedback");
 		assertEquals(session().getText("css=#FeedbackDialogWrapper > h1"), "Feedback");
@@ -65,9 +65,9 @@ public class WikiFeaturesTest extends BaseTest {
 		assertEquals(session().getText("css=div.AdminDashboardGeneralHeader.AdminDashboardArticleHeader > h1"), "WikiFeatures");
 		assertEquals(session().getText("//*[@id='WikiFeatures']/h2[1]"), "Features");
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/p[1]"));
-		assertEquals(session().getText("//*[@id='WikiFeatures']/h2[2]"), "Wikia Labs");
+		assertEquals(session().getText("//*[@id='WikiFeatures']/h2[2]"), "Labs");
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/p[2]"));
-		assertTrue(session().isVisible("css=section#WikiFeatures > ul.features > li.feature > img"));
+		assertTrue(session().isVisible("css=section#WikiFeatures > ul.features > li.feature img"));
 		assertTrue(session().isVisible("css=section#WikiFeatures > ul.features > li.feature > div.details > h3"));
 		assertTrue(session().isVisible("css=section#WikiFeatures > ul.features > li.feature > div.details > p"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[@class='features']/li[@class='feature']/div[@class='actions']/span[contains(@class,'slider')]"));
@@ -77,14 +77,14 @@ public class WikiFeaturesTest extends BaseTest {
 		assertEquals(session().getText("//section[@id='WikiFeatures']/ul[@class='features']/li[@class='feature']/div[@class='actions']/span[contains(@class,'slider')]/span[@class='textoff']"), "Disabled");
 
 		// Wikia Labs
-		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/img"));
+		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']//img"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='details']/h3"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='details']/p"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/span[contains(@class,'slider')]"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/div[@class='active-on']"));
 		assertTrue(session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/div[@class='active-on']").matches("Active on[\\s\\S]*wikis$"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/button[@class='secondary feedback']"));
-		assertEquals(session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/button[@class='secondary feedback']"), "Give feedback");
+		assertEquals(session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature']/div[@class='actions']/button[@class='secondary feedback']"), "Give Feedback");
 		
 		// Wikia Labs - feedback
 		String featureName = session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature'][1]/div[@class='details']/h3");
@@ -97,7 +97,7 @@ public class WikiFeaturesTest extends BaseTest {
 		assertTrue(session().isVisible("css=section.modalContent > #FeedbackDialog > div.feature-highlight > img"));
 		assertTrue(session().getText("css=section.modalContent > #FeedbackDialog > form > div.input-group > label").matches("^What's this about[\\s\\S]$"));
 		assertTrue(session().isVisible("css=section.modalContent > #FeedbackDialog > form > div.input-group > select[name=feedback]"));
-		assertEquals(session().getText("css=section.modalContent > #FeedbackDialog > form > div.comment-group > label"), "Comment:");
+		assertEquals(session().getText("css=section.modalContent > #FeedbackDialog > form > div.comment-group > label"), "Leave us a comment:");
 		assertTrue(session().isVisible("css=section.modalContent > #FeedbackDialog > form > div.comment-group > textarea[name=comment]"));
 		assertTrue(session().isVisible("css=section.modalContent > #FeedbackDialog > form > input[type=submit]"));
 		session().click("css=button.close.wikia-chiclet-button");
