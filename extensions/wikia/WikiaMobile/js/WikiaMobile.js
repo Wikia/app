@@ -2,12 +2,12 @@ var WikiaMobile = WikiaMobile || (function() {
 	/** @private **/
 
 	var body,
+	page,
+	article,
 	allImages = [],
 	handledTables,
 	deviceWidth = ($.os.ios) ? 268 : 300,
 	deviceHeight = ($.os.ios) ? 416 : 513,
-	//realWidth = ($.os.ios) ? ((window.orientation == 0) ? screen.width : screen.height) : screen.width,
-	//realHeight = ($.os.ios) ? ((window.orientation == 0) ? screen.height : screen.width) : screen.height,
 	realWidth = window.innerWidth || window.clientWidth,
 	realHeight = window.innerHeight || window.clientHeight,
 	//TODO: finalize the following line and update all references to it (also in extensions)
@@ -27,6 +27,48 @@ var WikiaMobile = WikiaMobile || (function() {
 			if(!window.pageYOffset)
 				window.scrollTo(0, 1);
 		}, 1);
+	}
+
+	function processSections(){
+		var articleElement = article[0],
+			contents = article.contents(),
+			root = wrapper = articleElement.cloneNode(false),
+			x = 0,
+			y = contents.length,
+			currentSection,
+			node,
+			nodeName,
+			isH2;
+
+		for (; x < y; x++) {
+			node = contents[x];
+			nodeName = node.nodeName;
+			isH2 = (nodeName == 'H2');
+
+			if (nodeName != '#comment' && nodeName != 'SCRIPT') {
+				if(node.id == 'WikiaMainContentFooter' || node.className == 'printfooter'){
+						//do not wrap these elements
+						root = wrapper;
+				}else if (isH2){
+					if (currentSection) wrapper.appendChild(currentSection);
+
+					currentSection = document.createElement('section');
+					currentSection.className = 'articleSection';
+					node = node.cloneNode(true);
+
+					node.className += ' collapsible-section';
+
+					wrapper.appendChild(node);
+					wrapper.appendChild(currentSection);
+					root = currentSection;
+					continue;
+				}
+
+				root.appendChild(node.cloneNode(true));
+			}
+		}
+
+		page[0].replaceChild(wrapper, articleElement);
 	}
 
 	function processTables(){
@@ -80,7 +122,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				if(firstRowWidth > realWidth || table.height() > deviceWidth){
 					//remove scripts to avoid re-parsing
 					table.find('script').remove();
-					table.wrapAll(tableWrapperHTML);
+					table.wrap(tableWrapperHTML);
 					table.wasWrapped = true;
 					table.isWrapped = true;
 					handledTables.push(table);
@@ -105,16 +147,15 @@ var WikiaMobile = WikiaMobile || (function() {
 				isBig = (table.computedWidth > maxWidth || table.computedHeight > deviceWidth);
 
 				if(!isWrapped && isBig){
-					table.wrap(tableWrapperHTML);
-					table.isWrapped = true;
-
 					if(!wasWrapped){
 						table.wasWrapped = true;
 						//remove scripts to avoid re-parsing
 						table.find('script').remove();
 					}
-				}
-				else if(isWrapped && !isBig){
+
+					table.wrap(tableWrapperHTML);
+					table.isWrapped = true;
+				}else if(isWrapped && !isBig){
 					table.unwrap();
 					table.isWrapped = false;
 				}
@@ -181,6 +222,9 @@ var WikiaMobile = WikiaMobile || (function() {
 	//init
 	$(function(){
 		body = $(document.body);
+		page = $('#WikiaPage');
+		article = $('#WikiaMainContent');
+
 		var navigationWordMark = $('#navigationWordMark'),
 		navigationSearch = $('#navigationSearch'),
 		searchToggle = $('#searchToggle'),
@@ -190,11 +234,14 @@ var WikiaMobile = WikiaMobile || (function() {
 		//analytics
 		track('view');
 
+		processSections();//NEEDS to run before table wrapping!!!
 		processTables();
-		//add class to collapse section as quick as possible,
+		
+		//add class for styling to be applied only if JS is enabled
+		//(e.g. collapse sections)
 		//must be done AFTER detecting size of elements on the page
 		body.addClass('js');
-
+		
 		hideURLBar();
 		processImages();
 
@@ -260,7 +307,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			}
 		});
 
-		$('#WikiaPage').bind(clickEvent, function(event){
+		page.bind(clickEvent, function(event){
 			navigationWordMark.show();
 			navigationSearch.hide().removeClass('open');
 			searchToggle.removeClass('open');
