@@ -54,6 +54,8 @@ class GameGuidesModel{
 					$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
 					$wikiDomain = str_replace('http://', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ));
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+					$wordmarkUrl = $wikiThemeSettings[ 'wordmark-image-url' ];
+					$wordmarkType = $wikiThemeSettings[ 'wordmark-type' ];
 					//$wikiLogo = WikiFactory::getVarValueByName( "wgLogo", $wikiId );
 					
 					$games[] = Array(
@@ -62,7 +64,7 @@ class GameGuidesModel{
 						'color' => ( !empty( $wikiThemeSettings[ 'wordmark-color' ] ) ) ? $wikiThemeSettings[ 'wordmark-color' ] : '#0049C6',
 						'backgroundColor' => ( !empty( $wikiThemeSettings[ 'color-page' ] ) ) ? $wikiThemeSettings[ 'color-page' ] : '#FFFFFF',
 						'domain' => $wikiDomain,
-						'wordmarkUrl'=> ( !empty( $wikiThemeSettings[ 'wordmark-image-url' ] ) ) ? $wikiThemeSettings[ 'wordmark-image-url' ] : null
+						'wordmarkUrl'=> ( $wordmarkType == 'graphic' && !empty( $wordmarkUrl ) ) ? $wordmarkUrl : ''
 					);
 				}
 			} else {
