@@ -537,11 +537,11 @@ class FeedRenderer {
 		//
 		// let's show everything we have :)
 		//
-
+		
 		if (isset($row['to_title']) && isset($row['to_url'])) {
 			$html .= self::formatDetailsRow('move', Xml::element('a', array('href' => $row['to_url']), $row['to_title']), false);
 		}
-
+		
 		// intro of new content
 		if (defined('NS_RELATED_VIDEOS') && isset( $row['ns'] ) && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] )) {
 			$RelatedVideosService = F::build('RelatedVideosService');
@@ -564,29 +564,29 @@ class FeedRenderer {
 			else if( !empty($row['wall']) ) {
 				if( !empty($row['comments']) ) {
 					$html .= self::formatMessageWallRows($row['comments']);
+					$html .= '';
 				} else {
 					$html .= '';
 				}
-                        } else if ( $row['ns'] == NS_USER_TALK ) { // BugId:15648
-                                $html = '';
+			} else if ( $row['ns'] == NS_USER_TALK ) { // BugId:15648
+				$html = '';
 			} else {
 				// another new content
 				$html .= self::formatDetailsRow('new-page', self::formatIntro($row['intro']), false);
 			}
 		}
 		
-
 		// section name
 		if (isset($row['section'])) {
 			$html .= self::formatDetailsRow('section-edit', $row['section']);
 		}
-
+		
 		// edit summary (don't show auto summary and summaries added by tools using edit from view mode)
 		if (isset($row['comment']) && trim($row['comment']) != '' && !isset($row['autosummaryType']) && !isset($row['viewMode'])) {
 			global $wgUser;
 			$html .= self::formatDetailsRow('summary', $wgUser->getSkin()->formatComment($row['comment']), false);
 		}
-
+		
 		// added categories
 		if (isset($row['new_categories'])) {
 			$categories = array();

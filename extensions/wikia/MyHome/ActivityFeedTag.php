@@ -30,10 +30,9 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 	if (!empty($parameters['includeNamespaces'])) $jsParams .= "&ns={$parameters['includeNamespaces']}";
 	if (!empty($parameters['flags'])) $jsParams .= '&flags=' . implode('|', $parameters['flags']);
 	$parameters['tagid'] = $tagid;
-
-	wfLoadExtensionMessages('MyHome');
+	
 	$feedHTML = ActivityFeedHelper::getList($parameters);
-
+	
 	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
 	$timestamp = wfTimestampNow();
 

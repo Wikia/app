@@ -188,7 +188,7 @@ class WallHelper {
 		
 		if( !is_null($parentId) ) {
 			$parent = F::build('ArticleComment', array($parentId), 'newFromId');
-
+			
 			if( !($parent instanceof ArticleComment) ) {
 			//this should never happen
 				Wikia::log(__METHOD__, false, 'No ArticleComment instance article id: '.$parentId);
@@ -200,7 +200,6 @@ class WallHelper {
 			}
 			
 			$commentList = F::build('ArticleCommentList', array($parent->getTitle()), 'newFromTitle');
-
 			$commentList->setId($parentId);
 			$data = $commentList->getData();
 			
@@ -285,20 +284,22 @@ class WallHelper {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
 		
-		$timeNow = time();
-		
 		$items = array();
-		foreach($comments as $comment) {
-			$ago = $timeNow - strtotime($comment['timestamp']) + 1;
+		if( count($comments) > 0 ) {
+			$timeNow = time();
 			
-			if( $ago <= self::WA_WALL_COMMENTS_EXPIRED_TIME ) {
-				$items[] = $comment;
+			foreach($comments as $comment) {
+				$ago = $timeNow - strtotime($comment['timestamp']) + 1;
+				
+				if( $ago <= self::WA_WALL_COMMENTS_EXPIRED_TIME ) {
+					$items[] = $comment;
+				}
 			}
-		}
-		
-		if( empty($items) ) {
-			$items[] = (!empty($comments[1])) ? $comments[1] : $comments[0];
-			unset($items[0]['timestamp']);
+			
+			if( empty($items) ) {
+				$items[] = (!empty($comments[1])) ? $comments[1] : $comments[0];
+				unset($items[0]['timestamp']);
+			}
 		}
 		
 		$app->wf->ProfileOut(__METHOD__);
@@ -468,9 +469,12 @@ class WallHelper {
 	}
 		
 	public function strip_wikitext( $text ) {
+		//bugfix fb#17907
+		$parser = F::build('Parser', array());
+		
 		$app = F::app();
 		$text = str_replace('*', '&asterix;', $text);
-		$text = $app->wg->Parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
+		$text = $parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
 		$text = str_replace('&amp;asterix;', '*', $text);
 		$text = trim( strip_tags($text) );
 		return $text;
