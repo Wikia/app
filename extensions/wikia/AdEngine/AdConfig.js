@@ -56,6 +56,7 @@ AdConfig = {
 		}
 	
 		var cookie = AdConfig.cookie(AdConfig.geoCookieName);
+		cookie = unescape(cookie);
 		if (typeof cookie != 'undefined' && cookie) {
 			AdConfig.geo = eval('(' + cookie + ')');
 			return;
