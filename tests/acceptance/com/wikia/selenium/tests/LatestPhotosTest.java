@@ -7,50 +7,44 @@ import static org.testng.AssertJUnit.assertEquals;
 import org.testng.annotations.Test;
 
 public class LatestPhotosTest extends BaseTest {
-	@Test(groups={"CI", "noIE"})
+	@Test(groups={"CI", "verified", "fileUpload"})
 	public void testLatestPhotos() throws Exception {
 		loginAsStaff();
 		
-		session().open("index.php?title=File:LatestPhotos1.gif");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=File:LatestPhotos1.gif");
 		doDeleteIfAllowed("Other reason", "SeleniumTest");
 		uploadImage( "http://www.google.com/logos/pl_independence08.gif", "LatestPhotos1.gif");
 		
-		session().open("index.php?title=File:LatestPhotos2.gif");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=File:LatestPhotos2.gif");
 		doDeleteIfAllowed("Other reason", "SeleniumTest");
 		uploadImage( "http://www.google.com/logos/polishind09.gif", "LatestPhotos2.gif");
 		
-		session().open("index.php?title=File:LatestPhotos3.gif");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=File:LatestPhotos3.gif");
 		doDeleteIfAllowed("Other reason", "SeleniumTest");
 		uploadImage( "http://www.google.com/logos/2010/firstdayofschool10-hp.gif", "LatestPhotos3.gif");
 		
-		session().open("index.php?title=File:LatestPhotos4.gif");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=File:LatestPhotos4.gif");
 		doDeleteIfAllowed("Other reason", "SeleniumTest");
 		uploadImage( "http://www.google.com/logos/childrens_day08_2.gif", "LatestPhotos4.gif");
 		
-		session().open("index.php?title=File:LatestPhotos5.gif");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=File:LatestPhotos5.gif");
 		doDeleteIfAllowed("Other reason", "SeleniumTest");
 		uploadImage( "http://www.google.com/logos/grandparents09.gif", "LatestPhotos5.gif");
 		
-		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Random");
 
 		// Latest Photos Module
 		assertTrue(session().isElementPresent("//section[contains(@class,'LatestPhotosModule')]"));
-		assertTrue(session().isElementPresent("link=Add a Photo"));
+		// do not confuse below button with "Contribute" drop-down elements
+		assertTrue(session().isElementPresent("//section[contains(@class,'LatestPhotosModule')]//a[@title='Add a Photo']"));
 
-		// Interatction Part
+		// Interaction Part
 		// add a photo button
-		session().click("link=Add a Photo");
+		session().click("//section[contains(@class,'LatestPhotosModule')]//a[@title='Add a Photo']");
 		waitForElement("//section[@id='UploadPhotosWrapper']");
 		session().click("//section[@id='UploadPhotosWrapper']//button[contains(@class, 'close')]");
 
-		session().open("index.php?title=Special:Random");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Random");
 
 		// browse through gallery
 		String firstPhotoSrc = session().getAttribute("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a@href");
@@ -60,12 +54,10 @@ public class LatestPhotosTest extends BaseTest {
 		assertTrue ( firstPhotoSrc != secondPhotoSrc );
 
 		//view all photos
-		session().click("//section[contains(@class,'LatestPhotosModule')]/a[@class='more']");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//section[contains(@class,'LatestPhotosModule')]/a[@class='more']");
 		assertEquals(session().getText("//header[@id='WikiaPageHeader']/h1"), "New photos on this wiki");
 
-		session().open("index.php?title=Special:Random");
-	 	session().waitForPageToLoad(this.getTimeout());
+		openAndWait("index.php?title=Special:Random");
 
 		// open a photo in the lightbox
 		session().click("//section[contains(@class,'LatestPhotosModule')]//ul[@class='carousel']/li/a");

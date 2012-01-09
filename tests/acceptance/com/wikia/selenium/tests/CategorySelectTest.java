@@ -43,7 +43,10 @@ public class CategorySelectTest extends BaseTest {
 		waitForElement("//a[contains(@class, 'cke_button_ModeSource')]");
 		session().click("//a[contains(@class, 'cke_button_ModeSource')]");
 		waitForElement("//textarea[@id='csWikitext']");
-		waitForElementVisible("//textarea[@id='csWikitext']");
+		if (!session().isVisible("//textarea[@id='csWikitext']")) {
+			session().click("//div[contains(@class, 'module_categories')]/h3");
+			waitForElementVisible("//textarea[@id='csWikitext']");
+		}
 
 		session().type("csWikitext", "[[Category:Other Category|Other Category sortkey]]\n[[Category:Wikia tests]]");
 		session().click("//a[contains(@class, 'cke_button_ModeWysiwyg')]");
