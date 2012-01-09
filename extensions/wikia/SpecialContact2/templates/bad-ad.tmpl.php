@@ -30,9 +30,7 @@ if ( $isLoggedIn ) {
 <label for="wpEmail"><?= wfMsg( 'specialcontact-yourmail' ) ?></label>
 <input name="wpEmail" value="<?= $encEmail ?>" />
 </p>
-<?php
-}
-?>
+<?php } ?>
 
 <p>
 <label for="wpContactWikiName"><?= wfMsg( 'specialcontact-label-bad-ad-link' ) ?></label>

@@ -15,7 +15,18 @@ echo wfMsgExt( 'specialcontact-intro-bug', array( 'parse' ) );
 <?php if ( $isLoggedIn ) {
 	echo wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName );
 	echo wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail );
-} ?>
+} else {
+?>
+<p>
+<label for="wpUserName"><?= wfMsg( 'specialcontact-username' ) ?></label>
+<input name="wpUserName" value="<?= $encName ?>" />
+</p>
+
+<p>
+<label for="wpEmail"><?= wfMsg( 'specialcontact-yourmail' ) ?></label>
+<input name="wpEmail" value="<?= $encEmail ?>" />
+</p>
+<?php } ?>
 
 <p>
 <label for="wpContactWikiName"><?= wfMsg( 'specialcontact-label-bug-link' ) ?></label>
