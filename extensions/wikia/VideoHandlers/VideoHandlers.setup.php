@@ -27,7 +27,7 @@ $wgLocalFileRepo = array(
  */
 $app = F::app();
 $dir = dirname( __FILE__ );
-$app->registerClass( 'VideoHandler', $dir . '/VideoHandler.class.php' );
+$app->registerClass( 'VideoHandler', $dir . '/handlers/VideoHandler.class.php' );
 $app->registerClass( 'VideoHandlerHooks', $dir . '/VideoHandlerHooks.class.php' );
 $app->registerClass( 'WikiaVideoPage', $dir . '/VideoPage.php' );
 $app->registerClass( 'ThumbnailVideo', $dir . '/ThumbnailVideo.class.php' );

@@ -1,127 +1,111 @@
 <?php
 
 class PrototypeVideoHandler extends VideoHandler {
-	
-	
-	/**
-	 * Get an associative array mapping magic word IDs to parameter names.
-	 * Will be used by the parser to identify parameters.
-	 */
-//	function getParamMap(){
-//		return array(
-//			'img_width' => 'width'
-//		);
-//	}
 
-	/*
-	 * Validate a thumbnail parameter at parse time.
-	 * Return true to accept the parameter, and false to reject it.
-	 * If you return false, the parser will do something quiet and forgiving.
-	 */
-//
-//	function validateParam( $name, $value ){
-//		return true;
-//	}
+	protected $apiName = 'video/prototype';
 
-	/**
-	 * Merge a parameter array into a string appropriate for inclusion in filenames
-	 */
-//	function makeParamString( $params ){
-//		return 'something';
-//
+	/* Digg through that */
+//	function getMetadata( $image, $filename ) {
+//		global $wgShowEXIF;
+//		if( $wgShowEXIF && file_exists( $filename ) ) {
+//			$exif = new Exif( $filename );
+//			$data = $exif->getFilteredData();
+//			if ( $data ) {
+//				$data['MEDIAWIKI_EXIF_VERSION'] = Exif::version();
+//				return serialize( $data );
+//			} else {
+//				return '0';
+//			}
+//		} else {
+//			return '';
+//		}
 //	}
-
-	/**
-	 * Parse a param string made with makeParamString back into an array
-	 */
-//	function parseParamString( $str ) {
-//		return array( 'width' => 666 );
 //
+//	function getMetadataType( $image ) {
+//		return 'exif';
 //	}
-
-	/**
-	 * Changes the parameter array as necessary, ready for transformation.
-	 * Should be idempotent.
-	 * Returns false if the parameters are unacceptable and the transform should fail
-	 */
-//	function normaliseParams( $image, &$params ) {
-		
-//		$mimeType = $image->getMimeType();
-//		$srcWidth = $image->getWidth( $params['page'] );
-//		$srcHeight = $image->getHeight( $params['page'] );
 //
-//		# Don't thumbnail an image so big that it will fill hard drives and send servers into swap
-//		# JPEG has the handy property of allowing thumbnailing without full decompression, so we make
-//		# an exception for it.
-//		if ( $mimeType !== 'image/jpeg' &&
-//			$this->getImageArea( $image, $srcWidth, $srcHeight ) > $wgMaxImageArea )
+//	function isMetadataValid( $image, $metadata ) {
+//		global $wgShowEXIF;
+//		if ( !$wgShowEXIF ) {
+//			# Metadata disabled and so an empty field is expected
+//			return true;
+//		}
+//		if ( $metadata === '0' ) {
+//			# Special value indicating that there is no EXIF data in the file
+//			return true;
+//		}
+//		$exif = @unserialize( $metadata );
+//		if ( !isset( $exif['MEDIAWIKI_EXIF_VERSION'] ) ||
+//			$exif['MEDIAWIKI_EXIF_VERSION'] != Exif::version() )
 //		{
+//			# Wrong version
+//			wfDebug( __METHOD__.": wrong version\n" );
 //			return false;
 //		}
-//
-//		# Don't make an image bigger than the source
-//		$params['physicalWidth'] = $params['width'];
-//		$params['physicalHeight'] = $params['height'];
-//
-//		if ( $params['physicalWidth'] >= $srcWidth ) {
-//			$params['physicalWidth'] = $srcWidth;
-//			$params['physicalHeight'] = $srcHeight;
-//		}
-
-		# Same as srcWidth * srcHeight above but:
-		# - no free pass for jpeg
-		# - thumbs should be smaller
-//		if ( $params['physicalWidth'] * $params['physicalHeight'] > $wgMaxThumbnailArea ) {
-//			return false;
-//		}
-
 //		return true;
 //	}
-
-	/**
-	 * Get an image size array like that returned by getimagesize(), or false if it
-	 * can't be determined.
-	 *
-	 * @param $image File: the image object, or false if there isn't one
-	 * @param $fileName String: the filename
-	 * @return Array
-	 */
-//	function getImageSize( $image, $path ){
-//		return array();
-//	}
-
-	/**
-	 * Get a MediaTransformOutput object representing the transformed output. Does the
-	 * transform unless $flags contains self::TRANSFORM_LATER.
-	 *
-	 * @param $image File: the image object
-	 * @param $dstPath String: filesystem destination path
-	 * @param $dstUrl String: destination URL to use in output HTML
-	 * @param $params Array: arbitrary set of parameters validated by $this->validateParam()
-	 * @param $flags Integer: a bitfield, may contain self::TRANSFORM_LATER
-	 */
-//	function doTransform( $file, $dstPath, $dstUrl, $params, $flags = 0 ){
 //
-//		if ( !$this->normaliseParams( $file, $params ) ) {
-//			return new TransformParameterError( $params );
+//	/**
+//	 * Get a list of EXIF metadata items which should be displayed when
+//	 * the metadata table is collapsed.
+//	 *
+//	 * @return array of strings
+//	 * @access private
+//	 */
+//	function visibleMetadataFields() {
+//		$fields = array();
+//		$lines = explode( "\n", wfMsgForContent( 'metadata-fields' ) );
+//		foreach( $lines as $line ) {
+//			$matches = array();
+//			if( preg_match( '/^\\*\s*(.*?)\s*$/', $line, $matches ) ) {
+//				$fields[] = $matches[1];
+//			}
 //		}
-//
-//		$clientWidth = $params['width'];
-//		$iconUrl = F::app()->wg->extensionsPath . '/wikia/VideoHandlers/handlers/PrototypePlaceholderImage.jpg';
-//		return F::build( 'ThumbnailVideo', array( $file, $iconUrl, 30, 80 ) );
+//		$fields = array_map( 'strtolower', $fields );
+//		return $fields;
 //	}
+//
+//	function formatMetadata( $image ) {
+//		$result = array(
+//			'visible' => array(),
+//			'collapsed' => array()
+//		);
+//		$metadata = $image->getMetadata();
+//		if ( !$metadata ) {
+//			return false;
+//		}
+//		$exif = unserialize( $metadata );
+//		if ( !$exif ) {
+//			return false;
+//		}
+//		unset( $exif['MEDIAWIKI_EXIF_VERSION'] );
+//		$format = new FormatExif( $exif );
+//
+//		$formatted = $format->getFormattedData();
+//		// Sort fields into visible and collapsed
+//		$visibleFields = $this->visibleMetadataFields();
+//		foreach ( $formatted as $name => $value ) {
+//			$tag = strtolower( $name );
+//			self::addMeta( $result,
+//				in_array( $tag, $visibleFields ) ? 'visible' : 'collapsed',
+//				'exif',
+//				$tag,
+//				$value
+//			);
+//		}
+//		return $result;
+//	}
+
+	/* StopDigging */
 
 	/**
 	 * Get the thumbnail extension and MIME type for a given source MIME type
 	 * @return array thumbnail extension and MIME type
 	 */
 
-//	function getThumbType( $ext, $mime, $params = null ) {
-//		return array( 'jpg', 'image/jpeg' );
-//	}
-
-	function getMetaData(){
-		return 'default metadata';
+	function getThumbType( $ext, $mime, $params = null ) {
+		return array( 'jpg', 'image/jpeg' );
 	}
 
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
