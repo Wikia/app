@@ -34,6 +34,8 @@ $app->registerClass( 'ThumbnailVideo', $dir . '/ThumbnailVideo.class.php' );
 $app->registerClass( 'WikiaLocalFile', $dir . '/filerepo/WikiaLocalFile.class.php' );
 $app->registerClass( 'WikiaLocalRepo', $dir . '/filerepo/WikiaLocalRepo.class.php' );
 
+$app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
+$app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
 /**
  * hooks
  */
