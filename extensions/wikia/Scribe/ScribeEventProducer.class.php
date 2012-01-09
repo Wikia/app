@@ -329,7 +329,8 @@ class ScribeEventProducer {
 			}
 			
 			$mediaType = MEDIATYPE_UNKNOWN;
-			$oLocalFile = F::build('LocalFile', array( $oTitle, RepoGroup::singleton()->getLocalRepo() ), 'newFromTitle');
+			$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
+
 			if ( $oLocalFile instanceof LocalFile ) {
 				$mediaType = $oLocalFile->getMediaType();
 			}
