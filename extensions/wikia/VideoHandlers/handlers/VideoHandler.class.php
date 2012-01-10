@@ -44,4 +44,28 @@ class VideoHandler extends BitmapHandler {
 			$this->api = F::build ( $this->apiName, array( $this->videoId ) );
 		}
 	}
+
+	function getThumbType( $ext, $mime, $params = null ) {
+		return array( 'jpg', 'image/jpeg' );
+	}
+
+		/**
+	 * Get the thumbnail extension and MIME type for a given source MIME type
+	 * @return array thumbnail extension and MIME type
+	 */
+
+	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
+
+		$oThumbnailImage = parent::doTransform( $image, $dstPath, $dstUrl, $params, $flags );
+
+		return new ThumbnailVideo(
+			$oThumbnailImage->file,
+			$oThumbnailImage->url,
+			$oThumbnailImage->width,
+			$oThumbnailImage->height,
+			$oThumbnailImage->path,
+			$oThumbnailImage->page
+		);
+	}
+
 }
