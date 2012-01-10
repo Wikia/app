@@ -12,7 +12,8 @@ var ImageLightbox = {
 
 	// setup click handler on article content
 	init: function() {
-		var self = this;
+		var self = this,
+			article;
 
 		// is ImageLightbox extension enabled? (RT #47665)
 		if (!window.wgEnableImageLightboxExt) {
@@ -21,10 +22,10 @@ var ImageLightbox = {
 		}
 
 		if (window.skin == 'oasis') {
-			var article = $('#WikiaArticle, .LatestPhotosModule, #article-comments');
+			article = $('#WikiaArticle, .LatestPhotosModule, #article-comments');
 		}
 		else {
-			var article = $('#bodyContent');
+			article = $('#bodyContent');
 		}
 
 		this.log('init');
@@ -218,7 +219,7 @@ var ImageLightbox = {
 
 		$.showModal(title, content, {
 			'id': 'lightbox',
-			'width': width ? width : 'auto',
+			'width': width || 'auto',
 
 			// track when popup is closed
 			'onClose': function() {
@@ -231,9 +232,9 @@ var ImageLightbox = {
 
 				$('#lightbox-link').click(function() {
 					self.track('/details');
-				});	
+				});
 				$('#lightbox-share-buttons').find('a').click(function() {
-					var source = $(this).attr('data-func');					
+					var source = $(this).attr('data-func');
 					if (source == "email") {
 						if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
 							showComboAjaxForPlaceHolder(false, "", function(){
@@ -244,7 +245,7 @@ var ImageLightbox = {
 							return false;
 						}
 					}
-					
+
 					$(this).closest('#lightbox-share').find('.lightbox-share-area').each(function() {
 						if (source == $(this).attr('data-func')) {
 							$(this).slideDown();
@@ -256,7 +257,7 @@ var ImageLightbox = {
 						$('#lightbox-share-embed-standard').select();
 					}
 					self.track('/share/' + source);
-				}); 
+				});
 
 				$('#lightbox-share-email-button').click(function() {
 					self.track('/share/email/send');
@@ -312,7 +313,7 @@ var ImageLightbox = {
 					$('#lightbox-share-buttons').find('a[data-func$="email"]').click();
 					$('#lightbox-share-email-text').focus();
 				}
-				
+
 				// remove lock
 				delete self.lock;
 			}
