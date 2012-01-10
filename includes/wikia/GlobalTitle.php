@@ -275,7 +275,7 @@ class GlobalTitle extends Title {
 	/**
 	 * check if page exists
 	 *
-	 * @return MW timestamp
+	 * @return 0/1
 	 */
 	public function exists() {
 		$this->loadAll();
