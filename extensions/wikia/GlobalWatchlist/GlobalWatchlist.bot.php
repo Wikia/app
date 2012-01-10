@@ -556,6 +556,7 @@ class GlobalWatchlistBot {
 		$iWikiId = $loop = 0;
 		$aDigestData = array();
 		$aWikiDigest = array( 'pages' => array() );
+		$aRemove = array();
 		while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
 			# ---
 			if ( $loop >= $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) {
@@ -593,10 +594,15 @@ class GlobalWatchlistBot {
 				$aWikiBlogs[$iWikiId][] = $oResultRow;
 				$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
 			} else {
-				$aWikiDigest[ 'pages' ][] = array(
-					'title' => GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
-					'revisionId' => $oResultRow->gwa_rev_id
-				);
+				$oGlobalTitle = GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId );
+				if ( $oGlobalTitle->exists() ) {
+					$aWikiDigest[ 'pages' ][] = array(
+						'title' => GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
+						'revisionId' => $oResultRow->gwa_rev_id
+					);
+				} else {
+					$aRemove[] = $oResultRow->gwa_id;
+				}
 			}
 			
 			$loop++;
@@ -619,6 +625,14 @@ class GlobalWatchlistBot {
 			$this->sendMail( $iUserId, $aDigestData, $bTooManyPages );
 		} else {
 			$this->printDebug( "No records to send " );				
+		}
+		
+		if ( count( $aRemove ) ) {
+			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+			foreach ( $aRemove as $gwa_id ) {
+				$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $iUserId, 'gwa_id' => $oResultRow->gwa_id ), __METHOD__ );
+			}
+			$dbs->commit();
 		}
 		
 		return $iEmailsSent;
