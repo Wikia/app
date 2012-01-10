@@ -30,45 +30,50 @@ var WikiaMobile = WikiaMobile || (function() {
 	}
 
 	function processSections(){
-		var articleElement = article[0],
-			contents = article.contents(),
-			root = wrapper = articleElement.cloneNode(false),
-			x = 0,
-			y = contents.length,
-			currentSection,
-			node,
-			nodeName,
-			isH2;
+		var firstLevelSections = $('#WikiaMainContent > h2');
 
-		for (; x < y; x++) {
-			node = contents[x];
-			nodeName = node.nodeName;
-			isH2 = (nodeName == 'H2');
+		//avoid running if there are no sections which are direct children of the article section
+		if(firstLevelSections.length > 0){
+			var articleElement = article[0],
+				contents = article.contents(),
+				root = wrapper = articleElement.cloneNode(false),
+				x = 0,
+				y = contents.length,
+				currentSection,
+				node,
+				nodeName,
+				isH2;
 
-			if (nodeName != '#comment' && nodeName != 'SCRIPT') {
-				if(node.id == 'WikiaMainContentFooter' || node.className == 'printfooter'){
-						//do not wrap these elements
-						root = wrapper;
-				}else if (isH2){
-					if (currentSection) wrapper.appendChild(currentSection);
+			for (; x < y; x++) {
+				node = contents[x];
+				nodeName = node.nodeName;
+				isH2 = (nodeName == 'H2');
 
-					currentSection = document.createElement('section');
-					currentSection.className = 'articleSection';
-					node = node.cloneNode(true);
+				if (nodeName != '#comment' && nodeName != 'SCRIPT') {
+					if(node.id == 'WikiaMainContentFooter' || node.className == 'printfooter'){
+							//do not wrap these elements
+							root = wrapper;
+					}else if (isH2){
+						if (currentSection) wrapper.appendChild(currentSection);
 
-					node.className += ' collapsible-section';
+						currentSection = document.createElement('section');
+						currentSection.className = 'articleSection';
+						node = node.cloneNode(true);
 
-					wrapper.appendChild(node);
-					wrapper.appendChild(currentSection);
-					root = currentSection;
-					continue;
+						node.className += ' collSec';
+
+						wrapper.appendChild(node);
+						wrapper.appendChild(currentSection);
+						root = currentSection;
+						continue;
+					}
+
+					root.appendChild(node.cloneNode(true));
 				}
-
-				root.appendChild(node.cloneNode(true));
 			}
-		}
 
-		page[0].replaceChild(wrapper, articleElement);
+			page[0].replaceChild(wrapper, articleElement);
+		}
 	}
 
 	function processTables(){
@@ -256,12 +261,6 @@ var WikiaMobile = WikiaMobile || (function() {
 		.delegate('#WikiaMainContent a', clickEvent, function(){
 			track(['link', 'content']);
 		})
-		.delegate('#WikiaArticleCategories a', clickEvent, function(){
-			track(['link', 'category']);
-		})
-		.delegate('.relPag ul', clickEvent, function(){
-			track(['related_pages', 'click']);
-		})
 		.delegate('.infobox img', clickEvent, function(event){
 			event.preventDefault();
 			imgModal($(this).parents('.image').data('number'));
@@ -314,6 +313,14 @@ var WikiaMobile = WikiaMobile || (function() {
 			searchInput.val('');
 		});
 
+		$('#wkRelPag').delegate('a', clickEvent, function(){
+			track(['link', 'related-page']);
+		});
+		
+		$('#WikiaArticleCategories').delegate('a', clickEvent, function(){
+			track(['link', 'category']);
+		});
+
 		$('#fullSiteSwitch').bind(clickEvent, function(event){
 			event.preventDefault();
 
@@ -329,5 +336,5 @@ var WikiaMobile = WikiaMobile || (function() {
 		getClickEvent: getClickEvent,
 		getTouchEvent: getTouchEvent,
 		track: track
-	}
+	};
 })();
