@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class InterwikiDispatcherTest extends BaseTest {
 
-	@Test(groups="CI")
+	@Test(groups={"CI", "verified"})
 	public void testInterwikiDispatcher() throws Exception {
 		File configFile = new File(System.getenv("TESTSCONFIG"));
 		File dataFile = new File(configFile.getParentFile() + "/fixtures/DirectRedirectingArticleForTest.txt");
@@ -40,13 +40,13 @@ public class InterwikiDispatcherTest extends BaseTest {
 		assertEquals(renderedUrl, session().getLocation());
 
 		session().open("index.php?title=Project:WikiaBotInterwikiDispatcherTest");
-		clickAndWait("link=exact:w:c:plemiona:User:Adi3ek/Test");
-		renderedUrl = "http://plemiona.wikia.com/wiki/U%C5%BCytkownik:Adi3ek/Test";
+		clickAndWait("link=exact:w:c:pl.plemiona:User:Adi3ek/Test");
+		renderedUrl = "http://pl.plemiona.wikia.com/wiki/U%C5%BCytkownik:Adi3ek/Test";
 		assertEquals(renderedUrl, session().getLocation());
 
 		session().open("index.php?title=Project:WikiaBotInterwikiDispatcherTest");
 		clickAndWait("link=exact:w:c:memoryalpha:Julian_Bashir");
-		renderedUrl = "http://memory-alpha.org/wiki/Julian_Bashir";
+		renderedUrl = "http://en.memory-alpha.org/wiki/Julian_Bashir";
 		assertEquals(renderedUrl, session().getLocation());
 	}
 }
