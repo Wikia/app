@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class LatestActivityTest extends BaseTest {
 	// Make an edit on a random page and verify that it shows up in the recent activity box
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testLatestActivity() throws Exception {
 		loginAsStaff(); 
 		session().click("link=Random Page");
@@ -17,6 +17,6 @@ public class LatestActivityTest extends BaseTest {
 		String ArticleTitle = session().getText("//header[@id='WikiaPageHeader']/h1");
 		String content = (new Date()).toString();
 		editArticle(ArticleTitle, "*Tested: " + content + " by [[wikia:user:" + getTestConfig().getString("ci.user.wikiabot.username")  + "|" + getTestConfig().getString("ci.user.wikiabot.username") + "]]");
-		assertTrue(session().isElementPresent("link=" + ArticleTitle));
+		waitForElement("link=" + ArticleTitle);
 	}
 }

@@ -6,7 +6,7 @@ import static org.testng.AssertJUnit.*;
 import org.testng.annotations.Test;
 
 public class MainPageTest extends BaseTest {
-	@Test(groups={"CI"})
+	@Test(groups={"CI", "verified"})
 	public void testMainPageNoRail() throws Exception {
 		session().open("index.php");
 		session().waitForPageToLoad(this.getTimeout());
