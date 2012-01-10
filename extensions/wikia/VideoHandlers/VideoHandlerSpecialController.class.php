@@ -11,33 +11,36 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 
+		$videoId = 123;
+		$apiWrapper = F::build( 'PrototypeApiWrapper', array( $videoId ) );
 		
-
-		$url = 'http://img.youtube.com/vi/FRKUuSnEDkU/0.jpg';
+		$url = $apiWrapper->getThumbnailUrl();
 		$data = array(
 			'wpUpload' => 1,
 			'wpSourceType' => 'web',
 			'wpUploadFileURL' => $url
 		);
-		$upload = new UploadFromUrl();
-		$upload->initializeFromRequest(new FauxRequest($data, true));
+		$upload = F::build('UploadFromUrl');
+		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
 		$upload->fetchFile();
 		$upload->verifyUpload();
-		$upload->getLocalFile();
-		$upload->getTempPath();
+//		$upload->getLocalFile();
+//		$upload->getTempPath();
 
-		$file = new WikiaLocalFile(
-				Title::newFromText('videoTestVerified', NS_FILE),
-				RepoGroup::singleton()->getLocalRepo()
-		);
+		$file = F::build('WikiaLocalFile',
+				array(
+					Title::newFromText( $apiWrapper->getTitle(), NS_FILE ),
+					RepoGroup::singleton()->getLocalRepo()
+				)
+			);
 
 		$file->forceMime( 'video/prototype' );
-		$file->setVideoId( '123' );
+		$file->setVideoId( $videoId );
 
 		var_dump(
 			$file->upload(
 				$upload->getTempPath(),
-				'bujah!',
+				$apiWrapper->getDescription(),
 				'[[Category:New Video]] Victory at the sea!',
 				File::DELETE_SOURCE
 			)

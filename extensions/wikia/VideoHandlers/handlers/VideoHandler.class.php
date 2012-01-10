@@ -26,20 +26,20 @@ class VideoHandler extends BitmapHandler {
 	// dunno if will be used
 	function getTitle() {
 		$this->loadApi();
-		return empty( $api ) ? $api()->getTitles() : false;
+		return $this->api instanceof ApiWrapper ? $this->api->getTitles() : false;
 	}
 	// dunno if will be used
 	function getDescription() {
 		$this->loadApi();
-		return empty( $api ) ? $api()->getDescription() : false;
+		return $this->api instanceof ApiWrapper ? $this->api->getDescription() : false;
 	}
 
 	function getMetadata( $image, $filename ) {
 		$this->loadApi();
-		return empty( $api ) ? $api()->getMetaData() : false;
+		return $this->api instanceof ApiWrapper ? serialize( $this->api->getMetaData() ) : false;
 	}
 
-	function loadApiDriver() {
+	function loadApi() {
 		if ( !empty( $this->videoId ) && empty( $this->api ) ){
 			$this->api = F::build ( $this->apiName, array( $this->videoId ) );
 		}

@@ -58,29 +58,31 @@ class WikiaLocalFile extends LocalFile {
 	}
 
 	function setVideoId( $videoId ){
-		if ( $this->isVideo() ){
-			$this->videoId = $videoId;
-		}
+		$this->videoId = $videoId;
 	}
 
 	function getHandler(){
 		$oHandler = parent::getHandler();
-		if ( !empty( $this->videoId ) && $this->isVideo() ){
+		if ( !empty( $this->videoId ) && ( $this->media_type == 'video' ) ){
+			
 			$oHandler->setVideoId( $this->videoId );
 		}
 		return $oHandler;
 	}
 
 	function setProps( $info ) {
-
 		parent::setProps( $info );
 		if ( $this->forceMime ){
 			$this->dataLoaded = true;
 			$this->mime = $this->forceMime;
 			list( $this->major_mime, $this->minor_mime ) = self::splitMime( $this->mime );
+
 			$handler = MediaHandler::getHandler( $this->getMimeType() );
-			$this->metadata = $handler->getMetaData();
+			$handler->setVideoId( $this->videoId );
+
+			$this->metadata = $handler->getMetaData( false, false );
 			$this->media_type = 'video';
+			$this->forceMime = false;
 		}
 	}
 
@@ -89,7 +91,7 @@ class WikiaLocalFile extends LocalFile {
 	 */
 	function loadFromFile() {
 
-		$aParams = array( 'minor_mime', 'major_mime', 'mime', 'media_type' );
+		$aParams = array( 'metadata', 'minor_mime', 'major_mime', 'mime', 'media_type' );
 		if ( $this->isVideo() ){
 			$aVal = array();
 			foreach( $aParams as $param ){

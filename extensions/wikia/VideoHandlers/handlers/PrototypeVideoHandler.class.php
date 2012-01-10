@@ -2,7 +2,7 @@
 
 class PrototypeVideoHandler extends VideoHandler {
 
-	protected $apiName = 'video/prototype';
+	protected $apiName = 'PrototypeApiWrapper';
 
 	/* Digg through that */
 //	function getMetadata( $image, $filename ) {
