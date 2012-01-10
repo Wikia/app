@@ -35,6 +35,7 @@ class GlobalTitle extends Title {
 	private $mArticlePath = false;
 	private $mNamespaceNames = false;
 	private $mLastEdit = false;
+	private $mExists = null;
 
 	/**
 	 * static constructor, Create new Title from name of page
@@ -270,6 +271,42 @@ class GlobalTitle extends Title {
 		return $result;
 	}
 
+
+	/**
+	 * check if page exists
+	 *
+	 * @return MW timestamp
+	 */
+	public function exists() {
+		$this->loadAll();
+
+		if ( !is_null( $this->mExists ) ) {
+			return $this->mExists;
+		}
+
+		if( WikiFactory::isPublic($this->mCityId) ) {
+			$dbName = WikiFactory::IDtoDB($this->mCityId);
+
+			$dbr = wfGetDB( DB_SLAVE, array(), $dbName );
+
+			$oRow = $dbr->selectRow(
+				array( 'page' ),
+				array( 'page_id' ),
+				array(
+					'page_title' => $this->mText,
+					'page_namespace' => $this->mNamespace
+				),
+				__METHOD__
+			);
+
+			$this->mExists = intval( $oRow->page_id > 0 );
+		} else {
+			$this->mExists = 0;
+		}
+
+		return $this->mExists;
+	}
+	
 	/**
 	 * loadServer
 	 *
