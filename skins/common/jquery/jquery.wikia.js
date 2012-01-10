@@ -2,7 +2,7 @@ jQuery.getSassCommonURL = function(scssFilePath, params) {
 	return wgCdnRootUrl + wgAssetsManagerQuery.
 		replace('%1$s', 'sass').
 		replace('%2$s', scssFilePath).
-		replace('%3$s', encodeURIComponent($.param(params ? params : sassParams))).
+		replace('%3$s', encodeURIComponent(params || window.sassParams)).
 		replace('%4$d', wgStyleVersion);
 }
 
@@ -90,14 +90,16 @@ jQuery.showModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
 	$.loadModalJS(function() {
+		var dialog, header;
+
 		$().log('showModal: plugin loaded');
 
 		if (skin == 'oasis') {
-			var header = $('<h1>').html(title);
-			var dialog = $('<div>').html(content).prepend(header).appendTo('body');
+			header = $('<h1>').html(title);
+			dialog = $('<div>').html(content).prepend(header).appendTo('body');
 		}
 		else {
-			var dialog = $('<div class="modalContent">').html(content).attr('title', title).appendTo('#positioned_elements');
+			dialog = $('<div class="modalContent">').html(content).attr('title', title).appendTo('#positioned_elements');
 		}
 
 		// fire callbackBefore if provided
