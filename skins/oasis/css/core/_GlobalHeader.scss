@@ -129,7 +129,7 @@
 			margin: 0 0 0 10px;
 			padding: 0;
 			position: static;
-			width: 160px;
+			width: 230px;
 			&:hover {
 				background: none;
 			}
@@ -137,11 +137,6 @@
 				font-weight: bold;
 			}
 
-		}
-		>li:first-child {
-			padding-top: 10px;
-			padding-right: 5px;
-			width: auto;
 		}
 		.catnav {
 			li {

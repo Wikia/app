@@ -25,4 +25,3 @@ $wgSpecialPageGroups['RelatedVideo']		= 'wikia';
 
 $wgHooks['AfterAdModuleExecute'][]		= 'RelatedVideoHelper::onAfterAdModuleExecute';
 $wgHooks['GetRailModuleList'][]			= 'RelatedVideoHelper::onGetRailModuleList';
-$wgHooks['BeforeExecuteSpotlightsIndex'][]	= 'RelatedVideoHelper::onBeforeExecuteSpotlightsIndex';
