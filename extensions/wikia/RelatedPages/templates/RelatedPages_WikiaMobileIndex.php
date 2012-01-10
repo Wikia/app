@@ -1,5 +1,5 @@
 <? if ( !$skipRendering ) :?>
-	<section class="relPag">
+	<section id="wkRelPag">
 		<h2 class="collSec open"><?= wfMsgForContent( 'wikiarelatedpages-heading' ) ;?><span class="chev"></span></h2>
 		<ul class="open">
 		<? foreach ( $pages as $page ) :?>
