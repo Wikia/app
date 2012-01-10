@@ -2,13 +2,15 @@
 
 abstract class ApiWrapper {
 
-	private $videoId;
+	protected $videoId;
+	
+	protected static $API_URL;
 	
 	public function __construct( $videoId ) {
 		$this->videoId = $videoId;
 	}
 
-	abstract function getMetaData();
+	abstract function getMetadata();
 
 	abstract function getTitle();
 	

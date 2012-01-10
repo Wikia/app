@@ -23,14 +23,3 @@ $app->registerClass('YoutubeVideoHandler', $dir . '/handlers/YoutubeVideoHandler
 $app->registerClass('YoutubeApiWrapper', $dir . '/apiwrappers/YoutubeApiWrapper.class.php');
 
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
-
-//$ytWrapper = new YoutubeApiWrapper('kfVsfOSbJY0');
-//willdebug($ytWrapper->getVideoTitle()."\n");
-//willdebug($ytWrapper->getVideoCategory()."\n");
-//willdebug($ytWrapper->getVideoDescription()."\n");
-//willdebug($ytWrapper->getVideoDuration()."\n");
-//willdebug($ytWrapper->getVideoTags());
-//willdebug($ytWrapper->getVideoThumbnails());
-//willdebug($ytWrapper->getVideoUploaded()."\n");
-//willdebug($ytWrapper->getDuration()."\n");
-//willdebug($ytWrapper->getVideoRatingInfo());

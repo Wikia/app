@@ -34,7 +34,7 @@ $app->registerClass( 'ThumbnailVideo',	$dir . '/ThumbnailVideo.class.php' );
 $app->registerClass( 'WikiaLocalFile',	$dir . '/filerepo/WikiaLocalFile.class.php' );
 $app->registerClass( 'WikiaLocalRepo',	$dir . '/filerepo/WikiaLocalRepo.class.php' );
 $app->registerClass( 'ApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
-
+$app->registerClass( 'ApiWrapper', $dir . '/apiwrappers/ApiWrapper.class.php' );
 /**
  * SpecialPages
  */
