@@ -161,7 +161,7 @@ class BodyModule extends Module {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
-			$wgEnableCorporatePageExt, $wgEnableSpotlightsV2_Rail,
+			$wgEnableCorporatePageExt,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3;
@@ -171,8 +171,6 @@ class BodyModule extends Module {
 		}
 
 		$railModuleList = array();
-
-		$spotlightsParams = array('mode'=>'RAIL', 'adslots'=> array( 'SPOTLIGHT_RAIL_1', 'SPOTLIGHT_RAIL_2', 'SPOTLIGHT_RAIL_3' ), 'sectionId'=>'WikiaSpotlightsModule', 'adGroupName'=>'SPOTLIGHT_RAIL');
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -195,10 +193,6 @@ class BodyModule extends Module {
 					if ($wgEnableHuluVideoPanel) {
 						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 					}
-				}
-
-				if($wgEnableSpotlightsV2_Rail) {
-					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 				}
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
@@ -230,9 +224,6 @@ class BodyModule extends Module {
 					if ($wgEnableHuluVideoPanel) {
 						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 					}
-				}
-				if($wgEnableSpotlightsV2_Rail) {
-					$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
 				}
 			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
 					$railModuleList = array (
@@ -272,10 +263,6 @@ class BodyModule extends Module {
 					$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 				}
 			}
-
-			if($wgEnableSpotlightsV2_Rail) {
-				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
-			}
 		}
 
 		// User page namespaces
@@ -296,9 +283,6 @@ class BodyModule extends Module {
 		if (self::isBlogPost() || self::isBlogListing()) {
 			$railModuleList[1500] = array('Search', 'Index', null);
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
-			if($wgEnableSpotlightsV2_Rail) {
-				$railModuleList[1150] = array('Spotlights', 'Index', $spotlightsParams);
-			}
 		}
 
 		// A/B testing leftovers, leave for now because we will do another one

@@ -54,35 +54,5 @@
 			}
 			return true;
 		}
-
-		/**
-		 * onBeforeExecuteSpotlightsIndex - replaces middle spotligh footer with 5min video.
-		 *
-		 * @param $spotlightsModule obj
-		 *
-		 * @return boolean
-		 */
-
-		static function onBeforeExecuteSpotlightsIndex( &$spotlightsModule ){
-
-			global $wgUser, $wgTitle, $wgEnableRelatedVideoSpotlight;
-			
-			if ( !empty( $wgEnableRelatedVideoSpotlight ) && ( $wgUser->isAnon() || $wgTitle->isSpecial('RelatedVideo') ) ){
-				if ( isset($spotlightsModule) && ($spotlightsModule->adslots[2] == 'SPOTLIGHT_FOOTER_3')) {
-					$forceContent = false;
-					$forceContent = array();
-					$forceContent[2] = wfRenderModule('RelatedVideo', 'Spotlight');
-					$spotlightsModule->forceContent = $forceContent;
-					if ( !empty($spotlightsModule->forceContent) && is_array( $spotlightsModule->forceContent )){
-						foreach($spotlightsModule->forceContent as $key => $val){
-							if ( !empty( $spotlightsModule->forceContent[$key] ) ){
-								unset($spotlightsModule->adslots[$key]);
-							}
-						}
-					}
-				}
-			}
-			return true;
-		}
 		
 	}

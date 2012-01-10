@@ -18,9 +18,11 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 					<li>
 						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wgBlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
 						<ul class="subnav">
+							<? /*
 							<li id="SPOTLIGHT_GLOBALNAV_<?= ++$i?>"<?= $wgEnableSpotlightsV2_GlobalNav ? ' class="SPOTLIGHT_GLOBALNAV"' : '' ?>>
 								<?= AdEngine::getInstance()->getAd('SPOTLIGHT_GLOBALNAV_'.$i) ?>
 							</li>
+							*/ ?>
 <?php
 		foreach($menuNodes[$level0]['children'] as $level1) {
 ?>
