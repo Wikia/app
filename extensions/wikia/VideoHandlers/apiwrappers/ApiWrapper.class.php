@@ -1,6 +1,6 @@
 <?php
 
-abstract class YoutubeApiWrapper {
+abstract class ApiWrapper {
 
 	private $videoId;
 	

@@ -27,13 +27,17 @@ $wgLocalFileRepo = array(
  */
 $app = F::app();
 $dir = dirname( __FILE__ );
-$app->registerClass( 'VideoHandler', $dir . '/handlers/VideoHandler.class.php' );
+$app->registerClass( 'VideoHandler',	$dir . '/handlers/VideoHandler.class.php' );
 $app->registerClass( 'VideoHandlerHooks', $dir . '/VideoHandlerHooks.class.php' );
-$app->registerClass( 'WikiaVideoPage', $dir . '/VideoPage.php' );
-$app->registerClass( 'ThumbnailVideo', $dir . '/ThumbnailVideo.class.php' );
-$app->registerClass( 'WikiaLocalFile', $dir . '/filerepo/WikiaLocalFile.class.php' );
-$app->registerClass( 'WikiaLocalRepo', $dir . '/filerepo/WikiaLocalRepo.class.php' );
+$app->registerClass( 'WikiaVideoPage',	$dir . '/VideoPage.php' );
+$app->registerClass( 'ThumbnailVideo',	$dir . '/ThumbnailVideo.class.php' );
+$app->registerClass( 'WikiaLocalFile',	$dir . '/filerepo/WikiaLocalFile.class.php' );
+$app->registerClass( 'WikiaLocalRepo',	$dir . '/filerepo/WikiaLocalRepo.class.php' );
+$app->registerClass( 'ApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 
+/**
+ * SpecialPages
+ */
 $app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
 $app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
 /**
