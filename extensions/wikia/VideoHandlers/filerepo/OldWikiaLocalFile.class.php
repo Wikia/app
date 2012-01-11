@@ -2,7 +2,7 @@
 
 class OldWikiaLocalFile extends OldLocalFile {
 
-	protected $oVideoLogic = null; // Leaf object
+	protected $oLocalFileLogic = null; // Leaf object
 
 	/* obligatory constructors */
 
@@ -52,16 +52,16 @@ class OldWikiaLocalFile extends OldLocalFile {
 	}
 
 	function  __call( $name, $arguments ){
-		if ( method_exists( $this->getVideoLogic(), $name ) ){
-			return call_user_func_array( array( $this->getVideoLogic(), $name ), $arguments );
+		if ( method_exists( $this->getLocalFileLogic(), $name ) ){
+			return call_user_func_array( array( $this->getLocalFileLogic(), $name ), $arguments );
 		} else {
-			throw new Exception( 'Method ' .get_class( $this->getVideoLogic() ).'::' . $name . ' does not extist' );
+			throw new Exception( 'Method ' .get_class( $this->getLocalFileLogic() ).'::' . $name . ' does not extist' );
 		}
 	}
 
 	function __set( $name, $value ){
-		if ( !isset( $this->$name ) && isset( $this->getVideoLogic()->$name ) ){
-			$this->getVideoLogic()->$name = $value;
+		if ( !isset( $this->$name ) && isset( $this->getLocalFileLogic()->$name ) ){
+			$this->getLocalFileLogic()->$name = $value;
 		} else {
 			$this->$name = $value;
 		}
@@ -69,35 +69,35 @@ class OldWikiaLocalFile extends OldLocalFile {
 
 	function __get( $name ){
 		if ( !isset( $this->$name ) ) {
-			return $this->getVideoLogic()->$name;
+			return $this->getLocalFileLogic()->$name;
 		} else {
 			return $this->$name;
 		}
 	}
 
-	protected function getVideoLogic() {
-		if ( empty( $this->oVideoLogic ) ){
-			$this->oVideoLogic = F::build( 'WikiaVideoLogic', array( $this ) );
+	protected function getLocalFileLogic() {
+		if ( empty( $this->oLocalFileLogic ) ){
+			$this->oLocalFileLogic = F::build( 'WikiaLocalFileShared', array( $this ) );
 		}
-		return $this->oVideoLogic;
+		return $this->oLocalFileLogic;
 	}
 
 	// Make parent methods accesible to Leaf
 
 	function getHandler(){
 		parent::getHandler();
-		$this->getVideoLogic()->afterGetHandler();
+		$this->getLocalFileLogic()->afterGetHandler();
 		return $this->handler;
 	}
 
 	function setProps( $info ) {
 		parent::setProps( $info );
-		$this->getVideoLogic()->afterSetProps();
+		$this->getLocalFileLogic()->afterSetProps();
 	}
 
 	function loadFromFile() {
-		$this->getVideoLogic()->beforeLoadFromFile();
+		$this->getLocalFileLogic()->beforeLoadFromFile();
 		parent::loadFromFile();
-		$this->getVideoLogic()->afterLoadFromFile();
+		$this->getLocalFileLogic()->afterLoadFromFile();
 	}
 }
