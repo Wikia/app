@@ -159,6 +159,9 @@ class WikiaApiLyricwiki extends ApiBase {
 		$result = postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, "", $language);
 
 		switch ( $fmt ) {
+			case 'php':
+				print serialize($result);
+				break;
 			case 'text':
 
 				// TODO: IMPLEMENT
@@ -235,6 +238,9 @@ function albumResult($artist, $album, $year){
 		}
 
 		switch ( $fmt ) {
+			case 'php':
+				print serialize(getHometown($artist));
+				break;
 			case 'text':
 				$result = getHometown($artist);
 				$hometown = getVal($result, 'hometown');
@@ -284,6 +290,9 @@ function albumResult($artist, $album, $year){
 		}
 
 		switch ( $fmt ) {
+			case 'php':
+				print serialize(getArtist($artist));
+				break;
 			case 'text':
 				$result = getArtist($artist);
 
@@ -391,6 +400,9 @@ function albumResult($artist, $album, $year){
 
 		$result = getAlbum($artist, $albumName, $albumYear);
 		switch ( $fmt ) {
+			case 'php':
+				print serialize($result);
+				break;
 			case 'text':
 				$this->dumpText($result);
 				break;
@@ -436,6 +448,9 @@ function albumResult($artist, $album, $year){
 
 		$result = getTopSongs($limit);
 		switch ( $fmt ) {
+		case 'php':
+			print serialize($result);
+			break;
 		case "xml" :
 			header('Content-Type: application/xml', true);
 			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -467,6 +482,9 @@ function albumResult($artist, $album, $year){
 
 		$result = getSOTD();
 		switch ( $fmt ) {
+		case "php" :
+			print serialize($result);
+			break;
 		case "xml" :
 			header('Content-Type: application/xml', true);
 			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -549,6 +567,9 @@ function albumResult($artist, $album, $year){
 				$this->rest_printListing($result['artist'].":".$result['song'], $result['lyrics'], $fmt);
 			} else {
 				switch($fmt){
+				case 'php':
+					print serialize($result);
+					break;
 				case "text":
 					print utf8_decode($result['lyrics']);
 					//print "\n\n".$result['url'];
@@ -705,6 +726,12 @@ function albumResult($artist, $album, $year){
 
 		// Ouptut the results as just the page title and a listing of pages linked to.
 		switch($fmt){
+			case 'php':
+				print serialize(array(
+							'listingPage' => $pageTitle,
+							'pageTitles' => $links)
+						));
+				break;
 			case "text":
 				print utf8_decode(implode($links, "\n"));
 				break;
