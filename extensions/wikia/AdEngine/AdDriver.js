@@ -30,8 +30,8 @@ var AdDriver = {
 	},
 
 	init: function() {
-		window.adDriverLastDARTCallNoAds = new Array();
-		window.adDriverAdCallComplete = new Array();
+		window.adDriverLastDARTCallNoAds = [];
+		window.adDriverAdCallComplete = [];
 		AdDriver.debug = parseInt($.getUrlVar('debug'));
 	},
 
@@ -58,7 +58,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 				//case 'LEFT_SKYSCRAPER_3':
 				//case 'TOP_RIGHT_BOXAD':
 					//return 'NO-AD';
-					//break;	
+					//break;
 				//default:
 					//return 'Liftium';
 			//}
@@ -77,7 +77,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 			// (e.g. eBay search). Don't make ad call if prerequisites aren't
 			// met
 			if (typeof window.partnerKeywords == 'undefined' || !window.partnerKeywords) {
-				return 'NO-AD'
+				return 'NO-AD';
 			}
 			break;
 		default:
@@ -126,24 +126,25 @@ AdDriver.getNumAllCall = function(slotname) {
 }
 
 AdDriver.getNumCall = function(storageName, slotname) {
-	var storageNum = 0;
-	var cookieNum = 0;
+	var storageNum = 0,
+		cookieNum = 0,
+		numCallStorage;
 
 	try {
 		if (window.wgAdDriverUseExpiryStorage) {
-			var numCallStorage = $.expiryStorage.get(storageName);
+			numCallStorage = $.expiryStorage.get(storageName);
 			storageNum = AdDriver.getNumCallFromStorageContents(numCallStorage, slotname);
 		}
-		
+
 		if (window.wgAdDriverUseCookie) {
 			numCallStorage = $.cookies.get(storageName);
 			cookieNum = AdDriver.getNumCallFromStorageContents(numCallStorage, slotname);
 		}
-		
+
 		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
 			// compare and report error if they're not equal
 			if (storageNum != cookieNum) {
-				WikiaTracker.track([LiftiumOptions.pubid, "error", "numcalloutofsync", storageName, slotname, window.wgDBname, storageNum, cookieNum], 'liftium.errors');				
+				WikiaTracker.track([LiftiumOptions.pubid, "error", "numcalloutofsync", storageName, slotname, window.wgDBname, storageNum, cookieNum], 'liftium.errors');
 				AdDriver.log('Cookie and ExpiryStorage for ' + storageName + ':' + slotname + ' are out of sync!');
 				AdDriver.log('Cookie contents: ' + cookieNum);
 				AdDriver.log('ExpiryStogage contents: ' + storageNum);
@@ -159,7 +160,7 @@ AdDriver.getNumCall = function(storageName, slotname) {
 
 AdDriver.getNumCallFromStorageContents = function(numCallStorage, slotname) {
 	var num = 0;
-	
+
 	if (typeof(numCallStorage) != 'undefined' && numCallStorage) {
 		var slotnameObjs = JSON.parse(numCallStorage);
 		for (var i = 0; i < slotnameObjs.length; i++) {
@@ -169,9 +170,9 @@ AdDriver.getNumCallFromStorageContents = function(numCallStorage, slotname) {
 					break;
 				}
 			}
-		}	
+		}
 	}
-	
+
 	return num;
 }
 
@@ -206,10 +207,10 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 		if (!slotnameInStorage) {
 			newSlotnameObjs.push( {slotname : slotname, num : ++numInStorage, ts : timestamp} );
 		}
-	
+
 		$.expiryStorage.set(storageName, $.toJSON(newSlotnameObjs), window.wgAdDriverCookieLifetime*3600000);	// wgAdDriverCookieLifetime expressed in hours
 	}
-	
+
 	if (window.wgAdDriverUseCookie) {
 		newSlotnameObjs = new Array();
 		slotnameInStorage = false;
@@ -258,7 +259,7 @@ AdDriver.incrementStorageContents = function(numCallStorage, slotname) {
 			}
 		}
 	}
-	
+
 	var retObj = new Object();
 	retObj.newSlotnameObjs = newSlotnameObjs;
 	retObj.num = num;
@@ -275,7 +276,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 			var lastDARTCallNoAdStorage = $.expiryStorage.get(AdDriver.storageNameLastDARTCallNoAd);
 			storageValue = AdDriver.getLastDARTCallNoAdFromStorageContents(lastDARTCallNoAdStorage, slotname);
 		}
-		
+
 		if (window.wgAdDriverUseCookie) {
 			var lastDARTCallNoAdCookie = $.cookies.get(AdDriver.storageNameLastDARTCallNoAd);
 			cookieValue = AdDriver.getLastDARTCallNoAdFromStorageContents(lastDARTCallNoAdCookie, slotname);
@@ -285,7 +286,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 			if (storageValue != cookieValue) {
 				WikiaTracker.track([LiftiumOptions.pubid, "error", "lastdartcallnoadoutofsync", slotname, window.wgDBname], 'liftium.errors');
 			}
-		}		
+		}
 	}
 	catch (e) {
 		AdDriver.log(e.message);
@@ -298,7 +299,7 @@ AdDriver.isLastDARTCallNoAd = function(slotname) {
 
 AdDriver.getLastDARTCallNoAdFromStorageContents = function(lastDARTCallNoAdStorage, slotname) {
 	var value = false;
-	
+
 	if (typeof(lastDARTCallNoAdStorage) != 'undefined' && lastDARTCallNoAdStorage) {
 		var slotnameTimestamps = JSON.parse(lastDARTCallNoAdStorage);
 		for (var i = 0; i < slotnameTimestamps.length; i++) {
@@ -310,7 +311,7 @@ AdDriver.getLastDARTCallNoAdFromStorageContents = function(lastDARTCallNoAdStora
 			}
 		}
 	}
-	
+
 	return value;
 }
 
@@ -367,7 +368,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 AdDriver.setLastDARTCallNoAdInStorageContents = function(lastDARTCallNoAdStorage, slotname, value) {
 	var slotnameInStorage = false;
 	var newSlotnameTimestamps = new Array();
-	
+
 	if (typeof(lastDARTCallNoAdStorage) != 'undefined' && lastDARTCallNoAdStorage) {
 		var slotnameTimestamps = JSON.parse(lastDARTCallNoAdStorage);
 		// look for slotname. If there is a new value, change the old value. If
@@ -384,7 +385,7 @@ AdDriver.setLastDARTCallNoAdInStorageContents = function(lastDARTCallNoAdStorage
 			}
 		}
 	}
-	
+
 	var retObj = new Object();
 	retObj.slotnameInStorage = slotnameInStorage;
 	retObj.newSlotnameTimestamps = newSlotnameTimestamps;
@@ -423,7 +424,7 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 }
 
 AdDriver.canCallLiftium = function(slotname) {
-	switch (slotname) {	
+	switch (slotname) {
 		case 'HOME_INVISIBLE_TOP':
 		case 'INVISIBLE_MODAL':
 		case 'INVISIBLE_TOP':
@@ -552,7 +553,7 @@ AdDriverDelayedLoader.callDART = function() {
 		{
 			insertType: "append",
 			script: {src: AdDriverDelayedLoader.currentAd.getDARTUrl()},
-			done: function() { 
+			done: function() {
 
 				ghostwriter.flushloadhandlers();
 
@@ -570,10 +571,10 @@ AdDriverDelayedLoader.callDART = function() {
 					}
 				}
 
-				if (nextAdProvider == AdDriver.adProviderLiftium) { 
-					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriver.adProviderLiftium); 
-					AdDriverDelayedLoader.prependItem(liftiumItem); 
-				} 
+				if (nextAdProvider == AdDriver.adProviderLiftium) {
+					var liftiumItem = new AdDriverDelayedLoaderItem(AdDriverDelayedLoader.currentAd.slotname, AdDriverDelayedLoader.currentAd.size, AdDriver.adProviderLiftium);
+					AdDriverDelayedLoader.prependItem(liftiumItem);
+				}
 				else {
 					// track ad call in Google Analytics, for forecasting.
 					// Track only calls that do not fall back to Liftium.
@@ -618,7 +619,7 @@ AdDriverDelayedLoader.callLiftium = function() {
 
 	var size = AdDriverDelayedLoader.currentAd.size;
 	LiftiumOptions.placement = slotname;
-	
+
 	try {
 		var script = AdDriverDelayedLoader.getLiftiumCallScript(slotname, size);
 		var slot = document.getElementById(slotname);
@@ -671,7 +672,7 @@ AdDriverDelayedLoader.loadNext = function() {
 			AdDriverDelayedLoader.loadNext();
 		}
 	}
-	
+
 	if (!AdDriverDelayedLoader.adDriverItems.length && typeof Liftium != 'undefined' && Liftium) {
 		Liftium.hasMoreCalls = 0;
 	}
