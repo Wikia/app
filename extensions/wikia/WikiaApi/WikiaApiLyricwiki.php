@@ -169,7 +169,7 @@ class WikiaApiLyricwiki extends ApiBase {
 				header('Content-Type: application/xml', true);
 				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 				$result = array("postSongResponse" => $result);
-				$this->dumpXML($result);
+				$this->dumpXml_hacky($result);
 				break;
 			case 'json':
 			case 'realjson':
@@ -249,7 +249,7 @@ function albumResult($artist, $album, $year){
 				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 				$result = getHometown($artist);
 				$result = array("getHometownResponse" => $result);
-				$this->dumpXML($result);
+				$this->dumpXml_hacky($result);
 				break;
 			case 'json':
 			case 'realjson':
@@ -316,7 +316,7 @@ function albumResult($artist, $album, $year){
 				//print "<getArtistResponse>\n";
 				$result = getArtist($artist);
 				$result = array("getArtistResponse" => $result);
-				$this->dumpXML($result);
+				$this->dumpXml_hacky($result);
 				//print "</getArtistResponse>\n";
 				break;
 			case 'html':
@@ -440,12 +440,11 @@ function albumResult($artist, $album, $year){
 			header('Content-Type: application/xml', true);
 			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
-			// TODO: FIX THIS FORMAT! (each item in the array isn't wrapped. The only well-formed XML is a hack. Figure out a better way to structure the data so that dumpXML can be generic.
-				// TODO: Maybe array("topSongs" => array("topSong", $result)) so that it knows what to call each item in the array?
-			// TODO: FIX THIS FORMAT! (each item in the array isn't wrapped. The only well-formed XML is a hack. Figure out a better way to structure the data so that dumpXML can be generic.
-
 			$result = array("topSongs" => $result);
-			$this->dumpXML($result);
+			$result['topSongs']['tag'] = "topSong";
+			$this->dumpXml($result);
+
+			break;
 		case "text":
 // TODO: IMPLEMENT
 // TODO: IMPLEMENT
@@ -472,7 +471,7 @@ function albumResult($artist, $album, $year){
 			header('Content-Type: application/xml', true);
 			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 			$result = array("songOfTheDay" => $result);
-			$this->dumpXML($result);
+			$this->dumpXml_hacky($result);
 			break;
 		case "text":
 // TODO: IMPLEMENT
@@ -568,7 +567,7 @@ function albumResult($artist, $album, $year){
 					print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 					print "<LyricsResult>\n";
 
-					// TODO: Would probably be best to extract this whole XMLing function and make it recursive for inner-arrays (look into dumpXML() and why that's not being used here).
+					// TODO: Would probably be best to extract this whole XMLing function and make it recursive for inner-arrays (look into dumpXml_hacky() and why that's not being used here).
 					foreach($result as $keyName=>$val){
 						if(is_array($val)){
 							print "\t<$keyName>\n";
@@ -831,8 +830,10 @@ function albumResult($artist, $album, $year){
 
 	////
 	// The second parameter is the optional indentation at the start of this item (used for recursion).
+	//
+	// NOTE: DEPRECATED. Use dumpXml() instead. It requires some formatting of the input-array, but when that is done, the code in dumpXml is more dependable and less hacky.
 	////
-	function dumpXML($dataArray, $tabs=""){
+	function dumpXml_hacky($dataArray, $tabs=""){
         if(is_array($dataArray)){
 			$cnt = 0;
 			foreach($dataArray as $tag => $val){
@@ -841,7 +842,7 @@ function albumResult($artist, $album, $year){
 						print "$tabs<albumResult>\n";
 						$tabs = "\t$tabs";
 					}
-					$this->dumpXML($val, $tabs);
+					$this->dumpXml_hacky($val, $tabs);
 					if(isset($val['album']) && isset($_GET['fixXML'])){
 						$tabs = substr($tabs, -1);
 						print "$tabs</albumResult>\n";
@@ -854,7 +855,7 @@ function albumResult($artist, $album, $year){
 					if(is_array($val)){
 						print "\n"; // keeps bottom-level items one-liners
 					}
-					$this->dumpXML($val, "\t$tabs");
+					$this->dumpXml_hacky($val, "\t$tabs");
 					if(is_array($val)){
 						print "$tabs";
 					}
@@ -865,7 +866,78 @@ function albumResult($artist, $album, $year){
         } else {
 			print htmlspecialchars($dataArray, ENT_QUOTES, "UTF-8");
         }
-	} // end dumpXML()
+	} // end dumpXml_hacky()
+	
+	////
+	// The second parameter is the optional indentation at the start of this item (used for recursion).
+	//
+	// For internal arrays, they should have the wrapper name as the key, then the array should contain a "tag" key which has the name
+	// to be used for each inner item.  If "tag" is not provided, this will automatically use the parent tag with an "_item" suffix as the inner key.
+	/*
+	Example (not the actual structure for LyricWiki's artistResult... just an example): - TODO: Make this use the exact structure
+	$dataArray = array(
+		"artistResult" => array(
+			"name" => "Tool",
+			"albums" => array(
+				"tag" => "album",
+				array(
+					"title" => "Aenima",
+					"year" => "1996",
+					"tracklist" => array(
+						"tag" => "track",
+						array(
+							"Stinkfist",
+							"Eulogy",
+							"H."
+						)
+					)
+				),
+				array(
+					"title" => "Lateralus",
+					"year" => "2001",
+					"tracklist" => array(
+						"tag" => "track",
+						array(
+							"The Grudge",
+							"Eon Blue Apocalypse",
+							"The Patient"
+						)
+					)
+				)
+			)
+		)
+	);
+	*/
+	////
+	function dumpXml($dataArray, $tabs=""){
+        if(is_array($dataArray)){
+			// Figure out the name for the inner-elements.
+			$tagName = "item";
+			if(isset($dataArray['tag'])){
+				$tagName = $dataArray['tag'];
+				unset($dataArray['tag']);
+			}
+			
+			$cnt = 0;
+			foreach($dataArray as $tag => $val){
+				if($cnt === $tag){
+					$tag = $tagName; // if this is just an item in an array, use the computed value for the tag name
+				}
+				print "$tabs<$tag>";
+				if(is_array($val)){
+					print "\n"; // keeps bottom-level items one-liners
+				}
+				$this->dumpXml($val, "\t$tabs");
+				if(is_array($val)){
+					print "$tabs";
+				}
+				print "</$tag>\n";
+				$cnt++;
+			}
+        } else {
+			print htmlspecialchars($dataArray, ENT_QUOTES, "UTF-8");
+        }
+	} // end dumpXml()
 	
 	/**
 	 * Dumps the result in human-readable plaintext.
