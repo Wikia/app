@@ -6,7 +6,6 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $aspectRatio = 1.7777778;
 	
 	public function getEmbed($width, $autoplay=false) {
-		willdebug(__METHOD__."\n");
 		$height = (integer) ($width / self::$aspectRatio);
 		
 		// YouTube parameters: http://code.google.com/apis/youtube/player_parameters.html
