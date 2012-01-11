@@ -2,6 +2,7 @@
 @import "variables.scss";
 
 //mixins
+@import "mixins/section-title.scss";
 @import "mixins/linear-gradient.scss";
 @import "mixins/box-sizing.scss";
 
@@ -80,4 +81,26 @@
 		color: $link-color;
 	}
 
+}
+
+#wkNavMenu{
+		.collSec{
+				@include section-title-related;
+		}
+}
+
+.js{
+		#wkNavMenu {
+				.lvl1{
+						display: none;
+						
+						&.open{
+								display: block;
+						}
+				}
+				
+				ul{
+						padding: 0 0 0 18px;
+				}
+		}
 }

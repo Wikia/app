@@ -70,3 +70,6 @@ $app->registerHook( 'MakeHeadline', 'WikiaMobileHooks', 'onMakeHeadline' );
 /*
  * settings
  */
+
+ //list of special pages (canonical names) to strip out from the navigation menu
+$app->wg->set( 'wgWikiaMobileNavigationBlacklist', array( 'Chat' ) );

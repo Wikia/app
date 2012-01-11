@@ -37,6 +37,13 @@ class WikiaMobileBodyService extends WikiaService {
 				array( 'categoryLinks' => $categoryLinks )
 			)->toString()
 		);
+		$this->response->setVal(
+			'navMenu',
+			$this->sendRequest(
+				'WikiaMobileNavigationService',
+				'navMenu'
+			)->toString()
+		);
 		$this->afterBodyContent = $afterBodyHtml;
 		$this->afterContentHookText = $afterContentHookText;
 	}

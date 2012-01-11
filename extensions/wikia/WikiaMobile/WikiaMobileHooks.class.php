@@ -13,7 +13,7 @@ class WikiaMobileHooks extends WikiaObject{
 		if ( Wikia::isWikiaMobile() ) {
 			$text = $parserOutput->getText();
 
-			//remove inline styling
+			//remove inline styling to avoid weird results and optimize the output size
 			$text = preg_replace('/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hpace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text);
 
 			$parserOutput->setText( $text );
@@ -30,7 +30,7 @@ class WikiaMobileHooks extends WikiaObject{
 
 	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ){
 		if ( $skin instanceof SkinWikiaMobile ) {
-			//remove bold, italics, underline and anchor tags from section headings
+			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
 			//$link contains the section edit link, add it to the next line to put it back
