@@ -22,6 +22,7 @@ $messages['en'] = array(
 	'userrenametool-warnings' => 'Warnings:',
 	'userrenametool-requested-rename' => 'User $1 requested a rename',
 	'userrenametool-did-not-request-rename' => 'User $1 did not request a rename',
+	'userrenametool-previously-renamed' => 'User $1 has already had a rename',
 	'userrenametool-confirm' => 'Yes, rename the user',
 	'userrenametool-submit' => 'Change username',
 
