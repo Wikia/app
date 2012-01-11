@@ -5,8 +5,7 @@ var Geo = {
 
 Geo.getGeoData = function () {
 	if ($.isEmptyObject(Geo.geoData)) {
-		var jsonData = $.cookies.get(Geo.cookieName);
-		jsonData = unescape(jsonData);
+		var jsonData = decodeURIComponent($.cookies.get(Geo.cookieName));
 		Geo.geoData = JSON.parse(jsonData);
 	}
 	return Geo.geoData;
