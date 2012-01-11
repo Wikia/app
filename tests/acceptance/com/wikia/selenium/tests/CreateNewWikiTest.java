@@ -19,7 +19,7 @@ public class CreateNewWikiTest extends BaseTest {
 	public static final String TEST_USER_PREFIX = "WikiaTestAccount";
 	public static final String TEST_EMAIL_FORMAT = "WikiaTestAccount%s@wikia-inc.com";
 	private static String wikiName;
-	private static List<String> testedLanguages = new ArrayList<String>();
+	private static List<String> testedLanguages = new ArrayList<String>();	
 	
 	private static String getWikiName() {
 		if (null == wikiName) {
@@ -29,7 +29,7 @@ public class CreateNewWikiTest extends BaseTest {
 		return wikiName;
 	}
 
-	@BeforeMethod(alwaysRun=true)
+	//@BeforeMethod(alwaysRun=true)
 	public void enforceMainWebsite() throws Exception {
 		if (this.webSite.contains("preview")) {
 			enforceWebsite("http://preview.www.wikia.com");
@@ -43,7 +43,7 @@ public class CreateNewWikiTest extends BaseTest {
 		startSession(this.seleniumHost, this.seleniumPort, this.browser, website, this.timeout, this.noCloseAfterFail);
 	}
 	
-	@DataProvider(name = "wikiLanguages")
+	//@DataProvider(name = "wikiLanguages")
 	public Iterator<Object[]> wikiLanguages() throws Exception {
 		String[] languages = getTestConfig().getStringArray("ci.extension.wikia.AutoCreateWiki.lang");
 		List<Object[]> languageList = new ArrayList<Object[]>();
@@ -53,7 +53,7 @@ public class CreateNewWikiTest extends BaseTest {
 		return languageList.iterator();
 	}
 	
-	@Test(groups={"envProduction", "verified"},dataProvider="wikiLanguages")
+	//@Test(groups={"envProduction", "verified"},dataProvider="wikiLanguages")
 	public void testCreateWikiComprehensive(String language) throws Exception {
 		loginAsStaff();
 		
@@ -93,7 +93,7 @@ public class CreateNewWikiTest extends BaseTest {
 		testedLanguages.add(language);
 	}
 	
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiComprehensive"},alwaysRun=true)
+	//@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiComprehensive"},alwaysRun=true)
 	public void testDeleteComprehensive() throws Exception {
 		loginAsStaff();
 		
@@ -104,7 +104,7 @@ public class CreateNewWikiTest extends BaseTest {
 		wikiName = null;
 	}
 
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteComprehensive"})
+	//@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteComprehensive"})
 	public void testCreateWikiAsLoggedOutUser() throws Exception {
 		session().open("/wiki/Special:CreateNewWiki");
 		waitForElement("//input[@name='wiki-name']");
@@ -130,7 +130,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
 	
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
+	//@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsLoggedOutUser() throws Exception {
 		loginAsStaff();
 		
@@ -139,7 +139,7 @@ public class CreateNewWikiTest extends BaseTest {
 		wikiName = null;
 	}
 	
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteCreateWikiAsLoggedOutUser"})
+	//@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteCreateWikiAsLoggedOutUser"})
 	public void testCreateWikiAsNewUser() throws Exception {
 		openAndWait("/wiki/Special:CreateNewWiki");
 		waitForElement("//input[@name='wiki-name']");
@@ -176,7 +176,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
 	
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiAsNewUser"},alwaysRun=true)
+	//@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiAsNewUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsNewUser() throws Exception {
 		loginAsStaff();
 		
@@ -213,6 +213,105 @@ public class CreateNewWikiTest extends BaseTest {
 			// click but don't wait for anything
 			session().click(closeButton);
 		}
+	}
+	
+	@Test(groups={"envProduction"})
+	public void createWikiDefaultLanguage() throws Exception {
+		
+		//Test Case 001
+		//log in as QATestsStaff(default language=english),change language to deutsch,verify after CNW flow that wiki domain is de. 
+		
+		loginAsStaff();
+		
+		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
+		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
+		
+		assertTrue(session().getLocation().contains("/Special:CreateNewWiki?uselang=en"));
+		session().type("//input[@name='wiki-name']", getWikiName());
+		session().type("//input[@name='wiki-domain']", getWikiName());
+		//waitForElementVisible("//span[contains(@class,'domain-status-icon')]/img[contains(@src,'check.png')]");	
+		session().click("//div[@class='language-default']/a[@id='ChangeLang']");
+		session().select("//select[@name='wiki-language']", "value=de");				
+		assertTrue(session().isTextPresent("de."));		
+		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");		
+		
+		waitForElementVisible("DescWiki");
+		session().select("//select[@name='wiki-category']", "value=3");
+		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
+		waitForElementVisible("ThemeWiki", this.getTimeout());
+		clickAndWait("//li[@id='ThemeWiki']/nav/input[@class='next']");
+		
+		waitForElement("WikiWelcome", this.getTimeout());
+		waitForElementVisible("WikiWelcome", this.getTimeout());
+				
+		assertTrue(session().getLocation().contains("de."));
+		
+		deleteWiki("de");
+		
+		logout();
+		
+		//Test Case 002
+		//logged out in german wiki,domain appears in german,log in as QATestsStaff during CNW flow,verify domain is de.
+		
+		
+		
+		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
+		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
+		
+		assertTrue(session().isTextPresent("de."));
+		session().type("//form[@name='label-wiki-form']/input[@type='text']", getWikiName());
+		session().type("//input[@name='wiki-domain']", getWikiName());
+		//waitForElementVisible("//form[@name='label-wiki-form]//span[@class='domain-status-icon status-icon']/img[@src='/extensions/wikia/CreateNewWiki/images/check.png'");		
+		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");
+		
+		session().click("//p[@class='login-msg']/a");
+		waitForElementVisible("AjaxLoginLoginForm");
+		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
+		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
+		session().click("//li[@id='Auth']/nav/input[@class='login']");
+		
+		waitForElementVisible("DescWiki");
+		session().select("//select[@name='wiki-category']", "value=3");
+		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
+		waitForElementVisible("ThemeWiki", this.getTimeout());
+		clickAndWait("//li[@id='ThemeWiki']/nav/input[@class='next']");
+		
+		waitForElement("WikiWelcome", this.getTimeout());
+		waitForElementVisible("WikiWelcome", this.getTimeout());
+		assertTrue(session().getLocation().contains("de."));
+		
+		deleteWiki("de");
+		
+		//Test Case 003
+		//logged out in german wiki,change language to english in CNW flow,log in as QATestsStaff,verify domain is english
+		
+		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
+		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
+		
+		assertTrue(session().isTextPresent("de."));
+		session().type("//form[@name='label-wiki-form']/input[@type='text']", getWikiName());
+		session().type("//input[@name='wiki-domain']", getWikiName());
+		session().click("//ol[@class='steps']//div[@class='language-default']/a[@id='ChangeLang']");		
+		session().select("//select[@name='wiki-language']", "value=en");		
+		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");
+		
+		session().click("//p[@class='login-msg']/a");
+		waitForElementVisible("AjaxLoginLoginForm");
+		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
+		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
+		session().click("//li[@id='Auth']/nav/input[@class='login']");
+		
+		waitForElementVisible("DescWiki");
+		session().select("//select[@name='wiki-category']", "value=3");
+		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
+		waitForElementVisible("ThemeWiki", this.getTimeout());
+		clickAndWait("//li[@id='ThemeWiki']/nav/input[@class='next']");
+		
+		waitForElement("WikiWelcome", this.getTimeout());
+		waitForElementVisible("WikiWelcome", this.getTimeout());
+		assertFalse(session().getLocation().contains("de."));
+		
+		deleteWiki("en");
 	}
 
 }
