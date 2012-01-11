@@ -88,6 +88,9 @@ class SpecialRenameuser extends SpecialPage {
 			} else {
 				$errors[] = wfMsg( 'userrenametool-did-not-request-rename', $oldusername );
 			}
+			if ( $olduser->getOption( 'wasRenamed', 0 ) ) {
+				$errors[] = wfMsg( 'userrenametool-previously-renamed', $oldusername );
+			}
 		}
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
