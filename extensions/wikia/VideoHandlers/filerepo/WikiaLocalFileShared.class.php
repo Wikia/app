@@ -2,7 +2,7 @@
 
 /* Leaf to WikiaLocalFile Composite */
 
-class WikiaVideoLogic  {
+class WikiaLocalFileShared  {
 
 	var $forceMime = '';
 	var $oFile = null;
