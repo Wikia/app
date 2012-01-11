@@ -7,11 +7,6 @@ class WikiNavigationModule extends Module {
 
 	private $service;
 
-	const WIKIA_GLOBAL_VARIABLE = 'wgOasisGlobalNavigation';
-	const WIKI_LOCAL_MESSAGE = 'Wiki-navigation';
-
-	const CACHE_TTL = 10800; // 3 hours
-
 	public function executeIndex($data) {
 		global $wgCityId, $wgUser, $wgIsPrivateWiki;
 
@@ -19,7 +14,7 @@ class WikiNavigationModule extends Module {
 		$isInternalWiki = empty($wgCityId);
 		$this->showMenu = !(($isInternalWiki || $wgIsPrivateWiki) && $wgUser->isAnon());
 
-		$this->service = new NavigationService();
+		$this->service = new WikiNavigationService();
 
 		// handle requests from preview mode
 		$request = $this->getRequest();
@@ -29,7 +24,7 @@ class WikiNavigationModule extends Module {
 		// render global wikia navigation ("On the Wiki" menu)
 		$this->wikiaMenuNodes =
 			$this->parseMenu(
-				self::WIKIA_GLOBAL_VARIABLE,
+				WikiNavigationService::WIKIA_GLOBAL_VARIABLE,
 				array(
 					1,
 					$this->wg->maxLevelTwoNavElements,
@@ -48,7 +43,7 @@ class WikiNavigationModule extends Module {
 		// render local navigation (more tabs)
 		$this->wikiMenuNodes =
 			$this->parseMenu(
-				self::WIKI_LOCAL_MESSAGE,
+				WikiNavigationService::WIKI_LOCAL_MESSAGE,
 				array(
 					$this->wg->maxLevelOneNavElements,
 					$this->wg->maxLevelTwoNavElements,
@@ -84,31 +79,8 @@ class WikiNavigationModule extends Module {
 				true /* $forContent */,
 				$filterInactiveSpecialPages
 			);
-		}
-		else {
-			switch($menuName) {
-				case self::WIKIA_GLOBAL_VARIABLE:
-					// get menu content from Wiki Factory variable
-					$nodes = $this->service->parseVariable(
-						$menuName,
-						$maxChildrenAtLevel,
-						self::CACHE_TTL,
-						true /* $forContent */,
-						$filterInactiveSpecialPages
-					);
-					break;
-
-				case self::WIKI_LOCAL_MESSAGE:
-				default:
-					// get menu content from the message
-					$nodes = $this->service->parseMessage(
-						$menuName,
-						$maxChildrenAtLevel,
-						self::CACHE_TTL,
-						true /* $forContent */,
-						$filterInactiveSpecialPages
-					);
-			}
+		} else {
+			$nodes = $this->service->parseMenu( $menuName, $maxChildrenAtLevel, $filterInactiveSpecialPages );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -199,9 +171,9 @@ HEADER;
 	public static function onWikiFactoryChanged($cv_name , $city_id, $value) {
 		global $wgMemc;
 
-		if ($cv_name == self::WIKIA_GLOBAL_VARIABLE) {
+		if ($cv_name == WikiNavigationService::WIKIA_GLOBAL_VARIABLE) {
 			$service = new NavigationService();
-			$memcKey = $service->getMemcKey(self::WIKIA_GLOBAL_VARIABLE, $city_id);
+			$memcKey = $service->getMemcKey(WikiNavigationService::WIKIA_GLOBAL_VARIABLE, $city_id);
 
 			wfDebug(__METHOD__ . ": purging the cache for wiki #{$city_id}\n");
 
@@ -215,6 +187,6 @@ HEADER;
 	 * Check if given title refers to wiki nav messages
 	 */
 	private static function isWikiNavMessage(Title $title) {
-		return ($title->getNamespace() == NS_MEDIAWIKI) && ($title->getText() == self::WIKI_LOCAL_MESSAGE);
+		return ($title->getNamespace() == NS_MEDIAWIKI) && ($title->getText() == WikiNavigationService::WIKI_LOCAL_MESSAGE);
 	}
 }
