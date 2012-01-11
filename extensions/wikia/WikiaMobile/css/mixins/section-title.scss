@@ -26,3 +26,8 @@
 		background-image: url("/extensions/wikia/WikiaMobile/images/close_chev.png");/* $wgCdnStylePath */
 	}
 }
+
+@mixin section-title-related {
+	text-transform: uppercase;
+	font-size: medium;
+}

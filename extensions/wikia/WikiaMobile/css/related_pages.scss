@@ -6,8 +6,15 @@
 @import "mixins/linear-gradient.scss";
 @import "mixins/box-sizing.scss";
 
+$itemHeight: 50px;
+$itemPadding: 6px;
+
 //TODO: css alias
 #wkRelPag, .RelatedPagesModule {
+	.collSec {
+		@include section-title-related;
+	}
+
 	ul {
 		display: none;
 		list-style: none;
@@ -20,29 +27,31 @@
 	}
 
 	li {
-		min-height: 60px;
+		min-height: $itemHeight + $itemPadding*2;
 		position: relative;
 
 		a {
 			color: $page-text-color;
 			width: 100%;
-			height: 100%;
+			height: $itemHeight;
+			padding: $itemPadding $itemPadding/2;
 			display: block;
 			position: absolute;
 
 			&.noImg {
-				background-position: 10px 50%;
+				background-position: $itemPadding/2 50%;
 				background-repeat: no-repeat;
 				background-size: 100px 50px;
 				background-image: url("/extensions/wikia/WikiaMobile/images/read_placeholder.png");/* $wgCdnStylePath */
-				padding-left: 120px;
+				padding: $itemPadding $itemPadding/2 $itemPadding 112px;
+				height: $itemHeight + $itemPadding*2;
 				@include box-sizing(border-box);
 			}
 
 			img {
 				height: 50px;
 				width: 100px;
-				margin: 5px 10px;
+				margin: 0 8px 0 0;
 				float: left;
 			}
 
