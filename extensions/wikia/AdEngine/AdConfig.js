@@ -10,9 +10,6 @@ AdConfig = {
 		if (window.wgHighValueCountries) {
 			return country in window.wgHighValueCountries && window.wgHighValueCountries[country];			
 		}
-		else {
-			$().log('WARNING: wgHighValueCountries is null');
-		}
 	},
 
 	isHighValueSlot: function(slotname) {
@@ -55,8 +52,7 @@ AdConfig = {
 			return; 
 		}
 	
-		var cookie = AdConfig.cookie(AdConfig.geoCookieName);
-		cookie = unescape(cookie);
+		var cookie = decodeURIComponent(AdConfig.cookie(AdConfig.geoCookieName));
 		if (typeof cookie != 'undefined' && cookie) {
 			AdConfig.geo = eval('(' + cookie + ')');
 			return;
