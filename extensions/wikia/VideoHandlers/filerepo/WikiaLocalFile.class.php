@@ -1,7 +1,7 @@
 <?php
 
 class WikiaLocalFile extends LocalFile {
-
+	
 	protected $oVideoLogic = null; // Leaf object
 
 	// obligatory contructors
