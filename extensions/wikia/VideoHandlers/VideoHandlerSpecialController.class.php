@@ -6,29 +6,29 @@
 class VideoHandlerSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		parent::__construct('VideoHandler');
+		parent::__construct( 'VideoHandler' );
 	}
 
 	public function index() {
 
-		if ($this->wg->user->isBlocked()) {
+		if ( $this->wg->user->isBlocked() ) {
 			$this->wg->out->blockedPage();
 			return false;	// skip rendering
 		}
-		if (!$this->wg->user->isAllowed('specialvideohandler')) {
+		if ( !$this->wg->user->isAllowed( 'specialvideohandler' ) ) {
 			$this->displayRestrictionError();
 			return false;
 		}
-		if (wfReadOnly() && !wfAutomaticReadOnly()) {
+		if ( wfReadOnly() && !wfAutomaticReadOnly() ) {
 			$this->wg->out->readOnlyPage();
 			return false;
 		}
 
-		$videoId = $this->getVal('videoid', null);
-		$provider = strtolower($this->getVal('provider', null));
+		$videoId = $this->getVal( 'videoid', null );
+		$provider = strtolower( $this->getVal( 'provider', null ) );
 		
-		if ($videoId && $provider) {
-			$apiWrapper = F::build( ucfirst($provider).'ApiWrapper', array( $videoId ) );
+		if ( $videoId && $provider ) {
+			$apiWrapper = F::build( ucfirst( $provider ) . 'ApiWrapper', array( $videoId ) );
 
 			$url = $apiWrapper->getThumbnailUrl();
 			$data = array(
@@ -36,14 +36,12 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 				'wpSourceType' => 'web',
 				'wpUploadFileURL' => $url
 			);
-			$upload = F::build('UploadFromUrl');
+			$upload = F::build( 'UploadFromUrl' );
 			$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
 			$upload->fetchFile();
 			$upload->verifyUpload();
-	//		$upload->getLocalFile();
-	//		$upload->getTempPath();
 
-			$file = F::build('WikiaLocalFile',
+			$file = F::build( 'WikiaLocalFile',
 					array(
 						Title::newFromText( $apiWrapper->getTitle(), NS_FILE ),
 						RepoGroup::singleton()->getLocalRepo()
@@ -59,8 +57,7 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 					'[[Category:New Video]]'.$apiWrapper->getDescription(),
 					File::DELETE_SOURCE
 				);
-			var_dump($result);
-			
+			var_dump( $result );
 		}
 	}
 	

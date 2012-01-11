@@ -10,7 +10,7 @@ if( !defined( 'MEDIAWIKI' ) )
  */
 class WikiaVideoPage extends ImagePage {
 	
-	protected static $videoWidth = 400;
+	protected static $videoWidth = 660;
 
 	function openShowImage(){
 		global $wgOut;
