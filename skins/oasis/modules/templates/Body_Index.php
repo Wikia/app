@@ -18,9 +18,6 @@
 
 		<div class="WikiaAdvertPage">
 		<?php
-		if ($isMainPage) {
-			echo '<div class="WikiaMainPageBanner">';
-		}
 		if ($wgEnableTopButton) {
 			echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'" id="WikiaTopAds">';
 		}
@@ -36,9 +33,6 @@
 		}
 		if ($wgEnableTopButton) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_BUTTON'));
-			echo '</div>';
-		}
-		if ($isMainPage) {
 			echo '</div>';
 		}
 		?>
