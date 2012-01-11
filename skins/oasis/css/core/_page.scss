@@ -1,5 +1,6 @@
 @import "../mixins/box-shadow";
 .WikiaPage {
+	background: red !important;
 	border-bottom: 1px solid $color-page-border;
 	border-left: 1px solid $color-page-border;
 	border-right: 1px solid $color-page-border;
@@ -30,8 +31,6 @@
 }
 
 .WikiaAdvertPage {
-	border-left: 1px solid $color-page-border;
-	border-right: 1px solid $color-page-border;
 	margin: 0px auto;
 	padding-bottom: 0px;
 	position: relative;

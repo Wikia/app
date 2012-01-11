@@ -9,7 +9,7 @@
 
 	min-height: 69px;
 	margin: 0 0 3px;
-	padding: 10px 10px 9px;
+	padding: 25px 10px 9px;
 	position: relative;
 	z-index: 1000; // BugId:2516
 
@@ -54,7 +54,7 @@
 	> nav {
 		left: 275px;
 		position: absolute;
-		top: 10px;
+		top: 25px;
 		width: $WikiNavWidth - 155px /* 155px is a spacing for contribute button (BugId:12490) */;
 		z-index: 3;
 		>h1 {
@@ -271,7 +271,7 @@
 		text-align: right;
 		width: 270px;
 		height: 10px;
-		top: 12px;
+		top: 27px;
 		z-index: 4;
 
 		.wikia-button,
