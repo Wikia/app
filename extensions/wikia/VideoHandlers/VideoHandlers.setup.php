@@ -43,3 +43,7 @@ $app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
  * hooks
  */
 $app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
+
+// permissions
+$wgAvailableRights[] = 'specialvideohandler';
+$wgGroupPermissions['staff']['specialvideohandler'] = true;
