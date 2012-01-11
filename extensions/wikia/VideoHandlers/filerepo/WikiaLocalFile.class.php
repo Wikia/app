@@ -35,7 +35,7 @@ class WikiaLocalFile extends LocalFile {
 
 	function isVideo(){
 		// Has proper mediatype
-		if ( $this->media_type == 'video' ) return true;
+		if ( strtolower($this->media_type) == 'video' ) return true;
 		// if mediatype is not set, maybe it has appropriate handler?
 		if ( $this->getHandler() instanceof VideoHandler ) return true;
 		// Too bad
@@ -45,9 +45,9 @@ class WikiaLocalFile extends LocalFile {
 	/*
 	 * Returns embed HTML
 	 */
-	function getEmbedCode(){
+	function getEmbedCode($width){
 		if ( $this->isVideo() ){
-			return $this->handler->getEmbed();
+			return $this->getHandler()->getEmbed($width);
 		} else {
 			false;
 		}
@@ -56,18 +56,37 @@ class WikiaLocalFile extends LocalFile {
 	function forceMime( $sMime ){
 		$this->forceMime = $sMime;
 	}
+	
+	function getVideoId() {
+		if (!empty($this->videoId)) {
+			return $this->videoId;
+		}
+
+		// check metadata
+		if (!empty($this->metadata)) {
+			$metadata = unserialize($this->metadata);
+			if (!empty($metadata['videoId'])) {
+				$this->videoId = $metadata['videoId'];
+			}
+		}
+
+		return $this->videoId;
+	}
 
 	function setVideoId( $videoId ){
 		$this->videoId = $videoId;
 	}
 
 	function getHandler(){
-		$oHandler = parent::getHandler();
-		if ( !empty( $this->videoId ) && ( $this->media_type == 'video' ) ){
-			
-			$oHandler->setVideoId( $this->videoId );
+		if (empty($this->handler)) {
+			$this->handler = parent::getHandler();
+			$videoId = $this->getVideoId();
+			if ( !empty( $videoId ) && ( strtolower($this->media_type) == 'video' ) ){
+				$this->handler->setVideoId( $videoId );
+			}
 		}
-		return $oHandler;
+		
+		return $this->handler;
 	}
 
 	function setProps( $info ) {
@@ -78,9 +97,9 @@ class WikiaLocalFile extends LocalFile {
 			list( $this->major_mime, $this->minor_mime ) = self::splitMime( $this->mime );
 
 			$handler = MediaHandler::getHandler( $this->getMimeType() );
-			$handler->setVideoId( $this->videoId );
+			$handler->setVideoId( $this->getVideoId() );
 
-			$this->metadata = $handler->getMetaData( false, false );
+			$this->metadata = $handler->getMetadata( false, false );
 			$this->media_type = 'video';
 			$this->forceMime = false;
 		}
@@ -90,7 +109,6 @@ class WikiaLocalFile extends LocalFile {
 	 * Load metadata from the file itself unless it is a video
 	 */
 	function loadFromFile() {
-
 		$aParams = array( 'metadata', 'minor_mime', 'major_mime', 'mime', 'media_type' );
 		if ( $this->isVideo() ){
 			$aVal = array();
@@ -106,5 +124,6 @@ class WikiaLocalFile extends LocalFile {
 				$this->$param = $aVal[ $param ];
 			}
 		}
+		
 	}
 }

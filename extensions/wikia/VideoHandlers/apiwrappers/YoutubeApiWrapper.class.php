@@ -18,8 +18,10 @@ class YoutubeApiWrapper extends ApiWrapper {
 	}
 	
 	public function getDescription() {
-		//@todo might want to add category and keywords
-		return $this->getVideoDescription();
+		$text = '';
+		if ($this->getVideoCategory()) $text .= 'Category: ' . $this->getVideoCategory();
+		if ($this->getVideoKeywords()) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
+		return $text;
 	}
 	
 	public function getThumbnailUrl() {

@@ -14,8 +14,9 @@ class VideoHandler extends BitmapHandler {
 	protected $api = null;
 	protected $apiName = 'video/*';
 	protected $videoId = '';
-
-	function getEmbed(){
+	protected static $aspectRatio;
+	
+	function getEmbed($autoplay=false){
 		/* override */
 		return false;
 	}
@@ -23,6 +24,11 @@ class VideoHandler extends BitmapHandler {
 	function setVideoId( $videoId ){
 		$this->videoId = $videoId;
 	}
+	
+	public function getVideoId() {
+		return $this->videoId;
+	}
+	
 	// dunno if will be used
 	function getTitle() {
 		$this->loadApi();
@@ -36,7 +42,7 @@ class VideoHandler extends BitmapHandler {
 
 	function getMetadata( $image, $filename ) {
 		$this->loadApi();
-		return $this->api instanceof ApiWrapper ? serialize( $this->api->getMetaData() ) : false;
+		return $this->api instanceof ApiWrapper ? serialize( $this->api->getMetadata() ) : false;
 	}
 
 	function loadApi() {

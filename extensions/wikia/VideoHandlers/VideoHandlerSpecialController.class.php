@@ -11,41 +11,57 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 
-		$videoId = 123;
-		$apiWrapper = F::build( 'PrototypeApiWrapper', array( $videoId ) );
+		if ($this->wg->user->isBlocked()) {
+			$this->wg->out->blockedPage();
+			return false;	// skip rendering
+		}
+		if (!$this->wg->user->isAllowed('specialvideohandler')) {
+			$this->displayRestrictionError();
+			return false;
+		}
+		if (wfReadOnly() && !wfAutomaticReadOnly()) {
+			$this->wg->out->readOnlyPage();
+			return false;
+		}
+
+		$videoId = $this->getVal('videoid', null);
+		$provider = strtolower($this->getVal('provider', null));
 		
-		$url = $apiWrapper->getThumbnailUrl();
-		$data = array(
-			'wpUpload' => 1,
-			'wpSourceType' => 'web',
-			'wpUploadFileURL' => $url
-		);
-		$upload = F::build('UploadFromUrl');
-		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
-		$upload->fetchFile();
-		$upload->verifyUpload();
-//		$upload->getLocalFile();
-//		$upload->getTempPath();
+		if ($videoId && $provider) {
+			$apiWrapper = F::build( ucfirst($provider).'ApiWrapper', array( $videoId ) );
 
-		$file = F::build('WikiaLocalFile',
-				array(
-					Title::newFromText( $apiWrapper->getTitle(), NS_FILE ),
-					RepoGroup::singleton()->getLocalRepo()
-				)
+			$url = $apiWrapper->getThumbnailUrl();
+			$data = array(
+				'wpUpload' => 1,
+				'wpSourceType' => 'web',
+				'wpUploadFileURL' => $url
 			);
+			$upload = F::build('UploadFromUrl');
+			$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
+			$upload->fetchFile();
+			$upload->verifyUpload();
+	//		$upload->getLocalFile();
+	//		$upload->getTempPath();
 
-		$file->forceMime( 'video/prototype' );
-		$file->setVideoId( $videoId );
+			$file = F::build('WikiaLocalFile',
+					array(
+						Title::newFromText( $apiWrapper->getTitle(), NS_FILE ),
+						RepoGroup::singleton()->getLocalRepo()
+					)
+				);
 
-		var_dump(
-			$file->upload(
-				$upload->getTempPath(),
-				$apiWrapper->getDescription(),
-				'[[Category:New Video]] Victory at the sea!',
-				File::DELETE_SOURCE
-			)
-		);
+			$file->forceMime( 'video/'.$provider );
+			$file->setVideoId( $videoId );
 
+			$result = $file->upload(
+					$upload->getTempPath(),
+					'created video',
+					'[[Category:New Video]]'.$apiWrapper->getDescription(),
+					File::DELETE_SOURCE
+				);
+			var_dump($result);
+			
+		}
 	}
 	
 //	Old code using API.
