@@ -40,23 +40,23 @@ class WikiaDispatcher {
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
 		}
 
-		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );		
+		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
 		$response = F::build( 'WikiaResponse', array( 'format' => $format, 'request' => $request ) );
 		if ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
 			$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
 		}
-		
+
 		// Main dispatch is a loop because Controllers can forward to each other
 		// Error condition is also handled via dispatching to the error controller
 		do {
 			$request->setDispatched(true);
-			
+
 			try {
 				$method = $this->getMethodName( $request );
 				$controllerName = $this->getControllerName( $request );
 				$controllerLegacyName = $app->getControllerLegacyName( $controllerName );
 				$controllerClassName = null;
-				
+
 				if (
 					(
 						$app->isService( $controllerName ) ||
@@ -67,11 +67,11 @@ class WikiaDispatcher {
 				) {
 					$controllerClassName = $controllerName;
 				}
-				
+
 				if ( empty( $controllerClassName ) ) {
 					$controllerClassName = $this->getControllerClassName( $controllerLegacyName );
 				}
-				
+
 				if( empty( $controllerClassName ) ) {
 					throw new WikiaException( "Invalid controller name: {$controllerName}" );
 				}
@@ -80,16 +80,16 @@ class WikiaDispatcher {
 				if ( empty( $autoloadClasses[$controllerClassName] ) || $app->isModule( $controllerName ) ) {
 					$controllerClassName = "{$controllerLegacyName}Module";
 					$method = ucfirst( $method );
-					
+
 					if ( !empty( $autoloadClasses[$controllerClassName] ) ) {
 						$moduleTemplatePath = dirname( $autoloadClasses[$controllerClassName] ) . "/templates/{$controllerLegacyName}_{$method}.php";
 						$response->getView()->setTemplatePath( $moduleTemplatePath );
 					}
-					
+
 					$method = "execute{$method}";
 					$params = $request->getParams();
 				}
-				
+
 				$app->wf->profileIn ( __METHOD__ . " ({$controllerName}_{$method})" );
 				$response->setControllerName( $controllerName );
 				$response->setMethodName( $method );
@@ -117,7 +117,7 @@ class WikiaDispatcher {
 				) {
 					throw new WikiaException( "Could not dispatch {$controllerClassName}::{$method}" );
 				}
-				
+
 				$controller->setRequest( $request );
 				$controller->setResponse( $response );
 				$controller->setApp( $app );
@@ -125,16 +125,16 @@ class WikiaDispatcher {
 
 				// BugId:5125 - keep old hooks naming convention
 				$originalMethod = ucfirst( $this->getMethodName( $request ) );
-				
+
 				$hookResult = $app->runHook( ( "{$controllerName}{$originalMethod}BeforeExecute" ), array( &$controller, &$params ) );
-				
+
 				if ( $controllerName != $controllerLegacyName ) {
 					$hookResult = ( $hookResult && $app->runHook( ( "{$controllerLegacyName}{$originalMethod}BeforeExecute" ), array( &$controller, &$params ) ) );
 				}
-				
+
 				if ( $hookResult ) {
 					$result = $controller->$method( $params );
-					
+
 					if($result === false) {
 						// skip template rendering when false returned
 						$controller->skipRendering();
@@ -142,13 +142,13 @@ class WikiaDispatcher {
 				}
 
 				$app->runHook( ( "{$controllerName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
-				
+
 				if ( $controllerName != $controllerLegacyName ) {
 					$app->runHook( ( "{$controllerLegacyName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
 				}
 			} catch ( Exception $e ) {
 				$app->runFunction( 'wfProfileOut', ( __METHOD__ . " ({$controllerName}_{$method})" ) );
-				
+
 				// Work around for errors thrown inside modules -- remove when modules go away
 				if ( $response instanceof Module ) {
 					$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
@@ -167,7 +167,8 @@ class WikiaDispatcher {
 		} while ( !$request->isDispatched() );
 
 		if ( $request->isInternal() && $response->hasException() ) {
-			throw new WikiaDispatchedException( 'Internal Throw', $response->getException() );
+			$controllerName = $this->getControllerName( $request );
+			throw new WikiaDispatchedException( "Internal Throw ({$controllerName})", $response->getException() );
 		}
 
 		$app->runFunction( 'wfProfileOut', ( __METHOD__ . " ({$controllerName}_{$method})" ) );
