@@ -21,10 +21,14 @@ class WikiaMobileBodyService extends WikiaService {
 		if ( !$this->wf->RunHooks('SkinAfterContent', array( &$afterContentHookText ) ) ) {
 			$afterContentHookText = '';
 		}
-		
+
 		$this->pageHeaderContent = $this->sendRequest( 'WikiaMobilePageHeaderService', 'index' )->toString();
 		$this->bodyContent = $bodyContent;
-		$this->response->setVal( 'relatedPages', (!empty($this->wg->EnableRelatedPagesExt)) ? $this->app->renderView( 'RelatedPagesModule', 'index' ) : null);
+		$this->response->setVal(
+			'relatedPages',
+			( !empty( $this->wg->EnableRelatedPagesExt ) &&
+				empty( $this->wg->MakeWikiWebsite ) &&
+				empty( $this->wg->EnableAnswers ) ) ? $this->app->renderView( 'RelatedPagesModule', 'index' ) : null);
 		$this->response->setVal(
 			'categoryLinks',
 			$this->sendRequest(
