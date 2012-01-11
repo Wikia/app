@@ -6,8 +6,7 @@
 	//TODO: css alias
 	.colSec, .collapsible-section {
 		margin: $section-title-margin;
-		text-transform: uppercase;
-		font-size: medium;
+		@include section-title-related;
 	}
 
 	#catlinks {
