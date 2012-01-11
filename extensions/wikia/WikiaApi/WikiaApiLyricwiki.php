@@ -729,7 +729,7 @@ function albumResult($artist, $album, $year){
 			case 'php':
 				print serialize(array(
 							'listingPage' => $pageTitle,
-							'pageTitles' => $links)
+							'pageTitles' => $links
 						));
 				break;
 			case "text":
