@@ -62,9 +62,11 @@ class WikiaVideoLogic  {
 	}
 
 	function afterGetHandler(){
-		$videoId = $this->getVideoId();
-		if ( !empty( $videoId ) && ( $this->oFile->media_type == self::VIDEO_MEDIA_TYPE ) ){
-			$this->oFile->handler->setVideoId( $videoId );
+		if ($this->oFile->media_type == self::VIDEO_MEDIA_TYPE) {
+			$videoId = $this->getVideoId();
+			if ( !empty( $videoId ) ){
+				$this->oFile->handler->setVideoId( $videoId );
+			}			
 		}
 	}
 
