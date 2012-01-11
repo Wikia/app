@@ -9,6 +9,7 @@
 			</nav>
 			<?= $afterContentHookText ;?>
 			<? if ( !empty( $afterBodyContent ) ) :?><aside id="WikiaAfterBodyContent"><?= $afterBodyContent ;?></aside><? endif ;?>
+			<?= $navMenu ;?>
 		</footer>
 	</article>
 </section>
