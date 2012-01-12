@@ -194,10 +194,15 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	$ringtoneLink.= "</div>";
 	GLOBAL $wgFirstLyricTag;
 	$wgFirstLyricTag = false; // Even though the gracenote extension ignores these, this will prevent ringtones on other <lyrics> tags.
+	
+	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
+	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
+		global $wgOut;
+		$wgOut->setRobotPolicy( 'noindex' );
+	}
 
 	#parse embedded wikitext
 	$retVal = "";
-
 	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
 
 	$retVal.= gracenote_getNoscriptTag();
