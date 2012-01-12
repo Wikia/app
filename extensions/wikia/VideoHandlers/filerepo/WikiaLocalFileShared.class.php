@@ -20,7 +20,7 @@ class WikiaLocalFileShared  {
 	 */
 	public function isVideo(){
 		// Has proper mediatype
-		if ( $this->oFile->media_type == self::VIDEO_MEDIA_TYPE ) return true;
+		if ( strtoupper($this->oFile->media_type) == self::VIDEO_MEDIA_TYPE ) return true;
 		// if mediatype is not set, maybe it has appropriate handler?
 		if ( $this->oFile->getHandler() instanceof VideoHandler ) return true;
 		// Too bad
@@ -30,9 +30,9 @@ class WikiaLocalFileShared  {
 	/*
 	 * Returns embed HTML
 	 */
-	public function getEmbedCode( $width ){
+	public function getEmbedCode( $width, $autoplay=false ){
 		if ( $this->isVideo() ){
-			return $this->oFile->getHandler()->getEmbed( $width );
+			return $this->oFile->getHandler()->getEmbed( $width, $autoplay );
 		} else {
 			false;
 		}
@@ -62,7 +62,7 @@ class WikiaLocalFileShared  {
 	}
 
 	function afterGetHandler(){
-		if ($this->oFile->media_type == self::VIDEO_MEDIA_TYPE) {
+		if (strtoupper($this->oFile->media_type) == self::VIDEO_MEDIA_TYPE) {
 			$videoId = $this->getVideoId();
 			if ( !empty( $videoId ) ){
 				$this->oFile->handler->setVideoId( $videoId );
@@ -79,8 +79,10 @@ class WikiaLocalFileShared  {
 			$handler = MediaHandler::getHandler( $this->oFile->getMimeType() );
 			$handler->setVideoId( $this->oFile->videoId );
 
-			$this->oFile->metadata = $handler->getMetaData( false, false );
-			$this->oFile->media_type = 'video';
+			$this->oFile->metadata = $handler->getMetadata( false, false );
+			$this->oFile->media_type = 'video';	// wlee: media_type starts out as VIDEO
+								// when file first created, then changes to "video"
+								// after file is edited. is this the culprit?
 			$this->forceMime = false;
 		}
 	}
