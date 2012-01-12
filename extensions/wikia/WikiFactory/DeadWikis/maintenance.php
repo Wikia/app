@@ -265,8 +265,11 @@ class AutomatedDeadWikisDeletionMaintenance {
 		// TOOD: copied from WikiFactory::disableWiki since it's not released yet
 		WikiFactory::setFlags( $wikiId, $flags );
 		$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
+		if ($this->debug) {
+			var_dump("setPublicStatus",$wikiId,$res);
+		}
 		WikiFactory::clearCache( $wikiId );
-		return $res;
+		return $res !== false;
 	}
 	
 	protected function disableWikis( $wikis, &$deleted = array(), &$notDeleted = array() ) {
@@ -275,22 +278,24 @@ class AutomatedDeadWikisDeletionMaintenance {
 			if ($this->debug) {
 				echo "$id STATUS " . intval(WikiFactory::isPublic($id)) . "\n";
 			}
+			echo "Closing wiki #$id ({$wiki['dbname']})... ";
 			if ($this->deletedLimit > 0 && $this->deletedCount >= $this->deletedLimit) {
+				echo "cancelled (limit exceeded)\n";
 				$notDeleted[$id] = $wiki;
 				continue;
 			}
 			if (!$this->forced) {
+				echo "cancelled (dry run mode active)\n";
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
 				continue;
 			}
-			echo "Closing wiki #$id ({$wiki['dbname']})...";
 			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
-				echo " ok\n";
+				echo "ok\n";
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
 			} else {
-				echo " failed\n";
+				echo "failed\n";
 				$notDeleted[$id] = $wiki;
 			}
 		}
@@ -382,8 +387,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 		
 		if ($this->debug) {
-			var_dump("deleted",$this->deleted);
-			var_dump("to be deleted",$this->toBeDeleted);
+#			var_dump("deleted",$this->deleted);
+#			var_dump("to be deleted",$this->toBeDeleted);
 		}
 	}
 	
