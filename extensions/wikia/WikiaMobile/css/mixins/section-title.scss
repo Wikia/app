@@ -1,4 +1,6 @@
 @import "../variables.scss";
+//mixins
+@import "transition.scss";
 
 @mixin section-title {
 	border-top: 1px solid $border-color;
@@ -17,7 +19,7 @@
 		background-image: url("/extensions/wikia/WikiaMobile/images/open_chev.png");/* $wgCdnStylePath */
 		position: absolute;
 		right: 0;
-		-webkit-transition: all .7s ease-out;
+		@include transition(all .7s ease-out);
 	}
 
 	//TODO: css alias

@@ -233,20 +233,20 @@ var WikiaMobile = WikiaMobile || (function() {
 		var navigationWordMark = $('#navigationWordMark'),
 		navigationSearch = $('#navigationSearch'),
 		searchToggle = $('#searchToggle'),
-		searchInput = $('#searchInput'),
-		wikiaAdPlace = $('#WikiaAdPlace');
+		searchInput = $('#searchInput');
 
 		//analytics
 		track('view');
 
 		processSections();//NEEDS to run before table wrapping!!!
 		processTables();
-		
+
+
 		//add class for styling to be applied only if JS is enabled
 		//(e.g. collapse sections)
 		//must be done AFTER detecting size of elements on the page
 		body.addClass('js');
-		
+
 		hideURLBar();
 		processImages();
 
@@ -289,7 +289,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			track(['search', 'submit']);
 		});
 
-		$('#searchToggle').bind(clickEvent, function(event){
+		$('#searchToggle').bind(touchEvent, function(event){
 			var self = $(this);
 
 			if(self.hasClass('open')){
@@ -306,6 +306,86 @@ var WikiaMobile = WikiaMobile || (function() {
 			}
 		});
 
+		//preparing the navigation
+		var wkWikiNav = $('#wkWikiNav');
+
+		//find menu on a page and append it to topBarMenu and check if element has child and append .child class
+		wkWikiNav.append( $('#wkNavMenu').remove().children('ul') ).find('ul ul').parents('li').addClass('child');
+
+		$('#navToggle').bind(clickEvent, function(event) {
+			var self = $(this),
+				nav = $('#wkNav'),
+				topBar = $('#navigation');
+
+			if(self.hasClass('open')){
+				//track(['navigation', 'toggle', 'close']);
+				self.removeClass('open');
+				nav.removeClass('open');
+				topBar.removeClass('noShadow');
+				$(document.body).children().not('#navigation, #wkNav').show();
+			}else{
+				//track(['navigation', 'toggle', 'open']);
+				$(document.body).children().not('#navigation, #wkNav').hide();
+				self.addClass('open');
+				nav.addClass('open');
+				topBar.addClass('noShadow');
+			}
+		});
+
+		//will be needed when more tabs will be introduced
+		 /* $('#wkTabs').delegate('li', clickEvent, function() {
+			var self = $(this);
+
+			if(self.hasClass('active')){
+				//track(['navigation', 'toggle', 'close']);
+				self.removeClass('active');
+			}else{
+				//track(['navigation', 'toggle', 'open']);
+				self.addClass('active');
+			}
+		}); */
+
+		$('.lvl1').delegate('.child', clickEvent, function(event) {
+			var self = $(this),
+			element = self.children(':first-child');
+
+			if($(event.target).parent().is('.child')) {
+
+				event.stopPropagation();
+				event.preventDefault();
+
+				$('#topBarText').text(element.text());
+
+				if(element.is('a')) {
+					$('#wkWikiNav header a').attr('href', element.attr('href')).show();
+				} else {
+					$('#wkWikiNav header a').hide();
+				}
+
+				self.children('ul').addClass('current');
+
+				if($('#wkWikiNav').is('.current1')) {
+					$('#wkWikiNav').addClass('current2').removeClass('current1');
+				} else {
+					$('#wkWikiNav').addClass('current3').removeClass('current2');
+				}
+			}
+		});
+
+		$('#wkNavBack').bind(clickEvent, function() {
+			var self = $(this),
+			wkNav = $('#wkWikiNav');
+
+			if(wkNav.is('.current2')) {
+				wkNav.addClass('current1').removeClass('current2').find('.lvl2').removeClass('current');
+			} else {
+				wkNav.addClass('current2').removeClass('current3').find('.lvl3').removeClass('current');
+				$('#topBarText').text( $('.current').prev().text() );
+			}
+		});
+
+		//end of preparing the nav
+
 		page.bind(clickEvent, function(event){
 			navigationWordMark.show();
 			navigationSearch.hide().removeClass('open');
@@ -316,7 +396,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		$('#wkRelPag').delegate('a', clickEvent, function(){
 			track(['link', 'related-page']);
 		});
-		
+
 		$('#WikiaArticleCategories').delegate('a', clickEvent, function(){
 			track(['link', 'category']);
 		});

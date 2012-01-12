@@ -33,8 +33,16 @@
 		window.onorientationchange = function() {
 				if(window.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 )},10);
 		}
-		//
-		document.getElementById('modalClose').addEventListener(WikiaMobile.getTouchEvent(), function(event) {
+
+		//handle back button to close modal
+		window.onbeforeunload = function() {
+			if($.isModalShown()) {
+				$.closeModal();
+				return 'Your in modal. By clicking back you\'ll go back. And probably you want to close modal. If so click - cancel';
+			}
+		};
+
+		document.getElementById('modalClose').addEventListener(WikiaMobile.getClickEvent(), function(event) {
 			event.stopPropagation();
 			event.preventDefault();
 			that.closeModal();
