@@ -523,12 +523,14 @@ class AchAwardingService {
 				if(empty($this->mCounters[BADGE_POUNCE]) || !in_array($this->mArticle->getID(), $this->mCounters[BADGE_POUNCE])) {
 					$firstRevision = $this->mTitle->getFirstRevision();
 					
-					if( $firstRevision instanceof Revision && ( strtotime( wfTimestampNow() ) - strtotime($firstRevision->getTimestamp()) < ( 60 * 60 ) ) ) {
+					if( $firstRevision instanceof Revision && ( strtotime( wfTimestampNow() ) - strtotime($firstRevision->getTimestamp()) < ( 3600 /* 1h */ ) ) ) {
 						if(empty($this->mCounters[BADGE_POUNCE])) {
 							$this->mCounters[BADGE_POUNCE] = array();
 						}
 						$this->mCounters[BADGE_POUNCE][] = $this->mArticle->getID();
-						if(count($this->mArticle->getID()) == 20) {
+						if( count( $this->mCounters[BADGE_POUNCE] ) > 99 && !$this->hasBadge(BADGE_POUNCE) ) {
+							// badge is awarded when user makes their 100th edit to a unique article within 1h of it's creation
+							// 99 was put here to correct an error in awarding that did not affect counters and award missing badges
 							$this->awardNotInTrackBadge(BADGE_POUNCE);
 							unset($this->mCounters[BADGE_POUNCE]);
 						}
