@@ -37,7 +37,7 @@
 										$isLink = $menuNode2[NavigationService::HREF] != '#';
 										
 										if ( !empty( $menuNode2[NavigationService::TEXT] ) && $isAllowed ) :?>
-?>
+
 										<li>
 											<? if ( $isLink ) :?><a href="<?= $menuNode2[NavigationService::HREF] ;?>"><? endif ;?><?= $menuNode2[NavigationService::TEXT] ;?><? if ( $isLink ) :?></a><? endif ;?>
 										</li>
