@@ -101,7 +101,7 @@ DOC
 function renderLyricTag($input, $argv, $parser)
 {
 	#make new lines in wikitext new lines in html
-	$transform=str_replace(array("\r\n", "\r","\n"), "<br/>", trim($input));
+	$transform = str_replace(array("\r\n", "\r","\n"), "<br/>", trim($input));
 
 	$isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
@@ -142,9 +142,15 @@ function renderLyricTag($input, $argv, $parser)
 		$wgFirstLyricTag = false;
 	}
 
-	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
+	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
+	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
+		global $wgOut;
+		$wgOut->setRobotPolicy( 'noindex' );
+	}
 
 	#parse embedded wikitext
+	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
+
 	$retVal = "";
 	$retVal.= gracenote_getNoscriptTag();
 	$retVal.= "<div class='lyricbox'>";
