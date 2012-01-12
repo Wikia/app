@@ -5,50 +5,68 @@
 @import "mixins/section-title.scss";
 @import "mixins/linear-gradient.scss";
 @import "mixins/box-sizing.scss";
+@import "mixins/box-shadow.scss";
+@import "mixins/transition.scss";
+
+
 
 #navigation {
 	position: relative;
-	height: 50px;
+	height: 40px;
 	padding: 2px 5px;
 	background-color: $navBarColorFirst;
 	@include linear-gradient($navBarColorFirst, $navBarColorSecond);
 	@include box-shadow(0 0 10px black);
-	@include box-sizing(content-box);
+	@include box-sizing(border-box);
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+	z-index: 20;
+
+	&.noShadow {
+		@include box-shadow(none);
+	}
 
 	#navigationWordMark {
-		height: 50px;
-		line-height: 50px;
+		height: 100%;
+		width: auto;
+		line-height: 40px;
 		font-size: x-large;
 		color: $navBarWordmarkText;
-		max-height: 50px;
+		max-height: 100%;
 		max-width: 80%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
-	#searchToggle {
+	.toggle {
 		position: absolute;
-		right: 0;
-		width: 50px;
 		top: 0;
+		width: 45px;
 		height: 100%;
+		background-color: none;
+		@include transition(background-color .5s);
 		background-repeat: no-repeat;
 		background-position: center;
+	}
+
+	#searchToggle {
+		right: 0;
 		background-image: url('/extensions/wikia/WikiaMobile/images/search.png');/* $wgCdnStylePath */
-		&:before {
-			content: "";
-			height: 80%;
-			width: 1px;
-			background-color: $dividerColorFirst;
-			position: absolute;
-			top: 5px;
-			border-right: 1px solid $dividerColorSecond;
-		}
 		&.open {
 			outline: 1px solid $searchOpenBorder;
+			background-color: $searchOpenBackground;
+		}
+	}
+
+	#navToggle {
+		right: 46px;
+		background-image: url('/extensions/wikia/WikiaMobile/images/menuChev.png');/* $wgCdnStylePath */
+
+		&.open {
+			border-left: 1px solid rgb(135,135,135);
+			border-top: 1px solid rgb(135,135,135);
+			border-right: 1px solid rgb(135,135,135);
 			background-color: $searchOpenBackground;
 
 			&:before {
@@ -58,18 +76,18 @@
 		}
 	}
 
+
 	#navigationSearch {
 		display: none;
-		width: 100%;
-		height: 50px;
+		position: absolute;
+		left: 10px;
+		right: 105px;
+		top: 8px;
 	}
 
 	#searchInput {
-		position: absolute;
-		left: 3px;
-		top: 10px;
-		right: 54px;
 		border: 0;
+		width: 100%;
 		font-size: large;
 		border-radius: 20px;
 		padding: 5px;
@@ -80,7 +98,199 @@
 	:-moz-placeholder {
 		color: $link-color;
 	}
+}
 
+#wkNav {
+	visibility: hidden;
+	position: absolute;
+	top: 40px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	background-color: white;
+	overflow: hidden;
+	border-top: 1px solid $border-color;
+	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+	@include transition(opacity .5s);
+
+	&.open {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+#wkTabs {
+	height: 40px;
+	margin: 0;
+	padding: 0;
+	background-color: $searchOpenBackground;
+
+	li {
+		position: relative;
+		bottom: -8px;
+		left: 10px;
+		list-style: none;
+		color: white;
+		display: inline-block;
+		border-radius: 4px 4px 0 0;
+		padding: 0 20px;
+		line-height: 32px;
+
+		&.active {
+			background-color: white;
+			@include box-shadow(0 0 5px black);
+			color: $link-color;
+		}
+
+		a {
+			font-weight: 600;
+		}
+	}
+}
+
+.navTab {
+	top: 40px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+}
+
+#wkWNTopBar {
+	color: $link-color;
+	line-height: 50px;
+	background-color: white;
+	@include box-shadow(0 5px 15px -10px black);
+	@include transition(left .5s);
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	position: relative;
+	z-index: 120;
+	left: 0;
+
+	#wkNavBack {
+		border-radius: 5px;
+		border: 1px solid grey;
+		color: $link-color;
+		font-size: medium;
+		font-weight: 100;
+		padding: 5px 10px;
+		float: left;
+		margin: 10px;
+		background-color: white;
+		position: absolute;
+	}
+
+	#wkNavBack:active {
+		color: white;
+		@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
+	}
+
+	h1 {
+		text-align: center;
+		margin: 0;
+		padding: 0;
+		font-size: medium;
+		font-weight: 600;
+	}
+
+	a {
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding: 25px;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-image: url('/extensions/wikia/WikiaMobile/images/chevron-right.png');/* $wgCdnStylePath */
+	}
+}
+
+#wkWikiNav {
+	height: 100%;
+	width: 100%;
+
+	ul {
+		position: absolute;
+		top:0;
+		left: 0;
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		width: 100%;
+		list-style: none;
+		color:  $link-color;
+		background-color: white;
+		@include transition(left .5s);
+		-webkit-transform: translateZ(0);
+		-moz-transform: translateZ(0);
+
+		li {
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+			padding-left: 15px;
+			padding-right: 20px;
+			@include box-sizing(border-box);
+			border-bottom: 1px solid $border-color;
+
+			span, a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+
+			a {
+				font-weight: 600;
+			}
+
+			&:active {
+				@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
+
+				&:first-child {
+					color: white;
+				}
+			}
+
+			&.child {
+				background-repeat: no-repeat;
+				background-position: right;
+				background-origin: content-box;
+				background-image: url('/extensions/wikia/WikiaMobile/images/chevron-right.png');/* $wgCdnStylePath */
+			}
+		}
+	}
+
+	.lvl2, .lvl3 {
+		position: absolute;
+		left: 100%;
+	}
+
+	.lvl2 {
+		top: 50px;
+	}
+
+	&.current1 {
+		#wkWNTopBar {
+			left: 100%;
+		}
+	}
+
+	&.current2 {
+		.lvl2.current {
+			left: 0;
+		}
+	}
+
+	&.current3 {
+		.lvl2.current {
+			left: 0;
+		}
+		.lvl3.current {
+			left: 0;
+		}
+	}
 }
 
 #wkNavMenu{
@@ -90,17 +300,17 @@
 }
 
 .js{
-		#wkNavMenu {
-				.lvl1{
-						display: none;
-						
-						&.open{
-								display: block;
-						}
-				}
-				
-				ul{
-						padding: 0 0 0 18px;
-				}
+	#wkNavMenu {
+		.lvl1{
+			display: none;
+
+			&.open{
+				display: block;
+			}
 		}
+
+		ul{
+			padding: 0 0 0 18px;
+		}
+	}
 }
