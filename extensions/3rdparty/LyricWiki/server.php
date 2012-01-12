@@ -30,6 +30,7 @@ $LW_USE_PERSISTENT_CONNECTIONS = true;
 $ENABLE_LOGGING_SLOW_SOAP = false;
 $MIN_SECONDS_TO_LOG = 15; // if the script takes longer than this many seconds to run, the request will be logged.
 $startTime = microtime(true);
+global $funcsOnly;
 $funcsOnly = (defined('LYRICWIKI_SOAP_FUNCS_ONLY') && LYRICWIKI_SOAP_FUNCS_ONLY);
 
 define('TRACK_REQUEST_RUNTIMES', false);
@@ -1662,6 +1663,7 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 		global $wgUser;
 		if(!$wgUser->isLoggedIn()){
 			// If this is a SOAP request, the credentials may be in the SOAP headers.
+			global $funcsOnly;
 			if($funcsOnly){
 				// Not a SOAP request, so we have to already be logged in.
 				$retVal['message'] = "Must be logged in to use postArtist().";
@@ -1971,9 +1973,10 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 		global $wgUser;
 		if(!$wgUser->isLoggedIn()){
 			// If this is a SOAP request, the credentials may be in the SOAP headers.
+			global $funcsOnly;
 			if($funcsOnly){
 				// Not a SOAP request, so we have to already be logged in.
-				$retVal['message'] = "Must be logged in to use postSong().";
+				$retVal['message'] = "Must be logged in to use postSong()."; // NOTE: Not enforced... anons can edit.
 			} else {
 				lw_tryLogin();
 			}
