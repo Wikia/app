@@ -41,9 +41,10 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 			$upload->fetchFile();
 			$upload->verifyUpload();
 
+			$title = Title::newFromText( $apiWrapper->getTitle(), NS_FILE );
 			$file = F::build( 'WikiaLocalFile',
 					array(
-						Title::newFromText( $apiWrapper->getTitle(), NS_FILE ),
+						$title,
 						RepoGroup::singleton()->getLocalRepo()
 					)
 				);
@@ -57,7 +58,10 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 					'[[Category:New Video]]'.$apiWrapper->getDescription(),
 					File::DELETE_SOURCE
 				);
-			var_dump( $result );
+			$this->setVal('uploadStatus', $result->ok);
+			$this->setVal('isNewFile', empty($result->value));
+			$this->setVal('title', $title->getText());
+			$this->setVal('url', $title->getFullURL());
 		}
 	}
 	

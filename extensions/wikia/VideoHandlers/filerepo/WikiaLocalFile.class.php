@@ -103,4 +103,5 @@ class WikiaLocalFile extends LocalFile {
 		parent::loadFromFile();
 		$this->getLocalFileLogic()->afterLoadFromFile();
 	}
+	
 }

@@ -16,7 +16,7 @@ class VideoHandler extends BitmapHandler {
 	protected $videoId = '';
 	protected static $aspectRatio;
 	
-	function getEmbed($autoplay=false){
+	function getEmbed($width, $autoplay=false){
 		/* override */
 		return false;
 	}
@@ -29,17 +29,6 @@ class VideoHandler extends BitmapHandler {
 		return $this->videoId;
 	}
 	
-	// dunno if will be used
-	function getTitle() {
-		$this->loadApi();
-		return $this->api instanceof ApiWrapper ? $this->api->getTitles() : false;
-	}
-	// dunno if will be used
-	function getDescription() {
-		$this->loadApi();
-		return $this->api instanceof ApiWrapper ? $this->api->getDescription() : false;
-	}
-
 	function getMetadata( $image, $filename ) {
 		$this->loadApi();
 		return $this->api instanceof ApiWrapper ? serialize( $this->api->getMetadata() ) : false;
@@ -55,7 +44,7 @@ class VideoHandler extends BitmapHandler {
 		return array( 'jpg', 'image/jpeg' );
 	}
 
-		/**
+	/**
 	 * Get the thumbnail extension and MIME type for a given source MIME type
 	 * @return array thumbnail extension and MIME type
 	 */
