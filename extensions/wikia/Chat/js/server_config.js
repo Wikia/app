@@ -25,10 +25,10 @@ exports.WIKIA_PROXY_PORT = 6081;
 
 /** KEY BUILDING / ACCESSING FUNCTIONS **/
 exports.getKey_listOfRooms = function( cityId, type, users ){
-	var users = users || [];
+	users = users || [];
 	users = users.sort();
 	if(type == "open") {
-		return "rooms_on_wiki:" + cityId;	
+		return "rooms_on_wiki:" + cityId;
 	} else {
 		return "rooms_on_wiki:" + cityId + ':' + md5( type + users.join( ',' ) );
 	}
