@@ -9,7 +9,7 @@ if ( !empty($err) ) {
 <?php print $intro; ?>
 </div>
 <hr/>
-<form name="contactform" id="contactform" method="post" action="<?php echo $form_action; ?>">
+<form name="contactform" id="contactform" method="post" action="<?php echo $form_action; ?>"  enctype="multipart/form-data">
 <p class="contactformcaption"><?php echo wfMsg( 'specialcontact-wikiname' ); ?></p>
 <?php
 	if( $unlockURL ) :
