@@ -12,5 +12,11 @@ class WikiaLocalRepo extends LocalRepo {
 	var $oldFileFactory = array( 'OldWikiaLocalFile', 'newFromTitle' );
 	var $fileFromRowFactory = array( 'WikiaLocalFile', 'newFromRow' );
 	var $oldFileFromRowFactory = array( 'OldWikiaLocalFile', 'newFromRow' );
+
+	function newFromArchiveName( $title, $archiveName ) {
+		return OldWikiaLocalFile::newFromArchiveName( $title, $this, $archiveName );
+	}
+
+
 }
 

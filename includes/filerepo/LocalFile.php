@@ -234,6 +234,7 @@ class LocalFile extends File {
 
 		$row = $dbr->selectRow( 'image', $this->getCacheFields( 'img_' ),
 			array( 'img_name' => $this->getName() ), $fname );
+
 		if ( $row ) {
 			$this->loadFromRow( $row );
 		} else {
@@ -640,7 +641,18 @@ class LocalFile extends File {
 	function getHistory( $limit = null, $start = null, $end = null, $inc = true ) {
 		$dbr = $this->repo->getSlaveDB();
 		$tables = array( 'oldimage' );
-		$fields = OldLocalFile::selectFields();
+
+		/* Wikia change - fix hardcoded classes - Jakub */
+
+		$sOldLocalFileClass =
+			isset ( $this->repo->oldFileFactory[0] ) 
+				? $this->repo->oldFileFactory[0]
+				: 'OldLocalFile';
+		$fields = $sOldLocalFileClass::selectFields();
+
+		// $fields = OldLocalFile::selectFields();
+		/* end of Wikia change - fix hardcoded classes - Jakub */
+
 		$conds = $opts = $join_conds = array();
 		$eq = $inc ? '=' : '';
 		$conds[] = "oi_name = " . $dbr->addQuotes( $this->title->getDBkey() );
@@ -664,7 +676,11 @@ class LocalFile extends File {
 		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $opts, $join_conds );
 		$r = array();
 		while( $row = $dbr->fetchObject( $res ) ) {
-			$r[] = OldLocalFile::newFromRow( $row, $this->repo );
+			/* Wikia change - fix hardcoded classes - Jakub */
+			$r[] = $sOldLocalFileClass::newFromRow( $row, $this->repo );
+			// $r[] = OldLocalFile::newFromRow( $row, $this->repo );
+			/* end of Wikia change - fix hardcoded classes - Jakub */
+
 		}
 		if( $order == 'ASC' ) {
 			$r = array_reverse( $r ); // make sure it ends up descending
@@ -801,6 +817,7 @@ class LocalFile extends File {
 		if ( !$props ) {
 			$props = $this->repo->getFileProps( $this->getVirtualUrl() );
 		}
+
 		$props['description'] = $comment;
 		$props['user'] = $user->getId();
 		$props['user_text'] = $user->getName();

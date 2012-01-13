@@ -6,9 +6,11 @@ class OldWikiaLocalFile extends OldLocalFile {
 
 	/* obligatory constructors */
 
-	function __construct( $title, $repo ){
-		parent::__construct( $title, $repo );
-	}
+	/* @param Title $title
+	 * @param FileRepo $repo
+	 * @param string $time Timestamp or null to load by archive name
+	 * @param string $archiveName Archive name or null to load by timestamp
+	 */
 	
 	static function newFromTitle( $title, $repo, $time = null ) {
 		# The null default value is only here to avoid an E_STRICT
@@ -45,11 +47,6 @@ class OldWikiaLocalFile extends OldLocalFile {
 	}
 
 	// Composite/Leaf interface
-
-	function __construct( $title, $repo ){
-		parent::__construct( $title, $repo );
-
-	}
 
 	function  __call( $name, $arguments ){
 		if ( method_exists( $this->getLocalFileLogic(), $name ) ){
