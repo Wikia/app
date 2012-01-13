@@ -59,7 +59,7 @@ Check given username for possible typos.</p>',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'all',
-        'lookupcontribs-unknown' => 'Uknown',
+        'lookupcontribs-unknown' => 'Unknown',
 );
 
 /** Message documentation (Message documentation)
