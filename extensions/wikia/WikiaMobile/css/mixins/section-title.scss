@@ -7,6 +7,7 @@
 	color: $section-text-color;
 	font-size: $section-title-font-size;
 	padding: $page-padding 27px 0 0;
+	word-wrap: break-word;
 	position: relative;
 
 	//TODO: css alias
@@ -19,6 +20,7 @@
 		background-image: url("/extensions/wikia/WikiaMobile/images/open_chev.png");/* $wgCdnStylePath */
 		position: absolute;
 		right: 0;
+		top: 37%;
 		@include transition(all .7s ease-out);
 	}
 
