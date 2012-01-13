@@ -88,7 +88,6 @@ public class WikiFeaturesTest extends BaseTest {
 		
 		// Wikia Labs - feedback
 		String featureName = session().getText("//section[@id='WikiFeatures']/ul[2]/li[@class='feature'][1]/div[@class='details']/h3");
-		System.out.println("Feature Name: "+featureName);
 		session().click("css=button.secondary.feedback");
 		assertEquals(session().getText("css=#FeedbackDialogWrapper > h1"), "Feedback");
 		assertEquals(session().getText("css=section.modalContent > #FeedbackDialog > div.feature-highlight > h2"), featureName);
@@ -108,7 +107,7 @@ public class WikiFeaturesTest extends BaseTest {
 		assertEquals(session().getText("//section[@id='WikiFeatures']/ul[1]/li[1]/div/span/span[2]"), "Disabled");
 
 		Integer default_show = 3;	// default to enabled
-		Integer default_hide = 2;	// default to enabled
+		Integer default_hide = 2;	// default to disabled
 		if (session().isVisible("//section[@id='WikiFeatures']/ul[1]/li[1]/div/span/span[2]")) {
 			default_show = 2;
 			default_hide = 3;
@@ -117,9 +116,19 @@ public class WikiFeaturesTest extends BaseTest {
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[1]/li[1]/div/span/span["+default_show+"]"));
 		assertFalse(session().isVisible("//section[@id='WikiFeatures']/ul[1]/li[1]/div/span/span["+default_hide+"]"));
 		session().click("//section[@id='WikiFeatures']/ul[1]/li[1]/div[@class='actions']/span[contains(@class,'slider')]/span[@class='button']");
+		if (default_show == 3) {
+			waitForElement("DeactivateDialogWrapper");
+			session().click("//section[@id='DeactivateDialogWrapper']//button[@class='confirm']");
+			waitForElementNotPresent("DeactivateDialogWrapper");
+		}
 		assertFalse(session().isVisible("//section[@id='WikiFeatures']/ul[1]/li[1]/div/span/span["+default_show+"]"));
 		assertTrue(session().isVisible("//section[@id='WikiFeatures']/ul[1]/li[1]/div/span/span["+default_hide+"]"));
 		session().click("//section[@id='WikiFeatures']/ul[1]/li[1]/div[@class='actions']/span[contains(@class,'slider')]/span[@class='button']");
+		if (default_show == 2) {
+			waitForElement("DeactivateDialogWrapper");
+			session().click("//section[@id='DeactivateDialogWrapper']//button[@class='confirm']");
+			waitForElementNotPresent("DeactivateDialogWrapper");
+		}
 
 		logout();
 	}
