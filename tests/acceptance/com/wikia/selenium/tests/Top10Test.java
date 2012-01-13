@@ -38,7 +38,7 @@ public class Top10Test extends BaseTest {
 	public void prepareTestData() throws Exception {
 		loginAsRegular();
 		
-		if (!isDataPrepared) {
+		*if (!isDataPrepared) {
 			editArticle(TOP10_ARTICLE_1, "Lorem ipsum " + new Date().toString());
 			editArticle(TOP10_ARTICLE_2, "Lorem ipsum " + (new Date()).toString());
 			editArticle(TOP10_ARTICLE_3, "Lorem ipsum " + (new Date()).toString());
@@ -64,8 +64,9 @@ public class Top10Test extends BaseTest {
 		session().waitForPageToLoad(this.getTimeout());
 		assertTrue(session().getLocation().contains("wiki/Top_10_list"));
 	}
-
-	//Test to verify because of phalanx problems, ask TOR
+	
+	//Broken
+	//Test to verify because of phalanx problems, ask TOR	
 	//@Test(groups={"envProduction", "CI"}) 
 	public void testCreateListWithInvalidData() throws Exception {
 		openAndWait("wiki/Special:CreateTopList");
@@ -124,74 +125,60 @@ public class Top10Test extends BaseTest {
 	
 	@Test(groups={"envProduction", "CI","verified"}) 
 	public void testCreateTopListAndFillIt() throws Exception {
-		session().open("wiki/Special:CreateTopList");
-		session().waitForPageToLoad(this.getTimeout());		
+		openAndWait("wiki/Special:CreateTopList");
 		String name = TOP10_LIST_NAME + (new Date()).toString();
 		waitForElement("list_name");
 		session().type("list_name", name);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[2]/div[2]/input", TOP10_ARTICLE_1);
 		session().type("//ul[@class='ItemsList ui-sortable']/li[3]/div[2]/input", TOP10_ARTICLE_2);
-		session().click("//input[@value='Create list']");
-		session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//input[@value='Create list']");
 		
 		waitForElement("//button[@class='VoteButton']");
 		Number numberOfOptions = session().getXpathCount("//button[@class='VoteButton']");
 		assertEquals(2, numberOfOptions.intValue());
 	    
-	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
-	    session().waitForPageToLoad(this.getTimeout());
+	    clickAndWait("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().type("//ul[@class='ItemsList ui-sortable']/li[4]/div[2]/input", TOP10_ARTICLE_3);
-	    session().click("//input[@value='Save list']");
-	    session().waitForPageToLoad(this.getTimeout());
+	    clickAndWait("//input[@value='Save list']");
 
 		waitForElement("//button[@class='VoteButton']");
 	    Number numberOfOptions2 = session().getXpathCount("//button[@class='VoteButton']");
 		assertEquals(3, numberOfOptions2.intValue());
 
-		session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
-	    session().waitForPageToLoad(this.getTimeout());
+		clickAndWait("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().click("//img[@class='sprite new']");
 
-	    session().open("wiki/Top_10_List:" + name.replace(" ", "_"));
-	    session().waitForPageToLoad(this.getTimeout());
+	    openAndWait("wiki/Top_10_List:" + name.replace(" ", "_"));
 	    Number numberOfOptions3 = session().getXpathCount("//button[@class='VoteButton']");
 	    assertEquals(3, numberOfOptions3.intValue());
 
-	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
-	    session().waitForPageToLoad(this.getTimeout());
+	    clickAndWait("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().click("//img[@class='sprite new']");
 	    session().type("//ul[@class='ItemsList ui-sortable']/li[5]/div[2]/input", TOP10_ARTICLE_4);
-	    session().click("//input[@value='Save list']");
-	    session().waitForPageToLoad(this.getTimeout());
+	    clickAndWait("//input[@value='Save list']");
 
 	    Number numberOfOptions4 = session().getXpathCount("//button[@class='VoteButton']");
 	    assertEquals(4, numberOfOptions4.intValue());
 
-	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
-	    session().waitForPageToLoad(this.getTimeout());
+	    clickAndWait("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().click("//form[@id='toplist-editor']/ul/li[5]/div[3]/a/img");
 
-	    session().open("wiki/Top_10_List:" + name.replace(" ", "_"));
-	    session().waitForPageToLoad(this.getTimeout());
+	    openAndWait("wiki/Top_10_List:" + name.replace(" ", "_"));
 	    assertEquals(4, numberOfOptions4.intValue());
 
-	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
-	    session().waitForPageToLoad(this.getTimeout());
+	    clickAndWait("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().click("//form[@id='toplist-editor']/ul/li[5]/div[3]/a/img");
-	    session().click("//input[@value='Save list']");
-	    session().waitForPageToLoad(this.getTimeout());
+	    clickAndWait("//input[@value='Save list']");
 
 	    assertEquals(3, numberOfOptions3.intValue());
 	    
 	    session().click("//div[@id='toplists-list-body']//ul/li[2]/div[@class='ItemNumber']/button");
 
-	    session().click("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
-	    session().waitForPageToLoad(this.getTimeout());
+	    clickAndWait("//nav[@class='wikia-menu-button']//img[@class='sprite edit-pencil']");
 	    session().click("//form[@id='toplist-editor']/ul/li[2]/div[3]/a/img");
 	    session().click("//input[@value='Save list']");
 
-	    session().open("wiki/Top_10_List:" + name.replace(" ", "_"));
-	    session().waitForPageToLoad(this.getTimeout());
+	    openAndWait("wiki/Top_10_List:" + name.replace(" ", "_"));
 	}
 	
 	@Test(groups={"envProduction", "CI","verified"})
@@ -415,4 +402,5 @@ public class Top10Test extends BaseTest {
 		clickAndWait("//form[@id='deleteconfirm']//td[@class='mw-submit']/input");
 		assertTrue(session().isTextPresent("has been deleted"));
 	}
+	
 }
