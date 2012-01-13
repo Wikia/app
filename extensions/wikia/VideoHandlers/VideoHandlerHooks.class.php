@@ -20,4 +20,15 @@ class VideoHandlerHooks extends WikiaObject{
 
 		return true;
 	}
+
+	/*
+	 * Preserves video mime types. Needed to fix MW 1.16 bug
+	 */
+	public function onFileRevertFormBeforeUpload( $oFile, $oOldFile ){
+
+		$oFile->forceMime( $oOldFile->mime );
+		$oFile->setVideoId( $oOldFile->getVideoId() );
+
+		return true;
+	}
 }

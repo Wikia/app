@@ -66,7 +66,13 @@ class FileRevertForm {
 		if( $wgRequest->wasPosted() && $wgUser->matchEditToken( $token, $this->archiveName ) ) {
 			$source = $this->file->getArchiveVirtualUrl( $this->archiveName );
 			$comment = $wgRequest->getText( 'wpComment' );
+			
 			// TODO: Preserve file properties from database instead of reloading from file
+
+			// Wikia changes - for video - jakub
+			wfRunHooks( 'FileRevertFormBeforeUpload', array( &$this->file, $this->getOldFile() ));
+			// End of Wikia changes - for video - jakub
+
 			$status = $this->file->upload( $source, $comment, $comment );
 			if( $status->isGood() ) {
 				$wgOut->addHTML( wfMsgExt( 'filerevert-success', 'parse', $this->title->getText(),

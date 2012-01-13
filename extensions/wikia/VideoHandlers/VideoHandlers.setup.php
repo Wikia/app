@@ -27,14 +27,16 @@ $wgLocalFileRepo = array(
  */
 $app = F::app();
 $dir = dirname( __FILE__ );
-$app->registerClass( 'VideoHandler',	$dir . '/handlers/VideoHandler.class.php' );
-$app->registerClass( 'VideoHandlerHooks', $dir . '/VideoHandlerHooks.class.php' );
-$app->registerClass( 'WikiaVideoPage',	$dir . '/VideoPage.php' );
-$app->registerClass( 'ThumbnailVideo',	$dir . '/ThumbnailVideo.class.php' );
-$app->registerClass( 'WikiaLocalFile',	$dir . '/filerepo/WikiaLocalFile.class.php' );
-$app->registerClass( 'WikiaLocalRepo',	$dir . '/filerepo/WikiaLocalRepo.class.php' );
+$app->registerClass( 'VideoHandler',		$dir . '/handlers/VideoHandler.class.php' );
+$app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
+$app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
+$app->registerClass( 'ThumbnailVideo',		$dir . '/ThumbnailVideo.class.php' );
+$app->registerClass( 'OldWikiaLocalFile',	$dir . '/filerepo/OldWikiaLocalFile.class.php' );
+$app->registerClass( 'WikiaLocalFile',		$dir . '/filerepo/WikiaLocalFile.class.php' );
 $app->registerClass( 'WikiaLocalFileShared',	$dir . '/filerepo/WikiaLocalFileShared.class.php' );
-$app->registerClass( 'ApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'WikiaLocalRepo',		$dir . '/filerepo/WikiaLocalRepo.class.php' );
+$app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');
 $app->registerClass( 'VideoHandlerController', $dir . '/VideoHandlerController.class.php' );
 
 /**
@@ -51,6 +53,7 @@ $app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
  * hooks
  */
 $app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
+$app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
 
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';
