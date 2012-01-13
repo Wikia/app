@@ -46,7 +46,10 @@ class OldWikiaLocalFile extends OldLocalFile {
 		}
 	}
 
-	// Composite/Leaf interface
+	/* Composite/Leaf interface
+	 *
+	 * if no method of var found in current object tries to get it from $this->oLocalFileLogic
+	 */
 
 	function  __call( $name, $arguments ){
 		if ( method_exists( $this->getLocalFileLogic(), $name ) ){
@@ -79,7 +82,10 @@ class OldWikiaLocalFile extends OldLocalFile {
 		return $this->oLocalFileLogic;
 	}
 
-	// Make parent methods accesible to Leaf
+	/*
+	 * No everything can be transparent, because __CALL skips already defined methods.
+	 * These methods work as a layer of communication between this class and SharedLogic
+	 */
 
 	function getHandler(){
 		parent::getHandler();

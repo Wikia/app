@@ -4,7 +4,7 @@ if( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
 /**
- * Special handling for vide description pages
+ * Special handling for video description pages
  *
  * @ingroup Media
  */

@@ -1,5 +1,10 @@
 <?php
 
+/* Wikia wrapper on LocalFile.
+ * Alter some functionality allow using thumbnails as a representative of videos in file structure.
+ * Works as interface, logic should go to WikiaLocalFileShared
+ */
+
 class WikiaLocalFile extends LocalFile {
 	
 	protected $oLocalFileLogic = null; // Leaf object
@@ -47,7 +52,10 @@ class WikiaLocalFile extends LocalFile {
 		}
 	}
 
-	// Composite/Leaf interface
+	/* Composite/Leaf interface
+	 * 
+	 * if no method of var found in current object tries to get it from $this->oLocalFileLogic
+	 */
 
 	function __construct( $title, $repo ){
 		parent::__construct( $title, $repo );
@@ -85,7 +93,8 @@ class WikiaLocalFile extends LocalFile {
 		return $this->oLocalFileLogic;
 	}
 
-	// Make parent methods accesible to Leaf
+	// No everything can be transparent, because __CALL skips already defined methods.
+	// These methods work as a layer of communication between this class and SharedLogic
 
 	function getHandler(){
 		parent::getHandler();

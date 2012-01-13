@@ -2,11 +2,11 @@
 
 class YoutubeApiWrapper extends ApiWrapper {
 
-	private $interfaceObj = null;
+	protected $interfaceObj = null;
 
 	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1?v=2&alt=json';
-	private static $CACHE_KEY = 'youtubeapi';
-	private static $CACHE_EXPIRY = 86400;
+	protected static $CACHE_KEY = 'youtubeapi';
+	protected static $CACHE_EXPIRY = 86400;
 
 	public function __construct($videoId) {
 		parent::__construct($videoId);

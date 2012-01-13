@@ -26,9 +26,10 @@ class VideoHandlerHooks extends WikiaObject{
 	 */
 	public function onFileRevertFormBeforeUpload( $oFile, $oOldFile ){
 
-		$oFile->forceMime( $oOldFile->mime );
-		$oFile->setVideoId( $oOldFile->getVideoId() );
-
+		if ( $oOldFile->isVideo() ){
+			$oFile->forceMime( $oOldFile->mime );
+			$oFile->setVideoId( $oOldFile->getVideoId() );
+		}
 		return true;
 	}
 }

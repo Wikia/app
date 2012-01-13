@@ -3,8 +3,6 @@
  * A repository that stores files in the local filesystem and registers them
  * in the wiki's own database.
  *
- * Extends most commonly used repository class to allow us to use some extra file functions.
- * 
  * @ingroup FileRepo
  */
 class WikiaLocalRepo extends LocalRepo {
@@ -13,8 +11,11 @@ class WikiaLocalRepo extends LocalRepo {
 	var $fileFromRowFactory = array( 'WikiaLocalFile', 'newFromRow' );
 	var $oldFileFromRowFactory = array( 'OldWikiaLocalFile', 'newFromRow' );
 
+	/* fixes hardcoded values of LocalRepo */
 	function newFromArchiveName( $title, $archiveName ) {
-		return OldWikiaLocalFile::newFromArchiveName( $title, $this, $archiveName );
+
+		$oldFileClass = $this->oldFileFactory[0];
+		return $oldFileClass::newFromArchiveName( $title, $this, $archiveName );
 	}
 
 
