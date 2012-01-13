@@ -412,6 +412,13 @@ class MWMemcached {
 
 		@$this->stats['get']++;
 
+		// If action=mpurge, flush memcache too @author owen
+		global $wgPurgeDisablesMemcache;
+		if (isset($wgPurgeDisablesMemcache) && $wgPurgeDisablesMemcache == true) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
         // Memoize duplicate memcache requests for the same key in the same request
 		if (isset($this->_dupe_cache[$key])) {
 			wfProfileIn ( __METHOD__ . "::$key !DUPE");
