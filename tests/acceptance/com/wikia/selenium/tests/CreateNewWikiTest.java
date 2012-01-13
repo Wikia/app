@@ -215,25 +215,23 @@ public class CreateNewWikiTest extends BaseTest {
 		}
 	}
 	
-	//@Test(groups={"envProduction"})
-	public void createWikiDefaultLanguage() throws Exception {
-		
-		//Test Case 001
-		//log in as QATestsStaff(default language=english),change language to deutsch,verify after CNW flow that wiki domain is de. 
-		
+	//Test Case 001
+	//log in as QATestsStaff(default language=english),change language to deutsch,verify after CNW flow that wiki domain is de.
+	@Test(groups={"envProduction"})
+	public void createWikiDefaultLanguageForLoggedInUsersIsUserPreferencesLanguage() throws Exception {
 		loginAsStaff();
 		
-		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
+		openAndWait("http://de.fallout.wikia.com/");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
 		
 		assertTrue(session().getLocation().contains("/Special:CreateNewWiki?uselang=en"));
 		session().type("//input[@name='wiki-name']", getWikiName());
 		session().type("//input[@name='wiki-domain']", getWikiName());
-		//waitForElementVisible("//span[contains(@class,'domain-status-icon')]/img[contains(@src,'check.png')]");	
+		//waitForElementVisible("//span[contains(@class,'domain-status-icon')]/img[contains(@src,'check.png')]");
 		session().click("//div[@class='language-default']/a[@id='ChangeLang']");
-		session().select("//select[@name='wiki-language']", "value=de");				
-		assertTrue(session().isTextPresent("de."));		
-		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");		
+		session().select("//select[@name='wiki-language']", "value=de");
+		assertTrue(session().isTextPresent("de."));
+		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");
 		
 		waitForElementVisible("DescWiki");
 		session().select("//select[@name='wiki-category']", "value=3");
@@ -243,25 +241,25 @@ public class CreateNewWikiTest extends BaseTest {
 		
 		waitForElement("WikiWelcome", this.getTimeout());
 		waitForElementVisible("WikiWelcome", this.getTimeout());
-				
+
 		assertTrue(session().getLocation().contains("de."));
 		
 		deleteWiki("de");
 		
-		logout();
+		wikiName = null;
+	}
 		
-		//Test Case 002
-		//logged out in german wiki,domain appears in german,log in as QATestsStaff during CNW flow,verify domain is de.
-		
-		
-		
+	//Test Case 002
+	//logged out in german wiki,domain appears in german,log in as QATestsStaff during CNW flow,verify domain is de.
+	@Test(groups={"envProduction"})
+	public void createWikiDefaultLanguageForAnonymousIsWikiLanguage() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
 		
 		assertTrue(session().isTextPresent("de."));
 		session().type("//form[@name='label-wiki-form']/input[@type='text']", getWikiName());
 		session().type("//input[@name='wiki-domain']", getWikiName());
-		//waitForElementVisible("//form[@name='label-wiki-form]//span[@class='domain-status-icon status-icon']/img[@src='/extensions/wikia/CreateNewWiki/images/check.png'");		
+		//waitForElementVisible("//form[@name='label-wiki-form]//span[@class='domain-status-icon status-icon']/img[@src='/extensions/wikia/CreateNewWiki/images/check.png'");
 		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");
 		
 		session().click("//p[@class='login-msg']/a");
@@ -282,17 +280,21 @@ public class CreateNewWikiTest extends BaseTest {
 		
 		deleteWiki("de");
 		
-		//Test Case 003
-		//logged out in german wiki,change language to english in CNW flow,log in as QATestsStaff,verify domain is english
+		wikiName = null;
+	}
 		
+	//Test Case 003
+	//logged out in german wiki,change language to english in CNW flow,log in as QATestsStaff,verify domain is english
+	@Test(groups={"envProduction"})
+	public void createWikiDefaultLanguageForAnonymousIsWikiAndItCanBeChanged() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
 		
 		assertTrue(session().isTextPresent("de."));
 		session().type("//form[@name='label-wiki-form']/input[@type='text']", getWikiName());
 		session().type("//input[@name='wiki-domain']", getWikiName());
-		session().click("//ol[@class='steps']//div[@class='language-default']/a[@id='ChangeLang']");		
-		session().select("//select[@name='wiki-language']", "value=en");		
+		session().click("//ol[@class='steps']//div[@class='language-default']/a[@id='ChangeLang']");
+		session().select("//select[@name='wiki-language']", "value=en");
 		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");
 		
 		session().click("//p[@class='login-msg']/a");
@@ -312,6 +314,8 @@ public class CreateNewWikiTest extends BaseTest {
 		assertFalse(session().getLocation().contains("de."));
 		
 		deleteWiki("en");
+		
+		wikiName = null;
 	}
 
 }
