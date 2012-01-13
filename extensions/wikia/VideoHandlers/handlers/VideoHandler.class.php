@@ -15,6 +15,7 @@ class VideoHandler extends BitmapHandler {
 	protected $apiName = 'video/*';
 	protected $videoId = '';
 	protected static $aspectRatio;
+	protected static $isJSLoaded = false;
 	
 	function getEmbed($width, $autoplay=false){
 		/* override */
@@ -50,8 +51,14 @@ class VideoHandler extends BitmapHandler {
 	 */
 
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
+		global $wgOut, $wgExtensionsPath;
 
 		$oThumbnailImage = parent::doTransform( $image, $dstPath, $dstUrl, $params, $flags );
+
+		if (empty(self::$isJSLoaded)) {
+			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/VideoHandlers/js/VideoHandlers.js"></script>');
+			self::$isJSLoaded = true;
+		}		
 
 		return new ThumbnailVideo(
 			$oThumbnailImage->file,
@@ -60,7 +67,7 @@ class VideoHandler extends BitmapHandler {
 			$oThumbnailImage->height,
 			$oThumbnailImage->path,
 			$oThumbnailImage->page
-		);
+		);		
 	}
 
 }

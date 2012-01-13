@@ -35,6 +35,12 @@ $app->registerClass( 'WikiaLocalFile',	$dir . '/filerepo/WikiaLocalFile.class.ph
 $app->registerClass( 'WikiaLocalRepo',	$dir . '/filerepo/WikiaLocalRepo.class.php' );
 $app->registerClass( 'WikiaLocalFileShared',	$dir . '/filerepo/WikiaLocalFileShared.class.php' );
 $app->registerClass( 'ApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'VideoHandlerController', $dir . '/VideoHandlerController.class.php' );
+
+/**
+ * messages
+ */
+$wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
 
 /**
  * SpecialPages
