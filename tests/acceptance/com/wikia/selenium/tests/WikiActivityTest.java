@@ -113,7 +113,7 @@ public class WikiActivityTest extends BaseTest {
 		loginAsRegular();
 		session().click("link=My preferences");
 		waitForElement("//ul[@id='preftoc']");
-		session().click("//ul[@id='preftoc']/li[6]/a");
+		session().click("//ul[@id='preftoc']/li[2]/a");
 		
 		if(!session().isChecked("//input[@id='mw-input-watchdefault']"))
 			{
@@ -139,6 +139,11 @@ public class WikiActivityTest extends BaseTest {
 				session().uncheck("//input[@id='mw-input-watchdefault']");
 			}
 		clickAndWait("//input[@id='prefcontrol']");
+		openAndWait("/wiki/" + WIKIACTIVITY_ARTICLE_FOUR);
+		waitForElement("//div[@class='toolbar']");
+		if (session().isElementPresent("//a[@id='ca-unwatch' and contains(@href, 'unwatch')]")) {
+			session().click("//a[@id='ca-unwatch' and contains(@href, 'unwatch')]");
+		}
 		content = "dolor " + (new Date()).toString();
 		editArticle(WIKIACTIVITY_ARTICLE_FOUR, content);
 		clickAndWait("//a[@data-id='wikiactivity']");

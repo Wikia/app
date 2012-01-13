@@ -10,7 +10,7 @@ public class SpecialPreferencesTest extends BaseTest {
 	private void loadPage() throws Exception {
 		openAndWait("wiki/Special:Preferences");
 		assertTrue(session().getLocation().contains("wiki/Special:Preferences"));
-		waitForElement("//input[@name='wpskin']");
+		waitForElement("//select[@name='wpskin']");
 	}
 
 	@Test(groups={"CI", "verified"})
@@ -18,17 +18,17 @@ public class SpecialPreferencesTest extends BaseTest {
 		loginAsRegular();
 
 		loadPage();
-		session().click("//input[@value='oasis']");
+		session().select("//select[@name='wpskin']","value=oasis");
 		clickAndWait("//input[@id='prefcontrol']");
 		waitForElement("//body[contains(@class, 'skin-oasis')]");
 
 		loadPage();
-		session().click("//input[@value='monobook']");
+		session().select("//select[@name='wpskin']","value=monobook");
 		clickAndWait("//input[@id='prefcontrol']");
 		waitForElement("//body[contains(@class, 'skin-monobook')]");
 
 		loadPage();
-		session().click("//input[@value='oasis']");
+		session().select("//select[@name='wpskin']","value=oasis");
 		clickAndWait("//input[@id='prefcontrol']");
 	}
 }
