@@ -36,7 +36,8 @@ var WikiaMobile = WikiaMobile || (function() {
 		if(firstLevelSections.length > 0){
 			var articleElement = article[0],
 				contents = article.contents(),
-				root = wrapper = articleElement.cloneNode(false),
+				wrapper = articleElement.cloneNode(false),
+				root = wrapper,
 				x = 0,
 				y = contents.length,
 				currentSection,
