@@ -83,7 +83,7 @@ class JSMessages {
 	 * @return array - key/value list of matching messages
 	 */
 	private function resolveMessagesPattern($pattern) {
-		$this->app->wf->ProfileIn(__METHOD__);
+		$this->app->wf->ProfileIn(__METHOD__ . "::$pattern");
 		$this->log(__METHOD__, $pattern);
 
 		$pattern = substr($pattern, 0, -1);
@@ -110,7 +110,7 @@ class JSMessages {
 			}
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__);
+		$this->app->wf->ProfileOut(__METHOD__ . "::$pattern");
 		return $ret;
 	}
 
