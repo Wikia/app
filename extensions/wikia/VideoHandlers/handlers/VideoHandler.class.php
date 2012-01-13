@@ -9,7 +9,7 @@
  * 
  */
 
-class VideoHandler extends BitmapHandler {
+abstract class VideoHandler extends BitmapHandler {
 
 	protected $api = null;
 	protected $apiName = 'video/*';
@@ -17,10 +17,11 @@ class VideoHandler extends BitmapHandler {
 	protected static $aspectRatio;
 	protected static $isJSLoaded = false;
 	
-	function getEmbed($width, $autoplay=false){
-		/* override */
-		return false;
-	}
+	/**
+	 * Returns embed code for a provider
+	 * @return string Embed HTML
+	 */
+	abstract function getEmbed($width, $autoplay = false );
 
 	function setVideoId( $videoId ){
 		$this->videoId = $videoId;
@@ -30,32 +31,45 @@ class VideoHandler extends BitmapHandler {
 		return $this->videoId;
 	}
 	
+	/**
+	 * Connects with Api and returns metadata
+	 * @return ApiWrapper object
+	 */
 	function getMetadata( $image, $filename ) {
-		$this->loadApi();
-		return $this->api instanceof ApiWrapper ? serialize( $this->api->getMetadata() ) : false;
+		return $this->getApi() instanceof ApiWrapper 
+			? serialize( $this->getApi()->getMetadata() )
+			: false;
 	}
 
-	function loadApi() {
+	/**
+	 * Returns propper api for a current handler
+	 * @return ApiWrapper object
+	 */
+	function getApi() {
 		if ( !empty( $this->videoId ) && empty( $this->api ) ){
 			$this->api = F::build ( $this->apiName, array( $this->videoId ) );
 		}
+		return $this->api;
 	}
 
+	/**
+	 * Returns fedault thumbnail mime type
+	 * @return array thumbnail extension and MIME type
+	 */
 	function getThumbType( $ext, $mime, $params = null ) {
 		return array( 'jpg', 'image/jpeg' );
 	}
 
 	/**
-	 * Get the thumbnail extension and MIME type for a given source MIME type
-	 * @return array thumbnail extension and MIME type
+	 * Get the thumbnail code for videos
+	 * @return object ThumbnailVideo object or error object
 	 */
-
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
 		global $wgOut, $wgExtensionsPath;
 
 		$oThumbnailImage = parent::doTransform( $image, $dstPath, $dstUrl, $params, $flags );
 
-		if (empty(self::$isJSLoaded)) {
+		if ( empty( self::$isJSLoaded ) ) {
 			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/VideoHandlers/js/VideoHandlers.js"></script>');
 			self::$isJSLoaded = true;
 		}		

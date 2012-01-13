@@ -1,6 +1,9 @@
 <?php
 
-/* Leaf to WikiaLocalFile Composite */
+/* Leaf to WikiaLocalFile Composite
+ * 
+ * Handles logic shared through Wikia LocalFile Wrappers
+ */
 
 class WikiaLocalFileShared  {
 
@@ -9,8 +12,6 @@ class WikiaLocalFileShared  {
 	var $videoId = '';
 	const VIDEO_MEDIA_TYPE = 'VIDEO';
 
-	private $lockedProperties = array( 'metadata', 'minor_mime', 'major_mime', 'mime', 'media_type' );
-	private $lockedPropertiesValues = array();
 	function __construct( $oWikiaLocalFile ){
 		$this->oFile = $oWikiaLocalFile;
 	}
@@ -30,7 +31,7 @@ class WikiaLocalFileShared  {
 	/*
 	 * Returns embed HTML
 	 */
-	public function getEmbedCode( $width, $autoplay=false ){
+	public function getEmbedCode( $width, $autoplay = false ){
 		if ( $this->isVideo() ){
 			return $this->oFile->getHandler()->getEmbed( $width, $autoplay );
 		} else {
@@ -38,6 +39,14 @@ class WikiaLocalFileShared  {
 		}
 	}
 
+	/*
+	 * Force file to use some specyfic mimetype
+	 *
+	 * MediaWiki is getting mime type directly from a file.
+	 * Need to alter this behavior for videos
+	 * as they are represented in filesystem by an image
+	 */
+	
 	function forceMime( $aMime ){
 		$this->forceMime = $aMime;
 	}
@@ -61,7 +70,10 @@ class WikiaLocalFileShared  {
 		return $this->videoId;
 	}
 
+	/* alter LocalFile getHandler logic */
+
 	function afterGetHandler(){
+		// make sure that the new handler ( if video ) will have videoId
 		if ($this->oFile->media_type == self::VIDEO_MEDIA_TYPE) {
 			$videoId = $this->getVideoId();
 			if ( !empty( $videoId ) ){
@@ -70,20 +82,32 @@ class WikiaLocalFileShared  {
 		}
 	}
 
+	/* alter LocalFile setProps logic */
+
 	function afterSetProps() {
 		if ( $this->forceMime ){
+
+			// if mime type was forced, repopulate File with proper data
 			$this->oFile->dataLoaded = true;
 			$this->oFile->mime = $this->forceMime;
 			list( $this->oFile->major_mime, $this->oFile->minor_mime ) = LocalFile::splitMime( $this->oFile->mime );
-
 			$handler = MediaHandler::getHandler( $this->oFile->getMimeType() );
 			$handler->setVideoId( $this->oFile->videoId );
 
 			$this->oFile->metadata = $handler->getMetadata( false, false );
-			$this->oFile->media_type = 'VIDEO';
+			$this->oFile->media_type = self::VIDEO_MEDIA_TYPE;
 			$this->forceMime = false;
 		}
 	}
+
+	/* alter loadFromFile logic
+	 * 
+	 * loadFromFile resets few params in class based on actual file in file system.
+	 * As videos are represented as image files we want some data not to be reseted.
+	 */
+
+	private $lockedProperties = array( 'metadata', 'minor_mime', 'major_mime', 'mime', 'media_type' );
+	private $lockedPropertiesValues = array();
 
 	function beforeLoadFromFile(){
 		if ( $this->isVideo() ){
