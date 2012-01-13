@@ -6,7 +6,7 @@
 
 (function(window,$){
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
 	 * Confirm when user wants to leave the edit page
@@ -47,6 +47,7 @@
 				// page is being saved
 				case states.SAVING:
 					$(window).unbind('.leaveconfirm');
+					break;
 			}
 		},
 
