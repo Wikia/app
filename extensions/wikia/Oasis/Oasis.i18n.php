@@ -186,7 +186,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magic words may only be displayed in Level 3 menus. Please only include them in your Level 2 wikitext.',
 	'oasis-navigation-v2-validation-next' => 'Next',
 	'oasis-navigation-v2-validation-caption' => 'Preview will check for menu errors. If ok, you can Publish from the Preview screen. If not, a Back button will allow you to continue editing.',
-	'on-the-wiki' => 'On the Wiki',
+	'oasis-on-the-wiki' => 'On the Wiki',
 
 	#sharing toolbar e-mail
 	'oasis-sharing-toolbar-mail-subject' => '$1 has sent you a link on Wikia',
@@ -275,7 +275,7 @@ Example output: edited by Avatar 3 hours ago',
 
 Example output: deleted by Avatar 3 hours ago',
 	'oasis-wiki-navigation' => '[[Thread:Support/About Wikia:Oasis-wiki-navigation/en|Parameter $1 is the name of the wiki, e.g. "Muppet Wiki".]]',
-	'on-the-wiki' => 'Name of the first tab of wiki navigation menu',
+	'oasis-on-the-wiki' => 'Name of the first tab of wiki navigation menu',
 );
 
 /** Afrikaans (Afrikaans)
@@ -790,7 +790,7 @@ $messages['de'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magische Wörter „Magic Words“ können nur in Level 3-Dropdowns angezeigt und somit nur in Level 2 verwendet werden.',
 	'oasis-navigation-v2-validation-next' => 'Vorschau',
 	'oasis-navigation-v2-validation-caption' => 'Die Vorschau erlaubt es dir, nach Fehlern zu sehen. Falls alles in Ordnung ist, kannst du es von dort aus speichern. Falls nicht, kannst du mittels "Zurück"-Button wieder zum Bearbeiten zurückkehren.',
-	'on-the-wiki' => 'Im Wiki',
+	'oasis-on-the-wiki' => 'Im Wiki',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -1267,7 +1267,7 @@ $messages['fr'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Les mots magiques peuvent seulement être affichés dans les menus de niveau 3. Veuillez seulement inclure dans votre wikitexte de niveau 2.',
 	'oasis-navigation-v2-validation-next' => 'Suite',
 	'oasis-navigation-v2-validation-caption' => "La prévisualisation vérifiera les erreurs de menu. Si c'est correct, vous pouvez publier depuis l'écran de prévisualisation. Si ce n'est pas le cas, un bouton Précédent vous permettra de continuer à éditer.",
-	'on-the-wiki' => 'Sur le wiki',
+	'oasis-on-the-wiki' => 'Sur le wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 vous a envoyé un lien sur Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Bonjour,
 
@@ -1429,7 +1429,7 @@ $messages['gl'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'As palabras máxicas poden mostrarse unicamente nos menús de nivel 3. Inclúa estas palabras máxicas soamente no texto wiki de nivel 2.',
 	'oasis-navigation-v2-validation-next' => 'Seguinte',
 	'oasis-navigation-v2-validation-caption' => 'A vista previa comprobará os erros no menú. Se todo está ben, pode publicar desde a pantalla de vista previa. Por se quere cambiar algo, terá un botón de regreso que permite continuar coa edición.',
-	'on-the-wiki' => 'No wiki',
+	'oasis-on-the-wiki' => 'No wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 envioulle unha ligazón en Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Ola.
 
@@ -1779,7 +1779,7 @@ $messages['ia'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Le parolas magic pote solmente esser monstrate in menus de nivello 3. Per favor include los solmente in wikitexto de nivello 2.',
 	'oasis-navigation-v2-validation-next' => 'Sequente',
 	'oasis-navigation-v2-validation-caption' => 'Le previsualisation verificara le presentia de errores de menu. Si es correcte, tu pote publicar desde le schermo Previsualisation. Si non, un button Retornar permittera continuar le modification.',
-	'on-the-wiki' => 'In le wiki',
+	'oasis-on-the-wiki' => 'In le wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 te ha inviate un ligamine in Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Salute.
 
@@ -2391,7 +2391,7 @@ $messages['mk'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Волшебните зборови се прикажуваат само на менија од III ниво. Затоа ставајте ги само во викитекстот од II ниво.',
 	'oasis-navigation-v2-validation-next' => 'Следно',
 	'oasis-navigation-v2-validation-caption' => 'Прегледот ќе провери дали менито има грешки. Ако сè е во ред, тогаш можете да го објавите од екранот „Преглед“. Ако има грешки, послужете се со копчето за одење назад и направете ги исправките.',
-	'on-the-wiki' => 'На викито',
+	'oasis-on-the-wiki' => 'На викито',
 	'oasis-sharing-toolbar-mail-subject' => '$1 ви испрати врска на Викија',
 	'oasis-sharing-toolbar-mail-body' => 'Здраво.
 
@@ -2605,7 +2605,7 @@ $messages['ms'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Kata sakti hanya boleh dipaparkan dalam menu Aras 3. Sila sertakannya hanya dalam teks wiki Aras 2.',
 	'oasis-navigation-v2-validation-next' => 'Berikutnya',
 	'oasis-navigation-v2-validation-caption' => 'Pralihat akan menyemak untuk ralat menu. Jika OK, anda boleh menyiarkannya dari skrin Pralihat. Jika tidak, butang Kembali akan disediakan untuk anda terus menyunting.',
-	'on-the-wiki' => 'Di Wiki ini',
+	'oasis-on-the-wiki' => 'Di Wiki ini',
 	'oasis-sharing-toolbar-mail-subject' => '$1 telah menghantar pautan kepada anda di Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Selamat sejahtera.
 
@@ -2794,7 +2794,7 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'oasis-navigation-v2-magic-word-validation' => "Magische woorden kunnen alleen worden weergegevens in menu's van het derde niveau. Neem ze alleen op in uw tweede niveau van uw wikitekst.",
 	'oasis-navigation-v2-validation-next' => 'Volgende',
 	'oasis-navigation-v2-validation-caption' => 'Tijdens de voorvertoning wordt het menu gecontroleerd op fouten. Als alles in orde is, kunt u Publiceren vanuit de voorvertoning. Als het nog niet in orde is, ga dan Terug zodat u correcties kunt aanbrengen.',
-	'on-the-wiki' => 'Op de wiki',
+	'oasis-on-the-wiki' => 'Op de wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 heeft u een verwijzing gezonden naar Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hallo.
 
@@ -2973,7 +2973,7 @@ $messages['nb'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magiske ord kan bare vises i nivå 3-menyer. Vennligst bare inkluder dem i wikiteksten i nivå 2-menyene dine.',
 	'oasis-navigation-v2-validation-next' => 'Neste',
 	'oasis-navigation-v2-validation-caption' => 'Forhåndsvisning vil se etter menyfeil. Hvis alt er ok, kan du publisere fra forhåndsvisningsvinduet. Hvis ikke, vil en tilbake-knapp la deg fortsette å redigere.',
-	'on-the-wiki' => 'På wikien',
+	'oasis-on-the-wiki' => 'På wikien',
 	'oasis-sharing-toolbar-mail-subject' => '$1 har sendt deg en lenke på Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hei.
 
@@ -3134,7 +3134,7 @@ $messages['pl'] = array(
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Edytuj lokalne menu Wikii',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Edytuj globalne menu Wikii',
 	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',
-	'on-the-wiki' => 'Na Wiki',
+	'oasis-on-the-wiki' => 'Na Wiki',
 );
 
 /** Piedmontese (Piemontèis)
@@ -3587,7 +3587,7 @@ $messages['ru'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Волшебные слова могут отображаться только на 3 уровне меню. Пожалуйста, включайте их только в свой викитекст 2 уровня.',
 	'oasis-navigation-v2-validation-next' => 'Следующий',
 	'oasis-navigation-v2-validation-caption' => 'Предпросмотр проверит наличие ошибок в меню. Если ошибок нет, то вы сможете сохранить его прямо из окна предпросмотра. Если нет, то нажатие кнопки Назад позволит вам продолжить редактирование.',
-	'on-the-wiki' => 'На этой вики',
+	'oasis-on-the-wiki' => 'На этой вики',
 	'oasis-sharing-toolbar-mail-subject' => '$1 прислал вам ссылку на Викия',
 	'oasis-sharing-toolbar-mail-body' => 'Привет.
 
@@ -3846,7 +3846,7 @@ $messages['sv'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magiska ord visas bara i nivå 3-menyer. Var god inkludera dem endast i wikitexten för dina nivå 2-menyer.',
 	'oasis-navigation-v2-validation-next' => 'Nästa',
 	'oasis-navigation-v2-validation-caption' => 'Förhandsgranskning kommer att kolla efter menyfel. Om det är OK, kan du publicera den från förhandsgranskningsskärmen. Om inte, kommer en Tillbaka-knapp låta dig fortsätta redigera.',
-	'on-the-wiki' => 'På wikin',
+	'oasis-on-the-wiki' => 'På wikin',
 	'oasis-sharing-toolbar-mail-subject' => '$1 har skickat en länk till dig på Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hej.
 
@@ -4149,7 +4149,7 @@ $messages['vi'] = array(
 	'oasis-navigation-v2-edit-page' => 'Sửa đổi trang này',
 	'oasis-navigation-v2-add-photo' => 'Thêm hình ảnh',
 	'oasis-navigation-v2-edit-this-menu' => 'Sửa đổi Danh mục Wiki',
-	'on-the-wiki' => 'Trên Wiki này',
+	'oasis-on-the-wiki' => 'Trên Wiki này',
 	'oasis-sharing-toolbar-mail-subject' => '$1 đã gửi cho bạn một liên kết trên Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Chào bạn.
 $1 đã gửi cho bạn trang này từ {{SITENAME}} trên Wikia:
