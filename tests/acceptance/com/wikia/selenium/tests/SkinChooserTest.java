@@ -16,16 +16,11 @@ public class SkinChooserTest extends BaseTest {
 
 		openAndWait("index.php?title=Special:Preferences");
 
-		assertTrue(session().isElementPresent("//input[@id='mw-input-skin-oasis']"));
-		assertTrue(session().isElementPresent("//input[@id='mw-input-skin-monobook']"));
-
-		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-cologneblue']"));
-		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-modern']"));
-		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-myskin']"));
-		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-simple']"));
-		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-standard']"));
-		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-corporate']"));
-		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-monaco']")); // RT#25098
-		assertFalse(session().isElementPresent("//input[@id='mw-input-skin-vector']"));
+		// new version of preferences page, skins that should be enabled
+		assertTrue(session().isElementPresent("//select[@name='wpskin']/option[@value='oasis']"));
+		assertTrue(session().isElementPresent("//select[@name='wpskin']/option[@value='monobook']"));
+		
+		// only above 2 skins should be on the list, all other skins are disabled and removed from UI
+		assertEquals(2, session().getXpathCount("//select[@name='wpskin']/option"));
 	}
 }
