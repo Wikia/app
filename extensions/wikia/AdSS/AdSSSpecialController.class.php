@@ -53,6 +53,10 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		// SponsoredLinks taking down: disabling everything else
+		$this->wg->Out->showErrorPage( 'adss-sponsoredlinksdisabled-title', 'adss-sponsoredlinksdisabled-body' );
+		return false;
+
 		if( $sub[0] == 'paypal' && isset( $sub[1] ) ) {
 			$this->request->setVal( 'status', $sub[1] );
 			$this->forward( 'AdSSSpecial', 'processPaypalReturn' );
@@ -105,6 +109,9 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function displayUpsellForm() {
+		// SponsoredLinks taking down: disabling
+		return false;
+
 		$ad = $this->getVal( 'ad' );
 
 		if( !empty( $ad ) && in_array( $ad->price['period'], array( 'd', 'w', 'm' ) ) ) {
@@ -136,6 +143,9 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function processPaypalReturn() {
+		// SponsoredLinks taking down: disabling
+		return false;
+
 		if( $this->getVal( 'status' ) == 'return' ) {
 			$token = $this->getVal( 'token' );
 			$ad = AdSS_AdFactory::createFromToken( $token );
@@ -199,6 +209,9 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function process() {
+		// SponsoredLinks taking down: disabling
+		return false;
+
 		$adForm = new AdSS_AdForm();
 		if ( $this->request->wasPosted() && AdSS_Util::matchToken( $this->wg->Request->getText( 'wpToken' ) ) ) {
 			$adForm->loadFromRequest( $this->wg->Request );
@@ -343,6 +356,9 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function processUpsellRequest() {
+		// SponsoredLinks taking down: disabling
+		return false;
+
 			$id = $this->getVal( 'id' );
 			$token = $this->getVal( 'token' );
 

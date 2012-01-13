@@ -8,6 +8,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'adss-sponsoredlinksdisabled-title' => 'Sponsored Links Disabled',
+	'adss-sponsoredlinksdisabled-body' => '',
 	'adss-desc' => 'Ad Self Service',
 	'adss' => 'AdSS',
 	'adss-sponsor-links' => 'Sponsored links on Wikia',
@@ -601,12 +603,12 @@ $messages['cs'] = array(
 	'adss-form-pick-plan-errormsg' => 'Musíte vybrat plán',
 	'adss-form-pick-plan' => 'Vyberte si reklamní balíček',
 	'adss-form-site-plan-header' => 'Koupit sponzorovaný odkaz na celé wiki',
-	'adss-form-site-plan-description' => 'Získejte sponzorované odkazy na {{SITENAME}} za jednu nízkou cenu. 
+	'adss-form-site-plan-description' => 'Získejte sponzorované odkazy na {{SITENAME}} za jednu nízkou cenu.
 
 1 sada je v současné době $1% sponzorovaných odkazů na {{SITENAME}} a stojí jen $2. Můžete to kdykoliv zrušit.',
 	'adss-form-site-plan-price' => '$1 za 1 sadu',
 	'adss-form-site-premium-plan-header' => 'Koupit 4 sady za cenu 3',
-	'adss-form-site-premium-plan-description' => 'Získejte sponzorované odkazy na {{SITENAME}} a získejte ještě větší vystavení koupí v balíku. 
+	'adss-form-site-premium-plan-description' => 'Získejte sponzorované odkazy na {{SITENAME}} a získejte ještě větší vystavení koupí v balíku.
 
 1 sada je v současné době $1% sponzorovaných odkazů na {{SITENAME}}. Takto koupíte 4 sady za cenu 3. Můžete to kdykoliv zrušit.',
 	'adss-form-site-premium-plan-price' => 'Pouze $1 za 4 sady!',
@@ -623,7 +625,7 @@ $messages['cs'] = array(
 	'adss-form-reviews-page-month-plan-price' => 'Uložit 50%: za $1',
 	'adss-form-reviews-page-day-plan-price' => 'Jen za $1',
 	'adss-form-or' => '- nebo -',
-	'adss-form-thanks' => 'Děkujeme vám za sponzorství! Vaše reklama byla zakoupena a bude vystavena ručním schválení (do 48 hodin). 
+	'adss-form-thanks' => 'Děkujeme vám za sponzorství! Vaše reklama byla zakoupena a bude vystavena ručním schválení (do 48 hodin).
 
 [[Special:AdSS|Koupit]] další reklamu!',
 	'adss-form-buy-another' => 'Chcete teď koupit druhou reklamu?  [[Special:AdSS|Klikněte zde]]',
@@ -655,7 +657,7 @@ Změňte vaší reklamu na čtvrtletní<br />a zaplaťte $$1 místo $$2 (33% sle
 	'adss-paypal-error' => 'Nepovedlo se vytvořit platbu PayPal. Zkuste to prosím později.
 
 Návrat na [[Special:AdSS|{{int:Adss}}]].',
-	'adss-error' => 'Došlo k chybě. Zkuste to prosím později. 
+	'adss-error' => 'Došlo k chybě. Zkuste to prosím později.
 
 Návrat na [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Všechny stránky',
@@ -698,17 +700,17 @@ Návrat na [[Special:AdSS|{{int:Adss}}]].',
 	'adss-amount' => '$$1',
 	'adss-cancel-confirmation' => 'Jste si jisti, že chcete smazat tuto reklamu?',
 	'adss-welcome-subject' => '[AdSS] Děkujeme za sponzorství!',
-	'adss-welcome-body' => 'Dobrý den, 
+	'adss-welcome-body' => 'Dobrý den,
 
-Gratulujeme, váš účet je nastaven a vaše reklamy se začnou zobrazovat do 48 hodin. Můžete se přihlásit pomocí údajů níže, pokud chcete překontrolovat svůj reklamní text, nakoupit další reklamy, nebo zkontrolovat platbu. Faktury Wikia jsou posílány přes PayPal pokaždé, když utratíte $$4 a více. 
+Gratulujeme, váš účet je nastaven a vaše reklamy se začnou zobrazovat do 48 hodin. Můžete se přihlásit pomocí údajů níže, pokud chcete překontrolovat svůj reklamní text, nakoupit další reklamy, nebo zkontrolovat platbu. Faktury Wikia jsou posílány přes PayPal pokaždé, když utratíte $$4 a více.
 
-URL: $1 
-Uživatelské jméno: $2 
-Heslo: $3 
+URL: $1
+Uživatelské jméno: $2
+Heslo: $3
 
-Uložte heslo na bezpečném místě. Pokud jej ztratíte, můžete kontaktujte zákaznickou podporu na adrese: http://www.wikia.com/wiki/Special:Contact a my vám pošleme heslo na Vaši e-mailovou adresu. 
+Uložte heslo na bezpečném místě. Pokud jej ztratíte, můžete kontaktujte zákaznickou podporu na adrese: http://www.wikia.com/wiki/Special:Contact a my vám pošleme heslo na Vaši e-mailovou adresu.
 
--- 
+--
 Wikia tým',
 );
 
@@ -1110,7 +1112,7 @@ Esto te permite llegar a más público al mostrar tu anuncio en otros wikis del 
 	'adss-paypal-error' => 'No ha sido posible realizar el pago a través de PayPal en este momento. Por favor, inténtelo de nuevo más tarde.
 
 Volver a [[Special:AdSS|{{int:Adss}}]].',
-	'adss-error' => 'Se produjo un error. Por favor, inténtelo de nuevo más tarde. 
+	'adss-error' => 'Se produjo un error. Por favor, inténtelo de nuevo más tarde.
 
 Volver [[Special:AdSS|{{int:ADS}}]].',
 	'adss-per-site' => 'Todas las páginas',
@@ -1170,7 +1172,7 @@ Guarda tu contraseña en un lugar seguro. Si la pierdes, puedes
 contactar al servicio al cliente en: http://www.wikia.com/wiki/Special:Contact
 y te enviaremos la contraseña a tu correo electrónico en un archivo.
 
--- 
+--
 Equipo de Wikia',
 	'adss-email-us' => 'Envíanos un email a [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] si requiere más información',
 	'adss-faq' => 'Preguntas más frecuentes',
@@ -1318,7 +1320,7 @@ $messages['fa'] = array(
 	'adss-welcome-subject' => '[AdSS] از حمایت شما متشکریم!',
 	'adss-welcome-body' => 'سلام،
 
-تبریک، حساب شما ایجاد شد و آگهی‌هایتان تا ۴۸ ساعت به نمایش درخواهند آمد. شما می‌توانید برای بررسی دوبارهٔ متن آگهی‌تان، خرید آگهی‌های بیشتر، یا بازبینی صورت‌حسابتان با اطلاعات زیر به سامانه وارد شوید. صورت‌حساب‌های ویکیا از طریق پی‌پال هر موقع که $$4 یا بیشتر خرج کرده باشید، صادر می‌شوند. 
+تبریک، حساب شما ایجاد شد و آگهی‌هایتان تا ۴۸ ساعت به نمایش درخواهند آمد. شما می‌توانید برای بررسی دوبارهٔ متن آگهی‌تان، خرید آگهی‌های بیشتر، یا بازبینی صورت‌حسابتان با اطلاعات زیر به سامانه وارد شوید. صورت‌حساب‌های ویکیا از طریق پی‌پال هر موقع که $$4 یا بیشتر خرج کرده باشید، صادر می‌شوند.
 
 نشانی: $1
 نام کاربری: $2
@@ -1616,7 +1618,7 @@ Retourner à [[Special:AdSS|{{int:Adss}}]].',
 	'adss-amount' => '$1&nbsp;$',
 	'adss-cancel-confirmation' => 'Êtes vous sûr(e) de vouloir supprimer cette annonce ?',
 	'adss-welcome-subject' => '[AdSS] Merci pour votre parrainage !',
-	'adss-welcome-body' => 'Bonjour, 
+	'adss-welcome-body' => 'Bonjour,
 
 Félicitations, votre compte est créé et vos annonces commenceront à
 paraître dans les 48 heures. Vous pouvez vous connecter en utilisant les
@@ -1624,16 +1626,16 @@ coordonnées ci-dessous pour vérifier votre texte d’annonce, acheter
 d’autres annonces ou consulter sur votre facture. Les factures Wikia sont
 adressées via Paypal à chaque fois que vous avez dépensé $4&nbsp;$ ou plus.
 
-Adresse URL : $1 
-Nom d’utilisateur : $2 
+Adresse URL : $1
+Nom d’utilisateur : $2
 Mot de passe : $3
 
 Veuillez enregistrer votre mot de passe dans un emplacement sécurisé.
 Si vous le perdez, vous pouvez contacter le support client sur
 http://www.wikia.com/wiki/Special:Contact et nous enverrons le mot de passe
-associé à votre adresse de courriel dans nos fichiers. 
+associé à votre adresse de courriel dans nos fichiers.
 
--- 
+--
 L’équipe Wikia',
 	'adss-more-information' => 'Plus d’informations',
 	'adss-email-us' => 'Envoyez-nous un courriel à [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] si vous avez besoin de plus amples informations.',
@@ -2067,7 +2069,7 @@ circular intra 48 horas. Vos pote aperir session usante le detalios hic infra
 pro re-verificar le texto de vostre annuncio, comprar additional annuncios o
 revider vostre factura. Le facturas de Wikia es inviate via PayPal cata vice
 que vos expende $$4 o plus.
-	
+
 URL: $1
 Nomine de usator: $2
 Contrasigno: $3
@@ -2077,7 +2079,7 @@ vos pote contactar le servicio pro clientes a:
 http://www.wikia.com/wiki/Special:Contact
 e nos vos inviara le contrasigno al adresse de e-mail registrate.
 
--- 
+--
 Le equipa de Wikia',
 	'adss-more-information' => 'Plus information',
 	'adss-email-us' => 'Scribe nos a [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] si vos ha besonio de plus information.',
@@ -2126,7 +2128,7 @@ $messages['id'] = array(
 	'adss-form-site-plan-price' => '$1 untuk untuk satu saham',
 	'adss-form-site-premium-plan-header' => 'Membeli 4 tautan yang disponsori dengan harga 3',
 	'adss-form-site-premium-plan-header-ribbon' => 'harga terbaik',
-	'adss-form-site-premium-plan-description' => '* Dapatkan tautan Sponsor  pada {{SITENAME}} dan dapatkan eksposur yang lebih dengan membeli dalam jumlah besar! N! N! 
+	'adss-form-site-premium-plan-description' => '* Dapatkan tautan Sponsor  pada {{SITENAME}} dan dapatkan eksposur yang lebih dengan membeli dalam jumlah besar! N! N!
 
 *! 1 saham saat ini sama dengan $1 % tautan yang di sponsori oleh{{SITENAME}}. Dengan opsi ini Anda membeli empat saham pada harga tiga! Anda dapat membatalkan kapan saja.',
 	'adss-form-site-premium-plan-price' => 'Hanya $1 untuk empat saham!',
@@ -2575,7 +2577,7 @@ URL: $1
 да се обратите на: http://www.wikia.com/wiki/Special:Contact
 и ние ќе ви ја испратиме лозинката по заведената е-пошта.
 
--- 
+--
 Екипата на Викија',
 	'adss-more-information' => 'Повеќе информации',
 	'adss-email-us' => 'Ако ви требаат повеќе информации, пишете ни на [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com].',
@@ -2762,7 +2764,7 @@ Kata laluan: $3
 
 Sila simpan kata laluan anda di tempat yang selamat. Sekiranya anda kehilangan kata laluan anda, anda boleh menghubungi khidmat bantuan pelanggan di: http://www.wikia.com/wiki/Special:Contact supaya kami boleh menghantarkan kata laluan dalam fail kepada alamat e-mel anda.
 
--- 
+--
 Pasukan Wikia',
 	'adss-more-information' => 'Maklumat Lanjut',
 	'adss-email-us' => 'E-mel kami di [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] untuk maklumat lanjut.',
@@ -2877,7 +2879,7 @@ en betaal $$1 in plaats van $$2 (33% korting)!',
 	'adss-paypal-item-type-site-premium-name' => 'Gesponsorde verwijzingen (meeste waar voor uw geld)',
 	'adss-paypal-item-type-hub-name' => 'Gesponsorde verwijzingen (meeste verkeer)',
 	'adss-paypal-redirect' => '$1 als u binnen vijf seconden niet wordt doorverwezen naar PayPal.',
-	'adss-paypal-error' => 'Het was niet mogelijk een PayPalbetaling te maken. Probeer het later opnieuw. 
+	'adss-paypal-error' => 'Het was niet mogelijk een PayPalbetaling te maken. Probeer het later opnieuw.
 
 Terugkeren naar [[Special:AdSS|{{int:Adss}}]].',
 	'adss-error' => 'Er is een fout opgetreden. Probeer het later opnieuw.
@@ -3059,7 +3061,7 @@ $messages['nb'] = array(
 	'adss-form-site-plan-price' => '$1 for én aksje',
 	'adss-form-site-premium-plan-header' => 'Kjøp fire sponsede lenker til prisen av tre',
 	'adss-form-site-premium-plan-header-ribbon' => 'Beste tilbud',
-	'adss-form-site-premium-plan-description' => '* Få sponsede lenker på {{SITENAME}} og få enda mer eksponering ved å kjøpe flere aksjer samtidig. 
+	'adss-form-site-premium-plan-description' => '* Få sponsede lenker på {{SITENAME}} og få enda mer eksponering ved å kjøpe flere aksjer samtidig.
 
 * 1 aksje tilsvarer for øyeblikket $1 % av {{SITENAME}}-sponsede lenker. Med dette alternativet kjøper du fire aksjer til prisen av tre! Du kan avbestille når som helst.',
 	'adss-form-site-premium-plan-price' => 'Kun $1 for fire aksjer!',
@@ -3172,7 +3174,7 @@ Tilbake til [[Special:AdSS|{{int:Adss}}]].',
 
 Gratulerer, kontoen din er satt opp og annonsene vil vises
 innen 48 timer. Du kan logge inn ved å bruke detaljene nedenfor
-for å dobbeltsjekke annonseteksten, kjøpe flere annonser eller 
+for å dobbeltsjekke annonseteksten, kjøpe flere annonser eller
 gjennomgå regningen. Wikia-regninger sendes via Paypal hver gang
 du har brukt $4 $ eller mer.
 
@@ -3418,10 +3420,10 @@ Converta o seu anúncio para uma assinatura trimestral agora<br />e pague $1$ em
 	'adss-preview-prompt' => 'O aspecto do seu patrocínio será este - clique "{{int:adss-button-edit}}" para voltar atrás e fazer alterações, ou "{{int:adss-button-save-pay}}" para gravar e ir para o PayPal.',
 	'adss-click-here' => 'Clique aqui',
 	'adss-paypal-redirect' => '$1 se não for redireccionado para o PayPal nos próximos 5 segundos.',
-	'adss-paypal-error' => 'Não foi possível criar o pagamento PayPal neste momento. Tente novamente mais tarde, por favor. 
+	'adss-paypal-error' => 'Não foi possível criar o pagamento PayPal neste momento. Tente novamente mais tarde, por favor.
 
 Voltar para [[Special:AdSS|{{int:AdSS}}]].',
-	'adss-error' => 'Ocorreu um erro. Tente novamente mais tarde, por favor. 
+	'adss-error' => 'Ocorreu um erro. Tente novamente mais tarde, por favor.
 
 Voltar para [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Todas as páginas',
@@ -3579,10 +3581,10 @@ Converta o seu anúncio a uma assinatura trimestral agora <br /> e pague $$1, em
 	'adss-preview-prompt' => 'O aspecto do seu patrocínio será este - clique "editar" para voltar atrás e fazer alterações, ou "salvar" para salvar e ir para o PayPal.',
 	'adss-click-here' => 'Clique aqui',
 	'adss-paypal-redirect' => '$1 se não for redirecionado para o PayPal nos próximos 5 segundos.',
-	'adss-paypal-error' => 'Não foi possível criar o pagamento PayPal neste momento. Tente novamente mais tarde, por favor. 
+	'adss-paypal-error' => 'Não foi possível criar o pagamento PayPal neste momento. Tente novamente mais tarde, por favor.
 
 Voltar para [[Special:AdSS|{{int:AdSS}}]].',
-	'adss-error' => 'Ocorreu um erro. Tente novamente mais tarde, por favor. 
+	'adss-error' => 'Ocorreu um erro. Tente novamente mais tarde, por favor.
 
 Voltar para [[Special:AdSS|{{int:Adss}}]].',
 	'adss-per-site' => 'Todas as páginas',
@@ -3802,13 +3804,13 @@ $messages['ru'] = array(
 	'adss-form-pick-plan' => 'Выберите пакет объявлений',
 	'adss-form-site-plan-header' => 'Купите перекрёстную ссылку через всю вики',
 	'adss-form-site-plan-header-ribbon' => 'Самый дешевый',
-	'adss-form-site-plan-description' => '* Получите спонсорские ссылки на {{SITENAME}} по единой низкой цене. 
+	'adss-form-site-plan-description' => '* Получите спонсорские ссылки на {{SITENAME}} по единой низкой цене.
 
 * 1 акция равна $1% спонсорских ссылок {{SITENAME}} и стоит всего $2. Вы в любое время можете отменить это.',
 	'adss-form-site-plan-price' => '$1 за одну акцию',
 	'adss-form-site-premium-plan-header' => 'Купите 4 спонсорские ссылки по цене 3',
 	'adss-form-site-premium-plan-header-ribbon' => 'Лучшее значение',
-	'adss-form-site-premium-plan-description' => '* Получите спонсорские ссылки на {{SITENAME}} и получите ещё большую выдержку, покупая больше акций. 
+	'adss-form-site-premium-plan-description' => '* Получите спонсорские ссылки на {{SITENAME}} и получите ещё большую выдержку, покупая больше акций.
 
 * 1 акция равна $1% рекламных ссылок {{SITENAME}}. С помощью этой опции вы покупаете четыре акции по цене трех! Вы в любое время можете отменить это.',
 	'adss-form-site-premium-plan-price' => 'Только $1 за четыре акции!',
@@ -3862,7 +3864,7 @@ $messages['ru'] = array(
 	'adss-paypal-error' => 'Не удается создать платёж в PayPal. Повторите попытку позже.
 
 Вернуться в [[Служебная:AdSS|{{int:Adss}}]].',
-	'adss-error' => 'Произошла ошибка. Пожалуйста, повторите попытку позже. 
+	'adss-error' => 'Произошла ошибка. Пожалуйста, повторите попытку позже.
 
 Вернуться в [[Служебная:AdSS|{{int:Adss}}]]',
 	'adss-per-site' => 'Все страницы',
@@ -4040,7 +4042,7 @@ Konvertera din annons till en kvartalsvis prenumeration nu<br />och betala $$1 i
 	'adss-paypal-item-type-site-premium-name' => 'Sponsrade länkar (Bästa värde)',
 	'adss-paypal-item-type-hub-name' => 'Sponsrade länkar (högst trafik)',
 	'adss-paypal-redirect' => '$1 om du inte omdirigeras till PayPal inom 5 sekunder.',
-	'adss-paypal-error' => 'Kunde inte skapa PayPal betalning den här gången. Försök igen senare. 
+	'adss-paypal-error' => 'Kunde inte skapa PayPal betalning den här gången. Försök igen senare.
 
 Återgå till [[Special:AdSS|{{int:Adss}}]].',
 	'adss-error' => 'Ett fel inträffade. Försök igen senare.
@@ -4087,7 +4089,7 @@ inom 48 timmar. Du kan logga in med uppgifterna nedan för att
 dubbelkolla annonstexten, köpa ytterligare annonser eller se över din
 räkning. Wikias räkningar skickas via Paypal varje gång du spenderar
 $$4 eller mer.
-	
+
 URL: $1
 Användarnamn: $2
 Lösenord: $3
@@ -4096,7 +4098,7 @@ Vänligen spara lösenordet på en säker plats.  Om du tappar bort det, kan du
 kontakta kundservicen på: http://www.wikia.com/wiki/Special:Contact
 så skickar vi lösenordet till din e-postadress.
 
--- 
+--
 Wikia Team',
 	'adss-more-information' => 'Mer information',
 	'adss-email-us' => 'Skicka e-post till oss på [mailto:sponsoredlinks@wikia-inc.com sponsoredlinks@wikia-inc.com] om du behöver mer information.',
