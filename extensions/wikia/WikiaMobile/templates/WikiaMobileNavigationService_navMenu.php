@@ -5,17 +5,16 @@
 	foreach ( array( $wikiaMenuNodes, $wikiMenuNodes ) as $menuNodes ) {
 		if ( is_array( $menuNodes ) && isset( $menuNodes[0] ) ) {
 			$levelOutput0 = '';
+			$processed0 = 0;
+			$blocked0 = 0;
 
 			foreach ($menuNodes[0][NavigationService::CHILDREN] as $level0) {
 				$menuNode0 = $menuNodes[$level0];
 				$isSpecialPage = !empty( $menuNode0[NavigationService::CANONICAL_NAME] );
 				$isAllowed = !$isSpecialPage || ( $isSpecialPage && !in_array( $menuNode0[ NavigationService::CANONICAL_NAME ], $wg->WikiaMobileNavigationBlacklist ) );
 				$isLink = $menuNode0[NavigationService::HREF] != '#';
-				$passed0 = 0;
-				$blocked0 = 0;
 
 				if ( !empty( $menuNode0[NavigationService::TEXT] ) && $isAllowed ) {
-					$passed0++;
 					$levelOutput0 .= '<li>';
 					$levelOutput1 = '';
 
@@ -26,7 +25,7 @@
 					}
 
 					if ( isset( $menuNodes[$level0][NavigationService::CHILDREN] ) ) {
-						$passed1 = 0;
+						$processed1 = 0;
 						$blocked1 = 0;
 						$levelOutput1 .= '<ul class=lvl2>';
 
@@ -37,7 +36,6 @@
 							$isLink = $menuNode1[NavigationService::HREF] != '#';
 
 							if ( !empty( $menuNode1[NavigationService::TEXT] ) && $isAllowed ) {
-								$passed1++;
 								$levelOutput1 .= '<li>';
 								$levelOutput2 = '';
 
@@ -48,7 +46,7 @@
 								}
 
 								if ( isset( $menuNode1[ NavigationService::CHILDREN ] ) ) {
-									$passed2 = 0;
+									$processed2 = 0;
 									$blocked2 = 0;
 									$levelOutput2 .= '<ul class=lvl3>';
 
@@ -59,7 +57,6 @@
 										$isLink = $menuNode2[NavigationService::HREF] != '#';
 
 										if ( !empty( $menuNode2[NavigationService::TEXT] ) && $isAllowed ) {
-											$passed2++;
 											$levelOutput2 .= '<li>';
 
 											if ( $isLink ) {
@@ -72,9 +69,11 @@
 										} else {
 											$blocked2++;
 										}
+
+										$processed2++;
 									}
 
-									if ( $blocked2 >= $passed2 ) {
+									if ( $blocked2 == $processed2 ) {
 										$levelOutput2 = '';
 									} else {
 										$levelOutput2 .= '</ul>';
@@ -85,9 +84,11 @@
 							} else {
 								$blocked1++;
 							}
+
+							$processed1++;
 						}
 
-						if ( $blocked1 >= $passed1 ) {
+						if ( $blocked1 == $processed1 ) {
 							$levelOutput1 = '';
 						} else {
 							$levelOutput1 .= '</ul>';
@@ -98,9 +99,11 @@
 				} else {
 					$blocked0++;
 				}
+
+				$processed0++;
 			}
 
-			if ( $blocked0 >= $passed0 ) {
+			if ( $blocked0 == $processed0 ) {
 				$levelOutput0 = '';
 			} else {
 				$levelOutput0 .= '</li>';
