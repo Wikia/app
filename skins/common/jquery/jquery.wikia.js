@@ -2,7 +2,7 @@ jQuery.getSassCommonURL = function(scssFilePath, params) {
 	return wgCdnRootUrl + wgAssetsManagerQuery.
 		replace('%1$s', 'sass').
 		replace('%2$s', scssFilePath).
-		replace('%3$s', encodeURIComponent(params || window.sassParams)).
+		replace('%3$s', encodeURIComponent($.param(params || window.sassParams))).
 		replace('%4$d', wgStyleVersion);
 }
 
