@@ -186,6 +186,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magic words may only be displayed in Level 3 menus. Please only include them in your Level 2 wikitext.',
 	'oasis-navigation-v2-validation-next' => 'Next',
 	'oasis-navigation-v2-validation-caption' => 'Preview will check for menu errors. If ok, you can Publish from the Preview screen. If not, a Back button will allow you to continue editing.',
+	'oasis-navigation-v2-new-photos' => 'New Photos',
 	'oasis-on-the-wiki' => 'On the Wiki',
 
 	#sharing toolbar e-mail
