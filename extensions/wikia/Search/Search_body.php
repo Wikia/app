@@ -201,9 +201,9 @@ class SolrSearchSet extends SearchResultSet {
 				'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
 				'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
 				'qt' => 'dismax',
-				'pf' => '', // override defaults
+				'pf' => 'html^0.8 title^2', // override defaults
 				'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
-				'ps' => '',
+				'ps' => '100',
 				'tie' => 1, // make it combine all scores instead of picking best match
 				'hl' => 'true',
 				'hl.fl' => 'html,title', // highlight field
@@ -249,7 +249,7 @@ class SolrSearchSet extends SearchResultSet {
 		}
 
 		if( $crossWikiaSearch ) {
-			$params['bf'] = 'scale(map(views,100000,100000000,100000),0,100)^10 map(backlinks,100,500,100)^2';
+			$params['bf'] = 'map(backlinks,100,500,100)^2';
 			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
 
 			$widQuery = '';
