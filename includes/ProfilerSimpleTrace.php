@@ -53,7 +53,7 @@ class ProfilerSimpleTrace extends ProfilerSimple {
 				$this->trace .= $message . "\n";
 			}
 			elseif ($ofname != $functionname) {
-				$self->trace .= "Profiling error: in({$ofname}), out($functionname)";
+				$this->trace .= "Profiling error: in({$ofname}), out($functionname)";
 			}
 			$elapsedcpu = $this->getCpuTime() - $octime;
 			$elapsedreal = microtime(true) - $ortime;
