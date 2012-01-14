@@ -24,7 +24,9 @@ class WikiaMobileHooks extends WikiaObject{
 
 	public function onParserLimitReport( $parser, &$limitReport ){
 		//strip out some unneeded content to lower the size of the output
-		$limitReport = null;
+		if ( Wikia::isWikiaMobile() ) {
+			$limitReport = null;
+		}
 		return true;
 	}
 
