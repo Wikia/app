@@ -106,8 +106,6 @@
 
 			if ( $blocked0 == $processed0 ) {
 				$levelOutput0 = '';
-			} else {
-				$levelOutput0 .= '</li>';
 			}
 ?>
 		<?= $levelOutput0 ;?>
