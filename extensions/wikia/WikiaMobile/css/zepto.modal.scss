@@ -6,7 +6,7 @@
 
 #modalWrapper {
 	position:absolute;
-	top:-100%;
+	top:0;
 	left:0;
 	height: 100%;
 	min-width: 100%;
@@ -15,10 +15,11 @@
 	color: $modal-text-color;
 	z-index: $highest-z-index + 1000;
 	-webkit-transition: opacity 1s;
+	pointer-events: none;
 
 	&.modalShown {
 		opacity: 1;
-		top: 0;
+		pointer-events: auto;
 	}
 }
 

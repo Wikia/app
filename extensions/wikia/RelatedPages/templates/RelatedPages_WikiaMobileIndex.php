@@ -1,6 +1,6 @@
 <? if ( !$skipRendering ) :?>
 	<section id="wkRelPag">
-		<h1 class="collSec open"><?= wfMsgForContent( 'wikiarelatedpages-heading' ) ;?><span class="chev"></span></h1>
+		<h1 class="collSec open"><?= wfMsgForContent( 'wikiarelatedpages-heading' ) ;?><span class=chev></span></h1>
 		<ul class="open">
 		<? foreach ( $pages as $page ) :?>
 			<? $noImage = empty( $page['imgUrl'] ) ;?>

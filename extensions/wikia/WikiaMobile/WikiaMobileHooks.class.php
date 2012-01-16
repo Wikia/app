@@ -41,7 +41,7 @@ class WikiaMobileHooks extends WikiaObject{
 
 			if ( $level == 2 ) {
 				//add chevron to expand the section
-				$ret .= '<span class=chevron></span>';
+				$ret .= '<span class=chev></span>';
 			}
 
 			$ret .= "</h{$level}>";
