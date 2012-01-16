@@ -73,7 +73,7 @@
 			WE.Editor.superclass.constructor.call(this);
 			WE.fire('newInstance',plugins,config);
 			this.pluginConfigs = plugins;
-			this.config = $.extend(WE.config,config)
+			this.config = $.extend(WE.config,config);
 			this.initialized = false;
 			this.state = false;
 			this.mode = false;
@@ -621,14 +621,14 @@
 		getContent: function() {
 			return this.getEditorElement().val();
 		},
-		
+
 		setContent: function(val, datamode) {
 			if(datamode == 'wysiwyg'){
 				RTE.ajax('html2wiki', {html: val, title: window.wgPageName}, function(data) {
 					this.getEditorElement().val(data.wikitext);
 				});
 			} else {
-				this.getEditorElement().val(val);	
+				this.getEditorElement().val(val);
 			}
 		},
 
@@ -745,9 +745,9 @@
 
 		setContent: function(content, datamode) {
 			switch (this.instance.mode) {
-				//TODO: in same case this swith is imposible  
+				//TODO: in same case this swith is imposible
 				case 'wysiwyg':
-					if(datamode != 'wysiwyg'){			
+					if(datamode != 'wysiwyg'){
 						RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, $.proxy(function(data) {
 							this.instance.setData(data.html);
 						}, this));
@@ -758,14 +758,14 @@
 					if(datamode == 'wysiwyg') {
 						RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, $.proxy(function(data) {
 							this.instance.setData(data.wikitext);
-						}, this));			
+						}, this));
 						return true;
 					}
 				break;
 			}
 			this.instance.setData(content);
 		},
-		
+
 		editorFocused: function() {
 			this.editor.fire('editorFocus',this.editor);
 		},
