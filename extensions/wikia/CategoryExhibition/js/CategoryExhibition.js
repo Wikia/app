@@ -1,4 +1,3 @@
-
 var CategoryExhibition = {
 
 	lockTable: {},
@@ -86,7 +85,7 @@ var CategoryExhibition = {
 		if ( CategoryExhibition.lockTable[ name ] == clickedObj.attr('data-page') ){
 		 	return false;
 		}
-		
+
 		CategoryExhibition.lockTable[ name ] = clickedObj.attr('data-page');
 
 		// tracking;
@@ -97,7 +96,7 @@ var CategoryExhibition = {
 		} else {
 			CategoryExhibition.track(name + '/pagination/' + clickedObj.attr('data-page'));
 		}
-		
+
 		CategoryExhibition.log('begin: paginatorClick');
 		$('#mw-pages .category-gallery').startThrobbing();
 		var UrlVars = $.getUrlVars();
@@ -122,7 +121,7 @@ var CategoryExhibition = {
 			if ( typeof goBack !== "undefined" && goBack ){
 				room2.html(room1.html());
 				room1.css( 'margin-left', ( -1 * room1.width() ) );
-				room1.html(axData.page)
+				room1.html(axData.page);
 				room1.animate( { 'margin-left' : 0 }, 500);
 				room1.queue(function () {
 					room2.html('');
@@ -140,7 +139,7 @@ var CategoryExhibition = {
 				});
 			}
 		});
-		
+
 		return false;
 	},
 
@@ -154,7 +153,7 @@ var CategoryExhibition = {
 		var itemSection = '';
 		var itemType = '';
 		var itemIndex = '';
-		
+
 		// perform detection of which element has been clicked
 
 		if ( node.hasParent('#mw-pages') ){
@@ -166,7 +165,7 @@ var CategoryExhibition = {
 		} else if ( node.hasParent('#mw-subcategories') ){
 			itemSection = 'subcategories';
 		}
-		
+
 		itemIndex = $(this).index() + 1;
 
 		if ( $(this).has('div.category-gallery-placeholder').length ){
@@ -176,7 +175,7 @@ var CategoryExhibition = {
 		} else {
 			itemType = 'image';
 		}
-		
+
 		if ( itemType != '' && itemSection != '' && itemIndex != '' ){
 			CategoryExhibition.track(itemSection + '/' + itemType + '/' + itemIndex);
 		}
