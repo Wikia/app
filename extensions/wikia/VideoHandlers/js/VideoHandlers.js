@@ -22,13 +22,22 @@ var VideoHandlers = {
 				autoplay: true
 			},
 			function( res ) {
-				if ( res.errors ) {
+				if ( res.error ) {
 					$.showModal( thumbData.video, res.error, {
 						'width': RelatedVideos.modalWidth
 					});
+				} else if ( res.asset ) {
+					$.getScript(res.asset, function() {
+						$.showModal( thumbData.video, '<div id="'+res.embedCode.id+'"></div>', {
+							'id': 'embedded-video-player',
+							'width': VideoHandlers.modalWidth,
+							'callback' : function(){
+								jwplayer( res.embedCode.id ).setup( res.embedCode );
+							}
+						});
+					});
 				} else if ( res.embedCode ) {
-				} else if ( res.html ) {
-					$.showModal( thumbData.video, res.html, {
+					$.showModal( thumbData.video, res.embedCode, {
 						'id': 'embedded-video-player',
 						'width': VideoHandlers.modalWidth
 					});
