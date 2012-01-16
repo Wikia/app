@@ -71,5 +71,12 @@ $app->registerHook( 'MakeHeadline', 'WikiaMobileHooks', 'onMakeHeadline' );
  * settings
  */
 
- //list of special pages (canonical names) to strip out from the navigation menu
-$app->wg->set( 'wgWikiaMobileNavigationBlacklist', array( 'Chat', 'WikiActivity' ) );
+//global menu for the mobile skin
+if ( empty($app->wg->WikiaMobileGlobalNavigationMenu ) ) {
+	$app->wg->set( 'wgWikiaMobileGlobalNavigationMenu', '*Special:Random|randompage' );
+}
+
+//list of special pages (canonical names) to strip out from the navigation menu
+if ( empty( $app->wg->WikiaMobileNavigationBlacklist ) ) {
+	$app->wg->set( 'wgWikiaMobileNavigationBlacklist', array( 'Chat', 'WikiActivity', 'NewFiles' ) );
+}

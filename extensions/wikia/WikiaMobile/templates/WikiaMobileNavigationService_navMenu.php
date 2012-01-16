@@ -1,8 +1,8 @@
 <section class=current1 id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?>data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 		<header>
-		   <button id=wkNavBack><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>
-		   <h1 class=collSec><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?><span class="chev"></h1>
-		   <a id=wkNavLink></a>
+			<button id=wkNavBack><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>
+			<h1 class=collSec><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?><span class="chev"></h1>
+			<a id=wkNavLink></a>
 		</header>
 	<ul class=lvl1>
 <?
@@ -14,8 +14,7 @@
 
 			foreach ($menuNodes[0][NavigationService::CHILDREN] as $level0) {
 				$menuNode0 = $menuNodes[$level0];
-				$isSpecialPage = !empty( $menuNode0[NavigationService::CANONICAL_NAME] );
-				$isAllowed = !$isSpecialPage || ( $isSpecialPage && !in_array( $menuNode0[ NavigationService::CANONICAL_NAME ], $wg->WikiaMobileNavigationBlacklist ) );
+				$isAllowed = !in_array( $menuNode0[ NavigationService::HREF ], $blacklist );
 				$isLink = $menuNode0[NavigationService::HREF] != '#';
 
 				if ( !empty( $menuNode0[NavigationService::TEXT] ) && $isAllowed ) {
@@ -35,8 +34,7 @@
 
 						foreach ($menuNodes[$level0][ NavigationService::CHILDREN ] as $level1) {
 							$menuNode1 = $menuNodes[$level1];
-							$isSpecialPage = !empty( $menuNode1[NavigationService::CANONICAL_NAME] );
-							$isAllowed = !$isSpecialPage || ( $isSpecialPage && !in_array( $menuNode1[ NavigationService::CANONICAL_NAME ], $wg->WikiaMobileNavigationBlacklist ) );
+							$isAllowed = !in_array( $menuNode1[ NavigationService::HREF ], $blacklist );
 							$isLink = $menuNode1[NavigationService::HREF] != '#';
 
 							if ( !empty( $menuNode1[NavigationService::TEXT] ) && $isAllowed ) {
@@ -56,8 +54,7 @@
 
 									foreach ( $menuNode1[NavigationService::CHILDREN] as $level2 ) {
 										$menuNode2 = $menuNodes[$level2];
-										$isSpecialPage = !empty( $menuNode2[NavigationService::CANONICAL_NAME] );
-										$isAllowed = !$isSpecialPage || ( $isSpecialPage && !in_array( $menuNode2[ NavigationService::CANONICAL_NAME ], $wg->WikiaMobileNavigationBlacklist ) );
+										$isAllowed = !in_array( $menuNode2[ NavigationService::HREF ], $blacklist );
 										$isLink = $menuNode2[NavigationService::HREF] != '#';
 
 										if ( !empty( $menuNode2[NavigationService::TEXT] ) && $isAllowed ) {

@@ -32,15 +32,17 @@ class  WikiaMobileNavigationService extends WikiaService {
 	public function navMenu(){
 		// render global wikia navigation ("On the Wiki" menu)
 		$this->response->setVal( 'wikiaMenuNodes',
-			$this->navService->parseMenu(
-				WikiNavigationService::WIKIA_GLOBAL_VARIABLE,
-				array(
-					1,
-					$this->wg->maxLevelTwoNavElements,
-					$this->wg->maxLevelThreeNavElements
-				),
-				true
-			)
+			$this->navService->parseVariable(
+					'wgWikiaMobileGlobalNavigationMenu',
+					array(
+						$this->wg->maxLevelOneNavElements,
+						$this->wg->maxLevelTwoNavElements,
+						$this->wg->maxLevelThreeNavElements
+					),
+					WikiNavigationService::CACHE_TTL,
+					true,
+					false
+				)
 		);
 
 		// render local navigation (more tabs)
@@ -54,6 +56,16 @@ class  WikiaMobileNavigationService extends WikiaService {
 				)
 			)
 		);
+
+		$blacklist = array();
+
+		foreach ( $this->wg->WikiaMobileNavigationBlacklist as $index => $item ) {
+			$title = SpecialPage::getTitleFor( $item );
+			$blacklist[] = $title->getLocalURL();
+			$blacklist[] = $title->getFullURL();
+		}
+
+		$this->response->setVal( 'blacklist', $blacklist );
 
 		// report wiki nav parse errors (BugId:15240)
 		$this->response->setVal( 'parseErrors', $this->navService->getErrors() );
