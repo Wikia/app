@@ -46,7 +46,7 @@ class AdSS_ManagerController {
 							$wgOut->addHTML( wfMsgWikiHtml( 'adss-paypal-error' ) );
 							return;
 					}
-				}	
+				}
 			}
 			$this->displayPanel();
 		} else {

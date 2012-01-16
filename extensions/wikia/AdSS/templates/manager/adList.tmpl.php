@@ -1,5 +1,4 @@
 <fieldset class="panel">
-<p><a id="adssBuyAnother" class="wikia-button" href="<?php echo $buyUrl; ?>"><?php echo wfMsgHtml('adss-buy-another'); ?></a></p>
 <?php echo $adList; ?>
 </fieldset>
 
@@ -49,7 +48,7 @@ $("a.edit").click( function(e) {
 			url.val(json["url"]);
 			text.val(json["text"]);
 			desc.val(json["desc"]);
-			
+
 			dialog.find(".save").click(function(evt){
 				$.post(wgScript, {
 					'action': 'ajax',
