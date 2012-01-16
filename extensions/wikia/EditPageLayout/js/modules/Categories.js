@@ -20,7 +20,7 @@
 		},
 
 		afterRender: function() {
-			var introText = this.editor.config.categoriesIntroText
+			var introText = this.editor.config.categoriesIntroText;
 			if (introText) {
 				this.el.append($('<div>').addClass('info-text').text(introText));
 			}
@@ -28,17 +28,17 @@
 
 		afterAttach: function() {
 			this.el.append($('#csMainContainer').show());
-			if (typeof initCatSelectForEdit == 'function') {
-				csType = "module";
-				initCatSelectForEdit();
+			if (typeof window.initCatSelectForEdit === 'function') {
+				window.csType = "module";
+				window.initCatSelectForEdit();
 			}
 
 			// tracking
 			this.el.bind({
-				categorySelectAdd: this.proxy(function(ev) {this.track('add')}),
-				categorySelectMove: this.proxy(function(ev) {this.track('move')}),
-				categorySelectEdit: this.proxy(function(ev) {this.track('edit')}),
-				categorySelectDelete: this.proxy(function(ev) {this.track('delete')})
+				categorySelectAdd: this.proxy(function(ev) {this.track('add');}),
+				categorySelectMove: this.proxy(function(ev) {this.track('move');}),
+				categorySelectEdit: this.proxy(function(ev) {this.track('edit');}),
+				categorySelectDelete: this.proxy(function(ev) {this.track('delete');})
 			});
 
 			// save
