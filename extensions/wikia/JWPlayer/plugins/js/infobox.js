@@ -4,7 +4,7 @@
 	});
 
 	var template = function(player, config, div) {
-		function setup(evt) {		
+		player.onReady( function setup(evt) {		
 			if (player.config.width >= 330) {
 				var container = $(div);
 				container.addClass('jwplayer-infobox');
@@ -30,8 +30,7 @@
 					container.fadeOut(200);
 				});
 			}
-		};
-		player.onReady(setup);
+		});
 		this.resize = function(width, height) {};
 	};		
 })(jwplayer);

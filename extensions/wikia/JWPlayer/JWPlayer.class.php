@@ -4,11 +4,11 @@ class JWPlayer {
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
 
 	private static $JWPLAYER_DIR = '/extensions/wikia/JWPlayer/';
-	private static $JWPLAYER_JS = 'jwplayer.js';
+	private static $JWPLAYER_JS = 'jwplayer.min.js';
 	private static $JWPLAYER_SWF = 'player.swf';
 	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
 	
-	private static $CACHEBUSTER = 2;	// increment this anytime an asset file is modified
+	private static $CACHEBUSTER = 3;	// increment this anytime an asset file is modified
 	
 	// ad.tag must be initialized somewhere in this class!
 	private static $JWPLAYER_GOOGIMA_DATA = 
@@ -18,18 +18,18 @@ class JWPlayer {
 			'scaled_ads'=>'false'
 		    );
 	
-	public static function getAssetUrl() {
-		return self::$JWPLAYER_DIR . self::$JWPLAYER_JS . '?cb=' . self::$CACHEBUSTER;		
+	public static function getJavascriptPlayerUrl() {
+		return self::getAssetUrl(self::$JWPLAYER_DIR . self::$JWPLAYER_JS);
 	}
 	
 	public static function getEmbedCode($articleId, $videoid, $url, $title, $width, $height, $showAd, $duration, $isHd, $hdfile='', $thumbUrl='', $cityShort='life', $autoplay=true, $isAjax=true, $playerOptions=array()) {
 		$jwplayerData = array();
-		$jwplayerData['jwplayerjs'] = self::getAssetUrl();
-		$jwplayerData['player'] = self::$JWPLAYER_DIR . self::$JWPLAYER_SWF . '?cb=' . self::$CACHEBUSTER;
+		$jwplayerData['jwplayerjs'] = self::getJavascriptPlayerUrl();
+		$jwplayerData['player'] = self::getAssetUrl( self::$JWPLAYER_DIR . self::$JWPLAYER_SWF );
 		$jwplayerData['playerId'] = 'player-'.$videoid.'-'.mt_rand();
 		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID),
 						'timeslidertooltipplugin-2'=>array(), 
-						(self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js?cb='.self::$CACHEBUSTER)=>array('title'=>htmlspecialchars($title))
+						self::getAssetUrl(self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js')=>array('title'=>htmlspecialchars($title))
 						);
 		
 		$jwplayerData['file'] = $url;
@@ -44,7 +44,7 @@ class JWPlayer {
 		else {
 			$wikiaSkinZip = 'wikia-medium.zip';			
 		}
-		$jwplayerData['skin'] = self::$JWPLAYER_DIR . '/skins/wikia/'.$wikiaSkinZip . '?cb=' . self::$CACHEBUSTER;
+		$jwplayerData['skin'] = self::getAssetUrl( self::$JWPLAYER_DIR . '/skins/wikia/'.$wikiaSkinZip );
 	
 		// thumb
 		if (!empty($thumbUrl) && empty($autoplay)) {
@@ -135,6 +135,10 @@ EOT;
 		}
 		
 		return $code;
+	}
+	
+	protected static function getAssetUrl($url) {
+		return $url . '?cb=' . self::$CACHEBUSTER;		
 	}
 	
 	/**
