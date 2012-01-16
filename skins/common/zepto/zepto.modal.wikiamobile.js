@@ -8,47 +8,45 @@
 
 	$._createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution(),
-		modal = '<div id="modalWrapper">\
-			<div id="modalTopBar"></div>\
-			<div id="modalClose">&times;</div>\
-			<div id="modalContent"></div>\
-			<div id="modalFooter"></div>\
+		modal = '<div id=modalWrapper>\
+			<div id=modalTopBar></div>\
+			<div id=modalClose>&times;</div>\
+			<div id=modalContent></div>\
+			<div id=modalFooter></div>\
 			</div><style>#modalWrapper{min-height:' + resolution[1] + 'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#modalWrapper{min-height:' + resolution[0] + 'px;}}</style>',
 		that = this,
 		body = $(document.body);
 
-		$('body').append(modal);
+		body.append(modal);
 
 		this._modal = $('#modalWrapper');
 		this._modalClose = $('#modalClose');
 		this._modalTopBar = $('#modalTopBar');
 		this._modalContent = $('#modalContent');
 		this._modalFooter = $('#modalFooter');
-		this._wikiaAdPlace = $('#WikiaAdPlace');
 		this._modalClose = $('#modalClose');
 		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
-		this._thePage = $('body').children().not('#modalWrapper,style,script');
+		this._thePage = $('#WikiaAdPlace, #wkTopNav, #WikiaPage, #wikiaFooter');
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
 				if(window.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 )},10);
 		}
 
-		//handle back button to close modal
-		window.onbeforeunload = function() {
-			if($.isModalShown()) {
-				$.closeModal();
-				return 'Your in modal. By clicking back you\'ll go back. And probably you want to close modal. If so click - cancel';
-			}
-		};
+		//close modal on back button
+		if ("onhashchange" in window) {
+			window.addEventListener("hashchange", function() {
+				if(window.location.hash == "") {
+					that.closeModal();
+				}
+			}, false);
+		}
 
-		document.getElementById('modalClose').addEventListener(WikiaMobile.getClickEvent(), function(event) {
-			event.stopPropagation();
-			event.preventDefault();
+		this._modalClose.bind(WikiaMobile.getClickEvent(), function(event) {
 			that.closeModal();
-		}, true);
+		});
 
-		$('#modalWrapper').bind(WikiaMobile.getTouchEvent(), function() {
+		this._modal.bind(WikiaMobile.getTouchEvent(), function() {
 			if($(this).hasClass('imageModal')) {
 				window.scrollTo( 0, 1 );
 			}
@@ -133,6 +131,9 @@
 			toHide = options.toHide,
 			onOpen = options.onOpen,
 			modal;
+
+		//needed for closing modal on back button
+		window.location.hash = "modalOpen";
 
 		if(!(html || imageNumber)) throw "No content provided for modal";
 

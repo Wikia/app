@@ -8,116 +8,267 @@
 @import "mixins/box-shadow.scss";
 @import "mixins/transition.scss";
 
+#wkWrdMark {
+	line-height: 36px;
+	font-size: x-large;
+	color: $navBarWordmarkText;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	position: absolute;
+	left: 5px;
+	right: 95px;
+	top: 2px;
+}
 
-
-#navigation {
-	position: relative;
-	height: 40px;
+#wkImgMark {
+	height: 36px;
+	width: auto;
 	padding: 2px 5px;
+	float: left;
+}
+
+#searchToggle {
+	background-image: url('/extensions/wikia/WikiaMobile/images/search.png');/* $wgCdnStylePath */
+}
+
+#navToggle {
+	img {
+		width: 21px;
+		height: 21px;
+		display: block;
+		margin: 10px auto;
+		@include transition(all .4s);
+	}
+}
+
+#navigationSearch {
+	display: none;
+	position: absolute;
+	left: 10px;
+	right: 55px;
+	top: 4px;
+}
+
+#searchInput {
+	border: none;
+	width: 100%;
+	font-size: large;
+	border-radius: 20px;
+	-webkit-border-radius: 20px;
+	padding: 5px;
+}
+::-webkit-input-placeholder, :-moz-placeholder {
+	color: $link-color;
+}
+
+#wkTopBar {
+	height: 40px;
 	background-color: $navBarColorFirst;
 	@include linear-gradient($navBarColorFirst, $navBarColorSecond);
-	@include box-shadow(0 0 10px black);
-	@include box-sizing(border-box);
+}
+
+#wkTopNav {
+	position: relative;
+	height: 40px;
+	max-height: 40px;
+	overflow-x: hidden;
+	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-	z-index: 20;
+	@include box-shadow(0 0 10px black);
+	@include box-sizing(border-box);
 
-	&.noShadow {
-		@include box-shadow(none);
-	}
+	&.fullNav {
+		min-height: 100%;
+		max-height: none;
+		background-color: white;
 
-	#navigationWordMark {
-		height: 100%;
-		width: auto;
-		line-height: 40px;
-		font-size: x-large;
-		color: $navBarWordmarkText;
-		max-height: 100%;
-		max-width: 80%;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.toggle {
-		position: absolute;
-		top: 0;
-		width: 45px;
-		height: 100%;
-		background-color: none;
-		@include transition(background-color .5s);
-		background-repeat: no-repeat;
-		background-position: center;
-	}
-
-	#searchToggle {
-		right: 0;
-		background-image: url('/extensions/wikia/WikiaMobile/images/search.png');/* $wgCdnStylePath */
-		&.open {
-			outline: 1px solid $searchOpenBorder;
+		#navToggle {
 			background-color: $searchOpenBackground;
-		}
-	}
-
-	#navToggle {
-		right: 46px;
-		background-image: url('/extensions/wikia/WikiaMobile/images/menuChev.png');/* $wgCdnStylePath */
-
-		&.open {
-			border-left: 1px solid rgb(135,135,135);
-			border-top: 1px solid rgb(135,135,135);
-			border-right: 1px solid rgb(135,135,135);
-			background-color: $searchOpenBackground;
-
-			&:before {
-				width: 0;
-				border: 0;
+			img {
+				-webkit-transform: rotateZ(180deg);
+				-moz-transform: rotateZ(180deg);
+				transform: rotateZ(180deg);
 			}
 		}
 	}
 
-
-	#navigationSearch {
-		display: none;
-		position: absolute;
-		left: 10px;
-		right: 105px;
-		top: 8px;
+	&.searchOpen {
+		#navToggle, #wkImgMark, #wkWrdMark {
+			display: none;
+		}
+		#navigationSearch {
+			display: block;
+		}
+		#searchToggle {
+			background-color: $searchOpenBackground;
+		}
 	}
 
-	#searchInput {
-		border: 0;
-		width: 100%;
-		font-size: large;
-		border-radius: 20px;
-		padding: 5px;
+	.toggle {
+		float: right;
+		width: 45px;
+		height: 100%;
+		background-color: none;
+		@include transition(all .4s);
+		-webkit-transform: rotateZ(0);
+		background-repeat: no-repeat;
+		background-position: center;
 	}
-	::-webkit-input-placeholder {
-		color: $link-color;
-	}
-	:-moz-placeholder {
-		color: $link-color;
+}
+.js {
+	#wkNavMenu {
+		ul {
+			position: relative;
+			top: -50px;
+			min-height: 100%;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			list-style: none;
+			color:  $link-color;
+			background-color: white;
+			@include transition(left .5s);
+			-webkit-transform: translateZ(0);
+			-moz-transform: translateZ(0);
+			transform: translateZ(0);
+
+			li {
+				width: 100%;
+				line-height: 49px;
+				padding-left: 15px;
+				padding-right: 20px;
+				@include box-sizing(border-box);
+				border-bottom: 1px solid $border-color;
+
+				&:active, &.fake-active {
+					@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
+
+					& > a, & > span {
+						color: white;
+					}
+				}
+
+				&.child {
+					& > a, & > span {
+						background-repeat: no-repeat;
+						background-position: right;
+						background-image: url('/extensions/wikia/WikiaMobile/images/chev-rg.png');/* $wgCdnStylePath */
+					}
+
+				}
+
+				a, span {
+					display: block;
+					width: 100%;
+					height: 100%;
+				}
+
+				a {
+					font-weight: bold;
+				}
+			}
+		}
+
+		.lvl2, .lvl3 {
+			position: absolute;
+			top: 0;
+			left: 100%;
+		}
+
+		.lvl2 {
+			top: 50px;
+		}
+
+		&.current1 {
+			header {
+				left: 100%;
+			}
+		}
+
+		&.current2 {
+			.lvl2.current {
+				left: 0;
+			}
+		}
+
+		&.current3 {
+			.lvl2.current {
+				left: 0;
+			}
+			.lvl3.current {
+				left: 0;
+			}
+		}
 	}
 }
 
 #wkNav {
-	visibility: hidden;
-	position: absolute;
-	top: 40px;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	opacity: 0;
+	display: none;
+	position: relative;
 	background-color: white;
-	overflow: hidden;
-	border-top: 1px solid $border-color;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-	@include transition(opacity .5s);
+	z-index: 40;
+	min-height: 100%;
 
-	&.open {
-		visibility: visible;
-		opacity: 1;
+	.fullNav & {
+		display: block;
+	}
+
+	header {
+		color: $link-color;
+		line-height: 50px;
+		background-color: white;
+		@include box-shadow(0 5px 15px -10px black);
+		@include transition(left .5s);
+		-webkit-transform: translateZ(0);
+		-moz-transform: translateZ(0);
+		position: relative;
+		z-index: 120;
+		left: 0;
+
+		#wkNavBack {
+			display: block;
+			border-radius: 5px;
+			border: 1px solid $border-color;
+			color: $link-color;
+			font-size: medium;
+			font-weight: 100;
+			padding: 5px 10px;
+			float: left;
+			margin: 10px;
+			@include linear-gradient(rgb(247,247,247), rgb(241,241,241));
+			position: absolute;
+
+			&:active, &.fake-active {
+				color: white;
+				@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
+			}
+		}
+
+		h1 {
+			text-align: center;
+			font-size: medium;
+			font-weight: bold;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			margin: 0 50px 0 80px;
+
+		}
+
+		a {
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 50px;
+			height: 50px;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-image: url('/extensions/wikia/WikiaMobile/images/chevron-right.png');/* $wgCdnStylePath */
+		}
 	}
 }
 
@@ -143,174 +294,15 @@
 			@include box-shadow(0 0 5px black);
 			color: $link-color;
 		}
-
-		a {
-			font-weight: 600;
-		}
 	}
 }
 
-.navTab {
-	top: 40px;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	position: absolute;
-}
-
-#wkWNTopBar {
-	color: $link-color;
-	line-height: 50px;
-	background-color: white;
-	@include box-shadow(0 5px 15px -10px black);
-	@include transition(left .5s);
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	position: relative;
-	z-index: 120;
-	left: 0;
-
-	#wkNavBack {
-		border-radius: 5px;
-		border: 1px solid grey;
-		color: $link-color;
-		font-size: medium;
-		font-weight: 100;
-		padding: 5px 10px;
-		float: left;
-		margin: 10px;
-		background-color: white;
-		position: absolute;
-	}
-
-	#wkNavBack:active {
-		color: white;
-		@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
-	}
-
-	h1 {
-		text-align: center;
-		margin: 0;
-		padding: 0;
-		font-size: medium;
-		font-weight: 600;
-	}
-
-	a {
-		position: absolute;
-		right: 0;
-		top: 0;
-		padding: 25px;
-		background-repeat: no-repeat;
-		background-position: center;
-		background-image: url('/extensions/wikia/WikiaMobile/images/chevron-right.png');/* $wgCdnStylePath */
-	}
-}
-
-#wkWikiNav {
-	height: 100%;
-	width: 100%;
-
-	ul {
-		position: absolute;
-		top:0;
-		left: 0;
-		margin: 0;
-		padding: 0;
-		height: 100%;
-		width: 100%;
-		list-style: none;
-		color:  $link-color;
-		background-color: white;
-		@include transition(left .5s);
-		-webkit-transform: translateZ(0);
-		-moz-transform: translateZ(0);
-
-		li {
-			width: 100%;
-			height: 50px;
-			line-height: 50px;
-			padding-left: 15px;
-			padding-right: 20px;
-			@include box-sizing(border-box);
-			border-bottom: 1px solid $border-color;
-
-			span, a {
-				display: block;
-				width: 100%;
-				height: 100%;
-			}
-
-			a {
-				font-weight: 600;
-			}
-
-			&:active {
-				@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
-
-				&:first-child {
-					color: white;
-				}
-			}
-
-			&.child {
-				background-repeat: no-repeat;
-				background-position: right;
-				background-origin: content-box;
-				background-image: url('/extensions/wikia/WikiaMobile/images/chevron-right.png');/* $wgCdnStylePath */
-			}
+//default style if js is disabled
+#WikiaMainContentFooter #wkNavMenu{
+		button, header a {
+			display: none;
 		}
-	}
-
-	.lvl2, .lvl3 {
-		position: absolute;
-		left: 100%;
-	}
-
-	.lvl2 {
-		top: 50px;
-	}
-
-	&.current1 {
-		#wkWNTopBar {
-			left: 100%;
-		}
-	}
-
-	&.current2 {
-		.lvl2.current {
-			left: 0;
-		}
-	}
-
-	&.current3 {
-		.lvl2.current {
-			left: 0;
-		}
-		.lvl3.current {
-			left: 0;
-		}
-	}
-}
-
-#wkNavMenu{
 		.collSec{
 				@include section-title-related;
 		}
-}
-
-.js{
-	#wkNavMenu {
-		.lvl1{
-			display: none;
-
-			&.open{
-				display: block;
-			}
-		}
-
-		ul{
-			padding: 0 0 0 18px;
-		}
-	}
 }

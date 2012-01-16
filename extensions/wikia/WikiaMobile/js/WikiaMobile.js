@@ -14,7 +14,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	clickEvent = ('ontap' in window) ? 'tap' : 'click',
 	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown',
 	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
-	tableWrapperHTML = '<div class="bigTable">';
+	tableWrapperHTML = '<div class=bigTable>';
 
 	function getImages(){
 		return allImages;
@@ -231,17 +231,29 @@ var WikiaMobile = WikiaMobile || (function() {
 		page = $('#WikiaPage');
 		article = $('#WikiaMainContent');
 
-		var navigationWordMark = $('#navigationWordMark'),
+		//replace menu from bottom to topBar - the faster the better
+		document.getElementById('wkNav').replaceChild(document.getElementById('wkNavMenu'), document.getElementById('wkWikiNav'));
+
+		var navigationWordMark = $('#wkWrdMark'),
 		navigationSearch = $('#navigationSearch'),
 		searchToggle = $('#searchToggle'),
-		searchInput = $('#searchInput');
+		searchInput = $('#searchInput'),
+		wkNavMenu = $('#wkNavMenu'),
+		wkNav = $('#wkNav'),
+		//while getting the h1 element erase classes needed for phones with no js
+		wikiNavHeader = wkNavMenu.find('h1').removeClass(),
+		wikiNavLink = $('#wkNavLink'),
+		navigationBar = $('#wkTopNav'),
+		navToggle = $('#navToggle'),
+		thePage = page.add('#wikiaFooter'),
+		//to cache link in wiki nav
+		lvl2Link;
 
 		//analytics
 		track('view');
 
 		processSections();//NEEDS to run before table wrapping!!!
 		processTables();
-
 
 		//add class for styling to be applied only if JS is enabled
 		//(e.g. collapse sections)
@@ -290,107 +302,90 @@ var WikiaMobile = WikiaMobile || (function() {
 			track(['search', 'submit']);
 		});
 
-		$('#searchToggle').bind(touchEvent, function(event){
-			var self = $(this);
-
-			if(self.hasClass('open')){
+		searchToggle.bind(clickEvent, function(event){
+			if(navigationBar.hasClass('searchOpen')){
 				track(['search', 'toggle', 'close']);
-				navigationWordMark.show();
-				navigationSearch.hide().removeClass('open');
-				self.removeClass('open');
+				navigationBar.removeClass();
 				searchInput.val('');
 			}else{
 				track(['search', 'toggle', 'open']);
-				navigationWordMark.hide();
-				navigationSearch.show().addClass('open');
-				self.addClass('open');
+				navigationBar.removeClass().addClass('searchOpen');
+				thePage.show();
 			}
 		});
 
 		//preparing the navigation
-		var wkWikiNav = $('#wkWikiNav');
+		wkNavMenu.find('ul ul').parent().addClass('child');
 
-		//find menu on a page and append it to topBarMenu and check if element has child and append .child class
-		wkWikiNav.append( $('#wkNavMenu').remove().children('ul') ).find('ul ul').parents('li').addClass('child');
-
-		$('#navToggle').bind(clickEvent, function(event) {
-			var self = $(this),
-				nav = $('#wkNav'),
-				topBar = $('#navigation');
-
-			if(self.hasClass('open')){
-				//track(['navigation', 'toggle', 'close']);
-				self.removeClass('open');
-				nav.removeClass('open');
-				topBar.removeClass('noShadow');
-				$(document.body).children().not('#navigation, #wkNav').show();
+		navToggle.bind(clickEvent, function(event) {
+			if(navigationBar.hasClass('fullNav')){
+				track(['navigation', 'toggle', 'close']);
+				thePage.show();
+				navigationBar.removeClass();
 			}else{
-				//track(['navigation', 'toggle', 'open']);
-				$(document.body).children().not('#navigation, #wkNav').hide();
-				self.addClass('open');
-				nav.addClass('open');
-				topBar.addClass('noShadow');
+				track(['navigation', 'toggle', 'open']);
+				thePage.hide();
+				navigationBar.addClass('fullNav');
 			}
 		});
 
-		//will be needed when more tabs will be introduced
-		 /* $('#wkTabs').delegate('li', clickEvent, function() {
-			var self = $(this);
-
-			if(self.hasClass('active')){
-				//track(['navigation', 'toggle', 'close']);
-				self.removeClass('active');
-			}else{
-				//track(['navigation', 'toggle', 'open']);
-				self.addClass('active');
-			}
-		}); */
+		$("#wkNavMenu li, #wkNavBack")
+		.bind("touchstart", function () {
+			$(this).addClass("fake-active");
+		}).bind("touchend touchcancel", function() {
+			$(this).removeClass("fake-active");
+		});
 
 		$('.lvl1').delegate('.child', clickEvent, function(event) {
-			var self = $(this),
-			element = self.children(':first-child');
-
 			if($(event.target).parent().is('.child')) {
-
 				event.stopPropagation();
 				event.preventDefault();
 
-				$('#topBarText').text(element.text());
+				var self = $(this),
+				element = self.children().first(),
+				href = element.attr('href'),
+				ul = self.find('ul').first().addClass('current');
 
-				if(element.is('a')) {
-					$('#wkWikiNav header a').attr('href', element.attr('href')).show();
-				} else {
-					$('#wkWikiNav header a').hide();
+				wikiNavHeader.text(element.text());
+
+				if(href) {
+					wikiNavLink.attr('href', href).show();
+				}else{
+					wikiNavLink.hide();
 				}
 
-				self.children('ul').addClass('current');
+				navigationBar.height(ul.height() + 130);
 
-				if($('#wkWikiNav').is('.current1')) {
-					$('#wkWikiNav').addClass('current2').removeClass('current1');
+
+				if(wkNavMenu.hasClass('current1')) {
+					wkNavMenu.removeClass().addClass('current2');
+					lvl2Link = href;
 				} else {
-					$('#wkWikiNav').addClass('current3').removeClass('current2');
+					wkNavMenu.removeClass().addClass('current3');
 				}
 			}
 		});
 
 		$('#wkNavBack').bind(clickEvent, function() {
 			var self = $(this),
-			wkNav = $('#wkWikiNav');
+			current;
 
-			if(wkNav.is('.current2')) {
-				wkNav.addClass('current1').removeClass('current2').find('.lvl2').removeClass('current');
+			if(wkNavMenu.hasClass('current2')) {
+				wkNavMenu.removeClass().addClass('current1').find('.lvl2').removeClass('current');
+				navigationBar.height($('.lvl1').height() + 80);
 			} else {
-				wkNav.addClass('current2').removeClass('current3').find('.lvl3').removeClass('current');
-				$('#topBarText').text( $('.current').prev().text() );
+				wkNavMenu.removeClass().addClass('current2').find('.lvl3').removeClass('current');
+				current = $('.lvl2.current');
+				wikiNavHeader.text( current.prev().text() );
+				navigationBar.height(current.height() + 130);
+				wikiNavLink.attr('href', lvl2Link);
 			}
 		});
 
 		//end of preparing the nav
 
 		page.bind(clickEvent, function(event){
-			navigationWordMark.show();
-			navigationSearch.hide().removeClass('open');
-			searchToggle.removeClass('open');
+			navigationBar.removeClass();
 			searchInput.val('');
 		});
 
