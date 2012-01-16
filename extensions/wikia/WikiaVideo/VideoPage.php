@@ -55,7 +55,7 @@ class VideoPage extends Article {
 	private static $SCREENPLAY_VENDOR_ID = 1893;
 	private static $SCREENPLAY_VIDEO_TYPE = '.mp4';
 	private static $JWPLAYER_DIR = '/extensions/wikia/JWPlayer/';
-	private static $JWPLAYER_JS = 'jwplayer.js';
+	private static $JWPLAYER_JS = 'jwplayer.min.js';
 	private static $JWPLAYER_SWF = 'player.swf';
 	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
 	

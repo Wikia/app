@@ -7,7 +7,7 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $urlTemplate = 'http://www.youtube.com/watch?v=';
 	
 	public function getPlayerAssetUrl() {
-		return JWPlayer::getAssetUrl();
+		return JWPlayer::getJavascriptPlayerUrl();
 	}
 	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false) {
