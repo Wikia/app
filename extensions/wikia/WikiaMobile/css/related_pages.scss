@@ -55,7 +55,7 @@ $itemPadding: 6px;
 				float: left;
 			}
 
-			&:active {
+			&:active, &.fake-active {
 				@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
 				color: white;
 			}

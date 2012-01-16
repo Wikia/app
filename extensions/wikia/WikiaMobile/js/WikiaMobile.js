@@ -246,6 +246,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		navigationBar = $('#wkTopNav'),
 		navToggle = $('#navToggle'),
 		thePage = page.add('#wikiaFooter'),
+		lvl1 = $('.lvl1'),
 		//to cache link in wiki nav
 		lvl2Link;
 
@@ -315,28 +316,36 @@ var WikiaMobile = WikiaMobile || (function() {
 		});
 
 		//preparing the navigation
-		wkNavMenu.find('ul ul').parent().addClass('child');
+		wkNavMenu.delegate('.lvl1 a', clickEvent, function() {
+			track(['link', 'nav', 'list']);
+		})
+		.delegate('header > a', clickEvent, function() {
+			track(['link', 'nav', 'header']);
+		})
+		.find('ul ul').parent().addClass('child');
 
 		navToggle.bind(clickEvent, function(event) {
 			if(navigationBar.hasClass('fullNav')){
-				track(['navigation', 'toggle', 'close']);
+				track(['nav', 'close']);
 				thePage.show();
 				navigationBar.removeClass();
 			}else{
-				track(['navigation', 'toggle', 'open']);
+				track(['nav', 'open']);
 				thePage.hide();
-				navigationBar.addClass('fullNav');
+				//80px is for lvl1 without header
+				navigationBar.addClass('fullNav').height(lvl1.height() + 80);
 			}
 		});
 
-		$("#wkNavMenu li, #wkNavBack")
+		//add 'active' state to devices that does not support it
+		$("#wkNavMenu li, #wkNavBack, #wkRelPag li")
 		.bind("touchstart", function () {
 			$(this).addClass("fake-active");
 		}).bind("touchend touchcancel", function() {
 			$(this).removeClass("fake-active");
 		});
 
-		$('.lvl1').delegate('.child', clickEvent, function(event) {
+		lvl1.delegate('.child', clickEvent, function(event) {
 			if($(event.target).parent().is('.child')) {
 				event.stopPropagation();
 				event.preventDefault();
@@ -354,14 +363,16 @@ var WikiaMobile = WikiaMobile || (function() {
 					wikiNavLink.hide();
 				}
 
+				//130px is for lvl2/3 with a header
 				navigationBar.height(ul.height() + 130);
-
 
 				if(wkNavMenu.hasClass('current1')) {
 					wkNavMenu.removeClass().addClass('current2');
 					lvl2Link = href;
+					track(['nav', 'level-2']);
 				} else {
 					wkNavMenu.removeClass().addClass('current3');
+					track(['nav', 'level-3']);
 				}
 			}
 		});
@@ -372,16 +383,17 @@ var WikiaMobile = WikiaMobile || (function() {
 
 			if(wkNavMenu.hasClass('current2')) {
 				wkNavMenu.removeClass().addClass('current1').find('.lvl2').removeClass('current');
-				navigationBar.height($('.lvl1').height() + 80);
+				navigationBar.height(lvl1.height() + 80);
+				track(['nav', 'level-1']);
 			} else {
 				wkNavMenu.removeClass().addClass('current2').find('.lvl3').removeClass('current');
 				current = $('.lvl2.current');
-				wikiNavHeader.text( current.prev().text() );
+				wikiNavHeader.text(current.prev().text());
 				navigationBar.height(current.height() + 130);
 				wikiNavLink.attr('href', lvl2Link);
+				track(['nav', 'level-2']);
 			}
 		});
-
 		//end of preparing the nav
 
 		page.bind(clickEvent, function(event){

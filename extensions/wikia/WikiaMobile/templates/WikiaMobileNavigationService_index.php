@@ -1,4 +1,4 @@
-<nav id=wkTopNav>
+<section id=wkTopNav>
    <section id=wkTopBar>
    <? if( $wordmarkType == "graphic" ) :?>
 	   <img<?= ( $searchOpen ) ? ' style="display:none"' : '' ;?> id=wkImgMark src="<?= $wordmarkUrl ;?>">
@@ -17,6 +17,6 @@
 	  <ul id=wkTabs>
 		 <li class=active>Menu
 	  </ul>
-	  <section id=wkWikiNav></section>
+	  <nav id=wkWikiNav></nav>
    </section>
-</nav>
+</section>
