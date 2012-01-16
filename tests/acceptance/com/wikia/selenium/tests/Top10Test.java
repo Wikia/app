@@ -38,7 +38,7 @@ public class Top10Test extends BaseTest {
 	public void prepareTestData() throws Exception {
 		loginAsRegular();
 		
-		*if (!isDataPrepared) {
+		if (!isDataPrepared) {
 			editArticle(TOP10_ARTICLE_1, "Lorem ipsum " + new Date().toString());
 			editArticle(TOP10_ARTICLE_2, "Lorem ipsum " + (new Date()).toString());
 			editArticle(TOP10_ARTICLE_3, "Lorem ipsum " + (new Date()).toString());
