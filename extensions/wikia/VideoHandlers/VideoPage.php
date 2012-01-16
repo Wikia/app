@@ -13,7 +13,7 @@ class WikiaVideoPage extends ImagePage {
 	protected static $videoWidth = 660;
 
 	function openShowImage(){
-		global $wgOut;
-		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$this->img->getEmbedCode(self::$videoWidth).'</div>' );
+		global $wgOut, $wgTitle;
+		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$this->img->getEmbedCode($wgTitle->getArticleId(), self::$videoWidth).'</div>' );
 	}
 }

@@ -14,14 +14,20 @@ abstract class VideoHandler extends BitmapHandler {
 	protected $api = null;
 	protected $apiName = 'video/*';
 	protected $videoId = '';
+	protected $title = '';
+	protected $metadata = null;
 	protected static $aspectRatio;
 	protected static $isJSLoaded = false;
+	
+	function getPlayerAssetUrl() {
+		return '';
+	}
 	
 	/**
 	 * Returns embed code for a provider
 	 * @return string Embed HTML
 	 */
-	abstract function getEmbed($width, $autoplay = false );
+	abstract function getEmbed( $articleId, $width, $autoplay=false, $isAjax=false );
 
 	function setVideoId( $videoId ){
 		$this->videoId = $videoId;
@@ -31,14 +37,34 @@ abstract class VideoHandler extends BitmapHandler {
 		return $this->videoId;
 	}
 	
+	function setTitle( $title ) {
+		$this->title = $title;
+	}
+	
+	function getTitle() {
+		return $this->title;
+	}
+	
 	/**
-	 * Connects with Api and returns metadata
-	 * @return ApiWrapper object
+	 * Get metadata. Connects with Api if metadata is not in database.
+	 * @return mixed array of data, or serialized version
 	 */
-	function getMetadata( $image, $filename ) {
-		return $this->getApi() instanceof ApiWrapper 
-			? serialize( $this->getApi()->getMetadata() )
-			: false;
+	function getMetadata($unserialize=false) {
+		if (empty($this->metadata)) {
+			$this->metadata = $this->getApi() instanceof ApiWrapper 
+				? serialize( $this->getApi()->getMetadata() )
+				: null;
+		}
+
+		return empty($unserialize) ? $this->metadata : unserialize($this->metadata);
+	}
+	
+	/**
+	 *
+	 * @param string $metadata serialized array
+	 */
+	function setMetadata( $metadata ) {
+		$this->metadata = $metadata;
 	}
 
 	/**
@@ -50,6 +76,24 @@ abstract class VideoHandler extends BitmapHandler {
 			$this->api = F::build ( $this->apiName, array( $this->videoId ) );
 		}
 		return $this->api;
+	}
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	protected function isHd() {
+		$metadata = $this->getMetadata(true);
+		return (!empty($metadata['hd']));
+	}
+	
+	/**
+	 *
+	 * @return int duration in seconds, or null
+	 */
+	protected function getDuration() {
+		$metadata = $this->getMetadata(true);
+		return (!empty($metadata['duration']) ? $metadata['duration'] : null);
 	}
 
 	/**

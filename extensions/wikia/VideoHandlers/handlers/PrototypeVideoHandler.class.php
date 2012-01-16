@@ -5,7 +5,7 @@ class PrototypeVideoHandler extends VideoHandler {
 	protected $apiName = 'PrototypeApiWrapper';
 	protected static $aspectRatio = 1.7777778;
 
-	function getEmbed($width, $autoplay=false){
+	function getEmbed($articleId, $width, $autoplay=false, $isAjax=false){
 		// hardcoden but this is only a prototype. In future it will be handled in a better way
 		$width = 660;
 		$height = (integer) ($width / self::$aspectRatio);

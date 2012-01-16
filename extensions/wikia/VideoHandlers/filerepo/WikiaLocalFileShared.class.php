@@ -31,11 +31,20 @@ class WikiaLocalFileShared  {
 	/*
 	 * Returns embed HTML
 	 */
-	public function getEmbedCode( $width, $autoplay = false ){
+	public function getEmbedCode( $articleId, $width, $autoplay=false, $isAjax=false ){
 		if ( $this->isVideo() ){
-			return $this->oFile->getHandler()->getEmbed( $width, $autoplay );
+			return $this->oFile->getHandler()->getEmbed( $articleId, $width, $autoplay, $isAjax );
 		} else {
-			false;
+			return false;
+		}
+	}
+	
+	public function getPlayerAssetUrl() {
+		if ( $this->isVideo() ) {
+			return $this->oFile->getHandler()->getPlayerAssetUrl();
+		}
+		else {
+			return false;
 		}
 	}
 
@@ -79,6 +88,8 @@ class WikiaLocalFileShared  {
 			if ( !empty( $videoId ) ){
 				$this->oFile->handler->setVideoId( $videoId );
 			}			
+			$this->oFile->handler->setTitle($this->oFile->getTitle()->getText());
+			$this->oFile->handler->setMetadata($this->oFile->metadata);
 		}
 	}
 
@@ -94,7 +105,7 @@ class WikiaLocalFileShared  {
 			$handler = MediaHandler::getHandler( $this->oFile->getMimeType() );
 			$handler->setVideoId( $this->oFile->videoId );
 
-			$this->oFile->metadata = $handler->getMetadata( false, false );
+			$this->oFile->metadata = $handler->getMetadata();
 			$this->oFile->media_type = self::VIDEO_MEDIA_TYPE;
 			$this->forceMime = false;
 		}
