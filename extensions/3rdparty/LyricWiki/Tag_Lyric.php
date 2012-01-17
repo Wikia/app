@@ -165,5 +165,3 @@ function renderLyricTag($input, $argv, $parser)
 
 	return $retVal;
 }
-
-?>

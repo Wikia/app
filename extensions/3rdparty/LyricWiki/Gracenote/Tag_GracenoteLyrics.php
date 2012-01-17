@@ -222,5 +222,3 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 
 	return $retVal;
 }
-
-?>
