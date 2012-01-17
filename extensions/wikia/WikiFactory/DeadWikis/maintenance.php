@@ -344,17 +344,21 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 	}
 	
-	protected function sendEmail( $from, $to, $subject, $body, $wikis ) {
-		$body .= "\n\n\n======\n\n";
-		$body .= "ID,DatabaseName,URL\r\n";
-		foreach ($wikis as $wiki) {
-			$body .= "\"{$wiki['id']}\",\"{$wiki['dbname']}\",\"{$wiki['url']}\"\r\n";
-		}
-		
-		$fromAddress = new MailAddress($from);
+	protected function sendEmail( $from, $to, $subject, $body, $bodyNoEntries, $fname, $wikis ) {
+//		$fromAddress = new MailAddress($from);
 		$toAddress = new MailAddress($to);
-//		var_dump($mime->get());
-		UserMailer::send($toAddress,$fromAddress,$subject,$body);
+
+		if (!empty($wikis)) {
+			$csv = "ID,DatabaseName,URL\r\n";
+			foreach ($wikis as $wiki) {
+				$csv .= "\"{$wiki['id']}\",\"{$wiki['dbname']}\",\"{$wiki['url']}\"\r\n";
+			}
+			$fileName = "/tmp/$fname.csv";
+			file_put_contents($fileName,$csv);
+			UserMailer::sendWithAttachment(array($toAddress),$subject,array($fileName),$from,'dead-wikis',$body);
+		} else {
+			UserMailer::sendWithAttachment(array($toAddress),$subject,array(),$from,'dead-wikis',$bodyNoEntries);
+		}
 	}
 	
 	protected function sendEmails() {
@@ -367,6 +371,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 			"wikis-deleted-l@wikia-inc.com",
 			"wikis deleted {$dateNice}",
 			"Script deleted {$count} wiki(s) today, the list of closed wikis is provided below.",
+			"Script didn't find any wiki to delete today.",
+			"wikis-deleted-{$date}",
 			$this->deleted);
 		
 		$count = count($this->toBeDeleted);
@@ -375,6 +381,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 			"wikis-to-be-deleted-l@wikia-inc.com",
 			"wikis to be deleted in 5 days {$dateNice}",
 			"Script found {$count} wiki(s) which will be deleted shortly, the list of wikis is provided below.",
+			"Script didn't find any wiki which will be deleted shortly today.",
+			"wikis-to-be-deleted-{$date}",
 			$this->toBeDeleted);
 	}
 	
