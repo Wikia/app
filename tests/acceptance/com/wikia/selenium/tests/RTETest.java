@@ -286,7 +286,7 @@ public class RTETest extends BaseTest {
 		return al.iterator();
 	}
 
-	@Test(groups={"RTE", "CI"}, dataProvider="wikiTextsProvider")
+	@Test(groups={"CI", "verified"}, dataProvider="wikiTextsProvider")
 	public void testRTE(String[] wikiTexts) throws Exception {
 		// open RTE editor in source mode
 		session().open("index.php?title=RTE_test_page&action=edit&useeditor=source");
