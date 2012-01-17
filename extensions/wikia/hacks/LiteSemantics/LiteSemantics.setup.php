@@ -41,3 +41,6 @@ $app->registerClass( 'LiteSemanticsHooks', $dir . '/LiteSemanticsHooks.class.php
 $app->registerHook( 'InternalParseBeforeLinks', 'LiteSemanticsHooks', 'onInternalParseBeforeLinks' );
 $app->registerHook( 'ArticleDeleteComplete', 'LiteSemanticsHooks', 'onArticleDeleteComplete' );
 $app->registerHook( 'ArticleSaveComplete', 'LiteSemanticsHooks', 'onArticleSaveComplete' );
+
+//test
+$app->registerHook( 'LiteSemanticsRenderData', 'LiteSemanticsHooks', 'onLiteSemanticsRenderData' );
