@@ -17,7 +17,7 @@ class LiteSemanticsParser extends WikiaObject{
 	function __construct(){
 		$this->xmlReader = new XMLReader();
 
-		F::setInstance( __CLASS__, this );
+		F::setInstance( __CLASS__, $this );
 	}
 
 	public function parse( $text, Title $title = null ){
