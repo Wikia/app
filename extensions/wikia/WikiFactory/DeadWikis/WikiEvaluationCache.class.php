@@ -13,11 +13,13 @@ class WikiEvaluationCache {
 	
 	protected function getSlaveDb() {
 		return $this->getMasterDb();
+		/* // database noreptemp isn't replicated to slaves
 		global $wgStatsDB;
 		if (empty($this->slaveDb)) {
 			$this->slaveDb = wfGetDB(DB_SLAVE,array(),$wgStatsDB);
 		}
 		return $this->slaveDb;
+		*/
 	}
 
 	protected function getMasterDb() {
