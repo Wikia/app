@@ -32,8 +32,9 @@ class WikiaLocalFileShared  {
 	 * Returns embed HTML
 	 */
 	public function getEmbedCode( $articleId, $width, $autoplay=false, $isAjax=false ){
-		if ( $this->isVideo() ){
-			return $this->oFile->getHandler()->getEmbed( $articleId, $width, $autoplay, $isAjax );
+		$handler = $this->oFile->getHandler();
+		if ( $this->isVideo() && !empty($handler) ){
+			return $handler->getEmbed( $articleId, $width, $autoplay, $isAjax );
 		} else {
 			return false;
 		}
@@ -82,14 +83,16 @@ class WikiaLocalFileShared  {
 	/* alter LocalFile getHandler logic */
 
 	function afterGetHandler(){
-		// make sure that the new handler ( if video ) will have videoId
-		if ($this->oFile->media_type == self::VIDEO_MEDIA_TYPE) {
-			$videoId = $this->getVideoId();
-			if ( !empty( $videoId ) ){
-				$this->oFile->handler->setVideoId( $videoId );
-			}			
-			$this->oFile->handler->setTitle($this->oFile->getTitle()->getText());
-			$this->oFile->handler->setMetadata($this->oFile->metadata);
+		if (!empty($this->oFile->handler)) {
+			// make sure that the new handler ( if video ) will have videoId
+			if ($this->oFile->media_type == self::VIDEO_MEDIA_TYPE) {
+				$videoId = $this->getVideoId();
+				if ( !empty( $videoId ) ){
+					$this->oFile->handler->setVideoId( $videoId );
+				}			
+				$this->oFile->handler->setTitle($this->oFile->getTitle()->getText());
+				$this->oFile->handler->setMetadata($this->oFile->metadata);
+			}
 		}
 	}
 
