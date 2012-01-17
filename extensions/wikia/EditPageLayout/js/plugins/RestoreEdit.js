@@ -44,7 +44,7 @@
 				}),
 				old = eds.getOldData();
 				
-				$('#wpSave').click(function(){
+				$('#editform').submit(function(){
 					eds.stop();
 					eds.deleteAll(); 
 					eds.clear();
