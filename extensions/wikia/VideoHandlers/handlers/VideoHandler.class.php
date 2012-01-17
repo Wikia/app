@@ -113,6 +113,7 @@ abstract class VideoHandler extends BitmapHandler {
 
 		$oThumbnailImage = parent::doTransform( $image, $dstPath, $dstUrl, $params, $flags );
 
+		//@todo use jssnippets
 		if ( empty( self::$isJSLoaded ) ) {
 			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/VideoHandlers/js/VideoHandlers.js"></script>');
 			self::$isJSLoaded = true;

@@ -33,6 +33,8 @@ class VideoHandlerController extends WikiaController {
 			}
 		}
 
-		$this->setVal('error', $error);
+		if (!empty($error)) {
+			$this->setVal('error', $error);
+		}
 	}
 }
