@@ -145,7 +145,7 @@ function renderLyricTag($input, $argv, $parser)
 	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
 	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
 		global $wgOut;
-		$wgOut->setRobotPolicy( 'noindex' );
+		$wgOut->setIndexPolicy( 'noindex' );
 	}
 
 	#parse embedded wikitext
