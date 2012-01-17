@@ -33,7 +33,7 @@ class ContactForm extends SpecialPage {
 		),
 
 		'bad-ad' => array(
-			'format' => "User reports a problem with ad visible here:\n%s\n\nDescription of the problem:\n%s",
+			'format' => "User %s reports a problem with ad visible here:\n%s\n\nDescription of the problem:\n%s",
 			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpDescription' ),
 			'subject' => 'Bad ad report by %s at %s',
 		),
@@ -69,13 +69,13 @@ class ContactForm extends SpecialPage {
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
 
 		if( $wgRequest->wasPosted() ) {
-			
+
 			if( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) ){
 				$captchaObj = new $wgCaptchaClass();
 				$captchaObj->retrieveCaptcha();
 				$info = $captchaObj->retrieveCaptcha();
 			}
-			
+
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
 			$this->mUserName = $wgRequest->getText( 'wpUserName' );
 			$wgRequest->setVal( 'wpUrlencUserName', urlencode( $wgRequest->getText( 'wpUserName' ) ) );
@@ -93,7 +93,7 @@ class ContactForm extends SpecialPage {
 				$wgOut->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
 				return;
 			}
-			
+
 			// handle custom forms
 			if ( !empty( $par ) && array_key_exists( $par, $this->customForms ) ) {
 				foreach ( $this->customForms[$par]['vars'] as $var ) {
@@ -255,7 +255,7 @@ class ContactForm extends SpecialPage {
 
 		return;
 	}
-	
+
 	/**
 	 * @access private
 	 */
@@ -300,12 +300,12 @@ class ContactForm extends SpecialPage {
 				}
 
 				$title = Title::newFromText('Contact/' . $sub, NS_SPECIAL);
-                                $msgKey = 'specialcontact-seclink-' . $msg;
+				$msgKey = 'specialcontact-seclink-' . $msg;
 				$newsec['links'][] = $uskin->makeKnownLinkObj( $title, wfMsg( $msgKey ), '', '', '', "class={$msgKey}" );
 			}
 			$secDat[] = $newsec;
 		}
-		
+
 			$local = wfMsgExt( 'specialcontact-intro-main-local', array('parse', 'content') );
 		if( !wfEmptyMsg('specialcontact-intro-main-local', $local) ) {
 			#ok?
@@ -446,7 +446,7 @@ class ContactForm extends SpecialPage {
 			$wgCaptcha = new $wgCaptchaClass();
 			$vars[ 'captchaForm' ] = $wgCaptcha->getForm();
 		}
-	
+
 		if( !empty( $this->err ) ) {
 			$vars['err'] = $this->formatError( $this->err );
 		}
@@ -460,7 +460,7 @@ class ContactForm extends SpecialPage {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * @access private
 	 */
@@ -545,7 +545,7 @@ class ContactForm extends SpecialPage {
 				}
 			}
 		}
-		
+
 		return false;
 	}
 }

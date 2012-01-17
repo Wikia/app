@@ -188,7 +188,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-captchatitle' => 'Blurry word',
 	'specialcontact-formtitle' => 'Contact Wikia Support Staff',
 	'specialcontact-label-screenshot' => 'Did you take a screenshot? If so, please upload here.',
-	'specialcontact-label-ba-ad-description' => 'Please describe the problem with the ad',
+	'specialcontact-label-bad-ad-description' => 'Please describe the problem with the ad',
 	'specialcontact-label-bad-ad-link' => 'Please provide a link to the page where you saw the bad ad',
 	'specialcontact-label-bug-link' => 'Please provide a link to the page where you are having the problem',
 	'specialcontact-label-bug-feature' => 'What feature is this related to?',
