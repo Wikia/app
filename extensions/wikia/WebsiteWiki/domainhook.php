@@ -164,7 +164,7 @@ function wsinfo( $parser, $thetext ) {
   {
     $wikitext = $rev->getText();
     $regs = array();
-    if(ereg('{{PLZ\|(D|A|CH)-([0-9]{4,5})}}', $wikitext, $regs) &&
+    if(preg_match('/{{PLZ\|(D|A|CH)-([0-9]{4,5})}}/', $wikitext, $regs) &&
       (($regs[1] == 'D' && strlen($regs[2]) == 5)  || ($regs[1] != 'D' && strlen($regs[2]) == 4)))
     {
       $country = $regs[1];
