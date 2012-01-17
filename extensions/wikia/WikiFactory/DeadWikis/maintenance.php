@@ -145,6 +145,46 @@ class AutomatedDeadWikisDeletionMaintenance {
 		return $result;
 	}
 	
+	protected $statsCache = null;
+	 
+	protected function getStatsCache() {
+		if (empty($this->statsCache)) {
+			$this->statsCache = new WikiEvaluationCache();
+		}
+		return $this->statsCache;
+	}
+	
+	protected function ts( $ts ) {
+		if ($ts == 0) {
+			return '1970-01-01 00:00:01';
+		} else {
+			return wfTimestamp( TS_DB, $ts );
+		}
+	}
+		
+	protected function updateWikiStats( $wiki ) {
+		$data = $wiki;
+		
+		$data['city_id'] = $data['id'];
+		$data['city_public'] = $data['public'];
+		$data['created'] = $this->ts($data['created']);
+		$data['lastedited'] = $this->ts($data['lastedited']);
+		
+		$catData = WikiFactory::getCategory($data['id']);
+		$data['city_cat_name'] = $catData ? $catData->cat_name : '';
+		
+		unset($data['public']);
+		unset($data['id']);
+		unset($data['url']);
+		
+		$this->getStatsCache()->update($data);
+	}
+	
+	protected function deleteWikiStats( $id ) {
+		$this->getStatsCache()->delete($id);
+	}
+		
+	
 	protected $oracle = null;
 	
 	protected function getOracle() {
@@ -239,7 +279,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			$where[] = "city_id <= ".intval($this->to);
 		$res = $db->select(
 			'city_list',
-			array( 'city_id', 'city_dbname', 'city_url' ),
+			array( 'city_id', 'city_dbname', 'city_url', 'city_public' ),
 			$where,
 			__METHOD__,
 			array(
@@ -254,6 +294,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 				'id' => $row['city_id'],
 				'dbname' => $row['city_dbname'],
 				'url' => $row['city_url'],
+				'public' => $row['city_public'],
 			);
 		}
 		$db->freeResult($res);
@@ -292,6 +333,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			}
 			if ($this->doDisableWiki($id,$flags,self::DELETION_REASON)) {
 				echo "ok\n";
+				$this->deleteWikiStats($id);
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
 			} else {
@@ -307,8 +349,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 			// fetch data from wikis
 			$ids = array();
 			$batchData = array();
+			$now = wfTimestamp(TS_DB);
 			foreach ($batch as $wiki) {
 				$batchData[$wiki['id']] = $wiki;
+				$batchData[$wiki['id']]['row_updated'] = $now;
 				$ids[$wiki['id']] = $wiki['id'];
 			}
 			$evaluated = array();
@@ -324,6 +368,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 				}				
 			}
 			
+			// save stats
+			foreach ($evaluated as $id => $wiki) {
+				$this->updateWikiStats($wiki);
+			}
 			// classify wikis
 			$classifications = $this->getOracleClassification($evaluated);
 			if (isset($classifications[self::DELETE_NOW])) {
@@ -332,15 +380,6 @@ class AutomatedDeadWikisDeletionMaintenance {
 			if (isset($classifications[self::DELETE_SOON])) {
 				$this->toBeDeleted += $classifications[self::DELETE_SOON];
 			}
-			
-			/*
-			$knownClassifications = array_keys( self::$conditions );
-			foreach ($knownClassifications as $classification) {
-				if (isset($classifications[$classification])) {
-					$this->{$classification} = $this->{$classification} + $classifications[$classification];
-				}
-			}
-			*/
 		}
 	}
 	
@@ -447,5 +486,6 @@ class AutomatedDeadWikisDeletionMaintenance {
  */
 $wgAutoloadClasses['WikiEvaluationDataSource'] = dirname(__FILE__). "/WikiEvaluationDataSource.class.php";
 $wgAutoloadClasses['WikiEvaluationOracle'] = dirname(__FILE__). "/WikiEvaluationOracle.class.php";
+$wgAutoloadClasses['WikiEvaluationCache'] = dirname(__FILE__). "/WikiEvaluationCache.class.php";
 $maintenance = new AutomatedDeadWikisDeletionMaintenance( $options );
 $maintenance->execute();
