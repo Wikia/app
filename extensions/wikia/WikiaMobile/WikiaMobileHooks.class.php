@@ -49,4 +49,13 @@ class WikiaMobileHooks extends WikiaObject{
 
 		return true;
 	}
+
+	public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
+		if ( $skin instanceof SkinWikiaMobile && in_array( 'broken', $options ) ) {
+			$ret = $text;
+			return false;
+		}
+
+		return true;
+	}
 }
