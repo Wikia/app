@@ -232,10 +232,12 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 function efGracenoteApplyIndexPolicy($article){
 	wfProfileIn( __METHOD__ );
 
-	$indexPolicy = $article->mParserOutput->getIndexPolicy();
-	if(!empty($indexPolicy)){
-		global $wgOut;
-		$wgOut->setIndexPolicy($indexPolicy);
+	if(is_object($article->mParserOutput)){
+		$indexPolicy = $article->mParserOutput->getIndexPolicy();
+		if(!empty($indexPolicy)){
+			global $wgOut;
+			$wgOut->setIndexPolicy($indexPolicy);
+		}
 	}
 
 	wfProfileOut( __METHOD__ );
