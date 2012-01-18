@@ -242,14 +242,20 @@ This list-based button used for all additional actions
 	}
 }
 
-
 /*****************************
 Wikia Chiclet Button
 This list-based button is used in the page header for edit/history/delete actions
 ******************************/
+
+$button-chiclet-opacity: 30;
+@if $is-dark-wiki {
+	$button-chiclet-opacity: 70;
+}
+
 .wikia-chiclet-button {
-	@include border-radius(3px);
-	@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+	@include opacity($button-chiclet-opacity);
+	@include border-radius(0);
+	background-image: none;
 	border: 0;
 	cursor: pointer;
 	display: inline-block;
@@ -265,7 +271,7 @@ This list-based button is used in the page header for edit/history/delete action
 		width: 15px;
 	}
 	&:hover {
-		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+		@include opacity(100);
 	}
 }
 button.wikia-chiclet-button {
