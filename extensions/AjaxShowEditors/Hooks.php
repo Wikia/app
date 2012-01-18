@@ -40,8 +40,8 @@ function wfAjaxShowEditorsCleanup( $article, $user ) {
 
 // Only when editing a page
 function wfAjaxShowEditorsAddCSS( $out ) {
-	global $action;
-	if ( $action != 'edit' ) {
+	global $wgRequest;
+	if ( $wgRequest->getVal('action') != 'edit' ) {
 		return true;
 	}
 	global $wgScriptPath;

@@ -8,7 +8,6 @@ $wgExtensionMessagesFiles['wsinfo'] = dirname( __FILE__ ) . '/domainhook.i18n.ph
 define( 'WSINFO_PLACEHOLDER', '__wsinfo_here__' );
 
 function fnDomainHook( &$article, &$text ) {
-	global $action;
 	global $exDomainList;
 	global $wgTitle;
 	global $wgParser;

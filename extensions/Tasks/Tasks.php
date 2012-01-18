@@ -404,8 +404,8 @@ function wfTasksExtensionArticleSaveComplete( &$article, &$user, $text, $summary
 * Prevents other tabs shown as active
 */
 function wfTasksExtensionPreventOtherActiveTabs( &$skin, &$prevent_active_tabs ) { # Checked for HTML and MySQL insertion attacks
-	global $action;
-	$prevent_active_tabs = ( $action == 'tasks' );
+	global $wgRequest;
+	$prevent_active_tabs = ( $wgRequest->getVal('action') == 'tasks' );
 	return true;
 }
 
@@ -416,7 +416,7 @@ function wfTasksExtensionPreventOtherActiveTabs( &$skin, &$prevent_active_tabs )
  * @return bool true to continue running other hooks, false to abort operation
  */
 function wfTasksExtensionTab( $skin, &$content_actions ) { # Checked for HTML and MySQL insertion attacks
-	global $wgTitle, $action;
+	global $wgTitle, $wgRequest;
 	if( $wgTitle->isTalkPage() ) {
 		# No talk pages please
 		return true;
@@ -429,7 +429,7 @@ function wfTasksExtensionTab( $skin, &$content_actions ) { # Checked for HTML an
 	wfTasksAddCache();
 	wfLoadExtensionMessages('Tasks');
 	$content_actions['tasks'] = array(
-		'class' => ($action == 'tasks') ? 'selected' : false,
+		'class' => ($wgRequest->getVal('action') == 'tasks') ? 'selected' : false,
 		'text' => wfMsgHTML('tasks_tab'),
 		'href' => $wgTitle->getLocalUrl( 'action=tasks' )
 	);
@@ -1179,7 +1179,7 @@ function wfTasksExtension() { # Checked for HTML and MySQL insertion attacks
 				return;
 			}
 			
-			global $wgOut, $action, $wgRequest, $wgUser, $wgTitle;
+			global $wgOut, $wgRequest, $wgUser, $wgTitle;
 			$out = '';
 			$tasks = array();
 			$wgOut->addLink(array(

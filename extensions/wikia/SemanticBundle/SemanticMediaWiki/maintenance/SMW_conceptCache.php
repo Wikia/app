@@ -21,6 +21,8 @@ require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 $output_level = array_key_exists( 'quiet', $options ) ? 0 :
 				( array_key_exists( 'verbose', $options ) ? 2 : 1 );
 
+global $action; // global 'action' has been removed in MW 1.18, this is just to globalize it since this script overwrites the value and uses it below
+$action = $wgRequest->getVal('action');
 if ( array_key_exists( 'help', $options ) ) {
 	$action = 'help';
 } elseif ( array_key_exists( 'status', $options ) ) {
