@@ -123,10 +123,12 @@ abstract class VideoHandler extends BitmapHandler {
 			$oThumbnailImage->file,
 			$oThumbnailImage->url,
 			$oThumbnailImage->width,
-			$oThumbnailImage->height,
+			!empty( $this::$aspectRatio )
+				? round( $oThumbnailImage->width / $this::$aspectRatio )
+				: $oThumbnailImage->height,
 			$oThumbnailImage->path,
-			$oThumbnailImage->page
+			$oThumbnailImage->page,
+			$this::$aspectRatio
 		);		
 	}
-
 }
