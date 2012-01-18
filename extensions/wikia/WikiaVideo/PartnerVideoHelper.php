@@ -593,7 +593,6 @@ class PartnerVideoHelper {
 		}
 		if(!$debug && !$parseOnly && $title->exists()) {
 			// don't output duplicate error message
-//			$msg = "article named $name already exists: clip id $id";
 			return 0;
 		}	
 
