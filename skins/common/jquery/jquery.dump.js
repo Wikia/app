@@ -14,16 +14,23 @@
 
 	$.dump = function(object) {
 		var recursion = function(obj, level) {
-			if(!level) level = 0;
-			var dump = '', p = '';
-			for(i = 0; i < level; i++) p += "\t";
+			var dump = '',
+				p = '';
+
+			if(!level) {
+				level = 0;
+			}
+
+			for(var i = 0; i < level; i++) {
+				p += "\t";
+			}
 
 			// limit recursion
 			if (level > 5) {
 				return "[Too deep]";
 			}
 
-			t = type(obj);
+			var t = type(obj);
 			switch(t) {
 				case "string":
 					return '"' + obj + '"';
