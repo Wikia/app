@@ -129,6 +129,9 @@ if(isset($wgScriptPath))
 	$wgHooks['SkinAfterBottomScripts'][] = 'gracenote_outputGoogleAnalytics';
 
 	//$wgHooks['getUserPermissionsErrorsExpensive'][] = "gracenote_disableEditByPermissions";
+	
+	// Use this pre-existing Wikia-specific hook to apply the index policy changes after the defaults are set (which comes after parsing).
+	$wgHooks['AfterViewUpdates'][] = "efGracenoteApplyIndexPolicy";
 }
 
 #Install extension
@@ -197,8 +200,7 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	
 	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
 	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
-		global $wgOut;
-		$wgOut->setIndexPolicy( 'noindex' );
+		$parser->mOutput->setIndexPolicy( 'noindex' );
 	}
 
 	#parse embedded wikitext
@@ -222,3 +224,20 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 
 	return $retVal;
 }
+
+/**
+ * The parser tag may have set a parser option (which gets cached in the parser-cache) indicating that
+ * this page should have a certain index policy.
+ */
+function efGracenoteApplyIndexPolicy($article){
+	wfProfileIn( __METHOD__ );
+
+	$indexPolicy = $article->mParserOutput->getIndexPolicy();
+	if(!empty($indexPolicy)){
+		global $wgOut;
+		$wgOut->setIndexPolicy($indexPolicy);
+	}
+
+	wfProfileOut( __METHOD__ );
+	return true;
+} // end efApplyIndexPolicy()

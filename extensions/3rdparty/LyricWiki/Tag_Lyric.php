@@ -61,6 +61,9 @@ if(isset($wgScriptPath))
 	$wgExtensionFunctions[] = "lyricTag";
 	$wgHooks['ParserFirstCallInit'][] = "lyricTag_InstallParser";
 	$wgHooks['BeforePageDisplay'][] = "lyricTagCss";
+
+	// Use this pre-existing Wikia-specific hook to apply the index policy changes after the defaults are set (which comes after parsing).
+	$wgHooks['AfterViewUpdates'][] = "efApplyIndexPolicy";
 }
 
 #Install extension
@@ -100,6 +103,8 @@ DOC
 
 function renderLyricTag($input, $argv, $parser)
 {
+	wfProfileIn( __METHOD__ );
+
 	#make new lines in wikitext new lines in html
 	$transform = str_replace(array("\r\n", "\r","\n"), "<br/>", trim($input));
 
@@ -144,8 +149,7 @@ function renderLyricTag($input, $argv, $parser)
 
 	// FogBugz 8675 - if a page is on the Gracenote takedown list, make it not spiderable (because it's not actually good content... more of a placeholder to indicate to the community that we KNOW about the song, but just legally can't display it).
 	if(0 < preg_match("/\{\{gracenote[ _]takedown\}\}/i", $transform)){
-		global $wgOut;
-		$wgOut->setIndexPolicy( 'noindex' );
+		$parser->mOutput->setIndexPolicy( 'noindex' );
 	}
 
 	#parse embedded wikitext
@@ -163,5 +167,23 @@ function renderLyricTag($input, $argv, $parser)
 	// Tell the Google Analytics code that this view was for non-Gracenote lyrics.
 	$retVal.= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_OTHER_LYRICS);
 
+	wfProfileOut( __METHOD__ );
 	return $retVal;
 }
+
+/**
+ * The parser tag may have set a parser option (which gets cached in the parser-cache) indicating that
+ * this page should have a certain index policy.
+ */
+function efApplyIndexPolicy($article){
+	wfProfileIn( __METHOD__ );
+
+	$indexPolicy = $article->mParserOutput->getIndexPolicy();
+	if(!empty($indexPolicy)){
+		global $wgOut;
+		$wgOut->setIndexPolicy($indexPolicy);
+	}
+
+	wfProfileOut( __METHOD__ );
+	return true;
+} // end efApplyIndexPolicy()
