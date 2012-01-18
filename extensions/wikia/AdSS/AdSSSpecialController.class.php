@@ -54,7 +54,7 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 		}
 
 		// SponsoredLinks taking down: disabling everything else
-		$this->wg->Out->showErrorPage( 'adss-sponsoredlinksdisabled-title', 'adss-sponsoredlinksdisabled-body' );
+		$this->wg->Out->redirect( 'http://www.wikia.com/Advertising' );
 		return false;
 
 		if( $sub[0] == 'paypal' && isset( $sub[1] ) ) {
