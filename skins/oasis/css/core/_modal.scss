@@ -1,19 +1,26 @@
+$modal-border-opacity: 80;
+@if $is-dark-wiki {
+	$modal-border-opacity: 60;
+}
+
 .modalWrapper {
 	@include box-shadow(0, 10px, 60px, mix($color-page, #000));
 	background: $color-page;
-	border: 5px solid $color-body;
+	border-width: 5px;
+	border-style: solid;
+	@include border-opacity($color-body, $modal-border-opacity);
 	color: $color-text;
 	position: absolute;
 	>h1 {
 		color: $color-links;
 		font-size: 22px;
-		margin: 26px 48px 10px 18px;
+		margin: 20px 60px 20px 20px;
 		overflow: hidden;
 	}
 	.close {
 		@include clearfix;
 		float: right;
-		margin: 18px 18px 0 0;
+		margin: 20px 20px 0 0;
 	}
 	.neutral {
 		background: transparent;
@@ -22,9 +29,6 @@
 		text-align: right;
 		background: transparent;
 		margin-top: 1em;
-		a {
-			margin: 0 5px;
-		}
 	}
 }
 
@@ -32,7 +36,7 @@
 	@include clearfix;
 	@include bodytext;
 	display: block;
-	margin: 0 18px 18px 18px;
+	margin: 0 20px 20px 20px;
         .MyToolsConfiguration {
             .options-list {
                 line-height: 1;
