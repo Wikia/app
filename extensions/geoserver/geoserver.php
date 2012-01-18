@@ -37,7 +37,7 @@ require_once( dirname(__FILE__) . '/SpecialWikimaps.php' );
  *  Return markup, but also a pointer to Map sources
  */
 function parseGeo ( $text, $params, &$parser ) {
-	global $action, $GeoserverParameters, $wgWikiMapsJS;
+	global $GeoserverParameters, $wgWikiMapsJS;
 	$latpat= '(-?[0-9.]*) *(([0-9.]+) *([0-9.]+)?)? *([NS])';
 	$lonpat= '(-?[0-9.]*) *(([0-9.]+) *([0-9.]+)?)? *([EW])';
 	$featcodepat = '(([AHLPRSTUV])\.([A-Z.]*))?';

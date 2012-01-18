@@ -14,7 +14,6 @@ define( 'WSINFO_PLACEHOLDER', '__wsinfo_here__' );
  * add WSINFO_PLACEHOLDER to every article in main namespace
  */
 function fnDomainHook( &$article, &$text ) {
-	global $action;
 	global $exDomainList;
 	global $wgTitle;
 	global $wgParser;
