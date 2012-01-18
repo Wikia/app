@@ -1,9 +1,7 @@
-<aside class=<?= $class ?> id=<?= $id ?> hash=<?= $hash ?>
+<section class=wkImgStk data-img-count=<?=$count;?>
 		<?php
-		echo "data-image-count=".count($images);
 		foreach ( $images as $key => $val) {
-			echo " data-slideshow-image-id-{$key}={$val}";
+			echo " data-img-{$key}='{$val[0]}'" . ( $val[1]  ? " data-cap-{$key}='{$val[1]}'" : "");
 		}
-		echo ">";
-		?>
-<img class=placeholderImg src=<?=$images[0]?>><footer><?=$counterValue?></footer></aside>
+		?>>
+<img class=wkPlcImg src=<?=$images[0][0]?>><footer><?=$footerText?></footer></section>

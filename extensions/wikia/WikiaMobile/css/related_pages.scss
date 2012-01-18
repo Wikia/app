@@ -54,11 +54,11 @@ $itemPadding: 6px;
 				margin: 0 8px 0 0;
 				float: left;
 			}
+		}
 
-			&:active, &.fake-active {
-				@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
-				color: white;
-			}
+		&:active, &.fake-active {
+			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
+			color: white;
 		}
 
 		&:nth-of-type(n+2) {

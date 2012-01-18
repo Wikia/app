@@ -9,8 +9,8 @@
 	$._createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution(),
 		modal = '<div id=modalWrapper>\
-			<div id=modalTopBar></div>\
-			<div id=modalClose>&times;</div>\
+			<div id=modalTopBar>\
+			<div id=modalClose>&times;</div></div>\
 			<div id=modalContent></div>\
 			<div id=modalFooter></div>\
 			</div><style>#modalWrapper{min-height:' + resolution[1] + 'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#modalWrapper{min-height:' + resolution[0] + 'px;}}</style>',
@@ -55,19 +55,19 @@
 
 		//handling next/previous image in lightbox
 		body.delegate('#nextImage', WikiaMobile.getClickEvent(), function() {
-			$._nextImage($(this).prev());
+			that._nextImage($(this).prev());
 		})
 		.delegate('#previousImage', WikiaMobile.getClickEvent(), function() {
 			that._previousImage($(this).next());
 		})
 		.delegate('#nextImage', 'swipeLeft', function() {
-			$._nextImage($(this).prev());
+			that._nextImage($(this).prev());
 		})
 		.delegate('#previousImage', 'swipeRight', function() {
 			that._previousImage($(this).next());
 		})
 		.delegate('.fullScreenImage', 'swipeLeft', function() {
-			$._nextImage($(this));
+			that._nextImage($(this));
 		})
 		.delegate('.fullScreenImage', 'swipeRight', function() {
 			that._previousImage($(this));
@@ -77,7 +77,7 @@
 	};
 
 	$._nextImage = function(imagePlace) {
-		var nextImageNumber = parseInt(imagePlace.data('number')) + 1;
+		var nextImageNumber = parseInt(imagePlace.data('number'),10) + 1;
 
 		if(WikiaMobile.getImages().length <= nextImageNumber) {
 			nextImageNumber = 0;
@@ -86,7 +86,7 @@
 	};
 
 	$._previousImage = function(imagePlace) {
-		var previousImageNamber = parseInt(imagePlace.data('number')) - 1;
+		var previousImageNamber = parseInt(imagePlace.data('number'),10) - 1;
 
 		if(previousImageNamber < 0) {
 			previousImageNamber = WikiaMobile.getImages().length-1;
@@ -104,14 +104,20 @@
 		fullScreen.css('background-image','url()');
 		img.onload =  function() {
 			fullScreen.css('background-image','url("' + img.src + '")').data('number', imageNumber);
-			img = null;
 			$.hideLoader(fullScreen);
+			img.onload = img = null;
 		};
 
-		this._showCaption(image[1]);
+		this._showCaption(image[1], image[2], image[3]);
 	};
 
-	$._showCaption = function(caption) {
+	$._showCaption = function(caption, number, length) {
+		caption = caption || '';
+
+		if(number !== undefined) {
+			caption += '<div class=wkImgStkFooter> ' + (number+1) + ' / ' + length + ' </div>';
+		}
+
 		if(caption) {
 			this._modalFooter.show();
 			this._modalFooter.html(caption);
@@ -144,17 +150,16 @@
 		if(addClass){
 			modal.addClass(addClass);
 		}else{
-			modal.attr('class', '');
+			modal.removeClass();
 		}
 
 		if(html){
 			this._modalContent.html(html);
+			this._showCaption(options.caption);
 		}else if(imageNumber){
 			this._modalContent.html('<div class=changeImageButton id=previousImage><div class=changeImageChevron></div></div><div class=fullScreenImage></div><div class=changeImageButton id=nextImage><div class=changeImageChevron></div></div>');
 			$._changeImage(imageNumber, $('.fullScreenImage'));
 		}
-
-		this._showCaption(options.caption);
 
 		if(toHide){
 			if(typeof toHide == 'string'){
@@ -199,12 +204,14 @@
 			this.hideModal();
 			this._modalContent.html('');
 			this._modalFooter.html('');
-			this._modal.attr('class', '');
+			this._modal.removeClass();
 		}
 	};
 
 	$.hideModal = function() {
 		if(this._modalCreated) {
+			//reset hash so user can go to previous page
+			window.location.href = '';
 			var modal = this._modal;
 
 			modal.removeClass('modalShown');
