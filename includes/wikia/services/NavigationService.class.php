@@ -19,6 +19,8 @@ class NavigationService {
 
 	// magic word used to force given menu item to not be turned into a link (BugId:15189)
 	const NOLINK = '__NOLINK__';
+	
+	const ALLOWABLE_TAGS = '';
 
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
@@ -109,7 +111,7 @@ class NavigationService {
 
 		$this->forContent = $forContent;
 		$useCache = ($wgLang->getCode() == $wgContLang->getCode()) || $this->forContent;
-
+		
 		if($useCache) {
 			$cacheKey = $this->getMemcKey($source);
 			$nodes = $wgMemc->get($cacheKey);
@@ -162,11 +164,26 @@ class NavigationService {
 
 		$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
 		$nodes = $this->filterSpecialPages($nodes, $filterInactiveSpecialPages);
+		$nodes = $this->stripTags($nodes);
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
-
+	
+	private function stripTags($nodes) {
+		wfProfileIn( __METHOD__ );
+		
+		foreach($nodes as &$node) {
+			$text = !empty($node['text']) ? $node['text'] : null;
+			if( !is_null($text)) {
+				$node['text'] = strip_tags($text, self::ALLOWABLE_TAGS);
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $nodes;
+	}
+	
 	private function filterSpecialPages( $nodes, $filterInactiveSpecialPages ){
 		if( !$filterInactiveSpecialPages ) {
 			return $nodes;
