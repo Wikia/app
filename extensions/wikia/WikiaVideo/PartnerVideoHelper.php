@@ -592,7 +592,8 @@ class PartnerVideoHelper {
 			return 0;
 		}
 		if(!$debug && !$parseOnly && $title->exists()) {
-			$msg = "article named $name already exists: clip id $id";
+			// don't output duplicate error message
+//			$msg = "article named $name already exists: clip id $id";
 			return 0;
 		}	
 
@@ -639,7 +640,7 @@ class PartnerVideoHelper {
 			}
 			else {
 				$video->save($categoryStr);
-				print "created article {$video->getID()} from partner clip id $id\n";
+				print "Ingested {$title->getText()} from partner clip id $id. {$title->getFullURL()}\n";
 			}
 			return 1;
 		}
