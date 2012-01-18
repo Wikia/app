@@ -9,7 +9,36 @@ class ThumbnailVideo extends ThumbnailImage {
 
 
 	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ){
-		parent::__construct( $file, $url, $width, $height, $path, $page );
+		
+		$this->file = $file;
+
+		/*
+		 * Do some math to recalculate valid position for cropped thumbnails
+		 */
+		$iCroppedAspectRatio = $width / $height;
+		$H = (float)$file->getWidth() / $iCroppedAspectRatio;
+		$hDelta = ( ( $file->getHeight() - $H ) / 2 );
+
+		$oImageServing = new ImageServing( null, $width, $height );
+		if ( $height < $file->getHeight() ) {
+
+			$oImageServing->setDeltaY(
+				$hDelta / $file->getHeight()
+			);
+		}
+
+		/*
+		 * Get thumbnail url
+		 */
+		$this->url = $oImageServing->getUrl( $file, $file->getWidth(), $file->getHeight() );
+
+		# These should be integers when they get here.
+		# If not, there's a bug somewhere.  But let's at
+		# least produce valid HTML code regardless.
+		$this->width = round( $width );
+		$this->height = round( $height );
+		$this->path = $path;
+		$this->page = $page;
 	}
 
 	function toHtml( $options = array() ) {
@@ -42,9 +71,11 @@ class ThumbnailVideo extends ThumbnailImage {
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
 			if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
-				$linkAttribs['data-image-name'] = $this->file->getTitle()->getText();
+				$linkAttribs['data-video-name'] = $this->file->getTitle()->getText();
 				$linkAttribs['href'] = $this->file->getFullUrl();
-				if ( !empty( $options['id'] ) ) $linkAttribs['id'] = $options['id'];
+				if ( !empty( $options['id'] ) ){
+					$linkAttribs['id'] = $options['id'];
+				}
 			}
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = array( 'href' => wfReplaceImageServer( $this->file->getURL(), $this->file->getTimestamp() ) );

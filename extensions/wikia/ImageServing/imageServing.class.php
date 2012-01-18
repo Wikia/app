@@ -47,8 +47,8 @@ class ImageServing {
 		$this->width = $width;
 		$this->memc =  $this->app->getGlobal( 'wgMemc' );
 		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
-
-		$this->deltaY = (round($this->proportion['w']/$this->proportion['h']) - 1)*0.1;
+		
+		$this->deltaY = ( $this->proportion['w'] / $this->proportion['h'] - 1 )*0.1;
 		$this->db = $db;
 	}
 	/**
@@ -246,29 +246,29 @@ class ImageServing {
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
 		//rescal of png always use width 512;
-		if($issvg) {
-			$height = round((512 * $height) / $width);
+		if( $issvg ) {
+			$height = round( ( 512 * $height) / $width );
 			$width = 512;
 		}
 
-		$pHeight = round(($width)*($this->proportion['h']/$this->proportion['w']));
+		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 
-		if($pHeight >= $height) {
-			$pWidth =  round($height*($this->proportion['w']/$this->proportion['h']));
+		if( $pHeight >= $height ) {
+			$pWidth =  round( $height * ( $this->proportion['w'] / $this->proportion['h'] ) );
 			$top = 0;
-			if ($align == "center") {
-				$left = round($width/2 - $pWidth/2) + 1;
-			} else if ($align == "origin") {
+			if ( $align == "center" ) {
+				$left = round( $width / 2 - $pWidth / 2 ) + 1;
+			} else if ( $align == "origin" ) {
 				$left = 0;
 			}
 			$right = $left + $pWidth + 1;
 			$bottom = $height;
 		} else {
-			if ($align == "center") {
-				$deltaYpx = round($height*$this->deltaY);
+			if ( $align == "center" ) {
+				$deltaYpx = round( $height * $this->deltaY );
 				$bottom = $pHeight + $deltaYpx;
 				$top = $deltaYpx;
-			} else if ($align == "origin") {
+			} else if ( $align == "origin" ) {
 				$bottom = $pHeight;
 				$top = 0;
 			}
@@ -282,6 +282,11 @@ class ImageServing {
 			$right = $width;
 
 		}
+
 		return "{$this->width}px-$left,$right,$top,$bottom";
+	}
+
+	public function setDeltaY( $iCenterPosition = 0 ){
+		$this->deltaY = $iCenterPosition;
 	}
 }

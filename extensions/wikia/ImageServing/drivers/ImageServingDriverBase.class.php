@@ -143,7 +143,7 @@ abstract class ImageServingDriverBase {
 	 *
 	 * @author Federico "Lox" Lucignano
 	 */
-	private function makeKey( $key  ) {
+	protected function makeKey( $key  ) {
 		return wfMemcKey("imageserving-images-data", $key, $this->proportion);
 	}
 }

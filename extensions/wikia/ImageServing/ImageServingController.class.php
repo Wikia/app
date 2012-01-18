@@ -41,7 +41,6 @@ class ImageServingController extends WikiaController {
 		}
 		
 		$width = (int) $this->getVal('width');
-		
 		$count = (int) $this->getVal('count');
 		
 		if ( ( !is_array( $height ) && $height < 1 ) || $count < 1 || $width < 1 || count( $ids ) < 1 ) {
