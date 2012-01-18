@@ -185,12 +185,21 @@ var WikiaMobile = WikiaMobile || (function() {
 			]);
 		});
 
-		$('.wikia-slideshow').each(function(){
-			var slideshow = $(this),
-			length = slideshow.data('number', number++).data('image-count');
+		$('.wkImgStk').each(function(){
+			var imgs = $(this),
+			l = imgs.data('img-count');
 
-			for(var i = 0; i < length; i++) {
-				allImages.push([slideshow.data('slideshow-image-id-' + i)]);
+			imgs.data('number', number);
+
+			number += parseInt(l, 10);
+
+			for(var i = 0; i < l; i++) {
+				allImages.push([
+					imgs.data('img-' + i),
+					imgs.data('cap-' + i),
+					//this true is to know that the image comes from gallery or slideshow
+					i , l
+				]);
 			}
 		});
 
@@ -286,9 +295,10 @@ var WikiaMobile = WikiaMobile || (function() {
 			image = thumb.children('.image').first();
 			imgModal(image.data('number'), thumb.children('.thumbcaption').html());
 		})
-		.delegate('.wikia-slideshow', clickEvent, function(event){
+		.delegate('.wkImgStk', clickEvent, function(event){
 			event.preventDefault();
-			imgModal($(this).data('number'));
+			var self = $(this);
+			imgModal(self.data('number'), self.data('cap-0'));
 		})
 		.delegate('.bigTable', clickEvent, function(event){
 			event.preventDefault();
@@ -390,6 +400,11 @@ var WikiaMobile = WikiaMobile || (function() {
 				current = $('.lvl2.current');
 				wikiNavHeader.text(current.prev().text());
 				navigationBar.height(current.height() + 130);
+				if(lvl2Link) {
+					wikiNavLink.attr('href', lvl2Link).show();
+				} else {
+					wikiNavLink.hide();
+				}
 				wikiNavLink.attr('href', lvl2Link);
 				track(['nav', 'level-2']);
 			}

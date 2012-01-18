@@ -3,6 +3,7 @@
 
 //mixins
 @import "mixins/transition.scss";
+@import "mixins/box-sizing.scss";
 
 #modalWrapper {
 	position:absolute;
@@ -36,7 +37,7 @@
 	@include transition(top .5s ease-in);
 
 	&.hidden {
-		top: -31px;
+		top: -100%;
 	}
 }
 
@@ -63,39 +64,31 @@
 	width: 100%;
 	height: auto;
 	margin: 0;
-	padding: 10px;
+	padding: 5px;
 	background-color: rgba(0,0,0,.8);
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	color: white;
+	color: rgb(157,157,157);
+	line-height: 20px;
 	z-index: $highest-z-index + 1005;
-	@include transition(all .5s ease-in);
+	@include transition(bottom .5s ease-in);
+	@include box-sizing(border-box);
 	display: none;
 
 	&.hidden {
-		bottom: -200px;
+		bottom: -100%;
 	}
 }
 
 #modalClose {
-	position: fixed;
-	right: 3px;
-	top: 0;
 	height: 30px;
-	width: 30px;
-	line-height: 30px;
-	text-align: right;
-	@include transition(top .5s ease-in);
+	width: 25px;
+	float: right;
 	font-size: xx-large;
-	color: white;
+	color: rgb(157,157,157);
 	z-index: $highest-z-index + 1005;
-	padding: 0 0 30px 30px;
-
-	&.hidden {
-		top: -31px;
-		padding: 0;
-	}
+	padding: 0 0 20px 20px;
 }
 
 .changeImageButton {
