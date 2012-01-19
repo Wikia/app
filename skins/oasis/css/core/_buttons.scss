@@ -272,6 +272,7 @@ $button-chiclet-opacity: 30;
 	}
 	&:hover {
 		@include opacity(100);
+		background-image: none;
 	}
 }
 button.wikia-chiclet-button {
