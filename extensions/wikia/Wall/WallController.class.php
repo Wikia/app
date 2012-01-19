@@ -8,12 +8,12 @@
 class WallController extends ArticleCommentsModule {
 	private $helper;
 	protected $allowedNamespaces = array();
-	
+
 	public function __construct() {
 		$this->app = F::App();
 		$this->allowedNamespaces = $this->app->getLocalRegistry()->get('UserProfileNamespaces');
 	}
-	
+
 	public function init() {
 		$this->helper = F::build('WallHelper', array());
 		$this->sortingOptionsText = array(
@@ -24,28 +24,29 @@ class WallController extends ArticleCommentsModule {
 			//'a' => $this->app->wf->Msg( 'wall-sorting-archived' )
 		);
 	}
-	
+
 	public function history() {
-		
+
 	}
 
 	public function index() {
-		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL); 
-		
+		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
+
 		$this->response->addAsset('extensions/wikia/Wall/js/Wall.js');
 		$this->response->addAsset('extensions/wikia/Wall/css/Wall.scss');
 		$this->response->addAsset('skins/common/jquery/jquery.autoresize.js');
-		
+
 		$title = $this->request->getVal('title', $this->app->wg->Title);
 
 		$page = $this->request->getVal('page', 1);
-		
+
 		$wallMessagesPerPage = 20;
 		if(!empty($this->app->wg->wgWallMessagesPerPage)){
 			$wallMessagesPerPage = $this->app->wg->wgWallMessagesPerPage;
 		};
 
 		$filterid = $this->request->getVal('filterid', null);
+
 		if(!empty($filterid)) {
 			$this->getThread($filterid);
 		} else {
@@ -55,7 +56,7 @@ class WallController extends ArticleCommentsModule {
 		if( !empty($filterid) ) {
 			$this->response->setVal('showNewMessage', false);
 			$this->response->setVal('condenseMessage', false);
-			
+
 			if( count($this->threads) > 0 ) {
 				$wn = F::build('WallNotifications', array());
 				foreach($this->threads as $key => $val ){
@@ -63,7 +64,7 @@ class WallController extends ArticleCommentsModule {
 					break;
 				}
 			}
-			
+
 			$this->response->setVal('renderUserTalkArchiveAnchor', false);
 			$this->response->setVal('greeting', '');
 
@@ -78,10 +79,10 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal('showNewMessage', true);
 			$this->response->setVal('condenseMessage', true);
 			$this->response->setVal('renderUserTalkArchiveAnchor', true);
-			
+
 			$greeting = F::build('Title', array($title->getText(), NS_USER_WALL_MESSAGE_GREETING), 'newFromText' );
-			
-			if( $greeting->exists() ) {
+
+			if( !empty( $greeting ) && $greeting->exists() ) {
 				$article = F::build( 'Article', array($greeting));
 				$article->getParserOptions();
 				$article->mParserOptions->setIsPreview(true); //create parser option
@@ -90,24 +91,24 @@ class WallController extends ArticleCommentsModule {
 			} else {
 				$this->response->setVal('greeting', '');
 			}
-		}	
-		
+		}
+
 		$this->response->setVal('sortingOptions', $this->getSortingOptions() );
 		$this->response->setVal('sortingSelected', $this->getSortingSelectedText() );
-		
+
 		$this->response->setVal('title', $title);
-		
+
 		$this->response->setVal('totalItems', $this->countComments );
-		$this->response->setVal('itemsPerPage', $wallMessagesPerPage); 
-		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );	
-		$this->response->setVal('currentPage', $page ); 
-		
+		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
+		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
+		$this->response->setVal('currentPage', $page );
+
 	}
 
 	public function messageDeleted() {
 		/*
 		 * Title no longer includes Username
-		 * 
+		 *
 		$parts = explode('/', $this->app->wg->Title->getText());
 		$parent_title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
 		$user = F::build('User',array($parts[0]),'newFromName');
@@ -122,20 +123,20 @@ class WallController extends ArticleCommentsModule {
 		$user = $this->helper->getUserFromArticleId_forDeleted( $id );
 		$user_displayname = $user->getRealName();
 		if(empty($user_displayname)) $user_displayname = $user->getName();
-		
+
 		$wallTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
-		$this->response->setVal( 'wallOwner', $user_displayname);	
+		$this->response->setVal( 'wallOwner', $user_displayname);
 		$this->response->setVal( 'wallUrl', $wallTitle->getFullURL() );
-		
+
 		$canUndelete = $this->app->wg->User->isAllowed( 'browsearchive' );
-		
+
 		if($canUndelete) {
-			$dbkey = $this->helper->getDbkeyFromArticleId_forDeleted( $id ); 
-			
+			$dbkey = $this->helper->getDbkeyFromArticleId_forDeleted( $id );
+
 			if(empty($dbkey)) {
 				// give up, don't display undelete
 				error_log("WALL_NOTITLE_FROM_DBKEY (dbkey)".print_r($dbkey,1));
-				$canUndelete = false;			
+				$canUndelete = false;
 			} else {
 				$msg_title = F::build('Title', array($dbkey, NS_USER_WALL_MESSAGE), 'newFromText' );
 				$undelete_title = F::build('Title', array('Undelete', NS_SPECIAL), 'newFromText' );
@@ -144,39 +145,39 @@ class WallController extends ArticleCommentsModule {
 			}
 		}
 		$this->response->setVal( 'canUndelete', $canUndelete );
-	}	
+	}
 	/**
 	 * @brief Passes $userTalkArchiveContent to the template and renders the template
-	 * 
+	 *
 	 * @desc Renders old User_talk:[username] page in new place, using Wall_renderOldUserTalkPage.php template
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function renderOldUserTalkPage() {
 		$wallUrl = $this->request->getVal('wallUrl');
-		
+
 		$this->response->addAsset('extensions/wikia/Wall/js/WallUserTalkArchive.js');
 		$this->userTalkArchiveContent = $this->getUserTalkContent();
-		
+
 		if( $this->userTalkArchiveContent === false && !empty($wallUrl) ) {
 		//the subpages did not exist before
 			$this->app->wg->Out->redirect($wallUrl, 301);
 		}
 	}
-	
+
 	/**
 	 * @brief Passes $userTalkArchiveContent to the template and renders the template
-	 * 
+	 *
 	 * @desc Renders old User_talk:[username]/[subpage] page in new place, using Wall_renderOldUserTalkSubpage.php template
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function renderOldUserTalkSubpage() {
 		$subpageName = $this->request->getVal('subpage', null);
 		$wallUrl = $this->request->getVal('wallUrl');
-		
+
 		$this->content = $this->getUserTalkContent($subpageName);
-		
+
 		if( $this->content === false && !empty($wallUrl) ) {
 		//the subpages did not exist before
 			//commented this because it caused fatal error fb#15508 -- so this is a quick fix
@@ -185,17 +186,17 @@ class WallController extends ArticleCommentsModule {
 			//}
 		}
 	}
-	
+
 	/**
 	 * @brief Passes $renderUserTalkArchiveAnchor to the template and renders the template
-	 * 
+	 *
 	 * @desc Renders an anchor to "User talk archive" page
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function renderUserTalkArchiveAnchor() {
 		$renderUserTalkArchiveAnchor = $this->request->getVal('renderUserTalkArchiveAnchor', false);
-		
+
 		$title = $this->request->getVal('title');
 		$content = $this->getUserTalkContent();
 		if( !empty($content) && $renderUserTalkArchiveAnchor !== false ) {
@@ -203,34 +204,34 @@ class WallController extends ArticleCommentsModule {
 			$this->userTalkArchivePageUrl = (empty($title) ? $this->wg->Title->getFullUrl():$title->getFullUrl()).'/'.$this->helper->getArchiveSubPageText();
 		}
 	}
-	
+
 	public function newMessage() {
 		$wall_username = $this->helper->getUser()->getRealName();
 		if( empty( $wall_username) ) $wall_username = $this->helper->getUser()->getName();
-		
+
 		// only use realname if user made edits (use logic from masthead)
 		$userStatsService = F::build('UserStatsService', array($this->helper->getUser()->getID()));
 		$userStats = $userStatsService->getStats();
 		if(empty($userStats['edits']) || $userStats['edits'] == 0) {
 			$wall_username = $this->helper->getUser()->getName();
 		}
-		
+
 		$username = $this->wg->User->getName();
 		$this->response->setVal('username', $username);
 		$this->response->setVal('wall_username', $wall_username);
-		
+
 		$this->checkAndSetAnonsEditing();
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
-	
-	public function loadMore() {	
+
+	public function loadMore() {
 		$this->response->setVal('repliesNumber', $this->request->getVal('repliesNumber'));
 	}
-	
+
 	public function message_error() {
 
 	}
-	
+
 	public function message() {
 		wfProfileIn( __METHOD__ );
 		$comment = $this->request->getVal('comment');
@@ -240,50 +241,50 @@ class WallController extends ArticleCommentsModule {
 			return;
 		}
 		$this->response->setVal('hide',  false);
-		
+
 		if(($comment instanceof ArticleComment)) {
-			$wallMessage = F::build('WallMessage', array($comment), 'newFromArticleComment' );	
+			$wallMessage = F::build('WallMessage', array($comment), 'newFromArticleComment' );
 		} else {
 			$wallMessage = $comment;
 		}
-		
+
 		$wallMessage->load();
 		$this->response->setVal('title', $this->getVal('title'));
-		
+
 		if( !$this->getVal('isreply') ) {
 			$this->response->setVal('feedtitle', htmlspecialchars($wallMessage->getMetaTitle()) );
 			$this->response->setVal('body', $wallMessage->getText() );
-			$this->response->setVal('isreply', false ); 
-			
+			$this->response->setVal('isreply', false );
+
 			$wallMaxReplies = 4;
 			if( !empty($this->app->wg->WallMaxReplies) ) {
 				$wallMaxReplies = $this->app->wg->WallMaxReplies;
 			}
-			
+
 			$replies = $this->getVal('replies');
 			$repliesCount = count($replies);
-			$this->response->setVal('repliesNumber', $repliesCount); 
+			$this->response->setVal('repliesNumber', $repliesCount);
 			$this->response->setVal('showRepliesNumber', $repliesCount);
 			$this->response->setVal('showLoadMore', false );
-			
+
 			if($this->request->getVal('condense', true) && $repliesCount > $wallMaxReplies) {
-				$this->response->setVal('showRepliesNumber', $wallMaxReplies - 2 );	
+				$this->response->setVal('showRepliesNumber', $wallMaxReplies - 2 );
 				$this->response->setVal('showLoadMore', true );
 			}
 			$this->response->setVal('isWatched', $wallMessage->isWatched($this->wg->User) || $this->request->getVal('new', false));
-			$this->response->setVal('replies', $replies ); 
-			
+			$this->response->setVal('replies', $replies );
+
 			$this->response->setVal('linkid', '');
 		} else {
 			$showFrom = $this->request->getVal('repliesNumber') - $this->request->getVal('showRepliesNumber');
 			if( $showFrom > $this->request->getVal('current') ){
 				$this->response->setVal('hide',  true);
 			}
-			
+
 			$this->response->setVal('body', $wallMessage->getText() );
 			$this->response->setVal('isreply', true );
 			$this->response->setVal('replies', false );
-			
+
 			$this->response->setVal('linkid', $wallMessage->getPageUrlPostFix() );
 		}
 		//TODO: refactor it
@@ -302,14 +303,14 @@ class WallController extends ArticleCommentsModule {
 			$isStaff = false;
 		}
 		$this->response->setVal( 'isStaff', $isStaff );
-	
+
 		$this->response->setVal( 'id', $wallMessage->getTitle()->getArticleID());
 		$this->response->setVal( 'username', $name );
 		$this->response->setVal( 'realname', $realname );
-		
+
 		if($wallMessage->isEdited()) {
 			$this->response->setVal( 'iso_timestamp',  $wallMessage->getEditTime(TS_ISO_8601) );
-			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getEditTime(TS_MW) ));  
+			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getEditTime(TS_MW) ));
 			$this->response->setVal( 'showEditedTS',  true );
 			$editorName = $wallMessage->getEditor()->getName();
 			$this->response->setVal( 'editorName', $editorName );
@@ -323,87 +324,87 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getCreatTime(TS_MW) ));
 			$this->response->setVal( 'isEdited',  false);
 		}
-		
+
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'canEdit', $wallMessage->canEdit($this->wg->User) );
 		$this->response->setVal( 'canDelete',$wallMessage->canDelete($this->wg->User) );
 		$this->response->setVal( 'showViewSource',$this->wg->User->getOption('wallshowsource', false) );
-		
+
 		if($this->wg->User->getId() > 0 && !$wallMessage->isWallOwner($this->wg->User) && !$wallMessage->isWallWatched($this->wg->User) ) {
 			$this->response->setVal( 'showFallowButton', true );
 		} else {
 			$this->response->setVal( 'showFallowButton', false );
 		}
-		
+
 		$displayname  = $realname;
 		$displayname2 = $name;
-		
+
 		if( empty($displayname) ) {
 			$displayname = $name;
 			$displayname2 = '';
 		}
 
 		$url = F::build('Title', array($name, NS_USER), 'newFromText' )->getFullUrl();
-		
+
 		if($wallMessage->getUser()->getId() == 0) { // anynymous contributor
 			//$url = F::build('Title', array($name, NS_USER), 'newFromText' )->getFullUrl();
 			//$url = $this->app->wg->SpecialPages['Contributors']
 			$url = Skin::makeSpecialUrl('Contributions').'/'.$wallMessage->getUser()->getName();
-			
+
 			$displayname = wfMsg('oasis-anon-user');
 			$displayname2 = $wallMessage->getUser()->getName();
 		}
 
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );
-		
+
 		$this->response->setVal( 'user_author_url', $url);
-		
+
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	public function parseText($text){
 		return $this->parserText($text);
 	}
-	
+
 	public function reply() {
 		$this->response->setVal('username', $this->wg->User->getName() );
 		$this->checkAndSetAnonsEditing();
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
-	
+
 	public function brickHeader() {
 		$this->response->setVal( 'wallUrl', '#');
 		$this->response->setVal( 'wallName', '');
 		$this->response->setVal( 'messageTitle', '');
 
 		$title = F::build('Title', array($this->request->getVal('id')), 'newFromId' );
-		
+
 		if(!empty($title)) {
 			$wallMessage = F::build('WallMessage', array($title), 'newFromTitle' );
-			
+
 			$wallMessageParent = $wallMessage->getTopParentObj();
 			if(!empty($wallMessageParent)) {
 				$wallMessage = $wallMessageParent;
 			}
-			
+
 			$wallMessage->load();
-			
+
 			if( $wallMessage->getWallOwner()->getId() == $this->wg->User->getId() ) {
 				$this->response->setVal( 'wallName', wfMsg('wall-message-mywall') );
 			} else {
 				$wallOwner = $wallMessage->getWallOwner()->getRealName();
-				if(empty($wallOwner)){ 
+				if(empty($wallOwner)){
 					$wallOwner = $wallMessage->getWallOwner()->getName();
 				}
-				
+
 				$this->response->setVal( 'wallName', wfMsg('wall-message-elseswall', $wallOwner));
 			}
-			
+
 			$this->response->setVal( 'wallUrl', $wallMessage->getWallUrl() );
 			$this->response->setVal( 'messageTitle', $wallMessage->getMetaTitle() );
-			
+
 			// for debugging put history directly in thread
 			//global $wgDevelEnvironment;
 			//if(!empty($wgDevelEnvironment))
@@ -411,10 +412,10 @@ class WallController extends ArticleCommentsModule {
 
 		}
 	}
-	
+
 	/**
 	 * @brief Checks if $wgDisableAnonymousEditing is not empty and and if user is logged-in
-	 * 
+	 *
 	 * @desc If $wgDisableAnonymousEditing is not empty and user is not logged-in it sets two vars and passes it to the templates
 	 */
 	protected function checkAndSetAnonsEditing() {
@@ -428,14 +429,14 @@ class WallController extends ArticleCommentsModule {
 
 	protected function checkAndSetUserBlockedStatus($wallOwner = null) {
 		$user = $this->app->wg->User;
-		
+
 		if( $user->isBlocked() || $user->isBlockedGlobally() ) {
 			if(	!empty($wallOwner) &&
 				$wallOwner->getName() == $this->wg->User->getName() &&
 				!(empty($user->mAllowUsertalk)) ) {
-					
+
 				// user is blocked, but this is his wall and he was not blocked
-				// from user talk page	
+				// from user talk page
 				$this->response->setVal('userBlocked', false);
 			} else {
 				$this->response->setVal('userBlocked', true);
@@ -443,24 +444,24 @@ class WallController extends ArticleCommentsModule {
 		} else {
 			$this->response->setVal('userBlocked', false);
 		}
-		
+
 	}
-	
+
 	protected function getSortingOptions() {
 		$title = $this->request->getVal('title', $this->app->wg->Title);
-		
+
 		$output = array();
-		
+
 		$selected = $this->getSortingSelected();
-		
+
 		foreach($this->sortingOptionsText as $id=>$option) {
 			$href = $title->getFullURL( array( 'sort' => $id ) );
 			if( $id == $selected )
 				$output[] = array( 'id' => $id, 'text'=>$option, 'href' => $href, 'selected' => true );
 			else
 				$output[] = array( 'id' => $id, 'text'=>$option, 'href' => $href );
-		} 
-				
+		}
+
 		return $output;
 	}
 
@@ -472,27 +473,27 @@ class WallController extends ArticleCommentsModule {
 		} else {
 			$this->request->setCookie('wall_sort', $selected, 0);
 		}
-		
+
 		if( empty($selected) || !array_key_exists( $selected, $this->sortingOptionsText ) ) {
 		 	$selected = 'nt';
 		}
-		
+
 		return $selected;
 	}
-	
-	
+
+
 	protected function getSortingSelectedText() {
 		$selected = $this->getSortingSelected();
 		return $this->sortingOptionsText[ $selected ];
 	}
-	
+
 	/**
 	 * @brief Gets and returns user's talk page's content
-	 * 
+	 *
 	 * @param string $subpageName a title of user talk subpage
-	 * 
+	 *
 	 * @return Title
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function getUserTalkContent($subpageName = '') {
@@ -503,14 +504,14 @@ class WallController extends ArticleCommentsModule {
 		}
 		$article = F::build('Article', array($pageTitle));
 		$articleId = $article->getId();
-		
+
 		if( empty($articleId) ) {
 			return false;
 		} else {
 			return $this->app->wg->Parser->parse($article->getContent(), $pageTitle, new ParserOptions($this->wg->User))->getText();
 		}
 	}
-	
+
 	private function getRealNameForUser($user) { // no longer used
 		$uib = F::build('UserIdentityBox', array($this->app, $user, 0));
 		if( $uib->shouldDisplayFullMasthead() ) {
@@ -519,7 +520,7 @@ class WallController extends ArticleCommentsModule {
 			return '';
 		}
 	}
-	
+
 	public function getThreads($title, $page, $perPage = null) {
 		wfProfileIn(__METHOD__);
 
@@ -527,15 +528,15 @@ class WallController extends ArticleCommentsModule {
 		if(!empty($perPage)) {
 			$wall->setMaxPerPage($perPage);
 		}
-		
+
 		$wall->setSorting($this->getSortingSelected() );
-		
+
 		$this->threads = $wall->getThreads($page);
 
 		$this->countComments = $wall->getThreadCount();
-		
+
 		$this->title = $this->wg->Title;
-		
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -543,13 +544,13 @@ class WallController extends ArticleCommentsModule {
 		wfProfileIn(__METHOD__);
 
 		$wallthread = F::build('WallThread', array($filterid), 'newFromId');
-		
+
 		$this->threads = array( $filterid => $wallthread );
-		
+
 		$this->title = $this->wg->Title;
-		
+
 		wfProfileOut(__METHOD__);
 	}
-	
-	
+
+
 } // end class Wall
