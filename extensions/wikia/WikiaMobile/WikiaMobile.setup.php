@@ -63,7 +63,7 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/WikiaMobile.i18n.php", 'Wikia
 /**
  * hooks
  */
-$app->registerHook( 'OutputPageParserOutput', 'WikiaMobileHooks', 'onOutputPageParserOutput' );
+$app->registerHook( 'ParserAfterTidy', 'WikiaMobileHooks', 'onParserAfterTidy' );
 $app->registerHook( 'ParserLimitReport', 'WikiaMobileHooks', 'onParserLimitReport' );
 $app->registerHook( 'MakeHeadline', 'WikiaMobileHooks', 'onMakeHeadline' );
 $app->registerHook( 'LinkBegin', 'WikiaMobileHooks', 'onLinkBegin' );

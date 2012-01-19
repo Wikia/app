@@ -5,18 +5,12 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileHooks extends WikiaObject{
-	const SECTION_OPENING = '<section class="articleSection">';
-	const SECTION_CLOSING = '</section>';
-
-	public function onOutputPageParserOutput( &$out, $parserOutput ){
+	public function onParserAfterTidy( &$parser, &$text ){
 		//cleanup page output from unwanted stuff
-		if ( Wikia::isWikiaMobile() ) {
-			$text = $parserOutput->getText();
-
+		if ( $parser->getOptions()->getSkin() instanceof SkinWikiaMobile ) {
 			//remove inline styling to avoid weird results and optimize the output size
-			$text = preg_replace('/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hpace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text);
-
-			$parserOutput->setText( $text );
+			$text = preg_replace('/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text );
+			
 		}
 
 		return true;
@@ -27,6 +21,7 @@ class WikiaMobileHooks extends WikiaObject{
 		if ( Wikia::isWikiaMobile() ) {
 			$limitReport = null;
 		}
+
 		return true;
 	}
 
