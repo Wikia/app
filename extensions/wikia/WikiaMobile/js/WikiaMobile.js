@@ -320,8 +320,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				searchInput.val('');
 			}else{
 				track(['search', 'toggle', 'open']);
-				navigationBar.removeClass().addClass('searchOpen');
-				thePage.show();
+				closeNav().addClass('searchOpen');
 			}
 		});
 
@@ -336,18 +335,33 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		navToggle.bind(clickEvent, function(event) {
 			if(navigationBar.hasClass('fullNav')){
-				track(['nav', 'close']);
-				thePage.show();
-				navigationBar.removeClass();
+				closeNav();
 			}else{
 				track(['nav', 'open']);
 				thePage.hide();
 				//80px is for lvl1 without header
 				navigationBar.addClass('fullNav').height(lvl1.height() + 80);
+				window.location.hash = 'WikiNav';
 			}
 		});
 
-		//add 'active' state to devices that does not support it
+		function closeNav() {
+			if(window.location.hash == '#WikiNav') window.history.back();
+			track(['nav', 'close']);
+			thePage.show();
+			return navigationBar.removeClass();
+		}
+
+		//close WikiNav on back button
+		if ("onhashchange" in window) {
+			window.addEventListener("hashchange", function() {
+				if(window.location.hash == "" && navigationBar.hasClass('fullNav')) {
+					closeNav();
+				}
+			}, false);
+		}
+
+		//add 'active' state to devices that does't support it
 		$("#wkNavMenu li, #wkNavBack, #wkRelPag li")
 		.bind("touchstart", function () {
 			$(this).addClass("fake-active");

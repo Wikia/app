@@ -8,8 +8,7 @@
 
 	$._createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution(),
-		modal = '<div id=modalWrapper>\
-			<div id=modalTopBar>\
+		modal = '<div id=modalWrapper><div id=modalTopBar>\
 			<div id=modalClose>&times;</div></div>\
 			<div id=modalContent></div>\
 			<div id=modalFooter></div>\
@@ -24,8 +23,7 @@
 		this._modalTopBar = $('#modalTopBar');
 		this._modalContent = $('#modalContent');
 		this._modalFooter = $('#modalFooter');
-		this._modalClose = $('#modalClose');
-		this._allToHide = this._modalTopBar.add(this._modalClose).add(this._modalFooter);
+		this._allToHide = this._modalTopBar.add(this._modalFooter);
 		this._thePage = $('#WikiaAdPlace, #wkTopNav, #WikiaPage, #wikiaFooter');
 
 		//hide adress bar on orientation change
@@ -36,7 +34,7 @@
 		//close modal on back button
 		if ("onhashchange" in window) {
 			window.addEventListener("hashchange", function() {
-				if(window.location.hash == "") {
+				if(window.location.hash == "" && that.isModalShown()) {
 					that.closeModal();
 				}
 			}, false);
@@ -44,6 +42,7 @@
 
 		this._modalClose.bind(WikiaMobile.getClickEvent(), function(event) {
 			that.closeModal();
+			window.history.back();
 		});
 
 		this._modal.bind(WikiaMobile.getTouchEvent(), function() {
@@ -139,7 +138,7 @@
 			modal;
 
 		//needed for closing modal on back button
-		window.location.hash = "modalOpen";
+		window.location.hash = "modal";
 
 		if(!(html || imageNumber)) throw "No content provided for modal";
 
@@ -210,8 +209,6 @@
 
 	$.hideModal = function() {
 		if(this._modalCreated) {
-			//reset hash so user can go to previous page
-			window.location.href = '';
 			var modal = this._modal;
 
 			modal.removeClass('modalShown');
