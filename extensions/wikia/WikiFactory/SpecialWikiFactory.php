@@ -61,3 +61,5 @@ $wgSpecialPageGroups['WikiFactory'] = 'wikia';
 $wgAutoloadClasses[ "CloseWikiPage" ] = $dir. "/Close/SpecialCloseWiki_body.php";
 $wgSpecialPages[ "CloseWiki" ] = "CloseWikiPage";
 $wgSpecialPageGroups[ "CloseWiki" ] = 'wikia';
+
+require_once( $dir . '/../SponsorshipDashboard/SponsorshipDashboard_autoload.php' );
