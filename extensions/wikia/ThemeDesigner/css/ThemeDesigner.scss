@@ -32,7 +32,7 @@ body {
 		font-size: 13px;
 	}
 	.form-questionmark {
-		background: url(/extensions/wikia/ThemeDesigner/images/question-light.png); /* TODO: Add as sprite? */
+		background: url(/extensions/wikia/ThemeDesigner/images/question-light.png); /* $wgCdnStylePath */
 		height: 12px;
 		width: 12px;
 		display: inline-block;
