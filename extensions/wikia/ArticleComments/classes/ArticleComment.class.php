@@ -122,9 +122,9 @@ class ArticleComment {
 	public function load($master = false) {
 		global $wgMemc, $wgParser, $wgOut;
 		wfProfileIn( __METHOD__ );
-
+		
 		$result = true;
-
+		
 		if ( $this->mTitle ) {
 			// get revision ids
 			if ($master) {
@@ -147,8 +147,8 @@ class ArticleComment {
 				}
 			}
 			
-			if( $this->mFirstRevId == 0 || $this->mLastRevId == 0 ) {
-				// assume article is bogus, threat as if it doesn't exist
+			if( empty($this->mFirstRevId) || empty($this->mLastRevId) ) {
+			// assume article is bogus, threat as if it doesn't exist
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -193,12 +193,11 @@ class ArticleComment {
 			} else {
 				$result = false;
 			}
-
-
+			
 			if(empty($this->mFirstRevision) || empty($this->mLastRevision) ){
 				return false;
 			}
-
+			
 			$rawtext = $this->mLastRevision->getText();
 			$this->parseText($rawtext);
 			$wgMemc->set($memckey, array(
@@ -209,13 +208,11 @@ class ArticleComment {
 				'last' => $this->mLastRevision,
 				'user' => $this->mUser
 			), 3600);
-			
 		} else { // null title
 			$result = false;
 		}
 		
 		wfProfileOut( __METHOD__ );
-
 		return $result;
 	}
 	
@@ -428,11 +425,12 @@ class ArticleComment {
 			$this->mArticle = new Article($this->mTitle, 0);
 		} 
 		$error = '';
+		$id = $this->mArticle->getId();
 		//we need to run all the hook manual :/
 		if ( wfRunHooks( 'ArticleDelete', array( &$this->mArticle, &$wgUser, &$reason, &$error ) ) ) {
 			if( $this->mArticle->doDeleteArticle( $reason, $suppress ) ) {
 				$deleted = $this->mTitle->getPrefixedText();
-				wfRunHooks( 'ArticleDeleteComplete', array( &$this->mArticle, &$wgUser, $reason, $this->mArticle->getId() ) );
+				wfRunHooks( 'ArticleDeleteComplete', array( &$this->mArticle, &$wgUser, $reason, $id) );
 				return true;
 			}
 		}

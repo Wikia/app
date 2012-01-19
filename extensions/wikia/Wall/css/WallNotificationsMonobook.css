@@ -76,16 +76,44 @@
 
 #wall-notifications-inner .notification {
 	width: 190px;
+	font-weight: normal;
 	display: inline-block;
 	white-space: normal;
-	font-size: 10px;
+	font-size: 11px;
+	padding-top: 5px;
 	line-height: 1.5em;
 	text-align: left;
 }
+
+#wall-notifications-inner .notification .msg-title {
+	font-weight: bold;
+	font-size: 14px;	
+}
+
+
 #wall-notifications-inner .notification:hover { text-decoration: underline; }
-#wall-notifications-inner .notification .timeago { display: block; font-size: 10px; }
+#wall-notifications-inner .notification .timeago {
+	display: block; 
+	font-size: 9px; 
+	font-style: italic;
+}
 #wall-notifications-inner .unread_notification { font-weight: bold; }
-#wall-notifications-inner .read_notification { font-weight: normal; }
+
+#wall-notifications-inner .read_notification .notification .msg-title { 
+	font-weight: normal;
+}
+#wall-notifications-inner .read_notification .notification  {
+	opacity: 0.3;
+	filter: alpha(opacity = 50);
+	-moz-opacity:.50; 
+}
+
+#wall-notifications-inner .read_notification .avatars img {
+	opacity: 0.3;
+	-moz-opacity:.50; 
+	filter: alpha(opacity = 50);
+}
+
 #wall-notifications-inner > li { width: 100%; }
 #wall-notifications-inner li,
 #wall-notifications-inner a {

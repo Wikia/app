@@ -10,20 +10,29 @@ class PaginationController extends WikiaController {
 	 *
 	 * @requestParam int $totalItems total number of items in result set
 	 * @requestParam int $itemsPerPage number of items to show on each page
-	 * @requestParam int $currentPage selected page number 
+	 * @requestParam int $currentPage selected page number
+	 * @requestParam String $url string with the url to which method will add "?page=" or "&page=" suffix
 	 */
 	public function index() {
+		$this->response->addAsset('includes/wikia/services/css/pagination.scss');
+		
 		$this->totalItems = $this->getVal('totalItems');
 		$this->itemsPerPage = $this->getVal('itemsPerPage');
 		$this->currentPage = $this->getVal('currentPage');
+		$this->url = $this->getVal('url', '#');
+		
+		if( strpos($this->url, '?') === false ) {
+			$this->url .= ($this->url === '#' ? '' : '?page=');
+		} else {
+			$this->url .= ($this->url === '#' ? '' : '&page=');
+		}
 		
 		$this->pages = null;
 		$this->prev = null;
 		$this->next = null;
-				
+		
 		$totalPages = ceil($this->totalItems / $this->itemsPerPage);
 		$pagesArray = array(1);
-
 		
 		// Don't render anything if $totalPages == 1
 		// if ($totalPages == 1) return; ??
@@ -41,7 +50,7 @@ class PaginationController extends WikiaController {
 		if ($firstVisiblePage > 2) {
 			$pagesArray[] = '…';
 		}
-
+		
 		// Push the range of pages into the pages array
 		for($i=$firstVisiblePage; $i<=$lastVisiblePage; $i++) {
 			$pagesArray[] = $i;
@@ -63,9 +72,8 @@ class PaginationController extends WikiaController {
 		if ($this->currentPage < $totalPages) {
 			$this->next = true;
 		}
-
+		
 		// Set the template variable
 		$this->pages = $pagesArray;
-
 	}
 }

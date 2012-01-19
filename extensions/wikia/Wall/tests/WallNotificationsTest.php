@@ -6,8 +6,8 @@ require_once(dirname(__FILE__) . '/../Wall.setup.php');
 $wgCanonicalNamespaceNames = $wgCanonicalNamespaceNames + $wgExtraNamespaces;
 
 class testWallNotifications extends WallNotifications {
-	public function addNotificationToData(&$data, $uniqueId, $entityKey, $authorId, $isReply, $read = false) {
-		return parent::addNotificationToData(&$data, $uniqueId, $entityKey, $authorId, $isReply, $read);
+	public function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false) {
+		return parent::addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read);
 	}
 }
 
@@ -113,7 +113,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 			)
 		);
 		
-		$tests[] = array( $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
 		
 		$dataS = $dataF;
 		
@@ -140,7 +140,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 			)
 		);		
 		
-		$tests[] = array( $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
 		
 		$authorId2 = 7777;
 		$entityKey  = '505_212';
@@ -170,7 +170,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 			)
 		);
 		
-		$tests[] = array( $uniqueId, $entityKey2, $authorId2, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $uniqueId, $entityKey2, $authorId2, $isReply, $read, $dataS, $dataF );
 		
 		$dataS = $dataF;
 		
@@ -202,7 +202,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 			)
 		);		
 		
-		$tests[] = array( $uniqueId, $entityKey3, $authorId3, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $uniqueId, $entityKey3, $authorId3, $isReply, $read, $dataS, $dataF );
 		
 		$dataS = $dataF;
 		
@@ -234,7 +234,7 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 			)
 		);		
 		
-		$tests[] = array( $uniqueId, $entityKey4, $authorId4, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $uniqueId, $entityKey4, $authorId4, $isReply, $read, $dataS, $dataF );
 		
 		$dataS = $dataF;
 		
@@ -265,17 +265,17 @@ class WallNotificationsTest extends PHPUnit_Framework_TestCase
 			)
 		);		
 		
-		$tests[] = array( $uniqueId, $entityKey5, $authorId4, $isReply, $read, $dataS, $dataF );		
+		$tests[] = array( null, null, $uniqueId, $entityKey5, $authorId4, $isReply, $read, $dataS, $dataF );		
 		
 		return $tests;
 	}
 	/**
 	 * @dataProvider someDataProvider
 	 */
-	public function testAddNotificationToData($uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF) {
+	public function testAddNotificationToData($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF) {
 		$wn = new testWallNotifications();
 
-		$wn->addNotificationToData($dataS, $uniqueId, $entityKey, $authorId, $isReply, $read);
+		$wn->addNotificationToData($dataS, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read);
 
 		$this->assertEquals($dataS, $dataF);
 	}

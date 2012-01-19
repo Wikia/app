@@ -308,9 +308,9 @@ class ChangesList {
 				array( 'known', 'noclasses' )
 			);
 		}
-		$s .= '(' . $diffLink . $this->message['pipe-separator'];
+		
 		# History link
-		$s .= $this->skin->link(
+		$histLink = $this->skin->link(
 			$rc->getTitle(),
 			$this->message['hist'],
 			array(),
@@ -321,11 +321,11 @@ class ChangesList {
 			array( 'known', 'noclasses' )
 		);
 		
-		$s .= ') . . ';
+		$s .= '(' . $diffLink . $this->message['pipe-separator'] . $histLink . ') . . ';
 		
 		/** Start of Wikia change @author nAndy */
 		wfRunHooks( 'ChangesListInsertDiffHist',
-			array(&$this, &$diffLink, &$s, &$rc, $unpatrolled) );
+			array(&$this, &$diffLink, &$histLink, &$s, &$rc, $unpatrolled) );
 		/** End of Wikia change */
 	}
 
@@ -369,7 +369,7 @@ class ChangesList {
 			array(&$this, &$articlelink, &$s, &$rc, $unpatrolled, $watched) );
 		/** End of Wikia change */
 
-		$s .= ' '.$articlelink;
+		$s .= $articlelink;
 	}
 
 	public function insertTimestamp( &$s, $rc ) {
@@ -614,10 +614,13 @@ class OldChangesList extends ChangesList {
 			$classes[] = Sanitizer::escapeClass( 'watchlist-'.$rc->mAttribs['rc_namespace'].'-'.$rc->mAttribs['rc_title'] );
 		}
 		
-		wfRunHooks( 'OldChangesListRecentChangesLine', array(&$this, &$s, $rc) );
-
-		wfProfileOut( __METHOD__ );
-		return "$dateheader<li class=\"".implode( ' ', $classes )."\">".$s."</li>\n";
+		/** Start of Wikia change @author nAndy */
+		if( wfRunHooks( 'OldChangesListRecentChangesLine', array(&$this, &$s, $rc) ) ) {
+			return "$dateheader<li class=\"".implode( ' ', $classes )."\">".$s."</li>\n";
+		} else {
+			return "$dateheader\n";
+		}
+		/** End of Wikia change */
 	}
 }
 
@@ -805,7 +808,6 @@ class EnhancedChangesList extends ChangesList {
 	 */
 	protected function recentChangesBlockGroup( $block ) {
 		global $wgLang, $wgContLang, $wgRCShowChangedSize;
-
 		wfProfileIn( __METHOD__ );
 
 		$r = '<table class="mw-enhanced-rc"><tr>';
@@ -1221,7 +1223,7 @@ class EnhancedChangesList extends ChangesList {
 		}
 
 		wfProfileOut( __METHOD__ );
-
+		
 		return '<div>'.$blockOut.'</div>';
 	}
 

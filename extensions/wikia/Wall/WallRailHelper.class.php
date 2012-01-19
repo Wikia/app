@@ -11,7 +11,11 @@ class WallRailHelper {
 		$app = F::App();
 		$app->wf->ProfileIn(__METHOD__);
 		
-		if( $app->wg->Title->getNamespace() === NS_USER_WALL 
+		$namespace = $app->wg->Title->getNamespace();
+		$action = $app->wg->Request->getVal('action', null);
+		
+		if( $action !== 'history' 
+			&& $namespace === NS_USER_WALL 
 			&& !$app->wg->Title->isSubpage()
 		) {
 			//we want only chat, achivements and following pages
@@ -21,6 +25,12 @@ class WallRailHelper {
 					unset($modules[$rightRailEl]);
 				}
 			}
+		}
+		
+		if( $action === 'history' && ($namespace === NS_USER_WALL || $namespace === NS_USER_WALL_MESSAGE) ) {
+			$modules = array();
+			$modules[1441] = array('Search', 'Index', null);
+			$modules[1440] = array('WallRailModule', 'index', null);
 		}
 		
 		$app->wf->ProfileOut(__METHOD__);

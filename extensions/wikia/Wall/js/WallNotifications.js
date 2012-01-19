@@ -50,7 +50,7 @@ var WallNotifications = $.createClass(Object, {
 				}
 				$('#WallNotificationsReminder').stop().fadeOut(200);
 			});
-
+			
 			this.monobook = false;
 		}
 		
@@ -62,6 +62,20 @@ var WallNotifications = $.createClass(Object, {
 			.live('click', this.proxy( this.markAllAsReadAllWikis ) );
 	},
 
+	checkIfFromMessageBubble: function() {
+		function urlParam(name){
+			var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+			if (!results){ 
+				return 0; 
+			}
+			return results[1] || 0;
+		}
+		if(urlParam('showNotifications')) {
+			$('#WallNotifications').trigger('mouseenter');
+			$('#WallNotifications .subnav').addClass('show');
+		}
+	},
+	
 	updateCounts: function() {
 		if( this.updateInProgress == false ) {
 			this.updateInProgress = true;
@@ -81,6 +95,10 @@ var WallNotifications = $.createClass(Object, {
 					
 					// make sure at least 1 element is visible
 					this.showFirst();
+					
+					// on first updateCounts show notifications if user
+					// came from Notification bubble on non-wall Wiki
+					this.checkIfFromMessageBubble();
 					
 					// do not update for next 10s
 					setTimeout( this.proxy( function() {this.updateInProgress = false; } ), 10000 );
@@ -152,7 +170,7 @@ var WallNotifications = $.createClass(Object, {
 				
 				// if we already have data for some Wikis, show it
 				this.restoreFromCache();
-
+				
 				// make sure user doesn't trap himself
 				// (closed tray for current wiki, marks all as read
 				//	= tray is hidden (because there are no other wikis with notifications)
@@ -160,10 +178,14 @@ var WallNotifications = $.createClass(Object, {
 				this.showFirst();
 				
 				//click tracking
-				if( typeof($.tracker) != 'undefined' ) {
-					$.tracker.byStr('wall/notifications/mark_all_as_read');
-				} else {
-					WET.byStr('wall/notifications/mark_all_as_read');
+				if( forceAll === false && typeof($.tracker) != 'undefined' ) {
+					$.tracker.byStr('wall/notifications/mark_all_as_read/this_wiki');
+				} else if( forceAll !== false && typeof($.tracker) != 'undefined' ) {
+					$.tracker.byStr('wall/notifications/mark_all_as_read/all_wikis');
+				} else if( forceAll === false && typeof($.tracker) == 'undefined' ) {
+					WET.byStr('wall/notifications/mark_all_as_read/this_wiki');
+				} else if( forceAll !== false && typeof($.tracker) == 'undefined' ) {
+					WET.byStr('wall/notifications/mark_all_as_read/all_wikis');
 				}
 			})
 	
@@ -177,6 +199,14 @@ var WallNotifications = $.createClass(Object, {
 		var height = $('#wall-notifications-markasread').outerHeight()+4;
 		$('#wall-notifications-markasread').closest('li').css({'height':height});
 		$('#wall-notifications-markasread-sub').addClass('disabled');
+		
+		//click tracking
+		if( typeof($.tracker) != 'undefined' ) {
+			$.tracker.byStr('wall/notifications/mark_all_as_read/click');
+		} else {
+			WET.byStr('wall/notifications/mark_all_as_read/click');
+		}
+		
 		return false;
 	},
 
@@ -244,11 +274,13 @@ var WallNotifications = $.createClass(Object, {
 			wikiEl.removeClass('show');
 			var wikiId = wikiEl.attr('data-wiki-id');
 			delete this.wikiShown[ wikiId ];
+			this.track('wall/notifications/tray_close');
 		} else {
 			wikiEl.addClass('show');
 			var wikiId = wikiEl.attr('data-wiki-id');
 			this.wikiShown[ wikiId ] = true;
 			this.updateWiki(wikiId);
+			this.track('wall/notifications/tray_open');
 		}
 		return false;
 	},
@@ -277,6 +309,7 @@ var WallNotifications = $.createClass(Object, {
 	},
 	
 	updateWikiFetch: function(wikiId) {
+		var isMain = (wikiId == this.currentWikiId) ? 'YES' : 'NO';
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'getUpdateWiki',
@@ -284,7 +317,8 @@ var WallNotifications = $.createClass(Object, {
 			scriptPath: this.wikisUrls[wikiId],
 			data: {
 				username: wgTitle,
-				wikiId: wikiId
+				wikiId: wikiId,
+				isMain: isMain
 			},
 			callback: this.proxy(function(data) {
 				if(data.status != true || data.html == '') return;

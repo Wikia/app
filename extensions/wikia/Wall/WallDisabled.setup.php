@@ -12,9 +12,9 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'User Wall - disabled',
-	'author' => array('Andrzej Łukaszewski'),
+	'author' => array( 'Tomek Odrobny', 'Andrzej Łukaszewski', 'Piotr Bablok' ),
 	'url' => 'http://www.wikia.com',
-	'descriptionmsg' => 'wall-desc',
+	'descriptionmsg' => 'wall-disabled-desc',
 );
 
 $dir = dirname(__FILE__);

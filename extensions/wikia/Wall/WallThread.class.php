@@ -3,6 +3,7 @@
 class WallThread {
 	private $mThreadId = false;
 	private $mCached = null;
+	private $mForceMaster = false;
 	
 	// cached data
 	private $data;
@@ -20,6 +21,7 @@ class WallThread {
 		$this->data->threadActivityScore = false;
 		$this->data->threadLastReplyTimestamp = false;
 		$this->mCached = null;
+		$this->mCityId = F::app()->wg->CityId;
 	}
 	
 	static public function newFromId( $id ) {
@@ -29,7 +31,7 @@ class WallThread {
 		return $wt;
 	}
 	
-	static public function timestampToScore ( $timestamp ) {
+	public function timestampToScore ( $timestamp ) {
 		$ago = time() - strtotime($timestamp) + 1;
 		if ($ago < 86400) {
 			// Under 24 hrs
@@ -52,8 +54,7 @@ class WallThread {
 		}
 	}
 	
-	public function isCached() {
-		return false;
+	public function loadIfCached() {
 		if($this->mCached === null) {
 			$this->loadFromMemcache();
 		}
@@ -95,17 +96,18 @@ class WallThread {
 		$score = 0;
 		foreach( $this->data->threadReplyObjs as $obj ) {
 			$obj->load();
-			if( $obj->mFirstRevision ) {
+			if( !empty($obj->mFirstRevision) ) {
 				$timestamp = $obj->mFirstRevision->getTimestamp();
-				$score += self::timestampToScore( $timestamp );
+				$score += $this->timestampToScore( $timestamp );
 			}
 		}
-		$ac = $this->getThreadAC();
-		$ac->load();
-		if(!empty($ac->mFirstRevision)) {
-			$score += self::timestampToScore( $ac->mFirstRevision->getTimestamp() );	
+		
+		$mainMsg = $this->getThreadMainMsg();
+		if(!($mainMsg instanceof WallMessage)) {
+			return 0;
 		}
-	
+		$mainMsg->load();
+		$score += $this->timestampToScore( $mainMsg->getCreateTimeRAW() );
 		return $score;
 	}
 	
@@ -114,14 +116,14 @@ class WallThread {
 		if(count($this->data->threadReplyObjs) > 0) {
 			$last = end($this->data->threadReplyObjs);
 		} else {
-			$last = $this->getThreadAC();
+			$last = $this->getThreadMainMsg();
 		}
-		//var_dump($this->mReplyObjs);
-		//var_dump($last);
+		if(!($last instanceof WallMessage)) {
+			return 0;
+		}
 		$last->load();
-		if( $last->mFirstRevision ) {
-			return $last->mFirstRevision->getTimestamp();
-		}
+
+		return $last->getCreateTimeRAW();
 	
 	}
 	
@@ -130,18 +132,23 @@ class WallThread {
 			$this->loadReplyIdsFromDB();
 		$this->data->threadReplyObjs = array();
 		foreach( $this->data->threadReplyIds as $id ) {
-			$ac = ArticleComment::newFromId( $id );
-			//$this->mReplyObjs[ $id ] = WallMessage::newFromArticleComment( $ac );
-			$this->data->threadReplyObjs[ $id ] = $ac;
+			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
+			if($wm instanceof WallMessage && !$wm->isAdminDelete()) {
+				$this->data->threadReplyObjs[ $id ] = $wm; 
+			}
 		}
 	}
 	
-	private function loadReplyIdsFromDB($master = true) {
+	private function loadReplyIdsFromDB($master = false) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
 		// (fetch for many threads at once, set with ->setReplies)
 
 		$title = Title::newFromId( $this->mThreadId );
+		
+		if( empty($title) ) {
+			$title = Title::newFromId( $this->mThreadId, GAID_FOR_UPDATE );
+		}
 
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
@@ -160,12 +167,14 @@ class WallThread {
 
 	}
 	
-	private function reloadAndCache() {
-		// invalidate cache at Thread level (new reply or reply removed in thread, reply edited)
+	public function invalidateCache() {
+		// invalidate cache at Thread level (new reply or reply removed in thread)
+		$this->mForceMaster = true;
+		$this->loadReplyIdsFromDB( true );
 	}
 	
 	private function getThreadKey() {
-		return  __CLASS__ . 'thread-key-v08-' . $this->mThreadId;
+		return  __CLASS__ . '-'.$this->mCityId.'-thread-key-v08-' . $this->mThreadId;
 	}
 	
 	private function getCache() {
@@ -191,16 +200,83 @@ class WallThread {
 
 		$cache->set($key, $this->data);
 		$this->mCached = true;
+		$this->mForceMaster = false;
 	}
 	
-	public function getThreadAC() {
-		return ArticleComment::newFromId( $this->mThreadId );
+	public function getThreadMainMsg() {
+		return WallMessage::newFromId( $this->mThreadId );
 	}
 	
-	public function getRepliesAC() {
+	public function getRepliesWallMessages() {
 		if($this->data->threadReplyObjs === false)
 			$this->loadReplyObjs();
 		return $this->data->threadReplyObjs;
+	}
+	//depricated 
+	public function getThreadHistory() {
+		global $wfGetDB, $wgLang;
+		$dbr = wfGetDB( DB_SLAVE ); //TODO: ???
+		
+		/*
+		 * Gather all ArticleIds related to that thread
+		 * - thread articleId
+		 * - all replies, including those that are deleted
+		 */
+		
+		// this is little weird, but out ArticleComment points to our Wall
+		// but ->getArticleId() on it return correct ID of a thread
+		// so we need to make new title, from this ID, to get proper dbkey
+		$id = $this->mThreadId;
+		$title = F::Build('title', array($id), 'newFromId');
+		$dbkey = $title->getDbkey();
+		 
+ 		$like = "page_title LIKE '" . $dbr->escapeLike($dbkey). "%'";
+		
+		$res = $dbr->select( 'page', array('page_id'), $like, __METHOD__ );
+		$ids = array();
+		foreach ( $res as $row ) {
+			$ids[] = $row->page_id;
+		}
+		
+		// now do the same for deleted comments
+ 		$like = "ar_title LIKE '" . $dbr->escapeLike($dbkey). "%'";
+		$res = $dbr->select( 'archive', array('ar_page_id'), $like, __METHOD__ );
+		foreach ( $res as $row ) {
+			$ids[] = $row->ar_page_id;
+		}
+		
+		/*
+		 * using all those IDs fetch their revisions
+		 * and generate output
+		 */
+		$output = '';
+		$output .= Xml::openElement('table');
+ 		$res = $dbr->select( 'revision', array('rev_id', 'rev_page', 'rev_user', 'rev_user_text', 'rev_timestamp', 'rev_parent_id'), array('rev_page'=>$ids), __METHOD__ );
+		foreach ( $res as $row ) {
+			$output .= Xml::openElement('tr');
+				$output .= Xml::openElement('td');
+					$user = User::newFromId( $row->rev_user );
+					$output .= $user->getName();
+				$output .= Xml::closeElement('td');
+				$output .= Xml::openElement('td');
+					if($row->rev_parent_id == 0) {
+						$output .= 'Posted ';
+					} else {
+						$output .= 'Edited ';
+					}
+					if($row->rev_page == $id) {
+						$output .= 'a message';
+					} else {
+						$output .= 'a reply';
+					}
+				$output .= Xml::closeElement('td');
+				$output .= Xml::openElement('td');
+					$output .= $wgLang->timeanddate( $row->rev_timestamp );
+				$output .= Xml::closeElement('td');
+			$output .= Xml::closeElement('tr');
+		}
+		$output .= Xml::closeElement('table');
+		return $output;
 	}
 	
 }

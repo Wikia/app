@@ -232,8 +232,7 @@ class FeedRenderer {
 
 		if (is_numeric($count)) {
 			$msg = wfMsgExt("myhome-feed-{$type}-details", array('parsemag'), $count);
-		}
-		else {
+		} else {
 			$msg = wfMsg("myhome-feed-{$type}-details");
 		}
 
@@ -281,31 +280,52 @@ class FeedRenderer {
 		$html = '';
 		
 		foreach( $comments as $comment ) {
-			$html .= '<tr>';
-			$html .= '<td>';
-			$html .= $comment['avatar'];
-			$html .= '</td>';
-			
-			$html .= '<td>';
-			$html .= '<p class="author">';
+			$authorLine = '';
 			if( !empty($comment['user-profile-url']) ) {
 				if( !empty($comment['real-name']) ) {
-					$html .= '<a href="'.$comment['user-profile-url'].'" class="real-name">'.$comment['real-name'].'</a>';
-					$html .= ' <span>'.$comment['author'].'</span>';
+					$authorLine .= Xml::element('a', array(
+						'href' => $comment['user-profile-url'],
+						'class' => 'real-name',
+					), $comment['real-name']);
+					$authorLine .= ' ';
+					$authorLine .= Xml::element('span', array(), $comment['author']);
 				} else {
-					$html .= '<a href="'.$comment['user-profile-url'].'">'.$comment['author'].'</a>';
+					$authorLine .= Xml::element('a', array(
+						'href' => $comment['user-profile-url'],
+						'class' => 'real-name',
+					), $comment['author']);
 				}
 			} else {
-				$html .= $comment['author'];
+				$authorLine .= $comment['author'];
 			}
-			$html .= '</p>';
-			$html .= '<p>'.$comment['wall-comment'];
+			
+			$timestamp = '';
 			if( !empty($comment['timestamp']) ) {
-				$html .= ' <time class="wall-timeago" datetime="'.wfTimestamp(TS_ISO_8601, $comment['timestamp']).'">'.self::formatTimestamp($comment['timestamp']).'</time>';
+				$timestamp .= Xml::openElement('time', array(
+					'class' => 'wall-timeago',
+					'datetime' => wfTimestamp(TS_ISO_8601, $comment['timestamp']),
+				));
+				$timestamp .= self::formatTimestamp($comment['timestamp']);
+				$timestamp .= Xml::closeElement('time');
 			}
-			$html .= '</p>';
-			$html .= '</td>';
-			$html .= '</tr>';
+			
+			$html .= Xml::openElement('tr');
+				$html .= Xml::openElement('td');
+					$html .= $comment['avatar'];
+				$html .= Xml::closeElement('td');
+				$html .= Xml::openElement('td');
+					$html .= Xml::openElement('p');
+						$html .= $authorLine;
+					$html .= Xml::closeElement('p');
+					$html .= Xml::openElement('p');
+						$html .= $comment['wall-comment'];
+						$html .= ' ';
+						$html .= Xml::openElement('a', array('href' => $comment['wall-message-url']));
+							$html .= $timestamp;
+						$html .= Xml::closeElement('a');
+					$html .= Xml::closeElement('p');
+				$html .= Xml::closeElement('td');
+			$html .= Xml::closeElement('tr');
 		}
 		
 		return $html;
@@ -529,7 +549,6 @@ class FeedRenderer {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getDetails($row) {
-
 		wfProfileIn(__METHOD__);
 
 		$html = '';

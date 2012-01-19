@@ -85,8 +85,16 @@ class MonoBookTemplate extends QuickTemplate {
 <div id="content" <?php $this->html("specialpageattributes") ?>>
 	<a id="top"></a>
 	<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
-
-	<h1 id="firstHeading" class="firstHeading"><?php $this->html('title') ?></h1>
+<?php
+/* Wikia change begin */
+	global $wgSuppressPageTitle;
+	if( !$wgSuppressPageTitle ) {
+		echo '<h1 id="firstHeading" class="firstHeading">';
+		$this->html('title');
+		echo '</h1>';
+	}
+/* Wikia change end */
+?>
 	<div id="bodyContent">
 		<h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
 		<div id="contentSub"<?php $this->html('userlangattributes') ?>><?php $this->html('subtitle') ?></div>

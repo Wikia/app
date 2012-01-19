@@ -3,7 +3,7 @@
 class WallHelper {
 	//WA = wiki activity
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
-	const WA_WALL_COMMENTS_EXPIRED_TIME = 86400;
+	const WA_WALL_COMMENTS_EXPIRED_TIME = 259200; // = (3 * 24 * 60 * 60) = 3 days
 	
 	public function __construct() {
 		$this->urls = array();
@@ -29,7 +29,7 @@ class WallHelper {
 	 * 
 	 * @return Title
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getTitle($namespace = null, $subpage = null, $user = null) {
 		$app = F::App();
@@ -64,21 +64,35 @@ class WallHelper {
 	 * 
 	 * @return User
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	
 	//TODO: remove call to UserProfilePage
 	public function getUser($title = false) {
-		$response = F::App()->sendRequest(
-			'UserProfilePage',
-			'getUserFromTitle',
-			array(
-				'title' => $title ? $title : F::App()->wg->Title,
-				'returnUser' => true
-			)
-		);
-		
-		return $response->getVal('user');
+		$title = $title ? $title : F::App()->wg->Title;
+		$ns = $title->getNamespace();
+		if( $ns == NS_USER_WALL ) {
+			$w = F::build( 'Wall', array( $title ), 'newFromTitle' );
+			return $w->getUser(); 
+		}
+		elseif( $ns == NS_USER_WALL_MESSAGE) {
+			$wm = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
+			return $wm->getWallOwner();
+		} else {
+			// this is last resort
+			// should no longer be needed
+			
+			$response = F::App()->sendRequest(
+				'UserProfilePage',
+				'getUserFromTitle',
+				array(
+					'title' => $title,
+					'returnUser' => true
+				)
+			);
+			
+			return $response->getVal('user');
+		}
 	}
 	
 	/**
@@ -89,7 +103,7 @@ class WallHelper {
 	 *
 	 * @return array | boolean returns false if ArticleComment class does not exist
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function wikiActivityFilterMessageWall($title, &$res) {
 		$app = F::app();
@@ -105,35 +119,46 @@ class WallHelper {
 		
 		$wmessage = F::build('WallMessage', array($title) );
 		$parent = $wmessage->getTopParentObj();
-
-		$item['wall-url'] = $wmessage->getWallPageUrl();
 		
-		$owner = $wmessage->getWallOwner();
-		if($realname = $owner->getRealName())
-			$item['wall-owner'] = $realname;
-		else
-			$item['wall-owner'] = $owner->getName();
-		
-		if( empty($parent) ) {
-		//parent
-			$metaTitle = $wmessage->getMetaTitle();
-			if( !empty($metaTitle) ) {
-				$item['title'] = $metaTitle;
-			} else {
-				$wmessage->load();
-				$metaTitle = $wmessage->getMetaTitle();
-				$item['title'] = empty($metaTitle) ? wfMsg('wall-no-title') : $metaTitle;
-			}
+		if( !in_array(true, array($wmessage->isAdminDelete(), $wmessage->isRemove())) ) {
+			$item['wall-url'] = $wmessage->getWallPageUrl();
 			
-			$item['url'] = $wmessage->getMessagePageUrl();
-			$res['title'] = 'message-wall-thread-#'.$title->getArticleID();
+			$owner = $wmessage->getWallOwner();
+			if($realname = $owner->getRealName())
+				$item['wall-owner'] = $realname;
+			else
+				$item['wall-owner'] = $owner->getName();
+			
+			if( empty($parent) ) {
+			//parent
+				$metaTitle = $wmessage->getMetaTitle();
+				if( !empty($metaTitle) ) {
+					$item['title'] = $metaTitle;
+				} else {
+					$wmessage->load();
+					$metaTitle = $wmessage->getMetaTitle();
+					$item['title'] = empty($metaTitle) ? wfMsg('wall-no-title') : $metaTitle;
+				}
+				
+				$item['url'] = $wmessage->getMessagePageUrl();
+				$res['title'] = 'message-wall-thread-#'.$title->getArticleID();
+			} else {
+			//child
+				$parent->load();
+				
+				if( !in_array(true, array($parent->isRemove(), $parent->isAdminDelete())) ) {
+					$title = wfMsg('wall-no-title'); // in case metadata does not include title field
+					if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
+					$this->mapParentData($item, $parent, $title);
+					$res['title'] = 'message-wall-thread-#'.$parent->getTitle()->getArticleID();
+				} else {
+				//message was removed or deleted
+					$item = array();
+				}
+			}
 		} else {
-		//child
-			$parent->load();
-			$title = wfMsg('wall-no-title'); // in case metadata does not include title field
-			if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
-			$this->mapParentData($item, $parent, $title);
-			$res['title'] = 'message-wall-thread-#'.$parent->getTitle()->getArticleID();
+		//message was removed or deleted
+			$item = array();
 		}
 		
 		$app->wf->ProfileOut(__METHOD__);
@@ -147,7 +172,7 @@ class WallHelper {
 	 * @param ArticleComment $parent parent comment
 	 * @param Title $title title object instance
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	private function mapParentData(&$item, $parent, $title) {
 		$app = F::app();
@@ -177,7 +202,7 @@ class WallHelper {
 	 *
 	 * @return array first element is a counter, second is an array with comments
 	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getWallComments($parentId = null) {
 		$app = F::app();
@@ -200,8 +225,14 @@ class WallHelper {
 			}
 			
 			$commentList = F::build('ArticleCommentList', array($parent->getTitle()), 'newFromTitle');
+			
 			$commentList->setId($parentId);
 			$data = $commentList->getData();
+			
+			if( !empty($data['commentListRaw'][$parentId]['level1']) ) {
+				$comment = $data['commentListRaw'][$parentId]['level1'];
+				$topMessage = F::build('WallMessage', array($comment->getTitle(), $comment));
+			}
 			
 			if( !empty($data['commentListRaw'][$parentId]['level2']) ) {
 			//top message has replies
@@ -210,16 +241,32 @@ class WallHelper {
 				//in wiki activity we display amount of messages
 				//not only replies (comments), so we add 1 which is top message
 				$commentsCount = count($comments) + 1;
-				if( $commentsCount > 2 ) {
-					$comments = array_slice($comments, -2, 2);
+				$revComments = array_reverse($comments);
+				$comments = array();
+				$i = 0;
+				foreach($revComments as $comment) {
+					$wm = F::build('WallMessage', array($comment->getTitle(), $comment));
+					
+					if( $wm instanceof WallMessage && !in_array(true, array($wm->isRemove(), $wm->isAdminDelete())) ) {
+						$comments[] = $wm;
+						$i++;
+					}
+					
+					if( $i === 2 ) break;
+				}
+				if( count($comments) < 2 ) {
+				//if there is only one reply we add the top message
+				//and the order is correct
+					array_unshift($comments, $topMessage);
+				} else {
+				//when there are more replies than one, we need to change
+				//the order again
+					$comments = array_reverse($comments);
 				}
 				$comments = $this->getCommentsData($comments);
 			} else {
 			//top message doesn't have replies yet -- it's a new wall message
-				if( !empty($data['commentListRaw'][$parentId]['level1']) ) {
-					$comment = $data['commentListRaw'][$parentId]['level1'];
-					$comments = $this->getCommentsData(array($comment));
-				}
+				$comments = $this->getCommentsData(array($topMessage));
 			}
 		}
 		
@@ -233,74 +280,48 @@ class WallHelper {
 	/**
 	 * @brief Gets wall comments data from memc/db
 	 * 
-	 * @param array $comments an array with ArticleComments instances
+	 * @param array $comments an array with WallMessage instances
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	private function getCommentsData($comments) {
 		$app = F::app();
 		$app->wf->ProfileIn(__METHOD__);
 		
+		$timeNow = time();
 		$items = array();
 		$i = 0;
-		foreach($comments as $comment) {
-			if( $comment instanceof ArticleComment ) {
-				$data = $comment->getData(false, null, 30);
+		foreach($comments as $wm) {
+			$data = $wm->getData(false, null, 30);
 				
-				$items[$i]['avatar'] = $data['avatarSmall'];
-				$items[$i]['user-profile-url'] = $data['userurl'];
-				$user = User::newFromName($data['author']->getName());
-				if($user)
-					$items[$i]['real-name'] = $user->getRealName();
-				else
-					$items[$i]['real-name'] = '';
-				$items[$i]['author'] = $data['username'];
-				$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
-				$items[$i]['timestamp'] = $data['rawmwtimestamp'];
-				if(User::isIP( $data['username']) ) {
-					$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
-					$items[$i]['real-name'] = wfMsg('oasis-anon-user');
-				}
-				$i++;
+			$items[$i]['avatar'] = $data['avatarSmall'];
+			$items[$i]['user-profile-url'] = $data['userurl'];
+			$user = User::newFromName($data['author']->getName());
+			if( $user ) {
+				$items[$i]['real-name'] = $user->getRealName();
 			} else {
-			//just in-case: all elements of $comments are should be instances of ArticleComments
-				Wikia::log(__METHOD__, false, 'WALL_HELPER_ERROR: an element is not ArticleComments instance: '.print_r($comment, true) );
+				$items[$i]['real-name'] = '';
 			}
+			$items[$i]['author'] = $data['username'];
+			$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
+			if( User::isIP( $data['username']) ) {
+				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
+				$items[$i]['real-name'] = wfMsg('oasis-anon-user');
+			}
+			
+			//if message is older than 3 days we don't show its timestamp
+			$items[$i]['timestamp'] = $msgTimestamp = $data['rawmwtimestamp'];
+			$ago = $timeNow - strtotime($msgTimestamp) + 1;
+			if( $ago <= self::WA_WALL_COMMENTS_EXPIRED_TIME ) {
+				$items[$i]['timestamp'] = $msgTimestamp;
+			} else {
+				$items[$i]['timestamp'] = null;
+			}
+			
+			$items[$i]['wall-message-url'] = $wm->getMessagePageUrl();
+			$i++;
 		}
 		unset($data);
-		
-		$items = $this->filterOldMessageWallComments($items);
-		
-		$app->wf->ProfileOut(__METHOD__);
-		return $items;
-	}
-	
-	/**
-	 * @brief Filters old messages -- finds them and removes
-	 * 
-	 * @param array $comments two comments from memc/db
-	 */
-	private function filterOldMessageWallComments($comments) {
-		$app = F::app();
-		$app->wf->ProfileIn(__METHOD__);
-		
-		$items = array();
-		if( count($comments) > 0 ) {
-			$timeNow = time();
-			
-			foreach($comments as $comment) {
-				$ago = $timeNow - strtotime($comment['timestamp']) + 1;
-				
-				if( $ago <= self::WA_WALL_COMMENTS_EXPIRED_TIME ) {
-					$items[] = $comment;
-				}
-			}
-			
-			if( empty($items) ) {
-				$items[] = (!empty($comments[1])) ? $comments[1] : $comments[0];
-				unset($items[0]['timestamp']);
-			}
-		}
 		
 		$app->wf->ProfileOut(__METHOD__);
 		return $items;
@@ -364,7 +385,7 @@ class WallHelper {
 	 * 
 	 * @return int | boolean
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getArticleId_forDeleted($dbkey, &$optFields) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -468,14 +489,16 @@ class WallHelper {
 		return false;
 	}
 		
-	public function strip_wikitext( $text ) {
-		//bugfix fb#17907
+	public function strip_wikitext($text) {
+		$app = F::app();
+		
+		//local parser to fix the issue fb#17907
 		$parser = F::build('Parser', array());
 		
-		$app = F::app();
 		$text = str_replace('*', '&asterix;', $text);
 		$text = $parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
 		$text = str_replace('&amp;asterix;', '*', $text);
+		$text = str_replace('&amp;', '&', $text);
 		$text = trim( strip_tags($text) );
 		return $text;
 	}
@@ -487,7 +510,7 @@ class WallHelper {
 	 * 
 	 * @param integer $textId article's text id in text table
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getDeletedArticleTitleTxt($textId) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -516,7 +539,9 @@ class WallHelper {
 	 * 
 	 * @param string $text text which should have <ac_metadata title="A title of a message"> </ac_metadata> tag inside
 	 * 
-	 * @author Andrzej 'nAndy' Łukaszewski
+	 * TODO: remove it we don't need to operate on delete wall messages anymore 
+	 * 
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function getTitleTxtFromMetadata($text) {
 		$pattern = '#<ac_metadata title="([^"]*)">(.*)</ac_metadata>#i';

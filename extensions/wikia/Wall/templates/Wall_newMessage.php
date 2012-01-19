@@ -25,4 +25,6 @@
 		<div class="loadingAjax"></div>
 	</blockquote>
 </div>
+<? else: ?>
+<br />
 <? endif; ?>
