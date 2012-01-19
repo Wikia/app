@@ -66,6 +66,7 @@ class CountNamespacesPerWikia {
 					'cnt' => $data[ $row2->page_namespace ] + $row2->cnt
 				);
 			}
+			$dbr->freeResult($res);
 		}
 		$db->freeResult($res);
 		
