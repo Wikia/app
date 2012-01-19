@@ -56,6 +56,7 @@ class WikiFactory {
 	const FLAG_ADOPTABLE             = 64;  //used by AutomaticWikiAdoption
 	const FLAG_ADOPT_MAIL_FIRST      = 128; //used by AutomaticWikiAdoption
 	const FLAG_ADOPT_MAIL_SECOND     = 256; //used by AutomaticWikiAdoption
+	const FLAG_PROTECTED             = 512; //wiki cannot be closed
 
 	const db            = "wikicities"; // @see $wgExternalSharedDB
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
@@ -1637,8 +1638,13 @@ class WikiFactory {
 			return false;
 		}
 
-		wfProfileIn( __METHOD__ );
+		if( (self::getFlags($city_id) & self::FLAG_PROTECTED) && $city_public != 1 ) {
+			Wikia::log( __METHOD__, "", "Wiki is protected. Skipping update.");
+			return false;
+		}
 
+		wfProfileIn( __METHOD__ );
+		
 		wfRunHooks( 'WikiFactoryPublicStatusChange', array( &$city_public, &$city_id, $reason ) );
 
 		$update = array( 
