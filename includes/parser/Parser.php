@@ -2370,9 +2370,19 @@ class Parser
 				# No prefix (not in list)--go to paragraph mode
 				// XXX: use a stack for nestable elements like span, table and div
 				$openmatch = preg_match('/(?:<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
+
+				/**
+				 * Wikia change start
+				 * @author Federico "Lox" Lucignano
+				 *
+				 * Stop the parser from wrapping figure tags in paragraphs
+				 */
 				$closematch = preg_match(
 					'/(?:<\\/table|<\\/blockquote|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
-					'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+				/**
+				 * Wikia change end
+				 */
 
 				# RTE (Rich Text Editor) - begin
 				# @author: Macbre

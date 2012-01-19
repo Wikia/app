@@ -686,7 +686,11 @@ class Linker {
 			$s .= $zoomicon;
 
 			if( !empty( $fp[ 'caption' ] ) ) $s .= '<figcaption class="thumbcaption">' . $fp['caption'] . '</figcaption>';
-			$s .= '<!-- picture-attribution -->';
+
+			//picture attribution placeholder is processed only by Oasis
+			if ( Wikia::isOasis() ) {
+				$s .= '<!-- picture-attribution -->';
+			}
 
 			$s .= '</figure>';
 		} else {
