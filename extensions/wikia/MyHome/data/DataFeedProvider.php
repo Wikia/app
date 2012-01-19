@@ -218,7 +218,7 @@ class DataFeedProvider {
 			}
 			
 			if( !empty($item['wall']) ) {
-				$wh = new WallHelper();
+				$wh = F::build('WallHelper', array());
 				if( !empty($item['parent-id']) ) {
 					$data = $wh->getWallComments($item['parent-id']);
 					$item['comments'] = $data['comments'];
@@ -373,9 +373,9 @@ class DataFeedProvider {
 	private function filterNew($res, $title) {
 		wfProfileIn(__METHOD__);
 		global $wgContentNamespaces, $wgEnableWallExt;
-
+		
 		$item = array('type' => 'new');
-                
+		
 		if (in_array($res['ns'], $wgContentNamespaces)
 		|| $res['ns'] == 110
 		|| $res['ns'] == NS_PROJECT
@@ -431,7 +431,7 @@ class DataFeedProvider {
 				$res['comment'] = ''; // suppressing needless details
 				$res['rc_params'] = '';
 			}
-		} else if( !empty($wgEnableWallExt) && ($res['ns']-1) == NS_USER_WALL && $this->proxyType == self::AF ) {
+		} else if( !empty($wgEnableWallExt)  && ($res['ns']-1) == NS_USER_WALL && $this->proxyType == self::AF ) {
 			$wh = F::build( 'WallHelper' );
 			$item = $wh->wikiActivityFilterMessageWall($title, $res);
 		} else if ( defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ){

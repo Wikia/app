@@ -19,7 +19,6 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__);
 
-
 include($dir . '/WallNamespaces.php');
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
@@ -29,11 +28,15 @@ $app->registerClass('WallThread', $dir . '/WallThread.class.php');
 $app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
 $app->registerClass('WallController', $dir . '/WallController.class.php');
 $app->registerClass('WallExternalController', $dir . '/WallExternalController.class.php');
+$app->registerClass('WallHistoryController', $dir . '/WallHistoryController.class.php');
 $app->registerClass('WallHooksHelper', $dir . '/WallHooksHelper.class.php');
 $app->registerClass('WallRailHelper', $dir . '/WallRailHelper.class.php');
+$app->registerClass('WallRailModule', $dir . '/WallRailModule.class.php');
 $app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
+$app->registerClass('WallHistory', $dir . '/WallHistory.class.php');
 
 include($dir . '/WallNotifications.setup.php');
+
 
 $app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
 
@@ -41,7 +44,6 @@ $app->registerHook('ArticleViewHeader', 'WallHooksHelper', 'onArticleViewHeader'
 $app->registerHook('SkinTemplateTabs', 'WallHooksHelper', 'onSkinTemplateTabs');
 $app->registerHook('AlternateEdit', 'WallHooksHelper', 'onAlternateEdit');
 $app->registerHook('AfterEditPermissionErrors', 'WallHooksHelper', 'onAfterEditPermissionErrors');
-$app->registerHook('BeforePageHistory', 'WallHooksHelper', 'onBeforePageHistory');
 $app->registerHook('BeforePageProtect', 'WallHooksHelper', 'onBeforePageProtect');
 $app->registerHook('BeforePageUnprotect', 'WallHooksHelper', 'onBeforePageUnprotect');
 $app->registerHook('BeforePageDelete', 'WallHooksHelper', 'onBeforePageDelete');
@@ -53,7 +55,9 @@ $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper'
 $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
 $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
 
+//wall history in toolbar
 $app->registerHook('BeforeToolbarMenu', 'WallHooksHelper', 'onBeforeToolbarMenu');
+$app->registerHook('BeforePageHistory', 'WallHooksHelper', 'onBeforePageHistory');
 
 $app->registerHook('AllowNotifyOnPageChange', 'WallHooksHelper', 'onAllowNotifyOnPageChange');
 $app->registerHook('GetPreferences', 'WallHooksHelper', 'onGetPreferences');
@@ -70,9 +74,19 @@ $app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'o
 $app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
 $app->registerHook('XmlNamespaceSelectorAfterGetFormattedNamespaces', 'WallHooksHelper', 'onXmlNamespaceSelectorAfterGetFormattedNamespaces');
 $app->registerHook('ChangesListHeaderBlockGroup', 'WallHooksHelper', 'onChangesListHeaderBlockGroup');
+$app->registerHook('OldChangesListRecentChangesLine', 'WallHooksHelper', 'onOldChangesListRecentChangesLine');
+$app->registerHook('ChangesListMakeSecureName', 'WallHooksHelper', 'onChangesListMakeSecureName');
+
+$app->registerHook('ArticleDeleteComplete' , 'WallHooksHelper', 'onArticleDeleteComplete');
 
 $app->registerHook('getUserPermissionsErrors', 'WallHooksHelper', 'onGetUserPermissionsErrors');
 $app->registerHook('ComposeCommonBodyMail', 'WallHooksHelper', 'onComposeCommonBodyMail' );
+
+//Special:Contributions adjusting
+$app->registerHook('ContributionsLineEnding', 'WallHooksHelper', 'onContributionsLineEnding' );
+
+//Special:Whatlinkshere adjustinb
+$app->registerHook('SpecialWhatlinkshere::renderWhatLinksHereRow', 'WallHooksHelper', 'onRenderWhatLinksHereRow');
 
 //watchlist
 $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArticleCommentBeforeWatchlistAdd');
@@ -114,7 +128,9 @@ F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-button-to-cancel-preview',
 	'wall-button-to-preview-comment',
 	'wall-button-done-source',
-	'wall-message-source'
+	'wall-action-*',
+	'wall-message-source',
+	'wall-confirm-monobook-*'
 ));
 
 /**
@@ -123,6 +139,7 @@ F::build('JSMessages')->registerPackage('Wall', array(
 
 $wgDefaultUserOptions['enotifwallthread'] = true;
 $wgDefaultUserOptions['wallshowsource'] = false;
+$wgDefaultUserOptions['walldelete'] = false;
 $wgDefaultUserOptions['enotifmywall'] = true;
  
 $userProfileNamespaces = array();
@@ -130,3 +147,10 @@ $userProfileNamespaces[] = NS_USER;
 $userProfileNamespaces[] = NS_USER_TALK;
 $userProfileNamespaces[] = NS_USER_WALL;
 $app->getLocalRegistry()->set('UserProfileNamespaces', $userProfileNamespaces);
+
+
+define( 'WH_EDIT', 0);
+define( 'WH_NEW', 1);
+define( 'WH_DELETE', 2);
+define( 'WH_REMOVE', 4);
+define( 'WH_RESTORE', 5);

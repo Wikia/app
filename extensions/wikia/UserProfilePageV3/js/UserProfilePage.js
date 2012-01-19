@@ -569,7 +569,9 @@ var UserProfilePage = {
 		} else if(id == "blog") {
 			UserProfilePage.track('blog_tab');
 		} else if(id == "following") {
-			UserProfilePage.track('following_tab');		
+			UserProfilePage.track('following_tab');
+		} else if(id == "wall") {
+			UserProfilePage.track('wall_tab');
 		}
 	},
 		

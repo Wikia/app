@@ -127,8 +127,8 @@ jQuery['confirm'] = function(options) {
 
 		var html = '<p>' + (options.content || '') + '</p>' +
 			'<div class="neutral modalToolbar">' +
-			'<a id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</a>' +
-			'<a id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</a>' +
+			'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</button>' +
+			'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</button>' +
 			'</div>';
 
 		var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";

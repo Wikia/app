@@ -227,20 +227,27 @@ class SpecialWhatLinksHere extends SpecialPage {
 			$prevnext = $this->getPrevNext( $prevId, $nextId );
 			$wgOut->addHTML( $prevnext );
 		}
-
+		
 		$wgOut->addHTML( $this->listStart() );
+		$defaultRendering = true;
+		
 		foreach ( $rows as $row ) {
-			$nt = Title::makeTitle( $row->page_namespace, $row->page_title );
-
-			if ( $row->page_is_redirect && $level < 2 ) {
-				$wgOut->addHTML( $this->listItem( $row, $nt, true ) );
-				$this->showIndirectLinks( $level + 1, $nt, $wgMaxRedirectLinksRetrieved );
-				$wgOut->addHTML( Xml::closeElement( 'li' ) );
-			} else {
-				$wgOut->addHTML( $this->listItem( $row, $nt ) );
+			/** Start of Wikia change @author nAndy */
+			wfRunHooks( 'SpecialWhatlinkshere::renderWhatLinksHereRow', array(&$row, &$level, &$defaultRendering) );
+			if( $defaultRendering ) {
+				$nt = Title::makeTitle( $row->page_namespace, $row->page_title );
+				
+				if ( $row->page_is_redirect && $level < 2 ) {
+					$wgOut->addHTML( $this->listItem( $row, $nt, true ) );
+					$this->showIndirectLinks( $level + 1, $nt, $wgMaxRedirectLinksRetrieved );
+					$wgOut->addHTML( Xml::closeElement( 'li' ) );
+				} else {
+					$wgOut->addHTML( $this->listItem( $row, $nt ) );
+				}
 			}
+			/** End of Wikia change */
 		}
-
+		
 		$wgOut->addHTML( $this->listEnd() );
 
 		if( $level == 0 ) {

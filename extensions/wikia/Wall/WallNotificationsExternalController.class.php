@@ -20,9 +20,9 @@ class WallNotificationsExternalController extends WikiaController {
 
 	public function getUpdateWiki() {
 		$id = $this->request->getVal('wikiId');
-	
+		$isMain = $this->request->getVal('isMain');
 		$wn = F::build('WallNotifications', array());
-		$this->getUpdateWikiInternal($wn, $id);
+		$this->getUpdateWikiInternal($wn, $id, $isMain);
 		return true;
 	}
 
@@ -31,8 +31,6 @@ class WallNotificationsExternalController extends WikiaController {
 		$wn = F::build('WallNotifications', array());
 		$ret = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId );
 		if($ret === false || $forceAll == 'FORCE') {
-			error_log( print_r( 'are we here?', 1 ) );
-			error_log( print_r( $ret, 1 ) );
 			$ret = $wn->markReadAllWikis( $this->wg->User->getId() );
 		}
 		$this->getUpdateCountsInternal($wn);
@@ -69,13 +67,15 @@ class WallNotificationsExternalController extends WikiaController {
 		$this->response->setVal('status', true);
 	}
 
-	private function getUpdateWikiInternal($wn, $wikiId) {
-		$all = $wn->getWikiNotifications( $this->wg->User->getId(), $wikiId );
+	private function getUpdateWikiInternal($wn, $wikiId, $isMain = 'YES') {
+		if ( $isMain == 'YES' ) {
+			$all = $wn->getWikiNotifications( $this->wg->User->getId(), $wikiId );
+		} else {
+			$all = $wn->getWikiNotifications( $this->wg->User->getId(), $wikiId, 0 );
+		}
 
 		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'UpdateWiki', array('notifications'=>$all) ));
-
 		$this->response->setVal('unread', $all[ 'unread_count' ] );
-		
 		$this->response->setVal('status', true);
 	}
 

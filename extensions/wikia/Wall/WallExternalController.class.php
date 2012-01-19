@@ -82,8 +82,8 @@ class WallExternalController extends WikiaController {
 		$this->response->setVal('status', true);
 		
 		$titleMeta = $this->helper->strip_wikitext($this->request->getVal('messagetitle', null));
+		$titleMeta = substr($titleMeta, 0, 200);
 		$body = $this->request->getVal('body', null);
-		
 		$helper = F::build('WallHelper', array());
 		
 		if( empty($titleMeta) ) {
@@ -110,28 +110,132 @@ class WallExternalController extends WikiaController {
 		$this->app->wf->ProfileOut(__METHOD__);
 	}
 	
-	public function removeMessage() {
-		//TODO: remember to delete all replies in a thread when msg id deleted
-		$title = F::build('Title', array( $this->request->getVal('msgid') ), 'newFromId');
-		if( !($title instanceof Title) ) {
-			// if this is invalid Title it means that the article no longer exists
-			// or we received wrong ArticleId in AJAX request
+	public function deleteMessage() {
+		$result = false;
+		$mw =  F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
+		if( empty($mw) ) {
 			$this->response->setVal('status', false);
-			return true;			
+			return true;
 		}
-		$ac =  F::build('WallMessage', array($title), 'newFromTitle');
-		$ac->load(true);
-		$result = !empty($ac) && $ac->canDelete($this->wg->User) && $ac->doDeleteComment(wfMsgForContent('wall-delete-reason'), false, true);
+
+		$formassoc = $this->processModalForm($this->request);
 		
-		F::build('NotificationsModule', array(), 'clearConfirmation');
+		$reason = isset($formassoc['reason']) ? $formassoc['reason'] : '';
+		$notify = isset($formassoc['notify-admin']) ? true : false;
+		
+		if( empty($reason) ) {
+			$this->response->setVal('status', false);
+			return true;
+		}
+
+		$isDeleteOrRemove = true;
+		
+		switch( $this->request->getVal('mode') ) {
+			case 'rev':
+				if($mw->canDelete($this->wg->User)) {
+					$result = $mw->delete(wfMsgForContent('wall-delete-reason'), true);
+					$this->response->setVal('status', $result);
+					return true;
+				} else {
+					$this->response->setVal('error', wfMsg('wall-message-no-permission'));
+				}
+			break;
+			
+			case 'admin':
+				if($mw->canAdminDelete($this->wg->User)) {
+					$result = $mw->adminDelete($this->wg->User, $reason, $notify);
+					$this->response->setVal('status', $result);
+					$isDeleteOrRemove = true;
+				} else {
+					$this->response->setVal('error', wfMsg('wall-message-no-permission'));
+				}
+			break;
+			
+			case 'remove':
+				if( $mw->canRemove($this->wg->User) ) {
+					$this->response->setVal('status', $result);
+					$result = $mw->remove($this->wg->User, $reason, $notify);
+
+					$this->response->setVal('status', $result);					
+					// TODO: log/save data
+					$isDeleteOrRemove = true;
+				} else {
+					$this->response->setVal('error', wfMsg('wall-message-no-permission'));
+				}
+			break;
+		}
+
+		if($isDeleteOrRemove) {
+			$this->response->setVal('html', $this->app->renderView( 'WallController', 'messageRemoved', array('showundo' => true , 'comment' => $mw)));
+			$reason = $mw->getLastActionReason();
+			$this->response->setVal('deleteInfoBox', 'INFO BOX');
+		}
 		
 		$this->response->setVal('status', $result);
 		return true;
 	}
+	
+	protected function processModalForm($request) {
+		$formdata = $request->getVal('formdata');
+		
+		$formassoc = array();
+		if(!empty($formdata)) {
+			foreach($formdata as $value) {
+				$formassoc[ $value['name'] ] = $value['value'];
+			}
+		}
+		return $formassoc;
+	}
+	
+	public function undoAction() {
+		$result = false;
+		$mw =  F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
+		if( empty($mw) ) {
+			$this->response->setVal('status', false);
+			return true;
+		}
+		
+		if($mw->isAdminDelete() && $mw->canRestore($this->wg->User)) {
+			$mw->undoAdminDelete($this->wg->User);
+			$this->response->setVal('status', true);
+			return true;
+		}
+	
+		if($mw->isRemove() && $mw->canRestore($this->wg->User)) {
+			$mw->restore($this->wg->User);
+			$this->response->setVal('status', true);
+			return true;
+		}
+	}
+		
+	public function restoreMessage() {
+		$result = false;
+		$mw =  F::build('WallMessage', array($this->request->getVal('msgid')), 'newFromId');
+		if( empty($mw) ) {
+			$this->response->setVal('status', false);
+			return true;
+		}
+		
+		if($mw->canRestore($this->wg->User)) {
+			$formassoc = $this->processModalForm($this->request);
+
+			$reason = isset($formassoc['reason']) ? $formassoc['reason'] : '';
+		
+			if( empty($reason) && !$mw->canFastrestore($this->wg->User) ) {
+				$this->response->setVal('status', false);
+				return true;
+			}
+		
+			$mw->restore($this->wg->User, $reason);
+
+			$this->response->setVal('buttons', $this->app->renderView( 'WallController', 'messageButtons', array('comment' => $mw)));
+			$this->response->setVal('status', true);
+		}
+	}
 
 	public function editMessage() {
 		$msgid = $this->request->getVal('msgid');
-		
+		//TODO: remove call to ac
 		$ac = ArticleComment::newFromId($msgid);
 		
 		if(empty($ac)) {
@@ -141,7 +245,7 @@ class WallExternalController extends WikiaController {
 			
 			$this->response->setVal('status', false);
 			$this->response->setVal('forcereload', true);
-			return true;			
+			return true;
 		}
 		
 		$ac->load();
@@ -150,7 +254,7 @@ class WallExternalController extends WikiaController {
 		$this->response->setVal('status', true);
 		return true;
 	}
-
+	
 	public function editMessageSave() {
 		$helper = F::build('WallHelper', array());
 		
@@ -166,8 +270,8 @@ class WallExternalController extends WikiaController {
 		$wallMessage = F::build('WallMessage', array($title), 'newFromTitle');
 		
 		$wallMessage->load();
-
-		$wallMessage->setMetaTitle( $newtitle );
+		
+		$wallMessage->setMetaTitle($newtitle);
 		$text = $wallMessage->doSaveComment( $newbody, $this->wg->User );
 		 
 		$this->response->setVal('isotime', wfTimestamp(TS_ISO_8601) );
@@ -179,10 +283,15 @@ class WallExternalController extends WikiaController {
 		
 		$this->response->setVal('userUrl', $editorUrl);
 		
-		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl('action=history') );
+		$query = array(
+			'diff' => 'prev',
+			'oldid' => $wallMessage->getTitle()->getLatestRevID(GAID_FOR_UPDATE),
+		);
+			
+		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl($query) );
 		
-		$this->response->setVal('status', true  );
-		$this->response->setVal('title', $newtitle);
+		$this->response->setVal('status', true);
+		$this->response->setVal('msgTitle', Xml::element('a', array('href' => $wallMessage->getMessagePageUrl()), $newtitle));
 		$this->response->setVal('body', $text );
 		return true;
 	}
@@ -191,6 +300,11 @@ class WallExternalController extends WikiaController {
 		$this->response->setVal('status', true);
 		
 		$parentTitle = F::build('Title', array( $this->request->getVal('parent') ), 'newFromId');
+
+		if(empty($parentTitle)) {
+			// try again from master
+			$parentTitle = F::build('Title', array( $this->request->getVal('parent'), GAID_FOR_UPDATE ), 'newFromId');
+		}
 		
 		if(empty($parentTitle)) {
 			$this->response->setVal('status', false);

@@ -63,8 +63,8 @@ class HistoryPage {
 	function history() {
 		global $wgOut, $wgRequest, $wgScript;
 		
-		/* Wikia change @author nAndy */
-		if(!wfRunHooks( 'BeforePageHistory', array( &$this->article, &$wgOut ) )) {
+		/* Wikia change @author Tomek */
+		if( !wfRunHooks('BeforePageHistory', array(&$this->article, &$wgOut)) ) {
 			return true;
 		}
 		/* End of Wikia change */
@@ -173,7 +173,7 @@ class HistoryPage {
 			$pager->getNavigationBar()
 		);
 		$wgOut->preventClickjacking( $pager->getPreventClickjacking() );
-
+		
 		wfProfileOut( __METHOD__ );
 	}
 

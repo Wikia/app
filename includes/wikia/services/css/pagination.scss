@@ -1,0 +1,46 @@
+@import "../../../../skins/oasis/css/core/color";
+
+.Pagination {
+	font-size: 0; /* hack to remove space between inline elements */
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	li {
+		border-left: 1px solid $color-links;
+		color: $color-links;
+		display: inline-block;
+		font-size: 13px; /* override font-size: 0 */
+		line-height: 1.2em;
+		padding: 0;
+		text-align: center;
+		&.first {
+			border-left: 0;
+		}
+		a {
+			display: inline-block;
+			margin: 0 2px;
+			padding: 0 4px;
+			text-align: center;
+		}
+		&.selected {
+			a {
+				background: $color-links;
+				color: $color-page;
+				margin: 0 5px;
+			}
+		}
+		&.prev {
+			border: none;
+			margin-right: 5px;
+		}
+		&.next {
+			border: none;
+			margin-left: 5px;
+		}
+		&.ellipsis {
+			padding-left: 4px;
+			padding-right: 4px; 
+		}
+	}
+}

@@ -11,16 +11,28 @@ $messages['en'] = array(
 	'wall-message-unfollow' => 'Unfollow',
 	'wall-message-following' => 'Following',
 	'wall-message-follow' => 'Follow',
+
+	'wall-message-undoremove' => 'Undo',
 	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
 	'wall-message-mywall' => 'My Wall',
 	'wall-toolbar-history' => 'History',
+	
+	'wall-message-remove-notify' => 'Notify admin',
+	'wall-message-delete-notify' => 'Notify admin',
+	'wall-message-remove' => 'Remove',
+	'wall-message-rev-delete' => 'Revision delete',
 
 	'wall-message-elseswall' => "$1's Wall",
+	'wall-message-no-permission' => 'You don\'t have permissions to perfom this action on the message',
+	
+	'wall-thread-removed' => 'Removed',
+	'wall-thread-deleted' => 'Deleted',
 
 	'wall-tab-wall-title' => 'User Wall:',
 	'wall-default-title' => 'Message from',
 	'wall-no-title-warning' => '&larr; You did not specify any title',
 	'wall-desc' => 'User talk page replacement',
+	'wall-disabled-desc' => 'Message Wall functionality for pages without Wall extension',
 	'wall-placeholder-topic' => 'What\'s this about?',
 	'wall-placeholder-message' => "Post a new message to $1's wall",
 	'wall-placeholder-message-anon' => "Post a new message to this wall",
@@ -36,21 +48,60 @@ $messages['en'] = array(
 	'wall-button-save-changes' => 'Save changes',
 	'wall-button-cancel-changes' => 'Cancel',
 	'wall-button-done-source' => 'Done',
-	'wall-message-source' => 'Source View',
 	'wall-message-edit' => "Edit",
 	'wall-message-more' => 'More', 
 	'wall-message-delete' => "Delete",
+	'wall-message-remove' => "Remove",
+	'wall-message-removed-thread-because' => "$1 removed this thread because:",
+	'wall-message-deleted-thread-because' => "$1 deleted this thread because:",
+	'wall-message-restore-thread' => "Restore Thread",
+	'wall-message-removed-reply-because' => "$1 removed this reply because:",
+	'wall-message-deleted-reply-because' => "$1 deleted this reply because:",
+	'wall-message-restore-reply' => "Restore Reply",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
 	'wall-user-talk-archive-page-title' => 'User_talk_archive',
 
-	'wall-delete-title' => 'Delete message',
-	'wall-delete-confirm' => 'Are you sure you want to delete this message?',
-	'wall-delete-confirm-thread' => 'Are you sure you want to delete this message? Doing so will delete all responses.',
-	'wall-delete-confirm-ok' => 'Yes, Delete',
-	'wall-delete-confirm-cancel' => 'Cancel',
+	'wall-action-all-confirm-cancel' => 'Cancel',
+	'wall-action-all-confirm-notify' => 'Notify an admin',
+
+	'wall-action-remove-reply-title' => 'Remove this reply',
+	'wall-action-remove-thread-title' => 'Remove this thread',
+
+	'wall-confirm-monobook-remove' => "Please tell us why you would like to remove this. \n\nThe original post and your summary will still appear in the wiki's history. \n",
+	'wall-confirm-monobook-admin' => "Please tell us why you would like to delete this. \n\nThe original post and your summary will still appear in the wiki's history. \n",
+	'wall-confirm-monobook-restore' => "Please tell us why you would like to restore this \n",
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'Message was deleted previously and it no longer exists.',
+	
+	'wall-confirm-monobook-lack-of-reason' => 'Please provide a summary for removing this thread/reply.',
+
+	'wall-action-remove-confirm' => 'Please tell us why you would like to remove this:',
+	'wall-action-remove-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history.",
+	'wall-action-remove-reply-confirm-info' => "This reply and your summary will still appear in the wiki's history.",	
+	'wall-action-remove-confirm-ok' => 'Remove',
+	
+	'wall-action-admin-thread-title' => 'Delete this thread',
+	'wall-action-admin-reply-title' => 'Delete this reply',
+
+	'wall-action-admin-confirm' => 'Please tell us why you would like to delete this:',
+	'wall-action-admin-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history",
+	'wall-action-admin-reply-confirm-info' => "This reply and your summary will still appear in the wiki's history",
+
+	'wall-action-admin-confirm-ok' => 'Delete',
+
+	'wall-action-restore-thread-title' => 'Restore this thread',
+	'wall-action-restore-reply-title' => 'Restore this reply',
+
+	'wall-action-restore-confirm' => 'Please tell us why you would like to restore this:',
+	'wall-action-restore-confirm-ok' => 'Restore',
+	
+	'wall-action-rev-thread-title' => 'Revision delete this thread?',
+	'wall-action-rev-reply-title' => 'Revision delete this reply?',
+
+	'wall-action-rev-reply-confirm' => 'Are you sure you want to delete this message?',
+	'wall-action-rev-thread-confirm' => 'Are you sure you want to revision delete this thread and all of its history from the wiki? This cannot be undone.',
+	'wall-action-rev-confirm-ok' => 'Yes, Delete',
 	
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
@@ -61,7 +112,7 @@ $messages['en'] = array(
 	'wall-notifications-loading' => 'Loading notifications',
 	'wall-notifications-reminder' => 'You have <span>$1</span> unread {{PLURAL:$1|notification|notifications}}',
 	'wall-notifications-wall-disabled' => 'Message Wall has been disabled on this Wiki. Unable to load notifications.',
-		
+	
 	'wn-user1-reply-you-your-wall' => '$1 replied to your message on your Wall',
 	'wn-user2-reply-you-your-wall' => '$1 and $2 replied to your message on your Wall',
 	'wn-user3-reply-you-your-wall' => '$1 and others replied to your message on your Wall',
@@ -93,6 +144,11 @@ $messages['en'] = array(
 	'wn-newmsg' => 'You left a new message on $1\'s Wall',
 	'wn-newmsg-on-followed-wall' => '$1 left a new message on $2\'s wall.',
 	
+	'wn-admin-thread-deleted' => 'Thread removed from $1\'s wall', 
+	'wn-admin-reply-deleted' => 'Reply removed from thread on $1\'s wall', 
+	'wn-owner-thread-deleted' => 'Thread removed from your wall', 
+	'wn-owner-reply-deleted' => 'Reply removed from thread on your wall', 
+	
 	'wall-sorting-newest-threads' => 'Newest threads',
 	'wall-sorting-oldest-threads' => 'Oldest threads',
 	'wall-sorting-newest-replies' => 'Newest replies',
@@ -107,6 +163,7 @@ $messages['en'] = array(
 	'wall-deleted-msg-pagetitle' => 'Message deleted',
 	'wall-deleted-msg-text' => 'The message you are trying to reach has been deleted.',
 	'wall-deleted-msg-return-to' => 'Return to $1\'s Wall.',
+	'wall-deleted-msg-view' => '(View/Restore)',
 
 	'wall-view-revert' => 'View/Revert',
 	
@@ -116,20 +173,82 @@ $messages['en'] = array(
 	'wall-recentchanges-new-reply' => '(reply: "$1")',
 	'wall-recentchanges-new-reply-group' => '(reply: "$1" on <a href="$2">"$3"</a>)',
 	'wall-recentchanges-edit' => '(edited message)',
-	'wall-recentchanges-deleted-thread' => ' deleted entire thread "<a href="$1" class="new">$2</a>" from <a href="$3">$4\'s wall</a>',
-	'wall-recentchanges-deleted-reply' => ' deleted reply from "<a href="$1" class="new">$2</a>" from <a href="$3">$4\'s wall</a>',
-	'wall-recentchanges-restored-thread' => ' restored thread "<a href="$1" class="new">$2</a>" from <a href="$3">$4\'s wall</a>',
-	'wall-recentchanges-restored-reply' => ' restored reply on "<a href="$1" class="new">$2</a>" from <a href="$3">$4\'s wall</a>',
+	
+	'wall-recentchanges-wall-removed-thread' => ' removed thread "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
+	'wall-recentchanges-wall-removed-reply' => ' removed reply from "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
+	'wall-recentchanges-wall-restored-thread' => ' restored thread "<a href="$1">$2</a>" on <a href="$3">$4\'s wall</a>',
+	'wall-recentchanges-wall-restored-reply' => ' restored reply on "<a href="$1">$2</a>" on <a href="$3">$4\'s wall</a>',
+	'wall-recentchanges-wall-deleted-thread' => ' deleted thread "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
+	'wall-recentchanges-wall-deleted-reply' => ' deleted reply from "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
+
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Message Wall',
-	'wall-recentchanges-wall-group' => '<a href="$1">Message Wall:$2</a>',
-
-	'wall-message-not-found' => 'This message could not be found. If you see this error please contact Wikia at [[Special:Contact]] and provide as much details as possible about how this bug can be reproduced. Thank You!',
+	'wall-recentchanges-wall-group' => '$1 on <a href="$2">$3\'s wall</a>',
+	'wall-recentchanges-wall-history-link' => 'Wall History',
+	'wall-recentchanges-thread-history-link' => 'Thread History',
+	'wall-recentchanges-wall-unrecognized-log-action' => 'Unrecognized log action',
+	
+	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> on <a href="$3">$4\'s wall</a>',
+	
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> on <a href="$3">$4\'s wall</a>',
+	
+	'wall-message-not-found' => 'This message could not be found. If you see this error, please contact Wikia at [[Special:Contact]] and provide as much detail as possible about how this bug can be reproduced. Thank you!',
 
 	'wall-message-staff-text' => 'This user is a member of Wikia staff',
 
 	'wall-ipballowusertalk' => "Allow this user to post on their own Message Wall while blocked", 
 	'wall-ipbwatchuser' => "Watch this user's profile and follow their Message Wall",
+	
+	/* Wall removed msg */
+	'wall-removed-thread-undo' => 'This thread has been removed. $1', //$1 = undo link
+	'wall-removed-reply-undo' => 'This reply has been removed. $1',
+	'wall-removed-reply' => 'This reply has been removed',
+
+	'wall-deleted-thread-undo' => 'This thread has been deleted. $1', //$1 = undo link
+	'wall-deleted-reply-undo' => 'This reply has been deleted. $1',
+	'wall-deleted-reply' => 'This reply has been deleted',
+
+	/* Wall Level History */
+	'wall-history' => 'History',
+	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
+	'wall-history-username-short' => '<a href="$2">$1</a>',
+	
+	'wall-history-title' => 'Wall History',
+	'wall-history-who-involved-wall-title' => "Who's involved on this wall?",
+	'wall-history-who-involved-thread-title' => "Who's involved in this thread?",
+	'wall-history-thread-created' => '$1 created by $2',
+	'wall-history-thread-removed' => '$1 removed by $2',
+	'wall-history-thread-restored' => '$1 restored by $2',
+	'wall-history-thread-admin-deleted' => '$1 deleted by $2',
+	'wall-history-sorting-newest-first' => 'Newest first',
+	'wall-history-sorting-oldest-first' => 'Oldest first',
+	
+	'wall-history-summary-label' => 'Summary',
+	
+	'wall-history-rail-wall' => 'wall',
+	'wall-history-rail-contribs' => 'contribs',
+	'wall-history-rail-block' => 'block',
+	
+	'wall-history-action-view' => 'view',
+	'wall-history-action-restore' => 'restore',
+	'wall-history-action-thread-history' => 'thread history',
+	
+	/* Thread Level History */
+	'wall-thread-history-title' => 'Thread History',
+	'wall-thread-history-thread-created' => '$1 $2 created this thread',
+	'wall-thread-history-reply-created' => '$1 $2 left a reply',
+
+	'wall-thread-history-thread-removed' => '$1 $2 removed this thread',
+	'wall-thread-history-reply-removed' => "$1 $2 removed $3's reply $5",
+	'wall-thread-history-thread-restored' => '$1 $2 restored this thread',
+	'wall-thread-history-reply-restored' => "$1 $2 restored $3's reply $5",
+	'wall-thread-history-thread-deleted' => '$1 $2 deleted this thread',
+
+	'wall-thread-history-thread-edited' => "$1 $2 edited $3's message $5",
+	'wall-thread-history-reply-edited' => "$1 $2 edited $3's message $5",
+
+	'wall-history-action-restore-reply' => 'restore reply',
+	'wall-history-action-restore-thread' => 'restore thread',
 	
 	/* Mail message */
 
@@ -199,11 +318,15 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	
 	/* Preferences */
 	'prefs-wall' => 'Wall',
+
+	'wallshowsource-toggle-v2' => 'Enable View source option on Message Wall posts',
 	'wallshowsource-toggle' => 'Enable View source on Message Wall posts',
-	'wallshowsource-toggle-v2' => 'Enable View source option on Message Wall posts'
+	'walldelete-toggle' => 'Enable Revision delete on Message Wall posts',
 );
 
 $messages['qqq'] = array(
 	'wall-recentchanges-article-link-new-message' => "$1 is link to user's wall page $2 is username (wall owner)",
-	'wall-recentchanges-delete' => "$1 is link to deleted message, $2 is title of the message, $3 is link to wall owner's wall and $4 is the owner's username",
+	'wall-recentchanges-wall-delete' => "$1 is link to deleted message, $2 is title of the message, $3 is link to wall owner's wall and $4 is the owner's username",
+	'wall-contributions-wall-line' => "$1 - timestamp linked to thread page; 2 - diff link or text; 3 - hist link; 4 - thread page url address; 5 - message title; 6 - user's wall url address; 7 - wall owner's username; 8 - new flag",
+	'wall-whatlinkshere-wall-line' => '$1 - link to wall message page; $2 - title of the message; $3 - link to wall page; $4 - wall owner username',
 );

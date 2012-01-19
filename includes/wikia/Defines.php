@@ -35,5 +35,11 @@ define("WPP_BLOGS_VOTING", 4);
 define("WPP_BLOGS_COMMENTING", 5);
 define("WPP_PLACES_LATITUDE", 6);
 define("WPP_PLACES_LONGITUDE", 7);
-define("WPP_WALL_COUNT", 8);
+
 define("WPP_PLACES_CATEGORY_GEOTAGGED", 9);
+//Wall flags
+define("WPP_WALL_COUNT", 8);
+define("WPP_WALL_ADMINDELETE", 10);
+define("WPP_WALL_ARCHIVE", 11);
+define("WPP_WALL_ACTIONREASON", 12);
+define("WPP_WALL_REMOVE", 13);

@@ -843,6 +843,7 @@ class UserProfilePageController extends WikiaController {
 				return $user;
 			}
 		}
+
 		
 		if( !empty($parts[0]) ) {
 			$userName = str_replace('_', ' ', $parts[0]);

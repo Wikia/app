@@ -101,7 +101,7 @@ html>body #WallNotifications .avatars { *float: left; }
 		}
 		.notification {
 			display: inline-block;
-			width: 190px;
+			//width: 190px;
 			white-space: normal;
 			font-size: 10px;
 			line-height: 1.5em;
@@ -132,6 +132,9 @@ html>body #WallNotifications .avatars { *float: left; }
 				background-image: none;
 			}
 		}
+		li.unread_notification:not(.admin_notification) .notification {
+			width: 190px;
+		}
 		li.unread_notification a {
 			background: mix($color-buttons, $color-page, 10%);
 			@if $is-dark-wiki {
@@ -140,6 +143,19 @@ html>body #WallNotifications .avatars { *float: left; }
 		}
 		li.read_notification a {
 			color: mix($color-text, $color-page, 50%);
+		}
+		li.admin_notification a {
+			padding-left: 17px;
+			position: relative;
+		}
+		li.admin_notification a:before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 7px;
+			height: 100%;
+			background: $color-buttons;
+			content: '';
 		}
 		a {
 			&:hover {

@@ -1129,7 +1129,7 @@ function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
 			'propname' => $type,
 			'props' => serialize($value)
 		)
-	);
+	);	
 }
 
 

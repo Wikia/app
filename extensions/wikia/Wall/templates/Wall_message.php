@@ -1,6 +1,37 @@
-<li class="SpeechBubble message" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
+<li class="SpeechBubble message <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?'message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
+	<?php if(($showDeleteOrRemoveInfo) && (!empty($deleteOrRemoveInfo) )): ?>
+		<div class="deleteorremove-infobox" >
+			<table class="deleteorremove-container"><tr><td width="100%">
+			<div class="deleteorremove-bubble">
+				<div class="avatar"><?= AvatarService::renderAvatar($deleteOrRemoveInfo['user']->getName(), 20) ?></div>
+				<div class="message">
+					<? if($isreply): ?>
+					<?= wfMsg('wall-message-'.$deleteOrRemoveInfo['status'].'-reply-because', $deleteOrRemoveInfo['user_displayname_linked']); ?><br />
+					<? else: ?>
+					<?= wfMsg('wall-message-'.$deleteOrRemoveInfo['status'].'-thread-because', $deleteOrRemoveInfo['user_displayname_linked']); ?><br />
+					<? endif; ?>
+					<div class="reason"><?php echo $deleteOrRemoveInfo['reason']; ?></div>
+					<div class="timestamp"><span><?php echo $deleteOrRemoveInfo['fmttime']; ?></span></div>
+				</div>
+			</div>
+			</td><td>
+			<? if($isreply): ?>
+				<button <? echo ($canRestore ? '':'disabled=disbaled') ?>  data-mode='restore<?php echo ($fastrestore ? '-fast':'') ?>' data-id="<?php echo $id; ?>"  class="message-restore wikia-button" ><?php echo wfMsg('wall-message-restore-reply'); ?></button>
+			<? else: ?>
+				<button <? echo ($canRestore ? '':'disabled=disbaled') ?> data-mode='restore<?php echo ($fastrestore ? '-fast':'') ?>' data-id="<?php echo $id; ?>"  class="message-restore wikia-button" ><?php echo wfMsg('wall-message-restore-thread'); ?></button>
+			<? endif; ?>
+			</td></tr></table>
+		</div>
+	<?php endif; ?>
+	
+	<? if($showRemovedBox): ?>
+		<div class='removed-info speech-bubble-message-removed' >
+			<?php echo wfMsg('wall-removed-reply'); ?>
+		</div>
+	<? endif; ?>
+	
 	<div class="speech-bubble-avatar">
-		<a href="/wiki/User:<?= $username ?>">
+		<a href="<?= $user_author_url ?>">
 			<? if(!$isreply): ?>
 				<?= AvatarService::renderAvatar($username, 50) ?>
 			<? else: ?>
@@ -10,10 +41,10 @@
 	</div>
 	<blockquote class="speech-bubble-message">
 		<? if(!$isreply): ?>
-			<?php if($isWatched): ?>	
-				<a <?php if(!$showFallowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wall-message-following'); ?></a>
+			<?php if($isWatched): ?>
+				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wall-message-following'); ?></a>
 			<?php else: ?>	
-				<a <?php if(!$showFallowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('wall-message-follow'); ?></a>
+				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('wall-message-follow'); ?></a>
 			<?php endif;?>
 			<div class="msg-title"><a href="<?= $fullpageurl; ?>"><? echo $feedtitle ?></a></div>
 		<? endif; ?>
@@ -27,7 +58,7 @@
 		<div class="msg-body">
 			<? echo $body ?>
 		</div>
-
+		
 		<div class="timestamp" style="clear:both">
 			<?php if($isEdited):?>
 				<? echo wfMsg('wall-message-edited', array('$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
@@ -36,50 +67,10 @@
 				<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
 				<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
 			</a>
-			<? if( $canEdit || $canDelete || $showViewSource ): ?>
-				<div class="buttons">
-					<div data-delay='50' class="wikia-menu-button contribute secondary"> 
-						<?= wfMsg('wall-message-more');?>
-						<span class="drop">
-							<img class="chevron"  src="<?=f::app()->getGlobal('wgBlankImgUrl'); ?>" >
-						</span>
-						
-						<ul style="min-width: 95px;">
-								<? if( $canEdit ): ?>
-									<li>
-										<a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
-									</li>
-								<? endif; ?>
-								<? if( $canDelete ): ?>
-									<li>
-										<a href="#" class="delete-message"> <?= wfMsg('wall-message-delete'); ?> </a>
-									</li>
-								<? endif; ?>
-								<? if( $showViewSource ): ?>
-									<li>
-										<a href="#" class="source-message"> <?= wfMsg('wall-message-source'); ?> </a>
-									</li>
-								<? endif; ?>
-						</ul>
-					</div>
-				</div>
-				<?php //TODO: This is hack for now unification buttons for all skins ASAP!!! ?> 
-				<div class="buttons-monobook"> 
-					<!-- only show this if it's user's own message -->  
-					<span class="tools"> 
-						<?php if( $canDelete ): ?> 
-							<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a> 
-						<?php endif; ?> 
-						
-						<?php if( $canEdit ): ?> 
-							<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
-						<?php endif; ?> 
-						<? if( $showViewSource ): ?>
-							<a href="#" class="source-message"> <?= wfMsg('wall-message-source'); ?> </a>
-						<? endif; ?>
-					</span> 
-				</div> 
-			<?php endif; ?> 
+			<div class="buttonswrapper">
+				<?= $app->renderView( 'WallController', 'messageButtons', array('comment' => $comment)) ; ?>
+			</div>
+			
 		</div>
 	</blockquote>
 	<? if(!$isreply): ?>
@@ -89,13 +80,17 @@
 				<? if($showLoadMore): ?>
 					<?= $app->renderView( 'WallController', 'loadMore', array('repliesNumber' => $repliesNumber) ); ?>
 				<? endif; ?>	
-				<? foreach( $replies as $key  => $val): ?>				
-					<?= $app->renderView( 'WallController', 'message', array('title' => $title, 'comment' => $val, 'isreply' => true, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)  ) ; ?>
+				<? foreach( $replies as $key  => $val): ?>
+					<?php //TODO: move this logic to controler !!! ?>
+					<?php if(!$val->isRemove() || $showDeleteOrRemoveInfo): ?>
+						<?= $app->renderView( 'WallController', 'message', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $val, 'isreply' => true, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)  ) ; ?>
+					<?php else: ?>
+						<?= $app->renderView( 'WallController', 'messageRemoved', array('comment' => $val, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)) ; ?>	
+					<?php endif; ?>	
 					<? $i++; ?>
 				<? endforeach; ?>
 			<? endif; ?>
-			<?= $app->renderView( 'WallController', 'reply'); ?>
+			<?= $app->renderView( 'WallController', 'reply', array('showReplyForm' => $showReplyForm )); ?>
 		</ul>
 	<? endif; ?>
 </li>
-
