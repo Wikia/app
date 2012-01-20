@@ -352,8 +352,9 @@ class WallNotifications {
 					'$MESSAGE_NO_HTML' =>  $textNoHtml,
 					'$MESSAGE_HTML' =>  $text,
 				);
-				
-				$this->sendEmail($watcher, $key, $data);
+				if($user->getBoolOption('unsubscribed') === true) {
+					$this->sendEmail($watcher, $key, $data);	
+				}
 			}
 		}
 		
