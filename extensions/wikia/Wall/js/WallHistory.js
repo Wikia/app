@@ -7,10 +7,10 @@ var WallHistory = $.createClass(Wall, {
 		$('#WallHistory .message-restore, #WallThreadHistory .message-restore' ).click(this.proxy(this.confirmAction));
 		$('#WallHistory tr').hover(
 			function(){
-				$(this).find('.threadHistory').css('visibility', 'visible').fadeIn("slow");
+				$(this).find('.threadHistory').fadeIn("slow");
 			},
 			function(){
-				$(this).find('.threadHistory').fadeOut("slow").css('visibility', 'hidden');
+				$(this).find('.threadHistory').fadeOut("slow");
 			}
 		);
 	},
