@@ -1,5 +1,22 @@
 @import "../../WikiaMobile/css/variables.scss";
 
+/*
+* 	Used to style slideshows, galleries and group of images
+*/
+.js #WikiaMainContent {
+	.wkImgStk.group {
+		.thumb {
+			margin: 1px;
+		}
+		figure:nth-of-type(n+2), figcaption {
+			display: none;
+		}
+		footer {
+			display: block;
+		}
+	}
+}
+
 .wkImgStk {
 	text-align: center;
 	margin: 10px auto;
@@ -11,6 +28,11 @@
 		color: $page-text-color;
 		border: 1px solid $border-color;
 		margin-top: -10px;
+	}
+	&.group {
+		footer {
+			display: none;
+		}
 	}
 }
 

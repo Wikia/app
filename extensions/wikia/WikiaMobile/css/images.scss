@@ -3,7 +3,6 @@
 
 #WikiaMainContent{
 	.thumb {
-		display: block;
 		text-align: center;
 		margin: 5px;
 
@@ -12,7 +11,6 @@
 			border: 1px solid $border-color;
 			box-shadow: 0 0 10px $shadow-color;
 			@include box-sizing(border-box);
-			display: block;
 			color: $page-text-color;
 			padding: 3px;
 			margin: -10px auto 0 auto;

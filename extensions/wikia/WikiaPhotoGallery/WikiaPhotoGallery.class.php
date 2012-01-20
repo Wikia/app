@@ -610,14 +610,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$html =  $template->render('renderWikiaMobileSlideshow');
 
-			$html .= F::build('JSSnippets')->addToStack(
-				array( '/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.wikiamobile.scss' ),
-				array(),
-				'',
-				array('id' => $this->mData['id'], 'extension' => 'gallery'),
-				'wikiamobile'
-			);
-
 		} else {
 
 			// loop throught the images and get height of the tallest one
@@ -1233,14 +1225,6 @@ class WikiaPhotoGallery extends ImageGallery {
 		);
 
 		}
-
-		$slideshowHtml .= F::build('JSSnippets')->addToStack(
-			array( '/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slideshow.wikiamobile.scss' ),
-			array(),
-			'',
-			array('id' => $id, 'extension' => 'slideshow'),
-			'wikiamobile'
-		);
 
 		wfProfileOut(__METHOD__);
 		return $slideshowHtml;

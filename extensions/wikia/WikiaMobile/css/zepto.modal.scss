@@ -15,7 +15,7 @@
 	overflow: hidden;
 	color: $modal-text-color;
 	z-index: $highest-z-index + 1000;
-	-webkit-transition: opacity 1s;
+	@include transition(opacity 1s);
 	pointer-events: none;
 
 	&.modalShown {
@@ -45,7 +45,6 @@
 	width: 100%;
 	height: 100%;
 	background-color: $footerBackground;
-
 
 	.fullScreenImage {
 		width: 100%;

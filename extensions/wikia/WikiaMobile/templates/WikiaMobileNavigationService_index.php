@@ -1,16 +1,16 @@
-<section id=wkTopNav>
+<section id=wkTopNav <?= ($searchOpen) ? 'class=searchOpen' : ''?>>
    <section id=wkTopBar>
    <? if( $wordmarkType == "graphic" ) :?>
-	   <img<?= ( $searchOpen ) ? ' style="display:none"' : '' ;?> id=wkImgMark src="<?= $wordmarkUrl ;?>">
+	   <img id=wkImgMark src="<?= $wordmarkUrl ;?>">
    <? else :?>
-	   <div<?= ( $searchOpen ) ? ' style="display:none"' : '' ;?> id=wkWrdMark><?= $wikiName ;?></div>
+	   <div id=wkWrdMark><?= $wikiName ;?></div>
    <? endif ;?>
-		<div id=navigationSearch <?= ($searchOpen) ? 'style=display:block class=open' : '' ?>>
+		<div id=navigationSearch>
 		   <form id=searchForm action=index.php method=post>
 			   <input id=searchInput type=search name=search placeholder="<?= $wf->MsgExt( 'wikiamobile-search', array( 'parseinline' ) ); ?>..." required=required />
 		   </form>
 		</div>
-	  <div id=searchToggle class="toggle<?= ($searchOpen) ? ' open': '' ?>"></div>
+	  <div id=searchToggle class=toggle></div>
 	  <div id=navToggle class=toggle><img src=/extensions/wikia/WikiaMobile/images/menuChev.png></div>
    </section>
    <section id=wkNav>
