@@ -3,6 +3,8 @@
 class WikiaSearchController extends WikiaSpecialPageController {
 
 	const RESULTS_PER_PAGE = 25;
+	const PAGES_PER_WINDOW = 10;
+
 	protected $wikiaSearch = null;
 
 	public function __construct() {
@@ -31,11 +33,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if( !empty( $query ) ) {
 			$results = $this->wikiaSearch->doSearch( $query, $start, self::RESULTS_PER_PAGE, ( $crossWikia ? 0 : $this->wg->CityId ) );
 			if(!empty($results->found)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'start' => $start, 'count' => $results->found ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'start' => $start, 'count' => $results->found, 'crossWikia' => $crossWikia ) );
 			}
 		}
 
 		$this->setVal( 'results', $results );
+		$this->setVal( 'currentPage',  ( $start / self::RESULTS_PER_PAGE ) + 1 );
 		$this->setVal( 'paginationLinks', $paginationLinks );
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
@@ -50,12 +53,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$start = $this->getVal( 'start', 0 );
 		$resultsPerPage = $this->getVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$resultsCount = $this->getVal( 'count', 0);
+		$pagesNum = ceil( $resultsCount / $resultsPerPage );
+		$currentPage = ( $start / $resultsPerPage ) + 1;
 
 		$this->setVal( 'query', $query );
-		$this->setVal( 'pagesNum', ceil( $resultsCount / $resultsPerPage ) );
-		$this->setVal( 'currentPage', ( $start / $resultsPerPage ) + 1 );
+		$this->setVal( 'pagesNum', $pagesNum );
+		$this->setVal( 'currentPage', $currentPage );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
+		$this->setVal( 'windowFirstPage', ( ( ( $currentPage - self::PAGES_PER_WINDOW ) > 0 ) ? ( $currentPage - self::PAGES_PER_WINDOW ) : 1 ) );
+		$this->setVal( 'windowLastPage', ( ( ( $currentPage + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $currentPage + self::PAGES_PER_WINDOW ) : $pagesNum ) );
 		$this->setVal( 'pageTitle', $this->wg->Title );
+		$this->setVal( 'crossWikia', $this->getVal( 'crossWikia', false ) );
 	}
 
 	public function getPage() {

@@ -6,20 +6,22 @@
 <br />
 <?php if( $results !== false ): ?>
 	<?php if( $results->found > 0 ): ?>
-		<strong>Search results:</strong>&nbsp;<strong><?= $results->start; ?> - <?= (($results->start+$resultsPerPage) < $results->found) ? ($results->start+$resultsPerPage) : $results->found; ?></strong> of <strong><?= $results->found; ?></strong> document(s)<br />
+		<strong>Search results:</strong>&nbsp;<strong><?= $results->start+1; ?> - <?= (($results->start+$resultsPerPage) < $results->found) ? ($results->start+$resultsPerPage) : $results->found; ?></strong> of <strong><?= $results->found; ?></strong> document(s)<br />
 		<?= $paginationLinks; ?>
+		<?php $pos = 0; ?>
 		<?php foreach( $results->hit as $hit ): ?>
-<?php
-if( $debug ) {
-echo "<pre>";
-var_dump($hit);
-exit;
-}
-?>
+			<?php
+				$pos++;
+				if( $debug ) {
+					echo "<pre>";
+					var_dump($hit);
+					exit;
+				}
+			?>
 			<?php if(isset($hit->data->canonical)): ?>
-				<strong><a href="<?= $hit->data->url; ?>"><?=$hit->data->title;?></a></strong> (Redirect: <?=$hit->data->canonical;?>)<br />
+				<strong><?=$pos + (($currentPage - 1) * $resultsPerPage); ?>. <a href="<?= $hit->data->url; ?>"><?=$hit->data->title;?></a></strong> (Redirect: <?=$hit->data->canonical;?>)<br />
 			<?php else: ?>
-				<strong><a href="<?= $hit->data->url; ?>"><?=$hit->data->title;?></a></strong><br />
+				<strong><?=$pos + (($currentPage - 1) * $resultsPerPage); ?>. <a href="<?= $hit->data->url; ?>"><?=$hit->data->title;?></a></strong><br />
 			<?php endif; ?>
 			<div style="width: 50%">
 				<?= substr( $hit->data->text, 0, 250 ); ?>...
