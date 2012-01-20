@@ -10,7 +10,7 @@
 			this.el.sortable({
 				axis: "y",
 				handle: ".drag",
-				opacity: .8,
+				opacity: 0.8,
 				update: $.proxy(this.updateLevels,this)
 			});
 		},
@@ -40,7 +40,9 @@
 		buildItem: function( item, level ) {
 			var type = (item.id.substr(0,5) == "Menu:") ? 'menu' : 'item';
 			var cl = level ? 'list-item-indent-'+level : '';
-			if (type == 'menu') cl += ' list-item-menu';
+			if (type == 'menu') {
+				cl += ' list-item-menu';
+			}
 			var html =
 				'<li'
 				+' data-tool-id="'+$.htmlentities(item.id)+'"'
@@ -52,10 +54,10 @@
 			}
 			html += '<span class="name">'+$.htmlentities(item.caption)+'</span>';
 			if (type == 'item') {
-				html += ''
-				+'<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">'
+				html +=
+				'<img src="'+wgBlankImgUrl+'" class="sprite edit-pencil">'
 				+'<img src="'+wgBlankImgUrl+'" class="sprite trash">'
-				+'<img src="'+wgBlankImgUrl+'" class="sprite drag">'
+				+'<img src="'+wgBlankImgUrl+'" class="sprite drag">';
 			}
 			html += '</li>';
 			var itemEl = $(html);

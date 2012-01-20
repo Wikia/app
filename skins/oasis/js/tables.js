@@ -1,4 +1,4 @@
-WikiaWideTables = {
+var WikiaWideTables = {
 	settings: {
 		article: $("#WikiaArticle"),
 		tables: [],
@@ -13,15 +13,14 @@ WikiaWideTables = {
 
 			//Add styling
 			$.each(WikiaWideTables.settings.tables, function() {
-				var table = this;
-				var wrapper;
+				var table = this,
+					wrapper;
 
 				//Add wrapper for overflow
 				wrapper = table.wrap('<div class="WikiaWideTablesWrapper"><div class="table"></div></div>').parent().parent();
 
 				//Add expand button
-				// TODO: FIXME: Use wgBlankImgUrl instead and test that it still works.
-				$('<img src="' + stylepath + '/common/blank.gif" class="sprite popout">').click(WikiaWideTables.makeModal).prependTo(wrapper);
+				$('<img src="' + wgBlankImgUrl + '" class="sprite popout">').click(WikiaWideTables.makeModal).prependTo(wrapper);
 
 				//If table is too wide, add jagged edge styling
 				if (table.attr("data-overflow") == "true") {
@@ -39,7 +38,6 @@ WikiaWideTables = {
 							})
 							.attr("width", 15)
 							.attr("height", wrapper.height());
-
 
 						var y = 0;
 						var x = 15;
@@ -73,7 +71,6 @@ WikiaWideTables = {
 						wrapper.addClass("border");
 					}
 				}
-
 			});
 
 			//Add scroll magic to popout buttons
@@ -115,11 +112,11 @@ WikiaWideTables = {
 
 	popoutScrolling: function() {
 		WikiaWideTables.settings.popouts.each(function() {
-			var popout = $(this);
-			var wrapper = popout.parent();
-			var tableTop = wrapper.offset().top;
-			var tableBottom = tableTop + wrapper.height();
-			var scrolledBy = $(window).scrollTop();
+			var popout = $(this),
+				wrapper = popout.parent(),
+				tableTop = wrapper.offset().top,
+				tableBottom = tableTop + wrapper.height(),
+				scrolledBy = $(window).scrollTop();
 
 			if (scrolledBy > tableTop && scrolledBy < tableBottom && popout.css("position") == "absolute") {
 				//Top of the table was just scrolled out of view - float the popout
