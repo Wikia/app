@@ -118,8 +118,6 @@
 									echo Xml::closeElement('span');
 								endif;
 							?>
-						</td>
-						<td>
 							<span class="threadHistory">(<?= $entry['historyLink']; ?>)</span>
 						</td>
 						<td>
@@ -129,7 +127,7 @@
 						</td>
 					</tr>
 					<tr class="border">
-						<td class="wrapper" colspan="3">
+						<td class="wrapper" colspan="2">
 							<?php if( !empty($entry['reason']) ): ?>
 								<div class="summaryBubble">
 									<label><?= wfMsg('wall-history-summary-label'); ?></label>&nbsp;<?= strip_tags($entry['reason']); ?>
