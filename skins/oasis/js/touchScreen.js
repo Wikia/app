@@ -1,4 +1,4 @@
-touchImprovements = {
+var touchImprovements = {
 
 	init: function() {
 
@@ -13,7 +13,7 @@ touchImprovements = {
 				event.preventDefault();
 				globalUls.removeClass('open');
 				next.addClass('open');
-			};
+			}
 		});
 
 		//user menu fix:
@@ -22,7 +22,7 @@ touchImprovements = {
 			if (next && !next.hasClass('open')) {
 				event.preventDefault();
 				next.addClass('open');
-			};
+			}
 		});
 	}
 };

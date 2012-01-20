@@ -85,8 +85,8 @@ var initTracker = function() {
 
 	// page header
 	$('#WikiaPageHeader').click(function(ev) {
-		var fakeUrl = 'pageheader/';
-		var node = $(ev.target);
+		var fakeUrl = 'pageheader/',
+			node = $(ev.target);
 
 		// clicks on image inside "edit" link
 		if (node.is('img')) {
@@ -126,7 +126,7 @@ var initTracker = function() {
 
 		// edit button / dropdown
 		else if (node.hasParent('.wikia-menu-button') || node.hasClass('wikia-button')) {
-			var fakeUrl = 'action/';
+			fakeUrl = 'action/';
 			$.tracker.byStr(fakeUrl + node.attr('data-id'));
 		}
 	});
@@ -598,22 +598,22 @@ var initTracker = function() {
 	// store timestamp when user left the page
 	$(window).unload(function(ev) {
 		if ($.storage) {
-			$.storage.set('unloadstamp', +new Date() /* leave + for casting to UNIX timestamp */);
+			$.storage.set('unloadstamp', (new Date()).getTime() /* UNIX timestamp */);
 		}
 	});
-	
+
 	var spotlightTrack = function(e, part) {
 		var el = $(e.target);
 		if(el.is('a') || el.is('img')) {
-			$.tracker.byStr('spotlights/' + part + '/' + cityShort);
+			$.tracker.byStr('spotlights/' + part + '/' + window.cityShort);
 		}
 	};
-	
+
 	// spotlights rail
 	$('#SPOTLIGHT_RAIL').bind('click', function(e) {
 		spotlightTrack(e, 'rail');
 	});
-	
+
 	// spotlights footer
 	$('#SPOTLIGHT_FOOTER').bind('click', function(e) {
 		spotlightTrack(e, 'footer');

@@ -75,7 +75,7 @@ var WikiHeader = {
 			WikiHeader.showSubNav(event.currentTarget);
 			WikiHeader.subnav.removeClass('opened');
 			subnav.addClass('opened');
-		};
+		}
 	},
 
 	mouseover: function(event) {
@@ -551,10 +551,13 @@ $(function() {
 
 			if (errorMessages.length > 0) {
 				$('#publish').remove();
+				// FIXME:replace with $.showModal
 				alert(errorMessages.join("\n\n"));
 			}
 			previewNode.find('nav > ul a').click(function() {
-				if ($(this).attr('href') == '#') return false;
+				if ($(this).attr('href') == '#') {
+					return false;
+				}
 			});
 		});
 
