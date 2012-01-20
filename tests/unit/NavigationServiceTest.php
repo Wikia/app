@@ -246,7 +246,36 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 				$service->parseOneLine($case['line'])
 			);
 		}
+	}
 
+	function testParseText() {
+		$service = new NavigationService();
+
+		$cases = array();
+
+		$cases[] = array(
+			'text' => '*<nowiki>foo</nowiki>',
+			'out' => array(
+				0 => array(
+					'children' => array(1)
+				),
+				1 => array (
+					'original' => '<nowiki>foo</nowiki>',
+					'text' => 'foo',
+					'href' => '#',
+					'specialAttr' => null,
+					'parentIndex' => 0,
+					'depth' => 1,
+				)
+			)
+		);
+
+		foreach($cases as $case) {
+			$this->assertEquals(
+				$case['out'],
+				$service->parseText($case['text'])
+			);
+		}
 	}
 
 	function testParseErrors() {
