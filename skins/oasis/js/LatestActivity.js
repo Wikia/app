@@ -1,12 +1,8 @@
-$(window).load(function() {
-    LatestActivity.init();
-});
-
 var LatestActivity = {
-		init: function() {
-			LatestActivity.lazyLoadContent();
+	init: function() {
+		LatestActivity.lazyLoadContent();
 	},
-	
+
 	lazyLoadContent: function() {
 		$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=LatestActivity&actionName=Index&outputType=html',
 			function(data) {
@@ -17,8 +13,12 @@ var LatestActivity = {
 				else {
 					$('section.WikiaActivityModule:not(.UserProfileRailModule_RecentActivity)').replaceWith(data);
 				}
-			
+
 			}
 		);
 	}
 }
+
+$(window).load(function() {
+    LatestActivity.init();
+});

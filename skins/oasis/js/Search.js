@@ -1,4 +1,4 @@
-WikiaSearchApp = {
+var WikiaSearchApp = {
 	searchForm: false,
 	searchField: false,
 
@@ -7,7 +7,7 @@ WikiaSearchApp = {
 	track: function(url) {
 		$.tracker.byStr('module/search/' + url);
 	},
-	
+
 	trackInternal: function(event, params) {
 		$.internalTrack(event, params);
 	},

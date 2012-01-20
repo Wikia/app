@@ -3,7 +3,7 @@
  * if query parameter contains "modal=XYZ", it will execute "showXYZ()" if the function exists
  * @author Hyun Lim
  */
-GlobalModal = {
+var GlobalModal = {
 	init: function() {
 		var modal = $.getUrlVar('modal');
 		if (modal) {	// modal takes precedence
@@ -35,7 +35,7 @@ GlobalModal = {
 			$('.ajaxLogin').trigger('click');
 		}
 	},
-	
+
 	showAdopt: function() {
 		$.get(wgScript, {
 			action: 'ajax',
@@ -48,7 +48,7 @@ GlobalModal = {
 			$(html).makeModal({width: 500, height: 400});
 		});
 		var sassUrl = $.getSassCommonURL('/extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss');
-		$.getCSS(sassUrl, function(){});
+		$.getCSS(sassUrl);
 	}
 }
 
