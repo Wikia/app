@@ -18,7 +18,7 @@
 	}
 }
 
-#WikiaMainContent{
+#wkMainCnt{
 	.bigTable{
 		@include box-shadow($shadow);
 		border:1px solid $border-color;
@@ -57,10 +57,10 @@
 	}
 }
 
-#modalWrapper.wideTable{
+#wkMdlWrp.wideTable{
 	overflow: visible;
 
-	#modalContent {
+	#wkMdlCnt {
 		padding-top:30px;
 	}
 

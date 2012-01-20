@@ -3,8 +3,8 @@
 /*
 * 	Used to style slideshows, galleries and group of images
 */
-.js #WikiaMainContent {
-	.wkImgStk.group {
+.js #wkMainCnt {
+	.wkImgStk.grp {
 		.thumb {
 			margin: 1px;
 		}
@@ -29,14 +29,14 @@
 		border: 1px solid $border-color;
 		margin-top: -10px;
 	}
-	&.group {
+	&.grp {
 		footer {
 			display: none;
 		}
 	}
 }
 
-.wkImgStkFooter {
+.wkStkFtr {
 	font-size: small;
 	padding-left: 20px;
 	background-position: left;

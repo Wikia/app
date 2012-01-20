@@ -9,8 +9,7 @@
 $itemHeight: 50px;
 $itemPadding: 6px;
 
-//TODO: css alias
-#wkRelPag, .RelatedPagesModule {
+#wkRelPag {
 	.collSec {
 		@include section-title-related;
 	}
@@ -54,7 +53,7 @@ $itemPadding: 6px;
 			}
 		}
 
-		&:active, &.fake-active {
+		&:active, &.fkAct {
 			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
 			color: white;
 		}

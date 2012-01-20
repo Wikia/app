@@ -1,4 +1,4 @@
-#WikiaMainContent{
+#wkMainCnt{
 	object, embed{
 		display: block;
 		margin: 5px auto;
@@ -12,7 +12,7 @@
 }
 
 @media screen and (min-width: 481px) {
-	#WikiaMainContent{
+	#wkMainCnt{
 		object, embed{
 			width: 460px;
 			height: 280px;
@@ -21,7 +21,7 @@
 }
 
 @media screen and ( min-width: 769px ) {
-	#WikiaMainContent{
+	#wkMainCnt{
 		object, embed{
 			width: 620px;
 			height: 378px;

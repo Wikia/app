@@ -1,14 +1,14 @@
-<section id="WikiaPage">
+<section id=wkPage>
 	<?= $pageHeaderContent ;?>
-	<article id="WikiaMainContent">
+	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
-		<footer id="WikiaMainContentFooter">
-			<nav id="WikiaRelatedContent">
+		<footer id=wkMainCntFtr>
+			<nav id=wkRltdCnt>
 				<?= $relatedPages ;?>
 				<?= $categoryLinks ;?>
 			</nav>
 			<?= $afterContentHookText ;?>
-			<? if ( !empty( $afterBodyContent ) ) :?><aside id="WikiaAfterBodyContent"><?= $afterBodyContent ;?></aside><? endif ;?>
+			<? if ( !empty( $afterBodyContent ) ) :?><aside><?= $afterBodyContent ;?></aside><? endif ;?>
 			<?= $navMenu ;?>
 		</footer>
 	</article>
