@@ -1,32 +1,32 @@
-FirefoxFindFix = {
-	
+var FirefoxFindFix = {
+
 	scrollThreshold: 30,
 	lastScroll: 0,
-	
+
 	init: function() {
 		$(window)
 			.scroll(FirefoxFindFix.analyze)
 			.mousedown(FirefoxFindFix.cancelTimer);
 	},
-	
+
 	/**
 	 * Determines if the scroll position should be adjusted based on highlighted text and amount of scroll.
 	 */
 	analyze: function() {
 		// Is anything highlighted?
 		if (window.getSelection().toString()) {
-			
+
 			var currentScroll = $(window).scrollTop();
 
 			// Did we just scroll a lot?
 			if (currentScroll > FirefoxFindFix.lastScroll + FirefoxFindFix.scrollThreshold) {
 				FirefoxFindFix.adjust();
 			}
-			
+
 			FirefoxFindFix.lastScroll = currentScroll;
 		}
 	},
-	
+
 	/**
 	 * Scrolls the window a bit and begins monitoring
 	 */
@@ -40,7 +40,7 @@ FirefoxFindFix = {
 			FirefoxFindFix.timer = setInterval(FirefoxFindFix.monitorHighlight, 250);
 		}
 	},
-	
+
 	/**
 	 * Monitors the position of highlighted text relative to its parent. This will catch repeat occurances in a sentence.
 	 */
@@ -52,7 +52,7 @@ FirefoxFindFix = {
 			}
 		}
 	},
-	
+
 	/**
 	 * Stops the monitoring interval timer
 	 */
@@ -62,7 +62,7 @@ FirefoxFindFix = {
 			FirefoxFindFix.timer = null;
 		}
 	}
-		
+
 };
 
 $(function() {
