@@ -64,7 +64,9 @@
 										unset($htmldata['msg']);
 										$actions[] =  '('.Xml::element('a', $htmldata , $action['msg']).')';
 									endforeach;
-									echo implode(' ',$actions); 
+									echo Xml::openElement('span', array('class' => 'actions'));
+									echo implode(' ',$actions);
+									echo Xml::closeElement('span');
 								endif; 
 							?>
 						</td>
@@ -111,8 +113,10 @@
 										unset($htmldata['msg']);
 										$actions[] =  '('.Xml::element('a', $htmldata , $action['msg']).')';
 									endforeach;
-									echo implode(' ',$actions); 
-								endif; 
+									echo Xml::openElement('span', array('class' => 'actions'));
+									echo implode(' ',$actions);
+									echo Xml::closeElement('span');
+								endif;
 							?>
 						</td>
 						<td>

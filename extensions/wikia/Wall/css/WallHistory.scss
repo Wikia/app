@@ -27,6 +27,11 @@ $separators: mix($color-page-border, $color-page, 50%);
 		.wrapper {
 			display: table-cell;
 		}
+		td {
+			.actions {
+				font-size: 11px;
+			}
+		}
 	}
 	tr:hover {
 		.threadHistory {
