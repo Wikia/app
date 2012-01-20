@@ -1,12 +1,12 @@
 <?php
 class FooterModule extends Module {
-
+	
 	var $wgBlankImgUrl;
-
+	
 	var $showToolbar;
 	var $showNotifications;
 	var $showLoadTime;
-
+	
 	public function executeIndex() {
 		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
 
