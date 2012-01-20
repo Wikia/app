@@ -10,6 +10,8 @@ class AccountNavigationModule extends Module {
 	var $personal_urls;
 	var $wgBlankImgUrl;
 	var $wgStylePath;
+	var $wgLanguageCode;
+	var $wgAvailableHelpLang;
 
 	var $dropdown;
 	var $isAnon;
@@ -136,7 +138,14 @@ class AccountNavigationModule extends Module {
 			}
 
 			// link to Help:Content (never render as redlink)
-			$this->dropdown[] = Wikia::link(Title::newFromText( wfMsgForContent( 'helppage' ) ), wfMsg('help'), array('title' => '', 'data-id' => 'help'), '', array('known'));
+			$helpLang = array_key_exists( $this->wg->LanguageCode, $this->wg->AvailableHelpLang ) ? $this->wg->LanguageCode : 'en';
+			$this->dropdown[] = Wikia::link(
+				Title::newFromText( wfMsgExt( 'helppage', array( 'language' => $helpLang ) ) ),
+				wfMsg('help'),
+				array('title' => '', 'data-id' => 'help'),
+				'',
+				array('known')
+			);
 
 			// logout link
 			$this->dropdown[] = $this->renderPersonalUrl('logout');
