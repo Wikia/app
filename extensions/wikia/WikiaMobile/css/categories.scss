@@ -1,10 +1,10 @@
 //mixins
 @import "mixins/section-title.scss";
 
-#WikiaArticleCategories {
+#wkArtCat {
 
 	//TODO: css alias
-	.colSec, .collapsible-section {
+	.collSec {
 		margin: $section-title-margin;
 		@include section-title-related;
 	}

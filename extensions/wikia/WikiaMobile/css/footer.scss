@@ -1,13 +1,13 @@
 //mixins
 @import "mixins/box-shadow.scss";
 
-#wikiaFooter {
+#wkFtr {
 	height: 170px;
 	background-color: $footerBackground;
 	@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
 	text-align: center;
 
-	#wikiaLogo {
+	#wkLogo {
 		margin-top: 20px;
 	}
 

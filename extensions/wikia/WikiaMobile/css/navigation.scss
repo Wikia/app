@@ -8,7 +8,7 @@
 @import "mixins/box-shadow.scss";
 @import "mixins/transition.scss";
 
-#wkWrdMark {
+#wkWrdMrk {
 	line-height: 36px;
 	font-size: x-large;
 	color: $navBarWordmarkText;
@@ -21,18 +21,18 @@
 	top: 2px;
 }
 
-#wkImgMark {
+#wkImgMrk {
 	height: 36px;
 	width: auto;
 	padding: 2px 5px;
 	float: left;
 }
 
-#searchToggle {
+#wkSrhTgl {
 	background-image: url('/extensions/wikia/WikiaMobile/images/search.png');/* $wgCdnStylePath */
 }
 
-#navToggle {
+#wkNavTgl {
 	img {
 		width: 21px;
 		height: 21px;
@@ -42,7 +42,7 @@
 	}
 }
 
-#navigationSearch {
+#wkNavSrh {
 	display: none;
 	position: absolute;
 	left: 10px;
@@ -50,7 +50,7 @@
 	top: 4px;
 }
 
-#searchInput {
+#wkSrhInp {
 	border: none;
 	width: 100%;
 	font-size: large;
@@ -79,12 +79,12 @@
 	@include box-shadow(0 0 10px black);
 	@include box-sizing(border-box);
 
-	&.fullNav {
+	&.fllNav {
 		min-height: 100%;
 		max-height: none;
 		background-color: white;
 
-		#navToggle {
+		#wkNavTgl {
 			background-color: $searchOpenBackground;
 			img {
 				-webkit-transform: rotateZ(180deg);
@@ -94,19 +94,19 @@
 		}
 	}
 
-	&.searchOpen {
-		#navToggle, #wkImgMark, #wkWrdMark {
+	&.srhOpn {
+		#wkNavTgl, #wkImgMrk, #wkWrdMrk {
 			display: none;
 		}
-		#navigationSearch {
+		#wkNavSrh {
 			display: block;
 		}
-		#searchToggle {
+		#wkSrhTgl {
 			background-color: $searchOpenBackground;
 		}
 	}
 
-	.toggle {
+	.tgl {
 		float: right;
 		width: 45px;
 		height: 100%;
@@ -142,7 +142,7 @@
 				@include box-sizing(border-box);
 				border-bottom: 1px solid $border-color;
 
-				&:active, &.fake-active {
+				&:active, &.fkAct {
 					@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
 
 					& > a, & > span {
@@ -150,7 +150,7 @@
 					}
 				}
 
-				&.child {
+				&.cld {
 					& > a, & > span {
 						background-repeat: no-repeat;
 						background-position: right;
@@ -181,23 +181,23 @@
 			top: 50px;
 		}
 
-		&.current1 {
+		&.cur1 {
 			header {
 				left: 100%;
 			}
 		}
 
-		&.current2 {
-			.lvl2.current {
+		&.cur2 {
+			.lvl2.cur {
 				left: 0;
 			}
 		}
 
-		&.current3 {
-			.lvl2.current {
+		&.cur3 {
+			.lvl2.cur {
 				left: 0;
 			}
-			.lvl3.current {
+			.lvl3.cur {
 				left: 0;
 			}
 		}
@@ -215,7 +215,7 @@
 	min-height: 100%;
 	@include transition(opacity .5s);
 
-	.fullNav & {
+	.fllNav & {
 		opacity: 1;
 		left:0;
 	}
@@ -292,7 +292,7 @@
 		padding: 0 20px;
 		line-height: 32px;
 
-		&.active {
+		&.act {
 			background-color: white;
 			@include box-shadow(0 0 5px black);
 			color: $link-color;
@@ -301,7 +301,7 @@
 }
 
 //default style if js is disabled
-#WikiaMainContentFooter #wkNavMenu{
+#wkMainCntFtr #wkNavMenu{
 		button, header a {
 			display: none;
 		}

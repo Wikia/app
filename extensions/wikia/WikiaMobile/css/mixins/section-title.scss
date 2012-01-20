@@ -10,8 +10,7 @@
 	word-wrap: break-word;
 	position: relative;
 
-	//TODO: css alias
-	.chev, .chevron {
+	.chev {
 		/*border: 1px solid mix($border-color, $page-background-color, 30%);*/
 		width: 22px;
 		height: 22px;
@@ -24,8 +23,7 @@
 		@include transition(all .7s ease-out);
 	}
 
-	//TODO: css alias
-	&.open .chevron, &.open .chev {
+	&.open .chev {
 		-webkit-transform: rotateZ(360deg);
 		background-image: url("/extensions/wikia/WikiaMobile/images/close_chev.png");/* $wgCdnStylePath */
 	}

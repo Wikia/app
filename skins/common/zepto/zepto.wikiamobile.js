@@ -1,4 +1,4 @@
-(function( $ ){
+(function($){
 	$.fn.contents = function() {
 		      return this[0].childNodes;
 	};
@@ -171,19 +171,19 @@
 	$.showLoader = function(element, options) {
 		options = options || {};
 
-		if(element.data('hasLoader')) {
-			element.find('.WikiaMobileLoader').show();
+		if(element.data('hasLdr')) {
+			element.find('.wkMblLdr').show();
 		} else {
-			element.append('<div class="WikiaMobileLoader' + (options.center?' center"':'"') +'><img class=WikiaMobileLoaderImg ' +
-						   (options.size?'style="width:' + options.size + '"':'') + ' src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>').data('hasLoader', true);
+			element.append('<div class="wkMblLdr' + (options.center?' center':'') +'"><img ' +
+						   (options.size?'style="width:' + options.size + '"':'') + ' src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>').data('hasLdr', true);
 		}
 	};
 
 	$.hideLoader = function(element) {
-		element.find('.WikiaMobileLoader').hide();
+		element.find('.wkMblLdr').hide();
 	};
 
 	$.removeLoader = function(element) {
-		element.find('.WikiaMobileLoader').remove();
+		element.find('.wkMblLdr').remove();
 	};
 })(Zepto);

@@ -7,24 +7,24 @@ h1, h2, h3{
 }
 
 .js {
-	.articleSection {
+	.artSec {
 		display: none;
 	}
 }
 //TODO: css alias
-.collapsible-section, .collSec {
+.collSec {
 	@include section-title;
 }
 
 body {
 	//TODO: css alias
-	&>.colSec, &>.collapsible-section, &>.articleSection {
+	&>.colSec &>.artSec {
 		margin-left: $page-padding;
 		margin-right: $page-padding;
 	}
 }
 
-.articleSection {
+.artSec {
 	&.open {
 		display: block;
 	}

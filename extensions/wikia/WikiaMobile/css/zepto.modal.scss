@@ -5,7 +5,7 @@
 @import "mixins/transition.scss";
 @import "mixins/box-sizing.scss";
 
-#modalWrapper {
+#wkMdlWrp {
 	position:absolute;
 	top:0;
 	left:0;
@@ -18,13 +18,13 @@
 	@include transition(opacity 1s);
 	pointer-events: none;
 
-	&.modalShown {
+	&.mdlShw {
 		opacity: 1;
 		pointer-events: auto;
 	}
 }
 
-#modalTopBar {
+#wkMdlTB {
 	width: 100%;
 	height: 30px;
 	margin: 0;
@@ -36,17 +36,17 @@
 	background-color: rgba(0,0,0,.8);
 	@include transition(top .5s ease-in);
 
-	&.hidden {
+	&.hdn {
 		top: -100%;
 	}
 }
 
-#modalContent {
+#wkMdlCnt {
 	width: 100%;
 	height: 100%;
 	background-color: $footerBackground;
 
-	.fullScreenImage {
+	.fllScrImg {
 		width: 100%;
 		height: 100%;
 		background-repeat: no-repeat;
@@ -59,7 +59,7 @@
 	}
 }
 
-#modalFooter {
+#wkMdlFtr {
 	width: 100%;
 	height: auto;
 	margin: 0;
@@ -75,12 +75,12 @@
 	@include box-sizing(border-box);
 	display: none;
 
-	&.hidden {
+	&.hdn {
 		bottom: -100%;
 	}
 }
 
-#modalClose {
+#wkMdlClo {
 	height: 30px;
 	width: 25px;
 	float: right;
@@ -90,7 +90,7 @@
 	padding: 0 0 20px 20px;
 }
 
-.changeImageButton {
+.chnImgBtn {
 	position: absolute;
 	top: 0;
 	height: 100%;
@@ -99,36 +99,36 @@
 	background-position: center;
 
 	@include transition(all .5s ease-in);
-	&.hidden {
+	&.hdn {
 		opacity: .2;
 	}
 }
 
-.justOneImage {
-	.changeImageButton {
+.oneImg {
+	.chnImgBtn {
 		display:none;
 	}
 }
 
-.changeImageChevron {
+.chnImgChv {
 	bottom: 50%;
 	border-width: 10px;
 	border-style: solid;
 	position: absolute;
 }
 
-#nextImage {
+#nxtImg {
 	right: 0;
-	.changeImageChevron {
+	.chnImgChv {
 		border-color: transparent transparent transparent #006CB0;
 		right: 10px;
 	}
 }
 
 
-#previousImage {
+#prvImg {
 	left: 0;
-	.changeImageChevron {
+	.chnImgChv {
 		border-color: transparent #006CB0 transparent transparent;
 		left: 10px;
 	}
