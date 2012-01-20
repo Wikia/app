@@ -106,13 +106,25 @@ class AdminDashboardLogic {
 	 *  
 	 */
 	function onBeforeToolbarMenu(&$items) {
-		if (F::app()->wg->User->isAllowed( 'admindashboard' )) {		
+		if( F::app()->wg->User->isAllowed('admindashboard') ) {
 			$item = array(
 				'type' => 'html',
 				'html' => Wikia::specialPageLink('AdminDashboard', 'admindashboard-toolbar-link', array('data-tracking' => 'admindashboard/toolbar/admin') )
 			);
-			if(is_array($items)) {
-				$items[] = $item;
+			
+			if( is_array($items) ) {
+				$isMenuSubElPresent = false;
+				
+				foreach($items as $el) {
+					if( isset($el['type']) && $el['type'] === 'menu' ) {
+						$isMenuSubElPresent = true;
+						break;
+					}
+				}
+				
+				if( $isMenuSubElPresent ) {
+					$items[] = $item;
+				}
 			} else {
 				$items = array($item);
 			}
