@@ -77,6 +77,10 @@ yui-overlay, .yui-panel-container {
 	z-index: $zTop + 1 !important;
 }
 
+.editor .mask {
+	margin-top:0;
+}
+
 .skin-oasis {
 
   #ImageUpload {

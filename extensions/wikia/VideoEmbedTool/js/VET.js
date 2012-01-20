@@ -534,7 +534,6 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			constraintoviewport: true,
 			draggable: false,
 			close: false,
-			fixedcenter: true,
 			underlay: "none",
 			visible: false,
 			zIndex: 900
@@ -550,6 +549,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 		VET_panel.render();
 		VET_panel.show();
+		VET_panel.center();
 		if(VET_refid != null && VET_wysiwygStart == 2) {
 			VET_editVideo();
 		} else {
