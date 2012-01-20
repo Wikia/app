@@ -1,21 +1,29 @@
+//mixins
+@import "variables.scss";
+
 #mw-search-top-table, .mw-search-formheader {
 	display: none;
 }
-.searchresults, .search-types {
-	p:first-child {
+
+#search {
+	p > b {
 		display: none;
 	}
 
 	ul {
-		padding: 3px;
+		padding: 0;
+		list-style: none;
 
 		li {
 			margin: 10px 3px;
 			padding: 3px;
 
-			a {
+			.searchalttitle {
 				display: block;
-				width: 100%;
+			}
+
+			.searchresult {
+				border-bottom: 1px solid $border-color;
 			}
 		}
 	}

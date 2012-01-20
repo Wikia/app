@@ -177,30 +177,47 @@ var WikiaMobile = WikiaMobile || (function() {
 			allImages.push([$(this).data('number', number++).attr('href')]);
 		});
 
-		$('figure').each(function(){
-			var self = $(this);
-			allImages.push([
-				self.find('.image').data('number', number++).attr('href'),
-				self.find('.thumbcaption').html()
-			]);
+		$('.wkImgStk').each(function(){
+			var imgs = $(this);
+
+			if(imgs.hasClass('group')) {
+				var figures = imgs.find('figure').addClass('processed'),
+				l = figures.length;
+
+				imgs.data('number', number).find('footer').append(l);
+
+				number += l;
+
+				figures.each(function(i) {
+					var img = $(this);
+					allImages.push([
+						img.find('.image').attr('href'),
+						img.find('figcaption').text(),
+						i, l
+					]);
+				});
+			} else {
+				l = imgs.data('number', number).data('img-count');
+
+				number += parseInt(l, 10);
+
+				for(var i = 0; i < l; i++) {
+					allImages.push([
+						imgs.data('img-' + i),
+						imgs.data('cap-' + i),
+						//I need these number to show counter in a modal
+						i, l
+					]);
+				}
+			}
 		});
 
-		$('.wkImgStk').each(function(){
-			var imgs = $(this),
-			l = imgs.data('img-count');
-
-			imgs.data('number', number);
-
-			number += parseInt(l, 10);
-
-			for(var i = 0; i < l; i++) {
-				allImages.push([
-					imgs.data('img-' + i),
-					imgs.data('cap-' + i),
-					//this true is to know that the image comes from gallery or slideshow
-					i , l
-				]);
-			}
+		$('figure').not('.processed').each(function(){
+			var self = $(this).data('number', number++);
+			allImages.push([
+				self.find('.image').attr('href'),
+				self.find('.thumbcaption').html()
+			]);
 		});
 
 		//if there is only one image in the article hide the prev/next buttons
@@ -247,6 +264,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		navigationSearch = $('#navigationSearch'),
 		searchToggle = $('#searchToggle'),
 		searchInput = $('#searchInput'),
+		searchForm = $('#searchForm'),
 		wkNavMenu = $('#wkNavMenu'),
 		wkNav = $('#wkNav'),
 		//while getting the h1 element erase classes needed for phones with no js
@@ -284,21 +302,12 @@ var WikiaMobile = WikiaMobile || (function() {
 		.delegate('#WikiaMainContent a', clickEvent, function(){
 			track(['link', 'content']);
 		})
-		.delegate('.infobox img', clickEvent, function(event){
+		.delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
+			var img = $(this),
+			num = img.data('number') || img.parent().data('number');
 			event.preventDefault();
-			imgModal($(this).parents('.image').data('number'));
-		})
-		.delegate('figure', clickEvent, function(event){
-			event.preventDefault();
-
-			var thumb = $(this),
-			image = thumb.children('.image').first();
-			imgModal(image.data('number'), thumb.children('.thumbcaption').html());
-		})
-		.delegate('.wkImgStk', clickEvent, function(event){
-			event.preventDefault();
-			var self = $(this);
-			imgModal(self.data('number'), self.data('cap-0'));
+			event.stopPropagation();
+			if(num) imgModal(num);
 		})
 		.delegate('.bigTable', clickEvent, function(event){
 			event.preventDefault();
@@ -309,15 +318,19 @@ var WikiaMobile = WikiaMobile || (function() {
 			});
 		});
 
-		$('#searchForm').bind('submit', function(){
+		searchForm.bind('submit', function(){
 			track(['search', 'submit']);
 		});
 
 		searchToggle.bind(clickEvent, function(event){
 			if(navigationBar.hasClass('searchOpen')){
 				track(['search', 'toggle', 'close']);
-				navigationBar.removeClass();
-				searchInput.val('');
+				if(searchInput.val()) {
+					searchForm.submit();
+				}else{
+					navigationBar.removeClass();
+					searchInput.val('');
+				}
 			}else{
 				track(['search', 'toggle', 'open']);
 				closeNav().addClass('searchOpen');

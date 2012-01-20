@@ -145,7 +145,7 @@
 		if(!this._modalCreated) this._createModal();
 
 		modal = this._modal;
-
+		modal.css('top', '0');
 		if(addClass){
 			modal.addClass(addClass);
 		}else{
@@ -209,13 +209,14 @@
 
 	$.hideModal = function() {
 		if(this._modalCreated) {
-			var modal = this._modal;
+			var modal = this._modal,
+			position = this._position;
 
-			modal.removeClass('modalShown');
+			modal.removeClass('modalShown').css('top', position);
 			this._allToHide.removeClass('hidden');
 			this._thePage.show();
 			clearTimeout(this._timer);
-			window.scrollTo(0, this._position);
+			window.scrollTo(0, position);
 			this._position = 1;
 		}
 	};
