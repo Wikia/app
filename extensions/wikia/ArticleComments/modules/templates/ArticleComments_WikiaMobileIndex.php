@@ -1,18 +1,18 @@
-<section id="WikiaArticleComments" data-pages="<?= $pagesCount ;?>">
-	<h1 id="commentsHeader" class="collapsible-section"><?= $wf->MsgExt( 'wikiamobile-article-comments-header', array('parsemag'), $wg->Lang->formatNum( $countCommentsNested ) ) ;?><span class="chevron"></span></h1>
-	<div id="commentsBody">
+<section id="wkArtCom" data-pages="<?= $pagesCount ;?>">
+	<h1 class="collSec"><?= $wf->MsgExt( 'wikiamobile-article-comments-header', array('parsemag'), $wg->Lang->formatNum( $countCommentsNested ) ) ;?><span class="chev"></span></h1>
+	<div class="comms">
 		<? if ( $countCommentsNested > 0 ) :?>
 			<? if ( $showMore ) :?>
-				<div id="commentsLoadPrev"><span class="label"><?= $wf->Msg( 'wikiamobile-article-comments-prev' ) ;?></span></div>
+				<div id="commPrev"><span class="lbl"><?= $wf->Msg( 'wikiamobile-article-comments-prev' ) ;?></span></div>
 			<? endif ;?>
 			
 			<?= wfRenderPartial( 'ArticleComments', 'CommentList', array( 'commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false ) );?>
 		
 			<? if ( $showMore ) :?>
-				<div id="commentsLoadMore"><span class="label"><?= $wf->Msg( 'wikiamobile-article-comments-more' ) ;?></span></div>
+				<div id="commMore"><span class="lbl"><?= $wf->Msg( 'wikiamobile-article-comments-more' ) ;?></span></div>
 			<? endif ;?>
 		<? else :?>
-			<span class="message"><?= $wf->Msg( 'wikiamobile-article-comments-none' ) ;?></span>
+			<?= $wf->Msg( 'wikiamobile-article-comments-none' ) ;?>
 		<? endif ;?>
 	</div>
 </section>
