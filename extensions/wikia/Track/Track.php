@@ -46,14 +46,16 @@ class Track {
 <script type="text/javascript">
 	var beaconCookie;
 	if (! beaconCookie) {
-		var beacon_rx = new RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})");
-		var result = beacon_rx.exec(document.cookie);
+		var result = RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})").exec(document.cookie);
 		if (result) {
 			beaconCookie = result[1];
 		}
 	}
 
-	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (beaconCookie ? "&amp;beacon=" + beaconCookie : "");
+	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
+	var utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie);
+
+	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (beaconCookie ? "&amp;beacon=" + beaconCookie : "") + (utma ? "&amp;utma=" + utma : "") + (utmb ? "&amp;utmb=" + utmb : "");
 	document.write('<'+'script type="text/javascript" src="' + trackUrl + '"><'+'/script>');
 </script>
 SCRIPT1;

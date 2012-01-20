@@ -13,11 +13,6 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 		$script = '';
 
-		// Load the OneDot javascript
-		if (class_exists('Track')) {
-			$script .= Track::getViewJS();
-		}
-
 		if(strpos($_SERVER['SCRIPT_URI'], '.wikia.com/') !== false) {
 			$setDomainName = '_gaq.push([\'_setDomainName\', \'.wikia.com\']);';
 		} else {
@@ -34,6 +29,11 @@ urchinTracker = function() {
 };
 </script>
 SCRIPT2;
+
+		// Load the OneDot javascript after GA
+		if (class_exists('Track')) {
+			$script .= Track::getViewJS();
+		}
 
 		return $script;
 	}
