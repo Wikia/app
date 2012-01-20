@@ -147,8 +147,12 @@ class WallHistoryController extends WallController {
 			if( !empty($name) ) {
 				$history[$key]['displayname'] = wfMsg( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url  ));
 			} else {
-				$name = wfMsg('oasis-anon-user');
-				$history[$key]['displayname'] = wfMsg( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url ));
+				if( $user->isAnon() ) {
+					$name = wfMsg('oasis-anon-user');
+					$history[$key]['displayname'] = wfMsg( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url ));
+				} else {
+					$history[$key]['displayname'] = wfMsg( 'wall-history-username-short', array('$1' => $username, '$2' => $url ));
+				}
 			}
 			
 			$history[$key]['username'] = $user->getName();
