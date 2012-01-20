@@ -105,8 +105,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 	
 	protected $deletedCount = 0;
 	protected $deletedLimit = 0;
-	protected $forced = false;
-	protected $mailing = false;
+	protected $readOnly = false;
+	protected $mailing = true;
 
 	public function __construct( $options ) {
 		// read command line arguments
@@ -128,12 +128,14 @@ class AutomatedDeadWikisDeletionMaintenance {
 			} else if ($k == 'debug') {
 				$this->verbose = true;
 				$this->debug = true;
-			} else if ($k == 'force') {
-				$this->forced = true;
+			} else if ($k == 'read-only' || $k == 'readonly') {
+				$this->readOnly = true;
 			} else if ($k == 'limit') {
 				$this->deletedLimit = intval($v);
-			} else if ($k == 'mail') {
-				$this->mailing = true;
+			} else if ($k == 'nomail') {
+				$this->mailing = false;
+			} else if ($v === true) {
+				die("Invalid argument: $k\n");
 			}
 		}
 	}
@@ -254,8 +256,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$oracle = $this->getOracle();
 		foreach ($wikis as $id => $wiki) {
 			$classification = $oracle->check($wiki);
-			if ($this->verbose) {
-				echo "$id "; var_dump($classification);
+			if ($classification) {
+				echo "Marking wiki \"{$wiki['dbname']}\" (#{$id}) as \"$classification\"\n";
 			}
 			if ($classification) {
 				$result[$classification][$id] = $wiki;
@@ -267,9 +269,13 @@ class AutomatedDeadWikisDeletionMaintenance {
 	
 	protected function getWikisList() {
 		global $wgExternalSharedDB;
+
+		echo "Searching for potentially dead wikis...\n";
+
 		$db = wfGetDB(DB_SLAVE,array(),$wgExternalSharedDB);
 		$where = array(
 			'city_public' => 1,
+			'city_flags & 512 = 0',
 			// it could be -55 days, but leaving the margin for TZs
 			"city_created < \"".wfTimestamp(TS_DB,strtotime('-340 days'))."\""
 		);
@@ -298,6 +304,8 @@ class AutomatedDeadWikisDeletionMaintenance {
 			);
 		}
 		$db->freeResult($res);
+
+		echo "Found ".count($wikis)." wikis for further analysis.\n";
 		
 		return $wikis;
 	}
@@ -319,14 +327,14 @@ class AutomatedDeadWikisDeletionMaintenance {
 			if ($this->debug) {
 				echo "$id STATUS " . intval(WikiFactory::isPublic($id)) . "\n";
 			}
-			echo "Closing wiki #$id ({$wiki['dbname']})... ";
+			echo "Closing wiki \"{$wiki['dbname']}\" (#{$id}) ... ";
 			if ($this->deletedLimit > 0 && $this->deletedCount >= $this->deletedLimit) {
 				echo "cancelled (limit exceeded)\n";
 				$notDeleted[$id] = $wiki;
 				continue;
 			}
-			if (!$this->forced) {
-				echo "cancelled (dry run mode active)\n";
+			if ($this->readOnly) {
+				echo "cancelled (read-only mode)\n";
 				$deleted[$id] = $wiki;
 				$this->deletedCount++;
 				continue;
@@ -368,12 +376,17 @@ class AutomatedDeadWikisDeletionMaintenance {
 				}				
 			}
 			
-			// save stats
-			foreach ($evaluated as $id => $wiki) {
-				$this->updateWikiStats($wiki);
-			}
 			// classify wikis
 			$classifications = $this->getOracleClassification($evaluated);
+			// save stats
+			foreach ($evaluated as $id => $wiki) {
+				$status = '';
+				if (isset($classifications[self::DELETE_NOW][$id])) $status = 'deleteNow';
+				if (isset($classifications[self::DELETE_SOON][$id])) $status = 'deleteSoon';
+				$this->updateWikiStats(array_merge($wiki,array(
+					'status' => $status,
+				)));
+			}
 			if (isset($classifications[self::DELETE_NOW])) {
 				$this->disableWikis($classifications[self::DELETE_NOW],$this->deleted,$this->toBeDeleted);
 			}
@@ -402,25 +415,27 @@ class AutomatedDeadWikisDeletionMaintenance {
 	
 	protected function sendEmails() {
 		$date = gmdate('Ymd');
-		$dateNice = gmdate('Y m d');
+		$dateNice = gmdate('Y-m-d');
 		
 		$count = count($this->deleted);
+		echo "Sending e-mail about $count deleted wikis...\n";
 		$this->sendEmail(
 			"wladek@wikia-inc.com",
 			"wikis-deleted-l@wikia-inc.com",
-			"wikis deleted {$dateNice}",
-			"Script deleted {$count} wiki(s) today, the list of closed wikis is provided below.",
-			"Script didn't find any wiki to delete today.",
+			"[dead wikis] {$dateNice} - $count wikis were deleted",
+			"{$count} wikis have been deleted today, full list of affected wikis is provided in the attachment.",
+			"No wiki has been found today.",
 			"wikis-deleted-{$date}",
 			$this->deleted);
 		
 		$count = count($this->toBeDeleted);
+		echo "Sending e-mail about $count wikis that may be deleted soon...\n";
 		$this->sendEmail(
 			"wladek@wikia-inc.com",
 			"wikis-to-be-deleted-l@wikia-inc.com",
-			"wikis to be deleted in 5 days {$dateNice}",
-			"Script found {$count} wiki(s) which will be deleted shortly, the list of wikis is provided below.",
-			"Script didn't find any wiki which will be deleted shortly today.",
+			"[dead wikis] {$dateNice} - $count wikis may be deleted soon",
+			"{$count} candidate wikis have been found that may be deleted soon, full list of affected wikis is provided in the attachment.",
+			"No candidate wiki has been found that may be deleted soon.",
 			"wikis-to-be-deleted-{$date}",
 			$this->toBeDeleted);
 	}
