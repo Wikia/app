@@ -1,3 +1,5 @@
+/*global WikiaTracker:true*/
+
 /**
  * @brief Internal Wikia tracking set up by Garth Webb
  *
@@ -13,7 +15,7 @@ jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
 	if (!event) {
 		return;
 	}
-	
+
 	// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
 	var params = {
 		'c': wgCityId,
@@ -21,10 +23,10 @@ jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
 		'a': wgArticleId,
 		'lc': wgContentLanguage,
 		'n': wgNamespaceNumber,
-		'u': trackID,
-		'beacon': (typeof beacon_id != 'undefined') ? beacon_id : ''
+		'u': window.trackID,
+		'beacon': window.beacon_id || ''
 	};
-	
+
 	// Add data object to params object
 	$.extend(params, data);
 
@@ -211,7 +213,7 @@ jQuery.tracker = function() {
 	if (wgIsArticle && wgArticleId > 0) {
 		// catch all clicks inside article content, but track clicks on links only
 		content.click(function(e) {
-			
+
 			var track = function(fakeUrl) {
 				var root = isOasis ? 'contentpage/contentlink/' : 'articleActions/contentLink/';
 				$.tracker.byStr(root + fakeUrl);
@@ -313,8 +315,8 @@ jQuery.tracker = function() {
 	}
 
 
-	if (typeof initTracker == 'function') {
-		initTracker();
+	if (typeof window.initTracker == 'function') {
+		window.initTracker();
 	}
 };
 
@@ -337,25 +339,25 @@ jQuery.tracker.trackStr = function(str, account) {
 };
 
 jQuery.tracker.track = function(fakeurl, unsampled) {
+	var fakeurlArray = fakeurl.split('/'),
+		username = wgUserName == null ? 'anon' : 'user',
+		skinname;
+
 	unsampled = unsampled || false;
-
-	fakeurlArray = fakeurl.split('/');
-
-	var username = wgUserName == null ? 'anon' : 'user';
 
 	switch(skin) {
 		case 'answers':
 		case 'SkinAnswers':
-			var skinname = 'ansmco';
+			skinname = 'ansmco';
 			break;
 
 		case 'oasis':
-			var skinname = 'wikia';
+			skinname = 'wikia';
 			break;
 
 		default:
-		case 'monaco':
-			var skinname = 'monaco';
+			skinname = 'monaco';
+			break;
 	}
 
 	// override bad skin recognition (RT#47483)

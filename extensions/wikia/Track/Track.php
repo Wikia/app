@@ -16,7 +16,7 @@ class Track {
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 		$url = Track::BASE_URL.
 			($type ? "/$type" : '').
-			($name ? "/$name" : '').	
+			($name ? "/$name" : '').
 			'?'.
 			'c='.$wgCityId.'&amp;'.
 			'lc='.$wgContLanguageCode.'&amp;'.
@@ -78,6 +78,7 @@ SCRIPT1;
 
 	public function addGlobalVars($vars) {
 		global $wgUser;
+		// TODO: conside using wg prefix for global JS variables
 		$vars['trackID'] = $wgUser->getId() ? $wgUser->getId() : 0;
 		return true;
 	}
