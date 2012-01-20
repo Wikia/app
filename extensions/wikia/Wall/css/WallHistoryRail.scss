@@ -40,10 +40,11 @@ $separators: mix($color-page-border, $color-page, 50%);
 				list-style-type: none;
 				padding: 0;
 				visibility:hidden;
+				font-size: 11px;
 				li {
 					display: inline;
 					margin: 0;
-					padding: 0 17px 0 0;
+					padding: 0 12px 0 0;
 					border: 0;
 				}
 			}
