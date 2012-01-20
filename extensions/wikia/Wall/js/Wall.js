@@ -156,7 +156,7 @@ var Wall = $.createClass(Object, {
 	onHashChange: function() {
 		if(window.location.hash) {
 			var number = parseInt(window.location.hash.substr(1));
-			$('li.message-' +  number ).removeClass('hide');
+			$('li.message-' +  number ).removeClass('hide').addClass('show');
 		}
 	},
 	

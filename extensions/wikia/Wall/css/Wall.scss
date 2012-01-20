@@ -216,6 +216,15 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			padding-bottom: 5px;
 			padding-top: 5px;
 		}
+		&.message-removed.show {
+			border: none;
+			&:first-child:before {
+				display: none;
+			}
+			&:first-child:after {
+				display: none;
+			}
+		}
 	}
 
 
@@ -663,40 +672,47 @@ $infobox-background: darken( $color-page, 3% );
 	}
 }
 
-.replies .deleteorremove-infobox {
-	position: static;
-	margin: -10px 0px 0px -20px;
-	border: none;
-	.message-restore {
-		margin-right: 0;
-	}
-	&:before {
-		position: absolute;
-		content: '';
-		background: darken( $color-page, 3% );
-		@if $is-dark-wiki {
-			background: lighten( $color-page, 3% );
+.replies .message-removed {
+	.deleteorremove-infobox {
+		position: static;
+		background: none;
+		margin: -10px 0px 0px -20px;
+		border: none;
+		table {
+			background-color: transparent;
 		}
-		height: 100%;
-		width: 100%;
-		padding-right: 30px;
-		padding-bottom: 5px;
-		border-top: 1px dashed $color-page-border;
-		border-left: 5px solid $color-buttons;
-	}
-	&:after {
-		position: absolute;
-		bottom: -1px;
-		left: -15px;
-		content: '';
-		background: darken( $color-page, 3% );
-		@if $is-dark-wiki {
-			background: lighten( $color-page, 3% );
+		.message-restore {
+			margin-right: 0;
 		}
-		height: 0;
-		width: 100%;
-		padding-right: 30px;
-		border-bottom: 1px dashed $color-page-border;
-		z-index: 2;
+		&:before {
+			position: absolute;
+			content: '';
+			background: darken( $color-page, 3% );
+			@if $is-dark-wiki {
+				background: lighten( $color-page, 3% );
+			}
+			height: 100%;
+			width: 100%;
+			padding-right: 30px;
+			padding-bottom: 5px;
+			border-top: 1px dashed $color-page-border;
+			border-left: 5px solid $color-buttons;
+			z-index: -1;
+		}
+		&:after {
+			position: absolute;
+			bottom: -1px;
+			left: -15px;
+			content: '';
+			background: darken( $color-page, 3% );
+			@if $is-dark-wiki {
+				background: lighten( $color-page, 3% );
+			}
+			height: 0;
+			width: 100%;
+			padding-right: 30px;
+			border-bottom: 1px dashed $color-page-border;
+			z-index: 2;
+		}
 	}
 }

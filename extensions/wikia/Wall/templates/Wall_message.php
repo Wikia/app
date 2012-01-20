@@ -1,4 +1,4 @@
-<li class="SpeechBubble message <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?'message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
+<li class="SpeechBubble message <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($hide):?> style="display:none" <? endif;?> >
 	<?php if(($showDeleteOrRemoveInfo) && (!empty($deleteOrRemoveInfo) )): ?>
 		<div class="deleteorremove-infobox" >
 			<table class="deleteorremove-container"><tr><td width="100%">
