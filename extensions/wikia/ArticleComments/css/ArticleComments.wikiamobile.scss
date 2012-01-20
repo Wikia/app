@@ -4,15 +4,15 @@
 @import "../../WikiaMobile/css/mixins/box-shadow.scss";
 
 //vars
-$comment-left-margin: $page-padding + 50px;
+$comment-left-margin: $page-padding + 60px;
 
-#WikiaArticleComments{
+#wkArtCom{
 
-	#commentsHeader{
+	.collSec{
 		@include section-title-related;
 	}
 
-	#commentsBody{
+	.comms{
 		display: none;
 
 		&.open{
@@ -24,14 +24,14 @@ $comment-left-margin: $page-padding + 50px;
 			padding: 0;
 			list-style: none;
 
-			&>.SpeechBubble:first-child{
+			&>.comment:first-child{
 				border: none;
 			}
 
 			.sub-comments{
 				list-style: none;
 
-				&>.SpeechBubble:first-child{
+				&>.comment:first-child{
 					position: relative;
 
 					&::before {
@@ -60,7 +60,7 @@ $comment-left-margin: $page-padding + 50px;
 				}
 			}
 
-			.SpeechBubble{
+			.comment{
 				border-top: 1px solid $border-color;
 				padding: $page-padding 0;
 
@@ -68,21 +68,21 @@ $comment-left-margin: $page-padding + 50px;
 					border-top: none;
 				}
 
-				.speech-bubble-message{
+				.msg{
 					margin: 0 0 0 $comment-left-margin;
 
-					.comment-by{
+					.by{
 						font-weight: bold;
 					}
 
-					.comment-text{
+					.txt{
 						p:first-child{
 							margin: 0;
 							padding: 0;
 						}
 					}
 
-					.comment-date{
+					.date{
 						color: $page-text-alternate-color;
 						font-size: small;
 
@@ -92,7 +92,7 @@ $comment-left-margin: $page-padding + 50px;
 					}
 				}
 
-				.speech-bubble-avatar{
+				.avatar{
 					float: left;
 					margin-right: $page-padding;
 				}
@@ -108,7 +108,7 @@ $comment-left-margin: $page-padding + 50px;
 			}
 		}
 
-		#commentsLoadMore, #commentsLoadPrev{
+		#commMore, #commPrev{
 			border-top: 1px solid $border-color;
 			color: $link-color;
 			font-size: medium;
@@ -126,19 +126,19 @@ $comment-left-margin: $page-padding + 50px;
 				color: inherit;
 				padding: $page-padding 0;
 
-				&>.label{
+				&>.lbl{
 					display:none;
 				}
 			}
 		}
 
-		#commentsLoadMore{
+		#commMore{
 			&.active{
 				margin-bottom: $page-padding;
 			}
 		}
 
-		#commentsLoadPrev{
+		#commPrev{
 			border-bottom: 1px solid $border-color;
 			display: none;
 		}

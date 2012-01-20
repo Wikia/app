@@ -17,7 +17,7 @@ var ArticleComments = ArticleComments || (function(){
 
 	function clickHandler(){
 		var elm = $(this),
-			forward = (elm.attr('id') == 'commentsLoadMore'),
+			forward = (elm.attr('id') == 'commMore'),
 			pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
 			condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
 
@@ -48,10 +48,10 @@ var ArticleComments = ArticleComments || (function(){
 
 	//init
 	$(function(){
-		wrapper = $('#WikiaArticleComments');
-		loadMore = $('#commentsLoadMore');
-		loadPrev = $('#commentsLoadPrev');
-		totalPages = parseInt($('#WikiaArticleComments').data('pages'));
+		wrapper = $('#wkArtCom');
+		loadMore = $('#commMore');
+		loadPrev = $('#commPrev');
+		totalPages = parseInt(wrapper.data('pages'));
 
 		if(totalPages > 1 && wgArticleId){
 			loadMore.bind(clickEvent, clickHandler);
