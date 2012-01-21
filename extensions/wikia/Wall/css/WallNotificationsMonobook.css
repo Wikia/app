@@ -178,10 +178,10 @@
 	background: none;
 }
 
-.SpeechBubble.message .timestamp{
-	float: left;
-}
-
 .SpeechBubble.message .buttons{
 	text-align: right;
+}
+
+.replies .message-removed .deleteorremove-infobox::before, .replies .message-removed .deleteorremove-infobox::after {
+	width: 99%;
 }
