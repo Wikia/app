@@ -5,12 +5,17 @@ $(document).ready(function() {
 var WallHistory = $.createClass(Wall, {
 	constructor: function() {
 		$('#WallHistory .message-restore, #WallThreadHistory .message-restore' ).click(this.proxy(this.confirmAction));
+		var timeout = null;
 		$('#WallHistory tr').hover(
 			function(){
-				$(this).find('.threadHistory').fadeIn("slow");
+				var self = this;
+				timeout = setTimeout(function() {
+					$(self).find('.threadHistory').css('visibility', 'visible');
+				}, 500);
 			},
 			function(){
-				$(this).find('.threadHistory').fadeOut("slow");
+				$('.threadHistory').css('visibility', 'hidden');
+				clearTimeout(timeout);
 			}
 		);
 	},
