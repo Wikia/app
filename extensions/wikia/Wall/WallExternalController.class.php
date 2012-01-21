@@ -122,8 +122,8 @@ class WallExternalController extends WikiaController {
 		
 		$reason = isset($formassoc['reason']) ? $formassoc['reason'] : '';
 		$notify = isset($formassoc['notify-admin']) ? true : false;
-		
-		if( empty($reason) ) {
+
+		if( empty($reason) && !$this->request->getVal('mode') == 'rev' ) {
 			$this->response->setVal('status', false);
 			return true;
 		}
