@@ -86,7 +86,7 @@ $messages['en'] = array(
 
 	'wall-action-admin-confirm' => 'Please tell us why you would like to delete this:',
 	'wall-action-admin-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history",
-	'wall-action-admin-reply-confirm-info' => "This reply and your summary will still appear in the wiki's history",
+	'wall-action-admin-reply-confirm-info' => "This thread and your summary will still appear in the wiki's history. Only admins will be able to view this thread.",
 
 	'wall-action-admin-confirm-ok' => 'Delete',
 
