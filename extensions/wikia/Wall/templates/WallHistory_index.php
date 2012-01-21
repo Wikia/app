@@ -45,7 +45,7 @@
 							<?php endif; ?>
 						</td>
 						<td>
-							<a href="<?php echo $entry['msguserurl'] ?>"><?= AvatarService::renderAvatar($entry['username'], 20); ?></a>
+							<a href="<?php echo $entry['authorurl'] ?>"><?= AvatarService::renderAvatar($entry['username'], 20); ?></a>
 						</td>
 						<td>
 							<?= wfMsg($wallHistoryMsg[$entry['prefix'].$entry['type']], array(

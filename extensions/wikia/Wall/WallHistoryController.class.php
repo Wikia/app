@@ -155,6 +155,7 @@ class WallHistoryController extends WallController {
 				}
 			}
 			
+			$history[$key]['authorurl'] = $url;
 			$history[$key]['username'] = $user->getName();
 			$history[$key]['userpage'] = $url;
 			$history[$key]['type'] = $type;
