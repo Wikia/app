@@ -320,7 +320,8 @@ class WallNotifications {
 		
 		foreach($watchers as $val){
 			$watcher = User::newFromId($val);
-			if( $watcher->getId() != 0 && ($watcher->getOption('enotifwallthread') )
+			
+			if( $watcher->getId() != 0 && ($watcher->getOption('enotifwallthread') && $notification->data->wall_userid != $watcher->getId())
 				|| ($watcher->getOption('enotifmywall') && $notification->data->wall_userid == $watcher->getId())
 			) {
 				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
