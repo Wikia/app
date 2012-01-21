@@ -155,10 +155,8 @@ $messages['en'] = array(
 	'wall-sorting-most-active' => 'Most active',
 	'wall-sorting-archived' => 'Archived',
 	
-	'tog-enotifwallthread' => 'Email me when someone replies on a Message Wall thread I\'m following.',
-	'tog-enotifmywall' => 'Email me when somebody writes a new message on my Message Wall.',
-	'tog-enotifwallthread-v2' => '...someone replies to a Message Wall thread I follow',
-	'tog-enotifmywall-v2' => '...someone posts a new message on my Wall',
+	'tog-enotifwallthread' => '...someone replies to a Message Wall thread I follow',
+	'tog-enotifmywall' => '...someone posts a new message on my Wall',
 	
 	'wall-deleted-msg-pagetitle' => 'Message deleted',
 	'wall-deleted-msg-text' => 'The message you are trying to reach has been deleted.',
