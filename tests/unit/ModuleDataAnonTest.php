@@ -55,12 +55,11 @@ class ModuleDataAnonTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($railList[1250][0], 'LatestActivity');
 		$this->assertEquals($railList[1300][0], 'LatestPhotos');
 
-		// Content page check
+		// Assert that content page has a Search Module
 		$wgTitle = Title::newFromText('Foo');
 		$moduleData = Module::get('Body')->getData();
 		$railList = $moduleData['railModuleList'];
 		$this->assertEquals($railList[1500][0], 'Search');
-		$this->assertEquals($railList[1150][0], 'Spotlights');
 	}
 
 }
