@@ -3,8 +3,7 @@
 
 /**
  * This file gets included if $wgSessionsInLibmemcached is set in the config.
- * It redirects session handling functions to store their data in redis
- * instead of the local filesystem.
+ * It redirects session handling functions to store their data using libmemcached
  *
  * @file
  * @ingroup Cache
@@ -69,7 +68,7 @@ class LibmemcachedSessionHandler {
 	}
 }
 
-if( $wgSessionsInLibmemcached ) {
+if( !empty($wgSessionsInLibmemcached) ) {
 	register_shutdown_function( 'session_write_close' );
 	session_set_save_handler(
 		array( "LibmemcachedSessionHandler", "open" ),
