@@ -83,7 +83,7 @@ class RedisSessionHandler {
 	}
 }
 
-if( $wgSessionsInRedis ) {
+if( !empty($wgSessionsInRedis) ) {
 	register_shutdown_function( 'session_write_close' );
 	session_set_save_handler(
 		array( "RedisSessionHandler", "open" ),
