@@ -14,7 +14,7 @@
 							</li>
 						<? endif; ?>
 						<li>
-							<a href="<?= $threadHistoryLink; ?>"><?= wfMsg('history_short'); ?></a> 
+							<a href="<?= $threadHistoryLink; ?>" class="thread-history"><?= wfMsg('history_short'); ?></a> 
 						</li>
 						<? if( $canAdminDelete ): ?>
 						<li>
