@@ -11,8 +11,8 @@ var WallUserTalkArchive = $.createClass(Object, {
 		$('.wikia-menu-button a[data-id="history"]').click(this.proxy(function(){
 			this.track('wall/archived_talk_page/history');
 		}));
-		$('.wikia-menu-button a[data-id="edit"]').click(this.proxy(function(){
-			var node = $(this);
+		$('.wikia-menu-button a[data-id="edit"]').click(this.proxy(function(e){
+			var node = $(e.target);
 			
 			if( node.attr('id') == 'talkArchiveEditButton' ) {
 				this.track('wall/archived_talk_page/edit');
