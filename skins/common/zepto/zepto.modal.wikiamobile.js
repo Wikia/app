@@ -109,8 +109,7 @@
 		}
 
 		if(caption) {
-			this._modalFooter.show();
-			this._modalFooter.html(caption);
+			this._modalFooter.show()[0].innerHTML = caption;
 			this._caption = true;
 		} else {
 			this._caption = false;

@@ -202,9 +202,10 @@ var WikiaMobile = WikiaMobile || (function() {
 				number += parseInt(l, 10);
 
 				for(var i = 0; i < l; i++) {
+					var cap = imgs.data('cap-' + i);
 					allImages.push([
 						imgs.data('img-' + i),
-						imgs.data('cap-' + i),
+						cap ? (( cap.indexOf('<script') >= 0) ? cap.replace(/<script[^>]*>(.*)<\/script>/gi, '') : cap ) : null,
 						//I need these number to show counter in a modal
 						i, l
 					]);
