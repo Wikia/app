@@ -273,11 +273,6 @@ class HAWelcomeJob extends Job {
 		} else {
 			$talkArticle->doEdit( $message, wfMsgForContent( "welcome-message-log" ), $flags );
 		}
-
-		if($to->getId() > 0) {
-			$to->setOption("HAWelcome", "1");
-			$to->saveSettings();	
-		}
 		
 		$wgMemc->set( $key, true );
 		return false;
@@ -292,14 +287,6 @@ class HAWelcomeJob extends Job {
 		$isPosted = $wgMemc->get( $key, false );
 		if($isPosted) {
 			return true;
-		}
-		
-		if(!empty($user) && $user->getId() > 0) {
-			$userOption = $user->getOption("HAWelcome" );
-			if($userOption == 1) {
-				$wgMemc->set( $key, true );
-				return true;
-			}	
 		}
 
 		if(!empty($wgEnableWallExt)) {
