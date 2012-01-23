@@ -10,16 +10,16 @@ var Wall = $.createClass(Object, {
 	constructor: function() {
 		this.settings = {};
 		this.hoverTimer = {};
-		this.deletedMessages = {},
+		this.deletedMessages = {};
 		this.settings.new_title = {min: 30, minFocus:30, minContent: 30, limit: 300, limitEmpty: 30, extraSpace: 15};
 		this.settings.new_body = {minFocus:100, minContent: 100, limit: 9999, limitEmpty: 70, extraSpace: 30};
 		this.settings.edit_title = {min: 30, minFocus:30, minContent: 30, limit: 300, limitEmpty: 30, extraSpace: 0};
 		this.settings.edit_body = this.settings.new_body;
 		this.settings.reply = {minFocus:100, minContent: 100, limit: 9999, limitEmpty: 30, extraSpace: 30};
 		
-		$("#WikiaArticle").bind('afterWatching', this.proxy(this.onWallWatch));
-		
-		$("#WikiaArticle").bind('afterUnwatching', this.proxy(this.onWallUnwatch) );
+		$("#WikiaArticle")
+			.bind('afterWatching', this.proxy(this.onWallWatch))
+			.bind('afterUnwatching', this.proxy(this.onWallUnwatch) );
 		
 		// Submit new wall post
 		$('.wall-require-login').live('click', this.proxy(this.onAfterAjaxLogin));
@@ -161,11 +161,11 @@ var Wall = $.createClass(Object, {
 	},
 	
 	onWallWatch: function(e) {
-		$('.SpeechBubble .follow.wikia-button').fadeOut();
+		$('.SpeechBubble .follow .wikia-button').fadeOut();
 	},
 	
 	onWallUnwatch: function(e) {
-		$('.SpeechBubble .follow.wikia-button').fadeIn();
+		$('.SpeechBubble .follow .wikia-button').fadeIn();
 	},
 	
 	//hack for safari tab index
