@@ -1,4 +1,4 @@
-WikiaNotificationsApp = {
+var WikiaNotificationsApp = {
 
 	purgeCurrentPage: function() {
 			$.post(wgScript, {action: 'purge', title: wgPageName});
