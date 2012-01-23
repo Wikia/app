@@ -1,6 +1,6 @@
-if(typeof blogInitialized == 'undefined') {
-	var blogInitialized = true;
-	
+if(!window.blogInitialized) {
+	window.blogInitialized = true;
+
 	var BlogPaginator = {
 		isFree: true,
 		init: function() {
@@ -37,10 +37,9 @@ if(typeof blogInitialized == 'undefined') {
 			);
 		}
 	};
-	
+
 	var blogPaginatorHandle = false;
-	
-	function initializeBlogPaginator() {
+	var initializeBlogPaginator = function() {
 		if(blogPaginatorHandle) {
 			clearInterval(blogPaginatorHandle);
 		}
@@ -56,6 +55,6 @@ if(typeof blogInitialized == 'undefined') {
 			}
 		}, 500);
 	}
-	
+
 	initializeBlogPaginator();
 }
