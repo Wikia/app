@@ -1,8 +1,4 @@
 (function(jwplayer){
-	$.getResources([ $.getSassCommonURL('/extensions/wikia/JWPlayer/plugins/css/infobox.scss') ], function() { 
-		jwplayer().registerPlugin('infobox', template);
-	});
-
 	var template = function(player, config, div) {
 		player.onReady( function setup(evt) {		
 			if (player.config.width >= 330) {
@@ -33,4 +29,8 @@
 		});
 		this.resize = function(width, height) {};
 	};		
+
+	$.getResources([ $.getSassCommonURL('/extensions/wikia/JWPlayer/plugins/css/infobox.scss') ], function() { 
+		jwplayer().registerPlugin('infobox', template);
+	});
 })(jwplayer);
