@@ -317,6 +317,9 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	/* Preferences */
 	'prefs-wall' => 'Wall',
 
+	'tog-enotifwallthread-v2' => '...someone replies to a Message Wall thread I follow',
+	'tog-enotifmywall-v2' => '...someone posts a new message on my Wall',
+  
 	'wallshowsource-toggle-v2' => 'Enable View source option on Message Wall posts',
 	'wallshowsource-toggle' => 'Enable View source on Message Wall posts',
 	'walldelete-toggle' => 'Enable Revision delete on Message Wall posts',

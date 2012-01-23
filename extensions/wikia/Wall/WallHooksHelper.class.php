@@ -194,6 +194,10 @@ class WallHooksHelper {
 						$wm = F::build('WallMessage', array($title));
 					}
 					
+					if(empty($wm)) {
+						return true;
+					}
+					
 					$wall = $wm->getWall(); 
 					$user = $wall->getUser();
 				} else {
