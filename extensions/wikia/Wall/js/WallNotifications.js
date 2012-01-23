@@ -4,7 +4,7 @@ $(function() {
 
 var WallNotifications = $.createClass(Object, {
 	constructor: function() {
-		this.wikisUrls = {},
+		this.wikisUrls = {};
 		this.updateInProgress = false; // we only want 1 update simultaneously 
 		this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
 		this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
