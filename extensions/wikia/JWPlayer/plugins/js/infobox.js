@@ -1,3 +1,5 @@
+/*global jwplayer:true */
+
 (function(jwplayer){
 	var template = function(player, config, div) {
 		player.onReady( function setup(evt) {		
