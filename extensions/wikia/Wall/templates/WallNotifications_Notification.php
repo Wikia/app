@@ -12,9 +12,11 @@
 			<?php endforeach; ?>
 		</div>
 		<div class="notification">
-			<div class="msg-title"><?= $title ?></div>
+			<div class="msg-title"><?= $title ?></div>			
 			<? if($unread): ?>
-				<?= $msg ?>
+				<div class="msg-body">
+					<?= $msg ?>
+				</div>
 			<? endif; ?>
 			<div class="timeago" title="<?= $iso_timestamp ?>"></div>
 		</div>
