@@ -161,11 +161,11 @@ var Wall = $.createClass(Object, {
 	},
 	
 	onWallWatch: function(e) {
-		$('.SpeechBubble .follow .wikia-button').fadeOut();
+		$('.SpeechBubble .follow.wikia-button').fadeOut();
 	},
 	
 	onWallUnwatch: function(e) {
-		$('.SpeechBubble .follow .wikia-button').fadeIn();
+		$('.SpeechBubble .follow.wikia-button').fadeIn();
 	},
 	
 	//hack for safari tab index
