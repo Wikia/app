@@ -6,7 +6,7 @@ function editPageJS() {
 	$action = $wgRequest->getVal('action', null);
 	
 	if ($action == 'edit') {
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/EditSave/js/EditSave.js?{$wgStyleVersion}\"></script>");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/hacks/EditSave/js/EditSave.js?{$wgStyleVersion}\"></script>");
 	}
 
 	return true;
