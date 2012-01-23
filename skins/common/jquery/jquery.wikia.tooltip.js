@@ -191,15 +191,14 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 			)
 		){
 			switch(options.position){
-				default:
+				case 'absolute':
+					position.top = options.top;
+					position.left = options.left;
+					break;
 				case 'auto':
 				case 'relative':
+				default:
 					switch(options.side){
-						default:
-						case 'top':
-							position.top = globalPosition.top - tooltip.outerHeight(options.includeMargin);
-							position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
-							break;
 						case 'bottom':
 							position.top = globalPosition.top + elm.outerHeight(options.includeMargin);
 							position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
@@ -212,12 +211,13 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 							position.left = globalPosition.left + elm.outerWidth(options.includeMargin);
 							position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
 							break;
+						default:
+						case 'top':
+							position.top = globalPosition.top - tooltip.outerHeight(options.includeMargin);
+							position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+							break;
 					}
 
-					break;
-				case 'absolute':
-					position.top = options.top;
-					position.left = options.left;
 					break;
 			}
 
