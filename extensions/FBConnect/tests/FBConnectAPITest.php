@@ -15,18 +15,18 @@ class FBConnectApiTest extends PHPUnit_Framework_TestCase {
 
 	public function testUser() {
 		$anything = rand();
-		$facebook = $this->getMock('Facebook', array('get_loggedin_user'), array(), '', false);
+		$facebook = $this->getMock('Facebook', array('getUser'), array(), '', false);
 		$facebook->expects($this->once())
-		         ->method('get_loggedin_user')
+		         ->method('getUser')
 		        ->will($this->returnValue($anything));
-/*
+
 		$fbApi = $this->getMock('FBConnectAPI', array('Facebook'));
 		$fbApi->expects($this->once())
 		      ->method('Facebook')
 		      ->will($this->returnValue($facebook));
 
 		$result = $fbApi->user();
-		$this->assertEquals($anything, $result); */
+		$this->assertEquals($anything, $result); 
 	}
 
 	/**
