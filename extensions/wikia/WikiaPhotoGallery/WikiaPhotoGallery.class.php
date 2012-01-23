@@ -1005,7 +1005,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			foreach($this->mImages as $key => $val) {
 				$img = wfFindFile( $val[0], false );
 				if( !empty( $img ) ) {
-					array_push($images, array($img->transform( array("width" => "320", "height" => "480") )->url, $val[1]));
+					array_push($images, array($img->transform( array("width" => "320", "height" => "480") )->url, str_replace( array( '"', "'" ), array( '&quot;', '&apos;' ),$val[1] ) ) );
 				}
 			}
 
