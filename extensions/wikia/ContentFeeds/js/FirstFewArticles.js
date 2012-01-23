@@ -2,7 +2,7 @@ var FirstFewArticles = {
 	ErrorMessages : {
 		EmptyTitle : 'emptyTitleErrorMsg',
 		EmptyBody: 'emptyBodyErrorMsg'
-	};
+	}
 };
 
 $('#firstFewArticlesTagNextBtn').bind( 'click', function(e) {
@@ -21,7 +21,7 @@ $('#firstFewArticlesTagNextBtn').bind( 'click', function(e) {
 
 	$('#firstFewArticlesTagErrorMsg').text( '' );
 
-	Mediawiki.editArticle( 
+	Mediawiki.editArticle(
 		{ title : title, text: body },
 		function() {
 			alert( 'ok!' );
@@ -29,7 +29,7 @@ $('#firstFewArticlesTagNextBtn').bind( 'click', function(e) {
 		function() {
 			alert( 'error!' );
 		}
-	
+
 	);
 });
 
