@@ -43,7 +43,7 @@ class WallRailModule extends Module {
 			
 			$usersInvolved[$key]['username'] = $username;
 			$usersInvolved[$key]['userpage'] = $userpage;
-			$usersInvolved[$key]['userwall'] = Title::newFromText($username, NS_USER_WALL);
+			$usersInvolved[$key]['userwall'] = Title::newFromText($username, NS_USER_WALL)->getFullUrl();
 			$usersInvolved[$key]['usercontribs'] = Skin::makeSpecialUrl('Contributions').'/'.$username;
 			$usersInvolved[$key]['userblock'] = Skin::makeSpecialUrl('Block').'/'.$username;
 			$key++;
