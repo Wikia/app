@@ -171,7 +171,8 @@ var WikiaMobile = WikiaMobile || (function() {
 
 	function processImages(){
 		var number = 0,
-		image;
+		image,
+		scriptRegex = new RegExp('<script[^>]*>.*</script>', 'gi');
 
 		$('.infobox .image').each(function(){
 			allImages.push([$(this).data('num', number++).attr('href')]);
@@ -205,7 +206,9 @@ var WikiaMobile = WikiaMobile || (function() {
 					var cap = imgs.data('cap-' + i);
 					allImages.push([
 						imgs.data('img-' + i),
-						cap ? (( cap.indexOf('<script') >= 0) ? cap.replace(/<script[^>]*>(.*)<\/script>/gi, '') : cap ) : null,
+						//data attributes decode html before returning a value,
+						//strp out script tags before someone gets hurted
+						cap ? cap.replace(scriptRegex, '') : null,
 						//I need these number to show counter in a modal
 						i, l
 					]);
