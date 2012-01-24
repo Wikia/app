@@ -590,20 +590,20 @@ class WikiaPhotoGallery extends ImageGallery {
 		$widths = array();
 
 		if( Wikia::isWikiaMobile() ) {
-			$images = array();
+			$pics = array();
 
 			foreach($this->mImages as $key => $val) {
 				$img = wfFindFile( $val[0], false );
 				if( !empty( $img ) ) {
-					array_push($images, array($img->transform( array("width" => "320", "height" => "480") )->url, $val[1]));
+					$pics[] = array($img->transform( array("width" => "320", "height" => "480") )->url, str_replace( array( '"', "'" ), array( '&quot;', '&apos;' ), $val[1] ) );
 				}
 			}
 
-			$count = count($images);
+			$count = count($pics);
 
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 			$template->set_vars(array(
-				'images' => $images,
+				'images' => $pics,
 				'count' => $count,
 				'footerText' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $count)
 			));
@@ -1000,20 +1000,20 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		//renderSlideshow for WikiaMobile
 		if( Wikia::isWikiaMobile() ) {
-			$images = array();
+			$pics = array();
 
 			foreach($this->mImages as $key => $val) {
 				$img = wfFindFile( $val[0], false );
 				if( !empty( $img ) ) {
-					array_push($images, array($img->transform( array("width" => "320", "height" => "480") )->url, str_replace( array( '"', "'" ), array( '&quot;', '&apos;' ),$val[1] ) ) );
+					$pics[] = array($img->transform( array("width" => "320", "height" => "480") )->url, str_replace( array( '"', "'" ), array( '&quot;', '&apos;' ), $val[1] ) );
 				}
 			}
 
-			$count = count($images);
+			$count = count( $pics );
 
 			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
 			$template->set_vars(array(
-				'images' => $images,
+				'images' => $pics,
 				'count' => $count,
 				'footerText' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $count)
 			));
