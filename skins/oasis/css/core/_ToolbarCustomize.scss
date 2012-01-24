@@ -18,8 +18,11 @@
 	.column {
 		position: relative;
 		float: left;
-                width: 332px;
+		width: 332px;
 		padding: 10px;
+		&:first-child {
+			padding-left: 0px;
+		}
 	}
 	
 	.options-list, .search-box {
