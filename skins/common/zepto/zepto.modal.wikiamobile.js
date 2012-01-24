@@ -1,27 +1,39 @@
 (function( $ ){
 
-	$._modalCreated = false;
-	$._position = 1;
-	$._timer =  null;
-	$._caption = false;
-	$._hideBarsAfter = 2500;
+	var modalCreated = false,
+	position = 1,
+	timer =  null,
+	caption = false,
+	hideBarsAfter = 2500,
+	images,
+	modal,
+	modalClose,
+	modalTopBar,
+	modalContent,
+	modalFooter,
+	allToHide,
+	thePage,
+	hide,
+	clickEvent,
+	current = 1,
 
-	$._createModal =  function() {
+	createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution(),
-		modal = '<div id=wkMdlWrp><div id=wkMdlTB><div id=wkMdlClo>&times;</div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div>\
-			</div><style>#wkMdlWrp{min-height:' + resolution[1] + 'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + resolution[0] + 'px;}}</style>',
-		that = this,
 		body = $(document.body);
 
-		body.append(modal);
+		body.append('<div id=wkMdlWrp><div id=wkMdlTB><div id=wkMdlClo>&times;</div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div>\
+			</div><style>#wkMdlWrp{min-height:' + resolution[1] + 'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + resolution[0] + 'px;}}</style>');
+		
+		images = WikiaMobile.getImages();
+		clickEvent = WikiaMobile.getClickEvent();
 
-		this._modal = $('#wkMdlWrp');
-		this._modalClose = $('#wkMdlClo');
-		this._modalTopBar = $('#wkMdlTB');
-		this._modalContent = $('#wkMdlCnt');
-		this._modalFooter = $('#wkMdlFtr');
-		this._allToHide = this._modalTopBar.add(this._modalFooter);
-		this._thePage = $('#wkAdPlc, #wkTopNav, #wkPage, #wkFtr');
+		modal = $('#wkMdlWrp');
+		modalClose = $('#wkMdlClo');
+		modalTopBar = $('#wkMdlTB');
+		modalContent = $('#wkMdlCnt');
+		modalFooter = $('#wkMdlFtr');
+		allToHide = modalTopBar.add(modalFooter);
+		thePage = $('#wkAdPlc, #wkTopNav, #wkPage, #wkFtr');
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
@@ -31,61 +43,61 @@
 		//close modal on back button
 		if ("onhashchange" in window) {
 			window.addEventListener("hashchange", function() {
-				if(window.location.hash == "" && that.isModalShown()) {
-					that.closeModal();
+				if(window.location.hash == "" && $.isModalShown()) {
+					$.closeModal();
 				}
 			}, false);
 		}
 
-		this._modalClose.bind(WikiaMobile.getClickEvent(), function(event) {
-			that.closeModal();
+		modalClose.bind(clickEvent, function(event) {
+			$.closeModal();
 			window.history.back();
 		});
 
-		this._modal.bind(WikiaMobile.getTouchEvent(), function() {
+		modal.bind(WikiaMobile.getTouchEvent(), function() {
 			if($(this).hasClass('imgMdl')) {
 				window.scrollTo( 0, 1 );
 			}
-			that._resetTimeout();
+			resetTimeout();
 		});
 
 		//handling next/previous image in lightbox
-		body.delegate('#nxtImg', 'swipeLeft ' + WikiaMobile.getClickEvent(), function() {
-			that._nextImage($(this).prev());
+		body.delegate('#nxtImg', 'swipeLeft ' + clickEvent, function() {
+			nextImage($(this).prev());
 		})
-		.delegate('#prvImg', 'swipeRight ' + WikiaMobile.getClickEvent(), function() {
-			that._previousImage($(this).next());
+		.delegate('#prvImg', 'swipeRight ' + clickEvent, function() {
+			previousImage($(this).next());
 		})
 		.delegate('.fllScrImg', 'swipeLeft', function() {
-			that._nextImage($(this));
+			nextImage($(this));
 		})
 		.delegate('.fllScrImg', 'swipeRight', function() {
-			that._previousImage($(this));
+			previousImage($(this));
 		});
 
-		this._modalCreated = true;
+		modalCreated = true;
 	};
 
-	$._nextImage = function(imagePlace) {
-		var nextImageNumber = parseInt(imagePlace.data('num'),10) + 1;
+	var nextImage = function(imagePlace) {
+		current += 1;
 
-		if(WikiaMobile.getImages().length <= nextImageNumber) {
-			nextImageNumber = 0;
+		if(images.length <= current) {
+			current = 0;
 		}
-		this._changeImage(nextImageNumber, imagePlace);
+		changeImage(imagePlace);
 	};
 
-	$._previousImage = function(imagePlace) {
-		var previousImageNamber = parseInt(imagePlace.data('num'),10) - 1;
+	var previousImage = function(imagePlace) {
+		current -= 1;
 
-		if(previousImageNamber < 0) {
-			previousImageNamber = WikiaMobile.getImages().length-1;
+		if(current < 0) {
+			current = images.length-1;
 		}
-		this._changeImage(previousImageNamber, imagePlace);
+		changeImage(imagePlace);
 	};
 
-	$._changeImage = function(imageNumber, fullScreen) {
-		var image = WikiaMobile.getImages()[imageNumber],
+	var changeImage = function(fullScreen) {
+		var image = images[current],
 		img = new Image();
 
 		$.showLoader(fullScreen,{center: true});
@@ -93,27 +105,27 @@
 		img.src = image[0];
 		fullScreen.css('background-image','url()');
 		img.onload =  function() {
-			fullScreen.css('background-image','url("' + img.src + '")').data('num', imageNumber);
+			fullScreen.css('background-image','url("' + img.src + '")').data('num', current);
 			$.hideLoader(fullScreen);
 			img.onload = img = null;
 		};
 
-		this._showCaption(image[1], image[2], image[3]);
+		showCaption(image[1], image[2], image[3]);
 	};
 
-	$._showCaption = function(caption, number, length) {
-		caption = caption || '';
+	var showCaption = function(cap, number, length) {
+		cap = cap || '';
 
 		if(number !== undefined) {
-			caption += '<div class=wkStkFtr> ' + (number+1) + ' / ' + length + ' </div>';
+			cap += '<div class=wkStkFtr> ' + (number+1) + ' / ' + length + ' </div>';
 		}
 
-		if(caption) {
-			this._modalFooter.show()[0].innerHTML = caption;
-			this._caption = true;
+		if(cap) {
+			modalFooter.show()[0].innerHTML = cap;
+			caption = true;
 		} else {
-			this._caption = false;
-			this._modalFooter.hide();
+			caption = false;
+			modalFooter.hide();
 		}
 	};
 
@@ -121,20 +133,19 @@
 		options = options || {};
 
 		var html = options.html,
-			imageNumber = options.imageNumber,
 			addClass = options.addClass,
 			toHide = options.toHide,
-			onOpen = options.onOpen,
-			modal;
-
+			onOpen = options.onOpen;
+			
+		current = parseInt(options.imageNumber, 10);
+		
 		//needed for closing modal on back button
 		window.location.hash = "modal";
 
-		if(!(html || imageNumber)) throw "No content provided for modal";
+		if(!(html || current)) throw "No content provided for modal";
 
-		if(!this._modalCreated) this._createModal();
+		if(!modalCreated) createModal();
 
-		modal = this._modal;
 		modal.css('top', '0');
 		if(addClass){
 			modal.addClass(addClass);
@@ -143,75 +154,70 @@
 		}
 
 		if(html){
-			this._modalContent.html(html);
-			this._showCaption(options.caption);
-		}else if(imageNumber){
-			this._modalContent.html('<div class=chnImgBtn id=prvImg><div class=chnImgChv></div></div><div class=fllScrImg></div><div class=chnImgBtn id=nxtImg><div class=chnImgChv></div></div>');
-			$._changeImage(imageNumber, $('.fllScrImg'));
+			modalContent.html(html);
+			showCaption(options.caption);
+		}else if(current){
+			modalContent.html('<div class=chnImgBtn id=prvImg><div class=chnImgChv></div></div><div class=fllScrImg></div><div class=chnImgBtn id=nxtImg><div class=chnImgChv></div></div>');
+			changeImage($('.fllScrImg'));
 		}
 
 		if(toHide){
 			if(typeof toHide == 'string'){
-				this._toHide = $(toHide);
+				hide = $(toHide);
 			}else if(toHide instanceof Array){
 				for(var i = 0, l = toHide.length; i < l; i++) {
-					this._toHide.add(toHide[i]);
+					hide.add(toHide[i]);
 				}
 			}else{
-				this._toHide = null;
+				hide = null;
 			}
 		}else{
-			this._toHide = null;
+			hide = null;
 		}
 
 		if(typeof onOpen == 'function'){
 			onOpen();
 		}
 
-		this._position = window.pageYOffset;
-		this._thePage.hide();
+		position = window.pageYOffset;
+		thePage.hide();
 		modal.addClass('mdlShw');
-		this._resetTimeout();
+		resetTimeout();
 	};
 
-	$._resetTimeout = function() {
-		var allToHide = this._allToHide,
-		toHide = this._toHide || false;
+	var resetTimeout = function() {
 
 		allToHide.removeClass('hdn');
-		if(toHide) toHide.removeClass('hdn');
+		if(hide) hide.removeClass('hdn');
 
-		clearTimeout(this._timer);
-		this._timer = setTimeout(function() {
+		clearTimeout(timer);
+		timer = setTimeout(function() {
 			allToHide.addClass('hdn');
-			if(toHide) toHide.addClass('hdn');
-		}, this._hideBarsAfter);
+			if(hide) hide.addClass('hdn');
+		}, hideBarsAfter);
 	};
 
-	$.closeModal =  function() {
-		if(this._modalCreated) {
+	$.closeModal = function() {
+		if(modalCreated) {
 			this.hideModal();
-			this._modalContent.html('');
-			this._modalFooter.html('');
-			this._modal.removeClass();
+			modalContent.html('');
+			modalFooter.html('');
+			modal.removeClass();
 		}
 	};
 
 	$.hideModal = function() {
-		if(this._modalCreated) {
-			var modal = this._modal,
-			position = this._position;
-
+		if(modalCreated) {
 			modal.removeClass('mdlShw').css('top', position);
-			this._allToHide.removeClass('hdn');
-			this._thePage.show();
-			clearTimeout(this._timer);
+			allToHide.removeClass('hdn');
+			thePage.show();
+			clearTimeout(timer);
 			window.scrollTo(0, position);
-			this._position = 1;
+			position = 1;
 		}
 	};
 
 	$.isModalShown = function(){
-		return this._modal.hasClass('mdlShw');
+		return modal.hasClass('mdlShw');
 	};
 })(Zepto);
