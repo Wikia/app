@@ -1,4 +1,4 @@
-Follow = {};
+var Follow = {};
 
 Follow.tracklick = function(e) {
     var index = 0;
@@ -66,7 +66,7 @@ Follow.showMore = function(e) {
                     }
 
                     $( "#" + head ).append(data);
-                    var lis = $( "#wikiafollowedpages-special-heading-article" ).find('li')
+                    var lis = $( "#wikiafollowedpages-special-heading-article" ).find('li');
                     lis.unbind().hover( Follow.hover,Follow.unhover );
                     lis.find('.title-link').unbind().click(Follow.tracklick);
                     lis.find('.ajax-unwatch').click(Follow.uwatch);
