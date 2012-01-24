@@ -397,7 +397,7 @@ class WikiaApp {
 			$params = array_merge( $params, $_POST, $_GET );
 		}
 		
-		$request = new WikiaRequest( $params );
+		$request = F::build('WikiaRequest', array($params) );
 
 		$request->setInternal( $internal );
 
