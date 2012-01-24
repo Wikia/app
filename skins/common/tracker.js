@@ -2,6 +2,8 @@
 Copyright (c) 2007, Wikia Inc.
 Author: Inez Korczynski (inez (at) wikia.com)
 Version: 1.1
+
+This file is used by Monobook only!
 */
 
 YAHOO.namespace('Wikia');
@@ -13,7 +15,7 @@ var Event = YAHOO.util.Event;
 
 YAHOO.Wikia.Tracker = {
 
-	initTracker: initTracker,
+	initTracker: window.initTracker,
 
 	init: function() {
 		this.initTracker();
