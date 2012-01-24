@@ -68,7 +68,7 @@
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	color: rgb(157,157,157);
+	color: white;
 	line-height: 20px;
 	z-index: $highest-z-index + 1005;
 	@include transition(bottom .5s ease-in);

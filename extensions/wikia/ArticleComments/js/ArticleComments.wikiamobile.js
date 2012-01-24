@@ -13,13 +13,18 @@ var ArticleComments = ArticleComments || (function(){
 		totalPages = 0,
 		currentPage = 1,
 		ajaxUrl = wgServer + "/index.php?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&useskin=" + skin + "&article=" + wgArticleId,
-		clickEvent = WikiaMobile.getClickEvent();
+		clickEvent = WikiaMobile.getClickEvent(),
+		firstPage,
+		commsUl;
 
 	function clickHandler(){
 		var elm = $(this),
 			forward = (elm.attr('id') == 'commMore'),
 			pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
 			condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
+
+		if(currentPage === 1 && !firstPage)
+				firstPage = commsUl.html();
 
 		if(condition){
 			elm.toggleClass('active');
@@ -31,7 +36,7 @@ var ArticleComments = ArticleComments || (function(){
 				currentPage = pageIndex;
 				finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
-				$('#article-comments-ul').html(result.text);
+				loadMore.before(result.text);
 
 				elm.toggleClass('active');
 				$.hideLoader(elm);
@@ -51,6 +56,7 @@ var ArticleComments = ArticleComments || (function(){
 		wrapper = $('#wkArtCom');
 		loadMore = $('#commMore');
 		loadPrev = $('#commPrev');
+		commsUl = $('#article-comments-ul');
 		totalPages = parseInt(wrapper.data('pages'));
 
 		if(totalPages > 1 && wgArticleId){
