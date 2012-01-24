@@ -91,7 +91,7 @@ class WikiStatsXLS {
 		$this->writeXLSLabel( 0, 3,  wfMsg('wikistats_edits').' > 5' );
 		$this->writeXLSLabel( 0, 4,  wfMsg('wikistats_edits').' > 100' );
 		$this->writeXLSLabel( 0, 5,  wfMsg('wikistats_article_total') );
-		$this->writeXLSLabel( 0, 6,  wfMsg('wikistats_article_daily') );
+		$this->writeXLSLabel( 0, 6,  wfMsg('wikistats_edits') );
 		$this->writeXLSLabel( 0, 7,  wfMsg('wikistats_image_uploads') );
 		$this->writeXLSLabel( 0, 8,  wfMsg('wikistats_video_uploads') );
 		$this->writeXLSLabel( 0, 9,  wfMsg('wikistats_article_created') );
