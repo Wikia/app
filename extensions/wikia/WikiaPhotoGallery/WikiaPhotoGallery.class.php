@@ -592,7 +592,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		if( Wikia::isWikiaMobile() ) {
 			$pics = array();
 
-			foreach($this->mImages as $key => $val) {
+			foreach($this->mImages as $val) {
 				$img = wfFindFile( $val[0], false );
 
 				if( !empty( $img ) ) {
@@ -609,7 +609,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'footerText' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $count)
 			));
 
-			$html =  $template->render('renderWikiaMobileSlideshow');
+			$html =  $template->render('renderWikiaMobileImageStack');
 
 		} else {
 
@@ -1019,7 +1019,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'count' => $count,
 				'footerText' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $count)
 			));
-			$slideshowHtml = $template->render('renderWikiaMobileSlideshow');
+			$slideshowHtml = $template->render('renderWikiaMobileImageStack');
 
 		} else {
 

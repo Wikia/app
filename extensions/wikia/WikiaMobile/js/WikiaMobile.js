@@ -171,8 +171,7 @@ var WikiaMobile = WikiaMobile || (function() {
 
 	function processImages(){
 		var number = 0,
-		image,
-		scriptRegex = new RegExp('<script[^>]*>.*</script>', 'gi');
+		image;
 
 		$('.infobox .image').each(function(){
 			allImages.push([$(this).data('num', number++).attr('href')]);
@@ -198,21 +197,19 @@ var WikiaMobile = WikiaMobile || (function() {
 					]);
 				});
 			} else {
-				l = imgs.data('num', number).data('img-count');
+				l = imgs.data('num', number).data('img-count'),
+				lis = imgs.find('li');
 
 				number += parseInt(l, 10);
 
-				for(var i = 0; i < l; i++) {
-					var cap = imgs.data('cap-' + i);
+				$.each(lis, function(i, li) {
 					allImages.push([
-						imgs.data('img-' + i),
-						//data attributes decode html before returning a value,
-						//strp out script tags before someone gets hurted
-						cap ? cap.replace(scriptRegex, '') : null,
+						li.attributes['data-img'].nodeValue,
+						li.innerHTML,
 						//I need these number to show counter in a modal
 						i, l
 					]);
-				}
+				});
 			}
 		});
 
