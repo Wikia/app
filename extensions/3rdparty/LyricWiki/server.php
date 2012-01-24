@@ -2297,6 +2297,14 @@ function lw_createPage($titleObj, $content, $summary="Page created using [[Lyric
 	wfProfileIn( __METHOD__ );
 	
 	$retVal = "";
+	
+	if($titleObj == null){
+		$retVal = "Title object was null in lw_createPage. This probably means that the string used to create it was invalid (which could be caused by bad unicode characters).";
+	} else if(is_string($titleObj)){
+		$retVal = "Passed a string into lw_createPage() for the pageTitle instead of passing a Title object. Tip: use Title::newFromDBkey() to convert strings into titles.";
+	} else if(!is_object($titleObj)){
+		$retVal = "Title object not an object. Please pass a title object into lw_createPage().";
+	}
 
 	// Create the Article object.
 	$article = new Article($titleObj);
