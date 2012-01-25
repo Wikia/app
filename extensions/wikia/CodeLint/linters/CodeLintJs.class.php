@@ -30,6 +30,7 @@ class CodeLintJs extends CodeLint {
 			'AjaxLogin',
 			'CKEDITOR',
 			'FB',
+			'Geo',
 			'GlobalNotification',
 			'GlobalTriggers',
 			'insertTags',
