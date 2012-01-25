@@ -538,6 +538,21 @@ class GlobalWatchlistBot {
 		return $sBody;
 	}
 
+	private function updateLog( $cnt ) {
+		global $wgStatsDB;
+		
+		$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
+
+		$dbw->insert( 
+			'`noreptemp`.`weekly_digest_log`', 
+			array(
+				'dt' => date('Ymd'),
+				'records' => $cnt 
+			),
+			__METHOD__
+		);	
+	}
+
 	/**
 	 * send digest
 	 */
@@ -575,6 +590,7 @@ class GlobalWatchlistBot {
 		}
 
 		$this->printDebug( "Sending digest emails ... Done! ($iEmailsSent total)" );
+		$this->updateLog( $iEmailsSent );
 	}
 
 	/**
