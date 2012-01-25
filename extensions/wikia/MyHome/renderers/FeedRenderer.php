@@ -288,7 +288,10 @@ class FeedRenderer {
 						'class' => 'real-name',
 					), $comment['real-name']);
 					$authorLine .= ' ';
-					$authorLine .= Xml::element('span', array(), $comment['author']);
+					$authorLine .= Xml::element('a', array(
+						'href' => $comment['user-profile-url'],
+						'class' => 'username',
+					), $comment['author']);
 				} else {
 					$authorLine .= Xml::element('a', array(
 						'href' => $comment['user-profile-url'],
