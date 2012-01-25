@@ -1,4 +1,4 @@
-<? if( $canEdit || $canRemove || $canDelete || $showViewSource ): ?>
+<? if( $canEdit || $canRemove || $canDelete || $showViewSource || ($isRemoved && !$isAnon) ): ?>
 		<div class="buttons">
 			<div data-delay='50' class="wikia-menu-button contribute secondary"> 
 				<?= wfMsg('wall-message-more');?>

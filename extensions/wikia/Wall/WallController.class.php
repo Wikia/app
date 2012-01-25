@@ -244,6 +244,8 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal( 'showViewSource', $this->wg->User->getOption('wallshowsource', false) );
 		$this->response->setVal( 'threadHistoryLink', $wallMessage->getMessagePageUrl(true).'?action=history' );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
+		$this->response->setVal( 'isRemoved', $wallMessage->isRemove() );
+		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
 	}
 	
 	public function message() {
