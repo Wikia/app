@@ -150,6 +150,7 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 table {font-family:Trebuchet MS,Arial,Helvetica,sans-serif;}
 .input_button {font-size: 9.5pt; font-family: Trebuchet MS,arial,sans-serif,helvetica;}
 fieldset {font-size: 9pt; font-family: Trebuchet MS,arial,sans-serif,helvetica;border-style:solid none none;border-width:1px 0 0;}
+fieldset.wikistats-info {padding: 0px 10px; width: 30%;}
 legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
 .ws-select-stats { text-align:right; margin:0px; font-size:8pt; }
 .ws-select-stats ul { padding:0px; line-height:1em; margin:0px; }
@@ -157,7 +158,7 @@ legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
 .ws-select-stats select { padding: 0px; font-size:8pt; }
 .ws-select-stats input { padding: 1px; font-size:8pt; }
 .ws-select-stats span { vertical-align: middle; padding: 9px 0 0; }
-#ws-upload {text-align:left;height:77px; margin:-15px 1px 0;}
+#ws-upload {text-align:left; float:right;}
 #ws-upload li {display: inline-block; padding: 0px;}
 .ws-info-url { font-size:7.5pt;  }
 .ws-info-url ul { line-height:9pt; margin:0px; }
