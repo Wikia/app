@@ -8,6 +8,7 @@
 //                  none of the rows in that file are redirects anymore.  Recently added sorting of
 //                  the files after creation (prevents the need for the bot code to sort on every
 //                  run which uses the files that this script creates).
+// Date: 20120124 - Decreased the nap-time (to let slaves catch up) to 10 seconds (was 20 previously).
 //
 // This script creates a dump file of all of the page titles, page_ids and redirects in the system.
 //
@@ -192,7 +193,7 @@ if($DO_REDIRECTS_FILE){
 			print "   Est. completion time:     ".date("Y-m-d H:i:s", time() + (60 * $estMinutesRemaining))."\n";
 		}
 		if($cnt % 10000 == 0){
-			$NAP_SECONDS = 20;
+			$NAP_SECONDS = 10;
 			print "TAKING A NAP FOR $NAP_SECONDS SECONDS TO LET THE SLAVE CATCH UP IN CASE IT IS BEHIND.\n";
 			sleep($NAP_SECONDS);
 			print "Awake again.  Continuing...\n";
