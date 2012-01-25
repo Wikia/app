@@ -81,14 +81,14 @@ if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($w
 	$wgHooks['userCan'][] = 'ArticleCommentInit::userCan';
 	// HAWelcome
 	$wgHooks['HAWelcomeGetPrefixText'][] = 'ArticleCommentInit::HAWelcomeGetPrefixText';
-	
+
 	// added by Moli
 	// special::movepage
 	$wgHooks['SpecialMovepageAfterMove'][] = 'ArticleComment::moveComments';
-	
-	
+
 	$wgHooks['ParserFirstCallInit'][] = 'ArticleComment::metadataParserInit';
 
+	$wgHooks['WikiaMobileAssetsPackages'][] = 'ArticleCommentInit::onWikiaMobileAssetsPackages';
 }
 
 // Ajax dispatcher

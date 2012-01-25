@@ -1,4 +1,6 @@
-@import "../../WikiaMobile/css/variables.scss";
+//extend the main WikiaMobile SASS package with comments styles
+@import "../../WikiaMobile/css/WikiaMobile.scss";
+
 //mixins
 @import "../../WikiaMobile/css/mixins/section-title.scss";
 @import "../../WikiaMobile/css/mixins/box-shadow.scss";

@@ -200,6 +200,15 @@ $config['wikiamobile_js_body'] = array(
 	)
 );
 
+//WikiaMobile JS, loaded at the bottom of the page in the body section for namespaces with comments
+$config['wikiamobile_js_body_comments_ns'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_wikiamobile_js_body',
+		'//extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js'
+	)
+);
+
 //WikiaApp JS and CSS
 $config['wikiaapp_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
