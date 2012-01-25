@@ -21,10 +21,10 @@ table.wallfeed {
 					font-weight: bold;
 					text-decoration: none;
 				}
-				span {
-					margin-left: 5px;
-					color: $color-alternate-text;
-				}
+			}
+			.username {
+				margin-left: 5px;
+				color: $color-alternate-text;
 			}
 		}
 		
