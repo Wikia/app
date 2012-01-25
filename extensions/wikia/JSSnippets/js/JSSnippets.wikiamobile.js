@@ -29,11 +29,10 @@ var JSSnippets = {
 
 	// resolve dependencies, load them and initialize stuff
 	init: function() {
-		var 	self = this,
-			dependencies = [],
+		var dependencies = [],
 			callbacks = {},
 			options = {};
-			
+
 		this.stack = window.JSSnippetsStack || [];
 
 		// stack is empty - leave now
@@ -60,8 +59,8 @@ var JSSnippets = {
 							dependency = dependency.
 								replace( /^\/extensions/, wgExtensionsPath ).
 								replace( /^\/skins/, stylepath );
-					};
-				};
+					}
+				}
 				dependencies.push(dependency);
 			});
 
@@ -102,5 +101,7 @@ var JSSnippets = {
 };
 
 $(function() {
-	if ( JSSnippetsStack.length ) JSSnippets.init();
+	if ( window.JSSnippetsStack.length ) {
+		JSSnippets.init();
+	}
 });
