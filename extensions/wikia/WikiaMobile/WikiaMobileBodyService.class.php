@@ -46,5 +46,14 @@ class WikiaMobileBodyService extends WikiaService {
 		);
 		$this->afterBodyContent = $afterBodyHtml;
 		$this->afterContentHookText = $afterContentHookText;
+		$this->response->setVal(
+			'comments',
+			( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) ?
+				$this->sendRequest(
+					'ArticleComments',
+					'index'
+				)->toString() :
+				''
+		);
 	}
 }

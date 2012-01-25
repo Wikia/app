@@ -122,28 +122,23 @@ class ArticleCommentInit {
 	static public function ArticleCommentEnable(&$data) {
 		global $wgTitle, $wgUser;
 
-		//use this hook only for skins other than Monaco
-		//update: it's actually only MonoBook since Oasis uses its own
-		//logic and mobile skins do not show comments-related stuff
-		if ( in_array( get_class( $wgUser->getSkin() ), array(
-			'SkinMonaco',
-			'SkinAnswers',
-			'SkinOasis',
-			'SkinWikiaphone',
-			'SkinWikiaApp'
-		) ) ) {
-			return true;
-		}
-		
-		wfProfileIn( __METHOD__ );
+		$skin = $wgUser->getSkin();
 
-		if (self::ArticleCommentCheck()) {
-			wfLoadExtensionMessages('ArticleComments');
-			$page = ArticleCommentList::newFromTitle($wgTitle);
-			$data = $page->render();
+		//use this hook only for skins other than Monaco
+		//update: it's actually only MonoBook since Oasis and WikiaMobile use their own
+		//logic and the other mobile skins do not show comments-related stuff
+		if ( $skin instanceof SkinMonoBook ) {
+			wfProfileIn( __METHOD__ );
+
+			if (self::ArticleCommentCheck()) {
+				wfLoadExtensionMessages('ArticleComments');
+				$page = ArticleCommentList::newFromTitle($wgTitle);
+				$data = $page->render();
+			}
+			
+			wfProfileOut( __METHOD__ );
 		}
-		
-		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -154,24 +149,7 @@ class ArticleCommentInit {
 		if (self::ArticleCommentCheck()) {
 			global $wgUser;
 			
-			if ( Wikia::isWikiaMobile() ) {
-				$out->addHTML( F::build( 'JSSnippets' )->addToStack(
-					array(
-						'/extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js',
-						'/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss'
-					),
-					array(),
-					null,
-					array(),
-					'wikiamobile'
-				) );
-			} elseif ( !in_array( get_class( $wgUser->getSkin() ), array(
-				'SkinMonaco',
-				'SkinAnswers',
-				'SkinOasis',
-				'SkinWikiaphone',
-				'SkinWikiaApp'
-			) ) ) {
+			if ( $sk instanceof SkinMonoBook ) {
 				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
 				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
 			}
@@ -336,6 +314,17 @@ class ArticleCommentInit {
 				$prefixedText = substr_replace( $aPrefix[0] ,"" ,-1 );
 			}
 		}
+		return true;
+	}
+
+	//when comments are enabled on the current namespace make the WikiaMobile skin enriched assets
+	//while keeping the response size (assets minification) and the number of external requests low (aggregation)
+	static public function onWikiaMobileAssetsPackages( &$jsHeadPackageName, &$jsBodyPackageName, &$scssPackageName ){
+		if ( self::ArticleCommentCheck() ) {
+			$jsBodyPackageName = 'wikiamobile_js_body_comments_ns';
+			$scssPackageName = 'extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss';
+		}
+
 		return true;
 	}
 }

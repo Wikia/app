@@ -7,6 +7,9 @@
  */
 class WikiaMobileService extends WikiaService {
 	const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCacheController&method=serveManifest&format=html';
+	const JS_PACKAGE_NAME_HEAD = 'wikiamobile_js_head';
+	const JS_PACKAGE_NAME_BODY = 'wikiamobile_js_body';
+	const SCSS_PACKAGE_NAME = 'extensions/wikia/WikiaMobile/css/WikiaMobile.scss';
 
 	static private $initialized = false;
 
@@ -30,6 +33,9 @@ class WikiaMobileService extends WikiaService {
 	}
 
 	public function index() {
+		$jsHeadPackageName = self::JS_PACKAGE_NAME_HEAD;
+		$jsBodyPackageName = self::JS_PACKAGE_NAME_BODY;
+		$scssPackageName = self::SCSS_PACKAGE_NAME;
 		$bottomscripts = '';
 		$jsBodyFiles = '';
 		$jsHeadFiles = '';
@@ -44,22 +50,35 @@ class WikiaMobileService extends WikiaService {
 			}
 		}
 
+		//let extensions change the asset packages (e.g. ArticleComments,
+		//this is done to cut down the number or requests
+		//until AssetsManager won't support arbitrary file group requests)
+		$this->app->runHook(
+			'WikiaMobileAssetsPackages',
+			array(
+				&$jsHeadPackageName,
+				&$jsBodyPackageName,
+				&$scssPackageName
+			)
+		);
+
 		//Bottom Scripts
 		$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
 
 		//force skin main CSS file to be the first so it will be always overridden by other files
-		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WikiaMobile/css/WikiaMobile.scss' ) . "\"/>";
+		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( $scssPackageName ) . "\"/>";
 		$cssFiles .= $tmpOut->buildCssLinks();
 
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js_head');
+		//core JS in the head section
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL( $jsHeadPackageName );
 
 		//TODO: add scripts from $wgOut as needed
 		foreach ( $srcs as $src ) {
 			$jsHeadFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
 		}
 
-		//Scripts are splitted in batches to not cross the 25Kb un-gizipped cap for caching on mobile browsers
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'wikiamobile_js_body' );
+		//additional JS at the bottom of the body section
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL( $jsBodyPackageName );
 
 		//TODO: add scripts from $wgOut as needed
 		foreach ( $srcs as $src ) {
