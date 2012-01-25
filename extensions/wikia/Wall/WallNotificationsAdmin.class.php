@@ -1,11 +1,12 @@
 <?php
 
 class WallNotificationsAdmin {
-	
+	var $cityId; 
 	public function __construct() {
 		$this->app = F::App();
+		$this->cityId = $this->app->wg->CityId;
 	}
-	
+
 	/*
 	 * Public Interface
 	 */
@@ -14,9 +15,14 @@ class WallNotificationsAdmin {
 	public function getAdminNotifications( $wikiId, $currentUserId = null ) {
 		// admin notifications are wiki specific, not user-specific
 		// as soon as one person reads them no other admin will see them
+	
+		if($this->cityId != $wikiId ) {
+			return array();
+		}
 		
 		$key = $this->getKey( $wikiId );
 		$val = $this->getCache()->get( $key );
+		
 		if(empty($val) ) {
 			$val = array();
 		}
