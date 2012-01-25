@@ -453,7 +453,7 @@ class PageHeaderModule extends Module {
 			$pipe = wfMsg('pipe-separator');
 			$this->pageSubtitle = implode(" {$pipe} ", $subtitle);
 		}
-
+		
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty($this->wgDisableAnonymousEditing) ? ' require-login' : '';
 
@@ -569,6 +569,10 @@ class PageHeaderModule extends Module {
 			// comments
 			$this->comments = $service->getCommentsCount();
 		}
+		
+		/** start of wikia changes @author nAndy */
+		wfRunHooks('PageHeaderEditPage', array(&$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory));
+		/** end of wikia changes */
 	}
 
 	/**

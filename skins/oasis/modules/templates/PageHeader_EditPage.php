@@ -11,6 +11,6 @@
 	}
 ?>
 	<p><?= $subtitle ?></p>
-
+	
 	<?= wfRenderModule('Search') ?>
 </div>

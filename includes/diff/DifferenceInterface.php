@@ -206,7 +206,7 @@ CONTROL;
 		} else {
 			$rollback = '';
 		}
-
+		
 		// Prepare a change patrol link, if applicable
 		if( $wgUseRCPatrol && $this->mTitle->userCan('patrol') ) {
 			// If we've been given an explicit change identifier, use it; saves time

@@ -1636,5 +1636,85 @@ class WallHooksHelper {
 		return true;
 	}
 	
+	/**
+	 * @desc Changes fields in a DifferenceEngine instance to display correct content in <title /> tag
+	 * 
+	 * @param DifferenceEngine $differenceEngine
+	 * @param Revivion $oldRev
+	 * @param Revivion $newRev
+	 * 
+	 * @return true
+	 */
+	public function onDiffViewHeader($differenceEngine, $oldRev, $newRev) {
+		$app = F::App();
+		$diff = $app->wg->request->getVal('diff', false);
+		$oldId = $app->wg->request->getVal('oldid', false);
+		
+		if( $app->wg->Title instanceof Title && $app->wg->Title->getNamespace() === NS_USER_WALL_MESSAGE ) {
+			$metaTitle = $this->getMetatitleFromTitleObject($app->wg->Title);
+			$differenceEngine->mOldPage->mPrefixedText = $metaTitle;
+			$differenceEngine->mNewPage->mPrefixedText = $metaTitle;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @desc Changes fields in a PageHeaderModule instance to display correct content in <h1 /> and <h2 /> tags
+	 * 
+	 * @param PageHeaderModule $pageHeaderModule
+	 * @param int $ns
+	 * @param Boolean $isPreview
+	 * @param Boolean $isShowChanges
+	 * @param Boolean $isDiff
+	 * @param Boolean $isEdit
+	 * @param Boolean $isHistory
+	 * 
+	 * @return true
+	 */
+	public function onPageHeaderEditPage($pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory) {
+		if( $ns === NS_USER_WALL_MESSAGE && $isDiff ) {
+			$app = F::App();
+			$wmRef = '';
+			$pageHeaderModule->title = $this->getMetatitleFromTitleObject($app->wg->Title, $wmRef);
+			$pageHeaderModule->subtitle = Xml::element('a', array('href' => $wmRef->getMessagePageUrl()), $app->wf->Msg('oasis-page-header-back-to-article'));
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * @desc Helper method which gets meta title from an WallMessage instance; used in WallHooksHelper::onDiffViewHeader() and WallHooksHelper::onPageHeaderEditPage()
+	 * @param Title $title
+	 * @param mixed $wmRef a variable which value will be created WallMessage instance
+	 * 
+	 * @return String
+	 */
+	private function getMetatitleFromTitleObject($title, &$wmRef = null) {
+		$wm = F::build('WallMessage', array($title));
+		$wm->load();
+		if( $wm instanceof WallMessage ) {
+			$metaTitle = $wm->getMetaTitle();
+			if( empty($metaTitle) ) {
+			//if wall message is a reply
+				$wmParent = $wm->getTopParentObj();
+				$wmParent->load();
+				if( $wmParent instanceof WallMessage ) {
+					if( !is_null($wmRef) ) {
+						$wmRef = $wmParent;
+					}
+					
+					return $wmParent->getMetaTitle();
+				}
+			}
+			
+			if( !is_null($wmRef) ) {
+				$wmRef = $wm;
+			}
+			
+			return $metaTitle;
+		}
+	}
+	
 }
 ?>
