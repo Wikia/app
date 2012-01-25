@@ -93,6 +93,10 @@ $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArt
 $app->registerHook('WatchArticle', 'WallHooksHelper', 'onWatchArticle');
 $app->registerHook('UnwatchArticle', 'WallHooksHelper', 'onUnwatchArticle');
 
+//diff page adjusting
+$app->registerHook('DiffViewHeader', 'WallHooksHelper', 'onDiffViewHeader');
+$app->registerHook('PageHeaderEditPage', 'WallHooksHelper', 'onPageHeaderEditPage');
+
 //right rail adjusting
 $app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList');
 

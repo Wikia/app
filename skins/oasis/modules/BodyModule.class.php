@@ -164,16 +164,18 @@ class BodyModule extends Module {
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3, $wgEnableWallExt;
-			
-		if ($this->wgSuppressRail) {
-			return array();
-		}
-
-		$railModuleList = array();
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
-
+		
+		$this->wgSuppressRail = ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE ) ? true : false;
+		
+		if ($this->wgSuppressRail) {
+			return array();
+		}
+		
+		$railModuleList = array();
+		
 		$latestPhotosKey = $wgUser->isAnon() ? 1300 : 1250;
 		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
