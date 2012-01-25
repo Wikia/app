@@ -11,7 +11,8 @@
 			<span class="title"><?php print htmlspecialchars($row['title']) ?></span>
 <?php } ?>
 			<cite><?php print FeedRenderer::getActionLabel($row); ?><?php print ActivityFeedRenderer::formatTimestamp($row['timestamp']); ?><?php print FeedRenderer::getDiffLink($row); ?></cite>
-			<table><?php print FeedRenderer::getDetails($row) ?></table><?php
+			<table><?php print FeedRenderer::getDetails($row) ?></table>
+			<?php
 				global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 				if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
 					if(isset($row['Badge'])){

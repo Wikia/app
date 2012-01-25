@@ -36,6 +36,9 @@ class ActivityFeedHelper {
 					case 'hidevideos':
 						if (!isset($val) || $val != 'false') $parameters['flags'][] = 'hidevideos';
 						break;
+					case 'hidedetails':
+						if (!isset($val) || $val != 'false') $parameters['flags'][] = 'hidedetails';
+						break;
 					case 'hidecategories':
 						if (!isset($val) || $val != 'false') $parameters['flags'][] = 'hidecategories';
 						break;
@@ -94,6 +97,7 @@ class ActivityFeedHelper {
 						if (!empty($val)) {
 							$flags = explode('|', $val);
 							if (in_array('hideimages', $flags)) $parameters['flags'][] = 'hideimages';
+							if (in_array('hidedetails', $flags)) $parameters['flags'][] = 'hidedetails';
 							if (in_array('hidevideos', $flags)) $parameters['flags'][] = 'hidevideos';
 							if (in_array('hidecategories', $flags)) $parameters['flags'][] = 'hidecategories';
 							if (in_array('shortlist', $flags)) $parameters['flags'][] = 'shortlist';

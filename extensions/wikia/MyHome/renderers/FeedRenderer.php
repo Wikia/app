@@ -52,6 +52,9 @@ class FeedRenderer {
 		if (isset($parameters['flags']) && in_array('shortlist', $parameters['flags'])) {
 			$template = 'feed.simple';
 		}
+		if (isset($parameters['flags']) && in_array('hidedetails', $parameters['flags'])) {
+                        $template = 'feed.nodtl';
+                }
 		if (isset($parameters['type']) && $parameters['type'] == 'widget') {
 			$template = 'feed.widget';
 		}
