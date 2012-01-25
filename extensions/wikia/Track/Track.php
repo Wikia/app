@@ -12,26 +12,29 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'Track::addGlobalVars';
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
 
-	private function getURL ($type=null, $name=null, $param=null) {
+	private function getURL ($type=null, $name=null, $param=null, $for_html=true) {
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
+		
+		$sep = $for_html ? '&amp;' : '&';
+		
 		$url = Track::BASE_URL.
 			($type ? "/$type" : '').
 			($name ? "/$name" : '').
 			'?'.
-			'c='.$wgCityId.'&amp;'.
-			'lc='.$wgContLanguageCode.'&amp;'.
-			'lid='.WikiFactory::LangCodeToId($wgContLanguageCode).'&amp;'.
-			'x='.$wgDBname.'&amp;'.
-			'y='.$wgDBcluster.'&amp;'.
-			'u='.$wgUser->getID().'&amp;'.
-			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).'&amp;'.
+			'c='.$wgCityId.$sep.
+			'lc='.$wgContLanguageCode.$sep.
+			'lid='.WikiFactory::LangCodeToId($wgContLanguageCode).$sep.
+			'x='.$wgDBname.$sep.
+			'y='.$wgDBcluster.$sep.
+			'u='.$wgUser->getID().$sep.
+			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
 			($wgTitle ? 'n='.$wgTitle->getNamespace() : '').
 			(!empty($wgAdServerTest) ? '&amp;db_test=1' : '');
 
 		// Handle any parameters passed to us
 		if ($param) {
 			foreach ($param as $key => $val) {
-				$url .= '&amp;'.urlencode($key).'='.urlencode($val);
+				$url .= $sep.urlencode($key).'='.urlencode($val);
 			}
 		}
 
@@ -70,7 +73,7 @@ SCRIPT1;
 		$line  = !empty($backtrace[1]['line']) ? $backtrace[1]['line'] : '?';
 		$param['caller'] = "$class::$func:$line";
 
-		$url = Track::getURL('special', urlencode($event_type), $param);
+		$url = Track::getURL('special', urlencode($event_type), $param, false);
 		if (Http::get($url) !== false) {
 			return true;
 		} else {
