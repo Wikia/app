@@ -10,30 +10,33 @@ class FollowedPagesModule extends Module {
 
 	public function executeIndex($params) {
 		global $wgUser, $wgTitle, $wgOut, $wgStylePath;
+	
+		$page_owner = User::newFromName($wgTitle->getText());
+
+		if ( !is_object( $page_owner ) || $page_owner->getId() == 0 ) {
+			// do not show module if page owner does not exist or is an anonymous user
+			return false;
+		}
 
 		// add CSS for this module
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/FollowedPages.scss"));
-		
-		// probably need some logic to only display on user pages
-		$page_owner = User::newFromName($wgTitle->getText());
-		
-		if ($page_owner) {
-			$showDeletedPages = isset($params['showDeletedPages']) ? (bool) $params['showDeletedPages'] : true;
-			// get 6 followed pages
-			$watchlist = FollowModel::getWatchList( $page_owner->getId(), 0, 6, null, $showDeletedPages );
-			// weird.  why is this an array of one element?
-			foreach ($watchlist as $unused_id => $item) {
-				$pagelist = $item['data'];
-				foreach ($pagelist as $page) {
-					$this->data[] = $page;
-				}
 
+		$showDeletedPages = isset($params['showDeletedPages']) ? (bool) $params['showDeletedPages'] : true;
+		// get 6 followed pages
+		$watchlist = FollowModel::getWatchList( $page_owner->getId(), 0, 6, null, $showDeletedPages );
+		// weird.  why is this an array of one element?
+		foreach ($watchlist as $unused_id => $item) {
+			$pagelist = $item['data'];
+			foreach ($pagelist as $page) {
+				$this->data[] = $page;
 			}
-			// only display  your own page
-			if ($page_owner->getId() == $wgUser->getId()) {
-				$this->follow_all_link = Wikia::specialPageLink('Following', 'oasis-wikiafollowedpages-special-seeall', 'more');
-			}
+
 		}
+		// only display  your own page
+		if ($page_owner->getId() == $wgUser->getId()) {
+			$this->follow_all_link = Wikia::specialPageLink('Following', 'oasis-wikiafollowedpages-special-seeall', 'more');
+		}
+		
 		$this->max_followed_pages = min($this->max_followed_pages, count($this->data));
 		$this->user_id = $wgUser->getId();
 		$this->wgStylePath = $wgStylePath;
