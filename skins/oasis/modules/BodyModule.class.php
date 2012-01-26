@@ -163,12 +163,13 @@ class BodyModule extends Module {
 			$wgEnableCorporatePageExt,
 			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
-			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3, $wgEnableWallExt;
-
+			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3, $wgEnableWallExt, $wgRequest;
+		
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
+		$isDiff = ($wgRequest->getVal('diff', false) && $wgRequest->getVal('oldid', false));
 		
-		$this->wgSuppressRail = ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE ) ? true : false;
+		$this->wgSuppressRail = ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) ? true : false;
 		
 		if ($this->wgSuppressRail) {
 			return array();
