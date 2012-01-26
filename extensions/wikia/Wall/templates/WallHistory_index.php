@@ -1,4 +1,5 @@
 <div class="WallHistory">
+<?php if( empty($wallmessageNotFound) ): ?>
 	<?php if( $isThreadLevelHistory ): ?>
 		<nav>
 			<a href="<?= $wallUrl; ?>"><?= wfMsg('wall-message-elseswall', array($wallOwnerName)); ?></a>
@@ -143,4 +144,24 @@
 			<?= $app->renderView('PaginationController', 'index', array('totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage, 'url' => $wallHistoryUrl)); ?>
 		<?php endif;?>
 	<?php endif; ?>
+<?php else: ?>
+	<div>
+		<p><?= wfMsg('wall-message-not-found-in-db'); ?></p>
+	</div>
+	<div class="SortingBar">
+		<div id="pageTitle"><?php if( $isThreadLevelHistory ): ?> <?php echo wfMsg('wall-thread-history-title'); ?> <?php else: ?> <?php echo wfMsg('wall-history-title'); ?> <?php endif; ?> </div>
+		<div class="SortingMenu">
+			<span class="SortingSelected"><?= $sortingSelected; ?></span>
+			<ul class="SortingList">
+				<? foreach($sortingOptions as $option): ?>
+					<li class="<? if (!empty($option['selected'])): ?>current<? endif ?> <?= $option['id']; ?>">
+						<a href="<?= $option['href'] ?>" class="sortingOption">
+							<?= $option['text'] ?>
+						</a>
+					</li>
+				<? endforeach; ?>
+			</ul>
+		</div>
+	</div>
+<?php endif; ?>
 </div>

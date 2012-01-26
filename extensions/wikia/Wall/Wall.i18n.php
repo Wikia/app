@@ -247,6 +247,8 @@ $messages['en'] = array(
 
 	'wall-history-action-restore-reply' => 'restore reply',
 	'wall-history-action-restore-thread' => 'restore thread',
+
+	'wall-message-not-found-in-db' => 'We could not find this wall message in our database, sorry.',
 	
 	/* Mail message */
 

@@ -16,14 +16,21 @@ class WallHistoryController extends WallController {
 			$title = F::build('Title', array($threadId), 'newFromId');
 		}
 		
-		if( !($title instanceof Title) ) {
-		//paranoia
-			return;
-		}
-		
 		$this->historyPreExecute();
 		$page = $this->request->getVal('page', 1);
 		$page = ( ($page = intval($page)) === 0) ? 1 : $page;
+		
+		$this->response->setVal('sortingOptions', $this->getSortingOptions());
+		$this->response->setVal('sortingSelected', $this->getSortingSelectedText());
+		$this->response->setVal('wallHistoryMsg', $this->getHistoryMessagesArray());
+		$this->response->setVal('currentPage', $page);
+		$this->response->setVal('isThreadLevelHistory', $this->isThreadLevel);
+		
+		if( !($title instanceof Title) || $title->getNamespace() !== NS_USER_WALL_MESSAGE ) {
+		//paranoia -- where the message is not in DB
+			$this->response->setVal('wallmessageNotFound', true);
+			return;
+		}
 		
 		if( $this->isThreadLevel ) {
 			$wallMessage = F::build('WallMessage', array($title));
@@ -63,14 +70,9 @@ class WallHistoryController extends WallController {
 		$wallOwnerName = ( empty($wallOwnerName) ) ? $wallOwnerUsername : $wallOwnerName;
 		$this->response->setVal('wallOwnerName', $wallOwnerName);
 		
-		$this->response->setVal('sortingOptions', $this->getSortingOptions());
-		$this->response->setVal('sortingSelected', $this->getSortingSelectedText());
-		$this->response->setVal('wallHistoryMsg', $this->getHistoryMessagesArray());
 		$this->response->setVal('totalItems', $count);
 		$this->response->setVal('itemsPerPage', $perPage);
 		$this->response->setVal('showPager', ($count > $perPage));
-		$this->response->setVal('currentPage', $page);
-		$this->response->setVal('isThreadLevelHistory', $this->isThreadLevel);
 	}
 	
 	public function threadHistory() {
