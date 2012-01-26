@@ -194,7 +194,8 @@ class WallHooksHelper {
 						$wm = F::build('WallMessage', array($title));
 					}
 					
-					if(empty($wm)) {
+					if( empty($wm) ) {
+					//FB#19394
 						return true;
 					}
 					
