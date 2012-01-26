@@ -32,8 +32,17 @@ class ArticleCommentsModule extends WikiaService {
 	
 	public function executeWikiaMobileIndex(){
 		/** render WikiaMobile template**/
-		$this->response->setVal( 'showMore', $this->countComments > $this->commentsPerPage );
-		$this->response->setVal( 'pagesCount', ceil( $this->countComments / $this->commentsPerPage ) );
+		$pagesCount = ceil( $this->countComments / $this->commentsPerPage );
+
+		if ( $this->page > 1 ) {
+			$this->response->setVal( 'prevPage', $this->page - 1 );
+		}
+
+		if ( $this->page <  $pagesCount ) {
+			$this->response->setVal( 'nextPage', $this->page + 1 );
+		}
+
+		$this->response->setVal( 'pagesCount', $pagesCount );
 	}
 
 	public function executeWikiaMobileComment(){/** render WikiaMobile template**/}
