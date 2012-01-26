@@ -28,7 +28,11 @@ $modal-border-opacity: 80;
 	.modalToolbar {
 		text-align: right;
 		background: transparent;
-		margin-top: 1em;
+		margin-top: 20px;
+
+		a {
+			margin-left: 10px;
+		}
 	}
 	
 	#WikiaConfirmOk {
