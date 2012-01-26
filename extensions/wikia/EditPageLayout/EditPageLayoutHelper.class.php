@@ -320,6 +320,7 @@ class EditPageLayoutHelper {
 		return array(
 			// >> mediawiki editor core file
 			'skins/common/edit.js',
+			'skins/common/jquery/jquery.md5.js',
 			// >> editor stack loaders and configurers
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 			// >> editor core
