@@ -26,7 +26,10 @@ class WallHistoryController extends WallController {
 		$this->response->setVal('currentPage', $page);
 		$this->response->setVal('isThreadLevelHistory', $this->isThreadLevel);
 		
-		if( !($title instanceof Title) || $title->getNamespace() !== NS_USER_WALL_MESSAGE ) {
+		if( !($title instanceof Title) || 
+			($this->isThreadLevel && 
+			$title->getNamespace() !== NS_USER_WALL_MESSAGE) 
+		) {
 		//paranoia -- where the message is not in DB
 			$this->response->setVal('wallmessageNotFound', true);
 			return;
