@@ -17,7 +17,9 @@ var ArticleComments = ArticleComments || (function(){
 		firstPage,
 		commsUl;
 
-	function clickHandler(){
+	function clickHandler(event){
+		event.preventDefault();
+
 		var elm = $(this),
 			forward = (elm.attr('id') == 'commMore'),
 			pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
@@ -36,15 +38,18 @@ var ArticleComments = ArticleComments || (function(){
 				currentPage = pageIndex;
 				finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
+				commsUl.remove();
 				loadMore.before(result.text);
+				commsUl = $('#article-comments-ul');
 
 				elm.toggleClass('active');
 				$.hideLoader(elm);
 
+				//there's a good reason to use display instead of show/hide in the following lines
 				if(finished)
-					elm.hide();
+					elm.css('display', 'none');
 
-				((forward) ? loadPrev : loadMore).show();
+				((forward) ? loadPrev : loadMore).css('display', 'block');
 
 				window.scrollTo(0, wrapper.offset().top);
 			});
