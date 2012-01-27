@@ -219,7 +219,7 @@ class SolrSearchSet extends SearchResultSet {
 				'spellcheck' => 'true',
 				'spellcheck.collate' => 'true',
 				*/
-				'timeAllowed' => 2500
+				'timeAllowed' => 5000
 			);
 		}
 		else {
@@ -239,7 +239,7 @@ class SolrSearchSet extends SearchResultSet {
 						'f.html.hl.alternateField' => 'html',
 						'f.html.hl.maxAlternateFieldLength' => 300,
 						'indent' => 1,
-						'timeAllowed' => 2500
+						'timeAllowed' => 5000
 					);
 					break;
 				default:
