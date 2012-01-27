@@ -11,8 +11,8 @@
 			<?php if( !empty($row['wall-url']) ): ?>
 				<span class="wall-owner">
 					<?= wfMsg(
-						'wiki-activity-wall-on',
-						'<a href="'.$row['wall-url'].'">'.wfMsg('wiki-activity-wall-owner', $row['wall-owner']).'</a>') ?>
+						'wall-wiki-activity-on',
+						'<a href="'.$row['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $row['wall-owner']).'</a>') ?>
 				</span>
 			<?php endif;?>
 			<br />
