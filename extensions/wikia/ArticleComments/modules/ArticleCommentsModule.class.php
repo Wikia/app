@@ -5,24 +5,31 @@ class ArticleCommentsModule extends WikiaService {
 		wfProfileIn(__METHOD__);
 
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
-			
+			$isMobile = Wikia::isWikiaMobile();
+
 			if ($this->wg->Request->wasPosted()) {
-				// for non-JS version !!!
+				// for non-JS version !!! (used also for Monobook and WikiaMobile)
 				$sComment = $this->wg->Request->getVal( 'wpArticleComment', false );
 				$iArticleId = $this->wg->Request->getVal( 'wpArticleId', false );
 				$sSubmit = $this->wg->Request->getVal( 'wpArticleSubmit', false );
+
 				if ( $sSubmit && $sComment && $iArticleId ) {
 					$oTitle = Title::newFromID( $iArticleId );
 					if ( $oTitle instanceof Title ) {
 						$response = ArticleComment::doPost( $this->wg->Request->getVal('wpArticleComment') , $this->wg->User, $oTitle );
-						$this->wg->Out->redirect( $oTitle->getLocalURL() );
+						if ( !$isMobile ) {
+							$this->wg->Out->redirect( $oTitle->getLocalURL() );
+						} else {
+							//the above doesn't work when running fully under the Nirvana stack
+							$this->response->redirect( $oTitle->getLocalURL() . '#article-comments' );
+						}
 					}
 				}
 			}
 		
 			$this->getCommentsData($this->wg->Title, (int)$this->wg->request->getVal( 'page', 1 ));
 			
-			if ( Wikia::isWikiaMobile() ) {
+			if ( $isMobile ) {
 				$this->forward( __CLASS__, 'WikiaMobileIndex', false );
 			}
 		}
@@ -52,13 +59,13 @@ class ArticleCommentsModule extends WikiaService {
 
 		$commentList = F::build('ArticleCommentList', array(($title)), 'newFromTitle');
 		if(!empty($perPage)) {
-			$commentList->setMaxPerPage($perPage);			
+			$commentList->setMaxPerPage($perPage);
 		}
 		
 		if(!empty($filterid)) {
-			$commentList->setId($filterid);			
+			$commentList->setId($filterid);
 		}
-		
+
 		$data = $commentList->getData($page);
 
 		if (empty($data)) {
