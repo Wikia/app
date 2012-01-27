@@ -15,6 +15,7 @@ class ArticleCommentsModule extends WikiaService {
 
 				if ( $sSubmit && $sComment && $iArticleId ) {
 					$oTitle = Title::newFromID( $iArticleId );
+
 					if ( $oTitle instanceof Title ) {
 						$response = ArticleComment::doPost( $this->wg->Request->getVal('wpArticleComment') , $this->wg->User, $oTitle );
 						if ( !$isMobile ) {
