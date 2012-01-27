@@ -171,16 +171,20 @@ class UserIdentityBox {
 					$data[$key] = $this->user->getOption(self::USER_PROPERTIES_PREFIX.$key);
 				}
 			}
-			$disabled = $this->user->getOption('disabled');
-			if(empty($disabled)) {
-				$data['realName'] = $this->user->getRealName();
-			} else {
-				$data['realName'] = '';
-			}
 		} else {
 			$data = array_merge_recursive($data, $memcData);
 		}
+		
 		$data['topWikis'] = $this->getTopWikis();
+		
+		//informations which aren't cached in UPPv3 (i.e. real name)
+		//fb#19398 
+		$disabled = $this->user->getOption('disabled');
+		if( empty($disabled) ) {
+			$data['realName'] = $this->user->getRealName();
+		} else {
+			$data['realName'] = '';
+		}
 	}
 	
 	/**
