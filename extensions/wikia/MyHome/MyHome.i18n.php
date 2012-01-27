@@ -99,9 +99,6 @@ For example, you could:
 	'activityfeed' => 'Activity feed',
 
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|one message|$1 messages}}',
-	'wiki-activity-wall-on' => 'on $1',
-	'wiki-activity-wall-owner' => '$1\'s Wall'
-	
 );
 
 /** Message documentation (Message documentation)
