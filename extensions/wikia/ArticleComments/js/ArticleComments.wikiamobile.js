@@ -123,6 +123,7 @@ var ArticleComments = ArticleComments || (function(){
 			self.removeClass().html('').append(rplComm).find('#article-comm').focus();
 		})
 		.on('submit', '.article-comm-form', post);
+	});
 
 	/** @public **/
 
