@@ -87,6 +87,7 @@ $app->registerHook('ContributionsLineEnding', 'WallHooksHelper', 'onContribution
 
 //Special:Whatlinkshere adjustinb
 $app->registerHook('SpecialWhatlinkshere::renderWhatLinksHereRow', 'WallHooksHelper', 'onRenderWhatLinksHereRow');
+$app->registerHook('ContributionsToolLinks', 'WallHooksHelper', 'onContributionsToolLinks');
 
 //watchlist
 $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArticleCommentBeforeWatchlistAdd');

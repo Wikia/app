@@ -1717,5 +1717,32 @@ class WallHooksHelper {
 		}
 	}
 	
+	/**
+	 * @desc Changes link from User_talk: page to Message_wall: page of the user
+	 * 
+	 * @param int $id id of user who's contributions page is displayed
+	 * @param Title $nt instance of Title object of the page
+	 * @param Array $tools a reference to an array with links in the header of Special:Contributions page
+	 * 
+	 * @return true
+	 */
+	public function onContributionsToolLinks($id, $nt, &$tools) {
+		$app = F::app();
+		
+		if( !empty($app->wg->EnableWallExt) && !empty($tools[0]) && $nt instanceof Title ) {
+		//tools[0] is the first link in subheading of Special:Contributions which is "User talk" page
+			$wallTitle = F::build('Title', array($nt->getText(), NS_USER_WALL), 'newFromText');
+			
+			if( $wallTitle instanceof Title ) {
+				$tools[0] = Xml::element('a', array(
+					'href' => $wallTitle->getFullUrl(),
+					'title' => $wallTitle->getPrefixedText(),
+				), $app->wf->Msg('wall-message-wall-shorten'));
+			}
+		}
+		
+		return true;
+	}
+	
 }
 ?>
