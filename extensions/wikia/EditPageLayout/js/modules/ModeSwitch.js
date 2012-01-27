@@ -19,11 +19,10 @@
 			editor.on('editboxReady', function() {
 				editor.getSpace('tabs').hide();
 			});
-			// Editor is loaded - show tabs. 
-			editor.on('editorReady', function() {
-				editor.getSpace('tabs').show();				
-			})
-
+			// Page is fully loaded - show tabs. 
+			$(window).bind('load', function() {
+				editor.getSpace('tabs').show();			
+			});
 		}
 
 	});
