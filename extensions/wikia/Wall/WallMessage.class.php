@@ -50,6 +50,10 @@ class WallMessage {
 		if($parent === false) {
 			$acStatus = F::build('ArticleComment', array($body, $user, $userPageTitle, false , array('title' => $metaTitle) ), 'doPost');	
 		} else {
+			if(!$parent->canReply()) {
+				return false;
+			}
+	
 			$acStatus = F::build('ArticleComment', array($body, $user, $userPageTitle, $parent->getTitle()->getArticleId() , null ), 'doPost');
 		}
 		
@@ -559,7 +563,7 @@ class WallMessage {
 			$wn->remNotificationsForUniqueID( null, $this->cityId, $uniqueId, true );
 		}
 	}
-	
+		
 	public function isArchive() {
 		return $this->isMarkInProps(WPP_WALL_ARCHIVE);
 	}
@@ -570,6 +574,10 @@ class WallMessage {
 	
 	public function isAdminDelete() {
 		return $this->isMarkInProps(WPP_WALL_ADMINDELETE);
+	}
+	
+	public function canReply() {
+		return !$this->isAdminDelete() && !$this->isRemove();
 	}
 	
 	public function canRestore($user) {
