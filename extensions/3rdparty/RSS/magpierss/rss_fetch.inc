@@ -85,7 +85,9 @@ define('MAGPIE_VERSION', '0.72');
 
 $MAGPIE_ERROR = "";
 
-function fetch_rss ($url) {
+/** Wikia change starts here @author nAndy */
+function fetch_rss ($url, &$returnedStatus = null) {
+/** Wikia change ends here */
     // initialize constants
     init();
 
@@ -102,6 +104,9 @@ function fetch_rss ($url) {
             return _response_to_rss( $resp );
         }
         else {
+            /** Wikia change starts here @author nAndy */
+            $returnedStatus = $resp->status;
+            /** Wikia change ends here */
             #error("Failed to fetch $url and cache is off");
             return false;
         }
