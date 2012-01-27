@@ -202,7 +202,7 @@ class WallHelper {
 	 *
 	 * @return array first element is a counter, second is an array with comments
 	 *
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function getWallComments($parentId = null) {
 		$app = F::app();
@@ -212,11 +212,11 @@ class WallHelper {
 		$commentsCount = 0;
 		
 		if( !is_null($parentId) ) {
-			$parent = F::build('ArticleComment', array($parentId), 'newFromId');
+			$parent = F::build('WallMessage', array($parentId), 'newFromId');
 			
-			if( !($parent instanceof ArticleComment) ) {
+			if( !($parent instanceof WallMessage) ) {
 			//this should never happen
-				Wikia::log(__METHOD__, false, 'No ArticleComment instance article id: '.$parentId);
+				Wikia::log(__METHOD__, false, 'No WallMessage instance article id: '.$parentId);
 				
 				return array(
 					'count' => $commentsCount,
@@ -224,20 +224,12 @@ class WallHelper {
 				);
 			}
 			
-			$commentList = F::build('ArticleCommentList', array($parent->getTitle()), 'newFromTitle');
+			$wallThread = F::build('WallThread', array($parentId), 'newFromId');
+			$topMessage = $wallThread->getThreadMainMsg();
+			$comments = $wallThread->getRepliesWallMessages();
 			
-			$commentList->setId($parentId);
-			$data = $commentList->getData();
-			
-			if( !empty($data['commentListRaw'][$parentId]['level1']) ) {
-				$comment = $data['commentListRaw'][$parentId]['level1'];
-				$topMessage = F::build('WallMessage', array($comment->getTitle(), $comment));
-			}
-			
-			if( !empty($data['commentListRaw'][$parentId]['level2']) ) {
+			if( !empty($comments) ) {
 			//top message has replies
-				$comments = $data['commentListRaw'][$parentId]['level2'];
-				
 				//in wiki activity we display amount of messages
 				//not only replies (comments), so we add 1 which is top message
 				$commentsCount = count($comments) + 1;
@@ -245,10 +237,8 @@ class WallHelper {
 				$comments = array();
 				$i = 0;
 				foreach($revComments as $comment) {
-					$wm = F::build('WallMessage', array($comment->getTitle(), $comment));
-					
-					if( $wm instanceof WallMessage && !in_array(true, array($wm->isRemove(), $wm->isAdminDelete())) ) {
-						$comments[] = $wm;
+					if( !in_array(true, array($comment->isRemove(), $comment->isAdminDelete())) ) {
+						$comments[] = $comment;
 						$i++;
 					}
 					
