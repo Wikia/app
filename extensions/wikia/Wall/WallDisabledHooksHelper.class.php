@@ -65,15 +65,36 @@ class WallDisabledHooksHelper {
 		return true;
 	}
 	
+	private function getDismissedMemcKey($userId) {
+		$app = F::app();
+		return $app->runFunction( 'wfSharedMemcKey', __CLASS__, 'dismissed' , $userId );
+	}
+	
 	public function onUserRetrieveNewTalks( &$user, &$talks ) {
-		$userId = $user->getId();
-		
+		$app = F::app();
+		$userId = $user->getId(); 
+		$key = $this->getDismissedMemcKey($userId);
 		// ignore anons
 		if( $userId > 0 ) {
 			$userName = $user->getName();
 			$wn = F::build( 'WallNotifications' );
 			
 			$counts = $wn->getCounts( $userId, false );
+	
+			$dismissed = $app->wg->Memc->get($key);
+			if(!empty($dismissed) && is_array($dismissed)) {
+				$alldismissed = true; 
+				foreach($counts as $wikiData) {
+					if($wikiData['unread'] > 0 && !in_array( $wikiData['id'], $dismissed ) ) {
+						$alldismissed = false;
+						break;
+					}
+				}
+				
+				if($alldismissed) {
+					return true;
+				}
+			}
 			
 			foreach($counts as $wikiData) {
 				if($wikiData['unread'] > 0) {
@@ -85,6 +106,29 @@ class WallDisabledHooksHelper {
 		}
 		
 		return true;
+	}
+	
+	public function onDismissWikiaNewtalks( $user ) {
+		$app = F::app();
+		$userId = $user->getId(); 
+		$key = $this->getDismissedMemcKey($userId);
+		
+		// ignore anons
+		if( $userId > 0 ) {
+			$userName = $user->getName();
+			$wn = F::build( 'WallNotifications' ); 
+			
+			$dismissed = $app->wg->Memc->get($key); 
+			
+			$counts = $wn->getCounts( $userId, false );
+			$list = array();
+			foreach($counts as $wikiData) {
+				if($wikiData['unread'] > 0) {
+					$list[] = $wikiData['id'];
+				}
+			}
+			$app->wg->Memc->set($key, $list, 60*60*24); 
+		}
 	}
 	
 	public function onWatchArticle(&$user, &$article) {
