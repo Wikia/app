@@ -185,23 +185,35 @@ class PartnerVideoHelper {
 					}		
 				}
 				if (empty($addlCategories)) {
-//					print("Skipping $titleName. Title does not contain any keyphrases.\n");
-					continue;
+					// keep going. If this title has Movie Trailer clips, ingest them
 				}
 			}
 			
 			$year = $title->getElementsByTagName('Year')->item(0)->textContent;
 			$clips = $title->getElementsByTagName('Clip');
 			$numClips = $clips->length;
+			$origAddlCategories = $addlCategories;
 			for ($j=0; $j<$numClips; $j++) {
+				$addlCategories = $origAddlCategories;
 				$clipData = array('titleName'=>$titleName, 'year'=>$year);
 
 				$clip = $clips->item($j);
-				$clipData['eclipId'] = $clip->getElementsByTagName('EclipId')->item(0)->textContent;
 				$clipData['trailerType'] = $clip->getElementsByTagName('TrailerType')->item(0)->textContent;
-				if (strtolower($clipData['trailerType']) == 'not set') unset($clipData['trailerType']);
 				$clipData['trailerVersion'] = $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent;
+				// if the title is not one that we explicitly target, ingest this clip only if it is a Movie Trailer
+				if (empty($addlCategories)) {
+					if (strtolower($clipData['trailerVersion']) == 'trailer'
+					&& (strtolower($clipData['trailerType']) != 'video game' && stripos($clipData['titleName'], '(VG)') === false)
+					) {
+						$addlCategories[] = 'Movie Trailers';
+					}
+					else {
+						continue;
+					}
+				}
+				if (strtolower($clipData['trailerType']) == 'not set') unset($clipData['trailerType']);
 				if (strtolower($clipData['trailerVersion']) == 'not set') unset($clipData['trailerVersion']);
+				$clipData['eclipId'] = $clip->getElementsByTagName('EclipId')->item(0)->textContent;
 				$clipData['description'] = html_entity_decode( $clip->getElementsByTagName('Description')->item(0)->textContent );
 				$clipData['duration'] = $clip->getElementsByTagName('RunTime')->item(0)->textContent;
 				$clipData['jpegBitrateCode'] = VideoPage::SCREENPLAY_MEDIUM_JPEG_BITRATE_ID;
