@@ -4,6 +4,8 @@
 //mixins
 @import "../../WikiaMobile/css/mixins/section-title.scss";
 @import "../../WikiaMobile/css/mixins/box-shadow.scss";
+@import "../../WikiaMobile/css/mixins/linear-gradient.scss";
+@import "../../WikiaMobile/css/mixins/transition.scss";
 
 //vars
 $comment-left-margin: $page-padding + 60px;
@@ -39,11 +41,11 @@ $comment-left-margin: $page-padding + 60px;
 						border-style: solid;
 						border-width: 11px;
 						content: " ";
-						height: 0px;
+						height: 0;
 						position: absolute;
 						top: -22px;
 						left: 40px;
-						width: 0px;
+						width: 0;
 					}
 
 					&::after {
@@ -51,11 +53,11 @@ $comment-left-margin: $page-padding + 60px;
 						border-style: solid;
 						border-width: 10px;
 						content: " ";
-						height: 0px;
+						height: 0;
 						position: absolute;
 						top: -19px;
 						left: 41px;
-						width: 0px;
+						width: 0;
 					}
 				}
 			}
@@ -64,12 +66,10 @@ $comment-left-margin: $page-padding + 60px;
 				border-top: 1px solid $border-color;
 				padding: $page-padding 0;
 
-				&:fist-of-type{
-					border-top: none;
-				}
-
 				.msg{
+					border-left: none;
 					margin: 0 0 0 $comment-left-margin;
+					padding-left: 0;
 
 					.by{
 						font-weight: bold;
@@ -145,6 +145,70 @@ $comment-left-margin: $page-padding + 60px;
 
 		#commPrev{
 			border-bottom: 1px solid $border-color;
+		}
+	}
+
+	form {
+		position: relative;
+		height: 35px;
+		@include transition(height .2s);
+	}
+
+	textarea {
+		outline: none;
+		margin: 0;
+		padding: 0;
+		border: 2px solid $border-color;
+		border-radius: 5px 0 0 5px;
+		height: 100%;
+		font-size: large;
+		font-weight: 100;
+		line-height: 35px;
+		padding-left: 5px;
+		resize: none;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		right: 45px;
+		overflow: hidden;
+	}
+
+	input {
+		height: 37px;
+		width: 45px;
+		margin: 0;
+		padding: 0;
+		font-size: small;
+		font-weight: 100;
+		color: #6A6A6A;
+		-webkit-appearance: none;
+		border-radius: 0 5px 5px 0;
+		border: 1px solid $border-color;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		@include linear-gradient(#FFF, #EFEFEF);
+		@include box-shadow(-2px 0 5px -2px grey);
+
+		&:active {
+			color: white;
+			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
+		}
+	}
+	
+	.rpl {
+		margin: 0 0 0 70px;
+		border-top: 1px solid $border-color;
+		color: $link-color;
+		height: 44px;
+		line-height: 40px;
+		font-weight: 100;
+		padding-left: 5px;
+		width: 100%;
+
+		&:active, &.wkAct {
+			color: white;
+			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
 		}
 	}
 }

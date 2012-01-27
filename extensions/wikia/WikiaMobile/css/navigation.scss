@@ -48,19 +48,26 @@
 	left: 10px;
 	right: 55px;
 	top: 4px;
+	bottom: 4px;
+	
+	form {
+		height: 100%;
+		width: 100%;
+	}
 }
 
 #wkSrhInp {
+	-webkit-appearance: none;
 	border: none;
 	width: 100%;
-	font-size: large;
+	height: 100%;
+	font-size: 25px;
+	line-height: 100%;
 	border-radius: 20px;
 	-webkit-border-radius: 20px;
-	padding: 5px;
-}
-::-webkit-input-placeholder, :-moz-placeholder {
 	color: $link-color;
 }
+
 
 #wkTopBar {
 	height: 40px;
@@ -72,7 +79,7 @@
 	position: relative;
 	height: 40px;
 	max-height: 40px;
-	overflow-x: hidden;
+	overflow: hidden;
 	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
@@ -170,6 +177,10 @@
 				}
 			}
 		}
+		
+		#wkNavBack {
+			display: block;
+		}
 
 		.lvl2, .lvl3 {
 			position: absolute;
@@ -233,7 +244,7 @@
 		left: 0;
 
 		#wkNavBack {
-			display: block;
+			display: none;
 			border-radius: 5px;
 			border: 1px solid $border-color;
 			color: $link-color;
