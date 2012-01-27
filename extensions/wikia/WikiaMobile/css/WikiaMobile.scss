@@ -57,6 +57,10 @@ a {
 	background-color: white;
 	overflow-x: hidden;
 }
+//for browsers that don't know that these should be block
+section, article, header, footer, aside {
+	display: block;
+}
 
 #wkMainCnt{
 	padding: $page-padding $page-padding 0 $page-padding;
