@@ -150,43 +150,40 @@ $comment-left-margin: $page-padding + 60px;
 
 	form {
 		position: relative;
-		height: 35px;
-		@include transition(height .2s);
+		margin: 5px 0;
 	}
 
 	textarea {
-		outline: none;
 		margin: 0;
 		padding: 0;
-		border: 2px solid $border-color;
+		border: 1px solid $border-color;
+		@include box-shadow(inset 2px 2px 8px -3px grey);
 		border-radius: 5px 0 0 5px;
-		height: 100%;
+		height: 35px;
 		font-size: large;
 		font-weight: 100;
 		line-height: 35px;
 		padding-left: 5px;
 		resize: none;
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		right: 45px;
-		overflow: hidden;
+		position: relative;
+		width: 82%;
+	
+		&:focus {
+			height: 140px;
+		}
 	}
 
 	input {
 		height: 37px;
-		width: 45px;
-		margin: 0;
+		width: 17%;
 		padding: 0;
 		font-size: small;
 		font-weight: 100;
 		color: #6A6A6A;
-		-webkit-appearance: none;
 		border-radius: 0 5px 5px 0;
 		border: 1px solid $border-color;
 		position: absolute;
 		right: 0;
-		bottom: 0;
 		@include linear-gradient(#FFF, #EFEFEF);
 		@include box-shadow(-2px 0 5px -2px grey);
 
@@ -194,6 +191,7 @@ $comment-left-margin: $page-padding + 60px;
 			color: white;
 			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
 		}
+
 	}
 	
 	.rpl {
