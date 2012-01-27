@@ -20,7 +20,14 @@ class WikiaRssExternalController extends WikiaController {
 		
 		if( !empty($options) && !empty($options['url']) ) {
 			$url = html_entity_decode($options['url']);
-			$rss = @fetch_rss($url);
+			
+			$status = null;
+			$rss = @fetch_rss($url, $status);
+			
+			if( $status !== 200 ) {
+				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-'.$status, $url));
+				return;
+			}
 			
 			if( !is_object($rss) || !is_array($rss->items) ) {
 				$this->response->setVal('error', wfMsg('wikia-rss-empty', $url));
