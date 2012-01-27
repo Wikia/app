@@ -37,6 +37,8 @@ $app->registerHook('UserRetrieveNewTalks', 'WallDisabledHooksHelper', 'onUserRet
 
 //wikifactory/wikifeatures
 $app->registerHook('WikiFactoryChanged', 'WallDisabledHooksHelper', 'onWikiFactoryChanged');
+$app->registerHook('DismissWikiaNewtalks', 'WallDisabledHooksHelper', 'onDismissWikiaNewtalks');
+
 
 //watchlist
 $app->registerHook('WatchArticle', 'WallDisabledHooksHelper', 'onWatchArticle');
