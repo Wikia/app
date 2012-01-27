@@ -24,7 +24,7 @@ class WikiaRssExternalController extends WikiaController {
 			$status = null;
 			$rss = @fetch_rss($url, $status);
 			
-			if( $status !== 200 ) {
+			if( !is_null($status) && $status !== 200 ) {
 				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-'.$status, $url));
 				return;
 			}

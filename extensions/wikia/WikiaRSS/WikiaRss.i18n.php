@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'wikia-rss-placeholder-loading' => 'Loading RSS data...',
 	'wikia-rss-date-format' => 'm/d/Y',
 	
+	'wikia-rss-error-wrong-status-404' => 'The provided RSS link is probably invalid RSS feed or the page does not exist.',
 	'wikia-rss-error-wrong-status-503' => 'The service is unavailable. It is possible the URL is busy or we exceeded limit of queries to the RSS URL address.',
 );
 
