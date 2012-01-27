@@ -131,15 +131,14 @@ $wgRC2UDPEnabled = false;
 // macbre: set proper proxy for dev boxes
 $wgHTTPProxy = "squid-proxy.local:3128";
 
-// macbre: generate proper paths for static assets on devboxes (BugId:6809)
-$devBoxImageServer = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
-$wgStylePath = $devBoxImageServer . '/skins';
-$wgExtensionsPath = $devBoxImageServer . '/extensions';
-$wgCdnStylePath = $devBoxImageServer; // paths for images requested from CSS/SASS
-$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
-
 // fetch SASS files from devboxes (BugId:8545)
-$wgCdnRootUrl = $devBoxImageServer;
+$wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
+
+// macbre: generate proper paths for static assets on devboxes (BugId:6809)
+$wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
+$wgStylePath = "{$wgCdnStylePath}/skins";
+$wgExtensionsPath = "{$wgCdnStylePath}/extensions";
+$wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // fetch GoogleMaps resources from devboxes
 $wgGoogleMapsUrlPath = $wgExtensionsPath . '/3rdparty/GoogleMaps';
