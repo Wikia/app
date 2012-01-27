@@ -1,4 +1,4 @@
-<li id=comm<?=$commentId?> class=comment data-user="<?=$comment['username']?>">
+<li id=<?=$commentId?> class=comment data-user="<?=$comment['username']?>">
 	<div class=avatar>
 		<a href=<?= $comment['userurl'] ?>><?= $comment['avatar'] ?></a>
 	</div>

@@ -1,8 +1,9 @@
 <ul id="article-comments-ul" class="comments">
 	<?php
-	$moduleAction = ( Wikia::isWikiaMobile() ) ? 'WikiaMobileComment' : 'Comment';
+	$isMobile = Wikia::isWikiaMobile();
+	$moduleAction = ( $isMobile ) ? 'WikiaMobileComment' : 'Comment';
 	
-	if (count($commentListRaw)) {
+	if ( count( $commentListRaw ) ) {
 		$odd = true;
 		$id = 1;
 		foreach ($commentListRaw as $commentId => $commentArr) {
@@ -22,6 +23,7 @@
 				}
 				echo "</ul>";
 			}
+			if ( $isMobile ) echo "<div class=rpl>{$wf->Msg('wikiamobile-article-comments-reply')}</div>";
 		}
 	}
 	?>

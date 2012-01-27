@@ -15,7 +15,7 @@
 	thePage,
 	hide,
 	clickEvent,
-	current = 1,
+	current = 0,
 
 	createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution(),
@@ -76,27 +76,27 @@
 		});
 
 		modalCreated = true;
-	};
+	},
 
-	var nextImage = function(imagePlace) {
+	nextImage = function(imagePlace) {
 		current += 1;
 
 		if(images.length <= current) {
 			current = 0;
 		}
 		changeImage(imagePlace);
-	};
+	},
 
-	var previousImage = function(imagePlace) {
+	previousImage = function(imagePlace) {
 		current -= 1;
 
 		if(current < 0) {
 			current = images.length-1;
 		}
 		changeImage(imagePlace);
-	};
+	},
 
-	var changeImage = function(fullScreen) {
+	changeImage = function(fullScreen) {
 		var image = images[current],
 		img = new Image();
 
@@ -111,9 +111,9 @@
 		};
 
 		showCaption(image[1], image[2], image[3]);
-	};
+	},
 
-	var showCaption = function(cap, number, length) {
+	showCaption = function(cap, number, length) {
 		cap = cap || '';
 
 		if(number !== undefined) {
@@ -127,6 +127,18 @@
 			caption = false;
 			modalFooter.hide();
 		}
+	},
+	
+	resetTimeout = function() {
+
+		allToHide.removeClass('hdn');
+		if(hide) hide.removeClass('hdn');
+
+		clearTimeout(timer);
+		timer = setTimeout(function() {
+			allToHide.addClass('hdn');
+			if(hide) hide.addClass('hdn');
+		}, hideBarsAfter);
 	};
 
 	$.openModal =  function(options) {
@@ -138,15 +150,15 @@
 			onOpen = options.onOpen;
 			
 		current = parseInt(options.imageNumber, 10);
-		
 		//needed for closing modal on back button
 		window.location.hash = "modal";
 
-		if(!(html || current)) throw "No content provided for modal";
+		if(!(html || typeof current == 'number')) throw "No content provided for modal";
 
 		if(!modalCreated) createModal();
 
 		modal.css('top', '0');
+		
 		if(addClass){
 			modal.addClass(addClass);
 		}else{
@@ -156,7 +168,7 @@
 		if(html){
 			modalContent.html(html);
 			showCaption(options.caption);
-		}else if(current){
+		}else if(current >= 0){
 			modalContent.html('<div class=chnImgBtn id=prvImg><div class=chnImgChv></div></div><div class=fllScrImg></div><div class=chnImgBtn id=nxtImg><div class=chnImgChv></div></div>');
 			changeImage($('.fllScrImg'));
 		}
@@ -183,18 +195,6 @@
 		thePage.hide();
 		modal.addClass('mdlShw');
 		resetTimeout();
-	};
-
-	var resetTimeout = function() {
-
-		allToHide.removeClass('hdn');
-		if(hide) hide.removeClass('hdn');
-
-		clearTimeout(timer);
-		timer = setTimeout(function() {
-			allToHide.addClass('hdn');
-			if(hide) hide.addClass('hdn');
-		}, hideBarsAfter);
 	};
 
 	$.closeModal = function() {
