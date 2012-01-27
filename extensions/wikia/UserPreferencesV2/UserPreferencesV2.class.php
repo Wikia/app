@@ -92,9 +92,9 @@ class UserPreferencesV2 {
 			$defaultPreferences['watchdefault']['section'] = 'emailv2/followed-pages-iv2';
 			$defaultPreferences['watchdefault']['label-message'] = 'preferences-v2-watchdefault';
 		}
-		if (isset($defaultPreferences['watchdefault'])) {
-			$defaultPreferences['watchdefault']['section'] = 'emailv2/followed-pages-iv2';
-			$defaultPreferences['watchdefault']['label-message'] = 'preferences-v2-watchmoves';
+		if (isset($defaultPreferences['watchmoves'])) {
+			$defaultPreferences['watchmoves']['section'] = 'emailv2/followed-pages-iv2';
+			$defaultPreferences['watchmoves']['label-message'] = 'preferences-v2-watchmoves';
 		}
 		if (isset($defaultPreferences['watchdeletion'])) {
 			if (in_array("autoconfirmed", $wgUser->getEffectiveGroups()) || $wgUser->isEmailConfirmed()) {
@@ -103,9 +103,9 @@ class UserPreferencesV2 {
 				$defaultPreferences['watchdeletion']['type'] = 'toggle';
 			}
 		}
-		if (isset($defaultPreferences['watchdefault'])) {
-			$defaultPreferences['watchdefault']['section'] = 'emailv2/followed-pages-iv2';
-			$defaultPreferences['watchdefault']['label-message'] = 'preferences-v2-watchcreations';
+		if (isset($defaultPreferences['watchcreations'])) {
+			$defaultPreferences['watchcreations']['section'] = 'emailv2/followed-pages-iv2';
+			$defaultPreferences['watchcreations']['label-message'] = 'preferences-v2-watchcreations';
 		}
 		
 		if (isset($defaultPreferences['enotifwatchlistpages'])) {
