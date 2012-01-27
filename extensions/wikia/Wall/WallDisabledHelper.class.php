@@ -65,69 +65,6 @@ class WallDisabledHooksHelper {
 		return true;
 	}
 	
-	private function getDismissedMemcKey($userId) {
-		$app = F::app();
-		return $app->runFunction( 'wfSharedMemcKey', __CLASS__, 'dismissed' , $userId );
-	}
-	
-	public function onUserRetrieveNewTalks( &$user, &$talks ) {
-		$userId = $user->getId(); 
-		$key = $this->getDismissedMemcKey($userId);
-		// ignore anons
-		if( $userId > 0 ) {
-			$userName = $user->getName();
-			$wn = F::build( 'WallNotifications' );
-			
-			$counts = $wn->getCounts( $userId, false );
-	
-			$dismissed = $app->wg->Memc->get($key); 
-			$alldismissed = true; 
-			foreach($counts as $wikiData) {
-				if($wikiData['unread'] > 0 && !in_array( $wikiData['id'], $dismissed ) ) {
-					$list[] = $wikiData['id'];
-					$alldismissed = false;
-					break;
-				}
-			}
-			
-			if($alldismissed) {
-				return true;
-			}
-			
-			foreach($counts as $wikiData) {
-				if($wikiData['unread'] > 0) {
-					$link = GlobalTitle::newFromText( $userName, NS_USER_WALL, $wikiData['id'] );
-					$talks[ $wikiData['id'] ] =
-						array( 'wiki' => $wikiData['sitename'], 'link' => $link->getFullURL( array('showNotifications'=>1) ) );
-				}
-			}
-		}
-		
-		return true;
-	}
-	
-	public function onDismissWikiaNewtalks( $user ) {
-		$userId = $user->getId(); 
-		$key = $this->getDismissedMemcKey($userId);
-		
-		// ignore anons
-		if( $userId > 0 ) {
-			$userName = $user->getName();
-			$wn = F::build( 'WallNotifications' ); 
-			
-			$dismissed = $app->wg->Memc->get($key); 
-			
-			$list = array();
-			foreach($counts as $wikiData) {
-				if($wikiData['unread'] > 0) {
-					$link = GlobalTitle::newFromText( $userName, NS_USER_WALL, $wikiData['id'] );
-					$talks[ $wikiData['id'] ] =
-				}
-			}
-		}
-	}
-	
-	
 	public function onWatchArticle(&$user, &$article) {
 		$app = F::app();
 		$title = $article->getTitle();
