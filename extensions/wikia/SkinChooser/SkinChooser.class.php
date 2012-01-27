@@ -201,8 +201,20 @@ class SkinChooser {
 			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiaphone", "wikiaapp" ) ) ) {
 				//FB#16417 - for the first release bind wikiaphone to wikiamobile via a WF variable
 				//TODO: remove after Ad performance test ends and WikiaMobile will be the default (FB#16582)
-				if ( !empty( $wgEnableWikiaMobile ) && $headers[ "X-Skin" ] == 'wikiaphone' ) {
-					$headers[ "X-Skin" ] = 'wikiamobile';
+				if ( $headers[ "X-Skin" ] == 'wikiaphone' ) {
+					if ( !empty( $wgEnableWikiaMobile ) ) {
+						$headers[ "X-Skin" ] = 'wikiamobile';
+					}
+
+					$requestedSkin = $wgRequest->getVal( 'useskin' );
+
+					//give mobile skin users with no js support a chance to use different skins
+					//FB#19758
+					if ( !empty( $requestedSkin ) ) {
+						$user->mSkin = &Skin::newFromKey( $requestedSkin );
+						wfProfileOut( __METHOD__ );
+						return false;	
+					}
 				}
 				
 				$user->mSkin = &Skin::newFromKey( $headers[ "X-Skin" ] );

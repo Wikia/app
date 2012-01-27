@@ -443,7 +443,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			track(['link', 'category']);
 		});
 
-		$('#fllSite').bind(clickEvent, function(event){
+		$('#wkFllSite').bind(clickEvent, function(event){
 			event.preventDefault();
 
 			track(['link', 'fullsite']);
