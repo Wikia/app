@@ -640,15 +640,6 @@ class WallController extends ArticleCommentsModule {
 		}
 	}
 	
-	private function getRealNameForUser($user) { // no longer used
-		$uib = F::build('UserIdentityBox', array($this->app, $user, 0));
-		if( $uib->shouldDisplayFullMasthead() ) {
-			return $user->getRealName();
-		} else {
-			return '';
-		}
-	}
-	
 	public function getThreads($title, $page, $perPage = null) {
 		wfProfileIn(__METHOD__);
 
