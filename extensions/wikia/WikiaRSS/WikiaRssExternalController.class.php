@@ -1,6 +1,6 @@
 <?php 
 class WikiaRssExternalController extends WikiaController {
-	
+
 	/**
 	 * @brief Returns status flag and data in html tags
 	 * @desc Here we use 3rd-part extension magpierss which fetches rss feeds from given url
@@ -9,7 +9,7 @@ class WikiaRssExternalController extends WikiaController {
 		$this->response->setVal('status', false);
 		$options = $this->request->getVal('options', false);
 		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); //cache it on varnish for 1h
-		
+
 		//somehow empty arrays are lost
 		//we need to restore then its default values
 		foreach(array('highlight', 'filter', 'filterout') as $option) {
@@ -17,35 +17,35 @@ class WikiaRssExternalController extends WikiaController {
 				$options[$option] = array();
 			}
 		}
-		
+
 		if( !empty($options) && !empty($options['url']) ) {
 			$url = html_entity_decode($options['url']);
-			
+
 			$status = null;
 			$rss = @fetch_rss($url, $status);
-			
+
 			if( !is_null($status) && $status !== 200 ) {
 				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-'.$status, $url));
 				return;
 			}
-			
+
 			if( !is_object($rss) || !is_array($rss->items) ) {
 				$this->response->setVal('error', wfMsg('wikia-rss-empty', $url));
 				return;
 			}
-			
+
 			if( $rss->ERROR ) {
 				$this->response->setVal('error', wfMsg('wikia-rss-error', $url, $rss->ERROR));
 				return;
 			}
-			
+
 			$short = ($options['short'] == 'true') ? true : false;
 			$reverse = ($options['reverse'] == 'true') ? true : false;
-			
+
 			if( $reverse ) {
 				$rss->items = array_reverse($rss->items);
 			}
-			
+
 			$description = false;
 			foreach( $rss->items as $item ) {
 				if( isset($item['description']) && $item['description'] ) {
@@ -53,7 +53,7 @@ class WikiaRssExternalController extends WikiaController {
 					break;
 				}
 			}
-			
+
 			if( !$short && $description ) {
 				$items = $this->getFullItemList($rss->items, $options);
 				$html = $this->app->renderView('WikiaRssExternal', 'fullList', array('items' => $items));
@@ -61,22 +61,22 @@ class WikiaRssExternalController extends WikiaController {
 				$items = $this->getShortItemList($rss->items, $options);
 				$html = $this->app->renderView('WikiaRssExternal', 'shortList', array('items' => $items));
 			}
-			
+
 			$this->response->setVal('status', true);
 			$this->response->setVal('html', $html);
 		} else {
 			$this->response->setVal('error', wfMsg('wikia-rss-error-invalid-options'));
 		}
 	}
-	
+
 	public function fullList() {
 		$this->response->setVal('items', $this->request->getVal('items', array()));
 	}
-	
+
 	public function shortList() {
 		$this->response->setVal('items', $this->request->getVal('items', array()));
 	}
-	
+
 	/**
 	 * @brief Depending on given options it returns an array with full data of a rss feed
 	 * 
@@ -88,68 +88,68 @@ class WikiaRssExternalController extends WikiaController {
 	private function getFullItemList($items, $options) {
 		$app = F::app();
 		$result = array();
-		
+
 		$charset = $options['charset'];
 		$date = $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
 		$maxheads = $options['maxheads'];
-		
+
 		$headcnt = 0;
 		foreach( $items as $i => $item ) {
 			$d_text = true;
 			$d_title = true;
-			
+
 			$href = htmlspecialchars(trim(iconv($charset, $app->wg->OutputEncoding, $item['link'])));
 			$title = htmlspecialchars(trim(iconv($charset, $app->wg->OutputEncoding, $item['title'])));
-			
+
 			if( $date != 'false' && isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ) {
 				$pubdate = trim(iconv($charset, $app->wg->OutputEncoding, $item['dc']['date']));
 				$pubdate = date($date, strtotime($pubdate));
 			} else {
 				$pubdate = false;
 			}
-			
+
 			$d_title = $this->doRssFilter($title, $rssFilter);
 			$d_title = $this->doRssFilterOut($title, $rssFilterout);
 			$title = $this->doRssHighlight($title, $rssHighlight);
-			
+
 			if( $item['description'] ) {
 				$text = trim(iconv($charset, $app->wg->OutputEncoding, $item['description']));
 				$text = str_replace( array("\r", "\n", "\t", '<br>'), ' ', $text );
-				
+
 				$d_text = $this->doRssFilter($text, $rssFilter );
 				$d_text = $this->doRssFilterOut($text, $rssFilterout);
 				$text = $this->doRssHighlight($text, $rssHighlight);
-				
+
 				$display = $d_text || $d_title;
  			} else {
 				$text = '';
 				$display = $d_title;
 			}
-			
+
 			if( $display ) {
 				$result[$i] = array(
 					'href' => $href,
 					'title' => $title,
 				);
-				
+
 				if( $date ) {
 					$result[$i]['date'] = $pubdate;
 				}
-				
+
 				if( $text ) {
 					$result[$i]['text'] = $text;
 				}
 			}
-			
+
 			if ( ++$headcnt == $maxheads ) break;
 		}
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 * @brief Depending on given options it returns an array with short data of a rss feed
 	 * 
@@ -161,54 +161,56 @@ class WikiaRssExternalController extends WikiaController {
 	private function getShortItemList($items, $options) {
 		$app = F::app();
 		$result = array();
-		
+
 		$charset = $options['charset'];
 		$date = $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
 		$maxheads = $options['maxheads'];
-		
+
 		$displayed = array();
 		$headcnt = 0;
 		foreach( $items as $i => $item ) {
 			$href = htmlspecialchars(trim(iconv($charset, $app->wg->OutputEncoding, $item['link'])));
 			$title = htmlspecialchars(trim(iconv($charset, $app->wg->OutputEncoding, $item['title'])));
-			
+
 			$d_title = $this->doRssFilter($title, $rssFilter) && $this->doRssFilterOut($title, $rssFilterout);
 			$attrTitle = $title;
 			$title = $this->doRssHighlight($title, $rssHighlight);
-			
-			if( $date ) {
+
+			if( $date !== 'false' ) {
 				$pubdate = isset($item['pubdate']) ? trim(iconv($charset, $app->wg->OutputEncoding, $item['pubdate'])) : '';
-				
+
 				if( $pubdate == '' ) {
 					$pubdate = isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ? trim(iconv($charset, $app->wg->OutputEncoding, $item['dc']['date'])) : false;
 				}
-				
+
 				$pubdate = date($date, strtotime($pubdate));
+			} else {
+				$pubdate = false;
 			}
-			
-			if( $d_title && !in_array($title, $displayed)) {
+
+			if( $d_title && !in_array( $title, $displayed ) ) {
 				$result[$i] = array(
 					'href' => $href,
 					'title' => $title,
 					'attrTitle' => $attrTitle,
 				);
-				
+
 				if( $date ) {
 					$result[$i]['date'] = $pubdate;
 				}
-				
+
 				$displayed[] = $title;
-				
+
 				if( ++$headcnt == $maxheads ) break;
 			}
 		}
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 * @brief Returns true if user wants to display the feed; false otherwise
 	 * 
@@ -228,14 +230,14 @@ class WikiaRssExternalController extends WikiaController {
 						return $display;
 					}
 				}
-				
+
 				if( $display ) break;
 			}
 		}
-		
+
 		return $display;
 	}
-	
+
 	/**
 	 * @brief Returns true if user doesn't want to display the feed; false otherwise
 	 * 
@@ -246,7 +248,7 @@ class WikiaRssExternalController extends WikiaController {
 	 */
 	private function doRssFilterOut($text, $rssFilterout) {
 		$display = true;
-		
+
 		if( is_array($rssFilterout) ) {
 			foreach( $rssFilterout as $term ) {
 				if( $term ) {
@@ -257,10 +259,10 @@ class WikiaRssExternalController extends WikiaController {
 				}
 			}
 		}
-		
+
 		return $display;
 	}
-	
+
 	/**
 	 * @brief Changes old text to highlighted text
 	 * 
@@ -273,14 +275,14 @@ class WikiaRssExternalController extends WikiaController {
 		$i = 0;
 		$starttag = 'v8x5u3t3u8h';
 		$endtag = 'q8n4f6n4n4x';
-		
+
 		$color[] = 'coral';
 		$color[] = 'greenyellow';
 		$color[] = 'lightskyblue';
 		$color[] = 'gold';
 		$color[] = 'violet';
 		$countColor = count($color);
-		
+
 		if( is_array($rssHighlight) ) {
 			foreach( $rssHighlight as $term ) {
 				if( $term ) {
@@ -290,13 +292,13 @@ class WikiaRssExternalController extends WikiaController {
 				}
 			}
 		}
-		
+
 		for( $i = 0; $i < 5; $i++ ) {
 			$text = preg_replace("|$starttag"."_".$i."|", "<span style=\"background-color:".$color[$i]."; font-weight: bold;\">", $text);
 			$text = preg_replace("|$endtag|", '</span>', $text);
 		}
-		
+
 		return $text;
 	}
-	
+
 }
