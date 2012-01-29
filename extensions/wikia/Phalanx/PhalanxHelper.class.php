@@ -363,6 +363,8 @@ class PhalanxHelper {
 			if ( !empty( $data[$module] ) ) {
 				$output .= Xml::element( 'h2', null, $name );
 
+				$output .= Xml::openElement( 'ul' );
+
 				foreach ( $data[$module] as $match ) {
 					$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $match['id'] ) );
 					$statsUrl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl() . '/' . $match['id'];
