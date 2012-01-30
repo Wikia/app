@@ -110,6 +110,9 @@ function is_valid_utf8_text( $text ) {
 	return $text === $converted;
 }
 
+/**
+ * @author Władysław Bodzek <wladek@wikia-inc.com>
+ */
 function do_clean_math_table() {
 	global $wgDatabase;
 
