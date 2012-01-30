@@ -140,7 +140,7 @@ class AccountNavigationModule extends Module {
 			// link to Help:Content (never render as redlink)
 			$helpLang = array_key_exists( $this->wg->LanguageCode, $this->wg->AvailableHelpLang ) ? $this->wg->LanguageCode : 'en';
 			$this->dropdown[] = Wikia::link(
-				Title::newFromText( wfMsgExt( 'helppage', array( 'pasremag', 'language' => $helpLang ) ) ),
+				Title::newFromText( wfMsgExt( 'helppage', array( 'parsemag', 'language' => $helpLang ) ) ),
 				wfMsg('help'),
 				array('title' => '', 'data-id' => 'help'),
 				'',
