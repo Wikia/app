@@ -137,7 +137,7 @@ class UserIdentityBox {
 			//other data operations
 			$this->getUserGroup($data);
 			
-			$birthdate = ( isset($data['birthday']) ? $data['birthday'] : '');
+			$birthdate = isset($data['birthday']) && is_string($data['birthday']) ? $data['birthday'] : '';
 			$birthdate = explode('-', $birthdate);
 			if( !empty($birthdate[0]) && !empty($birthdate[1]) ) {
 				$data['birthday'] = array('month' => $birthdate[0], 'day' => ltrim($birthdate[1], '0'));
@@ -296,7 +296,7 @@ class UserIdentityBox {
 		if( !$this->hasUserEditedMastheadBefore($wikiId) ) {
 			$this->user->setOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId, true);
 			$this->user->setOption(self::USER_FIRST_MASTHEAD_EDIT_DATE_PROPERTY.$wikiId, date('YmdHis'));
-
+			
 			$this->addTopWiki($wikiId);
 			$changed = true;
 		}
