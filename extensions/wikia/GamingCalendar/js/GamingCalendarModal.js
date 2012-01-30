@@ -53,7 +53,11 @@ var GamingCalendarModal = {
 		template = template.replace('##week-caption##', weekdates['caption'] );
 
 		if ( 1 == week.length ) {
-		    itemsHtml = itemsHtml + '<li class="no-entries">No Game Releases This Week<br />Check out our <a href="http://www.wikia.com/Gaming">Gaming Wikis</a>!</li>';
+                    if ( 'ent' == window.cityShort ) {
+                        itemsHtml = itemsHtml + '<li class="no-entries">No Events This Week<br />Check out our <a href="http://www.wikia.com/Entertainment">Entertainment Wikis</a>!</li>';
+                    } else {
+                        itemsHtml = itemsHtml + '<li class="no-entries">No Game Releases This Week<br />Check out our <a href="http://www.wikia.com/Gaming">Gaming Wikis</a>!</li>';
+                    }
 		} else {
 
 		    for ( var i = 1; i < week.length; i++  ) {
