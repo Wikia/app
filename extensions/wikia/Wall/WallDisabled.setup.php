@@ -36,7 +36,7 @@ $app->registerHook('AfterEditPermissionErrors', 'WallDisabledHooksHelper', 'onAf
 $app->registerHook('UserRetrieveNewTalks', 'WallDisabledHooksHelper', 'onUserRetrieveNewTalks');
 
 //wikifactory/wikifeatures
-$app->registerHook('WikiFactoryChanged', 'WallDisabledHooksHelper', 'onWikiFactoryChanged');
+//$app->registerHook('WikiFactoryChanged', 'WallDisabledHooksHelper', 'onWikiFactoryChanged');
 $app->registerHook('DismissWikiaNewtalks', 'WallDisabledHooksHelper', 'onDismissWikiaNewtalks');
 
 
