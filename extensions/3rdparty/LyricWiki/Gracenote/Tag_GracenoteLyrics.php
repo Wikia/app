@@ -172,11 +172,11 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	$ringtoneLink = "";
 	// NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
 	// If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-	GLOBAL $wgTitle, $wgExtensionsPath;
+	GLOBAL $wgExtensionsPath;
 	$imgPath = "$wgExtensionsPath/3rdparty/LyricWiki";
-	$artist = $wgTitle->getDBkey();
+	$artist = $parser->mTitle->getDBkey();
 	$colonIndex = strpos("$artist", ":");
-	$songTitle = $wgTitle->getText();
+	$songTitle = $parser->mTitle->getText();
 	$artistLink = $artist;
 	$songLink = $songTitle;
 	if($colonIndex !== false){
