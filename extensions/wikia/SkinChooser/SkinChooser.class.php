@@ -186,7 +186,9 @@ class SkinChooser {
 		
 		//allow showing wikiaphone on wikis where WikiaMobile is enabled for functionality comparison and testing
 		//will be removed on Dec 7th 2011
-		if( $wgRequest->getVal('useskin') == 'wikiaphone' && !empty( $wgEnableWikiaMobile ) ) {
+		$wikiaMobileEnabled = !empty( $wgEnableWikiaMobile );
+		
+		if( $wgRequest->getVal('useskin') == 'wikiaphone' && $wikiaMobileEnabled ) {
 			$user->mSkin = &Skin::newFromKey(  $wgRequest->getVal('useskin') );
 			wfProfileOut(__METHOD__);
 			return false;	
@@ -202,13 +204,20 @@ class SkinChooser {
 				//FB#16417 - for the first release bind wikiaphone to wikiamobile via a WF variable
 				//TODO: remove after Ad performance test ends and WikiaMobile will be the default (FB#16582)
 				if ( $headers[ "X-Skin" ] == 'wikiaphone' ) {
-					$requestedSkin = $wgRequest->getVal( 'useskin' );
-
 					//give mobile skin users with no js support a chance to use different skins
 					//FB#19758
-					if ( !empty( $requestedSkin ) ) {
+					$requestedSkin = $wgRequest->getVal( 'useskin' );
+
+					if (
+						!empty( $requestedSkin ) &&
+						/* avoid causing an error if WikiaMobile is disabled, FB#20041 */
+						!(
+							!$wikiaMobileEnabled &&
+							$requestedSkin == 'wikiamobile'
+						)
+					) {
 						$headers[ "X-Skin" ] = $requestedSkin;
-					} elseif ( !empty( $wgEnableWikiaMobile ) ) {
+					} elseif ( $wikiaMobileEnabled ) {
 						$headers[ "X-Skin" ] = 'wikiamobile';
 					}
 				}
