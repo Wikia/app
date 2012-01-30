@@ -25,7 +25,7 @@ class CountNamespacesPerWikia {
 	}
 
 	public function execute() {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgContentNamespaces;
 
 		if ( $this->options['city'] ) {
 			$dbr = wfGetDB( DB_SLAVE );
@@ -45,7 +45,9 @@ class CountNamespacesPerWikia {
 				}
 				$data[ $row2->page_namespace ] = array(
 					'ns_name' => $name,
-					'cnt' => $data[ $row2->page_namespace ] + $row2->cnt
+					'cnt' => $data[ $row2->page_namespace ] + $row2->cnt,
+					'content' => intval( in_array( $row2->page_namespace, $wgContentNamespaces ) ),
+					'no_content' => intval( !in_array( $row2->page_namespace, $wgContentNamespaces ) )
 				);
 			}
 			$dbr->freeResult($res2);
@@ -69,14 +71,17 @@ class CountNamespacesPerWikia {
 				$cmd .="--conf {$this->options['conf']} ";
 				$cmd .="--city {$row->city_id}";
 				$output = array();
-				$name = exec($cmd,$output);
+				$records = exec($cmd,$output);
 
-				if ( !empty( $name ) ) {
-					$x = split( "\n", $name );
+				if ( !empty( $records ) ) {
+					$x = split( "\n", $records );
 					foreach ( $x as $id => $val ) {
 						$y = split(";", $val);
 						$data[ $y[0] ] = array(
-							'ns_name' => $y[1], 'cnt' => $y[1] + $data[ $y[0] ]['cnt']
+							'ns_name' => $y[1], 
+							'cnt' => $y[2] + $data[ $y[0] ]['cnt'],
+							'content' => $data[ $y[0] ]['content'] + $y[3],
+							'no_content' => $data[ $y[0] ]['content'] + $y[4],
 						);
 					}
 				}
@@ -85,7 +90,7 @@ class CountNamespacesPerWikia {
 		}
 
 		foreach ( $data as $ns => $cnt ) {
-			echo $ns. ";" . $cnt['ns_name'] . ";" . $cnt['cnt'] . "\n";
+			echo $ns. ";" . $cnt['ns_name'] . ";" . $cnt['cnt'] . ";" . $cnt['content'] . ";" . $cnt['no_content'] . "\n";
 		}
 
 		return $data;
