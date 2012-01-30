@@ -1,12 +1,13 @@
+/*global jwplayer:true */
 var RelatedVideos = {
-	
-	lockTable:		new Array(),
+
+	lockTable:		[],
 	videoPlayerLock:	false,
 	maxRooms:		1,
 	currentRoom:		1,
 	modalWidth:		666,
 	alreadyLoggedIn:	false,
-	heightThreshold:	600,	
+	heightThreshold:	600,
 	playerHeight:           371,
 
 	init: function() {
@@ -15,7 +16,7 @@ var RelatedVideos = {
 		importantContentHeight += $('#WikiaArticleComments').height();
 		if ( $('span[data-placeholder="RelatedVideosModule"]').length != 0 ){
 			$('span[data-placeholder="RelatedVideosModule"]').replaceWith( relatedVideosModule );
-		};
+		}
 		if (importantContentHeight >= RelatedVideos.heightThreshold) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
 			relatedVideosModule.delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
@@ -24,9 +25,11 @@ var RelatedVideos = {
 			relatedVideosModule.delegate( '.addVideo', 'click', RelatedVideos.addVideoLoginWrapper );
 			relatedVideosModule.delegate( '.remove', 'click', RelatedVideos.removeVideoLoginWrapper );
 			RelatedVideos.maxRooms = relatedVideosModule.attr('data-count');
-			if ( RelatedVideos.maxRooms < 1 ) RelatedVideos.maxRooms = 1;
+			if ( RelatedVideos.maxRooms < 1 ) {
+				RelatedVideos.maxRooms = 1;
+			}
 			RelatedVideos.checkButtonState();
-			$('#RelatedVideos .addVideo').wikiaTooltip( $('#RelatedVideos .addVideoTooltip').html() );		
+			$('#RelatedVideos .addVideo').wikiaTooltip( $('#RelatedVideos .addVideoTooltip').html() );
 		}
 	},
 
@@ -37,7 +40,7 @@ var RelatedVideos = {
 		RelatedVideos.track( 'module/scrollRight' );
 		RelatedVideos.scroll( 1, false );
 	},
-	
+
 	scrollleft: function(){
 		RelatedVideos.track( 'module/scrollLight' );
 		RelatedVideos.scroll( -1, false );
@@ -170,7 +173,7 @@ var RelatedVideos = {
 				}
 			},
 			function(){
-				RelatedVideos.showError()
+				RelatedVideos.showError();
 			}
 		);
 	},
@@ -180,22 +183,22 @@ var RelatedVideos = {
 	addVideoLoginWrapper: function( e ){
 		e.preventDefault();
 		RelatedVideos.track( 'module/addVideo/beforeLogin' );
-		RelatedVideos.loginWrapper( RelatedVideos.addVideoModal, this )
+		RelatedVideos.loginWrapper( RelatedVideos.addVideoModal, this );
 	},
 
 	enableVideoSubmit: function(){
 		$('#relatedvideos-add-video').undelegate( '.rv-add-form', 'submit' );
 		$('#relatedvideos-add-video').delegate( '.rv-add-form', 'submit', RelatedVideos.addVideoConfirm );
-		
+
 	},
 
 	preventVideoSubmit: function(){
 		$('#relatedvideos-add-video').undelegate( '.rv-add-form', 'submit' );
-		$('#relatedvideos-add-video').delegate( 
+		$('#relatedvideos-add-video').delegate(
 			'.rv-add-form',
 			'submit',
 			function( e ){
-				e.preventDefault()
+				e.preventDefault();
 			}
 		);
 
@@ -224,7 +227,7 @@ var RelatedVideos = {
 				}
 			},
 			function(){
-				RelatedVideos.showError()
+				RelatedVideos.showError();
 			}
 		);
 	},
@@ -257,9 +260,9 @@ var RelatedVideos = {
 				}
 			},
 			function(){
-				RelatedVideos.showError()
+				RelatedVideos.showError();
 			}
-		)
+		);
 	},
 
 	injectCaruselElement: function( html ){
@@ -328,9 +331,9 @@ var RelatedVideos = {
 
 			},
 			function(){
-				RelatedVideos.showError()
+				RelatedVideos.showError();
 			}
-		)
+		);
 	}
 };
 
