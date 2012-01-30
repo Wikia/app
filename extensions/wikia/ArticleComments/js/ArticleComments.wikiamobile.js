@@ -16,7 +16,8 @@ var ArticleComments = ArticleComments || (function(){
 		clickEvent = WikiaMobile.getClickEvent(),
 		firstPage,
 		commsUl,
-		track = WikiaMobile.track;
+		track = WikiaMobile.track,
+		postComm;
 
 	function clickHandler(event){
 		event.preventDefault();
@@ -111,7 +112,14 @@ var ArticleComments = ArticleComments || (function(){
 						}
 					}else{
 						track('comment/new/submit');
-						commsUl.prepend(reply.find('li, .rpl'));
+						if(commsUl.length > 0){
+							commsUl.prepend(reply.find('li, .rpl'));
+						}else{
+							var com = $(postComm);
+							com.parent().html(com);
+							com.after(reply);
+						}
+						
 					}
 					wrapper.children('h1')[0].innerHTML = json.counter + '<span class=chev><span>';
 				}
@@ -121,13 +129,12 @@ var ArticleComments = ArticleComments || (function(){
 
 	//init
 	$(function(){
-		var postComm = document.getElementById('article-comm-form');
-
 		wrapper = $('#wkArtCom');
 		loadMore = $('#commMore');
 		loadPrev = $('#commPrev');
 		commsUl = $('#article-comments-ul');
 		totalPages = parseInt(wrapper.data('pages'));
+		postComm = document.getElementById('article-comm-form');
 
 		if(totalPages > 1 && wgArticleId){
 			loadMore.bind(clickEvent, clickHandler);
