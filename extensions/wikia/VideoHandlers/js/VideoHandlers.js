@@ -1,22 +1,35 @@
 var VideoHandlers = {
 	
 	modalWidth:		666,
+	playerWidth:		660,
+	thumbWidthThreshold:	320,
 
 	init: function() {
-		$('img.video-thumb').bind( 'click', VideoHandlers.displayVideoEmbed );
+		$('img.video-thumb').bind( 'click', VideoHandlers.displayVideo );
 		//@todo check with macbre if delegate is costly
 //		$('#WikiaArticle').delegate( 'img.video-thumb', 'click', VideoHandlers.displayVideoEmbed );
 	},
 	
-	displayVideoEmbed : function(e) {
+	displayVideo : function(e) {
 		e.stopPropagation();
 		e.preventDefault();
 		
 		var thumb = $(e.target);
+		var thumbParent = thumb.parent();
+		// thumbParent is an <a>. need to make relative and block for throbbing to work
+		thumbParent.css('position', 'relative').css('display', 'block').startThrobbing();
+		
+		if (thumb.width() < VideoHandlers.thumbWidthThreshold) {
+			VideoHandlers.displayVideoModal(thumb);
+		}
+		else {
+			VideoHandlers.displayVideoEmbed(thumb);
+		}
+	},
+	
+	displayVideoEmbed : function(thumb) {		
 		var thumbData = thumb.data();
 		var thumbParent = thumb.parent();
-		
-		thumbParent.startThrobbing();
 		
 		$.nirvana.getJson(
 			'VideoHandlerController',
@@ -46,45 +59,23 @@ var VideoHandlers = {
 				jwplayer( res.embedCode.id ).setup( res.embedCode );
 			});
 		} else if ( res.embedCode ) {
-			//@todo tbd
-			elem.html('<div style="width: '+res.embedCode.width+'; height: '+res.embedCode.height+';"><div id="'+res.embedCode.id+'"></div></div>');
-			jwplayer( res.embedCode.id ).setup( res.embedCode );
+			elem.html(res.embedCode);
 		} else {
 			//@todo error
 		}
 		
 	},
 
-	displayVideoModal : function(e) {
-		e.stopPropagation();
-		e.preventDefault();
-		
-		var thumb = $(e.target);
+	displayVideoModal : function(thumb) {
 		var thumbData = thumb.data();
 		var thumbParent = thumb.parent();
-
-
-//		$.showModal( thumbData.video, '', {
-//			'id': 'embedded-video-player',
-//			'width': RelatedVideos.modalWidth,
-//			'callback' : function(){
-//				
-//				
-//				
-//				
-//				
-//				jwplayer( res.embedCode.id ).setup( res.embedCode );
-//			}			
-//		});
-		
-		
 		
 		$.nirvana.getJson(
 			'VideoHandlerController',
 			'getEmbedCode',
 			{
 				title: thumbData.video,
-				width: thumb.width(),
+				width: VideoHandlers.playerWidth,
 				autoplay: true
 			},
 			function( res ) {
@@ -114,6 +105,7 @@ var VideoHandlers = {
 			},
 			function(){
 				//@todo show error msg
+				thumbParent.stopThrobbing();
 			}
 		);
 	}

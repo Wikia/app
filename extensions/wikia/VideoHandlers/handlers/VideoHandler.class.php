@@ -16,9 +16,10 @@ abstract class VideoHandler extends BitmapHandler {
 	protected $videoId = '';
 	protected $title = '';
 	protected $metadata = null;
-	protected static $aspectRatio;
-	protected static $isJSLoaded = false;
-	
+	protected $thumbnailImage = null;
+	protected static $aspectRatio = 1.7777778;
+
+
 	function getPlayerAssetUrl() {
 		return '';
 	}
@@ -27,7 +28,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * Returns embed code for a provider
 	 * @return string Embed HTML
 	 */
-	abstract function getEmbed( $articleId, $width, $autoplay=false, $isAjax=false );
+	abstract function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false );
 
 	function setVideoId( $videoId ){
 		$this->videoId = $videoId;
@@ -44,12 +45,24 @@ abstract class VideoHandler extends BitmapHandler {
 	function getTitle() {
 		return $this->title;
 	}
-	
+
+	function getAspectRatio(){
+		$metadata = $this->getMetadata(true);
+		if (!empty($metadata['aspectRatio'])) {
+			return $metadata['aspectRatio'];
+		}
+		return static::$aspectRatio;
+	}
+
+	function getHeight( $width ){
+		return (integer) ( $width / $this->getAspectRatio() );
+	}
+
 	/**
 	 * Get metadata. Connects with Api if metadata is not in database.
 	 * @return mixed array of data, or serialized version
 	 */
-	function getMetadata($unserialize=false) {
+	function getMetadata( $unserialize = false ) {
 		if (empty($this->metadata)) {
 			$this->metadata = $this->getApi() instanceof ApiWrapper 
 				? serialize( $this->getApi()->getMetadata() )
@@ -67,6 +80,14 @@ abstract class VideoHandler extends BitmapHandler {
 		$this->metadata = $metadata;
 	}
 
+	/**
+	 *
+	 * @param ThumbnailImage $thumbnailImage 
+	 */
+	function setThumbnailImage( $thumbnailImage ) {
+		$this->thumbnailImage = $thumbnailImage;
+	}
+	
 	/**
 	 * Returns propper api for a current handler
 	 * @return ApiWrapper object
@@ -95,6 +116,19 @@ abstract class VideoHandler extends BitmapHandler {
 		$metadata = $this->getMetadata(true);
 		return (!empty($metadata['duration']) ? $metadata['duration'] : null);
 	}
+	
+	/**
+	 * Get the video id that is used for embed code
+	 * @return string
+	 */
+	protected function getEmbedVideoId() {
+		$metadata = $this->getMetadata(true);
+		if (!empty($metadata['altVideoId'])) {
+			return $metadata['altVideoId'];
+		}
+		return $this->videoId;
+	}
+	
 
 	/**
 	 * Returns fedault thumbnail mime type
@@ -112,12 +146,6 @@ abstract class VideoHandler extends BitmapHandler {
 		global $wgOut, $wgExtensionsPath;
 
 		$oThumbnailImage = parent::doTransform( $image, $dstPath, $dstUrl, $params, $flags );
-
-		//@todo use jssnippets
-		if ( empty( self::$isJSLoaded ) ) {
-			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/VideoHandlers/js/VideoHandlers.js"></script>');
-			self::$isJSLoaded = true;
-		}		
 
 		return new ThumbnailVideo(
 			$oThumbnailImage->file,
