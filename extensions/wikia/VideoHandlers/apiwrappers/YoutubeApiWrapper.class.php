@@ -2,16 +2,8 @@
 
 class YoutubeApiWrapper extends ApiWrapper {
 
-	protected $interfaceObj = null;
-
 	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1?v=2&alt=json';
 	protected static $CACHE_KEY = 'youtubeapi';
-	protected static $CACHE_EXPIRY = 86400;
-
-	public function __construct($videoId) {
-		parent::__construct($videoId);
-		$this->getInterfaceObject();
-	}
 	
 	public function getTitle() {
 		return $this->getVideoTitle();
@@ -19,8 +11,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	
 	public function getDescription() {
 		$text = '';
-		if ($this->getVideoCategory()) $text .= 'Category: ' . $this->getVideoCategory();
-		if ($this->getVideoKeywords()) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
+		if ( $this->getVideoCategory() ) $text .= 'Category: ' . $this->getVideoCategory();
+		if ( $this->getVideoKeywords() ) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
 		return $text;
 	}
 	
@@ -29,8 +21,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 		$hiresUrl = '';
 		
 		$thumbnailDatas = $this->getVideoThumbnails();
-		foreach ($thumbnailDatas as $thumbnailData) {
-			switch ($thumbnailData['yt$name']) {
+		foreach ( $thumbnailDatas as $thumbnailData ) {
+			switch ( $thumbnailData['yt$name'] ) {
 				case 'default':
 					$lowresUrl = $thumbnailData['url'];
 					break;
@@ -43,39 +35,18 @@ class YoutubeApiWrapper extends ApiWrapper {
 		return !empty($hiresUrl) ? $hiresUrl : $lowresUrl;
 	}
 
-	public function getMetadata() {
-		$metadata = array();
-		
-		$metadata['videoId'] = $this->videoId;
-		$metadata['published'] = $this->getVideoPublished();
-		$metadata['category'] = $this->getVideoCategory();
-		$metadata['canEmbed'] = $this->canEmbed();
-		$metadata['hd'] = $this->isHdAvailable();
-		$metadata['keywords'] = $this->getVideoKeywords();
-		$metadata['duration'] = $this->getVideoDuration();
-		
-		return $metadata;
-	}
-
 	/**
-	 * Connect to YouTube's API and retrieve a data structure containing the response
-	 * @return type 
+	 * returns array of thumbnail data. Thumbnails taken from different
+	 * points of video. Elements: time, height, width, url
+	 * @return array
 	 */
-	protected function getInterfaceObject() {
-		global $wgMemc;
-		
-		if ($this->interfaceObj == null) {
-			$apiUrl = str_replace('$1', $this->videoId, self::$API_URL);
-			$memcKey = wfMemcKey( self::$CACHE_KEY, $apiUrl ); 
-			$response = $wgMemc->get( $memcKey );
-			if (empty($response)) {
-				$response = @Http::get($apiUrl);
-				$wgMemc->set( $memcKey, $response, self::$CACHE_EXPIRY );				
-			}
-			$this->interfaceObj = json_decode($response, true);
+	protected function getVideoThumbnails() {
+		if (!empty($this->interfaceObj['entry']['media$group']['media$thumbnail'])) {
+
+			return $this->interfaceObj['entry']['media$group']['media$thumbnail'];
 		}
-		
-		return $this->interfaceObj;
+
+		return array();
 	}
 
 	/**
@@ -95,7 +66,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * User-defined description
 	 * @return string
 	 */
-	protected function getVideoDescription() {
+	protected function getOriginalDescription() {
 		if (!empty($this->interfaceObj['entry']['media$group']['media$description']['$t'])) {
 			
 			return $this->interfaceObj['entry']['media$group']['media$description']['$t'];
@@ -137,7 +108,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	protected function getVideoPublished() {
 		if (!empty($this->interfaceObj['entry']['published']['$t'])) {
 			
-			return $this->interfaceObj['entry']['published']['$t'];
+			return strtotime($this->interfaceObj['entry']['published']['$t']);
 		}
 		
 		return '';
@@ -154,20 +125,6 @@ class YoutubeApiWrapper extends ApiWrapper {
 		}
 		
 		return '';
-	}
-	
-	/**
-	 * returns array of thumbnail data. Thumbnails taken from different 
-	 * points of video. Elements: time, height, width, url
-	 * @return array
-	 */
-	protected function getVideoThumbnails() {
-		if (!empty($this->interfaceObj['entry']['media$group']['media$thumbnail'])) {
-			
-			return $this->interfaceObj['entry']['media$group']['media$thumbnail'];
-		}
-		
-		return array();
 	}
 	
 	/**
@@ -193,4 +150,53 @@ class YoutubeApiWrapper extends ApiWrapper {
 		
 		return true;
 	}
+	
+	protected function sanitizeVideoId( $videoId ) {
+		if( ($pos = strpos( $videoId, '?' )) !== false ) {
+			$videoId = substr( $videoId, 0, $pos );
+		}
+		if( ($pos = strpos( $videoId, '&' )) !== false ) {
+			$videoId = substr( $videoId, 0, $pos );
+		}
+		return $videoId;
+	}
+
+	/*
+	 * Handle response errors
+	 */
+	protected function checkForResponseErrors( $status, $content, $apiUrl ){
+
+		// check if still exists
+		$code = $status->errors[0]['params'][0];
+		if( $code == 404 ) {
+			throw new VideoNotFoundException($status, $content, $apiUrl);
+		}
+
+		// interpret error XML response
+		$sp = new SimplePie();
+		$sp->set_raw_data( $content );
+		$sp->init();
+
+		// check if private
+		$googleShemas ='http://schemas.google.com/g/2005';
+		if( isset( $sp->data['child'][$googleShemas] ) ) {
+			$err = $sp->data['child'][$googleShemas]['errors'][0]['child'][$googleShemas]['error'][0]['child'][$googleShemas]['internalReason'][0]['data'];
+			if( $err == 'Private video' ) {
+				throw new VideoIsPrivateException( $status, $content, $apiUrl );
+			}
+		}
+
+		// check if quota exceeded
+		if ( isset( $sp->data['child'][''] ) ) {
+			$err = $sp->data['child']['']['errors'][0]['child']['']['error'][0]['child']['']['code'][0]['data'];
+			if( $err == 'too_many_recent_calls' ) {
+				throw new VideoQuotaExceededException( $status, $content, $apiUrl );
+			}
+		}
+
+		// return default
+		parent::checkForResponseErrors($status, $content, $apiUrl);
+	}
+
+	
 }

@@ -34,6 +34,7 @@ class WikiaLocalFileShared  {
 	public function getEmbedCode( $articleId, $width, $autoplay=false, $isAjax=false ){
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty($handler) ){
+			$handler->setThumbnailImage($this->oFile->getThumbnail($width));			
 			return $handler->getEmbed( $articleId, $width, $autoplay, $isAjax );
 		} else {
 			return false;
@@ -57,8 +58,11 @@ class WikiaLocalFileShared  {
 	 * as they are represented in filesystem by an image
 	 */
 	
-	function forceMime( $aMime ){
+	function forceMime( $aMime, $metadata = false ){
 		$this->forceMime = $aMime;
+		if ( !empty( $metadata ) ){
+			$this->forceMetadata = $metadata;
+		}
 	}
 
 	function setVideoId( $videoId ){
@@ -100,15 +104,15 @@ class WikiaLocalFileShared  {
 
 	function afterSetProps() {
 		if ( $this->forceMime ){
-
 			// if mime type was forced, repopulate File with proper data
 			$this->oFile->dataLoaded = true;
 			$this->oFile->mime = $this->forceMime;
 			list( $this->oFile->major_mime, $this->oFile->minor_mime ) = LocalFile::splitMime( $this->oFile->mime );
 			$handler = MediaHandler::getHandler( $this->oFile->getMimeType() );
+			
 			$handler->setVideoId( $this->oFile->videoId );
 
-			$this->oFile->metadata = $handler->getMetadata();
+			$this->oFile->metadata = ( isset( $this->forceMetadata ) ) ? $this->forceMetadata : $handler->getMetadata();
 			$this->oFile->media_type = self::VIDEO_MEDIA_TYPE;
 			$this->forceMime = false;
 		}

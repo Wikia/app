@@ -98,7 +98,13 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
+		$out = $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
+		// VideoHandlers.js is required to handle click on thumbnail
+		$out .= F::build('JSSnippets')->addToStack(
+			array('/extensions/wikia/VideoHandlers/js/VideoHandlers.js')
+			);
+		
+		return $out;
 	}
 }
 

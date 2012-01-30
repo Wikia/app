@@ -61,16 +61,19 @@ class JWPlayer {
 		// HD
 		if ($isHd) {
 			if ($hdfile) {
-				
+				$jwplayerData['plugins']['hd-2'] = array('file'=>$hdfile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
 			}
 			else {
 				$jwplayerData['plugins']['hd-2'] = array();
 			}
 		}
 		
+		// preroll
+//		$jwplayerData['plugins']['http://lp.longtailvideo.com/5/adtvideo/adtvideo.swf'] = array('config'=>'/extensions/wikia/WikiaVideo/wikia_exclusive.xml');
+//		
 		// ad
 		if ($showAd) {
-			self::$JWPLAYER_GOOGIMA_DATA['ad.tag'] = self::initGoogleIMAAdTag($cityShort);
+			self::$JWPLAYER_GOOGIMA_DATA['ad.tag'] = self::initGoogleIMAAdTag($articleId, $cityShort);
 			if (self::$JWPLAYER_GOOGIMA_DATA['ad.tag']) {
 				$jwplayerData['plugins']['googima'] = self::$JWPLAYER_GOOGIMA_DATA;
 			}
@@ -103,7 +106,7 @@ class JWPlayer {
 				$text = '"'.$key.'": ';
 				if (startsWith($val, 'http://')
 				|| startsWith($val, 'https://')) {
-					$text .= self::initJWPlayerURL($val, $asJSON);
+					$text .= self::initJWPlayerURL($val, true);
 				}
 				else {
 					$text .= '"'.$val.'"';

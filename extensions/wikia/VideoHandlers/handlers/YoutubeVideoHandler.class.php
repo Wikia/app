@@ -11,7 +11,7 @@ class YoutubeVideoHandler extends VideoHandler {
 	}
 	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false) {
-		$height = (integer) ($width / self::$aspectRatio);
+		$height =  $this->getHeight( $width );
 		return JWPlayer::getEmbedCode($articleId, $this->getVideoId(), self::$urlTemplate.$this->getVideoId(), $this->getTitle(), $width, $height, false, $this->getDuration(), $this->isHd(), null, null, null, $autoplay, $isAjax);
 	}
 		

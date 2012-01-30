@@ -1840,7 +1840,9 @@ EOD;
 				$height = round( $width / $this->getRatio() );
 			}
 		}
-                switch( $this->mProvider ) {
+
+
+		switch( $this->mProvider ) {
                         case self::V_METACAFE:
 				$url = 'http://www.metacafe.com/fplayer/' . $this->mId . '/' . $this->mData[0];
 				$code = 'custom';
