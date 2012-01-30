@@ -28,6 +28,9 @@ $wgUpdates[ "mysql" ][] = array( "do_page_wikia_props_update" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "imagetags" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_queue" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "send_stats" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "validate" );
+$wgUpdates[ "mysql" ][] = array( "do_drop_table", "cur" );
+
 if( !empty( $wgCityId ) ) {
 	$wgUpdates[ "mysql" ][] = array( "do_drop_table", "searchindex" );
 }
@@ -109,11 +112,11 @@ function is_valid_utf8_text( $text ) {
 
 function do_clean_math_table() {
 	global $wgDatabase;
-	
+
 	$table = 'math';
 	$primaryKey = 'math_inputhash';
 	$fields = array('math_inputhash','math_outputhash','math_html','math_mathml');
-	
+
 	wfOut( "Checking {$table} table and removing rows with different encoding than utf8...\n" );
 	if ( $wgDatabase->tableExists( $table ) ) {
 		wfOut( "...scanning table..." );
@@ -137,7 +140,7 @@ function do_clean_math_table() {
 		$wgDatabase->freeResult($res);
 		$count = count($wrong);
 		wfOut( "ok (found " . count($wrong) . " rows)\n" );
-		
+
 		// and finally remove all the malformed rows
 		if ($count > 0) {
 			wfOut( "...removing malformed rows..." );
@@ -157,7 +160,7 @@ function do_clean_math_table() {
 			wfOut( "ok\n" );
 		}
 	}
-	
+
 }
 
 /**
