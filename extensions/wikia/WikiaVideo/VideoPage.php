@@ -1175,7 +1175,7 @@ EOD;
 				}
 				break;
 			case self::V_VIMEO:
-				$file = @Http::get( "http://vimeo.com/api/clip/" . $this->mId . '.php', FALSE );
+				$file = @Http::get( "http://vimeo.com/api/v2/video/" . $this->mId . '.php', FALSE );
 				if ($file) {
 					$data = unserialize( $file );
 					$this->mVideoName = trim( $data[0]["title"] );
