@@ -118,14 +118,15 @@ function renderLyricTag($input, $argv, $parser)
 	// It seems that the parser is called multiple-times when saving a page-edit.
 	$wgFirstLyricTag = true;
 
+	$retVal = "";
 	// NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
 	// If a user has ringtone-ads turned off, their CSS will make the ad invisible.
 	if( !empty( $wgLyricTagDisplayRingtone ) && $wgFirstLyricTag ){
-		GLOBAL $wgTitle, $wgExtensionsPath;
+		GLOBAL $wgExtensionsPath;
 		$imgPath = "$wgExtensionsPath/3rdparty/LyricWiki";
-		$artist = $wgTitle->getDBkey();
+		$artist = $parser->mTitle->getDBkey();
 		$colonIndex = strpos("$artist", ":");
-		$songTitle = $wgTitle->getText();
+		$songTitle = $parser->mTitle->getText();
 		$artistLink = $artist;
 		$songLink = $songTitle;
 		if($colonIndex !== false){
@@ -155,7 +156,6 @@ function renderLyricTag($input, $argv, $parser)
 	#parse embedded wikitext
 	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
 
-	$retVal = "";
 	$retVal.= gracenote_getNoscriptTag();
 	$retVal.= "<div class='lyricbox'>";
 	$retVal.= ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
