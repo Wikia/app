@@ -203,7 +203,7 @@ $comment-left-margin: $page-padding + 60px;
 		width: 100%;
 		display: none;
 
-		&:active, &.wkAct {
+		&:active, &.fkAct {
 			color: white;
 			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
 		}
