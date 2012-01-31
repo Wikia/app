@@ -89,8 +89,7 @@ class WikiaPhotoGalleryUpload extends WikiaTempFilesUpload{
 						'height' => $thumbnail->height,
 						'url' => $thumbnail->url,
 						'width' => $thumbnail->width,
-					),
-					'isImageStrict' => !!WikiaPhotoGalleryHelper::isImageStrict($file),
+					)
 				);
 			} else {
 				// use regular MW upload
@@ -114,11 +113,6 @@ class WikiaPhotoGalleryUpload extends WikiaTempFilesUpload{
 					    'width' => ( !empty( $result->ok ) ) ? $imageFile->getWidth() : 0
 					),
 				);
-
-				// check if this image has correct dimensions to be placed in a slider (BugId:2787)
-				if (!empty($result->ok)) {
-					$ret['isImageStrict'] = !!WikiaPhotoGalleryHelper::isImageStrict($imageFile);
-				}
 			}
 		} else {
 			$reason = $nameValidation;

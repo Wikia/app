@@ -136,7 +136,6 @@ var WikiaPhotoGallery = {
 	// setup selected page (change dialog title, render content)
 	selectPage: function(selectedPage, params) {
 		params = params || {};
-		$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
 
 		// store current and previous page
 		params.source = this.editor.currentPage;
@@ -237,7 +236,6 @@ var WikiaPhotoGallery = {
 
 			// Slider preview page
 			case this.SLIDER_PREVIEW_PAGE:
-				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block')
 
 				title = msg['wikiaPhotoGallery-sliderpreview-title'];
 
@@ -754,10 +752,6 @@ var WikiaPhotoGallery = {
 				// tracking
 				var trackerSuffix = self.getPageTrackerSuffix();
 				self.track('/dialog/' + trackerSuffix + '/upload/button');
-				$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
-				if ( self.isSlider() ) {
-					$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
-				}
 			});
 
 		// upload form submittion
@@ -799,51 +793,41 @@ var WikiaPhotoGallery = {
 						$('#WikiaPhotoGalleryImageUploadButton').attr('disabled', false);
 						$('#WikiaPhotoGalleryUploadProgress').hide();
 
-						// check if uploaded image can be added to the slider
-						if ( self.isSlider() && ( data.success || data.conflict ) && (!data.isImageStrict) ){
-							self.log('Image size not valid!');
+                                                // are we editing gallery entry?
+                                                var imageId = self.editor.currentPageParams.imageId;
 
-							// clear upload form
-							$('#WikiaPhotoGalleryImageUpload').val('');
-							$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'block');
-							$('#WikiaPhotoGalleryImageUploadSize').css('display', 'none');
-					} else {
-							// are we editing gallery entry?
-							var imageId = self.editor.currentPageParams.imageId;
+                                                if (data.success) {
+                                                        // proceed to the caption / link page
+                                                        self.selectPage(self.CAPTION_LINK_PAGE, {
+                                                                imageId: imageId,
+                                                                imageName: data.name
+                                                        });
+                                                } else if (data.conflict) {
+                                                        // handle name conflicts
+                                                        // generate thumbnail of temporary uploaded file (and show it next to the current one from MW)
 
-							if (data.success) {
-								// proceed to the caption / link page
-								self.selectPage(self.CAPTION_LINK_PAGE, {
-									imageId: imageId,
-									imageName: data.name
-								});
-							} else if (data.conflict) {
-								// handle name conflicts
-								// generate thumbnail of temporary uploaded file (and show it next to the current one from MW)
+                                                        var thumbnail = '<img src="' + data.thumbnail.url + '" alt="" border="0" ' +
+                                                                'width="' + data.thumbnail.width + '" height ="' + data.thumbnail.height + '" />';
 
-								var thumbnail = '<img src="' + data.thumbnail.url + '" alt="" border="0" ' +
-									'width="' + data.thumbnail.width + '" height ="' + data.thumbnail.height + '" />';
+                                                        self.selectPage(self.UPLOAD_CONFLICT_PAGE, {
+                                                                imageId: imageId,
+                                                                imageName: data.name,
+                                                                nameParts: data.nameParts,
+                                                                tempId: data.tempId,
+                                                                thumbnail: thumbnail
+                                                        });
+                                                } else {
+                                                        // error handling
+                                                        self.log('upload error #' + data.reason);
 
-								self.selectPage(self.UPLOAD_CONFLICT_PAGE, {
-									imageId: imageId,
-									imageName: data.name,
-									nameParts: data.nameParts,
-									tempId: data.tempId,
-									thumbnail: thumbnail
-								});
-							} else {
-								// error handling
-								self.log('upload error #' + data.reason);
+                                                        self.showAlert(
+                                                                self.editor.msg['wikiaPhotoGallery-upload-title'],
+                                                                data.message
+                                                        );
 
-								self.showAlert(
-									self.editor.msg['wikiaPhotoGallery-upload-title'],
-									data.message
-								);
-
-								// clear upload form
-								$('#WikiaPhotoGalleryImageUpload').val('');
-							}
-						}
+                                                        // clear upload form
+                                                        $('#WikiaPhotoGalleryImageUpload').val('');
+                                                }
 					}
 				});
 			});
@@ -1022,12 +1006,6 @@ var WikiaPhotoGallery = {
 
 		// setup is done - show the results
 		results.show();
-
-		if (self.isSlider()){
-			// hides all images that does not have 'data-strict'.
-			$('#WikiaPhotoGallerySearchResults').find('li').hide()
-				.filter('[data-strict]').show();
-		}
 	},
 
 	// setup mini-MW toolbar for caption editor
@@ -1197,10 +1175,6 @@ var WikiaPhotoGallery = {
 		// TODO: update?
 		if (query != '') {
 			this.track('/dialog/upload/find/find/' + query.replace(/[^A-Za-z0-9]/g, '_'));
-			$('#WikiaPhotoGalleryImageUploadSizeError').css('display', 'none');
-			if (self.isSlider()){
-				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
-			}
 		}
 	},
 
@@ -1849,10 +1823,6 @@ var WikiaPhotoGallery = {
 
 			self.log('adding next picture...');
 			self.track('/dialog/slider/preview/addPhoto');
-
-			// hides all images that does not have 'data-strict'.
-			$('#WikiaPhotoGallerySearchResults').find('li').hide()
-				.filter('[data-strict]').show();
 
 			self.selectPage(self.UPLOAD_FIND_PAGE, {});
 		});
