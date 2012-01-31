@@ -8,8 +8,8 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension and cannot be used standalone.\n";
-    exit( 1 ) ;
+	echo "This is MediaWiki extension and cannot be used standalone.\n";
+	exit( 1 ) ;
 }
 
 class ListusersAjax {	
@@ -25,9 +25,9 @@ class ListusersAjax {
 	 */	
 	public static function axShowUsers ( ) {
 		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgContLang;
-		
-        wfProfileIn( __METHOD__ );
-	
+
+		wfProfileIn( __METHOD__ );
+
 		$groups 	= $wgRequest->getVal('groups');
 		$username 	= $wgRequest->getVal('username');
 		$edits 		= $wgRequest->getVal('edits');
@@ -40,7 +40,7 @@ class ListusersAjax {
 		if ( !isset($edits) ) {
 			$edits = Listusers::DEF_EDITS;
 		}
-		
+
 		$result = array(
 			'sEcho' => intval($loop), 
 			'iTotalRecords' => 0, 
@@ -51,7 +51,7 @@ class ListusersAjax {
 
 		if ( is_object($wgUser) ) {
 			wfLoadExtensionMessages(Listusers::TITLE);
-			
+
 			$records = array();
 			$data = new ListusersData($wgCityId, 0);
 			if ( is_object($data) ) {
@@ -65,7 +65,7 @@ class ListusersAjax {
 				$data->setOrder( $orders );
 				$records = $data->loadData();
 			}
-			
+
 			if ( !empty( $records ) && is_array( $records ) ) {
 				$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 				$result['iTotalDisplayRecords'] = intval($records['cnt']);
@@ -73,19 +73,23 @@ class ListusersAjax {
 				$rows = array();
 				if ( isset($records['data'] ) ) {
 					foreach ( $records['data'] as $user_id => $data ) {
-						$username  = Xml::openElement('div', array( 'style' => ( $data['blcked'] ) ? 'color:#DF2930' : '' ) );
+						$username  = Xml::openElement('div', array( 'class' => ( $data['blcked'] ) ? 'listusers_blockeduser' : '' ) );
 						$username .= Xml::tags( 'span', array( 'style' => 'font-size:90%;font-weight:bold;padding-left:5px;' ), $data['user_link'] );
 						$username .= "<br />";
 						$username .= Xml::tags( 'span', array( 'style' => 'font-size:77%; padding-left:5px;' ), $data['links'] );
 						$username .= Xml::closeElement('div');
 
-						$groups = $data['groups'];
-						$edits = $data['rev_cnt'];
-						$last_logged = ( isset($data['last_login']) ) ? $data['last_login'] : "-";
-						
+						$groups = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['groups'] ) : $data['groups'];
+						$edits = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['rev_cnt'] ) : $data['rev_cnt'];
+						$last_logged = ( $data['blcked'] ) ? Xml::tags(
+							'span',
+							array( 'class' => 'listusers_blockeduser' ),
+							( isset( $data['last_login'] ) ? $data['last_login'] : "-" )
+						) : ( isset( $data['last_login'] ) ? $data['last_login'] : "-" );
+
 						$last_edited  = "-";
 						if ( $data['last_edit_ts'] && $data['last_edit_page'] ) {
-							$last_edited  = Xml::openElement('div');
+							$last_edited  = Xml::openElement( 'div' );
 							$last_edited .= Xml::tags( 'span', 
 								array( 'style' => 'font-size:90%;' ), 
 								Xml::element('a', array( 'href' => $data['last_edit_page'] ), $data['last_edit_ts'] ) 
@@ -96,7 +100,7 @@ class ListusersAjax {
 							);
 							$last_edited .= Xml::closeElement('div');
 						} 
-						
+
 						$rows[] = array(
 							$username, //User name 
 							$groups, //Groups
