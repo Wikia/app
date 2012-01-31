@@ -23,6 +23,7 @@ $messages['en'] = array(
 	'userrenametool-requested-rename' => 'User $1 requested a rename',
 	'userrenametool-did-not-request-rename' => 'User $1 did not request a rename',
 	'userrenametool-previously-renamed' => 'User $1 has already had a rename',
+	'userrenametool-phalanx-matches' => 'Phalanx filters matching $1:',
 	'userrenametool-confirm' => 'Yes, rename the user',
 	'userrenametool-submit' => 'Change username',
 
