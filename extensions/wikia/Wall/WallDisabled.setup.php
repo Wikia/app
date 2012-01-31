@@ -41,7 +41,7 @@ $app->registerHook('DismissWikiaNewtalks', 'WallDisabledHooksHelper', 'onDismiss
 
 
 //watchlist
-$app->registerHook('WatchArticle', 'WallDisabledHooksHelper', 'onWatchArticle');
-$app->registerHook('UnwatchArticle', 'WallDisabledHooksHelper', 'onUnwatchArticle');
+//$app->registerHook('WatchArticle', 'WallDisabledHooksHelper', 'onWatchArticle');
+//$app->registerHook('UnwatchArticle', 'WallDisabledHooksHelper', 'onUnwatchArticle');
 
 include($dir . '/WallNamespaces.php');
