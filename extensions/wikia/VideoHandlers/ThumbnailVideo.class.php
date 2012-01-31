@@ -93,7 +93,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
 		}
-		$attribs['class'] = 'video-thumb';
+		$attribs['class'] = 'Wikia-video-thumb';
 		if ( !empty( $options['img-class'] ) ) {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
