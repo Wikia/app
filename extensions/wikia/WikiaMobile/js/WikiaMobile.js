@@ -232,6 +232,9 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		hideURLBar();
 		
+		//get search input
+		navigationSearch.remove().appendTo('#wkTopBar');
+		
 		//processImages
 		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function() {
 			var self = $(this);
@@ -314,6 +317,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		});
 
 		searchToggle.bind(clickEvent, function(event){
+			event.preventDefault();
 			if(navigationBar.hasClass('srhOpn')){
 				track(['search', 'toggle', 'close']);
 				if(searchInput.val()){
@@ -339,6 +343,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		.find('ul ul').parent().addClass('cld');
 
 		navToggle.bind(clickEvent, function(event){
+			event.preventDefault();
 			if(navigationBar.hasClass('fllNav')){
 				closeNav();
 			}else{
@@ -369,9 +374,9 @@ var WikiaMobile = WikiaMobile || (function() {
 		//add 'active' state to devices that does't support it
 		$("#wkNavMenu li, #wkNavBack, #wkRelPag li, .rpl")
 		.bind("touchstart", function () {
-			$(this).addClass("wkAct");
+			$(this).addClass("fkAct");
 		}).bind("touchend touchcancel", function() {
-			$(this).removeClass("wkAct");
+			$(this).removeClass("fkAct");
 		});
 
 		lvl1.delegate('.cld', clickEvent, function(event) {
