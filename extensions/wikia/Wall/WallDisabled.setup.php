@@ -20,7 +20,11 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__);
 
 $app->registerClass('WallDisabledHooksHelper', $dir . '/WallDisabledHooksHelper.class.php');
-$app->registerClass('WallCopyFollowsTask', $dir . '/WallCopyFollowsTask.class.php');
+
+// register task in task manager
+if (function_exists( "extAddBatchTask" ) ) {
+	extAddBatchTask(dirname(__FILE__)."/WallCopyFollowsTask.class.php", "wallcopyfollows", "WallCopyFollowsTask");
+}
 
 // Notifications are required on NonWall Wikis in order to show proper
 // lower-left corner notification bubbles from Wall Wikis
