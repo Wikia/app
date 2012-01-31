@@ -35,8 +35,6 @@ var WMU_height_par = null;
 var WMU_widthChanges = 1;
 var WMU_inGalleryPosition = false;
 var WMU_skipDetails = false;
-var RTEInstanceElemId = RTEInstanceElemId || 'wpTextbox1';
-
 
 if (typeof WMU_box_filled == 'undefined') WMU_box_filled = [];
 
@@ -263,7 +261,7 @@ function WMU_readjustSlider( value ) {
 
 function WMU_getCaret() {
         if (typeof FCK == 'undefined') {
-                var control = document.getElementById(RTEInstanceElemId);
+                var control = document.getElementById(WikiaEditor.instanceId);
         } else {
                 var control = FCK.EditingArea.Textarea;
         }
@@ -288,7 +286,7 @@ function WMU_getCaret() {
 function WMU_inGallery() {
         var originalCaretPosition = WMU_getCaret();
         if (typeof FCK == 'undefined') {
-                var originalText = document.getElementById(RTEInstanceElemId).value;
+                var originalText = document.getElementById(WikiaEditor.instanceId).value;
         } else {
                 var originalText = FCK.EditingArea.Textarea.value;
         }
