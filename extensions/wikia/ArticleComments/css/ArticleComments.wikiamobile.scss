@@ -159,12 +159,10 @@ $comment-left-margin: $page-padding + 60px;
 		border: 1px solid $border-color;
 		@include box-shadow(inset 2px 2px 8px -3px grey);
 		border-radius: 5px 0 0 5px;
-		height: 35px;
-		font-size: large;
+		height: 30px;
+		font-size: 18pt;
 		font-weight: 100;
-		line-height: 35px;
 		padding-left: 5px;
-		resize: none;
 		position: relative;
 		width: 82%;
 	
@@ -174,7 +172,7 @@ $comment-left-margin: $page-padding + 60px;
 	}
 
 	input {
-		height: 37px;
+		height: 32px;
 		width: 17%;
 		padding: 0;
 		font-size: small;
