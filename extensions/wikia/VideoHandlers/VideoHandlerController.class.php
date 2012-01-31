@@ -37,4 +37,43 @@ class VideoHandlerController extends WikiaController {
 			$this->setVal('error', $error);
 		}
 	}
+
+	public function getSanitizedOldVideoTitleString(){
+		$sTitle = $sOrginalTitle = $this->getVal( 'videoText', '' );
+
+		$prefix = '';
+		if ( strpos( $sTitle, ':' ) === 0 ){
+			$sTitle = substr( $sTitle, 1);
+			$prefix = ':';
+		}
+		if ( empty( $sTitle ) ){
+			$this->setVal( 'error', 1 );
+		}
+
+		$sTitle = str_replace( '/', '_', $sTitle );
+		$sTitle = str_replace( ':', '_', $sTitle );
+
+		if ( $sTitle != $sOrginalTitle ) {
+			// remove multi _
+			$aTitle = explode( '_', $sTitle );
+			$sTitle = implode ( '_', array_filter( $aTitle ) );
+		}
+		$this->setVal(
+			'result',
+			$prefix.$sTitle
+		);
+	}
+
+	public function hasForbiddenCharacters(){
+		$sTitle = $this->getVal( 'videoText', '' );
+
+		if ( empty( $sTitle ) ){
+			$this->setVal( 'error', 1 );
+		}
+		
+		$this->setVal(
+			'result',
+			strpos( $sTitle, '/' ) !== false
+		);
+	}
 }
