@@ -11,20 +11,23 @@
 			'ModeSource',
 			'ModeWysiwyg'
 		],
-		
-		init: function() {
-			// (BugId:16836) 
-			var editor = this.editor;
-			// Tabs are in place - hide them. 
-			editor.on('editboxReady', function() {
-				editor.getSpace('tabs').hide();
-			});
-			// Page is fully loaded - show tabs. 
-			$(window).bind('load', function() {
-				editor.getSpace('tabs').show();			
-			});
-		}
 
+		init: function() {
+			var editor = this.editor,
+				tabs = editor.getSpace('tabs');
+
+			if (tabs) {
+				// Tabs are in place - hide them. 
+				editor.on('editboxReady', function() {
+					tabs.hide();
+				});
+
+				// Page is fully loaded - show tabs (BugId:16836)  
+				$(window).bind('load', function() {
+					tabs.show();			
+				});
+			}
+		}
 	});
 
 })(this);
