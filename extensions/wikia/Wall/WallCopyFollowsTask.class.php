@@ -36,7 +36,7 @@ class WallCopyFollowsTask extends BatchTask {
 	 */
 	public function execute($params = null) {
 		$noErrors = true;
-		$params = unserialize($params);
+		$params = unserialize($params->task_arguments);
 		
 		if( isset($params['wiki_id']) ) {
 			$wikiId = intval($params['wiki_id']);
