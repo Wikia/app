@@ -1,0 +1,15 @@
+@import "../../../../skins/oasis/css/core/color";
+
+.SpecialPageWrapper {
+	border: 1px dashed #DDD;
+	margin: 20px auto;
+	padding: 20px;
+	width: 500px;
+	
+	#SpecialMiniEditor {
+		border: 1px $color-page-border solid;
+		height: 75px;
+		padding: 3px; 
+		width: 500px;
+	}
+}

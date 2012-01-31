@@ -134,14 +134,13 @@ img.WikiaPhotoGalleryProgress {
 
 /* Search field */
 #WikiaPhotoGallerySearch {
-	position: absolute;
-	right: 13px;
-	top: 130px;
+	float: right;
+	margin-top: 1em;
 	width: 245px;
 }
 
 #WikiaPhotoGallerySearch input[type="text"] {
-	width: 200px;
+	width: 193px;
 }
 
 #WikiaPhotoGallerySearch button {

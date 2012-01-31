@@ -1,23 +1,59 @@
 (function(window,$){
-
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
 
-	// fallback - begin
-	//window.EditPageToolkit = window.WikiaEditor;
-	// fallback - end
-
 	// config defaults
-	WE.config = {
-
-	};
+	WE.config = {};
 
 	// define subnamespaces
 	WE.plugins = {};
 	WE.modules = {};
+	WE.instances = {};
+
+	// instance tracking
+	WE.instanceId = '';
+	WE.instanceCount = 0;
+
+	// Update the current instance
+	WE.setInstanceId = function(instanceId) {
+		if (instanceId == WE.instanceId) {
+			$().log('instance "' + WE.instanceId + '" already active', 'WikiaEditor');
+			return;
+		}
+
+		var editor = WE.instances[WE.instanceId];
+
+		if (editor) {
+			editor.fire('editorDeactivated');
+			$().log('instance "' + WE.instanceId + '" deactivated', 'WikiaEditor');
+		}
+
+		WE.instanceId = instanceId;
+		WE.instances[instanceId].fire('editorActivated');
+		$().log('instance "' + WE.instanceId + '" activated', 'WikiaEditor');
+	};
+
+	// Returns the currently active instance
+	WE.getInstance = function(instanceId) {
+		return WE.instances[instanceId || WE.instanceId];
+	};
 
 	WE.create = function( plugins, config ) {
-		var instance = new WE.Editor(plugins,config);
+		var instance = new WE.Editor(plugins, config),
+			instanceId = config.body.attr('id');
+
+		if (!instanceId) {
+			instanceId = 'WikiaEditor-' + WE.instanceCount;
+
+			// Body must have an ID! This is a requirement of CKE
+			config.body.attr('id', instanceId);
+		}
+
+		WE.instanceId = instance.instanceId = instanceId;
+		WE.instances[WE.instanceId] = instance;
+		WE.instanceCount++;
+
 		instance.show();
+
 		return instance;
 	};
 
@@ -73,7 +109,7 @@
 			WE.Editor.superclass.constructor.call(this);
 			WE.fire('newInstance',plugins,config);
 			this.pluginConfigs = plugins;
-			this.config = $.extend(WE.config,config);
+			this.config = $.extend(true, {}, WE.config, config); // clone
 			this.initialized = false;
 			this.state = false;
 			this.mode = false;
@@ -127,15 +163,19 @@
 		setState: function( state ) {
 			if (this.state == state) return;
 			this.state = state;
-			this.fire('state',this,this.state);
+			this.fire('state', this, state);
 		},
 
 		setMode: function( mode, forceEvents ) {
 			if (this.mode == mode && !forceEvents) return;
-			this.element.removeClass('mode-'+this.mode);
+			this.element.removeClass('mode-' + this.mode);
 			this.mode = mode;
-			this.element.addClass('mode-'+this.mode);
-			this.fire('mode',this,this.mode);
+			this.element.addClass('mode-' + mode);
+			this.fire('mode', this, mode);
+		},
+
+		setAsActiveInstance: function() {
+			WE.setInstanceId(this.instanceId);
 		},
 
 		show: function() {
@@ -144,11 +184,13 @@
 				this.mode = this.config.mode = this.config.mode || 'source';
 				this.setState(this.states.INITIALIZING);
 				this.element = this.config.element;
-				this.fire('initConfig',this);
-				this.fire('beforeInit',this);
-				this.fire('init',this);
-				this.fire('initEditor',this,this.editorElement);
-				this.fire('initDom',this);
+				// track if original element is a div rather than a textarea.
+				this.fromDiv = $('#' + this.instanceId).is("div");
+				this.fire('initConfig', this);
+				this.fire('beforeInit', this);
+				this.fire('init', this);
+				this.fire('initEditor', this);
+				this.fire('initDom', this);
 				this.initialized = true;
 				this.fire('afterShow',this, this.editorElement);
 			}
@@ -180,29 +222,34 @@
 			this._log('error',Array.prototype.slice.call(arguments,0));
 			throw arguments[0];
 		}
-
 	});
+	
 
 	/**
 	 * Base plugin class
 	 */
-	WE.plugin = $.createClass(Observable,{
+	WE.plugin = $.createClass(Observable, {
 
 		constructor: function( editor ) {
 			WE.plugin.superclass.constructor.call(this);
+
+			var methodName,
+				autobindMethods = ['initConfig', 'beforeInit', 'init', 'initEditor', 'initDom', 'afterShow'],
+				i = 0,
+				l = autobindMethods.length;
+
 			this.editor = editor;
-			var autobind = {'initConfig':1,'beforeInit':1,'init':1,'initEditor':1,'initDom':1, 'afterShow' : 1};
-			for (var fn in autobind) {
-				if (typeof this[fn] == 'function') {
-					this.editor.on(fn,this[fn],this);
+
+			for (; methodName = autobindMethods[i], i < l; i++) {
+				if (typeof this[methodName] == 'function') {
+					this.editor.on(methodName, this[methodName], this);
 				}
 			}
 		},
 
 		proxy: function( fn ) {
-			return $.proxy(fn,this);
+			return $.proxy(fn, this);
 		}
-
 	});
 
 	/**
@@ -221,7 +268,6 @@
 			args[0] = this.MESSAGE_NAMESPACE + args[0];
 			return $.msg.apply($,args);
 		}
-
 	});
 
 	/**
@@ -253,16 +299,21 @@
 			var chk = function() {
 				if (!this.initDomCalled) return;
 				if (this.uiReadyFired) return;
-				for (var i=0;i<this.providers.length;i++)
+
+				for (var i=0;i<this.providers.length;i++) {
 					if (!this.providers[i].ready) return;
+				}
+
 				this.uiReadyFired = true;
 				this.addDefaults();
 				this.editor.fire('uiReady',this);
 			}
+
 			var chkInitDom = function() {
 				this.initDomCalled = true;
 				chk.apply(this);
 			}
+
 			this.editor.on({
 				uiExternalProviderReady: chk,
 				initDom: chkInitDom,
@@ -271,14 +322,16 @@
 		},
 
 		buildClickHandler: function( config ) {
+			var editor = this.editor;
+
 			if (!config.click) {
-				var editor = this.editor;
 				config.click = function() {
-					var mode = editor.mode;
-					if (typeof config['click'+mode] == 'function')
+				    var mode = editor.mode;
+					if (typeof config['click'+mode] == 'function'){
 						return config['click'+mode].apply(this,arguments);
-					else
+					} else{ 
 						editor.warn('Mode "'+mode+'" not supported for button: '+config.name);
+					}
 				};
 				this.editor.fire('uiBuildClickHandler',this.editor,config);
 			}
@@ -352,7 +405,6 @@
 			this.editor.warn('UI Element not found: ' + name);
 			return '';
 		}
-
 	});
 
 	/**
@@ -379,7 +431,6 @@
 			var e = new WE.ui[type](this.editor,config,data);
 			return e.render();
 		}
-
 	});
 
 
@@ -407,9 +458,11 @@
 				var space = $(spaces.get(i));
 				this.spaces[space.attr(this.SPACE_TYPE_ATTRIBUTE)] = space;
 			}
+
 			// Override with config
-			if (this.editor.config.spaces)
+			if (this.editor.config.spaces) {
 				this.spaces = $.extend(this.spaces,this.editor.config.spaces);
+			}
 		},
 
 		init: function() {
@@ -427,7 +480,6 @@
 		getEditorSpace: function() {
 			return this.getSpace(this.EDITOR_SPACE);
 		}
-
 	});
 
 	/**
@@ -470,7 +522,6 @@
 			}
 			return module;
 		}
-
 	});
 
 	/**
@@ -526,7 +577,6 @@
 			this.editor.fire('toolbarsRendered',this.editor);
 			this.editor.fire('toolbarsResized',this.editor);
 		}
-
 	});
 
 	/**
@@ -558,18 +608,14 @@
 				WE.functions[id] = false;
 			}
 		}
-
 	});
 
 	/**
 	 * Core plugins suite
 	 */
 	WE.plugins.core = $.createClass(WE.plugin,{
-
-		requires: ['functions','messages',
-		    'ui','uiautoregister',
-		    'spaces','toolbarspaces','collapsiblemodules']
-
+		// All these are included in this file except collapsiblemodules
+		requires: ['functions', 'messages', 'ui', 'uiautoregister', 'spaces', 'toolbarspaces', 'collapsiblemodules', 'tracker']
 	});
 
 	/**
@@ -579,47 +625,70 @@
 
 		requires: ['ui'],
 
+		// These methods will be publicly available on the editor instance
+		proxyMethods: ['getContent', 'setContent', 'getEditbox', 'getEditboxWrapper', 'getEditorElement', 'editorFocus', 'editorBlur'],
+
 		initConfig: function() {
 			this.editor.config.mode = 'source';
 		},
 
-		initEditor: function() {
-			this.editor.getEditorElement = this.proxy(this.getEditorElement);
-			this.editor.getContent = this.proxy(this.getContent);
-			this.editor.setContent = this.proxy(this.setContent);
+		beforeInit: function() {
+			var i = 0,
+				l = this.proxyMethods.length;
 
-			var self = this,
-				cnt = this.editor.getEditorSpace() || this.editor.element;
-			this.textarea = cnt.find('#wpTextbox1');
-			if (!this.textarea.exists()) {
-				this.textarea = cnt.find('textarea').eq(0); // get the first textarea in the editor
+			// Set up proxy methods on wikiaEditor
+			for (; methodName = this.proxyMethods[i], i < l; i++) {
+				this.editor[methodName] = this.proxy(this[methodName]);
+			}
+		},
+
+		initEditor: function() {
+			if(this.editor.fromDiv) {
+				var element = $('#' + this.editor.instanceId),
+					newId = this.editor.instanceId+"_textarea";
+				$("<textarea>", {id:newId}).insertAfter(element);
+				element.hide();
+				// Extensions will take care of HTML-to-Wiki text, so just grab html from div
+				var textarea = this.textarea = $('#' + newId).val(element.html());
+			} else {
+				this.textarea = $('#' + this.editor.instanceId);
 			}
 			this.textarea
 				.focus(this.proxy(this.editorFocused))
 				.blur(this.proxy(this.editorBlurred))
 				.click(this.proxy(this.editorClicked));
 
-			//this.editor.fire('editboxReady',this.editor,this.getEditbox());
-
-			this.editor.fire('editorReady',this.editor);
-			this.editor.setMode(this.editor.mode,true /* forceEvents */);
+			this.editor.setMode(this.editor.mode, true); // forceEvents
 			this.editor.setState(this.editor.states.IDLE);
+			this.editor.fire('editorReady', this.editor);
 		},
 
 		initDom: function() {
-			this.editor.fire('editboxReady',this.editor,this.getEditbox());
+			this.editor.fire('editboxReady', this.editor, this.getEditbox());
+		},
+
+		getContent: function() {
+			return this.textarea.val();
 		},
 
 		getEditbox: function() {
 			return this.textarea;
 		},
 
+		getEditboxWrapper: function() {
+			return this.editor.element;
+		},
+
 		getEditorElement: function() {
 			return this.textarea;
 		},
+		
+		editorFocus: function() {
+			this.getEditbox().focus();
+		},
 
-		getContent: function() {
-			return this.getEditorElement().val();
+		editorBlur: function() {
+			this.getEditbox().blur();
 		},
 
 		setContent: function(val, datamode) {
@@ -633,62 +702,110 @@
 		},
 
 		editorFocused: function() {
-			this.editor.fire('editorFocus',this.editor);
+			this.editor.fire('editorFocus', this.editor);
 		},
 
 		editorBlurred: function() {
-			this.editor.fire('editorBlur',this.editor);
+			this.editor.fire('editorBlur', this.editor);
 		},
 
 		editorClicked: function() {
-			this.editor.fire('editorClick',this.editor);
+			this.editor.fire('editorClick', this.editor);
 		}
-
 	});
-
 
 	/**
 	 * CKEditor provider
 	 */
 	WE.plugins.ckeditor = $.createClass(WE.plugin,{
 
+		loading: true,
 		requires: ['ui'],
 
-		loading: true,
+		// These events are proxied from ck and fired on the editor with the 'ck' prefix
+		proxyEvents: ['blur', 'focus', 'instanceReady', 'mode', 'modeSwitch', 'modeSwitchCancelled', 'themeLoaded'],
 
-		proxyEvents: [ 'mode', 'modeSwitch', 'modeSwitchCancelled', 'themeLoaded' ],
+		// These methods will be publicly available on the editor instance
+		proxyMethods: ['getContent', 'setContent', 'getEditbox', 'getEditboxWrapper', 'getEditorElement', 'editorFocus', 'editorBlur'],
 
-		initEditor: function() {
-			var mode = this.editor.config.mode;
-			RTE.init(mode);
-			this.instance = RTE.instance;
-			this.editor.ck = this.instance;
-			this.editor.getEditorElement = this.proxy(this.getEditorElement);
-			this.editor.getContent = this.proxy(this.getContent);
-			this.editor.setContent = this.proxy(this.setContent);
+		beforeInit: function() {
+			var i = 0,
+				l = this.proxyMethods.length;
 
-			for (var i=0;i<this.proxyEvents.length;i++) {
-				(function(eventName){
-					this.instance.on(eventName,function(){
-						var args = ['ck-'+eventName,this.editor].concat(arguments);
-						this.editor.fire.apply(this.editor,args);
-					},this);
-				}).call(this,this.proxyEvents[i]);
+			// Set up proxy methods on wikiaEditor
+			for (; methodName = this.proxyMethods[i], i < l; i++) {
+				this.editor[methodName] = this.proxy(this[methodName]);
 			}
-			this.instance.on('mode',this.proxy(this.modeChanged));
-			this.instance.on('modeSwitch',this.proxy(this.beforeModeChange));
-			this.instance.on('modeSwitchCancelled',this.proxy(this.modeChangeCancelled));
-			this.instance.on('themeLoaded',this.proxy(this.themeLoaded));
-			this.instance.on('focus',this.proxy(this.editorFocused));
-			this.instance.on('blur',this.proxy(this.editorBlurred));
 		},
 
-		modeChanged: function() {
-			var mode = this.instance.mode;
-			if (this.loading) {
-				this.editor.fire('editorReady',this.editor);
+		// wikiaEditor is now available as this.editor
+		initEditor: function() {
+
+			// Set up listeners on proxied ck events
+			this.editor.on('ck-mode', this.proxy(this.modeChanged));
+			this.editor.on('ck-modeSwitch', this.proxy(this.beforeModeChange));
+			this.editor.on('ck-modeSwitchCancelled', this.proxy(this.modeChangeCancelled));
+			this.editor.on('ck-themeLoaded', this.proxy(this.themeLoaded));
+			this.editor.on('ck-focus', this.proxy(this.editorFocused));
+			this.editor.on('ck-blur', this.proxy(this.editorBlurred));
+			
+			// This one can't be proxied because we need access to it before the proxies are set up
+			this.editor.on('ckInstanceCreated', this.proxy(this.ckInstanceCreated));
+
+			// Init RTE for this wikiaEditor instance
+			RTE.init(this.editor);
+		},
+
+		// ckeditor instance is now available
+		ckInstanceCreated: function(ck) {
+
+			// Store a reference to the CKE instance in wikiaEditor
+			this.editor.ck = ck;
+
+			// Set up proxy events on wikiaEditor
+			// These events are fired on the CKE instance and proxied over to
+			// wikiaEditor as 'ck-originalEventName' to avoid collisions
+			for (var i = 0, l = this.proxyEvents.length; i < l; i++) {
+				(function(eventName) {
+					this.editor.ck.on(eventName, function() {
+						this.editor.fire.apply(this.editor, ['ck-' + eventName, this.editor].concat(arguments));
+					},this);
+				}).call(this, this.proxyEvents[i]);
 			}
-			this.editor.setMode(mode,this.loading);
+		},
+
+		getContent: function() {
+			return this.editor.ck.getData();
+		},
+
+		// The actual place where the user content is going
+		// in WYSIWYG mode, this is the iframe's body element
+		// in source mode, this is CKE generated textarea
+		getEditbox: function() {
+			return $(this.editor.ck.mode == 'wysiwyg' ?
+				this.editor.ck.document.getBody().$ : this.editor.ck.textarea.$);
+		},
+
+		getEditboxWrapper: function() {
+			return $(this.editor.ck.getThemeSpace('contents').$);
+		},
+
+		// Returns the original editor element that CKE has replaced
+		getEditorElement: function() {
+			return $(this.editor.ck.element.$);
+		},
+
+		beforeModeChange: function() {
+			this.editor.setState(this.editor.ck.mode == 'wysiwyg' ?
+				this.editor.states.LOADING_SOURCE : this.editor.states.LOADING_VISUAL);
+		},
+		
+		modeChanged: function() {
+			if (this.loading) {
+				this.editor.fire('editorReady', this.editor);
+			}
+
+			this.editor.setMode(this.editor.ck.mode, this.loading);
 			this.editor.setState(this.editor.states.IDLE);
 
 			this.getEditbox().click(this.proxy(this.editorClicked));
@@ -696,60 +813,30 @@
 			this.loading = false;
 		},
 
-		beforeModeChange: function() {
-			if (this.instance.mode == 'source')
-				this.editor.setState(this.editor.states.LOADING_VISUAL);
-			else
-				this.editor.setState(this.editor.states.LOADING_SOURCE);
-		},
-
 		modeChangeCancelled: function() {
 			this.editor.setState(this.editor.states.IDLE);
 		},
 
 		themeLoaded: function() {
-			this.editor.fire('editboxReady',this.editor,$(this.instance.getThemeSpace('contents').$));
+			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.getThemeSpace('contents').$));
 		},
-
-		getEditbox: function() {
-			var editbox;
-
-			// TODO: move it to RTE?
-			switch (this.instance.mode) {
-				case 'wysiwyg':
-					editbox = $(this.instance.document.getBody().$);
-					break;
-
-				case 'source':
-					editbox = $(this.instance.textarea.$);
-					break;
-			}
-
-			return editbox;
+		
+		editorFocus: function() {
+			this.editor.ck.focus();
 		},
-
-		getEditorElement: function() {
-			switch (this.instance.mode) {
-			case 'wysiwyg':
-				return $(this.instance.getThemeSpace('contents').$);
-				break;
-			case 'source':
-				return $(this.instance.textarea.$);
-			}
-			return false;
-		},
-
-		getContent: function() {
-			return this.instance.getData();
+		
+		editorBlur: function() {
+			this.editor.ck.blur();
 		},
 
 		setContent: function(content, datamode) {
-			switch (this.instance.mode) {
+			ckeditor = this.editor.ck;
+			switch (ckeditor.mode) {
 				//TODO: in same case this swith is imposible
 				case 'wysiwyg':
 					if(datamode != 'wysiwyg'){
 						RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, $.proxy(function(data) {
-							this.instance.setData(data.html);
+							ckeditor.setData(data.html);
 						}, this));
 						return true;
 					}
@@ -757,27 +844,26 @@
 				case 'source':
 					if(datamode == 'wysiwyg') {
 						RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, $.proxy(function(data) {
-							this.instance.setData(data.wikitext);
+							ckeditor.setData(data.wikitext);
 						}, this));
 						return true;
 					}
 				break;
 			}
-			this.instance.setData(content);
+			ckeditor.setData(content);
 		},
 
 		editorFocused: function() {
-			this.editor.fire('editorFocus',this.editor);
+			this.editor.fire('editorFocus', this.editor);
 		},
 
 		editorBlurred: function() {
-			this.editor.fire('editorBlur',this.editor);
+			this.editor.fire('editorBlur', this.editor);
 		},
 
 		editorClicked: function() {
-			this.editor.fire('editorClick',this.editor);
+			this.editor.fire('editorClick', this.editor);
 		}
-
 	});
 
 	/**
@@ -796,9 +882,7 @@
 		beforeInit: function() {
 			this.editor.ui.addExternalProvider(this);
 			this.editor.on('ck-themeLoaded',this.ckReady,this);
-
 			this.editor.on('uiBuildClickHandler',this.buildWysiwygClickHandler,this);
-
 			this.editor.on('uiStandardElementCreated',this.elementCreated,this);
 			this.editor.on('mode',this.modeChanged,this);
 		},
@@ -809,10 +893,13 @@
 				var command = this.editor.ck.getCommand(name);
 				if (command && command.modes) {
 					for (var i=0;i<command.uiItems.length;i++) {
-						var button = command.uiItems[i];
-						if (button._.id) {
-							$('#'+button._.id)
-								.parent()[command.modes[mode]?'removeClass':'addClass']('cke_hidden');
+						var button = command.uiItems[i],
+						    ignores = ['ModeWysiwyg','ModeSource']; // override ckeditor's hidding of source/wysiwyg buttons
+						if($.inArray(button.command, ignores)<0){
+							if (button._.id) {
+								$('#'+button._.id)
+									.parent()[command.modes[mode]?'removeClass':'addClass']('cke_hidden');
+							}
 						}
 					}
 				}
@@ -851,7 +938,6 @@
 		},
 
 		elementCreated: function( editor, element, data ) {
-			//this.editor.log('elementCreated: ',element,data);
 			if (element.ckcommand) {
 				var commandName = element.ckcommand;
 				// auto state by ck command
@@ -875,12 +961,11 @@
 		},
 
 		buildWysiwygClickHandler: function( editor, button ) {
-			//this.editor.log('buildWysiwygClickHandler',button.name,button);
-			if (!button.clickwysiwyg && button.ckcommand) {
+			//if (!button.clickwysiwyg && button.ckcommand) {
 				button.clickwysiwyg = function() {
-					editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
+					this.editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
 				};
-			}
+			//}
 		},
 
 		createElement: function( name ) {
@@ -897,27 +982,22 @@
 			}
 			return false;
 		}
-
 	});
 
 	/**
 	 * Mediawiki editor plugins list
 	 */
 	WE.plugins.mweditorsuite = $.createClass(WE.plugin,{
-
 		requires: ['core','mweditor']
-
 	});
 
 	/**
 	 * CKEditor plugins list
 	 */
 	WE.plugins.ckeditorsuite = $.createClass(WE.plugin,{
-
 		requires: ['core','ckeditor','ui-ckeditor']
-
 	});
 
 	GlobalTriggers.fire('wikiaeditor',WE);
 
-})(this,jQuery);
+})(this, jQuery);

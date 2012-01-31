@@ -3,7 +3,7 @@ CKEDITOR.plugins.add('rte-paste',
 	htmlBeforePaste: '',
 
 	getHtml: function() {
-		return RTE.instance.document.getBody().getHtml();
+		return RTE.getInstance().document.getBody().getHtml();
 	},
 
 	track: function(ev) {

@@ -1,3 +1,4 @@
+// Insert buttons for Main RTE
 (function(window){
 
 	var WE = window.WikiaEditor;

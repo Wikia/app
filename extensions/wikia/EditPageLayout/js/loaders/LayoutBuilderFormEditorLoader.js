@@ -4,12 +4,14 @@
 		element: false,
 
 		constructor: function() {
+			this.body = $('<div/>'); // FIXME!!
 			this.element = $('<div/>');
 		},
 
 		getData: function() {
 			var plugins = [ 'plbpagecontrols' ];
 			var config = {
+				body: this.body,
 				element: this.element,
 				mode: 'source'
 			};
@@ -24,7 +26,6 @@
 			$('#wpSave').removeAttr('disabled');
 		}
 	});
-	
 
 	$(function(){
 		var editor = new LayoutBuilderFormEditorLoader();

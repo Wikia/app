@@ -91,7 +91,7 @@
 
 		renderHtml: function() {
 			var html = '';
-
+			
 			html += '<span class="' + this.buttonClass + ' ' + this.classes + '">';
 			html += '<a id="' + this.id + '" class="cke_off ' + this.classes + '"'
 				+ ' title="' + this.title + '"'

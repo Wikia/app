@@ -16,7 +16,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	position: relative; /* RT #39114 */
 }
 
-.cke_skin_wikia .cke_browser_ie6 .cke_wrapper,
 .cke_skin_wikia .cke_browser_iequirks .cke_wrapper
 {
 	background-image: none;
@@ -107,7 +106,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 }
 
 /* macbre: add IE8 due to RT #140917 */
-.cke_skin_wikia .cke_browser_ie6 .cke_contents textarea,
 .cke_skin_wikia .cke_browser_ie7 .cke_contents textarea,
 .cke_skin_wikia .cke_browser_ie8 .cke_contents textarea
 {
@@ -155,6 +153,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 html .cke_skin_wikia,
 html.cke_skin_wikia_container
 {
-	clear: both;
+	//clear: both;
 	visibility: visible;
 }

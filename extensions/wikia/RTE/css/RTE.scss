@@ -97,13 +97,13 @@
 }
 
 /* div for placeholder previews / image menus */
-#RTEStuff {
+#RTEOverlay {
 	position: absolute;
 	z-index: 100;
 }
 
 /* hide placeholder preview / image menu in source mode */
-.rte_source #RTEStuff div {
+.rte_source #RTEOverlay div {
 	display: none;
 }
 
@@ -558,7 +558,7 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 }
 
 /* CK on-hover menus */
-#RTEStuff {
+#RTEOverlay {
 	margin-top: 15px;
 	.color1 {
 		background-color: mix($color-buttons, $color-page, 5%);
@@ -575,7 +575,8 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 }
 
 /* CK modal tweaks */
-.skin-oasis.rte {
+.skin-oasis.rte,
+.skin-oasis.MiniEditor {
 	.cke_dialog {
 		border: 5px solid $color-body;
 		padding: 15px 15px 0 15px;

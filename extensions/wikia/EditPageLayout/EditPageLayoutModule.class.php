@@ -24,6 +24,7 @@ class EditPageLayoutModule extends Module {
 	// notices
 	var $notices;
 
+	
 	/**
 	 * Render HTML for whole edit page
 	 */

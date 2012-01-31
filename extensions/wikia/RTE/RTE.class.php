@@ -420,7 +420,7 @@ HTML
 		$userOption = $wgUser->getOption('enablerichtext');
 		if( ($userOption != true) && ($useEditor != 'wysiwyg') ) {
 			RTE::log('editor is disabled because of user preferences');
-			self::disableEditor('usepreferences');
+			self::disableEditor('userpreferences');
 		}
 
 		// check current skin - enable RTE only on Monaco

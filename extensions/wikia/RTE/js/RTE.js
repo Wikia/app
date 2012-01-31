@@ -1,333 +1,357 @@
-/*global CKEDITOR: true */
+(function($, window, undefined) {
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
 
-window.RTE = {
-	// configuration
-	// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
-	config: {
-		alignableElements: {
-			div: true,
-			p: true,
-			td: true,
-			th: true
+	// Rich Text Editor
+	// See also: RTE.preferences.js
+	var RTE = {
+
+		// configuration
+		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
+		config: {
+			alignableElements: {
+				div: true,
+				p: true,
+				td: true,
+				th: true
+			},
+			baseFloatZIndex: 20000001, // $zTop from _layout.scss
+			bodyClass: 'WikiaArticle',
+			bodyId: 'bodyContent',
+			contentsCss: [$.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParams)],
+			coreStyles_bold: {element: 'b', overrides: 'strong'},
+			coreStyles_italic: {element: 'i', overrides: 'em'},
+			customConfig: '',
+			dialog_backgroundCoverColor: '#000',
+			dialog_backgroundCoverOpacity: (window.skin == 'oasis' ? 0.8 : 0.5),
+			disableDragDrop: false,
+			disableObjectResizing: true,
+			entities: false,
+			format_tags: 'p;h2;h3;h4;h5;pre',
+			height: 400, // default height when "auto resizing" is not applied
+			language: window.wgUserLanguage,
+			plugins:
+				'basicstyles,' +
+				'button,' +
+				'clipboard,' +
+				'contextmenu,' +
+				'dialog,' +
+				'enterkey,' +
+				'format,' +
+				'htmldataprocessor,' +
+				'indent,' +
+				'keystrokes,' +
+				'list,' +
+				'pastetext,' +
+				'removeformat,' +
+				'sourcearea,' +
+				'table,' +
+				'tabletools,' +
+				'undo,' +
+				'wysiwygarea',
+	
+			// Custom RTE plugins for CKEDITOR
+			// Used to be built in RTE.loadPlugins()
+			extraPlugins:
+				'rte-accesskey,' +
+				'rte-comment,' +
+				'rte-dialog,' +
+				'rte-dragdrop,' +
+				'rte-entities,' +
+				'rte-gallery,' +
+				'rte-justify,' +
+				'rte-link,' +
+				'rte-linksuggest,' +
+				'rte-media,' +
+				'rte-modeswitch,' +
+				'rte-overlay,' +
+				'rte-paste,' +
+				'rte-placeholder,' +
+				'rte-plbelement,' +
+				'rte-poll,' +
+				'rte-signature,' +
+				'rte-spellchecker,' +
+				'rte-template,' +
+				'rte-temporary-save,' +
+				'rte-toolbar,' +
+				'rte-tools,' +
+				'rte-track',
+			resize_enabled: false,
+			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
+			skin: 'wikia',
+			startupFocus: true, // Also used for determining wether to focus after modeswitch (BugId:19807)
+			theme: 'wikia'
 		},
-		baseFloatZIndex: 20000001, // $zTop from _layout.scss
-		bodyClass: 'WikiaArticle',
-		bodyId: 'bodyContent',
-		contentsCss: $.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParams),
-		coreStyles_bold: {element: 'b', overrides: 'strong'},
-		coreStyles_italic: {element: 'i', overrides: 'em'},
-		customConfig: '',
-		dialog_backgroundCoverColor: '#000',
-		dialog_backgroundCoverOpacity: (window.skin == 'oasis' ? 0.8 : 0.5),
-		disableDragDrop: false,
-		disableObjectResizing: true,
-		entities: false,
-		format_tags: 'p;h2;h3;h4;h5;pre',
-		height: 400, // default height when "auto resizing" is not applied
-		language: window.wgUserLanguage,
-		plugins:
-			'basicstyles,' +
-			'button,' +
-			'clipboard,' +
-			'contextmenu,' +
-			'dialog,' +
-			'enterkey,' +
-			'format,' +
-			'htmldataprocessor,' +
-			'indent,' +
-			'keystrokes,' +
-			'list,' +
-			'pastetext,' +
-			'removeformat,' +
-			'sourcearea,' +
-			'table,' +
-			'tabletools,' +
-			'undo,' +
-			'wysiwygarea',
-		resize_enabled: false,
-		richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
-		skin: 'wikia',
-		startupFocus: true,
-		theme: 'wikia'
-	},
 
-	// reference to current CK instance
-	instance: false,
+		// Unique editor instance Id, set on modeswitch
+		// It is used mostly for paste tracking (detecting where pasted content came from)
+		// See RTE::getInstanceID() for details
+		instanceId: null,
 
-	// editor instance ID
-	instanceId: window.RTEInstanceId,
+		// array of fully loaded editor instances. 
+		loaded: [],
 
-	// is instance fully loaded?
-	loaded: false,
+		// CK loading time
+		loadTime: false,
 
-	// CK loading time
-	loadTime: false,
+		// use firebug / opera console to log events / dump objects
+		log: function(msg) {
+			$().log(msg, 'RTE');
+		},
 
-	// reference to #RTEStuff node
-	// TODO: store this node per instance
-	stuffNode: false,
-
-	// list of our RTE custom plugins (stored in js/plugins) to be loaded on editor init
-	plugins: [
-		'accesskey',
-		'comment',
-		'dialog',
-		'dragdrop',
-		'entities',
-		'gallery',
-		'justify',
-		'link',
-		'linksuggest',
-		'media',
-		'modeswitch',
-		'overlay',
-		'paste',
-		'placeholder',
-		'plbelement',
-		'poll',
-		'signature',
-		'spellchecker',
-		'template',
-		'temporary-save',
-		'toolbar',
-		'tools',
-		'track'
-	],
-
-	// use firebug / opera console to log events / dump objects
-	log: function(msg) {
-		$().log(msg, 'RTE');
-	},
-
-	// send AJAX request
-	ajax: function(method, params, callback) {
-		if (typeof params != 'object') {
-			params = {};
-		}
-		params.method = method;
-
-		jQuery.post(window.wgScript + '?action=ajax&rs=RTEAjax', params, function(data) {
-			if (typeof callback == 'function') {
-				callback(data);
+		// send AJAX request
+		ajax: function(method, params, callback) {
+			if (typeof params != 'object') {
+				params = {};
 			}
-		}, 'json');
-	},
+			params.method = method;
+	
+			jQuery.post(window.wgScript + '?action=ajax&rs=RTEAjax', params, function(data) {
+				if (typeof callback == 'function') {
+					callback(data);
+				}
+			}, 'json');
+		},
 
-	track: function(action, label, value) {
-	},
+		track: function(action, label, value) {
+		},
 
-	// start editor in mode provided
-	init : function(mode) {
-		// Fire the global event
-		GlobalTriggers.fire('rtebeforeinit', RTE, CKEDITOR);
-
-		// cache buster used by CK when loading CSS/JS
-		CKEDITOR.timestamp = window.wgStyleVersion;
-
-		// CKEDITOR.dtd fixes
-		// TODO: move to different place
-
-		// allow <img> (used for placeholders) to be placed inside <pre>
-		CKEDITOR.dtd.pre.img = 1;
-
-		// allow <center> to be placed inside <p>
-		CKEDITOR.dtd.p = $.extend({}, CKEDITOR.dtd.p, {center:1});
-
-		// allow <img> (used for placeholders) to be "direct" child of <table> (refs RT #49507)
-		CKEDITOR.dtd.table.img = 1;
-
-		// allow UL and OL in DT (RT#52593)
-		// DTD rules for <dt> use $inline elements which should not be modified (BugId:1304)
-		CKEDITOR.dtd.dt = $.extend({}, CKEDITOR.dtd.dt, {ul:1, ol:1});
-
-		// allow placeholders in UL/OL lists (BugId:10481)
-		CKEDITOR.dtd.ol = $.extend({}, CKEDITOR.dtd.ol, {img:1});
-		CKEDITOR.dtd.ul = $.extend({}, CKEDITOR.dtd.ul, {img:1});
-
-		// set startup mode
-		RTE.config.startupMode = mode;
-
-		// RT #69635: disable media drag&drop in Firefox 3.6.9+ (fixed in Firefox 3.6.11)
-		RTE.config.disableDragDrop = (CKEDITOR.env.gecko && (CKEDITOR.env.geckoRelease == "1.9.2.9" || CKEDITOR.env.geckoRelease == "1.9.2.10"));
-
-		if (RTE.config.disableDragDrop) {
-			RTE.log('media drag&drop disabled');
-		}
-
-		// register and load RTE plugins
-		RTE.loadPlugins();
-
-		// add and position wrapper for extra RTE stuff
-		RTE.stuffNode = $('<div>', {id: 'RTEStuff'}).appendTo('body');
-
-		// make textarea wysiwygable and store editor instance object
-		RTE.instance = CKEDITOR.replace('wpTextbox1', RTE.config);
-
-		// load CSS files
-		RTE.loadCss();
-
-		//
-		// register event handlers
-		//
-
-		// editor is loaded
-		CKEDITOR.on('instanceReady', RTE.onEditorReady);
-
-		// clean HTML returned by CKeditor
-		RTE.instance.on('getData', RTE.filterHtml);
-
-		// CKeditor code is loaded, now it's time to initialize RTE
-		GlobalTriggers.fire('rteinit', RTE.instance);
-	},
-
-	// load extra CSS files
-	loadCss: function() {
-		var css = [];
-
-		// load MW:Common.css / MW:Wikia.css (RT #77759)
-		css.push(window.RTESiteCss);
-
-		// Bartek - for RT #43217
-		if( typeof WikiaEnableAutoPageCreate != "undefined" ) {
-			css.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
-		}
-
-		GlobalTriggers.fire('rterequestcss', css);
-
-		for (var n=0; n<css.length; n++) {
-			if( typeof(css[n]) != 'undefined' ) {
-				var cb = ( (css[n].indexOf('?') > -1 || css[n].indexOf('__am') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
-				RTE.instance.addCss('@import url(' + css[n] + cb + ');');
+		// start editor in mode provided
+		init: function(editor) {
+			var instanceId = editor.instanceId;
+	
+			// Don't re-initialize the same instance
+			if (CKEDITOR.instances[instanceId]) return;
+	
+			// Editor specific config overrides
+			if (editor.config.minHeight) {
+				RTE.config.height = editor.config.minHeight;
 			}
-		}
-
-		// disable object resizing in IE
-		if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
-			// IMPORTANT! use local path
-			RTE.instance.addCss('img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}');
-		}
-	},
-
-	// register and load custom RTE plugins
-	loadPlugins: function() {
-		var extraPlugins= [];
-
-		for (var p=0; p < RTE.plugins.length; p++) {
-			var plugin = RTE.plugins[p];
-
-			extraPlugins.push('rte-' + plugin);
-
-			// register plugin
-			CKEDITOR.plugins.addExternal('rte-' + plugin, CKEDITOR.basePath + '../js/plugins/' + plugin + '/');
-		}
-
-		// load custom RTE plugins
-		RTE.config.extraPlugins = extraPlugins.join(',');
-	},
-
-	// final setup of editor's instance
-	onEditorReady: function(ev) {
-		var editor = ev.editor;
-
-		// base colors: use color / background-color from .color1 CSS class
-		RTE.tools.getThemeColors();
-
-		// remove HTML indentation
-		editor.dataProcessor.writer.indentationChars = '';
-		editor.dataProcessor.writer.lineBreakChars = '';
-
-		// override "Source" button to send AJAX request first, instead of mode switching
-		CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
-			if (editor.mode == 'wysiwyg') {
-				editor.fire('saveSnapshot');
+	
+			RTE.config.startupMode = editor.config.mode;
+	
+			// Load the iframe content CSS file for the MiniEditor
+			if (editor.config.isMiniEditor) {
+				RTE.config.contentsCss.push($.getSassCommonURL('/extensions/wikia/RTE/css/content_mini.scss'));
 			}
 
-			editor.fire('modeSwitch');
-		}
+			// This call creates a new CKE instance which replaces the textarea with the applicable ID
+			editor.ck = CKEDITOR.replace(instanceId, RTE.config);
+	
+			// clean HTML returned by CKeditor
+			editor.ck.on('getData', RTE.filterHtml);
+	
+			// CKeditor code is loaded, now it's time to initialize RTE
+			GlobalTriggers.fire('rteinit', editor.ck);
+		},
 
-		// ok, we're done!
-		RTE.loaded = true;
-
-		// calculate load time
-		RTE.loadTime = (new Date() - window.wgNow) / 1000;
-
-		RTE.log('CKEditor v' + CKEDITOR.version +
-			(window.RTEDevMode ? ' (in development mode)' : '') +
-			' is ready in "' + editor.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
-
-		// fire custom event for "track" plugin
-		editor.fire('RTEready');
-
-		// let extensions do their tasks when RTE is fully loaded
-		$(window).trigger('rteready', editor);
-		GlobalTriggers.fire('rteready', editor);
-
-		// reposition #RTEStuff
-		RTE.repositionRTEStuff();
-		$(window).
-			add('#EditPage').
-			bind('resize', RTE.repositionRTEStuff);
-
-		// preload format dropdown (BugId:4592)
-		var formatDropdown = editor.ui.create('Format');
-		if (formatDropdown) {
-			formatDropdown.createPanel(editor);
-		}
-
-		// send custom event "submit" when edit page is being saved (BugId:2947)
-		var editform = $(editor.element.$.form);
-		editform.bind('submit', $.proxy(function() {
-			editor.fire('submit', {form: editform}, editor);
-		}, this));
-
-		// remove data-rte-instance attribute when sending HTML to backend
-		editor.dataProcessor.htmlFilter.addRules({
-			attributes: {
-				'data-rte-instance': function(value, element) {
-					return false;
+		// load extra CSS files
+		loadCss: function(instanceId) {
+			var css = [];
+	
+			// load MW:Common.css / MW:Wikia.css (RT #77759)
+			css.push(window.RTESiteCss);
+			
+			// Bartek - for RT #43217
+			if( typeof WikiaEnableAutoPageCreate != "undefined" ) {
+				css.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
+			}
+	
+			GlobalTriggers.fire('rterequestcss', css);
+	
+			for (var n=0; n<css.length; n++) {
+				if( typeof(css[n]) != 'undefined' ) {
+					var cb = ( (css[n].indexOf('?') > -1 || css[n].indexOf('__am') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
+					RTE.getInstance(instanceId).addCss('@import url(' + css[n] + cb + ');');
 				}
 			}
-		});
-	},
+	
+			// disable object resizing in IE
+			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
+				// IMPORTANT! use local path
+				RTE.getInstance(instanceId).addCss('img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}');
+			}
+		},
 
-	// reposition #RTEStuff div
-	repositionRTEStuff: function() {
-		RTE.stuffNode.css({left:0,top:0});
+		// final setup of editor's instance
+		onEditorReady: function(event) {
+			var editor = event.editor,
+				instanceId = editor.instanceId;
+	
+			// load CSS files
+			RTE.loadCss(instanceId);
+	
+			// base colors: use color / background-color from .color1 CSS class
+			RTE.tools.getThemeColors();
+	
+			// remove HTML indentation
+			editor.dataProcessor.writer.indentationChars = '';
+			editor.dataProcessor.writer.lineBreakChars = '';
+	
+			// override "Source" button to send AJAX request first, instead of mode switching
+			CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
+				if (editor.mode == 'wysiwyg') {
+					editor.fire('saveSnapshot');
+				}
+	
+				editor.fire('modeSwitch');
+			}
+	
+			// ok, we're done!
+			RTE.loaded.push(editor);
 
-		var bodyPadding = RTE.stuffNode.offset();
-		var editorPosition = $('#cke_contents_wpTextbox1').offset();
+			// calculate load time
+			RTE.loadTime = (new Date() - window.wgNow) / 1000;
+	
+			RTE.log('CKEditor v' + CKEDITOR.version +
+				(window.RTEDevMode ? ' (in development mode)' : '') +
+				' is ready in "' + editor.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
+	
+			// let extensions do their tasks when RTE is fully loaded
+			$(window).trigger('rteready', editor);
+			GlobalTriggers.fire('rteready', editor);
+	
+			// preload format dropdown (BugId:4592)
+			var formatDropdown = editor.ui.create('Format');
+			if (formatDropdown) {
+				formatDropdown.createPanel(editor);
+			}
+	
+			// send custom event "submit" when edit page is being saved (BugId:2947)
+			var editform = $(editor.element.$.form).bind('submit', $.proxy(function() {
+				editor.fire('submit', {form: editform}, editor);
+			}, this));
+	
+			// remove data-rte-instance attribute when sending HTML to backend
+			editor.dataProcessor.htmlFilter.addRules({
+				attributes: {
+					'data-rte-instance': function(value, element) {
+						return false;
+					}
+				}
+			});
 
-		RTE.stuffNode.css({
-			'left': parseInt(editorPosition.left - bodyPadding.left) + 'px',
-			'top': parseInt(editorPosition.top - bodyPadding.top) + 'px'
-		});
-	},
+			$(window).resize(RTE.repositionRTEOverlay).resize();
+		},
+	
+		// reposition #RTEOverlay div
+		repositionRTEOverlay: function() {
+			RTE.overlayNode.css({left:0,top:0});
+	
+			var wikiaEditor = WikiaEditor.getInstance(),
+				editorWrapper =  wikiaEditor.getEditboxWrapper(),		
+				bodyPadding = RTE.overlayNode.offset(),
+				editorPosition = editorWrapper.offset();
+	
+			RTE.overlayNode.css({
+				'left': parseInt(editorPosition.left - bodyPadding.left) + 'px',
+				'top': parseInt(editorPosition.top - bodyPadding.top) + 'px'
+			});
+		},
+	
+		// get jQuery object wrapping body of editor' iframe
+		getEditor: function(instanceId) {
+			return $(RTE.getInstance(instanceId).document.$.body);
+		},
+	
+		// Returns the CKE instance that belongs to ID (or the current instance if no ID is given)
+		getInstance: function(instanceId) {
+			return CKEDITOR.instances[instanceId || WE.instanceId];
+		},
+	
+		// Returns the wikiaEditor instance that belongs to ID (or the current instance if no ID is given)
+		getInstanceEditor: function(instanceId) {
+			return WE.instances[instanceId || WE.instanceId];
+		},
+	
+		// Returns the element associated with an instance ID (or the current element if no ID is given)
+		getInstanceElement: function(instanceId) {
+			return $('#' + instanceId || WE.instanceId);
+		},
+	
+		// filter HTML returned by CKEditor
+		// TODO: implement using htmlFilter
+		// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
+		filterHtml: function(ev) {
+			if (ev.editor.mode == 'wysiwyg') {
+				// remove <div> added by Firebug
+				ev.data.dataValue = ev.data.dataValue.replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
+			}
+		},
+	
+		// constants (taken from global JS variables added by RTE backend)
+		constants: {
+			localPath: window.RTELocalPath,
+			urlProtocols: window.RTEUrlProtocols,
+			validTitleChars: window.RTEValidTitleChars
+		},
+	
+		// messages to be used in JS code
+		messages: window.RTEMessages
+	};
 
-	// get jQuery object wrapping body of editor' iframe
-	getEditor: function() {
-		return jQuery(RTE.instance.document.$.body);
-	},
+	// Create overlayNode when the DOM is ready
+	$(function() {
+		// used to be RTEStuff and stuffNode
+		RTE.overlayNode = $('<div>', {id: 'RTEOverlay'}).appendTo('body');
+	});
 
-	// filter HTML returned by CKEditor
-	// TODO: implement using htmlFilter
-	// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
-	filterHtml: function(ev) {
-		if (ev.editor.mode == 'wysiwyg') {
-			// remove <div> added by Firebug
-			ev.data.dataValue = ev.data.dataValue.replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
+	// Exports
+	window.RTE = RTE;
+
+})(jQuery, window);
+
+
+// Hack for IE with allinone mode turned off
+// Due to asynchronous script loading issues in WSL, things are executed out of order
+// which causes CKEDITOR to think plugins haven't been loaded yet, so it attempts to load
+// them again. In order for CKEDITOR to find our plugins, we must use addExternal here
+if ($.browser.msie && typeof RTEDevMode != 'undefined') {
+	CKEDITOR.on('loaded', function(event) {
+		var i, l, plugin, extraPlugins = RTE.config.extraPlugins.split(',');
+		for (var plugin, i = 0, l = extraPlugins.length; i < l, plugin = extraPlugins[i]; i++ ) {
+			CKEDITOR.plugins.addExternal(plugin, RTE.constants.localPath + '/js/plugins/' + plugin.replace('rte-', '') + '/');
 		}
-	},
+	});
+}
 
-	// constants (taken from global JS variables added by RTE backend)
-	constants: {
-		localPath: window.RTELocalPath,
-		urlProtocols: window.RTEUrlProtocols,
-		validTitleChars: window.RTEValidTitleChars
-	},
+// Pass the newly created CKE instances to wikiaEditor
+CKEDITOR.on('instanceCreated', function(event) {
 
-	// messages to be used in JS code
-	messages: window.RTEMessages
-};
+	// event.editor.name stores the elementId of the textarea CKE was attached to
+	// this ensures we are firing the event on the correct editor
+	WikiaEditor.instances[event.editor.name].fire('ckInstanceCreated', event.editor);
+});
+
+// editor is loaded
+CKEDITOR.on('instanceReady', RTE.onEditorReady);
+
+//
+// CKEDITOR.dtd fixes
+//
+
+// allow <img> (used for placeholders) to be placed inside <pre>
+CKEDITOR.dtd.pre.img = 1;
+
+// allow <center> to be placed inside <p>
+CKEDITOR.dtd.p = $.extend({}, CKEDITOR.dtd.p, {center:1});
+
+// allow <img> (used for placeholders) to be "direct" child of <table> (refs RT #49507)
+CKEDITOR.dtd.table.img = 1;
+
+// allow UL and OL in DT (RT#52593)
+// DTD rules for <dt> use $inline elements which should not be modified (BugId:1304)
+CKEDITOR.dtd.dt = $.extend({}, CKEDITOR.dtd.dt, {ul:1, ol:1});
+
+// allow placeholders in UL/OL lists (BugId:10481)
+CKEDITOR.dtd.ol = $.extend({}, CKEDITOR.dtd.ol, {img:1});
+CKEDITOR.dtd.ul = $.extend({}, CKEDITOR.dtd.ul, {img:1});
+
+// RT #69635: disable media drag&drop in Firefox 3.6.9+ (fixed in Firefox 3.6.11)
+RTE.config.disableDragDrop = (CKEDITOR.env.gecko && (CKEDITOR.env.geckoRelease == "1.9.2.9" || CKEDITOR.env.geckoRelease == "1.9.2.10"));
+
+if (RTE.config.disableDragDrop) {
+	RTE.log('media drag&drop disabled');
+}
 
 //
 // extend CK config
@@ -456,6 +480,9 @@ CKEDITOR.dom.element.prototype.setState = function( state ) {
 			break;
 	}
 };
+
+// cache buster used by CK when loading CSS/JS
+CKEDITOR.timestamp = window.wgStyleVersion;
 
 /**
  * @author wladek

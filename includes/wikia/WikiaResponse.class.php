@@ -432,6 +432,8 @@ class WikiaResponse {
 							case 'scss':
 								$type = AssetsManager::TYPE_SCSS;
 								break;
+							default:
+								throw new WikiaException( 'Unknown asset type' );
 						}
 					}
 				}

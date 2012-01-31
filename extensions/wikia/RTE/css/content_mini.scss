@@ -1,0 +1,18 @@
+/**
+ * This file is used in conjunction with ./content.css for styling the edit area of RTEMini CKeditor
+ */
+ 
+@import "../../../../skins/oasis/css/mixins/clearfix"; 
+ 
+.WikiaArticle {
+	@include clearfix;
+	min-height: 0; // overriding other min-heights 
+}
+
+html.resizing {
+	overflow-y: hidden;
+}
+
+#bodyContent {
+	margin-bottom: 0;
+}

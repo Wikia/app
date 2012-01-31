@@ -34,7 +34,7 @@ CKEDITOR.scriptLoader = (function()
 		 * @param {Object} [scope] The scope ("this" reference) to be used for
 		 *		the callback call. Default to {@link CKEDITOR}.
 		 * @param {Boolean} [showBusy] Changes the cursor of the document while
-+		 *		the script is loaded.
+		 *		the script is loaded.
 		 * @example
 		 * CKEDITOR.scriptLoader.load( '/myscript.js' );
 		 * @example

@@ -4,7 +4,7 @@ CKEDITOR.plugins.add('rte-signature',
 		// register "Add Signature" command
 		editor.addCommand('addsignature', {
 			exec: function(editor) {
-				var sig = RTE.instance.document.createText(editor.config.signature_markup);
+				var sig = RTE.getInstance().document.createText(editor.config.signature_markup);
 
 				// insert signature (wrapped inside jQuery object)
 				RTE.tools.insertElement( $(sig.$) );

@@ -80,8 +80,10 @@ CKEDITOR.on( 'instanceDestroyed', function ()
 			CKEDITOR.fire( 'reset' );
 	});
 
+// wikia: BugId:20159
 // Load the bootstrap script.
-CKEDITOR.loader.load( 'core/_bootstrap' );		// @Packager.RemoveLine
+// CKEDITOR.loader.load( 'core/_bootstrap' );		// @Packager.RemoveLine
+// wikia: end
 
 // Tri-state constants.
 

@@ -76,8 +76,8 @@ window.RTE.tools = {
 	"confirm": function(title, question, callback) {
 		var html = '<p>' + question + '</p>' +
 			'<div class="RTEConfirmButtons neutral">' +
-				'<a id="RTEConfirmCancel" class="wikia-button secondary"><span>' + RTE.instance.lang.common.cancel + '</span></a>' +
-				'<a id="RTEConfirmOk" class="wikia-button"><span>' + RTE.instance.lang.common.ok + '</span></a>' +
+				'<a id="RTEConfirmCancel" class="wikia-button secondary"><span>' + RTE.getInstance().lang.common.cancel + '</span></a>' +
+				'<a id="RTEConfirmOk" class="wikia-button"><span>' + RTE.getInstance().lang.common.ok + '</span></a>' +
 			'</div>';
 
 		$.showModal(title, html, {
@@ -103,7 +103,7 @@ window.RTE.tools = {
 
 	// creates new placeholder of given type and with given meta data
 	createPlaceholder: function(type, data) {
-		var placeholder = $('<img />', RTE.instance.document.$);
+		var placeholder = $('<img />', RTE.getInstance().document.$);
 
 		// CSS classes and attributes
 		placeholder.addClass('placeholder placeholder-' + type);
@@ -140,12 +140,12 @@ window.RTE.tools = {
 
 		if (CKEDITOR.env.webkit) {
 			// RT #46408: use different property for Safari to get scroll offset
-			scrollLeft = RTE.instance.document.$.body.scrollLeft;
-			scrollTop = RTE.instance.document.$.body.scrollTop;
+			scrollLeft = RTE.getInstance().document.$.body.scrollLeft;
+			scrollTop = RTE.getInstance().document.$.body.scrollTop;
 		}
 		else {
-			scrollLeft = RTE.instance.document.$.documentElement.scrollLeft;
-			scrollTop = RTE.instance.document.$.documentElement.scrollTop;
+			scrollLeft = RTE.getInstance().document.$.documentElement.scrollLeft;
+			scrollTop = RTE.getInstance().document.$.documentElement.scrollTop;
 		}
 
 		return {
@@ -160,7 +160,7 @@ window.RTE.tools = {
 		// create or use existing color picker div
 		var colorPicker = $('#RTEColorPicker');
 		if ( !colorPicker.exists() ) {
-			colorPicker = $('<div id="RTEColorPicker">').addClass('color1').appendTo(RTE.stuffNode).hide();
+			colorPicker = $('<div id="RTEColorPicker">').addClass('color1').appendTo(RTE.overlayNode).hide();
 		}
 
 		// get colors and update CK config
@@ -202,11 +202,11 @@ window.RTE.tools = {
 	getSelectionContent: function() {
 		if (CKEDITOR.env.ie) {
 			// IE
-			var text = RTE.instance.document.$.selection.createRange().text;
+			var text = RTE.getInstance().document.$.selection.createRange().text;
 		}
 		else {
 			// Gecko, Opera, Safari
-			var text = RTE.instance.window.$.getSelection().toString();
+			var text = RTE.getInstance().window.$.getSelection().toString();
 		}
 
 		return text;
@@ -224,11 +224,11 @@ window.RTE.tools = {
 	insertElement: function(element, dontReinitialize) {
 		var CKelement = new CKEDITOR.dom.element($(element).get(0));
 
-		RTE.instance.insertElement(CKelement);
+		RTE.getInstance().insertElement(CKelement);
 
 		// re-initialize placeholders
 		if (!dontReinitialize) {
-			RTE.instance.fire('wysiwygModeReady');
+			RTE.getInstance().fire('wysiwygModeReady');
 		}
 	},
 
@@ -285,13 +285,13 @@ window.RTE.tools = {
 	// remove given node and add undo step
 	removeElement: function(elem) {
 		// save undo step (RT #35914)
-		RTE.instance.fire('saveSnapshot');
+		RTE.getInstance().fire('saveSnapshot');
 
 		// remove element
 		$(elem).remove();
 
 		// save undo step (RT #35914)
-		RTE.instance.fire('saveSnapshot');
+		RTE.getInstance().fire('saveSnapshot');
 	},
 
 	// remove resize box
@@ -299,7 +299,7 @@ window.RTE.tools = {
 		setTimeout(function() {
 			// simply switch design mode off and on - this solves #RT #33853
 			if (CKEDITOR.env.gecko) {
-				var documentNode = RTE.instance.document.$;
+				var documentNode = RTE.getInstance().document.$;
 
 				documentNode.designMode = 'off';
 				documentNode.designMode = 'on';

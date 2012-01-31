@@ -297,7 +297,7 @@ public class RTETest extends BaseTest {
 
 		for(String wikitext : wikiTexts) {
 			// set text in source mode
-			session().runScript("window.RTE.instance.setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
+			session().runScript("window.RTE.getInstance().setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
 
 			// go to wysiwyg mode
 			this.switchWysiwygMode("wysiwyg");
@@ -305,7 +305,7 @@ public class RTETest extends BaseTest {
 			// go back to source mode
 			this.switchWysiwygMode("source");
 
-			assertEquals(wikitext, session().getEval("window.RTE.instance.getData();").replace("\r", ""));
+			assertEquals(wikitext, session().getEval("window.RTE.getInstance().getData();").replace("\r", ""));
 		}
 	}
 }

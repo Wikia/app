@@ -3149,8 +3149,9 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				var dialogDefinitions = CKEDITOR.dialog._.dialogDefinitions[ dialogName ],
 						dialogSkin = this.skin.dialog;
 
-				if ( CKEDITOR.dialog._.currentTop === null )
-					showCover( this );
+//				MiniEditor -- it looks like this is not necessary?
+//				if ( CKEDITOR.dialog._.currentTop === null )
+//					showCover( this );
 
 				// If the dialogDefinition is already loaded, open it immediately.
 				if ( typeof dialogDefinitions == 'function' && dialogSkin._isLoaded )

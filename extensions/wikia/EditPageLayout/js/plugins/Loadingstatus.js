@@ -28,7 +28,6 @@
 			var editarea = this.editor.getSpace('editarea');
 
 			if (editarea) {
-				editarea.append(this.el);
 				this.set('loading');
 			}
 		},
@@ -87,7 +86,6 @@
 				this.editor.fire('afterLoadingStatus');
 			}
 		}
-
 	});
 
 })(this,jQuery);

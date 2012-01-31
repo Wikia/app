@@ -1,0 +1,31 @@
+// This file is included dynamically for Wall style overrides
+@import "core/colors";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.Wall {
+	.new-message {
+		&.focused {
+			.speech-bubble-message {
+				padding-bottom: 10px;
+			}
+		}
+	}
+
+	.new-reply {
+		.speech-bubble-message {
+			textarea {
+				border: solid 1px $color-miniEditor-button-border;
+			}
+
+			.MiniEditorWrapper {
+				.cke_contents {
+					border: solid 1px $color-miniEditor-button-border;
+				}
+			}
+		}
+	}
+
+	.speech-bubble-buttons {
+		@include clearfix;
+	}
+}

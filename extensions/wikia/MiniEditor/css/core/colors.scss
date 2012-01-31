@@ -1,0 +1,15 @@
+@import "../../../../../skins/oasis/css/core/color";
+
+$color-miniEditor: mix($color-buttons, $color-page, 15%);
+$color-miniEditor-focus: mix($color-buttons, $color-page, 100%);
+$color-miniEditor-button: lighten($color-miniEditor, 6%);
+$color-miniEditor-button-hover: darken($color-miniEditor-button, 4%);
+$color-miniEditor-button-active: darken($color-miniEditor-button, 6%);
+$color-miniEditor-button-border: darken($color-miniEditor-button, 15%);
+$color-miniEditor-button-shadow: darken($color-miniEditor-button, 30%);
+
+// Sprite suffix based on wiki darkness
+$sprite-suffix: "dark";
+@if $is-dark-wiki {
+	$sprite-suffix: "light";
+}

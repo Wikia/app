@@ -105,7 +105,7 @@ CKEDITOR.plugins.add('rte-template',
 
 RTE.templateHelpers = {
 	showUsedList: function(editor) {
-		editor = editor || RTE.instance;
+		editor = editor || RTE.getInstance();
 		var el = $('#editform > .templatesUsed');
 		if (el.exists()) {
 			var list = $('<div>');
@@ -522,13 +522,13 @@ RTE.templateEditor = {
 		RTE.templateEditor.usePlaceholder(placeholder);
 
 		// open template editor
-		RTE.instance.openDialog('rte-template');
+		RTE.getInstance().openDialog('rte-template');
 	},
 
 	// create new template placeholder (and maybe show template editor for it)
 	createTemplateEditor: function(templateName) {
 		// quick hack to make it work in source mode
-		if (RTE.instance.mode == 'source') {
+		if (RTE.getInstance().mode == 'source') {
 			if (templateName) {
 				insertTags('{{'+templateName,'}}','');
 			}

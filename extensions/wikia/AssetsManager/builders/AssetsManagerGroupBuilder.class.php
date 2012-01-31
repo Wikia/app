@@ -39,7 +39,7 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 		}
 
 		// For RTE only
-		if($this->mOid == 'rte' || $this->mOid == 'eplrte') {
+		if($this->mOid == 'rte' || $this->mOid == 'eplrte' || $this->mOid == 'mini_editor_rte_js') {
 			$this->mContent = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $this->mContent);
 			$this->mContent = str_replace("\xEF\xBB\xBF", '', $this->mContent);
 		}

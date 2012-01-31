@@ -102,17 +102,19 @@ CKEDITOR.plugins.add('rte-dialog',
 		};
 
 		// setup click tracking when dialog is about to be shown
-		CKEDITOR.dialog.prototype.showOriginal = CKEDITOR.dialog.prototype.show;
-		CKEDITOR.dialog.prototype.show = function() {
-			this.showOriginal();
-
-			if(!this._.trackingSetUp) {
-				this.initTracking();
-
-				// run this just once per dialog's instance
-				this._.trackingSetUp = true;
-			}
-		};
+		if(!CKEDITOR.dialog.prototype.showOriginal){
+			CKEDITOR.dialog.prototype.showOriginal = CKEDITOR.dialog.prototype.show;
+			CKEDITOR.dialog.prototype.show = function() {
+				this.showOriginal();
+	
+				if(!this._.trackingSetUp) {
+					this.initTracking();
+	
+					// run this just once per dialog's instance
+					this._.trackingSetUp = true;
+				}
+			};
+		}
 
 		// setup tracking for given dialog
 		CKEDITOR.dialog.prototype.initTracking = function() {

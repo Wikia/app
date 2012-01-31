@@ -96,7 +96,7 @@ function mwSetupToolbar() {
 
 // apply tagOpen/tagClose to selection in textarea,
 // use sampleText instead of selection if there is none
-function insertTags( tagOpen, tagClose, sampleText ) {
+function insertTags( tagOpen, tagClose, sampleText, txtarea ) { // Wikia: txtarea passed as parameter
 	if ( typeof $j != 'undefined' && typeof $j.fn.textSelection != 'undefined' &&
 			( currentFocused.nodeName.toLowerCase() == 'iframe' || currentFocused.id == 'wpTextbox1' ) ) {
 		$j( '#wpTextbox1' ).textSelection(
@@ -104,19 +104,20 @@ function insertTags( tagOpen, tagClose, sampleText ) {
 		);
 		return;
 	}
-	var txtarea;
-	if ( document.editform ) {
-		if (typeof FCKeditorAPI != 'undefined') {
-			// wikia: support for wysiwyg editor
-			txtarea = FCKeditorAPI.GetInstance('wpTextbox1').EditingArea.TargetElement.firstChild;
+	if ( typeof txtarea == 'undefined'){
+		if ( document.editform ) {
+			if (typeof FCKeditorAPI != 'undefined') {
+				// wikia: support for wysiwyg editor
+				txtarea = FCKeditorAPI.GetInstance('wpTextbox1').EditingArea.TargetElement.firstChild;
+			}
+			else {
+				txtarea = currentFocused;
+			}
+		} else {
+			// some alternate form? take the first one we can find
+			var areas = document.getElementsByTagName( 'textarea' );
+			txtarea = areas[0];
 		}
-	 	else {
-			txtarea = currentFocused;
-		}
-	} else {
-		// some alternate form? take the first one we can find
-		var areas = document.getElementsByTagName( 'textarea' );
-		txtarea = areas[0];
 	}
 	var selText, isSample = false;
 

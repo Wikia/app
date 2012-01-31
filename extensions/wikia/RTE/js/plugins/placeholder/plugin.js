@@ -7,7 +7,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 		editor.on('instanceReady', function() {
 			// add node in which template previews will be stored
-			self.previews = $('<div>', {id: 'RTEPlaceholderPreviews'}).appendTo(RTE.stuffNode);
+			self.previews = $('<div>', {id: 'RTEPlaceholderPreviews'}).appendTo(RTE.overlayNode);
 		});
 
 		editor.on('wysiwygModeReady', function() {
@@ -78,7 +78,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 				var code = data.wikitext.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 				// messages
-				var lang = RTE.instance.lang.hoverPreview;
+				var lang = RTE.getInstance().lang.hoverPreview;
 
 				switch(info.type) {
 					case 'tpl':
@@ -240,7 +240,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 		// position preview node
 		var position = RTE.tools.getPlaceholderPosition(placeholder);
 		var tempTop,
-			freeBottomSpace = $(RTE.instance.getThemeSpace('contents').$).height() - position.top;
+			freeBottomSpace = $(RTE.getInstance().getThemeSpace('contents').$).height() - position.top;
 		if (freeBottomSpace <= preview.height()) { 
 			tempTop = position.top - preview.height() - placeholder.height();
 			preview.addClass('bottom');

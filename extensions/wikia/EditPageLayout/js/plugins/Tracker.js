@@ -19,6 +19,12 @@
 		initialMode: false,
 
 		beforeInit: function() {
+
+			// Update trackerRoot for the MiniEditor
+			if (this.editor.config.isMiniEditor) {
+				this.trackerRoot = 'MiniEditor';
+			}
+
 			this.setTrackingFunction(jQuery.tracker.byStr);
 			this.eventTrackerFn = jQuery.tracker.trackEvent;
 		},
@@ -91,7 +97,7 @@
 						if (window.RTEDisabledReason) {
 							switch(window.RTEDisabledReason) {
 								// RTE disabled in user preferences
-								case 'usepreferences':
+								case 'userpreferences':
 									initialMode = 'sourceModeLockedByPref';
 									break;
 
@@ -190,7 +196,7 @@
 				// ignore higher times (caused by people closing their browsers while being on edit page)
 				if (loadTimeTotal !== false && loadTimeTotal < 60000 /* 60 sec */) {
 					this.editor.log('Editor loaded in ' + (loadTimeTotal / 1000) + ' s (after "edit" was clicked)');
-					this.trackEvent('editpage', 'loadTimeTotal', browserInfo, loadTimeTotal);
+					this.trackEvent(this.trackerRoot, 'loadTimeTotal', browserInfo, loadTimeTotal);
 				}
 
 				// time it took to load the editor fully (within current page view)
@@ -198,7 +204,7 @@
 					var loadTime = now - window.wgNow;
 
 					this.editor.log('Editor loaded in ' + (loadTime / 1000) + ' s (after HTML has arrived)');
-					this.trackEvent('editpage', 'loadTime', browserInfo, loadTime);
+					this.trackEvent(this.trackerRoot, 'loadTime', browserInfo, loadTime);
 				}
 
 				// send this report just once

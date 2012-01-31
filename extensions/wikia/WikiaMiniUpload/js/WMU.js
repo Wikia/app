@@ -1,5 +1,6 @@
 /*
  * Author: Inez Korczynski, Bartek Lapinski
+ * $G = YAHOO.util.Dom.get
  */
 
 /*
@@ -34,6 +35,8 @@ var WMU_height_par = null;
 var WMU_widthChanges = 1;
 var WMU_inGalleryPosition = false;
 var WMU_skipDetails = false;
+var RTEInstanceElemId = RTEInstanceElemId || 'wpTextbox1';
+
 
 if (typeof WMU_box_filled == 'undefined') WMU_box_filled = [];
 
@@ -65,7 +68,14 @@ function WMU_setSkip(){
   WMU_skipDetails = true;
 }
 
+function WMU_getRTETxtarea(){
+	// return dom element, not jquery object
+	return WikiaEditor.getInstance().getEditbox()[0];
+}
+
+
 function WMU_loadDetails() {
+	
 	YAHOO.util.Dom.setStyle('ImageUploadMain', 'display', 'none');
 	WMU_indicator(1, true);
 
@@ -253,7 +263,7 @@ function WMU_readjustSlider( value ) {
 
 function WMU_getCaret() {
         if (typeof FCK == 'undefined') {
-                var control = document.getElementById('wpTextbox1');
+                var control = document.getElementById(RTEInstanceElemId);
         } else {
                 var control = FCK.EditingArea.Textarea;
         }
@@ -278,7 +288,7 @@ function WMU_getCaret() {
 function WMU_inGallery() {
         var originalCaretPosition = WMU_getCaret();
         if (typeof FCK == 'undefined') {
-                var originalText = document.getElementById('wpTextbox1').value;
+                var originalText = document.getElementById(RTEInstanceElemId).value;
         } else {
                 var originalText = FCK.EditingArea.Textarea.value;
         }
@@ -394,6 +404,12 @@ function WMU_loadMainFromView() {
 
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+	// Handle MiniEditor focus
+	// (BugId:18713)
+	var wikiaEditor = WikiaEditor.getInstance();
+	if(wikiaEditor.config.isMiniEditor) {
+		wikiaEditor.plugins.MiniEditor.hasFocus = true;
+	}
 
 	if(gallery === -2){
 	//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
@@ -514,6 +530,8 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
 	if(WMU_panel != null) {
 		WMU_panel.show();
+		// Recenter each time for different instances of RTE. (BugId:15589)
+		WMU_panel.center();
 		if(WMU_refid != null && WMU_wysiwygStart == 2) {
 			WMU_loadDetails();
 		} else {
@@ -1056,13 +1074,12 @@ function WMU_insertImage(e, type) {
 
 			var screenType = o.getResponseHeader['X-screen-type'];
 			if(typeof screenType == "undefined") {
-				screenType = o.getResponseHeader['X-Screen-Type'];
+				screenType = o.getResponseHeader['X-screen-type'];
 			}
 
 			switch(YAHOO.lang.trim(screenType)) {
 				case 'error':
 					o.responseText = o.responseText.replace(/<script.*script>/, "" );
-					alert(o.responseText);
 					break;
 				case 'conflict':
 					WMU_switchScreen('Conflict');
@@ -1079,12 +1096,13 @@ function WMU_insertImage(e, type) {
 					if ( event.isDefaultPrevented() ) {
 					    return false;
 					}
-
+										
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );
 						} else {
-							insertTags($G('ImageUploadTag').value, '', '');
+							// insert image in source mode
+							insertTags($G('ImageUploadTag').value, '', '', WMU_getRTETxtarea());
 						}
 					} else { // FCK
 						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').value;
@@ -1128,6 +1146,13 @@ function WMU_insertImage(e, type) {
 								// add new image
 								RTE.mediaEditor.addImage(wikitag, options);
 							}
+							// Handle MiniEditor focus
+							// (BugId:18713)
+							var wikiaEditor = WikiaEditor.getInstance();
+							if(wikiaEditor.config.isMiniEditor) {
+								wikiaEditor.plugins.MiniEditor.hasFocus = false;
+							}
+
 						}
 						else  if(WMU_refid != -1) {
 							if( -2 == WMU_gallery) { // updating image placeholder
@@ -1289,6 +1314,14 @@ function WMU_close(e) {
 	WMU_switchScreen('Main');
 	WMU_loadMain();
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
+
+	// Handle MiniEditor focus
+	// (BugId:18713)
+	var wikiaEditor = WikiaEditor.getInstance();
+	if(wikiaEditor.config.isMiniEditor) {
+		wikiaEditor.editorFocus();
+		wikiaEditor.plugins.MiniEditor.hasFocus = false;
+	}
 }
 
 function WMU_track(str) {
