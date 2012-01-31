@@ -89,18 +89,6 @@ class FollowModel {
 					$row['by_user'] =  $explode[0];
 				}
 			}
-			
-			/**
-			 * Wall Logic 
-			 * 
-			 * When you fallow tread the fallowing is marked in NS_USER_WALL_MESSAGE, NS_USER_WALL
-			 * so we will skip NS_USER_WALL with are subpage to filter out this.
-			 */
-			
-			if($title->getNamespace() == NS_USER_WALL) {
-				$hasWall = true;
-			}	
-					
 
 			if ( in_array($row['wl_namespace'], $wgContentNamespaces) && (NS_MAIN != $row['wl_namespace']) ) {
 				$ttile = Title::makeTitle($row['wl_namespace'], "none");
@@ -117,6 +105,13 @@ class FollowModel {
 			
 		}
 		
+		/**
+		 * Wall Logic 
+		 * 
+		 * When you fallow tread the fallowing is marked in NS_USER_WALL_MESSAGE, NS_USER_WALL
+		 * so we will skip NS_USER_WALL with are subpage to filter out this.
+		 */
+			
 		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")";
 		//special case for Wall to avoid subpages
 		if($hasWall) {
