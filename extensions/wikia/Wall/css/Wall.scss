@@ -557,6 +557,12 @@ body.skin-monobook {
 			margin: 0;
 			padding: 0;
 			background: none;
+			.msg-title {
+				
+			}
+		}
+		.comments .SpeechBubble .msg-title a {
+			color: black;
 		}
 		.message .message .speech-bubble-message {
 			margin-left: 50px;
@@ -567,6 +573,20 @@ body.skin-monobook {
 		}
 		.buttons {
 			display: none !important;
+		}
+		textarea{
+			background: white;
+			color: black;
+			border: black;
+			border: solid;
+			border-width: 1px;
+		}
+		.SortingBar {
+			background: white;
+			color: black;
+			border: black;
+			border: solid;
+			border-width: 1px;
 		}
 	}
 	
