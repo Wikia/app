@@ -1023,7 +1023,7 @@ class WikiaPhotoGalleryHelper {
 			if ($thumb) {
 				$ret[] = array(
 					'name' => $image->getText(),
-					'thumb' => $thumb1055
+					'thumb' => $thumb
                                     
 				);
 			}
