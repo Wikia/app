@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <h2>Variable Data - <?php echo $variable->cv_name ?>  <small>[<a href='#' id="wk-variable-change" title="Click here to edit this variable's settings" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>edit</a>]</small></h2>
 <div style="margin:.5em 0;"><?php echo $variable->cv_description ?></div>
-<table class="wikitable">
+<table class="WikiaTable">
 	<thead class="wf-tinyhead">
 		<tr>
 			<th>id</th>

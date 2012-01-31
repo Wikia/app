@@ -16,7 +16,7 @@ function close_allowToSave() {
 <?=wfMsg('closewiki-check-and-confirm')?>
 <div>
 	<form action="<?php echo $title->getFullUrl( "step=2") ?>" method="post">
-	<table class="wikitable" style="width: 100%">
+	<table class="WikiaTable" style="width: 100%">
 	<tr>
 		<th><?=wfMsg('allmessagesname')?></th>
 		<th><?=wfMsg('wf_city_id')?></th>

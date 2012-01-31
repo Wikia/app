@@ -23,6 +23,21 @@ CKEDITOR.plugins.add( 'table',
 		CKEDITOR.dialog.add( 'table', this.path + 'dialogs/table.js' );
 		CKEDITOR.dialog.add( 'tableProperties', this.path + 'dialogs/table.js' );
 
+		// Wikia Start - (BugId:19661)
+		editor.on( 'selectionChange', function( evt )
+			{
+				var element = evt.data.element.$,
+					table = $(element).closest( '.WikiaTable' );
+
+				$(editor.document.$).find('.WikiaTable-selected').removeClass('WikiaTable-selected');				
+
+				if ( table.length ) {
+					console.log('length')
+					table.addClass('WikiaTable-selected');
+				}
+			});
+		// Wikia End
+		
 		// If the "menu" plugin is loaded, register the menu items.
 		if ( editor.addMenuItems )
 		{
@@ -52,7 +67,7 @@ CKEDITOR.plugins.add( 'table',
 
 				if ( element.is( 'table' ) )
 					evt.data.dialog = 'tableProperties';
-			});
+			});			
 
 		// If the "contextmenu" plugin is loaded, register the listeners.
 		if ( editor.contextMenu )

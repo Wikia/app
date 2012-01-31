@@ -1,7 +1,7 @@
 <?php if($days) { ?>
 	<p>last <?= $days ?> days</p>
 <?php } ?>
-<table class="wikitable">
+<table class="WikiaTable">
 	<tr>
 		<th>date</th>
 		<th>total</th>

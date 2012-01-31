@@ -186,7 +186,7 @@
 	}
 ?>
 <form name="eznsForm" method="POST">
-<table class='wikitable'>
+<table class='WikiaTable'>
 	<caption>current namespace settings</caption>
 	<tr>
 		<th>wgExtraNamespaces</th>
@@ -244,9 +244,9 @@
 	
 ?>
 
-<table class="wikitable">
+<table class="WikiaTable">
 <tr>
-<td></td>
+<th></th>
 <th>id</th>
 <th>text</th>
 <th>is content?</th>
