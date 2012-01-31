@@ -91,8 +91,8 @@ $app->registerHook('ContributionsToolLinks', 'WallHooksHelper', 'onContributions
 
 //watchlist
 $app->registerHook('ArticleCommentBeforeWatchlistAdd', 'WallHooksHelper', 'onArticleCommentBeforeWatchlistAdd');
-$app->registerHook('WatchArticle', 'WallHooksHelper', 'onWatchArticle');
-$app->registerHook('UnwatchArticle', 'WallHooksHelper', 'onUnwatchArticle');
+//$app->registerHook('WatchArticle', 'WallHooksHelper', 'onWatchArticle');
+//$app->registerHook('UnwatchArticle', 'WallHooksHelper', 'onUnwatchArticle');
 
 //diff page adjusting
 $app->registerHook('DiffViewHeader', 'WallHooksHelper', 'onDiffViewHeader');
