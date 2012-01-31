@@ -89,11 +89,8 @@ function renderSpoiler( $input, $argv, $parser ) {
 	# Put this on the sandbox page:  (works in MediaWiki 1.5.5)
 	#   <example argument="foo" argument2="bar">Testing text **example** in between the new tags</example>
 
-	$localParser = new Parser();
-	$outputObj = $localParser->parse($input, $parser->mTitle, $parser->mOptions);
+	$outputObj = $parser->recursiveTagParse( $input );
 	$spoilerId = wfMakeSpoilerId();
-
-	wfLoadExtensionMessages('SpoilerExtension');
 
 	// quick hack to get rid of 'undefined index' notices...
 	foreach (array('collapsed', 'contentstyle', 'footwarningtext', 'headwarningtext', 'linkstyle', 'linktext', 'spoilerstyle', 'warningstyle') as $a)
@@ -109,7 +106,7 @@ function renderSpoiler( $input, $argv, $parser ) {
 		$output .= ($argv["headwarningtext"] == '' ? wfMsg('spoiler-warning') : $argv["headwarningtext"]);
 		$output .= "</div>";
 	}
-	$output .= "<div id=\"" . $spoilerId . "_content\" style=\"" . ($argv["contentstyle"] == '' ? "padding-top:4px; padding-bottom:4px;" : $argv["contentstyle"]) . "\">" . $outputObj->getText() . "</div>";
+	$output .= "<div id=\"" . $spoilerId . "_content\" style=\"" . ($argv["contentstyle"] == '' ? "padding-top:4px; padding-bottom:4px;" : $argv["contentstyle"]) . "\">" . $outputObj . "</div>";
 	if (!in_array("hidewarning", array_values($argv))) {
 		$output .= "<div style=\"" . ($argv["warningstyle"] == '' ? "border-top: 2px red solid; border-bottom: 2px red solid; padding:3px; line-height: 22px;" : $argv["warningstyle"]) . "\">";
 		$output .= ($argv["footwarningtext"] == '' ? wfMsg('spoiler-endshere') : $argv["footwarningtext"]);
