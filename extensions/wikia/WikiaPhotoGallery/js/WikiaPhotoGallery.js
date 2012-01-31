@@ -3045,7 +3045,7 @@ var WikiaPhotoGallery = {
 			var control = document.getElementById('wpTextbox1');
 		} else {
 			// RTE
-			var control = window.RTE.instance.textarea.$;
+			var control = RTE.getInstance().textarea.$;
 		}
 
 		return control;

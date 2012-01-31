@@ -39,14 +39,12 @@ body .cke_dialog
 }
 
 .cke_skin_wikia .cke_browser_iequirks .cke_dialog_title,
-.cke_skin_wikia .cke_browser_ie6 .cke_dialog_title,
 .cke_skin_wikia .cke_browser_ie7 .cke_dialog_title
 {
 	margin-bottom: 22px;
 }
 
 .cke_skin_wikia .cke_browser_iequirks.cke_single_page .cke_dialog_title,
-.cke_skin_wikia .cke_browser_ie6.cke_single_page .cke_dialog_title,
 .cke_skin_wikia .cke_browser_ie7.cke_single_page .cke_dialog_title
 {
 	margin-bottom: 10px;
@@ -331,11 +329,6 @@ body .cke_dialog
 	top: 0;
 }
 
-/*.cke_skin_wikia .cke_browser_ie6.cke_rtl .cke_dialog_close_button
-{
-	left: 16px;
-}*/
-
 /* IE7 + IE quirks */
 .cke_skin_wikia .cke_browser_ie7.cke_rtl .cke_dialog_close_button
 {
@@ -350,7 +343,6 @@ body .cke_dialog
 	margin-top: 22px;
 }
 
-.cke_skin_wikia .cke_browser_ie6 .cke_dialog_close_button,
 .cke_skin_wikia .cke_browser_iequirks .cke_dialog_close_button
 {
 	top: 7px;

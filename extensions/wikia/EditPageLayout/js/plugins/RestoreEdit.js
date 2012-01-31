@@ -206,7 +206,7 @@
 			
 	    	alldata[this.dataKey] = data;
 	    	$.storage.set(this.mainKey, alldata);
-			$().log('Data stored', 'RestoreEdit');
+			//$().log('Data stored', 'RestoreEdit');
 	    },
 		
 	    getOldData: function() {

@@ -23,8 +23,8 @@ CKEDITOR.plugins.add('rte-temporary-save',
 		$(window).bind('beforeunload', function(ev) {
 			RTE.log('onbeforeunload: performing temporary save');
 
-			$('#RTETemporarySaveType').attr('value', RTE.instance.mode);
-			$('#RTETemporarySaveContent').attr('value', RTE.instance.getData());
+			$('#RTETemporarySaveType').attr('value', RTE.getInstance().mode);
+			$('#RTETemporarySaveContent').attr('value', RTE.getInstance().getData());
 
 			RTE.track('temporarySave', 'store');
 		});

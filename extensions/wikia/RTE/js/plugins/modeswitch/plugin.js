@@ -13,18 +13,18 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		editor.on('mode', $.proxy(this.updateModeInfo, this));
 
 		// disable buttons while switching between modes
-		editor.on('modeSwitch', $.proxy(function(){
-			this.sourceCommand.disable();
-			this.wysiwygCommand.disable();
+		editor.on('modeSwitch', $.proxy(function(ev){
+			ev.editor.getCommand('ModeSource').disable();
+			ev.editor.getCommand('ModeWysiwyg').disable();
 		}, this));
 
 		// enable button switching to the "opposite" mode
 		editor.on('modeSwitchCancelled', $.proxy(function(ev){
 			if (ev.editor.mode == 'source') {
-				this.wysiwygCommand.enable();
+				ev.editor.getCommand('ModeWysiwyg').enable();
 			}
 			else {
-				this.sourceCommand.enable();
+				ev.editor.getCommand('ModeSource').enable();
 			}
 		}, this));
 
@@ -34,6 +34,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		editor.on('modeSwitch', $.proxy(this.modeSwitch, this));
 		editor.on('dataReady', $.proxy(this.dataReady, this));
 		editor.on('wysiwygModeReady', $.proxy(this.wysiwygModeReady, this));
+		editor.on('sourceModeReady', $.proxy(this.sourceModeReady, this));
 	},
 
 	modeSwitch: function(ev) {
@@ -115,7 +116,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 				break;
 		}
 	},
-	
+
 	mode: function(ev) {
 		RTE.log('mode "' + ev.editor.mode + '" is loaded');
 	},
@@ -123,11 +124,13 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	dataReady: function(ev) {
 		if (ev.editor.mode == 'wysiwyg') {
 			ev.editor.fire('wysiwygModeReady');
+		} else if (ev.editor.mode == 'source') {
+			ev.editor.fire('sourceModeReady');
 		}
 	},
 
 	wysiwygModeReady: function(ev) {
-		RTE.log('onWysiwygModeReady');
+		RTE.log('wysiwygModeReady');
 
 		var editor = ev.editor,
 			body = jQuery(editor.document.$.body);
@@ -149,6 +152,19 @@ CKEDITOR.plugins.add('rte-modeswitch',
 				}
 			}
 		}, 750);
+		
+		// (BugId:19807)
+		if(ev.editor.config.startupFocus) {
+			editor.focus();
+		}
+	},
+
+	sourceModeReady: function(ev) {
+		RTE.log('sourceModeReady');
+		// (BugId:19807)
+		if(ev.editor.config.startupFocus) {
+			ev.editor.focus();
+		}
 	},
 
 	updateModeInfo: function(ev) {
@@ -166,20 +182,20 @@ CKEDITOR.plugins.add('rte-modeswitch',
 			sourceTabLabel = this.messages['toSource' + (mode == 'source' ? '' : 'Tooltip')],
 			wysiwygTabLabel = this.messages['toWysiwyg' + (mode == 'wysiwyg' ? '' : 'Tooltip')];
 
-		this.getSwitchTab('source').attr('title', sourceTabLabel);
-		this.getSwitchTab('wysiwyg').attr('title', wysiwygTabLabel);
+		this.getSwitchTab(ev.editor, 'ModeSource').attr('title', sourceTabLabel);
+		this.getSwitchTab(ev.editor, 'ModeWysiwyg').attr('title', wysiwygTabLabel);
 	},
 
 	// get jQuery object for mode switching tab
-	getSwitchTab: function(mode) {
-		var nodeId = this[mode + 'Command'].uiItems[0]._.id;
+	getSwitchTab: function(editor, commandName) {
+		var nodeId = editor.getCommand(commandName).uiItems[0]._.id;
 		return $('#' + nodeId);
 	},
 
 	addCommands: function(editor) {
-		this.sourceCommand = editor.addCommand('ModeSource', {
+		editor.addCommand('ModeSource', {
 			modes: {wysiwyg:1},
-			editorFocus : false,
+			editorFocus : editor.config.isMiniEditor,
 			canUndo : false,
 			exec: function() {
 				if (editor.mode != 'source')
@@ -187,23 +203,24 @@ CKEDITOR.plugins.add('rte-modeswitch',
 			}
 		});
 
-		this.wysiwygCommand = editor.addCommand('ModeWysiwyg', {
+		editor.addCommand('ModeWysiwyg', {
 			modes: {source:1},
 			exec: function() {
-				if (editor.mode == 'source')
+				if (editor.mode == 'source'){
 					editor.execCommand('source');
+				}
 			}
 		});
 
 		editor.ui.addButton( 'ModeSource', {
 			label : this.messages.toSource,
-			hasIcon: false,
+			hasIcon: editor.config.isMiniEditor,
 			command : 'ModeSource'
 		});
 
 		editor.ui.addButton( 'ModeWysiwyg', {
 			label : this.messages.toWysiwyg,
-			hasIcon: false,
+			hasIcon: editor.config.isMiniEditor,
 			command : 'ModeWysiwyg'
 		});
 	}

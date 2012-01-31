@@ -14,7 +14,7 @@ CKEDITOR.plugins.add('rte-overlay',
 
 		// add node in which overlays will be stored
 		editor.on('instanceReady', function() {
-			self.overlays = $('<div>', {id : 'RTEMediaOverlays'}).appendTo(RTE.stuffNode);
+			self.overlays = $('<div>', {id : 'RTEMediaOverlays'}).appendTo(RTE.overlayNode);
 		});
 
 		// clean overlays when switching from source to wysiwyg mode
@@ -260,7 +260,7 @@ RTE.overlay = {
 	// add overlay menu and block CKeditor context menu
 	add: function(node, items) {
 		var self = this.plugin;
-
+		
 		// store items
 		node.data('items', items);
 

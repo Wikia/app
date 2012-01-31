@@ -169,7 +169,7 @@
 
 		// send AJAX request
 		ajax: function(method, params, callback) {
-			var editor = typeof RTE == 'object'? RTE.instance : false,
+			var editor = typeof RTE == 'object'? RTE.getInstance() : false,
 				mode = editor ? editor.mode : 'mw';
 
 			params = $.extend({
@@ -261,8 +261,9 @@
 								dialog.closeModal();
 
 								if (typeof RTE == 'object') {
-									RTE.instance.focus();
+									self.editor.ck.config.startupFocus = true;
 								}
+								self.editor.editorFocus();
 							}
 						}
 					}
@@ -473,7 +474,7 @@
 		// get editor's content (either wikitext or HTML)
 		// and call provided callback with wikitext as its parameter
 		getContent: function(callback) {
-			var editor = typeof RTE == 'object'? RTE.instance : false,
+			var editor = typeof RTE == 'object'? RTE.getInstance() : false,
 				mode = editor ? editor.mode : 'mw';
 
 			callback = callback || function() {};

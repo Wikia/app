@@ -1,0 +1,25 @@
+// This file is included dynamically for ArticleComment style overrides
+@import "core/colors";
+
+.WikiaArticleComments {
+
+	#article-comments > form > .MiniEditorWrapper {
+		margin: 10px 0 10px 70px;
+	
+		.editarea {
+			border: 1px solid $color-miniEditor-button-border;
+
+			textarea {
+				border: 0;
+				margin: 0;
+				padding: 0;
+				resize: none;
+				width: 100%;
+			}
+		}
+
+		&.focused .editarea {
+			border: 0;
+		}
+	}
+}

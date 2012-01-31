@@ -1,0 +1,146 @@
+Notes / Outline of RTEMini:
+==========================
+
+
+Enable RTEMini extension:
+-------------------------
+
+In DevBoxSettings.php, add: 
+
+$wgEnableRTEMiniExt = true;
+
+if ($wgEnableRTEMiniExt) {
+        include( "$IP/extensions/wikia/RTEMini/RTEMini.setup.php" );
+}
+
+In the template for the page that needs to use RTE Mini call setup once:
+
+    <?php if ( $wg->EnableRTEMiniExt ): ?>
+		<?= $app->renderView('RTEMiniController', 'EditorSetup'); ?>
+	<?php endif;?>
+
+In the template that has an edit area (for each edit area) add a wrapper:
+
+	<? if ( $wg->EnableRTEMiniExt ): ?>
+		<?= $app->renderView( 'RTEMiniController', 'EditorWrapper', array('editorName'=> "WallMessage".$id, 'element'=>'div', 'body'=>$body ) ); ?>
+	<? else: ?>
+		<div class="msg-body" id="WallMessage<? echo $linkid ?>">
+			<? echo $body ?>
+		</div>
+	<? endif; ?>
+
+Methods and Variables:
+----------------------
+
+* RTEMini.init() - Create new instance of mini editor; 
+	
+	* One param (id), which the id of the textarea to be replaced with the editor
+
+* RTEInstanceElemId is a global variable that represents the current editor instance
+
+* RTE.getInstance() - Grab currently focussed instance
+	
+	* One param (optional) which is the id of the instance you want to get. 
+
+* RTE.setInstance() - Set RTEInstanceElemId
+	
+	* One param (id) which is the value you want to give to RTEInstanceElemId 
+
+* To add a custom height to the RTEMini instance, add the attribute "data-editor-min-height" and "data-editor-max-height" to the wrapper element.  (See Wall_reply.php for example)
+
+
+DOM Dependencies: 
+-----------------
+
+* These DOM elements are added by controller methods in the RTEMiniController class (EditorSetup, EditorWrapper)
+
+* <body class='RTEMini'>
+
+* div#[EditorName]Wrapper that encloses editor, toolbar, and overlay divs
+
+* div#[EditorName]EditorWrapper with data-space-type of "editor"
+
+* div.editpage-editarea with data-space-type of "editarea""
+
+* textarea#[EditorName] - This is the textarea that will be replaced with the CKEditor instance. 
+
+* Loading indicator html (see below)
+
+	*  We'll probably want to include this from the back end. (BugId:15878)
+
+* Example markup:
+
+	<div id="[EditorName]Wrapper">
+		<div id="[EditorName]EditorWrapper" data-space-type="editor">
+			<div class="editpage-editarea" data-space-type="editarea">
+				<textarea id="[EditorName]"></textarea>
+	    	</div>
+		</div>
+		<div id="[EditorName]Toolbar" class="editpage-toolbar" data-space-type="toolbar"></div>
+	
+		<!-- loading indicator overlay -->
+		<div class="editpage-loading-indicator" data-space-type="loading-status" style="display:none">
+			<div class="loading-background"></div>
+			<div class="loading-message">
+				<span class="loading-throbber">&nbsp;</span>
+				<span class="loading-text">&nbsp;</span>
+			</div>
+		</div>
+	</div>
+
+
+Files of Interest for RTEMini:
+------------------------------
+
+
+Editor:
+
+* Loader: extensions/wikia/EditPageLayout/js/loaders/MiniEditorLoader.js
+
+	* Includes RTEMini.init()
+
+* WikiaEditor: extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js
+	
+
+RTEMini-Specific Plugins:
+
+* extensions/wikia/EditPageLayout/js/plugins/RTEMini.js
+
+	* Add any updates to RTE.config here (configOverrides)
+
+	* Any RTEMini specific UI like focus/blur and toolbar hide/show
+
+	
+RTEMini-Specific Modules (Toolbar):
+
+* extensions/wikia/EditPageLayout/js/modules/FormatMini.js
+
+	* Defines buttons to appear in "format" toolbar menu in Wysiwyg mode. 
+
+* extensions/wikia/EditPageLayout/js/modules/ToolbarRTEMini.js
+
+	* Defines buttons to appear in "format" toolbar menu in Source mode. 
+
+		* Note: Since source mode format buttons apply wiki text instead of html, we've hacked their functionality away from CKEditor's. These button configs can be found here: extensions/wikia/EditPageLayout/js/extras/Buttons.js
+
+* extensions/wikia/EditPageLayout/js/modules/Insert.js
+
+	* Defines buttons to appear in "insert" toolbar menu
+
+	* WE.modules.InsertMini is created at the bottom of the file as a new instance of WE.modules.Insert.
+
+
+Media:
+
+* extensions/wikia/WikiaMiniUpload/js/WMU.js
+
+	* Code for "add image" button
+
+* extensions/wikia/VideoEmbedTool/js/VET.js 
+
+	* Code for "add video" button
+
+* extensions/wikia/RTE/js/plugins/media/plugin.js 
+
+	* Plugin code for placing and editing media
+

@@ -169,7 +169,7 @@ CKEDITOR.ui.button.prototype =
 						// Wikia - start
 						// disable toolbar buttons until editor is fully loaded (RT #40472)
 						// TODO: move to more generic place
-						if (!RTE.loaded) {
+						if ($.inArray(editor, RTE.loaded)<0) {
 							this.setState(CKEDITOR.TRISTATE_DISABLED);
 							return;
 						}

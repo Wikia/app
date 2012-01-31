@@ -4,11 +4,12 @@ CKEDITOR.plugins.add('rte-dragdrop',
 	timeout: 250,
 
 	onDrop: function(ev) {
+		var editor = this;
 		RTE.log('drag&drop finished');
 
 		// reinitialize wysiwyg mode
 		setTimeout(function() {
-			RTE.instance.fire('wysiwygModeReady');
+			editor.fire('wysiwygModeReady');
 
 			// get dropped element (and remove marking attribute)
 			var droppedElement = RTE.getEditor().find('[data-rte-dragged]').removeAttr('data-rte-dragged');
@@ -16,16 +17,19 @@ CKEDITOR.plugins.add('rte-dragdrop',
 			RTE.log('dropped element:');
 			RTE.log(droppedElement);
 
-			RTE.instance.fire('droppedElements',droppedElement);
+			editor.fire('droppedElements',droppedElement);
 
-			RTE.instance.fire('saveSnapshot');
+			editor.fire('saveSnapshot');
 
 			// extra check for RT #36064
-			var content = RTE.instance.getData();
+			var content = editor.getData();
 			if (content == '') {
 				RTE.log('undoing drag&drop');
-				RTE.instance.execCommand('undo');
+				editor.execCommand('undo');
 			}
+			
+			// MiniEditor should be resized after drop
+			editor.fire('editorResize');
 
 			// get coordinates from "dragdrop" event and send it with "dropped" event
 			// @see http://www.quirksmode.org/js/events_properties.html#position
@@ -43,14 +47,13 @@ CKEDITOR.plugins.add('rte-dragdrop',
 	},
 
 	onDrag: function(ev) {
-
 		//hack for ie problem with scroll (for ie scroll bar is element ?)
 		if(typeof(ev.target.tagName) == 'undefined') {
 			return true;
 		}
 
 		// create undo point (RT #36064)
-		RTE.instance.fire('saveSnapshot');
+		this.fire('saveSnapshot');
 		RTE.log('drag&drop: undo point');
 
 		// "mark" dragged element
@@ -62,16 +65,16 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 		// fix for Chrome
 		if (CKEDITOR.env.webkit) {
-			RTE.instance.fire('wysiwygModeReady');
+			this.fire('wysiwygModeReady');
 		}
 	},
 
 	onDuringDragDrop: function(ev) {
 		var scrollStep = 15;
 		var scrollSpace = 50;
-
-		var editorHeight = parseInt($('#cke_contents_wpTextbox1').height());
-		var editorWindow = RTE.instance.window.$;
+		
+		var editorHeight = parseInt($('#cke_contents_'+RTE.getInstance().name).height());
+		var editorWindow = this.window.$;
 
 		// get position of vertical scroll
 		var scrollY = (CKEDITOR.env.ie ? editorWindow.document.body.parentNode.scrollTop : editorWindow.scrollY);
@@ -105,17 +108,17 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 				// for new Fx (3.5+)
 				//
-				bind('dragstart.dnd', self.onDrag).
+				bind('dragstart.dnd', $.proxy(self.onDrag, editor)).
 
-				bind('drop.dnd', self.onDrop).
+				bind('drop.dnd', $.proxy(self.onDrop, editor)).
 
 				// for old Fx (3.0-)
 				//
-				bind('dragdrop.dnd', self.onDrop).
+				bind('dragdrop.dnd', $.proxy(self.onDrop, editor)).
 
 				// user clicked on placeholder / image
 				// this can be beginning of drag&drop
-				bind('mousedown.dnd', self.onDrag).
+				bind('mousedown.dnd', $.proxy(self.onDrag, editor)).
 
 				// ok, so this wasn't drag&drop, just a click on placeholder / image
 				bind('mouseup.dnd', function(ev) {
@@ -144,14 +147,14 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				}).
 
 				// handle editor scrolling during drag&drop (RT #37709)
-				bind('dragover.dnd', self.onDuringDragDrop);
+				bind('dragover.dnd', $.proxy(self.onDuringDragDrop));
 
 			// for IE
 			if (CKEDITOR.env.ie) {
 				RTE.getEditor().
 					unbind('.dnd').
-					bind('drop.dnd',self.onDrop).
-					bind('dragover.dnd', self.onDuringDragDrop);
+					bind('drop.dnd',$.proxy(self.onDrop, editor)).
+					bind('dragover.dnd', $.proxy(self.onDuringDragDrop));
 			}
 		});
 	}

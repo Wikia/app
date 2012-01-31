@@ -24,6 +24,23 @@ $config['eplrte'] = array(
 	)
 );
 
+// Javascript for the MiniEditor
+$config['mini_editor_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#function_AssetsConfig::getMiniEditorAssets'
+	)	
+);
+
+// Javascript for the MiniEditor with RTE enabled
+$config['mini_editor_rte_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_mini_editor_js',
+		'#group_rte'
+	)	
+);
+
 // Site specific CSS
 $config['site_anon_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,

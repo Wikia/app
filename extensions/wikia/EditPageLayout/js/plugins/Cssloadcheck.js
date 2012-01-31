@@ -59,7 +59,8 @@
 		pollStylesheets: function() {
 			this.pollStylesheetsTimer.stop();
 
-			var ed = this.editor.getEditorElement();
+			var ed = this.editor.element;
+
 			if (ed) {
 				var iframe = ed.find('iframe');
 				if (iframe.exists()) {

@@ -48,7 +48,7 @@ CKEDITOR.command = function( editor, commandDefinition )
 
 		// Wikia - start
 		// disable toolbar buttons until editor is fully loaded (RT #40472)
-		if (!RTE.loaded) {
+		if ($.inArray(editor, RTE.loaded)<0) {
 			return false;
 		}
 		// Wikia - end

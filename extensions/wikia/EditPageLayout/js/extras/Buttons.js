@@ -1,12 +1,16 @@
 (function(window,$){
-	
 	var buttons = window.wgEditorExtraButtons = window.wgEditorExtraButtons || {};
-	
+
 	var checkGallery = function() {
 		return typeof window.WikiaPhotoGallery != 'undefined';
 	};
+
 	var checkVET = function() {
 		return typeof window.VET_show == 'function';
+	};
+
+	var getTextarea = function() {
+		return WikiaEditor.getInstance().getEditbox()[0];
 	};
 	
 	buttons['InsertImage'] = {
@@ -14,7 +18,10 @@
 		labelId: 'wikia-editor-media-image',
 		titleId: 'wikia-editor-media-image-tooltip',
 		className: 'RTEImageButton',
-		clicksource: function() { WMU_show({}); },
+		clicksource: function() { 
+			//debugger;
+			WMU_show({}); 
+		},
 		ckcommand: 'addimage'
 	};
 	buttons['InsertGallery'] = {
@@ -68,5 +75,32 @@
 		ckcommand: 'addvideo',
 		precondition: checkVET
 	};
-	
+	buttons['SourceBold'] = {
+		type: 'button',
+		labelId: 'wikia-editor-source-bold',
+		titleId: 'wikia-editor-source-bold-tooltip',
+		className: 'cke_button_bold',
+		clicksource: function() {
+			insertTags( "'''", "'''", "Bold text", getTextarea());
+		}
+	};
+	buttons['SourceItalic'] = {
+		type: 'button',
+		labelId: 'wikia-editor-source-italic',
+		titleId: 'wikia-editor-source-italic-tooltip',
+		className: 'cke_button_italic',
+		clicksource: function() {
+			insertTags( "''", "''", "Italic text", getTextarea());
+		}
+	};
+	buttons['SourceLink'] = {
+		type: 'button',
+		labelId: 'wikia-editor-source-link',
+		titleId: 'wikia-editor-source-link-tooltip',
+		className: 'cke_button_link',
+		clicksource: function() {
+			insertTags( "[[", "]]", "Link title", getTextarea());
+		}
+	};
+
 })(this,jQuery);

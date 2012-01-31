@@ -9,6 +9,7 @@
 
 		constructor: function() {
 			this.element = $('#EditPage');
+			this.body = $('#wpTextbox1');
 		},
 
 		getToolbarsConfig: function() {
@@ -72,7 +73,9 @@
 
 			var plugins = [ 'wikiacore', rte ? 'ckeditorsuite' : 'mweditorsuite' ];
 			var config = {
-				// the main DOM element where the editor should be rendered
+				// the element being replaced, where text will be entered
+				body: this.body,
+				// the DOM element wrapper where the editor should be rendered
 				element: this.element,
 				// toolbars definition
 				toolbars: this.getToolbarsConfig(),

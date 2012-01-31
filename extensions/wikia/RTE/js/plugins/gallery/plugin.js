@@ -81,7 +81,7 @@ CKEDITOR.plugins.add('rte-gallery',
 				var data = $(this).getData();
 				var key = (data.type == 1) ? 'tooltip' : 'tooltipSlideshow';
 
-				return RTE.instance.lang.photoGallery[key];
+				return RTE.getInstance().lang.photoGallery[key];
 			});
 	}
 });

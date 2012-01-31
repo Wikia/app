@@ -75,7 +75,6 @@ packages :
 			files :
 				[
 					'_source/core/ckeditor_base.js',
-					'_source/core/loader.js',
 					'_source/core/event.js',
 					'_source/core/editor_basic.js',
 					'_source/core/env.js',

@@ -2,7 +2,7 @@ CKEDITOR.plugins.add('rte-media',
 {
 	init: function(editor) {
 		var self = this;
-
+		
 		editor.on('wysiwygModeReady', function() {
 			// get all media (images / videos) - don't include placeholders
 			var media = RTE.tools.getMedia();
@@ -26,6 +26,7 @@ CKEDITOR.plugins.add('rte-media',
 			});
 		});
 
+		//debugger;
 		// register "Add Image" command
 		editor.addCommand('addimage', {
 			exec: function(editor) {
@@ -71,7 +72,8 @@ CKEDITOR.plugins.add('rte-media',
 
 	// setup both images and videos (including placeholders)
 	setupMedia: function(media) {
-		var self = this;
+		var self = this,
+			editor = RTE.getInstance();
 
 		// no media to setup - leave
 		if (!media.exists()) {
@@ -82,7 +84,7 @@ CKEDITOR.plugins.add('rte-media',
 		media.attr('data-rte-instance', RTE.instanceId);
 
 		// setup overlay
-		var msgs = RTE.instance.lang.media;
+		var msgs = RTE.getInstance().lang.media;
 
 		RTE.overlay.add(media, [
 			{
@@ -104,11 +106,17 @@ CKEDITOR.plugins.add('rte-media',
 					var type = self.getTrackingType(node);
 
 					// show modal version of confirm()
-					var title = RTE.instance.lang[type].confirmDeleteTitle;
-					var msg = RTE.instance.lang[type].confirmDelete;
+					var title = RTE.getInstance().lang[type].confirmDeleteTitle;
+					var msg = RTE.getInstance().lang[type].confirmDelete;
 
 					RTE.tools.confirm(title, msg, function() {
 						RTE.tools.removeElement(node);
+						
+						var wikiaEditor = RTE.getInstanceEditor();
+
+						// Resize editor area
+						wikiaEditor.fire('editorResize');
+						wikiaEditor.editorFocus();
 					});
 
 					// tracking
@@ -147,8 +155,8 @@ CKEDITOR.plugins.add('rte-media',
 			}
 
 			// calculate relative positon
-			var editorX = parseInt(extra.pageX - $('#editform').offset().left);
-			var editorWidth = parseInt($('#editform').width());
+			var editorX = parseInt(extra.pageX - $(this).offset().left);
+			var editorWidth = parseInt($(this).width());
 
 			// choose new image alignment
 			var data = target.getData();
@@ -316,14 +324,14 @@ CKEDITOR.plugins.add('rte-media',
 
 		// setup image / video placeholder separatelly
 		var images = placeholder.filter('.image-placeholder');
-		images.attr('title', RTE.instance.lang.imagePlaceholder.tooltip);
+		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
 		images.bind('click.placeholder edit.placeholder', function(ev) {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
 			RTE.tools.callFunction(window.WMU_show,$(this), {isPlaceholder: true});
 		});
 
 		var videos = placeholder.filter('.video-placeholder');
-		videos.attr('title', RTE.instance.lang.videoPlaceholder.tooltip);
+		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
 		videos.bind('edit.placeholder', function(ev) {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			RTE.tools.callFunction(window.VET_show,$(this), {isPlaceholder: true});
@@ -412,13 +420,15 @@ RTE.mediaEditor = {
 
 		// render an image and replace old one
 		RTE.tools.parseRTE(wikitext, function(html) {
+			var editor = RTE.getInstance();
+			
 			//RT#52431 - proper context
-			var newMedia = $(html, RTE.instance.document.$).children('img');
+			var newMedia = $(html, editor.document.$).children('img');
 
 			//fix for IE7, the above line of code is returning an empty element
 			//since $(html) strips the enclosing <p> tag out for some reason
 			if(!newMedia.exists()){
-				newMedia = $(html, RTE.instance.document.$);
+				newMedia = $(html, editor.document.$);
 			}
 
 			// set meta-data
@@ -427,8 +437,13 @@ RTE.mediaEditor = {
 			// insert new media (don't reinitialize all placeholders)
 			RTE.tools.insertElement(newMedia, true);
 
+			// for MiniEditor, resize the editor after adding an image. 
+			RTE.getInstanceEditor().fire('editorResize');
+
 			// setup added media
 			self.plugin.setupMedia(newMedia);
+			
+			editor.focus();
 
 			// tracking
 			RTE.track(self.plugin.getTrackingType(newMedia), 'event', 'add');
@@ -441,6 +456,8 @@ RTE.mediaEditor = {
 
 		// render an image and replace old one
 		RTE.tools.parseRTE(wikitext, function(html) {
+			var editor = RTE.getInstance();
+
 			var newMedia = $(html).children('img');
 
 			// replace old one with new one
@@ -450,6 +467,8 @@ RTE.mediaEditor = {
 
 			// setup added media
 			self.plugin.setupMedia(newMedia);
+
+			editor.focus();
 
 			// tracking
 			RTE.track(self.plugin.getTrackingType(newMedia), 'event', 'modified');

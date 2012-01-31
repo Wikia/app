@@ -312,7 +312,11 @@ class EditPageLayoutHelper {
 	 * @return boolean return true
 	 */
 	function onAfterDisplayingTextbox(&$editPage, &$hidden) {
-		$this->out->addHtml('</div>');
+		$html = wfRenderPartial('EditPageLayout', 'Loader', array(
+					'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
+				));
+		$html.="</div>";
+		$this->out->addHtml($html);
 		return true;
 	}
 

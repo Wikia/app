@@ -96,14 +96,6 @@
 							<!-- edit form content -->
 							<?= $bodytext ?>
 
-							<!-- loading indicator overlay (will be moved inside .editpage-editarea by JS)-->
-							<div class="editpage-loading-indicator" data-space-type="loading-status" style="display:none">
-								<div class="loading-background"></div>
-								<div class="loading-message">
-									<span class="loading-throbber">&nbsp;</span>
-									<span class="loading-text">&nbsp;</span>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

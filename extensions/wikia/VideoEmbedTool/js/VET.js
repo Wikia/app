@@ -30,6 +30,20 @@ var VET_ratio = 1;
 var VET_shownMax = false;
 var VET_inGalleryPosition = false;
 
+function VET_getTextarea() {
+	// return dom element, not jquery object
+	return WikiaEditor.getInstance().getEditbox()[0];
+}
+
+function VET_getTextareaValue() {
+	var ckeditor = WikiaEditor.getInstance().ck;
+	if(ckeditor) {
+		return ckeditor.getData()
+	} else {
+		return VET_getTextarea().value;
+	}
+}
+
 // macbre: show edit video screen (wysiwyg edit)
 function VET_editVideo() {
 	YAHOO.util.Dom.setStyle('VideoEmbedMain', 'display', 'none');
@@ -318,19 +332,7 @@ function VET_showPreview(e) {
 }
 
 function VET_getCaret() {
-	if (typeof FCK == 'undefined') {
-		var control = document.getElementById('wpTextbox1');
-		RTE_source = $('#cke_contents_wpTextbox1 textarea');
-
-		if( RTE_source.length > 0 ) {
-			control = $('#cke_contents_wpTextbox1 textarea')[0];
-		}
-
-	} else {
-		var control = FCK.EditingArea.Textarea;
-	}
-
-  var caretPos = 0;
+  var caretPos = 0, control = VET_getTextarea();
 	if(YAHOO.env.ua.ie != 0) { // IE Support
     control.focus();
     var sel = document.selection.createRange();
@@ -348,13 +350,9 @@ function VET_getCaret() {
 }
 
 function VET_inGallery() {
-	var originalCaretPosition = VET_getCaret();
-	if (typeof FCK == 'undefined') {
-		var originalText = document.getElementById('wpTextbox1').value;
-	} else {
-		var originalText = FCK.EditingArea.Textarea.value;
-	}
-	var lastIndexOfvideogallery = originalText.substring(0, originalCaretPosition).lastIndexOf('<videogallery>');
+	var originalCaretPosition = VET_getCaret(),
+		originalText = VET_getTextareaValue(),
+		lastIndexOfvideogallery = originalText.substring(0, originalCaretPosition).lastIndexOf('<videogallery>');
 
 	if(lastIndexOfvideogallery > 0) {
 	  var indexOfvideogallery = originalText.substring(originalCaretPosition).indexOf('</videogallery>');
@@ -379,6 +377,12 @@ function VET_getFirstFree( gallery, box ) {
 
 // some parameters are
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
+	// Handle MiniEditor focus
+	// (BugId:18713)
+	var wikiaEditor = WikiaEditor.getInstance();
+	if(wikiaEditor.config.isMiniEditor) {
+		wikiaEditor.plugins.MiniEditor.hasFocus = true;
+	}
 
 	if(typeof gallery == "undefined") {
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
@@ -462,8 +466,6 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 				window.FCK.wysiwygData[0] = data;
 
 				VET_track('open/fromWysiwyg/existing');
-
-				RTE.log(data);
 			}
 			else {
 				// add new video
@@ -494,6 +496,8 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		}
 
 		VET_panel.show();
+		// Recenter each time for different instances of RTE. (BugId:15589)
+		VET_panel.center();
 		if(VET_refid != null && VET_wysiwygStart == 2) {
 			VET_editVideo();
 		} else {
@@ -908,16 +912,12 @@ function VET_insertFinalVideo(e, type) {
 					$G('VideoEmbed' + VET_curScreen).innerHTML = o.responseText;
 					if ( !$G( 'VideoEmbedCreate'  ) && !$G( 'VideoEmbedReplace' ) ) {
 						if(VET_refid == null) { // not FCK
+
 							if ('-1' == VET_gallery) {
 								if (!VET_inGalleryPosition) {
-									insertTags( $G('VideoEmbedTag').value, '', '');
+									insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
 								} else {
-									if (typeof FCK == 'undefined') {
-										var txtarea = $G( 'wpTextbox1' );
-									} else {
-										var txtarea = FCK.EditingArea.Textarea;
-									}
-									VET_insertTag( txtarea, $G('VideoEmbedTag').value, VET_inGalleryPosition );
+									VET_insertTag( VET_getTextarea(), $G('VideoEmbedTag').value, VET_inGalleryPosition );
 								}
 							} else if( '-2' == VET_gallery) {
 								var to_update = $G( 'WikiaVideoPlaceholder' + VET_box );
@@ -1043,12 +1043,18 @@ function VET_close(e) {
 			$G( 'VideoEmbedPageWindow' ).style.visibility = '';
 		}
 	}
-	if (typeof RTE == 'undefined' && $G('wpTextbox1')) {
-		$G('wpTextbox1').focus();
-	}
+
 	VET_switchScreen('Main');
 	VET_loadMain();
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
+
+	// Handle MiniEditor focus
+	// (BugId:18713)
+	var wikiaEditor = WikiaEditor.getInstance();
+	if(wikiaEditor.config.isMiniEditor) {
+		wikiaEditor.editorFocus();
+		wikiaEditor.plugins.MiniEditor.hasFocus = false;
+	}
 }
 
 function VET_track(str) {
@@ -1076,4 +1082,3 @@ function VET_sendQueryEmbed(query) {
 	YAHOO.util.Connect.abort(VET_asyncTransaction);
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('POST', wgScriptPath + '/index.php', callback, 'action=ajax&rs=VET&method=insertVideo&url=' + escape($G('VideoEmbedUrl').value));
 }
-

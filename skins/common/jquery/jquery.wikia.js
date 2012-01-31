@@ -816,11 +816,13 @@ $.extend(Timer,{
  * Fetches given list of JS / CSS / SASS files and then fires callback (RT #70163)
  *
  * @author macbre
+ * FIXME: added support for asset manager groups, but it assumes they are javascript (which is not always true)
  */
 jQuery.getResources = function(resources, callback) {
 	var isJs = /.js(\?(.*))?$/,
 		isCss = /.css(\?(.*))?$/,
 		isSass = /.scss/,
+		isGroup = /__am\/\d+\/group/,
 		remaining = resources.length;
 
 	var onComplete = function() {
@@ -842,8 +844,8 @@ jQuery.getResources = function(resources, callback) {
 		if (typeof resource == 'function') {
 			resource.call(jQuery, onComplete);
 		}
-		// JS files
-		else if (isJs.test(resource)) {
+		// JS files and Asset Manager groups are scripts
+		else if (isJs.test(resource) || isGroup.test(resource)) {
 			$.getScript(resource, onComplete);
 		}
 		// CSS /SASS files

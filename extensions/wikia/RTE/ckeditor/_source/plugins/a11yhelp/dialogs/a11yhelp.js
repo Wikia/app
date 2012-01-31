@@ -184,7 +184,6 @@ CKEDITOR.dialog.add( 'a11yHelp', function( editor )
 							'}' +
 							// Some adjustments are to be done for IE6 and Quirks to work "properly" (#5757)
 							'.cke_browser_quirks .cke_accessibility_legend,' +
-							'.cke_browser_ie6 .cke_accessibility_legend' +
 							'{' +
 								'height:390px' +
 							'}' +

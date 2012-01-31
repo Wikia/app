@@ -80,7 +80,7 @@ CKEDITOR.themes.add( 'wikia', (function()
 
 			editor.fireOnce( 'themeLoaded' );
 			editor.fireOnce( 'uiReady' );
-
+			
 			RTE.log('theme is ready');
 		},
 
@@ -191,18 +191,19 @@ CKEDITOR.themes.add( 'wikia', (function()
 
 CKEDITOR.editor.prototype.getThemeSpace = function( spaceName )
 {
-	var getSpaceId = function(editorName, spaceName) {
-		switch (spaceName) {
-			case 'tabs':
-				return 'EditPageTabs';
-			case 'toolbar':
-				return 'EditPageToolbar';
-			case 'contents':
-				return spacePrefix + '_' + editorName;
-			case 'rail':
-				return 'EditPageRail';
-		}
-	};
+	var elementId = WikiaEditor.instanceId,
+		getSpaceId = function(editorName, spaceName) {
+			switch (spaceName) {
+				case 'tabs':
+					return elementId + 'Tabs';
+				case 'toolbar':
+					return elementId + 'Toolbar';
+				case 'contents':
+					return spacePrefix + '_' + editorName;
+				case 'rail':
+					return elementId + 'Rail';
+			}
+		};
 
 	var spacePrefix = 'cke_' + spaceName;
 	var space = this._[ spacePrefix ] ||

@@ -22,6 +22,6 @@ RTE.commentEditor = {
 		RTE.commentEditor.placeholder = placeholder;
 
 		// open comment editor
-		RTE.instance.openDialog('rte-comment');
+		RTE.getInstance().openDialog('rte-comment');
 	}
 };
