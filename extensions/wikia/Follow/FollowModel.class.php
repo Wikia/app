@@ -99,9 +99,6 @@ class FollowModel {
 			
 			if($title->getNamespace() == NS_USER_WALL) {
 				$hasWall = true;
-				if($title->isSubpage()){
-					//continue;	
-				}
 			}	
 					
 
