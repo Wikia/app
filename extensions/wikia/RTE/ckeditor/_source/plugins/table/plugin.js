@@ -36,6 +36,13 @@ CKEDITOR.plugins.add( 'table',
 					table.addClass('WikiaTable-selected');
 				}
 			});
+		editor.on('mode', function( evt )
+			{
+				// Remove WikiaTable-selected class when switching to source mode
+				if (evt.editor.mode == 'wysiwyg') {
+					$(editor.document.$).find('.WikiaTable-selected').removeClass('WikiaTable-selected');								
+				}
+			});
 		// Wikia End
 		
 		// If the "menu" plugin is loaded, register the menu items.
