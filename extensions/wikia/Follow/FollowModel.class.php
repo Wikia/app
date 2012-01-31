@@ -32,6 +32,7 @@ class FollowModel {
 			NS_FORUM => 'wikiafollowedpages-special-heading-forum',
 			NS_FILE => 'wikiafollowedpages-special-heading-media',
 			NS_VIDEO => 'wikiafollowedpages-special-heading-media',
+			NS_USER_WALL => 'wikiafollowedpages-special-heading-wall',
 		);
 
 
@@ -50,6 +51,7 @@ class FollowModel {
 			'wikiafollowedpages-special-heading-templates',
 			'wikiafollowedpages-special-heading-mediawiki',
 			'wikiafollowedpages-special-heading-media',
+			'wikiafollowedpages-special-heading-wall'
 		);
 
 		foreach ($wgContentNamespaces as $value) {
@@ -67,11 +69,14 @@ class FollowModel {
 
 		$queryArray = array();
 		foreach ($namespaces_keys as $value) {
-			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value)." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($from).",".intval($limit).")";
+			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value) 
+					.( intval($value) == NS_USER_WALL ? " and not wl_title like '%/%'  ":"") 
+					." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($from).",".intval($limit).")";
 		}
 
 		$res = $db->query( implode(" union ",$queryArray) );
 		$out_data = array();
+		$hasWall = false;
 		while ($row =  $db->fetchRow( $res ) ) {
 			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
 			$row['url'] = $title->getFullURL();
@@ -84,6 +89,21 @@ class FollowModel {
 					$row['by_user'] =  $explode[0];
 				}
 			}
+			
+			/**
+			 * Wall Logic 
+			 * 
+			 * When you fallow tread the fallowing is marked in NS_USER_WALL_MESSAGE, NS_USER_WALL
+			 * so we will skip NS_USER_WALL with are subpage to filter out this.
+			 */
+			
+			if($title->getNamespace() == NS_USER_WALL) {
+				$hasWall = true;
+				if($title->isSubpage()){
+					//continue;	
+				}
+			}	
+					
 
 			if ( in_array($row['wl_namespace'], $wgContentNamespaces) && (NS_MAIN != $row['wl_namespace']) ) {
 				$ttile = Title::makeTitle($row['wl_namespace'], "none");
@@ -93,14 +113,18 @@ class FollowModel {
 			if( $show_deleted_pages ) {
 				$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
 			} else {
-				if( $title->isKnown() ) {
+				if( $title->isKnown() ||  $title->getNamespace() == NS_USER_WALL) {
 					$out_data[$namespaces[ $row['wl_namespace'] ]][] = $row;
 				}
 			}
 			
 		}
-
+		
 		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")";
+		//special case for Wall to avoid subpages
+		if($hasWall) {
+			$con .= (" and ( not wl_namespace = ".NS_USER_WALL."  or (wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' ))");	
+		}
 
 		$res = $db->select(
 			array( 'watchlist' ),
@@ -129,7 +153,7 @@ class FollowModel {
 				$out[$ns]['show_more'] = 1;
 			}
 		}
-
+		
 		foreach ($order as $key => $value) {
 			if (!empty($out[$value]) ) {
 				$order[$key] = $out[$value];
