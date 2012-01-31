@@ -41,7 +41,7 @@ class WallCopyFollowsTask extends BatchTask {
 		if( isset($params['wiki_id']) ) {
 			$wikiId = intval($params['wiki_id']);
 		} else {
-			Wikia::log( __METHOD__, false, 'WALL_TASK_ERROR: No wiki id given.' );
+			$this->log('No wiki id given.');
 			$noErrors = false;
 		}
 		
@@ -53,12 +53,12 @@ class WallCopyFollowsTask extends BatchTask {
 			}
 			
 			if( !is_object($wiki) ) {
-				Wikia::log( __METHOD__, false, 'WALL_TASK_ERROR: Not a valid wiki. (wiki id: '.$wikiId.')' );
+				$this->log('Not a valid wiki. (wiki id: '.$wikiId.')');
 				$noErrors = false;
 			}
 			
 			if( empty($wiki->city_dbname) ) {
-				Wikia::log( __METHOD__, false, 'WALL_TASK_ERROR: Not a valid wiki db ('.$wiki->city_dbname.'). (wiki id: '.$wikiId.')' );
+				$this->log('Not a valid wiki db ('.$wiki->city_dbname.'). (wiki id: '.$wikiId.')');
 				$noErrors = false;
 			}
 			
@@ -87,7 +87,7 @@ class WallCopyFollowsTask extends BatchTask {
 							if( isset($row->wl_user) && isset($row->wl_title) ) {
 								$users[] = array('user_id' => $row->wl_user, 'title' => $row->wl_title);
 							} else {
-								Wikia::log( __METHOD__, false, 'WALL_TASK_NOTICE: No wl_user or wl_title from database. wl_user: '.( isset($row->wl_user) ? $row->wl_user : 'not set' ).' wl_title: '.( isset($row->wl_title) ? $row->wl_title : 'not set' ) );
+								$this->log('WALL_TASK_NOTICE: No wl_user or wl_title from database. wl_user: '.( isset($row->wl_user) ? $row->wl_user : 'not set' ).' wl_title: '.( isset($row->wl_title) ? $row->wl_title : 'not set' ));
 							}
 						}
 						$dbw->freeResult($results);
@@ -110,15 +110,13 @@ class WallCopyFollowsTask extends BatchTask {
 							$dbw = wfGetDB(DB_MASTER, array(), $wikiDb);
 							return $dbw->insert('watchlist', $data, __METHOD__, 'IGNORE');
 						} else {
-							Wikia::log( __METHOD__, false, 'WALL_TASK_ERROR: No data to add to database' );
-							$noErrors = false;
+							$this->log('WALL_TASK_NOTICE: No data to add to database');
 						}
 					} else {
-						Wikia::log( __METHOD__, false, 'WALL_TASK_ERROR: No results from database query' );
-						$noErrors = false;
+						$this->log('WALL_TASK_NOTICE: No results from database query');
 					}
 				} else {
-					Wikia::log( __METHOD__, false, 'WALL_TASK_ERROR: No NS_USER_WALL and/or NS_USER_WALL_MESSAGE defined when copy follows action run' );
+					$this->log('No NS_USER_WALL and/or NS_USER_WALL_MESSAGE defined when copy follows action run');
 					$noErrors = false;
 				}
 			}
