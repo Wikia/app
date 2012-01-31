@@ -189,10 +189,14 @@ $dateFormats = array(
  * Default list of book sources
  */
 $bookstoreList = array(
-	'AddALL' => 'http://www.addall.com/New/Partner.cgi?query=$1&type=ISBN',
-	'PriceSCAN' => 'http://www.pricescan.com/books/bookDetail.asp?isbn=$1',
-	'Barnes & Noble' => 'http://search.barnesandnoble.com/bookSearch/isbnInquiry.asp?isbn=$1',
-	'Amazon.com' => 'http://www.amazon.com/exec/obidos/ISBN=$1'
+
+	'Amazon.com' => 'http://astore.amazon.com/amazon-books-20/detail/$1',
+        'Amazon.de' => 'http://www.amazon.de/s?search-alias=stripbooks&field-keywords=$1',
+        'Amazon.fr' => 'http://astore.amazon.fr/www.amazon.fr-21/detail/$1',
+        'Amazon.co.uk' => 'http://astore.amazon.co.uk/dozertractfor-21/detail/$1',
+        'AddALL' => 'http://www.addall.com/New/Partner.cgi?query=$1&type=ISBN',
+        'Barnes & Noble' => 'http://shop.barnesandnoble.com/bookSearch/isbnInquiry.asp?isbn=$1',
+	'Google Book Search' => 'http://www.google.com/search?tbs=bks:1&q=isbn:$1',
 );
 
 /**
