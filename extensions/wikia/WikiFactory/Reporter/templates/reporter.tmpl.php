@@ -1,6 +1,6 @@
 <div>
 	<h2>Variable</h2>
-	<table class="wikitable">
+	<table class="WikiaTable">
 		<tr>
 			<th>id</th>
 			<th>name</th>
@@ -36,7 +36,7 @@
 	print $limit_message;
 }
 ?>
-	<table class="wikitable sortable">
+	<table class="WikiaTable sortable">
 		<tr>
 			<?php foreach ($th as $field): ?>
 				<th><?php print htmlspecialchars($field); ?></th>

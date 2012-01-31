@@ -539,7 +539,7 @@ $(function() {
 	</h2>
 	<div id="wk-wf-info">
 		<table><tr><td>
-		<table class="wikitable" style="margin:0">
+		<table class="WikiaTable" style="margin:0">
 			<thead class="wf-tinyhead">
 				<tr>
 					<th>id</th>

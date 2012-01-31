@@ -223,6 +223,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// Wikia - remove data-rte-attribs and data-rte-style attributes, so changes made in popup will be saved in wikitext
 				table.removeAttribute('data-rte-attribs');
 				table.removeAttribute('data-rte-style');
+				table.addClass('WikiaTable');
 
 				// Insert the table element if we're creating one.
 				if ( !this._.selectedElement )
@@ -326,7 +327,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 										{
 											type : 'select',
 											id : 'selHeaders',
-											'default' : '',
+											'default' : 'row', // Wikia - changed default from ''
 											label : editor.lang.table.headers,
 											items :
 											[
@@ -363,7 +364,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 										{
 											type : 'text',
 											id : 'txtBorder',
-											'default' : 1,
+											'default' : '0', // Wikia - changed default from 1
 											label : editor.lang.table.border,
 											controlStyle : 'width:3em',
 											validate : CKEDITOR.dialog.validate['number']( editor.lang.table.invalidBorder ),

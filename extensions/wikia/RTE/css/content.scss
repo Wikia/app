@@ -21,6 +21,24 @@ head {
 	a {
 		color: $color-links;
 	}
+	
+	// Add verticle dotted lines to tables when selected
+	table.WikiaTable {
+		th, td {
+			border-right: 1px solid transparent;
+		}
+		th:first-child, td:first-child {
+			border-left: 1px solid transparent;
+		}
+		&.WikiaTable-selected {
+			th, td {
+				border-right: 1px $color-page-border dashed;
+			}
+			th:first-child, td:first-child {	
+				border-left: 1px $color-page-border dashed;
+			}
+		}
+	}
 }
 
 /**

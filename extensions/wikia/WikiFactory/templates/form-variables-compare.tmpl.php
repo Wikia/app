@@ -164,7 +164,7 @@ foreach($vars as $side=>$data)
 
 ksort($combined);
 
-print "<table class='wikitable'>\n";
+print "<table class='WikiaTable'>\n";
 	print "<tr>\n";
 		print "<th colspan=2>name</th>\n";
 		print "<th colspan=2>" . WikiFactory::IDtoDB( $wiki->city_id ) . "</th>\n";
