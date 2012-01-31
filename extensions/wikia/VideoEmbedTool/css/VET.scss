@@ -129,7 +129,7 @@
 }
 
 .VideoEmbedProgress {
-	background: url(../../../../skins/common/images/ajax.gif) no-repeat;
+	background: url(/skins/common/images/ajax.gif) no-repeat; /* $wgCdnStylePath */
 	height: 16px;
 	width: 16px;
 }
@@ -152,7 +152,7 @@
 	width: 50%;
 }
 #VideoEmbedCompare td {
-	background: url(../images/conflict_background.png) center center no-repeat;
+	background: url(/extensions/wikia/VideoEmbedTool/images/conflict_background.png) center center no-repeat; /* $wgCdnStylePath */
 	height: 220px;
 	padding: 0;
 	vertical-align: middle;
