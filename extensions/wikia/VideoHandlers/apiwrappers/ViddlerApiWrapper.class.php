@@ -3,8 +3,8 @@
 class ViddlerApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_PHP;
 	protected static $API_URL = 'http://api.viddler.com/api/v2/viddler.videos.getDetails.php?key=$1&add_embed_code=1&url=';
-	protected static $API_KEY = 'hacouneo6n6o3nysn0em';
 	protected static $WATCH_URL = 'http://www.viddler.com/explore/$1';
+	protected static $CACHE_KEY = 'viddlerapi';
 	
 	public function getTitle() {
 		return $this->interfaceObj['video']['title'];
@@ -30,8 +30,9 @@ class ViddlerApiWrapper extends ApiWrapper {
 	
 	
 	protected function getApiUrl() {
+		global $wgViddlerApiKey;
 		$watchUrl = str_replace( '$1', trim($this->videoId, '/'), static::$WATCH_URL );
-		$apiUrl = str_replace( '$1', static::$API_KEY, static::$API_URL ) . urlencode($watchUrl);
+		$apiUrl = str_replace( '$1', $wgViddlerApiKey, static::$API_URL ) . urlencode($watchUrl);
 		return $apiUrl;
 	}
 

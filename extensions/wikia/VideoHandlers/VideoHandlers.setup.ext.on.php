@@ -97,6 +97,10 @@ $app->registerClass('MovieclipsVideoHandler', $dir . '/handlers/MovieclipsVideoH
 $app->registerClass('MovieclipsApiWrapper', $dir . '/apiwrappers/MovieclipsApiWrapper.class.php');
 $wgMediaHandlers['video/movieclips'] = 'MovieclipsVideoHandler';
 
+$app->registerClass('MyvideoVideoHandler', $dir . '/handlers/MyvideoVideoHandler.class.php');
+$app->registerClass('MyvideoApiWrapper', $dir . '/apiwrappers/MyvideoApiWrapper.class.php');
+$wgMediaHandlers['video/myvideo'] = 'MyvideoVideoHandler';
+
 $app->registerClass('RealgravityVideoHandler', $dir . '/handlers/RealgravityVideoHandler.class.php');
 $app->registerClass('RealgravityApiWrapper', $dir . '/apiwrappers/RealgravityApiWrapper.class.php');
 $wgMediaHandlers['video/realgravity'] = 'RealgravityVideoHandler';
