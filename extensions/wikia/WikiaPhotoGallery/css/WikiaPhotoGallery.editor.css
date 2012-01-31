@@ -785,21 +785,6 @@ p.SliderLink {
 	background-repeat: no-repeat;
 }
 
-#WikiaPhotoGalleryImageUploadSizeError {
-	display: none;
-	font-weight: bold;
-	color: #F00;
-	float: right;
-	margin: 6px;
-}
-
-#WikiaPhotoGalleryImageUploadSize {
-	display: none;
-	font-weight: bold;
-	float: right;
-	margin: 6px;
-}
-
 .WikiaPhotoGallerySliderItemNumber {
 	position: absolute;
 	padding: 8px;

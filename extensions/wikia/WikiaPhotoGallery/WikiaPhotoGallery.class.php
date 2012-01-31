@@ -1281,7 +1281,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$img = wfFindFile( $nt, $time );
-			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) { // && WikiaPhotoGalleryHelper::isImageStrict($img)) {
+			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 				$pageId = $nt->getArticleID();
 
 				// generate cropped version of big image (fit within 660x360 box)

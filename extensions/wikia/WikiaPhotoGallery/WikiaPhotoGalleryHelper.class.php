@@ -995,8 +995,7 @@ class WikiaPhotoGalleryHelper {
 					// use keys to remove duplicates
 					$ret[] = array(
 						'name' => $image->getText(),
-						'thumb' => $thumb,
-						'strict' => self::isImageStrict( $image )
+						'thumb' => $thumb
 					);
 				}
 			}
@@ -1004,28 +1003,6 @@ class WikiaPhotoGalleryHelper {
 
 		wfProfileOut(__METHOD__);
 		return $ret;
-	}
-
-	/**
-	 * Check if image has width and height that fits the slider (can be bigger - BugId:2787)
-	 *
-	 * @param mixed $image this can be either image name, Title or File object
-	 * @return boolean does image fit the slider size requirements
-	 */
-	static public function isImageStrict($image){
-		if ($image instanceof File) {
-			$oImage = $image;
-		}
-		else {
-			// Title object or string was provided
-			$oImage = wfFindFile($image);
-		}
-
-		if (!empty($oImage)) {
-			$isStrict = ($oImage->getWidth() >= self::SLIDER_MIN_IMG_WIDTH) && ($oImage->getHeight() >= self::SLIDER_MIN_IMG_HEIGHT);
-		}
-
-		return !empty($isStrict) ? 1 : 0;
 	}
 
 	/**
@@ -1046,8 +1023,8 @@ class WikiaPhotoGalleryHelper {
 			if ($thumb) {
 				$ret[] = array(
 					'name' => $image->getText(),
-					'thumb' => $thumb,
-					'strict' => self::isImageStrict( $image )
+					'thumb' => $thumb1055
+                                    
 				);
 			}
 		}
@@ -1073,8 +1050,7 @@ class WikiaPhotoGalleryHelper {
 				if ($thumb) {
 					$images[] = array(
 						'name' => $oImageTitle->getText(),
-						'thumb' => $thumb,
-						'strict' => self::isImageStrict( $oImageTitle )
+						'thumb' => $thumb
 					);
 				}
 			}

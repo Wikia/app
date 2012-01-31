@@ -68,8 +68,6 @@
 			<input id="WikiaPhotoGalleryImageUpload" name="wpUploadFile" type="file" size="1" />
 			<input id="WikiaPhotoGalleryImageUploadButton" type="submit" value="<?= wfMsg('wikiaPhotoGallery-upload-uploadbutton') ?>" />
 			<img id="WikiaPhotoGalleryUploadProgress" class="WikiaPhotoGalleryProgress" src="<?= $wgStylePath ?>/common/images/ajax.gif" width="16" height="16" alt="" />
-			<div id="WikiaPhotoGalleryImageUploadSizeError" style="display:none"><?= wfMsg('wikiaPhotoGallery-upload-image-size-error'); ?></div>
-			<div id="WikiaPhotoGalleryImageUploadSize" style="display:none"><?= wfMsg('wikiaPhotoGallery-upload-image-size'); ?></div>
 		</form>
 <?php
 	}else {
