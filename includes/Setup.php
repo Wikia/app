@@ -234,9 +234,9 @@ if( $wgUseFileCache || $wgUseSquid ) $wgShowIPinHeader = false;
 
 # $wgAllowRealName and $wgAllowUserSkin were removed in 1.16
 # in favor of $wgHiddenPrefs, handle b/c here
-if( !$wgAllowRealName ) {
-	$wgHiddenPrefs[] = 'realname';
-}
+/** Start of Wikia change @author nAndy (fb#20259) */
+$wgHiddenPrefs[] = 'realname';
+/** End of Wikia change */
 
 if( !$wgAllowUserSkin ) {
 	$wgHiddenPrefs[] = 'skin';

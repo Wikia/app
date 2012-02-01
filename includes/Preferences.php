@@ -1275,9 +1275,9 @@ class Preferences {
 
 	static function tryFormSubmit( $formData, $entryPoint = 'internal' ) {
 		global $wgUser, $wgEmailAuthentication, $wgEnableEmail;
-
+		
 		$result = true;
-
+		
 		// Filter input
 		foreach( array_keys( $formData ) as $name ) {
 			if ( isset( self::$saveFilters[$name] ) ) {
@@ -1285,14 +1285,14 @@ class Preferences {
 					call_user_func( self::$saveFilters[$name], $formData[$name], $formData );
 			}
 		}
-
+		
 		// Stuff that shouldn't be saved as a preference.
 		$saveBlacklist = array(
 			'realname',
 			'emailaddress',
 			'avatarupload'
 		);
-
+		
 		if( $wgEnableEmail ) {
 			$newadr = $formData['emailaddress'];
 			$oldadr = $wgUser->getEmail();
@@ -1319,27 +1319,27 @@ class Preferences {
 				wfRunHooks( 'PrefsEmailAudit', array( $wgUser, $oldadr, $newadr ) );
 			}
 		}
-
+		
 		// Fortunately, the realname field is MUCH simpler
 		global $wgHiddenPrefs;
 		if ( !in_array( 'realname', $wgHiddenPrefs ) ) {
 			$realName = $formData['realname'];
 			$wgUser->setRealName( $realName );
 		}
-
+		
 		foreach( $saveBlacklist as $b )
 			unset( $formData[$b] );
-
+		
 		//  Keeps old preferences from interfering due to back-compat
 		//  code, etc.
 		//$wgUser->resetOptions(); RT#144314
-
+		
 		foreach( $formData as $key => $value ) {
 			$wgUser->setOption( $key, $value );
 		}
-
+		
 		$wgUser->saveSettings();
-
+		
 		return $result;
 	}
 
@@ -1347,7 +1347,7 @@ class Preferences {
 		
 		$error = null;
 		
-		if(!wfRunHooks('SavePreferences', array(&$formData, &$error))) {
+		if( !wfRunHooks('SavePreferences', array(&$formData, &$error)) ) {
 			return $error;
 		}
 		

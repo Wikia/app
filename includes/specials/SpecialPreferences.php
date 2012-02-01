@@ -7,7 +7,7 @@ class SpecialPreferences extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest;
-
+		
 		$this->setHeaders();
 		$this->outputHeader();
 		$wgOut->disallowUserJs();  # Prevent hijacked user scripts from sniffing passwords etc.
