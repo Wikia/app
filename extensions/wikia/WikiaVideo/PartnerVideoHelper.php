@@ -651,7 +651,7 @@ class PartnerVideoHelper {
 			}
 			else {
 				$video->save($categoryStr);
-				print "Ingested {$title->getText()} from partner clip id $id. {$title->getFullURL()}\n";
+				print "Ingested {$title->getText()} from partner clip id $id. {$title->getFullURL()}\n\n";
 			}
 			return 1;
 		}
