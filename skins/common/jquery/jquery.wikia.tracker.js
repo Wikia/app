@@ -157,20 +157,13 @@ jQuery.tracker = function() {
             $.tracker.byStr('userengagement/editSimilar/editSimilarPrefs');
         }
     });
-
-    // CreateAPage extension - Bartek, Inez
-    if($('#createpageform').length) {
-        $('#wpSave').click(function(e) { $.tracker.byStr('createPage/save'); });
-        $('#wpPreview').click(function(e) { $.tracker.byStr('createPage/preview'); });
-        $('#wpAdvancedEdit').click(function(e) { $.tracker.byStr('createPage/advancedEdit'); });
-    }
+    
 
     // TODO: Verify if it works
     // Special:Userlogin (Macbre)
     if(wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Userlogin') {
         $('#userloginlink').children('a:first').click(function(e) { $.tracker.byStr('loginActions/goToSignup'); });
     }
-
 
     // Special:Search - Macbre, Inez
     if(wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Search') {
@@ -192,6 +185,11 @@ jQuery.tracker = function() {
     }
 
     // Create Page
+    if($('#createpageform').length) {
+        $('#wpSave').click(function(e) { $.tracker.byStr('createPage/save'); });
+        $('#wpPreview').click(function(e) { $.tracker.byStr('createPage/preview'); });
+        $('#wpAdvancedEdit').click(function(e) { $.tracker.byStr('createPage/advancedEdit'); });
+    }
     if(wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'CreatePage') {
         $.tracker.byStr('createPage');
     }

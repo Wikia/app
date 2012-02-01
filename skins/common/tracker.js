@@ -43,7 +43,7 @@ YAHOO.Wikia.Tracker = {
 			YAHOO.Wikia.Tracker.trackByStr(e, 'userengagement/editSimilar/editSimilarPrefs');
 		});
 
-		// CreateAPage extension (Bartek)
+		// CreatePage extension
 		var cpform = Dom.get('createpageform');
 		if(cpform) {
 			Event.addListener('wpSave', 'click', YAHOO.Wikia.Tracker.trackByStr, 'createPage/save');
