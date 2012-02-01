@@ -90,6 +90,23 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
+		
+		if($this->wg->User->getId() > 0 && empty($filterid) ) {
+			//THIS hack will be removed after runing script with will clear all notification copy
+			$dbw = wfGetDB( DB_SLAVE, array() );
+			$row = $dbw->selectRow( array( 'watchlist' ),
+				array( 'count(wl_user) as cnt' ),
+				array(
+					'wl_title' => array( $title->getDbKey() ),
+					'wl_namespace' => array(NS_USER_WALL, NS_USER_WALL_MESSAGE),
+					'wl_wikia_addedtimestamp < "2012-01-31" '  
+				), __METHOD__
+			);
+			
+			if($row->cnt > 0) {
+				$this->wg->User->removeWatch($this->wg->Title);
+			}
+		}
 	}
 	
 	/*
