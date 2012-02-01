@@ -393,10 +393,12 @@ class WallNotifications {
 			array( 'wl_user' ),
 			array(
 				'wl_title' => array($titleDbkey, $userTitle->getDBkey() ),
-				'wl_namespace' => array(NS_USER_WALL, NS_USER_WALL_MESSAGE)
+				'wl_namespace' => array(NS_USER_WALL, NS_USER_WALL_MESSAGE),
+				//THIS hack will be removed after runing script with will clear all notification copy
+				"((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = ".NS_USER_WALL.") or ( wl_namespace = " .NS_USER_WALL_MESSAGE. " ))"  
 			), __METHOD__
 		);
-		
+				
 		$users = array();
 		while ($row = $dbw->fetchObject( $res ) ) {
 			$userId = intval( $row->wl_user );
