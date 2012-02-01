@@ -15,6 +15,7 @@ class MiniEditorSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		$this->wg->Out->setPageTitle( $this->wf->msg( 'minieditor-specialpage-title' ) );
 		$this->sendRequest('MiniEditor', 'loadAssets', array(
 			'additionalAssets' => array(
 				'extensions/wikia/MiniEditor/js/SpecialPage.js',

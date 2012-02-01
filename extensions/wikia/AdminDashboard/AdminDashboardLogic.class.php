@@ -67,6 +67,7 @@ class AdminDashboardLogic {
 				"Leaderboard",
 				"LookupContribs",
 				"LookupUser",
+				"MiniEditor",
 				"MovePage",
 				"MultiLookup",
 				"NewFiles",

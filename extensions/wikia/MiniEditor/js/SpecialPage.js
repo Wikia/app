@@ -1,7 +1,5 @@
-// Attach MiniEditor functionality to Wall
 jQuery(function($) {
-	$('#SpecialMiniEditor').focus(function() {
+	$('.ElementToReplace').bind('click.MiniEditor', function(e) {
 		$(this).miniEditor();
 	})
-
 });
