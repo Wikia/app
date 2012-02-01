@@ -44,12 +44,6 @@ Community Messages
 Contest Tool
 file = ContestTool/SpecialContestTool.i18n.php
 
-#Commented out 2010-02-01 -- tor
-#Dropping in favour of CreatePage (below)
-#Create A Page
-#file = CreateAPage/MultiEdit.i18n.php
-#optional = createplate-Blank, createplate-list
-
 Create Page
 file = CreatePage/CreatePage.i18n.php
 ignored = createpage-newpagelayout
