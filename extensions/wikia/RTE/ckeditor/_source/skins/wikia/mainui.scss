@@ -66,17 +66,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 .cke_skin_wikia textarea.cke_source
 {
+	border: 0;
 	font-family: monospace;
 	font-size: 13px;
 	background-color: #fff;
 	white-space: pre;
 	overflow: auto;
-}
-
-.cke_skin_wikia .cke_browser_iequirks textarea.cke_source
-{
-	/* For IE6+Quirks only */
-	_white-space: normal;
 }
 
 .cke_skin_wikia .cke_resizer
