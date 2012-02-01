@@ -30,7 +30,7 @@
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 			$this->mockGlobalVariable('wgMemc', $mock_cache, 0);
 
-			$this->mockGlobalFunction('MemcKey', null, 0);
+			$this->mockGlobalFunction('wfMemcKey', null, 0);
 
 			$this->mockApp();
 		}
