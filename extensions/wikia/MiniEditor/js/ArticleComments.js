@@ -10,7 +10,7 @@ jQuery(function($) {
 		e.preventDefault();
 		var id = $(this).data('id'),
 			element = $("#msg-body-"+id);
-		console.log(element)
+		$().log(element);
 		// hide edited-by div while editor is open
 		element.closest('.MiniEditorWrapper').next().hide();
 		element.miniEditor();
