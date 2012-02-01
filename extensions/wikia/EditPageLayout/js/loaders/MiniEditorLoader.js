@@ -42,7 +42,8 @@
 				plugins: [
 					'MiniEditor',
 					ckeEnabled ? 'ckeditorsuite' : 'mweditorsuite',
-					'loadingstatus'
+					'loadingstatus',
+					'cssloadcheck'
 				],
 				config: {
 					// The element being replaced, where text was entered
