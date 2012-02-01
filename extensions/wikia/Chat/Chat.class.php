@@ -164,9 +164,16 @@ class Chat {
 		
 		$userToPromote = User::newFromName($userNameToPromote);
 		
+		if( !($userToPromote instanceof User) ) {
+			$errorMsg = wfMsg('chat-err-invalid-username-chatmod', $userNameToPromote);
+			
+			wfProfileOut( __METHOD__ );
+			return $errorMsg;
+		}
+		
 		// Check if the userToPromote is already in the chatmoderator group.
 		$errorMsg = "";
-		if(in_array( $CHAT_MOD_GROUP, $userToPromote->getEffectiveGroups() )){
+		if( in_array($CHAT_MOD_GROUP, $userToPromote->getEffectiveGroups()) ) {
 			$errorMsg = wfMsg("chat-err-already-chatmod", $userNameToPromote, $CHAT_MOD_GROUP);
 		} else {
 			$changeableGroups = $promottingUser->changeableGroups();
