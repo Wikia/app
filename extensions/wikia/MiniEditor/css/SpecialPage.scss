@@ -1,15 +1,56 @@
 @import "../../../../skins/oasis/css/core/color";
 
 .SpecialPageWrapper {
-	border: 1px dashed #DDD;
-	margin: 20px auto;
 	padding: 20px;
-	width: 500px;
-	
-	#SpecialMiniEditor {
-		border: 1px $color-page-border solid;
-		height: 75px;
-		padding: 3px; 
+
+	.Instance {
+		margin-bottom: 10px;
+	}
+
+	.MiniEditorWrapper {
+		background-color: $color-speech-bubble;
+		padding: 10px;
 		width: 500px;
+
+		.editarea {
+			background-color: $color-page;
+			border: 1px $color-page-border solid;
+			padding: 5px;
+			
+			.ElementToReplace {
+				border: 0;
+				height: 75px;
+				margin: 0;
+				padding: 0;
+				width: 100%;
+			}
+		}
+	}
+
+	#MiniEditorEdit {
+		.MiniEditorWrapper {
+			margin: 0 10px;
+			width: 480px;
+	
+			.editarea {
+				border: 0;
+	
+				.ElementToReplace {
+					background-color: $color-page;
+					width: auto;
+				}
+			}
+		}
+	}
+
+	#MiniEditorReply {
+		.MiniEditorWrapper {
+			background-color: $color-page;
+			padding: 0 10px;
+	
+			.ElementToReplace {
+				height: 12px;
+			}
+		}
 	}
 }
