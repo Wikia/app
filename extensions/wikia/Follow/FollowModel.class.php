@@ -71,6 +71,8 @@ class FollowModel {
 		foreach ($namespaces_keys as $value) {
 			$queryArray[] = "(select wl_namespace, wl_title from watchlist where wl_user = ".intval($user_id)." and wl_namespace = ".intval($value) 
 					.( intval($value) == NS_USER_WALL ? " and not wl_title like '%/%'  ":"") 
+					//THIS hack will be removed after runing script with will clear all notification copy
+					.( intval($value) == NS_USER_WALL ? " and wl_wikia_addedtimestamp > '2012-01-31'  ":"")
 					." ORDER BY wl_wikia_addedtimestamp desc limit ".intval($from).",".intval($limit).")";
 		}
 
@@ -114,9 +116,9 @@ class FollowModel {
 			
 		$con = " wl_user = ".intval($user_id)." and wl_namespace in (".implode(',', $namespaces_keys).")";
 		//special case for Wall to avoid subpages
-		if($hasWall) {
-			$con .= (" and ( not wl_namespace = ".NS_USER_WALL."  or (wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' ))");	
-		}
+		//THIS hack will be removed after runing script with will clear all notification copy
+		$con .= (" and ( not wl_namespace = ".NS_USER_WALL."  or (wl_namespace = ".NS_USER_WALL."  and not wl_title like '%/%' and wl_wikia_addedtimestamp > '2012-01-31' ))");
+		
 
 		$res = $db->select(
 			array( 'watchlist' ),
