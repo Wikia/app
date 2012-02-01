@@ -182,8 +182,8 @@ $messages['en'] = array(
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Message Wall',
 	'wall-recentchanges-wall-group' => '$1 on <a href="$2">$3\'s wall</a>',
-	'wall-recentchanges-wall-history-link' => 'Wall History',
-	'wall-recentchanges-thread-history-link' => 'Thread History',
+	'wall-recentchanges-wall-history-link' => 'wall history',
+	'wall-recentchanges-thread-history-link' => 'thread history',
 	'wall-recentchanges-wall-unrecognized-log-action' => 'Unrecognized log action',
 	
 	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> on <a href="$3">$4\'s wall</a>',
@@ -215,7 +215,7 @@ $messages['en'] = array(
 	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
 	'wall-history-username-short' => '<a href="$2">$1</a>',
 	
-	'wall-history-title' => 'Wall History',
+	'wall-history-title' => 'wall history',
 	'wall-history-who-involved-wall-title' => "Who's involved on this wall?",
 	'wall-history-who-involved-thread-title' => "Who's involved in this thread?",
 	'wall-history-thread-created' => '$1 created by $2',
@@ -236,7 +236,7 @@ $messages['en'] = array(
 	'wall-history-action-thread-history' => 'thread history',
 	
 	/* Thread Level History */
-	'wall-thread-history-title' => 'Thread History',
+	'wall-thread-history-title' => 'thread history',
 	'wall-thread-history-thread-created' => '$1 $2 created this thread',
 	'wall-thread-history-reply-created' => '$1 $2 left a reply',
 
