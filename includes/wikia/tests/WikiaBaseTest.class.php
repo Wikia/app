@@ -91,7 +91,7 @@ class WikiaAppMock {
 				->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
 		}
 		if( in_array( 'runFunction', $this->methods ) ) {
-			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper' );
+			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper', array_keys($this->mockedFunctions) );
 			foreach( $this->mockedFunctions as $functionName => $functionData ) {
 				$functionWrapperMock->expects( $this->testCase->exactly( $functionData['calls'] ) )
 				    ->method( $functionName )
