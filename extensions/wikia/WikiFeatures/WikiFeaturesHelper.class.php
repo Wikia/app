@@ -37,6 +37,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableArticleCommentsExt' => 200,	// Article Comments
 		'wgEnableCategoryExhibitionExt' => 201,	// Category Exhibition
 		'wgEnableChat' => 258,					// Chat
+		'wgEnableWallExt' => 258,				// wgEnableWallExt
 		'wgOasisNavV2' => 287,					// WikiNav
 	);
 	
@@ -44,6 +45,7 @@ class WikiFeaturesHelper extends WikiaModel {
 	public static $release_date = array (
 		'wgEnableChat' => '2011-08-01',					// Chat
 		'wgOasisNavV2' => '2011-10-05',					// WikiNav
+		'wgEnableWallExt' => '2012-01-26'					// Wall
 	);
 	
 	public static function getInstance() {
