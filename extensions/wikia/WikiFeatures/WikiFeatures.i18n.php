@@ -59,8 +59,13 @@ $messages['en'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Help editors on your wiki create great looking pages in less time. Layout builder lets the admins on your wiki create pre-formatted pages for your editors to choose from while adding a page.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogs allow users on your wiki to create their own blog posts on their profile page and can also be used as a great way to communicate news and events to your wiki community.',
+
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Message Wall',
+	'wikifeatures-feature-description-wgEnableWallExt' => "Communicating with the contributors on your wiki is an essential part of building and maintaining your community. The Message Wall uses a threaded conversation format and notification system that lets you control which conversations you're interested in following. No more missed messages!",
+
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Expanded Wiki Navigation',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Get more links, a new preview tool, a consolidated set of contribution links, and a new "On the Wiki" menu that highlights important features of your content and community.',
+	
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
 );
