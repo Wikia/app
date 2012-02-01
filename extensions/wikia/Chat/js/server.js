@@ -965,6 +965,8 @@ function processText(text, client) {
 	var pageLink = "";
 	if(text.match(exp)){
 		pageLink = unescape( exp.exec(text)[1] );
+		pageLink = pageLink.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
+		pageLink = pageLink.replace(/>/g, "&gt;");
 	}
 	text = text.replace(exp, "<a href='$1'>" + pageLink + "</a>");
 
@@ -974,6 +976,8 @@ function processText(text, client) {
 		article = article.replace(/ /g, "_");
 		linkText = linkText.replace(/_/g, " ");
 		linkText = unescape( linkText );
+		linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
+		linkText = linkText.replace(/>/g, "&gt;");
 
 		var path = client.wgServer + client.wgArticlePath;
 		article = escape( article );
@@ -989,6 +993,8 @@ function processText(text, client) {
 		article = article.replace(/ /g, "_");
 		var linkText = article.replace(/_/g, " ");
 		linkText = unescape( linkText );
+		linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
+		linkText = linkText.replace(/>/g, "&gt;");
 		
 		var path = client.wgServer + client.wgArticlePath;
 		article = escape( article );
