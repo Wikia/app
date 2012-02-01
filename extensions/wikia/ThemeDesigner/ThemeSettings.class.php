@@ -207,7 +207,6 @@ class ThemeSettings {
 				if (isset($oldBackgroundFile) && isset($history[$i]['settings']['background-image-name'])) {
 					if($history[$i]['settings']['background-image-name'] == self::BackgroundImageName) {
 						$history[$i]['settings']['background-image-name'] = $oldBackgroundFile['name'];
-						$history[$i]['settings']['background-image-url'] = $oldBackgroundFile['url'];
 					}
 				}
 			}
