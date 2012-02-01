@@ -680,11 +680,6 @@ var ThemeDesigner = {
 			
 			var settingsToLoad = ThemeDesigner.settings;
 
-			if (ThemeDesigner.settings['background-image-url']) {
-				$().log('Loading old background from history: ' + ThemeDesigner.settings['background-image-url']);
-				settingsToLoad['background-image'] = ThemeDesigner.settings['background-image-url'];
-			}
-
 			var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', settingsToLoad);
 			document.getElementById('PreviewFrame').contentWindow.ThemeDesignerPreview.loadSASS(sassUrl);
 		}
