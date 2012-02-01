@@ -33,8 +33,8 @@ $messages['en'] = array(
 	'chat-err-already-chatmod' => "Error: \"$1\" is already in the \"$2\" group.",
 	'chat-err-no-permission-to-add-chatmod' => "Error: You do not have permission to add the \"$1\" group to this user.",
 	'chat-userrightslog-a-made-b-chatmod' => "$1 promoted $2 to be a chat moderator on this wiki.",
-
-
+	'chat-err-invalid-username-chatmod' => 'Error: Couldn\'t find user "$1"',
+	
 	'chat-you-are-banned' => 'Permissions error.',
 	// TODO: link to list of admins
 	'chat-you-are-banned-text' => 'Sorry, you do not have permission to chat on this wiki.  If you think this was a mistake or would like to be reconsidered, please contact an administrator.',
