@@ -89,7 +89,6 @@
 		},
 
 		editorBlur: function() {
-			console.log('blurred')
 			var self = this;
 			self.blurTimout = setTimeout(function() {
 				if(self.hasFocus) {
