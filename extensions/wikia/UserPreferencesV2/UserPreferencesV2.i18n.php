@@ -53,6 +53,7 @@ $messages['en'] = array(
 	'preferences-v2-showads-enable' => 'Show all ads',
 	'preferences-v2-showads-disable' => 'Don\'t show all ads',
 	'preferences-v2-my-email-address' => 'My email address:',
+	'prefs-patrolled-editsv2' => 'Patrolled edits',
 	
 	'tog-editsectiononrightclick-v2' => 'Edit sections by right clicking on section titles',
 	'tog-editondblclick-v2' => 'Edit pages on double click',
