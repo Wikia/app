@@ -433,9 +433,9 @@ public class BaseTest {
 	 * "mode" can be either "wysiwyg" or "source"
 	 */
 	protected void switchWysiwygMode(String mode) throws Exception {
-		if (!session().getEval("window.RTE && window.RTE.getInstance().mode").equals(mode)) {
-			session().runScript("window.RTE.getInstance().switchMode('" + mode + "')");
-			session().waitForCondition("window.RTE.getInstance().mode == '" + mode + "'", this.getTimeout());
+		if (!session().getEval("window.RTE && (window.RTE.instance || window.RTE.getInstance()).mode").equals(mode)) {
+			session().runScript("(window.RTE.instance || window.RTE.getInstance()).switchMode('" + mode + "')");
+			session().waitForCondition("(window.RTE.instance || window.RTE.getInstance()).mode == '" + mode + "'", this.getTimeout());
 		}
 	}
 
@@ -458,7 +458,7 @@ public class BaseTest {
 		if (isWysiwygEditor()) {
 			// Visual Editor - switch to source mode (if needed)
 			this.switchWysiwygMode("source");
-			session().runScript("window.RTE.getInstance().setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
+			session().runScript("(window.RTE.instance || window.RTE.getInstance()).setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
 		} else {
 			// regular editor
 			session().type("wpTextbox1", wikitext);
