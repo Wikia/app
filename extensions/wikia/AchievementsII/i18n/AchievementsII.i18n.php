@@ -322,62 +322,62 @@ Keep editing!',
 on {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}}<br />
 on {{PLURAL:$1|a $2 page|$2 pages}}!',
-	'achievements-badge-hover-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}}<br />
+	'achievements-badge-hover-desc-picture' => 'Awarded for adding $1 {{PLURAL:$1|picture|pictures}}<br />
 to {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-hover-desc-category' => 'for adding $1 {{PLURAL:$1|page|pages}}<br />
+	'achievements-badge-hover-desc-category' => 'Awarded for adding $1 {{PLURAL:$1|page|pages}}<br />
 to {{PLURAL:$1|a category|categories}}!',
-	'achievements-badge-hover-desc-blogpost' => 'for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
-	'achievements-badge-hover-desc-blogcomment' => 'for writing a comment<br />
+	'achievements-badge-hover-desc-blogpost' => 'Awarted for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
+	'achievements-badge-hover-desc-blogcomment' => 'Awarded for writing a comment<br />
 on $1 different {{PLURAL:$1|blog post|blog posts}}!',
-	'achievements-badge-hover-desc-love' => 'for contributing to the wiki every day for {{PLURAL:$1|one day|$1 days}}!',
-	'achievements-badge-hover-desc-welcome' => 'for joining the wiki!',
-	'achievements-badge-hover-desc-introduction' => 'for adding to<br />
+	'achievements-badge-hover-desc-love' => 'Awarded for contributing to the wiki every day for {{PLURAL:$1|one day|$1 days}}!',
+	'achievements-badge-hover-desc-welcome' => 'Awarded for joining the wiki!',
+	'achievements-badge-hover-desc-introduction' => 'Awarded for adding to<br />
 your own user page!',
-	'achievements-badge-hover-desc-sayhi' => 'for leaving a message<br />
+	'achievements-badge-hover-desc-sayhi' => 'Awarded for leaving a message<br />
 on someone else\'s talk page!',
-	'achievements-badge-hover-desc-creator' => 'for creating the wiki!',
-	'achievements-badge-hover-desc-pounce' => 'for making edits on 100 pages within an hour of the page\'s creation!',
-	'achievements-badge-hover-desc-caffeinated' => 'for making 100 edits on pages in a single day!',
-	'achievements-badge-hover-desc-luckyedit' => 'for making the Lucky $1th Edit on the wiki!',
+	'achievements-badge-hover-desc-creator' => 'Awarded for creating the wiki!',
+	'achievements-badge-hover-desc-pounce' => 'Awarded for making edits on 100 pages within an hour of the page\'s creation!',
+	'achievements-badge-hover-desc-caffeinated' => 'Awarded for making 100 edits on pages in a single day!',
+	'achievements-badge-hover-desc-luckyedit' => 'Awarded for making the Lucky $1th Edit on the wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'This is a special Platinum badge that is only available for a limited time!',
 
 	/*
 	 * Badges' details for info in notification
 	 */
-	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
-	'achievements-badge-your-desc-edit' => 'for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-your-desc-edit-plus-category' => 'for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
-	'achievements-badge-your-desc-picture' => 'for adding {{PLURAL:$1|your first picture|$1 pictures}} to {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-your-desc-category' => 'for adding {{PLURAL:$1|your first page|$1 pages}} to {{PLURAL:$1|a category|categories}}!',
-	'achievements-badge-your-desc-blogpost' => 'for writing {{PLURAL:$1|your first blog post|$1 blog posts}}!',
-	'achievements-badge-your-desc-blogcomment' => 'for writing a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}!',
-	'achievements-badge-your-desc-love' => 'for contributing to the wiki every day for {{PLURAL:$1|one day|$1 days}}!',
-	'achievements-badge-your-desc-welcome' => 'for joining the wiki!',
-	'achievements-badge-your-desc-introduction' => 'for adding to your own user page!',
-	'achievements-badge-your-desc-sayhi' => 'for leaving a message on someone else\'s talk page!',
-	'achievements-badge-your-desc-creator' => 'for creating the wiki!',
-	'achievements-badge-your-desc-pounce' => 'for making edits on 100 pages within an hour of the page\'s creation!',
-	'achievements-badge-your-desc-caffeinated' => 'for making 100 edits on pages in a single day!',
-	'achievements-badge-your-desc-luckyedit' => 'for making the Lucky $1th edit on the wiki!',
+	'achievements-badge-your-desc-sharing' => 'Awarded {{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
+	'achievements-badge-your-desc-edit' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a page|pages}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
+	'achievements-badge-your-desc-picture' => 'Awarded for adding {{PLURAL:$1|your first picture|$1 pictures}} to {{PLURAL:$1|a page|pages}}!',
+	'achievements-badge-your-desc-category' => 'Awarded for adding {{PLURAL:$1|your first page|$1 pages}} to {{PLURAL:$1|a category|categories}}!',
+	'achievements-badge-your-desc-blogpost' => 'Awarded for writing {{PLURAL:$1|your first blog post|$1 blog posts}}!',
+	'achievements-badge-your-desc-blogcomment' => 'Awarded for writing a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}!',
+	'achievements-badge-your-desc-love' => 'Awarded for contributing to the wiki every day for {{PLURAL:$1|one day|$1 days}}!',
+	'achievements-badge-your-desc-welcome' => 'Awarded for joining the wiki!',
+	'achievements-badge-your-desc-introduction' => 'Awarded for adding to your own user page!',
+	'achievements-badge-your-desc-sayhi' => 'Awarded for leaving a message on someone else\'s talk page!',
+	'achievements-badge-your-desc-creator' => 'Awarded for creating the wiki!',
+	'achievements-badge-your-desc-pounce' => 'Awarded for making edits on 100 pages within an hour of the page\'s creation!',
+	'achievements-badge-your-desc-caffeinated' => 'Awarded for making 100 edits on pages in a single day!',
+	'achievements-badge-your-desc-luckyedit' => 'Awarded for making the Lucky $1th edit on the wiki!',
 
 	/*
 	 * Badges' details for recent badges list on leaderboard
 	 */
-	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
-	'achievements-badge-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
-	'achievements-badge-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-desc-category' => 'for adding $1 {{PLURAL:$1|page|pages}} to {{PLURAL:$1|a category|categories}}!',
-	'achievements-badge-desc-blogpost' => 'for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
-	'achievements-badge-desc-blogcomment' => 'for writing a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}!',
-	'achievements-badge-desc-love' => 'for contributing to the wiki every day for {{PLURAL:$1|a day|$1 days}}!',
-	'achievements-badge-desc-welcome' => 'for joining the wiki!',
-	'achievements-badge-desc-introduction' => 'for adding to your own user page!',
-	'achievements-badge-desc-sayhi' => 'for leaving a message on someone else\'s talk page!',
-	'achievements-badge-desc-creator' => 'for creating the wiki!',
-	'achievements-badge-desc-pounce' => 'for making edits on 100 pages within an hour of the page\'s creation!',
-	'achievements-badge-desc-caffeinated' => 'for making 100 edits on pages in a single day!',
-	'achievements-badge-desc-luckyedit' => 'for making the Lucky $1th edit on the wiki!',
+	'achievements-badge-desc-sharing' => 'Awarded {{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
+	'achievements-badge-desc-edit' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}!',
+	'achievements-badge-desc-edit-plus-category' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
+	'achievements-badge-desc-picture' => 'Awarded for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}!',
+	'achievements-badge-desc-category' => 'Awarded for adding $1 {{PLURAL:$1|page|pages}} to {{PLURAL:$1|a category|categories}}!',
+	'achievements-badge-desc-blogpost' => 'Awarded for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
+	'achievements-badge-desc-blogcomment' => 'Awarded for writing a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}!',
+	'achievements-badge-desc-love' => 'Awarded for contributing to the wiki every day for {{PLURAL:$1|a day|$1 days}}!',
+	'achievements-badge-desc-welcome' => 'Awarded for joining the wiki!',
+	'achievements-badge-desc-introduction' => 'Awarded for adding to your own user page!',
+	'achievements-badge-desc-sayhi' => 'Awarded for leaving a message on someone else\'s talk page!',
+	'achievements-badge-desc-creator' => 'Awarded for creating the wiki!',
+	'achievements-badge-desc-pounce' => 'Awarded for making edits on 100 pages within an hour of the page\'s creation!',
+	'achievements-badge-desc-caffeinated' => 'Awarded for making 100 edits on pages in a single day!',
+	'achievements-badge-desc-luckyedit' => 'Awarded for making the Lucky $1th edit on the wiki!',
 
 	//UserProfilePages module
 	'achievements-userprofile-title-no' => "$1's Earned Badges",
