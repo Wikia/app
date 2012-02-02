@@ -302,7 +302,7 @@ You can start earning your own badges!',
 	'achievements-badge-to-get-introduction-details' => 'Is your user page empty?
 Click on your user name at the top of the screen to see.
 Click "{{int:edit}}" to add some information about yourself!',
-	'achievements-badge-to-get-sayhi-details' => 'You can leave other users messages by clicking "{{int:tooltip-ca-addsection}}" on their talk page.
+	'achievements-badge-to-get-sayhi-details' => 'You can leave other users messages by clicking "{{int:addsection}}" on their talk page.
 Ask for help, thank them for their work, or just say hi!',
 	'achievements-badge-to-get-creator-details' => 'This badge is given to the person who founded the wiki.
 Click the "{{int:createwiki}}" button at the top to start a site about whatever you like most!',
