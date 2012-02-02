@@ -1,6 +1,6 @@
 (function($, window, undefined) {
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
-
+	
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
@@ -17,7 +17,6 @@
 			baseFloatZIndex: 20000001, // $zTop from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: [$.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParams)],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',
@@ -115,35 +114,48 @@
 		track: function(action, label, value) {
 		},
 
+		contentsCss: [$.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParams)],
+		
 		// start editor in mode provided
 		init: function(editor) {
-			var instanceId = editor.instanceId;
-	
-			// Don't re-initialize the same instance
-			if (CKEDITOR.instances[instanceId]) return;
-	
-			// Editor specific config overrides
-			if (editor.config.minHeight) {
-				RTE.config.height = editor.config.minHeight;
-			}
-	
-			RTE.config.startupMode = editor.config.mode;
-	
+		
 			// Load the iframe content CSS file for the MiniEditor
 			if (editor.config.isMiniEditor) {
-				RTE.config.contentsCss.push($.getSassCommonURL('/extensions/wikia/RTE/css/content_mini.scss'));
+				RTE.contentsCss.push($.getSassCommonURL('/extensions/wikia/RTE/css/content_mini.scss'));
 			}
 
-			// This call creates a new CKE instance which replaces the textarea with the applicable ID
-			editor.ck = CKEDITOR.replace(instanceId, RTE.config);
-	
-			// clean HTML returned by CKeditor
-			editor.ck.on('getData', RTE.filterHtml);
-	
-			// CKeditor code is loaded, now it's time to initialize RTE
-			GlobalTriggers.fire('rteinit', editor.ck);
-		},
+			// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
+			RTE.ajax('getContentsCss', {files: RTE.contentsCss}, function(data) {
+				if(data.status == 'okay') {
+					RTE.config.contentsCss = data.css;		
+				} else {
+					RTE.config.contentsCss = RTE.contentsCss;				
+				}
 
+				var instanceId = editor.instanceId;
+		
+				// Don't re-initialize the same instance
+				if (CKEDITOR.instances[instanceId]) return;
+		
+				// Editor specific config overrides
+				if (editor.config.minHeight) {
+					RTE.config.height = editor.config.minHeight;
+				}
+		
+				RTE.config.startupMode = editor.config.mode;
+				
+				// This call creates a new CKE instance which replaces the textarea with the applicable ID
+				editor.ck = CKEDITOR.replace(instanceId, RTE.config);
+		
+				// clean HTML returned by CKeditor
+				editor.ck.on('getData', RTE.filterHtml);
+		
+				// CKeditor code is loaded, now it's time to initialize RTE
+				GlobalTriggers.fire('rteinit', editor.ck);
+			});			
+	
+		},
+		
 		// load extra CSS files
 		loadCss: function(instanceId) {
 			var css = [];
