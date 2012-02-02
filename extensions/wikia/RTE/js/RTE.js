@@ -116,42 +116,43 @@
 
 		contentsCss: [$.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParams)],
 		
+		contentsCssString: "",
+		
+		getContentsCss: function(editor) {
+			// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
+			var cssArr = RTE.contentsCss;
+			if(cssArr.length) {
+				var file = cssArr.pop();
+				$.get(file, function(data) {
+					RTE.contentsCssString += data;
+					RTE.getContentsCss(editor);
+				});
+			} else {
+				RTE.config.contentsCss = RTE.contentsCssString;
+				RTE.initCk(editor);
+			}
+		},
+		
 		// start editor in mode provided
 		init: function(editor) {
-		
-// This is a work in progress.  I will fix tomorrow. 
-		
+				
 			var instanceId = editor.instanceId;
 	
 			// Don't re-initialize the same instance
 			if (CKEDITOR.instances[instanceId]) return;
 			
-			var css = "", 
-				contentsCss = RTE.contentsCss,
-				i = 0;
-			
-			// Load the iframe content CSS file for the MiniEditor
-			if (editor.config.isMiniEditor) {
-				contentsCss.push($.getSassCommonURL('/extensions/wikia/RTE/css/content_mini.scss'));
+			if(typeof RTE.config.contentsCss == 'undefined') {
+				// Add the iframe content CSS file for the MiniEditor
+				if (editor.config.isMiniEditor) {
+					RTE.contentsCss.push($.getSassCommonURL('/extensions/wikia/RTE/css/content_mini.scss'));
+				}
+				RTE.getContentsCss(editor);
+			} else {
+				RTE.initCk(editor);
 			}
-			
-			RTE.config.contentsCss = contentsCss;
-			RTE.initCk(editor, instanceId);
-			
-			// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
-			/*for(; i < contentsCss.length; i++ ) {
-				$.get(contentsCss[i], function(data) {
-					css+=data;
-					if(i == contentsCss.length-1) {
-						RTE.config.contentsCss = css;
-						// Css is ready, init CKEditor
-						RTE.initCk(editor);
-					}
-				})
-			}*/
 		},
 		
-		initCk: function(editor, instanceId) {
+		initCk: function(editor) {
 			// Editor specific config overrides
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
@@ -160,7 +161,7 @@
 			RTE.config.startupMode = editor.config.mode;
 			
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
-			editor.ck = CKEDITOR.replace(instanceId, RTE.config);
+			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
 	
 			// clean HTML returned by CKeditor
 			editor.ck.on('getData', RTE.filterHtml);
@@ -168,8 +169,6 @@
 			// CKeditor code is loaded, now it's time to initialize RTE
 			GlobalTriggers.fire('rteinit', editor.ck);		
 		},
-
-// end work in progress. 
 		
 		// load extra CSS files
 		loadCss: function(instanceId) {
