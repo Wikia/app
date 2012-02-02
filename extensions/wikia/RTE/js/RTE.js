@@ -139,7 +139,9 @@
 			var instanceId = editor.instanceId;
 	
 			// Don't re-initialize the same instance
-			if (CKEDITOR.instances[instanceId]) return;
+			if (CKEDITOR.instances[instanceId]) {
+				return;
+			}
 			
 			if(typeof RTE.config.contentsCss == 'undefined') {
 				// Add the iframe content CSS file for the MiniEditor
