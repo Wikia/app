@@ -157,10 +157,13 @@ class BodyModule extends Module {
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 		$isDiff = ($wgRequest->getVal('diff', false) && $wgRequest->getVal('oldid', false));
+
+		/** @TODO should be done via a hook instead **/
+		if ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) {
+			$this->wgSuppressRail = true;
+		}
 		
-		$this->wgSuppressRail = ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) ? true : false;
-		
-		if ($this->wgSuppressRail) {
+		if ( $this->wgSuppressRail ) {
 			return array();
 		}
 		
