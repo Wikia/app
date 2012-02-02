@@ -111,6 +111,7 @@
 			this.pluginConfigs = plugins;
 			this.config = $.extend(true, {}, WE.config, config); // clone
 			this.initialized = false;
+			this.ready = false;
 			this.state = false;
 			this.mode = false;
 			//this.debugEvents(['fire']);
@@ -181,9 +182,10 @@
 		show: function() {
 			if (!this.initialized) {
 				this.initPlugins();
-				this.mode = this.config.mode = this.config.mode || 'source';
-				this.setState(this.states.INITIALIZING);
 				this.element = this.config.element;
+				this.config.mode = this.config.mode || 'source';
+				this.setMode(this.config.mode);
+				this.setState(this.states.INITIALIZING);
 				// track if original element is a div rather than a textarea.
 				this.fromDiv = $('#' + this.instanceId).is("div");
 				this.fire('initConfig', this);
@@ -719,7 +721,6 @@
 	 */
 	WE.plugins.ckeditor = $.createClass(WE.plugin,{
 
-		loading: true,
 		requires: ['ui'],
 
 		// These events are proxied from ck and fired on the editor with the 'ck' prefix
@@ -748,9 +749,12 @@
 			this.editor.on('ck-themeLoaded', this.proxy(this.themeLoaded));
 			this.editor.on('ck-focus', this.proxy(this.editorFocused));
 			this.editor.on('ck-blur', this.proxy(this.editorBlurred));
-			
+
 			// This one can't be proxied because we need access to it before the proxies are set up
 			this.editor.on('ckInstanceCreated', this.proxy(this.ckInstanceCreated));
+
+			// Properly detect when we are finished loading (BugId:20297)
+			this.editor.on('afterLoadingStatus', this.proxy(this.editorReady));
 
 			// Init RTE for this wikiaEditor instance
 			RTE.init(this.editor);
@@ -799,18 +803,12 @@
 			this.editor.setState(this.editor.ck.mode == 'wysiwyg' ?
 				this.editor.states.LOADING_SOURCE : this.editor.states.LOADING_VISUAL);
 		},
-		
-		modeChanged: function() {
-			if (this.loading) {
-				this.editor.fire('editorReady', this.editor);
-			}
 
-			this.editor.setMode(this.editor.ck.mode, this.loading);
+		modeChanged: function() {
+			this.editor.setMode(this.editor.ck.mode);
 			this.editor.setState(this.editor.states.IDLE);
 
 			this.getEditbox().click(this.proxy(this.editorClicked));
-
-			this.loading = false;
 		},
 
 		modeChangeCancelled: function() {
@@ -863,6 +861,14 @@
 
 		editorClicked: function() {
 			this.editor.fire('editorClick', this.editor);
+		},
+
+		editorReady: function() {
+			if (!this.editor.ready) {
+				this.editor.ready = true;
+				this.editor.fire('editorReady', this.editor);
+				$().log('editor is ready!', 'WikiaEditor');
+			}
 		}
 	});
 

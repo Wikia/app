@@ -39,7 +39,15 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	modeSwitch: function(ev) {
 		var editor = ev.editor,
+			wikiaEditor = WikiaEditor.getInstance(editor.name),
 			content = editor.getData();
+
+		// modeSwitch needs to be aware of wikiaEditor readiness (BudId:20297)
+		if (!wikiaEditor.ready) {
+			RTE.log('cannot switch modes until editor is ready');
+			editor.fire('modeSwitchCancelled');
+			return;
+		}
 
 		RTE.log('switching from "' + editor.mode +'" mode');
 
