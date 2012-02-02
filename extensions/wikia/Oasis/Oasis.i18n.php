@@ -169,10 +169,6 @@ $messages['en'] = array(
 	'oasis-wiki-navigation' => '$1 Navigation',
 	'oasis-related-categories' => 'Related Categories',
 
-	# Corporate landing pages
-	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
-	'corporatelandingpage-trivia-description' => 'Test your trivia knowledge and win a prize pack from Wikia!',
-
 	#wikia navigation v2
 	'oasis-navigation-v2-create-page' => 'Add a Page',
 	'oasis-navigation-v2-edit-page' => 'Edit this Page',
@@ -499,7 +495,6 @@ $messages['br'] = array(
 	'oasis-skip-to-wiki-navigation' => 'Mont da verdeiñ ar wiki',
 	'oasis-skip-to-site-navigation' => "Mont da verdeiñ al lec'hienn",
 	'oasis-wiki-navigation' => 'Merdeiñ war $1',
-	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
 	'oasis-navigation-v2-validation-next' => "War-lerc'h",
 );
 
@@ -783,8 +778,6 @@ $messages['de'] = array(
 	'oasis-skip-to-site-navigation' => 'Zur Wikia-Navigation springen',
 	'oasis-wiki-navigation' => '$1: Navigation',
 	'oasis-related-categories' => 'Verwandte Kategorien',
-	'corporatelandingpage-trivia-title' => 'Wikia Kleinigkeiten',
-	'corporatelandingpage-trivia-description' => 'Teste deine Trivia-Kenntnisse und gewinne ein Geschenkpaket von Wikia!',
 	'oasis-navigation-v2-level1-validation' => 'Hoppla! Dein Level 1-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
 	'oasis-navigation-v2-level2-validation' => 'Hoppla! Dein Level 2-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
 	'oasis-navigation-v2-level12-validation' => 'Hoppla! Dein Level 1-Menü und Level 2-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
@@ -945,8 +938,6 @@ $messages['es'] = array(
 	'oasis-skip-to-site-navigation' => 'Saltar a la navegación del sitio',
 	'oasis-wiki-navigation' => 'Navegación de $1',
 	'oasis-related-categories' => 'Categorías Relacionadas',
-	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
-	'corporatelandingpage-trivia-description' => '¡Prueba tus conocimientos y gana un paquete de premios de Wikia!',
 );
 
 /** Persian (فارسی)
@@ -1254,8 +1245,6 @@ $messages['fr'] = array(
 	'oasis-skip-to-site-navigation' => 'Aller à la navigation du site',
 	'oasis-wiki-navigation' => 'Navigation sur $1',
 	'oasis-related-categories' => 'Catégories apparentées',
-	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
-	'corporatelandingpage-trivia-description' => 'Testez vos connaissances et gagnez un lot de prix de Wikia !',
 	'oasis-navigation-v2-create-page' => 'Ajouter une page',
 	'oasis-navigation-v2-edit-page' => 'Modifier cette page',
 	'oasis-navigation-v2-add-photo' => 'Ajouter une image',
@@ -1416,8 +1405,6 @@ $messages['gl'] = array(
 	'oasis-skip-to-site-navigation' => 'Saltar ata a navegación do sitio',
 	'oasis-wiki-navigation' => 'Navegación de $1',
 	'oasis-related-categories' => 'Categorías relacionadas',
-	'corporatelandingpage-trivia-title' => 'Curiosidades de Wikia',
-	'corporatelandingpage-trivia-description' => 'Poña a proba os seus coñecementos e gañe un paquete de premios de Wikia!',
 	'oasis-navigation-v2-create-page' => 'Engadir unha páxina',
 	'oasis-navigation-v2-edit-page' => 'Editar esta páxina',
 	'oasis-navigation-v2-add-photo' => 'Engadir unha foto',
@@ -1766,8 +1753,6 @@ $messages['ia'] = array(
 	'oasis-skip-to-site-navigation' => 'Saltar al navigation del sito',
 	'oasis-wiki-navigation' => 'Navigation de $1',
 	'oasis-related-categories' => 'Categorias connexe',
-	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
-	'corporatelandingpage-trivia-description' => 'Prova tu cognoscentia de trivialitates e gania un pacco de premios ab Wikia!',
 	'oasis-navigation-v2-create-page' => 'Adder un pagina',
 	'oasis-navigation-v2-edit-page' => 'Modificar iste pagina',
 	'oasis-navigation-v2-add-photo' => 'Adder un photo',
@@ -2378,8 +2363,6 @@ $messages['mk'] = array(
 	'oasis-skip-to-site-navigation' => 'Скокни на Навигација по местото',
 	'oasis-wiki-navigation' => 'Навигација по $1',
 	'oasis-related-categories' => 'Поврзани категории',
-	'corporatelandingpage-trivia-title' => 'Занимливости на Викија',
-	'corporatelandingpage-trivia-description' => 'Испобајте си го знаењето на занимливости и освојте пакет-награда од Викија!',
 	'oasis-navigation-v2-create-page' => 'Додај страница',
 	'oasis-navigation-v2-edit-page' => 'Уреди ја страницава',
 	'oasis-navigation-v2-add-photo' => 'Додај слика',
@@ -2592,8 +2575,6 @@ $messages['ms'] = array(
 	'oasis-skip-to-site-navigation' => 'Langkau ke Pandu Arah Tapak',
 	'oasis-wiki-navigation' => 'Pandu Arah $1',
 	'oasis-related-categories' => 'Kategori Berkaitan',
-	'corporatelandingpage-trivia-title' => 'Trivia Wikia',
-	'corporatelandingpage-trivia-description' => 'Uji pengetahuan trivia anda dan menangi hadiah daripada Wikia!',
 	'oasis-navigation-v2-create-page' => 'Buat Laman Baru',
 	'oasis-navigation-v2-edit-page' => 'Sunting Laman Ini',
 	'oasis-navigation-v2-add-photo' => 'Tambah Gambar',
@@ -2781,8 +2762,6 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'oasis-skip-to-site-navigation' => 'Doorgaan naar sitenavigatie',
 	'oasis-wiki-navigation' => 'Navigatie voor $1',
 	'oasis-related-categories' => 'Verwante categorieën',
-	'corporatelandingpage-trivia-title' => 'Wikia trivia',
-	'corporatelandingpage-trivia-description' => 'Toets uw triviakennis en win een prijzenpakket van Wikia!',
 	'oasis-navigation-v2-create-page' => 'Pagina toevoegen',
 	'oasis-navigation-v2-edit-page' => 'Deze pagina bewerken',
 	'oasis-navigation-v2-add-photo' => 'Afbeelding toevoegen',
@@ -2820,7 +2799,6 @@ $messages['nl-informal'] = array(
 	'oasis-editpage-readonlywarning' => '<h2>Helaas!</h2>
 <p>Je kunt deze pagina op dit moment niet bewerken. Deze storing is waarschijnlijk snel verholpen. Dit is er aan de hand<br /><em>$1</em></p>
 <p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.</p>',
-	'corporatelandingpage-trivia-description' => 'Toets je triviakennis en win een prijzenpakket van Wikia!',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -2960,8 +2938,6 @@ $messages['nb'] = array(
 	'oasis-skip-to-site-navigation' => 'Hopp til sidenavigasjon',
 	'oasis-wiki-navigation' => '$1-navigasjon',
 	'oasis-related-categories' => 'Relaterte kategorier',
-	'corporatelandingpage-trivia-title' => 'Wikia Trivia',
-	'corporatelandingpage-trivia-description' => 'Test dine trivielle kunnskaper og vinn en premiepakke fra Wikia!',
 	'oasis-navigation-v2-create-page' => 'Legg til side',
 	'oasis-navigation-v2-edit-page' => 'Rediger denne siden',
 	'oasis-navigation-v2-add-photo' => 'Legg til bilde',
@@ -3127,8 +3103,6 @@ $messages['pl'] = array(
 	'oasis-skip-to-site-navigation' => 'Przejdź do Nawigacji Strony',
 	'oasis-wiki-navigation' => 'Nawigacja $1',
 	'oasis-related-categories' => 'Kategorie pokrewne',
-	'corporatelandingpage-trivia-title' => 'Quizy',
-	'corporatelandingpage-trivia-description' => 'Przetestuj swoją wiedzę i wygaj nagrody z Wikia!',
 	'oasis-navigation-v2-create-page' => 'Dodaj stronę',
 	'oasis-navigation-v2-edit-page' => 'Edytuj tę stronę',
 	'oasis-navigation-v2-add-photo' => 'Dodaj zdjęcie',
@@ -3310,8 +3284,6 @@ $messages['pt'] = array(
 	'oasis-skip-to-site-navigation' => 'Saltar para a Navegação do Site',
 	'oasis-wiki-navigation' => 'Navgação da $1',
 	'oasis-related-categories' => 'Categorias Relacionadas',
-	'corporatelandingpage-trivia-title' => 'Trivialidades da Wikia',
-	'corporatelandingpage-trivia-description' => 'Teste os seus conhecimentos de trivialidades e ganhe um pacote prémio da Wikia!',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -3833,8 +3805,6 @@ $messages['sv'] = array(
 	'oasis-skip-to-site-navigation' => 'Hoppa till sidnavigering',
 	'oasis-wiki-navigation' => '$1-navigering',
 	'oasis-related-categories' => 'Relaterade kategorier',
-	'corporatelandingpage-trivia-title' => 'Wikia-trivia',
-	'corporatelandingpage-trivia-description' => 'Testa dina trivia-kunskaper och vinn ett prispaket från Wikia!',
 	'oasis-navigation-v2-create-page' => 'Lägg till en sida',
 	'oasis-navigation-v2-edit-page' => 'Redigera denna sida',
 	'oasis-navigation-v2-add-photo' => 'Lägg till ett foto',
@@ -3930,8 +3900,6 @@ $messages['tl'] = array(
 	'oasis-upload-photos-force' => 'Ikarga pa rin',
 	'oasis-upload-photos-caption' => 'Paliwanag',
 	'oasis-modal-error-headline' => 'Pakitama ang sumusunod na mga kamalian',
-	'corporatelandingpage-trivia-title' => 'Tribya ng Wikia',
-	'corporatelandingpage-trivia-description' => 'Subukan ang kaalaman mo na pangtribya at magwagi ng isang pakete ng premyo mula sa Wikia!',
 );
 
 /** Ukrainian (Українська)
