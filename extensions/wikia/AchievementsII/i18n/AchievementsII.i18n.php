@@ -318,9 +318,9 @@ Keep editing!',
 	 * Badges' details for badges list hovers on user profile
 	 */
 	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
-	'achievements-badge-hover-desc-edit' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />
+	'achievements-badge-hover-desc-edit' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}}<br />
 on {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-hover-desc-edit-plus-category' => 'for making $1 {{PLURAL:$1|edit|edits}}<br />
+	'achievements-badge-hover-desc-edit-plus-category' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}}<br />
 on {{PLURAL:$1|a $2 page|$2 pages}}!',
 	'achievements-badge-hover-desc-picture' => 'for adding $1 {{PLURAL:$1|picture|pictures}}<br />
 to {{PLURAL:$1|a page|pages}}!',
@@ -409,7 +409,7 @@ Parameters:
 Possible messages for $1 are: {{msg-mw|achievements-badge-to-get-blogcomment|notext=1}}, {{msg-mw|achievements-badge-to-get-blogpost|notext=1}}, {{msg-mw|achievements-badge-to-get-caffeinated|notext=1}}, {{msg-mw|achievements-badge-to-get-category|notext=1}}, {{msg-mw|achievements-badge-to-get-creator|notext=1}}, {{msg-mw|achievements-badge-to-get-edit|notext=1}}, {{msg-mw|achievements-badge-to-get-edit-plus-category|notext=1}}, {{msg-mw|achievements-badge-to-get-introduction|notext=1}}, {{msg-mw|achievements-badge-to-get-love|notext=1}}, {{msg-mw|achievements-badge-to-get-luckyedit|notext=1}}, {{msg-mw|achievements-badge-to-get-picture|notext=1}}, {{msg-mw|achievements-badge-to-get-pounce|notext=1}}, {{msg-mw|achievements-badge-to-get-sayhi|notext=1}}, {{msg-mw|achievements-badge-to-get-welcome|notext=1}}',
 	'achievements-masthead-points' => 'Parameters:
 * $1 is the number of earned points.',
-	'achievements-profile-title-no' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}} Parameters:
+	'achievements-profile-title-no' => 'Parameters:
 * $1 is a user name.',
 	'achievements-track-name-edit' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}
 
