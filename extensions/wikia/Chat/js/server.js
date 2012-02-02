@@ -359,7 +359,7 @@ function authConnection(handshakeData, authcallback){
 				if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
 					var client = {};
 					client.userKey = key;
-					client.username = data.username
+					client.username = data.username;
 					client.avatarSrc = data.avatarSrc;
 					client.isChatMod = data.isChatMod;
 					client.editCount = data.editCount;
@@ -389,9 +389,9 @@ function authConnection(handshakeData, authcallback){
 		}
 	};
 	
-	var requestUrl = config.AUTH_URL + "&roomId=" + roomId ;	
-	requestUrl +=  "&name=" + urlencode( name );
-	requestUrl +=  "&key=" + key ;
+	var requestUrl = config.AUTH_URL + "&roomId=" + roomId;
+	requestUrl += "&name=" + urlencode(name);
+	requestUrl += "&key=" + key;
 
 	requestMW(roomId, requestUrl, callback, function(){
 		authcallback(null, false); // error first callback style
