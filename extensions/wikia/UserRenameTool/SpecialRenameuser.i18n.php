@@ -34,7 +34,7 @@ $messages['en'] = array(
 	'userrenametool-errortoomany' => 'The user "<nowiki>$1</nowiki>" has $2 {{PLURAL:$2|contribution|contributions}}, renaming a user with more than $3 {{PLURAL:$3|contribution|contributions}} could adversely affect site performance.',
 	'userrenametool-errorprocessing' => 'The rename process for user <nowiki>$1</nowiki> to <nowiki>$2</nowiki> is already in progress.',
 	'userrenametool-errorblocked' => 'User <nowiki>$1</nowiki> is blocked by <nowiki>$2</nowiki> for $3.',
-	'userrenametool-errorlocked' => 'User <nowiki>$1</nowiki> is locked.',
+	'userrenametool-errorlocked' => 'User <nowiki>$1</nowiki> is blocked.',
 	'userrenametool-errorbot' => 'User <nowiki>$1</nowiki> is a bot.',
 	'userrenametool-error-request' => 'There was a problem with receiving the request.
 Please go back and try again.',
