@@ -18,15 +18,6 @@ require_once( 'ConfirmEdit.php' );
 
 // Set the default CAPTCHA to be reCAPTCHA.
 $wgCaptchaClass = 'ReCaptcha';
-
-
-global $recaptcha_public_key, $recaptcha_private_key;
-
-// Set these in LocalSettings.php
-$recaptcha_public_key = '';
-$recaptcha_private_key = '';
-
-
 $wgExtensionFunctions[] = 'efReCaptcha';
 
 /**
