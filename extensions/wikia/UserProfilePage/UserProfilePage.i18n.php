@@ -141,7 +141,7 @@ $messages['qqq'] = array(
 	'userprofilepage-desc' => '{{desc}}',
 	'userprofilepage-edit-button' => '{{Identical|Edit}}',
 	'userprofilepage-about-article-title' => '{{Identical|About}}',
-	'userprofilepage-user-group-vstf' => 'Vandalism/Spam Task Force',
+	'userprofilepage-user-group-vstf' => 'Volunteer Spam Task Force',
 	'userprofilepage-top-wikis-hide-label' => '{{Identical|Hide}}',
 	'userprofilepage-top-pages-title' => 'Parameters:
 * $1 is a username
