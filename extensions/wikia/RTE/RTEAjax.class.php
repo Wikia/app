@@ -204,24 +204,4 @@ class RTEAjax {
 
 		return $ret;
 	}
-	
-	static public function getContentsCss() {
-		global $wgRequest;
-		$css = '';
-		$files = $wgRequest->getArray('files', array() );
-		if(count($files) > 0) {
-			foreach($files as $file) {
-				$css.= file_get_contents($file);
-			}
-			$ret = array(
-				'status' => 'okay',
-				'css' => $css,
-			);
-		} else {
-			$ret = array(
-				'status' => 'error',
-			);
-		}
-		return $ret;
-	}
 }
