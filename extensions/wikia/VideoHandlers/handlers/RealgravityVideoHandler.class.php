@@ -2,9 +2,13 @@
 
 class RealgravityVideoHandler extends VideoHandler {
 
+	const DEFAULT_VET_WIDTH = 350;  // defined in VideoEmbedTool_setup.php, but that extension may not be enabled!
+	const REALGRAVITY_PLAYER_AUTOSTART_ID = 'ac330d90-cb46-012e-f91c-12313d18e962';
+	const REALGRAVITY_PLAYER_NO_AUTOSTART_ID = '63541030-a4fd-012e-7c44-1231391272da';
+	const REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID = '49321a60-d897-012e-f9bf-12313d18e962';
+
 	protected $apiName = 'RealgravityApiWrapper';
 	protected static $aspectRatio = 1.3333333;
-	protected static $urlTemplate = 'http://www.totaleclips.com/Player/Bounce.aspx?';
 
 	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false) {
 
@@ -12,12 +16,12 @@ class RealgravityVideoHandler extends VideoHandler {
 
 		$videoId = $this->getVideoId();
 
-		if ( $width == RealgravityApiWrapper::DEFAULT_VET_WIDTH ) {
-			$playerId = RealgravityApiWrapper::REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID;
+		if ( $width == self::DEFAULT_VET_WIDTH ) {
+			$playerId = self::REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID;
 		} elseif ( $autoplay ) {
-			$playerId = RealgravityApiWrapper::REALGRAVITY_PLAYER_AUTOSTART_ID;
+			$playerId = self::REALGRAVITY_PLAYER_AUTOSTART_ID;
 		} else {
-			$playerId = RealgravityApiWrapper::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
+			$playerId = self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
 		}
 
 		$embed =
@@ -32,7 +36,7 @@ class RealgravityVideoHandler extends VideoHandler {
 			<param name="flashvars" value="&config=http://mediacast.realgravity.com/vs/api/playerxml/' . $playerId . '"></param>
 			<embed id="' . $playerId . '" name="' . $playerId . '" width="' . $width . '" height="' . $height . '"
 			allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent"
-			flashvars="config=http://mediacast.realgravity.com/vs/api/playerxml/' . $playerId . '?video_guid=' . $videoId . '"
+			flashvars="config=http://mediacast.realgravity.com/vs/api/playerxml/' . $playerId . '/' . $videoId . '"
 			src="http://anomaly.realgravity.com/flash/player.swf"></embed>
 			</object>';
 

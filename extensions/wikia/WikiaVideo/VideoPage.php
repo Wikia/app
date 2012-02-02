@@ -1983,7 +1983,7 @@ EOD;
 					  <param name="flashvars" value="&config=http://mediacast.realgravity.com/vs/api/playerxml/'.$playerId.'"></param>
 					  <embed id="'.$playerId.'" name="'.$playerId.'" width="'.$width.'" height="'.$height.'"
 					    allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent"
-					    flashvars="config=http://mediacast.realgravity.com/vs/api/playerxml/'.$playerId.'?video_guid='.$this->mId.'"
+					    flashvars="config=http://mediacast.realgravity.com/vs/api/playerxml/'.$playerId.'/'.$this->mId.'"
 					    src="http://anomaly.realgravity.com/flash/player.swf"></embed>
 					</object>';
 				$code = 'custom';
