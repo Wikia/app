@@ -11,7 +11,7 @@ window.RTE.tools = {
 	// as per BugId:4440 it should no longer be used
 	/**
 	blockCommandInHeader: function(commandName) {
-		var editor = RTE.instance,
+		var editor = RTE.getInstance(),
 			command = editor.getCommand(commandName);
 
 		if (command) {
