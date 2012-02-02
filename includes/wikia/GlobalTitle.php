@@ -298,8 +298,7 @@ class GlobalTitle extends Title {
 				),
 				__METHOD__
 			);
-
-			$this->mExists = intval( $oRow->page_id > 0 );
+			$this->mExists = intval( $oRow ? ($oRow->page_id > 0) : 0 );
 		} else {
 			$this->mExists = 0;
 		}
