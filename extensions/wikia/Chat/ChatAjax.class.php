@@ -13,8 +13,8 @@ class ChatAjax {
 	 */
 	static public function echoCookies(){
 		global $wgUser, $wgMemc;
-		if(!$wgUser->isLoggedIn()) {
-			return array("key" => false ) ;	
+		if( !$wgUser->isLoggedIn() ) {
+			return array("key" => false ) ;
 		}
 		$key = md5( $wgUser->getId() . "_" . time() . '_' .  mt_rand(0, 65535) );
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*24);
@@ -43,20 +43,19 @@ class ChatAjax {
 		wfProfileIn( __METHOD__ );
 		
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
-
-		if(empty($data)) {
+		if( empty($data) ) {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
-	
+		
 		$user = User::newFromId( $data['user_id'] );
 		
-		if(empty($user) || !$user->isLoggedIn() || $user->getName() !=  $wgRequest->getVal('name', '') ) {
+		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 			wfProfileOut( __METHOD__ );
 		}
 		
 		$isCanGiveChatMode = false;
-		$userChangeableGroups = $user->changeableGroups();		
+		$userChangeableGroups = $user->changeableGroups();
 		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
 			$isCanGiveChatMode = true;
 		}

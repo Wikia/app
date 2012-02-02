@@ -20,7 +20,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	reConnectCount: 0,
 	constructor: function( roomId ) {
 		NodeChatSocketWrapper.superclass.constructor.apply(this,arguments);
-		this.sessionData = null;		
+		this.sessionData = null;
 		this.roomId = roomId;
 	},
 	
@@ -28,12 +28,12 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		$().log( $msg, 'message');
 		this.socket.emit('message', $msg);
 	},
-
+	
 	baseconnect: function() {
 		io.transports = globalTransports ;
 		this.authRequestWithMW(function(data){
 			this.socket = io.connect('http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT, { 
-				'force new connection' : true,	
+				'force new connection' : true,
 				'try multiple transports': true,
 				'connect timeout': false,
 				'query':data,
@@ -42,8 +42,8 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			
 			this.socket.on('connect', this.proxy( this.onConnect, this ) );
 			this.socket.on('message', this.proxy( this.onMsgReceived, this ) );
-		    this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
-		    this.socket.on('error', this.proxy( this.onError, this ) );
+			this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
+			this.socket.on('error', this.proxy( this.onError, this ) );
 		});
 	},
 	
@@ -56,7 +56,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			this.baseconnect();
 			this.connectTimeoutTimer = setTimeout($.proxy(function() {
 				$().log("timeout try without socket connection");
-				globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling'  ];
+				globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling' ];
 				if(this.connected == false) {
 					this.baseconnect();		
 				}
@@ -66,13 +66,13 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	
 	onConnect: function() {
 		clearTimeout(this.connectTimeoutTimer);
-        if(this.announceConnection){
+		if(this.announceConnection){
 			$().log("Reconnected.");
 			this.announceConnection = false;
 		}
-        this.connected = true;    	
-    },
-    
+		this.connected = true;
+	},
+	
 	onDisconnect: function(){
 		$().log("Node-server connection needs to be refreshed...");
         this.connected = false;
@@ -85,7 +85,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		}
     },
 	
-    authRequestWithMW: function(callback) {
+	authRequestWithMW: function(callback) {
 		// We can't access the second-level-domain cookies from Javascript, so we make a request to wikia's
 		// servers (which we trust) to echo back the session info which we then send to node via socket.io
 		// (which doesn't reliably get cookies directly from clients since they may be on flash, etc. and
@@ -97,13 +97,18 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		
 		this.isAuthRequestWithMW = true;
 		
+		//hacky fix of fb#19714
+		//it seems socket.io decodes it -- that's why I double encoded it
+		//but maybe we should implement here authorization via user id instead of username?
+		var encodedWgUserName = encodeURIComponent(encodeURIComponent(wgUserName));
 		this.checkSession = function(data) {
-			this.proxy(callback, this)('name=' + wgUserName + '&key=' + data.key + '&roomId=' + this.roomId);
+			$().log(encodedWgUserName);
+			this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + data.key + '&roomId=' + this.roomId);
 		};
-
+		
 		if(this.sessionData == null) {
-			$().log(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + wgUserName);
-			$.post(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + wgUserName , {}, 
+			$().log(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + encodedWgUserName);
+			$.post(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + encodedWgUserName , {}, 
 				this.proxy(function(data) {
 					this.isAuthRequestWithMW = false;
 					this.checkSession(data); 
