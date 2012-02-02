@@ -35,13 +35,15 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
 			}
 
-			$this->mContent .= "\n";
+			// add semicolon to separate concatenated files (BugId:20272)
+			$this->mContent .= ";\n";
 		}
 
 		// For RTE only
+		// TODO: add "filters" definitions to config.php
 		if($this->mOid == 'rte' || $this->mOid == 'eplrte' || $this->mOid == 'mini_editor_rte_js') {
 			$this->mContent = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $this->mContent);
-			$this->mContent = str_replace("\xEF\xBB\xBF", '', $this->mContent);
+			$this->mContent = str_replace("\xEF\xBB\xBF" /* BOM */, '', $this->mContent);
 		}
 
 		if($this->mOid == 'site_user_css') {
@@ -50,5 +52,4 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 
 		$this->mContentType = $ac->getGroupType($this->mOid);
 	}
-
 }
