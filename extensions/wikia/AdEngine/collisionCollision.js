@@ -4,7 +4,7 @@
 
 // Grabbed this function from http://images2.wikia.nocookie.net/common/extensions/wikia/FAST/FAST.js
 function JSisCollisionTop() {
-	var Dom = YAHOO.util.Dom;
+	var Dom = YAHOO.util.Dom; // TODO: Noooooo :( EVIL! REMOVE THE YUI!
 
 	var tables = $('bodyContent').getElementsByTagName('table');
 	for(var i = 0; i < tables.length; i++) {
