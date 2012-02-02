@@ -107,7 +107,7 @@ class UserPreferencesV2 {
 			$defaultPreferences['watchcreations']['section'] = 'emailv2/followed-pages-iv2';
 			$defaultPreferences['watchcreations']['label-message'] = 'preferences-v2-watchcreations';
 		}
-		
+
 		if (isset($defaultPreferences['enotifwatchlistpages'])) {
 			$defaultPreferences['enotifwatchlistpages']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['enotifwatchlistpages']['label-message'] = 'tog-enotifwatchlistpages-v2';
@@ -165,7 +165,7 @@ class UserPreferencesV2 {
 			$defaultPreferences['unsubscribed']['label-message'] = 'unsubscribe-preferences-toggle-v2';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'unsubscribed');
 		}
-		
+
 		//Tab 3: Editing
 		if (isset($defaultPreferences['watchlistdays'])) $defaultPreferences['watchlistdays']['help'] = '';
 		if (isset($defaultPreferences['wllimit'])) $defaultPreferences['wllimit']['help'] = '';
@@ -309,6 +309,15 @@ class UserPreferencesV2 {
 		if ( ($wgEnableWallExt) && (isset($defaultPreferences['wallshowsource'])) ) {
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'wallshowsource');
 		}
+		if ( isset( $defaultPreferences['hidepatrolled'] ) ) {
+			$defaultPreferences['hidepatrolled']['section'] = 'under-the-hood/patrolled-editsv2';
+		}
+		if ( isset( $defaultPreferences['newpageshidepatrolled'] ) ) {
+			$defaultPreferences['newpageshidepatrolled']['section'] = 'under-the-hood/patrolled-editsv2';
+		}
+		if ( isset( $defaultPreferences['watchlisthidepatrolled'] ) ) {
+			$defaultPreferences['watchlisthidepatrolled']['section'] = 'under-the-hood/patrolled-editsv2';
+		}
 		unset($defaultPreferences['enotiffollowedpages']);
 		unset($defaultPreferences['enotiffollowedminoredits']);
 		unset($defaultPreferences['nocache']);
@@ -317,7 +326,7 @@ class UserPreferencesV2 {
 
 		return true;
 	}
-	
+
 	public function moveToEndOfArray($array, $key) {
 		$temp[$key] = $array[$key];
 		unset($array[$key]);
