@@ -13,6 +13,11 @@
 
 		beforeInit: function() {
 			this.editor.controls = this;
+
+			// Disable the 'Publish' button.
+			$('#wpSave').attr('disabled', true);
+
+			// Re-enable the 'Publish' button when the editor is ready.
 			this.editor.on('editorReady', this.proxy(this.onEditorReady));
 		},
 
