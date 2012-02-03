@@ -143,15 +143,17 @@
 				return;
 			}
 			
-			if(typeof RTE.config.contentsCss == 'undefined') {
+			// Temporary fix for cross domain request issue on dev
+			//if(typeof RTE.config.contentsCss == 'undefined') {
 				// Add the iframe content CSS file for the MiniEditor
 				if (editor.config.isMiniEditor) {
 					RTE.contentsCss.push($.getSassCommonURL('/extensions/wikia/RTE/css/content_mini.scss'));
 				}
-				RTE.getContentsCss(editor);
-			} else {
+				//RTE.getContentsCss(editor);
+			//} else {
+				RTE.config.contentsCss = RTE.contentsCss;
 				RTE.initCk(editor);
-			}
+			//}
 		},
 		
 		initCk: function(editor) {
