@@ -33,15 +33,22 @@ class SpecialResetpass extends SpecialPage {
 		}
 
 		if( !$wgRequest->wasPosted() && !$wgUser->isLoggedIn() ) {
-			$title = SpecialPage::getTitleFor( 'Userlogin' );
-			$skin = $wgUser->getSkin();
-			$llink = $skin->linkKnown(
-				$title,
-				wfMsgHtml( 'loginreqlink' ),
-				array(),
-				array( 'returnto' => $this->getTitle()->getPrefixedText() )
-			);
-			$wgOut->addHTML( wfMsgWikiHtml( 'userlogin-changepassword-needlogin', $llink ) );
+			/* Wikia change - begin */
+			global $wgEnableUserLoginExt; 
+
+			if ( empty($wgEnableUserLoginExt) ) {
+				$this->error( wfMsg( 'resetpass-no-info' ) );
+			} else {
+				$title = SpecialPage::getTitleFor( 'Userlogin' );
+				$skin = $wgUser->getSkin();
+				$llink = $skin->linkKnown(
+					$title,
+					wfMsgHtml( 'loginreqlink' ),
+					array(),
+					array( 'returnto' => $this->getTitle()->getPrefixedText() )
+				);
+				$wgOut->addHTML( wfMsgWikiHtml( 'userlogin-changepassword-needlogin', $llink ) );
+			}
 			return;
 		}
 
