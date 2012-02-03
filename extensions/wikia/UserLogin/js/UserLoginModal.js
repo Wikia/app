@@ -82,5 +82,7 @@ var UserLoginModal = {
 };
 
 $(function() {
-	UserLoginModal.init();
+	if ((typeof window.wgEnableUserLoginExt != 'undefined') && wgEnableUserLoginExt ) {
+		UserLoginModal.init();
+	}
 });

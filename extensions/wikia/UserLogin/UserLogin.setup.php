@@ -24,6 +24,9 @@ $app->registerClass('TempUser', $dir . 'TempUser.class.php');
 $app->registerClass('UserLoginForm', $dir . 'UserLoginForm.class.php');
 $app->registerClass('UserLoginFacebookForm', $dir . 'UserLoginFacebookForm.class.php');
 
+// hooks
+$app->registerHook('MakeGlobalVariablesScript', 'UserLoginHelper', 'onMakeGlobalVariablesScript');
+
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';
 $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';

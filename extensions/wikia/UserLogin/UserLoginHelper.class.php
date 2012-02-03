@@ -493,4 +493,9 @@ class UserLoginHelper extends WikiaModel {
 			$this->wg->Out->addHTML( $form );
 		}
 	}
+	
+	public function onMakeGlobalVariablesScript(&$vars) {
+		$vars['wgEnableUserLoginExt'] = true;
+		return true;
+	}
 }
