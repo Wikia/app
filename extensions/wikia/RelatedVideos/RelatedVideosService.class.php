@@ -3,8 +3,8 @@
 class RelatedVideosService {
 
 	const memcKeyPrefix = 'RelatedVideosService';
-	const memcVersion = 10;
-	const width = 160;
+	const memcVersion = 15;
+	static public $width = 160;
 	const howLongVideoIsNew = 3;
 
 	/**
@@ -29,7 +29,7 @@ class RelatedVideosService {
 			if ( !empty( $source ) ){
 				$url = F::app()->wg->wikiaVideoRepoPath;
 				if ( !empty( $url ) ){
-					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&cityShort='.$cityShort.'&videoHeight='.$videoHeight.'&useJWPlayer='.$useJWPlayer.'&autoplay='.$autoplay.'&inAjaxResponse='.$inAjaxResponse.'&format=json';
+					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::$width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&cityShort='.$cityShort.'&videoHeight='.$videoHeight.'&useJWPlayer='.$useJWPlayer.'&autoplay='.$autoplay.'&inAjaxResponse='.$inAjaxResponse.'&format=json';
 				}
 				$httpResponse = Http::post( $url );
 				$result = json_decode( $httpResponse, true );
@@ -39,7 +39,7 @@ class RelatedVideosService {
 					'RelatedVideos',
 					'getVideoData',
 					array(
-						'width'		=> self::width,
+						'width'		=> self::$width,
 					        'videoWidth'	=> $videoWidth,
 						'title'		=> $title,
 						'articleId'	=> $articleId,
@@ -113,11 +113,11 @@ class RelatedVideosService {
 		if( empty( $source ) ){
 			$video = Title::newFromText( $title, NS_VIDEO );
 			if ($video instanceof Title && $video->exists() ) {
-				return F::app()->wf->memcKey( $video->getArticleID(), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix, self::memcVersion );
+				return F::app()->wf->memcKey( $video->getArticleID(), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix, self::memcVersion, self::$width );
 			}
 			return '';
 		} else {
-			return F::app()->wf->sharedMemcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix, self::memcVersion );
+			return F::app()->wf->sharedMemcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix, self::memcVersion, self::$width );
 		}
 	}
 

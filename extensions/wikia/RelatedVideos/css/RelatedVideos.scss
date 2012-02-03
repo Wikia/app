@@ -394,3 +394,133 @@ $color-related-videos-background: darken($color-page, 20%);
 		display: none;
 	}
 }
+
+.WikiaRail .RelatedVideosModule.module {
+	padding: 10px;
+	#RelatedVideosRL {
+		&.RelatedVideosHidden { display: block }
+		width: auto;
+		height: auto;
+		margin: 0;
+		.RVTitle {
+			font-size: 25px;
+			margin: 10px 5px;
+		}
+		.RVHeader {
+			border: none;
+			height: 38px;
+			.addVideo {
+				position: relative;
+				float: right;
+				margin-right: 0px;
+				padding-left: 40px;
+				img {
+					position: absolute;
+					left: 5px;
+				}
+			}
+			.tally {
+				margin-bottom: 15px;
+				margin-left: 4px;
+				.fixedwidth {
+					width: 80px;
+				}
+			}
+		}
+		.RVBody {
+			height: auto;
+			clear: both;
+			.wrapper {
+				width: 278px;
+				position: static;
+				left: 0;
+				div.item {
+					&:hover {
+						border: 1px solid $color-page-border;
+					}
+					border: 1px solid transparent;
+					display: block;
+					float: none;
+					width: 140px;
+					height: 80px;
+					padding-left: 120px;
+					padding-right: 13px;
+					margin: 0;
+					.new {
+						top: 14px;
+					}
+					.video-thumbnail {
+						width: 110px;
+						display: block;
+						position: absolute;
+						left: 5px;
+						top: 0;
+						.playButton {
+							width: 110px;
+						}
+					}
+					.description {
+						display: inline-block;
+						width: auto;
+					}
+					.videoduration {
+						margin-left: 2px;
+						color: $color-alternate-text;
+					}
+					.info {
+						display: inline-block;
+					}
+					.options {
+						top: 10px;
+						right: 3px;
+						left: auto;
+						bottom: auto;
+						position: absolute;
+						float: none;
+					}
+				}
+				.group {
+					display: inline-block;
+					float: left;
+					width: 278px;
+					padding-bottom: 5px;
+					//height: 370px;
+				}
+			}
+			.button {
+				left: 0;
+				position: static;
+				height: 25px;
+				margin: 0;
+				&.scrollleft {
+					float: left;
+					padding: 0 4px;
+					img {
+					 margin: 5px -4px;
+					 border-width: 7px;
+					 //position: relative;
+					 //top: -2px;
+				 }
+				}
+				&.scrollright {
+					float: right;
+					padding: 0 4px;
+					img {
+					 margin: 5px 5px;
+					 border-width: 7px;
+					 //position: relative;
+					 //top: -2px;
+				 }
+				}
+			}
+			.paginationbar {
+				margin: 10px 5px 20px 5px;
+				height: 25px;
+				.pagecount {
+					line-height: 25px;
+					text-align: center;
+				}
+			}
+		}
+	}
+}

@@ -4,7 +4,21 @@ class RelatedVideosController extends WikiaController {
 
 	const SURVEY_URL = 'http://www.surveymonkey.com/s/RelatedVideosExperience';
 	public function __construct( WikiaApp $app ) {
+		global $wgRelatedVideosOnRail;
 		$this->app = $app;
+		if( !empty( $wgRelatedVideosOnRail ) ) {
+			RelatedVideosService::$width = 110;
+		}
+	}
+
+	public function getCaruselRL(){
+		// just use different template, logic stays the same
+		return $this->getCarusel();
+	}
+
+	public function getCaruselElementRL(){
+		// just use different template, logic stays the same
+		return $this->getCaruselElement();
 	}
 
 	public function getCarusel(){
@@ -169,6 +183,7 @@ class RelatedVideosController extends WikiaController {
 	}
 	
 	public function addVideo() {
+		global $wgRelatedVideosOnRail;
 
 		$url = urldecode( $this->getVal( 'url', '' ) );
 		$articleId = $this->getVal( 'articleId', '' );
@@ -177,7 +192,11 @@ class RelatedVideosController extends WikiaController {
 		if ( is_array( $retval ) ) {
 			$rvs = F::build( 'RelatedVideosService' );
 			$data = $rvs->getRelatedVideoDataFromMaster( $retval );
-			$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCaruselElement', array( 'video' => $data, 'preloaded' => 1 ) ));
+			if ( empty($wgRelatedVideosOnRail) ) {
+				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCaruselElement', array( 'video' => $data, 'preloaded' => 1 ) ));
+			} else {
+				$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'getCaruselElementRL', array( 'video' => $data, 'preloaded' => 1 ) ));
+			}
 			$this->setVal( 'error', isset( $data['error'] ) ? $data['error'] : null);
 		} else {
 			$this->setVal( 'data', null );

@@ -8,7 +8,7 @@ class RelatedVideosHookHandler {
 	 
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
 		wfProfileIn(__METHOD__);
-
+		
 		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null && ( F::app()->wg->title->getNamespace() == NS_MAIN ) ) {
 			$text .= F::app()->sendRequest('RelatedVideosController', 'getCarusel')->toString();
 		}
@@ -84,15 +84,36 @@ class RelatedVideosHookHandler {
 	 * Entry for removing the magic words from displayed text
 	 */
 	static public function onInternalParseBeforeLinks( &$parser, &$text, &$strip_state ) {
+		global $wgRelatedVideosOnRail;
 		wfProfileIn(__METHOD__);
 
 		if ( empty( F::app()->wg->RTEParserEnabled ) ) {
 			$oMagicWord = MagicWord::get('RELATEDVIDEOS_POSITION');
-			$text = $oMagicWord->replace('<span data-placeholder="RelatedVideosModule"></span>', $text, 1 );
+			if ( empty( $wgRelatedVideosOnRail ) ) {
+				$text = $oMagicWord->replace('<span data-placeholder="RelatedVideosModule"></span>', $text, 1 );
+			}
 			$text = $oMagicWord->replace( '', $text );
 		}
 
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+	
+	public function onGetRailModuleList(&$modules) {
+		$app = F::App();
+		$app->wf->ProfileIn(__METHOD__);
+		
+		$title = $app->wg->Title;
+		$namespace = $title->getNamespace();
+		
+		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null && ( $namespace == NS_MAIN ) ) {
+			$modules[1285] = array('RelatedVideosRailModule', 'index', null);
+		}
+		
+		$app->wf->ProfileOut(__METHOD__);
+		return true;
+	}
+	
+	
+	
 }
