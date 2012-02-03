@@ -266,7 +266,7 @@ class SolrSearchSet extends SearchResultSet {
 				}
 				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ); # . "wid:" . ( !empty($wgSolrDebugWikiId) ? $wgSolrDebugWikiId : $wgCityId );
+			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ")" : "" ); # . "wid:" . ( !empty($wgSolrDebugWikiId) ? $wgSolrDebugWikiId : $wgCityId );
 		}
 		//echo "fq=" . $params['fq'] . "<br />";
 
