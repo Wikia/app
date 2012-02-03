@@ -23,6 +23,7 @@ class EditAccount extends SpecialPage {
 	var $mStatus = null;
 	var $mStatusMsg;
 	var $mStatusMsg2 = null;
+	var $mTempUser = null;
 
 	/**
 	 * Constructor
@@ -38,7 +39,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest;
+		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -80,9 +81,18 @@ class EditAccount extends SpecialPage {
 				}
 
 				if ( empty( $id ) ) {
-					$this->mStatus = false;
-					$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
-					$action = '';
+					if ( !empty($wgEnableUserLoginExt) ) {
+						$this->mTempUser = TempUser::getTempUserFromName( $userName );
+					}
+					
+					if ( $this->mTempUser ) {
+						$id = $this->mTempUser->getId();
+						$this->mUser = User::newFromId( $id );
+					} else {
+						$this->mStatus = false;
+						$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
+						$action = '';
+					}
 				}
 			} else {
 				$action = '';
@@ -146,10 +156,28 @@ class EditAccount extends SpecialPage {
 				'isUnsub' => null,
 				'isDisabled' => null,
 				'returnURL' => $this->getTitle()->getFullURL(),
+				'userStatus' => null,
+				'emailStatus' => null,
+				'disabled' => null,
+				'changeEmailRequested' => null,
 			) );
 
 		if( is_object( $this->mUser ) ) {
+			if ( $this->mTempUser ) {
+				$this->mUser = $this->mTempUser->mapTempUserToUser( false );
+				$userStatus = wfMsg('editaccount-status-tempuser');
+				$oTmpl->set_Vars( array('disabled' => 'disabled="disabled"') );
+			} else {
+				$userStatus = wfMsg('editaccount-status-realuser');
+			}
 			$this->mUser->load();
+
+			// get new email (unconfirmed)
+			$optionNewEmail = $this->mUser->getOption( 'new_email' );
+			$changeEmailRequested = ( empty($optionNewEmail) ) ? '' : wfMsg( 'editaccount-email-change-requested', $optionNewEmail ) ;
+
+			// emailStatus is the status of the email in the "Set new email address" field
+			$emailStatus = ( $this->mUser->isEmailConfirmed() ) ? wfMsg('editaccount-status-confirmed') : wfMsg('editaccount-status-unconfirmed') ;
 			$oTmpl->set_Vars( array(
 					'userEmail' => $this->mUser->getEmail(),
 					'userRealName' => $this->mUser->getRealName(),
@@ -157,6 +185,9 @@ class EditAccount extends SpecialPage {
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
 					'isUnsub' => $this->mUser->getOption('unsubscribed'),
 					'isDisabled' => $this->mUser->getOption('disabled'),
+					'userStatus' => $userStatus,
+					'emailStatus' => $emailStatus,
+					'changeEmailRequested' => $changeEmailRequested,
 				) );
 		}
 		
@@ -172,13 +203,27 @@ class EditAccount extends SpecialPage {
 	function setEmail( $email ) {
 		$oldEmail = $this->mUser->getEmail();
 		if ( $this->mUser->isValidEmailAddr( $email ) || $email == '' ) {
-			$this->mUser->setEmail( $email );
-			if ( $email != '' ) {
-				$this->mUser->confirmEmail();
+			if ( $this->mTempUser ) {
+				if ( $email == '' ) {
+					$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
+					return false;
+				} else {
+					$this->mTempUser->setEmail( $email );
+					$this->mUser = $this->mTempUser->activateUser( $this->mUser );
+
+					// reset temp user after activating the user
+					$this->mTempUser = null;
+				}
 			} else {
-				$this->mUser->invalidateEmail();
+				$this->mUser->setEmail( $email );
+				if ( $email != '' ) {
+					$this->mUser->confirmEmail();
+					$this->mUser->setOption( 'new_email', null );
+				} else {
+					$this->mUser->invalidateEmail();
+				}
+				$this->mUser->saveSettings();
 			}
-			$this->mUser->saveSettings();
 
 			// Check if everything went through OK, just in case
 			if ( $this->mUser->getEmail() == $email ) {
@@ -213,7 +258,14 @@ class EditAccount extends SpecialPage {
 			global $wgUser, $wgTitle;
 
 			// Save the new settings
-			$this->mUser->saveSettings();
+			if ( $this->mTempUser ) {
+				$this->mTempUser->setPassword( $this->mUser->mPassword );
+				$this->mTempUser->updateData();
+				$this->mTempUser->saveSettingsTempUserToUser( $this->mUser );
+				$this->mUser->mName = $this->mTempUser->getName();
+			} else {
+				$this->mUser->saveSettings();
+			}
 
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );

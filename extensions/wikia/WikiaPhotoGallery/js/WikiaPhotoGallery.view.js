@@ -53,13 +53,7 @@ var WikiaPhotoGalleryView = {
 	// force user to log in before using gallery editor in view mode (BugId:7453)
 	// returns true when log in dialog is shown
 	forceLogIn: function() {
-		if (window.showComboAjaxForPlaceHolder) {
-			// element, isPlaceholder, callback, showRegisterTabFirst, showLoginRequiredMessage
-			if (showComboAjaxForPlaceHolder("",false, "", false, true)) {
-				return true;
-			}
-		}
-		return false;
+		return UserLogin.isForceLogIn();
 	},
 
 	initGalleries: function () {

@@ -1,5 +1,5 @@
 (function(window,$){
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	// config defaults
 	WE.config = {};
@@ -83,13 +83,17 @@
 		};
 	})();
 
-	// reload the editor (used by AjaxLogin) - BugId:5307
+	// reload the edit page (used by AjaxLogin / UserLogin) - BugId:5307
 	WE.reloadEditor = function() {
-		// clear the edit token - preview will be forced
-		$('input[name=wpEditToken]').val('');
+		var editorInstance = $('#EditPage').data('wikiaeditor'),
+			editorForm = editorInstance.ui.getForm();
 
-		// save the page
-		$('#wpSave').click();
+		// clear the edit token - reload will be forced
+		editorForm.find('input[name=wpEditToken]').val('');
+
+		// set the state and submit the edit form
+		editorInstance.setState(editorInstance.states.RELOADING);
+		editorForm.submit();
 	};
 
 	WE.Editor = $.createClass(Observable,{
@@ -99,7 +103,8 @@
 			INITIALIZING: 2,
 			SAVING: 3,
 			LOADING_SOURCE: 4,
-			LOADING_VISUAL: 5
+			LOADING_VISUAL: 5,
+			RELOADING: 6
 		},
 
 		editorElement: false,
@@ -326,7 +331,12 @@
 		buildClickHandler: function( config ) {
 			var editor = this.editor;
 
-			if (!config.click) {
+			if ( (wgUserName == null) && (UserLogin) ) {
+				config.click = function() {
+					UserLogin.rteForceLogin();
+				}
+			} 
+			else if (!config.click) {
 				config.click = function() {
 				    var mode = editor.mode;
 					if (typeof config['click'+mode] == 'function'){
@@ -384,6 +394,11 @@
 
 		getElement: function( name ) {
 			return this.items[name];
+		},
+
+		// get editor form wrapping current editor
+		getForm: function() {
+			return this.editor.element.parent('form');
 		},
 
 		createElement: function( name ) {

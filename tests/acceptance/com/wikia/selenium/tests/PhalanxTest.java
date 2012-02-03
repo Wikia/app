@@ -21,7 +21,7 @@ public class PhalanxTest extends BaseTest {
 	private String testArticleName = "PhalanxTest";
 
 	// word added to article title
-	private static final String badWord = "WikiaTestBlockDontRemoveMe";
+	public static final String badWord = "WikiaTestBlockDontRemoveMe";
 
 	// used for content and summary
 	private static final String goodWords = "Wikia test text";

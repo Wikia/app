@@ -46,6 +46,8 @@
 			switch (state) {
 				// page is being saved
 				case states.SAVING:
+				//  page is being reload
+				case states.RELOADING:
 					$(window).unbind('.leaveconfirm');
 					break;
 			}

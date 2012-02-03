@@ -235,6 +235,8 @@ class LoginForm {
 
 	/**
 	 * @private
+	 * Wikia change - add new param ($errParam) to function mainLoginForm()
+	 * Wikia change - add prefix to message key for User Login Ext
 	 */
 	function addNewAccountInternal() {
 		global $wgUser, $wgOut;
@@ -243,10 +245,14 @@ class LoginForm {
 		global $wgEmailConfirmToEdit;
 
 		/* wikia change start */
+		global $wgEnableUserLoginExt;
+		// add prefix to message key for User Login Ext
+		$msgKeyPrefix = ( empty($wgEnableUserLoginExt) ) ? '' : 'userlogin-error-';
+
 		//new registration - start [Marooned [at] wikia-inc.com]
 		//check if the date has been choosen
 		if ($this->wpBirthYear == -1 || $this->wpBirthMonth == -1 || $this->wpBirthDay == -1) {
-			$this->mainLoginForm( wfMsg( 'userlogin-bad-birthday' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'userlogin-bad-birthday' ), 'error', 'birthday' );
 			return null;
 		}
 
@@ -256,7 +262,7 @@ class LoginForm {
 			$wgOut->setRobotpolicy( 'noindex,nofollow' );
 			$wgOut->setArticleRelated( false );
 			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
-			$wgOut->addWikiText( wfMsg('userlogin-unable-info') );
+			$wgOut->addWikiText( wfMsg($msgKeyPrefix.'userlogin-unable-info') );
 			if ( !empty( $this->mReturnTo ) ) {
 				$wgOut->returnToMain( true, $this->mReturnTo );
 			} else {
@@ -269,7 +275,7 @@ class LoginForm {
 
 		// If the user passes an invalid domain, something is fishy
 		if( !$wgAuth->validDomain( $this->mDomain ) ) {
-			$this->mainLoginForm( wfMsg( 'wrongpassword' ) ); // TODO: Misleading message.
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'wrongpassword' ), 'error', 'password' ); // TODO: Misleading message.
 			return false;
 		}
 
@@ -280,7 +286,7 @@ class LoginForm {
 		// to check this for domains that aren't local.
 		if( 'local' != $this->mDomain && $this->mDomain != '' ) {
 			if( !$wgAuth->canCreateAccounts() && ( !$wgAuth->userExists( $this->mName ) || !$wgAuth->authenticate( $this->mName, $this->mPassword ) ) ) {
-				$this->mainLoginForm( wfMsg( 'wrongpassword' ) );
+				$this->mainLoginForm( wfMsg( $msgKeyPrefix.'wrongpassword' ), 'error', 'password' );
 				return false;
 			}
 		}
@@ -293,19 +299,19 @@ class LoginForm {
 		# Request forgery checks.
 		if ( !self::getCreateaccountToken() ) {
 			self::setCreateaccountToken();
-			$this->mainLoginForm( wfMsg( 'sessionfailure' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'sessionfailure' ) );
 			return false;
 		}
 		
 		# The user didn't pass a createaccount token
 		if ( !$this->mToken ) {
-			$this->mainLoginForm( wfMsg( 'sessionfailure' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'sessionfailure' ) );
 			return false;
 		}
 		
 		# Validate the createaccount token
 		if ( $this->mToken !== self::getCreateaccountToken() ) {
-			$this->mainLoginForm( wfMsg( 'sessionfailure' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'sessionfailure' ) );
 			return false;
 		}
 
@@ -328,22 +334,22 @@ class LoginForm {
 		$name = trim( $this->mName );
 		$u = User::newFromName( $name, 'creatable' );
 		if ( !is_object( $u ) ) {
-			$this->mainLoginForm( wfMsg( 'noname' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'noname' ), 'error', 'username' );
 			return false;
 		}
 
 		$this->mExtUser = ExternalUser::newFromName( $this->mName );
 		
 		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) ) {
-			$this->mainLoginForm( wfMsg( 'userexists' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'userexists' ), 'error', 'username' );
 			return false;			
 		} elseif ( 0 != $u->idForName() ) {
-			$this->mainLoginForm( wfMsg( 'userexists' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'userexists' ), 'error', 'username' );
 			return false;
 		}
 
 		if ( 0 != strcmp( $this->mPassword, $this->mRetype ) ) {
-			$this->mainLoginForm( wfMsg( 'badretype' ) );
+			$this->mainLoginForm( wfMsg( 'badretype' ), 'error', 'password' );
 			return false;
 		}
 
@@ -351,7 +357,7 @@ class LoginForm {
 		$valid = $u->getPasswordValidity( $this->mPassword );
 		if ( $valid !== true ) {
 			if ( !$this->mCreateaccountMail ) {
-				$this->mainLoginForm( wfMsgExt( $valid, array( 'parsemag' ), $wgMinimalPasswordLength ) );
+				$this->mainLoginForm( wfMsgExt( $valid, array( 'parsemag' ), $wgMinimalPasswordLength ), 'error', 'password' );
 				return false;
 			} else {
 				# do not force a password for account creation by email
@@ -363,12 +369,12 @@ class LoginForm {
 		# if you need a confirmed email address to edit, then obviously you
 		# need an email address.
 		if ( $wgEmailConfirmToEdit && empty( $this->mEmail ) ) {
-			$this->mainLoginForm( wfMsg( 'noemailtitle' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'noemailtitle' ), 'error', 'email' );
 			return false;
 		}
 
 		if( !empty( $this->mEmail ) && !User::isValidEmailAddr( $this->mEmail ) ) {
-			$this->mainLoginForm( wfMsg( 'invalidemailaddress' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'invalidemailaddress' ), 'error', 'email' );
 			return false;
 		}
 
@@ -381,7 +387,22 @@ class LoginForm {
 		if( !wfRunHooks( 'AbortNewAccount', array( $u, &$abortError ) ) ) {
 			// Hook point to add extra creation throttles and blocks
 			wfDebug( "LoginForm::addNewAccountInternal: a hook blocked creation\n" );
-			$this->mainLoginForm( $abortError );
+			/* Wikia change begin */
+			$errParam = '';
+			if ( !empty($wgEnableUserLoginExt) ) {
+				if ( $abortError == wfMsg('phalanx-user-block-new-account') ) {
+					$abortError = wfMsg( 'userlogin-error-user-not-allowed' );
+					$errParam = 'username';
+				} else if ( $abortError == wfMsg('userexists') ) {
+					$abortError = wfMsg( 'userlogin-error-userexists' );
+					$errParam = 'username';
+				} else if ( $abortError == wfMsg('captcha-createaccount-fail') ) {
+					$abortError = wfMsg( 'userlogin-error-captcha-createaccount-fail' );
+					$errParam = 'wpCaptchaWord';
+				}
+			}
+			$this->mainLoginForm( $abortError, 'error', $errParam );
+			/* Wikia change end */
 			return false;
 		}
 
@@ -399,7 +420,7 @@ class LoginForm {
 		}
 
 		if( !$wgAuth->addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
-			$this->mainLoginForm( wfMsg( 'externaldberror' ) );
+			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'externaldberror' ) );
 			return false;
 		}
 
@@ -843,10 +864,11 @@ class LoginForm {
 	 * @param $throttle Boolean
 	 * @param $emailTitle String: message name of email title
 	 * @param $emailText String: message name of email text
+	 * @param $emailTextTemplate String: template of email text
 	 * @return Mixed: true on success, WikiError on failure
 	 * @private
 	 */
-	function mailPasswordInternal( $u, $throttle = true, $emailTitle = 'passwordremindertitle', $emailText = 'passwordremindertext' ) {
+	function mailPasswordInternal( $u, $throttle = true, $emailTitle = 'passwordremindertitle', $emailText = 'passwordremindertext', $emailTextTemplate = '' ) {
 		global $wgServer, $wgScript, $wgUser, $wgNewPasswordExpiry, $wgNoReplyAddress;
 
 		if ( $u->getEmail() == '' ) {
@@ -861,7 +883,21 @@ class LoginForm {
 
 		$np = $u->randomPassword();
 		$u->setNewpassword( $np, $throttle );
-		$u->saveSettings();
+		/* Wikia change begin */
+		global $wgEnableUserLoginExt;
+		$tempUser = null;
+		if ( !empty($wgEnableUserLoginExt) ) {
+			$tempUser = TempUser::getTempUserFromName( $u->getName() );
+			if ( $tempUser ) {
+				$tempUser->saveSettingsTempUserToUser( $u );
+				$u = $tempUser->mapTempUserToUser();
+			}
+		}
+		
+		if ( empty($tempUser) ) {
+			$u->saveSettings();
+		}
+		
 		/* Wikia change begin - @author: Uberfuzzy */
 		/* use noReply address (if available) */
 			$nr = null;
@@ -881,6 +917,13 @@ class LoginForm {
 		else {
 			$wantHTML = $u->isAnon() || $u->getOption('htmlemails');
 			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getOption('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
+			if ( !empty($emailTextTemplate) && $wantHTML ) {
+				$emailParams = array(
+					'$USERNAME' => $u->getName(),
+					'$NEWPASSWORD' => $np,
+				);
+				$mHTML = strtr($emailTextTemplate, $emailParams);
+			}
 			$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, $nr, 'TemporaryPassword', $mHTML, $priority );
 		}
 
@@ -998,8 +1041,9 @@ class LoginForm {
 
 	/**
 	 * @private
+	 * Wikia change - add new param ($errParam)
 	 */
-	function mainLoginForm( $msg, $msgtype = 'error' ) {
+	function mainLoginForm( $msg, $msgtype = 'error', $errParam='' ) {
 		global $wgUser, $wgOut, $wgHiddenPrefs, $wgEnableEmail;
 		global $wgCookiePrefix, $wgLoginLanguageSelector;
 		global $wgAuth, $wgEmailConfirmToEdit, $wgCookieExpiration;

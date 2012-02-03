@@ -1,5 +1,5 @@
 /*
- * Copyright � 2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
+ * Copyright (c) 2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -43,40 +43,33 @@
  * This function is called when FB SDK is loaded using $.getScript (inline bottom script)
  *
  * @author macbre
+ *
+ * TODO: "connect" it with $.loadFacebookAPI loader function
  */
 window.onFBloaded = function() {
 	$().log('onFBloaded', 'FB');
 
-	// macbre: fix IE issue (RT #140425)
-	// @see http://threebrothers.org/brendan/blog/facebook-connect-ie-fb_xd_fragment-iframe/
-	var channelUrl = window.location.protocol + '//' +
-		window.location.host + window.wgScriptPath +
-		'/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
+	var fbAppId = window.fbAppId,
+		// macbre: fix IE issue (RT #140425)
+		// @see http://threebrothers.org/brendan/blog/facebook-connect-ie-fb_xd_fragment-iframe/
+		channelUrl = window.location.protocol + '//' +
+			window.location.host + window.wgScriptPath +
+			'/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
+
+	if (typeof fbAppId != 'string') {
+		$().log('FB', 'appId is empty!');
+		return;
+	}
 
 	// Initialize the library with the API key
 	FB.init({
-		appId : window.fbAppId,
-		oauth: true,
+		appId : fbAppId,
+		oauth : true,
 		status : true, // Check login status
 		cookie : true, // Enable cookies to allow the server to access the session
 		xfbml  : window.fbUseMarkup, // Whether XFBML should be automatically parsed
 		channelUrl: channelUrl //for now
 	});
-
-	// NOTE: Auth.login doesn't appear to work anymore.  The onlogin attribute of the fb:login-buttons is being used instead.
-
-	// Register a function for when the user logs out of Facebook
-/*	FB.Event.subscribe('auth.logout', function(response) {
-		// TODO: Internationalize
-		var login = confirm("Not logged in.\n\nWe detected that you have been logged " +
-		                    "out of Facebook. If this isn't the case, don't worry! " +
-		                    "Facebook's new library seems to have some growing pains. " +
-		                    "Just press Cancel to stay on the current page. Otherwise, " +
-		                    "Press OK to log in via Facebook Connect again.");
-		if (login) {
-			window.location = window.wgArticlePath.replace(/\$1/, "Special:Connect");
-		}
-	}); */ 
 
 	if (typeof GlobalTriggers != 'undefined') {
 		GlobalTriggers.fire('fbinit');
@@ -122,21 +115,11 @@ $(document).ready(function() {
 	//Checks for visibility of Facebook Like button's hover panel and hides ads accordingly to prevent z-index problems
 	// Christian: (BugId 7297)
 	if (skin == 'oasis') {
-		var timer = null;
-		var mouseIn = false;
-		var FBbutton = $('#WikiaPageHeader .likes :first-child');
+		var timer = null,
+			mouseIn = false,
+			FBbutton = $('#WikiaPageHeader .likes :first-child');
 
-		$('#WikiaPageHeader .likes').hover(function() {
-			mouseIn = true;
-			timer = setInterval('poll()', 250);
-		}, function() {
-			mouseIn = false;
-			if (FBbutton.children('span').filter(':visible').length < 2) {
-				clearInterval(timer);
-			}
-		});
-
-		poll = function() {
+		var poll = function() {
 			if (FBbutton.children('span').filter(':visible').length > 1) {
 				$.hideAds();
 			} else {
@@ -145,19 +128,19 @@ $(document).ready(function() {
 					clearInterval(timer);
 				}
 			}
-		}
+		};
+
+		$('#WikiaPageHeader .likes').hover(function() {
+			mouseIn = true;
+			timer = setInterval(poll, 250);
+		}, function() {
+			mouseIn = false;
+			if (FBbutton.children('span').filter(':visible').length < 2) {
+				clearInterval(timer);
+			}
+		});
 	}
 });
-
-
-/**
- * check for api is init (FB.init)
- * @return bool
- *
-function isFbApiInit() {
-	return !(typeof FB._apiKey == 'undefined' ||  FB._apiKey == null);
-}
-*/
 
 /**
  * An optional handler to use in fbOnLoginJsOverride for when a user logs in via facebook connect.
@@ -172,17 +155,17 @@ function sendToConnectOnLoginForSpecificForm(formName){
 	FB.getLoginStatus(function(response) {
 		if(formName != ""){
 	        formName = "/"+formName;
-	    }
-		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + encodeURIComponent(fbReturnToTitle ? fbReturnToTitle : wgPageName) + "&returntoquery=" + encodeURIComponent(wgPageQuery);
+		}
+		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + encodeURIComponent(window.fbReturnToTitle || wgPageName) + "&returntoquery=" + encodeURIComponent(window.wgPageQuery || '');
 
 		if (formName == "/ConnectExisting") {
 			window.location.href = destUrl;
-			return
+			return;
 		}
 		$('#fbConnectModalWrapper').remove();
 		$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
 			if(data.status == "ok") {
-				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + encodeURIComponent(wgPageName) + '&returntoquery=' + encodeURIComponent(wgPageQuery),  "#fbConnectModal", {
+				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + encodeURIComponent(wgPageName) + '&returntoquery=' + encodeURIComponent(window.wgPageQuery || ''),  "#fbConnectModal", {
 			        id: "fbConnectModalWrapper",
 			        width: 600,
 			        callback: function() {
@@ -196,7 +179,6 @@ function sendToConnectOnLoginForSpecificForm(formName){
 			}
 		});
 	});
-	return
 }
 
 
@@ -333,20 +315,27 @@ window.wgAjaxLoginOnInit = function() {
 	$().log('Fbconnect: AjaxLogin expend');
 }
 
-/**
- * When the page is loaded, always init the FB code if it has not been initialized.  This
- * will allow FBML tags in content (if configured to do this).
- *
-$(document).ready(function(){
-	initFbWhenReady();
-});
-function initFbWhenReady(){
-	if(typeof FB == 'undefined'){
-		// The fbsdk code hasn't been loaded yet. Give it more time.
-		setTimeout("initFbWhenReady()", 500);
-	} else if (!isFbApiInit()) {
-		// The fbsdk has loaded but didn't initialize. Force it to init.
-		window.fbAsyncInit();
+function fixXFBML(id) {
+	// BugId:19603 (IE8 specific fix)
+	if (typeof $.browser.msie != 'undefined' && typeof $.browser.version != 'undefined' && $.browser.version && $.browser.version.substring(0, $.browser.version.indexOf('.')) < 9) {
+		GlobalTriggers.bind('fbinit', function() {
+			var node = $('#' + id).parent(),
+				html = node.html();
+
+			// FB JS adds 'fb' namespace support in IE, regenerate FBML tags
+			node.html('').append(html);
+
+			// force button to be rendered again
+			FB.XFBML.parse(node.get(0));
+
+			$().log('XFBML run for #' + id, 'FB');
+		});
 	}
 }
-*/
+
+// BugId:19767 - fix FBconnect button on Special:Connect
+$(function() {
+	if (window.wgCanonicalSpecialPageName === 'Connect') {
+		fixXFBML('fbSpecialConnect');
+	}
+});

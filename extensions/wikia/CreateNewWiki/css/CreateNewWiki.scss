@@ -266,6 +266,27 @@ div#userloginErrorBox3 {
 	}
 }
 
+#UserAuth {
+	display: none;
+	width: 600px;
+	.UserLoginModal {
+		border-right: 1px solid $color-borders;
+		margin: 0 0 15px 0;
+		padding: 10px 90px 0 0;
+	}
+	.signup-marketing {
+		float: right;
+		padding: 30px;
+		width: 175px;
+	}
+	.get-account {
+		display: none;
+	}
+	.keeploggedin {
+		display: none;
+	}
+}
+
 #DescWiki {
 	display: none;
 	width: 700px;

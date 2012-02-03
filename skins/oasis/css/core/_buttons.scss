@@ -64,6 +64,16 @@ button {
 			}
 		}
 	}
+	&.big {
+		font-size: 18px;
+		line-height: 23px;
+		height: 40px;
+	}
+	// BugId:19314 - fix for Firefox 4+
+	// @see https://developer.mozilla.org/en/CSS/%3A-moz-focusring
+	&:-moz-focusring {
+		box-shadow: 0px 0px 1px 1px highlight;
+	}
 }
 
 
@@ -190,7 +200,7 @@ This list-based button used for all additional actions
 		&:hover {
 			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
 		}
-		>a, 
+		>a,
 		.drop,
 		>li>a {
 			color: $color-text;
@@ -219,10 +229,10 @@ This list-based button used for all additional actions
 				color: $color-text;
 				display: block;
 				&:hover {
-					$dropdown-background: mix($color-buttons, $color-page, 20%); 
-					@if $is-dark-wiki { 
-						$dropdown-background: lighten($dropdown-background, 8%); 
-					} 
+					$dropdown-background: mix($color-buttons, $color-page, 20%);
+					@if $is-dark-wiki {
+						$dropdown-background: lighten($dropdown-background, 8%);
+					}
 					background-color: $dropdown-background !important;
 				}
 			}
@@ -289,5 +299,26 @@ button.wikia-chiclet-button {
 	padding: 0px 5px;
 	img {
 		margin-right: 8px;
+	}
+}
+
+/*****************************
+Facebook style button
+******************************/
+a.wikia-button-facebook {
+	@include border-radius(2px);
+	border-color: #afbdd6;
+	color: #fff;
+	font-weight: bold;
+	height: 21px;
+	padding: 0 6px;
+	&,
+	&:active,
+	&:hover {
+		@include linear-gradient(#5E7BB2, top, #5E7BB2, 0%, #3C62A1, 100%);
+	}
+	> img {
+		border-right: solid 1px #6381b4;
+		margin-right: 6px;
 	}
 }

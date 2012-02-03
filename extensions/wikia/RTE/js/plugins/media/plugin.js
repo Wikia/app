@@ -269,7 +269,7 @@ CKEDITOR.plugins.add('rte-media',
 			RTE.log('image clicked');
 
 			// call WikiaMiniUpload and provide WMU with image clicked
-			RTE.tools.callFunction(window.WMU_show,$(this));
+			if (!UserLogin.isForceLogIn()) RTE.tools.callFunction(window.WMU_show,$(this));
 		});
 	},
 
@@ -279,7 +279,7 @@ CKEDITOR.plugins.add('rte-media',
 			RTE.log('video clicked');
 
 			// call VideoEmbedTool and provide VET with video clicked
-			RTE.tools.callFunction(window.VET_show,$(this));
+			if (!UserLogin.isForceLogIn()) RTE.tools.callFunction(window.VET_show,$(this));
 		});
 	},
 

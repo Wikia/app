@@ -18,6 +18,7 @@
 		labelId: 'wikia-editor-media-image',
 		titleId: 'wikia-editor-media-image-tooltip',
 		className: 'RTEImageButton',
+		forceLogin: true,
 		clicksource: function() { 
 			//debugger;
 			WMU_show({}); 
@@ -29,6 +30,7 @@
 		labelId: 'wikia-editor-media-gallery',
 		titleId: 'wikia-editor-media-gallery-tooltip',
 		className: 'RTEGalleryButton',
+		forceLogin: true,
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
 				from: 'source',
@@ -43,6 +45,7 @@
 		labelId: 'wikia-editor-media-slideshow',
 		titleId: 'wikia-editor-media-slideshow-tooltip',
 		className: 'RTESlideshowButton',
+		forceLogin: true,
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
 				from: 'source',
@@ -57,6 +60,7 @@
 		labelId: 'wikia-editor-media-slider',
 		titleId: 'wikia-editor-media-slider-tooltip',
 		className: 'RTESliderButton',
+		forceLogin: true,
 		clicksource: function() {
 			WikiaPhotoGallery.showEditor({
 				from: 'source',
@@ -71,6 +75,7 @@
 		labelId: 'wikia-editor-media-video',
 		titleId: 'wikia-editor-media-video-tooltip',
 		className: 'RTEVideoButton',
+		forceLogin: true,
 		clicksource: function() { VET_show({target: {id:"mw-editbutton-vet"}}); },
 		ckcommand: 'addvideo',
 		precondition: checkVET

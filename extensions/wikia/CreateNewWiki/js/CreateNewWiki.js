@@ -31,6 +31,14 @@ var WikiBuilder = {
 		WikiBuilder.finishSpinner = $('#CreateNewWiki .finish-status');
 		WikiBuilder.descWikiNext = $('#DescWiki nav .next');
 
+		$('#SignupRedirect').submit(function(e){
+			var queryString = 'wikiName=' + WikiBuilder.wikiName.val() +
+				'&wikiDomain=' + WikiBuilder.wikiDomain.val() +
+				'&uselang=' + WikiBuilder.wikiLanguage.find('option:selected').val();
+			$().log(queryString);
+			$('#SignupRedirect input[name=returnto]').val(queryString);
+		});
+
 		// Name Wiki event handlers
 		$('#NameWiki input.next').click(function() {
 			$.tracker.byStr('createnewwiki/namewiki/next');
@@ -42,9 +50,24 @@ var WikiBuilder = {
 					wikiDomain: WikiBuilder.wikiDomain.val(),
 					wikiLang: WikiBuilder.wikiLanguage.find('option:selected').val()
 				});
-				if ($('#Auth')) {
+				if ($('#Auth').length) {
 					//AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
 					WikiBuilder.handleRegister();
+				} else if($('#UserAuth').length) {
+					// Init user auth
+					WikiBuilder.userAuth = {
+						el:$('#UserAuth'),
+						loginAjaxForm: new UserLoginAjaxForm('#UserAuth .UserLoginModal', {
+							ajaxLogin: true,
+							callback: function(json) {
+								WikiBuilder.transition('UserAuth', true, '+');
+							}
+						})
+					};
+					UserLoginFacebook.callbacks['login-success'] = function() {
+						WikiBuilder.transition('UserAuth', true, '+');
+						UserLoginFacebook.closeSignupModal();
+					}
 				}
 				if(onFBloaded) {  // FB hax
 					onFBloaded();
@@ -86,7 +109,13 @@ var WikiBuilder = {
 			$.tracker.byStr('createnewwiki/' + id.toLowerCase() + '/back');
 			if (id === 'DescWiki') {
 				WikiBuilder.transition('DescWiki', false, '-');
-				WikiBuilder.handleRegister();
+				if ($('#Auth').length) {
+					//AjaxLogin.init($('#AjaxLoginLoginForm form:first'));
+					WikiBuilder.handleRegister();
+				} else if($('#UserAuth').length) {
+					WikiBuilder.userAuth.loginAjaxForm.retrieveLoginToken({clearCache:true});
+					WikiBuilder.userAuth.loginAjaxForm.submitButton.removeAttr('disabled');
+				}
 			} else {
 				WikiBuilder.transition(id, false, '-');
 			}
@@ -173,7 +202,12 @@ var WikiBuilder = {
 			$.tracker.byStr('createnewwiki/view');
 		}
 
+		// onload stuff
 		WikiBuilder.wikiName.focus();
+		if(WikiBuilder.wikiName.val() || WikiBuilder.wikiDomain.val()) {
+			WikiBuilder.checkDomain();
+			WikiBuilder.checkName();
+		}
 	},
 
 	requestKeys: function() {

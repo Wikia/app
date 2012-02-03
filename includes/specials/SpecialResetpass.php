@@ -33,7 +33,15 @@ class SpecialResetpass extends SpecialPage {
 		}
 
 		if( !$wgRequest->wasPosted() && !$wgUser->isLoggedIn() ) {
-			$this->error( wfMsg( 'resetpass-no-info' ) );
+			$title = SpecialPage::getTitleFor( 'Userlogin' );
+			$skin = $wgUser->getSkin();
+			$llink = $skin->linkKnown(
+				$title,
+				wfMsgHtml( 'loginreqlink' ),
+				array(),
+				array( 'returnto' => $this->getTitle()->getPrefixedText() )
+			);
+			$wgOut->addHTML( wfMsgWikiHtml( 'userlogin-changepassword-needlogin', $llink ) );
 			return;
 		}
 

@@ -9,7 +9,7 @@
 				$accesskey = ' accesskey="e"';
 			}
 ?>
-<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= isset($action['html']) ? $action['html'] : '' ?></a>
+<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" data-id="<?= $actionName ?>"<?= $tooltip ?>><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= isset($action['html']) ? $action['html'] : '' ?></a>
 <?php
 		}
 		// render edit button with dropdown

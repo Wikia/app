@@ -112,6 +112,7 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar.js',
 		'//skins/oasis/js/ContributeMenu.js',
+		'//skins/oasis/js/WikiaForm.js',
 	)
 );
 
@@ -125,6 +126,9 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
+		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/Meebo/meebo.js',
@@ -148,6 +152,7 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//skins/oasis/js/GlobalModal.js',	// This needs to load last after all common extensions, please keep this last.
+		'//extensions/wikia/UserLogin/js/UserLogin.js',
 	)
 );
 
@@ -160,6 +165,8 @@ $config['oasis_anon_js'] = array(
 	'assets' => array(
 		'//skins/oasis/js/LatestActivity.js',
 		'//extensions/wikia/Interstitial/Exitstitial.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	)
 );
 

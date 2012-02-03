@@ -353,28 +353,40 @@ class Preferences {
 			if ( $wgEmailAuthentication ) {
 				if ( $user_email ) {
 					$user_emailauthts = $user->getEmailAuthenticationTimestamp();
-					if( $user_emailauthts ) {
+					/* Wikia change - begin */
+					global $wgEnableUserLoginExt;
+					if ( empty($wgEnableUserLoginExt) ) {
+						$optionNewEmail = '';
+						$msgKeyPrefixEmail = '';
+						$msgKeyPrefixEmailConfirmLink = '';
+					} else {
+						$optionNewEmail = $user->getOption( 'new_email' );
+						$msgKeyPrefixEmail = (empty($optionNewEmail) && !$user_emailauthts) ? 'usersignup-user-pref-unconfirmed-' : 'usersignup-user-pref-';
+						$msgKeyPrefixEmailConfirmLink = 'usersignup-user-pref-';
+					}
+					if( empty($optionNewEmail) && $user_emailauthts ) {
 						// date and time are separate parameters to facilitate localisation.
 						// $time is kept for backward compat reasons.
 						// 'emailauthenticated' is also used in SpecialConfirmemail.php
 						$time = $wgLang->timeAndDate( $user_emailauthts, true );
 						$d = $wgLang->date( $user_emailauthts, true );
 						$t = $wgLang->time( $user_emailauthts, true );
-						$emailauthenticated = wfMsgExt( 'emailauthenticated', 'parseinline',
+						$emailauthenticated = wfMsgExt( $msgKeyPrefixEmail.'emailauthenticated', 'parseinline',
 												array($time, $d, $t ) ) . '<br />';
 						$disableEmailPrefs = false;
 					} else {
 						$disableEmailPrefs = true;
 						$skin = $wgUser->getSkin();
-						$emailauthenticated = '<span class="error" >'.wfMsgExt( 'emailnotauthenticated', 'parseinline' ).'</span><br />' .
+						$emailauthenticated = '<span >'.wfMsgExt( $msgKeyPrefixEmail.'emailnotauthenticated', 'parseinline', array($optionNewEmail) ).'</span><br />' .
 						$skin->link(
 							SpecialPage::getTitleFor( 'Confirmemail' ),
-							wfMsg( 'emailconfirmlink' ),
+							wfMsg( $msgKeyPrefixEmailConfirmLink.'emailconfirmlink' ),
 							array(),
 							array(),
 							array( 'known', 'noclasses' )
 						) . '<br />';
 					}
+					/* Wikia change - end */
 				} else {
 					$disableEmailPrefs = true;
 					$emailauthenticated = wfMsgHtml( 'noemailprefs' );
@@ -1296,16 +1308,28 @@ class Preferences {
 		if( $wgEnableEmail ) {
 			$newadr = $formData['emailaddress'];
 			$oldadr = $wgUser->getEmail();
-			if( ( $newadr != '' ) && ( $newadr != $oldadr ) ) {
+			/* Wikia change begin */
+			global $wgEnableUserLoginExt;
+			$optionNewEmail = $wgUser->getOption( 'new_email' );
+			if( ( $newadr != '' ) && ( (empty($optionNewEmail) &&  $newadr != $oldadr ) || (!empty($optionNewEmail) &&  $newadr != $optionNewEmail )) ) {
 				# the user has supplied a new email address on the login page
 				# new behaviour: set this new emailaddr from login-page into user database record
-				$wgUser->setEmail( $newadr );
-				# but flag as "dirty" = unauthenticated
-				$wgUser->invalidateEmail();
+				if ( empty($wgEnableUserLoginExt) ) {
+					$wgUser->setEmail( $newadr );
+					# but flag as "dirty" = unauthenticated
+					$wgUser->invalidateEmail();
+				} else {
+					$wgUser->setOption( 'new_email', $newadr );
+				}
 				if( $wgEmailAuthentication ) {
 					# Mail a temporary password to the dirty address.
 					# User can come back through the confirmation URL to re-enable email.
-					$result = $wgUser->sendConfirmationMail();
+					if ( empty($wgEnableUserLoginExt) ) {
+						$result = $wgUser->sendConfirmationMail();
+					} else {
+						$result = UserLoginHelper::getInstance()->sendReconfirmationEmail( $wgUser, $newadr );
+					}
+					/* Wikia change end */
 					if( WikiError::isError( $result ) ) {
 						return wfMsg( 'mailerror', htmlspecialchars( $result->getMessage() ) );
 					} elseif( $entryPoint == 'ui' ) {

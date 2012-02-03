@@ -25,11 +25,15 @@
 		</ul>
 	</li>
 <?php
-	}
-
-	foreach ($links as $link) {
+	} else {
 ?>
-	<li><?= $link ?></li>
+	<li>
+		<?= $loginLink ?>
+		<?= $loginDropdown ?>
+	</li>
+	<li>
+		<?= $registerLink ?>
+	</li>
 <?php
 	}
 ?>

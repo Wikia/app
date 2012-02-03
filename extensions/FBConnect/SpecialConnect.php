@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,9 +25,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 /**
  * Class SpecialConnect
- * 
+ *
  * This class represents the body class for the page Special:Connect.
- * 
+ *
  * Currently, this page has one valid subpage at Special:Connect/ChooseName.
  * Visiting the subpage will generate an error; it is only useful when POSTed to.
  */
@@ -38,7 +38,7 @@ class SpecialConnect extends SpecialPage {
 	private $mRealName = '';
 	static private $fbOnLoginJs;
 	static private $availableUserUpdateOptions = array('fullname', 'nickname', 'email', 'language', 'timecorrection');
-	
+
 	/**
 	 * Constructor.
 	 */
@@ -49,10 +49,9 @@ class SpecialConnect extends SpecialPage {
 		// Add this special page to the "login" group of special pages
 		$wgSpecialPageGroups['Connect'] = 'login';
 
-		wfLoadExtensionMessages( 'FBConnect' );
 		$userNamePrefix = wfMsg('fbconnect-usernameprefix');
 	}
-	
+
 	/**
 	 * Allows the prefix to be changed at runtime.  This is useful, for example,
 	 * to generate a username based off of a facebook name.
@@ -60,7 +59,7 @@ class SpecialConnect extends SpecialPage {
 	public function setUserNamePrefix( $prefix ){
 		$this->userNamePrefix = $prefix;
 	}
-	
+
 	/**
 	 * Returns the list of user options that can be updated by facebook on each login.
 	 */
@@ -75,19 +74,19 @@ class SpecialConnect extends SpecialPage {
 	function getDescription() {
 		return wfMsg( 'fbconnect-title' );
 	}
-	
+
 	/**
 	 * Performs any necessary execution and outputs the resulting Special page.
 	 */
 	function execute( $par ) {
 		global $wgUser, $wgRequest;
-		
+
 		if ( $wgRequest->getVal("action", "") == "disconnect_reclamation" ) {
 			self::disconnectReclamationAction();
 			return ;
 
 		}
-		 
+
 		$this->mReturnTo = $wgRequest->getVal( 'returnto' );
 		$this->mReturnToQuery = $wgRequest->getVal( 'returntoquery' );
 
@@ -95,7 +94,7 @@ class SpecialConnect extends SpecialPage {
                  * BugId:13709
                  * Before the fix the logic and the usage of parse_str was wrong
                  * which had fatal side effects.
-                 * 
+                 *
                  * The goal if the block below is  to remove the fbconnected
                  * variable from the $this->mReturnToQuery (which is supposed
                  * to be a QUERY_STRING-like string.
@@ -118,7 +117,7 @@ class SpecialConnect extends SpecialPage {
                     // remove the temporary array
                     unset( $aReturnToQuery );
                 }
-		
+
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
 		{
@@ -128,23 +127,23 @@ class SpecialConnect extends SpecialPage {
 				$titleObj = Title::newMainPage();
 				$this->mReturnTo = $titleObj->getText( );
 				$this->mReturnToQuery = '';
-			}			
+			}
 		}
 
 		// Connect to the Facebook API
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user(); // fb id or 0 if none is found.
-		
+
 		// Setup the session
 		global $wgSessionStarted;
 		if (!$wgSessionStarted) {
 			wfSetupSession();
 		}
-		
+
 		// Look at the subpage name to discover where we are in the login process
 		wfDebug("FBConnect: Executing Special:Connect with the parameter of \"$par\".\n");
 		wfDebug("FBConnect: User is".($wgUser->isLoggedIn()?"":" NOT")." logged in.\n");
-		
+
 		// If the user is logged in to Wikia on an unconnected account, and trying to connect a
 		// facebook id, but the FB-id is already connected to a DIFFERENT Wikia account... display an error message.
 		global $wgUser;
@@ -205,7 +204,7 @@ class SpecialConnect extends SpecialPage {
 			#	$this->setReturnTo( $wgRequest->getText( 'returnto' ),
 			#				$wgRequest->getVal( 'returntoquery' ) );
 			#}
-			
+
 			if($wgUser->isLoggedIn()){
 				if($fb_user){
 					// If the user has previously connected, log them in.  If they have not, then complete the connection process.
@@ -229,7 +228,7 @@ class SpecialConnect extends SpecialPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * This is called when a user is logged into a Wikia account and has just gone through the Facebook Connect popups,
 	 * but has not been connected inside the system.
@@ -301,7 +300,7 @@ class SpecialConnect extends SpecialPage {
 			$fbUser = new FBConnectUser($user);
 			// Update user from facebook (see class FBConnectUser)
 			$fbUser->updateFromFacebook();
-			
+
 			// Setup the session
 			global $wgSessionStarted;
 			if (!$wgSessionStarted) {
@@ -361,7 +360,7 @@ class SpecialConnect extends SpecialPage {
 				$wgOut->showPermissionsErrorPage( $permErrors, 'createaccount' );
 				return;
 			}
-			
+
 			// If we are not allowing users to login locally, we should be checking
 			// to see if the user is actually able to authenticate to the authenti-
 			// cation server before they create an account (otherwise, they can
@@ -447,7 +446,7 @@ class SpecialConnect extends SpecialPage {
 				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-errortext');
 				return;
 			}
-			
+
 			// Adds the user to the local database (regardless of whether wgAuth was used).
 			$user = $this->initUser( $user, true );
 
@@ -493,7 +492,7 @@ class SpecialConnect extends SpecialPage {
 			$fbUser = new FBConnectUser($user);
 			// Update the user with settings from Facebook
 			$fbUser->updateFromFacebook();
-			
+
 			// Log the user in.
 			$user->setCookies();
 
@@ -503,7 +502,7 @@ class SpecialConnect extends SpecialPage {
 			// Allow custom form processing to store values since this form submission was successful.
 			// This hook should not fail on invalid input, instead check the input using the SpecialConnect::createUser::validateForm hook above.
 			wfRunHooks( 'SpecialConnect::createUser::postProcessForm', array( &$this ) );
-			
+
 			$user->addNewUserLogEntryAutoCreate();
 
 			$this->isNewUser = true;
@@ -512,7 +511,7 @@ class SpecialConnect extends SpecialPage {
 
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * Actually add a user to the database.
 	 * Give it a User object that has been initialised with a name.
@@ -543,7 +542,7 @@ class SpecialConnect extends SpecialPage {
 		//}
 
 		$u->setEmail( $this->mEmail );
-		$u->setRealName( $this->mRealName ); 
+		$u->setRealName( $this->mRealName );
 		$u->setToken();
 
 		$wgAuth->initUser( $u, $autocreate );
@@ -603,7 +602,7 @@ class SpecialConnect extends SpecialPage {
 		wfRunHooks( 'SpecialConnect::userAttached', array( &$this ) );
 
 		$this->sendPage('displaySuccessAttaching');
-		
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -634,22 +633,22 @@ class SpecialConnect extends SpecialPage {
 	 */
 	public function userNameOK ($name) {
 		global $wgReservedUsernames;
-		
+
 		$name = trim( $name );
-		
+
 		if ( empty( $name ) ) {
 			return false;
 		}
-		
+
 		$u = User::newFromName( $name, 'creatable' );
 		if ( !is_object( $u ) ) {
 			return false;
 		}
-		
+
 		if ( !empty($wgReservedUsernames) && in_array($name, $wgReservedUsernames) ) {
 			return false;
 		}
-				
+
 		$mExtUser = ExternalUser::newFromName( $name );
 		if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 			return false;
@@ -657,7 +656,7 @@ class SpecialConnect extends SpecialPage {
 			return false;
 		}
 
-		return true;		
+		return true;
 	}
 
 	/**
@@ -667,11 +666,10 @@ class SpecialConnect extends SpecialPage {
 		global $wgOut;
 		$wgOut->showErrorPage($titleMsg, $textMsg);
 	}
-	
+
 	public function sendPage($function, $arg = NULL) {
 		global $wgOut;
 		// Setup the page for rendering
-		wfLoadExtensionMessages( 'FBConnect' );
 		$this->setHeaders();
 		$wgOut->disallowUserJs();  # just in case...
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
@@ -683,13 +681,13 @@ class SpecialConnect extends SpecialPage {
 			$this->$function($arg);
 		}
 	}
-	
+
 	// NOTE: Actually for when you're both already logged in AND connected (consider renaming to alreadyLoggedInAndConnected()).
 	private function alreadyLoggedIn() {
 		global $wgOut, $wgUser, $wgRequest, $wgSitename;
 		$wgOut->setPageTitle(wfMsg('fbconnect-alreadyloggedin-title'));
 		$wgOut->addWikiMsg('fbconnect-alreadyloggedin', $wgUser->getName());
-		
+
 		// Note: it seems this only gets called when you're already connected, so these buttons aren't needed.
 		//$wgOut->addWikiMsg('fbconnect-click-to-connect-existing', $wgSitename);
 		//$wgOut->addHTML('<fb:login-button'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>');
@@ -697,7 +695,7 @@ class SpecialConnect extends SpecialPage {
 		// Render the "Return to" text retrieved from the URL
 		$wgOut->returnToMain(false, $this->mReturnTo, $this->mReturnToQuery);
 	}
-	
+
 	/**
 	 * This error-page is shown when the user is attempting to connect a Wikia account with a facebook id which is
 	 * already connected to a different Wikia account.
@@ -730,7 +728,7 @@ class SpecialConnect extends SpecialPage {
 		// Run any hooks for UserLoginComplete
 		$injected_html = '';
 		wfRunHooks( 'UserLoginComplete', array( &$wgUser, &$injected_html ) );
-	
+
 		if( $injected_html !== '' ) {
 			$wgOut->addHtml( $injected_html );
 			// Render the "return to" text retrieved from the URL
@@ -739,7 +737,7 @@ class SpecialConnect extends SpecialPage {
 			$addParam = "";
 			if($this->isNewUser) {
 				$addParam = "&fbconnected=1";
-			} 
+			}
 			// Since there was no additional message for the user, we can just redirect them back to where they came from.
 			$titleObj = Title::newFromText( $this->mReturnTo );
 			if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("Userlogout") ) || ( $titleObj->isSpecial("Signup") ) || ( $titleObj->isSpecial("Connect") )  ) {
@@ -758,7 +756,7 @@ class SpecialConnect extends SpecialPage {
 	private function displaySuccessAttaching() {
 		global $wgOut, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
-		
+
 		$wgOut->setPageTitle(wfMsg('fbconnect-success'));
 
 		$prefsLink = SpecialPage::getTitleFor('Preferences')->getLinkUrl();
@@ -861,7 +859,7 @@ class SpecialConnect extends SpecialPage {
 				'</td></tr>';
 			$wgOut->addHTML($html);
 		}
-		
+
 		// Add the options for nick name, first name and full name if we can get them
 		// TODO: Wikify the usernames (i.e. Full name should have an _ )
 		foreach (array('nick', 'first', 'full') as $option) {
@@ -894,7 +892,7 @@ class SpecialConnect extends SpecialPage {
 	 * Displays the main connect form.
 	 */
 	private function connectForm() {
-		global $wgOut, $wgUser, $wgSitename;
+		global $wgOut, $wgUser, $wgSitename, $wgJsMimeType, $wgExtensionsPath;
 
 		$titleObj = Title::newFromText( $this->mReturnTo );
 		if($titleObj){
@@ -903,10 +901,12 @@ class SpecialConnect extends SpecialPage {
 			// Outputs the canonical name of the special page at the top of the page
 			$this->outputHeader();
 
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/facebook.js\"></script>\n");
+
 			// Render a humble Facebook Connect button
 			$wgOut->addHTML('<div>'.wfMsgExt( 'fbconnect-intro', array('parse', 'content')) . '<br/>' . wfMsg( 'fbconnect-click-to-login', $wgSitename ) .'
-				<fb:login-button size="large" background="black" length="long"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>
-				</div>'
+				<fb:login-button id="fbSpecialConnect" size="large" background="black" length="long"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>
+			</div>'
 			);
 		}
 	}
@@ -916,90 +916,89 @@ class SpecialConnect extends SpecialPage {
 	 */
 	private function disconnectReclamationAction() {
 		global $wgRequest, $wgOut, $wgUser;
-		
+
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );
 		$wgOut->mRedirect = '';
 		$wgOut->mBodytext = '';
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
-		
+
 		$fb = new FBConnectAPI();
 
 		$user = $fb->verifyAccountReclamation( $sRequest );
-		
+
 		if (!($user === false)) {
 			$result = FBConnect::coreDisconnectFromFB($user);
 		}
-		
+
 		$title = Title::makeTitle( NS_SPECIAL  , "Signup"  );
-	
+
 		$html = Xml::openElement("a",array( "href" => $title->getFullUrl() ));
 		$html .= $title->getPrefixedText();
 		$html .= Xml::closeElement( "a" );
-		
+
 		if ( (!($user === false))  && ($result['status'] == "ok") ) {
 			$wgOut->setPageTitle(  wfMsg('fbconnect-reclamation-title') );
 			$wgOut->setHTMLTitle( wfMsg('fbconnect-reclamation-title') );
 			$wgOut->addHTML( wfMsg('fbconnect-reclamation-body',array("$1" => $html) ));
-			
+
 		} else {
 			$wgOut->setPageTitle(  wfMsg('fbconnect-reclamation-title-error') );
 			$wgOut->setHTMLTitle( wfMsg('fbconnect-reclamation-title-error') );
 			$wgOut->addHTML( wfMsg('fbconnect-reclamation-body-error',array("$1" => $html) ));
 		}
-		
+
 		return true;
 	}
-	
+
 	function checkCreateAccount() {
 		global $wgUser;
-		
+
 		$response = new AjaxResponse();
-		
+
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
-		
+
 		$error =  json_encode(array("status" => "error") );
-		
+
 		if (empty($fb_user)) {
 			$response->addText($error);
-			return $response;	
+			return $response;
 		}
 
 		if( ((int) $wgUser->getId()) != 0){
 			$response->addText($error);
-			return $response;			
-		} 
-		
+			return $response;
+		}
+
 		if( FBConnectDB::getUser($fb_user) != null) {
 			$response->addText($error);
-			return $response;			
+			return $response;
 		}
-		
-		$titleObj = SpecialPage::getTitleFor( 'Connect' );		
-		
+
+		$titleObj = SpecialPage::getTitleFor( 'Connect' );
+
 		if ( wfReadOnly() ) {
 			$response->addText($error);
-			return $response;	
+			return $response;
 		}
-		
+
 		if ( $wgUser->isBlockedFromCreateAccount() ) {
 			$response->addText($error);
-			return $response;	
+			return $response;
 		}
-		
+
 		if ( count( $permErrors = $titleObj->getUserPermissionsErrors( 'createaccount', $wgUser, true ) )>0 ) {
 			$response->addText($error);
-			return $response;	
+			return $response;
 		}
-		
+
 		$response->addText( json_encode(array("status" => "ok") ));
-		return $response;	
+		return $response;
 	}
-	
+
 	function ajaxModalChooseName() {
 		global $wgRequest;
-		wfLoadExtensionMessages('FBConnect');
 		$response = new AjaxResponse();
 
 		$specialConnect = new SpecialConnect();
@@ -1010,8 +1009,8 @@ class SpecialConnect extends SpecialPage {
 		ob_start();
 		$tmpl->execute();
 		$html = ob_get_clean();
-			
+
 		$response->addText( $html );
-		return $response;	
+		return $response;
 	}
 }

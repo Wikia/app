@@ -15,5 +15,6 @@ echo "<p>" .
 	"<p>" .
 	Xml::element( 'input', array(
 		'name' => 'wpCaptchaWord',
+		'placeholder' => wfMsg('captcha-input-placeholder'),
 		'id'   => 'wpCaptchaWord' ) ) .
 	"</p>\n";

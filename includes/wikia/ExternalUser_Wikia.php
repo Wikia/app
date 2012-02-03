@@ -189,7 +189,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	protected function addToDatabase( $User, $password, $email, $realname ) {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgEnableUserLoginExt;
 		wfProfileIn( __METHOD__ );
 
 		if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
@@ -199,8 +199,9 @@ class ExternalUser_Wikia extends ExternalUser {
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
-
-			$User->setPassword( $password );
+			if ( empty($wgEnableUserLoginExt) ) {
+				$User->setPassword( $password );
+			}
 			$User->setToken();
 
 			$dbw->insert( '`user`',
@@ -272,6 +273,7 @@ class ExternalUser_Wikia extends ExternalUser {
 				
 				if ( $need_update ) { 
 					$dbw->update( 'user', $data, array( 'user_id' => $this->getId() ), __METHOD__ );
+					$dbw->commit();
 				}
 			}
 		}
@@ -321,6 +323,7 @@ class ExternalUser_Wikia extends ExternalUser {
 					'user_id' => $this->mUser->mId
 				), __METHOD__
 			);
+			$dbw->commit();
 		}
 		wfProfileOut( __METHOD__ );
 	}

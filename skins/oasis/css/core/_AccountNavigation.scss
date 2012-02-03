@@ -19,15 +19,15 @@
 		&:last-child a {
 			border: 0;
 		}
-	}
-	a {
-		border-right: 1px solid mix($color-header-text, $color-header, 20%);
-		display: inline-block;
-		height: 22px;
-		line-height: 24px;
-		padding: 0 15px;
-		&:hover {
-			text-decoration: none;
+		>a {
+			border-right: 1px solid mix($color-header-text, $color-header, 20%);
+			display: inline-block;
+			height: 22px;
+			line-height: 24px;
+			padding: 0 15px;
+			&:hover {
+				text-decoration: none;
+			}
 		}
 	}
 	#fbconnect {
@@ -54,16 +54,16 @@
 			right: 0;
 			top: 34px;
 		}
-		li {
+		> li {
 			float: none;
 			height: auto;
 			&:hover {
 				background-image: none;
 			}
-			a {
+			> a {
 				padding: 10px;
 				color: $color-text;
-				&:hover { 
+				&:hover {
 					@include box-shadow(0,0,5px, mix($color-buttons, $color-page, 25%), inset);
 					$color-account-nav: mix($color-buttons, $color-page, 20%);
 					@if lightness($color-page) < 50 {

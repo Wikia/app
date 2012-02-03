@@ -136,11 +136,11 @@ public class BaseTest {
 	}
 
 	protected void login(String username, String password) throws Exception {
-		openAndWait("index.php?title=Special:Signup");
-		waitForElement("wpName2Ajax");
-		session().type("wpName2Ajax", username);
-		session().type("wpPassword2Ajax", password);
-		clickAndWait("wpLoginattempt");
+		openAndWait("index.php?title=Special:UserLogin");
+		waitForElement("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@name='username']");
+		session().type("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@name='username']", username);
+		session().type("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@name='password']", password);
+		clickAndWait("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@type='submit']");
 		if(isOasis()) {
 			waitForElement("//ul[@id='AccountNavigation']/li/a[contains(@href, '" + username + "')]");
 		} else {

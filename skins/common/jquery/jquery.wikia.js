@@ -201,11 +201,11 @@ jQuery.showCustomModal = function(title, content, options) {
 			options.callbackBefore();
 		}
 
-		dialog.makeModal(options);
+		var modal = dialog.makeModal(options);
 
 		// fire callback if provided
 		if (typeof options.callback == 'function') {
-			options.callback();
+			options.callback(modal);
 		}
 	});
 }
@@ -252,7 +252,7 @@ $.loadYUI = function(callback) {
 // load various jQuery libraries (if not yet loaded)
 $.loadJQueryUI = function(callback) {
 	$.loadLibrary('jQueryUI',
-		stylepath + '/common/jquery/jquery-ui-1.8.14.custom.js?' + wgStyleVersion,
+		stylepath + '/common/jquery/jquery-ui-1.8.14.custom.js',
 		typeof jQuery.ui,
 		callback
 	);
@@ -260,7 +260,7 @@ $.loadJQueryUI = function(callback) {
 
 $.loadJQueryAutocomplete = function(callback) {
 	$.loadLibrary('jQuery Autocomplete',
-		stylepath + '/common/jquery/jquery.autocomplete.js?' + wgStyleVersion,
+		stylepath + '/common/jquery/jquery.autocomplete.js',
 		typeof jQuery.fn.pluginAutocomplete,
 		callback
 	);
@@ -268,7 +268,10 @@ $.loadJQueryAutocomplete = function(callback) {
 
 $.loadWikiaTooltip = function(callback) {
 	$.loadLibrary('Wikia Tooltip',
-		stylepath + '/common/jquery/jquery.wikia.tooltip.js?' + wgStyleVersion,
+		[
+			stylepath + '/common/jquery/jquery.wikia.tooltip.js',
+			$.getSassCommonURL("skins/oasis/css/modules/WikiaTooltip.scss")
+		],
 		typeof jQuery.fn.wikiaTooltip,
 		callback
 	);
@@ -276,7 +279,7 @@ $.loadWikiaTooltip = function(callback) {
 
 $.loadJQueryAIM = function(callback) {
 	$.loadLibrary('jQuery AIM',
-		stylepath + '/common/jquery/jquery.aim.js?' + wgStyleVersion,
+		stylepath + '/common/jquery/jquery.aim.js',
 		typeof jQuery.AIM,
 		callback
 	);
@@ -284,7 +287,7 @@ $.loadJQueryAIM = function(callback) {
 
 $.loadModalJS = function(callback) {
 	$.loadLibrary('makeModal()',
-		stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion,
+		stylepath + '/common/jquery/jquery.wikia.modal.js',
 		typeof jQuery.fn.makeModal,
 		callback
 	);
@@ -336,11 +339,14 @@ $.loadTwitterAPI = function(callback) {
 /**
  * Loads library file if it's not already loaded and fires callback
  */
-$.loadLibrary = function(name, file, typeCheck, callback, failureFn) {
+$.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
 	if (typeCheck === 'undefined') {
 		$().log('loading ' + name, 'loadLibrary');
 
-		$.getScript(file, function() {
+		// cast single string to an array
+		files = (typeof files == 'string') ? [files] : files;
+
+		$.getResources(files, function() {
 			$().log(name + ' loaded', 'loadLibrary');
 
 			if (typeof callback == 'function') callback();

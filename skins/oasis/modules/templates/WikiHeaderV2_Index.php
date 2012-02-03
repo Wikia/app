@@ -1,13 +1,5 @@
 <header id="WikiHeader" class="WikiHeaderRestyle">
-	<h1 class="wordmark <?= $wordmarkSize ?> <?= $wordmarkType ?>">
-		<a accesskey="z" href="<?= htmlspecialchars($mainPageURL) ?>">
-			<? if (!empty($wordmarkUrl)) { ?>
-				<img src="<?= $wordmarkUrl ?>" alt="<?= htmlspecialchars($wordmarkText) ?>">
-			<? } else { ?>
-				<?= htmlspecialchars($wordmarkText) ?>
-			<? } ?>
-		</a>
-	</h1>
+	<?= wfRenderModule('WikiHeader', 'Wordmark') ?> 
 	<nav>
 		<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ); ?></h1>
 		<?php

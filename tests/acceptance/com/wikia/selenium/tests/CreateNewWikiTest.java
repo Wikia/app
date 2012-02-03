@@ -16,8 +16,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class CreateNewWikiTest extends BaseTest {
-	public static final String TEST_USER_PREFIX = "WikiaTestAccount";
-	public static final String TEST_EMAIL_FORMAT = "WikiaTestAccount%s@wikia-inc.com";
 	private static String wikiName;
 	private static List<String> testedLanguages = new ArrayList<String>();	
 	
@@ -152,8 +150,8 @@ public class CreateNewWikiTest extends BaseTest {
 		String password = Long.toString(Math.abs(new Random().nextLong()), 36).toLowerCase();
 		String captchaWord = getWordFromCaptchaId(session().getValue("wpCaptchaId"));
 
-		session().type("wpName2", TEST_USER_PREFIX + time);
-		session().type("wpEmail", String.format(TEST_EMAIL_FORMAT, time));
+		session().type("wpName2", SignupTest.TEST_USER_PREFIX + time);
+		session().type("wpEmail", String.format(SignupTest.TEST_EMAIL_FORMAT, time));
 		session().type("wpPassword2", password);
 		session().type("wpRetype", password);
 		session().select("wpBirthYear", "1900");

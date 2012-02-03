@@ -8,6 +8,8 @@ class CreateNewWikiModule extends Module {
 	var $wgOasisThemes;
 	var $wgSitename;
 	var $wgExtensionsPath;
+	var $wgComboAjaxLogin;
+	var $wgEnableUserLoginExt;
 
 	// form fields
 	var $aCategories;
@@ -37,7 +39,7 @@ class CreateNewWikiModule extends Module {
 	}
 
 	public function executeIndex() {
-		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgPageQuery, $wgUser;
+		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
 		// hide some default oasis UI things
@@ -57,7 +59,6 @@ class CreateNewWikiModule extends Module {
 		} else {
 			$this->currentStep = '';
 		}
-		$wgPageQuery[] =
 
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
@@ -87,6 +88,15 @@ class CreateNewWikiModule extends Module {
 		
 		$this->keys = CreateNewWikiObfuscate::generateValidSeeds();
 		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
+		
+		// prefill
+		$this->params['wikiName'] = $wgRequest->getVal('wikiName', '');
+		$this->params['wikiDomain'] = $wgRequest->getVal('wikiDomain', '');
+		$this->signupUrl = '';
+		if(!empty($this->wgEnableUserLoginExt)) {
+			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
+			$this->signupUrl = $signupTitle->getFullURL();
+		}
 
 		wfProfileOut( __METHOD__ );
 	}

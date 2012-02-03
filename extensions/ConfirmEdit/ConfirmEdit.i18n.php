@@ -36,6 +36,7 @@ Hit the 'back' button in your browser to return to the page editor.",
  #</pre> <!-- leave this line exactly as it is -->',
 
 	'right-skipcaptcha'          => 'Perform captcha triggering actions without having to go through the captcha',
+	'captcha-input-placeholder'	 => 'Enter text here',
 );
 
 /** Message documentation (Message documentation)
