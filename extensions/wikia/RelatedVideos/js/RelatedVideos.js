@@ -22,7 +22,7 @@ var RelatedVideos = {
 		
 		var importantContentHeight = $('#WikiaArticle').height();
 		importantContentHeight += $('#WikiaArticleComments').height();
-		if ( $('span[data-placeholder="RelatedVideosModule"]').length != 0 ){
+		if ( !this.onRightRail && $('span[data-placeholder="RelatedVideosModule"]').length != 0 ){
 			$('span[data-placeholder="RelatedVideosModule"]').replaceWith( relatedVideosModule );
 		}
 		if (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold) {
