@@ -314,6 +314,9 @@ function WMU_getFirstFree( gallery, box ) {
 }
 
 function WMU_loadMainFromView() {
+	if (UserLogin.isForceLogIn()) {
+		return;
+	}
 	var callback = function(data) {
 			// first, check if this is a special case for anonymous disabled...
 			if( data.wmu_init_login ) {

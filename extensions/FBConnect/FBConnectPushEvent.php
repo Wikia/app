@@ -394,9 +394,9 @@ class FBConnectPushEvent {
 	 */
 
 	static public function showImage() {
-		global $wgServer, $wgRequest;
+		global $wgStylePath, $wgRequest;
 		FBConnectPushEvent::addDisplayStat( $wgRequest->getVal('fb_id', '0'), $wgRequest->getVal('time', '0'), $wgRequest->getVal('class') );
-		$redirect = $wgServer.'/skins/common/fbconnect/'.$wgRequest->getVal('img', '0');
+		$redirect = $wgStylePath.'/common/fbconnect/'.$wgRequest->getVal('img', '0');
 		header("Location: $redirect");
 		exit;
 	}

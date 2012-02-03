@@ -102,9 +102,9 @@ class StaticChute {
 			'common/jquery/jquery.getcss.js',
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery.timeago.js',
-		
+
 			'common/jquery/jquery.store.js',
-		
+
 			'common/wikibits.js',
 			'common/ajax.js',
 			'common/ajaxwatch.js',
@@ -124,6 +124,11 @@ class StaticChute {
 			'../extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 			'../extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 			'../extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
+
+			// UserLogin
+			'../extensions/wikia/UserLogin/js/UserLogin.js',
+			'../extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+			'../extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		);
 	}
 

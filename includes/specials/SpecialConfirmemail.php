@@ -47,7 +47,14 @@ class EmailConfirmation extends UnlistedSpecialPage {
 		if( empty( $code ) ) {
 			if( $wgUser->isLoggedIn() ) {
 				if( User::isValidEmailAddr( $wgUser->getEmail() ) ) {
-					$this->showRequestForm();
+					/* Wikia change - begin */
+					global $wgEnableUserLoginExt;
+					if ( empty($wgEnableUserLoginExt) ) {
+						$this->showRequestForm();
+					} else {
+						UserLoginHelper::getInstance()->showRequestFormConfirmEmail( $this );
+					}
+					/* Wikia change - end */
 				} else {
 					$wgOut->addWikiMsg( 'confirmemail_noemail' );
 				}

@@ -13,27 +13,30 @@ var HoverMenu = function(selector) {
 
 	//Variables
 	this.selector = selector;
+	this.menu = $(this.selector);
+
+	// no submenu - leave here
+	if (!this.menu.find('ul').exists()) {
+		$().log('skipping ' + this.selector, 'HoverMenu');
+		return;
+	}
 
 	//Events
-	$(selector).children("li").hover($.proxy(this.mouseover, this), $.proxy(this.mouseout, this));
+	this.menu.children("li").hover($.proxy(this.mouseover, this), $.proxy(this.mouseout, this));
 
 	//Accessibility
 	//Show when any inner anchors are in focus
-	$(selector).children("li").children("a").focus($.proxy(function(event) {
+	this.menu.children("li").children("a").focus($.proxy(function(event) {
 		this.hideNav();
 		this.showNav($(event.currentTarget).closest("li"));
 	}, this));
-	$(selector).find(".subnav a").focus($.proxy(function(event) {
+	this.menu.find(".subnav a").focus($.proxy(function(event) {
 		this.hideNav();
 		this.showNav($(event.currentTarget).closest(".subnav").closest("li"));
 	}, this));
 	//Hide when focus out of first and last anchor
-	$(selector).children("li").first().children("a").focusout($.proxy(function() {
-		this.hideNav();
-	}, this));
-	$(selector).find(".subnav>li:last-child li:last-child a").focusout($.proxy(function() {
-		this.hideNav();
-	}, this));
+	this.menu.children("li").first().children("a").focusout($.proxy(this.hideNav, this));
+	this.menu.find(".subnav>li:last-child li:last-child a").focusout($.proxy(this.hideNav, this));
 };
 
 HoverMenu.prototype.mouseover = function(event) {
@@ -41,7 +44,7 @@ HoverMenu.prototype.mouseover = function(event) {
 	var self = this;
 
 	//Hide all subnavs except for this one
-	$(this.selector).children("li").children("ul").not($(event.currentTarget).find("ul")).removeClass("show");
+	this.menu.children("li").children("ul").not($(event.currentTarget).find("ul")).removeClass("show");
 
 	//Cancel mouseoutTimer
 	clearTimeout(this.mouseoutTimer);
@@ -143,7 +146,7 @@ HoverMenu.prototype.showNav = function(parent) {
 };
 
 HoverMenu.prototype.hideNav = function() {
-	$(this.selector).find(".subnav").removeClass("show");
+	this.menu.find(".subnav").removeClass("show");
 };
 
 $(function() {

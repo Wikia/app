@@ -39,6 +39,9 @@ $(function() {
 });
 
 PageLayoutBuilder.uploadImage = function (size, name) {
+	if (UserLogin.isForceLogIn()) {
+		return;
+	}
 	$.loadYUI( function() {
 		importStylesheetURI( wgExtensionsPath+ '/wikia/WikiaMiniUpload/css/WMU.css?'+wgStyleVersion );
 		$.getScript(wgExtensionsPath+ '/wikia/WikiaMiniUpload/js/WMU.js?'+wgStyleVersion, function() {
@@ -269,8 +272,11 @@ $(function() {
 
 //* gallery *//
 PageLayoutBuilder.uploadGallery = function(element_id) {
+	if (UserLogin.isForceLogIn()) {
+		return;
+	}
 	if (typeof window.WikiaPhotoGalleryView == 'undefined') {
-		$.getScript('/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', function() {	
+		$.getScript('/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', function() {
 			WikiaPhotoGalleryView.loadEditorJS(function() {
 				PageLayoutBuilder.showGalleryForPLB(element_id);
 			});

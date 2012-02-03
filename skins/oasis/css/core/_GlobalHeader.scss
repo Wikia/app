@@ -38,7 +38,7 @@
 			border: 0;
 		}
 	}
-	.wikia-button {
+	li > .wikia-button {
 		border: 1px solid mix($color-buttons, $color-page, 35%);
 		float: left;
 		font-size: 12px;
@@ -92,7 +92,7 @@
 			>a {
 				color: #fff;
 			}
-		}	
+		}
 	}
 	a {
 		border-right: 1px solid mix($color-header-text, $color-header, 20%);
@@ -150,10 +150,10 @@
 				line-height: 1.3em;
 				padding: 7px 5px;
 				&:hover {
-					$dropdown-background: mix($color-buttons, $color-page, 20%); 
-					@if lightness($color-page) < 50 { 
-						$dropdown-background: lighten($dropdown-background, 8%); 
-					} 
+					$dropdown-background: mix($color-buttons, $color-page, 20%);
+					@if lightness($color-page) < 50 {
+						$dropdown-background: lighten($dropdown-background, 8%);
+					}
 					background-color: $dropdown-background;
 				}
 			}

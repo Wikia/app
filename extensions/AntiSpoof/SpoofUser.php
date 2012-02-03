@@ -106,4 +106,24 @@ class SpoofUser {
 			return false;
 		}
 	}
+
+	/**
+	 * Wikia change
+	 * remove spoof normalization record from the database
+	 */
+	public function removeRecord() {
+		wfProfileIn( __METHOD__ );
+
+		if ( !wfReadOnly() ) {
+			$db = wfGetDB( DB_MASTER, array(), 'specials' );
+			$db->delete(
+				'spoofuser',
+				array( 'su_name' => $this->mName),
+				__METHOD__
+			);
+			$db->commit();
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
 }

@@ -16,7 +16,7 @@ class UserBlock {
 	const CACHE_KEY = 'user-status';
 
 	/**
-	 * @desc blockCheck() will return false if user is blocked. The reason why it was 
+	 * @desc blockCheck() will return false if user is blocked. The reason why it was
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
 	 */
 	public static function blockCheck(&$user) {
@@ -110,7 +110,7 @@ class UserBlock {
 
 		if ( !empty( $cachedState ) && $cachedState['timestamp'] > (int) Phalanx::getLastUpdate() ) {
 			if ( !$cachedState['return'] && $isCurrentUser ) {
-				self::setUserData( $user, $cachedState['block'], $text, $user->isAnon() );
+				self::setUserData( $user, $cachedState['block'], '', $user->isAnon() );
 			}
 
 			//added to make User::isBlockedGlobally() work for this instance of User class
@@ -125,14 +125,12 @@ class UserBlock {
 	}
 
 	//moved from RegexBlockCore.php
-	private static function setUserData(&$user, $blockData, $address, $isBlockIP = false) {
+	private static function setUserData(&$user, $blockData, $address /* not used at all */, $isBlockIP = false) {
 		wfProfileIn( __METHOD__ );
 
-		wfLoadExtensionMessages( 'Phalanx' );
-
 		$user->mBlockedby = $blockData['author_id'];
-		
-		//added to make User::isBlockedGlobally() 
+
+		//added to make User::isBlockedGlobally()
 		//work for this instance of User class
 		//-- Andrzej 'nAndy' Łukaszewski
 		$user->mBlockedGlobally = true;

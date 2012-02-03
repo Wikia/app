@@ -1757,7 +1757,7 @@ Here's a randomly-generated value you can use: $1",
 This cannot be undone.',
 'prefs-emailconfirm-label'      => 'E-mail confirmation:',
 'prefs-textboxsize'             => 'Size of editing window',
-'youremail'                     => 'E-mail:',
+'youremail'                     => 'Email:',
 'username'                      => 'Username:',
 'uid'                           => 'User ID:',
 'prefs-memberingroups'          => 'Member of {{PLURAL:$1|group|groups}}:',
@@ -1779,7 +1779,7 @@ It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
 'gender-female'                 => 'Female',
 'prefs-help-gender'             => 'Optional: used for gender-correct addressing by the software.
 This information will be public.',
-'email'                         => 'E-mail',
+'email'                         => 'Email',
 'prefs-help-realname'           => 'Real name is optional.
 If you choose to provide it, this will be used for giving you attribution for your work.',
 'prefs-help-email'              => 'E-mail address is optional, but is needed for password resets, should you forget your password.

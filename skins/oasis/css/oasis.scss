@@ -48,6 +48,7 @@
 @import "core/SpeechBubble";
 @import "core/ArticleComments";
 @import "core/ArticleAfterComments";
+@import "core/WikiaForm";
 @import "core/SharingToolbar";
 @import "core/GlobalNotification";
 
@@ -62,6 +63,7 @@
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
 @import "/extensions/FBConnect/css/fbModal.css";
 @import "/extensions/wikia/AjaxLogin/AjaxLogin.css";
+@import "../../../extensions/wikia/UserLogin/css/UserLoginGlobal.scss";
 
 // WikiaPhotoGallery - slideshows slidding (BugId:1296)
 // TODO: load on demand using JSView

@@ -39,15 +39,15 @@
 		height: 16px;
 		width: 21px;
 	}
-	
+
 	//Search button
 	&.search {
 		background-position: -1036px -48px;
 		height: 16px;
 		width: 21px;
 	}
-	
-	//Toolbar 
+
+	//Toolbar
 	&.mytools {
 		background-position: -1112px -64px;
 		height: 15px;
@@ -63,7 +63,7 @@
 		height: 15px;
 		width: 15px;
 	}
-	
+
 	&.logo {
 		background-position: -1000px -73px;
 		height: 23px;
@@ -74,12 +74,12 @@
 	&.drag {
 		background-position: -1144px -64px;
 		height: 17px;
-		width: 16px;		
+		width: 16px;
 	}
 	&.trash {
 		background-position: -1128px -48px;
 		height: 16px;
-		width: 16px;	
+		width: 16px;
 	}
 
 	//Wiki Header buttons
@@ -93,7 +93,7 @@
 		height: 13px;
 		width: 13px;
 	}
-	
+
 	&.close {
 		background-position: -1098px -66px;
 		height: 11px;
@@ -115,7 +115,7 @@
 	&.blog {
 		background-position: -1000px -32px;
 		height: 16px;
-		width: 22px;		
+		width: 22px;
 	}
 	&.message {
 		background-position: -1058px -48px;
@@ -151,32 +151,39 @@
 		height: 16px;
 		width: 16px;
 	}
+
 	&.error {
 		background-position: -1176px -80px;
 		height: 16px;
-		width: 16px;	
+		width: 16px;
 	}
 
 	&.contribute {
 		background-position: -1172px -13px;
 		height: 16px;
-		width: 22px;		
+		width: 22px;
 	}
-	
+
+	&.question {
+		background-position: -1144px -20px;
+		height: 12px;
+		width: 12px;
+	}
+
 	//Notifications
 	&.close-notification {
 		background-position: -1001px -65px;
 		height: 8px;
-		width: 8px;		
+		width: 8px;
 	}
-	
+
 	//Wide Tables
 	&.popout {
 		background-position: -1176px -48px;
 		height: 23px;
 		width: 24px;
 	}
-	
+
 	//Image SEO
 	&.embed {
 		background-position: -1153px -32px;
@@ -193,18 +200,25 @@
 		height: 13px;
 		width: 13px;
 	}
-	
+
 	//Toolbar
 	&.gear {
 		background-position: -1192px -80px;
 		height: 16px;
-		width: 16px;		
+		width: 16px;
 	}
-	
+
 	&.shadow {
 		background-position: 0 -32px;
 		height: 13px;
 		width: 1000px
+	}
+
+	//Facebook
+	&.facebook {
+		background-position: -1160px -18px;
+		height: 14px;
+		width: 15px;
 	}
 }
 
@@ -233,4 +247,4 @@
 	&.delete {
 		background-position: -1196px -18px;
 	}
-}	
+}

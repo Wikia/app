@@ -36,6 +36,12 @@ $messages['en'] = array(
 	'cnw-auth-signup-creative' => 'You\'ll need an account to continue building your wiki.<br />It only takes a minute to sign up!',
 	'cnw-auth-facebook-signup' => 'Sign up with Facebook',
 	'cnw-auth-facebook-login' => 'Login with Facebook',
+	// step2 - Wikia user signup
+	'cnw-userauth-headline' => 'Have an account?',
+	'cnw-userauth-creative' => 'Log in',
+	'cnw-userauth-marketing-heading' => 'Don\'t have an account?',
+	'cnw-userauth-marketing-body' => 'You need an account to create a wiki on Wikia.  It only takes a minute to [[Special:UserSignup|sign up]]!',
+	'cnw-userauth-signup-button' => 'Sign up',
 	// step3 - wiki description
 	'cnw-desc-headline' => 'What\'s your wiki about?',
 	'cnw-desc-creative' => 'Describe your topic',
@@ -378,7 +384,7 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-error-bot-header' => 'Du wurdest als Bot identifiziert.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -940,7 +946,7 @@ $messages['ko'] = array(
 	'cnw-login' => '로그인',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî))
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1232,7 +1238,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-error-bot-header' => 'U bent geïdentificeerd als een geautomatiseerd proces',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author MarkvA
  * @author Siebrand
  */
@@ -1259,7 +1265,7 @@ $messages['nl-informal'] = array(
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 wiki's per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian (bokmål) (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1687,7 +1693,7 @@ $messages['ru'] = array(
 	'cnw-error-torblock' => 'Создание вики через сеть Tor не допускается.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2044,7 +2050,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -2074,7 +2080,7 @@ $messages['zh-hans'] = array(
 	'cnw-welcome-headline' => '恭喜！$1 已被创造',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(

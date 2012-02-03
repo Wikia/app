@@ -307,7 +307,7 @@ class User {
 				$_touched = $wgMemc->get( $_key );
 				if($_touched == null){
 					$wgMemc->set( $_key, $data['mTouched'] );
-				} else if( $_touched <= $data['mTouched'] ) {
+				} else if( $_touched < $data['mTouched'] ) {
 					$isExpired = false;
 				}
 			}
@@ -3138,7 +3138,7 @@ class User {
 	 *
 	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
 	 */
-	function sendConfirmationMail($mailtype = "ConfirmationMail", $mailmsg = 'confirmemail', $ip_arg = true) {
+	function sendConfirmationMail($mailtype = "ConfirmationMail", $mailmsg = 'confirmemail', $ip_arg = true, $emailTextTemplate = '') {
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -3160,23 +3160,41 @@ class User {
 
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
-		global $wgEnableRichEmails;
+		global $wgEnableRichEmails, $wgEnableUserLoginExt;
+		if ( !empty($wgEnableUserLoginExt) ) {
+			$priority = 1;  // confirmation emails are higher than default priority of 0
+			$url = $this->wikiaConfirmationTokenUrl( $token );
+			if ( !$ip_arg )
+				$args[1] = $url;
+			else
+				$args[2] = $url;
+		} else {
+			$priority = 0;
+		}
 		if (empty($wgEnableRichEmails)) {
-		return $this->sendMail( wfMsg( 'confirmemail_subject' ),
-			wfMsg( 'confirmemail_body',
+		return $this->sendMail( wfMsg( $mailmsg.'_subject' ),
+			wfMsg( $mailmsg.'_body',
 				wfGetIP(),
 				$this->getName(),
 				$url,
 				$wgLang->timeanddate( $expiration, false ),
 				$invalidateURL,
 				$wgLang->date( $expiration, false ),
-				$wgLang->time( $expiration, false ) ), null, null, $mailtype );
+				$wgLang->time( $expiration, false ) ), null, null, $mailtype, null, $priority );
 		} else {
 			$wantHTML = $this->isAnon() || $this->getOption('htmlemails');
 
 			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $mailmsg.'_body', $this->getOption('language'), array(), $args, $wantHTML);
+			
+			if ( !empty($emailTextTemplate) && $wantHTML ) {
+				$emailParams = array(
+					'$USERNAME' => $name,
+					'$CONFIRMURL' => $url,
+				);
+				$bodyHTML = strtr($emailTextTemplate, $emailParams);
+			}
 
-			return $this->sendMail( wfMsg( $mailmsg.'_subject' ), $body, null, null, $mailtype, $bodyHTML );
+			return $this->sendMail( wfMsg( $mailmsg.'_subject' ), $body, null, null, $mailtype, $bodyHTML, $priority );
 		}
 		/* Wikia change end */
 	}
@@ -3189,7 +3207,15 @@ class User {
 	function sendReConfirmationMail() {
 		$this->setOption("mail_edited","1");
 		$this->saveSettings();
-		return $this->sendConfirmationMail( 'ReConfirmationMail', 'reconfirmemail' );
+		/* Wikia change - begin */
+		global $wgEnableUserLoginExt;
+		if ( empty($wgEnableUserLoginExt) ) {
+			return $this->sendConfirmationMail( 'ReConfirmationMail', 'reconfirmemail' );
+		} else {
+			$emailTextTemplate = UserLoginHelper::getInstance()->getReconfirmationEmailTempalte( $this );
+			return $this->sendConfirmationMail("ReConfirmationMail", 'usersignup-reconfirmation-email', false, $emailTextTemplate);
+		}
+		/* Wikia change - end */
 	}
 
 	/**
@@ -3252,7 +3278,9 @@ class User {
 	 */
 	function confirmationToken( &$expiration ) {
 		$now = time();
-		$expires = $now + 7 * 24 * 60 * 60;
+		/* Wikia change begin - change 7 days to 30 days */
+		$expires = $now + 30 * 24 * 60 * 60;
+		/* Wikia change end */
 		$expiration = wfTimestamp( TS_MW, $expires );
 		$token = self::generateToken( $this->mId . $this->mEmail . $expires );
 		$hash = md5( $token );
@@ -4058,6 +4086,15 @@ class User {
 	public function __toString() {
 		Wikia::logBacktrace(__METHOD__);
 		throw new Exception('Trying to convert User object to string');
+	}
+	
+	/**
+	 * Return a URL the user can use to confirm their email address. (Wikia change)
+	 * @param $token string Accepts the email confirmation token
+	 * @return string New token URL
+	 */
+	protected function wikiaConfirmationTokenUrl( $token ) {
+		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
 	}
 	// wikia change end
 }

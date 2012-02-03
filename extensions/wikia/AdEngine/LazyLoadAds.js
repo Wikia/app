@@ -25,28 +25,28 @@ var LazyLoadAds = {
 		}
 
 		var fold = LazyLoadAds.w.height() + LazyLoadAds.w.scrollTop();
-		
+
 		for(var i = 0; i < LazyLoadAds.num; i++) {
 			if(LazyLoadAds.allAds[i]) {
 				var top = LazyLoadAds.allAds[i].offset().top;
 				if(top > 0 && top < (fold + LazyLoadAds.settings.threshhold) ) {
 					var elemId = LazyLoadAds.allAds[i].attr("id");
 					var adslot = elemId;
-	
+
 					if($('#'+elemId).get(0).nodeName == 'IFRAME') {
 						var fillFunction = "fillIframe_" + adslot.replace("_iframe", "");
 					} else {
 						var fillFunction = "fillElem_" + adslot;
 					}
-	
+
 					if (typeof(window[fillFunction]) !== 'undefined') {
 						window[fillFunction]();
-						delete window[fillFunction];
+						window[fillFunction] = false;
 					}
 					else {
 						LazyLoadAds.log("Warning! " + fillFunction + " does not exist.");
 					}
-	
+
 					LazyLoadAds.allAds[i] = false;
 				}
 			}

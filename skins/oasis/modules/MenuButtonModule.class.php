@@ -13,6 +13,7 @@ class MenuButtonModule extends Module {
 	const BLOG_ICON = 4;
 	const MESSAGE_ICON = 5;
 	const CONTRIBUTE_ICON = 6;
+	const FACEBOOK_ICON = 7;
 
 	var $wgStylePath;
 	var $wgBlankImgUrl;
@@ -84,6 +85,12 @@ class MenuButtonModule extends Module {
 					$width = 22;
 					break;
 
+				case self::FACEBOOK_ICON:
+					$img_class = 'sprite facebook';
+					$height = 14;
+					$width = 15;
+					break;
+
 				case self::EDIT_ICON:
 				default:
 					$img_class = 'sprite edit-pencil';
@@ -134,10 +141,8 @@ class MenuButtonModule extends Module {
 			$this->class .= ' '.$data['class'];
 		}
 
-		$this->id = "";
-		if(!empty($data['id'])) {
-			$this->id = $data['id'];
-		}
+		$this->id = !empty($data['id']) ? $data['id'] : '';
+		$this->tooltip = !empty($data['tooltip']) ? (' data-tooltip="' . htmlspecialchars($data['tooltip']) . '"') : '';
 
 		wfProfileOut(__METHOD__);
 	}

@@ -16,7 +16,6 @@ class AccountNavigationModule extends Module {
 	var $dropdown;
 	var $isAnon;
 	var $itemsBefore;
-	var $links;
 	var $profileLink;
 	var $profileAvatar;
 	var $username;
@@ -32,7 +31,7 @@ class AccountNavigationModule extends Module {
 			'data-id' => $id,
 			'href' => $personalUrl['href']
 		);
-		
+
 		if( in_array( $id, array( 'login', 'register' ) ) ) {
 			$attributes['rel'] = 'nofollow';
 		}
@@ -70,7 +69,7 @@ class AccountNavigationModule extends Module {
 
 			// where to redirect after login
 			$returnto = wfGetReturntoParam();
-			
+
 			if(empty($wgComboAjaxLogin)) {
 				$signUpHref = Skin::makeSpecialUrl('UserLogin', $returnto);
 			} else {
@@ -97,28 +96,27 @@ class AccountNavigationModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
-		global $wgUser, $wgEnableWikiaLoginExt;
+		global $wgUser, $wgEnableUserLoginExt;
 
 		$this->setupPersonalUrls();
 
-		$this->links = array();
 		$this->itemsBefore = array();
 		$this->isAnon = $wgUser->isAnon();
 		$this->username = $wgUser->getName();
 
 		if ($this->isAnon) {
 			// facebook connect
-			if (isset($this->personal_urls['fbconnect'])) {
+			if (!empty($this->personal_urls['fbconnect']['html'])) {
 				$this->itemsBefore[] = $this->personal_urls['fbconnect']['html'];
 			}
 
 			// render Login and Register links
-			$loginhtml = $this->renderPersonalUrl('login');
-			if(!empty($wgEnableWikiaLoginExt)) {
-				$loginhtml = $loginhtml.(string)F::app()->sendRequest( 'WikiaLoginSpecial', 'widget', array('param' => 'paramvalue' ));
+			$this->loginLink = $this->renderPersonalUrl('login');
+			$this->registerLink = $this->renderPersonalUrl('register');
+			$this->loginDropdown = '';
+			if(!empty($wgEnableUserLoginExt)) {
+				$this->loginDropdown = (string)F::app()->sendRequest( 'UserLoginSpecial', 'dropdown', array('param' => 'paramvalue' ));
 			}
-			$this->links[] = $loginhtml;
-			$this->links[] = $this->renderPersonalUrl('register');
 		}
 		else {
 			// render user avatar and link to his user page
@@ -127,7 +125,7 @@ class AccountNavigationModule extends Module {
 
 			// dropdown items
 			$dropdownItems = array('mytalk', 'following', 'preferences');
-			
+
 			// Allow hooks to modify the dropdown items.
 			$this->wf->RunHooks( 'AccountNavigationModuleAfterDropdownItems', array(&$dropdownItems, &$this->personal_urls) );
 
@@ -150,7 +148,7 @@ class AccountNavigationModule extends Module {
 			// logout link
 			$this->dropdown[] = $this->renderPersonalUrl('logout');
 		}
-		
+
 		wfProfileOut(__METHOD__);
 	}
 }

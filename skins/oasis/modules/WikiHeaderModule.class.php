@@ -24,9 +24,21 @@ class WikiHeaderModule extends Module {
 		$this->isInternalWiki = empty($wgCityId);
 		$this->showMenu = !(($this->isInternalWiki || $wgIsPrivateWiki) && $wgUser->isAnon());
 
+		if($wgUser->isAllowed('editinterface')) {
+			$this->editURL['href'] = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL();
+			$this->editURL['text'] = wfMsg('oasis-edit-this-menu');
+		}
+
+		$service = new NavigationService();
+		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7, 7), 60*60*3 /* 3 hours */, true);
+		
+		$this->displaySearch = !empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard(F::app(), $wgTitle);
+	}
+	
+	public function executeWordmark() {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
-
+		
 		$this->wordmarkText = $settings["wordmark-text"];
 		$this->wordmarkType = $settings["wordmark-type"];
 		$this->wordmarkSize = $settings["wordmark-font-size"];
@@ -38,17 +50,7 @@ class WikiHeaderModule extends Module {
 		} else {
 			//$this->wordmarkStyle = '';
 		}
-
-		$this->mainPageURL = Title::newMainPage()->getLocalURL();
-
-		if($wgUser->isAllowed('editinterface')) {
-			$this->editURL['href'] = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL();
-			$this->editURL['text'] = wfMsg('oasis-edit-this-menu');
-		}
-
-		$service = new NavigationService();
-		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7, 7), 60*60*3 /* 3 hours */, true);
 		
-		$this->displaySearch = !empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard(F::app(), $wgTitle);
+		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 	}
 }

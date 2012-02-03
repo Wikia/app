@@ -71,10 +71,15 @@ CKEDITOR.plugins.add('rte-gallery',
 				var gallery = $(this);
 
 				// call editor
-				WikiaPhotoGallery.showEditor({
-					from: 'wysiwyg',
-					gallery: gallery
-				});
+				if ( (wgUserName == null) && (UserLogin) ) {
+					UserLogin.rteForceLogin();
+				}
+				else {
+					WikiaPhotoGallery.showEditor({
+						from: 'wysiwyg',
+						gallery: gallery
+					});
+				}
 			}).
 			// tooltips
 			attr('title', function() {

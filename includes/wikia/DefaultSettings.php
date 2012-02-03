@@ -206,6 +206,8 @@ $wgAutoloadClasses['HuluVideoPanelModule'] = $IP.'/skins/oasis/modules/HuluVideo
 $wgAutoloadClasses['ContributeMenuModule'] = $IP.'/skins/oasis/modules/ContributeMenuModule.class.php';
 $wgAutoloadClasses['WikiNavigationModule'] = $IP.'/skins/oasis/modules/WikiNavigationModule.class.php';
 $wgAutoloadClasses['SharingToolbarModule'] = $IP.'/skins/oasis/modules/SharingToolbarModule.class.php';
+$wgAutoloadClasses['WikiaFormModule'] = $IP.'/skins/oasis/modules/WikiaFormModule.class.php';
+
 
 $wgAutoloadClasses['UploadPhotosModule'] = $IP.'/skins/oasis/modules/UploadPhotosModule.class.php';
 $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';

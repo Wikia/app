@@ -252,7 +252,6 @@ HTML;
 		$thisurl = $wgTitle->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
 		$vars['fbScript'] = $fbScript;
-		#$vars['fbLoggedIn'] = FBConnect::$api->user() ? true : false;
 		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = $fbLogo ? true : false;
 
@@ -313,7 +312,7 @@ HTML;
 	 * TODO: Better 'returnto' code
 	 */
 	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
-		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly, $wgBlankImgUrl, $wgSkin;
+		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly, $wgBlankImgUrl, $wgSkin, $wgEnableUserLoginExt;
 		$skinName = get_class($wgUser->getSkin());
 
 		wfLoadExtensionMessages('FBConnect');
@@ -401,7 +400,7 @@ HTML;
 					);
 				}
 
-				if ( in_array($skinName, array('SkinMonaco', 'SkinOasis')) ) {
+				if ( in_array($skinName, array('SkinMonaco', 'SkinOasis')) && empty($wgEnableUserLoginExt) ) {
 					$html = Xml::openElement("span",array("id" => 'fbconnect' ));
 						$html .= Xml::openElement("a",array("href" => '#', 'class' => 'fb_button fb_button_small' ));
 							$html .= Xml::openElement("span",array("class" => "fb_button_text" ));

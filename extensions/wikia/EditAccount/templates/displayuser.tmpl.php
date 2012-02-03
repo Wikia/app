@@ -12,6 +12,9 @@
 	<?php echo $userEncoded ?><br />
 	ID: <?php echo $userId; ?><br />
 	Reg: <?php echo $userReg ; ?><br />
+	<?= wfMsg('editaccount-labal-account-status') ?>: <?php echo $userStatus; ?><br />
+	<?= wfMsg('editaccount-labal-email-status') ?>: <?php echo $emailStatus; ?><br />
+	<?= $changeEmailRequested; ?><br />
 	<table>
 	<tr>
 		<form method="post" action="">
@@ -46,7 +49,7 @@
 		</td>
 		<td>
 			<input type="text" name="wpNewRealName" value="<?php echo $userRealName ?>" />
-			<input type="submit" value="<?php echo wfMsg('editaccount-submit-realname') ?>" />
+			<input type="submit" value="<?php echo wfMsg('editaccount-submit-realname') ?>" <?= $disabled; ?> />
 			<input type="hidden" name="wpAction" value="setrealname" />
 			<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
 		</td>
@@ -57,7 +60,7 @@
 		<form method="post" action="">
 		<td><?php echo wfMsg('editaccount-label-clearunsub') ?></td>
 		<td>
-			<input type="submit" value="<?php echo wfMsg('editaccount-submit-clearunsub') ?>" />
+			<input type="submit" value="<?php echo wfMsg('editaccount-submit-clearunsub') ?>" <?= $disabled; ?> />
 			<input type="hidden" name="wpAction" value="clearunsub" />
 			<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
 		</td>
@@ -70,14 +73,14 @@
 	<legend><?php echo wfMsg('editaccount-frame-close', $user) ?></legend>
 	<p><?php echo wfMsg('editaccount-usage-close') ?></p>
 	<form method="post" action="">
-		<input type="submit" value="<?php echo wfMsg('editaccount-submit-close') ?>" />
+		<input type="submit" value="<?php echo wfMsg('editaccount-submit-close') ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="closeaccount" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
 	</form>
 <?php if( $isDisabled ) { ?>
 <?php print wfMsg('edit-account-closed-flag'); ?>
 	<form method="post" action="">
-		<input type="submit" value="<?php echo wfMsg('editaccount-submit-cleardisable') ?>" />
+		<input type="submit" value="<?php echo wfMsg('editaccount-submit-cleardisable') ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="cleardisable" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
 	</form>

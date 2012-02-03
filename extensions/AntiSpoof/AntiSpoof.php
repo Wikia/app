@@ -37,7 +37,13 @@ $wgAutoloadClasses['SpoofUser'] = "$dir/SpoofUser.php";
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'asUpdateSchema';
 $wgHooks['AbortNewAccount'][] = 'asAbortNewAccountHook';
 $wgHooks['UserCreateForm'][] = 'asUserCreateFormHook';
-$wgHooks['AddNewAccount'][] = 'asAddNewAccountHook';
+/* Wikia change - begin */
+if ( empty($wgEnableUserLoginExt) ) {
+	$wgHooks['AddNewAccount'][] = 'asAddNewAccountHook';
+} else {
+	$wgHooks['AddNewAccountTempUser'][] = 'asAddNewAccountHook';
+}
+/* Wikia change - end */
 
 function asUpdateSchema() {
 	global $wgExtNewTables, $wgDBtype;
@@ -79,13 +85,9 @@ function asAbortNewAccountHook( $user, &$message ) {
 		} else {
 			wfDebugLog( 'antispoof', "{$mode}CONFLICT new account '$name' [$normalized] spoofs " . implode( ',', $conflicts ) );
 			if( $active ) {
-				$numConflicts = count( $conflicts );
-				$message = wfMsgExt( 'antispoof-conflict-top', array('parsemag'), htmlspecialchars( $name ), $numConflicts );
-				$message .= '<ul>';
-				foreach( $conflicts as $simUser ) {
-					$message .= '<li>' . wfMsg( 'antispoof-conflict-item', $simUser ) . '</li>';
-				}
-				$message .= '</ul>' . wfMsg( 'antispoof-conflict-bottom' );
+				/* Wikia change - begin */
+				$message = wfMsg( 'userexists' );
+				/* Wikia change - end */
 				return false;
 			}
 		}

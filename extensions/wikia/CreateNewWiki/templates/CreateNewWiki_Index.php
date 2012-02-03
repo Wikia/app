@@ -70,6 +70,7 @@
 		</li>
 <?php
 	if (!$isUserLoggedIn) {
+		if($wgComboAjaxLogin) {
 ?>
 		<li id="Auth" class="step">
 			<h2 class="headline login"><?= wfMsg('cnw-auth-headline') ?></h2>
@@ -98,6 +99,25 @@
 			</nav>
 		</li>
 <?php
+		} // $wgComboAjaxLogin
+		else if($wgEnableUserLoginExt){
+?>
+	<li id="UserAuth" class="step">
+		<h2 class="headline"><?= wfMsg('cnw-userauth-headline') ?></h2>
+		<p class="creative"><?= wfMsg('cnw-userauth-creative') ?></p>
+		<div class="signup-marketing">
+			<h3><?= wfMsg('cnw-userauth-marketing-heading') ?></h3>
+			<p><?= wfMsgExt('cnw-userauth-marketing-body', array('parse')) ?></p>
+			<form method="post" action="<?= $signupUrl ?>" id="SignupRedirect">
+				<input type="hidden" name="returnto" value="">
+				<input type="hidden" name="redirected" value="true">
+				<input type="submit" value="<?= wfMsg('cnw-userauth-signup-button') ?>">
+			</form>
+		</div>
+		<?= F::app()->sendRequest('UserLoginSpecial', 'modal') ?>
+	</li>
+<?php
+		} // else, UserLogin
 	} // if isLoggedIn
 ?>
 		<li id="DescWiki" class="step">

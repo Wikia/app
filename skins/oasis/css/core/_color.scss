@@ -11,6 +11,7 @@ $background-fixed: get_command_line_param("background-fixed", false);
 $page-opacity: get_command_line_param("page-opacity", 100);	// default: 100
 
 ////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
+// Mixing colors
 
 // Text color
 $color-text: #3a3a3a;
@@ -21,6 +22,12 @@ $is-dark-wiki: false;
 @if $is-dark-wiki {
 	$color-text: #D5D4D4;
 	
+}
+
+// Opposite page color (use this as the mixing value to darken, lighten towards the opposite of page darkness)
+$color-page-opposite: #000;
+@if $is-dark-wiki {
+	$color-page-opposite: #fff;
 }
 
 // Alternate text (used for secondary information, less important)

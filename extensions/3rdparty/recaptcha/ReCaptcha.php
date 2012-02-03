@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Captcha class using the reCAPTCHA widget. 
- * Stop Spam. Read Books.  
+ * Captcha class using the reCAPTCHA widget.
+ * Stop Spam. Read Books.
  *
  * @addtogroup Extensions
  * @author Mike Crawford <mike.crawford@gmail.com>
@@ -13,7 +13,7 @@
 if( defined( 'MEDIAWIKI' ) ) {
 require_once( 'recaptchalib.php' );
 
-// make sure we have the confirm edit plugin 
+// make sure we have the confirm edit plugin
 require_once( 'ConfirmEdit.php' );
 
 // Set the default CAPTCHA to be reCAPTCHA.
@@ -22,14 +22,14 @@ $wgExtensionFunctions[] = 'efReCaptcha';
 
 /**
  * Add the reCAPTCHA messages
- * 
+ *
  */
 function efReCaptcha() {
 	global $wgMessageCache;
 	global $recaptcha_public_key, $recaptcha_private_key;
 	global $wgServerName;
-	
-	
+
+
 	require_once( dirname( __FILE__ ) . '/ReCaptcha.i18n.php' );
 	foreach( efReCaptchaMessages() as $lang => $messages )
 		$wgMessageCache->addMessages( $messages, $lang );
@@ -38,18 +38,18 @@ function efReCaptcha() {
 		die ('You need to set $recaptcha_private_key and $recaptcha_public_key in LocalSettings.php to ' .
 		     "use the reCAPTCHA plugin. You can sign up for a key <a href='" .
 		     htmlentities(recaptcha_get_signup_url ($wgServerName, "mediawiki")) . "'>here</a>.");
-	}	
+	}
 }
 
 
 class ReCaptcha extends SimpleCaptcha {
-		
+
 	//reCAPTHCA error code returned from recaptcha_check_answer
 	private $recaptcha_error = null;
 
-		
-	/** 
-	 * Displays the reCAPTCHA widget.  
+
+	/**
+	 * Displays the reCAPTCHA widget.
          * If $this->recaptcha_error is set, it will display an error in the widget.
 	 *
          */
@@ -60,19 +60,19 @@ class ReCaptcha extends SimpleCaptcha {
 	}
 
 
-		
+
 	/**
 	 * Calls the library function recaptcha_check_answer to verify the users input.
 	 * Sets $this->recaptcha_error if the user is incorrect.
-         * @return boolean 
+         * @return boolean
          *
          */
 	function passCaptcha() {
-		global $recaptcha_private_key;
+		global $recaptcha_private_key, $wgRequest;
 		$recaptcha_response = recaptcha_check_answer ($recaptcha_private_key,
-							      wfGetIP (),
-							      $_POST['recaptcha_challenge_field'],
-							      $_POST['recaptcha_response_field']);
+							      wfGetIP(),
+							      $wgRequest->getVal('recaptcha_challenge_field'),
+							      $wgRequest->getVal('recaptcha_response_field'));
                 if (!$recaptcha_response->is_valid) {
 			$this->recaptcha_error = $recaptcha_response->error;
 			return false;
@@ -111,7 +111,7 @@ class ReCaptcha extends SimpleCaptcha {
                 }
         }
 
-	
+
 
 	/**
 	 * Show a message asking the user to enter a captcha on edit
@@ -129,10 +129,8 @@ class ReCaptcha extends SimpleCaptcha {
 	}
 
 }
-	
+
 } else {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
-
-?>
