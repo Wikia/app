@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'related-videos-tally' => 'Related Videos',
+	'related-videos-tally-article' => 'Videos on this article',
 	'related-videos-added-by' => 'Added by',
 	'related-videos-remove' => 'Remove',
 	'related-videos-add-video' => 'Add a video',
@@ -39,6 +40,7 @@ $messages['en'] = array(
 	'related-videos-repo-name' => 'Wikia Video Library',
 	'related-videos-embed-text' => 'Embed code',
 	'related-videos-video-is-new' => 'New',
+	'related-videos-pagination' => '$1 of $2',
 );
 
 /** Breton (Brezhoneg)

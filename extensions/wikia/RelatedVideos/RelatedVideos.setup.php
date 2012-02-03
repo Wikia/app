@@ -18,6 +18,7 @@ $app->registerClass('RelatedVideosData', $dir . '/RelatedVideosData.class.php');
 $app->registerClass('RelatedVideosService', $dir. '/RelatedVideosService.class.php');
 $app->registerClass('RelatedVideosNamespaceData', $dir . '/RelatedVideosNamespaceData.class.php');
 $app->registerClass('RelatedVideosEmbededData', $dir . '/RelatedVideosEmbededData.class.php');
+$app->registerClass('RelatedVideosRailModule', $dir . '/RelatedVideosRailModule.class.php');
 
 /**
  * controllers
@@ -29,7 +30,6 @@ $app->registerClass('RelatedVideosController', $dir . '/RelatedVideosController.
  */
 if ( empty( $wgRelatedVideosPartialRelease ) ){
 	//$wgHooks['OutputPageBeforeHTML'][] = 'RelatedVideosHookHandler::onOutputPageBeforeHTML';
-	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedVideosHookHandler::onOutputPageBeforeHTML' );
 	// $app->registerHook('OutputPageMakeCategoryLinks', 'RelatedVideosController', 'onOutputPageMakeCategoryLinks');
 	$app->registerHook('OutputPageMakeCategoryLinks', 'RelatedVideosHookHandler', 'onOutputPageMakeCategoryLinks');
 	$app->registerHook('BeforePageDisplay', 'RelatedVideosHookHandler', 'onBeforePageDisplay' );
@@ -37,6 +37,12 @@ if ( empty( $wgRelatedVideosPartialRelease ) ){
 	define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
 	$app->registerHook('LanguageGetMagic', 'RelatedVideosHookHandler', 'onLanguageGetMagic' );
 	$app->registerHook('InternalParseBeforeLinks', 'RelatedVideosHookHandler', 'onInternalParseBeforeLinks' );
+
+	if( !empty( $wgRelatedVideosOnRail ) ) {
+		$app->registerHook('GetRailModuleList', 'RelatedVideosHookHandler', 'onGetRailModuleList');
+	} else {
+		array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedVideosHookHandler::onOutputPageBeforeHTML' );
+	}
 
 }
 $app->registerHook('ArticleSaveComplete', 'RelatedVideosHookHandler', 'onArticleSaveComplete');

@@ -9,15 +9,23 @@ var RelatedVideos = {
 	alreadyLoggedIn:	false,
 	heightThreshold:	600,
 	playerHeight:           371,
+	onRightRail: false,
+	videosPerPage: 3,
+	rvModule: null,
 
-	init: function() {
-		var relatedVideosModule = $('#RelatedVideos');
+	init: function(relatedVideosModule) {
+		this.rvModule = $(relatedVideosModule);
+		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
+			this.onRightRail = true;
+			this.videosPerPage = 4;
+		}
+		
 		var importantContentHeight = $('#WikiaArticle').height();
 		importantContentHeight += $('#WikiaArticleComments').height();
 		if ( $('span[data-placeholder="RelatedVideosModule"]').length != 0 ){
 			$('span[data-placeholder="RelatedVideosModule"]').replaceWith( relatedVideosModule );
 		}
-		if (importantContentHeight >= RelatedVideos.heightThreshold) {
+		if (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
 			relatedVideosModule.delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
 			relatedVideosModule.delegate( '.scrollright', 'click', RelatedVideos.scrollright );
@@ -29,7 +37,7 @@ var RelatedVideos = {
 				RelatedVideos.maxRooms = 1;
 			}
 			RelatedVideos.checkButtonState();
-			$('#RelatedVideos .addVideo').wikiaTooltip( $('#RelatedVideos .addVideoTooltip').html() );
+			$('.addVideo',this.rvModule).wikiaTooltip( $('.addVideoTooltip',this.rvModule).html() );
 		}
 	},
 
@@ -49,43 +57,76 @@ var RelatedVideos = {
 	scroll: function( param, callback ) {
 		//setup variables
 
-		var scroll_by = parseInt( $('#RelatedVideos .item').outerWidth(true) * 3 );
-		scroll_by = scroll_by * param;
+		if( this.onRightRail ) {
+			var scroll_by = parseInt( $('.group',this.rvModule).outerWidth(true) );
+			var anim_time = 300;
+		} else {
+			var scroll_by = parseInt( $('.item',this.rvModule).outerWidth(true) * 3 );
+			var anim_time = 500;
+		}
+		//scroll_by = scroll_by * param;
+		
 		// button vertical secondary left
 		var futureState = RelatedVideos.currentRoom + param;
-		if (( $('#RelatedVideos .container').queue().length == 0 ) &&
-			(( futureState >= 1 ) && ( futureState <= RelatedVideos.maxRooms ))) {
+		//if (( $('#RelatedVideosRL .container').queue().length == 0 ) &&
+		//	(( futureState >= 1 ) && ( futureState <= RelatedVideos.maxRooms ))) {
+		if( futureState >= 1 && futureState <= RelatedVideos.maxRooms ) {
+			var scroll_to = (futureState-1) * scroll_by;
+			$('.page',this.rvModule).text(futureState);
+			RelatedVideos.currentRoom = futureState;
+			$('.container',this.rvModule).clearQueue();
+			RelatedVideos.checkButtonState();
 			//scroll
-			$('#RelatedVideos .container').animate({
-				left: '-=' + scroll_by
-			}, 500, function(){
+			$('.container',this.rvModule).stop().animate({
+				left: -scroll_to
+				//left: '-=' + scroll_by
+			}, anim_time, function(){
 				//hide description
-				RelatedVideos.currentRoom = futureState;
-				$('#RelatedVideos .container').clearQueue();
-				RelatedVideos.checkButtonState();
 				if (typeof callback == 'function') {
 					callback();
 				}
 			});
 		}
 	},
+	
+	regroup: function() {
+		if ( !this.onRightRail ) { return; }
+		var container = $('.container',this.rvModule)
+		$('.group .item',this.rvModule).each( function() {
+			$(this).appendTo( container );
+		});
+		$('.group',this.rvModule).remove();
+
+		var group = null;
+		$('.container > .item',this.rvModule).each( function(i) {
+			if( i % 4 == 0 ) {
+				if(group) { group.appendTo( container ); }
+				group = $('<div class="group"></div>');
+			}
+			$(this).appendTo( group );
+		});
+		if(group) { group.appendTo( container ); }
+		
+	},
+	
 	// State calculations & refresh
 
 	checkButtonState: function(){
 
-		$('#RelatedVideos .scrollleft').removeClass( 'inactive' );
-		$('#RelatedVideos .scrollright').removeClass( 'inactive' );
+		$('.scrollleft',this.rvModule).removeClass( 'inactive' );
+		$('.scrollright',this.rvModule).removeClass( 'inactive' );
 		if ( RelatedVideos.currentRoom == 1 ){
-			$('#RelatedVideos .scrollleft').addClass( 'inactive' );
+			$('.scrollleft',this.rvModule).addClass( 'inactive' );
 		}
 		if ( RelatedVideos.currentRoom == RelatedVideos.maxRooms ) {
-			$('#RelatedVideos .scrollright').addClass( 'inactive' );
+			$('.scrollright',this.rvModule).addClass( 'inactive' );
 		}
 	},
 
 	showImages: function(){
-		$('#RelatedVideos div.item a.video-thumbnail img').each( function (i) {
-			if ( i < ( ( RelatedVideos.currentRoom + 2 ) * 3 ) ){
+		var rl = this;
+		$('div.item a.video-thumbnail img',this.rvModule).each( function (i) {
+			if ( i < ( ( RelatedVideos.currentRoom + (rl.videosPerPage-1) ) * rl.videosPerPage ) ){
 				if ( $(this).attr( 'data-src' ) != "" ){
 					$(this).attr( 'src', $(this).attr( 'data-src' ) );
 				}
@@ -94,10 +135,15 @@ var RelatedVideos = {
 	},
 
 	recalculateLenght: function(){
-		var numberItems = $( '#RelatedVideos .container .item' ).size();
-		$( '#RelatedVideos .tally em' ).html( numberItems );
-		numberItems = Math.ceil( ( numberItems + 1 ) / 3 );
+		var numberItems = $( '.container .item',this.rvModule ).size();
+		$( '.tally em',this.rvModule ).html( numberItems );
+		if ( this.onRightRail ) {
+			numberItems = Math.ceil( ( numberItems ) / this.videosPerPage );
+		} else {
+			numberItems = Math.ceil( ( numberItems + 1 ) / this.videosPerPage );
+		}
 		RelatedVideos.maxRooms = numberItems;
+		$( '.maxcount',this.rvModule ).text( numberItems );
 		RelatedVideos.checkButtonState();
 	},
 
@@ -114,7 +160,7 @@ var RelatedVideos = {
 				};
 				AjaxLogin.close = function() {
 					$('#AjaxLoginBoxWrapper').closeModal();
-					$( window ).scrollTop( $('#RelatedVideos').offset().top + 100 );
+					$( window ).scrollTop( $(RelatedVideos.rvModule).offset().top + 100 );
 				}
 			}, false, message );
 		} else {
@@ -158,7 +204,7 @@ var RelatedVideos = {
 						'id': 'relatedvideos-video-player',
 						'width': RelatedVideos.modalWidth,
 						'callback' : function(){
-							$('#relatedvideos-video-player-embed-code').wikiaTooltip( $('#RelatedVideos .embedCodeTooltip').html() );
+							$('#relatedvideos-video-player-embed-code').wikiaTooltip( $('.embedCodeTooltip',this.rvModule).html() );
 							jwplayer( res.json.id ).setup( res.json );
 						}
 					});
@@ -205,7 +251,7 @@ var RelatedVideos = {
 	},
 	addVideoModal: function( target ){
 		RelatedVideos.track( 'module/addVideo/afterLogin' );
-		$('#RelatedVideos').undelegate( '.addVideo', 'click' );
+		$(this.rvModule).undelegate( '.addVideo', 'click' );
 		$.nirvana.postJson(
 			'RelatedVideosController',
 			'getAddVideoModal',
@@ -219,8 +265,8 @@ var RelatedVideos = {
 						id: 'relatedvideos-add-video',
 						width: RelatedVideos.modalWidth,
 						callback : function(){
-							$('#RelatedVideos').undelegate( '.addVideo', 'click' );
-							$('#RelatedVideos').delegate( '.addVideo', 'click', RelatedVideos.addVideoModal );
+							$(RelatedVideos.rvModule).undelegate( '.addVideo', 'click' );
+							$(RelatedVideos.rvModule).delegate( '.addVideo', 'click', RelatedVideos.addVideoModal );
 							RelatedVideos.enableVideoSubmit();
 						}
 					});
@@ -272,11 +318,12 @@ var RelatedVideos = {
 			scrollLength,
 			function(){
 				$( html ).css('display', 'inline-block')
-					.prependTo( $('#RelatedVideos .container') )
+					.prependTo( $('.container',RelatedVideos.rvModule) )
 					.fadeOut( 0 )
 					.fadeIn( 'slow', function(){
 						RelatedVideos.recalculateLenght();
 					});
+				RelatedVideos.regroup();
 			}
 		);
 	},
@@ -297,7 +344,7 @@ var RelatedVideos = {
 		RelatedVideos.track( 'module/removeVideo/afterLogin' );
 		var parentItem = $(target).parents('.item');
 		$.confirm({
-			content: $( '#RelatedVideos .deleteConfirm' ).html(),
+			content: $( '.deleteConfirm',RelatedVideos.rvModule ).html(),
 			onOk: function(){
 				RelatedVideos.removeVideoItem( parentItem );
 			}
@@ -327,6 +374,7 @@ var RelatedVideos = {
 					$(parentItem).remove();
 					RelatedVideos.recalculateLenght();
 					RelatedVideos.showImages();
+					RelatedVideos.regroup();
 				}
 
 			},
@@ -338,4 +386,4 @@ var RelatedVideos = {
 };
 
 //on content ready
-RelatedVideos.init();
+RelatedVideos.init($('#RelatedVideosRL').size() > 0 ? $('#RelatedVideosRL') : $('#RelatedVideos'));
