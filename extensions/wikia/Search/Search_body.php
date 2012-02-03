@@ -186,7 +186,7 @@ class SolrSearchSet extends SearchResultSet {
 
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
 
-		$sanitizedQuery = self::sanitizeQuery($query);
+		$sanitizedQuery = self::sanitizeQuery($query." AND wid:$wgCityId");
 
 		$ABTestMode = false;
 		if( !empty( $wgWikiaSearchABTestEnabled ) ) {
@@ -198,8 +198,8 @@ class SolrSearchSet extends SearchResultSet {
 			$params = array(
 				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
 				'qf' => $queryFields,
-				'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
-				'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
+				#'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
+				#'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
 				'qt' => 'dismax',
 				'pf' => 'html^0.8 title^2', // override defaults
 				'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
@@ -266,7 +266,7 @@ class SolrSearchSet extends SearchResultSet {
 				}
 				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . ( !empty($wgSolrDebugWikiId) ? $wgSolrDebugWikiId : $wgCityId );
+			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ); # . "wid:" . ( !empty($wgSolrDebugWikiId) ? $wgSolrDebugWikiId : $wgCityId );
 		}
 		//echo "fq=" . $params['fq'] . "<br />";
 
