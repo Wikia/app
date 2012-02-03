@@ -144,7 +144,7 @@
 	 	switch ($buttonType) {
 	 		case 'save':
 ?>
-								<input class="<?=$buttonClasses?>" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
+								<input class="<?=$buttonClasses?>" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" disabled="disabled" />
 <?php
 	 			break;
 	 		case 'preview':
