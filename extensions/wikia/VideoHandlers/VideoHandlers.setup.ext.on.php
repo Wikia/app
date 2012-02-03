@@ -122,6 +122,12 @@ $app->registerClass('YoutubeVideoHandler', $dir . '/handlers/YoutubeVideoHandler
 $app->registerClass('YoutubeApiWrapper', $dir . '/apiwrappers/YoutubeApiWrapper.class.php');
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 
+/**
+ * Feed ingesters
+ */
+$app->registerClass('VideoFeedIngester', $dir . '/feedingesters/VideoFeedIngester.class.php');
+$app->registerClass('ScreenplayFeedIngester', $dir . '/feedingesters/ScreenplayFeedIngester.class.php');
+
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
 	5 => 'Youtube',
