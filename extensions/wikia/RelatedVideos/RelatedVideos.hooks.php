@@ -89,9 +89,7 @@ class RelatedVideosHookHandler {
 
 		if ( empty( F::app()->wg->RTEParserEnabled ) ) {
 			$oMagicWord = MagicWord::get('RELATEDVIDEOS_POSITION');
-			if ( empty( $wgRelatedVideosOnRail ) ) {
-				$text = $oMagicWord->replace('<span data-placeholder="RelatedVideosModule"></span>', $text, 1 );
-			}
+			$text = $oMagicWord->replace('<span data-placeholder="RelatedVideosModule"></span>', $text, 1 );
 			$text = $oMagicWord->replace( '', $text );
 		}
 
