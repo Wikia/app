@@ -13,16 +13,16 @@
 
 		beforeInit: function() {
 			this.editor.controls = this;
+			this.editor.on('editorReady', this.proxy(this.onEditorReady));
 		},
 
 		// init page controls widget
 		init: function() {
-			$('#wpSave').attr('disabled', true);
-			
 			var pageControls = $('#EditPageRail .module_page_controls'),
 				menu = pageControls.find('nav');
 
 			this.textarea = pageControls.find('textarea');
+
 			// set up the caption of summary field
 			this.textarea.placeholder();
 
@@ -30,11 +30,13 @@
 			this.textarea.bind('keypress', this.proxy(this.onSummaryKeypress));
 
 			this.minorEditCheck = pageControls.find('#wpMinoredit');
+
 			// pressing enter on minor edit checkbox should not save the edition
 			this.minorEditCheck.bind('keypress', this.proxy(this.onMinorEditKeypress));
 
 			// attach events
 			$('#wpPreview').bind('click', this.proxy(this.onPreview));
+
 			// Wikia change (bugid:5667) - begin
 			if ($.browser.msie) {
 				$(window).bind('keydown', function(e) {
@@ -43,12 +45,8 @@
 					}
 				});
 			}
-			// Wikia change (bugid:5667) - end
 
 			$('#wpDiff').bind('click', this.proxy(this.onDiff));
-			//enable publish button after init editor
-
-			this.editor.on('state', this.proxy(this.onStateChange));
 
 			// remove placeholder text when user submits the form without providing the summary
 			$('#editform').bind('submit', this.proxy(this.onSave));
@@ -107,6 +105,11 @@
 			}
 		},
 
+		// Enable 'Publish' button when the editor is ready (BugId:13957)
+		onEditorReady: function() {
+			$('#wpSave').removeAttr('disabled');
+		},
+
 		// handle "Preview" button
 		onPreview: function(ev) {
 			this.renderPreview({});
@@ -121,17 +124,6 @@
 			this.editor.track(this.editor.getTrackerInitialMode(), 'pageControls', 'diff', this.editor.getTrackerMode());
 
 			ev.preventDefault();
-		},
-
-		//enable publish button after init editor only for mediawiki editor
-		onStateChange: function(editor, state) {
-			var states = editor.states;
-			if (states.IDLE == state) {
-				$('#wpSave').removeAttr('disabled');
-			}
-			else if ( (states.LOADING_SOURCE == state) || (states.LOADING_VISUAL == state) ) {
-				$('#wpSave').attr('disabled', true);
-			}
 		},
 
 		// handle "Save" button
@@ -489,7 +481,6 @@
 					return;
 			}
 		}
-
 	});
 
 })(this,jQuery);
