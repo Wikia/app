@@ -25,7 +25,7 @@ Article Comments
 
 Auto Create Wiki
 optional = autocreatewiki-reminder-subject, autocreatewiki-language-top-list
-ignored = requestwiki-filter-language, autocreatewiki-tagline
+ignored = requestwiki-filter-language, autocreatewiki-tagline, autocreatewiki-language-top-list
 
 Auto Hubs Pages
 
