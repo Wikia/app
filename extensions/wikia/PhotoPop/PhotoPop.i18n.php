@@ -24,7 +24,7 @@ $messages['en'] = array(
 	'photopop-error-file-non-existing' => "The specified file article doesn't exist",
 	'photopop-error-db-error' => 'An error occurred, settings were not saved',
 	'photopop-settings-saved' => 'Settings have been saved',
-	'photopop-image-preview' => 'Preview of images: ',
+	'photopop-image-preview' => 'Preview of images:',
 
 	//game
 	'photopop-game-round' => 'Round',
