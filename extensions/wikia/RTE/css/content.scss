@@ -23,7 +23,7 @@ head {
 	}
 	
 	// Add verticle dotted lines to tables when selected
-	table.WikiaTable.WikiaTable-selected {
+	table.article-table.article-table-selected {
 		th, td {
 			border-right: 1px $color-page-border dashed;
 		}
