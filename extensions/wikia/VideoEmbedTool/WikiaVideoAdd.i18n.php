@@ -475,6 +475,23 @@ $messages['my'] = array(
 	'wva-add' => 'ပေါင်းထည့်ရန်',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'wva-success' => 'Videoside $1 ble lagt til.',
+	'wva-success-replaced' => 'Videoside $1 ble erstattet.',
+	'wva-failure' => 'Vennligst oppgi gyldige parametre.',
+	'wva-name' => 'Skriv inn navnet:',
+	'wva-url' => 'Skriv inn internettadressen:',
+	'wva-add' => 'Legg til',
+	'wva-title' => 'Legg til video raskt fra internettadresse',
+	'wva-notlogged' => 'Du må logge inn eller registrere deg for å legge til videoer.',
+	'wva-notallowed' => 'Du kan ikke legge til videoer på denne wikien.',
+	'wva-protected' => 'Denne videoen er beskyttet',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -497,23 +514,6 @@ $messages['nl'] = array(
 $messages['nl-informal'] = array(
 	'wva-notlogged' => "Je moet aanmelden of registreren om video's te kunnen toevoegen.",
 	'wva-notallowed' => "Je kunt geen video's toevoegen in deze wiki.",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'wva-success' => 'Videoside $1 ble lagt til.',
-	'wva-success-replaced' => 'Videoside $1 ble erstattet.',
-	'wva-failure' => 'Vennligst oppgi gyldige parametre.',
-	'wva-name' => 'Skriv inn navnet:',
-	'wva-url' => 'Skriv inn internettadressen:',
-	'wva-add' => 'Legg til',
-	'wva-title' => 'Legg til video raskt fra internettadresse',
-	'wva-notlogged' => 'Du må logge inn eller registrere deg for å legge til videoer.',
-	'wva-notallowed' => 'Du kan ikke legge til videoer på denne wikien.',
-	'wva-protected' => 'Denne videoen er beskyttet',
 );
 
 /** Occitan (Occitan)
@@ -737,10 +737,12 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'wva-name' => '输入名字：',
+	'wva-url' => '输入URL：',
 	'wva-add' => '添加',
 );
 

@@ -165,18 +165,18 @@ $messages['ms'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Laman khas]] untuk memeriksa keadaan pelayan',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'healthcheck-desc' => 'En [[Special:HealthCheck|spesialside]] for sjekk av serverstatus',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'healthcheck-desc' => 'Een [[Special:HealthCheck|speciale pagina]] voor de controle van de serverstatus',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'healthcheck-desc' => 'En [[Special:HealthCheck|spesialside]] for sjekk av serverstatus',
 );
 
 /** Polish (Polski)

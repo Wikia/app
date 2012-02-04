@@ -1206,7 +1206,7 @@ $messages['ms'] = array(
 	'toplists-editor-title-placeholder' => 'Isikan nama untuk senarai',
 	'toplists-editor-related-article-label' => 'Laman berkaitan <small>(tidak wajib, tetapi memilih gambar)</small>',
 	'toplists-editor-related-article-placeholder' => 'Isikan nama laman yang wujud',
-	'toplists-editor-image-browser-tooltip' => 'Bubuh gambar',
+	'toplists-editor-image-browser-tooltip' => 'Tambahkan satu gambar',
 	'toplists-editor-remove-item-tooltip' => 'Gugurkan item',
 	'toplists-editor-drag-item-tooltip' => 'Seret untuk mengubah susunan',
 	'toplists-editor-add-item-label' => 'Tambahkan item baru',
@@ -1269,6 +1269,92 @@ $messages['my'] = array(
 	'toplists-cancel-button' => 'မလုပ်တော့ပါ',
 	'toplists-list-item-voted' => 'ဆန္ဒမဲ',
 	'toplists-days' => '$1 {{PLURAL:$1|ရက်|ရက်}}',
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'toplists-desc' => 'Topp 10-lister',
+	'right-toplists-create-edit-list' => 'Opprett og rediger Topp 10-listesider.',
+	'right-toplists-create-item' => 'Opprett og legg elementer til en Topp 10-listeside',
+	'right-toplists-edit-item' => 'Rediger elementer i en Topp 10-listeside',
+	'right-toplists-delete-item' => 'Slett elementer fra en Topp 10-listeside',
+	'createtoplist' => 'Opprett en ny Topp 10-liste',
+	'edittoplist' => 'Rediger Topp 10-liste',
+	'toplists-category' => 'Topp 10-lister',
+	'toplists-error-invalid-title' => 'Den oppgitte teksten er ikke gyldig.',
+	'toplists-error-invalid-picture' => 'Det valgte bildet er ikke gyldig.',
+	'toplists-error-title-exists' => 'Denne siden eksisterer allerede. Du kan gå til <a href="$2" target="_blank">$1</a> eller oppgi et annet navn.',
+	'toplists-error-title-spam' => 'Den oppgitte teksten inneholder noen ord som gjenkjennes som spam.',
+	'toplists-error-article-blocked' => 'Du har ikke tillatelse til å opprette en side med dette navnet. Beklager.',
+	'toplists-error-article-not-exists' => '«$1» eksisterer ikke. Vil du <a href="$2" target="_blank">opprette den</a>?',
+	'toplists-error-picture-not-exists' => '«$1» eksisterer ikke. Vil du <a href="$2" target="_blank">laste det opp</a>?',
+	'toplists-error-duplicated-entry' => 'Du kan ikke bruke det samme navnet mer enn én gang.',
+	'toplists-error-empty-item-name' => 'Navnet på et eksisterende element kan ikke være blankt.',
+	'toplists-item-cannot-delete' => 'Sletting av dette elementet mislyktes.',
+	'toplists-error-image-already-exists' => 'Et bilde med det samme navnet eksisterer allerede.',
+	'toplists-error-add-item-anon' => 'Anonyme bukrere er ikke tillatt å legge til objekter i listene. Vennligst <a class="ajaxLogin" id="login" href="$1">Logg inn</a> eller <a class="ajaxLogin" id="signup" href="$2">registrer en ny konto</a>.',
+	'toplists-error-add-item-permission' => 'Tillatelsesfeil: Kontoen din har ikke blitt gitt rettighetene til å opprette nye elementer.',
+	'toplists-error-add-item-list-not-exists' => 'Topp 10-listen «$1» eksisterer ikke.',
+	'toplists-upload-error-unknown' => 'En feil har oppstått under behandlingen av opplastningsforespørselen, vennligst prøv igjen.',
+	'toplists-editor-title-label' => 'Listenavn',
+	'toplists-editor-title-placeholder' => 'Oppgi et navn til listen',
+	'toplists-editor-related-article-label' => 'Relatert side <small>(valgfritt, men velger et bilde)</small>',
+	'toplists-editor-related-article-placeholder' => 'Oppgi et navn på en eksisterende side',
+	'toplists-editor-image-browser-tooltip' => 'Legg til et bilde',
+	'toplists-editor-remove-item-tooltip' => 'Fjern element',
+	'toplists-editor-drag-item-tooltip' => 'Dra for å endre rekkefølgen',
+	'toplists-editor-add-item-label' => 'Legg til et nytt element',
+	'toplists-editor-add-item-tooltip' => 'Legg et nytt element til listen',
+	'toplists-create-button' => 'Opprett liste',
+	'toplists-update-button' => 'Lagre liste',
+	'toplists-cancel-button' => 'Avbryt',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|element|elementer}} fjernet',
+	'toplists-items-created' => '$1 {{PLURAL:$1|element|elementer}} opprettet',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|element|elementer}} oppdatert',
+	'toplists-items-nochange' => 'Ingen elementer endret',
+	'toplits-image-browser-no-picture-selected' => 'Ikke noe bilde valgt',
+	'toplits-image-browser-clear-picture' => 'Fjern bilde',
+	'toplits-image-browser-selected-picture' => 'For øyeblikket valgte: $1',
+	'toplists-image-browser-upload-btn' => 'Velg',
+	'toplists-image-browser-upload-label' => 'Last opp ditt eget',
+	'toplists-list-creation-summary' => 'Oppretter en liste, $1',
+	'toplists-list-update-summary' => 'Oppdaterer en liste, $1',
+	'toplists-item-creation-summary' => 'Oppretter et listeelement',
+	'toplists-item-update-summary' => 'Oppdaterer et listeelement',
+	'toplists-item-remove-summary' => 'Element fjernet fra listen',
+	'toplists-item-restored' => 'Element gjenopprettet',
+	'toplists-list-related-to' => 'Relatert til:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/>stemme|$1<br/>stemmer}}',
+	'toplists-list-created-by' => 'av [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Stem oppover',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|stemme|stemmer}} i $2',
+	'toplists-list-add-item-label' => 'Legg til element',
+	'toplists-list-add-item-name-label' => 'La listen fortsette...',
+	'toplists-list-item-voted' => 'Stemt',
+	'toplists-createpage-dialog-label' => 'Topp 10-liste',
+	'toplists-email-subject' => 'En topp 10-liste har blitt endret',
+	'toplists-email-body' => 'Wikia sier hei!
+
+Listen <a href="$1">$2</a> på Wikia har blitt endret.
+
+ $3
+
+Gå til Wikia for å sjekke endringene. $1
+
+- Wikia
+
+Du kan <a href="$4">slette abbonementet</a> på endringer i listen.',
+	'toplists-seconds' => '{{PLURAL:$1|ett sekund|$1 sekund}}',
+	'toplists-minutes' => '{{PLURAL:$1|ett minutt|$1 minutt}}',
+	'toplists-hours' => '{{PLURAL:$1|én time|$1 timer}}',
+	'toplists-days' => '{{PLURAL:$1|én dag|$1 dager}}',
+	'toplists-weeks' => '{{PLURAL:$1|én uke|$1 uker}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'har stemt på en Topp 10-liste på $WIKINAME!',
+	'toplists-create-heading' => '<em>Nyhet!</em> Lag din egen Topp ti',
+	'toplists-create-button-msg' => 'Opprett en liste',
 );
 
 /** Dutch (Nederlands)
@@ -1379,90 +1465,20 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-create-heading' => '<em>Nieuw!</em> Maak je eigen Top 10 aan',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
+/** Polish (Polski)
+ * @author Sovq
  */
-$messages['nb'] = array(
-	'toplists-desc' => 'Topp 10-lister',
-	'right-toplists-create-edit-list' => 'Opprett og rediger Topp 10-listesider.',
-	'right-toplists-create-item' => 'Opprett og legg elementer til en Topp 10-listeside',
-	'right-toplists-edit-item' => 'Rediger elementer i en Topp 10-listeside',
-	'right-toplists-delete-item' => 'Slett elementer fra en Topp 10-listeside',
-	'createtoplist' => 'Opprett en ny Topp 10-liste',
-	'edittoplist' => 'Rediger Topp 10-liste',
-	'toplists-category' => 'Topp 10-lister',
-	'toplists-error-invalid-title' => 'Den oppgitte teksten er ikke gyldig.',
-	'toplists-error-invalid-picture' => 'Det valgte bildet er ikke gyldig.',
-	'toplists-error-title-exists' => 'Denne siden eksisterer allerede. Du kan gå til <a href="$2" target="_blank">$1</a> eller oppgi et annet navn.',
-	'toplists-error-title-spam' => 'Den oppgitte teksten inneholder noen ord som gjenkjennes som spam.',
-	'toplists-error-article-blocked' => 'Du har ikke tillatelse til å opprette en side med dette navnet. Beklager.',
-	'toplists-error-article-not-exists' => '«$1» eksisterer ikke. Vil du <a href="$2" target="_blank">opprette den</a>?',
-	'toplists-error-picture-not-exists' => '«$1» eksisterer ikke. Vil du <a href="$2" target="_blank">laste det opp</a>?',
-	'toplists-error-duplicated-entry' => 'Du kan ikke bruke det samme navnet mer enn én gang.',
-	'toplists-error-empty-item-name' => 'Navnet på et eksisterende element kan ikke være blankt.',
-	'toplists-item-cannot-delete' => 'Sletting av dette elementet mislyktes.',
-	'toplists-error-image-already-exists' => 'Et bilde med det samme navnet eksisterer allerede.',
-	'toplists-error-add-item-anon' => 'Anonyme bukrere er ikke tillatt å legge til objekter i listene. Vennligst <a class="ajaxLogin" id="login" href="$1">Logg inn</a> eller <a class="ajaxLogin" id="signup" href="$2">registrer en ny konto</a>.',
-	'toplists-error-add-item-permission' => 'Tillatelsesfeil: Kontoen din har ikke blitt gitt rettighetene til å opprette nye elementer.',
-	'toplists-error-add-item-list-not-exists' => 'Topp 10-listen «$1» eksisterer ikke.',
-	'toplists-upload-error-unknown' => 'En feil har oppstått under behandlingen av opplastningsforespørselen, vennligst prøv igjen.',
-	'toplists-editor-title-label' => 'Listenavn',
-	'toplists-editor-title-placeholder' => 'Oppgi et navn til listen',
-	'toplists-editor-related-article-label' => 'Relatert side <small>(valgfritt, men velger et bilde)</small>',
-	'toplists-editor-related-article-placeholder' => 'Oppgi et navn på en eksisterende side',
-	'toplists-editor-image-browser-tooltip' => 'Legg til et bilde',
-	'toplists-editor-remove-item-tooltip' => 'Fjern element',
-	'toplists-editor-drag-item-tooltip' => 'Dra for å endre rekkefølgen',
-	'toplists-editor-add-item-label' => 'Legg til et nytt element',
-	'toplists-editor-add-item-tooltip' => 'Legg et nytt element til listen',
-	'toplists-create-button' => 'Opprett liste',
-	'toplists-update-button' => 'Lagre liste',
-	'toplists-cancel-button' => 'Avbryt',
-	'toplists-items-removed' => '$1 {{PLURAL:$1|element|elementer}} fjernet',
-	'toplists-items-created' => '$1 {{PLURAL:$1|element|elementer}} opprettet',
-	'toplists-items-updated' => '$1 {{PLURAL:$1|element|elementer}} oppdatert',
-	'toplists-items-nochange' => 'Ingen elementer endret',
-	'toplits-image-browser-no-picture-selected' => 'Ikke noe bilde valgt',
-	'toplits-image-browser-clear-picture' => 'Fjern bilde',
-	'toplits-image-browser-selected-picture' => 'For øyeblikket valgte: $1',
-	'toplists-image-browser-upload-btn' => 'Velg',
-	'toplists-image-browser-upload-label' => 'Last opp ditt eget',
-	'toplists-list-creation-summary' => 'Oppretter en liste, $1',
-	'toplists-list-update-summary' => 'Oppdaterer en liste, $1',
-	'toplists-item-creation-summary' => 'Oppretter et listeelement',
-	'toplists-item-update-summary' => 'Oppdaterer et listeelement',
-	'toplists-item-remove-summary' => 'Element fjernet fra listen',
-	'toplists-item-restored' => 'Element gjenopprettet',
-	'toplists-list-related-to' => 'Relatert til:',
-	'toplists-list-votes-num' => '{{PLURAL:$1|1<br/>stemme|$1<br/>stemmer}}',
-	'toplists-list-created-by' => 'av [[User:$1|$1]]',
-	'toplists-list-vote-up' => 'Stem oppover',
-	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|stemme|stemmer}} i $2',
-	'toplists-list-add-item-label' => 'Legg til element',
-	'toplists-list-add-item-name-label' => 'La listen fortsette...',
-	'toplists-list-item-voted' => 'Stemt',
-	'toplists-createpage-dialog-label' => 'Topp 10-liste',
-	'toplists-email-subject' => 'En topp 10-liste har blitt endret',
-	'toplists-email-body' => 'Wikia sier hei!
-
-Listen <a href="$1">$2</a> på Wikia har blitt endret.
-
- $3
-
-Gå til Wikia for å sjekke endringene. $1
-
-- Wikia
-
-Du kan <a href="$4">slette abbonementet</a> på endringer i listen.',
-	'toplists-seconds' => '{{PLURAL:$1|ett sekund|$1 sekund}}',
-	'toplists-minutes' => '{{PLURAL:$1|ett minutt|$1 minutt}}',
-	'toplists-hours' => '{{PLURAL:$1|én time|$1 timer}}',
-	'toplists-days' => '{{PLURAL:$1|én dag|$1 dager}}',
-	'toplists-weeks' => '{{PLURAL:$1|én uke|$1 uker}}',
-	'toplists-msg-fb-OnRateArticle-short' => 'har stemt på en Topp 10-liste på $WIKINAME!',
-	'toplists-create-heading' => '<em>Nyhet!</em> Lag din egen Topp ti',
-	'toplists-create-button-msg' => 'Opprett en liste',
+$messages['pl'] = array(
+	'toplists-desc' => 'Listy Top 10',
+	'right-toplists-create-edit-list' => 'Stwórz i edytuj listy Top 10',
+	'right-toplists-create-item' => 'Dodawaj elementy do do list Top 10',
+	'right-toplists-edit-item' => 'Edytuj elementy na listach Top 10',
+	'right-toplists-delete-item' => 'Usuwaj elementy z listy Top 10',
+	'createtoplist' => 'Utwórz nową listę Top 10',
+	'edittoplist' => 'Edytuj listę Top 10',
+	'toplists-category' => 'Listy Top 10',
+	'toplists-error-invalid-title' => 'Podany tekst jest nieprawidłowy.',
+	'toplists-error-invalid-picture' => 'Wybrany obraz jest nieprawidłowy.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2003,12 +2019,17 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'toplists-editor-title-label' => '列表名称',
+	'toplists-create-button' => '创建列表',
+	'toplists-update-button' => '保存列表',
 	'toplists-cancel-button' => '取消',
 	'toplists-image-browser-upload-btn' => '选择',
 	'toplists-image-browser-upload-label' => '上载您自己的',
 	'toplists-list-add-item-label' => '添加东西',
 	'toplists-list-item-voted' => '投票了',
+	'toplists-create-button-msg' => '创建列表',
 );
 

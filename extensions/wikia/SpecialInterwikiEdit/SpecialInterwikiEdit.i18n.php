@@ -120,6 +120,13 @@ $messages['de'] = array(
 	'iwedit-success' => '<p>Link-Erzeugung erfolgreich.</p>',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'iwedit-update' => 'Newekerdış',
+);
+
 /** Spanish (Español)
  * @author Translationista
  * @author VegaDark
@@ -310,6 +317,19 @@ $messages['ms'] = array(
 	'iwedit-success' => '<p>Pautan berjaya dicipta.</p>',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'interwikiedit' => 'Interwiki-editor',
+	'iwedit-title' => 'Interwiki Editor',
+	'iwedit-language-interwikis' => 'kun språkinterwikier',
+	'iwedit-all-interwikis' => 'alle interwikier',
+	'iwedit-update' => 'Oppdater',
+	'iwedit-error' => '<p>En feil oppsto.</p>',
+	'iwedit-success' => '<p>Opprettet lenke.</p>',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -321,19 +341,6 @@ $messages['nl'] = array(
 	'iwedit-update' => 'Bijwerken',
 	'iwedit-error' => '<p>Er is een fout opgetreden.</p>',
 	'iwedit-success' => '<p>De verwijzing is aangemaakt.</p>',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'interwikiedit' => 'Interwiki-editor',
-	'iwedit-title' => 'Interwiki Editor',
-	'iwedit-language-interwikis' => 'kun språkinterwikier',
-	'iwedit-all-interwikis' => 'alle interwikier',
-	'iwedit-update' => 'Oppdater',
-	'iwedit-error' => '<p>En feil oppsto.</p>',
-	'iwedit-success' => '<p>Opprettet lenke.</p>',
 );
 
 /** Occitan (Occitan)
@@ -349,9 +356,11 @@ $messages['oc'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'interwikiedit' => 'Edycja interwiki',
 	'iwedit-title' => 'Edytor interwiki',
 	'iwedit-language-interwikis' => 'tylko interwiki języków',
 	'iwedit-all-interwikis' => 'wszystkie interwiki',
@@ -365,6 +374,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
+	'interwikiedit' => 'Editor Interwiki',
 	'iwedit-title' => 'Editor Interwiki',
 	'iwedit-language-interwikis' => 'mach lenghe interwiki',
 	'iwedit-all-interwikis' => "tuti j'interwiki",

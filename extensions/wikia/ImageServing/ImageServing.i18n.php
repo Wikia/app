@@ -54,6 +54,13 @@ $messages['es'] = array(
 	'imageserving-desc' => 'Selecciona las imágenes de un conjunto especificado de páginas basados en necesidades visuales',
 );
 
+/** Finnish (Suomi)
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'imageserving-desc' => 'Valitsee kuvia määrätystä sivujoukosta visuaalisten vaatimusten perusteella',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
@@ -109,14 +116,14 @@ $messages['ms'] = array(
 	'imageserving-desc' => 'Memilih gambar daripada tatasusunan laman yang terpilih berasaskan keperluan visual',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$messages['nb'] = array(
+	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',
+);
+
 /** Dutch (Nederlands) */
 $messages['nl'] = array(
 	'imageserving-desc' => "Selecteert afbeeldingen uit een aangegeven verzameling pagina's gebaseerd op visuele eisen",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['nb'] = array(
-	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',
 );
 
 /** Polish (Polski)

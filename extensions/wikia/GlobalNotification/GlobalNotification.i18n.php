@@ -91,15 +91,7 @@ $messages['ms'] = array(
 	'globalnotification-general-ajax-failure' => 'Pelayar tidak dapat bersambung ke Wikia. Cuba lagi nanti.',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
-	'globalnotification-desc' => 'Geeft systeemberichten weer voor gebeurtenissen zoals AJAX-fouten',
-	'globalnotification-general-ajax-failure' => 'De browser kon geen verbinding maken met de Wikia. Probeer het later nog opnieuw.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -108,12 +100,28 @@ $messages['nb'] = array(
 	'globalnotification-general-ajax-failure' => 'Nettleseren kan ikke koble seg til Wikia. Prøv igjen senere.',
 );
 
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'globalnotification-desc' => 'Geeft systeemberichten weer voor gebeurtenissen zoals AJAX-fouten',
+	'globalnotification-general-ajax-failure' => 'De browser kon geen verbinding maken met de Wikia. Probeer het later nog opnieuw.',
+);
+
 /** Polish (Polski)
  * @author Sovq
  */
 $messages['pl'] = array(
 	'globalnotification-desc' => 'Wyświetla komunikaty systemowe dla zdarzeń takich jak błędy AJAX',
 	'globalnotification-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z Wikia. Spróbuj później.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
+$messages['pms'] = array(
+	'globalnotification-desc' => "A smon le notìfiche dël sistema për dj'event com ij faliment AJAX",
+	'globalnotification-general-ajax-failure' => "Ël navigador a l'ha pa podù coleghesse a la Wikia.  Ch'a preuva torna pi tard.",
 );
 
 /** Portuguese (Português)

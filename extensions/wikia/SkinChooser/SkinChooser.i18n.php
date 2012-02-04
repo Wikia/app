@@ -62,6 +62,7 @@ $messages['es'] = array(
 /** Finnish (Suomi)
  * @author Crt
  * @author Tm T
+ * @author VezonThunder
  */
 $messages['fi'] = array(
 	'skinchooser-desc' => 'Mahdollistaa ulkoasun valinnan käyttäjän asetuksissa',
@@ -143,6 +144,16 @@ $messages['ms'] = array(
 	'site-layout' => 'Tataletak Tapak',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'skinchooser-desc' => 'Lar brukere velge utseende i innstillingene sine',
+	'skinchooser-customcss' => 'For egendefinerte temaer, velg egendefinert-alternativet i menyen ovenfor og spesifiser egendefinert CDD i [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Wikias nye utseende',
+	'site-layout' => 'Sideoppsett',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -151,16 +162,6 @@ $messages['nl'] = array(
 	'skinchooser-customcss' => 'Voor eigengemaakte vormgeving kiest u de maatwerkinstelling in het bovenstaande menu in slaat u zelfgemaakte CSS op in [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Nieuw Wikia-uiterlijk',
 	'site-layout' => 'Sitevormgevingen',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'skinchooser-desc' => 'Lar brukere velge utseende i innstillingene sine',
-	'skinchooser-customcss' => 'For egendefinerte temaer, velg egendefinert-alternativet i menyen ovenfor og spesifiser egendefinert CDD i [[MediaWiki:Monaco.css]].',
-	'new-look' => 'Wikias nye utseende',
-	'site-layout' => 'Sideoppsett',
 );
 
 /** Polish (Polski)
@@ -210,6 +211,7 @@ $messages['pt-br'] = array(
  */
 $messages['ru'] = array(
 	'skinchooser-desc' => 'Позволяет участникам выбирать оболочки в личных настройках',
+	'skinchooser-customcss' => 'Для настройки тем выберите настраиваемый параметр в меню выше и укажите пользовательский CSS со страницы [[MediaWiki:Monaco.css]].',
 	'site-layout' => 'Оформления сайта',
 );
 

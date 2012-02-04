@@ -109,18 +109,18 @@ $messages['ms'] = array(
 	'wikiagameguides-desc' => 'Modul aplikasi mudah alih Panduan Permainan Wikia',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'wikiagameguides-desc' => 'Moduler for Wikias spillguide-app',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'wikiagameguides-desc' => 'Applicatiemodules voor mobiel voor Wikia Game Guides',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'wikiagameguides-desc' => 'Moduler for Wikias spillguide-app',
 );
 
 /** Piedmontese (Piemontèis)

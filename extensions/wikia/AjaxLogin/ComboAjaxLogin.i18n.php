@@ -63,7 +63,7 @@ $messages['ar'] = array(
  * @author Xuacu
  */
 $messages['ast'] = array(
-	'comboajaxlogin-desc' => "Cuadru dinámicu que permite la entrada d'usuarios, recordar la contraseña y el rexistru d'usuarios",
+	'comboajaxlogin-desc' => "Cuadru dinámicu que permite la entrada d'usuarios, recordar la conseña y rexistrar usuarios",
 	'comboajaxlogin-createlog' => 'Entrar o crear una cuenta',
 	'comboajaxlogin-actionmsg' => "Pa facer esta aición, primero tienes d'entrar o crear una cuenta",
 	'comboajaxlogin-actionmsg-protected' => "Pa facer esta aición, primero tienes d'entrar o crear una cuenta.",
@@ -81,7 +81,7 @@ $messages['ast'] = array(
 </ul>",
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Atrás',
 	'comboajaxlogin-connectmarketing-forward' => 'Primeros pasos &raquo;',
-	'comboajaxlogin-connectdirections' => "Escribi equí el to nome d'usuariu y contraseña de Wikia - en segundu planu coneutaremos máxicamente les tos cuentes de Wikia y Facebook.
+	'comboajaxlogin-connectdirections' => "Escribi equí el to nome d'usuariu y conseña de Wikia - en segundu planu coneutaremos máxicamente les tos cuentes de Wikia y Facebook.
 
 Cuando acabes, podrás entrar fácilmente usando cualesquier botón de Facebook Connect.",
 	'comboajaxlogin-post-not-understood' => "Hebo un fallu na manera en que taba construíu esti formulariu.
@@ -135,6 +135,7 @@ Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 );
 
 /** Czech (Česky)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -166,6 +167,7 @@ Zkuste to znova nebo [[Special:Contact|nás kontaktujte]].',
 <p>Více informací: <a href="http://twitter.com/wikia">Twitter</a> nebo <a href="http://facebook.com/wikia">Facebook</a>
 <br />
 (pokud již máte účet, můžete se <a href="#">přihlásit</a> jako obvykle, ale nebudete moci editovat)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia neodpovídá. Zkontrolujte připojení k síti.',
 );
 
 /** German (Deutsch)
@@ -244,10 +246,40 @@ Por favor intenta de nuevo o [[Special:Contact|reporta esto]].',
 );
 
 /** Finnish (Suomi)
+ * @author Nike
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
+	'comboajaxlogin-desc' => 'Dynaaminen laatikko, jossa käyttäjät voivat kirjautua, selvittää salasanaansa ja rekisteröityä käyttäjäksi',
 	'comboajaxlogin-createlog' => 'Kirjaudu sisään tai rekisteröidy',
+	'comboajaxlogin-actionmsg' => 'Suorittaaksesi tämän toiminnon sinun on ensin kirjauduttava sisään tai luotava tunnus',
+	'comboajaxlogin-actionmsg-protected' => 'Suorittaaksesi tämän toiminnon sinun on ensin kirjauduttava sisään tai luotava tunnus.',
+	'comboajaxlogin-connectmarketing' => '<h1>Tilien yhdistäminen</h1>
+<ul>
+<li>Säilytä nykyinen käyttäjänimesi, historiasi, muokkaukset... mikään muu kuin kirjautumistapa ei muutu</li>
+<li>Jaa Wikia-toimintasi ystävillesi Facebookissa</li>
+<li>Hallitset täydellisesti sitä, mikä julkaistaan</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Kirjaudu sisään Facebook Connect -toiminnolla</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Tilien yhdistäminen</h1>
+<ul>
+<li>Säilytä nykyinen käyttäjänimesi, historiasi, muokkaukset... mikään muu kuin kirjautumistapa ei muutu</li>
+<li>Jaa Wikia-toimintasi ystävillesi Facebookissa halliten täydellisesti sitä, mikä julkaistaan</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Edellinen',
+	'comboajaxlogin-connectmarketing-forward' => 'Aloita &raquo;',
+	'comboajaxlogin-connectdirections' => 'Syötä Wikia-käyttäjänimesi ja -salasanasi tähän – yhdistämme Wikia- ja Facebook-tunnuksesi automaattisesti.
+
+Kun olet valmis, voit kirjautua sisään helposti käyttämällä kaikilla Facebook Connect -painikkeila.',
+	'comboajaxlogin-post-not-understood' => 'Lomakkeen muodostustavassa oli ongelma.
+Yritä uudelleen tai [[Special:Contact|tee tästä ilmoitus]].',
+	'comboajaxlogin-readonlytext' => '<h2>Olemme pahoillamme!</h2>
+<p>Et voi luoda tunnusta tällä hetkellä – sivuston tulisi olla pian toiminnassa jälleen. Kyse on seuraavasta:<br /><em>$1</em></p>
+<p>Tarkista <a href="http://twitter.com/wikia">Twitter-</a> tai <a href="http://facebook.com/wikia">Facebook-sivumme</a> saadaksesi lisätietoa.
+<br />
+(Jos sinulla jo on tunnus, voit <a href="#">kirjautua sisään</a> kuten tavallisesti, mutta et voi muokata.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia ei vastaa. Tarkista verkkoyhteytesi.',
 );
 
 /** French (Français)
@@ -494,6 +526,41 @@ Sila cuba lagi atau [[Special:Contact|laporkannya kepada kami]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia tidak bertindak balas. Sila periksa sambungan rangkaian anda.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'comboajaxlogin-desc' => 'Dynamisk boks som lar brukere logge inn, få påminnelse om passord og registrere brukere',
+	'comboajaxlogin-createlog' => 'Logg inn eller opprett en konto',
+	'comboajaxlogin-actionmsg' => 'For å utføre denne handlingen må du først logge inn eller opprette en konto',
+	'comboajaxlogin-actionmsg-protected' => 'For å redigere denne beskyttede siden, må du først logge inn eller opprette en konto.',
+	'comboajaxlogin-connectmarketing' => '<h1>Koble sammen kontoene dine</h1>
+<ul>
+<li>Behold ditt nåværende brukernavn, din historie, dine redigeringer... Ingenting endres bortsett fra hvordan du logger inn</li>
+<li>Del aktiviteten din på Wikia med vennene dine på Facebook</li>
+<li>Full kontroll over hva som publiseres</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Logg inn med Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Koble Wikia-kontoen din til Facebook</h1>
+<ul>
+<li>Behold nåværende brukernavn, historie, endringer... Ingenting forandres bortsett fra hvordan du logger inn</li>
+<li>Del aktiviteten din på Wikia med vennene dine på Facebook, med full kontroll over hva som publiseres</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Tilbake',
+	'comboajaxlogin-connectmarketing-forward' => 'Kom i gang &raquo;',
+	'comboajaxlogin-connectdirections' => 'Skriv inn ditt Wikia-brukernavn og -passord her - vi vil på magisk vis koble sammen Wikia- og Facebook-kontoene dine i bakgrunnen.
+
+Så fort du er ferdig, kan du enkelt logge inn med en hvilken som helst Facebook Connect-knapp.',
+	'comboajaxlogin-post-not-understood' => 'Det er en feil i måten skjemaet ble bygget på.
+Vennligst prøv igjen eller [[Special:Contact|rapporter dette]].',
+	'comboajaxlogin-readonlytext' => '<h2>Beklager!</h2>
+<p>Du kan ikke opprette en konto for øyeblikket - vi er sannsyneligvis oppe og går igjen om kort tid. Her er det som skjer:<br /><em>$1</em></p>
+<p>Vennligst sjekk ut <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> for mer informasjon.
+<br />
+(Hvis du allerede har en konto, kan du <a href="#">logge inn</a> som vanlig, men du vil ikke kunne redigere.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia svarer ikke. Kontroller nettverkstilkoblingen.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -554,41 +621,6 @@ Nadat je dit hebt uitgevoerd, kan je eenvoudig aanmelden met de knop Facebook Co
 <p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.
 <br />
 Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'comboajaxlogin-desc' => 'Dynamisk boks som lar brukere logge inn, få påminnelse om passord og registrere brukere',
-	'comboajaxlogin-createlog' => 'Logg inn eller opprett en konto',
-	'comboajaxlogin-actionmsg' => 'For å utføre denne handlingen må du først logge inn eller opprette en konto',
-	'comboajaxlogin-actionmsg-protected' => 'For å redigere denne beskyttede siden, må du først logge inn eller opprette en konto.',
-	'comboajaxlogin-connectmarketing' => '<h1>Koble sammen kontoene dine</h1>
-<ul>
-<li>Behold ditt nåværende brukernavn, din historie, dine redigeringer... Ingenting endres bortsett fra hvordan du logger inn</li>
-<li>Del aktiviteten din på Wikia med vennene dine på Facebook</li>
-<li>Full kontroll over hva som publiseres</li>
-</ul>',
-	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Logg inn med Facebook Connect</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>Koble Wikia-kontoen din til Facebook</h1>
-<ul>
-<li>Behold nåværende brukernavn, historie, endringer... Ingenting forandres bortsett fra hvordan du logger inn</li>
-<li>Del aktiviteten din på Wikia med vennene dine på Facebook, med full kontroll over hva som publiseres</li>
-</ul>',
-	'comboajaxlogin-connectmarketing-back' => '&laquo; Tilbake',
-	'comboajaxlogin-connectmarketing-forward' => 'Kom i gang &raquo;',
-	'comboajaxlogin-connectdirections' => 'Skriv inn ditt Wikia-brukernavn og -passord her - vi vil på magisk vis koble sammen Wikia- og Facebook-kontoene dine i bakgrunnen.
-
-Så fort du er ferdig, kan du enkelt logge inn med en hvilken som helst Facebook Connect-knapp.',
-	'comboajaxlogin-post-not-understood' => 'Det er en feil i måten skjemaet ble bygget på.
-Vennligst prøv igjen eller [[Special:Contact|rapporter dette]].',
-	'comboajaxlogin-readonlytext' => '<h2>Beklager!</h2>
-<p>Du kan ikke opprette en konto for øyeblikket - vi er sannsyneligvis oppe og går igjen om kort tid. Her er det som skjer:<br /><em>$1</em></p>
-<p>Vennligst sjekk ut <a href="http://twitter.com/wikia">Twitter</a> eller <a href="http://facebook.com/wikia">Facebook</a> for mer informasjon.
-<br />
-(Hvis du allerede har en konto, kan du <a href="#">logge inn</a> som vanlig, men du vil ikke kunne redigere.)</p>',
-	'comboajaxlogin-ajaxerror' => 'Wikia svarer ikke. Kontroller nettverkstilkoblingen.',
 );
 
 /** Polish (Polski) */
@@ -653,6 +685,7 @@ Për piasì, ch'a preuva torna o [[Special:Contact|ch'a lo signala]].",
 <p>Për piasì, ch\'a contròla <a href="http://twitter.com/wikia">Twitter</a> o <a href="http://facebook.com/wikia">Facebook</a> për savèjne ëd pi.
 <br />
 (S\'a l\'ha già un cont, a peul <a href="#">intré ant ël sistema</a> coma al sòlit, ma a podrà pa fé \'d modìfiche.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia a arspond pa. Për piasì contròla toa conession ëd rej.',
 );
 
 /** Pashto (پښتو)
@@ -913,10 +946,17 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Hzy980512
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
 	'comboajaxlogin-createlog' => '登录或创建新账号',
 	'comboajaxlogin-actionmsg' => '若要执行此操作，您必须先登录或创建一个新帐号',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>用Facebook Connect登入</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>连接您的Wikia到Facebook</h1>
+<ul>
+<li>保存除您登入记录外的用户名、历史记录、编辑等信息</li>
+<li>和Facebook上的朋友分享您的活动，并且完全控制发布的内容</li>
+</ul>',
 );
 

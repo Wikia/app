@@ -83,6 +83,13 @@ $messages['de-formal'] = array(
 	'wikiawidget' => 'Wikia Widgets',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikiawidget' => 'Doreke wikia',
+);
+
 /** Spanish (Español)
  * @author Peter17
  * @author Translationista
@@ -224,6 +231,14 @@ $messages['ms'] = array(
 	'wikiawidget' => 'Widget Wikia',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'wikiawidget' => 'Skjermelementer for Wikia',
+);
+
 /** Nepali (नेपाली)
  * @author RajeshPandey
  */
@@ -236,15 +251,6 @@ $messages['ne'] = array(
  */
 $messages['nl'] = array(
 	'wikiawidget' => 'Wikia-widgets',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'wikiawidget' => 'Skjermelementer for Wikia',
 );
 
 /** Occitan (Occitan)

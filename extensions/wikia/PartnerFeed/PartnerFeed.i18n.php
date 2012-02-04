@@ -315,6 +315,31 @@ $messages['ms'] = array(
 	'feed-title-recentchanges' => 'Perubahan terkini',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'partner-feed-achievements-leaderboard' => 'Wikiens toppliste over utmerkelser',
+	'partner-feed-earned-badges' => 'Nylig tildelte utmerkelser for en bestemt Wiki',
+	'partner-feed-recent-blog-posts' => 'Siste blogginnlegg relatert til en kampanje',
+	'partner-feed-latest-images' => 'Galleri av de siste bildene som har blitt lastet opp',
+	'partner-feed-hotcontent' => 'Hub / vertikalt «Hett innhold» som rangert etter antall redaktører',
+	'partner-feed-recent-blog-comments' => 'Siste kommentarer tilknyttet spesifiserte blogginnlegg.',
+	'partner-feed-recent-changes' => 'Siste endringer',
+	'partnerfeed' => 'Partner-feed',
+	'error-no-article' => 'Feil: Ikke noe «artikkel»-parameter sendt',
+	'feed-title-blogposts' => 'Siste blogginnlegg',
+	'feed-title-recent-badges' => 'Siste utmerkelser',
+	'feed-title-recent-images' => 'Siste bilder',
+	'feed-title-leaderboard' => 'Toppliste over utmerkelser',
+	'feed-main-title' => 'Wikia-partner-feed',
+	'all-blog-posts' => 'alle kategorier',
+	'blog-posts-from-listing' => 'fra opplisting: $1',
+	'feed-title-hot-content' => 'Hot innhold - $1',
+	'feed-title-blogcomments' => 'Kommentarer til $1',
+	'feed-title-recentchanges' => 'Siste endringer',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -341,29 +366,29 @@ $messages['nl'] = array(
 	'feed-title-recentchanges' => 'Recente wijzigingen',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
+/** Polish (Polski)
+ * @author BeginaFelicysym
  */
-$messages['nb'] = array(
-	'partner-feed-achievements-leaderboard' => 'Wikiens toppliste over utmerkelser',
-	'partner-feed-earned-badges' => 'Nylig tildelte utmerkelser for en bestemt Wiki',
-	'partner-feed-recent-blog-posts' => 'Siste blogginnlegg relatert til en kampanje',
-	'partner-feed-latest-images' => 'Galleri av de siste bildene som har blitt lastet opp',
-	'partner-feed-hotcontent' => 'Hub / vertikalt «Hett innhold» som rangert etter antall redaktører',
-	'partner-feed-recent-blog-comments' => 'Siste kommentarer tilknyttet spesifiserte blogginnlegg.',
-	'partner-feed-recent-changes' => 'Siste endringer',
-	'partnerfeed' => 'Partner-feed',
-	'error-no-article' => 'Feil: Ikke noe «artikkel»-parameter sendt',
-	'feed-title-blogposts' => 'Siste blogginnlegg',
-	'feed-title-recent-badges' => 'Siste utmerkelser',
-	'feed-title-recent-images' => 'Siste bilder',
-	'feed-title-leaderboard' => 'Toppliste over utmerkelser',
-	'feed-main-title' => 'Wikia-partner-feed',
-	'all-blog-posts' => 'alle kategorier',
-	'blog-posts-from-listing' => 'fra opplisting: $1',
-	'feed-title-hot-content' => 'Hot innhold - $1',
-	'feed-title-blogcomments' => 'Kommentarer til $1',
-	'feed-title-recentchanges' => 'Siste endringer',
+$messages['pl'] = array(
+	'partner-feed-achievements-leaderboard' => 'Ranking osiągnięć poszczególnych Wiki',
+	'partner-feed-earned-badges' => 'Niedawno osiągnięte odznaki dla określonego typu Wiki',
+	'partner-feed-recent-blog-posts' => 'Ostatnie wpisy na blogach związane z promocją',
+	'partner-feed-latest-images' => 'Galerie z najnowszymi wczytanymi obrazami',
+	'partner-feed-hotcontent' => 'Centra aktywności treści uszeregowane według liczby edytorów',
+	'partner-feed-recent-blog-comments' => 'Ostatnie komentarze dotyczące określonego wpisu na blogu.',
+	'partner-feed-recent-changes' => 'Ostatnie zmiany',
+	'partnerfeed' => 'Subskrybuj kanał',
+	'error-no-article' => 'Błąd: Nie przekazano parametru "article"',
+	'feed-title-blogposts' => 'Ostatnie wpisy na blogu',
+	'feed-title-recent-badges' => 'Ostatnie odznaki',
+	'feed-title-recent-images' => 'Najnowsze obrazy',
+	'feed-title-leaderboard' => 'Ranking odznak',
+	'feed-main-title' => 'Kanał partnera Wikia',
+	'all-blog-posts' => 'wszystkie kategorie',
+	'blog-posts-from-listing' => 'z wykazu: $1',
+	'feed-title-hot-content' => 'Gorące treści - $1',
+	'feed-title-blogcomments' => 'Komentarze do $1',
+	'feed-title-recentchanges' => 'Ostatnie zmiany',
 );
 
 /** Piedmontese (Piemontèis)
@@ -468,6 +493,7 @@ $messages['ru'] = array(
 	'feed-title-leaderboard' => 'Лидеры по наградам',
 	'all-blog-posts' => 'все категории',
 	'blog-posts-from-listing' => 'из списка: $1',
+	'feed-title-hot-content' => 'Топ контент - $1',
 	'feed-title-blogcomments' => 'Комментарии к $1',
 	'feed-title-recentchanges' => 'Свежие правки',
 );
@@ -532,11 +558,26 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author A1
  * @author Тест
  */
 $messages['uk'] = array(
+	'partner-feed-achievements-leaderboard' => 'Список нагороджених на вікі',
+	'partner-feed-earned-badges' => 'Нещодавні відзнаки на конкретній Вікі',
+	'partner-feed-recent-blog-posts' => "Останні записи в блозі пов'язані з рекламою",
+	'partner-feed-latest-images' => 'Останні зображень, що були завантажені на вікі',
+	'partner-feed-recent-blog-comments' => "Останні коментарі, пов'язані із зазначеним блогом.",
+	'partner-feed-recent-changes' => 'Нові редагування',
+	'error-no-article' => 'Помилка: ні "статті" з такими параметрами',
+	'feed-title-blogposts' => 'Останні записи в блозі',
+	'feed-title-recent-badges' => 'Останні відзнаки',
+	'feed-title-recent-images' => 'Останні зображення',
+	'feed-title-leaderboard' => 'Список нагороджених на вікі',
 	'all-blog-posts' => 'усі категорії',
+	'blog-posts-from-listing' => 'зі списку: $1',
+	'feed-title-hot-content' => 'Топ контент - $1',
 	'feed-title-blogcomments' => 'Коментарі до $1',
+	'feed-title-recentchanges' => 'Нові редагування',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

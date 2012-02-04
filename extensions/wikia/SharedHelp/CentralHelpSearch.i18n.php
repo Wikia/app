@@ -13,6 +13,14 @@ $messages['en'] = array(
 	'centralhelpsearch-placeholder' => 'Search Help...'
 );
 
+/** German (Deutsch)
+ * @author Quedel
+ */
+$messages['de'] = array(
+	'centralhelpsearch-desc' => 'Ermöglicht das Hinzufügen eines Suchfeldes für die Community-Hilfe',
+	'centralhelpsearch-placeholder' => 'Suchhilfe...',
+);
+
 /** French (Français)
  * @author Gomoko
  */
@@ -53,6 +61,13 @@ $messages['it'] = array(
 	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'centralhelpsearch-placeholder' => 'Ieškoti Pagalbos...',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -69,6 +84,14 @@ $messages['ms'] = array(
 	'centralhelpsearch-placeholder' => 'Cari Bantuan&hellip;',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'centralhelpsearch-desc' => 'Tillat inkludering av et skjema for søk i Community Centrals hjelperegister',
+	'centralhelpsearch-placeholder' => 'Søk Hjelp&hellip;',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -77,12 +100,12 @@ $messages['nl'] = array(
 	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
  */
-$messages['nb'] = array(
-	'centralhelpsearch-desc' => 'Tillat inkludering av et skjema for søk i Community Centrals hjelperegister',
-	'centralhelpsearch-placeholder' => 'Søk Hjelp&hellip;',
+$messages['pms'] = array(
+	'centralhelpsearch-desc' => "Përmëtte l'anclusion d'un formolari për sërché ant l'Agiut sentral ëd la comunità",
+	'centralhelpsearch-placeholder' => "Arserché ant l'Agiut...",
 );
 
 /** Russian (Русский)

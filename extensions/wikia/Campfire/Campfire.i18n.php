@@ -47,6 +47,14 @@ $messages['gl'] = array(
 	'campfire-licensed-under' => 'Baixo a licenza $1',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'campfire-page-header' => '$1 innen: $2',
+	'campfire-licensed-under' => '$1 licenc alatt',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -79,6 +87,14 @@ $messages['ms'] = array(
 	'campfire-licensed-under' => 'Dilesenkan di bawah $1',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'campfire-page-header' => '$1 fra $2',
+	'campfire-licensed-under' => 'Lisensiert under $1',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author Tjcool007
@@ -88,20 +104,20 @@ $messages['nl'] = array(
 	'campfire-licensed-under' => 'Gelicenseerd onder $1',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'campfire-page-header' => '$1 fra $2',
-	'campfire-licensed-under' => 'Lisensiert under $1',
-);
-
 /** Polish (Polski)
  * @author Sovq
  */
 $messages['pl'] = array(
 	'campfire-page-header' => '$1 z $2',
 	'campfire-licensed-under' => 'Pod licencją $1',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'campfire-page-header' => '$1 da $2',
+	'campfire-licensed-under' => 'Licensià sota $1',
 );
 
 /** Portuguese (Português)

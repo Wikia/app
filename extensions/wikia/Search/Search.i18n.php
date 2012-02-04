@@ -183,10 +183,13 @@ $messages['fr'] = array(
  * @author Akerbeltz
  */
 $messages['gd'] = array(
+	'search-desc' => 'Einnsean-luirg thar nam uicipeidean le Solr backend',
 	'wikiasearch-titles-only' => 'Lorg am broinn tiotalan nan duilleagan a-mhàin',
 	'wikiasearch-system-error-msg' => "Cha b' urrainn dhuinn an lorg agad a thoirt gu buil air sgàth mearachd an t-siostaim",
 	'wikiasearch-search-this-wiki' => 'Lorg air Wikia Central a-mhàin',
 	'wikiasearch-search-wikia' => 'Lorg air Wikia',
+	'wikiasearch-image-results' => 'Toraidhean deilbh airson "$1"',
+	'wikiasearch-search-all-wikia' => "Lorg air feadh a' Wikia",
 );
 
 /** Galician (Galego)
@@ -377,6 +380,20 @@ $messages['ms'] = array(
 	'wikiasearch-search-all-wikia' => 'Cari Seluruh Wikia',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'search-desc' => 'Kryss-Wikia søkemotor som bruker Solr-bakgrunnsfunksjon',
+	'wikiasearch-titles-only' => 'Kun søk i sidetitler',
+	'wikiasearch-system-error-msg' => 'På grunn av en systemfeil kunne ikke søket ditt fullføres',
+	'wikiasearch-search-this-wiki' => 'Søk kun i Wikiasentralen',
+	'wikiasearch-search-wikia' => 'Søk i Wikia',
+	'wikiasearch-image-results' => 'Bilderesultat for «$1»',
+	'wikiasearch-search-all-wikia' => 'Søk gjennom hele Wikia',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -397,20 +414,6 @@ $messages['nl-informal'] = array(
 	'wikiasearch-system-error-msg' => 'Door een systeemfout was het niet mogelijk je zoekopdracht uit te voeren',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'search-desc' => 'Kryss-Wikia søkemotor som bruker Solr-bakgrunnsfunksjon',
-	'wikiasearch-titles-only' => 'Kun søk i sidetitler',
-	'wikiasearch-system-error-msg' => 'På grunn av en systemfeil kunne ikke søket ditt fullføres',
-	'wikiasearch-search-this-wiki' => 'Søk kun i Wikiasentralen',
-	'wikiasearch-search-wikia' => 'Søk i Wikia',
-	'wikiasearch-image-results' => 'Bilderesultat for «$1»',
-	'wikiasearch-search-all-wikia' => 'Søk gjennom hele Wikia',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -429,14 +432,17 @@ $messages['or'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'search-desc' => 'Silnik wyszukiwania w różnych Wikia  oparty na backendzie Solr',
 	'wikiasearch-titles-only' => 'Szukaj wyłącznie w tytułach stron',
 	'wikiasearch-system-error-msg' => 'Ze względu na błąd systemu, wyszukiwanie nie mogło zostać wykonane',
 	'wikiasearch-search-this-wiki' => 'Szukaj wyłącznie w Wikia Central',
 	'wikiasearch-search-wikia' => 'Szukaj w Wikii',
 	'wikiasearch-image-results' => 'Grafiki odnalezione dla „$1”',
+	'wikiasearch-search-all-wikia' => 'Wyszukiwanie wszystkich Wikia',
 );
 
 /** Piedmontese (Piemontèis)
@@ -450,6 +456,7 @@ $messages['pms'] = array(
 	'wikiasearch-search-this-wiki' => 'Serca Mach an Wikia Sentral',
 	'wikiasearch-search-wikia' => 'Serca an Wikia',
 	'wikiasearch-image-results' => 'Figura Arzultà për "$1"',
+	'wikiasearch-search-all-wikia' => 'Arserché su tuta Wikia',
 );
 
 /** Pashto (پښتو)
@@ -595,6 +602,7 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author A1
  * @author Ast
  * @author Prima klasy4na
  * @author Тест
@@ -602,7 +610,9 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'wikiasearch-titles-only' => 'Шукати тільки в заголовках сторінок',
 	'wikiasearch-system-error-msg' => 'Ваш пошук не може бути виконаним через системну помилку',
+	'wikiasearch-search-wikia' => 'Шукати на Вікіа',
 	'wikiasearch-image-results' => 'Результати пошуку зображень для "$1"',
+	'wikiasearch-search-all-wikia' => 'Шукати по всій Вікіа',
 );
 
 /** Vietnamese (Tiếng Việt)

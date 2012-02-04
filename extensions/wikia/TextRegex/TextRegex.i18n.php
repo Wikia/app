@@ -511,41 +511,7 @@ Sila cuba lagi.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 kembali ke senarai]',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
-	'textregex' => 'Tekst reguliere expressie',
-	'textregex-desc' => "[[Special:textregex/XXXX|Ongewenste tekstdelen filteren]] in bewerkte pagina's, gebaseerd op reguliere expressies",
-	'textregex-page-title' => 'Lijst met ongewenste reguliere expressies',
-	'textregex-error-unblocking' => 'Er is een fout opgetreden bij het deblokkeren ($1).
-Probeer het opnieuw.',
-	'textregex-currently-blocked' => "'''Op dit moment geblokkeerde tekstdelen:'''",
-	'textregex_nocurrently-blocked' => 'Er zijn geen geblokkeerde tekstdelen gevonden',
-	'textregex-addedby-user' => 'toegevoegd door $1 op $2',
-	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 verwijderen]',
-	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 statistieken]',
-	'textregex-unblock-succ' => 'De deblokkade is uitgevoerd',
-	'textregex-block-succ' => 'De blokkade is uitgevoerd',
-	'textregex-unblock-message' => "Het tekstdeel '''$1''' is verwijderd van de lijst met ongewenste teksten.",
-	'textregex-block-message' => "Het tekstdeel '''$1''' is toegevoegd aan de lijst met ongewenste teksten.",
-	'textregex-regex-block' => 'Te blokkeren reguliere expressie:',
-	'textregex-submit-regex' => 'Reguliere expressie toevoegen',
-	'textregex-empty-regex' => 'Geen een correcte te blokkeren reguliere expressie op.',
-	'textregex-invalid-regex' => 'Ongeldige reguliere expressie',
-	'textregex-already-added' => '"$1" is al toegevoegd',
-	'textregex-nodata-found' => 'Geen gegevens gevonden',
-	'textregex-stats-record' => 'het woord "$1" is gebruikt door $2 in $3 (\'\'opmerking: $4\'\')',
-	'textregex-select-subpage' => 'Selecteer uit een lijst van reguliere expressies:',
-	'textregex-select-default' => '-- selecteren --',
-	'textregex-create-subpage' => 'of maak een nieuwe lijst:',
-	'textregex-select-regexlist' => 'ga naar de lijst',
-	'textregex-invalid-regexid' => 'Ongeldig herkenningsteken of ongeldige reguliere expressie.',
-	'textregex-phrase-statistics' => "Statistieken voor het tekstdeel '''$1''' (aantal records: $2)",
-	'textregex-return-mainpage' => '[{{SERVER}}$1 terug naar de lijst]',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -578,6 +544,40 @@ Prøv igjen.',
 	'textregex-invalid-regexid' => 'Ugyldig frase.',
 	'textregex-phrase-statistics' => "Statistikk for «'''$1'''»-frasen (antall treff: $2)",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 gå tilbake til listen]',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'textregex' => 'Tekst reguliere expressie',
+	'textregex-desc' => "[[Special:textregex/XXXX|Ongewenste tekstdelen filteren]] in bewerkte pagina's, gebaseerd op reguliere expressies",
+	'textregex-page-title' => 'Lijst met ongewenste reguliere expressies',
+	'textregex-error-unblocking' => 'Er is een fout opgetreden bij het deblokkeren ($1).
+Probeer het opnieuw.',
+	'textregex-currently-blocked' => "'''Op dit moment geblokkeerde tekstdelen:'''",
+	'textregex_nocurrently-blocked' => 'Er zijn geen geblokkeerde tekstdelen gevonden',
+	'textregex-addedby-user' => 'toegevoegd door $1 op $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 verwijderen]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 statistieken]',
+	'textregex-unblock-succ' => 'De deblokkade is uitgevoerd',
+	'textregex-block-succ' => 'De blokkade is uitgevoerd',
+	'textregex-unblock-message' => "Het tekstdeel '''$1''' is verwijderd van de lijst met ongewenste teksten.",
+	'textregex-block-message' => "Het tekstdeel '''$1''' is toegevoegd aan de lijst met ongewenste teksten.",
+	'textregex-regex-block' => 'Te blokkeren reguliere expressie:',
+	'textregex-submit-regex' => 'Reguliere expressie toevoegen',
+	'textregex-empty-regex' => 'Geen een correcte te blokkeren reguliere expressie op.',
+	'textregex-invalid-regex' => 'Ongeldige reguliere expressie',
+	'textregex-already-added' => '"$1" is al toegevoegd',
+	'textregex-nodata-found' => 'Geen gegevens gevonden',
+	'textregex-stats-record' => 'het woord "$1" is gebruikt door $2 in $3 (\'\'opmerking: $4\'\')',
+	'textregex-select-subpage' => 'Selecteer uit een lijst van reguliere expressies:',
+	'textregex-select-default' => '-- selecteren --',
+	'textregex-create-subpage' => 'of maak een nieuwe lijst:',
+	'textregex-select-regexlist' => 'ga naar de lijst',
+	'textregex-invalid-regexid' => 'Ongeldig herkenningsteken of ongeldige reguliere expressie.',
+	'textregex-phrase-statistics' => "Statistieken voor het tekstdeel '''$1''' (aantal records: $2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 terug naar de lijst]',
 );
 
 /** Polish (Polski)

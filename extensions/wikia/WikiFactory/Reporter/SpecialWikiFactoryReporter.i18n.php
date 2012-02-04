@@ -110,6 +110,13 @@ $messages['de'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikifactoryreporter' => 'Raporteri Wikifebrika',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -288,6 +295,13 @@ $messages['ms'] = array(
 	'wikifactoryreporter' => 'Pelapor Kilang Wiki',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
 /** Nepali (नेपाली)
  * @author RajeshPandey
  */
@@ -300,13 +314,6 @@ $messages['ne'] = array(
  */
 $messages['nl'] = array(
 	'wikifactoryreporter' => 'Wikifactory rapportage',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
 /** Occitan (Occitan)

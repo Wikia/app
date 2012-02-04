@@ -117,6 +117,14 @@ $messages['gl'] = array(
 	'wikiarelatedpages-heading' => 'Ler máis',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'wikiarelatedpages-desc' => 'Kapcsolódó oldalakról készít listát az oldalakhoz',
+	'wikiarelatedpages-heading' => 'Továbbiak',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -194,20 +202,20 @@ $messages['ms'] = array(
 	'wikiarelatedpages-heading' => 'Bacaan lanjut',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'wikiarelatedpages-desc' => 'Legger til en liste med relaterte sider til sider',
+	'wikiarelatedpages-heading' => 'Les mer',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'wikiarelatedpages-desc' => "Voegt een lijst met gerelateerde pagina's to aan pagina's",
 	'wikiarelatedpages-heading' => 'Meer lezen',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'wikiarelatedpages-desc' => 'Legger til en liste med relaterte sider til sider',
-	'wikiarelatedpages-heading' => 'Les mer',
 );
 
 /** Polish (Polski)

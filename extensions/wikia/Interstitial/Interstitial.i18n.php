@@ -174,6 +174,19 @@ $messages['ms'] = array(
 	'exitstitial-button' => 'Langkau Iklan Ini',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'interstitial-default-campaign-code' => 'Wikia elsker deg!',
+	'interstitial-skip-ad' => 'Hopp over annonse',
+	'interstitial-already-logged-in-no-link' => 'Du er allerede logget inn, og det er ikke angitt et mål.',
+	'interstitial-disabled-no-link' => 'Det er ikke valgt noe mål, og entrésider er ikke aktivert for denne wikien.',
+	'interstitial-link-away' => 'Det er ingenting å se her!<br /><br />Vil du gå til [[{{MediaWiki:Mainpage}}|hovedsiden]] eller kanskje til en [[Special:Random|tilfeldig side]]?',
+	'exitstitial-register' => '<a href="#" class="register">Registrer deg</a> eller <a href="#" class="login">Logg inn</a> for å hoppe over annonser.',
+	'exitstitial-button' => 'Hopp over annonse',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -194,19 +207,6 @@ $messages['nl-informal'] = array(
 	'interstitial-default-campaign-code' => 'Wikia houdt van jou!',
 	'interstitial-already-logged-in-no-link' => 'Je bent al aangemeld en er is nog geen bestemming ingesteld.',
 	'interstitial-link-away' => 'Er is hier niets te zien!<br /><br />Wil je naar de [[{{MediaWiki:Mainpage}}|Hoofdpagina]] of misschien naar een [[Special:Random|willekeurige pagina]]?',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'interstitial-default-campaign-code' => 'Wikia elsker deg!',
-	'interstitial-skip-ad' => 'Hopp over annonse',
-	'interstitial-already-logged-in-no-link' => 'Du er allerede logget inn, og det er ikke angitt et mål.',
-	'interstitial-disabled-no-link' => 'Det er ikke valgt noe mål, og entrésider er ikke aktivert for denne wikien.',
-	'interstitial-link-away' => 'Det er ingenting å se her!<br /><br />Vil du gå til [[{{MediaWiki:Mainpage}}|hovedsiden]] eller kanskje til en [[Special:Random|tilfeldig side]]?',
-	'exitstitial-register' => '<a href="#" class="register">Registrer deg</a> eller <a href="#" class="login">Logg inn</a> for å hoppe over annonser.',
-	'exitstitial-button' => 'Hopp over annonse',
 );
 
 /** Polish (Polski)
@@ -266,6 +266,7 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author Kuzura
+ * @author Ole Yves
  */
 $messages['ru'] = array(
 	'interstitial-skip-ad' => 'Пропустить эту рекламу',

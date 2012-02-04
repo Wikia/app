@@ -155,6 +155,13 @@ $messages['de'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|Bearbeiter|Bearbeiter}}</span>',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'unhide' => 'me nımnê',
+);
+
 /** Spanish (Español)
  * @author Absay
  */
@@ -321,6 +328,17 @@ $messages['lb'] = array(
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|Auteur|Auteuren}}</span>',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'unhide' => 'Neslėpti',
+	'hub-blog-header' => 'Top $1 Pranešimai',
+	'hub-blog-showarticle' => 'Rodyti puslapį',
+	'hub-hotspot-from' => 'iš',
+	'hub-hot-news' => 'Kas Karšto',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -380,6 +398,31 @@ $messages['ms'] = array(
 	'hub-hot-news-post-details' => 'Oleh $1 di $2 pada $3',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'unhide' => 'Vis',
+	'hub-blog-header' => 'Topp $1 poster',
+	'hub-hotspot-header' => 'Populære områder',
+	'hub-topusers-header' => 'Toppredaktører denne uken på $1-wikier',
+	'hub-featured' => 'Topp $1 wikier',
+	'hub-header' => '$ wikier',
+	'hub-hotspot-info' => 'Dette er de heteste sidene denne uken, rangert etter flest redaktører.',
+	'hub-blog-comments' => ' {{PLURAL:$1|én kommentar|$1 kommentarer}}',
+	'hub-blog-continue' => 'Fortsett å lese',
+	'hub-blog-showarticle' => 'Vis side',
+	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">redigerings{{PLURAL:$1|poeng|poeng}}</span>',
+	'hub-topusers-editpoints-nonformatted' => '$1 redigerings{{PLURAL:$1|poeng|poeng}}',
+	'hub-hotspot-from' => 'fra',
+	'hub-hide-feed' => 'Skjul feed',
+	'hub-show-feed' => 'Vis feed',
+	'hub-contributors-info' => 'Dette er ukens toppbrukere, rangert etter flest redigeringer.',
+	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redaktør|redaktører}}</span>',
+	'hub-hot-news' => 'Hva er i skuddet',
+	'hub-hot-news-post-details' => 'Av $1 på $2 $3',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -406,31 +449,6 @@ $messages['nl'] = array(
 	'hub-hot-news-post-details' => 'Door $1 op $2 $3',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'unhide' => 'Vis',
-	'hub-blog-header' => 'Topp $1 poster',
-	'hub-hotspot-header' => 'Populære områder',
-	'hub-topusers-header' => 'Toppredaktører denne uken på $1-wikier',
-	'hub-featured' => 'Topp $1 wikier',
-	'hub-header' => '$ wikier',
-	'hub-hotspot-info' => 'Dette er de heteste sidene denne uken, rangert etter flest redaktører.',
-	'hub-blog-comments' => ' {{PLURAL:$1|én kommentar|$1 kommentarer}}',
-	'hub-blog-continue' => 'Fortsett å lese',
-	'hub-blog-showarticle' => 'Vis side',
-	'hub-topusers-editpoints' => '<span class="userPoints">$1</span><span class="txt">redigerings{{PLURAL:$1|poeng|poeng}}</span>',
-	'hub-topusers-editpoints-nonformatted' => '$1 redigerings{{PLURAL:$1|poeng|poeng}}',
-	'hub-hotspot-from' => 'fra',
-	'hub-hide-feed' => 'Skjul feed',
-	'hub-show-feed' => 'Vis feed',
-	'hub-contributors-info' => 'Dette er ukens toppbrukere, rangert etter flest redigeringer.',
-	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redaktør|redaktører}}</span>',
-	'hub-hot-news' => 'Hva er i skuddet',
-	'hub-hot-news-post-details' => 'Av $1 på $2 $3',
-);
-
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -439,7 +457,7 @@ $messages['pms'] = array(
 	'unhide' => 'Mostré',
 	'hub-blog-header' => 'Prim $1 Mëssagi',
 	'hub-hotspot-header' => 'Ròba Càuda',
-	'hub-topusers-header' => 'Prim $1 Utent',
+	'hub-topusers-header' => 'Prim Editor sta sman-a dzora a $1 Wiki',
 	'hub-featured' => 'Prime $1 wiki',
 	'hub-header' => '$1 Wiki',
 	'hub-hotspot-info' => 'Coste a son le pàgine pi ative dë sta sman-a, valutà da tanti editor.',
@@ -453,6 +471,8 @@ $messages['pms'] = array(
 	'hub-show-feed' => 'Smon-e ël fluss',
 	'hub-contributors-info' => 'Costi a son ij prim utent dë sta sman-a, an órdin ëd nùmer ëd modìfiche.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|editor|editor}}</span>',
+	'hub-hot-news' => 'Neuve frësche',
+	'hub-hot-news-post-details' => 'Da $1 dzora a $2 $3',
 );
 
 /** Pashto (پښتو)
@@ -583,6 +603,7 @@ $messages['sv'] = array(
 	'hub-show-feed' => 'Visa feed',
 	'hub-contributors-info' => 'Dessa är veckans toppanvändare, rangordnade efter flest redigeringar.',
 	'hub-editors' => '<strong>$1</strong><span>{{PLURAL:$1|redigerare|redigerare}}</span>',
+	'hub-hot-news' => 'Vad som är populärt',
 );
 
 /** Tamil (தமிழ்)
@@ -619,11 +640,12 @@ $messages['vep'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'unhide' => '取消隐藏',
-	'hub-topusers-header' => '首 $1 用户',
+	'hub-topusers-header' => '$1维基顶级编者',
 	'hub-featured' => '首 $1 维基',
 	'hub-header' => '$1 维基',
 	'hub-blog-continue' => '继续读',

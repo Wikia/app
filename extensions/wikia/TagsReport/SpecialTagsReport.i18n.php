@@ -73,6 +73,7 @@ $messages['bg'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -82,7 +83,7 @@ $messages['br'] = array(
 	'tagsreportselecttag' => 'Dibab ur balizenn :',
 	'tagsreportgo' => 'Diskouez',
 	'tagsreportnotspecify' => "N'ho peus dibabet balizenn arbennik ebet betek-henn",
-	'tagsreportnoresults' => "Disoc'h ebet kavet",
+	'tagsreportnoresults' => "N'eus bet kavet disoc'h ebet",
 	'tagsreportmainnspace' => 'Pennañ',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pajenn|pajennoù}})',
 	'tagsreportpagesfound' => 'Kavet <strong>$1</strong> pajennoù, zo enno ur valizenn arbennik (dpl, youtube, ...)',
@@ -362,6 +363,23 @@ $messages['my'] = array(
 	'tagsreportgenerated' => '$1 ရက် $2 အချိန်တွင် ဖန်တီးခဲ့သည်',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'tagsreport' => 'Merkelapprapport',
+	'tagsreporttitle' => 'Merkelapprapport',
+	'tagsreportselecttag' => 'Velg merkelapp:',
+	'tagsreportgo' => 'Vis',
+	'tagsreportnotspecify' => 'Du har ikke valgt noen spesialmerkelapp ennå',
+	'tagsreportnoresults' => 'Ingen resultat funnet',
+	'tagsreportmainnspace' => 'Hoved',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|side|sider}})',
+	'tagsreportpagesfound' => 'Fant <strong>$1</strong> {{PLURAL:$1|side|sider}} som inneholder en spesialmerkelapp (DPL, YouYube, osv.)',
+	'tagsreportgenerated' => 'Generert den $1 klokken $2',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -385,21 +403,21 @@ $messages['nl-informal'] = array(
 	'tagsreportnotspecify' => 'Je hebt nog geen special label geselecteerd.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ * @author Sovq
  */
-$messages['nb'] = array(
-	'tagsreport' => 'Merkelapprapport',
-	'tagsreporttitle' => 'Merkelapprapport',
-	'tagsreportselecttag' => 'Velg merkelapp:',
-	'tagsreportgo' => 'Vis',
-	'tagsreportnotspecify' => 'Du har ikke valgt noen spesialmerkelapp ennå',
-	'tagsreportnoresults' => 'Ingen resultat funnet',
-	'tagsreportmainnspace' => 'Hoved',
-	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|side|sider}})',
-	'tagsreportpagesfound' => 'Fant <strong>$1</strong> {{PLURAL:$1|side|sider}} som inneholder en spesialmerkelapp (DPL, YouYube, osv.)',
-	'tagsreportgenerated' => 'Generert den $1 klokken $2',
+$messages['pl'] = array(
+	'tagsreport' => 'Rejestr znaczników',
+	'tagsreporttitle' => 'Rejestr znaczników',
+	'tagsreportselecttag' => 'Wybierz znacznik:',
+	'tagsreportgo' => 'Pokaż',
+	'tagsreportnotspecify' => 'Żaden specjalny znacznik nie został jeszcze wybrany',
+	'tagsreportnoresults' => 'Nic nie znaleziono',
+	'tagsreportmainnspace' => 'Główny',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|strona|strony|stron}})',
+	'tagsreportpagesfound' => 'Znaleziono <strong>$1</strong> {{PLURAL:$1|stronę|strony|strony}}, gdzie znajduje się znacznik specjalny (DPL, YouTube, etc.)',
+	'tagsreportgenerated' => 'Utworzono $1 o $2',
 );
 
 /** Piedmontese (Piemontèis)

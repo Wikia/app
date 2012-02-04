@@ -42,10 +42,11 @@ $messages['ca'] = array(
 );
 
 /** Czech (Česky)
+ * @author Darth Daron
  * @author Mormegil
  */
 $messages['cs'] = array(
-	'tog-disablelinksuggest' => 'Nezobrazovat návrhy odkazů',
+	'tog-disablelinksuggest' => 'Nezobrazovat návrhy odkazů ve zdrojovém módu',
 );
 
 /** German (Deutsch)
@@ -74,7 +75,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'tog-disablelinksuggest' => 'Ne pas afficher la suggestion de lien en mode Source',
+	'tog-disablelinksuggest' => 'Ne pas afficher la suggestion de lien en mode source',
 );
 
 /** Galician (Galego)
@@ -189,6 +190,13 @@ $messages['ms'] = array(
 	'tog-disablelinksuggest' => 'Jangan paparkan cadangan pautan dalam mod Sumber',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'tog-disablelinksuggest' => 'Ikke vis lenkeforslag i kildemodus',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -202,14 +210,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'tog-disablelinksuggest' => 'Ikkje vis lenkjeframlegg',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Jon Harald Søby
- */
-$messages['nb'] = array(
-	'tog-disablelinksuggest' => 'Ikke vis lenkeforslag i kildemodus',
 );
 
 /** Occitan (Occitan)
@@ -230,7 +230,7 @@ $messages['pl'] = array(
  * @author Borichèt
  */
 $messages['pms'] = array(
-	'tog-disablelinksuggest' => "Mostra pa ij sugeriment ëd j'anliure",
+	'tog-disablelinksuggest' => "Nen ësmon-e ij sugeriment ëd j'anliure an modalità Sorgiss",
 );
 
 /** Pashto (پښتو)
@@ -273,7 +273,7 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'tog-disablelinksuggest' => 'Не приказуј предлог везе',
+	'tog-disablelinksuggest' => 'Не приказуј предложену везу у изворном режиму',
 );
 
 /** Sundanese (Basa Sunda)
@@ -325,10 +325,11 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
  */
 $messages['zh-hans'] = array(
-	'tog-disablelinksuggest' => '不会显示链接建议',
+	'tog-disablelinksuggest' => '源代码模式中勿显示链接建议',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

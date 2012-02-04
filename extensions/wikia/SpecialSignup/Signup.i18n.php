@@ -132,16 +132,16 @@ $messages['ms'] = array(
 	'signup' => 'Daftar Diri',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$messages['nb'] = array(
+	'signup-desc' => 'Legger til aliaset [[{{#Special:Signup}}]] for [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Registrer',
+);
+
 /** Dutch (Nederlands) */
 $messages['nl'] = array(
 	'signup-desc' => 'Voegt de alias [[{{#Special:Signup}}]] toe voor [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registreren',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['nb'] = array(
-	'signup-desc' => 'Legger til aliaset [[{{#Special:Signup}}]] for [[{{#Special:UserLogin}}/signup]]',
-	'signup' => 'Registrer',
 );
 
 /** Oriya (ଓଡ଼ିଆ)
@@ -151,6 +151,15 @@ $messages['nb'] = array(
 $messages['or'] = array(
 	'signup-desc' => '[[{{#Special:UserLogin}}/signup]] ବଦଳରେ [[{{#Special:Signup}}]] ନାଆଁଟି ଯୋଡ଼େ',
 	'signup' => 'ଯୋଗ ଦେବା',
+);
+
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'signup-desc' => 'Dodaje alias [[{{#Special:Signup}}]] dla [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Zarejestruj się',
 );
 
 /** Piedmontese (Piemontèis)

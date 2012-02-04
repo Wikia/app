@@ -201,11 +201,13 @@ $messages['ckb'] = array(
 $messages['cs'] = array(
 	'categoryselect-desc' => 'Poskytuje rozhraní pro správu kategorií v článku bez úprav celého článku',
 	'categoryselect-code-view' => 'Zobrazení kódu',
+	'categoryselect-code-view-placeholder' => 'Zde přidat kategoire, např. [[Kategorie:Jméno]]',
 	'categoryselect-visual-view' => 'Vizuální zobrazení',
 	'categoryselect-infobox-caption' => 'Možnosti kategorie',
 	'categoryselect-infobox-category' => 'Uveďte název kategorie:',
 	'categoryselect-infobox-sortkey' => 'Abecedně seřadit tento článek na stránce kategorie „$1" pod názvem:',
 	'categoryselect-addcategory-button' => 'Přidat kategorii',
+	'categoryselect-addcategory-edit' => 'Přidat kategorii',
 	'categoryselect-suggest-hint' => 'Po dokončení stiskněte Enter',
 	'categoryselect-tooltip' => "'''Novinka!''' Lišta na tagování kategorií. Vyzkoušejte ji nebo si přečtěte [[Help:CategorySelect|nápovědu]]",
 	'categoryselect-unhandled-syntax' => 'Zjištěna neošetřená syntaxe - přepnutí zpět do vizuálního zobrazení není možné.',
@@ -217,7 +219,8 @@ $messages['cs'] = array(
 	'categoryselect-error-user-rights' => 'Chyba uživatelských práv.',
 	'categoryselect-error-db-locked' => 'Databáze je uzamčena.',
 	'categoryselect-edit-abort' => 'Změna, o kterou jste se pokusili, byla zrušena rozšířením.',
-	'tog-disablecategoryselect' => 'Zakázat značení kategorií',
+	'tog-disablecategoryselect' => 'Zakázat značení kategorií (platné pouze, pokud bylo editování ve vizuálním režimu zakázáno)',
+	'tog-disablecategoryselect-v2' => 'Zakázat modul kategorií ve zdrojovém režimu',
 );
 
 /** German (Deutsch)
@@ -337,7 +340,9 @@ $messages['fi'] = array(
 	'categoryselect-error-not-exist' => 'Artikkelia [id=$1] ei ole olemassa.',
 	'categoryselect-error-user-rights' => 'Käyttöoikeusvirhe.',
 	'categoryselect-error-db-locked' => 'Tietokanta on lukittu.',
+	'categoryselect-edit-abort' => 'Laajennusriippuvuus keskeytti yrittämäsi muutoksen',
 	'tog-disablecategoryselect' => 'Poista luokkamoduuli käytöstä (koskee vain, jos visuaalisessa tilassa muokkaaminen on poistettu käytöstä)',
+	'tog-disablecategoryselect-v2' => 'Poista luokkamoduuli käytöstä lähdekooditilassa',
 );
 
 /** French (Français)
@@ -367,6 +372,7 @@ $messages['fr'] = array(
 	'categoryselect-error-db-locked' => 'La base de données est verrouillée.',
 	'categoryselect-edit-abort' => "La modification que vous avez essayé de faire a été arrêtée par un crochet d'une extension",
 	'tog-disablecategoryselect' => "Désactiver le module des catégories (valable uniquement si l'édition en mode visuel a été désactivée)",
+	'tog-disablecategoryselect-v2' => 'Désactiver le module Catégorie en mode Source',
 );
 
 /** Galician (Galego)
@@ -394,6 +400,7 @@ $messages['gl'] = array(
 	'categoryselect-error-db-locked' => 'A base de datos está bloqueada.',
 	'categoryselect-edit-abort' => 'O asociador da extensión abortou a modificación que intentou realizar',
 	'tog-disablecategoryselect' => 'Desactivar o módulo de categorías (só se aplica se a edición no modo visual está desactivada)',
+	'tog-disablecategoryselect-v2' => 'Desactivar o módulo de categorías no modo fonte',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -452,6 +459,7 @@ $messages['ia'] = array(
 	'categoryselect-error-db-locked' => 'Le base de datos es blocate.',
 	'categoryselect-edit-abort' => 'Le modification que tu tentava facer ha essite abortate per un extension.',
 	'tog-disablecategoryselect' => 'Disactivar le modulo Categoria (applicabile solmente si le modification in modo visual ha essite disactivate)',
+	'tog-disablecategoryselect-v2' => 'Disactivar le modulo Categoria in modo Fonte',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -568,6 +576,23 @@ $messages['lb'] = array(
 	'categoryselect-error-db-locked' => "D'Datebank ass gespaart.",
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'categoryselect-code-view' => 'Kodo peržiūra',
+	'categoryselect-code-view-placeholder' => 'Pridėkite kategorijas čia pvz. [[Kategorija:Pavadinimas]]',
+	'categoryselect-infobox-caption' => 'Kategorijos nustatymai',
+	'categoryselect-addcategory-button' => 'Pridėti kategoriją',
+	'categoryselect-addcategory-edit' => 'Pridėti kategoriją',
+	'categoryselect-suggest-hint' => 'Baigę paspauskite Enter',
+	'categoryselect-button-save' => 'Išsaugoti',
+	'categoryselect-button-cancel' => 'Atšaukti',
+	'categoryselect-error-not-exist' => 'Straipsnis [id = $1 ] neegzistuoja.',
+	'categoryselect-error-user-rights' => 'Vartotojo teisių klaida.',
+	'categoryselect-error-db-locked' => 'Duomenų bazė užrakinta.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -593,6 +618,7 @@ $messages['mk'] = array(
 	'categoryselect-error-db-locked' => 'Базата на податоци е заклучена.',
 	'categoryselect-edit-abort' => 'Измените кои се обидовте да ги направите се откажани од кука за додатоци',
 	'tog-disablecategoryselect' => 'Оневозможи го модулот за категории (важи само кога е оневозможено уредувањето во режимот „Визуелно“)',
+	'tog-disablecategoryselect-v2' => 'Оневозможи го модулот за Категорија во „Изворен режим“',
 );
 
 /** Malayalam (മലയാളം)
@@ -639,6 +665,36 @@ $messages['ms'] = array(
 	'categoryselect-error-db-locked' => 'Pangkalan data dikunci.',
 	'categoryselect-edit-abort' => 'Pengubahsuaian yang anda cuba buat telah dipaksa henti oleh cangkuk sambungan',
 	'tog-disablecategoryselect' => 'Matikan modul Kategori (hanya jika tidak boleh menyunting dalam mod visual)',
+	'tog-disablecategoryselect-v2' => 'Matikan modil Kategori dalam mod Sumber',
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'categoryselect-desc' => 'Tilbyr et grensesnitt for håndtering av kategorier i artikler uten å redigere hele artikkelen.',
+	'categoryselect-code-view' => 'Kodevisning',
+	'categoryselect-code-view-placeholder' => 'Legg til en kategori her, f. eks. [[Category:Name]]',
+	'categoryselect-visual-view' => 'Visuell visning',
+	'categoryselect-infobox-caption' => 'Kategorivalg',
+	'categoryselect-infobox-category' => 'Oppgi navnet på kategorien:',
+	'categoryselect-infobox-sortkey' => 'Alfabetiser denne artikkelen under kategorisiden «$1» under navnet:',
+	'categoryselect-addcategory-button' => 'Legg til kategori',
+	'categoryselect-addcategory-edit' => 'Legg til en kategori',
+	'categoryselect-suggest-hint' => 'Trykk Enter når du er ferdig',
+	'categoryselect-tooltip' => "'''Nyhet!''' Verktøylinje for kategorimerking. Prøv den eller se [[Help:CategorySelect|her]] for å lære mer",
+	'categoryselect-unhandled-syntax' => 'Uhåndtert syntaks oppdaget - umulig å bytte tilbake til visuell modus.',
+	'categoryselect-edit-summary' => 'Legger til kategorier',
+	'categoryselect-empty-name' => 'Oppgi kategorinavn (del før |)',
+	'categoryselect-button-save' => 'Lagre',
+	'categoryselect-button-cancel' => 'Avbryt',
+	'categoryselect-error-not-exist' => 'Artikkel [id=$1] finnes ikke.',
+	'categoryselect-error-user-rights' => 'Feil med brukerrettigheter.',
+	'categoryselect-error-db-locked' => 'Database er låst.',
+	'categoryselect-edit-abort' => 'Endringene du prøvde å utføre ble avbrutt av en utvidelseskrok',
+	'tog-disablecategoryselect' => 'Deaktiver kategorimodulen (gjelder kun dersom redigering i visuell modus er deaktivert)',
+	'tog-disablecategoryselect-v2' => 'Deaktiver kategorimodulen i kildemodus',
 );
 
 /** Dutch (Nederlands)
@@ -670,6 +726,7 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'categoryselect-error-db-locked' => 'De database is geblokkeerd.',
 	'categoryselect-edit-abort' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook',
 	'tog-disablecategoryselect' => 'Categoriemodule uitschakelen (alleen van toepassing als bewerken in visuele modus is uitgeschakeld)',
+	'tog-disablecategoryselect-v2' => 'Categoriemodule uitschakelen in broncodemodus',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -679,34 +736,6 @@ $messages['nl-informal'] = array(
 	'categoryselect-edit-abort' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'categoryselect-desc' => 'Tilbyr et grensesnitt for håndtering av kategorier i artikler uten å redigere hele artikkelen.',
-	'categoryselect-code-view' => 'Kodevisning',
-	'categoryselect-code-view-placeholder' => 'Legg til en kategori her, f. eks. [[Category:Name]]',
-	'categoryselect-visual-view' => 'Visuell visning',
-	'categoryselect-infobox-caption' => 'Kategorivalg',
-	'categoryselect-infobox-category' => 'Oppgi navnet på kategorien:',
-	'categoryselect-infobox-sortkey' => 'Alfabetiser denne artikkelen under kategorisiden «$1» under navnet:',
-	'categoryselect-addcategory-button' => 'Legg til kategori',
-	'categoryselect-addcategory-edit' => 'Legg til en kategori',
-	'categoryselect-suggest-hint' => 'Trykk Enter når du er ferdig',
-	'categoryselect-tooltip' => "'''Nyhet!''' Verktøylinje for kategorimerking. Prøv den eller se [[Help:CategorySelect|her]] for å lære mer",
-	'categoryselect-unhandled-syntax' => 'Uhåndtert syntaks oppdaget - umulig å bytte tilbake til visuell modus.',
-	'categoryselect-edit-summary' => 'Legger til kategorier',
-	'categoryselect-empty-name' => 'Oppgi kategorinavn (del før |)',
-	'categoryselect-button-save' => 'Lagre',
-	'categoryselect-button-cancel' => 'Avbryt',
-	'categoryselect-error-not-exist' => 'Artikkel [id=$1] finnes ikke.',
-	'categoryselect-error-user-rights' => 'Feil med brukerrettigheter.',
-	'categoryselect-error-db-locked' => 'Database er låst.',
-	'categoryselect-edit-abort' => 'Endringene du prøvde å utføre ble avbrutt av en utvidelseskrok',
-	'tog-disablecategoryselect' => 'Deaktiver kategorimodulen (gjelder kun dersom redigering i visuell modus er deaktivert)',
-);
-
 /** Oriya (ଓଡ଼ିଆ)
  * @author Psubhashish
  */
@@ -714,10 +743,32 @@ $messages['or'] = array(
 	'categoryselect-button-cancel' => 'ନାକଚ',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sovq
+ */
 $messages['pl'] = array(
+	'categoryselect-desc' => 'Umożliwia zarządzanie kategoriami bez potrzeby edytowania całego artykułu',
+	'categoryselect-code-view' => 'Tryb źródłowy',
+	'categoryselect-code-view-placeholder' => 'Dodaj kategorie tutaj, np. [[Kategoria:Nazwa]]',
+	'categoryselect-visual-view' => 'Tryb wizualny',
+	'categoryselect-infobox-caption' => 'Opcje kategorii',
+	'categoryselect-infobox-category' => 'Podaj nazwę kategorii:',
+	'categoryselect-infobox-sortkey' => 'Umieść artykuł na alfabetycznej liście kategorii "$1" pod nazwą:',
+	'categoryselect-addcategory-button' => 'Dodaj kategorię',
+	'categoryselect-addcategory-edit' => 'Dodaj kategorię',
+	'categoryselect-suggest-hint' => 'Naciśnij Enter po zakończeniu',
+	'categoryselect-tooltip' => "'''Nowość!''' Pasek dodawania kategorii. Wypróbuj lub zobacz [[Help:CategorySelect|stronę pomocy]] aby dowiedzieć się więcej",
+	'categoryselect-unhandled-syntax' => 'Wykryto nieobsługiwaną składnię - powrót do trybu wizualnego niemożliwy.',
+	'categoryselect-edit-summary' => 'Dodawanie kategorii',
+	'categoryselect-empty-name' => 'Podaj nazwę kategorii (część przed |)',
 	'categoryselect-button-save' => 'Zapisz',
 	'categoryselect-button-cancel' => 'Anuluj',
+	'categoryselect-error-not-exist' => 'Artykuł [id=$1] nie istnieje.',
+	'categoryselect-error-user-rights' => 'Błąd uprawnień użytkownika.',
+	'categoryselect-error-db-locked' => 'Baza danych jest zablokowana',
+	'categoryselect-edit-abort' => 'Zmiany, które próbowano wprowadzić zostały anulowane przez inne rozszerzenie',
+	'tog-disablecategoryselect' => 'Wyłącz pasek kategorii (tylko gdy edytowanie w trybie wizualnym zostało wyłączone)',
+	'tog-disablecategoryselect-v2' => 'Wyłącz pasek kategorii w trybie źródłowym',
 );
 
 /** Piedmontese (Piemontèis)
@@ -727,11 +778,13 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'categoryselect-desc' => "A dà n'antërfacia për gestì categorìe ant j'artìcoj sensa modifiché tut l'artìcol.",
 	'categoryselect-code-view' => 'Visualisé ël còdes',
+	'categoryselect-code-view-placeholder' => 'Gionta dle categorìe ambelessì, p.e. [[Category:Name]]',
 	'categoryselect-visual-view' => 'Visualisassion visual',
 	'categoryselect-infobox-caption' => 'Opsion ëd categorìa',
 	'categoryselect-infobox-category' => 'Dà ël nòm ëd la categorìa',
 	'categoryselect-infobox-sortkey' => 'Buté st\'artìcol-sì ant la pàgina ëd categorìa "$1" an órdin alfabétich sota ël nòm:',
 	'categoryselect-addcategory-button' => 'Gionta categorìa',
+	'categoryselect-addcategory-edit' => 'Gionta na categorìa',
 	'categoryselect-suggest-hint' => 'Sgnaché su Mandé quand fàit',
 	'categoryselect-tooltip' => "'''Neuv!''' Bara dj'utiss ëd j'etichëtte ëd categorìa. Ch'a la preuva o ch'a varda [[Help:CategorySelect|agiut]] për savèjne ëd pi",
 	'categoryselect-unhandled-syntax' => "Trovà sintassi pa gestìa - a l'é pa possìbil torné andré a modalità visual.",
@@ -743,7 +796,8 @@ $messages['pms'] = array(
 	'categoryselect-error-user-rights' => "Eror dij drit dj'utent.",
 	'categoryselect-error-db-locked' => "La base ëd dàit a l'é blocà.",
 	'categoryselect-edit-abort' => "La modìfica ch'it l'has provà a fé a l'é stàita abortìa da n'agancc ëd n'estension",
-	'tog-disablecategoryselect' => 'Disabìlita etichëtté categorìe',
+	'tog-disablecategoryselect' => "Disabilité ël mòdul dle categorìe (a s'àplica mach se ël modifiché an manera visual a l'é stàit disabilità)",
+	'tog-disablecategoryselect-v2' => 'Disabilité ël mòdul Categorìa an manera Sorgiss',
 );
 
 /** Pashto (پښتو)
@@ -852,6 +906,7 @@ $messages['ru'] = array(
 	'categoryselect-error-db-locked' => 'База данных заблокирована.',
 	'categoryselect-edit-abort' => 'Изменение, которые вы пытались сделать, прервано обработчиком расширения',
 	'tog-disablecategoryselect' => 'Отключить модуль категорий (применяется только при отключенном редактировании в визуальном режиме)',
+	'tog-disablecategoryselect-v2' => 'Отключить модуль Категории в режиме Исходного кода',
 );
 
 /** Slovenian (Slovenščina)
@@ -866,7 +921,7 @@ $messages['sl'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'categoryselect-code-view' => 'Кодни преглед',
+	'categoryselect-code-view' => 'Преглед кода',
 	'categoryselect-visual-view' => 'Визуални преглед',
 	'categoryselect-infobox-caption' => 'Поставке категорије',
 	'categoryselect-infobox-category' => 'Унесите име категорије:',
@@ -906,6 +961,7 @@ $messages['sv'] = array(
 	'categoryselect-error-db-locked' => 'Databasen är låst.',
 	'categoryselect-edit-abort' => 'Ändringen du försökte göra avbröts av en förlängningskrok',
 	'tog-disablecategoryselect' => 'Inaktivera kategorimodul (gäller endast om redigering i visuellt läge har inaktiverats)',
+	'tog-disablecategoryselect-v2' => 'Inaktivera kategorimodulen i källäget',
 );
 
 /** Swahili (Kiswahili) */
@@ -1052,9 +1108,14 @@ $messages['zh'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'categoryselect-addcategory-button' => '添加分类',
+	'categoryselect-addcategory-edit' => '添加分类',
 	'categoryselect-button-save' => '保存',
 	'categoryselect-button-cancel' => '取消',
+	'categoryselect-error-user-rights' => '用户权限错误。',
+	'categoryselect-error-db-locked' => '数据库已锁定。',
 );
 

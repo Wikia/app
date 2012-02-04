@@ -209,6 +209,19 @@ Adakah anda ingin ke [[{{MediaWiki:Mainpage}}|Laman utama]] ataupun [[Special:Ra
 	'outbound-screen-you-are-leaving' => 'Anda sekarang meninggalkan Wikia.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Opprett en ny brukerkonto]] eller [[Special:UserLogin|logg inn til din eksisterende brukerkonto]] for å hoppe over denne siden i fremtiden.',
+	'outbound-screen-already-logged-in-no-link' => 'Det er ikke satt noe mål.
+Det er ingenting å se her.
+
+Vil du gå til [[{{MediaWiki:Mainpage}}|Hovedsiden]] eller kanskje en [[Special:Random|tilfeldig side]]?',
+	'outbound-screen-you-are-leaving' => 'Du forlater nå Wikia.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -231,19 +244,6 @@ Er is hier niets te zien.
 
 Wil je naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een [[Special:Random|Willekeurige pagina]]?',
 	'outbound-screen-you-are-leaving' => 'Je verlaat nu Wikia.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Opprett en ny brukerkonto]] eller [[Special:UserLogin|logg inn til din eksisterende brukerkonto]] for å hoppe over denne siden i fremtiden.',
-	'outbound-screen-already-logged-in-no-link' => 'Det er ikke satt noe mål.
-Det er ingenting å se her.
-
-Vil du gå til [[{{MediaWiki:Mainpage}}|Hovedsiden]] eller kanskje en [[Special:Random|tilfeldig side]]?',
-	'outbound-screen-you-are-leaving' => 'Du forlater nå Wikia.',
 );
 
 /** Occitan (Occitan)

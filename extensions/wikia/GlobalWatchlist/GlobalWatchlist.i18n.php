@@ -207,8 +207,10 @@ Wikia
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author VezonThunder
  */
 $messages['fi'] = array(
+	'globalwatchlist-desc' => 'Lähettää viikkokatsaussähköposteja kaikkien wikien seuratuista sivuista',
 	'tog-watchlistdigest' => 'Lähetä minulle viikottainen tarkkailulistatiivistelmä sähköpostitse',
 	'tog-watchlistdigestclear' => 'Merkitse kaikki sivut viikottaiselta tarkkailulistatiivistelmästä vierailluiksi',
 	'globalwatchlist-see-more' => 'Tarkista lisämuutokset paikallisilta tarkkailulistoilta',
@@ -495,6 +497,38 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Tiada laman blog dijumpai.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'globalwatchlist-desc' => 'Sender ukentlig en sammensatt e-post med overvåkede sider på alle wikier',
+	'tog-watchlistdigest' => 'Send meg en e-post med et ukentlig sammendrag av overvåkningslisten min',
+	'tog-watchlistdigestclear' => 'Marker alle sider fra dette ukentlige sammendraget som besøkt',
+	'globalwatchlist-see-more' => 'Sjekk din lokale overvåkningsliste for flere endringer',
+	'globalwatchlist-digest-email-subject' => 'Ukentlig sammendrag',
+	'globalwatchlist-digest-email-body' => 'Kjære $1,
+
+Dette er en liste over sider på din Wikiaovervåkningsliste som har blitt endret siden du sist besøkte dem.
+
+$2
+
+
+Dette er en liste over bloggsider på din Wikiaovervåkningsliste som har blitt endret eller kommentert siden du sist besøkte dem.
+
+$3
+
+Vennligst kom på besøk og rediger ofte...
+
+Wikia
+
+* For å endre innstillingene dine for overvåkningslistevarsel, besøk http://www.wikia.com/wiki/Special:Preferences
+* For å markere alle sider fra dette ukentlige sammendraget, se valgene i «Overvåkningsliste»-fanen på siden for dine innstillinger',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
+	'globalwatchlist-no-page-found' => 'Ingen side funnet.',
+	'globalwatchlist-no-blog-page-found' => 'Ingen bloggside funnet.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -546,38 +580,6 @@ Groet, Wikia
 
 * Op de pagina http://www.wikia.com/wiki/Special:Preferences kunt u uw instellingen wijzigen voor volglijste-mails.
 * Zie het tabblad "Volglijst" in je voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'globalwatchlist-desc' => 'Sender ukentlig en sammensatt e-post med overvåkede sider på alle wikier',
-	'tog-watchlistdigest' => 'Send meg en e-post med et ukentlig sammendrag av overvåkningslisten min',
-	'tog-watchlistdigestclear' => 'Marker alle sider fra dette ukentlige sammendraget som besøkt',
-	'globalwatchlist-see-more' => 'Sjekk din lokale overvåkningsliste for flere endringer',
-	'globalwatchlist-digest-email-subject' => 'Ukentlig sammendrag',
-	'globalwatchlist-digest-email-body' => 'Kjære $1,
-
-Dette er en liste over sider på din Wikiaovervåkningsliste som har blitt endret siden du sist besøkte dem.
-
-$2
-
-
-Dette er en liste over bloggsider på din Wikiaovervåkningsliste som har blitt endret eller kommentert siden du sist besøkte dem.
-
-$3
-
-Vennligst kom på besøk og rediger ofte...
-
-Wikia
-
-* For å endre innstillingene dine for overvåkningslistevarsel, besøk http://www.wikia.com/wiki/Special:Preferences
-* For å markere alle sider fra dette ukentlige sammendraget, se valgene i «Overvåkningsliste»-fanen på siden for dine innstillinger',
-	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
-	'globalwatchlist-no-page-found' => 'Ingen side funnet.',
-	'globalwatchlist-no-blog-page-found' => 'Ingen bloggside funnet.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -762,6 +764,7 @@ $3
  */
 $messages['sv'] = array(
 	'tog-watchlistdigest' => 'Skicka en sammanfattning av bevakningslistan för veckan via e-post',
+	'tog-watchlistdigestclear' => 'Markera alla sidor från min veckosammanfattning av bevakningslistan som besökta',
 	'globalwatchlist-see-more' => 'Var god kontrollera din lokala bevakningslista för fler ändringar',
 	'globalwatchlist-digest-email-subject' => 'Veckans sammandrag',
 	'globalwatchlist-digest-email-body' => 'Kära $1,

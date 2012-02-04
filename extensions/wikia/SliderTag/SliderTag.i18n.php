@@ -127,20 +127,20 @@ $messages['ms'] = array(
 	'slidertag-featured-wikis' => 'Wiki pilihan',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'slidertag-desc' => 'Gir en generisk måte for brukere å legge til utvalgte glidere',
+	'slidertag-featured-wikis' => 'Utvalgte wikier',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'slidertag-desc' => 'Biedt een algemeen beschikbare manier voor gebruikers om "featured sliders" toe te voegen',
 	'slidertag-featured-wikis' => "Aanbevolen wiki's",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'slidertag-desc' => 'Gir en generisk måte for brukere å legge til utvalgte glidere',
-	'slidertag-featured-wikis' => 'Utvalgte wikier',
 );
 
 /** Polish (Polski)

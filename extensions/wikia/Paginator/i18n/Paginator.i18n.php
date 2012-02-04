@@ -79,7 +79,9 @@ $messages['es'] = array(
 	'paginator-back' => 'Atrás',
 );
 
-/** French (Français) */
+/** French (Français)
+ * @author Wyz
+ */
 $messages['fr'] = array(
 	'paginator-next' => 'Suivant',
 	'paginator-back' => 'Retour',
@@ -160,6 +162,14 @@ $messages['ms'] = array(
 	'paginator-back' => 'Kembali',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'paginator-next' => 'Neste',
+	'paginator-back' => 'Tilbake',
+);
+
 /** Nepali (नेपाली)
  * @author Bhawani Gautam
  * @author Bhawani Gautam Rhk
@@ -175,14 +185,6 @@ $messages['ne'] = array(
 $messages['nl'] = array(
 	'paginator-next' => 'Volgende',
 	'paginator-back' => 'Vorige',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'paginator-next' => 'Neste',
-	'paginator-back' => 'Tilbake',
 );
 
 /** Polish (Polski)
@@ -245,6 +247,14 @@ $messages['sw'] = array(
 $messages['tl'] = array(
 	'paginator-next' => 'Susunod',
 	'paginator-back' => 'Bumalik',
+);
+
+/** Ukrainian (Українська)
+ * @author A1
+ */
+$messages['uk'] = array(
+	'paginator-next' => 'Далі',
+	'paginator-back' => 'Назад',
 );
 
 /** Vietnamese (Tiếng Việt)

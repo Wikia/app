@@ -20,7 +20,9 @@ $messages['en'] = array(
         'stafflog-filter-type-wikifactory' => 'Wiki status',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author Erdemaslancan
+ */
 $messages['qqq'] = array(
 	'stafflog-desc' => '{{desc}}',
 	'stafflog' => 'Log name.',
@@ -45,6 +47,7 @@ $messages['qqq'] = array(
 * $2 is the name of the wiki of which the status was changed,
 * $3 is the new status of the wiki,
 * $4 is the reason of the change.',
+	'stafflog-filter-user' => '',
 );
 
 /** Bosnian (Bosanski) */
@@ -68,6 +71,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Alphakilo
  * @author Claudia Hattitten
  */
 $messages['de'] = array(
@@ -77,6 +81,19 @@ $messages['de'] = array(
 	'stafflog-piggybackloginmsg' => '$1 Huckepack - $2-Anmeldung als $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Huckepack - $2-Abmeldung von $3-Benutzerkonto',
 	'right-stafflog' => 'Kann das Staff-Log einsehen',
+	'stafflog-wiki-status-change' => '$1 veränderte den Status des  $2 zu $3. Grund:$4',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'Benutzer:',
+	'stafflog-filter-type' => 'Typ:',
+	'stafflog-filter-apply' => 'Filter anwenden',
+	'stafflog-filter-type-wikifactory' => 'Wiki Status',
+);
+
+/** Zazaki (Zazaki)
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'stafflog-filter-user' => 'Karber:',
 );
 
 /** Spanish (Español)
@@ -215,6 +232,27 @@ $messages['ms'] = array(
 	'stafflog-filter-type-wikifactory' => 'Status wiki',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'stafflog-desc' => 'Sentralisert loggføring for ledelse',
+	'stafflog' => 'Ledelseslogg',
+	'stafflog-blockmsg' => '$1 $2 forsøkte å blokkere ledelsesbrukeren $3 på wikien $4. Årsak: $5',
+	'stafflog-piggybackloginmsg' => '$1 operasjon som annen bruker - bruker $2 logger inn som $3',
+	'stafflog-piggybacklogoutmsg' => '$1 operasjon som annen bruker - bruker $2 logger ut fra $3-konto',
+	'right-stafflog' => 'Kan vise ledelsesloggen',
+	'stafflog-wiki-status-change' => '$1 endret statusen på $2 til $3. Årsak: $4',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'Bruker:',
+	'stafflog-filter-type' => 'Type:',
+	'stafflog-filter-apply' => 'Bruk filter',
+	'stafflog-filter-type-block' => 'Blokkeringer',
+	'stafflog-filter-type-piggyback' => 'Operer som annen bruker',
+	'stafflog-filter-type-renameuser' => 'Brukernavnebytter',
+	'stafflog-filter-type-wikifactory' => 'Wiki-status',
+);
+
 /** Dutch (Nederlands)
  * @author Saruman
  * @author Siebrand
@@ -237,32 +275,26 @@ $messages['nl'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wikistatus',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'stafflog-desc' => 'Sentralisert loggføring for ledelse',
-	'stafflog' => 'Ledelseslogg',
-	'stafflog-blockmsg' => '$1 $2 forsøkte å blokkere ledelsesbrukeren $3 på wikien $4. Årsak: $5',
-	'stafflog-piggybackloginmsg' => '$1 operasjon som annen bruker - bruker $2 logger inn som $3',
-	'stafflog-piggybacklogoutmsg' => '$1 operasjon som annen bruker - bruker $2 logger ut fra $3-konto',
-	'right-stafflog' => 'Kan vise ledelsesloggen',
-	'stafflog-wiki-status-change' => '$1 endret statusen på $2 til $3. Årsak: $4',
-	'stafflog-filter-label' => 'Filter',
-	'stafflog-filter-user' => 'Bruker:',
-	'stafflog-filter-type' => 'Type:',
-	'stafflog-filter-apply' => 'Bruk filter',
-	'stafflog-filter-type-block' => 'Blokkeringer',
-	'stafflog-filter-type-piggyback' => 'Operer som annen bruker',
-	'stafflog-filter-type-renameuser' => 'Brukernavnebytter',
-	'stafflog-filter-type-wikifactory' => 'Wiki-status',
-);
-
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Nandy
  */
 $messages['pl'] = array(
+	'stafflog-desc' => 'Scentralizowane logowanie dla personelu',
+	'stafflog' => 'StaffLog',
 	'stafflog-blockmsg' => '$1 $2 próbował zablokować użytkownika z grupy Staff $3 na wiki $4. Powód: $5',
+	'stafflog-piggybackloginmsg' => 'Podłączenie $1 - użytkownik $2 zalogowany jako $3',
+	'stafflog-piggybacklogoutmsg' => 'Podłączenie $1 - użytkownik $2 wylogowany z konta $3',
+	'right-stafflog' => 'Można wyświetlić dziennik grupy Staff',
+	'stafflog-wiki-status-change' => '$1 zmienił status  $2  na  $3 . Przyczyna: $4',
+	'stafflog-filter-label' => 'Filtr',
+	'stafflog-filter-user' => 'Użytkownik:',
+	'stafflog-filter-type' => 'Typ:',
+	'stafflog-filter-apply' => 'Zastosuj filtry',
+	'stafflog-filter-type-block' => 'Blokady',
+	'stafflog-filter-type-piggyback' => 'Podłączenie',
+	'stafflog-filter-type-renameuser' => 'Zmiany nazwy użytkownika',
+	'stafflog-filter-type-wikifactory' => 'Stan wiki',
 );
 
 /** Piedmontese (Piemontèis)
@@ -276,6 +308,15 @@ $messages['pms'] = array(
 	'stafflog-piggybackloginmsg' => "$1 Conession mùltipla - l'utent $2 a l'é intrà com $3",
 	'stafflog-piggybacklogoutmsg' => "$1 Conession mùltipla - l'utent $2 a l'é surtì dal cont $3",
 	'right-stafflog' => "A peul vëdde l'argistr ëd l'echip d'aministrassion",
+	'stafflog-wiki-status-change' => "$1 a l'ha cangià lë stat ëd $2 a $3. Rason: $4",
+	'stafflog-filter-label' => 'Filtr',
+	'stafflog-filter-user' => 'Utent:',
+	'stafflog-filter-type' => 'Sòrt:',
+	'stafflog-filter-apply' => 'Apliché ël filtr',
+	'stafflog-filter-type-block' => 'Blocagi',
+	'stafflog-filter-type-piggyback' => 'Acess mùltipl',
+	'stafflog-filter-type-renameuser' => "Arbatiaje d'utent",
+	'stafflog-filter-type-wikifactory' => 'Stat dla Wiki',
 );
 
 /** Portuguese (Português)
@@ -302,6 +343,7 @@ $messages['pt-br'] = array(
 /** Russian (Русский)
  * @author DCamer
  * @author Eleferen
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'stafflog-desc' => 'Централизованное ведение журнала для сотрудников',
@@ -310,13 +352,27 @@ $messages['ru'] = array(
 	'stafflog-piggybackloginmsg' => 'Вход $1 — участник $2 представился как $3',
 	'stafflog-piggybacklogoutmsg' => 'Выход $1 — участник $2 завершил сеанс учётной записи $3',
 	'right-stafflog' => 'Может просматривать журнал сотрудника',
+	'stafflog-wiki-status-change' => '$1изменил статус  $2  для  $3 . Причина: $4',
+	'stafflog-filter-label' => 'Фильтр',
+	'stafflog-filter-user' => 'Участник:',
+	'stafflog-filter-type' => 'Тип:',
+	'stafflog-filter-apply' => 'Применить фильтр',
+	'stafflog-filter-type-block' => 'Блокировки',
+	'stafflog-filter-type-renameuser' => 'Переименование участника',
+	'stafflog-filter-type-wikifactory' => 'Статус вики',
 );
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'stafflog-blockmsg' => '$1 $2 försökte blockera personalanvändaren $3 på wikin $4. Anledning: $5',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'Användare:',
+	'stafflog-filter-type' => 'Typ:',
+	'stafflog-filter-type-block' => 'Blockeringar',
+	'stafflog-filter-type-wikifactory' => 'Wiki-status',
 );
 
 /** Tagalog (Tagalog)

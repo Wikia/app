@@ -506,6 +506,35 @@ $messages['my'] = array(
 	'protectsite-unprotect' => 'မကာကွယ်တော့ရန်',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'specialprotectsite-desc' => 'Lar en sideadministrator [[Special:ProtectSite|midlertidig blokkere ulike sidemodifikasjoner]]',
+	'protectsite' => 'Beskytt side',
+	'protectsite-text-protect' => '<!-- Instruksjoner/kommentarer/fremgangsmåte for bruk -->',
+	'protectsite-text-unprotect' => '<!-- Instruksjoner/kommentarer når beskyttet -->',
+	'protectsite-title' => 'Innstillinger for sidebeskyttelse',
+	'protectsite-allowall' => 'Alle brukere',
+	'protectsite-allowusersysop' => 'Registrerte brukere og systemoperatører',
+	'protectsite-allowsysop' => 'Kun systemoperatører',
+	'protectsite-createaccount' => 'Tillat opprettelse av nye kontoer av',
+	'protectsite-createpage' => 'Tillat opprettelse av sider av',
+	'protectsite-edit' => 'Tillat redigering av sider av',
+	'protectsite-move' => 'Tillat flytting av sider av',
+	'protectsite-upload' => 'Tillat filopplasting av',
+	'protectsite-timeout' => 'Tidsavbrudd:',
+	'protectsite-timeout-error' => "'''Ugyldig tidsavbrudd.'''",
+	'protectsite-maxtimeout' => 'Maksimum:',
+	'protectsite-comment' => 'Kommentar:',
+	'protectsite-ucomment' => 'Opphev beskyttelse av kommentar:',
+	'protectsite-until' => 'Beskyttet til:',
+	'protectsite-protect' => 'Beskytt',
+	'protectsite-unprotect' => 'Opphev beskyttelse',
+	'protectsite-nologs' => 'ikke vis i logger',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -535,35 +564,6 @@ $messages['nl'] = array(
 	'protectsite-nologs' => 'niet weergeven in logboeken',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'specialprotectsite-desc' => 'Lar en sideadministrator [[Special:ProtectSite|midlertidig blokkere ulike sidemodifikasjoner]]',
-	'protectsite' => 'Beskytt side',
-	'protectsite-text-protect' => '<!-- Instruksjoner/kommentarer/fremgangsmåte for bruk -->',
-	'protectsite-text-unprotect' => '<!-- Instruksjoner/kommentarer når beskyttet -->',
-	'protectsite-title' => 'Innstillinger for sidebeskyttelse',
-	'protectsite-allowall' => 'Alle brukere',
-	'protectsite-allowusersysop' => 'Registrerte brukere og systemoperatører',
-	'protectsite-allowsysop' => 'Kun systemoperatører',
-	'protectsite-createaccount' => 'Tillat opprettelse av nye kontoer av',
-	'protectsite-createpage' => 'Tillat opprettelse av sider av',
-	'protectsite-edit' => 'Tillat redigering av sider av',
-	'protectsite-move' => 'Tillat flytting av sider av',
-	'protectsite-upload' => 'Tillat filopplasting av',
-	'protectsite-timeout' => 'Tidsavbrudd:',
-	'protectsite-timeout-error' => "'''Ugyldig tidsavbrudd.'''",
-	'protectsite-maxtimeout' => 'Maksimum:',
-	'protectsite-comment' => 'Kommentar:',
-	'protectsite-ucomment' => 'Opphev beskyttelse av kommentar:',
-	'protectsite-until' => 'Beskyttet til:',
-	'protectsite-protect' => 'Beskytt',
-	'protectsite-unprotect' => 'Opphev beskyttelse',
-	'protectsite-nologs' => 'ikke vis i logger',
-);
-
 /** Deitsch (Deitsch)
  * @author Xqt
  */
@@ -573,6 +573,7 @@ $messages['pdc'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -586,6 +587,18 @@ $messages['pl'] = array(
 	'protectsite-allowsysop' => 'Tylko administratorzy',
 	'protectsite-createaccount' => 'Pozwól na tworzenie nowych kont przez',
 	'protectsite-createpage' => 'Umożliwia tworzenie stron przez',
+	'protectsite-edit' => 'Zezwalaj na edycję stron przez',
+	'protectsite-move' => 'Pozwól na przenoszenie stron przez',
+	'protectsite-upload' => 'Pozwól na przesyłanie plików przez',
+	'protectsite-timeout' => 'Limit czasu:',
+	'protectsite-timeout-error' => "'''Niepoprawny limit czasu.'''",
+	'protectsite-maxtimeout' => 'Maksimum:',
+	'protectsite-comment' => 'Komentarz:',
+	'protectsite-ucomment' => 'Niechroniony komentarz:',
+	'protectsite-until' => 'Chronione aż do:',
+	'protectsite-protect' => 'Zabezpiecz',
+	'protectsite-unprotect' => 'Nie chroń',
+	'protectsite-nologs' => 'nie wyświetlaj w dziennikach',
 );
 
 /** Piedmontese (Piemontèis)
@@ -755,6 +768,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'specialprotectsite-desc' => 'Låter en administratör [[Special:ProtectSite|tillfälligt blockera olika sidändringar]]',
 	'protectsite' => 'Skydda sida',
 	'protectsite-text-protect' => '<!-- Instruktioner/Kommentarer/Policy för användning -->',
 	'protectsite-text-unprotect' => '<!-- Instruktioner/Kommentarer när skyddad -->',
@@ -771,6 +785,7 @@ $messages['sv'] = array(
 	'protectsite-timeout-error' => "'''Ogiltig Timeout.'''",
 	'protectsite-maxtimeout' => 'Maximal:',
 	'protectsite-comment' => 'Kommentar:',
+	'protectsite-ucomment' => 'Ta bort skydd från kommentar:',
 	'protectsite-until' => 'Skyddad till:',
 	'protectsite-protect' => 'Skydda',
 	'protectsite-unprotect' => 'Oskyddad',

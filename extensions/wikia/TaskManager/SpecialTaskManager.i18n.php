@@ -222,18 +222,7 @@ $messages['ms'] = array(
 	'right-taskmanager-action' => 'Boleh menguruskan tugasan latar belakang',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
-	'taskmanager' => 'Achtergrondtaken weergeven en beheren',
-	'taskmanager_title' => 'Achtergrondtaken weergeven en beheren',
-	'taskmanager_tasklist' => 'Terugkeren naar de takenlijst',
-	'right-taskmanager' => 'Kan achtergrondtaken bekijken',
-	'right-taskmanager-action' => 'Kan achtergrondtaken beheren',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -245,6 +234,17 @@ $messages['nb'] = array(
 	'right-taskmanager-action' => 'Kan ta hånd om bakgrunnsprosesser',
 );
 
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'taskmanager' => 'Achtergrondtaken weergeven en beheren',
+	'taskmanager_title' => 'Achtergrondtaken weergeven en beheren',
+	'taskmanager_tasklist' => 'Terugkeren naar de takenlijst',
+	'right-taskmanager' => 'Kan achtergrondtaken bekijken',
+	'right-taskmanager-action' => 'Kan achtergrondtaken beheren',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -254,11 +254,15 @@ $messages['oc'] = array(
 	'taskmanager_tasklist' => 'Tornar a la lista dels prètzfaches',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
 $messages['pl'] = array(
 	'taskmanager' => 'Zarządzanie zadaniami uruchamianymi w tle',
 	'taskmanager_title' => 'Zarządzanie zadaniami uruchamianymi w tle',
 	'taskmanager_tasklist' => 'Wróc do listy zadań',
+	'right-taskmanager' => 'Można wyświetlić zadania w tle',
+	'right-taskmanager-action' => 'Można zarządzać zadaniami w tle',
 );
 
 /** Piedmontese (Piemontèis)

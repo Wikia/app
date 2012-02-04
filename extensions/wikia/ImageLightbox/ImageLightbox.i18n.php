@@ -101,6 +101,14 @@ $1
 	'lightbox-share-email-error-login' => 'Um E-Mails zu senden, müssen Sie sich anmelden',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'lightbox-send' => 'Bırş',
+	'lightbox-share-button-embed' => 'Embed',
+);
+
 /** Finnish (Suomi)
  * @author Nike
  * @author VezonThunder
@@ -124,6 +132,8 @@ $1
 	'lightbox-share-button-www' => 'Jaa',
 	'lightbox-share-button-embed' => 'Upota',
 	'lightbox-share-email-label' => 'Lähetä kuva sähköpostitse ystävälle',
+	'lightbox-share-email-page-label' => 'Lähetä sivu ystävälle sähköpostitse',
+	'lightbox-share-email-page-label-address' => 'Sähköpostiosoite',
 	'lightbox-share-email-ok-caption' => 'Vahvistus',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Sähköposti|Sähköpostit}} lähetettiin.',
 	'lightbox-share-email-error-caption' => 'Virhe',
@@ -331,6 +341,39 @@ Butiran: $2',
 	'lightbox-share-email-error-noaddress' => 'Tiada alamat yang dinyatakan.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'lightbox_details_tooltip' => 'Vis bildedetaljer',
+	'lightbox-forum' => 'Forum',
+	'lightbox-standard-link' => 'Standard lenke',
+	'lightbox-blog-link' => 'Blogglenke',
+	'lightbox-send' => 'Send',
+	'lightbox-share-description' => 'Bilde i $1 på $2',
+	'lightbox-share-email-subject' => '$1 har sendt deg et bilde på Wikia',
+	'lightbox-share-email-body' => 'Hei,
+
+Noen ønsker å vise deg et bilde på Wikia. Sjekk det ut:
+
+$1
+
+- Wikia-teamet',
+	'lightbox-share-button-email' => 'E-post',
+	'lightbox-share-button-www' => 'Del',
+	'lightbox-share-button-embed' => 'Bygg inn',
+	'lightbox-share-email-label' => 'Send dette bildet til en venn gjennom e-post',
+	'lightbox-share-email-page-label' => 'Send denne siden til en venn på e-post',
+	'lightbox-share-email-page-label-address' => 'E-postadresse',
+	'lightbox-share-email-ok-caption' => 'Bekreftelse',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-posten|E-postene}} ble sendt.',
+	'lightbox-share-email-error-caption' => 'Feil',
+	'lightbox-share-email-error-content' => 'Feil ved sending av {{PLURAL:$1|e-post|e-post}}.
+Detaljer: $2',
+	'lightbox-share-email-error-login' => 'For å sende e-poster må du logge inn',
+	'lightbox-share-email-error-noaddress' => 'Ingen adresse har blitt spesifisert.',
+);
+
 /** Dutch (Nederlands)
  * @author Saruman
  * @author Siebrand
@@ -363,39 +406,6 @@ $1
 Details: $2',
 	'lightbox-share-email-error-login' => 'U moet aanmelden om e-mail te kunnen verzenden',
 	'lightbox-share-email-error-noaddress' => 'Er zijn geen adressen opgegeven.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'lightbox_details_tooltip' => 'Vis bildedetaljer',
-	'lightbox-forum' => 'Forum',
-	'lightbox-standard-link' => 'Standard lenke',
-	'lightbox-blog-link' => 'Blogglenke',
-	'lightbox-send' => 'Send',
-	'lightbox-share-description' => 'Bilde i $1 på $2',
-	'lightbox-share-email-subject' => '$1 har sendt deg et bilde på Wikia',
-	'lightbox-share-email-body' => 'Hei,
-
-Noen ønsker å vise deg et bilde på Wikia. Sjekk det ut:
-
-$1
-
-- Wikia-teamet',
-	'lightbox-share-button-email' => 'E-post',
-	'lightbox-share-button-www' => 'Del',
-	'lightbox-share-button-embed' => 'Bygg inn',
-	'lightbox-share-email-label' => 'Send dette bildet til en venn gjennom e-post',
-	'lightbox-share-email-page-label' => 'Send denne siden til en venn på e-post',
-	'lightbox-share-email-page-label-address' => 'E-postadresse',
-	'lightbox-share-email-ok-caption' => 'Bekreftelse',
-	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-posten|E-postene}} ble sendt.',
-	'lightbox-share-email-error-caption' => 'Feil',
-	'lightbox-share-email-error-content' => 'Feil ved sending av {{PLURAL:$1|e-post|e-post}}.
-Detaljer: $2',
-	'lightbox-share-email-error-login' => 'For å sende e-poster må du logge inn',
-	'lightbox-share-email-error-noaddress' => 'Ingen adresse har blitt spesifisert.',
 );
 
 /** Polish (Polski)

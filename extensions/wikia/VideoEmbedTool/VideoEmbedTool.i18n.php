@@ -1558,6 +1558,93 @@ $messages['my'] = array(
 	'vet-see-all' => 'ဆက်လက်ကြည့်ရန်',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'vet-upload' => 'Full URL',
+	'vet-notlogged' => 'Logg inn eller registrer deg for å sette inn videoer',
+	'vet-find' => 'Finn en video',
+	'vet-thiswiki' => 'Denne Wikien',
+	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'Neste',
+	'vet-find-btn' => 'Søk',
+	'vet-flickr-inf' => 'Søk gjennom forsvarlig lisensierte gratisbilder fra Flickr og importer dem til wikien din.',
+	'vet-conflict-inf' => '<h1>Oops, en video med det navnet finnes allerede.</h1>Hva vil du gjøre med <b>$1</b>?',
+	'vet-rename' => 'Gi video nytt navn',
+	'vet-existing' => 'Bruk eksisterende video',
+	'vet-overwrite' => 'Overskriv den eksisterende videoen med din',
+	'vet-insert' => 'Sett inn',
+	'vet-details-inf' => '<h1>Fildetaljer</h1>Angi et navn for denne videoen. Gi den noe beskrivende.',
+	'vet-name' => 'Navn',
+	'vet-license' => 'Lisens',
+	'vet-details-inf2' => 'Videovisningsvalg',
+	'vet-size' => 'Størrelse',
+	'vet-thumbnail' => 'Miniatyrbilde',
+	'vet-fullsize' => 'Full størrelse ($1x$2px)',
+	'vet-width' => 'Bredde',
+	'vet-layout' => 'Oppsett',
+	'vet-caption' => 'Bildetekst',
+	'vet-optional' => '  (Valgfri)',
+	'vet-insert2' => 'Sett inn video',
+	'vet-update' => 'Oppdater video',
+	'vet-video-replace-link' => 'For å bytte ut denne videoen, vennligst gå til [[:$1]]',
+	'vet-prev' => 'Forrige 8',
+	'vet-next' => 'Neste 8',
+	'vet-metacafe' => 'Metacafe-videoer ({{PLURAL:$1|Ett resultat|$1 resultat}})',
+	'vet-insert3' => 'Sett inn denne videoen',
+	'vet-recent-inf' => 'Nylig innsatte videoer',
+	'vet-thiswiki2' => 'Denne wikiens videoer ({{PLURAL:$1|Ett resultat|$1 resultat}})',
+	'vet-success' => '<h1>Suksess</h1>',
+	'vet-return' => 'Tilbake til redigering',
+	'vet-back' => 'tilbake',
+	'vet-close' => 'lukk',
+	'vet-warn1' => 'Du må spesifisere en spørring først.',
+	'vet-warn2' => 'Vennligst oppgi nettadressen til videoen til vil legge til',
+	'vet-warn3' => 'Vennligst oppgi navnet på videoen du ønsker å legge til',
+	'vet-imagelink' => '<b>Ny!</b> Sett inn videoer',
+	'vet-imagebutton' => 'Sett inn videoer',
+	'vet-license-cc' => 'Lisensiert under Creative Commons Navngivelse-Del på samme vilkår 3.0',
+	'vet-name-incorrect' => 'Dette videonavnet inneholder ugyldige tegn',
+	'vet-description' => 'Skriv inn hele nettadressen fra et av de støttede nettstedene. Se',
+	'vet-uploadtext' => "'''Dette skjemaet gjør at du raskt kan laste opp og vise filer i artikler.'''
+
+''Se også [[Special:Log/upload|opplastingsloggen]] og en [[Special:ImageList|liste over alle opplastede filer]].''",
+	'vet-show-message' => 'vis melding',
+	'vet-hide-message' => 'skjul melding',
+	'vet-hide-license-msg' => 'skjul lisenstekst',
+	'vet-show-license-msg' => 'vis lisenstekst',
+	'vet-max-thumb' => 'maks størrelse for miniatyrbilde overskredet, går tilbake til opprinnelig størrelse',
+	'vet-notallowed' => 'Du kan ikke sette inn videoer på denne wikien',
+	'vet-title' => 'Legg til en video i artikkelen din',
+	'vet-supported' => 'Støttede videosteder:',
+	'vet-preview' => '<i>Denne forhåndsvisningen er ikke i riktig skala</i>',
+	'vet-bad-url' => 'Den oppgitte URL-en er ugyldig',
+	'vet-non-existing' => 'Den oppgitte videoen finnes ikke',
+	'vet-main-info' => '<i>Skriv inn hele nettadressen fra noen av de støttede nettstedene</i>',
+	'vet-page-success' => 'Videosiden ble oppdatert. Du må kanskje slette mellomlagerfiler for videosiden for å se endringen.',
+	'vet-add-button' => 'Legg til video',
+	'vet-added-from-gallery' => 'video lagt til fra videogalleri',
+	'vet-see-all' => 'alle',
+	'vet-bad-search' => 'Feil under lasting av søkespørring.',
+	'vet-no-preview' => 'Du kan ikke legge til video fra artikkel i forhåndsvisningsmodus',
+	'vet-single-success' => 'Video ble vellykket plassert i denne artikkelen',
+	'vet-gallery-create-success' => 'Et videogalleri ble lagt til denne artikkelen',
+	'vet-gallery-add-success' => 'Videoen har blitt lagt til videogalleriet til denne artikkelen',
+	'vet-left' => 'Venstre',
+	'vet-right' => 'Høyre',
+	'vet-gallery' => 'Galleri',
+	'vet-protected' => 'Denne videoen er beskyttet',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'vet-find-btn' => 'खोज्नुहोस',
+);
+
 /** Dutch (Nederlands)
  * @author Naudefj
  * @author Siebrand
@@ -1658,86 +1745,6 @@ $messages['nl-informal'] = array(
 	'vet-page-success' => 'Die videopagina is bijgewerkt.
 Wellicht moet je de videopagina opschonen om de wijzigingen te zien.',
 	'vet-no-preview' => 'Je kunt geen video uit een pagina toevoegen in de voorvertoning',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'vet-upload' => 'Full URL',
-	'vet-notlogged' => 'Logg inn eller registrer deg for å sette inn videoer',
-	'vet-find' => 'Finn en video',
-	'vet-thiswiki' => 'Denne Wikien',
-	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'Neste',
-	'vet-find-btn' => 'Søk',
-	'vet-flickr-inf' => 'Søk gjennom forsvarlig lisensierte gratisbilder fra Flickr og importer dem til wikien din.',
-	'vet-conflict-inf' => '<h1>Oops, en video med det navnet finnes allerede.</h1>Hva vil du gjøre med <b>$1</b>?',
-	'vet-rename' => 'Gi video nytt navn',
-	'vet-existing' => 'Bruk eksisterende video',
-	'vet-overwrite' => 'Overskriv den eksisterende videoen med din',
-	'vet-insert' => 'Sett inn',
-	'vet-details-inf' => '<h1>Fildetaljer</h1>Angi et navn for denne videoen. Gi den noe beskrivende.',
-	'vet-name' => 'Navn',
-	'vet-license' => 'Lisens',
-	'vet-details-inf2' => 'Videovisningsvalg',
-	'vet-size' => 'Størrelse',
-	'vet-thumbnail' => 'Miniatyrbilde',
-	'vet-fullsize' => 'Full størrelse ($1x$2px)',
-	'vet-width' => 'Bredde',
-	'vet-layout' => 'Oppsett',
-	'vet-caption' => 'Bildetekst',
-	'vet-optional' => '  (Valgfri)',
-	'vet-insert2' => 'Sett inn video',
-	'vet-update' => 'Oppdater video',
-	'vet-video-replace-link' => 'For å bytte ut denne videoen, vennligst gå til [[:$1]]',
-	'vet-prev' => 'Forrige 8',
-	'vet-next' => 'Neste 8',
-	'vet-metacafe' => 'Metacafe-videoer ({{PLURAL:$1|Ett resultat|$1 resultat}})',
-	'vet-insert3' => 'Sett inn denne videoen',
-	'vet-recent-inf' => 'Nylig innsatte videoer',
-	'vet-thiswiki2' => 'Denne wikiens videoer ({{PLURAL:$1|Ett resultat|$1 resultat}})',
-	'vet-success' => '<h1>Suksess</h1>',
-	'vet-return' => 'Tilbake til redigering',
-	'vet-back' => 'tilbake',
-	'vet-close' => 'lukk',
-	'vet-warn1' => 'Du må spesifisere en spørring først.',
-	'vet-warn2' => 'Vennligst oppgi nettadressen til videoen til vil legge til',
-	'vet-warn3' => 'Vennligst oppgi navnet på videoen du ønsker å legge til',
-	'vet-imagelink' => '<b>Ny!</b> Sett inn videoer',
-	'vet-imagebutton' => 'Sett inn videoer',
-	'vet-license-cc' => 'Lisensiert under Creative Commons Navngivelse-Del på samme vilkår 3.0',
-	'vet-name-incorrect' => 'Dette videonavnet inneholder ugyldige tegn',
-	'vet-description' => 'Skriv inn hele nettadressen fra et av de støttede nettstedene. Se',
-	'vet-uploadtext' => "'''Dette skjemaet gjør at du raskt kan laste opp og vise filer i artikler.'''
-
-''Se også [[Special:Log/upload|opplastingsloggen]] og en [[Special:ImageList|liste over alle opplastede filer]].''",
-	'vet-show-message' => 'vis melding',
-	'vet-hide-message' => 'skjul melding',
-	'vet-hide-license-msg' => 'skjul lisenstekst',
-	'vet-show-license-msg' => 'vis lisenstekst',
-	'vet-max-thumb' => 'maks størrelse for miniatyrbilde overskredet, går tilbake til opprinnelig størrelse',
-	'vet-notallowed' => 'Du kan ikke sette inn videoer på denne wikien',
-	'vet-title' => 'Legg til en video i artikkelen din',
-	'vet-supported' => 'Støttede videosteder:',
-	'vet-preview' => '<i>Denne forhåndsvisningen er ikke i riktig skala</i>',
-	'vet-bad-url' => 'Den oppgitte URL-en er ugyldig',
-	'vet-non-existing' => 'Den oppgitte videoen finnes ikke',
-	'vet-main-info' => '<i>Skriv inn hele nettadressen fra noen av de støttede nettstedene</i>',
-	'vet-page-success' => 'Videosiden ble oppdatert. Du må kanskje slette mellomlagerfiler for videosiden for å se endringen.',
-	'vet-add-button' => 'Legg til video',
-	'vet-added-from-gallery' => 'video lagt til fra videogalleri',
-	'vet-see-all' => 'alle',
-	'vet-bad-search' => 'Feil under lasting av søkespørring.',
-	'vet-no-preview' => 'Du kan ikke legge til video fra artikkel i forhåndsvisningsmodus',
-	'vet-single-success' => 'Video ble vellykket plassert i denne artikkelen',
-	'vet-gallery-create-success' => 'Et videogalleri ble lagt til denne artikkelen',
-	'vet-gallery-add-success' => 'Videoen har blitt lagt til videogalleriet til denne artikkelen',
-	'vet-left' => 'Venstre',
-	'vet-right' => 'Høyre',
-	'vet-gallery' => 'Galleri',
-	'vet-protected' => 'Denne videoen er beskyttet',
 );
 
 /** Occitan (Occitan)
@@ -1870,7 +1877,7 @@ $messages['pms'] = array(
 	'vet-find' => 'Trové un filmà',
 	'vet-thiswiki' => 'Sta Wiki-sì',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'VA',
+	'vet-upload-btn' => 'Apress',
 	'vet-find-btn' => 'Sërché',
 	'vet-flickr-inf' => 'Sërché che fòto lìbere licensià për da bin su Flickr e amporteje su soa wiki.',
 	'vet-conflict-inf' => "<h1>Contacc, un filmà con col nòm a esist già.</h1>Lòn ch'a veul fé con <b>$1</b>?",
@@ -1909,6 +1916,7 @@ $messages['pms'] = array(
 	'vet-imagebutton' => 'Gionté dij filmà',
 	'vet-license-cc' => 'Licensià sota Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Ël nòm ëd cost filmà a conten dij caràter pa bon',
+	'vet-description' => "Ch'a anserissa l'anliura completa da qualsëssìa dij sit mantnù. Vëdde",
 	'vet-uploadtext' => "'''Cost formolari a-j përmët ëd carié e visualisé an pressa dj'archivi ant j'artìcoj.'''
 
 ''Ch'a bèica ëdcò ël [[Special:Log/upload|registr dij cariagi]] e na [[Special:ImageList|lista ëd tùit j'archivi carià]].''",
@@ -1923,11 +1931,11 @@ $messages['pms'] = array(
 	'vet-preview' => "<i>Costa preuva a l'é nen an scala</i>",
 	'vet-bad-url' => "L'adrëssa dl'aragnà butà a l'é pa bon-a",
 	'vet-non-existing' => 'Ël filmà giontà a esist pa',
-	'vet-main-info' => "<i>Ch'a sërca un filmà o ch'a buta l'adrëssa dl'aragnà completa da un qualsëssìa dij sit sostnù</i>",
+	'vet-main-info' => "<i>Ch'a anserissa l'anliura completa da qualsëssìa dij sit mantnù. </i>",
 	'vet-page-success' => "La pàgina dël filmà a l'é stàita modificà për da bin. A dovrìa purghé la pàgina dël filmà për vëdde ij cangiament.",
 	'vet-add-button' => 'Gionté un filmà',
 	'vet-added-from-gallery' => 'filmà giontà da na galarìa ëd filmà',
-	'vet-see-all' => 'varda tut',
+	'vet-see-all' => 'tuti',
 	'vet-bad-search' => "Eror cariand l'arcesta d'arserca",
 	'vet-no-preview' => 'A peul pa gionté ëd filmà da artìcoj an manera preuva',
 	'vet-single-success' => "Ël filmà a l'é stàit piassà da bin an st'artìcol-sì",
@@ -2277,7 +2285,7 @@ $messages['sr-ec'] = array(
 	'vet-bad-url' => 'URL адреса је неисправна',
 	'vet-non-existing' => 'Наведени видео-снимак не постоји',
 	'vet-add-button' => 'Додај видео-снимак',
-	'vet-see-all' => 'прикажи све',
+	'vet-see-all' => 'све',
 	'vet-left' => 'Лево',
 	'vet-right' => 'Десно',
 	'vet-gallery' => 'Галерија',
@@ -2495,6 +2503,7 @@ $messages['yi'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
  * @author Xiaomingyan
  */
@@ -2502,14 +2511,16 @@ $messages['zh-hans'] = array(
 	'vet-thiswiki' => '这个维基',
 	'vet-upload-btn' => '下一步',
 	'vet-find-btn' => '寻找',
+	'vet-insert' => '插入',
 	'vet-name' => '名',
+	'vet-license' => '授权协议',
 	'vet-size' => '大小',
 	'vet-prev' => '前 8 个',
 	'vet-next' => '后 8 个',
 	'vet-back' => '后退',
 	'vet-close' => '关闭',
 	'vet-show-message' => '显示性息',
-	'vet-see-all' => '查看所有',
+	'vet-see-all' => '全部',
 	'vet-left' => '左',
 	'vet-right' => '右',
 );

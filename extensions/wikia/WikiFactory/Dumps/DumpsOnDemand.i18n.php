@@ -310,6 +310,7 @@ $messages['he'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dj
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -322,6 +323,7 @@ $messages['hu'] = array(
 	'dump-database-request' => 'Frissítés kérése',
 	'dump-database-request-info' => '(Általában hetente készülnek dumpok)',
 	'dump-database-request-submit' => 'Kérelem elküldése',
+	'dump-database-request-already-submitted' => 'Friss dump igény érkezett (kevesebb mint 7 napja)',
 	'dump-database-request-requested' => 'Aadtbázis-dump készítési kérelem elküldve',
 	'dump-database-info-more' => 'További információkat <a href="http://community.wikia.com/wiki/Help:Database_download">itt</a> találsz',
 );
@@ -479,6 +481,25 @@ $messages['my'] = array(
 	'dump-database-curr-pages' => 'ယခုစာမျက်နှာများ',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'dump-database' => 'Databasedumper',
+	'dump-database-info' => 'Databasedumper kan brukes som en personlig sikkerhetskopi (Wikia produserer separate sikkerhetskopier av alle wikier automatisk) eller for vedlikeholdsroboter',
+	'dump-database-curr-pages' => 'Nåværende sider',
+	'dump-database-curr-pages-info' => '(Denne versjonen er vanligvis best for bot-bruk)',
+	'dump-database-full-pages' => 'Nåværende sider og historikk',
+	'dump-database-full-pages-info' => '(Advarsel: Denne filen kan være veldig stor)',
+	'dump-database-request' => 'Be om en oppdatering',
+	'dump-database-request-info' => '(Dumpinger er vanligvis generert ukentlig)',
+	'dump-database-request-submit' => 'Send forespørsel',
+	'dump-database-request-already-submitted' => 'Dumping har nylig blitt etterspurt (mindre enn 7 dager siden)',
+	'dump-database-request-requested' => 'Forespørsel om databasedump sendt',
+	'dump-database-info-more' => 'Vennligst <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> for mer info',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -496,25 +517,6 @@ Wikia maakt automatisch back-ups van alle wiki's.",
 	'dump-database-request-already-submitted' => 'Dump is onlangs gevraagd (minder dan 7 dagen geleden)',
 	'dump-database-request-requested' => 'Het verzoek voor de databasedump is ingediend.',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer informatie</a>.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'dump-database' => 'Databasedumper',
-	'dump-database-info' => 'Databasedumper kan brukes som en personlig sikkerhetskopi (Wikia produserer separate sikkerhetskopier av alle wikier automatisk) eller for vedlikeholdsroboter',
-	'dump-database-curr-pages' => 'Nåværende sider',
-	'dump-database-curr-pages-info' => '(Denne versjonen er vanligvis best for bot-bruk)',
-	'dump-database-full-pages' => 'Nåværende sider og historikk',
-	'dump-database-full-pages-info' => '(Advarsel: Denne filen kan være veldig stor)',
-	'dump-database-request' => 'Be om en oppdatering',
-	'dump-database-request-info' => '(Dumpinger er vanligvis generert ukentlig)',
-	'dump-database-request-submit' => 'Send forespørsel',
-	'dump-database-request-already-submitted' => 'Dumping har nylig blitt etterspurt (mindre enn 7 dager siden)',
-	'dump-database-request-requested' => 'Forespørsel om databasedump sendt',
-	'dump-database-info-more' => 'Vennligst <a href="http://community.wikia.com/wiki/Help:Database_download">se</a> for mer info',
 );
 
 /** Occitan (Occitan)

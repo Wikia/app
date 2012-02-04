@@ -321,6 +321,14 @@ $messages['my'] = array(
 	'ircgate-username' => 'အသုံးပြုသူအမည် :',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'ircgate-username' => 'Brukernavn:',
+	'ircgate-channel' => 'Kanal:',
+);
+
 /** Nepali (नेपाली)
  * @author RajeshPandey
  */
@@ -335,14 +343,6 @@ $messages['ne'] = array(
 $messages['nl'] = array(
 	'ircgate-username' => 'Gebruikersnaam:',
 	'ircgate-channel' => 'Kanaal:',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'ircgate-username' => 'Brukernavn:',
-	'ircgate-channel' => 'Kanal:',
 );
 
 /** Occitan (Occitan)
@@ -442,7 +442,7 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'ircgate-username' => 'వాడుకరిపేరు:',
+	'ircgate-username' => 'వాడుకరి పేరు:',
 );
 
 /** Tetum (Tetun)

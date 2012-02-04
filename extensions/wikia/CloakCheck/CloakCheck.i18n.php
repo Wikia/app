@@ -121,6 +121,13 @@ $messages['de'] = array(
 	'cloakcheck-process-edits-no' => 'Benutzer hat nicht genügend Bearbeitungen.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'cloakcheck-form-username' => 'Namey Qarberi',
+);
+
 /** Spanish (Español)
  * @author Absay
  * @author Locos epraix
@@ -361,28 +368,7 @@ $messages['ms'] = array(
 	'cloakcheck-process-edits-no' => 'Jumlah suntingan pengguna tidak memadai.',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
-	'cloakcheck' => 'Controle in aanmerking komen voor IRC cloak',
-	'cloakcheck-desc' => 'Biedt een interface voor het controleren op de voorwaarden voor een IRC-cloak',
-	'right-cloakcheck' => 'kan IRC-cloak en gerelateerde gegevens van andere gebruikers bekijken',
-	'cloakcheck-form-username' => 'Gebruikersnaam:',
-	'cloakcheck-form-check' => 'Gebruikersnaam controleren',
-	'cloakcheck-form-check-self' => 'Controleren of ik in aanmerking kom voor een IRC-cloak',
-	'cloakcheck-process-empty' => 'Gebruikersnaam kan niet leeg zijn.',
-	'cloakcheck-process-notexist' => 'De gebruikersnaam bestaat niet.',
-	'cloakcheck-process-username' => 'Gebruikersnaam: $1',
-	'cloakcheck-process-accountage-yes' => 'De gebruiker bestaat al lang genoeg.',
-	'cloakcheck-process-accountage-no' => 'De gebruiker bestaat nog niet lang genoeg.',
-	'cloakcheck-process-emailconf-yes' => 'Het e-mailadres is bevestigd.',
-	'cloakcheck-process-emailconf-no' => 'Het e-mailadres is niet bevestigd.',
-	'cloakcheck-process-edits-yes' => 'De gebruiker heeft voldoende bewerkingen gemaakt.',
-	'cloakcheck-process-edits-no' => 'De gebruiker heeft onvoldoende bewerkingen gemaakt.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -404,6 +390,27 @@ $messages['nb'] = array(
 	'cloakcheck-process-edits-no' => 'Bruker har ikke redigeringer nok.',
 );
 
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'cloakcheck' => 'Controle in aanmerking komen voor IRC cloak',
+	'cloakcheck-desc' => 'Biedt een interface voor het controleren op de voorwaarden voor een IRC-cloak',
+	'right-cloakcheck' => 'kan IRC-cloak en gerelateerde gegevens van andere gebruikers bekijken',
+	'cloakcheck-form-username' => 'Gebruikersnaam:',
+	'cloakcheck-form-check' => 'Gebruikersnaam controleren',
+	'cloakcheck-form-check-self' => 'Controleren of ik in aanmerking kom voor een IRC-cloak',
+	'cloakcheck-process-empty' => 'Gebruikersnaam kan niet leeg zijn.',
+	'cloakcheck-process-notexist' => 'De gebruikersnaam bestaat niet.',
+	'cloakcheck-process-username' => 'Gebruikersnaam: $1',
+	'cloakcheck-process-accountage-yes' => 'De gebruiker bestaat al lang genoeg.',
+	'cloakcheck-process-accountage-no' => 'De gebruiker bestaat nog niet lang genoeg.',
+	'cloakcheck-process-emailconf-yes' => 'Het e-mailadres is bevestigd.',
+	'cloakcheck-process-emailconf-no' => 'Het e-mailadres is niet bevestigd.',
+	'cloakcheck-process-edits-yes' => 'De gebruiker heeft voldoende bewerkingen gemaakt.',
+	'cloakcheck-process-edits-no' => 'De gebruiker heeft onvoldoende bewerkingen gemaakt.',
+);
+
 /** Polish (Polski) */
 $messages['pl'] = array(
 	'cloakcheck-form-username' => 'Nazwa użytkownika',
@@ -422,6 +429,7 @@ $messages['pl'] = array(
 $messages['pms'] = array(
 	'cloakcheck' => "Contròl d'amissibilità për la covertura IRC",
 	'cloakcheck-desc' => "A dà n'antërfacia antëgrà për verifiché j'arceste për na covertura IRC",
+	'right-cloakcheck' => "A peul controlé l'anformassion relativa d'un mantel IRC su d'àutri utent",
 	'cloakcheck-form-username' => 'Nòm utent:',
 	'cloakcheck-form-check' => "Controlé lë stranòm d'utent",
 	'cloakcheck-form-check-self' => "Contròla l'amissibilità ëd covertura IRC",

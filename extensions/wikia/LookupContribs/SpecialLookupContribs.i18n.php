@@ -178,7 +178,7 @@ $messages['br'] = array(
 	'lookupcontribsnext' => 'da-heul',
 	'lookupcontribsprevious' => 'kent',
 	'lookupcontribspageremoved' => 'Dilamet :',
-	'lookupcontribsrestore' => 'adsevel',
+	'lookupcontribsrestore' => 'assevel',
 	'lookupcontribslog' => 'marilh',
 	'lookupcontribshist' => 'istor',
 	'lookupcontribsdiff' => 'dish.',
@@ -269,6 +269,13 @@ Geben Sie zur Anzeige der Liste den Benutzernamen unten ein.',
 Bitte überprüfen Sie den angegebenen Benutzernamen auf mögliche Tippfehler.</p>',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'lookupcontribsrecordspager' => "'''$1''' , '''$2''' u '''$3''' basnı",
+);
+
 /** Spanish (Español)
  * @author Peter17
  * @author Translationista
@@ -351,7 +358,7 @@ $messages['fi'] = array(
 	'lookupcontribsdisplaymode' => 'Näyttötila:',
 	'lookupcontribsfullurls' => 'täydelliset verkko-osoitteet',
 	'lookupcontribsgo' => 'Siirry',
-	'lookupcontribsnoresultfound' => 'Tulosta ei löytynyt!',
+	'lookupcontribsnoresultfound' => 'Tuloksia ei löytynyt!',
 	'lookupcontribswikiurl' => 'Verkko-osoite',
 	'lookupcontribslastedited' => 'Viimeksi muokattu',
 	'lookupcontribsnext' => 'seuraava',
@@ -360,6 +367,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  */
@@ -411,6 +419,7 @@ $messages['fr'] = array(
 	'lookupcontribsnormal' => 'récent',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tout',
+	'lookupcontribs-unknown' => 'Inconnu',
 );
 
 /** Galician (Galego)
@@ -464,6 +473,7 @@ $messages['gl'] = array(
 	'lookupcontribsnormal' => 'recentes',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'todas',
+	'lookupcontribs-unknown' => 'Descoñecido',
 );
 
 /** Hungarian (Magyar)
@@ -545,6 +555,7 @@ $messages['ia'] = array(
 	'lookupcontribsnormal' => 'recente',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tote',
+	'lookupcontribs-unknown' => 'Incognite',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -694,6 +705,7 @@ $messages['mk'] = array(
 	'lookupcontribsnormal' => 'скорешни',
 	'lookupcontribsfinal' => 'последни',
 	'lookupcontribsall' => 'сите',
+	'lookupcontribs-unknown' => 'Непознато',
 );
 
 /** Malayalam (മലയാളം)
@@ -774,6 +786,7 @@ Tolong semak ejaan nama pengguna itu.</p>',
 	'lookupcontribsnormal' => 'terkini',
 	'lookupcontribsfinal' => 'akhir',
 	'lookupcontribsall' => 'semua',
+	'lookupcontribs-unknown' => 'Tidak diketahui',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -801,6 +814,63 @@ $messages['my'] = array(
 	'lookupcontribsshowpages' => 'စာမျက်နှာအားလုံး (အမည်ညွှန်း $1)',
 	'lookupcontribscontent' => 'မာတိကာ',
 	'lookupcontribsall' => 'အားလုံး',
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'lookupcontribs' => 'Slå opp bidrag',
+	'lookupcontribstitle' => 'Slå opp bidrag',
+	'lookupcontribsrecentcontributions' => 'Nylige bidrag for $1',
+	'lookupcontribsfinalcontributions' => 'Siste bidrag for $1',
+	'lookupcontribshelp' => 'Denne spesialsiden kan brukes for å vise en brukers bidrag på flere Wikiaer.
+For å vise listen, oppgi brukernavnet under.',
+	'lookupcontribusernotspecify' => 'Du har ikke oppgitt en bruker ennå',
+	'lookupcontribsselectuser' => 'Velg bruker:',
+	'lookupcontribsselectfor' => 'Velg for:',
+	'lookupcontribsdisplaymode' => 'Visningsmodus:',
+	'lookupcontribsselectmodenormal' => 'nylige bidrag for den brukeren',
+	'lookupcontribsselectmodefinal' => 'siste bidrag for den brukeren',
+	'lookupcontribsselectmodeall' => 'alle bidrag for den brukeren',
+	'lookupcontribsfullurls' => 'hele nettadresser',
+	'lookupcontribslinks' => 'bidragslenker',
+	'lookupcontribsgo' => 'Gå',
+	'lookupcontribsinvaliduser' => '<p class="error">Bruker <b>«$1</b> finnes ikke.
+Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error"><b>«$1»</b> er ikke en gyldig visningsmodus.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error"><b>«$1»</b> er ikke en gyldig modus.</p>',
+	'lookupcontribsselectwikis' => 'Velg wikier:',
+	'lookupcontribslistwikiainfo' => 'Liste over wikier der artikler ble redigert av <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Ingen resultat funnet!',
+	'lookupcontribsinvalidresults' => 'Ugyldige resultat!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'DB-navn',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Tittel',
+	'lookupcontribswikioptions' => 'Alternativer',
+	'lookupcontribscontribslink' => 'Bidragslenke',
+	'lookupcontribsdetails' => 'Se detaljer for:',
+	'lookupcontribslastedited' => 'Sist redigert',
+	'lookupcontribsrecordspager' => "Viser '''$1''' til '''$2''' av '''$3''' oppføringer.",
+	'lookupcontribscontribs' => 'bidrag',
+	'lookupcontribsnbrresult' => 'Antall resultat:',
+	'lookupcontribsnext' => 'neste',
+	'lookupcontribsprevious' => 'forrige',
+	'lookupcontribspageremoved' => 'Fjernet:',
+	'lookupcontribsrestore' => 'gjenopprett',
+	'lookupcontribslog' => 'logg',
+	'lookupcontribshist' => 'historikk',
+	'lookupcontribsdiff' => 'forskjell',
+	'right-lookupcontribs' => 'Vis brukerens globale endringer',
+	'lookupcontribsshowpages' => 'Alle sider ($1 navnerom)',
+	'lookupcontribscontent' => 'innhold',
+	'lookupcontribscontribtitleforuser' => 'Bidrag fra bruker:',
+	'lookupcontribsnormal' => 'siste',
+	'lookupcontribsfinal' => 'siste',
+	'lookupcontribsall' => 'alle',
+	'lookupcontribs-unknown' => 'Ukjent',
 );
 
 /** Dutch (Nederlands)
@@ -856,6 +926,7 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'laatste',
 	'lookupcontribsall' => 'alle',
+	'lookupcontribs-unknown' => 'Onbekend',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -863,62 +934,6 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
  */
 $messages['nl-informal'] = array(
 	'lookupcontribusernotspecify' => 'Je hebt nog geen gebruiker opgegeven',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'lookupcontribs' => 'Slå opp bidrag',
-	'lookupcontribstitle' => 'Slå opp bidrag',
-	'lookupcontribsrecentcontributions' => 'Nylige bidrag for $1',
-	'lookupcontribsfinalcontributions' => 'Siste bidrag for $1',
-	'lookupcontribshelp' => 'Denne spesialsiden kan brukes for å vise en brukers bidrag på flere Wikiaer.
-For å vise listen, oppgi brukernavnet under.',
-	'lookupcontribusernotspecify' => 'Du har ikke oppgitt en bruker ennå',
-	'lookupcontribsselectuser' => 'Velg bruker:',
-	'lookupcontribsselectfor' => 'Velg for:',
-	'lookupcontribsdisplaymode' => 'Visningsmodus:',
-	'lookupcontribsselectmodenormal' => 'nylige bidrag for den brukeren',
-	'lookupcontribsselectmodefinal' => 'siste bidrag for den brukeren',
-	'lookupcontribsselectmodeall' => 'alle bidrag for den brukeren',
-	'lookupcontribsfullurls' => 'hele nettadresser',
-	'lookupcontribslinks' => 'bidragslenker',
-	'lookupcontribsgo' => 'Gå',
-	'lookupcontribsinvaliduser' => '<p class="error">Bruker <b>«$1</b> finnes ikke.
-Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
-	'lookupcontribsinvalidviewmode' => '<p class="error"><b>«$1»</b> er ikke en gyldig visningsmodus.</p>',
-	'lookupcontribsinvalidmode' => '<p class="error"><b>«$1»</b> er ikke en gyldig modus.</p>',
-	'lookupcontribsselectwikis' => 'Velg wikier:',
-	'lookupcontribslistwikiainfo' => 'Liste over wikier der artikler ble redigert av <b>$1</b>',
-	'lookupcontribsnoresultfound' => 'Ingen resultat funnet!',
-	'lookupcontribsinvalidresults' => 'Ugyldige resultat!',
-	'lookupcontribswiki' => 'Wiki',
-	'lookupcontribswikidbname' => 'DB-navn',
-	'lookupcontribswikiurl' => 'URL',
-	'lookupcontribswikititle' => 'Tittel',
-	'lookupcontribswikioptions' => 'Alternativer',
-	'lookupcontribscontribslink' => 'Bidragslenke',
-	'lookupcontribsdetails' => 'Se detaljer for:',
-	'lookupcontribslastedited' => 'Sist redigert',
-	'lookupcontribsrecordspager' => "Viser '''$1''' til '''$2''' av '''$3''' oppføringer.",
-	'lookupcontribscontribs' => 'bidrag',
-	'lookupcontribsnbrresult' => 'Antall resultat:',
-	'lookupcontribsnext' => 'neste',
-	'lookupcontribsprevious' => 'forrige',
-	'lookupcontribspageremoved' => 'Fjernet:',
-	'lookupcontribsrestore' => 'gjenopprett',
-	'lookupcontribslog' => 'logg',
-	'lookupcontribshist' => 'historikk',
-	'lookupcontribsdiff' => 'forskjell',
-	'right-lookupcontribs' => 'Vis brukerens globale endringer',
-	'lookupcontribsshowpages' => 'Alle sider ($1 navnerom)',
-	'lookupcontribscontent' => 'innhold',
-	'lookupcontribscontribtitleforuser' => 'Bidrag fra bruker:',
-	'lookupcontribsnormal' => 'siste',
-	'lookupcontribsfinal' => 'siste',
-	'lookupcontribsall' => 'alle',
 );
 
 /** Occitan (Occitan)
@@ -1035,6 +1050,7 @@ $messages['pms'] = array(
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
 	'lookupcontribsall' => 'tuti',
+	'lookupcontribs-unknown' => 'Pa conossù',
 );
 
 /** Pashto (پښتو)
@@ -1191,6 +1207,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -1244,6 +1261,7 @@ $messages['ru'] = array(
 	'lookupcontribsnormal' => 'последние',
 	'lookupcontribsfinal' => 'последняя',
 	'lookupcontribsall' => 'все',
+	'lookupcontribs-unknown' => 'Неизвестный',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
@@ -1282,6 +1300,8 @@ $messages['sv'] = array(
 	'lookupcontribstitle' => 'Kolla upp bidrag',
 	'lookupcontribsrecentcontributions' => 'Senaste bidrag för $1',
 	'lookupcontribsfinalcontributions' => 'Senaste bidrag för $1',
+	'lookupcontribshelp' => 'Denna specialsida kan användas för att visa användares bidrag på flera Wikias.
+För att visa listan, ange användarnamnet nedan.',
 	'lookupcontribusernotspecify' => 'Du inte har angivit en användare ännu',
 	'lookupcontribsselectuser' => 'Välj användare:',
 	'lookupcontribsselectfor' => 'Välj för:',
@@ -1325,6 +1345,7 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribsnormal' => 'senaste',
 	'lookupcontribsfinal' => 'sista',
 	'lookupcontribsall' => 'alla',
+	'lookupcontribs-unknown' => 'Okänd',
 );
 
 /** Swahili (Kiswahili) */

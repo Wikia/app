@@ -98,6 +98,14 @@ $messages['ms'] = array(
 	'confirmemailprompt-error' => 'Adakah ini alamat e-mel anda: <strong>$1</strong>? [[$2|Sahkan]] atau [[$3|tukar]].',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'confirmemailprompt-desc' => 'Viser en advarsel dersom en bruker har en ubekreftet e-postadresse',
+	'confirmemailprompt-error' => 'Er dette e-postadressen din: <strong>$1</strong>? [[$2|Bekreft den]] eller [[$3|endre den]].',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -106,20 +114,20 @@ $messages['nl'] = array(
 	'confirmemailprompt-error' => 'Is dit uw e-mailadres: <strong>$1</strong>? [[$2|Bevestig het]] of [[$3|wijzig het]].',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'confirmemailprompt-desc' => 'Viser en advarsel dersom en bruker har en ubekreftet e-postadresse',
-	'confirmemailprompt-error' => 'Er dette e-postadressen din: <strong>$1</strong>? [[$2|Bekreft den]] eller [[$3|endre den]].',
-);
-
 /** Polish (Polski)
  * @author Woytecr
  */
 $messages['pl'] = array(
 	'confirmemailprompt-desc' => 'Wyświetla ostrzeżenie, jeżeli użytkownik nie potwierdził adresu e-mail',
 	'confirmemailprompt-error' => 'Czy to jest twój adres e-mail: <strong>$1</strong>? [[$2|Potwierdź go]] lub [[$3|zmień]].',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
+$messages['pms'] = array(
+	'confirmemailprompt-desc' => "A smon un mëssagi d'avertiment se n'utent a l'ha n'adrëssa ëd pòsta eletrònica nen confirmà",
+	'confirmemailprompt-error' => "É-lo costa soa adrëssa ëd pòsta eletrònica: <strong>$1</strong>? [[$2|Ch'a la confirma]] o [[$3|ch'a la cangia]].",
 );
 
 /** Russian (Русский)

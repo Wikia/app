@@ -160,20 +160,20 @@ $messages['ms'] = array(
 	'tog-watchlistsubpages' => 'Pantau sublaman',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'wikia-watchsubpages-desc' => 'Autofølging for undersider',
+	'tog-watchlistsubpages' => 'Følg undersider',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'wikia-watchsubpages-desc' => "Subpagina's automatisch volgen",
 	'tog-watchlistsubpages' => "Subpagina's volgen",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'wikia-watchsubpages-desc' => 'Autofølging for undersider',
-	'tog-watchlistsubpages' => 'Følg undersider',
 );
 
 /** Polish (Polski)

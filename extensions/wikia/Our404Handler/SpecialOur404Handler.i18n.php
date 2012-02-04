@@ -476,6 +476,22 @@ Rencana '''$1''' tidak dapat dijumpai.
 * Untuk ke laman utama tapak ini, klik pautan ini: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'our404handler' => 'Feil 404: Finner ikke siden!',
+	'our404handler-oops' => 'Dette er ikke sidene du leter etter. Vennligst fortsett.',
+	'message404' => "
+'''Vi er virkelig lei for dette, men av en eller annen grunn finnes ikke siden du har bedt om.'''
+
+Artikkelen '''$1''' ble ikke funnet.
+
+* Du kan prøve artikkel [[$2]]
+* Du kan bruke søkeboksen til venstre
+* For å gå videre til hovedsiden, trykk på lenken: [{{SERVER}} {{SITENAME}}]",
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -520,22 +536,6 @@ Artikkelen '''$1''' kunne ikkje verta funnen.
 * Du kan prøva artikkelen [[$2]]
 * Du kan nytta søkjeboksen til venstre
 * For å gå til hovudsida på denne nettstaden, trykk på lenkja: [{{SERVER}} {{SITENAME}}]",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'our404handler' => 'Feil 404: Finner ikke siden!',
-	'our404handler-oops' => 'Dette er ikke sidene du leter etter. Vennligst fortsett.',
-	'message404' => "
-'''Vi er virkelig lei for dette, men av en eller annen grunn finnes ikke siden du har bedt om.'''
-
-Artikkelen '''$1''' ble ikke funnet.
-
-* Du kan prøve artikkel [[$2]]
-* Du kan bruke søkeboksen til venstre
-* For å gå videre til hovedsiden, trykk på lenken: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Occitan (Occitan)

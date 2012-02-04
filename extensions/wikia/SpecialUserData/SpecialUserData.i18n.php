@@ -165,6 +165,22 @@ $messages['ms'] = array(
 	'userdata-no-wf' => 'WikiFactory (Kilang Wiki) tidak dihidupkan di wiki ini, maka wgUserData tidak dapat diubah.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'userdata' => 'Hent brukerdata',
+	'userdata-userid-label' => 'Oppgi bruker-ID:',
+	'userdata-submit' => 'Hent data',
+	'specialuserdata-desc' => 'Gir et grensesnitt for endring av wgUserData per wiki.',
+	'userdata-header' => 'Øk wgUserData',
+	'userdata-value' => 'Nåværende verdi av wgUserData er «$1». Trykk på knappen for å sette den til gjeldende dato.',
+	'userdata-updated' => 'wgUserData oppdatert til «$1».',
+	'userdata-not-updated' => 'Kunne ikke oppdatere wgBrukerData.',
+	'userdata-wf-reason' => 'Verdi oppdatert via [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory er ikke aktivert på denne wikien. Kunne ikke endre wgUserData.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -181,20 +197,20 @@ $messages['nl'] = array(
 	'userdata-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgUserData aan te passen.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
+/** Polish (Polski)
+ * @author BeginaFelicysym
  */
-$messages['nb'] = array(
-	'userdata' => 'Hent brukerdata',
-	'userdata-userid-label' => 'Oppgi bruker-ID:',
-	'userdata-submit' => 'Hent data',
-	'specialuserdata-desc' => 'Gir et grensesnitt for endring av wgUserData per wiki.',
-	'userdata-header' => 'Øk wgUserData',
-	'userdata-value' => 'Nåværende verdi av wgUserData er «$1». Trykk på knappen for å sette den til gjeldende dato.',
-	'userdata-updated' => 'wgUserData oppdatert til «$1».',
-	'userdata-not-updated' => 'Kunne ikke oppdatere wgBrukerData.',
-	'userdata-wf-reason' => 'Verdi oppdatert via [[Special:UserData|UserData]]',
-	'userdata-no-wf' => 'WikiFactory er ikke aktivert på denne wikien. Kunne ikke endre wgUserData.',
+$messages['pl'] = array(
+	'userdata' => 'Pobierz dane użytkownika',
+	'userdata-userid-label' => 'Podaj identyfikator użytkownika:',
+	'userdata-submit' => 'Pobieranie danych',
+	'specialuserdata-desc' => 'Zapewnia interfejs do zmiany wgUserData na wiki.',
+	'userdata-header' => 'Powiększanie wgUserData',
+	'userdata-value' => 'Bieżąca wartość wgUserData jest " $1 ". Naciśnij przycisk, aby ustawić ją na bieżący znacznik czasu.',
+	'userdata-updated' => 'wgUserData zaktualizowane do " $1 ".',
+	'userdata-not-updated' => 'Nie udało się zaktualizować wgUserData.',
+	'userdata-wf-reason' => 'Wartość zaktualizowana za pośrednictwem [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory nie jest włączony na tej wiki. Nie można zmienić wgUserData.',
 );
 
 /** Portuguese (Português)
@@ -230,13 +246,27 @@ $messages['pt-br'] = array(
 	'userdata-no-wf' => 'WikiFactory não é permitido nesta wiki. Não é possível alterar wgUserData.',
 );
 
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'userdata' => 'Получить данные участника',
+	'userdata-userid-label' => 'Предоставить ID участника:',
+	'userdata-submit' => 'Получить данные',
+);
+
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'userdata' => 'Hämta användardata',
 	'userdata-userid-label' => 'Ange användar-ID:',
 	'userdata-submit' => 'Hämta data',
+	'userdata-header' => 'Öka wgUserData',
+	'userdata-updated' => 'wgUserData uppdateras till "$1".',
+	'userdata-not-updated' => 'Det gick inte att uppdatera wgUserData.',
+	'userdata-wf-reason' => 'Värdet uppdaterat via [[Special:UserData|UserData]]',
 );
 
 /** Tagalog (Tagalog)

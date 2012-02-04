@@ -141,7 +141,7 @@ $messages['qqq'] = array(
 	'userprofilepage-desc' => '{{desc}}',
 	'userprofilepage-edit-button' => '{{Identical|Edit}}',
 	'userprofilepage-about-article-title' => '{{Identical|About}}',
-	'userprofilepage-user-group-vstf' => 'Volunteer Spam Task Force',
+	'userprofilepage-user-group-vstf' => 'Vandalism/Spam Task Force',
 	'userprofilepage-top-wikis-hide-label' => '{{Identical|Hide}}',
 	'userprofilepage-top-pages-title' => 'Parameters:
 * $1 is a username
@@ -183,8 +183,6 @@ $messages['af'] = array(
 	'recipes-template-user-description-hint' => 'Kort opsomming van die gebruiker',
 	'recipes-template-user-birthdate-label' => 'Geboortedatum',
 	'recipes-template-user-birthdate-hint' => 'Geboortedatum (in enige formaat)',
-	'recipes-template-user-species-label' => 'Soort',
-	'recipes-template-user-species-hint' => 'Soort',
 	'recipes-template-user-abilities-label' => 'Vaardighede',
 	'recipes-template-user-abilities-hint' => 'Vaardighede',
 	'recipes-template-user-gender-label' => 'Geslag',
@@ -301,8 +299,6 @@ $messages['be-tarask'] = array(
 	'recipes-template-user-description-hint' => 'Кароткая інфармацыя пра ўдзельніка',
 	'recipes-template-user-birthdate-label' => 'Дата нараджэньня',
 	'recipes-template-user-birthdate-hint' => 'Дата нараджэньня (у любым фармаце)',
-	'recipes-template-user-species-label' => 'Віды',
-	'recipes-template-user-species-hint' => 'Віды',
 	'recipes-template-user-abilities-label' => 'Здольнасьці',
 	'recipes-template-user-abilities-hint' => 'Здольнасьці',
 	'recipes-template-user-gender-label' => 'Пол',
@@ -409,8 +405,6 @@ $messages['br'] = array(
 	'recipes-template-user-description-hint' => 'Titouroù berr diwar-benn an implijer',
 	'recipes-template-user-birthdate-label' => 'Deiziad ganedigezh',
 	'recipes-template-user-birthdate-hint' => 'Deiziad ganedigezh (e forzh peseurt stumm)',
-	'recipes-template-user-species-label' => 'Spesadoù',
-	'recipes-template-user-species-hint' => 'Spesadoù',
 	'recipes-template-user-abilities-label' => 'Barregezhioù',
 	'recipes-template-user-abilities-hint' => 'Barregezhioù',
 	'recipes-template-user-gender-label' => 'Jener',
@@ -455,8 +449,6 @@ $messages['bs'] = array(
 	'recipes-template-user-description-hint' => 'Kratki podaci o korisniku',
 	'recipes-template-user-birthdate-label' => 'Datum rođenja',
 	'recipes-template-user-birthdate-hint' => 'Datum rođenja (bilo koji format)',
-	'recipes-template-user-species-label' => 'Vrste',
-	'recipes-template-user-species-hint' => 'Vrste',
 	'recipes-template-user-abilities-label' => 'Sposobnosti',
 	'recipes-template-user-abilities-hint' => 'Sposobnosti',
 	'recipes-template-user-gender-label' => 'Spol',
@@ -523,8 +515,6 @@ $messages['ca'] = array(
 	'recipes-template-user-description-hint' => "Informació breu sobre l'usuari",
 	'recipes-template-user-birthdate-label' => 'Data de naixement',
 	'recipes-template-user-birthdate-hint' => 'Data de naixement (en qualsevol format)',
-	'recipes-template-user-species-label' => 'Espècies',
-	'recipes-template-user-species-hint' => 'Espècies',
 	'recipes-template-user-abilities-label' => 'Habilitats',
 	'recipes-template-user-abilities-hint' => 'Habilitats',
 	'recipes-template-user-gender-label' => 'Gènere',
@@ -605,8 +595,6 @@ $messages['de'] = array(
 	'recipes-template-user-description-hint' => 'Kurzinfo über den Benutzer',
 	'recipes-template-user-birthdate-label' => 'Geburtsdatum:',
 	'recipes-template-user-birthdate-hint' => 'Geburtsdatum (in beliebigem Format)',
-	'recipes-template-user-species-label' => 'Art',
-	'recipes-template-user-species-hint' => 'Art',
 	'recipes-template-user-abilities-label' => 'Fähigkeiten',
 	'recipes-template-user-abilities-hint' => 'Fähigkeiten',
 	'recipes-template-user-gender-label' => 'Geschlecht',
@@ -705,8 +693,6 @@ $messages['es'] = array(
 	'recipes-template-user-description-hint' => 'Breve información sobre el usuario',
 	'recipes-template-user-birthdate-label' => 'Fecha de nacimiento',
 	'recipes-template-user-birthdate-hint' => 'Fecha de nacimiento (en cualquier formato)',
-	'recipes-template-user-species-label' => 'Especies',
-	'recipes-template-user-species-hint' => 'Especies',
 	'recipes-template-user-abilities-label' => 'Habilidades',
 	'recipes-template-user-abilities-hint' => 'Habilidades',
 	'recipes-template-user-gender-label' => 'Sexo',
@@ -768,12 +754,13 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
 	'userprofilepage-desc' => 'Fournit une page de profil utilisateur amusante et facile à mettre à jour',
 	'userprofilepage-edit-avatar-label' => 'Modifier l’image',
-	'userprofilepage-users-notes-title' => 'À propos de moi',
+	'userprofilepage-users-notes-title' => 'À mon sujet',
 	'userprofilepage-about-section-title' => 'Mon profil $1',
 	'userprofilepage-edit-button' => 'Modifier',
 	'userprofilepage-about-article-title' => 'À propos',
@@ -825,8 +812,6 @@ $messages['fr'] = array(
 	'recipes-template-user-description-hint' => 'Courtes infos au sujet de l’utilisateur',
 	'recipes-template-user-birthdate-label' => 'Date de naissance',
 	'recipes-template-user-birthdate-hint' => 'Date de naissance (dans n’importe quel format)',
-	'recipes-template-user-species-label' => 'Espèces',
-	'recipes-template-user-species-hint' => 'Espèces',
 	'recipes-template-user-abilities-label' => 'Aptitudes',
 	'recipes-template-user-abilities-hint' => 'Aptitudes',
 	'recipes-template-user-gender-label' => 'Sexe',
@@ -894,8 +879,6 @@ $messages['gl'] = array(
 	'recipes-template-user-description-hint' => 'Breve información do usuario',
 	'recipes-template-user-birthdate-label' => 'Data de nacemento',
 	'recipes-template-user-birthdate-hint' => 'Data de nacemento (en calquera formato)',
-	'recipes-template-user-species-label' => 'Especie',
-	'recipes-template-user-species-hint' => 'Especie',
 	'recipes-template-user-abilities-label' => 'Habilidades',
 	'recipes-template-user-abilities-hint' => 'Habilidades',
 	'recipes-template-user-gender-label' => 'Sexo',
@@ -921,8 +904,6 @@ $messages['hu'] = array(
 	'userprofilepage-user-group-bot' => 'Bot',
 	'userprofilepage-user-group-bureaucrat' => 'Bürokrata',
 	'userprofilepage-user-group-helper' => 'Segítő',
-	'recipes-template-user-species-label' => 'Fajok',
-	'recipes-template-user-species-hint' => 'Fajok',
 	'recipes-template-user-abilities-label' => 'Képességek',
 	'recipes-template-user-abilities-hint' => 'Képességek',
 	'recipes-template-user-gender-label' => 'Nem',
@@ -989,8 +970,6 @@ $messages['ia'] = array(
 	'recipes-template-user-description-hint' => 'Curte informationes super le usator',
 	'recipes-template-user-birthdate-label' => 'Data de nascentia',
 	'recipes-template-user-birthdate-hint' => 'Data de nascentia (in qualcunque formato)',
-	'recipes-template-user-species-label' => 'Specie',
-	'recipes-template-user-species-hint' => 'Specie',
 	'recipes-template-user-abilities-label' => 'Capacitates',
 	'recipes-template-user-abilities-hint' => 'Capacitates',
 	'recipes-template-user-gender-label' => 'Sexo',
@@ -1036,8 +1015,6 @@ $messages['ku-latn'] = array(
  * @author Rsa23899
  */
 $messages['la'] = array(
-	'recipes-template-user-species-label' => 'Speciēs',
-	'recipes-template-user-species-hint' => 'Speciēs',
 	'recipes-template-user-abilities-label' => 'Facultatēs',
 	'recipes-template-user-abilities-hint' => 'Facultatēs',
 	'recipes-template-user-gender-label' => 'Sexus',
@@ -1179,8 +1156,6 @@ $messages['mk'] = array(
 	'recipes-template-user-description-hint' => 'Кратки податоци за корисникот',
 	'recipes-template-user-birthdate-label' => 'Датум на раѓање',
 	'recipes-template-user-birthdate-hint' => 'Датум на раѓање (било кој формат)',
-	'recipes-template-user-species-label' => 'Вид',
-	'recipes-template-user-species-hint' => 'Вид',
 	'recipes-template-user-abilities-label' => 'Способности',
 	'recipes-template-user-abilities-hint' => 'Способности',
 	'recipes-template-user-gender-label' => 'Пол',
@@ -1248,8 +1223,6 @@ $messages['ms'] = array(
 	'recipes-template-user-description-hint' => 'Ringkasan maklumat pengguna',
 	'recipes-template-user-birthdate-label' => 'Tarikh lahir',
 	'recipes-template-user-birthdate-hint' => 'Tarikh lahir (dalam mana-mana format)',
-	'recipes-template-user-species-label' => 'Spesies',
-	'recipes-template-user-species-hint' => 'Spesies',
 	'recipes-template-user-abilities-label' => 'Kebolehan',
 	'recipes-template-user-abilities-hint' => 'Kebolehan',
 	'recipes-template-user-gender-label' => 'Jantina',
@@ -1281,6 +1254,74 @@ $messages['my'] = array(
  */
 $messages['mzn'] = array(
 	'userprofilepage-about-article-title' => 'درباره',
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'userprofilepage-desc' => 'Gir en brukerside som er morsom og enkel å oppdatere',
+	'userprofilepage-edit-avatar-label' => 'Rediger bilde',
+	'userprofilepage-users-notes-title' => 'Om meg',
+	'userprofilepage-about-section-title' => 'Mitt $1-intervju',
+	'userprofilepage-edit-button' => 'Rediger',
+	'userprofilepage-about-article-title' => 'Om',
+	'userprofilepage-about-empty-section' => 'Denne seksjonen er tom. Trykk på {{int:userprofilepage-edit-button}} for å legge til noe her!',
+	'userprofilepage-edit-permision-denied' => 'Redigeringstillatelse nektet',
+	'userprofilepage-edit-permision-denied-info' => 'Du har ikke tillatelse til å redigere andres brukersider eller undersider',
+	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Alle på denne wikien vil gjerne vite mer om deg!</div><a href="$1">Rediger denne seksjonen</a> for å legge til mer om deg selv og fortelle oss om tingene du elsker.',
+	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 har ikke lagt til noen informasjon ennå.</div>Du kan<a href="$2">legge igjen en beskjed</a> istedenfor',
+	'userprofilepage-user-doesnt-exists' => 'Brukeren $1 eksisterer ikke på Wikia. Sjekk ut [[Special:WikiActivity|Wiki-aktivitet]] for å se hvem som er aktiv på denne wikien.',
+	'userprofilepage-user-anon' => 'Denne brukeren har ikke registrert seg på Wikia ennå. [[Special:Signup|Registrer en konto]] og motta redigeringspoeng, utmerkelser og anerkjennelse fra andre redaktører!',
+	'userprofilepage-leave-message' => 'Legg igjen melding',
+	'userprofilepage-edits-since' => 'Redigeringer siden brukeren registrerte seg<br />$1',
+	'userprofilepage-user-last-action-edit' => '$1 redigerte siden <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-new' => '$1 opprettet <a href="$2">$3</a>',
+	'userprofilepage-user-last-action-delete' => '$1 slettet siden <a href="$2">$3</a>',
+	'userprofilepage-user-group-sysop' => 'Admin',
+	'userprofilepage-user-group-staff' => 'Medlem av ledelsen',
+	'userprofilepage-user-group-bot' => 'Robot',
+	'userprofilepage-user-group-bureaucrat' => 'Byråkrat',
+	'userprofilepage-user-group-helper' => 'Hjelper',
+	'userprofilepage-user-group-vstf' => 'VSO',
+	'userprofilepage-user-group-sysop-tooltip' => 'Denne brukeren er en administrator på denne wikien',
+	'userprofilepage-user-group-staff-tooltip' => 'Denne brukeren er et medlem av Wikia-ledelsen',
+	'userprofilepage-user-group-bot-tooltip' => 'Denne brukeren er en robot',
+	'userprofilepage-user-group-bureaucrat-tooltip' => 'Denne brukeren er en byråkrat på denne wikien',
+	'userprofilepage-user-group-helper-tooltip' => 'Denne brukeren er en hjelper på denne wikien',
+	'userprofilepage-user-group-vstf-tooltip' => 'Denne brukeren er et medlem av Spam-oppryderne',
+	'userprofilepage-top-wikis-title' => '$1s toppwikier',
+	'userprofilepage-top-wikis-edit-count' => 'Antall redigeringer',
+	'userprofilepage-top-wikis-hidden-see-more' => 'Du har skjult {{PLURAL:$1|$1 wiki|$1 wikier}}',
+	'userprofilepage-top-wikis-unhide-label' => 'vis',
+	'userprofilepage-top-wikis-hide-label' => 'skjul',
+	'userprofilepage-top-wikis-locked-label' => 'Den gjeldende wikien kan ikke være skjult',
+	'userprofilepage-recent-activity-title' => '$1s siste aktivitet',
+	'userprofilepage-activity-edit' => 'redigerte siden $1',
+	'userprofilepage-activity-new' => 'opprettet $1',
+	'userprofilepage-activity-comment' => 'kommenterte $1',
+	'userprofilepage-activity-image' => 'lastet opp et bilde til $1',
+	'userprofilepage-activity-video' => 'lastet opp en video til $1',
+	'userprofilepage-activity-delete' => 'slettet siden $1',
+	'userprofilepage-activity-talk' => 'la igjen en melding på $1s diskusjonsside',
+	'userprofilepage-recent-activity-default' => '$1 har blitt med på Wikia',
+	'userprofilepage-top-recent-activity-see-more' => 'Se alle',
+	'userprofilepage-top-pages-title' => '$1s $2-toppsider',
+	'userprofilepage-top-page-unhide-label' => 'vis',
+	'userprofilepage-top-pages-hidden-see-more' => 'Du har skjult {{PLURAL:$1|$1 side|$1 sider}}',
+	'userprofilepage-top-pages-default' => 'Du har ingen toppsider ennå. Hvorfor ikke sjekke ut noen <a href="$1">tilfeldige sider</a> på denne wikien?',
+	'recipes-template-user-description-label' => 'Beskrivelse',
+	'recipes-template-user-description-hint' => 'Kort informasjon om brukeren',
+	'recipes-template-user-birthdate-label' => 'Fødselsdato',
+	'recipes-template-user-birthdate-hint' => 'Fødselsdato (i et hvilket som helst format)',
+	'recipes-template-user-abilities-label' => 'Evner',
+	'recipes-template-user-abilities-hint' => 'Evner',
+	'recipes-template-user-gender-label' => 'Kjønn',
+	'recipes-template-user-gender-hint' => 'Kjønn',
+	'recipes-template-user-affiliation-label' => 'Tilknytning',
+	'recipes-template-user-affiliation-hint' => 'Tilknytning',
+	'right-editprofile' => 'Rediger profilen til andre brukere',
 );
 
 /** Nepali (नेपाली)
@@ -1351,8 +1392,6 @@ $messages['nl'] = array(
 	'recipes-template-user-description-hint' => 'Informatie over de gebruiker',
 	'recipes-template-user-birthdate-label' => 'Geboortedatum',
 	'recipes-template-user-birthdate-hint' => 'Geboortedatum (in elke indeling)',
-	'recipes-template-user-species-label' => 'Soort',
-	'recipes-template-user-species-hint' => 'Soort',
 	'recipes-template-user-abilities-label' => 'Deskundigheden',
 	'recipes-template-user-abilities-hint' => 'Deskundigheden',
 	'recipes-template-user-gender-label' => 'Geslacht',
@@ -1373,77 +1412,6 @@ $messages['nl-informal'] = array(
 	'userprofilepage-top-wikis-hidden-see-more' => "Je hebt $1 verborgen {{PLURAL:$1|wiki|wiki's}}",
 	'userprofilepage-top-pages-hidden-see-more' => "Je hebt $1 {{PLURAL:$1|pagina|pagina's}} verborgen",
 	'userprofilepage-top-pages-default' => 'Je hebt nog geen favoriete pagina\'s. Bekijk een aantal <a href="$1">willekeurige pagina\'s</a> op de wiki!',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'userprofilepage-desc' => 'Gir en brukerside som er morsom og enkel å oppdatere',
-	'userprofilepage-edit-avatar-label' => 'Rediger bilde',
-	'userprofilepage-users-notes-title' => 'Om meg',
-	'userprofilepage-about-section-title' => 'Mitt $1-intervju',
-	'userprofilepage-edit-button' => 'Rediger',
-	'userprofilepage-about-article-title' => 'Om',
-	'userprofilepage-about-empty-section' => 'Denne seksjonen er tom. Trykk på {{int:userprofilepage-edit-button}} for å legge til noe her!',
-	'userprofilepage-edit-permision-denied' => 'Redigeringstillatelse nektet',
-	'userprofilepage-edit-permision-denied-info' => 'Du har ikke tillatelse til å redigere andres brukersider eller undersider',
-	'userprofilepage-empty-my-about-me-section' => '<div style="font-size: 20px">Alle på denne wikien vil gjerne vite mer om deg!</div><a href="$1">Rediger denne seksjonen</a> for å legge til mer om deg selv og fortelle oss om tingene du elsker.',
-	'userprofilepage-empty-somebodys-about-me-section' => '<div style="font-size: 20px">$1 har ikke lagt til noen informasjon ennå.</div>Du kan<a href="$2">legge igjen en beskjed</a> istedenfor',
-	'userprofilepage-user-doesnt-exists' => 'Brukeren $1 eksisterer ikke på Wikia. Sjekk ut [[Special:WikiActivity|Wiki-aktivitet]] for å se hvem som er aktiv på denne wikien.',
-	'userprofilepage-user-anon' => 'Denne brukeren har ikke registrert seg på Wikia ennå. [[Special:Signup|Registrer en konto]] og motta redigeringspoeng, utmerkelser og anerkjennelse fra andre redaktører!',
-	'userprofilepage-leave-message' => 'Legg igjen melding',
-	'userprofilepage-edits-since' => 'Redigeringer siden brukeren registrerte seg<br />$1',
-	'userprofilepage-user-last-action-edit' => '$1 redigerte siden <a href="$2">$3</a>',
-	'userprofilepage-user-last-action-new' => '$1 opprettet <a href="$2">$3</a>',
-	'userprofilepage-user-last-action-delete' => '$1 slettet siden <a href="$2">$3</a>',
-	'userprofilepage-user-group-sysop' => 'Admin',
-	'userprofilepage-user-group-staff' => 'Medlem av ledelsen',
-	'userprofilepage-user-group-bot' => 'Robot',
-	'userprofilepage-user-group-bureaucrat' => 'Byråkrat',
-	'userprofilepage-user-group-helper' => 'Hjelper',
-	'userprofilepage-user-group-vstf' => 'VSO',
-	'userprofilepage-user-group-sysop-tooltip' => 'Denne brukeren er en administrator på denne wikien',
-	'userprofilepage-user-group-staff-tooltip' => 'Denne brukeren er et medlem av Wikia-ledelsen',
-	'userprofilepage-user-group-bot-tooltip' => 'Denne brukeren er en robot',
-	'userprofilepage-user-group-bureaucrat-tooltip' => 'Denne brukeren er en byråkrat på denne wikien',
-	'userprofilepage-user-group-helper-tooltip' => 'Denne brukeren er en hjelper på denne wikien',
-	'userprofilepage-user-group-vstf-tooltip' => 'Denne brukeren er et medlem av Spam-oppryderne',
-	'userprofilepage-top-wikis-title' => '$1s toppwikier',
-	'userprofilepage-top-wikis-edit-count' => 'Antall redigeringer',
-	'userprofilepage-top-wikis-hidden-see-more' => 'Du har skjult {{PLURAL:$1|$1 wiki|$1 wikier}}',
-	'userprofilepage-top-wikis-unhide-label' => 'vis',
-	'userprofilepage-top-wikis-hide-label' => 'skjul',
-	'userprofilepage-top-wikis-locked-label' => 'Den gjeldende wikien kan ikke være skjult',
-	'userprofilepage-recent-activity-title' => '$1s siste aktivitet',
-	'userprofilepage-activity-edit' => 'redigerte siden $1',
-	'userprofilepage-activity-new' => 'opprettet $1',
-	'userprofilepage-activity-comment' => 'kommenterte $1',
-	'userprofilepage-activity-image' => 'lastet opp et bilde til $1',
-	'userprofilepage-activity-video' => 'lastet opp en video til $1',
-	'userprofilepage-activity-delete' => 'slettet siden $1',
-	'userprofilepage-activity-talk' => 'la igjen en melding på $1s diskusjonsside',
-	'userprofilepage-recent-activity-default' => '$1 har blitt med på Wikia',
-	'userprofilepage-top-recent-activity-see-more' => 'Se alle',
-	'userprofilepage-top-pages-title' => '$1s $2-toppsider',
-	'userprofilepage-top-page-unhide-label' => 'vis',
-	'userprofilepage-top-pages-hidden-see-more' => 'Du har skjult {{PLURAL:$1|$1 side|$1 sider}}',
-	'userprofilepage-top-pages-default' => 'Du har ingen toppsider ennå. Hvorfor ikke sjekke ut noen <a href="$1">tilfeldige sider</a> på denne wikien?',
-	'recipes-template-user-description-label' => 'Beskrivelse',
-	'recipes-template-user-description-hint' => 'Kort informasjon om brukeren',
-	'recipes-template-user-birthdate-label' => 'Fødselsdato',
-	'recipes-template-user-birthdate-hint' => 'Fødselsdato (i et hvilket som helst format)',
-	'recipes-template-user-species-label' => 'Art',
-	'recipes-template-user-species-hint' => 'Art',
-	'recipes-template-user-abilities-label' => 'Evner',
-	'recipes-template-user-abilities-hint' => 'Evner',
-	'recipes-template-user-gender-label' => 'Kjønn',
-	'recipes-template-user-gender-hint' => 'Kjønn',
-	'recipes-template-user-affiliation-label' => 'Tilknytning',
-	'recipes-template-user-affiliation-hint' => 'Tilknytning',
-	'right-editprofile' => 'Rediger profilen til andre brukere',
 );
 
 /** Polish (Polski)
@@ -1505,8 +1473,6 @@ $messages['pl'] = array(
 	'recipes-template-user-description-hint' => 'Krótka informacja o użytkowniku',
 	'recipes-template-user-birthdate-label' => 'Data urodzenia',
 	'recipes-template-user-birthdate-hint' => 'Data urodzin (dowolny format)',
-	'recipes-template-user-species-label' => 'Rodzaj',
-	'recipes-template-user-species-hint' => 'Rodzaj',
 	'recipes-template-user-abilities-label' => 'Umiejętności',
 	'recipes-template-user-abilities-hint' => 'Umiejętności',
 	'recipes-template-user-gender-label' => 'Płeć',
@@ -1595,8 +1561,6 @@ $messages['pt'] = array(
 	'recipes-template-user-description-hint' => 'Informação breve sobre o utilizador',
 	'recipes-template-user-birthdate-label' => 'Data de nascimento',
 	'recipes-template-user-birthdate-hint' => 'Data de nascimento (em qualquer formato)',
-	'recipes-template-user-species-label' => 'Espécie',
-	'recipes-template-user-species-hint' => 'Espécie',
 	'recipes-template-user-abilities-label' => 'Capacidades',
 	'recipes-template-user-abilities-hint' => 'Capacidades',
 	'recipes-template-user-gender-label' => 'Sexo',
@@ -1676,8 +1640,6 @@ $messages['ru'] = array(
 	'recipes-template-user-description-hint' => 'Краткая информация о пользователе',
 	'recipes-template-user-birthdate-label' => 'Дата рождения',
 	'recipes-template-user-birthdate-hint' => 'Дата рождения (в любом формате)',
-	'recipes-template-user-species-label' => 'Виды',
-	'recipes-template-user-species-hint' => 'Виды',
 	'recipes-template-user-abilities-label' => 'Способности',
 	'recipes-template-user-abilities-hint' => 'Способности',
 	'recipes-template-user-gender-label' => 'Пол',
@@ -1733,12 +1695,11 @@ $messages['sr-ec'] = array(
 	'userprofilepage-top-recent-activity-see-more' => 'Прикажи све &gt;',
 	'userprofilepage-top-pages-title' => '$1 топ $2 страница',
 	'userprofilepage-top-page-unhide-label' => 'откриј',
+	'recipes-template-skip-toggle-types' => 'о кориснику',
 	'recipes-template-user-description-label' => 'Опис',
 	'recipes-template-user-description-hint' => 'Подаци о кориснику',
 	'recipes-template-user-birthdate-label' => 'Датум рођења',
 	'recipes-template-user-birthdate-hint' => 'Датум рођења',
-	'recipes-template-user-species-label' => 'Врста',
-	'recipes-template-user-species-hint' => 'Врста',
 	'recipes-template-user-abilities-label' => 'Могућности',
 	'recipes-template-user-abilities-hint' => 'Могућности',
 	'recipes-template-user-gender-label' => 'Пол',
@@ -1806,8 +1767,6 @@ $messages['sv'] = array(
 	'recipes-template-user-description-hint' => 'Kort info om användaren',
 	'recipes-template-user-birthdate-label' => 'Födelsedatum',
 	'recipes-template-user-birthdate-hint' => 'Födelsedatum (i alla format)',
-	'recipes-template-user-species-label' => 'Arter',
-	'recipes-template-user-species-hint' => 'Arter',
 	'recipes-template-user-abilities-label' => 'Förmågor',
 	'recipes-template-user-abilities-hint' => 'Förmågor',
 	'recipes-template-user-gender-label' => 'Kön',
@@ -1874,8 +1833,6 @@ $messages['tl'] = array(
 	'recipes-template-user-description-hint' => 'Maikling kabatiran tungkol sa tagagamit',
 	'recipes-template-user-birthdate-label' => 'Petsa ng kapanganakan',
 	'recipes-template-user-birthdate-hint' => 'Petsa ng kapanganakan (nasa anumang anyo)',
-	'recipes-template-user-species-label' => 'Mga uri',
-	'recipes-template-user-species-hint' => 'Uri',
 	'recipes-template-user-abilities-label' => 'Mga kakayahan',
 	'recipes-template-user-abilities-hint' => 'Mga kakayahan',
 	'recipes-template-user-gender-label' => 'Kasarian',
@@ -1885,11 +1842,13 @@ $messages['tl'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author A1
  * @author Тест
  */
 $messages['uk'] = array(
 	'userprofilepage-users-notes-title' => 'Про мене',
 	'userprofilepage-edit-button' => 'Редагувати',
+	'userprofilepage-about-article-title' => 'Про',
 	'userprofilepage-leave-message' => 'Залишити повідомлення',
 	'userprofilepage-user-group-sysop' => 'Адміністратор',
 	'userprofilepage-user-group-staff' => 'Співробітник',
@@ -1976,17 +1935,45 @@ $messages['vi'] = array(
 	'right-editprofile' => 'Sửa đổi trang cá nhân thành viên khác',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'userprofilepage-about-article-title' => 'וועגן',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
+ * @author Hzy980512
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
+	'userprofilepage-edit-avatar-label' => '编辑图片',
 	'userprofilepage-users-notes-title' => '关于我',
+	'userprofilepage-edit-button' => '编辑',
 	'userprofilepage-about-article-title' => '关于',
 	'userprofilepage-user-group-sysop' => '管理员',
+	'userprofilepage-user-group-staff' => '职员',
 	'userprofilepage-user-group-bot' => '机器人',
+	'userprofilepage-user-group-bureaucrat' => '行政员',
+	'userprofilepage-user-group-helper' => '助手',
+	'userprofilepage-user-group-vstf' => '义工防滥发特遣队',
 	'userprofilepage-user-group-sysop-tooltip' => '这个用户是这个维基的管理员',
+	'userprofilepage-user-group-staff-tooltip' => '这个用户是一位Wikia职员',
 	'userprofilepage-user-group-bot-tooltip' => '这个用户是一个机器人',
+	'userprofilepage-user-group-helper-tooltip' => '这个用户是一位助手',
+	'userprofilepage-user-group-vstf-tooltip' => '这个用户是一位义工防滥发特遣队员',
 	'recipes-template-user-description-label' => '说明',
+	'recipes-template-user-description-hint' => '用户简介',
+	'recipes-template-user-birthdate-label' => '出生日期',
+	'recipes-template-user-birthdate-hint' => '出生日期（任何格式）',
+	'recipes-template-user-abilities-label' => '能力',
+	'recipes-template-user-abilities-hint' => '能力',
+	'recipes-template-user-gender-label' => '性别',
+	'recipes-template-user-gender-hint' => '性别',
+	'recipes-template-user-affiliation-label' => '联系',
+	'recipes-template-user-affiliation-hint' => '联系',
+	'right-editprofile' => '编辑其他用户的资料',
 );
 

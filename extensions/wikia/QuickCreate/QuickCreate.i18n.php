@@ -191,20 +191,20 @@ $messages['ms'] = array(
 	'quickcreate' => 'serahkan resipi anda',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'quickcreate-desc' => 'Legger til en «opprett ny side»-knapp med muligheten for å logge inn for anonyme brukere',
+	'quickcreate' => 'send inn din oppskrift',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'quickcreate-desc' => 'Voegt een knop voor nieuwe pagina aanmaken toe met de mogelijkheid aan te melden voor anonieme gebruikers',
 	'quickcreate' => 'recept toevoegen',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'quickcreate-desc' => 'Legger til en «opprett ny side»-knapp med muligheten for å logge inn for anonyme brukere',
-	'quickcreate' => 'send inn din oppskrift',
 );
 
 /** Occitan (Occitan)

@@ -446,6 +446,30 @@ $messages['my'] = array(
 	'whereisextension-search-type' => 'အမျိုးအစား :',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'whereisextension' => 'Hvor er utvidelsen',
+	'whereisextension-submit' => 'Søk',
+	'whereisextension-list' => 'Liste over wikier med matchende kriterier',
+	'whereisextension-isset' => 'er satt til',
+	'whereisextension-filter' => 'Filter',
+	'whereisextension-all-groups' => 'Alle grupper',
+	'whereisextension-name-contains' => 'variabelnavn inneholder',
+	'whereisextension-search-like-value' => 'Lik:',
+	'whereisextension-search-type' => 'Type:',
+	'whereisextension-search-type-bool' => 'Boolsk',
+	'whereisextension-search-type-full' => 'Lik',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'whereisextension-submit' => 'खोज्नुहोस्',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -461,23 +485,6 @@ $messages['nl'] = array(
 	'whereisextension-search-type' => 'Type:',
 	'whereisextension-search-type-bool' => 'Booleaanse operator',
 	'whereisextension-search-type-full' => 'Zoals',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'whereisextension' => 'Hvor er utvidelsen',
-	'whereisextension-submit' => 'Søk',
-	'whereisextension-list' => 'Liste over wikier med matchende kriterier',
-	'whereisextension-isset' => 'er satt til',
-	'whereisextension-filter' => 'Filter',
-	'whereisextension-all-groups' => 'Alle grupper',
-	'whereisextension-name-contains' => 'variabelnavn inneholder',
-	'whereisextension-search-like-value' => 'Lik:',
-	'whereisextension-search-type' => 'Type:',
-	'whereisextension-search-type-bool' => 'Boolsk',
-	'whereisextension-search-type-full' => 'Lik',
 );
 
 /** Occitan (Occitan)
@@ -501,6 +508,7 @@ $messages['pdc'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -511,6 +519,10 @@ $messages['pl'] = array(
 	'whereisextension-filter' => 'Filtr',
 	'whereisextension-all-groups' => 'Wszystkie grupy',
 	'whereisextension-name-contains' => 'zawiera zmienną o takiej nazwie',
+	'whereisextension-search-like-value' => 'Podobnie do:',
+	'whereisextension-search-type' => 'Typ:',
+	'whereisextension-search-type-bool' => 'Wartość logiczna',
+	'whereisextension-search-type-full' => 'Podobnie do',
 );
 
 /** Piedmontese (Piemontèis)

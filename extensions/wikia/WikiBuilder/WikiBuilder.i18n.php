@@ -945,6 +945,85 @@ $messages['my'] = array(
 	'owb-status-saving' => 'သိမ်းနေသည်',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Opprett Wiki-veiviser]]',
+	'owb-title' => 'Wiki-bygger',
+	'owb-headline' => 'Hei, $1',
+	'owb-button-skip' => 'Hopp over',
+	'owb-button-save-intro' => 'Lagre intro',
+	'owb-button-save-theme' => 'Lagre tema',
+	'owb-button-save-pages' => 'Lagre sider',
+	'owb-button-done' => 'Fortsett til wikien din',
+	'owb-button-plus' => 'Velg Wikia+Plus',
+	'owb-step1' => 'Trinn 1',
+	'owb-step1-label' => 'Hva handler det om?',
+	'owb-step1-label-formatted' => 'Hva<br />handler det om?',
+	'owb-step1-instruction' => 'Skriv en kort intro til hjemsiden. Gjør den morsom og fengende for å gi andre lyst til å bidra til prosjektet ditt.',
+	'owb-step1-sample' => 'Eksempel på wikiens Hjem-side',
+	'owb-step2' => 'Trinn 2',
+	'owb-step2-label' => 'Velg et tema',
+	'owb-step2-label-formatted' => 'Velg</br >et tema',
+	'owb-step2-instruction1' => 'Det er lett å gjøre wikien din unik. Bare velg et tema som passer prosjektet ditt.',
+	'owb-step2-instruction2' => 'Du kan endre temaet eller utforme ditt eget når som helst.',
+	'owb-step2-gallery' => 'Temagalleri',
+	'owb-step3' => 'Trinn 3',
+	'owb-step3-label' => 'Opprett noen sider',
+	'owb-step3-label-formatted' => 'Opprett<br />noen sider',
+	'owb-step3-instruction' => 'For å starte wikien din må du legge til noen sider. Du kan legge til flere når du vil.',
+	'owb-step3-your-pages' => 'Dine sidenavn',
+	'owb-step3-examples1-title' => 'Eksempel: Navn på sider om monsterfilmer',
+	'owb-step3-examples1' => '<li>Frankensteins monster</li>
+<li>Ulvemannen</li>
+<li>Hyleren</li>
+<li>Mumien</li>
+<li>Vokshuset</li>
+<li>Sumptingen</li>',
+	'owb-step3-examples2-title' => 'Eksempel: Navn på sider om brettspill',
+	'owb-step3-examples2' => '<li>Monopol</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
+	'owb-step4' => 'Trinn 4',
+	'owb-step4-label-formatted' => 'Premium-<br />plan',
+	'owb-step4-label' => 'Legg til en premiumplan',
+	'owb-step4-instruction' => 'Velg å fjerne annonser med Wikia+Plus eller fortsett med Wikia Basic.',
+	'owb-step4-basic-price' => '<strong>$0</strong>/måned',
+	'owb-step4-basic-details' => '<ul><li>Wikia-annonser for brukere som ikke er logget inn</li>
+<li>Ubegrenset antall sider og bilder</li>
+<li>Enkle verktøy for wiki-redaktører</li>
+<li>Koble til og lik på Facebook</li>
+<li>Ubegrenset båndbredde</li></ul>',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/måned',
+	'owb-step4-plus-details' => '<ul><li><strong>Ingen annonser!<small><em>(begrensninger finnes for store wikier)</em></small></strong></li>
+<li>Ubegrenset antall sider og bilder</li>
+<li>Enkle verktøy for wiki-redaktører</li>
+<li>Koble til og lik på Facebook</li>
+<li>Ubegrenset båndbredde</li></ul>',
+	'owb-step4-error-caption' => 'Feil',
+	'owb-step4-error-upgrade-content' => 'Denne wikien kan ikke oppgraderes til Plus.',
+	'owb-step4-error-token-content' => 'Klarte ikke å motta en gyldig kode fra PayPal.',
+	'owb-status-saving' => 'Lagrer',
+	'owb-unable-to-edit-description' => 'Beskrivelsen er ikke redigerbar med Wiki-byggeren',
+	'owb-readonly-try-again' => 'Wikien er for øyeblikket i skrivebeskyttet modus. Vennligst prøv igjen om en liten stund',
+	'owb-error-saving-articles' => 'Feil under lagring av sider',
+	'owb-api-error-title' => 'Feil under behandling av forespørselen',
+	'owb-api-error' => 'Vennligst prøv igjen eller hopp over dette trinnet',
+	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
+Skriv sidens første avsnitt her . 
+
+==Overskrift for seksjon==
+
+Skriv sidens første seksjon her. Husk å inkludere lenker til andre sider på wikien.
+
+==Overskrift for seksjon==
+
+Skriv sidens andre seksjon her. Ikke glem å legge til en kategori for å hjelpe folk med å finne siden.',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -1048,83 +1127,83 @@ Schrijf hier het eerste deel van uw pagina. Denk eraan dat je verwijzingen naar 
 Schrijf hier het tweede deel van je pagina. Vergeet niet een categorie toe te voegen zodat andere gebruikers de pagina kunnen vinden.",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
+/** Polish (Polski)
+ * @author Sovq
  */
-$messages['nb'] = array(
-	'wikibuilder-desc' => '[[Special:WikiBuilder|Opprett Wiki-veiviser]]',
-	'owb-title' => 'Wiki-bygger',
-	'owb-headline' => 'Hei, $1',
-	'owb-button-skip' => 'Hopp over',
-	'owb-button-save-intro' => 'Lagre intro',
-	'owb-button-save-theme' => 'Lagre tema',
-	'owb-button-save-pages' => 'Lagre sider',
-	'owb-button-done' => 'Fortsett til wikien din',
-	'owb-button-plus' => 'Velg Wikia+Plus',
-	'owb-step1' => 'Trinn 1',
-	'owb-step1-label' => 'Hva handler det om?',
-	'owb-step1-label-formatted' => 'Hva<br />handler det om?',
-	'owb-step1-instruction' => 'Skriv en kort intro til hjemsiden. Gjør den morsom og fengende for å gi andre lyst til å bidra til prosjektet ditt.',
-	'owb-step1-sample' => 'Eksempel på wikiens Hjem-side',
-	'owb-step2' => 'Trinn 2',
-	'owb-step2-label' => 'Velg et tema',
-	'owb-step2-label-formatted' => 'Velg</br >et tema',
-	'owb-step2-instruction1' => 'Det er lett å gjøre wikien din unik. Bare velg et tema som passer prosjektet ditt.',
-	'owb-step2-instruction2' => 'Du kan endre temaet eller utforme ditt eget når som helst.',
-	'owb-step2-gallery' => 'Temagalleri',
-	'owb-step3' => 'Trinn 3',
-	'owb-step3-label' => 'Opprett noen sider',
-	'owb-step3-label-formatted' => 'Opprett<br />noen sider',
-	'owb-step3-instruction' => 'For å starte wikien din må du legge til noen sider. Du kan legge til flere når du vil.',
-	'owb-step3-your-pages' => 'Dine sidenavn',
-	'owb-step3-examples1-title' => 'Eksempel: Navn på sider om monsterfilmer',
-	'owb-step3-examples1' => '<li>Frankensteins monster</li>
-<li>Ulvemannen</li>
-<li>Hyleren</li>
-<li>Mumien</li>
-<li>Vokshuset</li>
-<li>Sumptingen</li>',
-	'owb-step3-examples2-title' => 'Eksempel: Navn på sider om brettspill',
+$messages['pl'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Kreator budowania wiki]]',
+	'owb-title' => 'Kreator Budowania Wiki',
+	'owb-headline' => 'Witaj, $1',
+	'owb-button-skip' => 'Pomiń',
+	'owb-button-save-intro' => 'Zapisz Intro',
+	'owb-button-save-theme' => 'Zapisz Motyw',
+	'owb-button-save-pages' => 'Zapisz Strony',
+	'owb-button-done' => 'Dalej do Twojej wiki',
+	'owb-button-plus' => 'Wybierz Wikia+Plus',
+	'owb-step1' => 'Krok 1',
+	'owb-step1-label' => 'O czym jest?',
+	'owb-step1-label-formatted' => 'O czym<br />jest?',
+	'owb-step1-instruction' => 'Napisz krótkie wprowadzenie dla swojej wiki. Zadbaj o to aby zachęcało innych do edytowania.',
+	'owb-step1-sample' => 'Przykładowa Strona Główna Wiki',
+	'owb-step2' => 'Krok 2',
+	'owb-step2-label' => 'Wybierz motyw',
+	'owb-step2-label-formatted' => 'Wybierz<br />motyw',
+	'owb-step2-instruction1' => 'Twoja wiki może wyglądać wyjątkowo. Wybierz motyw kolorystyczny pasujący do Twojego tematu.',
+	'owb-step2-instruction2' => 'Możesz zmienić motyw czy układ w dowolnej chwili.',
+	'owb-step2-gallery' => 'Galeria Motywów',
+	'owb-step3' => 'Krok 3',
+	'owb-step3-label' => 'Utwórz kilka stron',
+	'owb-step3-label-formatted' => 'Utwórz<br />kilka stron',
+	'owb-step3-instruction' => 'Aby rozkręcić swoją wiki, będziesz potrzebować nowych stron. Możesz dodać więcej w dowolnej chwili.',
+	'owb-step3-your-pages' => 'Nazwy Stron',
+	'owb-step3-examples1-title' => 'Przykład: Nazwy Stron o Filmach z Potworami',
+	'owb-step3-examples1' => '<li>Potwór Frankensteina</li>
+<li>Wilkołak</li>
+<li>Howling</li>
+<li>Mumia</li>
+<li>Dom woskowych ciał</li>
+<li>Z bagien</li>',
+	'owb-step3-examples2-title' => 'Przykład: Nazwy Stron Gier Planszowych',
 	'owb-step3-examples2' => '<li>Monopol</li>
-<li>Risk</li><li>Scrabble</li>
-<li>Trivial Pursuit</li>
-<li>Pictionary</li>
-<li>Taboo</li>',
-	'owb-step4' => 'Trinn 4',
-	'owb-step4-label-formatted' => 'Premium-<br />plan',
-	'owb-step4-label' => 'Legg til en premiumplan',
-	'owb-step4-instruction' => 'Velg å fjerne annonser med Wikia+Plus eller fortsett med Wikia Basic.',
-	'owb-step4-basic-price' => '<strong>$0</strong>/måned',
-	'owb-step4-basic-details' => '<ul><li>Wikia-annonser for brukere som ikke er logget inn</li>
-<li>Ubegrenset antall sider og bilder</li>
-<li>Enkle verktøy for wiki-redaktører</li>
-<li>Koble til og lik på Facebook</li>
-<li>Ubegrenset båndbredde</li></ul>',
-	'owb-step4-plus-price' => '<strong>$$1</strong>/måned',
-	'owb-step4-plus-details' => '<ul><li><strong>Ingen annonser!<small><em>(begrensninger finnes for store wikier)</em></small></strong></li>
-<li>Ubegrenset antall sider og bilder</li>
-<li>Enkle verktøy for wiki-redaktører</li>
-<li>Koble til og lik på Facebook</li>
-<li>Ubegrenset båndbredde</li></ul>',
-	'owb-step4-error-caption' => 'Feil',
-	'owb-step4-error-upgrade-content' => 'Denne wikien kan ikke oppgraderes til Plus.',
-	'owb-step4-error-token-content' => 'Klarte ikke å motta en gyldig kode fra PayPal.',
-	'owb-status-saving' => 'Lagrer',
-	'owb-unable-to-edit-description' => 'Beskrivelsen er ikke redigerbar med Wiki-byggeren',
-	'owb-readonly-try-again' => 'Wikien er for øyeblikket i skrivebeskyttet modus. Vennligst prøv igjen om en liten stund',
-	'owb-error-saving-articles' => 'Feil under lagring av sider',
-	'owb-api-error-title' => 'Feil under behandling av forespørselen',
-	'owb-api-error' => 'Vennligst prøv igjen eller hopp over dette trinnet',
+<li>Ryzyko</li><li>Scrabble</li>
+<li>Chińczyk</li>
+<li>Jenga</li>
+<li>Tabu</li>',
+	'owb-step4' => 'Krok 4',
+	'owb-step4-label-formatted' => 'Oferta<br />Premium',
+	'owb-step4-label' => 'Skorzystaj z oferty premium',
+	'owb-step4-instruction' => 'Wybierz aby usunąć reklamy w ramach Wikia+Plus lub kontynuuj budowanie standardową wiki.',
+	'owb-step4-basic-price' => '<strong>$0</strong>/miesiąc',
+	'owb-step4-basic-details' => '<ul><li>Reklamy dla niezalogowanych użytkowników</li>
+<li>Nieograniczony dostęp do stron i obrazów</li>
+<li>Łatwe w obsłudze narzędzia do edytowania</li>
+<li>Wtyczki Facebooka</li>
+<li>Nieograniczona przepustowość</li></ul>',
+	'owb-step4-plus-price' => '<strong>$$1</strong>/miesiąc',
+	'owb-step4-plus-details' => '<ul><li><strong>Zero reklam!<small><em>(za wyjątkiem dużych wiki)</em></small></strong></li>
+<li>Nieograniczony dostęp do stron i obrazów</li>
+<li>Łatwe w obsłudze narzędzia do edytowania</li>
+<li>Wtyczki Facebooka</li>
+<li>Nieograniczona przepustowość</li></ul>',
+	'owb-step4-error-caption' => 'Błąd',
+	'owb-step4-error-upgrade-content' => 'Tej wiki nie można uaktualnić do Wikia+Plus.',
+	'owb-step4-error-token-content' => 'Błąd tokena PayPal.',
+	'owb-status-saving' => 'Zapisywanie',
+	'owb-unable-to-edit-description' => 'Opisu nie można edytować w Kreatorze budowania wiki',
+	'owb-readonly-try-again' => 'Ta wiki jest obecnie w trybie tylko do odczytu. Spróbuj ponownie za kilka minut',
+	'owb-error-saving-articles' => 'Wystąpił błąd podczas zapisywania stron.',
+	'owb-api-error-title' => 'Błąd podczas przetwarzania żądania',
+	'owb-api-error' => 'Spróbuj ponownie lub pomiń ten krok',
 	'owb-new-pages-text' => '[[File:Placeholder|right|300px]]
-Skriv sidens første avsnitt her . 
+Napisz pierwszy akapit strony tutaj.
 
-==Overskrift for seksjon==
+==Nagłówek sekcji==
 
-Skriv sidens første seksjon her. Husk å inkludere lenker til andre sider på wikien.
+Napisz pierwszą sekcję tutaj. Pamiętaj aby dodać linki do innych stron na swojej wiki.
 
-==Overskrift for seksjon==
+==Nagłówek sekcji==
 
-Skriv sidens andre seksjon her. Ikke glem å legge til en kategori for å hjelpe folk med å finne siden.',
+Napisz drugą sekcję tutaj. Nie zapomnij dodać kategorii aby inni łatwo odnaleźli tą stronę.',
 );
 
 /** Pashto (پښتو)
@@ -1326,7 +1405,7 @@ $messages['ru'] = array(
  */
 $messages['sr-ec'] = array(
 	'wikibuilder-desc' => '[[Special:WikiBuilder|Водич за прављење викије]]',
-	'owb-title' => 'Вики градитељ',
+	'owb-title' => 'Вики-градитељ',
 	'owb-headline' => 'Здраво, $1',
 	'owb-button-skip' => 'Прескочи',
 	'owb-button-save-intro' => 'Сачувај увод',
@@ -1339,7 +1418,7 @@ $messages['sr-ec'] = array(
 	'owb-step1-label-formatted' => 'О чему се<br />овде ради?',
 	'owb-step1-sample' => 'Пример насловне странице',
 	'owb-step2' => 'Корак 2',
-	'owb-step2-label' => 'Изаберите пресвлаку',
+	'owb-step2-label' => 'Изаберите тему',
 	'owb-step2-label-formatted' => 'Изаберите<br />тему',
 	'owb-step2-instruction2' => 'Тему или изглед можете променити било када.',
 	'owb-step2-gallery' => 'Галерија пресвлака',
@@ -1543,14 +1622,23 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'owb-headline' => '您好， $1',
 	'owb-button-skip' => '跳过',
 	'owb-button-done' => '继续到您的维基',
+	'owb-step1' => '第一步',
+	'owb-step2' => '第二步',
+	'owb-step2-gallery' => '主题库',
+	'owb-step3' => '第三步',
+	'owb-step4' => '第四步',
 	'owb-step4-error-caption' => '错误',
 	'owb-status-saving' => '正在保存。。。',
+	'owb-error-saving-articles' => '保存页面错误',
+	'owb-api-error-title' => '提交请求错误',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

@@ -197,6 +197,21 @@ Sila semak ejaan anda.',
 	'piggyback-issysopto' => 'Anda tidak boleh menggendong pengguna dengan hak menggendong.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$messages['nb'] = array(
+	'piggybac-desc' => 'Tillater å logge på som en annen bruker',
+	'piggyback' => 'Operer som annen bruker',
+	'piggyback-otherusername' => 'Annet brukernavn:',
+	'piggyback-nosuchuser' => 'Det finnes ingen bruker ved navn «$1».
+Brukernavn skiller mellom store og små bokstaver.
+Sjekk stavemåten.',
+	'piggyback-wronguser' => '$1 er ikke brukernavnet ditt',
+	'piggyback-loginprompt' => 'Vennligst angi ditt brukernavn og passord på nytt.',
+	'piggyback-firstlogout' => 'Vennligst først logg deg inn på kontoen din igjen.',
+	'piggyback-itisyou' => 'Du kan ikke operere som deg selv.',
+	'piggyback-issysopto' => 'Du kan ikke operere som en bruker med rett til å operere som andre brukere.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -228,19 +243,21 @@ Controleer je schrijfwijze.',
 	'piggyback-issysopto' => 'Je kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['nb'] = array(
-	'piggybac-desc' => 'Tillater å logge på som en annen bruker',
-	'piggyback' => 'Operer som annen bruker',
-	'piggyback-otherusername' => 'Annet brukernavn:',
-	'piggyback-nosuchuser' => 'Det finnes ingen bruker ved navn «$1».
-Brukernavn skiller mellom store og små bokstaver.
-Sjekk stavemåten.',
-	'piggyback-wronguser' => '$1 er ikke brukernavnet ditt',
-	'piggyback-loginprompt' => 'Vennligst angi ditt brukernavn og passord på nytt.',
-	'piggyback-firstlogout' => 'Vennligst først logg deg inn på kontoen din igjen.',
-	'piggyback-itisyou' => 'Du kan ikke operere som deg selv.',
-	'piggyback-issysopto' => 'Du kan ikke operere som en bruker med rett til å operere som andre brukere.',
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
+$messages['pl'] = array(
+	'piggybac-desc' => 'Umożliwia zalogowanie się jako inny użytkownik',
+	'piggyback' => 'Podłączenie',
+	'piggyback-otherusername' => 'Inna nazwa użytkownika:',
+	'piggyback-nosuchuser' => 'Brak użytkownika o nazwie „$1”.
+W nazwie użytkownika ma znaczenie wielkość znaków.
+Sprawdź poprawność wpisanej nazwy.',
+	'piggyback-wronguser' => '$1 nie jest twoją nazwą użytkownika',
+	'piggyback-loginprompt' => 'Wprowadź ponownie nazwę użytkownika i hasło.',
+	'piggyback-firstlogout' => 'Prosimy najpierw wylogować się z powrotem do twojego konta.',
+	'piggyback-itisyou' => 'Nie możesz podłączyć się pod samego siebie.',
+	'piggyback-issysopto' => 'Nie możesz podłączyć się pod użytkownika posiadającego prawo do podłączania.',
 );
 
 /** Piedmontese (Piemontèis)
