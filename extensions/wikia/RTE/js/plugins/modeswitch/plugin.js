@@ -206,8 +206,10 @@ CKEDITOR.plugins.add('rte-modeswitch',
 			editorFocus : editor.config.isMiniEditor,
 			canUndo : false,
 			exec: function() {
-				if (editor.mode != 'source')
+				if (editor.mode != 'source'){
+					editor.fire('switchToSource');
 					editor.execCommand('source');
+				}
 			}
 		});
 

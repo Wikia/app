@@ -24,24 +24,26 @@ CKEDITOR.plugins.add( 'table',
 		CKEDITOR.dialog.add( 'tableProperties', this.path + 'dialogs/table.js' );
 
 		// Wikia Start - (BugId:19661)
+		var removeSelectedClass = function() {
+			$(editor.document.$).find('.article-table-selected').removeClass('article-table-selected');
+		}
+		
 		editor.on( 'selectionChange', function( evt )
 			{
 				var element = evt.data.element.$,
-					table = $(element).closest( '.WikiaTable' );
+					table = $(element).closest( '.article-table' );
 
-				$(editor.document.$).find('.WikiaTable-selected').removeClass('WikiaTable-selected');				
+				removeSelectedClass();
 
 				if ( table.length ) {
 					console.log('length')
-					table.addClass('WikiaTable-selected');
+					table.addClass('article-table-selected');
 				}
 			});
-		editor.on('mode', function( evt )
+		// Remove article-table-selected class when switching to source mode
+		editor.on('switchToSource', function( evt )
 			{
-				// Remove WikiaTable-selected class when switching to source mode
-				if (evt.editor.mode == 'wysiwyg') {
-					$(editor.document.$).find('.WikiaTable-selected').removeClass('WikiaTable-selected');								
-				}
+				removeSelectedClass();
 			});
 		// Wikia End
 		

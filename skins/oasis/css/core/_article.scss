@@ -530,7 +530,7 @@ table.wikitable {
 	}
 }
 
-table.WikiaTable {
+table.article-table { // This parallels WikiaTable in _table.scss
 	background: darken($color-page, 2%);
 	border-collapse: collapse;
 	border: 0px none $color-page-border;

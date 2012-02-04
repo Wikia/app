@@ -223,7 +223,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// Wikia - remove data-rte-attribs and data-rte-style attributes, so changes made in popup will be saved in wikitext
 				table.removeAttribute('data-rte-attribs');
 				table.removeAttribute('data-rte-style');
-				table.addClass('WikiaTable');
+				table.addClass('article-table');
 
 				// Insert the table element if we're creating one.
 				if ( !this._.selectedElement )
