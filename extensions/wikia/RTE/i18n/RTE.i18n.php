@@ -142,7 +142,7 @@ $messages['cs'] = array(
 	'rte-edgecase-redirect' => 'přesměrování',
 	'rte-edgecase-templateintable' => 'tabulka s voláním šablony v definici',
 	'rte-edgecase-unclosed-tags' => 'neuzavřený HTML tag',
-	'enablerichtexteditor' => 'Povolit rozšířený textový editor',
+	'enablerichtexteditor' => 'Povolit editování ve vizuálním módu (společně se zdrojovým módem)',
 	'rte-enablerichtexteditormessage' => 'Rozšířený textový editor povolen!',
 	'rte-first-run-notice' => 'Udělali jsme několik vylepšení editoru. Chcete-li se dozvědět více, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news přečtěte si oznámení].',
 	'prefs-rte' => 'Rozšířený textový editor',
@@ -385,6 +385,31 @@ $messages['ms'] = array(
 	'prefs-rte' => 'Alat Penyunting Teks Beraneka',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'rte-desc' => 'CKeditor-integrering for MediaWiki',
+	'rte-no-js-fallback' => 'Den rike tekstredaktøren virker ikke når JavaScript er slått av. Vennligst enten slå det på i nettleseralternativene dine, eller besøk [[Special:Preferences|innstillinger]] for å bytte til den gamle MediaWiki-redaktøren.',
+	'rte-edgecase-info-title' => 'Kildemodus påkrevd',
+	'rte-edgecase-info' => 'Rik tekstredigering har blitt deaktivert fordi siden inneholder kompleks kode.',
+	'rte-edgecase-comment' => 'HTML-kommentarer',
+	'rte-edgecase-triplecurls' => 'malparametre',
+	'rte-edgecase-nowysiwyg' => '«ingen WYSIWYG»-kommandoen',
+	'rte-edgecase-complex-description' => 'en ekstern URL eller mal inne i en lenkebeskrivelse',
+	'rte-edgecase-template-with-link' => 'en mal med en lenke som en parameter',
+	'rte-edgecase-syntax' => 'ikke tillatt syntaks',
+	'rte-edgecase-image-with-link' => 'bilde med en lenke i beskrivelsen',
+	'rte-edgecase-redirect' => 'omdiriger',
+	'rte-edgecase-templateintable' => 'en tabell med malpåkallelse i definisjonen',
+	'rte-edgecase-unclosed-tags' => 'ulukket HTML-element',
+	'enablerichtexteditor' => 'Aktiver redigering i visuell modus (i tillegg til kildemodus)',
+	'rte-enablerichtexteditormessage' => 'Rik tekstredaktør aktivert!',
+	'rte-first-run-notice' => 'Vi har gjort noen forbedringer på redaktøren. For å lære mer kan du [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lese annonseringen].',
+	'prefs-rte' => 'Rich Text Editor',
+);
+
 /** Dutch (Nederlands)
  * @author Kjell
  * @author Siebrand
@@ -415,31 +440,6 @@ $messages['nl'] = array(
  */
 $messages['nl-informal'] = array(
 	'rte-no-js-fallback' => 'De uitgebreide tekstverwerker werkt niet als JavaScript is uitgeschakeld. Schakel JavaScript in in je browser of schakel in je [[Special:Preferences| voorkeuren]] terug naar de oude tekstverwerker voor MediaWiki.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'rte-desc' => 'CKeditor-integrering for MediaWiki',
-	'rte-no-js-fallback' => 'Den rike tekstredaktøren virker ikke når JavaScript er slått av. Vennligst enten slå det på i nettleseralternativene dine, eller besøk [[Special:Preferences|innstillinger]] for å bytte til den gamle MediaWiki-redaktøren.',
-	'rte-edgecase-info-title' => 'Kildemodus påkrevd',
-	'rte-edgecase-info' => 'Rik tekstredigering har blitt deaktivert fordi siden inneholder kompleks kode.',
-	'rte-edgecase-comment' => 'HTML-kommentarer',
-	'rte-edgecase-triplecurls' => 'malparametre',
-	'rte-edgecase-nowysiwyg' => '«ingen WYSIWYG»-kommandoen',
-	'rte-edgecase-complex-description' => 'en ekstern URL eller mal inne i en lenkebeskrivelse',
-	'rte-edgecase-template-with-link' => 'en mal med en lenke som en parameter',
-	'rte-edgecase-syntax' => 'ikke tillatt syntaks',
-	'rte-edgecase-image-with-link' => 'bilde med en lenke i beskrivelsen',
-	'rte-edgecase-redirect' => 'omdiriger',
-	'rte-edgecase-templateintable' => 'en tabell med malpåkallelse i definisjonen',
-	'rte-edgecase-unclosed-tags' => 'ulukket HTML-element',
-	'enablerichtexteditor' => 'Aktiver redigering i visuell modus (i tillegg til kildemodus)',
-	'rte-enablerichtexteditormessage' => 'Rik tekstredaktør aktivert!',
-	'rte-first-run-notice' => 'Vi har gjort noen forbedringer på redaktøren. For å lære mer kan du [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lese annonseringen].',
-	'prefs-rte' => 'Rich Text Editor',
 );
 
 /** Polish (Polski)
@@ -487,7 +487,7 @@ $messages['pms'] = array(
 	'rte-edgecase-redirect' => 'ridiressioné',
 	'rte-edgecase-templateintable' => 'na tàula con na ciamada dë stamp ant la definission',
 	'rte-edgecase-unclosed-tags' => 'tichëtta HTML pa sarà',
-	'enablerichtexteditor' => "Abìlité l'editor ëd test anrichì",
+	'enablerichtexteditor' => "Abìlité l'editor ëd test anrichì (a pi ëd la modalità sorgiss)",
 	'rte-enablerichtexteditormessage' => 'Editor ëd test anrichì abilità!',
 	'rte-first-run-notice' => "I l'oma fàit chèich ameliorassion a l'editor. Për savejne ëd pi, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news ch'a lesa l'anonsi].",
 	'prefs-rte' => 'Editor ëd Test Anrichì',
@@ -670,5 +670,22 @@ $messages['zh'] = array(
 	'rte-edgecase-template-with-link' => '模板的變數中使用連結',
 	'rte-edgecase-syntax' => '不被允許的語法',
 	'rte-edgecase-image-with-link' => '圖像描述中有連結',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
+ */
+$messages['zh-hans'] = array(
+	'rte-desc' => '为MediaWiki提供的CKeditor整合',
+	'rte-edgecase-info-title' => '需要源模式',
+	'rte-edgecase-comment' => 'HTML注释',
+	'rte-edgecase-triplecurls' => '模板参数',
+	'rte-edgecase-nowysiwyg' => '“禁用所见即所得”命令',
+	'rte-edgecase-complex-description' => '链接描述之内的外部URL或模板',
+	'rte-edgecase-redirect' => '重定向',
+	'rte-edgecase-unclosed-tags' => '封闭的HTML标签',
+	'enablerichtexteditor' => '在可视模式下启用编辑（除源模式之外）',
+	'rte-enablerichtexteditormessage' => 'RTF编辑器启用！',
+	'prefs-rte' => 'RTF编辑器',
 );
 

@@ -231,19 +231,17 @@ $messages['ms'] = array(
 	'staffpowers-ipblock-aborted' => 'Anda tidak boleh menyekat kakitangan Wikia. Sila gunakan [[Special:Contact]] untuk melaporkan sebarang isu atau masalah berkenaan kakitangan kami.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$messages['nb'] = array(
+	'staffpowers-ipblock-aborted' => 'Det er ikke mulig å blokkere Wikia-medarbeidere. Bruk [[Special:Contact|kontaktsiden]] for å rapportere hendelser eller problemer med medarbeidere.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'staffpowers-ipblock-aborted' => 'Het blokkeren van stafmedewerkers van Wikia is niet mogelijk.
 Gebruik de [[Special:Contact|contactpagina]] om problemen met stafmedewerkers te melden.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['nb'] = array(
-	'staffpowers-ipblock-aborted' => 'Det er ikke mulig å blokkere Wikia-medarbeidere. Bruk [[Special:Contact|kontaktsiden]] for å rapportere hendelser eller problemer med medarbeidere.',
 );
 
 /** Occitan (Occitan)
@@ -312,7 +310,7 @@ $messages['shi'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'staffpowers-ipblock-aborted' => 'Блокирање уредника Викије није могуће. Користите [[Special:Contact|образац за контактирање]] да бисте пријавили било какве проблеме с нашим тимом.',
+	'staffpowers-ipblock-aborted' => 'Не могу да блокирам особље Викије. Ако желите да пријавите проблем с програмом или особљем, идите на [[Special:Contact]].',
 );
 
 /** Sundanese (Basa Sunda)

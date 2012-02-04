@@ -408,6 +408,28 @@ $messages['mzn'] = array(
 	'sponsorpage-edit' => 'دچی‌ین',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'sponsorpage-desc' => 'Lar brukere kjøpe sponsorskap for sider',
+	'sponsor-header' => '<h2>Eksterne sponsorlenker</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Spons denne siden</a></li>',
+	'sponsor-preview-prompt' => 'Dette er hvordan sponsorskapet vil se ut - trykk «Rediger» for å gå tilbake og gjøre endringer, eller «Lagre» for å lagre den og gå til PayPal.',
+	'sponsor-preview-errors' => 'Det er feil i innsendelsen din:',
+	'sponsor-form-url' => 'URL for det sponsende nettstedet (ditt nettsted):',
+	'sponsor-form-linktext' => 'Tkest som skal vises i lenken:',
+	'sponsor-form-additionaltext' => 'Tekst som skal vises under lenken din:',
+	'sponsor-form-page' => 'Side som skal sponses:',
+	'sponsor-form-price' => 'Sponsingsbeløp:',
+	'sponsor-form-email' => 'Din e-postadresse:',
+	'sponsor-form-thanks' => 'Takk for sponsingen din!',
+	'sponsor-price-45yr' => '$45 per år',
+	'sponsor-price-5mo' => '$5 per måned',
+	'sponsorpage-edit' => 'Rediger',
+	'sponsorpage-save' => 'Lagre',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author Tvdm
@@ -442,28 +464,6 @@ $messages['nl-informal'] = array(
 	'sponsor-form-additionaltext' => 'Tekst die wordt weergegeven onder je verwijzing:',
 	'sponsor-form-email' => 'Je e-mailadres:',
 	'sponsor-form-thanks' => 'Dank je wel voor je sponsoring!',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'sponsorpage-desc' => 'Lar brukere kjøpe sponsorskap for sider',
-	'sponsor-header' => '<h2>Eksterne sponsorlenker</h2>',
-	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Spons denne siden</a></li>',
-	'sponsor-preview-prompt' => 'Dette er hvordan sponsorskapet vil se ut - trykk «Rediger» for å gå tilbake og gjøre endringer, eller «Lagre» for å lagre den og gå til PayPal.',
-	'sponsor-preview-errors' => 'Det er feil i innsendelsen din:',
-	'sponsor-form-url' => 'URL for det sponsende nettstedet (ditt nettsted):',
-	'sponsor-form-linktext' => 'Tkest som skal vises i lenken:',
-	'sponsor-form-additionaltext' => 'Tekst som skal vises under lenken din:',
-	'sponsor-form-page' => 'Side som skal sponses:',
-	'sponsor-form-price' => 'Sponsingsbeløp:',
-	'sponsor-form-email' => 'Din e-postadresse:',
-	'sponsor-form-thanks' => 'Takk for sponsingen din!',
-	'sponsor-price-45yr' => '$45 per år',
-	'sponsor-price-5mo' => '$5 per måned',
-	'sponsorpage-edit' => 'Rediger',
-	'sponsorpage-save' => 'Lagre',
 );
 
 /** Pälzisch (Pälzisch) */
@@ -606,8 +606,9 @@ $messages['sl'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
+	'sponsor-template' => '<li><a href="http://$1" rel="nofollow">$2</a><br />$3</li>',
 	'sponsor-form-email' => 'Е-адреса:',
-	'sponsor-price-45yr' => '$45 по години',
+	'sponsor-price-45yr' => '$45 годишње',
 	'sponsor-price-5mo' => '$5 по месецу',
 	'sponsorpage-edit' => 'Уреди',
 	'sponsorpage-save' => 'Сачувај',

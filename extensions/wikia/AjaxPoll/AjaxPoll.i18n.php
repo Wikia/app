@@ -139,6 +139,14 @@ $messages['de-formal'] = array(
 	'ajaxpoll-submitting' => 'Bitte warten Sie kurz, Ihre Stimme wird verarbeitet.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'ajaxpoll-closed' => 'Anket racneya yo, newqe bewni reanketa',
+	'ajaxpoll-submitting' => 'Tay pıpawe, reya şımaya qeyd bena',
+);
+
 /** Greek (Ελληνικά)
  * @author Evropi
  */
@@ -391,6 +399,19 @@ $messages['ms'] = array(
 	'ajaxpoll-submitting' => 'Sila tunggu, undian anda sedang diserahkan...',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;av alle stemmer',
+	'ajaxpoll-thankyou' => 'Takk for din stemme!',
+	'ajaxpoll-error' => 'Det oppstod et problem under overføringen av stemmen din, vennligst prøv igjen.',
+	'ajaxpoll-summary' => 'Avstemningen ble opprettet $1 $2, og hittil har $3 personer stemt.',
+	'ajaxpoll-submit' => 'Stem!',
+	'ajaxpoll-closed' => 'Avstemningen er stengt nå. Nyt resultatene.',
+	'ajaxpoll-submitting' => 'Vennligst vent, sender inn stemmen din...',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -429,20 +450,6 @@ $messages['nn'] = array(
 	'ajaxpoll-submit' => 'Røyst!',
 	'ajaxpoll-closed' => 'Avrøystinga er stengd no. Nyt resultata.',
 	'ajaxpoll-submitting' => 'Vent, røysta di vert lagt til…',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Jon Harald Søby
- */
-$messages['nb'] = array(
-	'ajaxpoll-percentVotes' => '$1%&nbsp;av alle stemmer',
-	'ajaxpoll-thankyou' => 'Takk for din stemme!',
-	'ajaxpoll-error' => 'Det oppstod et problem under overføringen av stemmen din, vennligst prøv igjen.',
-	'ajaxpoll-summary' => 'Avstemningen ble opprettet $1 $2, og hittil har $3 personer stemt.',
-	'ajaxpoll-submit' => 'Stem!',
-	'ajaxpoll-closed' => 'Avstemningen er stengt nå. Nyt resultatene.',
-	'ajaxpoll-submitting' => 'Vennligst vent, sender inn stemmen din...',
 );
 
 /** Occitan (Occitan)
@@ -578,6 +585,13 @@ $messages['sv'] = array(
 	'ajaxpoll-submit' => 'Rösta!',
 	'ajaxpoll-closed' => 'Röstningen är nu stängd. Njut av resultaten.',
 	'ajaxpoll-submitting' => 'Du skickar in din röst, var god vänta...',
+);
+
+/** Tamil (தமிழ்)
+ * @author செல்வா
+ */
+$messages['ta'] = array(
+	'ajaxpoll-submit' => 'வாக்களி',
 );
 
 /** Thai (ไทย)

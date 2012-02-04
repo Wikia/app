@@ -221,6 +221,20 @@ $messages['ms'] = array(
 	'loggernoresult' => 'Tiada hasil carian',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'logger-desc' => 'Logger for bakgrunnsskript',
+	'logger' => 'Logger for bakgrunnsskript',
+	'loggertitle' => 'Logger for bakgrunnsskript',
+	'loggerselectlogname' => 'Velg loggnavn:',
+	'loggerrecordswithpercent' => "'''$1''' oppføringer ('''$2''' prosent fullført)",
+	'loggerrecords' => '$1 oppføringer',
+	'loggergo' => 'Vis',
+	'loggernoresult' => 'Ingen resultater funnet',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -233,20 +247,6 @@ $messages['nl'] = array(
 	'loggerrecords' => '$1 regels',
 	'loggergo' => 'Weergeven',
 	'loggernoresult' => 'Geen resultaten gevonden',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'logger-desc' => 'Logger for bakgrunnsskript',
-	'logger' => 'Logger for bakgrunnsskript',
-	'loggertitle' => 'Logger for bakgrunnsskript',
-	'loggerselectlogname' => 'Velg loggnavn:',
-	'loggerrecordswithpercent' => "'''$1''' oppføringer ('''$2''' prosent fullført)",
-	'loggerrecords' => '$1 oppføringer',
-	'loggergo' => 'Vis',
-	'loggernoresult' => 'Ingen resultater funnet',
 );
 
 /** Piedmontese (Piemontèis)
@@ -310,8 +310,10 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Kuzura
+ * @author Ole Yves
  */
 $messages['ru'] = array(
+	'logger' => 'Серверная часть журнала',
 	'loggerrecords' => '$1 записей',
 	'loggergo' => 'Показать',
 	'loggernoresult' => 'Ничего не найдено',
@@ -351,8 +353,16 @@ $messages['tl'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Yanmiao liu
  */
 $messages['zh-hans'] = array(
+	'logger-desc' => '后端脚本日志',
+	'logger' => '后端日志',
+	'loggertitle' => '后端日志',
+	'loggerselectlogname' => '选择日志名称：',
+	'loggerrecordswithpercent' => "'''$1''' 条记录（'''$2'''% 已结束）",
+	'loggerrecords' => '$1 条记录',
 	'loggergo' => '显示',
+	'loggernoresult' => '无搜索结果',
 );
 

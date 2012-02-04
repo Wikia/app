@@ -219,6 +219,15 @@ $messages['ms'] = array(
 	'theorytab-parent-title' => 'Rencana induk',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'theorytab-title' => 'Teori',
+	'theorytab-parent-title' => 'Overordnet artikkel',
+);
+
 /** Nepali (नेपाली)
  * @author RajeshPandey
  */
@@ -233,15 +242,6 @@ $messages['ne'] = array(
 $messages['nl'] = array(
 	'theorytab-title' => 'Theorieën',
 	'theorytab-parent-title' => 'Bovenliggende pagina',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'theorytab-title' => 'Teori',
-	'theorytab-parent-title' => 'Overordnet artikkel',
 );
 
 /** Occitan (Occitan)

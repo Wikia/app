@@ -263,7 +263,7 @@ $messages['fi'] = array(
 	'multilookupprevious' => 'edellinen',
 	'multilookupnbrresult' => 'Tulosten määrä:',
 	'multilookupinvalidresults' => 'Virheelliset tulokset!',
-	'multilookupnoresultfound' => 'Tulosta ei löytynyt!',
+	'multilookupnoresultfound' => 'Tuloksia ei löytynyt!',
 	'multilookupwiki' => 'Wiki',
 	'multilookupdetails' => 'Lisätietoja',
 	'multilookuplastedit' => 'Viimeisin muokkaus tästä IP-osoitteesta:',
@@ -516,6 +516,37 @@ $messages['my'] = array(
 	'multilookupwikioptions' => 'ရွေးပိုင်ခွင့်',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'specialmultiplelookup-desc' => 'Gir brukerinformasjonsoppslag på flere wikier',
+	'multilookup' => 'Slå opp flere',
+	'multilookupstitle' => 'Slå opp flere',
+	'multilookupselectuser' => 'Søk etter kontoer med samme IP på flere wikier',
+	'multilookupgo' => 'Gå',
+	'multilookupnotspecify' => 'Du har ikke oppgitt en IP ennå',
+	'multilookupnext' => 'neste',
+	'multilookupprevious' => 'forrige',
+	'multilookupnbrresult' => 'Antall resultater:',
+	'multilookupinvalidresults' => 'Ugyldige resultat!',
+	'multilookupnoresultfound' => 'Ingen resultat funnet!',
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Bidragslenke',
+	'multilookupdetails' => 'Se detaljer',
+	'multilookuplistwikiainfo' => 'Liste over wikier der artikler har blitt redigert av brukere fra IP: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">IP <b>«$1»</b> finnes ikke. Sjekk oppgitt IP for mulige skrivefeil.</p>',
+	'multilookuplastedit' => 'Sist redigert fra denne IP-en:',
+	'multilookupwikidbname' => 'DB-navn',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Tittel',
+	'multilookupwikioptions' => 'Alternativer',
+	'multilookuplastedithdr' => 'Sist redigert',
+	'multilookuprecordspager' => "Viser '''$1''' til '''$2''' av '''$3''' oppføringer.",
+	'right-multilookup' => 'Slå opp informasjon om brukere på flere wikier',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -554,37 +585,6 @@ $messages['nl-informal'] = array(
 	'multilookupnotspecify' => 'Je hebt nog geen IP-adres opgegeven',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'specialmultiplelookup-desc' => 'Gir brukerinformasjonsoppslag på flere wikier',
-	'multilookup' => 'Slå opp flere',
-	'multilookupstitle' => 'Slå opp flere',
-	'multilookupselectuser' => 'Søk etter kontoer med samme IP på flere wikier',
-	'multilookupgo' => 'Gå',
-	'multilookupnotspecify' => 'Du har ikke oppgitt en IP ennå',
-	'multilookupnext' => 'neste',
-	'multilookupprevious' => 'forrige',
-	'multilookupnbrresult' => 'Antall resultater:',
-	'multilookupinvalidresults' => 'Ugyldige resultat!',
-	'multilookupnoresultfound' => 'Ingen resultat funnet!',
-	'multilookupwiki' => 'Wiki',
-	'multilookuplink' => 'Bidragslenke',
-	'multilookupdetails' => 'Se detaljer',
-	'multilookuplistwikiainfo' => 'Liste over wikier der artikler har blitt redigert av brukere fra IP: <b>$1</b>',
-	'multilookupinvaliduser' => '<p class="error">IP <b>«$1»</b> finnes ikke. Sjekk oppgitt IP for mulige skrivefeil.</p>',
-	'multilookuplastedit' => 'Sist redigert fra denne IP-en:',
-	'multilookupwikidbname' => 'DB-navn',
-	'multilookupwikiurl' => 'URL',
-	'multilookupwikititle' => 'Tittel',
-	'multilookupwikioptions' => 'Alternativer',
-	'multilookuplastedithdr' => 'Sist redigert',
-	'multilookuprecordspager' => "Viser '''$1''' til '''$2''' av '''$3''' oppføringer.",
-	'right-multilookup' => 'Slå opp informasjon om brukere på flere wikier',
-);
-
 /** Deitsch (Deitsch) */
 $messages['pdc'] = array(
 	'multilookupnext' => 'Neegschte',
@@ -597,6 +597,7 @@ $messages['pfl'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -617,6 +618,12 @@ $messages['pl'] = array(
 	'multilookuplistwikiainfo' => 'Lista stron Wiki, na których były wykonywane edycje przez użytkowników z adresu IP <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">Adres IP „<b>$1</b>“ nie istnieje. Sprawdź czy w podanym adresie IP nie ma literówki.</p>',
 	'multilookuplastedit' => 'Ostatnia edycja z tego adresu IP',
+	'multilookupwikidbname' => 'Nazwa DB',
+	'multilookupwikiurl' => 'Adres URL',
+	'multilookupwikititle' => 'Tytuł',
+	'multilookupwikioptions' => 'Opcje',
+	'multilookuplastedithdr' => 'Ostatnia edycja',
+	'multilookuprecordspager' => "Pokazano od '''$1''' do '''$2''' z '''$3''' recordów.",
 	'right-multilookup' => 'Wyszukiwanie informacji o użytkowniku na wielu wiki',
 );
 
@@ -797,6 +804,10 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'specialmultiplelookup-desc' => 'Ger användarinformation att kolla upp på flera wikis',
+	'multilookup' => 'Kolla upp flera',
+	'multilookupstitle' => 'Kolla upp flera',
+	'multilookupselectuser' => 'Sök efter konton med samma IP-adress på flera wikis',
 	'multilookupgo' => 'Gå',
 	'multilookupnotspecify' => 'Du har inte angett en IP-adress ännu.',
 	'multilookupnext' => 'nästa',
@@ -816,6 +827,7 @@ $messages['sv'] = array(
 	'multilookupwikioptions' => 'Alternativ',
 	'multilookuplastedithdr' => 'Sista redigeringen',
 	'multilookuprecordspager' => "Visar '''$1''' till '''$2''' av '''$3''' poster.",
+	'right-multilookup' => 'Kolla upp information om användare på flera wikis',
 );
 
 /** Swahili (Kiswahili)

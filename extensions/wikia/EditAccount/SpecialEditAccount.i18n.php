@@ -277,6 +277,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Jan Luca
  * @author LWChris
+ * @author Quedel
  * @author The Evil IP address
  * @author Tiin
  */
@@ -316,6 +317,8 @@ $messages['de'] = array(
 	'editaccount-invalid-email' => '„$1“ ist keine gültige E-Mail-Adresse!',
 	'editaccount-nouser' => 'Konto „$1“ existiert nicht!',
 	'editaccount-remove-avatar-fail' => 'Problem beim automatischen Entfernen des Avatars.',
+	'editaccount-requested' => 'Hinweis: Benutzer hat Kontoschließung beantragt',
+	'editaccount-not-requested' => '!ACHTUNG: Benutzer hat noch keine Kontoschließung beantragt',
 	'editaccount-log' => 'Benutzerkonten-Logbuch',
 	'editaccount-log-header' => 'Diese Seite listet Änderungen von Benutzereinstellungen durch das Wikia Personal.',
 	'editaccount-log-entry-email' => 'änderte die E-Mail-Adresse von Benutzer $2',
@@ -959,6 +962,60 @@ $messages['ms'] = array(
 	'right-editaccount' => 'Sunting keutamaan pengguna lain',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'editaccount' => 'Rediger konto',
+	'editaccount-desc' => 'Lar ledelsesmedlemmer administrere brukerkontoinformasjon',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Rediger en konto',
+	'editaccount-frame-usage' => 'Merk',
+	'editaccount-usage' => 'Brukerdata blir mellomlagret separat for hver wiki. Når du tilbakestiller et passord eller en e-post, vil mellomlageret kun bli tømt for denne wikien. Vennligst led brukeren til denne wikien for å logge inn med det nyinnsatte passordet for å unngå problemer med mellomlageret.',
+	'editaccount-label-select' => 'Velg en brukerkonto',
+	'editaccount-submit-account' => 'Administrer konto',
+	'editaccount-frame-account' => 'Redigerer brukerkonto: $1',
+	'editaccount-frame-close' => 'Deaktiver brukerkonto: $1',
+	'editaccount-label-email' => 'Angi ny e-postadresse',
+	'editaccount-label-pass' => 'Angi nytt passord',
+	'editaccount-label-realname' => 'Angi nytt virkelig navn',
+	'editaccount-label-clearunsub' => 'Avsluttet abonnement',
+	'editaccount-submit-email' => 'Lagre e-post',
+	'editaccount-submit-pass' => 'Lagre passord',
+	'editaccount-submit-realname' => 'Lagre virkelig navn',
+	'editaccount-submit-clearunsub' => 'Tøm avslutt abonnement',
+	'editaccount-submit-cleardisable' => 'Fjern deaktiveringsflagget',
+	'editaccount-submit-close' => 'Lukk konto',
+	'editaccount-usage-close' => 'Du kan også deaktivere en brukerkonto ved å tilfeldiggjøre passordet og fjerne e-postadressen. Legg merke til at denne dataen går tapt og ikke vil kunne gjenopprettes.',
+	'editaccount-warning-close' => '<b>Forsiktig!</b> Du er i ferd med å permanent deaktivere kontoen til bruker <b>$1</b>. Dette kan ikke gjenopprettes. Er du sikker på at det er det du vil gjøre?',
+	'editaccount-status' => 'Statusmelding',
+	'editaccount-success-email' => 'Endret e-post for konto $1 til $2.',
+	'editaccount-success-email-blank' => 'Fjernet e-post for kontoen $1.',
+	'editaccount-success-pass' => 'Endret passord for konto $1.',
+	'editaccount-success-realname' => 'Endret virkelig navn for konto $1.',
+	'editaccount-success-unsub' => 'Fjernet avslutt abonnement-delen for kontoen $1.',
+	'editaccount-success-disable' => 'Fjernet den deaktiverte delen for kontoen $1.',
+	'editaccount-success-close' => 'Deaktiverte konto $1.',
+	'editaccount-error-email' => 'E-post ble ikke endret. Prøv igjen eller kontakt Tech Team.',
+	'editaccount-error-pass' => 'Passord ble ikke endret. Prøv igjen eller kontakt Tech Team.',
+	'editaccount-error-realname' => 'Virkelig navn ble ikke endret. Prøv igjen eller kontakt Tech Team.',
+	'editaccount-error-close' => 'Et problem oppsto under lukking av kontoen. Prøv igjen eller kontakt Tech Team.',
+	'editaccount-invalid-email' => '«$1» er ikke en gyldig e-postadresse!',
+	'editaccount-nouser' => 'Kontoen «$1» finnes ikke!',
+	'editaccount-remove-avatar-fail' => 'Problem med automatisk fjerning av avatar.',
+	'editaccount-requested' => 'Merk: Brukeren har søkt om å få kontoen sin stengt',
+	'editaccount-not-requested' => 'FORSIKTIG: Brukeren har ikke søkt om å få kontoen sin stengt',
+	'editaccount-log' => 'Brukerkontologg',
+	'editaccount-log-header' => 'Denne siden lister opp endringer gjort på brukerinnstillinger av Wikia Staff.',
+	'editaccount-log-entry-email' => 'endret e-post for bruker $2',
+	'editaccount-log-entry-pass' => 'endret passord for bruker $2',
+	'editaccount-log-entry-realname' => 'endret virkelig navn for bruker $2',
+	'editaccount-log-entry-close' => 'deaktiverte konto $2',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Denne kontoen har blitt deaktivert globalt av Wikia.</div>',
+	'right-editaccount' => 'Rediger andre brukeres innstillinger',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author Tjcool007
@@ -1038,60 +1095,6 @@ Dit kan niet ongedaan gemaakt worden.
 Weet je zeker dat u dit wilt doen?',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'editaccount' => 'Rediger konto',
-	'editaccount-desc' => 'Lar ledelsesmedlemmer administrere brukerkontoinformasjon',
-	'editaccount-title' => 'Special:EditAccount',
-	'editaccount-frame-manage' => 'Rediger en konto',
-	'editaccount-frame-usage' => 'Merk',
-	'editaccount-usage' => 'Brukerdata blir mellomlagret separat for hver wiki. Når du tilbakestiller et passord eller en e-post, vil mellomlageret kun bli tømt for denne wikien. Vennligst led brukeren til denne wikien for å logge inn med det nyinnsatte passordet for å unngå problemer med mellomlageret.',
-	'editaccount-label-select' => 'Velg en brukerkonto',
-	'editaccount-submit-account' => 'Administrer konto',
-	'editaccount-frame-account' => 'Redigerer brukerkonto: $1',
-	'editaccount-frame-close' => 'Deaktiver brukerkonto: $1',
-	'editaccount-label-email' => 'Angi ny e-postadresse',
-	'editaccount-label-pass' => 'Angi nytt passord',
-	'editaccount-label-realname' => 'Angi nytt virkelig navn',
-	'editaccount-label-clearunsub' => 'Avsluttet abonnement',
-	'editaccount-submit-email' => 'Lagre e-post',
-	'editaccount-submit-pass' => 'Lagre passord',
-	'editaccount-submit-realname' => 'Lagre virkelig navn',
-	'editaccount-submit-clearunsub' => 'Tøm avslutt abonnement',
-	'editaccount-submit-cleardisable' => 'Fjern deaktiveringsflagget',
-	'editaccount-submit-close' => 'Lukk konto',
-	'editaccount-usage-close' => 'Du kan også deaktivere en brukerkonto ved å tilfeldiggjøre passordet og fjerne e-postadressen. Legg merke til at denne dataen går tapt og ikke vil kunne gjenopprettes.',
-	'editaccount-warning-close' => '<b>Forsiktig!</b> Du er i ferd med å permanent deaktivere kontoen til bruker <b>$1</b>. Dette kan ikke gjenopprettes. Er du sikker på at det er det du vil gjøre?',
-	'editaccount-status' => 'Statusmelding',
-	'editaccount-success-email' => 'Endret e-post for konto $1 til $2.',
-	'editaccount-success-email-blank' => 'Fjernet e-post for kontoen $1.',
-	'editaccount-success-pass' => 'Endret passord for konto $1.',
-	'editaccount-success-realname' => 'Endret virkelig navn for konto $1.',
-	'editaccount-success-unsub' => 'Fjernet avslutt abonnement-delen for kontoen $1.',
-	'editaccount-success-disable' => 'Fjernet den deaktiverte delen for kontoen $1.',
-	'editaccount-success-close' => 'Deaktiverte konto $1.',
-	'editaccount-error-email' => 'E-post ble ikke endret. Prøv igjen eller kontakt Tech Team.',
-	'editaccount-error-pass' => 'Passord ble ikke endret. Prøv igjen eller kontakt Tech Team.',
-	'editaccount-error-realname' => 'Virkelig navn ble ikke endret. Prøv igjen eller kontakt Tech Team.',
-	'editaccount-error-close' => 'Et problem oppsto under lukking av kontoen. Prøv igjen eller kontakt Tech Team.',
-	'editaccount-invalid-email' => '«$1» er ikke en gyldig e-postadresse!',
-	'editaccount-nouser' => 'Kontoen «$1» finnes ikke!',
-	'editaccount-remove-avatar-fail' => 'Problem med automatisk fjerning av avatar.',
-	'editaccount-requested' => 'Merk: Brukeren har søkt om å få kontoen sin stengt',
-	'editaccount-not-requested' => 'FORSIKTIG: Brukeren har ikke søkt om å få kontoen sin stengt',
-	'editaccount-log' => 'Brukerkontologg',
-	'editaccount-log-header' => 'Denne siden lister opp endringer gjort på brukerinnstillinger av Wikia Staff.',
-	'editaccount-log-entry-email' => 'endret e-post for bruker $2',
-	'editaccount-log-entry-pass' => 'endret passord for bruker $2',
-	'editaccount-log-entry-realname' => 'endret virkelig navn for bruker $2',
-	'editaccount-log-entry-close' => 'deaktiverte konto $2',
-	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Denne kontoen har blitt deaktivert globalt av Wikia.</div>',
-	'right-editaccount' => 'Rediger andre brukeres innstillinger',
-);
-
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Aalam
  */
@@ -1112,6 +1115,7 @@ $messages['pa'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
@@ -1119,11 +1123,49 @@ $messages['pl'] = array(
 	'editaccount-desc' => 'Pozwala zmienić informacje o koncie użytkownika',
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Edytuj konto',
+	'editaccount-frame-usage' => 'Komentarz',
+	'editaccount-usage' => 'Dane użytkownika przechowywane są osobno na każdej wiki. Kiedy resetujesz hasło lub e-mai, pamięć podręczna zostanie odświeżona tylko na danej wiki. Proszę skieruj użytkownika do tej wiki aby zalogował się nowym hasłem, aby uniknąć kłopotów z pamięcią podręczną.',
+	'editaccount-label-select' => 'Wybierz konto użytkownika',
+	'editaccount-submit-account' => 'Zarządzanie kontem',
+	'editaccount-frame-account' => 'Edycja konta użytkownika:$1',
+	'editaccount-frame-close' => 'Wyłącz konto użytkownika: $1',
 	'editaccount-label-email' => 'Ustaw nowy adres e-mail',
 	'editaccount-label-pass' => 'Ustaw nowe hasło',
+	'editaccount-label-realname' => 'Ustaw nowe nazwisko',
+	'editaccount-label-clearunsub' => 'Zakończono subskrypcję',
 	'editaccount-submit-email' => 'Zapisz adres e-mail',
+	'editaccount-submit-pass' => 'Zapisz hasło',
+	'editaccount-submit-realname' => 'Zapisz nazwisko',
+	'editaccount-submit-clearunsub' => 'Wyczyść subskrypcję',
+	'editaccount-submit-cleardisable' => 'Wyczyść wyłączenie konta',
+	'editaccount-submit-close' => 'Zamknij konto',
+	'editaccount-usage-close' => 'Możesz także wyłączyć konto użytkownika poprzez zmianę jego hasło i usunięcie adresu e-mail. Dane zostaną utracone bez możliwości ich odzyskania.',
+	'editaccount-warning-close' => '<b>Uwaga!</b> Zamierzasz trwale wyłączyć konto użytkownika <b>$1</b>. Tej zmiany nie można cofnąć. Jesteś pewien?',
+	'editaccount-status' => 'Komunikat o stanie',
+	'editaccount-success-email' => 'Pomyślnie zmieniono adres e-mail konta $1 na $2.',
+	'editaccount-success-email-blank' => 'Pomyślnie usunięto adres e-mail konta  $1.',
+	'editaccount-success-pass' => 'Pomyślnie zmieniono hasło dla konta  $1 .',
+	'editaccount-success-realname' => 'Pomyślnie zmieniono nazwisko dla konta $1.',
+	'editaccount-success-unsub' => 'Pomyślnie usunięto ustawienia subskrypcji dla konta $1.',
+	'editaccount-success-disable' => 'Pomyślnie usunięto ustawienia wyłączenia konta $1.',
+	'editaccount-success-close' => 'Pomyślnie wyłączono konto $1.',
+	'editaccount-error-email' => 'Adres e-mail nie został zmieniony. Spróbuj ponownie lub skontaktuj się z zespołem technicznym.',
+	'editaccount-error-pass' => 'Hasło nie zostało zmienione. Spróbuj ponownie lub skontaktuj się z zespołem technicznym.',
+	'editaccount-error-realname' => 'Nazwisko nie zostało zmienione. Spróbuj ponownie lub skontaktuj się z zespołem technicznym.',
+	'editaccount-error-close' => 'Wystąpił błąd podczas zamykania konta. Spróbuj ponownie lub skontaktuj się z zespołem technicznym.',
 	'editaccount-invalid-email' => '"$1" nie jest prawidłowym adresem e-mail!',
 	'editaccount-nouser' => 'Konto "$1" nie istnieje!',
+	'editaccount-remove-avatar-fail' => 'Wystąpił błąd podczas usuwania awataru.',
+	'editaccount-requested' => 'Uwaga: Użytkownik poprosił o zamknięcia konta',
+	'editaccount-not-requested' => 'UWAGA: Użytkownik nie prosił o zamknięcia konta',
+	'editaccount-log' => 'Rejestr kont użytkownika',
+	'editaccount-log-header' => 'Ta strona zawiera listę zmian informacji o użytkowniku dokonanych przez pracowników.',
+	'editaccount-log-entry-email' => 'zmieniono e-mail użytkownika $2',
+	'editaccount-log-entry-pass' => 'zmieniono hasło użytkownika $2',
+	'editaccount-log-entry-realname' => 'zmieniono nazwisko użytkownika $2',
+	'editaccount-log-entry-close' => 'wyłączono konto $2',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">To konto zostało wyłączone globalnie przez Wikię.</div>',
+	'right-editaccount' => 'Edycja informacji innych użytkowników',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1149,6 +1191,7 @@ $messages['pms'] = array(
 	'editaccount-submit-pass' => 'Salva Ciav',
 	'editaccount-submit-realname' => 'Salva Nòm Ver',
 	'editaccount-submit-clearunsub' => "Scancelé l'anulament ëd l'abonament",
+	'editaccount-submit-cleardisable' => 'Gavé la marca ëd disabilitassion',
 	'editaccount-submit-close' => 'Sara Cont',
 	'editaccount-usage-close' => "A peul ëdcò disabilité a un cont utent an cripté soa ciav e gavand soa adrëssa ëd pòsta eletrònica. Ch'a fasa atension che sto dat a l'é përdù e a l'é pa arcuperàbil.",
 	'editaccount-warning-close' => "<b>Atension!</b> A l'é an camin ch'a disabìlita për sempe ël cont ëd l'utent <b>$1</b>. As peul pa torné andré. É-lo sigur ëd vorèj felo?",
@@ -1158,6 +1201,7 @@ $messages['pms'] = array(
 	'editaccount-success-pass' => 'Cambià da bin ciav për ël cont $1.',
 	'editaccount-success-realname' => 'Cambià da bin ël nòm ver për ël cont $1.',
 	'editaccount-success-unsub' => "Gavà për da bin l'anformassion d'anulament ëd l'abonament për ël cont $1.",
+	'editaccount-success-disable' => "Gavà për da bin l'anformassion ëd disabilitassion dal cont $1.",
 	'editaccount-success-close' => 'Disabilità da bin ël cont $1.',
 	'editaccount-error-email' => "L'adrëssa ëd pòsta eletrònica e l'é pa stàita cambià. Ch'a preuva torna o ch'a contata l'Echip técnica.",
 	'editaccount-error-pass' => "La ciav a l'é pa stàita cangià. Ch'a preuva torna o ch'a contata l'Echip técnica.",
@@ -1165,13 +1209,16 @@ $messages['pms'] = array(
 	'editaccount-error-close' => "Un problema a l'é capità an sarand ël cont. Ch'a preuva torna o ch'a contata l'Echip técnica.",
 	'editaccount-invalid-email' => '"$1" a l\'é n\'adrëssa ëd pòsta eletrònica pa bon-a!',
 	'editaccount-nouser' => 'Cont "$1" a esist pa!',
+	'editaccount-remove-avatar-fail' => "Problema an gavand da sol l'avatar.",
+	'editaccount-requested' => "Nòta: L'utent a l'ha ciamà ëd saré ël cont",
+	'editaccount-not-requested' => "TENSION: L'utent a l'ha pa ciamà ëd saré ël cont",
 	'editaccount-log' => 'Registr dël cont utent',
 	'editaccount-log-header' => "Sta pàgina-sì a lista ij cangiament fàit ai gust ëd l'utent da l'Echip ëd Wikia.",
 	'editaccount-log-entry-email' => "a l'ha cangià l'adrëssa ëd pòsta eletrònica për l'utent $2",
 	'editaccount-log-entry-pass' => 'cangià ciav për utent $2',
 	'editaccount-log-entry-realname' => 'cangià nòm ver për utent $2',
 	'editaccount-log-entry-close' => 'disabilità cont $2',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Sto cont-sì a l\'é stàit disabilità.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Sto cont-sì a l\'é stàit disabilità globalment da Wikia.</div>',
 	'right-editaccount' => "Modifiché ij gust ëd j'àutri utent",
 );
 
@@ -1472,6 +1519,7 @@ $messages['sv'] = array(
 	'editaccount-error-close' => 'Ett problem uppstod när kontot skulle avslutas. Försök igen eller kontakta Tech Teamet.',
 	'editaccount-invalid-email' => '"$1" är inte en giltig e-postadress!',
 	'editaccount-nouser' => 'Konto "$1" existerar inte!',
+	'editaccount-requested' => 'OBS: Användare har begärt en avslutning av sitt konto',
 	'editaccount-log' => 'Användarkontots log',
 	'editaccount-log-header' => 'Denna sida listar förändringar av användarnas inställningar av Wikias personal.',
 	'editaccount-log-entry-email' => 'ändrade e-post för användare $2',
@@ -1587,9 +1635,32 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author A1
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'editaccount' => 'Редагувати обліковий запис',
+	'editaccount-desc' => 'Дозволяє керувати обліковими записами користувачів',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Редагувати обліковий запис',
+	'editaccount-frame-usage' => 'Примітка',
+	'editaccount-label-select' => 'Оберіть обліковий запис користувача',
+	'editaccount-submit-account' => 'Керування обліковим записом',
+	'editaccount-frame-account' => 'Редагування облікового запису: $1',
+	'editaccount-frame-close' => 'Відключення облікового запису користувача: $1',
+	'editaccount-label-email' => 'Встановити адресу електронної пошти',
+	'editaccount-label-pass' => 'Встановити пароль',
+	'editaccount-label-realname' => "Встановити справжнє ім'я",
+	'editaccount-label-clearunsub' => 'Відписатися',
+	'editaccount-submit-email' => 'Зберегти адресу електронної пошти',
+	'editaccount-submit-pass' => 'Зберегти пароль',
+	'editaccount-submit-realname' => "Зберегти справжнє ім'я",
+	'editaccount-submit-close' => 'Закрити обліковий запис',
+	'editaccount-status' => 'Статусне повідомлення',
+	'editaccount-success-email' => 'Адресу електронної пошти для облікового запису $1 змінено на $2.',
+	'editaccount-success-email-blank' => 'Адресу електронної пошти для облікового запису $1 вилучено',
+	'editaccount-success-pass' => 'Пароль для облікового запису $1 змінено.',
+	'editaccount-success-realname' => "Справжнє ім'я для облікового запису $1 змінено.",
 	'editaccount-log' => 'Журнал облікових записів',
 );
 
@@ -1642,6 +1713,7 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
  * @author Hzy980512
  */
@@ -1652,6 +1724,10 @@ $messages['zh-hans'] = array(
 	'editaccount-usage' => '用户数据被每个Wiki分别储存。当您修改密码或电子邮箱时，只会在修改的Wiki上生效。请直接使用新密码登入该Wiki，以避免缓存问题。',
 	'editaccount-label-select' => '选择一个用户',
 	'editaccount-submit-account' => '管理用户',
+	'editaccount-label-email' => '设置新电子邮件地址',
+	'editaccount-label-pass' => '设置新密码',
+	'editaccount-label-realname' => '设置新真实姓名',
+	'editaccount-label-clearunsub' => '已取消关注',
 	'editaccount-submit-email' => '保存电子邮件地址',
 	'editaccount-submit-pass' => '保存密码',
 	'editaccount-submit-realname' => '保存真名',

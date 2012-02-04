@@ -149,6 +149,17 @@ $messages['ms'] = array(
 Kegiatan menilai laman ''tidak'' diambil kira di sini.",
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'graceexpired' => 'Hensyn utløpt',
+	'graceexpired-row' => '$1 (i $2, sist endret $3)',
+	'graceexpired-header' => "Denne siden lister opp alle sider som enten er [[:Category:Abandoned|forlatt]], [[:Category:Trash_builds|søppel]], [[:Category:Build stubs|stubber]] eller [[:Category:Trial Builds|tester]], og som ikke har blitt redigert på minst to uker.
+
+Aktivitet på karaktersider er ''ikke'' tatt hensyn til her.",
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -158,17 +169,6 @@ $messages['nl'] = array(
 	'graceexpired-header' => "Op deze pagina worden alle builds weergegeven die [[:Category:Abandoned|verlaten]], [[:Category:Trash_builds|verwijderd]], [[:Category:Build stubs|onafgemaakt]] of [[:Category:Trial Builds|probeerseltjes]] zijn en in de afgelopen twee weken niet zijn bewerkt.
 
 Er wordt ''geen rekening gehouden'' met beoordelingen van pagina's.",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'graceexpired' => 'Hensyn utløpt',
-	'graceexpired-row' => '$1 (i $2, sist endret $3)',
-	'graceexpired-header' => "Denne siden lister opp alle sider som enten er [[:Category:Abandoned|forlatt]], [[:Category:Trash_builds|søppel]], [[:Category:Build stubs|stubber]] eller [[:Category:Trial Builds|tester]], og som ikke har blitt redigert på minst to uker.
-
-Aktivitet på karaktersider er ''ikke'' tatt hensyn til her.",
 );
 
 /** Occitan (Occitan)

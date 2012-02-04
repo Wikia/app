@@ -224,6 +224,18 @@ $messages['ms'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Perhatian: Isi kandungan laman diperlukan',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$messages['nb'] = array(
+	'contentfeeds-desc' => 'Gir utdypende og oppdatert informasjon gjennom ulike tagger eller «feeds»',
+	'contentfeeds-newimages-rss-title' => 'RSS Feed for {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Feed fra $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Opprett dine første sider!',
+	'contentfeeds-firstfewarticles-tag-title' => 'Tittel',
+	'contentfeeds-firstfewarticles-tag-next' => 'Neste',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feil: Sidetittel er påkrevd',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Feil: Sideinnhold er påkrevd',
+);
+
 /** Dutch (Nederlands) */
 $messages['nl'] = array(
 	'contentfeeds-desc' => 'Biedt rijke en bijgewerkte informatie via verschillnde labels of "feeds"',
@@ -241,18 +253,6 @@ $messages['nl'] = array(
  */
 $messages['nl-informal'] = array(
 	'contentfeeds-firstfewarticles-tag-header' => "Maak je eerste pagina's aan!",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['nb'] = array(
-	'contentfeeds-desc' => 'Gir utdypende og oppdatert informasjon gjennom ulike tagger eller «feeds»',
-	'contentfeeds-newimages-rss-title' => 'RSS Feed for {{#Special:NewFiles}}',
-	'contentfeeds-newimages-rss-desc' => 'Feed fra $1',
-	'contentfeeds-firstfewarticles-tag-header' => 'Opprett dine første sider!',
-	'contentfeeds-firstfewarticles-tag-title' => 'Tittel',
-	'contentfeeds-firstfewarticles-tag-next' => 'Neste',
-	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feil: Sidetittel er påkrevd',
-	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Feil: Sideinnhold er påkrevd',
 );
 
 /** Polish (Polski) */
@@ -398,8 +398,10 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => '创建您的首批页面！',
 	'contentfeeds-firstfewarticles-tag-title' => '标题',
 	'contentfeeds-firstfewarticles-tag-next' => '下一页',
 );

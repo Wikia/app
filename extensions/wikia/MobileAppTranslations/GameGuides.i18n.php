@@ -330,6 +330,32 @@ $messages['ms'] = array(
 	'error-json-parse' => 'Maaf, ada masalah dengan data yang dipulangkan dari pelayan kami.\\nSila cuba lagi.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'activityindicator-message' => 'Laster inn...',
+	'window-wikis-title' => 'Wikia spillguider',
+	'window-wikis-wikilist-search-hint' => 'Våre toppspill',
+	'window-category-load-batch' => 'Mer',
+	'window-article-button-close' => 'Lukk',
+	'window-article-button-back' => 'Tilbake',
+	'window-article-menu-search-label' => 'Søk',
+	'window-article-menu-dashboard-label' => 'Guideinnhold',
+	'window-article-menu-cancel-label' => 'Avbryt',
+	'searchview-no-results' => 'Ingen resultater for «%s»',
+	'searchview-button-back-list' => 'Tilbake til listen',
+	'searchview-button-back-article' => 'Tilbake til artikkel',
+	'searchbar-hint' => 'Søk etter %s...',
+	'alert-download-updated-wikis-message' => 'Listen over tilgjengelige guider vil bli oppdatert.',
+	'alert-download-updated-wikis-button-ok' => 'Ok',
+	'error-update-required' => 'En oppdatering for denne appen er tilgjengelig og påkrevd.',
+	'error-no-connection' => 'Ingen internett-tilkobling tilgjengelig.\\nVennligst prøv igjen.',
+	'error-server' => 'Serverne våre svarte med en feil, beklager.\\nVennligst prøv igjen.',
+	'error-json-parse' => 'Det oppstod et problem med dataene returnert fra serverne våre, beklager.\\nVennligst prøv igjen.',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -355,32 +381,6 @@ $messages['nl'] = array(
 	'error-no-connection' => 'Geen internetverbinding beschikbaar. \\nProbeer het opnieuw.',
 	'error-server' => 'Sorry, onze servers reageerden met een foutmelding. \\nProbeer het opnieuw.',
 	'error-json-parse' => 'Er was een probleem met de gegevens die door onze servers zijn verzonden.\\nProbeer het opnieuw.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'activityindicator-message' => 'Laster inn...',
-	'window-wikis-title' => 'Wikia spillguider',
-	'window-wikis-wikilist-search-hint' => 'Våre toppspill',
-	'window-category-load-batch' => 'Mer',
-	'window-article-button-close' => 'Lukk',
-	'window-article-button-back' => 'Tilbake',
-	'window-article-menu-search-label' => 'Søk',
-	'window-article-menu-dashboard-label' => 'Guideinnhold',
-	'window-article-menu-cancel-label' => 'Avbryt',
-	'searchview-no-results' => 'Ingen resultater for «%s»',
-	'searchview-button-back-list' => 'Tilbake til listen',
-	'searchview-button-back-article' => 'Tilbake til artikkel',
-	'searchbar-hint' => 'Søk etter %s...',
-	'alert-download-updated-wikis-message' => 'Listen over tilgjengelige guider vil bli oppdatert.',
-	'alert-download-updated-wikis-button-ok' => 'Ok',
-	'error-update-required' => 'En oppdatering for denne appen er tilgjengelig og påkrevd.',
-	'error-no-connection' => 'Ingen internett-tilkobling tilgjengelig.\\nVennligst prøv igjen.',
-	'error-server' => 'Serverne våre svarte med en feil, beklager.\\nVennligst prøv igjen.',
-	'error-json-parse' => 'Det oppstod et problem med dataene returnert fra serverne våre, beklager.\\nVennligst prøv igjen.',
 );
 
 /** Polish (Polski)

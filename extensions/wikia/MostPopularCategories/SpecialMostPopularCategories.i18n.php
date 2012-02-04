@@ -244,6 +244,11 @@ $messages['ms'] = array(
 	'mostpopularcategories' => 'Kategori paling popular',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$messages['nb'] = array(
+	'mostpopularcategories' => 'Mest populære kategorier',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -256,13 +261,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'mostpopularcategories' => 'Mest populære kategoriar',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['nb'] = array(
-	'mostpopularcategories' => 'Mest populære kategorier',
 );
 
 /** Occitan (Occitan)

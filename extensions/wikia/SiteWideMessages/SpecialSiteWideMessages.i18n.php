@@ -581,6 +581,7 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author LWChris
  * @author Laximilian scoken
  * @author The Evil IP address
@@ -640,7 +641,7 @@ $messages['de'] = array(
 	'swm-list-table-date' => 'Versanddatum',
 	'swm-list-table-removed' => 'Entfernt',
 	'swm-list-table-content' => 'Inhalt',
-	'swm-list-table-tools' => 'Tools',
+	'swm-list-table-tools' => 'Werkzeuge',
 	'swm-list-table-lang' => 'Sprachen',
 	'swm-yes' => 'Ja',
 	'swm-no' => 'Nein',
@@ -662,6 +663,18 @@ $messages['de-formal'] = array(
 	'swm-msg-remove' => 'Wollen Sie diese Nachricht wirklich entfernen? Dies kann nicht rückgängig gemacht werden!',
 	'swm-error-empty-message' => 'Geben Sie den Inhalt der Nachricht ein.',
 	'swm-error-empty-group' => 'Geben Sie den Namen der Gruppe ein.',
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'swm-label-recipient-users' => 'Qarberi',
+	'swm-label-language' => 'Zuwan',
+	'swm-button-send' => '[ Bırsê ]',
+	'swm-button-save' => '[ Star fiyê ]',
+	'swm-button-new' => '[ Newe ]',
+	'swm-list-table-sender' => 'Rıster',
 );
 
 /** Ewe (Eʋegbe) */
@@ -802,8 +815,16 @@ $messages['fa'] = array(
  * @author Crt
  * @author Nike
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
+	'sitewidemessages' => 'Sivustonlaajuiset viestit',
+	'swm-page-title-editor' => 'Sivustonlaajuiset viestit :: Muokkaus',
+	'swm-page-title-preview' => 'Sivustonlaajuiset viestit :: Esikatselu',
+	'swm-page-title-send' => 'Sivustonlaajuiset viestit :: Lähetä',
+	'swm-page-title-sent' => 'Sivustonlaajuiset viestit :: Lähetetty',
+	'swm-page-title-dismiss' => 'Sivustonlaajuiset viestit :: Merkitse nähdyksi',
+	'swm-page-title-list' => 'Sivustonlaajuiset viestit :: Luettelo',
 	'swm-label-preview' => 'Esikatselu',
 	'swm-label-edit' => 'Muokkaa',
 	'swm-label-remove' => 'Poista',
@@ -814,6 +835,7 @@ $messages['fi'] = array(
 	'swm-label-recipient-users' => 'Käyttäjät',
 	'swm-label-expiration' => 'Vanhenemisaika',
 	'swm-label-mode-wikis-all' => 'Kaikki wikit',
+	'swm-label-mode-wikis-hub' => 'Valittu keskus',
 	'swm-label-mode-wikis-wiki' => 'Valittu wiki',
 	'swm-label-mode-users-all' => 'Kaikki käyttäjät',
 	'swm-label-mode-users-active' => 'Aktiiviset käyttäjät',
@@ -1534,11 +1556,84 @@ $messages['mzn'] = array(
 	'swm-list-table-lang' => 'زوون',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'sitewidemessages' => 'Meldinger for hele nettstedet',
+	'swm-page-title-editor' => 'Meldinger for hele nettstedet :: Skriveprogram',
+	'swm-page-title-preview' => 'Meldinger for hele nettstedet :: Forhåndsvis',
+	'swm-page-title-send' => 'Meldinger for hele nettstedet :: Send',
+	'swm-page-title-sent' => 'Meldinger for hele nettstedet :: Sendt',
+	'swm-page-title-dismiss' => 'Meldinger for hele nettstedet :: Forkast',
+	'swm-page-title-list' => 'Meldinger for hele nettstedet :: Liste',
+	'swm-label-preview' => 'Forhåndsvisning',
+	'swm-label-edit' => 'Rediger',
+	'swm-label-remove' => 'Fjern',
+	'swm-label-sent' => 'Sendt',
+	'swm-label-list' => 'Liste',
+	'swm-label-recipient' => 'Mottakere',
+	'swm-label-recipient-wikis' => 'Wikier',
+	'swm-label-recipient-users' => 'Brukere',
+	'swm-label-expiration' => 'Utløpstid',
+	'swm-label-mode-wikis-all' => 'Alle wikier',
+	'swm-label-mode-wikis-hub' => 'Valgt hub',
+	'swm-label-mode-wikis-cluster' => 'Valgt klynge',
+	'swm-label-mode-wikis-wiki' => 'Valgte wikier',
+	'swm-label-mode-users-all' => 'Alle brukere',
+	'swm-label-mode-users-active' => 'Aktive brukere',
+	'swm-label-mode-users-group' => 'Brukere som hører til gruppen',
+	'swm-label-mode-users-group-hint' => '<i>Velg en gruppe fra rullegardinen eller skriv inn navnet selv for å overskrive rullegardinvalget.</i>',
+	'swm-label-mode-users-user' => 'Valgt bruker',
+	'swm-label-mode-users-user-hint' => '<i>Dette alternativet ignorerer valg fra gruppen «Wikier».</i>',
+	'swm-label-content' => 'Innhold',
+	'swm-label-comment' => 'Kommentar',
+	'swm-label-dismissed' => 'Avvist',
+	'swm-label-language' => 'Språk',
+	'swm-button-lang-checkall' => '[ Merk alle ]',
+	'swm-button-lang-checknone' => '[ Merk ingen ]',
+	'swm-taskmanager-hint' => '<i>Merk at dette alternativet er mer tidkrevende og vil bli satt i kø i oppgavebehandleren.</i>',
+	'swm-button-preview' => '[ Forhåndsvis ]',
+	'swm-button-send' => '[ Send ]',
+	'swm-button-save' => '[ Lagre ]',
+	'swm-button-new' => '[ Ny ]',
+	'swm-msg-sent-ok' => '<h3>Meldingen ble sendt.</h3>',
+	'swm-msg-sent-err' => '<h3>Meldingen ble IKKE sendt.</h3>Se feilloggen for mer informasjon.',
+	'swm-msg-remove' => 'Er du sikker på at du vil fjerne denne meldingen? Dette kan ikke gjøres om!',
+	'swm-days' => 'aldri,time,timer,dag,dager',
+	'swm-expire-info' => 'Denne meldingen løper ut $1.',
+	'swm-link-dismiss' => 'skjul denne meldingen',
+	'swm-dismiss-content' => '<p>Meldingen ble skjult.</p><p>%s</p>',
+	'swm-list-no-messages' => 'Ingen meldinger.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Avsender',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Mottaker',
+	'swm-list-table-group' => 'Gruppe',
+	'swm-list-table-expire' => 'Utløper',
+	'swm-list-table-date' => 'Avsenderdato',
+	'swm-list-table-removed' => 'Fjernet',
+	'swm-list-table-content' => 'Innhold',
+	'swm-list-table-tools' => 'Verktøy',
+	'swm-list-table-lang' => 'Språk',
+	'swm-yes' => 'Ja',
+	'swm-no' => 'Nei',
+	'swm-error-no-such-wiki' => 'Det finnes ingen slik wiki.',
+	'swm-error-no-such-user' => 'Angitt bruker finnes ikke.',
+	'swm-error-empty-message' => 'Skriv inn innholdet i meldingen.',
+	'swm-error-long-message' => 'Meldinger er begrenset til 500 tegn.',
+	'swm-error-empty-group' => 'Skriv inn navnet på gruppen.',
+	'swm-lang-other' => 'alle gjenværende språk',
+);
+
 /** Nepali (नेपाली)
  * @author Bhawani Gautam
  * @author Bhawani Gautam Rhk
+ * @author RajeshPandey
  */
 $messages['ne'] = array(
+	'swm-label-comment' => 'टिप्पणी',
 	'swm-button-new' => '[ नयाँ ]',
 );
 
@@ -1620,77 +1715,6 @@ Dit kan niet ongedaan gemaakt worden.',
 $messages['nl-informal'] = array(
 	'swm-msg-remove' => 'Weet je zeker dat je dit bericht wilt verwijderen?
 Dit kan niet ongedaan gemaakt worden.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'sitewidemessages' => 'Meldinger for hele nettstedet',
-	'swm-page-title-editor' => 'Meldinger for hele nettstedet :: Skriveprogram',
-	'swm-page-title-preview' => 'Meldinger for hele nettstedet :: Forhåndsvis',
-	'swm-page-title-send' => 'Meldinger for hele nettstedet :: Send',
-	'swm-page-title-sent' => 'Meldinger for hele nettstedet :: Sendt',
-	'swm-page-title-dismiss' => 'Meldinger for hele nettstedet :: Forkast',
-	'swm-page-title-list' => 'Meldinger for hele nettstedet :: Liste',
-	'swm-label-preview' => 'Forhåndsvisning',
-	'swm-label-edit' => 'Rediger',
-	'swm-label-remove' => 'Fjern',
-	'swm-label-sent' => 'Sendt',
-	'swm-label-list' => 'Liste',
-	'swm-label-recipient' => 'Mottakere',
-	'swm-label-recipient-wikis' => 'Wikier',
-	'swm-label-recipient-users' => 'Brukere',
-	'swm-label-expiration' => 'Utløpstid',
-	'swm-label-mode-wikis-all' => 'Alle wikier',
-	'swm-label-mode-wikis-hub' => 'Valgt hub',
-	'swm-label-mode-wikis-cluster' => 'Valgt klynge',
-	'swm-label-mode-wikis-wiki' => 'Valgte wikier',
-	'swm-label-mode-users-all' => 'Alle brukere',
-	'swm-label-mode-users-active' => 'Aktive brukere',
-	'swm-label-mode-users-group' => 'Brukere som hører til gruppen',
-	'swm-label-mode-users-group-hint' => '<i>Velg en gruppe fra rullegardinen eller skriv inn navnet selv for å overskrive rullegardinvalget.</i>',
-	'swm-label-mode-users-user' => 'Valgt bruker',
-	'swm-label-mode-users-user-hint' => '<i>Dette alternativet ignorerer valg fra gruppen «Wikier».</i>',
-	'swm-label-content' => 'Innhold',
-	'swm-label-comment' => 'Kommentar',
-	'swm-label-dismissed' => 'Avvist',
-	'swm-label-language' => 'Språk',
-	'swm-button-lang-checkall' => '[ Merk alle ]',
-	'swm-button-lang-checknone' => '[ Merk ingen ]',
-	'swm-taskmanager-hint' => '<i>Merk at dette alternativet er mer tidkrevende og vil bli satt i kø i oppgavebehandleren.</i>',
-	'swm-button-preview' => '[ Forhåndsvis ]',
-	'swm-button-send' => '[ Send ]',
-	'swm-button-save' => '[ Lagre ]',
-	'swm-button-new' => '[ Ny ]',
-	'swm-msg-sent-ok' => '<h3>Meldingen ble sendt.</h3>',
-	'swm-msg-sent-err' => '<h3>Meldingen ble IKKE sendt.</h3>Se feilloggen for mer informasjon.',
-	'swm-msg-remove' => 'Er du sikker på at du vil fjerne denne meldingen? Dette kan ikke gjøres om!',
-	'swm-days' => 'aldri,time,timer,dag,dager',
-	'swm-expire-info' => 'Denne meldingen løper ut $1.',
-	'swm-link-dismiss' => 'skjul denne meldingen',
-	'swm-dismiss-content' => '<p>Meldingen ble skjult.</p><p>%s</p>',
-	'swm-list-no-messages' => 'Ingen meldinger.',
-	'swm-list-table-id' => 'ID',
-	'swm-list-table-sender' => 'Avsender',
-	'swm-list-table-wiki' => 'Wiki',
-	'swm-list-table-recipient' => 'Mottaker',
-	'swm-list-table-group' => 'Gruppe',
-	'swm-list-table-expire' => 'Utløper',
-	'swm-list-table-date' => 'Avsenderdato',
-	'swm-list-table-removed' => 'Fjernet',
-	'swm-list-table-content' => 'Innhold',
-	'swm-list-table-tools' => 'Verktøy',
-	'swm-list-table-lang' => 'Språk',
-	'swm-yes' => 'Ja',
-	'swm-no' => 'Nei',
-	'swm-error-no-such-wiki' => 'Det finnes ingen slik wiki.',
-	'swm-error-no-such-user' => 'Angitt bruker finnes ikke.',
-	'swm-error-empty-message' => 'Skriv inn innholdet i meldingen.',
-	'swm-error-long-message' => 'Meldinger er begrenset til 500 tegn.',
-	'swm-error-empty-group' => 'Skriv inn navnet på gruppen.',
-	'swm-lang-other' => 'alle gjenværende språk',
 );
 
 /** Ossetic (Ирон)
@@ -1813,6 +1837,7 @@ $messages['pms'] = array(
 	'swm-label-expiration' => 'Temp ëd fin',
 	'swm-label-mode-wikis-all' => 'Tute le wiki',
 	'swm-label-mode-wikis-hub' => 'Pòrt selessionà',
+	'swm-label-mode-wikis-cluster' => 'Baron selessionà',
 	'swm-label-mode-wikis-wiki' => 'Wiki selessionà',
 	'swm-label-mode-users-all' => "Tùit j'utent",
 	'swm-label-mode-users-active' => 'Utent ativ',
@@ -2184,7 +2209,7 @@ $messages['sr-ec'] = array(
 	'swm-yes' => 'Да',
 	'swm-no' => 'Не',
 	'swm-error-no-such-wiki' => 'Не постоји таква викија!',
-	'swm-error-no-such-user' => 'Тражени корисник не постоји.',
+	'swm-error-no-such-user' => 'Наведени корисник не постоји.',
 	'swm-error-empty-message' => 'Унесите садржај поруке.',
 	'swm-error-empty-group' => 'Унесите назив групе.',
 	'swm-lang-other' => 'сви преостали језици',
@@ -2206,7 +2231,7 @@ $messages['sv'] = array(
 	'swm-label-recipient-users' => 'Användare',
 	'swm-label-expiration' => 'Förfallotid',
 	'swm-label-mode-wikis-all' => 'Alla wikis',
-	'swm-label-mode-wikis-hub' => 'Valda nav',
+	'swm-label-mode-wikis-hub' => 'Valda hubbar',
 	'swm-label-mode-wikis-wiki' => 'Vald wiki',
 	'swm-label-mode-users-all' => 'Alla användare',
 	'swm-label-mode-users-active' => 'Aktiva användare',
@@ -2224,9 +2249,11 @@ $messages['sv'] = array(
 	'swm-button-save' => '[ Spara ]',
 	'swm-button-new' => '[ Ny ]',
 	'swm-msg-sent-ok' => '<h3>Meddelandet har skickats.</h3>',
+	'swm-msg-remove' => 'Är du säker på att du vill ta bort detta meddelande? Detta går inte att ångra!',
 	'swm-days' => 'aldrig,timme,timmar,dag,dagar',
 	'swm-expire-info' => 'Detta meddelande kommer att upphöra den $1.',
 	'swm-link-dismiss' => 'avfärda detta meddelande',
+	'swm-dismiss-content' => '<p>Meddelandet togs bort.</p><p>%s</p>',
 	'swm-list-no-messages' => 'Inga meddelanden.',
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Avsändare',
@@ -2243,6 +2270,7 @@ $messages['sv'] = array(
 	'swm-no' => 'Nej',
 	'swm-error-no-such-wiki' => 'Det finns ingen sådan wiki!',
 	'swm-error-no-such-user' => 'Det angivna användarnamnet finns inte.',
+	'swm-error-empty-message' => 'Ange innehållet i meddelandet.',
 	'swm-error-long-message' => 'Meddelanden är begränsade till 500 tecken.',
 	'swm-error-empty-group' => 'Ange namnet på gruppen.',
 	'swm-lang-other' => 'alla återstående språk',

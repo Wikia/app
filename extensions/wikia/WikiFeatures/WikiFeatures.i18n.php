@@ -276,7 +276,7 @@ Ein wenig experimentieren – du kannst jederzeit die Tools deaktivieren, die du
 	'wikifeatures-hate-this-project' => 'Mir gefällt dieses Projekt nicht.',
 	'wikifeatures-problem-with-project' => 'Ich habe ein Problem mit diesem Projekt',
 	'wikifeatures-an-idea-for-project' => 'Ich habe eine Idee für dieses Projekt',
-	'wikifeatures-feedback-heading' => 'Rückmeldung',
+	'wikifeatures-feedback-heading' => 'Rückmeldungen',
 	'wikifeatures-feedback-description' => 'Wir mögen es Rückmeldungen über Funktionen in WikiaLabs zu bekommen. Wenn du eine Idee hast, wie wir diese Funktion verbessern können, oder wenn du einen Fehler feststellst, hinterlasse bitte unten einen Kommentar, und die Entwickler, die an dieser Funktion arbeiten, werden deine Nachricht erhalten.',
 	'wikifeatures-feedback-type-label' => 'Worum geht es?',
 	'wikifeatures-feedback-comment-label' => 'Hinterlasse uns einen Kommentar',
@@ -564,8 +564,9 @@ $messages['ia'] = array(
  * @author Minerva Titani
  */
 $messages['it'] = array(
+	'wikifeatures' => 'Wiki Funzioni',
 	'wikifeatures-title' => 'Wiki Funzioni',
-	'wikifeatures-heading' => 'Funzioni',
+	'wikifeatures-heading' => 'Wiki Funzioni',
 	'wikifeatures-creative' => "Wiki Funzioni ti permette di scegliere quali funzioni opzionali di Wikia vuoi avere nella tua wiki. Dai un'occhiata e sperimenta: puoi attivare o disattivare queste funzioni in ogni momento.",
 	'wikifeatures-labs-heading' => 'Wikia Labs',
 	'wikifeatures-labs-creative' => 'Wikia Labs è il posto in cui puoi trovare funzioni e idee che stiamo ancora sperimentando. Dal momento che queste funzioni sono ancora in fase di modifica e test, potrebbero presentare alcuni problemi. In ogni caso, vogliamo che tu le provi e ti diverta! Attivale e inviaci un feedback per segnalarci ciò che di buono, brutto o bizzarro hai individuato!',
@@ -594,6 +595,7 @@ $messages['it'] = array(
 	'wikifeatures-deactivate-confirm-button' => 'Sì, disattiva',
 	'wikifeatures-deactivate-cancel-button' => 'Annulla',
 	'wikifeatures-promotion-new' => 'Novità',
+	'wikifeatures-oasis-only' => 'Wiki Funzioni non è disponibile per Monobook. Se vuoi usare questa funzione, per favore imposta nelle tue preferenze il Nuovo look di Wikia.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Liste Top 10',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Liste Top 10 permette a ogni utente della tua wiki di creare delle liste votabili. Se cerchi un modo efficace per far interagire con la wiki i nuovi editori, eccolo! Attivando questa funzione, verrà aggiunta l\'opzione "Lista Top 10" quando si clicca su "Crea una pagina".',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Successi',
@@ -775,6 +777,66 @@ $messages['ms'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Para saintis kami tengah berusaha membangunkan ciri-ciri baru untuk anda cuba. Nantikan kemunculan makmal baru di sini tidak lama lagi!',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'wikifeatures' => 'Wiki-funksjoner',
+	'wikifeatures-title' => 'Wiki-funksjoner',
+	'wikifeatures-heading' => 'Funksjoner',
+	'wikifeatures-creative' => 'Wiki-funksjoner lar deg velge hvilke av Wikias valgfrie funksjoner du vil ha på wikien din. Ta en titt og husk å prøve deg frem litt, du kan aktivere eller deaktivere disse funksjonene når som helst.',
+	'wikifeatures-labs-heading' => 'Laben',
+	'wikifeatures-labs-creative' => 'Laben er stedet hvor du finner funksjoner og ideer som vi eksperimenterer med. Siden vi fremdeles er på laben og jobber med disse funksjonene kan de fremdeles ha enkelte feil, men vi vil at du skal bli med på moroa! Skru de på og send oss din tilbakemelding på den gode, den dårlige, og den rent ut forferdelige oppførselen til disse produktene.',
+	'wikifeatures-feedback' => 'Gi tilbakemelding',
+	'wikifeatures-error-permission' => 'Beklager, du har ikke tillatelse til å vise denne siden.',
+	'wikifeatures-error-invalid-parameter' => 'Ugyldig parameter: $1. Vennligst prøv igjen.',
+	'wikifeatures-error-message' => 'Kommentaren er for kort eller for lang.',
+	'wikifeatures-error-spam-attempt' => 'Vennligst vent 60 sekunder før du sender flere tilbakemeldinger.',
+	'wikifeatures-error-invalid-category' => 'Ops! Vennligst velg hva denne saken handler om.',
+	'wikifeatures-toggle-active' => 'Aktivert',
+	'wikifeatures-toggle-inactive' => 'Deaktivert',
+	'wikifeatures-active-on' => 'Aktiv på $1 wikier',
+	'wikifeatures-category-choose-one' => 'Velg en...',
+	'wikifeatures-love-this-project' => 'Jeg elsker denne funksjonen',
+	'wikifeatures-hate-this-project' => 'Jeg hater denne funksjonen',
+	'wikifeatures-problem-with-project' => 'Jeg har et problem å rapportere',
+	'wikifeatures-an-idea-for-project' => 'Jeg har en idé til denne funksjonen',
+	'wikifeatures-feedback-heading' => 'Tilbakemelding',
+	'wikifeatures-feedback-description' => 'Vi elsker å få tilbakemeldinger på funksjonene på laben! Har du en idé til hvordan vi kan forbedre denne funksjonen, et problem å rapportere, eller simpelthen en tilbakemelding på hva du liker eller misliker? Gi oss beskjed ved å bruke boksen under.',
+	'wikifeatures-feedback-type-label' => 'Hva dreier dette seg om?',
+	'wikifeatures-feedback-comment-label' => 'Legg igjen en kommentar',
+	'wikifeatures-feedback-success' => 'Takk for tilbakemeldingen!',
+	'wikifeatures-deactivate-heading' => 'Deaktivere $1?',
+	'wikifeatures-deactivate-description' => 'Å deaktivere en funksjon vil fjerne den fra wikien din. Brukerne vil ikke kunne bruke denne funksjonen lenger, og de vil ikke se funksjonen noe sted på wikien.',
+	'wikifeatures-deactivate-notification' => 'Du kan slå funksjonen på igjen når som helst.',
+	'wikifeatures-deactivate-confirm-button' => 'Ja, deaktiver',
+	'wikifeatures-deactivate-cancel-button' => 'Avbryt',
+	'wikifeatures-promotion-new' => 'Nyhet',
+	'wikifeatures-oasis-only' => 'Wiki-funksjoner er ikke tilgjengelig for Monobook. Hvis du ønsker å bruke denne funksjonen, vennligst bytt til Wikia-utseendet.',
+	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Topp 10-lister',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Topp 10-lister lar alle på wikien lage avstemningslister. Hvis du ser etter en god måte å få junior-redaktørene til å bidra til wikien, er dette funksjonen for deg! Å aktivere denne funksjonen vil legge til «Topp 10-lister» som et alternativ når du trykker «Legg til en side»',
+	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Utmerkelser',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Utmerkelser vil hjelpe wikien med å vokse ved å oppfordre brukere til å bidra med ulikt innhold. Du kan lage dine egne utfordringer som er unike for wikien din, og til og med laste opp egne bilder til utmerkelsene.',
+	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Artikkelkommentarer',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Denne utvidelsen vil la folk skrive kommentarer på bunnen av artiklene. Andre brukere kan svare på kommentarene, og signaturer og datoer vil automatisk legges på. Dette vil erstatte diskusjonssider på wikien.',
+	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Kategoriutstilling',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'De åtte mest populære sidene i kategoriene dine vises allerede som bilder, men denne funksjonen vil liste opp alle sidene dine som bildelenker man kan sortere etter navn, sist besøk, eller popularitet!',
+	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
+	'wikifeatures-feature-description-wgEnableChat' => 'Umiddelbar kommunikasjon med andre mennesker som elsker wikien din og dens tema like mye som du gjør! Alle med en Wikia-konto kan bli med i chatten via «Bli med i chatten»-knappen i det høyre navigasjonsfeltet på siden din. lol omg rotfl.',
+	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia-redaktørens nye utseende',
+	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Redigeringen er selve hjertet i wikien, og å ha en god redaktør er nøkkelen til enkel og morsom innlegging av innhold. For å forbedre opplevelsen din, har vi gitt redaktørsidene våre et nytt utseende.',
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Avstemninger',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Tillater alle på wikien din å lage en avstemning! Med avstemninger aktivert kan brukerne dine bruke [http://help.wikia.com/wiki/Help:Poll poll-taggen] for å legge til denne praktiske funksjonen til en hvilken som helst side. Denne funksjonen er en god måte å øke bidragsmengden på wikien din.',
+	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Oppsettsbygger',
+	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Hjelp redaktører på wikien din med å lage sider som ser bra ut på kort tid. Oppsettsbyggeren lar administratorene på wikien lage forhåndsformaterte sider som redaktørene kan velge mellom når de legger til en side.',
+	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogger',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogger tillater brukerne på wikien din å skrive sine egne blogginnlegg på profilene sine og kan også brukes som en god måte å formidle nyheter og hendelser til wiki-fellesskapet.',
+	'wikifeatures-feature-heading-wgOasisNavV2' => 'Utvidet wiki-navigasjon',
+	'wikifeatures-feature-description-wgOasisNavV2' => 'Få flere lenker, et nytt forhåndsvisningsverktøy, et konsolidert sett med lenker til bidrag, og en ny «På wikien»-meny som fremhever viktige deler av innholdet og fellesskapet ditt.',
+	'wikifeatures-feature-heading-emptylabs' => 'Ser ut til at laben tar seg en pause',
+	'wikifeatures-feature-description-emptylabs' => 'Teknikerne våre jobber hardt med å koke i hop nye funksjoner du kan prøve ut. Se etter flere laber her snart!',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -835,66 +897,6 @@ $messages['nl'] = array(
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Krijg meer verwijzingen, een nieuwe voorvertoningshulpmiddel, een samengevoegde lijst met bijdrageverwijzingen een nieuw menu "Op de wiki" waarin de belangrijkste eigenschappen van uw pagina\'s en gemeenschap worden uitgelicht.',
 	'wikifeatures-feature-heading-emptylabs' => 'Het lijkt erop dat het lab even pauze aan het houden is',
 	'wikifeatures-feature-description-emptylabs' => 'Onze ontwikkelaars werken had aan het ontwerpen van nieuwe functies die u kunt uitproberen. Kom snel terug!',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'wikifeatures' => 'Wiki-funksjoner',
-	'wikifeatures-title' => 'Wiki-funksjoner',
-	'wikifeatures-heading' => 'Funksjoner',
-	'wikifeatures-creative' => 'Wiki-funksjoner lar deg velge hvilke av Wikias valgfrie funksjoner du vil ha på wikien din. Ta en titt og husk å prøve deg frem litt, du kan aktivere eller deaktivere disse funksjonene når som helst.',
-	'wikifeatures-labs-heading' => 'Laben',
-	'wikifeatures-labs-creative' => 'Laben er stedet hvor du finner funksjoner og ideer som vi eksperimenterer med. Siden vi fremdeles er på laben og jobber med disse funksjonene kan de fremdeles ha enkelte feil, men vi vil at du skal bli med på moroa! Skru de på og send oss din tilbakemelding på den gode, den dårlige, og den rent ut forferdelige oppførselen til disse produktene.',
-	'wikifeatures-feedback' => 'Gi tilbakemelding',
-	'wikifeatures-error-permission' => 'Beklager, du har ikke tillatelse til å vise denne siden.',
-	'wikifeatures-error-invalid-parameter' => 'Ugyldig parameter: $1. Vennligst prøv igjen.',
-	'wikifeatures-error-message' => 'Kommentaren er for kort eller for lang.',
-	'wikifeatures-error-spam-attempt' => 'Vennligst vent 60 sekunder før du sender flere tilbakemeldinger.',
-	'wikifeatures-error-invalid-category' => 'Ops! Vennligst velg hva denne saken handler om.',
-	'wikifeatures-toggle-active' => 'Aktivert',
-	'wikifeatures-toggle-inactive' => 'Deaktivert',
-	'wikifeatures-active-on' => 'Aktiv på $1 wikier',
-	'wikifeatures-category-choose-one' => 'Velg en...',
-	'wikifeatures-love-this-project' => 'Jeg elsker denne funksjonen',
-	'wikifeatures-hate-this-project' => 'Jeg hater denne funksjonen',
-	'wikifeatures-problem-with-project' => 'Jeg har et problem å rapportere',
-	'wikifeatures-an-idea-for-project' => 'Jeg har en idé til denne funksjonen',
-	'wikifeatures-feedback-heading' => 'Tilbakemelding',
-	'wikifeatures-feedback-description' => 'Vi elsker å få tilbakemeldinger på funksjonene på laben! Har du en idé til hvordan vi kan forbedre denne funksjonen, et problem å rapportere, eller simpelthen en tilbakemelding på hva du liker eller misliker? Gi oss beskjed ved å bruke boksen under.',
-	'wikifeatures-feedback-type-label' => 'Hva dreier dette seg om?',
-	'wikifeatures-feedback-comment-label' => 'Legg igjen en kommentar',
-	'wikifeatures-feedback-success' => 'Takk for tilbakemeldingen!',
-	'wikifeatures-deactivate-heading' => 'Deaktivere $1?',
-	'wikifeatures-deactivate-description' => 'Å deaktivere en funksjon vil fjerne den fra wikien din. Brukerne vil ikke kunne bruke denne funksjonen lenger, og de vil ikke se funksjonen noe sted på wikien.',
-	'wikifeatures-deactivate-notification' => 'Du kan slå funksjonen på igjen når som helst.',
-	'wikifeatures-deactivate-confirm-button' => 'Ja, deaktiver',
-	'wikifeatures-deactivate-cancel-button' => 'Avbryt',
-	'wikifeatures-promotion-new' => 'Nyhet',
-	'wikifeatures-oasis-only' => 'Wiki-funksjoner er ikke tilgjengelig for Monobook. Hvis du ønsker å bruke denne funksjonen, vennligst bytt til Wikia-utseendet.',
-	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Topp 10-lister',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Topp 10-lister lar alle på wikien lage avstemningslister. Hvis du ser etter en god måte å få junior-redaktørene til å bidra til wikien, er dette funksjonen for deg! Å aktivere denne funksjonen vil legge til «Topp 10-lister» som et alternativ når du trykker «Legg til en side»',
-	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Utmerkelser',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Utmerkelser vil hjelpe wikien med å vokse ved å oppfordre brukere til å bidra med ulikt innhold. Du kan lage dine egne utfordringer som er unike for wikien din, og til og med laste opp egne bilder til utmerkelsene.',
-	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Artikkelkommentarer',
-	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Denne utvidelsen vil la folk skrive kommentarer på bunnen av artiklene. Andre brukere kan svare på kommentarene, og signaturer og datoer vil automatisk legges på. Dette vil erstatte diskusjonssider på wikien.',
-	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Kategoriutstilling',
-	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'De åtte mest populære sidene i kategoriene dine vises allerede som bilder, men denne funksjonen vil liste opp alle sidene dine som bildelenker man kan sortere etter navn, sist besøk, eller popularitet!',
-	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
-	'wikifeatures-feature-description-wgEnableChat' => 'Umiddelbar kommunikasjon med andre mennesker som elsker wikien din og dens tema like mye som du gjør! Alle med en Wikia-konto kan bli med i chatten via «Bli med i chatten»-knappen i det høyre navigasjonsfeltet på siden din. lol omg rotfl.',
-	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia-redaktørens nye utseende',
-	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Redigeringen er selve hjertet i wikien, og å ha en god redaktør er nøkkelen til enkel og morsom innlegging av innhold. For å forbedre opplevelsen din, har vi gitt redaktørsidene våre et nytt utseende.',
-	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Avstemninger',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Tillater alle på wikien din å lage en avstemning! Med avstemninger aktivert kan brukerne dine bruke [http://help.wikia.com/wiki/Help:Poll poll-taggen] for å legge til denne praktiske funksjonen til en hvilken som helst side. Denne funksjonen er en god måte å øke bidragsmengden på wikien din.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Oppsettsbygger',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Hjelp redaktører på wikien din med å lage sider som ser bra ut på kort tid. Oppsettsbyggeren lar administratorene på wikien lage forhåndsformaterte sider som redaktørene kan velge mellom når de legger til en side.',
-	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogger',
-	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogger tillater brukerne på wikien din å skrive sine egne blogginnlegg på profilene sine og kan også brukes som en god måte å formidle nyheter og hendelser til wiki-fellesskapet.',
-	'wikifeatures-feature-heading-wgOasisNavV2' => 'Utvidet wiki-navigasjon',
-	'wikifeatures-feature-description-wgOasisNavV2' => 'Få flere lenker, et nytt forhåndsvisningsverktøy, et konsolidert sett med lenker til bidrag, og en ny «På wikien»-meny som fremhever viktige deler av innholdet og fellesskapet ditt.',
-	'wikifeatures-feature-heading-emptylabs' => 'Ser ut til at laben tar seg en pause',
-	'wikifeatures-feature-description-emptylabs' => 'Teknikerne våre jobber hardt med å koke i hop nye funksjoner du kan prøve ut. Se etter flere laber her snart!',
 );
 
 /** Polish (Polski)
@@ -985,6 +987,7 @@ $messages['ru'] = array(
 	'wikifeatures-error-invalid-parameter' => 'Недопустимый параметр: $1. Пожалуйста, попробуйте ещё раз.',
 	'wikifeatures-error-message' => 'Комментарий слишком короткий или слишком длинный.',
 	'wikifeatures-error-spam-attempt' => 'Пожалуйста, подождите 60 секунд перед отправкой следующего отзыва',
+	'wikifeatures-error-invalid-category' => 'Пожалуйста, выберите, что этот билет о том-то.',
 	'wikifeatures-toggle-active' => 'Включено',
 	'wikifeatures-toggle-inactive' => 'Отключено',
 	'wikifeatures-active-on' => 'Активно на $1 викиях',
@@ -1037,6 +1040,7 @@ $messages['sv'] = array(
 	'wikifeatures-heading' => 'Funktioner',
 	'wikifeatures-feedback' => 'Ge feedback',
 	'wikifeatures-error-invalid-parameter' => 'Ogiltig parameter: $1. Försök igen.',
+	'wikifeatures-error-message' => 'Din kommentar är antingen för kort eller för lång.',
 	'wikifeatures-toggle-active' => 'Aktiverad',
 	'wikifeatures-toggle-inactive' => 'Inaktiverad',
 	'wikifeatures-active-on' => 'Aktiv på $1 wikis',
@@ -1060,6 +1064,9 @@ $messages['sv'] = array(
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chatt',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Omröstningar',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Bloggar',
+	'wikifeatures-feature-heading-wgOasisNavV2' => 'Utökad Wiki-navigering',
+	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
+	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1079,7 +1086,7 @@ $messages['vi'] = array(
 	'wikifeatures-error-spam-attempt' => 'Vui lòng chờ trong 60 giây trước khi gửi thêm phản hồi tiếp theo.',
 	'wikifeatures-error-invalid-category' => 'Rất tiếc!  Hãy chọn vấn đề này là về.',
 	'wikifeatures-toggle-active' => 'Kích hoạt',
-	'wikifeatures-toggle-inactive' => 'Vô hiệu hóa',
+	'wikifeatures-toggle-inactive' => 'Vô hiệu',
 	'wikifeatures-active-on' => 'Kích hoạt trên $1 wiki',
 	'wikifeatures-category-choose-one' => 'Chọn một...',
 	'wikifeatures-love-this-project' => 'Tôi thích tính năng này',
@@ -1112,5 +1119,13 @@ $messages['vi'] = array(
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blog',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blog cho phép thành viên trên wiki của bạn tạo ra bài viết blog trên trang hồ sơ của họ và cũng có thể được sử dụng như là một cách tuyệt vời để giao tiếp tin tức và sự kiện với cộng đồng wiki.',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Mở rộng Danh mục Wiki',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
+ */
+$messages['zh-hans'] = array(
+	'wikifeatures' => 'Wikia功能',
+	'wikifeatures-title' => 'Wikia功能',
 );
 

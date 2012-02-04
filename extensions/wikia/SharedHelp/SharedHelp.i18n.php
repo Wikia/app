@@ -160,21 +160,21 @@ $messages['ms'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Laman perbincangan dicipta secara automatik',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
-	'sharedhelp-desc' => "Haalt pagina's op van [[w:c:Help|Wikia-help]] en voegt ze toe aan de naamruimte {{ns:help}} in deze wiki",
-	'sharedhelp-autotalkcreate-summary' => 'Overlegpagina automatisch aangemaakt',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
 	'sharedhelp-desc' => 'Tar sider fra [[w:c:Help|Hjelpe-Wikia]] og setter dem inn i {{ns:help}}-navnerommet på denne wikien',
 	'sharedhelp-autotalkcreate-summary' => 'Diskusjonsside opprettet automatisk',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'sharedhelp-desc' => "Haalt pagina's op van [[w:c:Help|Wikia-help]] en voegt ze toe aan de naamruimte {{ns:help}} in deze wiki",
+	'sharedhelp-autotalkcreate-summary' => 'Overlegpagina automatisch aangemaakt',
 );
 
 /** Polish (Polski)

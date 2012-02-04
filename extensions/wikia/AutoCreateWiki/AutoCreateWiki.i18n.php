@@ -800,6 +800,29 @@ indem Sie <a href="$2">$2</a> besuchen.</p>
 <p>-- Ihr Wikia Community Team</p>',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'autocreatewiki' => 'Wikiyo newe vıraze',
+	'autocreatewiki-desc' => 'Wikifebrika vıraştışire Qarqer buwaze',
+	'autocreatewiki-page-title-answers' => 'yew siteya newiyaqande cewaba vıraze',
+	'autocreatewiki-chooseone' => 'zeweri bıweçine',
+	'autocreatewiki-required' => '$1 = icab keno',
+	'autocreatewiki-web-address' => 'Adrese webi',
+	'autocreatewiki-category-select' => 'yeweri bıweçin',
+	'autocreatewiki-language-all' => 'Zuwani heme',
+	'autocreatewiki-done' => 'Vırazi ya',
+	'autocreatewiki-success-has-been-created' => 'vıraşt',
+	'autocreatewiki-title-template' => '$1 Wiki',
+	'autocreatewiki-invalid-username' => 'No namey qarqeri çıno',
+	'autocreatewiki-category-label' => 'Kategoriya',
+	'autocreatewiki-category-other' => 'Zewmi',
+	'autocreatewiki-welcometalk-log' => 'Mesacê Xeyr Amyayışi',
+	'newwikis' => 'Wikiyo newe',
+	'autocreatewiki-subname-answers' => 'cewab',
+);
+
 /** Ewe (Eʋegbe) */
 $messages['ee'] = array(
 	'autocreatewiki-create-account' => 'Ŋlɔ ŋkɔ daɖi',
@@ -2412,8 +2435,11 @@ $messages['lt'] = array(
 	'autocreatewiki-chooseone' => 'Pasirinkite vieną',
 	'autocreatewiki-required' => '$1 = būtina',
 	'autocreatewiki-web-address' => 'Tinklalapio adresas:',
+	'autocreatewiki-category-select' => 'Pasirinkite vieną',
+	'autocreatewiki-language-top' => 'Top $1 kalbos',
 	'autocreatewiki-language-all' => 'Visos kalbos',
 	'autocreatewiki-birthdate' => 'Gimimo data:',
+	'autocreatewiki-blurry-word' => 'Neryškus žodis:',
 	'autocreatewiki-remember' => 'Prisiminti mane',
 	'autocreatewiki-create-account' => 'Sukurti sąskaitą',
 	'autocreatewiki-done' => 'atlikta',
@@ -2431,6 +2457,11 @@ $messages['lt'] = array(
 	'autocreatewiki-info-email-address' => 'Jūsų elektroninio pašto adresas niekada nebus rodomas betkam Wikia svetainėje.',
 	'autocreatewiki-info-terms-agree' => 'Kuriant wiki ir vartotojo abonementą, jūs sutinkate su <a href="http://www.wikia.com/wiki/Terms_of_use">Naudojimosi Wikia sąlygomis</a>',
 	'autocreatewiki-title-template' => '$1 Wiki',
+	'autocreatewiki-empty-field' => 'Prašome užpildyti šį lauką.',
+	'autocreatewiki-category-label' => 'Kategorija:',
+	'autocreatewiki-category-other' => 'Kita',
+	'autocreatewiki-welcometalk-log' => 'Sveikinimo Žinutė',
+	'autocreatewiki-subname-answers' => 'Atsakymai',
 );
 
 /** Macedonian (Македонски)
@@ -2762,6 +2793,155 @@ $messages['mzn'] = array(
 	'autocreatewiki-page-title-default' => 'اتا نو ویکی درس هکردن',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'autocreatewiki' => 'Opprett en ny Wiki',
+	'autocreatewiki-desc' => 'Opprett wiki i WikiFactory etter forespørsel fra bruker',
+	'autocreatewiki-page-title-default' => 'Opprett en ny Wiki',
+	'autocreatewiki-page-title-answers' => 'Opprett en ny Svar-side',
+	'createwiki' => 'Opprett en ny Wiki',
+	'autocreatewiki-chooseone' => 'Velg en',
+	'autocreatewiki-required' => '$1 = påkrevd',
+	'autocreatewiki-web-address' => 'Nettadresse:',
+	'autocreatewiki-category-select' => 'Velg en',
+	'autocreatewiki-language-top' => 'Topp $1 språk',
+	'autocreatewiki-language-all' => 'Alle språk',
+	'autocreatewiki-birthdate' => 'Fødselsdato:',
+	'autocreatewiki-blurry-word' => 'Forvrengt ord:',
+	'autocreatewiki-remember' => 'Husk meg',
+	'autocreatewiki-create-account' => 'Opprett en konto',
+	'autocreatewiki-done' => 'ferdig',
+	'autocreatewiki-error' => 'feil',
+	'autocreatewiki-haveaccount-question' => 'Har du allerede en Wikia-konto?',
+	'autocreatewiki-success-title-default' => 'Din wiki har blitt opprettet!',
+	'autocreatewiki-success-title-answers' => 'Svar-siden din har blitt opprettet!',
+	'autocreatewiki-success-subtitle' => 'Du kan nå begynne å jobbe med din wiki ved å besøke:',
+	'autocreatewiki-success-has-been-created' => 'har blitt opprettet!',
+	'autocreatewiki-success-get-started' => 'Sett igang',
+	'autocreatewiki-info-domain' => 'Det er best å bruke ord som trolig vil bli brukt som søkeord etter emnet ditt.',
+	'autocreatewiki-info-topic' => 'Legg til en kort beskrivelse som «Star Wars» eller «TV-program».',
+	'autocreatewiki-info-category-default' => 'Dette vil hjelpe besøkende å finne wikien din.',
+	'autocreatewiki-info-category-answers' => 'Dette vil hjelpe besøkende å finne Svar-siden din.',
+	'autocreatewiki-info-language' => 'Dette blir standardspråket for besøkende på wikien din.',
+	'autocreatewiki-info-email-address' => 'Din e-postadresse vil aldri bli vist til noen på Wikia.',
+	'autocreatewiki-info-realname' => 'Om du velger å oppgi dette vil det bli brukt til å kreditere deg for ditt arbeid.',
+	'autocreatewiki-info-birthdate' => 'Wikia krever at alle brukere oppgir deres virkelige fødselsdato, både som et sikkerhetsforetak og som et middel for å bevare integriteten til nettstedet, og samtidig etterkomme føderale bestemmelser.',
+	'autocreatewiki-info-blurry-word' => 'For å beskytte mot automatisk opprettede kontoer vennligst skriv inn det forvrengte ordet som du ser i dette feltet.',
+	'autocreatewiki-info-terms-agree' => 'Ved å opprette en wiki og en brukerkonto godtar du <a href="http://www.wikia.com/wiki/Terms_of_use">Wikias vilkår for bruk</a>',
+	'autocreatewiki-info-staff-username' => '<b>Kun stab:</b> Den angitte brukeren vil bli listet opp som grunnlegger.',
+	'autocreatewiki-title-template' => '$1 Wiki',
+	'autocreatewiki-limit-day' => 'Wikia har overskredet maks antall wikier den kan opprette idag ($1).',
+	'autocreatewiki-limit-creation' => 'Du har overskredet maks antall wikier du kan opprette innen 24 timer ($1).',
+	'autocreatewiki-empty-field' => 'Fyll ut dette feltet.',
+	'autocreatewiki-bad-name' => 'Navnet kan ikke innholde spesialtegn (som $ eller @) og må være kun ett ord skrevet med små bokstaver uten mellomrom.',
+	'autocreatewiki-invalid-wikiname' => 'Navnet kan ikke inneholder spesialtegn (som $ eller @) og kan ikke være tomt',
+	'autocreatewiki-violate-policy' => 'Dette wikinavnet inneholder et ord som bryter med våre retningslinjer for navngivning',
+	'autocreatewiki-name-taken' => 'Det er allerede en wiki med denne adressen. Begynn å redigere på <a href="http://$1.wikia.com">http://$1.wikia.com</a> eller velg en annen adresse.',
+	'autocreatewiki-name-too-short' => 'Denne adressen er for kort, velg en adresse med minst 3 tegn.',
+	'autocreatewiki-name-too-long' => 'Denne adressen er for lang. Vennligst velg en adresse med maksimalt 50 tegn.',
+	'autocreatewiki-similar-wikis' => 'Nedenfor er wikiene som allerede er opprettet om temaet. Vi foreslår å redigere en av dem.',
+	'autocreatewiki-invalid-username' => 'Brukernavnet er ugyldig.',
+	'autocreatewiki-busy-username' => 'Brukernavnet er allerede tatt.',
+	'autocreatewiki-blocked-username' => 'Du kan ikke opprette en konto.',
+	'autocreatewiki-user-notloggedin' => 'Kontoen er opprettet men du er ikke logget inn!',
+	'autocreatewiki-empty-language' => 'Vennligst velg språk på Wikien.',
+	'autocreatewiki-empty-category' => 'Vennligst velg en kategori.',
+	'autocreatewiki-empty-wikiname' => 'Navnet på Wikien kan ikke være tomt.',
+	'autocreatewiki-empty-username' => 'Brukernavn kan ikke være tomt.',
+	'autocreatewiki-empty-password' => 'Passord kan ikke være tomt.',
+	'autocreatewiki-empty-retype-password' => 'Gjenta passord kan ikke være tomt.',
+	'autocreatewiki-category-label' => 'Kategori:',
+	'autocreatewiki-category-other' => 'Andre',
+	'autocreatewiki-set-username' => 'Angi brukernavn først.',
+	'autocreatewiki-invalid-category' => 'Ugyldig kategoriverdi.
+Vennligst velg en riktig fra rullegardinlisten.',
+	'autocreatewiki-invalid-language' => 'Ugyldig verdi for språk.
+Velg riktig fra rullegardinlisten.',
+	'autocreatewiki-invalid-retype-passwd' => 'Skriv inn det samme passordet som over',
+	'autocreatewiki-invalid-birthday' => 'Ugyldig fødselsdato',
+	'autocreatewiki-limit-birthday' => 'Kan ikke opprette registrering.',
+	'autocreatewiki-log-title' => 'Wikien din blir opprettet',
+	'autocreatewiki-step0' => 'Initialiserer prosess ...',
+	'autocreatewiki-stepdefault' => 'Prosessen er i gang, vent ...',
+	'autocreatewiki-errordefault' => 'Prosessen ble ikke ferdig ...',
+	'autocreatewiki-step1' => 'Oppretter bildemappe ...',
+	'autocreatewiki-step2' => 'Oppretter database ...',
+	'autocreatewiki-step3' => 'Setter opp standardinformasjon i database ...',
+	'autocreatewiki-step4' => 'Kopierer standardbilder og -logo ...',
+	'autocreatewiki-step5' => 'Setter opp standardvariabler i database ...',
+	'autocreatewiki-step6' => 'Setter opp standardtabeller i database ...',
+	'autocreatewiki-step7' => 'Setter opp oppstartsspråk ...',
+	'autocreatewiki-step8' => 'Setter opp brukergrupper og -kategorier ...',
+	'autocreatewiki-step9' => 'Setter opp variabler for ny wiki ...',
+	'autocreatewiki-step10' => 'Setter opp sider på en sentral wiki ...',
+	'autocreatewiki-step11' => 'Sender e-post til bruker ...',
+	'autocreatewiki-redirect' => 'Omdirigerer til ny wiki: $1 ...',
+	'autocreatewiki-congratulation' => 'Gratulerer!',
+	'autocreatewiki-welcometalk-log' => 'Velkomstmelding',
+	'autocreatewiki-regex-error-comment' => 'brukt i wiki $1 (hele teksten: $2)',
+	'autocreatewiki-step2-error' => 'Database finnes!',
+	'autocreatewiki-step3-error' => 'Kan ikke sette standardinformasjon i database!',
+	'autocreatewiki-step6-error' => 'Kan ikke sette standardtabeller i database!',
+	'autocreatewiki-step7-error' => 'Kan ikke kopiere database for oppstartsspråk!',
+	'autocreatewiki-protect-reason' => 'Del av det offisielle grensesnittet',
+	'autocreatewiki-welcomesubject' => '$1 har blitt opprettet!',
+	'autocreatewiki-welcomebody' => 'Hallo, $2,
+
+Wikiaen du spør etter er nå tilgjengelig på <$1> Vi håper å se deg redigere der snart!
+
+Vi har lagt til litt informasjon og tips på brukerdiskusjonssiden din (<$5>) for å hjelpe deg med å komme i gang.
+
+Hvis du har problemer kan du spørre fellesskapet om hjelp på wikien på <http://www.wikia.com/wiki/Forum:Help_desk>, eller via e-post til community@wikia.com. Du kan også få svar direkte på #wikia IRC snakkekanal <http://irc.wikia.com>.
+
+Jeg kan kontaktes direkte på e-post eller på diskusjonssiden min hvis du har spørsmål eller bekymringer.
+
+Lykke til med prosjektet!
+
+$3
+
+Wikia Community Team
+
+<http://www.wikia.com/wiki/User:$4>',
+	'autocreatewiki-welcometalk' => "== Velkommen! == 
+<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet! 
+
+Nå har du en hel nettside å fylle opp med informasjon, bilder og video om yndlingstemaet ditt. Men akkurat nå er det bare tomme sider som stirrer på deg... Skremmende, eller hva? Her er noen måter å komme i gang på.
+
+* '''Introduser temaet ditt''' på forsiden. Dette er din mulighet til å forklare leserne mer om hva temaet handler om. Skriv så mye du vil! Beskrivelsen din kan lenke til alle slags viktige artikler på siden din.
+
+* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant. 
+
+Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side. 
+
+Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
+
+-- [[User:\$2|\$3]] <staff /></div>",
+	'newwikis' => 'Nye wikier',
+	'newwikisstart' => 'Vis wikier fra og med:',
+	'autocreatewiki-reminder-body' => '
+Kjære $1: 
+
+Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2. 
+
+Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål! 
+
+
+-- Wikia Community Teamet',
+	'autocreatewiki-reminder-body-HTML' => '
+<p>Kjære $1:</p> 
+
+<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke 
+<a href="$2">$2</a>.</p> 
+
+<p>Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har spørsmål!</p>
+
+<p>-- Wikia Community Teamet</p>',
+	'autocreatewiki-subname-answers' => 'Svar',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -2976,155 +3156,6 @@ Dit is een volledig nieuw project, dus laat het ons weten als je met vragen zit.
 <p>Dit is een volledig nieuw project, dus laat het ons weten als je met vragen zit.</p>
 
 <p>-- Wikia gemeenschapsteam</p>',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'autocreatewiki' => 'Opprett en ny Wiki',
-	'autocreatewiki-desc' => 'Opprett wiki i WikiFactory etter forespørsel fra bruker',
-	'autocreatewiki-page-title-default' => 'Opprett en ny Wiki',
-	'autocreatewiki-page-title-answers' => 'Opprett en ny Svar-side',
-	'createwiki' => 'Opprett en ny Wiki',
-	'autocreatewiki-chooseone' => 'Velg en',
-	'autocreatewiki-required' => '$1 = påkrevd',
-	'autocreatewiki-web-address' => 'Nettadresse:',
-	'autocreatewiki-category-select' => 'Velg en',
-	'autocreatewiki-language-top' => 'Topp $1 språk',
-	'autocreatewiki-language-all' => 'Alle språk',
-	'autocreatewiki-birthdate' => 'Fødselsdato:',
-	'autocreatewiki-blurry-word' => 'Forvrengt ord:',
-	'autocreatewiki-remember' => 'Husk meg',
-	'autocreatewiki-create-account' => 'Opprett en konto',
-	'autocreatewiki-done' => 'ferdig',
-	'autocreatewiki-error' => 'feil',
-	'autocreatewiki-haveaccount-question' => 'Har du allerede en Wikia-konto?',
-	'autocreatewiki-success-title-default' => 'Din wiki har blitt opprettet!',
-	'autocreatewiki-success-title-answers' => 'Svar-siden din har blitt opprettet!',
-	'autocreatewiki-success-subtitle' => 'Du kan nå begynne å jobbe med din wiki ved å besøke:',
-	'autocreatewiki-success-has-been-created' => 'har blitt opprettet!',
-	'autocreatewiki-success-get-started' => 'Sett igang',
-	'autocreatewiki-info-domain' => 'Det er best å bruke ord som trolig vil bli brukt som søkeord etter emnet ditt.',
-	'autocreatewiki-info-topic' => 'Legg til en kort beskrivelse som «Star Wars» eller «TV-program».',
-	'autocreatewiki-info-category-default' => 'Dette vil hjelpe besøkende å finne wikien din.',
-	'autocreatewiki-info-category-answers' => 'Dette vil hjelpe besøkende å finne Svar-siden din.',
-	'autocreatewiki-info-language' => 'Dette blir standardspråket for besøkende på wikien din.',
-	'autocreatewiki-info-email-address' => 'Din e-postadresse vil aldri bli vist til noen på Wikia.',
-	'autocreatewiki-info-realname' => 'Om du velger å oppgi dette vil det bli brukt til å kreditere deg for ditt arbeid.',
-	'autocreatewiki-info-birthdate' => 'Wikia krever at alle brukere oppgir deres virkelige fødselsdato, både som et sikkerhetsforetak og som et middel for å bevare integriteten til nettstedet, og samtidig etterkomme føderale bestemmelser.',
-	'autocreatewiki-info-blurry-word' => 'For å beskytte mot automatisk opprettede kontoer vennligst skriv inn det forvrengte ordet som du ser i dette feltet.',
-	'autocreatewiki-info-terms-agree' => 'Ved å opprette en wiki og en brukerkonto godtar du <a href="http://www.wikia.com/wiki/Terms_of_use">Wikias vilkår for bruk</a>',
-	'autocreatewiki-info-staff-username' => '<b>Kun stab:</b> Den angitte brukeren vil bli listet opp som grunnlegger.',
-	'autocreatewiki-title-template' => '$1 Wiki',
-	'autocreatewiki-limit-day' => 'Wikia har overskredet maks antall wikier den kan opprette idag ($1).',
-	'autocreatewiki-limit-creation' => 'Du har overskredet maks antall wikier du kan opprette innen 24 timer ($1).',
-	'autocreatewiki-empty-field' => 'Fyll ut dette feltet.',
-	'autocreatewiki-bad-name' => 'Navnet kan ikke innholde spesialtegn (som $ eller @) og må være kun ett ord skrevet med små bokstaver uten mellomrom.',
-	'autocreatewiki-invalid-wikiname' => 'Navnet kan ikke inneholder spesialtegn (som $ eller @) og kan ikke være tomt',
-	'autocreatewiki-violate-policy' => 'Dette wikinavnet inneholder et ord som bryter med våre retningslinjer for navngivning',
-	'autocreatewiki-name-taken' => 'Det er allerede en wiki med denne adressen. Begynn å redigere på <a href="http://$1.wikia.com">http://$1.wikia.com</a> eller velg en annen adresse.',
-	'autocreatewiki-name-too-short' => 'Denne adressen er for kort, velg en adresse med minst 3 tegn.',
-	'autocreatewiki-name-too-long' => 'Denne adressen er for lang. Vennligst velg en adresse med maksimalt 50 tegn.',
-	'autocreatewiki-similar-wikis' => 'Nedenfor er wikiene som allerede er opprettet om temaet. Vi foreslår å redigere en av dem.',
-	'autocreatewiki-invalid-username' => 'Brukernavnet er ugyldig.',
-	'autocreatewiki-busy-username' => 'Brukernavnet er allerede tatt.',
-	'autocreatewiki-blocked-username' => 'Du kan ikke opprette en konto.',
-	'autocreatewiki-user-notloggedin' => 'Kontoen er opprettet men du er ikke logget inn!',
-	'autocreatewiki-empty-language' => 'Vennligst velg språk på Wikien.',
-	'autocreatewiki-empty-category' => 'Vennligst velg en kategori.',
-	'autocreatewiki-empty-wikiname' => 'Navnet på Wikien kan ikke være tomt.',
-	'autocreatewiki-empty-username' => 'Brukernavn kan ikke være tomt.',
-	'autocreatewiki-empty-password' => 'Passord kan ikke være tomt.',
-	'autocreatewiki-empty-retype-password' => 'Gjenta passord kan ikke være tomt.',
-	'autocreatewiki-category-label' => 'Kategori:',
-	'autocreatewiki-category-other' => 'Andre',
-	'autocreatewiki-set-username' => 'Angi brukernavn først.',
-	'autocreatewiki-invalid-category' => 'Ugyldig kategoriverdi.
-Vennligst velg en riktig fra rullegardinlisten.',
-	'autocreatewiki-invalid-language' => 'Ugyldig verdi for språk.
-Velg riktig fra rullegardinlisten.',
-	'autocreatewiki-invalid-retype-passwd' => 'Skriv inn det samme passordet som over',
-	'autocreatewiki-invalid-birthday' => 'Ugyldig fødselsdato',
-	'autocreatewiki-limit-birthday' => 'Kan ikke opprette registrering.',
-	'autocreatewiki-log-title' => 'Wikien din blir opprettet',
-	'autocreatewiki-step0' => 'Initialiserer prosess ...',
-	'autocreatewiki-stepdefault' => 'Prosessen er i gang, vent ...',
-	'autocreatewiki-errordefault' => 'Prosessen ble ikke ferdig ...',
-	'autocreatewiki-step1' => 'Oppretter bildemappe ...',
-	'autocreatewiki-step2' => 'Oppretter database ...',
-	'autocreatewiki-step3' => 'Setter opp standardinformasjon i database ...',
-	'autocreatewiki-step4' => 'Kopierer standardbilder og -logo ...',
-	'autocreatewiki-step5' => 'Setter opp standardvariabler i database ...',
-	'autocreatewiki-step6' => 'Setter opp standardtabeller i database ...',
-	'autocreatewiki-step7' => 'Setter opp oppstartsspråk ...',
-	'autocreatewiki-step8' => 'Setter opp brukergrupper og -kategorier ...',
-	'autocreatewiki-step9' => 'Setter opp variabler for ny wiki ...',
-	'autocreatewiki-step10' => 'Setter opp sider på en sentral wiki ...',
-	'autocreatewiki-step11' => 'Sender e-post til bruker ...',
-	'autocreatewiki-redirect' => 'Omdirigerer til ny wiki: $1 ...',
-	'autocreatewiki-congratulation' => 'Gratulerer!',
-	'autocreatewiki-welcometalk-log' => 'Velkomstmelding',
-	'autocreatewiki-regex-error-comment' => 'brukt i wiki $1 (hele teksten: $2)',
-	'autocreatewiki-step2-error' => 'Database finnes!',
-	'autocreatewiki-step3-error' => 'Kan ikke sette standardinformasjon i database!',
-	'autocreatewiki-step6-error' => 'Kan ikke sette standardtabeller i database!',
-	'autocreatewiki-step7-error' => 'Kan ikke kopiere database for oppstartsspråk!',
-	'autocreatewiki-protect-reason' => 'Del av det offisielle grensesnittet',
-	'autocreatewiki-welcomesubject' => '$1 har blitt opprettet!',
-	'autocreatewiki-welcomebody' => 'Hallo, $2,
-
-Wikiaen du spør etter er nå tilgjengelig på <$1> Vi håper å se deg redigere der snart!
-
-Vi har lagt til litt informasjon og tips på brukerdiskusjonssiden din (<$5>) for å hjelpe deg med å komme i gang.
-
-Hvis du har problemer kan du spørre fellesskapet om hjelp på wikien på <http://www.wikia.com/wiki/Forum:Help_desk>, eller via e-post til community@wikia.com. Du kan også få svar direkte på #wikia IRC snakkekanal <http://irc.wikia.com>.
-
-Jeg kan kontaktes direkte på e-post eller på diskusjonssiden min hvis du har spørsmål eller bekymringer.
-
-Lykke til med prosjektet!
-
-$3
-
-Wikia Community Team
-
-<http://www.wikia.com/wiki/User:$4>',
-	'autocreatewiki-welcometalk' => "== Velkommen! == 
-<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet! 
-
-Nå har du en hel nettside å fylle opp med informasjon, bilder og video om yndlingstemaet ditt. Men akkurat nå er det bare tomme sider som stirrer på deg... Skremmende, eller hva? Her er noen måter å komme i gang på.
-
-* '''Introduser temaet ditt''' på forsiden. Dette er din mulighet til å forklare leserne mer om hva temaet handler om. Skriv så mye du vil! Beskrivelsen din kan lenke til alle slags viktige artikler på siden din.
-
-* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant. 
-
-Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side. 
-
-Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
-
--- [[User:\$2|\$3]] <staff /></div>",
-	'newwikis' => 'Nye wikier',
-	'newwikisstart' => 'Vis wikier fra og med:',
-	'autocreatewiki-reminder-body' => '
-Kjære $1: 
-
-Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke $2. 
-
-Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har noen spørsmål! 
-
-
--- Wikia Community Teamet',
-	'autocreatewiki-reminder-body-HTML' => '
-<p>Kjære $1:</p> 
-
-<p>Gratulerer med oppstart av din nye wiki, {{SITENAME}}! Du kan komme tilbake og legge til mer på wikien ved å besøke 
-<a href="$2">$2</a>.</p> 
-
-<p>Dette er et helt nytt prosjekt, så vennligst skriv til oss om du har spørsmål!</p>
-
-<p>-- Wikia Community Teamet</p>',
-	'autocreatewiki-subname-answers' => 'Svar',
 );
 
 /** Polish (Polski)
@@ -3971,9 +4002,9 @@ $3
  */
 $messages['sr-ec'] = array(
 	'autocreatewiki' => 'Направи нову викију',
-	'autocreatewiki-page-title-default' => 'Прављење нове викије',
+	'autocreatewiki-page-title-default' => 'Стварање новог викија',
 	'createwiki' => 'Направи нову викију',
-	'autocreatewiki-category-select' => 'Изаберите једну',
+	'autocreatewiki-category-select' => 'Изаберите',
 	'autocreatewiki-language-top' => 'Најбољих $1 језика',
 	'autocreatewiki-language-all' => 'Сви језици',
 	'autocreatewiki-birthdate' => 'Датум рођења:',
@@ -3992,6 +4023,7 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-info-email-address' => 'Ваша е-адреса се не приказује другима.',
 	'autocreatewiki-info-terms-agree' => 'Прављењем викије и налога прихватате <a href="http://www.wikia.com/wiki/Terms_of_use">правилник</a>',
 	'autocreatewiki-empty-field' => 'Попуните ово поље.',
+	'autocreatewiki-name-taken' => 'Већ постоји вики с тим називом. Почните да уређујете на <a href="http://$1.wikia.com">http://$1.wikia.com</a> или изаберите другу адресу.',
 	'autocreatewiki-invalid-username' => 'Корисничко име је неисправно.',
 	'autocreatewiki-busy-username' => 'Корисничко име је заузето.',
 	'autocreatewiki-blocked-username' => 'Не можете направити налог.',
@@ -4020,6 +4052,7 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
 	'autocreatewiki-welcomesubject' => '$1 је направљена!',
 	'newwikis' => 'Нове викије',
+	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-reminder-body' => 'Драги $1:
 
 Честитамо вам на прављењу нове викије, {{SITENAME}}! Много тога можете додати кликом на $2.
@@ -4371,6 +4404,7 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author A1
  * @author AS
  * @author Ahonc
  * @author NickK
@@ -4411,9 +4445,24 @@ $messages['uk'] = array(
 	'autocreatewiki-empty-retype-password' => 'Підтвердження пароля не може бути порожнім.',
 	'autocreatewiki-category-label' => 'Категорія:',
 	'autocreatewiki-invalid-birthday' => 'Неправильна дата народження',
+	'autocreatewiki-log-title' => 'Ваша вікі створюється!',
+	'autocreatewiki-step0' => 'Процес ініціализації…',
 	'autocreatewiki-congratulation' => 'Вітаємо!',
 	'autocreatewiki-protect-reason' => 'Частина офіційного інтерфейсу',
+	'autocreatewiki-welcometalk' => "== Ласкаво просимо! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Вітаємо, \$1 — ми раді, що '''\$4''' — частина спільноти Wikia!
+
+Тепер вам слід розпочати роботу. Ось деякі поради:
+
+* '''Опишіть свою тему''' на першій сторінці, нехай читачі одразу зрозуміють, що на них очікує! 
+
+* '''Створіть кілька сторінок''' — можна почати з кількох речень, а потім додавати картинки і відео.
+
+А далі просто рухайтесь вперед! Звернутися до розробників можна  [[Special:Contact|тут]]. Успіхів!
+
+— [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Нові вікі',
+	'newwikisstart' => 'Показати вікі, починаючи з:',
 );
 
 /** Veps (Vepsän kel')
@@ -4428,6 +4477,13 @@ $messages['vep'] = array(
 	'autocreatewiki-success-get-started' => 'Radon augotiž',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-category-label' => 'Kategorii:',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'autocreatewiki-info-terms-agree' => 'Bằng việc tạo ra một wiki và một tài khoản thành viên, bạn đồng ý với <a href="http://www.wikia.com/wiki/Terms_of_use">Điều khoản Sử dụng của Wikia</a>',
 );
 
 /** Chinese (中文) */

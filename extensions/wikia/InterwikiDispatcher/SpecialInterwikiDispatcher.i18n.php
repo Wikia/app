@@ -174,20 +174,20 @@ $messages['ms'] = array(
 	'interwikidispatcher-desc' => 'Membaiki pautan antara wiki untuk mengurangkan pelencongan Apache',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'interwikidispatcher' => 'Interwikiavsender',
+	'interwikidispatcher-desc' => 'Løser interwikilenker for å redusere Apache-omdirigeringer',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'interwikidispatcher' => 'Interwikiverdeler',
 	'interwikidispatcher-desc' => 'Lost interwikiverwijzingen op om Apachedoorverwijzingen te verminderen',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'interwikidispatcher' => 'Interwikiavsender',
-	'interwikidispatcher-desc' => 'Løser interwikilenker for å redusere Apache-omdirigeringer',
 );
 
 /** Occitan (Occitan)

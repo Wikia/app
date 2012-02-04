@@ -297,6 +297,27 @@ $messages['my'] = array(
 	'unsubscribe-confirm-legend' => 'အတည်ပြု',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'unsubscribe' => 'Avbryt abonnement',
+	'unsubscribe-badaccess' => 'Beklager, denne siden kan ikke brukes direkte. Vennligst følg lenken fra e-posten din.',
+	'unsubscribe-badtoken' => 'Beklager, det oppstod et problem med sikkerhetskoden.',
+	'unsubscribe-bademail' => 'Beklager, det oppstod et problem med e-posten.',
+	'unsubscribe-badtime' => 'Beklager, lenken har utgått. Vennligst bruk en lenke som er mindre enn syv dager gammel.',
+	'unsubscribe-nousers' => 'Ingen brukere funnet med denne e-postadressen.',
+	'unsubscribe-noconfusers' => 'Ingen bekreftede brukere funnet med den e-postadressen.',
+	'unsubscribe-confirm-legend' => 'Bekreft',
+	'unsubscribe-confirm-text' => 'Avslutt abonnement for alle kontoer med <code>$1</code>?',
+	'unsubscribe-confirm-button' => 'Ja, jeg er sikker',
+	'unsubscribe-working' => 'Avbryter abonnement for $1 {{PLURAL:$1|konto|kontoer}} for $2',
+	'unsubscribe-working-problem' => 'problem med å laste brukerinformasjon for: $1',
+	'unsubscribe-working-done' => 'Fullført.',
+	'unsubscribe-preferences-toggle' => 'Avslutt abonnementet på all e-post fra Wikia (sjekk av denne for å få tilgang til alternativene under)',
+	'unsubscribe-preferences-notice' => 'E-post har blitt deaktivert for kontoen din. Besøk Brukerprofil-fanen for å aktivere dem igjen.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -325,25 +346,25 @@ $messages['nl-informal'] = array(
 	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alsjeblieft de verwijzing in je e-mail.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
+/** Polish (Polski)
+ * @author BeginaFelicysym
  */
-$messages['nb'] = array(
-	'unsubscribe' => 'Avbryt abonnement',
-	'unsubscribe-badaccess' => 'Beklager, denne siden kan ikke brukes direkte. Vennligst følg lenken fra e-posten din.',
-	'unsubscribe-badtoken' => 'Beklager, det oppstod et problem med sikkerhetskoden.',
-	'unsubscribe-bademail' => 'Beklager, det oppstod et problem med e-posten.',
-	'unsubscribe-badtime' => 'Beklager, lenken har utgått. Vennligst bruk en lenke som er mindre enn syv dager gammel.',
-	'unsubscribe-nousers' => 'Ingen brukere funnet med denne e-postadressen.',
-	'unsubscribe-noconfusers' => 'Ingen bekreftede brukere funnet med den e-postadressen.',
-	'unsubscribe-confirm-legend' => 'Bekreft',
-	'unsubscribe-confirm-text' => 'Avslutt abonnement for alle kontoer med <code>$1</code>?',
-	'unsubscribe-confirm-button' => 'Ja, jeg er sikker',
-	'unsubscribe-working' => 'Avbryter abonnement for $1 {{PLURAL:$1|konto|kontoer}} for $2',
-	'unsubscribe-working-problem' => 'problem med å laste brukerinformasjon for: $1',
-	'unsubscribe-working-done' => 'Fullført.',
-	'unsubscribe-preferences-toggle' => 'Avslutt abonnementet på all e-post fra Wikia (sjekk av denne for å få tilgang til alternativene under)',
-	'unsubscribe-preferences-notice' => 'E-post har blitt deaktivert for kontoen din. Besøk Brukerprofil-fanen for å aktivere dem igjen.',
+$messages['pl'] = array(
+	'unsubscribe' => 'Zrezygnuj z subskrypcji',
+	'unsubscribe-badaccess' => 'Niestety, nie można wejść bezpośrednio na stronę. Prosimy skorzystać z linku z wiadomości e-mail.',
+	'unsubscribe-badtoken' => 'Przepraszamy, wystąpił problem z tokenem zabezpieczeń.',
+	'unsubscribe-bademail' => 'Przepraszamy, wystąpił problem z e-mailem.',
+	'unsubscribe-badtime' => 'Niestety, link stracił ważność. Użyj łącza utworzonego w ciągu ostatnich 7 dni.',
+	'unsubscribe-nousers' => 'Nie znaleziono użytkownika z takim adresem e-mail.',
+	'unsubscribe-noconfusers' => 'Nie znaleziono zweryfikowanego użytkownika z takim adresem e-mail.',
+	'unsubscribe-confirm-legend' => 'Potwierdź',
+	'unsubscribe-confirm-text' => 'Wycofanie subskrypcji wszystkich kont z <code>$1</code> ?',
+	'unsubscribe-confirm-button' => 'Tak, potwierdzam',
+	'unsubscribe-working' => 'Anulowanie  subskrypcji $1   {{PLURAL:$1| konta|kont|kont}} dla $2',
+	'unsubscribe-working-problem' => 'problem podczas wczytywania informacji o użytkowniku:$1',
+	'unsubscribe-working-done' => 'Ukończono.',
+	'unsubscribe-preferences-toggle' => 'Zakończyć subskrypcję wszystkich kont e-mail z Wikia (odznacz tę opcję, aby uzyskać dostęp do opcji poniżej)',
+	'unsubscribe-preferences-notice' => 'Wiadomości e-mail na to konto zostały wyłączone. Odwiedź kartę profilu użytkownika, aby włączyć je ponownie.',
 );
 
 /** Pashto (پښتو)
@@ -447,10 +468,14 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
 	'unsubscribe' => 'చందావిరమించు',
+	'unsubscribe-confirm-legend' => 'ధృవీకరించు',
+	'unsubscribe-confirm-button' => 'అవును, నిజమే',
+	'unsubscribe-working-done' => 'పూర్తి',
 );
 
 /** Tagalog (Tagalog)
@@ -500,10 +525,12 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'unsubscribe-confirm-legend' => '确定',
 	'unsubscribe-confirm-button' => '是，我很确定',
 	'unsubscribe-working-done' => '完成。',
+	'unsubscribe-preferences-toggle' => '不订阅Wikia的所有邮件（取消选定这个方块才能进入下列选项）',
 );
 

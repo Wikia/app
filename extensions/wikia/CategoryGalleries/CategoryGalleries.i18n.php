@@ -72,6 +72,13 @@ $messages['fi'] = array(
 	'categorygalleries-desc' => 'Näyttää sivugallerian luokkasivuilla',
 );
 
+/** Faroese (Føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'categorygalleries-desc' => 'Vísur eitt myndasavn hjá einari síðu á bólka síðunum',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -149,18 +156,18 @@ $messages['ms'] = array(
 	'categorygalleries-desc' => 'Menunjukkan galeri laman di laman kategori',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'categorygalleries-desc' => 'Viser et sidegalleri på kategorisider',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'categorygalleries-desc' => "Geeft een galerij met pagina's weer op categoriepagina's",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'categorygalleries-desc' => 'Viser et sidegalleri på kategorisider',
 );
 
 /** Polish (Polski)

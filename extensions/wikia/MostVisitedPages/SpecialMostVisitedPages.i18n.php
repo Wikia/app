@@ -347,6 +347,19 @@ $messages['ms'] = array(
 	'mostvisitedpagesalllink' => 'Lihat laman yang paling kerap dikunjungi',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'mostvisitedpages' => 'Mest besøkte sider',
+	'mostvisitedpagessearchtext' => 'Artikkelens navn:',
+	'mostvisitedpagessearchbtn' => 'søk',
+	'mostvisitedpageslatest' => 'i de siste $1 minuttene',
+	'mostvisitedpageslatestlink' => 'Se sist besøkte sider',
+	'mostvisitedpagesalllink' => 'Se mest besøkte sider',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -366,19 +379,6 @@ $messages['nn'] = array(
 	'mostvisitedpages' => 'Mest vitja sider',
 	'mostvisitedpagessearchtext' => 'Artikkelnamn:',
 	'mostvisitedpagessearchbtn' => 'søk',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'mostvisitedpages' => 'Mest besøkte sider',
-	'mostvisitedpagessearchtext' => 'Artikkelens navn:',
-	'mostvisitedpagessearchbtn' => 'søk',
-	'mostvisitedpageslatest' => 'i de siste $1 minuttene',
-	'mostvisitedpageslatestlink' => 'Se sist besøkte sider',
-	'mostvisitedpagesalllink' => 'Se mest besøkte sider',
 );
 
 /** Occitan (Occitan)

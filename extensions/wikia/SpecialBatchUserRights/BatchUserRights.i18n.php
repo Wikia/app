@@ -84,12 +84,13 @@ Zbývající část stránky bude možné spustit tak, že lze snadno zobrazit, 
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Quedel
  * @author SVG
  * @author The Evil IP address
  */
 $messages['de'] = array(
 	'batchuserrights' => 'Massen-Benutzerrechte',
-	'batchuserrights-desc' => 'Einen oder mehrere Benutzer in einer Aktion einer Gruppe hinzufügen',
+	'batchuserrights-desc' => 'Einen oder mehrere Benutzer gleichzeitig einer Gruppe hinzufügen',
 	'batchuserrights-names' => 'Folgende Benutzer dieser Gruppe hinzufügen (einer pro Zeile):',
 	'batchuserrights-intro' => 'Auf dieser Seite kannst du mehrere Benutzern gleichzeitig einer Gruppe hinzufügen.
 Aus Sicherheitsgründen ist die Liste der hinzufügbaren Gruppen in der Erweiterungs-Konfiguration festgelegt und kann im Wiki nicht verändert werden.
@@ -122,11 +123,12 @@ El resto de la página será ejecutada solo para que puedas ver fácilmente si a
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Peter17
  */
 $messages['fr'] = array(
 	'batchuserrights' => 'Droits d’utilisateurs par lots',
-	'batchuserrights-desc' => 'Permet d’ajouter un ou plusieurs utilisateur(s) à un groupe en une seule action',
+	'batchuserrights-desc' => 'Permet d’ajouter un ou plusieurs utilisateurs à un groupe en une seule action',
 	'batchuserrights-names' => 'Noms d’utilisateurs à ajouter à ce groupe (un par ligne) :',
 	'batchuserrights-intro' => 'Cette page permet d’ajouter un groupe à plusieurs utilisateurs en une fois.
 Pour des raisons de sécurité, la liste des groupes utilisables est définie dans la configuration de l’extension et ne peut pas être changée depuis l’interface du wiki.
@@ -216,7 +218,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'batchuserrights' => 'Hak pengguna kelompok',
-	'batchuserrights-desc' => 'Membolehkan penambahan lebih daripada satu pengguna ke dalam sesebuah kumpulan dengan sekali tindakan',
+	'batchuserrights-desc' => 'Membolehkan penambahan satu atau lebih pengguna ke dalam satu kumpulan sekaligus',
 	'batchuserrights-names' => 'Nama-nama pengguna untuk disertakan ke dalam kumpulan ini (seorang sebaris):',
 	'batchuserrights-intro' => 'Laman ini akan membolehkan anda menyertakan lebih daripada satu pengguna ke dalam satu kumpulan sekaligus.
 Demi keselamatan, senarai kumpulan yang boleh ditambah itu ditetapkan dalam tatarajah sambungan dan tidak boleh diubah dari dalam wiki.
@@ -227,6 +229,25 @@ Sila tanya pentadbir sistem jika anda perlu membenarkan penambahan kumpulan lain
 	'batchuserrights-no-groups' => 'Anda belum memilih mana-mana kumpulan.
 Ini tidak akan mendatangkan sebarang hasil.
 Yang selebihnya dalam laman ini akan dibenarkan berjalan supaya anda mudah melihat sama ada terdapat nama pengguna yang tidak dapat dimuatkan.',
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'batchuserrights' => 'Puljeoppdater brukerrettigheter',
+	'batchuserrights-desc' => 'Gjør det mulig å legge til én eller flere brukere i en gruppe i én handling',
+	'batchuserrights-names' => 'Brukernavn som skal legges til denne gruppen (ett per linje):',
+	'batchuserrights-intro' => 'Denne siden lar deg legge flere brukere til en gruppe samtidig.
+Av sikkerhetsmessige årsaker, er listen over mulige grupper satt i utvidelseskonfigurasjonen og kan ikke endres fra wikien.
+Vennligst spør en systemadministrator hvis du har behov for å tillate puljetillegging av andre grupper.',
+	'batchuserrights-single-progress-update' => 'Lagt {{PLURAL:$1|gruppe|grupper}} til <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Legger {{PLURAL:$1|én bruker|$1 brukere}} til {{PLURAL:$2|den|de}} følgende {{PLURAL:$2|gruppen|gruppene}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Kunne ikke laste brukeren «'''$1'''».",
+	'batchuserrights-no-groups' => 'Du valgte ingen grupper.
+Dette vil ikke oppnå noe.
+Resten av siden vil få lov til å kjøre slik at du enkelt kan se om noen av brukernavnene ikke kunnes lastes.',
 );
 
 /** Dutch (Nederlands)
@@ -258,25 +279,6 @@ Vraag hulp van een systeembeheerder als je de beschikbare groepen wilt wijzigen.
 	'batchuserrights-no-groups' => 'Je hebt geen groepen gekozen.
 Nu wordt er niets uitgevoerd.
 De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'batchuserrights' => 'Puljeoppdater brukerrettigheter',
-	'batchuserrights-desc' => 'Tillater å legge én eller flere brukere til en gruppe i én handling',
-	'batchuserrights-names' => 'Brukernavn som skal legges til denne gruppen (ett per linje):',
-	'batchuserrights-intro' => 'Denne siden lar deg legge flere brukere til en gruppe samtidig.
-Av sikkerhetsmessige årsaker, er listen over mulige grupper satt i utvidelseskonfigurasjonen og kan ikke endres fra wikien.
-Vennligst spør en systemadministrator hvis du har behov for å tillate puljetillegging av andre grupper.',
-	'batchuserrights-single-progress-update' => 'Lagt {{PLURAL:$1|gruppe|grupper}} til <strong>$2</strong>.',
-	'batchuserrights-add-groups' => 'Legger {{PLURAL:$1|én bruker|$1 brukere}} til {{PLURAL:$2|den|de}} følgende {{PLURAL:$2|gruppen|gruppene}}: <strong>$3</strong>.',
-	'batchuserrights-userload-error' => "Kunne ikke laste brukeren «'''$1'''».",
-	'batchuserrights-no-groups' => 'Du valgte ingen grupper.
-Dette vil ikke oppnå noe.
-Resten av siden vil få lov til å kjøre slik at du enkelt kan se om noen av brukernavnene ikke kunnes lastes.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -336,6 +338,7 @@ Será permitida a execução do resto da página apenas para que você possa ver
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -357,7 +360,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'batchuserrights-desc' => 'Tillåter att lägga till en eller flera användare i en grupp i en handling',
+	'batchuserrights-desc' => 'Gör det möjligt att lägga till en eller flera användare till en grupp i en handling',
 	'batchuserrights-names' => 'Användarnamn som ska läggas till denna grupp (en per rad):',
 	'batchuserrights-single-progress-update' => 'Lade till {{PLURAL:$1|grupp|grupperna}} till <strong>$2</strong>.',
 	'batchuserrights-add-groups' => 'Lägger till {{PLURAL:$1|en användare|$1 användare}} till följande {{PLURAL:$2|grupp|grupper}}: <strong>$3</strong>.',
@@ -389,14 +392,15 @@ Ang natitirang bahagi ng pahina ay papahintulutang tumakbo upang maginhawa mong 
  * @author Тест
  */
 $messages['uk'] = array(
-	'batchuserrights-desc' => 'Дозволяє додавати одного або декількох користувачів в групу за одну дію',
+	'batchuserrights-desc' => 'Дозволяє додавання одного або кількох користувачів до групи в одну дію',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'batchuserrights' => '批处理的用户权限',
-	'batchuserrights-desc' => '允许将一个或多个用户添加到一个操作中的一个组',
+	'batchuserrights-desc' => '允许在一次操作中将一个或多个用户添加到一个组',
 );
 

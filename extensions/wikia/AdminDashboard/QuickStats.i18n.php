@@ -37,6 +37,21 @@ $messages['tly'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'quickstats-header-label' => 'إحصائيات سريعة',
+	'quickstats-header-date' => 'التاريخ',
+	'quickstats-header-views' => 'المشاهدات',
+	'quickstats-header-edits' => 'التعديلات',
+	'quickstats-header-photos' => 'الصور',
+	'quickstats-header-likes' => 'الإعجابات',
+	'quickstats-totals-label' => 'المجموع',
+	'quickstats-see-more-stats-link' => '[[خاص:WikiStats|شاهد المزيد من الإحصائيات]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** Azerbaijani (Azərbaycanca)
  * @author Cekli829
  * @author Melikov Memmed
@@ -51,10 +66,21 @@ $messages['az'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'quickstats-header-date' => 'Дата',
+	'quickstats-header-edits' => 'Редакции',
+	'quickstats-header-photos' => 'Снимки',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
+	'quickstats-header-label' => 'Stadegoù prim',
 	'quickstats-header-date' => 'Deiziad',
 	'quickstats-header-views' => 'Gweladennoù',
 	'quickstats-header-edits' => 'Kemmoù',
@@ -62,6 +88,7 @@ $messages['br'] = array(
 	'quickstats-header-likes' => 'Plijout a ra din',
 	'quickstats-totals-label' => 'Hollad',
 	'quickstats-see-more-stats-link' => "[[Special:WikiStats|Gwelet muioc'h a stadegoù]]",
+	'quickstats-number-shortening' => '$1K',
 );
 
 /** Catalan (Català)
@@ -79,6 +106,21 @@ $messages['ca'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Czech (Česky)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'quickstats-header-label' => 'Stručná statistika',
+	'quickstats-header-date' => 'Datum',
+	'quickstats-header-views' => 'Zobrazení',
+	'quickstats-header-edits' => 'Úpravy',
+	'quickstats-header-photos' => 'Fotografie',
+	'quickstats-header-likes' => 'To se mi líbí',
+	'quickstats-totals-label' => 'Celkem',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Další statistiky]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** German (Deutsch)
  * @author LWChris
  */
@@ -92,6 +134,16 @@ $messages['de'] = array(
 	'quickstats-totals-label' => 'Gesamt',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Weitere Statistiken]]',
 	'quickstats-number-shortening' => '$1k',
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'quickstats-header-label' => 'İstatıstike vistri',
+	'quickstats-header-photos' => 'Fotrafi',
+	'quickstats-header-likes' => 'Rındeni',
+	'quickstats-totals-label' => 'Pero piya',
 );
 
 /** Esperanto (Esperanto)
@@ -171,6 +223,32 @@ $messages['gl'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Hebrew (עברית)
+ * @author Deror avi
+ */
+$messages['he'] = array(
+	'quickstats-header-label' => 'סטטיסטיקה מהירה',
+	'quickstats-header-date' => 'תאריך',
+	'quickstats-header-views' => 'צפיות',
+	'quickstats-header-edits' => 'עריכות',
+	'quickstats-header-photos' => 'תמונות',
+	'quickstats-totals-label' => 'סה"כ',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|לצפיה בסטטיסטיקות נוספות]]',
+);
+
+/** Hungarian (Magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'quickstats-header-label' => 'Gyors statisztikák',
+	'quickstats-header-date' => 'Dátum',
+	'quickstats-header-views' => 'Megtekintések',
+	'quickstats-header-edits' => 'Szerkesztések',
+	'quickstats-header-photos' => 'Képek',
+	'quickstats-totals-label' => 'Összesítés',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Részletes statisztika]]',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -233,6 +311,20 @@ $messages['lb'] = array(
 	'quickstats-header-likes' => 'Hunn ech gär',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'quickstats-header-label' => 'Greita statistika',
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Peržiūros',
+	'quickstats-header-edits' => 'Pakeitimai',
+	'quickstats-header-photos' => 'Nuotraukos',
+	'quickstats-header-likes' => 'Patinka',
+	'quickstats-totals-label' => 'Viso',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -264,6 +356,22 @@ $messages['ms'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'quickstats-header-label' => 'Hurtigstatistikk',
+	'quickstats-header-date' => 'Dato',
+	'quickstats-header-views' => 'Visninger',
+	'quickstats-header-edits' => 'Redigeringer',
+	'quickstats-header-photos' => 'Bilder',
+	'quickstats-header-likes' => 'Liker',
+	'quickstats-date-format' => 'M d',
+	'quickstats-totals-label' => 'Totalt',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Se mer statistikk]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -281,22 +389,6 @@ $messages['nl'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'quickstats-header-label' => 'Hurtigstatistikk',
-	'quickstats-header-date' => 'Dato',
-	'quickstats-header-views' => 'Visninger',
-	'quickstats-header-edits' => 'Redigeringer',
-	'quickstats-header-photos' => 'Bilder',
-	'quickstats-header-likes' => 'Liker',
-	'quickstats-date-format' => 'M d',
-	'quickstats-totals-label' => 'Totalt',
-	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Se mer statistikk]]',
-	'quickstats-number-shortening' => '$1K',
-);
-
 /** Polish (Polski)
  * @author Cloudissimo
  * @author Woytecr
@@ -310,6 +402,21 @@ $messages['pl'] = array(
 	'quickstats-header-likes' => 'Polubienia',
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Więcej statystyk]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'quickstats-header-label' => 'Statìstiche Leste',
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-views' => 'Vìsite',
+	'quickstats-header-edits' => 'Modìfiche',
+	'quickstats-header-photos' => 'Fòto',
+	'quickstats-header-likes' => 'Com',
+	'quickstats-totals-label' => 'Totaj',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Varda pi statìstiche]]',
 	'quickstats-number-shortening' => '$1K',
 );
 
@@ -381,6 +488,22 @@ $messages['si'] = array(
 	'quickstats-totals-label' => 'සියල්ල',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'quickstats-header-label' => 'Статистике накратко',
+	'quickstats-header-date' => 'Датум',
+	'quickstats-header-views' => 'Прегледи',
+	'quickstats-header-edits' => 'Измене',
+	'quickstats-header-photos' => 'Слике',
+	'quickstats-header-likes' => 'Свиђања',
+	'quickstats-date-format' => 'd M',
+	'quickstats-totals-label' => 'Укупно',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Више статистика]]',
+	'quickstats-number-shortening' => '$1 K',
+);
+
 /** Swedish (Svenska)
  * @author WikiPhoenix
  */
@@ -394,6 +517,18 @@ $messages['sv'] = array(
 	'quickstats-totals-label' => 'Totalt',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Se mer statistik]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Tamil (தமிழ்)
+ * @author Shanmugamp7
+ */
+$messages['ta'] = array(
+	'quickstats-header-date' => 'தேதி',
+	'quickstats-header-views' => 'பார்வைகள்',
+	'quickstats-header-edits' => 'தொகுப்புகள்',
+	'quickstats-header-photos' => 'புகைப்படங்கள்',
+	'quickstats-header-likes' => 'விருப்பங்கள்',
+	'quickstats-totals-label' => 'மொத்தம்',
 );
 
 /** Telugu (తెలుగు)
@@ -440,6 +575,20 @@ $messages['vi'] = array(
 	'quickstats-header-likes' => 'Thích',
 	'quickstats-totals-label' => 'Tổng cộng',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Xem thêm các số liệu thống kê]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
+ */
+$messages['zh-hans'] = array(
+	'quickstats-header-date' => '日期',
+	'quickstats-header-views' => '浏览量',
+	'quickstats-header-edits' => '编辑量',
+	'quickstats-header-photos' => '照片',
+	'quickstats-header-likes' => '喜欢数',
+	'quickstats-totals-label' => '总计',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多统计]]',
 	'quickstats-number-shortening' => '$1K',
 );
 

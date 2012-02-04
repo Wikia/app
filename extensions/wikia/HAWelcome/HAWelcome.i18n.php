@@ -358,11 +358,11 @@ $messages['fr'] = array(
 	'welcome-message-user' => "Bonjour, bienvenue sur {{SITENAME}} ! Merci d'avoir modifié la page [[:$1]].
 
 Vous pouvez laisser un message sur ma page de [[$2|discussion]] si je peux vous aider pour quoi que ce soit ! $3",
-	'welcome-message-anon' => "Bonjour, bienvenue sur {{SITENAME}}. Merci pour votre contribution à la page [[:$1]].
+	'welcome-message-anon' => "Bonjour et bienvenue sur {{SITENAME}} ! Merci d’avoir modifié la page [[:$1]].
 
-'''Merci de vous [[Special:Userlogin|connecter ou de créer un compte]]'''. C'est un moyen simple de garder une trace de vos contributions et facilite la communication avec le reste de la communauté.
+'''Veuillez [[Special:Userlogin|vous enregistrer et créér un compte utilisateur]]'''. C’est un moyen simple de garder une une trace de vos contributions et facilite la communication avec le reste de la communauté.
 
-N'hésitez pas à laisser un message sur [[$2|ma page de discussion]] si je peux vous aider pour quoi que ce soit ! $3",
+N’hésitez pas à laisser un message sur [[$2|ma page de discussion]] si je peux vous aider pour quoi que ce soit ! $3",
 	'welcome-message-log' => 'accueil nouveau contributeur',
 	'welcome-message-user-staff' => "== Bienvenue ==
 Bonjour et bienvenue sur {{SITENAME}} ! Merci d'avoir modifié la page [[:$1]].
@@ -726,6 +726,52 @@ Jika anda memerlukan bantuan, tetapi tiada admin setempat di sini, anda disaran 
 	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'welcome-user-page' => "==Om meg==
+
+''Dette er brukersiden din. Vennligst rediger denne siden for å fortelle fellesskapet om deg selv!''
+
+==Mine bidrag==
+
+* [[Special:Contributions/{{PAGENAME}}|Brukerbidrag]]
+
+==Mine favorittsider==
+
+* Legg til lenker til dine favorittsider på denne wikien her!
+* Favorittside #2
+* Favorittside #3",
+	'welcome-message-user' => 'Hei, velkommen til {{SITENAME}}! Takk for bidraget til siden [[:$1]].
+
+Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hjelp til noe! $3',
+	'welcome-message-anon' => "Hei, velkommen til {{SITENAME}}! Takk for ditt bidrag til siden [[:$1]].
+
+'''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over dine bidrag og hjelper deg med å kommunisere med resten av fellesskapet.
+
+Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hjelp til noe! $3",
+	'welcome-message-log' => 'ønsker ny bidragsyter velkommen',
+	'welcome-message-user-staff' => '
+== Velkommen ==
+
+Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
+
+Hvis du trenger hjelp, og det ikke er noen lokale administratorer her, vil
+du kanskjebesøke [[wikia:Forum:Community Central Forum|forumene på Community
+Central Wiki]] $3',
+	'welcome-message-anon-staff' => "== Velkommen ==
+
+Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
+
+'''[[Special:Userlogin|Registrer deg og opprett et brukernavn]]'''. Det er en enkel måte å holde styring på bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
+
+Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|hjelpeforum]] | [[w:sblog|blogg]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -802,52 +848,6 @@ Hoi! Welkom bij {{SITENAME}}. Dank je wel voor je bewerking aan de pagina [[:$1]
 '''[[Special:UserLogin|Meld je alsjeblieft aan of maak een gebruiker aan]]'''. Zo kan je eenvoudig je bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
 
 Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'welcome-user-page' => "==Om meg==
-
-''Dette er brukersiden din. Vennligst rediger denne siden for å fortelle fellesskapet om deg selv!''
-
-==Mine bidrag==
-
-* [[Special:Contributions/{{PAGENAME}}|Brukerbidrag]]
-
-==Mine favorittsider==
-
-* Legg til lenker til dine favorittsider på denne wikien her!
-* Favorittside #2
-* Favorittside #3",
-	'welcome-message-user' => 'Hei, velkommen til {{SITENAME}}! Takk for bidraget til siden [[:$1]].
-
-Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hjelp til noe! $3',
-	'welcome-message-anon' => "Hei, velkommen til {{SITENAME}}! Takk for ditt bidrag til siden [[:$1]].
-
-'''[[Special:Userlogin|Vennligst logg inn og opprett et brukernavn]]'''. Det er en enkel måte å holde oversikt over dine bidrag og hjelper deg med å kommunisere med resten av fellesskapet.
-
-Vennligst legg igjen en melding på [[$2|diskusjonssiden min]] om du trenger hjelp til noe! $3",
-	'welcome-message-log' => 'ønsker ny bidragsyter velkommen',
-	'welcome-message-user-staff' => '
-== Velkommen ==
-
-Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
-
-Hvis du trenger hjelp, og det ikke er noen lokale administratorer her, vil
-du kanskjebesøke [[wikia:Forum:Community Central Forum|forumene på Community
-Central Wiki]] $3',
-	'welcome-message-anon-staff' => "== Velkommen ==
-
-Hei, velkommen til {{SITENAME}}. Takk for at du har redigert [[:$1]]-siden.
-
-'''[[Special:Userlogin|Registrer deg og opprett et brukernavn]]'''. Det er en enkel måte å holde styring på bidragene dine og hjelper deg med å kommunisere med resten av fellesskapet.
-
-Hvis du trenger hjelp og det ikke er noen lokale administratorer her vil du kanskje besøke [[wikia:Forum:Community Central Forum|forumene på Community Central Wiki]] $3",
-	'staffsig-text' => '$1<staff /> <small>([[w:forums|hjelpeforum]] | [[w:sblog|blogg]])</small>',
-	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Occitan (Occitan)

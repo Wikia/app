@@ -150,6 +150,15 @@ $messages['ms'] = array(
 	'relatedvideo' => 'Video berkaitan',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'related-video-random-video' => 'Tilfeldig video',
+	'related-video-related' => 'Relaterte videoer',
+	'relatedvideo' => 'Relaterte videoer',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -157,15 +166,6 @@ $messages['nl'] = array(
 	'related-video-random-video' => 'Willekeurige video',
 	'related-video-related' => "Gerelateerde video's",
 	'relatedvideo' => "Gerelateerde video's",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'related-video-random-video' => 'Tilfeldig video',
-	'related-video-related' => 'Relaterte videoer',
-	'relatedvideo' => 'Relaterte videoer',
 );
 
 /** Polish (Polski)

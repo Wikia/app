@@ -137,6 +137,19 @@ $messages['qqq'] = array(
 * $1 is the number of edits',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'userprofilepage-lightbox-interview-cancel' => 'Отказване',
+	'user-identity-box-edit' => 'Редактиране',
+	'userprofilepage-closing-popup-cancel' => 'Отказване',
+	'user-action-menu-edit' => 'Редактиране',
+	'user-action-menu-rename' => 'Преименуване',
+	'user-action-menu-delete' => 'Изтриване',
+	'user-action-menu-history' => 'История',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -256,6 +269,7 @@ $messages['ca'] = array(
 );
 
 /** German (Deutsch)
+ * @author Alphakilo
  * @author SVG
  * @author Sebastian Wallroth
  */
@@ -318,6 +332,46 @@ $messages['de'] = array(
 	'user-identity-box-about-location' => 'Wo lebst Du?',
 	'user-identity-box-about-birthday' => 'Wann hast Du Geburtstag?',
 	'user-identity-box-about-occupation' => 'Was ist Ihr Beruf?',
+	'user-identity-box-about-gender' => 'Welchem Geschlecht gehören Sie an?',
+	'user-identity-box-about-website' => 'Was ist Ihre persönliche Website?',
+	'user-identity-box-about-tweet' => 'Was ist Ihre Twitter-Namen?',
+	'user-identity-box-about-fav-wikis' => 'Wikis zu denen Sie beigetragen haben:',
+	'user-identity-box-about-fav-wikis-refresh' => 'Neu laden',
+	'user-identity-box-import-from-fb' => 'Importieren Sie Ihre Daten von Facebook',
+	'user-identity-box-connect-to-fb' => 'Mit Facebook verbinden',
+	'user-identity-box-invalid-fb-id-error' => 'Ungültige Facebook-ID',
+	'user-identity-box-fb-prefs' => 'Feed-Einstellungen',
+	'user-identity-box-avatar-error-nofile' => 'Fehler: Kein Avatar-Datei zum hochladen gefunden',
+	'user-identity-box-avatar-error-cantwrite' => 'Fehler: Konnte nicht in das temporäre Verzeichnis schreiben',
+	'user-identity-box-avatar-error-size' => 'Fehler: Avatar-Datei ist zu groß (maximal $1 KB)',
+	'user-identity-box-avatar-error' => 'Fehler: Interner Fehler beim Speichern des Avatars',
+	'userprofilepage-lightbox-about-me-cancel' => 'Abbrechen',
+	'userprofilepage-lightbox-about-me-save' => 'Speichern, ich bin fertig',
+	'user-identity-box-saving-error' => 'Speichern von Benutzerdaten fehlgeschlagen - Ihre Daten sollten ausschließlich Text sein',
+	'user-identity-box-saving-internal-error' => 'Speichern von Benutzerdaten fehlgeschlagen - ein interner Fehler ist aufgetreten',
+	'userprofilepage-closing-popup-header' => 'Profil Editor verlassen',
+	'userprofilepage-closing-popup-info' => 'Es gibt ungesicherte Änderungen in Ihrem Profil. Was möchten Sie tun?',
+	'userprofilepage-closing-popup-discard-and-quit' => 'Änderungen verwerfen und beenden',
+	'userprofilepage-closing-popup-save-and-quit' => 'Speichern und beenden',
+	'userprofilepage-closing-popup-cancel' => 'Abbrechen',
+	'user-action-menu-edit' => 'Bearbeiten',
+	'user-action-menu-edit-profile' => 'Profil bearbeiten',
+	'user-action-menu-leave-message' => 'Nachricht hinterlassen',
+	'user-action-menu-view-source' => 'Quelltext anzeigen',
+	'user-action-menu-protect' => 'Schützen',
+	'user-action-menu-unprotect' => 'Freigeben',
+	'user-action-menu-rename' => 'Umbenennen',
+	'user-action-menu-delete' => 'Löschen',
+	'user-action-menu-history' => 'Verlauf',
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'user-identity-box-my-twitter' => "Twitter'ê me",
+	'user-identity-box-my-website' => 'Websitey me',
+	'user-identity-box-my-fb-page' => "Facebook'ê me",
 );
 
 /** French (Français)
@@ -623,6 +677,13 @@ $messages['ia'] = array(
 	'usermasthead-log-alt' => 'Registros de modificationes de "masthead" de usator',
 );
 
+/** Italian (Italiano)
+ * @author Minerva Titani
+ */
+$messages['it'] = array(
+	'user-identity-box-fb-prefs' => 'Feed delle Preferenze',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -850,6 +911,107 @@ $messages['ms'] = array(
 	'usermasthead-log-alt' => 'Log suntingan inulangan pengguna',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'userprofilepage-edit-modal-header' => 'Rediger profil',
+	'userprofilepage-question-caption' => 'Spørsmål $1/$2',
+	'userprofilepage-lightbox-interview-cancel' => 'Avbryt',
+	'userprofilepage-lightbox-interview-save' => 'Lagre, jeg er ferdig',
+	'userprofilepage-interview-edit-new-summary' => 'Brukerintervju opprettet',
+	'userprofilepage-interview-edit-update-summary' => 'Brukerintervju oppdatert',
+	'userprofilepage-interview-save-error' => 'Lagringen av intervjuet mislyktes',
+	'userprofilepage-interview-save-internal-error' => 'Lagringen av intervjuet mislyktes – intern feil oppstod',
+	'userprofilepage-answers-stats-title' => 'Intervjustatistikk',
+	'userprofilepage-answers-stats-info' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur odio augue, pulvinar id malesuada nec, aliquam vitae est.',
+	'userprofilepage-add-question' => 'Legg til nytt spørsmål',
+	'userprofilepage-question-save' => 'Lagre spørsmål',
+	'userprofilepage-question-list-title' => '$1/$2 spørsmål',
+	'userprofilepage-interview-section-title' => 'Brukerintervju',
+	'userprofilepage-invalid-user' => 'Ugyldig bruker! Du er ikke innlogget eller mangler rettighetene til å fortsette',
+	'userprofilepage-avatar-error-type' => 'Ugyldig MIME-type. Tillatt: $1',
+	'userprofilepage-avatar-error-resolution' => 'Maksimum oppløsning på avatar er 2000x2000',
+	'user-identity-box-edit' => 'Rediger',
+	'user-identity-box-wikia-contributor' => 'En Wikia-bidragsyter',
+	'user-identity-box-edit-avatar' => 'Rediger avatar',
+	'user-identity-box-delete-avatar' => 'Slett avatar',
+	'user-identity-box-avatar-upload-avatar' => 'Last opp en avatar',
+	'user-identity-box-avatar-fb-import-avatar' => 'Importer avataren min fra Facebook',
+	'user-identity-box-avatar-choose-avatar' => 'Velg en avatar',
+	'user-identity-box-avatar-save' => 'Lagre, jeg er ferdig',
+	'user-identity-box-avatar-cancel' => 'Avbryt',
+	'user-identity-box-avatar-anon-user-error' => 'Du må logge inn før du endrer noe',
+	'user-identity-box-aka-label' => '<span>også kjent som</span> $1',
+	'user-identity-box-my-twitter' => 'Min Twitter',
+	'user-identity-box-my-website' => 'Min hjemmeside',
+	'user-identity-box-my-fb-page' => 'Min Facebook',
+	'user-identity-box-fav-wikis' => 'Mine yndlingswikier',
+	'user-identity-box-location' => '<span>Jeg bor i</span> $1',
+	'user-identity-box-was-born-on' => '<span>Jeg ble født den</span> $2. $1',
+	'user-identity-box-was-born-in' => '<span>Jeg ble født i</span> $1',
+	'user-identity-box-occupation' => '<span>Stillingen min er</span> $1',
+	'user-identity-i-am' => '<span>Jeg er</span> $1',
+	'user-identity-box-edits-since-joining' => 'Redigeringer siden bruker kom til wiki<br />$1',
+	'user-identity-box-edits' => '<em>$1</em><span>REDIGERINGER</span>',
+	'user-identity-box-group-blocked' => 'Utestengt',
+	'user-identity-box-group-chatmoderator' => 'Chat-moderator',
+	'user-identity-box-group-sysop' => 'Admin',
+	'user-identity-box-group-bureaucrat' => 'Byråkrat',
+	'user-identity-box-group-founder' => 'Grunnlegger',
+	'user-identity-box-group-staff' => 'Ledelse',
+	'user-identity-box-group-helper' => 'Hjelper',
+	'user-identity-box-group-vstf' => 'Frivillig spambekjempelsesstyrke',
+	'user-identity-box-zero-state-location' => 'Sted',
+	'user-identity-box-zero-state-birthday' => 'Bursdag',
+	'user-identity-box-zero-state-gender' => 'Kjønn',
+	'user-identity-box-zero-state-occupation' => 'Stilling',
+	'user-identity-box-zero-state-twitter' => 'Min Twitter',
+	'user-identity-box-zero-state-website' => 'Min hjemmeside',
+	'user-identity-box-zero-state-fb-page' => 'Min Facebook',
+	'user-identity-box-about-name' => 'Hva heter du?',
+	'user-identity-box-about-location' => 'Hvor bor du?',
+	'user-identity-box-about-birthday' => 'Når er bursdagen din?',
+	'user-identity-box-about-occupation' => 'Hva er stillingen din?',
+	'user-identity-box-about-gender' => 'Hvilke kjønn er du?',
+	'user-identity-box-about-website' => 'Hva er din personlige hjemmeside?',
+	'user-identity-box-about-tweet' => 'Hva er navnet på Twitteren din?',
+	'user-identity-box-about-fav-wikis' => 'Wikier du har bidratt til:',
+	'user-identity-box-about-fav-wikis-refresh' => 'Oppdater',
+	'user-identity-box-join-more-wikis' => 'Bli med på flere wikier for å se dem her!',
+	'user-identity-box-import-from-fb' => 'Importer informasjonen din fra Facebook',
+	'user-identity-box-connect-to-fb' => 'Koble til med Facebook',
+	'user-identity-box-unsyc-fb' => 'Koble fra Facebook',
+	'user-identity-box-fb-page' => 'Hva er Facebook-siden din?',
+	'user-identity-box-invalid-fb-id-error' => 'Ugyldig Facebook-ID',
+	'user-identity-box-fb-prefs' => 'Feed-instillinger',
+	'user-identity-box-avatar-error-nofile' => 'Feil: Ingen avatarfil å laste opp funnet',
+	'user-identity-box-avatar-error-cantwrite' => 'Feil: Kunne ikke skrive til midlertidig mappe',
+	'user-identity-box-avatar-error-size' => 'Feil: Avatarfilen er for stor (maks $1KB)',
+	'user-identity-box-avatar-error' => 'Feil: Det oppstod en intern feil under lagring av avatar',
+	'userprofilepage-lightbox-about-me-cancel' => 'Avrbyt',
+	'userprofilepage-lightbox-about-me-save' => 'Lagre, jeg er ferdig',
+	'user-identity-box-saving-error' => 'Lagring av brukerdata mislyktes – dataene dine bør være i klartekst',
+	'user-identity-box-saving-internal-error' => 'Lagring av brukerdata mislyktes – intern feil oppstod',
+	'userprofilepage-closing-popup-header' => 'Avslutt brukerredaktøren',
+	'userprofilepage-closing-popup-info' => 'Det er ulagrede endringer på profilen din. Hva vil du gjøre?',
+	'userprofilepage-closing-popup-discard-and-quit' => 'Forkast endringer og avslutt',
+	'userprofilepage-closing-popup-save-and-quit' => 'Lagre og avslutt',
+	'userprofilepage-closing-popup-cancel' => 'Avbryt',
+	'user-action-menu-edit' => 'Rediger',
+	'user-action-menu-edit-profile' => 'Rediger profil',
+	'user-action-menu-leave-message' => 'Legg igjen beskjed',
+	'user-action-menu-view-source' => 'Vis kilde',
+	'user-action-menu-protect' => 'Beskytt',
+	'user-action-menu-unprotect' => 'Ubeskyttet',
+	'user-action-menu-rename' => 'Omdøp',
+	'user-action-menu-delete' => 'Slett',
+	'user-action-menu-history' => 'Historikk',
+	'usermasthead-log' => 'Redaktørrute',
+	'usermasthead-log-message' => 'la til profilinformasjon',
+	'usermasthead-log-alt' => 'Loggføring av redigerte redaktørruter',
+);
+
 /** Dutch (Nederlands)
  * @author MarkvA
  * @author SPQRobin
@@ -953,108 +1115,8 @@ $messages['nl'] = array(
 	'usermasthead-log-alt' => 'Logboeken van bewerkingen aan gebruikerscolofons',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'userprofilepage-edit-modal-header' => 'Rediger profil',
-	'userprofilepage-question-caption' => 'Spørsmål $1/$2',
-	'userprofilepage-lightbox-interview-cancel' => 'Avbryt',
-	'userprofilepage-lightbox-interview-save' => 'Lagre, jeg er ferdig',
-	'userprofilepage-interview-edit-new-summary' => 'Brukerintervju opprettet',
-	'userprofilepage-interview-edit-update-summary' => 'Brukerintervju oppdatert',
-	'userprofilepage-interview-save-error' => 'Lagringen av intervjuet mislyktes',
-	'userprofilepage-interview-save-internal-error' => 'Lagringen av intervjuet mislyktes – intern feil oppstod',
-	'userprofilepage-answers-stats-title' => 'Intervjustatistikk',
-	'userprofilepage-answers-stats-info' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur odio augue, pulvinar id malesuada nec, aliquam vitae est.',
-	'userprofilepage-add-question' => 'Legg til nytt spørsmål',
-	'userprofilepage-question-save' => 'Lagre spørsmål',
-	'userprofilepage-question-list-title' => '$1/$2 spørsmål',
-	'userprofilepage-interview-section-title' => 'Brukerintervju',
-	'userprofilepage-invalid-user' => 'Ugyldig bruker! Du er ikke innlogget eller mangler rettighetene til å fortsette',
-	'userprofilepage-avatar-error-type' => 'Ugyldig MIME-type. Tillatt: $1',
-	'userprofilepage-avatar-error-resolution' => 'Maksimum oppløsning på avatar er 2000x2000',
-	'user-identity-box-edit' => 'Rediger',
-	'user-identity-box-wikia-contributor' => 'En Wikia-bidragsyter',
-	'user-identity-box-edit-avatar' => 'Rediger avatar',
-	'user-identity-box-delete-avatar' => 'Slett avatar',
-	'user-identity-box-avatar-upload-avatar' => 'Last opp en avatar',
-	'user-identity-box-avatar-fb-import-avatar' => 'Importer avataren min fra Facebook',
-	'user-identity-box-avatar-choose-avatar' => 'Velg en avatar',
-	'user-identity-box-avatar-save' => 'Lagre, jeg er ferdig',
-	'user-identity-box-avatar-cancel' => 'Avbryt',
-	'user-identity-box-avatar-anon-user-error' => 'Du må logge inn før du endrer noe',
-	'user-identity-box-aka-label' => '<span>også kjent som</span> $1',
-	'user-identity-box-my-twitter' => 'Min Twitter',
-	'user-identity-box-my-website' => 'Min hjemmeside',
-	'user-identity-box-my-fb-page' => 'Min Facebook',
-	'user-identity-box-fav-wikis' => 'Mine yndlingswikier',
-	'user-identity-box-location' => '<span>Jeg bor i</span> $1',
-	'user-identity-box-was-born-on' => '<span>Jeg ble født den</span> $2. $1',
-	'user-identity-box-was-born-in' => '<span>Jeg ble født i</span> $1',
-	'user-identity-box-occupation' => '<span>Stillingen min er</span> $1',
-	'user-identity-i-am' => '<span>Jeg er</span> $1',
-	'user-identity-box-edits-since-joining' => 'Redigeringer siden bruker kom til wiki<br />$1',
-	'user-identity-box-edits' => '<em>$1</em><span>REDIGERINGER</span>',
-	'user-identity-box-group-blocked' => 'Utestengt',
-	'user-identity-box-group-chatmoderator' => 'Chat-moderator',
-	'user-identity-box-group-sysop' => 'Admin',
-	'user-identity-box-group-bureaucrat' => 'Byråkrat',
-	'user-identity-box-group-founder' => 'Grunnlegger',
-	'user-identity-box-group-staff' => 'Ledelse',
-	'user-identity-box-group-helper' => 'Hjelper',
-	'user-identity-box-group-vstf' => 'Frivillig spambekjempelsesstyrke',
-	'user-identity-box-zero-state-location' => 'Sted',
-	'user-identity-box-zero-state-birthday' => 'Bursdag',
-	'user-identity-box-zero-state-gender' => 'Kjønn',
-	'user-identity-box-zero-state-occupation' => 'Stilling',
-	'user-identity-box-zero-state-twitter' => 'Min Twitter',
-	'user-identity-box-zero-state-website' => 'Min hjemmeside',
-	'user-identity-box-zero-state-fb-page' => 'Min Facebook',
-	'user-identity-box-about-name' => 'Hva heter du?',
-	'user-identity-box-about-location' => 'Hvor bor du?',
-	'user-identity-box-about-birthday' => 'Når er bursdagen din?',
-	'user-identity-box-about-occupation' => 'Hva er stillingen din?',
-	'user-identity-box-about-gender' => 'Hvilke kjønn er du?',
-	'user-identity-box-about-website' => 'Hva er din personlige hjemmeside?',
-	'user-identity-box-about-tweet' => 'Hva er navnet på Twitteren din?',
-	'user-identity-box-about-fav-wikis' => 'Wikier du har bidratt til:',
-	'user-identity-box-about-fav-wikis-refresh' => 'Oppdater',
-	'user-identity-box-join-more-wikis' => 'Bli med på flere wikier for å se dem her!',
-	'user-identity-box-import-from-fb' => 'Importer informasjonen din fra Facebook',
-	'user-identity-box-connect-to-fb' => 'Koble til med Facebook',
-	'user-identity-box-unsyc-fb' => 'Koble fra Facebook',
-	'user-identity-box-fb-page' => 'Hva er Facebook-siden din?',
-	'user-identity-box-invalid-fb-id-error' => 'Ugyldig Facebook-ID',
-	'user-identity-box-fb-prefs' => 'Feed-instillinger',
-	'user-identity-box-avatar-error-nofile' => 'Feil: Ingen avatarfil å laste opp funnet',
-	'user-identity-box-avatar-error-cantwrite' => 'Feil: Kunne ikke skrive til midlertidig mappe',
-	'user-identity-box-avatar-error-size' => 'Feil: Avatarfilen er for stor (maks $1KB)',
-	'user-identity-box-avatar-error' => 'Feil: Det oppstod en intern feil under lagring av avatar',
-	'userprofilepage-lightbox-about-me-cancel' => 'Avrbyt',
-	'userprofilepage-lightbox-about-me-save' => 'Lagre, jeg er ferdig',
-	'user-identity-box-saving-error' => 'Lagring av brukerdata mislyktes – dataene dine bør være i klartekst',
-	'user-identity-box-saving-internal-error' => 'Lagring av brukerdata mislyktes – intern feil oppstod',
-	'userprofilepage-closing-popup-header' => 'Avslutt brukerredaktøren',
-	'userprofilepage-closing-popup-info' => 'Det er ulagrede endringer på profilen din. Hva vil du gjøre?',
-	'userprofilepage-closing-popup-discard-and-quit' => 'Forkast endringer og avslutt',
-	'userprofilepage-closing-popup-save-and-quit' => 'Lagre og avslutt',
-	'userprofilepage-closing-popup-cancel' => 'Avbryt',
-	'user-action-menu-edit' => 'Rediger',
-	'user-action-menu-edit-profile' => 'Rediger profil',
-	'user-action-menu-leave-message' => 'Legg igjen beskjed',
-	'user-action-menu-view-source' => 'Vis kilde',
-	'user-action-menu-protect' => 'Beskytt',
-	'user-action-menu-unprotect' => 'Ubeskyttet',
-	'user-action-menu-rename' => 'Omdøp',
-	'user-action-menu-delete' => 'Slett',
-	'user-action-menu-history' => 'Historikk',
-	'usermasthead-log' => 'Redaktørrute',
-	'usermasthead-log-message' => 'la til profilinformasjon',
-	'usermasthead-log-alt' => 'Loggføring av redigerte redaktørruter',
-);
-
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Cloudissimo
  * @author Sovq
  */
@@ -1105,6 +1167,7 @@ $messages['pl'] = array(
 	'user-identity-box-group-founder' => 'Założyciel',
 	'user-identity-box-group-staff' => 'Personel',
 	'user-identity-box-group-helper' => 'Pomocnik',
+	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
 	'user-identity-box-zero-state-location' => 'Lokalizacja',
 	'user-identity-box-zero-state-birthday' => 'Data urodzenia',
 	'user-identity-box-zero-state-gender' => 'Płeć',
@@ -1127,6 +1190,7 @@ $messages['pl'] = array(
 	'user-identity-box-unsyc-fb' => 'Rozłącz z Facebookiem',
 	'user-identity-box-fb-page' => 'Jaka jest Twoja strona na Facebooku?',
 	'user-identity-box-invalid-fb-id-error' => 'Błędny identyfikator Facebooka',
+	'user-identity-box-fb-prefs' => 'Preferencje kanału',
 	'user-identity-box-avatar-error-nofile' => 'Błąd: Nie znaleziono pliku portretu do załadowania',
 	'user-identity-box-avatar-error-cantwrite' => 'Błąd: Nie można zapisać do tymczasowego katalogu',
 	'user-identity-box-avatar-error-size' => 'Błąd: Plik portretu jest zbyt duży (maks. $1KB)',
@@ -1281,6 +1345,7 @@ $messages['sv'] = array(
 	'userprofilepage-question-save' => 'Spara fråga',
 	'userprofilepage-question-list-title' => '$1/$2 frågor',
 	'userprofilepage-interview-section-title' => 'Användarintervju',
+	'userprofilepage-invalid-user' => 'Ogiltig användare! Du är inte inloggad eller har inte rättigheterna att gå vidare',
 	'userprofilepage-avatar-error-type' => 'Ogiltigt MIME-typ. Tillåtna: $1',
 	'userprofilepage-avatar-error-resolution' => 'Maximal upplösning för en avatar är 2000x2000',
 	'user-identity-box-edit' => 'Redigera',
@@ -1331,12 +1396,17 @@ $messages['sv'] = array(
 	'user-identity-box-join-more-wikis' => 'Gå med i fler wikis för att se dem här!',
 	'user-identity-box-import-from-fb' => 'Importera din information från Facebook',
 	'user-identity-box-connect-to-fb' => 'Anslut med Facebook',
+	'user-identity-box-unsyc-fb' => 'Koppla från Facebook',
 	'user-identity-box-fb-page' => 'Vad är din Facebook-sida?',
 	'user-identity-box-invalid-fb-id-error' => 'Ogiltig Facebook-ID',
+	'user-identity-box-avatar-error-nofile' => 'Fel: Ingen avatarfil hittades för uppladdning',
+	'user-identity-box-avatar-error-cantwrite' => 'Fel: Kunde inte skriva till temporär mapp',
 	'user-identity-box-avatar-error-size' => 'Fel: Avatarfilen är för stor (max  $1KB)',
+	'user-identity-box-avatar-error' => 'Fel: Ett internt fel uppstod när avataren sparades',
 	'userprofilepage-lightbox-about-me-cancel' => 'Avbryt',
 	'userprofilepage-lightbox-about-me-save' => 'Spara, jag är klar',
 	'userprofilepage-closing-popup-header' => 'Avsluta profilredigeraren',
+	'userprofilepage-closing-popup-info' => 'Det finns osparade ändringar i din profil. Vad vill du göra?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Ignorera ändringarna och avsluta',
 	'userprofilepage-closing-popup-save-and-quit' => 'Spara och avsluta',
 	'userprofilepage-closing-popup-cancel' => 'Avbryt',
@@ -1350,6 +1420,51 @@ $messages['sv'] = array(
 	'user-action-menu-delete' => 'Radera',
 	'user-action-menu-history' => 'Historik',
 	'usermasthead-log-message' => 'lade till profilinformation',
+);
+
+/** Ukrainian (Українська)
+ * @author A1
+ */
+$messages['uk'] = array(
+	'user-identity-box-group-sysop' => 'Адміністратор',
+	'user-identity-box-zero-state-location' => 'Місцезнаходження',
+	'user-identity-box-zero-state-birthday' => 'День народження',
+	'user-identity-box-zero-state-gender' => 'Стать',
+	'user-identity-box-zero-state-occupation' => 'Рід занять:',
+	'user-identity-box-zero-state-twitter' => 'Мій Твіттер',
+	'user-identity-box-about-name' => "Ваше ім'я?",
+	'user-identity-box-about-location' => 'Де ви мешкаєте?',
+	'user-identity-box-about-birthday' => 'Коли у вас день народження?',
+	'user-identity-box-about-fav-wikis' => 'Вікі в які ви зробили внесок:',
+	'user-identity-box-about-fav-wikis-refresh' => 'Оновити',
+	'user-identity-box-join-more-wikis' => 'Долучайтесь до вікі, щоб побачити їх тут!',
+	'user-identity-box-import-from-fb' => 'Імпорт інформації з Facebook',
+	'user-identity-box-connect-to-fb' => "Пов'язати з Facebook",
+	'user-identity-box-unsyc-fb' => 'Увійти з Facebook',
+	'user-identity-box-fb-page' => 'Ваша сторінка на Facebook?',
+	'user-identity-box-invalid-fb-id-error' => 'Невірний ID Facebook',
+	'user-identity-box-fb-prefs' => 'Налаштування користувача',
+	'user-identity-box-avatar-error-nofile' => 'Помилка: файл для завантаження аватара не знайдено',
+	'user-identity-box-avatar-error-size' => 'Помилка: файл для аватара завеликий (не більше $1 КБ)',
+	'userprofilepage-lightbox-about-me-cancel' => 'Скасувати',
+	'userprofilepage-lightbox-about-me-save' => 'Завершити, готово',
+	'user-identity-box-saving-internal-error' => 'Зберегти дані учасника не вдалося - внутрішня помилка',
+	'userprofilepage-closing-popup-header' => 'Вихід із редактора профілю',
+	'userprofilepage-closing-popup-info' => 'Є незбережені зміни в профайлі. Що ви хочете зробити?',
+	'userprofilepage-closing-popup-discard-and-quit' => 'Скасувати зміни та закрити вікно',
+	'userprofilepage-closing-popup-save-and-quit' => 'Зберегти та вийти',
+	'userprofilepage-closing-popup-cancel' => 'Скасувати',
+	'user-action-menu-edit' => 'Редагувати',
+	'user-action-menu-edit-profile' => 'Змінити профіль',
+	'user-action-menu-leave-message' => 'Залишити повідомлення',
+	'user-action-menu-view-source' => 'Переглянути код',
+	'user-action-menu-protect' => 'Захистити',
+	'user-action-menu-unprotect' => 'Зняти захист',
+	'user-action-menu-rename' => 'Перейменувати',
+	'user-action-menu-delete' => 'Вилучити',
+	'user-action-menu-history' => 'Історія',
+	'usermasthead-log-message' => 'Додана інформація до профілю',
+	'usermasthead-log-alt' => 'Журнали зміни даних про користувачів',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1436,5 +1551,39 @@ $messages['vi'] = array(
 	'user-action-menu-delete' => 'Xóa',
 	'user-action-menu-history' => 'Lịch sử',
 	'usermasthead-log-message' => 'bổ sung thông tin hồ sơ',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
+ * @author Hzy980512
+ */
+$messages['zh-hans'] = array(
+	'userprofilepage-edit-modal-header' => '编辑个人资料',
+	'userprofilepage-question-caption' => '$2个问题之$1',
+	'userprofilepage-lightbox-interview-cancel' => '取消',
+	'userprofilepage-lightbox-interview-save' => '做完了，保存',
+	'userprofilepage-interview-section-title' => '用户采访',
+	'userprofilepage-invalid-user' => '无效用户！您未登入或者没有权限进行',
+	'user-identity-box-avatar-cancel' => '取消',
+	'user-identity-box-occupation' => '<span>我的工作是</span> $1',
+	'user-identity-box-group-blocked' => '封禁',
+	'user-identity-box-group-chatmoderator' => '聊天主持人',
+	'user-identity-box-group-sysop' => '管理员',
+	'user-identity-box-group-bureaucrat' => '行政员',
+	'user-identity-box-group-founder' => '创始人',
+	'user-identity-box-group-staff' => '职员',
+	'user-identity-box-group-helper' => '助手',
+	'user-identity-box-group-vstf' => '防垃圾信息志愿者特遣队',
+	'user-identity-box-zero-state-location' => '位置',
+	'user-identity-box-zero-state-birthday' => '生日',
+	'user-identity-box-zero-state-gender' => '性别',
+	'user-identity-box-zero-state-occupation' => '职业',
+	'user-identity-box-zero-state-website' => '我的网站',
+	'user-identity-box-connect-to-fb' => '使用 Facebook 连接',
+	'userprofilepage-closing-popup-discard-and-quit' => '放弃更改并退出',
+	'userprofilepage-closing-popup-save-and-quit' => '保存并退出',
+	'userprofilepage-closing-popup-cancel' => '取消',
+	'user-action-menu-view-source' => '查看源代码',
+	'user-action-menu-protect' => '保护',
 );
 

@@ -170,6 +170,13 @@ Wenn du gewöhnliche E-Mails bevorzugst oder Anhänge hast, kannst du uns unter 
 	'specialcontact-submitcomplete' => 'Vielen Dank für die Kontaktaufnahme mit Wikia.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'specialcontact-username' => 'Namey Qarberi',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -522,6 +529,40 @@ $messages['my'] = array(
 	'specialcontact-problemdesc' => 'စာသား',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'contact' => 'Kontakt Wikia',
+	'specialcontact-wikia' => 'Kontakt Wikia',
+	'specialcontact-pagetitle' => 'Kontakt Wikia',
+	'specialcontact-intro' => 'Du kan kontakte [[w:project:Staff|Wikia-ledelsen]] ved hjelp av dette skjemaet. Administratorer på denne wikien kan bli funnet [[Special:ListAdmins|her]].
+
+Ytterligere informasjon om hvordan man rapporterer problemer til Wikia finnes [[w:project:Report_a_problem|her]], eventuelt kan du poste på [[w:Forum:Index|Wikias fellesskapsforum]] for brukerstøtte.
+
+Hvis du foretrekker å benytte deg av vanlig e-post eller har vedlegg, kan du kontakte oss på [mailto:community@wikia.com community@wikia.com].',
+	'specialcontact-username' => 'Brukernavn',
+	'specialcontact-wikiname' => 'Hvilke wiki',
+	'specialcontact-realname' => 'Ditt navn',
+	'specialcontact-yourmail' => 'E-postadresse',
+	'specialcontact-problem' => 'Emne',
+	'specialcontact-problemdesc' => 'Melding',
+	'specialcontact-mail' => 'Send til Wikia',
+	'specialcontact-filledin' => 'Denne informasjonen har blitt fylt ut fra kontoinnstillingene dine',
+	'specialcontact-ccme' => 'Send meg en kopi av denne meldingen',
+	'specialcontact-ccdisabled' => 'Deaktivert: Vennligst bekreft e-postadressen din for å bruke denne funksjonen',
+	'specialcontact-notyou' => 'Ikke deg?',
+	'specialcontact-captchainfo' => 'Vennligst skriv inn teksten i bildet.',
+	'specialcontact-captchatitle' => 'Uklart ord',
+	'specialcontact-formtitle' => 'Kontakt Wikias støttepersonell',
+	'specialcontact-nomessage' => 'Vennligst fyll ut en melding',
+	'specialcontact-captchafail' => 'Feil eller manglende bekreftelseskode.',
+	'specialcontact-mailsub' => 'Wikia kontakt-e-post',
+	'specialcontact-mailsubcc' => 'Kopi av Wikia kontakt-e-post',
+	'specialcontact-ccheader' => 'Dette er en kopi av meldingen som ble sendt til Wikias støttepersonell',
+	'specialcontact-submitcomplete' => 'Takk for at du kontaktet Wikia.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -571,40 +612,6 @@ Als je liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een
 	'specialcontact-notyou' => 'Ben jij dit niet?',
 	'specialcontact-ccheader' => 'Dit is een kopie van je bericht aan Wikia-gebruikersondersteuning',
 	'specialcontact-submitcomplete' => 'Dank je wel voor het contact opnemen met Wikia.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'contact' => 'Kontakt Wikia',
-	'specialcontact-wikia' => 'Kontakt Wikia',
-	'specialcontact-pagetitle' => 'Kontakt Wikia',
-	'specialcontact-intro' => 'Du kan kontakte [[w:project:Staff|Wikia-ledelsen]] ved hjelp av dette skjemaet. Administratorer på denne wikien kan bli funnet [[Special:ListAdmins|her]].
-
-Ytterligere informasjon om hvordan man rapporterer problemer til Wikia finnes [[w:project:Report_a_problem|her]], eventuelt kan du poste på [[w:Forum:Index|Wikias fellesskapsforum]] for brukerstøtte.
-
-Hvis du foretrekker å benytte deg av vanlig e-post eller har vedlegg, kan du kontakte oss på [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Brukernavn',
-	'specialcontact-wikiname' => 'Hvilke wiki',
-	'specialcontact-realname' => 'Ditt navn',
-	'specialcontact-yourmail' => 'E-postadresse',
-	'specialcontact-problem' => 'Emne',
-	'specialcontact-problemdesc' => 'Melding',
-	'specialcontact-mail' => 'Send til Wikia',
-	'specialcontact-filledin' => 'Denne informasjonen har blitt fylt ut fra kontoinnstillingene dine',
-	'specialcontact-ccme' => 'Send meg en kopi av denne meldingen',
-	'specialcontact-ccdisabled' => 'Deaktivert: Vennligst bekreft e-postadressen din for å bruke denne funksjonen',
-	'specialcontact-notyou' => 'Ikke deg?',
-	'specialcontact-captchainfo' => 'Vennligst skriv inn teksten i bildet.',
-	'specialcontact-captchatitle' => 'Uklart ord',
-	'specialcontact-formtitle' => 'Kontakt Wikias støttepersonell',
-	'specialcontact-nomessage' => 'Vennligst fyll ut en melding',
-	'specialcontact-captchafail' => 'Feil eller manglende bekreftelseskode.',
-	'specialcontact-mailsub' => 'Wikia kontakt-e-post',
-	'specialcontact-mailsubcc' => 'Kopi av Wikia kontakt-e-post',
-	'specialcontact-ccheader' => 'Dette er en kopi av meldingen som ble sendt til Wikias støttepersonell',
-	'specialcontact-submitcomplete' => 'Takk for at du kontaktet Wikia.',
 );
 
 /** Polish (Polski)
@@ -887,11 +894,13 @@ $messages['vi'] = array(
 	'contact' => 'Liên hệ Wikia',
 	'specialcontact-wikia' => 'Liên hệ Wikia',
 	'specialcontact-pagetitle' => 'Liên hệ Wikia',
-	'specialcontact-intro' => 'Bạn có thể liên lạc với [[w:project:Staff|nhân viên Wikia]] bằng cách sử dụng mẫu đơn này. Bảo quản viên của wiki này có thể được tìm thấy [[Special:ListAdmins|ở đây]].
+	'specialcontact-intro' => 'Bạn có thể liên lạc với [[w:project:Staff|nhân viên Wikia]] bằng cách sử dụng mẫu đơn sau đây. Bảo quản viên của wiki này có thể được tìm thấy [[Special:ListAdmins|ở đây]].
 
-Thông tin thêm về cách báo cáo vấn đề cho Wikia có thể tìm được [[w:project:Report_a_problem|tại đây]], hoặc bạn có thể đăng lên [[w:Forum:Index|Diễn đàn Cộng đồng Wikia]] để được sự hỗ trợ của các thành viên
+Thông tin thêm về cách báo cáo vấn đề cho Wikia có thể tìm được [[w:project:Report_a_problem|tại đây]], hoặc bạn có thể đăng lên [[w:vi:Project:Diễn đàn|Diễn đàn Cộng đồng Wikia]] để được sự hỗ trợ của các thành viên.
 
-Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có tập tin đính kèm, bạn có thể liên lạc với chúng tôi theo địa chỉ [mailto:community@wikia.com community@wikia.com].',
+Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có tập tin đính kèm, bạn có thể liên lạc với chúng tôi theo địa chỉ [mailto:community@wikia.com community@wikia.com].
+
+Để nhận được sự hỗ trợ bằng ngôn ngữ Tiếng Việt, xin vui lòng truy cập Wikia Tiếng Việt <a href="http://vi.wikia.com/wiki/Trang_Chính">vi.wikia.com</a>.',
 	'specialcontact-username' => 'Tên thành viên',
 	'specialcontact-wikiname' => 'Wiki nào',
 	'specialcontact-realname' => 'Tên của bạn',

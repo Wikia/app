@@ -160,7 +160,7 @@ $messages['gl'] = array(
 	'category-exhibition-recentedits' => 'Modificadas recentemente',
 	'category-exhibition-page-header' => 'Páxinas na categoría "$1"',
 	'category-exhibition-subcategories-header' => 'Subcategorías',
-	'category-exhibition-media-header' => 'Multimedia na categoría "$1"',
+	'category-exhibition-media-header' => 'Ficheiros multimedia na categoría "$1"',
 	'category-exhibition-blogs-header' => 'Entradas de blogue',
 	'category-exhibition-display-old' => 'Vista da lista de categorías',
 	'category-exhibition-display-new' => 'Vista da exhibición da categoría',
@@ -258,6 +258,19 @@ $messages['lb'] = array(
 	'category-exhibition-media-header' => 'Medien an der Kategorie "$1"',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'category-exhibition-sorttype' => 'Rūšiavimo tipas:',
+	'category-exhibition-alphabetical' => 'Abėcėlės tvarka',
+	'category-exhibition-mostvisited' => 'Labiausiai lankomas',
+	'category-exhibition-recentedits' => 'Neseniai redaguoti',
+	'category-exhibition-page-header' => 'Puslapiai kategorijoje „$1“',
+	'category-exhibition-subcategories-header' => 'Subkategorijos',
+	'category-exhibition-blogs-header' => 'Dienoraščio įrašai',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -300,6 +313,22 @@ $messages['ms'] = array(
 	'category-exhibition-display-new' => 'Paparan Pameran Kategori',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'category-exhibition-sorttype' => 'Sorteringsmetode:',
+	'category-exhibition-alphabetical' => 'Alfabetisk',
+	'category-exhibition-mostvisited' => 'Mest besøkt',
+	'category-exhibition-recentedits' => 'Nylig redigert',
+	'category-exhibition-page-header' => 'Sider i kategorien «$1»',
+	'category-exhibition-subcategories-header' => 'Underkategorier',
+	'category-exhibition-media-header' => 'Media i kategorien «$1»',
+	'category-exhibition-blogs-header' => 'Blogginnlegg',
+	'category-exhibition-display-old' => 'Visning av kategoriliste',
+	'category-exhibition-display-new' => 'Visning av kategoriutstilling',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -315,22 +344,6 @@ $messages['nl'] = array(
 	'category-exhibition-blogs-header' => 'Blogberichten',
 	'category-exhibition-display-old' => 'Categorielijstweergave',
 	'category-exhibition-display-new' => 'Categoriepresentatieweergave',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'category-exhibition-sorttype' => 'Sorteringsmetode:',
-	'category-exhibition-alphabetical' => 'Alfabetisk',
-	'category-exhibition-mostvisited' => 'Mest besøkt',
-	'category-exhibition-recentedits' => 'Nylig redigert',
-	'category-exhibition-page-header' => 'Sider i kategorien «$1»',
-	'category-exhibition-subcategories-header' => 'Underkategorier',
-	'category-exhibition-media-header' => 'Media i kategorien «$1»',
-	'category-exhibition-blogs-header' => 'Blogginnlegg',
-	'category-exhibition-display-old' => 'Visning av kategoriliste',
-	'category-exhibition-display-new' => 'Visning av kategoriutstilling',
 );
 
 /** Polish (Polski)
@@ -460,5 +473,13 @@ $messages['uk'] = array(
 	'category-exhibition-alphabetical' => 'Алфавітний',
 	'category-exhibition-page-header' => 'Сторінки в категорії "$1"',
 	'category-exhibition-subcategories-header' => 'Підкатегорії',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hzy980512
+ */
+$messages['zh-hans'] = array(
+	'category-exhibition-subcategories-header' => '子类别',
+	'category-exhibition-blogs-header' => '博客帖子',
 );
 

@@ -261,11 +261,14 @@ $messages['ms'] = array(
 	'imgplc-notinhistory' => 'Anda tidak boleh membubuh gambar dalam mod sejarah.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
 $messages['nb'] = array(
 	'imgplc-create' => 'Legg til bilde',
 	'imgplc-placeholder' => 'Plassholder',
 	'imgplc-image' => 'Bilde',
+	'imgplc-notinhistory' => 'Du kan ikke legge til bilder i historikkmodus',
 );
 
 /** Dutch (Nederlands)
@@ -293,17 +296,6 @@ $messages['nn'] = array(
 	'imgplc-placeholder' => 'Plasshaldar',
 	'imgplc-image' => 'Bilete',
 	'imgplc-notinhistory' => 'Du kan ikkje leggja til bilete i historikkmodus.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Jon Harald Søby
- */
-$messages['nb'] = array(
-	'imgplc-create' => 'Legg til bilde',
-	'imgplc-placeholder' => 'Plassholder',
-	'imgplc-image' => 'Bilde',
-	'imgplc-notinhistory' => 'Du kan ikke legge til bilder i historikkmodus',
 );
 
 /** Occitan (Occitan)

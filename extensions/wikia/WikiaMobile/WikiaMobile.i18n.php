@@ -75,6 +75,17 @@ $messages['az'] = array(
 	'wikiamobile-login-submit' => 'Loqin',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wikiamobile-search-wiki' => 'Уики',
+	'wikiamobile-search-wikia' => 'Уикия',
+	'wikiamobile-password' => 'Парола',
+	'wikiamobile-login-submit' => 'Влизане',
+	'wikiamobile-article-categories' => 'Категории',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -105,6 +116,7 @@ $messages['ca'] = array(
 
 /** German (Deutsch)
  * @author Avatar
+ * @author Quedel
  * @author Tiin
  */
 $messages['de'] = array(
@@ -117,9 +129,10 @@ $messages['de'] = array(
 	'wikiamobile-menu' => 'Menü',
 	'wikiamobile-explore' => 'Durchsuchen',
 	'wikiamobile-article-categories' => 'Kategorien',
-	'wikiamobile-footer-link1' => '[[w:c:de:Lifestyle|Lifestyle]]',
-	'wikiamobile-footer-link2' => '[[w:c:de:Entertainment|Entertainment]]',
-	'wikiamobile-footer-link3' => '[[w:c:de:Gaming|Gaming]]',
+	'wikiamobile-feedback' => 'Rückmeldung',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entertainment]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spiele]]',
 );
 
 /** Persian (فارسی)
@@ -133,9 +146,29 @@ $messages['fa'] = array(
 	'wikiamobile-password' => 'رمز عبور',
 );
 
+/** Finnish (Suomi)
+ * @author VezonThunder
+ */
+$messages['fi'] = array(
+	'wikiamobile-search' => 'Hae',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Kirjaudu sisään',
+	'wikiamobile-password' => 'Salasana',
+	'wikiamobile-login-submit' => 'Kirjaudu sisään',
+	'wikiamobile-menu' => 'Valikko',
+	'wikiamobile-explore' => 'Tutustu',
+	'wikiamobile-article-categories' => 'Luokat',
+	'wikiamobile-feedback' => 'Palaute',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Elämäntyyli]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Viihde]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Pelaaminen]]',
+);
+
 /** French (Français)
  * @author Crochet.david
  * @author DavidL
+ * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -148,6 +181,7 @@ $messages['fr'] = array(
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Explorer',
 	'wikiamobile-article-categories' => 'Catégories',
+	'wikiamobile-feedback' => 'Avis',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Divertissement]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Jeu]]',
@@ -166,6 +200,7 @@ $messages['gl'] = array(
 	'wikiamobile-menu' => 'Menú',
 	'wikiamobile-explore' => 'Explorar',
 	'wikiamobile-article-categories' => 'Categorías',
+	'wikiamobile-feedback' => 'Comentarios',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Estilo de vida]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entretemento]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Xogos]]',
@@ -184,9 +219,27 @@ $messages['ia'] = array(
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Explorar',
 	'wikiamobile-article-categories' => 'Categorias',
+	'wikiamobile-feedback' => 'Retroaction',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Stilo de vita]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Intertenimento]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Joco]]',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'wikiamobile-search' => 'ಹುಡುಕು',
+	'wikiamobile-search-wiki' => 'ವಿಕಿ',
+	'wikiamobile-search-wikia' => 'ವಿಕಿಯಾ',
+	'wikiamobile-login' => 'ಲಾಗ್ ಇನ್',
+	'wikiamobile-password' => 'ಪ್ರವೇಶಪದ',
+	'wikiamobile-login-submit' => 'ಲಾಗ್ ಇನ್',
+	'wikiamobile-menu' => 'ಯಾದಿ',
+	'wikiamobile-explore' => 'ಅನ್ವೇಷಿಸು',
+	'wikiamobile-article-categories' => 'ವರ್ಗಗಳು',
+	'wikiamobile-feedback' => 'ಮರುಮಾಹಿತಿ',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|ಮನರಂಜನೆ]]',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -229,6 +282,7 @@ $messages['mk'] = array(
 	'wikiamobile-menu' => 'Мени',
 	'wikiamobile-explore' => 'Истражете',
 	'wikiamobile-article-categories' => 'Категории',
+	'wikiamobile-feedback' => 'Мислења',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Животен стил]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Забава]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игри]]',
@@ -247,9 +301,29 @@ $messages['ms'] = array(
 	'wikiamobile-menu' => 'Masuk',
 	'wikiamobile-explore' => 'Jelajah',
 	'wikiamobile-article-categories' => 'Kategori',
+	'wikiamobile-feedback' => 'Maklum balas',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Gaya Hidup]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Hiburan]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Permainan]]',
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'wikiamobile-search' => 'Søk',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Logg inn',
+	'wikiamobile-password' => 'Passord',
+	'wikiamobile-login-submit' => 'Logg inn',
+	'wikiamobile-menu' => 'Meny',
+	'wikiamobile-explore' => 'Utforsk',
+	'wikiamobile-article-categories' => 'Kategorier',
+	'wikiamobile-feedback' => 'Tilbakemelding',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Livsstil]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Underholdning]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spill]]',
 );
 
 /** Dutch (Nederlands)
@@ -267,30 +341,14 @@ $messages['nl'] = array(
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Verkennen',
 	'wikiamobile-article-categories' => 'Categorieën',
+	'wikiamobile-feedback' => 'Terugkoppeling',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Vermaak]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'wikiamobile-search' => 'Søk',
-	'wikiamobile-search-wiki' => 'Wiki',
-	'wikiamobile-search-wikia' => 'Wikia',
-	'wikiamobile-login' => 'Logg inn',
-	'wikiamobile-password' => 'Passord',
-	'wikiamobile-login-submit' => 'Logg inn',
-	'wikiamobile-menu' => 'Meny',
-	'wikiamobile-explore' => 'Utforsk',
-	'wikiamobile-article-categories' => 'Kategorier',
-	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Livsstil]]',
-	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Underholdning]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spill]]',
-);
-
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sovq
  * @author Woytecr
  */
@@ -304,6 +362,7 @@ $messages['pl'] = array(
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Eksploruj',
 	'wikiamobile-article-categories' => 'Kategorie',
+	'wikiamobile-feedback' => 'Opinie',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Styl]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Rozrywka]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gry]]',
@@ -337,12 +396,23 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author Kuzura
  * @author Lvova
  */
 $messages['ru'] = array(
 	'wikiamobile-search' => 'Поиск',
+	'wikiamobile-search-wiki' => 'Вики',
+	'wikiamobile-search-wikia' => 'Викия',
+	'wikiamobile-login' => 'Войти',
 	'wikiamobile-password' => 'Пароль',
+	'wikiamobile-login-submit' => 'Войти',
 	'wikiamobile-menu' => 'Меню',
+	'wikiamobile-explore' => 'Исследовать',
+	'wikiamobile-article-categories' => 'Категории',
+	'wikiamobile-feedback' => 'Отзыв',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Увлечения]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Кино и сериалы]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игры]]',
 );
 
 /** Sakha (Саха тыла)
@@ -350,6 +420,24 @@ $messages['ru'] = array(
  */
 $messages['sah'] = array(
 	'wikiamobile-login-submit' => 'Киир',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'wikiamobile-search-wiki' => 'Вики',
+	'wikiamobile-search-wikia' => 'Викија',
+	'wikiamobile-login' => 'Пријава',
+	'wikiamobile-password' => 'Лозинка',
+	'wikiamobile-login-submit' => 'Пријави ме',
+	'wikiamobile-menu' => 'Мени',
+	'wikiamobile-explore' => 'Истражите',
+	'wikiamobile-article-categories' => 'Категорије',
+	'wikiamobile-feedback' => 'Повратне информације',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Животни стил]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Забава]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игре]]',
 );
 
 /** Swedish (Svenska)
@@ -364,18 +452,50 @@ $messages['sv'] = array(
 	'wikiamobile-login-submit' => 'Logga in',
 	'wikiamobile-menu' => 'Meny',
 	'wikiamobile-explore' => 'Utforska',
+	'wikiamobile-article-categories' => 'Kategorier',
+	'wikiamobile-feedback' => 'Feedback',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Livsstil]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Underhållning]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spel]]',
+);
+
+/** Tulu (ತುಳು)
+ * @author VASANTH S.N.
+ */
+$messages['tcy'] = array(
+	'wikiamobile-search' => 'ನಾಡ್‘ಲೆ',
+	'wikiamobile-search-wiki' => 'ವಿಕಿ',
+	'wikiamobile-search-wikia' => 'ವಿಕಿ',
+	'wikiamobile-login' => 'ಲಾಗಿನ್ ಆಲೆ',
+	'wikiamobile-password' => 'ಪಾಸ್-ವರ್ಡ್:',
+	'wikiamobile-login-submit' => 'ಲಾಗ್ ಇನ್',
+	'wikiamobile-menu' => 'ಮೆನು',
+	'wikiamobile-explore' => 'ಹುಡುಕುಲೆ',
+	'wikiamobile-article-categories' => 'ವರ್ಗೊಲು',
+	'wikiamobile-feedback' => 'ಫೀಡ್ ಬ್ಯಾಕ್',
+	'wikiamobile-footer-link1' => '[[w:c:www:ಜನ ಜೀವನ ವಿಧಾನ|ಜನ ಜೀವನ ವಿಧಾನ]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:ಮನರಂಜನೆ|ಮನರಂಜನೆ]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:ಗೊಬ್ಬುಲು|ಗೊಬ್ಬುಲು]]',
 );
 
 /** Telugu (తెలుగు)
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
 	'wikiamobile-search' => 'వెతుకు',
 	'wikiamobile-search-wiki' => 'వికీ',
 	'wikiamobile-search-wikia' => 'వికియా',
+	'wikiamobile-login' => 'ప్రవేశించండి',
 	'wikiamobile-password' => 'సంకేతపదం',
 	'wikiamobile-login-submit' => 'ప్రవేశించు',
 	'wikiamobile-menu' => 'మెనూ',
+	'wikiamobile-explore' => 'అన్వేషించండి',
+	'wikiamobile-article-categories' => 'వర్గాలు',
+	'wikiamobile-feedback' => 'ప్రతిస్పందన',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|జీవనవిధానం]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|వినోదం]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|ఆటలు]]',
 );
 
 /** Thai (ไทย)
@@ -392,6 +512,25 @@ $messages['th'] = array(
 	'wikiamobile-explore' => 'สำรวจ',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
+ */
+$messages['zh-hans'] = array(
+	'wikiamobile-search' => '搜索',
+	'wikiamobile-search-wiki' => '维基',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => '登录',
+	'wikiamobile-password' => '密码',
+	'wikiamobile-login-submit' => '登录',
+	'wikiamobile-menu' => '菜单',
+	'wikiamobile-explore' => '探索',
+	'wikiamobile-article-categories' => '分类',
+	'wikiamobile-feedback' => '反馈',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|生活时尚]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|影音娱乐]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|电玩游戏]]',
+);
+
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Lauhenry
  */
@@ -405,3 +544,4 @@ $messages['zh-hant'] = array(
 	'wikiamobile-menu' => '選單',
 	'wikiamobile-explore' => '探索',
 );
+

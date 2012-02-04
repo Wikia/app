@@ -163,6 +163,16 @@ $messages['ms'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'showperformancestats-desc' => 'Returnerer menneskelig lesbar ytelsesstatistikk',
+	'performancestat-total' => 'Totalt: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -173,12 +183,12 @@ $messages['nl'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
+/** Polish (Polski)
+ * @author BeginaFelicysym
  */
-$messages['nb'] = array(
-	'showperformancestats-desc' => 'Returnerer menneskelig lesbar ytelsesstatistikk',
-	'performancestat-total' => 'Totalt: $1s',
+$messages['pl'] = array(
+	'showperformancestats-desc' => 'Zwraca statystyki wydajności w przystępnej formie',
+	'performancestat-total' => 'Razem:  $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'CPU: $1s',
 );

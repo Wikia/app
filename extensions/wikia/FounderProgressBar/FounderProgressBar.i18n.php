@@ -185,6 +185,7 @@ $messages['br'] = array(
  * @author ChrisiPK
  * @author George Animal
  * @author Inkowik
+ * @author Kghbln
  * @author LWChris
  * @author Laximilian scoken
  * @author Quedel
@@ -210,7 +211,7 @@ $messages['de'] = array(
 	'founderprogressbar-task-call-to-action' => 'Zur Aufgabe',
 	'founderprogressbar-completion-message' => 'Herzlichen Glückwunsch! Du hast hervorragende Arbeit geleistet und alle Aufgaben zu 100% vollendet. Dein Wiki ist damit auf dem besten Weg zum Erfolg, oder sogar schon da. Behalte diese großartige Arbeit bei!',
 	'founderprogressbar-bonus-task-notice' => 'Hinweis: Jede Bonus-Aufgabe kann mehr als einmal ausgeführt werden. Führe sie so oft aus wie nötig, um die 100% zu erreichen.',
-	'founderprogressbar-page-add10-label' => 'Erreiche $1 {{PLURAL:$1|Seite|Seiten}}',
+	'founderprogressbar-page-add10-label' => 'Erreiche {{PLURAL:$1|eine Seite|$1 Seiten}}',
 	'founderprogressbar-page-add10-action' => 'Eine Seite hinzufügen',
 	'founderprogressbar-page-add10-description' => 'Die beste Methode um dein Wiki schnell ans Laufen zu kriegen ist das Hinzufügen von Seiten mit Informationen zu deinem Thema. Die besten Seiten haben mindestens einen Abschnitt oder zwei, und könnten auf andere Seiten verlinken.',
 	'founderprogressbar-themedesigner-visit-label' => 'Dein Theme anpassen',
@@ -240,7 +241,7 @@ $messages['de'] = array(
 	'founderprogressbar-total-edit75-label' => 'Erreiche 75 Bearbeitungen',
 	'founderprogressbar-total-edit75-action' => 'Eine Seite hinzufügen',
 	'founderprogressbar-total-edit75-description' => 'Sobald du 75 Bearbeitungen hast, hast du wahrscheinlich schon eine ordentliche Menge an Inhalten in deinem Wiki. Prima! Das ist nur ein Meilenstein auf dem Weg zum großen Wiki.',
-	'founderprogressbar-page-add20-label' => 'Erreiche $1 {{PLURAL:$1|Seite|Seiten}}',
+	'founderprogressbar-page-add20-label' => 'Erreiche {{PLURAL:$1|eine Seite|$1 Seiten}}',
 	'founderprogressbar-page-add20-action' => 'Eine Seite hinzufügen',
 	'founderprogressbar-page-add20-description' => 'Arbeite weiter daran, dein Wiki zu einer umfassenden Informationsquelle zu deinem Thema zu machen. Denk dran, erstelle nicht einfach nur die Seiten - sorge dafür, dass darauf auch einige gute Inhalte zu finden sind.',
 	'founderprogressbar-category-edit-label' => 'Eine Kategoriebeschreibungsseite bearbeiten',
@@ -439,6 +440,7 @@ $messages['es'] = array(
 
 /** French (Français)
  * @author Balzac 40
+ * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -448,7 +450,7 @@ $messages['fr'] = array(
 	'founderprogressbar-progress-see-full-list' => 'Afficher la liste',
 	'founderprogressbar-progress-hide-full-list' => 'Masquer la liste',
 	'founderprogressbar-skip-for-now' => 'Passer pour l’instant',
-	'founderprogressbar-task-completed' => 'Accomplie',
+	'founderprogressbar-task-completed' => 'Terminée',
 	'founderprogressbar-list-label' => 'Tâches de {{SITENAME}}',
 	'founderprogressbar-list-description1' => 'Prêt(e) à lancer votre wiki sur la voie du succès ? Achevez toutes les tâches énumérées ci-dessous pour remplir votre barre de progression à 100% ! N’importe qui sur votre wiki peut aider et chacune de ses contributions sera comptabilisée pour les tâches de cette liste.',
 	'founderprogressbar-list-description2' => "La zone des tâches liste toutes les tâches que vous devez accomplir. Si vous ignorez une tâche, elle sera déplacée dans la section « Tâches ignorées » et restera disponible pour que vous l'accomplissiez plus tard. Y a-t-il une tâche que vous pensez ne jamais réussir sur votre wiki ? Ne vous inquiétez pas, quand seules des tâches ignorées resteront nous débloquerons les tâches supplémentaires. Achevez ces tâches supplémentaires pour récupérer les points des tâches qu vous allez ignorer pour toujours et atteindre les 100% convoités.",
@@ -1105,136 +1107,7 @@ $messages['ms'] = array(
 	'founderprogressbar-browse-page-name' => 'Semak seimbas',
 );
 
-/** Dutch (Nederlands)
- * @author SPQRobin
- * @author Siebrand
- * @author Tjcool007
- */
-$messages['nl'] = array(
-	'founderprogressbar-credits' => 'Een takenhub en gids voor nieuwe wikioprichters',
-	'founderprogressbar-widget-label' => "{{SITENAME}}'s voortgang",
-	'founderprogressbar-progress-label' => 'Afgeronde taken',
-	'founderprogressbar-progress-see-full-list' => 'Volledige lijst bekijken',
-	'founderprogressbar-progress-hide-full-list' => 'Volledige lijst verbergen',
-	'founderprogressbar-skip-for-now' => 'Voorlopig overslaan',
-	'founderprogressbar-task-completed' => 'Voltooid',
-	'founderprogressbar-list-label' => "{{SITENAME}}'s taken",
-	'founderprogressbar-list-description1' => 'Klaar om uw wiki succesvol te maken? Voltooi alle onderstaande taken om uw voortgangsbalk naar 100% te brengen! Iedere gebruiker kan uw wiki kan helpen en alle bijdragen worden meegeteld voor de taken op deze lijst.',
-	'founderprogressbar-list-description2' => 'In het takengebied staan alle uit te voeren taken. Als u een taak overslaat wordt deze verplaats naar het gedeelte "Overgeslagen taken" en blijft deze taak beschikbaar om uitgevoerd te worden. Is er een taak is die niet bij uw wiki past? Maak u geen zorgen. Als er alleen overgeslagen taken open staan, komen de bonustaken beschikbaar. Voltooi de bonustaken om tot 100% te komen.',
-	'founderprogressbar-list-task-label' => 'Taken',
-	'founderprogressbar-list-skipped-task-label' => 'Overgeslagen taken',
-	'founderprogressbar-list-skipped-task-desc' => 'Hier kunt u later voor terugkomen.',
-	'founderprogressbar-list-bonus-task-label' => 'Bonustaken',
-	'founderprogressbar-list-bonus-task-desc' => 'Voer alle taken uit om de bonustaken vrij te spelen',
-	'founderprogressbar-task-call-to-action' => 'Naar taak gaan',
-	'founderprogressbar-completion-message' => 'Gefeliciteerd! U hebt geweldig werk gedaan en alle taken tot 100% voltooid. Uw wiki is goed op weg naar succes, of zelfs al daar. Vooral volhouden!',
-	'founderprogressbar-bonus-task-notice' => 'Let op: Elke bonustaak kan meerdere keren worden voltooid. Voer de taken net zo vaak uit als u wilt om tot 100% te komen.',
-	'founderprogressbar-page-add10-label' => "$1 {{PLURAL:$1|pagina|pagina's}} bereiken",
-	'founderprogressbar-page-add10-action' => 'Pagina toevoegen',
-	'founderprogressbar-page-add10-description' => "De beste manier om uw wiki een vliegende start te laten maken is het toevoegen van pagina's met informatie over uw onderwerp. De beste pagina's hebben tenminste twee paragrafen tekst en verwijzen naar andere pagina's.",
-	'founderprogressbar-themedesigner-visit-label' => 'Vormgeving personaliseren',
-	'founderprogressbar-themedesigner-visit-action' => 'Ga naar Special:ThemeDesigner',
-	'founderprogressbar-themedesigner-visit-description' => 'Met de Wizard Vormgeving kunt u een vormgeving voor uw wiki kiezen of uw eigen vormgeving maken met eenvoudige hulpmiddelen. Met een aangepaste vormgeving maakt u uw wiki uniek.',
-	'founderprogressbar-mainpage-edit-label' => 'Vul uw hoofdpagina in',
-	'founderprogressbar-mainpage-edit-action' => 'Hoofdpagina bewerken',
-	'founderprogressbar-mainpage-edit-description' => 'Als mensen uw wiki bezoeken, is de hoofdpagina het eerste wat ze te zien krijgen. Zorg ervoor dat de pagina aangeeft waar de wiki over gaat, hoe bezoekers kunnen helpen met bewerken en waar de beste inhoud van de wiki te vinden is.',
-	'founderprogressbar-photo-add10-label' => '$1 {{PLURAL:$1|afbeelding|afbeeldingen}} bereiken',
-	'founderprogressbar-photo-add10-action' => 'Afbeelding toevoegen',
-	'founderprogressbar-photo-add10-description' => 'Afbeeldingen helpen aangeven waar uw wiki over gaat en uit onderzoek blijkt aan dat mensen aangetrokken worden door afbeeldingen. We raden u aan om minstens één foto op elke pagina te plaatsen.',
-	'founderprogressbar-category-add3-label' => '$1 {{PLURAL:$1|categorie|categorieën}} bereiken',
-	'founderprogressbar-category-add3-action' => 'Categorie toevoegen',
-	'founderprogressbar-category-add3-description' => "Categorieën zijn een goede manier om uw wiki georganiseerd te houden en ze helpen anderen om de pagina's te vinden waarnaar ze op zoek zijn. Houd het wel simpel, want te veel categorieën kan tot verwarring leiden.",
-	'founderprogressbar-commcentral-visit-label' => 'Centrale plaats voor oprichters en beheerders bezoeken',
-	'founderprogressbar-commcentral-visit-action' => 'Centrale plaats voor oprichters en beheerders bezoeken',
-	'founderprogressbar-commcentral-visit-description' => "U staat niet alleen! De wiki voor oprichters en beheerders is een plaats waar de beheerdersgemeenschap van Wikia samenkomt om advies en tips te delen. Hier vindt u ook hulppagina's en informatie over hoe u contact kunt opnemen met Wikiamedewerkers.",
-	'founderprogressbar-wikiactivity-visit-label' => 'Wiki-activiteit bezoeken',
-	'founderprogressbar-wikiactivity-visit-action' => 'Ga naar Speciaal:WikiActivity',
-	'founderprogressbar-wikiactivity-visit-description' => "Wiki-activiteit geeft een overzicht van de recente activiteit op uw wiki, zoals gebruikers die hebben bewerkt en het geeft u snelle toegang tot de gewijzigde pagina's.",
-	'founderprogressbar-profile-edit-label' => 'Vul uw profielpagina in',
-	'founderprogressbar-profile-edit-action' => 'Naar uw profielpagina gaan',
-	'founderprogressbar-profile-edit-description' => "Gebruikerspagina's geven bezoekers van uw wiki wat meer gegevens over andere gebruikers en helpen bij het vormen van een gemeenschap.",
-	'founderprogressbar-photo-add20-label' => '$1 {{PLURAL:$1|afbeelding|afbeeldingen}} bereiken',
-	'founderprogressbar-photo-add20-action' => 'Afbeelding toevoegen',
-	'founderprogressbar-photo-add20-description' => 'Hebt u een afbeelding toegevoegd aan elke pagina? Mensen houden van afbeeldingen, ze laten uw wiki echt stralen!',
-	'founderprogressbar-total-edit75-label' => 'Maak 75 bewerkingen',
-	'founderprogressbar-total-edit75-action' => 'Pagina toevoegen',
-	'founderprogressbar-total-edit75-description' => 'Zodra u 75 bewerkingen hebt gemaakt is er waarschijnlijk een redelijke hoeveelheid inhoud op uw wiki. Dat is is een mooie prestatie! Dit is slechts één mijlpaal op weg naar een geweldige wiki.',
-	'founderprogressbar-page-add20-label' => "$1 {{PLURAL:$1|pagina|pagina's}} bereiken",
-	'founderprogressbar-page-add20-action' => 'Pagina toevoegen',
-	'founderprogressbar-page-add20-description' => "Blijven doorwerken om uw wiki een uitgebreide bron over uw onderwerp te maken. Maak niet alleen pagina's aan, maar zorg dat uw teksten ook inhoudelijk goed zijn.",
-	'founderprogressbar-category-edit-label' => 'Categoriepagina bewerken',
-	'founderprogressbar-category-edit-action' => 'Categorieën weergeven',
-	'founderprogressbar-category-edit-description' => "In categorieën worden niet alleen verwijzingen naar alle pagina's in de categorie weergegeven. U kunt kan de pagina's ook bewerken om bezoekers aan te geven waar de categorie over gaat en welke soorten pagina's de categorie bevat. Door de categoriepagina te bewerken verandert deze ook van een rode naar een blauwe verwijzing.",
-	'founderprogressbar-wikialabs-visit-label' => 'Wikia Laboratorium bezoeken',
-	'founderprogressbar-wikialabs-visit-action' => 'Wikia Laboratorium bekijken',
-	'founderprogressbar-wikialabs-visit-description' => 'In het Wikia Laboratorium kunt u de nieuwste functies van Wikia uitproberen op uw wiki. Deze functies zijn allemaal in de betafase, maar het is een goede manier om te zien wat u kunt verwachten van Wikia en om het zelf uit te proberen.',
-	'founderprogressbar-fb-connect-label' => 'Facebook Connect',
-	'founderprogressbar-fb-connect-action' => 'Facebook Connect',
-	'founderprogressbar-fb-connect-description' => 'Deel uw inspanningen. Via Facebook Connect kunt u uw handelingen in de wiki delen met uw vrienden op Facebook. U kunt de handelingen die gedeeld worden op Facebook aanpassen. Slecht een beheerder hoeft dit in te schakelen om de taak te voltooien.',
-	'founderprogressbar-category-add5-label' => '$1 {{PLURAL:$1|categorie|categorieën}} bereiken',
-	'founderprogressbar-category-add5-action' => 'Categorie toevoegen',
-	'founderprogressbar-category-add5-description' => "Nu uw wiki meerdere pagina's bevat, hebt u waarschijnlijk categorieën nodig om alles overzichtelijk te houden.",
-	'founderprogressbar-pagelayout-visit-label' => 'Naar de Wizard voor paginavormgeving gaan',
-	'founderprogressbar-pagelayout-visit-action' => 'Naar de Wizard voor paginavormgeving gaan',
-	'founderprogressbar-pagelayout-visit-description' => 'Met de Wizard Paginavormgeving kunt een overzichtelijk formulier ontwerpen dat mensen te zien krijgen als ze op "Pagina toevoegen" klikken in uw wiki. Ze kunnen de vormgeving die u hebt ontworpen gebruiken om via het formulier eenvoudig een pagina aan te maken.',
-	'founderprogressbar-gallery-add-label' => 'Afbeeldingengalerij toevoegen',
-	'founderprogressbar-gallery-add-action' => 'Hulppagina bekijken',
-	'founderprogressbar-gallery-add-description' => "Afbeeldingsgalerijen zijn een goede manier om meerdere foto's in een paginadeel te plaatsen. Het is ook leuk om de manier waarop afbeeldingen worden weergegeven af te wisselen zodat uw wiki aantrekkelijk en afwisselend blijft voor bezoekers.",
-	'founderprogressbar-topnav-edit-label' => 'Bewerk uw navigatie',
-	'founderprogressbar-topnav-edit-action' => 'Navigatie bewerken',
-	'founderprogressbar-topnav-edit-description' => "De dropdownmenu's naast het woordmerk van uw  wiki zijn uw navigatiehulpmiddelen. U kunt hier verwijzingen opnemen naar de pagina's waar mensen pagina's, categorieen, blogberichten en meer van uw wiki kunnen vinden. Ga naar Community Central als u hulp nodig hebt voor het bewerken van de navigatie.",
-	'founderprogressbar-mainpage-addslider-label' => 'Voeg een schuifafbeelding toe aan de hoofdpagina',
-	'founderprogressbar-mainpage-addslider-action' => 'Hoofdpagina bewerken',
-	'founderprogressbar-mainpage-addslider-description' => 'De schuifafbeeldingen op de hoofdpagina zijn een mooie manier om een pagina er professioneel uit te laten zien en een paar schitterende afbeeldingen toe te voegen. Elke afbeelding kan weer doorverwijzen naar een pagina, dus het is ook een goede manier om de pagina\'s waar u het meest trots op bent uit te lichten. Bekijk dit <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page">blogbericht van Susan Taylor</a> als u hulp nodig hebt met het wijzigen van de afmetingen voor uw schuifafbeeldingen.',
-	'founderprogressbar-commcorner-edit-label' => 'Gemeenschapsberichten bewerken',
-	'founderprogressbar-commcorner-edit-action' => 'Gemeenschapsberichten bekijken',
-	'founderprogressbar-commcorner-edit-description' => 'Als u de gemeenschapshoek bewerkt, krijgen bezoekers van uw wiki een melding. Het is een prima plek om mensen te laten weten wat voor een soort gemeenschap u hebt opgericht en om aankondigingen te maken.',
-	'founderprogressbar-video-add-label' => 'Video toevoegen',
-	'founderprogressbar-video-add-action' => 'Video toevoegen',
-	'founderprogressbar-video-add-description' => 'Video is een ander populair mediatype dat helpt om mensen uw wiki in te trekken. Op YouTube, Hulu en andere sites staat erg veel materiaal. Voeg een video toe bij de knop "Functies en media" in de tekstverwerker.',
-	'founderprogressbar-user-add5-label' => 'Bereik 5 gebruikersprofielen',
-	'founderprogressbar-user-add5-action' => 'Hulppagina bekijken',
-	'founderprogressbar-user-add5-description' => "Een fantastische wiki wordt gesteund door een fantastische gemeenschap. De beste wiki's hebben veel redacteuren. Zorg voor vijf redacteuren om een goede start te maken.",
-	'founderprogressbar-recentchanges-visit-label' => 'Recente wijzigingen bekijken',
-	'founderprogressbar-recentchanges-visit-action' => 'Ga naar Speciaal:RecenteWijzigingen',
-	'founderprogressbar-recentchanges-visit-description' => 'Recente wijzigingen is een geavanceerdere versie van de Wiki-activiteit. U kunt elke bewerking in detail bekijken via "diffs", bewerkingen terugdraaien, en meer details zien dan in wiki-activiteit. Het is een goede plaats om meer informatie te vinden.',
-	'founderprogressbar-wordmark-edit-label' => 'Woordmerk uploaden',
-	'founderprogressbar-wordmark-edit-action' => 'Ga naar Speciaal:ThemeDesigner',
-	'founderprogressbar-wordmark-edit-description' => 'Het woordmerk van uw wiki is belangrijk. Het is te zien op iedere pagina en het helpt gebruikers om een idee te krijgen van uw onderwerp en om wat flair toe te voegen. Door uw eigen grafische woordmerk te uploaden kunt u ervoor zorgen dat uw merk er nog meer uitspringt.',
-	'founderprogressbar-mostvisited-visit-label' => "Meestbezochte pagina's bekijken",
-	'founderprogressbar-mostvisited-visit-action' => 'Ga naar Speciaal:Mostvisitedpages',
-	'founderprogressbar-mostvisited-visit-description' => "Als u wiki echt op stoom komt, is het handig om te zien wat de meest populaire pagina's zijn, zodat u die kunt verbeteren en meer verwijzingen kunt toevoegen naar pagina's die minder vaak bezocht worden. Kijk naar uw meest bezochte pagina's om een idee te krijgen van wat het beste werkt voor uw wiki zodat u soortgelijke verbeteringen kunt maken aan de andere pagina's!",
-	'founderprogressbar-toptenlist-add-label' => 'Top-10 lijst toevoegen',
-	'founderprogressbar-toptenlist-add-action' => 'Top-10 lijst toevoegen',
-	'founderprogressbar-toptenlist-add-description' => 'Top-10 lijsten motiveren gebruikers die misschien wat terughoudend zijn om mee te werken aan uw wiki. Het is een leuke motivator voor de gemeenschap en het is makkelijk voor mensen die dingen die mensen aan lijsten toevoegen te waarderen.',
-	'founderprogressbar-blogpost-add-label' => 'Een blogpost schrijven',
-	'founderprogressbar-blogpost-add-action' => 'Naar uw blogpagina gaan',
-	'founderprogressbar-blogpost-add-description' => 'Blogberichten op uw wiki zijn een goede manier om aankondigingen te doen, aan te geven waar u hulp bij nodig hebt in uw wiki, uw mening te geven en andere mensen aan te moedigen hun eigen blogberichten te schrijven. Probeer het eens!',
-	'founderprogressbar-fb-likes3-label' => 'Bereik $1 keer "Vind ik leuk" op Facebook',
-	'founderprogressbar-fb-likes3-action' => 'Hoofdpagina bekijken',
-	'founderprogressbar-fb-likes3-description' => 'Delen geeft aan dat u erom geeft en het helpt echt bij geven van meer bekendheid aan uw wiki. Moedig uw leden en lezers aan om op de knop "Vind ik leuk" te klikken op de pagina voor uw wiki op Facebook.',
-	'founderprogressbar-uncategorized-visit-label' => "Pagina's zonder categorieën bekijken",
-	'founderprogressbar-uncategorized-visit-action' => 'Ga naar Speciaal:NietGecategoriseerdePaginas',
-	'founderprogressbar-uncategorized-visit-description' => "Als uw wiki meer inhoud heeft, raakt u mogelijk het overzicht kwijt. Blijf bij de les door pagina's zonder categorie in de gaten te houden en daar categorieën aan toe te voegen zodat ze te vinden blijven.",
-	'founderprogressbar-total-edit300-label' => 'Maak $1 bewerkingen',
-	'founderprogressbar-total-edit300-action' => 'Pagina toevoegen',
-	'founderprogressbar-total-edit300-description' => '$1 bewerkingen is een geweldige mijlpaal en met zoveel wijzigingen en toevoegingen aan de wiki bent u vast op weg naar succes!',
-	'founderprogressbar-bonus-photo-add10-label' => 'Voeg nog $1 afbeeldingen toe',
-	'founderprogressbar-bonus-photo-add10-action' => 'Foto toevoegen',
-	'founderprogressbar-bonus-photo-add10-description' => 'Meer afbeeldingen toevoegen is altijd een prima manier om uw wiki te verbeteren. Voeg meer dan tien afbeeldingen toe om uw bonustaak af te ronden.',
-	'founderprogressbar-bonus-page-add5-label' => "Voeg $1 meer pagina's toe",
-	'founderprogressbar-bonus-page-add5-action' => 'Voeg een pagina toe',
-	'founderprogressbar-bonus-page-add5-description' => "Welke wiki geeft geen baat bij meer inhoud? Voeg nog vijf pagina's toe om uw bonustaak af te ronden.",
-	'founderprogressbar-bonus-pagelayout-add-label' => 'Maak een paginavormgeving',
-	'founderprogressbar-bonus-pagelayout-add-action' => 'Naar de Wizard voor paginavormgeving gaan',
-	'founderprogressbar-bonus-pagelayout-add-description' => 'Paginavormgevingen toevoegen is een prima manier om meer mensen te helpen snel en eenvoudig inhoud aan uw wiki toe te voegen. Hoe meer redacteuren er actief zijn in uw wiki, hoe meer inhoud er is voor uw lezers! Voeg een paginavormgeving toe om uw bonustaak af te ronden.',
-	'founderprogressbar-bonus-edit50-label' => "Bewerk nog $1 pagina's",
-	'founderprogressbar-bonus-edit50-action' => 'Ga naar Special:WikiActivity',
-	'founderprogressbar-bonus-edit50-description' => 'Ga naar de sterren en krijg nog vijftig meer bewerken dat u al hebt om uw bonustaak af te ronden.',
-	'founderprogressbar-browse-page-name' => 'Bladeren',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1363,6 +1236,135 @@ $messages['nb'] = array(
 	'founderprogressbar-bonus-edit50-action' => 'Gå til Spesial:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Sikt mot stjernene og få ytterligere 50 redigeringer mer enn du allerede har for å fullføre denne bonusoppgaven.',
 	'founderprogressbar-browse-page-name' => 'Bla gjennom',
+);
+
+/** Dutch (Nederlands)
+ * @author SPQRobin
+ * @author Siebrand
+ * @author Tjcool007
+ */
+$messages['nl'] = array(
+	'founderprogressbar-credits' => 'Een takenhub en gids voor nieuwe wikioprichters',
+	'founderprogressbar-widget-label' => "{{SITENAME}}'s voortgang",
+	'founderprogressbar-progress-label' => 'Afgeronde taken',
+	'founderprogressbar-progress-see-full-list' => 'Volledige lijst bekijken',
+	'founderprogressbar-progress-hide-full-list' => 'Volledige lijst verbergen',
+	'founderprogressbar-skip-for-now' => 'Voorlopig overslaan',
+	'founderprogressbar-task-completed' => 'Voltooid',
+	'founderprogressbar-list-label' => "{{SITENAME}}'s taken",
+	'founderprogressbar-list-description1' => 'Klaar om uw wiki succesvol te maken? Voltooi alle onderstaande taken om uw voortgangsbalk naar 100% te brengen! Iedere gebruiker kan uw wiki kan helpen en alle bijdragen worden meegeteld voor de taken op deze lijst.',
+	'founderprogressbar-list-description2' => 'In het takengebied staan alle uit te voeren taken. Als u een taak overslaat wordt deze verplaats naar het gedeelte "Overgeslagen taken" en blijft deze taak beschikbaar om uitgevoerd te worden. Is er een taak is die niet bij uw wiki past? Maak u geen zorgen. Als er alleen overgeslagen taken open staan, komen de bonustaken beschikbaar. Voltooi de bonustaken om tot 100% te komen.',
+	'founderprogressbar-list-task-label' => 'Taken',
+	'founderprogressbar-list-skipped-task-label' => 'Overgeslagen taken',
+	'founderprogressbar-list-skipped-task-desc' => 'Hier kunt u later voor terugkomen.',
+	'founderprogressbar-list-bonus-task-label' => 'Bonustaken',
+	'founderprogressbar-list-bonus-task-desc' => 'Voer alle taken uit om de bonustaken vrij te spelen',
+	'founderprogressbar-task-call-to-action' => 'Naar taak gaan',
+	'founderprogressbar-completion-message' => 'Gefeliciteerd! U hebt geweldig werk gedaan en alle taken tot 100% voltooid. Uw wiki is goed op weg naar succes, of zelfs al daar. Vooral volhouden!',
+	'founderprogressbar-bonus-task-notice' => 'Let op: Elke bonustaak kan meerdere keren worden voltooid. Voer de taken net zo vaak uit als u wilt om tot 100% te komen.',
+	'founderprogressbar-page-add10-label' => "$1 {{PLURAL:$1|pagina|pagina's}} bereiken",
+	'founderprogressbar-page-add10-action' => 'Pagina toevoegen',
+	'founderprogressbar-page-add10-description' => "De beste manier om uw wiki een vliegende start te laten maken is het toevoegen van pagina's met informatie over uw onderwerp. De beste pagina's hebben tenminste twee paragrafen tekst en verwijzen naar andere pagina's.",
+	'founderprogressbar-themedesigner-visit-label' => 'Vormgeving personaliseren',
+	'founderprogressbar-themedesigner-visit-action' => 'Ga naar Special:ThemeDesigner',
+	'founderprogressbar-themedesigner-visit-description' => 'Met de Wizard Vormgeving kunt u een vormgeving voor uw wiki kiezen of uw eigen vormgeving maken met eenvoudige hulpmiddelen. Met een aangepaste vormgeving maakt u uw wiki uniek.',
+	'founderprogressbar-mainpage-edit-label' => 'Vul uw hoofdpagina in',
+	'founderprogressbar-mainpage-edit-action' => 'Hoofdpagina bewerken',
+	'founderprogressbar-mainpage-edit-description' => 'Als mensen uw wiki bezoeken, is de hoofdpagina het eerste wat ze te zien krijgen. Zorg ervoor dat de pagina aangeeft waar de wiki over gaat, hoe bezoekers kunnen helpen met bewerken en waar de beste inhoud van de wiki te vinden is.',
+	'founderprogressbar-photo-add10-label' => '$1 {{PLURAL:$1|afbeelding|afbeeldingen}} bereiken',
+	'founderprogressbar-photo-add10-action' => 'Afbeelding toevoegen',
+	'founderprogressbar-photo-add10-description' => 'Afbeeldingen helpen aangeven waar uw wiki over gaat en uit onderzoek blijkt aan dat mensen aangetrokken worden door afbeeldingen. We raden u aan om minstens één foto op elke pagina te plaatsen.',
+	'founderprogressbar-category-add3-label' => '$1 {{PLURAL:$1|categorie|categorieën}} bereiken',
+	'founderprogressbar-category-add3-action' => 'Categorie toevoegen',
+	'founderprogressbar-category-add3-description' => "Categorieën zijn een goede manier om uw wiki georganiseerd te houden en ze helpen anderen om de pagina's te vinden waarnaar ze op zoek zijn. Houd het wel simpel, want te veel categorieën kan tot verwarring leiden.",
+	'founderprogressbar-commcentral-visit-label' => 'Centrale plaats voor oprichters en beheerders bezoeken',
+	'founderprogressbar-commcentral-visit-action' => 'Centrale plaats voor oprichters en beheerders bezoeken',
+	'founderprogressbar-commcentral-visit-description' => "U staat niet alleen! De wiki voor oprichters en beheerders is een plaats waar de beheerdersgemeenschap van Wikia samenkomt om advies en tips te delen. Hier vindt u ook hulppagina's en informatie over hoe u contact kunt opnemen met Wikiamedewerkers.",
+	'founderprogressbar-wikiactivity-visit-label' => 'Wiki-activiteit bezoeken',
+	'founderprogressbar-wikiactivity-visit-action' => 'Ga naar Speciaal:WikiActivity',
+	'founderprogressbar-wikiactivity-visit-description' => "Wiki-activiteit geeft een overzicht van de recente activiteit op uw wiki, zoals gebruikers die hebben bewerkt en het geeft u snelle toegang tot de gewijzigde pagina's.",
+	'founderprogressbar-profile-edit-label' => 'Vul uw profielpagina in',
+	'founderprogressbar-profile-edit-action' => 'Naar uw profielpagina gaan',
+	'founderprogressbar-profile-edit-description' => "Gebruikerspagina's geven bezoekers van uw wiki wat meer gegevens over andere gebruikers en helpen bij het vormen van een gemeenschap.",
+	'founderprogressbar-photo-add20-label' => '$1 {{PLURAL:$1|afbeelding|afbeeldingen}} bereiken',
+	'founderprogressbar-photo-add20-action' => 'Afbeelding toevoegen',
+	'founderprogressbar-photo-add20-description' => 'Hebt u een afbeelding toegevoegd aan elke pagina? Mensen houden van afbeeldingen, ze laten uw wiki echt stralen!',
+	'founderprogressbar-total-edit75-label' => 'Maak 75 bewerkingen',
+	'founderprogressbar-total-edit75-action' => 'Pagina toevoegen',
+	'founderprogressbar-total-edit75-description' => 'Zodra u 75 bewerkingen hebt gemaakt is er waarschijnlijk een redelijke hoeveelheid inhoud op uw wiki. Dat is is een mooie prestatie! Dit is slechts één mijlpaal op weg naar een geweldige wiki.',
+	'founderprogressbar-page-add20-label' => "$1 {{PLURAL:$1|pagina|pagina's}} bereiken",
+	'founderprogressbar-page-add20-action' => 'Pagina toevoegen',
+	'founderprogressbar-page-add20-description' => "Blijven doorwerken om uw wiki een uitgebreide bron over uw onderwerp te maken. Maak niet alleen pagina's aan, maar zorg dat uw teksten ook inhoudelijk goed zijn.",
+	'founderprogressbar-category-edit-label' => 'Categoriepagina bewerken',
+	'founderprogressbar-category-edit-action' => 'Categorieën weergeven',
+	'founderprogressbar-category-edit-description' => "In categorieën worden niet alleen verwijzingen naar alle pagina's in de categorie weergegeven. U kunt kan de pagina's ook bewerken om bezoekers aan te geven waar de categorie over gaat en welke soorten pagina's de categorie bevat. Door de categoriepagina te bewerken verandert deze ook van een rode naar een blauwe verwijzing.",
+	'founderprogressbar-wikialabs-visit-label' => 'Wikia Laboratorium bezoeken',
+	'founderprogressbar-wikialabs-visit-action' => 'Wikia Laboratorium bekijken',
+	'founderprogressbar-wikialabs-visit-description' => 'In het Wikia Laboratorium kunt u de nieuwste functies van Wikia uitproberen op uw wiki. Deze functies zijn allemaal in de betafase, maar het is een goede manier om te zien wat u kunt verwachten van Wikia en om het zelf uit te proberen.',
+	'founderprogressbar-fb-connect-label' => 'Facebook Connect',
+	'founderprogressbar-fb-connect-action' => 'Facebook Connect',
+	'founderprogressbar-fb-connect-description' => 'Deel uw inspanningen. Via Facebook Connect kunt u uw handelingen in de wiki delen met uw vrienden op Facebook. U kunt de handelingen die gedeeld worden op Facebook aanpassen. Slecht een beheerder hoeft dit in te schakelen om de taak te voltooien.',
+	'founderprogressbar-category-add5-label' => '$1 {{PLURAL:$1|categorie|categorieën}} bereiken',
+	'founderprogressbar-category-add5-action' => 'Categorie toevoegen',
+	'founderprogressbar-category-add5-description' => "Nu uw wiki meerdere pagina's bevat, hebt u waarschijnlijk categorieën nodig om alles overzichtelijk te houden.",
+	'founderprogressbar-pagelayout-visit-label' => 'Naar de Wizard voor paginavormgeving gaan',
+	'founderprogressbar-pagelayout-visit-action' => 'Naar de Wizard voor paginavormgeving gaan',
+	'founderprogressbar-pagelayout-visit-description' => 'Met de Wizard Paginavormgeving kunt een overzichtelijk formulier ontwerpen dat mensen te zien krijgen als ze op "Pagina toevoegen" klikken in uw wiki. Ze kunnen de vormgeving die u hebt ontworpen gebruiken om via het formulier eenvoudig een pagina aan te maken.',
+	'founderprogressbar-gallery-add-label' => 'Afbeeldingengalerij toevoegen',
+	'founderprogressbar-gallery-add-action' => 'Hulppagina bekijken',
+	'founderprogressbar-gallery-add-description' => "Afbeeldingsgalerijen zijn een goede manier om meerdere foto's in een paginadeel te plaatsen. Het is ook leuk om de manier waarop afbeeldingen worden weergegeven af te wisselen zodat uw wiki aantrekkelijk en afwisselend blijft voor bezoekers.",
+	'founderprogressbar-topnav-edit-label' => 'Bewerk uw navigatie',
+	'founderprogressbar-topnav-edit-action' => 'Navigatie bewerken',
+	'founderprogressbar-topnav-edit-description' => "De dropdownmenu's naast het woordmerk van uw  wiki zijn uw navigatiehulpmiddelen. U kunt hier verwijzingen opnemen naar de pagina's waar mensen pagina's, categorieen, blogberichten en meer van uw wiki kunnen vinden. Ga naar Community Central als u hulp nodig hebt voor het bewerken van de navigatie.",
+	'founderprogressbar-mainpage-addslider-label' => 'Voeg een schuifafbeelding toe aan de hoofdpagina',
+	'founderprogressbar-mainpage-addslider-action' => 'Hoofdpagina bewerken',
+	'founderprogressbar-mainpage-addslider-description' => 'De schuifafbeeldingen op de hoofdpagina zijn een mooie manier om een pagina er professioneel uit te laten zien en een paar schitterende afbeeldingen toe te voegen. Elke afbeelding kan weer doorverwijzen naar een pagina, dus het is ook een goede manier om de pagina\'s waar u het meest trots op bent uit te lichten. Bekijk dit <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page">blogbericht van Susan Taylor</a> als u hulp nodig hebt met het wijzigen van de afmetingen voor uw schuifafbeeldingen.',
+	'founderprogressbar-commcorner-edit-label' => 'Gemeenschapsberichten bewerken',
+	'founderprogressbar-commcorner-edit-action' => 'Gemeenschapsberichten bekijken',
+	'founderprogressbar-commcorner-edit-description' => 'Als u de gemeenschapshoek bewerkt, krijgen bezoekers van uw wiki een melding. Het is een prima plek om mensen te laten weten wat voor een soort gemeenschap u hebt opgericht en om aankondigingen te maken.',
+	'founderprogressbar-video-add-label' => 'Video toevoegen',
+	'founderprogressbar-video-add-action' => 'Video toevoegen',
+	'founderprogressbar-video-add-description' => 'Video is een ander populair mediatype dat helpt om mensen uw wiki in te trekken. Op YouTube, Hulu en andere sites staat erg veel materiaal. Voeg een video toe bij de knop "Functies en media" in de tekstverwerker.',
+	'founderprogressbar-user-add5-label' => 'Bereik 5 gebruikersprofielen',
+	'founderprogressbar-user-add5-action' => 'Hulppagina bekijken',
+	'founderprogressbar-user-add5-description' => "Een fantastische wiki wordt gesteund door een fantastische gemeenschap. De beste wiki's hebben veel redacteuren. Zorg voor vijf redacteuren om een goede start te maken.",
+	'founderprogressbar-recentchanges-visit-label' => 'Recente wijzigingen bekijken',
+	'founderprogressbar-recentchanges-visit-action' => 'Ga naar Speciaal:RecenteWijzigingen',
+	'founderprogressbar-recentchanges-visit-description' => 'Recente wijzigingen is een geavanceerdere versie van de Wiki-activiteit. U kunt elke bewerking in detail bekijken via "diffs", bewerkingen terugdraaien, en meer details zien dan in wiki-activiteit. Het is een goede plaats om meer informatie te vinden.',
+	'founderprogressbar-wordmark-edit-label' => 'Woordmerk uploaden',
+	'founderprogressbar-wordmark-edit-action' => 'Ga naar Speciaal:ThemeDesigner',
+	'founderprogressbar-wordmark-edit-description' => 'Het woordmerk van uw wiki is belangrijk. Het is te zien op iedere pagina en het helpt gebruikers om een idee te krijgen van uw onderwerp en om wat flair toe te voegen. Door uw eigen grafische woordmerk te uploaden kunt u ervoor zorgen dat uw merk er nog meer uitspringt.',
+	'founderprogressbar-mostvisited-visit-label' => "Meestbezochte pagina's bekijken",
+	'founderprogressbar-mostvisited-visit-action' => 'Ga naar Speciaal:Mostvisitedpages',
+	'founderprogressbar-mostvisited-visit-description' => "Als u wiki echt op stoom komt, is het handig om te zien wat de meest populaire pagina's zijn, zodat u die kunt verbeteren en meer verwijzingen kunt toevoegen naar pagina's die minder vaak bezocht worden. Kijk naar uw meest bezochte pagina's om een idee te krijgen van wat het beste werkt voor uw wiki zodat u soortgelijke verbeteringen kunt maken aan de andere pagina's!",
+	'founderprogressbar-toptenlist-add-label' => 'Top-10 lijst toevoegen',
+	'founderprogressbar-toptenlist-add-action' => 'Top-10 lijst toevoegen',
+	'founderprogressbar-toptenlist-add-description' => 'Top-10 lijsten motiveren gebruikers die misschien wat terughoudend zijn om mee te werken aan uw wiki. Het is een leuke motivator voor de gemeenschap en het is makkelijk voor mensen die dingen die mensen aan lijsten toevoegen te waarderen.',
+	'founderprogressbar-blogpost-add-label' => 'Een blogpost schrijven',
+	'founderprogressbar-blogpost-add-action' => 'Naar uw blogpagina gaan',
+	'founderprogressbar-blogpost-add-description' => 'Blogberichten op uw wiki zijn een goede manier om aankondigingen te doen, aan te geven waar u hulp bij nodig hebt in uw wiki, uw mening te geven en andere mensen aan te moedigen hun eigen blogberichten te schrijven. Probeer het eens!',
+	'founderprogressbar-fb-likes3-label' => 'Bereik $1 keer "Vind ik leuk" op Facebook',
+	'founderprogressbar-fb-likes3-action' => 'Hoofdpagina bekijken',
+	'founderprogressbar-fb-likes3-description' => 'Delen geeft aan dat u erom geeft en het helpt echt bij geven van meer bekendheid aan uw wiki. Moedig uw leden en lezers aan om op de knop "Vind ik leuk" te klikken op de pagina voor uw wiki op Facebook.',
+	'founderprogressbar-uncategorized-visit-label' => "Pagina's zonder categorieën bekijken",
+	'founderprogressbar-uncategorized-visit-action' => 'Ga naar Speciaal:NietGecategoriseerdePaginas',
+	'founderprogressbar-uncategorized-visit-description' => "Als uw wiki meer inhoud heeft, raakt u mogelijk het overzicht kwijt. Blijf bij de les door pagina's zonder categorie in de gaten te houden en daar categorieën aan toe te voegen zodat ze te vinden blijven.",
+	'founderprogressbar-total-edit300-label' => 'Maak $1 bewerkingen',
+	'founderprogressbar-total-edit300-action' => 'Pagina toevoegen',
+	'founderprogressbar-total-edit300-description' => '$1 bewerkingen is een geweldige mijlpaal en met zoveel wijzigingen en toevoegingen aan de wiki bent u vast op weg naar succes!',
+	'founderprogressbar-bonus-photo-add10-label' => 'Voeg nog $1 afbeeldingen toe',
+	'founderprogressbar-bonus-photo-add10-action' => 'Foto toevoegen',
+	'founderprogressbar-bonus-photo-add10-description' => 'Meer afbeeldingen toevoegen is altijd een prima manier om uw wiki te verbeteren. Voeg meer dan tien afbeeldingen toe om uw bonustaak af te ronden.',
+	'founderprogressbar-bonus-page-add5-label' => "Voeg $1 meer pagina's toe",
+	'founderprogressbar-bonus-page-add5-action' => 'Voeg een pagina toe',
+	'founderprogressbar-bonus-page-add5-description' => "Welke wiki geeft geen baat bij meer inhoud? Voeg nog vijf pagina's toe om uw bonustaak af te ronden.",
+	'founderprogressbar-bonus-pagelayout-add-label' => 'Maak een paginavormgeving',
+	'founderprogressbar-bonus-pagelayout-add-action' => 'Naar de Wizard voor paginavormgeving gaan',
+	'founderprogressbar-bonus-pagelayout-add-description' => 'Paginavormgevingen toevoegen is een prima manier om meer mensen te helpen snel en eenvoudig inhoud aan uw wiki toe te voegen. Hoe meer redacteuren er actief zijn in uw wiki, hoe meer inhoud er is voor uw lezers! Voeg een paginavormgeving toe om uw bonustaak af te ronden.',
+	'founderprogressbar-bonus-edit50-label' => "Bewerk nog $1 pagina's",
+	'founderprogressbar-bonus-edit50-action' => 'Ga naar Special:WikiActivity',
+	'founderprogressbar-bonus-edit50-description' => 'Ga naar de sterren en krijg nog vijftig meer bewerken dat u al hebt om uw bonustaak af te ronden.',
+	'founderprogressbar-browse-page-name' => 'Bladeren',
 );
 
 /** Polish (Polski)
@@ -1629,6 +1631,15 @@ $messages['ru'] = array(
 	'founderprogressbar-browse-page-name' => 'Обзор',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'founderprogressbar-commcentral-visit-url' => 'http://community.wikia.com/wiki/Admin_Central:Main_Page?uselang=sr-ec',
+	'founderprogressbar-gallery-add-url' => 'http://community.wikia.com/wiki/Help:Gallery?uselang=sr-ec',
+	'founderprogressbar-user-add5-url' => 'http://help.wikia.com/wiki/Advice:Building_a_Community?uselang=sr-ec',
+);
+
 /** Swedish (Svenska)
  * @author WikiPhoenix
  */
@@ -1741,5 +1752,32 @@ $messages['sv'] = array(
 $messages['tt-cyrl'] = array(
 	'founderprogressbar-total-edit75-action' => 'Мәкалә өстәү',
 	'founderprogressbar-page-add20-label' => '$1 мәкалә өстәү',
+);
+
+/** Ukrainian (Українська)
+ * @author A1
+ */
+$messages['uk'] = array(
+	'founderprogressbar-page-add10-action' => 'Додати сторінку',
+	'founderprogressbar-total-edit75-label' => 'Досягти 75 редагувань',
+	'founderprogressbar-total-edit75-action' => 'Додати сторінку',
+	'founderprogressbar-total-edit75-description' => '75 правок - це віха на шляху до величі wiki!',
+	'founderprogressbar-page-add20-label' => 'Досягти  $1   {{PLURAL:$1| сторінки | сторінки}}',
+	'founderprogressbar-page-add20-action' => 'Додати сторінку',
+	'founderprogressbar-video-add-label' => 'Додати відео',
+	'founderprogressbar-video-add-action' => 'Додати відео',
+	'founderprogressbar-video-add-description' => 'Відео це інший тип популярних засобів масової інформації, які допоможуть залучити людей на ваш wiki. Ви можете позичити відео на YouTube, Hulu та інших сайтах. Додати, використовуючи кнопку "Можливості і Медіа" в редакторі',
+	'founderprogressbar-user-add5-label' => 'Досягти 5 профілів користувачів',
+	'founderprogressbar-user-add5-action' => 'Перейти до сторінки довідки',
+	'founderprogressbar-browse-page-name' => 'Огляд',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hzy980512
+ */
+$messages['zh-hans'] = array(
+	'founderprogressbar-profile-edit-label' => '填写您的档案页',
+	'founderprogressbar-profile-edit-action' => '到达您的档案页',
+	'founderprogressbar-user-add5-label' => '查看5个用户的档案',
 );
 

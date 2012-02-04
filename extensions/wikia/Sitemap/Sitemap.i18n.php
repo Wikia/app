@@ -88,6 +88,13 @@ $messages['he'] = array(
 	'sitemap-desc' => 'יצירת מפות אתרים לאתר הוויקי בו במקום',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'sitemap-desc' => 'Oldaltérképet generál a wikihez menet közben',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
@@ -158,6 +165,13 @@ $messages['ms'] = array(
 	'sitemap-desc' => 'Segera menjana Peta Tapak untuk wiki ini',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'sitemap-desc' => 'Generer Sitemaps for wikien etter forholdene',
+);
+
 /** Nepali (नेपाली)
  * @author RajeshPandey
  */
@@ -170,13 +184,6 @@ $messages['ne'] = array(
  */
 $messages['nl'] = array(
 	'sitemap-desc' => 'Sitemaps voor de wiki aanmaken',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'sitemap-desc' => 'Generer Sitemaps for wikien etter forholdene',
 );
 
 /** Occitan (Occitan)

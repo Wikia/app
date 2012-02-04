@@ -156,6 +156,21 @@ $messages['ms'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory (Kilang Wiki) tidak dihidupkan di wiki ini, maka wgCacheEpoch tidak dapat diubah.',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'cacheepoch-desc' => 'Gir et grensesnitt for endring av wgCacheEpoch per wiki',
+	'cacheepoch' => 'Grensesnitt for Cache Epoch',
+	'cacheepoch-header' => 'Øk wgCacheEpoch',
+	'cacheepoch-value' => 'Nåværende wgCacheEpoch-verdi er «$1». Trykk på knappen for å sette den til gjeldende dato.',
+	'cacheepoch-submit' => 'Oppdater verdien',
+	'cacheepoch-updated' => 'wgCacheEpoch oppdatert til «$1».',
+	'cacheepoch-not-updated' => 'Kunne ikke oppdatere wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Verdi oppdatert via Spesial:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory er ikke aktivert på denne wikien. Kunne ikke endre wgCacheEpoch.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -171,19 +186,34 @@ $messages['nl'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgCacheEpoch aan te passen.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
+/** Polish (Polski)
+ * @author BeginaFelicysym
  */
-$messages['nb'] = array(
-	'cacheepoch-desc' => 'Gir et grensesnitt for endring av wgCacheEpoch per wiki',
-	'cacheepoch' => 'Grensesnitt for Cache Epoch',
-	'cacheepoch-header' => 'Øk wgCacheEpoch',
-	'cacheepoch-value' => 'Nåværende wgCacheEpoch-verdi er «$1». Trykk på knappen for å sette den til gjeldende dato.',
-	'cacheepoch-submit' => 'Oppdater verdien',
-	'cacheepoch-updated' => 'wgCacheEpoch oppdatert til «$1».',
-	'cacheepoch-not-updated' => 'Kunne ikke oppdatere wgCacheEpoch.',
-	'cacheepoch-wf-reason' => 'Verdi oppdatert via Spesial:CacheEpoch',
-	'cacheepoch-no-wf' => 'WikiFactory er ikke aktivert på denne wikien. Kunne ikke endre wgCacheEpoch.',
+$messages['pl'] = array(
+	'cacheepoch-desc' => 'Zapewnia interfejs do zmiany wgCacheEpoch na wiki.',
+	'cacheepoch' => 'Pamięć podręczna interfejsu Epoch',
+	'cacheepoch-header' => 'Powiększenie wgCacheEpoch',
+	'cacheepoch-value' => 'Bieżąca wartość wgCacheEpoch to " $1 ". Naciśnij przycisk, aby ustawić ją na bieżący znacznik czasu.',
+	'cacheepoch-submit' => 'Aktualizacja wartości',
+	'cacheepoch-updated' => 'wgCacheEpoch zaktualizowane do "$1".',
+	'cacheepoch-not-updated' => 'Nie udało się zaktualizować wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Wartość zaktualizowana poprzez Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory nie jest włączony na tej wiki. Nie można zmienić wgCacheEpoch.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'cacheepoch-desc' => "A dà n'antërfacia për cangé wgCacheEpoch për wiki",
+	'cacheepoch' => 'Antërfacia Cache Epoch',
+	'cacheepoch-header' => 'Aumenta wgCacheEpoch',
+	'cacheepoch-value' => 'Valor corent ëd wgCacheEpoch an "$1". Sgnaca ël boton për ampostelo al timestamp corent.',
+	'cacheepoch-submit' => 'Modìfica ël valor',
+	'cacheepoch-updated' => 'wgcacheEpoch modificà a "$1".',
+	'cacheepoch-not-updated' => 'Falì a modifiché wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Valor modificà con Special:CacheEpoch',
+	'cacheepoch-no-wf' => "WikiFactory a l'é pa abilità dzora a sta wiki-sì. As peul pa modifiché wgCacheEpoch.",
 );
 
 /** Portuguese (Português)
@@ -217,11 +247,21 @@ $messages['pt-br'] = array(
 	'cacheepoch-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar a wgCacheEpoch.',
 );
 
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'cacheepoch-submit' => 'Обновить значение',
+);
+
 /** Swedish (Svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'cacheepoch-header' => 'Öka wgCacheEpoch',
+	'cacheepoch-value' => 'Aktuella värdet för wgCacheEpoch är "$1". Tryck på knappen för att ange den till nuvarande datum.',
 	'cacheepoch-submit' => 'Uppdatera värdet',
+	'cacheepoch-updated' => 'wgCacheEpoch uppdaterades till «$1».',
 	'cacheepoch-not-updated' => 'Misslyckades att uppdatera wgCacheEpoch.',
 );
 

@@ -194,6 +194,18 @@ $messages['ms'] = array(
 	'timeago-second' => 'seminit lalu',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'timeagomessaging-desc' => 'Gir i18n til jquery.timeago.js plugginnen',
+	'timeago-day' => 'for {{PLURAL:$1|én dag|$1 dager}} siden',
+	'timeago-hour' => 'for {{PLURAL:$1|én time|$1 timer}} siden',
+	'timeago-minute' => 'for {{PLURAL:$1|ett minutt|$1 minutter}} siden',
+	'timeago-month' => '{{PLURAL:$1|én måned|$1 måneder}} siden',
+	'timeago-second' => 'for et øyeblikk siden',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -204,18 +216,6 @@ $messages['nl'] = array(
 	'timeago-minute' => '{{PLURAL:$1|een minuut|$1 minuten}} geleden',
 	'timeago-month' => '{{PLURAL:$1|een maand|$1 maanden}} geleden',
 	'timeago-second' => 'een minuut geleden',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'timeagomessaging-desc' => 'Gir i18n til jquery.timeago.js plugginnen',
-	'timeago-day' => 'for {{PLURAL:$1|én dag|$1 dager}} siden',
-	'timeago-hour' => 'for {{PLURAL:$1|én time|$1 timer}} siden',
-	'timeago-minute' => 'for {{PLURAL:$1|ett minutt|$1 minutter}} siden',
-	'timeago-month' => '{{PLURAL:$1|én måned|$1 måneder}} siden',
-	'timeago-second' => 'for et øyeblikk siden',
 );
 
 /** Polish (Polski) */
@@ -237,6 +237,7 @@ $messages['pms'] = array(
 	'timeago-day' => '{{PLURAL:$1|un di|$1 di}} fà',
 	'timeago-hour' => "{{PLURAL:$1|n'ora|$1 ore}} fà",
 	'timeago-minute' => '{{PLURAL:$1|na minuta|$1 minute}} fà',
+	'timeago-month' => '{{PLURAL:$1|un mèis|$1 mèis}} fà',
 	'timeago-second' => 'na minuta fà',
 );
 
@@ -311,6 +312,7 @@ $messages['sv'] = array(
 	'timeago-day' => '{{PLURAL:$1|en dag|$1 dagar}} sedan',
 	'timeago-hour' => '{{PLURAL:$1|en timme|$1 timmar}} sedan',
 	'timeago-minute' => '{{PLURAL:$1|en minut|$1 minuter}} sedan',
+	'timeago-month' => '{{PLURAL:$1|en månad|$1 månader}} sedan',
 	'timeago-second' => 'en minut sedan',
 );
 

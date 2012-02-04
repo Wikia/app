@@ -68,6 +68,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Quedel
  */
 $messages['de'] = array(
 	'communitymessages-desc' => 'Hilfs-Erweiterung für Community-Nachrichten',
@@ -100,9 +101,11 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Yhteisön viestejä on päivitetty]].',
+	'communitymessages-desc' => 'Apulaajennus yhteisöviesteille',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Yhteisöviestejä on päivitetty]].',
 );
 
 /** French (Français)
@@ -193,20 +196,20 @@ $messages['ms'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Pesanan Komuniti telah dikemaskinikan]].',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'communitymessages-desc' => 'Hjelpeutvidelse for Fellesskapsmeldinger',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Fellesskapsmeldingene har blitt oppdatert]].',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'communitymessages-desc' => 'Hulpuitbreiding voor gemeenschapsberichten',
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Gemeenschapsberichten is bijgewerkt]].',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'communitymessages-desc' => 'Hjelpeutvidelse for Fellesskapsmeldinger',
-	'communitymessages-notice-msg' => '[[Special:WikiActivity|Fellesskapsmeldingene har blitt oppdatert]].',
 );
 
 /** Occitan (Occitan)
@@ -232,7 +235,7 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'communitymessages-desc' => "Estension d'agiut për ij Mëssagi ëd Comunità",
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Ij Mëssagi ëd Comunità a son ëstàit agiornà]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Ij Mëssagi ëd la Comunità a son ëstàit agiornà]].',
 );
 
 /** Pashto (پښتو)
@@ -281,7 +284,7 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'communitymessages-desc' => 'Hjälpförlängning för gemenskapsmeddelanden',
-	'communitymessages-notice-msg' => 'Gemenskapsmeddelanden har uppdaterats.',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Gemenskapsmeddelanden har uppdaterats]].',
 );
 
 /** Tagalog (Tagalog)

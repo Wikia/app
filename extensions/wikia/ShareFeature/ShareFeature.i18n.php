@@ -219,6 +219,16 @@ $messages['ms'] = array(
 	'sf-link-tooltip' => 'Kongsikan rencana ini dengan rakan-rakan anda',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'sharefeature-desc' => 'Tillat brukere å lenke til sider fra populære nettsteder',
+	'sf-link' => 'Del denne artikkelen',
+	'sf-link-popup' => 'Del denne artikkelen',
+	'sf-link-tooltip' => 'Del denne artikkelen med vennene dine',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -243,16 +253,6 @@ $messages['nn'] = array(
 	'sf-link' => 'Del denne artikkelen',
 	'sf-link-popup' => 'Del denne artikkelen',
 	'sf-link-tooltip' => 'Del denne artikkelen med venene dine',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'sharefeature-desc' => 'Tillat brukere å lenke til sider fra populære nettsteder',
-	'sf-link' => 'Del denne artikkelen',
-	'sf-link-popup' => 'Del denne artikkelen',
-	'sf-link-tooltip' => 'Del denne artikkelen med vennene dine',
 );
 
 /** Occitan (Occitan)

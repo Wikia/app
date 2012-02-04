@@ -586,6 +586,28 @@ $messages['my'] = array(
 	'wikiavideo-links' => 'လင့်',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'wikiavideo-reverted' => 'Videoen $1 ble tilbakestilt. Gå tilbake til $2.',
+	'wikiavideo-unreverted' => 'Du har ikke tillatelse til å tilbakestille $1.',
+	'wikiavideo-added' => 'la til video $1',
+	'wikiavideo-updated' => 'oppdaterte videoen [[$1]]',
+	'wikiavideo-back' => 'tilbake',
+	'wikiavideo-create' => 'Legg til video',
+	'wikiavideo-replace' => 'Erstatt video',
+	'wikiavideo-category' => 'Videoer',
+	'wikiavideo-links' => 'Lenker',
+	'wikiavideo-placeholder' => 'Plassholder',
+	'wikiavideo-gallery-template' => 'Dette videogalleriet er innenfor en mal og er kan ikke redigeres fra visningsmodusen. Vennligst rediger den gjeldende malen.',
+	'wikiavideo-not-supported' => 'Dette utseendet støtter ikke innsetting av videoer i gallerier fra visningsmodus.',
+	'wikiavideo-deleted-old' => "Versjonen av '''[$1 $2]''' fra $4, $3 har blitt slettet.",
+	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|piksel|piksler}}, levert av: <a href="$3" class="external" target="_blank">$4</a>)',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -613,28 +635,6 @@ $messages['nl'] = array(
 $messages['nl-informal'] = array(
 	'wikiavideo-unreverted' => 'Je hebt geen rechten om "$1" terug te draaien.',
 	'wikiavideo-intro-old' => "Je bent de versie van '''[$1 $5]''' per [$4 $3, $2] aan het verwijderen.",
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'wikiavideo-reverted' => 'Videoen $1 ble tilbakestilt. Gå tilbake til $2.',
-	'wikiavideo-unreverted' => 'Du har ikke tillatelse til å tilbakestille $1.',
-	'wikiavideo-added' => 'la til video $1',
-	'wikiavideo-updated' => 'oppdaterte videoen [[$1]]',
-	'wikiavideo-back' => 'tilbake',
-	'wikiavideo-create' => 'Legg til video',
-	'wikiavideo-replace' => 'Erstatt video',
-	'wikiavideo-category' => 'Videoer',
-	'wikiavideo-links' => 'Lenker',
-	'wikiavideo-placeholder' => 'Plassholder',
-	'wikiavideo-gallery-template' => 'Dette videogalleriet er innenfor en mal og er kan ikke redigeres fra visningsmodusen. Vennligst rediger den gjeldende malen.',
-	'wikiavideo-not-supported' => 'Dette utseendet støtter ikke innsetting av videoer i gallerier fra visningsmodus.',
-	'wikiavideo-deleted-old' => "Versjonen av '''[$1 $2]''' fra $4, $3 har blitt slettet.",
-	'wikiavideo-intro-old' => "Du sletter versjonen av '''[$1 $5]''' fra [$4 $3, $2].",
-	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|piksel|piksler}}, levert av: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -689,6 +689,7 @@ $messages['pms'] = array(
 	'wikiavideo-reverted' => "Ël video $1 a l'é tornà andré da bin. Va andré a $2.",
 	'wikiavideo-unreverted' => "It l'has pa ël përmess ëd fé torné andré $1.",
 	'wikiavideo-added' => 'giontà video $1',
+	'wikiavideo-updated' => 'modificà ël filmà [[$1]]',
 	'wikiavideo-back' => 'andré',
 	'wikiavideo-create' => 'Gionta Video',
 	'wikiavideo-replace' => 'Rimpiassa Video',
@@ -699,6 +700,7 @@ $messages['pms'] = array(
 	'wikiavideo-not-supported' => "Costa pel a manten pa l'anseriment ëd filmà da la modalità visualisa an galarìe.",
 	'wikiavideo-deleted-old' => "La version '''[$1 $2]''' ëd $4, $3 a l'é stàita scancelà.",
 	'wikiavideo-intro-old' => "A l'é dapress a scancelé la version ëd '''[$1 $5]''' dij [$4 $3, $2].",
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pontin|pontin}}, fornidor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Pashto (پښتو)
@@ -829,6 +831,7 @@ $messages['sr-ec'] = array(
 	'wikiavideo-reverted' => 'Видео-снимак $1 је враћен. Вратите се на $2.',
 	'wikiavideo-unreverted' => 'Немате дозволу да вратите $1.',
 	'wikiavideo-added' => 'додат је видео-снимак $1',
+	'wikiavideo-updated' => 'ажуриран је видео-снимак [[$1]]',
 	'wikiavideo-back' => 'назад',
 	'wikiavideo-create' => 'Додај видео-снимак',
 	'wikiavideo-replace' => 'Замени видео-снимак',
@@ -905,11 +908,18 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author A1
  * @author Prima klasy4na
  * @author Тест
  */
 $messages['uk'] = array(
+	'wikiavideo-reverted' => 'Відео $1 було успішно повернено. Повернутися до $2.',
+	'wikiavideo-unreverted' => 'У вас немає прав повертати $1.',
+	'wikiavideo-added' => 'додав відео $1',
+	'wikiavideo-updated' => 'оновив відео [[$1]]',
 	'wikiavideo-back' => 'назад',
+	'wikiavideo-create' => 'Додати відео',
+	'wikiavideo-replace' => 'Замінити відео',
 	'wikiavideo-category' => 'Відео',
 	'wikiavideo-links' => 'Посилання',
 	'wikiavideo-intro-old' => "Ви вилучаєте версію '''[$1 $5]''' від [$4 $3, $2].",
@@ -917,8 +927,23 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
+ * @author Yanmiao liu
  */
 $messages['zh-hans'] = array(
+	'wikiavideo-reverted' => '视频 $1 成功恢复。返回 $2。',
+	'wikiavideo-unreverted' => '您没有权限去恢复 $1。',
+	'wikiavideo-added' => '添加的视频 $1',
+	'wikiavideo-updated' => '更新的视频[[$1]]',
 	'wikiavideo-back' => '后退',
+	'wikiavideo-create' => '添加视频',
+	'wikiavideo-replace' => '替换视频',
+	'wikiavideo-category' => '视频',
+	'wikiavideo-links' => '链接',
+	'wikiavideo-placeholder' => '占位符',
+	'wikiavideo-gallery-template' => '此视频库是在一个模板内，并且在查看模式下是不可编辑的。请编辑适当的模板。',
+	'wikiavideo-not-supported' => '此皮肤不支持在查看模式下给视频库插入视频。',
+	'wikiavideo-deleted-old' => "'''[$1 $2]''' 于 $3 $4 的版本已经删除。",
+	'wikiavideo-intro-old' => "您现在正在删除 '''[$1 $5]''' 于 [$4 $2 $3] 的版本。",
+	'wikiavideo-details' => '$1 （$2 {{PLURAL:$2|像素|像素}}，提供者：<a href="$3" class="external" target="_blank">$4</a>）',
 );
 

@@ -237,6 +237,24 @@ $messages['my'] = array(
 	'spellchecker-info-spellcheck-languages' => 'ဘာသာ',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'spellchecker-desc' => 'Tilbyr et grensesnitt for korrekturlesning for enchant PHP-modulen',
+	'enablespellchecker' => 'Aktiver korrekturleser i visuell modus',
+	'spellchecker-info' => 'Informasjon om korrekturleseren',
+	'spellchecker-info-languages' => 'Tilgjengelige språk ($1)',
+	'spellchecker-info-provider' => 'Leverandør',
+	'spellchecker-info-dictionaries' => 'Tilgjengelige ordlister',
+	'spellchecker-info-spellcheck-text' => 'Tekst som skal kontrolleres',
+	'spellchecker-info-spellcheck-languages' => 'Språk',
+	'spellchecker-info-spellcheck-submit' => 'Sjekk staving',
+	'spellchecker-info-spellcheck-is-correct' => 'Ordet «$1» er riktig stavet',
+	'spellchecker-info-spellcheck-suggestions' => 'Forslag til stavemåte for «$1»: $2',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -254,22 +272,21 @@ $messages['nl'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Spellingsuggesties voor "$1": $2',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
+/** Polish (Polski)
+ * @author BeginaFelicysym
  */
-$messages['nb'] = array(
-	'spellchecker-desc' => 'Tilbyr et grensesnitt for korrekturlesning for enchant PHP-modulen',
-	'enablespellchecker' => 'Aktiver korrekturleser i visuell modus',
-	'spellchecker-info' => 'Informasjon om korrekturleseren',
-	'spellchecker-info-languages' => 'Tilgjengelige språk ($1)',
-	'spellchecker-info-provider' => 'Leverandør',
-	'spellchecker-info-dictionaries' => 'Tilgjengelige ordlister',
-	'spellchecker-info-spellcheck-text' => 'Tekst som skal kontrolleres',
-	'spellchecker-info-spellcheck-languages' => 'Språk',
-	'spellchecker-info-spellcheck-submit' => 'Sjekk staving',
-	'spellchecker-info-spellcheck-is-correct' => 'Ordet «$1» er riktig stavet',
-	'spellchecker-info-spellcheck-suggestions' => 'Forslag til stavemåte for «$1»: $2',
+$messages['pl'] = array(
+	'spellchecker-desc' => 'Zapewnia interfejs sprawdzania pisowni dla modułu PHP enchant',
+	'enablespellchecker' => 'Włącz sprawdzenie pisowni w trybie wizualnym',
+	'spellchecker-info' => 'Informacje sprawdzania pisowni',
+	'spellchecker-info-languages' => 'Dostępne języki ($1)',
+	'spellchecker-info-provider' => 'Dostawca',
+	'spellchecker-info-dictionaries' => 'Dostępne słowniki',
+	'spellchecker-info-spellcheck-text' => 'Tekst do sprawdzenia',
+	'spellchecker-info-spellcheck-languages' => 'Język',
+	'spellchecker-info-spellcheck-submit' => 'Sprawdzanie pisowni',
+	'spellchecker-info-spellcheck-is-correct' => 'Słowo " $1 " jest poprawne',
+	'spellchecker-info-spellcheck-suggestions' => 'Sugestie pisowni dla " $1 ":$2',
 );
 
 /** Pashto (پښتو)
@@ -350,11 +367,14 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
 	'spellchecker-info-languages' => 'అందుబాటులో ఉన్న భాషలు ($1)',
+	'spellchecker-info-dictionaries' => 'అందుబాటులో ఉన్న నిఘంటువులు',
 	'spellchecker-info-spellcheck-languages' => 'భాష',
+	'spellchecker-info-spellcheck-submit' => 'అక్షరక్రమ తనిఖీ',
 );
 
 /** Tagalog (Tagalog)

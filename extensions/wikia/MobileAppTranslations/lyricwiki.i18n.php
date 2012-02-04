@@ -576,7 +576,7 @@ $messages['ms'] = array(
 	'app-tab-search' => 'Cari',
 	'app-tab-about' => 'Perihal',
 	'app-tab-browse' => 'A..Z',
-	'app-tab-sotd' => 'SotD',
+	'app-tab-sotd' => 'LHI',
 	'app-async-error-title' => 'Harap maaf',
 	'app-async-error-message' => 'Masalah sambungan buat sementara. Sila cuba lagi nanti.',
 	'app-nonetwork-dialog-title' => 'Rangkaian tidak tersedia',
@@ -606,6 +606,47 @@ $messages['ms'] = array(
 	'gracenote-takedown' => 'Maaf! Kami tidak mendapat lesen untuk memaparkan lirik lagu ini selengkapnya buat masa ini (begitulah keadaannya bagi tak lebih 1% lagu dalam simpanan kami). Sila cuba lagi minggu depan.',
 	'lyrics-artist-byline' => 'oleh %s',
 	'ringtone-matcher-by-song' => 'Hantar Nada Dering %s Kepada Telefon Bimbit Anda',
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'app-loading' => 'Lader...',
+	'app-tab-search' => 'Søk',
+	'app-tab-about' => 'Om',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+	'app-async-error-title' => 'Oops',
+	'app-async-error-message' => 'Midlertidig problem med tilkoblingen. Vennligst prøv igjen senere.',
+	'app-nonetwork-dialog-title' => 'Nettverk utilgjengelig',
+	'app-nonetwork-dialog-message' => 'Finner ikke nettverkstilkobling.',
+	'app-nonetwork-dialog-close-button' => 'Ok',
+	'search-go' => 'Kjør!',
+	'search-hint-text' => "eks: 'John Lennon:Imagine'",
+	'search-no-match-found' => 'Ingen match funnet.',
+	'search-no-match-found-query' => 'Søkte etter: %s',
+	'search-results-title' => 'Søkeresultater for: %s',
+	'login-label' => 'Logg inn på LyricWiki',
+	'login-username-hint' => 'Brukernavn',
+	'login-password-hint' => 'Passord',
+	'login-submit-button' => 'Logg inn',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'av %s',
+	'about-heading-tips' => 'Søker',
+	'about-tips-0' => 'Begynn å søke etter artistnavn for å auto-fullføre mens du skriver.',
+	'about-tips-1' => 'Bildene på hovedskjermen er Topp 9 sanger på iTunes for øyeblikket.',
+	'about-heading-licensing' => 'Opphavsrett.',
+	'about-licensing-0' => 'Denne applikasjonen er 100% lovlig. Eiere av sang-rettigheter blir betalt Royalties gjennom Gracenote – akkurat som på LyricWiki-siden.',
+	'about-heading-feedback' => 'Tilbakemelding',
+	'about-feedback-0' => 'Har du tilbakemelding på appen som du vil dele med oss? Email meg: %s',
+	'about-heading-rate' => 'Vennligst gi appen karakter!',
+	'about-rate-0-android' => 'Hvis du liker denne appen, vennligst gi den 5 stjerner på Android-markedet!',
+	'about-rate-0-ios' => 'Hvis du liker denne appen, vennligst gi den fem stjerner i App Store!',
+	'gracenote-takedown' => 'Doh! Dessverre er vi for øyeblikket ikke lisensert til å vise full tekst for denne sangen (dette skjer med mindre enn 1% av våre sanger). Vennligst prøv igjen neste uke.',
+	'lyrics-artist-byline' => 'Av %s',
+	'ringtone-matcher-by-song' => 'Send %s Ringetone til din mobil',
 );
 
 /** Dutch (Nederlands)
@@ -656,47 +697,6 @@ $messages['nl-informal'] = array(
 	'about-tips-0' => 'Voer de naam van een artiest in. Tijdens het typen wordt de naam automatisch aangevuld.',
 	'about-rate-0-android' => 'Als je dit programma leuk vindt, geef het dan alsjeblieft vijf sterren in de Android Market!',
 	'ringtone-matcher-by-song' => 'De ringtone %s naar je telefoon sturen',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
-	'app-loading' => 'Lader...',
-	'app-tab-search' => 'Søk',
-	'app-tab-about' => 'Om',
-	'app-tab-browse' => 'A..Z',
-	'app-tab-sotd' => 'SotD',
-	'app-async-error-title' => 'Oops',
-	'app-async-error-message' => 'Midlertidig problem med tilkoblingen. Vennligst prøv igjen senere.',
-	'app-nonetwork-dialog-title' => 'Nettverk utilgjengelig',
-	'app-nonetwork-dialog-message' => 'Finner ikke nettverkstilkobling.',
-	'app-nonetwork-dialog-close-button' => 'Ok',
-	'search-go' => 'Kjør!',
-	'search-hint-text' => "eks: 'John Lennon:Imagine'",
-	'search-no-match-found' => 'Ingen match funnet.',
-	'search-no-match-found-query' => 'Søkte etter: %s',
-	'search-results-title' => 'Søkeresultater for: %s',
-	'login-label' => 'Logg inn på LyricWiki',
-	'login-username-hint' => 'Brukernavn',
-	'login-password-hint' => 'Passord',
-	'login-submit-button' => 'Logg inn',
-	'about-heading' => 'LyricWiki',
-	'about-credits' => 'av %s',
-	'about-heading-tips' => 'Søker',
-	'about-tips-0' => 'Begynn å søke etter artistnavn for å auto-fullføre mens du skriver.',
-	'about-tips-1' => 'Bildene på hovedskjermen er Topp 9 sanger på iTunes for øyeblikket.',
-	'about-heading-licensing' => 'Opphavsrett.',
-	'about-licensing-0' => 'Denne applikasjonen er 100% lovlig. Eiere av sang-rettigheter blir betalt Royalties gjennom Gracenote – akkurat som på LyricWiki-siden.',
-	'about-heading-feedback' => 'Tilbakemelding',
-	'about-feedback-0' => 'Har du tilbakemelding på appen som du vil dele med oss? Email meg: %s',
-	'about-heading-rate' => 'Vennligst gi appen karakter!',
-	'about-rate-0-android' => 'Hvis du liker denne appen, vennligst gi den 5 stjerner på Android-markedet!',
-	'about-rate-0-ios' => 'Hvis du liker denne appen, vennligst gi den fem stjerner i App Store!',
-	'gracenote-takedown' => 'Doh! Dessverre er vi for øyeblikket ikke lisensert til å vise full tekst for denne sangen (dette skjer med mindre enn 1% av våre sanger). Vennligst prøv igjen neste uke.',
-	'lyrics-artist-byline' => 'Av %s',
-	'ringtone-matcher-by-song' => 'Send %s Ringetone til din mobil',
 );
 
 /** Polish (Polski)
@@ -754,6 +754,7 @@ $messages['ps'] = array(
 
 /** Russian (Русский)
  * @author Byulent
+ * @author Kuzura
  * @author Lvova
  */
 $messages['ru'] = array(
@@ -768,6 +769,7 @@ $messages['ru'] = array(
 	'app-nonetwork-dialog-message' => 'Сетевое соединение не обнаружено',
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-go' => 'Искать!',
+	'search-hint-text' => "например, ' Джон Леннон:Представьте себе '",
 	'search-no-match-found' => 'Совпадений не найдено.',
 	'search-no-match-found-query' => 'Поиск: %s',
 	'search-results-title' => 'Результаты поиска: %s',
@@ -778,7 +780,15 @@ $messages['ru'] = array(
 	'about-heading' => 'LyricWiki',
 	'about-heading-tips' => 'Поиск',
 	'about-tips-0' => 'Начните набирать имя исполнителя, чтобы увидеть варианты.',
+	'about-tips-1' => 'Картинки на главном экране отображают Топ 9 песен на iTunes прямо сейчас.',
 	'about-heading-licensing' => 'Авторские права',
+	'about-licensing-0' => 'Это приложение является 100% законным. Роялти выплачиваются правообладателю песни через Gracenote - так же, как на веб-сайте LyricWiki.',
+	'about-heading-feedback' => 'Отзыв',
+	'about-feedback-0' => 'Хотите сказать нам что-нибудь о приложении? Напишите мне: %s',
+	'about-heading-rate' => 'Просьба оценить приложение!',
+	'about-rate-0-android' => 'Если вам нравится это приложение, пожалуйста, оцените его в 5 звёзд на Android Market!',
+	'about-rate-0-ios' => 'Если вам нравится это приложение, пожалуйста, оцените его в 5 звёзд на App Store!',
+	'gracenote-takedown' => 'К сожалению мы не лицензированы для отображения полного текста для этой песни на данный момент (это происходит на менее, чем 1% из наших песен). Пожалуйста, попробуйте снова на следующей неделе.',
 );
 
 /** Swedish (Svenska)
@@ -831,5 +841,38 @@ $messages['te'] = array(
 	'search-go' => 'వెళ్ళు!',
 	'login-password-hint' => 'సంకేతపదం',
 	'about-heading-licensing' => 'కాపీహక్కులు',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
+ */
+$messages['zh-hans'] = array(
+	'app-loading' => '正在载入…',
+	'app-tab-search' => '搜索',
+	'app-tab-about' => '关于',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => '当天之歌',
+	'app-async-error-title' => '糟糕',
+	'app-async-error-message' => '连接暂时有问题，请稍后再试。',
+	'app-nonetwork-dialog-title' => '网络不可用',
+	'app-nonetwork-dialog-message' => '检测不到网络连接。',
+	'app-nonetwork-dialog-close-button' => '确定',
+	'search-go' => '提交！',
+	'search-hint-text' => '例如：“John Lennon:Imagine”',
+	'search-no-match-found' => '找不到匹配项目。',
+	'search-no-match-found-query' => '已搜索：%s',
+	'search-results-title' => '对%s的搜索结果',
+	'login-label' => '登录到歌词维基',
+	'login-username-hint' => '用户名',
+	'login-password-hint' => '密码',
+	'login-submit-button' => '登录',
+	'about-heading' => '歌词维基',
+	'about-heading-licensing' => '版权',
+	'about-heading-feedback' => '反馈',
+	'about-heading-rate' => '请给此应用程序评一评！',
+	'about-rate-0-android' => '喜欢这个应用程序的话，请在Android市场给它五颗星！',
+	'about-rate-0-ios' => '喜欢这个应用程序的话，请在App Store给它五颗星！',
+	'lyrics-artist-byline' => '%s歌唱',
+	'ringtone-matcher-by-song' => '传送%s铃声到您的手机',
 );
 

@@ -221,11 +221,23 @@ $messages['eu'] = array(
 
 /** Finnish (Suomi)
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
+	'wikiapoll-desc' => 'Tarjoaa helpon tavan luoda ja hallita äänestyksiä',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 henkilö|$1 henkilöä}} on äänestänyt',
 	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Kiitos!',
+	'wikiapoll-vote' => 'Äänestä!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 ääni|$1 ääntä}}',
+	'wikiapoll-createpoll-headline' => 'Luo äänestys',
+	'wikiapoll-editpoll-headline' => 'Muokkaa äänestystä',
 	'wikiapoll-question-label' => 'Kysely',
+	'wikiapoll-addnewitem-label' => 'Lisää vastausvaihtoehto',
+	'wikiapoll-cancel-label' => 'Peruuta',
+	'wikiapoll-publish-label' => 'Julkaise',
+	'wikiapoll-error-duplicate' => 'Samanniminen äänestys on jo olemassa.',
+	'wikiapoll-error-invalid-title' => 'Kysymyksen teksti ei kelpaa.',
 );
 
 /** French (Français)
@@ -393,6 +405,26 @@ $messages['my'] = array(
 	'wikiapoll-error-invalid-title' => 'မေးခွန်း သည် တရားမဝင်ပါ။',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'wikiapoll-desc' => 'Tilbyr en enkel måte å opprette og administrere avstemninger',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 person|$1 personer}} stemte',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Takk!',
+	'wikiapoll-vote' => 'Stem!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 stemme|$1 stemmer}}',
+	'wikiapoll-createpoll-headline' => 'Opprett avstemning',
+	'wikiapoll-editpoll-headline' => 'Rediger avstemning',
+	'wikiapoll-question-label' => 'Spørsmål',
+	'wikiapoll-addnewitem-label' => 'Legg til element',
+	'wikiapoll-cancel-label' => 'Avbryt',
+	'wikiapoll-publish-label' => 'Publiser',
+	'wikiapoll-error-duplicate' => 'En avstemning med det navnet eksisterer allerede.',
+	'wikiapoll-error-invalid-title' => 'Spørsmålsteksten er ugyldig.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -411,26 +443,6 @@ $messages['nl'] = array(
 	'wikiapoll-publish-label' => 'Publiceren',
 	'wikiapoll-error-duplicate' => 'Er bestaat al een peiling met die naam.',
 	'wikiapoll-error-invalid-title' => 'De vraagtekst is ongeldig.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'wikiapoll-desc' => 'Tilbyr en enkel måte å opprette og administrere avstemninger',
-	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 person|$1 personer}} stemte',
-	'wikiapoll-question' => '$1?',
-	'wikiapoll-thanks-for-vote' => 'Takk!',
-	'wikiapoll-vote' => 'Stem!',
-	'wikiapoll-votes' => '{{PLURAL:$1|$1 stemme|$1 stemmer}}',
-	'wikiapoll-createpoll-headline' => 'Opprett avstemning',
-	'wikiapoll-editpoll-headline' => 'Rediger avstemning',
-	'wikiapoll-question-label' => 'Spørsmål',
-	'wikiapoll-addnewitem-label' => 'Legg til element',
-	'wikiapoll-cancel-label' => 'Avbryt',
-	'wikiapoll-publish-label' => 'Publiser',
-	'wikiapoll-error-duplicate' => 'En avstemning med det navnet eksisterer allerede.',
-	'wikiapoll-error-invalid-title' => 'Spørsmålsteksten er ugyldig.',
 );
 
 /** Polish (Polski)
@@ -574,7 +586,9 @@ $messages['sr-ec'] = array(
 	'wikiapoll-thanks-for-vote' => 'Хвала!',
 	'wikiapoll-vote' => 'Гласај!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа|$1 гласова}}',
+	'wikiapoll-question-mark-after' => '?',
 	'wikiapoll-createpoll-headline' => 'Прављење анкете',
+	'wikiapoll-editpoll-headline' => 'Уређивање анкете',
 	'wikiapoll-question-label' => 'Питање',
 	'wikiapoll-addnewitem-label' => 'Додај нову ставку',
 	'wikiapoll-cancel-label' => 'Откажи',
@@ -633,13 +647,32 @@ $messages['tl'] = array(
 	'wikiapoll-error-invalid-title' => 'Hindi katanggap-tanggap ang teksto ng katanungan.',
 );
 
+/** Ukrainian (Українська)
+ * @author A1
+ */
+$messages['uk'] = array(
+	'wikiapoll-cancel-label' => 'Скасувати',
+	'wikiapoll-publish-label' => 'Опублікувати',
+	'wikiapoll-error-duplicate' => 'Опитування з такою назвою вже існує.',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Hydra
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'wikiapoll-people-voted' => '$1个人已投票',
+	'wikiapoll-question' => '$1？',
 	'wikiapoll-thanks-for-vote' => '谢谢！',
+	'wikiapoll-vote' => '投票！',
+	'wikiapoll-votes' => '$1票',
 	'wikiapoll-question-mark-after' => '？',
+	'wikiapoll-createpoll-headline' => '发起调查',
+	'wikiapoll-editpoll-headline' => '编辑调查',
 	'wikiapoll-question-label' => '问题',
 	'wikiapoll-cancel-label' => '取消',
+	'wikiapoll-publish-label' => '发表',
+	'wikiapoll-error-invalid-title' => '问题文本无效。',
 );
 

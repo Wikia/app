@@ -218,6 +218,22 @@ $messages['ms'] = array(
 	'browser-loading-message' => 'Memuatkan...',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'main-tab-discover' => 'Oppdag',
+	'main-tab-personal' => 'Min Wikia',
+	'main-tab-search' => 'Søk',
+	'main-tab-offline' => 'Frakoblet',
+	'tab-discover-loading-message' => 'Laster inn...',
+	'tab-discover-no-network-dialog-title' => 'Nettverk utilgjengelig',
+	'tab-discover-no-network-dialog-message' => 'Ingen nettverkstilkobling oppdaget',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Søker...',
+	'browser-loading-message' => 'Laster inn...',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -233,22 +249,6 @@ $messages['nl'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Bezig met zoeken...',
 	'browser-loading-message' => 'Bezig met laden…',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'main-tab-discover' => 'Oppdag',
-	'main-tab-personal' => 'Min Wikia',
-	'main-tab-search' => 'Søk',
-	'main-tab-offline' => 'Frakoblet',
-	'tab-discover-loading-message' => 'Laster inn...',
-	'tab-discover-no-network-dialog-title' => 'Nettverk utilgjengelig',
-	'tab-discover-no-network-dialog-message' => 'Ingen nettverkstilkobling oppdaget',
-	'tab-discover-no-network-dialog-close-button' => 'OK',
-	'tab-search-loading-message' => 'Søker...',
-	'browser-loading-message' => 'Laster inn...',
 );
 
 /** Polish (Polski)
@@ -298,7 +298,7 @@ $messages['ru'] = array(
 	'main-tab-discover' => 'Открыть',
 	'main-tab-personal' => 'Моя Викия',
 	'main-tab-search' => 'Поиск',
-	'main-tab-offline' => 'Offline',
+	'main-tab-offline' => 'Автономный режим',
 	'tab-discover-loading-message' => 'Загрузка...',
 	'tab-discover-no-network-dialog-title' => 'Сеть недоступна',
 	'tab-discover-no-network-dialog-message' => 'Сетевое соединение не обнаружено',

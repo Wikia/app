@@ -204,20 +204,20 @@ $messages['my'] = array(
 	'randomwiki' => 'ကျပန်း ဝီကီ',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'randomwiki-desc' => 'Lar brukere utforske en tilfeldig wiki',
+	'randomwiki' => 'Tilfeldig wiki',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'randomwiki-desc' => 'Laat gebruikers een willekeurige wiki ontdekken',
 	'randomwiki' => 'Willekeurige wiki',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
-	'randomwiki-desc' => 'Lar brukere utforske en tilfeldig wiki',
-	'randomwiki' => 'Tilfeldig wiki',
 );
 
 /** Deitsch (Deitsch)

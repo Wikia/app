@@ -124,6 +124,13 @@ $messages['ms'] = array(
 	'scribeeventsrecords' => 'Rekod',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$messages['nb'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Verktøyl]] for å søke etter en bestemt sidetittel på tvers av wikier',
+	'scribeevents' => 'Nylige hendelser',
+	'scribeeventsrecords' => 'Oppføringer',
+);
+
 /** Dutch (Nederlands) */
 $messages['nl'] = array(
 	'scribe-desc' => "[[Special:Scribeevents|Hulpmiddel]] om een paginanaam te zoeken in meerdere wiki's",
@@ -131,11 +138,13 @@ $messages['nl'] = array(
 	'scribeeventsrecords' => 'Regels',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$messages['nb'] = array(
-	'scribe-desc' => '[[Special:Scribeevents|Verktøyl]] for å søke etter en bestemt sidetittel på tvers av wikier',
-	'scribeevents' => 'Nylige hendelser',
-	'scribeeventsrecords' => 'Oppføringer',
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
+$messages['pl'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Narzędzie]] do odnalezienia określonego tytułu strony w różnych wiki',
+	'scribeevents' => 'Ostatnie wydarzenia',
+	'scribeeventsrecords' => 'Wpisy',
 );
 
 /** Piedmontese (Piemontèis)
