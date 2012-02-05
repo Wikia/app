@@ -43,6 +43,10 @@ $messages['en'] = array(
 	'related-videos-pagination' => '$1 of $2',
 );
 
+$messages['qqq'] = array(
+	'related-videos-embed-text' => 'This is a label for an input field holding the embed (HTML) code for the currently displayed video.',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
