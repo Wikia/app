@@ -74,7 +74,6 @@ $messages['en'] = array(
 	"awc-metrics-two-months" => "created < 2 months ago",
 	"awc-metrics-three-months" => "created < 3 months ago",
 	"awc-metrics-half-year" => "created < 6 months ago",
-	"awc-metrics-wikis-found" => "Found $1 Wikis",
 	"awc-metrics-by-email" => " or (user email):",
 	"awc-metrics-by-user" => "found by (user name):",
 	"awc-metrics-by-dbname" => "where DB names contain:",
