@@ -74,7 +74,7 @@
 		<form id="BackgroundImageForm" class="BackgroundImageForm" onsubmit="return AIM.submit(this, ThemeDesigner.backgroundImageUploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=BackgroundImageUpload&outputType=html" method="POST" enctype="multipart/form-data">
 			<input id="backgroundImageUploadFile" name="wpUploadFile" type="file">
 			<input type="submit" value="<?= wfMsg('themedesigner-button-upload') ?>" onclick="return ThemeDesigner.backgroundImageUpload(event);">
-			<?= wfMsg('themedesigner-rules-background', UploadBackgroundFromFile::FILESIZE_LIMIT / 1024 ) ?>
+			<?= wfMsgExt('themedesigner-rules-background', array( 'parsemag' ), UploadBackgroundFromFile::FILESIZE_LIMIT / 1024 ) ?>
 		</form>
 
 	</div>
