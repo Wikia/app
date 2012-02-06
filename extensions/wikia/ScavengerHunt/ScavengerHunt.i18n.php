@@ -19,7 +19,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'scavengerhunt-desc' => 'Alows creation a scavenger hunt game on a wiki',
+	'scavengerhunt-desc' => 'Allows creation of a scavenger hunt game on a wiki',
 	'scavengerhunt' => 'Scavenger hunt builder',
 
 	'scavengerhunt-common-modal-title' => 'Scavenger hunt',
