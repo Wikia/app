@@ -279,8 +279,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().runScript("window.RTE.instance.setData('');");
 
 		// switch to wysiwyg mode
-		session().runScript("window.RTE.instance.switchMode('wysiwyg')");
-		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", this.getTimeout());
+		switchWysiwygMode("wysiwyg");
 
 		// check if button in toolbar exists
 		assertTrue(session().isElementPresent("//a[contains(@class, 'RTESlideshowButton')]"));
@@ -334,8 +333,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().runScript("window.RTE.instance.setData('');");
 
 		// switch to wysiwyg mode
-		session().runScript("window.RTE.instance.switchMode('wysiwyg')");
-		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", this.getTimeout());
+		switchWysiwygMode("wysiwyg");
 
 		// check if button in toolbar exists
 		assertTrue(session().isElementPresent("//a[contains(@class, 'RTEGalleryButton')]"));
@@ -379,8 +377,7 @@ public class PhotoGalleryTest extends BaseTest {
 		session().runScript("window.RTE.instance.setData('');");
 
 		// switch to wysiwyg mode
-		session().runScript("window.RTE.instance.switchMode('wysiwyg')");
-		session().waitForCondition("window.RTE.instance.mode == 'wysiwyg'", this.getTimeout());
+		switchWysiwygMode("wysiwyg");
 
 		// check if button in toolbar exists
 		assertTrue(session().isElementPresent("//a[contains(@class, 'RTESlideshowButton')]"));
