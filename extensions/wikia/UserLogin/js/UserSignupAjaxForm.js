@@ -19,14 +19,14 @@ UserSignupAjaxForm.prototype.validateInput = function(e) {
 		format: 'json',
 		field: paramName
 	};
-	
+
 	params[paramName] = el.val();
-	
+
 	var proxyObj = {
-		'paramName': paramName, 
+		'paramName': paramName,
 		'form': this
 	};
-	
+
 	$.post(wgScriptPath + '/wikia.php', params, $.proxy(this.validationHandler, proxyObj));
 };
 
@@ -38,15 +38,15 @@ UserSignupAjaxForm.prototype.validationHandler = function(res) {
 	} else {
 		form.wikiaForm.showInputError(this.paramName, res['msg']);
 	}
-	
+
 	var isInvalid = false;
-	for(i in form.inputsToValidate) {
+	for(var i in form.inputsToValidate) {
 		if(form.wikiaForm.getInputGroup(form.inputsToValidate[i]).hasClass('error')) {
 			isInvalid = true;
 			break;
 		}
 	}
-	
+
 	if(isInvalid) {
 		form.submitButton.attr('disabled', 'disabled');
 	} else {
