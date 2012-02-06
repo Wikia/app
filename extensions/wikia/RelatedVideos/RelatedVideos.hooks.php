@@ -105,7 +105,7 @@ class RelatedVideosHookHandler {
 		$namespace = $title->getNamespace();
 		
 		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null && ( $namespace == NS_MAIN ) ) {
-			$modules[1285] = array('RelatedVideosRailModule', 'index', null);
+			$modules[1310] = array('RelatedVideosRailModule', 'index', null);
 		}
 		
 		$app->wf->ProfileOut(__METHOD__);

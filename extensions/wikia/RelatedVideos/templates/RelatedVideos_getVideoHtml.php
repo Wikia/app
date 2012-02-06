@@ -2,7 +2,8 @@
 <?=$videoHtml; ?>
 </div>
 <? if ( !empty( $embedUrl )){ ?>
-<div class="embedCode" id="relatedvideos-video-player-embed-code">
+<button class="secondary" id="relatedvideos-video-player-embed-show"><?= wfMsg('lightbox-share-button-embed');?></button>
+<div class="embedCode" id="relatedvideos-video-player-embed-code" style="display: none">
 <label>
 	<?= wfMsg('related-videos-embed-text') ?>
 	<br>
