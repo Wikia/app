@@ -14,9 +14,10 @@ descmsg = comboajaxlogin-desc
 
 Ajax Poll
 
-Answers
-optional = q, ?, header_questionmark_post
-ignored = header_questionmark_pre, badWords, qa-featured-sites
+#Answers
+#disabled as we transition from Answers to a new model
+#optional = q, ?, header_questionmark_post
+#ignored = header_questionmark_pre, badWords, qa-featured-sites
 
 # Disabled. Duplicate key with Answers extension.
 #Answers Namespace
