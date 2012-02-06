@@ -33,6 +33,7 @@ var WikiaTracker = {
 	},
 	defaultRate:10,
 	profileRates:{
+		'UA-288915-1':100, // Wikia.main - test switch to 100%
 		'UA-2871474-2':100, // main.unsampled
 		'UA-2871474-3':1, // main.test
 		'UA-17475676-16':100, // liftium.slot2
@@ -74,6 +75,9 @@ WikiaTracker.track = function(page, profile, events) {
 
 	this.debug('sample rate is ' + sample, 7);
 
+	// temp switched to GA sampling (BugId: 20284)
+	return this._track(page, profile, sample, events);
+/*
 	if (sample == 100) {
 		// just track it
 	} else if (sample == 1) {
@@ -83,6 +87,7 @@ WikiaTracker.track = function(page, profile, events) {
 	}
 
 	return this._track(page, profile, 100, events);
+*/
 };
 
 WikiaTracker._track = function(page, profile, sample, events) {
