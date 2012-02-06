@@ -21,14 +21,16 @@ class WikiaVideoService extends Service {
 	 */
 	public function isFileTypeVideo($file) {
 		
-		if ( $file instanceof Title && $file->exists() ) {
-			$file = wfFindFile($file);
+		if ( $this->isVideoAsFile() ) {
+			// File can be video only when new video logic is enabled for the wiki
+			if ( $file instanceof Title && $file->exists() ) {
+				$file = wfFindFile( $file );
+			}
+
+			if ( $file instanceof WikiaLocalFile && $file->isVideo() ) {
+				return true;
+			}
 		}
-		
-		if ( $file instanceof WikiaLocalFile && $file->isVideo() ) {
-			return true;
-		}
-		
 		return false;
 	}
 	
