@@ -472,6 +472,7 @@ class WallHooksHelper {
 		if( !empty($app->wg->EnableWallExt) ) {
 			$title = $app->wg->Title;
 			$parts = explode( '/', $title->getText() );
+			$canEdit = $app->wg->User->isAllowed('editwallarchivedpages');
 			
 			if( $title->getNamespace() === NS_USER_WALL 
 				&& $title->isSubpage() 
@@ -493,6 +494,11 @@ class WallHooksHelper {
 						'text' => $app->wf->Msg('history_short'),
 					),
 				);
+				
+				if( $canEdit ) {
+					$action['text'] = $app->wf->Msg('edit');
+					$action['id'] = 'talkArchiveEditButton';
+				}
 			}
 			
 			if( $title->getNamespace() === NS_USER_WALL 
@@ -515,13 +521,11 @@ class WallHooksHelper {
 						'text' => $app->wf->Msg('history_short'),
 					),
 				);
-			}
-			
-			$canEdit = $app->wg->User->isAllowed('editwallarchivedpages');
-			
-			if( $canEdit ) {
-				$action['text'] = $app->wf->Msg('edit');
-				$action['id'] = 'talkArchiveEditButton';
+				
+				if( $canEdit ) {
+					$action['text'] = $app->wf->Msg('edit');
+					$action['id'] = 'talkArchiveEditButton';
+				}
 			}
 		}
 		
