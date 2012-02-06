@@ -122,7 +122,7 @@ html>body #WallNotifications .avatars { *float: left; }
 		@include menu-heavy;
 		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
 		padding: 0px; // overwrite from menu-heavy
-		li:first-child { 		border-top: 1px solid $color-page-border; } // overwrite from menu-heavy
+		//> li:first-child { 		border-top: 1px solid $color-page-border; } // overwrite from menu-heavy
 		display: block;
 		top: -9999px;
 		right: 9999px;
@@ -132,7 +132,13 @@ html>body #WallNotifications .avatars { *float: left; }
 			right: 0;
 			top: 34px;
 		}
-		li { float: none; height: auto; }
+		li {
+			float: none;
+			height: auto;
+			border-top: 1px solid $color-page-border;
+			margin: 0;
+			padding: 0;
+		}
 		&>li {
 			border: none;
 			width: 100%;
@@ -176,6 +182,9 @@ html>body #WallNotifications .avatars { *float: left; }
 				}
 			}
 			color: $color-text;
+			padding: 10px 5px;
+			display: block;
+			white-space: nowrap;
 			&:visited, &:active { color: $color-text; }
 			time, .timeago { color: $color-alternate-text; }
 			.msg-title { font-weight: bold; font-size: 12px; }
