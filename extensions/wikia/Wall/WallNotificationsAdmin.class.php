@@ -33,12 +33,6 @@ class WallNotificationsAdmin {
 			} 
 		}
 		
-		$x = var_export( $val, true );
-		$xx = explode("\n", $x);
-		foreach($xx as $xxx) {
-			error_log($xxx);
-		}
-		
 		return array_reverse($val);
 		
 	}
