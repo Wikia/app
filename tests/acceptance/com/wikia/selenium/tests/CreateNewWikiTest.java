@@ -109,12 +109,19 @@ public class CreateNewWikiTest extends BaseTest {
 		session().type("//input[@name='wiki-name']", getWikiName());
 		session().type("//input[@name='wiki-domain']", getWikiName());
 		session().click("//li[@id='NameWiki']/form/nav/input[@class='next']");
-		waitForElementVisible("Auth");
-		session().click("//p[@class='login-msg']/a");
-		waitForElementVisible("AjaxLoginLoginForm");
-		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
-		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
-		session().click("//li[@id='Auth']/nav/input[@class='login']");
+		if (session().isElementPresent("Auth")) {
+			waitForElementVisible("Auth");
+			session().click("//p[@class='login-msg']/a");
+			waitForElementVisible("AjaxLoginLoginForm");
+			session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
+			session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
+			session().click("//li[@id='Auth']/nav/input[@class='login']");
+		} else {
+			waitForElementVisible("UserAuth");
+			session().type("//li[@id='UserAuth']//input[@name='username']", getTestConfig().getString("ci.user.wikiastaff.username"));
+			session().type("//li[@id='UserAuth']//input[@name='password']", getTestConfig().getString("ci.user.wikiastaff.password"));
+			session().click("//li[@id='UserAuth']//input[@value='Log in']");
+		}
 		waitForElementVisible("DescWiki");
 		session().select("//select[@name='wiki-category']", "value=3");
 		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
@@ -137,6 +144,8 @@ public class CreateNewWikiTest extends BaseTest {
 		wikiName = null;
 	}
 	
+	/*
+	 * not testable - requires user account confirmation (reading mail) in order to complete process
 	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteCreateWikiAsLoggedOutUser"})
 	public void testCreateWikiAsNewUser() throws Exception {
 		openAndWait("/wiki/Special:CreateNewWiki");
@@ -166,10 +175,8 @@ public class CreateNewWikiTest extends BaseTest {
 		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
 		waitForElementVisible("ThemeWiki", this.getTimeout());
 		clickAndWait("//li[@id='ThemeWiki']/nav/input[@class='next']");
-		/*
-		waitForElementVisible("UpgradeWiki", this.getTimeout());
-		clickAndWait("//li[@id='UpgradeWiki']/nav/input[@class='next']");
-		*/
+		// waitForElementVisible("UpgradeWiki", this.getTimeout());
+		// clickAndWait("//li[@id='UpgradeWiki']/nav/input[@class='next']");
 		waitForElement("WikiWelcome", this.getTimeout());
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
@@ -182,6 +189,7 @@ public class CreateNewWikiTest extends BaseTest {
 		
 		wikiName = null;
 	}
+	*/
 	
 	public void deleteWiki(String language) throws Exception {
 		closeNotifications();
