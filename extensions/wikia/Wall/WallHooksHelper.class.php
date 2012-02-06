@@ -634,16 +634,20 @@ class WallHooksHelper {
 		return true;
 	}
 	
-	public function onArticleCommentBeforeWatchlistAdd($comment){
-		if($comment->getTitle()->getNamespace() == NS_USER_WALL_MESSAGE ){
+	public function onArticleCommentBeforeWatchlistAdd($comment) {
+		$commentTitle = $comment->getTitle();
+		
+		if( $commentTitle instanceof Title && $commentTitle->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$parentTitle = $comment->getTopParentObj();
-			if(!empty($parentTitle)) {
+			if( !empty($parentTitle) ) {
 				$comment->mUser->addWatch( $parentTitle->getTitle() );
 			} else {
 				$comment->mUser->addWatch( $comment->getTitle() );
 			}
+			
 			return false;
 		}
+		
 		return true;
 	}
 	

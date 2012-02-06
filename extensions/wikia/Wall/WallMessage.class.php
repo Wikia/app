@@ -37,7 +37,7 @@ class WallMessage {
 	}
 	
 	static public function buildNewMessageAndPost($body, $userWall, $user, $metaTitle = '', $parent = false) {
-		if($userWall instanceof Title ){
+		if($userWall instanceof Title ) {
 			$userPageTitle = $userWall;
 		} else {
 			$userPageTitle = F::build('Title', array($userWall , NS_USER_WALL), 'newFromText');
@@ -47,17 +47,17 @@ class WallMessage {
 			return false;
 		}
 		
-		if($parent === false) {
-			$acStatus = F::build('ArticleComment', array($body, $user, $userPageTitle, false , array('title' => $metaTitle) ), 'doPost');	
+		if( $parent === false ) {
+			$acStatus = F::build('ArticleComment', array($body, $user, $userPageTitle, false , array('title' => $metaTitle) ), 'doPost');
 		} else {
-			if(!$parent->canReply()) {
+			if( !$parent->canReply() ) {
 				return false;
 			}
-	
-			$acStatus = F::build('ArticleComment', array($body, $user, $userPageTitle, $parent->getTitle()->getArticleId() , null ), 'doPost');
+			
+			$acStatus = F::build('ArticleComment', array($body, $user, $userPageTitle, $parent->getTitle()->getArticleId() , null), 'doPost');
 		}
 		
-		if($acStatus === false) {
+		if( $acStatus === false ) {
 			return false;
 		}
 		
@@ -67,8 +67,6 @@ class WallMessage {
 		}
 		
 		// after successful posting invalidate Wall cache
-
-		
 		$class = F::build('WallMessage', array($ac->getTitle(), $ac));
 		if($parent === false) {//$db = DB_SLAVE
 			$class->setOrderId( 1 );
