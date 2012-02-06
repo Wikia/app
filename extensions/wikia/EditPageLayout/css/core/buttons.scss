@@ -84,51 +84,51 @@
 			margin: 3px 1px;
 		}
 		.cke_button_bold .cke_icon {
-			@include sprite-edit-page('bold-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('bold-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_italic .cke_icon {
-			@include sprite-edit-page('italic-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('italic-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_link .cke_icon {
-			@include sprite-edit-page('addlink-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('addlink-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_bulletedlist .cke_icon {
-			@include sprite-edit-page('unordered-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('unordered-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_numberedlist .cke_icon {
-			@include sprite-edit-page('ordered-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('ordered-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_indent .cke_icon {
-			@include sprite-edit-page('indent-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('indent-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_outdent .cke_icon {
-			@include sprite-edit-page('outdent-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('outdent-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_justifyleft .cke_icon {
-			@include sprite-edit-page('alignleft-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('alignleft-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_justifycenter .cke_icon {
-			@include sprite-edit-page('aligncenter-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('aligncenter-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_justifyright .cke_icon {
-			@include sprite-edit-page('alignright-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('alignright-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_undo .cke_icon {
-			@include sprite-edit-page('undo-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('undo-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_redo .cke_icon {
-			@include sprite-edit-page('redo-' + $sprite-suffix, 16px, 16px);
+			@include sprite-edit-page('redo-' + $sprite-theme, 16px, 16px);
 		}
 		.cke_button_underline .cke_icon {
-			@include sprite-edit-page('underline-' + $sprite-suffix, 16px, 20px);
+			@include sprite-edit-page('underline-' + $sprite-theme, 16px, 20px);
 			@include button-icon-resize-square(16px, 20px);
 		}
 		.cke_button_strike .cke_icon {
-			@include sprite-edit-page('strike-' + $sprite-suffix, 22px, 16px);
+			@include sprite-edit-page('strike-' + $sprite-theme, 22px, 16px);
 			@include button-icon-resize-square(22px, 16px);
 		}
 		.cke_button_signature .cke_icon {
-			@include sprite-edit-page('signature-' + $sprite-suffix, 26px, 22px);
+			@include sprite-edit-page('signature-' + $sprite-theme, 26px, 22px);
 			@include button-icon-resize(26px, 22px);
 		}
 	}
