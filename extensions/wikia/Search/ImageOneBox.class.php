@@ -117,16 +117,27 @@ class ImageOneBox {
 			$titleText = $result->mTitle->mTextform;
 			$title = Title::newFromText($titleText, $result->mTitle->mNamespace);
 
-			$pages[] = $title->getArticleID();
+			//FB#18631 - search results often include non-existing articles (removed)
+			//as the index is not updated in realtime, let's avoid generating fatals
+			//and pull in ImageServing if not needed
+			if ( $title instanceof Title && $title->exists() ) {
+				$pages[] = $title->getArticleID();
+			}
 		}
+
 		$resultSet->rewind( true );
 
-		$imageServing = new ImageServing( $pages );
-		$images = $imageServing->getImages(  ); // get just one image per article
-		foreach( $pages as $pageId ) {
-			if( isset( $images[$pageId] ) ) {
-				$image = $images[$pageId][0];
-				$this->images[] = array( 'image' => wfFindFile( $image['name'] ), 'url' => $image['url'], 'pages' => $this->filesForImage( $image['name'] ) );
+		//FB#18631 - search results often include non-existing articles (removed)
+		//as the index is not updated in realtime, let's avoid generating fatals
+		//and pull in ImageServing if not needed
+		if ( !empty( $pages ) ) {
+			$imageServing = new ImageServing( $pages );
+			$images = $imageServing->getImages(  ); // get just one image per article
+			foreach( $pages as $pageId ) {
+				if( isset( $images[$pageId] ) ) {
+					$image = $images[$pageId][0];
+					$this->images[] = array( 'image' => wfFindFile( $image['name'] ), 'url' => $image['url'], 'pages' => $this->filesForImage( $image['name'] ) );
+				}
 			}
 		}
 
