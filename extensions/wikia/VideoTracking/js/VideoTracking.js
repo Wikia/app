@@ -1,4 +1,4 @@
-VideoTracker = {
+var VideoTracker = {
 
 	PROGRESS_ATTR: 'data-wikiaprogress',
 	STARTED_ATTR: 'data-wikiastarted',
@@ -42,7 +42,7 @@ VideoTracker = {
 	},
 
 	checkTime: function() {
-		
+
 		VideoTracker.videoList.each( function(){
 
 			var currentTime = this.getCurrentTime();
@@ -60,13 +60,13 @@ VideoTracker = {
 							$( this ).attr( VideoTracker.STARTED_ATTR, 1 );
 							VideoTracker.track( '/action/start/first' );
 						}
-							
+
 						$.each( VideoTracker.trackingProgressPoints, function( index, value ){
 							if ( tempProgress >= value && currentProgress < value ){
 								VideoTracker.track( '/progress/' + value );
 							}
 						});
-						
+
 						$(this).attr( VideoTracker.PROGRESS_ATTR, tempProgress );
 					}
 				}
