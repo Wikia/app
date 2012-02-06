@@ -16,11 +16,14 @@ var UserLoginDropdown = {
 					this.hide();
 				}
 			}, this))
-			.closest('li').hover($.proxy(function(e) {
+			.closest('li').hover(function(e) {
 				e.preventDefault();
-				this.show();
-			}, this), function(e) {
-				// do nothing
+				UserLoginDropdown.hoverHandle = setTimeout(function() {
+					UserLoginDropdown.show();
+				}, 300);
+			}, function(e) {
+				// do nothing on hover out
+				clearTimeout(UserLoginDropdown.hoverHandle);
 			});
 	},
 	show: function() {
