@@ -26,15 +26,19 @@ var WikiaTrackerQueue = {
 	},
 
 	init: function() {
-		window.jQuery && jQuery.internalTrack && jQuery.internalTrack('wtq_init');
+//		window.jQuery && jQuery.internalTrack && jQuery.internalTrack('wtq_init');
 		this.log('init');
 
 		// set tracking function - queued items will be passed there
 		this.trackFn = this.proxy(WikiaTracker.track, WikiaTracker);
 
+		// temp (BugId: 20284)
+		this.moveQueue();
+/*
 		// check whether beacon_id exists every POLL_INTERVAL ms
 		this.pollIntervalId = setInterval(this.proxy(this.pollBeaconId, this), this.POLL_INTERVAL);
 		this.pollBeaconId();
+*/
 	},
 
 	pollBeaconId: function() {
@@ -49,6 +53,8 @@ var WikiaTrackerQueue = {
 			if (this.pollCounter > 1) {
 				this.log('beacon_id has arrived');
 				WikiaTracker._track('/wikiatracker/beacon_available/' + (this.pollCounter * this.POLL_INTERVAL), 'UA-2871474-3', 1);
+			} else {
+				WikiaTracker._track('/wikiatracker/beacon_immediately', 'UA-2871474-3', 1);
 			}
 			window.jQuery && jQuery.internalTrack && jQuery.internalTrack('wtq_sampled');
 
@@ -87,6 +93,7 @@ var WikiaTrackerQueue = {
 
 		// and now replace _wtq.push with this.pushCallback
 		queue.push = this.proxy(this.pushCallback, this);
+		WikiaTracker._track('/wikiatracker/beacon_move_queue', 'UA-2871474-3', 1);
 	},
 
 	pushCallback: function(item) {
