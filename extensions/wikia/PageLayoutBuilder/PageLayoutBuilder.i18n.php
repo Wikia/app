@@ -199,7 +199,7 @@ $messages['en'] = array (
 
 	'wikia-editor-modules-plb-insert-title' => 'Insert layout items',
 	'wikia-editor-modules-plb-list-title' => 'loading list...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 item(s) in layout',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 item|$1 items}} in layout',
 	'wikia-editor-plb-show-static-buttons' => 'Restore more <i>static</i> media buttons',
 );
 
