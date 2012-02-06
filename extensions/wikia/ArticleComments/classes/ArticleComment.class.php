@@ -781,7 +781,7 @@ class ArticleComment {
 	static public function doAfterPost($status, $article, $commentId = 0) {
 		global $wgUser, $wgDBname;
 		global $wgDevelEnvironment;
-
+		
 		wfRunHooks( 'ArticleCommentAfterPost', array( $status, &$article, $commentId ) );
 		$error = false; $id = 0;
 		switch( $status ) {
@@ -792,13 +792,13 @@ class ArticleComment {
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}
-			
+				
 				if ( empty( $commentId ) && !empty($comment->mTitle) ) {
 					$ok = self::addArticlePageToWatchlist($comment, $commentId) ;
 				}
-
+				
 				$message = false;
-
+				
 				//commit before purging
 				wfGetDB(DB_MASTER)->commit();
 				break;
