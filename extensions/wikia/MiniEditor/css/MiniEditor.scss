@@ -8,6 +8,7 @@
 
 .MiniEditorWrapper {
 	@include clearfix;
+	background-color: $color-MiniEditor;
 
 	// This is needed for loading status indicator positioning
 	.editarea {
@@ -16,7 +17,7 @@
 
 	// When the editor has focus
 	&.focused .editarea {
-		@include box-shadow(0px, 0px, 4px, $color-miniEditor-focus);
+		@include box-shadow(0px, 0px, 4px, $color-MiniEditor-focus);
 	}
 
 	// TODO: this should be abstracted out to a higher level at some point
@@ -37,7 +38,7 @@
 			right: 0;
 			top: 0;
 			bottom: 0;
-			background: $color-page;
+			background: $color-MiniEditor-loading;
 		}
 
 		.loading-message {
@@ -46,7 +47,7 @@
 			top: 20%;
 			width: 100%;
 			text-align: center;
-			color: $color-links;
+			color: $color-MiniEditor-loading-text;
 
 			.loading-throbber, .loading-text {
 				display: inline-block;
@@ -87,7 +88,7 @@
 				display: none;
 				cursor: inherit;
 				font-size: 10px;
-				color: $color-text;
+				color: $color-MiniEditor-button-text;
 				white-space: nowrap;
 	
 				// ck reset
@@ -103,7 +104,7 @@
 			
 			// buttons separator
 			.cke_separator {
-				background-color: $color-miniEditor-button-border;
+				background-color: $color-MiniEditor-button-border;
 				display: inline-block;
 				float: left;
 				height: 30px;
@@ -115,8 +116,8 @@
 		.cke_button {
 			> a {
 				@include border-radius(4px);
-				background-color: $color-miniEditor-button;
-				border: solid 1px $color-miniEditor-button-border;
+				background-color: $color-MiniEditor-button;
+				border: solid 1px $color-MiniEditor-button-border;
 				cursor: default;
 				display: inline-block;
 				float: left;
@@ -126,15 +127,15 @@
 				outline: none; // webkit
 
 				&:hover {
-					background-color: $color-miniEditor-button-hover;
+					background-color: $color-MiniEditor-button-hover;
 					text-decoration: none;
 				}
 			}
 
 			&.cke_on {
 				> a {
-					@include box-shadow(-1px, 1px, 2px, $color-miniEditor-button-shadow, true);
-					background-color: $color-miniEditor-button-active;
+					@include box-shadow(-1px, 1px, 2px, $color-MiniEditor-button-shadow, true);
+					background-color: $color-MiniEditor-button-active;
 				}
 			}
 
@@ -170,7 +171,7 @@
 			// mode switch
 			.cke_button_ModeSource {
 				.cke_icon {
-					@include sprite-MiniEditor('source-' + $sprite-suffix, 16px, 16px);
+					@include sprite-MiniEditor('source-' + $sprite-theme, 16px, 16px);
 				}
 
 				.cke_label {
@@ -180,7 +181,7 @@
 
 			.cke_button_ModeWysiwyg {
 				.cke_icon {
-					@include sprite-MiniEditor('visual-' + $sprite-suffix, 16px, 16px);
+					@include sprite-MiniEditor('visual-' + $sprite-theme, 16px, 16px);
 				}
 
 				.cke_label {
@@ -190,15 +191,15 @@
 
 			// format
 			.cke_button_bold .cke_icon {
-				@include sprite-MiniEditor('bold-' + $sprite-suffix, 16px, 16px);
+				@include sprite-MiniEditor('bold-' + $sprite-theme, 16px, 16px);
 			}
 
 			.cke_button_italic .cke_icon {
-				@include sprite-MiniEditor('italic-' + $sprite-suffix, 16px, 16px);
+				@include sprite-MiniEditor('italic-' + $sprite-theme, 16px, 16px);
 			}
 
 			.cke_button_link .cke_icon {
-				@include sprite-MiniEditor('link-' + $sprite-suffix, 16px, 16px);
+				@include sprite-MiniEditor('link-' + $sprite-theme, 16px, 16px);
 			}
 
 			// insert
