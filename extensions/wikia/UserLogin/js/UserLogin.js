@@ -1,16 +1,19 @@
 /*global WikiaEditor:true */
 var UserLogin = {
 	rteForceLogin: function() {
-		UserLoginModal.show({
-			callback: function() {
-				WikiaEditor.reloadEditor();
-			}
-		});
+		if (!window.wgComboAjaxLogin) {
+			UserLoginModal.show({
+				callback: function() {
+					WikiaEditor.reloadEditor();
+				}
+			});
+		}
+		else showComboAjaxForPlaceHolder("",false, "", false, true);
 	},
 
 	isForceLogIn: function() {
 		if (wgUserName == null) {
-			if (!window.wgEnableAjaxLogin) {
+			if (!window.wgComboAjaxLogin) {
 				UserLoginModal.show();
 				return true;
 			}
