@@ -203,7 +203,7 @@ class CreateNewWikiModule extends Module {
 			$numWikis = $this->countCreatedWikis($wgUser->getId());
 			if($numWikis >= self::DAILY_USER_LIMIT && $wgUser->isPingLimitable() ) {
 				$this->status = 'wikilimit';
-				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit', self::DAILY_USER_LIMIT);
+				$this->statusMsg = $this->app->runFunction('wfMsgExt', 'cnw-error-wiki-limit', array( 'parsemag' ), self::DAILY_USER_LIMIT);
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-wiki-limit-header');
 				return;
 			}
