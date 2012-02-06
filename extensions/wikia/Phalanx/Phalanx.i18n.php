@@ -122,6 +122,11 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'right-phalanxexempt' => 'Exempt from Phalanx rules',
 );
 
+$messages['qqq'] = array(
+	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
+	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
+);
+
 /** ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
  * @author MooRePrabu
  */
