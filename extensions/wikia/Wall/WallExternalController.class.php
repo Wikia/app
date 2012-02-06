@@ -266,8 +266,16 @@ class WallExternalController extends WikiaController {
 			$newtitle = $helper->getDefaultTitle();
 		}
 		
-		$title = F::build('Title', array( $msgid ), 'newFromId');
-		$wallMessage = F::build('WallMessage', array($title), 'newFromTitle');
+		$title = F::build( 'Title', array( $msgid ), 'newFromId' );
+		
+		if( empty( $title ) ){
+			$this->response->setVal( 'status', false) ;
+			$this->response->setVal( 'msgTitle', wfMsg(' wall-delete-error-title' ) );
+			$this->response->setVal( 'msgContent', wfMsg( 'wall-deleted-msg-text' ) );
+			return true;
+		}
+		
+		$wallMessage = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
 		
 		$wallMessage->load();
 		
