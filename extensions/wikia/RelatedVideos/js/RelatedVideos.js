@@ -209,6 +209,10 @@ var RelatedVideos = {
 						'callback' : function(){
 							$('#relatedvideos-video-player-embed-code').wikiaTooltip( $('.embedCodeTooltip',this.rvModule).html() );
 							jwplayer( res.json.id ).setup( res.json );
+							$('#relatedvideos-video-player-embed-show').click(function() {
+									$('#relatedvideos-video-player-embed-code').show();
+									$('#relatedvideos-video-player-embed-show').hide();
+							}); 
 						}
 					});
 				} else if ( res.html ) {

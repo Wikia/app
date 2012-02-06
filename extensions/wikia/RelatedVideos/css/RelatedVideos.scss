@@ -316,6 +316,11 @@ $color-related-videos-background: darken($color-page, 20%);
 	display: none;
 }
 
+#relatedvideos-video-player-embed-show {
+	margin-top: 10px;
+	float: right;
+}
+
 #relatedvideos-add-video {
 
 	input {
