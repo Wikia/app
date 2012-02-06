@@ -139,7 +139,7 @@ public class BaseTest {
 		// open new login page
 		openAndWait("index.php?title=Special:UserLogin");
 		// if new login page does not exist, try with old one
-		if (session().isElementPresent("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@name='username']")) {
+		if (session().isElementPresent("//div[@class='WikiaArticle']//div[@class='UserLogin']")) {
 			session().type("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@name='username']", username);
 			session().type("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@name='password']", password);
 			clickAndWait("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@type='submit']");
