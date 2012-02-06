@@ -2,7 +2,24 @@
 @import "core/colors";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
+// Wall color overrides
+$color-miniEditor: mix($color-buttons, $color-page, 15%);
+$color-miniEditor-focus: mix($color-buttons, $color-page, 100%);
+$color-miniEditor-button: lighten($color-miniEditor, 6%);
+$color-miniEditor-button-hover: darken($color-miniEditor-button, 4%);
+$color-miniEditor-button-active: darken($color-miniEditor-button, 6%);
+$color-miniEditor-button-border: darken($color-miniEditor-button, 15%);
+$color-miniEditor-button-shadow: darken($color-miniEditor-button, 30%);
+
 .Wall {
+	.MiniEditorWrapper {
+		&.focused {
+			.editarea {
+				@include box-shadow(0px, 0px, 4px, $color-miniEditor-focus);
+			}
+		}
+	}
+
 	.new-message {
 		&.focused {
 			.speech-bubble-message {
