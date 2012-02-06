@@ -82,7 +82,7 @@ $messages['en'] = array(
 
 	'user-identity-box-avatar-error-nofile' => 'Error: No avatar file found to upload',
 	'user-identity-box-avatar-error-cantwrite' => 'Error: Could not write to temporary directory',
-	'user-identity-box-avatar-error-size' => 'Error: Avatar file is too big (max $1KB)',
+	'user-identity-box-avatar-error-size' => 'Error: Avatar file is too big (max {{PLURAL:$1|$1|$1}}KB)',
 	'user-identity-box-avatar-error' => 'Error: There was internal error while saving avatar',
 
 	'userprofilepage-lightbox-about-me-cancel' => "Cancel",
