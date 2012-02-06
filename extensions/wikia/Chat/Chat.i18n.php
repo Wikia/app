@@ -45,7 +45,7 @@ $messages['en'] = array(
 	'chat-start-a-chat' => 'Start a Chat',
 	'chat-whos-here' => "Who's here ($1)",
 	'chat-join-the-chat' => 'Join the Chat',
-	'chat-edit-count' => '$1 Edits',
+	'chat-edit-count' => '{{PLURAL:$1|$1 edit|$1 edits}}',
 
 	'chat-member-since' => 'Member since $1',
 	'chat-great-youre-logged-in' => "Great! You're logged in.",
@@ -189,6 +189,7 @@ $messages['en'] = array(
  * @author VezonThunder
  */
 $messages['qqq'] = array(
+	'chat' => 'shown in Special:Specialpages as the link label.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 is user name when "he" make other user ($2) to become moderator. (account upgrade)',
 	'chat-whos-here' => 'Regards users that are in a chat room. The parameter gives the total count.',
 	'chat-edit-count' => '$1 is the number of edits made by the user',
