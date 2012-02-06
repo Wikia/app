@@ -8,7 +8,7 @@ class WikiaVideoService extends Service {
 	 * Checks if videos on the wiki are converted to new format (File namespace)
 	 * @return boolean
 	 */
-	public function isVideoAsFile() {
+	public function videosAsFiles() {
 		
 		$convertedVar = F::app()->wg->videoHandlersVideosMigrated;
 		return !empty( $convertedVar );
@@ -21,7 +21,7 @@ class WikiaVideoService extends Service {
 	 */
 	public function isFileTypeVideo($file) {
 		
-		if ( $this->isVideoAsFile() ) {
+		if ( $this->videosAsFiles() ) {
 			// File can be video only when new video logic is enabled for the wiki
 			if ( $file instanceof Title && $file->exists() ) {
 				$file = wfFindFile( $file );
@@ -48,7 +48,7 @@ class WikiaVideoService extends Service {
 			}
 		}
 
-		if ( $this->isVideoAsFile() ) { 
+		if ( $this->videosAsFiles() ) { 
 
 			// video-as-file logic
 			if ( $this->isFileTypeVideo($title) ) {
