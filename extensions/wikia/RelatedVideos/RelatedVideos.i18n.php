@@ -36,6 +36,7 @@ $messages['en'] = array(
 	'related-videos-update-summary-blacklist' => 'Related Videos blacklist updated',
 	'related-videos-update-summary-whitelist' => 'Related Videos whitelist updated',
 	'related-videos-tooltip-add' => 'Add a video to this page',
+	'related-videos-tooltip-remove' => 'Remove this video',
 	'related-videos-tooltip-embed' => 'Paste this URL in the video embed tool',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Wikia Video Library',

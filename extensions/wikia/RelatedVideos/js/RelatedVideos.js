@@ -38,6 +38,9 @@ var RelatedVideos = {
 			}
 			RelatedVideos.checkButtonState();
 			$('.addVideo',this.rvModule).wikiaTooltip( $('.addVideoTooltip',this.rvModule).html() );
+			if(this.onRightRail) {
+				$('.remove',this.rvModule).wikiaTooltip( $('.removeVideoTooltip',this.rvModule).html() );
+			}
 		}
 	},
 
