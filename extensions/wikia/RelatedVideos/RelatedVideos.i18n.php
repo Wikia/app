@@ -33,7 +33,8 @@ $messages['en'] = array(
 	'related-videos-remove-call' => 'Please wait wile we are removing the video',
 	'related-videos-wiki-summary-blacklist' => 'Removed [[:$2|$1]] from Related Videos.',
 	'related-videos-wiki-summary-whitelist' => 'Added [[:$2|$1]] to Related Videos.',
-	'related-videos-updated' => 'Related Videos $1 updated.',
+	'related-videos-update-summary-blacklist' => 'Related Videos blacklist updated',
+	'related-videos-update-summary-whitelist' => 'Related Videos whitelist updated',
 	'related-videos-tooltip-add' => 'Add a video to this page',
 	'related-videos-tooltip-embed' => 'Paste this URL in the video embed tool',
 	'related-videos-beta-feature' => 'beta',
@@ -44,6 +45,8 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'related-videos-update-summary-blacklist' => 'Appears as an edit summary in RecentChanges',
+	'related-videos-update-summary-whitelist' => 'Appears as an edit summary in RecentChanges',
 	'related-videos-embed-text' => 'This is a label for an input field holding the embed (HTML) code for the currently displayed video.',
 );
 
