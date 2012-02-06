@@ -20,7 +20,7 @@ if(!empty($wgReadOnly)){
 						<div class="info">
 							<img src="<?= $chatter['avatarUrl'] ?>">
 							<span class="username"><?= $chatter['username'] ?></span>
-							<span class="edits"><?= wfMsg('chat-edit-count', $chatter['editCount']) ?></span>
+							<span class="edits"><?= wfMsgExt('chat-edit-count', array( 'parsemag' ), $chatter['editCount']) ?></span>
 							<?php if($chatter['showSince']): ?>
 								<span class="since"><?= wfMsg('chat-member-since', $chatter['since']) ?></span>
 							<?php endif; ?>
