@@ -13,6 +13,7 @@
 @import "tables.scss";
 @import "related_pages.scss";
 @import "image_stack.scss";
+@import "ad.scss";
 
 //mixins
 @import "mixins/transition.scss";
@@ -32,6 +33,7 @@ body {
 	font-size: medium;
 	line-height: 25px;
 	margin: 0;
+	padding: 0;
 	height: 100%;
 
 	//avoid webkit's automatic text adjustment
@@ -58,7 +60,7 @@ a {
 	overflow-x: hidden;
 }
 //for browsers that don't know that these should be block
-section, article, header, footer, aside {
+section, article, header, footer, aside, figure, figcaption {
 	display: block;
 }
 
@@ -141,11 +143,4 @@ blockquote {
 	100% {
 		-webkit-transform: rotate(360deg);
 	}
-}
-
-#wkAdPlc {
-	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
-	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-	min-height: 0;
-	max-height: 50px;
 }

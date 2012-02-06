@@ -1,0 +1,48 @@
+#wkAdPlc {
+	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+	position: absolute;
+	bottom: 0;
+	height: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: rgba(0,0,0,.6);
+	z-index: 1;
+	
+	*:nth-last-child(n+2) {
+		width: 320px;
+		height: 50px;
+		max-height: 50px;
+		position: absolute;
+		margin-left: -160px;
+		bottom: 0;
+		left: 50%;
+	}
+}
+
+#wkAdCls {
+	background-color: rgba(0,0,0,.6);
+    border-radius: 5px 0 0 0;
+    color: white;
+    font-size: x-small;
+    line-height: 18px;
+	height: 15px;
+    padding: 0 6px;
+    position: absolute;
+    right: 0;
+    top: -15px;
+	display: none;
+	
+	div {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 40px;
+		width: 100%;
+	}
+	
+	&.show {
+		display: block;
+	}
+}
