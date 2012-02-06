@@ -47,7 +47,7 @@ $messages['en'] = array(
 	"wikistats_distrib_article_subtext" => "only article edits are counted, not edits on discussion pages, etc",
 	"wikistats_distrib_article_counting" => "1 : 3 : 10 : 32 : 100 : 316 : 1000 ... = 1 : √10 : 10 : 10√10 : 100 : 100√10 : 1000 ...",
 	"wikistats_namespace_records" => "Database records per namespace",
-	"wikistats_page_edits" => "Most edited articles (content namespaces) (&gt; 25 edits)",
+	"wikistats_page_edits" => "Most edited articles (content namespaces) (> 25 edits)",
 	"wikistats_other_nspaces_edits" => "Most edited pages (other namespaces) (&gt; 25 edits)",
         "wikistats_page_edits_count" => "$1 {{PLURAL:$1|edited article|most edited articles}} found",
         "wikistats_other_nspaces_edits_count" => "$1 {{PLURAL:$1|edited page|most edited pages}} found",
