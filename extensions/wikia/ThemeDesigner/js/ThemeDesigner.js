@@ -46,12 +46,12 @@ var ThemeDesigner = {
 		ThemeDesigner.toolBarInit();
 
 		ThemeDesigner.applySettings(false, false);
-		
+
 		// init tooltips
 		$('.form-questionmark').wikiaTooltip(function(el){
-			// Pass tooltip text to wikiaTooltip 
+			// Pass tooltip text to wikiaTooltip
 			return el.data('tooltip');
-		}, { hoverStay: true, maxWidth: '200', side: 'right', align: 'middle' })
+		}, { hoverStay: true, maxWidth: '200', side: 'right', align: 'middle' });
 
 		// track page view
 		ThemeDesigner.track('open');
@@ -180,18 +180,18 @@ var ThemeDesigner = {
 			event.preventDefault();
 			ThemeDesigner.set("wordmark-type", "text");
 			ThemeDesigner.set("wordmark-image-url", wgBlankImgUrl);
-                        
+
 			// Can't use js to clear file input value so reseting form
 			$('#WordMarkUploadForm')[0].reset();
 
 			ThemeDesigner.track('wordmark/nowordmark');
 		});
-                
+
         //remove favicon link
 		$("#WordmarkTab").find(".favicon").find(".preview").find("a").click(function(event) {
 			event.preventDefault();
 			ThemeDesigner.set("favicon-image-url", wgBlankImgUrl);
-                        
+
 			// Can't use js to clear file input value so reseting form
 			$('#FaviconUploadForm')[0].reset();
 
@@ -453,7 +453,7 @@ var ThemeDesigner = {
 		}
 
 	},
-	
+
 	/**
 	 * Favicon upload callback
 	 */
@@ -473,7 +473,7 @@ var ThemeDesigner = {
 			ThemeDesigner.track('favicon/upload');
 		}
 	},
-	
+
 	faviconUpload: function(e) {
 		// do validation
 	},
@@ -677,7 +677,7 @@ var ThemeDesigner = {
 		if(reloadCSS) {
 
 			$().log('applySettings, reloadCSS');
-			
+
 			var settingsToLoad = ThemeDesigner.settings;
 
 			var sassUrl = $.getSassCommonURL('/skins/oasis/css/oasis.scss', settingsToLoad);
