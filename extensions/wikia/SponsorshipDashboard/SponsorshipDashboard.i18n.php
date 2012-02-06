@@ -24,7 +24,6 @@ $messages['en'] = array(
 	'sponsorship-dashboard-serie-new-pages-content-namespace' => 'Increase in pages',
 	'sponsorship-dashboard-serie-organic' => 'Search Engines',
 	'sponsorship-dashboard-serie-referral' => 'Referring sites',
-	'sponsorship-dashboard-serie-direct' => 'Direct',
 	'sponsorship-dashboard-serie-content-article' => 'pages',
 	'sponsorship-dashboard-serie-toplists' => 'Top Lists',
 	'sponsorship-dashboard-serie-blog-comments' => 'Blog Comments',
