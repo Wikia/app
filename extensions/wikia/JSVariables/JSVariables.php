@@ -52,12 +52,6 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgExtensionsPath'] = $wgExtensionsPath;
 	$vars['wgSitename'] = $wgSitename;
 
-	// Monaco specific?
-	$vars['wgMenuMore'] = strtolower(wfMsg('moredotdotdot'));
-	if($wgUser->isAllowed('editinterface')) {
-		$vars['wgMenuEdit'] = wfMsg('oasis-edit-this-menu');
-	}
-
 	$vars['wgAfterContentAndJS'] = array();
 
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
