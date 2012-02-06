@@ -2,7 +2,7 @@
 function Room(client) {
 //	var path = client.wgServer + client.wgArticlePath;
 	this.articlePath = client.wgServer + client.wgArticlePath;
-};
+}
 
 exports = module.exports = Room;
 
@@ -18,9 +18,9 @@ Room.prototype.processText = function(text) {
 	text = text.replace(/>/g, "&gt;");
 
 	// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
-	
+
 	// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
-	localWikiLinkReg = this.articlePath.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");
+	var localWikiLinkReg = this.articlePath.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");
 	text = text.replace(new RegExp(localWikiLinkReg, "i"), "[[$1]]"); // easy way... will re-write this to a shortened link later in the function.
 
 	// Linkify http://links
@@ -32,7 +32,7 @@ Room.prototype.processText = function(text) {
 	text = text.replace(exp, "<a href='$1'>" + pageLink + "</a>");
 
 	// Linkify [[Pipes|Pipe-notation]] in bracketed links.
-	var exp = /\[\[([ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*)\|([^\]\|]*)\]\]/ig;
+	exp = /\[\[([ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*)\|([^\]\|]*)\]\]/ig;
 	text = text.replace(exp, function(wholeMatch, article, linkText) {
 		article = article.replace(/ /g, "_");
 		linkText = linkText.replace(/_/g, " ");
@@ -45,7 +45,7 @@ Room.prototype.processText = function(text) {
 	});
 
 	// Linkify [[links]] - the allowed characters come from http://www.mediawiki.org/wiki/Manual:$wgLegalTitleChars
-	var exp = /(\[\[[ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*\]\])/ig;
+	exp = /(\[\[[ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*\]\])/ig;
 	text = text.replace(exp, function(match) {
 		var article = match.substr(2, match.length - 4);
 		article = article.replace(/ /g, "_");
@@ -59,4 +59,4 @@ Room.prototype.processText = function(text) {
 	});
 
 	return text;
-} // end processText()
+}; // end processText()
