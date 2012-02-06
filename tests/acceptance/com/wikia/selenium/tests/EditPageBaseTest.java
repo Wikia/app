@@ -33,7 +33,7 @@ public class EditPageBaseTest extends BaseTest {
 	 * Is wysiwyg the currently used mode
 	 */
 	protected boolean isWysiwygMode() throws Exception {
-		return session().getEval("window.RTE.instance.mode").equals("wysiwyg");
+		return session().getEval("window.RTE && (window.RTE.instance || window.RTE.getInstance()).mode").equals("wysiwyg");
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class EditPageBaseTest extends BaseTest {
 		boolean isWysiwyg = this.isWysiwygMode();
 
 		session().click("//nav[@id='EditPageTabs']//span[contains(@class, '" + (isWysiwyg ? "ModeSource" : "ModeWysiwyg") +  "')]/a");
-		session().waitForCondition("window.RTE.instance.mode == '" + (isWysiwyg ? "source" : "wysiwyg") + "'", this.getTimeout());
+		session().waitForCondition("window.RTE && (window.RTE.instance || window.RTE.getInstance()).mode == '" + (isWysiwyg ? "source" : "wysiwyg") + "'", this.getTimeout());
 	}
 
 	/**
