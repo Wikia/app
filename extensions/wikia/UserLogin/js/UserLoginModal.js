@@ -65,12 +65,9 @@ var UserLoginModal = {
 			editpromptable = editpromptable.add(".editsection");
 		}
 
-		editpromptable.click(function(e) {
-			e.preventDefault();
-			UserLoginModal.show({
-				ajaxLogin: true,
-				callback: ''
-			});
+		editpromptable.click(function(ev) {
+			ev.preventDefault();
+			UserLogin.isForceLogIn();
 		});
 
 		//Attach DOM-Ready handlers
