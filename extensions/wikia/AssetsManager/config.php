@@ -215,6 +215,7 @@ $config['wikiamobile_js_body'] = array(
 		'//skins/common/zepto/zepto.wikiamobile.js',
 		'//skins/common/zepto/zepto.modal.wikiamobile.js',
 		'//skins/common/modernizr/modernizr.wikiamobile.js',
+		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',

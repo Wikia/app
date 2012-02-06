@@ -14,7 +14,9 @@ var WikiaMobile = WikiaMobile || (function() {
 	clickEvent = ('ontap' in window) ? 'tap' : 'click',
 	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown',
 	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
-	tableWrapperHTML = '<div class=bigTable>';
+	tableWrapperHTML = '<div class=bigTable>',
+	adSlot,
+	fixed = Modernizr.positionfixed;
 
 	function getImages(){
 		return allImages;
@@ -26,6 +28,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		setTimeout(function(){
 			if(!window.pageYOffset)
 				window.scrollTo(0, 1);
+				if(!fixed) moveSlot();
 		}, 1);
 	}
 
@@ -140,7 +143,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			});
 
 			if(handledTables.length > 0)
-				window.addEventListener(sizeEvent, processTables);
+				window.addEventListener(sizeEvent, processTables, false);
 		}else if(handledTables.length > 0){
 			var table, row, isWrapped, isBig, wasWrapped,
 				maxWidth = window.innerWidth || window.clientWidth;
@@ -192,13 +195,17 @@ var WikiaMobile = WikiaMobile || (function() {
 	function track(ev){
 		WikiaTracker.track('/1_mobile/' + ((ev instanceof Array) ? ev.join('/') : ev), 'main.sampled');
 	}
+	
+	function moveSlot(){
+		adSlot.style.top = Math.min((window.pageYOffset + window.innerHeight - 50), ftr.offsetTop + 150) + 'px';
+	}
 
 	//init
 	$(function(){
 		body = $(document.body);
 		page = $('#wkPage');
 		article = $('#wkMainCnt');
-
+		
 		var navigationSearch = $('#wkNavSrh'),
 		searchToggle = $('#wkSrhTgl'),
 		searchInput = $('#wkSrhInp'),
@@ -210,15 +217,16 @@ var WikiaMobile = WikiaMobile || (function() {
 		wikiNavLink = $('#wkNavLink'),
 		navigationBar = $('#wkTopNav'),
 		navToggle = $('#wkNavTgl'),
-		thePage = page.add('#wkFtr'),
+		ad = $('#wkAdPlc'),
+		thePage = page.add('#wkFtr').add(ad),
 		lvl1 = $('.lvl1'),
 		//to cache link in wiki nav
 		lvl2Link,
 		number = 0;
-		
+
 		//replace menu from bottom to topBar - the faster the better
 		wkNav[0].replaceChild(wkNavMenu[0], document.getElementById('wkWikiNav'));
-		
+
 		//analytics
 		track('view');
 
@@ -230,11 +238,47 @@ var WikiaMobile = WikiaMobile || (function() {
 		//must be done AFTER detecting size of elements on the page
 		body.addClass('js');
 
+		//handle ads
+		adSlot = ad[0];
+		
+		var close = document.getElementById('wkAdCls'),
+			i = 0;
+			adExist = function(){
+				if(adSlot.childElementCount > 3){
+					close.className = "show";
+					adSlot.style.height = '50px';
+					close.addEventListener(clickEvent, function() {
+						track('ad/close');
+						document.body.removeChild(adSlot);
+						window.removeEventListener('scroll', moveSlot);
+					}, false);
+					if(fixed){
+						adSlot.style.position = 'fixed';
+					}else{
+						window.addEventListener('scroll', moveSlot, false);
+					}
+					return true;
+				}
+			},
+			ftr = document.getElementById('wkFtr');
+
+		if(!adExist()) {
+			var inter = setInterval(function() {
+				if(!adExist() && i < 5) {
+					i += 1;
+				}else{
+					document.body.removeChild(adSlot);
+					clearInterval(inter);
+				}
+			}, 1000);
+		}
+		//end of handling ads
+
 		hideURLBar();
 		
 		//get search input
 		navigationSearch.remove().appendTo('#wkTopBar');
-		
+
 		//processImages
 		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function() {
 			var self = $(this);
@@ -278,7 +322,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				]);
 			}
 		});
-		
+
 		//if there is only one image in the article hide the prev/next buttons
 		//in the image modal
 		//TODO: move to a modal API call
@@ -286,15 +330,14 @@ var WikiaMobile = WikiaMobile || (function() {
 		//end processImages
 
 		//TODO: optimize selectors caching for this file
-		//TODO: css alias
 		body.delegate('.collSec', clickEvent, function(){
 			var self = $(this);
 
-			track(['section', self.hasClass('open') ? 'close' : 'open']);
+			track(['section', self.hasClass('open')?'close':'open']);
 			self.toggleClass('open').next().toggleClass('open');
 		})
 		.delegate('#wkMainCnt a', clickEvent, function(){
-			track(['link', 'content']);
+			track('link/content');
 		})
 		.delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
 			var img = $(this),
@@ -313,13 +356,13 @@ var WikiaMobile = WikiaMobile || (function() {
 		});
 
 		searchForm.bind('submit', function(){
-			track(['search', 'submit']);
+			track('search/submit');
 		});
 
 		searchToggle.bind(clickEvent, function(event){
 			event.preventDefault();
 			if(navigationBar.hasClass('srhOpn')){
-				track(['search', 'toggle', 'close']);
+				track('search/toggle/close');
 				if(searchInput.val()){
 					searchForm.submit();
 				}else{
@@ -327,7 +370,7 @@ var WikiaMobile = WikiaMobile || (function() {
 					searchInput.val('');
 				}
 			}else{
-				track(['search', 'toggle', 'open']);
+				track('search/toggle/open');
 				closeNav().addClass('srhOpn');
 				searchInput.focus();
 			}
@@ -335,10 +378,10 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		//preparing the navigation
 		wkNavMenu.delegate('.lvl1 a', clickEvent, function(){
-			track(['link', 'nav', 'list']);
+			track('link/nav/list');
 		})
 		.delegate('header > a', clickEvent, function(){
-			track(['link', 'nav', 'header']);
+			track('link/nav/header');
 		})
 		.find('ul ul').parent().addClass('cld');
 
@@ -347,7 +390,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			if(navigationBar.hasClass('fllNav')){
 				closeNav();
 			}else{
-				track(['nav', 'open']);
+				track('nav/open');
 				thePage.hide();
 				//80px is for lvl1 without header
 				navigationBar.addClass('fllNav').height(lvl1.height() + 80);
@@ -357,9 +400,10 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		function closeNav() {
 			if(window.location.hash == '#WikiNav') window.history.back();
-			track(['nav', 'close']);
+			track('nav/close');
 			thePage.show();
-			return navigationBar.removeClass();
+			if(!fixed) moveSlot();
+			return navigationBar.removeClass().css('height', '40px');
 		}
 
 		//close WikiNav on back button
@@ -403,10 +447,10 @@ var WikiaMobile = WikiaMobile || (function() {
 				if(wkNavMenu.hasClass('cur1')) {
 					wkNavMenu.removeClass().addClass('cur2');
 					lvl2Link = href;
-					track(['nav', 'level-2']);
+					track('nav/level-2');
 				} else {
 					wkNavMenu.removeClass().addClass('cur3');
-					track(['nav', 'level-3']);
+					track('nav/level-3');
 				}
 			}
 		});
@@ -418,7 +462,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			if(wkNavMenu.hasClass('cur2')) {
 				wkNavMenu.removeClass().addClass('cur1').find('.lvl2').removeClass('cur');
 				navigationBar.height(lvl1.height() + 80);
-				track(['nav', 'level-1']);
+				track('nav/level-1');
 			} else {
 				wkNavMenu.removeClass().addClass('cur2').find('.lvl3').removeClass('cur');
 				current = $('.lvl2.cur');
@@ -430,7 +474,7 @@ var WikiaMobile = WikiaMobile || (function() {
 					wikiNavLink.hide();
 				}
 				wikiNavLink.attr('href', lvl2Link);
-				track(['nav', 'level-2']);
+				track('nav/level-2');
 			}
 		});
 		//end of preparing the nav
@@ -441,17 +485,16 @@ var WikiaMobile = WikiaMobile || (function() {
 		});
 
 		$('#wkRelPag').delegate('a', clickEvent, function(){
-			track(['link', 'related-page']);
+			track('link/related-page');
 		});
 
 		$('#wkArtCat').delegate('a', clickEvent, function(){
-			track(['link', 'category']);
+			track('link/category');
 		});
 
 		$('#wkFllSite').bind(clickEvent, function(event){
 			event.preventDefault();
-
-			track(['link', 'fullsite']);
+			track('link/fullsite');
 			Wikia.CookieCutter.set('mobilefullsite', 'true');
 			location.reload();
 		});
@@ -462,6 +505,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		getDeviceResolution: getDeviceResolution,
 		getClickEvent: getClickEvent,
 		getTouchEvent: getTouchEvent,
-		track: track
+		track: track,
+		moveSlot: moveSlot
 	};
 })();

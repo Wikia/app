@@ -65,7 +65,6 @@
 #wkTopNav {
 	position: relative;
 	height: 40px;
-	max-height: 40px;
 	overflow: hidden;
 	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
@@ -75,7 +74,6 @@
 
 	&.fllNav {
 		min-height: 100%;
-		max-height: none;
 		background-color: white;
 
 		#wkNavTgl {

@@ -23,7 +23,7 @@
 
 		body.append('<div id=wkMdlWrp><div id=wkMdlTB><div id=wkMdlClo>&times;</div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div>\
 			</div><style>#wkMdlWrp{min-height:' + resolution[1] + 'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + resolution[0] + 'px;}}</style>');
-		
+
 		images = WikiaMobile.getImages();
 		clickEvent = WikiaMobile.getClickEvent();
 
@@ -37,7 +37,7 @@
 
 		//hide adress bar on orientation change
 		window.onorientationchange = function() {
-				if(window.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 )},10);
+				if(window.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 )},1);
 		}
 
 		//close modal on back button
@@ -128,7 +128,7 @@
 			modalFooter.hide();
 		}
 	},
-	
+
 	resetTimeout = function() {
 
 		allToHide.removeClass('hdn');
@@ -148,7 +148,7 @@
 			addClass = options.addClass,
 			toHide = options.toHide,
 			onOpen = options.onOpen;
-			
+
 		current = parseInt(options.imageNumber, 10);
 		//needed for closing modal on back button
 		window.location.hash = "modal";
@@ -157,8 +157,6 @@
 
 		if(!modalCreated) createModal();
 
-		modal.css('top', '0');
-		
 		if(addClass){
 			modal.addClass(addClass);
 		}else{
@@ -203,12 +201,13 @@
 			modalContent.html('');
 			modalFooter.html('');
 			modal.removeClass();
+			if(!Modernizr.positionfixed) WikiaMobile.moveSlot();
 		}
 	};
 
 	$.hideModal = function() {
 		if(modalCreated) {
-			modal.removeClass('mdlShw').css('top', position);
+			modal.removeClass('mdlShw');
 			allToHide.removeClass('hdn');
 			thePage.show();
 			clearTimeout(timer);
