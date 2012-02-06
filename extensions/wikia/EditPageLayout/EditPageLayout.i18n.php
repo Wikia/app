@@ -108,6 +108,8 @@ $messages['qqq'] = array(
 The first parameter is a placeholder for the license logo/image. The third parameter is the license name.',
 	'restore-edits-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'restore-edits-diff-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
+	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
+	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 );
 
 /** Azerbaijani (Azərbaycanca)
