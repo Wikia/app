@@ -4,7 +4,7 @@ var UserLogin = {
 		if (!window.wgComboAjaxLogin) {
 			UserLoginModal.show({
 				callback: function() {
-					WikiaEditor.reloadEditor();
+					window.WikiaEditor && WikiaEditor.reloadEditor();
 				}
 			});
 		}
