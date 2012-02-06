@@ -394,7 +394,7 @@ class RelatedVideosNamespaceData {
 		$article = F::build('Article', array($title));
 
 		if ( empty( $summary )){
-			$summary = wfMsg( 'related-videos-updated', array( ucfirst( strtolower( $list ) ) ) );
+			$summary = wfMsg( 'related-videos-update-summary-' . strtolower( $list ) );
 		}
 		$this->entries = $entries;
 		$status = $article->doEdit( $content, $summary, $this->exists() ? EDIT_UPDATE : EDIT_NEW, false, F::app()->wg->user);
