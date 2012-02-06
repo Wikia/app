@@ -542,7 +542,7 @@ class WikiStatsXLS {
 		$centralVersion = ($wgDBname == CENTRAL_WIKIA_ID);
 		#----
 		$this->setXLSFileBegin();
-		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsg('wikistats_page_edits')) );
+		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsgHtml('wikistats_page_edits')) );
 		$this->mergeXLSColsRows(1, 0, 1, 6);
 		$this->writeXLSLabel(3,0,wfMsg('wikistats_page_edits_count', count($statsCount)));
 		$this->mergeXLSColsRows(3, 0, 3, 6);
