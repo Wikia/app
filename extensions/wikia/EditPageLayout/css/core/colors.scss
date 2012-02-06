@@ -2,14 +2,6 @@
  * the colors, duke, the colors!
  */
 
-// Suffix added to sprite images to determine whether to load the
-// light themed version or the dark themed version.
-// FIXME: this should be refactored into oasis/core/colors
-$sprite-suffix: "dark";
-@if $is-dark-wiki {
-	$sprite-suffix: "light";
-}
-
 // Page
 $color-epl-hover: darken($color-page, 10%);
 $color-epl-page-secondary: darken($color-page, 10%);

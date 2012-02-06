@@ -3,6 +3,8 @@ Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
+@import "../../../../../../../skins/oasis/css/core/color";
+
 .cke_skin_wikia
 {
 	display: block;
@@ -56,7 +58,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 .cke_skin_wikia .cke_contents iframe
 {
-	background-color: #fff;
+	background-color: $color-page;
 }
 
 .cke_skin_wikia .cke_focus
@@ -69,7 +71,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	border: 0;
 	font-family: monospace;
 	font-size: 13px;
-	background-color: #fff;
+	background-color: $color-page;
 	white-space: pre;
 	overflow: auto;
 }

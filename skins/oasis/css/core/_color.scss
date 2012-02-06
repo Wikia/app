@@ -13,15 +13,18 @@ $page-opacity: get_command_line_param("page-opacity", 100);	// default: 100
 ////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
 // Mixing colors
 
-// Text color
-$color-text: #3a3a3a;
+// Theme
+$sprite-theme: "dark";
 $is-dark-wiki: false;
 @if lightness($color-page) < 50 {
+	$sprite-theme: "light";
 	$is-dark-wiki: true;
 }
+
+// Text color
+$color-text: #3a3a3a;
 @if $is-dark-wiki {
 	$color-text: #D5D4D4;
-	
 }
 
 // Opposite page color (use this as the mixing value to darken, lighten towards the opposite of page darkness)
