@@ -571,12 +571,12 @@ $messages['qqq'] = array(
 	
 	/* Mail message */
 
-	'mail-notification-new-someone' => "email notification, $AUTHOR_NAME is user, $WIKI is wiki name",
-	'mail-notification-new-your' => "email notification, $AUTHOR_NAME is user, $WIKI is wiki name",
+	'mail-notification-new-someone' => 'email notification, $AUTHOR_NAME is user, $WIKI is wiki name',
+	'mail-notification-new-your' => 'email notification, $AUTHOR_NAME is user, $WIKI is wiki name',
 
-	'mail-notification-reply-your' => "email notification, $AUTHOR_NAME is user, $WIKI is wiki name",
-	'mail-notification-reply-his' => "email notification, $AUTHOR_NAME is user, $WIKI is wiki name",
-	'mail-notification-reply-someone' => "email notification, $AUTHOR_NAME is user, $PARENT_AUTHOR_NAME is user who started the thread, $WIKI is wiki name", 
+	'mail-notification-reply-your' => 'email notification, $AUTHOR_NAME is user, $WIKI is wiki name',
+	'mail-notification-reply-his' => 'email notification, $AUTHOR_NAME is user, $WIKI is wiki name',
+	'mail-notification-reply-someone' => 'email notification, $AUTHOR_NAME is user, $PARENT_AUTHOR_NAME is user who started the thread, $WIKI is wiki name', 
 
 	'mail-notification-html-greeting' => "email notification greeting, $1 is username",
 	'mail-notification-html-button' => "email notification, button to visit the thread",
