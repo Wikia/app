@@ -158,8 +158,8 @@ var HoverMenuGlobal = {
 	menus: [],
 	hideAll: function() {
 		var menus = HoverMenuGlobal.menus;
-		for(index in menus) {
-			menus[index].hideNav();
+		for(var i = 0; i < menus.length; i++) {
+			menus[i].hideNav();
 		}
 	}
 };
