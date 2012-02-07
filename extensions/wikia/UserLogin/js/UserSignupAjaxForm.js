@@ -40,8 +40,9 @@ UserSignupAjaxForm.prototype.validationHandler = function(res) {
 	}
 
 	var isInvalid = false;
-	for(var i in form.inputsToValidate) {
-		if(form.wikiaForm.getInputGroup(form.inputsToValidate[i]).hasClass('error')) {
+	var inputsToValidate = form.inputsToValidate;
+	for(var i = 0; i < inputsToValidate.length; i++) {
+		if(form.wikiaForm.getInputGroup(inputsToValidate[i]).hasClass('error')) {
 			isInvalid = true;
 			break;
 		}
