@@ -23,7 +23,7 @@
 		init: function() {
 			this.el = this.editor.getSpace('loading-status');
 			
-			if(!this.el) {
+			if (!this.el) {
 				return;
 			}
 			
@@ -55,7 +55,7 @@
 		},
 
 		stateChanged: function( editor, state ) {
-			if(!this.el) {
+			if (!this.el) {
 				return;
 			}
 			var states = editor.states, value = false;
