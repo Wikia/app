@@ -23,7 +23,6 @@ var UserLoginDropdown = {
 				}, 300);
 			}, function(e) {
 				// do nothing on hover out
-				UserLoginDropdown.hide();
 				clearTimeout(UserLoginDropdown.hoverHandle);
 			});
 			
