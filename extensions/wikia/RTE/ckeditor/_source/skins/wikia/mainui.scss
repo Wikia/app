@@ -59,6 +59,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia .cke_contents iframe
 {
 	background-color: $color-page;
+	color: $color-text;
 }
 
 .cke_skin_wikia .cke_focus
@@ -69,6 +70,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia textarea.cke_source
 {
 	border: 0;
+	color: $color-text;
 	font-family: monospace;
 	font-size: 13px;
 	background-color: $color-page;

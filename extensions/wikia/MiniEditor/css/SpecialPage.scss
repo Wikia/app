@@ -19,6 +19,7 @@
 			.ElementToReplace {
 				background-color: $color-page;
 				border: 0;
+				color: $color-alternate-text;
 				height: 75px;
 				margin: 0;
 				padding: 0;
@@ -36,6 +37,7 @@
 				border: 0;
 	
 				.ElementToReplace {
+					color: $color-text;
 					width: auto;
 				}
 			}
