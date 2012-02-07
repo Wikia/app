@@ -295,14 +295,14 @@ class RenameUserProcess {
 		$olduser = User::newFromName($oldTitle->getText(), false);
 		$newuser = User::newFromName($newTitle->getText(), 'creatable');
 		
-		$this->addInternalLog("user: old={$olduser->getName()}:{$olduser->getId()} new={$newuser->getName()}:{$newuser->getId()}");
-		
 		// It won't be an object if for instance "|" is supplied as a value
 		if(!is_object($olduser)){
 			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->oldUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
+		
+		$this->addInternalLog("user: old={$olduser->getName()}:{$olduser->getId()} new={$newuser->getName()}:{$newuser->getId()}");
 		
 		if(!is_object($newuser) || !User::isCreatableName($newuser->getName())){
 			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->newUsername));
