@@ -259,6 +259,11 @@ class FBConnect {
 
 		$statusError = array('status' => "error", "msg" => wfMsg('fbconnect-unknown-error') );
 		
+		if(!($user instanceof User)) {
+			return $statusError;
+		}
+		
+		
 		if($user->getId() == 0) {
 			return $statusError;
 		}
@@ -284,6 +289,9 @@ class FBConnect {
 			return $statusError;
 		}
 
+		/**
+		 *  @todo: verify if lines 296-297 can be deleted, unreachable 
+		 */
 		return array('status' => "ok" );
 		$dbw->commit();
 		return $response;
