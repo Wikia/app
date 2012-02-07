@@ -532,14 +532,14 @@
 		public function testSendConfirmationEmail( $mockWebRequestParams, $mockWikiaRequestParams, $mockEmailAuth, $mockUserParams, $mockTempUserParams, $mockSessionParams, $mockCacheParams, $mockMsgExt, $expResult, $expMsg, $expMsgEmail, $expErrParam, $expHeading, $expSubheading ) {
 			// setup
 			$this->setUpMockObject( 'WebRequest', $mockWebRequestParams, false, 'wgRequest');
-			$this->setUpMockObject( 'WikiaRequest', $mockWikiaRequestParams, true );
+//			$this->setUpMockObject( 'WikiaRequest', $mockWikiaRequestParams, true );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
 			
 			$this->setUpSession( $mockSessionParams );
 			
 			$this->mockGlobalVariable( 'wgEmailAuthentication', $mockEmailAuth );
-			$this->mockGlobalFunction( 'MsgExt', $mockMsgExt );
+			$this->mockGlobalFunction( 'MsgExt', $mockMsgExt, $mockMsgExtCount );
 
 			$this->setUpMock( $mockCacheParams );
 			
@@ -547,7 +547,7 @@
 			UserLoginHelper::getInstance()->setApp( $this->app );
 
 			// test
-			$response = $this->app->sendRequest( 'UserSignupSpecial', 'sendConfirmationEmail' );
+			$response = $this->app->sendRequest( 'UserSignupSpecial', 'sendConfirmationEmail', $mockWikiaRequestParams );
 			
 			$responseData = $response->getVal( 'result' );
 			$this->assertEquals( $expResult, $responseData );
@@ -577,19 +577,14 @@
 				'wasPosted' => false,
 			);
 			$mockWikiaRequest1 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'sendConfirmationEmail',
-					'username' => self::TEST_USERNAME,
-				),
+				'username' => self::TEST_USERNAME,
 			);
 			$mockEmailAuth1 = '';
 			$mockUser1 = null;
 			$mockTempUser1 = false;
 			$mockSession1 = null;
 			$mockCache1 = null;
-			$mockMsgExt1 = wfMsg( 'usersignup-confirmation-email-sent', self::TEST_USERNAME );;
+			$mockMsgExt1 = wfMsg( 'usersignup-confirmation-email-sent', self::TEST_USERNAME );
 			$expMsg1 = wfMsg( 'usersignup-confirmation-email-sent', self::TEST_USERNAME );
 			$expMsgEmail1 = '';
 			$expHeading1 = wfMsg( 'usersignup-confirmation-heading' );
@@ -606,14 +601,10 @@
 			
 			// GET + temp user does not exist + pass byemail
 			$mockWikiaRequest3 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'sendConfirmationEmail',
-					'username' => self::TEST_USERNAME,
-					'byemail' => 1,
-				),
+				'username' => self::TEST_USERNAME,
+				'byemail' => 1,
 			);
+			$mockMsgExt3 = wfMsg( 'usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME );			
 			$expMsg3 = wfMsg( 'usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME );
 			$expHeading3 = wfMsg( 'usersignup-account-creation-heading' );
 			$expSubheading3 = wfMsg( 'usersignup-account-creation-subheading', self::TEST_USERNAME );
@@ -625,13 +616,8 @@
 				'wasPosted' => false,
 			);
 			$mockWikiaRequest5 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'sendConfirmationEmail',
-					'username' => self::TEST_USERNAME,
-					'action' => '',
-				),
+				'username' => self::TEST_USERNAME,
+				'action' => '',
 			);
 
 			// POST + temp user exist + empty action
@@ -644,26 +630,16 @@
 				'wasPosted' => true,
 			);
 			$mockWikiaRequest101 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'sendConfirmationEmail',
-					'username' => '',
-					'action' => 'resendconfirmation',
-				),
+				'username' => '',
+				'action' => 'resendconfirmation',
 			);
 			$expMsg101 = wfMsg( 'userlogin-error-noname' );
 			$expHeading101 = wfMsg( 'usersignup-confirmation-heading-email-resent' );
 			
 			// error - temp user does not exist ( POST + action = resendconfirmation )
 			$mockWikiaRequest102 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'sendConfirmationEmail',
-					'username' => self::TEST_USERNAME,
-					'action' => 'resendconfirmation',
-				),
+				'username' => self::TEST_USERNAME,
+				'action' => 'resendconfirmation',
 			);
 			$mockTempUser102 = false;
 			$expMsg102 = wfMsg( 'userlogin-error-nosuchuser' );
@@ -755,9 +731,9 @@
 				// GET + temp user exists + not pass byemail
 				array($mockWebRequest1, $mockWikiaRequest1, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 				// GET + temp user does not exist + pass byemail
-				array($mockWebRequest1, $mockWikiaRequest3, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
+				array($mockWebRequest1, $mockWikiaRequest3, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
 				// GET + temp user exists + pass byemail
-				array($mockWebRequest1, $mockWikiaRequest3, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
+				array($mockWebRequest1, $mockWikiaRequest3, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
 				// POST + temp user does not exist + empty action
 				array($mockWebRequest5, $mockWikiaRequest5, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 				// POST + temp user exist + empty action
