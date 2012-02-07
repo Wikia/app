@@ -236,12 +236,21 @@ var ImageLightbox = {
 				$('#lightbox-share-buttons').find('a').click(function() {
 					var source = $(this).attr('data-func');
 					if (source == "email") {
-						if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
-							showComboAjaxForPlaceHolder(false, "", function(){
-								AjaxLogin.doSuccess = function() {
-									window.location = $('#lightbox-image-link').val();
-								}
-							});
+						if ( window.wgUserName === null ) { 
+							if ( window.wgComboAjaxLogin ) {
+								showComboAjaxForPlaceHolder(false, "", function(){
+									AjaxLogin.doSuccess = function() {
+										window.location = $('#lightbox-image-link').val();
+									}
+								});
+							}
+							else {
+								UserLoginModal.show({
+									callback: function() {
+										window.location = $('#lightbox-image-link').val();
+									}
+								});
+							}
 							return false;
 						}
 					}
