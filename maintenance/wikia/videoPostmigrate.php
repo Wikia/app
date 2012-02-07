@@ -19,6 +19,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 //include( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbw = wfGetDB( DB_MASTER );
+$dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 $tables = array(
 	'archive' => array('ns'=>'ar_namespace','id'=>'ar_page_id'),
@@ -51,6 +52,18 @@ foreach( $tables as $tableName => $tableData ) {
 			array( $tableData['id'] => $id ),
 			__METHOD__
 		);
+
+		$dbw_dataware->insert(
+			'video_postmigrate_undo',
+			array(
+				'wiki_id'		=> $wgCityId,
+				'entry_id'		=> $id,
+				'entry_id_field'=> $tableData['id'],
+				'entry_ns_field'=> $tableData['ns'],
+			)
+		);
+			
+		
 	}
 
 	$dbw->freeResult($rows);
