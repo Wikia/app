@@ -105,7 +105,8 @@ class RelatedVideosHookHandler {
 		$namespace = $title->getNamespace();
 		
 		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null && ( $namespace == NS_MAIN ) ) {
-			$modules[1310] = array('RelatedVideosRailModule', 'index', null);
+			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
+			$modules[$pos] = array('RelatedVideosRailModule', 'index', null);
 		}
 		
 		$app->wf->ProfileOut(__METHOD__);
