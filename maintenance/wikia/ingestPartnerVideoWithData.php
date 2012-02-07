@@ -15,7 +15,7 @@ if ( isset( $options['h'] ) ) {
 	print <<<EOT
 Import video from a partner
 
-Usage: php importPartnerVideo.php [options...] <partner>
+Usage: php ingestPartnerVideoWithData.php [options...] <partner>
 
 Options:
   -u <user>         Username
@@ -52,29 +52,31 @@ if ( $wgUser->isAnon() ) {
 }
 
 $provider = !empty($args[0]) ? strtolower($args[0]) : '';
-$providers = array();
+$providersVideoFeed = array();	// "new" video
+$providersPartnerVideo = array();	// "old" video
 //@todo use old/new video service
-$useNewVideo = true;
-if ($useNewVideo) {
+$useVideoFeed = false;
+$usePartnerVideo = true;
+if ($useVideoFeed) {
 	if (empty($provider)) {
-		$providers = VideoFeedIngester::$PROVIDERS;
+		$providersVideoFeed = VideoFeedIngester::$PROVIDERS;
 	}
 	elseif (array_search($provider, VideoFeedIngester::$PROVIDERS) !== false) {
-		$providers = array( $provider );
+		$providersVideoFeed = array( $provider );
 	}
 	else {
 		die("unknown provider $provider. aborting.\n");			
 	}
 }
-else {
+if ($usePartnerVideo) {
 	switch ($provider) {
 		case VideoPage::V_SCREENPLAY:
 		case VideoPage::V_MOVIECLIPS:
 		case VideoPage::V_REALGRAVITY:
-			$providers = array( $provider );
+			$providersPartnerVideo = array( $provider );
 			break;
 		case '':
-			$providers = array( VideoPage::V_SCREENPLAY, VideoPage::V_MOVIECLIPS, VideoPage::V_REALGRAVITY );
+			$providersPartnerVideo = array( VideoPage::V_SCREENPLAY, VideoPage::V_MOVIECLIPS, VideoPage::V_REALGRAVITY );
 			break;
 		default:
 			die("unknown provider $provider. aborting.\n");		
@@ -83,17 +85,18 @@ else {
 
 // BEGIN MAIN
 
-foreach ($providers as $provider) {
-	if ($useNewVideo) {
+if ($useVideoFeed) {
+	foreach ($providersVideoFeed as $provider) {
 		print("Starting import for provider $provider...\n");
 
+		$feedIngester = VideoFeedIngester::getInstance($provider);
+
 		// get WikiFactory data
-		$ingestionData = PartnerVideoHelper::getInstance()->getPartnerVideoIngestionData();
+		$ingestionData = $feedIngester->getWikiIngestionData();
 		if (empty($ingestionData)) {
 			die("No ingestion data found in wikicities. Aborting.");
 		}
 		
-		$feedIngester = VideoFeedIngester::getInstance($provider);
 
 		// open file
 		$file = '';
@@ -119,9 +122,14 @@ foreach ($providers as $provider) {
 
 		}
 
-		$feedIngester->import($file, $params);		
+		$numCreated = $feedIngester->import($file, $params);		
+		
+		print "Created $numCreated articles!\n\n";
 	}
-	else {
+}
+
+if ($usePartnerVideo) {
+	foreach ($providersPartnerVideo as $provider) {
 		print("Starting import for provider $provider ({$wgWikiaVideoProviders[$provider]})...\n");
 
 		// get WikiFactory data
@@ -161,9 +169,7 @@ foreach ($providers as $provider) {
 		}
 
 		PartnerVideoHelper::getInstance()->importFromPartner($provider, $file, $params);
-		
 	}
-
 }
 
 // END OF MAIN

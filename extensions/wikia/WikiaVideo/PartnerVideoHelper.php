@@ -5,6 +5,7 @@ class PartnerVideoHelper {
 	private static $SCREENPLAY_FEED_URL = 'https://secure.totaleclips.com/WebServices/GetDataFeed.aspx?customerId=$1&username=$2&password=$3&startDate=$4&endDate=$5';
 	private static $MOVIECLIPS_VIDEOS_LISTING_FOR_MOVIE_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
 	private static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
+	private static $MOVIECLIPS_API_REQUEST_DELAY = 2;	// seconds
 	private static $REALGRAVITY_API_KEY = '4bd3e310-9c30-012e-b52b-12313d017962';
 	private static $REALGRAVITY_PROVIDER_IDS = array('MACHINIMA'=>240);
 	private static $REALGRAVITY_PAGE_SIZE = 100;
@@ -243,6 +244,7 @@ class PartnerVideoHelper {
 		$info = array();
 		!$parseOnly && print("Connecting to $url...\n");
 
+		sleep(self::$MOVIECLIPS_API_REQUEST_DELAY);	// making too many requests results in 503 errors
 		$rssContent = $this->getUrlContent($url);
 		
 		if (!$rssContent) {

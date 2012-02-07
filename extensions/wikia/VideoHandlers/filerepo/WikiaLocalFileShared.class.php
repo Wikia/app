@@ -103,13 +103,22 @@ class WikiaLocalFileShared  {
 	/* alter LocalFile setProps logic */
 
 	function afterSetProps() {
+		global $wgMediaHandlers;
+
 		if ( $this->forceMime ){
 			// if mime type was forced, repopulate File with proper data
 			$this->oFile->dataLoaded = true;
 			$this->oFile->mime = $this->forceMime;
 			list( $this->oFile->major_mime, $this->oFile->minor_mime ) = LocalFile::splitMime( $this->oFile->mime );
-			$handler = MediaHandler::getHandler( $this->oFile->getMimeType() );
-			
+			// normally, this kind of method would call 
+			// MediaHandler::getHandler(). However, this function
+			// may be called repeatedly in one session (by a video
+			// ingestion script) for different videos. MediaHandler::getHandler()
+			// reads its own cache and returns the same video handler for different videos.
+			// We must create the proper video handler ourselves.
+			$type = $this->oFile->getMimeType();
+			$class = $wgMediaHandlers[$type];
+			$handler = new $class();
 			$handler->setVideoId( $this->oFile->videoId );
 
 			$this->oFile->metadata = ( isset( $this->forceMetadata ) ) ? $this->forceMetadata : $handler->getMetadata();

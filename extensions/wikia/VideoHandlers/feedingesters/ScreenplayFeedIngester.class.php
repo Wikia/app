@@ -131,7 +131,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				}
 				else {
 					$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);
-					$articlesCreated += $this->createVideoPage($clipData, $msg, $createParams);
+					$articlesCreated += $this->createVideo($clipData, $msg, $createParams);
 				}
 				if ($msg) {
 					print "ERROR: $msg\n";
@@ -188,10 +188,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		return $categories;
 	}
 	
-	protected function generateInterfaceObject(array $data, &$errorMsg) {
-		$interfaceObj = array();
+	protected function generateParsedData(array $data, &$errorMsg) {
+		$parsedData = array();
 		$doesHdExist = (int) !empty($data['hdMp4Url']);
-		$interfaceObj = array($data['stdBitrateCode'], $doesHdExist, $data['duration'], $data['jpegBitrateCode'], $data['dateAdded']);
-		return $interfaceObj;
+		$parsedData = array('stdBitrateCode'=>$data['stdBitrateCode'], 'hd'=>$doesHdExist, 'duration'=>$data['duration'], 'jpegBitrateCode'=>$data['jpegBitrateCode'], 'dateAdded'=>$data['dateAdded']);
+		return $parsedData;
 	}
 }

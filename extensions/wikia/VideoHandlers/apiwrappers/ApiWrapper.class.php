@@ -25,6 +25,10 @@ abstract class ApiWrapper {
 	abstract function getDescription();
 	
 	abstract function getThumbnailUrl();
+	
+	public function getVideoId() {
+		return $this->videoId;
+	}
 
 	protected function postProcess( $return ){
 		return $return;

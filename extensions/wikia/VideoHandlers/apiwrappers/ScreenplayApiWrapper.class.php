@@ -1,6 +1,6 @@
 <?php
 
-class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
+class ScreenplayApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoData {
 	const VENDOR_ID = 1893;
 	const VIDEO_TYPE = '.mp4';
 	const THUMBNAIL_TYPE = '.jpg';
@@ -11,8 +11,10 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	const STANDARD_BITRATE_ID = 461;	// 360, 16:9
 	const ENCODEFORMATCODE_JPEG = 9;
 	const ENCODEFORMATCODE_MP4 = 20;
-	
-	protected static $CACHE_KEY = 'screenplayapi';
+
+	protected static $THUMBNAIL_URL_TEMPLATE = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=$1&bitrateid=$2&vendorid=$3&type=$4';
+	protected static $PARSED_DATA_CACHE_KEY = 'screenplaydata';
+	protected $parsedData;
 
 	public function __construct($videoName, $params=array()) {
 		$this->videoName = $videoName;
@@ -20,37 +22,43 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 			$this->videoId = $params['videoId'];
 		}
 
-		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION, $this->videoName );
+		$memcKey = F::app()->wf->memcKey( static::$PARSED_DATA_CACHE_KEY, static::$CACHE_KEY_VERSION, $this->videoName );
 		$data = F::app()->wg->memc->get( $memcKey );
 		$cacheMe = false;
 		if ( empty( $data ) ){
-			if (!empty($params['interfaceObj'])) {
-				$this->interfaceObj = $params['interfaceObj'];
+			if (!empty($params['parsedData'])) {
+				$this->parsedData = $params['parsedData'];
+				$cacheMe = true;
+				$data = $this->generateCacheData();
 			}
 			else {
 				$this->initializeInterfaceObject();			
 			}
-			$cacheMe = true;
-			$data = $this->generateCacheData();
 		}
 		else {
 			$this->loadDataFromCache($data);
 		}
-		
 		
 		if ( $cacheMe ) {
 			F::app()->wg->memc->set( $memcKey, $data, static::$CACHE_EXPIRY );
 		}
 	}
 	
-	protected function generateCacheData() {
-		$data = array('videoId'=>$this->videoId, 'interfaceObj'=>$this->interfaceObj);
+	public function getParsedDataField($field) {
+		if (isset($this->parsedData[$field])) {
+			return $this->parsedData[$field];
+		}
+		return null;
+	}
+	
+	public function generateCacheData() {
+		$data = array('videoId'=>$this->videoId, 'parsedData'=>$this->parsedData);
 		return $data;
 	}
 	
-	protected function loadDataFromCache($cacheData) {
+	public function loadDataFromCache($cacheData) {
 		$this->videoId = $cacheData['videoId'];
-		$this->interfaceObj = $cacheData['interfaceObj'];
+		$this->parsedData = $cacheData['parsedData'];
 	}
 	
 	public function getTitle() {
@@ -63,14 +71,23 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	
 	public function getThumbnailUrl() {
 		$bitrateId = self::MEDIUM_JPEG_BITRATE_ID;
-		if (!empty($this->interfaceObj[3])) {
+		if ($this->getParsedDataField('jpegBitrateCode')) {
+			$bitrateId = $this->getParsedDataField('jpegBitrateCode');
+		}
+		elseif (!empty($this->interfaceObj[3])) {
 			$bitrateId = $this->interfaceObj[3];
 		}
-		$thumb = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid='.$this->videoId.'&bitrateid='.$bitrateId.'&vendorid='.self::VENDOR_ID.'&type='.self::THUMBNAIL_TYPE;
+		$thumb = str_replace('$1', $this->videoId, self::$THUMBNAIL_URL_TEMPLATE);
+		$thumb = str_replace('$2', $bitrateId, $thumb);
+		$thumb = str_replace('$3', self::VENDOR_ID, $thumb);
+		$thumb = str_replace('$4', self::THUMBNAIL_TYPE, $thumb);
 		return $thumb;
 	}
 
 	protected function getVideoDuration(){
+		if ($duration = $this->getParsedDataField('duration')) {
+			return $duration;
+		}
 		if (!empty($this->interfaceObj[2])) {
 			return $this->interfaceObj[2];
 		}
@@ -78,15 +95,25 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	}
 	
 	protected function getAspectRatio() {
-		if (!empty($this->interfaceObj[0])) {
-			if ($this->interfaceObj[0] == self::STANDARD_BITRATE_ID) {
-				return 1.7777778;
-			}
+		$bitrateId = '';
+		if ($this->getParsedDataField('stdBitrateCode')) {
+			$bitrateId = $this->getParsedDataField('stdBitrateCode');
 		}
+		elseif (!empty($this->interfaceObj[0])) {
+			$bitrateId = $this->interfaceObj[0];
+		}
+
+		if ($bitrateId == self::STANDARD_BITRATE_ID) {
+			return 1.7777778;
+		}
+		
 		return '';		
 	}
 	
 	protected function isHdAvailable() {
+		if ($this->getParsedDataField('hd')) {
+			return true;
+		}
 		if (!empty($this->interfaceObj[1])) {
 			return true;
 		}
@@ -94,7 +121,10 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	}
 	
 	protected function getVideoPublished(){
-		if (!empty($this->interfaceObj[4])) {
+		if ($dateAdded = $this->getParsedDataField('dateAdded')) {
+			return strtotime($dateAdded);
+		}
+		elseif (!empty($this->interfaceObj[4])) {
 			return strtotime($this->interfaceObj[4]);
 		}
 		return '';	// Screenplay API includes this field, but videos

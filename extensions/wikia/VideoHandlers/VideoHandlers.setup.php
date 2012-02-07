@@ -46,6 +46,7 @@ $app->registerClass( 'WikiaLocalRepo',		$dir . '/filerepo/WikiaLocalRepo.class.p
 $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'WikiaVideoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'ParsedVideoData',		$dir . '/apiwrappers/ParsedVideoData.class.php' );
 $app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
 $app->registerClass( 'VideoHandlersUploader',	$dir . '/VideoHandlersUploader.class.php' );
@@ -127,6 +128,7 @@ $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
  * Feed ingesters
  */
 $app->registerClass('VideoFeedIngester', $dir . '/feedingesters/VideoFeedIngester.class.php');
+$app->registerClass('MovieclipsFeedIngester', $dir . '/feedingesters/MovieclipsFeedIngester.class.php');
 $app->registerClass('ScreenplayFeedIngester', $dir . '/feedingesters/ScreenplayFeedIngester.class.php');
 
 $wgVideoMigrationProviderMap = array(
@@ -137,7 +139,9 @@ $wgVideoMigrationProviderMap = array(
 	11 => 'Metacafe',
 	12 => 'Screenplay',
 	13 => 'Vimeo',
+        15 => 'Myvideo',
 	18 => 'Dailymotion',
+        19 => 'Viddler',
 	22 => 'Movieclips',
 	23 => 'Realgravity',
 );

@@ -10,13 +10,19 @@ abstract class VideoFeedIngester {
 	protected static $PROVIDER;
 	private static $instances = array();
 	
-	abstract public function import($file, $params=array());
+	protected static $CACHE_KEY = 'videofeedingester';
+	protected static $CACHE_EXPIRY = 3600;
+
+	private static $WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
+	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases', 'movieclipsIds');
+
+	abstract public function import($file, $params);
 	abstract protected function generateName(array $data);
-	abstract public function generateTitleName(array $data);
-	abstract protected function generateInterfaceObject(array $data, &$errorMsg);
+	abstract protected function generateTitleName(array $data);
+	abstract protected function generateParsedData(array $data, &$errorMsg);
 	abstract protected function generateCategories(array $data, $addlCategories);
 	
-	public function getInstance($provider='') {
+	public static function getInstance($provider='') {
 		if (empty($provider)) {
 			$className = __CLASS__;
 		}
@@ -34,13 +40,13 @@ abstract class VideoFeedIngester {
 		return self::$instances[$className];
 	}
 
-	public function createVideoPage(array $data, &$msg, $params=array()) {
+	public function createVideo(array $data, &$msg, $params=array()) {
 		$debug = !empty($params['debug']);
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 		
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
-		$interfaceObject = $this->generateInterfaceObject($data, $msg);
+		$parsedData = $this->generateParsedData($data, $msg);
 		if (!empty($msg)) {
 			return 0;
 		}
@@ -64,14 +70,24 @@ abstract class VideoFeedIngester {
 		}
 		
 		if ($debug) {
-			print "parsed partner clip id $id. name: {$title->getText()}. data: " . implode(',', $interfaceObject) . ". categories: " . implode(',', $categories) . "\n";
+			print "parsed partner clip id $id. name: {$title->getText()}. metadata: " . http_build_query($parsedData) . ". categories: " . implode(',', $categories) . "\n";
 			return 1;
 		}
 		else {
-			$apiParams = array('videoId'=>$id, 'interfaceObj'=>$interfaceObject);
-			$apiWrapper = new static::$API_WRAPPER($name, $apiParams);
+			$apiParams = array('parsedData'=>$parsedData);
+			
+			if (is_subclass_of(static::$API_WRAPPER, 'WikiaVideoApiWrapper')) {
+				$apiParams['videoId'] = $id;
+				$videoId = $name;
+			}
+			else {
+				$videoId = $id;
+				
+			}			
+
+			$apiWrapper = new static::$API_WRAPPER($videoId, $apiParams);
 			$uploadedTitle = null;
-			$result = VideoHandlersUploader::uploadVideo(static::$PROVIDER, $name, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
+			$result = VideoHandlersUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
 			if ($result->ok) {
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
 				return 1;
@@ -84,6 +100,82 @@ abstract class VideoFeedIngester {
 	protected function makeTitleSafe($name) {
 		return Title::makeTitleSafe(NS_FILE, $name);    // makeTitleSafe strips '#' and anything after. just leave # out
 	}		
+	
+	public function getWikiIngestionData() {
+		$data = array();
+		
+		// merge data from datasource into a data structure keyed by 
+		// partner API search keywords. Value is an array of categories
+		// relevant to wikis
+		$rawData = $this->getWikiIngestionDataFromSource();
+		foreach ($rawData as $cityId=>$cityData) {
+			if (is_array($cityData)) {
+				foreach (self::$WIKI_INGESTION_DATA_FIELDS as $field) {
+					if (!empty($cityData[$field]) && is_array($cityData[$field])) {
+						foreach ($cityData[$field] as $fieldVal) {
+							if (!empty($data[$field][$fieldVal]) && is_array($data[$field][$fieldVal])) {
+								$data[$field][$fieldVal] = array_merge($data[$field][$fieldVal], $cityData['categories']);
+							}
+							else {
+								$data[$field][$fieldVal] = $cityData['categories'];
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return $data;
+	}
+
+	protected function getWikiIngestionDataFromSource() {
+		global $wgExternalSharedDB, $wgMemc;
+		
+		
+		$memcKey = wfMemcKey( self::$CACHE_KEY );
+		$aWikis = $wgMemc->get( $memcKey );
+		if ( !empty( $aWikis ) ) {
+			return $aWikis;
+		}
+
+		$aWikis = array();
+		
+		// fetch data from DB
+		// note: as of 2011/11, this function is referred to by only one
+		// calling function, a script that is run once per day. No need 
+		// to memcache result yet.
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		
+		$aTables = array(
+			'city_variables',
+			'city_variables_pool',
+			'city_list',
+		);
+		$varName = mysql_real_escape_string(self::$WIKI_INGESTION_DATA_VARNAME);
+		$aWhere = array('city_id = cv_city_id', 'cv_id = cv_variable_id');
+		
+		$aWhere[] = "cv_value is not null";	
+		
+		$aWhere[] = "cv_name = '$varName'";
+
+
+		$oRes = $dbr->select(
+			$aTables,
+			array('city_id', 'cv_value'),
+			$aWhere,
+			__METHOD__,
+			array('ORDER BY' => 'city_sitename')
+		);
+
+		while ($oRow = $dbr->fetchObject($oRes)) {
+			$aWikis[$oRow->city_id] = unserialize($oRow->cv_value);
+		}
+		$dbr->freeResult( $oRes );
+		
+		$wgMemc->set( $memcKey, $aWikis, self::$CACHE_EXPIRY );
+
+		return $aWikis;
+	}
 
 	protected function getUrlContent($url) {
 		return Http::get($url);
