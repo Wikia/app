@@ -141,9 +141,6 @@ Recipes Tweaks
 Related Pages
 descmsg = wikiarelatedpages-desc
 
-Related Video
-file = RelatedVideo/i18n/RelatedVideo.i18n.php
-
 RTE - Base
 file = RTE/i18n/RTE.i18n.php
 
