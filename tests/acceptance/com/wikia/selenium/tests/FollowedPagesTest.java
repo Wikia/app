@@ -30,9 +30,8 @@ public class FollowedPagesTest extends BaseTest {
 		loginAsStaff();
 		session().open("index.php?title=Special:Preferences");
 		session().waitForPageToLoad(this.getTimeout());
-		session().click("//ul[@id='preftoc']/li[6]");
-		waitForElement("//input[@id='mw-input-watchlisthidebots']");
-		waitForElement("//li[@class='selected']");
+		session().click("//ul[@id='preftoc']/li[2]");
+		waitForElement("//input[@id='mw-input-enotiffollowedminoredits']");
 
 		session().uncheck( "//input[@id='mw-input-enotiffollowedminoredits']" );
 		session().check( "//input[@id='mw-input-enotiffollowedminoredits']" );
