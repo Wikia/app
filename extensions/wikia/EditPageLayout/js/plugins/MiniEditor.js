@@ -48,7 +48,7 @@
 			this.originalHeight = editorElement.outerHeight(true);
 
 			// Cache commonly accessed elements
-			this.buttonsWrapper = $('#' + wikiaEditor.instanceId + 'Buttons');
+			this.buttonsWrapper = wikiaEditor.getSpace('buttons') || $('#' + wikiaEditor.instanceId + 'Buttons');
 			this.buttons = this.buttonsWrapper.find('button');
 			this.toolbar = wikiaEditor.getSpace('toolbar');
 
@@ -73,6 +73,9 @@
 					wikiaEditor.editorFocus();		
 				}
 			});
+
+			// Focus the editor
+			this.editorFocus();
 
 			// Finish benchmarking initialization time
 			MiniEditor.initTime = (new Date().getTime() - MiniEditor.initTimer.getTime());

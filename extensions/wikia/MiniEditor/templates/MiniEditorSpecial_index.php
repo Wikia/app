@@ -9,9 +9,13 @@
 			)
 		))->render(); ?>
 
-		<textarea id="UniqueIdTest" class="ElementToReplace" placeholder="<?= wfMsg( 'minieditor-placeholder-new' ) ?>"></textarea>
+		<textarea id="MiniEditorOne" class="ElementToReplace" placeholder="<?= wfMsg( 'minieditor-placeholder-new' ) ?>"></textarea>
 
 		<?= $app->getView( 'MiniEditorController', 'EditorWrapper_End' )->render(); ?>
+
+		<div id="MiniEditorOneButtons" class="MiniEditorButtons">
+			<button type="button">Post</button>
+		</div>
 	</div>
 
 	<div id="MiniEditorEdit" class="Instance">
@@ -22,11 +26,15 @@
 			)
 		))->render(); ?>
 
-		<div class="ElementToReplace">
+		<div id="MiniEditorTwo" class="ElementToReplace">
 			<p><span style="font-weight: bold;"><?= wfMsg( 'minieditor-message-edit' ) ?></span></p>
 		</div>
 
 		<?= $app->getView( 'MiniEditorController', 'EditorWrapper_End' )->render(); ?>
+		
+		<div id="MiniEditorTwoButtons" class="MiniEditorButtons">
+			<button type="button">Edit</button>
+		</div>
 	</div>
 
 	<div id="MiniEditorReply" class="Instance">
@@ -36,9 +44,13 @@
 				'data-max-height' => 400
 			)
 		))->render(); ?>
-		
-		<textarea class="ElementToReplace" placeholder="<?= wfMsg( 'minieditor-placeholder-reply' ) ?>"></textarea>
+
+		<textarea id="MiniEditorThree" class="ElementToReplace" placeholder="<?= wfMsg( 'minieditor-placeholder-reply' ) ?>"></textarea>
 
 		<?= $app->getView( 'MiniEditorController', 'EditorWrapper_End' )->render(); ?>
+
+		<div id="MiniEditorThreeButtons" class="MiniEditorButtons">
+			<button type="button">Reply</button>
+		</div>
 	</div>
 </section>
