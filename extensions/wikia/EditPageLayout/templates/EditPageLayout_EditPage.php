@@ -47,7 +47,7 @@
 						<div id="EditPageEditor" class="editpage-content">
 							<!-- basic support for users with JS disabled -->
 							<noscript><style>
-								.edit-page-notices {
+								.editpage-notices {
 									display: block;
 								}
 
