@@ -338,11 +338,7 @@ class EditAccount extends SpecialPage {
 		$this->mUser->setEmail( '' );
 		$this->mUser->invalidateEmail();
 
-		// Password requirements need a captial letter, digit and lowercase letter.
-		// wfGenerateToken() returns a 32 char hex string, which will almost always satisfy the digit/letter but not always.
-		// This shouldn't reduce the entropy of the intentionally scrambled password.
-		$REQUIRED_CHARS = "A1a";
-		if ( $this->mUser->setPassword( wfGenerateToken() . $REQUIRED_CHARS ) ) {
+		if ( $this->mUser->setPassword( $this->generateRandomScrambledPassword() ) ) {
 			global $wgUser, $wgTitle;
 
 			// Mark as disabled in a more real way, that doesnt depend on the real_name text
@@ -391,5 +387,17 @@ class EditAccount extends SpecialPage {
 		$this->mStatusMsg = wfMsg( 'editaccount-success-disable', $this->mUser->mName );
 
 		return true;
+	}
+	
+	/**
+	 * Returns a random password which conforms to our password requirements and is
+	 * not easily guessable.
+	 */
+	function generateRandomScrambledPassword(){
+		// Password requirements need a captial letter, a digit, and a lowercase letter.
+		// wfGenerateToken() returns a 32 char hex string, which will almost always satisfy the digit/letter but not always.
+		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
+		$REQUIRED_CHARS = "A1a";
+		return (wfGenerateToken() . $REQUIRED_CHARS);
 	}
 }
