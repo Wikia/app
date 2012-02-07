@@ -138,7 +138,7 @@ public class EditPageBaseTest extends BaseTest {
 		content = content.replace("--~~~~", "");
 
 		// modify editable content to actually get a diff
-		session().runScript("window.RTE.instance.setData('foo')");
+		doEdit("foo");
 
 		session().click("//a[@id='wpDiff']");
 
