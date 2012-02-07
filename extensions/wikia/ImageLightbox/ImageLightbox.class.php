@@ -152,7 +152,7 @@ class ImageLightbox {
 		global $wgRequest, $wgTitle, $wgNoReplyAddress, $wgUser, $wgNoReplyAddress;
 		wfProfileIn(__METHOD__);
 		$user = $wgUser->getId();
-		
+
 		if (empty($user)) {
 			$res = array(
 					'result' => 0,
@@ -162,7 +162,7 @@ class ImageLightbox {
 			wfProfileOut(__METHOD__);
 			return $res;
 		}
-		
+
 		$addresses = $wgRequest->getVal('addresses');
 		if (!empty($addresses) && !$wgUser->isBlockedFromEmailuser() ) {
 			$addresses = explode(',', $addresses);
@@ -209,6 +209,8 @@ class ImageLightbox {
 				}
 			}
 		} else {
+			$countMails = 0;
+
 			$res = array(
 				'result' => 0,
 				'info-caption' => wfMsg('lightbox-share-email-error-caption'),
