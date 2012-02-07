@@ -407,9 +407,11 @@ function WMU_loadMainFromView() {
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	// Handle MiniEditor focus
 	// (BugId:18713)
-	var wikiaEditor = WikiaEditor.getInstance();
-	if(wikiaEditor.config.isMiniEditor) {
-		wikiaEditor.plugins.MiniEditor.hasFocus = true;
+	if (window.WikiaEditor) {
+		var wikiaEditor = WikiaEditor.getInstance();
+		if(wikiaEditor.config.isMiniEditor) {
+			wikiaEditor.plugins.MiniEditor.hasFocus = true;
+		}
 	}
 
 	if(gallery === -2){
