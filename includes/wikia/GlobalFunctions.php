@@ -928,9 +928,17 @@ function wfTimeFormatAgo($stamp){
 	wfProfileIn(__METHOD__);
 	global $wgLang;
 
+	$currenttime = time();
+	$stamptime = strtotime($stamp);	
 	$ago = time() - strtotime($stamp) + 1;
+	$sameyear = date('Y',$currenttime) == date('Y',$stamptime);
 
-	if ($ago < 60) {
+	if ($ago > 365 * 86400 || !$sameyear) {
+		// Over 365 days
+		// or different year than current:
+		// format is date, with a year (July 26, 2008)
+		$res = $wgLang->date(wfTimestamp(TS_MW, $stamp));
+	} elseif ($ago < 60) {
 		// Under 1 min: to the second (ex: 30 seconds ago)
 		$res = wfMsgExt('wikia-seconds-ago', array('parsemag'), $ago);
 	}
@@ -946,16 +954,13 @@ function wfTimeFormatAgo($stamp){
 		// Under 30 days: to the day (5 days ago)
 		$res = wfMsgExt('wikia-days-ago', array('parsemag'), floor($ago / 86400));
 	}
-	else if ($ago < 365 * 86400) {
+	else if ($ago < 365 * 86400) {	
 		// Under 365 days: date, with no year (July 26)
 		//remove year from user's date format
 		$format = trim($wgLang->getDateFormatString('date', 'default'), ' ,yY');
 		$res = $wgLang->sprintfDate($format, wfTimestamp(TS_MW, $stamp));
 	}
-	else {
-		// Over 365 days: date, with a year (July 26, 2008)
-		$res = $wgLang->date(wfTimestamp(TS_MW, $stamp));
-	}
+	
 
 	wfProfileOut(__METHOD__);
 	return $res;
