@@ -530,23 +530,8 @@ table.wikitable {
 	}
 }
 
-table.article-table { // This parallels WikiaTable in _table.scss
-	background: darken($color-page, 2%);
-	border-collapse: collapse;
-	border: 0px none $color-page-border;
-	margin: 1em 1em 1em 0;
-
-	th, td {
-		border-bottom: 1px $color-page-border solid;
-		padding: 6px 12px;
-	}
-	th {
-		background: darken($color-page, 5%);
-		text-align: left;
-	}
-	caption {
-		font-weight: bold;
-	}
+.article-table { // This parallels WikiaTable in _table.scss
+	@extend .WikiaTable
 }
 
 // /** Interlang Links **/

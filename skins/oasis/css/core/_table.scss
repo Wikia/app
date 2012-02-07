@@ -69,7 +69,7 @@
 	}
 }
 
-table.WikiaTable { // This parallels table.article-table in _article.scss
+.WikiaTable { // This parallels table.article-table in _article.scss
 	background: darken($color-page, 2%);
 	border-collapse: collapse;
 	border: 0px none $color-page-border;
