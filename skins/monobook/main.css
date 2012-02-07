@@ -1392,3 +1392,11 @@ div.mw-lag-warn-high {
 .no-text-transform {
 	text-transform: none;
 }
+
+.WikiaTable, .article-table, .WikiaTable td, .WikiaTable th, .article-table td, .article-table th {
+	border: 1px solid #333;
+}
+.WikiaTable td, .WikiaTable th, .article-table td, .article-table th {
+	padding:3px;
+}
+
