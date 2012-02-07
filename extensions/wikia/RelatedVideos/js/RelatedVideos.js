@@ -19,7 +19,7 @@ var RelatedVideos = {
 			this.onRightRail = true;
 			this.videosPerPage = 4;
 		}
-		
+
 		var importantContentHeight = $('#WikiaArticle').height();
 		importantContentHeight += $('#WikiaArticleComments').height();
 		if ( !this.onRightRail && $('span[data-placeholder="RelatedVideosModule"]').length != 0 ){
@@ -68,7 +68,7 @@ var RelatedVideos = {
 			var anim_time = 500;
 		}
 		//scroll_by = scroll_by * param;
-		
+
 		// button vertical secondary left
 		var futureState = RelatedVideos.currentRoom + param;
 		//if (( $('#RelatedVideosRL .container').queue().length == 0 ) &&
@@ -91,7 +91,7 @@ var RelatedVideos = {
 			});
 		}
 	},
-	
+
 	regroup: function() {
 		if ( !this.onRightRail ) { return; }
 		var container = $('.container',this.rvModule)
@@ -109,9 +109,9 @@ var RelatedVideos = {
 			$(this).appendTo( group );
 		});
 		if(group) { group.appendTo( container ); }
-		
+
 	},
-	
+
 	// State calculations & refresh
 
 	checkButtonState: function(){
@@ -155,15 +155,7 @@ var RelatedVideos = {
 	loginWrapper: function ( callback, target ){
 		var message = 'protected';
 		if(( wgUserName == null ) || ( RelatedVideos.alreadyLoggedIn )){
-			if (!window.wgComboAjaxLogin) {
-				UserLoginModal.show({
-					callback: function() {
-						RelatedVideos.alreadyLoggedIn = true;
-						callback( target );
-					}
-				});
-			}
-			else {
+			if (window.wgComboAjaxLogin) {
 				showComboAjaxForPlaceHolder( false, "", function() {
 					AjaxLogin.doSuccess = function() {
 						$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
@@ -175,6 +167,15 @@ var RelatedVideos = {
 						$( window ).scrollTop( $(RelatedVideos.rvModule).offset().top + 100 );
 					}
 				}, false, message );
+			}
+			else {
+				UserLoginModal.show({
+					callback: function() {
+						$( window ).scrollTop( $(RelatedVideos.rvModule).offset().top + 100 );
+						RelatedVideos.alreadyLoggedIn = true;
+						callback(target);
+					}
+				});
 			}
 		} else {
 			callback( target );
@@ -222,7 +223,7 @@ var RelatedVideos = {
 							$('#relatedvideos-video-player-embed-show').click(function() {
 									$('#relatedvideos-video-player-embed-code').show();
 									$('#relatedvideos-video-player-embed-show').hide();
-							}); 
+							});
 						}
 					});
 				} else if ( res.html ) {
