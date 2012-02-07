@@ -155,17 +155,27 @@ var RelatedVideos = {
 	loginWrapper: function ( callback, target ){
 		var message = 'protected';
 		if(( wgUserName == null ) || ( RelatedVideos.alreadyLoggedIn )){
-			showComboAjaxForPlaceHolder( false, "", function() {
-				AjaxLogin.doSuccess = function() {
-					$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
-					RelatedVideos.alreadyLoggedIn = true;
-					callback( target );
-				};
-				AjaxLogin.close = function() {
-					$('#AjaxLoginBoxWrapper').closeModal();
-					$( window ).scrollTop( $(RelatedVideos.rvModule).offset().top + 100 );
-				}
-			}, false, message );
+			if (!window.wgComboAjaxLogin) {
+				UserLoginModal.show({
+					callback: function() {
+						RelatedVideos.alreadyLoggedIn = true;
+						callback( target );
+					}
+				});
+			}
+			else {
+				showComboAjaxForPlaceHolder( false, "", function() {
+					AjaxLogin.doSuccess = function() {
+						$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
+						RelatedVideos.alreadyLoggedIn = true;
+						callback( target );
+					};
+					AjaxLogin.close = function() {
+						$('#AjaxLoginBoxWrapper').closeModal();
+						$( window ).scrollTop( $(RelatedVideos.rvModule).offset().top + 100 );
+					}
+				}, false, message );
+			}
 		} else {
 			callback( target );
 		}
