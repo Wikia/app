@@ -115,6 +115,7 @@ HoverMenu.prototype.mouseout = function(event) {
 
 HoverMenu.prototype.showNav = function(parent) {
 	var nav = $(parent).children('ul');
+	HoverMenuGlobal.hideAll();
 
 	if (nav.exists()) {
 		nav.addClass("show");
@@ -149,11 +150,25 @@ HoverMenu.prototype.hideNav = function() {
 	this.menu.find(".subnav").removeClass("show");
 };
 
+/**
+ * static singleton that holds all menu instances in skin, and the utility functions
+ * push new instance to menus[] if need be, be sure to implement hideNav()
+ */
+var HoverMenuGlobal = {
+	menus: [],
+	hideAll: function() {
+		var menus = HoverMenuGlobal.menus;
+		for(index in menus) {
+			menus[index].hideNav();
+		}
+	}
+};
+
 $(function() {
 	//Create instances of HoverMenu
-	new HoverMenu("#GlobalNavigation");
-	new HoverMenu("#AccountNavigation");
-	new HoverMenu("#WallNotifications");
+	HoverMenuGlobal.menus.push(new HoverMenu("#GlobalNavigation"));
+	HoverMenuGlobal.menus.push(new HoverMenu("#AccountNavigation"));
+	HoverMenuGlobal.menus.push(new HoverMenu("#WallNotifications"));
 	//Accessbility
 	$("div.skiplinkcontainer a").focus(function(evt) {
 		$("body").data("accessible", "true");

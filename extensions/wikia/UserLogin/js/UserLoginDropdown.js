@@ -23,8 +23,11 @@ var UserLoginDropdown = {
 				}, 300);
 			}, function(e) {
 				// do nothing on hover out
+				UserLoginDropdown.hide();
 				clearTimeout(UserLoginDropdown.hoverHandle);
 			});
+			
+		HoverMenuGlobal.menus.push(UserLoginDropdown);
 	},
 	show: function() {
 		if(!this.dropdown.hasClass('show')) {
@@ -50,6 +53,9 @@ var UserLoginDropdown = {
 		if(!target.closest('#AccountNavigation').exists()) {
 			this.hide();
 		}
+	},
+	hideNav: function() {
+		UserLoginDropdown.hide();
 	}
 };
 
