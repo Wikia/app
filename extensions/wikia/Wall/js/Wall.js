@@ -501,30 +501,32 @@ var Wall = $.createClass(Object, {
 	
 	onAfterAjaxLogin: function(e) {
 		var event = e;
-		if( typeof(showComboAjaxForPlaceHolder) == 'function' && showComboAjaxForPlaceHolder('', false, this.proxy(function() {
-			AjaxLogin.doSuccess = this.proxy(function() {
-				var eventTarget = $(event.target),
-					wallReply = false,
-					wallPost = false;
 				
-				if( eventTarget.hasClass('wall-require-login') ) {
-					if( eventTarget.hasClass('replyButton') ) {
-						wallReply = true;
-					} else {
-						wallPost = true;
+		if( UserLoginModal.show({
+				callback: this.proxy(function() {
+					var eventTarget = $(event.target),
+						wallReply = false,
+						wallPost = false;
+					
+					if( eventTarget.hasClass('wall-require-login') ) {
+						if( eventTarget.hasClass('replyButton') ) {
+							wallReply = true;
+						} else {
+							wallPost = true;
+						}
+						
+						eventTarget.removeClass('wall-require-login');
 					}
 					
-					eventTarget.removeClass('wall-require-login');
-				}
-				
-				var href = eventTarget.attr('data');
-				if( wallPost && href ) {
-					this.postNewMessage(href);
-				} else if(wallReply && href) {
-					this.replyToMessage(event, href);
-				}
-			});
-		}), false, true) ) {
+					var href = eventTarget.attr('data');
+					if( wallPost && href ) {
+						this.postNewMessage(href);
+					} else if(wallReply && href) {
+						this.replyToMessage(event, href);
+					}
+				}) //this.proxy()
+			}) //UserLoginModal.show()
+		) {
 			event.preventDefault();
 		}
 	},

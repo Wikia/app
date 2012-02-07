@@ -52,12 +52,13 @@ if(!empty($wgReadOnly)){
 			if(isLoggedIn){
 				<?= $chatClickAction ?>
 			} else {
-				showComboAjaxForPlaceHolder(false, "", function() {
-					AjaxLogin.doSuccess = function() {
+				UserLoginModal.show({
+					persistModal: true,
+					callback: function() {
 						$('.modalWrapper').children().not('.close').not('.modalContent').not('h1').remove();
 						$('.modalContent').load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=AnonLoginSuccess&outputType=html');
 					}
-				}, false, message); // show the 'login required for this action' message.
+				});
 			}
 		} // end onChatButtonClick()
 	</script>
