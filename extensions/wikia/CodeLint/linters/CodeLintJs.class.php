@@ -41,7 +41,6 @@ class CodeLintJs extends CodeLint {
 			'mwCustomEditButtons',
 			'Observable',
 			'RTE',
-			'showComboAjaxForPlaceHolder',
 			'skin',
 			'stylepath',
 			'ThemeDesigner',
