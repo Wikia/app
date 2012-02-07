@@ -31,18 +31,19 @@ class WikiHeaderModule extends Module {
 
 		$service = new NavigationService();
 		$this->menuNodes = $service->parseMessage('Wiki-navigation', array(4, 7, 7), 60*60*3 /* 3 hours */, true);
-		
+
 		$this->displaySearch = !empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard(F::app(), $wgTitle);
 	}
-	
+
 	public function executeWordmark() {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
-		
-		$this->wordmarkText = $settings["wordmark-text"];
-		$this->wordmarkType = $settings["wordmark-type"];
-		$this->wordmarkSize = $settings["wordmark-font-size"];
-		$this->wordmarkFont = $settings["wordmark-font"];
+
+		$this->wordmarkText = $settings['wordmark-text'];
+		$this->wordmarkType = $settings['wordmark-type'];
+		$this->wordmarkSize = $settings['wordmark-font-size'];
+		$this->wordmarkFont = $settings['wordmark-font'];
+		$this->wordmarkFontClass = !empty($settings["wordmark-font"]) ? "font-{$settings['wordmark-font']}" : '';
 
 		if ($this->wordmarkType == "graphic") {
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
@@ -50,7 +51,7 @@ class WikiHeaderModule extends Module {
 		} else {
 			//$this->wordmarkStyle = '';
 		}
-		
+
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 	}
 }
