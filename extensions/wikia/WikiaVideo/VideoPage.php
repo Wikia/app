@@ -1813,7 +1813,7 @@ EOD;
 	}
 
 	// return embed code for the particular video per provider
-        public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false, $cityShort='life', $height='', $inAjaxResponse=false ) {
+	public function getEmbedCode( $width = 300, $autoplay = false, $useJWPlayer = false, $asJSON = false, $cityShort='life', $height='', $inAjaxResponse=false ) {
 		// init jwplayer vars
 		$jwplayerData = array();
 		$jwplayerData['jwplayerjs'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_JS, '/'), false );
@@ -1831,7 +1831,8 @@ EOD;
 		}
 		$jwplayerData['skin'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . '/skins/wikia/'.$wikiaSkinZip, '/'), false );
 		
-                $embed = "";
+		$embed = "";
+		$url = "";
 		$code = 'standard';
 		if (!$height) {
 			if ($this->getRatio()) {
@@ -1843,13 +1844,13 @@ EOD;
 
 
 		switch( $this->mProvider ) {
-                        case self::V_METACAFE:
+			case self::V_METACAFE:
 				$url = 'http://www.metacafe.com/fplayer/' . $this->mId . '/' . $this->mData[0];
 				$code = 'custom';
 				$autoplay ? $auto = 'flashVars="playerVars=autoPlay=yes"' : $auto = '';
 				$embed = '<embed ' . $auto . ' src="' . $url . '" width="' . $width . '" height="' . $height . '" wmode="transparent"" allowFullScreen="true" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>';
-                                break;
-                        case self::V_YOUTUBE:
+				break;
+			case self::V_YOUTUBE:
 				$hd = false;
 				// mData either has mId (string), related (string), duration (int), description (string), hd (int), noembed (int)
 				// or mId, duration, description, hd, noembed
@@ -1895,10 +1896,10 @@ EOD;
 				$auto = $autoplay ? '&amp;autoplay=1' : '';
 				$embed = '<object width="'.$width.'" height="'.$height.'"><param name="allowfullscreen" value="true" /><param name="wmode" value="transparent"><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id='.$this->mId.'&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1'.$auto.'" /><embed src="http://vimeo.com/moogaloop.swf?clip_id='.$this->mId.'&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1'.$auto.'" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="'.$width.'" height="'.$height.'"></embed></object>';
 				break;
-                        case self::V_SOUTHPARKSTUDIOS:
-                                $code = 'custom';
-                                $embed = '<embed src="http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:' . $this->mId . '" width="' . $width . '" height="' . $height . '" type="application/x-shockwave-flash" wmode="window" flashVars="autoPlay=false&dist=http://www.southparkstudios.com&orig=" allowFullScreen="true" allowScriptAccess="always" allownetworking="all" bgcolor="#000000"></embed>';
-                                break;
+			case self::V_SOUTHPARKSTUDIOS:
+				$code = 'custom';
+				$embed = '<embed src="http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:' . $this->mId . '" width="' . $width . '" height="' . $height . '" type="application/x-shockwave-flash" wmode="window" flashVars="autoPlay=false&dist=http://www.southparkstudios.com&orig=" allowFullScreen="true" allowScriptAccess="always" allownetworking="all" bgcolor="#000000"></embed>';
+				break;
 			case self::V_BLIPTV:
 				$url = $this->getUrlToEmbed();
 				break;
@@ -2004,7 +2005,8 @@ EOD;
 				$embed = $videoData['embedCode'];
 				return $embed;
 				break;
-			default: break;
+			default:
+				break;
 		}
 
 		$sJSON = '';
@@ -2059,8 +2061,8 @@ EOD;
 				. '</script>';
 		}
 
-                return $asJSON ? $sJSON : $embed;
-        }
+		return $asJSON ? $sJSON : $embed;
+	}
 	
 	/**
 	 * MediaWiki parser tries to linkify any URL it encounters.
