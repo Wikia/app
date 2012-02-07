@@ -24,10 +24,10 @@ $dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 $tables = array(
 	'archive' => array('ns'=>'ar_namespace','id'=>'ar_page_id'),
 	'cu_changes' => array('ns'=>'cuc_namespace','id'=>'cuc_id'),
-	'hidden' => array('ns'=>'hidden_namespace','id'=>'hidden_page'),
+	//'hidden' => array('ns'=>'hidden_namespace','id'=>'hidden_page'),
 	'logging' => array('ns'=>'log_namespace','id'=>'log_id'),
 	'page' => array('ns'=>'page_namespace','id'=>'page_id'),
-	'pagelinks' => array('ns'=>'pl_namespace','id'=>'pl_from'),
+	//'pagelinks' => array('ns'=>'pl_namespace','id'=>'pl_from'),
 	'protected_titles' => array('ns'=>'pt_namespace','id'=>'pt_title'),
 	'recentchanges' => array('ns'=>'rc_namespace','id'=>'rc_id'),
 );
