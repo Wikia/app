@@ -770,44 +770,34 @@ var Wall = $.createClass(Object, {
 			format: 'json',
 			data: data,
 			callback: this.proxy(function(data) {
-				if(data.status){
-					this.cancelPreviewEdit(e);
-					var beforeedit = $('.before-edit', msg).html(),
-						bubble = $('.speech-bubble-message', msg).first();
-					
-					$('.speech-bubble-message', msg).first().html(beforeedit);
-					$('.msg-title', msg).first().html(data.msgTitle);
-					$('.msg-body', msg).first().html(data.body);
-					
-					//click tracking
-					var timestamp = $(bubble).find('.timestamp');
-					
-					var editor = timestamp.find('.username');
-					if(editor.exists()) {
-						timestamp.find('.username').html(data.username).attr('href', data.userUrl);
-					} else {
-						timestamp.prepend($($.msg('wall-message-edited', data.userUrl, data.username, data.historyUrl)));
-					}
-					
-					timestamp.find('.timeago').attr('title', data.isotime).timeago();
-					timestamp.find('.timeago-fmt').html(data.fulltime);
-					
-					if(window.skin && window.skin != "monobook") {
-						WikiaButtons.init(msg);
-					}
-					
-					//$('.SpeechBubble .timestamp .permalink') 
-					$('.buttons', msg).first().show();
-					this.track('wall/message/edit/save_changes');
-				}else{
-					$.showModal(data.msgTitle, data.msgContent,
-						{
-							onClose: function() {
-								window.location.reload();
-							}
-						}
-					);
+				this.cancelPreviewEdit(e);
+				var beforeedit = $('.before-edit', msg).html(),
+					bubble = $('.speech-bubble-message', msg).first();
+				
+				$('.speech-bubble-message', msg).first().html(beforeedit);
+				$('.msg-title', msg).first().html(data.msgTitle);
+				$('.msg-body', msg).first().html(data.body);
+				
+				//click tracking
+				var timestamp = $(bubble).find('.timestamp');
+				
+				var editor = timestamp.find('.username');
+				if(editor.exists()) {
+					timestamp.find('.username').html(data.username).attr('href', data.userUrl);
+				} else {
+					timestamp.prepend($($.msg('wall-message-edited', data.userUrl, data.username, data.historyUrl)));
 				}
+				
+				timestamp.find('.timeago').attr('title', data.isotime).timeago();
+				timestamp.find('.timeago-fmt').html(data.fulltime);
+				
+				if(window.skin && window.skin != "monobook") {
+					WikiaButtons.init(msg);
+				}
+				
+				//$('.SpeechBubble .timestamp .permalink') 
+				$('.buttons', msg).first().show();
+				this.track('wall/message/edit/save_changes');
 			})
 		});
 	},
