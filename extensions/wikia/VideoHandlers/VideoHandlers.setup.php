@@ -22,6 +22,13 @@ $wgLocalFileRepo = array(
 	'deletedHashLevels' => $wgFileStore['deleted']['hash']
 );
 
+if(empty($wgVideoHandlersVideosMigrated)) {
+	define('NS_VIDEO', '400');
+} else {
+	define('NS_VIDEO', '6');
+}
+
+
 /**
  * @var WikiaApp
  */
@@ -29,6 +36,7 @@ $app = F::app();
 $dir = dirname( __FILE__ );
 $app->registerClass( 'VideoHandler',		$dir . '/handlers/VideoHandler.class.php' );
 $app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
+$app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
 $app->registerClass( 'ThumbnailVideo',		$dir . '/ThumbnailVideo.class.php' );
 $app->registerClass( 'OldWikiaLocalFile',	$dir . '/filerepo/OldWikiaLocalFile.class.php' );
 $app->registerClass( 'WikiaLocalFile',		$dir . '/filerepo/WikiaLocalFile.class.php' );
@@ -133,3 +141,22 @@ $wgVideoMigrationProviderMap = array(
 	22 => 'Movieclips',
 	23 => 'Realgravity',
 );
+
+
+/*
+ * After migration
+ */ 
+if(!empty($wgVideoHandlersVideosMigrated)) {
+	
+	/**
+	 * SpecialPages
+	 */
+	$app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
+	$app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
+	
+	/**
+	 * hooks
+	 */
+	$app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
+	
+}

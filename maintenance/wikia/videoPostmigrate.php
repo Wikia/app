@@ -7,7 +7,7 @@ ini_set( 'display_errors', 'stdout' );
 $options = array('help');
 @require_once( '../commandLine.inc' );
 global $IP, $wgCityId, $wgExternalDatawareDB;
-$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
+#$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 echo( "$IP\n" );
 echo( "Premigration script running for $wgCityId\n" );
 
@@ -28,7 +28,7 @@ $tables = array(
 	'logging' => array('ns'=>'log_namespace','id'=>'log_id'),
 	'page' => array('ns'=>'page_namespace','id'=>'page_id'),
 	'pagelinks' => array('ns'=>'pl_namespace','id'=>'pl_from'),
-	'protected_titles' => array('ns'=>'pt_namespace','id'=>'title'),
+	'protected_titles' => array('ns'=>'pt_namespace','id'=>'pt_title'),
 	'recentchanges' => array('ns'=>'rc_namespace','id'=>'rc_id'),
 );
 
@@ -72,7 +72,7 @@ foreach( $tables as $tableName => $tableData ) {
 echo "Done updating tables\n";
 echo "Flipping the switch\n";
 
-#WikiFactory::setVarByName('wgVideoHandlersVideosMigrated', $wgCityId, true);
+WikiFactory::setVarByName('wgVideoHandlersVideosMigrated', $wgCityId, true);
 
 echo "Done\n";
 

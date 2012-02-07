@@ -7,7 +7,7 @@ ini_set( 'display_errors', 'stdout' );
 $options = array('help');
 @require_once( '../commandLine.inc' );
 global $IP, $wgCityId, $wgExternalDatawareDB;
-$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
+#$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 echo( "$IP\n" );
 echo( "Premigration script running for $wgCityId\n" );
 
