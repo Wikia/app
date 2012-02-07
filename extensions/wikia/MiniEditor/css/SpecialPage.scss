@@ -1,15 +1,22 @@
 @import "../../../../skins/oasis/css/core/color";
+@import "core/colors";
 
 .SpecialPageWrapper {
 	padding: 20px;
 
 	.Instance {
+		background-color: $color-MiniEditor;
 		margin-bottom: 10px;
+		width: 500px;
+		
+		h3 {
+			margin: 0;
+			padding: 5px 10px;
+		}
 	}
 
 	.MiniEditorWrapper {
 		padding: 10px;
-		width: 500px;
 
 		.editarea {
 			background-color: $color-page;
@@ -28,11 +35,17 @@
 		}
 	}
 
+	.MiniEditorButtons {
+		display: none;
+		padding: 0 10px 10px 10px;
+		text-align: right;
+	}
+
 	#MiniEditorEdit {
+		margin: 0  10px 10px 10px;
+		width: 480px;
+
 		.MiniEditorWrapper {
-			margin: 0 10px;
-			width: 480px;
-	
 			.editarea {
 				border: 0;
 	
@@ -45,9 +58,11 @@
 	}
 
 	#MiniEditorReply {
+		margin: 0 10px;
+		padding: 0;
+		width: 480px;
+
 		.MiniEditorWrapper {
-			margin: 0 10px;
-			padding: 0;
 	
 			.ElementToReplace {
 				height: 12px;
