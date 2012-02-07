@@ -4,12 +4,12 @@ $messages = array();
 
 $messages['en'] = array( 
 	'wall-no-title' => 'No title',
-	'wall-message-loadmore' => 'View all $1 replies',
+	'wall-message-loadmore' => 'View all $1 replies', // needs PLURAL support
 	'wall-message-wall' => 'Message Wall',
 	'wall-message-wall-shorten' => 'wall',
-	'wall-message-unfollow' => 'Unfollow',
-	'wall-message-following' => 'Following',
-	'wall-message-follow' => 'Follow',
+	'wall-message-unfollow' => 'Unfollow', // assuming this has the same context and meaning as Unfollow for any other case, why isn't that msg re-used? 
+	'wall-message-following' => 'Following', // ditto
+	'wall-message-follow' => 'Follow', // ditto
 
 	'wall-message-undoremove' => 'Undo',
 	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
@@ -17,29 +17,29 @@ $messages['en'] = array(
 	'wall-toolbar-history' => 'History',
 	
 	'wall-message-remove-notify' => 'Notify admin',
-	'wall-message-delete-notify' => 'Notify admin',
+	'wall-message-delete-notify' => 'Notify admin', // this message is repeated -- why? is there a difference in context? could we not have one "wall-message-notify"?
 	'wall-message-remove' => 'Remove',
 	'wall-message-rev-delete' => 'Revision delete',
 
-	'wall-message-elseswall' => "$1's wall",
+	'wall-message-elseswall' => "$1's wall", // needs GENDER support
 	'wall-message-no-permission' => 'You don\'t have permissions to perfom this action on the message',
 	
 	'wall-thread-removed' => 'Removed',
 	'wall-thread-deleted' => 'Deleted',
 
-	'wall-default-title' => 'Message from',
-	'wall-no-title-warning' => '&larr; You did not specify any title',
+	'wall-default-title' => 'Message from', // @FIXME user name should be a parameter in the message 
+	'wall-no-title-warning' => '&larr; You did not specify any title', // entity should be UTF8 character instead
 	'wall-desc' => 'User talk page replacement',
-	'wall-disabled-desc' => 'Message Wall functionality for pages without wall extension',
+	'wall-disabled-desc' => 'Message Wall functionality for pages without wall extension', // pages? did you mean "wikis"?
 	'wall-placeholder-topic' => 'What\'s this about?',
-	'wall-placeholder-message' => "Post a new message to $1's wall",
+	'wall-placeholder-message' => "Post a new message to $1's wall", // needs GENDER support
 	'wall-placeholder-message-anon' => "Post a new message to this wall",
 	'wall-placeholder-reply' => "Post a reply",
 	'wall-button-to-preview-comment' => "Preview",
 	'wall-button-to-cancel-preview' => "Edit",
 	'wall-button-to-submit-comment' => "Post",
 	'wall-button-to-submit-reply' => "Reply",
-	'wall-button-to-submit-comment-no-topic' => "Post without title",
+	'wall-button-to-submit-comment-no-topic' => "Post without title", // is this correct English? "with no title" or "without a title", perhaps?
 	'wall-button-save-changes' => 'Save changes',
 	'wall-button-cancel-changes' => 'Cancel',
 	'wall-button-done-source' => 'Done',
@@ -47,25 +47,25 @@ $messages['en'] = array(
 	'wall-message-more' => 'More', 
 	'wall-message-delete' => "Delete",
 	'wall-message-remove' => "Remove",
-	'wall-message-removed-thread-because' => "$1 removed this thread because:",
-	'wall-message-deleted-thread-because' => "$1 deleted this thread because:",
+	'wall-message-removed-thread-because' => "$1 removed this thread because:", // needs gender support
+	'wall-message-deleted-thread-because' => "$1 deleted this thread because:", // needs gender support
 	'wall-message-restore-thread' => "Restore Thread",
-	'wall-message-removed-reply-because' => "$1 removed this reply because:",
-	'wall-message-deleted-reply-because' => "$1 deleted this reply because:",
+	'wall-message-removed-reply-because' => "$1 removed this reply because:", // needs gender support
+	'wall-message-deleted-reply-because' => "$1 deleted this reply because:", // needs gender support, patchwork, reason should be a parameter
 	'wall-message-restore-reply' => "Restore Reply",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
-	'wall-user-talk-archive-page-title' => 'User_talk_archive',
+	'wall-user-talk-archive-page-title' => 'User_talk_archive', // why the underscores?
 
 	'wall-action-all-confirm-cancel' => 'Cancel',
-	'wall-action-all-confirm-notify' => 'Notify an admin',
+	'wall-action-all-confirm-notify' => 'Notify an admin', // again, this seems like a duplicate of the message(s) above, is the context different?
 
 	'wall-action-remove-reply-title' => 'Remove this reply',
 	'wall-action-remove-thread-title' => 'Remove this thread',
 
-	'wall-confirm-monobook-remove' => "Please tell us why you would like to remove this. \n\nThe original post and your summary will still appear in the wiki's history. \n",
-	'wall-confirm-monobook-admin' => "Please tell us why you would like to delete this. \n\nThe original post and your summary will still appear in the wiki's history. \n",
-	'wall-confirm-monobook-restore' => "Please tell us why you would like to restore this \n",
+	'wall-confirm-monobook-remove' => "Please tell us why you would like to remove this. \n\nThe original post and your summary will still appear in the wiki's history. \n", // do not end messages in new-line!
+	'wall-confirm-monobook-admin' => "Please tell us why you would like to delete this. \n\nThe original post and your summary will still appear in the wiki's history. \n", // do not end messages in new-line!
+	'wall-confirm-monobook-restore' => "Please tell us why you would like to restore this \n", // do not end messages in new-line!
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'Message was deleted previously and it no longer exists.',
 	
@@ -80,7 +80,7 @@ $messages['en'] = array(
 	'wall-action-admin-reply-title' => 'Delete this reply',
 
 	'wall-action-admin-confirm' => 'Please tell us why you would like to delete this:',
-	'wall-action-admin-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history",
+	'wall-action-admin-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history", // identical to 'wall-action-remove-thread above, why the duplicate?
 	'wall-action-admin-reply-confirm-info' => "This thread and your summary will still appear in the wiki's history. Only admins will be able to view this thread.",
 
 	'wall-action-admin-confirm-ok' => 'Delete',
@@ -108,35 +108,35 @@ $messages['en'] = array(
 	'wall-notifications-reminder' => 'You have <span>$1</span> unread {{PLURAL:$1|notification|notifications}}',
 	'wall-notifications-wall-disabled' => 'Message Wall has been disabled on this Wiki. Unable to load notifications.',
 	
-	'wn-user1-reply-you-your-wall' => '$1 replied to your message on your wall',
-	'wn-user2-reply-you-your-wall' => '$1 and $2 replied to your message on your wall',
-	'wn-user3-reply-you-your-wall' => '$1 and others replied to your message on your wall',
-	'wn-user1-reply-self-your-wall' => '$1 replied to a message on your wall',
+	'wn-user1-reply-you-your-wall' => '$1 replied to your message on your wall', // needs gender support
+	'wn-user2-reply-you-your-wall' => '$1 and $2 replied to your message on your wall', // needs gender support
+	'wn-user3-reply-you-your-wall' => '$1 and others replied to your message on your wall', // needs gender support
+	'wn-user1-reply-self-your-wall' => '$1 replied to a message on your wall', // needs gender support
 	'wn-user2-reply-self-your-wall' => '$1 and $2 replied to a message on your wall',
 	'wn-user3-reply-self-your-wall' => '$1 and others replied to a message on your wall',
 	'wn-user1-reply-other-your-wall' => '$1 replied to $2\'s message on your wall',
 	'wn-user2-reply-other-your-wall' => '$1 and $2 replied to $3\'s message on your wall',
 	'wn-user3-reply-other-your-wall' => '$1 and others replied to $2\'s message on your wall',
-	'wn-user1-reply-you-other-wall' => '$1 replied to your message on $2\'s wall',
+	'wn-user1-reply-you-other-wall' => '$1 replied to your message on $2\'s wall', // needs gender support
 	'wn-user2-reply-you-other-wall' => '$1 and $2 replied to your message on $3\'s wall',
 	'wn-user3-reply-you-other-wall' => '$1 and others replied to your message on $3\'s wall',
-	'wn-user1-reply-self-other-wall' => '$1 replied to a message on $2\'s wall',
+	'wn-user1-reply-self-other-wall' => '$1 replied to a message on $2\'s wall', // needs gender support
 	'wn-user2-reply-self-other-wall' => '$1 and $2 replied to a message on $3\'s wall',
 	'wn-user3-reply-self-other-wall' => '$1 and others replied to a message on $2\'s wall',
 	'wn-user1-reply-other-other-wall' => '$1 replied to $2\'s message on $3\'s wall',
 	'wn-user2-reply-other-other-wall' => '$1 and $2 replied to $3\'s message on $4\'s wall',
 	'wn-user3-reply-other-other-wall' => '$1 and others replied to $2\'s message on $3\'s wall',
-	'wn-user1-reply-you-a-wall' => '$1 replied to your message',
+	'wn-user1-reply-you-a-wall' => '$1 replied to your message', // needs gender support
 	'wn-user2-reply-you-a-wall' => '$1 and $2 replied to your message',
 	'wn-user3-reply-you-a-wall' => '$1 and others replied to your message',
-	'wn-user1-reply-self-a-wall' => '$1 replied to a message',
+	'wn-user1-reply-self-a-wall' => '$1 replied to a message', // needs gender support
 	'wn-user2-reply-self-a-wall' => '$1 and $2 replied to a message',
 	'wn-user3-reply-self-a-wall' => '$1 and others replied to a message',
-	'wn-user1-reply-other-a-wall' => '$1 replied to $2\'s message',
+	'wn-user1-reply-other-a-wall' => '$1 replied to $2\'s message', // needs gender support
 	'wn-user2-reply-other-a-wall' => '$1 and $2 replied to $3\'s message',
 	'wn-user3-reply-other-a-wall' => '$1 and others replied to $3\'s message',
-	'wn-newmsg-onmywall' => '$1 left a new message on your wall',
-	'wn-newmsg' => 'You left a new message on $1\'s wall',
+	'wn-newmsg-onmywall' => '$1 left a new message on your wall', // needs gender support
+	'wn-newmsg' => 'You left a new message on $1\'s wall', // needs gender support (for sender)
 	'wn-newmsg-on-followed-wall' => '$1 left a new message on $2\'s wall.',
 	
 	'wn-admin-thread-deleted' => 'Thread removed from $1\'s wall', 
@@ -149,7 +149,7 @@ $messages['en'] = array(
 	'wall-sorting-newest-replies' => 'Newest replies',
 	'wall-sorting-most-active' => 'Most active',
 	'wall-sorting-archived' => 'Archived',
-	
+	 // three dots are not an ellipsis (two below)
 	'tog-enotifwallthread' => '...someone replies to a Message Wall thread I follow',
 	'tog-enotifmywall' => '...someone posts a new message on my wall',
 	
@@ -162,7 +162,8 @@ $messages['en'] = array(
 	'wall-recentchanges-comment-new-message' => '(new: "$1")',
 	'wall-recentchanges-new-reply' => '(reply: "$1")',
 	'wall-recentchanges-edit' => '(edited message)',
-	
+	// for all 6 below: links could've been done via wikitext, perhaps? also, why isn't the user performing the action a param in the message?
+	// concatenation should be avoided if possible to allow word order changes
 	'wall-recentchanges-wall-removed-thread' => ' removed thread "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
 	'wall-recentchanges-wall-removed-reply' => ' removed reply from "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
 	'wall-recentchanges-wall-restored-thread' => ' restored thread "<a href="$1">$2</a>" on <a href="$3">$4\'s wall</a>',
@@ -227,7 +228,7 @@ $messages['en'] = array(
 	
 	/* Thread Level History */
 	'wall-thread-history-title' => 'thread history',
-	'wall-thread-history-thread-created' => '$1 $2 created this thread',
+	'wall-thread-history-thread-created' => '$1 $2 created this thread', // needs geneder support (also true for those below)
 	'wall-thread-history-reply-created' => '$1 $2 left a reply',
 
 	'wall-thread-history-thread-removed' => '$1 $2 removed this thread',
@@ -313,12 +314,12 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	/* Preferences */
 	'prefs-wall' => 'Wall',
 
-	'tog-enotifwallthread-v2' => '...someone replies to a Message Wall thread I follow',
+	'tog-enotifwallthread-v2' => '...someone replies to a Message Wall thread I follow', // three dots are not an ellipsis
 	'tog-enotifmywall-v2' => '...someone posts a new message on my Wall',
   
-	'wallshowsource-toggle-v2' => 'Enable View source option on Message Wall posts',
-	'wallshowsource-toggle' => 'Enable View source on Message Wall posts',
-	'walldelete-toggle' => 'Enable Revision delete on Message Wall posts',
+	'wallshowsource-toggle-v2' => 'Enable View source option on Message Wall posts', // if "view source" is a button, this should reference the relevant label message via {{int:msg-name}}
+	'wallshowsource-toggle' => 'Enable View source on Message Wall posts', // ditto
+	'walldelete-toggle' => 'Enable Revision delete on Message Wall posts', // ditto
 );
 
 $messages['qqq'] = array(
