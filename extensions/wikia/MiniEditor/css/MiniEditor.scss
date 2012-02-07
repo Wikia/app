@@ -44,6 +44,7 @@
 		.loading-message {
 			background: transparent;
 			z-index: 101;
+			left: 0;
 			top: 20%;
 			width: 100%;
 			text-align: center;
@@ -52,7 +53,6 @@
 			.loading-throbber, .loading-text {
 				display: inline-block;
 				vertical-align: middle;
-				padding: 10px;
 				zoom: 1;
 			}
 
