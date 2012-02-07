@@ -2304,25 +2304,25 @@ function lw_createPage($titleObj, $content, $summary="Page created using [[Lyric
 		$retVal = "Passed a string into lw_createPage() for the pageTitle instead of passing a Title object. Tip: use Title::newFromDBkey() to convert strings into titles.";
 	} else if(!is_object($titleObj)){
 		$retVal = "Title object not an object. Please pass a title object into lw_createPage().";
-	}
-
-	// Create the Article object.
-	$article = new Article($titleObj);
-	
-	$result = null;
-
-	$editPage = new EditPage( $article );
-	$editPage->edittime = $article->getTimestamp();
-	$editPage->textbox1 = $content;
-	
-	$bot = $wgUser->isAllowed('bot');
-		//this function calls Article::onArticleCreate which clears cache for article and it's talk page - NOTE: I don't know what this comment refers to... it was coppied from /extensions/wikia/ArticleComments/ArticleComment.class.php
-	$status = $editPage->internalAttemptSave( $result, $bot );
-
-	if(($status == EditPage::AS_SUCCESS_NEW_ARTICLE) || ($status == EditPage::AS_SUCCESS_UPDATE)){
-		$retVal = true;
 	} else {
-		$retVal = $status;
+		// Create the Article object.
+		$article = new Article($titleObj);
+		
+		$result = null;
+
+		$editPage = new EditPage( $article );
+		$editPage->edittime = $article->getTimestamp();
+		$editPage->textbox1 = $content;
+		
+		$bot = $wgUser->isAllowed('bot');
+			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - NOTE: I don't know what this comment refers to... it was coppied from /extensions/wikia/ArticleComments/ArticleComment.class.php
+		$status = $editPage->internalAttemptSave( $result, $bot );
+
+		if(($status == EditPage::AS_SUCCESS_NEW_ARTICLE) || ($status == EditPage::AS_SUCCESS_UPDATE)){
+			$retVal = true;
+		} else {
+			$retVal = $status;
+		}
 	}
 
 	wfProfileOut( __METHOD__ );
