@@ -23,7 +23,7 @@
 			border: 1px $color-page-border solid;
 			padding: 5px;
 
-			.ElementToReplace {
+			.TextareaToReplace, .DivToReplace {
 				background-color: $color-page;
 				border: 0;
 				color: $color-alternate-text;
@@ -42,7 +42,7 @@
 	}
 
 	#MiniEditorEdit {
-		margin: 0  10px 10px 10px;
+		margin: 0 10px 10px 20px;
 		width: 480px;
 
 		.MiniEditorWrapper {
@@ -58,7 +58,7 @@
 	}
 
 	#MiniEditorReply {
-		margin: 0 10px;
+		margin: 0 10px 10px 20px;
 		padding: 0;
 		width: 480px;
 
@@ -72,6 +72,13 @@
 				margin-top: 0;
 				padding: 10px 5px;
 			}
+		}
+	}
+	.buttons {
+		margin: 10px 20px;
+		.wikia-menu-button {
+			cursor: pointer;
+			padding: 0 8px;
 		}
 	}
 }
