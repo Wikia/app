@@ -54,10 +54,10 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 
 		if(!$titlesOnly) {
 			if($this->crossWikiSearch) {
-				$queryFields = 'title^10 host^5 html';
+				$queryFields = 'title^5 host^2 html';
 			}
 			else {
-				$queryFields = 'title^7 html';
+				$queryFields = 'title^5 html';
 			}
 
 			$searchSet = SolrSearchSet::newFromQuery( $term, $queryFields, $this->namespaces, $this->limit, $this->offset, $this->crossWikiSearch );
@@ -180,7 +180,6 @@ class SolrSearchSet extends SearchResultSet {
 	 */
 	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0, $crossWikiaSearch = false ) {
 		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgSolrDebugWikiId, $wgWikiaSearchABTestModes, $wgWikiaSearchABTestEnabled;
-
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
 
@@ -192,19 +191,12 @@ class SolrSearchSet extends SearchResultSet {
 		if( !empty( $wgWikiaSearchABTestEnabled ) ) {
 			$ABTestMode = self::getABTestMode( $wgWikiaSearchABTestModes );
 		}
-
+		
 		if(!$ABTestMode) {
 			$relevancyFunctionId = 2;
 			$params = array(
 				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
 				'qf' => $queryFields,
-				#'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
-				#'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
-				'qt' => 'dismax',
-				'pf' => 'html^0.8 title^2', // override defaults
-				'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
-				'ps' => '100',
-				'tie' => 1, // make it combine all scores instead of picking best match
 				'hl' => 'true',
 				'hl.fl' => 'html,title', // highlight field
 				'hl.snippets' => '2', // number of snippets per field
@@ -214,11 +206,6 @@ class SolrSearchSet extends SearchResultSet {
 				'f.html.hl.alternateField' => 'html',
 				'f.html.hl.maxAlternateFieldLength' => 300,
 				'indent' => 1,
-				'fq' => '',
-				/* ADi: tmp disabled due to performance reasons (RT: #63941)
-				'spellcheck' => 'true',
-				'spellcheck.collate' => 'true',
-				*/
 				'timeAllowed' => 5000
 			);
 		}
@@ -229,7 +216,6 @@ class SolrSearchSet extends SearchResultSet {
 					$params = array(
 						'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
 						'qf' => $queryFields,
-						'qt' => 'dismax',
 						'hl' => 'true',
 						'hl.fl' => 'html,title', // highlight field
 						'hl.snippets' => '2', // number of snippets per field
@@ -264,32 +250,35 @@ class SolrSearchSet extends SearchResultSet {
 				foreach($namespaces as $namespace) {
 					$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
 				}
-				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . ( !empty($wgSolrDebugWikiId) ? $wgSolrDebugWikiId : $wgCityId );
 		}
-		//echo "fq=" . $params['fq'] . "<br />";
-
+		
+		$dismaxParams = "{!dismax qf='html^0.8" 
+						." title^5'"
+						." pf='html^0.8"
+						." title^5'"
+						." mm=75" 
+						." ps=10"
+						." tie=1"
+						. "}";
+	
+		$sanitizedQuery = 'wid: '. ( !empty($wgSolrDebugWikiId) ? $wgSolrDebugWikiId : $wgCityId )
+						. ($nsQuery ? " AND ($nsQuery)" : '')
+						. ' AND _query_:"' . $dismaxParams . $sanitizedQuery . '"';
+		
 		try {
 			wfRunHooks( 'Search-beforeBackendCall', array( &$sanitizedQuery, &$offset, &$limit, &$params ) );
 			$response = $solr->search($sanitizedQuery, $offset, $limit, $params);
 		}
 		catch (Exception $exception) {
-			//echo '<pre>'; print_r($exception); echo '</pre>';
 			$wgErrorLogTmp = $wgErrorLog;
 			$wgErrorLog = true;
-			Wikia::log( __METHOD__, "ERROR", $exception->getMessage() . " PARAMS: q=$sanitizedQuery, fq=" . $params['fq'] );
+			Wikia::log( __METHOD__, "ERROR", $exception->getMessage() . " PARAMS: ".$sanitizedQuery );
 			$wgErrorLog = $wgErrorLogTmp;
 
 			wfProfileOut( $fname );
 			return 100;
 		}
-		//echo "<pre>";
-		//print_r($response->response);
-		//print_r($response->highlighting);
-		//print_r($response->spellcheck);
-		//exit;
-
 		$resultDocs = $response->response->docs;
 		$resultSnippets = is_object($response->highlighting) ? get_object_vars($response->highlighting) : array();
 		$resultSuggestions = is_object($response->spellcheck) ? $response->spellcheck->suggestions : null;
@@ -383,9 +372,6 @@ class SolrSearchSet extends SearchResultSet {
 				$deDupedResults[] = $result;
 			}
 		}
-		//echo "<pre>";
-		//print_r($deDupedResults);
-		//exit;
 		return $deDupedResults;
 	}
 	/**
