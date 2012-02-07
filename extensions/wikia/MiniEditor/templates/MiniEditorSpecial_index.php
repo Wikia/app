@@ -9,7 +9,7 @@
 			)
 		))->render(); ?>
 
-		<textarea id="MiniEditorOne" class="ElementToReplace" placeholder="<?= wfMsg( 'minieditor-placeholder-new' ) ?>"></textarea>
+		<textarea id="MiniEditorOne" class="TextareaToReplace" placeholder="<?= wfMsg( 'minieditor-placeholder-new' ) ?>"></textarea>
 
 		<?= $app->getView( 'MiniEditorController', 'EditorWrapper_End' )->render(); ?>
 
@@ -26,7 +26,7 @@
 			)
 		))->render(); ?>
 
-		<div id="MiniEditorTwo" class="ElementToReplace">
+		<div id="MiniEditorTwo" class="DivToReplace">
 			<p><span style="font-weight: bold;"><?= wfMsg( 'minieditor-message-edit' ) ?></span></p>
 		</div>
 
@@ -35,6 +35,9 @@
 		<div id="MiniEditorTwoButtons" class="MiniEditorButtons">
 			<button type="button">Edit</button>
 		</div>
+	</div>
+	<div class="buttons">
+		<div class="wikia-menu-button contribute secondary" id="MiniEditorEditButton">Edit</div>
 	</div>
 
 	<div id="MiniEditorReply" class="Instance">
@@ -45,7 +48,7 @@
 			)
 		))->render(); ?>
 
-		<textarea id="MiniEditorThree" class="ElementToReplace" placeholder="<?= wfMsg( 'minieditor-placeholder-reply' ) ?>"></textarea>
+		<textarea id="MiniEditorThree" class="TextareaToReplace" placeholder="<?= wfMsg( 'minieditor-placeholder-reply' ) ?>"></textarea>
 
 		<?= $app->getView( 'MiniEditorController', 'EditorWrapper_End' )->render(); ?>
 
