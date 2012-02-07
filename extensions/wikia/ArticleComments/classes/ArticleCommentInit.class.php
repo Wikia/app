@@ -74,10 +74,10 @@ class ArticleCommentInit {
 
 		//blog listing? (eg: User:Name instead of User:Name/Blog_name) - do not show comments
 		if (
-			defined('NS_BLOG_ARTICLE') &&
-			$title instanceof Title &&
-			$title->getNamespace() == NS_BLOG_ARTICLE &&
-			strpos($title->getText(), '/') === false
+				defined('NS_BLOG_ARTICLE') &&
+				$title instanceof Title &&
+				$title->getNamespace() == NS_BLOG_ARTICLE &&
+				strpos($title->getText(), '/') === false
 		) {
 			wfProfileOut(__METHOD__);
 			return false;
@@ -95,12 +95,13 @@ class ArticleCommentInit {
 		wfProfileIn(__METHOD__);
 
 		//enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
+
 		$enable = (
-			$title instanceof Title &&
-			in_array(
-				 $title->getNamespace(),
-				 empty( $wgArticleCommentsNamespaces ) ? $wgContentNamespaces : $wgArticleCommentsNamespaces
-			)
+				$title instanceof Title &&
+				in_array(
+						$title->getNamespace(),
+						empty( $wgArticleCommentsNamespaces ) ? $wgContentNamespaces : $wgArticleCommentsNamespaces
+				)
 		);
 
 		wfProfileOut(__METHOD__);
@@ -135,7 +136,7 @@ class ArticleCommentInit {
 				$page = ArticleCommentList::newFromTitle($wgTitle);
 				$data = $page->render();
 			}
-			
+
 			wfProfileOut( __METHOD__ );
 		}
 
@@ -148,12 +149,18 @@ class ArticleCommentInit {
 
 		if (self::ArticleCommentCheck()) {
 			global $wgUser;
-			
-			if ( $sk instanceof SkinMonoBook ) {
+			$app = F::app();
+
+			if ( in_array(
+					get_class($sk),
+					$app->wg->ArticleCommentsEnabledSkins
+			))
+			{
 				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
 				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
 			}
 		}
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -231,7 +238,7 @@ class ArticleCommentInit {
 
 		//for blog comments BlogLockdown is checking rights
 		if ((defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) ||
-			defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
+				defined('NS_BLOG_ARTICLE_TALK') && $namespace == NS_BLOG_ARTICLE_TALK ) {
 			return true;
 		}
 
@@ -278,13 +285,13 @@ class ArticleCommentInit {
 		global $wgRequireFBConnectionToComment, $wgEnableFacebookConnectExt, $wgUser;
 
 		if ( !empty ( $wgRequireFBConnectionToComment ) &&
-			!empty ( $wgEnableFacebookConnectExt ) ) {
+				!empty ( $wgEnableFacebookConnectExt ) ) {
 			$fb = new FBConnectAPI();
 			$tmpArrFaceBookId = FBConnectDB::getFacebookIDs($wgUser);
 			$isFBConnectionProblem = (
-				( $fb->user() == 0 ) ||					// fb id or 0 if none is found.
-				!isset( $tmpArrFaceBookId[0] ) ||
-				( (int)$fb->user() != (int)$tmpArrFaceBookId[0] )	// current fb id different from fb id of currenty logged user.
+					( $fb->user() == 0 ) ||					// fb id or 0 if none is found.
+					!isset( $tmpArrFaceBookId[0] ) ||
+					( (int)$fb->user() != (int)$tmpArrFaceBookId[0] )	// current fb id different from fb id of currenty logged user.
 			);
 			return $isFBConnectionProblem;
 		} else {

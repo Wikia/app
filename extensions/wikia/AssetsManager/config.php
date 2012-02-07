@@ -75,7 +75,9 @@ $config['oasis_jquery'] = array(
 		'//skins/common/jquery/jquery.timeago.js',
 		'//skins/common/jquery/jquery.store.js',
 		'//skins/common/jquery/jquery.wikia.js',
-		'//skins/common/jquery/jquery.expirystorage.js',
+		'//skins/common/jquery/jquery.hoverattr.js',
+		'//skins/common/jquery/jquery.hovertoarticles.js',
+		'//skins/common/jquery/jquery.expirystorage.js', 
 		'//skins/oasis/js/tables.js',
 		'//skins/oasis/js/common.js'
 	)
@@ -121,7 +123,6 @@ $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/ShareFeature/js/ShareFeature.js',
-		'//extensions/wikia/ArticleComments/js/ArticleComments.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
