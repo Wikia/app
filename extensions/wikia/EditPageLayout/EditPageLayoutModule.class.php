@@ -68,7 +68,7 @@ class EditPageLayoutModule extends Module {
 		}
 
 		// render WikiLogo
-		$wikiHeaderData = Module::get('WikiHeader')->getData();
+		$wikiHeaderData = Module::get('WikiHeader', 'Wordmark')->getData();
 
 		// move wordmark data
 		$this->wordmark = $wikiHeaderData;
