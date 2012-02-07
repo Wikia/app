@@ -44,10 +44,12 @@ div.ajax-poll-bar {
 }
 
 .pollAnswerVotes div {
-	background: mix($color-page, #000000, 75%);
 	@if lightness($color-page) < 50 {
 		background: mix($color-page, #FFFFFF, 75%);
+	} @else {
+		background: mix($color-page, #000000, 75%);
 	}
+
 
 	border-right: 1px solid $color-page-border;
 	font-size: 1px;
