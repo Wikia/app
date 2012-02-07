@@ -355,9 +355,8 @@
 		/**
 		 * @dataProvider changeTempUserEmailDataProvider
 		 */
-		public function testChangeTempUserEmail( $mockWikiaRequestParams, $mockUserParams, $mockTempUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
+		public function testChangeTempUserEmail( $params, $mockUserParams, $mockTempUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
 			// setup
-			$this->setUpMockObject( 'WikiaRequest', $mockWikiaRequestParams, true );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
 			
@@ -369,7 +368,7 @@
 			UserLoginHelper::getInstance()->setApp( $this->app );
 			
 			// test
-			$response = $this->app->sendRequest( 'UserSignupSpecial', 'changeTempUserEmail' );
+			$response = $this->app->sendRequest( 'UserSignupSpecial', 'changeTempUserEmail', $params );
 			
 			$responseData = $response->getVal( 'result' );
 			$this->assertEquals( $expResult, $responseData );
@@ -386,13 +385,8 @@
 		
 		public function changeTempUserEmailDataProvider() {
 			// error - empty email
-			$mockWikiaRequest1 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'changeTempUserEmail',
-					'email' => '',
-				),
+			$params1 = array(
+				'email' => '',
 			);
 			$mockUserParams1 = null;
 			$mockTempUserParams1 = null;
@@ -402,38 +396,23 @@
 			$expErrParam1 = 'email';
 			
 			// error - invalid email
-			$mockWikiaRequest2 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'changeTempUserEmail',
-					'email' => 'testEmail',
-				),
+			$params2 = array(
+				'email' => 'testEmail',
 			);
 			$expMsg2 = wfMsg( 'usersignup-error-invalid-email' );
 			
 			// error - empty username
-			$mockWikiaRequest3 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'changeTempUserEmail',
-					'email' => self::TEST_EMAIL,
-					'username' => '',
-				),
+			$params3 = array(
+				'email' => self::TEST_EMAIL,
+				'username' => '',
 			);
 			$expMsg3 = wfMsg( 'userlogin-error-noname' );
 			$expErrParam3 = 'username';
 			
 			// error - temp user does not exist
-			$mockWikiaRequest4 = array(
-				'setVal' => null,
-				'params' => array(
-					'controller' => 'UserSignupSpecialController',
-					'method' => 'changeTempUserEmail',
-					'email' => self::TEST_EMAIL,
-					'username' => self::TEST_USERNAME,
-				),
+			$params4 = array(
+				'email' => self::TEST_EMAIL,
+				'username' => self::TEST_USERNAME,
 			);
 			$mockTempUserParams4 = false;
 			$expMsg4 = wfMsg( 'userlogin-error-nosuchuser' );
@@ -506,38 +485,43 @@
 			
 			return array (
 				// error - empty email
-				array( $mockWikiaRequest1, $mockUserParams1, $mockTempUserParams1, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg1, $expErrParam1 ),
+				array( $params1, $mockUserParams1, $mockTempUserParams1, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg1, $expErrParam1 ),
 				// error - invalid email
-				array( $mockWikiaRequest2, $mockUserParams1, $mockTempUserParams1, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg2, $expErrParam1 ),
+				array( $params2, $mockUserParams1, $mockTempUserParams1, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg2, $expErrParam1 ),
 				// error - empty username
-				array( $mockWikiaRequest3, $mockUserParams1, $mockTempUserParams1, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg3, $expErrParam3 ),
+				array( $params3, $mockUserParams1, $mockTempUserParams1, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg3, $expErrParam3 ),
 				// error - temp user does not exist
-				array( $mockWikiaRequest4, $mockUserParams1, $mockTempUserParams4, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg4, $expErrParam3 ),
+				array( $params4, $mockUserParams1, $mockTempUserParams4, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg4, $expErrParam3 ),
 				// error - temp user id does not match with one in $_SESSION
-				array( $mockWikiaRequest4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams5, $mockCacheParams1, 'error', $expMsg5, $expErrParam3 ),
+				array( $params4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams5, $mockCacheParams1, 'error', $expMsg5, $expErrParam3 ),
 				// error - email changes exceed limit
-				array( $mockWikiaRequest4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams6, $mockCacheParams6, 'error', $expMsg6, $expErrParam1 ),
+				array( $params4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams6, $mockCacheParams6, 'error', $expMsg6, $expErrParam1 ),
 				// error - email changes == limit
-				array( $mockWikiaRequest4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams6, $mockCacheParams6v2, 'error', $expMsg6, $expErrParam1 ),
+				array( $params4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams6, $mockCacheParams6v2, 'error', $expMsg6, $expErrParam1 ),
 				// success - new email == current email ( email changes < limit ) -- do nothing
-				array( $mockWikiaRequest4, $mockUserParams1, $mockTempUserParams7, $mockSessionParams6, $mockCacheParams7, 'ok', $expMsg7, null ),
+				array( $params4, $mockUserParams1, $mockTempUserParams7, $mockSessionParams6, $mockCacheParams7, 'ok', $expMsg7, null ),
 				// success - new email != current email ( email changes < limit )
-				array( $mockWikiaRequest4, $mockUserParams8, $mockTempUserParams8, $mockSessionParams6, $mockCacheParams7, 'ok', $expMsg7, null ),
+				array( $params4, $mockUserParams8, $mockTempUserParams8, $mockSessionParams6, $mockCacheParams7, 'ok', $expMsg7, null ),
 			);
 		}
 		
 		/**
 		 * @dataProvider sendConfirmationEmailDataProvider
 		 */
-		public function testSendConfirmationEmail( $mockWebRequestParams, $mockWikiaRequestParams, $mockEmailAuth, $mockUserParams, $mockTempUserParams, $mockSessionParams, $mockCacheParams, $mockMsgExt, $expResult, $expMsg, $expMsgEmail, $expErrParam, $expHeading, $expSubheading ) {
+		public function testSendConfirmationEmail( $mockWebRequestParams, $params, $mockEmailAuth, $mockUserParams, $mockTempUserParams, $mockSessionParams, $mockCacheParams, $mockMsgExt, $expResult, $expMsg, $expMsgEmail, $expErrParam, $expHeading, $expSubheading ) {
 			// setup
 			$this->setUpMockObject( 'WebRequest', $mockWebRequestParams, false, 'wgRequest');
-//			$this->setUpMockObject( 'WikiaRequest', $mockWikiaRequestParams, true );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
 			
 			$this->setUpSession( $mockSessionParams );
 			
+			if ( array_key_exists('byemail', $params) && $params['byemail'] ) {
+				$mockMsgExtCount = 2;
+			} else {
+				$mockMsgExtCount = 1;
+			}
+
 			$this->mockGlobalVariable( 'wgEmailAuthentication', $mockEmailAuth );
 			$this->mockGlobalFunction( 'MsgExt', $mockMsgExt, $mockMsgExtCount );
 
@@ -547,7 +531,7 @@
 			UserLoginHelper::getInstance()->setApp( $this->app );
 
 			// test
-			$response = $this->app->sendRequest( 'UserSignupSpecial', 'sendConfirmationEmail', $mockWikiaRequestParams );
+			$response = $this->app->sendRequest( 'UserSignupSpecial', 'sendConfirmationEmail', $params );
 			
 			$responseData = $response->getVal( 'result' );
 			$this->assertEquals( $expResult, $responseData );
@@ -576,7 +560,7 @@
 			$mockWebRequest1 = array(
 				'wasPosted' => false,
 			);
-			$mockWikiaRequest1 = array(
+			$params1 = array(
 				'username' => self::TEST_USERNAME,
 			);
 			$mockEmailAuth1 = '';
@@ -600,12 +584,12 @@
 			);
 			
 			// GET + temp user does not exist + pass byemail
-			$mockWikiaRequest3 = array(
+			$params3 = array(
 				'username' => self::TEST_USERNAME,
 				'byemail' => 1,
 			);
-			$mockMsgExt3 = wfMsg( 'usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME );			
-			$expMsg3 = wfMsg( 'usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME );
+			$mockMsgExt3 = wfMsg( 'usersignup-account-creation-email-sent', self::TEST_USERNAME, self::TEST_USERNAME );
+			$expMsg3 = $mockMsgExt3;
 			$expHeading3 = wfMsg( 'usersignup-account-creation-heading' );
 			$expSubheading3 = wfMsg( 'usersignup-account-creation-subheading', self::TEST_USERNAME );
 			
@@ -615,7 +599,7 @@
 			$mockWebRequest5 = array(
 				'wasPosted' => false,
 			);
-			$mockWikiaRequest5 = array(
+			$params5 = array(
 				'username' => self::TEST_USERNAME,
 				'action' => '',
 			);
@@ -629,7 +613,7 @@
 			$mockWebRequest101 = array(
 				'wasPosted' => true,
 			);
-			$mockWikiaRequest101 = array(
+			$params101 = array(
 				'username' => '',
 				'action' => 'resendconfirmation',
 			);
@@ -637,7 +621,7 @@
 			$expHeading101 = wfMsg( 'usersignup-confirmation-heading-email-resent' );
 			
 			// error - temp user does not exist ( POST + action = resendconfirmation )
-			$mockWikiaRequest102 = array(
+			$params102 = array(
 				'username' => self::TEST_USERNAME,
 				'action' => 'resendconfirmation',
 			);
@@ -727,36 +711,36 @@
 
 			return array (
 				// GET + temp user does not exist + not pass byemail
-				array($mockWebRequest1, $mockWikiaRequest1, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
+				array($mockWebRequest1, $params1, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 				// GET + temp user exists + not pass byemail
-				array($mockWebRequest1, $mockWikiaRequest1, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
+				array($mockWebRequest1, $params1, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 				// GET + temp user does not exist + pass byemail
-				array($mockWebRequest1, $mockWikiaRequest3, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
+				array($mockWebRequest1, $params3, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
 				// GET + temp user exists + pass byemail
-				array($mockWebRequest1, $mockWikiaRequest3, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
+				array($mockWebRequest1, $params3, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt3, 'ok', $expMsg3, $expMsgEmail1, '', $expHeading3, $expSubheading3),
 				// POST + temp user does not exist + empty action
-				array($mockWebRequest5, $mockWikiaRequest5, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
+				array($mockWebRequest5, $params5, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 				// POST + temp user exist + empty action
-				array($mockWebRequest5, $mockWikiaRequest5, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
+				array($mockWebRequest5, $params5, $mockEmailAuth1, $mockUser1, $mockTempUser2, $mockSession1, $mockCache1, $mockMsgExt1, 'ok', $expMsg1, $expMsgEmail1, '', $expHeading1, $expSubheading1),
 
 
 				// test resend confirmation email
 				// error - empty username ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $mockWikiaRequest101, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'error', $expMsg101, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params101, $mockEmailAuth1, $mockUser1, $mockTempUser1, $mockSession1, $mockCache1, $mockMsgExt1, 'error', $expMsg101, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - temp user does not exist ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $mockWikiaRequest102, $mockEmailAuth1, $mockUser1, $mockTempUser102, $mockSession1, $mockCache1, $mockMsgExt1, 'error', $expMsg102, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser1, $mockTempUser102, $mockSession1, $mockCache1, $mockMsgExt1, 'error', $expMsg102, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - temp user id does not match with one in $_SESSION ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $mockWikiaRequest102, $mockEmailAuth1, $mockUser1, $mockTempUserParams103, $mockSession103, $mockCache1, $mockMsgExt1, 'error', $expMsg103, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser1, $mockTempUserParams103, $mockSession103, $mockCache1, $mockMsgExt1, 'error', $expMsg103, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - $wgEmailAuthentication == false ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $mockWikiaRequest102, $mockEmailAuth104, $mockUser1, $mockTempUserParams103, $mockSession104, $mockCache1, $mockMsgExt1, 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth104, $mockUser1, $mockTempUserParams103, $mockSession104, $mockCache1, $mockMsgExt1, 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - invalid email ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $mockWikiaRequest102, $mockEmailAuth105, $mockUser1, $mockTempUserParams105, $mockSession104, $mockCache1, $mockMsgExt1, 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser1, $mockTempUserParams105, $mockSession104, $mockCache1, $mockMsgExt1, 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - email is confirmed ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $mockWikiaRequest102, $mockEmailAuth105, $mockUser106, $mockTempUserParams106, $mockSession104, $mockCache1, $mockMsgExt1, 'error', $expMsg106, $expMsgEmail1, '', $expHeading101, $expSubheading1),				
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser106, $mockTempUserParams106, $mockSession104, $mockCache1, $mockMsgExt1, 'error', $expMsg106, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - pending email + email sent exceed limit ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $mockWikiaRequest102, $mockEmailAuth105, $mockUser107, $mockTempUserParams106, $mockSession104, $mockCache107, $mockMsgExt1, 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),				
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser107, $mockTempUserParams106, $mockSession104, $mockCache107, $mockMsgExt1, 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - email sent == limit ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $mockWikiaRequest102, $mockEmailAuth105, $mockUser107, $mockTempUserParams106, $mockSession104, $mockCache108, $mockMsgExt1, 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),				
+				array($mockWebRequest101, $params102, $mockEmailAuth105, $mockUser107, $mockTempUserParams106, $mockSession104, $mockCache108, $mockMsgExt1, 'error', $expMsg107, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// success - email sent < limit ( POST + action = resendconfirmation )
 			);
 		}
