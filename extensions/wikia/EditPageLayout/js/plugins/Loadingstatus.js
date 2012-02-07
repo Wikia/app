@@ -22,6 +22,11 @@
 
 		init: function() {
 			this.el = this.editor.getSpace('loading-status');
+			
+			if(!this.el) {
+				return;
+			}
+			
 			this.textEl = this.el.find('.loading-text');
 
 			// overlay just an edit area (BugId:6349)
@@ -50,6 +55,9 @@
 		},
 
 		stateChanged: function( editor, state ) {
+			if(!this.el) {
+				return;
+			}
 			var states = editor.states, value = false;
 			if (state == states.INITIALIZING)
 				value = 'loading';
