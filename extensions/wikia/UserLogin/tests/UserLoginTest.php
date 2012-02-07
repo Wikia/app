@@ -81,7 +81,7 @@
 		/**
 		 * @dataProvider loginDataProvider
 		 */
-		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockTempUserParams, $mockHelperParams, $expResult, $expError, $expErrParam='' ) {
+		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockTempUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='' ) {
 			// setup
 			$this->setUpRequest( $requestParams );
 			$this->setUpMockObject( 'User', $mockUserParams, true, 'wgUser' );
@@ -90,6 +90,10 @@
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
 			}
+
+			$mockMsgExtCount = ( $expResult == 'unconfirm' ) ? 1 : 0 ;
+			$this->mockGlobalFunction( 'MsgExt', $expMsg, $mockMsgExtCount );
+
 			$this->setUpMock();
 			
 			// test
@@ -99,7 +103,7 @@
 			$this->assertEquals( $expResult, $responseData );
 			
 			$responseData = $response->getVal( 'msg' );
-			$this->assertEquals( $expError, $responseData );
+			$this->assertEquals( $expMsg, $responseData );
 			
 			$responseData = $response->getVal( 'errParam' );
 			$this->assertEquals( $expErrParam, $responseData );
@@ -282,7 +286,7 @@
 		/**
 		 * @dataProvider mailPasswordDataProvider
 		 */
-		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockTempUserParams, $mockUserParams, $mockLoginFormParams, $expResult, $expError, $expErrParam='' ) {
+		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockTempUserParams, $mockUserParams, $mockLoginFormParams, $expResult, $expMsg, $expErrParam='' ) {
 			// setup
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
@@ -301,7 +305,7 @@
 			$this->assertEquals( $expResult, $responseData );
 			
 			$responseData = $response->getVal( 'msg' );
-			$this->assertEquals( $expError, $responseData );
+			$this->assertEquals( $expMsg, $responseData );
 			
 			// tear down
 			$this->tearDownRequest();
@@ -386,39 +390,36 @@
 		/**
 		 * @dataProvider changePasswordDataProvider
 		 */
-		public function testChangePassword($params, $mockWikiaRequestParams, $mockWgUserParams, $mockAuthParams, $mockTempUserParams, $mockUserParams, $mockHelperParams, $expResult, $expError) {
+		public function testChangePassword($params, $mockWebRequestParams, $mockWgUserParams, $mockAuthParams, $mockTempUserParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg) {
 			// setup
-			$this->setUpMockObject( 'WebRequest', $mockWikiaRequestParams, false, 'wgRequest', $params );
-			$this->setUpMockObject( 'WikiaRequest', $mockWikiaRequestParams, true, null, $params );
+			$this->setUpMockObject( 'WebRequest', $mockWebRequestParams, false, 'wgRequest', $params );
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
 			
-			$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
+			if ( $expResult == 'ok' ) {
+				$this->setUpMockObject( 'UserLoginSpecialController', array( 'login' => null ), true );
+			}
 			
 			$this->setUpMock();
 
 			// test
-			$response = $this->app->sendRequest( 'UserLoginSpecial', 'changePassword' );
+			$response = $this->app->sendRequest( 'UserLoginSpecial', 'changePassword', $params );
 			
 			$responseData = $response->getVal( 'result' );
 			$this->assertEquals( $expResult, $responseData );
 			
 			$responseData = $response->getVal( 'msg' );
-			$this->assertEquals( $expError, $responseData );
+			$this->assertEquals( $expMsg, $responseData );
 		}
 
 		public function changePasswordDataProvider() {
-			// default params for WikiaRequest
-			$params = array('controller' => 'UserLoginSpecialController', 'method' => 'changePassword');
-
 			// 1 do nothing -- GET
 			$params1 = array(
 				'username' => 'WikiaUser',
 			);
-			$params1 = array( $params + $params1 );
-			$mockWikiaRequest1 = array( 'wasPosted' => false );
+			$mockWebRequest1 = array( 'wasPosted' => false );
 			$mockWgUserParams1 = null;
 			$mockAuthParams1 = null;
 			$mockTempUserParams1 = null;
@@ -430,8 +431,7 @@
 				'username' => 'WikiaUser',
 				'fakeGet' => '1',
 			);
-			$params2 = array( $params + $params2 );
-			$mockWikiaRequest2 = array( 'wasPosted' => true, 'setVal' => null );
+			$mockWebRequest2 = array( 'wasPosted' => true, 'setVal' => null );
 			
 			// 3 error -- POST + empty fakeGet + not allow password change
 			$mockAuthParams3 = array( 'allowPasswordChange' => false );
@@ -442,7 +442,6 @@
 				'cancel' => true,
 				'returnto' => '',
 			);
-			$params4 = array( $params + $params4 );
 			$mockHelperParams4 = array(
 				'doRedirect' => array(
 					'mockExpTimes' => 1,
@@ -455,7 +454,6 @@
 				'cancel' => true,
 				'returnto' => 'Special:WikiFeatures',
 			);
-			$params5 = array( $params + $params5 );
 			
 			// 6 do nothing -- not match edit token
 			$mockAuthParams6 = array( 'allowPasswordChange' => true );
@@ -476,7 +474,6 @@
 				'newpassword' => 'testPasword',
 				'retype' => 'passwordTest',
 			);
-			$params9 = array( $params + $params9 );
 			$mockUserParams9 = array( 'isAnon' => false );
 			$expMsg9 = wfMsg( 'badretype' );
 			
@@ -486,7 +483,6 @@
 				'newpassword' => 'testPasword',
 				'retype' => 'testPasword',
 			);
-			$params10 = array( $params + $params10 );
 			$mockUserParams10 = array(
 				'isAnon' => false,
 				'checkTemporaryPassword' => false,
@@ -546,43 +542,46 @@
 				'saveSettings' => null,
 			);
 			$expMsg15 = wfMsg( 'resetpass_success' );
+			$mockHelperParams15 = array(
+				'doRedirect' => null,
+			);
 			
 			// 16 success -- temp user
 			
 			
 			return array(
 				// 1 do nothing -- GET
-				array( $params1, $mockWikiaRequest1, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, '', '' ),
+				array( $params1, $mockWebRequest1, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, '', '' ),
 				// 2 do nothing -- POST + not empty fakeGet
-				array( $params2, $mockWikiaRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, '', '' ),
+				array( $params2, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, '', '' ),
 				// 3 error -- POST + empty fakeGet + not allow password change
-				array( $params1, $mockWikiaRequest2, $mockWgUserParams1, $mockAuthParams3, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, 'error', $expMsg3 ),
+				array( $params1, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams3, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, 'error', $expMsg3 ),
 				// 4 redirect page -- cancel request + empty returnto
-				//array( $params4, $mockWikiaRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
+				//array( $params4, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
 				// 5 redirect page -- cancel request + returnto
-				//array( $params5, $mockWikiaRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
+				//array( $params5, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
 				// 6 do nothing -- not match edit token
-				array( $params1, $mockWikiaRequest2, $mockWgUserParams6, $mockAuthParams6, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, '', '' ),
+				array( $params1, $mockWebRequest2, $mockWgUserParams6, $mockAuthParams6, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, '', '' ),
 				// 7 error -- real user + user not found
-				array( $params1, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams7, $mockHelperParams1, 'error', $expMsg7 ),
+				array( $params1, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams7, $mockHelperParams1, 'error', $expMsg7 ),
 				// 8 error -- real user + anon user
-				array( $params1, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams8, $mockHelperParams1, 'error', $expMsg7 ),
+				array( $params1, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams8, $mockHelperParams1, 'error', $expMsg7 ),
 				// 9 error -- retype != newpassword
-				array( $params9, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams9, $mockHelperParams1, 'error', $expMsg9 ),
+				array( $params9, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams9, $mockHelperParams1, 'error', $expMsg9 ),
 				// 10 error --  not match temporary password (checkTemporaryPassword = false)
-				//array( $params10, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams10, $mockHelperParams1, 'error', $expMsg10 ),
+				//array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams10, $mockHelperParams1, 'error', $expMsg10 ),
 				// 11 error -- not correct password (checkPassword = false)
-				//array( $params10, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams11, $mockHelperParams1, 'error', $expMsg10 ),
+				//array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams11, $mockHelperParams1, 'error', $expMsg10 ),
 				// 1011 error -- [10] not match temporary password (checkTemporaryPassword = false) + [11] not correct password (checkPassword = false)
-				array( $params10, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams1011, $mockHelperParams1, 'error', $expMsg10 ),
+				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams1011, $mockHelperParams1, 'error', $expMsg10 ),
 				// 12 error -- not valid new password (passwordtooshort)
-				array( $params10, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams12, $mockHelperParams1, 'error', $expMsg12 ),
+				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams12, $mockHelperParams1, 'error', $expMsg12 ),
 				// 13 error -- not valid new password (password-name-match)
-				array( $params10, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams13, $mockHelperParams1, 'error', $expMsg13 ),
+				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams13, $mockHelperParams1, 'error', $expMsg13 ),
 				// 14 error -- not valid new password (securepasswords-invalid)
-				array( $params10, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams14, $mockHelperParams1, 'error', $expMsg14 ),
+				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams14, $mockHelperParams1, 'error', $expMsg14 ),
 				// 15 success -- real user
-				//array( $params10, $mockWikiaRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams15, $mockHelperParams4, 'ok', $expMsg15 ),
+				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams15, $mockHelperParams15, 'ok', $expMsg15 ),
 				// 16 success -- temp user
 				
 			);
