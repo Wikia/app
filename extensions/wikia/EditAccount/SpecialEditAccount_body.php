@@ -338,7 +338,11 @@ class EditAccount extends SpecialPage {
 		$this->mUser->setEmail( '' );
 		$this->mUser->invalidateEmail();
 
-		if ( $this->mUser->setPassword( wfGenerateToken() ) ) {
+		// Password requirements need a captial letter, digit and lowercase letter.
+		// wfGenerateToken() returns a 32 char hex string, which will almost always satisfy the digit/letter but not always.
+		// This shouldn't reduce the entropy of the intentionally scrambled password.
+		$REQUIRED_CHARS = "A1a";
+		if ( $this->mUser->setPassword( wfGenerateToken() . $REQUIRED_CHARS ) ) {
 			global $wgUser, $wgTitle;
 
 			// Mark as disabled in a more real way, that doesnt depend on the real_name text
