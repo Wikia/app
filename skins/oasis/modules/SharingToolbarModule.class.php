@@ -12,16 +12,38 @@ class SharingToolbarModule extends Module {
 	private function canBeShown() {
 		// generate list of namespaces toolbar can be shown on
 		$allowedNamespaces = $this->app->wg->ContentNamespaces;
-		$allowedNamespaces[] = NS_FILE;
-		if (defined('NS_VIDEO')) {
+		$allowedNamespaces = array_merge($allowedNamespaces, array(
+			NS_USER,
+			NS_USER_TALK,
+			NS_FILE,
+			NS_CATEGORY,
+		));
+		
+		if( defined('NS_VIDEO') ) {
 			$allowedNamespaces[] = intval(NS_VIDEO);
 		}
-
+		
+		if( defined('NS_BLOG_LISTING') ) {
+			$allowedNamespaces[] = intval(NS_BLOG_LISTING);
+		}
+		
+		if( !empty($this->app->wg->EnableWallExt) ) {
+			$allowedNamespaces[] = intval(NS_USER_WALL_MESSAGE);
+		}
+		
+		if( !empty($this->app->wg->EnableTopListsExt) ) {
+			$allowedNamespaces[] = intval(NS_TOPLIST);
+		}
+		
+		if( !empty($this->app->wg->EnableWikiaQuiz) ) {
+			$allowedNamespaces[] = intval(NS_WIKIA_QUIZ);
+		}
+		
 		$title = $this->app->wg->Title;
 		$namespace = ($title instanceof Title) ? $title->getNamespace() : -1;
-
+		
 		$ret = in_array($namespace, $allowedNamespaces) && !empty($this->app->wg->EnableSharingToolbar);
-
+		
 		return $ret;
 	}
 
