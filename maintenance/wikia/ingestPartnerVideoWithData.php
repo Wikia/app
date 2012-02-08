@@ -51,12 +51,10 @@ if ( $wgUser->isAnon() ) {
 //	$wgUser->addToDatabase();
 }
 
+$useVideoFeed = !empty($wgIngestVideosUseVideoHandlersExt);
+$usePartnerVideo = !empty($wgIngestVideosUseWikiaVideoExt);
+$providersVideoFeed = $providersPartnerVideo = array();
 $provider = !empty($args[0]) ? strtolower($args[0]) : '';
-$providersVideoFeed = array();	// "new" video
-$providersPartnerVideo = array();	// "old" video
-//@todo use old/new video service
-$useVideoFeed = false;
-$usePartnerVideo = true;
 if ($useVideoFeed) {
 	if (empty($provider)) {
 		$providersVideoFeed = VideoFeedIngester::$PROVIDERS;
