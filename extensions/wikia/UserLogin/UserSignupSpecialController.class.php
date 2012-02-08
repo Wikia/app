@@ -242,6 +242,13 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					$this->errParam = $response->getVal( 'errParam', '');
 				}
 			}
+
+			// redirect to login page if invalid session
+			if ( $this->result == 'invalidsession' ) {
+				$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
+				$this->wg->out->redirect( $titleObj->getFullURL() );
+				return;
+			}
 		} else {
 			if ( $this->byemail == true ) {
 				$this->heading = $this->wf->Msg( 'usersignup-account-creation-heading' );
@@ -255,7 +262,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * change temp user's email and send reconfirmation email
 	 * @requestParam string username
 	 * @requestParam string email
-	 * @responseParam string result [ok/error]
+	 * @responseParam string result [ok/error/invalidsession]
 	 * @responseParam string msg - result messages
 	 * @responseParam string errParam - error param
 	 */
@@ -292,7 +299,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( !(isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
-			$this->result = 'error';
+			$this->result = 'invalidsession';
 			$this->msg = $this->wf->Msg( 'usersignup-error-invalid-user' );
 			$this->errParam = 'username';
 			return;

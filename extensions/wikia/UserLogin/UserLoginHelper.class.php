@@ -237,7 +237,7 @@ class UserLoginHelper extends WikiaModel {
 	/**
 	 * send confirmation email
 	 * @param string $username
-	 * @return array result { array( 'result' => result status[error/ok], 'msg' => result message ) }
+	 * @return array result { array( 'result' => result status[error/ok/invalidsession], 'msg' => result message ) }
 	 */
 	public function sendConfirmationEmail( $username ) {
 		if ( empty($username) ) {
@@ -254,7 +254,7 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		if ( !(isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
-			$result['result'] = 'error';
+			$result['result'] = 'invalidsession';
 			$result['msg'] = $this->wf->Msg( 'usersignup-error-invalid-user' );
 			return $result;
 		}

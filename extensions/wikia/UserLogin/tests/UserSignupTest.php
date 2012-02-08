@@ -493,7 +493,7 @@
 				// error - temp user does not exist
 				array( $params4, $mockUserParams1, $mockTempUserParams4, $mockSessionParams1, $mockCacheParams1, 'error', $expMsg4, $expErrParam3 ),
 				// error - temp user id does not match with one in $_SESSION
-				array( $params4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams5, $mockCacheParams1, 'error', $expMsg5, $expErrParam3 ),
+				array( $params4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams5, $mockCacheParams1, 'invalidsession', $expMsg5, $expErrParam3 ),
 				// error - email changes exceed limit
 				array( $params4, $mockUserParams1, $mockTempUserParams5, $mockSessionParams6, $mockCacheParams6, 'error', $expMsg6, $expErrParam1 ),
 				// error - email changes == limit
@@ -755,7 +755,7 @@
 				// error - temp user does not exist ( POST + action = resendconfirmation )
 				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser1, $mockTempUser102, $mockSession1, $mockCache1, '', 'error', $expMsg102, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - temp user id does not match with one in $_SESSION ( POST + action = resendconfirmation )
-				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser1, $mockTempUserParams103, $mockSession103, $mockCache1, '', 'error', $expMsg103, $expMsgEmail1, '', $expHeading101, $expSubheading1),
+				array($mockWebRequest101, $params102, $mockEmailAuth1, $mockUser1, $mockTempUserParams103, $mockSession103, $mockCache1, '', 'invalidsession', $expMsg103, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - $wgEmailAuthentication == false ( POST + action = resendconfirmation )
 				array($mockWebRequest101, $params102, $mockEmailAuth104, $mockUser1, $mockTempUserParams103, $mockSession104, $mockCache1, '', 'error', $expMsg104, $expMsgEmail1, '', $expHeading101, $expSubheading1),
 				// error - invalid email ( POST + action = resendconfirmation )

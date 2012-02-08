@@ -12,7 +12,7 @@
 		'isRequired' => true,
 		'label' => wfMsg('yourname'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'username'),
-		'value' => $username
+		'value' => htmlspecialchars($username)
 	);
 	$userNameInput['errorMsg'] = $userNameInput['isInvalid'] ? $msg : '';
 

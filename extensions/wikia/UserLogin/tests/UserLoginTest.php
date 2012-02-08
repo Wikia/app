@@ -185,7 +185,7 @@
 
 			// error - USER_BLOCKED
 			$mockLoginFormParams111 = array( 'authenticateUserData' => LoginForm::USER_BLOCKED );
-			$expMsg111 = wfMsg( 'userlogin-error-login-userblocked', array('parsemag', 'escape'), $reqParams101['username'] );
+			$expMsg111 = wfMsg( 'userlogin-error-login-userblocked' );
 
 			// error - WRONG_PLUGIN_PASS
 			$mockLoginFormParams112 = array( 'authenticateUserData' => LoginForm::WRONG_PLUGIN_PASS );
@@ -398,6 +398,8 @@
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
 			
+			$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
+
 			if ( $expResult == 'ok' ) {
 				$this->setUpMockObject( 'UserLoginSpecialController', array( 'login' => null ), true );
 			}
