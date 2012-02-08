@@ -47,13 +47,18 @@ class WikiaMobileCategoryService extends WikiaService {
 			return false;
 		}
 	}
-	
+
 	public function alphabeticalList() {
 		$categoryPage = $this->getVal( 'categoryPage' );
-	
+
 		if ( $categoryPage instanceof CategoryPage ) {
-			$data = $this->model->getItemsCollection( F::build( 'Category', array( $categoryPage->getTitle() ),  'newFromTitle' ) );
-			$this->response->setVal( 'items', $data );
+			$title = $categoryPage->getTitle();
+			$category = F::build( 'Category', array( $title ),  'newFromTitle' );
+			$data = $this->model->getItemsCollection( $category );
+
+			$this->response->setVal( 'total', $data->getCount() );
+			$this->response->setVal( 'name', $title->getText() );
+			$this->response->setVal( 'collections', $data->getItems() );
 		} else {
 			return false;
 		}
