@@ -4,15 +4,13 @@ $test = "
 [[Video:Beer.png]]
 [[Video:Beer abc.png]]
 [[Video:Beer_abc.png]]
+[[Video:Beer_abc.png|test]]
 [[Video:Beer_abc]]
 [Video:Beer_abc.png]
 [[:Beer+abc.png]]
 [[Video:Free+Beer-7549.jpg|300px|right]]
 [[Video:abc def fg]]
 ";
-
-$title = "Beer.png";
-
 
 function title_replacer( $title, $fulltext ) {
 	$symbols = array(
@@ -42,9 +40,9 @@ function title_replacer( $title, $fulltext ) {
 		}
 	}
 	
-	$regexp = '/\\[\\[(Video\\:|:)' . $regexp . '\\]\\]/';
+	$regexp = '/(\\[\\[Video\\:)' . $regexp . '(\\]\\]|\\|[^]]+\\]\\])/';
 	var_dump($regexp);
-	$new = preg_replace( $regexp, '[[Video:' .$title . ']]', $fulltext );
+	$new = preg_replace( $regexp, '$1' .$title . '$2', $fulltext );
 	var_dump($new);
 	
 }
