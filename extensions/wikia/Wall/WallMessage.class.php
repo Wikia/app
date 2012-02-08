@@ -36,7 +36,7 @@ class WallMessage {
 		return null;
 	}
 	
-	static public function buildNewMessageAndPost($body, $userWall, $user, $metaTitle = '', $parent = false) {
+	static public function buildNewMessageAndPost($body, $userWall, $user, $metaTitle = '', $parent = false, $notify = true, $editflags ) {
 		if($userWall instanceof Title ) {
 			$userPageTitle = $userWall;
 		} else {
@@ -82,6 +82,10 @@ class WallMessage {
 			$class->getThread()->invalidateCache();
 		}
 		//Build data for sweet url ? id#number_of_comment 
+		//notify
+		if($notify) {
+			$class->sendNotificationAboutLastRev();	
+		}
 		
 		return $class;
 	}
@@ -327,6 +331,18 @@ class WallMessage {
 	}
 	
 	public function getUser(){
+		/*
+		 * During posting message as bot we are adding information about admin of wiki 
+		 * and when we are displaying this message we are loading user information from this data
+		 */ 
+		
+		if($this->isMain()) {
+			$user = $this->getPostedAsBot(); 
+			if(!empty($user)) {
+				return $user;
+			}
+		}
+		
 		if($this->getArticleComment()->mUser) {
 			return $this->getArticleComment()->mUser;
 		} else {
@@ -694,13 +710,41 @@ class WallMessage {
 		wfSetWikiaPageProp( WPP_WALL_ACTIONREASON, $this->getId(), $this->mActionReason);
 	}
 	
+	/*
+	 * $user - admin on wiki 
+	 */
+	
+	public function setPostedAsBot($user) {
+		$this->addWatch($user);
+		$this->setInProps(WPP_WALL_POSTEDBYBOT, $user->getId());
+	}
+	
+	public function getPostedAsBot() {		
+		$val = $this->getPropVal(WPP_WALL_POSTEDBYBOT);
+		if( ((int) $val) == 0 ) {
+			return false; 
+		}
+		$user = F::build('User', array($val), 'newFromId');
+		
+		if( $user instanceof User && $user->getId() > 0 ){
+			return $user;
+		}
+		
+		return false;
+	}
+	
 	protected function markInProps($prop) {
-		wfSetWikiaPageProp($prop, $this->getId(), 1);
+		$this->setInProps($prop, 1);
+		return true;
+	}
+	
+	protected function setInProps($prop, $val = 1) {
+		wfSetWikiaPageProp($prop, $this->getId(), $val);
 		$id = $this->getPropCacheKey($prop, $this->getId());
-		$this->propsCache[$id] = true;
+		$this->propsCache[$id] = $val;
 		
 		$cache = $this->getCache();
-		$cache->set( $id, true );
+		$cache->set( $id, $val );
 		
 		return true;
 	}
@@ -715,7 +759,7 @@ class WallMessage {
 		wfDeleteWikiaPageProp( $prop, $this->getId() );
 	}
 	
-	protected function isMarkInProps($prop) {
+	protected function getPropVal($prop) {
 		$id = $this->getPropCacheKey($prop, $this->getId());
 
 		// check local memory cache
@@ -731,9 +775,13 @@ class WallMessage {
 			return $val;
 		}
 		
-		$this->propsCache[$id] = wfGetWikiaPageProp($prop, $this->getId()) == 1;
+		$this->propsCache[$id] = wfGetWikiaPageProp($prop, $this->getId());
 		$cache->set( $id, $this->propsCache[$id] );
 		return $this->propsCache[$id];
+	}
+	
+	protected function isMarkInProps($prop) {
+		return $this->getPropVal($prop) == 1;
 	}
 	
 	protected function getPropCacheKey($prop, $id) {
@@ -762,5 +810,14 @@ class WallMessage {
 	
 	public function getData($master = false, $title = null) {
 		return $this->getArticleComment()->getData($master, $title);
+	}
+	
+	public function sendNotificationAboutLastRev() {
+		$this->load();
+		$lastRevId = $this->getArticleComment()->mLastRevId;
+		if(!empty($lastRevId)){
+			$helper = F::build('WallHelper', array());
+			$helper->sendNotification($lastRevId);	
+		}
 	}
 }

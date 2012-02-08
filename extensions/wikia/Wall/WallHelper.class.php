@@ -549,4 +549,18 @@ class WallHelper {
 		$comments = ArticleCommentList::newFromTitle($title);
 		return $comments->getCountAll() > 0;
 	}
+	
+	public function sendNotification($revOldId, $rcType = RC_NEW) {
+		$app = F::App();
+		$rev = Revision::newFromId($revOldId);
+		$notif = F::build('WallNotificationEntity', array($rev, $app->wg->CityId), 'createFromRev');
+			
+		$wh = F::build('WallHistory', array($app->wg->CityId));
+		$wh->add($rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User);
+			
+		if( $rcType == RC_NEW ) {
+			$wn = F::build('WallNotifications', array());
+			$wn->addNotification($notif);
+		}
+	}
 }
