@@ -48,7 +48,7 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 		showComboAjaxForPlaceHolder.statusAjaxLogin = false;
 	}
 
-	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin)
+	if ( (wgUserName !== null)
 		|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
 		return false;
 	}
@@ -126,7 +126,7 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 //Open image place holder if pass in get
 $(function(){
 	if ((typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
-		if (wgIsLogin) {
+		if (wgUserName !== null) {
 			if (window.location.href.indexOf("placeholder=") > 0) {
 				element = window.location.href.split("placeholder=")[1].split("&")[0];
 				if ($("#"+element).parent().parent().hasClass("wikiaPlaceholder")){
@@ -143,7 +143,7 @@ $(function() {
 	$('.ajaxLogin').click(openLogin);
 	$('.ajaxRegister').click(openRegister);
 
-	if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
+	if ( wgUserName === null && window.wgComboAjaxLogin ) {
 		$(".wikiaPlaceholder .wikia-button").removeAttr("onclick");
 		$(".wikiaPlaceholder .wikia-button").click(function(e){
 			if( e.target.nodeName == "SPAN" ){

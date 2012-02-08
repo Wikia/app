@@ -36,7 +36,7 @@ var SharingToolbar = {
 		lightboxSend = node.attr('data-lightboxSend'),
 		lightboxShareEmailLabelAddress = node.attr('data-lightboxShareEmailLabelAddress'),
 		lightboxCancel = node.attr('data-lightboxcancel');
-		if ( !window.wgIsLogin && window.wgComboAjaxLogin ) {
+		if ( wgUserName === null && window.wgComboAjaxLogin ) {
 			showComboAjaxForPlaceHolder(false, "", function() {
 				// show email modal when the page reloads (BugId:15911)
 				AjaxLogin.clickAfterLogin = '#SharingToolbar .email-link';

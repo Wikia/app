@@ -73,7 +73,7 @@ function WMU_getRTETxtarea(){
 
 
 function WMU_loadDetails() {
-	
+
 	YAHOO.util.Dom.setStyle('ImageUploadMain', 'display', 'none');
 	WMU_indicator(1, true);
 
@@ -605,10 +605,10 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 
 $(function(){
-	if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
+	if ( window.wgComboAjaxLogin ) {
 		if( (window.location.href.indexOf("openwindow=WMU") > 1)
 			&& (window.location.href.indexOf("action=submit") > 1)
-			&& ((typeof wgIsLogin != 'undefined') && wgIsLogin ) ) {
+			&& (wgUserName !== null) ) {
 			WMU_show(-1);
 		}
 	}
@@ -1099,7 +1099,7 @@ function WMU_insertImage(e, type) {
 					if ( event.isDefaultPrevented() ) {
 					    return false;
 					}
-										
+
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );
