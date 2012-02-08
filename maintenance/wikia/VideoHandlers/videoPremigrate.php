@@ -16,7 +16,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
-include( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
+//include( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbr = wfGetDB( DB_SLAVE );
 $dbw = wfGetDB( DB_MASTER );
