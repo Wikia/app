@@ -110,7 +110,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		global $wgLang;
 
 		$data = array();
-		$mainPage = Title :: newFromText( wfMsgForContent( 'mainpage' ) );
+		$mainPage = Title::newMainPage();
 		$data['mainpage'] = $mainPage->getPrefixedText();
 		$data['base'] = $mainPage->getFullUrl();
 		$data['sitename'] = $GLOBALS['wgSitename'];
