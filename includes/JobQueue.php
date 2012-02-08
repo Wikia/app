@@ -290,15 +290,16 @@ abstract class Job {
 		if ( ! $this->title instanceof Title ) {
 			$log = "MOLI JOB@invalid title: " . $this->command . " . params: " . print_r( $this->params, true ) . "\n";
 			error_log( $log );
+		} else {
+			$dbw = wfGetDB( DB_MASTER );
+			return array(
+				'job_id' => $dbw->nextSequenceValue( 'job_job_id_seq' ),
+				'job_cmd' => $this->command,
+				'job_namespace' => $this->title->getNamespace(),
+				'job_title' => $this->title->getDBkey(),
+				'job_params' => Job::makeBlob( $this->params )
+			);
 		}
-		$dbw = wfGetDB( DB_MASTER );
-		return array(
-			'job_id' => $dbw->nextSequenceValue( 'job_job_id_seq' ),
-			'job_cmd' => $this->command,
-			'job_namespace' => $this->title->getNamespace(),
-			'job_title' => $this->title->getDBkey(),
-			'job_params' => Job::makeBlob( $this->params )
-		);
 	}
 
 	function toString() {
