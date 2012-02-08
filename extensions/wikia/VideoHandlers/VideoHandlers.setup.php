@@ -25,7 +25,7 @@ $wgLocalFileRepo = array(
 if(empty($wgVideoHandlersVideosMigrated)) {
 	define('NS_VIDEO', '400');
 } else {
-	define('NS_VIDEO', '6');
+	define('NS_VIDEO', '400');
 }
 
 
