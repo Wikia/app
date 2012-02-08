@@ -68,6 +68,9 @@ $messages['en'] = array(
 	
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
+
+	'wikifeatures-log-name' => 'Wiki Features Log',
+	'wikifeatures-log-header' => 'Below is a list of Wiki Features settings changes.',
 );
 
 /** Message documentation (Message documentation)
