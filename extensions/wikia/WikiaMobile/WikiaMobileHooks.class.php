@@ -58,19 +58,33 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onCategoryPageView( &$categoryArticle ) {
-		if( Wikia::isWikiaMobile() ) {
+	public function onCategoryPageView( CategoryPage &$categoryPage ) {
+		if ( Wikia::isWikiaMobile() ) {
 			$app = F::app();
-			if( !$app->wg->DevelEnvironment ) return true;
+			
+			//TODO: remove before release
+			if ( !$app->wg->DevelEnvironment ) {
+				return true;
+			}
 
 			//converting categoryArticle to Article to avoid circular referance in CategoryPage::view 
-			Article::newFromID($categoryArticle->getID())->view();
+			Article::newFromID( $categoryPage->getID() )->view();
 
-			$app->wg->Out->addHTML( $app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', array( 'title' => $categoryArticle->getTitle() ) ) );
+			$app->wg->Out->addHTML( $app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', array( 'categoryPage' => $categoryPage ) ) );
 
-			$app->wg->Out->addHTML( $app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', array( 'title' => $categoryArticle->getTitle() ) ) );
+			$app->wg->Out->addHTML( $app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', array( 'categoryPage' => $categoryPage ) ) );
 
 			return false;
+		}
+
+		return true;
+	}
+
+	public function onArticlePurge( Article $article ) {
+		$title = $article->getTitle();
+
+		if ( $title->getNamespace() == NS_CATEGORY ) {
+			F::build( 'WikiaMobileCategoryModel' )->purgeCache();
 		}
 
 		return true;
