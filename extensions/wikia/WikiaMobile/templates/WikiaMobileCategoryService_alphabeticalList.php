@@ -12,7 +12,7 @@
 	<section id=<?= $id ;?>>
 		<ul>
 		<? foreach ( $itemsBatch['items'] as $item ) :?>
-			<li><a href="<?= $item->getUrl() ;?>"><?= $item->getName(); ?></a></li>
+			<li<?= ( $item->getType() == WikiaMobileCategoryItem::TYPE_SUBCATEGORY ) ? ' class=sub' : '';?>><a href="<?= $item->getUrl() ;?>"><?= $item->getName(); ?></a></li>
 		<? endforeach ;?>
 		</ul>
 		<? if ( $itemsBatch['next'] ) :?>
