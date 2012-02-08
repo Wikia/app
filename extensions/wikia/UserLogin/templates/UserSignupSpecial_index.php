@@ -47,7 +47,7 @@
 			array(
 				'type' => 'text',
 				'name' => 'username',
-				'value' => $username,
+				'value' => htmlspecialchars($username),
 				'label' => wfMsg('yourname'),
 				'isRequired' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'username'),

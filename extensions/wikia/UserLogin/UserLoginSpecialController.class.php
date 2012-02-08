@@ -294,7 +294,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				break;
 			case LoginForm::USER_BLOCKED:
 				$this->result = 'error';
-				$this->msg = $this->wf->Msg( 'userlogin-error-login-userblocked', array('parsemag', 'escape'), $loginForm->mName );
+				$this->msg = $this->wf->Msg( 'userlogin-error-login-userblocked' );
 				break;
 			default:
 				throw new MWException( "Unhandled case value" );
@@ -372,7 +372,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 */
 	public function changePassword() {
 		$this->wg->Out->setPageTitle($this->wf->Msg('userlogin-password-page-title'));
-		$this->pageHeading = wfMsg('resetpass');
+		$this->pageHeading = $this->wf->Msg('resetpass');
 		$this->initializeTemplate();
 
 		$this->username = $this->request->getVal( 'username', '' );
