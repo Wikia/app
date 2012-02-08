@@ -102,6 +102,9 @@ class RefreshLinksJob2 extends Job {
 		}
 		# Re-parse each page that transcludes this page and update their tracking links...
 		foreach ( $titles as $title ) {
+			if ( is_null( $title ) ) {
+				continue;
+			}
 			$revision = Revision::newFromTitle( $title );
 			if ( !$revision ) {
 				$this->error = 'refreshLinks: Article not found "' . $title->getPrefixedDBkey() . '"';
