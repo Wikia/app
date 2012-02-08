@@ -72,6 +72,7 @@ $app->registerHook( 'ParserLimitReport', 'WikiaMobileHooks', 'onParserLimitRepor
 $app->registerHook( 'MakeHeadline', 'WikiaMobileHooks', 'onMakeHeadline' );
 $app->registerHook( 'LinkBegin', 'WikiaMobileHooks', 'onLinkBegin' );
 $app->registerHook( 'CategoryPageView', 'WikiaMobileHooks', 'onCategoryPageView' );
+$app->registerHook( 'ArticlePurge', 'WikiaMobileHooks', 'onArticlePurge' );
 
 /*
  * settings

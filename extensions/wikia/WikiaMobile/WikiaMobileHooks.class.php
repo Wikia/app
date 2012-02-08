@@ -77,7 +77,7 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onArticlePurge( Article $article ) {
+	public function onArticlePurge( Article &$article ) {
 		$title = $article->getTitle();
 
 		if ( $title->getNamespace() == NS_CATEGORY ) {
