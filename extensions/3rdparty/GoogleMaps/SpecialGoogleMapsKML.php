@@ -23,10 +23,11 @@ class GoogleMapsKML extends SpecialPage {
 		header('Content-Disposition: attachment; filename="'.$article.'.kml"');
 
 		$title = Title::newFromText($article);
-		if ($title) {
+		if ($title instanceof Title) {
 			$revision = Revision::newFromTitle($title);
 
-			$mapOptions = GoogleMaps::getMapSettings($title,
+			if($revision instanceof Revision) {
+			$mapOptions = GoogleMaps::getMapSettings($title,			
 			array('icons' => 'http://maps.google.com/mapfiles/kml/pal4/{label}.png',
 			'icon' => 'icon57'));
 
@@ -55,6 +56,11 @@ class GoogleMapsKML extends SpecialPage {
 				echo $exporter->render();
 			} else {
 				echo "No maps in $article!";
+			}
+			} else {
+				$errorMessage = 'SpecialGoogleMapsKML.php ' . __LINE__ . ' - no revision for ' . $article . ' / ' . $title->getArticleID();
+				Wikia::log(__METHOD__,false, $errorMessage);
+				echo "No article revisions found by the name of $article";
 			}
 		} else {
 			echo "No article found by the name of $article";
