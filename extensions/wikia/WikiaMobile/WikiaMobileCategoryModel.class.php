@@ -11,11 +11,11 @@ class WikiaMobileCategoryModel extends WikiaModel{
 		$this->wf->profileIn( __METHOD__ );
 
 		$cacheKey = $this->getItemsCollectionCacheKey( $category->getName() );
-		$items = $this->wg->memc->get( $cacheKey );
+		$contents = $this->wg->memc->get( $cacheKey );
 
-		//this routine can return an empty array, so using empty is not wise
-		if ( !is_array( $items ) ) {
+		if ( empty( $contents ) ) {
 			$items = array();
+			$count = 0;
 
 			foreach ( $category->getMembers() as $title ) {
 				$name = $title->getText();
@@ -28,13 +28,15 @@ class WikiaMobileCategoryModel extends WikiaModel{
 				}
 
 				$items[$firstLetter]->addItem( F::build( 'WikiaMobileCategoryItem', array( $name, $url, $type ) ) );
+				$count++;
 			}
 
-			$this->wg->memc->set( $cacheKey, $items, self::CACHE_TTL_ITEMSCOLLECTION );
+			$contents = F::build( 'WikiaMobileCategoryContents', array( $items, $count ) );
+			$this->wg->memc->set( $cacheKey, $contents, self::CACHE_TTL_ITEMSCOLLECTION );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
-		return $items;
+		return $contents;
 	}
 
 	private function getItemsCollectionCacheKey( $categoryName ){
@@ -47,21 +49,50 @@ class WikiaMobileCategoryModel extends WikiaModel{
 }
 
 /**
+ * Simple DTO to avoid double iterating the list of collections to get the total count of items in a category
+ */
+class WikiaMobileCategoryContents{
+	private $items;
+	private $count;
+
+	function __construct( Array $items, $count ){
+		$this->items = $items;
+		$this->count = (int) $count;
+	}
+
+	public function setItems( Array $items ){
+		$this->items = $items;
+	}
+
+	public function getItems(){
+		return $this->items;
+	}
+
+	public function setCount( $count ){
+		$this->count = (int) $count;
+	}
+
+	public function getCount(){
+		return $this->count;
+	}
+}
+
+/**
  * Paginated container for all the members of a category starting with a specific letter
- *
- * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileCategoryItemsCollection extends WikiaObject{
-	private $items = null;
+	private $items;
+	private $count;
 
 	function __construct(){
 		parent::__construct();
 		$this->items = array();
+		$this->count = 0;
 	}
 
 	public function getItems( $batch = null, $batchSize = 25 ){
 		if ( is_int( $batch ) && is_int( $batchSize ) ) {
-			return $this->wg->PaginateArray( $this->items, $batch, $batchSize );
+			return $this->wf->PaginateArray( $this->items, $batchSize, $batch );
 		}
 
 		return $this->items;
@@ -69,6 +100,11 @@ class WikiaMobileCategoryItemsCollection extends WikiaObject{
 
 	public function addItem( WikiaMobileCategoryItem $item ){
 		$this->items[] = $item;
+		$this->count++;
+	}
+
+	public function getCount(){
+		return $this->count;
 	}
 }
 
