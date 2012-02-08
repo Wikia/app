@@ -1677,13 +1677,13 @@ class WallHooksHelper {
 		$app = F::App();
 		$diff = $app->wg->request->getVal('diff', false);
 		$oldId = $app->wg->request->getVal('oldid', false);
-
+		
 		if( $app->wg->Title instanceof Title && $app->wg->Title->getNamespace() === NS_USER_WALL_MESSAGE ) {
 			$metaTitle = $this->getMetatitleFromTitleObject($app->wg->Title);
 			$differenceEngine->mOldPage->mPrefixedText = $metaTitle;
 			$differenceEngine->mNewPage->mPrefixedText = $metaTitle;
 		}
-
+		
 		return true;
 	}
 
@@ -1720,28 +1720,31 @@ class WallHooksHelper {
 	 */
 	private function getMetatitleFromTitleObject($title, &$wmRef = null) {
 		$wm = F::build('WallMessage', array($title));
-		$wm->load();
+		
 		if( $wm instanceof WallMessage ) {
+			$wm->load();
 			$metaTitle = $wm->getMetaTitle();
 			if( empty($metaTitle) ) {
-				//if wall message is a reply
+			//if wall message is a reply
 				$wmParent = $wm->getTopParentObj();
-				$wmParent->load();
 				if( $wmParent instanceof WallMessage ) {
+					$wmParent->load();
 					if( !is_null($wmRef) ) {
 						$wmRef = $wmParent;
 					}
-
+					
 					return $wmParent->getMetaTitle();
 				}
 			}
-
+			
 			if( !is_null($wmRef) ) {
 				$wmRef = $wm;
 			}
-
+			
 			return $metaTitle;
 		}
+		
+		return '';
 	}
 
 	/**

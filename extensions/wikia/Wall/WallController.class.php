@@ -269,11 +269,11 @@ class WallController extends ArticleCommentsModule {
 		wfProfileIn( __METHOD__ );
 		$wallMessage = $this->getWallMessage(); 
 		
-		if(!($wallMessage instanceof WallMessage)) {
+		if( !($wallMessage instanceof WallMessage) ) {
 			$this->forward(__CLASS__, 'message_error');
 			return true;
-		} 
-				
+		}
+		
 		$this->response->setVal( 'comment', $wallMessage);
 		$this->response->setVal( 'hide',  false);
 		
