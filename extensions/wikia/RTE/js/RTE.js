@@ -166,6 +166,9 @@
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
 
+			// load CSS files
+			RTE.loadCss(editor.ck);
+
 			// clean HTML returned by CKeditor
 			editor.ck.on('getData', RTE.filterHtml);
 
@@ -174,12 +177,12 @@
 		},
 
 		// load extra CSS files
-		loadCss: function(instanceId) {
+		loadCss: function(editor) {
 			var css = [];
 
 			// load MW:Common.css / MW:Wikia.css (RT #77759)
 			css.push(window.RTESiteCss);
-
+			
 			// Bartek - for RT #43217
 			if( typeof WikiaEnableAutoPageCreate != "undefined" ) {
 				css.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
@@ -190,14 +193,14 @@
 			for (var n=0; n<css.length; n++) {
 				if( typeof(css[n]) != 'undefined' ) {
 					var cb = ( (css[n].indexOf('?') > -1 || css[n].indexOf('__am') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
-					RTE.getInstance(instanceId).addCss('@import url(' + css[n] + cb + ');');
+					editor.addCss('@import url(' + css[n] + cb + ');');
 				}
 			}
 
 			// disable object resizing in IE
 			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
 				// IMPORTANT! use local path
-				RTE.getInstance(instanceId).addCss('img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}');
+				editor.addCss('img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}');
 			}
 		},
 
@@ -205,9 +208,6 @@
 		onEditorReady: function(event) {
 			var editor = event.editor,
 				instanceId = editor.instanceId;
-
-			// load CSS files
-			RTE.loadCss(instanceId);
 
 			// base colors: use color / background-color from .color1 CSS class
 			RTE.tools.getThemeColors();
