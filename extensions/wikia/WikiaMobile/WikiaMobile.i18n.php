@@ -28,7 +28,15 @@ $messages['en'] = array(
 	//footer
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entertainment]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]'
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]',
+
+	//categories
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}} in "$2"',
+	'wikiamobile-category-items-more' => 'Load more'
+);
+
+$messages['qqq'] = array(
+	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category and $2 is the category name'
 );
 
 /** адыгэбзэ (адыгэбзэ)
