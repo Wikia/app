@@ -5349,7 +5349,14 @@ class Parser
 		// so just use the current user's name
 		if( $this->mRevisionId ) {
 			$revision = Revision::newFromId( $this->mRevisionId );
-			$revuser = $revision->getUserText();
+			/* Wikia change begin - @author: mech */
+			/* BugID: 17444 */
+			if( $revision ) {
+				$revuser = $revision->getUserText();
+			} else {
+				$revuser = null;
+			}
+			/* Wikia change end */
 		} else {
 			global $wgUser;
 			$revuser = $wgUser->getName();
