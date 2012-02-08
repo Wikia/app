@@ -57,4 +57,22 @@ class WikiaMobileHooks extends WikiaObject{
 
 		return true;
 	}
+
+	public function onCategoryPageView( &$categoryArticle ) {
+		if( Wikia::isWikiaMobile() ) {
+			$app = F::app();
+			if( !$app->wg->DevelEnvironment ) return true;
+
+			//converting categoryArticle to Article to avoid circular referance in CategoryPage::view 
+			Article::newFromID($categoryArticle->getID())->view();
+
+			$app->wg->Out->addHTML( $app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', array( 'title' => $categoryArticle->getTitle() ) ) );
+
+			$app->wg->Out->addHTML( $app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', array( 'title' => $categoryArticle->getTitle() ) ) );
+
+			return false;
+		}
+
+		return true;
+	}
 }
