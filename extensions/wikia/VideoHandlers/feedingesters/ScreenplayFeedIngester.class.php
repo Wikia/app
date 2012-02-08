@@ -174,7 +174,6 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'Screenplay, Inc.';
 
-		$categories[] = $this->generateTitleName($data);	
 		if (!empty($data['trailerVersion'])) {
 			$categories[] = $data['trailerVersion'];
 		}

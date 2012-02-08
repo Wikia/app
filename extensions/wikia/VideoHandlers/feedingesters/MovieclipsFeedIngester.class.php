@@ -30,7 +30,6 @@ class MovieclipsFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 
 		$url = str_replace('$1', $movieId, self::$VIDEOS_LISTING_FOR_MOVIE_URL);
-		$info = array();
 		print("Connecting to $url...\n");
 		sleep(self::$API_REQUEST_DELAY);	// making too quick requests results in 503 errors
 		$this->rssContent = $this->getUrlContent($url);
@@ -118,7 +117,6 @@ class MovieclipsFeedIngester extends VideoFeedIngester {
 	protected function generateCategories(array $data, $addlCategories) {
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'MovieClips Inc.';
-		$categories[] = $this->generateTitleName($data);
 		$categories[] = 'Entertainment';
 		
 		return $categories;

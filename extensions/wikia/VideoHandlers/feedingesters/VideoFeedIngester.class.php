@@ -70,7 +70,9 @@ abstract class VideoFeedIngester {
 		}
 		
 		if ($debug) {
-			print "parsed partner clip id $id. name: {$title->getText()}. metadata: " . http_build_query($parsedData) . ". categories: " . implode(',', $categories) . "\n";
+			print "parsed partner clip id $id. name: {$title->getText()}. categories: " . implode(',', $categories) . ". ";
+			print "metadata: \n";
+			print_r($parsedData);
 			return 1;
 		}
 		else {
