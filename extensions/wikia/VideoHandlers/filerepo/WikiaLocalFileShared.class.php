@@ -153,7 +153,6 @@ class WikiaLocalFileShared  {
 
 	function afterLoadFromFile(){
 		if ( $this->isVideo() ){
-			var_dump( 'isVideo' );
 			foreach( $this->lockedProperties as $param ){
 				$this->oFile->$param = $this->lockedPropertiesValues[ $param ];
 			}
