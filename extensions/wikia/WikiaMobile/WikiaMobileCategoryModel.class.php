@@ -21,13 +21,13 @@ class WikiaMobileCategoryModel extends WikiaModel{
 				$name = $title->getText();
 				$url = $title->getLocalUrl();
 				$firstLetter = strtolower( substr( $name, 0, 1 ) );
-				$type = ( $title->getNamespace() == NS_CATEGORY ) ? CategoryItem::TYPE_SUBCATEGORY : CategoryItem::TYPE_ARTICLE;
+				$type = ( $title->getNamespace() == NS_CATEGORY ) ? WikiaMobileCategoryItem::TYPE_SUBCATEGORY : WikiaMobileCategoryItem::TYPE_ARTICLE;
 
 				if ( empty( $items[$firstLetter] ) ) {
-					$items[$firstLetter] = F::build( 'CategoryItemsCollection' );
+					$items[$firstLetter] = F::build( 'WikiaMobileCategoryItemsCollection' );
 				}
 
-				$items[$firstLetter]->addItem( F::build( 'CategoryItem', array( $name, $url, $type ) ) );
+				$items[$firstLetter]->addItem( F::build( 'WikiaMobileCategoryItem', array( $name, $url, $type ) ) );
 			}
 
 			$this->wg->memc->set( $cacheKey, $items, self::CACHE_TTL_ITEMSCOLLECTION );
@@ -51,7 +51,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
  *
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
-class CategoryItemsCollection extends WikiaObject{
+class WikiaMobileCategoryItemsCollection extends WikiaObject{
 	private $items = null;
 
 	function __construct(){
@@ -67,12 +67,12 @@ class CategoryItemsCollection extends WikiaObject{
 		return $this->items;
 	}
 
-	public function addItem( CategoryItem $item ){
+	public function addItem( WikiaMobileCategoryItem $item ){
 		$this->items[] = $item;
 	}
 }
 
-class CategoryItem{
+class WikiaMobileCategoryItem{
 	const TYPE_ARTICLE = 1;
 	const TYPE_SUBCATEGORY = 2;
 
