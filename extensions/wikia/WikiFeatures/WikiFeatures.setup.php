@@ -30,3 +30,7 @@ $wgGroupPermissions['helper']['wikifeatures'] = true;
 
 $wgGroupPermissions['*']['wikifeaturesview'] = false;
 $wgGroupPermissions['user']['wikifeaturesview'] = true;
+
+$wgLogTypes[] = 'wikifeatures';
+$wgLogNames['wikifeatures'] = 'wikifeatures-log-name';
+$wgLogHeaders['wikifeatures'] = 'wikifeatures-log-header';
