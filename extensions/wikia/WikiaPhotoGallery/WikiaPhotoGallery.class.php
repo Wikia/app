@@ -1115,15 +1115,15 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ( $nt->getNamespace() != NS_FILE || !$img ) {
 				# We're dealing with a non-image, spit out the name and be done with it.
-				$thumbHtml = "\n\t\t\t".'<a class="image broken-image new" style="line-height: '.( $this->mHeights ).'px;">'
+				$thumbHtml = '<a class="image broken-image new" style="line-height: '.( $this->mHeights ).'px;">'
 					. $nt->getText() . '</a>';
 			} elseif ( $this->mHideBadImages && wfIsBadImage( $nt->getDBkey(), $this->getContextTitle() ) ) {
 				# The image is blacklisted, just show it as a text link.
-				$thumbHtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
+				$thumbHtml = '<div style="height: '.($this->mHeights*1.25+2).'px;">'
 					. $sk->makeKnownLinkObj( $nt, $nt->getText() ) . '</div>';
 			} elseif ( !( $thumb = $img->transform( $thumbParams ) ) ) {
 				# Error generating thumbnail.
-				$thumbHtml = "\n\t\t\t".'<div style="height: '.($this->mHeights*1.25+2).'px;">'
+				$thumbHtml = '<div style="height: '.($this->mHeights*1.25+2).'px;">'
 					. htmlspecialchars( $img->getLastError() ) . '</div>';
 			} else {
 				$liAttribs[ 'title' ] = $thumb->url;
