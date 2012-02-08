@@ -4,7 +4,6 @@
  * @usage: SERVER_ID=177 php videoPremigrate.php --conf /usr/wikia/conf-current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
  *  */
 ini_set( "include_path", dirname(__FILE__)."/.." );
-require_once( 'commandLine.inc' );
 
 ini_set( 'display_errors', 'stdout' );
 $options = array('help');
@@ -66,7 +65,7 @@ if( $rowCount ) {
 	$dbw_dataware->freeResult($existingRows);
 //
 
-	while( $video = $dbw->fetchObject($rows) ) {
+	while( $video = $dbw_dataware->fetchObject($rows) ) {
 		// check if video was processed previously (regardless of failure type)
 		if( in_array( $video->img_name, $alreadyExisting ) ) {
 			//echo "Aleardy migrated\n";
@@ -145,7 +144,7 @@ else {
 	echo("Nothing to do\n");
 }
 
-$dbw->freeResult($rows);
+$dbw_dataware->freeResult($rows);
 
 echo(": {$rowCount} videos processed.\n");
 
