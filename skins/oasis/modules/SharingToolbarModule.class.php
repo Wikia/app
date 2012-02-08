@@ -36,7 +36,7 @@ class SharingToolbarModule extends Module {
 		}
 		
 		if( !empty($this->app->wg->EnableWikiaQuiz) ) {
-			$allowedNamespaces[] = intval(NS_WIKIA_QUIZ);
+			$allowedNamespaces[] = intval(NS_WIKIA_PLAYQUIZ);
 		}
 		
 		$title = $this->app->wg->Title;
@@ -46,7 +46,7 @@ class SharingToolbarModule extends Module {
 		
 		return $ret;
 	}
-
+	
 	public function executeIndex() {
 		if (!$this->canBeShown()) {
 			// don't render the toolbar
