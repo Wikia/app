@@ -61,11 +61,41 @@ class SpecialPreferences extends SpecialPage {
 
 		$htmlForm->setSubmitText( wfMsg( 'restoreprefs' ) );
 		$htmlForm->setTitle( $this->getTitle( 'reset' ) );
-		$htmlForm->setSubmitCallback( array( __CLASS__, 'submitReset' ) );
+		/* Wikia change begin - @author: Marcin, #BugId: 19056 */
+		$htmlForm->setSubmitCallback( array( __CLASS__, 'submitResetWikia' ) );
+		/* Wikia change end */
 		$htmlForm->suppressReset();
 
 		$htmlForm->show();
 	}
+
+	/* Wikia change begin - @author: Marcin, #BugId: 19056 */
+	static function submitResetWikia() {
+		global $wgUser, $wgOut, $wgCityId, $wgEnableUserProfilePagesV3;
+		if ($wgEnableUserProfilePagesV3) {
+			$userIndentityObject = new UserIdentityBox(F::app(), $wgUser, 0);
+			$mastheadOptions = $userIndentityObject->optionsArray;
+			unset($mastheadOptions['gender'], $mastheadOptions['birthday']);
+			$mastheadOptions[] = UserIdentityBox::USER_PROPERTIES_PREFIX.'gender';
+			$mastheadOptions[] = UserIdentityBox::USER_PROPERTIES_PREFIX.'birthday';
+			$mastheadOptions[] = UserIdentityBox::USER_EVER_EDITED_MASTHEAD;
+			$mastheadOptions[] = UserIdentityBox::USER_EDITED_MASTHEAD_PROPERTY.$wgCityId;
+			foreach ($mastheadOptions as $optionName) {
+				$tempOptions[$optionName] = $wgUser->getOption($optionName);
+			}
+		}
+		$wgUser->resetOptions();
+		if ($wgEnableUserProfilePagesV3) {
+			foreach ($tempOptions as $optionName => $optionValue) {
+				$wgUser->setOption($optionName, $optionValue);
+			}
+		}
+		$wgUser->saveSettings();
+		$url = SpecialPage::getTitleFor( 'Preferences' )->getFullURL( 'success' );
+		$wgOut->redirect( $url );
+		return true;
+	}
+	/* Wikia change end */
 
 	static function submitReset( $formData ) {
 		global $wgUser, $wgOut;
