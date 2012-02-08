@@ -864,17 +864,19 @@ class ArticleCommentList {
 	 * @access public
 	 */
 	static public function ArticleFromTitle( &$title, &$article ) {
-		if (MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title)) {
+		if( MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title) ) {
 			global $wgRequest, $wgOut;
 			$redirect = $wgRequest->getText('redirect', false);
 			$diff = $wgRequest->getText('diff', '');
 			$oldid = $wgRequest->getText('oldid', '');
 			$action = $wgRequest->getText('action', '');
 			$permalink = $wgRequest->getInt( 'permalink', 0 );
+			
 			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history') && ($action != 'delete')) {
 				$parts = ArticleComment::explode($title->getText());
 				$redirectTitle = Title::newFromText($parts['title'], MWNamespace::getSubject($title->getNamespace()));
 				$commentId = $title->getArticleID();
+				
 				if ($redirectTitle) {
 					$query = array();
 					
@@ -895,6 +897,7 @@ class ArticleCommentList {
 				}
 			}
 		}
+		
 		return true;
 	}
 
