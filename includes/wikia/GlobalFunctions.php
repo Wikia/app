@@ -1489,6 +1489,7 @@ function wfPaginateArray( $data, $limit, $batch = 1 ){
 	}
 
 	$ret['next'] = $next;
+	$ret['total'] = $total;
 	$ret['batches'] = $batches;
 	$ret['currentBatch'] = $batch;
 

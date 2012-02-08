@@ -6,31 +6,35 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileCategoryService extends WikiaService {
-	
+	private $model;
+
+	public function init(){
+		$this->model = F::build( 'WikiaMobileCategoryModel' );
+	}
+
 	public function categoryExhibition() {
-		$title = $this->getVal('title');
+		$categoryPage = $this->getVal( 'categoryPage' );
 
-		if( class_exists( 'CategoryExhibitionPage' ) ) {
-
+		if ( $categoryPage instanceof CategoryPage && class_exists( 'CategoryExhibitionPage' ) ) {
+			$title = $categoryPage->getTitle();
 			$exh = CategoryDataService::getMostVisited( $title->getDBkey(), false, 4 );
 			$ids = array_keys($exh);
-			
-			for( $i = 0; $i < 4; $i++ ) {
+
+			for ( $i = 0; $i < 4; $i++ ) {
 				$pageId = $ids[$i];
-				var_dump($pageId);
+
 				$imageServing = new ImageServing( $pageId, 150 , array( "w" => 150, "h" => 150 ) );
-				var_dump($imageServing->getImages( 1 ) );
-				
+
 						$snippetText = '';
 						$imageUrl = $imageServing->getImages( 1 );
-				
+
 						if ( empty( $imageUrl ) ){
-							$snippetService = new ArticleService ( $pageId );
+							$snippetService = F::build( 'ArticleService', array( $pageId ) );
 							$snippetText = $snippetService->getTextSnippet();
 						}
-				var_dump($snippetText);
-						$oTitle = Title::newFromID( $pageId );
-				
+
+						$oTitle = F::build( 'Title', array( $pageId ), 'newFromID' );
+
 						$returnData = array(
 							'id'		=> $pageId,
 							'img'		=> $imageUrl,
@@ -39,15 +43,20 @@ class WikiaMobileCategoryService extends WikiaService {
 							'url'		=> $oTitle->getFullURL()
 						);
 			}
-			exit();
-			return true;
+		} else {
+			return false;
 		}
-		
-		return false;
 	}
 	
 	public function alphabeticalList() {
-		return true;
+		$categoryPage = $this->getVal( 'categoryPage' );
+	
+		if ( $categoryPage instanceof CategoryPage ) {
+			$data = $this->model->getItemsCollection( F::build( 'Category', array( $categoryPage->getTitle() ),  'newFromTitle' ) );
+			$this->response->setVal( 'items', $data );
+		} else {
+			return false;
+		}
 	}
 
 }
