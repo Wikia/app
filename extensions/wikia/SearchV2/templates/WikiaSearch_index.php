@@ -1,5 +1,10 @@
 <!-- <p><strong>Search Wikia</strong></p>-->
 <form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
+	Rank Expr:
+	<select name="rankExpr">
+		<option value="-indextank" <?= (empty($rankExpr) || ($rankExpr == '-indextank')) ? 'selected' : ''; ?> >indextank</option>
+		<option value="-bl" <?= ($rankExpr == '-bl') ? 'selected' : ''; ?> >backlinks</option>
+	</select>
 	<input type="text" name="query" value="<?=$query;?>" /><a class="wikia-button" id="search-v2-button">Search</a><br />
 	<input type="checkbox" name="crossWikia" value="1" <?= ( $crossWikia ? 'checked' : '' ); ?>/> Search all of Wikia
 </form>
@@ -27,6 +32,19 @@
 				<?= substr( $hit->data->text, 0, 250 ); ?>...
 			</div>
 			<a href="<?= $hit->data->url; ?>"><?=$hit->data->url;?></a><br />
+			<?php
+				switch($rankExpr) {
+					case '-indextank':
+						$rankValue = $hit->data->indextank;
+						break;
+					case '-bl':
+						$rankValue = $hit->data->bl;
+						break;
+					default:
+						$rankValue = '?';
+				}
+			?>
+			<i>[id: <?=$hit->id;?>, text_relevance: <?=$hit->data->text_relevance;?>, rank: <?= $rankValue; ?>]</i><br />
 			<br />
 			<?php ?>
 		<?php endforeach; ?>
