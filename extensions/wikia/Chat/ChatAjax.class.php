@@ -203,7 +203,7 @@ class ChatAjax {
 	 * Returns an associative array.  On success, returns "success" => true, on failure,
 	 * returns "error" => [error message].
 	 */
-	static public function giveChatMod(){
+	static public function giveChatMod() {
 		global $wgRequest, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
 		
