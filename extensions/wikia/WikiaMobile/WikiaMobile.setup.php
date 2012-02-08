@@ -32,6 +32,8 @@ $app->wg->append(
  * classes
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileHooks.class.php", 'WikiaMobileHooks' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryItem' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryItemsCollection' );
 
 /**
  * services
