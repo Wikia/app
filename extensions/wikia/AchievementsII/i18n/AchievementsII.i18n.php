@@ -326,7 +326,7 @@ on {{PLURAL:$1|a $2 page|$2 pages}}!',
 to {{PLURAL:$1|a page|pages}}!',
 	'achievements-badge-hover-desc-category' => 'Awarded for adding $1 {{PLURAL:$1|page|pages}}<br />
 to {{PLURAL:$1|a category|categories}}!',
-	'achievements-badge-hover-desc-blogpost' => 'Awarted for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
+	'achievements-badge-hover-desc-blogpost' => 'Awarded for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
 	'achievements-badge-hover-desc-blogcomment' => 'Awarded for writing a comment<br />
 on $1 different {{PLURAL:$1|blog post|blog posts}}!',
 	'achievements-badge-hover-desc-love' => 'Awarded for contributing to the wiki every day for {{PLURAL:$1|one day|$1 days}}!',
