@@ -100,20 +100,25 @@ if ($useVideoFeed) {
 
 		// open file
 		$file = '';
-		$startDate = date('m/d/y', $startDateTS);
-		$endDate = date('m/d/y', $endDateTS);
+		$startDate = $endDate = '';
 		switch ($provider) {
 			case VideoFeedIngester::PROVIDER_SCREENPLAY:
+				$startDate = date('m/d/y', $startDateTS);
+				$endDate = date('m/d/y', $endDateTS);
 				$file = $feedIngester->downloadFeed($startDate, $endDate);
 				break;
 			case VideoFeedIngester::PROVIDER_MOVIECLIPS:
-			case VideoFeedIngester::PROVIDER_REALGRAVITY:
 				// no file needed
+				break;
+			case VideoFeedIngester::PROVIDER_REALGRAVITY:				
+				// no file needed
+				$startDate = date('m/d/Y', $startDateTS);
+				$endDate = date('m/d/Y', $endDateTS);
 				break;
 			default:
 		}
 
-		$params = array('debug'=>$debug);
+		$params = array('debug'=>$debug, 'startDate'=>$startDate, 'endDate'=>$endDate);
 		if (!empty($ingestionData['keyphrases'])) {
 			$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
 		}

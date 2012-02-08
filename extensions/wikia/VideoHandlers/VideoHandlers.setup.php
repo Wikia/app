@@ -129,6 +129,7 @@ $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
  */
 $app->registerClass('VideoFeedIngester', $dir . '/feedingesters/VideoFeedIngester.class.php');
 $app->registerClass('MovieclipsFeedIngester', $dir . '/feedingesters/MovieclipsFeedIngester.class.php');
+$app->registerClass('RealgravityFeedIngester', $dir . '/feedingesters/RealgravityFeedIngester.class.php');
 $app->registerClass('ScreenplayFeedIngester', $dir . '/feedingesters/ScreenplayFeedIngester.class.php');
 
 $wgVideoMigrationProviderMap = array(
