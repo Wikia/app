@@ -5,12 +5,12 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileCategoryModel extends WikiaModel{
-	const CACHE_TTL = 1800;//30 mins, same TTL used by CategoryExhibition
+	const CACHE_TTL_ITEMSCOLLECTION = 1800;//30 mins, same TTL used by CategoryExhibition
 
 	public function getItemsCollection( Category $category ){
 		$this->wf->profileIn( __METHOD__ );
 
-		$cacheKey = $this->wf->memcKey( __CLASS__, __METHOD__, $category->getName() );
+		$cacheKey = $this->getItemsCollectionCacheKey( $category->getName() );
 		$items = $this->wg->memc->get( $cacheKey );
 
 		//this routine can return an empty array, so using empty is not wise
@@ -30,11 +30,19 @@ class WikiaMobileCategoryModel extends WikiaModel{
 				$items[$firstLetter]->addItem( F::build( 'CategoryItem', array( $name, $url, $type ) ) );
 			}
 
-			$this->wg->memc->set( $cacheKey, $items, self::CACHE_TTL );
+			$this->wg->memc->set( $cacheKey, $items, self::CACHE_TTL_ITEMSCOLLECTION );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
 		return $items;
+	}
+
+	private function getItemsCollectionCacheKey( $categoryName ){
+		return $this->wf->memcKey( __CLASS__, __METHOD__, $categoryName );
+	}
+
+	public function purgeItemsCollectionCache( $categoryName ){
+		$this->wg->memc->delete( $this->getItemsCollectionCacheKey( $categoryName ) );
 	}
 }
 
