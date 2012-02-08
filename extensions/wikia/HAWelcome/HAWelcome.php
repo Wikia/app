@@ -212,7 +212,7 @@ class HAWelcomeJob extends Job {
 							
 							$wgServer = WikiFactory::getVarValueByName('wgServer', $wgCityId );
 
-							$this->doPost($talkArticle, $flags,  wfMsgForContent( "welcome-message-log" ), $welcomeMsg,  $this->mSysop,  $this->mUser, $flags);
+							$this->doPost($talkArticle, $flags,  wfMsgForContent( "welcome-message-log" ), $welcomeMsg, $wgUser,  $this->mUser, $this->mSysop);
 						}
 					}
 					$wgTitle = $tmpTitle;
@@ -259,17 +259,20 @@ class HAWelcomeJob extends Job {
 	 * 
 	 */
 	
-	public function doPost( $talkArticle, $flags, $title, $message, $from, $to ) {
+	public function doPost( $talkArticle, $flags, $title, $message, $from, $to, $admin = false ) {
 		global $wgEnableWallExt, $wgMemc;
 		
 		$key = wfMemcKey( "HAWelcome-isPosted", $to->getName());
 		
 		if(!empty($wgEnableWallExt)) {
-			$wallMessage = F::build('WallMessage', array($message, $to->getName(), $from, $title), 'buildNewMessageAndPost');
+			$wallMessage = F::build('WallMessage', array($message, $to->getName(), $from, $title, false, false, $flags), 'buildNewMessageAndPost');
 			if( $wallMessage === false ) {
 				return false;
 			}
-
+			if($admin) {
+				$wallMessage->setPostedAsBot($admin);
+				$wallMessage->sendNotificationAboutLastRev();	
+			}
 		} else {
 			$talkArticle->doEdit( $message, wfMsgForContent( "welcome-message-log" ), $flags );
 		}

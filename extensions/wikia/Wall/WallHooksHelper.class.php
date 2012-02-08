@@ -616,17 +616,9 @@ class WallHooksHelper {
 
 			//FIXME: WallMessage::remove() creates a new RC but somehow there is no rc_this_oldid
 			$revOldId = $recentChange->getAttribute('rc_this_oldid');
-			if( $rcType == RC_NEW || $rcType == RC_EDIT && !empty($revOldId) ) {
-				$rev = Revision::newFromId($revOldId);
-				$notif = F::build('WallNotificationEntity', array($rev, $app->wg->CityId), 'createFromRev');
-					
-				$wh = F::build('WallHistory', array($app->wg->CityId));
-				$wh->add($rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User);
-					
-				if( $rcType == RC_NEW ) {
-					$wn = F::build('WallNotifications', array());
-					$wn->addNotification($notif);
-				}
+			if( $rcType == RC_EDIT && !empty($revOldId) ) {
+				$helper = F::build('WallHelper', array());
+				$helper->sendNotification($revOldId, $rcType);
 			}
 		}
 
