@@ -1,6 +1,6 @@
 (function($, window, undefined) {
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
-	
+
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
@@ -47,7 +47,7 @@
 				'tabletools,' +
 				'undo,' +
 				'wysiwygarea',
-	
+
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 			extraPlugins:
@@ -115,9 +115,9 @@
 		},
 
 		contentsCss: [$.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParams)],
-		
+
 		contentsCssString: "",
-		
+
 		getContentsCss: function(editor) {
 			// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
 			var cssArr = RTE.contentsCss;
@@ -132,17 +132,16 @@
 				RTE.initCk(editor);
 			}
 		},
-		
+
 		// start editor in mode provided
 		init: function(editor) {
-				
 			var instanceId = editor.instanceId;
-	
+
 			// Don't re-initialize the same instance
 			if (CKEDITOR.instances[instanceId]) {
 				return;
 			}
-			
+
 			// Temporary fix for cross domain request issue on dev
 			//if(typeof RTE.config.contentsCss == 'undefined') {
 				// Add the iframe content CSS file for the MiniEditor
@@ -155,46 +154,46 @@
 				RTE.initCk(editor);
 			//}
 		},
-		
+
 		initCk: function(editor) {
 			// Editor specific config overrides
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}
-	
+
 			RTE.config.startupMode = editor.config.mode;
-			
+
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
-	
+
 			// clean HTML returned by CKeditor
 			editor.ck.on('getData', RTE.filterHtml);
-	
+
 			// CKeditor code is loaded, now it's time to initialize RTE
 			GlobalTriggers.fire('rteinit', editor.ck);		
 		},
-		
+
 		// load extra CSS files
 		loadCss: function(instanceId) {
 			var css = [];
-	
+
 			// load MW:Common.css / MW:Wikia.css (RT #77759)
 			css.push(window.RTESiteCss);
-			
+
 			// Bartek - for RT #43217
 			if( typeof WikiaEnableAutoPageCreate != "undefined" ) {
 				css.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
 			}
-	
+
 			GlobalTriggers.fire('rterequestcss', css);
-	
+
 			for (var n=0; n<css.length; n++) {
 				if( typeof(css[n]) != 'undefined' ) {
 					var cb = ( (css[n].indexOf('?') > -1 || css[n].indexOf('__am') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
 					RTE.getInstance(instanceId).addCss('@import url(' + css[n] + cb + ');');
 				}
 			}
-	
+
 			// disable object resizing in IE
 			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
 				// IMPORTANT! use local path
@@ -206,17 +205,17 @@
 		onEditorReady: function(event) {
 			var editor = event.editor,
 				instanceId = editor.instanceId;
-	
+
 			// load CSS files
 			RTE.loadCss(instanceId);
-	
+
 			// base colors: use color / background-color from .color1 CSS class
 			RTE.tools.getThemeColors();
-	
+
 			// remove HTML indentation
 			editor.dataProcessor.writer.indentationChars = '';
 			editor.dataProcessor.writer.lineBreakChars = '';
-	
+
 			// override "Source" button to send AJAX request first, instead of mode switching
 			CKEDITOR.plugins.sourcearea.commands.source.exec = function(editor) {
 				if (editor.mode == 'wysiwyg') {
@@ -225,32 +224,32 @@
 	
 				editor.fire('modeSwitch');
 			}
-	
+
 			// ok, we're done!
 			RTE.loaded.push(editor);
 
 			// calculate load time
 			RTE.loadTime = (new Date() - window.wgNow) / 1000;
-	
+
 			RTE.log('CKEditor v' + CKEDITOR.version +
 				(window.RTEDevMode ? ' (in development mode)' : '') +
 				' is ready in "' + editor.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
-	
+
 			// let extensions do their tasks when RTE is fully loaded
 			$(window).trigger('rteready', editor);
 			GlobalTriggers.fire('rteready', editor);
-	
+
 			// preload format dropdown (BugId:4592)
 			var formatDropdown = editor.ui.create('Format');
 			if (formatDropdown) {
 				formatDropdown.createPanel(editor);
 			}
-	
+
 			// send custom event "submit" when edit page is being saved (BugId:2947)
 			var editform = $(editor.element.$.form).bind('submit', $.proxy(function() {
 				editor.fire('submit', {form: editform}, editor);
 			}, this));
-	
+
 			// remove data-rte-instance attribute when sending HTML to backend
 			editor.dataProcessor.htmlFilter.addRules({
 				attributes: {
@@ -262,7 +261,7 @@
 
 			$(window).resize(RTE.repositionRTEOverlay).resize();
 		},
-	
+
 		// reposition #RTEOverlay div
 		repositionRTEOverlay: function() {
 			RTE.overlayNode.css({left:0,top:0});
@@ -277,27 +276,27 @@
 				'top': parseInt(editorPosition.top - bodyPadding.top) + 'px'
 			});
 		},
-	
+
 		// get jQuery object wrapping body of editor' iframe
 		getEditor: function(instanceId) {
 			return $(RTE.getInstance(instanceId).document.$.body);
 		},
-	
+
 		// Returns the CKE instance that belongs to ID (or the current instance if no ID is given)
 		getInstance: function(instanceId) {
 			return CKEDITOR.instances[instanceId || WE.instanceId];
 		},
-	
+
 		// Returns the wikiaEditor instance that belongs to ID (or the current instance if no ID is given)
 		getInstanceEditor: function(instanceId) {
 			return WE.instances[instanceId || WE.instanceId];
 		},
-	
+
 		// Returns the element associated with an instance ID (or the current element if no ID is given)
 		getInstanceElement: function(instanceId) {
 			return $('#' + instanceId || WE.instanceId);
 		},
-	
+
 		// filter HTML returned by CKEditor
 		// TODO: implement using htmlFilter
 		// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
@@ -307,14 +306,14 @@
 				ev.data.dataValue = ev.data.dataValue.replace(/<div firebug[^>]+>[^<]+<\/div>/g, '');
 			}
 		},
-	
+
 		// constants (taken from global JS variables added by RTE backend)
 		constants: {
 			localPath: window.RTELocalPath,
 			urlProtocols: window.RTEUrlProtocols,
 			validTitleChars: window.RTEValidTitleChars
 		},
-	
+
 		// messages to be used in JS code
 		messages: window.RTEMessages
 	};
@@ -329,7 +328,6 @@
 	window.RTE = RTE;
 
 })(jQuery, window);
-
 
 // Hack for IE with allinone mode turned off
 // Due to asynchronous script loading issues in WSL, things are executed out of order
