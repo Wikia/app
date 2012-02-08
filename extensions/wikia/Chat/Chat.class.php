@@ -27,7 +27,7 @@ class Chat {
 	 */
 	static public function banUser($userNameToKickBan, &$doKickAnyway=false, $kickingUser){
 		wfProfileIn( __METHOD__ );
-	
+		
 		$errorMsg = "";
 		$PERMISSION_TO_KICKBAN = "chatmoderator";
 		$userToKickBan = User::newFromName($userNameToKickBan);
@@ -45,10 +45,10 @@ class Chat {
 					$oldGroups = $userToKickBan->getGroups();
 					$userToKickBan->addGroup( $BANNED_GROUP );
 					$newGroups = $userToKickBan->getGroups();
-
+					
 					// Log the rights-change.
-					Chat::addLogEntry($userToKickBan, $oldGroups, $newGroups, $kickingUser->getName());
-
+					Chat::addLogEntry($userToKickBan, $oldGroups, $newGroups, $kickingUser);
+					
 					// Make sure the new group is set in the database.
 					$userToKickBan->saveSettings();
 				}
@@ -172,7 +172,7 @@ class Chat {
 		}
 		
 		// Check if the userToPromote is already in the chatmoderator group.
-		$errorMsg = "";
+		$errorMsg = '';
 		if( in_array($CHAT_MOD_GROUP, $userToPromote->getEffectiveGroups()) ) {
 			$errorMsg = wfMsg("chat-err-already-chatmod", $userNameToPromote, $CHAT_MOD_GROUP);
 		} else {
@@ -180,38 +180,32 @@ class Chat {
 			$promottingUserName = $promottingUser->getName();
 			$isSelf = ($userToPromote->getName() == $promottingUserName);
 			$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : array() );
-			if(in_array($CHAT_MOD_GROUP, $addableGroups)){
+			
+			if( in_array($CHAT_MOD_GROUP, $addableGroups) ) {
 				// Adding the group is allowed. Add the group, clear the cache, run necessary hooks, and log the change.
 				$oldGroups = $userToPromote->getGroups();
-
+				
 				$userToPromote->addGroup( $CHAT_MOD_GROUP );
-
 				$userToPromote->invalidateCache();
-				if ( $userToPromote instanceof User ) {
+				
+				if( $userToPromote instanceof User ) {
 					$removegroups = array();
 					$addgroups = array( $CHAT_MOD_GROUP );
 					wfRunHooks( 'UserRights', array( &$userToPromote, $addgroups, $removegroups ) );
 				}
-
+				
 				// Update user-rights log.
 				$newGroups = array_merge($oldGroups, array($CHAT_MOD_GROUP));
-				$reason = wfMsg('chat-userrightslog-a-made-b-chatmod', $promottingUserName, $userToPromote->getName());
-				$log = new LogPage( 'rights' );
-				$log->addEntry( 'rights',
-					$userToPromote->getUserPage(),
-					$reason,
-					array(
-						Chat::makeGroupNameListForLog( $oldGroups ),
-						Chat::makeGroupNameListForLog( $newGroups )
-					)
-				);
+				
+				// Log the rights-change.
+				Chat::addLogEntry($userToPromote, $oldGroups, $newGroups, $promottingUser, 'chatmod');
 			} else {
 				$errorMsg = wfMsg("chat-err-no-permission-to-add-chatmod", $CHAT_MOD_GROUP);
 			}
 		}
-
+		
 		wfProfileOut( __METHOD__ );
-		return ( $errorMsg=="" ? true : $errorMsg);
+		return ( $errorMsg == "" ? true : $errorMsg);
 	} // end promoteChatMod()
 	
 	
@@ -254,22 +248,33 @@ class Chat {
 	 * @param object $user User object
 	 * @param boolean $addGroups adding or removing groups?
 	 * @param array $groups names of groups
-	 * @param string kicker - the chatmoderator that banned the user (this is subed into an i18n message).
+	 * @param object $doer - the chatmoderator that banned the user (this is subed into an i18n message).
 	 */
-	private static function addLogEntry($user, $oldGroups, $newGroups, $kicker) {
+	private static function addLogEntry($user, $oldGroups, $newGroups, $doer, $type = 'kick') {
 		global $wgRequest;
-
 		wfProfileIn(__METHOD__);
+		
+		$doerName = $doer->getName();
+		
+		if( $type === 'kick' ) {
+		//kickban
+			$reason = wfMsg('chat-kick-log-reason', $doerName);
+		} else {
+		//chatmode
+			$reason = wfMsg('chat-userrightslog-a-made-b-chatmod', $doerName, $user->getName());
+		}
+		
 		$log = new LogPage('rights');
-
 		$log->addEntry('rights',
 			$user->getUserPage(),
-			wfMsg('chat-kick-log-reason', "$kicker"),
+			$reason,
 			array(
-				implode(', ', $oldGroups),
-				implode(', ', $newGroups)
-			)
+				Chat::makeGroupNameListForLog( $oldGroups ),
+				Chat::makeGroupNameListForLog( $newGroups )
+			),
+			$doer
 		);
+		
 		wfProfileOut(__METHOD__);
 	}
 	
