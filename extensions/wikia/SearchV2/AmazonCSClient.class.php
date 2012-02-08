@@ -12,13 +12,13 @@ class AmazonCSClient extends WikiaSearchClient {
 		$this->httpProxy = $httpProxy;
 	}
 
-	public function search( $query, $start, $size, $cityId = 0 ) {
+	public function search( $query, $start, $size, $cityId = 0, $rankExpr = '' ) {
 		$params = array(
 			'q' => $query,
-			'rank' => $this->rankName,
+			'rank' => ( !empty($rankExpr) ? $rankExpr : $this->rankName ),
 			'start' => $start,
 			'size' => $size,
-			'return-fields' => 'title,url,text,canonical'
+			'return-fields' => 'title,url,text,canonical,text_relevance,indextank,bl'
 		);
 		if( !empty( $cityId ) ) {
 			// inter-wiki search

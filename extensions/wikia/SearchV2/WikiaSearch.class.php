@@ -15,8 +15,8 @@ class WikiaSearch extends WikiaObject {
 		parent::__construct();
 	}
 
-	public function doSearch( $query, $start = 0, $length = null, $cityId = 0 ) {
-		$results = $this->client->search( $query, $start, ( !empty($length) ? $length : self::RESULTS_PER_PAGE ), $cityId );
+	public function doSearch( $query, $start = 0, $length = null, $cityId = 0, $rankExpr = '' ) {
+		$results = $this->client->search( $query, $start, ( !empty($length) ? $length : self::RESULTS_PER_PAGE ), $cityId, $rankExpr );
 		return $results;
 	}
 
