@@ -2871,8 +2871,7 @@ var WikiaPhotoGallery = {
 					$('#' + id).closeModal();
 				});
 			},
-			id: id,
-			zIndex: 5000
+			id: id
 		});
 	},
 
