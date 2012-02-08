@@ -5,7 +5,7 @@
  */
 class CategoryDataService extends Service {
 
-	private static function tableFromResult( $res, $mNamespace = NS_MAIN ){
+	private static function tableFromResult( $res ){
 
 		$articles = array();
 		while ($row = $res->fetchObject($res)) {
@@ -30,7 +30,7 @@ class CategoryDataService extends Service {
 			array(	'ORDER BY' => 'page_title' ),
 			array(	'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
 		);
-		return self::tableFromResult( $res, $mNamespace );
+		return self::tableFromResult( $res );
 	}
 
 	public static function getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative = false  ){
@@ -48,7 +48,7 @@ class CategoryDataService extends Service {
 			array(	'revision'  => array( 'LEFT JOIN', 'rev_page = page_id' ),
 				'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
 		);
-		return self::tableFromResult( $res, $mNamespace );
+		return self::tableFromResult( $res );
 	}
 	
 	public function getMostVisited( $sCategoryDBKey, $mNamespace, $limit = false, $negative = false  ){
@@ -172,7 +172,7 @@ class CategoryDataService extends Service {
 					'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
 			);
 			
-			return self::tableFromResult( $res, $mNamespace );
+			return self::tableFromResult( $res );
 		}
 	}
 }

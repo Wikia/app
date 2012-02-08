@@ -43,7 +43,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobilePageHeaderService.class.p
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileNavigationService.class.php", 'WikiaMobileNavigationService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileFooterService.class.php", 'WikiaMobileFooterService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAdService.class.php", 'WikiaMobileAdService' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileLeftPaneService.class.php", 'WikiaMobileLeftPaneService' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryService.class.php", 'WikiaMobileCategoryService' );
 
 /**
  * controllers
@@ -53,7 +53,6 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAppCacheController.class.
 /**
  * special pages
  */
-
 
 /**
  * message files
@@ -67,6 +66,7 @@ $app->registerHook( 'ParserAfterTidy', 'WikiaMobileHooks', 'onParserAfterTidy' )
 $app->registerHook( 'ParserLimitReport', 'WikiaMobileHooks', 'onParserLimitReport' );
 $app->registerHook( 'MakeHeadline', 'WikiaMobileHooks', 'onMakeHeadline' );
 $app->registerHook( 'LinkBegin', 'WikiaMobileHooks', 'onLinkBegin' );
+$app->registerHook( 'CategoryPageView', 'WikiaMobileHooks', 'onCategoryPageView' );
 
 /*
  * settings

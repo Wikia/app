@@ -50,7 +50,7 @@ class CategoryExhibitionViewer extends CategoryPageIIViewer {
 		global $wgOut, $wgCategoryMagicGallery, $wgCategoryPagingLimit;
 		wfProfileIn( __METHOD__ );
 
-		$r = 	$this->getPagesSection().
+		$r = $this->getPagesSection().
 			$this->getSubcategorySection().
 			$this->getBlogsSection().
 			$this->getMediaSection();
