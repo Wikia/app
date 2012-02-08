@@ -75,6 +75,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			$this->response->setData( $page );
 		}
+
+		// force output format as there's no template file (BugId:18831)
+		$this->getResponse()->setFormat('json');
 	}
 
 	public function getPageMetaData() {
