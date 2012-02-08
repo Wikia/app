@@ -62,14 +62,21 @@ class CategoryDataService extends Service {
 
 		if ( empty( $wgDevelEnvironment ) ) {
 			// production mode
+			
+			if( !empty( $mNamespace ) ) {
+				$tmp = array(
+					'cl_to' => $sCategoryDBKey,
+					'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
+				);
+			} else {
+				$tmp = array( 'cl_to' => $sCategoryDBKey );
+			}
 
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 				array( 'page', 'categorylinks' ),
 				array( 'page_id', 'cl_to' ),
-				array(	'cl_to' => $sCategoryDBKey,
-					'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-				),
+				$tmp,
 				__METHOD__,
 				array( 'ORDER BY' => 'page_title' ),
 				array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ) )
@@ -87,14 +94,20 @@ class CategoryDataService extends Service {
 					$optionsArray['LIMIT'] = $limit;
 				}
 				
+				if( !empty( $mNamespace )  ) {
+					$tmp = array(
+						'city_id' => $wgCityId,
+						'page_ns ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
+					);
+				} else {
+					$tmp = array( 'city_id' => $wgCityId );
+				}
+				
 				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
 				$res = $dbr->select(
 					array( 'specials.page_views_summary_articles' ),
 					array( 'page_id' ),
-					array(
-						'city_id' => $wgCityId,
-						'page_ns ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-					),
+					$tmp,
 					__METHOD__,
 					$optionsArray
 				);
@@ -109,14 +122,20 @@ class CategoryDataService extends Service {
 						$optionsArray['LIMIT'] = $limit;
 					}
 
+					if( !empty( $mNamespace )  ) {
+						$tmp = array(
+							'pv_city_id' => $wgCityId,
+							'pv_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
+						);
+					} else {
+						$tmp = array( 'pv_city_id' => $wgCityId );
+					}
+					
 					$lastMonth = strftime( "%Y%m%d", time() - 30 * 24 * 60 * 60 );
 					$res = $dbr->select(
 						array( 'page_views_articles' ),
 						array( 'pv_page_id as page_id' ),
-						array(
-							'pv_city_id' => $wgCityId,
-							'pv_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-						),
+						$tmp,
 						__METHOD__,
 						array(
 							'GROUP BY' => 'pv_page_id',
@@ -158,14 +177,21 @@ class CategoryDataService extends Service {
 			if ( $limit ) {
 				$optionsArray['LIMIT'] = $limit;
 			}
+			
+			if( !empty( $mNamespace )  ) {
+				$tmp = array(
+					'cl_to' => $sCategoryDBKey,
+					'page_namespace IN(' . $mNamespace . ')'
+				);
+			} else {
+				$tmp = array( 'cl_to' => $sCategoryDBKey );
+			}
 
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 				array( 'page', 'page_visited', 'categorylinks' ),
 				array( 'page_id', 'page_title' ),
-				array(	'cl_to' => $sCategoryDBKey,
-					'page_namespace IN(' . $mNamespace . ')'
-				),
+				$tmp,
 				__METHOD__,
 				$optionsArray,
 				array(	'page_visited'  => array( 'LEFT JOIN', 'article_id = page_id' ),
