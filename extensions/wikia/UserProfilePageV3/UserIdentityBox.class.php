@@ -47,6 +47,17 @@ class UserIdentityBox {
 		'chatmoderator' => 1,
 	);
 	
+	public $optionsArray = array(
+		'location', 
+		'occupation', 
+		'birthday', 
+		'gender', 
+		'website', 
+		'avatar', 
+		'twitter', 
+		'fbPage', 
+		'name',
+	);
 	
 	/**
 	 * @param WikiaApp $app wikia appliacation object
@@ -244,7 +255,7 @@ class UserIdentityBox {
 		$changed = false;
 		
 		if( is_object($data) ) {
-			foreach(array('location', 'occupation', 'birthday', 'gender', 'website', 'avatar', 'twitter', 'fbPage', 'name') as $option) {
+			foreach($this->optionsArray as $option) {
 				if( isset($data->$option) ) {
 					$data->$option = str_replace('*', '&asterix;', $data->$option);
 					$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
