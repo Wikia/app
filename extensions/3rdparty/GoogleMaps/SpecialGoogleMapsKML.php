@@ -23,10 +23,23 @@ class GoogleMapsKML extends SpecialPage {
 		header('Content-Disposition: attachment; filename="'.$article.'.kml"');
 
 		$title = Title::newFromText($article);
-		if ($title) {
+		/* Wikia change begin - @author: Sebastian Marzjan */
+		/* fogbugz BugID #18043 */
+		if ($title instanceof Title) {
+		/* Wikia change end */
 			$revision = Revision::newFromTitle($title);
 
-			$mapOptions = GoogleMaps::getMapSettings($title,
+			/* Wikia change begin - @author: Sebastian Marzjan */
+			/* fogbugz BugID #18043 */
+			if(!($revision instanceof Revision)) {
+				$errorMessage = 'SpecialGoogleMapsKML.php ' . __LINE__ . ' - no revision for ' . $article . ' / ' . $title->getArticleID();
+				Wikia::log(__METHOD__,false, $errorMessage);
+				echo "No article revisions found by the name of $article";
+				return false;
+			}
+			/* Wikia change end */
+
+			$mapOptions = GoogleMaps::getMapSettings($title,			
 			array('icons' => 'http://maps.google.com/mapfiles/kml/pal4/{label}.png',
 			'icon' => 'icon57'));
 
