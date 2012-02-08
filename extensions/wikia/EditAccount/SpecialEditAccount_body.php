@@ -343,6 +343,8 @@ class EditAccount extends SpecialPage {
 
 			// Mark as disabled in a more real way, that doesnt depend on the real_name text
 			$this->mUser->setOption( 'disabled', 1 );
+                        // BugId:18085 - setting a new token causes the user to be logged out.
+                        $this->mUser->setToken( md5( microtime() . mt_rand( 0, 0x7fffffff ) ) );
 
 			// Save the new settings
 			$this->mUser->saveSettings();
