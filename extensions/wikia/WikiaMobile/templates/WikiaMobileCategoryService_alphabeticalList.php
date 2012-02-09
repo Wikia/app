@@ -1,18 +1,19 @@
 <section>
 	<header><?= $wf->MsgExt( 'wikiamobile-categories-items-total', array( 'parsemag', 'content' ), $wg->ContLang->formatNum( $total ), $name ) ;?></header>
-<? foreach ( $collections as $letter => $collection) :?>
+<? foreach ( $collections as $index => $collection) :?>
 	<?
-	$itemsBatch = $collection->getItems( 1 );
+	$batch = ( $index == $requestedIndex ) ? $requestedBatch : 1;
+	$itemsBatch = $collection->getItems( $batch );
 	$nextBatch = $itemsBatch['currentBatch'] + 1;
 	$prevBatch = $itemsBatch['currentBatch'] - 1;
-	$id = 'catAlpha' . htmlentities( $letter );
-	$urlSafeLetter = urlencode( $letter );
+	$id = 'catAlpha' . htmlentities( $index );
+	$urlSafeIndex = urlencode( $index );
 	$urlSafeId = urlencode( $id );
 	?>
-	<h2 class=collSec><?= strtoupper( $letter ) ;?> <span class=cnt>(<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>)</span><span class=chev></span></h2>
+	<h2 class=collSec><?= strtoupper( $index ) ;?> <span class=cnt>(<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>)</span><span class=chev></span></h2>
 	<section id=<?= $id ;?>>
 		<? if ( $itemsBatch['currentBatch'] > 1 ) :?>
-		<a id=catLess class="lbl pag" href="?page=<?=$prevBatch;?>&letter=<?=$urlSafeLetter;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-prev' ) ;?></a>
+		<a id=catLess class="lbl pag" href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-prev' ) ;?></a>
 		<? endif ;?>
 
 		<ul>
@@ -22,7 +23,7 @@
 		</ul>
 
 		<? if ( $itemsBatch['next'] ) :?>
-		<a id=catMore class="lbl pag" href="?page=<?=$nextBatch;?>&letter=<?=$urlSafeLetter;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-more' ) ;?></a>
+		<a id=catMore class="lbl pag" href="?page=<?=$nextBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-more' ) ;?></a>
 		<? endif ;?>
 	</section>
 <? endforeach ;?>
