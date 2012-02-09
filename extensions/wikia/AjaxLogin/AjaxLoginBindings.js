@@ -183,7 +183,12 @@ $(function() {
 						if( target.is('a') ){
 							window.location.href = target.attr('href');
 						} else {
-							window.location.href = target.parent().attr('href');
+							/* fogbugz BugId: 20320 */ 
+							if(target.parent().is('a')) {
+								window.location.href = target.parent().attr('href');
+							} else {
+								window.location.href = target.closest('nav').find('a').attr('href');
+							}
 						}
 					}
 				}
