@@ -36,18 +36,25 @@ var SharingToolbar = {
 		lightboxSend = node.attr('data-lightboxSend'),
 		lightboxShareEmailLabelAddress = node.attr('data-lightboxShareEmailLabelAddress'),
 		lightboxCancel = node.attr('data-lightboxcancel');
-		if ( wgUserName === null && window.wgComboAjaxLogin ) {
-			showComboAjaxForPlaceHolder(false, "", function() {
-				// show email modal when the page reloads (BugId:15911)
-				AjaxLogin.clickAfterLogin = '#SharingToolbar .email-link';
-			});
+		
+		var showEmailModal = function() {
+			SharingToolbar.showEmailModal(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel);
+		};
+		
+		if ( UserLoginModal.show({
+				callback: showEmailModal
+			}) ) {
 			return false;
 		}
 		else {
-			SharingToolbar.showEmailModal(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel);
+			showEmailModal();
 		}
 	},
 	showEmailModal: function(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel) {
+		var refreshPage = function() {
+			UserLoginAjaxForm.prototype.reloadPage();
+		};
+	
 		$.showCustomModal(
 			lightboxShareEmailLabel,
 			'<label>'+lightboxShareEmailLabelAddress+'<br/>'
@@ -69,16 +76,23 @@ var SharingToolbar = {
 							},
 							callback: function(data) {
 								var result = data.result;
-								$.showModal(result['info-caption'], result['info-content']);
+								$.showModal(result['info-caption'], result['info-content'], {
+									onClose: refreshPage
+								});
 								// close email modal when share is successful (BugId:16061)
 								if (result.success) {
 									$('#shareEmailModal').closeModal();
+									
 								}
 							}
 						});
 					}},
-					{id:'cancel', message:'Cancel', handler:function(){$('#shareEmailModal').hideModal();}}
-				]
+					{id:'cancel', message:'Cancel', handler:function(){
+							$('#shareEmailModal').hideModal();
+						}
+					}
+				],
+				onClose: refreshPage
 			}
 		);
 	},
