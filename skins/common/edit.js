@@ -253,6 +253,4 @@ hookEvent( 'load', function() {
 				.focus( function() { currentFocused = iframe.get( 0 ); } );
 		}
 	}
-
-	editForm
 } );
