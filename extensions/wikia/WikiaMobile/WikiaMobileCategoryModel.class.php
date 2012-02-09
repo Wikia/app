@@ -6,6 +6,7 @@
  */
 class WikiaMobileCategoryModel extends WikiaModel{
 	const CACHE_TTL_ITEMSCOLLECTION = 1800;//30 mins, same TTL used by CategoryExhibition
+	const EXHIBITION_ITEMS_LIMIT = 4;//maximum number of items in Category Exhibition to display
 
 	public function getItemsCollection( Category $category ){
 		$this->wf->profileIn( __METHOD__ );
@@ -20,6 +21,39 @@ class WikiaMobileCategoryModel extends WikiaModel{
 
 		$this->wf->profileOut( __METHOD__ );
 		return $contents;
+	}
+
+	public function getExhibitionItems( Title $title ){
+		if ( class_exists( 'CategoryDataService' ) ) {
+			$exh = CategoryDataService::getMostVisited( $title->getDBkey(), false, self::EXHIBITION_ITEMS_LIMIT );
+			$ids = array_keys( $exh );
+			$length = count( $ids );
+			$items = array();
+
+			for ( $i = 0; $i < $length; $i++ ) {
+				$pageId = $ids[$i];
+
+				$imgRespnse = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array ( $pageId ), 'height' => 150, 'width' => 150, 'count' => 1 ) );
+				$img = $imgRespnse->getVal( 'result' );
+
+				if ( !empty( $img[$pageId] ) ){
+					$img = $img[$pageId][0]['url'];
+				} else {
+					$img = false;
+				}
+
+				$oTitle = Title::newFromID( $pageId );
+				$items[] = array(
+					'img'		=> $img,
+					'title'		=> $oTitle->getText(),
+					'url'		=> $oTitle->getFullURL()
+				);
+			}
+
+			return $items;
+		}
+
+		return false;
 	}
 
 	private function getItemsCollectionCacheKey( $categoryName ){
