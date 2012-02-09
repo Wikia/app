@@ -275,8 +275,11 @@ class CategoryExhibitionSection {
 	protected function getArticles( $aTmpData ){
 
 		$aData = array();
-		foreach( $aTmpData as $item ){			
-			$aData[] = $this->getArticleData( $item['page_id'] );
+		foreach( $aTmpData as $item ){	
+			$articleData = $this->getArticleData( $item['page_id'] );
+			if(!empty($articleData)) { 		
+				$aData[] = $articleData;
+			} 
 		};		
 		return $aData;
 	}
@@ -314,6 +317,9 @@ class CategoryExhibitionSection {
 		}
 
 		$oTitle = Title::newFromID( $pageId );
+		if(!($oTitle instanceof Title)) {
+			return false;
+		}
 
 		$returnData = array(
 			'id'		=> $pageId,
