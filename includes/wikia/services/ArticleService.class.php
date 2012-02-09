@@ -88,19 +88,24 @@ class ArticleService extends Service {
 			$tmpParser = new Parser();
 			$content = $tmpParser->parse( $content,  $this->mArticle->getTitle(), new ParserOptions )->getText();
 
+			// the ? in (.*?) is INCREDIBLY important, guaranting non-greedy behaviour
 			foreach ( $this->mTagsToRemove as $tag ) {
-				$content = preg_replace( "#<{$tag}[^>]*>(.*)<\/{$tag}>#s", '', $content );
+				$content = preg_replace( "#<{$tag}[^>]*>(.*?)<\/{$tag}>#s", '', $content );
 			}
 
 			// strip HTML tags
 			$content = trim(strip_tags($content));
-
-			// compress white characters
 			$content = mb_substr($content, 0, $length + 200);
-			$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&'));
+			// stripping some html entities
+			$content = strtr($content, array('&nbsp;' => ' ', '&amp;' => '&', '&bull;' => ''));
+			// stripping leftover '[' & ']' as well as things between them
+			$content = preg_replace('/\[(.*?)\]/', '', $content);
+			// stripping leading non-alnum characters
+			$content = preg_replace('/^([^a-zA-Z0-9])+/', '', $content,1);
+			// compress white characters
 			$content = preg_replace('/\s+/',' ',$content);
 			$content = trim( $content );
-			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH );
+			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH-3 ) . '...';
 
 			if ( $length <= self::MAX_CACHED_TEXT_LENGTH ){
 				$oMemCache->set( $sKey, $cacheContent, 86400 );
