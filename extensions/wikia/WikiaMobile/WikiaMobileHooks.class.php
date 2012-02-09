@@ -97,7 +97,10 @@ class WikiaMobileHooks extends WikiaObject{
 
 		if ( $title->getNamespace() == NS_CATEGORY ) {
 			$category = F::build( 'Category', array( $title ), 'newFromTitle' );
-			F::build( 'WikiaMobileCategoryModel' )->purgeItemsCollectionCache( $category->getName() );
+			$model = F::build( 'WikiaMobileCategoryModel' );
+
+			$model->purgeItemsCollectionCache( $category->getName() );
+			$model->purgeExhibitionItemsCacheKey( $title->getText() );
 		}
 
 		$this->wf->profileOut( __METHOD__ );

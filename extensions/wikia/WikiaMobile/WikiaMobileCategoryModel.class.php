@@ -6,6 +6,7 @@
  */
 class WikiaMobileCategoryModel extends WikiaModel{
 	const CACHE_TTL_ITEMSCOLLECTION = 1800;//30 mins, same TTL used by CategoryExhibition
+	const CACHE_TTL_EXHIBITION = 21600;//6h
 	const EXHIBITION_ITEMS_LIMIT = 4;//maximum number of items in Category Exhibition to display
 
 	public function getItemsCollection( Category $category ){
@@ -24,35 +25,46 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	}
 
 	public function getExhibitionItems( Title $title ){
+		$this->wf->profileIn( __METHOD__ );
+
 		if ( class_exists( 'CategoryDataService' ) ) {
-			$exh = CategoryDataService::getMostVisited( $title->getDBkey(), false, self::EXHIBITION_ITEMS_LIMIT );
-			$ids = array_keys( $exh );
-			$length = count( $ids );
-			$items = array();
+			$cacheKey = $this->getExhibitionItemsCacheKey( $title->getText() );
+			$items = $this->wg->memc->get( $cacheKey );
 
-			for ( $i = 0; $i < $length; $i++ ) {
-				$pageId = $ids[$i];
-
-				$imgRespnse = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array ( $pageId ), 'height' => 150, 'width' => 150, 'count' => 1 ) );
-				$img = $imgRespnse->getVal( 'result' );
-
-				if ( !empty( $img[$pageId] ) ){
-					$img = $img[$pageId][0]['url'];
-				} else {
-					$img = false;
+			if ( !is_array( $items ) ) {
+				$exh = CategoryDataService::getMostVisited( $title->getDBkey(), false, self::EXHIBITION_ITEMS_LIMIT );
+				$ids = array_keys( $exh );
+				$length = count( $ids );
+				$items = array();
+	
+				for ( $i = 0; $i < $length; $i++ ) {
+					$pageId = $ids[$i];
+	
+					$imgRespnse = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array ( $pageId ), 'height' => 150, 'width' => 150, 'count' => 1 ) );
+					$img = $imgRespnse->getVal( 'result' );
+	
+					if ( !empty( $img[$pageId] ) ) {
+						$img = $img[$pageId][0]['url'];
+					} else {
+						$img = false;
+					}
+	
+					$oTitle = Title::newFromID( $pageId );
+					$items[] = array(
+						'img'		=> $img,
+						'title'		=> $oTitle->getText(),
+						'url'		=> $oTitle->getFullURL()
+					);
 				}
 
-				$oTitle = Title::newFromID( $pageId );
-				$items[] = array(
-					'img'		=> $img,
-					'title'		=> $oTitle->getText(),
-					'url'		=> $oTitle->getFullURL()
-				);
+				$this->wg->memc->set( $cacheKey, $items, self::CACHE_TTL_EXHIBITION );
 			}
 
+			$this->wf->profileOut( __METHOD__ );
 			return $items;
 		}
 
+		$this->wf->profileOut( __METHOD__ );
 		return false;
 	}
 
@@ -60,8 +72,16 @@ class WikiaMobileCategoryModel extends WikiaModel{
 		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', $categoryName );
 	}
 
+	private function getExhibitionItemsCacheKey( $titleText ){
+		return $this->wf->memcKey( __CLASS__, 'Exhibition', $titleText );
+	}
+
 	public function purgeItemsCollectionCache( $categoryName ){
 		$this->wg->memc->delete( $this->getItemsCollectionCacheKey( $categoryName ) );
+	}
+
+	public function purgeExhibitionItemsCacheKey( $titleText ){
+		$this->wg->memc->delete( $this->getItemsCollectionCacheKey( $titleText ) );
 	}
 }
 
