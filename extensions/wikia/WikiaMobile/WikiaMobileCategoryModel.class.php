@@ -44,6 +44,9 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 
 		//get all the members in the category
 		$this->limit = null;
+
+		$this->items = array();
+		$this->count = 0;
 	}
 
 	function addImage( Title $title, $sortkey, $pageLength, $isRedirect = false ){
@@ -59,14 +62,6 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	}
 
 	private function addItem( $title, $sortkey ){
-		if ( !is_array( $this->items ) ) {
-			$this->items = array();
-		}
-
-		if ( !is_int( $this->count ) ) {
-			$this->count = 0;
-		}
-	
  		if ( $title instanceof Title ) {
 			$index = strtolower( substr( $sortkey, 0, 1 ) );
 
