@@ -53,7 +53,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 /**
  * Simple DTO to handle the indexed contents of a category
  */
-class WikiaMobileCategoryContents{
+class WikiaMobileCategoryContents implements arrayaccess{
 	private $items;
 	private $count;
 
@@ -77,6 +77,26 @@ class WikiaMobileCategoryContents{
 	public function getCount(){
 		return $this->count;
 	}
+
+	public function offsetSet( $offset, $value ){
+        if ( is_null( $offset ) ) {
+            $this->items[] = $value;
+        } else {
+            $this->items[$offset] = $value;
+        }
+    }
+
+    public function offsetExists( $offset ){
+        return isset( $this->items[$offset] );
+    }
+
+    public function offsetUnset( $offset ){
+        unset( $this->container[$offset] );
+    }
+
+    public function offsetGet( $offset ){
+        return isset( $this->container[$offset] ) ? $this->container[$offset] : null;
+    }
 }
 
 /**
