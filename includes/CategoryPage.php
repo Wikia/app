@@ -250,15 +250,28 @@ class CategoryViewer {
 		wfRunHooks('CategoryPage::beforeCategoryData',array(&$userCon));
 		/* Wikia change end */
 
+		/* Wikia change begin - @author: Federico "Lox" Lucignano */
+		/* allow getting all the items in a category */
+		$opts = array(
+			'ORDER BY' => $this->flip ? 'cl_sortkey DESC' : 'cl_sortkey',
+			'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' )
+		);
+
+		if ( is_integer( $this->limit ) ) {
+			$opts['LIMIT']  = $this->limit + 1;
+		}
+		/* Wikia change end*/
+
 		$res = $dbr->select(
 			array( 'page', 'categorylinks', 'category' ),
 			array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
 				'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
 			array( $userCon, $pageCondition, 'cl_to' => $this->title->getDBkey() ),
 			__METHOD__,
-			array( 'ORDER BY' => $this->flip ? 'cl_sortkey DESC' : 'cl_sortkey',
-				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-				'LIMIT'    => $this->limit + 1 ),
+			/* Wikia change begin - @author: Federico "Lox" Lucignano */
+			/* allow getting all the items in a category */
+			$opts
+			/* Wikia change end*/,
 			array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
 				'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) )
 		);
@@ -267,7 +280,12 @@ class CategoryViewer {
 		$this->nextPage = null;
 
 		while ( $x = $dbr->fetchObject ( $res ) ) {
-			if ( ++$count > $this->limit ) {
+			if ( ++$count > $this->limit
+				/* Wikia change begin - @author: Federico "Lox" Lucignano */
+				/* allow getting all the items in a category */
+				&& is_integer( $this->limit )
+				/* Wikia change end*/
+			) {
 				// We've reached the one extra which shows that there are
 				// additional pages to be had. Stop here...
 				$this->nextPage = $x->cl_sortkey;
