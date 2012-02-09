@@ -18,17 +18,19 @@ class WikiaMobileCategoryModel extends WikiaModel{
 			$count = 0;
 
 			foreach ( $category->getMembers() as $title ) {
-				$name = $title->getText();
-				$url = $title->getLocalUrl();
-				$firstLetter = strtolower( substr( $name, 0, 1 ) );
+				$firstLetter = strtolower( $this->wg->ContLang->firstChar( $title->getDBkey() ) );
 				$type = ( $title->getNamespace() == NS_CATEGORY ) ? WikiaMobileCategoryItem::TYPE_SUBCATEGORY : WikiaMobileCategoryItem::TYPE_ARTICLE;
 
 				if ( empty( $items[$firstLetter] ) ) {
 					$items[$firstLetter] = F::build( 'WikiaMobileCategoryItemsCollection' );
 				}
 
-				$items[$firstLetter]->addItem( F::build( 'WikiaMobileCategoryItem', array( $name, $url, $type ) ) );
+				$items[$firstLetter]->addItem( F::build( 'WikiaMobileCategoryItem', array( $title->getText(), $title->getLocalUrl(), $type ) ) );
 				$count++;
+			}
+
+			if ( $count > 0 ) {
+				ksort( $items );
 			}
 
 			$contents = F::build( 'WikiaMobileCategoryContents', array( $items, $count ) );
