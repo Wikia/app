@@ -68,11 +68,17 @@
 		'output' => '',
 	);
 	foreach ($fbFeedOptions as $option) {
-		$newOptions[] = array(
+		$optionElement = array(
 			'type' => 'checkbox',
 			'name' => $option['name'],
 			'label' => $option['shortText'],
+			'checked' => true
 		);
+		if ($optionElement['label'] == wfMsg('tog-fbconnect-push-allow-never')) {
+			$optionElement['checked'] = false;
+			$optionElement['class'] = 'indented';
+		}
+		$newOptions[] = $optionElement;
 	}
 	$formFb = array(
 		'class' => 'FacebookSignupConfig',
