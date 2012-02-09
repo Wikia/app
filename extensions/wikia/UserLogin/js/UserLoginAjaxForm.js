@@ -100,6 +100,8 @@ UserLoginAjaxForm.prototype.retrieveTemplateHandler = function(html) {
 	});
 };
 
+/* TODO: Generalize this - hyun */
+/* It seems like we stuff all utility functions into jQuery namespace.  I'd rather wait until we come to a decision on placement of global utility functions than to further pollute jQuery - hyun */
 UserLoginAjaxForm.prototype.reloadPage = function() {
 	var location = window.location.href;
 	var delim = "?";
