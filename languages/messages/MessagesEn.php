@@ -1142,8 +1142,7 @@ Please wait before trying again.',
 
 # Password reset dialog
 'resetpass'                 => 'Change password',
-'resetpass_announce'        => 'You logged in with a temporary e-mailed code.
-To finish logging in, you must set a new password here:',
+'resetpass_announce'        => 'Looks like you used a temporary password. Pick a new password here to continue logging in.',
 'resetpass_text'            => '<!-- Add text here -->', # only translate this message to other languages if you have to change it
 'resetpass_header'          => 'Change account password',
 'oldpassword'               => 'Old password:',
