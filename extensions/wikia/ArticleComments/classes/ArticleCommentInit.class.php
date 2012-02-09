@@ -153,7 +153,7 @@ class ArticleCommentInit {
 
 			if ( in_array(
 					get_class($sk),
-					$app->wg->ArticleCommentsEnabledSkins
+					!empty($app->wg->ArticleCommentsEnabledSkins)?$app->wg->ArticleCommentsEnabledSkins:array()
 			))
 			{
 				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
