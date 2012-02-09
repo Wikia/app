@@ -42,7 +42,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	}
 
 	private function getItemsCollectionCacheKey( $categoryName ){
-		return $this->wf->memcKey( __CLASS__, __METHOD__, $categoryName );
+		return $this->wf->memcKey( __CLASS__, 'ItemsCollection', $categoryName );
 	}
 
 	public function purgeItemsCollectionCache( $categoryName ){
