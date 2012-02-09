@@ -181,6 +181,7 @@ var LatestPhotos = {
 	init: function() {
 		LatestPhotos.carousel = $('.LatestPhotosModule').find('.carousel');
 		LatestPhotos.attachListeners();
+		$('.timeago').timeago();
 		//LatestPhotos.lazyLoadImages(3);
 	},
 
