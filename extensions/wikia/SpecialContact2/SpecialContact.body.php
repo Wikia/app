@@ -222,7 +222,14 @@ class ContactForm extends SpecialPage {
 		if ( !empty( $screenshot ) ) {
 			$body .= "\n\nScreenshot attached.";
 
-			$error = UserMailer::sendWithAttachment( $mail_community, $subject, array( $wgRequest->getFileTempname( 'wpScreenshot' ) ), $mail_user, $mail_user, $body );
+			$screenshots = array();
+			foreach($screenshot as $image) {
+				if(!empty($image)) {
+					$screenshots []= $image;
+				}
+			}
+
+			$error = UserMailer::sendWithAttachment( $mail_community, $subject, $screenshots, $mail_user, $mail_user, $body );
 		} else {
 			$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
 		}
