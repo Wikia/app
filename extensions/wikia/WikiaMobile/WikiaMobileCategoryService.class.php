@@ -37,7 +37,7 @@ class WikiaMobileCategoryService extends WikiaService {
 				$imgRespnse = $app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array ( $pageId ), 'height' => 150, 'width' => 150, 'count' => 1 ) );
 				$img = $imgRespnse->getVal( 'result' );
 
-				if ( empty( $img ) ){
+				if ( !empty( $img[$pageId] ) ){
 					$img = $img[$pageId][0]['url'];
 				} else {
 					$img = false;
