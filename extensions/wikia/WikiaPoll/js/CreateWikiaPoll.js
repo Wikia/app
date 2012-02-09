@@ -5,7 +5,7 @@ var CreateWikiaPoll = {
 			.find("ul").sortable({
 				axis: "y",
 				handle: ".drag",
-				opacity: .8,
+				opacity: 0.8,
 				stop: CreateWikiaPoll.renumber
 			}).end()
 			.find(".drag").live("mousedown", function(event) {
@@ -20,31 +20,31 @@ var CreateWikiaPoll = {
 				event.preventDefault();
 				$(this).closest(".modalWrapper").closeModal();
 			});
-		}		
+		}
 	},
-	
+
 	addNew: function(event) {
 		event.preventDefault();
 		$("#CreateWikiaPoll .new-item").clone().removeClass("new-item").appendTo("#CreateWikiaPoll ul");
 		CreateWikiaPoll.renumber();
 	},
-	
+
 	remove: function() {
 		$(this).closest("li").slideUp("fast", function() {
 			$(this).remove();
 			CreateWikiaPoll.renumber();
-		})
+		});
 	},
-	
+
 	renumber: function() {
 		$("#CreateWikiaPoll li:not('.new-item') label").each(function(i) {
 			$(this).text("#" + (i + 1));
 		});
 	},
-	
+
 	showEditor: function(event) {
 		var self = CreateWikiaPoll;
-	
+
 		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
 		$.getResources([
 			$.loadJQueryUI,
@@ -54,7 +54,7 @@ var CreateWikiaPoll = {
 			$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaPoll&actionName=SpecialPage&outputType=html', function(data) {
 				$(data).makeModal({width: 600});
 				CreateWikiaPoll.init();
-				
+
 				// editing an existing poll?
 				if ($(event.target).hasClass("placeholder-poll")) {
 					CreateWikiaPoll.editExisting(event.target);
@@ -62,33 +62,34 @@ var CreateWikiaPoll = {
 			});
 		});
 	},
-	
+
 	editExisting: function(placeholder) {
-		var pollData = $(placeholder).getData();
+		var pollData = $(placeholder).getData(),
+			index,
+			li;
 
 		// add hidden form element for pollId
 		$("#CreateWikiaPoll").find("form").append('<input type="hidden" name="pollId" value="' + pollData.pollId + '">');
-		
+
 		// store data in main dom element for use when saving
 		$("#CreateWikiaPoll").data(pollData);
-		
+
 		// populate question field
 		$("#CreateWikiaPoll").find("input[name='question']").val(pollData.question);
-		
+
 		// remove 3 empty answer fields from the default template
 		$("#CreateWikiaPoll li:not('.new-item')").remove();
-		
+
 		// generate answer list elements
 		for (index in pollData.answers) {
-			var li = $("#CreateWikiaPoll .new-item").clone().removeClass("new-item").appendTo("#CreateWikiaPoll ul");
+			li = $("#CreateWikiaPoll .new-item").clone().removeClass("new-item").appendTo("#CreateWikiaPoll ul");
 			li.find("input").val(pollData.answers[index]);
 		}
-		
+
 		// properly number the answers
 		CreateWikiaPoll.renumber();
-		
 	},
-	
+
 	onSave: function(event) {
 		event.preventDefault();
 
@@ -129,7 +130,7 @@ var CreateWikiaPoll = {
 					}
 				} else { // Special:Poll
 					if (data.success) {
-						document.location = data.url;				
+						document.location = data.url;
 					} else if (data.error) {
 						$("#CreateWikiaPoll").find(".errorbox").remove().end().prepend(data.error);
 					}
