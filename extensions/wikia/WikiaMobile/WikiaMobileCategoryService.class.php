@@ -1,6 +1,6 @@
 <?php
 /**
- * WikiaMobile category page
+ * WikiaMobile category page service
  * 
  * @author Jakub Olek <jolek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
