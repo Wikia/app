@@ -36,7 +36,7 @@ else {
 
 		<span class="thumbcaption">
 			<?= wfMsg('oasis-latest-photos-by'); ?> <?= $url["user_href"] ?><br/>
-			<?= $url["date"] ?><br/>
+			<time class="timeago" datetime="<?= $url["date"] ?>"><?= $url["date"] ?></time><br/>
 
 			<?php
 		if (count($url["links"]) >= 1) {?>

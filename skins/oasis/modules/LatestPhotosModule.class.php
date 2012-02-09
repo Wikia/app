@@ -92,7 +92,7 @@ class LatestPhotosModule extends Module {
 			"image_filename" => $file->getTitle()->getFullText(),
 			"user_href" => Wikia::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $this->getLinkedFiles($file->name),
-			"date" => wfTimeFormatAgo($file->timestamp));
+			"date" => wfTimestamp(TS_ISO_8601, $file->timestamp));
 		return $retval;
 	}
 
@@ -232,9 +232,11 @@ class LatestPhotosModule extends Module {
 
 	private static function memcacheKey() {
 		global $wgDevelEnvironment;
-		$mKey = wfMemcKey('mOasisLatestPhotos');
+		// mech: bugfix for 19619 in getTemplateData method requires me to invalidate the cache,
+		// so I'm changing the memkey 
+		$mKey = wfMemcKey('mOasisLatestPhotosKey');
 		if(!empty($wgDevelEnvironment)){
-			$mKey = wfMemcKey('mOasisLatestPhotos', $_SERVER['SERVER_NAME']);
+			$mKey = wfMemcKey('mOasisLatestPhotosKey', $_SERVER['SERVER_NAME']);
 		}
 		return $mKey;
 	}
