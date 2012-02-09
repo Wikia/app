@@ -31,8 +31,18 @@ echo wfMsgExt( 'specialcontact-intro-account-issue', array( 'parse' ) );
 </p>
 
 <p>
-<label for="wpScreenshot"><?= wfMsg( 'specialcontact-label-screenshot' ) ?></label>
-<input name="wpScreenshot" type="file" accept="image/*" />
+<label for="wpScreenshot1"><?= wfMsg( 'specialcontact-label-screenshot' ) ?></label>
+<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" />
+</p>
+
+<p class="additionalScreenShot">
+<label for="wpScreenshot2"><?= wfMsg( 'specialcontact-label-additionalscreenshot' ) ?></label>
+<input id="wpScreenshot2" name="wpScreenshot[]" type="file" accept="image/*" />
+</p>
+
+<p class="additionalScreenShot">
+<label for="wpScreenshot3"><?= wfMsg( 'specialcontact-label-additionalscreenshot' ) ?></label>
+<input id="wpScreenshot3" name="wpScreenshot[]" type="file" accept="image/*" />
 </p>
 
 <?php

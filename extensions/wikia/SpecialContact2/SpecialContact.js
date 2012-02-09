@@ -19,8 +19,12 @@ var SpecialContact = {
         $('#SpecialContactFooterNoForm a').trackClick('wiki/SpecialContact/footer-noform');
         $('#SpecialContactIntroNoForm a').trackClick('wiki/SpecialContact/intro-noform');
         $('#SpecialContactIntroForm a').trackClick('wiki/SpecialContact/intro-form');
+        
+        $('input[type=file]').change(function() {
+        	$(this).closest('p').next().show();
+        });
     }
-}
+};
 
 $(function() {
 	SpecialContact.init();
