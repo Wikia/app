@@ -51,7 +51,12 @@ class WikiaQuizModule extends Module {
 		$wgOut->addMeta('property:og:type', 'game');
 		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
 		$wgOut->addMeta('property:og:site_name', $wgSiteName);
-		$wgOut->addMeta('property:og:description', wfMsg('wikiaquiz-facebook-creative', strip_tags($this->data['titlescreentext'])));
+		
+		// mech: simply stripping the tags wont work, as some tags have to be replaced with a space 
+		$descrition = str_replace('<', ' <', $this->data['titlescreentext']);  // introduce an extra space at in front of tags
+		$descrition = strip_tags($descrition);
+		$descrition = preg_replace('/\s\s+/u', ' ', $descrition);	// eliminate extraneous whitespaces 
+		$wgOut->addMeta('property:og:description', wfMsg('wikiaquiz-facebook-creative', $descrition));
 		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
 
 		$this->username = $wgUser->getName();
