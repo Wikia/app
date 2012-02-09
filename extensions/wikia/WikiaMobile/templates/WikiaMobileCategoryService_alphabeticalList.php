@@ -1,4 +1,4 @@
-<section>
+<section class=alphaSec>
 	<header><?= $wf->MsgExt( 'wikiamobile-categories-items-total', array( 'parsemag', 'content' ), $wg->ContLang->formatNum( $total ), $name ) ;?></header>
 <? foreach ( $collections as $index => $collection) :?>
 	<?
@@ -11,19 +11,15 @@
 	$urlSafeId = urlencode( $id );
 	?>
 	<h2 class=collSec><?= strtoupper( $index ) ;?> <span class=cnt>(<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>)</span><span class=chev></span></h2>
-	<section id=<?= $id ;?>>
+	<section id=<?= $id ;?> class=artSec>
 		<? if ( $itemsBatch['currentBatch'] > 1 ) :?>
-		<a id=catLess class="lbl pag" href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-prev' ) ;?></a>
+		<a class=pagLess data-batch=<?=$prevBatch;?> href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-prev' ) ;?></a>
 		<? endif ;?>
 
-		<ul>
-		<? foreach ( $itemsBatch['items'] as $item ) :?>
-			<li<?= ( $item->getType() == WikiaMobileCategoryItem::TYPE_SUBCATEGORY ) ? ' class=sub' : '';?>><a href="<?= $item->getUrl() ;?>"><?= $item->getName(); ?></a></li>
-		<? endforeach ;?>
-		</ul>
+		<?= $app->getView( 'WikiaMobile', 'getCategoryIndexBatch', array( 'itemsBatch' => $itemsBatch ) ) ;?>
 
 		<? if ( $itemsBatch['next'] ) :?>
-		<a id=catMore class="lbl pag" href="?page=<?=$nextBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-more' ) ;?></a>
+		<a class=pagMore data-batch=<?=$nextBatch;?> href="?page=<?=$nextBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-more' ) ;?></a>
 		<? endif ;?>
 	</section>
 <? endforeach ;?>

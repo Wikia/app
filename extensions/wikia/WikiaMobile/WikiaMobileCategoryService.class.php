@@ -1,7 +1,7 @@
 <?php
 /**
  * WikiaMobile category page service
- * 
+ *
  * @author Jakub Olek <jolek(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
@@ -13,37 +13,50 @@ class WikiaMobileCategoryService extends WikiaService {
 	}
 
 	public function categoryExhibition() {
+		$app = F::app();
+
+		$app->wf->profileIn(__METHOD__);
+
 		$categoryPage = $this->getVal( 'categoryPage' );
 
-		if ( $categoryPage instanceof CategoryPage && class_exists( 'CategoryExhibitionPage' ) ) {
+		if ( $categoryPage instanceof CategoryPage && class_exists( 'CategoryDataService' ) ) {
 			$title = $categoryPage->getTitle();
-			$exh = CategoryDataService::getMostVisited( $title->getDBkey(), false, 4 );
-			$ids = array_keys($exh);
 
-			for ( $i = 0; $i < 4; $i++ ) {
+			$exh = CategoryDataService::getMostVisited( $title->getDBkey(), false, 4 );
+			$ids = array_keys( $exh );
+			$length = count( $ids );
+
+			$this->length = $length;
+
+			$top = array();
+
+			for( $i = 0; $i < $length; $i++ ) {
+
 				$pageId = $ids[$i];
 
-				$imageServing = new ImageServing( $pageId, 150 , array( "w" => 150, "h" => 150 ) );
+				$imgRespnse = $app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array ( $pageId ), 'height' => 150, 'width' => 150, 'count' => 1 ) );
+				$img = $imgRespnse->getVal( 'result' );
 
-						$snippetText = '';
-						$imageUrl = $imageServing->getImages( 1 );
+				if ( empty( $img ) ){
+					$img = $img[$pageId][0]['url'];
+				} else {
+					$img = false;
+				}
 
-						if ( empty( $imageUrl ) ){
-							$snippetService = F::build( 'ArticleService', array( $pageId ) );
-							$snippetText = $snippetService->getTextSnippet();
-						}
+				$oTitle = Title::newFromID( $pageId );
 
-						$oTitle = F::build( 'Title', array( $pageId ), 'newFromID' );
-
-						$returnData = array(
-							'id'		=> $pageId,
-							'img'		=> $imageUrl,
-							'snippet'	=> $snippetText,
-							'title'		=> $oTitle->getText(),
-							'url'		=> $oTitle->getFullURL()
-						);
+				$top[] = array(
+					'img'		=> $img,
+					'title'		=> $oTitle->getText(),
+					'url'		=> $oTitle->getFullURL()
+				);
 			}
+
+			$this->top = $top;
+			$app->wf->profileOut(__METHOD__);
+			return true;
 		} else {
+			$app->wf->profileOut(__METHOD__);
 			return false;
 		}
 	}

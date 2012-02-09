@@ -3,14 +3,14 @@
 	<head>
 		<title><?= htmlspecialchars( $pageTitle ) ;?></title>
 		<? if( !$showAllowRobotsMetaTag ): ?>
-			<meta name=robots content=noindex, nofollow/>
+			<meta name=robots content=noindex, nofollow>
 		<?endif; ?>
-		<meta http-equiv=Content-Type content="<?= $mimeType ;?>; charset=<?= $charSet ;?>"/>
-		<meta name=HandheldFriendly content=true />
-		<meta name=MobileOptimized content=width />
-		<meta name=viewport content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
-		<meta name=apple-mobile-web-app-capable content=yes />
-		<link rel=alternate media=handheld href="" />
+		<meta http-equiv=Content-Type content="<?= $mimeType ;?>; charset=<?= $charSet ;?>">
+		<meta name=HandheldFriendly content=true>
+		<meta name=MobileOptimized content=width>
+		<meta name=viewport content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name=apple-mobile-web-app-capable content=yes>
+		<link rel=alternate media=handheld href="">
 		<script>var JSSnippetsStack = [];</script>
 		<?= $headLinks ;?>
 		<?= $cssLinks ;?>

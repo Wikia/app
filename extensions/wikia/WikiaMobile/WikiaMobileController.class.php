@@ -22,14 +22,14 @@ class WikiaMobileController extends WikiaController{
 		$batch = $this->request->getInt( 'batch' );
 		$err = false;
 
-		if ( !empty( $category ) && !empty( $index ) && !empty( $batch ) ){
-			$category = Category::newFromName( $categoryName );
+		if ( !empty( $categoryName ) && !empty( $index ) && !empty( $batch ) ){
+			$category = F::build( 'Category', array ( F::build( 'Title' , array ( $categoryName, NS_CATEGORY ), 'newFromText' ) ), 'newFromTitle' );
 
 			if ( $category instanceof Category ) {
 				$data = F::build( 'WikiaMobileCategoryModel' )->getItemsCollection( $category );
-
-				if ( !empty( $data[$index] ) && $batch <= $data[$index]['batches'] && $batch > 0 ) {
-					$this->response->setVal( 'batch', $data[$index]->getItems( $batch ) );
+				
+				if ( !empty( $data[$index] ) && $batch > 0) {
+					$this->response->setVal( 'itemsBatch', $data[$index]->getItems( $batch ) );
 				} else {
 					$err = true;
 				}
