@@ -14,26 +14,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 		$contents = $this->wg->memc->get( $cacheKey );
 
 		if ( empty( $contents ) ) {
-			$items = array();
-			$count = 0;
-
-			foreach ( $category->getMembers() as $title ) {
-				$index = strtolower( $this->wg->ContLang->firstChar( $title->getDBkey() ) );
-				$type = ( $title->getNamespace() == NS_CATEGORY ) ? WikiaMobileCategoryItem::TYPE_SUBCATEGORY : WikiaMobileCategoryItem::TYPE_ARTICLE;
-
-				if ( empty( $items[$index] ) ) {
-					$items[$index] = F::build( 'WikiaMobileCategoryItemsCollection' );
-				}
-
-				$items[$index]->addItem( F::build( 'WikiaMobileCategoryItem', array( $title->getText(), $title->getLocalUrl(), $type ) ) );
-				$count++;
-			}
-
-			if ( $count > 0 ) {
-				ksort( $items );
-			}
-
-			$contents = F::build( 'WikiaMobileCategoryContents', array( $items, $count ) );
+			$contents = F::build( 'WikiaMobileCategoryViewer', array( $category ) )->getContents();
 			$this->wg->memc->set( $cacheKey, $contents, self::CACHE_TTL_ITEMSCOLLECTION );
 		}
 
@@ -47,6 +28,74 @@ class WikiaMobileCategoryModel extends WikiaModel{
 
 	public function purgeItemsCollectionCache( $categoryName ){
 		$this->wg->memc->delete( $this->getItemsCollectionCacheKey( $categoryName ) );
+	}
+}
+
+/**
+ * CategoryViewer specialization to access the data using the correct sort-keys
+ *
+ */
+class WikiaMobileCategoryViewer extends CategoryViewer{
+	private $items;
+	private $count;
+
+	function __construct( Category $category ){
+		parent::__construct( $category->getTitle() );
+
+		//get all the members in the category
+		$this->limit = null;
+	}
+
+	function addImage( Title $title, $sortkey, $pageLength, $isRedirect = false ){
+		$this->addItem( $title, $sortkey );
+	}
+
+	function addPage( Title $title, $sortkey, $pageLength, $isRedirect = false ){
+		$this->addItem( $title, $sortkey );
+	}
+
+	function addSubcategory( $title, $sortkey, $pageLength ){
+		$this->addItem( $title, $sortkey );
+	}
+
+	private function addItem( $title, $sortkey ){
+		if ( !is_array( $this->items ) ) {
+			$this->items = array();
+		}
+
+		if ( !is_int( $this->count ) ) {
+			$this->count = 0;
+		}
+	
+ 		if ( $title instanceof Title ) {
+			$index = strtolower( substr( $sortkey, 0, 1 ) );
+
+			if ( empty( $this->items[$index] ) ) {
+				$this->items[$index] = F::build( 'WikiaMobileCategoryItemsCollection' );
+			}
+
+			$this->items[$index]->addItem( F::build( 'WikiaMobileCategoryItem', array( $title ) ) );
+			$this->count++;
+		}
+	}
+
+	/**
+	 * Executes CategoryViewer::doCategoryQuery() and returns the contents wrapped in a DTO
+	 *
+	 * @return WikiaMobileCategoryContents The contents of the category
+	 */
+	public function getContents(){
+		parent::doCategoryQuery();
+
+		if ( $this->count > 0 ) {
+			ksort( $this->items );
+		}
+
+		$ret = F::build( 'WikiaMobileCategoryContents', array( $this->items, $this->count ) );
+
+		$this->count = $this->items = null;
+
+		return $ret;
 	}
 }
 
@@ -141,10 +190,10 @@ class WikiaMobileCategoryItem{
 	private $url;
 	private $type;
 
-	function __construct( $name, $url, $type ){
-		$this->name = $name;
-		$this->url = $url;
-		$this->type = $type;
+	function __construct( Title $title ){
+		$this->name = $title->getText();
+		$this->url = $title->getLocalUrl();
+		$this->type = ( $title->getNamespace() == NS_CATEGORY ) ? self::TYPE_SUBCATEGORY : self::TYPE_ARTICLE;;
 	}
 
 	public function getName(){
