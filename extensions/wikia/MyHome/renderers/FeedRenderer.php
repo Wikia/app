@@ -47,7 +47,7 @@ class FeedRenderer {
 
 	public function render($data, $wrap = true, $parameters = array()) {
 		wfProfileIn(__METHOD__);
-		
+
 		$template = 'feed';
 		if (isset($parameters['flags']) && in_array('shortlist', $parameters['flags'])) {
 			$template = 'feed.simple';
@@ -271,7 +271,7 @@ class FeedRenderer {
 		$html .= Xml::closeElement('tr');
 		return $html;
 	}
-	
+
 	/**
 	 * @brief Returns rows with message wall comments
 	 *
@@ -281,7 +281,7 @@ class FeedRenderer {
 	 */
 	public static function formatMessageWallRows($comments) {
 		$html = '';
-		
+
 		foreach( $comments as $comment ) {
 			$authorLine = '';
 			if( !empty($comment['user-profile-url']) ) {
@@ -304,7 +304,7 @@ class FeedRenderer {
 			} else {
 				$authorLine .= $comment['author'];
 			}
-			
+
 			$timestamp = '';
 			if( !empty($comment['timestamp']) ) {
 				$timestamp .= Xml::openElement('time', array(
@@ -314,7 +314,7 @@ class FeedRenderer {
 				$timestamp .= self::formatTimestamp($comment['timestamp']);
 				$timestamp .= Xml::closeElement('time');
 			}
-			
+
 			$html .= Xml::openElement('tr');
 				$html .= Xml::openElement('td');
 					$html .= $comment['avatar'];
@@ -333,7 +333,7 @@ class FeedRenderer {
 				$html .= Xml::closeElement('td');
 			$html .= Xml::closeElement('tr');
 		}
-		
+
 		return $html;
 	}
 
@@ -356,7 +356,7 @@ class FeedRenderer {
 			return '';
 		}
 
-		global $wgExtensionsPath, $wgStyleVersion;
+		global $wgExtensionsPath;
 
 		$html = Xml::openElement('a', array(
 			'class' => 'activityfeed-diff',
@@ -365,7 +365,7 @@ class FeedRenderer {
 			'rel' => 'nofollow',
 		));
 		$html .= Xml::element('img', array(
-			'src' => $wgExtensionsPath . '/wikia/MyHome/images/diff.png?' . $wgStyleVersion,
+			'src' => $wgExtensionsPath . '/wikia/MyHome/images/diff.png',
 			'width' => 16,
 			'height' => 16,
 			'alt' => 'diff',
@@ -562,11 +562,11 @@ class FeedRenderer {
 		//
 		// let's show everything we have :)
 		//
-		
+
 		if (isset($row['to_title']) && isset($row['to_url'])) {
 			$html .= self::formatDetailsRow('move', Xml::element('a', array('href' => $row['to_url']), $row['to_title']), false);
 		}
-		
+
 		// intro of new content
 		if (defined('NS_RELATED_VIDEOS') && isset( $row['ns'] ) && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] )) {
 			$RelatedVideosService = F::build('RelatedVideosService');
@@ -600,18 +600,18 @@ class FeedRenderer {
 				$html .= self::formatDetailsRow('new-page', self::formatIntro($row['intro']), false);
 			}
 		}
-		
+
 		// section name
 		if (isset($row['section'])) {
 			$html .= self::formatDetailsRow('section-edit', $row['section']);
 		}
-		
+
 		// edit summary (don't show auto summary and summaries added by tools using edit from view mode)
 		if (isset($row['comment']) && trim($row['comment']) != '' && !isset($row['autosummaryType']) && !isset($row['viewMode'])) {
 			global $wgUser;
 			$html .= self::formatDetailsRow('summary', $wgUser->getSkin()->formatComment($row['comment']), false);
 		}
-		
+
 		// added categories
 		if (isset($row['new_categories'])) {
 			$categories = array();
