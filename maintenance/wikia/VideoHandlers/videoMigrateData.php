@@ -1,15 +1,15 @@
 <?php
 /**
- * @usage: SERVER_ID=177 php videoPremigrate.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
- * @usage: SERVER_ID=177 php videoPremigrate.php --conf /usr/wikia/conf-current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
+ * @usage: SERVER_ID=177 php videoMigrateData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
+ * @usage: SERVER_ID=177 php videoMigrateData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
  *  */
-ini_set( "include_path", dirname(__FILE__)."/.." );
 
 ini_set( 'display_errors', 'stdout' );
 $options = array('help');
 @require_once( '../../commandLine.inc' );
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 // echo( "$IP\n" );
+
 echo( "Video Migration script running for $wgCityId\n" );
 
 if( isset( $options['help'] ) && $options['help'] ) {
@@ -117,11 +117,10 @@ if( $rowCount ) {
 			);
 
 		/* override thumbnail metadata with video metadata */
-		$file->setVideoId( $metadata['videoId'], $metadata );
-		$file->forceMime( 'video/'.strtolower($provider) );
-
+		$file->setVideoId( $metadata['videoId'] );
+		$file->forceMime( 'video/'.strtolower( $provider ), serialize($metadata) );
+		
 		/* real upload */
-
 		$result = $file->upload(
 				$upload->getTempPath(),
 				'',
