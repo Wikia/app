@@ -45,6 +45,13 @@ function title_replacer( $title, $fulltext ) {
 	$new = preg_replace( $regexp, '$1' .$title . '$2', $fulltext );
 	var_dump($new);
 	
+	if( $new === NULL ) {
+		return $fulltext;
+	} else {
+		return $new;
+	}
+	
 }
+
 
 title_replacer('Beer abc.png', $test);
