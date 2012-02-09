@@ -8,7 +8,7 @@ $options = array('help');
 @require_once( '../../commandLine.inc' );
 global $IP, $wgCityId, $wgExternalDatawareDB;
 #$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
-echo( "$IP\n" );
+#echo( "$IP\n" );
 
 echo( "Postmigration undo script running for $wgCityId\n" );
 
@@ -45,12 +45,13 @@ while( $row = $dbw_dataware->fetchObject($rows) ) {
 	$dbw_dataware->delete(
 		'video_postmigrate_undo',
 		array('id' => $row->id),
+		__METHOD__
 	);
 
 }
 
 $dbw->freeResult($rows);
-}
+
 
 echo "Done updating tables\n";
 echo "Flipping the switch\n";
