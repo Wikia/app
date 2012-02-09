@@ -8,63 +8,57 @@
 class WikiaMobileCategoryService extends WikiaService {
 	private $model;
 
-	public function init(){
-		$this->model = F::build( 'WikiaMobileCategoryModel' );
-	}
-
-	public function categoryExhibition() {
-		$app = F::app();
-
-		$app->wf->profileIn(__METHOD__);
-
-		$categoryPage = $this->getVal( 'categoryPage' );
-
-		if ( $categoryPage instanceof CategoryPage && class_exists( 'CategoryDataService' ) ) {
-			$title = $categoryPage->getTitle();
-
-			$exh = CategoryDataService::getMostVisited( $title->getDBkey(), false, 4 );
-			$ids = array_keys( $exh );
-			$length = count( $ids );
-
-			$this->length = $length;
-
-			$top = array();
-
-			for( $i = 0; $i < $length; $i++ ) {
-
-				$pageId = $ids[$i];
-
-				$imgRespnse = $app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array ( $pageId ), 'height' => 150, 'width' => 150, 'count' => 1 ) );
-				$img = $imgRespnse->getVal( 'result' );
-
-				if ( !empty( $img[$pageId] ) ){
-					$img = $img[$pageId][0]['url'];
-				} else {
-					$img = false;
-				}
-
-				$oTitle = Title::newFromID( $pageId );
-
-				$top[] = array(
-					'img'		=> $img,
-					'title'		=> $oTitle->getText(),
-					'url'		=> $oTitle->getFullURL()
-				);
-			}
-
-			$this->top = $top;
-			$app->wf->profileOut(__METHOD__);
-			return true;
-		} else {
-			$app->wf->profileOut(__METHOD__);
-			return false;
+	private function initModel(){
+		if ( !isset( $this->model ) ){
+			$this->model = F::build( 'WikiaMobileCategoryModel' );
 		}
 	}
 
-	public function alphabeticalList() {
+	public function index(){
+		$categoryLinks = $this->request->getVal( 'categoryLinks', '' );
+
+		//MW1.16 always returns non empty $catlinks
+		//TODO: remove since we're on 1.17+?
+		if (strpos($categoryLinks, ' catlinks-allhidden\'></div>') !== false) {
+			$categoryLinks = '';
+		}
+
+		$this->response->setVal( 'categoryLinks', $categoryLinks );
+	}
+
+	public function categoryExhibition() {
+		$this->wf->profileIn(__METHOD__);
+
 		$categoryPage = $this->getVal( 'categoryPage' );
 
 		if ( $categoryPage instanceof CategoryPage ) {
+			$title = $categoryPage->getTitle();
+			$this->initModel();
+
+			$items = $this->model->getExhibitionItems( $title );
+			
+			if ( empty( $items ) ) {
+				$this->wf->profileOut( __METHOD__ );
+				return false;
+			}
+
+			$this->response->setVal( 'items', $items );
+		} else {
+			$this->wf->profileOut( __METHOD__ );
+			return false;
+		}
+
+		$this->wf->profileOut( __METHOD__ );
+	}
+
+	public function alphabeticalList() {
+		$this->wf->profileIn( __METHOD__ );
+
+		$categoryPage = $this->getVal( 'categoryPage' );
+
+		if ( $categoryPage instanceof CategoryPage ) {
+			$this->initModel();
+
 			$title = $categoryPage->getTitle();
 			$category = F::build( 'Category', array( $title ),  'newFromTitle' );
 			$data = $this->model->getItemsCollection( $category );
@@ -75,8 +69,11 @@ class WikiaMobileCategoryService extends WikiaService {
 			$this->response->setVal( 'requestedIndex', $this->wg->Request->getText( 'index', null ) );
 			$this->response->setVal( 'requestedBatch', $this->wg->Request->getInt( 'page', 1 ) );
 		} else {
+			$this->wf->profileOut( __METHOD__ );
 			return false;
 		}
+
+		$this->wf->profileOut( __METHOD__ );
 	}
 
 }
