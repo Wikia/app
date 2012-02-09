@@ -26,6 +26,7 @@ if(empty($wgVideoHandlersVideosMigrated)) {
 	define('NS_VIDEO', '400');
 } else {
 	define('NS_VIDEO', '400');
+	$wgNamespaceAliases['NS_VIDEO'] = NS_FILE;
 }
 
 
