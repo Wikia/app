@@ -140,11 +140,11 @@ class WikiaMobileCategoryContents implements arrayaccess{
     }
 
     public function offsetUnset( $offset ){
-        unset( $this->container[$offset] );
+        unset( $this->items[$offset] );
     }
 
     public function offsetGet( $offset ){
-        return isset( $this->container[$offset] ) ? $this->container[$offset] : null;
+        return isset( $this->items[$offset] ) ? $this->items[$offset] : null;
     }
 }
 

@@ -76,8 +76,10 @@ class WikiaMobileHooks extends WikiaObject{
 				return true;
 			}
 
-			//converting categoryArticle to Article to avoid circular referance in CategoryPage::view 
-			F::build( 'Article', array( $categoryPage->getID() ), 'newFromID' )->view();
+			if($categoryPage->getTitle()->exists()) {
+				//converting categoryArticle to Article to avoid circular referance in CategoryPage::view
+				F::build( 'Article', array( $categoryPage->getID() ), 'newFromID' )->view();
+			}
 
 			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', array( 'categoryPage' => $categoryPage ) ) );
 			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', array( 'categoryPage' => $categoryPage ) ) );

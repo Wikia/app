@@ -195,7 +195,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	function track(ev){
 		WikiaTracker.track('/1_mobile/' + ((ev instanceof Array) ? ev.join('/') : ev), 'main.sampled');
 	}
-	
+
 	function moveSlot(){
 		adSlot.style.top = Math.min((window.pageYOffset + window.innerHeight - 50), ftr.offsetTop + 150) + 'px';
 	}
@@ -205,7 +205,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		body = $(document.body);
 		page = $('#wkPage');
 		article = $('#wkMainCnt');
-		
+
 		var navigationSearch = $('#wkNavSrh'),
 		searchToggle = $('#wkSrhTgl'),
 		searchInput = $('#wkSrhInp'),
@@ -240,7 +240,7 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		//handle ads
 		adSlot = ad[0];
-		
+
 		var close = document.getElementById('wkAdCls'),
 			i = 0;
 			adExist = function(){
@@ -275,7 +275,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		//end of handling ads
 
 		hideURLBar();
-		
+
 		//get search input
 		navigationSearch.remove().appendTo('#wkTopBar');
 
@@ -416,7 +416,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		}
 
 		//add 'active' state to devices that does't support it
-		$("#wkNavMenu li, #wkNavBack, #wkRelPag li, .rpl")
+		$("#wkNavMenu li, #wkNavBack, #wkRelPag li, .rpl, .alphaSec li")
 		.bind("touchstart", function () {
 			$(this).addClass("fkAct");
 		}).bind("touchend touchcancel", function() {
@@ -498,6 +498,42 @@ var WikiaMobile = WikiaMobile || (function() {
 			Wikia.CookieCutter.set('mobilefullsite', 'true');
 			location.reload();
 		});
+
+		//category pages
+		var catUrl = wgServer + "/wikia.php?controller=WikiaMobile&method=getCategoryIndexBatch&category=" + wgTitle.replace(' ', '_');
+
+		$('.pagMore, .pagLess').bind(clickEvent, function(event) {
+			event.preventDefault();
+			var self = $(this);
+
+			catUrl += "&batch=" + self.data('batch') + "&index=" + self.parent().attr('id').charAt(8);
+			
+			paginationHandler(self, catUrl);
+
+		});
+		//end category pages
+		
+		//pagination
+		function paginationHandler(elm, url){
+	
+			var forward = (elm.attr('class') == 'pagMore'),
+				container = elm.parent().find('ul');
+
+			elm.toggleClass('active');
+			$.showLoader(elm);
+
+			$.get(url, function(result){
+				
+				container.remove();
+				elm.parent().find('.pagMore').before(result);
+
+				elm.toggleClass('active');
+				$.hideLoader(elm);
+
+				window.scrollTo(0, container.offset().top);
+			});
+		}
+		//end pagination
 	});
 
 	return {
