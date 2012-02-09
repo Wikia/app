@@ -32,7 +32,8 @@ $messages['en'] = array(
 
 	//categories
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}} in "$2"',
-	'wikiamobile-category-items-more' => 'Load more'
+	'wikiamobile-category-items-more' => 'Load more',
+	'wikiamobile-category-items-prev' => 'Load previous'
 );
 
 $messages['qqq'] = array(
