@@ -18,14 +18,14 @@ class WikiaMobileCategoryModel extends WikiaModel{
 			$count = 0;
 
 			foreach ( $category->getMembers() as $title ) {
-				$firstLetter = strtolower( $this->wg->ContLang->firstChar( $title->getDBkey() ) );
+				$index = strtolower( $this->wg->ContLang->firstChar( $title->getDBkey() ) );
 				$type = ( $title->getNamespace() == NS_CATEGORY ) ? WikiaMobileCategoryItem::TYPE_SUBCATEGORY : WikiaMobileCategoryItem::TYPE_ARTICLE;
 
-				if ( empty( $items[$firstLetter] ) ) {
-					$items[$firstLetter] = F::build( 'WikiaMobileCategoryItemsCollection' );
+				if ( empty( $items[$index] ) ) {
+					$items[$index] = F::build( 'WikiaMobileCategoryItemsCollection' );
 				}
 
-				$items[$firstLetter]->addItem( F::build( 'WikiaMobileCategoryItem', array( $title->getText(), $title->getLocalUrl(), $type ) ) );
+				$items[$index]->addItem( F::build( 'WikiaMobileCategoryItem', array( $title->getText(), $title->getLocalUrl(), $type ) ) );
 				$count++;
 			}
 
@@ -51,7 +51,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 }
 
 /**
- * Simple DTO to avoid double iterating the list of collections to get the total count of items in a category
+ * Simple DTO to handle the indexed contents of a category
  */
 class WikiaMobileCategoryContents{
 	private $items;
