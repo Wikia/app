@@ -16,7 +16,7 @@ function ActivityFeedTag_setup(&$parser) {
 }
 
 function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
-	global $wgStyleVersion, $wgExtensionsPath, $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
+	global $wgExtensionsPath, $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 
 	if (!class_exists('ActivityFeedHelper')) {
 		return '';
@@ -30,17 +30,17 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 	if (!empty($parameters['includeNamespaces'])) $jsParams .= "&ns={$parameters['includeNamespaces']}";
 	if (!empty($parameters['flags'])) $jsParams .= '&flags=' . implode('|', $parameters['flags']);
 	$parameters['tagid'] = $tagid;
-	
+
 	$feedHTML = ActivityFeedHelper::getList($parameters);
-	
+
 	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
 	$timestamp = wfTimestampNow();
 
 	$snippetsDependencies = array('/extensions/wikia/MyHome/ActivityFeedTag.js', '/extensions/wikia/MyHome/ActivityFeedTag.css');
-	
-	if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){	
+
+	if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
 		array_push($snippetsDependencies, '/extensions/wikia/AchievementsII/css/achievements_sidebar.css');
-		
+
 	}
 
 	$snippets = F::build('JSSnippets')->addToStack(
@@ -48,8 +48,8 @@ function ActivityFeedTag_render($content, $attributes, $parser, $frame) {
 		null,
 		'ActivityFeedTag.initActivityTag',
 		array(
-			'tagid' => $tagid, 
-			'jsParams' => $jsParams, 
+			'tagid' => $tagid,
+			'jsParams' => $jsParams,
 			'timestamp' => $timestamp
 		)
 	);
