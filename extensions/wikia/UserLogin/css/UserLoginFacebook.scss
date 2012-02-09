@@ -89,7 +89,7 @@
 
 .FacebookSignupConfig {
 	display: none;
-	margin-top: 2px;
+	margin: 2px 0 -7px 0;
 	> fieldset {
 		@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
 		background-color: mix($color-page, #000000, 95%);
@@ -97,14 +97,14 @@
 			background-color: mix($color-page, #ffffff, 85%);
 		}
 		> .input-group {
-			padding: 0 17px;
+			padding: 0 12px;
 			width: 300px;
 			p {
 				font-weight: bold;
 				padding: 17px 0;
 			}
 			input[type=checkbox] {
-				margin-right: 20px;
+				margin-right: 26px;
 				padding-left: 17px;
 			}
 		}
@@ -114,6 +114,10 @@
 		> div:nth-child(odd) {
 			clear: right;
 			float: right;
+		}
+		.indented label {
+			padding-left: 42px;
+			text-indent: -42px;
 		}
 	}
 }
