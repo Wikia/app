@@ -1,5 +1,8 @@
 #!/bin/sh
-echo "Usage ./$0 WIKI_ID"
+if [ -z "$1" ]
+then
+	echo "Usage ./$0 WIKI_ID"
+fi
 
 SERVER_ID=$1 php videoPremigrate.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
 SERVER_ID=$1 php videoMigrateData.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
