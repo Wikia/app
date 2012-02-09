@@ -9,10 +9,10 @@ $options = array('help');
 global $IP, $wgCityId, $wgExternalDatawareDB;
 #$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 echo( "$IP\n" );
-echo( "Premigration script running for $wgCityId\n" );
+echo( "Postmigration script running for $wgCityId\n" );
 
 if( isset( $options['help'] ) && $options['help'] ) {
-	echo( "Usage: php videoPremigrate.php\n" );
+	echo( "Usage: php videoPostmigrate.php\n" );
 	exit( 0 );
 }
 
@@ -60,6 +60,7 @@ foreach( $tables as $tableName => $tableData ) {
 				'entry_id'		=> $id,
 				'entry_id_field'=> $tableData['id'],
 				'entry_ns_field'=> $tableData['ns'],
+				'entry_table'	=> $tableName,
 			)
 		);
 			
