@@ -1,6 +1,6 @@
 <?php
 /**
- * WikiaMobile page
+ * WikiaMobile skin entry point
  *
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>

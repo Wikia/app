@@ -57,6 +57,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryModel.class.php",
  * controllers
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAppCacheController.class.php", 'WikiaMobileAppCacheController' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileController.class.php", 'WikiaMobileController' );
 
 /**
  * special pages
