@@ -30,16 +30,27 @@ class UserLoginHelper extends WikiaModel {
 	 * @responseParam array avatars
 	 */
 	public function getRandomAvatars() {
-		$avatars = $this->getRandomWikiAvatars( self::LIMIT_AVATARS );
-		if ( count($avatars) < self::LIMIT_AVATARS ) {
-			$additions = $this->getRandomWikiAvatars( self::LIMIT_AVATARS, self::WIKIA_CITYID_COMMUNITY );
-			$diff = array_diff_assoc( $additions, $avatars );
-			foreach( $diff as $userId => $avatar ) {
-				$avatars[$userId] = $avatar;
-				if ( count($avatars) >= self::LIMIT_AVATARS )
-					break;
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$memKey = $this->wf->MemcKey( 'userlogin', 'random_avatars' );
+		$avatars = $this->wg->Memc->get( $memKey );
+
+		if ( is_null($avatars) ) {
+			$avatars = $this->getRandomWikiAvatars( self::LIMIT_AVATARS );
+			if ( count($avatars) < self::LIMIT_AVATARS ) {
+				$additions = $this->getRandomWikiAvatars( self::LIMIT_AVATARS, self::WIKIA_CITYID_COMMUNITY );
+				$diff = array_diff_assoc( $additions, $avatars );
+				foreach( $diff as $userId => $avatar ) {
+					$avatars[$userId] = $avatar;
+					if ( count($avatars) >= self::LIMIT_AVATARS )
+						break;
+				}
 			}
+			$this->wg->Memc->set( $memKey, $avatars, 60*60*24 );
 		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
 		return $avatars;
 	}
 
@@ -72,7 +83,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @param integer $limit (number of users)
 	 * @return array $wikiUsers
 	 */
-	protected function getWikiUsers( $wikiId=null, $limit=10 ) {
+	protected function getWikiUsers( $wikiId=null, $limit=30 ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$wikiId = (empty($wikiId)) ? $this->wg->CityId : $wikiId;
@@ -129,18 +140,27 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array $wikis
 	 */
 	public function getRandomWikis( $require=self::LIMIT_WIKIS ) {
-		$popularWikis = $this->getPopularWikis();
-		shuffle( $popularWikis );
-		$wikis = array();
+		$this->wf->ProfileIn( __METHOD__ );
 
-		foreach( $popularWikis as $wikiId ) {
-			$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
-			if( !empty($themeSettings['wordmark-image-url']) ) {
-				$wikis[] = $themeSettings['wordmark-image-url'];
+		$memKey = $this->wf->SharedMemcKey( 'userlogin', 'random_wikis' );
+		$wikis = $this->wg->Memc->get( $memKey );
+
+		if ( is_null($wikis) ) {
+			$popularWikis = $this->getPopularWikis();
+			shuffle( $popularWikis );
+			$wikis = array();
+
+			foreach( $popularWikis as $wikiId ) {
+				$themeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
+				if( !empty($themeSettings['wordmark-image-url']) ) {
+					$wikis[] = $themeSettings['wordmark-image-url'];
+				}
+
+				if ( count($wikis) >= $require )
+					break;
 			}
-
-			if ( count($wikis) >= $require )
-				break;
+			
+			$this->wg->Memc->set( $memKey, $wikis, 60*60*24 );
 		}
 
 		return $wikis;
@@ -237,7 +257,7 @@ class UserLoginHelper extends WikiaModel {
 	/**
 	 * send confirmation email
 	 * @param string $username
-	 * @return array result { array( 'result' => result status[error/ok/invalidsession], 'msg' => result message ) }
+	 * @return array result { array( 'result' => result status[error/ok/invalidsession/confirmed], 'msg' => result message ) }
 	 */
 	public function sendConfirmationEmail( $username ) {
 		if ( empty($username) ) {
@@ -248,8 +268,14 @@ class UserLoginHelper extends WikiaModel {
 
 		$tempUser = F::build( 'TempUser', array( $username ), 'getTempUserFromName' );
 		if ( $tempUser == false ) {
-			$result['result'] = 'error';
-			$result['msg'] = $this->wf->Msg( 'userlogin-error-nosuchuser' );
+			$user = F::build( 'User', array( $username ), 'newFromName' );
+			if ( $user instanceof User && $user->getID() != 0 ) {
+				$result['result'] = 'confirmed';
+				$result['msg'] = $this->wf->MsgExt( 'usersignup-error-confirmed-user', array('parseinline'), $username, $user->getUserPage()->getFullURL() );
+			} else {
+				$result['result'] = 'error';
+				$result['msg'] = $this->wf->Msg( 'userlogin-error-nosuchuser' );
+			}
 			return $result;
 		}
 

@@ -78,7 +78,7 @@ class UserLoginForm extends LoginForm {
 			$this->mainLoginForm( wfMsg( 'userlogin-error-mail-error', $result->getMessage() ) );
 			return false;
 		} else {
-			$this->mainLoginForm( wfMsg( 'usersignup-account-creation-email-sent', $this->mEmail ), 'success' );
+			$this->mainLoginForm( wfMsgExt( 'usersignup-account-creation-email-sent', array('parseinline'), $this->mEmail, $this->username ), 'success' );
 			return $u;
 		}
 	}
