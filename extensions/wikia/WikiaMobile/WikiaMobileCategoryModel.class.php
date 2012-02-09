@@ -110,6 +110,9 @@ class WikiaMobileCategoryItemsCollection extends WikiaObject{
 	}
 }
 
+/**
+ * Simple DTO representing one item in a Category
+ */
 class WikiaMobileCategoryItem{
 	const TYPE_ARTICLE = 1;
 	const TYPE_SUBCATEGORY = 2;
