@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'usersignup-error-throttled-email' => "Oops, you've requested too many confirmation emails be sent to you today. Try again in a little while.",
 	'usersignup-error-too-many-changes' => "You've reached the maximum limit for email changes today. Please try again later.",
 	'usersignup-error-password-length' => "Oops, your password is too long. Please choose a password that's 50 characters or less.",
+	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your email address for $1!  Check our your [$2 user profile].',
 
 	// facebook sign-up
 	'usersignup-facebook-heading' => 'Finish Signing Up',
@@ -196,10 +197,12 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-account-creation-heading' => 'Success!',
 	'usersignup-account-creation-subheading' => 'We\'ve sent an email to $1',
 	'usersignup-account-creation-email-sent' => 'You\'ve started the account creation process for $2. We\'ve sent them an email at $1 with a temporary password and a confirmation link.
-<br/><br/>
+
+
 $2 will need to click on the link in the email we sent them to confirm their account and change their temporary password to finish creating their account.
-<br/><br/>
-Go back to <a href="{{SERVER}}">{{SITENAME}}</a>',
+
+
+[{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Create more accounts] on {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => 'An account has been created for you on Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Hello,',
 	'usersignup-account-creation-email-content' => 'An account has been created for you on {{SITENAME}}. To access your account and change your temporary password click the link below and log in with username "$USERNAME" and password "$NEWPASSWORD".

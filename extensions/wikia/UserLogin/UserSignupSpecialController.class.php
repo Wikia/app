@@ -171,7 +171,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @brief send confirmation email
 	 * @resquestParam string username
 	 * @resquestParam boolean byemail
-	 * @responseParam string result [ok/error]
+	 * @responseParam string result [ok/error/invalidsession/confirmed]
 	 * @responseParam string msg - result message
 	 * @responseParam string msgEmail
 	 * @responseParam string errParam
@@ -240,6 +240,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				} else if($this->result == 'error') {
 					$this->msgEmail = $response->getVal( 'msg','' );
 					$this->errParam = $response->getVal( 'errParam', '');
+				} else if ( $this->result == 'confirmed' ) {
+					$this->msg = $response->getVal( 'msg','' );
 				}
 			}
 
@@ -262,7 +264,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * change temp user's email and send reconfirmation email
 	 * @requestParam string username
 	 * @requestParam string email
-	 * @responseParam string result [ok/error/invalidsession]
+	 * @responseParam string result [ok/error/invalidsession/confirmed]
 	 * @responseParam string msg - result messages
 	 * @responseParam string errParam - error param
 	 */
@@ -292,8 +294,14 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		$tempUser = F::build( 'TempUser', array( $username ), 'getTempUserFromName' );
 		if ( $tempUser == false ) {
-			$this->result = 'error';
-			$this->msg = $this->wf->Msg( 'userlogin-error-nosuchuser' );
+			$user = F::build( 'User', array( $username ), 'newFromName' );
+			if ( $user instanceof User && $user->getID() != 0 ) {
+				$this->result = 'confirmed';
+				$this->msg = $this->wf->MsgExt( 'usersignup-error-confirmed-user', array('parseinline'), $username, $user->getUserPage()->getFullURL() );
+			} else {
+				$this->result = 'error';
+				$this->msg = $this->wf->Msg( 'userlogin-error-nosuchuser' );
+			}
 			$this->errParam = 'username';
 			return;
 		}

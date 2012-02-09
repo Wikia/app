@@ -8,7 +8,7 @@
 		<?= $msg ?>
 	</div>
 
-<? if (!$byemail) { ?>
+<? if ( !$byemail && $result != 'confirmed' ) { ?>
 	<form action="" method="post" class="WikiaForm ResendConfirmation" id="ResendConfirmation">
 		<fieldset>
 			<div class="input-group">
