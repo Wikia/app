@@ -59,7 +59,8 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 	$().log(json);
 	$('.error-msg').remove();
 	this.form.find('.input-group').removeClass('error');
-	if(json['result'] === 'ok') {
+	var result = json['result'];
+	if(result === 'ok') {
 		var callback = this.options['callback'] || '';
 		if(callback && typeof callback === 'function') {
 			callback(json);
@@ -67,7 +68,7 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 			// reload page if no callback specified
 			this.reloadPage();
 		}
-	} else if(json['result'] === 'resetpass') {
+	} else if(result === 'resetpass') {
 		var callback = this.options['resetpasscallback'] || '';
 		if(callback && typeof callback === 'function') {
 			callback(json);
@@ -84,6 +85,15 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 				}, $.proxy(this.retrieveTemplateHandler, this)
 			);
 		}
+	} else if(result === 'unconfirm') {
+		$.post(wgScriptPath + '/wikia.php', {
+			controller: 'UserLoginSpecial',
+			method: 'getUnconfirmedUserRedirectUrl',
+			format: 'json',
+			username: this.inputs['username'].val()
+		}, function(json) {
+			window.location = json['redirectUrl'];
+		});
 	} else {
 		this.submitButton.removeAttr('disabled');
 		this.errorValidation(json);
