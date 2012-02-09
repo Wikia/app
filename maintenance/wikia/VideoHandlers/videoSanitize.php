@@ -3,8 +3,45 @@
  * @usage: SERVER_ID=177 php videoSanitize.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
  * @usage: SERVER_ID=177 php videoSanitize.php --conf /usr/wikia/conf-current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
  *  */
+
+function title_replacer( $title, $replacement, $fulltext  ) {
+	$symbols = array(
+		array(' ','_','-','+'),
+	);
+	$refs = array();
+	foreach( $symbols as $id => $val ) {
+		foreach( $val as $id2 => $symbol ) {
+			$imp = implode('\\',$val);
+			$refs[$symbol] = '[\\' . $imp .']';
+		}
+	}
+	
+	$regexp = '';
+	
+	$j = mb_strlen($title);
+	for ($k = 0; $k < $j; $k++) {
+		$char = mb_substr($title, $k, 1);
+		if(isset($refs[$char])) {
+			$regexp .= $refs[$char];
+		} else {
+			if(ctype_alnum($char)) {
+				$regexp .= $char;
+			} else {
+				$regexp .= '\\' . $char;
+			}
+		}
+	}
+	
+	//$regexp = '/(\\[\\[Video\\:)' . $regexp . '(\\]\\]|\\|[^]]+\\]\\])/';
+	$regexp = '/(\\[\\[Video\\:)' . $regexp . '(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
+	
+	$new = preg_replace( $regexp, '$1' . $replacement . '$4', $fulltext );
+	return $new;	
+}
+
+
 ini_set( "include_path", dirname(__FILE__)."/.." );
-require_once( 'commandLine.inc' );
+//require_once( 'commandLine.inc' );
 
 ini_set( 'display_errors', 'stdout' );
 $options = array('help');
@@ -86,13 +123,13 @@ if ( $rowCount ) {
 $dbw->freeResult( $rows );
 echo "[".intval( microtime( true ) - $timeStart)." s] get translation table!\n";
 
-var_dump( $aTranslation );
+print_r( $aTranslation );
 
 $botUser = User::newFromName( 'WikiaBot' );
 
 foreach ( $aTranslation as $key => $val ) {
-	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='{$key}'");
-
+	echo "aTranslation[$key]=$val\n\n";
+	
 	$strippedNew = str_replace( ':', '', $val );
 	$strippedOld = str_replace( ':', '', $key );
 
@@ -166,13 +203,14 @@ foreach ( $aTranslation as $key => $val ) {
 		'where' => array( 'wl_namespace' => NS_VIDEO, 'wl_title' => $strippedOld ),
 		'update' => array( 'wl_title' => $strippedNew )
 	);
-
+	
 	// Fixing links in article;
-	// echo "SELECT distinct il_from FROM imagelinks WHERE il_to ='{$key}'! /n";
+	//echo "SELECT distinct il_from FROM imagelinks WHERE il_to ='{$key}'! /n";
+	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
 	while( $file = $dbw->fetchObject( $rows ) ) {
 		// var_dump( $key );
 //		echo "ONE! /n";
-		// echo "DANGER! ".$file->il_from."/n";
+		echo "FETCH FROM DB il_from= ".$file->il_from." // ($key)\n";
 		$articleId = $file->il_from;
 		$oTitle = Title::newFromId( $articleId );
 		if ( $oTitle instanceof Title && $oTitle->exists() ){
@@ -184,30 +222,40 @@ foreach ( $aTranslation as $key => $val ) {
 //				var_dump( $sTextAfter, $key, $val );
 //				var_dump( $oTitle );
 				$spacesText = str_replace( '_', ' ', $key );
-
+				echo "\n ========== ART:" .$oTitle." =============\n\n";
 				foreach ( array( $key, $spacesText ) as $what ){
 
-					var_dump( '---' );
+//					var_dump( '---' );
 //					var_dump( $sTextAfter );
 //					var_dump( 'Video'.$what.'|' );
 //					var_dump( 'Video'.$what.']' );
 //					var_dump( strpos( $sTextAfter, 'Video'.$what.'|' ) );
 //					var_dump( strpos( $sTextAfter, 'Video'.$what.']' ) );
-					var_dump( '--' );
-
-					$sTextAfter = str_replace( 'Video'.$what.'|', 'Video'.$val.'|', $sTextAfter );
-					$sTextAfter = str_replace( 'Video'.$what.']', 'Video'.$val.']', $sTextAfter );
+//					var_dump( '--' );
+					echo "\n\nCHANGING: --$what-- TO: --$val--\n\n";
+					$sTextAfter = title_replacer( substr( $what, 1 ), substr( $val, 1), $sTextAfter  );
+					//$sTextAfter = str_replace( 'Video'.$what.'|', 'Video'.$val.'|', $sTextAfter );
+					//$sTextAfter = str_replace( 'Video'.$what.']', 'Video'.$val.']', $sTextAfter );
 				}
-
+				
 				if ( $sTextAfter != $sText ) {
-					echo "DANGER! /n";
+					echo "ARTICLE WAS CHANGED! \n";
+					echo "BEFORE:\n";
+					echo $sText;
+					echo "\n\n\n AFTER:\n";
+					echo $sTextAfter;
+					echo "\n\n----\n\n";
 //					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
 //					var_dump( $status );
 //					if ( is_object( $status ) && !$status->isOK() ){
 //						var_dump( $status );
 //					}
 				} else {
-					echo "FAIL! /n";
+					if (strpos($sText, $what)!==false) {
+						echo "FAIL! \n";
+						echo "ARTICLE:\n";
+						echo $sText;					
+					}
 				}
 			} else {
 				var_dump( $oArticle );
