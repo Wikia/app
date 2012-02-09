@@ -108,12 +108,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					// redirect page
 					UserLoginHelper::getInstance()->doRedirect();
 				} else if ( $this->result == 'unconfirm' ) {
-					$title = Title::newFromText('UserSignup', NS_SPECIAL);
-					$params = array(
-						'method' => 'sendConfirmationEmail',
-						'username' => $this->username,
-					);
-					$redirectUrl = $title->getFullUrl( $params );
+					$response = $this->app->sendRequest('UserLoginSpecial', 'getUnconfirmedUserRedirectUrl', array('username' => $this->username));
+					$redirectUrl = $response->getVal('redirectUrl');
 					$this->wg->out->redirect( $redirectUrl );
 				} else if ( $this->result == 'resetpass') {
 					$this->editToken = $this->wg->User->editToken();
@@ -123,6 +119,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				}
 			}
 		}
+	}
+	
+	public function getUnconfirmedUserRedirectUrl() {
+		$title = Title::newFromText('UserSignup', NS_SPECIAL);
+		$params = array(
+			'method' => 'sendConfirmationEmail',
+			'username' => $this->getVal('username'),
+		);
+		$this->redirectUrl = $title->getFullUrl( $params );
 	}
 
 	/**
