@@ -64,7 +64,7 @@ class CategoryExhibitionAjax {
 		wfProfileIn( __METHOD__ );
 		global $wgTitle;
 
-		if ( ( $wgTitle instanceof Title ) && ( $wgTitle->exists() ) && ( $wgTitle->getNamespace() == NS_VIDEO ) ){
+		if ( ( $wgTitle instanceof Title ) && ( $wgTitle->exists() ) && ( $wgTitle->getNamespace() == NS_LEGACY_VIDEO ) ){
 
 			$video = new VideoPage( $wgTitle );
 			$video->load();

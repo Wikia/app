@@ -1638,7 +1638,7 @@ class Parser
 	 * @private
 	 */
 	function replaceInternalLinks2( &$s ) {
-		global $wgContLang, $wgEnableVideoToolExt;
+		global $wgContLang, $wgEnableVideoToolExt, $wgVideoHandlersVideosMigrated;
 		# RTE (Rich Text Editor) - begin
 		global $wgRTEParserEnabled;
 		# RTE - end
@@ -1891,7 +1891,7 @@ class Parser
 				/* Wikia change begin - @author: Bartek */
 				/* Support for [[Video:...]] */
 				/* TODO: Get the hell out with this code from here */
-				if( $ns == NS_VIDEO ) {
+				if( empty($wgVideoHandlersVideosMigrated) && $ns == NS_VIDEO ) {
 					if(!empty($wgEnableVideoToolExt)) {
 						wfProfileIn(__METHOD__ . "-video");
 						$text = $this->replaceExternalLinks($text);

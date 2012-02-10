@@ -138,12 +138,12 @@ foreach ( $aTranslation as $key => $val ) {
 
 	$aTablesMove = array();
 	$aTablesMove['archive']	= array (
-		'where' => array( 'ar_namespace' => NS_VIDEO, 'ar_title' => $strippedOld ),
+		'where' => array( 'ar_namespace' => NS_LEGACY_VIDEO, 'ar_title' => $strippedOld ),
 		'update' => array( 'ar_title' => $strippedNew )
 	);
 
 	$aTablesMove['cu_changes'] = array (
-		'where' => array( 'cuc_namespace' => NS_VIDEO, 'cuc_title' => $strippedOld ),
+		'where' => array( 'cuc_namespace' => NS_LEGACY_VIDEO, 'cuc_title' => $strippedOld ),
 		'update' => array( 'cuc_title' => $strippedNew )
 	);
 
@@ -158,12 +158,12 @@ foreach ( $aTranslation as $key => $val ) {
 	);
 
 	$aTablesMove['hidden'] = array (
-		'where' => array( 'hidden_namespace' => NS_VIDEO, 'hidden_title' => $strippedOld ),
+		'where' => array( 'hidden_namespace' => NS_LEGACY_VIDEO, 'hidden_title' => $strippedOld ),
 		'update' => array( 'hidden_title' => $strippedNew )
 	);
 
 	$aTablesMove['logging']	= array (
-		'where' => array( 'log_namespace' => NS_VIDEO, 'log_title' => $strippedOld ),
+		'where' => array( 'log_namespace' => NS_LEGACY_VIDEO, 'log_title' => $strippedOld ),
 		'update' => array( 'log_title' => $strippedNew )
 	);
 
@@ -178,32 +178,32 @@ foreach ( $aTranslation as $key => $val ) {
 	);
 
 	$aTablesMove['page'] = array (
-		'where' => array( 'page_namespace' => NS_VIDEO, 'page_title' => $strippedOld ),
+		'where' => array( 'page_namespace' => NS_LEGACY_VIDEO, 'page_title' => $strippedOld ),
 		'update' => array( 'page_title' => $strippedNew )
 	);
 
 	$aTablesMove['pagelinks'] = array (
-		'where' => array( 'pl_namespace' => NS_VIDEO, 'pl_title' => $strippedOld ),
+		'where' => array( 'pl_namespace' => NS_LEGACY_VIDEO, 'pl_title' => $strippedOld ),
 		'update' => array( 'pl_title' => $strippedNew )
 	);
 
 	$aTablesMove['protected_titles'] = array (
-		'where' => array( 'pt_namespace' => NS_VIDEO, 'pt_title' => $strippedOld ),
+		'where' => array( 'pt_namespace' => NS_LEGACY_VIDEO, 'pt_title' => $strippedOld ),
 		'update' => array( 'pt_title' => $strippedNew )
 	);
 
 	$aTablesMove['recentchanges'] = array (
-		'where' => array( 'rc_namespace' => NS_VIDEO, 'rc_title' => $strippedOld ),
+		'where' => array( 'rc_namespace' => NS_LEGACY_VIDEO, 'rc_title' => $strippedOld ),
 		'update' => array( 'rc_title' => $strippedNew )
 	);
 
 	$aTablesMove['redirect'] = array (
-		'where' => array( 'rd_namespace' => NS_VIDEO, 'rd_title' => $strippedOld ),
+		'where' => array( 'rd_namespace' => NS_LEGACY_VIDEO, 'rd_title' => $strippedOld ),
 		'update' => array( 'rd_title' => $strippedNew )
 	);
 
 	$aTablesMove['watchlist'] = array (
-		'where' => array( 'wl_namespace' => NS_VIDEO, 'wl_title' => $strippedOld ),
+		'where' => array( 'wl_namespace' => NS_LEGACY_VIDEO, 'wl_title' => $strippedOld ),
 		'update' => array( 'wl_title' => $strippedNew )
 	);
 	
