@@ -3145,7 +3145,12 @@ class Parser
 		wfProfileIn( __METHOD__.'-modifiers' );
 		if ( !$found ) {
 
-			$substMatch = $this->mSubstWords->matchStartAndRemove( $part1 );
+			/* Wikia change fogbugz BugID: 19362 start 
+			 * @author Sebastian Marzjan */
+			if($this->mSubstWords instanceof MagicWordArray) {
+				$substMatch = $this->mSubstWords->matchStartAndRemove( $part1 );
+			}
+			/* Wikia change fogbugz BugID: 19362 end */
 
 			# Possibilities for substMatch: "subst", "safesubst" or FALSE
 			# Decide whether to expand template or keep wikitext as-is.
