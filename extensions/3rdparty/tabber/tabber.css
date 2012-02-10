@@ -25,10 +25,7 @@
 ul.tabbernav
 {
  margin:0;
- /* Wikia Start */
- /* (BugId:20878) */
- padding: 3px 0 0 0;
- /* Wikia End */
+ padding: 3px 0;
  border-bottom: 1px solid #778;
  font: bold 12px Verdana, sans-serif;
 }
@@ -38,6 +35,9 @@ ul.tabbernav li
  list-style: none;
  margin: 0;
  display: inline;
+ /* Wikia Start */
+ line-height: normal;
+ /* Wikia End */
 }
 
 ul.tabbernav li a
