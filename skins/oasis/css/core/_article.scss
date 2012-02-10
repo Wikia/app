@@ -593,3 +593,10 @@ table.wikitable {
 		}
 	}
 }
+
+.ArticlePreview {
+	a.new,
+	a.new:visited {
+		color: #CC2200;
+	}
+}
