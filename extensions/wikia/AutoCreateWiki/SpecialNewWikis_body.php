@@ -137,7 +137,7 @@ class NewWikisPage extends AlphabeticPager {
 
 		// Don't show hidden names
 		$query['conds'][] = 'city_public = 1';
-		
+
 		// founder info
 		if ($this->more_details) {
 			$query['tables'][] = 'user';
@@ -160,7 +160,7 @@ class NewWikisPage extends AlphabeticPager {
 
 		return $query;
 	}
-        /* need to be overwrite because of not unique col name (city_id) */
+	/* need to be overwrite because of not unique col name (city_id) */
 
 	function reallyDoQuery( $offset, $limit, $descending ) {
 		$fname = __METHOD__ . ' (' . get_class( $this ) . ')';
@@ -188,10 +188,16 @@ class NewWikisPage extends AlphabeticPager {
 	function formatRow( $row ) {
 		global $wgLang;
 
-		$name = XML::tags('A', array('href' => $row->city_url), $row->city_title);
+		$name = Xml::tags( 'a', array( 'href' => $row->city_url ), $row->city_title );
 		if ($this->more_details) {
+			$cuTitle = GlobalTitle::newFromText( 'CheckUser', NS_SPECIAL, $row->city_id );
+			$userLink = Xml::tags(
+				'a',
+				array( 'href' => $cuTitle->getFullURL( 'user=' . urlencode( $row->user_name ) ) ),
+				$row->user_name
+			);
 			$confirm = ($row->user_email_authenticated) ? 'Y' : 'N';
-			$detail = "$row->city_lang, $row->city_created, FounderName:$row->user_name, Email:$row->user_email, Confirm:$confirm";
+			$detail = "$row->city_lang, $row->city_created, FounderName:$userLink, Email:$row->user_email, Confirm:$confirm";
 		} else {
 			$detail = $row->city_lang;
 		}
