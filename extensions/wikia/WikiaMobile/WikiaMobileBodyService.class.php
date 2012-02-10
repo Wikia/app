@@ -32,7 +32,7 @@ class WikiaMobileBodyService extends WikiaService {
 		$this->response->setVal(
 			'categoryLinks',
 			$this->sendRequest(
-				'WikiaMobileArticleCategoriesService',
+				'WikiaMobileCategoryService',
 				'index',
 				array( 'categoryLinks' => $categoryLinks )
 			)->toString()
