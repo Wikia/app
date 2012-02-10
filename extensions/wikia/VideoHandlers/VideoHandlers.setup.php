@@ -45,6 +45,7 @@ $app->registerClass( 'WikiaLocalFileShared',	$dir . '/filerepo/WikiaLocalFileSha
 $app->registerClass( 'WikiaLocalRepo',		$dir . '/filerepo/WikiaLocalRepo.class.php' );
 $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'FakeApiWrapper',	$dir . '/apiwrappers/FakeApiWrapper.class.php' );
 $app->registerClass( 'WikiaVideoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'ParsedVideoData',		$dir . '/apiwrappers/ParsedVideoData.class.php' );
 $app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');

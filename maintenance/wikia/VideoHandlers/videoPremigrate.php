@@ -180,12 +180,24 @@ if($rowCount) {
 					$retry = false;
 					$status = STATUS_KNOWN_ERROR;
 					$statusMsg = 'NOT_FOUND';
+					if(!is_subclass_of($className, 'PseudoApiWrapper')) {
+						// if a video failed that used regular provider
+						// just get fake metadata (from old entry)
+						$apiWrapper = F::build( 'FakeApiWrapper', array( $videoName ) );
+						$meta = $apiWrapper->getMetadata();
+					}
 					break;
 				}
 				catch( VideoIsPrivateException $e ) {
 					$retry = false;
 					$status = STATUS_KNOWN_ERROR;
 					$statusMsg = 'PRIVATE';
+					if(!is_subclass_of($className, 'PseudoApiWrapper')) {
+						// if a video failed that used regular provider
+						// just get fake metadata (from old entry)
+						$apiWrapper = F::build( 'FakeApiWrapper', array( $videoName ) );
+						$meta = $apiWrapper->getMetadata();
+					}
 					break;
 				}
 				catch( VideoQuotaExceededException $e ) {
@@ -197,6 +209,12 @@ if($rowCount) {
 					$retry = false;
 					$status = STATUS_UNKNOWN_ERROR;
 					$fullResponse = $e->content;
+					if(!is_subclass_of($className, 'PseudoApiWrapper')) {
+						// if a video failed that used regular provider
+						// just get fake metadata (from old entry)
+						$apiWrapper = F::build( 'FakeApiWrapper', array( $videoName ) );
+						$meta = $apiWrapper->getMetadata();
+					}
 					break;
 				}
 				catch( Exception $e ) {
@@ -206,6 +224,12 @@ if($rowCount) {
 					$fullResponse = $e->getMessage();
 					if( isset($e->apiUrl) ) {
 						$apiUrl = $e->apiUrl;
+					}
+					if(!is_subclass_of($className, 'PseudoApiWrapper')) {
+						// if a video failed that used regular provider
+						// just get fake metadata (from old entry)
+						$apiWrapper = F::build( 'FakeApiWrapper', array( $videoName ) );
+						$meta = $apiWrapper->getMetadata();
 					}
 					break;
 				}
