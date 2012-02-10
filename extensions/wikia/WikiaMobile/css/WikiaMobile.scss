@@ -15,6 +15,7 @@
 @import "image_stack.scss";
 @import "ad.scss";
 @import "category_page.scss";
+@import 'ui.scss';
 
 //mixins
 @import "mixins/transition.scss";
@@ -143,18 +144,5 @@ blockquote {
 	}
 	100% {
 		-webkit-transform: rotate(360deg);
-	}
-}
-
-.wkBtn {
-	font-size: medium;
-	padding: 7px;
-	border: 1px solid $border-color;
-	border-radius: 5px;
-	@include linear-gradient(rgb(253,253,251), rgb(239,239,239));
-	
-	&:active, &.fkAct {
-		color: white;
-		@include linear-gradient($activeGradient1, $activeGradient2);
 	}
 }

@@ -176,20 +176,11 @@ $comment-left-margin: $page-padding + 60px;
 		width: 17%;
 		padding: 0;
 		font-size: small;
-		font-weight: 100;
-		color: #6A6A6A;
 		border-radius: 0 5px 5px 0;
-		border: 1px solid $border-color;
 		position: absolute;
 		right: 0;
-		@include linear-gradient(#FFF, #EFEFEF);
+		margin: 0;
 		@include box-shadow(-2px 0 5px -2px grey);
-
-		&:active {
-			color: white;
-			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
-		}
-
 	}
 	
 	.rpl {
