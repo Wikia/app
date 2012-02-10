@@ -523,15 +523,11 @@
 			}
 			
 			if ( isset($mockUserParams['sendConfirmationMail']['mockExpTimes']) ) {
-				$mockRenderModule =  1;
 				$mockMsgExtCount++;
-			} else {
-				$mockRenderModule =  0;
 			}
 
 			$this->mockGlobalVariable( 'wgEmailAuthentication', $mockEmailAuth );
 			$this->mockGlobalFunction( 'MsgExt', $mockMsgExt, $mockMsgExtCount );
-			$this->mockGlobalFunction( 'RenderModule', '', $mockRenderModule );
 
 			$this->setUpMock( $mockCacheParams );
 			
