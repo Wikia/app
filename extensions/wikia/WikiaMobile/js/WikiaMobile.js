@@ -16,8 +16,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
 	tableWrapperHTML = '<div class=bigTable>',
 	adSlot,
-	fixed = Modernizr.positionfixed,
-	categoryUrl = wgServer + "/wikia.php?controller=WikiaMobile&method=getCategoryIndexBatch&category=" + wgTitle.replace(' ', '_');
+	fixed = Modernizr.positionfixed;
 
 	function getImages(){
 		return allImages;
@@ -513,7 +512,6 @@ var WikiaMobile = WikiaMobile || (function() {
 				batch = (forward) ? nextBatch : prevBatch,
 				add = (forward ? 1 : -1),
 				id = parent.attr('id'),
-				url = categoryUrl + "&batch=" + batch + "&index=" + id.charAt(id.length-1),
 				container = parent.find('ul');
 
 			prev.attr('data-batch', prevBatch + add);
@@ -522,24 +520,33 @@ var WikiaMobile = WikiaMobile || (function() {
 			self.toggleClass('active');
 			$.showLoader(self);
 
-			$.get(url, function(result){
-	
-				container.remove();
-				next.before(result);
-	
-				if(forward) {
-					window.scrollTo(0, parent.prev().offset().top);
-					track('category/next');
-				} else {
-					track('category/prev');
+			$.nirvana.sendRequest({
+				controller: 'WikiaMobileController',
+				method: 'getCategoryBatch',
+				format: 'html',
+				data:{
+					category: wgTitle,
+					batch: batch,
+					index: encodeURIComponent(id.substr(-1, 1))
+				},
+				callback: function(result){
+					container.remove();
+					next.before(result);
+		
+					if(forward) {
+						window.scrollTo(0, parent.prev().offset().top);
+						track('category/next');
+					} else {
+						track('category/prev');
+					}
+		
+					self.toggleClass('active');
+					$.hideLoader(self);
+		
+					(batch > 1) ? prev.addClass('visible') : prev.removeClass('visible');
+		
+					(batch < ~~(parent.attr('data-batches'))) ? next.addClass('visible') : next.removeClass('visible');
 				}
-	
-				self.toggleClass('active');
-				$.hideLoader(self);
-	
-				(batch > 1) ? prev.addClass('visible') : prev.removeClass('visible');
-
-				(batch < ~~(parent.attr('data-batches'))) ? next.addClass('visible') : next.removeClass('visible');
 			});
 		});
 		

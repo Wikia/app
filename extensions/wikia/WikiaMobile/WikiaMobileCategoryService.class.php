@@ -77,4 +77,33 @@ class WikiaMobileCategoryService extends WikiaService {
 		$this->wf->profileOut( __METHOD__ );
 	}
 
+	public function getBatch(){
+		//see Category::newFromName for valid format
+		$categoryName = str_replace( ' ', '_', $this->request->getVal( 'category' ) );
+		$index = $this->request->getVal( 'index' );
+		$batch = $this->request->getInt( 'batch' );
+		$err = false;
+
+		if ( !empty( $categoryName ) && !empty( $index ) && !empty( $batch ) ){
+			$category = F::build( 'Category', array ( F::build( 'Title' , array ( $categoryName, NS_CATEGORY ), 'newFromText' ) ), 'newFromTitle' );
+
+			if ( $category instanceof Category ) {
+				$data = F::build( 'WikiaMobileCategoryModel' )->getItemsCollection( $category );
+				
+				if ( !empty( $data[$index] ) && $batch > 0) {
+					$this->response->setVal( 'itemsBatch', $data[$index]->getItems( $batch ) );
+				} else {
+					$err = true;
+				}
+			} else {
+				$err = true;
+			}
+		} else {
+			$err = true;
+		}
+
+		if ( $err ) {
+			throw new WikiaException( "Error loading batch {$batch} for index {$index} in Category {$categoryName}" );
+		}
+	}
 }
