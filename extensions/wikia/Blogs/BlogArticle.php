@@ -716,7 +716,7 @@ class BlogArticle extends Article {
 	/* hook used to redirect to custom edit page */
 
 	public static function alternateEditHook($oEditPage) {
-		global $wgOut;
+		global $wgOut, $wgRequest;
 		$oTitle = $oEditPage->mTitle;
 		if($oTitle->getNamespace() == NS_BLOG_LISTING) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogListingPage', NS_SPECIAL);
@@ -724,7 +724,12 @@ class BlogArticle extends Article {
 		}
 		if($oTitle->getNamespace() == NS_BLOG_ARTICLE && $oTitle->isSubpage() && empty($oEditPage->isCreateBlogPage) ) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogPage', NS_SPECIAL);
-			$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() );
+			if ($wgRequest->getVal('oldid'))
+			{
+				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() . "&oldid=" . $wgRequest->getVal('oldid'));
+			} else {
+				$url = $oSpecialPageTitle->getFullUrl("pageId=" . $oTitle->getArticleId() );
+			}
 			$wgOut->redirect($url);
 
 		}
