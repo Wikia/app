@@ -5,7 +5,11 @@ class VimeoApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://vimeo.com/api/v2/video/$1.json';
 	protected static $CACHE_KEY = 'Vimeoapi';
 	
-	protected function getTitle() {
+	public function getTitle() {
+		return $this->getVideoTitle();
+	}
+	
+	public function getVideoTitle() {
 		if (!empty($this->interfaceObj['title'])) {
 			return $this->interfaceObj['title'];
 		}

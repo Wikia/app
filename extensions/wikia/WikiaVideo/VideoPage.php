@@ -1582,14 +1582,12 @@ EOD;
 		);
 		if ($row) {
 			$metadata = explode( ",", $row->img_metadata );
-			if ( is_array( $metadata ) ) {
+			if ( is_array( $metadata ) && count( $metadata ) > 1 ) {
 				$this->mProvider = $metadata[0];
 				$this->mId = $metadata[1];
 				array_splice( $metadata, 0, 2 );
-				if ( count( $metadata ) > 0 ) {
-					foreach( $metadata as $data  ) {
-						$this->mData[] = $data;
-					}
+				foreach( $metadata as $data  ) {
+					$this->mData[] = $data;
 				}
 			}
 		}
