@@ -46,24 +46,22 @@ class WikiHeaderModule extends Module {
 		$this->wordmarkFontClass = !empty($settings["wordmark-font"]) ? "font-{$settings['wordmark-font']}" : '';
 
 		if ($this->wordmarkType == "graphic") {
+			wfProfileIn(__METHOD__ . 'graphicWordmark');
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());			
 			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName,NS_IMAGE);
 			if($imageTitle instanceof Title) {
 				$attributes = array();
 				$file = wfFindFile($imageTitle);
 				if($file instanceof File) {
-					if($file->width < 250) {
-						$attributes []= 'width="' . $file->width . '"';
-					}
-					if($file->height < 65) {
-						$attributes []= 'height="' . $file->height. '"';
-					}
+					$attributes []= 'width="' . $file->width . '"';
+					$attributes []= 'height="' . $file->height. '"';
 	
 					if(!empty($attributes)) {
 						$this->wordmarkStyle = ' ' . implode(' ',$attributes) . ' ';
 					}
 				}
 			}
+			wfProfileOut(__METHOD__. 'graphicWordmark');
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
