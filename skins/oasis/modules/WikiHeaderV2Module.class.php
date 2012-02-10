@@ -11,6 +11,7 @@ class WikiHeaderV2Module extends Module {
 	var $wordmarkText;
 	var $wordmarkType;
 	var $wordmarkSize;
+	var $wordmarkStyle;
 	var $wordmarkUrl;
 	var $wordmarkFont;
 	var $displaySearch;
@@ -27,7 +28,22 @@ class WikiHeaderV2Module extends Module {
 		$this->wordmarkFont = $settings["wordmark-font"];
 
 		if ($this->wordmarkType == "graphic") {
+			wfProfileIn(__METHOD__ . 'graphicWordmarkV2');
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());
+			$imageTitle = Title::newFromText($themeSettings::WordmarkImageName,NS_IMAGE);
+			if($imageTitle instanceof Title) {
+				$attributes = array();
+				$file = wfFindFile($imageTitle);
+				if($file instanceof File) {
+					$attributes []= 'width="' . $file->width . '"';
+					$attributes []= 'height="' . $file->height. '"';
+			
+					if(!empty($attributes)) {
+						$this->wordmarkStyle = ' ' . implode(' ',$attributes) . ' ';
+					}
+				}
+			}
+			wfProfileOut(__METHOD__. 'graphicWordmarkV2');
 		}
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
