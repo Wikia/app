@@ -43,7 +43,14 @@ class FacebookSignupController extends WikiaController {
 		$resp = $this->sendRequest('FacebookSignupController', 'getFacebookData', array(
 			'fbUserId' => $this->getFacebookUserId(),
 		));
+
 		$this->fbEmail = $resp->getVal('contact_email', false);
+		$email = $resp->getVal('email', false);
+		// check for proxy email
+		if ( $this->fbEmail != $email ) {
+			$this->fbEmail = $this->wf->Msg( 'usersignup-facebook-proxy-email' );
+		}
+
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
 		$this->specialUserLoginUrl = F::build('SpecialPage', array('UserLogin'), 'getTitleFor')->getLocalUrl();
@@ -115,6 +122,7 @@ class FacebookSignupController extends WikiaController {
 			'locale',
 			'username',
 			'contact_email',
+			'email',
 		));
 
 		$this->response->setData($data);

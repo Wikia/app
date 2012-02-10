@@ -241,6 +241,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					$this->msgEmail = $response->getVal( 'msg','' );
 					$this->errParam = $response->getVal( 'errParam', '');
 				} else if ( $this->result == 'confirmed' ) {
+					$this->heading = $this->wf->Msg( 'usersignup-confirm-page-heading-confirmed-user' );
+					$this->subheading = $this->wf->Msg( 'usersignup-confirm-page-subheading-confirmed-user' );					
 					$this->msg = $response->getVal( 'msg','' );
 				}
 			}

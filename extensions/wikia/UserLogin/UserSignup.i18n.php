@@ -29,6 +29,7 @@ $messages['en'] = array(
 	'usersignup-facebook-email-tooltip' => 'If you\'d like to use a different email address you can change it later in your Preferences.',
 	'usersignup-facebook-have-an-account-heading' => ' Already have an account?',
 	'usersignup-facebook-have-an-account' => ' Connect your existing Wikia username with Facebook instead.',
+	'usersignup-facebook-proxy-email' => 'Anonymous facebook email',
 
 	// user preferences
 	'usersignup-user-pref-emailconfirmlink' => 'Request a new confirmation email',
@@ -48,6 +49,8 @@ $messages['en'] = array(
 	'usersignup-confirm-email-tooltip' => 'Did you enter an email address that you can\'t confirm, or do you want to use a different email address? Don\'t worry, use the link below to change your email address and get a new confirmation email.',
 	'usersignup-resend-email-heading-success' => 'New email sent',
 	'usersignup-resend-email-heading-failure' => 'Email not re-sent',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Congrats!',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'You\'re already confirmed',
 
 	// confirmation email
 	'usersignup-confirmation-heading' => 'Almost there',
