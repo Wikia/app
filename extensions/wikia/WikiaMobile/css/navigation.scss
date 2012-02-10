@@ -246,21 +246,9 @@
 
 		#wkNavBack {
 			display: none;
-			border-radius: 5px;
-			border: 1px solid $border-color;
 			color: $link-color;
-			font-size: medium;
-			font-weight: 100;
-			padding: 5px 10px;
 			float: left;
-			margin: 10px;
-			@include linear-gradient(rgb(247,247,247), rgb(241,241,241));
 			position: absolute;
-
-			&:active, &.fkAct {
-				color: white;
-				@include linear-gradient($activeGradient1, $activeGradient2);
-			}
 		}
 
 		h1 {

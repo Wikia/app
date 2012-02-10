@@ -1,4 +1,4 @@
-<section class=alphaSec>
+<section class="alphaSec noWrap">
 	<header><?= $wf->MsgExt( 'wikiamobile-categories-items-total', array( 'parsemag', 'content' ), $wg->ContLang->formatNum( $total ), $name ) ;?><button class=wkBtn id=expAll><span class=expand><?= $wf->MsgExt( 'wikiamobile-categories-expand', array( 'parsemag', 'content' )) ;?></span><span class=collapse><?= $wf->MsgExt( 'wikiamobile-categories-collapse', array( 'parsemag', 'content' )) ;?></span></button></header>
 <? foreach ( $collections as $index => $collection) :?>
 	<?

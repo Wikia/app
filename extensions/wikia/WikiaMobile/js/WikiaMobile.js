@@ -55,9 +55,9 @@ var WikiaMobile = WikiaMobile || (function() {
 				isH2 = (nodeName == 'H2');
 
 				if (nodeName != '#comment' && nodeName != 'SCRIPT') {
-					if(node.id == 'WkMainCntFtr' || node.className == 'printfooter'){
-							//do not wrap these elements
-							root = wrapper;
+					if(node.id == 'WkMainCntFtr' || node.className == 'printfooter' || (node.className && node.className.indexOf('noWrap') > -1)){
+						//do not wrap these elements
+						root = wrapper;
 					}else if (isH2){
 						if (currentSection) wrapper.appendChild(currentSection);
 
@@ -529,9 +529,9 @@ var WikiaMobile = WikiaMobile || (function() {
 	
 				if(forward) {
 					window.scrollTo(0, parent.prev().offset().top);
-					track('category/page/next');
+					track('category/next');
 				} else {
-					track('category/page/prev');
+					track('category/prev');
 				}
 	
 				self.toggleClass('active');
@@ -544,18 +544,18 @@ var WikiaMobile = WikiaMobile || (function() {
 		});
 		
 		$('#expAll').bind(clickEvent, function(event) {
-			var elements = $('.artSec').add('.collSec');
+			var elements = $('.alphaSec .artSec').add('.alphaSec .collSec');
 			if($(this).toggleClass('exp').hasClass('exp')){
 				elements.addClass('open');
-				track('category/page/expandAll');
+				track('category/expandAll');
 			}else{
 				elements.removeClass('open');
-				track('category/page/collapseAll');
+				track('category/collapseAll');
 			}
 		});
 		
 		$('#wkCatExh').bind(clickEvent, function(event) {
-			track('category/page/exhibition/click');
+			track('category/exhibition/click');
 		});
 		//end category pages
 	});
