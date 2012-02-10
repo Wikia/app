@@ -27,7 +27,7 @@ ul.tabbernav
  margin:0;
  /* Wikia Start */
  /* (BugId:20878) */
- padding: 0;
+ padding: 3px 0 0 0;
  /* Wikia End */
  border-bottom: 1px solid #778;
  font: bold 12px Verdana, sans-serif;
