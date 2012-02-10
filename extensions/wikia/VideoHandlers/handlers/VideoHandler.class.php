@@ -63,8 +63,8 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return mixed array of data, or serialized version
 	 */
 	function getMetadata( $unserialize = false ) {
-		if (empty($this->metadata)) {
-			$this->metadata = $this->getApi() instanceof ApiWrapper 
+		if ( empty($this->metadata)) {
+			$this->metadata = $this->getApi() instanceof ApiWrapper
 				? serialize( $this->getApi()->getMetadata() )
 				: null;
 		}

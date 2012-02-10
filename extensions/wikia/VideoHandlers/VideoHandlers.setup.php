@@ -22,13 +22,12 @@ $wgLocalFileRepo = array(
 	'deletedHashLevels' => $wgFileStore['deleted']['hash']
 );
 
-if(empty($wgVideoHandlersVideosMigrated)) {
-	define('NS_VIDEO', '400');
+if( empty( $wgVideoHandlersVideosMigrated ) ) {
+	define( 'NS_VIDEO', 400 );
 } else {
-	define('NS_VIDEO', '400');
-	$wgNamespaceAliases['NS_VIDEO'] = NS_FILE;
+	$wgNamespaceAliases[ 'Video' ] = 6;
+	define( 'NS_VIDEO', 6 );
 }
-
 
 /**
  * @var WikiaApp
