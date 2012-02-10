@@ -109,14 +109,6 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
-		# Now create a dummy user ($u) and check if it is valid
-		$name = trim( $this->mName );
-		$u = User::newFromName( $name, 'creatable' );
-		if ( !is_object( $u ) ) {
-			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'noname' ), 'error', 'username' );
-			return false;
-		}
-
 		return true;
 	}
 
