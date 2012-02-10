@@ -28,7 +28,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$mTitle			= null,
 		$mContent		= '';
 	private 
-		$mediaNS = array(NS_VIDEO, NS_IMAGE, NS_FILE);
+		$mediaNS = array(NS_LEGACY_VIDEO, NS_IMAGE, NS_FILE);
 	
 	private $stripTags = array(
 		"/\{\{#dpl(.*)\}\}/siU",
@@ -721,8 +721,8 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		
 		$oTitle = $this->mTitle;
 		if ( in_array($ns, $this->mediaNS) ) {
-			# NS_VIDEO 
-			if ( $ns == NS_VIDEO ) {
+			# NS_LEGACY_VIDEO 
+			if ( $ns == NS_LEGACY_VIDEO ) {
 				if ( !empty($wgEnableVideoToolExt) && class_exists('VideoPage') ) {
 					$videoName = VideoPage::getNameFromTitle( $oTitle );
 					if ( $videoName ) {

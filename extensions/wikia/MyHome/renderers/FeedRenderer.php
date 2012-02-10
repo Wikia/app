@@ -657,7 +657,7 @@ class FeedRenderer {
 		wfProfileIn(__METHOD__);
 
 		$thumbs = array();
-		$namespace = $type == 'videos' ? NS_VIDEO : NS_FILE;
+		$namespace = $type == 'videos' ? NS_LEGACY_VIDEO : NS_FILE;
 
 		foreach($row[$key] as $item) {
 			// Empty span for styling IE. Ugly, but offers an image size independant

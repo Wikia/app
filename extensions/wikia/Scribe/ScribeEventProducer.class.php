@@ -4,7 +4,7 @@ class ScribeEventProducer {
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
 
-	private $mediaNS = array(NS_VIDEO, NS_IMAGE, NS_FILE);
+	private $mediaNS = array(NS_LEGACY_VIDEO, NS_IMAGE, NS_FILE);
 
 	const 
 		EDIT_CATEGORY 		    = 'log_edit',
@@ -319,7 +319,7 @@ class ScribeEventProducer {
 		$page_namespace = $oTitle->getNamespace();
 		if ( in_array( $page_namespace, $this->mediaNS ) ) {
 
-			if ( $page_namespace == NS_VIDEO ) {
+			if ( $page_namespace == NS_LEGACY_VIDEO ) {
 				if ( !empty($this->app->wg->EnableVideoToolExt) && class_exists( 'VideoPage' ) ) {
 					$videoName = F::build('VideoPage', array( $oTitle ), 'getNameFromTitle');
 					if ( $videoName ) {

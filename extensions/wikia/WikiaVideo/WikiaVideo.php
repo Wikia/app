@@ -60,7 +60,7 @@ function WikiaVideoWantedFilesGetSQL( $sql, $querypage, $name, $imagelinks, $pag
 }
 
 function WikiaVideoSpecialUndeleteSwitchArchive( $archive, $title ) {
-	if( NS_VIDEO != $title->getNamespace() ) {
+	if( NS_LEGACY_VIDEO != $title->getNamespace() ) {
 		return true;
 	} else {
 		$archive = new VideoPageArchive( $title );
