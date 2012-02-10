@@ -11,6 +11,7 @@ var WikiaFooterApp = {
 			mobileSwitchLink.live('click', function(e){
 				e.preventDefault();
 				document.cookie = 'mobilefullsite=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+				jQuery.tracker.byStr('link/mobilesite');
 				location.reload();
 			});
 		}
