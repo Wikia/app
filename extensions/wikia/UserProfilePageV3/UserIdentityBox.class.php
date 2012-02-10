@@ -118,7 +118,7 @@ class UserIdentityBox {
 			$data['registration'] = $this->userStats['date'];
 			
 			$wikiId = $this->app->wg->CityId;
-
+			
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
 			
 			if( $isEdit || $this->shouldDisplayFullMasthead() ) {
@@ -235,11 +235,11 @@ class UserIdentityBox {
 	}
 	
 	private function hasUserEverEditedMasthead() {
-		return $this->user->getOption(self::USER_EVER_EDITED_MASTHEAD);
+		return $has = $this->user->getOption(self::USER_EVER_EDITED_MASTHEAD, false);
 	}
 	
 	private function hasUserEditedMastheadBefore($wikiId) {
-		return $this->user->getOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId);
+		return $this->user->getOption(self::USER_EDITED_MASTHEAD_PROPERTY.$wikiId, false);
 	}
 	
 	/**
@@ -405,8 +405,9 @@ class UserIdentityBox {
 				$memcData[$property] = null;
 			}
 		}
+		
 		$this->app->wg->Memc->set($this->getMemcUserIdentityDataKey(), $memcData);
-				
+		
 		return $memcData;
 	}
 	
@@ -888,7 +889,7 @@ class UserIdentityBox {
 			$userStatsService = F::build('UserStatsService', array($userId));
 			$this->userStats = $userStatsService->getStats();
 		}
-				
+		
 		$iEdits = $this->userStats['edits'];
 		$iEdits = is_null($iEdits) ? 0 : intval($iEdits);
 		
