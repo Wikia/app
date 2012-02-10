@@ -87,6 +87,7 @@ if ( $rowCount ) {
 	foreach( $aAllFiles as $sFile => $val ) {
 		if ( strpos ( $sFile, ':' ) === 0 ) {
 			// var_dump(':');
+
 			$response = F::app()->sendRequest(
 				'VideoHandlerController',
 				'getSanitizedOldVideoTitleString',
@@ -94,6 +95,7 @@ if ( $rowCount ) {
 					'videoText' => $sFile
 				)
 			)->getData();
+
 			if( isset( $response['error'] ) ) continue;
 
 			$newNameCandidate = $response['result'];
@@ -101,13 +103,14 @@ if ( $rowCount ) {
 
 			if (
 				( $newNameCandidate != $sFile ) ||
-				( isset ( $aAllFiles[ $afterSanitizer ] ) )
+				isset ( $aAllFiles[ $afterSanitizer ] ) ||
+				empty( $afterSanitizer )
 			){
 				$found = false;
 				$sufix = 0;
 				$continue = true;
 				while ( $continue == true ) {
-					$sNewTitle = $newNameCandidate . ( empty( $sufix ) ? '' : '_'.$sufix );
+					$sNewTitle = $newNameCandidate . ( ( empty( $sufix ) || empty( $afterSanitizer ) ) ? '' : '_'.$sufix );
 					if ( 	!isset( $aAllFiles[ substr( $sNewTitle, 1) ] ) &&
 						!isset( $aAllFiles[ $sNewTitle ] )
 					) {
