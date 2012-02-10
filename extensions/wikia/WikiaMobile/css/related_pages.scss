@@ -54,7 +54,7 @@ $itemPadding: 6px;
 		}
 
 		&:active, &.fkAct {
-			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
+			@include linear-gradient($activeGradient1, $activeGradient2);
 			color: white;
 		}
 
