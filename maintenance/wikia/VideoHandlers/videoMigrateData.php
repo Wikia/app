@@ -17,6 +17,9 @@ if( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
+$defaultThumbnailUrl = 'http://images4.wikia.nocookie.net/szeryftest/images/0/0a/Videoclip.jpg'; // CHANGEME
+
+
 //@include( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 //$dbw = WikiFactory::db( DB_MASTER );
@@ -99,7 +102,7 @@ if( $rowCount ) {
 		$data = array(
 			'wpUpload' => 1,
 			'wpSourceType' => 'web',
-			'wpUploadFileURL' => $video->thumbnail_url
+			'wpUploadFileURL' => !empty( $video->thumbnail_url ) ? $video->thumbnail_url : $defaultThumbnailUrl
 		);
 		$upload = F::build( 'UploadFromUrl' );
 		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
