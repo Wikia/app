@@ -14,7 +14,7 @@
 	<section id=<?= $id ;?> class=artSec data-batches=<?= $itemsBatch['batches'] ;?>>
 		<a class="pagLess<?= ( $itemsBatch['currentBatch'] > 1 ? ' visible' : '' ) ;?>" data-batch=<?=$prevBatch?> href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-prev' ) ;?></a>
 
-		<?= $app->getView( 'WikiaMobile', 'getCategoryIndexBatch', array( 'itemsBatch' => $itemsBatch ) ) ;?>
+		<?= $app->getView( 'WikiaMobileCategoryService', 'getBatch', array( 'itemsBatch' => $itemsBatch ) ) ;?>
 
 		<a class="pagMore<?= ( $itemsBatch['next']  ? ' visible' : '' ) ;?>" data-batch=<?=$nextBatch;?> href="?page=<?=$nextBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-more' ) ;?></a>
 	</section>

@@ -15,34 +15,9 @@ class WikiaMobileController extends WikiaController{
 	 *
 	 * @responseParam array $batch
 	 */
-	public function getCategoryIndexBatch(){
-		//see Category::newFromName for valid format
-		$categoryName = $this->request->getVal( 'category' );
-		$index = $this->request->getVal( 'index' );
-		$batch = $this->request->getInt( 'batch' );
-		$err = false;
-
-		if ( !empty( $categoryName ) && !empty( $index ) && !empty( $batch ) ){
-			$category = F::build( 'Category', array ( F::build( 'Title' , array ( $categoryName, NS_CATEGORY ), 'newFromText' ) ), 'newFromTitle' );
-
-			if ( $category instanceof Category ) {
-				$data = F::build( 'WikiaMobileCategoryModel' )->getItemsCollection( $category );
-				
-				if ( !empty( $data[$index] ) && $batch > 0) {
-					$this->response->setVal( 'itemsBatch', $data[$index]->getItems( $batch ) );
-				} else {
-					$err = true;
-				}
-			} else {
-				$err = true;
-			}
-		} else {
-			$err = true;
-		}
-
-		//TODO: error handling
-		if ( $err ) {
-			throw new WikiaException( "Error loading batch {$batch} for index {$index} in Category {$categoryName}" );
-		}
+	public function getCategoryBatch(){
+		//allow proxying request to a service (shared method implementation)
+		$this->request->setInternal( true );
+		$this->forward( 'WikiaMobileCategoryService', 'getBatch' );
 	}
 }
