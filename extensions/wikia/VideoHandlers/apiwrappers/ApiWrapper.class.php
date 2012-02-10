@@ -129,8 +129,7 @@ abstract class ApiWrapper {
 		$metadata = array();
 
 		$metadata['videoId']		= $this->videoId;
-		
-		// TODO: make common format for published timestamp
+		$metadata['title']			= $this->getVideoTitle();
 		$metadata['published']		= $this->getVideoPublished();
 		$metadata['category']		= $this->getVideoCategory();
 		$metadata['canEmbed']		= $this->canEmbed();
