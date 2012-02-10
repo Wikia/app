@@ -3183,7 +3183,16 @@ class Parser
 
 		# Variables
 		if ( !$found && $args->getLength() == 0 ) {
-			$id = $this->mVariables->matchStartToEnd( $part1 );
+			/* Wikia change fogbugz BugID: 19362 start
+			 * @author Sebastian Marzjan */
+			if($this->mVariables instanceof MagicWordArray) {
+				$id = $this->mVariables->matchStartToEnd( $part1 );
+			} else {
+				$id = false;
+				Wikia::logBacktrace(__METHOD__);
+			}
+			/* Wikia change fogbugz BugID: 19362 end */
+
 			if ( $id !== false ) {
 				# RTE (Rich Text Editor) - begin
 				# @author: Inez Korczyński
