@@ -20,35 +20,69 @@ $dir = dirname(__FILE__).'/';
 
 define( 'VIDEO_PREVIEW', 350 );
 
-switch( $wgLanguageCode ) {
+if ( empty( $wgVideoHandlersVideosMigrated ) ) {
+	switch( $wgLanguageCode ) {
+	/*
+		case "pl" :
+		$wgExtraNamespaces[400] = 'Wideo';
+		$wgExtraNamespaces[401] = 'Dyskusja_wideo';
 
-/*
-        case "pl" :
-        $wgExtraNamespaces[400] = 'Wideo';
-        $wgExtraNamespaces[401] = 'Dyskusja_wideo';
+		$wgNamespaceAliases['Video'] = 400;
+		$wgNamespaceAliases['Video_talk'] = 401;
+		break;
+	*/
+		case "en" :
+		default :
+			$wgExtraNamespaces[400] = "Video";
+			$wgExtraNamespaces[401] = "Video_talk";
+			break;
+		case "ru":
+			$wgExtraNamespaces[400] = "Видео";
+			$wgExtraNamespaces[401] = "Обсуждение_видео";
+			$wgNamespaceAliases["Video"] = 400;
+			$wgNamespaceAliases["Video_talk"] = 401;
+			break;
+		case "no":
+		case "nn":
+			$wgExtraNamespaces[400] = "Video";
+			$wgExtraNamespaces[401] = "Videodiskusjon";
+			$wgNamespaceAliases["Video"] = 400;
+			$wgNamespaceAliases["Video_talk"] = 401;
+			break;
 
-        $wgNamespaceAliases['Video'] = 400;
-        $wgNamespaceAliases['Video_talk'] = 401;
-        break;
-*/
-        case "en" :
-	default :
-		$wgExtraNamespaces[400] = "Video";
-		$wgExtraNamespaces[401] = "Video_talk";
+	}
+} else {
+	switch( $wgLanguageCode ) {
+	/*
+		case "pl" :
+		$wgExtraNamespaces[400] = 'Wideo';
+		$wgExtraNamespaces[401] = 'Dyskusja_wideo';
+
+		$wgNamespaceAliases['Video'] = 400;
+		$wgNamespaceAliases['Video_talk'] = 401;
 		break;
-	case "ru":
-		$wgExtraNamespaces[400] = "Видео";
-		$wgExtraNamespaces[401] = "Обсуждение_видео";
-		$wgNamespaceAliases["Video"] = 400;
-		$wgNamespaceAliases["Video_talk"] = 401;
-		break;
-	case "no":
-	case "nn":
-		$wgExtraNamespaces[400] = "Video";
-		$wgExtraNamespaces[401] = "Videodiskusjon";
-		$wgNamespaceAliases["Video"] = 400;
-		$wgNamespaceAliases["Video_talk"] = 401;
-		break;
+	*/
+		case "en" :
+		default :
+			//$wgExtraNamespaces[6] = "Video";
+			//$wgExtraNamespaces[7] = "Video_talk";
+			$wgNamespaceAliases["Video"] = 6;
+			$wgNamespaceAliases["Video_talk"] = 7;
+			break;
+		case "ru":
+			//$wgExtraNamespaces[6] = "Видео";
+			//$wgExtraNamespaces[7] = "Обсуждение_видео";
+			$wgNamespaceAliases["Video"] = 6;
+			$wgNamespaceAliases["Video_talk"] = 7;
+			break;
+		case "no":
+		case "nn":
+			//$wgExtraNamespaces[6] = "Video";
+			//$wgExtraNamespaces[7] = "Videodiskusjon";
+			$wgNamespaceAliases["Video"] = 6;
+			$wgNamespaceAliases["Video_talk"] = 7;
+			break;
+	}
 }
 
 require_once( "$IP/extensions/wikia/WikiaVideo/WikiaVideo.php" );
