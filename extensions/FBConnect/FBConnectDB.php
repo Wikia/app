@@ -90,7 +90,22 @@ class FBConnectDB {
 		);
 
 		if ( $id ) {
-			return User::newFromId( $id );
+			/* Wikia change - begin */
+			global $wgExternalAuthType;
+
+			$user = User::newFromId( $id );
+			if ( $wgExternalAuthType ) {
+				$user->load();
+				if ( $user->getId() == 0 ) {
+					$mExtUser = ExternalUser::newFromId( $id );
+					if ( is_object( $mExtUser ) && ( $mExtUser->getId() != 0 ) ) {
+						$mExtUser->linkToLocal( $mExtUser->getId() );
+						$user->setId( $id );
+					}
+				}
+			}
+
+			return $user;
 		} else {
 			return null;
 		}

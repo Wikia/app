@@ -27,7 +27,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 		));
 
 		// add an email to the request and pass it to the underlying class
-		$request->setVal('email', $resp->getVal('contact_email', false));
+		$request->setVal('email', $resp->getVal('email', false));
 
 		parent::__construct($request, $par);
 	}
