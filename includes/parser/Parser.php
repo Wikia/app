@@ -3149,6 +3149,8 @@ class Parser
 			 * @author Sebastian Marzjan */
 			if($this->mSubstWords instanceof MagicWordArray) {
 				$substMatch = $this->mSubstWords->matchStartAndRemove( $part1 );
+			} else {
+				Wikia::logBacktrace(__METHOD__);
 			}
 			/* Wikia change fogbugz BugID: 19362 end */
 
