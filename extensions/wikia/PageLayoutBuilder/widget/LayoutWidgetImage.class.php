@@ -46,7 +46,12 @@ class LayoutWidgetImage extends LayoutWidgetBase {
 			$data['width'] = $size['width'];
 
 			$user = User::newFromName($img->getUser());
-			$data['username'] = $user->getName();
+			if(empty($user)) {
+				$data['username'] = '';	
+			} else {
+				$data['username'] = $user->getName();
+			}
+
 			$data['divwidth'] =  $data['width'];
 			$data['img'] = wfReplaceImageServer( $img->getThumbUrl( $img->thumbName( array( 'width' => $data["width"] ) ) ) ); 
 		}
