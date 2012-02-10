@@ -16,7 +16,8 @@ var WikiaMobile = WikiaMobile || (function() {
 	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
 	tableWrapperHTML = '<div class=bigTable>',
 	adSlot,
-	fixed = Modernizr.positionfixed;
+	fixed = Modernizr.positionfixed,
+	categoryUrl = wgServer + "/wikia.php?controller=WikiaMobile&method=getCategoryIndexBatch&category=" + wgTitle.replace(' ', '_');
 
 	function getImages(){
 		return allImages;
@@ -416,10 +417,9 @@ var WikiaMobile = WikiaMobile || (function() {
 		}
 
 		//add 'active' state to devices that does't support it
-		$("#wkNavMenu li, #wkNavBack, #wkRelPag li, .rpl, .alphaSec li")
-		.bind("touchstart", function () {
+		body.delegate("#wkNavMenu li, #wkNavBack, #wkRelPag li, .rpl, .alphaSec li", "touchstart", function () {
 			$(this).addClass("fkAct");
-		}).bind("touchend touchcancel", function() {
+		}).delegate("#wkNavMenu li, #wkNavBack, #wkRelPag li, .rpl, .alphaSec li", "touchend touchcancel", function() {
 			$(this).removeClass("fkAct");
 		});
 
@@ -500,40 +500,64 @@ var WikiaMobile = WikiaMobile || (function() {
 		});
 
 		//category pages
-		var catUrl = wgServer + "/wikia.php?controller=WikiaMobile&method=getCategoryIndexBatch&category=" + wgTitle.replace(' ', '_');
-
 		$('.pagMore, .pagLess').bind(clickEvent, function(event) {
-			event.preventDefault();
-			var self = $(this);
-
-			catUrl += "&batch=" + self.data('batch') + "&index=" + self.parent().attr('id').charAt(8);
 			
-			paginationHandler(self, catUrl);
+			event.preventDefault();
+			var self = $(this),
+				forward = self.hasClass('pagMore'),
+				parent = self.parent(),
+				prev = (forward) ? parent.children('.pagLess') : self,
+				prevBatch = ~~(prev.attr('data-batch')),
+				next = (forward) ? self : parent.children('.pagMore'),
+				nextBatch = prevBatch + 2,
+				batch = (forward) ? nextBatch : prevBatch,
+				add = (forward ? 1 : -1),
+				id = parent.attr('id'),
+				url = categoryUrl + "&batch=" + batch + "&index=" + id.charAt(id.length-1),
+				container = parent.find('ul');
 
-		});
-		//end category pages
-		
-		//pagination
-		function paginationHandler(elm, url){
-	
-			var forward = (elm.attr('class') == 'pagMore'),
-				container = elm.parent().find('ul');
+			prev.attr('data-batch', prevBatch + add);
+			next.attr('data-batch', nextBatch + add);
 
-			elm.toggleClass('active');
-			$.showLoader(elm);
+			self.toggleClass('active');
+			$.showLoader(self);
 
 			$.get(url, function(result){
-				
+	
 				container.remove();
-				elm.parent().find('.pagMore').before(result);
+				next.before(result);
+	
+				if(forward) {
+					window.scrollTo(0, parent.prev().offset().top);
+					track('category/page/next');
+				} else {
+					track('category/page/prev');
+				}
+	
+				self.toggleClass('active');
+				$.hideLoader(self);
+	
+				(batch > 1) ? prev.addClass('visible') : prev.removeClass('visible');
 
-				elm.toggleClass('active');
-				$.hideLoader(elm);
-
-				window.scrollTo(0, container.offset().top);
+				(batch < ~~(parent.attr('data-batches'))) ? next.addClass('visible') : next.removeClass('visible');
 			});
-		}
-		//end pagination
+		});
+		
+		$('#expAll').bind(clickEvent, function(event) {
+			var elements = $('.artSec').add('.collSec');
+			if($(this).toggleClass('exp').hasClass('exp')){
+				elements.addClass('open');
+				track('category/page/expandAll');
+			}else{
+				elements.removeClass('open');
+				track('category/page/collapseAll');
+			}
+		});
+		
+		$('#wkCatExh').bind(clickEvent, function(event) {
+			track('category/page/exhibition/click');
+		});
+		//end category pages
 	});
 
 	return {

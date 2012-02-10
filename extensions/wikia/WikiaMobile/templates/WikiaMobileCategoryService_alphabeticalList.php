@@ -1,5 +1,5 @@
 <section class=alphaSec>
-	<header><?= $wf->MsgExt( 'wikiamobile-categories-items-total', array( 'parsemag', 'content' ), $wg->ContLang->formatNum( $total ), $name ) ;?></header>
+	<header><?= $wf->MsgExt( 'wikiamobile-categories-items-total', array( 'parsemag', 'content' ), $wg->ContLang->formatNum( $total ), $name ) ;?><button class=wkBtn id=expAll><span class=expand><?= $wf->MsgExt( 'wikiamobile-categories-expand', array( 'parsemag', 'content' )) ;?></span><span class=collapse><?= $wf->MsgExt( 'wikiamobile-categories-collapse', array( 'parsemag', 'content' )) ;?></span></button></header>
 <? foreach ( $collections as $index => $collection) :?>
 	<?
 	$batch = ( $index == $requestedIndex ) ? $requestedBatch : 1;
@@ -11,16 +11,12 @@
 	$urlSafeId = urlencode( $id );
 	?>
 	<h2 class=collSec><?= strtoupper( $index ) ;?> <span class=cnt>(<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>)</span><span class=chev></span></h2>
-	<section id=<?= $id ;?> class=artSec>
-		<? if ( $itemsBatch['currentBatch'] > 1 ) :?>
-		<a class=pagLess data-batch=<?=$prevBatch;?> href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-prev' ) ;?></a>
-		<? endif ;?>
+	<section id=<?= $id ;?> class=artSec data-batches=<?= $itemsBatch['batches'] ;?>>
+		<a class="pagLess<?= ( $itemsBatch['currentBatch'] > 1 ? ' visible' : '' ) ;?>" data-batch=<?=$prevBatch?> href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-prev' ) ;?></a>
 
 		<?= $app->getView( 'WikiaMobile', 'getCategoryIndexBatch', array( 'itemsBatch' => $itemsBatch ) ) ;?>
 
-		<? if ( $itemsBatch['next'] ) :?>
-		<a class=pagMore data-batch=<?=$nextBatch;?> href="?page=<?=$nextBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-more' ) ;?></a>
-		<? endif ;?>
+		<a class="pagMore<?= ( $itemsBatch['next']  ? ' visible' : '' ) ;?>" data-batch=<?=$nextBatch;?> href="?page=<?=$nextBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-more' ) ;?></a>
 	</section>
 <? endforeach ;?>
 </section>

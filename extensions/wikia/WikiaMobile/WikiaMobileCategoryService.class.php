@@ -43,6 +43,7 @@ class WikiaMobileCategoryService extends WikiaService {
 			}
 
 			$this->response->setVal( 'items', $items );
+
 		} else {
 			$this->wf->profileOut( __METHOD__ );
 			return false;
