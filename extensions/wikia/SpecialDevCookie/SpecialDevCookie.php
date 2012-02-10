@@ -11,7 +11,7 @@
 
 $wgSpecialPages['DevCookie'] = 'SpecialDevCookie';
 $wgDevCookieName = "-wikia-development";
-$wgStagingCookieName = "-wikia-staging-1";
+$wgStagingCookieName = "wikia-preview";
 $wgGroupPermissions['*']['devcookie'] = false;
 $wgGroupPermissions['staff']['devcookie'] = true;
 
@@ -64,17 +64,15 @@ class SpecialDevCookie extends UnlistedSpecialPage {
 		</style>");
 
 		// Dev cookie
-		$wgOut->addHTML('<h1>Dev cookie</h1>');
-		$this->handlePostForCookie($wgDevCookieName);
-		$this->showSelectBox($wgDevCookieName);
+//		$wgOut->addHTML('<h1>Dev cookie</h1>');
+//		$this->handlePostForCookie($wgDevCookieName);
+//		$this->showSelectBox($wgDevCookieName);
 		
-		$wgOut->addHTML('<br/><br/>');
-
 		// Staging cookie
-		//$wgOut->addHTML('<h1>Staging cookie</h1>');
-		//$wgOut->addHTML('<p>To use the staging server (code that will be released to production soon), set this cookie to <em>true</em></p>');
-		//$this->handlePostForCookie($wgStagingCookieName);
-		//$this->showSelectBox($wgStagingCookieName);
+		$wgOut->addHTML('<h1>Preview cookie</h1>');
+		$wgOut->addHTML('<p>To use the preview server (code that will be released to production soon), set this cookie to <em>true</em></p>');
+		$this->handlePostForCookie($wgStagingCookieName);
+		$this->showSelectBox($wgStagingCookieName);
 
 		wfProfileOut( __METHOD__ );
 	}
