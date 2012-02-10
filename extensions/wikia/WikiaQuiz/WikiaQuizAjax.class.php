@@ -276,7 +276,7 @@ class WikiaQuizAjax {
 			$quizContent .= WikiaQuiz::TITLESCREENTEXT_MARKER . $titleScreenText . "\n";
 		}
 
-		// title screen text
+		// facebook recommendation description
 		$fbRecommendationText = trim($request->getVal ('fbrecommendationtext'));
 		if ($fbRecommendationText) {
 			$quizContent .= WikiaQuiz::FBRECOMMENDATIONTEXT_MARKER . $fbRecommendationText . "\n";
