@@ -110,7 +110,8 @@ if ( $rowCount ) {
 				$sufix = 0;
 				$continue = true;
 				while ( $continue == true ) {
-					$sNewTitle = $newNameCandidate . ( ( empty( $sufix ) || empty( $afterSanitizer ) ) ? '' : '_'.$sufix );
+					$sufixLength = strlen( $sufix );
+					$sNewTitle = substr( $newNameCandidate, ( 255 - $sufixLength ) ) . ( ( empty( $sufix ) || empty( $afterSanitizer ) ) ? '' : '_'.$sufix );
 					if ( 	!isset( $aAllFiles[ substr( $sNewTitle, 1) ] ) &&
 						!isset( $aAllFiles[ $sNewTitle ] )
 					) {
