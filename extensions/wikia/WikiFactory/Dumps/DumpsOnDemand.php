@@ -106,34 +106,46 @@ class DumpsOnDemand {
 	 * @static
 	 * @access public
 	 */
-	static public function sendMail() {
-		global $wgDBname, $wgServer, $wgCityId, $wgUser;
-
-		$title = SpecialPage::getTitleFor( "Statistics" );
-		$body = sprintf(
-			"Database dump request for %s, city id %d\nurl %s\nRequested by %s\n",
-			$wgDBname, $wgCityId, $title->getFullUrl(), $wgUser->getName()
-		);
-
-		UserMailer::send(
-			new MailAddress( "dump-requests@wikia-inc.com" ),
-			new MailAddress( "dump-requests@wikia-inc.com" ),
-			"Database dump request for {$wgDBname}",
-			$body,
-			null /*reply*/,
-			null /*ctype*/,
-			'DumpRequest'
-		);
-
-		/**
-		 * @todo universal WikiFactory metod for that
-		 */
-		$dbw = WikiFactory::db( DB_MASTER );
-		$dbw->update(
-			"city_list",
-			array( "city_lastdump_timestamp" => wfTimestampNow() ),
-			array( "city_id" => $wgCityId ),
-			__METHOD__
-		);
+	static public function sendMail( $sDbName = null, $iCityId = null, $bHidden = false, $bClose = false ) {
+            
+            if ( is_null( $sDbName ) ) {
+                global $wgDBname;
+                $sDbName = $wgDBname;
+            }
+            
+            if ( is_null( $iCityId ) ) {
+                global $wgCityId;
+                $iCityId = $wgCityId;
+            }
+            
+            global $wgServer, $wgUser;
+            
+            $title = SpecialPage::getTitleFor( "Statistics" );
+            
+            $body = sprintf(
+                    "Database dump request for %s, city id %d, hidden %d, closeWiki %d\nurl %s\nRequested by %s\n",
+                    $sDbName, $iCityId, (int) $bHidden, (int) $bClose, $title->getFullUrl(), $wgUser->getName()
+            );
+            
+            UserMailer::send(
+                new MailAddress( "dump-requests@wikia-inc.com" ),
+                new MailAddress( "dump-requests@wikia-inc.com" ),
+                "Database dump request for {$wgDBname}",
+                $body,
+                null /*reply*/,
+                null /*ctype*/,
+                'DumpRequest'
+            );
+            
+            /**
+             * @todo universal WikiFactory metod for that
+             */
+            $dbw = WikiFactory::db( DB_MASTER );
+            $dbw->update(
+                    "city_list",
+                    array( "city_lastdump_timestamp" => wfTimestampNow() ),
+                    array( "city_id" => $wgCityId ),
+                    __METHOD__
+            );
 	}
 }
