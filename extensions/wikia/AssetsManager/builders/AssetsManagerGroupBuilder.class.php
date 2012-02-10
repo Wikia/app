@@ -35,8 +35,12 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
 			}
 
-			// add semicolon to separate concatenated files (BugId:20272)
-			$this->mContent .= ";\n";
+
+			if($this->mContentType == AssetsManager::TYPE_JS) {
+				// add semicolon to separate concatenated files (BugId:20272)
+				// but only for JS (BugId:20824)
+				$this->mContent .= ";\n";
+			}
 		}
 
 		// For RTE only
