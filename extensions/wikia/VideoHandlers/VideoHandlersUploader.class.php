@@ -62,6 +62,17 @@ class VideoHandlersUploader {
 	}
 
 	public static function sanitizeTitle( $titleText, $replaceChar=' ' ) {
+
+		// We need more strict sanitizing because the commented code below 
+		// isn't clearing all illegal characters for files. 
+		// So we decided to remove all characters that are not alphanumeric.
+		
+		$sanitized = preg_replace('/[^[:alnum:]]{1,}/', $replaceChar, $titleText);
+
+		return trim($sanitized);
+		
+		/*
+
 		$titleText = preg_replace(Title::getTitleInvalidRegex(), $replaceChar, $titleText);
 		
 		foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
@@ -74,13 +85,16 @@ class VideoHandlersUploader {
 
 		$sTitle = substr($sTitle, 0, self::$IMAGE_NAME_MAX_LENGTH);	// DB column Image.img_name has size 255
 		
-		$title = Title::makeTitleSafe( NS_FILE, $sTitle );
+		// this method is cruching if you use [, ] :
+		//$title = Title::makeTitleSafe( NS_FILE, $sTitle );
 
 		if ($replaceChar == ' ') {
 			return $title->getText();
 		}
 		
 		return $title->getDBkey();
+		 
+		*/
 	}
 	
 	public static function hasForbiddenCharacters( $text ) {
