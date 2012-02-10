@@ -143,6 +143,12 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 	}
 
 	public function getWikitextFromRequest() {
+		if (!$this->layoutTitle instanceof  Title) {
+			// mech: bugid 18307
+			// if layout is missing, display an error message instead of the wiki text
+			Wikia::logBacktrace(__METHOD__);
+			return wfMsg( 'plb-special-no-layout-body' );
+		}
 		$this->tagValues = array();
 		$this->formValues = array();
 
