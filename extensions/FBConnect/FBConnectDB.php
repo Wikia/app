@@ -106,6 +106,7 @@ class FBConnectDB {
 			}
 
 			return $user;
+			/* Wikia change - end */
 		} else {
 			return null;
 		}
