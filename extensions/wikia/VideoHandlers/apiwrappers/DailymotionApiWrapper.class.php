@@ -5,10 +5,6 @@ class DailymotionApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'https://api.dailymotion.com/video/$1?fields=id,title,tags,created_time,duration,channel,description,thumbnail_url,thumbnail_large_url,aspect_ratio';
 	protected static $CACHE_KEY = 'dailymotionapi';
 
-	public function getTitle() {
-		return $this->getVideoTitle();
-	}
-
 	public function getDescription() {
 		$text = '';
 		if ( $this->getOrignalDescription() )

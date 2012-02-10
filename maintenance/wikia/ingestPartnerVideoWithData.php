@@ -51,8 +51,8 @@ if ( $wgUser->isAnon() ) {
 //	$wgUser->addToDatabase();
 }
 
-$useVideoFeed = !empty($wgIngestVideosUseVideoHandlersExt);
-$usePartnerVideo = !empty($wgIngestVideosUseWikiaVideoExt);
+$useVideoFeed = WikiaVideoService::useVideoHandlersExtForIngestion();
+$usePartnerVideo = WikiaVideoService::useWikiaVideoExtForIngestion();
 $providersVideoFeed = $providersPartnerVideo = array();
 $provider = !empty($args[0]) ? strtolower($args[0]) : '';
 if ($useVideoFeed) {

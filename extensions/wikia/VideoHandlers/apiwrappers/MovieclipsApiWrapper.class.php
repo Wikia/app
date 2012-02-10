@@ -51,10 +51,15 @@ class MovieclipsApiWrapper extends ApiWrapper implements ParsedVideoData {
 	}
 
 	public function getTitle() {
-		$title = '';
-		$title .= $this->getMovieTitleAndYear() . ' - ';
-		$title .= $this->getVideoTitle();
-		return $title;
+		if (!empty($this->videoName)) {
+			return $this->videoName;
+		}
+		else {			
+			$title = '';
+			$title .= $this->getMovieTitleAndYear() . ' - ';
+			$title .= $this->getVideoTitle();
+			return $title;
+		}
 	}
 
 	protected function getMovieTitleAndYear() {

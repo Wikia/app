@@ -5,10 +5,6 @@ class MetacafeApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_XML;
 	protected static $API_URL = 'http://www.metacafe.com/api/item/$1/';
 	protected static $CACHE_KEY = 'metacafeapi';
-
-	public function getTitle() {
-		return $this->getVideoTitle();
-	}
 	
 	public function getVideoTitle() {
 		return $this->interfaceObj['title'];

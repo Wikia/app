@@ -1245,6 +1245,12 @@ EOD;
 			default:
 				break;
 		}
+		
+		// ensure name is the same as one that is safe to use for File: namespace
+		if (!empty($this->mVideoName)) {
+			$this->mVideoName = VideoHandlersUploader::sanitizeTitle($this->mVideoName);
+		}
+		
 		return $exists;
 	}
 

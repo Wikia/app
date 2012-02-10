@@ -6,10 +6,6 @@ class HuluApiWrapper extends ApiWrapper {
 	protected static $WATCH_URL = 'http://www.hulu.com/watch/$1';
 	protected static $CACHE_KEY = 'huluapi';
 	
-	public function getTitle() {
-		return $this->interfaceObj['title'];
-	}
-	
 	public function getDescription() {
 	}
 	
@@ -17,6 +13,10 @@ class HuluApiWrapper extends ApiWrapper {
 		return $this->interfaceObj['thumbnail_url'];
 	}
 
+	protected function getVideoTitle() {
+		return $this->interfaceObj['title'];
+	}
+	
 	protected function getApiUrl() {
 		$watchUrl = str_replace( '$1', $this->videoId, static::$WATCH_URL );
 		$apiUrl = static::$API_URL . urlencode($watchUrl);

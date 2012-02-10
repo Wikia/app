@@ -74,7 +74,6 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 				}
 				
 				$clipData['description'] = $video->getElementsByTagName('description')->item(0)->textContent;
-				print("\n\ndescription: " . $clipData['description']."\n\n");
 
 				$msg = '';
 				$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);

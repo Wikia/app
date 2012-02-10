@@ -49,8 +49,8 @@ class RealgravityApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoD
 		$this->videoId = $cacheData['videoId'];
 		$this->parsedData = $cacheData['parsedData'];
 	}
-
-	public function getTitle() {
+	
+	protected function getVideoTitle() {
 		return $this->videoName;
 	}
 	

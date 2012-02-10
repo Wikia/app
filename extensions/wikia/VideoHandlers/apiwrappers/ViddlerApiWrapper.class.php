@@ -6,7 +6,7 @@ class ViddlerApiWrapper extends ApiWrapper {
 	protected static $WATCH_URL = 'http://www.viddler.com/explore/$1';
 	protected static $CACHE_KEY = 'viddlerapi';
 	
-	public function getTitle() {
+	protected function getVideoTitle() {
 		return $this->interfaceObj['video']['title'];
 	}
 	

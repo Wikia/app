@@ -89,7 +89,7 @@ abstract class VideoFeedIngester {
 
 			$apiWrapper = new static::$API_WRAPPER($videoId, $apiParams);
 			$uploadedTitle = null;
-			$result = VideoHandlersUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
+			$result = VideoHandlersUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, null, $categoryStr.$apiWrapper->getDescription(), false);
 			if ($result->ok) {
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
 				return 1;

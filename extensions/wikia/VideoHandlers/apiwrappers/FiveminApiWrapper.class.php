@@ -5,10 +5,6 @@ class FiveminApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_XML;
 	protected static $API_URL = 'http://api.5min.com/video/$1/info.xml?thumbnail_sizes=true';
 	protected static $CACHE_KEY = 'fivemin';
-
-	public function getTitle() {
-		return $this->getVideoTitle();
-	}
 	
 	public function getVideoTitle() {
 		return $this->interfaceObj['title'];
