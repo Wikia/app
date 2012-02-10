@@ -3150,6 +3150,7 @@ class Parser
 			if($this->mSubstWords instanceof MagicWordArray) {
 				$substMatch = $this->mSubstWords->matchStartAndRemove( $part1 );
 			} else {
+				$substMatch = false;
 				Wikia::logBacktrace(__METHOD__);
 			}
 			/* Wikia change fogbugz BugID: 19362 end */
