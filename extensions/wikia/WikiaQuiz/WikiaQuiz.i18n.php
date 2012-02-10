@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Edit Quiz Question and Answers',
 	'wikiaquiz-title-label' => 'Title',
 	'wikiaquiz-titlescreentext-label' => 'Title screen text',
+	'wikiaquiz-fbrecommendationtext-label' => 'Facebook recommendation description',
 	'wikiaquiz-titlescreenimages-label' => 'Title screen images',
 	'wikiaquiz-moreinfoheading-label' => 'More info heading',
 	'wikiaquiz-requireemail-label' => 'Require player to enter an email address at the end of the game',
@@ -64,7 +65,6 @@ $messages['en'] = array(
 	'wikiaquiz-game-email-error' => 'There was an error while sending this email: $1',
 	'wikiaquiz-game-challenge' => 'Challenge your friends to play!',
 	'wikiaquiz-game-mute' => 'Mute',
-	'wikiaquiz-facebook-creative' => 'Come play $1 at {{SITENAME}}',
 );
 
 /** Message documentation (Message documentation)
@@ -78,6 +78,7 @@ $messages['qqq'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Headline for Edit Quiz Article Special Page.',
 	'wikiaquiz-title-label' => 'Form Label for Title.',
 	'wikiaquiz-titlescreentext-label' => 'Form Label for Title Screen Images.',
+	'wikiaquiz-fbrecommendationtext-label' => 'Form Label for Facebook recommendation description.',
 	'wikiaquiz-moreinfoheading-label' => 'Form Label for More Info Heading.',
 	'wikiaquiz-requireemail-label' => 'Label for checkbox for required email address.',
 	'wikiaquiz-moreinfolinks-label' => 'Form Label for More Info Links.',
@@ -227,7 +228,6 @@ $messages['ca'] = array(
 	'wikiaquiz-game-email-error' => "Hi ha hagut un error en l'enviament d'aquest correu electrònic:$1",
 	'wikiaquiz-game-challenge' => 'Desafia als teus amics per jugar!',
 	'wikiaquiz-game-mute' => 'Atenuar-se',
-	'wikiaquiz-facebook-creative' => 'Venir jugar  $1  a {{SITENAME}}',
 );
 
 /** German (Deutsch)
@@ -295,7 +295,6 @@ $messages['de'] = array(
 	'wikiaquiz-game-email-error' => 'Beim Senden dieser e-Mail ist ein Fehler aufgetreten:$1',
 	'wikiaquiz-game-challenge' => 'Fordere deine Freunde zum Spielen heraus!',
 	'wikiaquiz-game-mute' => 'Ton aus',
-	'wikiaquiz-facebook-creative' => 'Komm und spiel $1 auf {{SITENAME}}',
 );
 
 /** Spanish (Español)
@@ -350,7 +349,6 @@ $messages['es'] = array(
 	'wikiaquiz-game-thanks' => '¡Gracias por jugar!',
 	'wikiaquiz-game-challenge' => '¡Desafía a tus amigos a jugar!',
 	'wikiaquiz-game-mute' => 'Mudo',
-	'wikiaquiz-facebook-creative' => 'Ven a jugar $1 en {{SITENAME}}',
 );
 
 /** Persian (فارسی)
@@ -429,7 +427,6 @@ $messages['fr'] = array(
 	'wikiaquiz-game-email-error' => 'Une erreur est survenue à l’envoi de ce courriel : $1',
 	'wikiaquiz-game-challenge' => 'Défiez vos amis d’y participer !',
 	'wikiaquiz-game-mute' => 'Muet',
-	'wikiaquiz-facebook-creative' => '$1, venez jouer sur {{SITENAME}}',
 );
 
 /** Galician (Galego)
@@ -495,7 +492,6 @@ $messages['gl'] = array(
 	'wikiaquiz-game-email-error' => 'Houbo un erro ao enviar o correo electrónico: $1',
 	'wikiaquiz-game-challenge' => 'Desafíe aos seus amigos para que participen!',
 	'wikiaquiz-game-mute' => 'Silenciar',
-	'wikiaquiz-facebook-creative' => 'Veña xogar a $1 en {{SITENAME}}',
 );
 
 /** Interlingua (Interlingua)
@@ -561,7 +557,6 @@ $messages['ia'] = array(
 	'wikiaquiz-game-email-error' => 'Un error occurreva durante le invio de iste e-mail: $1',
 	'wikiaquiz-game-challenge' => 'Defia tu amicos a jocar!',
 	'wikiaquiz-game-mute' => 'Assurdar',
-	'wikiaquiz-facebook-creative' => 'Veni jocar al $1 a {{SITENAME}}',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -613,7 +608,6 @@ $messages['id'] = array(
 	'wikiaquiz-game-thanks' => 'Terima kasih telah bermain!',
 	'wikiaquiz-game-challenge' => 'Tantang teman Anda untuk bermain!',
 	'wikiaquiz-game-mute' => 'Diam',
-	'wikiaquiz-facebook-creative' => '$1 Datanglah ke {{SITENAME}} untuk bermain',
 );
 
 /** Italian (Italiano)
@@ -699,7 +693,6 @@ $messages['ko'] = array(
 	'wikiaquiz-game-thanks' => '게임에 참여해주셔서 감사합니다!',
 	'wikiaquiz-game-challenge' => '게임을 진행한 친구에게 도전해보세요!',
 	'wikiaquiz-game-mute' => '음소거',
-	'wikiaquiz-facebook-creative' => '{{SITENAME}}에서 $1 퀴즈를 진행해보세요.',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -772,7 +765,6 @@ $messages['mai'] = array(
 	'wikiaquiz-game-thanks' => 'खेलहि लेल धन्यवाद.',
 	'wikiaquiz-game-challenge' => 'खेलहि लेल अप्पन मित्र के बजाऊ.',
 	'wikiaquiz-game-mute' => 'चुप',
-	'wikiaquiz-facebook-creative' => 'आऊ, खेलहु$1',
 );
 
 /** Macedonian (Македонски)
@@ -838,7 +830,6 @@ $messages['mk'] = array(
 	'wikiaquiz-game-email-error' => 'Се појави грешка при испраќањето на поракава: $1',
 	'wikiaquiz-game-challenge' => 'Предизвикајте ги пријателите на квизов!',
 	'wikiaquiz-game-mute' => 'Искл. звук',
-	'wikiaquiz-facebook-creative' => 'Ајде да играме $1 на {{SITENAME}}',
 );
 
 /** Malay (Bahasa Melayu)
@@ -904,7 +895,6 @@ $messages['ms'] = array(
 	'wikiaquiz-game-email-error' => 'Terdapat ralat ketika menghantar e-mel ini: $1',
 	'wikiaquiz-game-challenge' => 'Cabar kawan-kawan anda!',
 	'wikiaquiz-game-mute' => 'Bisu',
-	'wikiaquiz-facebook-creative' => 'Jom main $1 di {{SITENAME}}',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -970,7 +960,6 @@ $messages['nb'] = array(
 	'wikiaquiz-game-email-error' => 'Det oppstod en feil under sendingen av denne e-posten: $1',
 	'wikiaquiz-game-challenge' => 'Utfordre vennene dine til å spille!',
 	'wikiaquiz-game-mute' => 'Demp',
-	'wikiaquiz-facebook-creative' => 'Kom og spill $1 på {{SITENAME}}',
 );
 
 /** Dutch (Nederlands)
@@ -1037,7 +1026,6 @@ $messages['nl'] = array(
 	'wikiaquiz-game-email-error' => 'Er is een fout opgetreden tijdens het verzenden van deze e-mail: $1',
 	'wikiaquiz-game-challenge' => 'Daag uw vrienden uit om deel te nemen!',
 	'wikiaquiz-game-mute' => 'Dempen',
-	'wikiaquiz-facebook-creative' => 'Doe mee aan "$1" op {{SITENAME}}',
 );
 
 /** Polish (Polski)
@@ -1103,7 +1091,6 @@ $messages['pl'] = array(
 	'wikiaquiz-game-email-error' => 'Wystąpił błąd podczas wysyłania tej wiadomości e-mail: $1',
 	'wikiaquiz-game-challenge' => 'Wyzwij znajomych w grze!',
 	'wikiaquiz-game-mute' => 'Wyciszenie',
-	'wikiaquiz-facebook-creative' => 'Pochodzić do gry  $1  na {{SITENAME}}',
 );
 
 /** Pashto (پښتو)
@@ -1172,7 +1159,6 @@ $messages['pt'] = array(
 	'wikiaquiz-game-thanks' => 'Obrigado por ter jogado!',
 	'wikiaquiz-game-challenge' => 'Desafie os seus amigos a jogar!',
 	'wikiaquiz-game-mute' => 'Mudo',
-	'wikiaquiz-facebook-creative' => 'Venha jogar $1 na {{SITENAME}}',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1261,7 +1247,6 @@ $messages['ru'] = array(
 	'wikiaquiz-game-email-error' => 'Произошла ошибка при отправке этого письма: $1',
 	'wikiaquiz-game-challenge' => 'Бросьте вызов своим друзьям в викторине!',
 	'wikiaquiz-game-mute' => 'Без звука',
-	'wikiaquiz-facebook-creative' => '$1, приходи играть на {{SITENAME}}',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
@@ -1327,7 +1312,6 @@ $messages['sr-ec'] = array(
 	'wikiaquiz-game-email-error' => 'Дошло је до грешке при слању поруке: $1',
 	'wikiaquiz-game-challenge' => 'Позовите пријатеље на квиз!',
 	'wikiaquiz-game-mute' => 'Искључи звук',
-	'wikiaquiz-facebook-creative' => 'Хајде да играмо $1 на {{SITENAME}}',
 );
 
 /** Swedish (Svenska)
@@ -1393,7 +1377,6 @@ $messages['sv'] = array(
 	'wikiaquiz-game-email-error' => 'Ett fel uppstod när detta e-postmeddelande skulle skickas: $1',
 	'wikiaquiz-game-challenge' => 'Utmana dina vänner att spela!',
 	'wikiaquiz-game-mute' => 'Tyst',
-	'wikiaquiz-facebook-creative' => 'Kom och spela $1 på {{SITENAME}}',
 );
 
 /** Telugu (తెలుగు)
@@ -1489,6 +1472,5 @@ $messages['zh-hans'] = array(
 	'wikiaquiz-game-email-error' => '发送此邮件时出错：$1',
 	'wikiaquiz-game-challenge' => '挑战您的朋友来参与！',
 	'wikiaquiz-game-mute' => '静音',
-	'wikiaquiz-facebook-creative' => '来 {{SITENAME}} 参与 $1',
 );
 

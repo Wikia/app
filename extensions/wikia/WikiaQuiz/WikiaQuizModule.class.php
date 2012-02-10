@@ -52,11 +52,17 @@ class WikiaQuizModule extends Module {
 		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
 		$wgOut->addMeta('property:og:site_name', $wgSiteName);
 		
-		// mech: simply stripping the tags wont work, as some tags have to be replaced with a space 
-		$descrition = str_replace('<', ' <', $this->data['titlescreentext']);  // introduce an extra space at in front of tags
-		$descrition = strip_tags($descrition);
-		$descrition = preg_replace('/\s\s+/u', ' ', $descrition);	// eliminate extraneous whitespaces 
-		$wgOut->addMeta('property:og:description', wfMsg('wikiaquiz-facebook-creative', $descrition));
+		// mech: simply stripping the tags wont work, as some tags have to be replaced with a space
+		$descrition = $this->data['fbrecommendationtext'];
+		if (!$descrition) {		
+			/* mech: fbrecommendationtext field was intoduced while fixing bug 14843.
+			 * For older quizes the FB recommendation description defaults to titlescreentext
+			 */
+			$descrition = str_replace('<', ' <', $this->data['titlescreentext']);  // introduce an extra space at in front of tags
+			$descrition = strip_tags($descrition);
+			$descrition = preg_replace('/\s\s+/u', ' ', $descrition);	// eliminate extraneous whitespaces
+		}
+		$wgOut->addMeta('property:og:description', $descrition);
 		$wgOut->addMeta('property:og:image', $this->wordmarkUrl);
 
 		$this->username = $wgUser->getName();

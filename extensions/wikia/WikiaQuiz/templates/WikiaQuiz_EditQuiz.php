@@ -17,6 +17,11 @@
 		<input type="text" name="titlescreentext" value="<?= htmlspecialchars($data['titlescreentext']) ?>">
 	</div>
 
+	<label><?= wfMsg('wikiaquiz-fbrecommendationtext-label') ?></label>
+	<div class="fbrecommendationtext">
+		<input type="text" name="fbrecommendationtext" value="<?= htmlspecialchars($data['fbrecommendationtext']) ?>">
+	</div>
+
 	<label><?= wfMsg('wikiaquiz-titlescreenimages-label') ?></label>
 	<div class="titlescreenimages">
 		<div><input type="text" name="titlescreenimage[]" value="<?= isset($data['imageShorts'][0]) ? htmlspecialchars($data['imageShorts'][0]) : '' ?>"></div>
