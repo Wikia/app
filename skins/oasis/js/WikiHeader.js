@@ -565,5 +565,6 @@ $(function() {
 		$('#EditPageRail .module_page_controls .module_content').append(
 			'<div class="preview-validator-desc">' + $.msg('oasis-navigation-v2-validation-caption') + '</div>'
 		);
+		$('#EditPageMain').addClass('editpage-wikianavmode');	// to set the toolbar height in wide mode (so the preview-validator-desc div fits)
 	}
 });
