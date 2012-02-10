@@ -13,9 +13,10 @@ class WikiaQuiz {
 	private $mQuizId;
 
 	const CACHE_TTL = 86400;
-	const CACHE_VER = 7;
+	const CACHE_VER = 8;
 	const QUIZ_CATEGORY_PREFIX = 'Quiz_';
 	const TITLESCREENTEXT_MARKER = 'TITLESCREENTEXT:';
+	const FBRECOMMENDATIONTEXT_MARKER = 'FBRECOMMENDATIONTEXT:';
 	const IMAGE_MARKER = 'IMAGE:';
 	const REQUIRE_EMAIL_MARKER = 'REQUIREEMAIL:';
 	const MOREINFOHEADING_MARKER = 'MOREINFOHEADING:';
@@ -83,6 +84,7 @@ class WikiaQuiz {
 			$firstRev = $title->getFirstRevision();
 			$titleText = $title->getText();
 			$titleScreenText = '';
+			$fbRecommendationText = '';
 			$images = array();
 			$imageShorts = array();
 			$moreInfoHeading = '';
@@ -96,6 +98,9 @@ class WikiaQuiz {
 			foreach($lines as $line) {
 				if (startsWith($line, self::TITLESCREENTEXT_MARKER)) {
 					$titleScreenText = trim( substr($line, strlen(self::TITLESCREENTEXT_MARKER)) );
+				}
+				elseif (startsWith($line, self::FBRECOMMENDATIONTEXT_MARKER)) {
+					$fbRecommendationText = trim( substr($line, strlen(self::FBRECOMMENDATIONTEXT_MARKER)) );
 				}
 				elseif (startsWith($line, self::IMAGE_MARKER)) {
 					$imageShort = trim( substr($line, strlen(self::IMAGE_MARKER)) );
@@ -153,6 +158,7 @@ class WikiaQuiz {
 				'requireEmail' => !empty($requireEmail),
 				'elements' => $quizElements,
 				'titlescreentext' => $titleScreenText,
+				'fbrecommendationtext' => $fbRecommendationText,
 				'images' => $images,
 				'imageShorts' => $imageShorts,
 				'moreinfoheading' => $moreInfoHeading,

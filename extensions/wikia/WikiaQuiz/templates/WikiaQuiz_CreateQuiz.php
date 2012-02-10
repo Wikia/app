@@ -14,6 +14,11 @@
 		<input type="text" name="titlescreentext">
 	</div>
 
+	<label><?= wfMsg('wikiaquiz-fbrecommendationtext-label') ?></label>
+	<div class="fbrecommendationtext">
+		<input type="text" name="fbrecommendationtext">
+	</div>
+
 	<label><?= wfMsg('wikiaquiz-titlescreenimages-label') ?></label>
 	<div class="titlescreenimages">
 		<div><input type="text" name="titlescreenimage[]"></div>

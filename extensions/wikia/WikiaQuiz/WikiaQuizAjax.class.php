@@ -276,6 +276,12 @@ class WikiaQuizAjax {
 			$quizContent .= WikiaQuiz::TITLESCREENTEXT_MARKER . $titleScreenText . "\n";
 		}
 
+		// title screen text
+		$fbRecommendationText = trim($request->getVal ('fbrecommendationtext'));
+		if ($fbRecommendationText) {
+			$quizContent .= WikiaQuiz::FBRECOMMENDATIONTEXT_MARKER . $fbRecommendationText . "\n";
+		}
+		
 		// title screen images
 		$titleScreenImages = $request->getArray ('titlescreenimage');
 		foreach($titleScreenImages as $image) {

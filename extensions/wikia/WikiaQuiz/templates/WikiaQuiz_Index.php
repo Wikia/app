@@ -3,6 +3,9 @@
 <? if ($data['titlescreentext']) { ?>
 <p>Title screen text: <?= $data['titlescreentext'] ?></p>
 <? } ?>
+<? if ($data['fbrecommendationtext']) { ?>
+<p><?= wfMsg('wikiaquiz-fbrecommendationtext-label') ?>: <?= $data['fbrecommendationtext'] ?></p>
+<? } ?>
 <? if (sizeof($data['images'])) { ?>
 <ul>
 <?	foreach ($data['images'] as $image) { ?>
