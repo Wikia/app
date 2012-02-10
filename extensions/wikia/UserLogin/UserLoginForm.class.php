@@ -72,7 +72,7 @@ class UserLoginForm extends LoginForm {
 		UserLoginHelper::getInstance()->addNewUserLogEntry( $u, true );
 
 		// mail temporary password
-		$emailTextTemplate = wfRenderModule( "UserLogin", "GeneralMail", array('language' => $u->getOption('language'), 'type' => 'account-creation-email') );
+		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array('language' => $u->getOption('language'), 'type' => 'account-creation-email') );
 		$result = $this->mailPasswordInternal( $u, false, 'usersignup-account-creation-email-subject', 'usersignup-account-creation-email-body', $emailTextTemplate );
 		if( WikiError::isError( $result ) ) {
 			$this->mainLoginForm( wfMsg( 'userlogin-error-mail-error', $result->getMessage() ) );

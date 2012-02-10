@@ -247,7 +247,7 @@ class UserLoginHelper extends WikiaModel {
 		if ( empty($this->wg->EnableRichEmails) ) {
 			$bodyHTML = null;
 		} else {
-			$emailTextTemplate = $this->wf->RenderModule( "UserLogin", $template, array('language' => $user->getOption('language'), 'type' => $templateType) );
+			$emailTextTemplate = $this->app->renderView( "UserLogin", $template, array('language' => $user->getOption('language'), 'type' => $templateType) );
 			$bodyHTML = strtr( $emailTextTemplate, $emailParams );
 		}
 
@@ -306,7 +306,7 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
-		$emailTextTemplate = $this->wf->RenderModule( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-email') );
+		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-email') );
 		$response = $user->sendConfirmationMail("ConfirmationMail", 'usersignup-confirmation-email', false, $emailTextTemplate);
 		$tempUser->saveSettingsTempUserToUser( $user );
 		if( WikiError::isError( $response ) ) {
@@ -322,7 +322,7 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	public function getReconfirmationEmailTempalte( $user ) {
-		$emailTextTemplate = $this->wf->RenderModule( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'reconfirmation-email') );
+		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'reconfirmation-email') );
 		return $emailTextTemplate;
 	}
 
@@ -356,7 +356,7 @@ class UserLoginHelper extends WikiaModel {
 		if( ($user->getOption("cr_mailed", 0) == 1) ) {
 			return false;
 		}
-		$emailTextTemplate = $this->wf->RenderModule( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-reminder-email') );
+		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-reminder-email') );
 		$user->setOption( "cr_mailed","1" );
 		return $user->sendConfirmationMail("ConfirmationReminderMail", 'usersignup-confirmation-reminder-email', false, $emailTextTemplate);
 	}

@@ -350,7 +350,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->result = 'error';
 				$this->msg = $this->wf->Msg('userlogin-error-throttled-mailpassword', round( $this->wg->PasswordReminderResendTime, 3) );
 			} else {
-				$emailTextTemplate = $this->wf->RenderModule( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'password-email') );
+				$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'password-email') );
 				$result = $loginForm->mailPasswordInternal( $user, true, 'userlogin-password-email-subject', 'userlogin-password-email-body', $emailTextTemplate );
 				if( WikiError::isError( $result ) ) {
 					$this->result = 'error';
