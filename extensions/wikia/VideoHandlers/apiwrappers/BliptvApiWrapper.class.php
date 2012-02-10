@@ -20,10 +20,6 @@ class BliptvApiWrapper extends ApiWrapper {
         return parent::processResponse($response, $type);
     }
 
-    public function getTitle() {
-		return $this->getVideoTitle();
-	}
-
 	protected function postProcess( $return ){
 		return $return[0]['Post'];
 	}    

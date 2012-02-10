@@ -134,6 +134,7 @@ class VideoEmbedTool {
 	}
 
 	function chooseImage() {
+		// 2012/02/08 wlee: does not appear to be in use
 		global $wgRequest, $wgUser, $IP;
 
 		$itemId = $wgRequest->getVal('itemId');
@@ -145,7 +146,7 @@ class VideoEmbedTool {
 		switch( $sourceId ) {
 			case 0: //metacafe
 				$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
-				$title = Title::makeTitle( NS_VIDEO, $tempname );
+				$title = Title::makeTitle( NS_LEGACY_VIDEO, $tempname );
 				$video = new VideoPage( $title );
 
 				$video->loadFromPars( VideoPage::V_METACAFE, $itemId, array( $itemLink ) );
@@ -168,7 +169,7 @@ class VideoEmbedTool {
 		global $wgRequest;
 		$itemTitle = $wgRequest->getVal('itemTitle');
 
-		$title = Title::newFromText( $itemTitle, NS_VIDEO );
+		$title = Title::newFromText( $itemTitle, NS_LEGACY_VIDEO );
 		$video = new VideoPage( $title );
 
 		$video->load();
@@ -195,7 +196,7 @@ class VideoEmbedTool {
 
 		$url = $wgRequest->getVal( 'url' );
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
-		$title = Title::makeTitle( NS_VIDEO, $tempname );
+		$title = Title::makeTitle( NS_LEGACY_VIDEO, $tempname );
 		$video = new VideoPage( $title );
 
 		// todo some safeguard here to take care of bad urls
@@ -226,11 +227,12 @@ class VideoEmbedTool {
 	}
 
 	function getVideoFromName() {
+		// 2011/02/08 wlee: does not appear to be in use
                 global $wgRequest, $wgUser, $wgContLang, $IP;
                 require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
 
                 $name = $wgRequest->getVal('name');
-		$title = Title::makeTitle( NS_VIDEO, $name );
+		$title = Title::makeTitle( NS_LEGACY_VIDEO, $name );
 		$video = new VideoPage( $title );
 		$video->load();
 		return $video->getEmbedCode();
@@ -246,6 +248,7 @@ class VideoEmbedTool {
 	function insertFinalVideo() {
 		global $wgRequest, $wgUser, $wgContLang, $IP, $wgWikiaVideoInterwikiPrefix;
 		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
+		require_once( "$IP/includes/wikia/services/WikiaVideoService.class.php" );
 
 		$type = $wgRequest->getVal('type');
 		$id = $wgRequest->getVal('id');
@@ -262,7 +265,7 @@ class VideoEmbedTool {
 			$name = $oname;
 		}
 
-		$title = Title::makeTitle( NS_VIDEO, $name );
+		$title = Title::makeTitle( NS_LEGACY_VIDEO, $name );
 
 		$extra = 0;
 		$metadata = array();
@@ -273,6 +276,7 @@ class VideoEmbedTool {
 
 		$embed_code = '';
 
+		// create video
 		if ($provider != VideoPage::V_WIKIAVIDEO && $provider != VideoPage::V_LOCALVIDEO) {
 			if($name !== NULL) {
 				if($name == '') {
@@ -281,10 +285,16 @@ class VideoEmbedTool {
 					return 'You need to specify file name first!'; // FIXME: missing i18n
 				} else {
 
-					$title = Title::makeTitleSafe(NS_VIDEO, $name);
+					$title = Title::makeTitleSafe(NS_LEGACY_VIDEO, $name);
+					$nameForFile = VideoHandlersUploader::sanitizeTitle($name);
+					
 					if(is_null($title)) {
 						header('X-screen-type: error');
 						return wfMsg ( 'vet-name-incorrect' );
+					}
+					elseif ($title->getText() != $nameForFile) {
+						header('X-screen-type: error');
+						return wfMsg ( 'vet-name-incorrect' );						
 					}
 					if($title->exists()) {
 						if($type == 'overwrite') {
@@ -298,18 +308,24 @@ class VideoEmbedTool {
 								return wfMsg( 'vet-protected' );
 							}
 
-							$video = new VideoPage( $title );
-							if ($video instanceof VideoPage) {
-								$video->loadFromPars( $provider, $id, $metadata );
-								$video->setName( $name );
-								$video->save();
-								if ('' != $gallery) { // for gallery, return also embed code to insert live on page
-									$embed_code = $video->getEmbedCode( 300 );
-								}						
+							if (!WikiaVideoService::isVideoStoredAsFile()) {
+								$video = new VideoPage( $title );
+								if ($video instanceof VideoPage) {
+									$video->loadFromPars( $provider, $id, $metadata );
+									$video->setName( $name );
+									$video->save();
+									if ('' != $gallery) { // for gallery, return also embed code to insert live on page
+										$embed_code = $video->getEmbedCode( 300 );
+									}						
+								}
+							}
+							
+							if (WikiaVideoService::useVideoHandlersExtForIngestion()) {
+								$this->uploadVideoAsFile($provider, $id, $nameForFile);
 							}
 						} else if($type == 'existing') {
 							header('X-screen-type: existing');
-							$title = Title::makeTitle( NS_VIDEO, $name );
+							$title = Title::makeTitle( NS_LEGACY_VIDEO, $name );
 							$video = new VideoPage( $title );
 
 							$props = array();
@@ -351,15 +367,22 @@ class VideoEmbedTool {
 							return wfMsg( 'vet-protected' );
 						}
 
-						$video = new VideoPage( $title );
-						if ($video instanceof VideoPage) {
-							$video->loadFromPars( $provider, $id, $metadata );
-							$video->setName( $name );
-							$video->save();
-							if ('' != $gallery) { // for gallery, return also embed code to insert live on page
-								$embed_code = $video->getEmbedCode( 300 );							
-							}						
+						if (!WikiaVideoService::isVideoStoredAsFile()) {
+							$video = new VideoPage( $title );
+							if ($video instanceof VideoPage) {
+								$video->loadFromPars( $provider, $id, $metadata );
+								$video->setName( $name );
+								$video->save();
+								if ('' != $gallery) { // for gallery, return also embed code to insert live on page
+									$embed_code = $video->getEmbedCode( 300 );							
+								}						
+							}
 						}
+						
+						if (WikiaVideoService::useVideoHandlersExtForIngestion()) {
+							$this->uploadVideoAsFile($provider, $id, $nameForFile);
+						}
+						
 					}
 				}
 			} else {
@@ -367,7 +390,7 @@ class VideoEmbedTool {
 			}			
 		}
 
-		$ns_vid = $wgContLang->getFormattedNsText( NS_VIDEO );
+		$ns_vid = $wgContLang->getFormattedNsText( NS_LEGACY_VIDEO );
 		$caption = $wgRequest->getVal('caption');
 
 		if ('' != $gallery) {
@@ -525,6 +548,29 @@ class VideoEmbedTool {
 			'code' => $embed_code,
 			));
 		return $tmpl->execute('summary');
+	}
+	
+	/**
+	 * Upload video using LocalFile framework
+	 * @param mixed $provider string or int from $wgVideoMigrationProviderMap
+	 * @param string $videoId
+	 * @param string $videoName
+	 * @return mixed FileRepoStatus or FALSE on error 
+	 */
+	private function uploadVideoAsFile($provider, $videoId, $videoName) {
+		global $IP;
+		require_once( "$IP/extensions/wikia/VideoHandlers/apiwrappers/ApiWrapperFactory.class.php" );
+		if (ctype_digit($provider)) {
+			$provider = ApiWrapperFactory::getInstance()->getProviderNameFromId($provider);
+			if (!$provider) {
+				// error
+				return false;
+			}
+		}
+		
+		$title = null;
+		$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title, $videoName);
+		return $result;
 	}
 	
 	static function neatTrim($str, $n, $delim='...') { 

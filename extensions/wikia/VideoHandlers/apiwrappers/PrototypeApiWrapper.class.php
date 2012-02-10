@@ -3,7 +3,7 @@
 class PrototypeApiWrapper extends ApiWrapper{
 
 
-	function getTitle( ){
+	protected function getVideoTitle( ){
 		return 'prototypeTitle';
 	}
 

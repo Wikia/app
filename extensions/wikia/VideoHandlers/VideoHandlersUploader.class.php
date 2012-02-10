@@ -5,8 +5,19 @@ class VideoHandlersUploader {
 	protected static $ILLEGAL_TITLE_CHARS = array( '/', ':', '#' );
 	protected static $IMAGE_NAME_MAX_LENGTH = 255;
 	
-	public static function uploadVideo($provider, $videoId, &$title, $description=null, $undercover=false) {
-		$apiWrapper = F::build( ucfirst( $provider ) . 'ApiWrapper', array( $videoId ) );
+	/**
+	 * Create a video using LocalFile framework
+	 * @param string $provider provider whose API will be used to fetch video data
+	 * @param string $videoId id of video, assigned by provider
+	 * @param Title $title Title object stemming from name of video
+	 * @param string $videoName name of video and associated article
+	 * @param string $description description of video
+	 * @param boolean $undercover upload a video without creating the associated article
+	 * @return FileRepoStatus On success, the value member contains the
+	 *     archive name, or an empty string if it was a new file. 
+	 */
+	public static function uploadVideo($provider, $videoId, &$title, $videoName=null, $description=null, $undercover=false) {
+		$apiWrapper = F::build( ucfirst( $provider ) . 'ApiWrapper', array( $videoId, array('videoName'=>$videoName) ) );
 
 		/* prepare temporary file */
 		$url = $apiWrapper->getThumbnailUrl();

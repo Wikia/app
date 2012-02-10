@@ -46,7 +46,7 @@ $messages['en'] = array(
 	'vet-imagelink' => '<b>New!</b> Insert videos',
 	'vet-imagebutton' => 'Insert videos' ,
 	'vet-license-cc' => 'Licenced under Creative Commons Attribution-Share Alike 3.0',
-	'vet-name-incorrect' => 'This video name contains invalid characters',
+	'vet-name-incorrect' => 'This video name contains invalid characters, like : / #',
 	'vet-description' => 'Enter the full URL, from any of the supported sites. See',
 	'vet-uploadtext' => '\'\'\'This form allows you to quickly upload and display files in articles.\'\'\'
 

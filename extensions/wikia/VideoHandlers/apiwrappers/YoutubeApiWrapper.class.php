@@ -5,10 +5,6 @@ class YoutubeApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1?v=2&alt=json';
 	protected static $CACHE_KEY = 'youtubeapi';
 	
-	public function getTitle() {
-		return $this->getVideoTitle();
-	}
-	
 	public function getDescription() {
 		$text = '';
 		if ( $this->getVideoCategory() ) $text .= 'Category: ' . $this->getVideoCategory();

@@ -7,6 +7,7 @@ abstract class ApiWrapper {
 	const RESPONSE_FORMAT_PHP = 2;
 
 	protected $videoId;
+	protected $videoName;
 	protected $interfaceObj = null;
 
 	protected static $API_URL;
@@ -15,16 +16,27 @@ abstract class ApiWrapper {
 	protected static $CACHE_EXPIRY = 86400;
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_JSON;
 	
-	public function __construct( $videoId ) {
+	public function __construct( $videoId, $params=array() ) {
 		$this->videoId = $this->sanitizeVideoId( $videoId );
+		if (!empty($params['videoName'])) {
+			$this->videoName = $params['videoName'];
+		}
 		$this->initializeInterfaceObject();
 	}
 
-	abstract function getTitle();
+	public function getTitle() {
+		if (!empty($this->videoName)) {
+			return $this->videoName;
+		}
+		
+		return $this->getVideoTitle();
+	}
 	
-	abstract function getDescription();
+	abstract protected function getVideoTitle();
 	
-	abstract function getThumbnailUrl();
+	abstract public function getDescription();
+	
+	abstract public function getThumbnailUrl();
 	
 	public function getVideoId() {
 		return $this->videoId;
@@ -212,7 +224,7 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 	protected $videoName;
 	protected $provider;
 	
-	public function __construct( $videoName ) {
+	public function __construct( $videoName, $params=array() ) {
 		$this->videoName = $videoName;
 		$this->initializeInterfaceObject();
 	}

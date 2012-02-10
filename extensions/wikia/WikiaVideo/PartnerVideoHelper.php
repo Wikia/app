@@ -422,7 +422,7 @@ class PartnerVideoHelper {
 		return $terms;
 	}
 	
-	public static function generateNameForPartnerVideo($provider, array $data) {
+	public static function generateNameForPartnerVideo($provider, array $data, $useVideoHandlersSanitizer=true) {
 		$name = '';
 
 		switch ($provider) {
@@ -443,13 +443,19 @@ class PartnerVideoHelper {
 			default:
 		}
 		
-		// sanitize title
-		$name = preg_replace(Title::getTitleInvalidRegex(), ' ', $name);
-		// get rid of slashes. these are technically allowed in article
-		// titles, but they refer to subpages, which videos don't have
-		$name = str_replace('  ', ' ', $name);
-		
-		$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255
+
+		if ($useVideoHandlersSanitizer) {
+			$name = VideoHandlersUploader::sanitizeTitle($name);
+		}
+		else {
+			// sanitize title
+			$name = preg_replace(Title::getTitleInvalidRegex(), ' ', $name);
+			// get rid of slashes. these are technically allowed in article
+			// titles, but they refer to subpages, which videos don't have
+			$name = str_replace('  ', ' ', $name);
+
+			$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255			
+		}
 
 		return $name;
 	}
@@ -510,7 +516,7 @@ class PartnerVideoHelper {
 	}
 	
 	protected function makeTitleSafe($name) {
-		return Title::makeTitleSafe(NS_VIDEO, str_replace('#', '', $name));    // makeTitleSafe strips '#' and anything after. just leave # out
+		return Title::makeTitleSafe(NS_LEGACY_VIDEO, str_replace('#', '', $name));    // makeTitleSafe strips '#' and anything after. just leave # out
 	}		
 	
 	protected static function sanitizeDataForPartnerVideo($provider, &$data) {
@@ -569,7 +575,12 @@ class PartnerVideoHelper {
 			$msg = "article title was null: clip id $id. name: $name";
 			return 0;
 		}
-		if(!$debug && !$parseOnly && $title->exists()) {
+		
+		// check for duplicate names. need to check against videos with
+		// current style of sanitizing names and old style
+		$oldStyleName = self::generateNameForPartnerVideo($provider, $data, false);
+		$oldStyleTitle = $this->makeTitleSafe($oldStyleName);
+		if( !$debug && !$parseOnly && ($title->exists() || $oldStyleTitle->exists()) ) {
 			// don't output duplicate error message
 			return 0;
 		}	

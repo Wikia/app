@@ -61,7 +61,7 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoDa
 		$this->parsedData = $cacheData['parsedData'];
 	}
 	
-	public function getTitle() {
+	protected function getVideoTitle() {
 		return $this->videoName;
 	}
 	

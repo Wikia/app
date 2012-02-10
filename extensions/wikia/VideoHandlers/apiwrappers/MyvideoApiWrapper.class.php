@@ -19,10 +19,6 @@ class MyvideoApiWrapper extends ApiWrapper {
 		$this->interfaceObj = $interfaceObj['child']['']['response'][0]['child']['']['myvideo'][0]['child']['']['movie'][0]['child'][''];
 	}
 
-	public function getTitle() {
-		return $this->getVideoTitle();
-	}
-
 	protected function getVideoTitle() {
 		if (!empty($this->interfaceObj)) {
 			return $this->interfaceObj['movie_title'][0]['data'];
