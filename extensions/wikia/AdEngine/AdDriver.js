@@ -18,6 +18,7 @@ var AdDriver = {
 	paramLiftiumTag: 'liftium_tag',
 	standardLeaderboardMinHeight: 90,
 	standardLeaderboardMaxHeight: 95,
+	standardTopButtonMinHeight: 100,
 
 	getMinNumDARTCall: function(country) {
 		country = country.toUpperCase();
@@ -418,6 +419,12 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 			$('#'+slotname).removeClass(AdDriver.classNameDefaultHeight);
 			return true;
 			break;
+		case 'HOME_TOP_RIGHT_BUTTON':
+			if ($('#'+slotname).height() >= AdDriver.standardTopButtonMinHeight) {
+				$('#'+slotname).addClass('home-top-right-button-visible');			
+			}
+			break;
+			
 	}
 
 	return false;

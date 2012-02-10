@@ -93,6 +93,10 @@
 
 /** Button ads **/
 #HOME_TOP_RIGHT_BUTTON {
+	display: none;
+}
+.home-top-right-button-visible {
+	display: block;
 	margin-bottom: 10px;
 }
 
