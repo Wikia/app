@@ -22,7 +22,7 @@ class MobileService extends Service {
 	}
 	
 	function __construct(){
-		$this->mUserAgent = $_SERVER[ 'HTTP_USER_AGENT' ];
+		$this->mUserAgent = ( !empty( $_SERVER[ 'HTTP_USER_AGENT' ] ) ) ? $_SERVER[ 'HTTP_USER_AGENT' ] : 'unknown';
 		$this->mAgents = array(
 			'winmo' => 'Windows CE',
 			'kindle' => 'Kindle',
