@@ -79,7 +79,7 @@ var SponsorshipDashboardEditor = {
 
 	generateSave: function ( asNew ){
 
-		SponsorshipDashboardEditor.sourceData = [],
+		SponsorshipDashboardEditor.sourceData = [];
 		$( 'form.sd-form' ).each( function( index ){
 			SponsorshipDashboardEditor.sourceData.push( $( this ).serialize() );
 		});
