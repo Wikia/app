@@ -394,3 +394,15 @@
 #EditPageRail .preview-validator-desc {
 	margin-top: 12px;
 }
+
+.editpage-sourcewidemode-on {
+	#EditPageRail .preview-validator-desc {
+		left: 5px;
+		position: absolute;
+		top: 20px;
+	}
+	
+	.editpage-wikianavmode #EditPageToolbar:after {
+		height: 25px;
+	}
+} 
