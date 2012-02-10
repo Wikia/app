@@ -67,9 +67,9 @@ class VideoHandlersUploader {
 		// isn't clearing all illegal characters for files. 
 		// So we decided to remove all characters that are not alphanumeric.
 		
-		$sanitized = preg_replace('/[^[:alnum:]]{1,}/', $replaceChar, $titleText);
+		$sanitized = preg_replace( '/[^[:alnum:]]{1,}/', $replaceChar, $titleText );
 
-		return trim($sanitized);
+		return substr( trim( $sanitized ), 0, 255 );
 		
 		/*
 
