@@ -43,7 +43,7 @@
 	display: inline;
 }
 .share-links img {
-	background-image: url(<?= $wgExtensionsPath ?>/wikia/ShareFeature/images/share_sprite.png);
+	background-image: url(<?= $wgExtensionsPath ?>/wikia/ImageLightbox/images/share_sprite.png);
 	margin-left: 2px;
 }
 .share-stumbleupon {
