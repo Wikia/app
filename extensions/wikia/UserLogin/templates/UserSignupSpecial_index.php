@@ -3,7 +3,7 @@
 	<h2 class="pageheading">
 		<?= $pageHeading ?>
 	</h2>
-	<h3 class="subheading"><?= wfMsg('usersignup-subheading') ?></h3>
+	<h3 class="subheading"></h3>
 	<div class="wiki-info">
 		<?= wfRenderModule('WikiHeader', 'Wordmark') ?>
 		<p><?= wfMsgExt('usersignup-marketing-wikia', 'parseinline') ?></p>
@@ -29,6 +29,10 @@
 				</ul>
 				<h3><?= wfMsg('usersignup-marketing-global-heading') ?></h3>
 				<p><?= wfMsg('usersignup-marketing-global') ?></p>
+			</div>
+			<div class="benefit">
+				<h3><?= wfMsg('usersignup-marketing-creativity-heading') ?></h3>
+				<p><?= wfMsg('usersignup-marketing-creativity') ?></p>
 			</div>
 		</div>
 	<?php } //marketing ?>
