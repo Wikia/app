@@ -1,3 +1,4 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/forms";
 @import "../../../../skins/oasis/css/mixins/wordmark";
 @import "../../../../skins/oasis/css/core/color";
@@ -31,6 +32,7 @@
 		float: right;
 		width: 250px;
 		.benefit {
+			@include clearfix;
 			margin: 30px 0;
 			p {
 				padding-right: 15px;
