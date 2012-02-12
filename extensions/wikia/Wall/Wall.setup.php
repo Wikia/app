@@ -148,10 +148,14 @@ F::build('JSMessages')->registerPackage('Wall', array(
  * extension related configuration
  */
 
-$wgDefaultUserOptions['enotifwallthread'] = true;
+define( 'WALL_EMAIL_NOEMAIL', 0);
+define( 'WALL_EMAIL_EVERY', 1);
+define( 'WALL_EMAIL_SINCEVISITED', 2);
+define( 'WALL_EMAIL_REMINDER', 3);
+
+$wgDefaultUserOptions['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
 $wgDefaultUserOptions['wallshowsource'] = false;
 $wgDefaultUserOptions['walldelete'] = false;
-$wgDefaultUserOptions['enotifmywall'] = true;
  
 $userProfileNamespaces = array();
 $userProfileNamespaces[] = NS_USER;
@@ -165,3 +169,4 @@ define( 'WH_NEW', 1);
 define( 'WH_DELETE', 2);
 define( 'WH_REMOVE', 4);
 define( 'WH_RESTORE', 5);
+

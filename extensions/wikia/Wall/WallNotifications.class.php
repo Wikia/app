@@ -15,7 +15,7 @@
 
 class WallNotifications {
 	private $removedEntities;
-	
+	private $notUniqueUsers = array(); //used for sicen read email.
 	public function __construct($isMain = true) {
 		$this->app = F::App();
 		$this->removedEntities = array();
@@ -280,8 +280,8 @@ class WallNotifications {
 		} 
 
 		$title = Title::newFromText($notification->data->wall_username. '/' . $notification->data->title_id, NS_USER_WALL ); 
-		$this->sendEmails(array_keys($users), $notification );
 		$this->addNotificationLinks($users, $notification);
+		$this->sendEmails(array_keys($users), $notification );
 	}
 	
 	protected function createKeyForMailNotification($watcher, $notification) {
@@ -318,12 +318,21 @@ class WallNotifications {
 		$textNoHtml = trim(preg_replace('#</?p\s*/?>#i', "\n", $textNoHtml));
 		$textNoHtml = substr($textNoHtml,0,3000).( strlen($textNoHtml) > 3000 ? '...':'');
 		
+		$entityKey = $notification->getId();
+		
+		if(empty($this->notUniqueUsers[$entityKey])){
+			$this->notUniqueUsers[$entityKey] = array();
+		}
+		
 		foreach($watchers as $val){
 			$watcher = User::newFromId($val);
-			
-			if( $watcher->getId() != 0 && ($watcher->getOption('enotifwallthread') && $notification->data->wall_userid != $watcher->getId())
-				|| ($watcher->getOption('enotifmywall') && $notification->data->wall_userid == $watcher->getId())
-			) {
+			$mode = $watcher->getOption('enotifwallthread');
+
+			if($mode != false && $watcher->getId() != 0 && (
+				($mode == WALL_EMAIL_EVERY) ||
+				( $mode == WALL_EMAIL_SINCEVISITED && empty($this->notUniqueUsers[$entityKey][$watcher->getId()]) )  
+			)) {
+				
 				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
 				
 				$watcherName = $watcher->getRealName();
@@ -601,23 +610,20 @@ class WallNotifications {
 		}
 		$this->storeInDB($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply); 
 		//id use to prevent having of extra entry after memc fail.   
+
+		$memcSync = $this->getCache($userId, $wikiId);
+		do {
+			$count = 0; //use to set priority of process 
+			if($memcSync->lock()) {
+				$data = $this->getData($memcSync, $userId, $wikiId);
+				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply );
+			} else {
+				$this->sleep($count);
+			}
+			$count++;
+		} while(!isset($data) || !$this->setData($memcSync, $data));
 		
-		// if the object is in memory, update it, if not, skip it (it will be rebuild from db at some point anyway)
-		if($this->isCachedData($userId, $wikiId)) {
-			$memcSync = $this->getCache($userId, $wikiId);
-			do {
-				$count = 0; //use to set priority of process 
-				if($memcSync->lock()) {
-					$data = $this->getData($memcSync, $userId, $wikiId);
-					$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply );
-				} else {
-					$this->sleep($count);
-				}
-				$count++;
-			} while(!isset($data) || !$this->setData($memcSync, $data));
-			
-			$memcSync->unlock();
-		}
+		$memcSync->unlock();
 		
 		$this->cleanEntitiesFromDB();
 	}
@@ -642,11 +648,19 @@ class WallNotifications {
 		$addedAtTmp = end( $data['notification'] );
 		$addedAt = key( $data['notification'] );
 		reset( $data['notification'] );
+
+		if(isset($data['relation'][ $uniqueId ]) && $data['relation'][ $uniqueId ]['read'] != true) {
+			if(empty($this->notUniqueUsers[$entityKey])) {
+				$this->notUniqueUsers[$entityKey] = array();
+			}
+			$this->notUniqueUsers[$entityKey][$userId] = 1; 
+		}
+		
 		if(isset($data['relation'][ $uniqueId ]['last']) && $data['relation'][ $uniqueId ]['last'] > -1) {
 			// $data['notification'][ $data['relation'][$uniqueId ]['last'] ] = null;
-			
 			// remove previous element from the list (to keep proper ordering)
 			unset( $data['notification'][ $data['relation'][$uniqueId ]['last'] ] );
+			
 		}
 
 		if(empty($data['relation'][ $uniqueId ]['list']) || $data['relation'][ $uniqueId ]['read'] ) {
