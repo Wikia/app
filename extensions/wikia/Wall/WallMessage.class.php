@@ -36,7 +36,7 @@ class WallMessage {
 		return null;
 	}
 	
-	static public function buildNewMessageAndPost($body, $userWall, $user, $metaTitle = '', $parent = false, $notify = true, $editflags ) {
+	static public function buildNewMessageAndPost($body, $userWall, $user, $metaTitle = '', $parent = false, $notify = true ) {
 		if($userWall instanceof Title ) {
 			$userPageTitle = $userWall;
 		} else {

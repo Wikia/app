@@ -350,7 +350,7 @@ class FollowHelper {
 
 
 	static public function renderFollowPrefs($user, &$defaultPreferences) {
-		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgOut;
+		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgOut, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js?{$wgStyleVersion}\"></script>\n");
@@ -394,7 +394,7 @@ class FollowHelper {
 		global $wgEnableWallExt, $wgEnableUserPreferencesV2Ext;
 		if($wgEnableWallExt) {
 			if ($wgEnableUserPreferencesV2Ext) {
-				$section = 'emailv2/email-me-v2';
+				$section = 'emailv2/email-wall-v2';
 				$messageWallmy = 'tog-enotifmywall-v2';
 				$messageWallthread = 'tog-enotifwallthread-v2';
 			}
@@ -403,18 +403,23 @@ class FollowHelper {
 				$messageWallmy = 'tog-enotifmywall';
 				$messageWallthread = 'tog-enotifwallthread';
 			}
+	
+			//back compatybility 
+			if($wgUser->getOption('enotifwallthread') === false) {
+				$wgUser->setOption('enotifwallthread', WALL_EMAIL_NOEMAIL);
+			}
+			
 			$defaultPreferences['enotifwallthread'] = array(
-				'type' => 'toggle',
+				'type' => 'select',
 				'section' => $section,
+				'options' => array(
+					wfMsg('tog-enotifmywall-every') => WALL_EMAIL_EVERY,
+					wfMsg('tog-enotifmywall-sincevisited') => WALL_EMAIL_SINCEVISITED,
+			//		wfMsg('tog-enotifmywall-reminder') => WALL_EMAIL_REMINDER,
+					wfMsg('tog-enotifmywall-noemail') => WALL_EMAIL_NOEMAIL
+				),
 				'label-message' => $messageWallthread,
-			);
-			
-			$defaultPreferences['enotifmywall'] = array(
-				'type' => 'toggle',
-				'section' => $section,
-				'label-message' => $messageWallmy,
-			);
-			
+			);			
 		}
 		
 

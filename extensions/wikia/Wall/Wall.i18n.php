@@ -312,11 +312,15 @@ ___________________________________________<br>
 your email preferences here: http://community.wikia.com/Special:Preferences',
 	
 	/* Preferences */
-	'prefs-wall' => 'Wall',
+	'prefs-email-wall-v2' => 'Message Wall',
 
-	'tog-enotifwallthread-v2' => '...someone replies to a Message Wall thread I follow', // three dots are not an ellipsis
-	'tog-enotifmywall-v2' => '...someone posts a new message on my Wall',
+	'tog-enotifwallthread-v2' => 'Email me...', // three dots are not an ellipsis
   
+	'tog-enotifmywall-every' => 'For every message & reply',
+	'tog-enotifmywall-sincevisited' => 'Once per thread since my last visit',
+	'tog-enotifmywall-reminder' => 'With a daily reminder email', 
+	'tog-enotifmywall-noemail' => 'Never. Do not send me any Message Wall emails',
+
 	'wallshowsource-toggle-v2' => 'Enable View source option on Message Wall posts', // if "view source" is a button, this should reference the relevant label message via {{int:msg-name}}
 	'wallshowsource-toggle' => 'Enable View source on Message Wall posts', // ditto
 	'walldelete-toggle' => 'Enable Revision delete on Message Wall posts', // ditto
@@ -595,10 +599,16 @@ $messages['qqq'] = array(
 	/* Preferences */
 	'prefs-wall' => "preferences, heading for section about Wall e-mails",
 
-	'tog-enotifwallthread-v2' => "preferences checkbox",
-	'tog-enotifmywall-v2' => "preferences checkbox",
+	'tog-enotifwallthread-v2' => "preferences combobox name",
   
+	'tog-enotifmywall-every' => 'preferences combobox option',
+	'tog-enotifmywall-sincevisited' => 'preferences combobox option',
+	'tog-enotifmywall-reminder' => 'preferences combobox option',
+	'tog-enotifmywall-noemail' => 'preferences combobox option',
+	
 	'wallshowsource-toggle-v2' => "preferences checkbox",
 	'wallshowsource-toggle' => "preferences checkbox",
 	'walldelete-toggle' => "preferences checkbox",
+
+	
 );
