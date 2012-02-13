@@ -300,6 +300,9 @@ class EditPageLayoutHelper {
 	 * @return boolean return true
 	 */
 	function onBeforeDisplayingTextbox(&$editPage, &$hidden) {
+		if ( !Wikia::isOasis() ) {
+			return true;
+		}
 		$this->out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
 		return true;
 	}
@@ -312,10 +315,13 @@ class EditPageLayoutHelper {
 	 * @return boolean return true
 	 */
 	function onAfterDisplayingTextbox(&$editPage, &$hidden) {
+		if ( !Wikia::isOasis() ) {
+			return true;
+		}
 		$html = wfRenderPartial('EditPageLayout', 'Loader', array(
 					'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
 				));
-		$html.="</div>";
+		$html .= '</div>';
 		$this->out->addHtml($html);
 		return true;
 	}
