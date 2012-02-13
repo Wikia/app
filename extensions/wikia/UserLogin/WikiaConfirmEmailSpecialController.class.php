@@ -30,7 +30,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = false;
 		$this->wg->SuppressPageHeader = false;
-		$this->wg->SuppressFooter = false;
+		$this->wg->SuppressFooter = true;
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
 		
