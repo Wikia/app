@@ -71,11 +71,6 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( Wikia::isWikiaMobile() ) {
-			//TODO: remove before release
-			if ( !$this->wg->DevelEnvironment ) {
-				return true;
-			}
-
 			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view 
 			F::build( 'Article', array( $categoryPage->getTitle() ) )->view();
 
