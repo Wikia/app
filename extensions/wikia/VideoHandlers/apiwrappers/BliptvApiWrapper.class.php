@@ -4,25 +4,25 @@ class BliptvApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://blip.tv/a/b-$1?skin=json';
 	protected static $CACHE_KEY = 'bliptvapi';
 
-    protected function processResponse($response, $type) {
-            
-        $replaced_count = 0;
-        $response = str_replace( "blip_ws_results([[{", "[{", $response, $replaced_count );
-        if($replaced_count > 0) {
-            $response = str_replace( "]);", "", $response );
-        }
-        else
-        {
-            $response = str_replace( "blip_ws_results([{", "[{", $response, $replaced_count );
-            $response = str_replace( "]);", "]", $response );
-        }        
-        
-        return parent::processResponse($response, $type);
-    }
+	protected function processResponse($response, $type) {
+			
+		$replaced_count = 0;
+		$response = str_replace( "blip_ws_results([[{", "[{", $response, $replaced_count );
+		if($replaced_count > 0) {
+			$response = str_replace( "]);", "", $response );
+		}
+		else
+		{
+			$response = str_replace( "blip_ws_results([{", "[{", $response, $replaced_count );
+			$response = str_replace( "]);", "]", $response );
+		}		 
+		
+		return parent::processResponse($response, $type);
+	}
 
 	protected function postProcess( $return ){
 		return $return[0]['Post'];
-	}    
+	}	  
 	
 	public function getVideoTitle() {
 		$title = $this->interfaceObj['title'];
@@ -31,7 +31,7 @@ class BliptvApiWrapper extends ApiWrapper {
 		}
 		return $title;
 	}
-    
+	
 	public function getVideoPublished() {
 		if ( !empty( $this->interfaceObj['datestamp'] ) ) {
 			$d = date_create_from_format('m-d-y g:ia', $this->interfaceObj['datestamp']);
@@ -42,30 +42,30 @@ class BliptvApiWrapper extends ApiWrapper {
 
 	public function getVideoCategory(){
 		return $this->interfaceObj['categoryName'];
-	}    
-    
+	}	  
+	
 	public function getDescription() {
-        
-        $text = $this->interfaceObj['description'];
+		
+		$text = $this->interfaceObj['description'];
 		if ( $this->getVideoKeywords() ) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
 		return $text;
 	}
 
 	public function getThumbnailUrl() {
-        return $this->interfaceObj['thumbnailUrl'];
+		return $this->interfaceObj['thumbnailUrl'];
 	}
 	
-    protected function getAltVideoId() {
-        return $this->interfaceObj['embedLookup'];
-    }    
-    
+	protected function getAltVideoId() {
+		return $this->interfaceObj['embedLookup'];
+	}	 
+	
 	protected function getVideoKeywords() {
-        
+		
 		if (is_array( $this->interfaceObj['tags'] )) {
-            $keywords = array();
-            foreach ( $this->interfaceObj['tags'] as $tag ) {
-                $keywords[] = $tag['name'];
-            }
+			$keywords = array();
+			foreach ( $this->interfaceObj['tags'] as $tag ) {
+				$keywords[] = $tag['name'];
+			}
 			return implode( ', ', $keywords );
 		}
 
