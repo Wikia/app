@@ -51,41 +51,24 @@
 	header {
 		line-height: 38px;
 	}
-	
+
 	.cnt {
 		font-size: small;
 		position: relative;
 		top: -4px;
 	}
-	
-	li {
-		line-height: 50px;
-		border-bottom: 1px solid $border-color;
-		padding-left: 10px;
-		
-		a {
-			width: 100%;
-			height: 100%;
-			display: inline-block;
-		}
 
-		&:active, &.fkAct {
-			@include linear-gradient($activeGradient1, $activeGradient2);
-			
-			a {
-				color: white;
-			}
-		}
-		&:last-child {
-			border-bottom: none;
-		}
-		
+	li {
 		&.sub {
 			background-repeat: no-repeat;
 			background-position: right;
 			background-image: url('/extensions/wikia/WikiaMobile/images/chev-rg.png');/* $wgCdnStylePath */
 			background-origin: content-box;
 			padding-right: 10px;
+		}
+		
+		&:last-child {
+			border-bottom: none;
 		}
 	}
 }
@@ -96,16 +79,16 @@
 	width: 100%;
 	line-height: 50px;
 	text-align: center;
-	
+
 	&.visible {
 		display: block;
 	}
-	
+
 	&.active {
 		@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
 		background-color: $border-color;
 		padding: $page-padding 0;
-		
+
 		//hide the text and make it take no space without adding
 		//yet another wrapping element...
 		color: transparent;
@@ -115,6 +98,7 @@
 
 #expAll {
 	float: right;
+	
 	&.exp {
 		.expand {
 			display: none;
@@ -133,18 +117,18 @@
 
 header {
 		&:after {
-		content: "."; 
-		display: block; 
-		height: 0; 
-		font-size:0;	
-		clear: both; 
+		content: ".";
+		display: block;
+		height: 0;
+		font-size:0;
+		clear: both;
 		visibility:hidden;
 	}
 }
 
 @media (orientation:landscape) {
 	.wkExhItm, .exhPlcHld {
-		width: 115px;
-		height: 115px;
+		width: 105px;
+		height: 105px;
 	}
 }

@@ -127,20 +127,8 @@
 			transform: translateZ(0);
 
 			li {
-				width: 100%;
-				line-height: 49px;
-				padding-left: 15px;
 				padding-right: 20px;
 				@include box-sizing(border-box);
-				border-bottom: 1px solid $border-color;
-
-				&:active, &.fkAct {
-					@include linear-gradient($activeGradient1, $activeGradient2);
-
-					& > a, & > span {
-						color: white;
-					}
-				}
 
 				&.cld {
 					& > a, & > span {
@@ -148,13 +136,6 @@
 						background-position: right;
 						background-image: url('/extensions/wikia/WikiaMobile/images/chev-rg.png');/* $wgCdnStylePath */
 					}
-
-				}
-
-				a, span {
-					display: block;
-					width: 100%;
-					height: 100%;
 				}
 
 				a {
@@ -162,7 +143,7 @@
 				}
 			}
 		}
-		
+
 		#wkNavBack {
 			display: block;
 		}
@@ -197,8 +178,12 @@
 				left: 0;
 			}
 		}
+		
+		header a {
+			display: block;
+		}
 	}
-	
+
 	#wkNavSrh {
 		display: none;
 		position: absolute;
@@ -206,6 +191,7 @@
 		right: 55px;
 		top: 4px;
 		bottom: 4px;
+		
 		form {
 			height: 100%;
 			width: 100%;
@@ -244,13 +230,6 @@
 		z-index: 120;
 		left: 0;
 
-		#wkNavBack {
-			display: none;
-			color: $link-color;
-			float: left;
-			position: absolute;
-		}
-
 		h1 {
 			text-align: center;
 			font-size: medium;
@@ -273,6 +252,11 @@
 			background-image: url('/extensions/wikia/WikiaMobile/images/chevron-right.png');/* $wgCdnStylePath */
 		}
 	}
+}
+
+#wkNavBack {
+	display: none;
+	position: absolute;
 }
 
 #wkTabs {
@@ -301,11 +285,6 @@
 }
 
 //default style if js is disabled
-#wkMainCntFtr #wkNavMenu{
-		button, header a {
-			display: none;
-		}
-		.collSec{
-				@include section-title-related;
-		}
+#wkNavMenu header a {
+	display: none;
 }

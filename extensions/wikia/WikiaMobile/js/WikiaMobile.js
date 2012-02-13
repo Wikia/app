@@ -25,11 +25,12 @@ var WikiaMobile = WikiaMobile || (function() {
 	//slide up the addressbar on webkit mobile browsers for maximum reading area
 	//setTimeout is necessary to make it work on ios...
 	function hideURLBar(){
-		setTimeout(function(){
-			if(!window.pageYOffset)
-				window.scrollTo(0, 1);
-				if(!fixed) moveSlot();
-		}, 1);
+		if(window.pageYOffset < 20) {
+			setTimeout(function(){
+					window.scrollTo(0, 1);
+					if(!fixed) moveSlot();
+			}, 0);
+		}
 	}
 
 	function processSections(){
@@ -80,6 +81,57 @@ var WikiaMobile = WikiaMobile || (function() {
 		}
 	}
 
+	function processImages(){
+		var number = 0;
+		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function() {
+			var self = $(this);
+
+			if(self.hasClass('image')) {
+				allImages.push([self.data('num', number++).attr('href')]);
+			} else if(self.hasClass('wkImgStk')) {
+				if(self.hasClass('grp')) {
+					var figures = self.find('figure'),
+					l = figures.length,
+					cap;
+
+					self.data('num', number).find('footer').append(l);
+
+					$.each(figures, function(i, fig){
+						allImages.push([
+							fig.getElementsByClassName('image')[0].href,
+							(cap = fig.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:"",
+							i, l
+						]);
+					});
+				} else {
+					var l = parseInt( self.data('num', number).data('img-count'), 10),
+					lis = self.find('li');
+
+					$.each(lis, function(i, li){
+						allImages.push([
+							li.attributes['data-img'].nodeValue,
+							li.innerHTML,
+							//I need these number to show counter in a modal
+							i, l
+						]);
+					});
+				}
+				number += l;
+			} else {
+				self.data('num', number++);
+				allImages.push([
+					self.find('.image').attr('href'),
+					self.find('.thumbcaption').html()
+				]);
+			}
+		});
+
+		//if there is only one image in the article hide the prev/next buttons
+		//in the image modal
+		//TODO: move to a modal API call
+		if(allImages.length <= 1) body.addClass('oneImg');
+	}
+	
 	function processTables(){
 		if(typeof handledTables == 'undefined'){
 			handledTables = [];
@@ -221,8 +273,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		thePage = page.add('#wkFtr').add(ad),
 		lvl1 = $('.lvl1'),
 		//to cache link in wiki nav
-		lvl2Link,
-		number = 0;
+		lvl2Link;
 
 		//replace menu from bottom to topBar - the faster the better
 		wkNav[0].replaceChild(wkNavMenu[0], document.getElementById('wkWikiNav'));
@@ -279,56 +330,6 @@ var WikiaMobile = WikiaMobile || (function() {
 		//get search input
 		navigationSearch.remove().appendTo('#wkTopBar');
 
-		//processImages
-		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function() {
-			var self = $(this);
-
-			if(self.hasClass('image')) {
-				allImages.push([self.data('num', number++).attr('href')]);
-			} else if(self.hasClass('wkImgStk')) {
-				if(self.hasClass('grp')) {
-					var figures = self.find('figure'),
-					l = figures.length,
-					cap;
-
-					self.data('num', number).find('footer').append(l);
-
-					$.each(figures, function(i, fig){
-						allImages.push([
-							fig.getElementsByClassName('image')[0].href,
-							(cap = fig.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:"",
-							i, l
-						]);
-					});
-				} else {
-					var l = parseInt( self.data('num', number).data('img-count'), 10),
-					lis = self.find('li');
-
-					$.each(lis, function(i, li){
-						allImages.push([
-							li.attributes['data-img'].nodeValue,
-							li.innerHTML,
-							//I need these number to show counter in a modal
-							i, l
-						]);
-					});
-				}
-				number += l;
-			} else {
-				self.data('num', number++);
-				allImages.push([
-					self.find('.image').attr('href'),
-					self.find('.thumbcaption').html()
-				]);
-			}
-		});
-
-		//if there is only one image in the article hide the prev/next buttons
-		//in the image modal
-		//TODO: move to a modal API call
-		if(allImages.length <= 1) body.addClass('oneImg');
-		//end processImages
-
 		//TODO: optimize selectors caching for this file
 		body.delegate('.collSec', clickEvent, function(){
 			var self = $(this);
@@ -340,10 +341,13 @@ var WikiaMobile = WikiaMobile || (function() {
 			track('link/content');
 		})
 		.delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
-			var img = $(this),
-			num = img.data('num') || img.parent().data('num');
 			event.preventDefault();
 			event.stopPropagation();
+			
+			if(allImages.length == 0) processImages();
+			
+			var img = $(this),
+				num = img.data('num') || img.parent().data('num');
 			if(num) imgModal(num);
 		})
 		.delegate('.bigTable', clickEvent, function(event){
@@ -500,7 +504,6 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		//category pages
 		$('.pagMore, .pagLess').bind(clickEvent, function(event) {
-			
 			event.preventDefault();
 			var self = $(this),
 				forward = self.hasClass('pagMore'),

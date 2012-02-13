@@ -1,5 +1,6 @@
 @import 'variables.scss';
 @import 'mixins/linear-gradient.scss';
+@import 'mixins/box-sizing.scss';
 
 .wkBtn {
 	font-size: medium;
@@ -10,9 +11,36 @@
 	margin: 10px;
 	color: #6A6A6A;
 	@include linear-gradient(rgb(253,253,251), rgb(239,239,239));
-	
+
 	&:active, &.fkAct {
 		color: white;
 		@include linear-gradient($activeGradient1, $activeGradient2);
+	}
+}
+
+.wkLst {
+	list-style: none;
+	
+	li {
+		width: 100%;
+		line-height: 50px;
+		border-bottom: 1px solid $border-color;
+		padding-left: 10px;
+		@include box-sizing(border-box);
+
+		& > a, & > span {
+			width: 100%;
+			height: 100%;
+			display: inline-block;
+		}
+
+		&:active, &.fkAct {
+			color: white;
+			@include linear-gradient($activeGradient1, $activeGradient2);
+
+			& > a, & > span {
+				color: white;
+			}
+		}
 	}
 }
