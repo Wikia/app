@@ -137,10 +137,7 @@ class CategoryDataService extends Service {
 						array( 'pv_page_id as page_id' ),
 						$tmp,
 						__METHOD__,
-						array(
-							'GROUP BY' => 'pv_page_id',
-							'ORDER BY' => 'sum(pv_views) DESC'
-						)
+						$optionsArray
 					);
 				}
 				if ( $dbr->numRows( $res ) > 0 ) {
@@ -160,7 +157,6 @@ class CategoryDataService extends Service {
 
 					return $aResult + $aCategoryArticles;
 				} else {
-					
 					Wikia::log(__METHOD__, 'No data at all. Quitting.');
 					return array();
 				}
