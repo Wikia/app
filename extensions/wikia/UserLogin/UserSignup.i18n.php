@@ -187,7 +187,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-marketing-login' => 'Already a user? [[Special:UserLogin|Log in]]',
 	'usersignup-marketing-benefits' => 'Be a part of something huge',
 	'usersignup-marketing-community-heading' => 'Collaborate',
-	'usersignup-marketing-community' => 'Discover and explore subjects ranging video games to movies and tv. Meet people with similar interests and passions.',
+	'usersignup-marketing-community' => 'Discover and explore subjects ranging from video games to movies and tv. Meet people with similar interests and tv. Meet people with similar interests and passions.',
 	'usersignup-marketing-global-heading' => 'Create',
 	'usersignup-marketing-global' => 'Start a wiki. Start small, grow big, with the help of others.',
 	'usersignup-marketing-creativity-heading' => 'Be original',
