@@ -33,7 +33,6 @@ var WikiaTracker = {
 	},
 	defaultRate:10,
 	profileRates:{
-		'UA-288915-1':100, // Wikia.main - test switch to 100%
 		'UA-2871474-2':100, // main.unsampled
 		'UA-2871474-3':1, // main.test
 		'UA-17475676-16':100, // liftium.slot2
