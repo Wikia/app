@@ -20,7 +20,7 @@
 
 .wkLst {
 	list-style: none;
-	
+
 	li {
 		width: 100%;
 		line-height: 50px;
@@ -41,6 +41,10 @@
 			& > a, & > span {
 				color: white;
 			}
+		}
+
+		&:last-child {
+			border-bottom: none;
 		}
 	}
 }

@@ -141,6 +141,10 @@
 				a {
 					font-weight: bold;
 				}
+
+				&:last-child {
+					border-bottom: 1px solid $border-color;
+				}
 			}
 		}
 
@@ -178,7 +182,7 @@
 				left: 0;
 			}
 		}
-		
+
 		header a {
 			display: block;
 		}
@@ -191,7 +195,7 @@
 		right: 55px;
 		top: 4px;
 		bottom: 4px;
-		
+
 		form {
 			height: 100%;
 			width: 100%;
@@ -255,6 +259,7 @@
 }
 
 #wkNavBack {
+	color: inherit;
 	display: none;
 	position: absolute;
 }
