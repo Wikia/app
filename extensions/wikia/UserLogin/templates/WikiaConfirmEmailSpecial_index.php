@@ -1,4 +1,4 @@
-<div class="UserLogin">
+<div class="UserLogin UserConfirm">
 <? if(!empty($pageHeading)) { ?>
 	<h1 class="pageheading"><?= $pageHeading ?></h1>
 <? } ?>
