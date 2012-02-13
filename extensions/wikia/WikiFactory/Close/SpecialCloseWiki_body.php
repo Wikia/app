@@ -325,6 +325,12 @@ class CloseWikiPage extends SpecialPage {
 					}
 					WikiFactory::setFlags($wiki->city_id, $city_flags);
 				}
+                                
+                                // Let's request the XML dump if needed
+                                if ( isset( $this->mFlags[WikiFactory::FLAG_CREATE_DB_DUMP] ) ) {
+                                    DumpsOnDemand::sendMail( $wiki->city_dbname, $wiki->city_id, isset( $this->mFlags[WikiFactory::FLAG_HIDE_DB_IMAGES] ), true );
+                                }
+                                
 				if ( empty($this->mReason) ) {
 					$this->mReason = "-";
 				}

@@ -130,7 +130,7 @@ class DumpsOnDemand {
             UserMailer::send(
                 new MailAddress( "dump-requests@wikia-inc.com" ),
                 new MailAddress( "dump-requests@wikia-inc.com" ),
-                "Database dump request for {$wgDBname}",
+                "Database dump request for {$sDbName}",
                 $body,
                 null /*reply*/,
                 null /*ctype*/,
@@ -144,7 +144,7 @@ class DumpsOnDemand {
             $dbw->update(
                     "city_list",
                     array( "city_lastdump_timestamp" => wfTimestampNow() ),
-                    array( "city_id" => $wgCityId ),
+                    array( "city_id" => $iCityId ),
                     __METHOD__
             );
 	}
