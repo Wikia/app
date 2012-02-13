@@ -17,7 +17,7 @@ var LatestActivity = {
 			}
 		);
 	}
-}
+};
 
 $(window).load(function() {
     LatestActivity.init();
