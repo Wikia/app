@@ -13,6 +13,7 @@ class CategoryDataService extends Service {
 				'page_id'		=> $row->page_id
 			);
 		}
+
 		return $articles;
 	}
 
@@ -60,9 +61,6 @@ class CategoryDataService extends Service {
 			return array();
 		}
 
-		if ( empty( $wgDevelEnvironment ) ) {
-			// production mode
-			
 			if( !empty( $mNamespace ) ) {
 				$tmp = array(
 					'cl_to' => $sCategoryDBKey,
@@ -79,9 +77,9 @@ class CategoryDataService extends Service {
 				$tmp,
 				__METHOD__,
 				array( 'ORDER BY' => 'page_title' ),
-				array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ) )
+				array( 'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' ) )
 			);
-			
+
 			if ( $dbr->numRows( $res ) > 0 ) {
 				Wikia::log(__METHOD__, ' Found some data in categories. Proceeding ');
 				$aCategoryArticles = self::tableFromResult( $res );
@@ -154,8 +152,11 @@ class CategoryDataService extends Service {
 							}
 						}
 					}
-
-					return $aResult + $aCategoryArticles;
+					$ret = $aResult + $aCategoryArticles;
+					if( !empty( $limit ) && count( $ret ) > $limit ) {
+						$ret = array_slice($ret, 0, $limit, true);
+					}
+					return $ret;
 				} else {
 					Wikia::log(__METHOD__, 'No data at all. Quitting.');
 					return array();
@@ -164,37 +165,5 @@ class CategoryDataService extends Service {
 				Wikia::log(__METHOD__, ' No articles in category found - quitting');
 				return array();
 			}
-			
-		} else {
-			// devbox version
-
-			$optionsArray = array();
-			$optionsArray['ORDER BY'] = 'count DESC, page_title';
-			if ( $limit ) {
-				$optionsArray['LIMIT'] = $limit;
-			}
-			
-			if( !empty( $mNamespace )  ) {
-				$tmp = array(
-					'cl_to' => $sCategoryDBKey,
-					'page_namespace IN(' . $mNamespace . ')'
-				);
-			} else {
-				$tmp = array( 'cl_to' => $sCategoryDBKey );
-			}
-
-			$dbr = wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				array( 'page', 'page_visited', 'categorylinks' ),
-				array( 'page_id', 'page_title' ),
-				$tmp,
-				__METHOD__,
-				$optionsArray,
-				array(	'page_visited'  => array( 'LEFT JOIN', 'article_id = page_id' ),
-					'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
-			);
-			
-			return self::tableFromResult( $res );
-		}
 	}
 }
