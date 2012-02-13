@@ -36,7 +36,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 				$ids = array_keys( $exh );
 				$length = count( $ids );
 				$items = array();
-	
+
 				for ( $i = 0; $i < $length; $i++ ) {
 					$pageId = $ids[$i];
 	
@@ -81,7 +81,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 	}
 
 	public function purgeExhibitionItemsCacheKey( $titleText ){
-		$this->wg->memc->delete( $this->getItemsCollectionCacheKey( $titleText ) );
+		$this->wg->memc->delete( $this->getExhibitionItemsCacheKey( $titleText ) );
 	}
 }
 

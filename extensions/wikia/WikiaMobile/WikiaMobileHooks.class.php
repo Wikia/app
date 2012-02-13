@@ -71,7 +71,7 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( Wikia::isWikiaMobile() ) {
-			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view 
+			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view
 			F::build( 'Article', array( $categoryPage->getTitle() ) )->view();
 
 			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', array( 'categoryPage' => $categoryPage ) ) );
