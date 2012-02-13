@@ -2,8 +2,11 @@
 
 class VideoHandlersUploader {
 	
-	protected static $ILLEGAL_TITLE_CHARS = array( '/', ':', '#' );
+	protected static $ILLEGAL_TITLE_CHARS = array( '#' );
 	protected static $IMAGE_NAME_MAX_LENGTH = 255;
+	
+	const SANITIZE_MODE_FILENAME = 1;
+	const SANITIZE_MODE_ARTICLETITLE = 2;
 	
 	/**
 	 * Create a video using LocalFile framework
@@ -33,7 +36,7 @@ class VideoHandlersUploader {
 
 		/* create a reference to article that will contain uploaded file */
 		$titleText = self::sanitizeTitle( $apiWrapper->getTitle() );
-		$title = Title::makeTitleSafe( NS_FILE, $titleText );
+		$title = Title::newFromText( $titleText, NS_FILE );
 
 		$file = F::build( !empty( $undercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile',
 				array(
@@ -61,40 +64,40 @@ class VideoHandlersUploader {
 		return $result;		
 	}
 
-	public static function sanitizeTitle( $titleText, $replaceChar=' ' ) {
+	/**
+	 * Sanitize text for use as filename or article title
+	 * @param string $titleText title to sanitize
+	 * @param string $replaceChar character to replace illegal characters with
+	 * @param int $sanitizeMode SANITIZE_MODE_FILENAME or SANITIZE_MODE_ARTICLETITLE
+	 * @return string sanitized title 
+	 */
+	public static function sanitizeTitle( $titleText, $replaceChar=' ', $sanitizeMode=self::SANITIZE_MODE_FILENAME ) {
 
-		// We need more strict sanitizing because the commented code below 
-		// isn't clearing all illegal characters for files. 
-		// So we decided to remove all characters that are not alphanumeric.
-		
-		$sanitized = preg_replace( '/[^[:alnum:]]{1,}/', $replaceChar, $titleText );
+		$sanitized = '';
 
-		return substr( trim( $sanitized ), 0, 255 );
-		
-		/*
-
-		$titleText = preg_replace(Title::getTitleInvalidRegex(), $replaceChar, $titleText);
-		
-		foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
-			$titleText = str_replace( $illegalChar, $replaceChar, $titleText );
+		switch ($sanitizeMode) {
+			case self::SANITIZE_MODE_FILENAME:
+				// remove all characters that are not alphanumeric.
+				$sanitized = preg_replace( '/[^[:alnum:]]{1,}/', $replaceChar, $titleText );
+				break;
+			case self::SANITIZE_MODE_ARTICLETITLE:
+				$sanitized = preg_replace(Title::getTitleInvalidRegex(), $replaceChar, $titleText);
+				foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
+					$sanitized = str_replace( $illegalChar, $replaceChar, $sanitized );
+				}
+				break;
+			default:
+				$sanitized = $titleText;
 		}
 		
-		// remove multi _
-		$aTitle = explode( $replaceChar, $titleText );
-		$sTitle = implode ( $replaceChar, array_filter( $aTitle ) );	// array_filter() removes null elements
+		$sanitized = substr( trim( $sanitized ), 0, 255 );	// image table column name has 255-char limit
 
-		$sTitle = substr($sTitle, 0, self::$IMAGE_NAME_MAX_LENGTH);	// DB column Image.img_name has size 255
+		// remove multiple spaces
+		$sanitized = explode( $replaceChar, $sanitized );
+		$sanitized = implode( $replaceChar, array_filter( $sanitized ) );	// array_filter() removes null elements
 		
-		// this method is cruching if you use [, ] :
-		//$title = Title::makeTitleSafe( NS_FILE, $sTitle );
-
-		if ($replaceChar == ' ') {
-			return $title->getText();
-		}
-		
-		return $title->getDBkey();
-		 
-		*/
+		return $sanitized;
+	
 	}
 	
 	public static function hasForbiddenCharacters( $text ) {

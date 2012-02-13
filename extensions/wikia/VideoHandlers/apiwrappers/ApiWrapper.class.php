@@ -16,6 +16,11 @@ abstract class ApiWrapper {
 	protected static $CACHE_EXPIRY = 86400;
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_JSON;
 	
+	/**
+	 *
+	 * @param string $videoId
+	 * @param Array $params 
+	 */
 	public function __construct( $videoId, $params=array() ) {
 		$this->videoId = $this->sanitizeVideoId( $videoId );
 		if (!empty($params['videoName'])) {
@@ -24,6 +29,10 @@ abstract class ApiWrapper {
 		$this->initializeInterfaceObject();
 	}
 
+	/**
+	 *
+	 * @return string 
+	 */
 	public function getTitle() {
 		if (!empty($this->videoName)) {
 			return $this->videoName;
@@ -129,7 +138,8 @@ abstract class ApiWrapper {
 		$metadata = array();
 
 		$metadata['videoId']		= $this->videoId;
-		$metadata['title']			= $this->getVideoTitle();
+		$metadata['videoTitle']		= $this->getVideoTitle();
+		$metadata['articleTitle']	= $this->getTitle();
 		$metadata['published']		= $this->getVideoPublished();
 		$metadata['category']		= $this->getVideoCategory();
 		$metadata['canEmbed']		= $this->canEmbed();
