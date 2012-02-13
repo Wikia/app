@@ -285,6 +285,14 @@ class FBConnectAPI {
 		return 0;
 	}
 	
+	/**
+	 * logout from FB  
+	 */
+	
+	function logout() {
+		$this->Facebook()->destroySession();
+	}
+	
 	/*
 	 * 
 	 */

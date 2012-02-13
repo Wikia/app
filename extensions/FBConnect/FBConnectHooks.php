@@ -723,4 +723,13 @@ HTML;
 		}
 		return true;
 	}
+	
+	/**
+	 * clear facebook session 
+	 */
+	public static function UserLogout(&$user){
+		$fb = new FBConnectAPI();
+		$fb->logout();
+		return true;
+	}
 }
