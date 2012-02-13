@@ -8,26 +8,24 @@ class MobileContentParser {
 	}
 
 	public static function displayContent( $contents, $attributes, $parser ) {
-		$app = F::build('App');
-		$skin = $app->getGlobal( 'wgUser' )->getSkin();
-		$wgMobileSkins = $app->getGlobal( 'wgMobileSkins' );
+		$app = F::app();
+		$skin = $app->wg->User->getSkin();
 
-		if ( in_array( $skin->getSkinName(), $wgMobileSkins ) ) {
-			return $app->wg->Parser->recursiveTagParse( $contents );
+		if ( in_array( $skin->getSkinName(), $app->wg->MobileSkins ) ) {
+			return $parser->recursiveTagParse( $contents );
 		} else {
 			return '';
 		}
 	}
 
 	public static function hideContent( $contents, $attributes, $parser ) {
-		$app = F::build('App');
-		$skin = $app->getGlobal( 'wgUser' )->getSkin();
-		$wgMobileSkins = $app->getGlobal( 'wgMobileSkins' );
+		$app = F::app();
+		$skin = $app->wg->User->getSkin();
 
-		if ( in_array( $skin->getSkinName(), $wgMobileSkins ) ) {
+		if ( in_array( $skin->getSkinName(), $app->wg->MobileSkins ) ) {
 			return '';
 		} else {
-			return $app->wg->Parser->recursiveTagParse( $contents );
+			return $parser->recursiveTagParse( $contents );
 		}
 	}
 }
