@@ -104,7 +104,8 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	
 	protected function generateName(array $data) {
 		$name = $data['clipTitle'];
-		$name = VideoHandlersUploader::sanitizeTitle($name);
+		
+		// per parent class's definition, do not sanitize
 
 		return $name;		
 	}

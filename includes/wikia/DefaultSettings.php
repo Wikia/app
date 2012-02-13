@@ -945,3 +945,8 @@ include "$IP/lib/predis/Predis.php";
 $wgRedis = new Predis_Client( array(
 	array( 'host' => '127.0.0.1', 'port' => 6379 ),
 ));
+
+/**
+ * Video
+ */
+$wgAutoloadClasses['WikiaVideoService'] = $IP.'/includes/wikia/services/WikiaVideoService.class.php';

@@ -17,6 +17,12 @@ abstract class VideoFeedIngester {
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases', 'movieclipsIds');
 
 	abstract public function import($file, $params);
+	/**
+	 * Generate name for video.
+	 * Note: The name is not sanitized for use as filename or article title.
+	 * @param array $data video data
+	 * @return string video name 
+	 */
 	abstract protected function generateName(array $data);
 	abstract protected function generateTitleName(array $data);
 	abstract protected function generateParsedData(array $data, &$errorMsg);
@@ -51,15 +57,9 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 		
-		$title = $this->makeTitleSafe($name);
-		if(is_null($title)) {
-			$msg = "article title was null: clip id $id. name: $name";
+		if (!$this->validateTitle($id, $name, $msg, $debug)) {
 			return 0;
 		}
-		if(!$debug && $title->exists()) {
-			// don't output duplicate error message
-			return 0;
-		}	
 
 		$categories = $this->generateCategories($data, $addlCategories);
 		$categories[] = 'Video';
@@ -70,7 +70,7 @@ abstract class VideoFeedIngester {
 		}
 		
 		if ($debug) {
-			print "parsed partner clip id $id. name: {$title->getText()}. categories: " . implode(',', $categories) . ". ";
+			print "parsed partner clip id $id. name: $name. categories: " . implode(',', $categories) . ". ";
 			print "metadata: \n";
 			print_r($parsedData);
 			return 1;
@@ -98,9 +98,24 @@ abstract class VideoFeedIngester {
 
 		return 0;
 	}
+	
+	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
+		$sanitizedName = VideoHandlersUploader::sanitizeTitle($name);
+		$title = $this->titleFromText($name);
+		if(is_null($title)) {
+			$msg = "article title was null: clip id $videoId. name: $name";
+			return 0;
+		}
+		if(!$isDebug && $title->exists()) {
+			// don't output duplicate error message
+			return 0;
+		}	
+		
+		return 1;
+	}
 
-	protected function makeTitleSafe($name) {
-		return Title::makeTitleSafe(NS_FILE, $name);    // makeTitleSafe strips '#' and anything after. just leave # out
+	protected function titleFromText($name) {
+		return Title::newFromText($name, NS_FILE);
 	}		
 	
 	public function getWikiIngestionData() {

@@ -96,4 +96,19 @@ class WikiaVideoService extends Service {
 		return !empty(F::app()->wg->ingestVideosUseVideoHandlersExt);
 	}
 	
+	/**
+	 * Can VideoHandlers extension be used to embed video
+	 * @return boolean
+	 */
+	public static function useWikiaVideoExtForEmbed() {
+		return !empty(F::app()->wg->embedVideosUseWikiaVideoExt);		
+	}
+	
+	/**
+	 * Can VideoHandlers extension be used to embed video
+	 * @return boolean
+	 */
+	public static function useVideoHandlersExtForEmbed() {
+		return !empty(F::app()->wg->embedVideosUseVideoHandlersExt);		
+	}
 }
