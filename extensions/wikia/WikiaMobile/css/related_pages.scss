@@ -10,15 +10,11 @@ $itemHeight: 50px;
 $itemPadding: 6px;
 
 #wkRelPag {
-	.collSec {
-		@include section-title-related;
-	}
-
 	ul {
 		display: none;
-		list-style: none;
 		padding: 0;
 		margin: 0;
+		color: $page-text-color;
 
 		&.open {
 			display: block;
@@ -27,10 +23,10 @@ $itemPadding: 6px;
 
 	li {
 		position: relative;
+		padding-left: 0;
 
 		a {
-			color: $page-text-color;
-			display: block;
+			color: inherit;
 			padding: $itemPadding $itemPadding/2 $itemPadding 112px;
 			min-height: $itemHeight + $itemPadding*2;
 			@include box-sizing(border-box);
@@ -51,15 +47,6 @@ $itemPadding: 6px;
 				left: $itemPadding;
 				margin-top: -25px;
 			}
-		}
-
-		&:active, &.fkAct {
-			@include linear-gradient($activeGradient1, $activeGradient2);
-			color: white;
-		}
-
-		&:nth-of-type(n+2) {
-			border-top: 1px solid $border-color;
 		}
 	}
 }

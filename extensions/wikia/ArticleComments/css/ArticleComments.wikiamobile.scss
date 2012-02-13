@@ -10,142 +10,23 @@
 //vars
 $comment-left-margin: $page-padding + 60px;
 
-#wkArtCom{
+.js{
+	#article-comments{
+		display: none;
+		
+		.rpl {
+			display: block;
+		}
+	}
+	
+	#commMore{
+		display: block;
+	}
+}
 
+#wkArtCom{
 	.collSec{
 		@include section-title-related;
-	}
-
-	#article-comments{
-		&.open{
-			display:block;
-		}
-
-		#article-comments-ul{
-			margin: 0;
-			padding: 0;
-			list-style: none;
-
-			&>.comment:first-child{
-				border: none;
-			}
-
-			.sub-comments{
-				list-style: none;
-
-				&>.comment:first-child{
-					position: relative;
-
-					&::before {
-						border-color: transparent transparent $border-color transparent;
-						border-style: solid;
-						border-width: 11px;
-						content: " ";
-						height: 0;
-						position: absolute;
-						top: -22px;
-						left: 40px;
-						width: 0;
-					}
-
-					&::after {
-						border-color: transparent transparent $page-background-color transparent;
-						border-style: solid;
-						border-width: 10px;
-						content: " ";
-						height: 0;
-						position: absolute;
-						top: -19px;
-						left: 41px;
-						width: 0;
-					}
-				}
-			}
-
-			.comment{
-				border-top: 1px solid $border-color;
-				padding: $page-padding 0;
-
-				.msg{
-					border-left: none;
-					margin: 0 0 0 $comment-left-margin;
-					padding-left: 0;
-
-					.by{
-						font-weight: bold;
-					}
-
-					.txt{
-						p:first-child{
-							margin: 0;
-							padding: 0;
-						}
-					}
-
-					.date{
-						color: $page-text-alternate-color;
-						font-size: small;
-
-						a{
-							color: $page-text-alternate-color;
-						}
-					}
-				}
-
-				.avatar{
-					float: left;
-					margin-right: $page-padding;
-				}
-
-				.buttons{
-					display: none;
-				}
-			}
-
-			.sub-comments{
-				margin: 0 0 0 $comment-left-margin;
-				padding: 0;
-			}
-		}
-
-		#commMore, #commPrev{
-			display: none;
-			border-top: 1px solid $border-color;
-			color: $link-color;
-			font-size: medium;
-			height: 50px;
-			line-height: 50px;
-			left: -$page-padding;
-			position: relative;
-			text-align: center;
-			vertical-align: middle;
-			width: 110%;
-
-			&.pag{
-				display: block;
-			}
-
-			&.active{
-				@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
-				background-color: $border-color;
-				padding: $page-padding 0;
-				
-				//hide the text and make it take no space without adding
-				//yet another wrapping element...
-				color: transparent;
-				line-height: 0;
-			}
-		}
-
-		#commMore{
-			&.active{
-				margin-bottom: $page-padding;
-			}
-		}
-
-		#commPrev{
-			border-bottom: 1px solid $border-color;
-		}
 	}
 
 	form {
@@ -196,21 +77,139 @@ $comment-left-margin: $page-padding + 60px;
 
 		&:active, &.fkAct {
 			color: white;
-			@include linear-gradient(rgb(70,147,214), rgb(46,106,174));
+			@include linear-gradient($activeGradient1, $activeGradient2);
 		}
 	}
 }
 
-.js{
-	#article-comments{
-		display: none;
-		
-		.rpl {
-			display: block;
+#article-comments{
+	&.open{
+		display:block;
+	}
+}
+
+#article-comments-ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	&>.comment:first-child{
+		border: none;
+	}
+
+	.sub-comments{
+		list-style: none;
+
+		&>.comment:first-child{
+			position: relative;
+
+			&::before {
+				border-color: transparent transparent $border-color transparent;
+				border-style: solid;
+				border-width: 11px;
+				content: " ";
+				height: 0;
+				position: absolute;
+				top: -22px;
+				left: 40px;
+				width: 0;
+			}
+
+			&::after {
+				border-color: transparent transparent $page-background-color transparent;
+				border-style: solid;
+				border-width: 10px;
+				content: " ";
+				height: 0;
+				position: absolute;
+				top: -19px;
+				left: 41px;
+				width: 0;
+			}
 		}
 	}
-	
-	#commMore{
+
+	.comment{
+		border-top: 1px solid $border-color;
+		padding: $page-padding 0;
+
+		.msg{
+			border-left: none;
+			margin: 0 0 0 $comment-left-margin;
+			padding-left: 0;
+
+			.by{
+				font-weight: bold;
+			}
+
+			.txt{
+				p:first-child{
+					margin: 0;
+					padding: 0;
+				}
+			}
+
+			.date{
+				color: $page-text-alternate-color;
+				font-size: small;
+
+				a{
+					color: $page-text-alternate-color;
+				}
+			}
+		}
+
+		.avatar{
+			float: left;
+			margin-right: $page-padding;
+		}
+
+		.buttons{
+			display: none;
+		}
+	}
+
+	.sub-comments{
+		margin: 0 0 0 $comment-left-margin;
+		padding: 0;
+	}
+}
+
+#commMore, #commPrev{
+	display: none;
+	border-top: 1px solid $border-color;
+	color: $link-color;
+	font-size: medium;
+	height: 50px;
+	line-height: 50px;
+	left: -$page-padding;
+	position: relative;
+	text-align: center;
+	vertical-align: middle;
+	width: 110%;
+
+	&.pag{
 		display: block;
 	}
+
+	&.active{
+		@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
+		background-color: $border-color;
+		padding: $page-padding 0;
+		
+		//hide the text and make it take no space without adding
+		//yet another wrapping element...
+		color: transparent;
+		line-height: 0;
+	}
+}
+
+#commMore{
+	&.active{
+		margin-bottom: $page-padding;
+	}
+}
+
+#commPrev{
+	border-bottom: 1px solid $border-color;
 }

@@ -6,12 +6,10 @@ h1, h2, h3{
 	margin: $section-title-margin;
 }
 
-.js {
-	.artSec {
-		display: none;
-	}
+.js .artSec {
+	display: none;
 }
-//TODO: css alias
+
 .collSec {
 	@include section-title;
 }

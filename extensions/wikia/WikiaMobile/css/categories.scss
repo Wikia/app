@@ -1,14 +1,9 @@
+@import "variables.scss";
+
 //mixins
 @import "mixins/section-title.scss";
 
 #wkArtCat {
-
-	//TODO: css alias
-	.collSec {
-		margin: $section-title-margin;
-		@include section-title-related;
-	}
-
 	#catlinks {
 		&.open {
 			display: block;

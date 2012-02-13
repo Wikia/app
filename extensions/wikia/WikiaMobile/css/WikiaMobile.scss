@@ -146,3 +146,9 @@ blockquote {
 		-webkit-transform: rotate(360deg);
 	}
 }
+
+#wkMainCntFtr {
+	.collSec {
+		@include section-title-related;
+	}
+}
