@@ -67,4 +67,4 @@ var Exitstitial = {
 			$("#ExitstitialInfobox").html(data);
 		});
 	}
-}
+};
