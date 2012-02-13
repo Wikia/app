@@ -35,7 +35,7 @@ class CategoryDataService extends Service {
 	}
 
 	public static function getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative = false  ){
-		
+
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			array( 'page', 'revision', 'categorylinks' ),
@@ -51,8 +51,8 @@ class CategoryDataService extends Service {
 		);
 		return self::tableFromResult( $res );
 	}
-	
-	public function getMostVisited( $sCategoryDBKey, $mNamespace, $limit = false, $negative = false ){
+
+	public function getMostVisited( $sCategoryDBKey, $mNamespace = false, $limit = false, $negative = false ){
 
 		global $wgStatsDB, $wgCityId, $wgDevelEnvironment, $wgStatsDBEnabled;
 
@@ -61,109 +61,112 @@ class CategoryDataService extends Service {
 			return array();
 		}
 
-			if( !empty( $mNamespace ) ) {
-				$tmp = array(
-					'cl_to' => $sCategoryDBKey,
-					'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-				);
-			} else {
-				$tmp = array( 'cl_to' => $sCategoryDBKey );
-			}
+		$where = array(
+			'cl_to' => $sCategoryDBKey
+		);
 
-			$dbr = wfGetDB( DB_SLAVE );
-			$res = $dbr->select(
-				array( 'page', 'categorylinks' ),
-				array( 'page_id', 'cl_to' ),
-				$tmp,
-				__METHOD__,
-				array( 'ORDER BY' => 'page_title' ),
-				array( 'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' ) )
+		if( !empty( $mNamespace ) ) {
+			$where[] = 'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')';
+		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			array( 'page', 'categorylinks' ),
+			array( 'page_id', 'cl_to' ),
+			$where,
+			__METHOD__,
+			array( 'ORDER BY' => 'page_title' ),
+			array( 'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' ) )
+		);
+
+		if ( $dbr->numRows( $res ) > 0 ) {
+			Wikia::log(__METHOD__, ' Found some data in categories. Proceeding ');
+			$aCategoryArticles = self::tableFromResult( $res );
+
+			//nice trick to get far less results from Stats DB in most cases
+			$catKeys = array_keys($aCategoryArticles);
+			$catKeyMin = min($catKeys);
+			$catKeyMax = max($catKeys);
+
+			Wikia::log(__METHOD__, ' Searching for prepared data');
+
+			$optionsArray = array();
+			$optionsArray['ORDER BY'] = 'pv_views DESC';
+
+			$where = array(
+				'city_id' => $wgCityId,
+				'page_id > ' . $catKeyMin,
+				'page_id < ' . $catKeyMax
 			);
 
-			if ( $dbr->numRows( $res ) > 0 ) {
-				Wikia::log(__METHOD__, ' Found some data in categories. Proceeding ');
-				$aCategoryArticles = self::tableFromResult( $res );
-				
-				Wikia::log(__METHOD__, ' Searching for prepared data');
+			if( !empty( $mNamespace )  ) {
+				$where[] = 'page_ns ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')';
+			}
 
-				$optionsArray = array();
-				$optionsArray['ORDER BY'] = 'pv_views DESC';
-				if ( !empty( $limit ) ) {
-					$optionsArray['LIMIT'] = $limit;
-				}
-				
-				if( !empty( $mNamespace )  ) {
-					$tmp = array(
-						'city_id' => $wgCityId,
-						'page_ns ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-					);
-				} else {
-					$tmp = array( 'city_id' => $wgCityId );
-				}
-				
-				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
-				$res = $dbr->select(
-					array( 'specials.page_views_summary_articles' ),
-					array( 'page_id' ),
-					$tmp,
-					__METHOD__,
-					$optionsArray
+			$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
+			$res = $dbr->select(
+				array( 'specials.page_views_summary_articles' ),
+				array( 'page_id' ),
+				$where,
+				__METHOD__,
+				$optionsArray
+			);
+
+			if ( ( $dbr->numRows( $res ) == 0 ) ) {
+
+				Wikia::log(__METHOD__, ' No data. Try to gather some by myself');
+
+				$where = array(
+					'pv_city_id' => $wgCityId,
+					'pv_page_id > ' . $catKeyMin,
+					'pv_page_id < ' . $catKeyMax
 				);
-				if ( ( $dbr->numRows( $res ) == 0 ) ) {
-	
-					Wikia::log(__METHOD__, ' No data. Try to gather some by myself');
 
-					$optionsArray = array();
-					$optionsArray['GROUP BY'] = 'pv_page_id';
-					$optionsArray['ORDER BY'] = 'sum(pv_views) DESC';
-					if ( !empty( $limit ) ) {
-						$optionsArray['LIMIT'] = $limit;
-					}
-
-					if( !empty( $mNamespace )  ) {
-						$tmp = array(
-							'pv_city_id' => $wgCityId,
-							'pv_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-						);
-					} else {
-						$tmp = array( 'pv_city_id' => $wgCityId );
-					}
-					
-					$lastMonth = strftime( "%Y%m%d", time() - 30 * 24 * 60 * 60 );
-					$res = $dbr->select(
-						array( 'page_views_articles' ),
-						array( 'pv_page_id as page_id' ),
-						$tmp,
-						__METHOD__,
-						$optionsArray
-					);
+				if( !empty( $mNamespace )  ) {
+					$where[] = 'pv_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')';
 				}
-				if ( $dbr->numRows( $res ) > 0 ) {
 
-					Wikia::log(__METHOD__, 'Found some data. Lets find a commmon part with categories');
-					$aSortedArticles = self::tableFromResult( $res );
-					$aResult = array();
-					foreach( $aSortedArticles as $key => $val ){
-						if ( isset($aCategoryArticles[$key]) ){
-							unset( $aCategoryArticles[$key] );
-							$aResult[$key] = $val;
-							if ( !empty( $limit ) && count($aResult) >= $limit ){
-								return $aResult;
-							}
+				$res = $dbr->select(
+					array( 'page_views_articles' ),
+					array( 'pv_page_id as page_id' ),
+					$where,
+					__METHOD__,
+					array(
+						'GROUP BY' => 'pv_page_id',
+						'ORDER BY' => 'sum(pv_views) DESC'
+					)
+				);
+			}
+
+			if ( $dbr->numRows( $res ) > 0 ) {
+
+				Wikia::log(__METHOD__, 'Found some data. Lets find a commmon part with categories');
+
+				$aResult = array();
+				while ($row = $res->fetchObject($res)) {
+					$key = $row->page_id;
+					if ( in_array( $key, $catKeys ) ){
+						unset( $aCategoryArticles[$key] );
+						$aResult[$key] = $key;
+						if ( !empty( $limit ) && count( $aResult ) >= $limit ){
+							return $aResult;
 						}
 					}
-					$ret = $aResult + $aCategoryArticles;
-					if( !empty( $limit ) && count( $ret ) > $limit ) {
-						$ret = array_slice($ret, 0, $limit, true);
-					}
-					return $ret;
-				} else {
-					Wikia::log(__METHOD__, 'No data at all. Quitting.');
-					return array();
 				}
+
+				$ret = ( !empty( $aResult ) )  ? $aResult + $aCategoryArticles : $aCategoryArticles;
+
+				if( !empty( $limit ) && count( $ret ) > $limit ) {
+					$ret = array_slice($ret, 0, $limit, true);
+				}
+				return $ret;
 			} else {
-				Wikia::log(__METHOD__, ' No articles in category found - quitting');
+				Wikia::log(__METHOD__, 'No data at all. Quitting.');
 				return array();
 			}
+		} else {
+			Wikia::log(__METHOD__, ' No articles in category found - quitting');
+			return array();
+		}
 	}
 }
