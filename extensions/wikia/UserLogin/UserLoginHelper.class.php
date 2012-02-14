@@ -507,7 +507,7 @@ class UserLoginHelper extends WikiaModel {
 			}
 
 			if ( $this->wg->User->isEmailConfirmationPending() || !empty($optionNewEmail) ) {
-				$this->wg->Out->addWikiMsg( 'usersignup-user-pref-unconfirmed-emailnotauthenticated' );
+				$this->wg->Out->addWikiMsg( 'usersignup-confirm-email-unconfirmed-emailnotauthenticated' );
 				if (strtotime($this->wg->User->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0)
 					return;
 			}

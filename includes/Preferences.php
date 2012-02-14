@@ -351,10 +351,10 @@ class Preferences {
 			$disableEmailPrefs = false;
 
 			if ( $wgEmailAuthentication ) {
+				/* Wikia change - begin */
+				global $wgEnableUserLoginExt;
 				if ( $user_email ) {
 					$user_emailauthts = $user->getEmailAuthenticationTimestamp();
-					/* Wikia change - begin */
-					global $wgEnableUserLoginExt;
 					if ( empty($wgEnableUserLoginExt) ) {
 						$optionNewEmail = '';
 						$msgKeyPrefixEmail = '';
@@ -386,11 +386,12 @@ class Preferences {
 							array( 'known', 'noclasses' )
 						) . '<br />';
 					}
-					/* Wikia change - end */
 				} else {
 					$disableEmailPrefs = true;
-					$emailauthenticated = wfMsgHtml( 'noemailprefs' );
+					$msgKeyPrefix = ( empty($wgEnableUserLoginExt) ) ? '' : 'usersignup-user-pref-' ;
+					$emailauthenticated = wfMsgHtml( $msgKeyPrefix.'noemailprefs' );
 				}
+				/* Wikia change - end */
 
 				$defaultPreferences['emailauthentication'] =
 						array(

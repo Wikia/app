@@ -36,8 +36,13 @@ $messages['en'] = array(
 	'usersignup-user-pref-confirmemail_send' => 'Resend my confirmation email',
 	'usersignup-user-pref-emailauthenticated' => 'Thanks! Your email was confirmed on $2 at $3.',
 	'usersignup-user-pref-emailnotauthenticated' => 'Check your email and click the confirmation link to finish changing your email to: $1',
-	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. Email features won\'t work until you confirm your email address',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. Email features won\'t work until you confirm your email address.',
 	'usersignup-user-pref-reconfirmation-email-sent' => 'Almost there! We\'ve sent a new confirmation email to $1. Check your email and click on the link to finish confirming your email address.',
+	'usersignup-user-pref-noemailprefs' => ' Looks like we don\'t have an email address for you. Please enter an email address above.',
+
+	// Special:ConfirmEmail
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. We\'ve sent you an email, click the confirmation link there to confirm.',
+	'usersignup-user-pref-confirmemail_noemail' => 'Looks like we don\'t have an email address for you. Go to [[Special:Preferences|user preferences]] to enter one.',
 
 	// confirm email
 	'usersignup-confirm-page-title' => 'Confirm your email',
@@ -100,7 +105,7 @@ Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:spe
 <br/><br/>
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 <br/><br/>
-You will only be able to log in with your new email address once you confirm. Until then, you can keep logging in with your old email address.',
+You\'ll continue to recieve email at your old email address until you confirm this one.',
 	'usersignup-reconfirmation-email-signature' => 'The Wikia Team',
 	'usersignup-reconfirmation-email_body' => 'Hi $2,
 
@@ -108,7 +113,7 @@ Please click the link below to confirm your change of email address on Wikia.
 
 $3
 
-You will only be able to log in with your new email address once you confirm. Until then, you can keep logging in with your old email address.
+You\'ll continue to recieve email at your old email address until you confirm this one.
 
 The Wikia Team
 
@@ -123,7 +128,7 @@ Please click the link below to confirm your change of email address on Wikia.
 
 <a style="color:#2C85D5;" href="$2">$2</a>
 
-You will only be able to log in with your new email address once you confirm. Until then, you can keep logging in with your old email address.
+You\'ll continue to recieve email at your old email address until you confirm this one.
 
 The Wikia Team
 
