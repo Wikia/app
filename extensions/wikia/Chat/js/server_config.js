@@ -18,6 +18,9 @@ exports.API_URL = "/api.php";
 exports.WIKIA_PROXY_HOST = "";
 exports.WIKIA_PROXY_PORT = "";
 
+exports.REDIS_PORT = 6379;
+exports.REDIS_HOST = "redis-s1";
+
 // Settings for local varnish
 exports.WIKIA_PROXY_HOST = "127.0.0.1";
 exports.WIKIA_PROXY_PORT = 6081;

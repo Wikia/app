@@ -1,6 +1,7 @@
 
 /** REQUIRES, OTHER SETUP **/
-	
+
+var config = require("./server_config.js");
 var app = require('express').createServer()
     , jade = require('jade')
     , sio = require('./lib/socket.io.8.4/socket.io.js')
@@ -8,11 +9,10 @@ var app = require('express').createServer()
     , _ = require('underscore')._
     , Backbone = require('backbone')
     , redis = require('redis')
-    , rc = redis.createClient()
+    , rc = redis.createClient(config.REDIS_PORT, config.REDIS_HOST)
     , models = require('./models/models')
 	, urlUtil = require('url');
 var http = require("http");
-var config = require("./server_config.js");
 
 
 //console.log = function() {};
