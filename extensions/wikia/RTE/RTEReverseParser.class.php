@@ -11,14 +11,8 @@ class RTEReverseParser {
 	private $listIndent;
 	
 	// elements forcing newline before list
-	private $elementsNewligningFollowingList = array(
-				'div',
-				'h1',
-				'h2',
-				'h3',
-				'h4',
-				'h5',
-				'h6'
+	private $elementsNewliningFollowingList = array(
+				'div','h1','h2','h3','h4','h5','h6'
 			);
 
 	// node ID counter
