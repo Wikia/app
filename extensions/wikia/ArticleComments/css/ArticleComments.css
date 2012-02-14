@@ -69,7 +69,7 @@ div.article-comm-input-text textarea {
 	height: 100px;
 	margin-bottom: 5px;
 	padding: 3px;
-	width: 450px;
+	width: 100%;
 }
 
 .article-comments .details {
@@ -99,7 +99,7 @@ div.article-comm-input-avatar {
 
 .article-comments .comment,
 div.article-comm-input-text {
-	margin-left: 185px;
+	margin-left: 0px;
 }
 
 .custom_answers div.article-comm-input-text {
