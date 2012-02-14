@@ -549,7 +549,7 @@ function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 
 				</ul>
 			</div>
-			<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext" placeholder="'.wfMsg('categoryselect-code-view-placeholder').'" rows="4" data-initial-value="' . $categories . '">' . $categories . '</textarea></div>
+			<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext" placeholder="'.wfMsg('categoryselect-code-view-placeholder').'" rows="4" data-initial-value="' . htmlspecialchars($categories) . '">' . htmlspecialchars($categories) . '</textarea></div>
 			<div class="clearfix"></div>
 		</div>';
 
