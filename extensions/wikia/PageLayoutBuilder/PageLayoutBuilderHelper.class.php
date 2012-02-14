@@ -224,7 +224,7 @@ class PageLayoutBuilderHelper {
 	 * @access public
 	 */
 	public static function createPageOptions(&$standardOptions, &$options, &$listtype) {
-		global $wgCdnStylePath, $wgScript;
+		global $wgExtensionsPath;
 		$listtype = "long";
 		$out = PageLayoutBuilderModel::getListOfLayout(DB_SLAVE);
 		$optionsAdd = array();
@@ -233,7 +233,7 @@ class PageLayoutBuilderHelper {
 				$optionsAdd["plb".$value['page_id']] = array(
 					'label' => str_replace("_", " " ,$value['page_title']),
 					'desc' => $value['desc'],
-					'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
+					'icon' => "{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_format.png",
 					'trackingId' => 'blankpage',
 					'submitUrl' => Title::newFromText( "LayoutBuilderForm", NS_SPECIAL )->getFullUrl("plbId=".$value['page_id']."&default=$1&action=edit")
 				);
