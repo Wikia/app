@@ -500,6 +500,14 @@ class LoginForm {
 	 */
 	public function authenticateUserData() {
 		global $wgUser, $wgAuth;
+
+		/* Wikia change - begin */
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return false;
+		}
+		/* Wikia change - end */
+
 		if ( $this->mName == '' ) {
 			return self::NO_NAME;
 		}
