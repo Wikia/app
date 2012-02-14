@@ -19,14 +19,14 @@ var WikiaForm = function(el) {
 	// pre-cache known inputs by name (this could potentially cause a bug if the input is dynamic)
 	this.inputs = {};
 	var inputs = this.el.find('input, select');
-	for(i = 0; i < inputs.length; i++) {
+	for(var i = 0; i < inputs.length; i++) {
 		var input = $(inputs[i]),
 			name = input.attr('name');
 		if(name) {
 			this.inputs[name] = input;
 		}
 	}
-	
+
 	this.inputGroups = {};
 
 	// handle tooltips
@@ -56,7 +56,7 @@ WikiaForm.prototype.getInputGroup = function(paramName) {
 				inputGroup = input.closest('.input-group');
 			}
 		}
-		
+
 		// cache if found
 		if(inputGroup.exists()) {
 			this.inputGroups[paramName] = inputGroup;
@@ -81,9 +81,9 @@ WikiaForm.prototype.showInputError = function(paramName, msg) {
 
 WikiaForm.prototype.clearInputError = function(paramName) {
 	var inputGroup = this.getInputGroup(paramName);
-	
+
 	inputGroup.removeClass('error');
-	
+
 	this.clearErrorMsg(inputGroup);
 };
 

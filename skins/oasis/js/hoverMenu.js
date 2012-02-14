@@ -115,7 +115,7 @@ HoverMenu.prototype.mouseout = function(event) {
 
 HoverMenu.prototype.showNav = function(parent) {
 	var nav = $(parent).children('ul');
-	HoverMenuGlobal.hideAll();
+	window.HoverMenuGlobal.hideAll();
 
 	if (nav.exists()) {
 		nav.addClass("show");
