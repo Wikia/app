@@ -20,7 +20,7 @@ class NewWikisSpecialPage extends SpecialPage {
 
 	function execute($par) {
 		global $wgOut, $wgRequest;
-
+		
 		$format = $wgRequest->getVal( "format", false );
 		if( $format === "xml" || $format === "csv" ) {
 			$this->generateList( $format );
@@ -198,6 +198,11 @@ class NewWikisPage extends AlphabeticPager {
 			);
 			$confirm = ($row->user_email_authenticated) ? 'Y' : 'N';
 			$detail = "$row->city_lang, $row->city_created, FounderName:$userLink, Email:$row->user_email, Confirm:$confirm";
+			
+			//FB#11896
+			if( !empty($row->founding_user_ip) ) {
+				$detail .= ', IP:'.long2ip($row->founding_user_ip);
+			}
 		} else {
 			$detail = $row->city_lang;
 		}
