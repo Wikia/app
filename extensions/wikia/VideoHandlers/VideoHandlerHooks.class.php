@@ -32,4 +32,25 @@ class VideoHandlerHooks extends WikiaObject{
 		}
 		return true;
 	}
+	
+	public function onSetupAfterCache() {
+		global $wgLocalFileRepo, $wgUploadDirectory, $wgUploadBaseUrl,
+			$wgUploadPath, $wgHashedUploadDirectory, 
+			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
+			$wgFileStore;
+		
+		$wgLocalFileRepo = array(
+			'class' => 'WikiaLocalRepo',
+			'name' => 'local',
+			'directory' => $wgUploadDirectory,
+			'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
+			'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
+			'thumbScriptUrl' => $wgThumbnailScriptPath,
+			'transformVia404' => !$wgGenerateThumbnailOnParse,
+			'deletedDir' => $wgFileStore['deleted']['directory'],
+			'deletedHashLevels' => $wgFileStore['deleted']['hash']
+		);
+		
+		return true;
+	}
 }
