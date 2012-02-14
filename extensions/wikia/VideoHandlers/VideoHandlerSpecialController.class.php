@@ -29,7 +29,7 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 		$undercover = $this->getVal( 'undercover', false );
 		
 		if ( $videoId && $provider ) {
-			$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title, null, null, $undercover);
+			$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title, null, $undercover);
         
 			$this->setVal( 'uploadStatus', $result->ok );
 			$this->setVal( 'isNewFile', empty( $result->value ) );

@@ -1,6 +1,6 @@
 <?php
 
-class ScreenplayApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoData {
+class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	const VENDOR_ID = 1893;
 	const VIDEO_TYPE = '.mp4';
 	const THUMBNAIL_TYPE = '.jpg';
@@ -12,67 +12,17 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoDa
 	const ENCODEFORMATCODE_JPEG = 9;
 	const ENCODEFORMATCODE_MP4 = 20;
 
+	protected static $CACHE_KEY = 'screenplayapi';
 	protected static $THUMBNAIL_URL_TEMPLATE = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=$1&bitrateid=$2&vendorid=$3&type=$4';
-	protected static $PARSED_DATA_CACHE_KEY = 'screenplaydata';
-	protected $parsedData;
-
-	public function __construct($videoName, $params=array()) {
-		$this->videoName = $videoName;
-		if (!empty($params['videoId'])) {
-			$this->videoId = $params['videoId'];
-		}
-
-		$memcKey = F::app()->wf->memcKey( static::$PARSED_DATA_CACHE_KEY, static::$CACHE_KEY_VERSION, $this->videoName );
-		$data = F::app()->wg->memc->get( $memcKey );
-		$cacheMe = false;
-		if ( empty( $data ) ){
-			if (!empty($params['parsedData'])) {
-				$this->parsedData = $params['parsedData'];
-				$cacheMe = true;
-				$data = $this->generateCacheData();
-			}
-			else {
-				$this->initializeInterfaceObject();			
-			}
-		}
-		else {
-			$this->loadDataFromCache($data);
-		}
 		
-		if ( $cacheMe ) {
-			F::app()->wg->memc->set( $memcKey, $data, static::$CACHE_EXPIRY );
-		}
-	}
-	
-	public function getParsedDataField($field) {
-		if (isset($this->parsedData[$field])) {
-			return $this->parsedData[$field];
-		}
-		return null;
-	}
-	
-	public function generateCacheData() {
-		$data = array('videoId'=>$this->videoId, 'parsedData'=>$this->parsedData);
-		return $data;
-	}
-	
-	public function loadDataFromCache($cacheData) {
-		$this->videoId = $cacheData['videoId'];
-		$this->parsedData = $cacheData['parsedData'];
-	}
-	
-	protected function getVideoTitle() {
-		return $this->videoName;
-	}
-	
 	public function getDescription() {
 		return '';	// no description from provider
 	}
 	
 	public function getThumbnailUrl() {
 		$bitrateId = self::MEDIUM_JPEG_BITRATE_ID;
-		if ($this->getParsedDataField('jpegBitrateCode')) {
-			$bitrateId = $this->getParsedDataField('jpegBitrateCode');
+		if (!empty($this->metadata['jpegBitrateCode'])) {
+			$bitrateId = $this->metadata['jpegBitrateCode'];
 		}
 		elseif (!empty($this->interfaceObj[3])) {
 			$bitrateId = $this->interfaceObj[3];
@@ -85,9 +35,6 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoDa
 	}
 
 	protected function getVideoDuration(){
-		if ($duration = $this->getParsedDataField('duration')) {
-			return $duration;
-		}
 		if (!empty($this->interfaceObj[2])) {
 			return $this->interfaceObj[2];
 		}
@@ -96,8 +43,8 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoDa
 	
 	protected function getAspectRatio() {
 		$bitrateId = '';
-		if ($this->getParsedDataField('stdBitrateCode')) {
-			$bitrateId = $this->getParsedDataField('stdBitrateCode');
+		if (!empty($this->metadata['stdBitrateCode'])) {
+			$bitrateId = $this->metadata['stdBitrateCode'];
 		}
 		elseif (!empty($this->interfaceObj[0])) {
 			$bitrateId = $this->interfaceObj[0];
@@ -111,9 +58,6 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoDa
 	}
 	
 	protected function isHdAvailable() {
-		if ($this->getParsedDataField('hd')) {
-			return true;
-		}
 		if (!empty($this->interfaceObj[1])) {
 			return true;
 		}
@@ -121,10 +65,7 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper implements ParsedVideoDa
 	}
 	
 	protected function getVideoPublished(){
-		if ($dateAdded = $this->getParsedDataField('dateAdded')) {
-			return strtotime($dateAdded);
-		}
-		elseif (!empty($this->interfaceObj[4])) {
+		if (!empty($this->interfaceObj[4])) {
 			return strtotime($this->interfaceObj[4]);
 		}
 		return '';	// Screenplay API includes this field, but videos

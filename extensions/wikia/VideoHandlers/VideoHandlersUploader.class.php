@@ -13,14 +13,13 @@ class VideoHandlersUploader {
 	 * @param string $provider provider whose API will be used to fetch video data
 	 * @param string $videoId id of video, assigned by provider
 	 * @param Title $title Title object stemming from name of video
-	 * @param string $videoName name of video and associated article
 	 * @param string $description description of video
 	 * @param boolean $undercover upload a video without creating the associated article
 	 * @return FileRepoStatus On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file. 
 	 */
-	public static function uploadVideo($provider, $videoId, &$title, $videoName=null, $description=null, $undercover=false) {
-		$apiWrapper = F::build( ucfirst( $provider ) . 'ApiWrapper', array( $videoId, array('videoName'=>$videoName) ) );
+	public static function uploadVideo($provider, $videoId, &$title, $description=null, $undercover=false) {
+		$apiWrapper = F::build( ucfirst( $provider ) . 'ApiWrapper', array( $videoId ) );
 
 		/* prepare temporary file */
 		$url = $apiWrapper->getThumbnailUrl();
@@ -65,30 +64,17 @@ class VideoHandlersUploader {
 	}
 
 	/**
-	 * Sanitize text for use as filename or article title
+	 * Sanitize text for use as filename and article title
 	 * @param string $titleText title to sanitize
 	 * @param string $replaceChar character to replace illegal characters with
-	 * @param int $sanitizeMode SANITIZE_MODE_FILENAME or SANITIZE_MODE_ARTICLETITLE
 	 * @return string sanitized title 
 	 */
-	public static function sanitizeTitle( $titleText, $replaceChar=' ', $sanitizeMode=self::SANITIZE_MODE_FILENAME ) {
+	public static function sanitizeTitle( $titleText, $replaceChar=' ' ) {
 
 		$sanitized = '';
 
-		switch ($sanitizeMode) {
-			case self::SANITIZE_MODE_FILENAME:
-				// remove all characters that are not alphanumeric.
-				$sanitized = preg_replace( '/[^[:alnum:]]{1,}/', $replaceChar, $titleText );
-				break;
-			case self::SANITIZE_MODE_ARTICLETITLE:
-				$sanitized = preg_replace(Title::getTitleInvalidRegex(), $replaceChar, $titleText);
-				foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
-					$sanitized = str_replace( $illegalChar, $replaceChar, $sanitized );
-				}
-				break;
-			default:
-				$sanitized = $titleText;
-		}
+		// remove all characters that are not alphanumeric.
+		$sanitized = preg_replace( '/[^[:alnum:]]{1,}/', $replaceChar, $titleText );
 		
 		$sanitized = substr( trim( $sanitized ), 0, 255 );	// image table column name has 255-char limit
 

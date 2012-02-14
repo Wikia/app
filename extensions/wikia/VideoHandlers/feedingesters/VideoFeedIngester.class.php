@@ -25,7 +25,7 @@ abstract class VideoFeedIngester {
 	 */
 	abstract protected function generateName(array $data);
 	abstract protected function generateTitleName(array $data);
-	abstract protected function generateParsedData(array $data, &$errorMsg);
+	abstract protected function generateMetadata(array $data, &$errorMsg);
 	abstract protected function generateCategories(array $data, $addlCategories);
 	
 	public static function getInstance($provider='') {
@@ -52,7 +52,7 @@ abstract class VideoFeedIngester {
 		
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
-		$parsedData = $this->generateParsedData($data, $msg);
+		$metadata = $this->generateMetadata($data, $msg);
 		if (!empty($msg)) {
 			return 0;
 		}
@@ -72,14 +72,11 @@ abstract class VideoFeedIngester {
 		if ($debug) {
 			print "parsed partner clip id $id. name: $name. categories: " . implode(',', $categories) . ". ";
 			print "metadata: \n";
-			print_r($parsedData);
+			print_r($metadata);
 			return 1;
 		}
 		else {
-			$apiParams = array('parsedData'=>$parsedData);
-			
 			if (is_subclass_of(static::$API_WRAPPER, 'WikiaVideoApiWrapper')) {
-				$apiParams['videoId'] = $id;
 				$videoId = $name;
 			}
 			else {
@@ -87,9 +84,10 @@ abstract class VideoFeedIngester {
 				
 			}			
 
-			$apiWrapper = new static::$API_WRAPPER($videoId, $apiParams);
+			$metadata['ingestedFromFeed'] = true;
+			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata, true);
 			$uploadedTitle = null;
-			$result = VideoHandlersUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, null, $categoryStr.$apiWrapper->getDescription(), false);
+			$result = VideoHandlersUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
 			if ($result->ok) {
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
 				return 1;
@@ -101,7 +99,7 @@ abstract class VideoFeedIngester {
 	
 	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
 		$sanitizedName = VideoHandlersUploader::sanitizeTitle($name);
-		$title = $this->titleFromText($name);
+		$title = $this->titleFromText($sanitizedName);
 		if(is_null($title)) {
 			$msg = "article title was null: clip id $videoId. name: $name";
 			return 0;

@@ -7,7 +7,7 @@ abstract class ApiWrapper {
 	const RESPONSE_FORMAT_PHP = 2;
 
 	protected $videoId;
-	protected $videoName;
+	protected $metadata;
 	protected $interfaceObj = null;
 
 	protected static $API_URL;
@@ -19,14 +19,22 @@ abstract class ApiWrapper {
 	/**
 	 *
 	 * @param string $videoId
-	 * @param Array $params 
+	 * @param array $overrideMetadata one or more metadata fields that override API response
+	 * In this case, metadata is passed through constructor, so $orverrideMetadata should be set.
 	 */
-	public function __construct( $videoId, $params=array() ) {
+	public function __construct( $videoId, $overrideMetadata=array() ) {
 		$this->videoId = $this->sanitizeVideoId( $videoId );
-		if (!empty($params['videoName'])) {
-			$this->videoName = $params['videoName'];
+		if (!empty($overrideMetadata['ingestedFromFeed'])
+		|| $this->isIngestedFromFeed()) {
+			// don't connect to api
 		}
-		$this->initializeInterfaceObject();
+		else {
+			$this->initializeInterfaceObject();
+		}
+		if (!is_array($overrideMetadata)) {
+			$overrideMetadata = array();
+		}
+		$this->loadMetadata($overrideMetadata);
 	}
 
 	/**
@@ -34,10 +42,9 @@ abstract class ApiWrapper {
 	 * @return string 
 	 */
 	public function getTitle() {
-		if (!empty($this->videoName)) {
-			return $this->videoName;
+		if (!empty($this->metadata['title'])) {
+			return $this->metadata['title'];
 		}
-		
 		return $this->getVideoTitle();
 	}
 	
@@ -48,7 +55,20 @@ abstract class ApiWrapper {
 	abstract public function getThumbnailUrl();
 	
 	public function getVideoId() {
+		if (!$this->videoId) {
+			if (isset($this->metadata['videoId'])) {
+				$this->videoId = $this->metadata['videoId'];
+			}
+		}
+		
 		return $this->videoId;
+	}
+	
+	protected function isIngestedFromFeed() {
+		// need to check cached metadata
+		$memcKey = F::app()->wf->memcKey( $this->getMetadataCacheKey() );
+		$metadata = F::app()->wg->memc->get( $memcKey );
+		return !empty( $metadata['ingestedFromFeed'] );
 	}
 
 	protected function postProcess( $return ){
@@ -66,7 +86,7 @@ abstract class ApiWrapper {
 	protected function getInterfaceObjectFromType( $type ) {
 
 		$apiUrl = $this->getApiUrl();
-		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, static::$CACHE_KEY_VERSION, $apiUrl );
+		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, $apiUrl, static::$CACHE_KEY_VERSION );
 		if ( empty($this->videoId) ){
 			throw new EmptyResponseException($apiUrl);
 		}
@@ -135,26 +155,61 @@ abstract class ApiWrapper {
 
 	// metadata
 	public function getMetadata() {
-		$metadata = array();
-
-		$metadata['videoId']		= $this->videoId;
-		$metadata['videoTitle']		= $this->getVideoTitle();
-		$metadata['articleTitle']	= $this->getTitle();
-		$metadata['published']		= $this->getVideoPublished();
-		$metadata['category']		= $this->getVideoCategory();
-		$metadata['canEmbed']		= $this->canEmbed();
-		$metadata['hd']			= $this->isHdAvailable();
-		$metadata['keywords']		= $this->getVideoKeywords();
-		$metadata['duration']		= $this->getVideoDuration();
-		$metadata['aspectRatio']	= $this->getAspectRatio();
-		$metadata['description']	= $this->getOriginalDescription();
-	
-        // for providers that use diffrent video id for embeded code
-        $metadata['altVideoId']      = $this->getAltVideoId();
-
-		return $metadata;
+		if (empty($this->metadata)) {
+			$this->loadMetadata();
+		}
+		
+		return $this->metadata;
 	}
+	
+	protected function loadMetadata(array $overrideFields=array()) {
+		$memcKey = F::app()->wf->memcKey( $this->getMetadataCacheKey() );
+		$metadata = F::app()->wg->memc->get( $memcKey );
+		$cacheMe = false;
+		if ( empty( $metadata ) ){
+			$cacheMe = true;
+			$metadata = $overrideFields;	// $overrideFields may have more fields
+							// than the standard ones, listed below.
+							// This is ok.
+			$this->metadata = $metadata;	// must do this to facilitate getters below
+							// $this->metadata will be reset at end of this function
 
+			if (!isset($metadata['videoId']))
+				$metadata['videoId']		= $this->videoId;
+			if (!isset($metadata['title']))
+				$metadata['title']		= $this->getTitle();
+			if (!isset($metadata['published']))
+				$metadata['published']		= $this->getVideoPublished();
+			if (!isset($metadata['category']))
+				$metadata['category']		= $this->getVideoCategory();
+			if (!isset($metadata['canEmbed']))
+				$metadata['canEmbed']		= $this->canEmbed();
+			if (!isset($metadata['hd']))
+				$metadata['hd']			= $this->isHdAvailable();
+			if (!isset($metadata['keywords']))
+				$metadata['keywords']		= $this->getVideoKeywords();
+			if (!isset($metadata['duration']))
+				$metadata['duration']		= $this->getVideoDuration();
+			if (!isset($metadata['aspectRatio']))
+				$metadata['aspectRatio']	= $this->getAspectRatio();
+			if (!isset($metadata['description']))
+				$metadata['description']	= $this->getOriginalDescription();	
+			// for providers that use diffrent video id for embeded code
+			if (!isset($metadata['altVideoId']))
+				$metadata['altVideoId']		= $this->getAltVideoId();
+		}
+		
+		if ( $cacheMe ) {
+			$result = F::app()->wg->memc->set( $memcKey, $metadata, static::$CACHE_EXPIRY );
+		}
+		
+		$this->metadata = $metadata;
+	}
+	
+	protected function getMetadataCacheKey() {
+		$key = static::$CACHE_KEY . '_metadata';
+		return $key . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoId;
+	}
 
 	protected function getVideoPublished(){
 		return '';
@@ -233,9 +288,20 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 	protected $videoName;
 	protected $provider;
 	
-	public function __construct( $videoName, $params=array() ) {
+	public function __construct( $videoName, array $overrideMetadata=array() ) {
 		$this->videoName = $videoName;
-		$this->initializeInterfaceObject();
+		if (!empty($overrideMetadata['ingestedFromFeed'])
+		|| $this->isIngestedFromFeed()) {
+			// don't connect to api
+		}
+		else {
+			$this->initializeInterfaceObject();
+		}
+		if (!is_array($overrideMetadata)) {
+			$overrideMetadata = array();
+		}
+		$this->loadMetadata($overrideMetadata);
+		$this->getVideoId();	// lazy-load $this->videoId
 	}
 	
 	protected function getInterfaceObjectFromType( $type ) {
@@ -252,5 +318,14 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 
 		}
 		return $response;
+	}
+	
+	protected function getVideoTitle() {
+		return $this->videoName;
+	}
+	
+	protected function getMetadataCacheKey() {
+		$key = static::$CACHE_KEY . '_metadata';
+		return $key . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoName;
 	}
 }
