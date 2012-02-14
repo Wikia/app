@@ -57,7 +57,7 @@ $messages['en'] = array(
 	'wall-user-talk-archive-page-title' => 'User_talk_archive', // why the underscores?
 
 	'wall-action-all-confirm-cancel' => 'Cancel',
-	'wall-action-all-confirm-notify' => 'Notify an admin', // again, this seems like a duplicate of the message(s) above, is the context different?
+	'wall-action-all-confirm-notify' => 'Notify an admin', // again, this seems like a duplicate of the message(s) above, is the context different? YES 
 
 	'wall-action-remove-reply-title' => 'Remove this reply',
 	'wall-action-remove-thread-title' => 'Remove this thread',
@@ -227,7 +227,7 @@ $messages['en'] = array(
 	
 	/* Thread Level History */
 	'wall-thread-history-title' => 'thread history',
-	'wall-thread-history-thread-created' => '$1 $2 created this thread', // needs geneder support (also true for those below)
+	'wall-thread-history-thread-created' => '$1 $2 created this thread', 
 	'wall-thread-history-reply-created' => '$1 $2 left a reply',
 
 	'wall-thread-history-thread-removed' => '$1 $2 removed this thread',
