@@ -18,7 +18,7 @@ class CreateWiki {
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder, $mTables,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables, $mTypeTables,
-		$mStarterTables, $sDbStarter;
+		$mStarterTables, $sDbStarter, $mFounderIp;
 
 	const ERROR_BAD_EXECUTABLE_PATH                    = 1;
 	const ERROR_DOMAIN_NAME_TAKEN                      = 2;
@@ -86,7 +86,9 @@ class CreateWiki {
 				$this->mFounder = $founder;
 			}
 		}
-
+		
+		$this->mFounderIp = wfGetIP();
+		
 		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
 		/**
 		 * starters map: langcode => database name
@@ -650,6 +652,7 @@ class CreateWiki {
 		$this->mNewWiki->founderName = $this->mFounder->getName();
 		$this->mNewWiki->founderEmail = $this->mFounder->getEmail();
 		$this->mNewWiki->founderId = $this->mFounder->getId();
+		$this->mNewWiki->founderIp = $this->mFounderIp;
 		$this->mNewWiki->type = $this->mType;
 
 		wfProfileOut( __METHOD__ );
@@ -889,6 +892,7 @@ class CreateWiki {
 			'city_url'            => $this->mNewWiki->url,
 			'city_founding_user'  => $this->mNewWiki->founderId,
 			'city_founding_email' => $this->mNewWiki->founderEmail,
+			'city_founding_ip'    => ip2long($this->mNewWiki->founderIp),
 			'city_path'           => $this->mNewWiki->path,
 			'city_description'    => $this->mNewWiki->sitename,
 			'city_lang'           => $this->mNewWiki->language,
