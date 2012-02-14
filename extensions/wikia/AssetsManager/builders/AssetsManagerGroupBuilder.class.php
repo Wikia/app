@@ -13,6 +13,7 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 
 		$ac = new AssetsConfig();
 		$assets = $ac->resolve($this->mOid, true, (!isset($this->mParams['minify']) || $this->mParams['minify'] == true), $this->mParams);
+		$this->mContentType = $ac->getGroupType($this->mOid);
 
 		foreach($assets as $asset) {
 			// reference to a file to be fetched by the browser from external server (BugId:9522)
@@ -53,7 +54,5 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 		if($this->mOid == 'site_user_css') {
 			$this->mCacheMode = 'private';
 		}
-
-		$this->mContentType = $ac->getGroupType($this->mOid);
 	}
 }
