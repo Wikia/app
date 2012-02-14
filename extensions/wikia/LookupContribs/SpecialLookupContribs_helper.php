@@ -179,28 +179,19 @@ class LookupContribsCore {
                         $wData = WikiFactory::getWikisByID( $wikisIds );
                         $i = 0;
                         while ( $row = $dbr->fetchObject( $res ) ) {
-                            if ( isset( $wData[$row->wiki_id] ) ) {
-                                $aItem = array(
-                                    'id'         =>  $row->wiki_id,
-                                    'url'        =>  $wData[$row->wiki_id]->city_url,
-                                    'dbname'     =>  $wData[$row->wiki_id]->city_dbname,
-                                    'title'      =>  $wData[$row->wiki_id]->city_title,
-                                    'active'     =>  $wData[$row->wiki_id]->city_public,
-                                    'last_edit'  =>  $row->last_edit,
-                                    'edit_count' => 0
-                                );
-                            } else {
-                                $aItem = array(
-                                    'id'        => $row->wiki_id,
-                                    'url'       => wfMsg( 'lookupcontribs-unknown' ),
-                                    'dbname'    => wfMsg( 'lookupcontribs-unknown' ),
-                                    'title'     => wfMsg( 'lookupcontribs-unknown' ),
-                                    'active'    => 0,
-                                    'last_edit' => 0,
-                                    'editcount' => 0
-
-                                );
+                            if ( !isset( $wData[$row->wiki_id] ) ) {
+                                continue;
                             }
+                            
+                            $aItem = array(
+                                'id'         =>  $row->wiki_id,
+                                'url'        =>  $wData[$row->wiki_id]->city_url,
+                                'dbname'     =>  $wData[$row->wiki_id]->city_dbname,
+                                'title'      =>  $wData[$row->wiki_id]->city_title,
+                                'active'     =>  $wData[$row->wiki_id]->city_public,
+                                'last_edit'  =>  $row->last_edit,
+                                'edit_count' => 0
+                            );
                                 
                             if ( isset( $wikiEdits[$row->wiki_id]->edits ) ) {
                                 $aItem['editcount'] = $wikiEdits[$row->wiki_id]->edits;
