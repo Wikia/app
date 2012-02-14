@@ -1076,10 +1076,8 @@ class RTEReverseParser {
 
 				// bugfix: fogbugz BugID 11537
 				// losing newline before : and * following h[1-6] or div
-				if($node->previousSibling) {
-					if(in_array($node->previousSibling->nodeName,$this->elementsNewliningFollowingList)) {
-						$out = "\n{$out}";
-					}
+				if(self::previousSiblingIs($node,$this->elementsNewliningFollowingList)) {
+					$out = "\n{$out}";
 				}
 
 				// this list is indented list (RT #38268)
@@ -1137,10 +1135,8 @@ class RTEReverseParser {
 
 				// bugfix: fogbugz BugID 11537
 				// losing newline before : and * following h[1-6] or div 
-				if($node->previousSibling) {
-					if(in_array($node->previousSibling->nodeName,$this->elementsNewliningFollowingList)) {
-						$out = "\n{$out}";
-					}
+				if(self::previousSiblingIs($node,$this->elementsNewliningFollowingList)) {
+					$out = "\n{$out}";
 				}
 
 				// handle nested intended list
