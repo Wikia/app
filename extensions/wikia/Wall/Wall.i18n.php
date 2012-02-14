@@ -7,9 +7,8 @@ $messages['en'] = array(
 	'wall-message-loadmore' => 'View all $1 {{PLURAL:$1|reply|replies}}', 
 	'wall-message-wall' => 'Message Wall',
 	'wall-message-wall-shorten' => 'wall',
-	'wall-message-unfollow' => 'Unfollow',  
-	'wall-message-following' => 'Following', // ditto
-	'wall-message-follow' => 'Follow', // ditto
+
+	'wall-message-unfollow' => 'Unfollow',
 
 	'wall-message-undoremove' => 'Undo',
 	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
@@ -27,9 +26,9 @@ $messages['en'] = array(
 	'wall-thread-deleted' => 'Deleted',
 
 	'wall-default-title' => 'Message from $1', 
-	'wall-no-title-warning' => '&larr; You did not specify any title', // entity should be UTF8 character instead
+	'wall-no-title-warning' => '← You did not specify any title',
 	'wall-desc' => 'User talk page replacement',
-	'wall-disabled-desc' => 'Message Wall functionality for pages without wall extension', // pages? did you mean "wikis"?
+	'wall-disabled-desc' => 'Message Wall functionality for wikis without wall extension', 
 	'wall-placeholder-topic' => 'What\'s this about?',
 	'wall-placeholder-message' => "Post a new message to $1's wall",
 	'wall-placeholder-message-anon' => "Post a new message to this wall",
@@ -38,7 +37,7 @@ $messages['en'] = array(
 	'wall-button-to-cancel-preview' => "Edit",
 	'wall-button-to-submit-comment' => "Post",
 	'wall-button-to-submit-reply' => "Reply",
-	'wall-button-to-submit-comment-no-topic' => "Post without title", // is this correct English? "with no title" or "without a title", perhaps?
+	'wall-button-to-submit-comment-no-topic' => "Post without a title",
 	'wall-button-save-changes' => 'Save changes',
 	'wall-button-cancel-changes' => 'Cancel',
 	'wall-button-done-source' => 'Done',
@@ -50,14 +49,14 @@ $messages['en'] = array(
 	'wall-message-deleted-thread-because' => "$1 deleted this thread because:",
 	'wall-message-restore-thread' => "Restore Thread",
 	'wall-message-removed-reply-because' => "$1 removed this reply because:",
-	'wall-message-deleted-reply-because' => "$1 deleted this reply because:", // needs gender support, patchwork, reason should be a parameter
+	'wall-message-deleted-reply-because' => "$1 deleted this reply because:", 
 	'wall-message-restore-reply' => "Restore Reply",
 	'wall-delete-reason' => "User/admin action",
 	'wall-user-talk-page-archive-anchor' => 'See archived talk page',
-	'wall-user-talk-archive-page-title' => 'User_talk_archive', // why the underscores?
+	'wall-user-talk-archive-page-title' => 'User_talk_archive', 
 
 	'wall-action-all-confirm-cancel' => 'Cancel',
-	'wall-action-all-confirm-notify' => 'Notify an admin', // again, this seems like a duplicate of the message(s) above, is the context different? YES 
+	'wall-action-all-confirm-notify' => 'Notify an admin',  
 
 	'wall-action-remove-reply-title' => 'Remove this reply',
 	'wall-action-remove-thread-title' => 'Remove this thread',
@@ -148,9 +147,9 @@ $messages['en'] = array(
 	'wall-sorting-newest-replies' => 'Newest replies',
 	'wall-sorting-most-active' => 'Most active',
 	'wall-sorting-archived' => 'Archived',
-	 // three dots are not an ellipsis (two below)
-	'tog-enotifwallthread' => '...someone replies to a Message Wall thread I follow',
-	'tog-enotifmywall' => '...someone posts a new message on my wall',
+
+	'tog-enotifwallthread' => '…someone replies to a Message Wall thread I follow',
+	'tog-enotifmywall' => '…someone posts a new message on my wall',
 	
 	'wall-deleted-msg-pagetitle' => 'Message deleted',
 	'wall-deleted-msg-text' => 'The message you are trying to reach has been deleted.',
@@ -162,7 +161,7 @@ $messages['en'] = array(
 	'wall-recentchanges-new-reply' => '(reply: "$1")',
 	'wall-recentchanges-edit' => '(edited message)',
 	// for all 6 below: links could've been done via wikitext, perhaps? also, why isn't the user performing the action a param in the message?
-	// concatenation should be avoided if possible to allow word order changes
+	// concatenation should be avoided if possible to allow word order changes - GENDER - add param for geder 
 	'wall-recentchanges-wall-removed-thread' => ' removed thread "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
 	'wall-recentchanges-wall-removed-reply' => ' removed reply from "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
 	'wall-recentchanges-wall-restored-thread' => ' restored thread "<a href="$1">$2</a>" on <a href="$3">$4\'s wall</a>',
@@ -192,11 +191,11 @@ $messages['en'] = array(
 	'wall-wiki-activity-wall-owner' => '$1\'s wall',
 	
 	/* Wall removed msg */
-	'wall-removed-thread-undo' => 'This thread has been removed. $1', //$1 = undo link
+	'wall-removed-thread-undo' => 'This thread has been removed. $1',
 	'wall-removed-reply-undo' => 'This reply has been removed. $1',
 	'wall-removed-reply' => 'This reply has been removed',
 
-	'wall-deleted-thread-undo' => 'This thread has been deleted. $1', //$1 = undo link
+	'wall-deleted-thread-undo' => 'This thread has been deleted. $1',
 	'wall-deleted-reply-undo' => 'This reply has been deleted. $1',
 	'wall-deleted-reply' => 'This reply has been deleted',
 
@@ -313,16 +312,16 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	/* Preferences */
 	'prefs-email-wall-v2' => 'Message Wall',
 
-	'tog-enotifwallthread-v2' => 'Email me...', // three dots are not an ellipsis
+	'tog-enotifwallthread-v2' => 'Email me…',
   
 	'tog-enotifmywall-every' => 'For every message & reply',
 	'tog-enotifmywall-sincevisited' => 'Once per thread since my last visit',
 	'tog-enotifmywall-reminder' => 'With a daily reminder email', 
 	'tog-enotifmywall-noemail' => 'Never. Do not send me any Message Wall emails',
 
-	'wallshowsource-toggle-v2' => 'Enable View source option on Message Wall posts', // if "view source" is a button, this should reference the relevant label message via {{int:msg-name}}
-	'wallshowsource-toggle' => 'Enable View source on Message Wall posts', // ditto
-	'walldelete-toggle' => 'Enable Revision delete on Message Wall posts', // ditto
+	'wallshowsource-toggle-v2' => 'Enable {{int:user-action-menu-view-source}} option on Message Wall posts',
+	'wallshowsource-toggle' => 'Enable {{int:user-action-menu-view-source}} on Message Wall posts',
+	'walldelete-toggle' => 'Enable Revision delete on Message Wall posts',
 );
 
 $messages['qqq'] = array(
@@ -608,7 +607,5 @@ $messages['qqq'] = array(
 	
 	'wallshowsource-toggle-v2' => "preferences checkbox",
 	'wallshowsource-toggle' => "preferences checkbox",
-	'walldelete-toggle' => "preferences checkbox",
-
-	
+	'walldelete-toggle' => "preferences checkbox",	
 );
