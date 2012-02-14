@@ -47,7 +47,7 @@ $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' )
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'FakeApiWrapper',	$dir . '/apiwrappers/FakeApiWrapper.class.php' );
 $app->registerClass( 'WikiaVideoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
-$app->registerClass( 'ParsedVideoData',		$dir . '/apiwrappers/ParsedVideoData.class.php' );
+//$app->registerClass( 'ParsedVideoData',		$dir . '/apiwrappers/ParsedVideoData.class.php' );
 //mech: missing WikiaFileRevertForm class breaks the unit tests, so I commented it out
 //$app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
