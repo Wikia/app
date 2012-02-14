@@ -58,8 +58,7 @@ Check given username for possible typos.</p>',
 	'lookupcontribscontribtitleforuser' => 'Contributions for user:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'all',
-        'lookupcontribs-unknown' => 'Unknown',
+	'lookupcontribsall' => 'all'
 );
 
 /** Message documentation (Message documentation)
@@ -418,8 +417,7 @@ $messages['fr'] = array(
 	'lookupcontribscontribtitleforuser' => 'Contributions de l’utilisateur :',
 	'lookupcontribsnormal' => 'récent',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'tout',
-	'lookupcontribs-unknown' => 'Inconnu',
+	'lookupcontribsall' => 'tout'
 );
 
 /** Galician (Galego)
@@ -472,8 +470,7 @@ $messages['gl'] = array(
 	'lookupcontribscontribtitleforuser' => 'Contribucións do usuario:',
 	'lookupcontribsnormal' => 'recentes',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'todas',
-	'lookupcontribs-unknown' => 'Descoñecido',
+	'lookupcontribsall' => 'todas'
 );
 
 /** Hungarian (Magyar)
@@ -554,8 +551,7 @@ $messages['ia'] = array(
 	'lookupcontribscontribtitleforuser' => 'Contributiones del usator:',
 	'lookupcontribsnormal' => 'recente',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'tote',
-	'lookupcontribs-unknown' => 'Incognite',
+	'lookupcontribsall' => 'tote'
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -704,8 +700,7 @@ $messages['mk'] = array(
 	'lookupcontribscontribtitleforuser' => 'Придонеси на корисникот:',
 	'lookupcontribsnormal' => 'скорешни',
 	'lookupcontribsfinal' => 'последни',
-	'lookupcontribsall' => 'сите',
-	'lookupcontribs-unknown' => 'Непознато',
+	'lookupcontribsall' => 'сите'
 );
 
 /** Malayalam (മലയാളം)
@@ -785,8 +780,7 @@ Tolong semak ejaan nama pengguna itu.</p>',
 	'lookupcontribscontribtitleforuser' => 'Sumbangan untuk pengguna:',
 	'lookupcontribsnormal' => 'terkini',
 	'lookupcontribsfinal' => 'akhir',
-	'lookupcontribsall' => 'semua',
-	'lookupcontribs-unknown' => 'Tidak diketahui',
+	'lookupcontribsall' => 'semua'
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -869,8 +863,7 @@ Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
 	'lookupcontribscontribtitleforuser' => 'Bidrag fra bruker:',
 	'lookupcontribsnormal' => 'siste',
 	'lookupcontribsfinal' => 'siste',
-	'lookupcontribsall' => 'alle',
-	'lookupcontribs-unknown' => 'Ukjent',
+	'lookupcontribsall' => 'alle'
 );
 
 /** Dutch (Nederlands)
@@ -925,8 +918,7 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribscontribtitleforuser' => 'Bijdragen van gebruiker:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'laatste',
-	'lookupcontribsall' => 'alle',
-	'lookupcontribs-unknown' => 'Onbekend',
+	'lookupcontribsall' => 'alle'
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1049,8 +1041,7 @@ $messages['pms'] = array(
 	'lookupcontribscontribtitleforuser' => 'Contribussion për utent:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'tuti',
-	'lookupcontribs-unknown' => 'Pa conossù',
+	'lookupcontribsall' => 'tuti'
 );
 
 /** Pashto (پښتو)
@@ -1260,8 +1251,7 @@ $messages['ru'] = array(
 	'lookupcontribscontribtitleforuser' => 'Вклад участника:',
 	'lookupcontribsnormal' => 'последние',
 	'lookupcontribsfinal' => 'последняя',
-	'lookupcontribsall' => 'все',
-	'lookupcontribs-unknown' => 'Неизвестный',
+	'lookupcontribsall' => 'все'
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
@@ -1344,8 +1334,7 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribscontribtitleforuser' => 'Bidrag för användare:',
 	'lookupcontribsnormal' => 'senaste',
 	'lookupcontribsfinal' => 'sista',
-	'lookupcontribsall' => 'alla',
-	'lookupcontribs-unknown' => 'Okänd',
+	'lookupcontribsall' => 'alla'
 );
 
 /** Swahili (Kiswahili) */
