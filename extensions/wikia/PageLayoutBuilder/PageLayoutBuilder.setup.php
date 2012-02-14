@@ -89,7 +89,7 @@ $wgHooks['getUserPermissionsErrors'][] = 'PageLayoutBuilderHelper::getUserPermis
 $wgHooks['AlternateEdit'][] = 'PageLayoutBuilderHelper::alternateEditHook';
 
 /* Add all possible layouts to CreatePage types list */
-$wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderHelper::createPageOptions';
+#$wgHooks['CreatePage::FetchOptions'][] = 'PageLayoutBuilderHelper::createPageOptions'; // commented out due to BugId:21102
 
 /* Set up verious elements on layout edit pages */
 //$wgHooks['CategorySelect:beforeDisplayingEdit'][] = 'SpecialPageLayoutBuilder::beforeCategorySelect';
