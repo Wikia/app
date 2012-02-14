@@ -42,14 +42,14 @@ var WikiaMobile = WikiaMobile || (function() {
 				contents = article.contents(),
 				wrapper = articleElement.cloneNode(false),
 				root = wrapper,
-				x = 0,
+				x,
 				y = contents.length,
 				currentSection,
 				node,
 				nodeName,
 				isH2;
 
-			for (; x < y; x++) {
+			for (x=0; x < y; x++) {
 				node = contents[x];
 				nodeName = node.nodeName;
 				isH2 = (nodeName == 'H2');
@@ -131,7 +131,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		//TODO: move to a modal API call
 		if(allImages.length <= 1) body.addClass('oneImg');
 	}
-	
+
 	function processTables(){
 		if(typeof handledTables == 'undefined'){
 			handledTables = [];
@@ -343,9 +343,9 @@ var WikiaMobile = WikiaMobile || (function() {
 		.delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
 			event.preventDefault();
 			event.stopPropagation();
-			
+
 			if(allImages.length == 0) processImages();
-			
+
 			var img = $(this),
 				num = img.data('num') || img.parent().data('num');
 			if(num) imgModal(num);
@@ -535,24 +535,24 @@ var WikiaMobile = WikiaMobile || (function() {
 				callback: function(result){
 					container.remove();
 					next.before(result);
-		
+
 					if(forward) {
 						window.scrollTo(0, parent.prev().offset().top);
 						track('category/next');
 					} else {
 						track('category/prev');
 					}
-		
+
 					self.toggleClass('active');
 					$.hideLoader(self);
-		
+
 					(batch > 1) ? prev.addClass('visible') : prev.removeClass('visible');
-		
+
 					(batch < ~~(parent.attr('data-batches'))) ? next.addClass('visible') : next.removeClass('visible');
 				}
 			});
 		});
-		
+
 		$('#expAll').bind(clickEvent, function(event) {
 			var elements = $('.alphaSec .artSec').add('.alphaSec .collSec');
 			if($(this).toggleClass('exp').hasClass('exp')){
@@ -563,7 +563,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				track('category/collapseAll');
 			}
 		});
-		
+
 		$('#wkCatExh').bind(clickEvent, function(event) {
 			track('category/exhibition/click');
 		});
