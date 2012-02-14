@@ -49,7 +49,7 @@
 							<a href="<?php echo $entry['authorurl'] ?>"><?= AvatarService::renderAvatar($entry['username'], 20); ?></a>
 						</td>
 						<td>
-							<?= wfMsg($wallHistoryMsg[$entry['prefix'].$entry['type']], array(
+							<?= wfMsgExt($wallHistoryMsg[$entry['prefix'].$entry['type']], array('parsemag'), array(
 									'$1' => '',
 									'$2' => $entry['displayname'],
 									'$3' => Xml::element('a', array('href' => $entry['msguserurl']), $entry['msgusername']),

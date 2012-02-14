@@ -193,7 +193,7 @@ class WallNotificationsController extends WikiaController {
 		$this->response->setVal( 'unread', $unread );
 		if(!$unread) $authors = array_slice($authors, 0, 1);
 		
-		$msg = wfMsg($msgid, $params);
+		$msg = wfMsgExt($msgid, array( 'parsemag'), $params);
 		$this->response->setVal( 'msg', $msg );
 		if ( empty( $data->url ) ) $data->url = '';
 		$this->response->setVal( 'url', $data->url );

@@ -11,7 +11,7 @@
 		<? if (User::isIP($wall_username) ): ?>
 			<textarea id="WallMessageBody" class="body" placeholder="<?= wfMsg('wall-placeholder-message-anon') ?>"></textarea>
 		<? else: ?>
-			<textarea id="WallMessageBody" class="body" placeholder="<?= wfMsg('wall-placeholder-message', $wall_username) ?>"></textarea>
+			<textarea id="WallMessageBody" class="body" placeholder="<?= wfMsgExt('wall-placeholder-message', array('parsemag'), array($wall_username)) ?>"></textarea>
 		<? endif; ?>
 		<?php if( $loginToEditProtectedPage ) { ?>
 			<button id="WallMessageSubmit" class="wall-require-login" disabled="disabled" style="display: none" data="<?= $ajaxLoginUrl; ?>"><?= wfMsg('wall-button-to-submit-comment') ?></button>
