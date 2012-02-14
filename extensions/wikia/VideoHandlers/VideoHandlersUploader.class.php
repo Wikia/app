@@ -2,7 +2,7 @@
 
 class VideoHandlersUploader {
 	
-	protected static $ILLEGAL_TITLE_CHARS = array( '#' );
+	protected static $ILLEGAL_TITLE_CHARS = array( '/', ':', '#', '?' );
 	protected static $IMAGE_NAME_MAX_LENGTH = 255;
 	
 	const SANITIZE_MODE_FILENAME = 1;
@@ -71,19 +71,26 @@ class VideoHandlersUploader {
 	 */
 	public static function sanitizeTitle( $titleText, $replaceChar=' ' ) {
 
-		$sanitized = '';
+		foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
+			$titleText = str_replace( $illegalChar, $replaceChar, $titleText );
+		}
+		
+		$titleText = preg_replace(Title::getTitleInvalidRegex(), $replaceChar, $titleText);
+		
+		// remove multiple spaces
+		$aTitle = explode( $replaceChar, $titleText );
+		$sTitle = implode( $replaceChar, array_filter( $aTitle ) );    // array_filter() removes null elements
 
+		$sTitle = substr($sTitle, 0, self::$IMAGE_NAME_MAX_LENGTH);     // DB column Image.img_name has size 255
+		
+		return trim($sTitle);
+		
+		/*
 		// remove all characters that are not alphanumeric.
 		$sanitized = preg_replace( '/[^[:alnum:]]{1,}/', $replaceChar, $titleText );
 		
-		$sanitized = substr( trim( $sanitized ), 0, 255 );	// image table column name has 255-char limit
-
-		// remove multiple spaces
-		$sanitized = explode( $replaceChar, $sanitized );
-		$sanitized = implode( $replaceChar, array_filter( $sanitized ) );	// array_filter() removes null elements
-		
 		return $sanitized;
-	
+		*/
 	}
 	
 	public static function hasForbiddenCharacters( $text ) {
