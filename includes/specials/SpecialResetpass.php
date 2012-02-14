@@ -49,6 +49,7 @@ class SpecialResetpass extends SpecialPage {
 				);
 				$wgOut->addHTML( wfMsgWikiHtml( 'userlogin-changepassword-needlogin', $llink ) );
 			}
+			/* Wikia change - end */
 			return;
 		}
 
