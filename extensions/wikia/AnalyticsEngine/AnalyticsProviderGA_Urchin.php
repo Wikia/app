@@ -19,6 +19,8 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 			$setDomainName = '';
 		}
 
+		// TODO: use asynchronous approach (BugId:20216)
+		// @see http://code.google.com/intl/pl/apis/analytics/docs/tracking/asyncTracking.html
 		$script .= <<<SCRIPT2
 <script type="text/javascript" src="{$wgProto}://www.google-analytics.com/ga.js"></script>
 <script type="text/javascript">
@@ -45,7 +47,8 @@ SCRIPT2;
 				break;
 
 			case AnalyticsEngine::EVENT_PAGEVIEW:
-				return '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'Wikia.main\']);</script>';
+				#return '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'Wikia.main\']);</script>';
+				return '<script type="text/javascript">_gaq.push([\'_trackPageview\']);</script>'; // BugId:21127
 
 			// oasis is not calling this?!?
 			case 'hub':
