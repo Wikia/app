@@ -6,9 +6,9 @@
 				<div class="avatar"><?= AvatarService::renderAvatar($deleteOrRemoveInfo['user']->getName(), 20) ?></div>
 				<div class="message">
 					<? if($isreply): ?>
-					<?= wfMsg('wall-message-'.$deleteOrRemoveInfo['status'].'-reply-because', $deleteOrRemoveInfo['user_displayname_linked']); ?><br />
+					<?= wfMsgExt('wall-message-'.$deleteOrRemoveInfo['status'].'-reply-because',array( 'parsemag'), array($deleteOrRemoveInfo['user_displayname_linked'])); ?><br />
 					<? else: ?>
-					<?= wfMsg('wall-message-'.$deleteOrRemoveInfo['status'].'-thread-because', $deleteOrRemoveInfo['user_displayname_linked']); ?><br />
+					<?= wfMsgExt('wall-message-'.$deleteOrRemoveInfo['status'].'-thread-because',array( 'parsemag'), array($deleteOrRemoveInfo['user_displayname_linked'])); ?><br />
 					<? endif; ?>
 					<div class="reason"><?php echo $deleteOrRemoveInfo['reason']; ?></div>
 					<div class="timestamp"><span><?php echo $deleteOrRemoveInfo['fmttime']; ?></span></div>

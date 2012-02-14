@@ -50,15 +50,15 @@
 				<?php if( $canEdit ): ?> 
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMsg('wall-message-edit'); ?></a> 
 				<?php endif; ?> 
-
+				 
 				<? if( $canRemove ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="remove"><?= wfMsg('wall-message-remove'); ?> </a>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="removenotify"><?= wfMsg('wall-message-remove-notify'); ?> </a>
+					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="removenotify"><?= wfMsg('wall-message-notify'); ?> </a>
 				<? endif; ?>
 
 				<? if( $canAdminDelete ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="admin"><?= wfMsg('wall-message-delete'); ?> </a>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="adminnotify"><?= wfMsg('wall-message-delete-notify'); ?> </a>
+					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="adminnotify"><?= wfMsg('wall-message-notify'); ?> </a>
 				<?php endif;?>
 
 				<?php if( $canDelete ): ?> 

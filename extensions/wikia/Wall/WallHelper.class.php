@@ -352,7 +352,7 @@ class WallHelper {
 			$name = wfMsg('oasis-anon-user');
 			$name{0} = strtolower($name{0});
 		}
-		return $app->wf->msg('wall-default-title') . ' ' . $name;
+		return $app->wf->msg('wall-default-title', array('$1' => $name));
 		
 	}
 	
