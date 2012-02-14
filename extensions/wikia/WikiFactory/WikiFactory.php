@@ -962,7 +962,7 @@ class WikiFactory {
 	 *
 	 * @return string	url pointing to local env
 	 */
-	
+
 	static public function getLocalEnvURL( $url ) {
 		// first - normalize URL
 		$regexp = '/^http:\/\/([^\/]+)\/(.*)$/';
@@ -973,7 +973,7 @@ class WikiFactory {
 		$server = $groups[1];
 		$address = $groups[2];
 		$devbox = '';
-		
+
 		// what do we use?
 		//  en.wikiname.wikia.com
 		//  wikiname.wikia.com
@@ -981,14 +981,14 @@ class WikiFactory {
 		//  (preview/verify/sandbox).wikiname.wikia.com
 		//  en.wikiname.developer.wikia-dev.com
 		//  wikiname.developer.wikia-dev.com
-		
+
 		$servers = array( 'preview.', 'sandboxs1.', 'verify.' );
 		foreach( $servers as $serv ) {
 			if( strpos( $server, $serv ) === 0 ) {
 				$server = substr( $server, strlen( $serv ) );
 			}
 		}
-		
+
 		$regexp = '/\.([^\.]+)\.wikia-dev\.com$/';
 		if(preg_match( $regexp, $server, $groups ) === 1) {
 			// devbox
@@ -997,25 +997,25 @@ class WikiFactory {
 		} else {
 			$server = str_replace( '.wikia.com', '', $server );
 		}
-		
+
 		// put the addres back into shape and return
 		$servername = $_SERVER['SERVER_NAME'];
 		if( strpos( $servername, 'preview.' ) !== false ) {
-			return 'http://preview. ' . $server . '.wikia.com/'.$address; 
+			return 'http://preview. ' . $server . '.wikia.com/'.$address;
 		}
 		if( strpos( $servername, 'verify.' ) !== false ) {
-			return 'http://verify. ' . $server . '.wikia.com/'.$address; 
+			return 'http://verify. ' . $server . '.wikia.com/'.$address;
 		}
 		if( strpos( $servername, 'sandboxs1.' ) !== false ) {
-			return 'http://sandbox. ' . $server . '.wikia.com/'.$address; 
+			return 'http://sandbox. ' . $server . '.wikia.com/'.$address;
 		}
 		if( preg_match( $regexp, $servername, $groups ) === 1 ) {
-			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com/'.$address; 
+			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com/'.$address;
 		}
 
 		// by default return original address
 		return $url;
-		
+
 	}
 
 	 	/**
@@ -1058,19 +1058,19 @@ class WikiFactory {
 
 		return $oRow;
 	}
-        
+
         /**
          * getWikisByID
-         * 
+         *
          * get multiple wikis params from city_list (shared database) in a single query
-         * 
+         *
          * @access public
          * @static
          * @author Michał Roszka (Mix) <michal@wikia-inc.com>
-         * 
+         *
          * @param array $ids an array containing IDs of wikis
          * @param bool $master query master or slave
-         * 
+         *
          * @return array an array of objects, keys are wikis ids.
          */
         static public function getWikisByID( $ids, $master = false ) {
@@ -1083,12 +1083,12 @@ class WikiFactory {
 		if ( empty( $ids ) ) {
 			return array();
 		}
-            
+
             global $wgWikiFactoryCacheType;
             $oMemc = wfGetCache( $wgWikiFactoryCacheType );
-            
+
             $aOut = array();
-            
+
             // Retrieve cached data.
             foreach ( $ids as $k => $id ) {
                 $sMemKey = self::getWikiaCacheKey( $id );
@@ -1105,7 +1105,7 @@ class WikiFactory {
 			// if this is empty, then we have every thing we need from cache
 			return $aOut;
 		}
-            
+
             // Query the DB for the data we don't have cached yet.
             $dbr = self::db( ( $master ) ? DB_MASTER : DB_SLAVE );
             $oRes = $dbr->select(
@@ -1114,16 +1114,16 @@ class WikiFactory {
                 array( "city_id" => $ids ),
                 __METHOD__
             );
-            
+
             while( $oRow = $dbr->fetchObject( $oRes ) ) {
                 // Cache single entries so other methods could use the cache
                 $sMemKey = self::getWikiaCacheKey( $oRow->city_id );
                 $oMemc->set( $sMemKey, $oRow, 60*60*24 );
-                
+
                 // append to the output
                 $aOut[$oRow->city_id] = $oRow;
             }
-            
+
             $dbr->freeResult( $oRes );
             return $aOut;
         }
@@ -1644,17 +1644,17 @@ class WikiFactory {
 		}
 
 		wfProfileIn( __METHOD__ );
-		
+
 		wfRunHooks( 'WikiFactoryPublicStatusChange', array( &$city_public, &$city_id, $reason ) );
 
-		$update = array( 
+		$update = array(
 			"city_public" => $city_public,
 			"city_last_timestamp" => wfTimestamp( TS_DB ),
 		);
 		if ( !empty($reason) ) {
 			$update["city_additional"] = $reason;
 		}
-		
+
 		$dbw = self::db( DB_MASTER );
 		$dbw->update(
 			"city_list",
@@ -1722,16 +1722,16 @@ class WikiFactory {
 
 		return false;
 	}
-	
+
 	/**
 	 * disableWiki
-	 * 
-	 * Disables wiki, users won't be able to access it, 
+	 *
+	 * Disables wiki, users won't be able to access it,
 	 * database and files are still in place
-	 * 
+	 *
 	 * @author wladek
 	 * @static
-	 * 
+	 *
 	 * @param integer $wikiId wiki id
 	 * @param integer $flags close flags
 	 * @param string  $reason [optional] reason text
@@ -2140,6 +2140,7 @@ class WikiFactory {
 					"city_description"       => $wiki->city_description,
 					"city_title"             => $wiki->city_title,
 					"city_founding_email"    => $wiki->city_founding_email,
+					"city_founding_ip"       => $wiki->city_founding_ip,
 					"city_lang"              => $wiki->city_lang,
 					"city_special_config"    => $wiki->city_special_config,
 					"city_umbrella"          => $wiki->city_umbrella,
@@ -2794,7 +2795,7 @@ class WikiFactory {
 	static public function getClusters() {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
-		
+
 		$key = "wikifactory:clusters";
 		$clusters = $wgMemc->get( $key );
 		if( !is_array( $clusters ) ) {
@@ -2807,7 +2808,7 @@ class WikiFactory {
 				__METHOD__,
 				array( "GROUP BY" => "city_cluster" )
 			);
-			
+
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$clusters[] = strtolower( $oRow->cluster );
 			}
