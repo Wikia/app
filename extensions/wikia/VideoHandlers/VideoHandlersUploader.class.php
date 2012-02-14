@@ -71,6 +71,14 @@ class VideoHandlersUploader {
 	 */
 	public static function sanitizeTitle( $titleText, $replaceChar=' ' ) {
 
+		/*
+		 * OK, guys. I talked to Eloy, and he said that all characters that
+		 * are correct for Title should be also correct for Files (!) 
+		 * this means that if we fail to create thumbnail for some invalid
+		 * titles, we should delegate this problem to ops. 
+		 * 
+		 */
+		
 		foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
 			$titleText = str_replace( $illegalChar, $replaceChar, $titleText );
 		}
