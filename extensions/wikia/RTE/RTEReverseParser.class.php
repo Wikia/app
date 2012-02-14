@@ -1077,7 +1077,7 @@ class RTEReverseParser {
 				// bugfix: fogbugz BugID 11537
 				// losing newline before : and * following h[1-6] or div
 				if($node->previousSibling) {
-					if(in_array($node->previousSibling->nodeName,$this->elementsNewligningFollowingList)) {
+					if(in_array($node->previousSibling->nodeName,$this->elementsNewliningFollowingList)) {
 						$out = "\n{$out}";
 					}
 				}
@@ -1138,7 +1138,7 @@ class RTEReverseParser {
 				// bugfix: fogbugz BugID 11537
 				// losing newline before : and * following h[1-6] or div 
 				if($node->previousSibling) {
-					if(in_array($node->previousSibling->nodeName,$this->elementsNewligningFollowingList)) {
+					if(in_array($node->previousSibling->nodeName,$this->elementsNewliningFollowingList)) {
 						$out = "\n{$out}";
 					}
 				}
