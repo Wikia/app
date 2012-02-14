@@ -10,18 +10,6 @@
 /**
  * setup
  */
-$wgLocalFileRepo = array(
-	'class' => 'WikiaLocalRepo',
-	'name' => 'local',
-	'directory' => $wgUploadDirectory,
-	'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
-	'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
-	'thumbScriptUrl' => $wgThumbnailScriptPath,
-	'transformVia404' => !$wgGenerateThumbnailOnParse,
-	'deletedDir' => $wgFileStore['deleted']['directory'],
-	'deletedHashLevels' => $wgFileStore['deleted']['hash']
-);
-
 if( empty( $wgVideoHandlersVideosMigrated ) ) {
 	define( 'NS_VIDEO', 400 );
 } else {
@@ -45,9 +33,8 @@ $app->registerClass( 'WikiaLocalFileShared',	$dir . '/filerepo/WikiaLocalFileSha
 $app->registerClass( 'WikiaLocalRepo',		$dir . '/filerepo/WikiaLocalRepo.class.php' );
 $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
-$app->registerClass( 'FakeApiWrapper',	$dir . '/apiwrappers/FakeApiWrapper.class.php' );
+$app->registerClass( 'FakeApiWrapper',		$dir . '/apiwrappers/FakeApiWrapper.class.php' );
 $app->registerClass( 'WikiaVideoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
-//$app->registerClass( 'ParsedVideoData',		$dir . '/apiwrappers/ParsedVideoData.class.php' );
 //mech: missing WikiaFileRevertForm class breaks the unit tests, so I commented it out
 //$app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
@@ -70,6 +57,7 @@ $wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
  */
 $app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
 $app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
+$app->registerHook( 'SetupAfterCache', 'VideoHandlerHooks', 'onSetupAfterCache' );
 
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';
@@ -115,13 +103,13 @@ $app->registerClass('ScreenplayVideoHandler', $dir . '/handlers/ScreenplayVideoH
 $app->registerClass('ScreenplayApiWrapper', $dir . '/apiwrappers/ScreenplayApiWrapper.class.php');
 $wgMediaHandlers['video/screenplay'] = 'ScreenplayVideoHandler';
 
-$app->registerClass('VimeoVideoHandler', $dir . '/handlers/VimeoVideoHandler.class.php');
-$app->registerClass('VimeoApiWrapper', $dir . '/apiwrappers/VimeoApiWrapper.class.php');
-$wgMediaHandlers['video/vimeo'] = 'VimeoVideoHandler';
-
 $app->registerClass('ViddlerVideoHandler', $dir . '/handlers/ViddlerVideoHandler.class.php');
 $app->registerClass('ViddlerApiWrapper', $dir . '/apiwrappers/ViddlerApiWrapper.class.php');
 $wgMediaHandlers['video/viddler'] = 'ViddlerVideoHandler';
+
+$app->registerClass('VimeoVideoHandler', $dir . '/handlers/VimeoVideoHandler.class.php');
+$app->registerClass('VimeoApiWrapper', $dir . '/apiwrappers/VimeoApiWrapper.class.php');
+$wgMediaHandlers['video/vimeo'] = 'VimeoVideoHandler';
 
 $app->registerClass('YoutubeVideoHandler', $dir . '/handlers/YoutubeVideoHandler.class.php');
 $app->registerClass('YoutubeApiWrapper', $dir . '/apiwrappers/YoutubeApiWrapper.class.php');
