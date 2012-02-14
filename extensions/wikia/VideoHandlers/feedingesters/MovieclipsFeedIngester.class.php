@@ -102,17 +102,18 @@ class MovieclipsFeedIngester extends VideoFeedIngester {
 		return $name;
 	}
 
-	protected function generateParsedData(array $data, &$errorMsg) {
-		$parsedData = array(
+	protected function generateMetadata(array $data, &$errorMsg) {
+		$metadata = array(
+		    'videoId'		=> $data['videoId'],
 		    'description'	=> $data['description'],
 		    'duration'		=> $data['duration'],
 		    'movieTitleAndYear'	=> $data['movieTitleAndYear'],
-		    'published'		=> $data['published'],
+		    'published'		=> strtotime($data['published']),
 		    'thumbnailUrl'	=> $data['thumbnail'],
 		    'videoTitle'	=> $data['clipTitle']
 		);
 		
-		return $parsedData;
+		return $metadata;
 	}
 	
 	protected function generateCategories(array $data, $addlCategories) {

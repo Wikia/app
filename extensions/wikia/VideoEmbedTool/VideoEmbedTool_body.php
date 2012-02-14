@@ -285,7 +285,7 @@ class VideoEmbedTool {
 				// wlee 2012/2/12: next four lines haven't been tested thoroughly. comment out for now and keep original behavior
 					//$nameStrictSanitized = VideoHandlersUploader::sanitizeTitle($name);
 					//$titleForLegacyVideo = Title::newFromText($nameStrictSanitized, NS_LEGACY_VIDEO);
-					//$nameLooseSanitized = VideoHandlersUploader::sanitizeTitle($name, ' ', VideoHandlersUploader::SANITIZE_MODE_ARTICLETITLE);
+					//$nameLooseSanitized = VideoHandlersUploader::sanitizeTitle($name);
 					//$titleForFile = Title::newFromText($nameLooseSanitized, NS_FILE);
 					// retain original behavior
 					$nameStrictSanitized = $name;
@@ -582,7 +582,8 @@ class VideoEmbedTool {
 		}
 		
 		$title = null;
-		$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title, $videoName);
+		//@todo call $apiWrapper to override metadata fields (e.g. name, description)
+		$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title);
 		return $result;
 	}
 	

@@ -187,10 +187,18 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		return $categories;
 	}
 	
-	protected function generateParsedData(array $data, &$errorMsg) {
-		$parsedData = array();
+	protected function generateMetadata(array $data, &$errorMsg) {
+		$metadata = array();
 		$doesHdExist = (int) !empty($data['hdMp4Url']);
-		$parsedData = array('stdBitrateCode'=>$data['stdBitrateCode'], 'hd'=>$doesHdExist, 'duration'=>$data['duration'], 'jpegBitrateCode'=>$data['jpegBitrateCode'], 'dateAdded'=>$data['dateAdded']);
-		return $parsedData;
+		$metadata = 
+			array(
+			    'videoId'		=>	$data['videoId'],
+			    'stdBitrateCode'	=>	$data['stdBitrateCode'],
+			    'hd'		=>	$doesHdExist,
+			    'duration'		=>	$data['duration'],
+			    'jpegBitrateCode'	=>	$data['jpegBitrateCode'],
+			    'published'		=>	strtotime($data['dateAdded'])
+			    );
+		return $metadata;
 	}
 }

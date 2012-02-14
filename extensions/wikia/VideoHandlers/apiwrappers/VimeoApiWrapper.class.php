@@ -5,10 +5,6 @@ class VimeoApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://vimeo.com/api/v2/video/$1.json';
 	protected static $CACHE_KEY = 'Vimeoapi';
 	
-	public function getTitle() {
-		return $this->getVideoTitle();
-	}
-	
 	public function getVideoTitle() {
 		if (!empty($this->interfaceObj['title'])) {
 			return $this->interfaceObj['title'];
@@ -24,20 +20,6 @@ class VimeoApiWrapper extends ApiWrapper {
 	
 	public function getThumbnailUrl() {
 		return $this->interfaceObj['thumbnail_large'];
-	}
-
-	public function getMetadata() {
-		$metadata = array();
-		
-		$metadata['videoId'] = $this->videoId;
-		$metadata['published'] = $this->getVideoPublished();
-		$metadata['category'] = $this->getVideoCategory();
-		$metadata['canEmbed'] = $this->canEmbed();
-		$metadata['hd'] = $this->isHdAvailable();
-		$metadata['keywords'] = $this->getVideoKeywords();
-		$metadata['duration'] = $this->getVideoDuration();
-		
-		return $metadata;
 	}
 
 	/**

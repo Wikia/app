@@ -69,7 +69,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 					$sourceVideoPropsTxt = $video->getElementsByTagName('source-video-props')->item(0)->textContent;
 					$sourceVideoProps = explode('|', $sourceVideoPropsTxt);
 					if (sizeof($sourceVideoProps)) {
-						$clipData['aspectRatio'] = $sourceVideoProps[0];
+						$clipData['dimensions'] = $sourceVideoProps[0];
 					}
 				}
 				
@@ -124,14 +124,15 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		return $categories;		
 	}
 	
-	protected function generateParsedData(array $data, &$errorMsg) {
+	protected function generateMetadata(array $data, &$errorMsg) {
 		$parsedData = array(
+		    'videoId'		=> $data['videoId'],
 		    'thumbnail'		=> $data['thumbnail'],
 		    'duration'		=> $data['duration'],
-		    'published'		=> $data['published'],
+		    'published'		=> strtotime($data['published']),
 		    'category'		=> $data['category'],
 		    'keywords'		=> $data['keywords'],
-		    'aspectRatio'	=> $data['aspectRatio'],
+		    'dimensions'	=> $data['dimensions'],
 		    'description'	=> $data['description']
 		    );
 		
