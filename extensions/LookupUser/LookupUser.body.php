@@ -117,7 +117,7 @@ EOT
 	 * @param $target Mixed: user whose info we're looking up
 	 */
 	function showInfo( $target, $emailUser = "" ) {
-		global $wgOut, $wgLang, $wgScript;
+		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath, $wgEnableLookupContribsExt;
 		
@@ -209,7 +209,9 @@ EOT
 			}
 			$wgOut->addWikiText( '*' . wfMsg( 'username' ) . ' [[User:' . $name . '|' . $name . ']] (' .
 				$wgLang->pipeList( array(
-					'<span id="lu-tools">[[User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) . ']]',
+					'<span id="lu-tools">[[' . ( !empty( $wgEnableWallExt ) ?
+					'Message Wall:' . $name . '|' . wfMsg( 'wall-message-wall-shorten' ) :
+					'User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) ) . ']]',
 					'[[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']]</span>)'
 				) ) );
 			$wgOut->addWikiText( '*' . wfMsgForContent( 'lookupuser-toollinks', $name, urlencode($name) ) );
