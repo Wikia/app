@@ -992,19 +992,19 @@ class WallHooksHelper {
 			//created in WallHooksHelper::getMessageOptions()
 			//and there is not needed to be passed to wfMsg()
 			unset($wfMsgOpts['isThread'], $wfMsgOpts['isNew']);
-
+			
 			switch($rc->getAttribute('rc_log_action')) {
 				case 'wall_remove':
-					$actionText = $app->wf->Msg('wall-recentchanges-wall-removed-'.$msgType, $wfMsgOpts);
+					$actionText = wfMsgExt('wall-recentchanges-wall-removed-'.$msgType, array('parsemag'), $wfMsgOpts);
 					break;
 				case 'wall_restore':
-					$actionText = $app->wf->Msg('wall-recentchanges-wall-restored-'.$msgType, $wfMsgOpts);
+					$actionText = wfMsgExt('wall-recentchanges-wall-restored-'.$msgType, array('parsemag'), $wfMsgOpts);
 					break;
 				case 'wall_admindelete':
-					$actionText = $app->wf->Msg('wall-recentchanges-wall-deleted-'.$msgType, $wfMsgOpts);
+					$actionText = wfMsgExt('wall-recentchanges-wall-deleted-'.$msgType, array('parsemag'), $wfMsgOpts);
 					break;
 				default:
-					$actionText = $app->wf->Msg('wall-recentchanges-wall-unrecognized-log-action', $wfMsgOpts);
+					$actionText = wfMsg('wall-recentchanges-wall-unrecognized-log-action', $wfMsgOpts);
 				break;
 			}
 		}
@@ -1577,7 +1577,13 @@ class WallHooksHelper {
 	 */
 	private function getMessageOptions($rc = null, $row = null) {
 		$helper = F::build('WallHelper', array());
-
+		
+		if( !is_null($rc) ) {
+			$actionUser = $rc->getAttribute('rc_user_text');
+		} else {
+			$actionUser = '';
+		}
+		
 		if( is_object($row) ) {
 			$objTitle = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
 			$userText = !empty($row->rev_user_text) ? $row->rev_user_text : '';
@@ -1613,14 +1619,15 @@ class WallHooksHelper {
 		$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
 		$wallPageUrl = $wm->getWallPageUrl();
 		$wallUrl = empty($wallPageUrl) ? $wallUrl : $wallPageUrl;
-
+		
 		return array(
-				$articleUrl,
-				$articleTitleTxt,
-				$wallUrl,
-				$userText,
-				'isThread' => $isThread,
-				'isNew' => $isNew,
+			$articleUrl,
+			$articleTitleTxt,
+			$wallUrl,
+			$userText,
+			$actionUser,
+			'isThread' => $isThread,
+			'isNew' => $isNew,
 		);
 	}
 

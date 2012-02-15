@@ -160,8 +160,7 @@ $messages['en'] = array(
 	'wall-recentchanges-comment-new-message' => '(new: "$1")',
 	'wall-recentchanges-new-reply' => '(reply: "$1")',
 	'wall-recentchanges-edit' => '(edited message)',
-	// for all 6 below: links could've been done via wikitext, perhaps? also, why isn't the user performing the action a param in the message?
-	// concatenation should be avoided if possible to allow word order changes - GENDER - add param for geder 
+	
 	'wall-recentchanges-wall-removed-thread' => ' removed thread "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
 	'wall-recentchanges-wall-removed-reply' => ' removed reply from "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
 	'wall-recentchanges-wall-restored-thread' => ' restored thread "<a href="$1">$2</a>" on <a href="$3">$4\'s wall</a>',
@@ -492,13 +491,13 @@ $messages['qqq'] = array(
 	'wall-recentchanges-new-reply' => "Recent changes item, $1 is beginning of reply",
 	'wall-recentchanges-edit' => "Recent changes item, default summary for editing a message",
 	
-	'wall-recentchanges-wall-removed-thread' => "Recent changes item, $2 is thread title, $4 is wall owner",
-	'wall-recentchanges-wall-removed-reply' => "Recent changes item, $2 is thread title, $4 is wall owner",
-	'wall-recentchanges-wall-restored-thread' => "Recent changes item, $2 is thread title, $4 is wall owner",
-	'wall-recentchanges-wall-restored-reply' => "Recent changes item, $2 is thread title, $4 is wall owner",
-	'wall-recentchanges-wall-deleted-thread' => "Recent changes item, $2 is thread title, $4 is wall owner",
-	'wall-recentchanges-wall-deleted-reply' => "Recent changes item, $2 is thread title, $4 is wall owner",
-
+	'wall-recentchanges-wall-removed-thread' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-removed-reply' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-restored-thread' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-restored-reply' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-deleted-thread' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-deleted-reply' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
+	
 	'wall-recentchanges-deleted-reply-title' => 'fallback reply title for deleted replies  are not accessible in archive', 
 	'wall-recentchanges-namespace-selector-message-wall' => "Recent changes, item in namespace dropdown",
 	'wall-recentchanges-wall-group' => "Grouped recent changes item, $1 is thread title, $3 is wall owner",
@@ -607,5 +606,5 @@ $messages['qqq'] = array(
 	
 	'wallshowsource-toggle-v2' => "preferences checkbox",
 	'wallshowsource-toggle' => "preferences checkbox",
-	'walldelete-toggle' => "preferences checkbox",	
+	'walldelete-toggle' => "preferences checkbox",
 );
