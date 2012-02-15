@@ -69,7 +69,7 @@ div.article-comm-input-text textarea {
 	height: 100px;
 	margin-bottom: 5px;
 	padding: 3px;
-	width: 100%;
+	width: 450px;
 }
 
 .article-comments .details {
@@ -99,7 +99,7 @@ div.article-comm-input-avatar {
 
 .article-comments .comment,
 div.article-comm-input-text {
-	margin-left: 0px;
+	margin-left: 185px;
 }
 
 .custom_answers div.article-comm-input-text {
@@ -161,15 +161,16 @@ a.article-comm-reply {
 	padding: 0 20px;
 }
 
-.speech-bubble-message .tools {
-	visibility: hidden;
-}
 
-.speech-bubble-message:hover .tools {
+.speech-bubble-message:hover .tools{
 	visibility: visible;
 }
 
-.speech-bubble-message .tools .sprite {
+.tools {
+	visibility: hidden;
+}
+
+.tools .sprite {
 	margin: 0 2px 0 4px;
 }
 

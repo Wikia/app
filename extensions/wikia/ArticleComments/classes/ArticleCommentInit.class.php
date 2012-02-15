@@ -143,20 +143,23 @@ class ArticleCommentInit {
 		return true;
 	}
 
-	static public function ArticleCommentAddJS(&$out, &$sk) {
+	static public function ArticleCommentAddJS( &$out, &$sk ){
 		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 
-		if (self::ArticleCommentCheck()) {
+		if ( self::ArticleCommentCheck() ) {
 			global $wgUser;
 			$app = F::app();
 
 			if ( in_array(
-					get_class($sk),
+					get_class( $sk ),
 					$app->wg->ArticleCommentsEnabledSkins
-			))
+			) )
 			{
 				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
+			}
+			//FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
+			if ( $sk instanceof SkinMonoBook ) { 
 				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
 			}
 		}
