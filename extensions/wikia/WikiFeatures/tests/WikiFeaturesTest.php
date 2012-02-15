@@ -77,7 +77,6 @@
 			WikiFeaturesHelper::$release_date = $this->release_date_org;
 		}
 		
-		
 		/**
 		 * @dataProvider toggleFeatureDataProvider
 		 */
@@ -160,7 +159,7 @@
 			$this->setUpMock($cache_value);
 
 			$helper = new WikiFeaturesHelper();
-			$helper::$release_date = $release_date;
+			WikiFeaturesHelper::$release_date = $release_date;
 			$response = $helper->getFeatureLabs();
 			$this->assertEquals($exp_result, $response);
 
