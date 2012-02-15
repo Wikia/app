@@ -855,7 +855,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testWikiHeaderModule() {
-		$moduleData = Module::get('WikiHeader')->getData();
+		$moduleData = Module::get('WikiHeader', 'Wordmark')->getData();
 
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
