@@ -50,6 +50,25 @@ It is an easy way to keep track of your contributions and helps you communicate 
 If you need help, and there are no local admins here, you may want to visit the [[wikia:Forum:Community Central Forum|forums on the Community Central Wiki]] $3",
 	'staffsig-text' => "$1<staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>",
 	'hawelcomeedit' => "HAWelcomeEdit",
+
+	'welcome-message-wall-user' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
+
+Please leave me a message if I can help with anything!",
+	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the $1 page.
+
+If you need help, and there are no local admins here, you may want to visit the [[wikia:Forum:Community Central Forum|forums on the Community Central Wiki]]. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia.
+
+Happy editing!",
+	'welcome-message-wall-anon' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the $1 page.
+
+'''[[Special:Userlogin|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
+
+Please leave me a message if I can help with anything!",
+	'welcome-message-wall-anon-staff' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
+
+'''[[Special:Userlogin|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
+
+Please leave me a message if I can help with anything!",
 );
 
 /** Breton (Brezhoneg)
@@ -1388,3 +1407,9 @@ Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần 
 	'hawelcomeedit' => 'Sửa đổi tin nhắn chào mừng',
 );
 
+$messages['qqq'] = array(
+	'welcome-message-wall-user-staff' => '$1 is the name of the page the user edited that tirggered the welcome',
+	'welcome-message-wall-user' => '$1 is the name of the page the user edited that tirggered the welcome',
+	'welcome-message-wall-anon-staff' => '$1 is the name of the page the user edited that tirggered the welcome',
+	'welcome-message-wall-anon' => '$1 is the name of the page the user edited that tirggered the welcome',
+);
