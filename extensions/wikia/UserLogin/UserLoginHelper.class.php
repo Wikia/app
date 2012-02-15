@@ -24,6 +24,11 @@ class UserLoginHelper extends WikiaModel {
 		}
 		return self::$instance;
 	}
+	
+	// set instance for testing
+	public static function setInstance( $ins ) {
+		self::$instance = $ins;
+	}
 
 	/**
 	 * get random avatars from the current wiki

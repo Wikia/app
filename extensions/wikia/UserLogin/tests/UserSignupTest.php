@@ -124,6 +124,10 @@
 			}
 		}
 
+		protected function tearDownHelper() {
+			UserLoginHelper::setInstance( null );
+		}
+
 		/**
 		 * @dataProvider signupDataProvider
 		 */
@@ -381,6 +385,7 @@
 
 			// tear down
 			$this->tearDownSession( $mockSessionParams );
+			$this->tearDownHelper();
 		}
 		
 		public function changeTempUserEmailDataProvider() {
@@ -557,6 +562,7 @@
 
 			// tear down
 			$this->tearDownSession( $mockSessionParams );
+			$this->tearDownHelper();
 		}
 		
 		public function sendConfirmationEmailDataProvider() {
