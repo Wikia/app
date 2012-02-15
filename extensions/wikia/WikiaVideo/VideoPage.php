@@ -1919,6 +1919,9 @@ EOD;
 				break;
 			case self::V_GAMETRAILERS:
 				$code = 'custom';
+				// note: object and embed tags must be on one 
+				// line, or else MW parser will inject <p> tags 
+				// and do other weird things!
 				$embed =
 				'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" id="gtembed" width="'.$width.'" height="'.$height.'">
 					<param name="allowScriptAccess" value="sameDomain" />
@@ -1958,6 +1961,9 @@ EOD;
 				break;
 			case self::V_MOVIECLIPS:
 				$code = 'custom';
+				// note: object and embed tags must be on one 
+				// line, or else MW parser will inject <p> tags 
+				// and do other weird things!
 				$embed = '<object width="'.$width.'" height="'.$height.'" type="application/x-shockwave-flash" data="http://static.movieclips.com/embedplayer.swf?config=http://config.movieclips.com/player/config/embed/'.$this->mId.'/%3Floc%3DPL&endpoint=http://movieclips.com/api/v1/player/test/action/&start=0&v=1.0.15" style="display:block; overflow:hidden;">
 					<param name="movie" value="http://static.movieclips.com/embedplayer.swf?config=http://config.movieclips.com/player/config/embed/'.$this->mId.'/%3Floc%3DPL&endpoint=http://movieclips.com/api/v1/player/test/action/&start=0&v=1.0.15" />
 					<param name="wmode" value="transparent" />
@@ -1978,21 +1984,19 @@ EOD;
 					$playerId = self::REALGRAVITY_PLAYER_NO_AUTOSTART_ID;
 				}
 
+				// note: object and embed tags must be on one 
+				// line, or else MW parser will inject <p> tags 
+				// and do other weird things!
 				$embed = 
-					'<object id="rg_player_'.$playerId.'" name="rg_player_'.$playerId.'" type="application/x-shockwave-flash"
-					    width="'.$width.'" height="'.$height.'" classid="clsid:'.$playerId.'" style="visibility: visible;"
-					    data="http://anomaly.realgravity.com/flash/player.swf">
+					'<object id="rg_player_'.$playerId.'" name="rg_player_'.$playerId.'" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'" classid="clsid:'.$playerId.'" style="visibility: visible;" data="http://anomaly.realgravity.com/flash/player.swf">
 					  <param name="allowscriptaccess" value="always"></param>
 					  <param name="allowNetworking" value="all"></param>
 					  <param name="menu" value="false"></param>
 					  <param name="wmode" value="transparent"></param>
 					  <param name="allowFullScreen" value="true"></param>
 					  <param name="flashvars" value="&config=http://mediacast.realgravity.com/vs/api/playerxml/'.$playerId.'"></param>
-					  <embed id="'.$playerId.'" name="'.$playerId.'" width="'.$width.'" height="'.$height.'"
-					    allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent"
-					    flashvars="config=http://mediacast.realgravity.com/vs/2/players/single/'.$playerId.'/'.$this->mId.'.xml"
-					    src="http://anomaly.realgravity.com/flash/player.swf"></embed>
-					</object>';
+					  <embed id="'.$playerId.'" name="'.$playerId.'" width="'.$width.'" height="'.$height.'" allowNetworking="all" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" flashvars="config=http://mediacast.realgravity.com/vs/2/players/single/'.$playerId.'/'.$this->mId.'.xml" src="http://anomaly.realgravity.com/flash/player.swf"></embed>
+					 </object>';
 				$code = 'custom';
 				break;
 			case self::V_WIKIAVIDEO:
