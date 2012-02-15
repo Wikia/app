@@ -36,7 +36,7 @@ class AssetsManagerServer {
 		}
 
 		$headers = array();
-		$headers['Vary'] = 'Accept-Encoding';
+		$headers['Vary'] = 'Cookie,Accept-Encoding';
 
 		if($builder->getContentType()) {
 			$headers['Content-Type'] = $builder->getContentType();
