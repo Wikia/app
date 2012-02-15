@@ -161,16 +161,15 @@ a.article-comm-reply {
 	padding: 0 20px;
 }
 
-
-.speech-bubble-message:hover .tools{
-	visibility: visible;
-}
-
-.tools {
+.speech-bubble-message .tools {
 	visibility: hidden;
 }
 
-.tools .sprite {
+.speech-bubble-message:hover .tools {
+	visibility: visible;
+}
+
+.speech-bubble-message .tools .sprite {
 	margin: 0 2px 0 4px;
 }
 
