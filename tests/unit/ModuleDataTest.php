@@ -432,7 +432,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testBodyModule() {
-		global $wgTitle, $wgEnableUserProfilePagesExt;
+		global $wgTitle, $wgEnableUserProfilePagesExt, $wgOasisNavV2;
 
 		//Special pages should have no modules
 		$wgTitle = Title::newFromText('Special:SpecialPages');
@@ -444,7 +444,11 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgTitle = Title::newFromText('Special:Search');
 		$moduleData = Module::get('Body')->getData();
 		$railList = $moduleData['railModuleList'];
-		$this->assertEquals($railList[1450][0], 'PagesOnWiki');
+		
+		if( empty($wgOasisNavV2) ) {
+			$this->assertEquals($railList[1450][0], 'PagesOnWiki');
+		}
+		
 		$this->assertEquals($railList[1300][0], 'LatestActivity');
 		$this->assertEquals($railList[1250][0], 'LatestPhotos');
 
@@ -454,7 +458,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$railList = $moduleData['railModuleList'];
 		$this->assertEquals($railList[1101][0], 'FollowedPages');
 
-		if (!empty($wgEnableUserProfilePagesExt)) {
+		if( !empty($wgEnableUserProfilePagesExt) ) {
 			$this->assertEquals($railList[1350][0], 'Achievements');
 		}
 
