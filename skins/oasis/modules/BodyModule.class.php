@@ -178,6 +178,7 @@ class BodyModule extends Module {
 				$railModuleList = array(
 					$latestActivityKey => array('LatestActivity', 'Index', null),
 				);
+				
 				if( empty( $wgEnableWikiReviews ) ) {
 					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 				}
@@ -371,7 +372,7 @@ class BodyModule extends Module {
 		// WikiNav v2 - end
 		
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
-
+		
 		wfProfileOut(__METHOD__);
 		
 		return $railModuleList;
