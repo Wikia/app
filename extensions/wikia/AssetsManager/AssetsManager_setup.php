@@ -17,6 +17,15 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
+$wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
+
+function AssetsManagerClearCookie( $user, &$result ) {
+	global $wgRequest;
+	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint' ) {
+		$result = new User();
+	}
+	return true;
+}
 
 function AssetsManagerEntryPoint() {
 	global $wgRequest, $wgAutoloadClasses;
