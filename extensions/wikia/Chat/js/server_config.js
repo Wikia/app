@@ -11,9 +11,6 @@ exports.CHAT_SERVER_PORT = 8000;
 exports.API_SERVER_PORT = 8001;
 exports.MAX_MESSAGES_IN_BACKLOG = 50; // how many messages each room will store for now. only longer than NUM_MESSAGES_TO_SHOW_ON_CONNECT for potential debugging.
 exports.NUM_MESSAGES_TO_SHOW_ON_CONNECT = 10;
-exports.AUTH_URL = "/?action=ajax&rs=ChatAjax&method=getUserInfo"; // do NOT add hostname into this URL.
-exports.KICKBAN_URL = "/?action=ajax&rs=ChatAjax&method=kickBan";
-exports.GIVECHATMOD_URL = "/?action=ajax&rs=ChatAjax&method=giveChatMod";
 exports.API_URL = "/api.php";
 exports.WIKIA_PROXY_HOST = "";
 exports.WIKIA_PROXY_PORT = "";

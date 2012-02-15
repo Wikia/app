@@ -1,5 +1,4 @@
 <?php
-# Geo redirect
 $preIP = dirname( __FILE__ );
 require_once ("$preIP/extensions/wikia/LangRedirect/LangRedirect.php") ;
 /**

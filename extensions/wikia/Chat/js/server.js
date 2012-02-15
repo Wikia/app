@@ -11,7 +11,8 @@ var app = require('express').createServer()
     , redis = require('redis')
     , rc = redis.createClient(config.REDIS_PORT, config.REDIS_HOST)
     , models = require('./models/models')
-	, urlUtil = require('url');
+	, urlUtil = require('url')
+	, mwBridge = require('WMBridge.js');
 var http = require("http");
 
 
@@ -151,58 +152,6 @@ function startServer() {
 		clearChatBuffer(client);
 		
 		console.log("Raw connection recieved. Waiting for authentication info from client.");
-	});
-}
-
-
-
-function requestMW(roomId, query, callback, errorcallback) {
-	if(!errorcallback){
-		errorcallback = function() {};
-	}
-	
-	console.log("Trying to find the wgServer for the room key: " + config.getKey_room( roomId ));
-	rc.hget(config.getKey_room( roomId ), 'wgServer', function(err, data) {
-		if (err) {
-			console.log('Error getting wgServer for a room: ' + err); 
-			errorcallback();
-		} else if (data) {
-			var wikiHostname = data.replace(/^https?:\/\//i, "");
-			var url = 'http://' + wikiHostname + '/index.php' + query + "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.;
-			console.log("Making  request to host: " + url);
-			request({
-			    	method: 'GET',
-			    	//followRedirect: false,
-			    	url: url,
-			    	proxy: 'http://' + config.WIKIA_PROXY_HOST + ':' + config.WIKIA_PROXY_PORT
-			    }, 
-			    function (error, response, body) {
-			    	if(error) {
-			    		errorcallback();
-			    		console.log(error);	
-			    		return ;
-			    	}
-			    	
-			    	if(response.statusCode ==  200) {
-						try{
-							data = JSON.parse(body);
-							callback(data);
-						} catch(e) {
-							console.log("Error: while parsing result. Error was: ");
-							console.log(e);
-							console.log("Response that didn't parse was:\n" + body);
-		
-							data = {
-								error: '',
-								errorWfMsg: 'chat-err-communicating-with-mediawiki',
-								errorMsgParams: []
-							};
-						}
-			    		console.log(data);
-			    	}
-			    }
-			);
-		}
 	});
 }
 
@@ -388,12 +337,8 @@ function authConnection(handshakeData, authcallback){
 			authcallback(null, false); // error first callback style
 		}
 	};
-	
-	var requestUrl = config.AUTH_URL + "&roomId=" + roomId;
-	requestUrl += "&name=" + urlencode(name);
-	requestUrl += "&key=" + key;
 
-	requestMW(roomId, requestUrl, callback, function(){
+	mwBridge.getUser(roomId, name, key, callback, function(){
 		authcallback(null, false); // error first callback style
 	});
 } // end of socket connection code
@@ -583,7 +528,10 @@ function broadcastDisconnectionInfo(client, socket){
 	// Delay before sending part messages because there are occasional disconnects/reconnects or just ppl refreshing their browser
 	// and that's really not useful information to anyone that under-the-hood they were disconnected for a moment (BugzId 5753).
 	var DELAY_MILLIS = 7000;
-	setTimeout(function(){
+	
+	
+	
+	var setTimeout(function(){
 		// Now that the delay has passed, check that the user is still gone (if they're disconnecting/reconnecting, don't bother showing the part-message).
 		rc.hget(config.getKey_usersInRoom(client.roomId), client.myUser.get('name'), function(err, data){
 			// If data is EMPTY, then the user is still gone, so we can actually broadcast the message now.
@@ -812,7 +760,7 @@ function storeAndBroadcastChatEntry(client, socket, chatEntry, callback){
 			id: newId,
 			name: client.myUser.get('name'),
 			avatarSrc: client.myUser.get('avatarSrc'),
-			text: processText(chatEntry.get('text'), client),
+			text: chatEntry.get('text'),
 			timeStamp: now.getTime()
 		});
 
@@ -941,70 +889,6 @@ function broadcastToRoom(client, socket, data, users, callback){
 		}
 	});
 } // end broadcastToRoom()
-
-/**
- * Does pre-processing of text (currently used BEFORE storing it in redis).
- *
- * Some wg variables (stored in the client) are needed for link rewriting, etc. so
- * the second param should be the client of the user who sent the message.
- */
-function processText(text, client) {
-	// Prevent simple HTML/JS vulnerabilities (need to do this before other rewrites).
-	text = text.replace(/</g, "&lt;");
-	text = text.replace(/>/g, "&gt;");
-
-	// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
-	
-	// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
-	var localWikiLinkReg = client.wgServer + client.wgArticlePath;
-	localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");
-	text = text.replace(new RegExp(localWikiLinkReg, "i"), "[[$1]]"); // easy way... will re-write this to a shortened link later in the function.
-
-	// Linkify http://links
-	var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])/ig;
-	var pageLink = "";
-	if(text.match(exp)){
-		pageLink = unescape( exp.exec(text)[1] );
-		pageLink = pageLink.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-		pageLink = pageLink.replace(/>/g, "&gt;");
-	}
-	text = text.replace(exp, "<a href='$1'>" + pageLink + "</a>");
-
-	// Linkify [[Pipes|Pipe-notation]] in bracketed links.
-	var exp = /\[\[([ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*)\|([^\]\|]*)\]\]/ig;
-	text = text.replace(exp, function(wholeMatch, article, linkText) {
-		article = article.replace(/ /g, "_");
-		linkText = linkText.replace(/_/g, " ");
-		linkText = unescape( linkText );
-		linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-		linkText = linkText.replace(/>/g, "&gt;");
-
-		var path = client.wgServer + client.wgArticlePath;
-		article = escape( article );
-		article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
-		var url = path.replace("$1", article);
-		return '<a href="' + url + '">' + linkText + '</a>';
-	});
-
-	// Linkify [[links]] - the allowed characters come from http://www.mediawiki.org/wiki/Manual:$wgLegalTitleChars
-	var exp = /(\[\[[ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*\]\])/ig;
-	text = text.replace(exp, function(match) {
-		var article = match.substr(2, match.length - 4);
-		article = article.replace(/ /g, "_");
-		var linkText = article.replace(/_/g, " ");
-		linkText = unescape( linkText );
-		linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-		linkText = linkText.replace(/>/g, "&gt;");
-		
-		var path = client.wgServer + client.wgArticlePath;
-		article = escape( article );
-		article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
-		var url = path.replace("$1", article);
-		return '<a href="' + url + '">' + linkText + '</a>';
-	});
-
-	return text;
-} // end processText()
 
 /**
  * Helper-function to log the details of a more complex object.
