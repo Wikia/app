@@ -78,6 +78,10 @@
 			$wgRequest = $this->wgRequest_org;
 		}
 
+		protected function tearDownHelper() {
+			UserLoginHelper::setInstance( null );
+		}
+
 		/**
 		 * @dataProvider loginDataProvider
 		 */
@@ -110,6 +114,7 @@
 			
 			// tear down
 			$this->tearDownRequest();
+			$this->tearDownHelper();
 		}
 		
 		public function loginDataProvider() {
@@ -447,7 +452,7 @@
 			$mockHelperParams4 = array(
 				'doRedirect' => array(
 					'mockExpTimes' => 1,
-					'mockExpValues' => true,
+					'mockExpValues' => null,
 				)
 			);
 			
@@ -559,7 +564,7 @@
 				// 3 error -- POST + empty fakeGet + not allow password change
 				array( $params1, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams3, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, 'error', $expMsg3 ),
 				// 4 redirect page -- cancel request + empty returnto
-				//array( $params4, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
+				array( $params4, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
 				// 5 redirect page -- cancel request + returnto
 				//array( $params5, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
 				// 6 do nothing -- not match edit token
