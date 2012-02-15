@@ -61,11 +61,10 @@
 	if ($countComments) {
 		echo '<div class="article-comments-pagination upper-pagination"><div>' . $pagination . '</div></div>';
 	}
-
-	echo wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false));
-
-	?>
-
+?>
+<ul id="article-comments-ul" class="comments">
+<?= wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false)) ;?>
+</ul>
 <?php
 	if ($countComments) {
 		echo '<div class="article-comments-pagination"><div>' . $pagination . '</div></div>';

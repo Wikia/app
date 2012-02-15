@@ -91,8 +91,15 @@ if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($w
 	$wgHooks['WikiaMobileAssetsPackages'][] = 'ArticleCommentInit::onWikiaMobileAssetsPackages';
 }
 
+//JSMEssages setup
+F::build('JSMessages')->registerPackage( 'ArticleCommentsCounter', array(
+	'oasis-comments-header',
+	'oasis-comments-showing-most-recent'
+) );
+
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ArticleCommentsAjax';
+
 function ArticleCommentsAjax() {
 	global $wgUser, $wgRequest;
 	$method = $wgRequest->getVal('method', false);

@@ -748,7 +748,7 @@ class ArticleComment {
 		
 		$key = $title->getPrefixedDBkey(); // FIXME: does this line cause some side-effects that are needed? Otherwise, this line doesn't appear to serve any purpose.
 
-		$res = ArticleComment::doAfterPost($retval, $article);
+		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
 		
 		ArticleComment::doPurge($title, $commentTitle);
 		
@@ -778,17 +778,20 @@ class ArticleComment {
 		}
 	}
 
-	static public function doAfterPost($status, $article, $commentId = 0) {
+	static public function doAfterPost( $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 		global $wgDevelEnvironment;
-		
-		wfRunHooks( 'ArticleCommentAfterPost', array( $status, &$article, $commentId ) );
-		$error = false; $id = 0;
+
+		wfRunHooks( 'ArticleCommentAfterPost', array( $status, &$article ) );
+		$commentId = $article->getID();
+		$error = false;
+		$id = 0;
+
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
-				$text = wfRenderPartial('ArticleComments', 'Comment', array('comment' => $comment->getData(true), 'commentId' => $commentId, 'rowClass' => ''));
+				$text = wfRenderPartial( 'ArticleComments', ( Wikia::isWikiaMobile() ) ? 'WikiaMobileComment' : 'Comment', array('comment' => $comment->getData(true), 'commentId' => $commentId, 'rowClass' => '', 'level' => ( $parentId ) ? 2 : 1 ) );
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}
