@@ -148,7 +148,7 @@ F::build('JSMessages')->registerPackage('Wall', array(
  * extension related configuration
  */
 
-define( 'WALL_EMAIL_NOEMAIL', 0);
+define( 'WALL_EMAIL_NOEMAIL', -1);
 define( 'WALL_EMAIL_EVERY', 1);
 define( 'WALL_EMAIL_SINCEVISITED', 2);
 define( 'WALL_EMAIL_REMINDER', 3);
