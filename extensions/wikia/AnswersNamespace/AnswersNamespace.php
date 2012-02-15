@@ -75,7 +75,7 @@ function wfANCheck( $title=null ) {
 }
 
 // move from un-answered to answered category
-function wfANArticleCommentAfterPost( $status, &$articleComment, $commentId ) {
+function wfANArticleCommentAfterPost( $status, &$articleComment) {
 	global $wgContLang;
 
 	$unansweredCat = Title::newFromText( wfMsgForContent('unanswered-category'), NS_CATEGORY );

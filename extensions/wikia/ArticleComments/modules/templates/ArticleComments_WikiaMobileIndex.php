@@ -6,7 +6,9 @@
 			<? if ( $pagesCount > 1 ) :?>
 				<a id=commPrev class="lbl<?= ( !empty( $prevPage ) ) ? ' pag" href="?page=' . $prevPage . '#article-comments"' : '' ?>"><?= $wf->Msg( 'wikiamobile-article-comments-prev' ) ;?></a>
 			<? endif ;?>
-			<?= wfRenderPartial( 'ArticleComments', 'CommentList', array( 'commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false ) );?>
+			<ul id="article-comments-ul" class="comments">
+				<?= wfRenderPartial( 'ArticleComments', 'CommentList', array( 'commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false ) );?>
+			</ul>
 			<? if ( $pagesCount > 1 ) :?>
 				<a id=commMore class="lbl<?= ( !empty( $nextPage ) ) ? ' pag" href="?page=' . $nextPage . '#article-comments"' : '' ?>"><?= $wf->Msg( 'wikiamobile-article-comments-more' ) ;?></a>
 			<? endif ;?>

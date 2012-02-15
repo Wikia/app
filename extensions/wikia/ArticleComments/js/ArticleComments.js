@@ -1,6 +1,7 @@
 var ArticleComments = {
 	processing: false,
 	clickedElementSelector: "",
+	mostRecentCount: 0,
 
 	init: function() {
 		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.postComment);
@@ -249,28 +250,43 @@ var ArticleComments = {
 		var throbber = $(this).next('.throbber').css('visibility', 'visible');
 		$.postJSON(wgScript, data, function(json) {
 			throbber.css('visibility', 'hidden');
-			if (!json.error) {				
-				//FIXME: this is dangerous to do without checking for existence of element
-				var topE = $('#' + $(json.text).find('li:first').attr('id'));
-				if(!topE.exists()) {
-					$(json.text).find('li:first').prependTo('#article-comments-ul');					
-				} else {
-					if(topE.next().hasClass('sub-comments')) {
-						topE.next().append($(json.text).find('li:last'));
-						topE.replaceWith($(json.text).find('li:first'));
-					} else {
-						topE.replaceWith($(json.text).children());
-					}				
+			if (!json.error) {
+				var parent,
+					subcomments,
+					parentId = json.parentId,
+					nodes = $(json.text);
+
+				if(parentId){
+					//second level: reply
+					parent = $('#comm-' + parentId);
+					subcomments = parent.next();
+
+					if(!subcomments.hasClass('sub-comments')){
+						parent.after(subcomments = $('<ul class="sub-comments"></ul>'));
+					}
+
+					subcomments.append(nodes);
+				}else{
+					//first level: comment
+					nodes.prependTo('#article-comments-ul');
 				}
 
 				//update counter
-				if ( window.skin == 'oasis' ){
-					$('#article-comments-counter-header').html(json.counter.header);
-					$('#article-comments-counter-recent').html(json.counter.recent);
-					$('#WikiaUserPagesHeader').find('.commentsbubble').html(json.counter.plain);
-				}else{
-					$('#article-comments-counter').html(json.counter);
+				$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
+
+				if(window.skin == 'oasis'){
+					$('#WikiaPageHeader').find('.commentsbubble').html(json.counter);
+
+					if(!parentId){
+						if(!ArticleComments.mostRecentCount)
+							ArticleComments.mostRecentCount = $('#article-comments-ul > li').length;
+						else
+							ArticleComments.mostRecentCount++;
+	
+						$('#article-comments-counter-recent').html($.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount));
+					}
 				}
+
 				//readd events
 				ArticleComments.addHover();
 				//force to show 'edit' links for owners
@@ -308,7 +324,7 @@ var ArticleComments = {
 
 		$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
 			if (!json.error) {
-				$('#article-comments-ul').replaceWith(json.text);
+				$('#article-comments-ul').html(json.text);
 				if ($('.article-comments-pagination').exists()) {
 					$('.article-comments-pagination').find('div').html(json.pagination);
 

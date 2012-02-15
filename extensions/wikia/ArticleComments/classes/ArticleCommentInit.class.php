@@ -157,7 +157,9 @@ class ArticleCommentInit {
 			) )
 			{
 				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
+				F::build('JSMessages')->enqueuePackage( 'ArticleCommentsCounter', JSMessages::EXTERNAL );
 			}
+
 			//FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
 			if ( $sk instanceof SkinMonoBook ) { 
 				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");

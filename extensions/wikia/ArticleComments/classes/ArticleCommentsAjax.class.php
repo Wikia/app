@@ -33,6 +33,7 @@ class ArticleCommentsAjax {
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
+		$parentId = $wgRequest->getVal( 'parentId', 0 );
 
 		$result = array(
 			'error' => 1
@@ -63,7 +64,7 @@ class ArticleCommentsAjax {
 					$status = $response[0];
 					$article = $response[1];
 					wfLoadExtensionMessages('ArticleComments');
-					return ArticleComment::doAfterPost($status, $article, $commentId);
+					return ArticleComment::doAfterPost($status, $article, $parentId );
 				}
 			}
 		}
@@ -173,79 +174,56 @@ class ArticleCommentsAjax {
 		$parentId = $wgRequest->getVal( 'parentId' );
 		$page = $wgRequest->getVal( 'page', 1 );
 		$showall = $wgRequest->getText( 'showall', false );
-
-		$result = array(
-			'error' => 1
-		);
-
+		$commentingAllowed = true;
+		$result = array( 'error' => 1 );
 		$title = Title::newFromID( $articleId );
+
 		if ( !$title ) {
 			return $result;
 		}
 
-		$commentingAllowed = true;
-		if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
-			$props = BlogArticle::getProps($title->getArticleID());
-			$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
+		if ( defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE ) {
+			$props = BlogArticle::getProps( $title->getArticleID() );
+			$commentingAllowed = ( isset( $props['commenting'] ) ) ? (bool)$props['commenting'] : true;
 		}
 
-		if (!$commentingAllowed) {
+		if ( !$commentingAllowed ) {
 			return $result;
 		}
 
-		$response = ArticleComment::doPost( $wgRequest->getText('wpArticleComment', false), $wgUser, $title, $parentId );
-		//RT#44830
-		if ($title->getNamespace() == NS_USER_TALK &&
-		 $response !== false &&
-		 $response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE &&
-		 $title->getText() != $wgUser->getName()) {
-			$user = User::newFromName($title->getText());
-			if ($user) {
-				$user->setNewtalk(true);
-			}
-		}
+		$response = ArticleComment::doPost( $wgRequest->getText( 'wpArticleComment', false ), $wgUser, $title, $parentId );
 
 		if ( $response !== false ) {
+/**/
+			//RT#44830
+			if (
+				$title->getNamespace() == NS_USER_TALK &&
+				$response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE &&
+				$title->getText() != $wgUser->getName()
+			) {
+				$user = User::newFromName( $title->getText() );
 
-			$listing = ArticleCommentList::newFromTitle($title);
-
-			$addedComment = ArticleComment::newFromArticle($response[1]);
-
-			$parts = ArticleComment::explode($addedComment->getTitle()->getDBkey());
-
-			if(count($parts['partsOriginal']) == 1) {
-				// level1 comment
-				$comments = array($response[1]->getID() => array('level1' => $addedComment));
-			} else {
-				// level2 comment
-				$addedCommentParent = ArticleComment::newFromId($parentId);
-				$comments = array($parentId => array('level1' => $addedCommentParent, 'level2' => array($response[1]->getID() => $addedComment)));
-			}
-
-			// a very ugly hack...
-			global $wgArticleCommentsEnableVoting;
-			$tmp_wgArticleCommentsEnableVoting = $wgArticleCommentsEnableVoting;
-			$wgArticleCommentsEnableVoting = false;
-			// RT#68254 RT#69919 RT#86385
-			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => true));
-				$countAll = $wgLang->formatNum($listing->getCountAllNested());
-				$countDisplayed = $countAll;
-				if (!$showall && ($countAll > $wgArticleCommentsMaxPerPage)) {
-					$countDisplayed = $wgLang->formatNum($wgArticleCommentsMaxPerPage);
+				if ( $user ) {
+					$user->setNewtalk( true );
 				}
-				$counter = array(
-				    'plain' =>		$countAll,
-				    'header' =>		wfMsg('oasis-comments-header', $countAll),
-				    'recent' =>		wfMsg('oasis-comments-showing-most-recent', $countDisplayed)
-				);
-			} else {
-				$commentsHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
-				$counter = wfMsg('article-comments-comments', $wgLang->formatNum($listing->getCountAllNested()));
 			}
-			$wgArticleCommentsEnableVoting = $tmp_wgArticleCommentsEnableVoting;
-			// Owen removed pagination from results since we ajax one comment at a time now RT#141141
-			$result = array('text' => $commentsHTML, 'counter' => $counter);
+
+			$listing = ArticleCommentList::newFromTitle( $title );
+			$countAll = $wgLang->formatNum( $listing->getCountAllNested() );
+			$commentsHTML = $response[2]['text'];
+
+			$result = array('text' => $commentsHTML, 'counter' => $countAll);
+			
+			if ( $parentId ) {
+				$result['parentId'] = $parentId;
+			}
+
+			return $result;
+/**/
+
+/*				    'header' =>		wfMsg('oasis-comments-header', $countAll),
+				    'recent' =>		wfMsg('oasis-comments-showing-most-recent', $countDisplayed)
+*/
 		}
 
 		return $result;
