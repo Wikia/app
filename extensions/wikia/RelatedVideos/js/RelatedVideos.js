@@ -32,6 +32,12 @@ var RelatedVideos = {
 			relatedVideosModule.delegate( '.scrollleft', 'click', RelatedVideos.scrollleft );
 			relatedVideosModule.delegate( '.addVideo', 'click', RelatedVideos.addVideoLoginWrapper );
 			relatedVideosModule.delegate( '.remove', 'click', RelatedVideos.removeVideoLoginWrapper );
+			$('body').delegate( '#relatedvideos-video-player-embed-show', 'click', function() {
+				$('#relatedvideos-video-player-embed-code').show();
+				$('#relatedvideos-video-player-embed-show').hide();
+			});
+
+			
 			RelatedVideos.maxRooms = relatedVideosModule.attr('data-count');
 			if ( RelatedVideos.maxRooms < 1 ) {
 				RelatedVideos.maxRooms = 1;
@@ -220,10 +226,6 @@ var RelatedVideos = {
 						'callback' : function(){
 							$('#relatedvideos-video-player-embed-code').wikiaTooltip( $('.embedCodeTooltip',this.rvModule).html() );
 							jwplayer( res.json.id ).setup( res.json );
-							$('#relatedvideos-video-player-embed-show').click(function() {
-									$('#relatedvideos-video-player-embed-code').show();
-									$('#relatedvideos-video-player-embed-show').hide();
-							});
 						}
 					});
 				} else if ( res.html ) {
