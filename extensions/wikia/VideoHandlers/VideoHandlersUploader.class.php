@@ -15,11 +15,12 @@ class VideoHandlersUploader {
 	 * @param Title $title Title object stemming from name of video
 	 * @param string $description description of video
 	 * @param boolean $undercover upload a video without creating the associated article
+	 * @param array $overrideMetadata one or more metadata fields that override API response
 	 * @return FileRepoStatus On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file. 
 	 */
-	public static function uploadVideo($provider, $videoId, &$title, $description=null, $undercover=false) {
-		$apiWrapper = F::build( ucfirst( $provider ) . 'ApiWrapper', array( $videoId ) );
+	public static function uploadVideo($provider, $videoId, &$title, $description=null, $undercover=false, $overrideMetadata=array()) {
+		$apiWrapper = F::build( ucfirst( $provider ) . 'ApiWrapper', array( $videoId, $overrideMetadata ) );
 
 		/* prepare temporary file */
 		$url = $apiWrapper->getThumbnailUrl();
