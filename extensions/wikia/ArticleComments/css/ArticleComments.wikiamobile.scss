@@ -11,17 +11,21 @@
 $comment-left-margin: $page-padding + 60px;
 
 .js{
-	#article-comments{
+	#wkComm {
 		display: none;
-		
+
 		.rpl {
 			display: block;
 		}
 	}
-	
+
 	#commMore{
 		display: block;
 	}
+}
+
+.fkRpl {
+	display: none;
 }
 
 #wkArtCom{
@@ -46,7 +50,7 @@ $comment-left-margin: $page-padding + 60px;
 		padding-left: 5px;
 		position: relative;
 		width: 82%;
-	
+
 		&:focus {
 			height: 140px;
 		}
@@ -63,7 +67,7 @@ $comment-left-margin: $page-padding + 60px;
 		margin: 0;
 		@include box-shadow(-2px 0 5px -2px grey);
 	}
-	
+
 	.rpl {
 		margin: 0 0 0 70px;
 		border-top: 1px solid $border-color;
@@ -82,13 +86,11 @@ $comment-left-margin: $page-padding + 60px;
 	}
 }
 
-#article-comments{
-	&.open{
-		display:block;
-	}
+#wkComm.open{
+	display:block;
 }
 
-#article-comments-ul{
+#wkComUl{
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -196,7 +198,7 @@ $comment-left-margin: $page-padding + 60px;
 		@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
 		background-color: $border-color;
 		padding: $page-padding 0;
-		
+
 		//hide the text and make it take no space without adding
 		//yet another wrapping element...
 		color: transparent;

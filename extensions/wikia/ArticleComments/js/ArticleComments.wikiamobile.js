@@ -17,7 +17,8 @@ var ArticleComments = ArticleComments || (function(){
 		firstPage,
 		commsUl,
 		track = WikiaMobile.track,
-		postComm;
+		postComm,
+		rpl;
 
 	function clickHandler(event){
 		event.preventDefault();
@@ -28,7 +29,7 @@ var ArticleComments = ArticleComments || (function(){
 			condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
 
 		if(currentPage === 1)
-				firstPage = commsUl[0].cloneNode(true);
+				firstPage = commsUl.outerHTML;
 				
 		track(['comment', 'page', (forward)?'next':'previous']);
 
@@ -42,9 +43,9 @@ var ArticleComments = ArticleComments || (function(){
 				currentPage = pageIndex;
 				finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
-				commsUl.remove();
-				loadMore.before(result.text);
-				commsUl = $('#article-comments-ul');
+				commsUl.parentNode.removeChild(commsUl);
+				loadMore.insertAdjacentHTML('beforebegin', result.text);
+				commsUl = document.getElementById('wkComUl');
 
 				elm.toggleClass('active');
 				$.hideLoader(elm);
@@ -53,7 +54,7 @@ var ArticleComments = ArticleComments || (function(){
 				if(finished)
 					elm.css('display', 'none');
 
-				((forward) ? loadPrev : loadMore).css('display', 'block');
+				((forward) ? loadPrev : loadMore).style.display = 'block';
 
 				window.scrollTo(0, wrapper.offset().top);
 			});
@@ -64,12 +65,15 @@ var ArticleComments = ArticleComments || (function(){
 		ev.preventDefault();
 
 		var self = $(this),
-		inputs = self.find('input'),
-		commId = inputs.first(),
-		submit = inputs.last(),
-		parentId = (commId.attr('name') === 'wpParentId')?commId.val():undefined,
-		text = self.find('textarea').val();
+		prev = this.parentNode.previousElementSibling,
+		parentId = (prev.nodeName == 'UL' ? prev.previousElementSibling : prev).id,
+		submit = this.getElementsByTagName('input')[0],
+		textArea = this.getElementsByTagName('textarea')[0],
+		text = textArea.value;
+		
 		if(text !== '') {
+			submit.disabled =  true;
+			
 			var data = {
 				action:'ajax',
 				article:wgArticleId,
@@ -79,49 +83,49 @@ var ArticleComments = ArticleComments || (function(){
 				wpArticleComment:text,
 				useskin:'wikiamobile'
 			};
-			
-			submit.attr('disabled', true);
 	
 			if(parentId)
 				data.parentId = parentId;
 	
 			$.post(wgScript, data, function(resp) {
 				var json = JSON.parse(resp);
-				if(!json.error){
-					self.find('textarea').val('');
-					var reply = $(json.text);
-					
-					submit.removeAttr('disabled');
-	
+				textArea.value = '';
+
+				submit.disabled = false;
+				if(!json.error && json.text){
+
 					if(currentPage > 1){
-						commsUl.remove();
-						loadMore.before(firstPage);
-						commsUl = $('#article-comments-ul');
+						commsUl.parentNode.removeChild(commsUl);
+						loadMore.insertAdjacentHTML('beforebegin', firstPage);
+						commsUl = document.getElementById('wkComUl');
 						currentPage = 1;
-						loadPrev.hide();
+						loadPrev.style.display = 'none';
 					}
-	
-					if(parentId) {
+
+					if(parentId){
+						if(prev.className.indexOf('sub-comments') > -1) {
+							prev.innerHTML += json.text;
+						}else{
+							var ul = document.createElement('ul');
+							ul.className = 'sub-comments';
+							ul.innerHTML = json.text;
+							prev.insertAdjacentHTML('afterend', ul.outerHTML);
+						}
+
 						track('comment/reply/submit');
-						var prev = self.parent().prev();
-	
-						if(prev.hasClass('sub-comments')) {
-							prev.append(reply.find('.sub-comments li'));
-						}else{
-							prev.after(reply.find('.sub-comments'));
-						}
 					}else{
-						track('comment/new/submit');
-						if(commsUl.length > 0){
-							commsUl.prepend(reply.find('li, .rpl'));
-						}else{
-							var com = $(postComm);
-							com.parent().html(com);
-							com.after(reply);
+						var newRpl = rpl.cloneNode(true);
+						newRpl.className ='rpl';
+
+						if(commsUl.childElementCount == 0){
+							commsUl.previousSibling.nodeValue = '';
 						}
-						
+
+						commsUl.insertAdjacentHTML('afterbegin', json.text + newRpl.outerHTML);
+
+						track('comment/new/submit');
 					}
-					wrapper.children('h1')[0].innerHTML = json.counter + '<span class=chev><span>';
+					document.getElementById('wkArtCnt').innerText = json.counter;
 				}
 			});
 		}
@@ -130,37 +134,33 @@ var ArticleComments = ArticleComments || (function(){
 	//init
 	$(function(){
 		wrapper = $('#wkArtCom');
-		loadMore = $('#commMore');
-		loadPrev = $('#commPrev');
-		commsUl = $('#article-comments-ul');
-		totalPages = parseInt(wrapper.data('pages'));
-		postComm = document.getElementById('article-comm-form');
+		loadMore = document.getElementById('commMore');
+		loadPrev = document.getElementById('commPrev');
+		commsUl = document.getElementById('wkComUl');
+		totalPages = ~~wrapper.data('pages');
+		postComm = document.getElementById('wkCommFrm');
+		rpl = document.getElementsByClassName('fkRpl')[0];
 
 		if(totalPages > 1 && wgArticleId){
-			loadMore.bind(clickEvent, clickHandler);
-			loadPrev.bind(clickEvent, clickHandler);
+			loadMore.addEventListener(clickEvent, clickHandler);
+			loadPrev.addEventListener(clickEvent, clickHandler);
 		}
 
 		wrapper.on(clickEvent, '.rpl', function(){
-			var self = $(this),
-			prev = self.prev(),
-			rplComm = $(postComm.cloneNode(true));
-			
+			var rplComm = postComm.cloneNode(true);
+
+			rplComm.getElementsByTagName('input')[0].name = 'wpArticleReply';
+
+			this.className = '';
+			this.innerHTML = '';
+			this.appendChild(rplComm);
+			this.getElementsByTagName('textarea')[0].focus();
+
 			track('comment/reply/form/show');
-
-			if(prev.is('ul')) prev = prev.prev();
-
-			rplComm.find('input').first().attr('name', 'wpParentId').val(prev.attr('id')).next().attr('name', 'wpArticleReply');
-
-			self.removeClass().html('').append(rplComm).find('#article-comm').focus();
 		})
-		.on('submit', '.article-comm-form', post)
+		.on('submit', '#wkCommFrm', post)
 		.on(clickEvent, '.collSec', function(){
-			track(['comment',($(this).hasClass('open')?'close':'open')]);
+			track(['comment',(this.className.indexOf('open')>-1?'close':'open')]);
 		});
 	});
-
-	/** @public **/
-
-	return {};
 })();
