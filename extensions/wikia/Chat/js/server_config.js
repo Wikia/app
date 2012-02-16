@@ -5,6 +5,7 @@
  */
 
 var md5 = require("./lib/md5.js").md5;
+var os = require('os');
 
 /** CONSTANTS **/
 exports.CHAT_SERVER_PORT = 8000;
@@ -16,18 +17,12 @@ exports.WIKIA_PROXY_HOST = "";
 exports.WIKIA_PROXY_PORT = "";
 
 exports.REDIS_PORT = 6379;
-//exports.REDIS_HOST = "redis-s1";
+exports.REDIS_HOST = "redis-s1";
 
-exports.REDIS_HOST = "127.0.0.1";
-
-/*
- * console.log(process.env);
-
-if(process.env.ENV_VARIABLE['ISDEVCHAT'] == 1 ) {
+if( os.hostname() == 'dev-chat' ) {
 	exports.REDIS_HOST = "127.0.0.1";
-	console.log(exports.REDIS_HOST);
 }
-*/
+
 // Settings for local varnish
 exports.WIKIA_PROXY_HOST = "127.0.0.1";
 exports.WIKIA_PROXY_PORT = 6081;

@@ -115,6 +115,42 @@ WMBridge.prototype.getUser = function(roomId, name, key, success, error) {
 	requestMW(roomId, requestUrl, success, error);
 }
 
+WMBridge.prototype.kickban = function(roomId, name, key, success, error) {
+	var requestUrl = getUrl('kickBan', {
+		roomId: roomId,
+		userToBan: urlencode(name),
+		key: key
+	});
+
+	requestMW(roomId, requestUrl, function(data){
+		// Process response from MediaWiki server and then kick the user from all clients.
+		if(data.error || data.errorWfMsg){
+			error(data);
+		} else {
+			success(data);
+		}
+	});
+}
+
+
+WMBridge.prototype.giveChatMod = function(roomId, name, key, success, error) {
+	var requestUrl = getUrl('giveChatMod', {
+		roomId: roomId,
+		userToPromote: urlencode(name),
+		key: key
+	});
+
+	requestMW(roomId, requestUrl, function(data){
+		// Process response from MediaWiki server and then kick the user from all clients.
+		if(data.error || data.errorWfMsg){
+			error(data);
+		} else {
+			success(data);
+		}
+	});
+};
+
+
 console.log(WMBridge.prototype.getUser);
 
 exports.WMBridge = new WMBridge();
