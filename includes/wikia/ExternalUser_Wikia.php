@@ -69,10 +69,10 @@ class ExternalUser_Wikia extends ExternalUser {
 		// Copy safety check from User.php
 		$uid = intval( isset( $_COOKIE["{$wgCookiePrefix}UserID"] ) ? $_COOKIE["{$wgCookiePrefix}UserID"] : 0 );
 		if( isset( $_SESSION['wsUserID'] ) && $uid != $_SESSION['wsUserID'] ) {
-			$wgRequest->response()->setcookie( "{$wgCookiePrefix}UserID", '', time() - 86400 );
-			$wgRequest->response()->setcookie( "{$wgCookiePrefix}UserName", '', time() - 86400 );
-			$wgRequest->response()->setcookie( "{$wgCookiePrefix}_session", '', time() - 86400 );
-			$wgRequest->response()->setcookie( "{$wgCookiePrefix}Token", '', time() - 86400 );
+			$wgRequest->response()->setcookie( "UserID", '', time() - 86400 );
+			$wgRequest->response()->setcookie( "UserName", '', time() - 86400 );
+			$wgRequest->response()->setcookie( "_session", '', time() - 86400 );
+			$wgRequest->response()->setcookie( "Token", '', time() - 86400 );
 			wfDebugLog( 'initFromCookie', "Session user ID ({$_SESSION['wsUserID']}) and cookie user ID ($uid) don't match!" );
 			return false;
 		}
