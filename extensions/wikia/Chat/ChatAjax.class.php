@@ -2,7 +2,6 @@
 
 class ChatAjax {
 	const INTERNAL_POLLING_DELAY_MICROSECONDS = 500000;
-	const CHAT_AVATAR_DIMENSION = 50;
 
 	/**
 	 * This function is meant to just echo the COOKIES which are available to the apache server.
@@ -68,7 +67,7 @@ class ChatAjax {
 			'isCanGiveChatMode' => $isCanGiveChatMode, 
 			'isStaff' => $user->isAllowed( 'chatstaff' ),
 			'username' => $user->getName(),
-			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), self::CHAT_AVATAR_DIMENSION),
+			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), ChatModule::CHAT_AVATAR_DIMENSION),
 			'editCount' => "",
 			'since' => '',
 
