@@ -205,11 +205,9 @@ a {
 	}
 	.avatar {
 		@extend ._avatar;
-		height: 28px;
 		left: 15px;
 		position: absolute;
 		top: 20px;
-		width: 28px;
 	}
 	.username {
 		display: block;

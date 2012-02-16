@@ -62,7 +62,7 @@
 
 	<!-- HTML Templates -->
 	<script type='text/template' id='message-template'>
-		<img class="avatar" src="<%= avatarSrc %>"/>
+		<img width="<?= ChatModule::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatModule::CHAT_AVATAR_DIMENSION ?>" class="avatar" src="<%= avatarSrc %>"/>
 		<span class="time"><%= timeStamp %></span>
 		<span class="username"><%= name %></span>
 		<span class="message"><%= text %></span>
