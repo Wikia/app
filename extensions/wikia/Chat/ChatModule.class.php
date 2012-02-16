@@ -24,7 +24,10 @@ class ChatModule extends Module {
 	var $wgFavicon = '';
 	var $jsMessagePackagesUrl = '';
 	var $app;
-
+	static public $wordmarkWidth = 115;
+	static public $wordmarkHeight = 35;
+	public $wordmarkThumbnailUrl;
+	
 	public function executeIndex() {
 		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon;
 		wfProfileIn( __METHOD__ );
@@ -86,7 +89,21 @@ class ChatModule extends Module {
 		//Theme Designer stuff
 		$themeSettings = new ThemeSettings();
 		$this->themeSettings = $themeSettings->getSettings();
-
+		$this->wordmarkThumbnailUrl = '';
+		if ($this->themeSettings['wordmark-type'] == 'graphic') {
+			$title = Title::newFromText($this->themeSettings['wordmark-image-name'], NS_FILE);
+			if ($title) {
+				$image = wfFindFile($title);
+				if ($image) {
+					$thumb = $image->getThumbnail(ChatModule::$wordmarkWidth, ChatModule::$wordmarkHeight);
+					if ($thumb) $this->wordmarkThumbnailUrl = $thumb->url;
+				}
+			}
+			if (!$this->wordmarkThumbnailUrl) {
+				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($themeSettings['wordmark-image-url']);			
+			}
+		}
+		
 		// Since we don't emit all of the JS headscripts or so, fetch the URL to load the JS Messages packages.
 		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();
 
