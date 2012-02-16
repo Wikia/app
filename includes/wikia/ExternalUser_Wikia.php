@@ -58,7 +58,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function initFromCookie() {
-		global $wgMemc,$wgDBcluster;
+		global $wgMemc,$wgDBcluster, $wgCookiePrefix, $wgRequest;
 		wfDebug( __METHOD__ . " \n" );
 
         if ( wfReadOnly() ) {
@@ -66,7 +66,17 @@ class ExternalUser_Wikia extends ExternalUser {
             return false;
         }
 
-		$uid = @$_SESSION['wsUserID'];
+		// Copy safety check from User.php
+		$uid = intval( isset( $_COOKIE["{$wgCookiePrefix}UserID"] ) ? $_COOKIE["{$wgCookiePrefix}UserID"] : 0 );
+		if( isset( $_SESSION['wsUserID'] ) && $uid != $_SESSION['wsUserID'] ) {
+			$wgRequest->response()->setcookie( "{$wgCookiePrefix}UserID", '', time() - 86400 );
+			$wgRequest->response()->setcookie( "{$wgCookiePrefix}UserName", '', time() - 86400 );
+			$wgRequest->response()->setcookie( "{$wgCookiePrefix}_session", '', time() - 86400 );
+			$wgRequest->response()->setcookie( "{$wgCookiePrefix}Token", '', time() - 86400 );
+			wfDebugLog( 'initFromCookie', "Session user ID ({$_SESSION['wsUserID']}) and cookie user ID ($uid) don't match!" );
+			return false;
+		}
+		
 		wfDebug( __METHOD__ . ": user from session: $uid \n" );
 		if ( empty($uid) ) {
 			return false;
