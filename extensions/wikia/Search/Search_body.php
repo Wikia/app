@@ -233,24 +233,39 @@ class SolrSearchSet extends SearchResultSet {
 					$relevancyFunctionId = 11;
 			}
 		}
+		
+		$queryClauses = array();
 
 		if( $crossWikiaSearch ) {
-			$params['bf'] = 'map(backlinks,100,500,100)^2';
-			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
-
+			
 			$widQuery = '';
-			foreach(self::getCrossWikiaSearchExcludedWikis() as $wikiId) {
+			
+			foreach (self::getCrossWikiaSearchExcludedWikis() as $wikiId) 
+			{
 				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $wikiId;
 			}
+			
+			$queryClauses[] = $widQuery;
+			
+			$params['bf'] = 'map(backlinks,100,500,100)^2';
+			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
 			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en AND iscontent:true";
-		}
-		else {
+			
+		} else {
+			
 			if(count($namespaces)) {
 				$nsQuery = '';
 				foreach($namespaces as $namespace) {
 					$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
 				}
+				
+				$queryClauses[] = $nsQuery;
+				
 			}
+			
+			$wid = (!empty($wgSolrDebugWikiId)) ? $wgSolrDebugWikiId : $wgCityId;
+			$queryClauses[] = "wid: {$wid}";
+			
 		}
 		
 		$dismaxParams = "{!dismax qf='html^0.8" 
@@ -261,11 +276,11 @@ class SolrSearchSet extends SearchResultSet {
 						." ps=10"
 						." tie=1"
 						. "}";
-	
-		$sanitizedQuery = 'wid: '. ( !empty($wgSolrDebugWikiId) ? $wgSolrDebugWikiId : $wgCityId )
-						. ($nsQuery ? " AND ($nsQuery)" : '')
-						. ' AND _query_:"' . $dismaxParams . $sanitizedQuery . '"';
 		
+		$queryClauses[] = '_query_:"' . $dismaxParams . $sanitizedQuery . '"';
+		
+		$sanitizedQuery = implode(' AND ', $queryClauses);
+
 		try {
 			wfRunHooks( 'Search-beforeBackendCall', array( &$sanitizedQuery, &$offset, &$limit, &$params ) );
 			$response = $solr->search($sanitizedQuery, $offset, $limit, $params);
