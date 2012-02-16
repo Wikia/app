@@ -491,11 +491,11 @@ class WallController extends ArticleCommentsModule {
 					$wallOwner = $wallMessage->getWallOwner()->getName();
 				}
 				
-				$this->response->setVal( 'wallName', wfMsg('wall-message-elseswall', array('parsemag'), $wallOwner));
+				$this->response->setVal( 'wallName', wfMsg('wall-message-elseswall', $wallOwner));
 			}
 			
 			$this->response->setVal( 'wallUrl', $wallMessage->getWallUrl() );
-			$this->response->setVal( 'messageTitle', $wallMessage->getMetaTitle() );
+			$this->response->setVal( 'messageTitle', htmlspecialchars($wallMessage->getMetaTitle()) );
 			$isRemoved = $wallMessage->isRemove();
 			$isDeleted = $wallMessage->isAdminDelete();
 			$this->response->setVal( 'isRemoved', $isRemoved );
