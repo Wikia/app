@@ -24,8 +24,9 @@ class ChatModule extends Module {
 	var $wgFavicon = '';
 	var $jsMessagePackagesUrl = '';
 	var $app;
-	static public $wordmarkWidth = 115;
-	static public $wordmarkHeight = 35;
+	const CHAT_WORDMARK_WIDTH = 115;
+	const CHAT_WORDMARK_HEIGHT = 35;
+	const CHAT_AVATAR_DIMENSION = 28;
 	public $wordmarkThumbnailUrl;
 	
 	public function executeIndex() {
@@ -44,7 +45,7 @@ class ChatModule extends Module {
 
 		// Variables for this user
 		$this->username = $wgUser->getName();
-		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, 50);
+		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, ChatModule::CHAT_AVATAR_DIMENSION);
 
 		// Find the chat for this wiki (or create it, if it isn't there yet).
 		$this->roomName = $this->roomTopic = "";
@@ -95,7 +96,7 @@ class ChatModule extends Module {
 			if ($title) {
 				$image = wfFindFile($title);
 				if ($image) {
-					$thumb = $image->getThumbnail(ChatModule::$wordmarkWidth, ChatModule::$wordmarkHeight);
+					$thumb = $image->getThumbnail(self::CHAT_WORDMARK_WIDTH, self::CHAT_WORDMARK_HEIGHT);
 					if ($thumb) $this->wordmarkThumbnailUrl = $thumb->url;
 				}
 			}

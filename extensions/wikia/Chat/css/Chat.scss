@@ -255,10 +255,8 @@ a {
 	right: 150px;
 	img {
 		@extend ._avatar;
-		height: 28px;
 		left: 15px;
 		position: absolute;
-		width: 28px;
 	}
 	[name="message"] {
 		border: 1px solid $color-page-border;
