@@ -12,7 +12,7 @@ var app = require('express').createServer()
     , rc = redis.createClient(config.REDIS_PORT, config.REDIS_HOST)
     , models = require('./models/models')
 	, urlUtil = require('url')
-	, mwBridge = require('WMBridge.js');
+	, mwBridge = require('./WMBridge.js').WMBridge;
 var http = require("http");
 
 
@@ -527,11 +527,8 @@ function clientDisconnect(client, socket) {
 function broadcastDisconnectionInfo(client, socket){
 	// Delay before sending part messages because there are occasional disconnects/reconnects or just ppl refreshing their browser
 	// and that's really not useful information to anyone that under-the-hood they were disconnected for a moment (BugzId 5753).
-	var DELAY_MILLIS = 7000;
-	
-	
-	
-	var setTimeout(function(){
+	var DELAY_MILLIS = 7000;	
+	setTimeout(function(){
 		// Now that the delay has passed, check that the user is still gone (if they're disconnecting/reconnecting, don't bother showing the part-message).
 		rc.hget(config.getKey_usersInRoom(client.roomId), client.myUser.get('name'), function(err, data){
 			// If data is EMPTY, then the user is still gone, so we can actually broadcast the message now.
