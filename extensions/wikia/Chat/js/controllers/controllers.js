@@ -440,7 +440,7 @@ var NodeRoomController = $.createClass(Observable,{
 		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
 		
 		// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
-		var localWikiLinkReg = client.wgServer + client.wgArticlePath;
+		var localWikiLinkReg = wgServer + wgArticlePath;
 		localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");
 		text = text.replace(new RegExp(localWikiLinkReg, "i"), "[[$1]]"); // easy way... will re-write this to a shortened link later in the function.
 
@@ -463,7 +463,7 @@ var NodeRoomController = $.createClass(Observable,{
 			linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
 			linkText = linkText.replace(/>/g, "&gt;");
 
-			var path = client.wgServer + client.wgArticlePath;
+			var path = wgServer + wgArticlePath;
 			article = escape( article );
 			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
 			var url = path.replace("$1", article);
@@ -480,7 +480,7 @@ var NodeRoomController = $.createClass(Observable,{
 			linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
 			linkText = linkText.replace(/>/g, "&gt;");
 			
-			var path = client.wgServer + client.wgArticlePath;
+			var path = wgServer + wgArticlePath;
 			article = escape( article );
 			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
 			var url = path.replace("$1", article);

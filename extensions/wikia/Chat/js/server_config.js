@@ -16,8 +16,18 @@ exports.WIKIA_PROXY_HOST = "";
 exports.WIKIA_PROXY_PORT = "";
 
 exports.REDIS_PORT = 6379;
-exports.REDIS_HOST = "redis-s1";
+//exports.REDIS_HOST = "redis-s1";
 
+exports.REDIS_HOST = "127.0.0.1";
+
+/*
+ * console.log(process.env);
+
+if(process.env.ENV_VARIABLE['ISDEVCHAT'] == 1 ) {
+	exports.REDIS_HOST = "127.0.0.1";
+	console.log(exports.REDIS_HOST);
+}
+*/
 // Settings for local varnish
 exports.WIKIA_PROXY_HOST = "127.0.0.1";
 exports.WIKIA_PROXY_PORT = 6081;
