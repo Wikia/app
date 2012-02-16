@@ -422,7 +422,7 @@ class PartnerVideoHelper {
 		return $terms;
 	}
 	
-	public static function generateNameForPartnerVideo($provider, array $data, $useVideoHandlersSanitizer=true) {
+	public static function generateNameForPartnerVideo($provider, array $data) {
 		$name = '';
 
 		switch ($provider) {
@@ -444,18 +444,13 @@ class PartnerVideoHelper {
 		}
 		
 
-		if ($useVideoHandlersSanitizer) {
-			$name = VideoHandlersUploader::sanitizeTitle($name);
-		}
-		else {
-			// sanitize title
-			$name = preg_replace(Title::getTitleInvalidRegex(), ' ', $name);
-			// get rid of slashes. these are technically allowed in article
-			// titles, but they refer to subpages, which videos don't have
-			$name = str_replace('  ', ' ', $name);
+		// sanitize title
+		$name = preg_replace(Title::getTitleInvalidRegex(), ' ', $name);
+		// get rid of slashes. these are technically allowed in article
+		// titles, but they refer to subpages, which videos don't have
+		$name = str_replace('  ', ' ', $name);
 
-			$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255			
-		}
+		$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255			
 
 		return $name;
 	}
@@ -515,7 +510,7 @@ class PartnerVideoHelper {
 		return $name;		
 	}
 	
-	protected function makeTitleSafe($name) {
+	public function makeTitleSafe($name) {
 		return Title::makeTitleSafe(NS_LEGACY_VIDEO, str_replace('#', '', $name));    // makeTitleSafe strips '#' and anything after. just leave # out
 	}		
 	
@@ -576,11 +571,7 @@ class PartnerVideoHelper {
 			return 0;
 		}
 		
-		// check for duplicate names. need to check against videos with
-		// current style of sanitizing names and old style
-		$oldStyleName = self::generateNameForPartnerVideo($provider, $data, false);
-		$oldStyleTitle = $this->makeTitleSafe($oldStyleName);
-		if( !$debug && !$parseOnly && ($title->exists() || $oldStyleTitle->exists()) ) {
+		if( !$debug && !$parseOnly && $title->exists() ) {
 			// don't output duplicate error message
 			return 0;
 		}	

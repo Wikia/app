@@ -265,6 +265,17 @@ class VideoEmbedTool {
 			$name = $oname;
 		}
 
+		// sanitize name and init title objects
+		if (WikiaVideoService::useWikiaVideoExtForEmbed()) {
+			$titleLegacyVideo = PartnerVideoHelper::getInstance()->makeTitleSafe($name);
+		}		
+		if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
+			$nameFile = VideoHandlersUploader::sanitizeTitle($name);
+			$titleFile = Title::newFromText($nameFile, NS_FILE);
+		}				
+		$nameSanitized = WikiaVideoService::isVideoStoredAsFile() ? $nameFile : $titleLegacyVideo->getText();
+		$title = WikiaVideoService::isVideoStoredAsFile() ? $titleFile : $titleLegacyVideo;
+
 		$extra = 0;
 		$metadata = array();
 		while( '' != $wgRequest->getVal( 'metadata' . $extra ) ) {
@@ -282,37 +293,22 @@ class VideoEmbedTool {
 					// todo messagize
 					return 'You need to specify file name first!'; // FIXME: missing i18n
 				} else {
-				// wlee 2012/2/12: next four lines haven't been tested thoroughly. comment out for now and keep original behavior
-					//$nameStrictSanitized = VideoHandlersUploader::sanitizeTitle($name);
-					//$titleForLegacyVideo = Title::newFromText($nameStrictSanitized, NS_LEGACY_VIDEO);
-					//$nameLooseSanitized = VideoHandlersUploader::sanitizeTitle($name);
-					//$titleForFile = Title::newFromText($nameLooseSanitized, NS_FILE);
-					// retain original behavior
-					$nameStrictSanitized = $name;
-					$titleForLegacyVideo = Title::makeTitleSafe(NS_LEGACY_VIDEO, $nameStrictSanitized);
-					$nameLooseSanitized = $name;
-					$titleForFile = Title::makeTitleSafe(NS_FILE, $nameLooseSanitized);
 					
-					if(WikiaVideoService::useWikiaVideoExtForEmbed() && is_null($titleForLegacyVideo)) {
+					if(WikiaVideoService::useWikiaVideoExtForEmbed() && is_null($titleLegacyVideo)) {
 						header('X-screen-type: error');
 						return wfMsg ( 'vet-name-incorrect' );
 					}
-					elseif(WikiaVideoService::useVideoHandlersExtForEmbed() && is_null($titleForFile)) {
+					elseif(WikiaVideoService::useVideoHandlersExtForEmbed() && is_null($titleFile)) {
 						header('X-screen-type: error');
 						return wfMsg ( 'vet-name-incorrect' );
 					}
-					elseif ($name != $nameLooseSanitized) {
-						// name contains illegal characters
-						header('X-screen-type: error');
-						return wfMsg ( 'vet-name-incorrect' );						
-					}
-					if ( (WikiaVideoService::useWikiaVideoExtForEmbed() && $titleForLegacyVideo->exists() ) || 
-					( WikiaVideoService::useVideoHandlersExtForEmbed() && $titleForFile->exists() ) ) {
+					if ( (WikiaVideoService::useWikiaVideoExtForEmbed() && $titleLegacyVideo->exists() ) || 
+					( WikiaVideoService::useVideoHandlersExtForEmbed() && $titleFile->exists() ) ) {
 						if($type == 'overwrite') {
 							// is the target protected?
-							$permErrors = $titleForLegacyVideo->getUserPermissionsErrors( 'edit', $wgUser );
-							$permErrorsUpload = $titleForLegacyVideo->getUserPermissionsErrors( 'upload', $wgUser );
-							$permErrorsCreate = ( $titleForLegacyVideo->exists() ? array() : $titleForLegacyVideo->getUserPermissionsErrors( 'create', $wgUser ) );
+							$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+							$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
+							$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
 							
 							// skipping permission checks on NS_FILE article for now
 
@@ -322,10 +318,9 @@ class VideoEmbedTool {
 							}
 
 							if (WikiaVideoService::useWikiaVideoExtForEmbed()) {
-								$video = new VideoPage( $titleForLegacyVideo );
+								$video = new VideoPage( $titleLegacyVideo );
 								if ($video instanceof VideoPage) {
 									$video->loadFromPars( $provider, $id, $metadata );
-									$video->setName( $nameStrictSanitized );
 									$video->save();
 									if ('' != $gallery) { // for gallery, return also embed code to insert live on page
 										$embed_code = $video->getEmbedCode( 300 );
@@ -334,11 +329,11 @@ class VideoEmbedTool {
 							}
 							
 							if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
-								$this->uploadVideoAsFile($provider, $id, $nameLooseSanitized);	// file uploader will sanitize strictly
+								$this->uploadVideoAsFile($provider, $id, $name);	// file uploader will sanitize as needed
 							}
 						} else if($type == 'existing') {
 							header('X-screen-type: existing');
-							$video = new VideoPage( $titleForLegacyVideo );
+							$video = new VideoPage( $titleLegacyVideo );
 
 							$props = array();
 							$video->load();
@@ -370,9 +365,9 @@ class VideoEmbedTool {
 						}
 					} else {
 						// is the target protected?
-						$permErrors = $titleForLegacyVideo->getUserPermissionsErrors( 'edit', $wgUser );
-						$permErrorsUpload = $titleForLegacyVideo->getUserPermissionsErrors( 'upload', $wgUser );
-						$permErrorsCreate = ( $titleForLegacyVideo->exists() ? array() : $titleForLegacyVideo->getUserPermissionsErrors( 'create', $wgUser ) );
+						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
+						$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
 
 						// skipping permission checks on NS_FILE article for now
 						
@@ -382,10 +377,9 @@ class VideoEmbedTool {
 						}
 
 						if (WikiaVideoService::useWikiaVideoExtForEmbed()) {
-							$video = new VideoPage( $titleForLegacyVideo );
+							$video = new VideoPage( $titleLegacyVideo );
 							if ($video instanceof VideoPage) {
 								$video->loadFromPars( $provider, $id, $metadata );
-								$video->setName( $nameStrictSanitized );
 								$video->save();
 								if ('' != $gallery) { // for gallery, return also embed code to insert live on page
 									$embed_code = $video->getEmbedCode( 300 );							
@@ -394,7 +388,7 @@ class VideoEmbedTool {
 						}
 						
 						if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
-							$this->uploadVideoAsFile($provider, $id, $nameLooseSanitized);
+							$this->uploadVideoAsFile($provider, $id, $name);
 						}
 						
 					}
@@ -404,7 +398,7 @@ class VideoEmbedTool {
 			}			
 		}
 
-		$ns_vid = $wgContLang->getFormattedNsText( NS_LEGACY_VIDEO );
+		$ns_vid = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal('caption');
 		if ('' != $gallery) {
 
@@ -430,7 +424,7 @@ class VideoEmbedTool {
 					$gallery_split = explode( ':', $our_gallery );
 					$thumb = false;
 					
-					$tag = $gallery_split[0] . ":" . $nameStrictSanitized;	
+					$tag = $gallery_split[0] . ":" . $nameSanitized;	
 
 					if($size != 'full') {
 						$tag .= '|thumb';
@@ -469,7 +463,7 @@ class VideoEmbedTool {
 					preg_match_all( '/<videogallery[^>]*>[^<]*/s', $text, $matches, PREG_OFFSET_CAPTURE );
 					if( is_array( $matches ) ) {
 						$our_gallery = $matches[0][$gallery][0];				
-						$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $nameStrictSanitized;	
+						$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $nameSanitized;	
 						if( $caption != '' ) {
 							$our_gallery_modified .= '|' . $caption;
 						}				
@@ -487,7 +481,7 @@ class VideoEmbedTool {
 					}
 				} else {
 					header('X-screen-type: summary');				
-					$tag = $ns_vid . ":" . $nameStrictSanitized;
+					$tag = $ns_vid . ":" . $nameSanitized;
 					if($caption != '') {
 						$tag .= "|".$caption;
 					}
@@ -505,7 +499,7 @@ class VideoEmbedTool {
 			if( 'gallery' != $layout ) {
 				if( '' == $mwInGallery ) { // not adding gallery, not in gallery
 					if ($provider == VideoPage::V_WIKIAVIDEO) {
-						$tag = '{{:' . $wgWikiaVideoInterwikiPrefix . ':' . $name;
+						$tag = '{{:' . $wgWikiaVideoInterwikiPrefix . ':' . $nameSanitized;
 						$params = array();
 						if($size != 'full') {
 							$params[] = 'thumb=1';
@@ -521,7 +515,7 @@ class VideoEmbedTool {
 						$tag .= '}}';
 					}
 					else {
-						$tag = '[[' . $ns_vid . ':'.$name;
+						$tag = '[[' . $ns_vid . ':'.$nameSanitized;
 						if($size != 'full') {
 							$tag .= '|thumb';
 						}
@@ -536,7 +530,7 @@ class VideoEmbedTool {
 					}
 					$message = wfMsg( 'vet-single-success' );
 				} else { // we were in gallery
-					$tag = "\n" . $ns_vid . ":" . $name ;
+					$tag = "\n" . $ns_vid . ":" . $nameSanitized ;
 					if($caption != '') {
 						$tag .= "|".$caption;
 					}
@@ -544,7 +538,7 @@ class VideoEmbedTool {
 				}	
 			} else { // gallery needs to be treated differently...
 				$tag = "<videogallery>\n";
-				$tag .= $ns_vid . ":" . $name;			
+				$tag .= $ns_vid . ":" . $nameSanitized;			
 				if($caption != '') {
 					$tag .= "|".$caption."\n</videogallery>";
 				} else {
@@ -583,7 +577,8 @@ class VideoEmbedTool {
 		
 		$title = null;
 		//@todo call $apiWrapper to override metadata fields (e.g. name, description)
-		$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title);
+		$result = VideoHandlersUploader::uploadVideo( $provider, $videoId, $title, null, false, array('title'=>$videoName) );
+		
 		return $result;
 	}
 	
