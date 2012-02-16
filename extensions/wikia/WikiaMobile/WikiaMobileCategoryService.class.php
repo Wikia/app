@@ -65,7 +65,6 @@ class WikiaMobileCategoryService extends WikiaService {
 			$data = $this->model->getItemsCollection( $category );
 
 			$this->response->setVal( 'total', $data->getCount() );
-			$this->response->setVal( 'name', $title->getText() );
 			$this->response->setVal( 'collections', $data->getItems() );
 			$this->response->setVal( 'requestedIndex', $this->wg->Request->getText( 'index', null ) );
 			$this->response->setVal( 'requestedBatch', $this->wg->Request->getInt( 'page', 1 ) );
