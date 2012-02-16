@@ -31,15 +31,15 @@ $messages['en'] = array(
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]',
 
 	//categories
-	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}} in "$2"',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
 	'wikiamobile-category-items-more' => 'Load more',
 	'wikiamobile-category-items-prev' => 'Load previous',
-	'wikiamobile-categories-expand' => 'Expand All',
-	'wikiamobile-categories-collapse' => 'Compress All'
+	'wikiamobile-categories-expand' => 'Show All',
+	'wikiamobile-categories-collapse' => 'Hide All'
 );
 
 $messages['qqq'] = array(
-	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category and $2 is the category name'
+	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category'
 );
 
 /** адыгэбзэ (адыгэбзэ)
