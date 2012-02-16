@@ -250,39 +250,6 @@ function openPrivateRoom(client, socket, data){
 	});
 }
 
-function urlencode (str) {
-    // http://kevin.vanzonneveld.net
-    // +   original by: Philip Peterson
-    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-    // +      input by: AJ
-    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-    // +   improved by: Brett Zamir (http://brett-zamir.me)
-    // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-    // +      input by: travc
-    // +      input by: Brett Zamir (http://brett-zamir.me)
-    // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-    // +   improved by: Lars Fischer
-    // +      input by: Ratheous
-    // +      reimplemented by: Brett Zamir (http://brett-zamir.me)
-    // +   bugfixed by: Joris
-    // +      reimplemented by: Brett Zamir (http://brett-zamir.me)
-    // %          note 1: This reflects PHP 5.3/6.0+ behavior
-    // %        note 2: Please be aware that this function expects to encode into UTF-8 encoded strings, as found on
-    // %        note 2: pages served as UTF-8
-    // *     example 1: urlencode('Kevin van Zonneveld!');
-    // *     returns 1: 'Kevin+van+Zonneveld%21'
-    // *     example 2: urlencode('http://kevin.vanzonneveld.net/');
-    // *     returns 2: 'http%3A%2F%2Fkevin.vanzonneveld.net%2F'
-    // *     example 3: urlencode('http://www.google.nl/search?q=php.js&ie=utf-8&oe=utf-8&aq=t&rls=com.ubuntu:en-US:unofficial&client=firefox-a');
-    // *     returns 3: 'http%3A%2F%2Fwww.google.nl%2Fsearch%3Fq%3Dphp.js%26ie%3Dutf-8%26oe%3Dutf-8%26aq%3Dt%26rls%3Dcom.ubuntu%3Aen-US%3Aunofficial%26client%3Dfirefox-a'
-    str = (str + '').toString();
-
-    // Tilde should be allowed unescaped in future versions of PHP (as reflected below), but if you want to reflect current
-    // PHP behavior, you would need to add ".replace(/~/g, '%7E');" to the following.
-    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-    replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
-}
-
 /**
  * After the initial connection, the client will be expected to send its auth
  * info (essentially: the Wikia authentication cookies) so that we can then
@@ -564,26 +531,19 @@ function kickBan(client, socket, msg){
 
 	var userToBan = kickBanCommand.get('userToBan');
 
-	var requestUrl = config.KICKBAN_URL;
-	requestUrl += "&userToBan=" + urlencode(userToBan);
-	requestUrl +=  "&key=" + client.userKey ;
-	
-	requestMW(client.roomId, requestUrl, function(data){
-		// Process response from MediaWiki server and then kick the user from all clients.
-		if(data.error || data.errorWfMsg){
-			sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-			
-			if(data.doKickAnyway){
-				kickedUser = new models.User({name: userToBan});
-				kickUserFromRoom(client, socket, kickedUser, client.roomId);
-			}
-		} else {
-			// Build a user that looks like the one that got banned... then kick them!
+	mwBridge.kickban(client.roomId, userToBan, client.userKey, function(data){
+		// Build a user that looks like the one that got banned... then kick them!
+		kickedUser = new models.User({name: userToBan});
+		broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
+			// The user has been banned and the ban has been broadcast, now physically remove them from the room.
+			kickUserFromRoom(client, socket, kickedUser, client.roomId);
+		});
+	}, function(data){
+		sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
+		
+		if(data.doKickAnyway){
 			kickedUser = new models.User({name: userToBan});
-			broadcastInlineAlert(client, socket, 'chat-user-was-kickbanned', [kickedUser.get('name')], function(){
-				// The user has been banned and the ban has been broadcast, now physically remove them from the room.
-				kickUserFromRoom(client, socket, kickedUser, client.roomId);
-			});
+			kickUserFromRoom(client, socket, kickedUser, client.roomId);
 		}
 	});
 } // end kickBan()
@@ -596,32 +556,23 @@ function giveChatMod(client, socket, msg){
 	giveChatModCommand.mport(msg);
 
 	var userToPromote = giveChatModCommand.get('userToPromote');
-
-	var requestUrl = config.GIVECHATMOD_URL;
-	requestUrl +=  "&key=" + client.userKey ;
-	requestUrl += "&userToPromote=" + urlencode(userToPromote);
 	
-	requestMW(client.roomId, requestUrl, function(data){
-		// Either send the error to the client who tried this action, or (if it was a success), send the updated User to all clients.
-		if(data.error || data.errorWfMsg){
-			sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
-		} else {
-// TODO: ONCE WE HAVE A LIST OF CLIENTS, INSTEAD OF BUILDING A FAKE... LOOP THROUGH THE USERS IN THIS CHAT AND FIND THE REAL ONE. THAT'S FAR SAFER/BETTER.
-// TODO: The users are in a hash now... grab the user, then send them.
-			// Build a user that looks like the one that got banned... then kick them!
-			promotedUser = new models.User({name: userToPromote});
+	mwBridge.giveChatMod(client.roomId, userToPromote, client.userKey, function(data){
+		// Build a user that looks like the one that got banned... then kick them!
+		promotedUser = new models.User({name: userToPromote});
 
-			// Broadcast inline-alert saying that A has made B a chatmoderator.
-			broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
-				// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
-				var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
-				if(typeof promotedClientId != 'undefined'){
-					socket.socket(promotedClientId).json.send({
-						event: 'forceReconnect'
-					});
-				}
-			});
-		}
+		// Broadcast inline-alert saying that A has made B a chatmoderator.
+		broadcastInlineAlert(client, socket, 'chat-inlinealert-a-made-b-chatmod', [client.myUser.get('name'), promotedUser.get('name')], function(){
+			// Force the user to reconnect so that their real state is fetched again and is broadcast to all users (whose models will be updated).
+			var promotedClientId = sessionIdsByKey[config.getKey_userInRoom(promotedUser.get('name'), client.roomId)];
+			if(typeof promotedClientId != 'undefined'){
+				socket.socket(promotedClientId).json.send({
+					event: 'forceReconnect'
+				});
+			}
+		});
+	},function(data){
+		sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 	});
 } // end giveChatMod()
 
