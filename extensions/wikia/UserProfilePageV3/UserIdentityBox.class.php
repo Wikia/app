@@ -262,15 +262,16 @@ class UserIdentityBox {
 					$data->$option = $this->app->wg->Parser->parse($data->$option, $this->user->getUserPage(), new ParserOptions($this->user))->getText();
 					$data->$option = str_replace('&amp;asterix;', '*', $data->$option);
 					$data->$option = trim( strip_tags($data->$option) );
+					
 					//phalanx filtering; bugId:10233
-					$data->$option = $this->doPhalanxFilter($data->$option);
+					if( $option !== 'name' ) {
+					//bugId:21358
+						$data->$option = $this->doPhalanxFilter($data->$option);
+					}
 					
 					//char limit added; bugId:15593
-					if( in_array($option, array('name', 'location', 'occupation', 'gender')) ) {
+					if( in_array($option, array('location', 'occupation', 'gender')) ) {
 						switch($option) {
-							case 'name':
-								$data->$option = mb_substr($data->$option, 0, self::USER_NAME_CHAR_LIMIT);
-								break;
 							case 'location':
 								$data->$option = mb_substr($data->$option, 0, self::USER_LOCATION_CHAR_LIMIT);
 								break;
@@ -299,6 +300,11 @@ class UserIdentityBox {
 			}
 			
 			if( isset($data->name) ) {
+				//phalanx filtering; bugId:21358
+				$data->name = $this->doPhalanxFilter($data->name, Phalanx::TYPE_USER);
+				//char limit added; bugId:15593
+				$data->name = mb_substr($data->name, 0, self::USER_NAME_CHAR_LIMIT);
+				
 				$this->user->setRealName($data->name);
 				$changed = true;
 			}
@@ -346,8 +352,8 @@ class UserIdentityBox {
 			
 			foreach($filters as $filter) {
 				$result = Phalanx::isBlocked($text, $filter);
+				
 				if( $result['blocked'] ) {
-					
 					$this->app->wf->ProfileOut( __METHOD__ );
 					return '';
 				}
