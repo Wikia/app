@@ -24,6 +24,7 @@ $messages['en'] = array(
 	'wikiamobile-article-comments-post' => 'Post',
 	'wikiamobile-article-comments-placeholder' => 'Post a comment',
 	'wikiamobile-article-comments-reply' => 'Post a reply',
+	'wikiamobile-hide-section' => 'hide',
 
 	//footer
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',

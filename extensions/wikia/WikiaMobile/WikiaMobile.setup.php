@@ -67,6 +67,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileController.class.php", 'W
  */
 $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/WikiaMobile.i18n.php", 'WikiaMobile' );
 
+F::build('JSMessages')->registerPackage( 'WMgoBck', array( 'wikiamobile-hide-section' ) );
 /**
  * hooks
  */
