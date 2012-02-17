@@ -46,6 +46,13 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 ini_set( 'display_errors', 'stdout' );
 $options = array('help');
 @require_once( '../../commandLine.inc' );
+require_once ('videoSanitizerMigrationHelper.class.php');
+global $IP, $wgCityId, $wgExternalDatawareDB;
+
+
+$sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgExternalDatawareDB);
+$previouslyProcessed = $sanitizeHelper->getRenamedVideos("old", " operation_status='OK'");
+
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 // echo( "$IP\n" );
 echo( "Video name sanitizer script running for $wgCityId\n" );
@@ -65,8 +72,7 @@ $aTranslation = array();
 $aAllFiles = array();
 $timeStart = microtime( true );
 
-$rows = $dbw->query( "	SELECT img_name
-			FROM image");
+$rows = $dbw->query( "SELECT img_name FROM image" );
 
 $rowCount = $rows->numRows();
 echo( ": {$rowCount} videos found\n" );
@@ -88,6 +94,10 @@ if ( $rowCount ) {
 		if ( strpos ( $sFile, ':' ) === 0 ) {
 			// var_dump(':');
 
+			if ( !empty( $previouslyProcessed[$sFile] ) ) {
+				continue;
+			}
+			
 			$response = F::app()->sendRequest(
 				'VideoHandlerController',
 				'getSanitizedOldVideoTitleString',
@@ -245,20 +255,25 @@ foreach ( $aTranslation as $key => $val ) {
 				if ( $sTextAfter != $sText ) {
 					echo "ARTICLE WAS CHANGED! \n";
 					echo "BEFORE:\n";
-					echo $sText;
+					//echo $sText;
 					echo "\n\n\n AFTER:\n";
-					echo $sTextAfter;
+					//echo $sTextAfter;
 					echo "\n\n----\n\n";
 //					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
 //					var_dump( $status );
 //					if ( is_object( $status ) && !$status->isOK() ){
 //						var_dump( $status );
 //					}
+					$sanitizeHelper->logVideoTitle($what, $val, 'OK', $oTitle);
+					
 				} else {
 					if (strpos($sText, $what)!==false) {
 						echo "FAIL! \n";
 						echo "ARTICLE:\n";
 						echo $sText;					
+						$sanitizeHelper->logVideoTitle($what, $val, 'FAIL', $oTitle);
+					} else {
+						$sanitizeHelper->logVideoTitle($what, $val, 'UNKNOWN', $oTitle);
 					}
 				}
 			} else {
