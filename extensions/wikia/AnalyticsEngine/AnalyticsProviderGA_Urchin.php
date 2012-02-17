@@ -48,7 +48,7 @@ SCRIPT2;
 
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				#return '<script type="text/javascript">_wtq.push([\'AnalyticsEngine::EVENT_PAGEVIEW\', \'Wikia.main\']);</script>';
-				return '<script type="text/javascript">_gaq.push([\'_trackPageview\']);</script>'; // BugId:21127
+				return '<script type="text/javascript">_gaq.push([\'_setAccount\',\'UA-288915-1\']);_gaq.push([\'_setSampleRate\',10]);_gaq.push([\'_setDomainName\',\'.wikia.com\']);_gaq.push([\'_trackPageview\']);</script>'; // BugId:21127
 
 			// oasis is not calling this?!?
 			case 'hub':
