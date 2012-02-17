@@ -123,7 +123,7 @@ Thanks in advance and happy editing!",
 	'specialcontact-intro-bug' => "We are sorry to hear that you found a bug on Wikia. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
 *Your username
 *Link to your wiki
-*Your browser information (including type and version)
+*Your browser information including type and version ([[Help:Supported_browsers|click here for our supported browser list]])
 *Screenshot
 *Any and all other details.
 
@@ -155,6 +155,8 @@ Admins interested in testing out new features that are still in development can 
 Want to stay current on announcement of new features and improvements to current ones? Stop by and follow the [[w:c:community:Blog:Wikia_New_Features|staff blog new features list]]",
 
     'specialcontact-intro-close-wiki' => "Thanks for contacting Wikia. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
+
+If you wish to rename your wiki or \"stat-over\" please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you.
 
 If you feel this wiki is on a topic that no other users may be interested in (such as a personal or spam wiki), please submit a request using the form below. Please make the request from the wiki that needs closing.
 
