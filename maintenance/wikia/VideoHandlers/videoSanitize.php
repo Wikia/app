@@ -6,7 +6,7 @@
 
 function title_replacer( $title, $replacement, $fulltext  ) {
 	$symbols = array(
-		array(' ','_','-','+'),
+		array(' ','_','-','+','/'),
 	);
 	$refs = array();
 	foreach( $symbols as $id => $val ) {
@@ -36,6 +36,7 @@ function title_replacer( $title, $replacement, $fulltext  ) {
 	$regexp = '/(\\[\\[Video\\:)' . $regexp . '(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
 	
 	$new = preg_replace( $regexp, '$1' . $replacement . '$4', $fulltext );
+	if($new === null) return $fulltext;
 	return $new;	
 }
 
@@ -109,28 +110,19 @@ if ( $rowCount ) {
 			if( isset( $response['error'] ) ) continue;
 
 			$newNameCandidate = $response['result'];
-			$afterSanitizer = substr( $response['result'], 1);
+			$sNewTitle = $newNameCandidate;
 
-			if (
-				( $newNameCandidate != $sFile ) ||
-				isset ( $aAllFiles[ $afterSanitizer ] ) ||
-				empty( $afterSanitizer )
-			){
-				$found = false;
-				$sufix = 0;
-				$continue = true;
-				while ( $continue == true ) {
-					$sufixLength = strlen( $sufix );
-					$sNewTitle = substr( $newNameCandidate, ( 255 - $sufixLength ) ) . ( ( empty( $sufix ) || empty( $afterSanitizer ) ) ? '' : '_'.$sufix );
-					if ( 	!isset( $aAllFiles[ substr( $sNewTitle, 1) ] ) &&
-						!isset( $aAllFiles[ $sNewTitle ] )
-					) {
-						$continue = false;
-					}
-					$sufix++;
-				}
-				$aTranslation[ $sFile ] = $sNewTitle;
+			$sufix = 2;
+			$continue = true;
+			while (
+					strlen( $sNewTitle ) < 2 ||
+					isset ( $aAllFiles[ $sNewTitle ] ) ||
+					isset (	$aAllFiles[ substr($sNewTitle, 1 ) ] )
+			) {
+				$newNameCandidate = substr( $newNameCandidate, 0, 255-strlen( '_' . $sufix) );
+				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 0  ? '_' : '' ) . $sufix;
 			}
+			$aTranslation[ $sFile ] = $sNewTitle;
 		}
 	}
 }
@@ -142,7 +134,7 @@ print_r( $aTranslation );
 $botUser = User::newFromName( 'WikiaBot' );
 
 foreach ( $aTranslation as $key => $val ) {
-	echo "aTranslation[$key]=$val\n\n";
+	echo "aTranslation[$key]=$val\n";
 	
 	$strippedNew = str_replace( ':', '', $val );
 	$strippedOld = str_replace( ':', '', $key );
@@ -228,6 +220,10 @@ foreach ( $aTranslation as $key => $val ) {
 		$articleId = $file->il_from;
 		$oTitle = Title::newFromId( $articleId );
 		if ( $oTitle instanceof Title && $oTitle->exists() ){
+			global $wgTitle;
+			// in some cases hooks depend on wgTitle (hook for article edit)
+			// but normally it wouldn't be set for maintenance script
+			$wgTitle = $oTitle;
 //			echo "TWO! /n";
 			$oArticle = new Article ( $oTitle );
 			if ( $oArticle instanceof Article ){
@@ -235,45 +231,32 @@ foreach ( $aTranslation as $key => $val ) {
 				$sTextAfter = $sText = $oArticle->getContent();
 //				var_dump( $sTextAfter, $key, $val );
 //				var_dump( $oTitle );
-				$spacesText = str_replace( '_', ' ', $key );
-				echo "\n ========== ART:" .$oTitle." =============\n\n";
-				foreach ( array( $key, $spacesText ) as $what ){
+				echo "\n ========== ART:" .$oTitle." =============\n";
 
-//					var_dump( '---' );
-//					var_dump( $sTextAfter );
-//					var_dump( 'Video'.$what.'|' );
-//					var_dump( 'Video'.$what.']' );
-//					var_dump( strpos( $sTextAfter, 'Video'.$what.'|' ) );
-//					var_dump( strpos( $sTextAfter, 'Video'.$what.']' ) );
-//					var_dump( '--' );
-					echo "\n\nCHANGING: --$what-- TO: --$val--\n\n";
-					$sTextAfter = title_replacer( substr( $what, 1 ), substr( $val, 1), $sTextAfter  );
-					//$sTextAfter = str_replace( 'Video'.$what.'|', 'Video'.$val.'|', $sTextAfter );
-					//$sTextAfter = str_replace( 'Video'.$what.']', 'Video'.$val.']', $sTextAfter );
-				}
-				
+				$sTextAfter = title_replacer( substr( $key, 1 ), substr( $val, 1), $sTextAfter  );
+
 				if ( $sTextAfter != $sText ) {
 					echo "ARTICLE WAS CHANGED! \n";
-					echo "BEFORE:\n";
-					//echo $sText;
+/*					echo "BEFORE:\n";
+					echo $sText;
 					echo "\n\n\n AFTER:\n";
-					//echo $sTextAfter;
-					echo "\n\n----\n\n";
-//					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
+					echo $sTextAfter;
+					echo "\n\n----\n\n";*/
+					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
 //					var_dump( $status );
 //					if ( is_object( $status ) && !$status->isOK() ){
 //						var_dump( $status );
 //					}
-					$sanitizeHelper->logVideoTitle($what, $val, 'OK', $oTitle);
+					//$sanitizeHelper->logVideoTitle($key, $val, 'OK', $oTitle);
 					
 				} else {
-					if (strpos($sText, $what)!==false) {
+					if (strpos($sText, $key)!==false) {
 						echo "FAIL! \n";
 						echo "ARTICLE:\n";
 						echo $sText;					
-						$sanitizeHelper->logVideoTitle($what, $val, 'FAIL', $oTitle);
+						$sanitizeHelper->logVideoTitle($key, $val, 'FAIL', $oTitle);
 					} else {
-						$sanitizeHelper->logVideoTitle($what, $val, 'UNKNOWN', $oTitle);
+						$sanitizeHelper->logVideoTitle($key, $val, 'UNKNOWN', $oTitle);
 					}
 				}
 			} else {
@@ -284,15 +267,19 @@ foreach ( $aTranslation as $key => $val ) {
 		}
 	}
 
-//	foreach(  $aTablesMove as $table => $actions ){
-//		$dbw->update(
-//			$table,
-//			$actions['update'],
-//			$actions['where'],
-//			__METHOD__
-//		);
-//		// ad error handling
-//	}
+	foreach(  $aTablesMove as $table => $actions ){
+		$res = $dbw->update(
+			$table,
+			$actions['update'],
+			$actions['where'],
+			__METHOD__
+		);
+		$num = $dbw->affectedRows();
+		if( $num ) {
+			echo "updated $table (changes:$num)\n";
+		}
+		// ad error handling
+	}
 }
 
 echo(": {$rowCount} videos processed.\n");
