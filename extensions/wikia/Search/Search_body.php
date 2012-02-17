@@ -236,12 +236,18 @@ class SolrSearchSet extends SearchResultSet {
 		
 		$queryClauses = array();
 
+		$onWikiId = (!empty($wgSolrDebugWikiId)) ? $wgSolrDebugWikiId : $wgCityId;
+		
 		if( $crossWikiaSearch ) {
 			
 			$widQuery = '';
 			
 			foreach (self::getCrossWikiaSearchExcludedWikis() as $wikiId) 
 			{
+				if ($onWikiId == $wikiId) {
+					continue;
+				}
+				
 				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $wikiId;
 			}
 			
@@ -259,12 +265,12 @@ class SolrSearchSet extends SearchResultSet {
 					$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
 				}
 				
-				$queryClauses[] = $nsQuery;
+				$queryClauses[] = "({$nsQuery})";
 				
 			}
 			
-			$wid = (!empty($wgSolrDebugWikiId)) ? $wgSolrDebugWikiId : $wgCityId;
-			$queryClauses[] = "wid: {$wid}";
+			
+		        array_unshift($queryClauses, "wid: {$onWikiId}");
 			
 		}
 		
