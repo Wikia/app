@@ -25,7 +25,7 @@
 	width: 135px;
 	height: 135px;
 	background-color: $link-color;
-	background-image: url('/extensions/wikia/WikiaMobile/images/catExhPlcHld.png');/* $wgCdnStylePath */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAALElEQVQImW3KwQkAMAzDQHe/7L/O9VUoSQz6SD7Isgo6hayyh/pPq3xhSOQCT55ebZXPf+gAAAAASUVORK5CYII=);
 	display: inline-block;
 }
 
@@ -61,9 +61,7 @@
 
 	li {
 		&.sub {
-			background-repeat: no-repeat;
-			background-position: right;
-			background-image: url('/extensions/wikia/WikiaMobile/images/chev-rg.png');/* $wgCdnStylePath */
+			//to remove redundancy image comes from ui.scss
 			background-origin: content-box;
 			padding-right: 10px;
 		}

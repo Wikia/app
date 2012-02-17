@@ -6,7 +6,7 @@
 	   <div id=wkWrdMrk><?= $wikiName ;?></div>
    <? endif ;?>
    <a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
-   <a href=#wkNavMenu id=wkNavTgl class=tgl><img src=/extensions/wikia/WikiaMobile/images/menuChev.png></a>
+   <a href=#wkNavMenu id=wkNavTgl class=tgl><span></span></a>
    </section>
    <section id=wkNav>
 	  <ul id=wkTabs>
