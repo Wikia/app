@@ -66,6 +66,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 require_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbw = wfGetDB( DB_MASTER );
+$dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 $i = 0;
 $timeStart = microtime( true );
@@ -280,6 +281,15 @@ foreach ( $aTranslation as $key => $val ) {
 		}
 		// ad error handling
 	}
+
+	// when you sanitize make sure that the original entry in video_premigrate is deleted
+	$dbw_dataware->delete(
+		'video_premigrate',
+		array(
+			'wiki_id'	=>$wgCityId,
+			'img_name'	=>$key
+		)
+	);
 }
 
 echo(": {$rowCount} videos processed.\n");
