@@ -24,7 +24,7 @@ class UserIdentityBox {
 	/**
 	 * Char limits for user's input fields
 	 */
-	const USER_NAME_CHAR_LIMIT = 100;
+	const USER_NAME_CHAR_LIMIT = 40;
 	const USER_LOCATION_CHAR_LIMIT = 200;
 	const USER_OCCUPATION_CHAR_LIMIT = 200;
 	const USER_GENDER_CHAR_LIMIT = 200;
