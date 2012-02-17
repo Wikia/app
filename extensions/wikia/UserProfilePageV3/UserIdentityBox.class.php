@@ -580,11 +580,13 @@ class UserIdentityBox {
 				$wikiId = $row->wiki_id;
 				$editCount = $row->edits;
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
-				$wikiUrl = $wikiUrl.'?redirect=no';
-				
-				$wikis[$wikiId] = array( 'id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
+				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText'); 
+				if ($wikiTitle) {
+					$wikiUrl = $wikiTitle->getFullUrl();
+					$wikis[$wikiId] = array( 'id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
+				}
 			}
+			
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
@@ -601,7 +603,21 @@ class UserIdentityBox {
 			$this->clearHiddenTopWikis();
 		}
 		
-		$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis());
+		/*
+		 * mech: fixing bug 21198
+		 * right now the memcache has current numer of edits, but urls are incorrect (they point do main wiki page instead of user talk page)
+		 * so we combine both - take number of edits from memcache and links from db
+		 * later (f.e. in a month) once the links in memcache are correct, we can revert this change  
+		 */
+		//$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis());
+		$dbWikis = $this->getTopWikisFromDb();
+		$memcWikis = $this->getEditsWikis();
+		foreach($memcWikis as $wiki) {
+			if (array_key_exists($wiki['id'], $dbWikis)) {
+				$wiki['wikiUrl'] = $dbWikis[$wiki['id']]['wikiUrl'];
+			}
+		}
+		$wikis = array_merge($dbWikis, $memcWikis);
 		
 		$ids = array();
 		foreach($wikis as $key => $wiki) {
@@ -658,16 +674,18 @@ class UserIdentityBox {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-		$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
-		$wikiUrl = $wikiUrl.'?redirect=no';
-		
-		$userStatsService = F::build('UserStatsService', array($this->app->wg->User->getId()) );
-		$userStats = $userStatsService->getStats();
-		
-		//adding new wiki to topWikis in cache
-		$wiki = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $userStats['edits'] + 1);
-		$this->storeEditsWikis($wikiId, $wiki );
-		
+		$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText'); 
+		if ($wikiTitle) {
+			$wikiUrl = $wikiTitle->getFullUrl();
+			
+			$userStatsService = F::build('UserStatsService', array($this->app->wg->User->getId()) );
+			$userStats = $userStatsService->getStats();
+			
+			//adding new wiki to topWikis in cache
+			$wiki = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $userStats['edits'] + 1);
+			$this->storeEditsWikis($wikiId, $wiki );
+		}
+								
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
@@ -682,8 +700,11 @@ class UserIdentityBox {
 
 		if(count($mastheadEditsWikis) < 20) {
 			$mastheadEditsWikis[$wikiId] = $wiki;
+		} else if (array_key_exists($wikiId, $mastheadEditsWikis)) {
+			// mech: BugId 21198 - even if the array is full, it is still nice if we update existing entries
+			$mastheadEditsWikis[$wikiId] = $wiki;
 		}
-
+		
 		$this->app->wg->Memc->set( $this->getMemcMastheadEditsWikisKey(), $mastheadEditsWikis);
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
@@ -740,10 +761,13 @@ class UserIdentityBox {
 		foreach( $wikis as $wikiId => $editCount ) {
 			if( !$this->isTopWikiHidden($wikiId) && ($wikiId != $this->app->wg->CityId) ) {
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
-				$wikiUrl = F::build('WikiFactory', array('wgServer', $wikiId), 'getVarValueByName');
-				$wikiUrl = $wikiUrl.'?redirect=no';
-				
-				$wikis[$wikiId] = array( 'id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount );
+				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText'); 
+				if ($wikiTitle) {
+					$wikiUrl = $wikiTitle->getFullUrl();
+					$wikis[$wikiId] = array( 'id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount );
+				} else {
+					unset($wikis[$wikiId]);
+				}
 			} else {
 				unset($wikis[$wikiId]);
 			}
