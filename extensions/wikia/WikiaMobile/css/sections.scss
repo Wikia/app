@@ -31,4 +31,18 @@ body {
 		//there is already a padding so if this is not 0 it gets way too big
 		padding: 0;
 	}
+	&:after{
+		 content: "."; 
+		display: block; 
+		height: 0; 
+		font-size:0;
+		clear: both;
+		visibility:hidden;
+	}
+}
+
+.goBck {
+	color: $page-text-alternate-color;
+	float: right;
+	padding: 5px;
 }

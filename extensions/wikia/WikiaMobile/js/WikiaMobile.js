@@ -47,7 +47,8 @@ var WikiaMobile = WikiaMobile || (function() {
 				currentSection,
 				node,
 				nodeName,
-				isH2;
+				isH2,
+				goBck = '<span class=goBck>&uarr; '+$.msg('wikiamobile-hide-section')+'</span>';
 
 			for (x=0; x < y; x++) {
 				node = contents[x];
@@ -57,9 +58,13 @@ var WikiaMobile = WikiaMobile || (function() {
 				if (nodeName != '#comment' && nodeName != 'SCRIPT') {
 					if(node.id == 'WkMainCntFtr' || node.className == 'printfooter' || (node.className && node.className.indexOf('noWrap') > -1)){
 						//do not wrap these elements
+						currentSection.insertAdjacentHTML('beforeend', goBck);
 						root = wrapper;
 					}else if (isH2){
-						if (currentSection) wrapper.appendChild(currentSection);
+						if (currentSection) {
+							currentSection.insertAdjacentHTML('beforeend', goBck);
+							wrapper.appendChild(currentSection);
+						}
 
 						currentSection = document.createElement('section');
 						currentSection.className = 'artSec';
@@ -72,7 +77,6 @@ var WikiaMobile = WikiaMobile || (function() {
 						root = currentSection;
 						continue;
 					}
-
 					root.appendChild(node.cloneNode(true));
 				}
 			}
@@ -336,6 +340,10 @@ var WikiaMobile = WikiaMobile || (function() {
 
 			track(['section', self.hasClass('open')?'close':'open']);
 			self.toggleClass('open').next().toggleClass('open');
+		})
+		.delegate('.goBck', clickEvent, function(){
+			var top = $(this).parent().removeClass('open').prev().removeClass('open').offset().top;
+			window.scrollTo(0, top);
 		})
 		.delegate('#wkMainCnt a', clickEvent, function(){
 			track('link/content');
