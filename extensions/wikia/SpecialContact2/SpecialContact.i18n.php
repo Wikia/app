@@ -156,7 +156,7 @@ Want to stay current on announcement of new features and improvements to current
 
     'specialcontact-intro-close-wiki' => "Thanks for contacting Wikia. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
 
-If you wish to rename your wiki or \"stat-over\" please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you.
+If you wish to rename your wiki or \"start-over\" please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you.
 
 If you feel this wiki is on a topic that no other users may be interested in (such as a personal or spam wiki), please submit a request using the form below. Please make the request from the wiki that needs closing.
 
