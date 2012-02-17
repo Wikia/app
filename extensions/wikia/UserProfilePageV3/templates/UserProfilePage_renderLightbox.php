@@ -71,7 +71,7 @@
 		<li class="about">
 			<form id="userData" name="userData">
 				<div class="column">
-					<label><?= wfMsg('user-identity-box-about-name'); ?></label>
+					<label><?= wfMsg('user-identity-box-about-name'); ?> <span class="form-questionmark" data-tooltip="<?= wfMsg('user-identity-box-about-name-tooltip'); ?>"></span></label>
 					<input type="text" name="name" value="<?= strip_tags($user['realName']); ?>" maxlength="<?= $charLimits['name']; ?>" />
 					
 					<label><?= wfMsg('user-identity-box-about-location'); ?></label>
