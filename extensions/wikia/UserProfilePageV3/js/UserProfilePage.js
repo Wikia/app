@@ -395,11 +395,13 @@ var UserProfilePage = {
 			month: null,
 			day: null
 		};
-		
 		for(var i in userData) {
 			if( typeof($(document.userData[i]).val()) !== 'undefined' ) {
 				userData[i] = $(document.userData[i]).val();
 			}
+		}
+		if (document.userData['hideEditsWikis'].checked) {
+			userData['hideEditsWikis'] = 1;
 		}
 
 		return userData;

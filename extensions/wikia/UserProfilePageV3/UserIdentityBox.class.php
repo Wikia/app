@@ -57,6 +57,7 @@ class UserIdentityBox {
 		'twitter', 
 		'fbPage', 
 		'name',
+		'hideEditsWiki',
 	);
 	
 	/**
@@ -175,7 +176,7 @@ class UserIdentityBox {
 		$memcData = $this->app->wg->Memc->get($this->getMemcUserIdentityDataKey());
 		
 		if( empty($memcData) ) {
-			foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
+			foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis') as $key) {
 				if( !in_array($key, array('gender', 'birthday')) ) {
 					$data[$key] = $this->user->getOption($key);
 				} else {
@@ -226,7 +227,7 @@ class UserIdentityBox {
 	 * @return void
 	 */
 	private function getEmptyData(&$data) {
-		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage') as $key) {
+		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis') as $key) {
 			$data[$key] = "";
 		}
 		
@@ -365,7 +366,7 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	private function saveMemcUserIdentityData($data) {
-		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis') as $property) {
+		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis') as $property) {
 			if( is_object($data) && isset($data->$property) ) {
 				$memcData[$property] = $data->$property;
 			}
@@ -400,7 +401,7 @@ class UserIdentityBox {
 		}
 		
 		//if any of properties isn't set then set it to null
-		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName') as $property) {
+		foreach(array('location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'hideEditsWikis') as $property) {
 			if( !isset($memcData[$property]) ) {
 				$memcData[$property] = null;
 			}

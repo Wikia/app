@@ -136,6 +136,9 @@
 					<? endforeach; ?>
 						<li class="join-more-wikis"><span><?= wfMsg('user-identity-box-join-more-wikis'); ?></span></li>
 					</ul>
+					<p id="hideEditsWikis">
+						<input type="checkbox" name="hideEditsWikis" value="1" <?php if (array_key_exists('hideEditsWikis', $user) && $user['hideEditsWikis']):?>checked="checked"<?php endif;?>/><?= wfMsg('user-identity-box-hide-edits-wikis'); ?>
+					</p>
 					
 				</div>
 			</form>

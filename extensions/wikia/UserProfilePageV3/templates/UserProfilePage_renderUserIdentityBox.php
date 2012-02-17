@@ -112,8 +112,8 @@
 					<? endif; ?>
 				<? endif; ?>
 			</ul>
-			
-			<? if( !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
+
+			<? if( (!array_key_exists('hideEditsWikis', $user) || !$user['hideEditsWikis']) && !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
 			<ul class="wikis">
 				<span><?= wfMsg('user-identity-box-fav-wikis'); ?></span>
 				<ul>
