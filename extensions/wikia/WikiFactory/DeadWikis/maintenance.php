@@ -36,7 +36,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'datetime',
 				'key' => 'created',
-				'max' => '-365 days',
+				'max' => '-350 days',
 			),
 			array(
 				'type' => 'datetime',
@@ -63,12 +63,12 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'datetime',
 				'key' => 'created',
-				'max' => '-360 days',
+				'max' => '-342 days',
 			),
 			array(
 				'type' => 'datetime',
 				'key' => 'lastedited',
-				'max' => '-55 days',
+				'max' => '-53 days',
 			),
 			array(
 				'type' => 'int',
