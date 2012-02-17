@@ -16,6 +16,9 @@
 	hide,
 	clickEvent,
 	current = 0,
+	track = function(ev){
+		WikiaTracker.track('/1_mobile/modal/' + ev, 'main.sampled');
+	},
 
 	createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution(),
@@ -62,17 +65,21 @@
 		});
 
 		//handling next/previous image in lightbox
-		body.delegate('#nxtImg', 'swipeLeft ' + clickEvent, function() {
+		body.delegate('#nxtImg', 'swipeLeft ' + clickEvent, function(event) {
 			nextImage($(this).prev());
+			track(((event.type == 'swipeLeft')?'swipe':'click') + '/left');
 		})
-		.delegate('#prvImg', 'swipeRight ' + clickEvent, function() {
+		.delegate('#prvImg', 'swipeRight ' + clickEvent, function(event) {
 			previousImage($(this).next());
+			track(((event.type == 'swipeRight')?'swipe':'click') + '/right');
 		})
 		.delegate('.fllScrImg', 'swipeLeft', function() {
 			nextImage($(this));
+			track('swipe/left');
 		})
 		.delegate('.fllScrImg', 'swipeRight', function() {
 			previousImage($(this));
+			track('swipe/right');
 		});
 
 		modalCreated = true;
@@ -193,6 +200,7 @@
 		thePage.hide();
 		modal.addClass('mdlShw');
 		resetTimeout();
+		track('open');
 	};
 
 	$.closeModal = function() {
@@ -202,6 +210,7 @@
 			modalFooter.html('');
 			modal.removeClass();
 			if(!Modernizr.positionfixed) WikiaMobile.moveSlot();
+			track('close');
 		}
 	};
 
