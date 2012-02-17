@@ -81,6 +81,9 @@
 			previousImage($(this));
 			track('swipe/right');
 		});
+		//document.body.addEventListener('touchmove', function(event) {
+		//	event.preventDefault();
+		//}, false); 
 
 		modalCreated = true;
 	},

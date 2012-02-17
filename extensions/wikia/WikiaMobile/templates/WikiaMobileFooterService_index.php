@@ -1,7 +1,5 @@
 <footer id=wkFtr>
-	<a href=http://wikia.com>
-		<img id=wkLogo src="<?= $wg->ExtensionsPath ;?>/wikia/WikiaMobile/images/wordmark.png" alt=Wikia.com>
-	</a>
+	<a id=wkLogo href=http://wikia.com></a>
 	<? if( !empty( $links ) ) :?>
 		<ul>
 			<? foreach( $links as $link ) :?>

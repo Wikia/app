@@ -16,7 +16,7 @@
 		height: 22px;
 		background-position: center;
 		background-repeat: no-repeat;
-		background-image: url("/extensions/wikia/WikiaMobile/images/open_chev.png");/* $wgCdnStylePath */
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAAAAADI5CmLAAAAAnRSTlMA/1uRIrUAAABqSURBVAhbLck7CoAwFETRt/8VWUQQRIhYiBLRKAS/2FgopoyMvsTpzh3ClV4Im6MNdIpE3t6zyORBu8ir2nrKenCEu2y1slhjqUYHAqzSulmzQk0P2Bz6tumY3l/ojVmYwRwCf8Maxy/wAmzRfGyMutB5AAAAAElFTkSuQmCC);
 		position: absolute;
 		right: 0;
 		top: 37%;
@@ -25,7 +25,7 @@
 
 	&.open .chev {
 		-webkit-transform: rotateZ(360deg);
-		background-image: url("/extensions/wikia/WikiaMobile/images/close_chev.png");/* $wgCdnStylePath */
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAn1BMVEX///8pe8YoesQmcrfV4u4qf80pe8U3hs0qfsoqfssoecMxdLEmcrjx9vugwuCgwuElcLStyuUndr5rotMja6woeMEyd7UkbK66z+Pk7/gydLLy9vt4qdV4qNTy9/tRldIxcq7W5PAmc7kqgM4pfclqoNCsx9+6z+LK3/Ksxt2tyuPx9vpRlNFSltR4qtYpfMhSl9bX5/Xy9/woeMJQk8+oBF+BAAAAAXRSTlMAQObYZgAAAGFJREFUeF5NyzUSxDAAxdBvdpiZl5nvf7YUzs5E3SsEEx8PWMWd0L2syTJiR3+WNftaW0F9w3OxsdXpJSzZLaTqjf6306QFjqlL7xWAa/LU0gfP4+Fjxge5ecC0b7AUeJgBd/cGOcZKDCgAAAAASUVORK5CYII=);
 	}
 }
 
