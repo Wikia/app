@@ -283,6 +283,9 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 	}
 }
 
+/**
+ * A class that gets video data for "old" videos from the WikiaVideo extension
+ */
 abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 	
 	protected $videoName;
@@ -328,4 +331,49 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 		$key = static::$CACHE_KEY . '_metadata';
 		return $key . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoName;
 	}
+}
+
+/**
+ * ApiWrapper for a video provider that has no API. This class does not attempt
+ * to connect to any API.
+ */
+abstract class NullApiWrapper extends PseudoApiWrapper {
+	//@todo change this url
+	protected static $THUMBNAIL_URL = 'http://pinside.com/img/no_thumbnail.jpg';
+	
+	
+	public function __construct($videoId, array $overrideMetadata=array()) {
+		$this->videoId = $this->sanitizeVideoId( $videoId );
+		if (!empty($overrideMetadata['ingestedFromFeed'])
+		|| $this->isIngestedFromFeed()) {
+			// don't connect to api
+		}
+		if (!is_array($overrideMetadata)) {
+			$overrideMetadata = array();
+		}
+		$this->loadMetadata($overrideMetadata);
+	}
+	
+	protected function getVideoTitle() {
+		$classname = get_class($this);
+		$provider = substr($classname, 0, strlen($classname)-strlen('ApiWrapper'));
+		return wfMsg('videohandler-unknown-title') . " ($provider $this->videoId)";
+	}
+	
+	public function getDescription() {
+		return '';
+	}
+	
+	public function getThumbnailUrl() {
+		return self::$THUMBNAIL_URL;
+	}
+	
+	protected function getInterfaceObjectFromType( $type ) {
+		return null;
+	}
+	
+	protected function processResponse( $response, $type ) {
+		return null;
+	}
+	
 }

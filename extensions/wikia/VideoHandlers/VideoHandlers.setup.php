@@ -35,6 +35,7 @@ $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' )
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'FakeApiWrapper',		$dir . '/apiwrappers/FakeApiWrapper.class.php' );
 $app->registerClass( 'WikiaVideoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'NullApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 //mech: missing WikiaFileRevertForm class breaks the unit tests, so I commented it out
 //$app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
@@ -83,6 +84,10 @@ $app->registerClass('FiveminVideoHandler', $dir . '/handlers/FiveminVideoHandler
 $app->registerClass('FiveminApiWrapper', $dir . '/apiwrappers/FiveminApiWrapper.class.php');
 $wgMediaHandlers['video/fivemin'] = 'FiveminVideoHandler';
 
+$app->registerClass('GametrailersVideoHandler', $dir . '/handlers/GametrailersVideoHandler.class.php');
+$app->registerClass('GametrailersApiWrapper', $dir . '/apiwrappers/GametrailersApiWrapper.class.php');
+$wgMediaHandlers['video/gametrailers'] = 'GametrailersVideoHandler';
+
 $app->registerClass('MetacafeVideoHandler', $dir . '/handlers/MetacafeVideoHandler.class.php');
 $app->registerClass('MetacafeApiWrapper', $dir . '/apiwrappers/MetacafeApiWrapper.class.php');
 $wgMediaHandlers['video/metacafe'] = 'MetacafeVideoHandler';
@@ -102,6 +107,15 @@ $wgMediaHandlers['video/realgravity'] = 'RealgravityVideoHandler';
 $app->registerClass('ScreenplayVideoHandler', $dir . '/handlers/ScreenplayVideoHandler.class.php');
 $app->registerClass('ScreenplayApiWrapper', $dir . '/apiwrappers/ScreenplayApiWrapper.class.php');
 $wgMediaHandlers['video/screenplay'] = 'ScreenplayVideoHandler';
+
+$app->registerClass('SevenloadVideoHandler', $dir . '/handlers/SevenloadVideoHandler.class.php');
+$app->registerClass('SevenloadApiWrapper', $dir . '/apiwrappers/SevenloadApiWrapper.class.php');
+$wgMediaHandlers['video/sevenload'] = 'SevenloadVideoHandler';
+
+$app->registerClass('SouthparkstudiosVideoHandler', $dir . '/handlers/SouthparkstudiosVideoHandler.class.php');
+$app->registerClass('SouthparkstudiosApiWrapper', $dir . '/apiwrappers/SouthparkstudiosApiWrapper.class.php');
+$wgMediaHandlers['video/southparkstudios'] = 'SouthparkstudiosVideoHandler';
+
 
 $app->registerClass('ViddlerVideoHandler', $dir . '/handlers/ViddlerVideoHandler.class.php');
 $app->registerClass('ViddlerApiWrapper', $dir . '/apiwrappers/ViddlerApiWrapper.class.php');
