@@ -139,10 +139,6 @@ class ImportPartnerVideoTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnValue(true));
 
 		$helper = $this->getMock('PartnerVideoHelper', array('makeTitleSafe'));
-		$helper->expects($this->once())
-			->method('makeTitleSafe')
-			->will($this->returnValue($title));					
-		
 
 		$data = array(
 		    'titleName' => 'Harry Potter & The Sorcerer\'s Stone',
@@ -169,9 +165,6 @@ class ImportPartnerVideoTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnValue(false));
 
 		$helper = $this->getMock('PartnerVideoHelper', array('makeTitleSafe'));
-		$helper->expects($this->once())
-			->method('makeTitleSafe')
-			->will($this->returnValue($title));					
 		
 		$videoMock = $this->getMock('VideoPage', array('loadFromPars', 'setName', 'save'), array(&$title));
 		$videoMock->expects($this->atLeastOnce())
