@@ -28,7 +28,7 @@ Auto Create Wiki
 optional = autocreatewiki-reminder-subject, autocreatewiki-language-top-list
 ignored = requestwiki-filter-language, autocreatewiki-tagline, autocreatewiki-language-top-list
 
-Auto Hubs Pages
+#Auto Hubs Pages
 
 Automatic Wiki Adoption
 # Extension is not completely done yet. Ignoring unfinished parts.
@@ -233,7 +233,7 @@ aliasfile = Sitemap/Sitemap.alias.php
 
 Site Wide Messages
 file = SiteWideMessages/SpecialSiteWideMessages.i18n.php
-ignored = swm-expire-options
+ignored = swm-expire-options, swm-days
 
 Skin Chooser
 
