@@ -230,6 +230,8 @@ $messages['qqq'] = array(
 	'sponsorship-dashboard-report-new-source-gapi' => '"GA" stands for Google Analytics.',
 	'sponsorship-dashboard-report-new-source-gapi-custom' => '"GA" stands for Google Analytics.',
 	'sponsorship-dashboard-source-gapi-force-account' => '"GA" stands for Google Analytics.',
+
+	'sponsorship-dashboard-source-in-case-of-empty' => 'This is a label for a text input element',
 );
 
 /** Afrikaans (Afrikaans)
