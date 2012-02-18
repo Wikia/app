@@ -460,8 +460,11 @@ class ContactForm extends SpecialPage {
 
 		$oTmpl->set_vars( $vars );
 
-		if( $this->secDat['form'] === true || ( $wgUser->isAnon() && !empty( $this->secDat['reqlogin'] ) ) ) {
+		if( $this->secDat['form'] === true ) {
 			$wgOut->addHTML( $oTmpl->execute("form") );
+		} elseif ( $wgUser->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
+			$wgOut->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
+			return;
 		} else {
 			$wgOut->addHTML( $oTmpl->execute( $this->secDat['form'] ) );
 		}
