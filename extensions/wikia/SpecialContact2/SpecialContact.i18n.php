@@ -211,6 +211,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-captchafail' =>	'Incorrect or missing confirmation code.',
 	'specialcontact-error-title' => 'Contact Form Error',
 	'specialcontact-error-message' => 'Something went wrong while submitting your form. Please try again later.',
+	'specialcontact-error-logintext' => 'You must be logged in to make this request. Please [[Special:SignUp|login to your account]] and try again.',
 
 	/* email */
 	'specialcontact-mailsub' => 'Wikia Support',
