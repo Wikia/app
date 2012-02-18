@@ -82,7 +82,7 @@ class AccountNavigationModule extends Module {
 			);
 
 			$this->personal_urls['register'] = array(
-				'text' => wfMsg('nologinlink'),
+				'text' => wfMsg('oasis-signup'),
 				'href' => $signUpHref . "&type=signup",
 				'class' => 'ajaxRegister'
 			);
