@@ -39,6 +39,8 @@ $app->registerClass( 'LiteSemanticsHooks', $dir . '/LiteSemanticsHooks.class.php
  * hooks
  */
 $app->registerHook( 'InternalParseBeforeLinks', 'LiteSemanticsHooks', 'onInternalParseBeforeLinks' );
+$app->registerHook( 'SanitizerTagsLists', 'LiteSemanticsHooks', 'onSanitizerTagsLists' );
+$app->registerHook( 'SanitizerAttributesSetup', 'LiteSemanticsHooks', 'onSanitizerAttributesSetup' );
 $app->registerHook( 'ArticleDeleteComplete', 'LiteSemanticsHooks', 'onArticleDeleteComplete' );
 $app->registerHook( 'ArticleSaveComplete', 'LiteSemanticsHooks', 'onArticleSaveComplete' );
 

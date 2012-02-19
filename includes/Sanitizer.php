@@ -402,6 +402,15 @@ class Sanitizer {
 			}
 			$staticInitialised = true;
 		}
+
+		/**
+		 * Wikia change begin
+		 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+		 * Allow modifying list of tags to avoid stripping
+		 */
+		wfRunHooks( 'SanitizerTagsLists', array( &$extratags, &$removetags ) );
+		/** Wikia change end **/
+
 		# Populate $htmlpairs and $htmlelements with the $extratags and $removetags arrays
 		$extratags = array_flip( $extratags );
 		$removetags = array_flip( $removetags );
@@ -1495,6 +1504,15 @@ class Sanitizer {
 			# http://www.w3.org/TR/REC-MathML/
 			'math'       => array( 'class', 'style', 'id', 'title' ),
 			);
+
+		/**
+		 * Wikia change begin
+		 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+		 * Allow modifying list of attributes to avoid stripping
+		 */
+		wfRunHooks( 'SanitizerAttributesSetup', array( &$whitelist ) );
+		/** Wikia change end **/
+
 		return $whitelist;
 	}
 

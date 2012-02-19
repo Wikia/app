@@ -5,7 +5,7 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-abstract class LiteSemanticsCollection{
+abstract class LiteSemanticsCollection implements arrayaccess{
 	protected $items = null;
 
 	function __construct(){
@@ -34,25 +34,24 @@ abstract class LiteSemanticsCollection{
 		return ( $this->items !== null ) ? count( $this->items ) : 0;
 	}
 
-	public function rewind(){
-		reset( $this->items );
+	public function offsetSet( $offset, $value ){
+        if ( is_null( $offset ) ) {
+            $this->items[] = $value;
+        } else {
+            $this->items[$offset] = $value;
+        }
     }
 
-    public function current(){
-		return current( $this->items );
+    public function offsetExists( $offset ){
+        return isset( $this->items[$offset] );
     }
 
-    public function key(){
-		return key( $this->items );
+    public function offsetUnset( $offset ){
+        unset( $this->items[$offset] );
     }
 
-    public function next(){
-		return next( $this->items );
-    }
-
-    public function valid(){
-        $key = key( $this->items );
-		return ( $key !== NULL && $key !== FALSE );
+    public function offsetGet( $offset ){
+        return isset( $this->items[$offset] ) ? $this->items[$offset] : null;
     }
 }
 
@@ -64,7 +63,7 @@ class LiteSemanticsHashCollection extends LiteSemanticsCollection{
 	}
 
 	public function storeItem( $name, LiteSemanticsEntity $item ){
-		$this->items->setItem( $name, $item );
+		$this->setItem( $name, $item );
 	}
 }
 
