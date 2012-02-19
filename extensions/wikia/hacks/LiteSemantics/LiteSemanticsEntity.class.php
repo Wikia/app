@@ -72,6 +72,10 @@ class LiteSemanticsProperty extends LiteSemanticsEntity{
 	public function removeAttribute( $name ){
 		$this->attributes->removeItem( $name );
 	}
+
+	function __toString(){
+		return $this->getValue();
+	}
 }
 
 class LiteSemanticsData extends LiteSemanticsEntity{

@@ -59,8 +59,6 @@ class LiteSemanticsParser extends WikiaObject{
 						$type = null;
 
 						while ( $this->xmlReader->moveToNextAttribute() ) {
-							echo($this->xmlReader->name);
-							echo('---');
 							if ( $this->xmlReader->name == 'type' ) {
 								$property->setType( $type = $this->xmlReader->value );
 							} else {
