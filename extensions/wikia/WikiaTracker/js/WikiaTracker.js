@@ -91,6 +91,7 @@ WikiaTracker.track = function(page, profile, events) {
 
 WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
+	return true; // temp (BugId: 20284) - disable tracking
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
