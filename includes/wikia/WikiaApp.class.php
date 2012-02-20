@@ -92,6 +92,7 @@ class WikiaApp {
 		if(is_object($this->wg)) {
 			$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
 		} else {
+			Wikia::log( __METHOD__, false, 'WikiaGlobalRegistry not set in ' . __CLASS__ . ' ' . __METHOD__ );
 			Wikia::logBacktrace(__METHOD__);
 		}
 	}
