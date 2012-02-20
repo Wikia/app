@@ -453,7 +453,7 @@ class UserIdentityBox {
 			$data['blocked'] = false;
 			$userGroups = $this->user->getEffectiveGroups();
 			
-			if( (true !== $this->isFounder()) || (!in_array('sysop', $userGroups) && !in_array('bureaucrat', $userGroups)) ) {
+			if( true !== $this->isFounder() ) {
 				$group = $this->getUserGroups($this->user);
 				if( false !== $group ) {
 					$data['group'] = $this->app->wf->Msg('user-identity-box-group-'.$group);
@@ -907,8 +907,11 @@ class UserIdentityBox {
 		$wiki = F::build('WikiFactory', array($this->app->wg->CityId), 'getWikiById');
 		
 		if( intval($wiki->city_founding_user) === $this->user->GetId() ) {
+			// mech: BugId 18248
+			$userGroups = $this->user->getEffectiveGroups();
+			$founder = in_array('sysop', $userGroups) || in_array('bureaucrat', $userGroups); 	
 			$this->app->wf->ProfileOut( __METHOD__ );
-			return true;
+			return $founder;
 		}
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
