@@ -21,13 +21,13 @@ class WikiaVideoService extends Service {
 	 */
 	public static function isFileTypeVideo($file) {
 		
-		if ( $this->isVideoStoredAsFile() ) {
+		if ( self::isVideoStoredAsFile() ) {
 			// File can be video only when new video logic is enabled for the wiki
 			if ( $file instanceof Title && $file->exists() ) {
 				$file = wfFindFile( $file );
 			}
 
-			if ( $file instanceof WikiaLocalFile && $file->isVideo() ) {
+			if ( $file instanceof WikiaLocalFileShared && $file->isVideo() ) {
 				return true;
 			}
 		}
@@ -48,10 +48,10 @@ class WikiaVideoService extends Service {
 			}
 		}
 
-		if ( $this->isVideoStoredAsFile() ) { 
+		if ( self::isVideoStoredAsFile() ) {
 
 			// video-as-file logic
-			if ( $this->isFileTypeVideo($title) ) {
+			if ( self::isFileTypeVideo($title) ) {
 			
 				return true;
 			}
