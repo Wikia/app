@@ -147,7 +147,7 @@ class CategoryDataService extends Service {
 					$key = $row->page_id;
 					if ( in_array( $key, $catKeys ) ){
 						unset( $aCategoryArticles[$key] );
-						$aResult[$key] = $key;
+						$aResult[ intval( $key ) ] = array( 'page_id' => $key );
 						if ( !empty( $limit ) && count( $aResult ) >= $limit ){
 							return $aResult;
 						}
@@ -159,6 +159,7 @@ class CategoryDataService extends Service {
 				if( !empty( $limit ) && count( $ret ) > $limit ) {
 					$ret = array_slice($ret, 0, $limit, true);
 				}
+
 				return $ret;
 			} else {
 				Wikia::log(__METHOD__, 'No data at all. Quitting.');

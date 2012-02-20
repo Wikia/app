@@ -11,7 +11,7 @@ class CategoryExhibitionSection {
 	protected $displayOption = false;	// current state of display option
 	protected $sortOption = false;		// current state of sort option
 
-	protected $allowedSortOptions = array( 'alphabetical', 'recentedits' ); // once contained "mostivisited", removed b/c no data
+	protected $allowedSortOptions = array( 'mostvisited', 'alphabetical', 'recentedits' );
 	protected $allowedDisplayOptions = array( 'exhibition', 'page' );
 
 	protected $verifyChecker = '';
@@ -62,7 +62,9 @@ class CategoryExhibitionSection {
 		} else {
 			$mNamespace = implode(',', $mNamespace);
 		}
+
 		switch ( $this->getSortType() ){
+			case 'mostvisited': return CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $negative );
 			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
 			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative );
 		}
@@ -275,9 +277,9 @@ class CategoryExhibitionSection {
 	protected function getArticles( $aTmpData ){
 
 		$aData = array();
-		foreach( $aTmpData as $item ){	
+		foreach( $aTmpData as $item ){
 			$articleData = $this->getArticleData( $item['page_id'] );
-			if(!empty($articleData)) { 		
+			if(!empty($articleData)) {
 				$aData[] = $articleData;
 			} 
 		};		
