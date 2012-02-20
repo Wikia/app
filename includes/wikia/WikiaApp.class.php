@@ -89,7 +89,11 @@ class WikiaApp {
 		$this->wf = $functionWrapper;
 
 		// register ajax dispatcher
-		$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
+		if(is_object($this->wg)) {
+			$this->wg->append('wgAjaxExportList', 'WikiaApp::ajax');
+		} else {
+			Wikia::logBacktrace(__METHOD__);
+		}
 	}
 	
 	/**
