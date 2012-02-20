@@ -12,6 +12,5 @@ $messages['en'] = array(
 	'videohandler-error-missing-title' => 'Required parameter "title" is missing',
 	'videohandler-error-missing-width' => 'Required parameter "width" is missing',
 	'videohandler-error-video-no-exist' => 'Video specified by title does not exist',
-        'videohandler-unknown-title' => 'Unknown title'
-    
+	'videohandler-unknown-title' => 'Unknown title',
 );
