@@ -427,13 +427,6 @@ var WikiaMobile = WikiaMobile || (function() {
 			}, false);
 		}
 
-		//add 'active' state to devices that does't support it
-		body.delegate("#wkNavMenu li, #wkNavBack, #wkRelPag li, .rpl, .alphaSec li", "touchstart", function () {
-			$(this).addClass("fkAct");
-		}).delegate("#wkNavMenu li, #wkNavBack, #wkRelPag li, .rpl, .alphaSec li", "touchend touchcancel", function() {
-			$(this).removeClass("fkAct");
-		});
-
 		lvl1.delegate('.cld', clickEvent, function(event) {
 			if($(event.target).parent().is('.cld')) {
 				event.stopPropagation();
