@@ -923,12 +923,9 @@ class UserProfilePageController extends WikiaController {
 				array('pic_big')
 			);
 
-			$data->source = 'facebook';
-			$data->file = $userFbData['pic_big'];
-
 			$oAvatarObj = F::build('Masthead', array( $user ), 'newFromUser');
 			$tmpFile = '';
-			$oAvatarObj->uploadByUrlToTempFile($data->file, $tmpFile);
+			$oAvatarObj->uploadByUrlToTempFile($userFbData['pic_big'], $tmpFile);
 
 			$fileuploader = new WikiaTempFilesUpload();
 			$thumbnail = $this->storeInTempImage($tmpFile, $fileuploader);
@@ -1137,14 +1134,13 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		if ($revision !== NULL) {	// do not count null edits
-			$wikiId = intval( $this->app->wg->CityId );
-	
-			if( $user instanceof User && $wikiId > 0 ) {
-				$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-				$userIdentityBox->addTopWiki($wikiId);
-			}			
+		$wikiId = intval( $this->app->wg->CityId );
+
+		if( $user instanceof User && $wikiId > 0 ) {
+			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+			$userIdentityBox->addTopWiki($wikiId);
 		}
+
 		return true;
 	}
 
