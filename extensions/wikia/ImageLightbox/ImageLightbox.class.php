@@ -56,7 +56,9 @@ class ImageLightbox {
 		 * ImageLightbox will be changed in a month (in lightbox project) ;-)
 		 * @author Jacek Jursza (VideoTeam) 
 		 */
-		if ( $image instanceof WikiaLocalFile && $image->isVideo() ) {
+		
+		if ( F::build( 'WikiaVideoService' )->isFileTypeVideo( $image ) ) {
+		
 			if ( !empty($wgTitle) ) {
 				
 				$embedCode = $image->getEmbedCode( $wgTitle->getArticleId(), $maxWidth, true, true );
