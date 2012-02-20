@@ -1137,13 +1137,14 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		$wikiId = intval( $this->app->wg->CityId );
-
-		if( $user instanceof User && $wikiId > 0 ) {
-			$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
-			$userIdentityBox->addTopWiki($wikiId);
+		if ($revision !== NULL) {	// do not count null edits
+			$wikiId = intval( $this->app->wg->CityId );
+	
+			if( $user instanceof User && $wikiId > 0 ) {
+				$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
+				$userIdentityBox->addTopWiki($wikiId);
+			}			
 		}
-
 		return true;
 	}
 

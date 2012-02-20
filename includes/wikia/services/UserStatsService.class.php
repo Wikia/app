@@ -26,11 +26,13 @@ class UserStatsService extends Service {
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 
 		wfProfileIn(__METHOD__);
-
-		// tell service to update cached data for user who edited the page
-		if (!$user->isAnon()) {
-			$service = new UserStatsService($user->getId());
-			$service->increaseEditsCount();
+		
+		if ($revision !== NULL) {	// // do not count null edits
+			// tell service to update cached data for user who edited the page
+			if (!$user->isAnon()) {
+				$service = new UserStatsService($user->getId());
+				$service->increaseEditsCount();
+			}
 		}
 
 		wfProfileOut(__METHOD__);
