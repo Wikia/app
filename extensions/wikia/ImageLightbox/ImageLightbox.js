@@ -2,6 +2,7 @@ var ImageLightbox = {
 	// store element which was clicked to trigger lightbox - custom event will be fired when lightbox will be shown
 	target: false,
 	afterLoadOpened : false,
+	videoThumbWidthThreshold: 320,
 	log: function(msg) {
 		$().log(msg, 'ImageLightbox');
 	},
@@ -61,20 +62,27 @@ var ImageLightbox = {
 	onClick: function(ev) {
 		var target = $(ev.target);
 
+
 		// move to parent of an image -> anchor
 		if (target.is('img')) {
-			target = target.parent();
+			if ( target.hasClass('Wikia-video-thumb') ) {
+				target = target.parent();
+				target.addClass('image');
+			} else {
+				target = target.parent();
+			}	
 		}
 
 		// handle clicks on links only
 		if (!target.is('a')) {
 			return;
 		}
-
+		
 		// handle clicks on "a.lightbox, a.image" only
 		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
 			return;
 		}
+
 
 		// don't show thumbs for gallery images linking to a page
 		if (target.hasClass('link-internal')) {
@@ -90,6 +98,7 @@ var ImageLightbox = {
 		if (ev.ctrlKey) {
 			return;
 		}
+
 
 		// store clicked element
 		this.target = target;
@@ -152,6 +161,32 @@ var ImageLightbox = {
 			}
 
 		}
+		
+		// for Video Thubnails:
+		if ( imageName == false ) {
+			
+			var isVideoThumb = false;
+			var targetChildImg = target.find('img').eq(0);
+
+			if ( target.attr('data-video-name') ) {
+				
+				imageName = 'File:' + target.attr('data-video-name');
+				isVideoThumb = true;
+				
+			} else if ( targetChildImg.length > 0 && targetChildImg.attr('data-video') ) {
+				
+				imageName = 'File:' + targetChildImg.attr('data-video');
+				isVideoThumb = true;
+			}
+			
+			
+			if (imageName && isVideoThumb && targetChildImg.width() >= this.videoThumbWidthThreshold) {
+				this.displayInlineVideo(targetChildImg, imageName);
+				ev.preventDefault();
+				return false;
+			}
+		}
+		
 		//imageName = "File:acat.jpg";
 		if (imageName != false) {
 			// RT #44281
@@ -164,6 +199,41 @@ var ImageLightbox = {
 			// don't follow href
 			ev.preventDefault();
 		}
+	},
+	
+	displayInlineVideo: function(targetImage, imageName) {
+		
+		var parentTag = targetImage.parent();
+		if (!parentTag.is('a')) {
+			return;
+		}		
+		
+		var imageWidth = targetImage.width();
+		var imageHeight = targetImage.height();
+
+		// get resized image from server or fetch video data for lightbox
+		$.getJSON(wgScript + '?action=ajax&rs=ImageLightboxAjax', {
+			'maxheight': imageHeight,
+			'maxwidth': imageWidth,
+			'method': 'ajax',
+			'pageName': wgPageName,
+			'share': 0,
+			'title': imageName,
+			'videoInline': 1
+		}, function(res) {
+			if (res && ( res.html || res.jsonData ) ) {
+				if (res.asset) {
+					$.getScript(res.asset, function() {
+						jQuery( '<div id="'+res.jsonData.id+'" style="width:'+imageWidth+'px; height:'+imageHeight+'px; display: inline-block;"></div>' ).replaceAll( parentTag );
+						jwplayer( res.jsonData.id ).setup( res.jsonData );
+					});					
+				} else {
+					jQuery( '<div>'+res.html+'</div>' ).replaceAll( parentTag );
+				}	
+			} 
+		});
+		
+		
 	},
 
 	// fetch data and show lightbox
@@ -192,7 +262,7 @@ var ImageLightbox = {
 			maxWidth = 850;
 		}
 
-		// get resized image from server
+		// get resized image from server or fetch video data for lightbox
 		$.getJSON(wgScript + '?action=ajax&rs=ImageLightboxAjax', {
 			'maxheight': maxHeight,
 			'maxwidth': maxWidth,
@@ -201,8 +271,16 @@ var ImageLightbox = {
 			'share': showShareTools,
 			'title': imageName
 		}, function(res) {
-			if (res && res.html) {
-				self.showLightbox(res.title, res.html, caption, res.width);
+			if (res && ( res.html || res.jsonData ) ) {
+				if (res.asset) {
+					$.getScript(res.asset, function() {
+						self.showLightbox(res.title, '<div id="'+res.jsonData.id+'"></div>'+res.html, caption, res.width, function(){
+							jwplayer( res.jsonData.id ).setup( res.jsonData );
+						});
+					});					
+				} else {
+					self.showLightbox(res.title, res.html, caption, res.width);
+				}	
 			} else {
 				// remove lock
 				delete self.lock;
@@ -211,7 +289,7 @@ var ImageLightbox = {
 	},
 
 	// create modal popup
-	showLightbox: function(title, content, caption, width) {
+	showLightbox: function(title, content, caption, width, secondCallBack) {
 		var self = this;
 
 		// fix caption when not provided
@@ -321,6 +399,10 @@ var ImageLightbox = {
 					self.afterLoadOpened = true;
 					$('#lightbox-share-buttons').find('a[data-func$="email"]').click();
 					$('#lightbox-share-email-text').focus();
+				}
+
+				if (typeof secondCallBack == 'function') {
+					 $.proxy(secondCallBack, this)();
 				}
 
 				// remove lock

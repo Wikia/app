@@ -51,6 +51,39 @@ class ImageLightbox {
 			return array();
 		}
 
+		/* 
+		 * 2012-02-01 this is temporary.
+		 * ImageLightbox will be changed in a month (in lightbox project) ;-)
+		 * @author Jacek Jursza (VideoTeam) 
+		 */
+		if ( $image instanceof WikiaLocalFile && $image->isVideo() ) {
+			if ( !empty($wgTitle) ) {
+				
+				$embedCode = $image->getEmbedCode( $wgTitle->getArticleId(), $maxWidth, true, true );
+				$asset = $image->getPlayerAssetUrl();
+
+				if ( empty($asset) ) {
+					// $image->getEmbedCode returns normal html
+					$html = $embedCode;
+					$jsonData = '';
+				} else {
+					// $image->getEmbedCode returns json
+					$html = ''; // You can still add here some code, it will be displayed under the video
+					$jsonData = $embedCode;
+				}
+				
+				$res = array(
+					'html' => $html,
+					'jsonData' => $jsonData,
+					'title' => $wgTitle->getText(),
+					'width' => $maxWidth,
+					'asset' => $asset
+				);		
+				wfProfileOut(__METHOD__);
+				return $res;				
+			}
+		}		
+		
 		// get original dimensions of an image
 		$width = $image->getWidth();
 		$height = $image->getHeight();
@@ -132,7 +165,7 @@ class ImageLightbox {
 		));
 
 		$html = $tmpl->render('ImageLightbox');
-
+		
 		$res = array(
 			'html' => $html,
 			'title' => $wgTitle->getText(),
