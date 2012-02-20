@@ -451,8 +451,9 @@ class UserIdentityBox {
 		
 		if( $isBlocked === false ) {
 			$data['blocked'] = false;
+			$userGroups = $this->user->getEffectiveGroups();
 			
-			if( true !== $this->isFounder() ) {
+			if( (true !== $this->isFounder()) || (!in_array('sysop', $userGroups) && !in_array('bureaucrat', $userGroups)) ) {
 				$group = $this->getUserGroups($this->user);
 				if( false !== $group ) {
 					$data['group'] = $this->app->wf->Msg('user-identity-box-group-'.$group);
