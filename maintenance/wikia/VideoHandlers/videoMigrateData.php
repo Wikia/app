@@ -6,9 +6,15 @@
 
 ini_set( 'display_errors', 'stdout' );
 $options = array('help');
-@require_once( '../../commandLine.inc' );
+
+require_once( '../../commandLine.inc' );
+require_once( 'premigrate.class.php' );
+
+
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 // echo( "$IP\n" );
+
+global $wgCityId, $wgExternalDatawareDB;
 
 echo( "Video Migration script running for $wgCityId\n" );
 
@@ -38,13 +44,14 @@ $rows = $dbw_dataware->select( 'video_premigrate',
 $rowCount = $rows->numRows();
 echo(": {$rowCount} videos found\n");
 
-$providers = $wgVideoMigrationProviderMap;
 
-define('STATUS_UNKNOWN', 0);
-define('STATUS_OK', 1);
-define('STATUS_NOT_SUPPORTED', 2);
-define('STATUS_KNOWN_ERROR', 3);
-define('STATUS_UNKNOWN_ERROR', 4);
+/* cache premigration data for videos */
+$premigration_cache = array();
+while( $video = $dbw_dataware->fetchObject($rows) ) {
+	$premigration_cache[ $video->img_name ] = $video;
+}
+
+$dbw_dataware->freeResult( $rows );
 
 $failures = array();
 
@@ -66,14 +73,29 @@ if( $rowCount ) {
 	
 	echo "Found $numb videos already migrated\n";
 	$dbw_dataware->freeResult($existingRows);
-//
 
-	while( $video = $dbw_dataware->fetchObject($rows) ) {
+	premigrate::initialize();
+
+	$rows = $dbw->query( 'select img_name FROM image WHERE img_name LIKE ":%"' );
+	while( $video_name = $dbw->fetchObject($rows) ) {
 		// check if video was processed previously (regardless of failure type)
-		if( in_array( $video->img_name, $alreadyExisting ) ) {
+		if( in_array( $video_name->img_name, $alreadyExisting ) ) {
 			//echo "Aleardy migrated\n";
 			continue;
 		}
+
+		// check if we have premigration data
+		// (this shouldn't happen, because this script is supposed to be
+		//  run right after premigration)
+		$videoName = substr($video_name->img_name, 1);
+		$video = null;
+		if( !isset($premigration_cache[ $videoName ] ) ) {
+			echo "NO DATA FOR VIDEO!\n";
+			$video = premigrate::processVideo( $video_name->img_name );
+		} else {
+			$video = $premigration_cache[ $videoName ];
+		}
+
 		$i++;
 		if ( !in_array( $video->provider, $wgVideoMigrationProviderMap ) ){
 			echo "Unreconizable provider {$video->provider}\n";
@@ -122,6 +144,7 @@ if( $rowCount ) {
 		/* override thumbnail metadata with video metadata */
 		$file->setVideoId( $metadata['videoId'] );
 		$file->forceMime( 'video/'.strtolower( $provider ), serialize($metadata) );
+		$file->forceMetadata( serialize($metadata) );
 		
 		/* real upload */
 		$result = $file->upload(

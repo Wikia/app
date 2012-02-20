@@ -21,7 +21,7 @@ class videoSanitizerMigrationHelper {
 	public function getRenamedVideos($key="old", $filter=" 1=1") {
 		
 		$rows = $this->dbw_dataware->query( "SELECT old_title, sanitized_title 
-											 FROM video_migration_sanitization 
+											 FROM video_migration_sanitization
 											 WHERE city_id=".$this->city_id." AND $filter" );
 		$rowCount = $rows->numRows();
 		$result = array();
@@ -47,7 +47,7 @@ class videoSanitizerMigrationHelper {
 	 */
 	public function logVideoTitle($oldTitle, $sanitizedTitle, $operationStatus="UNKNOWN", $articleTitle="") {
 		
-			$this->dbw_dataware->replace('video_migration_sanitization', 
+			$this->dbw_dataware->replace('video_migration_sanitization',
 				array( 'city_id', 'old_title' ),	
 				array( 
 					'city_id'			=> $this->city_id,

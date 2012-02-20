@@ -64,11 +64,18 @@ class WikiaLocalFileShared  {
 	 * as they are represented in filesystem by an image
 	 */
 	
-	function forceMime( $aMime, $metadata = false ){
+	function forceMime( $aMime ){
 		$this->forceMime = $aMime;
-		if ( !empty( $metadata ) ){
-			$this->forceMetadata = $metadata;
-		}
+	}
+
+	/*
+	 * Used only as part of video migration process (prevent
+	 * connecting to Provider, because we take metadata from
+	 * previously stored information)
+	 * TODO: remove after refactoring Video
+	 */
+	function forceMetadata( $metadata ) {
+		$this->forceMetadata = $metadata;
 	}
 
 	function setVideoId( $videoId ){
