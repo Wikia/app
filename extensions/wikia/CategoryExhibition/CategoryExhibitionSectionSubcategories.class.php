@@ -97,6 +97,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 	protected function getCategoryImageOrSnippet( $iCategoryId ){
 
 		$title = Title::newFromID( $iCategoryId );
+
 		$sCategoryDBKey = $title->getDBKey();
 
 		// tries to get image from images in category
