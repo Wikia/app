@@ -62,7 +62,9 @@ $messages['en'] = array(
 	'user-identity-box-zero-state-twitter' => 'My Twitter',
 	'user-identity-box-zero-state-website' => 'My Website',
 	'user-identity-box-zero-state-fb-page' => 'My Facebook',
-
+	
+	'user-identity-box-about-me' => 'About Me',
+	'user-identity-box-avatar' => 'Avatar',
 	'user-identity-box-about-name' => 'What\'s your name?',
 	'user-identity-box-about-name-tooltip' => 'If your username sounds clunky and you\'d like people to call you something else, fill out this field. We\'ll display the name you choose next to your username on your profile, and on other features around the site. It\'s optional, and you can change your mind any time. Feel free to be creative!',
 	'user-identity-box-about-location' => 'Where do you live?',

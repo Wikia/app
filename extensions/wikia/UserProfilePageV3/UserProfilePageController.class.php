@@ -307,8 +307,8 @@ class UserProfilePageController extends WikiaController {
 		$sessionUser = $this->wg->User;
 		
 		$tabs = array(
-			array( 'id' => 'avatar', 'name' => 'Avatar' ),
-			array( 'id' => 'about', 'name' => 'About Me' ),
+			array( 'id' => 'avatar', 'name' => $this->wf->msg('user-identity-box-avatar') ),
+			array( 'id' => 'about', 'name' => $this->wf->msg('user-identity-box-about-me') ),
 			//array( 'id' => 'interview', 'name' => 'User Interview' ), //not yet --nAndy, 2011-06-15
 		);
 		
