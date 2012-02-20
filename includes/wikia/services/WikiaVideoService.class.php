@@ -27,7 +27,7 @@ class WikiaVideoService extends Service {
 				$file = wfFindFile( $file );
 			}
 
-			if ( $file instanceof WikiaLocalFileShared && $file->isVideo() ) {
+			if ( $file instanceof WikiaLocalFile && $file->isVideo() ) {
 				return true;
 			}
 		}
