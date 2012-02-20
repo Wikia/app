@@ -84,11 +84,9 @@ $app->registerClass('FiveminVideoHandler', $dir . '/handlers/FiveminVideoHandler
 $app->registerClass('FiveminApiWrapper', $dir . '/apiwrappers/FiveminApiWrapper.class.php');
 $wgMediaHandlers['video/fivemin'] = 'FiveminVideoHandler';
 
-/* file missing in repo
 $app->registerClass('GametrailersVideoHandler', $dir . '/handlers/GametrailersVideoHandler.class.php');
 $app->registerClass('GametrailersApiWrapper', $dir . '/apiwrappers/GametrailersApiWrapper.class.php');
 $wgMediaHandlers['video/gametrailers'] = 'GametrailersVideoHandler';
-*/
 
 $app->registerClass('MetacafeVideoHandler', $dir . '/handlers/MetacafeVideoHandler.class.php');
 $app->registerClass('MetacafeApiWrapper', $dir . '/apiwrappers/MetacafeApiWrapper.class.php');
@@ -110,17 +108,13 @@ $app->registerClass('ScreenplayVideoHandler', $dir . '/handlers/ScreenplayVideoH
 $app->registerClass('ScreenplayApiWrapper', $dir . '/apiwrappers/ScreenplayApiWrapper.class.php');
 $wgMediaHandlers['video/screenplay'] = 'ScreenplayVideoHandler';
 
-/* file missing in repo
 $app->registerClass('SevenloadVideoHandler', $dir . '/handlers/SevenloadVideoHandler.class.php');
 $app->registerClass('SevenloadApiWrapper', $dir . '/apiwrappers/SevenloadApiWrapper.class.php');
 $wgMediaHandlers['video/sevenload'] = 'SevenloadVideoHandler';
-*/
 
-/* file missing in repo
 $app->registerClass('SouthparkstudiosVideoHandler', $dir . '/handlers/SouthparkstudiosVideoHandler.class.php');
 $app->registerClass('SouthparkstudiosApiWrapper', $dir . '/apiwrappers/SouthparkstudiosApiWrapper.class.php');
 $wgMediaHandlers['video/southparkstudios'] = 'SouthparkstudiosVideoHandler';
-*/
 
 $app->registerClass('ViddlerVideoHandler', $dir . '/handlers/ViddlerVideoHandler.class.php');
 $app->registerClass('ViddlerApiWrapper', $dir . '/apiwrappers/ViddlerApiWrapper.class.php');
