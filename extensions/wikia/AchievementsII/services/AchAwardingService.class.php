@@ -597,7 +597,7 @@ class AchAwardingService {
 						$origIP = $wgIP;
 						$wgIP = '127.0.0.1';
 
-						$userPageArticle->doEdit( wfMsgForContent('welcome-user-page', $userPageTitle->getName() ), '', $userWikia->isAllowed('bot') ? EDIT_FORCE_BOT : 0, false, $userWikia );
+						$userPageArticle->doEdit( wfMsgForContent('welcome-user-page', $userPageTitle->getText() ), '', $userWikia->isAllowed('bot') ? EDIT_FORCE_BOT : 0, false, $userWikia );
 						
 						//restore original IP from user session
 						$wgIP = $origIP;
