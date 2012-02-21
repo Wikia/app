@@ -75,13 +75,9 @@ function wfWikiAnswersPageTitle( &$out, $parserOutput ) {
 }
 
 function wfWikiAnswersAnswerBox( &$out, &$html ) {
-	global $wgEnableReviews;
-	if( !empty( $wgEnableReviews ) ) {
-		return true;
-	}
 
 	$answerObj = Answer::newFromTitle( $out->getTitle() );
-	if( $answerObj->isQuestion() && 
+	if( $answerObj->isQuestion() &&
 	    in_array( ucfirst(Answer::getSpecialCategory("unanswered")), $out->getCategories() ) ) {
 		wfLoadExtensionMessages('WikiAnswers');
 		$html = wfRenderPartial( 'WikiAnswers', 'AnswerBox' );
