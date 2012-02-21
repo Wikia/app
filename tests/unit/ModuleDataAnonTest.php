@@ -43,14 +43,14 @@ class ModuleDataAnonTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testBodyModule() {
-		global $wgTitle, $wgEnableWikiReviews, $wgOasisNavV2;
+		global $wgTitle, $wgOasisNavV2;
 
 		//Special search page has a custom list of modules
 		$wgTitle = Title::newFromText('Special:Search');
 		$moduleData = Module::get('Body')->getData();
 		$railList = $moduleData['railModuleList'];
 
-		if ( empty( $wgEnableWikiReviews ) && empty( $wgOasisNavV2 ) ) {
+		if ( empty( $wgOasisNavV2 ) ) {
 			$this->assertEquals( $railList[1450][0], 'PagesOnWiki' );
 		} else {
 			$this->assertNotEquals( $railList[1450][0], 'PagesOnWiki' );
