@@ -40,14 +40,14 @@ class RelatedVideosService {
 					'getVideoData',
 					array(
 						'width'		=> self::$width,
-					        'videoWidth'	=> $videoWidth,
+						'videoWidth'	=> $videoWidth,
 						'title'		=> $title,
 						'articleId'	=> $articleId,
 						'cityShort'	=> $cityShort,
 						'useMaster'	=> $useMaster,
 						'videoHeight'	=> $videoHeight,
-					        'useJWPlayer'	=> $useJWPlayer,
-					        'autoplay'	=> $autoplay,
+						'useJWPlayer'	=> $useJWPlayer,
+						'autoplay'	=> $autoplay,
 						'inAjaxReponse'	=> $inAjaxResponse
 					)
 				)->getData();
