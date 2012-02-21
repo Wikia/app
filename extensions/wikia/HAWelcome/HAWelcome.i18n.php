@@ -410,7 +410,7 @@ $messages['gl'] = array(
 
 ==As miñas contribucións==
 
-* [[Special:Contributions/1|As miñas contribucións]]
+* [[Special:Contributions/$1|As miñas contribucións]]
 
 ==As miñas páxinas favoritas==
 
