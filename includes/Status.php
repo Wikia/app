@@ -70,6 +70,11 @@ class Status {
 			'type' => 'error',
 			'message' => $message,
 			'params' => $params );
+
+		/* Wikia change begin - @author: Macbre */
+		/* BugId:21618 */
+		Wikia::log(__METHOD__, '', $message . ' ' . implode(', ', $params), true);
+		/* Wikia change end */
 	}
 
 	/**
@@ -82,6 +87,11 @@ class Status {
 			'message' => $message,
 			'params' => $params );
 		$this->ok = false;
+
+		/* Wikia change begin - @author: Macbre */
+		/* BugId:21618 */
+		Wikia::log(__METHOD__, '', $message . ' ' . implode(', ', $params), true);
+		/* Wikia change end */
 	}
 
 	/**
