@@ -41,6 +41,10 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		// SponsoredLinks taking down: disabling everything else
+		$this->wg->Out->redirect( 'http://www.wikia.com/Advertising' );
+		return false;
+
 		if( $sub[0] == 'manager' ) {
 			$managerController = F::build('AdSS_ManagerController');
 			$managerController->execute( $sub );
@@ -52,10 +56,6 @@ class AdSSSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->addInlineScript( '$(function() { $.tracker.byStr("adss/form/view/readonly") } )' );
 			return false;
 		}
-
-		// SponsoredLinks taking down: disabling everything else
-		$this->wg->Out->redirect( 'http://www.wikia.com/Advertising' );
-		return false;
 
 		if( $sub[0] == 'paypal' && isset( $sub[1] ) ) {
 			$this->request->setVal( 'status', $sub[1] );
