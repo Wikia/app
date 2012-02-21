@@ -489,7 +489,7 @@ class VideoPage extends Article {
 	// table of contents
 	function showTOC($metadata) {
 		global $wgLang;
-		$r = '<ul id="filetoc"><li><a href="#file">'.$wgLang->getNsText(NS_VIDEO).'</a></li><li><a href="#filehistory">'.wfMsgHtml( 'filehist' ).'</a></li>'.($metadata ? '<li><a href="#metadata">'.wfMsgHtml('metadata').'</a></li>' : '').'</ul>';
+		$r = '<ul id="filetoc"><li><a href="#file">'.$wgLang->getNsText(NS_LEGACY_VIDEO).'</a></li><li><a href="#filehistory">'.wfMsgHtml( 'filehist' ).'</a></li>'.($metadata ? '<li><a href="#metadata">'.wfMsgHtml('metadata').'</a></li>' : '').'</ul>';
 		return $r;
 	}
 
@@ -939,10 +939,10 @@ EOD;
 			$url = trim($url, '/');
 			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
-				$idxNsVideo = strpos($url, $wgContLang->getNsText(NS_VIDEO).':');
+				$idxNsVideo = strpos($url, $wgContLang->getNsText(NS_LEGACY_VIDEO).':');
 				if ($idxNsVideo !== false) {
 					$idxQueryStr = strpos($url, '?');
-					$startIdx = $idxNsVideo + strlen($wgContLang->getNsText(NS_VIDEO).':');
+					$startIdx = $idxNsVideo + strlen($wgContLang->getNsText(NS_LEGACY_VIDEO).':');
 					$videoTitle = substr($url, $startIdx, ($idxQueryStr !== false) ? $idxQueryStr-$startIdx : strlen($url));
 					$this->mProvider = $provider;
 					$this->mId = $videoTitle;
@@ -958,10 +958,10 @@ EOD;
 			$url = trim($url, '/');
 			$parsed = explode( "/", $url );
 			if( is_array( $parsed ) ) {
-				$idxNsVideo = strpos($url, $wgContLang->getNsText(NS_VIDEO).':');
+				$idxNsVideo = strpos($url, $wgContLang->getNsText(NS_LEGACY_VIDEO).':');
 				if ($idxNsVideo !== false) {
 					$idxQueryStr = strpos($url, '?');
-					$startIdx = $idxNsVideo + strlen($wgContLang->getNsText(NS_VIDEO).':');
+					$startIdx = $idxNsVideo + strlen($wgContLang->getNsText(NS_LEGACY_VIDEO).':');
 					$videoTitle = substr($url, $startIdx, ($idxQueryStr !== false) ? $idxQueryStr-$startIdx : strlen($url));
 					$this->mProvider = $provider;
 					$this->mId = $videoTitle;
