@@ -4,6 +4,8 @@
 	<select name="rankExpr">
 		<option value="-indextank" <?= (empty($rankExpr) || ($rankExpr == '-indextank')) ? 'selected' : ''; ?> >indextank</option>
 		<option value="-bl" <?= ($rankExpr == '-bl') ? 'selected' : ''; ?> >backlinks</option>
+		<option value="-bl2" <?= ($rankExpr == '-bl2') ? 'selected' : ''; ?> >backlinks (Mike)</option>
+		<option value="-bl3" <?= ($rankExpr == '-bl3') ? 'selected' : ''; ?> >backlinks only</option>
 	</select>
 	<input type="text" name="query" value="<?=$query;?>" /><a class="wikia-button" id="search-v2-button">Search</a><br />
 	<input type="checkbox" name="crossWikia" value="1" <?= ( $crossWikia ? 'checked' : '' ); ?>/> Search all of Wikia
@@ -33,6 +35,7 @@
 			</div>
 			<a href="<?= $hit->data->url; ?>"><?=$hit->data->url;?></a><br />
 			<?php
+				//var_dump($hit->data);
 				switch($rankExpr) {
 					case '-indextank':
 						$rankValue = $hit->data->indextank;
@@ -40,11 +43,17 @@
 					case '-bl':
 						$rankValue = $hit->data->bl;
 						break;
+					case '-bl2':
+						$rankValue = $hit->data->bl2;
+						break;
+					case '-bl3':
+						$rankValue = $hit->data->bl3;
+						break;
 					default:
 						$rankValue = '?';
 				}
 			?>
-			<i>[id: <?=$hit->id;?>, text_relevance: <?=$hit->data->text_relevance;?>, rank: <?= $rankValue; ?>]</i><br />
+			<i>[id: <?=$hit->id;?>, text_relevance: <?=$hit->data->text_relevance;?>, backlinks: <?=$hit->data->backlinks;?>, rank: <?= $rankValue; ?>]</i><br />
 			<br />
 			<?php ?>
 		<?php endforeach; ?>

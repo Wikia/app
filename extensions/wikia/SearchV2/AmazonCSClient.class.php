@@ -18,7 +18,7 @@ class AmazonCSClient extends WikiaSearchClient {
 			'rank' => ( !empty($rankExpr) ? $rankExpr : $this->rankName ),
 			'start' => $start,
 			'size' => $size,
-			'return-fields' => 'title,url,text,canonical,text_relevance,indextank,bl'
+			'return-fields' => 'title,url,text,canonical,text_relevance,indextank,bl,bl2,bl3,backlinks'
 		);
 		if( !empty( $cityId ) ) {
 			// inter-wiki search
@@ -35,6 +35,8 @@ class AmazonCSClient extends WikiaSearchClient {
 			return $response->hits;
 		}
 		else {
+var_dump( $response );
+exit;
 			throw new WikiaException('Search Failed: ' . $response);
 		}
 	}
