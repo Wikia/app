@@ -149,7 +149,7 @@ function askQuestion(){
 
 	// Override default content handling
 	function printContent(){
-		global $wgTitle, $wgEnableReviews, $wgUser, $wgCdnStylePath, $wgBlankImgUrl;
+		global $wgTitle, $wgUser, $wgCdnStylePath, $wgBlankImgUrl;
 		$answer_page = Answer::newFromTitle( $wgTitle );
 
 		if (ArticleAdLogic::isMainPage()){
@@ -243,19 +243,7 @@ function askQuestion(){
 			</div><!-- answer_box -->
 		</div><!-- answer_level -->
 
-	     <?php if (empty($wgEnableReviews)){?>
-		<div id="related_level">
-			<div id="related_questions">
-				<h2 class="dark_text_2"><?= wfMsg("related_questions") ?></h2>
-				<ul id="related_answered_questions">
-				  <?= HomePageList::related_answered_questions() ?>
-				</ul>
-			</div>
-		</div>
-	     <?php } ?>
-
 	     <?php } else { // Unsanswersed question ?>
-	       <?php if (empty($wgEnableReviews)){?>
 		<div id="answer_level">
 		<div id="answer_box" class="accent">
 			<div id="answer_follow_link">
@@ -266,7 +254,6 @@ function askQuestion(){
 				<?php $this->printUnansweredQuestionForm($wgTitle) ?>
 			</div>
 		</div><!-- answer_level -->
-	       <?php } ?>
 	     <?php } ?>
 
 
