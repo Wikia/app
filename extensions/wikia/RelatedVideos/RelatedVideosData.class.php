@@ -5,7 +5,7 @@ class RelatedVideosData {
 	protected static $theInstance = null;
 	protected static $memcKeyPrefix = 'RelatedVideosData';
 	protected static $memcTtl = 86400;
-	protected static $memcVer = 12;
+	protected static $memcVer = 13;
 	protected $memcKey;
 
 	function __construct() {
@@ -20,20 +20,43 @@ class RelatedVideosData {
 		if ( empty( $title ) || !is_object( $title ) || !( $title instanceof Title ) || !$title->exists() ){
 			$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
 		} else {
-			$videoPage = F::build( 'VideoPage', array( $title ) );
-			$videoPage->load($useMaster);
-			$data['external']	= false; // false means it is not set. Meaningful values: 0 and 1.
-			$data['id']		= $title->getArticleID();
-			$data['description']	= $videoPage->getDescription();
-			$data['duration']	= $videoPage->getDuration();
-			$data['embedCode']	= $videoPage->getEmbedCode( $videoWidth, $autoplay, $useJWPlayer, false, $cityShort, $videoHeight, $inAjaxResponse );
-			$data['embedJSON']	= $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort, $videoHeight );
-			$data['fullUrl']	= $title->getFullURL();
-			$data['prefixedUrl']	= $title->getPrefixedURL();
-			$data['provider']	= $videoPage->getProvider();
-			$data['thumbnailData']	= $videoPage->getThumbnailParams( $thumbnailWidth );
-			$data['title']		= $videoPage->getTitle()->getText();
-			$data['timestamp']	= $videoPage->getTimestamp();	//@todo for premium video, eventually use date published given by provider
+
+			if( WikiaVideoService::isVideoStoredAsFile() ) {
+				// TODO: this is work in progress, this doesn't work yet
+
+				$file = wfFindFile($title);
+
+				$data['external']		= false; // false means it is not set. Meaningful values: 0 and 1.
+				$data['id']				= $title->getArticleID();
+				$data['fullUrl']		= $title->getFullURL();
+				$data['prefixedUrl']	= $title->getPrefixedURL();
+				$data['description']	= $file->getDescription();
+				$data['duration']		= '';
+				$data['embedCode']		= $file->getEmbedCode( $videoWith, $autoplay );
+				$data['embedJSON']		= '';
+				$data['provider']		= '';
+				$data['thumbnailData']	= '';
+				$data['title']			= $file->getTitle()->getText();
+				$data['timestamp']		= $file->getTimestamp();
+
+			} else {
+
+				$videoPage = F::build( 'VideoPage', array( $title ) );
+				$videoPage->load($useMaster);
+				$data['external']		= false; // false means it is not set. Meaningful values: 0 and 1.
+				$data['id']				= $title->getArticleID();
+				$data['fullUrl']		= $title->getFullURL();
+				$data['prefixedUrl']	= $title->getPrefixedURL();
+				$data['description']	= $videoPage->getDescription();
+				$data['duration']		= $videoPage->getDuration();
+				$data['embedCode']		= $videoPage->getEmbedCode( $videoWidth, $autoplay, $useJWPlayer, false, $cityShort, $videoHeight, $inAjaxResponse );
+				$data['embedJSON']		= $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort, $videoHeight );
+				$data['provider']		= $videoPage->getProvider();
+				$data['thumbnailData']	= $videoPage->getThumbnailParams( $thumbnailWidth );
+				$data['title']			= $videoPage->getTitle()->getText();
+				$data['timestamp']		= $videoPage->getTimestamp();	//@todo for premium video, eventually use date published given by provider
+
+			}
 
 			$owner = '';
 			$ownerUrl = '';
