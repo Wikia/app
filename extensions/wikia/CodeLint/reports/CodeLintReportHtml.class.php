@@ -31,10 +31,16 @@ class CodeLintReportHtml extends CodeLintReport {
 		$stats = array(
 			'generationDate' => date('r'),
 			'totalTime' => $totalTime,
+			'errorsCount' => 0,
 		);
 
 		if ($tool !== '') {
 			$stats['tool'] = $tool;
+		}
+
+		// count errors reported in all files
+		foreach($results as $entry) {
+			$stats['errorsCount'] += $entry['errorsCount'];
 		}
 
 		$tmpl->set('results', $results);
