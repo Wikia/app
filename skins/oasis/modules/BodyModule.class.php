@@ -150,10 +150,10 @@ class BodyModule extends Module {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt,
-			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers, $wgEnableWikiReviews,
+			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3, $wgEnableWallExt, $wgRequest;
-		
+
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
 		$isDiff = ($wgRequest->getVal('diff', false) && $wgRequest->getVal('oldid', false));
@@ -162,13 +162,13 @@ class BodyModule extends Module {
 		if ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) {
 			$this->wgSuppressRail = true;
 		}
-		
+
 		if ( $this->wgSuppressRail ) {
 			return array();
 		}
-		
+
 		$railModuleList = array();
-		
+
 		$latestPhotosKey = $wgUser->isAnon() ? 1300 : 1250;
 		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
@@ -178,10 +178,8 @@ class BodyModule extends Module {
 				$railModuleList = array(
 					$latestActivityKey => array('LatestActivity', 'Index', null),
 				);
-				
-				if( empty( $wgEnableWikiReviews ) ) {
-					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-				}
+
+				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
 				if( empty( $wgEnableWikiAnswers ) ) {
 					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
@@ -201,9 +199,7 @@ class BodyModule extends Module {
 					1102 => array('HotSpots', 'Index', null),
 					1101 => array('CommunityCorner', 'Index', null),
 				);
-				if( empty( $wgEnableWikiReviews ) ) {
-					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-				}
+				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			} else if ($wgTitle->isSpecial('Following') || $wgTitle->isSpecial('Contributions') ) {
 				// intentional nothing here
 			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
@@ -211,9 +207,9 @@ class BodyModule extends Module {
 					1500 => array('Search', 'Index', null),
 					$latestActivityKey => array('LatestActivity', 'Index', null),
 				);
-				if( empty( $wgEnableWikiReviews ) ) {
-					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-				}
+
+				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+
 				if( empty( $wgEnableWikiAnswers ) ) {
 					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 					if ($wgEnableHuluVideoPanel) {
@@ -247,11 +243,10 @@ class BodyModule extends Module {
 			in_array($subjectNamespace, $wgContentNamespaces) ||
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
-			
+
 			$railModuleList[$latestActivityKey] = array('LatestActivity', 'Index', null);
-			if( empty( $wgEnableWikiReviews ) ) {
-				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
-			}
+			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+
 			if( empty( $wgEnableWikiAnswers ) ) {
 				$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 				if ($wgEnableHuluVideoPanel) {
@@ -311,7 +306,7 @@ class BodyModule extends Module {
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
-		
+
 		//  No rail on main page or edit page for oasis skin
 		// except &action=history of wall
 		if( !empty($wgEnableWallExt) ) {
@@ -319,7 +314,7 @@ class BodyModule extends Module {
 		} else {
 			$isEditPage = BodyModule::isEditPage();
 		}
-		
+
 		if ( $isEditPage || ArticleAdLogic::isMainPage() ) {
 			$modules = array();
 			wfRunHooks( 'GetEditPageRailModuleList', array( &$modules ) );
@@ -370,11 +365,11 @@ class BodyModule extends Module {
 			unset($railModuleList[1450]);
 		}
 		// WikiNav v2 - end
-		
+
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
-		
+
 		wfProfileOut(__METHOD__);
-		
+
 		return $railModuleList;
 	}
 
