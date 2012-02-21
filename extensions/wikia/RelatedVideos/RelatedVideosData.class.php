@@ -22,7 +22,7 @@ class RelatedVideosData {
 		} else {
 			$videoPage = F::build( 'VideoPage', array( $title ) );
 			$videoPage->load($useMaster);
-			$data['external']	= false; // false means it is not set. Meaning values are 0 and 1.
+			$data['external']	= false; // false means it is not set. Meaningful values: 0 and 1.
 			$data['id']		= $title->getArticleID();
 			$data['description']	= $videoPage->getDescription();
 			$data['duration']	= $videoPage->getDuration();
