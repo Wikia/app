@@ -15,7 +15,7 @@ $messages['en'] = array(
 
 ==My contributions==
 
-* [[Special:Contributions/{{PAGENAME}}|User contributions]]
+* [[Special:Contributions/$1|User contributions]]
 
 ==My favorite pages==
 
@@ -84,7 +84,7 @@ $messages['br'] = array(
 
 ==Ma degasadennoù==
 
-* [[Special:Contributions/{{PAGENAME}}|Degasadennoù an implijer]]
+* [[Special:Contributions/$1|Degasadennoù an implijer]]
 
 ==Ar pajennoù plijetañ ==
 
@@ -126,7 +126,7 @@ $messages['cs'] = array(
 
 ==Mé příspěvky==
 
-* [[Special:Contributions/{{PAGENAME}}|Příspěvky uživatele]]
+* [[Special:Contributions/$1|Příspěvky uživatele]]
 
 ==Mé oblíbené stránky==
 
@@ -173,7 +173,7 @@ $messages['de'] = array(
 
 == Meine Beiträge ==
 
-* [[Special:Contributions/{{PAGENAME}}|Benutzerbeiträge]]
+* [[Special:Contributions/$1|Benutzerbeiträge]]
 
 == Meine beliebtesten Seiten ==
 
@@ -217,7 +217,7 @@ $messages['de-formal'] = array(
 
 == Meine Beiträge ==
 
-* [[Special:Contributions/{{PAGENAME}}|Benutzerbeiträge]]
+* [[Special:Contributions/$1|Benutzerbeiträge]]
 
 == Meine beliebtesten Seiten ==
 
@@ -260,7 +260,7 @@ $messages['es'] = array(
 
 ==Mis contribuciones==
 
-* [[Special:Contributions/{{PAGENAME}}|Contribuciones del usuario]]
+* [[Special:Contributions/$1|Contribuciones del usuario]]
 
 ==Mis páginas favoritas==
 
@@ -304,7 +304,7 @@ $messages['fa'] = array(
 
 ==مشارکت‌های من==
 
-* [[Special:Contributions/{{PAGENAME}}|مشارکت‌های کاربر]]
+* [[Special:Contributions/$1|مشارکت‌های کاربر]]
 
 ==صفحات محبوب من==
 
@@ -334,7 +334,7 @@ $messages['fi'] = array(
 
 ==Omat muokkaukset==
 
-* [[Special:Contributions/{{PAGENAME}}|Käyttäjän muokkaukset]]
+* [[Special:Contributions/$1|Käyttäjän muokkaukset]]
 
 ==Omat suosikkisivut==
 
@@ -367,7 +367,7 @@ $messages['fr'] = array(
 
 ==Mes contributions==
 
-* [[Special:Contributions/{{PAGENAME}}|Mes contributions]]
+* [[Special:Contributions/$1|Mes contributions]]
 
 ==Mes pages préférées==
 
@@ -410,7 +410,7 @@ $messages['gl'] = array(
 
 ==As miñas contribucións==
 
-* [[Special:Contributions/{{PAGENAME}}|As miñas contribucións]]
+* [[Special:Contributions/1|As miñas contribucións]]
 
 ==As miñas páxinas favoritas==
 
@@ -455,7 +455,7 @@ $messages['he'] = array(
 ''זה דף המשתמש שלך. כדאי לערוך דף זה כדי שמשתמשים אחרים יוכלו לדעת עליך יותר!''
 
 ==התרומות שלי==
-*[[Special:Contributions/{{PAGENAME}}|העריכות שלך]]
+*[[Special:Contributions/$1|העריכות שלך]]
 
 ==הדפים האהובים עליי==
 * הוסף כאן קישור לדפים האהובים עליך או דפים שיצרת.
@@ -482,7 +482,7 @@ $messages['hu'] = array(
 
 == Közreműködéseim  ==
 
-* [[Special:Contributions/{{PAGENAME}}|Felhasználó közreműködései]]
+* [[Special:Contributions/$1|Felhasználó közreműködései]]
 
 == Kedvenc lapjaim ==
 
@@ -522,7 +522,7 @@ $messages['ia'] = array(
 
 ==Mi contributiones==
 
-* [[Special:Contributions/{{PAGENAME}}|Contributiones de iste usator]]
+* [[Special:Contributions/$1|Contributiones de iste usator]]
 
 ==My favorite pages==
 
@@ -567,7 +567,7 @@ $messages['id'] = array(
 
 == Kontribusi saya ==
 
-* [[Special:Contributions/{{PAGENAME}}|Kontribusi pengguna]] 
+* [[Special:Contributions/$1|Kontribusi pengguna]] 
 
 == Halaman kesukaan saya == 
 
@@ -589,7 +589,7 @@ $messages['it'] = array(
 
 ==I miei contribti==
 
-* [[Special:Contributions/{{PAGENAME}}|Contributi utente]]
+* [[Special:Contributions/$1|Contributi utente]]
 
 ==Le mie pagine preferite==
 
@@ -629,7 +629,7 @@ Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita i [[wik
  */
 $messages['ja'] = array(
 	'welcome-user-page' => "== 自己紹介 ==
-'''ここは、「{{PAGENAME}}」さんの利用者ページです。'''
+'''ここは、「$1」さんの利用者ページです。'''
 
 上の\"編集\"ボタンをクリックしてこのページを編集してみましょう。",
 	'welcome-message-user' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
@@ -669,7 +669,7 @@ $messages['mk'] = array(
 
 ==Мои придонеси==
 
-* [[Special:Contributions/{{PAGENAME}}|Кориснички придонеси]]
+* [[Special:Contributions/$1|Кориснички придонеси]]
 
 ==Мои омилени страници==
 
@@ -711,7 +711,7 @@ $messages['ms'] = array(
 
 ==Sumbangan saya==
 
-* [[Special:Contributions/{{PAGENAME}}|Sumbangan pengguna]]
+* [[Special:Contributions/$1|Sumbangan pengguna]]
 
 ==Laman kegemaran saya==
 
@@ -756,7 +756,7 @@ $messages['nb'] = array(
 
 ==Mine bidrag==
 
-* [[Special:Contributions/{{PAGENAME}}|Brukerbidrag]]
+* [[Special:Contributions/$1|Brukerbidrag]]
 
 ==Mine favorittsider==
 
@@ -800,7 +800,7 @@ $messages['nl'] = array(
 ''Dit is uw gebruikerspagina. Bewerk deze pagina alstublieft en vertel de gemeenschap iets over uzelf''
 
 ==Mijn bijdragen==
-* [[Special:Contributions/{{PAGENAME}}|Uw eigen bijdragen]]
+* [[Special:Contributions/$1|Uw eigen bijdragen]]
 
 ==Mijn favoriete pagina's==
 * Voeg hier verwijzingen toe naar uw favoriete pagina's op deze wiki!
@@ -840,7 +840,7 @@ $messages['nl-informal'] = array(
 ''Dit is je gebruikerspagina. Bewerk deze pagina alsjeblieft en vertel de gemeenschap iets over jezelf''
 
 ==Mijn bijdragen==
-* [[Special:Contributions/{{PAGENAME}}|Je eigen bijdragen]]
+* [[Special:Contributions/$1|Je eigen bijdragen]]
 
 ==Mijn favoriete pagina's==
 * Voeg hier verwijzingen toe naar je favoriete pagina's op deze wiki!
@@ -877,7 +877,7 @@ $messages['oc'] = array(
 
 ==Mas contribucions==
 
-* [[Special:Contributions/{{PAGENAME}}|Mas contribucions]]
+* [[Special:Contributions/$1|Mas contribucions]]
 
 ==Mas paginas preferidas==
 
@@ -915,7 +915,7 @@ $messages['pl'] = array(
 
 == Mój wkład ==
 
-* [[Special:Contributions/{{PAGENAME}}|wkład]]
+* [[Special:Contributions/$1|wkład]]
 
 == Moje ulubione strony ==
 
@@ -957,7 +957,7 @@ $messages['pms'] = array(
 
 ==Mie contribussion==
 
- [[Special:Contributions/{{PAGENAME}}|Contribussion ëd l'utent]]
+ [[Special:Contributions/$1|Contribussion ëd l'utent]]
 
 ==Mie pàgine preferìe==
 
@@ -1000,7 +1000,7 @@ $messages['ps'] = array(
 
 ==زما ونډې==
 
-* [[Special:Contributions/{{PAGENAME}}|د کارن ونډې]]
+* [[Special:Contributions/$1|د کارن ونډې]]
 
 ==زما پزړه پوري مخونه==
 
@@ -1020,7 +1020,7 @@ $messages['pt'] = array(
 
 ==As minhas contribuições==
 
-* [[Special:Contributions/{{PAGENAME}}|Contribuições deste utilizador]]
+* [[Special:Contributions/$1|Contribuições deste utilizador]]
 
 ==As minhas páginas preferidas==
 
@@ -1067,7 +1067,7 @@ $messages['pt-br'] = array(
 
 ==Minhas contribuições==
 
-* [[Special:Contributions/{{PAGENAME}}|Contribuições desse usuário]]
+* [[Special:Contributions/$1|Contribuições desse usuário]]
 
 ==Minhas páginas favoritas==
 
@@ -1112,7 +1112,7 @@ $messages['ru'] = array(
 
 == Мой вклад ==
 
-* [[Special:Contributions/{{PAGENAME}}|Вклад участника]]
+* [[Special:Contributions/$1|Вклад участника]]
 
 == Мои избранные страницы ==
 
@@ -1156,7 +1156,7 @@ $messages['sr-ec'] = array(
 
 == Прилози ==
 
-* [[Special:Contributions/{{PAGENAME}}|Прилози корисника]]
+* [[Special:Contributions/$1|Прилози корисника]]
 
 == Омиљене странице ==
 
@@ -1199,7 +1199,7 @@ $messages['sv'] = array(
 
 ==Mina bidrager==
 
-* [[Special:Contributions/{{PAGENAME}}|Användarbidrager]]
+* [[Special:Contributions/$1|Användarbidrager]]
 
 ==Mina favoritsidor==
 
@@ -1247,7 +1247,7 @@ $messages['th'] = array(
 ''นี่เป็นหน้าผู้ใช้ของคุณ. กรุณาแก้ไขหน้านี้เพื่อบอกให้ชุมชนรู้เรื่องเกี่ยวกับตัวคุณ!''
 
 == ผลงานของฉัน==
-* [[Special:Contributions/{{PAGENAME}}|ผลงานของผู้ใช้]]
+* [[Special:Contributions/$1|ผลงานของผู้ใช้]]
 
 ==หน้าโปรดของฉัน==
 
@@ -1292,7 +1292,7 @@ $messages['tl'] = array(
 
 ==Mga ambag ko==
 
-* [[Special:Contributions/{{PAGENAME}}|Mga ambag ng tagagamit]]
+* [[Special:Contributions/$1|Mga ambag ng tagagamit]]
 
 ==Mga paborito kong pahina==
 
@@ -1339,7 +1339,7 @@ $messages['uk'] = array(
 
 ==Мій внесок==
 
-* [[Special:Contributions/{{PAGENAME}}|Внесок користувача]]
+* [[Special:Contributions/$1|Внесок користувача]]
 
 ==Мої улюблені сторінки==
 
@@ -1373,7 +1373,7 @@ $messages['vi'] = array(
 ''Đây là trang thành viên của bạn. Xin vui lòng viết và sửa đổi trang này để cho cộng đồng biết bạn!''
 
 ==Đóng góp==
-* [[Special:Contributions/{{PAGENAME}}|Đóng góp của tôi]]
+* [[Special:Contributions/$1|Đóng góp của tôi]]
 
 ==Bài viết ưa thích==
 * Liên kết trang bạn thích đến đây

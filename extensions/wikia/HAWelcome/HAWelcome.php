@@ -172,7 +172,7 @@ class HAWelcomeJob extends Job {
 									$userArticle = new Article( $userPage, 0 );
 									Wikia::log( __METHOD__, "userpage", $userPage->getFullUrl() );
 									if( ! $userArticle->exists() ) {
-										$pageMsg = wfMsgForContent( "welcome-user-page" );
+										$pageMsg = wfMsgForContent( 'welcome-user-page', $this->mUser->getName() );
 										$userArticle->doEdit( $pageMsg, false, $flags );
 									}
 								}
