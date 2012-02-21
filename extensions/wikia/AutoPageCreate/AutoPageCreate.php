@@ -43,7 +43,7 @@ function wfAutoPageCreateEditPage( $editpage ) {
 		if( $editpage->mTitle->isContentPage() ) {
 			$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
 		} else if( ( $editpage->mTitle->getNamespace() == NS_USER ) && !wfAutoPageCreateIsAnonUserpage( $editpage->mTitle->getText()  ) ) {
-			$editpage->textbox1 = wfMsgForContent( 'welcome-user-page' );
+			$editpage->textbox1 = wfMsgForContent( 'welcome-user-page', $editpage->mTitle->getText() );
 		}
 	}
 	return true;
@@ -108,7 +108,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 							$overlayMsgKey = false;
 						}
 						else if( !wfAutoPageCreateIsAnonUserpage( $title->getText() ) ) {
-							$text = wfMsgForContent( "welcome-user-page" );
+							$text = wfMsgForContent( 'welcome-user-page', $title->getText() );
 							$overlayMsgKey = "autopagecreate-newpage-notice-user";
 						}
 						else {
