@@ -31,7 +31,7 @@ class AdSS_Publisher {
 				$adsRendered[] = array( 'id' => 0, 'html' => '' );
 			}
 		}
-		
+
 		$response->addText( Wikia::json_encode( $adsRendered ) );
 		$response->setCacheDuration( $minExpire - time() );
 
@@ -120,18 +120,13 @@ class AdSS_Publisher {
 
 	static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgTitle, $wgAdSS_templatesDir;
-		global $wgEnableReviews;
 		if( self::canShowAds( $wgTitle ) ) {
 			wfLoadExtensionMessages( 'AdSS' );
 			$ads = self::getPageAds( $wgTitle );
 			$tmpl = new EasyTemplate( $wgAdSS_templatesDir );
-			
+
 			$selfAd = new AdSS_TextAd();
-			if( !empty( $wgEnableReviews ) ) {
-				$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL( 'page='.$wgTitle->getText() ) );
-			} else {
-				$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL() );
-			}
+			$selfAd->url = str_replace( 'http://', '', SpecialPage::getTitleFor( 'AdSS')->getFullURL() );
 			$selfAd->text = wfMsg( 'adss-ad-default-text' );
 			$selfAd->desc = wfMsg( 'adss-ad-default-desc' );
 
@@ -172,7 +167,7 @@ class AdSS_Publisher {
 			$ads = self::getPageAds( $wgTitle->getArticleID() );
 			foreach( $ads as $ad ) {
 				if( $ad->expires < $now ) {
-					$modifiedTimes['adss'] = wfTimestamp( TS_MW, $now );	
+					$modifiedTimes['adss'] = wfTimestamp( TS_MW, $now );
 				}
 			}
 		}
