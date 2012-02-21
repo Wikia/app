@@ -122,6 +122,7 @@ if ( $rowCount ) {
 			) {
 				$newNameCandidate = substr( $newNameCandidate, 0, 255-strlen( '_' . $sufix) );
 				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 0  ? '_' : '' ) . $sufix;
+				$sufix++;
 			}
 			$aTranslation[ $sFile ] = $sNewTitle;
 		}
@@ -281,7 +282,7 @@ foreach ( $aTranslation as $key => $val ) {
 				echo "updated $table (changes:$num)\n";
 			}
 			// ad error handling
-		} {
+		} else {
 			echo "table $table does not exist on this wiki\n";
 		}
 	}
