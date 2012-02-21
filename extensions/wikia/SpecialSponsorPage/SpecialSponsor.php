@@ -29,7 +29,7 @@ if ( !isset( $wgSponsorAdsLimit ) ) {
 //enable the advertisements
 $wgAutoloadClasses['Advertisement'] = $dir . 'Advertisements.php';
 $wgAutoloadClasses['AdDisplay'] = $dir . 'AdDisplay.php';
-$wgHooks['SkinAfterComments'][] = 'AdDisplay::OutputAdvertisementOutputHook';
+//$wgHooks['SkinAfterComments'][] = 'AdDisplay::OutputAdvertisementOutputHook';
 $wgHooks['ArticlePurge'][] = 'Advertisement::onArticlePurge';
 
 //Sponsor page
