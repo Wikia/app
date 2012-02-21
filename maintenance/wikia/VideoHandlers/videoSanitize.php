@@ -269,17 +269,21 @@ foreach ( $aTranslation as $key => $val ) {
 	}
 
 	foreach(  $aTablesMove as $table => $actions ){
-		$res = $dbw->update(
-			$table,
-			$actions['update'],
-			$actions['where'],
-			__METHOD__
-		);
-		$num = $dbw->affectedRows();
-		if( $num ) {
-			echo "updated $table (changes:$num)\n";
+		if( $dbw->tableExists($table)) {
+			$res = $dbw->update(
+				$table,
+				$actions['update'],
+				$actions['where'],
+				__METHOD__
+			);
+			$num = $dbw->affectedRows();
+			if( $num ) {
+				echo "updated $table (changes:$num)\n";
+			}
+			// ad error handling
+		} {
+			echo "table $table does not exist on this wiki\n";
 		}
-		// ad error handling
 	}
 
 	// when you sanitize make sure that the original entry in video_premigrate is deleted
