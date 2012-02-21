@@ -1082,10 +1082,10 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 						$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";
 						$lyrics = $retVal['lyrics'];
 
-						if(strlen($lyrics) < 50){
+						if(mb_strlen($lyrics) < 50){
 							$lyrics = "";
 						} else {
-							$lyrics = mb_substr($lyrics, 0, max(0, round(strlen($lyrics) / 7)), 'UTF-8') . "[...]";
+							$lyrics = mb_substr($lyrics, 0, max(0, round(mb_strlen($lyrics) / 7)), 'UTF-8') . "[...]";
 						}
 						//$lyrics .= "\n\n\n\n$TRUNCATION_NOTICE".$retVal['url']."$urlLink"; // we'll let apps decide how to handle this.
 
