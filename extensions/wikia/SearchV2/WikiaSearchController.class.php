@@ -34,7 +34,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if( !empty( $query ) ) {
 			$results = $this->wikiaSearch->doSearch( $query, $start, self::RESULTS_PER_PAGE, ( $crossWikia ? 0 : $this->wg->CityId ), $rankExpr );
 			if(!empty($results->found)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'start' => $start, 'count' => $results->found, 'crossWikia' => $crossWikia ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'start' => $start, 'count' => $results->found, 'crossWikia' => $crossWikia, 'rankExpr' => $rankExpr ) );
 			}
 		}
 
@@ -53,6 +53,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function pagination() {
 		$query = $this->getVal('query');
 		$start = $this->getVal( 'start', 0 );
+		$rankExpr = $this->getVal('rankExpr');
 		$resultsPerPage = $this->getVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$resultsCount = $this->getVal( 'count', 0);
 		$pagesNum = ceil( $resultsCount / $resultsPerPage );
@@ -60,6 +61,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setVal( 'query', $query );
 		$this->setVal( 'pagesNum', $pagesNum );
+		$this->setVal( 'rankExpr', $rankExpr );
 		$this->setVal( 'currentPage', $currentPage );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$this->setVal( 'windowFirstPage', ( ( ( $currentPage - self::PAGES_PER_WINDOW ) > 0 ) ? ( $currentPage - self::PAGES_PER_WINDOW ) : 1 ) );
