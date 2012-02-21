@@ -75,7 +75,7 @@
 </head>
 <body>
 	<table class="report" width="100%">
-		<caption>Code lint report for <?= count($results) ?> file(s)</caption>
+		<caption>Code lint report for <?= count($results) ?> file(s) / <?= $stats['errorsCount'] ?> issue(s) found</caption>
 		<colgroup>
 			<col width="25">
 			<col width="*">
