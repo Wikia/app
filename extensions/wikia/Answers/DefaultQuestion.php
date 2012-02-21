@@ -3,7 +3,7 @@
 class DefaultQuestion {
 
 	function __construct( $question ) {
-		global $wgRequest, $wgEnableReviews;
+		global $wgRequest;
 
 		wfLoadExtensionMessages( 'Answers' );
 
@@ -22,17 +22,6 @@ class DefaultQuestion {
 		if ( strpos( $question, $search ) === 0 ) {
 			$question = substr( $question, strlen( $search ) );
 			$question = ltrim( $question );
-		}
-
-		if( !empty( $wgEnableReviews ) && !preg_match( "/_/", $question ) ) {
-			//remove www. if typed at the beginning of the pagename
-			$question = preg_replace( "/^www\./i", "", $question );
-
-			//add a .com if there was no .com, .net, .org, .co.uk, .ca or .au at the end of the pagename
-			//(for the sake of simplicity add .com if there is on . or character)
-			if( !preg_match( "/\.|\//", $question ) ) {
-				$question .= ".com";
-			}
 		}
 
 		$this->title = Title::makeTitleSafe( NS_MAIN, $question );
@@ -102,11 +91,6 @@ class DefaultQuestion {
 
 	// redirect one or two word questions to search
 	function searchTest() {
-		//on reviews wikis always redirect to search if there is a space inside
-		global $wgEnableReviews;
-		if( !empty( $wgEnableReviews ) && preg_match( "/\s/", $this->question ) ) {
-			return true;
-		}
 
 		global $wgDisableAnswersShortQuestionsRedirect;
 		if (!empty($wgDisableAnswersShortQuestionsRedirect)) {
