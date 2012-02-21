@@ -61,11 +61,6 @@ class AdSS_Util {
 
 	static function getPagePricing( $title=null ) {
 		global $wgAdSS_pricingConf, $wgAdSS_pricingLevel;
-		global $wgEnableReviews;
-
-		if( !empty( $wgEnableReviews ) ) {
-			return $wgAdSS_pricingConf['reviews'];
-		}
 
 		if( $title ) {
 			if( isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page'][$title->getText()] ) ) {
@@ -73,7 +68,7 @@ class AdSS_Util {
 			} elseif( isset( $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page']['#mainpage#'] )
 					&& $title->equals( Title::newMainPage() ) ) {
 				return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page']['#mainpage#'];
-			} 
+			}
 		}
 		return $wgAdSS_pricingConf[$wgAdSS_pricingLevel]['page']['#default#'];
 	}
@@ -137,12 +132,12 @@ class AdSS_Util {
 		if( $wikiArticlePath === false ) $wikiArticlePath = $wgArticlePath;
 
 		if( $pageId > 0 ) {
-			$title = $dbw->selectField( 
+			$title = $dbw->selectField(
 					'page',
 					'page_title',
 					array( 'page_id' => $pageId )
 					);
-			
+
 			$dbw->update(
 					'page',
 					array( 'page_touched' => $dbw->timestamp() ),
