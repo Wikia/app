@@ -27,9 +27,14 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 		$videoId = $this->getVal( 'videoid', null );
 		$provider = strtolower( $this->getVal( 'provider', null ) );
 		$undercover = $this->getVal( 'undercover', false );
+		$videoTitle = $this->getVal( 'videotitle', null );
 		
 		if ( $videoId && $provider ) {
-			$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title, null, $undercover);
+			$overrideMetadata = array();
+			if (!empty($videoTitle)) {
+				$overrideMetadata['title'] = $videoTitle;
+			}
+			$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title, null, $undercover, $overrideMetadata);
         
 			$this->setVal( 'uploadStatus', $result->ok );
 			$this->setVal( 'isNewFile', empty( $result->value ) );
