@@ -24,7 +24,7 @@
 		var resolution = WikiaMobile.getDeviceResolution(),
 		body = $(document.body);
 
-		body.append('<div id=wkMdlWrp><div id=wkMdlTB><div id=wkMdlClo>&times;</div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div>\
+		body.append('<div id=wkMdlWrp><div id=wkMdlTB><div class=wkShr id=wkShrImg></div><div id=wkMdlClo>&times;</div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div>\
 			</div><style>#wkMdlWrp{min-height:' + resolution[1] + 'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + resolution[0] + 'px;}}</style>');
 
 		images = WikiaMobile.getImages();
@@ -83,7 +83,13 @@
 		});
 		//document.body.addEventListener('touchmove', function(event) {
 		//	event.preventDefault();
-		//}, false); 
+		//}, false);
+		
+		WikiaMobile.popOver({
+			on: document.getElementById('wkShrImg'),
+			content: WikiaMobile.loadShare,
+			align: 'left:0'
+		});
 
 		modalCreated = true;
 	},

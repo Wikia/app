@@ -168,22 +168,22 @@
 		}
 	};
 
-	$.showLoader = function(element, options) {
+	$.showLoader = function(elm, options) {
 		options = options || {};
 
-		if(element.data('hasLdr')) {
-			element.find('.wkMblLdr').show();
+		if(elm.attr('data-hasLdr')) {
+			elm.find('.wkMblLdr').show();
 		} else {
-			element.append('<div class="wkMblLdr' + (options.center?' center':'') +'"><img ' +
-						   (options.size?'style="width:' + options.size + '"':'') + ' src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>').data('hasLdr', true);
+			elm.append('<div class="wkMblLdr' + (options.center?' center':'') +'"><img ' +
+						   (options.size?'style="width:' + options.size + '"':'') + ' src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>').attr('data-hasLdr', true);
 		}
 	};
 
-	$.hideLoader = function(element) {
-		element.find('.wkMblLdr').hide();
+	$.hideLoader = function(elm) {
+		elm.find('.wkMblLdr').hide();
 	};
 
-	$.removeLoader = function(element) {
-		element.find('.wkMblLdr').remove();
+	$.removeLoader = function(elm) {
+		elm.find('.wkMblLdr').remove();
 	};
 })(Zepto);
