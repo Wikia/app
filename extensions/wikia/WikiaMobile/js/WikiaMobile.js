@@ -16,6 +16,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
 	tableWrapperHTML = '<div class=bigTable>',
 	adSlot,
+	shareData,
 	fixed = Modernizr.positionfixed;
 
 	function getImages(){
@@ -569,7 +570,104 @@ var WikiaMobile = WikiaMobile || (function() {
 			track('category/exhibition/click');
 		});
 		//end category pages
+
+		popOver({
+			on: document.getElementById('wkShrPag'),
+			content: loadShare,
+			align: 'right:0'
+		});
 	});
+
+	function loadShare(cnt){
+
+		shareData = shareData || Wikia.Cache.get('shareButtons');
+
+		var handle = function(data){
+			if(cnt.parentNode.id == 'wkShrPag'){
+				cnt.innerHTML = data.pageShare
+
+				if(data.scripts){
+					var scr = document.createElement('script');
+					scr.insertAdjacentHTML('afterbegin', data.scripts);
+					document.head.appendChild(scr);
+				}
+			}else{
+				cnt.innerHTML = data.imageShare;
+			}
+		}
+
+		if(!shareData){
+			$.nirvana.sendRequest({
+				controller: 'WikiaMobileController',
+				method: 'getShareButtons',
+				format: 'json',
+				callback: function(result){
+					if(!shareData) {
+						Wikia.Cache.set('shareButtons', result, 604800/*7 days*/);
+						shareData = result;
+					}
+					handle(result);
+				}
+			});
+		}else{
+			handle(shareData);
+		}
+	}
+
+	/*
+	 * POPOVER
+	 * options.on - element that opens popover - throws an exception if not provided
+	 * options.align - helps to align popover ie '10px' or '100%' - throws an exception if not provided
+	 * options.content - content of popover, either string or function that gets container as an attribute
+	 * options.position - position of popover relative to the button 'bottom', 'top', 'left' , 'right'
+	*/
+	function popOver(options){
+		var options = options || {},
+		elm = options.on,
+		initialized = false
+
+		if(elm){
+			elm.addEventListener(clickEvent, function(event) {
+				if(elm.className.indexOf('on') > -1){
+					elm.className = elm.className.replace(' on', '');
+				}else{
+					if(!initialized){
+						var position = options.position || 'bottom',
+							horizontal = (position == 'bottom' || position == 'top'),
+							offset = (horizontal)?elm.offsetHeight:elm.offsetWidth,
+							content = options.content,
+							align = options.align || '',
+							cnt;
+
+						if(content){
+							elm.insertAdjacentHTML('afterbegin', '<div class=shrCnt></div>');
+							cnt = elm.getElementsByClassName('shrCnt')[0];
+
+							if(typeof content == 'function'){
+								$.showLoader($(cnt), {center: true, size: '20px'});
+								content(cnt);
+							}else{
+								cnt.insertAdjacentHTML('afterbegin', content);
+							}
+						}else{
+							throw 'No content provided';
+						}
+
+						elm.className += ' ' + position;
+						var pos = (horizontal)?(position == 'top'?'bottom':'top'):(position == 'left'?'right':'left');
+						cnt.style[pos] = (offset + 15) + 'px';
+
+						cnt.styleText += align;
+
+						initialized = true;
+					}
+					elm.className += ' on';
+				}
+			});
+		}else{
+			throw 'Non existing element';
+		}
+	}
 
 	return {
 		getImages: getImages,
@@ -577,6 +675,8 @@ var WikiaMobile = WikiaMobile || (function() {
 		getClickEvent: getClickEvent,
 		getTouchEvent: getTouchEvent,
 		track: track,
-		moveSlot: moveSlot
+		moveSlot: moveSlot,
+		popOver: popOver,
+		loadShare: loadShare
 	};
 })();
