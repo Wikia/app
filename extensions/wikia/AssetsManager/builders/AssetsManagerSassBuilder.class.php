@@ -6,7 +6,7 @@
 
 class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
-	public function __construct($request) {
+	public function __construct(WebRequest $request) {
 		parent::__construct($request);
 
 		if (strpos($this->mOid, '..') !== false) {

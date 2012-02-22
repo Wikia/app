@@ -182,6 +182,38 @@ class AssetsManager {
 		}
 	}
 
+	/**
+	 * @author macbre
+	 * @return array Array of one or many URLs
+ 	 */
+	private function getGroupsURL(Array $groupNames, /* array */ $params, /* string */ $prefix, /* boolean */ $combine, /* boolean */ $minify) {
+		$URLs = array();
+
+		if($combine !== null ? $combine : $this->mCombine) {
+			// When AssetsManager works in "combine" mode return URL to the combined package
+			$URLs[] = $prefix . $this->getAMLocalURL('groups', implode(',', $groupNames), $params);
+		}
+		else {
+			foreach($groupNames as $groupName) {
+				$URLs = array_merge($URLs, $this->getGroupURL($groupName, $params, $prefix, $combine, $minify));
+			}
+		}
+
+		return $URLs;
+	}
+
+	/**
+	 * @author macbre
+	 * @return array Array of one or many full common URLs, uses not wiki specific host
+ 	 */
+	public function getGroupsCommonURL(Array $groupNames, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null)  {
+		if (($combine !== null ? $combine : $this->mCombine) || ($minify !== null ? $minify : $this->mMinify)) {
+			return $this->getGroupsURL($groupNames, $params, $this->mCommonHost, $combine, $minify);
+		} else {
+			return $this->getGroupsURL($groupNames, $params, '', $combine, $minify);
+		}
+	}
+
 	private function getAMLocalURL($type, $oid, $params = array()) {
 		global $wgAssetsManagerQuery;
 		return sprintf($wgAssetsManagerQuery,

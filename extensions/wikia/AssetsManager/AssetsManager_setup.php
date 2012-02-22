@@ -38,6 +38,7 @@ function AssetsManagerEntryPoint() {
 	$wgAutoloadClasses['AssetsManagerBaseBuilder'] = $dir.'builders/AssetsManagerBaseBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerGroupBuilder'] = $dir.'builders/AssetsManagerGroupBuilder.class.php';
+	$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = $dir.'builders/AssetsManagerGroupsBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';
 	$wgAutoloadClasses['AssetsManagerServer'] = $dir.'AssetsManagerServer.class.php';
 

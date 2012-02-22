@@ -6,7 +6,7 @@
 
 class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 
-	public function __construct($request) {
+	public function __construct(WebRequest $request) {
 		parent::__construct($request);
 
 		global $IP;
