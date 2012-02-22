@@ -524,8 +524,9 @@ function WikiaVideoArticleFromTitle($title, $article) {
 		$newTitle = Title::newFromText($titleTextNoQS, $title->getNamespace());
 		if (!is_null($newTitle)) {
 			$title = $newTitle;
-		}								
+		}
 		
+		$article = new VideoPage($title);	
 	}
 	return true;
 }
