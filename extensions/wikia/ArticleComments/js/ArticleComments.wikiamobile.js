@@ -29,7 +29,7 @@ var ArticleComments = ArticleComments || (function(){
 			condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
 
 		if(currentPage === 1)
-				firstPage = commsUl.outerHTML;
+				firstPage = commsUl.innerHTML;
 				
 		track(['comment', 'page', (forward)?'next':'previous']);
 
@@ -43,9 +43,7 @@ var ArticleComments = ArticleComments || (function(){
 				currentPage = pageIndex;
 				finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
-				commsUl.parentNode.removeChild(commsUl);
-				loadMore.insertAdjacentHTML('beforebegin', result.text);
-				commsUl = document.getElementById('wkComUl');
+				commsUl.innerHTML = result.text;
 
 				elm.toggleClass('active');
 				$.hideLoader(elm);
@@ -95,9 +93,7 @@ var ArticleComments = ArticleComments || (function(){
 				if(!json.error && json.text){
 
 					if(currentPage > 1){
-						commsUl.parentNode.removeChild(commsUl);
-						loadMore.insertAdjacentHTML('beforebegin', firstPage);
-						commsUl = document.getElementById('wkComUl');
+						commsUl.innerHTML = firstPage;
 						currentPage = 1;
 						loadPrev.style.display = 'none';
 					}
