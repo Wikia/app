@@ -15,7 +15,7 @@ class AssetsManagerBaseBuilder {
 	protected $mContentType;
 	protected $mCacheMode = 'public';
 
-	public function __construct($request) {
+	public function __construct(WebRequest $request) {
 		$this->mType = $request->getText('type');
 		$this->mOid = $request->getText('oid');
 		parse_str(urldecode($request->getText('params')), $this->mParams);

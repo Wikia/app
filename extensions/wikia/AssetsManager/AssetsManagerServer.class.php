@@ -18,6 +18,10 @@ class AssetsManagerServer {
 					$builder = new AssetsManagerGroupBuilder($request);
 					break;
 
+				case 'groups':
+					$builder = new AssetsManagerGroupsBuilder($request);
+					break;
+
 				case 'sass':
 					$builder = new AssetsManagerSassBuilder($request);
 					break;
