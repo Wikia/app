@@ -470,7 +470,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 
 $wgHooks['MWNamespace:isMovable'][] = 'WikiaVideo_isMovable';
 function WikiaVideo_isMovable($result, $index) {
-	if($index == NS_VIDEO) {
+	if($index == NS_LEGACY_VIDEO) {
 		$result = false;
 	}
 	return true;
@@ -482,7 +482,7 @@ function WikiaVideoArticleFromTitle($title, $article) {
 
 	$embedArgs = array('align', 'caption', 'thumb', 'width');
 
-	if(NS_VIDEO == $title->getNamespace()) {
+	if(NS_LEGACY_VIDEO == $title->getNamespace()) {
 		// overloading subpages to encode query string parameters
 		// i.e. Video:Foo/width=480px&caption=Hello World
 		
@@ -526,8 +526,6 @@ function WikiaVideoArticleFromTitle($title, $article) {
 			$title = $newTitle;
 		}								
 		
-		
-		$article = new VideoPage($title);		
 	}
 	return true;
 }

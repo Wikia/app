@@ -21,6 +21,8 @@ class WikiaLocalFileShared  {
 	 */
 	public function isVideo(){
 
+		return ($this->oFile->getHandler() instanceof VideoHandler);
+
 		// Media type loss is just teporary
 		if (	isset( $this->lockedPropertiesValues[ 'media_type' ] ) &&
 			( $this->lockedPropertiesValues[ 'media_type' ] == self::VIDEO_MEDIA_TYPE )
@@ -100,7 +102,7 @@ class WikiaLocalFileShared  {
 	/* alter LocalFile getHandler logic */
 
 	function afterGetHandler(){
-		if (!empty($this->oFile->handler)) {
+		if (!empty($this->oFile->handler) && $this->oFile->handler instanceof VideoHandler) {
 			// make sure that the new handler ( if video ) will have videoId
 			if ($this->oFile->media_type == self::VIDEO_MEDIA_TYPE) {
 				$videoId = $this->getVideoId();
