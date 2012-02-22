@@ -173,6 +173,36 @@ $dbw_dataware->freeResult($rows);
 
 echo(": {$rowCount} videos processed.\n");
 
+
+echo "Migrating RelatedVideos from cross-wiki links to regular links\n";
+
+$botUser = User::newFromName( 'WikiaBot' );
+
+$rows = $dbw->query( 'select page_id FROM page WHERE page_namespace = 1100' );
+while( $page = $dbw->fetchObject($rows) ) {
+	$articleId = $page->page_id;
+	$oTitle = Title::newFromId( $articleId );
+	if ( $oTitle instanceof Title && $oTitle->exists() ){
+		global $wgTitle;
+		// in some cases hooks depend on wgTitle (hook for article edit)
+		// but normally it wouldn't be set for maintenance script
+		$wgTitle = $oTitle;
+		$oArticle = new Article ( $oTitle );
+		if ( $oArticle instanceof Article ){
+			$sTextAfter = $sText = $oArticle->getContent();
+			$sTextAfter = str_replace( '* VW:', '', $sTextAfter  );
+
+			if ( $sTextAfter != $sText ) {
+				echo "ARTICLE WAS CHANGED! \n";
+				$status = $oArticle->doEdit( $sTextAfter, 'Changing cross-wiki links to local links', EDIT_UPDATE, false, $botUser );
+			}
+		}
+	}
+}
+
+echo "Done\n";
+
+
 foreach ( $failures as $failure ){
 	echo ( "$failure \n" );
 }
