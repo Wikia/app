@@ -13,6 +13,18 @@ CREATE TABLE wall_history (
 	parent_page_id INT(11),
 	revision_id INT(11),
 	event_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	KEY `wlh` (wall_user_id,wiki_id),
-	KEY `tlh` (parent_page_id,wiki_id)
+	KEY `w_wip_pid_ed` (wiki_id, wall_user_ip, page_id, event_date),
+	KEY `w_wid_pid_ed` (wiki_id, wall_user_id, page_id, event_date),
+	KEY `w_wip_ppid_ed` (wiki_id, wall_user_ip, parent_page_id, event_date),
+	KEY `w_wid_ppid_ed` (wiki_id, wall_user_id, parent_page_id, event_date)
 ) ENGINE=InnoDB;
+
+
+/*
+ALTER TABLE wall_history DROP KEY wlh;
+ALTER TABLE wall_history DROP KEY tlh;
+ALTER TABLE wall_history ADD KEY `w_wip_pid_ed` (wiki_id, wall_user_ip, page_id, event_date);
+ALTER TABLE wall_history ADD KEY `w_wid_pid_ed` (wiki_id, wall_user_id, page_id, event_date);
+ALTER TABLE wall_history ADD KEY `w_wip_ppid_ed` (wiki_id, wall_user_ip, parent_page_id, event_date);
+ALTER TABLE wall_history ADD KEY `w_wid_ppid_ed` (wiki_id, wall_user_id, parent_page_id, event_date);
+*/

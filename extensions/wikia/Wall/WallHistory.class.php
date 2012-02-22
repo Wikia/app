@@ -123,10 +123,12 @@ class WallHistory extends WikiaModel {
 	protected function getWhere($user, $parent_page_id = 0) {
 		if( $user->getId() > 0 ) {
 			$query = array(
+				'wiki_id' => $this->wikiId,
 				'wall_user_id' => $user->getID()
 			);
 		} elseif ( $this->ip2long($user->getName()) !== false ) {
 			$query = array(
+				'wiki_id' => $this->wikiId,
 				'wall_user_ip' => $this->ip2long($user->getName())
 			);
 		} else {
