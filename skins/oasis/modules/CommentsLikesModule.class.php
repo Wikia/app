@@ -155,7 +155,7 @@ class CommentsLikesModule extends Module {
 
 		if (
 			$this->wg->OasisNavV2 &&
-			($response = $this->getResponse()) instanceof WikiaResponse
+			($response = $this->getResponse()) instanceof CommentsLikesModule
 		) {
 			$response->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/CommentsLikes_IndexV2.php' );
 		}
