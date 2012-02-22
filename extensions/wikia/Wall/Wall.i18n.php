@@ -161,12 +161,12 @@ $messages['en'] = array(
 	'wall-recentchanges-new-reply' => '(reply: "$1")',
 	'wall-recentchanges-edit' => '(edited message)',
 	
-	'wall-recentchanges-wall-removed-thread' => ' removed thread "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
-	'wall-recentchanges-wall-removed-reply' => ' removed reply from "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
-	'wall-recentchanges-wall-restored-thread' => ' restored thread "<a href="$1">$2</a>" on <a href="$3">$4\'s wall</a>',
-	'wall-recentchanges-wall-restored-reply' => ' restored reply on "<a href="$1">$2</a>" on <a href="$3">$4\'s wall</a>',
-	'wall-recentchanges-wall-deleted-thread' => ' deleted thread "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
-	'wall-recentchanges-wall-deleted-reply' => ' deleted reply from "<a href="$1">$2</a>" from <a href="$3">$4\'s wall</a>',
+	'wall-recentchanges-wall-removed-thread' => 'removed thread "[[$1|$2]]" from [[$3|$4\'s wall]]',
+	'wall-recentchanges-wall-removed-reply' => 'removed reply from "[[$1|$2]]" from [[$3|$4\'s wall]]',
+	'wall-recentchanges-wall-restored-thread' => 'restored thread "[[$1|$2]]" on [[$3|$4\'s wall]]',
+	'wall-recentchanges-wall-restored-reply' => 'restored reply on "[[$1|$2]]" on [[$3|$4\'s wall]]',
+	'wall-recentchanges-wall-deleted-thread' => 'deleted thread "[[$1|$2]]" from [[$3|$4\'s wall]]',
+	'wall-recentchanges-wall-deleted-reply' => 'deleted reply from "[[$1|$2]]" from [[$3|$4\'s wall]]',
 
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Message Wall',
