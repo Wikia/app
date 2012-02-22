@@ -11,6 +11,7 @@ window.Wikia.Cache = (function(){
 	
 	var CACHE_PREFIX = 'wkch_',
 		CACHE_EXP_SUFFIX = '_ttl',
+		clean = false,
 		ls;
 
 	function getKey(token){
@@ -69,11 +70,38 @@ window.Wikia.Cache = (function(){
 
 			if(!isNaN(ttl) && ttl > 0)
 				ls.setItem(getTtlKey(key), getTimestamp() + (ttl * 1000));
+
+			//attempt at cleaning old ttl's
+			if(!clean)
+				this.cleanup();
 		},
 
 		del: function(key){
 			ls.removeItem(getKey(key));
 			ls.removeItem(getTtlKey(key));
+
+			//attempt at cleaning old ttl's
+			if(!clean)
+				this.cleanup();
+		},
+
+		cleanup: function(){
+			for(var x = 0, y = ls.length, k; x < y; x++){
+				k = ls.key(x);
+
+				if(
+					k !== null &&
+					k.indexOf(CACHE_PREFIX) == 0 &&
+					k.indexOf(CACHE_EXP_SUFFIX) > 0 &&
+					JSON.parse(ls.getItem(k)) <= getTimestamp()
+				){
+					ls.removeItem(k);
+					ls.removeItem(k.replace(CACHE_EXP_SUFFIX, ''));
+					console.log('CACHE cleanup:', k, k.replace(CACHE_EXP_SUFFIX, ''));
+				}
+			}
+
+			clean = true;
 		}
 	}
 })();
