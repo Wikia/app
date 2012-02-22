@@ -6,7 +6,7 @@
 	padding: 4px 10px;
 	&.preview,
 	&.error {
-		background-color: red; 
+		background-color: red;
 		color: white;
 		p {
 			a {
@@ -106,4 +106,9 @@
 	.WikiaMainContent {
 		margin-bottom: 150px;
 	}
+}
+
+// anons notifications
+#WikiaFooter > #WikiaNotifications {
+	top: -35px;
 }

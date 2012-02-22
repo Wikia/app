@@ -1,14 +1,17 @@
 <?php
 class FooterModule extends Module {
-	
+
 	var $wgBlankImgUrl;
-	
+
 	var $showToolbar;
 	var $showNotifications;
 	var $showLoadTime;
-	
+
 	public function executeIndex() {
 		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
+
+		// show for anons as well (BugId:20730)
+		$this->showNotifications = empty($wgSuppressToolbar);
 
 		// don't show toolbar when wgSuppressToolbar is set (for instance on edit pages)
 		$this->showToolbar = empty($wgSuppressToolbar) && !$wgUser->isAnon();
@@ -20,8 +23,6 @@ class FooterModule extends Module {
 		if (!empty($wgShowMyToolsOnly)) {
 			return;
 		}
-
-		$this->showNotifications = true;
 
 		// BugId:5497 PerformanceStats are now displayed via OasisToolbarService (see: DevInfoUserCommand)
 	}
@@ -36,7 +37,7 @@ class FooterModule extends Module {
 	}
 
 
-	public function executeToolbar() {		
+	public function executeToolbar() {
 		$service = $this->getToolbarService();
 		$toolbar = $service->listToInstance($service->getVisibleList());
 		$this->toolbar = $service->instanceToRenderData($toolbar);
