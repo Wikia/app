@@ -47,7 +47,8 @@ class WallHistory extends WikiaModel {
 			$feed->data->parent_id,
 			$feed->data_non_cached->thread_title_full,
 			$action,
-			null
+			null,
+			$feed->data->rev_id
 		);
 		return true;
 	}
@@ -66,13 +67,14 @@ class WallHistory extends WikiaModel {
 			$feed->data->parent_id,
 			$feed->data->title,
 			$action, 
-			$feed->data->reason 
+			$feed->data->reason,
+			null
 		);	
 			
 		return true;
 	}
 	
-	private function internalAdd( $wallUserId, $wallUserName, $postUserId, $postUserName, $isReply, $pageId, $parentPageId, $metatitle, $action, $reason ) {
+	private function internalAdd( $wallUserId, $wallUserName, $postUserId, $postUserName, $isReply, $pageId, $parentPageId, $metatitle, $action, $reason, $revId ) {
 		$this->getDatawareDB(DB_MASTER)->insert(
 			'wall_history', 
 			array(
@@ -86,7 +88,8 @@ class WallHistory extends WikiaModel {
 				'parent_page_id' => ( intval($parentPageId) === 0 ? null : $parentPageId),
 				'metatitle' => $metatitle,
 				'reason' => empty($reason) ? null:$reason,
-				'action' => $action		
+				'action' => $action,
+				'revision_id' => $revId
 			)
 		); 
 	}
@@ -166,6 +169,7 @@ class WallHistory extends WikiaModel {
 				'event_date',
 				'metatitle',
 				'reason',
+				'revision_id'
 			), 
 			$con,
 			__METHOD__,
@@ -206,7 +210,8 @@ class WallHistory extends WikiaModel {
 				'is_reply' => $row['is_reply'],
 				'action' => $row['action'],
 				'metatitle' => $row['metatitle'],
-				'reason' => $row['reason'] 
+				'reason' => $row['reason'],
+				'revision_id' => $row['revision_id']
 			);				
 		} else {
 		//it happened once on devbox when master&slave weren't sync'ed
