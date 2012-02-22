@@ -190,7 +190,7 @@ while( $page = $dbw->fetchObject($rows) ) {
 		$oArticle = new Article ( $oTitle );
 		if ( $oArticle instanceof Article ){
 			$sTextAfter = $sText = $oArticle->getContent();
-			$sTextAfter = str_replace( '* VW:', '', $sTextAfter  );
+			$sTextAfter = str_replace( '* VW:', '* ', $sTextAfter  );
 
 			if ( $sTextAfter != $sText ) {
 				echo "ARTICLE WAS CHANGED! \n";
