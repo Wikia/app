@@ -370,9 +370,9 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getEditTime(TS_MW) ));  
 			$this->response->setVal( 'showEditedTS',  true );
 			$editorName = $wallMessage->getEditor()->getName();
-			$this->response->setVal( 'editorName', $editorName );
-			$editorUrl = F::build('Title', array($editorName, NS_USER), 'newFromText' )->getFullUrl();
-			$this->response->setVal( 'editorUrl',  $editorUrl);
+			$this->response->setVal( 'editorName', $editorName );			
+			$editorUrl = F::build( 'Title', array( $editorName, NS_USER_WALL ), 'newFromText' )->getFullUrl();
+			$this->response->setVal( 'editorUrl',  $editorUrl );
 			$this->response->setVal( 'isEdited',  true);
 			
 			$query = array(
@@ -407,7 +407,7 @@ class WallController extends ArticleCommentsModule {
 			$displayname2 = '';
 		}
 
-		$url = F::build('Title', array($name, NS_USER), 'newFromText' )->getFullUrl();
+		$url = F::build( 'Title', array( $name, NS_USER_WALL ), 'newFromText' )->getFullUrl();
 		
 		if($wallMessage->getUser()->getId() == 0) { // anynymous contributor
 			$url = Skin::makeSpecialUrl('Contributions').'/'.$wallMessage->getUser()->getName();
@@ -425,7 +425,7 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal( 'displayname',  $displayname );
 		$this->response->setVal( 'displayname2', $displayname2 );
 		
-		$this->response->setVal( 'user_author_url', $url);
+		$this->response->setVal( 'user_author_url',  $url );
 
 		wfProfileOut( __METHOD__ );
 	}
