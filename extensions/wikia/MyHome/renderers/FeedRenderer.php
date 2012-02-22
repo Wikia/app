@@ -238,7 +238,7 @@ class FeedRenderer {
 		} else {
 			$msg = wfMsg("myhome-feed-{$type}-details");
 		}
-
+		
 		$html = Xml::openElement('tr', array('data-type' => $type));
 		$html .= Xml::openElement('td', array('class' => 'activityfeed-details-label'));
 		$html .= Xml::element('em', array('class' => 'dark_text_2'), $msg);
@@ -654,6 +654,8 @@ class FeedRenderer {
 			return '';
 		}
 
+		//var_dump($row); die;
+		
 		wfProfileIn(__METHOD__);
 
 		$thumbs = array();
@@ -664,8 +666,9 @@ class FeedRenderer {
 			// solution for centering thumbnails within their container.
 			$thumb = '<!--[if lt IE 8]><span></span><![endif]-->';
 
-			$thumb .= substr($item['html'], 0, -2) . '/>';
-
+			//$thumb .= substr($item['html'], 0, -2) . '/>';
+			$thumb .= $item['html'];
+			
 			// localised title for popup
 			$popupTitle = $wgLang->getNsText($namespace) . ':' . $item['name'];
 
