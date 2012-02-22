@@ -97,7 +97,6 @@ window.Wikia.Cache = (function(){
 				){
 					ls.removeItem(k);
 					ls.removeItem(k.replace(CACHE_EXP_SUFFIX, ''));
-					console.log('CACHE cleanup:', k, k.replace(CACHE_EXP_SUFFIX, ''));
 				}
 			}
 
