@@ -227,14 +227,6 @@ var UserProfilePage = {
 			UserProfilePage.removeFbProfileUrl();
 		});
 
-		// init tooltips
-		$.loadWikiaTooltip(function(){
-			$('.form-questionmark').wikiaTooltip(function(el){
-				// Pass tooltip text to wikiaTooltip
-				return el.data('tooltip');
-			}, {maxWidth: '300', side: 'right', hoverStay: true, align: 'middle'});			
-		});
-
 		var monthSelectBox = modal.find('#userBDayMonth'),
 			daySelectBox = modal.find('#userBDayDay');
 		

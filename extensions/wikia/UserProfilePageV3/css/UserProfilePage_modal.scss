@@ -3,14 +3,7 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
 .UPPLightbox {
-	
-	.form-questionmark {
-		background: url(/extensions/wikia/UserProfilePageV3/images/question-light.png); /* $wgCdnStylePath */
-		height: 12px;
-		width: 12px;
-		display: inline-block;
-	}
-	
+		
 	.tab-content li {
 		@include clearfix;
 		font-size: 14px;
