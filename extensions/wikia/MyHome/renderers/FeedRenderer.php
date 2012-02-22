@@ -654,7 +654,7 @@ class FeedRenderer {
 			return '';
 		}
 
-		//var_dump($row); die;
+		
 		
 		wfProfileIn(__METHOD__);
 
