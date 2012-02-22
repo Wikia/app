@@ -7,8 +7,10 @@
 if(!window.Wikia) window.Wikia = {};
 
 window.Wikia.Cache = (function(){
-	var CACHE_PREFIX = 'wkch',
-		CACHE_EXP_SUFFIX = 'ttl',
+	/** @private **/
+	
+	var CACHE_PREFIX = 'wkch_',
+		CACHE_EXP_SUFFIX = '_ttl',
 		ls;
 
 	function getKey(token){
@@ -42,6 +44,8 @@ window.Wikia.Cache = (function(){
 			}
 		};
 	}
+
+	/** public **/
 
 	return {
 		get: function(key){
