@@ -5,9 +5,9 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-var Wikia = Wikia || {};
+if(!window.Wikia) window.Wikia = {};
 
-(function(ns){
+window.Wikia.CookieCutter = (function(){
 	/** @private **/
 
 	var cookieReplaceRegEx1 = /^\s*/,
@@ -40,7 +40,7 @@ var Wikia = Wikia || {};
 	
 	/** @public **/
 	
-	ns.CookieCutter = {
+	return {
 		get: function(name){
 			var val = fetchCookies()[name];
 
@@ -84,5 +84,5 @@ var Wikia = Wikia || {};
 			document.cookie = cookieString;
 			return cookieString;
 		}
-	}
-})(Wikia);
+	};
+})();
