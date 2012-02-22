@@ -11,6 +11,7 @@ CREATE TABLE wall_history (
 	page_id INT(11),
 	reason varchar(100),
 	parent_page_id INT(11),
+	revision_id INT(11),
 	event_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	KEY `wlh` (wall_user_id,wiki_id),
 	KEY `tlh` (parent_page_id,wiki_id)

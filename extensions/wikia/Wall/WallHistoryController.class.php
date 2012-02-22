@@ -195,9 +195,10 @@ class WallHistoryController extends WallController {
 				
 				if( $type == WH_EDIT ) {
 					$rev = Revision::newFromTitle($title);
+					// mech: fixing 20617 - revision_id is available only for new entries
 					$query = array(
 						'diff' => 'prev',
-						'oldid' => $title->getLatestRevID(),
+						'oldid' => ( $history[$key]['revision_id'] ) ? $history[$key]['revision_id'] : $title->getLatestRevID(),
 					);
 					
 					$history[$key]['actions'][] = array(
