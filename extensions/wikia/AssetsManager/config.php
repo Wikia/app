@@ -208,12 +208,13 @@ $config['wikiamobile_js_head'] = array(
 $config['wikiamobile_js_body'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//skins/common/modernizr/modernizr.wikiamobile.min.js',
+		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
 		'//skins/common/wikia/outerhtml.js',
+		'//skins/common/wikia/cache.js',
 		'//skins/common/zepto/zepto.getcss.js',
 		'//skins/common/zepto/zepto.wikiamobile.js',
 		'//skins/common/zepto/zepto.modal.wikiamobile.js',
-		'//skins/common/modernizr/modernizr.wikiamobile.min.js',
-		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
