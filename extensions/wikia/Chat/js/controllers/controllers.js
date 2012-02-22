@@ -427,12 +427,7 @@ var NodeRoomController = $.createClass(Observable,{
 	 * All messages that are recieved are processed here before being displayed. This
 	 * will escape html/js, build links, and process emoticons.
 	 */
-	processText: function( text ){
-
-		// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
-		// Replace appropriate shortcuts in the text with the emoticons.
-		text = WikiaEmoticons.doReplacements(text, this.emoticonMapping);
-	
+	processText: function( text ){	
 		// Prevent simple HTML/JS vulnerabilities (need to do this before other rewrites).
 		text = text.replace(/</g, "&lt;");
 		text = text.replace(/>/g, "&gt;");
@@ -486,6 +481,10 @@ var NodeRoomController = $.createClass(Observable,{
 			var url = path.replace("$1", article);
 			return '<a href="' + url + '">' + linkText + '</a>';
 		});
+		
+		// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
+		// Replace appropriate shortcuts in the text with the emoticons.
+		text = WikiaEmoticons.doReplacements(text, this.emoticonMapping);
 
 		return text;
 	}
