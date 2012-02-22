@@ -1,7 +1,7 @@
 <?php
 /**
- * @usage: SERVER_ID=177 php purgeOldVideos.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
- * @usage: SERVER_ID=177 php purgeOldVideos.php --conf /usr/wikia/conf-current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
+ * @usage: SERVER_ID=177 php videoPurgeOld.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
+ * @usage: SERVER_ID=177 php videoPurgeOld.php --conf /usr/wikia/conf-current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
  *  */
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
@@ -15,7 +15,7 @@ global $IP, $wgCityId, $wgExternalDatawareDB;
 echo "***Purge Old Videos*** script running for $wgCityId\n";
 
 if( isset( $options['help'] ) && $options['help'] ) {
-	echo( "Usage: usage: SERVER_ID=[CITY_ID] php purgeOldVideos.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php \n" );
+	echo( "Usage: usage: SERVER_ID=[CITY_ID] php videoPurgeOld.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php \n" );
 	exit( 0 );
 }
 
@@ -103,9 +103,8 @@ if ( count($aVideosToBeRemoved) > 0 ) {
 	
 	echo "Executing querys: \n";
 	
-	echo "DELETE FROM image WHERE img_name=? AND img_media_type='VIDEO' for".count($aVideosToBeRemoved)." titles \n";
+	echo "DELETE FROM image WHERE img_name=? AND img_media_type='VIDEO' for ".count($aVideosToBeRemoved)." titles \n";
 	foreach ($aVideosToBeRemoved as $videoTitleToRemove) {
-		/*
 		$dbw->delete(
 			'image',
 			array(
@@ -114,7 +113,6 @@ if ( count($aVideosToBeRemoved) > 0 ) {
 			),
 		    'purgeOldVideos::videoTitleToRemove'
 		);
-		 */			
 	}
 }
 //$dbw->affectedRows();
@@ -140,8 +138,8 @@ if ( count($aArticleToRemove) > 0 ) {
 			continue;
 		}
 
-		echo "DELETE FROM $tableName ... ";
-		/*
+		echo "DELETE FROM $tableName ";
+
 		$dbw->delete(
 			$tableName,
 			array(
@@ -151,8 +149,7 @@ if ( count($aArticleToRemove) > 0 ) {
 		    'purgeOldVideos::aArticleToRemove'
 		);		
 		echo $dbw->affectedRows() . " affected rows\n";
-		 
-		*/
+
 	}
 
 	
@@ -160,6 +157,5 @@ if ( count($aArticleToRemove) > 0 ) {
 
 
 
-die;
 
 ?>
