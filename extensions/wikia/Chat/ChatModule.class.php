@@ -101,7 +101,7 @@ class ChatModule extends Module {
 				}
 			}
 			if (!$this->wordmarkThumbnailUrl) {
-				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($themeSettings['wordmark-image-url']);			
+				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($this->themeSettings['wordmark-image-url']);			
 			}
 		}
 		
