@@ -995,20 +995,22 @@ class WallHooksHelper {
 			
 			switch($rc->getAttribute('rc_log_action')) {
 				case 'wall_remove':
-					$actionText = wfMsgExt('wall-recentchanges-wall-removed-'.$msgType, array('parsemag'), $wfMsgOpts);
+					$actionText = wfMsgExt('wall-recentchanges-wall-removed-'.$msgType, array('parseinline'), $wfMsgOpts);
 					break;
 				case 'wall_restore':
-					$actionText = wfMsgExt('wall-recentchanges-wall-restored-'.$msgType, array('parsemag'), $wfMsgOpts);
+					$actionText = wfMsgExt('wall-recentchanges-wall-restored-'.$msgType, array('parseinline'), $wfMsgOpts);
 					break;
 				case 'wall_admindelete':
-					$actionText = wfMsgExt('wall-recentchanges-wall-deleted-'.$msgType, array('parsemag'), $wfMsgOpts);
+					$actionText = wfMsgExt('wall-recentchanges-wall-deleted-'.$msgType, array('parseinline'), $wfMsgOpts);
 					break;
 				default:
 					$actionText = wfMsg('wall-recentchanges-wall-unrecognized-log-action', $wfMsgOpts);
 				break;
 			}
 		}
-
+		
+		$actionText = ' '.$actionText;
+		
 		return true;
 	}
 
@@ -1610,15 +1612,17 @@ class WallHooksHelper {
 
 		$parts = explode('/@', $objTitle->getText());
 		$isThread = ( count($parts) === 2 ) ? true : false;
-
+		
+		$app = F::app();
 		$articleTitleTxt = $this->getParentTitleTxt($objTitle);
 		$wm = F::build('WallMessage', array($objTitle));
-		$articleUrl = $wm->getMessagePageUrl();
-		$articleUrl = !empty($articleUrl) ? $articleUrl : $objTitle->getFullUrl();
+		$articleId = $wm->getId();
+		$wallMsgNamespace = $app->wg->Lang->getNsText(NS_USER_WALL_MESSAGE);
+		$articleUrl = !empty($articleId) ? $wallMsgNamespace.':'.$articleId : '#';
 		$wallOwnerName = $wm->getWallOwnerName();
 		$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
-		$wallPageUrl = $wm->getWallPageUrl();
-		$wallUrl = empty($wallPageUrl) ? $wallUrl : $wallPageUrl;
+		$wallNamespace = $app->wg->Lang->getNsText(NS_USER_WALL);
+		$wallUrl = $wallNamespace.':'.$userText;
 		
 		return array(
 			$articleUrl,
