@@ -289,9 +289,12 @@ class WallHelper {
 			$user = User::newFromName($data['author']->getName());
 			if( $user ) {
 				$items[$i]['real-name'] = $user->getRealName();
+				$userWallTitle = F::build( 'Title', array( $user->getName(), NS_USER_WALL ), 'newFromText' );
+				$items[$i]['user-profile-url'] = $userWallTitle->getFullUrl();
 			} else {
 				$items[$i]['real-name'] = '';
 			}
+			
 			$items[$i]['author'] = $data['username'];
 			$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
 			if( User::isIP( $data['username']) ) {

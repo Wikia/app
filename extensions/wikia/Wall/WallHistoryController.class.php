@@ -147,7 +147,7 @@ class WallHistoryController extends WallController {
 			$user = $value['user'];
 			$name = $user->getRealName();
 			$username = $user->getName();
-			$url = $user->getUserPage()->getFullUrl();
+			$url = F::build( 'Title', array( $username, NS_USER_WALL ), 'newFromText' )->getFullUrl();
 			
 			if( !empty($name) ) {
 				$history[$key]['displayname'] = wfMsg( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url  ));
@@ -186,7 +186,7 @@ class WallHistoryController extends WallController {
 				
 				$msgUser = $wm->getUser();
 				$msgUserName = $msgUser->getRealName();
-				$history[$key]['msguserurl'] = $msgUser->getUserPage()->getFullUrl();
+				$history[$key]['msguserurl'] = F::build( 'Title', array( $msgUser->getName(), NS_USER_WALL ), 'newFromText' )->getFullUrl();
 				if( !empty($msgUserName) ) {
 					$history[$key]['msgusername'] = $msgUserName;
 				} else {
