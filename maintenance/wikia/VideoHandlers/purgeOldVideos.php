@@ -22,7 +22,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 require_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbw = wfGetDB( DB_MASTER );
-$dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+//$dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 
 $timeStart = microtime( true );
@@ -98,12 +98,13 @@ if ( $rowCount ) {
 }
 $dbw->freeResult( $rows );
 
+
 if ( count($aVideosToBeRemoved) > 0 ) {
 	
 	echo "Executing querys: \n";
+	
+	echo "DELETE FROM image WHERE img_name=? AND img_media_type='VIDEO' for".count($aVideosToBeRemoved)." titles \n";
 	foreach ($aVideosToBeRemoved as $videoTitleToRemove) {
-		
-		echo "DELETE FROM image WHERE img_name='$videoTitleToRemove' AND img_media_type='VIDEO'\n";
 		/*
 		$dbw->delete(
 			'image',
@@ -116,7 +117,7 @@ if ( count($aVideosToBeRemoved) > 0 ) {
 		 */			
 	}
 }
-
+//$dbw->affectedRows();
 
 if ( count($aArticleToRemove) > 0 ) {
 	
@@ -139,7 +140,7 @@ if ( count($aArticleToRemove) > 0 ) {
 			continue;
 		}
 
-		echo "DELETE FROM $tableName WHERE ".$tableData['ns']."=".NS_LEGACY_VIDEO." AND ".$tableData['id']." IN (".implode(",",$aArticleToRemove).")\n";
+		echo "DELETE FROM $tableName ... ";
 		/*
 		$dbw->delete(
 			$tableName,
@@ -149,6 +150,8 @@ if ( count($aArticleToRemove) > 0 ) {
 			),
 		    'purgeOldVideos::aArticleToRemove'
 		);		
+		echo $dbw->affectedRows() . " affected rows\n";
+		 
 		*/
 	}
 
