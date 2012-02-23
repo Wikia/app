@@ -236,6 +236,13 @@ var ImageLightbox = {
 		
 	},
 
+	setTopPosition: function() {
+		var lightbox = $('#lightbox');							
+		if (window.skin == 'oasis') {
+			lightbox.css('top', lightbox.getModalTopOffset());
+		}		
+	},
+
 	// fetch data and show lightbox
 	fetchLightbox: function(imageName, caption, showShareTools) {
 		var self = this;
@@ -275,11 +282,22 @@ var ImageLightbox = {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
 						self.showLightbox(res.title, '<div id="'+res.jsonData.id+'"></div>'+res.html, caption, res.width, function(){
-							jwplayer( res.jsonData.id ).setup( res.jsonData );
+
+							
+							if ( typeof(res.jsonData.events) == "undefined" || typeof(res.jsonData.events.onReady) == "undefined" ) {
+								res.jsonData.events = { 
+									onReady: function() {
+										self.setTopPosition();
+									}
+								};
+							}
+							jwplayer( res.jsonData.id ).setup( res.jsonData	);
+							self.setTopPosition();
 						});
 					});					
 				} else {
 					self.showLightbox(res.title, res.html, caption, res.width);
+					self.setTopPosition();
 				}	
 			} else {
 				// remove lock
@@ -385,9 +403,7 @@ var ImageLightbox = {
 				}
 
 				// RT #69824
-				if (window.skin == 'oasis') {
-					lightbox.css('top', lightbox.getModalTopOffset());
-				}
+				self.setTopPosition();
 
 				// fire custom event (RT #74852)
 				if (self.target) {
