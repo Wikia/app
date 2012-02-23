@@ -4,25 +4,6 @@ class ImageLightbox {
 	const MIN_HEIGHT = 300;
 	const MIN_WIDTH = 300;
 
-	static $shareFeatureSites = array(
-		array(
-			'name'	=>	'Facebook',
-			'url' 	=>	'http://www.facebook.com/sharer.php?u=$1&t=$2'
-		),
-		array(
-			'name'	=>	'Twitter',
-			'url'	=>	'http://twitter.com/home?status=$1%20$2'
-		), // message and url goes into the one parameter here for Twitter...
-		array(
-			'name'	=>	'Stumbleupon',
-			'url'	=>	'http://www.stumbleupon.com/submit?url=$1&title=$2'
-		),
-		array(
-			'name' 	=>	'Reddit',
-			'url' 	=>	'http://www.reddit.com/submit?url=$1&title=$2'
-		)
-	);
-
 	/**
 	 * Add global JS variable indicating this extension is enabled (RT #47665)
 	 */
@@ -126,15 +107,20 @@ class ImageLightbox {
 		$linkStdEncoded = rawurlencode($linkStd);
 		$linkDescription = wfMsg('lightbox-share-description', $currentTitle->getText(), $wgSitename);
 		$shareButtons = array();
-		foreach (self::$shareFeatureSites as $button) {
-			$url = str_replace('$1', $linkStdEncoded, $button['url']);
-			$url = str_replace('$2', $linkDescription, $url);
-			$type = strtolower($button['name']);
+		$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
+			'facebook',
+			'twitter',
+			'stumbleupon',
+			'reddit'
+		) );
+
+		foreach ( $shareNetworks as $n) {
+			$type = $n->getId();
 			$shareButtons[] = array(
 				'class' => 'share-' . $type,
-				'text' => $button['name'],
+				'text' => ucfirst( $type ),
 				'type' => $type,
-				'url' => $url
+				'url' => $n->getUrl( $linkStdEncoded , $linkDescription )
 			);
 		}
 
