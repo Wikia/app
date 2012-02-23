@@ -69,7 +69,7 @@ abstract class SocialSharing{
 	protected $id;
 
 	public function getUrl( $link, $text ){
-		return str_replace( array( '$1', '$2' ), array( $link, $text ), $this->urlTemplate );
+		return str_replace( array( '$1', '$2' ), array( $link, urlencode( $text ) ), $this->urlTemplate );
 	}
 
 	public function getId(){
