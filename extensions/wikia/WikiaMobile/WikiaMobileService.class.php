@@ -2,7 +2,7 @@
 /**
  * WikiaMobile skin entry point
  *
- * @author Jakub Olek <bukaj.kelo(at)gmail.com>
+ * @author Jakub Olek <jakubolek(at)wikia-inc.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileService extends WikiaService {

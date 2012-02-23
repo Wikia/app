@@ -22,8 +22,8 @@ class WikiaMobileController extends WikiaController{
 	}
 	
 	public function getShareButtons(){
-		$this->response->setVal('scripts', 'alert("asd");');
-		$this->response->setVal('pageShare', $this->wf->RenderPartial('WikiaMobile', 'getSharePageButtons'));
-		$this->response->setVal('imageShare', $this->wf->RenderPartial('WikiaMobile', 'getShareImageButtons'));
+		//allow proxying request to a service (shared method implementation)
+		$this->request->setInternal( true );
+		$this->forward( 'WikiaMobileSharingService', 'index' );
 	}
 }
