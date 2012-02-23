@@ -50,7 +50,7 @@ $wgExtensionCredits['parserhook'][] = array(
 function efParserCreateLink( $parser, $target, $label = null ) {
     // sanitise the input and set defaults
     if ( is_null( $label ) ) { $label = $target; }
-    $label = htmlspecialchars( $label, ENT_NOQUOTES, 'UTF-8' );
+    $label = $parser->recursiveTagParse( $label );
     $attributes = array( 'target' => '_blank' );
 
     // WARNING: the order of the statements below does matter!
