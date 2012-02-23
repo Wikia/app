@@ -72,13 +72,13 @@ class ThumbnailVideo extends ThumbnailImage {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
 			if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
 				$linkAttribs['data-video-name'] = $this->file->getTitle()->getText();
-				$linkAttribs['href'] = $this->file->getFullUrl();
+				$linkAttribs['href'] = $this->file->getTitle()->getLocalURL();
 				if ( !empty( $options['id'] ) ){
 					$linkAttribs['id'] = $options['id'];
 				}
 			}
 		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = array( 'href' => wfReplaceImageServer( $this->file->getURL(), $this->file->getTimestamp() ) );
+			$linkAttribs = array( 'href' => $this->file->getTitle()->getLocalURL() );
 		} else {
 			$linkAttribs = false;
 		}
