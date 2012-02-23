@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array( 
 	'wall-no-title' => 'No title',
+	'wall-tab-wall-title' => 'Message Wall:$1',
 	'wall-message-loadmore' => 'View all $1 {{PLURAL:$1|reply|replies}}', 
 	'wall-message-wall' => 'Message Wall',
 	'wall-message-wall-shorten' => 'wall',
