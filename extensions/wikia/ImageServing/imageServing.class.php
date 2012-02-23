@@ -47,7 +47,7 @@ class ImageServing {
 		$this->width = $width;
 		$this->memc =  $this->app->getGlobal( 'wgMemc' );
 		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
-		
+
 		$this->deltaY = ( $this->proportion['w'] / $this->proportion['h'] - 1 )*0.1;
 		$this->db = $db;
 	}
@@ -79,7 +79,7 @@ class ImageServing {
 			$this->articlesByNS = array();
 			foreach($articles as $key => $value) {
 				$mcValue = $this->memc->get( $this->makeKey($key) , null );
-				
+
 				if(!empty($mcValue)) {
 					unset($articles[$key]);
 					$this->addArticleToList($mcValue);
@@ -102,7 +102,7 @@ class ImageServing {
 			while ($row =  $db->fetchRow( $res ) ) {
 				$this->addArticleToList($row);
 			}
-			
+
 			if(empty($driver)) {
 				foreach($this->imageServingDrivers as $key => $value ){
 					if(!empty($this->articlesByNS[$key])) {
@@ -127,7 +127,7 @@ class ImageServing {
 					$out = $out + $driver->execute($n);
 				}
 			}
-			
+
 			if(empty($out)){
 				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $n)? Seems like overkill.
 				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( &$this, $n, &$out ) );
@@ -144,7 +144,7 @@ class ImageServing {
 	 *
 	 * The resulting data is an associative array whose keys are namespaces and whose values
 	 * are associative arrays whose keys are article-ids and whose values are associative arrays
-	 * of the data which is the same namespace (in key 'ns'), the same article-id (in key 'id'), and 
+	 * of the data which is the same namespace (in key 'ns'), the same article-id (in key 'id'), and
 	 * the page_title (in key 'title').
 	 *
 	 * @TODO: Please refactor this... it's a really weird/confusing datastructure.
@@ -250,6 +250,10 @@ class ImageServing {
 			$height = round( ( 512 * $height) / $width );
 			$width = 512;
 		}
+
+		// make sure these are numeric (BugId:20644)
+		$width = intval($width);
+		$height = intval($height);
 
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 

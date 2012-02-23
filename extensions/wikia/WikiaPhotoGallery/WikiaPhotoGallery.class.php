@@ -1005,7 +1005,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			foreach($this->mImages as $key => $val) {
 				$img = wfFindFile( $val[0], false );
-	
+
 				if ( !empty( $img ) ) {
 					$pics[] = array( $img->transform( array("width" => "320", "height" => "480") )->url, $val[1] );
 				}
@@ -1287,7 +1287,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				// generate cropped version of big image (fit within 660x360 box)
 				// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
 				// so this also scales image UP if it is too small (stretched is better than blank)
-				$imageUrl = $imageServingForImages->getUrl($img, WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH, WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT);
+				// max() added due to BugId:20644
+				$imageUrl = $imageServingForImages->getUrl($img, max(WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH, $img->getWidth()), max(WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT, $img->getHeight()));
 				// generate navigation thumbnails
 				$thumbUrl = $imageServingForThumbs->getUrl($img, $img->getWidth(), $img->getHeight());
 
