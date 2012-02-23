@@ -36,11 +36,24 @@ $messages['en'] = array(
 	'wikiamobile-category-items-more' => 'Load more',
 	'wikiamobile-category-items-prev' => 'Load previous',
 	'wikiamobile-categories-expand' => 'Show All',
-	'wikiamobile-categories-collapse' => 'Hide All'
+	'wikiamobile-categories-collapse' => 'Hide All',
+
+	//sharing
+	'wikiamobile-sharing-media-image' => 'Picture',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 on $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Hey,
+you should definitely check this out:
+	$1
+
+Enjoy!'
 );
 
 $messages['qqq'] = array(
-	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category'
+	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category',
+	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
+	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
+	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text'
 );
 
 /** адыгэбзэ (адыгэбзэ)
