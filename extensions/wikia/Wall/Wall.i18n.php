@@ -254,7 +254,6 @@ $messages['en'] = array(
 
 	'mail-notification-html-greeting' => 'Hi $1,',
 	'mail-notification-html-button' => 'See the conversation',
-	'mail-notification-html-signature' => '-- $1 ($2)',
 
 	'mail-notification-subject' => '$1 -- $2',
 
@@ -584,7 +583,6 @@ $messages['qqq'] = array(
 
 	'mail-notification-html-greeting' => "email notification greeting, $1 is username",
 	'mail-notification-html-button' => "email notification, button to visit the thread",
-	'mail-notification-html-signature' => "email notification, $1 is preferred name, $2 is username",
 
 	'mail-notification-subject' => "email notification title, $1 is thread title, $2 is wiki",
 

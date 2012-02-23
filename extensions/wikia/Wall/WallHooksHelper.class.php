@@ -431,7 +431,7 @@ class WallHooksHelper {
 				$userWallTitle = $this->getWallTitle();
 
 				if( $userWallTitle instanceof Title ) {
-					$tabs[$key]['link'] = '<a href="'.$userWallTitle->getLocalUrl().'" title="'.$app->wf->Msg('wall-tab-wall-title', $userName).'">'.$app->wf->Msg('wall-message-wall').'</a>';
+					$tabs[$key]['link'] = '<a href="'.$userWallTitle->getLocalUrl().'" title="'.$app->wf->Msg('wall-tab-wall-title', array($userName)).'">'.$app->wf->Msg('wall-message-wall').'</a>';
 					$tabs[$key]['data-id'] = 'wall';
 
 					if( $namespace === NS_USER_WALL ) {
