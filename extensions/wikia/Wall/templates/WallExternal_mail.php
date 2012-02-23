@@ -54,7 +54,7 @@
 									</tr>
 									<tr>
 										<td style="color: #3a3a3a; font-size: 14px; line-height: 20px">
-											<?php echo wfMsgForContent('mail-notification-html-signature', array( '$1' => $data['$AUTHOR_NAME'],'$2' => $data['$AUTHOR'] )); ?>
+											-- <?= $data['$AUTHOR_SIGNATURE']; ?>
 										</td>
 									</tr>
 									
