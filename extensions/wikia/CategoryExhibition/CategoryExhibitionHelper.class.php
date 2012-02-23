@@ -58,6 +58,7 @@
 		 * Hook entry when article is purged (purge the gallery cache if purging the category page
 		 */
 		static public function onArticlePurge( Article $article ) {
+			global $wgVideoHandlersVideosMigrated;
 			$title = $article->getTitle();
 
 			$a = new Title;
@@ -66,7 +67,9 @@
 			$sKey = F::App()->wf->sharedMemcKey(
 				'category_exhibition_article_cache',
 				$title->getArticleId(),
-				F::App()->wg->cityId
+				F::App()->wg->cityId,
+				$this->isVerify(),
+				$wgVideoHandlersVideosMigrated ? 1 : 0
 			);
 
 			$oMemCache->delete( $sKey );
