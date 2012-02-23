@@ -26,7 +26,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					$forceWidth = '';
 
 					if ( $itemTitle->getNamespace() == NS_LEGACY_VIDEO ){
-
+						
 						// item is video
 						$elementClass = 'video-thumbnail';
 						if ( class_exists('VideoPage') ) {
@@ -44,7 +44,6 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 							$imageSrc = '';
 						}
 					} else {
-
 						// item is image
 						$image = wfFindFile( $itemTitle );
 						$elementClass = 'lightbox';

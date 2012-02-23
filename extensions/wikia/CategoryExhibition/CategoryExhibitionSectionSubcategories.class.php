@@ -40,12 +40,14 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 	}
 
 	protected function getArticleData( $pageId ){
-
+		global $wgVideoHandlersVideosMigrated;
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
 			'category_exhibition_article_cache',
 			$pageId,
-			F::App()->wg->cityId
+			F::App()->wg->cityId,
+			$this->isVerify(),
+			$wgVideoHandlersVideosMigrated ? 1 : 0
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );

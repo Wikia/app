@@ -296,12 +296,17 @@ class CategoryExhibitionSection {
 
 	protected function getArticleData( $pageId ){
 
+		global $wgVideoHandlersVideosMigrated;
+		
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
 			'category_exhibition_category_cache',
 			$pageId,
 			F::App()->wg->cityId,
-			$this->isVerify()
+			$this->isVerify(),
+			$wgVideoHandlersVideosMigrated ? 1 : 0
+			
+			
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
@@ -376,7 +381,7 @@ class CategoryExhibitionSection {
 	 */
 
 	protected function getKey( ) {
-		global $wgCityId;
+		global $wgCityId, $wgVideoHandlersVideosMigrated;
 		return wfSharedMemcKey(
 			'category_exhibition_section',
 			$this->categoryTitle->getDBKey(),
@@ -385,7 +390,8 @@ class CategoryExhibitionSection {
 			$this->getDisplayType(),
 			$this->getSortType(),
 			$this->isVerify(),
-			$wgCityId
+			$wgCityId,
+			$wgVideoHandlersVideosMigrated ? 1 : 0
 		);
 	}
 
@@ -401,7 +407,6 @@ class CategoryExhibitionSection {
 	}
 
 	protected function getFromCache ( ){
-
 		global $wgMemc;
 		return $wgMemc->get( $this->getKey( ) );
 	}
