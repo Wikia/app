@@ -459,7 +459,9 @@ $messages['qqq'] = array(
 	'wn-user1-reply-self-a-wall' => "Notification, $1 is user who replied to a message that that user started on his or her own wall(you can use GENDER in this message)",
 	'wn-user2-reply-self-a-wall' => "Notification, $1 and $2 are users who replied to a message that one of them started on his or her own wall(you can use GENDER in this message)",
 	'wn-user3-reply-self-a-wall' => "Notification when 3 or more users reply to a thread that one of them started on his or her own wall, $1 is first user who replied(you can use GENDER in this message)",
-	'wn-user1-reply-other-a-wall' => "Notification when wall owner is one of the users involved, $1 is user who replied, $2 started the thread(you can use GENDER in this message)",
+	'wn-user1-reply-other-a-wall' => "Notification when wall owner is one of the users involved. Parameters:
+* $1 is user who replied
+* $2 started the thread(you can use GENDER in this message)",
 	'wn-user2-reply-other-a-wall' => "Notification when wall owner is one of the users involved, $1 and $2 are users who replied, $3 started the thread(you can use GENDER in this message)",
 	'wn-user3-reply-other-a-wall' => "Notification when 3 or more users reply and wall owner is one of the users involved, $1 is first user who replied, $3 started the thread(you can use GENDER in this message)",
 
@@ -491,22 +493,50 @@ $messages['qqq'] = array(
 	'wall-recentchanges-new-reply' => "Recent changes item, $1 is beginning of reply",
 	'wall-recentchanges-edit' => "Recent changes item, default summary for editing a message",
 	
-	'wall-recentchanges-wall-removed-thread' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
-	'wall-recentchanges-wall-removed-reply' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
-	'wall-recentchanges-wall-restored-thread' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
-	'wall-recentchanges-wall-restored-reply' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
-	'wall-recentchanges-wall-deleted-thread' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
-	'wall-recentchanges-wall-deleted-reply' => "Recent changes item, $2 is thread title, $4 is wall owner, $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-removed-thread' => "Recent changes item. Parameters:
+* $2 is thread title
+* $4 is wall owner
+* $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-removed-reply' => "Recent changes item. Parameters:
+* $2 is thread title
+* $4 is wall owner
+* $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-restored-thread' => "Recent changes item. Parameters:
+* $2 is thread title
+* $4 is wall owner
+* $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-restored-reply' => "Recent changes item. Parameters:
+* $2 is thread title
+* $4 is wall owner
+* $5 is optional username and you can use it with GENDER parameter",
+	'wall-recentchanges-wall-deleted-thread' => "Recent changes item. Parameters:
+* $2 is thread title
+* $4 is wall owner
+* $5 is optional username, you can use it with GENDER parameter",
+	'wall-recentchanges-wall-deleted-reply' => "Recent changes item. Parameters:
+* $2 is thread title
+* $4 is wall owner
+* $5 is optional username and you can use it with GENDER parameter",
 	
 	'wall-recentchanges-deleted-reply-title' => 'fallback reply title for deleted replies  are not accessible in archive', 
 	'wall-recentchanges-namespace-selector-message-wall' => "Recent changes, item in namespace dropdown",
-	'wall-recentchanges-wall-group' => "Grouped recent changes item, $1 is thread title, $3 is wall owner",
+	'wall-recentchanges-wall-group' => "Grouped recent changes item. Parameters:
+* $1 is thread title
+* $3 is wall owner",
 	'wall-recentchanges-wall-history-link' => "Recent changes, link to wall history for items about removed and deleted threads",
 	'wall-recentchanges-thread-history-link' => "Recent changes, link to thread history for items about removed replies", 
 	
-	'wall-contributions-wall-line' => "Contributions item, $5 is timestamp, $6 is diff link if applicable, $7 is history link, $8 is N if it's a new thread, $2 is thread title, $4 is wall owner",
+	'wall-contributions-wall-line' => "Contributions item. Parameters:
+* $5 is timestamp
+* $6 is diff link if applicable
+* $7 is history link
+* $8 is N if it's a new thread
+* $2 is thread title
+* $4 is wall owner",
 	
-	'wall-whatlinkshere-wall-line' => "What links here item, $2 is thread title, $4 is wall owner",
+	'wall-whatlinkshere-wall-line' => "What links here item. Parameters:
+* $2 is thread title
+* $4 is wall owner",
 	
 	'wall-message-not-found' => "Error message if user tries to visit a thread that doesn't exist",
 
@@ -516,30 +546,47 @@ $messages['qqq'] = array(
 	'wall-ipbwatchuser' => "checkbox on Special:Block",
 	
 	/* Wall WikiActivity */
-	'wall-wiki-activity-on' => "Wiki Activity item, $1 is wall owner",
-	'wall-wiki-activity-wall-owner' => "Wiki Activity item, $1 is wall owner",
+	'wall-wiki-activity-on' => "Wiki Activity item. Parameters:
+* $1 is wall owner",
+	'wall-wiki-activity-wall-owner' => "Wiki Activity item. Parameters:
+* $1 is wall owner",
 	
 	/* Wall removed msg */
-	'wall-removed-thread-undo' => "Confirmation message after removing a thread, $1 is Undo link",
-	'wall-removed-reply-undo' => "Confirmation message after removing a reply, $1 is Undo link",
+	'wall-removed-thread-undo' => "Confirmation message after removing a thread. Parameters:
+* $1 is Undo link",
+	'wall-removed-reply-undo' => "Confirmation message after removing a reply. Parameters:
+* $1 is Undo link",
 	'wall-removed-reply' => "Confirmation message after removing a thread",
 
-	'wall-deleted-thread-undo' => "Confirmation message after deleting a thread, $1 is Undo link",
-	'wall-deleted-reply-undo' => "Confirmation message after deleting a reply, $1 is Undo link",
+	'wall-deleted-thread-undo' => "Confirmation message after deleting a thread. Parameters:
+* $1 is Undo link",
+	'wall-deleted-reply-undo' => "Confirmation message after deleting a reply. Parameters:
+* $1 is Undo link",
 	'wall-deleted-reply' => "Confirmation message after deleting a reply",
 
 	/* Wall Level History */
 	'wall-history' => "toolbar link to wall history",
-	'wall-history-username-full' => "username on wall history page, $1 is preferred name, $2 is username",
-	'wall-history-username-short' => "username on wall history page, $2 is username",
+	'wall-history-username-full' => "username on wall history page. Parameters:
+* $1 is preferred name
+* $2 is username",
+	'wall-history-username-short' => "username on wall history page. Parameters:
+* $2 is username",
 	
 	'wall-history-title' => "heading on wall history page",
 	'wall-history-who-involved-wall-title' => "heading on who's involved box on wall history page",
 	'wall-history-who-involved-thread-title' => "heading on who's involved box on thread history page",
-	'wall-history-thread-created' => "wall history item, $1 is thread title, $2 is username",
-	'wall-history-thread-removed' => "wall history item, $1 is thread title, $2 is username",
-	'wall-history-thread-restored' => "wall history item, $1 is thread title, $2 is username",
-	'wall-history-thread-admin-deleted' => "wall history item, $1 is thread title, $2 is username",
+	'wall-history-thread-created' => "wall history item. Parameters:
+* $1 is thread title
+* $2 is username",
+	'wall-history-thread-removed' => "wall history item. Parameters:
+* $1 is thread title
+* $2 is username",
+	'wall-history-thread-restored' => "wall history item. Parameters:
+* $1 is thread title
+* $2 is username",
+	'wall-history-thread-admin-deleted' => "wall history item. Parameters:
+* $1 is thread title
+* $2 is username",
 	'wall-history-sorting-newest-first' => "sorting option, view newest changes first",
 	'wall-history-sorting-oldest-first' => "sorting option, view oldest changes first",
 	
@@ -555,17 +602,55 @@ $messages['qqq'] = array(
 	
 	/* Thread Level History */
 	'wall-thread-history-title' => "heading on thread history page",
-	'wall-thread-history-thread-created' => "thread history page, $1 is thread title, $2 is username(you can use GENDER in this message)",
-	'wall-thread-history-reply-created' => "thread history page item, $1 is preferred name, $2 is username(you can use GENDER in this message)",
+	'wall-thread-history-thread-created' => "thread history page. Parameters:
+* $1 is thread title
+* $2 is username
 
-	'wall-thread-history-thread-removed' => "thread history page item, $1 is preferred name, $2 is username(you can use GENDER in this message)",
-	'wall-thread-history-reply-removed' => "thread history page item, $1 is preferred name, $2 is username, $3 is username, $5 is number of the reply(you can use GENDER in this message)",
-	'wall-thread-history-thread-restored' => "thread history page item, $1 is preferred name, $2 is username(you can use GENDER in this message)",
-	'wall-thread-history-reply-restored' => "thread history page item, $1 is preferred name, $2 is username, $3 is username, $5 is number of the reply(you can use GENDER in this message)",
-	'wall-thread-history-thread-deleted' => "thread history page item, $1 is preferred name, $2 is username(you can use GENDER in this message)",
+(you can use GENDER in this message)",
+	'wall-thread-history-reply-created' => "thread history page item. Parameters:
+* $1 is preferred name
+* $2 is username
+
+(you can use GENDER in this message)",
+
+	'wall-thread-history-thread-removed' => "thread history page item. Parameters:
+* $1 is preferred name
+* $2 is username
+
+(you can use GENDER in this message)",
+	'wall-thread-history-reply-removed' => "thread history page item. Parameters:
+* $1 is preferred name
+* $2 is username
+* $3 is username
+* $5 is number of the reply
+
+(you can use GENDER in this message)",
+	'wall-thread-history-thread-restored' => "thread history page item. Parameters:
+* $1 is preferred name
+* $2 is username
+
+(you can use GENDER in this message)",
+	'wall-thread-history-reply-restored' => "thread history page item. Parameters:
+* $1 is preferred name
+* $2 is username
+* $3 is username
+* $5 is number of the reply
+
+(you can use GENDER in this message)",
+	'wall-thread-history-thread-deleted' => "thread history page item. Parameters:
+* $1 is preferred name
+* $2 is username
+
+(you can use GENDER in this message)",
 
 	'wall-thread-history-thread-edited' => "thread history page item, $1 is preferred name, $2 is username, $3 is username, $5 is number of the reply(you can use GENDER in this message)",
-	'wall-thread-history-reply-edited' => "thread history page item, $1 is preferred name, $2 is username, $3 is username, $5 is number of the reply(you can use GENDER in this message)",
+	'wall-thread-history-reply-edited' => "thread history page item. Parameters:
+* $1 is preferred name
+* $2 is username
+* $3 is username
+* $5 is number of the reply
+
+(you can use GENDER in this message)",
 
 	'wall-history-action-restore-reply' => "thread history page, link to restore reply",
 	'wall-history-action-restore-thread' => "thread history page, link to restore thread",
@@ -574,17 +659,31 @@ $messages['qqq'] = array(
 	
 	/* Mail message */
 
-	'mail-notification-new-someone' => 'email notification, $AUTHOR_NAME is user, $WIKI is wiki name',
-	'mail-notification-new-your' => 'email notification, $AUTHOR_NAME is user, $WIKI is wiki name',
+	'mail-notification-new-someone' => 'email notification. Parameters:
+* $AUTHOR_NAME is user
+* $WIKI is wiki name',
+	'mail-notification-new-your' => 'email notification. Parameters:
+* $AUTHOR_NAME is user
+* $WIKI is wiki name',
 
-	'mail-notification-reply-your' => 'email notification, $AUTHOR_NAME is user, $WIKI is wiki name',
-	'mail-notification-reply-his' => 'email notification, $AUTHOR_NAME is user, $WIKI is wiki name',
-	'mail-notification-reply-someone' => 'email notification, $AUTHOR_NAME is user, $PARENT_AUTHOR_NAME is user who started the thread, $WIKI is wiki name', 
+	'mail-notification-reply-your' => 'email notification. Parameters:
+* $AUTHOR_NAME is user
+* $WIKI is wiki name',
+	'mail-notification-reply-his' => 'email notification
+* $AUTHOR_NAME is user
+* $WIKI is wiki name',
+	'mail-notification-reply-someone' => 'email notification. Parameters:
+* $AUTHOR_NAME is a user name
+* $PARENT_AUTHOR_NAME is user who started the thread
+* $WIKI is wiki name', 
 
-	'mail-notification-html-greeting' => "email notification greeting, $1 is username",
+	'mail-notification-html-greeting' => "email notification greeting. Parameters:
+* $1 is username",
 	'mail-notification-html-button' => "email notification, button to visit the thread",
 
-	'mail-notification-subject' => "email notification title, $1 is thread title, $2 is wiki",
+	'mail-notification-subject' => "email notification title. Parameters:
+* $1 is thread title
+* $2 is wiki",
 
 	'mail-notification-html-footer-line3' => "email notification footer with links to Twitter, Facebook, YouTube, Wikia staff blog",
 	'mail-notification-html-footer-line1' => "email notification footer with link to Community Central",
