@@ -343,8 +343,14 @@ class WallMessage {
 			}
 		}
 		
-		if($this->getArticleComment()->mUser) {
-			return $this->getArticleComment()->mUser;
+		$user = $this->getArticleComment()->mUser; 
+		if($user) {
+			/*
+			 * FB 19409 - cannot user the user object cached in article comment,
+			 * cos it may have an old real name
+			 */
+			//return $user;
+			return User::newFromName($user->getName(), false);
 		} else {
 			// this only happend for wrong enties in DB
 			// without revision information
