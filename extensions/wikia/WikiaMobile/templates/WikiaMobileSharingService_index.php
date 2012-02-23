@@ -32,6 +32,6 @@
 </style>
 <ul class=wkLst>
 <? foreach ( $networks as $n ) :?>
-	<li class=<?= $n->getId() ;?>Shr><a href="<?= $n->getUrl( '$1', '$2' )/*param substitution happens in JS*/ ;?>"></a></li>
+	<li class=<?= $n->getId() ;?>Shr><a href="<?= $n->getUrl( '$1', ($n->getId() == 'email'? '$3' : '$2' ) )/*param substitution happens in JS*/ ;?>"></a></li>
 <? endforeach ;?>
 </ul>

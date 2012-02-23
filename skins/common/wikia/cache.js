@@ -66,7 +66,7 @@ window.Wikia.Cache = (function(){
 
 		set: function(key, value, ttl/* seconds */){
 			ttl = parseInt(ttl);
-			ls.setItem(getKey(key), (typeof(value) == 'string') ? '"' + value + '"' : JSON.stringify(value));
+			ls.setItem(getKey(key), JSON.stringify(value));
 
 			if(!isNaN(ttl) && ttl > 0)
 				ls.setItem(getTtlKey(key), getTimestamp() + (ttl * 1000));

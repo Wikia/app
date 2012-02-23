@@ -19,6 +19,7 @@
 	track = function(ev){
 		WikiaTracker.track('/1_mobile/modal/' + ev, 'main.sampled');
 	},
+	sharePopOver;
 
 	createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution(),
@@ -61,7 +62,7 @@
 			if($(this).hasClass('imgMdl')) {
 				window.scrollTo( 0, 1 );
 			}
-			resetTimeout();
+			$.resetTimeout();
 		});
 
 		//handling next/previous image in lightbox
@@ -85,10 +86,16 @@
 		//	event.preventDefault();
 		//}, false);
 		
-		WikiaMobile.popOver({
+		sharePopOver = WikiaMobile.popOver({
 			on: document.getElementById('wkShrImg'),
-			content: WikiaMobile.loadShare,
-			align: 'left:0'
+			content: ' ',
+			style: 'left:3px;',
+			open: function(event){
+				event.stopPropagation();
+				$.preventHide();
+				sharePopOver.changeContent(WikiaMobile.loadShare);
+			},
+			close: $.resumeHide
 		});
 
 		modalCreated = true;
@@ -126,7 +133,9 @@
 			img.onload = img = null;
 		};
 
-		showCaption(image[1], image[2], image[3]);
+		showCaption(image[2], image[3], image[4]);
+		
+		sharePopOver.close();
 	},
 
 	showCaption = function(cap, number, length) {
@@ -143,18 +152,33 @@
 			caption = false;
 			modalFooter.hide();
 		}
-	},
-
-	resetTimeout = function() {
-
-		allToHide.removeClass('hdn');
-		if(hide) hide.removeClass('hdn');
-
+	};
+	
+	$.getCurrentImg = function(){
+		return current;
+	}
+	
+	$.preventHide = function(){
+		$.noTimeout = true;
 		clearTimeout(timer);
-		timer = setTimeout(function() {
-			allToHide.addClass('hdn');
-			if(hide) hide.addClass('hdn');
-		}, hideBarsAfter);
+	};
+	
+	$.resumeHide = function(){
+		$.noTimeout = false;
+		$.resetTimeout();
+	};
+
+	$.resetTimeout = function() {
+		if(!$.noTimeout){
+			allToHide.removeClass('hdn');
+			if(hide) hide.removeClass('hdn');
+	
+			clearTimeout(timer);
+			timer = setTimeout(function() {
+				allToHide.addClass('hdn');
+				if(hide) hide.addClass('hdn');
+			}, hideBarsAfter);
+		}
 	};
 
 	$.openModal =  function(options) {
@@ -208,7 +232,7 @@
 		position = window.pageYOffset;
 		thePage.hide();
 		modal.addClass('mdlShw');
-		resetTimeout();
+		$.resetTimeout();
 		track('open');
 	};
 
