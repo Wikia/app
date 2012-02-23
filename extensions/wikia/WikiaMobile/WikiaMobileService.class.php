@@ -20,7 +20,7 @@ class WikiaMobileService extends WikiaService {
 			F::setInstance( __CLASS__, $this );
 			self::$initialized = true;
 			$this->wf->LoadExtensionMessages( 'WikiaMobile' );
-			F::build('JSMessages')->enqueuePackage('WMgoBck', JSMessages::INLINE);
+			F::build('JSMessages')->enqueuePackage('WkMbl', JSMessages::INLINE);
 		}
 	}
 
