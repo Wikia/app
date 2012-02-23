@@ -8,6 +8,7 @@ class WallController extends ArticleCommentsModule {
 	private $helper;
 	protected $allowedNamespaces = array();
 	protected $sortingType = 'index';
+	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)		
 	
 	public function __construct() {
 		$this->app = F::App();
@@ -366,8 +367,12 @@ class WallController extends ArticleCommentsModule {
 		$this->response->setVal( 'realname', $realname );
 		
 		if($wallMessage->isEdited()) {
-			$this->response->setVal( 'iso_timestamp',  $wallMessage->getEditTime(TS_ISO_8601) );
-			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getEditTime(TS_MW) ));  
+			if (time() - $wallMessage->getEditTime(TS_UNIX) < self::WALL_MESSAGE_RELATIVE_TIMESTAMP) {
+				$this->response->setVal( 'iso_timestamp',  $wallMessage->getEditTime(TS_ISO_8601) );
+			} else {
+				$this->response->setVal( 'iso_timestamp', null);
+			}
+			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getEditTime(TS_MW) ));			
 			$this->response->setVal( 'showEditedTS',  true );
 			$editorName = $wallMessage->getEditor()->getName();
 			$this->response->setVal( 'editorName', $editorName );			
@@ -383,7 +388,11 @@ class WallController extends ArticleCommentsModule {
 			$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl( $query ) );
 		} else {
 			$this->response->setVal( 'showEditedTS',  false );
-			$this->response->setVal( 'iso_timestamp',  $wallMessage->getCreatTime(TS_ISO_8601) );
+			if (time() - $wallMessage->getEditTime(TS_UNIX) < self::WALL_MESSAGE_RELATIVE_TIMESTAMP) {
+				$this->response->setVal( 'iso_timestamp',  $wallMessage->getCreatTime(TS_ISO_8601) );
+			} else {
+				$this->response->setVal( 'iso_timestamp', null);
+			}
 			$this->response->setVal( 'fmt_timestamp',  $this->wg->Lang->timeanddate( $wallMessage->getCreatTime(TS_MW) ));
 			$this->response->setVal( 'isEdited',  false);
 		}

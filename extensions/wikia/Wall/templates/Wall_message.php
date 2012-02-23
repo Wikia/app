@@ -64,8 +64,12 @@
 				<? echo wfMsg('wall-message-edited', array('$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
 			<?php endif; ?>
 			<a  href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
+				<?php if (!is_null($iso_timestamp)): ?>
 				<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
 				<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
+				<?php else: ?>
+					<span><?= $fmt_timestamp ?></span>
+				<?php endif; ?>
 			</a>
 			<div class="buttonswrapper">
 				<?= $app->renderView( 'WallController', 'messageButtons', array('comment' => $comment)) ; ?>
