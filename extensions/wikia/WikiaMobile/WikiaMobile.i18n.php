@@ -44,6 +44,7 @@ $messages['en'] = array(
 	'wikiamobile-sharing-modal-text' => '$1 on $2 - $3',
 	'wikiamobile-sharing-email-text' => 'Hey,
 you should definitely check this out:
+
 	$1
 
 Enjoy!'

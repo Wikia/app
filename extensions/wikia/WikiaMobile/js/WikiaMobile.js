@@ -16,7 +16,10 @@ var WikiaMobile = WikiaMobile || (function() {
 	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
 	tableWrapperHTML = '<div class=bigTable>',
 	adSlot,
-	shareData,
+	shrData,
+	pageUrl = wgServer + '/wiki/' + wgPageName,
+	shrImgTxt, shrPageTxt, shrMailPageTxt, shrMailImgTxt,
+	$1 =/\$1/g, $2 =/\$2/g, $3 =/\$3/g,
 	fixed = Modernizr.positionfixed;
 
 	function getImages(){
@@ -87,13 +90,17 @@ var WikiaMobile = WikiaMobile || (function() {
 	}
 
 	function processImages(){
-		var number = 0;
-		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function() {
+		var number = 0,
+		href, name, nameMatch = /[^\/]*\.\w*$/;
+		
+		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function(){
 			var self = $(this);
 
-			if(self.hasClass('image')) {
-				allImages.push([self.data('num', number++).attr('href')]);
-			} else if(self.hasClass('wkImgStk')) {
+			if(self.hasClass('image')){
+				href = self.data('num', number++).attr('href');
+				name = href.match(nameMatch)[0].replace('.','-');
+				allImages.push([href, name]);
+			} else if(self.hasClass('wkImgStk')){
 				if(self.hasClass('grp')) {
 					var figures = self.find('figure'),
 					l = figures.length,
@@ -102,10 +109,13 @@ var WikiaMobile = WikiaMobile || (function() {
 					self.data('num', number).find('footer').append(l);
 
 					$.each(figures, function(i, fig){
+						href = fig.getElementsByClassName('image')[0].href;
+						name = href.match(nameMatch)[0].replace('.','-');
 						allImages.push([
-							fig.getElementsByClassName('image')[0].href,
+							href, name,
 							(cap = fig.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:"",
 							i, l
+
 						]);
 					});
 				} else {
@@ -113,8 +123,11 @@ var WikiaMobile = WikiaMobile || (function() {
 					lis = self.find('li');
 
 					$.each(lis, function(i, li){
+						href = li.attributes['data-img'].nodeValue;
+						name = href.match(nameMatch)[0].replace('.','-');
 						allImages.push([
-							li.attributes['data-img'].nodeValue,
+							href,
+							name,
 							li.innerHTML,
 							//I need these number to show counter in a modal
 							i, l
@@ -124,8 +137,10 @@ var WikiaMobile = WikiaMobile || (function() {
 				number += l;
 			} else {
 				self.data('num', number++);
+				href = self.find('.image').attr('href');
+				name = href.match(nameMatch)[0].replace('.','-');
 				allImages.push([
-					self.find('.image').attr('href'),
+					href, name,
 					self.find('.thumbcaption').html()
 				]);
 			}
@@ -255,6 +270,138 @@ var WikiaMobile = WikiaMobile || (function() {
 
 	function moveSlot(){
 		adSlot.style.top = Math.min((window.pageYOffset + window.innerHeight - 50), ftr.offsetTop + 150) + 'px';
+	}
+
+	function loadShare(cnt){
+
+		var handle = function(html){
+			if(cnt.parentNode.id == 'wkShrPag'){
+				cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt);
+			}else{
+				var imgUrl = pageUrl + '?image=' + allImages[$.getCurrentImg()][1];
+
+				cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt);
+			}
+
+			cnt.addEventListener(touchEvent, function(event){
+				event.preventDefault();
+				event.stopPropagation();
+			})
+		};
+
+		if(!shrData){
+			shrData = Wikia.Cache.get('shareButtons');
+			shrImgTxt = $.msg('wikiamobile-sharing-modal-text', $.msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
+			shrPageTxt = $.msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
+			shrMailImgTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrImgTxt));
+			shrMailPageTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrPageTxt));
+		}
+
+		if(!shrData){
+			$.nirvana.sendRequest({
+				controller: 'WikiaMobileController',
+				method: 'getShareButtons',
+				format: 'html',
+				callback: function(result){
+					Wikia.Cache.set('shareButtons', result, 604800/*7 days*/);
+					shrData = result;
+					handle(result);
+				}
+			});
+		}else{
+			handle(shrData);
+		}
+	}
+
+	/*
+	 * POPOVER
+	 * options.on - element that opens popover - throws an exception if not provided
+	 * options.align - helps to align popover ie '10px' or '100%' - throws an exception if not provided
+	 * options.content - content of popover, either string or function that gets container as an attribute
+	 * options.position - position of popover relative to the button 'bottom', 'top', 'left' , 'right'
+	*/
+	function popOver(options){
+		options = options || {};
+
+		var elm = options.on,
+		initialized = false,
+		onClose = options.close,
+		onOpen = options.open,
+		isOpen = false,
+		cnt;
+
+		if(elm){
+			elm.addEventListener(touchEvent, function(event) {
+				if(this.className.indexOf("on") > -1){
+					close();
+				}else{
+					if(!initialized){
+						var position = options.position || 'bottom',
+							horizontal = (position == 'bottom' || position == 'top'),
+							offset = (horizontal)?this.offsetHeight:this.offsetWidth,
+							content = options.content,
+							style = options.style || '';
+
+						if(content){
+							this.insertAdjacentHTML('afterbegin', '<div class=ppOvr></div>');
+							cnt = this.getElementsByClassName('ppOvr')[0];
+
+							changeContent(content);
+						}else{
+							throw 'No content provided';
+						}
+
+						this.className += ' ' + position;
+						var pos = (horizontal)?(position == 'top'?'bottom':'top'):(position == 'left'?'right':'left');
+						cnt.style[pos] = (offset + 15) + 'px';
+
+						cnt.style.cssText += style;
+
+						initialized = true;
+					}
+
+					open();
+				}
+			});
+		}else{
+			throw 'Non existing element';
+		}
+
+		function changeContent(content){
+			cnt.innerHTML = '';
+			if(typeof content == 'function'){
+				$.showLoader($(cnt), {center: true, size: '20px'});
+				content(cnt);
+			}else{
+				cnt.insertAdjacentHTML('afterbegin', content);
+			}
+		}
+
+		function close(){
+			if(isOpen){
+				elm.className = elm.className.replace(" on", "");
+				if(typeof onClose == 'function') {
+					onClose(event, elm);
+				}
+				isOpen = false;
+			}
+		}
+
+		function open(){
+			if(!isOpen){
+				elm.className += " on";
+				if(typeof onOpen == 'function') {
+					onOpen(event, elm);
+				}
+				isOpen = true;
+			}
+
+		}
+
+		return {
+			changeContent: changeContent,
+			close: close
+		}
 	}
 
 	//init
@@ -574,100 +721,15 @@ var WikiaMobile = WikiaMobile || (function() {
 		popOver({
 			on: document.getElementById('wkShrPag'),
 			content: loadShare,
-			align: 'right:0'
+			style: 'right:0;'
 		});
+		
+		//if url contains image=imageName - open modal with this image
+		var locationSearch = window.location.search;
+		if(locationSearch.indexOf('image=') > -1){
+			
+		}
 	});
-
-	function loadShare(cnt){
-
-		shareData = shareData || Wikia.Cache.get('shareButtons');
-
-		var handle = function(data){
-			if(cnt.parentNode.id == 'wkShrPag'){
-				cnt.innerHTML = data.pageShare
-
-				if(data.scripts){
-					var scr = document.createElement('script');
-					scr.insertAdjacentHTML('afterbegin', data.scripts);
-					document.head.appendChild(scr);
-				}
-			}else{
-				cnt.innerHTML = data.imageShare;
-			}
-		}
-
-		if(!shareData){
-			$.nirvana.sendRequest({
-				controller: 'WikiaMobileController',
-				method: 'getShareButtons',
-				format: 'json',
-				callback: function(result){
-					if(!shareData) {
-						Wikia.Cache.set('shareButtons', result, 604800/*7 days*/);
-						shareData = result;
-					}
-					handle(result);
-				}
-			});
-		}else{
-			handle(shareData);
-		}
-	}
-
-	/*
-	 * POPOVER
-	 * options.on - element that opens popover - throws an exception if not provided
-	 * options.align - helps to align popover ie '10px' or '100%' - throws an exception if not provided
-	 * options.content - content of popover, either string or function that gets container as an attribute
-	 * options.position - position of popover relative to the button 'bottom', 'top', 'left' , 'right'
-	*/
-	function popOver(options){
-		var options = options || {},
-		elm = options.on,
-		initialized = false
-
-		if(elm){
-			elm.addEventListener(clickEvent, function(event) {
-				if(elm.className.indexOf('on') > -1){
-					elm.className = elm.className.replace(' on', '');
-				}else{
-					if(!initialized){
-						var position = options.position || 'bottom',
-							horizontal = (position == 'bottom' || position == 'top'),
-							offset = (horizontal)?elm.offsetHeight:elm.offsetWidth,
-							content = options.content,
-							align = options.align || '',
-							cnt;
-
-						if(content){
-							elm.insertAdjacentHTML('afterbegin', '<div class=shrCnt></div>');
-							cnt = elm.getElementsByClassName('shrCnt')[0];
-
-							if(typeof content == 'function'){
-								$.showLoader($(cnt), {center: true, size: '20px'});
-								content(cnt);
-							}else{
-								cnt.insertAdjacentHTML('afterbegin', content);
-							}
-						}else{
-							throw 'No content provided';
-						}
-
-						elm.className += ' ' + position;
-						var pos = (horizontal)?(position == 'top'?'bottom':'top'):(position == 'left'?'right':'left');
-						cnt.style[pos] = (offset + 15) + 'px';
-
-						cnt.styleText += align;
-
-						initialized = true;
-					}
-					elm.className += ' on';
-				}
-			});
-		}else{
-			throw 'Non existing element';
-		}
-	}
 
 	return {
 		getImages: getImages,
