@@ -15,7 +15,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 		$cachedContent = $this->getFromCache();
 		if ( empty( $cachedContent ) ){
 			// grabs data fo videos and images
-			$aTmpData = $this->fetchSectionItems( array( NS_FILE, NS_LEGACY_VIDEO ) );
+			$aTmpData = $this->fetchSectionItems( array( NS_FILE, NS_VIDEO ) ); // we wan't old videos
 			if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
 				$pages = Paginator::newFromArray( $aTmpData, $wgCategoryExhibitionMediaSectionRows * 4 );
 				$pageData = $pages->getPage( $this->paginatorPosition, true);
@@ -24,10 +24,8 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					$itemTitle = Title::newFromID($item['page_id']);
 					$forceHeight = '';
 					$forceWidth = '';
-
 					if ( $itemTitle->getNamespace() == NS_LEGACY_VIDEO ){
-						
-						// item is video
+						// item is old video
 						$elementClass = 'video-thumbnail';
 						if ( class_exists('VideoPage') ) {
 							$oVideo = new VideoPage( $itemTitle );
@@ -100,7 +98,6 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 			} else {
 				return false;
 			}
-			
 		} else {
 			$aContent = $cachedContent;
 		};
