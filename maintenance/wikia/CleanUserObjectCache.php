@@ -31,6 +31,6 @@ if ( !isset( $options['user'] ) ) {
 	exit( 1 );
 }
 
-$oObj = new CleanUserObjectCache);
+$oObj = new CleanUserObjectCache();
 $oObj->execute( $options['user'] );
 exit( 0 );
