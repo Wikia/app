@@ -68,7 +68,7 @@
 				'category_exhibition_article_cache',
 				$title->getArticleId(),
 				F::App()->wg->cityId,
-				$this->isVerify(),
+				md5( F::app()->wg->server ),
 				$wgVideoHandlersVideosMigrated ? 1 : 0
 			);
 
