@@ -308,7 +308,7 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 	}
 	
 	protected function getInterfaceObjectFromType( $type ) {
-		$title = Title::newFromText($this->videoName, NS_VIDEO);
+		$title = Title::newFromText($this->videoName, NS_LEGACY_VIDEO);
 		$videoPage = new VideoPage($title);
 		$videoPage->load();
 		$this->videoId = $videoPage->getVideoId();
