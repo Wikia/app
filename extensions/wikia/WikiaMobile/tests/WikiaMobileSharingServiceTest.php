@@ -15,7 +15,7 @@ class WikiaMobileSharingServiceTest extends PHPUnit_Framework_TestCase{
 			'facebook' => array( 'FacebookSharing', 'http://www.facebook.com/sharer.php?u=$1&t=$2' ),
 			'twitter' => array( 'TwitterSharing', 'http://twitter.com/home?status=$1%20$2' ),
 			'plusone' => array( 'PlusoneSharing', 'https://plusone.google.com/_/+1/confirm?hl=$lang&url=$1' ),
-			'email' => array( 'EmailSharing', 'mailto:?body=$2%3A%0A%0A$1' )
+			'email' => array( 'EmailSharing', 'mailto:?body=$2%20$1' )
 		);
 
 		//mock Language::getCode and override wgLang
