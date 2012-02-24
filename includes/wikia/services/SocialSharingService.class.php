@@ -114,7 +114,7 @@ class RedditSharing extends SocialSharing{
 
 class EmailSharing extends SocialSharing{
 	function __construct(){
-		$this->urlTemplate = 'mailto:?body=$2%3A%0A%0A$1';
+		$this->urlTemplate = 'mailto:?body=$2%20$1';
 		$this->id = 'email';
 	}
 }

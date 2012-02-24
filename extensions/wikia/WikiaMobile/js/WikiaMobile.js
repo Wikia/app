@@ -282,7 +282,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				});
 			}else{
 				var imgUrl = pageUrl + '?image=' + allImages[$.getCurrentImg()][1];
-				cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);;
+				cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);
 			}
 		};
 
