@@ -29,7 +29,6 @@ class ContentBlock {
 			foreach( $blocksData as $blockData ) {
 				$result = Phalanx::isBlocked($summary, $blockData);
 				if ( $result['blocked'] ) {
-					wfLoadExtensionMessages( 'Phalanx' );
 
 					$wgOut->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
 					$wgOut->setRobotPolicy( 'noindex,nofollow' );
