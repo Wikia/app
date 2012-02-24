@@ -129,6 +129,8 @@ class WallDisabledHooksHelper {
 			}
 			$app->wg->Memc->set($key, $list, 60*60*24); 
 		}
+		
+		return true;
 	}
 	
 	public function onWatchArticle(&$user, &$article) {
