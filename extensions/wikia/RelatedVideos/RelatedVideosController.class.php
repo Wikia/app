@@ -42,6 +42,7 @@ class RelatedVideosController extends WikiaController {
 
 		$oRelatedVideosService = F::build('RelatedVideosService');
 		$blacklist = array();
+
 		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
 			if ( !empty( $oLists ) && $oLists->exists() ){
 				$data = $oLists->getData();
@@ -76,6 +77,9 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getVideo(){
+		/* this is only used pre-migration (before Video Refactoring)
+		   afterwards videos are played using regular Lightbox
+		*/
 
 		$title = urldecode($this->getVal( 'title' ));
 		$external = $this->getVal( 'external', '' );
@@ -164,12 +168,14 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCaruselElement(){
+		global $wgVideoHandlersVideosMigrated;
 
 		$video = $this->getVal( 'video' );
 		$preloaded = $this->getVal( 'preloaded' );
 		
 		$this->setVal( 'video', $video );
 		$this->setVal( 'preloaded', $preloaded );
+		$this->setVal( 'videoPlay',empty($wgVideoHandlersVideosMigrated) ? 'video-play' : 'lightbox');
 	}
 
 	public function getAddVideoModal(){

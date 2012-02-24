@@ -36,6 +36,13 @@ var ImageLightbox = {
 			bind('click.lightbox', function(ev) {
 				self.onClick.call(self, ev);
 			});
+
+        // also bind to right rail RelatedVideos module
+        $('#RelatedVideosRL').
+            unbind('.lightbox').
+            bind('click.lightbox', function(ev) {
+                self.onClick.call(self, ev);
+            });
 	},
 
 	// get caption html for given target node
@@ -72,6 +79,10 @@ var ImageLightbox = {
 				target = target.parent();
 			}	
 		}
+        // move to parent of an playButton (relatedVideos)
+        if (target.is('div') && target.hasClass('playButton')) {
+            target = target.parent();
+        }
 
 		// handle clicks on links only
 		if (!target.is('a')) {
