@@ -2,6 +2,9 @@
 
 class JWPlayer {
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
+	const JWPLAYER_VERSION = '5.9';
+	const INFOBOX_VERSION = '1';
+	const SKIN_VERSION = '1';
 
 	private static $JWPLAYER_DIR = '/wikia/JWPlayer/';
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
@@ -19,7 +22,7 @@ class JWPlayer {
 	public static function getJavascriptPlayerUrl() {
 		global $wgExtensionsPath;
 		
-		return self::getAssetUrl($wgExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_JS);
+		return self::getAssetUrl($wgExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_JS, self::JWPLAYER_VERSION);
 	}
 	
 	public static function getEmbedCode($articleId, $videoid, $url, $title, $width, $height, $showAd, $duration, $isHd, $hdfile='', $thumbUrl='', $cityShort='life', $autoplay=true, $isAjax=true, $playerOptions=array()) {
@@ -27,11 +30,11 @@ class JWPlayer {
 		
 		$jwplayerData = array();
 		$jwplayerData['jwplayerjs'] = self::getJavascriptPlayerUrl();
-		$jwplayerData['player'] = self::getAssetUrl( $wgExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_SWF );
+		$jwplayerData['player'] = self::getAssetUrl( $wgExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_SWF, self::JWPLAYER_VERSION );
 		$jwplayerData['playerId'] = 'player-'.$videoid.'-'.mt_rand();
 		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID),
 						'timeslidertooltipplugin-2'=>array(), 
-						self::getAssetUrl($wgExtensionsPath.self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js')=>array('title'=>htmlspecialchars($title))
+						self::getAssetUrl($wgExtensionsPath.self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js', self::INFOBOX_VERSION)=>array('title'=>htmlspecialchars($title))
 						);
 		
 		$jwplayerData['file'] = $url;
@@ -46,7 +49,7 @@ class JWPlayer {
 		else {
 			$wikiaSkinZip = 'wikia-medium.zip';			
 		}
-		$jwplayerData['skin'] = self::getAssetUrl( $wgExtensionsPath . self::$JWPLAYER_DIR . '/skins/wikia/'.$wikiaSkinZip );
+		$jwplayerData['skin'] = self::getAssetUrl( $wgExtensionsPath . self::$JWPLAYER_DIR . 'skins/wikia/'.$wikiaSkinZip, self::SKIN_VERSION );
 	
 		// thumb
 		if (!empty($thumbUrl) && empty($autoplay)) {
@@ -61,10 +64,10 @@ class JWPlayer {
 		// HD
 		if ($isHd) {
 			if ($hdfile) {
-				$jwplayerData['plugins']['hd-2'] = array('file'=>$hdfile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
+				$jwplayerData['plugins']['http://lp.longtailvideo.com/5/hd/hd-2.1.swf'] = array('file'=>$hdfile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
 			}
 			else {
-				$jwplayerData['plugins']['hd-2'] = array();
+				$jwplayerData['plugins']['http://lp.longtailvideo.com/5/hd/hd-2.1.swf'] = array();
 			}
 		}
 		
@@ -142,9 +145,9 @@ EOT;
 		return $code;
 	}
 	
-	protected static function getAssetUrl($url) {
+	protected static function getAssetUrl($url, $version) {
 		//@todo use cachebusting value or cachebuster framework
-		return $url;
+		return $url . '?v=' . $version;
 	}
 	
 	/**

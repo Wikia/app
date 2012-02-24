@@ -1828,7 +1828,7 @@ EOD;
 		else {
 			$wikiaSkinZip = 'wikia-medium.zip';			
 		}
-		$jwplayerData['skin'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . '/skins/wikia/'.$wikiaSkinZip, '/'), false );
+		$jwplayerData['skin'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . 'skins/wikia/'.$wikiaSkinZip, '/'), false );
 		
 		$embed = "";
 		$url = "";
@@ -1870,7 +1870,7 @@ EOD;
 					$code = 'custom';
 					$jwplayerData['file'] = $url;
 					if ($hd) {
-						$jwplayerData['plugins']['hd-2'] = array();
+						$jwplayerData['plugins']['http://lp.longtailvideo.com/5/hd/hd-2.1.swf'] = array();
 					}
 				}
 				break;
@@ -1938,7 +1938,7 @@ EOD;
 				$jwplayerData['provider'] = 'video';
 
 				if ($this->mData[1]) {
-					$jwplayerData['plugins']['hd-2'] = array('file'=>$jwplayerData['hdfile'], 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
+					$jwplayerData['plugins']['http://lp.longtailvideo.com/5/hd/hd-2.1.swf'] = array('file'=>$jwplayerData['hdfile'], 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
 				}
 				
 				// preroll
