@@ -67,7 +67,6 @@ function wfOasisSetup() {
 	F::build('JSMessages')->registerPackage('Oasis-navigation-v2', array(
 		'oasis-navigation-v2-*'
 	));
-	F::build('JSMessages')->enqueuePackage('Oasis-navigation-v2', JSMessages::EXTERNAL);
 }
 
 // TODO: why do we have this code here? It should be placed in ThemeDesigner
