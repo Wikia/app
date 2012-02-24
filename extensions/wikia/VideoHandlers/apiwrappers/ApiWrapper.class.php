@@ -15,7 +15,15 @@ abstract class ApiWrapper {
 	protected static $CACHE_KEY_VERSION = 0.1;
 	protected static $CACHE_EXPIRY = 86400;
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_JSON;
-	
+
+	public static function isHostnameFromProvider( $hostname ) {
+		return false;
+	}
+	public static function newFromUrl( $url ) {
+		// if $url is from this provider, return object
+		return null;
+	}
+
 	/**
 	 *
 	 * @param string $videoId

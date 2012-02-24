@@ -5,7 +5,32 @@ class HuluApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://www.hulu.com/api/oembed.json?url=';
 	protected static $WATCH_URL = 'http://www.hulu.com/watch/$1';
 	protected static $CACHE_KEY = 'huluapi';
-	
+
+	public static function isHostnameFromProvider( $hostname ) {
+		return endsWith($hostname, "HULU.COM") ? true : false;
+	}
+
+	public static function newFromUrl( $url ) {
+		// Hulu goes like
+		// http://www.hulu.com/watch/252775/[seo terms]
+		$url = trim($url, "/");
+		$parsed = explode( "/", $url );
+		if( is_array( $parsed ) ) {
+			// mId is a number, and it is either last or second to last element of $parsed
+			$last = explode('?', array_pop( $parsed ) );
+			$last = $last[0];
+			if (is_numeric($last)) {
+				$videoId = $last;
+			}
+			else {
+				$videoId = array_pop($parsed);
+			}
+			return static( $videoId );
+		}
+
+		return null;
+	}
+
 	public function getDescription() {
 	}
 	

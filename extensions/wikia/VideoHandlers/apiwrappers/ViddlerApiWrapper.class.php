@@ -5,7 +5,33 @@ class ViddlerApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://api.viddler.com/api/v2/viddler.videos.getDetails.php?key=$1&add_embed_code=1&url=';
 	protected static $WATCH_URL = 'http://www.viddler.com/explore/$1';
 	protected static $CACHE_KEY = 'viddlerapi';
-	
+
+	public static function isHostnameFromProvider( $hostname ) {
+		return endsWith($hostname, "VIDDLER.COM") ? true : false;
+	}
+
+	public static function newFromUrl( $url ) {
+		$parsed = explode( "/explore/", strtolower($url));
+		if( is_array( $parsed ) ) {
+			$mdata = array_pop( $parsed );
+			if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+				$videoId = $mdata;
+			} else {
+				$videoId = array_pop( $parsed );
+			}
+			/* what is this?
+			if ( substr( $this->mId, -1, 1) != "/" )
+			{
+				$videoId .= "/";
+			}
+			*/
+			return static( $videoId );
+		}
+
+		return null;
+	}
+
+
 	protected function getVideoTitle() {
 		return $this->interfaceObj['video']['title'];
 	}
