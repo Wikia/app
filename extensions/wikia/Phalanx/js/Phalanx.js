@@ -104,6 +104,9 @@ Phalanx.loadBlockData = function( response ) {
 	if( type & 64  ) {
 		$( '#wpPhalanxTypeCreation' ).attr( 'checked', 'checked' );
 	}
+	if( type & 256  ) {
+		$( '#wpPhalanxTypeEmail' ).attr( 'checked', 'checked' );
+	}
 
 	if( 'add'  == Phalanx.mode ) {
 		Phalanx.mode = 'edit';

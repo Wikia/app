@@ -55,7 +55,7 @@
 								<div>
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][1] ), array( 'id' => 'wpPhalanxTypeContent', 'value' => 1, 'title'=>1 ) ) ?>
 									<label for="wpPhalanxTypeContent"><?php echo wfMsg( 'phalanx-type-content' ) ?></label>
-									
+
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][2] ), array( 'id' => 'wpPhalanxTypeSummary', 'value' => 2, 'title'=>2 ) ) ?>
 									<label for="wpPhalanxTypeSummary"><?php echo wfMsg( 'phalanx-type-summary' ) ?></label>
 								</div>
@@ -66,16 +66,20 @@
 								<div>
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][8] ), array( 'id' => 'wpPhalanxTypeUser', 'value' => 8, 'title'=>8 ) ) ?>
 									<label for="wpPhalanxTypeUser"><?php echo wfMsg( 'phalanx-type-user' ) ?></label>
-									
+
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][64] ), array( 'id' => 'wpPhalanxTypeCreation', 'value' => 64, 'title'=>64 ) ) ?>
 									<label for="wpPhalanxTypeCreation"><?php echo wfMsg( 'phalanx-type-wiki-creation' ) ?></label>
 								</div>
 								<div>
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][16] ), array( 'id' => 'wpPhalanxTypeQuestion', 'value' => 16, 'title'=>16 ) ) ?>
 									<label for="wpPhalanxTypeQuestion"><?php echo wfMsg( 'phalanx-type-answers-question-title' ) ?></label>
-									
+
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][32] ), array( 'id' => 'wpPhalanxTypeFilterWords', 'value' => 32, 'title'=>32 ) ) ?>
 									<label for="wpPhalanxTypeFilterWords"><?php echo wfMsg( 'phalanx-type-answers-recent-questions' ) ?></label>
+								</div>
+								<div>
+									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['typeFilter'][256] ), array( 'id' => 'wpPhalanxTypeEmail', 'value' => 256 ) ) ?>
+									<label for="wpPhalanxTypeEmail"><?php echo wfMsg( 'phalanx-type-user-email' ) ?></label>
 								</div>
 							</div>
 							<div id="phalanx-help">
@@ -86,6 +90,7 @@
 								<div id="phalanx-help-64" class="accent"><?php echo wfMsg( 'phalanx-help-type-wiki-creation' )  ?></div>
 								<div id="phalanx-help-16" class="accent"><?php echo wfMsg( 'phalanx-help-type-answers-question-title' ) ?></div>
 								<div id="phalanx-help-32" class="accent"><?php echo wfMsg( 'phalanx-help-type-answers-recent-questions' ) ?></div>
+								<div id="phalanx-help-256" class="accent"><?php echo wfMsg( 'phalanx-help-type-user-email' ) ?></div>
 							</div>
 						</div>
 						<!-- Reason -->
@@ -131,7 +136,7 @@
 							<div>
 								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][1] ), array( 'id' => 'wpPhalanxTypeContentFilter', 'value' => 1 ) ) ?>
 								<label for="wpPhalanxTypeContentFilter"><?php echo wfMsg( 'phalanx-type-content' ) ?></label>
-								
+
 								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][2] ), array( 'id' => 'wpPhalanxTypeSummaryFilter', 'value' => 2 ) ) ?>
 								<label for="wpPhalanxTypeSummaryFilter"><?php echo wfMsg( 'phalanx-type-summary' ) ?></label>
 							</div>
@@ -142,16 +147,20 @@
 							<div>
 								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][8] ), array( 'id' => 'wpPhalanxTypeUserFilter', 'value' => 8 ) ) ?>
 								<label for="wpPhalanxTypeUserFilter"><?php echo wfMsg( 'phalanx-type-user' ) ?></label>
-								
+
 								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][64] ), array( 'id' => 'wpPhalanxTypeCreationFilter', 'value' => 64 ) ) ?>
 								<label for="wpPhalanxTypeCreationFilter"><?php echo wfMsg( 'phalanx-type-wiki-creation' ) ?></label>
 							</div>
 							<div>
 								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][16] ), array( 'id' => 'wpPhalanxTypeQuestionFilter', 'value' => 16 ) ) ?>
 								<label for="wpPhalanxTypeQuestionFilter"><?php echo wfMsg( 'phalanx-type-answers-question-title' ) ?></label>
-								
+
 								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][32] ), array( 'id' => 'wpPhalanxTypeFilterWordsFilter', 'value' => 32 ) ) ?>
 								<label for="wpPhalanxTypeFilterWordsFilter"><?php echo wfMsg( 'phalanx-type-answers-recent-questions' ) ?></label>
+							</div>
+							<div>
+								<?= Xml::check( 'wpPhalanxTypeFilter[]', !empty( $data['typeFilter'][256] ), array( 'id' => 'wpPhalanxTypeEmailFilter', 'value' => 256 ) ) ?>
+								<label for="wpPhalanxTypeEmailFilter"><?php echo wfMsg( 'phalanx-type-user-email' ) ?></label>
 							</div>
 						</div>
 

@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'phalanx-type-summary' => 'page summary',
 	'phalanx-type-title' => 'page title',
 	'phalanx-type-user' => 'user',
+	'phalanx-type-user-email' => 'email',
 	'phalanx-type-answers-question-title' => 'question title',
 	'phalanx-type-answers-recent-questions' => 'recent questions',
 	'phalanx-type-wiki-creation' => 'wiki creation',
@@ -68,6 +69,7 @@ Note: only works on Answers-type wikis.',
 It does not prevent those pages from being created.
 
 Note: works only on Answers-type wiks.',
+	'phalanx-help-type-user-email' => 'This filter prevents account creation using a blocked email address.',
 
 	#block reason overrides, when no block reason was inputed (original usage)
 	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption by you or by someone who shares your IP address.
