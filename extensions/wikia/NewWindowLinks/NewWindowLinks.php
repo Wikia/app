@@ -31,7 +31,7 @@ $wgExtensionCredits['parserhook'][] = array(
     'description'       => 'Create links to be opened in a new browser window or tab.',
     'descriptionmsg'    => 'newwindowlinks-desc',
     'version'           => '1.0',
-    'author'            => array( '[http://community.wikia.com/wiki/User:Mroszka Michał Roszka (Mix)]' ),
+    'author'            => array( '[http://community.wikia.com/wiki/User:Mroszka Michał Roszka (Mix)]', '[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]' ),
     'url'               => 'http://www.mediawiki.org/wiki/Extension:NewWindowLinks',
 );
 
@@ -49,8 +49,13 @@ $wgExtensionCredits['parserhook'][] = array(
  */
 function efParserCreateLink( $parser, $target, $label = null ) {
     // sanitise the input and set defaults
-    if ( is_null( $label ) ) { $label = $target; }
-    $label = $parser->recursiveTagParse( $label );
+    if ( is_null( $label ) ) {
+        $label = $target;
+        $label = htmlspecialchars( $label, ENT_NOQUOTES, 'UTF-8' );
+    } else {
+        $label = preg_replace( "/{$parser->mUrlProtocols}/", htmlspecialchars( "$1" ), $label );
+        $label = $parser->recursiveTagParse( $label );
+    }
     $attributes = array( 'target' => '_blank' );
 
     // WARNING: the order of the statements below does matter!
@@ -65,7 +70,7 @@ function efParserCreateLink( $parser, $target, $label = null ) {
 
     // Process (or rule out) external targets (literal URIs)
     if ( preg_match( $parser->mExtLinkBracketedRegex, "[{$target}]" ) ) {
-        return $parser->insertStripItem( $oLinker->makeExternalLink( $target, $label, true, '', $attributes ) , $parser->mStripState );
+        return $parser->insertStripItem( $oLinker->makeExternalLink( $target, $label, false, '', $attributes ) , $parser->mStripState );
     }
 
     // The target is not a literal URI.  Create a Title object.
@@ -78,7 +83,7 @@ function efParserCreateLink( $parser, $target, $label = null ) {
 
     // Process (or rule out) interwiki links.
     if ( true !== $oTitle->isLocal() ) {
-        return $parser->insertStripItem( $oLinker->makeExternalLink( $oTitle->getFullURL(), $label, true, '', $attributes ), $parser->mStripState );
+        return $parser->insertStripItem( $oLinker->makeExternalLink( $oTitle->getFullURL(), $label, false, '', $attributes ), $parser->mStripState );
     }
 
     // Only non existing local articles remain.
