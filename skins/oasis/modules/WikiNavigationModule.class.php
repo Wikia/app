@@ -116,9 +116,6 @@ class WikiNavigationModule extends Module {
 					</nav>
 				</header>
 HEADER;
-
-			//Oasis-navigation-v2 messages
-			F::build('JSMessages')->enqueuePackage('Oasis-navigation-v2', JSMessages::EXTERNAL);
 		}
 
 		return true;
