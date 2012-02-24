@@ -199,6 +199,18 @@ class UserBlock {
 			$abortError = wfMsg( 'phalanx-user-block-new-account' );
 			return false;
 		}
+		// Check if email is blocked
+		$emailBlocksData = Phalanx::getFromFilter( Phalanx::TYPE_EMAIL );
+		$userEmail = $user->getEmail();
+		if ( $userEmail !== '' ) {
+			foreach ( $emailBlocksData as $emailBlockData ) {
+				$result = Phalanx::isBlocked( $userEmail, $emailBlockData, true );
+				if ( $result['blocked'] ) {
+					$abortError = wfMsg( 'phalanx-user-block-new-account' );
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 
