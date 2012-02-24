@@ -484,6 +484,46 @@ $color-related-videos-background: darken($color-page, 20%);
 						float: none;
 					}
 				}
+				div.action {
+				    cursor: pointer;
+    				padding: 0;
+    				margin: 0;
+    				display: inline-block;
+    				position: relative;
+    				height: 87px;
+    				a.video-thumbnail{
+    				    top: 14px;
+    					width: 110px;
+    					height: 62px;
+    					display: block;
+    					overflow: hidden;
+    					position: relative;
+    					border: none;
+    					background: $color-related-videos-background;
+    					.addVideo {
+    						@include opacity(30);
+    						width: 110px;
+    						height: 62px;
+    						position: absolute;
+    						z-index: 100;
+    						background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* wgCdnStylePath */
+    						background-repeat:no-repeat;
+    						background-position:center;
+    						&:hover {
+    							@include opacity(100);
+    						}
+    					}
+    				}
+    				&:hover {
+    				    border: none;
+    					padding: 1px;
+    					@include box-shadow( 0, 0, 0, #ffffff );
+    					background: none;
+    					.addVideo {
+    						@include opacity(50);
+    					}
+    				}
+    			}
 				.group {
 					display: inline-block;
 					float: left;
@@ -526,6 +566,8 @@ $color-related-videos-background: darken($color-page, 20%);
 					text-align: center;
 				}
 			}
+
+
 		}
 	}
 }

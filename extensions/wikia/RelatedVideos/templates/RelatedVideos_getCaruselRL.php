@@ -19,6 +19,7 @@
 			<div class="container">
 				<? $i = 0;
 				if( isset($videos) && is_array($videos) ){
+					$videos[] = 'AddNew';
 					$videosGrouped = array();
 					$j = -1;
 					foreach( $videos as $id => $video ){
@@ -34,14 +35,23 @@
 						$i++; 
 						echo '<div class="group">';
 						foreach( $videos as $id => $video ){
-							echo F::app()->renderView(
-								'RelatedVideos',
-								'getCaruselElementRL',
-								array(
-									'video' => $video,
-									'preloaded' => ( $i <= 2 )
-								)
-							);
+							if ( !is_string($video ) ) {
+								echo F::app()->renderView(
+									'RelatedVideos',
+									'getCaruselElementRL',
+									array(
+										'video' => $video,
+										'preloaded' => ( $i <= 2 )
+									)
+								);
+							} else {
+								echo '
+									<div class="item action">
+										<a class="video-thumbnail" href="#" >
+										<div class="addVideo"></div>
+										</a>
+									</div>';
+							}
 						}
 						echo '</div>';
 					}
