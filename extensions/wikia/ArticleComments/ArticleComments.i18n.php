@@ -9,7 +9,7 @@
 $messages = array();
 
 $messages['qqq'] = array(
-    'wikiamobile-article-comments-header' => 'The header of the Comments section; $1 is the number of the comments.',
+    'wikiamobile-article-comments-header' => 'The header of the Comments section shown in Wikia\'s mobile skin; $1 is the number of the comments.',
 );
 
 $messages['en'] = array(
