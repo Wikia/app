@@ -20,8 +20,10 @@ class PageSpeedAPI extends Service {
 	 * @return mixed report
 	 */
 	public function getReportForURL($url) {
-		$urlEncoded = urlencode($url);
-		$apiUrl = self::PAGESPPED_API_URL . "?url={$urlEncoded}&key={$this->apiKey}";
+		$apiUrl = self::PAGESPPED_API_URL . '?' . http_build_query(array(
+			'url' => $url,
+			'key' => $this->apiKey,
+		));
 
 		$resp = Http::get($apiUrl);
 
