@@ -91,28 +91,31 @@ WikiaTracker.track = function(page, profile, events) {
 
 WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
-	return true; // temp (BugId: 20284) - disable tracking
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
 
-	_gaq.push(['WikiaTracker._setDomainName', window.wgCookieDomain || '.wikia.com']);
+//	temp change - BugId: 20284
+//	_gaq.push(['WikiaTracker._setDomainName', window.wgCookieDomain || '.wikia.com']);
+	_gaq.push(['WikiaTracker._setDomainName', '.wikia.com']);
 
 	//_gaq.push(['WikiaTracker._setCustomVar', 1, 'db',    window.wgDBname || window.wgDB || 'unknown', 3]);
 	//_gaq.push(['WikiaTracker._setCustomVar', 2, 'hub',   window.wgCatId || 'unknown', 3]);
 	//_gaq.push(['WikiaTracker._setCustomVar', 3, 'lang',  window.wgContentLanguage || 'unknown', 3]);
-	var wiki = 'db=' + (window.wgDBname || window.wgDB || 'unknown') + ';hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown');
-	_gaq.push(['WikiaTracker._setCustomVar', 1, 'wiki',  wiki, 3]);
+//	temp disable - BugId: 20284
+//	var wiki = 'db=' + (window.wgDBname || window.wgDB || 'unknown') + ';hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown');
+//	_gaq.push(['WikiaTracker._setCustomVar', 1, 'wiki',  wiki, 3]);
 
-	_gaq.push(['WikiaTracker._setCustomVar', 3, 'AB',    this._userGroup() || 'unknown', 3]);
-	_gaq.push(['WikiaTracker._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
-	_gaq.push(['WikiaTracker._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
+//	_gaq.push(['WikiaTracker._setCustomVar', 3, 'AB',    this._userGroup() || 'unknown', 3]);
+//	_gaq.push(['WikiaTracker._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
+//	_gaq.push(['WikiaTracker._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
 	if (typeof events != 'undefined' && events instanceof Array) {
 		this.debug('...with events: ' + events.join('/'), 7);
 
 		events.unshift('WikiaTracker._trackEvent');
-		_gaq.push(events);
+//		temp disable - BugId: 20284
+//		_gaq.push(events);
 	}
 
 	if (page == 'AnalyticsEngine::EVENT_PAGEVIEW') {
