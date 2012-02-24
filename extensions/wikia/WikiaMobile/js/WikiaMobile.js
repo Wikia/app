@@ -19,7 +19,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	shrData,
 	pageUrl = wgServer + '/wiki/' + wgPageName,
 	shrImgTxt, shrPageTxt, shrMailPageTxt, shrMailImgTxt,
-	$1 =/\$1/g, $2 =/\$2/g, $3 =/\$3/g,
+	$1 =/__1__/g, $2 =/__2__/g, $3 =/__3__/g, $4 = /__4__/g,
 	fixed = Modernizr.positionfixed;
 
 	function getImages(){
@@ -92,7 +92,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	function processImages(){
 		var number = 0,
 		href, name, nameMatch = /[^\/]*\.\w*$/;
-		
+
 		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function(){
 			var self = $(this);
 
@@ -276,25 +276,19 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		var handle = function(html){
 			if(cnt.parentNode.id == 'wkShrPag'){
-				cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt);
+				cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt).replace($4, shrPageTxt);
 			}else{
 				var imgUrl = pageUrl + '?image=' + allImages[$.getCurrentImg()][1];
-
-				cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt);
+				cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);;
 			}
-
-			cnt.addEventListener(touchEvent, function(event){
-				event.preventDefault();
-				event.stopPropagation();
-			})
 		};
 
 		if(!shrData){
-			shrData = Wikia.Cache.get('shareButtons');
-			shrImgTxt = $.msg('wikiamobile-sharing-modal-text', $.msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
+			shrData = Wikia.Cache.get('shareButtons' + wgStyleVersion);
 			shrPageTxt = $.msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
-			shrMailImgTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrImgTxt));
 			shrMailPageTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrPageTxt));
+			shrImgTxt = $.msg('wikiamobile-sharing-modal-text', $.msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
+			shrMailImgTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrImgTxt));
 		}
 
 		if(!shrData){
@@ -302,8 +296,12 @@ var WikiaMobile = WikiaMobile || (function() {
 				controller: 'WikiaMobileController',
 				method: 'getShareButtons',
 				format: 'html',
+				type: 'GET',
+				data: {
+					'cb': wgStyleVersion
+				},
 				callback: function(result){
-					Wikia.Cache.set('shareButtons', result, 604800/*7 days*/);
+					Wikia.Cache.set('shareButtons' + wgStyleVersion, result, 604800/*7 days*/);
 					shrData = result;
 					handle(result);
 				}
@@ -315,18 +313,20 @@ var WikiaMobile = WikiaMobile || (function() {
 
 	/*
 	 * POPOVER
-	 * options.on - element that opens popover - throws an exception if not provided
-	 * options.align - helps to align popover ie '10px' or '100%' - throws an exception if not provided
-	 * options.content - content of popover, either string or function that gets container as an attribute
+	 * create or/and open callback has to be provided to create pop over
+	 * 
+	 * options.on - (required) element that opens popover - throws an exception if not provided
+	 * options.style - allows you to pass cssText for a content wrapper
+	 * options.create - content of popover, either string or function that gets content wrapper as an attribute
 	 * options.position - position of popover relative to the button 'bottom', 'top', 'left' , 'right'
+	 * options.open - callback on open 
+	 * options.close - callback on close
 	*/
 	function popOver(options){
 		options = options || {};
 
 		var elm = options.on,
 		initialized = false,
-		onClose = options.close,
-		onOpen = options.open,
 		isOpen = false,
 		cnt;
 
@@ -339,16 +339,17 @@ var WikiaMobile = WikiaMobile || (function() {
 						var position = options.position || 'bottom',
 							horizontal = (position == 'bottom' || position == 'top'),
 							offset = (horizontal)?this.offsetHeight:this.offsetWidth,
-							content = options.content,
+							onCreate = options.create,
 							style = options.style || '';
+							
+							
+						this.insertAdjacentHTML('afterbegin', '<div class=ppOvr></div>');
+						cnt = this.getElementsByClassName('ppOvr')[0];
 
-						if(content){
-							this.insertAdjacentHTML('afterbegin', '<div class=ppOvr></div>');
-							cnt = this.getElementsByClassName('ppOvr')[0];
-
-							changeContent(content);
-						}else{
-							throw 'No content provided';
+						if(onCreate){
+							changeContent(onCreate);
+						}else if(!open){
+							throw 'No content or on open callback provided';
 						}
 
 						this.className += ' ' + position;
@@ -367,21 +368,21 @@ var WikiaMobile = WikiaMobile || (function() {
 			throw 'Non existing element';
 		}
 
-		function changeContent(content){
+		function changeContent(onCreate){
 			cnt.innerHTML = '';
-			if(typeof content == 'function'){
+			if(typeof onCreate == 'function'){
 				$.showLoader($(cnt), {center: true, size: '20px'});
-				content(cnt);
+				onCreate(cnt);
 			}else{
-				cnt.insertAdjacentHTML('afterbegin', content);
+				cnt.insertAdjacentHTML('afterbegin', onCreate);
 			}
 		}
 
 		function close(){
 			if(isOpen){
 				elm.className = elm.className.replace(" on", "");
-				if(typeof onClose == 'function') {
-					onClose(event, elm);
+				if(typeof options.close == 'function') {
+					 options.close(event, elm);
 				}
 				isOpen = false;
 			}
@@ -390,8 +391,8 @@ var WikiaMobile = WikiaMobile || (function() {
 		function open(){
 			if(!isOpen){
 				elm.className += " on";
-				if(typeof onOpen == 'function') {
-					onOpen(event, elm);
+				if(typeof options.open == 'function') {
+					options.open(event, elm);
 				}
 				isOpen = true;
 			}
@@ -720,14 +721,49 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		popOver({
 			on: document.getElementById('wkShrPag'),
-			content: loadShare,
+			create: function(cnt){
+				var self = $(cnt);
+				loadShare(cnt);
+
+				self.delegate('li', clickEvent, function(){
+					track('share/page/'+this.className.replace('Shr',''));
+				});
+				
+				cnt.addEventListener(touchEvent, function(event){
+					event.preventDefault();
+					event.stopPropagation();
+				})
+			},
+			open: function(){
+				track('share/page/open');
+			},
+			close: function(){
+				track('share/page/close');
+			},
 			style: 'right:0;'
 		});
 		
 		//if url contains image=imageName - open modal with this image
 		var locationSearch = window.location.search;
 		if(locationSearch.indexOf('image=') > -1){
-			
+			var img = locationSearch.substr(1).split('&'),
+				imgName;
+			for(var i=0;i<img.length; i++){
+				var s = img[i].split('=');
+				if(s[0] == 'image'){
+					imgName = s[1];
+					break;
+				}
+			}
+
+			if(allImages.length == 0) processImages();
+			var imgL = allImages.length;
+			for(var i=0;i<imgL;i++){
+				if(allImages[i][1] == imgName){
+					setTimeout(function(){imgModal(i)}, 1000)
+					break;
+				}
+			}
 		}
 	});
 

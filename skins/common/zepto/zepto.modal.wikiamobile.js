@@ -16,8 +16,8 @@
 	hide,
 	clickEvent,
 	current = 0,
-	track = function(ev){
-		WikiaTracker.track('/1_mobile/modal/' + ev, 'main.sampled');
+	track = function(ev, what){
+		WikiaTracker.track('/1_mobile/'+(what?(what+'/'):'')+'modal/' + ev, 'main.sampled');
 	},
 	sharePopOver;
 
@@ -47,7 +47,7 @@
 		//close modal on back button
 		if ("onhashchange" in window) {
 			window.addEventListener("hashchange", function() {
-				if(window.location.hash == "" && $.isModalShown()) {
+				if(window.location.hash == "" && $.isModalShown()){
 					$.closeModal();
 				}
 			}, false);
@@ -59,7 +59,7 @@
 		});
 
 		modal.bind(WikiaMobile.getTouchEvent(), function() {
-			if($(this).hasClass('imgMdl')) {
+			if(this.className.indexOf('imgMdl') > -1) {
 				window.scrollTo( 0, 1 );
 			}
 			$.resetTimeout();
@@ -88,14 +88,27 @@
 		
 		sharePopOver = WikiaMobile.popOver({
 			on: document.getElementById('wkShrImg'),
-			content: ' ',
 			style: 'left:3px;',
+			create: function(cnt){
+				var self = $(cnt);
+				self.delegate('li', clickEvent, function(){
+					track(this.className.replace('Shr',''),'share');
+				});
+				cnt.addEventListener(WikiaMobile.getTouchEvent(), function(event){
+					event.preventDefault();
+					event.stopPropagation();
+				})
+			},
 			open: function(event){
 				event.stopPropagation();
 				$.preventHide();
 				sharePopOver.changeContent(WikiaMobile.loadShare);
+				track('open', 'share');
 			},
-			close: $.resumeHide
+			close: function(){
+				track('close', 'share');
+				$.resumeHide();
+			}
 		});
 
 		modalCreated = true;
