@@ -25,7 +25,7 @@
 		}
 
 		public function addItem( $item ) {
-			if(!is_object($v)) {				
+			if(!is_object($item)) {				
 				Wikia::log(__METHOD__,false,'BugID: 21498 - adding non-object to MenuUserCommand->items');
 				Wikia::logBacktrace(__METHOD__);
 			}
