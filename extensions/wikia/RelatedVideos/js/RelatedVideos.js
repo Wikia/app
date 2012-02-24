@@ -95,7 +95,9 @@ var RelatedVideos = {
 					callback();
 				}
 			});
-		}
+		} else if (futureState == 0 && RelatedVideos.maxRooms == 0) {
+            $('.page',this.rvModule).text(0);
+        }
 	},
 
 	regroup: function() {
@@ -153,6 +155,9 @@ var RelatedVideos = {
 		}
 		RelatedVideos.maxRooms = numberItems;
 		$( '.maxcount',this.rvModule ).text( numberItems );
+        if(numberItems < RelatedVideos.currentRoom) {
+            RelatedVideos.scroll(-1);
+        }
 		RelatedVideos.checkButtonState();
 	},
 
