@@ -7,6 +7,11 @@
  */
 
 $messages = array();
+
+$messages['qqq'] = array(
+    'wikiamobile-article-comments-header' => 'The header of the Comments section; $1 is the number of the comments.',
+);
+
 $messages['en'] = array(
 	'article-comments-anonymous' => 'Anonymous user',
 	'article-comments-comments' => 'Comments ($1)',
