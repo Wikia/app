@@ -708,7 +708,7 @@ var Wall = $.createClass(Object, {
 					$('.edited-by', msg).append($('<span class="sourceview subtle">'+$.msg('wall-message-source')+'</span>'));
 				}
 				
-				$('.msg-body', msg).first().html('<textarea  ' + (mode == 'source' ? 'disabled="disabled"':'') + ' class="body">'+data.wikitext+'</textarea>');
+				$('.msg-body', msg).first().html('<textarea  ' + (mode == 'source' ? 'readonly="readonly"':'') + ' class="body">'+data.wikitext+'</textarea>');
 				$('.follow', msg).hide();
 				$('textarea.title', msg).first()
 					.keydown(function(e) { if(e.which == 13) { return false; }})
