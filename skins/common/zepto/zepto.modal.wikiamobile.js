@@ -90,14 +90,9 @@
 			on: document.getElementById('wkShrImg'),
 			style: 'left:3px;',
 			create: function(cnt){
-				var self = $(cnt);
-				self.delegate('li', clickEvent, function(){
+				$(cnt).delegate('li', clickEvent, function(){
 					track(this.className.replace('Shr',''),'share');
 				});
-				cnt.addEventListener(WikiaMobile.getTouchEvent(), function(event){
-					event.preventDefault();
-					event.stopPropagation();
-				})
 			},
 			open: function(event){
 				event.stopPropagation();

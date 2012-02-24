@@ -134,7 +134,12 @@
 	}
 }
 
+.imgMdl #wkShrImg {
+	display: block;
+}
+
 #wkShrImg {
+	display: none;
 	float: left;
 	margin: 2px 0;
 }

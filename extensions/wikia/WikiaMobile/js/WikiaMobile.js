@@ -273,10 +273,13 @@ var WikiaMobile = WikiaMobile || (function() {
 	}
 
 	function loadShare(cnt){
-
 		var handle = function(html){
 			if(cnt.parentNode.id == 'wkShrPag'){
 				cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt).replace($4, shrPageTxt);
+
+				$(cnt).delegate('li', clickEvent, function(){
+					track('share/page/'+this.className.replace('Shr',''));
+				});
 			}else{
 				var imgUrl = pageUrl + '?image=' + allImages[$.getCurrentImg()][1];
 				cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);;
@@ -314,12 +317,12 @@ var WikiaMobile = WikiaMobile || (function() {
 	/*
 	 * POPOVER
 	 * create or/and open callback has to be provided to create pop over
-	 * 
+	 *
 	 * options.on - (required) element that opens popover - throws an exception if not provided
 	 * options.style - allows you to pass cssText for a content wrapper
 	 * options.create - content of popover, either string or function that gets content wrapper as an attribute
 	 * options.position - position of popover relative to the button 'bottom', 'top', 'left' , 'right'
-	 * options.open - callback on open 
+	 * options.open - callback on open
 	 * options.close - callback on close
 	*/
 	function popOver(options){
@@ -331,7 +334,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		cnt;
 
 		if(elm){
-			elm.addEventListener(touchEvent, function(event) {
+			elm.addEventListener(clickEvent, function(event){
 				if(this.className.indexOf("on") > -1){
 					close();
 				}else{
@@ -341,8 +344,8 @@ var WikiaMobile = WikiaMobile || (function() {
 							offset = (horizontal)?this.offsetHeight:this.offsetWidth,
 							onCreate = options.create,
 							style = options.style || '';
-							
-							
+
+
 						this.insertAdjacentHTML('afterbegin', '<div class=ppOvr></div>');
 						cnt = this.getElementsByClassName('ppOvr')[0];
 
@@ -722,17 +725,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		popOver({
 			on: document.getElementById('wkShrPag'),
 			create: function(cnt){
-				var self = $(cnt);
 				loadShare(cnt);
-
-				self.delegate('li', clickEvent, function(){
-					track('share/page/'+this.className.replace('Shr',''));
-				});
-				
-				cnt.addEventListener(touchEvent, function(event){
-					event.preventDefault();
-					event.stopPropagation();
-				})
 			},
 			open: function(){
 				track('share/page/open');
@@ -742,7 +735,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			},
 			style: 'right:0;'
 		});
-		
+
 		//if url contains image=imageName - open modal with this image
 		var locationSearch = window.location.search;
 		if(locationSearch.indexOf('image=') > -1){

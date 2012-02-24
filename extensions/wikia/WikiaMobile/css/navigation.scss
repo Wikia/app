@@ -100,10 +100,9 @@
 	.tgl {
 		float: right;
 		width: 45px;
-		height: 100%;
+		height: 40px;
 		background-color: none;
 		@include transition(all .4s);
-		-webkit-transform: rotateZ(0);
 		background-repeat: no-repeat;
 		background-position: center;
 	}

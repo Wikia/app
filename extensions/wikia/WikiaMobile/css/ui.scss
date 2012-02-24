@@ -52,8 +52,8 @@ li.sub, li.cld > a, li.cld > span {
 	border-radius: 5px;
 	border: 1px solid $link-color;
 	background-color: white;
-	min-width: 50px;
-	min-height: 50px;
+	width: 50px;
+	height: auto;
 
 	.on & {
 		display: block;

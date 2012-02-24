@@ -45,11 +45,18 @@ body {
 #wkMainCntHdr {
 	border-bottom: 1px solid $border-color;
 	padding: $page-padding;
+	position: relative;
 
 	h1{
 		float: left;
 		margin:0;
 		padding:0;
+	}
+	
+	.wkShr{
+		position: absolute;
+		right: 5px;
+		z-index: 234523454325324563456543;
 	}
 }
 
@@ -161,7 +168,6 @@ blockquote {
 .wkShr {
 	display: none;
 	position: relative;
-	float: right;
 	width: 50px;
 	height: 25px;
 	background-position: center;
