@@ -53,8 +53,9 @@ function efParserCreateLink( $parser, $target, $label = null ) {
         $label = $target;
         $label = htmlspecialchars( $label, ENT_NOQUOTES, 'UTF-8' );
     } else {
-        $label = preg_replace( "/{$parser->mUrlProtocols}/", htmlspecialchars( "$1" ), $label );
+        $label = preg_replace( "/\b({$parser->mUrlProtocols})/", "$1 ", $label ); // Hack to not parse external links by breaking them
         $label = $parser->recursiveTagParse( $label );
+        $label = preg_replace( "/\b({$parser->mUrlProtocols}) /", "$1", $label ); // Put them back together
     }
     $attributes = array( 'target' => '_blank' );
 
