@@ -45,16 +45,19 @@ $messages['en'] = array(
 	'wikiamobile-sharing-email-text' => 'Hey,
 you should definitely check this out:
 
-	$1
-
-Enjoy!'
+ $1
+'
 );
 
 $messages['qqq'] = array(
+	'wikiamobile-page-header-title' => 'please ignore for now',
+	'wikiamobile-footer-link1' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
+	'wikiamobile-footer-link2' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
+	'wikiamobile-footer-link3' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
 	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category',
 	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
 	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
-	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text'
+	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1 and new line after $1'
 );
 
 /** адыгэбзэ (адыгэбзэ)
