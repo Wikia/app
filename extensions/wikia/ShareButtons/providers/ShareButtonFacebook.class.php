@@ -12,6 +12,11 @@ class ShareButtonFacebook extends ShareButton {
 	 * @see https://developers.facebook.com/docs/reference/plugins/like/
 	 */
 	public function getShareBox() {
+		global $wgNoExternals;
+		if (!empty($wgNoExternals)) {
+			return '';
+		}
+
 		$html = Xml::element('div', array(
 			'class' => 'fb-like',
 			'data-send' => 'false',

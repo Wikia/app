@@ -12,6 +12,11 @@ class ShareButtonTwitter extends ShareButton {
 	 * @see http://twitter.com/goodies/tweetbutton
 	 */
 	public function getShareBox() {
+		global $wgNoExternals;
+		if (!empty($wgNoExternals)) {
+			return '';
+		}
+		
 		$html = Xml::element('a', array(
 			'href' => 'https://twitter.com/share',
 			'class' => 'twitter-share-button',
