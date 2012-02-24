@@ -155,6 +155,7 @@ class WikiaDispatcher {
 				}
 
 				$response->setException($e);
+				Wikia::log(__METHOD__, $e->getMessage() );
 
 				if ( $controllerClassName != 'WikiaErrorController' && $method != 'error' ) {
 					// Work around for module dispatching until modules are renamed
