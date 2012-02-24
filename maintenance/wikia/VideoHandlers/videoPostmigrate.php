@@ -101,7 +101,29 @@ echo "Flipping the switch\n";
 
 WikiFactory::setVarByName('wgVideoHandlersVideosMigrated', $wgCityId, true);
 
-echo "Done\n";
+echo "Purging articles including videos:";
+
+$rows = $dbw->query( "SELECT img_name FROM image WHERE img_media_type = 'VIDEO'" );
+
+while( $image = $dbw->fetchObject( $rows ) ) {
+	$rows2 = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($image->img_name)."'");
+	while( $page = $dbw->fetchObject( $rows2 ) ) {
+		global $wgTitle;
+		$oTitle = Title::newFromId( $page->il_from );
+		$wgTitle = $oTitle;
+		if ( $oTitle instanceof Title && $oTitle->exists() && ($oArticle = new Article ( $oTitle )) instanceof Article ) {
+			$oTitle->purgeSquid();
+			$oArticle->doPurge();
+			echo "+";
+		} else {
+			echo "-";
+		}
+	}
+	$dbw->freeResult($rows2);
+}
+
+
+echo "\nDone\n";
 
 
 ?>
