@@ -146,13 +146,9 @@ var RelatedVideos = {
 	},
 
 	recalculateLenght: function(){
-		var numberItems = $( '.container .item',this.rvModule ).size();
+		var numberItems = $( '.container .item:not(.action)',this.rvModule ).size();
 		$( '.tally em',this.rvModule ).html( numberItems );
-		if ( this.onRightRail ) {
-			numberItems = Math.ceil( ( numberItems ) / this.videosPerPage );
-		} else {
-			numberItems = Math.ceil( ( numberItems + 1 ) / this.videosPerPage );
-		}
+        numberItems = Math.ceil( ( numberItems + 1 ) / this.videosPerPage );
 		RelatedVideos.maxRooms = numberItems;
 		$( '.maxcount',this.rvModule ).text( numberItems );
         if(numberItems < RelatedVideos.currentRoom) {
