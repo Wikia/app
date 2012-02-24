@@ -64,6 +64,7 @@ class RelatedVideosData {
 				$data['thumbnailData']	= $videoPage->getThumbnailParams( $thumbnailWidth );
 				$data['title']			= $videoPage->getTitle()->getText();
 				$data['timestamp']		= $videoPage->getTimestamp();	//@todo for premium video, eventually use date published given by provider
+
 			}
 
 			$owner = '';
@@ -81,7 +82,7 @@ class RelatedVideosData {
 			}
 			$data['owner'] = $owner;
 			$data['ownerUrl'] = $ownerUrl;
-			$data['arrayId'] = $data['external'].'|'.$data['id'];
+			$data['arrayId'] = isset($data['error']) ? '' : $data['external'].'|'.$data['id'];
 		}
 
 		wfProfileOut( __METHOD__ );
