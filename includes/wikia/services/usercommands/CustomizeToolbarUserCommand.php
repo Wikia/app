@@ -16,7 +16,7 @@
 
 		protected function renderIcon() {
 			global $wgBlankImgUrl;
-			return "<img src=\"$wgBlankImgUrl\" class=\"gear-icon\" height=\"16\" width=\"16\" />";
+			return "<img src=\"$wgBlankImgUrl\" class=\"sprite gear\" height=\"16\" width=\"16\" />";
 		}
 
 		protected function getTrackerName() {
