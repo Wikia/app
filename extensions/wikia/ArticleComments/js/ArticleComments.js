@@ -2,6 +2,7 @@ var ArticleComments = {
 	processing: false,
 	clickedElementSelector: "",
 	mostRecentCount: 0,
+	messagesLoaded: false,
 
 	init: function() {
 		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.postComment);
@@ -248,62 +249,76 @@ var ArticleComments = {
 		}
 
 		var throbber = $(this).next('.throbber').css('visibility', 'visible');
-		$.postJSON(wgScript, data, function(json) {
-			throbber.css('visibility', 'hidden');
-			if (!json.error) {
-				var parent,
-					subcomments,
-					parentId = json.parentId,
-					nodes = $(json.text);
-
-				if(parentId){
-					//second level: reply
-					parent = $('#comm-' + parentId);
-					subcomments = parent.next();
-
-					if(!subcomments.hasClass('sub-comments')){
-						parent.after(subcomments = $('<ul class="sub-comments"></ul>'));
-					}
-
-					subcomments.append(nodes);
-				}else{
-					//first level: comment
-					nodes.prependTo('#article-comments-ul');
-				}
-
-				//update counter
-				$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
-
-				if(window.skin == 'oasis'){
-					$('#WikiaPageHeader').find('.commentsbubble').html(json.counter);
-
-					if(!parentId){
-						if(!ArticleComments.mostRecentCount)
-							ArticleComments.mostRecentCount = $('#article-comments-ul > li').length;
-						else
-							ArticleComments.mostRecentCount++;
+		
+		function makeRequest(){
+			$.postJSON(wgScript, data, function(json) {
+				throbber.css('visibility', 'hidden');
+				if (!json.error) {
+					var parent,
+						subcomments,
+						parentId = json.parentId,
+						nodes = $(json.text);
 	
-						$('#article-comments-counter-recent').html($.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount));
+					if(parentId){
+						//second level: reply
+						parent = $('#comm-' + parentId);
+						subcomments = parent.next();
+	
+						if(!subcomments.hasClass('sub-comments')){
+							parent.after(subcomments = $('<ul class="sub-comments"></ul>'));
+						}
+	
+						subcomments.append(nodes);
+					}else{
+						//first level: comment
+						nodes.prependTo('#article-comments-ul');
 					}
+	
+					//update counter
+					$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
+	
+					if(window.skin == 'oasis'){
+						$('#WikiaPageHeader').find('.commentsbubble').html(json.counter);
+	
+						if(!parentId){
+							if(!ArticleComments.mostRecentCount)
+								ArticleComments.mostRecentCount = $('#article-comments-ul > li').length;
+							else
+								ArticleComments.mostRecentCount++;
+		
+							$('#article-comments-counter-recent').html($.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount));
+						}
+					}
+	
+					//readd events
+					ArticleComments.addHover();
+					//force to show 'edit' links for owners
+					ArticleComments.showEditLink();
+					//clear error box
+					$('#article-comm-info').html('');
+				} else {
+					//fill error box
+					$('#article-comm-info').html(json.msg);
 				}
+				$(e.data.source).removeAttr('readonly');
+				$(e.target).removeAttr('disabled');
+				$(e.data.source).val('');
+				ArticleComments.processing = false;
+				
+			});
 
-				//readd events
-				ArticleComments.addHover();
-				//force to show 'edit' links for owners
-				ArticleComments.showEditLink();
-				//clear error box
-				$('#article-comm-info').html('');
-			} else {
-				//fill error box
-				$('#article-comm-info').html(json.msg);
-			}
-			$(e.data.source).removeAttr('readonly');
-			$(e.target).removeAttr('disabled');
-			$(e.data.source).val('');
-			ArticleComments.processing = false;
-			
-		});
-		ArticleComments.processing = true;
+			ArticleComments.processing = true;
+		}
+
+		if(!ArticleComments.messagesLoaded){
+			$.getMessages('ArticleCommentsCounter', function(){
+				ArticleComments.messagesLoaded = true;
+				makeRequest();
+			});
+		}else{
+			makeRequest();
+		}
+
 		ArticleComments.log('end: postComment');
 	},
 
