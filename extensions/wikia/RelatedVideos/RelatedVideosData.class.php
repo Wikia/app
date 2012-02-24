@@ -3,10 +3,6 @@
 class RelatedVideosData {
 
 	protected static $theInstance = null;
-	protected static $memcKeyPrefix = 'RelatedVideosData';
-	protected static $memcTtl = 86400;
-	protected static $memcVer = 13;
-	protected $memcKey;
 
 	function __construct() {
 		
@@ -22,22 +18,35 @@ class RelatedVideosData {
 		} else {
 
 			if( WikiaVideoService::isVideoStoredAsFile() ) {
-				// TODO: this is work in progress, this doesn't work yet
-
 				$file = wfFindFile($title);
 
-				$data['external']		= false; // false means it is not set. Meaningful values: 0 and 1.
-				$data['id']				= $title->getArticleID();
-				$data['fullUrl']		= $title->getFullURL();
-				$data['prefixedUrl']	= $title->getPrefixedURL();
-				$data['description']	= $file->getDescription();
-				$data['duration']		= '';
-				$data['embedCode']		= $file->getEmbedCode( $videoWith, $autoplay );
-				$data['embedJSON']		= '';
-				$data['provider']		= '';
-				$data['thumbnailData']	= '';
-				$data['title']			= $file->getTitle()->getText();
-				$data['timestamp']		= $file->getTimestamp();
+				if( empty($file) || !is_object( $file) || !( $file instanceof WikiaLocalFile ) ) {
+					$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
+				} else {
+
+					$meta = $file->getMetadata();
+					$trans = $file->transform(array('width'=>$thumbnailWidth, 'height'=>-1));
+
+					$thumb = array(
+						'width' => $trans->width,
+						'height' => $trans->height,
+						'thumb' => $trans->url
+					);
+
+					$data['external']		= 0; // false means it is not set. Meaningful values: 0 and 1.
+					$data['id']				= $title->getArticleID();
+					$data['fullUrl']		= $title->getFullURL();
+					$data['prefixedUrl']	= $title->getPrefixedURL();
+					$data['description']	= $file->getDescription();
+					$data['duration']		= $meta['duration'];
+					$data['embedCode']		= null;
+					$data['embedJSON']		= null;
+					$data['provider']		= $file->minor_mime;
+					$data['thumbnailData']	= $thumb;
+					$data['title']			= $file->getTitle()->getText();
+					$data['timestamp']		= $file->getTimestamp();
+
+				}
 
 			} else {
 
@@ -55,7 +64,6 @@ class RelatedVideosData {
 				$data['thumbnailData']	= $videoPage->getThumbnailParams( $thumbnailWidth );
 				$data['title']			= $videoPage->getTitle()->getText();
 				$data['timestamp']		= $videoPage->getTimestamp();	//@todo for premium video, eventually use date published given by provider
-
 			}
 
 			$owner = '';
