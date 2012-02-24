@@ -3,7 +3,7 @@
 class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 
 	protected static $CACHE_KEY = 'realgravityapi';
-
+	
 	public function getDescription() {
 		$description = $this->getOriginalDescription();
 		if ($category = $this->getVideoCategory()) {

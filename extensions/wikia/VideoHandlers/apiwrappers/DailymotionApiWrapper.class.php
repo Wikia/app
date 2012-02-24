@@ -5,25 +5,6 @@ class DailymotionApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'https://api.dailymotion.com/video/$1?fields=id,title,tags,created_time,duration,channel,description,thumbnail_url,thumbnail_large_url,aspect_ratio';
 	protected static $CACHE_KEY = 'dailymotionapi';
 
-	public static function isHostnameFromProvider( $hostname ) {
-		return strpos($hostname, "WWW.DAILYMOTION") ? true : false;
-	}
-
-	public static function newFromUrl( $url ) {
-		$parsed = explode( "/", $url );
-		if( is_array( $parsed ) ) {
-			$mdata = array_pop( $parsed );
-			if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-				$videoId = $mdata;
-			} else {
-				$videoId = array_pop( $parsed );
-			}
-			return static( $videoId );
-		}
-
-		return null;
-	}
-
 	public function getDescription() {
 		$text = '';
 		if ( $this->getOrignalDescription() )
