@@ -296,7 +296,7 @@ class RenameUserProcess {
 		$newuser = User::newFromName($newTitle->getText(), 'creatable');
 		
 		// It won't be an object if for instance "|" is supplied as a value
-		if(!is_object($olduser)){
+		if( !($olduser instanceof User) ) {
 			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->oldUsername));
 			wfProfileOut(__METHOD__);
 			return false;
