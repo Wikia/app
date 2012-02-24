@@ -2,6 +2,14 @@
 class LatestPhotosModule extends Module {
 
 	const BLACKLIST_MESSAGE = 'Photosblacklist';
+	/**
+	 * The widht&height of cropped thumbnail fb#22163
+	 * 
+	 * @var int
+	 * 
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	const THUMB_SIZE = 82;
 
 	var $thumbUrls;
 	var $wgBlankImgUrl;
@@ -79,7 +87,7 @@ class LatestPhotosModule extends Module {
 
 		$file = $element['file'];
 		// crop the images correctly using extension:imageservice
-		$is = new ImageServing(array(), 82);
+		$is = new ImageServing(array(), self::THUMB_SIZE);
 		$thumb_url = $is->getThumbnails(array($file));
 		$thumb_url = array_pop($thumb_url);
 		$thumb_url = $thumb_url['url'];
