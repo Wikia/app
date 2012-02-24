@@ -296,20 +296,20 @@ class RenameUserProcess {
 		$newuser = User::newFromName($newTitle->getText(), 'creatable');
 		
 		// It won't be an object if for instance "|" is supplied as a value
-		if( !($olduser instanceof User) ) {
+		if( !is_object($olduser) ) {
 			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->oldUsername));
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+		
+		if( !is_object($newuser) || !User::isCreatableName($newuser->getName()) ) {
+			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->newUsername));
 			wfProfileOut(__METHOD__);
 			return false;
 		}
 		
 		$this->addInternalLog("user: old={$olduser->getName()}:{$olduser->getId()} new={$newuser->getName()}:{$newuser->getId()}");
 		
-		if(!is_object($newuser) || !User::isCreatableName($newuser->getName())){
-			$this->addError(wfMsgForContent('userrenametool-errorinvalid', $this->mRequestData->newUsername));
-			wfProfileOut(__METHOD__);
-			return false;
-		}
-
 		// Check for the existence of lowercase oldusername in database.
 		// Until r19631 it was possible to rename a user to a name with first character as lowercase
 		if($oldTitle->getText() !== $wgContLang->ucfirst( $oldTitle->getText())){
