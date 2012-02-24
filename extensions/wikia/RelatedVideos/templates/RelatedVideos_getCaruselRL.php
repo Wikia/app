@@ -55,7 +55,12 @@
 			<div class="button vertical secondary left scrollright">
 				<img src="<?=wfBlankImgUrl();?>" class="chevron" />
 			</div>
-			<div class="pagecount"><?= wfMsg('related-videos-pagination','<span class="page">1</span>','<span class="maxcount">'.$pageCount.'</span>');?></div>
+			<div class="pagecount">
+				<?= wfMsg(
+					'related-videos-pagination',
+					'<span class="page">'.($pageCount > 0 ? 1 : 0).'</span>',
+					'<span class="maxcount">'.$pageCount.'</span>');?>
+			</div>
 		</div>
 	</div>
 </div>
