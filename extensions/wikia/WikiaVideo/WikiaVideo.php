@@ -418,7 +418,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			$out = RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
 		}
 		else {
-			$out = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $title->getPrefixedText(), 'name=' . $title->getDBKey());
+			$out = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $title->getPrefixedText(), 'name=' . urlencode($title->getDBKey()));
 		}
 	} else {
 		$params = array_map( 'trim', explode( '|', $options) );
