@@ -25,6 +25,11 @@
 		}
 
 		public function addItem( $item ) {
+			if(!is_object($v)) {				
+				Wikia::log(__METHOD__,false,'BugID: 21498 - adding non-object to MenuUserCommand->items');
+				Wikia::logBacktrace(__METHOD__);
+			}
+			
 			$this->items[] = $item;
 		}
 
@@ -73,9 +78,15 @@
 		static protected function renderDataList( $list ) {
 			$result = array();
 			foreach ($list as $v) {
-				$item = $v->getRenderData();
-				if ($item)
-					$result[] = $item;
+				if(is_object($v)) {
+					$item = $v->getRenderData();
+					if ($item) {
+						$result[] = $item;
+					}
+				} else {
+					Wikia::log(__METHOD__,false,'BugID: 21498');
+					Wikia::logBacktrace(__METHOD__);
+				}
 			}
 			return $result;
 		}
