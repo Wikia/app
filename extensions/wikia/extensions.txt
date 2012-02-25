@@ -221,8 +221,6 @@ Search
 
 Shared Help
 
-Share Feature
-
 Show Performance Stats
 
 Signup
