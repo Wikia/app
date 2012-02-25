@@ -5,7 +5,7 @@ class SouthparkstudiosVideoHandler extends VideoHandler {
 	protected static $aspectRatio = 1.22866894;	// 360 x 293
 	protected static $urlTemplate = 'http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:$1';
 	
-	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false) {
+	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false) {
 		$height = $this->getHeight($width);
 		$url = str_replace('$1', $this->getEmbedVideoId(), static::$urlTemplate);
 		$autoplayStr = $autoplay ? 'true' : 'false';

@@ -39,11 +39,11 @@ class WikiaLocalFileShared  {
 	/*
 	 * Returns embed HTML
 	 */
-	public function getEmbedCode( $articleId, $width, $autoplay=false, $isAjax=false ){
+	public function getEmbedCode( $articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false ){
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty($handler) ){
 			$handler->setThumbnailImage($this->oFile->getThumbnail($width));			
-			return $handler->getEmbed( $articleId, $width, $autoplay, $isAjax );
+			return $handler->getEmbed( $articleId, $width, $autoplay, $isAjax, $postOnload );
 		} else {
 			return false;
 		}

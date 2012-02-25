@@ -195,33 +195,70 @@ class VideoEmbedTool {
 		$ns = $wgTitle->getNamespace();
 
 		$url = $wgRequest->getVal( 'url' );
-		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
-		$title = Title::makeTitle( NS_LEGACY_VIDEO, $tempname );
-		$video = new VideoPage( $title );
+		if ( !WikiaVideoService::isVideoStoredAsFile()
+		|| ( !WikiaVideoService::isUrlMatchThisWiki($url) && !WikiaVideoService::isUrlMatchWikiaVideoRepo($url) ) ) {
+			$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
+			$title = Title::makeTitle( NS_LEGACY_VIDEO, $tempname );
+			$video = new VideoPage( $title );
 
-		// todo some safeguard here to take care of bad urls
-		if( !$video->parseUrl( $url ) ) {
-			header('X-screen-type: error');
-			return wfMsg( 'vet-bad-url' );
+			// todo some safeguard here to take care of bad urls
+			if( !$video->parseUrl( $url ) ) {
+				header('X-screen-type: error');
+				return wfMsg( 'vet-bad-url' );
+			}
+
+			if( !$video->checkIfVideoExists() ) {
+				header('X-screen-type: error');
+				return wfMsg( 'vet-non-existing' );
+			}
+
+			$props['provider'] = $video->getProvider();
+			$props['id'] = $video->getVideoId();
+			$props['vname'] = $video->getVideoName();
+			$data = $video->getData();
+			if (is_array( $data ) ) {
+				$props['metadata'] = implode( ",", $video->getData() );
+			} else {
+				$props['metadata'] = '';
+			}
+
+			$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
+			$props['oname'] = '';
+			
 		}
+		else {
+			$file = null;
+			if ( WikiaVideoService::isUrlMatchThisWiki($url) ) {
+				$props['provider'] = VideoPage::V_LOCALVIDEO;
 
-		if( !$video->checkIfVideoExists() ) {
-			header('X-screen-type: error');
-			return wfMsg( 'vet-non-existing' );
-		}
+			}
+			else {	// assume url is on Wikia video repo
+				$props['provider'] = VideoPage::V_WIKIAVIDEO;
+			}
+			
+			// get the video name
+			$pattern = '/(File:|Video:)(.+)$/';
+			if (preg_match($pattern, $url, $matches)) {
+				$file = wfFindFile( $matches[2] );					
+			}
+			else {
+				header('X-screen-type: error');
+				return wfMsg( 'vet-bad-url' );					
+			}
 
-		$props['provider'] = $video->getProvider();
-		$props['id'] = $video->getVideoId();
-		$props['vname'] = $video->getVideoName();
-		$data = $video->getData();
-		if (is_array( $data ) ) {
-			$props['metadata'] = implode( ",", $video->getData() );
-		} else {
+			if ( !$file ) {
+				header('X-screen-type: error');
+				return wfMsg( 'vet-non-existing' );				
+			}
+			
+			$embedCode = $file->getEmbedCode( $wgTitle->getArticleID(), VIDEO_PREVIEW, false, false, true );
+			
+			$props['id'] = $file->getVideoId();
+			$props['vname'] = $file->getTitle()->getText();
+			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
+			$props['oname'] = '';			
 		}
-		
-		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
-		$props['oname'] = '';
 
 		return $this->detailsPage($props);
 	}
@@ -248,7 +285,6 @@ class VideoEmbedTool {
 	function insertFinalVideo() {
 		global $wgRequest, $wgUser, $wgContLang, $IP, $wgWikiaVideoInterwikiPrefix;
 		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
-//		require_once( "$IP/includes/wikia/services/WikiaVideoService.class.php" );
 
 		$type = $wgRequest->getVal('type');
 		$id = $wgRequest->getVal('id');

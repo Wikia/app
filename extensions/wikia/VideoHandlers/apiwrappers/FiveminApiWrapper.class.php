@@ -5,7 +5,23 @@ class FiveminApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_XML;
 	protected static $API_URL = 'http://api.5min.com/video/$1/info.xml?thumbnail_sizes=true';
 	protected static $CACHE_KEY = 'fivemin';
-	
+
+	public static function isMatchingHostname( $hostname ) {
+		return endsWith($hostname, "5min.com") ? true : false;
+	}
+
+	public static function newFromUrl( $url ) {
+		$parsed = explode( "/", $url );
+		if( is_array( $parsed ) ) {
+			$ids = array_pop( $parsed );
+			$parsed_twice = explode( "-", $ids );
+			return new static( array_pop( $parsed_twice ) );
+		}
+
+		return null;
+	}
+
+
 	public function getVideoTitle() {
 		return $this->interfaceObj['title'];
 	}

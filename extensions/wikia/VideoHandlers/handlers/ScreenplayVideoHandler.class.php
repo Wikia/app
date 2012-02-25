@@ -10,8 +10,7 @@ class ScreenplayVideoHandler extends VideoHandler {
 		return JWPlayer::getJavascriptPlayerUrl();
 	}
 	
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false) {
-		
+	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
 				
 		$file = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, $this->getAspectRatio() <= (4/3) ? ScreenplayApiWrapper::STANDARD_43_BITRATE_ID : ScreenplayApiWrapper::STANDARD_BITRATE_ID);
@@ -28,7 +27,7 @@ class ScreenplayVideoHandler extends VideoHandler {
 		$playerOptions = array();
 		$playerOptions['provider'] = 'video';
 		
-		return JWPlayer::getEmbedCode($articleId, $this->getVideoId(), $file, $this->getTitle(), $width, $height, true, $this->getDuration(), $this->isHd(), $hdfile, $thumbUrl, $cat['short'], $autoplay, $isAjax, $playerOptions);
+		return JWPlayer::getEmbedCode($articleId, $this->getVideoId(), $file, $this->getTitle(), $width, $height, true, $this->getDuration(), $this->isHd(), $hdfile, $thumbUrl, $cat['short'], $autoplay, $isAjax, $postOnload, $playerOptions);
 	}
 	
 	protected function getFileUrl($type, $bitrateid) {

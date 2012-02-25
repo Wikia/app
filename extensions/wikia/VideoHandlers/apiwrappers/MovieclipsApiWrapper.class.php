@@ -7,6 +7,20 @@ class MovieclipsApiWrapper extends ApiWrapper {
 	protected static $CACHE_KEY = 'movieclipsapi';
 	protected static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
 
+	public static function isMatchingHostname( $hostname ) {
+		return endsWith($hostname, "movieclips.com" ) ? true : false;
+	}
+
+	public static function newFromUrl( $url ) {
+		$url = trim($url, '/');
+		$parsed = explode( "/", $url );
+		if( is_array( $parsed ) ) {
+			return new static( array_pop( $parsed ) );
+		}
+
+		return null;
+	}
+
 	public function getTitle() {
 		if (!empty($this->metadata['title'])) {
 			return $this->metadata['title'];

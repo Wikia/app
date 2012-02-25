@@ -111,4 +111,24 @@ class WikiaVideoService extends Service {
 	public static function useVideoHandlersExtForEmbed() {
 		return !empty(F::app()->wg->embedVideosUseVideoHandlersExt);		
 	}
+	
+	/**
+	 * Could the given URL exist on this wiki? Does not actually check if
+	 * video exists.
+	 * @param string $url
+	 * @return boolean
+	 */
+	public static function isUrlMatchThisWiki($url) {
+		return stripos( $url, F::app()->wg->server ) !== false;
+	}
+	
+	/**
+	 * Could the given URL exist on the Wikia video repository? Does not
+	 * actually check if video exists.
+	 * @param string $url
+	 * @return boolean
+	 */
+	public static function isUrlMatchWikiaVideoRepo($url) {
+		return stripos( $url, F::app()->wg->wikiaVideoRepoPath ) !== false;
+	}
 }

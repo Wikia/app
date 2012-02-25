@@ -5,7 +5,7 @@ class MetacafeVideoHandler extends VideoHandler {
 	protected $apiName = 'MetacafeApiWrapper';
 	protected static $urlTemplate = 'http://www.metacafe.com/fplayer/$1/.swf';
 	
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false) {
+	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload = false) {
 		$height =  $this->getHeight( $width );
 		$sAutoPlay = $autoplay  ? 'yes' : 'no';
 		$url = str_replace('$1', $this->videoId,  self::$urlTemplate);

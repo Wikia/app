@@ -25,7 +25,7 @@ class JWPlayer {
 		return self::getAssetUrl($wgExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_JS, self::JWPLAYER_VERSION);
 	}
 	
-	public static function getEmbedCode($articleId, $videoid, $url, $title, $width, $height, $showAd, $duration, $isHd, $hdfile='', $thumbUrl='', $cityShort='life', $autoplay=true, $isAjax=true, $playerOptions=array()) {
+	public static function getEmbedCode($articleId, $videoid, $url, $title, $width, $height, $showAd, $duration, $isHd, $hdfile='', $thumbUrl='', $cityShort='life', $autoplay=true, $isAjax=true, $postOnload=false, $playerOptions=array()) {
 		global $wgExtensionsPath;
 		
 		$jwplayerData = array();
@@ -135,9 +135,24 @@ class JWPlayer {
 			$code = <<<EOT
 <div id="{$jwplayerData['playerId']}"></div>
 <script type="text/javascript">
+EOT;
+			if (!$postOnload) {
+				$code .= <<<EOT
 	wgAfterContentAndJS.push( function() {
+EOT;
+			}
+			
+			$code .= <<<EOT
 		$.getScript("{$jwplayerData['jwplayerjs']}", function() { jwplayer("{$jwplayerData['playerId']}").setup($sJSON); });
-	});
+EOT;
+		
+			if (!$postOnload) {
+				$code .= <<<EOT
+	});       
+EOT;
+			}
+			
+			$code .= <<<EOT
 </script>
 EOT;
 		}

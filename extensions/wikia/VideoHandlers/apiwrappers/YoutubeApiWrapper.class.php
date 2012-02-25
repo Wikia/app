@@ -4,7 +4,44 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1?v=2&alt=json';
 	protected static $CACHE_KEY = 'youtubeapi';
-	
+
+	public static function isMatchingHostname( $hostname ) {
+		return endsWith($hostname, "youtube.com")
+			|| endsWith($hostname, "youtu.be" ) ? true : false;
+	}
+
+	public static function newFromUrl( $url ) {
+
+		$aData = array();
+
+		$id = '';
+		$parsedUrl = parse_url( $url );
+		if ( !empty( $parsedUrl['query'] ) ){
+			parse_str( $parsedUrl['query'], $aData );
+		};
+		if ( isset( $aData['v'] ) ){
+			$id = $aData['v'];
+		}
+
+		if( empty( $id ) ){
+			$parsedUrl = parse_url( $url );
+
+			$aExploded = explode( '/', $parsedUrl['path'] );
+			$id = array_pop( $aExploded );
+		}
+
+		if( false !== strpos( $id, "&" ) ){
+			$parsedId = explode("&",$id);
+			$id = $parsedId[0];
+		}
+
+		if ($id) {
+			return new static( $id );
+		}
+
+		return null;
+	}
+
 	public function getDescription() {
 		$text = '';
 		if ( $this->getVideoCategory() ) $text .= 'Category: ' . $this->getVideoCategory();
