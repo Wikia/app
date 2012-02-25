@@ -10,7 +10,7 @@ class RealgravityVideoHandler extends VideoHandler {
 	protected $apiName = 'RealgravityApiWrapper';
 	protected static $aspectRatio = 1.3333333;
 
-	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false) {
+	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false) {
 
 		$height = $this->getHeight($width);
 

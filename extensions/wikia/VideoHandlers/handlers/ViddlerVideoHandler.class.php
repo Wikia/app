@@ -5,7 +5,7 @@ class ViddlerVideoHandler extends VideoHandler {
 	protected static $aspectRatio = 1.56160458;
 	protected static $urlTemplate = 'http://www.viddler.com/player/$1/';
 	
-	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false) {
+	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false) {
 		$height = $this->getHeight($width);
 		$url = str_replace('$1', $this->getEmbedVideoId(), static::$urlTemplate);
 		$embedVideoId = $this->getEmbedVideoId();

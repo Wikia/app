@@ -28,7 +28,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * Returns embed code for a provider
 	 * @return string Embed HTML
 	 */
-	abstract function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false );
+	abstract function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false );
 
 	function setVideoId( $videoId ){
 		$this->videoId = $videoId;

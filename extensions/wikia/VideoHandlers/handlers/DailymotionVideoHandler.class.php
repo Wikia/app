@@ -5,7 +5,7 @@ class DailymotionVideoHandler extends VideoHandler {
 	protected $apiName = 'DailymotionApiWrapper';
 	protected static $aspectRatio = 1.7777778;
 	
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false ) {
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
 		$autoStartParam = $autoplay ? '1' :  '0';
 		$code = <<<EOT

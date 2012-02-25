@@ -4,6 +4,28 @@ class BliptvApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://blip.tv/a/b-$1?skin=json';
 	protected static $CACHE_KEY = 'bliptvapi';
 
+	protected static function isMatchingHostname( $hostname ) {
+		return endsWith($hostname, "blip.tv") ? true : false;
+	}
+
+	public static function newFromUrl( $url ) {
+		$parsed = explode( "/", $url );
+		if( is_array( $parsed ) ) {
+			$mdata = array_pop( $parsed );
+			if ( '' != $mdata ) {
+				$blip = $mdata;
+			} else {
+				$blip = array_pop( $parsed );
+			}
+			$last = explode( "?", $blip);
+			$videoId = $last[0];
+			return new static( $videoId );
+		}
+
+		return null;
+	}
+
+
 	protected function processResponse($response, $type) {
 			
 		$replaced_count = 0;

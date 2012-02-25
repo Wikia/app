@@ -10,14 +10,13 @@ class VimeoVideoHandler extends VideoHandler {
 		return ''; //JWPlayer::getJavascriptPlayerUrl();
 	}
 	
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false ) {
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 		return $this->getEmbedNative( $width, $autoplay );
 	}
 		
 	private function getEmbedNative( $width, $autoplay = false ) {
-		$params['autoplay'] = ($autoplay) ? 1 : 0;
-		$qs = http_build_query( $params );
 		$height =  $this->getHeight( $width );
-		return '<iframe src="http://player.vimeo.com/video/'.$this->videoId.'?autoplay=1" width="'.$width.'" height="'.$height.'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+		$autoplayStr = $autoplay ? '1' : '0';
+		return '<iframe src="http://player.vimeo.com/video/'.$this->videoId.'?autoplay='.$autoplayStr.'" width="'.$width.'" height="'.$height.'" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
 	}	
 }

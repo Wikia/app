@@ -5,7 +5,7 @@ class BliptvVideoHandler extends VideoHandler {
 	protected $apiName = 'BliptvApiWrapper';
 	protected static $aspectRatio = 1.7777778;
 	
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false ) {
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
 		$embedVideoId = $this->getEmbedVideoId();
         $autoStartParam = $autoplay ? 'true' :  'false';

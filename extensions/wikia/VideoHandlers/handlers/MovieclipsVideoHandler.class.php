@@ -6,7 +6,7 @@ class MovieclipsVideoHandler extends VideoHandler {
 	protected static $aspectRatio = 1.84210526;	// 560 x 304
 	protected static $urlTemplate = 'http://movieclips.com/e/';
 	
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false) {
+	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
 		
 		$url = self::$urlTemplate . $this->videoId . '/';

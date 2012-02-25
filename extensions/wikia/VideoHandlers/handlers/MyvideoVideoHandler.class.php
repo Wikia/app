@@ -6,7 +6,7 @@ class MyvideoVideoHandler extends VideoHandler {
 	protected static $aspectRatio = 1.59530026;	// 611 x 383
 	protected static $urlTemplate = 'http://www.myvideo.de/movie/';
 	
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false) {
+	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
 		
 		$url = self::$urlTemplate . $this->videoId;
