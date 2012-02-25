@@ -3,7 +3,7 @@
 		<?php foreach($items as $item): ?>
 			<dt>
 				<a href="<?= $item['href']; ?>"><b><?= $item['title']; ?></b></a>
-				<?php if( $item['date'] ): ?>
+				<?php if( !empty($item['date']) ): ?>
 					(<?= $item['date']; ?>)
 				<?php endif; ?>
 			</dt>

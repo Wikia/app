@@ -12,6 +12,7 @@ class WikiaRssModel {
 	private $filter = array();
 	private $filterout = array();
 	private $parseError = false;
+	private $nojs = false;
 	
 	public function __construct($input) {
 		$this->parseFields($input);
@@ -50,7 +51,7 @@ class WikiaRssModel {
 	public function getRssAttributes() {
 		$attrs = array();
 		
-		foreach(array('id', 'url', 'charset', 'maxheads', 'short', 'reverse', 'dateFormat', 'highlight', 'filter', 'filterout') as $attr) {
+		foreach(array('id', 'url', 'charset', 'maxheads', 'short', 'reverse', 'dateFormat', 'highlight', 'filter', 'filterout', 'nojs') as $attr) {
 			$attrs[$attr] = $this->$attr;
 		}
 		
@@ -125,6 +126,11 @@ class WikiaRssModel {
 					$this->$option = explode(' ', trim($this->$option));
 				}
 			}
+
+			if( isset($args['nojs']) ) {
+				$this->nojs = true;
+			}
+			
 		} else {
 			$this->parseError = true;
 		}

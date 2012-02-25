@@ -17,8 +17,14 @@ class WikiaRssHelper {
 		//wfDebug( "soft disable Cache (wikia rss)\n" );
 		
 		$html = '';
-		$html .= self::getJSSnippet($rss->getRssAttributes());
-		$html .= $rss->getPlaceholder();
+		$options = $rss->getRssAttributes();
+		if ( array_key_exists('nojs', $options) && $options['nojs'] ) {
+			$response =  $app->sendRequest( 'WikiaRssExternalController', 'getRssFeeds', array( 'options' => $options ) );
+			$html .= $response->getVal( 'html', '' );
+		} else {
+			$html .= self::getJSSnippet( $options );
+			$html .= $rss->getPlaceholder();
+		}
 		
 		return $html;
 	}
