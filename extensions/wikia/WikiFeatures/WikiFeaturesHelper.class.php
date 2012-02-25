@@ -86,7 +86,7 @@ class WikiFeaturesHelper extends WikiaModel {
 					'name' => $feature, 
 					'enabled' => $this->getFeatureEnabled($feature),
 					'new' => self::isNew($feature),
-					'active' => $this->getNumActiveWikis($feature),
+					'active' => $this->wg->Lang->formatNum( $this->getNumActiveWikis( $feature ) ),
 				);
 			}
 		}
