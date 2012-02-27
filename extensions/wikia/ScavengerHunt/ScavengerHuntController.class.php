@@ -101,7 +101,7 @@ class ScavengerHuntController extends WikiaController {
 		$factory = WF::build( 'ScavengerHuntGames' );
 		$gameId =  $this->getVal( 'gameId', '' );
 		$readWrite =  $this->getVal( 'readwrite', 0 );
-		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $gameId, ( $readWrite ? 1 : 0 ) );
+		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $gameId, ( $readWrite ? 1 : 0 ), ScavengerHuntGames::CACHE_VERSION );
 
 		$this->setVal(
 			'key', $key
