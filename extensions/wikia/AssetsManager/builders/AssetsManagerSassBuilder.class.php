@@ -2,11 +2,15 @@
 
 /**
  * @author Inez Korczyński <korczynski@gmail.com>
+ * @author Piotr Bablok <piotr.bablok@gmail.com>
  */
 
 class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 	public function __construct(WebRequest $request) {
+		global $wgDevelEnvironment, $wgSpeedBox;
+		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
+
 		parent::__construct($request);
 
 		if (strpos($this->mOid, '..') !== false) {
@@ -17,12 +21,44 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			throw new Exception('Requested file must be .scss.');
 		}
 
-		$this->sassProcessing();
-		$this->importsProcessing();
-		$this->stylePathProcessing();
-		$this->janusProcessing();
+		if (startsWith($this->mOid, '/', false)) {
+			$this->mOid = substr( $this->mOid, 1);
+		}
+
+		if( $wgDevelEnvironment && $wgSpeedBox ) {
+			$hash = wfAssetManagerGetSASShash( $this->mOid );
+			$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
+
+			$cacheId = "/Sass-$inputHash-$hash";
+			//$cacheFile = $tempDir . $cacheId;
+			$memc = F::App()->wg->Memc;
+
+			if ( $obj = $memc->get( $cacheId ) ) {
+				$this->mContent = $obj;
+			} else {
+				$this->sassProcessing();
+				$this->importsProcessing();
+				$this->stylePathProcessing();
+				$this->janusProcessing();
+				$memc->set( $cacheId, $this->mContent );
+			}
+		} else {
+			$this->sassProcessing();
+			$this->importsProcessing();
+			$this->stylePathProcessing();
+			$this->janusProcessing();
+		}
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
+
+
+		if( $wgDevelEnvironment ) {
+			$timeEnd = microtime( true );
+			$time = intval( ($timeEnd - $timeStart) * 1000 );
+			$contentLen = strlen( $this->mContent);
+			error_log( "{$this->mOid}\t{$time}ms {$contentLen}b" );
+		}
+
 	}
 
 	private function sassProcessing() {
@@ -34,7 +70,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$tempDir = str_replace('\\', '/', $tempDir);
 		$params = urldecode(http_build_query($this->mParams, '', ' '));
 
-		$cmd = "{$wgSassExecutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir} --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
+		$cmd = "{$wgSassExecutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir}/sass --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
 		$escapedCmd = escapeshellcmd($cmd) . " 2>&1";
 
 		$sassResult = shell_exec($escapedCmd);
@@ -42,7 +78,9 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			Wikia::log(__METHOD__, false, "commandline error: " . $sassResult. " -- Full commandline was: $escapedCmd", true /* $always */);
 			Wikia::log(__METHOD__, false, "Full commandline was: {$escapedCmd}", true /* $always */);
 			Wikia::log(__METHOD__, false, AssetsManager::getRequestDetails(), true /* $always */);
-			unlink($tempOutFile);
+			if ( file_exists( $tempOutFile ) ) {
+				unlink($tempOutFile);
+			}
 			throw new Exception('Problem with SASS processing. Check the PHP error log for more info.'); // TODO: Should these exceptions be wrapped as comments like in the old system?
 		}
 
