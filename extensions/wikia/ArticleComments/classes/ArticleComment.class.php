@@ -734,7 +734,7 @@ class ArticleComment {
 		 * because we save different tile via Ajax request TODO: fix it !! 
 		 */
 		$wgTitle = $commentTitle;
-		
+
 		if( !($commentTitle instanceof Title) ) {
 			return false;
 		}
@@ -795,11 +795,12 @@ class ArticleComment {
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}
-				
-				if ( empty( $commentId ) && !empty($comment->mTitle) ) {
-					$ok = self::addArticlePageToWatchlist($comment, $commentId) ;
+
+				if ( !empty($comment->mTitle) ) {
+					$ok = self::addArticlePageToWatchlist( $comment ) ;
+
 				}
-				
+
 				$message = false;
 				
 				//commit before purging
@@ -825,9 +826,9 @@ class ArticleComment {
 		return $res;
 	}
 
-	static public function addArticlePageToWatchlist($comment, $commentId) {
+	static public function addArticlePageToWatchlist( $comment ) {
 		global $wgUser, $wgEnableArticleWatchlist, $wgBlogsEnableStaffAutoFollow;
-		
+
 		if(!wfRunHooks( 'ArticleCommentBeforeWatchlistAdd', array( $comment ) )) {
 			return true;
 		}
