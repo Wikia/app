@@ -185,7 +185,8 @@ function getLinkSuggest() {
 			" page_title_lower >= '{$query}' ",
 			" page_title_lower < '{$queryUpper}' ",
 			" page_namespace IN (" . implode(',', $namespaces) . ")",
-			" page_status = 0 "
+			" page_status = 0 ",
+                        " page_is_redirect = 0"
 		),
 		__METHOD__,
 		array(
