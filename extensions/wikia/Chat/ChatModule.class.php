@@ -42,7 +42,7 @@ class ChatModule extends Module {
 		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::INLINE); // package defined in Chat_setup.php
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
-
+		
 		// Variables for this user
 		$this->username = $wgUser->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, ChatModule::CHAT_AVATAR_DIMENSION);
@@ -51,15 +51,13 @@ class ChatModule extends Module {
 		$this->roomName = $this->roomTopic = "";
 		$this->roomId = NodeApiClient::getDefaultRoomId($this->roomName, $this->roomTopic);
 		$this->roomId = (int) $this->roomId;
-		$this->roomId = (int) $this->roomId;
 		
 		// Set the hostname of the node server that the page will connect to.
-		$this->nodePort = NodeApiClient::PORT;
-		if($wgDevelEnvironment){
-			$this->nodeHostname = NodeApiClient::HOST_DEV_FROM_CLIENT;
-		} else {
-			$this->nodeHostname = NodeApiClient::HOST_PRODUCTION_FROM_CLIENT;
-		}
+
+		$server = ChatHelper::getServer('Main');
+		
+		$this->nodePort = $server['port'];
+		$this->nodeHostname = $server['host'];
 
 		// Some building block for URLs that the UI needs.
 		$this->pathToProfilePage = Title::makeTitle( NS_USER, '$1' )->getFullURL();
@@ -101,7 +99,7 @@ class ChatModule extends Module {
 				}
 			}
 			if (!$this->wordmarkThumbnailUrl) {
-				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($this->themeSettings['wordmark-image-url']);			
+				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($themeSettings['wordmark-image-url']);			
 			}
 		}
 		
@@ -111,7 +109,7 @@ class ChatModule extends Module {
 		wfProfileOut( __METHOD__ );
 	}
 	
-	/*
+	/**
 	 * adding js variable
 	 */
 	
