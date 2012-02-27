@@ -72,6 +72,8 @@ WikiaTracker.track = function(page, profile, events) {
 		sample = this.profileRates[profile];
 	}
 
+	if (sample != 100) sample = 10;
+
 	this.debug('sample rate is ' + sample, 7);
 
 	// temp switched to GA sampling (BugId: 20284)
