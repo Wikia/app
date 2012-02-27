@@ -502,6 +502,7 @@ class LoginForm {
 		global $wgUser, $wgAuth;
 
 		/* Wikia change - begin */
+		global $wgOut;
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return false;
