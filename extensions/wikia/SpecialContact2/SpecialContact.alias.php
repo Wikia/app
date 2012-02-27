@@ -15,3 +15,7 @@ $aliases['de'] = array(
 $aliases['es'] = array(
     'Contact' => array(  'Contactar',  ),
 );
+
+$aliases['pl'] = array(
+	'Contact' => array( 'Kontakt' ),
+);
