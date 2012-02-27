@@ -1270,6 +1270,7 @@ function WMU_switchScreen(to) {
 	$G('ImageUpload' + WMU_curScreen).style.display = '';
 	if(WMU_curScreen == 'Main') {
 		$G('ImageUploadBack').style.display = 'none';
+		WMU_loadMain();
 	}
 	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $G('ImageUploadName')) {
 		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $G('ImageUploadMWname').value + '&tempid=' + $G( 'ImageUploadTempid' ).value );
