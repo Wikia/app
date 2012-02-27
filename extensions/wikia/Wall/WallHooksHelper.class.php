@@ -210,7 +210,7 @@ class WallHooksHelper {
 					$contentActions['user-profile'] = array(
 							'class' => false,
 							'href' => $user->getUserPage()->getFullUrl(),
-							'text' => $app->wf->Msg('user-page'),
+							'text' => $app->wf->Msg('nstab-user'),
 					);
 				}
 
@@ -992,7 +992,7 @@ class WallHooksHelper {
 			//created in WallHooksHelper::getMessageOptions()
 			//and there is not needed to be passed to wfMsg()
 			unset($wfMsgOpts['isThread'], $wfMsgOpts['isNew']);
-			
+
 			switch($rc->getAttribute('rc_log_action')) {
 				case 'wall_remove':
 					$actionText = wfMsgExt('wall-recentchanges-wall-removed-'.$msgType, array('parseinline'), $wfMsgOpts);
@@ -1008,9 +1008,9 @@ class WallHooksHelper {
 				break;
 			}
 		}
-		
+
 		$actionText = ' '.$actionText;
-		
+
 		return true;
 	}
 
@@ -1360,7 +1360,7 @@ class WallHooksHelper {
 			$parts = explode('/', $title->getText());
 			$username = empty($parts[0]) ? '':$parts[0];
 
-			if( $user->isAllowed('walledit') || $user->getName() == $username   ) {
+			if( $user->isAllowed('walledit') || $user->getName() == $username ) {
 				$result = null;
 				return true;
 			} else {
@@ -1579,13 +1579,13 @@ class WallHooksHelper {
 	 */
 	private function getMessageOptions($rc = null, $row = null) {
 		$helper = F::build('WallHelper', array());
-		
+
 		if( !is_null($rc) ) {
 			$actionUser = $rc->getAttribute('rc_user_text');
 		} else {
 			$actionUser = '';
 		}
-		
+
 		if( is_object($row) ) {
 			$objTitle = F::build('Title', array($row->page_title, $row->page_namespace), 'newFromText');
 			$userText = !empty($row->rev_user_text) ? $row->rev_user_text : '';
@@ -1612,7 +1612,7 @@ class WallHooksHelper {
 
 		$parts = explode('/@', $objTitle->getText());
 		$isThread = ( count($parts) === 2 ) ? true : false;
-		
+
 		$app = F::app();
 		$articleTitleTxt = $this->getParentTitleTxt($objTitle);
 		$wm = F::build('WallMessage', array($objTitle));
@@ -1623,7 +1623,7 @@ class WallHooksHelper {
 		$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
 		$wallNamespace = $app->wg->Lang->getNsText(NS_USER_WALL);
 		$wallUrl = $wallNamespace.':'.$userText;
-		
+
 		return array(
 			$articleUrl,
 			$articleTitleTxt,
@@ -1680,13 +1680,13 @@ class WallHooksHelper {
 		$app = F::App();
 		$diff = $app->wg->request->getVal('diff', false);
 		$oldId = $app->wg->request->getVal('oldid', false);
-		
+
 		if( $app->wg->Title instanceof Title && $app->wg->Title->getNamespace() === NS_USER_WALL_MESSAGE ) {
 			$metaTitle = $this->getMetatitleFromTitleObject($app->wg->Title);
 			$differenceEngine->mOldPage->mPrefixedText = $metaTitle;
 			$differenceEngine->mNewPage->mPrefixedText = $metaTitle;
 		}
-		
+
 		return true;
 	}
 
@@ -1723,7 +1723,7 @@ class WallHooksHelper {
 	 */
 	private function getMetatitleFromTitleObject($title, &$wmRef = null) {
 		$wm = F::build('WallMessage', array($title));
-		
+
 		if( $wm instanceof WallMessage ) {
 			$wm->load();
 			$metaTitle = $wm->getMetaTitle();
@@ -1735,18 +1735,18 @@ class WallHooksHelper {
 					if( !is_null($wmRef) ) {
 						$wmRef = $wmParent;
 					}
-					
+
 					return $wmParent->getMetaTitle();
 				}
 			}
-			
+
 			if( !is_null($wmRef) ) {
 				$wmRef = $wm;
 			}
-			
+
 			return $metaTitle;
 		}
-		
+
 		return '';
 	}
 
