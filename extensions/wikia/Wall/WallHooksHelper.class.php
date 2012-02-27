@@ -290,11 +290,23 @@ class WallHooksHelper {
 	/**
 	 * @brief add history to wall toolbar
 	 **/
-	function onBeforeToolbarMenu(&$items) {
+	function onBeforeToolbarMenu(&$items) {		
 		$app = F::app();
 		$title = $app->wg->Title;
 		$action = $app->wg->Request->getText('action');
-
+		
+		if ($title instanceof Title && $title->getNamespace() === NS_USER_WALL_MESSAGE) {
+			if ( is_array($items) ) {
+				foreach($items as $k=>$value) {				
+					if( $value['type'] == 'follow' ) {
+						unset($items[$k]);
+						break;
+					}
+				}
+				
+			}
+		}
+		
 		if( $title instanceof Title && $title->getNamespace() === NS_USER_WALL_MESSAGE || $title->getNamespace() === NS_USER_WALL  && !$title->isSubpage() && empty($action) ) {
 			$item = array(
 					'type' => 'html',
