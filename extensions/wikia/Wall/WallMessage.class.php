@@ -410,7 +410,6 @@ class WallMessage {
 	}
 
 	public function addWatch(User $user) {
-		error_log('========================= WallMessage::addWatch');
 		$user->addWatch($this->title);
 	}
 
