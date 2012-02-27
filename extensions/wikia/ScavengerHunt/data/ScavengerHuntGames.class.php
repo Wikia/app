@@ -2,6 +2,7 @@
 class ScavengerHuntGames {
 
 	const GAMES_TABLE_NAME = "scavenger_hunt_games";
+	const CACHE_VERSION = 1;
 
 	protected $app = null;
 	protected $gamesFound = array();
@@ -62,7 +63,7 @@ class ScavengerHuntGames {
 	}
 
 	public function findEnabledById( $id, $readWrite = false ) {
-		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $id, ( $readWrite ? 1 : 0 ), 1 );
+		$key = wfSharedMemcKey( 'ScavengerHuntGameIndex', $id, ( $readWrite ? 1 : 0 ), self::CACHE_VERSION );
 		$row = $this->getCache()->get( $key );
 		if ( empty( $row ) ){
 			$row = $this->findById(
@@ -283,13 +284,15 @@ class ScavengerHuntGames {
 					->delete( wfSharedMemcKey(
 						'ScavengerHuntGameIndex',
 						$game->getId(),
-						0
+						0,
+						self::CACHE_VERSION
 					));
 				$this	->getCache()
 					->delete( wfSharedMemcKey(
 						'ScavengerHuntGameIndex',
 						$game->getId(),
-						1
+						1,
+						self::CACHE_VERSION
 					));
 				$this->purgeURL( $url );
 				foreach( $oldGame->getArticleURLs() as $url ){
