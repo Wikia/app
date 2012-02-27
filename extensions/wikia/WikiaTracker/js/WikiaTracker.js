@@ -72,8 +72,6 @@ WikiaTracker.track = function(page, profile, events) {
 		sample = this.profileRates[profile];
 	}
 
-	if (sample != 100) sample = 10;
-
 	this.debug('sample rate is ' + sample, 7);
 
 	// temp switched to GA sampling (BugId: 20284)
@@ -93,6 +91,8 @@ WikiaTracker.track = function(page, profile, events) {
 
 WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
+
+	if (sample != 100) sample = 10;
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
