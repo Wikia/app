@@ -215,12 +215,15 @@ class AssetsManager {
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
-		global $wgAssetsManagerQuery;
+		global $wgAssetsManagerQuery, $IP, $wgSpeedBox, $wgDevelEnvironment;
+		$cb = $wgSpeedBox && $wgDevelEnvironment ?
+			hexdec(substr(wfAssetManagerGetSASShash( $IP.'/'.$oid ),0,6)) :
+			$this->mCacheBuster;
 		return sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
 			/* 2 */ $oid,
 			/* 3 */ !empty($params) ? urlencode(http_build_query($params)) : '-',
-			/* 4 */ $this->mCacheBuster);
+			/* 4 */ $cb);
 	}
 
 

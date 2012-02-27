@@ -1533,6 +1533,50 @@ function wfGetBeaconId() {
 }
 
 /**
+ * @brief Function that calculates content hash including dependencies for SASS files
+ *
+ * @author Piotr Bablok <piotr.bablok@gmail.com>
+ */
+function wfAssetManagerGetSASShash( $file ) {
+	$processedFiles = array();
+	$hash = '';
+	wfAssetManagerGetSASShashCB( $file, $processedFiles, $hash );
+	return md5($hash); // shorten it
+}
+
+function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
+	if ( !file_exists( $file ) ) {
+		$parts = explode('/', $file);
+		$filename = array_pop($parts);
+		$alter = implode('/',$parts) . '/_' . $filename . '.scss';
+		if ( file_exists( $alter ) ) {
+			$file = $alter;
+		} else {
+			return;
+		}
+	}
+	$file = realpath( $file );
+	if ( isset($processedFiles[$file]) ) return;
+	$processedFiles[$file] = true;
+
+	//error_log( 'Processing: ' . $file );
+	$contents = file_get_contents($file);
+	$hash .= md5( $contents );
+
+	preg_replace_callback('/\\@import(\\s)*\\"([^\\"]*)\\"/', function($match) use($file, &$processedFiles, &$hash) {
+		global $IP;
+		if ( startsWith( $match[2], '/' ) ) {
+			$newfile = $IP . $match[2];
+		} else {
+			$newfile = dirname( $file ) . '/' . $match[2];
+		}
+		//error_log( $match[2] . " ::: " . $newfile );
+		wfAssetManagerGetSASShashCB( $newfile, $processedFiles, $hash );
+	}, $contents);
+}
+
+
+/**
  * Defines error handler to log backtrace for PHP (catchable) fatal errors
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>
