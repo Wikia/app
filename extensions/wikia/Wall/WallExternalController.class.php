@@ -37,13 +37,13 @@ class WallExternalController extends WikiaController {
 		
 		if($this->wg->User->getId() > 0  && !$wallMessage->isWallOwner($this->wg->User) ) {
 			if($isWatched) {
-				$wallMessage->removeWatch($this->wg->User);	
+				$wallMessage->removeWatch($this->wg->User);
 			} else {
 				$wallMessage->addWatch($this->wg->User);
 			}
 			
-			$this->response->setVal('status', true);	
-		}	
+			$this->response->setVal('status', true);
+		}
 	}
 
 	public function previewMessage() {
