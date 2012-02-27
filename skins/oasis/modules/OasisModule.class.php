@@ -235,33 +235,36 @@ class OasisModule extends Module {
 		wfProfileOut(__METHOD__);
 	}
 
-	// TODO: implement as a separate module?
-	private function loadJs() {
-		function rewriteJSlinks( &$link ) {
-			global $IP;
-			$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
-			if( count($parts) == 2 ) {
-				//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
-				$hash = filemtime( $IP . '/' . $parts[0]);
-				$link = $parts[0].'?cb='.$hash;
-			} else {
-				$ret = preg_replace_callback(
-					'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
-					function($matches) {
-						global $IP, $wgStyleVersion;
-						$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
-						//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
-						$hash = filemtime( $IP . '/' . $filename[0] );
-						return str_replace( $wgStyleVersion, $hash, $matches[0]);
-					},
-					$link
-				);
-				if ( $ret ) {
-					$link = $ret;
-				}
+	private function rewriteJSlinks( &$link ) {
+		global $IP;
+		$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
+		if( count($parts) == 2 ) {
+			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
+			$hash = filemtime( $IP . '/' . $parts[0]);
+			$link = $parts[0].'?cb='.$hash;
+		} else {
+			$ret = preg_replace_callback(
+				'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
+				function($matches) {
+					global $IP, $wgStyleVersion;
+					$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
+					//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
+					$hash = filemtime( $IP . '/' . $filename[0] );
+					return str_replace( $wgStyleVersion, $hash, $matches[0]);
+				},
+				$link
+			);
+			if ( $ret ) {
+				$link = $ret;
 			}
-			//error_log( $link );
 		}
+		//error_log( $link );
+	}
+
+	// TODO: implement as a separate module?
+
+	private function loadJs() {
+
 		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment;
 		wfProfileIn(__METHOD__);
 
@@ -278,7 +281,7 @@ class OasisModule extends Module {
 		$wslFiles = AssetsManager::getInstance()->getGroupCommonURL('wsl');
 		foreach($wslFiles as $wslFile) {
 			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				rewriteJSlinks( $wslFile );
+				$this->rewriteJSlinks( $wslFile );
 			}
 			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$wslFile\"></script>";
 		}
@@ -338,7 +341,7 @@ class OasisModule extends Module {
 
 		if( $wgSpeedBox && $wgDevelEnvironment ) {
 			foreach($jsReferences as &$ref) {
-				rewriteJSlinks( $ref );
+				$this->rewriteJSlinks( $ref );
 			}
 		}
 
