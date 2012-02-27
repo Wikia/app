@@ -16,7 +16,7 @@ function efDisplayMessageDocumentation( $editPage ) {
 		return true;
 	}
 
-	$docTitle = Title::newFromText( $wgTitle->getText() . '/qqq', NS_MEDIAWIKI );
+	$docTitle = Title::newFromText( $wgTitle->getBaseText() . '/qqq', NS_MEDIAWIKI );
 	$docArticle = new Article( $docTitle );
 
 	$wikitext = $docArticle->getContent();
