@@ -8,7 +8,7 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks['MakeGlobalVariablesScript'][] = 'Meebo::onMakeGlobalVariablesScript';
 
 class Meebo {
-	private static $PROHIBITED_DBNAMES = array('fallout', 'answers');
+	private static $PROHIBITED_DBNAMES = array('answers');
 	public static function onMakeGlobalVariablesScript( &$vars ) {
 		global $wgEnableMeeboExt, $wgDBname;
 		wfProfileIn( __METHOD__ );
