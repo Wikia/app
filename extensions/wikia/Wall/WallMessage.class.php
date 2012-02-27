@@ -134,9 +134,18 @@ class WallMessage {
 		if($this->canEdit($user)){
 			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true );
 		}
+		/*
+		 * mech: EditPage calls Article with watchThis set to false
+		 *       which causes this article comment to be unsubscribed.
+		 *       so we re-subscribe (it's not a hack, it's a workaround)
+		 */
 		if( !$this->isMain() ) {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
+			$parent = $this->getTopParentObj();
+			if ($parent) $parent->addWatch($user);
+		} else {
+			$this->addWatch($user);
 		}
 		return $this->getArticleComment()->parseText($body);
 	}
@@ -401,7 +410,8 @@ class WallMessage {
 	}
 
 	public function addWatch(User $user) {
-		$user->addWatch( $this->title );
+		error_log('========================= WallMessage::addWatch');
+		$user->addWatch($this->title);
 	}
 
 	public function removeWatch(User $user) {
