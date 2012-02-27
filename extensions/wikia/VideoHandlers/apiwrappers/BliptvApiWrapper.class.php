@@ -4,7 +4,7 @@ class BliptvApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://blip.tv/a/b-$1?skin=json';
 	protected static $CACHE_KEY = 'bliptvapi';
 
-	protected static function isMatchingHostname( $hostname ) {
+	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "blip.tv") ? true : false;
 	}
 
