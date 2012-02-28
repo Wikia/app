@@ -87,7 +87,9 @@ class WallMessage {
 		if($notify) {
 			$class->sendNotificationAboutLastRev();
 		}
-	
+		
+		$this->addWatch($user);
+		
 		return $class;
 	}
 
@@ -129,24 +131,21 @@ class WallMessage {
 	public function canEdit(User $user){
 		return $this->isAuthor($user) || $user->isAllowed('walledit') || $user->isAllowed('rollback');
 	}
-
+		
 	public function doSaveComment($body, $user) {
 		if($this->canEdit($user)){
 			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true );
 		}
-		/*
-		 * mech: EditPage calls Article with watchThis set to false
-		 *       which causes this article comment to be unsubscribed.
-		 *       so we re-subscribe (it's not a hack, it's a workaround)
-		 */
 		if( !$this->isMain() ) {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
-			$parent = $this->getTopParentObj();
-			if ($parent) $parent->addWatch($user);
-		} else {
-			$this->addWatch($user);
 		}
+		/*
+		* mech: EditPage calls Article with watchThis set to false
+		*       which causes this article comment to be unsubscribed.
+		*       so we re-subscribe (it's not a hack, it's a workaround)
+		*/
+		$this->addWatch($user);
 		return $this->getArticleComment()->parseText($body);
 	}
 
@@ -410,11 +409,22 @@ class WallMessage {
 	}
 
 	public function addWatch(User $user) {
-		$user->addWatch($this->title);
+		if( !$this->isMain() ) {
+			$parent = $this->getTopParentObj();
+			if ($parent) $user->addWatch( $parent->getTitle() );
+		} else {
+			$user->addWatch( $this->title );
+		}		
 	}
 
 	public function removeWatch(User $user) {
-		$user->removeWatch( $this->title );
+		if( !$this->isMain() ) {
+			$parent = $this->getTopParentObj();
+			if ($parent) $user->removeWatch( $parent->getTitle() );
+		} else {
+			$user->removeWatch( $this->title );
+		}		
+		
 	}
 
 	public function getCreatTime($format) {
