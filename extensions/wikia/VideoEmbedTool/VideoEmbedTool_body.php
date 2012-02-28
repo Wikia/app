@@ -302,9 +302,7 @@ class VideoEmbedTool {
 		}
 
 		// sanitize name and init title objects
-		if (WikiaVideoService::useWikiaVideoExtForEmbed()) {
-			$titleLegacyVideo = PartnerVideoHelper::getInstance()->makeTitleSafe($name);
-		}		
+		$titleLegacyVideo = PartnerVideoHelper::getInstance()->makeTitleSafe($name);
 		if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
 			$nameFile = VideoHandlersUploader::sanitizeTitle($name);
 			$titleFile = Title::newFromText($nameFile, NS_FILE);
