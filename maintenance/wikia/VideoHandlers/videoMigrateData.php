@@ -143,7 +143,7 @@ if( $rowCount ) {
 
 		/* override thumbnail metadata with video metadata */
 		$file->setVideoId( $metadata['videoId'] );
-		$file->forceMime( 'video/'.strtolower( $provider ), serialize($metadata) );
+		$file->forceMime( 'video/'.strtolower( $provider ) );
 		$file->forceMetadata( serialize($metadata) );
 		
 		/* real upload */
