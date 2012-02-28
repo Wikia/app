@@ -73,6 +73,7 @@ class ChatAjax {
 			'since' => '',
 
 			// Extra wg variables that we need.
+			'wgCityId' => $wgCityId,
 			'wgServer' => $wgServer,
 			'wgArticlePath' => $wgArticlePath
 		);
