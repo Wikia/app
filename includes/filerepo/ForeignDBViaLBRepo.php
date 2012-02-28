@@ -8,6 +8,8 @@ class ForeignDBViaLBRepo extends LocalRepo {
 	var $wiki, $dbName, $tablePrefix;
 	var $fileFactory = array( 'ForeignDBFile', 'newFromTitle' );
 	var $fileFromRowFactory = array( 'ForeignDBFile', 'newFromRow' );
+//	var $fileFactory = array( 'WikiaForeignDBFile', 'newFromTitle' );
+//	var $fileFromRowFactory = array( 'WikiaForeignDBFile', 'newFromRow' );
 
 	function __construct( $info ) {
 		parent::__construct( $info );
