@@ -43,7 +43,7 @@ class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 	
 	function testUrlsMainNS() {
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$url = "http://memory-alpha.org/wiki/Timeline";
+		$url = "http://en.memory-alpha.org/wiki/Timeline";
 		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 	}
 	
@@ -61,14 +61,14 @@ class GlobalTitleTest extends PHPUnit_Framework_TestCase {
 	
 	function testUrlsPolishWiki() {
 		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
-		$url = "http://pl.wikia.com/wiki/Special:WikiFactory";
+		$url = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory";
 		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 
-		$url = "http://pl.wikia.com/wiki/Special:WikiFactory?diff=0&oldid=500";
+		$url = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory?diff=0&oldid=500";
 		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 
 		$title = GlobalTitle::newFromText( "Strona główna", false, 1686 ); # pl.wikia.com
-		$url = "http://pl.wikia.com/wiki/Strona_g%C5%82%C3%B3wna?diff=0&oldid=500";
+		$url = "http://spolecznosc.wikia.com/wiki/Strona_g%C5%82%C3%B3wna?diff=0&oldid=500";
 		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, "NOT MATCH" );
 	}
 };
