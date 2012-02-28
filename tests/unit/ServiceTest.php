@@ -85,7 +85,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 
 	function testUserStatsService() {
 		global $wgArticle;
-		$user = User::newFromName('WikiaBot');
+		$user = User::newFromName('QATestsBot');
 
 		$service = new UserStatsService($user->getId());
 		$stats = $service->getStats();
