@@ -10,7 +10,7 @@ class LatestPhotosModule extends Module {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	const THUMB_SIZE = 82;
-
+	
 	var $thumbUrls;
 	var $wgBlankImgUrl;
 	var $enableScroll;
@@ -100,6 +100,7 @@ class LatestPhotosModule extends Module {
 			"image_filename" => $file->getTitle()->getFullText(),
 			"user_href" => Wikia::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $this->getLinkedFiles($file->name),
+			"isVideoThumb"  => WikiaVideoService::isFileTypeVideo( $file ),
 			"date" => wfTimestamp(TS_ISO_8601, $file->timestamp));
 		return $retval;
 	}
