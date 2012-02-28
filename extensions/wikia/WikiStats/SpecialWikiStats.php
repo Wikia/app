@@ -47,6 +47,9 @@ $wgStatsSpecialGroupUser = false;
 #--- messages file
 $wgExtensionMessagesFiles["WikiStats"] = dirname(__FILE__) . '/SpecialWikiStats.i18n.php';
 
+// aliases
+$wgExtensionAliasesFiles['WikiStats'] = __DIR__ . '/SpecialWikiStats.aliases.php';
+
 #--- helper file
 require_once( dirname(__FILE__) . '/SpecialWikiStats_helper.php' );
 
