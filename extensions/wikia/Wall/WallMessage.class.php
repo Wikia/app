@@ -88,7 +88,7 @@ class WallMessage {
 			$class->sendNotificationAboutLastRev();
 		}
 		
-		$this->addWatch($user);
+		$class->addWatch($user);
 		
 		return $class;
 	}
