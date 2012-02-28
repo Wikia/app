@@ -43,7 +43,7 @@ class CreateWiki {
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
-	const ACTIVE_CLUSTER       = "c4";
+	const ACTIVE_CLUSTER       = "c3";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
@@ -86,9 +86,9 @@ class CreateWiki {
 				$this->mFounder = $founder;
 			}
 		}
-		
+
 		$this->mFounderIp = wfGetIP();
-		
+
 		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
 		/**
 		 * starters map: langcode => database name
@@ -1129,7 +1129,7 @@ class CreateWiki {
 			 */
 			$starter[ "dbStarter" ] = $dbStarter;
 			$starter[ "uploadDir" ] = WikiFactory::getVarValueByName( "wgUploadDirectory", WikiFactory::DBtoID( $dbStarter ) );
-                        
+
                         // BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
                         $this->sDbStarter = $dbStarter;
 
