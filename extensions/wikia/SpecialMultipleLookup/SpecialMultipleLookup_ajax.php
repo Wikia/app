@@ -19,7 +19,7 @@ class MultiLookupAjax {
 	function axData() {
 		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgLang, $wgDevelEnvironment;
 		
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 	
 		$username 	= $wgRequest->getVal('username');
 		$dbname		= $wgRequest->getVal('wiki');
@@ -90,7 +90,7 @@ class MultiLookupAjax {
 			$oML->setDBname($dbname);
 			$oML->setLimit($limit);
 			$oML->setOffset($offset);
-			$data = $oML->fetchContribs();
+			$data = $oML->fetchContribs( true );
 			/* order by timestamp desc */
 			$nbr_records = 0;
 			if ( !empty($data) && is_array($data) ) {
