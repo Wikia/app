@@ -46,6 +46,7 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
  * messages file
  */
 $wgExtensionMessagesFiles['Masthead'] = dirname(__FILE__) . '/Masthead.i18n.php';
+$wgExtensionAliasesFiles['Masthead'] = __DIR__ . '/Masthead.aliases.php';
 
 #--- permissions
 $wgAvailableRights[] = 'removeavatar';
