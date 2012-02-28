@@ -184,6 +184,6 @@
 	};
 
 	$.removeLoader = function(elm) {
-		elm.find('.wkMblLdr').remove();
+		elm.removeAttr('data-hasLdr').find('.wkMblLdr').remove();
 	};
 })(Zepto);

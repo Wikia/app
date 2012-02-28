@@ -54,6 +54,7 @@ li.sub, li.cld > a, li.cld > span {
 	background-color: white;
 	width: 50px;
 	height: auto;
+	min-height: 20px;
 
 	.on & {
 		display: block;
