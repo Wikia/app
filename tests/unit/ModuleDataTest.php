@@ -544,7 +544,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		global $wgTitle;
 
 		// User page check
-		$wgTitle = Title::newFromText('User:WikiaBot');
+		$wgTitle = Title::newFromText('User:QATestsBot');
 		$moduleData = Module::get('FollowedPages')->getData();
 		#print_r($moduleData);
 		$this->assertType('array', $moduleData['data']);
@@ -797,11 +797,11 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 
 	function testCommunityCornerModule() {
 		global $wgUser;
-		$wgUser = User::newFromName('WikiaSysop');
+		$wgUser = User::newFromName('QATestsSysop');
 		$moduleData = Module::get('CommunityCorner')->getData();
-
 		$this->assertFalse($moduleData['isAdmin']);
-		$wgUser = User::newFromName('WikiaStaff');
+
+		$wgUser = User::newFromName('QATestsStaff');
 		$moduleData = Module::get('CommunityCorner')->getData();
 		$this->assertTrue($moduleData['isAdmin']);
 	}
