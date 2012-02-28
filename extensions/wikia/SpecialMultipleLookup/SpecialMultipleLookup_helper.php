@@ -22,7 +22,7 @@ class MultipleLookupCore {
 	var $mWikia;
 	var $mNumRecords;
 	var $oUser;
-	
+
 	public function __construct( $username, $dbname = '' ) {
 		$this->mUsername = $username;
 		$this->oUser = User::newFromName($this->mUsername);
@@ -61,16 +61,16 @@ class MultipleLookupCore {
 
 		return false;
 	}
-	
+
 	public function countUserActivity() {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
-		
+
 		$countActivity = 0;
 		$ip = ip2long( $this->mUsername );
 		$memkey = __METHOD__ . ":all:" . $ip;
 		$cached = $wgMemc->get( $memkey );
 		if ( ( empty( $cached ) || MULTILOOKUP_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
-			
+
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			$oRow = $dbs->selectRow(
 				array( '`specials`.`multilookup`' ),
@@ -95,15 +95,15 @@ class MultipleLookupCore {
 
 	function checkUserActivity() {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
-		
+
 		$userActivity = array();
-		
+
 		$ip = ip2long( $this->mUsername );
 		$memkey = __METHOD__ . ":all:ip:" . $ip . ":limit:" . intval($this->mLimit) . ":offset:" . intval($this->mOffset);
 		$cached = $wgMemc->get( $memkey );
 		if ( ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-					
+
 			$oRes = $dbs->select(
 				array( '`specials`.`multilookup`' ),
 				array( 'ml_city_id' ),
@@ -122,7 +122,7 @@ class MultipleLookupCore {
 			if ( !MULTILOOKUP_NO_CACHE ) {
 				$wgMemc->set( $memkey, $userActivity, 60 * 15 );
 			}
-			
+
 		} else {
 			$userActivity = $cached;
 		}
@@ -136,7 +136,7 @@ class MultipleLookupCore {
 	}
 
 	/* fetch all contributions from that given database */
-	function fetchContribs ( ) {
+	function fetchContribs() {
 		global $wgOut, $wgRequest, $wgLang, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -145,10 +145,10 @@ class MultipleLookupCore {
 			wfProfileOut( __METHOD__ );
 			return $fetched_data;	
 		}
-		
+
 		$where = array(
 			'rc_ip' => $this->mUsername
-		);		
+		);
 		# count of records
 		$key = "{$this->mDBname}:MultiLookup:count:" . $this->mUsername;
 		$cached = $wgMemc->get( $key );	
@@ -166,9 +166,9 @@ class MultipleLookupCore {
 			}
 			if ( !MULTILOOKUP_NO_CACHE ) {
 				$wgMemc->set( $key, $cached, 60 * 15 );
-			}	
+			}
 		}
-		
+
 		$this->setNumRecords($cached);	
 
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
@@ -184,8 +184,7 @@ class MultipleLookupCore {
 				array(
 					'GROUP BY' 	=> 'rc_user_text',
 					'ORDER BY'	=> 'rc_user_text',
-					'LIMIT'		=> $this->mLimit,
-					'OFFSET'	=> $this->mOffset
+					'LIMIT'		=> $this->mLimit
 				)
 			);
 
