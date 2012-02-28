@@ -17,7 +17,7 @@ $wgDBdevboxServer2 = 'dev-db-b1';
 $databaseDirectories = array ("database_A", "database_B", "database_C", "database_D");
 
 $USAGE =
-	"Usage:\tphp getDatabase.php -c [cluser A,B,C] [ -l [config] ] [-f [dbname] | -i [filename] | -?]\n" .
+	"Usage:\tphp getDatabase.php -c [cluster A,B,C,D] [ -l [config] ] [-f [dbname] | -i [filename] | -?]\n" .
 	"\toptions:\n" .
 	"\t\t--help      show this message\n" .
 	"\t\t-f          Fetch a new database dump from s3\n" .
