@@ -59,6 +59,7 @@ $wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
 $app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
 $app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
 $app->registerHook( 'SetupAfterCache', 'VideoHandlerHooks', 'onSetupAfterCache' );
+$app->registerHook( 'BeforePageDisplay', 'VideoHandlerHooks', 'onBeforePageDisplay' );
 
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';
@@ -162,5 +163,5 @@ if(!empty($wgVideoHandlersVideosMigrated)) {
 	 */
 	$app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
 	$app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
-	
+ 
 }

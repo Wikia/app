@@ -82,7 +82,9 @@ class ThumbnailVideo extends ThumbnailImage {
 		} else {
 			$linkAttribs = false;
 		}
-
+		
+		$linkAttribs['style'] = "display:inline-block;";
+		
 		$attribs = array(
 			'alt' => $alt,
 			'src' => $this->url,
@@ -98,12 +100,57 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		$out = $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
-		// VideoHandlers.js is required to handle click on thumbnail
+		$playButton = array(
+			"class"		=> "Wikia-video-play-button",
+			"style"		=> "width: {$this->width}px; height: {$this->height}px;"
+		);
+		$titleBar = array(
+			"class"		=> "Wikia-video-title-bar",
+			"style"		=> "width: {$this->width}px; margin-left: -{$this->width}px;"
+		);
+		
+		$videoTitle = $attribs['data-video'];
+		
+		$infoVars = array();
+		$userName = $this->file->getUser();
+		if (!is_null($userName)) {
+			$link = AvatarService::renderLink($userName);
+			$infoVars["author"] = wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $userName );
+		} else {
+			$infoVars["author"] = "";
+		}
+		
+		$duration = $this->file->getHandler()->getFormattedDuration();
+		if (!empty($duration)) {
+			$infoVars["duration"] = '('.$duration.')';
+		} else {
+			$infoVars["duration"] = '';
+		}
+		
+		
+			
+		$html = Xml::openElement('a', $linkAttribs);
+			$html .= Xml::element( 'span', $playButton, '', false );
+			$html .= Xml::element( 'img', $attribs, '', true );
+		$html .= Xml::closeElement('a');	
+		if ($options['img-class'] != "thumbimage") {
+			$html .= Xml::openElement('span', $titleBar);
+				$html .= Xml::element('span', array('class'=>'title'), $videoTitle);
+				$html .= Xml::element('span', array('class'=>'info'),  '{author} {duration}');
+			$html .= Xml::closeElement('span');			
+		}
+			
+		foreach ($infoVars as $key => $value) {
+			$html = str_replace('{'.$key.'}', $value, $html);
+		}
+		
+		//echo '<pre>---'; var_dump($options); die("<HR>");
+		
+		$out = $html;
 		$out .= F::build('JSSnippets')->addToStack(
 			array('/extensions/wikia/VideoHandlers/js/VideoHandlers.js')
 			);
-		
+    
 		return $out;
 	}
 }
