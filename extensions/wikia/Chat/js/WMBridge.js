@@ -62,7 +62,7 @@ var requestMW = function(roomId, query, callback, errorcallback) {
 			    		console.log(error);	
 			    		return ;
 			    	}
-			    	console.log(response.statusCode);
+			    	
 			    	if(response.statusCode ==  200) {
 						try{
 							data = JSON.parse(body);

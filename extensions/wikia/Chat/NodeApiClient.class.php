@@ -9,6 +9,16 @@
  * @author Sean Colombo
  */
 class NodeApiClient {
+	// Internal requests use diff hostnames than requests from the browsers.
+	const HOST_PRODUCTION = "chatserver.wikia-dev.com";
+	const HOST_DEV = "chat.wikia-dev.com";
+	const API_HOST_AND_PORT_PRODUCTION = "chat.wikia-prod:8001";
+	const API_HOST_AND_PORT_DEV = "chat.wikia-dev.com:8001";
+	
+	const HOST_PRODUCTION_FROM_CLIENT = "chatserver.wikia.com";
+	const HOST_DEV_FROM_CLIENT = "chat.wikia-dev.com";
+	const PORT = "8000"; // port of the chat server (as opposed to the Node API)
+
 	/**
 	 * Given a roomId, fetches the wgCityId from redis. This will
 	 * allow the auth class to verify that the room is in the same
@@ -151,13 +161,12 @@ class NodeApiClient {
 	static protected function getHostAndPort(){
 		global $wgDevelEnvironment;
 
-		$server = ChatHelper::getServer('Api');
-		$hostAndPort = $server['host'].':'.$server['port'];
+		$hostAndPort = NodeApiClient::API_HOST_AND_PORT_PRODUCTION;
+		if(!empty($wgDevelEnvironment)){
+			$hostAndPort = NodeApiClient::API_HOST_AND_PORT_DEV;
+		}
 
 		return $hostAndPort;
-		
-		
-		
 	} // end getHostAndPort()
 
 }
