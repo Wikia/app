@@ -70,6 +70,13 @@ class WikiaVideoService extends Service {
 		return false;
 	}
 
+	public static function videoPlayButtonOverlay( $width, $height ) {
+		$playButton = array(
+			"class"		=> "Wikia-video-play-button",
+			"style"		=> "width: {$width}px; height: {$height}px;"
+		);
+		return  Xml::element( 'span', $playButton, '', false );
+	}
 	
 	/*
 	 * Checks if user wants to have old image bahaviour
