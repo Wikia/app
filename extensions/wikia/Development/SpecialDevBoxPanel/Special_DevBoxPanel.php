@@ -91,8 +91,8 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 		if($wgCommandLineMode) {
 			$cityId = getenv( "SERVER_ID" );
 
-			$wikiFactoryLoader->mCityId = $cityId;
-			$wikiFactoryLoader->mWikiId = $cityId;
+			$wikiFactoryLoader->mCityID = $cityId;
+			$wikiFactoryLoader->mWikiID = $cityId;
 		}
 
 
@@ -100,8 +100,8 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 			$wikiFactoryLoader->mServerName = $forcedWikiDomain;
 
 			// Need to set both in order to get our desired effects.
-			$wikiFactoryLoader->mCityId = $cityId;
-			$wikiFactoryLoader->mWikiId = $cityId;
+			$wikiFactoryLoader->mCityID = $cityId;
+			$wikiFactoryLoader->mWikiID = $cityId;
 		}
 
 		// This section allows us to use c1 or c2 as a source for wiki databases
