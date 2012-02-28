@@ -24,7 +24,7 @@ class RelatedVideosData {
 					$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
 				} else {
 
-					$meta = $file->getMetadata();
+					$meta = unserialize($file->getMetadata());
 					$trans = $file->transform(array('width'=>$thumbnailWidth, 'height'=>-1));
 
 					$thumb = array(
@@ -115,53 +115,12 @@ class RelatedVideosData {
 			return wfMsg('related-videos-error-permission-article');
 		}
 
-		// create temp VideoPage to parse URL
-		$tempname = 'Temp_video_' . F::app()->wg->user->getID() . '_'.rand(0, 1000); // FIXME: use normal empty title;
-		$temptitle = F::build( 'Title', array( NS_VIDEO, $tempname ), 'makeTitle' );
-		$video = F::build( 'VideoPage', array( $temptitle ) );
-
-		if( !$video->parseUrl( $url ) ) {
-			wfProfileOut( __METHOD__ );
-			return wfMsg( 'related-videos-add-video-error-bad-url' );
+		try {
+			list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoPage( $articleId, $url );
 		}
-
-		if( !$video->checkIfVideoExists() ) {
+		catch( Exception $e ) {
 			wfProfileOut( __METHOD__ );
-			return wfMsg( 'related-videos-add-video-error-nonexisting' );
-		}
-
-		$videoName = $video->getVideoName();
-		$videoProvider = $video->getProvider();
-		$videoId = $video->getVideoId();
-		$videoMetadata = $video->getData();
-
-		// check if video already exists on this wiki. If not, create 
-		// new VideoPage
-		$videoTitle = $this->sanitizeTitle( $videoName );
-
-		if( is_null( $videoTitle ) ) {
-			wfProfileOut( __METHOD__ );
-			return wfMsg ( 'related-videos-add-video-error-bad-name' );
-		}
-
-		if( $videoTitle->exists() ) {
-			$videoPageId = $videoTitle->getArticleID();
-			// no need to create video page
-		} else {
-			// is the target protected?
-			$permErrors = $videoTitle->getUserPermissionsErrors( 'edit', F::app()->wg->user );
-			$permErrorsUpload = $videoTitle->getUserPermissionsErrors( 'upload', F::app()->wg->user );
-			$permErrorsCreate = $videoTitle->getUserPermissionsErrors( 'create', F::app()->wg->user );
-
-			if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-				return wfMsg( 'related-videos-add-video-error-permission-video' );
-			}
-
-			$video = F::build( 'VideoPage', array( $videoTitle ) );
-			$video->loadFromPars( $videoProvider, $videoId, $videoMetadata );
-			$video->setName( $videoName );
-			$video->save();
-			$videoPageId = $video->getTitle()->getArticleID();
+			return $e->getMessage();
 		}
 
 		// add to article's whitelist
@@ -181,12 +140,66 @@ class RelatedVideosData {
 				return $data;
 			}
 			else {
-				
+
 			}
 		}
 		wfProfileOut( __METHOD__ );
 
-		return $retval;		
+		return $retval;
+	}
+
+	protected function addVideoVideoPage( $url ) {
+		// create temp VideoPage to parse URL
+		$tempname = 'Temp_video_' . F::app()->wg->user->getID() . '_'.rand(0, 1000); // FIXME: use normal empty title;
+		$temptitle = F::build( 'Title', array( NS_VIDEO, $tempname ), 'makeTitle' );
+		$video = F::build( 'VideoPage', array( $temptitle ) );
+
+		if( !$video->parseUrl( $url ) ) {
+			wfProfileOut( __METHOD__ );
+			throw Exception( wfMsg( 'related-videos-add-video-error-bad-url' ) );
+		}
+
+		if( !$video->checkIfVideoExists() ) {
+			wfProfileOut( __METHOD__ );
+			throw Exception( wfMsg( 'related-videos-add-video-error-nonexisting' ) );
+		}
+
+		$videoName = $video->getVideoName();
+		$videoProvider = $video->getProvider();
+		$videoId = $video->getVideoId();
+		$videoMetadata = $video->getData();
+
+		// check if video already exists on this wiki. If not, create 
+		// new VideoPage
+		$videoTitle = $this->sanitizeTitle( $videoName );
+
+		if( is_null( $videoTitle ) ) {
+			wfProfileOut( __METHOD__ );
+			throw Exception( wfMsg ( 'related-videos-add-video-error-bad-name' ) );
+		}
+
+		if( $videoTitle->exists() ) {
+			$videoPageId = $videoTitle->getArticleID();
+			// no need to create video page
+		} else {
+			// is the target protected?
+			$permErrors = $videoTitle->getUserPermissionsErrors( 'edit', F::app()->wg->user );
+			$permErrorsUpload = $videoTitle->getUserPermissionsErrors( 'upload', F::app()->wg->user );
+			$permErrorsCreate = $videoTitle->getUserPermissionsErrors( 'create', F::app()->wg->user );
+
+			if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+				throw Exception( wfMsg( 'related-videos-add-video-error-permission-video' ) );
+			}
+
+			$video = F::build( 'VideoPage', array( $videoTitle ) );
+			$video->loadFromPars( $videoProvider, $videoId, $videoMetadata );
+			$video->setName( $videoName );
+			$video->save();
+			$videoPageId = $video->getTitle()->getArticleID();
+		}
+
+		return array($videoTitle, $videoPageId, $videoProvider);
+
 	}
 
 	protected function sanitizeTitle($name) {
