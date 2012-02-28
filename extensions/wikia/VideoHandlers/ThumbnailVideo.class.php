@@ -128,7 +128,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			$html .= Xml::element( 'img', $attribs, '', true );
 		$html .= Xml::closeElement( 'a' );
 		
-		if ( $options['img-class'] != "thumbimage" ) {
+		if ( (!empty($options['img-class']) && $options['img-class'] != "thumbimage") || empty($options['img-class']) ) {
 			$html .= Xml::openElement( 'span', $titleBar );
 				$html .= Xml::element( 'span', array('class'=>'title'), $videoTitle );
 				$html .= Xml::element( 'span', array('class'=>'info'),  '{author} {duration}' );
@@ -139,14 +139,11 @@ class ThumbnailVideo extends ThumbnailImage {
 			$html = str_replace('{'.$key.'}', $value, $html);
 		}
 		
-		//echo '<pre>---'; var_dump($options); die("<HR>");
-//
-		$out = $html;
-//		$out .= F::build('JSSnippets')->addToStack(
+//		$html .= F::build('JSSnippets')->addToStack(
 //			array('/extensions/wikia/VideoHandlers/js/VideoHandlers.js')
 //			);
     
-		return $out;
+		return $html;
 	}
 }
 
