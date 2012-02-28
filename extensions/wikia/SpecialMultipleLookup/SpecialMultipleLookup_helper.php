@@ -136,7 +136,7 @@ class MultipleLookupCore {
 	}
 
 	/* fetch all contributions from that given database */
-	function fetchContribs() {
+	function fetchContribs( $singleWiki = false ) {
 		global $wgOut, $wgRequest, $wgLang, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -184,7 +184,8 @@ class MultipleLookupCore {
 				array(
 					'GROUP BY' 	=> 'rc_user_text',
 					'ORDER BY'	=> 'rc_user_text',
-					'LIMIT'		=> $this->mLimit
+					'LIMIT'		=> $this->mLimit,
+					'OFFSET'	=> ( $singleWiki ? $this->mOffset : 0 )
 				)
 			);
 
