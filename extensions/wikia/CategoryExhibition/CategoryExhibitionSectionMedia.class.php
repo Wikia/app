@@ -45,7 +45,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 						// item is image
 						$image = wfFindFile( $itemTitle );
 						$elementClass = 'lightbox';
-							
+						
 						if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
 							$imageSrc = '';
 						} else {
@@ -77,15 +77,16 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					
 					// types casting for proper caching;
 					$aData[] = array(
-						'id'		=> $item['page_id'],
-						'title'		=> $itemTitle->getText(),
-						'img'		=> (string) $imageSrc,
-						'url'		=> $itemTitle->getFullURL(),
-						'dimensions'	=> array( 'w' => (int) $forceWidth, 'h' => (int) $forceHeight ),
-						'class'		=> $elementClass,
-						'data-ref'	=> $itemTitle->getPrefixedURL(),
-						'targetUrl'	=> $linkFullUrl,
-						'targetText'	=> $linkText
+						'id'			=> $item['page_id'],
+						'title'			=> $itemTitle->getText(),
+						'img'			=> (string) $imageSrc,
+						'url'			=> $itemTitle->getFullURL(),
+						'dimensions'		=> array( 'w' => (int) $forceWidth, 'h' => (int) $forceHeight ),
+						'class'			=> $elementClass,
+						'data-ref'		=> $itemTitle->getPrefixedURL(),
+						'targetUrl'		=> $linkFullUrl,
+						'targetText'		=> $linkText,
+						'useVideoOverlay'	=> ( WikiaVideoService::isVideoStoredAsFile() && WikiaVideoService::isTitleVideo( $itemTitle ) )
 					);
 				};
 

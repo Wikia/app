@@ -12,8 +12,11 @@
 			<? } else { ?>
 			<span class="category-gallery-item-image">
 				<a href="<?=$row['url'] ?>" data-ref="<?=$row['data-ref']; ?>" class="<?=$row['class']; ?>" title="<?=htmlspecialchars($row['title']); ?>">
-					<? if($row['class'] != 'lightbox'){ ?><div class="category-gallery-item-play"></div><? } ?>
-					<img src="<?=$row['img'] ?>" alt="<?=htmlspecialchars($row['title']) ?>" style="<?
+					<? if( $row['class'] != 'lightbox' ): ?><div class="category-gallery-item-play"></div><? endif ?>
+					<? if( $row['useVideoOverlay'] == true ) {
+						echo WikiaVideoService::videoPlayButtonOverlay( $row['dimensions']['w'], $row['dimensions']['h'] );
+					} ?>
+					<img src="<?=$row['img'] ?>" alt="<?=htmlspecialchars( $row['title'] ) ?>" style="<?
 						if(!empty($row['dimensions']['w'])){
 							echo "width:".$row['dimensions']['w']."px; ";
 						};
