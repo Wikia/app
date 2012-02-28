@@ -68,11 +68,11 @@ var ImageLightbox = {
 	// handle clicks on article content and handle clicks on links only
 	onClick: function(ev) {
 		var target = $(ev.target);
-
-
+		
+			
 		// move to parent of an image -> anchor
-		if (target.is('img')) {
-			if ( target.hasClass('Wikia-video-thumb') ) {
+		if ( target.is('span') || target.is('img') ) {
+			if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
 				target = target.parent();
 				target.addClass('image');
 			} else {
@@ -110,7 +110,7 @@ var ImageLightbox = {
 			return;
 		}
 
-
+		
 		// store clicked element
 		this.target = target;
 
@@ -174,24 +174,21 @@ var ImageLightbox = {
 		}
 		
 		// for Video Thubnails:
-		if ( imageName == false ) {
+		var targetChildImg = target.find('img').eq(0);
+		
+		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
 			
-			var isVideoThumb = false;
-			var targetChildImg = target.find('img').eq(0);
-
 			if ( target.attr('data-video-name') ) {
 				
 				imageName = 'File:' + target.attr('data-video-name');
-				isVideoThumb = true;
-				
+			
 			} else if ( targetChildImg.length > 0 && targetChildImg.attr('data-video') ) {
 				
 				imageName = 'File:' + targetChildImg.attr('data-video');
-				isVideoThumb = true;
 			}
 			
-			
-			if (imageName && isVideoThumb && targetChildImg.width() >= this.videoThumbWidthThreshold) {
+			if (imageName && targetChildImg.width() >= this.videoThumbWidthThreshold) {
+
 				this.displayInlineVideo(targetChildImg, imageName);
 				ev.preventDefault();
 				return false;
@@ -232,6 +229,7 @@ var ImageLightbox = {
 			'title': imageName,
 			'videoInline': 1
 		}, function(res) {
+			jQuery(parentTag).siblings('span.Wikia-video-title-bar').eq(0).remove();
 			if (res && ( res.html || res.jsonData ) ) {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
