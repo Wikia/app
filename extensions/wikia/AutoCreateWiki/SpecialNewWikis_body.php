@@ -129,7 +129,7 @@ class NewWikisPage extends AlphabeticPager {
 	function getQueryInfo() {
 		$query = array(
 			'tables' => array( 'city_list' ),
-			'fields' => array('city_list.city_id', 'city_dbname', 'city_url', 'city_title', 'city_lang', 'city_created'),
+			'fields' => array('city_list.city_id', 'city_dbname', 'city_url', 'city_title', 'city_lang', 'city_created', 'city_founding_ip'),
 			'options' => array(),
 			'conds' => array(),
 			'join_conds' => array(),
@@ -187,7 +187,7 @@ class NewWikisPage extends AlphabeticPager {
 
 	function formatRow( $row ) {
 		global $wgLang;
-
+		
 		$name = Xml::tags( 'a', array( 'href' => $row->city_url ), $row->city_title );
 		if ($this->more_details) {
 			$cuTitle = GlobalTitle::newFromText( 'CheckUser', NS_SPECIAL, $row->city_id );
@@ -200,8 +200,8 @@ class NewWikisPage extends AlphabeticPager {
 			$detail = "$row->city_lang, $row->city_created, FounderName:$userLink, Email:$row->user_email, Confirm:$confirm";
 			
 			//FB#11896
-			if( !empty($row->founding_user_ip) ) {
-				$detail .= ', IP:'.long2ip($row->founding_user_ip);
+			if( !empty($row->city_founding_ip) ) {
+				$detail .= ', IP:'.long2ip($row->city_founding_ip);
 			}
 		} else {
 			$detail = $row->city_lang;
