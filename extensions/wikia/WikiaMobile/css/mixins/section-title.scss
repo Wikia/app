@@ -20,16 +20,44 @@
 		position: absolute;
 		right: 0;
 		top: 37%;
-		@include transition(all .7s ease-out);
+		@include transition(all .4s ease-out);
+		-webkit-animation: cute .3s ease-in;
+		-moz-animation: cute .3s ease-in;
+		-ms-animation: cute .3s ease-in;
+		animation: cute .3s ease-in;
+		-webkit-backface-visibility: hidden;
 	}
 
 	&.open .chev {
-		-webkit-transform: rotateZ(360deg);
 		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAn1BMVEX///8pe8YoesQmcrfV4u4qf80pe8U3hs0qfsoqfssoecMxdLEmcrjx9vugwuCgwuElcLStyuUndr5rotMja6woeMEyd7UkbK66z+Pk7/gydLLy9vt4qdV4qNTy9/tRldIxcq7W5PAmc7kqgM4pfclqoNCsx9+6z+LK3/Ksxt2tyuPx9vpRlNFSltR4qtYpfMhSl9bX5/Xy9/woeMJQk8+oBF+BAAAAAXRSTlMAQObYZgAAAGFJREFUeF5NyzUSxDAAxdBvdpiZl5nvf7YUzs5E3SsEEx8PWMWd0L2syTJiR3+WNftaW0F9w3OxsdXpJSzZLaTqjf6306QFjqlL7xWAa/LU0gfP4+Fjxge5ecC0b7AUeJgBd/cGOcZKDCgAAAAASUVORK5CYII=);
+		-webkit-animation: cute .3s ease-out;
+		-moz-animation: cute .3s ease-out;
+		-ms-animation: cute .3s ease-out;
+		animation: cute .3s ease-out;
 	}
 }
 
 @mixin section-title-related {
 	text-transform: uppercase;
 	font-size: medium;
+}
+
+@-webkit-keyframes cute {
+	0%{-webkit-transform: rotate(180deg);}
+	100%{-webkit-transform: rotate(0);}
+}
+
+@-moz-keyframes cute {
+	0%{-moz-transform: rotate(180deg);}
+	100%{-moz-transform: rotate(0);}
+}
+
+@-ms-keyframes cute {
+	0%{-ms-transform: rotate(180deg);}
+	100%{-ms-transform: rotate(0);}
+}
+
+@-keyframes cute {
+	0%{transform: rotate(180deg);}
+	100%{transform: rotate(0);}
 }

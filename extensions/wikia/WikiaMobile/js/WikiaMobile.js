@@ -20,6 +20,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	pageUrl = wgServer + '/wiki/' + wgPageName,
 	shrImgTxt, shrPageTxt, shrMailPageTxt, shrMailImgTxt,
 	$1 =/__1__/g, $2 =/__2__/g, $3 =/__3__/g, $4 = /__4__/g,
+	shrOpenNum = 0, shrImgName = '',
 	fixed = Modernizr.positionfixed;
 
 	function getImages(){
@@ -91,7 +92,7 @@ var WikiaMobile = WikiaMobile || (function() {
 
 	function processImages(){
 		var number = 0,
-		href, name, nameMatch = /[^\/]*\.\w*$/;
+		href = '', name = '', nameMatch = /[^\/]*\.\w*$/;
 
 		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function(){
 			var self = $(this);
@@ -100,6 +101,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				href = self.data('num', number++).attr('href');
 				name = href.match(nameMatch)[0].replace('.','-');
 				allImages.push([href, name]);
+
 			} else if(self.hasClass('wkImgStk')){
 				if(self.hasClass('grp')) {
 					var figures = self.find('figure'),
@@ -113,13 +115,15 @@ var WikiaMobile = WikiaMobile || (function() {
 						name = href.match(nameMatch)[0].replace('.','-');
 						allImages.push([
 							href, name,
-							(cap = fig.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:"",
+							(cap = fig.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
 							i, l
 
 						]);
+						
+						if(name === shrImgName) shrOpenNum = number + i;
 					});
 				} else {
-					var l = parseInt( self.data('num', number).data('img-count'), 10),
+					var l = parseInt(self.data('num', number).data('img-count'), 10),
 					lis = self.find('li');
 
 					$.each(lis, function(i, li){
@@ -132,6 +136,8 @@ var WikiaMobile = WikiaMobile || (function() {
 							//I need these number to show counter in a modal
 							i, l
 						]);
+						
+						if(name === shrImgName) shrOpenNum = number + i;
 					});
 				}
 				number += l;
@@ -144,6 +150,8 @@ var WikiaMobile = WikiaMobile || (function() {
 					self.find('.thumbcaption').html()
 				]);
 			}
+
+			if(name === shrImgName) shrOpenNum = number;
 		});
 
 		//if there is only one image in the article hide the prev/next buttons
@@ -344,7 +352,6 @@ var WikiaMobile = WikiaMobile || (function() {
 							offset = (horizontal)?this.offsetHeight:this.offsetWidth,
 							onCreate = options.create,
 							style = options.style || '';
-
 
 						this.insertAdjacentHTML('afterbegin', '<div class=ppOvr></div>');
 						cnt = this.getElementsByClassName('ppOvr')[0];
@@ -724,9 +731,7 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		popOver({
 			on: document.getElementById('wkShrPag'),
-			create: function(cnt){
-				loadShare(cnt);
-			},
+			create: loadShare,
 			open: function(){
 				track('share/page/open');
 			},
@@ -739,24 +744,11 @@ var WikiaMobile = WikiaMobile || (function() {
 		//if url contains image=imageName - open modal with this image
 		var locationSearch = window.location.search;
 		if(locationSearch.indexOf('image=') > -1){
-			var img = locationSearch.substr(1).split('&'),
-				imgName;
-			for(var i=0;i<img.length; i++){
-				var s = img[i].split('=');
-				if(s[0] == 'image'){
-					imgName = s[1];
-					break;
-				}
-			}
-
+			shrImgName = locationSearch.match('image=.*(?=&)|$')[0].substring(6);
+console.log(shrImgName);
 			if(allImages.length == 0) processImages();
-			var imgL = allImages.length;
-			for(var i=0;i<imgL;i++){
-				if(allImages[i][1] == imgName){
-					setTimeout(function(){imgModal(i)}, 1000)
-					break;
-				}
-			}
+console.log(shrOpenNum)
+			setTimeout(function(){imgModal(shrOpenNum)}, 1000);
 		}
 	});
 
