@@ -49,9 +49,12 @@ class ChatHelper {
 	}
 
 	static public function getServer($type = 'Main'){
+		global $wgCityId;
+		
 		$server = self::getChatConfig($type.'ChatServers');
-		//TODO: load balans
-		$out = explode(':', $server[self::getServerBasket()][0]);
+		$serversCount = count($server[self::getServerBasket()]);
+		
+		$out = explode(':', $server[self::getServerBasket()][$wgCityId%$serversCount]);
 		return array('host' => $out[0], 'port' => $out[1]); 
 	}
 	
