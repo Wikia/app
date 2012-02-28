@@ -32,6 +32,16 @@ class VideoHandlerHooks extends WikiaObject{
 		}
 		return true;
 	}
+  
+	public function onBeforePageDisplay( $out, $skin ) {
+		wfProfileIn(__METHOD__);
+		
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/VideoHandlers/css/VideoHandlers.scss' ) );
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}  
+  
 	
 	public function onSetupAfterCache() {
 		global $wgLocalFileRepo, $wgUploadDirectory, $wgUploadBaseUrl,

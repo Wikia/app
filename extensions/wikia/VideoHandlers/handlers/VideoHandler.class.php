@@ -116,6 +116,38 @@ abstract class VideoHandler extends BitmapHandler {
 		$metadata = $this->getMetadata(true);
 		return (!empty($metadata['duration']) ? $metadata['duration'] : null);
 	}
+  
+	public function getFormattedDuration() {
+
+		$metadata = $this->getMetadata(true);
+		if (!empty($metadata['duration'])) {
+
+			$sec = $metadata['duration'];
+
+			if ( (int)$sec == $sec ) {
+
+				$hms = "";
+				$hours = intval(intval($sec) / 3600);  
+				if ($hours > 0) {
+					$hms .= str_pad($hours, 2, "0", STR_PAD_LEFT). ":";          
+				}
+
+				$minutes = intval(($sec / 60) % 60); 
+				$hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
+
+				$seconds = intval($sec % 60); 
+				$hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
+				
+				return $hms;
+
+			} else {
+
+				return $metadata['duration'];
+			}
+		}
+
+		return '';
+	}
 	
 	/**
 	 * Get the video id that is used for embed code

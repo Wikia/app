@@ -1,0 +1,27 @@
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+
+.Wikia-video-play-button { 
+   background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_100Alpha.png); /* wgCdnStylePath */
+   background-position:center center;
+   background-repeat:no-repeat;
+   display:block;
+   position:absolute;
+   z-index:100;
+   @include opacity(30);
+}
+
+a:hover .Wikia-video-play-button {
+    @include opacity(70);
+}
+
+.Wikia-video-title-bar {
+   background-color:black;
+   position:absolute;
+   z-index:99;  
+   text-align:left;
+   @include opacity(50);       
+}
+
+.Wikia-video-title-bar .title { display:block; text-decoration:none; color:white; padding-left:5px; overflow-x: hidden; white-space: nowrap;  }
+.Wikia-video-title-bar .info { display:block; text-decoration:none; color:white; font-size:11px; padding-left:5px; }   
