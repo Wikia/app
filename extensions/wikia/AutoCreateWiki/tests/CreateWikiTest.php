@@ -48,7 +48,7 @@ class CreateWikiTest extends PHPUnit_Framework_TestCase {
 
 		foreach ( $types as $type ) {
 			foreach ( $languages as $lang ) {
-				$domain = sprintf("test%s", date('YmdHis'));
+				$domain = sprintf("test%stest", date('YmdHis'));
 
 				$this->oCWiki = new CreateWiki( 
 					"Test Create Wiki", // sitename
