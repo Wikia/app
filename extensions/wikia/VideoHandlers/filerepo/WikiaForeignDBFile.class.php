@@ -9,10 +9,30 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	
 	protected $oLocalFileLogic = null; // Leaf object
 
+	static function newFromTitle( $title, $repo, $unused = null ) {
+		return new static( $title, $repo );
+	}
+
+	/**
+	 * Create a WikiaForeignDBFile from a title
+	 * Do not call this except from inside a repo class.
+	 */
+	static function newFromRow( $row, $repo ) {
+		$title = Title::makeTitle( NS_FILE, $row->img_name );
+		$file = new static( $title, $repo );
+		$file->loadFromRow( $row );
+		return $file;
+	}
+
 	/* Composite/Leaf interface
 	 * 
 	 * if no method of var found in current object tries to get it from $this->oLocalFileLogic
 	 */
+
+	function __construct( $title, $repo ){
+		parent::__construct( $title, $repo );
+		
+	}
 
 	function  __call( $name, $arguments ){
 		if ( method_exists( $this->getLocalFileLogic(), $name ) ){

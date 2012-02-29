@@ -13,7 +13,7 @@ class VideoHandlerHooks extends WikiaObject{
 
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
 			$oFile = wfFindFile( $oTitle );
-			if ( ( $oFile instanceof WikiaLocalFile ) && ( $oFile->isVideo() ) ){
+			if ( ( $oFile instanceof LocalFile ) && ( $oFile->isVideo() ) ){
 				$oArticle = new WikiaVideoPage( $oTitle );
 			}
 		}
