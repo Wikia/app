@@ -283,10 +283,22 @@ class WallHelper {
 		$i = 0;
 		foreach($comments as $wm) {
 			$data = $wm->getData(false, null, 30);
+
+			if( !($data['author'] instanceof User) ) {
+				// just logging for Fatal Error bugId:22820
+
+				error_log("WallHelper.class.php NO_AUTHOR_FOR_AC:" . $wm->getId() );
+				$error_msg = var_export( $wm, 1 );
+				foreach( explode("\n",$error_msg) as $line ) {
+					error_log("NO_AUTHOR_FOR_AC:". $line);
+				}
+				continue;
+			}
 				
 			$items[$i]['avatar'] = $data['avatarSmall'];
 			$items[$i]['user-profile-url'] = $data['userurl'];
 			$user = User::newFromName($data['author']->getName());
+
 			if( $user ) {
 				$items[$i]['real-name'] = $user->getRealName();
 				$userWallTitle = F::build( 'Title', array( $user->getName(), NS_USER_WALL ), 'newFromText' );
