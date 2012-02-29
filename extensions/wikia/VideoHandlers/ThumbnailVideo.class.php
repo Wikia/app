@@ -62,7 +62,7 @@ class ThumbnailVideo extends ThumbnailImage {
 	}
 	
 	function getHeight() {
-		return $this->width;
+		return $this->height;
 	}
 	
 	function toHtml( $options = array() ) {
