@@ -270,6 +270,27 @@ class LoginForm {
 			}
 			return null;
 		}
+		
+		// check if username is in user_temp table
+		if ( empty($wgEnableUserLoginExt) ) {
+			global $wgExternalSharedDB;
+			
+			$username = User::getCanonicalName( $this->mName, 'valid' );
+			if ( $username != false ) {
+				$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+				$row = $db->selectRow(
+					array( 'user_temp' ),
+					array( 'user_name' ),
+					array( 'user_name' => $username ),
+					__METHOD__
+				);
+
+				if ( $row ) {
+					$this->mainLoginForm( wfMsg( $msgKeyPrefix.'userexists' ), 'error', 'username' ); 
+					return false;
+				}
+			}
+		}
 		//new registration - end
 		/* wikia change end */
 
