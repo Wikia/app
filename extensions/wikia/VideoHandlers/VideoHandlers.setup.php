@@ -22,31 +22,39 @@ if( empty( $wgVideoHandlersVideosMigrated ) ) {
  */
 $app = F::app();
 $dir = dirname( __FILE__ );
-$app->registerClass( 'VideoHandler',		$dir . '/handlers/VideoHandler.class.php' );
-$app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
-$app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
 $app->registerClass( 'ThumbnailVideo',		$dir . '/ThumbnailVideo.class.php' );
-$app->registerClass( 'OldWikiaLocalFile',	$dir . '/filerepo/OldWikiaLocalFile.class.php' );
-$app->registerClass( 'WikiaLocalFile',		$dir . '/filerepo/WikiaLocalFile.class.php' );
-$app->registerClass( 'WikiaNoArticleLocalFile',	$dir . '/filerepo/WikiaNoArticleLocalFile.class.php' );
-$app->registerClass( 'WikiaLocalFileShared',	$dir . '/filerepo/WikiaLocalFileShared.class.php' );
-$app->registerClass( 'WikiaLocalRepo',		$dir . '/filerepo/WikiaLocalRepo.class.php' );
+$app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
+$app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
+$app->registerClass( 'VideoHandlersUploader',	$dir . '/VideoHandlersUploader.class.php' );
+$app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
+
+// api wrappers
 $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'FakeApiWrapper',		$dir . '/apiwrappers/FakeApiWrapper.class.php' );
 $app->registerClass( 'WikiaVideoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'NullApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
-//mech: missing WikiaFileRevertForm class breaks the unit tests, so I commented it out
-//$app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');
-$app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
-$app->registerClass( 'VideoHandlersUploader',	$dir . '/VideoHandlersUploader.class.php' );
-
+// api exceptions and errors
 $app->registerClass( 'EmptyResponseException',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'VideoNotFoundException',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'VideoQuotaExceededException',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'VideoIsPrivateException',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'UnsuportedTypeSpecifiedException', $dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'VideoNotFound', $dir . '/apiwrappers/ApiWrapper.class.php' );
+
+// file repo
+$app->registerClass( 'OldWikiaLocalFile',	$dir . '/filerepo/OldWikiaLocalFile.class.php' );
+//mech: missing WikiaFileRevertForm class breaks the unit tests, so I commented it out
+//$app->registerClass( 'WikiaFileRevertForm',	$dir . '/filerepo/WikiaFileRevertForm.class.php');
+$app->registerClass( 'WikiaForeignDBFile',	$dir . '/filerepo/WikiaForeignDBFile.class.php' );
+$app->registerClass( 'WikiaForeignDBViaLBRepo',	$dir . '/filerepo/WikiaForeignDBViaLBRepo.class.php' );
+$app->registerClass( 'WikiaLocalFile',		$dir . '/filerepo/WikiaLocalFile.class.php' );
+$app->registerClass( 'WikiaLocalFileShared',	$dir . '/filerepo/WikiaLocalFileShared.class.php' );
+$app->registerClass( 'WikiaLocalRepo',		$dir . '/filerepo/WikiaLocalRepo.class.php' );
+$app->registerClass( 'WikiaNoArticleLocalFile',	$dir . '/filerepo/WikiaNoArticleLocalFile.class.php' );
+
+// handler
+$app->registerClass( 'VideoHandler',		$dir . '/handlers/VideoHandler.class.php' );
 
 /**
  * messages
