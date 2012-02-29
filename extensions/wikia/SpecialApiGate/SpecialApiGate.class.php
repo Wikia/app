@@ -515,20 +515,44 @@ class SpecialApiGate extends SpecialPage {
 		
 		switch($period){
 			case "hourly":
+				$period = "60 Minute"; // rewrite to make this use the format that the Wikia stats processing expects. - TODO: Just use period_ids or constants everywhere.
 				$frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_HOUR;
 				break;
 			default:
 				$frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
 		}
 
-		if( $aggregate ){
-			$tablePrefix = "apiGate_statsTotals_";
-			$whereClause = "";
-		} else {
-			$tablePrefix = "apiGate_stats_";
-			$whereClause = " WHERE apiKey='$apiKey'";
+		$tableName = "rollup_apikey_events"; // TODO: PUT THIS IN ApiGate::Config
+
+		// CHOOSE RIGHT period_id BASED ON $period (need some mapping of period ids in PHP... should be more global than just this extension though, probably).
+		// Should we hardcode or look this up from the db? (we'd have to make sure to export statsdb_etl DB to prod also).
+		// Mapping from statsdb_etl.etl_periods.
+		$PERIOD_ID_BY_STR = array(
+			"Daily" => 1,
+			"Weekly" => 2,
+			"Monthly" => 3,
+			"Quarterly" => 4,
+			"Yearly" => 5,
+			"15 Minute" => 15,
+			"60 Minute" => 60,
+			"Rolling 7 Day (Every Day)" => 1007,
+			"Rolling 28 Day (Every Day)" => 1028,
+			"Rolling 24 Hours (Every 15 Minutes)" => 10024,
+		);
+		$periodId = 1;
+		if(isset( $PERIOD_ID_BY_STR[ ucfirst($period) ] )){
+			$periodId = $PERIOD_ID_BY_STR[ ucfirst($period) ];
 		}
-		$queryString = "SELECT hits as number, startOfPeriod as creation_date FROM $tablePrefix$period$whereClause ORDER BY startOfPeriod";
+		
+		// Build the query.
+		if( $aggregate ){
+			$queryString = "SELECT SUM(events) as number, time_id as creation_date FROM $tableName WHERE period_id=$periodId ORDER BY creation_date GROUP BY creation_date";
+		} else {
+			$whereClause = "WHERE period_id=$periodId";
+			$whereClause .= " AND api_key=hex('$apiKey')";
+			$queryString = "SELECT SUM(events) as number, time_id as creation_date FROM $tableName $whereClause ORDER BY time_id";
+		}
+
 		$html = SpecialApiGate::getChartHtmlByQuery( $queryString, $frequency, $uniqueMemCacheKey, $metricName, $chartName );
 
 		wfProfileOut( __METHOD__ );
