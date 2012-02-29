@@ -10,18 +10,6 @@ class JSMessagesController extends WikiaController {
 	const CACHE_TIME = 604800;
 
 	/**
-	 * @brief Set caching headers for both Varnish and browser
-	 *
-	 * @param integer $duration - cache duration (in seconds)
-	 */
-	private function setCacheDuration($duration) {
-		// headers taken from AssetsManagerServer
-		$this->response->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $duration) . 'GMT');
-		$this->response->setHeader('Cache-Control', 'public, max-age=' . $duration);
-		$this->response->setHeader('X-Pass-Cache-Control', 'public, max-age=' . $duration);
-	}
-
-	/**
 	 * @brief This function gets messages from given list of packages
 	 */
 	public function getMessages() {
@@ -37,6 +25,9 @@ class JSMessagesController extends WikiaController {
 		$this->response->setHeader('Content-type', 'application/javascript; charset=utf-8');
 
 		// cache it well :)
-		$this->setCacheDuration(self::CACHE_TIME);
+		$this->response->setCacheValidity(self::CACHE_TIME, self::CACHE_TIME, array(
+			WikiaResponse::CACHE_TARGET_BROWSER,
+			WikiaResponse::CACHE_TARGET_VARNISH
+		));
 	}
 }
