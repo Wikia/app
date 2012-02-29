@@ -1516,7 +1516,7 @@ class WallHooksHelper {
 			$page->resetArticleId($row->rev_page);
 			$skin = $app->wg->User->getSkin();
 
-			$wfMsgOpts = $this->getMessageOptions(null, $row);
+			$wfMsgOpts = $this->getMessageOptions(null, $row, true);
 
 			$isThread = $wfMsgOpts['isThread'];
 			$isNew = $wfMsgOpts['isNew'];
@@ -1589,7 +1589,7 @@ class WallHooksHelper {
 	 *
 	 * @return Array
 	 */
-	private function getMessageOptions($rc = null, $row = null) {
+	private function getMessageOptions($rc = null, $row = null, $fullUrls = false) {
 		$helper = F::build('WallHelper', array());
 
 		if( !is_null($rc) ) {
@@ -1635,6 +1635,14 @@ class WallHooksHelper {
 		$userText = empty($wallOwnerName) ? $userText : $wallOwnerName;
 		$wallNamespace = $app->wg->Lang->getNsText(NS_USER_WALL);
 		$wallUrl = $wallNamespace.':'.$userText;
+		
+		if( $fullUrls === true ) {
+		//by default it's Thread:xxx and Message_wall:XXX for messages of recent changes 
+		//i.e. 'wall-recentchanges-wall-removed-thread'
+		//but here we need the entire links
+			$articleUrl = $wm->getMessagePageUrl();
+			$wallUrl = $wm->getWallUrl();
+		}
 
 		return array(
 			$articleUrl,
@@ -1663,7 +1671,7 @@ class WallHooksHelper {
 
 			$app = F::app();
 			$wlhTitle = SpecialPage::getTitleFor( 'Whatlinkshere' );
-			$wfMsgOpts = $this->getMessageOptions(null, $row);
+			$wfMsgOpts = $this->getMessageOptions(null, $row, true);
 			$app->wg->Out->addHtml(
 					Xml::openElement('li') .
 					$app->wf->Msg('wall-whatlinkshere-wall-line', $wfMsgOpts) .
