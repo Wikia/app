@@ -57,6 +57,8 @@ class VideoPage extends Article {
 	private static $JWPLAYER_DIR = '/extensions/wikia/JWPlayer/';
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
 	private static $JWPLAYER_SWF = 'player.swf';
+	private static $JWPLAYER_PLUGIN_HD_JS = 'hd-2.1.min.js';
+	private static $JWPLAYER_PLUGIN_HD_SWF = 'hd-2.1.swf';
 	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
 	
 	// ad.tag must be initialized somewhere in this class!
@@ -1870,7 +1872,7 @@ EOD;
 					$code = 'custom';
 					$jwplayerData['file'] = $url;
 					if ($hd) {
-						$jwplayerData['plugins']['http://lp.longtailvideo.com/5/hd/hd-2.1.swf'] = array();
+						$jwplayerData['plugins'][self::$JWPLAYER_DIR.self::$JWPLAYER_PLUGIN_HD_SWF] = array();
 					}
 				}
 				break;
@@ -1938,7 +1940,7 @@ EOD;
 				$jwplayerData['provider'] = 'video';
 
 				if ($this->mData[1]) {
-					$jwplayerData['plugins']['http://lp.longtailvideo.com/5/hd/hd-2.1.swf'] = array('file'=>$jwplayerData['hdfile'], 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
+					$jwplayerData['plugins'][self::$JWPLAYER_DIR.self::$JWPLAYER_PLUGIN_HD_SWF] = array('file'=>$jwplayerData['hdfile'], 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
 				}
 				
 				// preroll
