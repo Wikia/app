@@ -395,7 +395,7 @@ class EditAccount extends SpecialPage {
 	 * Returns a random password which conforms to our password requirements and is
 	 * not easily guessable.
 	 */
-	function generateRandomScrambledPassword(){
+	function generateRandomScrambledPassword() {
 		// Password requirements need a captial letter, a digit, and a lowercase letter.
 		// wfGenerateToken() returns a 32 char hex string, which will almost always satisfy the digit/letter but not always.
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
