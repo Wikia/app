@@ -13,32 +13,33 @@ class WikiaVideoService extends Service {
 		$convertedVar = F::app()->wg->videoHandlersVideosMigrated;
 		return !empty( $convertedVar );
 	}	
-	
+
 	/*
 	 * Checks if given File is video
 	 * @param $file WikiaLocalFile object or Title object eventually
 	 * @return boolean
 	 */
-	public static function isFileTypeVideo($file) {
+	public static function isFileTypeVideo( $file ) {
 		
 		if ( self::isVideoStoredAsFile() ) {
 			// File can be video only when new video logic is enabled for the wiki
 			if ( $file instanceof Title && $file->exists() ) {
 				$file = wfFindFile( $file );
 			}
-
-			if ( $file instanceof LocalFile && $file->isVideo() ) {
-				return true;
-			}
+			return self::isVideoFile();
 		}
 		return false;
 	}
-	
+
+	public static function isVideoFile( $file ) {
+		return ( method_exists( $file, 'isVideo' ) && $file->isVideo() );
+	}
+
 	/*
 	 * Checks if given Title is video 
 	 * @return boolean
 	 */
-	public static function isTitleVideo($title) {
+	public static function isTitleVideo( $title, $allowOld = true ) {
 		
 		if ( !($title instanceof Title) ) {
 
@@ -57,14 +58,9 @@ class WikiaVideoService extends Service {
 			}
 			return false;
 
-		} else { 
+		} elseif ( ( $title->getNamespace() == NS_VIDEO ) && $allowOld ) {
 
-			// video-namespace logic
-			if ( $title->getNamespace() == NS_VIDEO ) {
-
-				return true;
-			}			
-			return false;
+			return true;
 		}
 		
 		return false;
@@ -86,7 +82,7 @@ class WikiaVideoService extends Service {
 		
 		return false;
 	}
-	
+
 	/**
 	 * Can WikiaVideo extension be used to ingest video
 	 * @return boolean 
@@ -94,7 +90,7 @@ class WikiaVideoService extends Service {
 	public static function useWikiaVideoExtForIngestion() {
 		return !empty(F::app()->wg->ingestVideosUseWikiaVideoExt);
 	}
-	
+
 	/**
 	 * Can VideoHandlers extensions be used to ingest video
 	 * @return boolean
@@ -102,7 +98,7 @@ class WikiaVideoService extends Service {
 	public static function useVideoHandlersExtForIngestion() {
 		return !empty(F::app()->wg->ingestVideosUseVideoHandlersExt);
 	}
-	
+
 	/**
 	 * Can VideoHandlers extension be used to embed video
 	 * @return boolean
@@ -110,7 +106,7 @@ class WikiaVideoService extends Service {
 	public static function useWikiaVideoExtForEmbed() {
 		return !empty(F::app()->wg->embedVideosUseWikiaVideoExt) && !self::isVideoStoredAsFile();		
 	}
-	
+
 	/**
 	 * Can VideoHandlers extension be used to embed video
 	 * @return boolean
@@ -118,7 +114,7 @@ class WikiaVideoService extends Service {
 	public static function useVideoHandlersExtForEmbed() {
 		return !empty(F::app()->wg->embedVideosUseVideoHandlersExt);		
 	}
-	
+
 	/**
 	 * Could the given URL exist on this wiki? Does not actually check if
 	 * video exists.
@@ -128,7 +124,7 @@ class WikiaVideoService extends Service {
 	public static function isUrlMatchThisWiki($url) {
 		return stripos( $url, F::app()->wg->server ) !== false;
 	}
-	
+
 	/**
 	 * Could the given URL exist on the Wikia video repository? Does not
 	 * actually check if video exists.
