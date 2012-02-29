@@ -12,3 +12,9 @@ $aliases['en'] = array(
 $aliases['de'] = array(
     'CreatePage' => array( 'SiteErstellen', 'CreatePage' ),
 );
+/**
+ * Polish
+ */
+$aliases['pl'] = array(
+	'CreatePage' => array( 'Utwórz stronę', 'CreatePage' ),
+);
