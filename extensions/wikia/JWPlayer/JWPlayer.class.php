@@ -10,6 +10,8 @@ class JWPlayer {
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
 	private static $JWPLAYER_SWF = 'player.swf';
 	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
+	private static $JWPLAYER_PLUGIN_HD_JS = 'hd-2.1.min.js';
+	private static $JWPLAYER_PLUGIN_HD_SWF = 'hd-2.1.swf';
 	
 	// ad.tag must be initialized somewhere in this class!
 	private static $JWPLAYER_GOOGIMA_DATA = 
@@ -64,10 +66,10 @@ class JWPlayer {
 		// HD
 		if ($isHd) {
 			if ($hdfile) {
-				$jwplayerData['plugins']['http://lp.longtailvideo.com/5/hd/hd-2.1.swf'] = array('file'=>$hdfile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
+				$jwplayerData['plugins'][self::getAssetUrl($wgExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array('file'=>$hdfile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
 			}
 			else {
-				$jwplayerData['plugins']['http://lp.longtailvideo.com/5/hd/hd-2.1.swf'] = array();
+				$jwplayerData['plugins'][self::getAssetUrl($wgExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array();
 			}
 		}
 		
