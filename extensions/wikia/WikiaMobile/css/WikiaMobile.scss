@@ -46,17 +46,17 @@ body {
 	border-bottom: 1px solid $border-color;
 	padding: $page-padding;
 	position: relative;
+	margin-top: 10px;
 
 	h1{
 		float: left;
 		margin:0;
 		padding:0;
 	}
-	
+
 	.wkShr{
 		position: absolute;
 		right: 5px;
-		z-index: 234523454325324563456543;
 	}
 }
 
@@ -170,6 +170,8 @@ blockquote {
 	position: relative;
 	width: 50px;
 	height: 25px;
+	z-index: $top-layer-z-index+1000;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAABJElEQVR42s3SwWcDQRgF8LWrYSmlp0hYiZQKJYcSpdXKaiR6iN5CpUSrh0qIVqLVUPP37F/ZF97yGds3RA89/ETMm7fz7U5UFEWpBycQ7aEJV+V/u/ACDlZwCWmgKIGe2beFA1tag28uOhOaQN0rO4IcNsxZmS3tgBMe+OC7QO7alg5EcASpGblvpvLNbOlclN5443dF9hPi8ulbFTQnjeEVnFDfBTOOMxPBnKVnIvMEX9DfBRtwzE3PVRsYPoTlL+trqHGijn/32uIkC7F2YXuqLvWjCX/AEFqcqFVxR98hCZU2GZ5z5KpMar7BOUSylG75jmJe6DdzqhwSmvJXlvomLPNNxR5ZmoETTvcpHQRKx/+mtB0o7apS5f7vPhSpK6X2/QBekKSAsQjaEgAAAABJRU5ErkJggg==);
