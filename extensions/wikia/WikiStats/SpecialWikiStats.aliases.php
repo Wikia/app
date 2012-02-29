@@ -12,3 +12,9 @@ $aliases['en'] = array(
 $aliases['de'] = array(
     'WikiStats' => array( 'WikiStatistik', 'WikiStats' ),
 );
+/**
+ * Polish
+ */
+$aliases['pl'] = array(
+	'WikiStats' => array( 'StatystykiWiki', 'WikiStats' ),
+);
