@@ -20,7 +20,7 @@ class RelatedVideosData {
 			if( WikiaVideoService::isVideoStoredAsFile() ) {
 				$file = wfFindFile($title);
 
-				if( empty($file) || !is_object( $file) || !( $file instanceof LocalFile ) || !$file->isVideo() ) {
+				if( WikiaVideoService::isVideoFile( $file ) ) {
 					$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
 				} else {
 

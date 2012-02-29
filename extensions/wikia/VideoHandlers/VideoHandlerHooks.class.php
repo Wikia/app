@@ -13,7 +13,7 @@ class VideoHandlerHooks extends WikiaObject{
 
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
 			$oFile = wfFindFile( $oTitle );
-			if ( ( $oFile instanceof LocalFile ) && ( $oFile->isVideo() ) ){
+			if ( WikiaVideoService::isVideoFile( $oFile ) ){
 				$oArticle = new WikiaVideoPage( $oTitle );
 			}
 		}
@@ -32,7 +32,7 @@ class VideoHandlerHooks extends WikiaObject{
 		}
 		return true;
 	}
-  
+
 	public function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
 		
@@ -40,8 +40,7 @@ class VideoHandlerHooks extends WikiaObject{
 
 		wfProfileOut(__METHOD__);
 		return true;
-	}  
-  
+	}
 	
 	public function onSetupAfterCache() {
 		global $wgLocalFileRepo, $wgUploadDirectory, $wgUploadBaseUrl,
