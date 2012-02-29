@@ -20,20 +20,7 @@ class WikiaLocalFileShared  {
 	 * Checkes if file is a video
 	 */
 	public function isVideo(){
-
 		return ($this->oFile->getHandler() instanceof VideoHandler);
-
-		// Media type loss is just teporary
-		if (	isset( $this->lockedPropertiesValues[ 'media_type' ] ) &&
-			( $this->lockedPropertiesValues[ 'media_type' ] == self::VIDEO_MEDIA_TYPE )
-		) return true;
-		// Has proper mediatype
-		if ( $this->oFile->media_type == self::VIDEO_MEDIA_TYPE ) return true;
-		// if mediatype is not set, maybe it has appropriate handler?
-		if ( $this->oFile->getHandler() instanceof VideoHandler ) return true;
-		// Too bad. It's not a video file
-
-		return false;
 	}
 
 	/*
