@@ -1,7 +1,14 @@
 <?php
+/**
+ * A foreign repository with a MediaWiki database accessible via the configured LBFactory
+ *
+ * @file
+ * @ingroup FileRepo
+ */
 
 /**
  * A foreign repository with a MediaWiki database accessible via the configured LBFactory
+ *
  * @ingroup FileRepo
  */
 class ForeignDBViaLBRepo extends LocalRepo {
@@ -23,6 +30,7 @@ class ForeignDBViaLBRepo extends LocalRepo {
 	function getSlaveDB() {
 		return wfGetDB( DB_SLAVE, array(), $this->wiki );
 	}
+
 	function hasSharedCache() {
 		return $this->hasSharedCache;
 	}
