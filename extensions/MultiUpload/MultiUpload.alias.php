@@ -185,6 +185,11 @@ $specialPageAliases['zh-hant'] = array(
 	'MultipleUpload' => array( '大量上傳' ),
 );
 
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'MultipleUpload' => array( 'Prześlij wiele plików' )
+);
+
 /**
  * For backwards compatibility with MediaWiki 1.15 and earlier.
  */
