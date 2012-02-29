@@ -2,11 +2,13 @@
 $aliases = array();
 
 $aliases['en'] = array(
-	'MyHome' => array('MyHome', 'My Home')
+	'MyHome'	=> array( 'MyHome', 'My Home' ),
+	'WikiActivity'	=> array( 'WikiActivity' ),
 );
 
 $aliases['pl'] = array(
-	'MyHome' => array('Moja strona domowa')
+	'MyHome'	=> array( 'Moja strona domowa' ),
+	'WikiActivity'  => array( 'Aktywność na wiki' ),
 );
 
 $aliases['de'] = array(
