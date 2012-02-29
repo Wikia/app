@@ -1,4 +1,10 @@
 <?php
+/**
+ * File repository with no files.
+ *
+ * @file
+ * @ingroup FileRepo
+ */
 
 /**
  * File repository with no files, for performance testing
@@ -17,6 +23,9 @@ class NullRepo extends FileRepo {
 	function append( $srcPath, $toAppendPath, $flags = 0 ){
 		return false;
 	}
+	function appendFinish( $toAppendPath ){
+		return false;
+	}
 	function publishBatch( $triplets, $flags = 0 ) {
 		return false;
 	}
@@ -33,6 +42,9 @@ class NullRepo extends FileRepo {
 		return false;
 	}
 	function findFile( $title, $options = array() ) {
+		return false;
+	}
+	function concatenate( $fileList, $targetPath, $flags = 0 ) {
 		return false;
 	}
 }
