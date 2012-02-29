@@ -19,12 +19,9 @@ To make a read query, something like this usually suffices:
 
 $dbr = wfGetDB( DB_SLAVE );
 $res = $dbr->select( /* ...see docs... */ );
-while ( $row = $dbr->fetchObject( $res ) ) {
+foreach ( $res as $row ) {
 	...
 }
-$dbr->freeResult( $res );
-
-Note the assignment operator in the while condition.
 
 For a write query, use something like:
 
@@ -149,9 +146,7 @@ to avoid long-lasting locks. By default, MediaWiki opens a transaction
 at the first query, and commits it before the output is sent. Locks will
 be held from the time when the query is done until the commit. So you
 can reduce lock time by doing as much processing as possible before you
-do your write queries. Update operations which do not require database
-access can be delayed until after the commit by adding an object to
-$wgPostCommitUpdateList.
+do your write queries.
 
 Often this approach is not good enough, and it becomes necessary to
 enclose small groups of queries in their own transaction. Use the
@@ -173,4 +168,32 @@ Instead of locking reads, combine your existence checks into your write
 queries, by using an appropriate condition in the WHERE clause of an
 UPDATE, or by using unique indexes in combination with INSERT IGNORE.
 Then use the affected row count to see if the query succeeded.
+
+------------------------------------------------------------------------
+    Supported DBMSs
+------------------------------------------------------------------------
+
+MediaWiki is written primarily for use with MySQL. Queries are optimized
+for it and its schema is considered the canonical version. However,
+MediaWiki does support the following other DBMSs to varying degrees.
+
+* PostgreSQL
+* SQLite
+* Oracle
+* IBM DB2
+* MSSQL
+
+More information can be found about each of these databases (known issues,
+level of support, extra configuration) in the "databases" subdirectory in
+this folder.
+
+------------------------------------------------------------------------
+    Use of GROUP BY
+------------------------------------------------------------------------
+
+MySQL supports GROUP BY without checking anything in the SELECT clause. 
+Other DBMSs (especially Postgres) are stricter and require that all the 
+non-aggregate items in the SELECT clause appear in the GROUP BY. For 
+this reason, it is highly discouraged to use SELECT * with GROUP BY 
+queries.
 
