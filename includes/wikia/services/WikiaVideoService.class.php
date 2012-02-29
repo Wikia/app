@@ -26,13 +26,13 @@ class WikiaVideoService extends Service {
 			if ( $file instanceof Title && $file->exists() ) {
 				$file = wfFindFile( $file );
 			}
-			return self::isVideoFile();
+			return self::isVideoFile( $file );
 		}
 		return false;
 	}
 
 	public static function isVideoFile( $file ) {
-		return ( method_exists( $file, 'isVideo' ) && $file->isVideo() );
+		return ( $file instanceof LocalFile && $file->getHandler() instanceof VideoHandler);
 	}
 
 	/*
