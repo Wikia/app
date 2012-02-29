@@ -55,7 +55,7 @@ window.Wikia.Cache = (function(){
 
 			if(ttl === null || typeof ttl == 'undefined' || (typeof ttl == 'string' && JSON.parse(ttl) > getTimestamp())){
 				value = ls.getItem(getKey(key))
-				value = (typeof value == 'undefined') ? null : JSON.parse(value);
+				value = (typeof value == 'undefined' || value === null) ? null : JSON.parse(value);
 			}else{
 				this.del(key);
 				value = null;
