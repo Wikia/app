@@ -1077,7 +1077,7 @@ function WMU_insertImage(e, type) {
 
 			var screenType = o.getResponseHeader['X-screen-type'];
 			if(typeof screenType == "undefined") {
-				screenType = o.getResponseHeader['X-screen-Type'];
+				screenType = o.getResponseHeader['X-Screen-Type'];
 			}
 
 			switch(YAHOO.lang.trim(screenType)) {
