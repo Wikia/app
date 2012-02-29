@@ -1,79 +1,115 @@
-$.extend({
-	/**
-	 * JS version of wfMsg()
-	 *
-	 * Examples:
-	 *
-	 *  $.msg('foo');
-	 *  $.msg('bar', 'test', 'foo');
-	 *
-	 * @param string key - message name
-	 * @param string param - message parameter #1
-	 * @param string param - message parameter #2
-	 * ...
-	 * @return string - localised message
-	 */
-	msg: function() {
-		// get the first function parameter
-		var key = Array.prototype.shift.call(arguments),
-			// then the rest of parameters as message arguments
-			params = arguments;
+/**
+ * JavaScript support for JSMessages
+ *
+ * Allows on-demand fetching of packages with messages and rendering of messages
+ *
+ * @see https://internal.wikia-inc.com/wiki/JSMessages
+ */
+(function($) {
+	var loadedPackages = [];
 
-		// default value to be returned
-		var ret = false;
+	$.extend({
+		/**
+		 * JS version of wfMsg()
+		 *
+		 * Examples:
+		 *
+		 *  $.msg('foo');
+		 *  $.msg('bar', 'test', 'foo');
+		 *
+		 * @param string key - message name
+		 * @param string param - message parameter #1
+		 * @param string param - message parameter #2
+		 * ...
+		 * @return string - localised message
+		 */
+		msg: function() {
+			// get the first function parameter
+			var key = Array.prototype.shift.call(arguments),
+				// then the rest of parameters as message arguments
+				params = arguments;
 
-		if (typeof wgMessages != 'undefined') {
-			ret = wgMessages[key] || ret;
+			// default value to be returned
+			var ret = false;
 
-			// replace $1, $2, $3, ...  with parameters provided
-			if (ret !== false && params && params.length) {
-				$.each(params, function(i, param) {
-					ret = ret.replace(new RegExp('\\$' + parseInt(i+1), 'g'), param);
-				});
+			if (typeof wgMessages != 'undefined') {
+				ret = wgMessages[key] || ret;
+
+				// replace $1, $2, $3, ...  with parameters provided
+				if (ret !== false && params && params.length) {
+					$.each(params, function(i, param) {
+						ret = ret.replace(new RegExp('\\$' + parseInt(i+1), 'g'), param);
+					});
+				}
 			}
-		}
 
-		return ret !== false ? ret : ('<' + key + '>');
-	},
+			return ret !== false ? ret : ('<' + key + '>');
+		},
 
-	/**
-	 * Load messages from given package(s)
-	 *
-	 * @param string/array packages - package name or list of packages
-	 * @param function callback - function to call when request is completed
-	 * @param string language - optionally language code (fallbacks to user language)
-	 */
-	getMessages: function(packages, callback, language) {
-		// list of packages was given
-		if (typeof packages != 'string') {
-			packages = Array.prototype.join.call(packages, ',');
-		}
-
-		// by default use user language
-		language = language || window.wgUserLanguage;
-
-		$().log('loading ' + packages + ' package(s) for "' + language + '"', 'JSMessages');
-
-		$.get(wgScriptPath + '/wikia.php', {
-			controller: 'JSMessages',
-			method: 'getMessages',
-			format: 'html',
-			packages: packages,
-			uselang: language,
-			cb: window.wgJSMessagesCB
-		}, function() {
-			$().log(packages + ' package(s) loaded', 'JSMessages');
-
-			if (typeof callback == 'function') {
-				callback();
+		/**
+		 * Load messages from given package(s)
+		 *
+		 * @param string/array packages - package name or list of packages
+		 * @param function callback - function to call when request is completed
+		 * @param string language - optionally language code (fallbacks to user language)
+		 */
+		getMessages: function(packages, callback, language) {
+			// single of the single package was given
+			if (typeof packages == 'string') {
+				packages = [packages];
 			}
-		}, 'script');
-	},
 
-	/**
-	 * Load messages from given package(s) using content language
-	 */
-	getMessagesForContent: function(packages, callback) {
-		this.getMessages(packages, callback, window.wgContentLanguage);
-	}
-});
+			// by default use user language
+			language = language || window.wgUserLanguage;
+
+			$().log('loading ' + packages.join(',') + ' package(s) for "' + language + '"', 'JSMessages');
+
+			// create a list of packages to be loaded
+			// check the list of requested packages against already loaded
+			var packagesToLoad = [];
+
+			for (var i = 0, len = packages.length; i < len; i++) {
+				if (loadedPackages.indexOf(packages[i]) === -1) {
+					packagesToLoad.push(packages[i]);
+				}
+			}
+
+			// load packages (if needed)
+			if (packagesToLoad.length == 0) {
+				$().log('package(s) are already loaded', 'JSMessages');
+
+				if (typeof callback == 'function') {
+					callback();
+				}
+			}
+			else {
+				$.get(wgScriptPath + '/wikia.php', {
+					controller: 'JSMessages',
+					method: 'getMessages',
+					format: 'html',
+					packages: packagesToLoad.join(','),
+					uselang: language,
+					cb: window.wgJSMessagesCB
+				},
+				function() {
+					$().log(packagesToLoad.join(',') + ' package(s) loaded', 'JSMessages');
+
+					if (typeof callback == 'function') {
+						callback();
+					}
+
+					// these packages are loaded
+					loadedPackages = loadedPackages.concat(packagesToLoad);
+				}, 'script');
+			}
+		},
+
+		/**
+		 * Load messages from given package(s) using content language
+		 */
+		getMessagesForContent: function(packages, callback) {
+			this.getMessages(packages, callback, window.wgContentLanguage);
+		}
+	});
+
+})(jQuery);
