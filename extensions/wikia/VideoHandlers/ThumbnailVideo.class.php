@@ -41,13 +41,39 @@ class ThumbnailVideo extends ThumbnailImage {
 		$this->page = $page;
 	}
 
+	function getFile() {
+		return $this->file;
+	}
+	
+	function getUrl() {
+		return $this->url;
+	}
+	
+	function getPath() {
+		return $this->path;
+	}
+	
+	function getPage() {
+		return $this->page;
+	}
+	
+	function getWidth() {
+		return $this->width;
+	}
+	
+	function getHeight() {
+		return $this->width;
+	}
+	
 	function toHtml( $options = array() ) {
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
-
+		
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
+		$useThmbnailInfoBar = false;
+		
 		/**
 		 * Note: if title is empty and alt is not, make the title empty, don't
 		 * use alt; only use alt if title is not set
@@ -100,48 +126,57 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		$titleBar = array(
-			"class"		=> "Wikia-video-title-bar",
-			"style"		=> "width: {$this->width}px; margin-left: -{$this->width}px;"
-		);
-		
-		$videoTitle = $attribs['data-video'];
-		
-		$infoVars = array();
-		$userName = $this->file->getUser();
-		if (!is_null($userName)) {
-			$link = AvatarService::renderLink($userName);
-			$infoVars["author"] = wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $userName );
-		} else {
-			$infoVars["author"] = "";
-		}
-		
-		$duration = $this->file->getHandler()->getFormattedDuration();
-		if (!empty($duration)) {
-			$infoVars["duration"] = '('.$duration.')';
-		} else {
-			$infoVars["duration"] = '';
-		}
 		
 		$html = Xml::openElement( 'a', $linkAttribs );
 			$html .= WikiaVideoService::videoPlayButtonOverlay( $this->width, $this->height );
 			$html .= Xml::element( 'img', $attribs, '', true );
-		$html .= Xml::closeElement( 'a' );
+		$html .= Xml::closeElement( 'a' ); 
 		
-		if ( (!empty($options['img-class']) && $options['img-class'] != "thumbimage") || empty($options['img-class']) ) {
-			$html .= Xml::openElement( 'span', $titleBar );
-				$html .= Xml::element( 'span', array('class'=>'title'), $videoTitle );
-				$html .= Xml::element( 'span', array('class'=>'info'),  '{author} {duration}' );
-			$html .= Xml::closeElement( 'span' );
-		}
+		if ( $useThmbnailInfoBar ) {
+
+			$titleBar = array(
+				"class"		=> "Wikia-video-title-bar",
+				"style"		=> "width: {$this->width}px; margin-left: -{$this->width}px;"
+			);
 			
-		foreach ( $infoVars as $key => $value ) {
-			$html = str_replace('{'.$key.'}', $value, $html);
+			$videoTitle = $attribs['data-video'];
+			
+			$infoVars = array();
+			$userName = $this->file->getUser();
+			if (!is_null($userName)) {
+				$link = AvatarService::renderLink($userName);
+				$infoVars["author"] = wfMsgExt('oasis-content-picture-added-by', array( 'parsemag' ), $link, $userName );
+			} else {
+				$infoVars["author"] = "";
+			}
+
+			$duration = $this->file->getHandler()->getFormattedDuration();
+			if (!empty($duration)) {
+				$infoVars["duration"] = '('.$duration.')';
+			} else {
+				$infoVars["duration"] = '';
+			}
+
+			if ( !isset($options['img-class']) ) {
+				$options['img-class'] = "";
+			}
+
+			if ( $options['img-class'] != "thumbimage" ) {
+				$html .= Xml::openElement( 'span', $titleBar );
+					$html .= Xml::element( 'span', array('class'=>'title'), $videoTitle );
+					$html .= Xml::element( 'span', array('class'=>'info'),  '{author} {duration}' );
+				$html .= Xml::closeElement( 'span' );
+			}
+
+			foreach ( $infoVars as $key => $value ) {
+				$html = str_replace('{'.$key.'}', $value, $html);
+			}
+
 		}
 		
-//		$html .= F::build('JSSnippets')->addToStack(
-//			array('/extensions/wikia/VideoHandlers/js/VideoHandlers.js')
-//			);
+		//	$html .= F::build('JSSnippets')->addToStack(
+		//		array('/extensions/wikia/VideoHandlers/js/VideoHandlers.js')
+		//	);
     
 		return $html;
 	}
