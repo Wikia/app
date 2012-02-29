@@ -27,6 +27,7 @@ $wgAutoloadClasses['AutoHubsPagesHelper'] =
 
 
 $wgExtensionMessagesFiles['PartnerFeed'] = $dir . 'PartnerFeed.i18n.php';
+$wgExtensionAliasesFiles['PartnerFeed'] = __DIR__ . '/PartnerFeed.aliases.php';
 
 $wgSpecialPages['PartnerFeed']		= 'PartnerFeed';
 $wgSpecialPageGroups['PartnerFeed']	= 'wikia';
