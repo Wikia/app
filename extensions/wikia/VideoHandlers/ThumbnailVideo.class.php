@@ -11,7 +11,6 @@ class ThumbnailVideo extends ThumbnailImage {
 	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ){
 		
 		$this->file = $file;
-
 		/*
 		 * Do some math to recalculate valid position for cropped thumbnails
 		 */
@@ -65,9 +64,52 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $this->height;
 	}
 	
+	/*
+	 * Render video thumbnail as image thumbnail
+	 */
+	function renderAsThumbnailImage($options) {
+
+		$thumb = F::build( 'ThumbnailImage', array(
+					"file" => $this->getFile(),
+					"url" => $this->getUrl(),
+					"width" => $this->getWidth(),
+					"height" => $this->getHeight(),
+					"path" => $this->getPath(),
+					"page" => $this->getPage())
+		);
+		
+		// make sure to replace 'image' css class whith 'video' css class
+		// in order to make thumbnail be handled correctly by RTE
+		if ( isset( $options['img-class'] ) ) {
+
+			$imgClasses = explode( ' ', $options['img-class'] );
+			$changeIndex = array_search( 'image', $imgClasses );
+
+			if ( $changeIndex !== false ) {
+
+				$imgClasses[$changeIndex] = "video";
+			} else {
+
+				$imgClasses[] = "video";
+			}
+
+			$options['img-class'] = implode( ' ', $imgClasses );
+		} else {
+
+			$options['img-class'] = "video";
+		}
+
+		return $thumb->toHtml( array('img-class' => $options['img-class']) );
+	}
+	
+	
 	function toHtml( $options = array() ) {
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
+		}
+		
+		if ( !empty( F::app()->wg->RTEParserEnabled ) ) {
+			return $this->renderAsThumbnailImage($options);		
 		}
 		
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
