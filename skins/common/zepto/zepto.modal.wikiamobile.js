@@ -19,23 +19,24 @@
 	track = function(ev, what){
 		WikiaTracker.track('/1_mobile/'+(what?(what+'/'):'')+'modal/' + ev, 'main.sampled');
 	},
-	sharePopOver;
+	sharePopOver,
+	d = document,
+	byId = 'getElementById';
 
 	createModal =  function() {
-		var resolution = WikiaMobile.getDeviceResolution(),
-		body = $(document.body);
+		var resolution = WikiaMobile.getDeviceResolution();
 
-		body.append('<div id=wkMdlWrp><div id=wkMdlTB><div class=wkShr id=wkShrImg></div><div id=wkMdlClo>&times;</div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div>\
+		document.body.insertAdjacentHTML('beforeend', '<div id=wkMdlWrp><div id=wkMdlTB><div class=wkShr id=wkShrImg></div><div id=wkMdlClo>&times;</div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div>\
 			</div><style>#wkMdlWrp{min-height:' + resolution[1] + 'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + resolution[0] + 'px;}}</style>');
 
 		images = WikiaMobile.getImages();
 		clickEvent = WikiaMobile.getClickEvent();
 
-		modal = $('#wkMdlWrp');
-		modalClose = $('#wkMdlClo');
-		modalTopBar = $('#wkMdlTB');
-		modalContent = $('#wkMdlCnt');
-		modalFooter = $('#wkMdlFtr');
+		modal = $(d[byId]('wkMdlWrp'));
+		modalClose = $(d[byId]('wkMdlClo'));
+		modalTopBar = $(d[byId]('wkMdlTB'));
+		modalContent = $(d[byId]('wkMdlCnt'));
+		modalFooter = $(d[byId]('wkMdlFtr'));
 		allToHide = modalTopBar.add(modalFooter);
 		thePage = $('#wkAdPlc, #wkTopNav, #wkPage, #wkFtr');
 
@@ -66,7 +67,7 @@
 		});
 
 		//handling next/previous image in lightbox
-		body.delegate('#nxtImg', 'swipeLeft ' + clickEvent, function(event) {
+		$(document.body).delegate('#nxtImg', 'swipeLeft ' + clickEvent, function(event) {
 			nextImage($(this).prev());
 			track(((event.type == 'swipeLeft')?'swipe':'click') + '/left');
 		})
@@ -82,12 +83,9 @@
 			previousImage($(this));
 			track('swipe/right');
 		});
-		//document.body.addEventListener('touchmove', function(event) {
-		//	event.preventDefault();
-		//}, false);
 		
 		sharePopOver = WikiaMobile.popOver({
-			on: document.getElementById('wkShrImg'),
+			on: d[byId]('wkShrImg'),
 			style: 'left:3px;',
 			create: function(cnt){
 				$(cnt).delegate('li', clickEvent, function(){
