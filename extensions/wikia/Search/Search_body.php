@@ -188,14 +188,14 @@ class SolrSearchSet extends SearchResultSet {
 		$sanitizedQuery = self::sanitizeQuery($query);
 
 		$ABTestMode = false;
-		if( !empty( $wgWikiaSearchABTestEnabled ) ) {
-			$ABTestMode = self::getABTestMode( $wgWikiaSearchABTestModes );
-		}
-		
+		//if( !empty( $wgWikiaSearchABTestEnabled ) ) {
+		//	$ABTestMode = self::getABTestMode( $wgWikiaSearchABTestModes );
+		//}
+
 		if(!$ABTestMode) {
-			$relevancyFunctionId = 2;
+			$relevancyFunctionId = 5;
 			$params = array(
-				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
+				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,pageid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
 				'qf' => $queryFields,
 				'hl' => 'true',
 				'hl.fl' => 'html,title', // highlight field
@@ -214,7 +214,7 @@ class SolrSearchSet extends SearchResultSet {
 				case 'AB_VANILLA':
 					$relevancyFunctionId = 4;
 					$params = array(
-						'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
+						'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,pageid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
 						'qf' => $queryFields,
 						'hl' => 'true',
 						'hl.fl' => 'html,title', // highlight field
@@ -233,58 +233,56 @@ class SolrSearchSet extends SearchResultSet {
 					$relevancyFunctionId = 11;
 			}
 		}
-		
+
 		$queryClauses = array();
 
 		$onWikiId = (!empty($wgSolrDebugWikiId)) ? $wgSolrDebugWikiId : $wgCityId;
-		
+
 		if( $crossWikiaSearch ) {
-			
+
 			$widQuery = '';
-			
-			foreach (self::getCrossWikiaSearchExcludedWikis() as $wikiId) 
+
+			foreach (self::getCrossWikiaSearchExcludedWikis() as $wikiId)
 			{
 				if ($onWikiId == $wikiId) {
 					continue;
 				}
-				
+
 				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $wikiId;
 			}
-			
+
 			$queryClauses[] = $widQuery;
-			
+
 			$params['bf'] = 'map(backlinks,100,500,100)^2';
 			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
 			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en AND iscontent:true";
-			
+
 		} else {
-			
+
 			if(count($namespaces)) {
 				$nsQuery = '';
 				foreach($namespaces as $namespace) {
 					$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
 				}
-				
+
 				$queryClauses[] = "({$nsQuery})";
-				
+
 			}
-			
-			
-		        array_unshift($queryClauses, "wid: {$onWikiId}");
-			
+
+			array_unshift($queryClauses, "wid: {$onWikiId}");
 		}
-		
-		$dismaxParams = "{!dismax qf='html^0.8" 
+
+		$dismaxParams = "{!dismax qf='html^0.8"
 						." title^5'"
 						." pf='html^0.8"
 						." title^5'"
-						." mm=75" 
+						." mm=75"
 						." ps=10"
 						." tie=1"
 						. "}";
-		
+
 		$queryClauses[] = '_query_:"' . $dismaxParams . $sanitizedQuery . '"';
-		
+
 		$sanitizedQuery = implode(' AND ', $queryClauses);
 
 		try {
@@ -309,7 +307,7 @@ class SolrSearchSet extends SearchResultSet {
 		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits, $crossWikiaSearch );
 
 		if( empty( $offset ) ) {
-			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), array( 'sterm' => $query, 'rver' => $relevancyFunctionId, 'stype' => ( $crossWikiaSearch ? 'intra' : 'inter' ) ) );
+			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), array( 'sterm' => $query, 'rver' => $relevancyFunctionId, 'stype' => ( $crossWikiaSearch ? 'inter' : 'intra' ) ) );
 		}
 
 		wfProfileOut( $fname );
@@ -481,7 +479,9 @@ class SolrResult extends SearchResult {
 	private $mHighlightTitle = null;
 	private $mRedirectTitle = null;
 	private $mWikiId = null;
+	private $mPageId = null;
 	private $mUrl = null;
+	private $mNamespace = null;
 	private $crossWikiaResult = false;
 	private $mRelevancyFunctionId = 0;
 	private $mDebug = '';
@@ -498,6 +498,8 @@ class SolrResult extends SearchResult {
 	public function __construct( Apache_Solr_Document $document, $crossWikiaResult = false ) {
 		$this->crossWikiaResult = $crossWikiaResult;
 		$this->mWikiId = $document->wid;
+		$this->mPageId = $document->pageid;
+		$this->mNamespace = $document->ns;
 		$this->mDebug = "<br>views:" . $document->views . " revcount:" . $document->revcount . " backlinks:" . $document->backlinks . " articles:" . $document->wikiarticles . " pages:" . $document->wikipages . " ativeusers:" . $document->activeusers;
 		$this->mWikiTitle = $document->wikititle;
 
@@ -572,6 +574,18 @@ class SolrResult extends SearchResult {
 		return $this->mWikiId;
 	}
 
+	public function getPageId() {
+		return $this->mPageId;
+	}
+
+	public function getPageNS() {
+		return $this->mNamespace;
+	}
+
+	public function getTitle() {
+		return $this->mTitle;
+	}
+
 	public function getRedirectTitle() {
 		return $this->mRedirectTitle;
 	}
@@ -638,7 +652,7 @@ class SolrResult extends SearchResult {
 
 	public static function showHit($result, $link, $redirect, $section, $extract, $data) {
 		// adding class and extra params to result link
-		$link = preg_replace('/( title=\")/i', ' class="mw-search-result-title" data-wid="' . $result->getWikiId() . '" data-pos="' . $result->getPosition() . '" data-sterm="' . urlencode( $result->getSearchTerm() ) . '" data-stype="' . ( $result->isCrossWikiaResult() ? 'intra' : 'inter' ) . '" data-rver="' . $result->getRelevancyFunctionId() . '"$1', $link);
+		$link = preg_replace('/( title=\")/i', ' class="mw-search-result-title" data-wid="' . $result->getWikiId() . '" data-pageid="' . $result->getPageId() . '" data-pagens="' . $result->getPageNS() . '" data-title="' . $result->getTitle()->getText() . '" data-pos="' . $result->getPosition() . '" data-sterm="' . urlencode( $result->getSearchTerm() ) . '" data-stype="' . ( $result->isCrossWikiaResult() ? 'inter' : 'intra' ) . '" data-rver="' . $result->getRelevancyFunctionId() . '"$1', $link);
 
 		if($result->isCrossWikiaResult()) {
 			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none; font-size: small\"><span class=\"dark_text_2\">" . strtr( urldecode( $result->getUrl() ), array( 'http://' => '' ) ) . "</span></a>";
@@ -658,12 +672,12 @@ class SolrResult extends SearchResult {
 class SolrResultTitle extends Title {
 	private $mUrl;
 
-	public function __construct($ns, $title, $url) {
+	public function __construct($ns, $title, $url, $id = 0) {
 		$this->mInterwiki = '';
 		$this->mFragment = '';
 		$this->mNamespace = intval( $ns );
 		$this->mDbkeyform = str_replace( ' ', '_', $title );
-		$this->mArticleID = 0; //( $ns >= 0 ) ? -1 : 0;
+		$this->mArticleID = $id; //( $ns >= 0 ) ? -1 : 0;
 		$this->mUrlform = wfUrlencode( $this->mDbkeyform );
 		$this->mTextform = str_replace( '_', ' ', $title );
 

@@ -18,7 +18,10 @@ var SearchClickTracking = {
 						'pos': element.attr('data-pos'),
 						'sterm': element.attr('data-sterm'),
 						'stype': element.attr('data-stype'),
-						'rver': element.attr('data-rver')
+						'rver': element.attr('data-rver'),
+						'pageid': element.attr('data-pageid'),
+						'pagens': element.attr('data-pagens'),
+						'title': element.attr('data-title')
 					}, callback, callback );
 				}
 			});
