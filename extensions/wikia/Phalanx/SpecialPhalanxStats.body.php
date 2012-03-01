@@ -81,7 +81,12 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$data['lang'] = empty($block['lang']) ? '*' : $block['lang'];
 
 		#pull these out of the array, so they dont get used in the top rows
-		$data2['text'] = $block['text'];
+		if ( $block['type'] & Phalanx::TYPE_EMAIL && !$wgUser->isAllowed( 'phalanxemailblock' ) {
+			// hide email from non-privildged users
+			$data2['text'] = wfMsg( 'phalanx-email-filter-hidden' );
+		} else {
+			$data2['text'] = $block['text'];
+		}
 		$data2['reason'] = $block['reason'];
 
 		$headers = array(

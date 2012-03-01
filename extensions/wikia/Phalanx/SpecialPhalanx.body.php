@@ -5,7 +5,6 @@ class SpecialPhalanx extends SpecialPage {
 	var $mDefaultExpire;
 
 	function __construct() {
-		wfLoadExtensionMessages('Phalanx');
 		$this->mDefaultExpire = '1 year';
 		parent::__construct('Phalanx', 'phalanx' /* restrictions */, true /* listed */);
 	}
@@ -42,7 +41,8 @@ class SpecialPhalanx extends SpecialPage {
 			'languages' => $wgPhalanxSupportedLanguages,
 			'listing' => $listing,
 			'data' => $data,
-			'action' => $wgTitle->getFullURL()
+			'action' => $wgTitle->getFullURL(),
+			'showEmail' => $wgUser->isAllowed( 'phalanxemailblock' )
 		));
 
 		$wgOut->addHTML($template->render('phalanx'));
@@ -146,7 +146,12 @@ class PhalanxPager extends ReverseChronologicalPager {
 	}
 
 	function formatRow( $row ) {
-		global $wgLang;
+		global $wgLang, $wgUser;
+
+		// hide e-mail filters
+		if ( $row->p_type & Phalanx::TYPE_EMAIL && !$wgUser->isAllowed( 'phalanxemailblock' ) ) {
+			return '';
+		}
 
 		$author = User::newFromId( $row->p_author_id );
 		$authorName = $author->getName();
