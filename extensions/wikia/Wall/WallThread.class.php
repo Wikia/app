@@ -155,6 +155,7 @@ class WallThread {
 		$table = array( 'page' );
 		$vars = array( 'page_id' );
 		$conds[]  = "page_title LIKE '" . $dbr->escapeLike( $title->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX ."%'";
+		$conds[] = "page_latest > 0";	// BugId:22821
 		$conds['page_namespace'] = NS_USER_WALL_MESSAGE;
 		$options = array( 'ORDER BY' => 'page_id ASC' );
 		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
@@ -174,7 +175,7 @@ class WallThread {
 	}
 	
 	private function getThreadKey() {
-		return  __CLASS__ . '-'.$this->mCityId.'-thread-key-v08-' . $this->mThreadId;
+		return  __CLASS__ . '-'.$this->mCityId.'-thread-key-v09-' . $this->mThreadId;
 	}
 	
 	private function getCache() {
