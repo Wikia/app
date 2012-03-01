@@ -186,32 +186,7 @@ class VideoEmbedTool {
 			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
 			$props['href'] = $title->getPrefixedText();
-			/*
-			if ($file instanceof WikiaForeignDBFile) {
-				$props['provider'] = VideoPage::V_WIKIAVIDEO;
-			}
-			else {
-				$handlerClassname = get_class($file->getHandler());
-				if ( endsWith($handlerClassname, 'VideoHandler') ) {
-					$handlerName = substr($handlerClassname, 0, strlen($handlerClassname)-strlen('VideoHandler'));
-					$providerId = array_search($handlerName, $wgVideoMigrationProviderMap);
-					if ($providerId !== false) {
-						$props['provider'] = $providerId;
-					}
-					else {
-						// unsupported provider
-						header('X-screen-type: error');
-						return wfMsg( 'vet-non-existing' );				
-					}
-				}
-				else {
-					// file does not have a supported handler
-					header('X-screen-type: error');
-					return wfMsg( 'vet-non-existing' );				
-				}
-			 
-			}
-		    */
+			// provider not needed
 		}
 		else {
 			$title = Title::newFromText( $itemTitle, NS_LEGACY_VIDEO );
@@ -275,10 +250,12 @@ class VideoEmbedTool {
 		else {
 			$file = null;
 			if ( WikiaVideoService::isUrlMatchThisWiki($url) ) {
+				//@todo should we move constant VideoPage::V_LOCALVIDEO to VideoHandlers ext?
 				$props['provider'] = VideoPage::V_LOCALVIDEO;
 
 			}
 			else {	// assume url is on Wikia video repo
+				//@todo should we move constant VideoPage::V_WIKIAVIDEO to VideoHandlers ext?
 				$props['provider'] = VideoPage::V_WIKIAVIDEO;
 			}
 			
