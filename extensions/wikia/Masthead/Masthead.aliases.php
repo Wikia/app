@@ -12,3 +12,9 @@ $aliases['en'] = array(
 $aliases['de'] = array(
     'RemoveUserAvatar' => array( 'EntferneBenutzerAvatar', 'RemoveUserAvatar' ),
 );
+/**
+ * Polish
+ */
+$aliases['pl'] = array(
+	'RemoveUserAvatar' => array( 'Usuń avatar użytkownika', 'RemoveUserAvatar' ),
+);
