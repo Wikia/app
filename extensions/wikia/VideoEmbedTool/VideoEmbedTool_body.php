@@ -166,21 +166,62 @@ class VideoEmbedTool {
 	}
 
 	function editVideo() {
-		global $wgRequest;
+		global $wgRequest, $wgTitle, $wgVideoMigrationProviderMap;
 		$itemTitle = $wgRequest->getVal('itemTitle');
 
-		$title = Title::newFromText( $itemTitle, NS_LEGACY_VIDEO );
-		$video = new VideoPage( $title );
+		if (WikiaVideoService::isVideoStoredAsFile()) {
+			$title = Title::newFromText($itemTitle, NS_FILE);
+			$file = wfFindFile( $title );					
+			if ( !$file ) {
+				header('X-screen-type: error');
+				return wfMsg( 'vet-non-existing' );				
+			}
+			
+			$embedCode = $file->getEmbedCode( $wgTitle->getArticleID(), VIDEO_PREVIEW, false, false, true );			
+			$props['id'] = $file->getVideoId();
+			$props['oname'] = '';			
+			$props['vname'] = $file->getTitle()->getText();
+			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
+			$props['metadata'] = '';
+			// no need to set $props['href']. it's not used anywhere
+			if ($file instanceof WikiaForeignDBFile) {
+				$props['provider'] = VideoPage::V_WIKIAVIDEO;
+			}
+			else {
+				$handlerClassname = get_class($file->getHandler());
+				if ( endsWith($handlerClassname, 'VideoHandler') ) {
+					$handlerName = substr(0, strlen($handlerClassname)-strlen('VideoHandler'));
+					$providerId = array_search($handlerName, $wgVideoMigrationProviderMap);
+					if ($providerId !== false) {
+						$props['provider'] = $providerId;
+					}
+					else {
+						// unsupported provider
+						header('X-screen-type: error');
+						return wfMsg( 'vet-non-existing' );				
+					}
+				}
+				else {
+					// file does not have a supported handler
+					header('X-screen-type: error');
+					return wfMsg( 'vet-non-existing' );				
+				}
+			}
+		}
+		else {
+			$title = Title::newFromText( $itemTitle, NS_LEGACY_VIDEO );
+			$video = new VideoPage( $title );
 
-		$video->load();
-		$props['oname'] = '';
-		$props['provider'] = $video->getProvider();
-		$props['id'] = $video->getVideoId();
-		$props['vname'] = $title->getText();
+			$video->load();
+			$props['oname'] = '';
+			$props['provider'] = $video->getProvider();
+			$props['id'] = $video->getVideoId();
+			$props['vname'] = $title->getText();
 
-		$props['metadata'] = implode( ",", $video->getData() );
-		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
-		$props['href'] = $title->getPrefixedText();
+			$props['metadata'] = implode( ",", $video->getData() );
+			$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
+			$props['href'] = $title->getPrefixedText();			
+		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
@@ -532,7 +573,7 @@ class VideoEmbedTool {
 
 			if( 'gallery' != $layout ) {
 				if( '' == $mwInGallery ) { // not adding gallery, not in gallery
-					if ($provider == VideoPage::V_WIKIAVIDEO) {
+					if ($provider == VideoPage::V_WIKIAVIDEO && !WikiaVideoService::isVideoStoredAsFile()) {
 						$tag = '{{:' . $wgWikiaVideoInterwikiPrefix . ':' . $nameSanitized;
 						$params = array();
 						if($size != 'full') {
