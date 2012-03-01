@@ -464,14 +464,21 @@ $color-related-videos-background: darken($color-page, 20%);
 						.playButton {
 							width: 110px;
 						}
+						.timer {
+							position: absolute;
+							right: 3px;
+							bottom: 15px;
+							color: white;
+							font-size: 11px;
+							line-height: 14px;
+							background-color: black;
+							padding: 1px 4px 1px 6px;
+							@include border-radius(4px);
+						}
 					}
 					.description {
 						display: inline-block;
 						width: auto;
-					}
-					.videoduration {
-						margin-left: 2px;
-						color: $color-alternate-text;
 					}
 					.info {
 						display: inline-block;
