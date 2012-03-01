@@ -17,6 +17,8 @@ $dir = dirname(__FILE__) . '/';
 $app->registerClass('WikiaSearch', $dir . 'WikiaSearch.class.php');
 $app->registerClass('WikiaSearchClient', $dir . 'WikiaSearchClient.class.php');
 $app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
+$app->registerClass('WikiaSearchResult', $dir . 'WikiaSearchResult.class.php');
+$app->registerClass('WikiaSearchResultSet', $dir . 'WikiaSearchResultSet.class.php');
 
 /**
  * special pages

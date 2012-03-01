@@ -15,9 +15,44 @@ class WikiaSearch extends WikiaObject {
 		parent::__construct();
 	}
 
-	public function doSearch( $query, $start = 0, $length = null, $cityId = 0, $rankExpr = '' ) {
+	public function doSearch( $query, $start = 0, $length = null, $cityId = 0, $rankExpr = '', $groupResults = false ) {
 		$results = $this->client->search( $query, $start, ( !empty($length) ? $length : self::RESULTS_PER_PAGE ), $cityId, $rankExpr );
+//var_dump($results);
+//exit;
+
+		if(empty($cityId) && $groupResults) {
+			$results = $this->groupResults( $results );
+		}
+
 		return $results;
+	}
+
+	private function groupResults(stdClass $results) {
+		$wikiResults = array();
+
+		foreach( $results->hit as $hit) {
+			if(!isset($wikiResults[$hit->data->cityid])) {
+				$cityId = $hit->data->cityid;
+				$cityTitle = WikiFactory::getVarValueByName( 'wgSitename', $cityId );
+				$cityUrl = WikiFactory::getVarValueByName( 'wgServer', $cityId );
+				$wikiResults[$cityId] = array(
+					'cityId' => $cityId,
+					'cityTitle' => !empty($cityTitle) ? $cityTitle : '?',
+					'cityUrl' => !empty($cityUrl) ? $cityUrl : '#',
+					'hits' => array()
+				);
+			}
+			$wikiResults[$hit->data->cityid]['hits'][] = $hit;
+		}
+echo "<pre>";
+var_dump($wikiResults);
+exit;
+
+		return $results;
+	}
+
+	private function groupWikiResults($wikiId, Array $resultsPerWiki) {
+		return $resultsPerWiki;
 	}
 
 	public function setClient( WikiaSearchClient $client ) {
