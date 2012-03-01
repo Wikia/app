@@ -34,6 +34,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionMessagesFiles['SpecialProtectSite'] = $dir . '/SpecialProtectSite.i18n.php';
+$wgExtensionAliasesFiles['SpecialProtectSite'] = __DIR__ . '/SpecialProtectSite.aliases.php';
 
 /* Add this Special page to the Special page listing array */
 $wgSpecialPages['Protectsite'] = 'ProtectsiteForm';
