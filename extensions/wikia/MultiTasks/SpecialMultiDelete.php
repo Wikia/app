@@ -20,6 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionMessagesFiles["Multidelete"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
+$wgExtensionAliasesFiles['Multidelete'] = __DIR__ . '/MultiTasks.aliases.php';
 
 $wgAvailableRights[] = 'multidelete';
 $wgGroupPermissions['staff']['multidelete'] = true;
