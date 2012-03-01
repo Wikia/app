@@ -403,7 +403,14 @@ class PhalanxHelper {
 	static public function logUniversal( $action, $data ) {
 		$title = Title::newFromText('PhalanxStats/' . $data['id'],NS_SPECIAL);
 		$types = implode(',', Phalanx::getTypeNames($data['type']));
-		$log = new LogPage( 'phalanx' );
+
+		if ( $data['type'] & Phalanx::BLOCK_EMAIL ) {
+			$logType = 'phalanxemail';
+		} else { 
+			$logType = 'phalanx';
+		}
+
+		$log = new LogPage( $logType );
 		$log->addEntry( $action, $title, wfMsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), 
 			$data['text'], $types, $data['reason'] ) );
 		// Workaround lack of automatic COMMIT in Ajax requests

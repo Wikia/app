@@ -109,6 +109,8 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 
 	'phalanx-rule-log-name' => 'Phalanx rules log',
 	'phalanx-rule-log-header' => 'This is a log of changes to phalanx rules.',
+	'phalanx-email-rule-log-name' => 'Phalanx e-mail rules log',
+	'phalanx-email-rule-log-header' => 'This is a log of changes to phalanx rules for type e-mail.',
 	'phalanx-rule-log-add' => 'Phalanx rule added: $1',
 	'phalanx-rule-log-edit' => 'Phalanx rule edited: $1',
 	'phalanx-rule-log-delete' => 'Phalanx rule deleted: $1',
@@ -119,9 +121,12 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'phalanx-stats-table-wiki-url' => 'Wiki URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Last edited',
 
+	'phalanx-email-filter-hidden' => 'E-mail filter hidden. You do not have permission to view text.',
+
 	#permissions
 	'right-phalanx' => 'Can manage global blocks and spam filters',
 	'right-phalanxexempt' => 'Exempt from Phalanx rules',
+	'right-phalanxemailblock' => 'Can file, view and manage e-mail based blocks',
 );
 
 $messages['qqq'] = array(

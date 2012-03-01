@@ -77,10 +77,12 @@
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['type'][32] ), array( 'id' => 'wpPhalanxTypeFilterWords', 'value' => 32, 'title'=>32 ) ) ?>
 									<label for="wpPhalanxTypeFilterWords"><?php echo wfMsg( 'phalanx-type-answers-recent-questions' ) ?></label>
 								</div>
+								<?php if ( $showEmail ) { ?>
 								<div>
 									<?= Xml::check( 'wpPhalanxType[]', !empty( $data['typeFilter'][256] ), array( 'id' => 'wpPhalanxTypeEmail', 'value' => 256 ) ) ?>
 									<label for="wpPhalanxTypeEmail"><?php echo wfMsg( 'phalanx-type-user-email' ) ?></label>
 								</div>
+								<?php } ?>
 							</div>
 							<div id="phalanx-help">
 								<div id="phalanx-help-1" class="accent"><?php echo wfMsg( 'phalanx-help-type-content' ) ?></div>
