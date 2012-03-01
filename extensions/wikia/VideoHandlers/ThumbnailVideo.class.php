@@ -7,28 +7,14 @@
 
 class ThumbnailVideo extends ThumbnailImage {
 
-
 	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ){
 		
 		$this->file = $file;
-		/*
-		 * Do some math to recalculate valid position for cropped thumbnails
-		 */
-		$iCroppedAspectRatio = $width / $height;
-		$H = (float)$file->getWidth() / $iCroppedAspectRatio;
-		$hDelta = ( ( $file->getHeight() - $H ) / 2 );
-
-		$oImageServing = new ImageServing( null, $width, $height );
-		if ( $height < $file->getHeight() ) {
-
-			$oImageServing->setDeltaY(
-				$hDelta / $file->getHeight()
-			);
-		}
 
 		/*
 		 * Get thumbnail url
 		 */
+		$oImageServing = new ImageServing( null, $width, $height );
 		$this->url = $oImageServing->getUrl( $file, $file->getWidth(), $file->getHeight() );
 
 		# These should be integers when they get here.
@@ -43,41 +29,44 @@ class ThumbnailVideo extends ThumbnailImage {
 	function getFile() {
 		return $this->file;
 	}
-	
+
 	function getUrl() {
 		return $this->url;
 	}
-	
+
 	function getPath() {
 		return $this->path;
 	}
-	
+
 	function getPage() {
 		return $this->page;
 	}
-	
+
 	function getWidth() {
 		return $this->width;
 	}
-	
+
 	function getHeight() {
 		return $this->height;
 	}
-	
+
 	/*
 	 * Render video thumbnail as image thumbnail
 	 */
 	function renderAsThumbnailImage($options) {
 
-		$thumb = F::build( 'ThumbnailImage', array(
-					"file" => $this->getFile(),
-					"url" => $this->getUrl(),
-					"width" => $this->getWidth(),
-					"height" => $this->getHeight(),
-					"path" => $this->getPath(),
-					"page" => $this->getPage())
+		$thumb = F::build( 
+			'ThumbnailImage',
+			array(
+				"file" => $this->getFile(),
+				"url" => $this->getUrl(),
+				"width" => $this->getWidth(),
+				"height" => $this->getHeight(),
+				"path" => $this->getPath(),
+				"page" => $this->getPage()
+			)
 		);
-		
+
 		// make sure to replace 'image' css class whith 'video' css class
 		// in order to make thumbnail be handled correctly by RTE
 		if ( isset( $options['img-class'] ) ) {
@@ -86,10 +75,8 @@ class ThumbnailVideo extends ThumbnailImage {
 			$changeIndex = array_search( 'image', $imgClasses );
 
 			if ( $changeIndex !== false ) {
-
 				$imgClasses[$changeIndex] = "video";
 			} else {
-
 				$imgClasses[] = "video";
 			}
 
@@ -101,17 +88,16 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		return $thumb->toHtml( array('img-class' => $options['img-class']) );
 	}
-	
-	
+
 	function toHtml( $options = array() ) {
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
-		
+	
 		if ( !empty( F::app()->wg->RTEParserEnabled ) ) {
 			return $this->renderAsThumbnailImage($options);		
 		}
-		
+	
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
 		$useThmbnailInfoBar = false;
@@ -150,9 +136,9 @@ class ThumbnailVideo extends ThumbnailImage {
 		} else {
 			$linkAttribs = false;
 		}
-		
+
 		$linkAttribs['style'] = "display:inline-block;";
-		
+
 		$attribs = array(
 			'alt' => $alt,
 			'src' => $this->url,
@@ -168,7 +154,6 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		
 		$html = Xml::openElement( 'a', $linkAttribs );
 			$html .= WikiaVideoService::videoPlayButtonOverlay( $this->width, $this->height );
 			$html .= Xml::element( 'img', $attribs, '', true );
@@ -223,5 +208,4 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $html;
 	}
 }
-
 ?>
