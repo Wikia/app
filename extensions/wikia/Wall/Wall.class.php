@@ -313,6 +313,7 @@ class Wall {
 		// get list of threads (article IDs) on Message Wall
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 		
+		// page_latest condition is for BugId:22821
 		$query = "
 		select page.page_id, page.page_title from page
 		left join page_wikia_props
@@ -324,6 +325,7 @@ class Wall {
 		and page.page_title LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%'
 		and page.page_title NOT LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%/" . ARTICLECOMMENT_PREFIX ."%'
 		and page.page_namespace = ".NS_USER_WALL_MESSAGE."
+		and page.page_latest > 0
 		order by page.page_id desc";
 		
 		$res = $dbr->query( $query );
@@ -406,6 +408,7 @@ class Wall {
 			$like[]  = "page_title LIKE '" . $dbr->escapeLike( $tTitle ) . '/' . ARTICLECOMMENT_PREFIX ."%'";
 		}
 		$conds[] = implode(' OR ', $like);
+		$conds[] = "page_latest > 0";	// BugId:22821
 		$conds['page_namespace'] = NS_USER_WALL_MESSAGE;
 		$options = array( 'ORDER BY' => 'page_id ASC' );
 		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
@@ -438,7 +441,7 @@ class Wall {
 	}
 
 	private function getWallThreadListKey() {
-		return  __CLASS__ . '-'.$this->mCityId.'-wall-threadlist-key-v01-' . $this->mTitle->getDBkey();
+		return  __CLASS__ . '-'.$this->mCityId.'-wall-threadlist-key-v02-' . $this->mTitle->getDBkey();
 	}
 	
 	private function getCache() {
