@@ -34,8 +34,8 @@ class ModuleDataAnonTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($moduleData['dropdown']);
 
 		// log in / register links
-		$this->assertRegExp('/Special:Signup(.*)type=login/', $moduleData['personal_urls']['login']['href']);
-		$this->assertRegExp('/Special:Signup(.*)type=signup/', $moduleData['personal_urls']['register']['href']);
+		$this->assertRegExp('/Special:UserLogin(.*)type=login/', $moduleData['personal_urls']['login']['href']);
+		$this->assertRegExp('/Special:UserLogin(.*)type=signup/', $moduleData['personal_urls']['register']['href']);
 
 		// user data
 		$this->assertTrue($moduleData['isAnon']);
