@@ -60,3 +60,22 @@ li.sub, li.cld > a, li.cld > span {
 		display: block;
 	}
 }
+
+.cnt {
+	font-size: small;
+	padding: 2px 5px;
+	border-radius: 3px;
+	color: #999;
+	background: #F2F2F2;
+	position: absolute;
+	left: 35px;
+	height: 15px;
+	line-height: 15px;
+	top: 12px;
+	font-weight: 100;
+}
+
+.clsIco{
+	background-repeat: no-repeat;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhklEQVR42o2RwQnAIBAErcECAulMsA8L8mElPtKBpJLkFgSDcEweI3owA3Kh1iqyEXX/SZxO0KMYj9FXBOU+naJB0mOLoDzJGjoRktcX3AjJQgdEfHkF/MgldhkCW8SRKRCN8ZGHtx1cFW2H5EQrBplXjDJFQOaIhs2VOdI0OIx7kzEynfMFAmZVGhb8oTQAAAAASUVORK5CYII=);
+}

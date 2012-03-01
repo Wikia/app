@@ -110,8 +110,8 @@
 .js {
 	#wkNavMenu {
 		ul {
-			position: relative;
-			top: -50px;
+			position: absolute;
+			top: 40px;
 			min-height: 100%;
 			margin: 0;
 			padding: 0;
@@ -119,10 +119,7 @@
 			list-style: none;
 			color:  $link-color;
 			background-color: white;
-			@include transition(left .5s);
-			-webkit-transform: translateZ(0);
-			-moz-transform: translateZ(0);
-			transform: translateZ(0);
+			@include transition(left .6s);
 
 			li {
 				padding-right: 20px;
@@ -142,15 +139,19 @@
 		#wkNavBack {
 			display: block;
 		}
-
-		.lvl2, .lvl3 {
-			position: absolute;
+		
+		.lvl3{
 			top: 0;
 			left: 100%;
 		}
 
 		.lvl2 {
 			top: 50px;
+			left: 100%;
+		}
+		
+		.cur{
+			z-index: 1;
 		}
 
 		&.cur1 {
@@ -160,17 +161,14 @@
 		}
 
 		&.cur2 {
-			.lvl2.cur {
-				left: 0;
+			.lvl1 {
+				left:-100%;
 			}
 		}
 
 		&.cur3 {
-			.lvl2.cur {
-				left: 0;
-			}
-			.lvl3.cur {
-				left: 0;
+			.lvl1 {
+				left: -200%;
 			}
 		}
 
@@ -206,7 +204,7 @@
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 	z-index: 40;
 	min-height: 100%;
-	@include transition(opacity .5s);
+	@include transition(opacity .6s);
 
 	.fllNav & {
 		opacity: 1;
@@ -218,9 +216,7 @@
 		line-height: 50px;
 		background-color: white;
 		@include box-shadow(0 5px 15px -10px black);
-		@include transition(left .5s);
-		-webkit-transform: translateZ(0);
-		-moz-transform: translateZ(0);
+		@include transition(left .6s);
 		position: relative;
 		z-index: 120;
 		left: 0;

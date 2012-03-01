@@ -8,6 +8,10 @@
 		.thumb {
 			margin: 1px;
 		}
+		figure{
+			border: none;
+			margin: 0;
+		}
 		figure:nth-of-type(n+2), figcaption {
 			display: none;
 		}
@@ -18,17 +22,6 @@
 }
 
 .wkImgStk {
-	text-align: center;
-	margin: 10px auto;
-	width: 300px;
-
-	footer {
-		font-size: 90%;
-		box-shadow: 0 0 10px $shadow-color;
-		color: $page-text-color;
-		border: 1px solid $border-color;
-		margin-top: -10px;
-	}
 	&.grp {
 		footer {
 			display: none;

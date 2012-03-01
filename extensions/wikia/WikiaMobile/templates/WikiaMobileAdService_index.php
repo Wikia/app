@@ -1,2 +1,1 @@
-<aside id=wkAdPlc><?= $adSlot ?>
-<div id=wkAdCls>CLOSE &#215;<div></div></div></aside>
+<aside id=wkAdPlc><?= $adSlot ?><div id=wkAdCls>CLOSE<div></div></div></aside>

@@ -84,8 +84,7 @@
 	height: 30px;
 	width: 25px;
 	float: right;
-	font-size: xx-large;
-	color: rgb(157,157,157);
+	background-position: 20px 7px;
 	z-index: $highest-z-index + 1005;
 	padding: 0 0 20px 20px;
 }
@@ -120,7 +119,7 @@
 #nxtImg {
 	right: 0;
 	.chnImgChv {
-		border-color: transparent transparent transparent #006CB0;
+		border-color: transparent transparent transparent rgb(157,157,157);
 		right: 10px;
 	}
 }
@@ -129,7 +128,7 @@
 #prvImg {
 	left: 0;
 	.chnImgChv {
-		border-color: transparent #006CB0 transparent transparent;
+		border-color: transparent rgb(157,157,157) transparent transparent;
 		left: 10px;
 	}
 }

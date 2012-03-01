@@ -16,7 +16,7 @@ class WikiaMobileHooks extends WikiaObject{
 			$text = preg_replace('/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text );
 
 			//transform groups of IMAGE_GROUP_MIN images in a row into a media stack
-			$text = preg_replace( '/(\s*<figure[^>]*>(<\/?a|<img|<\/?figcaption|[^<])+<\/figure>\s*){' . self::IMAGE_GROUP_MIN . ',}/im', '<section class="wkImgStk grp">$0<footer>' . $this->wf->Msg('wikiaPhotoGallery-slideshow-view-number', '1', '') . '</footer></section>', $text );
+			$text = preg_replace( '/(\s*<figure[^>]*>(<\/?a|<img|<\/?figcaption|[^<])+<\/figure>\s*){' . self::IMAGE_GROUP_MIN . ',}/im', '<section class="wkImgStk grp thumb">$0<footer class=thumbcaption>' . $this->wf->Msg('wikiaPhotoGallery-slideshow-view-number', '1', '') . '</footer></section>', $text );
 		}
 
 		$this->wf->profileOut( __METHOD__ );
