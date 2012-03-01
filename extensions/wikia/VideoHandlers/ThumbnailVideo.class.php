@@ -136,7 +136,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		} else {
 			$linkAttribs = false;
 		}
-
+		
 		$linkAttribs['style'] = "display:inline-block;";
 
 		$attribs = array(
@@ -154,10 +154,10 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		$html = Xml::openElement( 'a', $linkAttribs );
+		$html = ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::openElement( 'a', $linkAttribs ) : '';
 			$html .= WikiaVideoService::videoPlayButtonOverlay( $this->width, $this->height );
 			$html .= Xml::element( 'img', $attribs, '', true );
-		$html .= Xml::closeElement( 'a' ); 
+		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : ''; 
 		
 		if ( $useThmbnailInfoBar ) {
 
