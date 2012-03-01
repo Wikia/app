@@ -133,6 +133,11 @@ $aliases['oc'] = array(
 	'ImportFreeImages' => array( 'ImportarImatgesLiures' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'ImportFreeImages' => array( 'Importuj obrazy' ),
+);
+
 /** Portuguese (Português) */
 $aliases['pt'] = array(
 	'ImportFreeImages' => array( 'Importar imagens de acesso livre' ),
