@@ -14,7 +14,8 @@ var WikiaPhotoGallerySlider = {
 
 	init: function(sliderId) {
 		this.sliderId = sliderId;
-		
+		$().log('Slider');
+		$().log(this.sliderId);
 		//move spotlights
 		$('.wikiaPhotoGallery-slider-body').each(function() {
 			$(this).css('left', parseInt($(this).css('left')) - (620 * WikiaPhotoGallerySlider.initialImageId));

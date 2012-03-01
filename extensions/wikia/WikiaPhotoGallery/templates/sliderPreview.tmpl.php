@@ -12,9 +12,9 @@
 			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-delete')?></a>
 		</span>
 
-		<span class="WikiaPhotoGallerySliderItemNumber<?=( $i >= 4 ) ? 'Warning' : ''; ?>">
+		<span class="WikiaPhotoGallerySliderItemNumber<?=( ($i >= 4) && ($slider['params']['orientation'] !== 'mosaic') ) ? 'Warning' : ''; ?>">
 			<div><?php
-				if ( $i < 4 ){
+				if ( ($i < 4) || ($slider['params']['orientation'] == 'mosaic') ){
 					echo '#'.( $i+1 );
 				} else {
 					echo wfMsg('wikiaPhotoGallery-not-displayed');

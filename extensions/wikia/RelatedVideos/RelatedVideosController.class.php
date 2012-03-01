@@ -86,6 +86,8 @@ class RelatedVideosController extends WikiaController {
 		$external = empty( $external ) ? null : $this->app->wg->wikiaVideoRepoDBName;
 		$cityShort = $this->getVal('cityShort');
 		$videoHeight = $this->getVal('videoHeight');
+		$controlerName = str_replace('Controller', '', $this->getVal('controlerName', 'RelatedVideos'));
+		$wikiLink = $this->getVal('wikiLink', '');
 
 		$oRelatedVideosService = F::build('RelatedVideosService');
 		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( array( 'title' => $title, 'source' => $external ), VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
@@ -102,14 +104,15 @@ class RelatedVideosController extends WikiaController {
 			}
 			$this->setVal( 'html',
 				 $this->app->renderView(
-					'RelatedVideos',
+					$controlerName,
 					'getVideoHtml',
 					array(
-						 'videoHtml' => $videoHtml,
-						 'embedUrl' => $result['fullUrl']
+						'videoHtml' => $videoHtml,
+						'embedUrl' => $result['fullUrl'],
+						'wikiLink' => $wikiLink,
 					)
 				)
-			 );
+			);
 			$this->setVal( 'title', $result['title'] );
 			if ( !empty( $result['external'] ) ){
 				$this->setVal( 'embedUrl', $result['fullUrl'] );

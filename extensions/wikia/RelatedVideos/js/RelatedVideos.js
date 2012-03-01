@@ -12,6 +12,7 @@ var RelatedVideos = {
 	onRightRail: false,
 	videosPerPage: 3,
 	rvModule: null,
+	isHubVideos: false,
 
 	init: function(relatedVideosModule) {
 		this.rvModule = $(relatedVideosModule);
@@ -19,13 +20,17 @@ var RelatedVideos = {
 			this.onRightRail = true;
 			this.videosPerPage = 4;
 		}
-
+		
+		if( this.rvModule.hasClass('RelatedHubsVideos') ) {
+			this.isHubVideos = true;
+		}
+		
 		var importantContentHeight = $('#WikiaArticle').height();
 		importantContentHeight += $('#WikiaArticleComments').height();
 		if ( !this.onRightRail && $('span[data-placeholder="RelatedVideosModule"]').length != 0 ){
 			$('span[data-placeholder="RelatedVideosModule"]').replaceWith( relatedVideosModule );
 		}
-		if (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold) {
+		if (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold || this.isHubVideos) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
 			relatedVideosModule.delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
 			relatedVideosModule.delegate( '.scrollright', 'click', RelatedVideos.scrollright );
@@ -36,7 +41,6 @@ var RelatedVideos = {
 				$('#relatedvideos-video-player-embed-code').show();
 				$('#relatedvideos-video-player-embed-show').hide();
 			});
-
 			
 			RelatedVideos.maxRooms = relatedVideosModule.attr('data-count');
 			if ( RelatedVideos.maxRooms < 1 ) {
@@ -122,8 +126,7 @@ var RelatedVideos = {
 
 	// State calculations & refresh
 
-	checkButtonState: function(){
-
+	checkButtonState: function() {
 		$('.scrollleft',this.rvModule).removeClass( 'inactive' );
 		$('.scrollright',this.rvModule).removeClass( 'inactive' );
 		if ( RelatedVideos.currentRoom == 1 ){
@@ -216,14 +219,25 @@ var RelatedVideos = {
 		var url = $(this).attr('data-ref');
 		var external = $(this).attr('data-external');
 		var link = $(this).attr('href');
+		
+		if( RelatedVideos.isHubVideos ) {
+			var wikiLink = $(this).attr('data-wiki');
+			var controlerName = 'RelatedHubsVideosController';
+		} else {
+			var wikiLink = '';
+			var controlerName = 'RelatedVideosController';
+		}
+		
 		$.nirvana.getJson(
-			'RelatedVideosController',
+			controlerName,
 			'getVideo',
 			{
 				title: url,
 				external: external,
 				cityShort: window.cityShort,
-				videoHeight: RelatedVideos.playerHeight
+				videoHeight: RelatedVideos.playerHeight,
+				controlerName: controlerName,
+				wikiLink: wikiLink
 			},
 			function( res ) {
 				if ( res.error ) {
@@ -231,8 +245,16 @@ var RelatedVideos = {
 						'width': RelatedVideos.modalWidth
 					});
 				} else if ( res.json ) {
-					$.showModal( /*res.title*/ '', res.html, {
-						'id': 'relatedvideos-video-player',
+					if( RelatedVideos.isHubVideos ) {
+						var displayTitle = res.title;
+						var modalId = 'relatehubsdvideos-video-player';
+					} else {
+						var displayTitle = '';
+						var modalId = 'relatedvideos-video-player';
+					}
+					
+					$.showModal( /*res.title*/ displayTitle, res.html, {
+						'id': modalId,
 						'width': RelatedVideos.modalWidth,
 						'callback' : function(){
 							$('#relatedvideos-video-player-embed-code').wikiaTooltip( $('.embedCodeTooltip',this.rvModule).html() );
