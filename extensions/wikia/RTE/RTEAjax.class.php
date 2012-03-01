@@ -141,6 +141,7 @@ class RTEAjax {
 		global $wgRequest, $wgTitle, $wgRDBEnabled, $wgRDBData, $wgParser;
 
 		// initialization of required objects and settings
+		$wgParser->getstriplist(); //we need to create (unstub) this object, because of in_array($tagName, $stripList) in parser 
 		$parser = new Parser();
 		//$parser->mDefaultStripList = $parser->mStripList = array();
 		$parser->mTagHooks = &$wgParser->mTagHooks;

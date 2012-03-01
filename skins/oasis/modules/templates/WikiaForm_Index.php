@@ -29,6 +29,9 @@
 						<? } elseif($input['type'] === 'password') { ?>
 							<label><?= !empty($input['label']) ? $input['label'] : '' ?></label>
 							<input type="password" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>">
+						<? } elseif($input['type'] === 'textarea') { ?>
+							<label><?= !empty($input['label']) ? $input['label'] : '' ?></label>
+							<textarea><?= !empty($input['value']) ? $input['value'] : '' ?></textarea>
 						<? } elseif($input['type'] === 'display') { ?>
 							<label><?= !empty($input['label']) ? $input['label'] : '' ?><?= $tooltip ?></label>
 							<strong><?= !empty($input['value']) ? $input['value'] : '' ?></strong>

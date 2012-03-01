@@ -246,7 +246,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$this->mType = self::WIKIA_PHOTO_SLIDER;
 						// choose slideshow alignment
-			if (isset($params['orientation']) && in_array($params['orientation'], array('bottom', 'right'))) {
+			if (isset($params['orientation']) && in_array($params['orientation'], array('bottom', 'right', 'mosaic'))) {
 				$this->setParam('orientation', $params['orientation']);
 			} else {
 				$this->setParam('orientation', 'bottom');
@@ -374,12 +374,14 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			// search for caption and link= param
 			$captionParts = array();
-			$link = $linktext = '';
+			$link = $linktext = $shorttext = '';
 			foreach ($parts as $part) {
 				if (substr($part, 0, 5) == 'link=') {
 					$link = substr($part, 5);
 				} else if (substr($part, 0, 9) == 'linktext=') {
 					$linktext = substr($part, 9);
+				} else if (substr($part, 0, 10) == 'shorttext=') {
+					$shorttext = substr($part, 10);
 				} else {
 					$captionParts[] = trim($part);
 				}
@@ -393,6 +395,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'caption' => $caption,
 				'link' => $link,
 				'linktext' => $linktext,
+				'shorttext' => $shorttext,
 			);
 
 			// store list of images from inner content of tag (to be used by front-end)
@@ -490,6 +493,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'link' => '',
 				'linktext' => '',
 				'recentlyUploaded' => true,
+				'shorttext' => '',
 			);
 
 			// Only add real images (bug #5586)
@@ -1248,31 +1252,48 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$skin = $this->getSkin();
+		
+		$orientation = $this->getParam('orientation');
 
 		// setup image serving for "big" images
-		$imagesDimensions = array(
-			'w' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH,
-			'h' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT,
-		);
+		if ($orientation == 'mosaic') {
+			$imagesDimensions = array(
+				'w' => WikiaPhotoGalleryHelper::SLIDER_MOSAIC_MIN_IMG_WIDTH,
+				'h' => WikiaPhotoGalleryHelper::SLIDER_MOSAIC_MIN_IMG_HEIGHT,
+			);
+		} else {
+			$imagesDimensions = array(
+				'w' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH,
+				'h' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT,
+			);
+		}
 
-		$imageServingForImages = new ImageServing(null, $imagesDimensions['w'] ,$imagesDimensions);
+		$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], $imagesDimensions);
 
 		// setup image serving for navigation thumbnails
-		if ( $this->getParam('orientation') == 'right' ){
+		if ( $orientation == 'mosaic' ) {
+			$sliderClass = 'mosaic';
+			$thumbDimensions = array( "w" => 155, "h" => 100);
+		}
+		else if ( $orientation == 'right' ){
 			$sliderClass = 'vertical';
 			$thumbDimensions = array( "w" => 110, "h" => 50 );
 		} else {
 			$sliderClass = 'horizontal';
 			$thumbDimensions = array( "w" => 90, "h" => 70 );
 		}
-		$imageServingForThumbs = new ImageServing(null, $thumbDimensions['w'] ,$thumbDimensions);
+		$imageServingForThumbs = new ImageServing(null, $thumbDimensions['w'], $thumbDimensions);
 
 		$out = array();
+		
+		$sliderImageLimit = $orientation == 'mosaic' ? 5 : 4; 
+		
 		foreach ( $this->mImages as $p => $pair ) {
 			$nt = $pair[0];
 			$text = $pair[1];
 			$link = $pair[2];
 			$linkText = $this->mData['images'][$p]['linktext'];
+			$shortText = $this->mData['images'][$p]['shorttext'];
 			$time = $descQuery = false;
 
 			// parse link (RT #142515)
@@ -1288,20 +1309,21 @@ class WikiaPhotoGallery extends ImageGallery {
 				// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
 				// so this also scales image UP if it is too small (stretched is better than blank)
 				// max() added due to BugId:20644
-				$imageUrl = $imageServingForImages->getUrl($img, max(WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH, $img->getWidth()), max(WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT, $img->getHeight()));
+				$imageUrl = $imageServingForImages->getUrl($img, max($imagesDimensions['w'], $img->getWidth()), max($imagesDimensions['h'], $img->getHeight()));
 				// generate navigation thumbnails
 				$thumbUrl = $imageServingForThumbs->getUrl($img, $img->getWidth(), $img->getHeight());
 
 				$out[] = array(
 				    'imageUrl' => $imageUrl,
 				    'imageTitle' => $text,
+					'imageShortTitle' => $shortText,
 				    'imageLink' => !empty($link) ? $linkAttribs['href'] : '',
 				    'imageDescription' => $linkText,
 				    'imageThumbnail' => $thumbUrl,
 				);
 			}
 
-			if ( count( $out ) >= 4 ) {
+			if ( count( $out ) >= $sliderImageLimit ) {
 				break;
 			}
 		}
@@ -1315,26 +1337,40 @@ class WikiaPhotoGallery extends ImageGallery {
 				'sliderClass' => $sliderClass,
 				'images' => $out,
 				'thumbDimensions' => $thumbDimensions,
-				'sliderId' => $this->mData['id']
+				'sliderId' => $this->mData['id'],
+				'imagesDimensions' => $imagesDimensions,
 			));
 
 			if( Wikia::isWikiaMobile() ) {
 				$html = $template->render('renderWikiaMobileSlider');
+			} else if($orientation == 'mosaic') {
+				$html = $template->render('renderMosaicSlider');
 			} else {
 				$html = $template->render('renderSlider');
 			}
 
-
-			$html .= F::build('JSSnippets')->addToStack(
-				array(
+			if ($orientation == 'mosaic') {
+				$sliderResources = array(
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
+					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js'
+				);
+				$javascriptInitializationFunction = 'WikiaMosaicSliderMasterControl.init';
+			} else {
+				$sliderResources = array(
 					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.css',
 					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js'
-				),
+				);
+				$javascriptInitializationFunction = 'WikiaPhotoGallerySlider.init';
+			}
+			
+			$html .= F::build('JSSnippets')->addToStack(
+				$sliderResources,
 				array(),
-				'WikiaPhotoGallerySlider.init',
+				$javascriptInitializationFunction,
 				array($this->mData['id'])
 			);
 
+			// shouldn't this be checking for mobile phone? - hyun
 			$html .= F::build('JSSnippets')->addToStack(
 				array(
 					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss',

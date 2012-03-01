@@ -1,0 +1,69 @@
+.WikiaArticle {
+	.wikiahubs-sponsored-video {
+		background: #f0f0f0;
+		width: 320px;
+		height: 295px;
+		overflow:hidden;
+		.title-wrapper {
+			margin: 10px 10px 25px 10px;
+			overflow:hidden;
+			h2 {				
+				margin:0;
+				border:none;
+				float:left;
+			}
+			.sponsorbox {
+				float:right;
+				text-align:right;
+				ins {
+					text-transform:uppercase;
+					float:left;
+					font-size:8px;
+					height:18px;
+					line-height:25px;
+					margin-right:5px;
+					display:block;		
+				}
+				a {
+					float:left;
+					display:block;
+					height:18px;
+					line-height:18px;
+				}
+			}
+			.floatright {
+				clear:none;
+				float:none;
+				display:inline;
+				margin:0;
+				border:0;
+			}
+			.wikiheader {
+				clear:both;
+				float:left;			
+			}
+		}
+		.sponsored-video-content {
+			clear: both;
+			margin: 10px 0 0 10px;
+			.thumbinner {
+				border:0;padding:0;
+			}
+			h4 {
+				font-size: 13px;
+				line-height: 1.5em;
+				margin: 0;
+			}
+			p {
+				margin:0;
+			}
+			a {
+				font-size: 13px;
+				line-height: 1.5em;
+			}
+			.thumbcaption {
+				display: none;			
+			}
+		}
+	}
+}

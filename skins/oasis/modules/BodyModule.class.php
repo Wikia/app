@@ -434,7 +434,6 @@ class BodyModule extends Module {
 
 			// FIXME: move to separate module
 			if ($wgEnableCorporatePageExt) {
-
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
 				wfLoadExtensionMessages( 'AutoHubsPages' );
 

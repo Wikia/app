@@ -1,0 +1,85 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.WikiaArticle {
+	.wikiahubs-pulse {
+		height: 160px;
+		position:relative;
+		padding-bottom:9px;
+		border-bottom: 1px solid #D8E3E7;
+		.social {
+			position:absolute;
+			right:0;
+			top:-5px;
+			a {
+				display: inline-block;
+				width: 26px;
+				height: 26px;
+				background: url(/extensions/wikia/WikiaHubs/images/sprite.png) no-repeat;  /* $wgCdnStylePath */
+			}
+			#facebook {
+				background-position: 0 0;
+			}
+			#google {
+				background-position: -26px 0;
+			}
+			#twitter {
+				background-position: -52px 0;
+			}
+		}
+		.title-wrapper {
+			margin-top: 10px;
+			width: 100%;
+			position: relative;
+			@include clearfix;			
+		}
+		.pulse-content {
+			.search {
+				overflow:hidden;
+				clear:both;
+				.WikiaSearch {
+					right:0;
+					bottom:5px;
+					label { 
+						text-align: left;
+						font-size: 15px;
+						line-height: 27px;
+						color:#7E7E7E;
+						width: 159px;
+						display: inline-block;
+					}
+					#HubSearch {
+						width: 270px;
+					}
+				}
+			}
+			.boxes {
+				margin-top:10px;
+				overflow:hidden;
+				clear:both;
+			}
+			.box{
+				width:144px;
+				float:left;
+				margin-left:10px;
+				border-left: 1px dotted #808080;
+				padding-left:10px;			
+				h5 {
+					font-size: 15px;
+					line-height:1.5em;
+					color:#7E7E7E;
+				}
+				big {
+					font-size: 23px;
+					color:#3A3A3A;
+					font-weight:bold;
+				}
+				&:first-child {
+					width:155px;
+					margin-left:0;
+					border-left: 0;
+					padding-left: 0;
+				}
+			}		
+		}	
+	}
+}

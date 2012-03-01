@@ -1,0 +1,58 @@
+@import "../../../../skins/oasis/css/mixins/gradient";
+
+.wikiahubs-newstabs {
+	.title-wrapper {
+		width: 100%;
+		@include clearfix;
+		.title {
+			float: left;
+			font-size: 18px;
+			font-weight: bold;
+		}
+	}
+	.tabberlive {
+		margin: 0;
+		.tabbernav {
+			border-bottom: none;
+			border-top: 5px solid #D9E3E9;
+			padding: 0;
+			li a {
+				background: $color-page;
+				border: none;
+				color: $color-links;
+				display: inline-block;
+				margin: 0;
+				padding: 10px;
+				vartical-align: middle;
+			}
+			li a:hover {
+				@include linear-gradient(false, top, #D9E3E9, 0, #a9b4b8, 100%);
+				border: none;
+				color: $color-links;
+			}
+			li a:visited {
+				@include linear-gradient(false, top, #D9E3E9, 0, #a9b4b8, 100%);
+				border: none;
+				color: $color-links;
+			}
+			li a:link {
+				background: $color-page;
+				border: none;
+				color: $color-links;
+			}
+			li.tabberactive a {
+				@include linear-gradient(false, top, #D9E3E9, 0, #a9b4b8, 100%);
+				border: none;
+				color: $color-text;
+			}
+			li.tabberactive a:hover {
+				@include linear-gradient(false, top, #D9E3E9, 0, #a9b4b8, 100%);
+				border: none;
+				color: $color-text;
+			}
+		}
+		.tabbertab {
+			border: none;
+		}
+	}
+}

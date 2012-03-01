@@ -50,7 +50,12 @@ class OasisModule extends Module {
 	var $wgOasisLastCssScripts;
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableAdminDashboardExt, $wgDevelEnvironment;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableAdminDashboardExt, $wgDevelEnvironment, $wgEnableWikiaHubsExt;
+		
+		if(!empty($wgEnableWikiaHubsExt)) {
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubs/css/WikiaHubs.scss'));
+			$wgOut->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiaHubs/js/WikiaHubs.js');
+		}
 
 		$this->showAllowRobotsMetaTag = !$this->wgDevelEnvironment;
 
@@ -191,7 +196,6 @@ class OasisModule extends Module {
 		} else {
 			$this->displayAdminDashboard = false;
 		}
-
 	} // end executeIndex()
 
 	/**

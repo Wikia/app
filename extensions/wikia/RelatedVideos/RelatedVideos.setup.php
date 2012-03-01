@@ -24,6 +24,7 @@ $app->registerClass('RelatedVideosRailModule', $dir . '/RelatedVideosRailModule.
  * controllers
  */
 $app->registerClass('RelatedVideosController', $dir . '/RelatedVideosController.class.php');
+$app->registerClass('RelatedHubsVideosController', $dir . '/RelatedHubsVideosController.class.php');
 
 /**
  * hooks

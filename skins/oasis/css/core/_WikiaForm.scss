@@ -12,7 +12,8 @@
 		margin-bottom: 5px;
 		padding: 5px 7px;
 		input[type=text],
-		input[type=password] {
+		input[type=password],
+		textarea {
 			@include wikia-form-input-field;
 		}
 		label {
