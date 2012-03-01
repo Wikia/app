@@ -56,5 +56,10 @@ $wgGroupPermissions['util']['taskmanager-action'] = true;
  */
 $wgExtensionMessagesFiles[ $sSpecialPage ] = dirname(__FILE__) . "/Special{$sSpecialPage}.i18n.php";
 
+/**
+ * aliases file
+ */
+$wgExtensionAliasesFiles[ $sSpecialPage ] = __DIR__ . "/Special{$sSpecialPage}.aliases.php";
+
 extAddSpecialPage( dirname(__FILE__) . "/Special{$sSpecialPage}_body.php", $sSpecialPage, "{$sSpecialPage}Page" );
 $wgSpecialPageGroups[$sSpecialPage] = 'wikia';
