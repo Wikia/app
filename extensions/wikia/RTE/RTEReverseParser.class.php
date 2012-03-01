@@ -85,7 +85,7 @@ class RTEReverseParser {
 
 				// bugID: 11537 revised
 				// losing newline before : and * following h[1-6] or div
-				$out = mb_ereg_replace("(</h[1-6]>|</div>)([*|:])","\\1\n\\2", $out);
+				// $out = mb_ereg_replace("(</h[1-6]>|</div>)([*|:])","\\1\n\\2", $out);
 				
 				wfProfileOut(__METHOD__.'::postFixes');
 
