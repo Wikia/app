@@ -116,7 +116,7 @@ class RelatedVideosData {
 		}
 
 		try {
-			list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoPage( $articleId, $url );
+			list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoPage( $url );
 		}
 		catch( Exception $e ) {
 			wfProfileOut( __METHOD__ );
