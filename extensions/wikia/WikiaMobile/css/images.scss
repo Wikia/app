@@ -1,20 +1,21 @@
-//mixins
-@import "mixins/box-sizing.scss";
-
 #wkMainCnt{
 	.thumb {
 		text-align: center;
 		margin: 5px;
+		border: 1px solid $border-color;
+		padding: 3px;
+		background: #F2F2F2;
 
 		.thumbcaption {
 			font-size: 90%;
-			border: 1px solid $border-color;
-			box-shadow: 0 0 10px $shadow-color;
-			@include box-sizing(border-box);
-			color: $page-text-color;
 			padding: 3px;
-			margin: -10px auto 0 auto;
-			max-width: 300px;
+			margin-bottom: -3px;
+			line-height: 20px;
+		}
+		
+		.image {
+			display: block;
+			margin-bottom: -4px; 
 		}
 	}
 }

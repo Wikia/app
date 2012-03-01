@@ -24,7 +24,8 @@ var WikiaMobile = WikiaMobile || (function() {
 	fixed = Modernizr.positionfixed,
 	d = document,
 	byId = 'getElementById',
-	byClass = 'getElementsByClassName';
+	byClass = 'getElementsByClassName',
+	bind = 'addEventListener';
 
 	function getImages(){
 		return allImages;
@@ -98,39 +99,43 @@ var WikiaMobile = WikiaMobile || (function() {
 		href = '', name = '', nameMatch = /[^\/]*\.\w*$/;
 
 		$('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure').each(function(){
-			var self = $(this);
-
-			if(self.hasClass('image')){
-				href = self.data('num', number++).attr('href');
-				name = href.match(nameMatch)[0].replace('.','-');
+			var self = $(this),
+			className = this.className;
+			
+			if(className.indexOf('image') > -1){
+				self.attr('data-num', number++);
+				href = this.href;
+				name = this.attributes['data-image-name'].value.replace('.','-');
 				allImages.push([href, name]);
-
-			} else if(self.hasClass('wkImgStk')){
-				if(self.hasClass('grp')) {
+			}else if(className.indexOf('wkImgStk') > -1){
+				if(className.indexOf('grp') > -1) {
 					var figures = self.find('figure'),
 					l = figures.length,
-					cap;
-
-					self.data('num', number).find('footer').append(l);
+					cap, img;
+					
+					self.attr('data-num', number);
+					this.getElementsByTagName('footer').insertAdjacentHTML('beforeend', l);
 
 					$.each(figures, function(i, fig){
-						href = fig[byClass]('image')[0].href;
-						name = href.match(nameMatch)[0].replace('.','-');
+						img = fig[byClass]('image')[0];
+						href = img.href;
+						name = img.id;
 						allImages.push([
 							href, name,
 							(cap = fig[byClass]('thumbcaption')[0])?cap.innerHTML:'',
 							i, l
-
 						]);
 
 						if(name === shrImgName) shrOpenNum = number + i;
 					});
 				} else {
-					var l = parseInt(self.data('num', number).data('img-count'), 10),
+					var l = parseInt(this.attributes['data-img-count'], 10),
 					lis = self.find('li');
+					
+					self.attr('data-num', number);
 
 					$.each(lis, function(i, li){
-						href = li.attributes['data-img'].nodeValue;
+						href = li.attributes['data-img'].value;
 						name = href.match(nameMatch)[0].replace('.','-');
 						allImages.push([
 							href,
@@ -145,12 +150,14 @@ var WikiaMobile = WikiaMobile || (function() {
 				}
 				number += l;
 			} else {
-				self.data('num', number++);
-				href = self.find('.image').attr('href');
-				name = href.match(nameMatch)[0].replace('.','-');
+				self.attr('data-num', number);
+
+				img = this[byClass]('image')[0];
+				href = img.href;
+				name = img.id;
 				allImages.push([
 					href, name,
-					self.find('.thumbcaption').html()
+					(cap = this[byClass]('thumbcaption')[0])?cap.innerHTML:''
 				]);
 			}
 
@@ -222,7 +229,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			});
 
 			if(handledTables.length > 0)
-				window.addEventListener(sizeEvent, processTables, false);
+				window[bind](sizeEvent, processTables, false);
 		}else if(handledTables.length > 0){
 			var table, row, isWrapped, isBig, wasWrapped,
 				maxWidth = window.innerWidth || window.clientWidth;
@@ -275,8 +282,8 @@ var WikiaMobile = WikiaMobile || (function() {
 		WikiaTracker.track('/1_mobile/' + ((ev instanceof Array) ? ev.join('/') : ev), 'main.sampled');
 	}
 
-	function moveSlot(){
-		adSlot.style.top = Math.min((window.pageYOffset + window.innerHeight - 50), ftr.offsetTop + 150) + 'px';
+	function moveSlot(plus){
+		adSlot.style.top = Math.min((window.pageYOffset + window.innerHeight - 50 + isFinite(plus)?plus:0), ftr.offsetTop + 150) + 'px';
 	}
 
 	function loadShare(cnt){
@@ -313,7 +320,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				callback: function(result){
 					Wikia.Cache.set('shareButtons' + wgStyleVersion, result, 604800/*7 days*/);
 					shrData = result;
-					handle(result);
+					handle(shrData);
 				}
 			});
 		}else{
@@ -341,9 +348,9 @@ var WikiaMobile = WikiaMobile || (function() {
 		cnt;
 
 		if(elm){
-			elm.addEventListener(clickEvent, function(event){
+			elm[bind](clickEvent, function(event){
 				if(this.className.indexOf("on") > -1){
-					close();
+					close(event);
 				}else{
 					if(!initialized){
 						var position = options.position || 'bottom',
@@ -370,7 +377,7 @@ var WikiaMobile = WikiaMobile || (function() {
 						initialized = true;
 					}
 
-					open();
+					open(event);
 				}
 			});
 		}else{
@@ -387,21 +394,21 @@ var WikiaMobile = WikiaMobile || (function() {
 			}
 		}
 
-		function close(){
+		function close(ev){
 			if(isOpen){
 				elm.className = elm.className.replace(" on", "");
 				if(typeof options.close == 'function') {
-					 options.close(event, elm);
+					 options.close(ev, elm);
 				}
 				isOpen = false;
 			}
 		}
 
-		function open(){
+		function open(ev){
 			if(!isOpen){
 				elm.className += " on";
 				if(typeof options.open == 'function') {
-					options.open(event, elm);
+					options.open(ev, elm);
 				}
 				isOpen = true;
 			}
@@ -426,20 +433,19 @@ var WikiaMobile = WikiaMobile || (function() {
 		searchToggle = $(d[byId]('wkSrhTgl')),
 		searchInput = $(d[byId]('wkSrhInp')),
 		searchForm = $(d[byId]('wkSrhFrm')),
-		wkNavMenu = $(d[byId]('wkNavMenu')),
-		wkNav = $(d[byId]('wkNav')),
+		wkNav = d[byId]('wkNav'),
+		wkNavMenu = d[byId]('wkNavMenu'),
 		//while getting the h1 element erase classes needed for phones with no js
-		wikiNavHeader = wkNavMenu.find('h1').removeClass(),
-		wikiNavLink = $(d[byId]('wkNavLink')),
-		navigationBar = $(d[byId]('wkTopNav')),
-		navToggle = $(d[byId]('wkNavTgl')),
+		wikiNavHeader = wkNavMenu.getElementsByTagName('h1')[0],
+		wikiNavLink = d[byId]('wkNavLink'),
+		navBar = d[byId]('wkTopNav'),
 		thePage = page.add(ftr).add(adSlot),
 		lvl1 = $('.lvl1'),
 		//to cache link in wiki nav
 		lvl2Link;
 
 		//replace menu from bottom to topBar - the faster the better
-		wkNav[0].replaceChild(wkNavMenu[0], d[byId]('wkWikiNav'));
+		wkNav.replaceChild(wkNavMenu, d[byId]('wkWikiNav'));
 
 		//analytics
 		track('view');
@@ -459,15 +465,21 @@ var WikiaMobile = WikiaMobile || (function() {
 				if(adSlot.childElementCount > 3){
 					close.className = "show";
 					adSlot.style.height = '50px';
-					close.addEventListener(clickEvent, function() {
+					close[bind](clickEvent, function() {
 						track('ad/close');
-						d.body.removeChild(adSlot);
+						adSlot.className += 'anim';
+						if(!fixed) {
+							moveSlot(70);
+						}else{
+							adSlot.style.bottom = '-70px';
+						}
+						setTimeout(function(){d.body.removeChild(adSlot);},800);
 						window.removeEventListener('scroll', moveSlot);
 					}, false);
 					if(fixed){
 						adSlot.style.position = 'fixed';
 					}else{
-						window.addEventListener('scroll', moveSlot, false);
+						window[bind]('scroll', moveSlot, false);
 					}
 					return true;
 				}
@@ -529,23 +541,25 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		searchToggle.bind(clickEvent, function(event){
 			event.preventDefault();
-			if(navigationBar.hasClass('srhOpn')){
+			if(navBar.className.indexOf('srhOpn') > -1){
 				track('search/toggle/close');
 				if(searchInput.val()){
 					searchForm.submit();
 				}else{
-					navigationBar.removeClass();
+					navBar.className = '';
 					searchInput.val('');
 				}
 			}else{
 				track('search/toggle/open');
-				closeNav().addClass('srhOpn');
+				closeNav();
+				navBar.className = 'srhOpn';
 				searchInput.focus();
 			}
 		});
 
 		//preparing the navigation
-		wkNavMenu.delegate('.lvl1 a', clickEvent, function(){
+		wikiNavHeader.className = '';
+		$(wkNavMenu).delegate('.lvl1 a', clickEvent, function(){
 			track('link/nav/list');
 		})
 		.delegate('header > a', clickEvent, function(){
@@ -553,15 +567,16 @@ var WikiaMobile = WikiaMobile || (function() {
 		})
 		.find('ul ul').parent().addClass('cld');
 
-		navToggle.bind(clickEvent, function(event){
+		d[byId]('wkNavTgl')[bind](clickEvent, function(event){
 			event.preventDefault();
-			if(navigationBar.hasClass('fllNav')){
+			if(navBar.className.indexOf('fllNav') > -1){
 				closeNav();
 			}else{
 				track('nav/open');
 				thePage.hide();
 				//80px is for lvl1 without header
-				navigationBar.addClass('fllNav').height(lvl1.height() + 80);
+				navBar.className += ' fllNav';
+				navBar.style.height = (lvl1.height() + 80) + 'px';
 				window.location.hash = 'WikiNav';
 			}
 		});
@@ -569,16 +584,17 @@ var WikiaMobile = WikiaMobile || (function() {
 		function closeNav() {
 			if(window.location.hash == '#WikiNav') window.history.back();
 			track('nav/close');
-			wkNavMenu[0].className = 'cur1';
+			wkNavMenu.className = 'cur1';
 			thePage.show();
 			if(!fixed) moveSlot();
-			return navigationBar.removeClass().css('height', '40px');
+			navBar.className = '';
+			navBar.style.height = '40px';
 		}
 
 		//close WikiNav on back button
 		if ("onhashchange" in window) {
-			window.addEventListener("hashchange", function() {
-				if(window.location.hash == "" && navigationBar.hasClass('fullNav')) {
+			window[bind]("hashchange", function() {
+				if(window.location.hash == "" && navBar.className.indexOf('fullNav') > -1) {
 					closeNav();
 				}
 			}, false);
@@ -594,54 +610,58 @@ var WikiaMobile = WikiaMobile || (function() {
 				href = element.attr('href'),
 				ul = self.find('ul').first().addClass('cur');
 
-				wikiNavHeader.text(element.text());
+				wikiNavHeader.innerText = element.text();
 
 				if(href) {
-					wikiNavLink.attr('href', href).show();
+					wikiNavLink.href = href
+					wikiNavLink.style.display = 'block';
 				}else{
-					wikiNavLink.hide();
+					wikiNavLink.style.display = 'none';
 				}
 
 				//130px is for lvl2/3 with a header
-				navigationBar.height(ul.height() + 130);
+				navBar.style.height = (ul.height() + 130) + 'px';
 
-				if(wkNavMenu.hasClass('cur1')){
-					wkNavMenu.removeClass().addClass('cur2');
+				if(wkNavMenu.className == 'cur1'){
+					wkNavMenu.className = 'cur2';
 					lvl2Link = href;
 					track('nav/level-2');
 				}else{
-					wkNavMenu.removeClass().addClass('cur3');
+					wkNavMenu.className = 'cur3';
 					track('nav/level-3');
 				}
 			}
 		});
 
-		d[byId]('wkNavBack').addEventListener(clickEvent, function() {
+		d[byId]('wkNavBack')[bind](clickEvent, function() {
 			var self = $(this),
 			current;
 
-			if(wkNavMenu.hasClass('cur2')) {
-				wkNavMenu.removeClass().addClass('cur1').find('.lvl2').removeClass('cur');
-				navigationBar.height(lvl1.height() + 80);
+			if(wkNavMenu.className == 'cur2') {
+				wkNavMenu.className = 'cur1';
+				wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2';
+				navBar.style.height = (lvl1.height() + 80) + 'px';
 				track('nav/level-1');
 			} else {
-				wkNavMenu.removeClass().addClass('cur2').find('.lvl3').removeClass('cur');
+				wkNavMenu.className = 'cur2';
+				wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3';
 				current = $('.lvl2.cur');
-				wikiNavHeader.text(current.prev().text());
-				navigationBar.height(current.height() + 130);
+				wikiNavHeader.innerText = current.prev().text();
+				navBar.style.height = (current.height() + 130) + 'px';
 				if(lvl2Link) {
-					wikiNavLink.attr('href', lvl2Link).show();
+					wikiNavLink.href = lvl2Link;
+					wikiNavLink.style.display = 'block';
 				} else {
-					wikiNavLink.hide();
+					wikiNavLink.style.display = 'none';
 				}
-				wikiNavLink.attr('href', lvl2Link);
+				
 				track('nav/level-2');
 			}
 		});
 		//end of preparing the nav
 
 		page.bind(clickEvent, function(event){
-			navigationBar.removeClass();
+			navBar.className = '';
 			searchInput.val('');
 		});
 
@@ -653,7 +673,7 @@ var WikiaMobile = WikiaMobile || (function() {
 			track('link/category');
 		});
 
-		d[byId]('wkFllSite').addEventListener(clickEvent, function(event){
+		d[byId]('wkFllSite')[bind](clickEvent, function(event){
 			event.preventDefault();
 			track('link/fullsite');
 			Wikia.CookieCutter.set('mobilefullsite', 'true');
@@ -698,7 +718,7 @@ var WikiaMobile = WikiaMobile || (function() {
 						if(forward) {
 							window.scrollTo(0, parent.prev().offset().top);
 							track('category/next');
-						} else {
+						}else{
 							track('category/prev');
 						}
 
@@ -712,7 +732,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				});
 			});
 
-			d[byId]('expAll').addEventListener(clickEvent, function(event) {
+			d[byId]('expAll')[bind](clickEvent, function(event) {
 				var elements = $('.alphaSec .artSec').add('.alphaSec .collSec');
 				if($(this).toggleClass('exp').hasClass('exp')){
 					elements.addClass('open');

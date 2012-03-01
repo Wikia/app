@@ -10,7 +10,7 @@
 	$urlSafeIndex = urlencode( $index );
 	$urlSafeId = urlencode( $id );
 	?>
-	<h2 class=collSec><?= strtoupper( $index ) ;?> <span class=cnt>(<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>)</span><span class=chev></span></h2>
+	<h2 class=collSec><?= strtoupper( $index ) ;?> <span class=cnt><?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?></span><span class=chev></span></h2>
 	<section id=<?= $id ;?> class=artSec data-batches=<?= $itemsBatch['batches'] ;?>>
 		<a class="pagLess<?= ( $itemsBatch['currentBatch'] > 1 ? ' visible' : '' ) ;?>" data-batch=<?=$prevBatch?> href="?page=<?=$prevBatch;?>&index=<?=$urlSafeIndex;?>#<?=$urlSafeId;?>"><?= $wf->Msg( 'wikiamobile-category-items-prev' ) ;?></a>
 		<?= $app->getView( 'WikiaMobileCategoryService', 'getBatch', array( 'itemsBatch' => $itemsBatch ) ) ;?>
