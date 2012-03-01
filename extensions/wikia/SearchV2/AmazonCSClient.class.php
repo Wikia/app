@@ -18,7 +18,7 @@ class AmazonCSClient extends WikiaSearchClient {
 			'rank' => ( !empty($rankExpr) ? $rankExpr : $this->rankName ),
 			'start' => $start,
 			'size' => $size,
-			'return-fields' => 'title,url,text,canonical,text_relevance,indextank,bl,bl2,bl3,backlinks'
+			'return-fields' => 'title,url,text,canonical,text_relevance,cityid,indextank,bl,bl2,bl3,backlinks'
 		);
 		if( !empty( $cityId ) ) {
 			// inter-wiki search
@@ -32,13 +32,39 @@ class AmazonCSClient extends WikiaSearchClient {
 			//foreach( $response->hits->hit as $hit ) {
 			//	$hit->data->text_excerpt = $this->getTextExcerpt( $hit->data->text, explode(' ', $query ) );
 			//}
-			return $response->hits;
+
+			$results = array();
+			foreach($response->hits->hit as $hit) {
+				$results[] = $this->getWikiaResult($hit);
+			}
+
+			$resultSet = F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->hits->found ) );
+
+			echo "<pre>";
+			var_dump($resultSet);
+			exit;
+
+			return $resultSet;
 		}
 		else {
-var_dump( $response );
-exit;
 			throw new WikiaException('Search Failed: ' . $response);
 		}
+	}
+
+	private function getWikiaResult(stdClass $amazonHit) {
+		$result = F::build( 'WikiaSearchResult', array( 'id' => $amazonHit->id ) );
+		$result->setCityId($amazonHit->cityId);
+		$result->setTitle($amazonHit->title);
+		$result->setText($amazonHit->text);
+		$result->setUrl($amazonHit->url);
+
+		$result->setVar('backlinks', $amazonHit->backlinks);
+		$result->setVar('text_rel', $amazonHit->text_relevance);
+		$result->setVar('rank_bl', $amazonHit->bl);
+		$result->setVar('rank_bl2', $amazonHit->bl2);
+		$result->setVar('rank_bl3', $amazonHit->bl3);
+
+		return $result;
 	}
 
 	private function apiCall( $url, $params = array()) {
