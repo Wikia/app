@@ -120,6 +120,11 @@ $aliases['oc'] = array(
 	'RandomInCategory' => array( "Pagina a l'azard dins una categoria" ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'RandomInCategory' => array( 'Losowa strona w kategorii' )
+);
+
 /** Sanskrit (संस्कृत) */
 $aliases['sa'] = array(
 	'RandomInCategory' => array( 'अविशिष्टवर्ग' ),
