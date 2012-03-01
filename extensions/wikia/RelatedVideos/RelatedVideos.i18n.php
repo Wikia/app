@@ -43,6 +43,7 @@ $messages['en'] = array(
 	'related-videos-embed-text' => 'Embed code',
 	'related-videos-video-is-new' => 'New',
 	'related-videos-pagination' => '$1 of $2',
+	'related-videos-empty' => 'Be the first to add a video',
 );
 
 $messages['qqq'] = array(
