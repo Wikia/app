@@ -170,9 +170,11 @@ class VideoEmbedTool {
 		$itemTitle = $wgRequest->getVal('itemTitle');
 
 		if (WikiaVideoService::isVideoStoredAsFile()) {
+			
 			$title = Title::newFromText($itemTitle, NS_FILE);
-			$file = wfFindFile( $title );					
-			if ( !$file ) {
+			$file = wfFindFile( $title );	
+			
+			if ( ! ( $file instanceof LocalFile ) ) {
 				header('X-screen-type: error');
 				return wfMsg( 'vet-non-existing' );				
 			}
@@ -183,14 +185,15 @@ class VideoEmbedTool {
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
-			// no need to set $props['href']. it's not used anywhere
+			$props['href'] = $title->getPrefixedText();
+			/*
 			if ($file instanceof WikiaForeignDBFile) {
 				$props['provider'] = VideoPage::V_WIKIAVIDEO;
 			}
 			else {
 				$handlerClassname = get_class($file->getHandler());
 				if ( endsWith($handlerClassname, 'VideoHandler') ) {
-					$handlerName = substr(0, strlen($handlerClassname)-strlen('VideoHandler'));
+					$handlerName = substr($handlerClassname, 0, strlen($handlerClassname)-strlen('VideoHandler'));
 					$providerId = array_search($handlerName, $wgVideoMigrationProviderMap);
 					if ($providerId !== false) {
 						$props['provider'] = $providerId;
@@ -206,7 +209,9 @@ class VideoEmbedTool {
 					header('X-screen-type: error');
 					return wfMsg( 'vet-non-existing' );				
 				}
+			 
 			}
+		    */
 		}
 		else {
 			$title = Title::newFromText( $itemTitle, NS_LEGACY_VIDEO );
