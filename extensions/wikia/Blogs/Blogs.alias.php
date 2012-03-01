@@ -12,9 +12,16 @@ $aliases['en'] = array(
 	'CreateBlogListingPage' => array( 'CreateBlogListingPage' ),
 );
 
-/** German(Deutsch)
+/** German (Deutsch)
  */
 $aliases['de'] = array(
 	'CreateBlogPage' => array( 'Blog-Beitrag_erstellen' , 'CreateBlogPage' ),
 	'CreateBlogListingPage' => array( 'Blog-Aggregation_erstellen', 'CreateBlogListingPage' ),
+);
+
+/** Polish (Polski)
+ */
+$aliases['pl'] = array(
+	'CreateBlogPage'	=> array( 'Utwórz wpis na blogu', 'CreateBlogPage' ),
+	'CreateBlogListingPage' => array( 'Utwórz listę wpisów na blogach', 'CreateBlogListingPage' )
 );
