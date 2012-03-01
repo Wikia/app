@@ -48,7 +48,7 @@ class ImageServing {
 		$this->memc =  $this->app->getGlobal( 'wgMemc' );
 		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
 
-		$this->deltaY = ( $this->proportion['w'] / $this->proportion['h'] - 1 )*0.1;
+		$this->deltaY = ( $this->proportion['w'] / $this->proportion['h'] - 1 ) * 0.1;
 		$this->db = $db;
 	}
 	/**
@@ -213,25 +213,33 @@ class ImageServing {
 	 */
 
 	public function getUrl( $name, $width = 0, $height = 0 ) {
-		if ($name instanceof File) {
+		if ( $name instanceof File ) {
 			$img = $name;
-		}
-		else {
+		} else {
 			//TODO: Create files local cache of IS
-			$file_title = Title::newFromText( $name ,NS_FILE );
+			$file_title = Title::newFromText( $name, NS_FILE );
 			$img = wfFindFile( $file_title  );
-			if( empty($img) ) {
+			if( empty( $img ) ) {
 				return "";
 			}
 		}
 
 		$issvg = false;
-		$mime = strtolower($img->getMimeType());
+		$mime = strtolower( $img->getMimeType() );
 		if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
 			$issvg = true;
 		}
 
-		return wfReplaceImageServer( $img->getThumbUrl( $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
+		$sPrefix = '';
+		if ( WikiaVideoService::isVideoFile( $img ) ) {
+			// videos has different thumbnail markup
+			$sPrefix = 'v,000000,';
+			// they need to be literally centered
+			$H = ( float )( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
+			$this->tmpDeltaY = 0.5 - $H / $height / 2;
+		}
+		
+		return wfReplaceImageServer( $img->getThumbUrl( $sPrefix . $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
 	}
 
 	/**
@@ -245,11 +253,16 @@ class ImageServing {
 	 * @return \string prefix for thumb image
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
-		//rescal of png always use width 512;
+
+		//rescale of png always use width 512;
 		if( $issvg ) {
 			$height = round( ( 512 * $height) / $width );
 			$width = 512;
 		}
+
+		$iCroppedAspectRatio = $this->proportion['h'] / $this->proportion['w'];
+		$H = (float)$width / ($iCroppedAspectRatio);
+		$hDelta = ( ( $height - $H ) / 2 );
 
 		// make sure these are numeric (BugId:20644)
 		$width = intval($width);
@@ -269,7 +282,9 @@ class ImageServing {
 			$bottom = $height;
 		} else {
 			if ( $align == "center" ) {
-				$deltaYpx = round( $height * $this->deltaY );
+				$deltaY = isset( $this->tmpDeltaY ) ? $this->tmpDeltaY : $this->deltaY;
+				unset( $this->tmpDeltaY );
+				$deltaYpx = round( $height * $deltaY );
 				$bottom = $pHeight + $deltaYpx;
 				$top = $deltaYpx;
 			} else if ( $align == "origin" ) {
@@ -284,7 +299,6 @@ class ImageServing {
 
 			$left = 0;
 			$right = $width;
-
 		}
 
 		return "{$this->width}px-$left,$right,$top,$bottom";
