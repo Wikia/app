@@ -95,8 +95,8 @@ var RelatedVideos = {
 					callback();
 				}
 			});
-		} else if (futureState == 0 && RelatedVideos.maxRooms == 0) {
-            $('.page',this.rvModule).text(0);
+		} else if (futureState == 0 && RelatedVideos.maxRooms == 1) {
+            $('.page',this.rvModule).text(1);
         }
 	},
 
@@ -146,9 +146,19 @@ var RelatedVideos = {
 	},
 
 	recalculateLenght: function(){
-		var numberItems = $( '.container .item:not(.action)',this.rvModule ).size();
+		var numberItems = $( '.container .item',this.rvModule ).size();
 		$( '.tally em',this.rvModule ).html( numberItems );
-        numberItems = Math.ceil( ( numberItems + 1 ) / this.videosPerPage );
+        if ( numberItems == 0 ) {
+            $( '.novideos' ).show();
+        } else {
+            $( '.novideos' ).hide();
+        }
+		if ( this.onRightRail ) {
+			numberItems = Math.ceil( ( numberItems ) / this.videosPerPage );
+		} else {
+			numberItems = Math.ceil( ( numberItems + 1 ) / this.videosPerPage );
+		}
+        if( numberItems == 0) { numberItems = 1; }
 		RelatedVideos.maxRooms = numberItems;
 		$( '.maxcount',this.rvModule ).text( numberItems );
         if(numberItems < RelatedVideos.currentRoom) {

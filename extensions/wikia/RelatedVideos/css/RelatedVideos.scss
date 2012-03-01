@@ -435,6 +435,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		.RVBody {
 			height: auto;
 			clear: both;
+			.novideos { padding: 7px; }
 			.wrapper {
 				width: 278px;
 				position: static;

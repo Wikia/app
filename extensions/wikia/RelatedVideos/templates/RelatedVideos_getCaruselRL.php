@@ -19,7 +19,6 @@
 			<div class="container">
 				<? $i = 0;
 				if( isset($videos) && is_array($videos) ){
-					$videos[] = 'AddNew';
 					$videosGrouped = array();
 					$j = -1;
 					foreach( $videos as $id => $video ){
@@ -35,29 +34,21 @@
 						$i++; 
 						echo '<div class="group">';
 						foreach( $videos as $id => $video ){
-							if ( !is_string($video ) ) {
-								echo F::app()->renderView(
-									'RelatedVideos',
-									'getCaruselElementRL',
-									array(
-										'video' => $video,
-										'preloaded' => ( $i <= 2 )
-									)
-								);
-							} else {
-								echo '
-									<div class="item action">
-										<a class="video-thumbnail" href="#" >
-										<div class="addVideo"></div>
-										</a>
-									</div>';
-							}
+							echo F::app()->renderView(
+								'RelatedVideos',
+								'getCaruselElementRL',
+								array(
+									'video' => $video,
+									'preloaded' => ( $i <= 2 )
+								)
+							);
 						}
 						echo '</div>';
 					}
 				} ?>
 			</div>
 		</div>
+		<div class="novideos" <? if(count($videos)!=0):?>style="display: none"<?endif?>><?= wfMsg('related-videos-empty');?></div>
 		<div class="paginationbar">
 			<div class="button vertical secondary scrollleft" >
 				<img src="<?=wfBlankImgUrl();?>" class="chevron" />
@@ -68,8 +59,8 @@
 			<div class="pagecount">
 				<?= wfMsg(
 					'related-videos-pagination',
-					'<span class="page">'.($pageCount > 0 ? 1 : 0).'</span>',
-					'<span class="maxcount">'.$pageCount.'</span>');?>
+					'<span class="page">1</span>',
+					'<span class="maxcount">'.($pageCount > 0 ? $pageCount : '1').'</span>');?>
 			</div>
 		</div>
 	</div>
