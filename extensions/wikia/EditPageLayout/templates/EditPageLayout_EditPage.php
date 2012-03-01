@@ -145,6 +145,8 @@
 	 		case 'save':
 ?>
 								<input class="<?=$buttonClasses?>" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
+								<!-- If JavaScript is enabled, disable the save button immediately. -->
+								<script type="text/javascript">document.getElementById('wpSave').disabled=true;</script>
 <?php
 	 			break;
 	 		case 'preview':
