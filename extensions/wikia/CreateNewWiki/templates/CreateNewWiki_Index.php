@@ -111,6 +111,7 @@
 			<form method="post" action="<?= $signupUrl ?>" id="SignupRedirect">
 				<input type="hidden" name="returnto" value="">
 				<input type="hidden" name="redirected" value="true">
+				<input type="hidden" name="uselang" value="<?= $params['wikiLanguage'] ?>">
 				<input type="submit" value="<?= wfMsg('cnw-userauth-signup-button') ?>">
 			</form>
 		</div>
