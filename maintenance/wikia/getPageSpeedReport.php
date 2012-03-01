@@ -1,8 +1,9 @@
 <?php
-
 /**
  * @addto maintenance
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
+ *
+ * SERVER_ID=1 php getPageSpeedReport.php --url=http://wikia.com --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php
  */
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
@@ -12,7 +13,7 @@ function printHelp() {
 		echo <<<HELP
 Returns Google PageSpeed report
 
-USAGE: php codelint.php --url=http://foo.bar --score-only
+USAGE: php codelint.php --url=http://foo.bar
 
 	--url
 		Page to be checked
