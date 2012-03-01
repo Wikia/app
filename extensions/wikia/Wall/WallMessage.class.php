@@ -389,7 +389,9 @@ class WallMessage {
 	}
 
 	public function getEditTime($format){
-		return wfTimestamp($format, $this->getArticleComment()->mLastRevision->getTimestamp());
+		$r = $this->getArticleComment()->mLastRevision;
+		if (!$r) return null; // BugId:22821
+		return wfTimestamp($format, $r->getTimestamp());
 	}
 
 	public function isEdited() {
