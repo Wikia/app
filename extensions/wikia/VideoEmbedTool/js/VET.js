@@ -58,9 +58,16 @@ function VET_editVideo() {
 			$G('VideoEmbedBack').style.display = 'none';
 
 			setTimeout(function() {
-				if(!data.thumb) {
-					$G('VideoEmbedThumbOption').click();
-				}
+
+        if ( (typeof (data.thumbnail) != "undefined" && data.thumbnail ) || 
+             (typeof (data.thumb) != "undefined" && data.thumb ) ) {
+                 
+             $G("VideoEmbedThumbOption").checked = true;      
+        }  else {
+        
+             $G("VideoEmbedThumbOption").checked = false;
+        }
+
 				if(data.align && data.align == 'left') {
 					$G('VideoEmbedLayoutLeft').click();
 				}
@@ -88,7 +95,11 @@ function VET_editVideo() {
 
 	YAHOO.util.Connect.abort(VET_asyncTransaction);
 	var params = [];
-	params.push('itemTitle='+FCK.wysiwygData[VET_refid].href);
+  if ( typeof(FCK.wysiwygData[VET_refid].href) == "undefined" ) {
+     params.push('itemTitle='+FCK.wysiwygData[VET_refid].title);  
+  } else {
+	   params.push('itemTitle='+FCK.wysiwygData[VET_refid].href);
+  }
 
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=editVideo&' + params.join('&'), callback);
 }
