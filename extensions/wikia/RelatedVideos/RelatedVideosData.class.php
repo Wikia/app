@@ -156,12 +156,12 @@ class RelatedVideosData {
 
 		if( !$video->parseUrl( $url ) ) {
 			wfProfileOut( __METHOD__ );
-			throw Exception( wfMsg( 'related-videos-add-video-error-bad-url' ) );
+			throw new Exception( wfMsg( 'related-videos-add-video-error-bad-url' ) );
 		}
 
 		if( !$video->checkIfVideoExists() ) {
 			wfProfileOut( __METHOD__ );
-			throw Exception( wfMsg( 'related-videos-add-video-error-nonexisting' ) );
+			throw new Exception( wfMsg( 'related-videos-add-video-error-nonexisting' ) );
 		}
 
 		$videoName = $video->getVideoName();
@@ -175,7 +175,7 @@ class RelatedVideosData {
 
 		if( is_null( $videoTitle ) ) {
 			wfProfileOut( __METHOD__ );
-			throw Exception( wfMsg ( 'related-videos-add-video-error-bad-name' ) );
+			throw new Exception( wfMsg ( 'related-videos-add-video-error-bad-name' ) );
 		}
 
 		if( $videoTitle->exists() ) {
@@ -188,7 +188,7 @@ class RelatedVideosData {
 			$permErrorsCreate = $videoTitle->getUserPermissionsErrors( 'create', F::app()->wg->user );
 
 			if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-				throw Exception( wfMsg( 'related-videos-add-video-error-permission-video' ) );
+				throw new Exception( wfMsg( 'related-videos-add-video-error-permission-video' ) );
 			}
 
 			$video = F::build( 'VideoPage', array( $videoTitle ) );
