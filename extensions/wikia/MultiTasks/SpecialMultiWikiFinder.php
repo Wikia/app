@@ -26,6 +26,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 #--- messages file
 $wgExtensionMessagesFiles["Multiwikifinder"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
+$wgExtensionAliasesFiles['Multiwikifinder'] = __DIR__ . '/MultiTasks.aliases.php';
 
 $wgAvailableRights[] = 'multiwikifinder';
 $wgGroupPermissions['staff']['multiwikifinder'] = true;
