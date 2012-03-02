@@ -620,6 +620,9 @@ class Linker {
 				# Do not present an image bigger than the source, for bitmap-style images
 				# This is a hack to maintain compatibility with arbitrary pre-1.10 behaviour
 				$srcWidth = $file->getWidth( $page );
+				/* Wikia change start - Jakub */
+				F::app()->runHook( 'LinkerMakeThumbLink2FileOriginalSize', array( $file, &$srcWidth ) );
+				/* Wikia change end */
 				if ( $srcWidth && !$file->mustRender() && $hp['width'] > $srcWidth ) {
 					$hp['width'] = $srcWidth;
 				}

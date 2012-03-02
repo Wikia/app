@@ -529,8 +529,7 @@ abstract class File {
 	 * @return MediaTransformOutput
 	 */
 	function transform( $params, $flags = 0 ) {
-		global $wgUseSquid, $wgIgnoreImageErrors, $wgThumbnailEpoch, $wgServer;
-
+		global $wgUseSquid, $wgIgnoreImageErrors, $wgThumbnailEpoch, $wgServer;;
 		wfProfileIn( __METHOD__ );
 		do {
 			if ( !$this->canRender() ) {
