@@ -472,6 +472,8 @@
 			
 			// success - new email != current email ( email changes < limit )
 			$mockUserParams8 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'sendReConfirmationMail' => null,
 			);
 			$mockTempUserParams8 = array(
@@ -676,6 +678,8 @@
 			
 			// error - email is confirmed ( POST + action = resendconfirmation )
 			$mockUser106 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isEmailConfirmed' => true,
 				'sendConfirmationMail' => null,
 				'params' => array(
@@ -697,6 +701,8 @@
 			
 			// error - pending email + email sent exceed limit ( POST + action = resendconfirmation )
 			$mockUser107 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isEmailConfirmed' => false,
 				'isEmailConfirmationPending' => true,
 				'sendConfirmationMail' => null,
@@ -722,6 +728,8 @@
 				'get' => UserLoginHelper::LIMIT_EMAILS_SENT - 1,
 			);
 			$mockUser109 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isEmailConfirmed' => false,
 				'isEmailConfirmationPending' => true,
 				'getOption' => 'en',
