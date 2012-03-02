@@ -122,5 +122,67 @@ Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:spe
 );
 
 $messages['qqq'] = array(
+	// login
+	'userlogin-login-heading' => 'Login page heading',
+	'userlogin-forgot-password' => 'Link that asks if you forgot your password.',
+	'userlogin-remembermypassword' => 'Label for staying logged in checkbox',
+	'userlogin-error-noname' => 'Error message upon login attempt stating the name field is blank.',
+	'userlogin-error-sessionfailure' => 'Error message upon login attempt stating session has timed out.',
+	'userlogin-error-nosuchuser' => "Error message upon login attempt stating there is no such user.  Reminds of caps lock.",
+	'userlogin-error-wrongpassword' => 'Error message upon login attempt stating the password is incorrect.  Reminds of caps lock.',
+	'userlogin-error-wrongpasswordempty' => 'Error message upon login attempt stating password field is blank.',
+	'userlogin-error-resetpass_announce' => 'Error message upon login attempt stating that this password is a temp password, and the user needs to set a new password.',
+	'userlogin-error-login-throttled' => "Error message upon login attempt stating user has failed too many logins for the time period.",
+	'userlogin-error-login-userblocked' => "Error message upon login attempt stating user has been blocked.",
+	'userlogin-error-edit-account-closed-flag' => 'Error message upon login attempt stating the account has been closed.',
+	'userlogin-error-cantcreateaccount-text' => 'Error message upon login attempt stating that the user\'s IP address has been throttled because of login failures.',
+	'userlogin-error-userexists' => 'Error message upon signup attempt stating user name already exists.',
+	'userlogin-error-invalidemailaddress' => 'Error message upon signup attempt stating email address is invalid.',
+	'userlogin-get-account' => 'Marketing blurb asking to sign up with wikitext internal link to usersignup page.  Please append userlang as appropriate.',
+
+	// signup
+	'userlogin-error-invalid-username' => 'Error message upon signup attempt stating username is badly formatted, or invalid',
+	'userlogin-error-userlogin-unable-info' => 'Error message upon signup attempt stating account cannot be create currently.',
+	'userlogin-error-user-not-allowed' => 'Error message upon signup attempt stating username is unacceptable.',
+	'userlogin-error-captcha-createaccount-fail' => 'Error message upon signup attempt stating CAPTCHA has failed or not entered correctly.',
+	'userlogin-error-userlogin-bad-birthday' => 'Error message upon signup attempt stating all fields for birthday is required: Year, Month, Day.',
+	'userlogin-error-externaldberror' => 'Error message upon signup attempt stating there was a technical issue at wikia.',
+	'userlogin-error-noemailtitle' => 'Error message upon signup attempt stating user should enter a valid email address.',
+	'userlogin-error-acct_creation_throttle_hit' => 'Error message upon signup attempt stating that too many accounts have been created from the same IP.',
+
+	// mail password
+	'userlogin-error-resetpass_forbidden' => 'Error message stating password cannot be changed.',
+	'userlogin-error-blocked-mailpassword' => "Error message stating password cannot be changed because IP has been restricted.",
+	'userlogin-error-throttled-mailpassword' => "Error message stating email has already been sent $1 hours ago and asks user to check email.  $1 is numerical hour.",
+	'userlogin-error-mail-error' => 'Error message stating there was an error sending the email.  Link to Contact us page in wikitext.',
+	'userlogin-password-email-sent' => "Validation message stating that email has been to the user.  $1 contains the email address, such as john@wikia-inc.com",
+	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
+
+	// change password page
+	'userlogin-password-page-title' => 'Heading for change password page.',
+	'userlogin-oldpassword' => 'Label for old password field',
+	'userlogin-newpassword' => 'Label for new password field',
+	'userlogin-retypenew' => 'Label for retype password field',
+	
+
+	// password email
+	'userlogin-password-email-subject' => 'Subject line for Forgot password email',
+	'userlogin-password-email-greeting' => 'Email body heading.  $USERNAME is a special wikia magic word, so re-use it without changing.  This may contain html markup, and is placed onto a template.',
+	'userlogin-password-email-content' => 'Email body.  $NEWPASSWORD is wikia magic word.  This may contain html markup, and is placed onto a template.',
+	'userlogin-password-email-signature' => 'Wikia Email signature at the bottom of the email.  This may contain html markup, and is placed onto a template.',
+	'userlogin-password-email-body' => 'This is a text-only version email that combines the contents userlogin-password-email-greeting, userlogin-password-email-content, and userlogin-password-email-signature.  This does NOT contain HTML.  $2 is username in greeting, $3 is the temporary password value.  Content-wise, it is exactly the same as templated html version, but this is a complete stand-alone.',
+	'userlogin-password-email-body-HTML' => 'This is a standalone HTML version of the email.  This will not be placed onto a pre-formatted template that userlogin-password-email-greeting, userlogin-password-email-content, and userlogin-password-email-signature is placed onto.',
+
+	// general email
+	'userlogin-email-footer-line1' => 'Footer line 1 in the standard Wikia email template.',
+	'userlogin-email-footer-line2' => 'Footer line 2 in the standard Wikia email template.',
+	'userlogin-email-footer-line3' => 'Footer line 3 in the standard Wikia email template.  The links are space (&nbsp) separated pointing to social networks.  Leave this blank if social network is unknown.',
+
+	// 3rd party login providers
 	'userlogin-provider-or' => 'Word shown between login form and FB connect button',
+	'userlogin-provider-tooltip-facebook' => 'Tooltip when hovering over facebook connect button in login page or context.',
+	'userlogin-provider-tooltip-facebook-signup' => 'Tooltip when hovering over facebook connect button in signup page or context.',
+	'userlogin-facebook-show-preferences' => 'Action anchor text to show facebook feed preference section of the UI when near facebook signup completion.',
+	'userlogin-facebook-hide-preferences' => 'Action anchor text to hide facebook feed preference section of the UI when near facebook signup completion.',
+	'userlogin-changepassword-needlogin' => '$1 is an action link using the message loginreqlink.',
 );

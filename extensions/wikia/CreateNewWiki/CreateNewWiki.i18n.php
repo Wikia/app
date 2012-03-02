@@ -123,6 +123,13 @@ $messages['qqq'] = array(
 	'cnw-auth-signup-creative' => 'Creative or instruction for this step following H1 for signup',
 	'cnw-auth-facebook-signup' => '"Sign up with Facebook" Button',
 	'cnw-auth-facebook-login' => '"Login with Facebook" Button',
+	// new login box
+	'cnw-userauth-headline' => 'Heading for user login/signup box at the top',
+	'cnw-userauth-creative' => 'Sublabel that says "log in"',
+	'cnw-userauth-marketing-heading' => 'Heading to create an account in form of a question on the right side of the box',
+	'cnw-userauth-marketing-body' => 'Marketing blurb with link to user signup on the right side.  Please append uselang=es(or other lang) on the link.',
+	'cnw-userauth-signup-button' => 'Label for sign up button on the right side.',
+	// end of new login box
 	'cnw-desc-headline' => 'H1 for this step',
 	'cnw-desc-creative' => 'Creative or instruction for this step following H1',
 	'cnw-desc-placeholder' => 'Placeholder for the textarea',
@@ -428,7 +435,7 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-error-bot-header' => 'Du wurdest als Bot identifiziert.',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -1013,7 +1020,7 @@ $messages['ko'] = array(
 	'cnw-login' => '로그인',
 );
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+/** Kurdish (Latin script) (Kurdî (latînî))
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1231,7 +1238,7 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-error-bot-header' => 'Anda telah dikesan sebagai bot',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1382,7 +1389,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-error-bot-header' => 'U bent geïdentificeerd als een geautomatiseerd proces',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author MarkvA
  * @author Siebrand
  */
@@ -1762,7 +1769,7 @@ $messages['ru'] = array(
 	'cnw-error-bot-header' => 'Вы были определены как бот',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (Српски (ћирилица))
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2230,7 +2237,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Anakmalaysia
  * @author Hydra
  */
@@ -2262,7 +2269,7 @@ $messages['zh-hans'] = array(
 	'cnw-welcome-headline' => '恭喜！$1 已被创造',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
