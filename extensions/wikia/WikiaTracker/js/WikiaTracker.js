@@ -92,7 +92,7 @@ WikiaTracker.track = function(page, profile, events) {
 WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
-	if (sample != 100) sample = 10;
+	sample = '10';
 
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
@@ -111,15 +111,15 @@ WikiaTracker._track = function(page, profile, sample, events) {
 //	_gaq.push(['WikiaTracker._setCustomVar', 3, 'AB',    this._userGroup() || 'unknown', 3]);
 //	_gaq.push(['WikiaTracker._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
 //	_gaq.push(['WikiaTracker._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
-
+/*
 	if (typeof events != 'undefined' && events instanceof Array) {
 		this.debug('...with events: ' + events.join('/'), 7);
 
-		events.unshift('WikiaTracker._trackEvent');
+//		events.unshift('WikiaTracker._trackEvent');
 //		temp disable - BugId: 20284
 //		_gaq.push(events);
 	}
-
+*/
 	if (page == 'AnalyticsEngine::EVENT_PAGEVIEW') {
 		_gaq.push(['WikiaTracker._trackPageview']);
 		_gaq.push(['WikiaTracker._trackPageLoadTime']);
