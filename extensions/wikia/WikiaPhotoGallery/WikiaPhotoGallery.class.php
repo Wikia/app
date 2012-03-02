@@ -878,6 +878,11 @@ class WikiaPhotoGallery extends ImageGallery {
 					)
 				);
 				if (!empty($image['thumbnail'])) {
+					
+					if ( WikiaVideoService::isFileTypeVideo( $fileObject ) ) {
+						$html .= WikiaVideoService::videoPlayButtonOverlay( $image['width'], $image['height'] );
+					}
+					
 					$html .= Xml::openElement(
 						'img',
 						array(
