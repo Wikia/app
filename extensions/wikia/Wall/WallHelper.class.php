@@ -286,12 +286,7 @@ class WallHelper {
 
 			if( !($data['author'] instanceof User) ) {
 				// just logging for Fatal Error bugId:22820
-
 				error_log("WallHelper.class.php NO_AUTHOR_FOR_AC:" . $wm->getId() );
-				$error_msg = var_export( $wm, 1 );
-				foreach( explode("\n",$error_msg) as $line ) {
-					error_log("NO_AUTHOR_FOR_AC:". $line);
-				}
 				continue;
 			}
 				
