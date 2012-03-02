@@ -16,6 +16,9 @@ class LatestActivityModule extends Module {
 		$this->moduleHeader = wfMsg('oasis-activity-header');
 		
 		// TODO: add comment
+		// I think it could be removed
+		// because it seems to be a wiki activity of a user
+		// in rail module on his profile page -- fb#12692
 		if( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() ) {
 			$userPage = UserProfilePage::getInstance( $wgTitle );
 			$user = ( !empty( $userPage ) ) ? $userPage->getUser() : null;
