@@ -51,16 +51,12 @@ if (empty($report)) {
 }
 
 // format the output for Cacti
-// a1:2982236 a2:1034853568 a3:3339620 a4:871 a5:6370988398 a6:139 a7:140 a8:0 a9:138
 if (isset($options['cacti'])) {
-	$output = "a1:{$report['score']}";
+	$output = "pageScore:{$report['score']}";
 
 	// emit the rest of the values
-	$values = array_values($report['stats']);
-
-	foreach($values as $id => $value) {
-		$id += 2; // start from #2
-		$output .= " a{$id}:{$value}";
+	foreach($report['stats'] as $id => $value) {
+		$output .= " {$id}:{$value}";
 	}
 
 	echo $output . "\n";
