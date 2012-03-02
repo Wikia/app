@@ -18,6 +18,8 @@ abstract class VideoHandler extends BitmapHandler {
 	protected $metadata = null;
 	protected $thumbnailImage = null;
 	protected static $aspectRatio = 1.7777778;
+	protected static $classnameSuffix = 'VideoHandler';
+	protected static $providerDetailUrlTemplate = '';	// must have a token called "$1"
 
 	function normaliseParams( $image, &$params ) {
 		global $wgMaxImageArea, $wgMaxThumbnailArea;
@@ -57,7 +59,16 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string Embed HTML
 	 */
 	abstract function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false );
+	
+	public function getProviderDetailUrl() {
+		return str_replace('$1', $this->videoId, static::$providerDetailUrlTemplate);
+	}
+	
+	public function getProviderHomeUrl() {
+		return static::$providerHomeUrl;
+	}
 
+	
 	function setVideoId( $videoId ){
 		$this->videoId = $videoId;
 	}

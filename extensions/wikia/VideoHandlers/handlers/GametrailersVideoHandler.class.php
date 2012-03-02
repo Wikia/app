@@ -4,6 +4,8 @@ class GametrailersVideoHandler extends VideoHandler {
 	protected $apiName = 'GametrailersApiWrapper';
 	protected static $aspectRatio = 1.77777778;	// 512 x 288
 	protected static $urlTemplate = 'http://media.mtvnservices.com/mgid:moses:video:gametrailers.com:$1';
+	protected static $providerDetailUrlTemplate = 'http://www.gametrailers.com/video/play/$1';
+	protected static $providerHomeUrl = 'http://www.gametrailers.com/';
 	
 	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false) {
 		$height = $this->getHeight($width);

@@ -58,7 +58,12 @@ class HuluApiWrapper extends ApiWrapper {
 	}
 	
 	protected function getVideoPublished() {
-		return strtotime($this->interfaceObj['air_date']);
+		if (is_string($this->interfaceObj['air_date'])) {
+			return strtotime();
+		}
+		else {
+			return '';
+		}
 	}	
 	
 }

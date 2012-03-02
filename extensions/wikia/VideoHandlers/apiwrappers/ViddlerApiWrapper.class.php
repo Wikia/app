@@ -3,7 +3,7 @@
 class ViddlerApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_PHP;
 	protected static $API_URL = 'http://api.viddler.com/api/v2/viddler.videos.getDetails.php?key=$1&add_embed_code=1&url=';
-	protected static $WATCH_URL = 'http://www.viddler.com/explore/$1';
+	protected static $WATCH_URL = 'http://www.viddler.com/v/$1';
 	protected static $CACHE_KEY = 'viddlerapi';
 
 	public static function isMatchingHostname( $hostname ) {

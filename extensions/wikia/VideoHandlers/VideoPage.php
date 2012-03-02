@@ -14,6 +14,19 @@ class WikiaVideoPage extends ImagePage {
 
 	function openShowImage(){
 		global $wgOut, $wgTitle;
-		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$this->img->getEmbedCode($wgTitle->getArticleId(), self::$videoWidth).'</div>' );
+		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$this->img->getEmbedCode($wgTitle->getArticleId(), self::$videoWidth).$this->getVideoInfoLine().'</div>' );
 	}
+	
+	protected function getVideoInfoLine() {
+		global $wgWikiaVideoProviders;
+		
+		$detailUrl = $this->img->getProviderDetailUrl();
+		$provider = $this->img->getProviderName();
+		$providerUrl = $this->img->getProviderHomeUrl();
+		
+		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';
+		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerUrl, $provider )  . '</div>';
+		return $s;
+	}
+
 }

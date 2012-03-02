@@ -4,6 +4,8 @@ class BliptvVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'BliptvApiWrapper';
 	protected static $aspectRatio = 1.7777778;
+	protected static $providerDetailUrlTemplate = 'http://blip.tv/play/$1';
+	protected static $providerHomeUrl = 'http://blip.tv/';
 	
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
@@ -13,5 +15,9 @@ class BliptvVideoHandler extends VideoHandler {
 <iframe src="http://blip.tv/play/$embedVideoId.html?p=1&autoStart={$autoStartParam}" width="{$width}" height="{$height}" frameborder="0" allowfullscreen></iframe><embed type="application/x-shockwave-flash" src="http://a.blip.tv/api.swf#{$embedVideoId}" style="display:none"></embed>                
 EOT;
 		return $code;
+	}
+
+	public function getProviderDetailUrl() {
+		return str_replace('$1', $this->getEmbedVideoId(), static::$providerDetailUrlTemplate);
 	}
 }

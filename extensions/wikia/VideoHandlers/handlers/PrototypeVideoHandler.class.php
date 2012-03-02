@@ -4,6 +4,8 @@ class PrototypeVideoHandler extends VideoHandler {
 
 	protected $apiName = 'PrototypeApiWrapper';
 	protected static $aspectRatio = 1.7777778;
+	protected static $providerDetailUrlTemplate = 'http://www.wikia.com';
+	protected static $providerHomeUrl = 'http://www.wikia.com/';
 
 	function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false){
 		// hardcoden but this is only a prototype. In future it will be handled in a better way

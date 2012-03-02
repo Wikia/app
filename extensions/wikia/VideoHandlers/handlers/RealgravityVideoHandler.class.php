@@ -9,6 +9,8 @@ class RealgravityVideoHandler extends VideoHandler {
 
 	protected $apiName = 'RealgravityApiWrapper';
 	protected static $aspectRatio = 1.3333333;
+	protected static $providerDetailUrlTemplate = 'http://www.realgravity.com/';
+	protected static $providerHomeUrl = 'http://www.realgravity.com/';
 
 	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false) {
 
