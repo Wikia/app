@@ -121,7 +121,7 @@ header {
 	}
 }
 
-@media (orientation:landscape) {
+@media screen and (min-width:321px) {
 	.wkExhItm, .exhPlcHld {
 		width: 105px;
 		height: 105px;

@@ -47,9 +47,8 @@ var WikiaMobile = WikiaMobile || (function() {
 
 		//avoid running if there are no sections which are direct children of the article section
 		if(firstLevelSections.length > 0){
-			var articleElement = article[0],
-				contents = article.contents(),
-				wrapper = articleElement.cloneNode(false),
+			var contents = article.childNodes,
+				wrapper = article.cloneNode(false),
 				root = wrapper,
 				x,
 				y = contents.length,
@@ -90,7 +89,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				}
 			}
 
-			page[0].replaceChild(wrapper, articleElement);
+			page.replaceChild(wrapper, article);
 		}
 	}
 
@@ -283,7 +282,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	}
 
 	function moveSlot(plus){
-		adSlot.style.top = Math.min((window.pageYOffset + window.innerHeight - 50 + isFinite(plus)?plus:0), ftr.offsetTop + 150) + 'px';
+		adSlot.style.top = Math.min((window.pageYOffset + window.innerHeight - 50 + (isFinite(plus)?plus:0)), ftr.offsetTop + 150) + 'px';
 	}
 
 	function loadShare(cnt){
@@ -424,8 +423,8 @@ var WikiaMobile = WikiaMobile || (function() {
 	//init
 	$(function(){
 		body = $(d.body);
-		page = $(d[byId]('wkPage'));
-		article = $(d[byId]('wkMainCnt'));
+		page = d[byId]('wkPage');
+		article = d[byId]('wkMainCnt');
 		ftr = d[byId]('wkFtr');
 		adSlot = d[byId]('wkAdPlc');
 
@@ -435,11 +434,9 @@ var WikiaMobile = WikiaMobile || (function() {
 		searchForm = $(d[byId]('wkSrhFrm')),
 		wkNav = d[byId]('wkNav'),
 		wkNavMenu = d[byId]('wkNavMenu'),
-		//while getting the h1 element erase classes needed for phones with no js
 		wikiNavHeader = wkNavMenu.getElementsByTagName('h1')[0],
 		wikiNavLink = d[byId]('wkNavLink'),
 		navBar = d[byId]('wkTopNav'),
-		thePage = page.add(ftr).add(adSlot),
 		lvl1 = $('.lvl1'),
 		//to cache link in wiki nav
 		lvl2Link;
@@ -456,7 +453,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		//add class for styling to be applied only if JS is enabled
 		//(e.g. collapse sections)
 		//must be done AFTER detecting size of elements on the page
-		body.addClass('js');
+		d.body.className += ' js';
 
 		//handle ads
 		var close = d[byId]('wkAdCls'),
@@ -467,7 +464,7 @@ var WikiaMobile = WikiaMobile || (function() {
 					adSlot.style.height = '50px';
 					close[bind](clickEvent, function() {
 						track('ad/close');
-						adSlot.className += 'anim';
+						adSlot.className += ' anim';
 						if(!fixed) {
 							moveSlot(70);
 						}else{
@@ -525,14 +522,6 @@ var WikiaMobile = WikiaMobile || (function() {
 			var img = $(this),
 				num = img.data('num') || img.parent().data('num');
 			if(num) imgModal(num);
-		})
-		.delegate('.bigTable', clickEvent, function(event){
-			event.preventDefault();
-
-			$.openModal({
-				addClass: 'wideTable',
-				html: this.innerHTML
-			});
 		});
 
 		searchForm.bind('submit', function(){
@@ -573,7 +562,8 @@ var WikiaMobile = WikiaMobile || (function() {
 				closeNav();
 			}else{
 				track('nav/open');
-				thePage.hide();
+				page.style.height = 0;
+				ftr.style.display = adSlot.style.display = 'none';
 				//80px is for lvl1 without header
 				navBar.className += ' fllNav';
 				navBar.style.height = (lvl1.height() + 80) + 'px';
@@ -585,7 +575,8 @@ var WikiaMobile = WikiaMobile || (function() {
 			if(window.location.hash == '#WikiNav') window.history.back();
 			track('nav/close');
 			wkNavMenu.className = 'cur1';
-			thePage.show();
+			page.style.height = 'auto';
+			ftr.style.display = adSlot.style.display = 'block';
 			if(!fixed) moveSlot();
 			navBar.className = '';
 			navBar.style.height = '40px';
@@ -660,7 +651,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		});
 		//end of preparing the nav
 
-		page.bind(clickEvent, function(event){
+		page[bind](clickEvent, function(event){
 			navBar.className = '';
 			searchInput.val('');
 		});
