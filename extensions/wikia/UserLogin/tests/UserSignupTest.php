@@ -160,6 +160,8 @@
 		}
 		
 		public function signupDataProvider() {
+			global $wgWikiaMaxNameChars;
+			
 			// error - empty username
 			$reqParams1 = array(
 				'username' => '',
@@ -188,7 +190,7 @@
 				'username' => 'test123456789test123456789test123456789test123456789test123456789',
 			);
 			$mockTempUserParams3 = false;
-			$expMsg3 = wfMsg( 'usersignup-error-username-length' );
+			$expMsg3 = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );
 			
 			// error - invalid user name ( getCanonicalName() = false for creatable )
 			$reqParams4 = array(
