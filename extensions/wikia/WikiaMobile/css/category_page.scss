@@ -104,6 +104,12 @@
 	}
 }
 
+#catTtl{
+	font-size: medium;
+	color: $page-text-alternate-color;
+	font-weight: 100;
+}
+
 header {
 		&:after {
 		content: ".";

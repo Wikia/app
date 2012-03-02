@@ -92,7 +92,7 @@ class WikiaMobileService extends WikiaService {
 		$this->charSet = $this->templateObject->data['charset'];
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $this->templateObject->data['skinname'] );
-		$this->pageTitle = $this->wg->Out->getPageTitle();
+		$this->pageTitle = $this->wg->Out->getHTMLTitle();
 		$this->cssLinks = $cssFiles;
 		$this->headLinks = $this->wg->Out->getHeadLinks();
 		$this->jsHeadFiles = $jsHeadFiles;
