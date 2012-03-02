@@ -11,7 +11,7 @@ var WikiaHubs = {
 		//WikiaHubs.trackingCategory = 'video-games';
 	},
 	trackClick: function(label, value) {
-		$.tracker.trackEvent(WikiaHubs.trackingCategory, 'click', label)
+		$.tracker.trackEvent(WikiaHubs.trackingCategory, 'click', label);
 	},
 	clickTrackingHandler: function(e) {
 		var node = $(e.target);
@@ -113,6 +113,7 @@ var SuggestModal = {
 	init: function() {
 		// show modal for suggest article
 		$('#suggestArticle').click(function() {
+			$().log(window.wgUserName );
 			if ( window.wgUserName ) {
 				SuggestModal.suggestArticle();
 			} else {
@@ -124,7 +125,7 @@ var SuggestModal = {
 						};
 						AjaxLogin.close = function() {
 							$('#AjaxLoginBoxWrapper').closeModal();
-						}
+						};
 					}, false, true );
 				} else {
 					UserLoginModal.show({
@@ -148,7 +149,7 @@ var SuggestModal = {
 						};
 						AjaxLogin.close = function() {
 							$('#AjaxLoginBoxWrapper').closeModal();
-						}
+						};
 					}, false, true );
 				} else {
 					UserLoginModal.show({
@@ -167,12 +168,8 @@ var SuggestModal = {
 				method: 'modalArticle',
 				format: 'html'
 		}, function(html) {
-				var modal = $(html).makeModal({width: 490});
+				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
 				var wikiaForm = new WikiaForm(modal.find('form'));
-
-				modal.find('button.cancel').click(function(e) {
-					SuggestModal.closeModal(e, modal);
-				});
 
 				modal.find('input[name=articleurl]').focus(function(){
 					if ( $(this).parent().is('.default-value') ) {
@@ -211,10 +208,6 @@ var SuggestModal = {
 						}
 					});
 				});
-
-				modal.find('button.close').click(function(e) {
-					SuggestModal.closeModal(e, modal);
-				});
 		});
 	},
 
@@ -224,12 +217,8 @@ var SuggestModal = {
 				method: 'modalRelatedVideos',
 				format: 'html'
 		}, function(html) {
-				var modal = $(html).makeModal({width: 490});
+				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
 				var wikiaForm = new WikiaForm(modal.find('form'));
-
-				modal.find('button.cancel').click(function(e) {
-					SuggestModal.closeModal(e, modal);
-				});
 
 				modal.find('input[name=videourl]').focus(function(){
 					if ( $(this).parent().is('.default-value') ) {
@@ -275,10 +264,6 @@ var SuggestModal = {
 						}
 					});
 				});
-
-				modal.find('button.close').click(function(e) {
-					SuggestModal.closeModal(e, modal);
-				});
 		});
 	},
 
@@ -298,10 +283,9 @@ var SuggestModal = {
 		});
 	},
 
-	closeModal: function(e, modal) {
-		e.preventDefault();
-		modal.closeModal();
+	closeModal: function() {
 		if ( !window.wgUserName ) {
+			var searchstring = window.location.search;
 			if(typeof searchstring == "undefined") {
 				window.location.search = '';
 			}
@@ -311,8 +295,7 @@ var SuggestModal = {
 			} else if (window.location.search.substr(0,1) == '?') {
 				window.location = window.location + '&cb=' + Math.floor(Math.random()*10000);
 				
-			}
-			
+			}			
 		}
 	}
 
