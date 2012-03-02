@@ -14,13 +14,16 @@ function printHelp() {
 		echo <<<HELP
 Returns Google PageSpeed report
 
-USAGE: php codelint.php --url=http://foo.bar [--cacti]
+USAGE: php codelint.php --url=http://foo.bar [--cacti] [--noexternals]
 
 	--url
 		Page to be checked
 
 	--cacti
 		Use Cacti compatible output format
+
+	--noexternals
+		Test pages without external resources fetched (i.e. noexternals=1 added to the URL)
 
 HELP;
 }
@@ -33,6 +36,11 @@ if (!isset($options['url'])) {
 
 $service = new PageSpeedAPI();
 $url = $options['url'];
+
+// support --noexternals option
+if (isset($options['noexternals'])) {
+	$url .= (strpos($url, '?') !== false ? '&' : '?') . 'noexternals=1';
+}
 
 // use GooglePage speed API
 $report = $service->getReportForURL($url);
