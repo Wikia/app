@@ -1,8 +1,4 @@
 (function($){
-	$.fn.contents = function() {
-		      return this[0].childNodes;
-	};
-
 	//TODO: split this library in different files: zepto.resources.js, zepto.loader.js, etc.
 	//then use AssetsManager config to group them together
 	$.getSassCommonURL = function( scssFilePath, params ) {

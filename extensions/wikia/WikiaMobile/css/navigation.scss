@@ -29,16 +29,11 @@
 }
 
 #wkSrhTgl {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAC4ElEQVR42p2US2hTQRSGp2pr60YEBXWjK5Ei4kJcuBF0IwiCbkoe5GFt0qRtkqY2TU0ueT9M0rQhqWlrmz7SJmkqrhTEjSCCim5cFAWVLopoBdFFQaPC+B+5V3K5RtDAv5jMf79z5pwzw1QqVb1aoPNQBroLPYeeQGVoCDos80Oc89+q39ir0WjGnE7nx3g8zsdzOT4zPc1vTE3xsdFR7vf5uclkegzfRajpb7DdRoOxGI/FeGlpid9cWSFtQuvQBq1JU5OT/MrAwIZape5oBNtq0BuE9EhagnyFblfKZWNxYeH40uLiaayD0BuIY81dg4Mv8d1RBUytVh8JBgKrIuj7cqWSz2azO4fdw8xqsTK7zcZCwdC2+bm5M9h/Rb7ZQoF3m7sTCpjZbO4rzBQ4mVaq1UeJROKATqeTFRkBmd1uZ3Ozs3YKSN5oJPIAe/tkMMHrvVZXk/Tlzs5mEaKQIAjtCPiCvBP5/Nolo/GUDIYIGQkWi8YEdHRLI5jZZN6PIz4l78L8/Iatz3ZWBsMYhCQYajeDTrU0giGTYxgVqRGvHQ7HSRksHArppTqkkqk1ZHaiAazZ0m2JohE/yIv63evt6d0jg7nd7oOow0Mxdd5jtVJhCVh/3B0I4oiEwx/gpVPUxnPjDoPBIO8mCs4mJyaMNF9iYQm4iuNGANFAvVqttoTib9KMkae6vPwFa8sfbwBmqg3zFZCANCrIgg+5hj57Pd7aaDrNMcRcqi283OPxrOHbDgUMkWkwW2HqgfmZ9FG5VKIsJMhb6D70SSoJbsJ7FX6Ki67VaBmyYOjWIZgHoWnoFlSBRhaLxXP56/ldCHAV628ExH/c5XK9kzJUdK2rq4v5fD6WSiabMplMK16MZswfc/b3M71OzwJ+fwuyDdQDkeE6vr0gQpRCA35liy7K/qc1lUQE1giIB4Fekztk+GchCAG3AyiIT9RmLptN0+Z/A3Fj2jAucXS6ilK0/wTJbdYK8Pmq3QAAAABJRU5ErkJggg==);
+	background-image: url(/extensions/wikia/WikiaMobile/images/search_hi.png); /* $wgCdnStylePath */
 }
 
-#wkNavTgl span {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAACuElEQVR42o2UT0gbURDGHwiBgpCr4FUoCJ4KXguFQqEgeBLRhJhqomITjU2NrklIlUYT88/YBO0aNWk0uqVQEDwVehUEoVDoSRAET0IhECgUpt8LmbDdbmwOP1je7Pt2duabEcPDw/dhBQPABbLAB16AHn6HiP6hlVg3UO12e83n89HS4hKtr61RKBjC8yJNjE8Q4ufgabuiDqfTWduIx+m4UqGPmmbK+50dmvXOSvEKeHCfqD8QCBjFrsEnEAIquNSLp1MpGh0dvcDdTjPRwXA4rBe7BYPFgwORyWTEm0hEIHuhqqrAeTc402dts9k+G0U7X83P3+oEv3wolaw4M605yiPebW1J8Rm+k93cJMSGmqL4SggiLHiVz+WsaBKLtGRZWZbCaRZ+7ff/YFH5a1ccONjft7FgO6xFo5249xPQXqEgs+2r2wdCnGU1sLBgaVzoAY/+g0VmdnR4uMdJTbonFVmfJ3xQOTr6OjIyUs8AXuyfnpquAWpBjs2f2NiYYo1IJFIUXo/nOR/kc/lT/a/BWgM4/w3IwGlsfb2DRRVFGeJYMpHQhG9u7nGzg9nsubFm2skJZ8F8w3tW/ZiiQc13Mul0Tnheerp0fqvJeTcKI5YABG52VbVbF+NMy6yBP/CLMceYkF8H9UlC52eMotG30Q7Ei6Visc/EAV2pZLLKohigvnoAX/fyIbx3Jx3RrqWQVBEN5tJcNn0aDAYt0vSADstlgiMuZAZtiK6iMSxIGOFnTVFpI3hVWusXzzIyuEHM1kKsF5ytrqzoG7htnH1pLXFyfOxgC6F+hEEgxO6ABrYbfHe73ITZ/8ti8VjMYrr6sPakhWTGt4C4HLAJ4VKdwm7B6NkYLNbRcp9yxlgucp4VcA3IhCrQQG87m5+3lsC4CblLcfEhGAKuBv3otgXZC5RBmIn+AQLig1G6QhmtAAAAAElFTkSuQmCC);
-	width: 21px;
-	height: 21px;
-	display: block;
-	margin: 10px auto;
-	@include transition(all .4s);
+#wkNavTgl {
+	background-image: url(/extensions/wikia/WikiaMobile/images/menu_hi.png); /* $wgCdnStylePath */
 }
 
 #wkSrhInp {
@@ -101,10 +96,9 @@
 		float: right;
 		width: 45px;
 		height: 40px;
-		background-color: none;
-		@include transition(all .4s);
 		background-repeat: no-repeat;
 		background-position: center;
+		background-size: 50%;
 	}
 }
 .js {
@@ -120,6 +114,11 @@
 			color:  $link-color;
 			background-color: white;
 			@include transition(left .6s);
+			-webkit-transform: translate3d(0px,0px,0px);
+			-moz-transform: translate3d(0px,0px,0px);
+			-ms-transform: translate3d(0px,0px,0px);
+			-o-transform: translate3d(0px,0px,0px);
+			transform: translate3d(0px,0px,0px);
 
 			li {
 				padding-right: 20px;
