@@ -240,13 +240,9 @@ class LatestPhotosModule extends Module {
 	}
 
 	private static function memcacheKey() {
-		global $wgDevelEnvironment;
 		// mech: bugfix for 19619 in getTemplateData method requires me to invalidate the cache,
 		// so I'm changing the memkey 
 		$mKey = wfMemcKey('mOasisLatestPhotosKey');
-		if(!empty($wgDevelEnvironment)){
-			$mKey = wfMemcKey('mOasisLatestPhotosKey', $_SERVER['SERVER_NAME']);
-		}
 		return $mKey;
 	}
 
