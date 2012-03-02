@@ -25,7 +25,7 @@ class ChatModule extends Module {
 	var $jsMessagePackagesUrl = '';
 	var $app;
 	const CHAT_WORDMARK_WIDTH = 115;
-	const CHAT_WORDMARK_HEIGHT = 35;
+	const CHAT_WORDMARK_HEIGHT = 30;
 	const CHAT_AVATAR_DIMENSION = 41;
 	public $wordmarkThumbnailUrl;
 	
