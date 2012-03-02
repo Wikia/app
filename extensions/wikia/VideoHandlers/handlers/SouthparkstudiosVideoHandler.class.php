@@ -4,6 +4,8 @@ class SouthparkstudiosVideoHandler extends VideoHandler {
 	protected $apiName = 'SouthparkstudiosApiWrapper';
 	protected static $aspectRatio = 1.22866894;	// 360 x 293
 	protected static $urlTemplate = 'http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:$1';
+	protected static $providerDetailUrlTemplate = 'http://www.southparkstudios.com/clips/$1';
+	protected static $providerHomeUrl = 'http://www.southparkstudios.com/';
 	
 	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false) {
 		$height = $this->getHeight($width);

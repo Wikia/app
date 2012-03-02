@@ -44,6 +44,28 @@ class WikiaLocalFileShared  {
 			return false;
 		}
 	}
+	
+	public function getProviderName() {
+		return $this->oFile->minor_mime;
+	}
+	
+	public function getProviderDetailUrl() {
+		$handler = $this->oFile->getHandler();
+		if ( $this->isVideo() && !empty($handler) ){
+			return $handler->getProviderDetailUrl();
+		}
+		
+		return false;
+	}
+	
+	public function getProviderHomeUrl() {
+		$handler = $this->oFile->getHandler();
+		if ( $this->isVideo() && !empty($handler) ){
+			return $handler->getProviderHomeUrl();
+		}
+		
+		return false;		
+	}
 
 	/*
 	 * Force file to use some specyfic mimetype

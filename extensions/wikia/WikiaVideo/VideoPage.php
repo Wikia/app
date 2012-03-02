@@ -1720,7 +1720,7 @@ EOD;
 	private function getBlipTVData()
 	{
 		global $wgMemc,$wgTranscludeCacheExpiry;
-		$cacheKey = wfMemcKey( "wvi", "bliptv",$this->mId, $url );
+		$cacheKey = wfMemcKey( "wvi", "bliptv",$this->mId );
 		$obj  = $wgMemc->get( $cacheKey );
 
 		if (isset($obj))

@@ -4,6 +4,8 @@ class DailymotionVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'DailymotionApiWrapper';
 	protected static $aspectRatio = 1.7777778;
+	protected static $providerDetailUrlTemplate = 'http://www.dailymotion.com/video/$1';
+	protected static $providerHomeUrl = 'http://www.dailymotion.com/';
 	
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );

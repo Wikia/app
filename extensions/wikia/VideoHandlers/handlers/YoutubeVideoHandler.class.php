@@ -5,6 +5,8 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected $apiName = 'YoutubeApiWrapper';
 	protected static $aspectRatio = 1.7777778;
 	protected static $urlTemplate = 'http://www.youtube.com/watch?v=';
+	protected static $providerDetailUrlTemplate = 'http://www.youtube.com/watch?v=$1';
+	protected static $providerHomeUrl = 'http://www.youtube.com/';
 	
 	public function getPlayerAssetUrl() {
 		return JWPlayer::getJavascriptPlayerUrl();

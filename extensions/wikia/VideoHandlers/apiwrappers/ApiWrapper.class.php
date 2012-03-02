@@ -142,6 +142,19 @@ abstract class ApiWrapper {
 	}
 
 	protected function checkForResponseErrors( $status, $content, $apiUrl ){
+		if (is_array($status->errors)) {
+			foreach ($status->errors as $error) {
+				if (!empty($error['params']) && is_array($error['params'])) {
+					switch ($error['params'][0]) {
+						case '403':
+							throw new VideoIsPrivateException($status, $content, $apiUrl);
+							break;
+						default:
+					}
+				}
+			}
+		}
+		
 		throw new NegativeResponseException( $status, $content, $apiUrl );
 	}
 
