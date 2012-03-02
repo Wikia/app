@@ -119,6 +119,8 @@ class WikiaLocalFileShared  {
 			// reads its own cache and returns the same video handler for different videos.
 			// We must create the proper video handler ourselves.
 			$type = $this->oFile->getMimeType();
+			foreach( explode("\n", var_export($wgMediaHandlers, 1)) as $line)
+				error_log( $line );
 			$class = $wgMediaHandlers[$type];
 			$handler = new $class();
 			$handler->setVideoId( $this->oFile->videoId );
