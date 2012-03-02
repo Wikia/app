@@ -33,6 +33,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string captcha - on POST
 	 * @requestParam string returnto - url to return to upon successful login
 	 * @requestParam string signupToken
+	 * @requestParam string uselang
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam string errParam - error param
@@ -59,6 +60,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->returnto = $this->request->getVal( 'returnto', '' );
 		$this->byemail = $this->request->getBool( 'byemail', false );
 		$this->signupToken = UserLoginHelper::getSignupToken();
+		$this->uselang = $this->request->getVal( 'uselang', 'en' );
 
 		$this->avatars = UserLoginHelper::getInstance()->getRandomAvatars();
 		$this->popularWikis = UserLoginHelper::getInstance()->getRandomWikis();
