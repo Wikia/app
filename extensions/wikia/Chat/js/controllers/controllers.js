@@ -170,19 +170,10 @@ var NodeRoomController = $.createClass(Observable,{
 	roomId: null,
 	mainController: null,
 	afterInitQueue: [],
-	emoticonMapping: new EmoticonMapping(),
 
 	constructor: function(roomId) {
 		
 		NodeRoomController.superclass.constructor.apply(this,arguments);
-
-		// Load the mapping of emoticons.  This wiki has priority, then falls back to Messaging.  If both of those fail, uses some hardcoded fallback.
-		var wikiText = $.msg( WikiaEmoticons.EMOTICON_MESSAGE );
-		if(wikiText && (wikiText != "") && (wikiText != "<" + WikiaEmoticons.EMOTICON_MESSAGE + ">")){
-			this.emoticonMapping.loadFromWikiText( wikiText );
-		} else {
-			this.emoticonMapping.loadDefault();
-		}
 
 		this.afterInitQueue = [];
 		$().log(this.afterInitQueue);
@@ -198,10 +189,7 @@ var NodeRoomController = $.createClass(Observable,{
 		});
 
 		// This is called any time a new message arrives in the room.
-		this.model.chats.bind('add', $.proxy(function(current) {
-			// Make a call to process any text for links, unsafe html/js, emoticions, etc.
-			current.set({'text': this.processText(current.get('text'))});
-		
+		this.model.chats.bind('add', $.proxy(function(current) {		
 			if(current.get('isInlineAlert') !== true && current.get('msgType') == 'chat' && current.get('name') != wgUserName) {
 				this.unreadMessage ++;	
 			}
@@ -421,73 +409,8 @@ var NodeRoomController = $.createClass(Observable,{
 	
 	init: function() {
 		this.socket.connect();
-	},
-	
-	/**
-	 * All messages that are recieved are processed here before being displayed. This
-	 * will escape html/js, build links, and process emoticons.
-	 */
-	processText: function( text ){	
-		// Prevent simple HTML/JS vulnerabilities (need to do this before other rewrites).
-		text = text.replace(/</g, "&lt;");
-		text = text.replace(/>/g, "&gt;");
-
-		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
-		
-		// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
-		var localWikiLinkReg = wgServer + wgArticlePath;
-		localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");
-		text = text.replace(new RegExp(localWikiLinkReg, "i"), "[[$1]]"); // easy way... will re-write this to a shortened link later in the function.
-
-		// Linkify http://links
-		var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])/ig;
-		var pageLink = "";
-		if(text.match(exp)){
-			pageLink = unescape( exp.exec(text)[1] );
-			pageLink = pageLink.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-			pageLink = pageLink.replace(/>/g, "&gt;");
-		}
-		text = text.replace(exp, "<a href='$1'>" + pageLink + "</a>");
-
-		// Linkify [[Pipes|Pipe-notation]] in bracketed links.
-		var exp = /\[\[([ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*)\|([^\]\|]*)\]\]/ig;
-		text = text.replace(exp, function(wholeMatch, article, linkText) {
-			article = article.replace(/ /g, "_");
-			linkText = linkText.replace(/_/g, " ");
-			linkText = unescape( linkText );
-			linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-			linkText = linkText.replace(/>/g, "&gt;");
-
-			var path = wgServer + wgArticlePath;
-			article = escape( article );
-			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
-			var url = path.replace("$1", article);
-			return '<a href="' + url + '">' + linkText + '</a>';
-		});
-
-		// Linkify [[links]] - the allowed characters come from http://www.mediawiki.org/wiki/Manual:$wgLegalTitleChars
-		var exp = /(\[\[[ %!\"$&'()*,\-.\/0-9:;=?@A-Z\\^_`a-z~\x80-\xFF+#]*\]\])/ig;
-		text = text.replace(exp, function(match) {
-			var article = match.substr(2, match.length - 4);
-			article = article.replace(/ /g, "_");
-			var linkText = article.replace(/_/g, " ");
-			linkText = unescape( linkText );
-			linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
-			linkText = linkText.replace(/>/g, "&gt;");
-			
-			var path = wgServer + wgArticlePath;
-			article = escape( article );
-			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
-			var url = path.replace("$1", article);
-			return '<a href="' + url + '">' + linkText + '</a>';
-		});
-		
-		// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
-		// Replace appropriate shortcuts in the text with the emoticons.
-		text = WikiaEmoticons.doReplacements(text, this.emoticonMapping);
-
-		return text;
 	}
+	
 });
 
 
