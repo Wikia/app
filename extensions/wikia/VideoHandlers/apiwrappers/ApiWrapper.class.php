@@ -72,6 +72,10 @@ abstract class ApiWrapper {
 	abstract public function getDescription();
 	
 	abstract public function getThumbnailUrl();
+
+	public function getProvider() {
+		return str_replace('ApiWrapper','',get_class($this));
+	}
 	
 	public function getVideoId() {
 		if (!$this->videoId) {
