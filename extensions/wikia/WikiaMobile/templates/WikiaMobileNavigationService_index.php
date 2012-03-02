@@ -6,7 +6,7 @@
 	   <div id=wkWrdMrk><?= $wikiName ;?></div>
    <? endif ;?>
    <a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
-   <a href=#wkNavMenu id=wkNavTgl class=tgl><span></span></a>
+   <a href=#wkNavMenu id=wkNavTgl class=tgl></a>
    </section>
    <section id=wkNav>
 	  <ul id=wkTabs>
