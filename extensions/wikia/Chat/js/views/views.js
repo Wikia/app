@@ -7,10 +7,88 @@ var ChatView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template( $('#message-template').html() ),
 	inlineTemplate: _.template( $('#inline-alert-template').html() ),
+	emoticonMapping: new EmoticonMapping(),
 
 	initialize: function(options) {
 		_.bindAll(this, 'render');
 		this.model.bind('all', this.render);
+		// Load the mapping of emoticons.  This wiki has priority, then falls back to Messaging.  If both of those fail, uses some hardcoded fallback.
+		var wikiText = $.msg( WikiaEmoticons.EMOTICON_MESSAGE );
+		if(wikiText && (wikiText != "") && (wikiText != "<" + WikiaEmoticons.EMOTICON_MESSAGE + ">")){
+			this.emoticonMapping.loadFromWikiText( wikiText );
+		} else {
+			this.emoticonMapping.loadDefault();
+	},
+
+	/**
+	 * All messages that are recieved are processed here before being displayed. This
+	 * will escape html/js, build links, and process emoticons.
+	 */
+	processText: function( text, allowHtml ){
+		
+		if (!allowHtml) {
+			// Prevent simple HTML/JS vulnerabilities (need to do this before other rewrites).
+			text = text.replace(/</g, "&lt;");
+			text = text.replace(/>/g, "&gt;");			
+		}
+
+		// TODO: Use the wgServer and wgArticlePath from the chat room. Maybe the room should be passed into this function? (it seems like it could be called a bunch of times in rapid succession).
+		
+		// Prepare a regexp we use to match local wiki links
+		var localWikiLinkReg = wgServer + wgArticlePath;
+		localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");		
+		localWikiLinkReg = new RegExp(localWikiLinkReg, "i");
+		
+		// Linkify http://links
+		var exp = /\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|']/ig;
+		text = text.replace(exp, function(link) {
+			var linkName = link;
+			// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
+			var match = localWikiLinkReg.exec(link);
+			if (match !== null) {
+				linkName = match[1];
+			}
+			linkName = decodeURIComponent(linkName);
+			linkName = linkName.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
+			linkName = linkName.replace(/>/g, "&gt;");
+			return '<a href="'+link+'">'+linkName+'</a>';
+		});
+		
+		// helper function (to avoid code duplicates)
+		var linkify = function(article, linkText) {
+			article = article.replace(/ /g, "_");
+			linkText = linkText.replace(/_/g, " ");
+			linkText = unescape( linkText );
+			linkText = linkText.replace(/</g, "&lt;"); // prevent embedding HTML in urls (to get it to come out as plain HTML in the text of the link)
+			linkText = linkText.replace(/>/g, "&gt;");
+
+			var path = wgServer + wgArticlePath;
+			article = encodeURIComponent( article );
+			article = article.replace(/%2f/ig, "/"); // make slashes more human-readable (they don't really need to be escaped)
+			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
+			var url = path.replace("$1", article);
+			return '<a href="' + url + '">' + linkText + '</a>';			
+		}
+		
+		// Linkify [[Pipes|Pipe-notation]] in bracketed links.
+		var exp = /\[\[([^\[\|\]\r\n\t]*)\|([^\[\]\|\r\n\t]*)\]\]/ig;
+		text = text.replace(exp, function(wholeMatch, article, linkText) {
+			return linkify(article, linkText);
+		});
+
+		// Linkify [[links]]
+		var exp = /(\[\[[^\[\]\r\n\t]*\]\])/ig;
+		text = text.replace(exp, function(match) {
+			var article = match.substr(2, match.length - 4);
+			var linkText = article.replace(/_/g, " ");
+			return linkify(article, linkText);
+		});
+
+		// Process emoticons (should be done after the linking because the link code is searching for URLs and the emoticons contain URLs).
+		// Replace appropriate shortcuts in the text with the emoticons.
+		text = WikiaEmoticons.doReplacements(text, this.emoticonMapping);
+
+		return text;
 	},
 
 	render: function(type){
@@ -25,13 +103,18 @@ var ChatView = Backbone.View.extend({
 			$().log("Message translated to: " + i18nText);
 		}
 
+		
+		var msg = this.model.toJSON();
+		// Make a call to process any text for links, unsafe html/js, emoticions, etc.
+		// note: html/js is not escaped in alerts (FB 21922)
+		msg.text = this.processText(msg.text, this.model.get('isInlineAlert'));
 		if(this.model.get('isInlineAlert')){
 			var originalTemplate = this.template;
 			this.template = this.inlineTemplate;
-			$(this.el).html(this.template(this.model.toJSON()));
+			$(this.el).html(this.template(msg));
 			this.template = originalTemplate;
 		} else {
-			$(this.el).html(this.template(this.model.toJSON()));
+			$(this.el).html(this.template(msg));
 		}
 		
 		$(this.el).attr('id', 'entry-' + this.model.cid );
