@@ -10,7 +10,7 @@ class CorporateFooterModule extends Module {
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc;
 		$catId = WikiFactoryHub::getInstance()->getCategoryId($wgCityId);
-		$mKey = wfMemcKey('mOasisFooterLinks', $wgLang->getCode(), $catId);
+		$mKey = wfSharedMemcKey('mOasisFooterLinks', $wgLang->getCode(), $catId);
 		$this->footer_links = $wgMemc->get($mKey);
 		$this->copyright = $wgUser->getSkin()->getCopyright();
 
