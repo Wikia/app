@@ -35,7 +35,7 @@ class DataFeedProvider {
 
 	public static function getVideoThumb($videoName) {
 		wfProfileIn(__METHOD__);
-		$title = Title::newFromText($videoName, NS_VIDEO);
+		$title = Title::newFromText($videoName, NS_LEGACY_VIDEO);
 		if ($title && class_exists('VideoPage')) {
 			$videoObj = new VideoPage($title);
 			$videoObj->load();
