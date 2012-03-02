@@ -116,7 +116,11 @@ class RelatedVideosData {
 		}
 
 		try {
-			list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoPage( $url );
+			if ( WikiaVideoService::isVideoStoredAsFile() ) {
+				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
+			} else {
+				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoPage( $url );
+			}
 		}
 		catch( Exception $e ) {
 			wfProfileOut( __METHOD__ );
@@ -146,6 +150,14 @@ class RelatedVideosData {
 		wfProfileOut( __METHOD__ );
 
 		return $retval;
+	}
+
+	protected function addVideoVideoHandlers( $url ) {
+		$provider = null;
+		$title = VideoHandlersUploader::URLtoTitle( $url, $provider );
+		if (!$title) throw new Exception( wfMsg('related-videos-error-unknown', 876463) );
+		return array( $title, $title->getArticleID(), $provider );
+
 	}
 
 	protected function addVideoVideoPage( $url ) {

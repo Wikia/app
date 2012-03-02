@@ -47,12 +47,12 @@ class VideoHandlersUploader {
 
 		/* override thumbnail metadata with video metadata */
 		$file->forceMime( 'video/'.$provider );
-		$file->setVideoId( $videoId );  
-		
+		$file->setVideoId( $videoId );
+
 		if (empty($description)) {
 			$description = '[[Category:Video]]'.$apiWrapper->getDescription();
 		}
-		
+
 		/* real upload */
 		$result = $file->upload(
 				$upload->getTempPath(),
@@ -60,8 +60,32 @@ class VideoHandlersUploader {
 				$description,
 				File::DELETE_SOURCE
 			);
-		
+
 		return $result;		
+	}
+
+	/**
+	 * Translate URL to Title object
+	 * can transparently upload new video if it doesn't exist
+	 * @param $requestedTitle if new Video will be created you can optionally request
+	 *  it's title (otherwise Video name from provider is used)
+	 */
+	public static function URLtoTitle( $url, &$provider = null ) {
+		// try to find API wrapper for that url
+		$apiWF = ApiWrapperFactory::getInstance();
+		$apiWrapper = $apiWF->getApiWrapper($url);
+
+		if ( $apiWrapper ) {
+			$createdTitle = null;
+			$videoId = $apiWrapper->getVideoId();
+			$provider = $apiWrapper->getProvider();
+			$result = static::uploadVideo( $provider, $videoId, $createdTitle);
+			if( $result->ok ) {
+				return $createdTitle;
+			}
+			return null;
+		}
+		return null;
 	}
 
 	/**

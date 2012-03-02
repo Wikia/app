@@ -29,6 +29,7 @@ $app->registerClass( 'VideoHandlersUploader',	$dir . '/VideoHandlersUploader.cla
 $app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
 
 // api wrappers
+$app->registerClass( 'ApiWrapperFactory',		$dir . '/apiwrappers/ApiWrapperFactory.class.php' );
 $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'FakeApiWrapper',		$dir . '/apiwrappers/FakeApiWrapper.class.php' );
