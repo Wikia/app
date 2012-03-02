@@ -147,17 +147,25 @@ if ( $rowCount ) {
 			$sNewTitle = $newNameCandidate;
 
 			$sufix = 2;
-			$continue = true;
+			$firstCheck = true;
 			while (
 					strlen( $sNewTitle ) < 2 ||
-					isset ( $aAllFiles[ $sNewTitle ] ) ||
+					($firstCheck === false && isset ( $aAllFiles[ $sNewTitle ] ) ) ||
 					isset (	$aAllFiles[ substr($sNewTitle, 1 ) ] )
 			) {
+				$firstCheck = false;
 				$newNameCandidate = substr( $newNameCandidate, 0, 255-strlen( '_' . $sufix) );
 				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 0  ? '_' : '' ) . $sufix;
 				$sufix++;
 			}
-			$aTranslation[ $sFile ] = $sNewTitle;
+
+			if( $sFile != $sNewTitle ) {
+				echo "Doing translation $sFile to $sNewTitle \n";
+				$aTranslation[ $sFile ] = $sNewTitle;
+				$aAllFiles[ substr($sNewTitle, 1 ) ] = 1;
+			} else {
+				echo "NOT doing translation for $sFile\n";
+			}
 		}
 	}
 }
