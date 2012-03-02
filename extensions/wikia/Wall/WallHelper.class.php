@@ -34,15 +34,12 @@ class WallHelper {
 	public function getTitle($namespace = null, $subpage = null, $user = null) {
 		$app = F::App();
 		
-		if( empty($namespace) ) {
-			$namespace2 = $this->getVal('namespace');
-		}
-		
 		if( empty($user) ) {
 			$user = $this->getUser();
 		}
 		
 		if( empty($namespace) ) {
+			$namespace2 = $this->getVal('namespace');
 			$this->title = F::build('Title', array($user->getName(), $namespace2), 'newFromText');
 			
 			return $this->title;
@@ -474,16 +471,6 @@ class WallHelper {
 		return User::newFromId( $user_id );
 	}
 
-
-	public function getDbkeyFromArticleId($articleId) {
-		$title = Title::newFromId($articleId);
-		if(empty($dbkey)) {
-			$dbkey = getDbkeyFromArticleId_forDeleted($articleId);
-		} else {
-			return $title->getDBkey();
-		}
-		return $dbkey;
-	}
 
 	public function isDbkeyFromWall($dbkey) {
 		$lookFor = explode( '/@' ,$dbkey);
