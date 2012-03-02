@@ -292,3 +292,130 @@ To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-
 Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
 
 );
+
+
+$messages['qqq'] = array(
+	'usersignup-page-title' => 'Page title for Special:UserSignup',
+	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
+	
+	'usersignup-error-username-length' => "Error message stating that username is too long and over 50 characters.",
+	'usersignup-error-invalid-user' => 'Generic error message when the user has been invalidated in the session for security reasons.',
+	'usersignup-error-invalid-email' => 'Error message stating that email address is invalid.',
+	'usersignup-error-symbols-in-username' => 'Error message stating that username cannot contain weird symbols.',
+	'usersignup-error-empty-email' => 'Error message stating that email address is required.',
+	'usersignup-error-empty-username' => 'Error message stating that user name field is required.',
+	'usersignup-error-already-confirmed' => "Error message stating that the user has already been confirmed.",
+	'usersignup-error-throttled-email' => "Error message stating that too many email has been sent.",
+	'usersignup-error-too-many-changes' => "Error message stating that email address has been changed too many times today.",
+	'usersignup-error-password-length' => "Error message stating that password is over 50 characters and is too long.",
+	'usersignup-error-confirmed-user' => 'Validation message stating that user has been confirmed already for $1 email address.  $2 is link to user preference page.',
+
+	// facebook sign-up
+	'usersignup-facebook-heading' => 'Heading on Facebook signup modal when signing up via facebook connect',
+	'usersignup-facebook-create-account' => 'Sub heading on facebook signup modal.',
+	'usersignup-facebook-email-tooltip' => 'A hint to the user saying you can changed the email later in preferences.',
+	'usersignup-facebook-have-an-account-heading' => 'Heading to suggest logging in instead.',
+	'usersignup-facebook-have-an-account' => 'Suggestion to connect existing account with FB.',
+	'usersignup-facebook-proxy-email' => 'Masking label if user decides to use proxy email from FB instead of real one.  This masked label will be displayed instead of the very long FB proxy email address.',
+
+	// user preferences
+	'usersignup-user-pref-emailconfirmlink' => 'Action link to confirm an email on Special:Preference',
+	'usersignup-user-pref-confirmemail_send' => 'Action link to re-send confirmation email',
+	'usersignup-user-pref-emailauthenticated' => 'Label stating email was already confirmed.  $2 is date (April 16, 2011), $3 is time of day (01:47).  Assume $2, and $3 is already internationalized.',
+	'usersignup-user-pref-emailnotauthenticated' => 'Alert to check email and to confirm email.  $1 is the email address email is sent to.',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Alert that user cannot perform this action when user has not confirmed email.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'Validation message telling user that email has been sent to $1. $1 is email address.',
+	'usersignup-user-pref-noemailprefs' => 'Alert that user email does not exist.  Instructs user to enter an email address.',
+
+	// Special:ConfirmEmail
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Alert that user\'s email is unconfirmed, and the email has already been sent.',
+	'usersignup-user-pref-confirmemail_noemail' => 'Alert that email has not been entered.  Instructs and links user to Special:Preferences.',
+
+	// confirm email page
+	'usersignup-confirm-page-title' => 'Confirm page title.  This page is displayed after initially submitting the account information from Special:UserSignup.',
+	'usersignup-confirm-email-resend-email' => "Action link to resend email.",
+	'usersignup-confirm-email-change-email-content' => "Change email heading.",
+	'usersignup-confirm-email-change-email' => 'Action link to open a dialog to change email.',
+	'usersignup-confirm-email-new-email-label' => 'Label for email input.',
+	'usersignup-confirm-email-update' => 'Button to submit email address update form.',
+	'usersignup-confirm-email-tooltip' => 'Tooltip letting user know they can change their email.  Tooltip is on the same line as usersignup-confirm-email-change-email-content',
+	'usersignup-resend-email-heading-success' => 'Validation message telling the user the email has been re-sent.',
+	'usersignup-resend-email-heading-failure' => 'Error message telling the user email has not been re-sent',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Congratulatory message when user has confirm email on confirmation page.',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'Alert that user has been confirmed already.',
+
+	// confirmation email
+	'usersignup-confirmation-heading' => 'Confirm page heading.',
+	'usersignup-confirmation-heading-email-resent' => 'Confirm page heading when email has been re-sent.',
+	'usersignup-confirmation-subheading' => 'Confirm page sub heading.',
+	'usersignup-confirmation-email-sent' => "Confirm page action validation stating email has been sent to $1 email address.  Bold $1, and leave a purposeful line break between line 1 and line 2.",
+	'usersignup-confirmation-email_subject' => 'Confirmation email subject',
+	'usersignup-confirmation-email-greeting' => 'Confirmation email template greeting.',
+	'usersignup-confirmation-email-content' => 'Confirmation email template body content.  $CONFIRMURL is full url to goto confirm email, and is displayed as-is.',
+	'usersignup-confirmation-email-signature' => 'Confirmation email template footer signature.',
+	'usersignup-confirmation-email_body' => 'Text only version of the confirmation email.  Contains the same content as the templated version.  $2 is username, $3 is confirmation url.',
+	'usersignup-confirmation-email_body-html' => 'Standalone HTML version of confirmation email.  Contains the same content as the templated version.  $1 is username, $2 is confirmation url.',
+
+	// reconfirmation email
+	'usersignup-reconfirmation-email-sent' => "Message telling user that the email address has been changed to $1.",
+	'usersignup-reconfirmation-email_subject' => 'Subject of Confirmation email stating email has changed',
+	'usersignup-reconfirmation-email-greeting' => 'Greeting of Confirmation email stating email has changed.',
+	'usersignup-reconfirmation-email-content' => 'Body of Confirmation email stating email has changed.  $CONFIRMURL is url to confirm the email change, and is displayed and linked as-is.',
+	'usersignup-reconfirmation-email-signature' => 'Signature of confirmation email stating email has changed.',
+	'usersignup-reconfirmation-email_body' => 'Text-only version of Confirmation email stating email has changed.  $2 is username, $3 is confirmation url.',
+	'usersignup-reconfirmation-email_body-HTML' => 'Standalone HTML email version of confirmation email stating email has changed.  $1 is username, $2 is confirmation link.',
+
+	// welcome email
+	'usersignup-welcome-email-subject' => 'Welcome email subject.  $USERNAME is magic word for user name.',
+	'usersignup-welcome-email-greeting' => 'Welcome email greeting.  $USERNAME is magic word for user name.',
+	'usersignup-welcome-email-heading' => 'Welcome email heading.  SITENAME is MediaWiki magic word for wiki name.',
+	'usersignup-welcome-email-edit-profile-heading' => 'Welcome email first section heading.',
+	'usersignup-welcome-email-edit-profile-content' => 'Welcome email first section body.  SITENAME is MediaWiki magic word.',
+	'usersignup-welcome-email-edit-profile-button' => 'Welcome email first section button label.  Links to preferences in the template, so no linking required from messaging.',
+	'usersignup-welcome-email-learn-basic-heading' => 'Welcome email second section heading.',
+	'usersignup-welcome-email-learn-basic-content' => 'Welcome email second section body.',
+	'usersignup-welcome-email-learn-basic-button' => 'Welcome email second section button label.  Do not be concerned with linking.',
+	'usersignup-welcome-email-explore-wiki-heading' => 'Welcome email third section heading.',
+	'usersignup-welcome-email-explore-wiki-content' => 'Welcome email third section body.  There are links to category pages on hubs.  Those links can be omitted if there are no hub pages for the language.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Welcome email third section button.',
+	'usersignup-welcome-email-content' => 'Welcome email user help content.  Leave blank of the language does not have a helper or community wiki in that language, or leave the link to english community wiki as-is.',
+	'usersignup-welcome-email-signature' => 'Welcome email signature.',
+	'usersignup-welcome-email-body' => 'Text-only version of Welcome email.  $USERNAME, $EDITPROFILEURL, $LEARNBASICURL, $EXPLOREWIKISURL should be left as-is.',
+
+	// Signup main form
+	'usersignup-heading' => 'Page heading for Special:UserSignup',
+	'usersignup-heading-byemail' => 'Page heading for Special:UserSignup?byemail=1 to create account for others.',
+	'usersignup-marketing-wikia' => 'Marketing message on the left side of Special:UserSignup',
+	'usersignup-marketing-login' => 'Encouragement to login if account exists on the left side of Special:UserSignup.  Link to Special:UserLogin using wikitext.',
+	'usersignup-marketing-benefits' => 'Heading for right side of Special:UserSignup',
+	'usersignup-marketing-community-heading' => 'Subsection heading on right side of Special:UserSignup',
+	'usersignup-marketing-community' => 'Marketing blurb on right side of Special:UserSignup',
+	'usersignup-marketing-global-heading' => 'Second subsection heading on right side of Special:UserSignup',
+	'usersignup-marketing-global' => 'Second marketing blurb on right side of Special:UserSignup.',
+	'usersignup-marketing-creativity-heading' => 'Third subsection heading on right side of Special:UserSignup',
+	'usersignup-marketing-creativity' => 'Third marketing blurb on right side of Special:UserSignup.',
+	'usersignup-createaccount-byemail' => 'Button label on signup form for Special:UserSignup?byemail=1 to create account for others.',
+
+	// Signup form validation
+	'usersignup-error-captcha' => "Error message for captcha failure.",
+
+	// account creation by email
+	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.',
+	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used.  $1 is email address.',
+	'usersignup-account-creation-email-sent' => 'Page content for confirm page when byemail=1 is used.  $2 is the user name that the account has been created for.  $1 is email address sent to.',
+	'usersignup-account-creation-email-subject' => 'Confirmation email subject for people receiving the account when byemail=1 is used.',
+	'usersignup-account-creation-email-greeting' => 'Confirmation email greeting for people receiving the account when byemail=1 is used.',
+	'usersignup-account-creation-email-content' => 'Confirmation email body for people receiving the account when byemail=1 is used.  $USERNAME is user name, $NEWPASSWORD is new password for the user to use.',
+	'usersignup-account-creation-email-signature' => 'Confirmation email signature for people receiving the account when byemail=1 is used.',
+	'usersignup-account-creation-email-body' => 'Text-only version of confirmation email for people receiving the account when byemail=1 is used.  $2 is username, $3 is the new password.',
+	'usersignup-account-creation-email-body-HTML' => 'Standalone HTML version of confirmation email for people receiving the account when byemail=1 is used.  $2 is username, $3 is the new password.',
+
+	// confirmation reminder email
+	'usersignup-confirmation-reminder-email_subject' => "Confirmation email subject that is sent 7 days after user has started the signup process without confirming.",
+	'usersignup-confirmation-reminder-email-greeting' => 'Confirmation email greeting that is sent 7 days after user has started the signup process without confirming.  $USERNAME is user name.',
+	'usersignup-confirmation-reminder-email-content' => 'Confirmation email body that is sent 7 days after user has started the signup process without confirming.  $CONFIRMURL is confirmation url, and should be displayed and linked as-is.  $USERNAME is user name.',
+	'usersignup-confirmation-reminder-email-signature' => 'Confirmation email signature that is sent 7 days after user has started the signup process without confirming.',
+	'usersignup-confirmation-reminder-email_body' => 'Text-only version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
+	'usersignup-confirmation-reminder-email_body-HTML' => 'Stand-alone HTML version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
+
+);
