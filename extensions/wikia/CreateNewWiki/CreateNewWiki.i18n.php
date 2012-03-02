@@ -40,7 +40,7 @@ $messages['en'] = array(
 	'cnw-userauth-headline' => 'Have an account?',
 	'cnw-userauth-creative' => 'Log in',
 	'cnw-userauth-marketing-heading' => 'Don\'t have an account?',
-	'cnw-userauth-marketing-body' => 'You need an account to create a wiki on Wikia.  It only takes a minute to [[Special:UserSignup|sign up]]!',
+	'cnw-userauth-marketing-body' => 'You need an account to create a wiki on Wikia. It only takes a minute to [[Special:UserSignup|sign up]]!',
 	'cnw-userauth-signup-button' => 'Sign up',
 	// step3 - wiki description
 	'cnw-desc-headline' => 'What\'s your wiki about?',
