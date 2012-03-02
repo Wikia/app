@@ -381,16 +381,18 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					}
 
 					if ( $result !== true ) {
+						$msg = '';
 						if ( $result == 'userlogin-bad-username-taken' ) {
-							$result = 'userlogin-error-userexists';
+							$msg = $this->wf->Msg('userlogin-error-userexists');
 						} else if ( $result == 'userlogin-bad-username-character' ) {
-							$result = 'usersignup-error-symbols-in-username';
+							global $wgWikiaMaxNameChars;
+							$msg = $this->wf->Msg('usersignup-error-symbols-in-username', $wgWikiaMaxNameChars);
 						} else if ( $result == 'userlogin-bad-username-length' ) {
-							$result = 'usersignup-error-username-length';
+							$msg = $this->wf->Msg('usersignup-error-username-length');
 						}
 
 						$signupForm->msgType = 'error';
-						$signupForm->msg = $this->wf->Msg( $result );
+						$signupForm->msg = empty($msg) ? $result : $msg;
 						$signupForm->errParam = 'username';
 					}
 				}

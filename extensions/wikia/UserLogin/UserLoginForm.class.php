@@ -99,7 +99,8 @@ class UserLoginForm extends LoginForm {
 
 		// check username length
 		if( !User::isNotMaxNameChars($this->mName) ) {
-			$this->mainLoginForm( wfMsg( 'usersignup-error-username-length' ), 'error', 'username' );
+			global $wgWikiaMaxNameChars;
+			$this->mainLoginForm( wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars ), 'error', 'username' );
 			return false;
 		}
 
