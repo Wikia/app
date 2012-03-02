@@ -285,7 +285,11 @@ class WallHelper {
 			$data = $wm->getData(false, null, 30);
 
 			if( !($data['author'] instanceof User) ) {
-				// just logging for Fatal Error bugId:22820
+				// bugId:22820
+				// in case of Page table entries without corresponding revision
+				// there is no content for specific article (and consequently - wall message)
+				// and there is no user
+				// it's safe to ignore such entries
 				error_log("WallHelper.class.php NO_AUTHOR_FOR_AC:" . $wm->getId() );
 				continue;
 			}
