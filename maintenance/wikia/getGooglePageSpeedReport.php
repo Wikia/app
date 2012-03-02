@@ -3,10 +3,8 @@
  * @addto maintenance
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  *
- * SERVER_ID=1 php getPageSpeedReport.php --url=http://wikia.com/Wikia --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php
- *
+ * SERVER_ID=1 php getGooglePageSpeedReport.php --url=http://wikia.com/Wikia --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php
  */
-
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
@@ -14,7 +12,7 @@ function printHelp() {
 		echo <<<HELP
 Returns Google PageSpeed report
 
-USAGE: php codelint.php --url=http://foo.bar [--cacti] [--noexternals]
+USAGE: php getGooglePageSpeedReport.php --url=http://foo.bar [--cacti] [--noexternals]
 
 	--url
 		Page to be checked
