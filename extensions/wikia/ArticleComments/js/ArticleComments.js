@@ -249,7 +249,7 @@ var ArticleComments = {
 		}
 
 		var throbber = $(this).next('.throbber').css('visibility', 'visible');
-		
+
 		function makeRequest(){
 			$.postJSON(wgScript, data, function(json) {
 				throbber.css('visibility', 'hidden');
@@ -258,38 +258,42 @@ var ArticleComments = {
 						subcomments,
 						parentId = json.parentId,
 						nodes = $(json.text);
-	
+
 					if(parentId){
 						//second level: reply
 						parent = $('#comm-' + parentId);
 						subcomments = parent.next();
-	
+
 						if(!subcomments.hasClass('sub-comments')){
 							parent.after(subcomments = $('<ul class="sub-comments"></ul>'));
 						}
-	
+
 						subcomments.append(nodes);
+
+						//remove input field and show buttons
+						parent.find('.speech-bubble-message > .clearfix').remove();
+						parent.find('.buttons').show();
 					}else{
 						//first level: comment
 						nodes.prependTo('#article-comments-ul');
 					}
-	
+
 					//update counter
 					$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
-	
+
 					if(window.skin == 'oasis'){
 						$('#WikiaPageHeader').find('.commentsbubble').html(json.counter);
-	
+
 						if(!parentId){
 							if(!ArticleComments.mostRecentCount)
 								ArticleComments.mostRecentCount = $('#article-comments-ul > li').length;
 							else
 								ArticleComments.mostRecentCount++;
-		
+
 							$('#article-comments-counter-recent').html($.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount));
 						}
 					}
-	
+
 					//readd events
 					ArticleComments.addHover();
 					//force to show 'edit' links for owners
