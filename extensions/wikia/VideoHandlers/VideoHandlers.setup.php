@@ -68,6 +68,7 @@ $app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRe
 $app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
 $app->registerHook( 'SetupAfterCache', 'VideoHandlerHooks', 'onSetupAfterCache' );
 $app->registerHook( 'BeforePageDisplay', 'VideoHandlerHooks', 'onBeforePageDisplay' );
+$app->registerHook( 'LinkerMakeThumbLink2FileOriginalSize', 'VideoHandlerHooks', 'onLinkerMakeThumbLink2FileOriginalSize' );
 
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';

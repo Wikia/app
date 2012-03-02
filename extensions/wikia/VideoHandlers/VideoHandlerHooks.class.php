@@ -35,7 +35,7 @@ class VideoHandlerHooks extends WikiaObject{
 
 	public function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
-		
+
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/VideoHandlers/css/VideoHandlers.scss' ) );
 
 		wfProfileOut(__METHOD__);
@@ -43,7 +43,7 @@ class VideoHandlerHooks extends WikiaObject{
 	}
 	
 	public function onSetupAfterCache() {
-		global $wgLocalFileRepo, $wgUploadDirectory, $wgUploadBaseUrl,
+		global	$wgLocalFileRepo, $wgUploadDirectory, $wgUploadBaseUrl,
 			$wgUploadPath, $wgHashedUploadDirectory, 
 			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
 			$wgFileStore;
@@ -60,6 +60,13 @@ class VideoHandlerHooks extends WikiaObject{
 			'deletedHashLevels' => $wgFileStore['deleted']['hash']
 		);
 		
+		return true;
+	}
+
+	public function onLinkerMakeThumbLink2FileOriginalSize ( $file, $width ){
+		if ( WikiaVideoService::isVideoFile( $file ) ){
+			$width = WikiaVideoService::maxWideoWidth;
+		};
 		return true;
 	}
 }
