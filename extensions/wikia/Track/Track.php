@@ -12,7 +12,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'Track::addGlobalVars';
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
 
-	private function getURL ($type=null, $name=null, $param=null, $for_html=true) {
+	public function getURL ($type=null, $name=null, $param=null, $for_html=true) {
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 		
 		$sep = $for_html ? '&amp;' : '&';
@@ -27,6 +27,7 @@ class Track {
 			'x='.$wgDBname.$sep.
 			'y='.$wgDBcluster.$sep.
 			'u='.$wgUser->getID().$sep.
+			'ip='.wfGetIp().$sep.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
 			($wgTitle ? 'n='.$wgTitle->getNamespace() : '').
 			(!empty($wgAdServerTest) ? '&amp;db_test=1' : '');
