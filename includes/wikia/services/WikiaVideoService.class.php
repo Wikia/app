@@ -4,6 +4,8 @@
  */
 class WikiaVideoService extends Service {
 
+	const maxWideoWidth = 1200;
+
 	/*
 	 * Checks if videos on the wiki are converted to new format (File namespace)
 	 * @return boolean
