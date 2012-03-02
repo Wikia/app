@@ -11,7 +11,7 @@ $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
 	'usersignup-page-captcha-label' => 'Blurry Word',
 
-	'usersignup-error-username-length' => "Oops, your username can't be more than 50 characters.",
+	'usersignup-error-username-length' => "Oops, your username can't be more than 50 characters.", // this needs to be parametrized (50) and support plural
 	'usersignup-error-invalid-user' => 'Invalid user. Please login first.',
 	'usersignup-error-invalid-email' => 'Please enter a valid email address.',
 	'usersignup-error-symbols-in-username' => 'Oops, your username can only contain letters and numbers.',
@@ -21,13 +21,13 @@ $messages['en'] = array(
 	'usersignup-error-throttled-email' => "Oops, you've requested too many confirmation emails be sent to you today. Try again in a little while.",
 	'usersignup-error-too-many-changes' => "You've reached the maximum limit for email changes today. Please try again later.",
 	'usersignup-error-password-length' => "Oops, your password is too long. Please choose a password that's 50 characters or less.",
-	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your email address for $1!  Check our your [$2 user profile].',
+	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your email address for $1!  Check our your [$2 user profile].', // why is this an external link? should be internal, use interwiki if needed
 
 	// facebook sign-up
 	'usersignup-facebook-heading' => 'Finish Signing Up',
 	'usersignup-facebook-create-account' => 'Create account',
 	'usersignup-facebook-email-tooltip' => 'If you\'d like to use a different email address you can change it later in your Preferences.',
-	'usersignup-facebook-have-an-account-heading' => ' Already have an account?',
+	'usersignup-facebook-have-an-account-heading' => ' Already have an account?', // do not use spaces in front or end of msgs! if this is concatenated with another message, that's also wrong
 	'usersignup-facebook-have-an-account' => ' Connect your existing Wikia username with Facebook instead.',
 	'usersignup-facebook-proxy-email' => 'Anonymous facebook email',
 
@@ -252,7 +252,7 @@ To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-
 Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
 
 	// confirmation reminder email
-	'usersignup-confirmation-reminder-email_subject' => "Don't be a stranger...",
+	'usersignup-confirmation-reminder-email_subject' => "Don't be a stranger...", // three dots are not an ellipsis, use the correct UTF-8 character
 	'usersignup-confirmation-reminder-email-greeting' => 'Hi $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'It\'s been a few days, but it looks like you haven\'t finished creating your account on Wikia yet. It\'s easy. Just click the confirmation link below:
 <br/><br/>

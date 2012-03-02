@@ -24,7 +24,7 @@ $messages['en'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Your IP address is not allowed to create new accounts.',
 	'userlogin-error-userexists' => 'Someone already has this username. Try a different one!',
 	'userlogin-error-invalidemailaddress' => 'Please enter a valid email address.',
-	'userlogin-get-account' => 'Don\'t have an account?  [[Special:UserSignup|Sign up]]',
+	'userlogin-get-account' => 'Don\'t have an account? [[Special:UserSignup|Sign up]]',
 
 	// signup
 	'userlogin-error-invalid-username' => 'Invalid username',
@@ -184,5 +184,5 @@ $messages['qqq'] = array(
 	'userlogin-provider-tooltip-facebook-signup' => 'Tooltip when hovering over facebook connect button in signup page or context.',
 	'userlogin-facebook-show-preferences' => 'Action anchor text to show facebook feed preference section of the UI when near facebook signup completion.',
 	'userlogin-facebook-hide-preferences' => 'Action anchor text to hide facebook feed preference section of the UI when near facebook signup completion.',
-	'userlogin-changepassword-needlogin' => '$1 is an action link using the message loginreqlink.',
+	'userlogin-changepassword-needlogin' => '$1 is an action link using the message loginreqlink.', // where is the "loginrequlink" defined? if this is a core MW message then we should NOT be re-using it in a different context!
 );
