@@ -178,7 +178,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 				$this->addWhere( "{$this->bl_title} > '$title' OR " .
 						"({$this->bl_title} = '$title' AND " .
 						"{$this->bl_from} >= $from)" );
-				
+
 		}
 		if ( $this->params['filterredir'] == 'redirects' )
 			$this->addWhereFld( 'page_is_redirect', 1 );
@@ -190,6 +190,31 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 		$this->addOption( 'USE INDEX', array( 'page' => 'PRIMARY' ) );
 	}
 
+	// *** Wikia change (@author ADi) - get backlinks count /Begin
+	private function prepareThirdQuery() {
+		$db = $this->getDB();
+		$this->addTables( array( $this->bl_table, 'page' ) );
+		$this->addWhere( "{$this->bl_from}=page_id" );
+		$this->addFields( array( 'count(*) as count' ) );
+
+		$this->addWhereFld( $this->bl_title, $this->rootTitle->getDBkey() );
+
+		if ( $this->hasNS )
+			$this->addWhereFld( $this->bl_ns, $this->rootTitle->getNamespace() );
+		$this->addWhereFld( 'page_namespace', $this->params['namespace'] );
+
+		if ( !is_null( $this->contID ) )
+			$this->addWhere( "{$this->bl_from}>={$this->contID}" );
+
+		if ( $this->params['filterredir'] == 'redirects' )
+			$this->addWhereFld( 'page_is_redirect', 1 );
+		else if ( $this->params['filterredir'] == 'nonredirects' && !$this->redirect )
+			$this->addWhereFld( 'page_is_redirect', 0 );
+
+		$this->addOption( 'STRAIGHT_JOIN' );
+	}
+	// *** Wikia change /End
+
 	private function run( $resultPageSet = null ) {
 		$this->params = $this->extractRequestParams( false );
 		$this->redirect = isset( $this->params['redirect'] ) && $this->params['redirect'];
@@ -199,6 +224,21 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 			$this->params['limit'] = $this->getMain()->canApiHighLimits() ? $botMax : $userMax;
 			$this->getResult()->setParsedLimit( $this->getModuleName(), $this->params['limit'] );
 		}
+
+		// *** Wikia change (@author ADi) - get backlinks count /Begin
+		if( isset($this->params['count']) && $this->params['count'] ) {
+			// only get total backlinks count and exit
+			$this->processContinue();
+			$this->prepareThirdQuery();
+
+			$db = $this->getDB();
+			$res = $this->select( __METHOD__ . '::firstQuery' );
+			$row = $db->fetchRow( $res );
+
+			$this->getResult()->addValue('query', 'backlinks_count', (int) $row['count']);
+			return;
+		}
+		// *** Wikia change /End
 
 		$this->processContinue();
 		$this->prepareFirstQuery( $resultPageSet );
@@ -379,7 +419,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 			$this->dieUsage( "Invalid continue param. You should pass the original value returned by the previous query", "_badcontinue" );
 		$this->contID = $contID;
 		$redirID = intval( @$continueList[3] );
-		
+
 		if ( $redirID === 0 && @$continueList[3] !== '0' )
 			// This one isn't required
 			return;
@@ -419,7 +459,8 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 				ApiBase :: PARAM_MIN => 1,
 				ApiBase :: PARAM_MAX => ApiBase :: LIMIT_BIG1,
 				ApiBase :: PARAM_MAX2 => ApiBase :: LIMIT_BIG2
-			)
+			),
+			'count' => null // *** Wikia change (@author ADi)
 		);
 		if ( $this->getModuleName() == 'embeddedin' )
 			return $retval;
@@ -432,6 +473,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 			'title' => 'Title to search.',
 			'continue' => 'When more results are available, use this to continue.',
 			'namespace' => 'The namespace to enumerate.',
+			'count' => 'Return only total number of backlinks' // *** Wikia change (@author ADi)
 		);
 		if ( $this->getModuleName() != 'embeddedin' )
 			return array_merge( $retval, array(
@@ -457,7 +499,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 				ApiBase :: dieDebug( __METHOD__, 'Unknown module name' );
 		}
 	}
-	
+
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
 			array( 'invalidtitle', 'title' ),
