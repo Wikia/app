@@ -18,6 +18,7 @@ var ChatView = Backbone.View.extend({
 			this.emoticonMapping.loadFromWikiText( wikiText );
 		} else {
 			this.emoticonMapping.loadDefault();
+        }
 	},
 
 	/**
