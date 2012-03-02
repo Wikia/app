@@ -185,13 +185,16 @@
 
 			// error - CLOSED_ACCOUNT_FLAG account (WRONG_PASS)
 			$mockLoginFormParams110 = array( 'authenticateUserData' => LoginForm::WRONG_PASS );
-			$mockUserParams110 = array( 'getOption' => true );
+			$mockUserParams110 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
+				'getOption' => true
+			);
 			$expMsg110 = wfMsg('userlogin-error-edit-account-closed-flag');
 
 			// error - USER_BLOCKED
 			$mockLoginFormParams111 = array( 'authenticateUserData' => LoginForm::USER_BLOCKED );
-			global $wgWikiaMaxNameChars;
-			$expMsg111 = wfMsg( 'userlogin-error-login-userblocked', $wgWikiaMaxNameChars );
+			$expMsg111 = wfMsg( 'userlogin-error-login-userblocked' );
 
 			// error - WRONG_PLUGIN_PASS
 			$mockLoginFormParams112 = array( 'authenticateUserData' => LoginForm::WRONG_PLUGIN_PASS );
@@ -210,6 +213,8 @@
 
 			// error - NOT_EXISTS - Temp User account with wrong password
 			$mockUserParams116 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'checkPassword' => false,
 				'checkTemporaryPassword' => false,
 			);
@@ -218,12 +223,16 @@
 			
 			// reset - NOT_EXISTS - Temp User account with temporary password
 			$mockUserParams117 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'checkPassword' => false,
 				'checkTemporaryPassword' => true,
 			);
 			
 			// unconfirm - NOT_EXISTS - Temp User account with temporary password
 			$mockUserParams118 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'checkPassword' => true,
 				'checkTemporaryPassword' => false,
 			);
@@ -233,6 +242,8 @@
 			// success
 			$mockLoginFormParams120 = array( 'authenticateUserData' => LoginForm::SUCCESS );
 			$mockUserParams120 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'setOption' => null,
 				'setCookies' => null,
 				'saveSettings' => null,
@@ -347,15 +358,29 @@
 			$expMsg4 = wfMsg('userlogin-error-noname');
 
 			// User - invalid user (user id = 0)
-			$mockUserParams5 = array( 'getId' => 0 );
+			$mockUserParams5 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
+				'getId' => 0
+			);
 			$expMsg5 = wfMsg('userlogin-error-nosuchuser', $reqParams2['username']);
 
 			// User - password reminder throttled
-			$mockUserParams6 = array( 'getId' => $testUserId, 'isPasswordReminderThrottled' => true );
+			$mockUserParams6 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
+				'getId' => $testUserId,
+				'isPasswordReminderThrottled' => true
+			);
 			$expMsg6 = wfMsg('userlogin-error-throttled-mailpassword', round( F::app()->wg->PasswordReminderResendTime, 3));
 
 			// User - mail error
-			$mockUserParams7 = array( 'getId' => $testUserId, 'isPasswordReminderThrottled' => false );
+			$mockUserParams7 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
+				'getId' => $testUserId,
+				'isPasswordReminderThrottled' => false
+			);
 			$wikiError7 = new WikiError('');
 			$mockLoginFormParams7 = array( 'mailPasswordInternal' => $wikiError7 );
 			$expMsg7 = wfMsg('userlogin-error-mail-error', $wikiError7->getMessage());
@@ -474,7 +499,11 @@
 			$expMsg7 = wfMsg( 'userlogin-error-nosuchuser' );
 			
 			// 8 error -- real user + anon user
-			$mockUserParams8 = array( 'isAnon' => true );
+			$mockUserParams8 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
+				'isAnon' => true
+			);
 			
 			// 9 error -- retype != newpassword
 			$params9 = array(
@@ -482,7 +511,11 @@
 				'newpassword' => 'testPasword',
 				'retype' => 'passwordTest',
 			);
-			$mockUserParams9 = array( 'isAnon' => false );
+			$mockUserParams9 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
+				'isAnon' => false
+			);
 			$expMsg9 = wfMsg( 'badretype' );
 			
 			// 10 error --  not match temporary password (checkTemporaryPassword = false)
@@ -492,6 +525,8 @@
 				'retype' => 'testPasword',
 			);
 			$mockUserParams10 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isAnon' => false,
 				'checkTemporaryPassword' => false,
 				'checkPassword' => true,
@@ -500,6 +535,8 @@
 			
 			// 11 error -- not correct password (checkPassword = false)
 			$mockUserParams11 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isAnon' => false,
 				'checkTemporaryPassword' => true,
 				'checkPassword' => false,
@@ -507,6 +544,8 @@
 			
 			// 1011 error -- [10] not match temporary password (checkTemporaryPassword = false) + [11] not correct password (checkPassword = false)
 			$mockUserParams1011 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isAnon' => false,
 				'checkTemporaryPassword' => false,
 				'checkPassword' => false,
@@ -514,6 +553,8 @@
 			
 			// 12 error -- not valid new password (passwordtooshort)
 			$mockUserParams12 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isAnon' => false,
 				'checkTemporaryPassword' => true,
 				'checkPassword' => true,
@@ -523,6 +564,8 @@
 
 			// 13 error -- not valid new password (password-name-match)
 			$mockUserParams13 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isAnon' => false,
 				'checkTemporaryPassword' => true,
 				'checkPassword' => true,
@@ -532,6 +575,8 @@
 
 			// 14 error -- not valid new password (securepasswords-invalid)
 			$mockUserParams14 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isAnon' => false,
 				'checkTemporaryPassword' => true,
 				'checkPassword' => true,
@@ -541,6 +586,8 @@
 
 			// 15 success -- real user
 			$mockUserParams15 = array(
+				'load' => null,
+				'loadFromDatabase' => null,
 				'isAnon' => false,
 				'checkTemporaryPassword' => true,
 				'checkPassword' => true,
