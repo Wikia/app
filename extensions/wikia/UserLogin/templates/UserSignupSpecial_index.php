@@ -49,6 +49,11 @@
 				'value' => $signupToken
 			),
 			array(
+				'type' => 'hidden',
+				'name' => 'uselang',
+				'value' => $uselang
+			),
+			array(
 				'type' => 'text',
 				'name' => 'username',
 				'value' => htmlspecialchars($username),
