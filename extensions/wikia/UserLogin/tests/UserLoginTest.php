@@ -190,7 +190,8 @@
 
 			// error - USER_BLOCKED
 			$mockLoginFormParams111 = array( 'authenticateUserData' => LoginForm::USER_BLOCKED );
-			$expMsg111 = wfMsg( 'userlogin-error-login-userblocked' );
+			global $wgWikiaMaxNameChars;
+			$expMsg111 = wfMsg( 'userlogin-error-login-userblocked', $wgWikiaMaxNameChars );
 
 			// error - WRONG_PLUGIN_PASS
 			$mockLoginFormParams112 = array( 'authenticateUserData' => LoginForm::WRONG_PLUGIN_PASS );

@@ -11,7 +11,7 @@ $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
 	'usersignup-page-captcha-label' => 'Blurry Word',
 
-	'usersignup-error-username-length' => "Oops, your username can't be more than 50 characters.", // this needs to be parametrized (50) and support plural
+	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
 	'usersignup-error-invalid-user' => 'Invalid user. Please login first.',
 	'usersignup-error-invalid-email' => 'Please enter a valid email address.',
 	'usersignup-error-symbols-in-username' => 'Oops, your username can only contain letters and numbers.',
@@ -27,7 +27,7 @@ $messages['en'] = array(
 	'usersignup-facebook-heading' => 'Finish Signing Up',
 	'usersignup-facebook-create-account' => 'Create account',
 	'usersignup-facebook-email-tooltip' => 'If you\'d like to use a different email address you can change it later in your Preferences.',
-	'usersignup-facebook-have-an-account-heading' => ' Already have an account?', // do not use spaces in front or end of msgs! if this is concatenated with another message, that's also wrong
+	'usersignup-facebook-have-an-account-heading' => 'Already have an account?', 
 	'usersignup-facebook-have-an-account' => ' Connect your existing Wikia username with Facebook instead.',
 	'usersignup-facebook-proxy-email' => 'Anonymous facebook email',
 
@@ -252,7 +252,7 @@ To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-
 Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
 
 	// confirmation reminder email
-	'usersignup-confirmation-reminder-email_subject' => "Don't be a stranger...", // three dots are not an ellipsis, use the correct UTF-8 character
+	'usersignup-confirmation-reminder-email_subject' => "Don't be a strangerÉ",
 	'usersignup-confirmation-reminder-email-greeting' => 'Hi $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'It\'s been a few days, but it looks like you haven\'t finished creating your account on Wikia yet. It\'s easy. Just click the confirmation link below:
 <br/><br/>
@@ -298,7 +298,7 @@ $messages['qqq'] = array(
 	'usersignup-page-title' => 'Page title for Special:UserSignup',
 	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
 	
-	'usersignup-error-username-length' => "Error message stating that username is too long and over 50 characters.",
+	'usersignup-error-username-length' => "Error message stating that username is too long and over $1 amount of characters.",
 	'usersignup-error-invalid-user' => 'Generic error message when the user has been invalidated in the session for security reasons.',
 	'usersignup-error-invalid-email' => 'Error message stating that email address is invalid.',
 	'usersignup-error-symbols-in-username' => 'Error message stating that username cannot contain weird symbols.',
