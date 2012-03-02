@@ -29,6 +29,7 @@ class ApiWrapperFactory {
 	}
 	
 	public function getApiWrapper($url) {
+		$map = F::app()->wg->videoMigrationProviderMap;
 		$url = trim($url);
 		$fixed_url = strtolower( $url );
 		$test = strpos( $fixed_url, "http://" );
@@ -40,7 +41,7 @@ class ApiWrapperFactory {
 		$fixed_parts = explode( "/", $fixed_url );
 		$hostname = $fixed_parts[0];
 
-		foreach( $wgVideoMigrationProviderMap as $id => $name ) {
+		foreach( $map as $id => $name ) {
 			$class_name = $name . 'ApiWrapper';
 			if ( $class_name::isMatchingHostname( $hostname ) ) {
 				return $class_name::newFromUrl( $url );
