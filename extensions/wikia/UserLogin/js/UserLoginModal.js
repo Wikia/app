@@ -85,8 +85,9 @@ var UserLoginModal = {
 		}
 
 		editpromptable.click(function(ev) {
-			ev.preventDefault();
-			UserLogin.isForceLogIn();
+			if(UserLogin.isForceLogIn()) {
+				ev.preventDefault();
+			}
 		});
 
 		//Attach DOM-Ready handlers
