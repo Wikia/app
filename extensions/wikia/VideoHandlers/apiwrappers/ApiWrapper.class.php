@@ -335,7 +335,7 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 		$response = $videoPage->getData();
 		$this->response = $response;	// only for migration purposes
 		if ( empty( $response ) ) {
-			throw new EmptyResponseException();
+			throw new EmptyResponseException( $this->getApiUrl() );
 		} else {
 
 		}
