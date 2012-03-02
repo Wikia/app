@@ -3,7 +3,8 @@
  * @addto maintenance
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  *
- * SERVER_ID=1 php getPageSpeedReport.php --url=http://wikia.com --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php
+ * SERVER_ID=1 php getPageSpeedReport.php --url=http://wikia.com/Wikia --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php
+ *
  */
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
@@ -13,10 +14,13 @@ function printHelp() {
 		echo <<<HELP
 Returns Google PageSpeed report
 
-USAGE: php codelint.php --url=http://foo.bar
+USAGE: php codelint.php --url=http://foo.bar [--cacti]
 
 	--url
 		Page to be checked
+
+	--cacti
+		Use Cacti compatible output format
 
 HELP;
 }
@@ -38,7 +42,24 @@ if (empty($report)) {
 	die(1);
 }
 
-// print the report
+// format the output for Cacti
+// a1:2982236 a2:1034853568 a3:3339620 a4:871 a5:6370988398 a6:139 a7:140 a8:0 a9:138
+if (isset($options['cacti'])) {
+	$output = "a1:{$report['score']}";
+
+	// emit the rest of the values
+	$values = array_values($report['stats']);
+
+	foreach($values as $id => $value) {
+		$id += 2; // start from #2
+		$output .= " a{$id}:{$value}";
+	}
+
+	echo $output . "\n";
+	die(0);
+}
+
+// print the report on the screen
 $reportUrl = $report['url'];
 
 echo <<<REPORT
@@ -48,6 +69,7 @@ PageSpeed report for <$reportUrl>:
 
 REPORT;
 
+// make the score green
 echo "\nPageSpeed score is: \033[32m{$report['score']}\033[0m\n";
 
 // print key/value details
