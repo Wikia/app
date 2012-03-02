@@ -19,6 +19,34 @@ abstract class VideoHandler extends BitmapHandler {
 	protected $thumbnailImage = null;
 	protected static $aspectRatio = 1.7777778;
 
+	function normaliseParams( $image, &$params ) {
+		global $wgMaxImageArea, $wgMaxThumbnailArea;
+		
+		if ( !ImageHandler::normaliseParams( $image, $params ) ) {
+			return false;
+		}
+
+		$params['physicalWidth'] = $params['width'];
+		$params['physicalHeight'] = $params['height'];
+
+		
+		// Video files can be bigger than usuall images. We are alowing them to stretch up to WikiaVideoService::maxWideoWidth px.
+		if ( $params['physicalWidth'] > WikiaVideoService::maxWideoWidth ) {
+			$srcWidth = $image->getWidth( $params['page'] );
+			$srcHeight = $image->getHeight( $params['page'] );
+			$params['physicalWidth'] = WikiaVideoService::maxWideoWidth;
+			$params['physicalHeight'] = round( ($params['physicalWidth'] * $srcHeight ) / $srcWidth );
+		}
+
+		# Same as srcWidth * srcHeight above but:
+		# - no free pass for jpeg
+		# - thumbs should be smaller
+		if ( $params['physicalWidth'] * $params['physicalHeight'] > $wgMaxThumbnailArea ) {
+			return false;
+		}
+
+		return true;
+	}
 
 	function getPlayerAssetUrl() {
 		return '';
