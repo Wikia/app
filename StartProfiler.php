@@ -1,4 +1,6 @@
 <?php
+# defined here since this is loaded before settings -gp
+$wgProfilerSamplePercent = 100;
 if( !empty( $_GET['forceprofile'] ) ) {
 	require_once( dirname(__FILE__).'/includes/ProfilerSimpleText.php' );
 	$wgProfiler = new ProfilerSimpleText;
@@ -13,11 +15,9 @@ if( !empty( $_GET['forceprofile'] ) ) {
 	}
 	require_once( dirname(__FILE__).'/extensions/wikia/WyvProfiler/WyvProfiler.class.php' );
 	$wgProfiler = new WyvProfiler;
-} elseif (rand(1, 100) == 42 ) {
-	/* Wikia change -- turn on invisible profiling for 1% of hits */
-	require_once( dirname(__FILE__).'/includes/ProfilerSimpleText.php' );
-	$wgProfiler = new ProfilerSimpleText;
-	$wgProfiler->invisible=true;
+} elseif (rand(1, 100) <= $wgProfilerSamplePercent  ) {
+	require_once( dirname(__FILE__).'/includes/ProfilerSimpleUDP.php' );
+ 	$wgProfiler = new ProfilerSimpleUDP;
 } else {
 	require_once( dirname(__FILE__).'/includes/ProfilerStub.php' );
 }
