@@ -119,8 +119,9 @@ class SearchDigestPager extends ReverseChronologicalPager {
 		# Don't announce the limit everywhere if it's the default
 		$urlLimit = $this->mLimit == $this->mDefaultLimit ? '' : $this->mLimit;
 		$minLim = $this->mOffset - $urlLimit;
+		$maxLim = $this->mOffset + $urlLimit;
 
-		if ( $this->mIsFirst || intval( $this->mOffset ) <= 0 ) {
+		if ( $this->mIsFirst ) {
 			$prev = false;
 			$first = false;
 		} else {
@@ -128,14 +129,26 @@ class SearchDigestPager extends ReverseChronologicalPager {
 				'offset' => ( $minLim < 0 ? 0 : $minLim ),
 				'limit' => $urlLimit
 			);
+			if ( $this->mIsBackwards ) {
+				$prev['offset'] = $maxLim;
+				$prev['dir'] = 'prev';
+			}
 			$first = array( 'limit' => $urlLimit );
 		}
 		if ( $this->mIsLast ) {
 			$next = false;
 			$last = false;
 		} else {
-			$next = array( 'offset' => ( $this->mOffset + $this->mLimit ), 'limit' => $urlLimit );
+			$next = array( 'offset' => $maxLim, 'limit' => $urlLimit );
 			$last = array( 'dir' => 'prev', 'limit' => $urlLimit );
+			if ( $this->mIsBackwards ) {
+				if ( !$this->mIsFirst ) {
+					$next['offset'] = ( $minLim < 0 ? 0 : $minLim );
+					$next['dir'] = 'prev';
+				} else {
+					$next['offset'] = $this->getNumRows();
+				}
+			}
 		}
 		return array(
 			'prev' => $prev,
@@ -153,7 +166,11 @@ class SearchDigestPager extends ReverseChronologicalPager {
 		$conds = isset( $info['conds'] ) ? $info['conds'] : array();
 		$options = isset( $info['options'] ) ? $info['options'] : array();
 		$join_conds = isset( $info['join_conds'] ) ? $info['join_conds'] : array();
-		$options['ORDER BY'] = $this->mIndexField . ' DESC';
+		if ( $descending ) {
+			$options['ORDER BY'] = $this->mIndexField;
+		} else {
+			$options['ORDER BY'] = $this->mIndexField . ' DESC';
+		}
 		$options['LIMIT'] = intval( $limit );
 		if ( $offset != '' ) {
 			if ( $offset < 0 ) {
