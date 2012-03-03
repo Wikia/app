@@ -18,6 +18,9 @@
 			$this->mockGlobalVariable('wgMemc', $mock_cache);
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 
+			$this->setUpMockObject( 'stdClass', array( 'getCode' => 'en' ), false, 'wgLang' );
+			$this->setUpMockObject( 'stdClass', array( 'getCode' => 'en' ), false, 'wgContLang' );
+
 			$this->mockApp();
 		}
 		
