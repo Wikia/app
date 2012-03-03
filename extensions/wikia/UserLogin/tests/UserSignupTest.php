@@ -22,8 +22,8 @@
 			}
 			$this->setUpMockObject( 'stdClass', $memcParams, false, 'wgMemc' );
 
-			$this->setUpMockObject( 'stdClass', array( 'getCode' => 'en' ), false, 'wgLang' );
-			$this->setUpMockObject( 'stdClass', array( 'getCode' => 'en' ), false, 'wgContLang' );
+			$this->setUpMockObject( 'Language', array( 'getCode' => 'en' ), false, 'wgLang' );
+			$this->setUpMockObject( 'Language', array( 'getCode' => 'en' ), false, 'wgContLang' );
 
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 
