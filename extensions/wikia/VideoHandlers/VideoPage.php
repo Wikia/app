@@ -29,4 +29,16 @@ class WikiaVideoPage extends ImagePage {
 		return $s;
 	}
 
+	protected function imageHistory() {
+		global $wgOut;
+
+		$this->loadFile();
+		$pager = new ImageHistoryPseudoPager( $this );
+		$wgOut->addHTML( $pager->getBody() );
+		$wgOut->preventClickjacking( $pager->getPreventClickjacking() );
+
+		$this->img->resetHistory(); // free db resources
+
+		// no upload links 
+	}
 }
