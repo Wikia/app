@@ -15,7 +15,7 @@
  // Extension credits
  $wgExtensionCredits['other'][] = array(
 		 'name' => 'SearchDigest',
-		 'author' => array( '[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]' ),
+		 'author' => array( '[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]', '[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]' ),
 		 'descriptionmsg' => 'searchdigest-desc',
 		 );
 

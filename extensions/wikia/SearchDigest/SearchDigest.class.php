@@ -36,11 +36,11 @@ class SpecialSearchDigest extends SpecialPage {
 
 				$html .= Xml::openElement( 'nav' );
 				$html .= Xml::element(
-					'a',    
-					array(  
+					'a',
+					array(
 						'href' => $downloadUrl,
 						'class' => 'wikia-button'
-					     ),      
+					),
 					wfMsg( 'searchdigest-download-csv' )
 				);
 				$html .= Xml::closeElement( 'nav' );
@@ -106,7 +106,64 @@ class SearchDigestPager extends ReverseChronologicalPager {
 
 	function getEndBody() {
 		return '</ul>';
-	}	
+	}
+
+	/**
+	 * Override these functions to allow for offsetting based on result number as there aren't unique indices
+	 */
+	function getPagingQueries() {
+		if ( !$this->mQueryDone ) {
+			$this->doQuery();
+		}
+
+		# Don't announce the limit everywhere if it's the default
+		$urlLimit = $this->mLimit == $this->mDefaultLimit ? '' : $this->mLimit;
+		$minLim = $this->mOffset - $urlLimit;
+
+		if ( $this->mIsFirst || intval( $this->mOffset ) <= 0 ) {
+			$prev = false;
+			$first = false;
+		} else {
+			$prev = array(
+				'offset' => ( $minLim < 0 ? 0 : $minLim ),
+				'limit' => $urlLimit
+			);
+			$first = array( 'limit' => $urlLimit );
+		}
+		if ( $this->mIsLast ) {
+			$next = false;
+			$last = false;
+		} else {
+			$next = array( 'offset' => ( $this->mOffset + $this->mLimit ), 'limit' => $urlLimit );
+			$last = array( 'dir' => 'prev', 'limit' => $urlLimit );
+		}
+		return array(
+			'prev' => $prev,
+			'next' => $next,
+			'first' => $first,
+			'last' => $last
+		);
+	}
+
+	function reallyDoQuery( $offset, $limit, $descending ) {
+		$fname = __METHOD__ . ' (' . get_class( $this ) . ')';
+		$info = $this->getQueryInfo();
+		$tables = $info['tables'];
+		$fields = $info['fields'];
+		$conds = isset( $info['conds'] ) ? $info['conds'] : array();
+		$options = isset( $info['options'] ) ? $info['options'] : array();
+		$join_conds = isset( $info['join_conds'] ) ? $info['join_conds'] : array();
+		$options['ORDER BY'] = $this->mIndexField . ' DESC';
+		$options['LIMIT'] = intval( $limit );
+		if ( $offset != '' ) {
+			if ( $offset < 0 ) {
+				$offset = 0;
+			}
+			$options['OFFSET'] = intval( $offset );
+		}
+		$res = $this->mDb->select( $tables, $fields, $conds, $fname, $options, $join_conds );
+		return new ResultWrapper( $this->mDb, $res );
+	}
 }
 
 class SearchDigestCSVPager extends SearchDigestPager {
