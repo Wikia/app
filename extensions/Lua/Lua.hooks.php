@@ -68,7 +68,7 @@ class LuaHooks {
 		global $wgLua;
 		# Create a new LuaWrapper if needed
 		if (!isset($wgLua))
-			$wgLua = LuaWrapper::create();
+			$wgLua = new LuaWrapper;
 		
 		# Execute this Lua chunk, wrapped in io.write().
 		if ($param1 == FALSE)
