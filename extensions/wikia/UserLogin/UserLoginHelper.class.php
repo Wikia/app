@@ -264,7 +264,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @param string $username
 	 * @return array result { array( 'result' => result status[error/ok/invalidsession/confirmed], 'msg' => result message ) }
 	 */
-	public function sendConfirmationEmail( $username ) {
+	public function sendConfirmationEmail( $username, $user=null ) {
 		if ( empty($username) ) {
 			$result['result'] = 'error';
 			$result['msg'] = $this->wf->Msg( 'userlogin-error-noname' );
@@ -296,7 +296,7 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
-		$user = $tempUser->mapTempUserToUser();
+		$user = $tempUser->mapTempUserToUser( true, $user );
 		if ( $user->isEmailConfirmed() ) {
 			$result['result'] = 'error';
 			$result['msg'] = $this->wf->Msg( 'usersignup-error-already-confirmed' );
@@ -528,5 +528,16 @@ class UserLoginHelper extends WikiaModel {
 	public function onMakeGlobalVariablesScript(&$vars) {
 		$vars['wgEnableUserLoginExt'] = true;
 		return true;
+	}
+	
+	public function setUserLanguage( $lang ) {
+		if ( !empty( $lang ) ) {
+			if ( $this->wg->Lang->getCode() != $lang ) {
+				$this->wg->Lang = Language::factory( $lang );
+			}
+			if ( $this->wg->ContLang->getCode() != $lang ) {
+				$this->wg->ContLang = $this->wf->GetLangObj( $lang );
+			}
+		}
 	}
 }

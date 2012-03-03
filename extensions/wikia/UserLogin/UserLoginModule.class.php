@@ -13,10 +13,9 @@ class UserLoginModule extends Module {
 		$type = $this->wg->Request->getVal( 'type' );
 		$lang = $this->wg->Request->getVal( 'lang', 'en' );
 		
-		$this->wg->ContLang = $this->wf->GetLangObj( $lang );
-		
 		$params = array(
 				'type' => $type, 
+				'language' => $lang, 
 		);
 
 		if ( $type == 'welcome-email' ) {
@@ -49,6 +48,7 @@ class UserLoginModule extends Module {
 	 */
 	public function executeGeneralMail( $params ) {
 		$this->type = $params['type'];
+		UserLoginHelper::getInstance()->setUserLanguage( $params['language'] );
 
 		switch ( $params['type'] ) {
 			case 'password-email':
@@ -77,6 +77,7 @@ class UserLoginModule extends Module {
 	 * @requestParam Array params
 	 */
 	public function executeWelcomeMail( $params ) {
+		UserLoginHelper::getInstance()->setUserLanguage( $params['language'] );
 	}
 
 }

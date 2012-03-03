@@ -49,7 +49,7 @@ class UserLoginForm extends LoginForm {
 			return false;
 
 		// send confirmation email
-		$result = UserLoginHelper::getInstance()->sendConfirmationEmail( $this->mName );
+		$result = UserLoginHelper::getInstance()->sendConfirmationEmail( $this->mName, $u );
 		$this->mainLoginForm( $result['msg'], $result['result'] );
 
 		return $u;

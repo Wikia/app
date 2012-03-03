@@ -183,7 +183,6 @@ class TempUser extends WikiaModel {
 	public function mapTempUserToUser( $resetUserId=true, $user=null ) {
 		if ( !$user ) {
 			$user = F::build( 'User' , array(self::getDefaultName($this->getId())), 'newFromName' );
-			$user->load();
 			if ( $user->getId() == 0 ) {
 				$user = F::build( 'User' , array($this->getId()), 'newFromId' );
 				$user->loadFromDatabase();
