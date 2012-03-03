@@ -14,9 +14,9 @@ class Track {
 
 	public function getURL ($type=null, $name=null, $param=null, $for_html=true) {
 		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
-		
+
 		$sep = $for_html ? '&amp;' : '&';
-		
+
 		$url = Track::BASE_URL.
 			($type ? "/$type" : '').
 			($name ? "/$name" : '').
@@ -29,8 +29,9 @@ class Track {
 			'u='.$wgUser->getID().$sep.
 			'ip='.wfGetIp().$sep.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
-			($wgTitle ? 'n='.$wgTitle->getNamespace() : '').
-			(!empty($wgAdServerTest) ? '&amp;db_test=1' : '');
+			($wgTitle && !is_object($wgArticle) ? 'pg='.urlencode($wgTitle->getPrefixedDBkey()).$sep : '').
+			($wgTitle ? 'n='.$wgTitle->getNamespace().$sep : '').
+			(!empty($wgAdServerTest) ? 'db_test=1'.$sep : '');
 
 		// Handle any parameters passed to us
 		if ($param) {
