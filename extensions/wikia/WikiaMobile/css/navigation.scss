@@ -52,7 +52,6 @@
 
 #wkTopBar {
 	height: 40px;
-	background-color: $navBarColorFirst;
 	@include linear-gradient($navBarColorFirst, $navBarColorSecond);
 }
 
@@ -60,7 +59,6 @@
 	position: relative;
 	height: 40px;
 	overflow: hidden;
-	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 	@include box-shadow(0 0 5px black);
@@ -72,11 +70,7 @@
 
 		#wkNavTgl {
 			background-color: $searchOpenBackground;
-			span {
-				-webkit-transform: rotateZ(180deg);
-				-moz-transform: rotateZ(180deg);
-				transform: rotateZ(180deg);
-			}
+
 		}
 	}
 
@@ -106,7 +100,6 @@
 		ul {
 			position: absolute;
 			top: 40px;
-			min-height: 100%;
 			margin: 0;
 			padding: 0;
 			width: 100%;

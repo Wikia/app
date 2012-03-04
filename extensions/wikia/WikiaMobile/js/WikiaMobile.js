@@ -522,6 +522,14 @@ var WikiaMobile = WikiaMobile || (function() {
 			var img = $(this),
 				num = img.data('num') || img.parent().data('num');
 			if(num) imgModal(num);
+		})
+		.delegate('.bigTable', clickEvent, function(event){
+				event.preventDefault();
+
+				$.openModal({
+					addClass: 'wideTable',
+					html: this.innerHTML
+					});
 		});
 
 		searchForm.bind('submit', function(){
@@ -540,7 +548,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				}
 			}else{
 				track('search/toggle/open');
-				closeNav();
+				if(navBar.className.indexOf('fllNav') > -1) closeNav();
 				navBar.className = 'srhOpn';
 				searchInput.focus();
 			}
@@ -565,7 +573,7 @@ var WikiaMobile = WikiaMobile || (function() {
 				page.style.height = 0;
 				ftr.style.display = adSlot.style.display = 'none';
 				//80px is for lvl1 without header
-				navBar.className += ' fllNav';
+				navBar.className = 'fllNav';
 				navBar.style.height = (lvl1.height() + 80) + 'px';
 				window.location.hash = 'WikiNav';
 			}

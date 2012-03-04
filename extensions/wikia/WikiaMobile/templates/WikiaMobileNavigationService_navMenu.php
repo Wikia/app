@@ -1,4 +1,4 @@
-<nav class=cur1 id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?>data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
+<nav class=cur1 id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 		<header>
 			<button id=wkNavBack class=wkBtn><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>
 			<h1 class=collSec><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?><span class=chev></h1>
