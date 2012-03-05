@@ -136,19 +136,21 @@ function getLyricWikiVariables()
 		return $lwVars;
 	};
 
-	global $wgTitle;
-	$titleStr = $wgTitle->getFullText();
 	$lwVars = LyricWikiVariableDefaults();
+	global $wgTitle;
+	if(is_object($wgTitle)){
+		$titleStr = $wgTitle->getFullText();
 
-	$ns = $wgTitle->getNamespace();
-	if(($ns != NS_MAIN) && ($ns  != NS_TALK))
-	{
-		//pages outside of the main namespace & talk shouldn't have music-related templates.
-		$lwVars["pagetype"] = "none";
-	}
-	else
-	{
-		parseLyricWikiTitle( $titleStr, $lwVars );
+		$ns = $wgTitle->getNamespace();
+		if(($ns != NS_MAIN) && ($ns  != NS_TALK))
+		{
+			//pages outside of the main namespace & talk shouldn't have music-related templates.
+			$lwVars["pagetype"] = "none";
+		}
+		else
+		{
+			parseLyricWikiTitle( $titleStr, $lwVars );
+		}
 	}
 
 	return $lwVars;
