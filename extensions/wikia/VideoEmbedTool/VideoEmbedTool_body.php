@@ -325,10 +325,20 @@ class VideoEmbedTool {
 		}
 
 		// sanitize name and init title objects
-		$titleLegacyVideo = PartnerVideoHelper::getInstance()->makeTitleSafe($name);
+		if (WikiaVideoService::useWikiaVideoExtForEmbed()) {
+			$titleLegacyVideo = PartnerVideoHelper::getInstance()->makeTitleSafe($name);
+			if (empty($titleLegacyVideo)) {
+				header('X-screen-type: error');
+				return wfMsg ( 'vet-name-incorrect' );
+			}
+		}		
 		if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
 			$nameFile = VideoHandlersUploader::sanitizeTitle($name);
 			$titleFile = Title::newFromText($nameFile, NS_FILE);
+			if (empty($titleFile)) {
+				header('X-screen-type: error');
+				return wfMsg ( 'vet-name-incorrect' );
+			}
 		}				
 		$nameSanitized = WikiaVideoService::isVideoStoredAsFile() ? $nameFile : $titleLegacyVideo->getText();
 		$title = WikiaVideoService::isVideoStoredAsFile() ? $titleFile : $titleLegacyVideo;
