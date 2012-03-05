@@ -28,6 +28,7 @@ class SpotlightsModule extends Module {
 		//spotlights on hubs
 		if( !empty($wgSuppressSpotlights) ) {
 			$this->skipRendering();
+			return;
 		}
 		
 		$this->adslots = $params['adslots'];
