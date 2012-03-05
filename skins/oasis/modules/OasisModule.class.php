@@ -304,8 +304,8 @@ class OasisModule extends Module {
 		$headscripts = $wgOut->getScript();
 
 		// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.js and Common.js.
-		$oTitleWikiaJs	= Title::newFromText( 'MediaWiki:Wikia.js' );
-		$oTitleCommonJs	= Title::newFromText( 'MediaWiki:Common.js' );
+		$oTitleWikiaJs	= Title::newFromText( 'Wikia.js',  NS_MEDIAWIKI );
+		$oTitleCommonJs	= Title::newFromText( 'Common.js', NS_MEDIAWIKI );
 		$iMaxRev = max( (int) $oTitleWikiaJs->getLatestRevID(), (int) $oTitleCommonJs->getLatestRevID() );
 		unset( $oTitleWikiaJs, $oTitleCommonJs );
 
