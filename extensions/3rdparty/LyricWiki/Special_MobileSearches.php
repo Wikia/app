@@ -92,8 +92,9 @@ function wfMobileSearches(){
 
 			print "<html><head><title>Success</title></head><body>\n"; // TODO: i18n
 			print "Deleting record... ";
-			if(mysql_query("DELETE FROM $TABLE_NAME WHERE request_artist='$artist' AND request_song='$song'", $db)){
-				print "Deleted.";
+			$queryString = "DELETE FROM $TABLE_NAME WHERE request_artist='$artist' AND request_song='$song'";
+			if(mysql_query($queryString, $db)){
+				print "Deleted using query:<br/>$queryString<br/>\n";
 			} else {
 				print "Failed. ".mysql_error();
 			}
