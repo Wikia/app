@@ -139,6 +139,11 @@ class ApiLogin extends ApiBase {
 				$result['result'] = 'Blocked';
 				break;
 
+			case LoginForm::ABORTED:
+				$result['result'] = 'Aborted';
+				$result['reason'] =  $loginForm->mAbortLoginErrorMsg;
+				break;
+
 			default:
 				ApiBase::dieDebug( __METHOD__, "Unhandled case value: {$authRes}" );
 		}
