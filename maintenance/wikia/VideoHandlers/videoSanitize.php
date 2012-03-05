@@ -81,6 +81,8 @@ ini_set( 'display_errors', 'stdout' );
 $options = array('help');
 @require_once( '../../commandLine.inc' );
 require_once ('videoSanitizerMigrationHelper.class.php');
+require_once( 'videolog.class.php' );
+
 global $IP, $wgCityId, $wgExternalDatawareDB;
 
 
@@ -90,6 +92,8 @@ $previouslyProcessed = $sanitizeHelper->getRenamedVideos("old", " operation_stat
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 // echo( "$IP\n" );
 echo( "Video name sanitizer script running for $wgCityId\n" );
+videoLog( 'sanitize', 'START', '');
+
 
 if( isset( $options['help'] ) && $options['help'] ) {
 	echo( "Usage: php VideoSanitizer.php\n" );
@@ -176,6 +180,7 @@ print_r( $aTranslation );
 
 $botUser = User::newFromName( 'WikiaBot' );
 
+$i=0;
 foreach ( $aTranslation as $key => $val ) {
 	echo "aTranslation[$key]=$val\n";
 	
@@ -314,14 +319,18 @@ foreach ( $aTranslation as $key => $val ) {
 			'img_name'	=>$key
 		)
 	);
+
+	$i++;
 }
 
 echo(": {$rowCount} videos processed.\n");
+videoLog( 'sanitize', 'RENAMED', "renamed:$i");
 
 
 echo "Fixing Related Videos\n";
 $rows = $dbw->query( "SELECT page_id FROM page WHERE page_namespace = 1100" );
 
+$i=0;
 while( $page = $dbw->fetchObject( $rows ) ) {
 	global $wgTitle;
 	$oTitleRV = Title::newFromID( $page->page_id );
@@ -339,6 +348,7 @@ while( $page = $dbw->fetchObject( $rows ) ) {
 			if ( $sTextAfter != $sText ) {
 				echo "ARTICLE WAS CHANGED! \n";
 				$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
+				$i++;
 			}
 		} else {
 			var_dump( $oArticle );
@@ -346,8 +356,9 @@ while( $page = $dbw->fetchObject( $rows ) ) {
 	}
 
 }
+videoLog( 'sanitize', 'RELATEDVIDEOS', "edits:$i");
 
-
+videoLog( 'sanitize', 'STOP', "");
 
 /*
  * wywala nam sie upload
