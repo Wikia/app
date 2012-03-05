@@ -110,7 +110,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'phalanx-rule-log-name' => 'Phalanx rules log',
 	'phalanx-rule-log-header' => 'This is a log of changes to phalanx rules.',
 	'phalanx-email-rule-log-name' => 'Phalanx e-mail rules log',
-	'phalanx-email-rule-log-header' => 'This is a log of changes to phalanx rules for type e-mail.',
+	'phalanx-email-rule-log-header' => 'This is a log of changes to Phalanx rules for type e-mail.',
 	'phalanx-rule-log-add' => 'Phalanx rule added: $1',
 	'phalanx-rule-log-edit' => 'Phalanx rule edited: $1',
 	'phalanx-rule-log-delete' => 'Phalanx rule deleted: $1',
