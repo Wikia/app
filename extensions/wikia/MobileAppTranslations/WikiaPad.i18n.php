@@ -105,6 +105,7 @@ $messages['es'] = array(
 
 /** French (Français)
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'main-tab-discover' => 'Découvrir',

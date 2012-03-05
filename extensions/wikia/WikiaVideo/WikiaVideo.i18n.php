@@ -264,6 +264,7 @@ $messages['de-formal'] = array(
 
 /** Spanish (Español)
  * @author Bola
+ * @author Ciencia Al Poder
  * @author Fitoschido
  * @author Translationista
  * @author VegaDark
@@ -283,7 +284,7 @@ $messages['es'] = array(
 	'wikiavideo-not-supported' => 'Esta piel no soporta insertar vídeos desde este modo de vista en las galerías.',
 	'wikiavideo-deleted-old' => "La versión de '''[$1 $2]''' así como de $4, $3 ha sido borrada.",
 	'wikiavideo-intro-old' => "Estás borrando la versión de '''[$1 $5]''' así como la de [$4 $3, $2].",
-	'wikiavideo-details' => '$1 ($2 píxeles, proveedor: <a href="$3" class="external" target="_blank">$4</a>)',
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pixel|píxeles}}, proveedor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Basque (Euskara)
@@ -829,7 +830,7 @@ $messages['sl'] = array(
  */
 $messages['sr-ec'] = array(
 	'wikiavideo-reverted' => 'Видео-снимак $1 је враћен. Вратите се на $2.',
-	'wikiavideo-unreverted' => 'Немате дозволу да вратите $1.',
+	'wikiavideo-unreverted' => 'Немате дозволу да вратите видео-снимак $1.',
 	'wikiavideo-added' => 'додат је видео-снимак $1',
 	'wikiavideo-updated' => 'ажуриран је видео-снимак [[$1]]',
 	'wikiavideo-back' => 'назад',
@@ -840,8 +841,8 @@ $messages['sr-ec'] = array(
 	'wikiavideo-placeholder' => 'Чувар места',
 	'wikiavideo-gallery-template' => 'Ова видео-галерија се налази у шаблону, и не може да се уређује из режима приказа. Уредите одговарајући шаблон.',
 	'wikiavideo-not-supported' => 'Ова тема не подржава убацивање видео-снимака из режима приказа у галерије.',
-	'wikiavideo-deleted-old' => "Издање '''[$1 $2]''', као и $4, $3 је обрисано.",
-	'wikiavideo-intro-old' => "Управо ћете да обришете '''[$1 $5]''' издање, као и [$4 $3, $2].",
+	'wikiavideo-deleted-old' => "Верзија '''[$1 $2]''' од $4, $3 је обрисана.",
+	'wikiavideo-intro-old' => "Бришете верзију датотеке '''[$1 $5]''' од [$4 $3, $2].",
 );
 
 /** Swedish (Svenska)
@@ -860,7 +861,7 @@ $messages['sv'] = array(
 	'wikiavideo-links' => 'Länkar',
 	'wikiavideo-placeholder' => 'Platshållare',
 	'wikiavideo-gallery-template' => 'Detta videogalleri är inne i en mall, och kan inte redigeras från visningsläget. Var god redigera mallen istället.',
-	'wikiavideo-not-supported' => 'Detta skal har inte stöd för att sätta in videor från visningsläget i gallerier.',
+	'wikiavideo-not-supported' => 'Detta skal har inte stöd för att lägga in videoklipp från visningsläget i gallerier.',
 	'wikiavideo-deleted-old' => "Versionen av '''[$1 $2]''' från $4, $3 har raderats.",
 	'wikiavideo-intro-old' => "Du håller på att radera versionen av '''[$1 $5]''' från [$4 $3, $2].",
 	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pixel|pixlar}}, leverantör: <a href="$3" class="external" target="_blank">$4</a>)',

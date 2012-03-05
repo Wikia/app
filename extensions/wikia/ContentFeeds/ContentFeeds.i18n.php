@@ -255,10 +255,18 @@ $messages['nl-informal'] = array(
 	'contentfeeds-firstfewarticles-tag-header' => "Maak je eerste pagina's aan!",
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
 $messages['pl'] = array(
+	'contentfeeds-desc' => "Udostępnia bogate i aktualne informacje za pośrednictwem różnych znaczników oraz ''kanałów''",
+	'contentfeeds-newimages-rss-title' => 'Źródło danych RSS dla {{#Special:NewFiles|Nowych Plików}}',
+	'contentfeeds-newimages-rss-desc' => 'Kanał z $1',
+	'contentfeeds-firstfewarticles-tag-header' => 'Utwórz swoje pierwsze kilka stron!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Tytuł',
-	'contentfeeds-firstfewarticles-tag-next' => 'Następny',
+	'contentfeeds-firstfewarticles-tag-next' => 'Dalej',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Błąd: Tytuł strony jest wymagany',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Błąd: Ciało strony jest wymagane',
 );
 
 /** Piedmontese (Piemontèis)
@@ -317,9 +325,13 @@ $messages['ro'] = array(
 );
 
 /** Russian (Русский)
+ * @author Express2000
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'contentfeeds-desc' => 'Предоставляет насыщенную и новейшую информацию посредством различных меток или рассылок',
+	'contentfeeds-newimages-rss-title' => 'RSS-канал для {{#Special:NewFiles}}',
+	'contentfeeds-newimages-rss-desc' => 'Рассылка с $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Создайте ваши первые несколько страниц!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Заголовок',
 	'contentfeeds-firstfewarticles-tag-next' => 'Далее',

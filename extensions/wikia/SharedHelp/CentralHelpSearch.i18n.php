@@ -21,6 +21,14 @@ $messages['de'] = array(
 	'centralhelpsearch-placeholder' => 'Suchhilfe...',
 );
 
+/** Spanish (Español)
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'centralhelpsearch-desc' => 'Permite la insersión de un formulario para buscar ayuda en Community Central',
+	'centralhelpsearch-placeholder' => 'Buscar en Ayuda...',
+);
+
 /** French (Français)
  * @author Gomoko
  */
@@ -98,6 +106,14 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'centralhelpsearch-desc' => 'Opname van een formulier om Community Central Help te doorzoeken toestaan',
 	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
+);
+
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
+$messages['pl'] = array(
+	'centralhelpsearch-desc' => 'Umożliwia włączenie formularza wyszukiwania do Centralnej Pomocy Wspólnoty',
+	'centralhelpsearch-placeholder' => 'Wyszukiwanie w pomocy...',
 );
 
 /** Piedmontese (Piemontèis)

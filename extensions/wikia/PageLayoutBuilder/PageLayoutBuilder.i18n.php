@@ -563,6 +563,8 @@ $messages['diq'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
+ * @author Benfutbol10
  * @author Bola
  * @author McDutchie
  * @author VegaDark
@@ -589,16 +591,19 @@ $messages['es'] = array(
 	'plb-special-form-error-info' => 'Por favor, corrige los siguientes errores:',
 	'plb-special-form-new' => 'Nuevo diseño',
 	'plb-special-form-session-fail' => 'Parece que hubo un problema con tu sesión',
+	'plb-special-form-save-as-draft' => 'Guardar como un borrador',
+	'plb-special-form-preview-form' => 'Vista previa del formulario',
 	'plb-special-no-layout' => 'No se especificó ningún diseño',
 	'plb-special-no-layout-body' => 'Parece que estás intentado crear una nueva página usando un diseño, eso está bien, pero no podemos decirte cuál usar. ¡Lo sentimos!',
 	'plb-special-no-article' => 'Página especificada inválida.',
 	'plb-special-no-article-body' => 'Parece que estás intentando modificar una página que no está basada en ningún diseño en concreto.',
 	'plb-special-no-login' => 'Por favor, identifícate para usar el Creador de diseños.',
-	'plb-login-required' => 'Necesitas estar [[Special:Signup|identificado]] para usar el Creador de diseños.',
+	'plb-login-required' => 'Necesita <span class="plainlinks">[{{fullurl:Special:Signup|$1}} iniciar sesión]</span> para emplear el generador Layout Builder.',
 	'plb-empty-page' => 'Sin nombre',
 	'plb-create-empty-body-error' => 'Este diseño parece estar vacío.',
 	'plb-create-empty-desc' => 'Por favor, introduce una descripción para este diseño.',
 	'plb-create-new-title' => 'Crea un nuevo diseño',
+	'plb-create-new-modal-title' => 'Nombre',
 	'plb-create-edit-title' => '<strong>Editando:</strong> $1',
 	'plb-create-preview-title' => '<strong>Vista previa:</strong> $1',
 	'plb-create-button-layout-title' => 'Guarda tus cambios [ctrl-s]',
@@ -627,7 +632,7 @@ $messages['es'] = array(
 	'plb-list-name' => 'Nombre',
 	'plb-list-desc' => 'Descripción',
 	'plb-list-last-editor' => 'Último editor',
-	'plb-list-count' => '#Páginas',
+	'plb-list-count' => 'Nº de artículos',
 	'plb-list-last-edit' => 'Última edición',
 	'plb-list-action-edit' => 'Editar',
 	'plb-list-action-delete' => 'Borrar',
@@ -672,6 +677,8 @@ $messages['es'] = array(
 	'plb-editor-overlay-edit' => 'editar',
 	'plb-editor-enter-caption' => 'Introduce la pregunta.',
 	'plb-editor-left-sidebar-tutorial' => '<b>¡Bienvenido/a al Creador de diseños!</b><br /><br />Para comenzar a editar elementos, haz clic en el botón de <em>Añadir elemento</em> y elige el tipo deseado<br /><br />Al añadir elementos, se añadirán nuevas preguntas automáticamente, basándose en todos los elementos que pongas en el diseño.',
+	'plb-editor-read-only-selection-info' => 'Asegúrese de que su cursor no está situado dentro de un elemento del diseño existente',
+	'plb-editor-saving-as-draft' => 'Guardando borrador de diseño',
 	'plb-widget-name-plb_input' => 'Caja de entrada',
 	'plb-widget-name-plb_mlinput' => 'Párrafo',
 	'plb-widget-name-plb_image' => 'Imagen',
@@ -730,6 +737,10 @@ $messages['es'] = array(
 	'plb-copy-delete-link' => 'Borrar',
 	'plb-copy-cat-add' => 'Añadir:',
 	'plb-copy-submit-link' => 'Guardar',
+	'wikia-editor-modules-plb-insert-title' => 'Insertar elementos de diseño',
+	'wikia-editor-modules-plb-list-title' => 'Cargando lista...',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 elemento|$1 elementos}} en el diseño',
+	'wikia-editor-plb-show-static-buttons' => 'Restaurar más botones  de elementos multimedia <i>estáticos</i>',
 );
 
 /** Finnish (Suomi)
@@ -748,7 +759,9 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Peter17
+ * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -775,12 +788,12 @@ $messages['fr'] = array(
 	'plb-special-form-session-fail' => 'Il semble y avoir un problème avec votre session de connexion',
 	'plb-special-form-save-as-draft' => 'Enregistrer brouillon',
 	'plb-special-form-preview-form' => 'Formulaire de prévisualisation',
-	'plb-special-no-layout' => 'Aucune mise en page spécifiée.',
+	'plb-special-no-layout' => 'Aucune mise en page n’a été spécifiée.',
 	'plb-special-no-layout-body' => 'Il semble que vous essayez de créer une nouvelle page utilisant une mise en page, mais nous ne pouvons dire laquelle utiliser. Désolé !',
 	'plb-special-no-article' => 'Page non valide spécifiée.',
 	'plb-special-no-article-body' => 'Il semble que vous essayez de modifier une page qui n’utilise aucune mise en page.',
 	'plb-special-no-login' => 'Veuillez vous connecter pour utiliser le Générateur de mise en page.',
-	'plb-login-required' => 'Vous devez vous [[Special:Signup|connecter]] pour utiliser le Générateur de mise en page.',
+	'plb-login-required' => 'Vous devez vous <span class="plainlinks">[{{fullurl:Special:Signup|$1}} connecter]</span> pour utiliser le Générateur de mise en page.',
 	'plb-empty-page' => 'Sans nom',
 	'plb-create-empty-body-error' => 'Cette mise en page semble être vide.',
 	'plb-create-empty-desc' => 'Veuillez renseigner une description pour cette mise en page.',
@@ -814,7 +827,7 @@ $messages['fr'] = array(
 	'plb-list-name' => 'Nom de la mise en page',
 	'plb-list-desc' => 'Description',
 	'plb-list-last-editor' => 'Dernier contributeur',
-	'plb-list-count' => 'Nb pages',
+	'plb-list-count' => "Nb d'articles",
 	'plb-list-last-edit' => 'Dernière modification',
 	'plb-list-action-edit' => 'Modifier',
 	'plb-list-action-delete' => 'Supprimer',
@@ -922,7 +935,7 @@ $messages['fr'] = array(
 	'plb-copy-submit-link' => 'Enregistrer',
 	'wikia-editor-modules-plb-insert-title' => 'Insérer des éléments de mise en page',
 	'wikia-editor-modules-plb-list-title' => 'chargement de la liste...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 élément{{PLURAL:$1|s}}dans le gabarit',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 élément|$1 éléments}} dans le gabarit',
 	'wikia-editor-plb-show-static-buttons' => 'Restaurer plus de boutons de média <i>statique</i>',
 );
 
@@ -958,7 +971,7 @@ $messages['gl'] = array(
 	'plb-special-no-article' => 'Especificou unha páxina inválida.',
 	'plb-special-no-article-body' => 'Semella que está intentado modificar unha páxina que non está baseada en ningún esquema.',
 	'plb-special-no-login' => 'Acceda ao sistema para empregar o Creador de deseños.',
-	'plb-login-required' => 'Ten que [[Special:Signup|acceder ao sistema]] para empregar o Creador de deseños.',
+	'plb-login-required' => 'Ten que<span class="plainlinks">[{{fullurl:Special:Signup|$1}} acceder ao sistema]</span> para empregar o Creador de deseños.',
 	'plb-empty-page' => 'Sen nome',
 	'plb-create-empty-body-error' => 'Semella que este esquema está baleiro.',
 	'plb-create-empty-desc' => 'Encha unha descrición para este esquema.',
@@ -1099,7 +1112,7 @@ $messages['gl'] = array(
 	'plb-copy-submit-link' => 'Gardar',
 	'wikia-editor-modules-plb-insert-title' => 'Inserir elementos de esquema',
 	'wikia-editor-modules-plb-list-title' => 'cargando a lista...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 elemento(s) no esquema',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 elemento|$1 elementos}} no esquema',
 	'wikia-editor-plb-show-static-buttons' => 'Restaurar máis botóns <i>estáticos</i>',
 );
 
@@ -1218,7 +1231,7 @@ $messages['ia'] = array(
 	'plb-special-no-article' => 'Le pagina specificate es invalide.',
 	'plb-special-no-article-body' => 'Il sembla que tu tenta modificar un pagina que non es basate sur alcun designo.',
 	'plb-special-no-login' => 'Per favor aperi session pro usar le constructor de designos.',
-	'plb-login-required' => 'Es necessari [[Special:Signup|aperir session]] pro usar le constructor de designos.',
+	'plb-login-required' => 'Es necessari <span class="plainlinks">[{{fullurl:Special:Signup|$1}} aperir session]</span> pro usar le constructor de designos.',
 	'plb-empty-page' => 'Sin nomine',
 	'plb-create-empty-body-error' => 'Iste designo pare esser vacue.',
 	'plb-create-empty-desc' => 'Per favor entra un description pro iste designo.',
@@ -1252,7 +1265,7 @@ $messages['ia'] = array(
 	'plb-list-name' => 'Nomine del disposition',
 	'plb-list-desc' => 'Description',
 	'plb-list-last-editor' => 'Ultime contributor',
-	'plb-list-count' => '№ de paginas',
+	'plb-list-count' => '№ de articulos',
 	'plb-list-last-edit' => 'Ultime modification',
 	'plb-list-action-edit' => 'Modificar',
 	'plb-list-action-delete' => 'Deler',
@@ -1359,7 +1372,7 @@ $messages['ia'] = array(
 	'plb-copy-submit-link' => 'Salveguardar',
 	'wikia-editor-modules-plb-insert-title' => 'Inserer elementos de disposition',
 	'wikia-editor-modules-plb-list-title' => 'carga lista...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 elemento(s) in disposition',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 elemento|$1 elementos}} in disposition',
 	'wikia-editor-plb-show-static-buttons' => 'Restaurar plus buttones de multimedia <i>static</i>',
 );
 
@@ -1385,11 +1398,12 @@ $messages['lb'] = array(
 	'plb-special-form-new' => 'Neie Layout',
 	'plb-empty-page' => 'Ouni Numm',
 	'plb-special-form-submit-button' => 'Säit späicheren',
+	'plb-special-form-preview-button' => 'Säit kucken ouni ze späicheren',
 	'plb-special-form-summary' => 'Resumé:',
 	'plb-form-title' => 'Titel:',
 	'plb-form-desc' => 'Beschreiwung:',
 	'plb-list-desc' => 'Beschreiwung',
-	'plb-list-count' => '#Artikelen',
+	'plb-list-count' => 'Zuel vun Artikelen',
 	'plb-list-action-edit' => 'Änneren',
 	'plb-list-action-delete' => 'Läschen',
 	'plb-parser-preview-image-username' => 'Benotzernumm',
@@ -1436,7 +1450,7 @@ $messages['mk'] = array(
 	'plb-special-no-article' => 'Назначена е неважечка страница.',
 	'plb-special-no-article-body' => 'Се чини дека сакате да измените страница која не се заснова на ниеден распоред.',
 	'plb-special-no-login' => 'Најавете се за да можете да правите распоред.',
-	'plb-login-required' => 'Треба да се [[Special:Signup|најавите]] за да го користите Распоредувачот.',
+	'plb-login-required' => 'Треба да се <span class="plainlinks">[{{fullurl:Special:Signup|$1}} најавите]</span> за да го користите Распоредувачот.',
 	'plb-empty-page' => 'Неименувано',
 	'plb-create-empty-body-error' => 'Овој распоред е празен.',
 	'plb-create-empty-desc' => 'Напишете опис за овој распоред.',
@@ -1470,7 +1484,7 @@ $messages['mk'] = array(
 	'plb-list-name' => 'Име на распоредот',
 	'plb-list-desc' => 'Опис',
 	'plb-list-last-editor' => 'Последен уредник',
-	'plb-list-count' => '#Страници',
+	'plb-list-count' => 'Бр. на статии',
 	'plb-list-last-edit' => 'Последно уредување',
 	'plb-list-action-edit' => 'Уреди',
 	'plb-list-action-delete' => 'Избриши',
@@ -1578,7 +1592,7 @@ $messages['mk'] = array(
 	'plb-copy-submit-link' => 'Зачувај',
 	'wikia-editor-modules-plb-insert-title' => 'Вметнете елементи во распоредот',
 	'wikia-editor-modules-plb-list-title' => 'го вчитувам списокот...',
-	'wikia-editor-modules-plb-list-title-count' => 'Во распоредот има $1 елемент(и)',
+	'wikia-editor-modules-plb-list-title-count' => 'Во распоредот има {{PLURAL:$1|$1 елемент|$1 елементи}}',
 	'wikia-editor-plb-show-static-buttons' => 'Врати уште <i>статични</i> копчиња за медиуми',
 );
 
@@ -1655,7 +1669,7 @@ $messages['ms'] = array(
 	'plb-special-no-article' => 'Laman yang dinyatakan tidak sah.',
 	'plb-special-no-article-body' => 'Nampaknya anda cuba mengubahsuai laman yang tidak berasaskan mana-mana tataletak.',
 	'plb-special-no-login' => 'Sila log masuk untuk menggunakan pembina tataletak.',
-	'plb-login-required' => 'Anda perlu [[Special:Signup|log masuk]] untuk menggunakan Pembina Tataletak.',
+	'plb-login-required' => 'Anda perlu <span class="plainlinks">[{{fullurl:Special:Signup|$1}} log masuk]</span> untuk menggunakan Pembina Tataletak.',
 	'plb-empty-page' => 'Tanpa Nama',
 	'plb-create-empty-body-error' => 'Nampaknya tataletak ini kosong.',
 	'plb-create-empty-desc' => 'Sila isikan keterangan tataletak ini.',
@@ -1689,7 +1703,7 @@ $messages['ms'] = array(
 	'plb-list-name' => 'Nama Tataletak',
 	'plb-list-desc' => 'Keterangan',
 	'plb-list-last-editor' => 'Penyunting terkini',
-	'plb-list-count' => '#Rencana',
+	'plb-list-count' => 'Bil. rencana',
 	'plb-list-last-edit' => 'Suntingan Terkini',
 	'plb-list-action-edit' => 'Sunting',
 	'plb-list-action-delete' => 'Hapuskan',
@@ -1796,7 +1810,7 @@ $messages['ms'] = array(
 	'plb-copy-submit-link' => 'Simpan',
 	'wikia-editor-modules-plb-insert-title' => 'Sisipkan bahan tataletak',
 	'wikia-editor-modules-plb-list-title' => 'memuatkan senarai...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 bahan dalam tataletak',
+	'wikia-editor-modules-plb-list-title-count' => '$1 perkara dalam tataletak',
 	'wikia-editor-plb-show-static-buttons' => 'Pulihkan banyak lagi butang media <i>statik</i>',
 );
 
@@ -1832,7 +1846,7 @@ $messages['nb'] = array(
 	'plb-special-no-article' => 'Ugyldig side oppgitt.',
 	'plb-special-no-article-body' => 'Det ser ut som du prøver å modifisere en side som ikke er basert på et oppsett.',
 	'plb-special-no-login' => 'Vennligst logg inn for å bruke oppsettbyggeren.',
-	'plb-login-required' => 'Du må [[Special:Signup|logge inn]] for å bruke Oppsettsbyggeren.',
+	'plb-login-required' => 'Du må <span class="plainlinks">[{{fullurl:Special:Signup|$1}} logge inn]</span> for å bruke Oppsettsbyggeren.',
 	'plb-empty-page' => 'Uten navn',
 	'plb-create-empty-body-error' => 'Dette oppsettet ser ut til å være tomt.',
 	'plb-create-empty-desc' => 'Vennligst fyll ut en beskrivelse av dette oppsettet.',
@@ -1866,7 +1880,7 @@ $messages['nb'] = array(
 	'plb-list-name' => 'Navn på oppsett',
 	'plb-list-desc' => 'Beskrivelse',
 	'plb-list-last-editor' => 'Siste redaktør',
-	'plb-list-count' => '#Sider',
+	'plb-list-count' => 'Antall artikler',
 	'plb-list-last-edit' => 'Sist redigert',
 	'plb-list-action-edit' => 'Rediger',
 	'plb-list-action-delete' => 'Slett',
@@ -1973,7 +1987,7 @@ $messages['nb'] = array(
 	'plb-copy-submit-link' => 'Lagre',
 	'wikia-editor-modules-plb-insert-title' => 'Sett inn oppsettselementer',
 	'wikia-editor-modules-plb-list-title' => 'laster inn liste...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 element(er) i oppsettet',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 element|$1 elementer}} i oppsettet',
 	'wikia-editor-plb-show-static-buttons' => 'Gjenopprett mer <i>statiske</i> mediaknapper',
 );
 
@@ -2011,7 +2025,7 @@ $messages['nl'] = array(
 	'plb-special-no-article' => 'Er is een ongeldige pagina opgegeven.',
 	'plb-special-no-article-body' => 'U probeert waarschijnlijk een pagina te wijzigen die niet op een vaste vormgeving is gebaseerd.',
 	'plb-special-no-login' => 'Meld u aan om de wizard voor het aanmaken van een vormgeving te gebruiken.',
-	'plb-login-required' => 'U moet [[Special:Signup|aanmelden]] om de wizard voor het aanmaken van een vormgeving te gebruiken.',
+	'plb-login-required' => 'U moet <span class="plainlinks">[{{fullurl:Special:Signup|$1}} aanmelden]</span> om de wizard voor het aanmaken van een vormgeving te gebruiken.',
 	'plb-empty-page' => 'Geen naam',
 	'plb-create-empty-body-error' => 'Deze vormgeving lijkt leeg te zijn.',
 	'plb-create-empty-desc' => 'Voer alstublieft een beschrijving voor deze vormgeving in.',
@@ -2045,7 +2059,7 @@ $messages['nl'] = array(
 	'plb-list-name' => 'Naam vormgeving',
 	'plb-list-desc' => 'Beschrijving',
 	'plb-list-last-editor' => 'Laatste bewerking door',
-	'plb-list-count' => "Pagina's",
+	'plb-list-count' => "Aantal pagina's",
 	'plb-list-last-edit' => 'Laatste bewerking',
 	'plb-list-action-edit' => 'Bewerken',
 	'plb-list-action-delete' => 'Verwijderen',
@@ -2152,7 +2166,7 @@ $messages['nl'] = array(
 	'plb-copy-submit-link' => 'Opslaan',
 	'wikia-editor-modules-plb-insert-title' => 'Vormgevingsitems toevoegen',
 	'wikia-editor-modules-plb-list-title' => 'bezig met het laden van de lijst...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 item(s) in de vormgeving',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 item|$1 items}} in de vormgeving',
 	'wikia-editor-plb-show-static-buttons' => 'Meer <i>statische</i> mediaknoppen herstellen',
 );
 
@@ -2195,6 +2209,7 @@ $messages['nl-informal'] = array(
 
 /** Polish (Polski)
  * @author Anoon6
+ * @author BeginaFelicysym
  * @author Sp5uhe
  * @author Wladekb
  */
@@ -2227,7 +2242,7 @@ $messages['pl'] = array(
 	'plb-special-no-article' => 'Określono nieprawidłową stronę.',
 	'plb-special-no-article-body' => 'Wygląda na to, że próbujesz zmodyfikować stronę, która nie bazuje na żadnej kompozycji.',
 	'plb-special-no-login' => 'Zaloguj się, aby użyć kreatora kompozycji.',
-	'plb-login-required' => 'Musisz [[Special:Signup|zalogować się]], aby użyć kreatora kompozycji.',
+	'plb-login-required' => 'Musisz <span class="plainlinks">[{{fullurl:Special:Signup|$1}}zalogować się]</span>, aby użyć kreatora kompozycji.',
 	'plb-empty-page' => 'Bez nazwy',
 	'plb-create-empty-body-error' => 'Ta kompozycja wygląda na pustą.',
 	'plb-create-empty-desc' => 'Wypełnij opis kompozycji.',
@@ -2261,7 +2276,7 @@ $messages['pl'] = array(
 	'plb-list-name' => 'Nazwa kompozycji',
 	'plb-list-desc' => 'Opis',
 	'plb-list-last-editor' => 'Ostatni wprowadzający zmiany',
-	'plb-list-count' => 'liczba artykułów',
+	'plb-list-count' => 'Liczba artykułów',
 	'plb-list-last-edit' => 'Ostatnia zmiana',
 	'plb-list-action-edit' => 'Edytuj',
 	'plb-list-action-delete' => 'Usuń',
@@ -2368,7 +2383,7 @@ $messages['pl'] = array(
 	'plb-copy-submit-link' => 'Zapisz',
 	'wikia-editor-modules-plb-insert-title' => 'Wstaw elementy kompozycji',
 	'wikia-editor-modules-plb-list-title' => 'wczytywanie listy...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 element(-ów) w kompozycji',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 element|$1 elementy|$1 elementów}} w kompozycji',
 	'wikia-editor-plb-show-static-buttons' => 'Pokaż więcej <i>statycznych</i> przycisków multimedialnych',
 );
 
@@ -2659,7 +2674,7 @@ $messages['ru'] = array(
 	'plb-special-no-article' => 'Указана неправильная страница.',
 	'plb-special-no-article-body' => 'Похоже, что вы пытаетесь править страницу, которая не основана на каком-либо макете.',
 	'plb-special-no-login' => 'Пожалуйста, войдите в систему, чтобы создавать макеты.',
-	'plb-login-required' => 'Вы должны [[Special:Signup|войти в систему]], чтобы создавать макеты.',
+	'plb-login-required' => 'Вы должны <span class="plainlinks">[{{fullurl:Special:Signup|$1}} войти в систему]</span>, чтобы использовать Создание макетов.',
 	'plb-empty-page' => 'Без названия',
 	'plb-create-empty-body-error' => 'Этот макет - пустой.',
 	'plb-create-empty-desc' => 'Пожалуйста, опишите этот макет.',
@@ -2693,7 +2708,7 @@ $messages['ru'] = array(
 	'plb-list-name' => 'Имя макета',
 	'plb-list-desc' => 'Описание',
 	'plb-list-last-editor' => 'Последний редактор',
-	'plb-list-count' => '#Статьи',
+	'plb-list-count' => 'Нет. статьи',
 	'plb-list-last-edit' => 'Последняя правка',
 	'plb-list-action-edit' => 'Править',
 	'plb-list-action-delete' => 'Удалить',
@@ -2800,7 +2815,7 @@ $messages['ru'] = array(
 	'plb-copy-submit-link' => 'Сохранить',
 	'wikia-editor-modules-plb-insert-title' => 'Вставить элементы макета',
 	'wikia-editor-modules-plb-list-title' => 'Загрузка списка...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 элемент(ов) в макете',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 элемент|$1 элемент|а$1 элементов}} в макете',
 	'wikia-editor-plb-show-static-buttons' => 'Вернуть остальные <i>стандартные</i> кнопки',
 );
 
@@ -2826,7 +2841,7 @@ $messages['sr-ec'] = array(
 	'plb-list-name' => 'Назив',
 	'plb-list-desc' => 'Опис',
 	'plb-list-last-editor' => 'Последњи уређивач',
-	'plb-list-count' => 'Број страница',
+	'plb-list-count' => 'Број чланака',
 	'plb-list-last-edit' => 'Последња измена',
 	'plb-list-action-edit' => 'Уреди',
 	'plb-list-action-delete' => 'Обриши',
@@ -2863,7 +2878,7 @@ $messages['sr-ec'] = array(
 	'plb-property-editor-alignment-center' => 'Центар',
 	'plb-property-editor-alignment-right' => 'Десно',
 	'plb-property-editor-maximum-width' => 'Највећа ширина:',
-	'plb-property-editor-thumbnail' => 'Умањени приказ',
+	'plb-property-editor-thumbnail' => 'Минијатура',
 	'plb-property-editor-choices' => 'Избори (једна ставка по линији)',
 	'plb-property-editor-save' => 'Сачувај',
 	'plb-property-editor-cancel' => 'Откажи',
@@ -2901,7 +2916,7 @@ $messages['sv'] = array(
 	'plb-special-no-article' => 'Ogiltig sida specificerad.',
 	'plb-special-no-article-body' => 'Det ser ut som du försöker ändra en sida, som inte baseras på någon layout.',
 	'plb-special-no-login' => 'Vänligen logga in för att använda layout-byggaren.',
-	'plb-login-required' => 'Du behöver [[Special:Signup|logga in]] för att använda Layout-Byggaren.',
+	'plb-login-required' => 'Du behöver <span class="plainlinks">[{{fullurl:Special:Signup|$1}} logga in]</span> för att använda Layout-byggaren.',
 	'plb-empty-page' => 'Namnlös',
 	'plb-create-empty-body-error' => 'Den här layouten verkar vara tom.',
 	'plb-create-empty-desc' => 'Fyll i en beskrivning för den här layouten.',
@@ -2935,7 +2950,7 @@ $messages['sv'] = array(
 	'plb-list-name' => 'Layoutnamn',
 	'plb-list-desc' => 'Beskrivning',
 	'plb-list-last-editor' => 'Senaste redaktör',
-	'plb-list-count' => '#Sidor',
+	'plb-list-count' => 'Antal artiklar',
 	'plb-list-last-edit' => 'Senast redigerad',
 	'plb-list-action-edit' => 'Redigera',
 	'plb-list-action-delete' => 'Radera',
@@ -2955,9 +2970,12 @@ $messages['sv'] = array(
 	'plb-parser-preview-input' => 'Användarens text kommer att visas här.',
 	'plb-parser-preview-sinput' => 'Användarens val kommer att visas här.',
 	'plb-create-from-article-new' => '<span style="color:red">Ny!</span> Layoutbyggare',
+	'plb-create-from-article-button' => 'Skapa en layout från denna sida',
+	'plb-create-from-article-button-desc' => 'Använd denna sida som grund för en layout. <a href="#">Läs mer></a>',
 	'plb-editor-elements-in-the-editor' => '<span>OBJEKT</span> I REDIGERINGSFORMULÄRET',
 	'plb-editor-add-element' => 'Lägg till objekt',
 	'plb-editor-edit' => 'Redigera',
+	'plb-editor-toolbar-caption' => 'Sidlayouts-byggare',
 	'plb-editor-rte-caption' => 'Lägg till objekt',
 	'plb-editor-preview' => 'Förhandsgranska',
 	'plb-editor-preview-desc' => 'Extra redigeringshjälp',
@@ -2975,6 +2993,7 @@ $messages['sv'] = array(
 	'plb-property-editor-spacing-medium' => 'Mellan',
 	'plb-property-editor-spacing-large' => 'Stor',
 	'plb-property-editor-value-required' => 'Detta fält är obligatoriskt',
+	'plb-property-editor-instructions' => 'Extra redigeringshjälp:',
 	'plb-property-editor-required' => 'Nödvändig',
 	'plb-property-editor-alignment' => 'Justering:',
 	'plb-property-editor-alignment-left' => 'Vänster',
@@ -2985,22 +3004,25 @@ $messages['sv'] = array(
 	'plb-property-editor-choices' => 'Val (ett objekt per rad)',
 	'plb-property-editor-save' => 'Spara',
 	'plb-property-editor-cancel' => 'Avbryt',
+	'plb-mytools-link' => 'Layout-byggare',
 	'plb-parser-gallery-size-not-int' => 'Galleristorleken måste vara ett heltal. Se hjälpsidan för rätt alternativ.',
 	'plb-parser-gallery-size-too-small' => 'Galleristorleken är för liten. Se hjälpsidan för rätt alternativ.',
 	'plb-parser-gallery-size-too-big' => 'Galleristorleken är för stor. Se hjälpsidan för rätt alternativ.',
 	'plb-parser-gallery-incorrect-spacing' => 'Galleriets avståndsparameter är inte korrekt. Se hjälpsidan för rätt alternativ.',
 	'plb-parser-gallery-incorrect-align' => 'Gallerijusteringen är inte korrekt inställd. Se hjälpsidan för rätt alternativ.',
 	'plb-property-editor-help-spacing' => 'Detta bestämmer avståndet mellan bilderna i galleriet.',
-	'plb-helpbox-makesense' => 'Låter förnuftigt för mig! <br /> Fortsätt till Layoutbyggaren',
+	'plb-helpbox-title' => 'Vad är Wiki-layouter?',
+	'plb-helpbox-makesense' => 'Låter förnuftigt för mig! <br /> Fortsätt till Layout-byggaren',
 	'plb-helpbox-getstarted' => 'Kom igång',
 	'plb-helpbox-dontshow' => 'Visa inte denna guide igen.',
 	'plb-helpbox-bigimage-title' => 'Den stora bilden',
 	'plb-helpbox-buttton-head1' => 'Låter vettigt för mig!',
-	'plb-helpbox-buttton-head2' => 'Fortsätt till Layoutbyggaren.',
+	'plb-helpbox-buttton-head2' => 'Fortsätt till Layout-byggaren.',
 	'plb-helpbox-checkboxinfo1' => 'Visa inte denna guide igen.',
-	'plb-helpbox-help-button-head3' => 'Redo att prova i layoutbyggaren?',
+	'plb-helpbox-help-button-head3' => 'Redo att prova i layout-byggaren?',
 	'plb-helpbox-checkboxinfo2' => 'Visa inte denna guide igen.',
 	'plb-helpbox-help-desc' => 'Har du fortfarande frågor?',
+	'plb-helpbox-help-link' => 'Läs guiden för layout-byggaren.',
 	'plb-list-action-copy' => 'Ny wiki-kategori',
 	'plb-copy-delete-link' => 'Radera',
 	'plb-copy-cat-add' => 'Lägg till:',
@@ -3008,6 +3030,7 @@ $messages['sv'] = array(
 	'wikia-editor-modules-plb-insert-title' => 'Infoga layoutobjekt',
 	'wikia-editor-modules-plb-list-title' => 'läser in lista...',
 	'wikia-editor-modules-plb-list-title-count' => '$1 objekt i layouten',
+	'wikia-editor-plb-show-static-buttons' => 'Återställ fler <i>statiska</i> mediaknappar',
 );
 
 /** Telugu (తెలుగు)

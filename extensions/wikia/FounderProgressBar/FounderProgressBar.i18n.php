@@ -183,6 +183,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author ChrisiPK
+ * @author Geitost
  * @author George Animal
  * @author Inkowik
  * @author Kghbln
@@ -293,21 +294,22 @@ $messages['de'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Finde nicht kategorisierte Seiten',
 	'founderprogressbar-uncategorized-visit-action' => 'Gehe zu Spezial:UncategorizedPages',
 	'founderprogressbar-uncategorized-visit-description' => 'Wenn dein Wiki mehr Inhalte hat, kann man leicht den Überblick über die Organisation verlieren. Behalte die Übersicht indem du unkategorisiere Seiten verfolgst und bei ihnen Kategorien hinzufügst, damit sie gut erreichbar und organisiert bleiben.',
-	'founderprogressbar-total-edit300-label' => 'Erreiche $1 Bearbeitungen',
+	'founderprogressbar-total-edit300-label' => 'Erreiche {{PLURAL:$1|eine Bearbeitung|$1 Bearbeitungen}}.',
 	'founderprogressbar-total-edit300-action' => 'Eine Seite hinzufügen',
 	'founderprogressbar-bonus-photo-add10-label' => '$1 weitere Fotos hinzufügen',
 	'founderprogressbar-bonus-photo-add10-action' => 'Foto hinzufügen',
-	'founderprogressbar-bonus-page-add5-label' => '$1 Seiten hinzufügen',
+	'founderprogressbar-bonus-page-add5-label' => '{{PLURAL:$1|$1 weitere Seite|$1 weitere Seiten}} hinzufügen',
 	'founderprogressbar-bonus-page-add5-action' => 'Eine Seite hinzufügen',
 	'founderprogressbar-bonus-page-add5-description' => 'Welches Wiki profitiert nicht von mehr Inhalt? Ergänze fünf weitere Seiten, um das Guthaben für eine Bonus-Aufgabe zu erhalten.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Erstelle ein Seitenlayout',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Gehe zur Seite „Layout-Ersteller“',
-	'founderprogressbar-bonus-edit50-label' => 'Bearbeite $1 weitere Seiten',
+	'founderprogressbar-bonus-edit50-label' => 'Bearbeite {{PLURAL:$1|eine weitere Seite|$1 weitere Seiten}}.',
 	'founderprogressbar-bonus-edit50-action' => 'Gehe zu Spezial:WikiActivity',
 	'founderprogressbar-browse-page-name' => 'Durchsuchen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Geitost
  * @author Tiin
  */
 $messages['de-formal'] = array(
@@ -327,10 +329,15 @@ $messages['de-formal'] = array(
 	'founderprogressbar-mainpage-addslider-description' => 'Der Hauptseiten-Slider ist ein schöner Weg, um Ihre Hauptseite professionell erscheinen zu lassen und einige gutaussehende Fotos zu ergänzen. Jedes der Fotos kann zu einem Artikel verlinken, sodass es ein guter Weg ist, um die besten Seiten Ihres Wikis zu präsentieren. Sehen Sie sich <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page"> diesen Blog-Post an</a>, falls Sie Hilfe für die Größenänderung der Fotos für den Slider benötigen.',
 	'founderprogressbar-commcorner-edit-description' => 'Das Bearbeiten der Community Corner bewirkt eine Benachrichtigung für Leute, die Ihr Wiki besuchen. Es ist ein guter Platz um die Leute über die Art Ihrer Community und ihre Möglichkeiten zur Mitarbeit zu informieren und Ankündigungen zu machen.',
 	'founderprogressbar-fb-likes3-label' => 'Erreichen Sie $1 Facebook-Likes',
+	'founderprogressbar-total-edit300-label' => 'Erreichen Sie {{PLURAL:$1|eine Bearbeitung|$1 Bearbeitungen}}.',
+	'founderprogressbar-bonus-edit50-label' => 'Bearbeiten Sie {{PLURAL:$1|eine weitere Seite|$1 weitere Seiten}}.',
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
+ * @author Ciencia Al Poder
  * @author DJ Nietzsche
+ * @author Geitost
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -340,12 +347,18 @@ $messages['es'] = array(
 	'founderprogressbar-progress-see-full-list' => 'Ver la lista completa',
 	'founderprogressbar-progress-hide-full-list' => 'Ocultar lista completa',
 	'founderprogressbar-skip-for-now' => 'Saltar por ahora',
+	'founderprogressbar-task-completed' => 'Completado',
 	'founderprogressbar-list-label' => 'Tareas en {{SITENAME}}',
+	'founderprogressbar-list-description1' => '¿Estás preparado para llevar tu wiki al éxito? ¡Completa todas las tareas citadas abajo para llenar la barra de progreso al 100%! Cualquier usuario de tu wiki puede ayudarte con sus contribuciones a conseguir las tareas de la lista.',
+	'founderprogressbar-list-description2' => 'La sección de tareas contiene todas las tareas que necesitas completar. Si te saltas alguna, se moverá a la sección de tareas omitidas y podrás completarlas en cualquier momento. ¿Hay alguna tarea en la lista que piensas que no es buena para tu wiki? Sin problema -- cuando solo te queden por hacer tareas omitidas, desbloquearás las tareas de bonificación. Completa las tareas de bonificación para conseguir puntos en la barra de progreso y llegar así al ansiado 100%.',
 	'founderprogressbar-list-task-label' => 'Tareas',
 	'founderprogressbar-list-skipped-task-label' => 'Tareas omitidas',
 	'founderprogressbar-list-skipped-task-desc' => 'Puedes regresar a esto más adelante.',
 	'founderprogressbar-list-bonus-task-label' => 'Tareas de bonificación',
 	'founderprogressbar-list-bonus-task-desc' => 'Completa la lista de tareas para desbloquear las tareas de bonificación',
+	'founderprogressbar-task-call-to-action' => 'Hacer tarea',
+	'founderprogressbar-completion-message' => '¡Felicidades! Has hecho un grandioso trabajo completando todas las tareas al 100%. Has encaminado tu wiki hacia el éxito. ¡Sigue trabajando así!',
+	'founderprogressbar-bonus-task-notice' => 'Atención: Cada tarea de bonificación puede completarse más de una vez. Completa cuantas necesites para conseguir el 100%',
 	'founderprogressbar-page-add10-label' => 'Añade $1 páginas',
 	'founderprogressbar-page-add10-action' => 'Añade una página',
 	'founderprogressbar-page-add10-description' => 'La mejor manera de darle un buen inicio a tu wiki es comenzar a añadir páginas con información sobre el tema. Las mejores páginas tienen al menos un párrafo o dos y pueden enlazar a otras páginas.',
@@ -430,16 +443,30 @@ $messages['es'] = array(
 	'founderprogressbar-fb-likes3-label' => 'Alcanza $1 Me Gusta de Facebook',
 	'founderprogressbar-fb-likes3-action' => 'Ir a la Página Principal',
 	'founderprogressbar-fb-likes3-description' => 'Compartir es bueno, y puede ser realmente útil para difundir tu wiki al resto del mundo. Anima a tus usuarios y lectores a que "les guste" la página principal de tu wiki en Facebook para difundirla.',
-	'founderprogressbar-uncategorized-visit-label' => 'Ver las páginas que no tienen categorías',
+	'founderprogressbar-uncategorized-visit-label' => 'Ver páginas sin categorizar',
 	'founderprogressbar-uncategorized-visit-action' => 'Ir a Especial:PáginasSinCategorizar',
 	'founderprogressbar-uncategorized-visit-description' => 'Cuando tu wiki tiene más contenido puede ser muy fácil que se pierda su organización. Mantente al tanto de ello haciendo un seguimiento de las páginas que no tienen categorías; añádeselas para mantenerlas accesibles y organizadas.',
-	'founderprogressbar-total-edit300-label' => 'Alcanza $1 ediciones',
+	'founderprogressbar-total-edit300-label' => 'Alcanza {{PLURAL:$1|$1 edición|$1 ediciones}}',
 	'founderprogressbar-total-edit300-action' => 'Añade una página',
 	'founderprogressbar-total-edit300-description' => '$1 ediciones son un logro impresionante, y con los cambios que están siendo hechos y el contenido siendo añadido, ¡será bueno para alcanzar el éxito!',
+	'founderprogressbar-bonus-photo-add10-label' => 'Añadir $1 imágenes más',
+	'founderprogressbar-bonus-photo-add10-action' => 'Añadir una imagen',
+	'founderprogressbar-bonus-photo-add10-description' => 'Añadir más imágenes siempre ayuda a que tu wiki se vea mejor. Añade diez imágenes más para conseguir puntos para una tarea de bonificación.',
+	'founderprogressbar-bonus-page-add5-label' => 'Crear {{PLURAL:$1|$1 página|$1 páginas}} más',
+	'founderprogressbar-bonus-page-add5-action' => 'Añadir una página',
+	'founderprogressbar-bonus-page-add5-description' => '¿Qué wiki puede salir perjudicado de tener más contenido? Añade cinco páginas más para completar esta tarea de bonificación.',
+	'founderprogressbar-bonus-pagelayout-add-label' => 'Crear un nuevo diseño',
+	'founderprogressbar-bonus-pagelayout-add-action' => 'Ir a la página del Creador de Diseños',
+	'founderprogressbar-bonus-pagelayout-add-description' => 'Añadir nuevos diseños de páginas es una excelente manera de conseguir que más personas ayuden de forma más rápida y fácil en tu wiki. ¡Cuantos más editen más contenido tendrás para que la gente lea! Añadiendo un nuevo diseño de página conseguirás puntos para una tarea de bonificación.',
+	'founderprogressbar-bonus-edit50-label' => 'Editar {{PLURAL:$1|$1 página|$1 páginas}} más',
+	'founderprogressbar-bonus-edit50-action' => 'Ir a Especial:WikiActivity',
+	'founderprogressbar-bonus-edit50-description' => 'Apunta alto y consigue 50 ediciones más para completar esta tarea de bonificación.',
+	'founderprogressbar-browse-page-name' => 'Navegador',
 );
 
 /** French (Français)
  * @author Balzac 40
+ * @author Gomoko
  * @author Verdy p
  * @author Wyz
  */
@@ -551,19 +578,19 @@ $messages['fr'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Voir les pages sans catégorie',
 	'founderprogressbar-uncategorized-visit-action' => 'Aller à Special:UncategorizedPages',
 	'founderprogressbar-uncategorized-visit-description' => 'Quand votre wiki a plus de contenu, il peut être facile de perdre l’organisation de vue. Gardez la main en traçant les pages qui n’ont pas de catégories et en ajoutant des catégories à ces pages pour qu’elles restent accessibles et organisées.',
-	'founderprogressbar-total-edit300-label' => 'Atteindre $1 modifications',
+	'founderprogressbar-total-edit300-label' => 'Atteindre {{PLURAL:$1|$1 modification|$1 modifications}}',
 	'founderprogressbar-total-edit300-action' => 'Ajouter une page',
 	'founderprogressbar-total-edit300-description' => '$1 modifications est une étape important et avec tant de changements apportées et de contenu ajouté, votre wiki sera bel et bien sur la voie du succès !',
 	'founderprogressbar-bonus-photo-add10-label' => 'Ajouter $1 images en plus',
 	'founderprogressbar-bonus-photo-add10-action' => 'Ajouter une image',
 	'founderprogressbar-bonus-photo-add10-description' => 'Ajouter plus d’images est toujours un bon moyen d’améliorer votre wiki. Ajoutez-en dix de plus pour obtenir un crédit pour une tâche supplémentaire.',
-	'founderprogressbar-bonus-page-add5-label' => 'Ajouter $1 pages en plus',
+	'founderprogressbar-bonus-page-add5-label' => 'Ajouter {{PLURAL:$1|$1 page de plus|$1 pages de plus}}',
 	'founderprogressbar-bonus-page-add5-action' => 'Ajouter une page',
 	'founderprogressbar-bonus-page-add5-description' => 'Quel wiki ne profiterait pas de plus de contenu ? Ajouter cinq pages en plus gagner un crédit pour une tâche supplémentaire.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Créer une mise en page',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Aller au Générateur de mise en page',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Ajouter des mises en page est bon moyen pour aider les gens à participer rapidement et facilement sur votre wiki. Plus vous aurez de contributeurs et plus les gens auront de contenu à lire ! Ajoutez une mise en page pour gagner un crédit pour une tâche supplémentaire.',
-	'founderprogressbar-bonus-edit50-label' => 'Modifier $1 pages de plus',
+	'founderprogressbar-bonus-edit50-label' => 'Modifier {{PLURAL:$1|$1 page de plus|$1 pages de plus}}',
 	'founderprogressbar-bonus-edit50-action' => 'Aller à Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Obtenez 50 modifications de plus que ce que vous avez déjà pour accomplir cette tâche supplémentaire.',
 	'founderprogressbar-browse-page-name' => 'Parcourir',
@@ -678,19 +705,19 @@ $messages['gl'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Ver as páxinas sen categoría',
 	'founderprogressbar-uncategorized-visit-action' => 'Ir a Special:UncategorizedPages',
 	'founderprogressbar-uncategorized-visit-description' => 'Cando o wiki ten máis contido é fácil perder o seguimento da organización. Teña coñecemento de todo o que acontece seguindo as páxinas que non teñen categorías e engadindo categorías a estas páxinas para mantelas accesibles e organizadas.',
-	'founderprogressbar-total-edit300-label' => 'Acadar $1 edicións',
+	'founderprogressbar-total-edit300-label' => 'Acadar {{PLURAL:$1|$1 edición|$1 edicións}}',
 	'founderprogressbar-total-edit300-action' => 'Engadir unha páxina',
 	'founderprogressbar-total-edit300-description' => '$1 edicións é un fito incrible. Con ese número de edicións e todos os contidos engadidos de seguro que está no camiño cara ao éxito!',
 	'founderprogressbar-bonus-photo-add10-label' => 'Engadir $1 fotos máis',
 	'founderprogressbar-bonus-photo-add10-action' => 'Engadir unha foto',
 	'founderprogressbar-bonus-photo-add10-description' => 'Engadir máis imaxes é sempre un bo xeito de mellorar o wiki. Engada dez fotos máis para gañar créditos para unha tarefa de bonificación.',
-	'founderprogressbar-bonus-page-add5-label' => 'Engadir $1 páxinas máis',
+	'founderprogressbar-bonus-page-add5-label' => 'Engadir {{PLURAL:$1|$1 páxina|$1 páxinas}} máis',
 	'founderprogressbar-bonus-page-add5-action' => 'Engadir unha páxina',
 	'founderprogressbar-bonus-page-add5-description' => 'Que wiki non obtén beneficio de máis contidos? Engada cinco páxinas máis para gañar créditos para unha tarefa de bonificación.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Crear un deseño de páxina',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Ir ao Creador de deseños de páxinas',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Engadir deseños de páxinas é un bo modo de axudar á xente a que contribúa de xeito doado e fácil no seu wiki. Cantos máis editores teña, máis contidos terá os lectores! Engada un deseño de páxina para gañar créditos para unha tarefa de bonificación.',
-	'founderprogressbar-bonus-edit50-label' => 'Editar $1 páxinas máis',
+	'founderprogressbar-bonus-edit50-label' => 'Editar {{PLURAL:$1|$1 páxina|$1 páxinas}} máis',
 	'founderprogressbar-bonus-edit50-action' => 'Ir a Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Consiga 50 edicións máis para completar esta tarefa de bonificación.',
 	'founderprogressbar-browse-page-name' => 'Navegar',
@@ -805,19 +832,19 @@ $messages['ia'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Vider paginas sin categoria',
 	'founderprogressbar-uncategorized-visit-action' => 'Vader a Special:UncategorizedPages',
 	'founderprogressbar-uncategorized-visit-description' => 'Quando tu wiki ha plus contento il pote esser facile perder le vista del organisation. Mantene le controlo sur illo per traciar paginas que non ha categorias, e adder categorias a iste paginas pro mantener los accessibile e organisate.',
-	'founderprogressbar-total-edit300-label' => 'Attinger $1 modificationes',
+	'founderprogressbar-total-edit300-label' => 'Attinger $1 {{PLURAL:$1|modification|modificationes}}',
 	'founderprogressbar-total-edit300-action' => 'Adder un pagina',
 	'founderprogressbar-total-edit300-description' => '$1 modificationes es un travalio excellente, e con tante modificationes facite e contento addite, tu wiki face grande passos verso le successo!',
 	'founderprogressbar-bonus-photo-add10-label' => 'Adder $1 plus photos',
 	'founderprogressbar-bonus-photo-add10-action' => 'Adder un photo',
 	'founderprogressbar-bonus-photo-add10-description' => 'Le addition de photos es sempre un bon medio de meliorar tu wiki. Adde dece photos pro ganiar credito pro un carga de bonus.',
-	'founderprogressbar-bonus-page-add5-label' => 'Adder $1 plus paginas',
+	'founderprogressbar-bonus-page-add5-label' => 'Adder $1 {{PLURAL:$1|pagina|paginas}} in plus',
 	'founderprogressbar-bonus-page-add5-action' => 'Adder un pagina',
 	'founderprogressbar-bonus-page-add5-description' => 'Qual wiki non beneficiarea de plus contento? Adde cinque paginas pro ganiar credito pro un carga de bonus.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Crear un designo de pagina',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Vader al constructor de designos',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Le addition de designos de pagina es un optime medio a adjutar le personas a contribuer rapide- e facilemente a tu wiki. Quanto plus contributores tu ha, tanto plus contento tu habera que le gente pote leger! Adde un designo de pagina pro ganiar credito pro un carga de bonus.',
-	'founderprogressbar-bonus-edit50-label' => 'Modificar $1 plus paginas',
+	'founderprogressbar-bonus-edit50-label' => 'Modificar $1 {{PLURAL:$1|pagina|paginas}} in plus',
 	'founderprogressbar-bonus-edit50-action' => 'Vader a Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Face un effortio stellar e face 50 modificationes in addition a illos que tu ha jam facite pro completar iste carga de bonus.',
 	'founderprogressbar-browse-page-name' => 'Foliar',
@@ -960,19 +987,19 @@ $messages['mk'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Некатегоризирани страници',
 	'founderprogressbar-uncategorized-visit-action' => 'Оди на Специјална:НекатегоризираниСтраници',
 	'founderprogressbar-uncategorized-visit-description' => 'Кога викито ќе биде побогато со содржини, тоа лесно станува неорганизирано. Победете ја оваа појава проследувајќи ги страниците што немаат категории и категоризирајќи ги за да бидат достапни и организирани.',
-	'founderprogressbar-total-edit300-label' => 'Достигнати $1 уредувања',
+	'founderprogressbar-total-edit300-label' => '{{PLURAL:$1|Достигнато $1 уредување|Достигнати $1 уредувања}}',
 	'founderprogressbar-total-edit300-action' => 'Додај страница',
 	'founderprogressbar-total-edit300-description' => '$1 уредувања е одличен чекор напред. Со сиве овие измени и додавки во содржините, викито е на добар пат да биде мошне успешно!',
 	'founderprogressbar-bonus-photo-add10-label' => 'Додај уште $1 слики',
 	'founderprogressbar-bonus-photo-add10-action' => 'Додај слика',
 	'founderprogressbar-bonus-photo-add10-description' => 'Одличен начин да го подобрите викито е да му додадете слики. Додајте десет или повеќе слики за да заработите кредит за една бонус задача.',
-	'founderprogressbar-bonus-page-add5-label' => 'Додај уште $1 страници',
+	'founderprogressbar-bonus-page-add5-label' => 'Додајте уште {{PLURAL:$1|$1 страница|$1 страници}}',
 	'founderprogressbar-bonus-page-add5-action' => 'Додај страница',
 	'founderprogressbar-bonus-page-add5-description' => 'На кое вики не му се потребни повеќе содржини? Додајте уште пет страници за да заработите кредит за една бонус задача.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Создај распоред',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Оди на Распоредувач на страници',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Одличен начин да им помотнете на многу учесници на викито во нивната работа и придонеси е да направите распореди на страниците. Што повеќе уредници, тоа повеќе содржини за читателите. Направете распоред за да заработите кредит за една бонус задача.',
-	'founderprogressbar-bonus-edit50-label' => 'Уреди уште $1 страници',
+	'founderprogressbar-bonus-edit50-label' => 'Уредете уште {{PLURAL:$1|$1 страница|$1 страници}}',
 	'founderprogressbar-bonus-edit50-action' => 'Оди на Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Вивнете се кон ѕвездите: направете уште барем 50 уредувања за да ја завршите оваа бонус задача.',
 	'founderprogressbar-browse-page-name' => 'Прелистување',
@@ -1220,25 +1247,26 @@ $messages['nb'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Se ukategoriserte sider',
 	'founderprogressbar-uncategorized-visit-action' => 'Gå til Spesial:Ukategoriserte_sider',
 	'founderprogressbar-uncategorized-visit-description' => 'Når wikien din har mer innhold er det lett å miste oversikten over organiseringen. Hold deg ett skritt foran ved å spore opp sider som ikke er kategorisert, og legge til kategorier på de sidene for å holde dem tilgjengelige og organiserte.',
-	'founderprogressbar-total-edit300-label' => 'Nå $1 redigeringer',
+	'founderprogressbar-total-edit300-label' => 'Nå {{PLURAL:$1|$1 redigering|$1 redigeringer}}',
 	'founderprogressbar-total-edit300-action' => 'Legg til en side',
 	'founderprogressbar-total-edit300-description' => '$1 redigeringer er en fantastisk milepæl, og med så mange endringer gjort og så mye innhold lagt til er wikien godt på vei til å oppnå stor suksess!',
 	'founderprogressbar-bonus-photo-add10-label' => 'Legg til $1 bilder til',
 	'founderprogressbar-bonus-photo-add10-action' => 'Legg til et bilde',
 	'founderprogressbar-bonus-photo-add10-description' => 'Å legge til flere bilder er alltid en god måte å forbedre wikien din på. Legg til ti til for å fullføre en bonusoppgave.',
-	'founderprogressbar-bonus-page-add5-label' => 'Legg til $1 sider til',
+	'founderprogressbar-bonus-page-add5-label' => 'Legg til {{PLURAL:$1|$1 side til|$1 sider til}}',
 	'founderprogressbar-bonus-page-add5-action' => 'Legg til en side',
 	'founderprogressbar-bonus-page-add5-description' => 'Hvilke wiki tjener ikke på mer innhold? Legg til fem sider til for å fullføre en bonusoppgave.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Opprett et sideoppsett',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Gå til sideoppsett-byggeren',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Å legge til sideoppsett er en flott måte å hjelpe folk med å bidra raskt og enkelt til wikien din på. Jo flere redaktører du har, jo mer innhold kan folk lese! Legg til et sideoppsett for å fullføre en bonusoppgave.',
-	'founderprogressbar-bonus-edit50-label' => 'Rediger $1 sider til',
+	'founderprogressbar-bonus-edit50-label' => 'Rediger {{PLURAL:$1|$1 side til|$1 sider til}}',
 	'founderprogressbar-bonus-edit50-action' => 'Gå til Spesial:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Sikt mot stjernene og få ytterligere 50 redigeringer mer enn du allerede har for å fullføre denne bonusoppgaven.',
 	'founderprogressbar-browse-page-name' => 'Bla gjennom',
 );
 
 /** Dutch (Nederlands)
+ * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
  * @author Tjcool007
@@ -1349,19 +1377,19 @@ $messages['nl'] = array(
 	'founderprogressbar-uncategorized-visit-label' => "Pagina's zonder categorieën bekijken",
 	'founderprogressbar-uncategorized-visit-action' => 'Ga naar Speciaal:NietGecategoriseerdePaginas',
 	'founderprogressbar-uncategorized-visit-description' => "Als uw wiki meer inhoud heeft, raakt u mogelijk het overzicht kwijt. Blijf bij de les door pagina's zonder categorie in de gaten te houden en daar categorieën aan toe te voegen zodat ze te vinden blijven.",
-	'founderprogressbar-total-edit300-label' => 'Maak $1 bewerkingen',
+	'founderprogressbar-total-edit300-label' => 'Bereik $1 {{PLURAL:$1|bewerking|bewerkingen}}',
 	'founderprogressbar-total-edit300-action' => 'Pagina toevoegen',
 	'founderprogressbar-total-edit300-description' => '$1 bewerkingen is een geweldige mijlpaal en met zoveel wijzigingen en toevoegingen aan de wiki bent u vast op weg naar succes!',
 	'founderprogressbar-bonus-photo-add10-label' => 'Voeg nog $1 afbeeldingen toe',
 	'founderprogressbar-bonus-photo-add10-action' => 'Foto toevoegen',
 	'founderprogressbar-bonus-photo-add10-description' => 'Meer afbeeldingen toevoegen is altijd een prima manier om uw wiki te verbeteren. Voeg meer dan tien afbeeldingen toe om uw bonustaak af te ronden.',
-	'founderprogressbar-bonus-page-add5-label' => "Voeg $1 meer pagina's toe",
+	'founderprogressbar-bonus-page-add5-label' => "Voeg nog {{PLURAL:$1|één pagina|$1 pagina's}} toe",
 	'founderprogressbar-bonus-page-add5-action' => 'Voeg een pagina toe',
 	'founderprogressbar-bonus-page-add5-description' => "Welke wiki geeft geen baat bij meer inhoud? Voeg nog vijf pagina's toe om uw bonustaak af te ronden.",
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Maak een paginavormgeving',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Naar de Wizard voor paginavormgeving gaan',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Paginavormgevingen toevoegen is een prima manier om meer mensen te helpen snel en eenvoudig inhoud aan uw wiki toe te voegen. Hoe meer redacteuren er actief zijn in uw wiki, hoe meer inhoud er is voor uw lezers! Voeg een paginavormgeving toe om uw bonustaak af te ronden.',
-	'founderprogressbar-bonus-edit50-label' => "Bewerk nog $1 pagina's",
+	'founderprogressbar-bonus-edit50-label' => "Bewerk nog {{PLURAL:$1|één pagina|$1 pagina's}}",
 	'founderprogressbar-bonus-edit50-action' => 'Ga naar Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Ga naar de sterren en krijg nog vijftig meer bewerken dat u al hebt om uw bonustaak af te ronden.',
 	'founderprogressbar-browse-page-name' => 'Bladeren',
@@ -1477,19 +1505,19 @@ $messages['pl'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Zobacz strony bez kategorii',
 	'founderprogressbar-uncategorized-visit-action' => 'Idź do Special:UncategorizedPages',
 	'founderprogressbar-uncategorized-visit-description' => 'Kiedy Twoja wiki urośnie w treść może być trudno utrzymać odpowiednią strukturę. Zapanuj nad tym, poprzez dodawanie kategorii do tych stron, które jeszcze ich nie posiadają, aby podtrzymać ich dostępność i miejsce w strukturze.',
-	'founderprogressbar-total-edit300-label' => 'Osiągnij $1 edycji',
+	'founderprogressbar-total-edit300-label' => 'Osiągnij {{PLURAL:$1|$1 edycję|$1 edycje|$1 edycji}}',
 	'founderprogressbar-total-edit300-action' => 'Dodaj stronę',
 	'founderprogressbar-total-edit300-description' => '$1 edycji to doskonały wynik. Przy tylu edycjach i nowej treści, Twoja wiki jest do dobrej drodze do sukcesu!',
 	'founderprogressbar-bonus-photo-add10-label' => 'Dodaj $1 zdjęć',
 	'founderprogressbar-bonus-photo-add10-action' => 'Dodaj grafikę',
 	'founderprogressbar-bonus-photo-add10-description' => 'Dodawanie więcej obrazów to wspaniały sposób na ulepszenie Twojej wiki. Dodaj dodatkowe 10 aby zaliczyć dodatkowe zadanie.',
-	'founderprogressbar-bonus-page-add5-label' => 'Dodaj $1 dodatkowych artykułów',
+	'founderprogressbar-bonus-page-add5-label' => 'Dodaj {{PLURAL:$1|$1 dodatkowy artykuł|$1 dodatkowe artykuły|$1 dodatkowych artykułów}}',
 	'founderprogressbar-bonus-page-add5-action' => 'Dodaj stronę',
 	'founderprogressbar-bonus-page-add5-description' => 'Więcej treści może jedynie pomóc. Dodaj 5 dodatkowych stron aby zaliczyć dodatkowe zadanie.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Utwórz układ strony',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Odwiedź stronę kreatora kompozycji',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Dodawanie nowych układów pomaga nowym użytkownikom w szybki i łatwy sposób dodawać strony. Im więcej edytorów, tym więcej treści! Dodaj nowy układ strony aby zaliczyć dodatkowe zadanie.',
-	'founderprogressbar-bonus-edit50-label' => 'Edytuj dodatkowo $1 stron.',
+	'founderprogressbar-bonus-edit50-label' => 'Edytuj dodatkowo {{PLURAL:$1|$1 stronę|$1 strony|$1 stron}}.',
 	'founderprogressbar-bonus-edit50-action' => 'Odwiedź Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Mierz wysoko i wykonaj dodatkowe 50 edycji aby zaliczyć dodatkowe zadanie.',
 	'founderprogressbar-browse-page-name' => 'Przeglądaj',
@@ -1499,13 +1527,25 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'founderprogressbar-page-add10-action' => 'يو مخ ورګډول',
 	'founderprogressbar-photo-add10-action' => 'يو انځور ورګډول',
 	'founderprogressbar-category-add3-action' => 'يوه وېشنيزه ورګډول',
 	'founderprogressbar-total-edit75-action' => 'يو مخ ورګډول',
 	'founderprogressbar-page-add20-action' => 'يو مخ ورګډول',
+	'founderprogressbar-fb-connect-label' => 'فېسبوک سره يوځای کول',
+	'founderprogressbar-fb-connect-action' => 'فېسبوک سره يوځای کول',
+	'founderprogressbar-category-add5-action' => 'يوه وېشنيزه ورګډول',
+	'founderprogressbar-gallery-add-label' => 'يو انځورتون ورګډول',
+	'founderprogressbar-video-add-label' => 'يوه ويډيو ورګډول',
+	'founderprogressbar-video-add-action' => 'يوه ويډيو ورګډول',
+	'founderprogressbar-total-edit300-action' => 'يو مخ ورګډول',
+	'founderprogressbar-bonus-photo-add10-action' => 'يو انځور ورګډول',
+	'founderprogressbar-bonus-page-add5-action' => 'يو مخ ورګډول',
+	'founderprogressbar-browse-page-name' => 'سپړل',
 );
 
 /** Russian (Русский)
+ * @author Ignatus
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -1614,20 +1654,21 @@ $messages['ru'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Посмотрите, какие страницы некатегоризированы',
 	'founderprogressbar-uncategorized-visit-action' => 'Перейти на Special:UncategorizedPages',
 	'founderprogressbar-uncategorized-visit-description' => 'Когда на вашей вики много страниц, очень легко в них затеряться. Обязательно отслеживаете страницы, которые не входят ни в одну категорию, и добавляйте их в категории, чтобы всё было доступно и организованно.',
-	'founderprogressbar-total-edit300-label' => 'Достигнете цифры в $1 правок',
+	'founderprogressbar-total-edit300-label' => 'Достигнете {{PLURAL:$1|$1 правки|$1 правок}}',
 	'founderprogressbar-total-edit300-action' => 'Добавить страницу',
 	'founderprogressbar-total-edit300-description' => '$1 правок - это отличный результат; продолжайте вносить изменения в содержание вики и вы обязательно достигнете успеха!',
 	'founderprogressbar-bonus-photo-add10-label' => 'Добавить $1 больше фотографий',
 	'founderprogressbar-bonus-photo-add10-action' => 'Добавить изображение',
 	'founderprogressbar-bonus-photo-add10-description' => 'Добавление изображений - это отличный способ для улучшения вашей вики. Добавьте более десяти изображений, чтобы получить бонусную задачу.',
-	'founderprogressbar-bonus-page-add5-label' => 'Добавить $1 больше страниц',
+	'founderprogressbar-bonus-page-add5-label' => 'Добавить {{PLURAL:$1|более чем $1 страницу|более чем $1 страницы|более чем $1 страниц}}',
 	'founderprogressbar-bonus-page-add5-action' => 'Добавить страницу',
 	'founderprogressbar-bonus-page-add5-description' => 'Контента на вики никогда не бывает много. Добавьте ещё пять страниц, чтобы получить бонусную задачу.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Создание страницы макета',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Перейти на страницу создания макетов',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Добавление макетов страниц — отличный способ помочь большому числу людей быстро и легко редактировать на вашей вики. Больше редакторов смогут создать больше контента, который будут читать ещё больше людей! Добавьте макет страницы, чтобы получить бонусную задачу.',
-	'founderprogressbar-bonus-edit50-label' => 'Редактировать $1 больше страниц',
+	'founderprogressbar-bonus-edit50-label' => 'Отредактировать {{PLURAL:$1|более чем $1 страницу|более чем $1 страницы|более чем $1 страниц}}',
 	'founderprogressbar-bonus-edit50-action' => 'Перейти к Special:WikiActivity',
+	'founderprogressbar-bonus-edit50-description' => 'Стремитесь к большему! Это призовое задание будет выполнено, когда у вас будет на 50 правок больше, чем уже есть.',
 	'founderprogressbar-browse-page-name' => 'Обзор',
 );
 
@@ -1641,6 +1682,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Geitost
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1728,22 +1770,35 @@ $messages['sv'] = array(
 	'founderprogressbar-fb-likes3-action' => 'Gå till huvudsidan',
 	'founderprogressbar-uncategorized-visit-label' => 'Se okategoriserade sidor',
 	'founderprogressbar-uncategorized-visit-action' => 'Gå till Special:UncategorizedPages',
-	'founderprogressbar-total-edit300-label' => 'Nå $1 redigeringar',
+	'founderprogressbar-total-edit300-label' => 'Nå {{PLURAL:$1|$1 redigering|$1 redigeringar}}',
 	'founderprogressbar-total-edit300-action' => 'Lägg till en sida',
 	'founderprogressbar-total-edit300-description' => '$1 redigeringar är en fantastisk milstolpe. Med så många ändringar som görs och innehåll som läggs till på din wiki kommer den vara bra på god väg att uppnå framgång!',
 	'founderprogressbar-bonus-photo-add10-label' => 'Lägg till $1 fler foton',
 	'founderprogressbar-bonus-photo-add10-action' => 'Lägg till ett foto',
 	'founderprogressbar-bonus-photo-add10-description' => 'Att lägga till fler bilder är alltid ett bra sätt att förbättra din wiki. Lägg till tio fler för att slutföra en bonusuppgift.',
-	'founderprogressbar-bonus-page-add5-label' => 'Lägg till $1 fler sidor',
+	'founderprogressbar-bonus-page-add5-label' => 'Lägg till {{PLURAL:$1|$1 sida till|$1 fler sidor}}',
 	'founderprogressbar-bonus-page-add5-action' => 'Lägg till en sida',
 	'founderprogressbar-bonus-page-add5-description' => 'Vilken wiki drar inte nytta av mer innehåll? Lägg till fem sidor till för att slutföra en bonusuppgift.',
 	'founderprogressbar-bonus-pagelayout-add-label' => 'Skapa en sidlayout',
 	'founderprogressbar-bonus-pagelayout-add-action' => 'Gå till sidlayouts-byggaren',
 	'founderprogressbar-bonus-pagelayout-add-description' => 'Att lägga till sidlayouter är ett bra sätt att hjälpa folk att bidra snabbt och enkelt på din wiki. Ju fler redigerare du har, desto mer innehåll har du för folk att läsa! Lägg till en sidlayout för att slutföra en bonusuppgift.',
-	'founderprogressbar-bonus-edit50-label' => 'Redigera $1 fler sidor',
+	'founderprogressbar-bonus-edit50-label' => 'Redigera {{PLURAL:$1|$1 flera sida|$1 fler sidor}}',
 	'founderprogressbar-bonus-edit50-action' => 'Gå till Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Sikta mot stjärnorna och få 50 fler redigeringar än du redan behöver för att slutföra denna bonusuppgift.',
 	'founderprogressbar-browse-page-name' => 'Bläddra',
+);
+
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'founderprogressbar-photo-add10-action' => 'Fotoğraf ekle',
+	'founderprogressbar-category-add3-action' => 'Kategori ekle',
+	'founderprogressbar-total-edit75-action' => 'Sayfa ekle',
+	'founderprogressbar-video-add-action' => 'Video ekle',
+	'founderprogressbar-user-add5-action' => 'Yardım sayfasına git',
+	'founderprogressbar-recentchanges-visit-label' => 'Son Değişiklikleri ziyaret et',
+	'founderprogressbar-fb-likes3-action' => 'Ana Sayfaya git',
 );
 
 /** Tatar (Cyrillic script) (Татарча)

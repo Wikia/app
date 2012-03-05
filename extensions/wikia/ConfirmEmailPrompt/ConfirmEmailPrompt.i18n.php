@@ -82,6 +82,14 @@ $messages['it'] = array(
 	'confirmemailprompt-error' => 'È questa la tua e-mail: <strong>$1</strong>? [[$2|Confermala]] o [[$3|cambiala]].',
 );
 
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'confirmemailprompt-desc' => 'Tidokna pesen pengetan nek panganggo duwe alamat imel sing durung dikonfirmasi',
+	'confirmemailprompt-error' => 'Apa kiye alamat imele Rika: <strong>$1</strong>? [[$2|Konfirmasi kiye]] utawa [[$3|ganti kiye]].',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

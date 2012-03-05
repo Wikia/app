@@ -46,6 +46,7 @@ $messages['en'] = array(
 	'related-videos-empty' => 'Be the first to add a video',
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'related-videos-update-summary-blacklist' => 'Appears as an edit summary in RecentChanges',
 	'related-videos-update-summary-whitelist' => 'Appears as an edit summary in RecentChanges',
@@ -105,11 +106,36 @@ $messages['diq'] = array(
 	'related-videos-video-is-new' => 'Newe',
 );
 
+/** Spanish (Español)
+ * @author Benfutbol10
+ * @author Bernardom
+ */
+$messages['es'] = array(
+	'related-videos-tally' => 'Vídeos relacionados',
+	'related-videos-added-by' => 'Añadido por',
+	'related-videos-remove' => 'Eliminar',
+	'related-videos-add-video' => 'Añadir un vídeo',
+	'related-videos-leave-feedback' => 'Dejar sugerencias',
+	'related-videos-add-video-to-this-page' => 'Añadir un vídeo a esta página',
+	'related-videod-add-video-ok' => 'Hecho',
+	'related-videod-add-video-label-name' => 'Ingrese la dirección completa de cualquiera de los sitios soportados.',
+	'related-videod-add-video-label-all' => 'Ver todo',
+	'related-videos-add-video-error-nonexisting' => 'Este vídeo no existe.',
+	'related-videos-remove-confirm' => '¿Estás seguro que quieres retirar este vídeo?',
+	'related-videos-tooltip-add' => 'Añadir un vídeo a esta página',
+	'related-videos-tooltip-remove' => 'Retirar este vídeo',
+	'related-videos-beta-feature' => 'beta',
+	'related-videos-video-is-new' => 'Nuevo',
+	'related-videos-pagination' => '$1 de $2',
+);
+
 /** French (Français)
  * @author Gomoko
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'related-videos-tally' => 'Vidéos associées',
+	'related-videos-tally-article' => 'Vidéos sur cet article',
 	'related-videos-added-by' => 'Ajouté par',
 	'related-videos-remove' => 'Supprimer',
 	'related-videos-add-video' => 'Ajouter une vidéo',
@@ -138,13 +164,16 @@ $messages['fr'] = array(
 	'related-videos-remove-call' => 'Veuillez patienter pendant que nous retirons la vidéo',
 	'related-videos-wiki-summary-blacklist' => 'Supprimé [[:$2|$1]] des vidéos connexes.',
 	'related-videos-wiki-summary-whitelist' => 'Ajouté [[:$2|$1]] aux vidéos connexes.',
-	'related-videos-updated' => 'Les vidéos connexes  $1 ont été mises à jour.',
+	'related-videos-update-summary-blacklist' => 'Liste noire des vidéos connexes mise à jour',
+	'related-videos-update-summary-whitelist' => 'Liste blanche des vidéos connexes mise à jour',
 	'related-videos-tooltip-add' => 'Ajouter une vidéo à cette page.',
+	'related-videos-tooltip-remove' => 'Supprimer cette vidéo',
 	'related-videos-tooltip-embed' => "Collez cette URL dans l'outil de vidéo intégrée",
 	'related-videos-beta-feature' => 'bêta',
 	'related-videos-repo-name' => 'Bibliothèque de vidéos Wikia',
 	'related-videos-embed-text' => 'Incorporer le code',
 	'related-videos-video-is-new' => 'Nouveau',
+	'related-videos-pagination' => '$1 de $2',
 );
 
 /** Galician (Galego)
@@ -152,6 +181,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'related-videos-tally' => 'Vídeos relacionados',
+	'related-videos-tally-article' => 'Vídeos neste artigo',
 	'related-videos-added-by' => 'Engadido por',
 	'related-videos-remove' => 'Eliminar',
 	'related-videos-add-video' => 'Engadir un vídeo',
@@ -179,14 +209,18 @@ $messages['gl'] = array(
 	'related-videos-remove-confirm' => 'Está seguro de querer borrar este vídeo?',
 	'related-videos-remove-call' => 'Agarde mentres eliminamos o vídeo',
 	'related-videos-wiki-summary-blacklist' => 'Eliminouse "[[:$2|$1]]" dos vídeos relacionados.',
-	'related-videos-wiki-summary-whitelist' => 'Angadiuse "[[:$2|$1]]" aos vídeos relacionados.',
-	'related-videos-updated' => 'Actualizáronse os vídeos relacionados con "$1".',
+	'related-videos-wiki-summary-whitelist' => 'Engadiuse "[[:$2|$1]]" aos vídeos relacionados.',
+	'related-videos-update-summary-blacklist' => 'Actualizouse a lista negra dos vídeos relacionados.',
+	'related-videos-update-summary-whitelist' => 'Actualizouse a lista branca dos vídeos relacionados.',
 	'related-videos-tooltip-add' => 'Engadir un vídeo a esta páxina',
-	'related-videos-tooltip-embed' => 'Pegue este enderezo URL na ferramenta de incrustación de vídeos',
+	'related-videos-tooltip-remove' => 'Eliminar este vídeo',
+	'related-videos-tooltip-embed' => 'Pegue este enderezo URL na ferramenta de inserción de vídeos',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Biblioteca de vídeos de Wikia',
-	'related-videos-embed-text' => 'Inserir o código',
+	'related-videos-embed-text' => 'Código de inserción',
 	'related-videos-video-is-new' => 'Novo',
+	'related-videos-pagination' => '$1 de $2',
+	'related-videos-empty' => 'Sexa o primeiro en engadir un vídeo',
 );
 
 /** Interlingua (Interlingua)
@@ -194,10 +228,11 @@ $messages['gl'] = array(
  */
 $messages['ia'] = array(
 	'related-videos-tally' => 'Videos similar',
+	'related-videos-tally-article' => 'Videos sur iste articulo',
 	'related-videos-added-by' => 'Addite per',
 	'related-videos-remove' => 'Remover',
 	'related-videos-add-video' => 'Adder un video',
-	'related-videos-leave-feedback' => 'Lassar retroaction',
+	'related-videos-leave-feedback' => 'Lassar commentario',
 	'related-videos-add-video-to-this-page' => 'Adder un video a iste pagina',
 	'related-videod-add-video-ok' => 'Finite',
 	'related-videod-add-video-label-name' => 'Entra le URL complete de un del sitos supportate.',
@@ -222,13 +257,16 @@ $messages['ia'] = array(
 	'related-videos-remove-call' => 'Per favor attende durante que nos remove iste video',
 	'related-videos-wiki-summary-blacklist' => '[[:$2|$1]] removite de "videos similar".',
 	'related-videos-wiki-summary-whitelist' => '[[:$2|$1]] addite a "videos similar".',
-	'related-videos-updated' => '"Videos similar" $1 actualisate.',
+	'related-videos-update-summary-blacklist' => 'Lista nigre de videos connexe actualisate',
+	'related-videos-update-summary-whitelist' => 'Lista blanc de videos connexe actualisate',
 	'related-videos-tooltip-add' => 'Adder un video a iste pagina',
+	'related-videos-tooltip-remove' => 'Remover iste video',
 	'related-videos-tooltip-embed' => 'Colla iste URL in le instrumento de incorporation de video',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Bibliotheca video de Wikia',
 	'related-videos-embed-text' => 'Codice de incorporation',
 	'related-videos-video-is-new' => 'Nove',
+	'related-videos-pagination' => '$1 de $2',
 );
 
 /** Macedonian (Македонски)
@@ -236,6 +274,7 @@ $messages['ia'] = array(
  */
 $messages['mk'] = array(
 	'related-videos-tally' => 'Поврзани видеа',
+	'related-videos-tally-article' => 'Видеа на статијава',
 	'related-videos-added-by' => 'Додадено од',
 	'related-videos-remove' => 'Отстрани',
 	'related-videos-add-video' => 'Додај видео',
@@ -264,13 +303,17 @@ $messages['mk'] = array(
 	'related-videos-remove-call' => 'Почекајте додека ја отстрануваме снимката',
 	'related-videos-wiki-summary-blacklist' => 'Отстранета [[:$2|$1]] од Поврзани видеа.',
 	'related-videos-wiki-summary-whitelist' => 'Додадена [[:$2|$1]] во Поврзани видеа.',
-	'related-videos-updated' => 'Поврзаните видеа $1 се подновени.',
+	'related-videos-update-summary-blacklist' => 'Црниот список на поврзани видеоснимки е подновен',
+	'related-videos-update-summary-whitelist' => 'Белиот список на поврзани видеоснимки е подновен',
 	'related-videos-tooltip-add' => 'Додај видео во страницава',
+	'related-videos-tooltip-remove' => 'Отстрани го видеово',
 	'related-videos-tooltip-embed' => 'Прекопирајте ја оваа URL-адреса во алатката за вметнување видеа',
 	'related-videos-beta-feature' => 'бета',
 	'related-videos-repo-name' => 'Викиина видеотека',
 	'related-videos-embed-text' => 'Код за вметнување',
 	'related-videos-video-is-new' => 'Нова',
+	'related-videos-pagination' => '$1 од $2',
+	'related-videos-empty' => 'Бидете првиот што ќе додаде видео',
 );
 
 /** Malay (Bahasa Melayu)
@@ -278,6 +321,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'related-videos-tally' => 'Video Berkaitan',
+	'related-videos-tally-article' => 'Video pada rencana ini',
 	'related-videos-added-by' => 'Ditambahkan oleh',
 	'related-videos-remove' => 'Buang',
 	'related-videos-add-video' => 'Tambahkan video',
@@ -306,13 +350,16 @@ $messages['ms'] = array(
 	'related-videos-remove-call' => 'Sila tunggu sementara kami membuang video ini',
 	'related-videos-wiki-summary-blacklist' => '[[:$2|$1]] digugurkan daripada Video Berkaitan.',
 	'related-videos-wiki-summary-whitelist' => '[[:$2|$1]] ditambahkan kepada Video Berkaitan.',
-	'related-videos-updated' => 'Video Berkaitan $1 dikemaskinikan.',
+	'related-videos-update-summary-blacklist' => 'Senarai hitam Video Berkaitan dikemaskinikan',
+	'related-videos-update-summary-whitelist' => 'Senarai putih Video Berkaitan dikemaskinikan',
 	'related-videos-tooltip-add' => 'Letakkan video pada laman ini',
+	'related-videos-tooltip-remove' => 'Buang video ini',
 	'related-videos-tooltip-embed' => 'Tampalkan URL ini pada alat pembenaman video',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Pustaka Video Wikia',
 	'related-videos-embed-text' => 'Benamkan teks',
 	'related-videos-video-is-new' => 'Baru',
+	'related-videos-pagination' => '$1 / $2',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -320,6 +367,7 @@ $messages['ms'] = array(
  */
 $messages['nb'] = array(
 	'related-videos-tally' => 'Relaterte videoer',
+	'related-videos-tally-article' => 'Videoer i denne artikkelen',
 	'related-videos-added-by' => 'Lagt til av',
 	'related-videos-remove' => 'Fjern',
 	'related-videos-add-video' => 'Legg til en video',
@@ -348,21 +396,26 @@ $messages['nb'] = array(
 	'related-videos-remove-call' => 'Vennligst vent mens vi fjerner denne videoen',
 	'related-videos-wiki-summary-blacklist' => 'Fjernet [[:$2|$1]] fra relaterte videoer.',
 	'related-videos-wiki-summary-whitelist' => 'La [[:$2|$1]] til relaterte videoer.',
-	'related-videos-updated' => 'Relaterte videoer $1 oppdatert.',
+	'related-videos-update-summary-blacklist' => 'Svartelisten over relaterte videoer har blitt oppdatert',
+	'related-videos-update-summary-whitelist' => 'Hvitelisten over relaterte videoer har blitt oppdatert',
 	'related-videos-tooltip-add' => 'Legg til en video på denne siden',
+	'related-videos-tooltip-remove' => 'Fjern denne videoen',
 	'related-videos-tooltip-embed' => 'Lim inn denne URL-en i verktøyet for videoinnebygging',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Wikia videobibliotek',
 	'related-videos-embed-text' => 'Innebyggingskode',
 	'related-videos-video-is-new' => 'Ny',
+	'related-videos-pagination' => '$1 av $2',
 );
 
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Saruman
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'related-videos-tally' => "Gerelateerde video's",
+	'related-videos-tally-article' => "Video's in deze pagina",
 	'related-videos-added-by' => 'Toegevoegd door',
 	'related-videos-remove' => 'Verwijderen',
 	'related-videos-add-video' => 'Video toevoegen',
@@ -391,20 +444,26 @@ $messages['nl'] = array(
 	'related-videos-remove-call' => 'Een moment geduld alstublieft. De video wordt verwijderd...',
 	'related-videos-wiki-summary-blacklist' => "Heeft [[:$2|$1]] uit de gerelateerde video's verwijderd.",
 	'related-videos-wiki-summary-whitelist' => "Heeft [[:$2|$1]] aan de gerelateerde video's toegevoegd.",
-	'related-videos-updated' => "Gerelateerde video's $1 bijgewerkt.",
+	'related-videos-update-summary-blacklist' => "Zwarte lijst voor gerelateerde video's bijgewerkt",
+	'related-videos-update-summary-whitelist' => "Witte lijst voor gerelateerde video's bijgewerkt",
 	'related-videos-tooltip-add' => 'Video aan deze pagina toevoegen',
+	'related-videos-tooltip-remove' => 'Deze video verwijderen',
 	'related-videos-tooltip-embed' => 'Plak deze URL in het hulpprogramma om video in te bedden',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Wikia Videobibliotheek',
 	'related-videos-embed-text' => 'Embedcode',
 	'related-videos-video-is-new' => 'Nieuw',
+	'related-videos-pagination' => '$1 van $2',
+	'related-videos-empty' => 'Wees de eerste om een video toe te voegen',
 );
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'related-videos-tally' => 'Powiązane filmy',
+	'related-videos-tally-article' => 'Filmów w tym artykule',
 	'related-videos-added-by' => 'Dodane przez',
 	'related-videos-remove' => 'Usuń',
 	'related-videos-add-video' => 'Dodaj film',
@@ -433,13 +492,17 @@ $messages['pl'] = array(
 	'related-videos-remove-call' => 'Czekaj, aż usuniemy film',
 	'related-videos-wiki-summary-blacklist' => 'Usunięto[[:$2|$1]] z powiązanych plików wideo.',
 	'related-videos-wiki-summary-whitelist' => 'Dodano [[:$2|$1]] do powiązanych plików wideo.',
-	'related-videos-updated' => 'Zaktualizowano powiązane filmy $1.',
+	'related-videos-update-summary-blacklist' => 'Zaktualizowano czarną listę Powiązanych Filmów',
+	'related-videos-update-summary-whitelist' => 'Zaktualizowano białą listę Powiązanych Filmów',
 	'related-videos-tooltip-add' => 'Dodaj film do tej strony',
+	'related-videos-tooltip-remove' => 'Usuń ten film',
 	'related-videos-tooltip-embed' => 'Wklej ten adres URL w narzędziu osadzania wideo',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Biblioteka wideo na Wikia',
 	'related-videos-embed-text' => 'Osadź kod',
 	'related-videos-video-is-new' => 'Nowy',
+	'related-videos-pagination' => '$1 z $2',
+	'related-videos-empty' => 'Bądź pierwszym dodającym film',
 );
 
 /** Russian (Русский)
@@ -447,6 +510,7 @@ $messages['pl'] = array(
  */
 $messages['ru'] = array(
 	'related-videos-tally' => 'Похожее видео',
+	'related-videos-tally-article' => 'Видео в этой статье',
 	'related-videos-added-by' => 'Добавлено',
 	'related-videos-remove' => 'Удалить',
 	'related-videos-add-video' => 'Добавить видео',
@@ -475,8 +539,10 @@ $messages['ru'] = array(
 	'related-videos-remove-call' => 'Пожалуйста, подождите пока мы удалим видео',
 	'related-videos-wiki-summary-blacklist' => 'Удалено [[:$2|$1]] из Похожих Видео.',
 	'related-videos-wiki-summary-whitelist' => 'Добавлено [[:$2|$1]] к Похожим Видео.',
-	'related-videos-updated' => 'Похожее Видео  $1  обновлено.',
+	'related-videos-update-summary-blacklist' => 'Чёрный список похожего видео обновлён',
+	'related-videos-update-summary-whitelist' => 'Белый список похожего видео обновлён',
 	'related-videos-tooltip-add' => 'Добавить видео на эту страницу',
+	'related-videos-tooltip-remove' => 'Удалить это видео',
 	'related-videos-tooltip-embed' => 'Вставьте этот URL в инструмент добавления видео',
 	'related-videos-beta-feature' => 'бета-версия',
 	'related-videos-repo-name' => 'Видео библиотека Викия',
@@ -497,7 +563,8 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'related-videos-tally' => 'Relaterade videor',
+	'related-videos-tally' => 'Relaterade videoklipp',
+	'related-videos-tally-article' => 'Videoklipp på denna artikel',
 	'related-videos-added-by' => 'Lades till av',
 	'related-videos-remove' => 'Ta bort',
 	'related-videos-add-video' => 'Lägg till en video',
@@ -509,7 +576,7 @@ $messages['sv'] = array(
 	'related-videos-add-video-error-bad-url' => 'Den angivna URL:en är ogiltig.',
 	'related-videos-add-video-error-nonexisting' => 'Denna video finns inte.',
 	'related-videos-add-video-error-bad-name' => 'Namnet på videon innehåller ogiltiga tecken. Välj en annan URL.',
-	'related-videos-add-video-error-permission-video' => 'Du har inte rättigheter att lägga till videor på denna wiki.',
+	'related-videos-add-video-error-permission-video' => 'Du har inte rättigheter att lägga till videoklipp på denna wiki.',
 	'related-videos-add-video-error-protected-video' => 'Du kan inte lägga till en video på denna wiki.',
 	'related-videos-add-video-error-duplicate' => 'Denna video har redan lagts till.',
 	'related-videos-error-unknown' => 'Ett okänt fel inträffade. Kod: $1.',
@@ -524,14 +591,14 @@ $messages['sv'] = array(
 	'related-videos-remove-video-error-nonexisting' => 'Videon du försöker ta bort finns inte.',
 	'related-videos-remove-confirm' => 'Är du säker på att du vill ta bort denna video?',
 	'related-videos-remove-call' => 'Var god vänta medan vi tar bort videon',
-	'related-videos-wiki-summary-blacklist' => 'Tog bort [[:$2|$1]] from Relaterade videor.',
-	'related-videos-wiki-summary-whitelist' => 'Lade till [[:$2|$1]] till Relaterade videor.',
-	'related-videos-updated' => 'Relaterade videor $1 uppdaterades.',
+	'related-videos-wiki-summary-blacklist' => 'Tog bort [[:$2|$1]] from Relaterade videoklipp.',
+	'related-videos-wiki-summary-whitelist' => 'Lade till [[:$2|$1]] till Relaterade videoklipp.',
 	'related-videos-tooltip-add' => 'Lägg till en video på denna sida',
 	'related-videos-tooltip-embed' => 'Klistra in denna URL i verktyget för videoinbäddning',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Wikia videobibliotek',
 	'related-videos-embed-text' => 'Inbäddningskod',
 	'related-videos-video-is-new' => 'Ny',
+	'related-videos-pagination' => '$1 av $2',
 );
 

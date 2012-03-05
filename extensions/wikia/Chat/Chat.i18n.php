@@ -223,14 +223,29 @@ $messages['ar'] = array(
  * @author Xuacu
  */
 $messages['ast'] = array(
+	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Charra en vivu]]',
 	'chat-no-login' => 'Has de tar coneutáu pa charrar',
 	'chat-no-login-text' => 'Por favor, conéutate pa charrar.',
 	'chat-default-topic' => 'Bienveníu a la charra $1',
+	'chat-user-joined' => '$1 entró na charra.',
+	'chat-read-only' => 'El chat nun ta disponible de mou temporal mentanto la wiki ta en mou de sólo llectura.',
+	'chat-user-parted' => '$1 dexó la charra.',
+	'chat-user-blocked' => '$1 bloquió a $2.',
+	'chat-user-allow' => '$1 autorizó a $2.',
+	'chat-user-was-kickbanned' => '$1 ta bloquiáu y espulsáu.',
+	'chat-user-permanently-disconnected' => 'Tas desconectáu; comprueba la conexón a Internet y refresca la ventana del navegador',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 fizo a <strong>$2</strong> moderador del chat.',
+	'chat-err-connected-from-another-browser' => 'Tas coneutáu dende otru navegador. Esta conexón se zarrará.',
+	'chat-err-communicating-with-mediawiki' => 'Error al comunicar col sirvidor de MediaWiki.',
 	'chat-ban-cant-ban-moderator' => 'Nun pues espulsar/torgar a otru moderador del chat.',
 	'chat-ban-already-banned' => '$1 yá tien torgáu el chat nesta wiki.',
 	'chat-ban-you-need-permission' => 'Nun tienes el permisu de $1 que ye necesariu pa espulsar/torgar a un usuariu.',
 	'chat-missing-required-parameter' => "'$1' ye necesariu, pero nun s'alcontró na petición.",
+	'chat-err-already-chatmod' => 'Error: "$1" yá ta nel grupu "$2".',
+	'chat-err-no-permission-to-add-chatmod' => "Error: Nun tienes permisu p'amestar el grupu $1 a esti usuariu.",
+	'chat-userrightslog-a-made-b-chatmod' => "$1 ascendió a $2 a moderador del chat d'esta wiki.",
+	'chat-err-invalid-username-chatmod' => 'Error: Nun se pudo alcontrar l\'usuariu "$1"',
 	'chat-you-are-banned' => 'Fallu de permisos.',
 	'chat-you-are-banned-text' => "Nun tienes permisu pal chat d'esta wiki. Si pienses que foi por error o quies que se reconsidere, ponte en contautu con un alministrador.",
 	'chat-room-is-not-on-this-wiki' => 'La sala de charra na que tas tentando entrar paez que nun esiste nesta wiki.',
@@ -241,8 +256,23 @@ Ponte'n contautu con ellos pa más info.",
 	'chat-start-a-chat' => 'Aniciar una charra',
 	'chat-whos-here' => 'Quién ta equí ($1)',
 	'chat-join-the-chat' => 'Xunise al Chat',
-	'chat-edit-count' => '$1 Ediciones',
+	'chat-edit-count' => '{{PLURAL:$1|$1 edición|$1 ediciones}}',
 	'chat-member-since' => 'Miembru dende $1',
+	'chat-great-youre-logged-in' => '¡Bien! Tas coneutáu.',
+	'chat-user-manu-profile' => 'Perfil del usuariu',
+	'chat-user-manu-contribs' => 'Collaboraciones',
+	'chat-user-manu-private' => 'Mensaxe priváu',
+	'chat-user-manu-give-chat-mod' => 'Dar estáu de moderador del chat',
+	'chat-user-manu-kickban' => 'Espulsar y bloquiar',
+	'chat-user-manu-private-block' => 'Bloquiar mensaxes privaos',
+	'chat-user-manu-private-allow' => 'Permitir mensaxes privaos',
+	'chat-user-manu-private-close' => 'Zarrar sala privada',
+	'chat-private-headline' => 'Charra privada con $1',
+	'right-chatmoderator' => 'Pue espulsar/bloquiar usuarios del [[Help:Chat|chat]]',
+	'group-chatmoderator' => 'Moderadores del chat',
+	'group-chatmoderator-member' => 'Moderador del chat',
+	'group-bannedfromchat' => 'Bloquiaos de la charra',
+	'group-bannedfromchat-member' => 'Bloquiáu de la charra',
 );
 
 /** Bulgarian (Български)
@@ -359,12 +389,15 @@ $messages['ca'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author DaSch
+ * @author Dennis07
+ * @author Geitost
  * @author Jan Luca
  * @author LWChris
  * @author SVG
  * @author Tiin
  */
 $messages['de'] = array(
+	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Live-Chat]]',
 	'chat-no-login' => 'Du musst angemeldet sein, um chatten zu können.',
 	'chat-no-login-text' => 'Bitte anmelden, um zu chatten.',
@@ -386,6 +419,7 @@ $messages['de'] = array(
 	'chat-err-already-chatmod' => 'Fehler: "$1" ist bereits in der "$2" Gruppe.',
 	'chat-err-no-permission-to-add-chatmod' => 'Fehler: Du hast keine Berechtigung, die "$1" Gruppe bei diesem Benutzer hinzuzufügen.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 hat $2 zum Chat-Moderator in diesem Wiki befördert.',
+	'chat-err-invalid-username-chatmod' => 'Fehler: Benutzer "$1" konnte nicht gefunden werden',
 	'chat-you-are-banned' => 'Berechtigungsfehler.',
 	'chat-you-are-banned-text' => 'Entschuldige bitte, aber du hast keine Berechtigung, in diesem Wiki zu chatten.
 Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung überdacht wird, wende dich bitte an einen Administrator.',
@@ -430,9 +464,12 @@ $messages['diq'] = array(
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
+ * @author Geitost
  * @author VegaDark
  */
 $messages['es'] = array(
+	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat en vivo]]',
 	'chat-no-login' => 'Debes iniciar sesión para chatear.',
 	'chat-no-login-text' => 'Inicia sesión para chatear.',
@@ -454,6 +491,7 @@ $messages['es'] = array(
 	'chat-err-already-chatmod' => 'Error: "$1" ya está en el grupo "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Error: No tienes permiso para agregar el grupo $1 a este usuario.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 promovió a $2 para ser moderador del chat en este wiki.',
+	'chat-err-invalid-username-chatmod' => 'Error: No se pudo encontrar al usuario "$1"',
 	'chat-you-are-banned' => 'Error de permisos.',
 	'chat-you-are-banned-text' => 'Lo sentimos, no tienes permiso para entrar al chat en esta wiki.
 Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta con un administrador.',
@@ -465,7 +503,7 @@ Por favor, contáctalo para más información.',
 	'chat-start-a-chat' => 'Iniciar el Chat',
 	'chat-whos-here' => 'Quién está aquí ($1)',
 	'chat-join-the-chat' => 'Únete al Chat',
-	'chat-edit-count' => '$1 ediciones',
+	'chat-edit-count' => '{{PLURAL:$1|$1 edición|$1 ediciones}}',
 	'chat-member-since' => 'Miembro desde $1',
 	'chat-great-youre-logged-in' => '¡Genial! Has iniciado sesión.',
 	'chat-user-manu-profile' => 'Perfil de Usuario',
@@ -480,8 +518,10 @@ Por favor, contáctalo para más información.',
 	'right-chatmoderator' => 'Puede banear y expulsar usuarios del [[Help:Chat|Chat]]',
 	'group-chatmoderator' => 'Moderadores del chat',
 	'group-chatmoderator-member' => 'Moderador del chat',
+	'grouppage-chatmoderator' => 'w:c:ayuda:Ayuda:Chat',
 	'group-bannedfromchat' => 'Baneados del chat',
 	'group-bannedfromchat-member' => 'Baneado del chat',
+	'grouppage-bannedfromchat' => 'w:c:ayuda:Ayuda:Chat',
 );
 
 /** Finnish (Suomi)
@@ -511,6 +551,7 @@ $messages['fi'] = array(
 	'chat-err-already-chatmod' => 'Virhe: "$1" on jo ryhmässä "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Virhe: Sinulla ei ole oikeutta lisätä ryhmää "$1" tälle käyttäjälle.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 ylensi käyttäjän $2 tämän wikin chat-valvojaksi.',
+	'chat-err-invalid-username-chatmod' => 'Virhe: Käyttäjää ”$1” ei löytynyt',
 	'chat-you-are-banned' => 'Käyttöoikeusvirhe.',
 	'chat-you-are-banned-text' => 'Valitettavasti sinulla ei ole oikeutta käyttää chattia tässä wikissä. Jos arvelet tämän johtuvan virheestä tai haluaisit, että oikeutta harkittaisiin uudelleen, ota yhteys ylläpitäjään.',
 	'chat-room-is-not-on-this-wiki' => 'Chat-huone, johon yrität päästä, ei näytä olevan olemassa tässä wikissä.',
@@ -570,6 +611,7 @@ $messages['fr'] = array(
 	'chat-err-already-chatmod' => 'Erreur : « $1 » est déjà dans le groupe « $2 ».',
 	'chat-err-no-permission-to-add-chatmod' => "Erreur : Vous n'avez pas la permission d'ajouter cet utilisateur au groupe « $1 ».",
 	'chat-userrightslog-a-made-b-chatmod' => '$1 a promu $2 au rang de modérateur du tchat sur ce wiki.',
+	'chat-err-invalid-username-chatmod' => 'Erreur: Impossible de trouver l\'utilisateur "$1"',
 	'chat-you-are-banned' => 'Erreur de permissions.',
 	'chat-you-are-banned-text' => "Désolé, vous n'avez pas la permission de tchater sur ce wiki. Si vous pensez que c'est une erreur ou souhaitez en discuter, veuillez contacter un administrateur.",
 	'chat-room-is-not-on-this-wiki' => 'Le salon de tchat auquel vous essayez de vous connecter ne semble pas exister sur ce wiki.',
@@ -579,7 +621,7 @@ $messages['fr'] = array(
 	'chat-start-a-chat' => 'Démarrer une discussion',
 	'chat-whos-here' => 'Qui est présent ($1)',
 	'chat-join-the-chat' => 'Rejoindre la discussion',
-	'chat-edit-count' => '$1 contributions',
+	'chat-edit-count' => '{{PLURAL:$1|$1 modification|$1 modifications}}',
 	'chat-member-since' => 'Membre depuis $1',
 	'chat-great-youre-logged-in' => 'Super ! Vous êtes connecté.',
 	'chat-user-manu-profile' => 'Profil utilisateur',
@@ -625,6 +667,7 @@ $messages['gl'] = array(
 	'chat-err-already-chatmod' => 'Erro: "$1" xa está no grupo "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Erro: Non ten permisos para engadir este usuario ao grupo "$1".',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 fixo unha proposta para converter a $2 en moderador do chat neste wiki.',
+	'chat-err-invalid-username-chatmod' => 'Erro: Non se puido atopar o usuario "$1"',
 	'chat-you-are-banned' => 'Erro de permisos.',
 	'chat-you-are-banned-text' => 'Sentímolo, non ten os permisos necesarios para conversar neste wiki. Se cre que foi un erro ou quere que esta decisión sexa reconsiderada, póñase en contacto cun administrador.',
 	'chat-room-is-not-on-this-wiki' => 'Semella que a sala de conversa á que intenta entrar non existe neste wiki.',
@@ -634,7 +677,7 @@ $messages['gl'] = array(
 	'chat-start-a-chat' => 'Iniciar un chat',
 	'chat-whos-here' => 'Quen está aquí ($1)',
 	'chat-join-the-chat' => 'Únase ao chat',
-	'chat-edit-count' => '$1 edicións',
+	'chat-edit-count' => '{{PLURAL:$1|$1 edición|$1 edicións}}',
 	'chat-member-since' => 'Membro desde $1',
 	'chat-great-youre-logged-in' => 'Ben! Está conectado.',
 	'chat-user-manu-profile' => 'Perfil do usuario',
@@ -721,6 +764,7 @@ $messages['ia'] = array(
 	'chat-err-already-chatmod' => 'Error: "$1" es jam in le gruppo "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Error: Tu non ha le permission de adder iste usator al gruppo "$1".',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 ha promovite $2 a moderator del chat in iste wiki.',
+	'chat-err-invalid-username-chatmod' => 'Error: Non poteva trovar le usator "$1"',
 	'chat-you-are-banned' => 'Error de permissiones.',
 	'chat-you-are-banned-text' => 'Regrettabilemente, tu non ha le permission de entrar in le chat de iste wiki.
 Si tu pensa que isto es un error o si tu vole esser reconsiderate, per favor contacta un administrator.',
@@ -732,7 +776,7 @@ Per favor contacta le pro plus informationes.',
 	'chat-start-a-chat' => 'Comenciar un chat',
 	'chat-whos-here' => 'Qui es presente ($1)',
 	'chat-join-the-chat' => 'Entrar in le chat',
-	'chat-edit-count' => 'Modificationes de $1',
+	'chat-edit-count' => '{{PLURAL:$1|$1 modification|$1 modificationes}}',
 	'chat-member-since' => 'Membro depost $1',
 	'chat-great-youre-logged-in' => 'Genial! Tu ha aperite session.',
 	'chat-user-manu-profile' => 'Profilo de usator',
@@ -777,6 +821,7 @@ $messages['id'] = array(
  * @author Minerva Titani
  */
 $messages['it'] = array(
+	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat dal vivo]]',
 	'chat-no-login' => 'Devi effettuare il login per chattare.',
 	'chat-no-login-text' => 'Per favore effettua il login per chattare.',
@@ -807,7 +852,7 @@ $messages['it'] = array(
 	'chat-start-a-chat' => 'Inizia una Chat',
 	'chat-whos-here' => "Chi c'è qui ($1)",
 	'chat-join-the-chat' => 'Entra in Chat',
-	'chat-edit-count' => '$1 modifiche',
+	'chat-edit-count' => '{{PLURAL:$1|$1 modifica|$1 modifiche}}',
 	'chat-member-since' => 'Membro dal $1',
 	'chat-great-youre-logged-in' => 'Fantastico! Ti sei connesso.',
 	'chat-user-manu-profile' => 'Profilo utente',
@@ -918,8 +963,10 @@ $messages['lb'] = array(
 	'chat-user-blocked' => '$1 huet $2 gespaart.',
 	'chat-you-are-banned' => 'Berechtigungs-Feeler',
 	'chat-headline' => 'Chat: $1',
-	'chat-edit-count' => '$1 Ännerungen',
+	'chat-live' => 'Live!',
+	'chat-edit-count' => '{{PLURAL:$1|Eng Ännerung|$1 Ännerungen}}',
 	'chat-member-since' => 'Member zënter $1',
+	'chat-user-manu-private' => 'Private Message',
 );
 
 /** Lithuanian (Lietuvių)
@@ -972,7 +1019,8 @@ $messages['mk'] = array(
 	'chat-err-already-chatmod' => 'Грешка: „$1“ веќе членува во групата „$2“.',
 	'chat-err-no-permission-to-add-chatmod' => 'Грешка: Немате дозвола да ја додадете групата „$1“ кон овој корисник.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 го унапреди корисникот $2 во модератор на разговорите на ова вики.',
-	'chat-you-are-banned' => 'Грешка во дозволите.',
+	'chat-err-invalid-username-chatmod' => 'Грешка: Не можев да го најдам корисникот „$1“',
+	'chat-you-are-banned' => 'Грешка со дозволата за пристап.',
 	'chat-you-are-banned-text' => 'Забрането ви е да разговарате на ова вики. Доколку сметате дека ова е направено по грешка или сакате да се преиспита одлуката, обратете се кај администратор.',
 	'chat-room-is-not-on-this-wiki' => 'Собата за разговор што сакате да ја пристапите не постои на ова вики.',
 	'chat-kick-log-reason' => 'Исфрлен од/има забранет пристап до разговорот на ова вики од страна на $1. За повеќе информации, обратете се кај тој корисник.',
@@ -981,7 +1029,7 @@ $messages['mk'] = array(
 	'chat-start-a-chat' => 'Започнете разговор',
 	'chat-whos-here' => 'Кој има тука ($1)',
 	'chat-join-the-chat' => 'Приклучете се во разговорот',
-	'chat-edit-count' => '$1 уредувања',
+	'chat-edit-count' => '{{PLURAL:$1|$1 уредување|$1 уредувања}}',
 	'chat-member-since' => 'Членува од $1',
 	'chat-great-youre-logged-in' => 'Одлично! Најавени сте.',
 	'chat-user-manu-profile' => 'Кориснички профил',
@@ -1035,6 +1083,7 @@ $messages['ms'] = array(
 	'chat-err-already-chatmod' => 'Perhatian: "$1" sudah berada dalam kumpulan "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Perhatian: Anda tidak dibenarkan menambahkan kumpulan "$1" ke dalam pengguna ini.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 menaik pangkat $2 untuk menjadi moderator sembang di wiki ini.',
+	'chat-err-invalid-username-chatmod' => 'Ralat: Pengguna "$1" tidak dapat dijumpai',
 	'chat-you-are-banned' => 'Ralat kebenaran.',
 	'chat-you-are-banned-text' => 'Maaf, anda tidak dibenarkan untuk bersembang di wiki ini.
 Jika anda rasa ini kesilapan atau ingin merayu untuk dibenarkan semula, sila hubungi pentadbir.',
@@ -1046,7 +1095,7 @@ Sila hubungi mereka untuk penjelasan lanjut.',
 	'chat-start-a-chat' => 'Mula Bersembang',
 	'chat-whos-here' => 'Siapa di sini ($1)',
 	'chat-join-the-chat' => 'Jom Sembang',
-	'chat-edit-count' => '$1 Suntingan',
+	'chat-edit-count' => '$1 suntingan',
 	'chat-member-since' => 'Ahli sejak $1',
 	'chat-great-youre-logged-in' => 'Bagus! Anda telah log masuk.',
 	'chat-user-manu-profile' => 'Profil Pengguna',
@@ -1094,6 +1143,7 @@ $messages['nb'] = array(
 	'chat-err-already-chatmod' => 'Feil: «$1» er allerede i gruppen «$2».',
 	'chat-err-no-permission-to-add-chatmod' => 'Feil: Du har ikke tillatelse til å legge gruppen «$1» til denne brukeren.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 forfremmet $2 til å være en chat-moderator på denne wikien.',
+	'chat-err-invalid-username-chatmod' => 'Felt: Fant ikke brukeren «$1»',
 	'chat-you-are-banned' => 'Rettighetsfeil.',
 	'chat-you-are-banned-text' => 'Beklager, du har ikke rett til å chatte på denne wikien. Hvis du tror dette er en feil, eller om du vil bli revurdert, vennligst kontakt en administrator.',
 	'chat-room-is-not-on-this-wiki' => 'Chatrommet du forsøker å entre ser ikke ut til å eksistere på denne wikien.',
@@ -1104,7 +1154,7 @@ Vennligst kontakt dem for mer informasjon.',
 	'chat-start-a-chat' => 'Start en chat',
 	'chat-whos-here' => 'Hvem er her ($1)',
 	'chat-join-the-chat' => 'Bli med i chatten',
-	'chat-edit-count' => '$1 redigeringer',
+	'chat-edit-count' => '{{PLURAL:$1|$1 redigering|$1 redigeringer}}',
 	'chat-member-since' => 'Medlem siden $1',
 	'chat-great-youre-logged-in' => 'Flott! Du er logget inn.',
 	'chat-user-manu-profile' => 'Brukerprofil',
@@ -1153,6 +1203,7 @@ $messages['nl'] = array(
 	'chat-err-already-chatmod' => 'Fout: "$1" is al in de groep "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Fout: U hebt geen toestemming om de groep "$1" aan deze gebruiker toe te voegen.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 heeft $2 gepromoveerd tot chatmoderator op deze wiki.',
+	'chat-err-invalid-username-chatmod' => 'Fout: de gebruiker "$1" is niet aangetroffen',
 	'chat-you-are-banned' => 'Fouten in rechten.',
 	'chat-you-are-banned-text' => 'U mag niet langer deelnemen aan de chat. Als u denkt dat dit niet klopt, of als u wilt vragen uw blokkade op te heffen, neem dan contact op met een beheerder.',
 	'chat-room-is-not-on-this-wiki' => 'De chatroom waar u probeert binnen te komen bestaat niet op deze wiki.',
@@ -1163,7 +1214,7 @@ Neem alstublieft contact op met deze gebruiker voor meer informatie.',
 	'chat-start-a-chat' => 'Chat starten',
 	'chat-whos-here' => 'Wie is er ($1)',
 	'chat-join-the-chat' => 'Deelnemen aan de chat',
-	'chat-edit-count' => '$1 bewerkingen',
+	'chat-edit-count' => '{{PLURAL:$1|bewerking|bewerkingen}}',
 	'chat-member-since' => 'Lid sinds $1',
 	'chat-great-youre-logged-in' => 'Geweldig! U bent aangemeld.',
 	'chat-user-manu-profile' => 'Gebruikersprofiel',
@@ -1196,6 +1247,7 @@ $messages['nl-informal'] = array(
 
 /** Polish (Polski)
  * @author Anoon6
+ * @author BeginaFelicysym
  * @author Cloudissimo
  * @author Nandy
  * @author Sovq
@@ -1225,6 +1277,7 @@ $messages['pl'] = array(
 	'chat-err-already-chatmod' => 'Błąd: "$1" jest już w "$2" grupie.',
 	'chat-err-no-permission-to-add-chatmod' => 'Błąd: Nie masz uprawnień do dodawania "$1" grupy do tego użytkownika.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 awansował $2 na moderatora czatu tej wiki.',
+	'chat-err-invalid-username-chatmod' => 'Błąd: Nie dało się odnaleźć użytkownika "$1"',
 	'chat-you-are-banned' => 'Błąd uprawnień.',
 	'chat-you-are-banned-text' => 'Niestety, nie masz uprawnień do korzystania z czatu na tej wiki. Jeśli uważasz, że wynikło to z powodu błędu lub powinno być ponownie rozpatrzone, skontaktuj się z administratorem.',
 	'chat-room-is-not-on-this-wiki' => 'Chatroom, do którego próbujesz dołączyć wydaje się nie istnieć na tej wiki.',
@@ -1234,7 +1287,7 @@ $messages['pl'] = array(
 	'chat-start-a-chat' => 'Rozpocznij czat',
 	'chat-whos-here' => 'Obecnych ($1)',
 	'chat-join-the-chat' => 'Dołącz do czatu',
-	'chat-edit-count' => '$1 Edycji',
+	'chat-edit-count' => '{{PLURAL:$1|$1 edycja|$1 edycje|$1 edycji}}',
 	'chat-member-since' => 'Użytkownik od $1',
 	'chat-great-youre-logged-in' => 'Świetnie! Jesteś zalogowany',
 	'chat-user-manu-profile' => 'Profil użytkownika',
@@ -1257,6 +1310,8 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'chat' => 'بانډار',
+	'chat-no-login-text' => 'د بانډار لپاره غونډال ته ورننوځۍ.',
 	'chat-headline' => '$1 بانډار',
 	'chat-live' => 'ژوندی!',
 	'chat-start-a-chat' => 'بانډار پيلول',
@@ -1409,6 +1464,7 @@ $messages['ru'] = array(
 	'chat-err-already-chatmod' => 'Ошибка: "$1" уже находится в группе "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Ошибка: у вас нет разрешения на добавление к группе "$1" этого участника.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 присвоил $2 статус модератора чата на этой вики.',
+	'chat-err-invalid-username-chatmod' => 'Ошибка: не удалось найти участника " $1 "',
 	'chat-you-are-banned' => 'Ошибка доступа.',
 	'chat-you-are-banned-text' => 'Извините, у вас нет доступа в чат на этой вики. Если вы думаете, что произошла ошибка или хотели бы, чтобы бан был пересмотрен, пожалуйста, свяжитесь с администратором вики.',
 	'chat-room-is-not-on-this-wiki' => 'Чат, в который вы пытаетесь войти, вероятно, не существует на этой вики.',
@@ -1418,7 +1474,7 @@ $messages['ru'] = array(
 	'chat-start-a-chat' => 'Начать чат',
 	'chat-whos-here' => 'Кто находится здесь ($1)',
 	'chat-join-the-chat' => 'Присоединиться к чату',
-	'chat-edit-count' => '$1 правок',
+	'chat-edit-count' => '{{PLURAL:$1|$1 правка|$1 правки|$1 правок}}',
 	'chat-member-since' => 'Участник с $1',
 	'chat-great-youre-logged-in' => 'Отлично! Вы вошли в систему.',
 	'chat-user-manu-profile' => 'Профиль участника',
@@ -1454,6 +1510,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Geitost
  * @author Lokal Profil
  * @author WikiPhoenix
  */
@@ -1480,6 +1537,7 @@ $messages['sv'] = array(
 	'chat-err-already-chatmod' => 'Fel: "$1" är redan i gruppen "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Fel: Du har inte behörighet att lägga till gruppen "$1" till den här användaren.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 befordrade $2 att vara en chattmoderator på denna wiki.',
+	'chat-err-invalid-username-chatmod' => 'Fel: Kunde inte hitta användaren "$1"',
 	'chat-you-are-banned' => 'Behörighetsfel.',
 	'chat-you-are-banned-text' => 'Tyvärr har du inte behörighet att chatta på denna wiki. Om du tror att detta var ett misstag eller vill bli omprövad, var god kontakta en administratör.',
 	'chat-room-is-not-on-this-wiki' => 'Chattrummet du försöker gå in på verkar inte finnas på denna wiki.',
@@ -1489,7 +1547,7 @@ $messages['sv'] = array(
 	'chat-start-a-chat' => 'Starta en chatt',
 	'chat-whos-here' => 'Vem är här ($1)',
 	'chat-join-the-chat' => 'Delta i chatten',
-	'chat-edit-count' => '$1 redigeringar',
+	'chat-edit-count' => '{{PLURAL:$1|$1 redigering|$1 redigeringar}}',
 	'chat-member-since' => 'Medlem sedan $1',
 	'chat-great-youre-logged-in' => 'Toppen! Du är inloggad.',
 	'chat-user-manu-profile' => 'Användarprofil',
@@ -1570,6 +1628,13 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
 	'chat-member-since' => 'Kasapi magmula pa noong $1',
 );
 
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'chat-user-manu-contribs' => 'Katkılar',
+);
+
 /** Veps (Vepsän kel')
  * @author Игорь Бродский
  */
@@ -1607,6 +1672,7 @@ $messages['vi'] = array(
 	'chat-err-already-chatmod' => 'Lỗi: "$1" đã nằm trong nhóm "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Lỗi: Bạn không có quyền cấp nhóm "$1" cho thành viên này.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 đã phong cấp cho $2 thành điều phối viên tán gẫu tại wiki này.',
+	'chat-err-invalid-username-chatmod' => 'Lỗi: Không thể tìm thấy thành viên " $1 "',
 	'chat-you-are-banned' => 'Lỗi về quyền.',
 	'chat-you-are-banned-text' => 'Xin lỗi, bạn không được phép tán gẫu trên wiki này. Nếu bạn nghĩ rằng đây là một sai lầm hoặc muốn được xem xét lại, xin vui lòng liên hệ với một bảo quản viên.',
 	'chat-room-is-not-on-this-wiki' => 'Phòng tán gẫu bạn đang cố gắng nhập vào có vẻ không tồn tại trên wiki này.',
@@ -1616,7 +1682,7 @@ $messages['vi'] = array(
 	'chat-start-a-chat' => 'Bắt đầu cuộc Tán gẫu',
 	'chat-whos-here' => 'Ai đang ở đây ($1)',
 	'chat-join-the-chat' => 'Tham gia Tán gẫu',
-	'chat-edit-count' => '$1 Sửa đổi',
+	'chat-edit-count' => '{{PLURAL:$1|$1 sửa đổi|$1 sửa đổi}}',
 	'chat-member-since' => 'Thành viên từ $1',
 	'chat-great-youre-logged-in' => 'Tuyệt! Bạn đã đăng nhập.',
 	'chat-user-manu-profile' => 'Thông tin Thành viên',

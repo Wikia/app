@@ -49,15 +49,15 @@ you should definitely check this out:
 '
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
-	'wikiamobile-page-header-title' => 'please ignore for now',
 	'wikiamobile-footer-link1' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
 	'wikiamobile-footer-link2' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
 	'wikiamobile-footer-link3' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
 	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category',
 	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
 	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
-	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1 and new line after $1'
+	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1 and new line after $1',
 );
 
 /** адыгэбзэ (адыгэбзэ)
@@ -108,11 +108,16 @@ $messages['az'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'wikiamobile-search' => 'Търсене',
 	'wikiamobile-search-wiki' => 'Уики',
 	'wikiamobile-search-wikia' => 'Уикия',
+	'wikiamobile-login' => 'Влизане',
 	'wikiamobile-password' => 'Парола',
 	'wikiamobile-login-submit' => 'Влизане',
+	'wikiamobile-menu' => 'Меню',
 	'wikiamobile-article-categories' => 'Категории',
+	'wikiamobile-back' => 'Връщане',
+	'wikiamobile-hide-section' => 'скриване',
 );
 
 /** Breton (Brezhoneg)
@@ -164,6 +169,38 @@ $messages['de'] = array(
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spiele]]',
 );
 
+/** Spanish (Español)
+ * @author Benfutbol10
+ * @author Ciencia Al Poder
+ */
+$messages['es'] = array(
+	'wikiamobile-search' => 'Buscar',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Ingresar',
+	'wikiamobile-password' => 'Contraseña',
+	'wikiamobile-login-submit' => 'Ingresar',
+	'wikiamobile-menu' => 'Menú',
+	'wikiamobile-explore' => 'Explorar',
+	'wikiamobile-article-categories' => 'Categorías',
+	'wikiamobile-feedback' => 'Sugerencias',
+	'wikiamobile-back' => 'Atrás',
+	'wikiamobile-article-comments-post' => 'Publicar',
+	'wikiamobile-article-comments-placeholder' => 'Dejar un comentario',
+	'wikiamobile-article-comments-reply' => 'Dejar una respuesta',
+	'wikiamobile-hide-section' => 'ocultar',
+	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Estilo de vida]]',
+	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entretenimiento]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Videojuegos]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artículo|artículos}}',
+	'wikiamobile-category-items-more' => 'Cargar más',
+	'wikiamobile-category-items-prev' => 'Cargar el anterior',
+	'wikiamobile-categories-expand' => 'Mostrar todo',
+	'wikiamobile-categories-collapse' => 'Ocultar todo',
+	'wikiamobile-sharing-media-image' => 'Imagen',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+);
+
 /** Persian (فارسی)
  * @author Mjbmr
  */
@@ -197,6 +234,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author DavidL
+ * @author Gomoko
  * @author Verdy p
  * @author Wyz
  */
@@ -211,9 +249,26 @@ $messages['fr'] = array(
 	'wikiamobile-explore' => 'Explorer',
 	'wikiamobile-article-categories' => 'Catégories',
 	'wikiamobile-feedback' => 'Avis',
+	'wikiamobile-back' => 'Retour',
+	'wikiamobile-article-comments-post' => 'Envoyer',
+	'wikiamobile-article-comments-placeholder' => 'Envoyer un commentaire',
+	'wikiamobile-article-comments-reply' => 'Envoyer une réponse',
+	'wikiamobile-hide-section' => 'masquer',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Divertissement]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Jeu]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
+	'wikiamobile-category-items-more' => 'Lire la suite',
+	'wikiamobile-category-items-prev' => 'Lire le précédent',
+	'wikiamobile-categories-expand' => 'Afficher tout',
+	'wikiamobile-categories-collapse' => 'Masquer tout',
+	'wikiamobile-sharing-media-image' => 'Image',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 sur $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Bonjour,
+vous devriez vraiment y jeter un œil :
+
+$1',
 );
 
 /** Galician (Galego)
@@ -230,9 +285,26 @@ $messages['gl'] = array(
 	'wikiamobile-explore' => 'Explorar',
 	'wikiamobile-article-categories' => 'Categorías',
 	'wikiamobile-feedback' => 'Comentarios',
+	'wikiamobile-back' => 'Volver',
+	'wikiamobile-article-comments-post' => 'Publicar',
+	'wikiamobile-article-comments-placeholder' => 'Publicar un comentario',
+	'wikiamobile-article-comments-reply' => 'Publicar unha resposta',
+	'wikiamobile-hide-section' => 'agochar',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Estilo de vida]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entretemento]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Xogos]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artigo|artigos}}',
+	'wikiamobile-category-items-more' => 'Cargar máis',
+	'wikiamobile-category-items-prev' => 'Cargar os anteriores',
+	'wikiamobile-categories-expand' => 'Mostrar todos',
+	'wikiamobile-categories-collapse' => 'Agochar todos',
+	'wikiamobile-sharing-media-image' => 'Imaxe',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 en $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Boas,
+deberías botar un ollo a isto:
+
+ $1',
 );
 
 /** Interlingua (Interlingua)
@@ -248,10 +320,20 @@ $messages['ia'] = array(
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Explorar',
 	'wikiamobile-article-categories' => 'Categorias',
-	'wikiamobile-feedback' => 'Retroaction',
+	'wikiamobile-feedback' => 'Commentario',
+	'wikiamobile-back' => 'Retro',
+	'wikiamobile-article-comments-post' => 'Inviar',
+	'wikiamobile-article-comments-placeholder' => 'Publicar un commento',
+	'wikiamobile-article-comments-reply' => 'Publicar un responsa',
+	'wikiamobile-hide-section' => 'celar',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Stilo de vita]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Intertenimento]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Joco]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|articulo|articulos}}',
+	'wikiamobile-category-items-more' => 'Cargar plus',
+	'wikiamobile-category-items-prev' => 'Cargar precedente',
+	'wikiamobile-categories-expand' => 'Monstrar totes',
+	'wikiamobile-categories-collapse' => 'Celar totes',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -312,9 +394,26 @@ $messages['mk'] = array(
 	'wikiamobile-explore' => 'Истражете',
 	'wikiamobile-article-categories' => 'Категории',
 	'wikiamobile-feedback' => 'Мислења',
+	'wikiamobile-back' => 'Назад',
+	'wikiamobile-article-comments-post' => 'Објави',
+	'wikiamobile-article-comments-placeholder' => 'Објави коментар',
+	'wikiamobile-article-comments-reply' => 'Објави одговор',
+	'wikiamobile-hide-section' => 'скриј',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Животен стил]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Забава]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игри]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|статија|статии}}',
+	'wikiamobile-category-items-more' => 'Вчитај уште',
+	'wikiamobile-category-items-prev' => 'Вчитај претходни',
+	'wikiamobile-categories-expand' => 'Прикажи сè',
+	'wikiamobile-categories-collapse' => 'Скриј ги сите',
+	'wikiamobile-sharing-media-image' => 'Слика',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 на $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Здраво,
+ова дефинитивно мора да го видиш:
+
+ $1',
 );
 
 /** Malay (Bahasa Melayu)
@@ -331,9 +430,26 @@ $messages['ms'] = array(
 	'wikiamobile-explore' => 'Jelajah',
 	'wikiamobile-article-categories' => 'Kategori',
 	'wikiamobile-feedback' => 'Maklum balas',
+	'wikiamobile-back' => 'Kembali',
+	'wikiamobile-article-comments-post' => 'Hantar',
+	'wikiamobile-article-comments-placeholder' => 'Hantar ulasan',
+	'wikiamobile-article-comments-reply' => 'Balas',
+	'wikiamobile-hide-section' => 'sorokkan',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Gaya Hidup]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Hiburan]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Permainan]]',
+	'wikiamobile-categories-items-total' => '$1 rencana',
+	'wikiamobile-category-items-more' => 'Muatkan banyak lagi',
+	'wikiamobile-category-items-prev' => 'Muatkan yang sebelumnya',
+	'wikiamobile-categories-expand' => 'Paparkan Semua',
+	'wikiamobile-categories-collapse' => 'Sorokkan Semua',
+	'wikiamobile-sharing-media-image' => 'Gambar',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 tentang $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Hei,
+apa kata anda tengok yang ini pula:
+
+ $1',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -350,13 +466,30 @@ $messages['nb'] = array(
 	'wikiamobile-explore' => 'Utforsk',
 	'wikiamobile-article-categories' => 'Kategorier',
 	'wikiamobile-feedback' => 'Tilbakemelding',
+	'wikiamobile-back' => 'Tilbake',
+	'wikiamobile-article-comments-post' => 'Post',
+	'wikiamobile-article-comments-placeholder' => 'Post en kommentar',
+	'wikiamobile-article-comments-reply' => 'Post et svar',
+	'wikiamobile-hide-section' => 'skjul',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Livsstil]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Underholdning]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spill]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artikkel|artikler}}',
+	'wikiamobile-category-items-more' => 'Last inn mer',
+	'wikiamobile-category-items-prev' => 'Last inn forrige',
+	'wikiamobile-categories-expand' => 'Vis alle',
+	'wikiamobile-categories-collapse' => 'Skjul alle',
+	'wikiamobile-sharing-media-image' => 'Bilde',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-email-text' => 'Hei,
+du burde definitivt sjekke ut dette:
+
+$1',
 );
 
 /** Dutch (Nederlands)
  * @author Bereisgreat
+ * @author SPQRobin
  * @author Siebrand
  * @author TBloemink
  */
@@ -371,9 +504,27 @@ $messages['nl'] = array(
 	'wikiamobile-explore' => 'Verkennen',
 	'wikiamobile-article-categories' => 'Categorieën',
 	'wikiamobile-feedback' => 'Terugkoppeling',
+	'wikiamobile-back' => 'Terug',
+	'wikiamobile-article-comments-post' => 'Opslaan',
+	'wikiamobile-article-comments-placeholder' => 'Opmerking plaatsen',
+	'wikiamobile-article-comments-reply' => 'Reactie plaatsen',
+	'wikiamobile-hide-section' => 'verbergen',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Vermaak]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]',
+	'wikiamobile-categories-items-total' => "{{PLURAL:$1|Eén pagina|$1 pagina's}}",
+	'wikiamobile-category-items-more' => 'Meer laden',
+	'wikiamobile-category-items-prev' => 'Vorige laden',
+	'wikiamobile-categories-expand' => 'Allemaal weergeven',
+	'wikiamobile-categories-collapse' => 'Alles verbergen',
+	'wikiamobile-sharing-media-image' => 'Afbeelding',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 in $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Hallo,
+
+dit moet u echt zien:
+
+$1',
 );
 
 /** Polish (Polski)
@@ -392,9 +543,25 @@ $messages['pl'] = array(
 	'wikiamobile-explore' => 'Eksploruj',
 	'wikiamobile-article-categories' => 'Kategorie',
 	'wikiamobile-feedback' => 'Opinie',
+	'wikiamobile-back' => 'Wstecz',
+	'wikiamobile-article-comments-post' => 'Publikuj',
+	'wikiamobile-article-comments-placeholder' => 'Wyślij komentarz',
+	'wikiamobile-article-comments-reply' => 'Odpowiedz',
+	'wikiamobile-hide-section' => 'ukryj',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Styl]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Rozrywka]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gry]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artykuł|artykuły|artykułów}}',
+	'wikiamobile-category-items-more' => 'Załaduj więcej',
+	'wikiamobile-category-items-prev' => 'Załaduj poprzednie',
+	'wikiamobile-categories-expand' => 'Pokaż wszystko',
+	'wikiamobile-categories-collapse' => 'Ukryj wszystko',
+	'wikiamobile-sharing-media-image' => 'Obraz',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 w $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Zdecydowanie powinieneś zobaczyć to:
+
+ $1',
 );
 
 /** Pashto (پښتو)
@@ -408,6 +575,7 @@ $messages['ps'] = array(
 	'wikiamobile-password' => 'پټنوم',
 	'wikiamobile-login-submit' => 'ننوتل',
 	'wikiamobile-menu' => 'غورنۍ',
+	'wikiamobile-article-categories' => 'وېشنيزې',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -425,6 +593,7 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author Express2000
  * @author Kuzura
  * @author Lvova
  */
@@ -439,9 +608,26 @@ $messages['ru'] = array(
 	'wikiamobile-explore' => 'Исследовать',
 	'wikiamobile-article-categories' => 'Категории',
 	'wikiamobile-feedback' => 'Отзыв',
+	'wikiamobile-back' => 'Назад',
+	'wikiamobile-article-comments-post' => 'Оставить',
+	'wikiamobile-article-comments-placeholder' => 'Оставить комментарий',
+	'wikiamobile-article-comments-reply' => 'Опубликовать ответ',
+	'wikiamobile-hide-section' => 'скрыть',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Увлечения]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Кино и сериалы]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игры]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|статья|статьи|статей}}',
+	'wikiamobile-category-items-more' => 'Загрузить ещё',
+	'wikiamobile-category-items-prev' => 'Загрузить предыдущие',
+	'wikiamobile-categories-expand' => 'Показать всё',
+	'wikiamobile-categories-collapse' => 'Скрыть всё',
+	'wikiamobile-sharing-media-image' => 'Картинка',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 на $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Привет,
+ты определенно должен заглянуть сюда:
+
+ $1',
 );
 
 /** Sakha (Саха тыла)
@@ -455,6 +641,7 @@ $messages['sah'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
+	'wikiamobile-search' => 'Претражи',
 	'wikiamobile-search-wiki' => 'Вики',
 	'wikiamobile-search-wikia' => 'Викија',
 	'wikiamobile-login' => 'Пријава',
@@ -464,6 +651,10 @@ $messages['sr-ec'] = array(
 	'wikiamobile-explore' => 'Истражите',
 	'wikiamobile-article-categories' => 'Категорије',
 	'wikiamobile-feedback' => 'Повратне информације',
+	'wikiamobile-back' => 'Назад',
+	'wikiamobile-article-comments-post' => 'Постави',
+	'wikiamobile-article-comments-placeholder' => 'Постави коментар',
+	'wikiamobile-article-comments-reply' => 'Постави одговор',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Животни стил]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Забава]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игре]]',
@@ -483,6 +674,10 @@ $messages['sv'] = array(
 	'wikiamobile-explore' => 'Utforska',
 	'wikiamobile-article-categories' => 'Kategorier',
 	'wikiamobile-feedback' => 'Feedback',
+	'wikiamobile-back' => 'Tillbaka',
+	'wikiamobile-article-comments-post' => 'Skriv',
+	'wikiamobile-article-comments-placeholder' => 'Skriv en kommentar',
+	'wikiamobile-article-comments-reply' => 'Skriv ett svar',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Livsstil]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Underhållning]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spel]]',

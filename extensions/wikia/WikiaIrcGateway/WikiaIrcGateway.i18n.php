@@ -423,11 +423,12 @@ $messages['si'] = array(
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'ircgate-username' => 'Корисничко име:',
-	'ircgate-channel' => 'Канал',
+	'ircgate-channel' => 'Канал:',
 );
 
 /** Swedish (Svenska)

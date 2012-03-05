@@ -607,6 +607,7 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Dennis07
  * @author F.trott
  * @author Kghbln
  * @author Kjell
@@ -695,6 +696,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 	'myhome-default-view-success' => 'Deine Einstellung wurde gespeichert.',
 	'tooltip-pt-myhome' => 'Gehe zu meiner Startseite',
 	'activityfeed' => 'Aktivitäten-Feed',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|eine Nachricht|$1 Nachrichten}}',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -736,8 +738,10 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
+	'myhome-feed-edit' => 'bıvurne',
 	'myhome-feed-article-comment-created-by' => '$1 ra yew vatışo newe ame',
 );
 
@@ -828,6 +832,7 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Absay
+ * @author Benfutbol10
  * @author Bola
  * @author Crazymadlover
  * @author Danke7
@@ -909,6 +914,7 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
 	'myhome-default-view-success' => 'Perfecto, así será a partir de ahora',
 	'tooltip-pt-myhome' => 'Ir a mi página',
 	'activityfeed' => 'Lista de actividad',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un mensaje|$1 mensajes}}',
 );
 
 /** Persian (فارسی)
@@ -2274,7 +2280,7 @@ $messages['pdc'] = array(
 	'myhome' => 'Haaptblatt',
 	'myhome-feed-edit' => 'ennere',
 	'myhome-feed-talkpage' => 'Gschwetz-Blatt',
-	'myhome-feed-delete' => 'glescht',
+	'myhome-feed-delete' => 'verwischt',
 	'myhome-feed-added-by' => 'vun $1 dezu geduh',
 	'myhome-feed-edited-by' => 'vun $1 geennert',
 	'myhome-feed-comment-by' => 'Aamaericking vun $1',
@@ -2861,7 +2867,7 @@ $messages['sr-ec'] = array(
 Кликните на ''[[Special:CreatePage|Нова страница]]'' да бисте почели да пишете!",
 	'myhome-watchlist-feed' => 'Списак надгледања',
 	'myhome-user-contributions-feed' => 'Доприноси',
-	'myhome-hot-spots-feed' => 'Вруће тачке',
+	'myhome-hot-spots-feed' => 'Најактивнија места',
 	'myhome-hot-spots-newest' => 'Нове странице на викији',
 	'myhome-feed-newpage' => 'нова страница',
 	'myhome-feed-edit' => 'уреди',
@@ -2926,7 +2932,7 @@ $messages['sr-ec'] = array(
 	'myhome-default-view-checkbox' => 'Начини $1 као подразумевани приказ',
 	'myhome-default-view-success' => 'Ово је сада ваш подразумевани приказ.',
 	'tooltip-pt-myhome' => 'Пређите у Мој Дом',
-	'activityfeed' => 'Довод активности',
+	'activityfeed' => 'Активности',
 );
 
 /** Swedish (Svenska)
@@ -2981,7 +2987,7 @@ Du kan använda din bevakningslista för att hålla koll på de senaste ändring
 	'myhome-feed-move-details' => 'Namnändrad',
 	'myhome-feed-redirect-details' => 'Omdirigera',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Lade till bild|Lade till bilder}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Lade till video|Lade till videor}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Lade till videoklipp|Lade till videoklipp}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Lade till kategori|Lade till kategorier}}',
 	'myhome-user-contributions-empty' => 'Du kan engagera dig på denna wiki genom att klicka på "{{int:editthispage}}" på någon sida, och lägga till vad du vet.
 Alla kan göra ändringar, lägga till information eller rätta till ett misstag.

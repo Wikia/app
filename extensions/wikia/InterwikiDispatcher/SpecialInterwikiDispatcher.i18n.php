@@ -242,11 +242,19 @@ $messages['ru'] = array(
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'interwikidispatcher' => 'Међувики диспечер',
-	'interwikidispatcher-desc' => 'Решава међувики везе да би смањило Апаш преусмерења',
+	'interwikidispatcher' => 'Пошиљалац међувикија',
+	'interwikidispatcher-desc' => 'Решава међувики везе да би се смањио број Апаш преусмерења',
+);
+
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'interwikidispatcher-desc' => 'Löser interwiki-länkar för att reducera Apache-omdirigeringar',
 );
 
 /** Tagalog (Tagalog)

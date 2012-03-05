@@ -165,7 +165,8 @@ Verskaf 'n beskrywende naam vir die video.",
 	'vet-imagelink' => "<b>Nuut!</b> Voeg video's by",
 	'vet-imagebutton' => "Voeg video's by",
 	'vet-license-cc' => 'Gelisensieer onder die Creative Commons-lisensie Erkenning-Insgelyks Deel 3.0',
-	'vet-name-incorrect' => 'Die naam van hierdie video bevat ongeldige karakters',
+	'vet-name-incorrect' => 'Die naam van hierdie video bevat ongeldige karakters. soos #.',
+	'vet-description' => "Verskaf 'n volledige URL vanaf enige van die ondersteunde webwerwe. Sien",
 	'vet-uploadtext' => "'''Hierdie vorm laat u toe om vinnig lêers te laai en in artikels te plaas.'''
 
 ''Sien ook die [[Special:Log/upload|oplaailogboek]] en 'n [[Special:ImageList|lys met alle toegevoegde lêers]].''",
@@ -473,6 +474,7 @@ $messages['ckb'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author DaSch
+ * @author Geitost
  * @author LWChris
  * @author The Evil IP address
  */
@@ -520,7 +522,7 @@ $messages['de'] = array(
 	'vet-imagelink' => '<b>Neu!</b> Videos hinzufügen',
 	'vet-imagebutton' => 'Videos einfügen',
 	'vet-license-cc' => 'Lizenziert unter der Creative Commons Attribution-Share Alike 3.0 Lizenz',
-	'vet-name-incorrect' => 'Dieser Video-Name enthält ungültige Zeichen',
+	'vet-name-incorrect' => 'Dieser Video-Name enthält ungültige Zeichen, etwa #.',
 	'vet-description' => 'Gib die vollständige URL von einer der unterstützten Websites ein. Siehe',
 	'vet-uploadtext' => "'''Dieses Formular erlaubt dir das schnelle Hochladen und Einbinden von Dateien in Artikel.'''
 
@@ -584,6 +586,7 @@ $messages['ee'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author McDutchie
  * @author Peter17
  * @author Sanbec
@@ -634,7 +637,7 @@ $messages['es'] = array(
 	'vet-imagelink' => '<b>¡Nuevo!</b> Insertar Vídeos',
 	'vet-imagebutton' => 'Insertar Vídeos',
 	'vet-license-cc' => 'Licenciada bajo Creative Commons Attribution-Share Alike 3.0',
-	'vet-name-incorrect' => 'El nombre de este vídeo contiene caracteres inválidos',
+	'vet-name-incorrect' => 'Este nombre de vídeo contiene caracteres inválidos, como #',
 	'vet-description' => 'Escribe la URL completa de cualquiera de los sitios soportados. Ver',
 	'vet-uploadtext' => "'''Este formulario te permite subir rápidamente y mostrar archivos en los artículos.''' ''Echa un vistazo también al [[Special:Log/upload|registro de subidas]] y la [[Special:ImageList|lista de todos los archivos subidos]].''",
 	'vet-show-message' => 'mostrar mensaje',
@@ -706,6 +709,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author Dodoïste
+ * @author Gomoko
  * @author IAlex
  * @author McDutchie
  * @author Peter17
@@ -756,7 +760,7 @@ $messages['fr'] = array(
 	'vet-imagelink' => '<b>Nouveau!</b> Ajouter des vidéos',
 	'vet-imagebutton' => 'Ajouter des vidéos',
 	'vet-license-cc' => 'Disponible sous licence Creative Commons Attribution-Share Alike 3.0',
-	'vet-name-incorrect' => 'Le nom de cette vidéo contient des caractères non-valides',
+	'vet-name-incorrect' => 'Le nom de cette vidéo contient des caractères non-valides, comme #',
 	'vet-description' => "Entrez l'URL complète provenant de l'un des sites pris en charge. Voir",
 	'vet-uploadtext' => "'''Ce formulaire vous permet d'importer rapidement des fichiers et de les afficher dans les articles.'''
 
@@ -835,7 +839,7 @@ $messages['gl'] = array(
 	'vet-imagelink' => '<b>Novo!</b> Inserir vídeos',
 	'vet-imagebutton' => 'Inserir vídeos',
 	'vet-license-cc' => 'Licenciado baixo a licenza Creative Commons recoñecemento compartir igual 3.0',
-	'vet-name-incorrect' => 'O nome deste vídeo contén caracteres non válidos',
+	'vet-name-incorrect' => 'O nome deste vídeo contén caracteres non válidos, como #',
 	'vet-description' => 'Escriba o enderezo URL completo de calquera dos sitios soportados. Véxase',
 	'vet-uploadtext' => "'''Este formulario permítelle cargar ficheiros rapidamente e incluílos en artigos.'''
 
@@ -1052,7 +1056,7 @@ $messages['ia'] = array(
 	'vet-imagelink' => '<b>Nove!</b> Insertion de videos',
 	'vet-imagebutton' => 'Inserer videos',
 	'vet-license-cc' => 'Disponibile sub licentia Creative Commons Attribution-Share Alike 3.0',
-	'vet-name-incorrect' => 'Le nomine de iste video contine characteres invalide',
+	'vet-name-incorrect' => 'Le nomine de iste video contine characteres invalide, como #',
 	'vet-description' => 'Entra le URL complete de un del sitos supportate. Vide',
 	'vet-uploadtext' => "'''Iste formulario permitte rapidemente incargar e presentar files in articulos.'''
 
@@ -1415,7 +1419,7 @@ $messages['mk'] = array(
 	'vet-imagelink' => '<b>Ново!</b> Вметнување на видеоснимки',
 	'vet-imagebutton' => 'Вметни видеоснимки',
 	'vet-license-cc' => 'Лиценцирано со Creative Commons Наведи извор-Сподели под исти услови 3.0',
-	'vet-name-incorrect' => 'Името на оваа видеоснимка содржи неважечки знаци',
+	'vet-name-incorrect' => 'Името на оваа видеоснимка содржи неважечки знаци, како на пр. #',
 	'vet-description' => 'Внесете ја полната URL-адреса од едно од поддржаните мрежни места. Вид.',
 	'vet-uploadtext' => "'''Овој образец служи за брзо подигање и поставување на податотеки во статии.'''
 
@@ -1501,7 +1505,7 @@ $messages['ms'] = array(
 	'vet-imagelink' => '<b>Baru!</b> Sisipkan video',
 	'vet-imagebutton' => 'Sisipkan video',
 	'vet-license-cc' => 'Dilesenkan di bawah Creative Commons Attribution-Share Alike 3.0',
-	'vet-name-incorrect' => 'Nama video ini mengandungi aksara yang tidak boleh diterima',
+	'vet-name-incorrect' => 'Nama video ini mengandungi aksara yang tidak boleh diterima, seperti #',
 	'vet-description' => 'Isikan URL dari mana-mana tapak yang disokong. Lihat',
 	'vet-uploadtext' => "'''Borang ini membolehkan anda memuat naik dan memaparkan fail pada rencana dengan segera.'''
 
@@ -1606,7 +1610,7 @@ $messages['nb'] = array(
 	'vet-imagelink' => '<b>Ny!</b> Sett inn videoer',
 	'vet-imagebutton' => 'Sett inn videoer',
 	'vet-license-cc' => 'Lisensiert under Creative Commons Navngivelse-Del på samme vilkår 3.0',
-	'vet-name-incorrect' => 'Dette videonavnet inneholder ugyldige tegn',
+	'vet-name-incorrect' => 'Dette videonavnet inneholder ugyldige tegn, som #',
 	'vet-description' => 'Skriv inn hele nettadressen fra et av de støttede nettstedene. Se',
 	'vet-uploadtext' => "'''Dette skjemaet gjør at du raskt kan laste opp og vise filer i artikler.'''
 
@@ -1694,7 +1698,7 @@ Geef een beschrijvende naam op voor deze video.',
 	'vet-imagelink' => '<b>Nieuw!</b> Video toevoegen',
 	'vet-imagebutton' => "Video's toevoegen",
 	'vet-license-cc' => 'Gelicenseerd onder de Creative Commons-licentie Naamsvermelding-Gelijk delen 3.0',
-	'vet-name-incorrect' => 'De naam van deze video bevat ongeldige tekens',
+	'vet-name-incorrect' => 'De naam van deze video bevat ongeldige tekens, zoals #.',
 	'vet-description' => 'Geef een volledige URL op van een van de ondersteunde websites. Zie',
 	'vet-uploadtext' => "'''Via dit formulier kunt u snel bestanden uploaden en in pagina's plaatsen.'''
 
@@ -1788,6 +1792,7 @@ $messages['pfl'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -1835,7 +1840,7 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-imagelink' => '<b>Nowe!</b> Wstawianie filmów',
 	'vet-imagebutton' => 'Wstaw filmy',
 	'vet-license-cc' => 'Udostępniane na licencji Creative Commons Uznanie autorstwa – Na tych samych warunkach 3.0',
-	'vet-name-incorrect' => 'Nazwa filmu zawiera niedozwolone znaki',
+	'vet-name-incorrect' => 'Nazwa filmu zawiera niedozwolone znaki, jak #',
 	'vet-description' => 'Wprowadź pełny adres URL jednej z obsługiwanych witryn. Zobacz',
 	'vet-uploadtext' => "'''Ten formularz umożliwia szybkie przesyłanie i zamieszczanie plików w artykułach.'''
 
@@ -1954,7 +1959,7 @@ $messages['ps'] = array(
 	'vet-find' => 'يوه ويډيو موندل',
 	'vet-thiswiki' => 'همدا ويکي',
 	'vet-flickr' => 'فلېکر',
-	'vet-upload-btn' => 'ورځه',
+	'vet-upload-btn' => 'راتلونکی',
 	'vet-find-btn' => 'پلټل',
 	'vet-name' => 'نوم',
 	'vet-license' => 'منښتليک',
@@ -1965,7 +1970,7 @@ $messages['ps'] = array(
 	'vet-show-message' => 'پيغام ښکاره کول',
 	'vet-hide-message' => 'پيغام پټول',
 	'vet-add-button' => 'ويډيو ورګډول',
-	'vet-see-all' => 'ټول کتل',
+	'vet-see-all' => 'ټول',
 	'vet-left' => 'کيڼ',
 	'vet-right' => 'ښي',
 	'vet-gallery' => 'انځورتون',
@@ -2193,7 +2198,7 @@ $messages['ru'] = array(
 	'vet-imagelink' => '<b>Новинка!</b>Добавление видео',
 	'vet-imagebutton' => 'Вставить видео',
 	'vet-license-cc' => 'Лицензировано на условиях Creative Commons Attribution-Share Alike 3.0',
-	'vet-name-incorrect' => 'Это название видео содержит недопустимые символы',
+	'vet-name-incorrect' => 'Это название видео содержит недопустимые символы, как #',
 	'vet-description' => 'Введите полный URL любого из поддерживаемых сайтов. Смотреть',
 	'vet-uploadtext' => "'''Эта форма позволяет быстро загружать и отображать файлы в статьях.'''
 
@@ -2254,10 +2259,10 @@ $messages['sr-ec'] = array(
 	'vet-license' => 'Лиценца',
 	'vet-details-inf2' => 'Поставке приказа видео-снимка',
 	'vet-size' => 'Величина',
-	'vet-thumbnail' => 'Умањени приказ',
+	'vet-thumbnail' => 'Минијатура',
 	'vet-fullsize' => 'Пуна величина ($1×$2 тачака)',
 	'vet-width' => 'Ширина',
-	'vet-layout' => 'Изглед',
+	'vet-layout' => 'Распоред',
 	'vet-caption' => 'Назив',
 	'vet-optional' => '(необавезно)',
 	'vet-insert2' => 'Убаци видео-снимак',
@@ -2269,8 +2274,8 @@ $messages['sr-ec'] = array(
 	'vet-insert3' => 'Убаци видео-снимак',
 	'vet-recent-inf' => 'Недавно убачени видео-снимци',
 	'vet-thiswiki2' => 'Видео-снимци на овом викију ($1 {{PLURAL:$1|резултат|резултата|резултата}})',
-	'vet-success' => '<h1>Успех</h1>',
-	'vet-return' => 'Повратак на уређивање',
+	'vet-success' => '<h1>Успешно извршено</h1>',
+	'vet-return' => 'Назад на уређивање',
 	'vet-back' => 'Назад',
 	'vet-close' => 'Затвори',
 	'vet-imagelink' => '<b>Ново!</b> Убацивање видео-снимака',
@@ -2299,7 +2304,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'vet-upload' => 'Fullständig URL',
-	'vet-notlogged' => 'Logga in eller registrera dig för att lägga till videor',
+	'vet-notlogged' => 'Logga in eller registrera dig för att lägga till videoklipp',
 	'vet-find' => 'Hitta en video',
 	'vet-thiswiki' => 'Denna wiki',
 	'vet-flickr' => 'Flickr',
@@ -2329,7 +2334,7 @@ $messages['sv'] = array(
 	'vet-next' => 'Nästa 8',
 	'vet-metacafe' => 'Metacafe videoklipp ($1 {{PLURAL:$1|resultat|resultat}})',
 	'vet-insert3' => 'Infoga den här videon',
-	'vet-recent-inf' => 'Nyligen infogade videor',
+	'vet-recent-inf' => 'Nyligen infogade videoklipp',
 	'vet-thiswiki2' => 'Denna wikins videoklipp ($1 {{PLURAL:$1|resultat|resultat}})',
 	'vet-success' => '<h1>Succé</h1>',
 	'vet-return' => 'Återgå till redigering',
@@ -2338,10 +2343,10 @@ $messages['sv'] = array(
 	'vet-warn1' => 'Du måste ange en fråga först!',
 	'vet-warn2' => 'Vänligen ange URL till videon du vill lägga till',
 	'vet-warn3' => 'Vänligen ange namnet på den video du vill lägga till',
-	'vet-imagelink' => '<b>Nytt!</b> Infoga videor',
-	'vet-imagebutton' => 'Infoga videor',
+	'vet-imagelink' => '<b>Nytt!</b> Infoga videoklipp',
+	'vet-imagebutton' => 'Infoga videoklipp',
 	'vet-license-cc' => 'Licensierad under Creative Commons Attribution-Share Alike 3.0',
-	'vet-name-incorrect' => 'Detta videonamn innehåller ogiltiga tecken',
+	'vet-name-incorrect' => 'Detta videonamn innehåller ogiltiga tecken, som #',
 	'vet-description' => 'Skriv in den fulla URL-adressen från någon av de stödjande sidorna. Se',
 	'vet-uploadtext' => "'''Detta formulär tillåter dig att snabbt ladda upp och visa filer i artiklar.'''
 

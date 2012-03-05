@@ -1211,6 +1211,7 @@ Napisz drugą sekcję tutaj. Nie zapomnij dodać kategorii aby inni łatwo odnal
  */
 $messages['ps'] = array(
 	'owb-headline' => '$1 سلامونه',
+	'owb-button-skip' => 'تېرېدل',
 	'owb-button-save-pages' => 'مخونه خوندي کول',
 	'owb-step1' => '۱ ګام',
 	'owb-step1-label' => 'دا د څه په اړه دی؟',
@@ -1404,7 +1405,7 @@ $messages['ru'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'wikibuilder-desc' => '[[Special:WikiBuilder|Водич за прављење викије]]',
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Помоћник за прављење викија]]',
 	'owb-title' => 'Вики-градитељ',
 	'owb-headline' => 'Здраво, $1',
 	'owb-button-skip' => 'Прескочи',

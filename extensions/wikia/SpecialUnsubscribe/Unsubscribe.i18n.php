@@ -53,6 +53,13 @@ $messages['az'] = array(
 	'unsubscribe-confirm-legend' => 'Təsdiq et',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'unsubscribe-confirm-legend' => 'Потвърждаване',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -106,6 +113,7 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author Bola
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'unsubscribe' => 'Darse de baja',
@@ -121,6 +129,8 @@ $messages['es'] = array(
 	'unsubscribe-working' => 'Dar de baja $1 {{PLURAL:$1|cuenta|cuentas}} por $2',
 	'unsubscribe-working-problem' => 'problema cargando información del usuario para: $1',
 	'unsubscribe-working-done' => 'Completado.',
+	'unsubscribe-preferences-toggle' => 'Darme de baja de todos los correos de Wikia (deselecciona esta opción para acceder a las opciones de abajo)',
+	'unsubscribe-preferences-notice' => 'Los correos electrónicos han sido deshabilitados para tu cuenta. Visita la pestaña de tu perfil para reactivarlos.',
 );
 
 /** Persian (فارسی)

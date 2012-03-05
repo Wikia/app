@@ -504,8 +504,8 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'tagsreport' => 'Извештај ознака',
-	'tagsreporttitle' => 'Извештај ознака',
+	'tagsreport' => 'Извештај о ознакама',
+	'tagsreporttitle' => 'Извештај о ознакама',
 	'tagsreportselecttag' => 'Избор ознаке:',
 	'tagsreportgo' => 'Прикажи',
 	'tagsreportnotspecify' => 'Нисте изабрали ниједну посебну ознаку',

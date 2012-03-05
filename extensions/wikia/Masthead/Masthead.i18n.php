@@ -685,7 +685,7 @@ $messages['pl'] = array(
 	'blog-avatar-removed-log' => 'Usunięto avatary $1',
 	'blog-avatar-save-info' => 'Jeśli chcesz zapisać zmiany, <a href="#prefcontrol">idź na dół strony</a> i naciśnij „Zapisz”.',
 	'masthead-edits-since' => 'Zmiany od',
-	'useravatar-log' => 'Log awatarów użytkownika',
+	'useravatar-log' => 'Log avatarów użytkownika',
 	'blog-avatar-alt' => 'Avatar',
 	'removeuseravatar' => 'Usuń avatar użytkownika',
 	'right-removeavatar' => 'Usuń avatary użytkowników',
@@ -846,13 +846,13 @@ $messages['si'] = array(
  */
 $messages['sr-ec'] = array(
 	'blog-avatar-removeavatar' => 'Уклони сличицу',
-	'blog-avatar-goto-userpage' => 'Пређи на корисничку страницу',
+	'blog-avatar-goto-userpage' => 'Иди на корисничку страницу',
 	'blog-avatar-edit' => 'Измени',
 	'blog-avatar-delete' => 'Обриши',
 	'prefs-avatarupload' => 'Корисничка сличица',
 	'blog-avatar-choose-avatar' => 'Изабери нову сличицу',
 	'blog-avatar-upload-avatar' => 'Пошаљи нову сличицу',
-	'blog-avatar-nouser' => 'Овај корисник није пронађен!',
+	'blog-avatar-nouser' => 'Не могу да пронађем корисника.',
 	'blog-avatar-cannot-remove' => 'Корисничке сличице се не могу уклонити с изабраног корисника!',
 	'blog-avatar-getuser' => 'Претражи',
 	'blog-avatar-remove-confirm' => 'Желите ли да уклоните корисничку сличицу?',
@@ -917,6 +917,15 @@ $messages['tl'] = array(
 	'blog-avatar-edit' => 'Baguhin',
 	'blog-avatar-delete' => 'Burahin',
 	'prefs-avatarupload' => 'Huwaran',
+);
+
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'blog-avatar-edit' => 'Değiştir',
+	'blog-avatar-delete' => 'Sil',
+	'blog-avatar-getuser' => 'Ara',
 );
 
 /** Ukrainian (Українська)

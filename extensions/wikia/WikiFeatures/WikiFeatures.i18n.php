@@ -128,6 +128,33 @@ A wengerl experimentiern - du kauhst dert jeederzeid d' Tools deaktiviern, dé d
 	'wikifeatures-error-permission' => 'Tschuidige, ower du host koah Berechtigung daast dé Seiten aufruaffer kauhst.',
 	'wikifeatures-error-invalid-parameter' => 'Néd gijtiger Paarameeter: $1. Bitscheh vasuachs daneit.',
 	'wikifeatures-error-message' => "Der Kómmentar is z' kurz óder z' laung.",
+	'wikifeatures-promotion-new' => 'Neich',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'wikifeatures-toggle-active' => 'Gweredekaet',
+	'wikifeatures-toggle-inactive' => 'Diweredekaet',
+	'wikifeatures-active-on' => 'Oberiant war $1 wiki',
+	'wikifeatures-category-choose-one' => 'Dibabit un tres...',
+	'wikifeatures-love-this-project' => "An arc'hweladur-mañ a blij din",
+	'wikifeatures-hate-this-project' => "An arc'hweladur-mañ a zisplij din",
+	'wikifeatures-problem-with-project' => 'Ur gudenn am eus da venegiñ',
+	'wikifeatures-an-idea-for-project' => "Ur mennozh am eus evit an arc'hweladur-mañ",
+	'wikifeatures-feedback-heading' => 'Sonjoù',
+	'wikifeatures-feedback-type-label' => 'Eus petra zo kaoz ?',
+	'wikifeatures-feedback-comment-label' => 'Lezel un evezhiadenn deomp',
+	'wikifeatures-feedback-success' => 'Trugarez da vezañ roet ho soñj.',
+	'wikifeatures-deactivate-heading' => 'Diweredekaat $1 ?',
+	'wikifeatures-deactivate-confirm-button' => 'Ya, diweredekaat',
+	'wikifeatures-deactivate-cancel-button' => 'Nullañ',
+	'wikifeatures-promotion-new' => 'Nevez',
+	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Evezhiadennoù war ar pennadoù',
+	'wikifeatures-feature-heading-wgEnableChat' => 'Flap',
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Sontadegoù',
+	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogoù',
 );
 
 /** Catalan (Català)
@@ -245,6 +272,7 @@ $messages['cs'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Pomáhá editorům vytvořit skvěle vypadající stránky za kratší dobu. Tvůrce rozvržení umožňuje administrátorům vytvořit předformátované stránky, z nichž si poté můžou editoři vybírat při přidávání stránky.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogy',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogy umožňují uživatelém vytvořit své vlastní příspěvky do blogu na jejich profilové stránce. Lze je také použít pro oznamování novinek a událostí vaší komunitě.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Zeď zpráv',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Rozšířená Wiki navigace',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Získejte více odkazů, nový nástroj pro zobrazení náhledu, konsolidovanou sadu odkazů s příspěvky a novou nabídku "Na Wiki", který zdůrazňuje důležité funkce vašeho obsahu a komunity.',
 	'wikifeatures-feature-heading-emptylabs' => 'Vypadá to, že laboratoř má přestávku',
@@ -325,7 +353,9 @@ $messages['de-formal'] = array(
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
  * @author Bola
+ * @author VegaDark
  * @author Vivaelcelta
  */
 $messages['es'] = array(
@@ -360,6 +390,7 @@ $messages['es'] = array(
 	'wikifeatures-deactivate-confirm-button' => 'Sí, desactívala',
 	'wikifeatures-deactivate-cancel-button' => 'Cancelar',
 	'wikifeatures-promotion-new' => 'Nueva',
+	'wikifeatures-oasis-only' => 'Funcionalidades wikis no está disponible en Monobook. Si deseas utilizar esta función, por favor cambie su piel a "Wikia".',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Lista de Top 10',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'La lista de top 10 permite que cualquier usuario de tu wiki cree una lista en la que votar. Si buscas algo para conseguir que los editores más nuevos interactúen con el wiki, ¡esto es lo que buscas! Activando esta funcionalidad añadirás "Listas de top 10"  como opción al hacer clic en "Añadir una página"',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Logros',
@@ -378,8 +409,14 @@ $messages['es'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Ayuda a los editores de tu wiki a crear páginas en menos tiempo. El creador de diseños te permite administrar páginas predefinidas en tu wiki para que los editores las puedan coger como base para nuevos artículos.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Los blogs permiten a los usuarios de tu wiki crear sus propias entradas de blog en sus perfiles y pueden usarse para comunicar noticias y eventos a la comunidad de tu wiki.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Muro de mensajes',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Comunicarse con los editores de tu wiki es una de las partes fundamentales a la hora de construir y mantener una comunidad. El Muro de mensajes usa un formato de conversación dividido por temas y un sistema de notificación que te permite controlar qué conversaciones quiéres seguir. ¡No volverás a pasar por alto ningún mensaje!',
+	'wikifeatures-feature-heading-wgOasisNavV2' => 'Panel extendido de navegación',
+	'wikifeatures-feature-description-wgOasisNavV2' => 'Obtén más enlaces, una nueva herramienta de previsualización, un conjunto de enlaces para contribuir, y un nuevo menú con los enlaces más importantes para destacar el contenido del wiki y su comunidad.',
 	'wikifeatures-feature-heading-emptylabs' => 'Parece que el laboratorio está tomándose un descanso',
 	'wikifeatures-feature-description-emptylabs' => 'Nuestros técnicos están trabajando duro para crear nuevas funcionalidades que podrás probar pronto. ¡Visita esta página pronto para encontrar más novedades!',
+	'wikifeatures-log-name' => 'Registro de funcionalidades wiki',
+	'wikifeatures-log-header' => 'A continuación hay una lista con los cambios realizados en las funcionalidades del wiki.',
 );
 
 /** French (Français)
@@ -437,10 +474,14 @@ $messages['fr'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Aide les contributeurs sur votre wiki à créer des pages superbes en un rien de temps. Le générateur de mise en page permet aux administrateurs sur votre wiki de créer des pages pré-formatées que vos contributeurs peuvent sélectionner quand ils ajoutent une page.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Les blogs permettent aux utilisateurs de votre wiki de créer leurs propres billets de blog sur leur page de profil et peuvent aussi être utilisés comme un moyen pour communiquer des nouvelles et des évènements à la communauté de votre wiki.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mur de discussion',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Communiquer avec les contributeurs de votre wiki est une partie essentielle pour bâtir votre communauté et la maintenir. Le Mur de discussion utilise un format de discussions sous forme de fils et un système de notifications qui vous permettent de contrôler les conversations que vous souhaiteriez suivre. Plus de messages manqués !',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Navigation de wiki accrue',
 	'wikifeatures-feature-description-wgOasisNavV2' => "Ayez plus de liens, un nouvel outil d'aperçu, des liens pour participer regroupés en un seul endroit et un nouveau menu « Sur le wiki » qui met en exergue les fonctionnalités importantes pour le contenu et la communauté.",
 	'wikifeatures-feature-heading-emptylabs' => 'Il semble que le labo fait une pause',
 	'wikifeatures-feature-description-emptylabs' => "Nos scientifiques travaillent d'arrache-pied pour concevoir des nouvelles fonctionnalités à essayer. Revenez ici pour plus d’expériences bientôt !",
+	'wikifeatures-log-name' => 'Journal de Composants de wiki',
+	'wikifeatures-log-header' => 'Vous trouverez ci-dessous une liste des modifications de paramètres avec Composants de wiki.',
 );
 
 /** Galician (Galego)
@@ -497,10 +538,14 @@ $messages['gl'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Axude aos editores do seu wiki a crear páxinas de aspecto agradable en menos tempo. O Creador de deseños permite aos administradores do wiki crear deseños de formato para as páxinas que os editores poden escoller no momento de engadir unha páxina.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogues',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Os blogues permiten aos usuarios do wiki crear as súas propias entradas de blogue nas súas páxinas de perfil e tamén se poden empregar como medio para comunicar novas e acontecementos á comunidade.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Muro de mensaxes',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'A comunicación cos colaboradores do seu wiki é unha parte esencial da construción e o mantemento da comunidade. O muro de mensaxes utiliza o formato de conversas en fío e un sistema de notificación que axuda a controlar os debates nos que un está interesado. Non perderá ningunha mensaxe!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Navegación do wiki estendida',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Obteña máis ligazóns, unha nova ferramenta de vista previa, un conxunto consolidado de ligazóns de colaboración e un novo menú "No wiki" que resalta características importantes do contido e a comunidade.',
 	'wikifeatures-feature-heading-emptylabs' => 'Semella que o laboratorio está descansando',
 	'wikifeatures-feature-description-emptylabs' => 'Os nosos científicos traballan arreo para concibir novas características que poida probar. Volva pronto por aquí para atopar máis funcións!',
+	'wikifeatures-log-name' => 'Rexistro das características do wiki',
+	'wikifeatures-log-header' => 'A continuación hai unha lista cos cambios feitos nas características do wiki.',
 );
 
 /** Interlingua (Interlingua)
@@ -512,12 +557,12 @@ $messages['ia'] = array(
 	'wikifeatures-heading' => 'Functiones',
 	'wikifeatures-creative' => 'Functionalitate Wiki permitte seliger le functiones optional de Wikia que tu vole haber in tu wiki. Jecta un oculo e non hesita de experimentar. Tu pote activar o disactivar iste functiones a omne tempore.',
 	'wikifeatures-labs-heading' => 'Laboratorio',
-	'wikifeatures-labs-creative' => 'In Laboratorio se trova le functiones e ideas con le quales nos experimenta. Post que nos es ancora in le processo de perfectionar iste functiones, illos pote haber qualque faltas. Nonobstante, nos vole que tu los proba! Activa los e invia nos tu retroaction super le comportamento bon, mal o bizarre de iste productos.',
-	'wikifeatures-feedback' => 'Dar retroaction',
+	'wikifeatures-labs-creative' => 'In Laboratorio se trova le functiones e ideas con le quales nos experimenta. Post que nos es ancora in le processo de perfectionar iste functiones, illos pote haber qualque faltas. Nonobstante, nos vole que tu los proba! Activa los e invia nos tu commentario sur le comportamento bon, mal o bizarre de iste productos.',
+	'wikifeatures-feedback' => 'Dar commentario',
 	'wikifeatures-error-permission' => 'Pardono, tu non ha le permission de vider iste pagina.',
 	'wikifeatures-error-invalid-parameter' => 'Parametro invalide: $1. Per favor reproba.',
 	'wikifeatures-error-message' => 'Tu commento es troppo curte o troppo longe.',
-	'wikifeatures-error-spam-attempt' => 'Per favor attende 60 secundas ante de submitter altere retroaction.',
+	'wikifeatures-error-spam-attempt' => 'Per favor attende 60 secundas ante de submitter altere commentario.',
 	'wikifeatures-error-invalid-category' => 'Ups! Per favor selige le thema de iste billet.',
 	'wikifeatures-toggle-active' => 'Active',
 	'wikifeatures-toggle-inactive' => 'Inactive',
@@ -527,11 +572,11 @@ $messages['ia'] = array(
 	'wikifeatures-hate-this-project' => 'Io odia iste function',
 	'wikifeatures-problem-with-project' => 'Io ha un problema a reportar',
 	'wikifeatures-an-idea-for-project' => 'Io ha un idea pro iste function',
-	'wikifeatures-feedback-heading' => 'Retroaction',
-	'wikifeatures-feedback-description' => 'Nos ama audir retroaction super functiones presente in le Laboratorio! Ha tu un idea super como meliorar iste function, un reporto de problema, o simplemente alcun commentos super lo que te place o displace? Dice nos lo usante le quadro sequente.',
+	'wikifeatures-feedback-heading' => 'Commentario',
+	'wikifeatures-feedback-description' => 'Nos ama reciper commentario sur functiones presente in le Laboratorio! Ha tu un idea super como meliorar iste function, un reporto de problema, o simplemente alcun commentos super lo que te place o displace? Dice nos lo usante le quadro sequente.',
 	'wikifeatures-feedback-type-label' => 'Que es isto?',
 	'wikifeatures-feedback-comment-label' => 'Lassar nos un commento',
-	'wikifeatures-feedback-success' => 'Gratias pro tu retroaction!',
+	'wikifeatures-feedback-success' => 'Gratias pro tu commentario!',
 	'wikifeatures-deactivate-heading' => 'Disactivar $1?',
 	'wikifeatures-deactivate-description' => 'Disactivar un function lo removera de tu wiki. Tu usatores non plus potera usar iste function, e illes non videra le function in alcun parte del wiki.',
 	'wikifeatures-deactivate-notification' => 'Tu pote reactivar le function a omne tempore.',
@@ -557,10 +602,14 @@ $messages['ia'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Adjuta le contributores de tu wiki a crear paginas con superbe aspectos in minus tempore. Le constructor de designos permitte al administratores de tu wiki de crear paginas preformatate que tu contributores pote seliger quando adder un pagina.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Le blogs permitte al usatores de tu wiki de crear proprie articulos de blog in lor paginas de profilo e pote tamben esser usate como optime modo de communicar novas e eventos al communitate de tu wiki.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Muro de messages',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Communicar con le contributores de tu wiki es un parte essential del crescimento e mantenentia de tu communitate. Le Muro de Messages usa un formato de conversation in filos e un systema de notification que permitte seliger le conversationes a sequer. Pone fin al messages mancate!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Navigation de wiki expandite',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Obtene plus ligamines, un nove instrumento de previsualisation, un collection consolidate de ligamines de contribution, e un nove menu "In le wiki" que mitte in evidentia le characteristicas importante de tu contento e communitate.',
 	'wikifeatures-feature-heading-emptylabs' => 'Pare que le laboratorio prende un pausa',
 	'wikifeatures-feature-description-emptylabs' => 'Nostre technicos labora durmente pro conciper nove functionalitate que tu pote probar. Reveni hic tosto pro nove projectos de laboratorio!',
+	'wikifeatures-log-name' => 'Registro de functionalitate wiki',
+	'wikifeatures-log-header' => 'Ecce un lista de cambios de configuration in le functionalitate wiki.',
 );
 
 /** Italian (Italiano)
@@ -714,10 +763,14 @@ $messages['mk'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Помогнете им на уредниците на вашето вики да создаваат убави страници за кусо време. Распоредувачот им дава на администраторите да изработат претходно форматирани страници, кои уредниците потоа ќе ги имаат на избор при создавањето на нови страници.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Блогови',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Блоговите им овозможуваат на корисниците да прават свои записи на нивната профилна страница. Ова е одличен начин да се извести заедницата кога има новости и настани.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Ѕид за пораки',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Општењето со учесниците на вашето вики е од суштинско значење за развојот и одржувањето на заедницата. Ѕидот за пораки користи нанижани пораки и систем за известување што ви овозможува да ги одберете разговорите што сакате да ги следите. Отсега нема да имате пропуштени пораки!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Проширена навигација по викито',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Повеќе врски, нова алатка за преглед и обединет збир на врски за придоенси, како и ново мени „На викито“ каде се истакнати најважните функции за вашите содржини и заедница.',
 	'wikifeatures-feature-heading-emptylabs' => 'Се чини дека лабораторијата решила да одмара',
 	'wikifeatures-feature-description-emptylabs' => 'Нашите технолози работат напорно на нови функции што ќе можете да ги испробувате. Вратете се тука наскоро, и ќе најдете повеќе лаборатории!',
+	'wikifeatures-log-name' => 'Дневник на Функции на викито',
+	'wikifeatures-log-header' => 'Подолу е наведен список на промени во поставките на Функциите на викито.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -774,10 +827,14 @@ $messages['ms'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Bantulah para penyunting wiki anda untuk membuat laman-laman yang menarik dalam masa yang lebih singkat. Pembina tataletak membolehkan para pentadbir wiki anda membuat laman-laman yang dipraformat untuk dipilih oleh para penyunting semasa membuat halaman baru.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blog',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blog membolehkan pengguna di wiki anda untuk membuat catatan blog sendiri pada laman profil, di samping juga menjadi cara yang bagus untuk menyampaikan berita dan acara kepada komunti wiki anda.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Papan Pesanan',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Berkomunikasi dengan para penyumbang di wiki anda merupakan sebahagian penting dalam mengembangkan dan menjaga komuniti anda. Papan Pesanan menggunakan format perbualan secara tred dan sistem pemberitahuan yang membolehkan anda menentukan perbualan mana yang hendak anda ikuti. Jangan terlepas pandang pesanan lagi!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Pandu Arah Wiki Diperluas',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Dapatkan lebih banyak pautan, alatan pralihat yang baru, peranggu pautan sumbangan yang disatukan, dan menu "Di Wiki" yang baru yang menonjolkan ciri-ciri yang penting dalam kandungan dan komuniti anda.',
 	'wikifeatures-feature-heading-emptylabs' => 'Nampaknya makmal tengah berehat',
 	'wikifeatures-feature-description-emptylabs' => 'Para saintis kami tengah berusaha membangunkan ciri-ciri baru untuk anda cuba. Nantikan kemunculan makmal baru di sini tidak lama lagi!',
+	'wikifeatures-log-name' => 'Log Ciri-Ciri Wiki',
+	'wikifeatures-log-header' => 'Berikut ialah senarai perubahan tetapan Ciri-Ciri Wiki.',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -834,10 +891,14 @@ $messages['nb'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Hjelp redaktører på wikien din med å lage sider som ser bra ut på kort tid. Oppsettsbyggeren lar administratorene på wikien lage forhåndsformaterte sider som redaktørene kan velge mellom når de legger til en side.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogger',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogger tillater brukerne på wikien din å skrive sine egne blogginnlegg på profilene sine og kan også brukes som en god måte å formidle nyheter og hendelser til wiki-fellesskapet.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Beskjedtavle',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Å kommunisere med bidragsyterne på wikien din er en essensiell del av å bygge og opprettholde samfunnet ditt. Beskjedtavla bruker et trådbasert samtaleformat og varslingssystem som lar deg styre hvilke samtaler du ønsker å følge. Ingen flere meldinger du har gått glipp av!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Utvidet wiki-navigasjon',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Få flere lenker, et nytt forhåndsvisningsverktøy, et konsolidert sett med lenker til bidrag, og en ny «På wikien»-meny som fremhever viktige deler av innholdet og fellesskapet ditt.',
 	'wikifeatures-feature-heading-emptylabs' => 'Ser ut til at laben tar seg en pause',
 	'wikifeatures-feature-description-emptylabs' => 'Teknikerne våre jobber hardt med å koke i hop nye funksjoner du kan prøve ut. Se etter flere laber her snart!',
+	'wikifeatures-log-name' => 'Logg over Wiki-funksjoner',
+	'wikifeatures-log-header' => 'Under følger en liste over endringer i innstillingene for Wiki-funksjoner.',
 );
 
 /** Dutch (Nederlands)
@@ -896,6 +957,7 @@ $messages['nl'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Help de redacteuren van uw wiki goed uitziende pagina\'s aan te maken in minder tijd. Met de functie "Vormgeving bouwen" kunnen wikibeheerders vooringestelde pagina\'s voor redacteuren aanmaken waaruit gekozen kan worden tijdens het toevoegen van een pagina.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => "De functie Blogs stelt gebruikers in staat eigen blogberichten toe te voegen aan hun profielpagina's. De functie is ook goed te gebruiken om nieuws en gebeurtenissen aan uw gemeenschap aan te kondigen.",
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Berichtenmuur',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Uitgebreide Wikinavigatie',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Krijg meer verwijzingen, een nieuwe voorvertoningshulpmiddel, een samengevoegde lijst met bijdrageverwijzingen een nieuw menu "Op de wiki" waarin de belangrijkste eigenschappen van uw pagina\'s en gemeenschap worden uitgelicht.',
 	'wikifeatures-feature-heading-emptylabs' => 'Het lijkt erop dat het lab even pauze aan het houden is',
@@ -903,6 +965,7 @@ $messages['nl'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sovq
  * @author Wladekb
  */
@@ -957,10 +1020,14 @@ $messages['pl'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Pomóż edytorom na Twojej wiki w tworzeniu świetnie wyglądających artykułów w krótkim czasie. Kreator Układu pozwala administratorom na Twojej wiki tworzyć wcześniej sformatowane układy artykułów, z których edytorzy mogą wybierać przy tworzeniu stron.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogi',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogi pozwalają użytkownikom Twojej wiki na tworzenie wpisów we własnym profilu. Są też doskonałym narzędziem do informowania społeczności Twojej wiki o nowościach.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Tablica Wiadomości',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Sprawna wymiana wiadomości pomiędzy użytkownikami Twojej wiki to kluczowy element budowania społeczności. Tablica Wiadomości zapewnia łatwość tworzenia i odpowiadania na wątki, jak i system powiadomień, pozwalający na obserwowanie tych wątków, które Cię najbardziej interesują. Już nigdy nie przegapisz żadnej wiadomości!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Rozszerzona Nawigacja',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Więcej linków, narzędzie do podglądu menu, zestaw narzędzi do edycji i nowe menu "Na Wiki", zawierające linki do istotnych stron na Twojej wiki.',
 	'wikifeatures-feature-heading-emptylabs' => 'Wygląda na to, że Laboratorium ma przerwę',
 	'wikifeatures-feature-description-emptylabs' => 'Nasi technicy ciężko pracują aby stworzyć dla Ciebie nowe rozszerzenia. Zajrzyj wkrótce!',
+	'wikifeatures-log-name' => 'Dziennik Rozszerzeń Wiki',
+	'wikifeatures-log-header' => 'Poniżej znajduje się lista zmian ustawień w Rozszerzeniach Wiki.',
 );
 
 /** Pashto (پښتو)
@@ -1029,6 +1096,8 @@ $messages['ru'] = array(
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Больше страниц - за меньшее время. Это расширение позволит администраторам создавать макеты страниц, что упростит создание и редактирование страниц на вики всем участникам.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Блоги',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Это расширение позволит участникам вики писать блоги. Это отличный способ общаться, делиться новостями или высказать своё мнение на вики.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Стена обсуждения',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Общение с участниками вашей вики - это неотъемлемая часть создания и поддержания активного вики-сообщества. Стена обсуждения представляет новый взгляд на традиционную страницу обсуждения участника. Форма вопрос-ответ позволяет контролировать конкретные темы обсуждения и не метаться между своей и чужой страницами обсуждения. Пропущенных сообщений больше не будет!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Расширенное верхнее меню',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Получите больше ссылок в верхнем меню, новый инструмент для работы на вики и новое меню «На вики». Всё это поможет вам гораздо лучше представить контент, находящийся на вашей вики.',
 	'wikifeatures-feature-heading-emptylabs' => 'Похоже, Wikia Labs взяла перерыв',
@@ -1044,6 +1113,7 @@ $messages['sv'] = array(
 	'wikifeatures-feedback' => 'Ge feedback',
 	'wikifeatures-error-invalid-parameter' => 'Ogiltig parameter: $1. Försök igen.',
 	'wikifeatures-error-message' => 'Din kommentar är antingen för kort eller för lång.',
+	'wikifeatures-error-spam-attempt' => 'Vänta 60 sekunder innan du skickar nästa feedback.',
 	'wikifeatures-toggle-active' => 'Aktiverad',
 	'wikifeatures-toggle-inactive' => 'Inaktiverad',
 	'wikifeatures-active-on' => 'Aktiv på $1 wikis',
@@ -1063,10 +1133,13 @@ $messages['sv'] = array(
 	'wikifeatures-promotion-new' => 'Ny',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Topp 10-listor',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Utmärkelser',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Utmärkelser kommer att hjälpa din wiki att växa genom att uppfordra användarna till att bidra en mängd innehåll. Du kan skapa dina egna utmaningar som är unika för din wiki och även ladda upp dina egna bilder till emblemen.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Artikelkommentarer',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chatt',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Omröstningar',
+	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Layout-byggare',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Bloggar',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Meddelandevägg',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Utökad Wiki-navigering',
 	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
 	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
@@ -1118,9 +1191,14 @@ $messages['vi'] = array(
 	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Tám trang phổ biến nhất trong thể loại của bạn đã sẵn sàng để được hiển thị dưới dạng các hình ảnh, nhưng tính năng này sẽ liệt kê tất cả các trang của bạn dưới dạng hình ảnh liên kết được sắp xếp theo tên, hoạt động sửa đổi hoặc tính phổ biến!',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Tán gẫu',
 	'wikifeatures-feature-description-wgEnableChat' => 'Liên lạc với những người khác, những người yêu thích wiki của bạn và chủ đề wiki nhanh nhất mà bạn có thể! Bất cứ ai với một tài khoản Wikia có thể tham gia trò chuyện qua nút "Tham gia Tán gẫu" bên khu vực góc phải trang web của bạn.',
+	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Thiết kế Biên tập Wikia',
+	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Sửa đổi là nền tảng của một wiki và có được một trình soạn thảo tuyệt vời là chiếc chìa để có một cách dễ dàng và kinh nghiệm thú vị khi thêm vào nội dung. Để cải thiện kinh nghiệm của bạn, chúng tôi đã thiết kế lại các trang sửa đổi của mình.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Bảng thăm dò',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Cho phép bất cứ ai trên wiki của bạn để tạo ra một cuộc thăm dò! Với các cuộc thăm dò cho phép người dùng của bạn có thể sử dụng [http://vi.wikia.com/wiki/Help:Thăm_dò thẻ thăm dò ý kiến] để thêm tính năng gọn gàng này vào bất kỳ trang nào. Tính năng này là một cách tuyệt vời để tăng sự đóng góp vào wiki của bạn.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blog',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blog cho phép thành viên trên wiki của bạn tạo ra bài viết blog trên trang hồ sơ của họ và cũng có thể được sử dụng như là một cách tuyệt vời để giao tiếp tin tức và sự kiện với cộng đồng wiki.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Tường tin nhắn',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Liên lạc với những người đóng góp vào wiki của bạn là một phần thiết yếu trong xây dựng và duy trì cộng đồng. Tường tin nhắn sử dụng các hộp thoại định dạng và thông báo hệ thống mà có thể để bạn kiểm soát những cuộc hội thoại mà bạn quan tâm theo dõi. Không sót tin nhắn nào cả!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Mở rộng Danh mục Wiki',
 );
 

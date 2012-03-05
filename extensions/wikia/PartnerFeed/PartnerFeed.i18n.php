@@ -484,6 +484,7 @@ $messages['ru'] = array(
 	'partner-feed-earned-badges' => 'Недавно заработанные значки на конкретной вики',
 	'partner-feed-recent-blog-posts' => 'Последние записи в блоге, связанные с рекламой',
 	'partner-feed-latest-images' => 'Галерея из последних изображений, которые были загружены на вики',
+	'partner-feed-hotcontent' => 'Портал / по вертикали "Hot Content" отсортировано по количеству редакторов',
 	'partner-feed-recent-blog-comments' => 'Последние комментарии, связанные с указанным блогом.',
 	'partner-feed-recent-changes' => 'Свежие правки',
 	'error-no-article' => 'Ошибка: нет "статьи" с такими параметрами',
@@ -512,7 +513,9 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'partner-feed-achievements-leaderboard' => 'Wikins topplista för utmärkelser',
 	'partner-feed-earned-badges' => 'Nyligen tjänade emblem för en viss Wiki',
+	'partner-feed-latest-images' => 'Galleri med de senaste bilderna som har laddats upp',
 	'partner-feed-recent-changes' => 'Senaste ändringar',
 	'feed-title-blogposts' => 'Senaste blogginlägg',
 	'feed-title-recent-badges' => 'Senaste emblem',

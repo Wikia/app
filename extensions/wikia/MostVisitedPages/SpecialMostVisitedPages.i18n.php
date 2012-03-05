@@ -485,10 +485,10 @@ $messages['sl'] = array(
 $messages['sr-ec'] = array(
 	'mostvisitedpages' => 'Најпосећеније странице',
 	'mostvisitedpagessearchtext' => 'Назив чланка:',
-	'mostvisitedpagessearchbtn' => 'претрага',
-	'mostvisitedpageslatest' => 'последњих $1 минута',
+	'mostvisitedpagessearchbtn' => 'претражи',
+	'mostvisitedpageslatest' => '{{PLURAL:|у последњем минуту|у последња $1 минута|у последњих $1 минута}}',
 	'mostvisitedpageslatestlink' => 'Прикажи последње посећене странице',
-	'mostvisitedpagesalllink' => 'Погледај најпосећеније странице',
+	'mostvisitedpagesalllink' => 'Најпосећеније странице',
 );
 
 /** Swedish (Svenska)

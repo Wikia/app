@@ -104,6 +104,7 @@ Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst ob einer der
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Bola
  * @author Sanbec
  */
@@ -279,6 +280,24 @@ Vraag hulp van een systeembeheerder als je de beschikbare groepen wilt wijzigen.
 	'batchuserrights-no-groups' => 'Je hebt geen groepen gekozen.
 Nu wordt er niets uitgevoerd.
 De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
+);
+
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
+$messages['pl'] = array(
+	'batchuserrights' => 'Wsadowe uprawnienia użytkowników',
+	'batchuserrights-desc' => 'Umożliwia dodawanie jednego lub większej liczby użytkowników do grupy w jednym ruchu',
+	'batchuserrights-names' => 'nazwy użytkowników do dodania do tej grupy (po jednej w wierszu):',
+	'batchuserrights-intro' => 'Ta strona pozwoli Ci dodać grupę do wielu użytkowników naraz.
+Ze względów bezpieczeństwa lista możliwych do dodania grup jest ustawiona w konfiguracji rozszerzenia i nie można jej zmieniać w wiki.
+Poproś administratora systemu jeśli należy zezwolić na dodawanie wsadowe innych grup.',
+	'batchuserrights-single-progress-update' => 'Dodano {{PLURAL:$1| grupę|grupy|grupy}} do <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'Dodawanie  {{PLURAL:$1| jejednego użytkownika| $1  użytkowników}} do {{PLURAL:$2|następującej grupy|następujących grup}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Nie można wczytać użytkownika \"'''\$1'''\".",
+	'batchuserrights-no-groups' => 'Nie wybrano żadnych grup.
+Wykonanie nie spowoduje żadnych zmian.
+Pozostałą część strony będzie można uruchomić tylko po to, by dało się zobaczyć, czy wszystkie nazwy uzytkownikow mogą być załadowane.',
 );
 
 /** Piedmontese (Piemontèis)

@@ -33,11 +33,11 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'places-in-category' => '$1 is a category name',
 	'places-on-map' => 'Counter of places on a map ($1 is number of places)',
 	'places-modal-go-to-special' => 'Shows below map in the modal and links to Special:Places. $1 is number of places shown on a map',
 	'places-editor-title-create-new' => 'Title of places editor modal when creating a new geotag',
 	'places-editor-title-edit' => 'Title of places editor modal when editing an existing geotag',
-	'places-in-category' => '$1 is a category name',
 );
 
 /** German (Deutsch)
@@ -54,6 +54,18 @@ $messages['de'] = array(
  */
 $messages['diq'] = array(
 	'places-geolocation-modal-error-title' => 'Xelato',
+);
+
+/** Spanish (Español)
+ * @author Benfutbol10
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'places' => 'Lugares en este wiki',
+	'places-editor-search' => 'Buscar',
+	'places-geolocation-button-label' => 'Añadir localización',
+	'places-geolocation-modal-add-title' => 'Añadir localización',
+	'places-geolocation-modal-error-title' => 'Error',
 );
 
 /** French (Français)
@@ -326,6 +338,7 @@ $messages['sv'] = array(
 	'places-on-map' => '{{PLURAL:$1|$1 ställe|$1 ställen}} på denna karta',
 	'places-modal-go-to-special' => 'Visar {{PLURAL:$1|$1 plats|$1 platser}} ([[Special:Places|se alla]])',
 	'places-toolbar-button-tooltip' => 'Klicka för att lägga till geotagg på denna sida',
+	'places-toolbar-button-address' => 'Var god ange adressen som ska använda som en geotaggning för denna sida',
 	'places-editor-search' => 'Sök',
 	'places-editor-title-create-new' => 'Lägg till en geotagg',
 	'places-editor-title-edit' => 'Redigera en geotagg',

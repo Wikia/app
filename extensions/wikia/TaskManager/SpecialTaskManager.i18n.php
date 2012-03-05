@@ -323,12 +323,13 @@ $messages['si'] = array(
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'taskmanager' => 'Прикажи и управљај позадинским задацима',
 	'taskmanager_title' => 'Прикажи и управљај позадинским задацима',
-	'taskmanager_tasklist' => 'Повратак на списак задатака',
+	'taskmanager_tasklist' => 'Назад на списак задатака',
 );
 
 /** Swedish (Svenska)

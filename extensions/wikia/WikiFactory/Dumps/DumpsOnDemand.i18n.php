@@ -364,12 +364,14 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Leviathan 89
+ * @author Nemo bis
  * @author OrbiliusMagister
  * @author Pietrodn
  */
 $messages['it'] = array(
-	'dump-database' => 'i dump del database',
-	'dump-database-info' => 'i dump del database possono essere utilizzati come backup personale (Wikia prodice copie di backup separatedi tutte le wiki automaticamente) o per i bot di manutenzione',
+	'dump-database' => 'Dump del database',
+	'dump-database-info' => 'I dump del database possono essere utilizzati come backup personale (Wikia produce copie di backup separate di tutte le wiki automaticamente) o per i bot di manutenzione',
 	'dump-database-curr-pages' => 'pagine attuali',
 	'dump-database-curr-pages-info' => '(Questa versione è normalmente la migliore da far usare ai bot)',
 	'dump-database-full-pages' => 'Pagine e cronologia attuali',
@@ -659,9 +661,9 @@ $messages['sr-ec'] = array(
 	'dump-database-info' => 'Исписи базе података се могу користити као лична резерва (Викија самостално ствара одвојене примерке свих викија) или за ботове за одржавање',
 	'dump-database-curr-pages' => 'Тренутне странице',
 	'dump-database-curr-pages-info' => '(ово издање је обично најбоље за ботове)',
-	'dump-database-full-pages' => 'Тренутне странице и историјат',
-	'dump-database-full-pages-info' => '(Упозорење: ова датотека је веома велика)',
-	'dump-database-request' => 'Затражи доградњу',
+	'dump-database-full-pages' => 'Текуће странице и историја',
+	'dump-database-full-pages-info' => '(Упозорење: ова датотека може бити веома велика)',
+	'dump-database-request' => 'Захтевај ажурирање',
 	'dump-database-request-info' => '(Исписи се обично стварају недељно)',
 	'dump-database-request-submit' => 'Пошаљи захтев',
 	'dump-database-request-already-submitted' => 'Испис је недавно затражен (пре мање од седам дана)',

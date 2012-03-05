@@ -159,9 +159,32 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
+ * @author Bernardom
  * @author Vivaelcelta
  */
 $messages['es'] = array(
+	'photopop-setup-category-label' => 'Categoría',
+	'photopop-setup-category-tip' => 'Ingresa el nombre de una categoría...',
+	'photopop-setup-icon-label' => 'Ícono del juego (120px x 120px)',
+	'photopop-setup-submit-label' => 'Actualizar',
+	'photopop-error-category-non-existing' => 'La categoría especificada no existe.',
+	'photopop-error-field-compulsory' => 'Este campo es obligatorio',
+	'photopop-error-db-error' => 'Se ha producido un error, las opciones no han podido ser guardadas',
+	'photopop-settings-saved' => 'Se ha guardado la configuración',
+	'photopop-image-preview' => 'Vista previa de imágenes:',
+	'photopop-game-round' => 'Ronda',
+	'photopop-game-points' => 'puntos',
+	'photopop-game-total' => 'total',
+	'photopop-game-score' => 'puntaje',
+	'photopop-game-wiki' => 'wiki',
+	'photopop-game-date' => 'fecha',
+	'photopop-game-timeup' => '¡Tiempo!',
+	'photopop-game-please-wait' => 'Por favor espera...',
+	'photopop-game-loading-image' => 'Cargando imagen...<br />Espera',
+	'photopop-game-loading' => 'Cargando...',
+	'photopop-game-progress' => 'imágenes',
+	'photopop-game-finished' => '¡Finalizado!',
 	'photopop-game-month-0' => 'ene',
 	'photopop-game-month-1' => 'feb',
 	'photopop-game-month-2' => 'mar',
@@ -174,6 +197,9 @@ $messages['es'] = array(
 	'photopop-game-month-9' => 'oct',
 	'photopop-game-month-10' => 'nov',
 	'photopop-game-month-11' => 'dic',
+	'photopop-game-download-progress-text' => 'Descargando juego...',
+	'photopop-game-update-progress-text' => 'Actualizando juego...',
+	'photopop-game-download-error-text' => 'Un error ha ocurrido mientras se descargaban los datos del juego, intenta nuevamente.',
 );
 
 /** French (Français)
@@ -641,6 +667,7 @@ $messages['nl'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -660,19 +687,32 @@ $messages['pl'] = array(
 	'photopop-error-db-error' => 'Wystąpił błąd, ustawienia nie zostały zapisane',
 	'photopop-settings-saved' => 'Ustawienia zostały zapisane',
 	'photopop-image-preview' => 'Podgląd obrazów:',
-	'photopop-game-correct' => 'Prawidłowy',
+	'photopop-game-round' => 'Runda',
+	'photopop-game-correct' => 'Prawidłowo',
 	'photopop-game-points' => 'punkty',
 	'photopop-game-total' => 'łącznie',
-	'photopop-game-score' => 'Punktacja',
+	'photopop-game-score' => 'punkty',
 	'photopop-game-wiki' => 'Wiki',
 	'photopop-game-date' => 'data',
 	'photopop-game-timeup' => 'czas minął!',
 	'photopop-game-please-wait' => 'Proszę czekać...',
 	'photopop-game-loading-image' => 'Trwa ładowanie obrazu... <br />Proszę czekać',
 	'photopop-game-loading' => 'Ładowanie...',
+	'photopop-game-highscore' => 'Najlepszy wynik',
+	'photopop-game-highscores' => 'najlepsze wyniki',
+	'photopop-game-continue' => 'To:',
+	'photopop-game-yougot' => 'Wyniki:',
+	'photopop-game-outof' => 'z',
 	'photopop-game-progress' => 'obrazy',
 	'photopop-game-finished' => 'gotowe!',
 	'photopop-game-image-load-error' => 'Nie załadowano obrazu. Przepraszamy, spróbuj ponownie.',
+	'photopop-game-tutorial-intro' => 'Pacnij w ekran by zerknąć na tajemniczy obrazek pod spodem.',
+	'photopop-game-tutorial-continue' => 'Gdy już odpowiedź jest podana, wybierz przycisk "dalej", aby kontynuować do nowego obrazu.',
+	'photopop-game-tutorial-drawer' => 'Im mniej zerknięć na obrazek, im mniej strzałów w ciemno i mniej czasu zajęła ci odpowiedź, tym lepszy twój wynik!',
+	'photopop-game-tutorial-tile' => 'Pacnij przycisk "odpowiedź" aby strzelić w ciemno.',
+	'photopop-game-new-highscore' => 'Nowy rekord',
+	'photopop-game-paused' => 'Gra wstrzymana',
+	'photopop-game-loading-assets' => 'Ładowanie plików gry',
 	'photopop-game-month-0' => 'Sty',
 	'photopop-game-month-1' => 'Lut',
 	'photopop-game-month-2' => 'Mar',
@@ -685,12 +725,60 @@ $messages['pl'] = array(
 	'photopop-game-month-9' => 'Paź',
 	'photopop-game-month-10' => 'Lis',
 	'photopop-game-month-11' => 'Gru',
+	'photopop-game-no-highscore' => 'Brak rekordów',
+	'photopop-game-error-text' => 'Wystąpił błąd, spróbuj ponownie.',
+	'photopop-game-error-network-text' => 'Wystąpiły problemy z połączeniem, sprawdź czy działa Wi-Fi lub łącze mobilne.',
+	'photopop-game-download-progress-text' => 'Ściąganie gry...',
+	'photopop-game-update-progress-text' => 'Aktualizowanie gry...',
+	'photopop-game-download-error-text' => 'Wystąpił błąd w trakcie ładowania gry, spróbuj ponownie.',
 );
 
 /** Russian (Русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'photopop-setup-title' => 'Настройка Фото-паззл',
+	'photopop-setup-category-label' => 'Категория',
+	'photopop-setup-category-tip' => 'Введите имя категории...',
+	'photopop-setup-icon-label' => 'Значок игры (120px x 120px)',
+	'photopop-setup-icon-tip' => 'Введите название статьи...',
+	'photopop-setup-watermark-label' => 'Подложка',
+	'photopop-setup-watermark-tip' => 'Введите название статьи...',
+	'photopop-setup-submit-label' => 'Обновить',
+	'photopop-current-settings-title' => 'Текущие настройки',
+	'photpop-category-none' => 'Н/Д',
+	'photopop-error-category-non-existing' => 'Указанная категория не существует',
+	'photopop-error-field-compulsory' => 'Это поле является обязательным',
+	'photopop-error-file-non-existing' => 'Указанная статья не существует',
+	'photopop-error-db-error' => 'Произошла ошибка, настройки не были сохранены',
+	'photopop-settings-saved' => 'Настройки были сохранены',
+	'photopop-image-preview' => 'Предпросмотр изображений:',
+	'photopop-game-round' => 'Раунд',
+	'photopop-game-correct' => 'Верно',
+	'photopop-game-points' => 'очки',
+	'photopop-game-total' => 'всего',
+	'photopop-game-score' => 'результат',
+	'photopop-game-wiki' => 'вики',
+	'photopop-game-date' => 'дата',
+	'photopop-game-timeup' => 'время пошло!',
+	'photopop-game-please-wait' => 'Пожалуйста, подождите',
+	'photopop-game-loading-image' => 'Загрузка изображения... <br />Пожалуйста, подождите',
+	'photopop-game-loading' => 'Загрузка...',
+	'photopop-game-highscore' => 'Лучший результат',
+	'photopop-game-highscores' => 'Лучшие результаты',
+	'photopop-game-continue' => 'Это:',
+	'photopop-game-yougot' => 'Вы получили',
+	'photopop-game-outof' => 'из',
+	'photopop-game-progress' => 'фотографии',
+	'photopop-game-finished' => 'готово!',
+	'photopop-game-image-load-error' => 'Не удалось загрузить изображения. Извините, пожалуйста, попробуйте еще раз.',
+	'photopop-game-tutorial-intro' => 'Коснитесь экрана, чтобы заглянуть под таинственное изображение.',
+	'photopop-game-tutorial-continue' => 'После того, как ответ раскроется, нажмите кнопку «Далее», чтобы продолжать с новым изображением.',
+	'photopop-game-tutorial-drawer' => 'Чем меньше кусочков вы откроете, меньше догадок сделаете и меньше времени потратите, тем больше получите очков!',
+	'photopop-game-tutorial-tile' => 'Нажмите кнопку «ответить», чтобы сделать предположение.',
+	'photopop-game-new-highscore' => 'Новый рекорд',
+	'photopop-game-paused' => 'Игра приостановлена',
+	'photopop-game-loading-assets' => 'Загрузка активов игры',
 	'photopop-game-month-0' => 'Янв',
 	'photopop-game-month-1' => 'Фев',
 	'photopop-game-month-2' => 'Мар',
@@ -703,6 +791,12 @@ $messages['ru'] = array(
 	'photopop-game-month-9' => 'Окт',
 	'photopop-game-month-10' => 'Ноя',
 	'photopop-game-month-11' => 'Дек',
+	'photopop-game-no-highscore' => 'Нет рекордов',
+	'photopop-game-error-text' => 'Произошла ошибка, пожалуйста, попробуйте еще раз.',
+	'photopop-game-error-network-text' => 'Кажется, что подключение к Интернету отсутствует, пожалуйста включите ваш Wi-Fi или мобильный Интеренет.',
+	'photopop-game-download-progress-text' => 'Загрузка игры...',
+	'photopop-game-update-progress-text' => 'Обновление игры...',
+	'photopop-game-download-error-text' => 'Произошла ошибка при загрузке данных игры, пожалуйста, попробуйте еще раз.',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

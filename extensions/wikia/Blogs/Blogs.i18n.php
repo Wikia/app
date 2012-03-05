@@ -779,6 +779,7 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Crazymadlover
  * @author Danke7
  * @author Locos epraix
@@ -797,6 +798,7 @@ $messages['es'] = array(
 	'create-blog-post-recent-listing-title' => 'Entradas recientes',
 	'create-blog-post-recent-listing-log' => 'Creado artículo para las entradas de blog recientes',
 	'create-blog-post-title' => 'Crear nueva entrada',
+	'create-blog-post-title-edit' => 'Editar una entrada de blog',
 	'create-blog-form-title' => '¿Qué es una entrada de blog?',
 	'create-blog-form-post-text' => 'Contenido de la entrada',
 	'create-blog-form-info' => 'Las entradas de blog son la mejor forma de escribir cualquier cosa que no quieres que sea editado por la comunidad.
@@ -2807,7 +2809,7 @@ $messages['or'] = array(
  */
 $messages['pdc'] = array(
 	'blog-comments' => 'Aamaerickinge',
-	'blog-comment-delete' => 'lesche',
+	'blog-comment-delete' => 'verwische',
 );
 
 /** Pälzisch (Pälzisch) */
@@ -3513,7 +3515,7 @@ $messages['sl'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'createblogpage' => 'Напиши блог',
+	'createblogpage' => 'Стварање блога',
 	'create-blog-post-recent-listing' => 'Скорашње поруке',
 	'create-blog-form-post-text' => 'Текст блога',
 	'create-blog-empty-title-error' => 'Потребан је наслов',
@@ -3522,7 +3524,7 @@ $messages['sr-ec'] = array(
 	'create-blog-categories-submit' => 'Пошаљи',
 	'create-blog-save' => 'Сачувај страницу',
 	'create-blog-preview' => 'Претпреглед',
-	'create-blog-listing-preview' => 'Претпреглед',
+	'create-blog-listing-preview' => 'Преглед',
 	'create-blog-listing-matches-calculate' => 'Израчунај',
 	'create-blog-listing-matches-recalculate' => 'Прерачунај',
 	'create-blog-listing-sortby' => 'Поређај по',
@@ -3541,7 +3543,7 @@ $messages['sr-ec'] = array(
 	'blog-edited' => 'измењена',
 	'blog-page' => 'Блог',
 	'blog-zero-comments' => 'Нема коментара!',
-	'blog-comment-post' => 'Пошаљи коментар',
+	'blog-comment-post' => 'Постави коментар',
 	'blog-comments' => 'Коментари',
 	'blog-rc-comments' => 'Коментари на блогу',
 	'blog-comments-new' => 'Нови коментар на блогу',
@@ -3561,8 +3563,8 @@ $messages['sr-ec'] = array(
 	'blog-avatar-preferences-title' => 'Корисничка сличица',
 	'blog-page-rate' => 'Оцени овај чланак:',
 	'blog-create-post-label' => 'Напиши поруку на блогу',
-	'blog-create-label' => 'Започни чланак на блогу',
-	'blog-create-next-label' => 'Започни нови чланак на блогу',
+	'blog-create-label' => 'Напиши чланак на блогу',
+	'blog-create-next-label' => 'Напиши нови чланак на блогу',
 	'blog-refresh-label' => 'Освежи',
 	'blog-widgets-label' => 'Табла с алаткама',
 	'blog-userblog' => 'Блог члана $1',
@@ -3995,6 +3997,18 @@ $messages['tl'] = array(
 	'blog-movepage-badtitle' => 'Hindi tanggap na pamagat ng paskil na pamblog.',
 	'blog-comment-sending' => 'Ipinapadala...',
 	'blog-by' => '$1 ni $2',
+);
+
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'create-blog-categories-textinput' => 'Yeni kategori ekle',
+	'blog-comments-anonymous' => 'Anonim kullanıcı',
+	'blog-comment-delete' => 'sil',
+	'blog-comment-hide' => 'gizle',
+	'blog-comment-history' => 'geçmiş',
+	'blog-refresh-label' => 'Yenile',
 );
 
 /** Ukrainian (Українська)

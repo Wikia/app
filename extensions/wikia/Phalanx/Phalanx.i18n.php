@@ -129,6 +129,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'right-phalanxemailblock' => 'Can file, view and manage e-mail based blocks',
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'phalanx-stats-row' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is the URL of a wiki, $4 is a time and date',
 	'phalanx-stats-row-per-wiki' => '$1 is a type of block (e.g. user or title), $2 is a user (name or IP), $3 is a filter ID, $4 is the URL of a wiki, $4 is a time and date, $5 is a link to stats for that filter ID',
@@ -330,6 +331,7 @@ $messages['es'] = array(
 	'phalanx-type-summary' => 'resumen de artículo',
 	'phalanx-type-title' => 'título de artículo',
 	'phalanx-type-user' => 'usuario',
+	'phalanx-type-user-email' => 'correo',
 	'phalanx-type-answers-question-title' => 'título de pregunta',
 	'phalanx-type-answers-recent-questions' => 'preguntas recientes',
 	'phalanx-type-wiki-creation' => 'creación de wiki',
@@ -382,6 +384,7 @@ Nota: solo trabaja en wikis tipo answers.',
 	'phalanx-help-type-answers-recent-questions' => 'Este filtro previene que las preguntas sean mostradas en los widgets, listas, etiquetas, etc. No previene que esas páginas sean creadas.
 
 Nota: solo trabaja en wikis tipo answers.',
+	'phalanx-help-type-user-email' => 'Este filtro evita el registro de cuentas usando un correo electrónico bloqueado.',
 	'phalanx-user-block-reason-ip' => 'Esta dirección IP ha sido bloqueada para editar en toda Wikia debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP.
 Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Este nombre de usuario o dirección IP ha sido bloqueado para editar en toda Wikia debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP.
@@ -453,6 +456,7 @@ $messages['fr'] = array(
 	'phalanx-type-summary' => 'résumé de la page',
 	'phalanx-type-title' => 'titre de la page',
 	'phalanx-type-user' => 'utilisateur',
+	'phalanx-type-user-email' => 'courriel',
 	'phalanx-type-answers-question-title' => 'titre de la question',
 	'phalanx-type-answers-recent-questions' => 'questions récentes',
 	'phalanx-type-wiki-creation' => 'Création de wiki',
@@ -506,6 +510,7 @@ Note: Ne fonctionne que sur les wikis de type Answers.",
 Il n’empêche pas ces pages d’être créées.
 
 Note : cela ne fonctionne que sur les wikis de type Réponses.',
+	'phalanx-help-type-user-email' => 'Ce filtre empêche la création de compte en utilisant une adresse de courriel bloquée.',
 	'phalanx-user-block-reason-ip' => 'Cette adresse IP n’a pas les droits de modification dans le réseau entier Wikia en raison de vandalisme ou autres méfaits analogues commis par vous ou par quelqu’un d’autre qui partage cette adresse IP.
 Si vous pensez qu’il s’agit d’une erreur, [[Special:Contact|Contacter Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Ce nom d’utilisateur ou cette adresse IP est interdit de toute modification sur l’intégralité du réseau Wikia en raison de vandalisme ou d’autres perturbations.
@@ -561,6 +566,7 @@ $messages['gl'] = array(
 	'phalanx-type-summary' => 'resumo da páxina',
 	'phalanx-type-title' => 'título da páxina',
 	'phalanx-type-user' => 'usuario',
+	'phalanx-type-user-email' => 'correo electrónico',
 	'phalanx-type-answers-question-title' => 'título da pregunta',
 	'phalanx-type-answers-recent-questions' => 'preguntas recentes',
 	'phalanx-type-wiki-creation' => 'creación de wiki',
@@ -614,6 +620,7 @@ Nota: Funciona só nos wikis do tipo de preguntas e respostas.',
 Non impide a creación das devanditas páxinas.
 
 Nota: Funciona só nos wikis do tipo de preguntas e respostas.',
+	'phalanx-help-type-user-email' => 'Este filtro evita a creación de contas segundo os enderezos de correo electrónico bloqueados.',
 	'phalanx-user-block-reason-ip' => 'A este enderezo IP estalle prohibido editar ao longo de toda a rede de Wikia debido a vandalismo ou outras actividades negativas realizadas por vostede ou por alguén que comparte o seu enderezo IP.
 Se pensa que se trata dun erro, [[Special:Contact|póñase en contacto con Wikia]].',
 	'phalanx-user-block-reason-exact' => 'A este enderezo IP estalle prohibido editar ao longo de toda a rede de Wikia debido a vandalismo ou outras actividades negativas.
@@ -646,6 +653,8 @@ Se pensa que se trata dun erro, [[Special:Contact|póñase en contacto con Wikia
 	'phalanx-stats-row-per-wiki' => "o usuario '''$2''' foi bloqueado en '''$4''' polo filtro co identificador '''$3''' ($5) (tipo: '''$1''')",
 	'phalanx-rule-log-name' => 'Rexistro de regras do Phalanx',
 	'phalanx-rule-log-header' => 'Este é un rexistro dos cambios realizados nas regras do Phalanx.',
+	'phalanx-email-rule-log-name' => 'Rexistro de regras de correo electrónico do Phalanx',
+	'phalanx-email-rule-log-header' => 'Este é un rexistro dos cambios realizados nas regras do Phalanx para o tipo de correo electrónico.',
 	'phalanx-rule-log-add' => 'Regra do Phalanx engadida: $1',
 	'phalanx-rule-log-edit' => 'Regra do Phalanx editada: $1',
 	'phalanx-rule-log-delete' => 'Regra do Phalanx borrada: $1',
@@ -654,8 +663,10 @@ Se pensa que se trata dun erro, [[Special:Contact|póñase en contacto con Wikia
 	'phalanx-stats-table-wiki-name' => 'Nome do wiki',
 	'phalanx-stats-table-wiki-url' => 'URL do wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Última edición',
+	'phalanx-email-filter-hidden' => 'O filtro de correo electrónico está agochado. Non ten os permisos necesarios para ollar o texto.',
 	'right-phalanx' => 'Pode xestionar os bloqueos globais e os filtros de spam',
 	'right-phalanxexempt' => 'Exento das regras do Phalanx',
+	'right-phalanxemailblock' => 'Pode arquivar, ollar e xestionar os bloqueos baseados en correos electrónicos',
 );
 
 /** Hungarian (Magyar)
@@ -884,6 +895,7 @@ $messages['mk'] = array(
 	'phalanx-type-summary' => 'опис на страницата',
 	'phalanx-type-title' => 'наслов на страницата',
 	'phalanx-type-user' => 'корисник',
+	'phalanx-type-user-email' => 'е-пошта',
 	'phalanx-type-answers-question-title' => 'наслов на прашањето',
 	'phalanx-type-answers-recent-questions' => 'скорешни прашања',
 	'phalanx-type-wiki-creation' => 'создавање на вики',
@@ -937,6 +949,7 @@ $messages['mk'] = array(
 Филтерот не спречува создавање на таквите страници.
 
 Напомена: работи само на викија за одговорање на прашања',
+	'phalanx-help-type-user-email' => 'Филтерот спречува создавање на сметки со блокирани е-пошти.',
 	'phalanx-user-block-reason-ip' => 'Оваа IP-адреса е спречена да уредува низ сета мрежа на Викија поради вандализам или друго нарушување од страна на вас или некој што ја користи вашата IP-адреса.
 Доколку сметате дека ова е по грешка, [[Special:Contact|контактирајте ја Викија]].',
 	'phalanx-user-block-reason-exact' => 'Ова корисничко име или IP-адреса е спречена да уредува низ сета мрежа на Викија поради вандализам или друго нарушување.
@@ -969,6 +982,8 @@ $messages['mk'] = array(
 	'phalanx-stats-row-per-wiki' => "корисникот '''$2''' е блокиран на '''$4''' од филтерот со назнака '''$3''' ($5) (тип: '''$1''')",
 	'phalanx-rule-log-name' => 'Дневник на правила за Phalanx',
 	'phalanx-rule-log-header' => 'Ова е дневник на измените во правилата на Phalanx.',
+	'phalanx-email-rule-log-name' => 'Дневник на правила за е-пошта на Phalanx',
+	'phalanx-email-rule-log-header' => 'Ова е дневник на измените во правилата за е-пошта.',
 	'phalanx-rule-log-add' => 'Додадено правилото: $1',
 	'phalanx-rule-log-edit' => 'Изменето правилото: $1',
 	'phalanx-rule-log-delete' => 'Избришано правилото: $1',
@@ -977,8 +992,10 @@ $messages['mk'] = array(
 	'phalanx-stats-table-wiki-name' => 'Име на викито',
 	'phalanx-stats-table-wiki-url' => 'URL на викито',
 	'phalanx-stats-table-wiki-last-edited' => 'Последно уредување',
+	'phalanx-email-filter-hidden' => 'Филтерот за е-пошта е скриен. Немате дозвола да го гледате текстот.',
 	'right-phalanx' => 'Може да раководи со глобални блокови и филтри за спам',
 	'right-phalanxexempt' => 'Изземен од правилата на Phalanx',
+	'right-phalanxemailblock' => 'Може да заведува, прегледува и раководи со блокови за е-пошта',
 );
 
 /** Malayalam (മലയാളം)
@@ -1018,6 +1035,7 @@ $messages['ms'] = array(
 	'phalanx-type-summary' => 'ringkasan laman',
 	'phalanx-type-title' => 'tajuk laman',
 	'phalanx-type-user' => 'pengguna',
+	'phalanx-type-user-email' => 'e-mel',
 	'phalanx-type-answers-question-title' => 'tajuk soalan',
 	'phalanx-type-answers-recent-questions' => 'soalan terbaru',
 	'phalanx-type-wiki-creation' => 'penciptaan wiki',
@@ -1070,6 +1088,7 @@ Perhatian: berkesan di wiki jenis Soal Jawab (Answers) sahaja.',
 	'phalanx-help-type-answers-recent-questions' => 'Penapis ini menghalang (laman) soalan daripada dipaparkan di sebilangan output (widget, senarai, senarai janaan tag). Ia tidak menghalang pembukaan laman-laman itu.
 
 Perhatian: Berkesan di wiki jenis Soal Jawab (Answers) sahaja.',
+	'phalanx-help-type-user-email' => 'Penapis ini melarang pembukaan akaun dengan alamat e-mel yang disekat.',
 	'phalanx-user-block-reason-ip' => 'Alamat IP ini dihalang daripada menyunting atas kesalahan laku musnah atau gangguan yang dilakukan oleh anda atau sesiapa yang berkongsi alamat IP anda.
 Jika anda percaya bahawa ini ialah kesilapan, sila [[Special:Contact|hubungi Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Nama pengguna atau alamat IP ini dihalang daripada menyunting atas kesalahan laku musnah atau gangguan.
@@ -1126,6 +1145,7 @@ $messages['nb'] = array(
 	'phalanx-type-summary' => 'sidesammendrag',
 	'phalanx-type-title' => 'sidetittel',
 	'phalanx-type-user' => 'bruker',
+	'phalanx-type-user-email' => 'e-post',
 	'phalanx-type-answers-question-title' => 'spørsmålstittel',
 	'phalanx-type-answers-recent-questions' => 'siste spørsmål',
 	'phalanx-type-wiki-creation' => 'wiki-opprettelse',
@@ -1234,6 +1254,7 @@ $messages['nl'] = array(
 	'phalanx-type-summary' => 'paginasamenvatting',
 	'phalanx-type-title' => 'paginanaam',
 	'phalanx-type-user' => 'gebruiker',
+	'phalanx-type-user-email' => 'e-mail',
 	'phalanx-type-answers-question-title' => 'vraag',
 	'phalanx-type-answers-recent-questions' => 'recente vragen',
 	'phalanx-type-wiki-creation' => 'wikiaanmaak',
@@ -1287,6 +1308,7 @@ Dit werkt alleen voor Antwoordwiki's.",
 Het voorkomt niet dat pagina's worden aangemaakt.
 
 Dit werkt alleen voor Antwoordwiki's.",
+	'phalanx-help-type-user-email' => 'Dit filter voorkomt het aanmaken van gebruikers met een geblokkeerd e-mailadres.',
 	'phalanx-user-block-reason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door u of door iemand met hetzelfde IP-adres.
 Als u denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Deze (anonieme) gebruiker mag niet bewerken in het hele Wikia-netwerk wegens vandalisme of verstoring.
@@ -1319,6 +1341,8 @@ Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] 
 	'phalanx-stats-row-per-wiki' => "gebruiker '''$2''' is geblokkeerd op '''$4''' door filternummer '''$3''' ($5) (type '''$1''')",
 	'phalanx-rule-log-name' => 'Logboek Phalanx-regels',
 	'phalanx-rule-log-header' => 'Dit is een logboek met wijzigingen aan Phalanx-regels',
+	'phalanx-email-rule-log-name' => 'Logboek Phalanxe-mailregels',
+	'phalanx-email-rule-log-header' => 'Dit is een logboek met de wijzingen aan Phalanx-regels voor het type e-mail.',
 	'phalanx-rule-log-add' => 'Phalanx-regel toegevoegd: $1',
 	'phalanx-rule-log-edit' => 'Phalanx-regel gewijzigd: $1',
 	'phalanx-rule-log-delete' => 'Phalanx-regel verwijderd: $1',
@@ -1327,8 +1351,10 @@ Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] 
 	'phalanx-stats-table-wiki-name' => 'Wikinaam',
 	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Laatste bewerking',
+	'phalanx-email-filter-hidden' => 'E-mailfilter verborgen. U hebt geen rechten om de tekst te bekijken.',
 	'right-phalanx' => 'Kan globale blokkades en spamfilters beheren',
 	'right-phalanxexempt' => 'Kan Phalanx-regels omzeilen',
+	'right-phalanxemailblock' => 'Kan e-mailgebaseerde blokkades toevoegen, bekijken en beheren',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1350,6 +1376,7 @@ Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met 
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'phalanx-desc' => 'Phalanx jest zintegrowanym mechanizmem obrony przed spamem',
@@ -1359,6 +1386,7 @@ $messages['pl'] = array(
 	'phalanx-type-summary' => 'podsumowanie strony',
 	'phalanx-type-title' => 'tytuł strony',
 	'phalanx-type-user' => 'użytkownik',
+	'phalanx-type-user-email' => 'e‐mail',
 	'phalanx-type-answers-question-title' => 'tytuł pytania',
 	'phalanx-type-answers-recent-questions' => 'ostatnie pytania',
 	'phalanx-type-wiki-creation' => 'tworzenie wiki',
@@ -1398,6 +1426,34 @@ Kliknięcie "{{int:phalanx-edit-block}}" spowoduje zapisanie zmian!',
 	'phalanx-legend-input' => 'Tworzenie lub modyfikowanie filtru',
 	'phalanx-legend-listing' => 'Obecnie stosowane filtry',
 	'phalanx-unblock-message' => 'Blokada o ID #$1  została pomyślnie usunięta',
+	'phalanx-help-type-content' => 'Ten filtr zapobiega zapisowi zmiany, jeśli zawartość pasuje do dowolnego z wyrażeń zabronionych.',
+	'phalanx-help-type-summary' => 'Ten filtr zapobiega zapisowi zmiany, jeśli wprowadzone podsumowanie pasuje do dowolnego z wyrażeń zabronionych.',
+	'phalanx-help-type-title' => 'Ten filtr zapobiega utworzeniu strony, jeśli jego nazwa pasuje do dowolnego wyrażeń zabronionych.
+
+Nie uniemożliwia edycji strony utworzonej wcześniej.',
+	'phalanx-help-type-user' => 'Ten filtr blokuje użytkownika (dokładnie tak samo jak blokada lokalna MediaWiki), jeśli nazwa lub adres IP odpowiada jednej z zabronionych nazw lub adresów IP.',
+	'phalanx-help-type-wiki-creation' => 'Ten filtr zapobiega utworzeniu wiki, jeśli jego nazwa lub adres URL odpowiada dowolnej z zabronionych fraz.',
+	'phalanx-help-type-answers-question-title' => 'Ten filtr blokuje pytanie (stronę) przed utworzeniem, jeśli jego nazwa pasuje do dowolnego z zabronionych wyrażeń.
+
+Uwaga: działa tylko na wiki typu Odpowiedzi.',
+	'phalanx-help-type-answers-recent-questions' => 'Ten filtr uniemożliwia wyświetlenie  pytań (stron)  w pewnych wyjściach (widżety, listy, wykazy generowane według znacznika).
+Nie blokuje on utworzenia tych stron.
+
+Uwaga: działa tylko z wiki typu Odpowiedzi.',
+	'phalanx-help-type-user-email' => 'Ten filtr zapobiega tworzeniu kont przy użyciu zablokowanego adresu e-mail.',
+	'phalanx-user-block-reason-ip' => 'Ten adres IP jest został zablokowany i nie posiada praw edycji w całej sieci Wikia z powodu wandalizmu lub innego typu zakłóceń czynionych przez Ciebie lub przez inną osobę, która dzieli twój adres IP.
+Jeśli uważasz, że jest to błąd, proszę [[Special:Contact|skontaktuj się z Wikia]].',
+	'phalanx-user-block-reason-exact' => 'Ta nazwa użytkownika lub adres IP jest zablokowany i nie ma prawa do edycji w całej sieci Wikia ze względu na wandalizm lub inne zaburzenia.
+Jeśli uważasz, że jest to błąd, prosimy [[Special:Contact|skontaktuj się z Wikia]].',
+	'phalanx-user-block-reason-similar' => 'Na tą nazwę użytkownika nałożono blokadę edycji w całej sieci Wikia spowodowaną wandalizmem lub innymi zakłóceniami czynionymi przez użytkownika o podobnej nazwie.
+Prosimy [[Special:Contact|o kontakt]] w sprawie problemu.',
+	'phalanx-user-block-new-account' => 'Nazwa użytkownika nie jest dostępna do zarejestrowania. Proszę wybrać inną.',
+	'phalanx-user-block-withreason-ip' => 'Ten adres IP został zablokowany i nie posiada praw edycji w całej sieci Wikia z powodu wandalizmu lub innego typu zakłóceń czynionych przez Ciebie lub przez inną osobę, która dzieli twój adres IP.
+Jeśli uważasz, że jest to błąd, proszę [[Special:Contact|skontaktuj się z Wikia]].<br />Blokujący podał również powód dodatkowy: $1.',
+	'phalanx-user-block-withreason-exact' => 'Ta nazwa użytkownika lub adres IP zostały zablokowane i nie posiadają praw edycji w całej sieci Wikia z powodu wandalizmu lub innego typu zakłóceń.
+Jeśli uważasz, że jest to błąd, prosimy [[Special:Contact|skontaktuj się z Wikia]].<br />Blokujący podał również powód dodatkowy: $1.',
+	'phalanx-user-block-withreason-similar' => 'Ta nazwa użytkownika została zablokowana i nie posiada praw edycji w całej sieci Wikia z powodu wandalizmu lub innego typu zakłóceń czynionych przez użytkownika o podobnej nazwie.
+Prosimy [[Special:Contact|skontaktuj się z Wikia]] w sprawie problemu.<br />Blokujący podał również powód dodatkowy: $1.',
 	'phalanx-title-move-summary' => 'Wybrany powód zawiera zabroniony zwrot.',
 	'phalanx-content-spam-summary' => 'Tekst został odnaleziony w opisie zmian.',
 	'phalanx-stats-title' => 'Statystyki Phalanx',
@@ -1409,6 +1465,7 @@ Kliknięcie "{{int:phalanx-edit-block}}" spowoduje zapisanie zmian!',
 	'phalanx-stats-table-expire' => 'Wygasa',
 	'phalanx-stats-table-exact' => 'Dokładny',
 	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-case' => 'Wypadek',
 	'phalanx-stats-table-language' => 'Język',
 	'phalanx-stats-table-text' => 'Tekst',
 	'phalanx-stats-table-reason' => 'Powód',
@@ -1416,6 +1473,8 @@ Kliknięcie "{{int:phalanx-edit-block}}" spowoduje zapisanie zmian!',
 	'phalanx-stats-row-per-wiki' => "użytkownik '''$2''' zablokował na '''$4''' wedle ID filtru '''$3''' ($5) (typ: '''$1''')",
 	'phalanx-rule-log-name' => 'Dzienni reguł Phalanx',
 	'phalanx-rule-log-header' => 'Jest to dziennik zmian reguł Phalanx.',
+	'phalanx-email-rule-log-name' => 'rejestr filtrów e-mailowych Phalanx',
+	'phalanx-email-rule-log-header' => 'To jest rejestr zmian w filtrach Phalanx dotyczących e-maili.',
 	'phalanx-rule-log-add' => 'Reguła Phalanx dodana: $1',
 	'phalanx-rule-log-edit' => 'Reguła Phalanx zmieniona: $1',
 	'phalanx-rule-log-delete' => 'Reguła Phalanx usunięta: $1',
@@ -1424,8 +1483,10 @@ Kliknięcie "{{int:phalanx-edit-block}}" spowoduje zapisanie zmian!',
 	'phalanx-stats-table-wiki-name' => 'Nazwa Wiki',
 	'phalanx-stats-table-wiki-url' => 'Adres URL Wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Ostatnia zmiana',
+	'phalanx-email-filter-hidden' => 'Filtr e-mailowy ukryty. Nie masz uprawnień aby wyświetlić tekst.',
 	'right-phalanx' => 'Można zarządzać globalnymi blokadami i filtrami spamu',
 	'right-phalanxexempt' => 'Wyłączone z reguł Phalanx',
+	'right-phalanxemailblock' => 'Umożliwia włączanie, przeglądanie i zarządzanie blokadami opartymi o e-mail',
 );
 
 /** Pashto (پښتو)
@@ -1717,11 +1778,16 @@ $messages['sv'] = array(
 	'phalanx-view-blocker' => 'Sök med textfilter:',
 	'phalanx-view-blocks' => 'Sökfilter',
 	'phalanx-view-id' => 'Få filter efter ID:',
+	'phalanx-view-id-submit' => 'Hämta filter',
 	'phalanx-format-text' => 'oformaterad text',
 	'phalanx-format-case' => 'skiftlägeskänslig',
 	'phalanx-format-exact' => 'exakt',
 	'phalanx-tab-main' => 'Hantera filter',
 	'phalanx-tab-secondary' => 'Testa filter',
+	'phalanx-block-success' => 'Blockeringen lades till',
+	'phalanx-block-failure' => 'Det uppstod ett fel när blockeringen skulle läggas till',
+	'phalanx-modify-success' => 'Blockeringen ändrades',
+	'phalanx-modify-failure' => 'Det uppstod ett fel när blockeringen skulle ändras',
 	'phalanx-modify-warning' => 'Du redigerar blockerings-ID #$1.
 Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-test-submit' => 'Test',
@@ -1735,6 +1801,7 @@ Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-legend-input' => 'Skapa eller ändra filter',
 	'phalanx-unblock-message' => 'Block-ID #$1 har tagits bort',
 	'phalanx-user-block-new-account' => 'Användarnamnet är inte tillgängligt för registrering. Välj ett annat.',
+	'phalanx-title-move-summary' => 'Anledningen du skrev in innehöll en blockerad fras.',
 	'phalanx-content-spam-summary' => 'Texten hittades i sidans sammanfattning.',
 	'phalanx-stats-block-notfound' => 'blockerings-ID hittades inte',
 	'phalanx-stats-table-id' => 'Blockerings-ID',
@@ -1746,6 +1813,7 @@ Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-stats-table-language' => 'Språk',
 	'phalanx-stats-table-text' => 'Text',
 	'phalanx-stats-table-reason' => 'Anledning',
+	'phalanx-stats-row' => "på $4, filtertyp '''$1''' blockerade '''$2''' den $3",
 	'phalanx-stats-row-per-wiki' => "användaren '''$2''' blockerades den '''$4''' av filter-ID '''$3''' ($5) (typ: '''$1''')",
 	'phalanx-rule-log-add' => 'Phalanx-regel lades till: $1',
 	'phalanx-rule-log-edit' => 'Phalanx-regel redigerades: $1',

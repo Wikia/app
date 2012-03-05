@@ -68,9 +68,11 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author ZxxZxxZ
  */
 $messages['fa'] = array(
-	'signup' => 'ثبت نام',
+	'signup-desc' => 'نام مستعار [[{{#Special:Signup}}]] را به [[{{#Special:UserLogin}}/signup]] می‌افزاید',
+	'signup' => 'ثبت‌نام',
 );
 
 /** French (Français)

@@ -902,6 +902,7 @@ Teamo de Wikia
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
  * @author Bola
  * @author Crazymadlover
  * @author DJ Nietzsche
@@ -1033,6 +1034,7 @@ Si tienes algunas dudas, envíanos un correo electrónico a través de nuestro [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nuevos wikis',
 	'newwikisstart' => 'Mostrar wikis comenzando por:',
+	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-reminder-body' => '
 Estimado/a $1,
 
@@ -3159,6 +3161,7 @@ Dit is een volledig nieuw project, dus laat het ons weten als je met vragen zit.
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -3285,6 +3288,7 @@ Jeśli masz pytania, możesz zawsze napisać do nas e‐mail za pośrednictwem [
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nowe wiki',
 	'newwikisstart' => 'Wyświetl wiki rozpoczynając od',
+	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-reminder-body' => 'Szanowny $1!
 
 Gratulujemy utworzenia nowego projektu wiki „{{SITENAME}}”! Możesz teraz wejść na swoją wiki odwiedzając $2 i dodać informacje.
@@ -4042,16 +4046,16 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-step0' => 'Покретање поступка...',
 	'autocreatewiki-stepdefault' => 'Поступак је покренут. Молимо, сачекајте...',
 	'autocreatewiki-errordefault' => 'Поступак није завршен.',
-	'autocreatewiki-step1' => 'Прављење фасцикле за слике...',
-	'autocreatewiki-step2' => 'Прављење базе података...',
-	'autocreatewiki-step11' => 'Слање е-поруке кориснику...',
+	'autocreatewiki-step1' => 'Правим фасциклу за слике…',
+	'autocreatewiki-step2' => 'Правим базу података…',
+	'autocreatewiki-step11' => 'Шаљем е-поруку кориснику…',
 	'autocreatewiki-redirect' => 'Преусмеравање на нову викију: $1...',
 	'autocreatewiki-congratulation' => 'Честитамо!',
 	'autocreatewiki-welcometalk-log' => 'Порука добродошлице',
 	'autocreatewiki-step2-error' => 'База података постоји!',
 	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
 	'autocreatewiki-welcomesubject' => '$1 је направљена!',
-	'newwikis' => 'Нове викије',
+	'newwikis' => 'Нови викији',
 	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-reminder-body' => 'Драги $1:
 
@@ -4184,13 +4188,13 @@ Wikia Community Team
 
 <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => "== Välkommen! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hej \$1 -- vi är glada över att ha '''\$4''' som en del av Wikia communityn!
+<div style=\"font-size:120%; line-height:1.2em;\">Hej \$1 -- vi är glada över att ha '''\$4''' som en del av Wikia-gemenskapen!
 
-Nu har du en hel webbsida att fylla med information, bilder och videor om ditt favoritämne. Men just nu är det bara blanka sidor som stirrar på dig... Skrämmande, heller hur? Här är några sätt om hur du kommer igång.
+Nu har du en hel webbsida att fylla med information, bilder och videoklipp om ditt favoritämne. Men just nu är det bara blanka sidor som stirrar på dig... Skrämmande, heller hur? Här är några sätt om hur du kommer igång.
 
 * '''Presentera ditt ämne''' på framsidan. Detta är din chans att förklara för alla besökare vad ditt ämne handlar om. Skriv så mycket du vill! Din beskrivning kan länka till alla viktiga sidor på din wiki.
 
-* '''Skriv några nya sidor''' -- bara en eller två meningar är en bra början. Låt inte de tomma sidorna titta på dig! En wiki handlar om att lägga till och förändra saker med tiden. Du kan också lägga till bilder och videor för att fylla upp sidan och göra den mer intressant.
+* '''Skriv några nya sidor''' -- bara en eller två meningar är en bra början. Låt inte de tomma sidorna titta på dig! En wiki handlar om att lägga till och förändra saker med tiden. Du kan också lägga till bilder och videoklipp för att fylla upp sidan och göra den mer intressant.
 
 Och sedan är det bara att fortsätta! Människor gillar att besöka wikis där det finns mycket av saker att titta på och läsa, så fortsätt lägga till saker, så kommer du att locka till dig läsare och redaktörer. Det finns massor av saker att göra ännu, men oroa dig inte -- idag är det din första dag, och du har gott om tid. Varje wiki börjar på samma sätt -- en liten bit i taget, några sidor åt gången, tills den växer till en enorm, befolkad sida.
 
@@ -4325,6 +4329,7 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
+ * @author Suelnur
  */
 $messages['tr'] = array(
 	'autocreatewiki' => 'Yeni bir wiki oluştur',
@@ -4370,6 +4375,7 @@ $messages['tr'] = array(
 	'autocreatewiki-errordefault' => 'İşlem tamamlanmadı...',
 	'autocreatewiki-step1' => 'Görsel dizini oluşturuluyor ...',
 	'autocreatewiki-step2' => 'Veri tabanı oluşturuluyor...',
+	'autocreatewiki-congratulation' => 'Tebrikler!',
 );
 
 /** Tatar (Cyrillic script) (Татарча)
@@ -4409,10 +4415,12 @@ $messages['tt-cyrl'] = array(
  * @author Ahonc
  * @author NickK
  * @author Prima klasy4na
+ * @author Vox
  * @author Тест
  */
 $messages['uk'] = array(
 	'autocreatewiki' => 'Створити нову Вікі',
+	'autocreatewiki-desc' => 'Створити вікі у WikiFactory з запитів користувачів',
 	'autocreatewiki-page-title-default' => 'Створити нову Вікі',
 	'createwiki' => 'Створити нову Вікі',
 	'autocreatewiki-chooseone' => 'Виберіть зі списку',
@@ -4429,14 +4437,31 @@ $messages['uk'] = array(
 	'autocreatewiki-error' => 'помилка',
 	'autocreatewiki-haveaccount-question' => 'Ви вже маєте обліковий запис у Вікії?',
 	'autocreatewiki-success-title-default' => 'Вашу вікі створено!',
+	'autocreatewiki-success-subtitle' => 'Тепер ви можете почати працювати в вашій вікі відвідавши:',
+	'autocreatewiki-success-has-been-created' => 'було створено!',
+	'autocreatewiki-success-get-started' => 'Початок роботи',
+	'autocreatewiki-info-domain' => 'Краще використати слово, що може бути ключовим для вашої теми при пошуку.',
 	'autocreatewiki-info-topic' => 'Додайте короткий опис, наприклад, "Зоряні війни" або "ТВ-шоу".',
 	'autocreatewiki-info-category-default' => 'Це допоможе відвідувачам знайти вашу вікі.',
+	'autocreatewiki-info-language' => 'Ця мова використовуватиметься за замовчанням для відвідувачів вашої вікі.',
+	'autocreatewiki-info-email-address' => 'Ваша адреса електронної пошти ніколи не відображається нікому на Wikia.',
+	'autocreatewiki-info-birthdate' => 'Вікія зобов’язує всіх користувачів указувати свою справжню дату народження; це є запобіжним засобом, дозволяє забезпечити відповідність сайту вимогам федеральних правил.',
+	'autocreatewiki-info-blurry-word' => 'Для захисту від автоматичного створення облікових записів, будь ласка, введіть розмиті слова, що ви бачите, у надане поле.',
+	'autocreatewiki-info-terms-agree' => 'Створюючи вікі й обліковий запис користувача, ви погоджуєтеся з <a href="http://www.wikia.com/wiki/Terms_of_use">умовами використання Wikia</a>',
+	'autocreatewiki-info-staff-username' => '<b>Лише для персоналу:</b> Вказаний користувач буде зазначений як засновник.',
 	'autocreatewiki-title-template' => 'Вікі $1',
 	'autocreatewiki-empty-field' => 'Будь ласка, заповніть це поле.',
+	'autocreatewiki-bad-name' => 'Назва не може містити спеціальних символів (як, наприклад, $ чи @) і має бути одним словом, написаним малими літерами без пробілів.',
+	'autocreatewiki-invalid-wikiname' => 'Назва не може містити спеціальних символів (як, наприклад, $ або @) і не може бути пустою',
+	'autocreatewiki-violate-policy' => 'Ця назва вікі містить слова, що порушують наші правила йменування',
+	'autocreatewiki-name-taken' => 'Вікі з цією URL адресою вже існує. Ви можете почати редагування в <a href="http://<span class=" notranslate"="">$1.wikia.com">http:// $1 . wikia.com</a> або вибрати іншу адресу.',
 	'autocreatewiki-name-too-short' => 'Ця адреса занадто коротка. Будь ласка, оберіть адресу, що містить щонайменше 3 символи.',
 	'autocreatewiki-name-too-long' => 'Ця адреса занадто довга. Будь ласка, оберіть адресу, яка має не більше 50 символів.',
+	'autocreatewiki-similar-wikis' => 'Нижче наведені вже існуючі вікі з такою тематикою. Ми пропонуємо редагування однієї з них.',
+	'autocreatewiki-invalid-username' => 'Неприпустиме ім’я користувача.',
 	'autocreatewiki-busy-username' => "Це ім'я користувача вже зайнято.",
 	'autocreatewiki-blocked-username' => 'Ви не можете створити обліковий запис.',
+	'autocreatewiki-user-notloggedin' => 'Ваш обліковий запис був створений, але ви не ввійшли в систему!',
 	'autocreatewiki-empty-language' => 'Будь ласка, виберіть мову для вікі.',
 	'autocreatewiki-empty-category' => 'Будь ласка, виберіть категорію.',
 	'autocreatewiki-empty-wikiname' => 'Назва вікі не може бути порожньою.',
@@ -4444,11 +4469,55 @@ $messages['uk'] = array(
 	'autocreatewiki-empty-password' => 'Пароль не може бути порожнім.',
 	'autocreatewiki-empty-retype-password' => 'Підтвердження пароля не може бути порожнім.',
 	'autocreatewiki-category-label' => 'Категорія:',
+	'autocreatewiki-category-other' => 'Інше',
+	'autocreatewiki-set-username' => 'Спочатку оберіть ім’я користувача.',
+	'autocreatewiki-invalid-category' => 'Неприпустиме значення категорії.
+Будь ласка, виберіть належне з випадаючого списку.',
+	'autocreatewiki-invalid-language' => 'Неприпустиме значення мови.
+Будь ласка, виберіть належне з випадаючого списку.',
+	'autocreatewiki-invalid-retype-passwd' => 'Будь ласка, введіть той самий пароль, що ви ввели вище',
 	'autocreatewiki-invalid-birthday' => 'Неправильна дата народження',
+	'autocreatewiki-limit-birthday' => 'Неможливо створити реєстрацію.',
 	'autocreatewiki-log-title' => 'Ваша вікі створюється!',
 	'autocreatewiki-step0' => 'Процес ініціализації…',
+	'autocreatewiki-stepdefault' => 'Процес запущено, будь ласка, зачекайте...',
+	'autocreatewiki-errordefault' => 'Процес не було завершено...',
+	'autocreatewiki-step1' => 'Створення папки зображень...',
+	'autocreatewiki-step2' => 'Створення бази даних...',
+	'autocreatewiki-step3' => 'Налаштування інформації за замовчуванням в базі даних...',
+	'autocreatewiki-step4' => 'Копіювання зображень за замовчанням і логотипу...',
+	'autocreatewiki-step5' => 'Налаштування змінних за замовчуванням в базі даних...',
+	'autocreatewiki-step6' => 'Налаштування таблиць за замовчанням в базі даних...',
+	'autocreatewiki-step7' => 'Налаштування початкової мови...',
+	'autocreatewiki-step8' => 'Створення груп користувачів та категорій...',
+	'autocreatewiki-step9' => 'Налаштування змінних для нової вікі...',
+	'autocreatewiki-step10' => 'Налаштування сторінок на центральній вікі...',
+	'autocreatewiki-step11' => 'Надсилання електронної пошти користувачеві...',
+	'autocreatewiki-redirect' => 'Перенаправлення на нову вікі: $1...',
 	'autocreatewiki-congratulation' => 'Вітаємо!',
+	'autocreatewiki-welcometalk-log' => 'Повідомлення привітання',
+	'autocreatewiki-regex-error-comment' => 'використано в вікі $1 (весь текст: $2)',
+	'autocreatewiki-step2-error' => 'База даних існує!',
+	'autocreatewiki-step3-error' => 'Не вдалося налаштувати інформацію за замовчуванням в базі даних!',
+	'autocreatewiki-step6-error' => 'Не вдалося налаштувати таблиці за замовчуванням у базі даних!',
+	'autocreatewiki-step7-error' => 'Не вдалося скопіювати початкову бази даних для мови!',
 	'autocreatewiki-protect-reason' => 'Частина офіційного інтерфейсу',
+	'autocreatewiki-welcomesubject' => '$1 було створено!',
+	'autocreatewiki-welcomebody' => 'Вітаємо вас, $2.
+
+Вікі з вашого запиту тепер доступна за адресою <$1>. Ми сподіваємося, що ви скоро почнете її редагування.
+
+Ми додали деяку інформацію та поради на вашу сторінку обговорення користувача (<$5>), щоб допомогти вам розпочати роботу.
+
+Якщо у вас виникли якісь проблеми, ви можете звернутися по допомогу до спільноти в вікі на <http: www.wikia.com/wiki/forum:help_desk="">, або за електронною поштою community@wikia.com. Ви можете також відвідати наш IRC чат-канал #wikia <http: irc.wikia.com="">.
+
+Зі мною можна зв’язатися напряму за електронною поштою або на моїй сторінці обговорення, якщо у вас є питання чи зауваження.
+
+Удачі в розвитку проекту!
+
+Команда спільноти Wikia
+
+<http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => "== Ласкаво просимо! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Вітаємо, \$1 — ми раді, що '''\$4''' — частина спільноти Wikia!
 
@@ -4463,6 +4532,13 @@ $messages['uk'] = array(
 — [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Нові вікі',
 	'newwikisstart' => 'Показати вікі, починаючи з:',
+	'autocreatewiki-reminder-body' => 'Шановний $1:
+
+Вітаємо вас з початком роботи вашої нової вікі, {{SITENAME}}! Ви можете повернутися і додати більше до вашої вікі відвідавши $2.
+
+Це зовсім новий проект тому, будь ласка, напишіть нам, коли у вас виникнуть які-небудь питання!
+
+— Команда спільноти Wikia',
 );
 
 /** Veps (Vepsän kel')
@@ -4590,10 +4666,12 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-subname-answers' => '答案网站',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Oapbtommy
+ */
 $messages['zh-hant'] = array(
-	'autocreatewiki-page-title-default' => '申請wiki',
-	'createwiki' => '申請wiki',
+	'autocreatewiki-page-title-default' => '建立一個新的維基',
+	'createwiki' => '建立一個新的維基',
 );
 
 /** Chinese (Hong Kong) (‪中文(香港)‬) */

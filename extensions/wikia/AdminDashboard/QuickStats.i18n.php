@@ -279,6 +279,16 @@ $messages['id'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
+/** Italian (Italiano)
+ * @author Lexaeus 94
+ */
+$messages['it'] = array(
+	'quickstats-header-views' => 'Visite',
+	'quickstats-header-edits' => 'Modifiche',
+	'quickstats-header-photos' => 'Foto',
+	'quickstats-header-likes' => 'Mi Piace',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */
@@ -390,6 +400,7 @@ $messages['nl'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Cloudissimo
  * @author Woytecr
  */
@@ -400,6 +411,7 @@ $messages['pl'] = array(
 	'quickstats-header-edits' => 'Edycje',
 	'quickstats-header-photos' => 'Grafiki',
 	'quickstats-header-likes' => 'Polubienia',
+	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Więcej statystyk]]',
 	'quickstats-number-shortening' => '$1K',
@@ -553,6 +565,22 @@ $messages['tt-cyrl'] = array(
 	'quickstats-header-edits' => 'төзәтмә',
 	'quickstats-header-photos' => 'Рәсем',
 	'quickstats-header-likes' => 'Ошый',
+);
+
+/** Ukrainian (Українська)
+ * @author A1
+ * @author Vox
+ */
+$messages['uk'] = array(
+	'quickstats-header-label' => 'Стисла статистика',
+	'quickstats-header-date' => 'Дата',
+	'quickstats-header-views' => 'Переглядів',
+	'quickstats-header-edits' => 'редагувань',
+	'quickstats-header-photos' => 'Фото',
+	'quickstats-header-likes' => 'Подобається',
+	'quickstats-totals-label' => 'Загалом',
+	'quickstats-see-more-stats-link' => '[[Спеціальна:WikiStats|Див. більше статистики]]',
+	'quickstats-number-shortening' => '$1K',
 );
 
 /** Veps (Vepsän kel')

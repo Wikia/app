@@ -259,10 +259,15 @@ Anatz a la [[{{MediaWiki:Mainpage}}|pagina d'acuèlh]] o benlèu a [[Special:Ran
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Cloudissimo
  */
 $messages['pl'] = array(
 	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Utwórz nowe konto]] lub [[Special:UserLogin|zaloguj się na swoje istniejące konto]], żeby następnym razem pominąć tę stronę.',
+	'outbound-screen-already-logged-in-no-link' => 'Nie wskazano celu.
+Nie ma tu nic do oglądania!
+
+Zechcesz może zobaczyć [[{{MediaWiki:Mainpage}}|Stronę główną]] lub [[Special:Random|losową stronę]]?',
 	'outbound-screen-you-are-leaving' => 'Opuszczasz Wikię.',
 );
 

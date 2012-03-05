@@ -161,12 +161,11 @@ $messages['qqq'] = array(
 	'wikifactory-label-actions' => '{{Identical|Action}}',
 	'wikifactory-label-close' => '{{Identical|Close}}',
 	'wikifactory-label-tags' => '{{Identical|Tag}}',
-	'wikifactory-label-masstags' => 'Label for a tab that contains a form, allowing staff to apply tags in bunk.',
-	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag.',
+	'wikifactory-label-masstags' => 'Label for a tab that contains a form, allowing staff to apply tags in bulk. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
+	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'right-wikifactory' => '{{doc-right|wikifactory}}',
 	'closewiki-nbr-wiki' => 'What is $1? If it is a number it should support PLURAL',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
-	'awc-metrics-wikis-found' => "Needs plural support. Cannot currently be done, because there is no plural support in Wikia's version of MediaWiki.",
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
 	'awc-metrics-close' => '{{Identical|Close}}',
 	'awc-metrics-active' => '{{Identical|Active}}',
@@ -239,7 +238,6 @@ $messages['af'] = array(
 	'awc-metrics-two-months' => 'geskep < 2 maande gelede',
 	'awc-metrics-three-months' => 'geskep < 3 maande gelede',
 	'awc-metrics-half-year' => 'geskep < 6 maande gelede',
-	'awc-metrics-wikis-found' => "Het $1 Wiki's gevind",
 	'awc-metrics-by-email' => ' of (gebruiker se e-pos):',
 	'awc-metrics-by-user' => 'gevind deur (gebruikersnaam):',
 	'awc-metrics-by-dbname' => 'waar die databasisnaam bevat:',
@@ -364,7 +362,6 @@ $messages['ar'] = array(
 	'awc-metrics-two-months' => 'أنشأت < منذ شهرين',
 	'awc-metrics-three-months' => 'أنشأت < منذ 3 أشهر',
 	'awc-metrics-half-year' => 'أنشأت < منذ 6 أشهر',
-	'awc-metrics-wikis-found' => 'تم العثور على $1 ويكي',
 	'awc-metrics-by-email' => 'أو (البريد الإلكتروني للمستخدم):',
 	'awc-metrics-by-user' => 'أسست من قبل (إسم المستخدم):',
 	'awc-metrics-by-dbname' => 'أين تحتوي أسماء DB:',
@@ -527,7 +524,6 @@ $messages['be-tarask'] = array(
 	'awc-metrics-two-months' => 'створана менш за два месяцы таму',
 	'awc-metrics-three-months' => 'створана менш за тры месяцы таму',
 	'awc-metrics-half-year' => 'створана менш за паўгода таму',
-	'awc-metrics-wikis-found' => 'Знойдзеныя $1 вікі',
 	'awc-metrics-by-email' => '  ці (адрас электроннай пошты удзельніка):',
 	'awc-metrics-by-user' => 'знойдзена па (імені ўдзельніка):',
 	'awc-metrics-by-dbname' => 'дзе назвы базаў зьвестак утрымліваюць:',
@@ -630,6 +626,7 @@ $messages['bg'] = array(
 	'awc-metrics-all-languages' => 'всички езици',
 	'awc-metrics-nbr-result' => 'Резултати:',
 	'awc-metrics-articles' => 'Статии',
+	'awc-metrics-edits' => 'Редакции',
 	'awc-metrics-images' => 'Изображения',
 	'awc-metrics-statistics' => 'Статистики (средно за всички месеци)',
 	'awc-metrics-close' => 'Затваряне',
@@ -651,6 +648,7 @@ $messages['bg'] = array(
 	'closed-wiki-create-wiki' => 'Създаване на ново уики',
 	'closed-delete-images' => 'Изтриване на картинките',
 	'closed-reason' => 'Причина:',
+	'newwikisgraph-param-all' => 'Всички',
 );
 
 /** Banjar (Bahasa Banjar)
@@ -729,7 +727,6 @@ $messages['br'] = array(
 	'awc-metrics-two-months' => 'krouet > 2 viz zo',
 	'awc-metrics-three-months' => 'krouet < 3 miz zo',
 	'awc-metrics-half-year' => 'krouet < 6 miz zo',
-	'awc-metrics-wikis-found' => '$1 Wiki kavet',
 	'awc-metrics-by-email' => ' pa (postel an implijer) :',
 	'awc-metrics-by-user' => 'kavet gant (anv implijer):',
 	'awc-metrics-by-dbname' => "e-lech ma'z eus en anv an diaz roadennoù :",
@@ -816,7 +813,6 @@ $messages['bs'] = array(
 	'awc-metrics-all' => 'svi Wikiji',
 	'awc-metrics-all-languages' => 'svi jezici',
 	'awc-metrics-search' => 'Opcije pretrage:',
-	'awc-metrics-wikis-found' => 'Pronađeno $1 wiki',
 	'awc-metrics-by-email' => '  ili (korisnički email):',
 	'awc-metrics-not-found' => 'Nisu pronađeni wikiji',
 	'awc-metrics-nbr-result' => 'Rezultati:',
@@ -896,7 +892,6 @@ $messages['ca'] = array(
 	'awc-metrics-two-months' => 'crear < fa 2 mesos',
 	'awc-metrics-three-months' => 'crear < fa 3 mesos',
 	'awc-metrics-half-year' => 'crear < fa 6 mesos',
-	'awc-metrics-wikis-found' => "S'ha trobat  $1  Wikis",
 	'awc-metrics-by-email' => "o (d'usuari de correu electrònic):",
 	'awc-metrics-by-user' => "s'ha trobat per (nom d'usuari):",
 	'awc-metrics-by-dbname' => 'Si els noms de DB conté:',
@@ -1043,7 +1038,6 @@ $messages['cs'] = array(
 	'awc-metrics-two-months' => 'založeno < před 2 měsíci',
 	'awc-metrics-three-months' => 'založeno < před 3 měsíci',
 	'awc-metrics-half-year' => 'založeno < před 6 měsíci',
-	'awc-metrics-wikis-found' => 'Nalezeno $1 wiki',
 	'awc-metrics-by-email' => '   nebo (uživatelův e-mail):',
 	'awc-metrics-by-user' => 'nalezeno (uživatelské jméno):',
 	'awc-metrics-by-dbname' => 'kde název databáze obsahuje:',
@@ -1133,7 +1127,6 @@ $messages['cy'] = array(
 	'awc-metrics-wikis' => 'Arddangos wicïau',
 	'awc-metrics-select' => 'Dangos wicïau',
 	'awc-metrics-all-languages' => 'pob iaith',
-	'awc-metrics-wikis-found' => 'Cafwyd hyd i $1 wici',
 	'awc-metrics-not-found' => 'Dim wicïau ar gael',
 	'awc-metrics-nbr-result' => 'Canlyniadau:',
 	'awc-metrics-articles' => 'Erthyglau',
@@ -1182,6 +1175,7 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author ChrisiPK
  * @author Claudia Hattitten
+ * @author Geitost
  * @author Inkowik
  * @author Kghbln
  * @author LWChris
@@ -1256,7 +1250,6 @@ $messages['de'] = array(
 	'awc-metrics-two-months' => 'vor < 2 Monaten erstellt',
 	'awc-metrics-three-months' => 'vor < 3 Monaten erstellt',
 	'awc-metrics-half-year' => 'vor < 6 Monaten erstellt',
-	'awc-metrics-wikis-found' => '$1 Wikis gefunden',
 	'awc-metrics-by-email' => 'oder (Benutzer-E-Mail):',
 	'awc-metrics-by-user' => 'gegründet von (Benutzername):',
 	'awc-metrics-by-dbname' => 'wo DB-Namen enthalten:',
@@ -1299,7 +1292,7 @@ $messages['de'] = array(
 	'closed-wiki' => 'geschlossenes Wiki',
 	'closed-wiki-info' => 'Dieses Wiki wurde geschlossen',
 	'disabled-wiki-info' => 'Dieses Wiki wurde deaktiviert',
-	'closed-wiki-dump-exists' => 'Bitte klicke [$1 hier], wenn du die Inhalte runterladen möchtest.<br />(Wenn das Wiki erst kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden)',
+	'closed-wiki-dump-exists' => 'Du kannst [$1 deine Inhalte herunterladen], wenn du möchtest.<br />(Wenn dein Wiki kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden.)',
 	'closed-wiki-dump-noexists' => 'Dieses Wiki wurde geschlossen. Der Inhaltsdump wird innerhalb von 24 Stunden zur Verfügung stehen. Bitte sieh dann noch einmal nach.',
 	'closed-wiki-create-wiki' => 'Ein neues Wiki erstellen',
 	'closed-wiki-policy' => 'Zeige Wikias Schließungs-Richtlinie',
@@ -1321,6 +1314,7 @@ $messages['de'] = array(
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Geitost
  * @author LWChris
  * @author Umherirrender
  */
@@ -1329,7 +1323,7 @@ $messages['de-formal'] = array(
 	'wikifactory-label-domains' => 'Domains',
 	'wikifactory-label-tags' => 'Tags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
-	'closed-wiki-dump-exists' => 'Bitte klicken Sie [$1 hier], wenn Sie die Inhalte runterladen möchten.<br />(Wenn das Wiki erst kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden)',
+	'closed-wiki-dump-exists' => 'Sie können [$1 Ihre Inhalte herunterladen], wenn Sie möchten.<br />(Wenn Ihr Wiki kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden.)',
 	'closed-wiki-dump-noexists' => 'Dieses Wiki wurde geschlossen. Der Inhaltsdump wird innerhalb von 24 Stunden zur Verfügung stehen. Bitte sehen Sie dann noch einmal nach.',
 	'closed-redirect-alert' => 'Bitte geben Sie die neue URL der Weiterleitung ein!',
 );
@@ -1375,6 +1369,7 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Bola
  * @author Locos epraix
  * @author Peter17
@@ -1430,6 +1425,7 @@ $messages['es'] = array(
 	'closewiki-return' => 'Volver a $1',
 	'wikifactory-button-saveparse' => 'Analizar y guardar los cambios',
 	'wikifactory-button-save' => 'Guardar cambios',
+	'wikifactory-public-status-change-default-reason' => 'Estado cambiado desde la pestaña Dominios.',
 	'awc-metrics-wikis' => 'Mostrar Wikis',
 	'awc-metrics-select' => 'Mostrar Wikis:',
 	'awc-metrics-by-language' => 'por idioma:',
@@ -1444,7 +1440,6 @@ $messages['es'] = array(
 	'awc-metrics-two-months' => 'creado hace < 2 meses',
 	'awc-metrics-three-months' => 'creado hace < 3 meses',
 	'awc-metrics-half-year' => 'creado hace < 6 meses',
-	'awc-metrics-wikis-found' => 'Encontrados $1 wikis',
 	'awc-metrics-by-email' => 'o (correo electrónico del usuario):',
 	'awc-metrics-by-user' => 'encontrado por (nombre de usuario):',
 	'awc-metrics-by-dbname' => 'donde los nombres de las DB contengan:',
@@ -1487,7 +1482,7 @@ $messages['es'] = array(
 	'closed-wiki' => 'Wiki cerrado',
 	'closed-wiki-info' => 'Este wiki ha sido cerrado',
 	'disabled-wiki-info' => 'Este wiki ha sido dishabilitado',
-	'closed-wiki-dump-exists' => 'Por favor, haz clic [$1 aquí] si quieres recuperar tu contenido.<br />(Si tu wiki fue cerrada recientemente, puede demorar un pequeño tiempo para que los archivos se generen)',
+	'closed-wiki-dump-exists' => 'Puede [$1 recuperar su contenido], si lo desea.<br />(Si su wiki cerró hace poco tiempo, puede tardar algo de tiempo la generación de los archivos)',
 	'closed-wiki-dump-noexists' => 'Este wiki ha sido cerrado. La descarga del contenido estará disponible en 24 horas. Por favor compruébalo de nuevo más tarde.',
 	'closed-wiki-create-wiki' => 'Crear un nuevo wiki',
 	'closed-wiki-policy' => 'Ver Política de Cierre de Wikia',
@@ -1501,6 +1496,11 @@ $messages['es'] = array(
 	'closed-confirm-btn' => 'Confirmar cierre',
 	'closed-redirect-alert' => '¡Por favor, escribe un nuevo URL de redirección!',
 	'closed-reason' => 'Motivo:',
+	'newwikisgraph' => 'Gráfica de los nuevos wikis',
+	'newwikisgraph-report-title' => 'creaciones de wikis por día',
+	'newwikisgraph-wikis-created' => 'wikis creados',
+	'newwikisgraph-param-all' => 'Todos',
+	'newwikisgraph-param-other' => 'Otro',
 );
 
 /** Estonian (Eesti)
@@ -1556,6 +1556,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Huji
  * @author Mjbmr
  * @author ZxxZxxZ
  */
@@ -1570,7 +1571,7 @@ $messages['fa'] = array(
 	'wikifactory-button-saveparse' => 'تجزیه و ذخیره تغییرات',
 	'wikifactory-button-save' => 'ذخیره‌کردن تغییرات',
 	'awc-metrics-category' => 'و رده:',
-	'awc-metrics-all-languages' => 'همه زبان‌ها',
+	'awc-metrics-all-languages' => 'همۀ زبان‌ها',
 	'awc-metrics-not-found' => 'هیچ ویکی یافت نشد',
 	'awc-metrics-nbr-result' => 'نتایج:',
 	'awc-metrics-articles' => 'مقاله‌ها',
@@ -1642,6 +1643,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Crochet.david
+ * @author Gomoko
  * @author IAlex
  * @author Jean-Frédéric
  * @author Peter17
@@ -1713,7 +1715,6 @@ $messages['fr'] = array(
 	'awc-metrics-two-months' => 'créé il y a moins de deux mois',
 	'awc-metrics-three-months' => 'créé il y a moins de trois mois',
 	'awc-metrics-half-year' => 'créé il y a moins de six mois',
-	'awc-metrics-wikis-found' => '$1 wikis trouvés',
 	'awc-metrics-by-email' => "  ou (courriel de l'utilisateur):",
 	'awc-metrics-by-user' => "trouvé par (nom d'utilisateur) :",
 	'awc-metrics-by-dbname' => 'où le nom de la base de données contient :',
@@ -1756,7 +1757,7 @@ $messages['fr'] = array(
 	'closed-wiki' => 'Wiki clôturé',
 	'closed-wiki-info' => 'Ce wiki a été clôturé',
 	'disabled-wiki-info' => 'Ce wiki a été désactivé',
-	'closed-wiki-dump-exists' => 'Veuillez cliquer [$1 ici] si vous voulez récupérer votre contenu.<br />(Si votre wiki a été récemment fermé, cela prendra une courte période de temps pour que les fichiers soient générés)',
+	'closed-wiki-dump-exists' => 'Vous pouvez [$1 récupérer votre contenu] si vous voulez.<br />(Si votre wiki a été récemment fermé, cela peut prendre un peu de temps pour que les fichiers soient générés)',
 	'closed-wiki-dump-noexists' => 'Ce wiki a été clôturé. Un dump du contenu sera disponible dans les 24 heures. Revenez voir plus tard.',
 	'closed-wiki-create-wiki' => 'Créer un nouveau wiki',
 	'closed-wiki-policy' => 'Voir la politique de clôture de Wikia',
@@ -1845,7 +1846,6 @@ $messages['gl'] = array(
 	'awc-metrics-two-months' => 'creado hai menos de dous meses',
 	'awc-metrics-three-months' => 'creado hai menos de tres meses',
 	'awc-metrics-half-year' => 'creado hai menos de seis meses',
-	'awc-metrics-wikis-found' => 'Atopáronse $1 wikis',
 	'awc-metrics-by-email' => '  ou (correo electrónico do usuario):',
 	'awc-metrics-by-user' => 'atopado por (nome de usuario):',
 	'awc-metrics-by-dbname' => 'onde os nomes da base de datos conteñan:',
@@ -1888,7 +1888,7 @@ $messages['gl'] = array(
 	'closed-wiki' => 'Wiki pechado',
 	'closed-wiki-info' => 'Este wiki foi pechado',
 	'disabled-wiki-info' => 'Este wiki foi desactivado',
-	'closed-wiki-dump-exists' => 'Por favor, prema [$1 aquí] se quere recuperar o seu contido.<br />(Se pecharon o seu wiki hai pouco, poida que a xeración dos ficheiros tarde uns intres)',
+	'closed-wiki-dump-exists' => 'Pode [$1 recuperar o seu contido], se quere.<br />(Se pecharon o seu wiki hai pouco, poida que a xeración dos ficheiros tarde uns intres)',
 	'closed-wiki-dump-noexists' => 'Este wiki foi pechado. Haberá dispoñible unha copia do contido nun prazo de 24 horas. Por favor, volva máis adiante.',
 	'closed-wiki-create-wiki' => 'Crear un novo wiki',
 	'closed-wiki-policy' => 'Ollar a política de peche de Wikia',
@@ -2009,7 +2009,6 @@ $messages['hu'] = array(
 	'awc-metrics-two-months' => 'kevesebb mint két hónapja létrehozva',
 	'awc-metrics-three-months' => 'kevesebb mint három hónapja létrehozva',
 	'awc-metrics-half-year' => 'kevesebb mint hat hónapja létrehozva',
-	'awc-metrics-wikis-found' => '$1 wiki találat',
 	'awc-metrics-by-email' => ' vagy (felhasználó email):',
 	'awc-metrics-by-dbname' => 'ahol az adatbázisnév tartalmazza a következőt:',
 	'awc-metrics-not-found' => 'nem található wiki',
@@ -2090,8 +2089,8 @@ $messages['ia'] = array(
 	'wikifactory-label-close' => 'Clauder',
 	'wikifactory-label-tags' => 'Etiquettas',
 	'wikifactory-label-tags2' => 'Etiquettas',
-	'wikifactory-label-masstags' => 'MassTags',
-	'wikifactory-label-findtags' => 'FindTags',
+	'wikifactory-label-masstags' => 'Etiquettage in massa',
+	'wikifactory-label-findtags' => 'Cercar per etiquetta',
 	'wikifactory-label-ezsharedupload' => 'EZIncargamentoCommun',
 	'wikifactory-label-compare' => 'Comparar',
 	'right-wikifactory' => 'Cambiar le configuration interne del wikis',
@@ -2127,7 +2126,6 @@ $messages['ia'] = array(
 	'awc-metrics-two-months' => 'create minus de 2 septimanas retro',
 	'awc-metrics-three-months' => 'create minus de 3 menses retro',
 	'awc-metrics-half-year' => 'create minus de 6 menses retro',
-	'awc-metrics-wikis-found' => '$1 wikis trovate',
 	'awc-metrics-by-email' => '  or (e-mail del usator):',
 	'awc-metrics-by-user' => 'trovate per (nomine de usator):',
 	'awc-metrics-by-dbname' => 'ubi le nomine del base de datos contine:',
@@ -2170,7 +2168,7 @@ $messages['ia'] = array(
 	'closed-wiki' => 'Wiki claudite',
 	'closed-wiki-info' => 'Iste wiki ha essite claudite',
 	'disabled-wiki-info' => 'Iste wiki ha essite disactivate',
-	'closed-wiki-dump-exists' => 'Per favor clicca [$1 hic] si tu vole recuperar tu contento.<br />(Si tu wiki ha essite recentemente claudite, le generation del files pote prender un curte periodo de tempore.)',
+	'closed-wiki-dump-exists' => 'Tu pote [$1 recuperar tu contento] si tu vole.<br />(Si tu wiki ha essite recentemente claudite, le generation del files pote prender un curte periodo de tempore.)',
 	'closed-wiki-dump-noexists' => 'Iste wiki ha essite claudite. Un copia del contento essera disponibile intra 24 horas. Per favor reveni plus tarde.',
 	'closed-wiki-create-wiki' => 'Crear un nove wiki',
 	'closed-wiki-policy' => 'Vider le politica de clausura de Wikia',
@@ -2260,7 +2258,6 @@ $messages['id'] = array(
 	'awc-metrics-two-months' => 'dibuat < 2 bulan lalu',
 	'awc-metrics-three-months' => 'dibuat < 3 bulan lalu',
 	'awc-metrics-half-year' => 'dibuat < 6 bulan lalu',
-	'awc-metrics-wikis-found' => 'Ditemukan  $1 wiki',
 	'awc-metrics-by-email' => 'atau (sur-e pengguna):',
 	'awc-metrics-by-user' => 'ditemukan oleh (nama pengguna):',
 	'awc-metrics-by-dbname' => 'yangmana nama DB berisi:',
@@ -2394,7 +2391,6 @@ $messages['it'] = array(
 	'awc-metrics-two-months' => 'creato < 2 mesi fa',
 	'awc-metrics-three-months' => 'creato < 3 mesi fa',
 	'awc-metrics-half-year' => 'creato < 6 mesi fa',
-	'awc-metrics-wikis-found' => 'Trovati $1 Wiki',
 	'awc-metrics-by-email' => 'o (e-mail utente):',
 	'awc-metrics-images' => 'Immagini',
 	'awc-metrics-close' => 'Chiudi',
@@ -2549,7 +2545,6 @@ $messages['krc'] = array(
 	'awc-metrics-two-months' => '< 2 ай мындан алгъа къуралгъанды',
 	'awc-metrics-three-months' => ' < 3 ай мындан алгъа къуралгъанды',
 	'awc-metrics-half-year' => '< 6 ай мындан алгъа къуралгъанды',
-	'awc-metrics-wikis-found' => ' $1 вики табылгъанды',
 	'awc-metrics-by-email' => ' неда  (кошулуучуну эл. почтасы):',
 	'awc-metrics-by-user' => 'къуралгъынды (къошулуучуну аты):',
 	'awc-metrics-by-dbname' => 'Анда БД атда бу барды:',
@@ -2758,7 +2753,6 @@ $messages['mk'] = array(
 	'awc-metrics-two-months' => 'создадено < пред 2 месеца',
 	'awc-metrics-three-months' => 'создадено < пред 3 месеци',
 	'awc-metrics-half-year' => 'создадено < пред 6 месеци',
-	'awc-metrics-wikis-found' => '{{PLURAL:$1|Пронајдено е $1 вики|Пронајдени се $1 викија}}',
 	'awc-metrics-by-email' => '  или (корисничка е-пошта):',
 	'awc-metrics-by-user' => 'пронајдено од (корисничко име):',
 	'awc-metrics-by-dbname' => 'кајшто имињата од БП содржат:',
@@ -2801,7 +2795,7 @@ $messages['mk'] = array(
 	'closed-wiki' => 'Затворено вики',
 	'closed-wiki-info' => 'Ова вики е затворено',
 	'disabled-wiki-info' => 'Ова вики е оневозможено',
-	'closed-wiki-dump-exists' => 'Кликнете [$1 тука] ако сакате повторно да си ги повратите вашите содржини.<br />(Ако викито ви е неодамна затворено, создавањето на податотеките може малку да потрае)',
+	'closed-wiki-dump-exists' => 'Можете да [$1 си ги повратите содржините], доколку сакате.<br />(ако вашето вики е затворено од неодамна, може да треба накратко да почекате за да се создадат податотеките)',
 	'closed-wiki-dump-noexists' => 'Ова вики е затворено. Складираната резервна содржина ќе биде достапна во рок од 24 часа. Проверете подоцна.',
 	'closed-wiki-create-wiki' => 'Создај ново вики',
 	'closed-wiki-policy' => 'Прикажи ги правилата за затворање на Викија',
@@ -2913,7 +2907,6 @@ $messages['ms'] = array(
 	'awc-metrics-two-months' => 'dicipta < 2 bulan lalu',
 	'awc-metrics-three-months' => 'dicipta <3 bulan lalu',
 	'awc-metrics-half-year' => 'dicipta < 6 bulan lalu',
-	'awc-metrics-wikis-found' => '$1 Wiki Dicari',
 	'awc-metrics-by-email' => 'atau (e-mel pengguna):',
 	'awc-metrics-by-user' => 'ditemui oleh (nama pengguna):',
 	'awc-metrics-by-dbname' => 'yang mana nama pangkalan data mengandungi:',
@@ -2956,7 +2949,7 @@ $messages['ms'] = array(
 	'closed-wiki' => 'Wiki Ditutup',
 	'closed-wiki-info' => 'Wiki ini telah ditutup',
 	'disabled-wiki-info' => 'Wiki ini telah dimatikan',
-	'closed-wiki-dump-exists' => 'Sila klik [$1 di sini] jika anda ingin mengambil isi kandungan anda.<br />(Jika wiki anda ditutup baru-baru ini, penjanaan fail mungkin mengambil masa seketika)',
+	'closed-wiki-dump-exists' => 'Anda boleh [$1 mengambil kandungan anda] pada bila-bila masa.<br />(Jika wiki anda baru ditutup, sedikit masa mungkin diperlukan untuk menjana fail-fail anda)',
 	'closed-wiki-dump-noexists' => 'Wiki ini telah ditutup. Longgokan kandungan akan disediakan dalam masa 24 jam. Sila semak semula.',
 	'closed-wiki-create-wiki' => 'Cipta wiki baru',
 	'closed-wiki-policy' => 'Lihat Dasar Penutupan Wikia',
@@ -3092,7 +3085,6 @@ $messages['nb'] = array(
 	'awc-metrics-two-months' => 'opprettet for < 2 måneder siden',
 	'awc-metrics-three-months' => 'opprettet for < 3 måneder siden',
 	'awc-metrics-half-year' => 'opprettet for < 6 måneder siden',
-	'awc-metrics-wikis-found' => 'Fant $1 wikier',
 	'awc-metrics-by-email' => ' eller (brukers e-post):',
 	'awc-metrics-by-user' => 'funnet av (brukernavn):',
 	'awc-metrics-by-dbname' => 'hvor DB-navn inneholder:',
@@ -3135,7 +3127,7 @@ $messages['nb'] = array(
 	'closed-wiki' => 'Stengt Wiki',
 	'closed-wiki-info' => 'Denne wikien har blitt stengt',
 	'disabled-wiki-info' => 'Denne wikien har blitt deaktivert',
-	'closed-wiki-dump-exists' => 'Vennligst trykk [$1 her] hvis du vil gjenopprette innholdet ditt.<br />(Hvis wikien din nylig ble stengt, kan det ta en liten stund før filene blir generert)',
+	'closed-wiki-dump-exists' => 'Du kan [$1 gjenopprette innholdet ditt] hvis du vil.<br />(Hvis wikien din nylig ble stengt, kan det ta en liten stund før filene blir generert)',
 	'closed-wiki-dump-noexists' => 'Denne wikien har blitt stengt. Innholdsdumping vil bli tilgjengelig innen 24 timer. Vennligst kom tilbake senere.',
 	'closed-wiki-create-wiki' => 'Opprett en ny wiki',
 	'closed-wiki-policy' => 'Vis Wikias stengningspolitikk',
@@ -3158,6 +3150,7 @@ $messages['nb'] = array(
 
 /** Dutch (Nederlands)
  * @author McDutchie
+ * @author SPQRobin
  * @author Siebrand
  * @author Tjcool007
  */
@@ -3225,7 +3218,6 @@ $messages['nl'] = array(
 	'awc-metrics-two-months' => '< 2 maanden geleden aangemaakt',
 	'awc-metrics-three-months' => '< 3 maanden geleden aangemaakt',
 	'awc-metrics-half-year' => '< 6 maanden geleden aangemaakt',
-	'awc-metrics-wikis-found' => "$1 wiki's gevonden",
 	'awc-metrics-by-email' => 'of (gebruikerse-mail):',
 	'awc-metrics-by-user' => 'gevonden door (gebruikersnaam):',
 	'awc-metrics-by-dbname' => 'waar de databasenaam bevat:',
@@ -3269,7 +3261,7 @@ paginagrootte',
 	'closed-wiki' => 'Gesloten wiki',
 	'closed-wiki-info' => 'Deze wiki is gesloten',
 	'disabled-wiki-info' => 'Deze wiki is uitgeschakeld',
-	'closed-wiki-dump-exists' => 'Klik [$1 hier] als u uw inhoud wilt ophalen.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
+	'closed-wiki-dump-exists' => 'U kunt [$1 uw inhoud ophalen] als u wilt.<br />(Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.)',
 	'closed-wiki-dump-noexists' => 'Deze wiki is gesloten.
 Een dump van de inhoud wordt binnen 24 uur beschikbaar gemaakt.
 Kom hier alstublieft terug.',
@@ -3362,6 +3354,7 @@ $messages['pdc'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Marcin Łukasz Kiejzik
  * @author Sp5uhe
  */
@@ -3414,6 +3407,7 @@ $messages['pl'] = array(
 	'closewiki-return' => 'Powrót do $1',
 	'wikifactory-button-saveparse' => 'Przetwórz i zapisz zmiany',
 	'wikifactory-button-save' => 'Zapisz zmiany',
+	'wikifactory-public-status-change-default-reason' => 'Status zmieniony z zakładki Domeny.',
 	'awc-metrics-wikis' => 'Wyświetlaj wiki',
 	'awc-metrics-select' => 'Pokaż wiki:',
 	'awc-metrics-by-language' => 'w języku:',
@@ -3428,7 +3422,6 @@ $messages['pl'] = array(
 	'awc-metrics-two-months' => 'utworzone < 2 miesiące temu',
 	'awc-metrics-three-months' => 'utworzone < 3 miesiące temu',
 	'awc-metrics-half-year' => 'utworzone < 6 miesięcy temu',
-	'awc-metrics-wikis-found' => 'Znaleziono $1 wiki',
 	'awc-metrics-by-email' => 'lub (e‐mail użytkownika)',
 	'awc-metrics-by-user' => 'znalezione przez (nazwa użytkownika)',
 	'awc-metrics-by-dbname' => 'gdzie nazwy baz danych zawierają',
@@ -3471,7 +3464,7 @@ $messages['pl'] = array(
 	'closed-wiki' => 'Zamknięte wiki',
 	'closed-wiki-info' => 'Ta wiki została zamknięta',
 	'disabled-wiki-info' => 'Ta wiki została wyłączona',
-	'closed-wiki-dump-exists' => 'Kliknij [$1 tutaj], jeśli chcesz pobrać zawartość.<br />(Jeśli wiki została niedawno zamknięta, może upłynąć jakiś czas zanim pliki zostaną wygenerowane)',
+	'closed-wiki-dump-exists' => 'Możesz [$1 pobrać stąd zawartość], jeśli chcesz.<br />(Jeśli wiki została niedawno zamknięta, może upłynąć jakiś czas zanim pliki zostaną wygenerowane)',
 	'closed-wiki-dump-noexists' => 'Ta wiki została zamknięta. Zrzut bazy danych będzie dostępny w ciągu 24 godzin. Prosimy spróbować ponownie.',
 	'closed-wiki-create-wiki' => 'Utwórz nową wiki',
 	'closed-wiki-policy' => 'Zobacz politykę Wikii zamykania wiki',
@@ -3485,6 +3478,11 @@ $messages['pl'] = array(
 	'closed-confirm-btn' => 'Potwierdzam zamknięcie',
 	'closed-redirect-alert' => 'Podaj nowy adres URL przekierowania!',
 	'closed-reason' => 'Powód',
+	'newwikisgraph' => 'Wykres nowych wiki',
+	'newwikisgraph-report-title' => 'wiki tworzone w kolejnych dniach',
+	'newwikisgraph-wikis-created' => 'utworzone wiki',
+	'newwikisgraph-param-all' => 'Wszystkie',
+	'newwikisgraph-param-other' => 'Inne',
 );
 
 /** Piedmontese (Piemontèis)
@@ -3555,7 +3553,6 @@ $messages['pms'] = array(
 	'awc-metrics-two-months' => 'creà < 2 mèis fa',
 	'awc-metrics-three-months' => 'creà < 3 mèis fa',
 	'awc-metrics-half-year' => 'creà < 6 mèis fa',
-	'awc-metrics-wikis-found' => 'Trovà $1 Wiki',
 	'awc-metrics-by-email' => " o (pòsta eletrònica dl'utent):",
 	'awc-metrics-by-user' => 'trovà da (nòm utent):',
 	'awc-metrics-by-dbname' => 'anté che ël nòm ëd la base ëd dàit a conten:',
@@ -3682,6 +3679,8 @@ $messages['ps'] = array(
 	'closed-create-image-archive' => 'د انځورونو يو خونديځ جوړول',
 	'closed-delete-images' => 'انځورونه ړنګول',
 	'closed-reason' => 'سبب:',
+	'newwikisgraph-param-all' => 'ټول',
+	'newwikisgraph-param-other' => 'نور',
 );
 
 /** Portuguese (Português)
@@ -3754,7 +3753,6 @@ $messages['pt'] = array(
 	'awc-metrics-two-months' => 'criadas há menos de dois meses',
 	'awc-metrics-three-months' => 'criadas há menos de três meses',
 	'awc-metrics-half-year' => 'criadas há menos de seis meses',
-	'awc-metrics-wikis-found' => 'Encontradas $1 wikis',
 	'awc-metrics-by-email' => 'ou (correio electrónico do utilizador):',
 	'awc-metrics-by-user' => 'encontrado por (nome do utilizador):',
 	'awc-metrics-by-dbname' => 'onde os nomes das BDs contenham:',
@@ -3882,7 +3880,6 @@ $messages['pt-br'] = array(
 	'awc-metrics-two-months' => 'criado < 2 meses atrás',
 	'awc-metrics-three-months' => 'criado < 3 meses atrás',
 	'awc-metrics-half-year' => 'criado < 6 meses atrás',
-	'awc-metrics-wikis-found' => 'Encontradas $1 wikis',
 	'awc-metrics-by-email' => 'ou (email do usuário):',
 	'awc-metrics-by-user' => 'encontrado por (nome de usuário):',
 	'awc-metrics-by-dbname' => 'onde os nomes das DB contenham:',
@@ -4073,7 +4070,6 @@ $messages['ru'] = array(
 	'awc-metrics-two-months' => 'создано < 2 месяцев назад',
 	'awc-metrics-three-months' => 'создано < 3 месяцев назад',
 	'awc-metrics-half-year' => 'создано < 6 месяцев назад',
-	'awc-metrics-wikis-found' => 'Найдено $1 вики',
 	'awc-metrics-by-email' => '  или (эл. почта участника):',
 	'awc-metrics-by-user' => 'основанные (имя участника):',
 	'awc-metrics-by-dbname' => 'где название БД содержит:',
@@ -4116,7 +4112,7 @@ $messages['ru'] = array(
 	'closed-wiki' => 'Закрытая вики',
 	'closed-wiki-info' => 'Эта вики закрыта',
 	'disabled-wiki-info' => 'Эта вики отключена',
-	'closed-wiki-dump-exists' => 'Нажмите кнопку [$1 здесь], если вы хотите получить ваше содержимое.<br />(Если ваша вики была закрыта недавно, то создание файла может занять короткий период времени)',
+	'closed-wiki-dump-exists' => 'Вы можете [$1 получить ваше содержимое здесь], если вам оно нравится.<br />(Если ваша вики была закрыта недавно, то создание файла может занять короткий период времени)',
 	'closed-wiki-dump-noexists' => 'Этот вики была закрыт. Снимок содержимого будет доступен в течение 24 часов. Пожалуйста, заходите позже.',
 	'closed-wiki-create-wiki' => 'Создать новую вики',
 	'closed-wiki-policy' => 'Просмотреть правила закрытия Викии',
@@ -4160,15 +4156,15 @@ $messages['sl'] = array(
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'wikifactorypagetitle' => 'Викифабрика поставке',
-	'wikifactory' => 'Wiki Factory конфигуратор',
+	'wikifactorypagetitle' => 'Викифабрика – подешавање',
+	'wikifactory' => 'Викифабрика – подешавање',
 	'closewiki' => 'Затвори викију',
 	'wf_city_url' => 'Адреса',
-	'wf_city_id' => 'ID',
+	'wf_city_id' => 'ИД',
 	'wf_city_title' => 'Наслов',
 	'wf_city_created' => 'Направљено',
 	'wf_city_founding_user' => 'Оснивач',
-	'wf_city_founding_email' => 'Е-пошта оснивача',
+	'wf_city_founding_email' => 'Е-адреса оснивача',
 	'wf_city_public' => 'Статус',
 	'wf_city_lang' => 'Језик',
 	'wf_cc_name' => 'Категорија',
@@ -4179,7 +4175,7 @@ $messages['sr-ec'] = array(
 	'wikifactory-label-variables2' => 'Опште',
 	'wikifactory-label-hubs' => 'Сабиралишта',
 	'wikifactory-label-domains' => 'Домени',
-	'wikifactory-label-return' => 'Повратак на списак',
+	'wikifactory-label-return' => 'Назад на списак',
 	'wikifactory-label-clog' => 'Дневник измена',
 	'wikifactory-label-actions' => 'Радње',
 	'wikifactory-label-google' => 'Гугл алатке',
@@ -4190,9 +4186,9 @@ $messages['sr-ec'] = array(
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-eznamespace' => 'Именски простор EZ',
-	'right-wikifactory' => 'мењање унутрашњих поставки за викије',
+	'right-wikifactory' => 'мењање унутрашњих подешавања викија',
 	'wikifactory-domain-edit' => 'уредите ову URL адресу',
-	'wikifactory-domain-remove' => 'уклоните ову URL адресу с викије',
+	'wikifactory-domain-remove' => 'уклоните ову адресу с викија',
 	'wikifactory-domain-setmain' => 'убаците ову URL адресу у wgServer',
 	'closewiki-check-and-confirm' => 'Провери викије и потврди радњу',
 	'closewiki-redirect-to' => 'Преусмери на',
@@ -4200,17 +4196,17 @@ $messages['sr-ec'] = array(
 	'closewiki-confirm-button' => 'Потврди „$1“ од $2',
 	'closewiki-nbr-wiki' => '$1 викија',
 	'closewiki-wiki-closed' => "'''$1''' је затворен ($2)",
-	'closewiki-wiki-closed_removed' => "'''$1''' је сада затворен и предвиђен за уклањање ($2)",
+	'closewiki-wiki-closed_removed' => "'''$1''' је сада затворен и предвиђен за брисање ($2)",
 	'closewiki-wiki-closed_redirect' => "'''$1''' је затворен ($2) и сада се преусмерава на: $3",
 	'closewiki-dump-url' => 'Испис базе података: $1',
-	'closewiki-images-url' => 'Архив слика: $1',
+	'closewiki-images-url' => 'Архива слика: $1',
 	'closewiki-unknown' => 'Непознато',
-	'closewiki-return' => 'Повратак на $1',
+	'closewiki-return' => 'Назад на $1',
 	'awc-metrics-wikis' => 'Приказ викија',
 	'awc-metrics-select' => 'Прикажи викије:',
 	'awc-metrics-by-language' => 'по језику:',
 	'awc-metrics-category' => 'и категорији:',
-	'awc-metrics-all' => 'све викије',
+	'awc-metrics-all' => 'сви викији',
 	'awc-metrics-all-languages' => 'сви језици',
 	'awc-metrics-search' => 'Поставке претраге:',
 	'awc-metrics-one-week' => 'направљено претходне недеље',
@@ -4220,7 +4216,6 @@ $messages['sr-ec'] = array(
 	'awc-metrics-two-months' => 'направљено пре два месеца',
 	'awc-metrics-three-months' => 'направљено пре три месеца',
 	'awc-metrics-half-year' => 'направљено пре шест месеци',
-	'awc-metrics-wikis-found' => '{{PLURAL:$1|Пронађена је $1 викија|Пронађене су $1 викије|Пронађено је $1 викија}}',
 	'awc-metrics-by-email' => ' или (е-пошта корисника):',
 	'awc-metrics-by-user' => ' пронашао/-ла (корисничко име):',
 	'awc-metrics-by-dbname' => 'где база података садржи:',
@@ -4229,27 +4224,27 @@ $messages['sr-ec'] = array(
 	'awc-metrics-not-found' => 'Нема викија',
 	'awc-metrics-nbr-result' => 'Резултати:',
 	'awc-metrics-created-between' => 'направљено између $1 (DD/MM/YYYY) и $2 (DD/MM/YYYY)',
-	'awc-metrics-wikians' => 'Уредници<br />(>10 уређивања)',
+	'awc-metrics-wikians' => 'Уредници<br />(>10 измена)',
 	'awc-metrics-articles' => 'Чланци',
 	'awc-metrics-articles-per-day' => 'Чланци<br />(просек по дану)',
-	'awc-metrics-revisions-per-page' => 'Ревизије<br />(просек по страници)',
-	'awc-metrics-article-avg-size' => 'Прос. члан.<br />величина',
+	'awc-metrics-revisions-per-page' => 'Измене<br />(просек по страници)',
+	'awc-metrics-article-avg-size' => 'Просечна<br />величина',
 	'awc-metrics-edits' => 'Измене',
-	'awc-metrics-db-size' => 'Величина базе података',
+	'awc-metrics-db-size' => 'Величина базе',
 	'awc-metrics-images' => 'Слике',
 	'awc-metrics-all-users' => 'Упис.<br />корисници',
 	'awc-metrics-all-users-edit-main-ns' => 'Упис. корисници<br />(Садржај NS)',
-	'awc-metrics-pageviews' => 'Страница<br />прегледа',
+	'awc-metrics-pageviews' => 'Прегледи<br />странице',
 	'awc-metrics-statistics' => 'Статистика (просек за све месеце)',
 	'awc-metrics-close' => 'Затвори',
 	'awc-metrics-close-action' => 'затвори',
 	'awc-metrics-active' => 'активан',
 	'awc-metrics-closed' => 'затворен',
 	'awc-metrics-redirected' => 'затворен и преусмерен',
-	'awc-metrics-removed' => 'уклоњено',
-	'awc-metrics-hubs' => 'Нове викије (месечно)',
-	'awc-metrics-news-day' => 'Нове викије (дневно)',
-	'awc-metrics-sum-month' => 'Број (у месец дана)',
+	'awc-metrics-removed' => 'уклоњен',
+	'awc-metrics-hubs' => 'Нови викији (месечно)',
+	'awc-metrics-news-day' => 'Нови викији (дневно)',
+	'awc-metrics-sum-month' => 'Број (месечно)',
 	'awc-metrics-sum-day' => 'Број (по дану)',
 	'awc-metrics-fewer-than' => 'који има мање од {{PLURAL:$1|$1 чланак|$1 чланка|$1 чланака}},',
 	'awc-metrics-edits-label' => '{{PLURAL:$1|$1 измена|$1 измене|$1 измена}} у $2,',
@@ -4261,9 +4256,9 @@ $messages['sr-ec'] = array(
 	'awc-metrics-exact-match' => 'тачно поклапање',
 	'awc-metrics-recordspager' => "Приказивање '''$1''' до '''$2''' од '''$3''' белешки",
 	'closed-wiki' => 'Затворена викија',
-	'closed-wiki-info' => 'Ова викија је затворена',
-	'disabled-wiki-info' => 'Ова викија је онемогућена',
-	'closed-wiki-dump-exists' => 'Кликните [$1 овде] ако желите да вратите свој садржај.<br />(Ако вам је вики недавно затворен, стварање датотека може да потраје.)',
+	'closed-wiki-info' => 'Овај вики је затворен',
+	'disabled-wiki-info' => 'Овај вики је онемогућен',
+	'closed-wiki-dump-exists' => 'Можете да [$1 вратите свој садржај], ако желите.<br />(Ако вам је вики недавно затворен, стварање датотека може потрајати.)',
 	'closed-wiki-dump-noexists' => 'Ова викија је затворена. Испис садржаја ће бити доступан у року од 24 часа. Посетите нас касније.',
 	'closed-wiki-create-wiki' => 'Направи нову викију',
 	'closed-wiki-policy' => 'Прикажи Викијину политику затварања',
@@ -4347,7 +4342,6 @@ $messages['sv'] = array(
 	'awc-metrics-two-months' => 'skapad < 2 månader sedan',
 	'awc-metrics-three-months' => 'skapad < 3 månader sedan',
 	'awc-metrics-half-year' => 'skapad < 6 månader sedan',
-	'awc-metrics-wikis-found' => 'Hittade $1 Wikis',
 	'awc-metrics-by-email' => ' eller (användarens e-post):',
 	'awc-metrics-by-user' => 'hittats av (användarnamn):',
 	'awc-metrics-by-dbname' => 'där DB namn innehåller:',
@@ -4382,13 +4376,15 @@ $messages['sv'] = array(
 	'awc-metrics-edits-label' => '{{PLURAL:$1|$1 redigering|$1 redigeringar}} i $2,',
 	'awc-metrics-this-month' => 'denna månad',
 	'awc-metrics-last-month' => 'de senaste {{PLURAL:$1|månaden|$1 månaderna}}',
+	'awc-metrics-pageviews-label' => 'och {{PLURAL:$1|$1 sidvisning|$1 sidvisningar}} de senaste {{PLURAL:$2|dagen|$2 dagarna}}',
 	'awc-metrics-close-listed' => 'Stäng alla listade',
 	'awc-metrics-close-checked' => 'Stäng markerade',
 	'awc-metrics-exact-match' => 'exakt matchning',
+	'awc-metrics-recordspager' => "Visar '''$1''' till '''$2''' av '''$3''' poster",
 	'closed-wiki' => 'Stängd Wiki',
 	'closed-wiki-info' => 'Denna wiki har stängts',
 	'disabled-wiki-info' => 'Denna wiki har avaktiverats',
-	'closed-wiki-dump-exists' => 'Var god klicka [$1 här] om du vill hämta ditt innehåll<br />(Om din wiki avslutades nyligen, kan det ta en kort tid för filer att genereras)',
+	'closed-wiki-dump-exists' => 'Du kan [$1 hämta ditt innehåll] om du vill.<br />(Om din wiki avslutades nyligen, kan det ta en kort tid för filer att genereras)',
 	'closed-wiki-dump-noexists' => 'Denna wiki har avslutats. En innehållsdump kommer att finnas tillgänglig inom 24 timmar. Var god kom tillbaka då.',
 	'closed-wiki-create-wiki' => 'Skapa en ny wiki',
 	'closed-wiki-policy' => 'Visa Wikias Stängningspolicy',
@@ -4396,12 +4392,14 @@ $messages['sv'] = array(
 	'closed-create-image-archive' => 'Skapa ett bildarkiv',
 	'closed-delete-database-images' => 'Radera databasen och alla bilder',
 	'closed-delete-images' => 'Ta bort bilder',
-	'closed-free-url' => 'Lämna tillbaka din URL till en ny grundare',
+	'closed-free-url' => 'Frigör din URL för en ny grundare',
 	'closed-hide-dumps' => 'Dölj Databas- och Bilddump',
 	'closed-redirect-url' => 'Omdirigera URL',
 	'closed-confirm-btn' => 'Bekräfta stängning',
 	'closed-redirect-alert' => 'Vänligen sätt en ny URL för omdirigering!',
 	'closed-reason' => 'Orsak:',
+	'newwikisgraph' => 'Graf över nya wikis',
+	'newwikisgraph-report-title' => 'wiki-skapelser per dag',
 	'newwikisgraph-wikis-created' => 'wikis skapade',
 	'newwikisgraph-param-all' => 'Alla',
 	'newwikisgraph-param-other' => 'Andra',
@@ -4530,7 +4528,6 @@ $messages['tl'] = array(
 	'awc-metrics-two-months' => 'nalikha < 2 mga buwan ang nakalipas',
 	'awc-metrics-three-months' => 'nalikha < 3 mga buwan ang nakalipas',
 	'awc-metrics-half-year' => 'nalikha < 6 mga buwan ang nakalipas',
-	'awc-metrics-wikis-found' => 'Nakatagpo ng $1 mga wiki',
 	'awc-metrics-by-email' => 'o (e-liham ng tagagamit):',
 	'awc-metrics-by-user' => 'natagpuan ni (pangalan ng tagagamit):',
 	'awc-metrics-by-dbname' => 'kung saan ang mga pangalan ng kalipunan ng dato ay naglalaman ng:',
@@ -4654,7 +4651,6 @@ $messages['tt-cyrl'] = array(
 	'awc-metrics-two-months' => '< 2 ай элек ясалган',
 	'awc-metrics-three-months' => '< 3 ай элек ясалган',
 	'awc-metrics-half-year' => '< 6 ай элек ясалган',
-	'awc-metrics-wikis-found' => '$1 вики табалды',
 	'awc-metrics-by-email' => 'яисә (кулланучының эл. почтасы):',
 	'awc-metrics-by-user' => 'гомуми (кулланучының исеме):',
 	'awc-metrics-by-dbname' => 'МБ үз эченә:',
