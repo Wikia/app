@@ -20,7 +20,7 @@ class FacebookSignupController extends WikiaController {
 		// try to get connected Wikia account
 		$user = F::build('FBConnectDB', array($fbUserId), 'getUser');
 
-		if ($user instanceof User) {
+		if ( ($user instanceof User) && ($fbUserId !== 0) ) {
 			// account is connected - log the user in
 			$user->setCookies();
 
