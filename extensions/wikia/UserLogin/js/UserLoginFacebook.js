@@ -26,7 +26,7 @@ var UserLoginFacebook = {
 	},
 
 	loginSetup: function() {
-		$('body').delegate('.sso-login-facebook', 'click', $.proxy(function(ev) {
+		$('body').undelegate('fb').delegate('.sso-login-facebook', 'click.fb', $.proxy(function(ev) {
 			ev.preventDefault();
 
 			this.log('FBConnect clicked');
@@ -85,7 +85,7 @@ var UserLoginFacebook = {
 	// show FB signup modal
 	showSignupModal: function(modal) {
 		this.modal = modal;
-		
+
 		var loginCallback = this.callbacks['login-success'] || '';
 
 		// hmm, why was loginajaxform inherited to create this? - hyun is curious
@@ -100,7 +100,7 @@ var UserLoginFacebook = {
 				}
 			}
 		});
-		
+
 		this.wikiaForm = this.form.wikiaForm;	// re-reference for convinience
 
 		this.modal.find('.FacebookSignupConfigHeader').bind('click', function(ev) {
@@ -112,8 +112,8 @@ var UserLoginFacebook = {
 		});
 
 		this.signupAjaxForm = new UserSignupAjaxForm(
-			this.wikiaForm, 
-			['username', 'password'], 
+			this.wikiaForm,
+			['username', 'password'],
 			this.form.el.find('input[type=submit]'));
 		this.wikiaForm.el
 			.find('input[name=username], input[name=password]')
@@ -121,14 +121,10 @@ var UserLoginFacebook = {
 
 		$.getResources([$.getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginFacebook.scss')]);
 	},
-	
+
 	closeSignupModal: function() {
 		if(this.modal) {
 			this.modal.closeModal();
 		}
 	}
 };
-
-$(function() {
-	UserLoginFacebook.init();
-});
