@@ -86,7 +86,7 @@ var Sprite = {
 			id: spriteData.id,
 			parent: parent,
 			pos: spriteData.pos,
-			zIndex: spriteData.zIndex ? spriteData.zIndex : this.zIndex
+			zIndex: spriteData.zIndex || this.zIndex
 		});
 	},
 
@@ -126,13 +126,13 @@ var Sprite = {
 			el.attr('id', spriteData.id);
 		}
 		if (spriteData.data) {
-			el.data(spriteData.data)
+			el.data(spriteData.data);
 		}
 		if (spriteData.cssClass) {
-			el.addClass(spriteData.cssClass)
+			el.addClass(spriteData.cssClass);
 		}
 		if (spriteData.events) {
-			el.bind(spriteData.events)
+			el.bind(spriteData.events);
 		}
 		el.css({
 			backgroundImage: 'url("' + Sprite.URL + '")',

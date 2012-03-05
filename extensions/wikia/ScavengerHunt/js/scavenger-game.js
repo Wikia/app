@@ -1,3 +1,4 @@
+/*global Sprite:true */
 var ScavengerHunt = {
 	currentArticleIndex: null,
 	gameId: null,
