@@ -4,7 +4,6 @@ $messages = array();
 
 $messages['en'] = array( 
 	'wall-no-title' => 'No title',
-	'wall-tab-wall-title' => 'Message Wall:$1',
 	'wall-message-loadmore' => 'View all $1 {{PLURAL:$1|reply|replies}}', 
 	'wall-message-wall' => 'Message Wall',
 	'wall-message-wall-shorten' => 'wall',
@@ -29,7 +28,7 @@ $messages['en'] = array(
 	'wall-default-title' => 'Message from $1', 
 	'wall-no-title-warning' => '← You did not specify any title',
 	'wall-desc' => 'User talk page replacement',
-	'wall-disabled-desc' => 'Message Wall functionality for wikis without wall extension', 
+	'wall-disabled-desc' => 'Message Wall functionality for wikis without the Wall extension enabled', 
 	'wall-placeholder-topic' => 'What\'s this about?',
 	'wall-placeholder-message' => "Post a new message to $1's wall",
 	'wall-placeholder-message-anon' => "Post a new message to this wall",
@@ -68,7 +67,7 @@ $messages['en'] = array(
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'Message was deleted previously and it no longer exists.',
 	
-	'wall-confirm-monobook-lack-of-reason' => 'Please provide a summary for removing this thread/reply.',
+	'wall-confirm-monobook-lack-of-reason' => 'Please provide a reason for removing this thread/reply.',
 
 	'wall-action-remove-confirm' => 'Please tell us why you would like to remove this:',
 	'wall-action-remove-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history.",
@@ -80,7 +79,7 @@ $messages['en'] = array(
 
 	'wall-action-admin-confirm' => 'Please tell us why you would like to delete this:',
 	'wall-action-admin-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history", // identical to 'wall-action-remove-thread above, why the duplicate?
-	'wall-action-admin-reply-confirm-info' => "This thread and your summary will still appear in the wiki's history. Only admins will be able to view this thread.",
+	'wall-action-admin-reply-confirm-info' => "This thread and your summary will still appear in the wiki's history. Only administrators will be able to view this thread.",
 
 	'wall-action-admin-confirm-ok' => 'Delete',
 
@@ -95,7 +94,7 @@ $messages['en'] = array(
 
 	'wall-action-rev-reply-confirm' => 'Are you sure you want to delete this message?',
 	'wall-action-rev-thread-confirm' => 'Are you sure you want to revision delete this thread and all of its history from the wiki? This cannot be undone.',
-	'wall-action-rev-confirm-ok' => 'Yes, Delete',
+	'wall-action-rev-confirm-ok' => 'Yes, delete',
 	
 	'wall-notifications' => 'Notifications',
 	'wall-notifications-all' => 'All Notifications',
@@ -105,7 +104,7 @@ $messages['en'] = array(
 	'wall-notifications-empty' => 'There are no notifications',
 	'wall-notifications-loading' => 'Loading notifications',
 	'wall-notifications-reminder' => 'You have <span>$1</span> unread {{PLURAL:$1|notification|notifications}}',
-	'wall-notifications-wall-disabled' => 'Message Wall has been disabled on this Wiki. Unable to load notifications.',
+	'wall-notifications-wall-disabled' => 'Message Wall has been disabled on this wiki. Unable to load notifications.',
 	
 	'wn-user1-reply-you-your-wall' => '$1 replied to your message on your wall', 
 	'wn-user2-reply-you-your-wall' => '$1 and $2 replied to your message on your wall', 
@@ -153,7 +152,7 @@ $messages['en'] = array(
 	'tog-enotifmywall' => '…someone posts a new message on my wall',
 	
 	'wall-deleted-msg-pagetitle' => 'Message deleted',
-	'wall-deleted-msg-text' => 'The message you are trying to reach has been deleted.',
+	'wall-deleted-msg-text' => 'The message you are trying to view has been deleted.',
 	'wall-deleted-msg-return-to' => 'Return to $1\'s wall.',
 	'wall-deleted-msg-view' => '(View/Restore)',
 	
@@ -491,7 +490,7 @@ $messages['qqq'] = array(
 	'wall-sorting-archived' => 'Sorting option, show archived threads (not built yet)',
 	'tog-enotifwallthread' => "Email preference option, checkbox to receive email when there's a reply to a followed thread",
 	'tog-enotifmywall' => "Email preference option, checkbox to receive email when there's a new thread on your wall",
-	'wall-deleted-msg-pagetitle' => 'Confirmation that a thread has been deleted',
+	'wall-deleted-msg-pagetitle' => 'Confirmation that a message has been deleted',
 	'wall-deleted-msg-text' => 'Error message when a user follows a link to a deleted thread',
 	'wall-deleted-msg-return-to' => "Link to return to user's wall when you try to follow a link to a deleted thread, $1 is wall owner",
 	'wall-deleted-msg-view' => 'Option for admins and staff to view and restore a deleted thread',
