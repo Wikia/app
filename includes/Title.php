@@ -2666,9 +2666,13 @@ class Title {
 				'action' => 'raw',
 				'maxage' => $wgSquidMaxage,
 			);
-			if( $this->getText() == 'Common.css' ) {
-				$urls[] = $this->getInternalURL( $query );
-			} elseif( $this->getText() == 'Wikia.css' ) {
+
+			if( $this->getText() == 'Common.css' || $this->getText() == 'Wikia.css' ) {
+				// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.css and Common.css.
+				$oTitleCommonCss	= Title::newFromText( 'Common.css', NS_MEDIAWIKI );
+				$oTitleWikiaCss		= Title::newFromText( 'Wikia.css',  NS_MEDIAWIKI );
+				$query['maxrev'] = max( (int) $oTitleWikiaCss->getLatestRevID(), (int) $oTitleCommonCss->getLatestRevID() ); 
+				unset( $oTitleWikiaCss, $oTitleCommonCss );
 				$urls[] = $this->getInternalURL( $query );
 			} else {
 				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {

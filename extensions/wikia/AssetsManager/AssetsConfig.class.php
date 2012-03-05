@@ -17,6 +17,12 @@ class AssetsConfig {
 			'action' => 'raw',
 			'maxage' => $wgSquidMaxage,
 		);
+		// BugId:20929 tell (or trick) varnish to store the latest revisions of Wikia.css and Common.css.
+		$oTitleCommonCss	= Title::newFromText( 'Common.css', NS_MEDIAWIKI );
+		$oTitleWikiaCss		= Title::newFromText( 'Wikia.css',  NS_MEDIAWIKI );
+		$siteargs['maxrev'] = max( (int) $oTitleWikiaCss->getLatestRevID(), (int) $oTitleCommonCss->getLatestRevID() );
+		unset( $oTitleWikiaCss, $oTitleCommonCss );
+
 		$query = wfArrayToCGI( array(
 			'usemsgcache' => 'yes',
 			'ctype' => 'text/css',
@@ -27,7 +33,6 @@ class AssetsConfig {
 
 		$srcs[] = Title::newFromText( $articleName, NS_MEDIAWIKI)->getFullURL( $query );
 		$srcs[] = Title::newFromText( '-' )->getFullURL( wfArrayToCGI( $siteargs ) );
-
 		return $srcs;
 	}
 
