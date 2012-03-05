@@ -5,7 +5,7 @@ var STATUS_STATE_AWAY = 'away';
 	if (typeof exports !== 'undefined') {
 		_ = require('underscore')._;
 		Backbone = require('backbone');
-		
+
 		models = exports;
 		server = true;
 	} else {
@@ -15,7 +15,7 @@ var STATUS_STATE_AWAY = 'away';
 	//
 	//models
 	//
-	
+
 	models.AuthInfo = Backbone.Model.extend({
 		defaults: {
 			'name': '', // username, NOT trusted (comes from client) but helpful w/debugging and double check.
@@ -23,7 +23,7 @@ var STATUS_STATE_AWAY = 'away';
 			'roomId': '' // the room the user is trying to get into
 		}
 	});
-	
+
 	/** Commands **/
 	models.Command = Backbone.Model.extend({
 		defaults: {
@@ -31,7 +31,7 @@ var STATUS_STATE_AWAY = 'away';
 			'command': ''
 		}
 	});
-	
+
 	models.OpenPrivateRoom = models.Command.extend({
 		initialize: function(options){
 			this.set({
@@ -41,7 +41,7 @@ var STATUS_STATE_AWAY = 'away';
 			});
 		}
 	});
-	
+
 	models.KickBanCommand = models.Command.extend({
 		initialize: function(options){
 			this.set({
@@ -50,7 +50,7 @@ var STATUS_STATE_AWAY = 'away';
 			});
 		}
 	});
-	
+
 	models.GiveChatModCommand = models.Command.extend({
 		initialize: function(options){
 			this.set({
@@ -59,7 +59,7 @@ var STATUS_STATE_AWAY = 'away';
 			});
 		}
 	});
-	
+
 	models.SetStatusCommand = models.Command.extend({
 		initialize: function(options){
 			this.set({
@@ -102,37 +102,37 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 
-	
+
 	var modelInit = function() {
 		this.chats = new models.ChatCollection();
 		this.users = new models.UserCollection();
 		this.privateUsers = new models.UserCollection();
 		this.blockedUsers = new models.UserCollection();
 		this.blockedByUsers = new models.UserCollection();
-		
+
 		this.chats.bind('add', function(current) {
 			var last = this.at(this.length - 2);
-			
+
 			if(typeof(last) == 'object' ) {
 				if(last.get('name') == current.get('name') && current.get('msgType') == 'chat' && current.get('msgType') == 'chat') {
 					current.set({'continued': true});
 				}
-				
+
 				if(last.get('temp') != current.get('temp')) {
-					current.set({'continued': false});		
+					current.set({'continued': false});
 				}
 			} else {
 				current.set({'continued': false});
 			}
-			
+
 			this.trigger('afteradd', current);
 		});
-		
+
 		this.chats.bind('remove', function(current) {
 			current.set({'continued': false });
 		});
 	}
-	
+
 	models.NodeChatModel = Backbone.Model.extend({
 		defaults: {
 			"clientId": 0
@@ -146,7 +146,7 @@ var STATUS_STATE_AWAY = 'away';
 	models.NodeChatModelCS = models.NodeChatModel.extend({
 		initialize: function() {
 			modelInit.apply(this,arguments);
-			this.room = new models.ChatRoom();	
+			this.room = new models.ChatRoom();
 		}
 	});
 
@@ -189,15 +189,15 @@ var STATUS_STATE_AWAY = 'away';
 			'roomId': 0,
 			'unreadMessage': 0,
 			'blockedMessageInput': false,
-			'isActive': false, 
+			'isActive': false,
 			'privateUser': false
 		}
 	});
-	
+
 	//
 	//Collections
 	//
-	
+
 	models.ChatCollection = Backbone.Collection.extend({
 		model: models.ChatEntry
 	});
@@ -208,25 +208,25 @@ var STATUS_STATE_AWAY = 'away';
 		});
 		return userObject;
 	}
-	
+
 	models.UserCollection = Backbone.Collection.extend({
 		model: models.User,
 		initialize: function() {
 			this.findByName = findByName;
-		} 
+		}
 	});
-	
+
 	models.PrivateUserCollection = Backbone.Collection.extend({
 		model: models.PrivateUser,
 		initialize: function() {
 			this.findByName = findByName;
-		} 
+		}
 	});
-	
+
 	//
 	//Model exporting/importing
 	//
-    
+
 	Backbone.Model.prototype.xport = function (opt) {
 		var result = {},
 		settings = _({recurse: true}).extend(opt || {});
@@ -300,5 +300,5 @@ var STATUS_STATE_AWAY = 'away';
 
 		return this;
 	};
-	
-})()
+
+})();
