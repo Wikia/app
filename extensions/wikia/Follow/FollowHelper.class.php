@@ -404,9 +404,9 @@ class FollowHelper {
 				$messageWallthread = 'tog-enotifwallthread';
 			}
 	
-
 			//back compatybility 
-			if($wgUser->getOption('enotifwallthread') === false || $wgUser->getOption('enotifwallthread') == 0 ) {
+			$option = $wgUser->getOption('enotifwallthread');
+			if(empty($option)){
 				$wgUser->setOption('enotifwallthread', WALL_EMAIL_NOEMAIL);
 				$wgUser->saveSettings();
 			}
