@@ -160,7 +160,7 @@ class ImageMap {
 			} else {
 				return self::error( 'imagemap_no_link', $lineNum );
 			}
-			if ( !$title ) {
+			if ( !($title instanceof Title) ) {
 				return self::error( 'imagemap_invalid_title', $lineNum );
 			}
 
