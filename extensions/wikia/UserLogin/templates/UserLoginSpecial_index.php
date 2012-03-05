@@ -73,6 +73,14 @@
 			'value' => $returnto
 		);
 	}
+	
+	if(!empty($returntoquery)) {
+		$form['inputs'][] = array(
+			'type' => 'hidden',
+			'name' => 'returntoquery',
+			'value' => $returntoquery
+		);
+	}
 
 	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
 
