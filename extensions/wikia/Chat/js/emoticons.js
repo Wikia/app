@@ -135,7 +135,7 @@ if(typeof EmoticonMapping === 'undefined'){
 				for(var imgSrc in self._settings){
 					var codes = self._settings[imgSrc];
 					var regexString = "";
-					for(var index in codes){
+					for(var index = 0; codes.length < index; index ++){
 						var code = codes[index];
 						// Escape the string for use in the regex (thanks to http://simonwillison.net/2006/Jan/20/escape/#p-6).
 						code = code.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
