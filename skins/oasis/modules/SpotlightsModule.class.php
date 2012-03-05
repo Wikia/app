@@ -22,8 +22,14 @@ class SpotlightsModule extends Module {
  */
 
 	public function executeIndex($params) {
-		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
-
+		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad, $wgSuppressSpotlights;
+		
+		//introducing new global var to remove
+		//spotlights on hubs
+		if( !empty($wgSuppressSpotlights) ) {
+			$this->skipRendering();
+		}
+		
 		$this->adslots = $params['adslots'];
 		$this->n_adslots = sizeof($this->adslots);
 		if (!empty($params['sectionId'])) {
