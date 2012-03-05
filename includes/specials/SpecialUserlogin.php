@@ -43,6 +43,7 @@ class LoginForm {
 	var $mLoginattempt, $mRemember, $mEmail, $mDomain, $mLanguage;
 	var $mSkipCookieCheck, $mReturnToQuery, $mToken;
 	var $mMarketingOptIn, $wpBirthYear, $wpBirthMonth, $wpBirthDay;
+	var $mAbortLoginErrorMsg = 'login-abort-generic';
 
 	private $mExtUser = null;
 
@@ -523,10 +524,16 @@ class LoginForm {
 		global $wgUser, $wgAuth;
 
 		/* Wikia change - begin */
+		// This might not be needed once we're upgraded to MW 1.19 since that throws new ReadOnlyError in a few spots (test that).
 		global $wgOut;
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return false;
+			if(is_object($wgOut)){
+				$wgOut->readOnlyPage();
+				return false;
+			} else {
+				$this->mAbortLoginErrorMsg = wfMsg( 'login-abort-readonly' ); // msg is in languages/messages/wikia/MessagesEn.php if we end up deleting this after the upgrade to MW 1.19
+				return self::ABORTED;
+			}
 		}
 		/* Wikia change - end */
 

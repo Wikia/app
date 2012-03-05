@@ -531,6 +531,7 @@ div.wikiaDialog h2,
 'popular-articles' => 'Popular Pages',
 'popular-wikis' => 'Popular Wikis',
 'mycontributions' => 'My contributions',
+'login-abort-readonly' => 'Site is currently in read-only mode. Users can not log in while the site is in read-only mode.',
 
 #Wikia Widgets
 
