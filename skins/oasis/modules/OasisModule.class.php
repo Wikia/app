@@ -303,8 +303,14 @@ class OasisModule extends Module {
 		// move JS files added by extensions to list of files to be loaded using WSL
 		$headscripts = $wgOut->getScript();
 
+		// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.js and Common.js.
+		$oTitleWikiaJs	= Title::newFromText( 'MediaWiki:Wikia.js' );
+		$oTitleCommonJs	= Title::newFromText( 'MediaWiki:Common.js' );
+		$iMaxRev = max( (int) $oTitleWikiaJs->getLatestRevID(), (int) $oTitleCommonJs->getLatestRevID() );
+		unset( $oTitleWikiaJs, $oTitleCommonJs );
+
 		// Load SiteJS / common.js separately, after all other js files (moved here from oasis_shared_js)
-		$headscripts .= "<script type=\"$wgJsMimeType\" src=\"".Title::newFromText('-')->getFullURL('action=raw&smaxage=86400&gen=js&useskin=oasis')."\"></script>";
+		$headscripts .= "<script type=\"$wgJsMimeType\" src=\"".Title::newFromText('-')->getFullURL('action=raw&smaxage=86400&maxrev=' . $iMaxRev . '&gen=js&useskin=oasis')."\"></script>";
 
 		// find <script> tags with src attribute
 		preg_match_all("#<script[^>]+src=\"([^\"]+)\"></script>#", $headscripts, $matches, PREG_SET_ORDER);
