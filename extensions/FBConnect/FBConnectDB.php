@@ -143,6 +143,8 @@ class FBConnectDB {
 
 		if($user->getId() == 0){
 			wfDebug("FBConnect: tried to store a mapping from fbid \"$fbid\" to a user with no id (ie: not logged in).\n");
+		} elseif ($fbid == 0) {
+			Wikia::log(__METHOD__, "", "FBConnect: \"fbid\" = 0\n");
 		} else {
 			$prefix = self::getPrefix();
 			$dbw = wfGetDB( DB_MASTER, array(), self::sharedDB() );
