@@ -105,7 +105,9 @@ class ArticleService extends Service {
 			// compress white characters
 			$content = preg_replace('/\s+/',' ',$content);
 			$content = trim( $content );
-			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH-3 ) . '...';
+			$content = mb_substr( $content, 0, $length-3 );
+			$content = mb_substr( $content, 0, strrpos($content,' ')) . '...';
+			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH-3 );
 
 			if ( $length <= self::MAX_CACHED_TEXT_LENGTH ){
 				$oMemCache->set( $sKey, $cacheContent, 86400 );
