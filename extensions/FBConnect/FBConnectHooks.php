@@ -728,8 +728,7 @@ HTML;
 	 * clear facebook session 
 	 */
 	public static function UserLogout(&$user){
-		$fb = new FBConnectAPI();
-		$fb->logout();
+		F::build('FBConnectAPI')->logout();
 		return true;
 	}
 }
