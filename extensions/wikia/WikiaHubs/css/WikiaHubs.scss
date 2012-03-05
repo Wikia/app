@@ -14,6 +14,7 @@ $wikiahubs-line-height: 16px;
 .WikiaHubs {
 	font-size: 13px;	/* reset font size */
 	line-height: $wikiahubs-line-height;	/* reset line height */
+	margin-top: 40px; /* separate from global nav */
 
 	/* reset article styling */
 	p {
