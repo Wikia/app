@@ -39,6 +39,7 @@ class CodeLintJs extends CodeLint {
 			'Mediawiki',
 			'Modernizr',
 			'mwCustomEditButtons',
+			'Node',
 			'Observable',
 			'RTE',
 			'skin',
