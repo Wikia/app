@@ -45,8 +45,7 @@ $messages['en'] = array(
 	'wikiamobile-sharing-email-text' => 'Hey,
 you should definitely check this out:
 
- $1
-'
+$1',
 );
 
 /** Message documentation (Message documentation) */
@@ -57,7 +56,7 @@ $messages['qqq'] = array(
 	'wikiamobile-categories-items-total' => '$1 is the total number of articles in the category',
 	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
 	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
-	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1 and new line after $1',
+	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
 );
 
 /** адыгэбзэ (адыгэбзэ)
