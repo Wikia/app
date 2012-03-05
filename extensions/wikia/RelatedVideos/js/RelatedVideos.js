@@ -106,7 +106,7 @@ var RelatedVideos = {
 
 	regroup: function() {
 		if ( !this.onRightRail ) { return; }
-		var container = $('.container',this.rvModule)
+		var container = $('.container',this.rvModule);
 		$('.group .item',this.rvModule).each( function() {
 			$(this).appendTo( container );
 		});
@@ -232,7 +232,7 @@ var RelatedVideos = {
 			controlerName,
 			'getVideo',
 			{
-				title: url,
+				video_title: url,
 				external: external,
 				cityShort: window.cityShort,
 				videoHeight: RelatedVideos.playerHeight,

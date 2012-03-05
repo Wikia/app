@@ -81,7 +81,7 @@ class RelatedVideosController extends WikiaController {
 		   afterwards videos are played using regular Lightbox
 		*/
 
-		$title = urldecode($this->getVal( 'title' ));
+		$title = urldecode($this->getVal( 'video_title' ));
 		$external = $this->getVal( 'external', '' );
 		$external = empty( $external ) ? null : $this->app->wg->wikiaVideoRepoDBName;
 		$cityShort = $this->getVal('cityShort');
