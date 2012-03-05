@@ -2,25 +2,52 @@
 
 class MiniEditorHelper extends WikiaModel {
 
-	// For now just add the MiniEditor enabled var on NS_USER_WALL namespace
-	// When MiniEditor is added to other page types, this logic will have to change
+	// Logic to determine where to enable MiniEditor
 	public static function makeGlobalVariablesScript(&$vars) {
 		global $wgTitle;
-		if ($wgTitle->getNamespace() == NS_USER_WALL ||
-			class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ||
-			$wgTitle->isSpecial( 'MiniEditor' )) {
+
+		$namespace = $wgTitle->getNamespace();
+
+		// Enable for Wall, Wall Threads and Special:MiniEditor
+		if ($namespace == NS_USER_WALL || $namespace == NS_USER_WALL_MESSAGE || $wgTitle->isSpecial( 'MiniEditor' )) {
 			$vars['wgEnableMiniEditorExt'] = true;
 		}
+
 		return true;
 	}
 
-	// TODO: remove any that are not needed for MiniEditor
-	static public function getAssets() {
+	/**
+	 * Helper function for extensions integrating with the Mini Editor
+	 * This will look at the request 'format' parameter and will return 
+	 * the opposite format. html -> wikitext and wikitext -> html
+	 * The second parameter is the name of the request parameter to convert ('body' or 'newbody' etc)
+	 * If the second parameter is null, you can pass in raw text for conversion
+	 */
+	public static function convertRequestText(WikiaRequest $request, $requestParam, $rawText = null) {
+		// $convertFormat is the desired format, i.e. convert to this format.  
+		$convertFormat = $request->getVal('convertFormat', 'wikitext');
+		
+		if ($rawText != null) {
+			$text = $rawText;
+
+		} else {
+			$text = $request->getVal($requestParam, null);
+		}
+
+		if ($convertFormat == 'RTEHtml') {
+			$text = RTE::WikitextToHtml($text);
+
+		} else {
+			$text = RTE::HtmlToWikitext($text);					
+		}
+
+		return $text;
+	}
+
+	public static function getAssets() {
 		return array (
 			// >> mediawiki editor core file
 			'skins/common/edit.js',
-			// >> editor stack loaders and configurers
-			'extensions/wikia/EditPageLayout/js/loaders/MiniEditorLoader.js',
 			// >> editor core
 			'extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
 			'extensions/wikia/EditPageLayout/js/editor/Buttons.js',
@@ -36,12 +63,9 @@ class MiniEditorHelper extends WikiaModel {
 			'extensions/wikia/EditPageLayout/js/extras/Buttons.js',
 			// >> visual modules - toolbars etc.
 			'extensions/wikia/EditPageLayout/js/modules/Container.js',
-			//'extensions/wikia/EditPageLayout/js/modules/RailContainer.js',
 			'extensions/wikia/EditPageLayout/js/modules/ButtonsList.js',
-			//'extensions/wikia/EditPageLayout/js/modules/Format.js',
 			'extensions/wikia/EditPageLayout/js/modules/FormatMiniEditor.js',
 			'extensions/wikia/EditPageLayout/js/modules/FormatMiniEditorSource.js',
-			//'extensions/wikia/EditPageLayout/js/modules/FormatExpanded.js',
 			'extensions/wikia/EditPageLayout/js/modules/Insert.js',
 			'extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
 			'extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
@@ -50,7 +74,7 @@ class MiniEditorHelper extends WikiaModel {
 			// plugins/extensions for MiniEditor
 			'extensions/wikia/VideoEmbedTool/js/VET.js',
 			'extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
-			'extensions/wikia/WikiaMiniUpload/js/WMU.js'//,
+			'extensions/wikia/WikiaMiniUpload/js/WMU.js',
 			//'extensions/wikia/LinkSuggest/LinkSuggest.js'
 		);
 	}

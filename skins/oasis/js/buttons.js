@@ -22,7 +22,7 @@ var WikiaButtons = {
 		  click: WikiaButtons.click
 		 };
 		 var s = $.extend({},defaults,opts||{});
-		 e .unbind('.wikiabutton')
+		 e.unbind('.wikiabutton')
 		  .one("mouseover.wikiabutton", WikiaButtons.setup)
 		  .bind('mouseenter.wikiabutton',WikiaButtons.mouseover)
 		  .bind('mouseleave.wikiabutton',WikiaButtons.mouseout)

@@ -1,146 +1,66 @@
-Notes / Outline of RTEMini:
-==========================
+MiniEditor: FAQ
+================================================================================
 
+1) How do I enable this extension?
 
-Enable RTEMini extension:
--------------------------
+	Set the variable $wgEnableMiniEditorExt to 'true' in wiki settings. In the
+	extension you will be integrating with, add a call to MiniEditor's loadAssets()
+	function to include any required assets. If you want to include custom CSS or
+	JavaScript specifically for your extension, you may pass an array of files to
+	load into the 'additionalAssets' parameter (see example).
 
-In DevBoxSettings.php, add: 
+Example:
+--------------------------------------------------------------------------------
 
-$wgEnableRTEMiniExt = true;
+		if ($this->wg->enableMiniEditorExt) {
+			$this->sendRequest('MiniEditor', 'loadAssets', array(
+				'additionalAssets' => array(
+					'extensions/wikia/MiniEditor/js/MyExtension.js', 
+					'extensions/wikia/MiniEditor/css/MyExtension.scss'
+				)
+			));
+		}
 
-if ($wgEnableRTEMiniExt) {
-        include( "$IP/extensions/wikia/RTEMini/RTEMini.setup.php" );
-}
+--------------------------------------------------------------------------------
 
-In the template for the page that needs to use RTE Mini call setup once:
+2) How do I embed MiniEditor in my templates?
 
-    <?php if ( $wg->EnableRTEMiniExt ): ?>
-		<?= $app->renderView('RTEMiniController', 'EditorSetup'); ?>
-	<?php endif;?>
+	Template rendering should always be done inside a check to see if the extension
+	is enabled by checking the value of $wg->enableMiniEditorExt. There are four
+	templates: Header, Footer, Editor_Header and Editor_Footer. Header and Footer
+	are used to wrap the entire editing area, including anything the editor will
+	need to know about (like buttons). the Editor_Header and Editor_Footer
+	templates are used to wrap the original editing area, adding a toolbar and
+	loading status indicator.
 
-In the template that has an edit area (for each edit area) add a wrapper:
+Example:
+--------------------------------------------------------------------------------
 
-	<? if ( $wg->EnableRTEMiniExt ): ?>
-		<?= $app->renderView( 'RTEMiniController', 'EditorWrapper', array('editorName'=> "WallMessage".$id, 'element'=>'div', 'body'=>$body ) ); ?>
-	<? else: ?>
-		<div class="msg-body" id="WallMessage<? echo $linkid ?>">
-			<? echo $body ?>
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Header', array(
+				'attributes' => array(
+					'data-min-height' => 100,
+					'data-max-height' => 400
+				)
+			))->render();
+		endif; ?>
+		<div id="MyExtension">
+			<? if ( $wg->enableMiniEditorExt ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+			endif; ?>
+			<textarea class="body"></textarea>
+			<? if ( $wg->enableMiniEditorExt ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
+			endif; ?>
 		</div>
-	<? endif; ?>
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
+		endif; ?>
 
-Methods and Variables:
-----------------------
+--------------------------------------------------------------------------------
 
-* RTEMini.init() - Create new instance of mini editor; 
-	
-	* One param (id), which the id of the textarea to be replaced with the editor
+3) How do I invoke the MiniEditor plugin?
 
-* RTEInstanceElemId is a global variable that represents the current editor instance
-
-* RTE.getInstance() - Grab currently focussed instance
-	
-	* One param (optional) which is the id of the instance you want to get. 
-
-* RTE.setInstance() - Set RTEInstanceElemId
-	
-	* One param (id) which is the value you want to give to RTEInstanceElemId 
-
-* To add a custom height to the RTEMini instance, add the attribute "data-editor-min-height" and "data-editor-max-height" to the wrapper element.  (See Wall_reply.php for example)
-
-
-DOM Dependencies: 
------------------
-
-* These DOM elements are added by controller methods in the RTEMiniController class (EditorSetup, EditorWrapper)
-
-* <body class='RTEMini'>
-
-* div#[EditorName]Wrapper that encloses editor, toolbar, and overlay divs
-
-* div#[EditorName]EditorWrapper with data-space-type of "editor"
-
-* div.editpage-editarea with data-space-type of "editarea""
-
-* textarea#[EditorName] - This is the textarea that will be replaced with the CKEditor instance. 
-
-* Loading indicator html (see below)
-
-	*  We'll probably want to include this from the back end. (BugId:15878)
-
-* Example markup:
-
-	<div id="[EditorName]Wrapper">
-		<div id="[EditorName]EditorWrapper" data-space-type="editor">
-			<div class="editpage-editarea" data-space-type="editarea">
-				<textarea id="[EditorName]"></textarea>
-	    	</div>
-		</div>
-		<div id="[EditorName]Toolbar" class="editpage-toolbar" data-space-type="toolbar"></div>
-	
-		<!-- loading indicator overlay -->
-		<div class="editpage-loading-indicator" data-space-type="loading-status" style="display:none">
-			<div class="loading-background"></div>
-			<div class="loading-message">
-				<span class="loading-throbber">&nbsp;</span>
-				<span class="loading-text">&nbsp;</span>
-			</div>
-		</div>
-	</div>
-
-
-Files of Interest for RTEMini:
-------------------------------
-
-
-Editor:
-
-* Loader: extensions/wikia/EditPageLayout/js/loaders/MiniEditorLoader.js
-
-	* Includes RTEMini.init()
-
-* WikiaEditor: extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js
-	
-
-RTEMini-Specific Plugins:
-
-* extensions/wikia/EditPageLayout/js/plugins/RTEMini.js
-
-	* Add any updates to RTE.config here (configOverrides)
-
-	* Any RTEMini specific UI like focus/blur and toolbar hide/show
-
-	
-RTEMini-Specific Modules (Toolbar):
-
-* extensions/wikia/EditPageLayout/js/modules/FormatMini.js
-
-	* Defines buttons to appear in "format" toolbar menu in Wysiwyg mode. 
-
-* extensions/wikia/EditPageLayout/js/modules/ToolbarRTEMini.js
-
-	* Defines buttons to appear in "format" toolbar menu in Source mode. 
-
-		* Note: Since source mode format buttons apply wiki text instead of html, we've hacked their functionality away from CKEditor's. These button configs can be found here: extensions/wikia/EditPageLayout/js/extras/Buttons.js
-
-* extensions/wikia/EditPageLayout/js/modules/Insert.js
-
-	* Defines buttons to appear in "insert" toolbar menu
-
-	* WE.modules.InsertMini is created at the bottom of the file as a new instance of WE.modules.Insert.
-
-
-Media:
-
-* extensions/wikia/WikiaMiniUpload/js/WMU.js
-
-	* Code for "add image" button
-
-* extensions/wikia/VideoEmbedTool/js/VET.js 
-
-	* Code for "add video" button
-
-* extensions/wikia/RTE/js/plugins/media/plugin.js 
-
-	* Plugin code for placing and editing media
-
+	The MiniEditor can be invoked as a jQuery plugin: $('.selector').miniEditor();
+	Refer to the examples inside of "/extensions/wikia/MiniEditor/js" for more
+	information.

@@ -40,6 +40,14 @@
 		</a>
 	</div>
 	<blockquote class="speech-bubble-message">
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Header', array(
+				'attributes' => array(
+					'data-min-height' => 100,
+					'data-max-height' => 400
+				)
+			))->render();
+		endif; ?>
 		<? if(!$isreply): ?>
 			<?php if($isWatched): ?>
 				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wikiafollowedpages-following'); ?></a>
@@ -55,27 +63,43 @@
 				<span class="stafflogo"></span>
 			<?php endif; ?>
 		</div>
-		<div class="msg-body">
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+		endif; ?>
+		<div class="msg-body" id="WallMessage_<?= $id ?>">
 			<? echo $body ?>
 		</div>
-		
-		<div class="timestamp" style="clear:both">
-			<?php if($isEdited):?>
-				<? echo wfMsg('wall-message-edited', array('$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
-			<?php endif; ?>
-			<a  href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
-				<?php if (!is_null($iso_timestamp)): ?>
-				<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
-				<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
-				<?php else: ?>
-					<span><?= $fmt_timestamp ?></span>
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
+		endif; ?>
+		<div class="msg-toolbar">
+			<div class="timestamp">
+				<?php if($isEdited):?>
+					<? echo wfMsg('wall-message-edited', array('$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
 				<?php endif; ?>
-			</a>
-			<div class="buttonswrapper">
-				<?= $app->renderView( 'WallController', 'messageButtons', array('comment' => $comment)) ; ?>
+				<a href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
+					<?php if (!is_null($iso_timestamp)): ?>
+					<span class="timeago abstimeago" title="<?= $iso_timestamp ?>" alt="<?= $fmt_timestamp ?>">&nbsp;</span>
+					<span class="timeago-fmt"><?= $fmt_timestamp ?></span>
+					<?php else: ?>
+						<span><?= $fmt_timestamp ?></span>
+					<?php endif; ?>
+				</a>
+				<div class="buttonswrapper">
+					<?= $app->renderView( 'WallController', 'messageButtons', array('comment' => $comment)); ?>
+				</div>
 			</div>
-			
+			<div class="edit-buttons sourceview">
+				<button class="wikia-button cancel-edit cancel-source"><?php echo wfMsg('wall-button-done-source'); ?></button>
+			</div>
+			<div class="edit-buttons edit" id="WallMessage_<?= $id ?>Buttons" data-space-type="buttons">
+				<button class="wikia-button save-edit"><?php echo wfMsg('wall-button-save-changes'); ?></button>
+				<button class="wikia-button cancel-edit secondary"><?php echo wfMsg('wall-button-cancel-changes'); ?></button>
+			</div>
 		</div>
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
+		endif; ?>
 	</blockquote>
 	<? if(!$isreply): ?>
 		<ul class="replies">

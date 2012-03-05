@@ -316,3 +316,28 @@ $config['photopop'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js'
 	)
 );
+
+$config['walljs'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Wall/js/Wall.js',
+		'//extensions/wikia/Wall/js/WallPagination.js',
+		'//extensions/wikia/Wall/js/WallBackendBridge.js',
+		'//extensions/wikia/Wall/js/WallMessageForm.js',
+
+		'//extensions/wikia/Wall/js/WallNewMessageForm.js',
+		'//extensions/wikia/Wall/js/WallEditMessageForm.js',
+		'//extensions/wikia/Wall/js/WallReplyMessageForm.js',
+		'//extensions/wikia/Wall/js/WallSortingBar.js',
+		'//skins/common/jquery/jquery.autoresize.js'
+	)
+);
+
+$config['wallhistoryjs'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Wall/js/Wall.js',
+		'//extensions/wikia/Wall/js/WallHistory.js',
+		'//extensions/wikia/Wall/js/WallSortingBar.js'
+	)
+);

@@ -10,89 +10,89 @@
 	$image-y: -1;
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: addpicture.png@72,0,90b91c262f07229fe5115342a6c0d5bf
+	// @autosprite-image-details: addpicture.png@72,0,6290e3827247de41549304313f75cd3c
 	@if $imageName == 'addpicture' {
 		$image-x: 72px;
 		$image-y: 0px;
-		$image-width: 24px;
-		$image-height: 16px;
+		$image-width: 26px;
+		$image-height: 20px;
 	}
-	// @autosprite-image-details: addvideo.png@108,0,1f228761b9ddc4fd573531bb83930dcf
+	// @autosprite-image-details: addvideo.png@110,0,3fe0a232e5ac4afaaf9b39b78b80f0ed
 	@if $imageName == 'addvideo' {
-		$image-x: 108px;
+		$image-x: 110px;
 		$image-y: 0px;
-		$image-width: 20px;
+		$image-width: 26px;
+		$image-height: 20px;
+	}
+	// @autosprite-image-details: bold-dark.png@148,0,e5a8d237ce30f58cc6f363875b7e440c
+	@if $imageName == 'bold-dark' {
+		$image-x: 148px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: bold-light.png@171,0,f073074a8062570610bc007c8c08047a
+	@if $imageName == 'bold-light' {
+		$image-x: 171px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: italic-dark.png@194,0,63dc13a1a137d4c45e2fb5d8ec6f7592
+	@if $imageName == 'italic-dark' {
+		$image-x: 194px;
+		$image-y: 0px;
+		$image-width: 5px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: italic-light.png@211,0,1c3b3f13374835de4dca2415aa609506
+	@if $imageName == 'italic-light' {
+		$image-x: 211px;
+		$image-y: 0px;
+		$image-width: 5px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: link-dark.png@228,0,d27553c4dc172f9d58944e9b0281fcb4
+	@if $imageName == 'link-dark' {
+		$image-x: 228px;
+		$image-y: 0px;
+		$image-width: 16px;
 		$image-height: 16px;
 	}
-	// @autosprite-image-details: bold-dark.png@140,0,d04fb6a09e7935f29ac2aa84a4a53332
-	@if $imageName == 'bold-dark' {
-		$image-x: 140px;
-		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
-	}
-	// @autosprite-image-details: bold-light.png@170,0,1533cf193a745d4d9c544d778dc98764
-	@if $imageName == 'bold-light' {
-		$image-x: 170px;
-		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
-	}
-	// @autosprite-image-details: italic-dark.png@200,0,f58bc120237b7900ad302a8bd1cc9f93
-	@if $imageName == 'italic-dark' {
-		$image-x: 200px;
-		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
-	}
-	// @autosprite-image-details: italic-light.png@230,0,db154a7cafa6d7f6cac4751a63a21042
-	@if $imageName == 'italic-light' {
-		$image-x: 230px;
-		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
-	}
-	// @autosprite-image-details: link-dark.png@260,0,21dc3328b28844cb34a19ab6fb200158
-	@if $imageName == 'link-dark' {
-		$image-x: 260px;
-		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
-	}
-	// @autosprite-image-details: link-light.png@290,0,332d80495c0407ff4747ac4d1b5ef771
+	// @autosprite-image-details: link-light.png@256,0,b0bbbc8e9258b95da3ff53a4a45fb3df
 	@if $imageName == 'link-light' {
-		$image-x: 290px;
+		$image-x: 256px;
 		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
+		$image-width: 16px;
+		$image-height: 16px;
 	}
-	// @autosprite-image-details: source-dark.png@320,0,035ecfda7e98d88d790930475ed60d0a
+	// @autosprite-image-details: source-dark.png@284,0,2d8a39cc07d99aa64c07aab59777cc1b
 	@if $imageName == 'source-dark' {
-		$image-x: 320px;
+		$image-x: 284px;
 		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
+		$image-width: 14px;
+		$image-height: 12px;
 	}
-	// @autosprite-image-details: source-light.png@350,0,55c28e0048e4fbba15213ba4139533a8
+	// @autosprite-image-details: source-light.png@310,0,cead4b01388e1bd10a0f53b0c2aff380
 	@if $imageName == 'source-light' {
-		$image-x: 350px;
+		$image-x: 310px;
 		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
+		$image-width: 14px;
+		$image-height: 12px;
 	}
-	// @autosprite-image-details: visual-dark.png@380,0,3e9a09a6c7ba6d734688dcbccd518ac6
+	// @autosprite-image-details: visual-dark.png@336,0,a568ff438c9bf8cf0a1a35ab81f4fe71
 	@if $imageName == 'visual-dark' {
-		$image-x: 380px;
+		$image-x: 336px;
 		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
+		$image-width: 17px;
+		$image-height: 12px;
 	}
-	// @autosprite-image-details: visual-light.png@410,0,570147dd12af3c522fee1244cb97a5fd
+	// @autosprite-image-details: visual-light.png@365,0,ceaa2e37c571b5b19839fcdf59eadcad
 	@if $imageName == 'visual-light' {
-		$image-x: 410px;
+		$image-x: 365px;
 		$image-y: 0px;
-		$image-width: 18px;
-		$image-height: 18px;
+		$image-width: 17px;
+		$image-height: 12px;
 	}
 	@if $image-x != -1 {
 		$position-x: 0px - $image-x;

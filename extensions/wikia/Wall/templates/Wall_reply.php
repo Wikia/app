@@ -1,22 +1,37 @@
 <? if( $userBlocked === false ): ?>
-	<li class="SpeechBubble new-reply" <?php echo ($showReplyForm ? '':'style="display:none"') ?>>
+	<li class="SpeechBubble new-reply" <?php echo ($showReplyForm ? '' : 'style="display:none"') ?>>
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Header', array(
+				'attributes' => array(
+					'data-min-height' => 100,
+					'data-max-height' => 400
+				)
+			))->render();
+		endif; ?>
 		<div class="speech-bubble-avatar">
 			<?= AvatarService::renderAvatar($username, 30) ?>
 		</div>
 		<blockquote class="speech-bubble-message">
-			<textarea placeholder="<?= wfMsg('wall-placeholder-reply') ?>"></textarea>
+			<? if ( $wg->enableMiniEditorExt ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+			endif; ?>
+			<textarea class="body" placeholder="<?= wfMsg('wall-placeholder-reply') ?>"></textarea>
+			<? if ( $wg->enableMiniEditorExt ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
+			endif; ?>
 		</blockquote>
-		<div class="abs-container">
-			<?php if( $loginToEditProtectedPage ) { ?>
-				<button class="replyButton wall-require-login" disabled="disabled" data="<?= $ajaxLoginUrl; ?>"><?= wfMsg('wall-button-to-submit-reply') ?></button>
-			<?php } else { ?>
-				<button class="replyButton" disabled="disabled"><?= wfMsg('wall-button-to-submit-reply') ?></button>
-			<?php } ?>
-			<? if (0): ?>
+		<div class="speech-bubble-buttons" data-space-type="buttons">
+			<button disabled="disabled" class="replyButton<?
+				if ( $loginToEditProtectedPage ): ?> wall-require-login" data="<?= $ajaxLoginUrl; ?><? endif;
+			?>"><?= wfMsg('wall-button-to-submit-reply') ?></button>
+			<? /* ?>
 			<button class="replyPreview secondary" disabled="disabled" style="display: none"><?= wfMsg('wall-button-to-preview-comment') ?></button>
 			<button class="replyPreviewCancel secondary" style="display: none"><?= wfMsg('wall-button-to-cancel-preview') ?></button>
-			<? endif; ?>
+			<? */ ?>
 			<div class="loadingAjax"></div>
 		</div>
+		<? if ( $wg->enableMiniEditorExt ):
+			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
+		endif; ?>
 	</li>
 <? endif; ?>

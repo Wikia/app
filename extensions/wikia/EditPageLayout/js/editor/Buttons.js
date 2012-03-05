@@ -119,9 +119,9 @@
 			}
 			*/
 
-			html +=	' onclick="WikiaEditor.callFunction(' + this.clickFn + ', this); return false;">';
+			//html +=	' onclick="WikiaEditor.callFunction(' + this.clickFn + ', this); return false;">';
 			//html += ' onclick="return false;"';
-			//html += ' onmousedown="WikiaEditor.callFunction(' + clickFn + ', this); return false;">';
+			html += ' onmousedown="WikiaEditor.callFunction(' + this.clickFn + ', this); return false;">';
 
 			if ( this.hasIcon !== false ) {
 				html += '<span class="cke_icon">&nbsp;</span>';

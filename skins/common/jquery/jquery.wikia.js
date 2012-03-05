@@ -1,5 +1,13 @@
 jQuery.getSassCommonURL = function(scssFilePath, params) {
-	return wgCdnRootUrl + wgAssetsManagerQuery.
+	return jQuery.getSassURL(wgCdnRootUrl, scssFilePath, params);
+}
+
+jQuery.getSassLocalURL = function(scssFilePath, params) {
+	return jQuery.getSassURL(wgServer, scssFilePath, params);
+}
+
+jQuery.getSassURL = function(rootURL, scssFilePath, params) {
+	return rootURL + wgAssetsManagerQuery.
 		replace('%1$s', 'sass').
 		replace('%2$s', scssFilePath).
 		replace('%3$s', encodeURIComponent($.param(params || window.sassParams))).
@@ -537,7 +545,7 @@ jQuery.fn.placeholder = function() {
 					.val(text);
 			}
 
-			input.focus(function(){
+			input.bind('focus.placeholder', function(){
 				if(input.val() == text){
 					input.val('');
 				}
@@ -545,7 +553,7 @@ jQuery.fn.placeholder = function() {
 				input.removeClass('placeholder');
 			});
 
-			input.blur(function(){
+			input.bind('blur.placeholder', function(){
 				if(input.val() == ''){
 					input
 						.addClass('placeholder')
@@ -554,7 +562,7 @@ jQuery.fn.placeholder = function() {
 			});
 
 			//clear the field is a submit event is fired somewhere around here
-			input.closest('form').submit(function(){
+			input.closest('form').bind('submit.placeholder', function(){
 				if(input.val() == text){
 					input.val('');
 				}

@@ -85,12 +85,8 @@ class WallHistoryController extends WallController {
 	}
 	
 	private function historyPreExecute() {
-		$this->response->addAsset('extensions/wikia/Wall/js/Wall.js');
-		$this->response->addAsset('extensions/wikia/Wall/css/Wall.scss');
+		$this->response->addAsset('wallhistoryjs');
 		$this->response->addAsset('extensions/wikia/Wall/css/WallHistory.scss');
-		$this->response->addAsset('extensions/wikia/Wall/js/WallHistory.js');
-		$this->response->addAsset('extensions/wikia/Wall/css/WallSortingBar.scss');
-		$this->response->addAsset('extensions/wikia/Wall/js/WallSortingBar.js');
 		
 		if( $this->isThreadLevel ) {
 			$this->wg->Out->setPageTitle( wfMsg('wall-thread-history-title') );

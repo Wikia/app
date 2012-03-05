@@ -14,22 +14,28 @@
 	WE.instanceCount = 0;
 
 	// Update the current instance
-	WE.setInstanceId = function(instanceId) {
+	WE.setInstanceId = function(instanceId, forceEvents) {
+		var editor;
+
 		if (instanceId == WE.instanceId) {
-			$().log('instance "' + WE.instanceId + '" already active', 'WikiaEditor');
-			return;
+			if (!forceEvents) {
+				$().log('instance "' + WE.instanceId + '" already active', 'WikiaEditor');
+				return;
+			}
+
+		} else {
+			if ((editor = WE.instances[WE.instanceId])) {
+				editor.fire('editorDeactivated');
+				$().log('instance "' + WE.instanceId + '" deactivated', 'WikiaEditor');
+			}
+
+			WE.instanceId = instanceId;
 		}
 
-		var editor = WE.instances[WE.instanceId];
-
-		if (editor) {
-			editor.fire('editorDeactivated');
-			$().log('instance "' + WE.instanceId + '" deactivated', 'WikiaEditor');
+		if ((editor = WE.instances[instanceId])) {
+			editor.fire('editorActivated');
+			$().log('instance "' + WE.instanceId + '" activated', 'WikiaEditor');
 		}
-
-		WE.instanceId = instanceId;
-		WE.instances[instanceId].fire('editorActivated');
-		$().log('instance "' + WE.instanceId + '" activated', 'WikiaEditor');
 	};
 
 	// Returns the currently active instance
@@ -48,8 +54,8 @@
 			config.body.attr('id', instanceId);
 		}
 
-		WE.instanceId = instance.instanceId = instanceId;
-		WE.instances[WE.instanceId] = instance;
+		WE.instances[instanceId] = instance;
+		WE.setInstanceId(instance.instanceId = instanceId);
 		WE.instanceCount++;
 
 		instance.show();
@@ -180,8 +186,8 @@
 			this.fire('mode', this, mode);
 		},
 
-		setAsActiveInstance: function() {
-			WE.setInstanceId(this.instanceId);
+		setAsActiveInstance: function(forceEvents) {
+			WE.setInstanceId(this.instanceId, forceEvents);
 		},
 
 		show: function() {
@@ -191,8 +197,6 @@
 				this.config.mode = this.config.mode || 'source';
 				this.setMode(this.config.mode);
 				this.setState(this.states.INITIALIZING);
-				// track if original element is a div rather than a textarea.
-				this.fromDiv = $('#' + this.instanceId).is("div");
 				this.fire('initConfig', this);
 				this.fire('beforeInit', this);
 				this.fire('init', this);
@@ -331,12 +335,12 @@
 		buildClickHandler: function( config ) {
 			var editor = this.editor;
 
-			if ( (wgUserName == null) && (UserLogin) ) {
+			if (wgUserName == null && typeof UserLogin != 'undefined') {
 				config.click = function() {
 					UserLogin.rteForceLogin();
 				}
-			} 
-			else if (!config.click) {
+
+			} else if (!config.click) {
 				config.click = function() {
 				    var mode = editor.mode;
 					if (typeof config['click'+mode] == 'function'){
@@ -345,6 +349,7 @@
 						editor.warn('Mode "'+mode+'" not supported for button: '+config.name);
 					}
 				};
+
 				this.editor.fire('uiBuildClickHandler',this.editor,config);
 			}
 		},
@@ -660,24 +665,33 @@
 		},
 
 		initEditor: function() {
-			if(this.editor.fromDiv) {
-				var element = $('#' + this.editor.instanceId),
-					newId = this.editor.instanceId+"_textarea";
-				$("<textarea>", {id:newId}).insertAfter(element);
-				element.hide();
-				// Extensions will take care of HTML-to-Wiki text, so just grab html from div
-				var textarea = this.textarea = $('#' + newId).val(element.html());
-			} else {
-				this.textarea = $('#' + this.editor.instanceId);
+			this.textarea = this.editor.config.body;
+
+			// Mediawiki expects a textarea
+			// Extensions will have to handle the html to wikitext conversions
+			// TODO: can probably move RTE.ajax() to WikiaEditor to fix this.
+			if (!this.textarea.is('textarea')) {
+				this.textarea = $('<textarea>')
+					.addClass('body')
+					.attr('id', 'mw_' + this.editor.instanceId)
+					.val($.trim(this.textarea.html()))
+					.insertAfter(this.textarea.hide());
 			}
+
+			// Event binding
 			this.textarea
 				.focus(this.proxy(this.editorFocused))
 				.blur(this.proxy(this.editorBlurred))
 				.click(this.proxy(this.editorClicked));
 
-			this.editor.setMode(this.editor.mode, true); // forceEvents
+			// Editor is ready now
+			this.editor.ready = true;
 			this.editor.setState(this.editor.states.IDLE);
 			this.editor.fire('editorReady', this.editor);
+
+			GlobalTriggers.fire('WikiaEditorReady', this.editor);
+
+			$().log('editor is ready!', 'WikiaEditor');
 		},
 
 		initDom: function() {
@@ -697,24 +711,28 @@
 		},
 
 		getEditorElement: function() {
-			return this.textarea;
+			return this.editor.config.body;
 		},
-		
+
 		editorFocus: function() {
-			this.getEditbox().focus();
+			this.textarea.focus();
 		},
 
 		editorBlur: function() {
-			this.getEditbox().blur();
+			this.textarea.blur();
 		},
 
-		setContent: function(val, datamode) {
-			if(datamode == 'wysiwyg'){
-				RTE.ajax('html2wiki', {html: val, title: window.wgPageName}, function(data) {
-					this.getEditorElement().val(data.wikitext);
+		setContent: function(content, datamode) {
+			var editbox = this.getEditbox();
+
+			// Needs conversion
+			if (datamode == 'wysiwyg') {
+				RTE.ajax('html2wiki', { html: content, title: wgPageName }, function(data) {
+					editbox.val(data.wikitext);
 				});
+
 			} else {
-				this.getEditorElement().val(val);
+				editbox.val(content);
 			}
 		},
 
@@ -739,7 +757,7 @@
 		requires: ['ui'],
 
 		// These events are proxied from ck and fired on the editor with the 'ck' prefix
-		proxyEvents: ['blur', 'focus', 'instanceReady', 'mode', 'modeSwitch', 'modeSwitchCancelled', 'themeLoaded'],
+		proxyEvents: ['blur', 'focus', 'instanceReady', 'mode', 'modeSwitch', 'modeSwitchCancelled', 'themeLoaded', 'wysiwygModeReady'],
 
 		// These methods will be publicly available on the editor instance
 		proxyMethods: ['getContent', 'setContent', 'getEditbox', 'getEditboxWrapper', 'getEditorElement', 'editorFocus', 'editorBlur'],
@@ -788,7 +806,7 @@
 				(function(eventName) {
 					this.editor.ck.on(eventName, function() {
 						this.editor.fire.apply(this.editor, ['ck-' + eventName, this.editor].concat(arguments));
-					},this);
+					}, this);
 				}).call(this, this.proxyEvents[i]);
 			}
 		},
@@ -823,7 +841,7 @@
 			this.editor.setMode(this.editor.ck.mode);
 			this.editor.setState(this.editor.states.IDLE);
 
-			this.getEditbox().click(this.proxy(this.editorClicked));
+			this.getEditbox().click(this.proxy(this.editorClicked)).addClass('focused');
 		},
 
 		modeChangeCancelled: function() {
@@ -833,44 +851,41 @@
 		themeLoaded: function() {
 			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.getThemeSpace('contents').$));
 		},
-		
+
 		editorFocus: function() {
 			this.editor.ck.focus();
 		},
-		
+
 		editorBlur: function() {
 			this.editor.ck.blur();
 		},
 
 		setContent: function(content, datamode) {
-			ckeditor = this.editor.ck;
-			switch (ckeditor.mode) {
-				//TODO: in same case this swith is imposible
-				case 'wysiwyg':
-					if(datamode != 'wysiwyg'){
-						RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, $.proxy(function(data) {
-							ckeditor.setData(data.html);
-						}, this));
-						return true;
-					}
-				break;
-				case 'source':
-					if(datamode == 'wysiwyg') {
-						RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, $.proxy(function(data) {
-							ckeditor.setData(data.wikitext);
-						}, this));
-						return true;
-					}
-				break;
+			var ckeditor = this.editor.ck,
+				isWysiwyg = ckeditor.mode == 'wysiwyg',
+				dataKey = isWysiwyg ? 'wikitext' : 'html',
+				params = { title: wgPageName };
+
+			params[dataKey] = content;
+
+			// Needs conversion
+			if (datamode && ckeditor.mode != datamode) {
+				RTE.ajax(isWysiwyg ? 'html2wiki' : 'wiki2html', params, function(data) {
+					ckeditor.setData(data[dataKey]);
+				});
+
+			} else {
+				ckeditor.setData(content);
 			}
-			ckeditor.setData(content);
 		},
 
 		editorFocused: function() {
+			this.getEditbox().addClass('focused');
 			this.editor.fire('editorFocus', this.editor);
 		},
 
 		editorBlurred: function() {
+			this.getEditbox().removeClass('focused');
 			this.editor.fire('editorBlur', this.editor);
 		},
 
@@ -882,6 +897,9 @@
 			if (!this.editor.ready) {
 				this.editor.ready = true;
 				this.editor.fire('editorReady', this.editor);
+
+				GlobalTriggers.fire('WikiaEditorReady', this.editor);
+
 				$().log('editor is ready!', 'WikiaEditor');
 			}
 		}
@@ -982,11 +1000,9 @@
 		},
 
 		buildWysiwygClickHandler: function( editor, button ) {
-			//if (!button.clickwysiwyg && button.ckcommand) {
-				button.clickwysiwyg = function() {
-					this.editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
-				};
-			//}
+			button.clickwysiwyg = function() {
+				this.editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
+			};
 		},
 
 		createElement: function( name ) {
@@ -998,9 +1014,10 @@
 					// auto show/hide buttons
 					this.modeAwareCommands[item.command] = true;
 				}
-				//this.editor.log('ui item: ',item);
+
 				return output.join( '' );
 			}
+
 			return false;
 		}
 	});
@@ -1009,14 +1026,14 @@
 	 * Mediawiki editor plugins list
 	 */
 	WE.plugins.mweditorsuite = $.createClass(WE.plugin,{
-		requires: ['core','mweditor']
+		requires: ['core', 'mweditor']
 	});
 
 	/**
 	 * CKEditor plugins list
 	 */
 	WE.plugins.ckeditorsuite = $.createClass(WE.plugin,{
-		requires: ['core','ckeditor','ui-ckeditor']
+		requires: ['core', 'ckeditor', 'ui-ckeditor']
 	});
 
 	GlobalTriggers.fire('wikiaeditor',WE);

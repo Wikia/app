@@ -29,6 +29,8 @@ class WallNotificationsController extends WikiaController {
 	public function Update() {
 		wfProfileIn(__METHOD__);
 		
+		$this->response->setVal('notificationKey', $this->request->getVal('notificationKey') );
+		
 		$notificationCounts = $this->request->getVal('notificationCounts');
 		$this->response->setVal('notificationCounts', $notificationCounts);
 
@@ -53,6 +55,7 @@ class WallNotificationsController extends WikiaController {
 		$this->response->setVal('user', $this->wg->User);
 		$this->response->setVal('unread', $all['unread']);
 		$this->response->setVal('read', $all['read']);
+		
 		//$this->response->setVal('count', $all['unread_count']);
 		
 		//$duration = 60; // one minute

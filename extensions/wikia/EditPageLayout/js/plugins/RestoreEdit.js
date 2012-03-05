@@ -21,14 +21,14 @@
 				
 				executed = 1;
 				
-				var orginalText = editor.getContent(),
+				var originalText = editor.getContent(),
 				eds = new EditDataStore(wgTitle + '#' + wgEditPageSection, 5000, function(){
 					return {'rev' : wgRevisionId, 'con': editor.getContent(), 'mode': editor.mode };
 				}),
 				old = eds.getOldData(),
 				restoreHandler = function(ev){
 					$().log('restoring original content', 'RestoreEdit');
-					editor.setContent(orginalText, orginalMode);
+					editor.setContent(originalText,originalMode);
 					eds.deleteAll();
 					self.closeModal();
 				},
@@ -37,7 +37,7 @@
 					editor.plugins.pagecontrols.renderChanges({});
 				};
 				
-				var orginalMode = editor.mode;
+				var originalMode = editor.mode;
 			
 				eds = new EditDataStore(wgTitle + '#' + wgEditPageSection, 5000, function(){
 					return {'rev' : wgRevisionId, 'con': editor.getContent(), 'mode': editor.mode };

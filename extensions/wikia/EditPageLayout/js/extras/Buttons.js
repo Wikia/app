@@ -1,4 +1,4 @@
-(function(window,$){
+(function(window, $) {
 	var buttons = window.wgEditorExtraButtons = window.wgEditorExtraButtons || {};
 
 	var checkGallery = function() {
@@ -12,7 +12,7 @@
 	var getTextarea = function() {
 		return WikiaEditor.getInstance().getEditbox()[0];
 	};
-	
+
 	buttons['InsertImage'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-image',
@@ -25,6 +25,7 @@
 		},
 		ckcommand: 'addimage'
 	};
+
 	buttons['InsertGallery'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-gallery',
@@ -40,6 +41,7 @@
 		ckcommand: 'addgallery',
 		precondition: checkGallery
 	};
+
 	buttons['InsertSlideshow'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-slideshow',
@@ -55,6 +57,7 @@
 		ckcommand: 'addslideshow',
 		precondition: checkGallery
 	};
+
 	buttons['InsertSlider'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-slider',
@@ -70,6 +73,7 @@
 		ckcommand: 'addslider',
 		precondition: checkGallery
 	};
+
 	buttons['InsertVideo'] = {
 		type: 'button',
 		labelId: 'wikia-editor-media-video',
@@ -80,6 +84,7 @@
 		ckcommand: 'addvideo',
 		precondition: checkVET
 	};
+
 	buttons['SourceBold'] = {
 		type: 'button',
 		labelId: 'wikia-editor-source-bold',
@@ -89,6 +94,7 @@
 			insertTags( "'''", "'''", "Bold text", getTextarea());
 		}
 	};
+
 	buttons['SourceItalic'] = {
 		type: 'button',
 		labelId: 'wikia-editor-source-italic',
@@ -98,6 +104,7 @@
 			insertTags( "''", "''", "Italic text", getTextarea());
 		}
 	};
+
 	buttons['SourceLink'] = {
 		type: 'button',
 		labelId: 'wikia-editor-source-link',
@@ -108,4 +115,4 @@
 		}
 	};
 
-})(this,jQuery);
+})(this, jQuery);

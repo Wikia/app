@@ -1,6 +1,7 @@
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
 @import "core/colors";
@@ -8,16 +9,20 @@
 
 .MiniEditorWrapper {
 	@include clearfix;
-	background-color: $color-MiniEditor;
 
-	// This is needed for loading status indicator positioning
 	.editarea {
+		// Needed for loading status indicator positioning
 		position: relative;
-	}
 
-	// When the editor has focus
-	&.focused .editarea {
-		@include box-shadow(0px, 0px, 4px, $color-MiniEditor-focus);
+		.body {
+			border: 0;
+			outline: none;
+			resize: none;
+		}
+
+		.msg-body {
+			@include clearfix;
+		}
 	}
 
 	// TODO: this should be abstracted out to a higher level at some point
@@ -25,32 +30,34 @@
 	.loading-indicator {
 		display: none;
 
-		.loading-background, .loading-message {
-			position: absolute;
+		.loading-background,
+		.loading-message {
 			display: block;
+			position: absolute;
 		}
 
 		.loading-background {
-			z-index: 100;
 			@include opacity(75);
+			background-color: $color-MiniEditor-loading;
+			bottom: 0;
 			display: block;
 			left: 0;
 			right: 0;
 			top: 0;
-			bottom: 0;
-			background: $color-MiniEditor-loading;
+			z-index: 100;
 		}
 
 		.loading-message {
-			background: transparent;
-			z-index: 101;
+			background-color: transparent;
+			color: $color-MiniEditor-loading-text;
 			left: 0;
 			top: 20%;
-			width: 100%;
 			text-align: center;
-			color: $color-MiniEditor-loading-text;
+			width: 100%;
+			z-index: 101;
 
-			.loading-throbber, .loading-text {
+			.loading-throbber,
+			.loading-text {
 				display: inline-block;
 				vertical-align: middle;
 				zoom: 1;
@@ -58,21 +65,21 @@
 
 			.loading-throbber {
 				background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
-				width: 16px;
 				height: 16px;
+				width: 16px;
 			}
 
 			.loading-text {
-				padding-left: 9px;
 				font-size: 16px;
+				padding-left: 9px;
 			}
 		}
 	}
 
 	// Toolbar with buttons
 	.toolbar {
+		@include clearfix;
 		display: none;
-		float: left;
 		margin-top: 10px;
 
 		.cke_buttons {
@@ -86,11 +93,11 @@
 
 			.cke_label {
 				display: none;
+				color: $color-MiniEditor-button-text;
 				cursor: inherit;
 				font-size: 10px;
-				color: $color-MiniEditor-button-text;
 				white-space: nowrap;
-	
+
 				// ck reset
 				padding-top: 0;
 				padding-left: 0;
@@ -101,62 +108,34 @@
 				vertical-align: baseline;
 				float: none;
 			}
-			
+
 			// buttons separator
 			.cke_separator {
 				background-color: $color-MiniEditor-button-border;
 				display: inline-block;
 				float: left;
-				height: 30px;
-				margin: -1px 5px;
+				height: 22px;
+				margin-right: 5px;
 				width: 1px;
 			}
 		}
-		
+
 		.cke_button {
 			> a {
 				@include border-radius(4px);
 				background-color: $color-MiniEditor-button;
 				border: solid 1px $color-MiniEditor-button-border;
-				cursor: default;
+				cursor: pointer;
 				display: inline-block;
 				float: left;
-				height: 26px;
-				width: 26px;
-				margin: 0 5px;
+				height: 20px;
+				margin-right: 5px;
 				outline: none; // webkit
+				width: 20px;
 
 				&:hover {
-					background-color: $color-MiniEditor-button-hover;
+					@include linear-gradient($color-MiniEditor-button-hover, top, $color-MiniEditor-button, 0%, $color-MiniEditor-button-hover, 100%);
 					text-decoration: none;
-				}
-			}
-
-			&.cke_on {
-				> a {
-					@include box-shadow(-1px, 1px, 2px, $color-MiniEditor-button-shadow, true);
-					background-color: $color-MiniEditor-button-active;
-				}
-			}
-
-			&.cke_disabled {
-				> a {
-					@include opacity(20);
-					zoom: 1; /* IE fix to make opacity work */
-				}
-			}
-
-			&.cke_hidden {
-				display: none;
-			}
-
-			&.cke_button_big {
-				> a {
-					width: 34px;
-				}
-				.cke_icon {
-					margin: 5px;
-					width: 24px;
 				}
 			}
 
@@ -164,8 +143,8 @@
 				@include sprite-MiniEditor-base;
 				display: inline-block;
 				height: 16px;
+				margin: 2px;
 				width: 16px;
-				margin: 5px;
 			}
 
 			// mode switch
@@ -204,20 +183,48 @@
 
 			// insert
 			.RTEImageButton .cke_icon { // used for RTE disabled and enabled in Mini Editor
-				@include sprite-MiniEditor('addpicture', 24px, 16px);
+				@include sprite-MiniEditor('addpicture');
 			}
 
 			.RTEVideoButton .cke_icon { // used for RTE disabled and enabled in Mini Editor
-				@include sprite-MiniEditor('addvideo', 24px, 16px);
+				@include sprite-MiniEditor('addvideo');
 			}
-		}
 
-		// No borders/background for image/video buttons
-		.cke_toolbar_insert .cke_button {
-			> a {
-				background-color: transparent;
-				border: 0;
-				margin: 0;
+			&.cke_on {
+				> a {
+					@include box-shadow(-1px, 1px, 2px, $color-MiniEditor-button-shadow, true);
+					background-color: $color-MiniEditor-button-active;
+				}
+			}
+
+			&.cke_disabled {
+				> a {
+					@include opacity(20);
+					zoom: 1; /* IE fix to make opacity work */
+				}
+			}
+
+			&.cke_hidden {
+				display: none;
+			}
+
+			&.cke_button_big {
+				> a {
+					background-color: transparent;
+					border: 0;
+					height: 20px;
+					width: 26px;
+
+					&:hover {
+						background-image: none;
+					}
+				}
+
+				.cke_icon {
+					height: 20px;
+					margin: 0;
+					width: 26px;
+				}
 			}
 		}
 
@@ -226,12 +233,14 @@
 			> a {
 				width: auto;
 			}
+
 			.cke_icon {
 				float: left;
 			}
+
 			.cke_label {
 				display: inline;
-				line-height: 26px;
+				line-height: 20px;
 				padding: 0 4px;
 			}
 		}

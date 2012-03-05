@@ -52,6 +52,7 @@ class WikiaResponse {
 	private $controllerName = null;
 	private $methodName = null;
 	private $request = null;
+	private $jsVars = array();
 	protected $data = array();
 	protected $exception = null;
 
@@ -400,6 +401,33 @@ class WikiaResponse {
 	 */
 	public function redirect( $url ){
 		$this->sendHeader( "Location: " . $url, true );
+	}
+	
+	/**
+	 * @brief Add js var to script tag on top of the page 
+	 * 
+	 * @param string $name, mix $val
+	 */
+	
+	public function setJsVar($name, $val) {
+		if(empty($this->jsVars)) {
+			F::app()->registerHook('MakeGlobalVariablesScript',  'WikiaResponse', 'onMakeGlobalVariablesScript', array(), false, $this);
+		}
+		
+		$this->jsVars[$name] = $val;
+	}
+	
+	/**
+	 * @brief this hook is making js global vars base on WikiaResponse jsVars
+	 * 
+	 * @param $vars list from skin object
+	 */
+	
+	public function onMakeGlobalVariablesScript(&$vars) {
+		foreach($this->jsVars as $name => $val) {
+			$vars[$name] = $val;
+		}
+		return true;
 	}
 
 	public function addAsset( $assetName ){

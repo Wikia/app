@@ -126,14 +126,24 @@ CKEDITOR.plugins.add('rte-modeswitch',
 	},
 
 	mode: function(ev) {
-		RTE.log('mode "' + ev.editor.mode + '" is loaded');
+		var editor = ev.editor;
+
+		RTE.log('mode "' + editor.mode + '" is loaded');
+
+		// (BugId:19807)
+		if (editor.config.startupFocus) {
+			editor.focus();
+		}
 	},
 
 	dataReady: function(ev) {
-		if (ev.editor.mode == 'wysiwyg') {
-			ev.editor.fire('wysiwygModeReady');
-		} else if (ev.editor.mode == 'source') {
-			ev.editor.fire('sourceModeReady');
+		var editor = ev.editor;
+
+		if (editor.mode == 'wysiwyg') {
+			editor.fire('wysiwygModeReady');
+
+		} else if (editor.mode == 'source') {
+			editor.fire('sourceModeReady');
 		}
 	},
 
@@ -160,19 +170,10 @@ CKEDITOR.plugins.add('rte-modeswitch',
 				}
 			}
 		}, 750);
-		
-		// (BugId:19807)
-		if(ev.editor.config.startupFocus) {
-			editor.focus();
-		}
 	},
 
 	sourceModeReady: function(ev) {
 		RTE.log('sourceModeReady');
-		// (BugId:19807)
-		if(ev.editor.config.startupFocus) {
-			ev.editor.focus();
-		}
 	},
 
 	updateModeInfo: function(ev) {

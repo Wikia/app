@@ -3,134 +3,141 @@
 
 	WE.plugins.MiniEditor = $.createClass(WE.plugin, {
 
-		// Whether or not this instance is currently active.
-		// "Active" means that the editor is visible and ready to use
-		isActive: false,
-		hasFocus: false,
-		blurTimout: false,
+		proxyEvents: [
+			'ck-instanceReady', 'ck-wysiwygModeReady', 'editorActivated', 
+			'editorBlur', 'editorClear', 'editorDeactivated', 'editorFocus',
+			'editorReady', 'editorReset', 'editorResize'
+		],
+
+		beforeInit: function() {
+			var i = 0,
+				l = this.proxyEvents.length;
+
+			// Set up proxy events on the body element
+			// This will allow events fired on the wikiaEditor instance to
+			// be passed on to the body element for handling elsewhere.
+			for (; eventName = this.proxyEvents[i], i < l; i++) {
+				(function(eventName) {
+					this.editor.on(eventName, this.proxy(function() {
+						this[eventName].apply(this, arguments);
+						this.editor.config.body.triggerHandler(eventName, [this.editor].concat(arguments));
+					}));
+				}).call(this, eventName);
+			}
+		},
 
 		init: function() {
-			this.editor.on('editorActivated', this.proxy(this.editorActivated));
-			this.editor.on('editorDeactivated', this.proxy(this.editorDeactivated));
-			this.editor.on('editorFocus', this.proxy(this.editorFocus));
-			this.editor.on('editorBlur', this.proxy(this.editorBlur));
-			this.editor.on('editorClear', this.proxy(this.editorClear));
-			this.editor.on('editorResize', this.proxy(this.editorResize));
-			this.editor.on('editorReady', this.proxy(this.editorReady));
 
-			// This event will be ignored for non CK editors
-			this.editor.on('ck-instanceReady', this.proxy(this.ckInstanceReady));
-		},
-
-		// CKE properties are now available for CK editors
-		ckInstanceReady: function() {
-			var ckeditor = this.editor.ck,
-				self = this;
-			
-			ckeditor.focus();
-			
-			// when ckeditor dialogs open and close, toggle this.hasFocus so editor doesn't shrink up
-			ckeditor.on('dialogShow', function() { 
-				self.hasFocus = true;
-			});
-
-			ckeditor.on('dialogHide', function() { 
-				self.hasFocus = false;
-			});
-		},
-
-		// Editor is ready!
-		editorReady: function() {
-			var wikiaEditor = this.editor,
-				ckeditor = wikiaEditor.ck,
-				editorElement = wikiaEditor.getEditorElement();
-
-			this.originalHeight = editorElement.outerHeight(true);
+			// The height of the element we are replacing
+			this.originalHeight = this.editor.config.body.outerHeight(true);
 
 			// Cache commonly accessed elements
-			this.buttonsWrapper = wikiaEditor.getSpace('buttons') || $('#' + wikiaEditor.instanceId + 'Buttons');
-			this.buttons = this.buttonsWrapper.find('button');
-			this.toolbar = wikiaEditor.getSpace('toolbar');
+			this.toolbar = this.editor.getSpace('toolbar');
+			this.buttonsWrapper = this.editor.getSpace('buttons');
 
-			// Remove visibility styles that we added for the loading status indicator
-			editorElement.css('visibility', '');
-
-			// Editor resizing
-			wikiaEditor.getEditbox().bind('keyup.MiniEditor', this.proxy(this.editorResize)).keyup();
-			
-			// Handle positioning of RTEOverlay (image overlay etc) for CKE
-			if (ckeditor) {
-				wikiaEditor.getEditboxWrapper().bind('mouseenter.MiniEditor', function() {
-					RTE.repositionRTEOverlay(ckeditor.name);
-					RTE.overlayNode.data('editor', wikiaEditor);
-				});
+			if (this.buttonsWrapper.length) {
+				this.buttons = this.buttonsWrapper.find('button');
 			}
-			
-			// Clicking inside editor area should not blur the editor (BugId:18713)
-			wikiaEditor.element.parent().bind('click.MiniEditor', function(e) {
-				var target = $(e.target);
-				if(!target.is('textarea')) {
-					wikiaEditor.editorFocus();		
-				}
-			});
-
-			// Focus the editor
-			this.editorFocus();
-
-			// Finish benchmarking initialization time
-			MiniEditor.initTime = (new Date().getTime() - MiniEditor.initTimer.getTime());
-			$().log('End initialization (' + MiniEditor.initTime + 'ms)', 'MiniEditor');
-			$().log('Time consumed until ready: ' + ((MiniEditor.loadTime + MiniEditor.initTime) / 1000) + 's', 'MiniEditor');
 		},
 
-		editorFocus: function() {
-			clearTimeout(this.blurTimout)
-			this.editor.setAsActiveInstance();
-			this.hasFocus = false;
-			this.editor.element.addClass('focused');
-			this.editorActivated();
+		// CKE properties are now available
+		'ck-instanceReady': function() {
+			var self = this,
+				wikiaEditor = this.editor,
+				ckeditor = wikiaEditor.ck;
+
+			// Handle positioning of RTEOverlay (image overlay etc)
+			wikiaEditor.getEditboxWrapper().bind('mouseenter.MiniEditor', function() {
+				RTE.repositionRTEOverlay(ckeditor.name);
+				RTE.overlayNode.data('editor', wikiaEditor);
+			});
+		},
+
+		// Re-bind event listenners for elements inside wysiwyg iframe
+		'ck-wysiwygModeReady': function() {
+			this.editor.getEditbox().bind('keyup.MiniEditor', this.proxy(this.editorResize)).keyup();		
+		},
+
+		editorActivated: function(isFirstActivation) {
+			var self = this,
+				wikiaEditor = this.editor,
+				element = wikiaEditor.getEditorElement(),
+				wrapper = wikiaEditor.getEditboxWrapper(),
+				animation = { height: wikiaEditor.config.minHeight },
+				afterAnimation = function() {
+					this.showButtons();
+					this.showToolbar();
+				};
+
+			if (!wikiaEditor.element.hasClass('active')) {
+				if (wikiaEditor.ck) {
+					var hasContent = wikiaEditor.getContent();
+
+					// CKEDITOR resizes itself on initialization, which means setting
+					// wrapper height to match the element height would result in the
+					// wrapper shrinking then expanding again. Also don't need to
+					// animate if there is content, it will already be the proper height.
+					if (!isFirstActivation && !hasContent) {
+						wrapper.height(element.height()).show();
+					}
+
+					// Animate to proper height, then focus
+					// If editor already has content, editorResize will handle animations
+					if (hasContent) {
+						afterAnimation.call(self);
+					} else {
+						wrapper.animate(animation, function() {
+							wikiaEditor.getEditbox().focus();
+							afterAnimation.call(self);
+						});
+					}
+
+					// Make sure the original element is hidden
+					element.hide();
+
+				} else {
+
+					// If element isn't a textarea, we are dealing with content
+					// editing. Instead of animating we will need to do a swap.
+					if (!element.is('textarea')) {
+						element.hide();
+						
+						var textarea = wikiaEditor.getEditbox();
+						// Only animate on first time showing the edit instance
+						if(isFirstActivation){
+							// Temporary solution to show scrollbar in the textarea 
+							// until we enable autoresizing when RTE is disabled. 
+							textarea.css('overflow','auto').animate(animation, this.proxy(afterAnimation));
+						} else {
+							textarea.show();
+							afterAnimation.call(this);
+						}
+					} else {
+						element.animate(animation, this.proxy(afterAnimation));
+					}
+				}
+
+			} else {
+				afterAnimation.call(this);
+			}
+
+			// Mark as active
+			wikiaEditor.element.addClass('active');
 		},
 
 		editorBlur: function() {
-			var self = this;
-			self.blurTimout = setTimeout(function() {
-				if(self.hasFocus) {
-					self.hasFocus=false;
-					return;
-				}
-				self.editor.element.removeClass('focused');
-				self.editorDeactivated();			
-			}, 200)
+			this.editor.element.removeClass('focused');
 		},
 
-		editorActivated: function(fromFocus) {
-			var self = this,
-				element = this.editor.getEditorElement(),
-				animation = { height: self.editor.config.minHeight },
-				wrapper = this.editor.getEditboxWrapper();
+		editorClear: function() {
+			var ckeditor = this.editor.ck;
 
-			if (!wrapper.is(":visible")) {
-				if (this.editor.ck) {
-					// Hide the original textarea
-					var elementHeight = element.height();
-					element.hide().blur();
+			if (ckeditor) {
+				ckeditor.setData('');
 
-					// Switch to CKE and transition from original textarea height
-					wrapper
-						.height(elementHeight)
-						.show()
-						.animate(animation, function() {
-							self.editor.getEditbox().show().focus();
-						});
-				} else {
-					element.animate(animation);
-				}
+			} else {
+				this.editor.getEditbox().val('');
 			}
-
-			this.showButtons();
-			this.showToolbar();
-			this.isActive = true;
-			this.editor.log('activated "' + this.editor.instanceId + '"');
 		},
 
 		editorDeactivated: function(force) {
@@ -139,36 +146,73 @@
 				element = wikiaEditor.getEditorElement(),
 				animation = { height: self.originalHeight };
 
-			// if the textarea is already visible, no need to do animation
-			if (!element.is(":visible")) {
+			this.hideToolbar();
 
-				// only hide if there's no content or we're forcing a switch
-				if (!this.editor.getContent() || force) { 
-					// if the editor started as a div instead of a textarea, don't do animation
-					if(!wikiaEditor.fromDiv) {
-						if (this.editor.ck) {
-							var wrapper = this.editor.getEditboxWrapper();
-		
+			if (wikiaEditor.element.hasClass('active') || force) {
+				// Don't animate or hide buttons if there is content
+				if (!wikiaEditor.getContent()) {
+					this.hideButtons(function() {
+						if (wikiaEditor.ck) {
+							var wrapper = wikiaEditor.getEditboxWrapper();
+	
 							// Transition back to the original textarea
 							wrapper.animate(animation, function() {
 								wrapper.hide();
-								element.show().blur();
+								element.show();
 							});
-		
+	
 						} else {
-							element.animate(animation);
+
+							// If element isn't a textarea, we are dealing with content
+							// editing. Instead of animating we will need to do a swap.
+							if (!element.is('textarea')) {
+								wikiaEditor.getEditbox().hide();
+								element.show();
+	
+							} else {
+								element.animate(animation);
+							}
 						}
-					}
-					this.hideButtons();
+					});
 				}
 			}
 
-			this.hideToolbar();
-			this.isActive = false;
-			this.editor.log('deactivated "' + this.editor.instanceId + '"');
+			// Mark as inactive
+			wikiaEditor.element.removeClass('active');
 		},
 
-		// Resizes the editor on keydown between min height and max height
+		editorFocus: function() {
+			if (this.editor.instanceId != WikiaEditor.instanceId) {
+				this.editor.setAsActiveInstance();
+			}
+
+			this.editor.element.addClass('focused');
+		},
+
+		editorReady: function() {
+			var wikiaEditor = this.editor,
+				ckeditor = wikiaEditor.ck;
+			
+			// Remove visibility styles that we added for the loading status indicator
+			wikiaEditor.config.body.css('visibility', '');
+
+			// Trigger editorActivated
+			wikiaEditor.fire('editorActivated', true);
+
+			// Finish benchmarking initialization time
+			MiniEditor.initTime = (new Date().getTime() - MiniEditor.initTimer.getTime());
+			$().log('End initialization (' + MiniEditor.initTime + 'ms)', 'MiniEditor');
+			$().log('Time consumed until ready: ' + ((MiniEditor.loadTime + MiniEditor.initTime) / 1000) + 's', 'MiniEditor');
+		},
+
+		editorReset: function() {
+			this.editor.fire('editorClear');
+			this.editor.fire('editorDeactivated', true);
+			this.editor.getEditorElement().blur();
+		},
+
+		// Resizes the CKEditor body tag on keydown between min height and max height
+		// This doesn't work for RTE disabled.   
 		editorResize: function() {
 			var editbox = this.editor.getEditbox(),
 				currentHeight = editbox.outerHeight(true),
@@ -176,50 +220,29 @@
 					this.editor.config.maxHeight : currentHeight > this.editor.config.minHeight ?
 						currentHeight : this.editor.config.minHeight;
 
-			if (this.editor.ck) {
-				this.editor.getEditboxWrapper().height(newHeight);
-
-				// Hack to fix a scrollbar appearing for CKE when resizing
-				editbox.parent().toggleClass('resizing', newHeight < this.editor.config.maxHeight);
-
-			} else {
-				editbox.height(newHeight);
-			}
+			this.editor.getEditboxWrapper().height(newHeight);
+			
+			// Hack to fix a scrollbar appearing for CKE when resizing
+			editbox.parent().toggleClass('resizing', newHeight < this.editor.config.maxHeight);
 		},
 
-		showButtons: function() {
-			this.buttonsWrapper.slideDown();
-			this.buttons.removeAttr('disabled');
-		},
-
-		hideButtons: function() {
-			this.buttonsWrapper.slideUp();
+		hideButtons: function(callback) {
 			this.buttons.attr('disabled', true);
-		},
-
-		showToolbar: function() {
-			this.toolbar.slideDown();
+			this.buttonsWrapper.slideUp(this.proxy(callback));
 		},
 
 		hideToolbar: function() {
 			this.toolbar.slideUp();
 		},
 
-		editorClear: function() {
-			if (this.editor.ck) {
-				this.editor.ck.setData('');
-			} else {
-				this.editor.getEditorElement().val('');
-			}
+		showButtons: function() {
+			this.buttonsWrapper.slideDown();
+			this.buttons.show().removeAttr('disabled');
 		},
 
-		reset: function(elementId) {
-			this.editor.ui.uiReadyFired = false;
-			
-			if (this.editor.ck) {
-				this.editor.ck.destroy();
-			}
+		showToolbar: function() {
+			this.toolbar.slideDown();
 		}
 	});
 
-})(this,jQuery);
+})(this, jQuery);
