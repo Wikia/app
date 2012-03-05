@@ -67,6 +67,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->keeploggedin = $this->request->getCheck( 'keeploggedin' );
 		$this->loginToken = UserLoginHelper::getLoginToken();
 		$this->returnto = $this->request->getVal( 'returnto', '' );
+		$this->returntoquery = $this->request->getVal( 'returntoquery', '' );
 
 		// process login
 		if($this->wg->request->wasPosted()) {
@@ -138,6 +139,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function dropdown() {
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserLoginDropdown.scss');
 		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginDropdown.js');
+		
+		$query = $this->app->wg->Request->getValues();
+		if (isset($query['title'])) {
+			unset($query['title']);
+		}
+	
+		$this->returntoquery = $this->app->wf->ArrayToCGI( $query );
 	}
 
 	public function providers() {

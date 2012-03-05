@@ -226,6 +226,7 @@ class UserLoginHelper extends WikiaModel {
 	 */
 	public function doRedirect(){
 		$returnUrl = $this->wg->request->getVal( 'returnto', '' );
+		$returnToQuery = $this->wg->request->getVal('returntoquery', '');
 		$titleObj = Title::newFromText( $returnUrl );
 		if ( (!$titleObj instanceof Title) ||
 				$titleObj->isSpecial("Userlogout") ||
@@ -233,7 +234,7 @@ class UserLoginHelper extends WikiaModel {
 				$titleObj->isSpecial("Userlogin") ) {
 			$titleObj = Title::newMainPage();
 		}
-		$this->wg->out->redirect( $titleObj->getFullURL("cb=".rand(1,10000)) );
+		$this->wg->out->redirect( $titleObj->getFullURL($returnToQuery."&cb=".rand(1,10000)) );
 	}
 
 	/**

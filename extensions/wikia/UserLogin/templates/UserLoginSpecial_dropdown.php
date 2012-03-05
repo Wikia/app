@@ -13,6 +13,11 @@
 				'value' => ''
 			),
 			array(
+				'type' => 'hidden',
+				'name' => 'returntoquery',
+				'value' => $returntoquery
+			),
+			array(
 				'type' => 'text',
 				'name' => 'username',
 				'isRequired' => true,
