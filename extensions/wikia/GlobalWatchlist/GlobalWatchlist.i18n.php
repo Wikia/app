@@ -582,6 +582,37 @@ Groet, Wikia
 * Zie het tabblad "Volglijst" in je voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
 );
 
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
+$messages['pl'] = array(
+	'globalwatchlist-desc' => 'Wysyła e-maile z tygodniowym streszczeniem listy obserwowanych stron ze wszystkich wiki',
+	'tog-watchlistdigest' => 'Proszę przesyłać mi co tydzień e-mail ze streszczeniem',
+	'tog-watchlistdigestclear' => 'Oznacz wszystkie strony z mojego tygodniowego streszczenia obserwowanych jako odwiedzone',
+	'globalwatchlist-see-more' => 'Sprawdź, czy zmieniło się coś jeszcze na twojej lokalnej liście obserwowanych stron',
+	'globalwatchlist-digest-email-subject' => 'Tygodniowe streszczenie',
+	'globalwatchlist-digest-email-body' => 'Witaj $1,
+
+To jest lista obserwowanych stron z Wikia, które zostały zmienione od twojej ostatniej wizyty.
+
+$2
+
+
+To jest lista wpisów na obserwowanych blogach, które zostały zmienione lub skomentowane od twojej ostatniej wizyty.
+
+$3
+
+Odwiedzaj i edytuj często...
+
+Wikia
+
+ * Aby zmienić preferencje dla powiadomień listy obserwowanych stron, przejdź na http://www.wikia.com/wiki/Special:Preferences
+ * Aby oznaczyć wszystkie strony z tego tygodniowego streszczenia jako odwiedzone, sprawdź opcję na karcie "Obserwowane" na twojej stronie preferencji',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|komentarz|komentarze|komentarzy}})',
+	'globalwatchlist-no-page-found' => 'Nie znaleziono stron.',
+	'globalwatchlist-no-blog-page-found' => 'Nie znaleziono wpisów na blogach.',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -733,7 +764,7 @@ Wikia
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'tog-watchlistdigest' => 'Пошаљи ми поруку с недељним прегледом',
+	'tog-watchlistdigest' => 'Пошаљи ми недељни преглед надгледаних страница',
 	'tog-watchlistdigestclear' => 'Означи све странице с недељног прегледа као посећене',
 	'globalwatchlist-see-more' => 'Проверите локални списак надгледања за више измена',
 	'globalwatchlist-digest-email-subject' => 'Недељни преглед',
@@ -763,6 +794,7 @@ $3
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'globalwatchlist-desc' => 'Skickar e-postsammanfattningar med bevakningslistade sidor varje vecka på alla wikis',
 	'tog-watchlistdigest' => 'Skicka en sammanfattning av bevakningslistan för veckan via e-post',
 	'tog-watchlistdigestclear' => 'Markera alla sidor från min veckosammanfattning av bevakningslistan som besökta',
 	'globalwatchlist-see-more' => 'Var god kontrollera din lokala bevakningslista för fler ändringar',

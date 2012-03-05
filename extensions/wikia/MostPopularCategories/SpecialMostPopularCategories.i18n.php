@@ -125,6 +125,13 @@ $messages['fr'] = array(
 	'mostpopularcategories' => 'Catégories les plus populaires',
 );
 
+/** Scottish Gaelic (Gàidhlig)
+ * @author Akerbeltz
+ */
+$messages['gd'] = array(
+	'mostpopularcategories' => 'Na roinnean air a bheil an fhèill as motha',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */

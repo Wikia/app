@@ -106,6 +106,15 @@ $messages['es'] = array(
 	'stafflog-piggybackloginmsg' => '$1 Personificación - usuario $2 inicia como $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Personificación - usuario $2 cierra sesión de la cuenta $3',
 	'right-stafflog' => 'Puede ver el registro del staff',
+	'stafflog-wiki-status-change' => '$1 cambió el estado de $2 a $3. Motivo: $4',
+	'stafflog-filter-label' => 'Filtro',
+	'stafflog-filter-user' => 'Usuario:',
+	'stafflog-filter-type' => 'Tipo:',
+	'stafflog-filter-apply' => 'Aplicar filtro',
+	'stafflog-filter-type-block' => 'Bloquear',
+	'stafflog-filter-type-piggyback' => 'Personificar',
+	'stafflog-filter-type-renameuser' => 'Cambiar nombre de usuario',
+	'stafflog-filter-type-wikifactory' => 'Estado del wiki',
 );
 
 /** French (Français)
@@ -317,6 +326,13 @@ $messages['pms'] = array(
 	'stafflog-filter-type-piggyback' => 'Acess mùltipl',
 	'stafflog-filter-type-renameuser' => "Arbatiaje d'utent",
 	'stafflog-filter-type-wikifactory' => 'Stat dla Wiki',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'stafflog-filter-user' => 'کارن:',
 );
 
 /** Portuguese (Português)

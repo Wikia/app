@@ -772,7 +772,7 @@ $messages['sr-ec'] = array(
 	'textregex-unblock-message' => "Израз '''$1''' је уклоњен са списка непожељних фраза.",
 	'textregex-block-message' => "Израз '''$1''' је додат на списак непожељних фраза.",
 	'textregex-regex-block' => 'Забрањена фраза:',
-	'textregex-submit-regex' => 'Додај фразу',
+	'textregex-submit-regex' => 'Додај регуларни израз',
 	'textregex-empty-regex' => 'Унесите фразу коју желите да забраните.',
 	'textregex-already-added' => '„$1“ је већ додато',
 	'textregex-nodata-found' => 'Подаци нису пронађени',
@@ -782,7 +782,7 @@ $messages['sr-ec'] = array(
 	'textregex-select-regexlist' => 'пређи на списак',
 	'textregex-invalid-regexid' => 'Неисправна фраза.',
 	'textregex-phrase-statistics' => "Статистика за „'''$1'''“  фразу (број појављивања: $2)",
-	'textregex-return-mainpage' => '[{{SERVER}}$1 повратак на списак]',
+	'textregex-return-mainpage' => '[{{SERVER}}$1 назад на списак]',
 );
 
 /** Swedish (Svenska)
@@ -869,5 +869,12 @@ $messages['uk'] = array(
 	'textregex-submit-regex' => 'Додати фразу',
 	'textregex-select-regexlist' => 'перейти до списку',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 повернутися до списку]',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 סטאַטיסטיק]',
 );
 

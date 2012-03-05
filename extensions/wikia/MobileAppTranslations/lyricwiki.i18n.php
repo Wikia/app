@@ -789,6 +789,7 @@ $messages['ru'] = array(
 	'about-rate-0-android' => 'Если вам нравится это приложение, пожалуйста, оцените его в 5 звёзд на Android Market!',
 	'about-rate-0-ios' => 'Если вам нравится это приложение, пожалуйста, оцените его в 5 звёзд на App Store!',
 	'gracenote-takedown' => 'К сожалению мы не лицензированы для отображения полного текста для этой песни на данный момент (это происходит на менее, чем 1% из наших песен). Пожалуйста, попробуйте снова на следующей неделе.',
+	'ringtone-matcher-by-song' => 'Отправить  %s  рингтон для вашей группы',
 );
 
 /** Swedish (Svenska)
@@ -841,6 +842,15 @@ $messages['te'] = array(
 	'search-go' => 'వెళ్ళు!',
 	'login-password-hint' => 'సంకేతపదం',
 	'about-heading-licensing' => 'కాపీహక్కులు',
+);
+
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'login-username-hint' => 'Kullanıcı adı',
+	'login-password-hint' => 'Parola',
+	'about-heading-licensing' => 'Telif hakları',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

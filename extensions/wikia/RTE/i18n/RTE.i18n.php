@@ -187,6 +187,7 @@ $messages['el'] = array(
 /** Spanish (Español)
  * @author Bola
  * @author Crazymadlover
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'rte-desc' => 'Integración del editor CK en MediaWiki',
@@ -203,7 +204,7 @@ $messages['es'] = array(
 	'rte-edgecase-redirect' => 'redirección',
 	'rte-edgecase-templateintable' => 'una tabla con una plantilla en su definición',
 	'rte-edgecase-unclosed-tags' => 'etiqueta HTML no cerrada',
-	'enablerichtexteditor' => 'Activar Editor de Texto Enriquecido',
+	'enablerichtexteditor' => 'Habilitar la edición en modo visual (en lugar del modo fuente)',
 	'rte-enablerichtexteditormessage' => "'''El Editor de Texto Enriquecido (Rich Text Editor) ha sido habilitado en esta cuenta de usuario.'''
 
 * ¡Puedes probar el nuevo editor [{{fullurl:Special:MyPage|action=edit}} editando tu página de usuario ahora]!
@@ -590,9 +591,11 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'rte-desc' => 'CKeditor-integration för MediaWiki',
 	'rte-edgecase-info-title' => 'Källäget krävs',
 	'rte-edgecase-comment' => 'HTML-kommentarer',
 	'rte-edgecase-triplecurls' => 'mallparametrar',
+	'rte-edgecase-nowysiwyg' => 'kommandot "ingen WYSIWYG"',
 	'rte-edgecase-complex-description' => 'en extern URL eller mall inom en länk beskrivning',
 	'rte-edgecase-template-with-link' => 'en mall med en länk som en parameter',
 	'rte-edgecase-syntax' => 'inte tillåten syntax',
@@ -628,6 +631,7 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Emperyan
  * @author Mert.subay
  */
 $messages['tr'] = array(
@@ -638,7 +642,7 @@ $messages['tr'] = array(
 	'rte-edgecase-comment' => 'HTML yorumları',
 	'rte-edgecase-triplecurls' => 'şablon parametreleri',
 	'rte-edgecase-nowysiwyg' => '"WYSIWYG" komutu yok',
-	'rte-edgecase-complex-description' => 'açıklamalı linkle bir harici bağlantı veya şablon',
+	'rte-edgecase-complex-description' => 'açıklamalı bağlantı ile bir dış bağlantı veya şablon',
 	'rte-edgecase-template-with-link' => 'parametre linkle bir şablon',
 	'rte-edgecase-syntax' => 'söz dizimi izin verilmiyor',
 	'rte-edgecase-image-with-link' => 'açıklamalı resim',

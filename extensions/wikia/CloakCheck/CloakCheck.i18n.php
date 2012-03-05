@@ -268,10 +268,15 @@ $messages['ia'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Lexaeus 94
  * @author Minerva Titani
  */
 $messages['it'] = array(
+	'cloakcheck-form-username' => 'Nome utente:',
+	'cloakcheck-form-check' => 'Verifica utente',
+	'cloakcheck-process-accountage-yes' => "L'account è abbastanza vecchio.",
 	'cloakcheck-process-emailconf-yes' => 'Indirizzo e-mail confermato.',
+	'cloakcheck-process-edits-yes' => "L'utente ha compiuto abbastanza modifiche.",
 );
 
 /** Japanese (日本語)
@@ -411,13 +416,23 @@ $messages['nl'] = array(
 	'cloakcheck-process-edits-no' => 'De gebruiker heeft onvoldoende bewerkingen gemaakt.',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sovq
+ */
 $messages['pl'] = array(
+	'cloakcheck' => 'Test dostępności maski IRC',
+	'cloakcheck-desc' => 'Udostępnia interfejs do weryfikacji warunków koniecznych do otrzymania maski IRC',
+	'right-cloakcheck' => 'Może sprawdzić informacje powiązane z maską IRC dotyczące innych użytkowników',
 	'cloakcheck-form-username' => 'Nazwa użytkownika',
 	'cloakcheck-form-check' => 'Sprawdź nazwę użytkownika',
+	'cloakcheck-form-check-self' => 'Sprawdź dostępność maski IRC',
 	'cloakcheck-process-empty' => 'Nazwa użytkownika nie może być pusta.',
 	'cloakcheck-process-notexist' => 'Użytkownik o tej nazwie nie istnieje.',
 	'cloakcheck-process-username' => 'Nazwa użytkownika: $1',
+	'cloakcheck-process-accountage-yes' => 'Konto jest aktywne dostatecznie długo.',
+	'cloakcheck-process-accountage-no' => 'Konto nie jest aktywne dostatecznie długo.',
+	'cloakcheck-process-emailconf-yes' => 'Adres e-mail potwierdzony.',
+	'cloakcheck-process-emailconf-no' => 'Adres e-mail nie potwierdzony.',
 	'cloakcheck-process-edits-yes' => 'Użytkownik wykonał wystarczającą liczbę zmian.',
 	'cloakcheck-process-edits-no' => 'Użytkownik nie wykonał wystarczającej liczby zmian.',
 );
@@ -598,6 +613,14 @@ $messages['tl'] = array(
 	'cloakcheck-process-emailconf-no' => 'Hindi natiyak ang tirahan ng e-liham.',
 	'cloakcheck-process-edits-yes' => 'May sapat na pamamatnugot ang tagagamit.',
 	'cloakcheck-process-edits-no' => 'Walang sapat na mga pamamatnugot ang tagagamit.',
+);
+
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'cloakcheck-form-username' => 'Kullanıcı adı:',
+	'cloakcheck-process-username' => 'Kullanıcı adı: $1',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

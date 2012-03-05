@@ -220,10 +220,11 @@ $messages['nl'] = array(
 
 /** Polish (Polski)
  * @author Sp5uhe
+ * @author TOR
  */
 $messages['pl'] = array(
 	'wikiarelatedpages-desc' => 'Dodaje do stron spis stron pokrewnych',
-	'wikiarelatedpages-heading' => 'Więcej informacji',
+	'wikiarelatedpages-heading' => 'Podobne strony',
 );
 
 /** Piedmontese (Piemontèis)

@@ -53,9 +53,11 @@ $messages['br'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Hizivaet eo bet kemennadennoù ar gumuniezh]].',
 );
 
-/** Catalan (Català) */
+/** Catalan (Català)
+ * @author Ciencia Al Poder
+ */
 $messages['ca'] = array(
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Els Missatges de la Comunitat han estat actualitzats]].',
+	'communitymessages-notice-msg' => "[[Special:WikiActivity|S'han actualitzat els Missatges de la Comunitat]].",
 );
 
 /** Czech (Česky)
@@ -76,11 +78,12 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Ciencia Al Poder
  * @author Crazymadlover
  */
 $messages['es'] = array(
 	'communitymessages-desc' => 'Extensión de ayuda para mensajes de la comunidad',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Los mensajes de la comunidad han sido actualizados]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Se han actualizado los mensajes de la comunidad]].',
 );
 
 /** Basque (Euskara)
@@ -165,11 +168,12 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Minerva Titani
  * @author Pietrodn
  */
 $messages['it'] = array(
 	'communitymessages-desc' => 'Estensione di supporto per i messaggi della comunità',
-	'communitymessages-notice-msg' => '[[Special:WikiActivity|I messaggi della comunità sono stati aggiornati]].',
+	'communitymessages-notice-msg' => '[[Speciale:WikiActivity|I messaggi della community sono stati aggiornati]].',
 );
 
 /** Colognian (Ripoarisch)

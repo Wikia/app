@@ -1466,6 +1466,7 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1479,6 +1480,75 @@ $messages['pl'] = array(
 	'toplists-category' => 'Listy Top 10',
 	'toplists-error-invalid-title' => 'Podany tekst jest nieprawidłowy.',
 	'toplists-error-invalid-picture' => 'Wybrany obraz jest nieprawidłowy.',
+	'toplists-error-title-exists' => 'Ta strona już istnieje. Możesz przejść do <a href="$2" target="_blank">$1</a> lub podać inną nazwę.',
+	'toplists-error-title-spam' => 'Podany tekst zawiera pewne wyrazy rozpoznane jako spam.',
+	'toplists-error-article-blocked' => 'Nie masz uprawnień do utworzenia strony o takiej nazwie. Przepraszamy.',
+	'toplists-error-article-not-exists' => '"$1" nie istnieje. Czy chcesz <a href="$2" target="_blank">ją utworzyć</a>?',
+	'toplists-error-picture-not-exists' => '"$1" nie istnieje. Czy chcesz <a href="$2" target="_blank">go przesłać</a>?',
+	'toplists-error-duplicated-entry' => 'Nie możesz użyć tej samej nazwy więcej niż jeden raz.',
+	'toplists-error-empty-item-name' => 'Nazwa istniejącego elementu nie może być pusta.',
+	'toplists-item-cannot-delete' => 'Usunięcie tego elementu nie powiodło się.',
+	'toplists-error-image-already-exists' => 'Obraz o tej samej nazwie już istnieje.',
+	'toplists-error-add-item-anon' => 'Anonimowi użytkownicy nie mogą dodawać elementów do listy. Prosimy <a class="ajaxLogin" id="login" href="$1"> zaloguj się</a> lub <a class="ajaxLogin" id="signup" href="$2">zarejestruj konto</a>.',
+	'toplists-error-add-item-permission' => 'Błąd uprawnień: twoje konto nie posiada praw do tworzenia nowych elementów.',
+	'toplists-error-add-item-list-not-exists' => 'Lista Top 10 "$1" nie istnieje.',
+	'toplists-upload-error-unknown' => 'Wystąpił błąd podczas przetwarzania żądania przesłania. Spróbuj ponownie.',
+	'toplists-editor-title-label' => 'Nazwa listy',
+	'toplists-editor-title-placeholder' => 'Wprowadź nazwę listy',
+	'toplists-editor-related-article-label' => 'Strona powiązana<small>(opcjonalne, ale wybiera obraz)</small>',
+	'toplists-editor-related-article-placeholder' => 'Wprowadź nazwę istniejącej strony',
+	'toplists-editor-image-browser-tooltip' => 'Dodaj grafikę',
+	'toplists-editor-remove-item-tooltip' => 'Usuń element',
+	'toplists-editor-drag-item-tooltip' => 'Przeciągnij, aby zmienić kolejność',
+	'toplists-editor-add-item-label' => 'Dodaj nowy element',
+	'toplists-editor-add-item-tooltip' => 'Dodaj nowy element do listy',
+	'toplists-create-button' => 'Utwórz listę',
+	'toplists-update-button' => 'Zapisz listę',
+	'toplists-cancel-button' => 'Anuluj',
+	'toplists-items-removed' => 'Usunięto $1 {{PLURAL:$1|element|elementy|elementów}}',
+	'toplists-items-created' => 'Utworzono $1 {{PLURAL:$1|element|elementy|elementów}}',
+	'toplists-items-updated' => 'Zmieniono $1 {{PLURAL:$1|element|elementy|elementów}}',
+	'toplists-items-nochange' => 'Nie zmieniono elementów',
+	'toplits-image-browser-no-picture-selected' => 'Nie wybrano obrazka',
+	'toplits-image-browser-clear-picture' => 'Wyczyść obrazek',
+	'toplits-image-browser-selected-picture' => 'Aktualnie wybrano: $1',
+	'toplists-image-browser-upload-btn' => 'Wybierz',
+	'toplists-image-browser-upload-label' => 'Prześlij własne',
+	'toplists-list-creation-summary' => 'Tworzenie listy, $1',
+	'toplists-list-update-summary' => 'Aktualizacja listy, $1',
+	'toplists-item-creation-summary' => 'Tworzenie elementu listy',
+	'toplists-item-update-summary' => 'Aktualizacja elementu listy',
+	'toplists-item-remove-summary' => 'Element usunięty z listy',
+	'toplists-item-restored' => 'Przywrócono element',
+	'toplists-list-related-to' => 'Związane z:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />głos|$1<br />głosy|$1<br />głosów}}',
+	'toplists-list-created-by' => 'przez [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Zagłosuj',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|głos|głosy|głosów}} w $2',
+	'toplists-list-add-item-label' => 'Dodaj element',
+	'toplists-list-add-item-name-label' => 'Przechowanie stanów listy...',
+	'toplists-list-item-voted' => 'Głosowało',
+	'toplists-createpage-dialog-label' => 'Lista Top 10',
+	'toplists-email-subject' => 'Zmieniono listę Top 10',
+	'toplists-email-body' => 'Witam z Wikia!
+
+Lista <a href="$1">$2</a> na Wikia została zmieniona.
+
+ $3
+
+Przejdź na Wikia by sprawdzić zmiany! $1
+
+- Wikia
+
+Możesz <a href="$4">anulować subskrypcję</a> zmian na liście.',
+	'toplists-seconds' => '$1 {{PLURAL:$1|sekunda|sekundy|sekund}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minuta|minuty|minut}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|godzina|godziny|godzin}}',
+	'toplists-days' => '$1 {{PLURAL:$1|dzień|dni}}',
+	'toplists-weeks' => '{{PLURAL:$1|tydzień|tygodnie|tygodni}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'zagłosowało na liście Top 10 na $WIKINAME!',
+	'toplists-create-heading' => '<em>Nowość!</em> Utwórz własne Top Dziesięć',
+	'toplists-create-button-msg' => 'Utwórz listę',
 );
 
 /** Piedmontese (Piemontèis)

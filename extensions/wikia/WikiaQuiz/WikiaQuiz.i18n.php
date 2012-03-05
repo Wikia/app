@@ -132,6 +132,9 @@ $messages['bg'] = array(
 	'wikiaquiz-title-label' => 'Заглавие',
 	'wikiaquiz-moreinfoarticle-label' => 'Статия',
 	'wikiaquiz-image-label' => 'Изображение (незадължително)',
+	'wikiaquiz-questions-label' => 'Въпроси',
+	'wikiaquiz-answers-label' => 'Отговори',
+	'wikiaquiz-answer-label' => 'Отговор',
 	'wikiaquiz-cancel-label' => 'Отказване',
 	'wikiaquiz-game-question-label' => 'ВЪПРОС',
 	'wikiaquiz-game-next-button' => 'Следващ въпрос',
@@ -298,6 +301,7 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -347,6 +351,9 @@ $messages['es'] = array(
 	'wikiaquiz-game-your-score' => 'Tu puntuación es',
 	'wikiaquiz-game-continue-button' => 'Continuar',
 	'wikiaquiz-game-thanks' => '¡Gracias por jugar!',
+	'wikiaquiz-game-provide-email' => 'Por favor, escribe una dirección de correo electrónico',
+	'wikiaquiz-game-email-placeholder' => 'tunombre@tucorreo.com',
+	'wikiaquiz-game-email-valid-please' => 'Por favor, escribe una dirección de correo electrónico válida',
 	'wikiaquiz-game-challenge' => '¡Desafía a tus amigos a jugar!',
 	'wikiaquiz-game-mute' => 'Mudo',
 );
@@ -365,6 +372,7 @@ $messages['fa'] = array(
 /** French (Français)
  * @author Cmarget
  * @author Crochet.david
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -375,6 +383,7 @@ $messages['fr'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Modifier les questions et les réponses du quizz',
 	'wikiaquiz-title-label' => 'Titre',
 	'wikiaquiz-titlescreentext-label' => 'Texte de l’écran de titre',
+	'wikiaquiz-fbrecommendationtext-label' => 'Description de la recommandation de Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Images de l’écran de titre',
 	'wikiaquiz-moreinfoheading-label' => 'En-tête « Plus d’informations »',
 	'wikiaquiz-requireemail-label' => 'Demander au joueur de saisir une adresse de courriel à la fin du jeu',
@@ -440,6 +449,7 @@ $messages['gl'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Editar as preguntas e as respostas do cuestionario',
 	'wikiaquiz-title-label' => 'Título',
 	'wikiaquiz-titlescreentext-label' => 'Texto da pantalla de título',
+	'wikiaquiz-fbrecommendationtext-label' => 'Descrición da recomendación do Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Imaxes da pantalla de título',
 	'wikiaquiz-moreinfoheading-label' => 'Cabeceira con máis información',
 	'wikiaquiz-requireemail-label' => 'Obrigar ao xogador a que insira o enderezo de correo electrónico ao final do xogo',
@@ -505,6 +515,7 @@ $messages['ia'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Modificar question de quiz e responsas',
 	'wikiaquiz-title-label' => 'Titulo',
 	'wikiaquiz-titlescreentext-label' => 'Texto del schermo de titulo',
+	'wikiaquiz-fbrecommendationtext-label' => 'Description del recommendation Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Imagines del schermo de titulo',
 	'wikiaquiz-moreinfoheading-label' => 'Capite pro "plus info"',
 	'wikiaquiz-requireemail-label' => 'Require que le jocator entra un adresse de e-mail al fin del joco',
@@ -778,6 +789,7 @@ $messages['mk'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Уредување на прашања и одговори за квиз',
 	'wikiaquiz-title-label' => 'Наслов',
 	'wikiaquiz-titlescreentext-label' => 'Текст на насловниот екран',
+	'wikiaquiz-fbrecommendationtext-label' => 'Опис на препораката преку Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Слики на насловниот екран',
 	'wikiaquiz-moreinfoheading-label' => 'Заглавие за повеќе информации',
 	'wikiaquiz-requireemail-label' => 'Барај од играчот да внесе е-пошта на крајот од играта',
@@ -843,6 +855,7 @@ $messages['ms'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Sunting Soalan dan Jawapan Kuiz',
 	'wikiaquiz-title-label' => 'Tajuk',
 	'wikiaquiz-titlescreentext-label' => 'Teks skrin tajuk',
+	'wikiaquiz-fbrecommendationtext-label' => 'Keterangan cadangan Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Imej skrin tajuk',
 	'wikiaquiz-moreinfoheading-label' => 'Pengatas maklumat lanjut',
 	'wikiaquiz-requireemail-label' => 'Kehendaki pemain untuk memasukkan alamat e-mel di akhir permainan',
@@ -908,6 +921,7 @@ $messages['nb'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Rediger spørsmål og svar for quizen',
 	'wikiaquiz-title-label' => 'Tittel',
 	'wikiaquiz-titlescreentext-label' => 'Tekst for tittelbildet',
+	'wikiaquiz-fbrecommendationtext-label' => 'Beskrivelse av Facebook anbefaling',
 	'wikiaquiz-titlescreenimages-label' => 'Bilder for tittelbildet',
 	'wikiaquiz-moreinfoheading-label' => 'Mer info-overskrift',
 	'wikiaquiz-requireemail-label' => 'Krever at spilleren oppgir en e-postadresse ved slutten av spillet',
@@ -974,6 +988,7 @@ $messages['nl'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Vragen en antwoorden bewerken',
 	'wikiaquiz-title-label' => 'Titel',
 	'wikiaquiz-titlescreentext-label' => 'Koptekst voor het scherm',
+	'wikiaquiz-fbrecommendationtext-label' => 'Beschrijving Facebookaanbeveling',
 	'wikiaquiz-titlescreenimages-label' => 'Afbeeldingen voor het scherm',
 	'wikiaquiz-moreinfoheading-label' => 'Koptekst voor meer informatie',
 	'wikiaquiz-requireemail-label' => 'Vereisen dat een speler een e-mailadres opgeeft aan het einde van het spel',
@@ -1039,6 +1054,7 @@ $messages['pl'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Edycja pytań i odpowiedzi quizu',
 	'wikiaquiz-title-label' => 'Tytuł',
 	'wikiaquiz-titlescreentext-label' => 'Tekst na ekranie tytułu',
+	'wikiaquiz-fbrecommendationtext-label' => 'Opis rekomendacji Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Obrazy ekranu tytułu',
 	'wikiaquiz-moreinfoheading-label' => 'Nagłówek - informacje dodatkowe',
 	'wikiaquiz-requireemail-label' => 'Wymaganie od gracza wprowadzenia adresu e-mail pod koniec gry',
@@ -1097,14 +1113,20 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'wikiaquiz-title-label' => 'سرليک',
 	'wikiaquiz-moreinfoarticle-label' => 'ليکنه',
+	'wikiaquiz-question-label' => 'پوښتنه',
 	'wikiaquiz-questions-label' => 'پوښتنې',
 	'wikiaquiz-answers-label' => 'ځوابونه',
 	'wikiaquiz-answer-label' => 'ځواب',
+	'wikiaquiz-correct-label' => 'سم؟',
 	'wikiaquiz-cancel-label' => 'ناګارل',
 	'wikiaquiz-publish-label' => 'خپرول',
+	'wikiaquiz-game-start-button' => 'لوبه پيلول',
+	'wikiaquiz-game-cadence-3' => 'چمتو شه',
 	'wikiaquiz-game-cadence-1' => 'ورځه!',
 	'wikiaquiz-game-question-label' => 'پوښتنه',
+	'wikiaquiz-game-mute' => 'ټپول',
 );
 
 /** Portuguese (Português)
@@ -1196,6 +1218,7 @@ $messages['ru'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Править вопросы и ответы для викторины',
 	'wikiaquiz-title-label' => 'Название',
 	'wikiaquiz-titlescreentext-label' => 'Название для отображения на экране',
+	'wikiaquiz-fbrecommendationtext-label' => 'Описание рекомендаций Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Название на экране',
 	'wikiaquiz-moreinfoheading-label' => 'Подробнее под заголовком',
 	'wikiaquiz-requireemail-label' => 'Требуется медиа-проигрыватель для ввода адреса электронной почты в конце игры',

@@ -780,14 +780,14 @@ $messages['ru'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'specialcontact-pagetitle' => 'Контактирање Викије',
+	'specialcontact-pagetitle' => 'Контакт',
 	'specialcontact-username' => 'Корисничко име',
 	'specialcontact-realname' => 'Име',
 	'specialcontact-yourmail' => 'Е-адреса',
 	'specialcontact-problem' => 'Наслов',
 	'specialcontact-problemdesc' => 'Порука',
 	'specialcontact-notyou' => 'Нисте ви?',
-	'specialcontact-captchatitle' => 'Замагљена реч',
+	'specialcontact-captchatitle' => 'Мутна реч',
 	'specialcontact-submitcomplete' => 'Хвала вам што сте контактирали Викију.',
 );
 
@@ -896,7 +896,7 @@ $messages['vi'] = array(
 	'specialcontact-pagetitle' => 'Liên hệ Wikia',
 	'specialcontact-intro' => 'Bạn có thể liên lạc với [[w:project:Staff|nhân viên Wikia]] bằng cách sử dụng mẫu đơn sau đây. Bảo quản viên của wiki này có thể được tìm thấy [[Special:ListAdmins|ở đây]].
 
-Thông tin thêm về cách báo cáo vấn đề cho Wikia có thể tìm được [[w:project:Report_a_problem|tại đây]], hoặc bạn có thể đăng lên [[w:vi:Project:Diễn đàn|Diễn đàn Cộng đồng Wikia]] để được sự hỗ trợ của các thành viên.
+Thông tin thêm về cách báo cáo vấn đề cho Wikia có thể tìm được [[w:project:Report_a_problem|tại đây]], hoặc bạn có thể đăng lên [[w:Forum:Index|Diễn đàn Cộng đồng Wikia]] hoặc [[w:vi:Project:Diễn đàn|Wikia Tiếng Việt]] để được sự hỗ trợ của các thành viên.
 
 Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có tập tin đính kèm, bạn có thể liên lạc với chúng tôi theo địa chỉ [mailto:community@wikia.com community@wikia.com].
 

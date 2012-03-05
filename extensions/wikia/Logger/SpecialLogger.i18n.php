@@ -249,6 +249,20 @@ $messages['nl'] = array(
 	'loggernoresult' => 'Geen resultaten gevonden',
 );
 
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
+$messages['pl'] = array(
+	'logger-desc' => 'Rejestrator dziennika dla skryptów wewnętrznych',
+	'logger' => 'Rejestrator dziennika backendu',
+	'loggertitle' => 'Rejestrator dziennika backendu',
+	'loggerselectlogname' => 'Wybierz nazwę dziennika:',
+	'loggerrecordswithpercent' => "'''$1''' rekordów ('''$2''' procent ukończono)",
+	'loggerrecords' => '$1 rekordów',
+	'loggergo' => 'Pokaż',
+	'loggernoresult' => 'Nic nie znaleziono',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -314,6 +328,8 @@ $messages['ro'] = array(
  */
 $messages['ru'] = array(
 	'logger' => 'Серверная часть журнала',
+	'loggerselectlogname' => 'Выберите название журнала:',
+	'loggerrecordswithpercent' => "'''$1''' записей ('''$2''' процентов завершено)",
 	'loggerrecords' => '$1 записей',
 	'loggergo' => 'Показать',
 	'loggernoresult' => 'Ничего не найдено',

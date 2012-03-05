@@ -866,6 +866,7 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Crazymadlover
  * @author McDutchie
  * @author Peter17
@@ -911,7 +912,7 @@ $messages['es'] = array(
 	'wmu-success' => '<h1>Éxito</h1>Tu imagen ha sido insertada.',
 	'wmu-success-placeholder' => '<h1>Éxito</h1>',
 	'wmu-return' => 'Volver a editar',
-	'wmu-back' => 'Volver',
+	'wmu-back' => 'Seleccionar otra fotografía',
 	'wmu-close' => 'Cerrar',
 	'wmu-warn1' => '¡Necesitas especificar una duda primero!',
 	'wmu-warn2' => '¡Necesitas seleccionar un archivo primero!',
@@ -944,6 +945,8 @@ $messages['es'] = array(
 	'wmu-replace-default-caption' => 'reemplazar el comentario predeterminado',
 	'wmu-appearance-in-article' => 'Aparición en el artículo',
 	'wmu-alignment' => 'Alineación',
+	'wmu-file-protected' => 'Esta imagen está protegida',
+	'wmu-file-error' => 'Hubo un error durante el proceso de carga. Inténtelo de nuevo.',
 );
 
 /** Basque (Euskara)
@@ -2481,9 +2484,10 @@ $messages['sl'] = array(
  */
 $messages['sr-ec'] = array(
 	'wmu-upload-image' => 'Отпреми слику',
+	'wmu-title' => 'Отпремање слике',
 	'wmu-upload' => 'Отпреми',
 	'wmu-notlogged' => 'Пријавите се или отворите налог да бисте отпремили слике',
-	'wmu-find' => 'Пронађи',
+	'wmu-find' => 'Проналажење',
 	'wmu-thiswiki' => 'Овај вики',
 	'wmu-flickr' => 'Фликр',
 	'wmu-upload-btn' => 'Отпреми',
@@ -2500,10 +2504,10 @@ $messages['sr-ec'] = array(
 	'wmu-licensing' => 'Лиценцирање',
 	'wmu-details-inf2' => '<h1>Поставке чланка</h1>Изаберите како желите да датотека изгледа на страници.',
 	'wmu-size' => 'Величина',
-	'wmu-thumbnail' => 'Умањени приказ',
+	'wmu-thumbnail' => 'Минијатура',
 	'wmu-fullsize' => 'Пуна величина ($1×$2 тачака)',
 	'wmu-width' => 'Ширина',
-	'wmu-layout' => 'Изглед',
+	'wmu-layout' => 'Распоред',
 	'wmu-caption' => 'Назив',
 	'wmu-link' => 'Веза',
 	'wmu-optional' => '(необавезно)',
@@ -2515,8 +2519,8 @@ $messages['sr-ec'] = array(
 	'wmu-recent-inf' => 'Најновије слике',
 	'wmu-thiswiki2' => 'Слике ($1 {{PLURAL:$1|резултат|резултата|резултата}})',
 	'wmu-success' => '<h1>Успех</h1>Ваша слика је додата.',
-	'wmu-success-placeholder' => '<h1>Успех</h1>',
-	'wmu-return' => 'Повратак на уређивање',
+	'wmu-success-placeholder' => '<h1>Успешно извршено</h1>',
+	'wmu-return' => 'Назад на уређивање',
 	'wmu-back' => 'Изаберите другу слику',
 	'wmu-close' => 'затвори',
 	'wmu-warn1' => 'Морате да унесете упит!',
@@ -2524,6 +2528,10 @@ $messages['sr-ec'] = array(
 	'wmu-warn3' => 'Прво унесите назив датотеке!',
 	'wmu-imagelink' => '<b>Ново!</b> Додајте слике',
 	'wmu-imagebutton' => 'Додај слике',
+	'wmu-license-cc' => 'Доступно под лиценцом Кријејтив комонс Ауторство-Делити под истим условима 3.0',
+	'wmu-bad-extension' => 'Пробали сте да отпремите забрањену врсту датотеке. Покушајте поново.',
+	'wmu-filetype-missing' => 'Отпремљена датотека нема наставак',
+	'wmu-filetype-incorrect' => 'Датотека има неисправан наставак',
 	'wmu-hide-license-msg' => 'сакриј текст лиценце',
 	'wmu-show-license-msg' => 'прикажи текст лиценце',
 	'wmu-notallowed' => 'Не можете да отпремате слике на ову викију',
@@ -2536,7 +2544,7 @@ $messages['sr-ec'] = array(
 	'wmu-gallery-success' => 'Додали сте слику у нову галерију. Кликните испод да бисте додали више слика или убацили галерију',
 	'wmu-gallery-btn1' => 'Додај другу слику',
 	'wmu-gallery-btn2' => 'Убаци галерију на страницу',
-	'wmu-no-preview' => 'Не можете да додајете слике са странице у претпрегледу',
+	'wmu-no-preview' => 'Не можете да додајете слике док прегледате страницу',
 	'wmu-no-protect' => 'Ова страница је заштићена. Не можете да додајете слике на њу',
 	'wmu-no-rights' => 'Немате овлашћења да додајете слике на ову страницу',
 	'wmu-more-options' => 'Више поставки',

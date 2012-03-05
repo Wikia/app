@@ -623,8 +623,11 @@ Nadat je dit hebt uitgevoerd, kan je eenvoudig aanmelden met de knop Facebook Co
 Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
 );
 
-/** Polish (Polski) */
+/** Polish (Polski)
+ * @author Sovq
+ */
 $messages['pl'] = array(
+	'comboajaxlogin-desc' => 'Dynamiczne okienko, umożliwiające użytkownikom na logowanie, rejestrację i przypomnienie hasła.',
 	'comboajaxlogin-createlog' => 'Zaloguj się lub utwórz konto',
 	'comboajaxlogin-actionmsg' => 'Aby wykonać tę akcję musisz się najpierw zalogować lub utworzyć konto.',
 	'comboajaxlogin-actionmsg-protected' => 'Aby wykonać tę czynność, musisz najpierw zalogować się lub utworzyć konto.',
@@ -645,11 +648,14 @@ $messages['pl'] = array(
 	'comboajaxlogin-connectdirections' => 'Wpisz tutaj swoją nazwę użytkownika i hasło na Wikii – połączymy w tle Twoje konta na Wikii i Facebooku.
 
 Gdy skończysz, będziesz mógł się łatwo zalogować korzystając z każdego przycisku „Facebook Connect”.',
+	'comboajaxlogin-post-not-understood' => 'Wystąpił błąd w sposobie, w jaki ten formularz został wypełniony.
+Spróbuj ponownie lub [[Special:Contact|zgłoś problem]].',
 	'comboajaxlogin-readonlytext' => '<h2>Przepraszamy!</h2>
 <p>W tym momencie nie możesz utworzyć konta. Wkrótce wszystko ponownie wrócić do normy. Przyczyna problemów:<br /><em>$1</em></p>
 <p>Więcej informacji odnajdziesz na stronach <a href="http://twitter.com/wikia">Twittera</a> lub <a href="http://facebook.com/wikia">Facebooka</a>.
 <br />
 (Jeśli już masz konto, możesz zwyczajnie <a href="#">zalogować się</a>, ale nie będziesz mógł edytować.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia nie odpowiada. Sprawdź swoje połączenie z siecią.',
 );
 
 /** Piedmontese (Piemontèis)

@@ -73,6 +73,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Lloffiwr
  * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
@@ -81,6 +82,10 @@ $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
 	'editaccount-success-disable' => 'Parameters:
 * $1 is a username.',
+	'editaccount-status-realuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.
+
+Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
+	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount}}',
 );
 
@@ -264,6 +269,14 @@ $messages['cs'] = array(
 	'editaccount-remove-avatar-fail' => 'Problém při auto-odstraňování avataru.',
 	'editaccount-requested' => 'Poznámka: Uživatel požadoval uzavření účtu.',
 	'editaccount-not-requested' => 'Upozornění: Uživatel nepožadoval uzavření účtu.',
+	'editaccount-labal-account-status' => 'Stav účtu',
+	'editaccount-labal-email-status' => 'Stav e-mailu',
+	'editaccount-status-confirmed' => 'Potvrzené',
+	'editaccount-status-unconfirmed' => 'Nepotvrzené',
+	'editaccount-status-realuser' => 'Skutečný uživatel',
+	'editaccount-status-tempuser' => 'Dočasný uživatel',
+	'editaccount-error-tempuser-email' => 'Dočasní uživatelé nemohou mít prázdné pole e-mailové adresy, zadejte prosím e-mailovou adresu.',
+	'editaccount-email-change-requested' => 'Uživatel požaduje změnu e-mailu pomocí předvoleb na $1 . Chcete-li potvrdit změnu e-mailové adresu uživatele, zadejte požadovanou e-mailovou adresu do pole níže a klepněte na tlačítko "Uložit a potvrdit."',
 	'editaccount-log' => 'Protokol uživatelských účtů',
 	'editaccount-log-header' => 'Tato stránka obsahuje seznam změn provedených v uživatelských předvoleb zaměstnanci Wikia.',
 	'editaccount-log-entry-email' => 'změněn e-mail uživatele $2',
@@ -368,6 +381,8 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
+ * @author Benfutbol10
  * @author Crazymadlover
  * @author Pertile
  * @author Translationista
@@ -392,6 +407,7 @@ $messages['es'] = array(
 	'editaccount-submit-pass' => 'Guardar contraseña',
 	'editaccount-submit-realname' => 'Guardar nombre verdadero',
 	'editaccount-submit-clearunsub' => 'Borrar desuscripción',
+	'editaccount-submit-cleardisable' => 'Retirar la marca de desactivado',
 	'editaccount-submit-close' => 'Cerrar cuenta',
 	'editaccount-usage-close' => 'También puedes desactivar una cuenta de usuario desordenando su contraseña y eliminando la dirección de correo electrónico. Ten en cuenta que estos datos se perderán y no se podrán recuperar.',
 	'editaccount-warning-close' => '<b>Atención:</b> Estás a punto de desactivar permanentemente la cuenta del usuario <b>$1</b>. Esta acción es irreversible. ¿Seguro que eso es lo que deseas?',
@@ -401,6 +417,7 @@ $messages['es'] = array(
 	'editaccount-success-pass' => 'Se ha cambiado correctamente la contraseña de cuenta de $1.',
 	'editaccount-success-realname' => 'Se ha cambiado correctamente el nombre real de la cuenta de $1.',
 	'editaccount-success-unsub' => 'Eliminada correctamente la suscripción de la cuenta $1.',
+	'editaccount-success-disable' => 'Se ha retirado la etiqueta "desactivada" para la cuenta $1 correctamente.',
 	'editaccount-success-close' => 'Se ha inhabilitado correctamente la cuenta $1.',
 	'editaccount-error-email' => 'El correo electrónico no se ha cambiado. Inténtalo de nuevo o contacta con el Equipo Técnico.',
 	'editaccount-error-pass' => 'La clave ha sido cambiada. Inténtalo de nuevo o contacta con el Equipo Técnico.',
@@ -408,6 +425,17 @@ $messages['es'] = array(
 	'editaccount-error-close' => 'Ha ocurrido un problema mientras cerrabas la cuenta. Inténtalo de nuevo o contacta con el Equipo Técnico.',
 	'editaccount-invalid-email' => '¡"$1" no es una dirección válida de correo electrónico!',
 	'editaccount-nouser' => '¡La cuenta "$1" no existe!',
+	'editaccount-remove-avatar-fail' => 'Problema durante la eliminación automática del avatar.',
+	'editaccount-requested' => 'Nota: El usuario ha solicitado la clausura de una cuenta',
+	'editaccount-not-requested' => 'AVISO: El usuario no ha solicitado la clausura de una cuenta',
+	'editaccount-labal-account-status' => 'Estado de cuenta',
+	'editaccount-labal-email-status' => 'Estado de correo electrónico',
+	'editaccount-status-confirmed' => 'Confirmado',
+	'editaccount-status-unconfirmed' => 'No confirmado',
+	'editaccount-status-realuser' => 'Usuario real',
+	'editaccount-status-tempuser' => 'Usuario temporal',
+	'editaccount-error-tempuser-email' => 'Los usuarios temporales no pueden tener el campo de dirección de correo electrónico en blanco, escriba una dirección de correo electrónico.',
+	'editaccount-email-change-requested' => 'Un usuario pidió cambio de correo electrónico a través de sus Preferencias en $1. Para confirmar el cambio de dirección de correo electrónico solicitado por el usuario, escriba la dirección de correo electrónico solicitada en el campo de más abajo y haga clic en "Guardar y confirmar".',
 	'editaccount-log' => 'Registro de cuentas del usuario',
 	'editaccount-log-header' => 'Esta página se enumera los cambios que el personal de Wikia ha realizado a las preferencias de usuario.',
 	'editaccount-log-entry-email' => 'Se ha cambiado de correo electrónico del usuario $2',
@@ -479,6 +507,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  * @author Verdy p
@@ -524,6 +553,14 @@ $messages['fr'] = array(
 	'editaccount-remove-avatar-fail' => 'Problème à l’auto-suppression de l’avatar.',
 	'editaccount-requested' => 'Note : l’utilisateur a demandé la fermeture de son compte',
 	'editaccount-not-requested' => 'ATTENTION : l’utilisateur n’a pas demandé la fermeture de son compte',
+	'editaccount-labal-account-status' => 'État de compte',
+	'editaccount-labal-email-status' => 'État du Courriel',
+	'editaccount-status-confirmed' => 'Confirmé',
+	'editaccount-status-unconfirmed' => 'Non confirmé',
+	'editaccount-status-realuser' => 'Utilisateur réel',
+	'editaccount-status-tempuser' => 'Utilisateur temporaire',
+	'editaccount-error-tempuser-email' => 'Les utilisateurs temporaires ne peuvent pas avoir de champ Adresse de courriel vide; veuillez entrer une adresse de courriel.',
+	'editaccount-email-change-requested' => "Un utilisateur a demandé le changement de courriel via les préférences de $1. Pour confirmer le changement d'adresse courriel demandé pour l'utilisateur, entrez l'adresse de courriel demandée dans le champ ci-dessous et cliquez sur «Enregistrer et confirmer».",
 	'editaccount-log' => 'Journal des comptes utilisateurs',
 	'editaccount-log-header' => 'Cette page liste les modifications faîtes au préférences utilisateur par le staff de Wikia.',
 	'editaccount-log-entry-email' => "a modifié l'adresse électronique de l'utilisateur $2",
@@ -577,13 +614,21 @@ $messages['gl'] = array(
 	'editaccount-remove-avatar-fail' => 'Problema durante a eliminación automática do avatar.',
 	'editaccount-requested' => 'Nota: O usuario solicitou o peche da conta',
 	'editaccount-not-requested' => 'AVISO: O usuario non solicitou o peche da conta',
+	'editaccount-labal-account-status' => 'Estado da conta',
+	'editaccount-labal-email-status' => 'Estado do correo electrónico',
+	'editaccount-status-confirmed' => 'Confirmado',
+	'editaccount-status-unconfirmed' => 'Sen confirmar',
+	'editaccount-status-realuser' => 'Usuario real',
+	'editaccount-status-tempuser' => 'Usuario temporal',
+	'editaccount-error-tempuser-email' => 'Os usuarios temporais non poden deixar en branco o campo do correo electrónico. Insira un enderezo.',
+	'editaccount-email-change-requested' => 'O usuario solicitou un cambio de correo electrónico mediante as preferencias a $1. Para confirmar o cambio no enderezo de correo electrónico do usuario, insira o enderezo solicitado no campo inferior e prema en "Gardar e confirmar".',
 	'editaccount-log' => 'Rexistro de contas de usuario',
 	'editaccount-log-header' => 'Esta páxina lista as modificacións feitas ás preferencias do usuario polo persoal de Wikia.',
 	'editaccount-log-entry-email' => 'cambiou o correo electrónico do usuario $2',
 	'editaccount-log-entry-pass' => 'cambiou o contrasinal do usuario $2',
 	'editaccount-log-entry-realname' => 'cambiou o nome real do usuario $2',
 	'editaccount-log-entry-close' => 'desactivou a conta $2',
-	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Esta conta foi desactivada globalmente por Wikia.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Wikia desactivou esta conta globalmente.</div>',
 	'right-editaccount' => 'Editar as preferencias doutros usuarios',
 );
 
@@ -681,6 +726,14 @@ $messages['ia'] = array(
 	'editaccount-remove-avatar-fail' => 'Problema durante le elimination automatic del avatar.',
 	'editaccount-requested' => 'Nota: Le usator ha requestate le clausura de un conto',
 	'editaccount-not-requested' => 'ATTENTION: Le usator non ha requestate le clausura de un conto',
+	'editaccount-labal-account-status' => 'Stato del conto',
+	'editaccount-labal-email-status' => 'Stato de e-mail',
+	'editaccount-status-confirmed' => 'Confirmate',
+	'editaccount-status-unconfirmed' => 'Non confirmate',
+	'editaccount-status-realuser' => 'Usator real',
+	'editaccount-status-tempuser' => 'Usator temporari',
+	'editaccount-error-tempuser-email' => 'Le usatores temporari non pote haber un campo de adresse de e-mail vacue. Per favor specifica un adresse de e-mail.',
+	'editaccount-email-change-requested' => 'Le usator requestava un cambio de e-mail via le Preferentias a $1. Pro confirmar le cambio de adresse de e-mail requestate pro iste usator, entra le adresse de e-mail requestate in le campo hic infra e clicca sur "Salveguardar e confirmar".',
 	'editaccount-log' => 'Registro de contos de usator',
 	'editaccount-log-header' => 'Iste pagina lista le cambios facite al preferentias de usator per le personal de Wikia.',
 	'editaccount-log-entry-email' => 'cambiava le adresse de e-mail del usator $2',
@@ -899,6 +952,14 @@ $messages['mk'] = array(
 	'editaccount-remove-avatar-fail' => 'Проблем при автоотстранување на аватарот.',
 	'editaccount-requested' => 'Напомена: Корисникот има побарано затворање на сметката',
 	'editaccount-not-requested' => 'ВНИМАНИЕ: Корисникот нема пријавено затворање на сметката',
+	'editaccount-labal-account-status' => 'Статус на сметка',
+	'editaccount-labal-email-status' => 'Статус на е-пошта',
+	'editaccount-status-confirmed' => 'Потврдено',
+	'editaccount-status-unconfirmed' => 'Непотврдено',
+	'editaccount-status-realuser' => 'Вистински корисник',
+	'editaccount-status-tempuser' => 'Привремен корисник',
+	'editaccount-error-tempuser-email' => 'Привремените корисници мора да внесат е-пошта. Внесете ја.',
+	'editaccount-email-change-requested' => 'Корисникот преку нагодувањата побара промена на е-поштата во $1. За да ја потврдите промената, внесете ја бараната адреса во долунаведеното поле и стиснете на „Зачувај и потврди“.',
 	'editaccount-log' => 'Дневник на кориснички сметки',
 	'editaccount-log-header' => 'Оваа страница ги прикажува промените во нагодувањата на корисниците направени од персоналот на Викија',
 	'editaccount-log-entry-email' => 'променета е-поштата на корисникот $2',
@@ -927,7 +988,7 @@ $messages['ms'] = array(
 	'editaccount-label-pass' => 'Tetapkan kata laluan baru',
 	'editaccount-label-realname' => 'Tetapkan nama sebenar baru',
 	'editaccount-label-clearunsub' => 'Langganan dihentikan',
-	'editaccount-submit-email' => 'Simpan alamat e-mel',
+	'editaccount-submit-email' => 'Simpan dan terima alamat e-mel',
 	'editaccount-submit-pass' => 'Simpan kata laluan',
 	'editaccount-submit-realname' => 'Simpan nama sebenar',
 	'editaccount-submit-clearunsub' => 'Padamkan penghentian melanggan',
@@ -952,6 +1013,14 @@ $messages['ms'] = array(
 	'editaccount-remove-avatar-fail' => 'Masalah ketika membuang avatar secara automatik.',
 	'editaccount-requested' => 'Perhatian: Pengguna memohon penutupan akaun',
 	'editaccount-not-requested' => 'AWAS: Pengguna tidak memohon penutupan akaun',
+	'editaccount-labal-account-status' => 'Status Akaun',
+	'editaccount-labal-email-status' => 'Status E-mel',
+	'editaccount-status-confirmed' => 'Disahkan',
+	'editaccount-status-unconfirmed' => 'Belum disahkan',
+	'editaccount-status-realuser' => 'Pengguna Aktif',
+	'editaccount-status-tempuser' => 'Pengguna Tak Aktif',
+	'editaccount-error-tempuser-email' => 'Pengguna tak aktif tidak boleh membiarkan ruangan alamat e-mel kosong; sila isikan alamat e-mel.',
+	'editaccount-email-change-requested' => 'Pengguna ini memohon penukaran alamat e-mel kepada $1 melalui Keutamaan. Untuk menerima penukaran alamat e-mel yang dipohon untuk pengguna tersebut, taipkan alamat e-mel yang dipohon itu dalam ruangan di bawah, kemudian klik "Simpan dan terima."',
 	'editaccount-log' => 'Log akaun pengguna',
 	'editaccount-log-header' => 'Laman ini menyenaraikan perubahan yang dilakukan oleh Kakitangan Wikia pada keutamaan pengguna.',
 	'editaccount-log-entry-email' => 'mengubah e-mel pengguna $2',
@@ -1006,6 +1075,14 @@ $messages['nb'] = array(
 	'editaccount-remove-avatar-fail' => 'Problem med automatisk fjerning av avatar.',
 	'editaccount-requested' => 'Merk: Brukeren har søkt om å få kontoen sin stengt',
 	'editaccount-not-requested' => 'FORSIKTIG: Brukeren har ikke søkt om å få kontoen sin stengt',
+	'editaccount-labal-account-status' => 'Kontostatus',
+	'editaccount-labal-email-status' => 'E-poststatus',
+	'editaccount-status-confirmed' => 'Bekreftet',
+	'editaccount-status-unconfirmed' => 'Ubekreftet',
+	'editaccount-status-realuser' => 'Virkelig bruker',
+	'editaccount-status-tempuser' => 'Midlertidig bruker',
+	'editaccount-error-tempuser-email' => 'Midlertidige brukere kan ikke ha et tomt e-postadressefelt, vennligst oppgi en e-postadresse.',
+	'editaccount-email-change-requested' => 'Brukerforespurt e-postbytte via Innstillinger til $1. For å bekrefte det forespurte e-postadressebyttet for brukeren, skriv den forespurte e-postadressen inn i feltet under og trykk «Lagre og bekreft.»',
 	'editaccount-log' => 'Brukerkontologg',
 	'editaccount-log-header' => 'Denne siden lister opp endringer gjort på brukerinnstillinger av Wikia Staff.',
 	'editaccount-log-entry-email' => 'endret e-post for bruker $2',
@@ -1017,6 +1094,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Siebrand
  * @author Tjcool007
  */
@@ -1070,6 +1148,14 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 	'editaccount-remove-avatar-fail' => 'Er is een probleem opgetreden tijdens het automatisch verwijderen van de avatar.',
 	'editaccount-requested' => 'Opmerking: gebruiker heeft een rekeningsluiting aangevraagd',
 	'editaccount-not-requested' => 'Waarschuwing: gebruiker heeft geen rekeningsluiting aangevraagd',
+	'editaccount-labal-account-status' => 'Gebruikersstatus',
+	'editaccount-labal-email-status' => 'E-mailadresstatus',
+	'editaccount-status-confirmed' => 'Bevestigd',
+	'editaccount-status-unconfirmed' => 'Niet bevestigd',
+	'editaccount-status-realuser' => 'Echte gebruiker',
+	'editaccount-status-tempuser' => 'Tijdelijke gebruiker',
+	'editaccount-error-tempuser-email' => 'Tijdelijke gebruikers moeten een e-mailadres opgeven. Geef een e-mailadres op.',
+	'editaccount-email-change-requested' => 'De gebruiker heeft via de voorkeuren een wijziging van het e-mailadres naar $1 aangevraagd. Voer het aangevraagde e-mailadres in het onderstaande veld in en klik op "Opslaan en bevestigen" om de gevraagde wijziging te bevestigen.',
 	'editaccount-log' => 'Logboek gebruikers',
 	'editaccount-log-header' => 'Op deze pagina staan wijzigingen in gebruikersvoorkeuren die door stafleden van Wikia zijn gemaakt.',
 	'editaccount-log-entry-email' => 'heeft het e-mailadres voor gebruiker $2 aangepast',
@@ -1115,6 +1201,7 @@ $messages['pa'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sovq
  * @author Woytecr
  */
@@ -1158,6 +1245,14 @@ $messages['pl'] = array(
 	'editaccount-remove-avatar-fail' => 'Wystąpił błąd podczas usuwania awataru.',
 	'editaccount-requested' => 'Uwaga: Użytkownik poprosił o zamknięcia konta',
 	'editaccount-not-requested' => 'UWAGA: Użytkownik nie prosił o zamknięcia konta',
+	'editaccount-labal-account-status' => 'Stan konta',
+	'editaccount-labal-email-status' => 'Stan wiadomości e-mail',
+	'editaccount-status-confirmed' => 'Potwierdzone',
+	'editaccount-status-unconfirmed' => 'Niepotwierdzone',
+	'editaccount-status-realuser' => 'Rzeczywisty użytkownik',
+	'editaccount-status-tempuser' => 'Tymczasowy użytkownik',
+	'editaccount-error-tempuser-email' => 'Tymczasowi użytkownicy nie mogą mieć pustego pola adresu e-mail, wprowadź adres e-mail.',
+	'editaccount-email-change-requested' => "Użytkownik prosił o zmianę adresu e-mail za pomocą preferencji  $1. Aby potwierdzić zmianę adresu e-mail żądaną dla użytkownika, wprowadź żądany adres w polu poniżej i kliknij przycisk ''Zapisz i potwierdź.''",
 	'editaccount-log' => 'Rejestr kont użytkownika',
 	'editaccount-log-header' => 'Ta strona zawiera listę zmian informacji o użytkowniku dokonanych przez pracowników.',
 	'editaccount-log-entry-email' => 'zmieniono e-mail użytkownika $2',
@@ -1235,6 +1330,7 @@ $messages['ps'] = array(
 	'editaccount-submit-email' => 'برېښليک خوندي کول',
 	'editaccount-submit-pass' => 'پټنوم خوندي کول',
 	'editaccount-submit-close' => 'کارن حساب تړل',
+	'editaccount-labal-account-status' => 'د ګڼون دريځ',
 );
 
 /** Portuguese (Português)
@@ -1387,6 +1483,16 @@ $messages['ru'] = array(
 	'editaccount-invalid-email' => '«$1» не является допустимым адресом электронной почты!',
 	'editaccount-nouser' => 'Учётная запись «$1» не существует!',
 	'editaccount-remove-avatar-fail' => 'Проблема с перезагрузкой аватара',
+	'editaccount-requested' => 'Примечание: участник запросил закрытие учётной записи',
+	'editaccount-not-requested' => 'ВНИМАНИЕ: участник не запрашивал закрытие учётной записи',
+	'editaccount-labal-account-status' => 'Статус учётной записи',
+	'editaccount-labal-email-status' => 'Статус электронной почты',
+	'editaccount-status-confirmed' => 'Подтверждено',
+	'editaccount-status-unconfirmed' => 'Не подтверждено',
+	'editaccount-status-realuser' => 'Реальный участник',
+	'editaccount-status-tempuser' => 'Временный участник',
+	'editaccount-error-tempuser-email' => 'Временные участники не могут иметь пустое поле адреса электронной почты, пожалуйста, введите адрес электронной почты.',
+	'editaccount-email-change-requested' => 'Участник запросил изменения адреса электронной почты через настройки для  $1 . Для подтверждения изменения адреса запрошенной электронной почты для участника, введите требуемый адрес в поле ниже и нажмите кнопку «Сохранить и подтвердить».',
 	'editaccount-log' => 'Журнал учётных записей',
 	'editaccount-log-header' => 'На этой странице показаны изменения настроек участника, выполненные сотрудниками Викии',
 	'editaccount-log-entry-email' => 'изменил адрес эл. почты участника $2',
@@ -1441,12 +1547,14 @@ $messages['sah'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author Singhalawap
  * @author බිඟුවා
  */
 $messages['si'] = array(
 	'editaccount' => 'ගිණුම සංස්කරණය',
 	'editaccount-frame-manage' => 'ගිණුමක් සංස්කරණය',
 	'editaccount-frame-usage' => 'සටහන',
+	'editaccount-label-email' => 'විද්‍යුත් ලිපිනයන් සකසන්න',
 	'editaccount-submit-pass' => 'මුර පදය සුරකින්න',
 );
 
@@ -1467,14 +1575,14 @@ $messages['sr-ec'] = array(
 	'editaccount-submit-pass' => 'Сачувај лозинку',
 	'editaccount-submit-realname' => 'Сачувај право име',
 	'editaccount-submit-close' => 'Затвори налог',
-	'editaccount-status' => 'Стање поруке',
+	'editaccount-status' => 'Статусна порука',
 	'editaccount-success-email' => 'Е-адреса за налог $1 на $2 је измењена.',
 	'editaccount-success-pass' => 'Лозинка за налог $1 је измењена.',
 	'editaccount-success-realname' => 'Право име за налог $1 је измењено.',
 	'editaccount-success-close' => 'Налог $1 је успешно затворен.',
 	'editaccount-invalid-email' => '„$1“ није исправна е-адреса!',
 	'editaccount-nouser' => '„$1“ налог не постоји!',
-	'editaccount-log' => 'Извештај корисничких налога',
+	'editaccount-log' => 'Дневник корисничких налога',
 	'editaccount-log-entry-email' => 'е-адреса корисника $2 је измењена',
 	'editaccount-log-entry-pass' => 'лозинка корисника $2 је измењена',
 	'editaccount-log-entry-realname' => 'право име корисника $2 је измењено',
@@ -1520,6 +1628,14 @@ $messages['sv'] = array(
 	'editaccount-invalid-email' => '"$1" är inte en giltig e-postadress!',
 	'editaccount-nouser' => 'Konto "$1" existerar inte!',
 	'editaccount-requested' => 'OBS: Användare har begärt en avslutning av sitt konto',
+	'editaccount-not-requested' => 'VARNING: Användaren har inte begärt att få kontot stängt',
+	'editaccount-labal-account-status' => 'Kontostatus',
+	'editaccount-labal-email-status' => 'E-poststatus',
+	'editaccount-status-confirmed' => 'Bekräftad',
+	'editaccount-status-unconfirmed' => 'Obekräftad',
+	'editaccount-status-realuser' => 'Riktig användare',
+	'editaccount-status-tempuser' => 'Tillfällig användare',
+	'editaccount-error-tempuser-email' => 'Tillfälliga användare kan inte ha ett tomt fält för e-postadressen, var god ange en e-postadress.',
 	'editaccount-log' => 'Användarkontots log',
 	'editaccount-log-header' => 'Denna sida listar förändringar av användarnas inställningar av Wikias personal.',
 	'editaccount-log-entry-email' => 'ändrade e-post för användare $2',
@@ -1629,8 +1745,11 @@ $messages['tl'] = array(
 	'right-editaccount' => 'Baguhin ang mga nais ng iba pang mga tagagamit',
 );
 
-/** Turkish (Türkçe) */
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
 $messages['tr'] = array(
+	'editaccount-submit-close' => 'Hesabı kapat',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Bu hesap devre dışı bırakıldı.</div>',
 );
 
@@ -1661,7 +1780,28 @@ $messages['uk'] = array(
 	'editaccount-success-email-blank' => 'Адресу електронної пошти для облікового запису $1 вилучено',
 	'editaccount-success-pass' => 'Пароль для облікового запису $1 змінено.',
 	'editaccount-success-realname' => "Справжнє ім'я для облікового запису $1 змінено.",
+	'editaccount-error-pass' => 'Пароль не було змінено. Повторіть спробу або зверніться до технічної підтримки.',
+	'editaccount-error-realname' => "Справжнє ім'я не було змінено. Повторіть спробу або зверніться до технічної підтримки.",
+	'editaccount-error-close' => 'Сталася помилка під час закриття облікового запису. Повторіть спробу або зверніться до технічної підтримки.',
+	'editaccount-invalid-email' => '" $1 " не є адресою електронної пошти!',
+	'editaccount-nouser' => 'Обліковий запис " $1 " не існує!',
+	'editaccount-remove-avatar-fail' => 'Проблеми автоматичного видалення аватари.',
+	'editaccount-requested' => 'Примітка: Користувач запросив закриття облікового запису',
+	'editaccount-not-requested' => 'Увага: Користувач не запрошував закриття рахунку',
+	'editaccount-labal-account-status' => 'Статус облікового запису',
+	'editaccount-labal-email-status' => 'Статус електронної пошти',
+	'editaccount-status-confirmed' => 'Підтверджено',
+	'editaccount-status-unconfirmed' => 'Непідтверджений',
+	'editaccount-status-tempuser' => 'Тимчасовий користувач',
+	'editaccount-error-tempuser-email' => 'Тимчасові користувачі не можуть мати порожнє поле адреси електронної пошти, будь ласка, введіть адресу електронної пошти.',
+	'editaccount-email-change-requested' => 'Користувач зробив запит зміни адреси електронної пошти через налаштування для  $1 . Щоб підтвердити зміну адреси електронної пошти, введіть запитану електронну адресу в поле нижче і натисніть кнопку "Зберегти і підтвердити".',
 	'editaccount-log' => 'Журнал облікових записів',
+	'editaccount-log-entry-email' => 'змінив адресу електронної пошти для користувача $2',
+	'editaccount-log-entry-pass' => 'змінив пароль для користувача $2',
+	'editaccount-log-entry-realname' => "змінено справжнє ім'я користувача $2",
+	'editaccount-log-entry-close' => 'вимкнено обліковий запис $2',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Цей обліковий запис відключений глобально на Wikia.</div>',
+	'right-editaccount' => 'Редагувати інформацію інших користувачів',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1719,6 +1859,8 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'editaccount' => '编辑账户',
+	'editaccount-desc' => '允许管理人员处理用户帐户信息',
+	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => '编辑账户',
 	'editaccount-frame-usage' => '注意',
 	'editaccount-usage' => '用户数据被每个Wiki分别储存。当您修改密码或电子邮箱时，只会在修改的Wiki上生效。请直接使用新密码登入该Wiki，以避免缓存问题。',
@@ -1732,6 +1874,8 @@ $messages['zh-hans'] = array(
 	'editaccount-submit-pass' => '保存密码',
 	'editaccount-submit-realname' => '保存真名',
 	'editaccount-submit-close' => '关闭户口',
+	'editaccount-status-realuser' => '活跃用户',
+	'editaccount-status-tempuser' => '非活跃用户',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

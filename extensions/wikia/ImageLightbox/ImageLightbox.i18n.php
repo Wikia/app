@@ -109,6 +109,41 @@ $messages['diq'] = array(
 	'lightbox-share-button-embed' => 'Embed',
 );
 
+/** Spanish (Español)
+ * @author Benfutbol10
+ * @author Ciencia Al Poder
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'lightbox_details_tooltip' => 'Ver detalles de la imagen',
+	'lightbox-forum' => 'Foro',
+	'lightbox-standard-link' => 'Enlace estándar',
+	'lightbox-blog-link' => 'Enlace de blog',
+	'lightbox-send' => 'Enviar',
+	'lightbox-share-description' => 'Imagen de $1 en $2',
+	'lightbox-share-email-subject' => '$1 te ha enviado una imagen en Wikia',
+	'lightbox-share-email-body' => 'Hola,
+
+Alguien quería mostrarte una imagen en Wikia. Mírala:
+
+$1
+
+-El Equipo de Wikia',
+	'lightbox-share-button-email' => 'Email',
+	'lightbox-share-button-www' => 'Compartir',
+	'lightbox-share-button-embed' => 'Insertar',
+	'lightbox-share-email-label' => 'Enviar por e-mail esta imagen a un amigo',
+	'lightbox-share-email-page-label' => 'Enviar por e-mail esta página a un amigo',
+	'lightbox-share-email-page-label-address' => 'Dirección de correo electrónico',
+	'lightbox-share-email-ok-caption' => 'Confirmación',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|correo ha|correos han}} sido enviado.',
+	'lightbox-share-email-error-caption' => 'Error',
+	'lightbox-share-email-error-content' => 'Error al enviar {{PLURAL:$1|correo|correos}}.
+Detalles: $2',
+	'lightbox-share-email-error-login' => 'Para enviar correos electrónicos debes iniciar sesión.',
+	'lightbox-share-email-error-noaddress' => 'No has especificado ninguna dirección.',
+);
+
 /** Finnish (Suomi)
  * @author Nike
  * @author VezonThunder
@@ -445,7 +480,12 @@ Szczegóły: $2',
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'lightbox-forum' => 'فورم',
+	'lightbox-send' => 'لېږل',
 	'lightbox-share-button-email' => 'برېښليک',
+	'lightbox-share-button-www' => 'شريکول',
+	'lightbox-share-email-page-label-address' => 'برېښليک پته',
+	'lightbox-share-email-error-caption' => 'تېروتنه',
 );
 
 /** Russian (Русский)
@@ -512,5 +552,12 @@ $1
 Detaljer: $2',
 	'lightbox-share-email-error-login' => 'För att skicka e-postmeddelanden måste du logga in',
 	'lightbox-share-email-error-noaddress' => 'Inga adresser har angivits.',
+);
+
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'lightbox-share-email-error-caption' => 'Hata',
 );
 

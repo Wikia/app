@@ -380,6 +380,7 @@ $messages['diq'] = array(
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
  * @author Od1n
  * @author VegaDark
  */
@@ -427,6 +428,7 @@ $messages['es'] = array(
 	'scavengerhunt-button-enable' => 'Habilitar',
 	'scavengerhunt-button-delete' => 'Borrar',
 	'scavengerhunt-button-export' => 'Exportar a CSV',
+	'scavengerhunt-button-remove-section' => 'Quitar este paso',
 	'scavengerhunt-form-error' => 'Por favor, corrige los siguientes errores:',
 	'scavengerhunt-form-error-no-landing-title' => 'Introduce el título de la página inicial.',
 	'scavengerhunt-form-error-invalid-title' => 'El siguiente título de página no fue encontrado: "$1".',
@@ -446,6 +448,13 @@ $messages['es'] = array(
 	'scavengerhunt-entry-form-name' => 'Tu nombre:',
 	'scavengerhunt-entry-form-email' => 'Tu dirección de correo electrónico:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
+	'scavengerhunt-label-progress-bar' => 'Barra de progreso',
+	'scavengerhunt-quit-game-button-quit' => 'Salir',
+	'scavengerhunt-quit-game-button-cancel' => 'Cancelar',
+	'scavengerhunt-label-entry-form-email' => 'E-Mail del usuario',
+	'scavengerhunt-label-entry-form-username' => 'Nombre de usuario',
+	'scavengerhunt-label-clue-color' => 'Color de fuente',
+	'scavengerhunt-label-clue-size' => 'Tamaño del texto',
 );
 
 /** Finnish (Suomi)
@@ -1583,6 +1592,7 @@ $messages['nl-informal'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1688,7 +1698,7 @@ $messages['pl'] = array(
 	'scavengerhunt-label-progressBarBackgroundSprite' => 'Tło paska postępu',
 	'scavengerhunt-label-progressBarExitSprite' => 'Współrzędne przycisku wyjścia',
 	'scavengerhunt-label-startPopupSprite' => 'Współrzędne wyskakującej wskazówki',
-	'scavengerhunt-label-spriteNotFound' => 'Współrzędne ikony szukanego elementu',
+	'scavengerhunt-label-spriteNotFound' => 'Współrzędne ikony szukanego przedmiotu',
 	'scavengerhunt-label-spriteInProgressBar' => 'Współrzędne paska postępu',
 	'scavengerhunt-label-spriteInProgressBarHover' => 'Współrzędne elementu paska postępu po najechaniu na niego kursorem',
 	'scavengerhunt-label-spriteInProgressBarNotFound' => 'Nie odnaleziono elementu paska postępu',
@@ -1697,6 +1707,40 @@ $messages['pl'] = array(
 	'scavengerhunt-label-clue-size' => 'Rozmiar czcionki',
 	'scavengerhunt-label-clue-font' => 'Ozdoby czcionki',
 	'scavengerhunt-label-article-congrats' => 'Komunikat z gratulacjami',
+	'scavengerhunt-label-facebook' => 'Udostępnianie na Facebooku',
+	'scavengerhunt-editor-tip-name' => 'Jest to nazwa, która pojawia się na liście wszystkich Poszukiwań.',
+	'scavengerhunt-editor-tip-landing-title' => 'To jest strona, gdzie użytkownik trafia by zacząć Poszukiwanie.',
+	'scavengerhunt-editor-tip-landing-button-text' => 'Jest to etykieta tekstowa na przycisku „start (np. "kliknij tutaj, aby rozpocząć poszukiwanie!")',
+	'scavengerhunt-editor-tip-sprite-img' => 'Jest to łącze do pliku ikonek, zawierających wszystkie obrazy Poszukiwania. Aby uniknąć wyświetlenia obrazu użytkownikom wiki, należy wstawić  do niego zewnętrzny adres URL.',
+	'scavengerhunt-editor-tip-progressBarBackgroundSprite' => 'Współrzędne te umożliwiają wskazanie:<br />
+(1) gdzie umieścić plik ikonek<br />
+(2) który fragment pliku ikonek jest elementem aktywnego obrazu.',
+	'scavengerhunt-editor-tip-progressBarExitSprite' => 'UWAGA: wszystkie współrzędne są ustalane względem punktu odniesienia w dolnym prawym rogu strony',
+	'scavengerhunt-editor-tip-starting-clue-title' => 'Jest to tytuł modalnego okna dialogowego, wyrzucającego z Poszukiwania.',
+	'scavengerhunt-editor-tip-starting-clue-text' => 'Jest to tekst, opcja orientuje gracza i rozpoczyna Poszukiwanie.',
+	'scavengerhunt-editor-tip-starting-clue-button-text' => 'Ten tekst jest etykietą przycisku, który przekieruje użytkowników do strony z pierwszym przedmiotem.',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => 'To jest lokalizacja strony z pierwszym przedmiotem.',
+	'scavengerhunt-editor-tip-startPopupSprite' => 'Jeśli obraz jest pożądany w oknie podręcznym podjęcia tropu, wprowadź współrzędne tutaj.',
+	'scavengerhunt-editor-tip-articleTitle' => 'To jest lokalizacja strony z następnym przedmiotem.',
+	'scavengerhunt-editor-tip-spriteNotFound' => 'Ta sekcja definiuje obraz pojawiający się jako wskazówka.',
+	'scavengerhunt-editor-tip-spriteInProgressBar' => 'Ta sekcja definiuje ikonę do wyświetlenia na pasku postępu, jeśli element został już znaleziony.',
+	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'Ta sekcja definiuje ikonę wyświetlaną na pasku postępu po najechaniu myszką.',
+	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'Ta sekcja definiuje ikonę do wyświetlenia na pasku postępu, jeśli element nie został jeszcze znaleziony.',
+	'scavengerhunt-editor-tip-article-title' => 'To jest lokalizacja strony z następnym przedmiotem.',
+	'scavengerhunt-editor-tip-entry-form-title' => 'Jest to nazwa wyskakującego okna dialogowego, które pojawia się na końcu poszukiwania.',
+	'scavengerhunt-editor-tip-entry-form-text' => 'Jest to treść wyskakującego okna dialogowego, które pojawia się na końcu Poszukiwania.',
+	'scavengerhunt-editor-tip-entry-form-question' => 'Jeśli chcesz wyświetlić puste pole dla graczy na odpowiedź na pytanie lub wprowadzenie komentarza, wpisz tutaj tekst. Jeśli nie chcesz tego pola, pozostaw to pole puste.',
+	'scavengerhunt-editor-tip-entry-form-email' => 'Jest to wyświetlany tekst instruujący użytkownika co do podania adresu e-mail. UWAGA: To pole jest opcjonalne; Jeśli zostawisz je puste, nie pojawi się użytkownikowi',
+	'scavengerhunt-editor-tip-entry-form-username' => 'Jest to wyświetlany tekst instruujący użytkownika co do podania nazwy użytkownika. UWAGA: To pole jest opcjonalne; Jeśli zostawisz je puste, nie pojawi się użytkownikowi.',
+	'scavengerhunt-editor-tip-finishPopupSprite' => 'Jeśli chcesz wyświetlić obraz w oknie dialogowym komunikatu końcowego , zdefiniuj go tutaj.',
+	'scavengerhunt-editor-tip-goodbye-title' => 'Jest to tytuł wyskakującego końcowego komunikatu z Poszukiwania.',
+	'scavengerhunt-editor-tip-goodbye-text' => 'Jest to treść wyskakującego końcowego komunikatu z Poszukiwania.',
+	'scavengerhunt-editor-tip-clue-color' => 'Kolory powinny być w notacji szesnastkowej, na przykład #F00.',
+	'scavengerhunt-editor-tip-entry-form-button-text' => 'Jest to tekst na przycisku, który pojawia się w oknie dialogowym na końcu poszukiwań.',
+	'scavengerhunt-editor-tip-facebook-image' => 'Ścieżka do obrazka w stylu MediaWiki na stronie docelowej wiki. Przykład: "Some_image_example.png"',
+	'scavengerhunt-editor-tip-facebook-description' => 'Tekst wyświetlany we wiadomości o udostępnieniu',
+	'scavengerhunt-facebook-image' => 'Obraz udostępniania przez Facebooka',
+	'scavengerhunt-facebook-description' => 'Tekst udostępniania przez Facebooka',
 );
 
 /** Pashto (پښتو)

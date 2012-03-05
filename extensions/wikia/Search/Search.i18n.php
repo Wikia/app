@@ -134,6 +134,7 @@ $messages['es'] = array(
 	'wikiasearch-search-this-wiki' => 'Buscar sólo en Wikia Central',
 	'wikiasearch-search-wikia' => 'Buscar en Wikia',
 	'wikiasearch-image-results' => 'Resultados para la imagen "$1"',
+	'wikiasearch-search-all-wikia' => 'Buscar en todo Wikia',
 );
 
 /** Estonian (Eesti)

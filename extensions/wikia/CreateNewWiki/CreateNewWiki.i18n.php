@@ -123,13 +123,11 @@ $messages['qqq'] = array(
 	'cnw-auth-signup-creative' => 'Creative or instruction for this step following H1 for signup',
 	'cnw-auth-facebook-signup' => '"Sign up with Facebook" Button',
 	'cnw-auth-facebook-login' => '"Login with Facebook" Button',
-	// new login box
 	'cnw-userauth-headline' => 'Heading for user login/signup box at the top',
 	'cnw-userauth-creative' => 'Sublabel that says "log in"',
 	'cnw-userauth-marketing-heading' => 'Heading to create an account in form of a question on the right side of the box',
 	'cnw-userauth-marketing-body' => 'Marketing blurb with link to user signup on the right side.  Please append uselang=es(or other lang) on the link.',
 	'cnw-userauth-signup-button' => 'Label for sign up button on the right side.',
-	// end of new login box
 	'cnw-desc-headline' => 'H1 for this step',
 	'cnw-desc-creative' => 'Creative or instruction for this step following H1',
 	'cnw-desc-placeholder' => 'Placeholder for the textarea',
@@ -221,6 +219,22 @@ $messages['az'] = array(
 	'cnw-login' => 'Daxil ol',
 	'cnw-auth-headline' => 'Daxil ol',
 	'cnw-desc-lang' => 'Dil',
+);
+
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent zan Dastejn vahram Wiki]]',
+	'cnw-next' => 'Naxde',
+	'cnw-back' => 'Zruck',
+	'cnw-or' => 'óder',
+	'cnw-title' => 'Neichs Wiki erstejn',
+	'cnw-name-wiki-headline' => 'A Wiki starten',
+	'cnw-name-wiki-creative' => 'Wikia is da béste Ort, um rund um deih Liablingsthéma a Webseiten afzbaun und a Gmoahschoft woxen zan lossen.',
+	'cnw-name-wiki-label' => 'Gib an Wiki an Naum',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Gib deim Wiki a Adress',
 );
 
 /** Bulgarian (Български)
@@ -358,6 +372,7 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
 
 /** German (Deutsch)
  * @author Claudia Hattitten
+ * @author Geitost
  * @author George Animal
  * @author LWChris
  * @author Quedel
@@ -427,7 +442,7 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-badword-header' => 'Ganz ruhig',
 	'cnw-badword-msg' => 'Hallo, bitte verwende keines der folgenden Schimpfwörter oder unerlaubten Begriffe in deiner Wiki-Beschreibung: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki Limit erreicht',
-	'cnw-error-wiki-limit' => 'Hallo, du darfst nur {{PLURAL:$1|ein Wiki|$1 Wikis}} am Tag gründen. Warte 24 Stunden bevor du ein weiteres Wiki gründest.',
+	'cnw-error-wiki-limit' => 'Hallo, du darfst nur {{PLURAL:$1|ein Wiki|$1 Wikis}} am Tag gründen. Warte 24 Stunden, bevor du ein weiteres Wiki gründest.',
 	'cnw-error-blocked-header' => 'Konto gesperrt',
 	'cnw-error-blocked' => 'Du wurdest von $1 gesperrt. Die Begründung lautet: $2. (Block-ID zu Referenzzwecken: $3)',
 	'cnw-error-torblock' => 'Das Erstellen von Wikis über das Tor-Netzwerk ist nicht erlaubt.',
@@ -435,10 +450,12 @@ Upgrade mit PayPal um ein werbefreies Wiki für nur $4,95 pro Monat zu bekommen!
 	'cnw-error-bot-header' => 'Du wurdest als Bot identifiziert.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Geitost
  * @author Tiin
  */
 $messages['de-formal'] = array(
+	'cnw-error-wiki-limit' => 'Guten Tag, Sie dürfen nur {{PLURAL:$1|ein Wiki|$1 Wikis}} am Tag gründen. Warten Sie 24 Stunden, bevor Sie ein weiteres Wiki gründen.',
 	'cnw-error-blocked' => 'Sie wurden von $1 gesperrt. Die Begründung lautet: $2. (Block-ID zu Referenzzwecken: $3)',
 );
 
@@ -450,6 +467,9 @@ $messages['diq'] = array(
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
+ * @author Ciencia Al Poder
+ * @author Geitost
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -476,6 +496,11 @@ $messages['es'] = array(
 	'cnw-auth-signup-creative' => 'Necesitarás una cuenta para seguir construyendo tu wiki.<br />¡Solamente tardarás un minuto para registrarte!',
 	'cnw-auth-facebook-signup' => 'Registraste con Facebook',
 	'cnw-auth-facebook-login' => 'Entrar con Facebook',
+	'cnw-userauth-headline' => '¿Tienes una cuenta?',
+	'cnw-userauth-creative' => 'Iniciar sesión',
+	'cnw-userauth-marketing-heading' => '¿No tienes una cuenta?',
+	'cnw-userauth-marketing-body' => 'Necesitas una cuenta para crear un wiki en Wikia. ¡Solo tardas un minuto en [[Special:UserSignup|registrarte]]!',
+	'cnw-userauth-signup-button' => 'Registrarse',
 	'cnw-desc-headline' => '¿De qué trata tu wiki?',
 	'cnw-desc-creative' => 'Describe el tema',
 	'cnw-desc-placeholder' => 'Esto aparecerá en la página principal de tu wiki.',
@@ -512,10 +537,16 @@ Actualizar a través de PayPal para conseguir una wiki sin publicidad ¡por solo
 	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.',
 	'cnw-error-general' => 'Algo salió mal al crear tu wiki. Por favor, inténtalo de nuevo más tarde.',
 	'cnw-error-general-heading' => 'Error',
+	'cnw-error-database' => 'Error en la base de datos: $1',
 	'cnw-badword-header' => '¡Oops!',
 	'cnw-badword-msg' => 'Hola, por favor abstente de usar estas malas palabras o palabras prohibidas en la descripción de tu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Has alcanzado el límite de wikis',
-	'cnw-error-wiki-limit' => 'Hola, estás limitado a $1 creación de wikis por día. Espera 24 horas antes de crear otro wiki.',
+	'cnw-error-wiki-limit' => 'Hola, estás limitado a {{PLURAL:$1|$1 creación|$1 creaciones}} de wikis por día. Espera 24 horas antes de crear otro wiki.',
+	'cnw-error-blocked-header' => 'Cuenta bloqueada',
+	'cnw-error-blocked' => 'Tu usuario ha sido bloqueado por $1. El motivo proporcionado fue: $2. (Identificador del bloqueo para referencia: $3)',
+	'cnw-error-torblock' => 'No está permitido crear wikis a través de la red Tor.',
+	'cnw-error-bot' => 'Hemos detectado que puedes ser un bot. Si hemos cometido un error, por favor contáctanos y describe que has sido detectado como si fueras un bot y te ayuderamos en crear tu wiki: [http://www.wikia.com/Special:Contact/general Contáctanos]',
+	'cnw-error-bot-header' => 'Has sido detectado como un bot',
 );
 
 /** Basque (Euskara)
@@ -555,8 +586,10 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Od1n
  * @author Peter17
+ * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -583,6 +616,11 @@ $messages['fr'] = array(
 	'cnw-auth-signup-creative' => 'Vous aurez besoin d’un compte pour continuer à construire votre wiki.<br />Cela ne prendre qu’une minute pour vous inscrire !',
 	'cnw-auth-facebook-signup' => 'S’identifier avec Facebook',
 	'cnw-auth-facebook-login' => 'Se connecter avec Facebook',
+	'cnw-userauth-headline' => 'Avez-vous un compte?',
+	'cnw-userauth-creative' => 'Connexion',
+	'cnw-userauth-marketing-heading' => 'Vous n’avez pas encore de compte ?',
+	'cnw-userauth-marketing-body' => "Vous avez besoin d'un compte pour créer un wiki sur Wikia. Il suffit d'une minute pour [[Special:UserSignup|s'inscrire]]!",
+	'cnw-userauth-signup-button' => "S'inscrire",
 	'cnw-desc-headline' => 'De quoi parle votre wiki ?',
 	'cnw-desc-creative' => 'Décrivez le sujet',
 	'cnw-desc-placeholder' => 'Ceci apparaîtra sur la page d’accueil de votre wiki.',
@@ -623,7 +661,7 @@ Mettez à niveau via Paypal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-badword-header' => 'Eh Oh',
 	'cnw-badword-msg' => 'Bonjour, veuillez éviter d’utiliser des mots grossiers ou interdits dans la description de votre wiki : $1',
 	'cnw-error-wiki-limit-header' => 'Limite de wikis atteinte',
-	'cnw-error-wiki-limit' => 'Bonjour, vous êtes limité à la création de $1 wikis par jour. Attendez 24 heures avant de créer un autre wiki.',
+	'cnw-error-wiki-limit' => 'Bonjour, vous êtes limité à la création de {{PLURAL:$1|$1 wiki|$1 wikis}} par jour. Attendez 24 heures avant de créer un autre wiki.',
 	'cnw-error-blocked-header' => 'Compte bloqué',
 	'cnw-error-blocked' => 'Vous avez été bloqué par $1. La raison invoquée était : $2. (ID de blocage pour référence : $3)',
 	'cnw-error-torblock' => "Créer des wikis via le réseau Tor n'est pas autorisé.",
@@ -658,6 +696,11 @@ $messages['gl'] = array(
 	'cnw-auth-signup-creative' => 'Necesitará unha conta para continuar a construción do seu wiki.<br />Tardará soamente un minuto en completar o rexistro!',
 	'cnw-auth-facebook-signup' => 'Rexístrese co Facebook',
 	'cnw-auth-facebook-login' => 'Acceda co Facebook',
+	'cnw-userauth-headline' => 'Ten unha conta?',
+	'cnw-userauth-creative' => 'Acceda ao sistema',
+	'cnw-userauth-marketing-heading' => 'Non está rexistrado?',
+	'cnw-userauth-marketing-body' => 'Necesita unha conta para crear un wiki en Wikia. Leva un minuto [[Special:UserSignup|rexistrarse]]!',
+	'cnw-userauth-signup-button' => 'Rexístrese',
 	'cnw-desc-headline' => 'De que vai o seu wiki?',
 	'cnw-desc-creative' => 'Describa o seu tema',
 	'cnw-desc-placeholder' => 'Isto aparecerá na páxina principal do seu wiki.',
@@ -698,7 +741,7 @@ Faga a actualización a través do PayPal para conseguir un wiki libre de anunci
 	'cnw-badword-header' => 'Vaites!',
 	'cnw-badword-msg' => 'Por favor, abstéñase de empregar palabras groseiras na descrición do seu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Alcanzouse o límite de wikis',
-	'cnw-error-wiki-limit' => 'Desculpe, hai un límite que impide crear máis de $1 wikis ao día. Agarde 24 horas antes de crear outro wiki.',
+	'cnw-error-wiki-limit' => 'Desculpe, hai un límite que impide crear máis {{PLURAL:$1|de $1 wiki|de $1 wikis}} ao día. Agarde 24 horas antes de crear outro wiki.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
 	'cnw-error-blocked' => 'Foi bloqueado por $1. A razón que deu foi: $2. (ID do bloqueo para referencia: $3)',
 	'cnw-error-torblock' => 'Non está permitido crear wikis a través da rede Tor.',
@@ -851,6 +894,11 @@ $messages['ia'] = array(
 	'cnw-auth-signup-creative' => 'Es necessari haber un conto pro continuar le construction de tu wiki.<br />Le inscription prende solmente un minuta!',
 	'cnw-auth-facebook-signup' => 'Crear conto con Facebook',
 	'cnw-auth-facebook-login' => 'Aperir session con Facebook',
+	'cnw-userauth-headline' => 'Ha un conto?',
+	'cnw-userauth-creative' => 'Aperir session',
+	'cnw-userauth-marketing-heading' => 'Non ha un conto?',
+	'cnw-userauth-marketing-body' => 'Un conto es necessari pro crear un wiki in Wikia. Il prende solmente un minuta [[Special:UserSignup|crear un conto]]!',
+	'cnw-userauth-signup-button' => 'Crear un conto',
 	'cnw-desc-headline' => 'Que es le thema de tu wiki?',
 	'cnw-desc-creative' => 'Describe tu topico',
 	'cnw-desc-placeholder' => 'Isto apparera in le pagina principal de tu wiki.',
@@ -891,7 +939,7 @@ Compra le actualisation per PayPal pro obtener un wiki sin publicitate pro solme
 	'cnw-badword-header' => 'Stop!',
 	'cnw-badword-msg' => 'Salute, per favor abstine te de usar le sequente parolas improprie o bannite in le description de tu wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Limite de wikis attingite',
-	'cnw-error-wiki-limit' => 'Salute, tu es limitate al creation de $1 wikis per die. Attende 24 horas ante de crear un altere wiki.',
+	'cnw-error-wiki-limit' => 'Salute, tu es limitate al creation de $1 {{PLURAL:$1|wiki|wikis}} per die. Attende 24 horas ante de crear un altere wiki.',
 	'cnw-error-blocked-header' => 'Conto blocate',
 	'cnw-error-blocked' => '$1 te ha blocate, specificante le motivo: $2. (Le ID del blocada pro referentia: $3)',
 	'cnw-error-torblock' => 'Le creation de wikis via le rete Tor non es permittite.',
@@ -904,6 +952,14 @@ Compra le actualisation per PayPal pro obtener un wiki sin publicitate pro solme
  */
 $messages['inh'] = array(
 	'cnw-name-wiki-wiki' => 'ВIикIи',
+);
+
+/** Italian (Italiano)
+ * @author Lexaeus 94
+ */
+$messages['it'] = array(
+	'cnw-userauth-creative' => 'Entra',
+	'cnw-desc-change-lang' => 'Cambiamento',
 );
 
 /** Japanese (日本語)
@@ -1020,7 +1076,7 @@ $messages['ko'] = array(
 	'cnw-login' => '로그인',
 );
 
-/** Kurdish (Latin script) (Kurdî (latînî))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1085,6 +1141,11 @@ $messages['mk'] = array(
 	'cnw-auth-signup-creative' => 'Ќе ви треба сметка за да продолжите со изработка на викито.<br />Регистрацијата ќе ви одземе само минутка!',
 	'cnw-auth-facebook-signup' => 'Регистрација со Facebook',
 	'cnw-auth-facebook-login' => 'Најава со Facebook',
+	'cnw-userauth-headline' => 'Имате сметка?',
+	'cnw-userauth-creative' => 'Најава',
+	'cnw-userauth-marketing-heading' => 'Немате сметка?',
+	'cnw-userauth-marketing-body' => 'Ќе ви треба сметка за да можете да создадете вики на Викија. [[Special:UserSignup|Регистрацијата]] ќе ви земе само минутка!',
+	'cnw-userauth-signup-button' => 'Регистрација',
 	'cnw-desc-headline' => 'Која е тематиката на викито?',
 	'cnw-desc-creative' => 'Опишете ја вашата тема',
 	'cnw-desc-placeholder' => 'Ова ќе се прикажува на главната страница на викито',
@@ -1125,7 +1186,7 @@ $messages['mk'] = array(
 	'cnw-badword-header' => 'Предупредување',
 	'cnw-badword-msg' => 'Здраво. Ве молиме да се воздржите од употреба на непристојни зборови или забранетите зборови наведени во описот на викито: $1',
 	'cnw-error-wiki-limit-header' => 'Границата на создадени викија е достигната',
-	'cnw-error-wiki-limit' => 'Здраво. Можете да создавате само по $1 вики дневно. Почекајте 24 часа, па потоа создајте друго.',
+	'cnw-error-wiki-limit' => 'Здраво. Можете да создавате само по {{PLURAL:$1|$1 вики|$1 викија}} дневно. Почекајте 24 часа, па потоа создајте друго.',
 	'cnw-error-blocked-header' => 'Сметката е блокирана',
 	'cnw-error-blocked' => 'Блокирани сте од $1. Понудената причина гласи: $2. (назнака или навод на блокирањето: $3)',
 	'cnw-error-torblock' => 'Не е дозволено создавање на викија преку Tor-мрежа.',
@@ -1190,6 +1251,11 @@ $messages['ms'] = array(
 	'cnw-auth-signup-creative' => 'Anda perlukan akaun untuk terus membina wiki anda.<br />Pendaftaran hanya mengambil masa seminit!',
 	'cnw-auth-facebook-signup' => 'Berdaftar dengan Facebook',
 	'cnw-auth-facebook-login' => 'Log masuk dengan Facebook',
+	'cnw-userauth-headline' => 'Dah buka akaun?',
+	'cnw-userauth-creative' => 'Log masuk',
+	'cnw-userauth-marketing-heading' => 'Belum buka akaun?',
+	'cnw-userauth-marketing-body' => 'Anda memerlukan akaun untuk membuka wiki baru di Wikia. Seminit saja untuk [[Special:UserSignup|mendaftar]]!',
+	'cnw-userauth-signup-button' => 'Daftar diri',
 	'cnw-desc-headline' => 'Apakah topik wiki anda?',
 	'cnw-desc-creative' => 'Jelaskan topik anda',
 	'cnw-desc-placeholder' => 'Ini akan terpapar pada laman utama wiki anda.',
@@ -1238,7 +1304,7 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-error-bot-header' => 'Anda telah dikesan sebagai bot',
 );
 
-/** Norwegian Bokmål (Norsk (bokmål))
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1266,6 +1332,11 @@ $messages['nb'] = array(
 	'cnw-auth-signup-creative' => 'Du vil trenge en konto for å fortsette å bygge wikien din.<br />Det tar bare et øyeblikk å registrere seg!',
 	'cnw-auth-facebook-signup' => 'Registrer deg med Facebook',
 	'cnw-auth-facebook-login' => 'Logg inn med Facebook',
+	'cnw-userauth-headline' => 'Har du en konto?',
+	'cnw-userauth-creative' => 'Logg inn',
+	'cnw-userauth-marketing-heading' => 'Har du ikke en konto?',
+	'cnw-userauth-marketing-body' => 'Du trenger en konto for å opprette en wiki hos Wikia. Det tar bare et minutt å [[Special:UserSignup|registrere deg]]!',
+	'cnw-userauth-signup-button' => 'Registrer deg',
 	'cnw-desc-headline' => 'Hva handler wikien din om?',
 	'cnw-desc-creative' => 'Beskriv emnet ditt',
 	'cnw-desc-placeholder' => 'Dette vil vises på hovedsiden til wikien din.',
@@ -1306,7 +1377,7 @@ Oppgrader gjennom PayPal for å få en reklamefri wiki til kun $4,95 per måned!
 	'cnw-badword-header' => 'Hei der',
 	'cnw-badword-msg' => 'Hei, vennligst unngå å bruke disse grove eller forbudte ordene i beskrivelsen av wikien: $1',
 	'cnw-error-wiki-limit-header' => 'Wikigrense nådd',
-	'cnw-error-wiki-limit' => 'Hei, du er begrenset til $1 wikiopprettelse per dag.  Vent 24 timer før du oppretter en annen wiki.',
+	'cnw-error-wiki-limit' => 'Hei, du er begrenset til {{PLURAL:$1|$1 wikiopprettelse|$1 wikiopprettelser}} per dag.  Vent i 24 timer før du oppretter en ny wiki.',
 	'cnw-error-blocked-header' => 'Konto blokkert',
 	'cnw-error-blocked' => 'Du har blitt blokkert av $1. Begrunnelsen var: $2. (Blokkerings-ID for referanse: $3)',
 	'cnw-error-torblock' => 'Å opprette wikier via Tor-nettverket er ikke tillatt.',
@@ -1341,6 +1412,11 @@ $messages['nl'] = array(
 	'cnw-auth-signup-creative' => 'U hebt een gebruiker nodig om door te kunnen gaan met het bouwen van uw wiki.<br />Registreren kost maar een minuutje van uw tijd!',
 	'cnw-auth-facebook-signup' => 'Aanmelden met Facebook',
 	'cnw-auth-facebook-login' => 'Aanmelden met Facebook',
+	'cnw-userauth-headline' => 'Hebt u een geregistreerde gebruiker?',
+	'cnw-userauth-creative' => 'Aanmelden',
+	'cnw-userauth-marketing-heading' => 'Hebt u geen geregistreerde gebruiker?',
+	'cnw-userauth-marketing-body' => 'U hebt een gebruiker nodig om een wiki aan te maken bij Wikia. Het kost u slechts een minuutje om te [[Special:UserSignup|registreren]].',
+	'cnw-userauth-signup-button' => 'Registreren',
 	'cnw-desc-headline' => 'Waar gaat uw wiki over?',
 	'cnw-desc-creative' => 'Beschrijf uw onderwerp',
 	'cnw-desc-placeholder' => 'Dit wordt weergegeven op de hoofdpagina van uw wiki.',
@@ -1381,7 +1457,7 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-badword-header' => 'Pas op!',
 	'cnw-badword-msg' => 'Hallo. Probeer u te onthouden van het gebruiken van ongewenste woorden in uw wikibeschrijving: $1',
 	'cnw-error-wiki-limit-header' => 'De wikilimiet is bereikt',
-	'cnw-error-wiki-limit' => "Hallo. U mag maximaal $1 wiki's per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
+	'cnw-error-wiki-limit' => "Hallo. U mag maximaal $1 {{PLURAL:$1|wiki|wiki's}} per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 	'cnw-error-blocked-header' => 'Gebruiker geblokkeerd',
 	'cnw-error-blocked' => 'U bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
@@ -1389,7 +1465,8 @@ Schaf uw upgrade aan via PayPal. Geen advertenties voor maar $4,95 per maand!",
 	'cnw-error-bot-header' => 'U bent geïdentificeerd als een geautomatiseerd proces',
 );
 
-/** Nederlands (informeel) (Nederlands (informeel))
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Geitost
  * @author MarkvA
  * @author Siebrand
  */
@@ -1413,16 +1490,17 @@ $messages['nl-informal'] = array(
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan je wiki toe te voegen.",
 	'cnw-welcome-instruction2' => 'Je ziet deze knop overal in je wiki. Gebruik hem als je een nieuwe pagina wilt toevoegen.',
 	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.',
-	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 wiki's per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
+	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 {{PLURAL:$1|wiki|wiki's}} per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Kreator tworzenia wiki]]',
-	'cnw-next' => 'Następny',
+	'cnw-next' => 'Dalej',
 	'cnw-back' => 'Wstecz',
 	'cnw-or' => 'lub',
 	'cnw-title' => 'Utwórz nową Wiki',
@@ -1430,7 +1508,7 @@ $messages['pl'] = array(
 	'cnw-name-wiki-creative' => 'Wikia to najlepsze miejsce do budowania własnej wiki i tworzenia społeczności wokół tego co kochasz.',
 	'cnw-name-wiki-label' => 'Nazwij swoją wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
-	'cnw-name-wiki-domain-label' => 'Nadal adres swojej wiki',
+	'cnw-name-wiki-domain-label' => 'Podaj adres swojej wiki',
 	'cnw-name-wiki-submit-error' => 'Opps! Musisz wypełnić oba pola aby przejść dalej',
 	'cnw-login' => 'Zaloguj',
 	'cnw-signup' => 'Utwórz konto',
@@ -1444,6 +1522,11 @@ $messages['pl'] = array(
 	'cnw-auth-signup-creative' => 'Potrzebujesz konta aby kontynuować.<br />Zajmie to tylko kilka chwil!',
 	'cnw-auth-facebook-signup' => 'Zarejestruj się poprzez Facebooka',
 	'cnw-auth-facebook-login' => 'Zaloguj się poprzez Facebooka',
+	'cnw-userauth-headline' => 'Posiadasz konto?',
+	'cnw-userauth-creative' => 'Zaloguj się',
+	'cnw-userauth-marketing-heading' => 'Nie masz konta?',
+	'cnw-userauth-marketing-body' => 'Posiadanie konta wymagane jest do tworzenia wiki na Wikia.  Zajmuje tylko minutę do [[Special:UserSignup|zarejestruj się]]!',
+	'cnw-userauth-signup-button' => 'Zarejestruj się',
 	'cnw-desc-headline' => 'O czym będzie twoja wiki?',
 	'cnw-desc-creative' => 'Opisz temat swojej wiki',
 	'cnw-desc-placeholder' => 'To pojawi się na stronie głównej Twojej wiki',
@@ -1484,7 +1567,7 @@ Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na
 	'cnw-badword-header' => 'Uwaga',
 	'cnw-badword-msg' => 'Witaj, proszę nie używaj tych niedozwolonych słów w opisie wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Osiągnięto limit wiki',
-	'cnw-error-wiki-limit' => 'Możesz utworzyć tylko $1 wiki dziennie. Zaczekaj 24 godziny aby utworzyć inną wiki.',
+	'cnw-error-wiki-limit' => 'Możesz utworzyć tylko {{PLURAL:$1|$1}} wiki dziennie. Zaczekaj 24 godziny aby utworzyć inną wiki.',
 	'cnw-error-blocked-header' => 'Konto zablokowane',
 	'cnw-error-blocked' => 'Użytkownik został zablokowany przez  $1 . Jako przyczynę podano:  $2 . (ID blokady:  $3 )',
 	'cnw-error-torblock' => 'Tworzenie wiki za pośrednictwem Tor Network nie jest dozwolone.',
@@ -1511,6 +1594,11 @@ $messages['ps'] = array(
 	'cnw-call-to-login' => 'دلته ننوتل',
 	'cnw-auth-headline' => 'ننوتل',
 	'cnw-auth-headline2' => 'نومليکل',
+	'cnw-auth-facebook-signup' => 'د فېسبوک له لارې نومليکل',
+	'cnw-auth-facebook-login' => 'د فېسبوک له لارې ننوتل',
+	'cnw-userauth-headline' => 'آيا يو ګڼون لرې؟',
+	'cnw-userauth-creative' => 'ننوتل',
+	'cnw-userauth-signup-button' => 'نومليکل',
 	'cnw-desc-headline' => 'ستاسې ويکي د څه په اړه دی؟',
 	'cnw-desc-placeholder' => 'دا به ستاسې د ويکي په لومړي مخ ښکاره شي.',
 	'cnw-desc-tip1-creative' => 'دلته په يوې يا دوه کرښو کې خلکو ته مالومات ورکړۍ چې ستاسې ويکي د څه په اړه دی',
@@ -1525,6 +1613,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Geitost
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -1590,7 +1679,7 @@ Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por 
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Não use estas palavras impróprias ou proibidas na Descrição da Wiki, por favor: $1',
 	'cnw-error-wiki-limit-header' => 'O limite de wikis foi atingido',
-	'cnw-error-wiki-limit' => 'Olá, está limitado à criação de $1 wiki por dia. Aguarde 24 horas antes de criar outra wiki.',
+	'cnw-error-wiki-limit' => 'Olá, está limitado à criação de $1 {{PLURAL:$1|wiki|wikis}} por dia. Aguarde 24 horas antes de criar outra wiki.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1732,6 +1821,11 @@ $messages['ru'] = array(
 	'cnw-auth-signup-creative' => 'Вам нужна учётная запись, чтобы продолжить создание вики.<br />Регистрация займёт всего одну минуту!',
 	'cnw-auth-facebook-signup' => 'Зарегистрироваться через Facebook',
 	'cnw-auth-facebook-login' => 'Войти через Facebook',
+	'cnw-userauth-headline' => 'Есть аккаунт?',
+	'cnw-userauth-creative' => 'Войти',
+	'cnw-userauth-marketing-heading' => 'Нет аккаунта?',
+	'cnw-userauth-marketing-body' => 'Вам необходим аккаунт для создания вики на Викия.   Всего минута  на [[Special:UserSignup|регистрацию]]!',
+	'cnw-userauth-signup-button' => 'Регистрация',
 	'cnw-desc-headline' => 'О чём будет ваша вики?',
 	'cnw-desc-creative' => 'Опишите вашу тему',
 	'cnw-desc-placeholder' => 'Это будет отображаться на заглавной странице вики.',
@@ -1762,14 +1856,15 @@ $messages['ru'] = array(
 	'cnw-badword-header' => 'Эй там',
 	'cnw-badword-msg' => 'Пожалуйста, воздержитесь от использования плохих или запрещенных слов в описании вики: $1',
 	'cnw-error-wiki-limit-header' => 'Лимит создания вики',
-	'cnw-error-wiki-limit' => 'Вы достигли ограничения $1 на создание викий в день. Подождите 24 часа, прежде чем создавать другую вики.',
+	'cnw-error-wiki-limit' => 'Привет, вы достигли ограничения по созданию {{PLURAL:$1|$1 вики|$1 викии|$1 викий}} в день. Подождите 24 часа перед созданием другой вики..',
 	'cnw-error-blocked-header' => 'Учётная запись заблокирована',
 	'cnw-error-blocked' => 'Вы были заблокированы $1. Причиной было: $2. (Для справки: $3)',
 	'cnw-error-torblock' => 'Создание вики через сеть Tor не допускается.',
+	'cnw-error-bot' => 'Мы обнаружили, что вы можете быть ботом. Если мы сделали ошибку, пожалуйста, свяжитесь с нами и подтвердите, что  вы не бот, и мы поможем вам в создании новой вики: [http://www.wikia.com/Special:Contact/general связь с нами]',
 	'cnw-error-bot-header' => 'Вы были определены как бот',
 );
 
-/** Serbian (Cyrillic script) (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1845,6 +1940,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Geitost
  * @author Lokal Profil
  * @author McDutchie
  * @author WikiPhoenix
@@ -1873,6 +1969,11 @@ $messages['sv'] = array(
 	'cnw-auth-signup-creative' => 'Du kommer att behöva ett konto för att fortsätta bygga på din wiki. <br /> Det tar bara en minut att registrera dig!',
 	'cnw-auth-facebook-signup' => 'Registrera dig med Facebook',
 	'cnw-auth-facebook-login' => 'Logga in med Facebook',
+	'cnw-userauth-headline' => 'Har du ett konto?',
+	'cnw-userauth-creative' => 'Logga in',
+	'cnw-userauth-marketing-heading' => 'Har du inget konto?',
+	'cnw-userauth-marketing-body' => 'Du behöver ett konto för att skapa en wiki på Wikia. Det tar bara en minut att [[Special:UserSignup|registrera dig]]!',
+	'cnw-userauth-signup-button' => 'Registrera',
 	'cnw-desc-headline' => 'Vad handlar din wiki om?',
 	'cnw-desc-creative' => 'Beskriv ditt ämne',
 	'cnw-desc-placeholder' => 'Det här kommer att visas på huvudsidan i din wiki.',
@@ -1913,7 +2014,7 @@ Uppgradera via PayPal för att få en reklamfri wiki för endast $4,95 per måna
 	'cnw-badword-header' => 'Hallå där',
 	'cnw-badword-msg' => 'Hej, var god avstå från att använda dessa grova eller fula ord i beskrivningen av din wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki-gräns nådd',
-	'cnw-error-wiki-limit' => 'Hej, du är begränsad till $1 skapelser av wikis per dag. Vänta 24 timmar innan du skapar en annan wiki.',
+	'cnw-error-wiki-limit' => 'Hej, du är begränsad till {{PLURAL:$1|$1 wikiskapelse|$1 skapelser av wikis}} per dag. Vänta 24 timmar innan du skapar en annan wiki.',
 	'cnw-error-blocked-header' => 'Konto blockerat',
 	'cnw-error-blocked' => 'Du har blivit blockerad av $1. Anledningen var:  $2. (Blockerings-ID för referens: $3)',
 	'cnw-error-torblock' => 'Skapa wikis via Tor-nätverket är inte tillåtet.',
@@ -2010,6 +2111,15 @@ Magpataas ng antas sa pamamagitan ng PayPal upang makakuha ng wiking walang anun
 	'cnw-welcome-instruction1' => 'Pindutin ang pindutang nasa ibaba upang makapagsimulang magdagdag ng mga pahina sa wiki mo.',
 	'cnw-welcome-instruction2' => 'Makikita mo ang pinduting ito sa kabuuan ng wiki mo, gamitin ito anumang oras na nais mong magdagdag ng isang bagong pahina.',
 	'cnw-welcome-help' => 'Maghanap ng mga sagot, mga payo, at marami pa sa <a href="http://community.wikia.com">Lunduyan ng Pamayanan</a>.',
+);
+
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'cnw-signup' => 'Hesap Oluştur',
+	'cnw-desc-change-lang' => 'değiştir',
+	'cnw-desc-lang' => 'Dil',
 );
 
 /** Tatar (Cyrillic script) (Татарча)
@@ -2129,6 +2239,11 @@ $messages['vi'] = array(
 	'cnw-auth-signup-creative' => 'Bạn sẽ cần một tài khoản để tiếp tục xây dựng wiki của mình.<br />Chỉ mất một phút để đăng ký!',
 	'cnw-auth-facebook-signup' => 'Đăng ký cùng Facebook',
 	'cnw-auth-facebook-login' => 'Đăng nhập cùng Facebook',
+	'cnw-userauth-headline' => 'Đã có tài khoản?',
+	'cnw-userauth-creative' => 'Đăng nhập',
+	'cnw-userauth-marketing-heading' => 'Chưa có tài khoản?',
+	'cnw-userauth-marketing-body' => 'Bạn cần một tài khoản để tạo ra một wiki trên Wikia.  Nó chỉ mất một phút để [[Special:UserSignup|đăng ký]]!',
+	'cnw-userauth-signup-button' => 'Đăng ký',
 	'cnw-desc-headline' => 'Wiki của bạn đề cập về?',
 	'cnw-desc-creative' => 'Mô tả chủ đề của bạn',
 	'cnw-desc-placeholder' => 'Điều này sẽ xuất hiện trên trang chính của wiki bạn.',
@@ -2168,7 +2283,7 @@ Nâng cấp thông qua PayPal để có được một quảng cáo wiki miễn 
 	'cnw-badword-header' => 'Whoa có rồi',
 	'cnw-badword-msg' => 'Chào bạn, xin vui lòng tránh sử dụng những từ ngữ xấu hoặc từ bị cấm trong các mô tả Wiki: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki đã đạt đến giới hạn',
-	'cnw-error-wiki-limit' => 'Chào, bạn bị giới hạn khi tạo ra $1 wiki mỗi ngày. Hãy chờ 24 giờ trước khi tạo một wiki khác.',
+	'cnw-error-wiki-limit' => 'Xin chào, bạn bị giới hạn {{PLURAL:$1|tạo lập $1 wiki|tạo lập $1 wiki}} mỗi ngày. Hãy chờ 24 giờ trước khi tạo lập một wiki khác.',
 	'cnw-error-blocked-header' => 'Tài khoản bị chặn',
 	'cnw-error-blocked' => 'Bạn đã bị cấm bởi  $1. Lý do đưa ra là: $2 . (ID cấm để tham khảo: $3 )',
 	'cnw-error-torblock' => 'Tạo wiki qua mạng Tor là không được phép.',
@@ -2237,7 +2352,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
  * @author Hydra
  */
@@ -2269,13 +2384,14 @@ $messages['zh-hans'] = array(
 	'cnw-welcome-headline' => '恭喜！$1 已被创造',
 );
 
-/** Traditional Chinese (中文(繁體))
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Oapbtommy
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'cnw-next' => '下一步',
 	'cnw-back' => '前一步',
-	'cnw-or' => '或',
+	'cnw-or' => '或者',
 	'cnw-auth-headline' => '登入',
 	'cnw-auth-facebook-login' => '以Facebook登入',
 	'cnw-desc-tip1' => '提示',

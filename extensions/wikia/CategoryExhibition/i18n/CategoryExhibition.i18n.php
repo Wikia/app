@@ -467,6 +467,13 @@ $messages['tl'] = array(
 	'category-exhibition-page-header' => 'Mga pahina sa kategoryang "$1"',
 );
 
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'category-exhibition-subcategories-header' => 'Alt kategoriler',
+);
+
 /** Ukrainian (Українська) */
 $messages['uk'] = array(
 	'category-exhibition-sorttype' => 'Тип сортування:',

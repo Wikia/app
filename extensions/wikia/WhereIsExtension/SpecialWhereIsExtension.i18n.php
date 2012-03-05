@@ -639,10 +639,13 @@ $messages['sr-ec'] = array(
 	'whereisextension-submit' => 'Претражи',
 	'whereisextension-list' => 'Списак викија са поклапањима',
 	'whereisextension-isset' => 'је подешена на',
-	'whereisextension-filter' => 'Филтар',
+	'whereisextension-filter' => 'Филтер',
 	'whereisextension-all-groups' => 'Све групе',
-	'whereisextension-name-contains' => 'име променљиве садржи',
+	'whereisextension-name-contains' => 'назив променљиве садржи',
+	'whereisextension-search-like-value' => 'Како:',
 	'whereisextension-search-type' => 'Врста:',
+	'whereisextension-search-type-bool' => 'Булова',
+	'whereisextension-search-type-full' => 'Како',
 );
 
 /** Swedish (Svenska)

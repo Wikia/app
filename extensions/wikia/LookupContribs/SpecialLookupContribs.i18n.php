@@ -417,7 +417,7 @@ $messages['fr'] = array(
 	'lookupcontribscontribtitleforuser' => 'Contributions de l’utilisateur :',
 	'lookupcontribsnormal' => 'récent',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'tout'
+	'lookupcontribsall' => 'tout',
 );
 
 /** Galician (Galego)
@@ -470,7 +470,7 @@ $messages['gl'] = array(
 	'lookupcontribscontribtitleforuser' => 'Contribucións do usuario:',
 	'lookupcontribsnormal' => 'recentes',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'todas'
+	'lookupcontribsall' => 'todas',
 );
 
 /** Hungarian (Magyar)
@@ -551,7 +551,7 @@ $messages['ia'] = array(
 	'lookupcontribscontribtitleforuser' => 'Contributiones del usator:',
 	'lookupcontribsnormal' => 'recente',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'tote'
+	'lookupcontribsall' => 'tote',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -700,7 +700,7 @@ $messages['mk'] = array(
 	'lookupcontribscontribtitleforuser' => 'Придонеси на корисникот:',
 	'lookupcontribsnormal' => 'скорешни',
 	'lookupcontribsfinal' => 'последни',
-	'lookupcontribsall' => 'сите'
+	'lookupcontribsall' => 'сите',
 );
 
 /** Malayalam (മലയാളം)
@@ -780,7 +780,7 @@ Tolong semak ejaan nama pengguna itu.</p>',
 	'lookupcontribscontribtitleforuser' => 'Sumbangan untuk pengguna:',
 	'lookupcontribsnormal' => 'terkini',
 	'lookupcontribsfinal' => 'akhir',
-	'lookupcontribsall' => 'semua'
+	'lookupcontribsall' => 'semua',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -863,7 +863,7 @@ Sjekk oppgitt brukernavn for mulige skrivefeil.</p>',
 	'lookupcontribscontribtitleforuser' => 'Bidrag fra bruker:',
 	'lookupcontribsnormal' => 'siste',
 	'lookupcontribsfinal' => 'siste',
-	'lookupcontribsall' => 'alle'
+	'lookupcontribsall' => 'alle',
 );
 
 /** Dutch (Nederlands)
@@ -918,7 +918,7 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribscontribtitleforuser' => 'Bijdragen van gebruiker:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'laatste',
-	'lookupcontribsall' => 'alle'
+	'lookupcontribsall' => 'alle',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -963,6 +963,28 @@ $messages['pdc'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
+	'lookupcontribs' => 'LookupContribs',
+	'lookupcontribstitle' => 'LookupContribs',
+	'lookupcontribsrecentcontributions' => 'Najnowsze edycje $1',
+	'lookupcontribsfinalcontributions' => 'Ostatnie edycje $1',
+	'lookupcontribshelp' => 'Ta strona specjalna pozwala przejrzeć edycje danego użytkownika na wielu wiki.
+Aby wyświetlić listę, podaj nazwę użytokwnika.',
+	'lookupcontribusernotspecify' => 'Nie określono nazwy użytkownika',
+	'lookupcontribsselectuser' => 'Wybierz użytkownika:',
+	'lookupcontribsselectfor' => 'Wybierz dla:',
+	'lookupcontribsdisplaymode' => 'Wyświetl jako:',
+	'lookupcontribsselectmodenormal' => 'najnowsze edycje tego użytkownika',
+	'lookupcontribsselectmodefinal' => 'ostatnie edycje tego użytkownika',
+	'lookupcontribsselectmodeall' => 'wszystkie edycje tego użytkownika',
+	'lookupcontribsfullurls' => 'Pełne adresy URL',
+	'lookupcontribslinks' => 'linki wkładu',
+	'lookupcontribsgo' => 'Idź',
+	'lookupcontribsinvaliduser' => '<p class="error">Użytkownik "<b>$1</b>" nie istnieje.
+Sprawdź nazwę użytkonika.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" nie jest poprawnym trybem wyświetlania.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" nie jest poprawnym trybem.</p>',
+	'lookupcontribsselectwikis' => 'Wybierz wiki:',
+	'lookupcontribslistwikiainfo' => 'Lista wiki z edycjami $1',
 	'lookupcontribsnoresultfound' => 'Brak wyników!',
 	'lookupcontribsinvalidresults' => 'Nieprawidłowe wyniki!',
 	'lookupcontribswiki' => 'Wiki',
@@ -970,8 +992,10 @@ $messages['pl'] = array(
 	'lookupcontribswikiurl' => 'Adres URL',
 	'lookupcontribswikititle' => 'Tytuł',
 	'lookupcontribswikioptions' => 'Opcje',
+	'lookupcontribscontribslink' => 'Link wkładu',
 	'lookupcontribsdetails' => 'Zobacz szczegóły dotyczące:',
 	'lookupcontribslastedited' => 'Ostatnio edytowano',
+	'lookupcontribsrecordspager' => "Wyniki od '''$1''' do '''$2''' z '''$3'''.",
 	'lookupcontribscontribs' => 'edycje',
 	'lookupcontribsnbrresult' => 'Liczba wyników:',
 	'lookupcontribsnext' => 'następny',
@@ -1041,7 +1065,7 @@ $messages['pms'] = array(
 	'lookupcontribscontribtitleforuser' => 'Contribussion për utent:',
 	'lookupcontribsnormal' => 'recent',
 	'lookupcontribsfinal' => 'final',
-	'lookupcontribsall' => 'tuti'
+	'lookupcontribsall' => 'tuti',
 );
 
 /** Pashto (پښتو)
@@ -1251,7 +1275,7 @@ $messages['ru'] = array(
 	'lookupcontribscontribtitleforuser' => 'Вклад участника:',
 	'lookupcontribsnormal' => 'последние',
 	'lookupcontribsfinal' => 'последняя',
-	'lookupcontribsall' => 'все'
+	'lookupcontribsall' => 'все',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
@@ -1274,7 +1298,7 @@ $messages['sr-ec'] = array(
 	'lookupcontribsprevious' => 'претходно',
 	'lookupcontribspageremoved' => 'Уклоњено:',
 	'lookupcontribsrestore' => 'врати',
-	'lookupcontribslog' => 'извештај',
+	'lookupcontribslog' => 'дневник',
 	'lookupcontribshist' => 'ист',
 	'lookupcontribsdiff' => 'разл',
 	'lookupcontribscontent' => 'садржај',
@@ -1334,7 +1358,7 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribscontribtitleforuser' => 'Bidrag för användare:',
 	'lookupcontribsnormal' => 'senaste',
 	'lookupcontribsfinal' => 'sista',
-	'lookupcontribsall' => 'alla'
+	'lookupcontribsall' => 'alla',
 );
 
 /** Swahili (Kiswahili) */

@@ -244,7 +244,7 @@ $messages['ru'] = array(
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'graceexpired' => 'Период одгоде је истекао',
+	'graceexpired' => 'Резервни период је истекао',
 	'graceexpired-row' => '$1 (у $2, последњи пут измењено у $3)',
 	'graceexpired-header' => "Ова страница приказује све израде које су [[:Category:Abandoned|напуштене]], [[:Category:Trash_builds|одбачене]], [[:Category:Build stubs|клице]] или [[:Category:Trial Builds|пробна издања]], а које нису измењене најмање две недеље.
 

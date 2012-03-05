@@ -206,6 +206,7 @@ Enjoy!
 $messages['qqq'] = array(
 	'oasis-home' => "This refers to the wiki's main page title shown on the top of the page.",
 	'oasis-more' => 'Included in the activity minibox in the sidebar beside articles.',
+	'oasis-signup' => 'Label for link to account creation form, seen in header',
 	'oasis-related-video-by-5min' => '"5min Video" is a web site name. See http://www.5min.com/',
 	'oasis-total-articles-mainpage' => '$1 is the number of pages on the wiki.
 
@@ -274,8 +275,6 @@ Example output: edited by Avatar 3 hours ago',
 Example output: deleted by Avatar 3 hours ago',
 	'oasis-wiki-navigation' => '[[Thread:Support/About Wikia:Oasis-wiki-navigation/en|Parameter $1 is the name of the wiki, e.g. "Muppet Wiki".]]',
 	'oasis-on-the-wiki' => 'Name of the first tab of wiki navigation menu',
-
-	'oasis-signup' => 'Label for link to account creation form, seen in header',
 );
 
 /** Afrikaans (Afrikaans)
@@ -531,6 +530,7 @@ $messages['cs'] = array(
 	'oasis-follow' => 'Sledovat',
 	'oasis-share' => 'Sdílet',
 	'oasis-like' => 'To se mi líbí',
+	'oasis-signup' => 'Registrace',
 	'oasis-edit-protected-article' => 'Přihlašte se, chcete-li editovat.',
 	'oasis-button-random-page' => 'Náhodná stránka',
 	'oasis-button-random-wiki' => 'Náhodná Wiki',
@@ -668,6 +668,8 @@ $messages['cs'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Kouzelná slova mohou být zobrazena pouze v nabídkách 3. úrovně . Prosím zahrnujte je pouze ve wikitextu úrovně 2.',
 	'oasis-navigation-v2-validation-next' => 'Následující',
 	'oasis-navigation-v2-validation-caption' => 'Náhled zkontrolovat chyby v nabídce. Pokud je vše v pořádku, můžete ho publikovat . Pokud ne, tlačítko zpět vám umožní pokračovat v úpravách.',
+	'oasis-navigation-v2-new-photos' => 'Nové fotky',
+	'oasis-on-the-wiki' => 'Na Wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 vám poslal odkaz na Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Ahoj.
  $1  vám poslal tuto stránku ze stránky {{SITENAME}} na Wikia:
@@ -678,6 +680,7 @@ Příjemnou zábavu!
 
 /** German (Deutsch)
  * @author Claudia Hattitten
+ * @author Dennis07
  * @author Diebuche
  * @author George Animal
  * @author LWChris
@@ -761,7 +764,12 @@ $messages['de'] = array(
 	'oasis-member-since' => 'Mitglied seit $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|Bearbeitung|Bearbeitungen}}</sup>',
 	'oasis-edit-saved' => 'Deine Bearbeitung wurde gespeichert!',
+	'oasis-button-contribute-tooltip' => 'Beitragen',
 	'oasis-button-add-video' => 'Video hinzufügen',
+	'oasis-button-create-page' => 'Seite hinzufügen',
+	'oasis-button-add-photo' => 'Bild hinzufügen',
+	'oasis-button-edit-wikia-local-menu' => 'Lokales Wikia-Menü bearbeiten',
+	'oasis-button-edit-wikia-global-menu' => 'Globales Wikia-Menü bearbeiten',
 	'oasis-toolbar-edit-title' => 'Werkzeugkasten bearbeiten',
 	'oasis-toolbar-edit-toolbar-list' => 'Dein Werkzeugkasten',
 	'oasis-toolbar-edit-reset-defaults' => 'Standard wiederherstellen',
@@ -820,13 +828,23 @@ $messages['de'] = array(
 	'oasis-navigation-v2-create-page' => 'Eine Seite hinzufügen',
 	'oasis-navigation-v2-edit-page' => 'Diese Seite bearbeiten',
 	'oasis-navigation-v2-add-photo' => 'Ein Foto hinzufügen',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Lokales Wikia-Menü bearbeiten',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Globales Wikia-Menü bearbeiten',
+	'oasis-navigation-v2-edit-this-menu' => 'Wiki-Navigation bearbeiten',
 	'oasis-navigation-v2-level1-validation' => 'Hoppla! Dein Level 1-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
 	'oasis-navigation-v2-level2-validation' => 'Hoppla! Dein Level 2-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
 	'oasis-navigation-v2-level12-validation' => 'Hoppla! Dein Level 1-Menü und Level 2-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
 	'oasis-navigation-v2-magic-word-validation' => 'Magische Wörter „Magic Words“ können nur in Level 3-Dropdowns angezeigt und somit nur in Level 2 verwendet werden.',
 	'oasis-navigation-v2-validation-next' => 'Vorschau',
 	'oasis-navigation-v2-validation-caption' => 'Die Vorschau erlaubt es dir, nach Fehlern zu sehen. Falls alles in Ordnung ist, kannst du es von dort aus speichern. Falls nicht, kannst du mittels "Zurück"-Button wieder zum Bearbeiten zurückkehren.',
+	'oasis-navigation-v2-new-photos' => 'Neue Fotos',
 	'oasis-on-the-wiki' => 'Im Wiki',
+	'oasis-sharing-toolbar-mail-subject' => '$1 hat dir einen Link auf Wikia gesendet',
+	'oasis-sharing-toolbar-mail-body' => 'Hallo.
+$1 hat dir diese Seite von {{SITENAME}} bei Wikia gesendet:
+     $2
+Viel Spaß!
+- Das Wikia-Team',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -857,6 +875,8 @@ $messages['eo'] = array(
 
 /** Spanish (Español)
  * @author Absay
+ * @author Armando-Martin
+ * @author Benfutbol10
  * @author DJ Nietzsche
  * @author McDutchie
  * @author TOR
@@ -880,7 +900,7 @@ $messages['es'] = array(
 	'oasis-activity-header' => 'Actividad reciente de la wiki',
 	'oasis-related-video-header' => 'Vídeos relacionados',
 	'oasis-related-video-by-5min' => 'vídeo por 5min',
-	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|página en<br /> esta wiki|páginas en<br /> esta wiki}}</span>',
+	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|página en<br /> este wiki|páginas en<br /> este wiki}}</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|imagen en esta wiki|imágenes en esta wiki}}</span>',
 	'oasis-latest-photos-more' => 'Ver más >',
 	'oasis-latest-photos-inner-message' => 'Ver todas las imágenes',
@@ -923,6 +943,7 @@ $messages['es'] = array(
 	'oasis-page-header-subtitle-forum' => 'Página de foro',
 	'oasis-page-header-subtitle-special-wikiactivity' => 'Ver toda la actividad >',
 	'oasis-search-results-from' => 'Mostrando resultados de: $1',
+	'oasis-search-results-from-all-wikis' => 'Mostrando resultados de toda Wikia',
 	'oasis-user-page-change-avatar' => 'Cambiar avatar',
 	'oasis-content-picture-added-by' => 'Añadida por $1',
 	'oasis-confirmation-page-deleted' => '"$1" ha sido borrada. ([[Special:Undelete/$1|restaurar]])',
@@ -933,6 +954,12 @@ $messages['es'] = array(
 	'oasis-member-since' => 'Miembro desde $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edición hecha|ediciones hechas}}',
 	'oasis-edit-saved' => '¡Se ha grabado tu edición!',
+	'oasis-button-contribute-tooltip' => 'Contribuir',
+	'oasis-button-add-video' => 'Añadir un vídeo',
+	'oasis-button-create-page' => 'Añadir una página',
+	'oasis-button-add-photo' => 'Añadir una imagen',
+	'oasis-button-edit-wikia-local-menu' => 'Editar menú local de Wikia',
+	'oasis-button-edit-wikia-global-menu' => 'Editar menú global de Wikia',
 	'oasis-toolbar-edit-title' => 'Personalizar la barra de herramientas',
 	'oasis-toolbar-edit-toolbar-list' => 'Lista de la barra de herramientas',
 	'oasis-toolbar-edit-reset-defaults' => 'restablecer',
@@ -988,6 +1015,26 @@ $messages['es'] = array(
 	'oasis-skip-to-site-navigation' => 'Saltar a la navegación del sitio',
 	'oasis-wiki-navigation' => 'Navegación de $1',
 	'oasis-related-categories' => 'Categorías Relacionadas',
+	'oasis-navigation-v2-create-page' => 'Añadir una página',
+	'oasis-navigation-v2-edit-page' => 'Editar esta página',
+	'oasis-navigation-v2-add-photo' => 'Añadir una imagen',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Editar menú local de Wikia',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Editar menú global de Wikia',
+	'oasis-navigation-v2-edit-this-menu' => 'Editar navegación del Wiki',
+	'oasis-navigation-v2-level1-validation' => '¡Oops! El nivel 1 del menú es muy extenso. Por favor ajústalo un poco más. ¡Gracias!',
+	'oasis-navigation-v2-level2-validation' => '¡Oops! El nivel 2 del menú es muy extenso. Por favor ajústalo un poco más. ¡Gracias!',
+	'oasis-navigation-v2-level12-validation' => '¡Oops! El nivel 1 y 2 del menú son muy extensos. Por favor ajústalos un poco más.',
+	'oasis-navigation-v2-magic-word-validation' => 'Las palabras mágicas únicamente pueden mostrarse en los menús de nivel 3. Incluya estas palabras mágicas solamente en su texto wiki de nivel 2.',
+	'oasis-navigation-v2-validation-next' => 'Siguiente',
+	'oasis-navigation-v2-validation-caption' => 'La vista previa buscará errores en el menú. Si está bien, podrás publicar los cambios, de lo contrario, ve Atrás para continuar editando.',
+	'oasis-navigation-v2-new-photos' => 'Imágenes nuevas',
+	'oasis-on-the-wiki' => 'Wiki',
+	'oasis-sharing-toolbar-mail-subject' => '$1 te ha enviado un enlace en Wikia',
+	'oasis-sharing-toolbar-mail-body' => 'Hola.
+$1 te ha enviado esta página de {{SITENAME}} en Wikia:
+     $2
+
+-El Equipo de Wikia',
 );
 
 /** Persian (فارسی)
@@ -1152,6 +1199,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author DavidL
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  * @author Sherbrooke
@@ -1307,7 +1355,8 @@ $messages['fr'] = array(
 	'oasis-navigation-v2-level12-validation' => 'Désolé, les niveaux 1 et 2 du menu sont trop larges. Veuillez les modifier pour réduire la largeur.',
 	'oasis-navigation-v2-magic-word-validation' => 'Les mots magiques peuvent seulement être affichés dans les menus de niveau 3. Veuillez seulement inclure dans votre wikitexte de niveau 2.',
 	'oasis-navigation-v2-validation-next' => 'Suite',
-	'oasis-navigation-v2-validation-caption' => "La prévisualisation vérifiera les erreurs de menu. Si c'est correct, vous pouvez publier depuis l'écran de prévisualisation. Si ce n'est pas le cas, un bouton Précédent vous permettra de continuer à éditer.",
+	'oasis-navigation-v2-validation-caption' => 'L’aperçu recherchera des erreurs sur le menu. Si c’est bon, vous pourrez publier à partir de la fenêtre d’aperçu. Sinon, un bouton « Retour » vous permettra de poursuivre la modification.',
+	'oasis-navigation-v2-new-photos' => 'Nouvelles photos',
 	'oasis-on-the-wiki' => 'Sur le wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 vous a envoyé un lien sur Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Bonjour,
@@ -1331,6 +1380,7 @@ $messages['gl'] = array(
 	'oasis-follow' => 'Seguir',
 	'oasis-share' => 'Compartir',
 	'oasis-like' => 'Gústame',
+	'oasis-signup' => 'Rexístrese',
 	'oasis-edit-protected-article' => 'Acceda ao sistema para editar',
 	'oasis-button-random-page' => 'Páxina aleatoria',
 	'oasis-button-random-wiki' => 'Wiki ao chou',
@@ -1468,6 +1518,7 @@ $messages['gl'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'As palabras máxicas poden mostrarse unicamente nos menús de nivel 3. Inclúa estas palabras máxicas soamente no texto wiki de nivel 2.',
 	'oasis-navigation-v2-validation-next' => 'Seguinte',
 	'oasis-navigation-v2-validation-caption' => 'A vista previa comprobará os erros no menú. Se todo está ben, pode publicar desde a pantalla de vista previa. Por se quere cambiar algo, terá un botón de regreso que permite continuar coa edición.',
+	'oasis-navigation-v2-new-photos' => 'Novas fotos',
 	'oasis-on-the-wiki' => 'No wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 envioulle unha ligazón en Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Ola.
@@ -1678,6 +1729,7 @@ $messages['ia'] = array(
 	'oasis-follow' => 'Sequer',
 	'oasis-share' => 'Condivider',
 	'oasis-like' => 'Me place',
+	'oasis-signup' => 'Crear conto',
 	'oasis-edit-protected-article' => 'Aperi session pro modificar',
 	'oasis-button-random-page' => 'Pagina aleatori',
 	'oasis-button-random-wiki' => 'Wiki aleatori',
@@ -1798,6 +1850,10 @@ $messages['ia'] = array(
 	'oasis-upload-photos-fewer-options' => 'Minus optiones',
 	'oasis-upload-photos-force' => 'Incargar totevia',
 	'oasis-upload-photos-caption' => 'Legenda',
+	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=ia',
+	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=ia',
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=ia',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=ia',
 	'oasis-modal-error-headline' => 'Per favor corrige le sequente errores',
 	'oasis-skip-to-content' => 'Saltar al contento',
 	'oasis-skip-to-wiki-navigation' => 'Saltar al navigation del wiki',
@@ -1816,6 +1872,7 @@ $messages['ia'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Le parolas magic pote solmente esser monstrate in menus de nivello 3. Per favor include los solmente in wikitexto de nivello 2.',
 	'oasis-navigation-v2-validation-next' => 'Sequente',
 	'oasis-navigation-v2-validation-caption' => 'Le previsualisation verificara le presentia de errores de menu. Si es correcte, tu pote publicar desde le schermo Previsualisation. Si non, un button Retornar permittera continuar le modification.',
+	'oasis-navigation-v2-new-photos' => 'Nove photos',
 	'oasis-on-the-wiki' => 'In le wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 te ha inviate un ligamine in Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Salute.
@@ -2289,6 +2346,7 @@ $messages['mk'] = array(
 	'oasis-follow' => 'Следи',
 	'oasis-share' => 'Сподели',
 	'oasis-like' => 'Бендисај',
+	'oasis-signup' => 'Регистрација',
 	'oasis-edit-protected-article' => 'Најавете се за да уредувате',
 	'oasis-button-random-page' => 'Случајна страница',
 	'oasis-button-random-wiki' => 'Случајно вики',
@@ -2311,8 +2369,8 @@ $messages['mk'] = array(
 	'oasis-global-nav-create-wiki' => 'Започнете вики',
 	'oasis-page-header-no-comments-tooltip' => 'Бидете првите што ќе разговарате за страницава',
 	'oasis-page-header-comments' => '{{PLURAL:$1|Коментар|Коментари}}',
-	'oasis-page-header-comments-k' => '$1k',
-	'oasis-page-header-comments-m' => '$1M',
+	'oasis-page-header-comments-k' => '$1 илј.',
+	'oasis-page-header-comments-m' => '$1 мил.',
 	'oasis-page-header-talk' => 'Разговор',
 	'oasis-page-header-edited-by' => 'Уредено: $1 од $2',
 	'oasis-page-header-edited' => 'Уредено: $1',
@@ -2323,7 +2381,7 @@ $messages['mk'] = array(
 	'oasis-page-header-back-to-mediawiki' => 'Назад кон страницата за МедијаВики',
 	'oasis-page-header-back-to-category' => 'Назад кон категоријата',
 	'oasis-page-header-back-to-file' => 'Назад кон податотеката',
-	'oasis-page-header-back-to-video' => 'Назад кон снимката',
+	'oasis-page-header-back-to-video' => 'Назад кон видео',
 	'oasis-page-header-add-topic' => 'Додај теми',
 	'oasis-page-header-edit-profile' => 'Уреди профил',
 	'oasis-page-header-editing' => '<strong>Уредувате:</strong> $1',
@@ -2333,7 +2391,7 @@ $messages['mk'] = array(
 	'oasis-page-header-diff' => '<strong>Промени</strong>: $1',
 	'oasis-page-header-history' => '<strong>Историја</strong>: $1',
 	'oasis-anon-header' => 'Нерегистриран учесник <small>$1</small>',
-	'oasis-preview-confirmation' => 'Прегледен режим: промените сè уште не се зачувани! Одете подолу да продолжите со уредување.',
+	'oasis-preview-confirmation' => 'Прегледен режим: промените сè уште не се зачувани! Одете подолу за да продолжите со уредување.',
 	'oasis-badge-notification' => 'Штотуку ја заработивте значката „$2“ $3',
 	'oasis-badge-notification-see-more' => 'Погледајте кои други значки можете да ги заработите!',
 	'oasis-page-header-subtitle-mediawiki' => 'МедијаВики-страница',
@@ -2388,7 +2446,7 @@ $messages['mk'] = array(
 	'oasis-add-page' => 'Додај страница',
 	'oasis-section-edit' => 'Уреди',
 	'oasis-section-edit-alt' => 'Уреди пасус $1',
-	'oasis-popular-blogs-title' => 'Популарен блог<br />записи',
+	'oasis-popular-blogs-title' => 'Популарни<br />блог-записи',
 	'oasis-spotlights-rail-title' => 'Повеќе од',
 	'oasis-spotlights-footer-title' => 'Низ мрежата на Викија',
 	'themedesigner' => 'Ликовен уредник',
@@ -2431,6 +2489,7 @@ $messages['mk'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Волшебните зборови се прикажуваат само на менија од III ниво. Затоа ставајте ги само во викитекстот од II ниво.',
 	'oasis-navigation-v2-validation-next' => 'Следно',
 	'oasis-navigation-v2-validation-caption' => 'Прегледот ќе провери дали менито има грешки. Ако сè е во ред, тогаш можете да го објавите од екранот „Преглед“. Ако има грешки, послужете се со копчето за одење назад и направете ги исправките.',
+	'oasis-navigation-v2-new-photos' => 'Нови слики',
 	'oasis-on-the-wiki' => 'На викито',
 	'oasis-sharing-toolbar-mail-subject' => '$1 ви испрати врска на Викија',
 	'oasis-sharing-toolbar-mail-body' => 'Здраво.
@@ -2506,6 +2565,7 @@ $messages['ms'] = array(
 	'oasis-follow' => 'Ikuti',
 	'oasis-share' => 'Kongsi',
 	'oasis-like' => 'Suka',
+	'oasis-signup' => 'Daftar diri',
 	'oasis-edit-protected-article' => 'Log masuk untuk menyunting',
 	'oasis-button-random-page' => 'Laman Rawak',
 	'oasis-button-random-wiki' => 'Wiki Rawak',
@@ -2643,6 +2703,7 @@ $messages['ms'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Kata sakti hanya boleh dipaparkan dalam menu Aras 3. Sila sertakannya hanya dalam teks wiki Aras 2.',
 	'oasis-navigation-v2-validation-next' => 'Berikutnya',
 	'oasis-navigation-v2-validation-caption' => 'Pralihat akan menyemak untuk ralat menu. Jika OK, anda boleh menyiarkannya dari skrin Pralihat. Jika tidak, butang Kembali akan disediakan untuk anda terus menyunting.',
+	'oasis-navigation-v2-new-photos' => 'Gambar Baru',
 	'oasis-on-the-wiki' => 'Di Wiki ini',
 	'oasis-sharing-toolbar-mail-subject' => '$1 telah menghantar pautan kepada anda di Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Selamat sejahtera.
@@ -2692,6 +2753,7 @@ $messages['nb'] = array(
 	'oasis-follow' => 'Følg',
 	'oasis-share' => 'Del',
 	'oasis-like' => 'Lik',
+	'oasis-signup' => 'Registrer deg',
 	'oasis-edit-protected-article' => 'Logg inn for å redigere',
 	'oasis-button-random-page' => 'Tilfeldig side',
 	'oasis-button-random-wiki' => 'Tilfeldig wiki',
@@ -2830,6 +2892,7 @@ $messages['nb'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magiske ord kan bare vises i nivå 3-menyer. Vennligst bare inkluder dem i wikiteksten i nivå 2-menyene dine.',
 	'oasis-navigation-v2-validation-next' => 'Neste',
 	'oasis-navigation-v2-validation-caption' => 'Forhåndsvisning vil se etter menyfeil. Hvis alt er ok, kan du publisere fra forhåndsvisningsvinduet. Hvis ikke, vil en tilbake-knapp la deg fortsette å redigere.',
+	'oasis-navigation-v2-new-photos' => 'Nye bilder',
 	'oasis-on-the-wiki' => 'På wikien',
 	'oasis-sharing-toolbar-mail-subject' => '$1 har sendt deg en lenke på Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hei.
@@ -2993,6 +3056,7 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'oasis-navigation-v2-magic-word-validation' => "Magische woorden kunnen alleen worden weergegevens in menu's van het derde niveau. Neem ze alleen op in uw tweede niveau van uw wikitekst.",
 	'oasis-navigation-v2-validation-next' => 'Volgende',
 	'oasis-navigation-v2-validation-caption' => 'Tijdens de voorvertoning wordt het menu gecontroleerd op fouten. Als alles in orde is, kunt u Publiceren vanuit de voorvertoning. Als het nog niet in orde is, ga dan Terug zodat u correcties kunt aanbrengen.',
+	'oasis-navigation-v2-new-photos' => 'Nieuwe afbeeldingen',
 	'oasis-on-the-wiki' => 'Op de wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 heeft u een verwijzing gezonden naar Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hallo.
@@ -3052,6 +3116,7 @@ $messages['pl'] = array(
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|grafika|grafiki|grafik}} na tej wiki</span>',
 	'oasis-latest-photos-more' => 'Zobacz więcej >',
 	'oasis-latest-photos-inner-message' => 'Zobacz wszystkie grafiki',
+	'oasis-latest-photos-single' => '+',
 	'oasis-latest-photos-empty' => 'Każdy może pomóc, aby ta wiki wyglądała niesamowicie<br /><span>Kliknij tutaj jeśli chcesz dodać grafikę.</span>',
 	'oasis-latest-photos-by' => 'przez',
 	'oasis-latest-photos-posted-in' => 'Użyto w',
@@ -3138,7 +3203,7 @@ $messages['pl'] = array(
 	'oasis-section-edit-alt' => 'Edytuj sekcję $1',
 	'oasis-popular-blogs-title' => 'Popularne posty<br />na blogach',
 	'oasis-spotlights-rail-title' => 'Więcej z',
-	'oasis-spotlights-footer-title' => 'O sieci Wikii',
+	'oasis-spotlights-footer-title' => 'Więcej od Wikii',
 	'themedesigner' => 'Kreator motywu',
 	'oasis-pages-on-wiki-header' => 'Strony na $1',
 	'oasis-latest-activity-new-details' => 'stworzony przez $1 $2',
@@ -3157,6 +3222,10 @@ $messages['pl'] = array(
 	'oasis-upload-photos-fewer-options' => 'Mniej opcji',
 	'oasis-upload-photos-force' => 'Prześlij mimo wszystko',
 	'oasis-upload-photos-caption' => 'Podpis',
+	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=pl',
+	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=pl',
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=pl',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=pl',
 	'oasis-modal-error-headline' => 'Proszę poprawić następujące błędy',
 	'oasis-skip-to-content' => 'Przejdź do Treści',
 	'oasis-skip-to-wiki-navigation' => 'Przejdź do Nawigacji Wiki',
@@ -3175,6 +3244,7 @@ $messages['pl'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magiczne słowa mogą być wyświetlane tylko w menu poziomu 3. Prosimy na poziomie 2 umieszczać je tylko wewnątrz wikitekstu.',
 	'oasis-navigation-v2-validation-next' => 'Dalej',
 	'oasis-navigation-v2-validation-caption' => 'Podgląd zweryfikuje błędy menu. Jeśli poprawne, można je opublikować z ekranu podglądu. Jeśli nie, przycisk Wstecz pozwala kontynuować edycję.',
+	'oasis-navigation-v2-new-photos' => 'Nowe zdjęcia',
 	'oasis-on-the-wiki' => 'Na Wiki',
 	'oasis-sharing-toolbar-mail-subject' => '$1 przesyła ci łącze na Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Witaj,
@@ -3634,6 +3704,7 @@ $messages['ru'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Волшебные слова могут отображаться только на 3 уровне меню. Пожалуйста, включайте их только в свой викитекст 2 уровня.',
 	'oasis-navigation-v2-validation-next' => 'Следующий',
 	'oasis-navigation-v2-validation-caption' => 'Предпросмотр проверит наличие ошибок в меню. Если ошибок нет, то вы сможете сохранить его прямо из окна предпросмотра. Если нет, то нажатие кнопки Назад позволит вам продолжить редактирование.',
+	'oasis-navigation-v2-new-photos' => 'Новые фотографии',
 	'oasis-on-the-wiki' => 'На этой вики',
 	'oasis-sharing-toolbar-mail-subject' => '$1 прислал вам ссылку на Викия',
 	'oasis-sharing-toolbar-mail-body' => 'Привет.
@@ -3759,6 +3830,7 @@ $messages['sv'] = array(
 	'oasis-follow' => 'Följ',
 	'oasis-share' => 'Dela',
 	'oasis-like' => 'Gilla',
+	'oasis-signup' => 'Registrera dig',
 	'oasis-edit-protected-article' => 'Logga in för att redigera',
 	'oasis-button-random-page' => 'Slumpmässig sida',
 	'oasis-button-random-wiki' => 'Slumpmässig wiki',
@@ -3767,7 +3839,7 @@ $messages['sv'] = array(
 	'oasis-button-wiki-activity-watchlist' => 'endast Bevakade Sidor',
 	'oasis-activity-watchlist-login' => 'Du måste logga in för att se dina bevakade sidor.',
 	'oasis-activity-header' => 'Senaste Wiki-aktivitet',
-	'oasis-related-video-header' => 'Relaterade Videor',
+	'oasis-related-video-header' => 'Relaterade videoklipp',
 	'oasis-related-video-by-5min' => 'av 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|sida på<br /> denna wiki|sidor på<br /> denna wiki}}</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|foto på denna wiki|foton på denna wiki}}</span>',
@@ -3896,6 +3968,7 @@ $messages['sv'] = array(
 	'oasis-navigation-v2-magic-word-validation' => 'Magiska ord visas bara i nivå 3-menyer. Var god inkludera dem endast i wikitexten för dina nivå 2-menyer.',
 	'oasis-navigation-v2-validation-next' => 'Nästa',
 	'oasis-navigation-v2-validation-caption' => 'Förhandsgranskning kommer att kolla efter menyfel. Om det är OK, kan du publicera den från förhandsgranskningsskärmen. Om inte, kommer en Tillbaka-knapp låta dig fortsätta redigera.',
+	'oasis-navigation-v2-new-photos' => 'Nya foton',
 	'oasis-on-the-wiki' => 'På wikin',
 	'oasis-sharing-toolbar-mail-subject' => '$1 har skickat en länk till dig på Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hej.
@@ -4072,6 +4145,7 @@ $messages['vi'] = array(
 	'oasis-follow' => 'Theo dõi',
 	'oasis-share' => 'Chia sẻ',
 	'oasis-like' => 'Thích',
+	'oasis-signup' => 'Đăng ký',
 	'oasis-edit-protected-article' => 'Đăng nhập để sửa đổi',
 	'oasis-button-random-page' => 'Trang ngẫu nhiên',
 	'oasis-button-random-wiki' => 'Wiki ngẫu nhiên',
@@ -4140,6 +4214,8 @@ $messages['vi'] = array(
 	'oasis-button-add-video' => 'Thêm đoạn phim',
 	'oasis-button-create-page' => 'Tạo trang',
 	'oasis-button-add-photo' => 'Thêm hình ảnh',
+	'oasis-button-edit-wikia-local-menu' => 'Sửa đổi menu Wikia địa phương',
+	'oasis-button-edit-wikia-global-menu' => 'Sửa đổi menu Wikia toàn cầu',
 	'oasis-toolbar-edit-title' => 'Tùy chỉnh thanh công cụ',
 	'oasis-toolbar-edit-toolbar-list' => 'Danh sách công cụ',
 	'oasis-toolbar-edit-reset-defaults' => 'thiết lập lại mặc định',
@@ -4198,7 +4274,16 @@ $messages['vi'] = array(
 	'oasis-navigation-v2-create-page' => 'Tạo trang',
 	'oasis-navigation-v2-edit-page' => 'Sửa đổi trang này',
 	'oasis-navigation-v2-add-photo' => 'Thêm hình ảnh',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Sửa đổi menu Wikia địa phương',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Sửa đổi menu Wikia toàn cầu',
 	'oasis-navigation-v2-edit-this-menu' => 'Sửa đổi Danh mục Wiki',
+	'oasis-navigation-v2-level1-validation' => 'Rất tiếc! Menu cấp 1 của bạn quá rộng. Xin rút ngắn lại các mục để cho vừa vặn. Cảm ơn!',
+	'oasis-navigation-v2-level2-validation' => 'Rất tiếc! Menu cấp 2 của bạn quá rộng. Xin rút ngắn lại các mục để cho vừa vặn. Cảm ơn!',
+	'oasis-navigation-v2-level12-validation' => 'Rất tiếc! Menu cấp 1 và cấp 2 của bạn quá rộng. Xin sửa lại để cho vừa vặn. Cảm ơn!',
+	'oasis-navigation-v2-magic-word-validation' => 'Những từ ma thuật chỉ được ở Menu cấp 3. Xin vui lòng dùng văn bản wiki tại menu cấp 2.',
+	'oasis-navigation-v2-validation-next' => 'Tiếp theo',
+	'oasis-navigation-v2-validation-caption' => 'Xem trước sẽ kiểm tra lỗi của menu. Nếu ổn, bạn có thể lưu nó từ màn hình xem trước. Nếu không, một nút Trở lại sẽ cho phép bạn tiếp tục chỉnh sửa.',
+	'oasis-navigation-v2-new-photos' => 'Hình ảnh mới',
 	'oasis-on-the-wiki' => 'Trên Wiki này',
 	'oasis-sharing-toolbar-mail-subject' => '$1 đã gửi cho bạn một liên kết trên Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Chào bạn.

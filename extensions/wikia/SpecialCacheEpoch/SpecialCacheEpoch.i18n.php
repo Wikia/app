@@ -202,11 +202,12 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'cacheepoch-desc' => "A dà n'antërfacia për cangé wgCacheEpoch për wiki",
-	'cacheepoch' => 'Antërfacia Cache Epoch',
+	'cacheepoch-desc' => "A dà n'antërfacia për cangé wgCacheEpoch për na wiki",
+	'cacheepoch' => 'Antërfacia ëd memorisassion local Epoch',
 	'cacheepoch-header' => 'Aumenta wgCacheEpoch',
 	'cacheepoch-value' => 'Valor corent ëd wgCacheEpoch an "$1". Sgnaca ël boton për ampostelo al timestamp corent.',
 	'cacheepoch-submit' => 'Modìfica ël valor',

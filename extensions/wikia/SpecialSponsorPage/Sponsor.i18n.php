@@ -466,9 +466,39 @@ $messages['nl-informal'] = array(
 	'sponsor-form-thanks' => 'Dank je wel voor je sponsoring!',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'sponsorpage-save' => 'Beilege',
+);
+
 /** Pälzisch (Pälzisch) */
 $messages['pfl'] = array(
 	'sponsorpage-edit' => 'Bearwaide',
+);
+
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'sponsorpage-desc' => 'Umożliwia użytkownikom sponsorowanie stron',
+	'sponsor-header' => '<h2>Zewnętrze linki sponsora</h2>',
+	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Sponsoruj tą stronę</a></li>',
+	'sponsor-preview-prompt' => 'Tak wyglądać będzie Twoja strona - kliknij "Edytuj" aby dokonać zmian albo "Zapisz" aby przejść dalej do PayPal.',
+	'sponsor-preview-errors' => 'Wystąpiły błędy w Twoim zgłoszeniu:',
+	'sponsor-form-url' => 'Adres URL strony sponsora (Twojej strony):',
+	'sponsor-form-linktext' => 'Tekst, który zawierać będzie link:',
+	'sponsor-form-additionaltext' => 'Tekst poniżej linka:',
+	'sponsor-form-page' => 'Sponsorowana strona:',
+	'sponsor-form-price' => 'Wysokość donacji:',
+	'sponsor-form-email' => 'Twój adres e-mail:',
+	'sponsor-form-thanks' => 'Dziękujemy za zostanie sponsorem!',
+	'sponsor-price-45yr' => '$45 rocznie',
+	'sponsor-price-5mo' => '$5 miesięcznie',
+	'sponsorpage-edit' => 'Edytuj',
+	'sponsorpage-save' => 'Zapisz',
 );
 
 /** Piedmontese (Piemontèis)

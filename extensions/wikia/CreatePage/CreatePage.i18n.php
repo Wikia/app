@@ -221,12 +221,13 @@ Skrivit amañ eil rannskrid ho pennad.',
 
 /** Catalan (Català)
  * @author BroOk
+ * @author Ciencia Al Poder
  */
 $messages['ca'] = array(
 	'createpage-desc' => "Permet crear una pàgina nova utilitzant l'editor WYSIWYG de Wikia",
 	'createpage-sp-title' => 'Crea una pàgina nova',
 	'createpage_title' => 'Crea una pàgina nova',
-	'createpage_title_caption' => 'Títol:',
+	'createpage_title_caption' => 'Títol',
 	'createpage_enter_text' => 'Text:',
 	'createpage_empty_title_error' => 'Títol requerit',
 	'createpage_empty_article_body_error' => 'Text de la pàgina requerit',
@@ -399,6 +400,8 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
+ * @author Ciencia Al Poder
  * @author Crazymadlover
  * @author Mor
  * @author Translationista
@@ -407,7 +410,7 @@ $messages['es'] = array(
 	'createpage-desc' => 'Permite crear una nueva página usando editor WYSIWYG de Wikia',
 	'createpage-sp-title' => 'Crea un nuevo artículo',
 	'createpage_title' => 'Crear un nuevo artículo',
-	'createpage_title_caption' => 'Título:',
+	'createpage_title_caption' => 'Título',
 	'createpage_enter_text' => 'Escribe el contenido aquí:',
 	'createpage_empty_title_error' => 'Título requerido',
 	'createpage_empty_article_body_error' => 'Texto de artículo requerido',
@@ -427,7 +430,7 @@ $messages['es'] = array(
 	'createpage-error-article-spam' => 'Lo sentimos, el título del artículo fue rechazado por nuestro filtro de contenido no deseado. Por favor, usa un título diferente.',
 	'createpage-error-article-blocked' => 'Lo sentimos, no puedes crear ese artículo en este momento.',
 	'tog-createpagedefaultblank' => 'Usa una página en blanco de manera predeterminada para la traducción de nuevas páginas.',
-	'tog-createpagepopupdisabled' => 'Inhabilitar la ventana emergente de Crear Página',
+	'tog-createpagepopupdisabled' => 'Desactivar el proceso "Crear un nuevo artículo" (no recomendado)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Escribe aquí el primer párrafo de tu artículo.
 
@@ -1422,15 +1425,15 @@ Escreva a segunda seção do seu artigo aqui.',
  * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'createpage-sp-title' => 'Crează o pagină nou',
-	'createpage_title' => 'Crează o pagină nouă',
+	'createpage-sp-title' => 'Creează o pagină nouă',
+	'createpage_title' => 'Creează o pagină nouă',
 	'createpage_title_caption' => 'Titlu',
 	'createpage_enter_text' => 'Text:',
 	'createpage_empty_title_error' => 'Titlul necesar',
 	'createpage_empty_article_body_error' => 'Textul paginii este necesar',
 	'createpage_invalid_title_error' => 'Titlu invalid',
 	'createpage_cant_edit' => 'Nu se poate efectua modificarea',
-	'createpage-dialog-title' => 'Crează o nouă pagină',
+	'createpage-dialog-title' => 'Creează o pagină nouă',
 	'createpage-dialog-message1' => 'Ura! În acest moment creați o nouă pagină!',
 	'createpage-dialog-blank' => 'Pagină necompletată',
 );
@@ -1546,7 +1549,7 @@ $messages['sr-ec'] = array(
 	'createpage-dialog-message1' => 'Пишете нову страницу!',
 	'createpage-dialog-message2' => 'Како желите да је назовете?',
 	'createpage-dialog-choose' => 'Изаберите изглед странице:',
-	'createpage-dialog-format' => 'Стандардан изглед',
+	'createpage-dialog-format' => 'Стандардан распоред',
 	'createpage-dialog-blank' => 'Празна страница',
 	'createpage-error-empty-title' => 'Унесите наслов странице',
 	'createpage-error-invalid-title' => 'Наслов странице је неисправан.
@@ -1676,6 +1679,13 @@ Isulat ang unang sekyon ng artikulo mo rito.
 Isulat ang pangalawang ulo ng sekyon mo rito.',
 );
 
+/** Turkish (Türkçe)
+ * @author Suelnur
+ */
+$messages['tr'] = array(
+	'createpage-dialog-blank' => 'Boş sayfa',
+);
+
 /** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
@@ -1700,11 +1710,22 @@ $messages['uk'] = array(
 	'createpage_invalid_title_error' => 'Неприпустима назва',
 	'createpage_article_already_exists' => 'Стаття з такою назвою вже існує.
 Будь ласка, оберіть іншу назву.',
+	'createpage_spam' => 'На жаль, не вдалося зберегти ваші редагування',
+	'createpage_cant_edit' => 'Не вдалося виконати редагування',
 	'createpage-dialog-title' => 'Створити нову статтю',
+	'createpage-dialog-message1' => 'Ура, ви створюєте нову сторінку!',
+	'createpage-dialog-message2' => 'Як назвати сторінку?',
+	'createpage-dialog-choose' => 'Виберіть макет сторінки:',
+	'createpage-dialog-format' => 'Стандартний макет',
 	'createpage-dialog-blank' => 'Порожня сторінка',
 	'createpage-error-empty-title' => 'Будь ласка, введіть назву вашої сторінки.',
 	'createpage-error-invalid-title' => 'Назва не припустима. Придумайте іншу.',
 	'createpage-error-article-exists' => 'Сторінка з такою назвою вже існує. Огляньте <a href="$1">$2</a>, або перейменуйте свою сторінку',
+	'createpage-error-article-spam' => 'На жаль, заголовок сторінки відхилив спам-фільтра.
+Будь ласка, спробуйте іншу назву.',
+	'createpage-error-article-blocked' => 'На жаль, не вдається створити сторінку.',
+	'tog-createpagedefaultblank' => 'Використовувати порожню сторінку за замовчуванням для створення нової сторінки',
+	'tog-createpagepopupdisabled' => 'Вимкнути виринаюче вікно "Створити нову статтю" (не рекомендовано)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Напишіть тут перший параграф вашої статті.
 
@@ -1802,10 +1823,11 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Anakmalaysia
+ * @author Oapbtommy
  */
 $messages['zh-hant'] = array(
-	'createpage-sp-title' => '新增文章',
-	'createpage_title' => '發表新文章',
+	'createpage-sp-title' => '建立一個新的頁面',
+	'createpage_title' => '建立一個新的頁面',
 	'createpage_title_caption' => '標題',
 	'createpage_enter_text' => '輸入文字',
 );

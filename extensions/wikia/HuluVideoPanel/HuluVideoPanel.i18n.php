@@ -25,6 +25,13 @@ $messages['de'] = array(
 	'huluvideopanel-title' => '{{SITENAME}} Hulu-Videos',
 );
 
+/** Spanish (Español)
+ * @author VegaDark
+ */
+$messages['es'] = array(
+	'huluvideopanel-title' => 'Hulu Vídeos de {{SITENAME}}',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  */
@@ -113,6 +120,6 @@ $messages['pms'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'huluvideopanel-title' => 'Hulu-videor på {{SITENAME}}',
+	'huluvideopanel-title' => 'Hulu-videoklipp på {{SITENAME}}',
 );
 

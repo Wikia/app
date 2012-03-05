@@ -11,6 +11,13 @@ $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'wikiagameguides-desc' => "Guíes de Xuegu Wikia pa módulos d'aplicaciones móviles",
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -121,6 +128,13 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'wikiagameguides-desc' => 'Applicatiemodules voor mobiel voor Wikia Game Guides',
+);
+
+/** Polish (Polski)
+ * @author Sovq
+ */
+$messages['pl'] = array(
+	'wikiagameguides-desc' => 'moduły aplikacji Wikia Game Guides dla urządzeń mobilnych',
 );
 
 /** Piedmontese (Piemontèis)

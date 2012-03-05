@@ -82,6 +82,7 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Bola
  */
 $messages['es'] = array(
@@ -89,6 +90,7 @@ $messages['es'] = array(
 	'timeago-day' => 'hace {{PLURAL:$1|un día|$1 días}}',
 	'timeago-hour' => 'hace {{PLURAL:$1|una hora|$1 horas}}',
 	'timeago-minute' => 'hace $1 {{PLURAL:$1|minuto|$1 minutos}}',
+	'timeago-month' => 'hace {{PLURAL:$1|un mes|$1 meses}}',
 	'timeago-second' => 'hace un minuto',
 );
 

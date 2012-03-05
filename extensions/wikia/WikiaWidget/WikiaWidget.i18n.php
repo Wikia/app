@@ -325,10 +325,11 @@ $messages['ru'] = array(
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'wikiawidget' => 'Викија алатке',
+	'wikiawidget' => 'Елементи Викија',
 );
 
 /** Swedish (Svenska)

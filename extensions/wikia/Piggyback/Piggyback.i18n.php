@@ -310,9 +310,11 @@ Verifique a ortografia.',
 );
 
 /** Russian (Русский)
+ * @author Kuzura
  * @author MaxSem
  */
 $messages['ru'] = array(
+	'piggybac-desc' => 'Позволяет войти в качестве другого пользователя',
 	'piggyback-wronguser' => '$1 — не ваше имя пользователя.',
 );
 

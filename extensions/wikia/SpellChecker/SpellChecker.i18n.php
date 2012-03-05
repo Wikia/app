@@ -70,6 +70,23 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
 );
 
+/** Czech (Česky)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'spellchecker-desc' => 'Poskytuje rozhraní kontroly pravopisu pro enchant PHP modul.',
+	'enablespellchecker' => 'Povolit kontrolu pravopisu ve vizuálním módu',
+	'spellchecker-info' => 'Informace o kontrole pravopisu',
+	'spellchecker-info-languages' => 'Dostupné jazyky ($1)',
+	'spellchecker-info-provider' => 'Poskytovatel',
+	'spellchecker-info-dictionaries' => 'Dostupné slovníky',
+	'spellchecker-info-spellcheck-text' => 'Text pro zkontrolování',
+	'spellchecker-info-spellcheck-languages' => 'Jazyk',
+	'spellchecker-info-spellcheck-submit' => 'Zkontrolovat pravopis',
+	'spellchecker-info-spellcheck-is-correct' => 'Slovo "$1" je napsáno správně.',
+	'spellchecker-info-spellcheck-suggestions' => 'Pravopisné návrhy pro "$1": $2',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris

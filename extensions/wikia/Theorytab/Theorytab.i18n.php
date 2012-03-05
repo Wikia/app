@@ -305,11 +305,12 @@ $messages['sl'] = array(
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Charmed94
+ * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'theorytab-title' => 'Теорија',
-	'theorytab-parent-title' => 'Сродан чланак',
+	'theorytab-parent-title' => 'Матични чланак',
 );
 
 /** Swedish (Svenska)

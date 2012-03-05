@@ -220,7 +220,7 @@ $messages['cs'] = array(
 	'categoryselect-error-db-locked' => 'Databáze je uzamčena.',
 	'categoryselect-edit-abort' => 'Změna, o kterou jste se pokusili, byla zrušena rozšířením.',
 	'tog-disablecategoryselect' => 'Zakázat značení kategorií (platné pouze, pokud bylo editování ve vizuálním režimu zakázáno)',
-	'tog-disablecategoryselect-v2' => 'Zakázat modul kategorií ve zdrojovém režimu',
+	'tog-disablecategoryselect-v2' => 'Zakázat modul kategorií (pouze pokud je zakázaný vizuální editor)',
 );
 
 /** German (Deutsch)
@@ -270,6 +270,8 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
+ * @author Benfutbol10
  * @author Pertile
  * @author Translationista
  * @author VegaDark
@@ -277,6 +279,7 @@ $messages['el'] = array(
 $messages['es'] = array(
 	'categoryselect-desc' => 'Proporciona una interfaz para gestionar las categorías de los artículos sin editar todo el artículo.',
 	'categoryselect-code-view' => 'Vista de código',
+	'categoryselect-code-view-placeholder' => 'Añadir categorías aquí, por ejemplo, [[Category:Nombre]]',
 	'categoryselect-visual-view' => 'Vista visual',
 	'categoryselect-infobox-caption' => 'Opciones de categoría',
 	'categoryselect-infobox-category' => 'Pon el nombre de la categoría:',
@@ -294,7 +297,8 @@ $messages['es'] = array(
 	'categoryselect-error-user-rights' => 'Error de derechos de usuario.',
 	'categoryselect-error-db-locked' => 'La base de datos está bloqueada.',
 	'categoryselect-edit-abort' => 'La modificación que ha intentado realizar fue abortada por un gancho de extensión',
-	'tog-disablecategoryselect' => 'Desactivar el Etiquetador de Categorías (Category Tagging)',
+	'tog-disablecategoryselect' => 'Desactivar el módulo de categorías (sólo se aplica si la edición en modo visual está desactivada)',
+	'tog-disablecategoryselect-v2' => 'Desactivar módulo de Categorías en el modo fuente',
 );
 
 /** Basque (Euskara)
@@ -346,6 +350,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  * @author Wyz
@@ -372,7 +377,7 @@ $messages['fr'] = array(
 	'categoryselect-error-db-locked' => 'La base de données est verrouillée.',
 	'categoryselect-edit-abort' => "La modification que vous avez essayé de faire a été arrêtée par un crochet d'une extension",
 	'tog-disablecategoryselect' => "Désactiver le module des catégories (valable uniquement si l'édition en mode visuel a été désactivée)",
-	'tog-disablecategoryselect-v2' => 'Désactiver le module Catégorie en mode Source',
+	'tog-disablecategoryselect-v2' => "Désactiver le module Catégorie (s'applique uniquement si le mode d'édition visuelle est désactivé)",
 );
 
 /** Galician (Galego)
@@ -400,7 +405,7 @@ $messages['gl'] = array(
 	'categoryselect-error-db-locked' => 'A base de datos está bloqueada.',
 	'categoryselect-edit-abort' => 'O asociador da extensión abortou a modificación que intentou realizar',
 	'tog-disablecategoryselect' => 'Desactivar o módulo de categorías (só se aplica se a edición no modo visual está desactivada)',
-	'tog-disablecategoryselect-v2' => 'Desactivar o módulo de categorías no modo fonte',
+	'tog-disablecategoryselect-v2' => 'Desactivar o módulo de categorías (só se aplica se o modo de edición visual está desactivado)',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -459,7 +464,7 @@ $messages['ia'] = array(
 	'categoryselect-error-db-locked' => 'Le base de datos es blocate.',
 	'categoryselect-edit-abort' => 'Le modification que tu tentava facer ha essite abortate per un extension.',
 	'tog-disablecategoryselect' => 'Disactivar le modulo Categoria (applicabile solmente si le modification in modo visual ha essite disactivate)',
-	'tog-disablecategoryselect-v2' => 'Disactivar le modulo Categoria in modo Fonte',
+	'tog-disablecategoryselect-v2' => 'Disactivar le modulo Categoria (applicabile solmente si le modification in modo visual es disactivate)',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -618,7 +623,7 @@ $messages['mk'] = array(
 	'categoryselect-error-db-locked' => 'Базата на податоци е заклучена.',
 	'categoryselect-edit-abort' => 'Измените кои се обидовте да ги направите се откажани од кука за додатоци',
 	'tog-disablecategoryselect' => 'Оневозможи го модулот за категории (важи само кога е оневозможено уредувањето во режимот „Визуелно“)',
-	'tog-disablecategoryselect-v2' => 'Оневозможи го модулот за Категорија во „Изворен режим“',
+	'tog-disablecategoryselect-v2' => 'Оневозможи го категорискиот модул (важи само ако е оневозможен визуелниот режим)',
 );
 
 /** Malayalam (മലയാളം)
@@ -665,7 +670,7 @@ $messages['ms'] = array(
 	'categoryselect-error-db-locked' => 'Pangkalan data dikunci.',
 	'categoryselect-edit-abort' => 'Pengubahsuaian yang anda cuba buat telah dipaksa henti oleh cangkuk sambungan',
 	'tog-disablecategoryselect' => 'Matikan modul Kategori (hanya jika tidak boleh menyunting dalam mod visual)',
-	'tog-disablecategoryselect-v2' => 'Matikan modil Kategori dalam mod Sumber',
+	'tog-disablecategoryselect-v2' => 'Matikan modul Kategori (hanya jika mod penyuntingan visual dimatikan)',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -694,7 +699,7 @@ $messages['nb'] = array(
 	'categoryselect-error-db-locked' => 'Database er låst.',
 	'categoryselect-edit-abort' => 'Endringene du prøvde å utføre ble avbrutt av en utvidelseskrok',
 	'tog-disablecategoryselect' => 'Deaktiver kategorimodulen (gjelder kun dersom redigering i visuell modus er deaktivert)',
-	'tog-disablecategoryselect-v2' => 'Deaktiver kategorimodulen i kildemodus',
+	'tog-disablecategoryselect-v2' => 'Deaktiver kategorimodulen (gjelder kun dersom redigering i visuell modus er deaktivert)',
 );
 
 /** Dutch (Nederlands)
@@ -726,7 +731,7 @@ Terugschakelen naar visuele weergave is niet mogelijk.',
 	'categoryselect-error-db-locked' => 'De database is geblokkeerd.',
 	'categoryselect-edit-abort' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook',
 	'tog-disablecategoryselect' => 'Categoriemodule uitschakelen (alleen van toepassing als bewerken in visuele modus is uitgeschakeld)',
-	'tog-disablecategoryselect-v2' => 'Categoriemodule uitschakelen in broncodemodus',
+	'tog-disablecategoryselect-v2' => 'Categoriemodule uitschakelen (alleen van toepassing als de visuele tekstverwerker is uitgeschakeld)',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -743,7 +748,15 @@ $messages['or'] = array(
 	'categoryselect-button-cancel' => 'ନାକଚ',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'categoryselect-button-save' => 'Beilege',
+);
+
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -768,7 +781,7 @@ $messages['pl'] = array(
 	'categoryselect-error-db-locked' => 'Baza danych jest zablokowana',
 	'categoryselect-edit-abort' => 'Zmiany, które próbowano wprowadzić zostały anulowane przez inne rozszerzenie',
 	'tog-disablecategoryselect' => 'Wyłącz pasek kategorii (tylko gdy edytowanie w trybie wizualnym zostało wyłączone)',
-	'tog-disablecategoryselect-v2' => 'Wyłącz pasek kategorii w trybie źródłowym',
+	'tog-disablecategoryselect-v2' => 'Wyłącz pasek kategorii w trybie (stosuje się tylko jeśli zablokowany jest edytor wizualny)',
 );
 
 /** Piedmontese (Piemontèis)
@@ -906,7 +919,7 @@ $messages['ru'] = array(
 	'categoryselect-error-db-locked' => 'База данных заблокирована.',
 	'categoryselect-edit-abort' => 'Изменение, которые вы пытались сделать, прервано обработчиком расширения',
 	'tog-disablecategoryselect' => 'Отключить модуль категорий (применяется только при отключенном редактировании в визуальном режиме)',
-	'tog-disablecategoryselect-v2' => 'Отключить модуль Категории в режиме Исходного кода',
+	'tog-disablecategoryselect-v2' => 'Отключить модуль Категорий (активно только при редактировании в режиме Исходного кода)',
 );
 
 /** Slovenian (Slovenščina)
@@ -961,7 +974,7 @@ $messages['sv'] = array(
 	'categoryselect-error-db-locked' => 'Databasen är låst.',
 	'categoryselect-edit-abort' => 'Ändringen du försökte göra avbröts av en förlängningskrok',
 	'tog-disablecategoryselect' => 'Inaktivera kategorimodul (gäller endast om redigering i visuellt läge har inaktiverats)',
-	'tog-disablecategoryselect-v2' => 'Inaktivera kategorimodulen i källäget',
+	'tog-disablecategoryselect-v2' => 'Inaktivera kategorimodulen (gäller endast om det visuella redigeringsläget är inaktiverat)',
 );
 
 /** Swahili (Kiswahili) */
@@ -1010,8 +1023,10 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
+ * @author Suelnur
  */
 $messages['tr'] = array(
+	'categoryselect-addcategory-button' => 'Kategori ekle',
 	'categoryselect-button-save' => 'Kaydet',
 	'categoryselect-button-cancel' => 'İptal',
 );
