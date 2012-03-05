@@ -312,6 +312,7 @@
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
+			$this->setUpMockObject( 'UserLoginHelper', array( 'setUserLanguage' => null ), true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
 			}
@@ -329,6 +330,7 @@
 			
 			// tear down
 			$this->tearDownRequest();
+			$this->tearDownHelper();
 		}
 		
 		public function mailPasswordDataProvider() {
@@ -415,9 +417,9 @@
 				// error - User - mail error
 				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams4, $mockUserParams7, $mockLoginFormParams7, 'error', $expMsg7 ),
 				// success - User - email sent
-				//array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams4, $mockUserParams7, $mockLoginFormParams8, 'ok', $expMsg8 ),
+				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams4, $mockUserParams7, $mockLoginFormParams8, 'ok', $expMsg8 ),
 				// success - Temp User - email sent
-				//array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams9, $mockUserParams7, $mockLoginFormParams8, 'ok', $expMsg8 ),
+				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams9, $mockUserParams7, $mockLoginFormParams8, 'ok', $expMsg8 ),
 			);
 		}
 		
@@ -448,6 +450,9 @@
 			
 			$responseData = $response->getVal( 'msg' );
 			$this->assertEquals( $expMsg, $responseData );
+
+			// tear down
+			$this->tearDownHelper();
 		}
 
 		public function changePasswordDataProvider() {
@@ -482,7 +487,8 @@
 				'doRedirect' => array(
 					'mockExpTimes' => 1,
 					'mockExpValues' => null,
-				)
+				),
+				'setUserLanguage' => null,
 			);
 			
 			// 5 redirect page -- cancel request + returnto
@@ -602,6 +608,7 @@
 			$expMsg15 = wfMsg( 'resetpass_success' );
 			$mockHelperParams15 = array(
 				'doRedirect' => null,
+				'setUserLanguage' => null,
 			);
 			
 			// 16 success -- temp user
@@ -615,7 +622,7 @@
 				// 3 error -- POST + empty fakeGet + not allow password change
 				array( $params1, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams3, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, 'error', $expMsg3 ),
 				// 4 redirect page -- cancel request + empty returnto
-				//array( $params4, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
+				array( $params4, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
 				// 5 redirect page -- cancel request + returnto
 				//array( $params5, $mockWebRequest2, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams4, null, null ),
 				// 6 do nothing -- not match edit token
@@ -639,7 +646,7 @@
 				// 14 error -- not valid new password (securepasswords-invalid)
 				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams14, $mockHelperParams1, 'error', $expMsg14 ),
 				// 15 success -- real user
-				//array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams15, $mockHelperParams15, 'ok', $expMsg15 ),
+				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams15, $mockHelperParams15, 'ok', $expMsg15 ),
 				// 16 success -- temp user
 				
 			);
