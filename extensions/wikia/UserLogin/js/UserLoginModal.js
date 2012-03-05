@@ -55,12 +55,12 @@ var UserLoginModal = {
 						);
 					}
 				});
-	
-				// setup facebook button
-				UserLoginFacebook.setupTooltips();
+
+				// lazy load jquery.wikia.tooltip.js (BugId:22143)
+				UserLoginFacebook.init();
 			});
 			$.getResources([$.getSassCommonURL('/extensions/wikia/UserLogin/css/UserLoginModal.scss')]);
-			
+
 			return true;
 		} else if(window.wgComboAjaxLogin) {
 			/* 1st, 2nd, 4th, and 5th vars in this method is not used outside of ajaxlogin itself*/
@@ -69,10 +69,10 @@ var UserLoginModal = {
 					AjaxLogin.doSuccess = options['callback'];
 				}
 			}, false, true);
-			
+
 			return true;
 		}
-		
+
 		return false;
 	},
 	init: function() {

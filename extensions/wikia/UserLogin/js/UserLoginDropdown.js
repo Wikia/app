@@ -25,7 +25,7 @@ var UserLoginDropdown = {
 				// do nothing on hover out
 				clearTimeout(UserLoginDropdown.hoverHandle);
 			});
-			
+
 		HoverMenuGlobal.menus.push(UserLoginDropdown);
 	},
 	show: function() {
@@ -33,6 +33,9 @@ var UserLoginDropdown = {
 			this.dropdown.addClass('show');
 			if(!this.loginAjaxForm) {
 				this.loginAjaxForm = new UserLoginAjaxForm(this.dropdown);
+
+				// lazy load jquery.wikia.tooltip.js (BugId:22143)
+				UserLoginFacebook.init();
 			}
 			this.loginAjaxForm.inputs['username'].focus();
 
