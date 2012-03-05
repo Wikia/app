@@ -9,6 +9,7 @@ $options = array('help');
 
 require_once( '../../commandLine.inc' );
 require_once( 'premigrate.class.php' );
+require_once( 'videolog.class.php' );
 
 
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
@@ -17,6 +18,7 @@ require_once( 'premigrate.class.php' );
 global $wgCityId, $wgExternalDatawareDB;
 
 echo( "Video Migration script running for $wgCityId\n" );
+videoLog( 'migration', 'START', '');
 
 if( isset( $options['help'] ) && $options['help'] ) {
 	echo( "Usage: php VideoMigrationData.php\n" );
@@ -56,6 +58,7 @@ $dbw_dataware->freeResult( $rows );
 $failures = array();
 
 $i = 0;
+$er = 0;
 $timeStart = microtime( true );
 if( $rowCount ) {
 	// before processing videos prepare 'status cache'
@@ -160,6 +163,7 @@ if( $rowCount ) {
 			$failures[] = 'Upload failed :' . $video->img_name;
 			var_dump( $result );
 			echo( "- Failure! \n" );
+			$er++;
 		}
 
 	}
@@ -172,12 +176,14 @@ else {
 $dbw_dataware->freeResult($rows);
 
 echo(": {$rowCount} videos processed.\n");
+videoLog( 'migration', 'MIGRATED', "migrated:$i,total:$rowCount,errors:$er");
 
 
 echo "Migrating RelatedVideos from cross-wiki links to regular links\n";
 
 $botUser = User::newFromName( 'WikiaBot' );
 
+$i=0;
 $rows = $dbw->query( 'select page_id FROM page WHERE page_namespace = 1100' );
 while( $page = $dbw->fetchObject($rows) ) {
 	$articleId = $page->page_id;
@@ -195,12 +201,15 @@ while( $page = $dbw->fetchObject($rows) ) {
 			if ( $sTextAfter != $sText ) {
 				echo "ARTICLE WAS CHANGED! \n";
 				$status = $oArticle->doEdit( $sTextAfter, 'Changing cross-wiki links to local links', EDIT_UPDATE, false, $botUser );
+				$i++;
 			}
 		}
 	}
 }
 
 echo "Done\n";
+videoLog( 'migration', 'RELATEDVIDEOS', "edits:$i");
+videoLog( 'migration', 'STOP', "");
 
 
 foreach ( $failures as $failure ){

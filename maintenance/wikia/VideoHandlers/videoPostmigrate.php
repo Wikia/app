@@ -6,10 +6,13 @@
 ini_set( 'display_errors', 'stdout' );
 $options = array('help');
 @require_once( '../../commandLine.inc' );
+require_once( 'videolog.class.php' );
+
 global $IP, $wgCityId, $wgExternalDatawareDB;
 #$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 #echo( "$IP\n" );
 echo( "Postmigration script running for $wgCityId\n" );
+videoLog( 'postmigration', 'START', '');
 
 if( isset( $options['help'] ) && $options['help'] ) {
 	echo( "Usage: php videoPostmigrate.php\n" );
@@ -33,7 +36,8 @@ $tables = array(
 );
 
 
-
+$i=0;
+$j=0;
 foreach( $tables as $tableName => $tableData ) {
 	echo( "Processing $tableName\n" );
 	
@@ -84,6 +88,7 @@ foreach( $tables as $tableName => $tableData ) {
 					'entry_table'	=> $tableName,
 				)
 			);
+			$i++;
 				
 		} catch(DBError $e) {
 			# this is most likely due to duplication errors
@@ -91,15 +96,20 @@ foreach( $tables as $tableName => $tableData ) {
 			# TODO - remove pagelinks if they exist in NS_FILE namespace
 		
 			echo "  failed\n";
+			$j++;
 		}		
 	}
 
 }
 
+videoLog( 'postmigration', 'TABLESUPDATE', "updated:$i,failed:$j");
+
 echo "Done updating tables\n";
 echo "Flipping the switch\n";
 
 WikiFactory::setVarByName('wgVideoHandlersVideosMigrated', $wgCityId, true);
+
+videoLog( 'postmigration', 'VARIABLE_SET', "");
 
 echo "Purging articles including videos:";
 
@@ -124,6 +134,7 @@ while( $image = $dbw->fetchObject( $rows ) ) {
 
 
 echo "\nDone\n";
+videoLog( 'postmigration', 'STOP', "");
 
 
 ?>

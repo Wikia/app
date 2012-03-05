@@ -8,11 +8,14 @@ $options = array('help');
 
 require_once( '../../commandLine.inc' );
 require_once( 'premigrate.class.php' );
+require_once( 'videolog.class.php' );
 
 global $IP, $wgCityId, $wgExternalDatawareDB;
 #$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 echo( "$IP\n" );
 echo( "Premigration script running for $wgCityId\n" );
+
+videoLog( 'premigration', 'START', '');
 
 if( isset( $options['help'] ) && $options['help'] ) {
 	echo( "Usage: php videoPremigrate.php\n" );
@@ -38,6 +41,7 @@ echo(": {$rowCount} videos found\n");
 
 
 $i = 0;
+$j = 0;
 $timeStart = microtime( true );
 if($rowCount) {
 	Premigrate::initialize();
@@ -48,6 +52,8 @@ if($rowCount) {
 		if( !Premigrate::needsProcessing($video->img_name) ) {
 			continue;
 		}
+
+		$j++;
 
 		// debugging info
 		$timeEnd = microtime( true );
@@ -68,6 +74,7 @@ else {
 }
 
 $dbw->freeResult($rows);
+videoLog( 'premigration', 'STOP', "processed:$j,total:$i");
 
 echo(": {$rowCount} videos processed.\n");
 
