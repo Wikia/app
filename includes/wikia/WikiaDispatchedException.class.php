@@ -39,7 +39,7 @@ class WikiaDispatchedException extends WikiaException {
 	protected function getOriginal() {
 		return $this->_original;
 	}
-	
+
 	/**
 	 * String representation of the exception
 	 *
@@ -48,13 +48,13 @@ class WikiaDispatchedException extends WikiaException {
 	 */
 	public function __toString() {
 		$ret = '';
-		
+
 		if ( null !== ( $e = $this->getOriginal() ) ) {
 			$ret .= $e->__toString() . "\n\n";
 		}
-		
+
 		$ret .= 'Reported by ' . parent::__toString();
-		
+
 		return $ret;
 	}
 
@@ -64,25 +64,25 @@ class WikiaDispatchedException extends WikiaException {
 	function report() {
 		global $wgRequest;
 		$info = '';
-		
+
 		if ( !empty( $this->_original ) ) {
 			$file = $this->_original->getFile();
 			$line = $this->_original->getLine();
 			$message = $this->_original->getMessage();
-			
+
 			$info = "exception has occurred at line {$line} of {$file}: {$message}";
 		} else {
 			$info = "unknown exception has occurred";
 		}
-		
+
 		$url = '[no URL]';
-		
+
 		if ( isset( $wgRequest ) ) {
 			$url = $wgRequest->getFullRequestURL();
 		}
-		
+
 		trigger_error("[REPORT: {$this->getMessage()}] WikiaDispatcher reports an {$info}  (URL: {$url}) [REPORT: End]", E_USER_ERROR);
-		
+
 		parent::report();
 	}
 
