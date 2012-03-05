@@ -13,22 +13,25 @@
 				return;
 			}
 
-			$href = $page->getTitle()->getLocalUrl();
-			switch ( $this->name ) {
-				case 'RecentChangesLinked':
-					$href .= '/' . $wgTitle->getPartialUrl();
-					break;
-
-				case 'Contributions':
-					$href .= '/' . $wgUser->getTitleKey();
-					break;
-			}
-
 			$this->available = true;
 			$this->enabled = $page->userCanExecute($wgUser);
 			$this->caption = $page->getDescription();
 			$this->description = $page->getDescription();
-			$this->href = $href;
+
+			$this->href = $page->getTitle()->getLocalUrl();
+
+			switch ( $this->name ) {
+				case 'RecentChangesLinked':
+					$this->href .= '/' . $wgTitle->getPartialUrl();
+					break;
+				case 'Contributions':
+					$this->href .= '/' . $wgUser->getTitleKey();
+					break;
+				case 'PageLayoutBuilder':
+					// do not show PLB if it's not available on the wiki
+					$this->available = $this->enabled;
+					break;
+			}
 
 			$specialPageName = $page->getName();
 			$options = array();
