@@ -33,6 +33,9 @@ class WikiaException extends MWException {
 		} else {
 			parent::__construct($message, $code, $previous);
 		}
+
+		// log more details (macbre)
+		Wikia::logBacktrace(__METHOD__);
 	}
 
 	/**
@@ -80,8 +83,8 @@ class WikiaException extends MWException {
 
 	/**
 	 * Override MWException report() and write exceptions to error_log
-	 * 
-	 * Uncomment the flush() line to override normal MWException headers 
+	 *
+	 * Uncomment the flush() line to override normal MWException headers
 	 * so we can display an error page instead of a 500 error (varnish doesn't like those)
 	 *
 	 * TODO: display a nice walter?
@@ -96,9 +99,8 @@ class WikiaException extends MWException {
 			$url = $wgRequest->getFullRequestURL();
 		}
 		trigger_error("Exception from line $line of $file: $message ($url)", E_USER_ERROR);
-		
+
 		//flush();   // bust the headers_sent check in MWException::report()
 		parent::report();
 	}
-
 }
