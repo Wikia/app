@@ -118,8 +118,8 @@ class SearchDigestPager extends ReverseChronologicalPager {
 
 		# Don't announce the limit everywhere if it's the default
 		$urlLimit = $this->mLimit == $this->mDefaultLimit ? '' : $this->mLimit;
-		$minLim = $this->mOffset - $urlLimit;
-		$maxLim = $this->mOffset + $urlLimit;
+		$minLim = $this->mOffset - $this->mLimit;
+		$maxLim = $this->mOffset + $this->mLimit;
 
 		if ( $this->mIsFirst ) {
 			$prev = false;
