@@ -328,7 +328,7 @@ class WallNotifications {
 			$watcher = User::newFromId($val);
 			$mode = $watcher->getOption('enotifwallthread');
 
-			if($mode != false && $watcher->getId() != 0 && (
+			if(!empty($mode) && $watcher->getId() != 0 && (
 				($mode == WALL_EMAIL_EVERY) ||
 				( $mode == WALL_EMAIL_SINCEVISITED && empty($this->notUniqueUsers[$entityKey][$watcher->getId()]) )  
 			)) {
