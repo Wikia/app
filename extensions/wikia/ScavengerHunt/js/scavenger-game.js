@@ -34,7 +34,7 @@ var ScavengerHunt = {
 				method: 'getHunterId'
 			},
 			function( json ) {
-				if ( json.name ){ ScavengerHunt.userName = json.name};
+				if ( json.name ){ ScavengerHunt.userName = json.name}
 				ScavengerHunt.gameId = $.cookies.get(
 					ScavengerHunt.getCookieKey(),
 					{
@@ -74,7 +74,7 @@ var ScavengerHunt = {
 					)
 				.appendTo( '#WikiaArticle' );
 			}
-		)
+		);
 	},
 
 	//init article page
@@ -297,7 +297,7 @@ var ScavengerHunt = {
 					var w = $('#scavengerEntryFormModal');
 					var b = w.find('.scavenger-clue-button input[type=submit]');
 					var inputFrom = w.find('.scavenger-entry-form');
-					var inputs = inputFrom.find('input, textarea').not('input[type=submit]')
+					var inputs = inputFrom.find('input, textarea').not('input[type=submit]');
 					var inputsChange = function() {
 						var ok = true;
 						inputs.each(
@@ -410,7 +410,7 @@ var ScavengerHunt = {
 		ScavengerHunt.showClueText(data.articleClue);
 
 		if (type == 'notFound') {
-			type = 'active'
+			type = 'active';
 			Sprite.changeSprite(el, {
 				pos: data[type].pos,
 				TL: data[type].spriteTL,
@@ -430,7 +430,7 @@ var ScavengerHunt = {
 		}
 
 		if (type == 'active') {
-			type = 'notFound'
+			type = 'notFound';
 			var index = el.data('index');
 			var data = ScavengerHunt.huntData.articles[index];
 			Sprite.changeSprite(el, {
@@ -582,8 +582,8 @@ var ScavengerHunt = {
 		ScavengerHunt.log('onProgressBarItemClick invoked with target = ' + targetItem);
 		ScavengerHunt.track('progressBar/targetItem/click/targetItem=' + targetItem);
 		//using <a> in <div> for sprites is harder - let's stick to JS version for now
-		
-		window.location.href = ScavengerHunt.addCachebusterToLink( ScavengerHunt.huntData.articles[$(this).data('index')].articleTitle );		
+
+		window.location.href = ScavengerHunt.addCachebusterToLink( ScavengerHunt.huntData.articles[$(this).data('index')].articleTitle );
 	},
 
 	addCachebusterToLink: function( link ){
