@@ -1,28 +1,13 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
-$roundness: 2px;
-$roundness_inputs: 0px;
-
-$separators: mix($color-page-border,$color-page,50%);
-
-$inputs_bg: lighten($color-page, 3%);
-$inputs_bg_f: lighten($color-page, 6%);
-$bubble_bg: mix($color-buttons, $color-page, 15%);
-$new_inputs_bg: mix($bubble_bg, $inputs_bg,20%);
-@if $is-dark-wiki {
-	$inputs_bg: lighten($color-page, 5%);
-	$inputs_bg_f: lighten($color-page, 10%);
-	$bubble_bg: mix($color-buttons, $color-page, 30%);
-	$new_inputs_bg: mix($bubble_bg, $inputs_bg,30%);
-	@if lightness($bubble_bg) < 30 {
-		$bubble_bg: mix($color-buttons, $color-page, 40%);
-	}
-}
+@import "WallColors";
+@import "WallDimensions";
+@import "WallSortingBar";
 
 /* IE7 targeted hacks */
 html>body #Wall textarea { *width: 96%; }
@@ -67,19 +52,20 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				top: 0; left: 0; width: 100%; height: 100%;
 				background: yellow;
 			}
-			/* edit message */
-			.msg-title { 
-				font-weight: bold; 
+			.msg-title {
+				font-weight: bold;
 				font-size: 18px;
+
 				a {
 					color: $color-text;
-					font-decoration: none;
+					text-decoration: none;
 				}
 			}
-			//.speech-bubble-message { line-height: 150%; }
-			.msg-body textarea { font-size: 13px; height: 100px; }
+			.msg-body {
+				word-wrap: break-word;
+			}
 			> ul { margin-left: 75px; }
-			border: none; // -top: 1px solid $separators;
+			border: none; // -top: 1px solid $color-wall-border;
 			padding-top: 12px;
 			margin-bottom: 0px;
 		}
@@ -93,7 +79,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				height: 0px; width: 0px;
 				border-width: 8px;
 				border-style: solid;
-				border-color: transparent transparent $separators transparent;
+				border-color: transparent transparent $color-wall-border transparent;
 				left: 28px; top: -16px;
 				visibility: visible;
 			}
@@ -127,42 +113,46 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	
 	/* only messages, not replies */
 	ul.comments > li.message {
-		border-bottom: 1px solid $separators;
+		border-bottom: 1px solid $color-wall-border;
 		padding-top: 20px;
 		padding-bottom: 30px;
-		& > .speech-bubble-message-removed {
-			text-align: center;
-			@include border-radius($roundness);
-			background: $bubble_bg;
+
+	  	> .speech-bubble-message {
+			@include border-radius($wall-border-radius);
+			background: $color-wall-bubble;
 			border: none;
-			padding: 10px 20px 10px 20px;
-	  }	
-	  & > .speech-bubble-message {
-			@include border-radius($roundness);
-			background: $bubble_bg;
-			border: none;
-			padding: 10px 20px 10px 20px;
+			padding: 10px 20px;
 			margin-bottom: 15px;
 			margin-right: 16px;
+
 			&:before {
 				border: none;
 			}
+
 			&:after {
-				border-color: $bubble_bg $bubble_bg transparent transparent;
+				border-color: $color-wall-bubble $color-wall-bubble transparent transparent;
 				border-width: 12px;
 			}
-			.edited-by { margin-top: 6px;  }
 		}
+
+		> .speech-bubble-message-removed {
+			text-align: center;
+			@include border-radius($wall-border-radius);
+			background: $color-wall-bubble;
+			border: none;
+			padding: 10px 20px;
+	  	}
+
 		&:last-child { border-bottom: none; }
 	}
-	
+
 	/* inputs on page */
-	textarea:-moz-placeholder { color: mix($color-text, $color-page, 50%); }
-	textarea::-webkit-input-placeholder { color: mix($color-text, $color-page, 50%); }
+	textarea:-moz-placeholder { color: $color-wall-text-placeholder }
+	textarea::-webkit-input-placeholder { color: $color-wall-text-placeholder }
 	textarea { 
 		@include box-sizing;
-		@include border-radius($roundness_inputs);
-		background: $inputs_bg;
+		@include border-radius($wall-border-radius-inputs);
+		background: $color-wall-input;
 		color: $color-text;
 		border: none;
 		outline: none;
@@ -174,24 +164,65 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		display: block;
 		overflow: hidden;
 		font-size: 13px;
-		&:focus { background: $inputs_bg_f; color: $color-text; }
-		&:focus { @include box-shadow(0px, 0px, 4px, mix($color-buttons,$color-page,100%) ); }
+
+		&:focus {
+			@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow );
+			background: $color-wall-input-focus;
+			color: $color-text;
+		}
 	}
-	.new-message textarea{ 
-		background: $new_inputs_bg;
+	.new-message textarea { 
+		background: $color-wall-input-new;
 		font-size: 14px;
 		&.title { height: 30px; margin-bottom: 10px; }
 		&.body { height: 70px; } 
-		&:focus { background: $inputs_bg_f; color: $color-text; }
+		&:focus { background: $color-wall-input-focus; color: $color-text; }
 	}
 	.new-reply textarea{ height: 30px; line-height: normal; }
-	ul.comments > li.message li.message textarea { border: 1px solid $separators; }
+	ul.comments > li.message li.message textarea { border: 1px solid $color-wall-border; }
 	ul.comments > li.message > .speech-bubble-message textarea { font-size: 13px; }
 	ul.comments > li.message > .speech-bubble-message textarea.title { font-size: 18px; font-weight: bold; }
 
+	/* edit message */
+	ul.comments > li.message > .speech-bubble-message {
+		.msg-title textarea { 
+			font-size: 13px;
+			font-weight: normal;
+			height: 32px;
+			line-height: 18px;
+			margin-bottom: 10px;
+
+			&:focus {
+				@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow);
+				background: $color-wall-input-focus;
+				color: $color-text;
+			}
+		}
+
+		.msg-body textarea {
+			font-size: 13px;
+			height: 100px;
+			margin-top: 10px;
+		}
+	}
+
+	.msg-toolbar {
+		@include clearfix;
+	}
+
+	.edit-buttons {
+		display: none;
+		float: right;
+
+		.wikia-button {
+			float: right;
+			margin-left: 10px;
+		}
+	}
+
 	/* only replies */
 	ul.comments > li.message ul.replies > li {
-		border-top: 1px solid $separators;
+		border-top: 1px solid $color-wall-border;
 		margin-right: 16px;
 	}
 	ul.comments > li.message li.message {
@@ -227,36 +258,35 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 	}
 
-
 	/* Common styles for new message and new reply */
 	.SpeechBubble.new-message, li.SpeechBubble.new-reply {
 		margin-right: 16px;
 	}
-	
+
 	/* Post new message (top of the wall) */
 	.new-message {
 		margin-bottom: 40px;
 		position: relative;
 		.preview { margin-left: 10px; margin-right: 10px; }
 		.speech-bubble-message {
-			@include border-radius($roundness);
-			//@include box-shadow(0,0,6px,$bubble_bg);
-			background: $bubble_bg;
+			@include border-radius($wall-border-radius);
+			//@include box-shadow(0,0,6px,$color-wall-bubble);
+			background: $color-wall-bubble;
 			border: none;
 			padding: 10px;
 			&:before {
 				border: none;
 			}
 			&:after {
-				border-color: $bubble_bg $bubble_bg transparent transparent;
+				border-color: $color-wall-bubble $color-wall-bubble transparent transparent;
 			}
 		}
-	
+
 		.no-title-container {
 			position: relative;
 			float: right;
 			.no-title-warning {
-				@include border-radius($roundness);
+				@include border-radius($wall-border-radius);
 				position: absolute;
 				width: 200px;
 				font-size: 12px;
@@ -264,46 +294,46 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				height: 19px;
 				top: 4px;
 				left: -204px;
-				background: mix($inputs_bg, $color-error, 70%);
+				background: mix($color-wall-input, $color-error, 70%);
 				text-align: center;
 				display: none;
 				z-index: 50;
 			}
 		}
+
 		#WallMessageSubmit {
-			//right: 10px;
-			//position: absolute;
 			float: right;
 			margin-top: 10px;
 			margin-left: 10px;
-			position: relative;
 		}
+
 		#WallMessagePreview, #WallMessagePreviewCancel {
-			//right: 110px;
-			//position: absolute;
 			float: right;
 			margin-top: 10px;
 			margin-left: 10px;
-			position: relative;
+		}
+		.speech-bubble-buttons {
+			@include clearfix;
 		}
 	}
-	
+
 	.preview-title { 
 		font-weight: bold; 
 		font-size: 18px;
 	}
-	
+
 	.preview-bubble {
-		background: mix($color-error,$bubble_bg,10%) !important;
-		&:after { border-color: mix($color-error,$bubble_bg,10%) mix($color-error,$bubble_bg,10%) transparent transparent !important; }
+		background: $color-wall-bubble-preview !important;
+		&:after { border-color: $color-wall-bubble-preview $color-wall-bubble-preview transparent transparent !important; }
 	}
+
 	.replies .preview-bubble {
-		background: mix($color-error,$color-page,5%) !important;
+		background: $color-wall-bubble-preview-reply !important;
 		padding: 5px 10px 5px 10px !important;
 		&:before { display: none !important; }
 		&:after { display: none !important; }
 	}
-	
+
 	/* Post reply to message (beneath each message thread) */
 	.new-reply {
 		margin-bottom: 0;
@@ -337,14 +367,19 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			position: relative;
 		}
 	}
-	
+
 	/* change background of inputs when they are disabled (submitting) */
 	.new-message input[disabled=disabled],
 	.new-message textarea[disabled=disabled],
-	.new-reply textarea[disabled=disabled]
-		{ opacity: 0.8; }
-	
-	#WallMessageSubmit, .replyButton { padding-left: 20px; padding-right: 20px; }
+	.new-reply textarea[disabled=disabled] {
+		opacity: 0.8;
+	}
+
+	#WallMessageSubmit, .replyButton {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
 	.loadingAjax {
 		vertical-align: center;
 		height: 21px;
@@ -354,10 +389,10 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		padding: 0;
 		content: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */
 	}
-	
+
 	.load-more{
 		//@include border-radius(4px);
-		border-top: 1px solid $separators;
+		border-top: 1px solid $color-wall-border;
 		//border-bottom: 1px solid $color-page-border;
 		//margin-left:75px;
 		margin: 9px 16px 0px 0px;
@@ -378,14 +413,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			}
 		}
 	}
-	
-	/* buttons for editing existing msg/reply */
-	.edit-buttons {
-		width: 100%;
-		height: 30px;
-		button { margin: 0 5px 10px 5px; }
-		.wikia-button { float: right; }
-	}
+
 	.speech-bubble-message .buttons {
 		.wikia-menu-button {
 			padding-left: 8px;
@@ -402,25 +430,17 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	
 	/* element used to hide original wikitext before edit starts */
 	.before-edit { display: none }
-	
-	.msg-title {
-		font-size: 14px;
-		//font-weight: bold;
-		margin: 0 0 2px 0;
-		overflow: hidden;
-		//text-shadow: #c0c0c0 1px 1px 3px;
-	}
-	
+
 	.follow {
 		float: right;
 		min-width: 60px;
 		text-align: center;
 		opacity: 0.7;
 		display: block;
-		margin-right: -10px;
 		&:hover { opacity: 1; background-image: none; }
 		background-image: none;
 	}
+
 	.follow.secondary {
 		background-image: none;
 		&:hover { background-image: none; }
@@ -431,18 +451,23 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	.follow:not(.secondary):hover {
 		opacity: 1;
 	}
-	
+
 	.edited-by {
-		margin-bottom: 5px;
 		font-size: 14px;
-		margin-bottom: 5px;
 		font-weight: bold;
-		.subtle { color: $color-alternate-text; font-weight: normal; font-size: 12px; margin-left: 5px; }
+		margin-bottom: 5px;
+
+		.subtle {
+			color: $color-alternate-text;
+			font-weight: normal;
+			font-size: 12px;
+			margin-left: 5px;
+		}
 	}
-	.preview .edited-by { margin-top: 6px; }
-	
+
 	.timestamp {
-		line-height: 23px;
+		float: left;
+
 		a, span { 
 			color: $color-alternate-text; font-size: 10px;
 			.timeago-fmt { display: none; }
@@ -503,7 +528,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 #WallBrickHeader {
 	font-size: 14px;
-	border-bottom: 1px solid $separators;
+	border-bottom: 1px solid $color-wall-border;
 	padding-bottom: 5px;
 	.WallName {
 		padding-right: 5px;
@@ -615,15 +640,11 @@ body.skin-monobook {
 		}
 	}
 }
-$infobox-background: darken( $color-page, 3% );
-@if $is-dark-wiki {
-	$infobox-background: lighten( $color-page, 3% );
-}
 
 .deleteorremove-infobox {
 	display: block;
 	margin-top: -4px;
-	background: $infobox-background;
+	background: $color-wall-infobox;
 	font-size: 12px;
 	border-top: 1px dashed $color-page-border;
 	position: relative;
@@ -637,15 +658,12 @@ $infobox-background: darken( $color-page, 3% );
 	}
 	.deleteorremove-bubble {
 		@include border-radius(3px);
-		@include box-shadow(2px, 2px, 4px, darken($infobox-background,4%));
-		@if lightness($color-page) < 50 {
-			@include box-shadow(2px, 2px, 4px, darken($infobox-background,3%));
-		}
+		@include box-shadow(2px, 2px, 4px, $color-wall-infobox-delete);
 
 		display: block;
 		padding: 5px 10px 5px 5px;
 		background: $color-page;
-		border: 1px solid $separators;
+		border: 1px solid $color-wall-border;
 		margin: 10px;
 		position: relative;
 		.avatar {
@@ -675,7 +693,7 @@ $infobox-background: darken( $color-page, 3% );
 			z-index: 2;
 		}
 		&:before {
-			border-color: transparent transparent transparent $separators;
+			border-color: transparent transparent transparent $color-wall-border;
 			right: -20px;
 			z-index: 1;
 		}
@@ -707,10 +725,7 @@ $infobox-background: darken( $color-page, 3% );
 		&:before {
 			position: absolute;
 			content: '';
-			background: darken( $color-page, 3% );
-			@if $is-dark-wiki {
-				background: lighten( $color-page, 3% );
-			}
+			background: $color-wall-infobox;
 			height: 100%;
 			width: 100%;
 			padding-right: 30px;
@@ -724,10 +739,7 @@ $infobox-background: darken( $color-page, 3% );
 			bottom: -1px;
 			left: -15px;
 			content: '';
-			background: darken( $color-page, 3% );
-			@if $is-dark-wiki {
-				background: lighten( $color-page, 3% );
-			}
+			background: $color-wall-infobox;
 			height: 0;
 			width: 100%;
 			padding-right: 30px;

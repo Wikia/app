@@ -1,0 +1,80 @@
+@import "../../../Wall/css/WallColors";
+@import "../../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../../skins/oasis/css/mixins/clearfix";
+
+.Wall {
+	.MiniEditorWrapper {
+		@include clearfix;
+
+		.loading-background {
+			background-color: $color-wall-input;
+		}
+
+		.editarea {
+			textarea {
+				background-color: $color-wall-input;
+				border: 0;
+
+				&.focused {
+					background-color: $color-wall-input-focus;
+				}
+			}
+		}
+
+		.toolbar {
+			float: left;
+		}
+
+		.speech-bubble-buttons {
+			@include clearfix;
+			float: right;
+		}
+
+		&.active {
+			.edited-by {
+				margin: 10px 0;
+			}
+
+			.msg-toolbar {
+				margin-top: 10px;
+			}
+		}
+
+		&.focused {
+			.editarea {
+				@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow);
+			}
+		}
+	}
+
+	.new-message {
+		.editarea {
+			margin-bottom: 0px;
+
+			textarea {
+				background-color: $color-wall-input-new;
+			}
+		}
+
+		.loading-background {
+			background-color: $color-wall-input-new;
+		}
+	}
+
+	.new-reply {
+		.active {
+			.speech-bubble-message {
+				margin-left: 40px;
+			}
+
+			.speech-bubble-avatar {
+				display: block;
+			}
+		}
+
+		.editarea {
+			border: solid 1px $color-page-border;
+			margin-bottom: 0px;
+		}
+	}
+}

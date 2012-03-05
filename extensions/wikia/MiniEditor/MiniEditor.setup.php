@@ -8,47 +8,46 @@
  *
  */
 
- 
 $wgExtensionCredits['specialpage'][] = array(
-	'name' => 'Mini Editor',
+	'name' => 'MiniEditor',
 	'author' => array( 'Liz Lee', 'Kyle Florence', 'Owen Davis' ),
 	'url' => 'http://www.wikia.com',
-	'descriptionmsg' => 'minieditor-desc',
+	'descriptionmsg' => 'minieditor-desc'
 );
-
- 
-$wgSpecialPageGroups['MiniEditor'] = 'specialpages-group-other';
-
 
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 /**
- * class
+ * Class
  */
-
 $app->registerClass('MiniEditor', $dir . 'MiniEditor.class.php');
 
 /**
- * controllers
+ * Controllers
  */
 $app->registerClass('MiniEditorController', $dir . '/MiniEditorController.class.php');
 $app->registerClass('MiniEditorHelper', $dir . '/MiniEditorHelper.class.php');
 $app->registerClass('MiniEditorSpecialController', $dir . 'MiniEditorSpecialController.class.php');
 
 /**
- * special pages
+ * Special page
  */
-$app->registerSpecialPage('MiniEditor', 'MiniEditorSpecialController');
+$app->registerSpecialPage('MiniEditorDemo', 'MiniEditorSpecialController');
 
 /**
- * message files
+ * Message files
  */
 $app->registerExtensionMessageFile('MiniEditor', $dir . 'MiniEditor.i18n.php');
 
-
-// MiniEditor depends on several other extensions so load those dependencies here
-
-// add global JS variables for MiniEditor
+/**
+ * Hooks
+ */
 $app->registerHook('MakeGlobalVariablesScript', 'MiniEditorHelper', 'makeGlobalVariablesScript');
 
+/**
+ * Permissions
+ */
+$wgAvailableRights[] = 'minieditor-specialpage';
+$wgGroupPermissions['*']['minieditor-specialpage'] = false;
+$wgGroupPermissions['staff']['minieditor-specialpage'] = true;

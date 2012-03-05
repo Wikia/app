@@ -60,8 +60,14 @@ class WallNotificationsExternalController extends WikiaController {
 				$all[$k]['sitename'] = $app->wg->Lang->truncate($wikiSitename, (self::WALL_WIKI_NAME_MAX_LEN - 3) );
 			}
 		}
+
+		//solution for problem with cross wiki notification and no wikia domain.
+		$notificationKey = uniqid(); 
 		
-		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'Update', array('notificationCounts'=>$all, 'count'=>$sum) ));
+		$this->app->runFunction( 'wfSharedMemcKey', 'notificationkey', $notificationKey);
+		$app->wg->Memc->set($notificationKey,  $this->wg->User->getId() );
+		
+		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'Update', array('notificationCounts' => $all, 'count' => $sum, 'notificationKey' => $notificationKey) ));
 		$this->response->setVal('count', $sum);
 		$this->response->setVal('reminder', $this->app->wf->MsgExt( 'wall-notifications-reminder', array('parsemag'), $sum ) );
 		$this->response->setVal('status', true);

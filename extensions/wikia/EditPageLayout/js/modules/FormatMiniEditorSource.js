@@ -8,7 +8,6 @@
 		},
 		headerClass: 'formatsourcemini',
 		items: [
-			'|',
 			'SourceBold',
 			'SourceItalic',
 			'SourceLink'

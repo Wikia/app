@@ -535,7 +535,7 @@ HTML
 
 		return $wikitext;
 	}
-
+	
 	/**
 	 * Add given message / dump given variable to MW log
 	 *

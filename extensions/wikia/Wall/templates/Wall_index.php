@@ -1,7 +1,11 @@
-<?php
-	if (!empty(F::app()->wg->WallBrickHeader)){
-		echo F::app()->renderView( 'WallController', 'brickHeader', array( "id" => F::app()->wg->WallBrickHeader) );
-	}
+<?
+if ( $wg->enableMiniEditorExt ) {
+	echo $app->renderView('MiniEditorController', 'EditorSetup');
+}
+
+if (!empty(F::app()->wg->WallBrickHeader)){
+	echo F::app()->renderView( 'WallController', 'brickHeader', array( "id" => F::app()->wg->WallBrickHeader) );
+}
 ?>
 <div class="WallGreeting" >
 	<?= $greeting ?>

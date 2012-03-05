@@ -36,6 +36,9 @@ $messages['en'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Add Slideshow',
 	'wikia-editor-media-slider-tooltip' => 'Add Slider',
 	'wikia-editor-media-video-tooltip' => 'Add Video',
+	'wikia-editor-source-bold-tooltip' => 'Bold',
+	'wikia-editor-source-italic-tooltip' => 'Italic',
+	'wikia-editor-source-link-tooltip' => 'Add Link',
 
 	'wikia-editor-modules-templates-title' => 'Templates',
 	'wikia-editor-modules-templates-add-tooltip' => 'Add "$1" Template',
@@ -110,6 +113,9 @@ The first parameter is a placeholder for the license logo/image. The third param
 	'restore-edits-diff-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
+	'wikia-editor-source-bold-tooltip' => 'Tooltip for the button used to bold text in source mode.',
+	'wikia-editor-source-italic-tooltip' => 'Tooltip for the button used to italicize text in source mode.',
+	'wikia-editor-source-link-tooltip' => 'Tooltip for the button used to add a link in source mode.',
 );
 
 /** Azerbaijani (Azərbaycanca)
@@ -1153,7 +1159,7 @@ $messages['ms'] = array(
 	'tog-forceeditsummary' => 'Ingatkan saya jika ringkasan suntingan kosong',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (Norsk (bokmål))
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1309,7 +1315,7 @@ $messages['nl'] = array(
 	'tog-forceeditsummary' => 'Een melding geven bij een lege bewerkingssamenvatting',
 );
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+/** Nederlands (informeel) (Nederlands (informeel))
  * @author MarkvA
  * @author McDutchie
  * @author Siebrand
@@ -1760,7 +1766,7 @@ $messages['vi'] = array(
 	'tog-forceeditsummary' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Anakmalaysia
  * @author Hzy980512
  */

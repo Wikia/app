@@ -22,12 +22,22 @@ class WallController extends ArticleCommentsModule {
 	public function index() {
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL); 
 		
-		$this->response->addAsset('extensions/wikia/Wall/js/Wall.js');
+		$this->response->addAsset('walljs');		
 		$this->response->addAsset('extensions/wikia/Wall/css/Wall.scss');
-		$this->response->addAsset('skins/common/jquery/jquery.autoresize.js');
-		$this->response->addAsset('extensions/wikia/Wall/css/WallSortingBar.scss');
-		$this->response->addAsset('extensions/wikia/Wall/js/WallSortingBar.js');
-		
+
+		// Load MiniEditor assets, if enabled 
+		if ($this->wg->EnableMiniEditorExt) {
+			$this->sendRequest('MiniEditor', 'loadAssets', array(
+				'additionalAssets' => array(
+					'extensions/wikia/MiniEditor/css/Wall/Wall.scss',
+					'extensions/wikia/MiniEditor/js/Wall/Wall.Setup.js',
+					'extensions/wikia/MiniEditor/js/Wall/Wall.EditMessageForm.js',
+					'extensions/wikia/MiniEditor/js/Wall/Wall.NewMessageForm.js',
+					'extensions/wikia/MiniEditor/js/Wall/Wall.ReplyMessageForm.js'
+				)
+			));
+		}
+
 		$title = $this->request->getVal('title', $this->app->wg->Title);
 		$page = $this->request->getVal('page', 1);
 		
@@ -626,7 +636,7 @@ class WallController extends ArticleCommentsModule {
 					'nt' => $this->app->wf->Msg('wall-sorting-newest-threads'),
 					'ot' => $this->app->wf->Msg('wall-sorting-oldest-threads'),
 					'nr' => $this->app->wf->Msg('wall-sorting-newest-replies'),
-					'ma' => $this->app->wf->Msg('wall-sorting-most-active'),
+					//'ma' => $this->app->wf->Msg('wall-sorting-most-active'),
 					//'a' => $this->app->wf->Msg('wall-sorting-archived')
 				);
 				break;

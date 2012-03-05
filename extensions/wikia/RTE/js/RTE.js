@@ -17,6 +17,7 @@
 			baseFloatZIndex: 20000001, // $zTop from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
+			contentsCss: "",
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',
@@ -43,6 +44,7 @@
 				'pastetext,' +
 				'removeformat,' +
 				'sourcearea,' +
+				'tab,' +
 				'table,' +
 				'tabletools,' +
 				'undo,' +
@@ -114,23 +116,40 @@
 		track: function(action, label, value) {
 		},
 
-		contentsCss: [$.getSassCommonURL('/extensions/wikia/RTE/css/content.scss', sassParams)],
+		contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss ], // load MW:Common.css / MW:Wikia.css (RT #77759)
 
-		contentsCssString: "",
-
+		// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
 		getContentsCss: function(editor) {
-			// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
-			var cssArr = RTE.contentsCss;
-			if(cssArr.length) {
-				var file = cssArr.pop();
-				$.get(file, function(data) {
-					RTE.contentsCssString += data;
-					RTE.getContentsCss(editor);
-				});
-			} else {
-				RTE.config.contentsCss = RTE.contentsCssString;
-				RTE.initCk(editor);
+
+			// Bartek - for RT #43217
+			if (typeof WikiaEnableAutoPageCreate != 'undefined') {
+				RTE.contentsCss.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
 			}
+
+			var contentsCss = '',
+				index = 0,
+				length = RTE.contentsCss.length;
+
+			(function load() {
+				$.get(RTE.contentsCss[index], function(css) {
+					contentsCss += css, index++;
+
+					if (index < length) {
+						load();
+
+					// Done loading
+					} else {
+						RTE.config.contentsCss = contentsCss;
+	
+						// disable object resizing in IE. IMPORTANT! use local path
+						if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
+							RTE.config.contentsCss += 'img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}';
+						}
+	
+						RTE.initCk(editor);
+					}
+				});
+			})();		
 		},
 
 		// start editor in mode provided
@@ -141,24 +160,23 @@
 			if (CKEDITOR.instances[instanceId]) {
 				return;
 			}
-
-			// Temporary fix for cross domain request issue on dev
-			//if(typeof RTE.config.contentsCss == 'undefined') {
-				// Add the iframe content CSS file for the MiniEditor
-				if (editor.config.isMiniEditor) {
-					RTE.contentsCss.push($.getSassCommonURL('/extensions/wikia/RTE/css/content_mini.scss'));
-				}
-				//RTE.getContentsCss(editor);
-			//} else {
-				RTE.config.contentsCss = RTE.contentsCss;
+			
+			if(!RTE.config.contentsCss) {
+				RTE.getContentsCss(editor);
+			} else {
 				RTE.initCk(editor);
-			//}
+			}
 		},
-
+		
 		initCk: function(editor) {
+		
 			// Editor specific config overrides
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
+			}
+			
+			if(typeof editor.config.tabIndex != "undefined") {
+				RTE.config.tabIndex = editor.config.tabIndex;			
 			}
 
 			RTE.config.startupMode = editor.config.mode;
@@ -167,27 +185,20 @@
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
 
 			// load CSS files
-			RTE.loadCss(editor.ck);
+			RTE.loadExtraCss(editor.ck);
 
 			// clean HTML returned by CKeditor
 			editor.ck.on('getData', RTE.filterHtml);
 
 			// CKeditor code is loaded, now it's time to initialize RTE
-			GlobalTriggers.fire('rteinit', editor.ck);		
+			GlobalTriggers.fire('rteinit', editor.ck);
 		},
 
-		// load extra CSS files
-		loadCss: function(editor) {
+		// load extra CSS - modstly for PLB at this point.
+		// TODO: work this into getContentsCss()
+		loadExtraCss: function(editor) {
 			var css = [];
-
-			// load MW:Common.css / MW:Wikia.css (RT #77759)
-			css.push(window.RTESiteCss);
 			
-			// Bartek - for RT #43217
-			if( typeof WikiaEnableAutoPageCreate != "undefined" ) {
-				css.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
-			}
-
 			GlobalTriggers.fire('rterequestcss', css);
 
 			for (var n=0; n<css.length; n++) {
@@ -197,11 +208,6 @@
 				}
 			}
 
-			// disable object resizing in IE
-			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
-				// IMPORTANT! use local path
-				editor.addCss('img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}');
-			}
 		},
 
 		// final setup of editor's instance

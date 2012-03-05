@@ -9,7 +9,8 @@
 
 		items: [
 			'ModeSource',
-			'ModeWysiwyg'
+			'ModeWysiwyg',
+			'|'
 		]
 	});
 

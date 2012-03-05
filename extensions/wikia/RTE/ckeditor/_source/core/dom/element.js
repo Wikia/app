@@ -345,7 +345,18 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		 */
 		getHtml : function()
 		{
-			var retval = this.$.innerHTML;
+			//var retval = this.$.innerHTML;
+			//Wikia Start - fixing this bug: http://dev.ckeditor.com/ticket/4566
+			var retval;
+			
+			try {
+				retval = this.$.innerHTML;
+			} catch(err) {
+				return "";
+			}
+			//Wikia End
+
+
 			// Strip <?xml:namespace> tags in IE. (#3341).
 			return CKEDITOR.env.ie ? retval.replace( /<\?[^>]*>/g, '' ) : retval;
 		},
