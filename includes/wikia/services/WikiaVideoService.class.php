@@ -98,7 +98,7 @@ class WikiaVideoService extends Service {
 	 * @return boolean
 	 */
 	public static function useVideoHandlersExtForIngestion() {
-		return !empty(F::app()->wg->ingestVideosUseVideoHandlersExt);
+		return static::isVideoStoredAsFile() || !empty(F::app()->wg->ingestVideosUseVideoHandlersExt);
 	}
 
 	/**
@@ -114,7 +114,7 @@ class WikiaVideoService extends Service {
 	 * @return boolean
 	 */
 	public static function useVideoHandlersExtForEmbed() {
-		return !empty(F::app()->wg->embedVideosUseVideoHandlersExt);		
+		return static::isVideoStoredAsFile() || !empty(F::app()->wg->embedVideosUseVideoHandlersExt);
 	}
 
 	/**
