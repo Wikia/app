@@ -58,10 +58,10 @@ class WikiaSkinMonoBook extends SkinTemplate {
 
 		// setup footer links
 		$tpl->set('copyright',  '');
-		$tpl->set('privacy',    '<a href="http://www.wikia.com/wiki/Wikia:Privacy_Policy" title="Privacy Policy">Privacy</a>');
+		$tpl->set('privacy',    '<a href="http://www.wikia.com/wiki/Wikia:Privacy_Policy" title="Privacy Policy">Privacy</a> <span style="color: red">(Updated)</span>');
 
 		$tpl->set('about',      '<a href="http://www.wikia.com/wiki/Wikia:About" title="About Wikia">About Wikia</a>');
-		$tpl->set('disclaimer', '<a href="http://www.wikia.com/wiki/Wikia:Terms_of_use" title="Terms of use">Terms of use</a>');
+		$tpl->set('disclaimer', '<a href="http://www.wikia.com/wiki/Wikia:Terms_of_use" title="Terms of use">Terms of use</a> <span style="color: red">(Updated)</span>');
 		$tpl->set('advertise',  '<a href="http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia" title="advertise on Wikia">Advertise</a>'); # rt33045
 		$tpl->set('hosting',    '<i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.');
 		$tpl->set('credits',    ' ');
