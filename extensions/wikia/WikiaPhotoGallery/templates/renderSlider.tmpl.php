@@ -10,7 +10,7 @@
 					if ( !empty( $val['imageLink'] ) ){
 						echo "<a href='{$val['imageLink']}'>";
 					}?>
-					<img width='<?= $imagesDimensions['w']; ?>' height='<?= $imagesDimensions['h'] ?>' class='wikiaPhotoGallery-slider'>
+					<img width='<?= $imagesDimensions['w']; ?>' height='<?= $imagesDimensions['h'] ?>'  src='<?=$val['imageUrl']?>' class='wikiaPhotoGallery-slider'>
 					<?php
 						if (!empty( $val['imageLink'] )){
 							echo '</a>';
