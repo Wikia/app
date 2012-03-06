@@ -1,61 +1,46 @@
 <!-- <p><strong>Search Wikia</strong></p>-->
 <form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
-	Rank Expr:
-	<select name="rankExpr">
-		<option value="-indextank" <?= (empty($rankExpr) || ($rankExpr == '-indextank')) ? 'selected' : ''; ?> >indextank</option>
-		<option value="-bl" <?= ($rankExpr == '-bl') ? 'selected' : ''; ?> >backlinks</option>
-		<option value="-bl2" <?= ($rankExpr == '-bl2') ? 'selected' : ''; ?> >backlinks (Mike)</option>
-		<option value="-bl3" <?= ($rankExpr == '-bl3') ? 'selected' : ''; ?> >backlinks only</option>
-	</select>
-	<input type="text" name="query" value="<?=$query;?>" /><a class="wikia-button" id="search-v2-button">Search</a><br />
-	<input type="checkbox" name="crossWikia" value="1" <?= ( $crossWikia ? 'checked' : '' ); ?>/> Search all of Wikia
+	<?php if($debug): ?>
+		Rank Expr:
+		<select name="rankExpr">
+			<option value="-indextank" <?= (empty($rankExpr) || ($rankExpr == '-indextank')) ? 'selected' : ''; ?> >indextank</option>
+			<option value="-bl" <?= ($rankExpr == '-bl') ? 'selected' : ''; ?> >backlinks</option>
+			<option value="-bl2" <?= ($rankExpr == '-bl2') ? 'selected' : ''; ?> >backlinks (Mike)</option>
+			<option value="-bl3" <?= ($rankExpr == '-bl3') ? 'selected' : ''; ?> >backlinks only</option>
+		</select>
+	<?php endif; ?>
+	<input type="text" name="query" value="<?=$query;?>" /><a class="wikia-button" id="search-v2-button"><?= wfMsg( 'wikiasearch2-search-btn' ); ?></a><br />
+	<input type="checkbox" name="crossWikia" value="1" <?= ( $crossWikia ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-search-all-wikia' ); ?>
+	<input type="checkbox" name="groupResults" value="1" <?= ( $groupResults ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-group-results' ); ?>
+	<input type="checkbox" name="debug" value="1" <?= ( $debug ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-debug-mode' ); ?>
 </form>
 <br />
-<?php if( $results !== false ): ?>
-	<?php if( $results->found > 0 ): ?>
-		<strong>Search results:</strong>&nbsp;<strong><?= $results->start+1; ?> - <?= (($results->start+$resultsPerPage) < $results->found) ? ($results->start+$resultsPerPage) : $results->found; ?></strong> of <strong><?= $results->found; ?></strong> document(s)<br />
+
+<?php if(!empty($results)): ?>
+	<?php if( $resultsFound > 0 ): ?>
+		<strong>Search results:</strong>&nbsp;<strong><?= $results->getResultsStart()+1; ?> - <?= (($results->getResultsStart()+$resultsPerPage) < $resultsFound) ? ($results->getResultsStart()+$resultsPerPage) : $resultsFound; ?></strong> of <strong><?= $resultsFound; ?></strong> document(s)<br />
 		<?= $paginationLinks; ?>
 		<?php $pos = 0; ?>
-		<?php foreach( $results->hit as $hit ): ?>
+		<?php foreach( $results as $result ): ?>
 			<?php
 				$pos++;
-				if( $debug ) {
-					echo "<pre>";
-					var_dump($hit);
-					exit;
+				if($result instanceof WikiaSearchResultSet) {
+					echo F::app()->getView( 'WikiaSearch', 'resultSet', array(
+					  'resultSet' => $result,
+					  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+					  'rankExpr' => $rankExpr,
+					  'debug' => $debug
+					));
+				}
+				else {
+					echo F::app()->getView( 'WikiaSearch', 'result', array(
+					  'result' => $result,
+					  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+					  'rankExpr' => $rankExpr,
+					  'debug' => $debug
+					));
 				}
 			?>
-			<?php if(isset($hit->data->canonical)): ?>
-				<strong><?=$pos + (($currentPage - 1) * $resultsPerPage); ?>. <a href="<?= $hit->data->url; ?>"><?=$hit->data->title;?></a></strong> (Redirect: <?=$hit->data->canonical;?>)<br />
-			<?php else: ?>
-				<strong><?=$pos + (($currentPage - 1) * $resultsPerPage); ?>. <a href="<?= $hit->data->url; ?>"><?=$hit->data->title;?></a></strong><br />
-			<?php endif; ?>
-			<div style="width: 50%">
-				<?= substr( $hit->data->text, 0, 250 ); ?>...
-			</div>
-			<a href="<?= $hit->data->url; ?>"><?=$hit->data->url;?></a><br />
-			<?php
-				//var_dump($hit->data);
-				switch($rankExpr) {
-					case '-indextank':
-						$rankValue = $hit->data->indextank;
-						break;
-					case '-bl':
-						$rankValue = $hit->data->bl;
-						break;
-					case '-bl2':
-						$rankValue = $hit->data->bl2;
-						break;
-					case '-bl3':
-						$rankValue = $hit->data->bl3;
-						break;
-					default:
-						$rankValue = '?';
-				}
-			?>
-			<i>[id: <?=$hit->id;?>, text_relevance: <?=$hit->data->text_relevance;?>, backlinks: <?=$hit->data->backlinks;?>, rank: <?= $rankValue; ?>]</i><br />
-			<br />
-			<?php ?>
 		<?php endforeach; ?>
 		<?= $paginationLinks; ?>
 	<?php else: ?>

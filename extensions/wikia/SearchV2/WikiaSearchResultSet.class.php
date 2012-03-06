@@ -2,14 +2,18 @@
 
 class WikiaSearchResultSet implements Iterator {
 	private $position = 0;
+	private $resultsPerPage = 25;
+	private $currentPage = 1;
 
 	protected $resultsFound = 0;
-	protected $header = array();
+	protected $resultsStart = 0;
+	protected $header = null;
 	protected $results = array();
 
-	public function __construct(Array $results, $resultsFound = 0) {
+	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0) {
 		$this->setResults($results);
 		$this->setResultsFound($resultsFound);
+		$this->setResultsStart($resultsStart);
 	}
 
 	/**
@@ -43,17 +47,47 @@ class WikiaSearchResultSet implements Iterator {
 		$this->resultsFound += $value;
 	}
 
+	public function getResultsStart() {
+		return $this->resultsStart;
+	}
+
+	public function setResultsStart($value) {
+		$this->resultsStart = $value;
+	}
+
+	public function getResultsNum() {
+		return count($this->results);
+	}
+
+	public function getResultsPerPage() {
+		return $this->resultsPerPage;
+	}
+
+	public function setResultsPerPage($value) {
+		$this->resultsPerPage = $value;
+		$this->resetPosition();
+	}
+
+	public function getCurrentPage() {
+		return $this->currentPage;
+	}
+
+	public function setCurrentPage($value) {
+		$this->currentPage = $value;
+		$this->resetPosition();
+	}
+
 	public function next() {
 		$result = $this->current();
 		$this->position++;
 		return $result;
 	}
 
-	function rewind() {
-		$this->position = 0;
+	public function rewind() {
+		$this->resetPosition();
 	}
 
-	function current() {
+	public function current() {
 		if($this->valid()) {
 			return $this->results[$this->position];
 		}
@@ -62,12 +96,14 @@ class WikiaSearchResultSet implements Iterator {
 		}
 	}
 
-	function key() {
+	public function key() {
 		return $this->position;
 	}
 
-	function valid() {
-		if(isset($this->results[$this->position])) {
+	public function valid() {
+		$maxPosition = ( ( $this->getCurrentPage() - 1) * $this->getResultsPerPage() ) + $this->getResultsPerPage();
+var_dump($maxPosition);
+		if(($this->position < $maxPosition) && isset($this->results[$this->position])) {
 			return true;
 		}
 		else {
@@ -75,8 +111,23 @@ class WikiaSearchResultSet implements Iterator {
 		}
 	}
 
+	public function setHeader($key, $value) {
+		if($this->header === null) {
+			$this->header = array();
+		}
+		$this->header[$key] = $value;
+	}
+
+	public function getHeader($key = null) {
+		return ( empty($key) ? $this->header : ( isset($this->header[$key]) ? $this->header[$key] : null ) );
+	}
+
 	private function isValidResult($result) {
-		return (($result instanceof WikiaSerachResult) || ($result instanceof WikiaSearchResultSet)) ? true : false;
+		return (($result instanceof WikiaSearchResult) || ($result instanceof WikiaSearchResultSet)) ? true : false;
+	}
+
+	private function resetPosition() {
+		$this->position = ($this->getCurrentPage() - 1) * $this->getResultsPerPage();
 	}
 
 }

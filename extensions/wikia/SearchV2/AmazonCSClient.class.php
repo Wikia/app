@@ -27,24 +27,22 @@ class AmazonCSClient extends WikiaSearchClient {
 
 		list($responseCode, $response) = $this->apiCall( $this->searchEndpoint, $params );
 
+//echo "<pre>";
+//var_dump($response);
 		if($responseCode == 200) {
 			$response = json_decode( $response );
 			//foreach( $response->hits->hit as $hit ) {
 			//	$hit->data->text_excerpt = $this->getTextExcerpt( $hit->data->text, explode(' ', $query ) );
 			//}
 
+//var_dump($response->hits);
+//exit;
 			$results = array();
 			foreach($response->hits->hit as $hit) {
 				$results[] = $this->getWikiaResult($hit);
 			}
 
-			$resultSet = F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->hits->found ) );
-
-			echo "<pre>";
-			var_dump($resultSet);
-			exit;
-
-			return $resultSet;
+			return F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->hits->found, 'resultsStart' => $response->hits->start ) );
 		}
 		else {
 			throw new WikiaException('Search Failed: ' . $response);
@@ -53,16 +51,20 @@ class AmazonCSClient extends WikiaSearchClient {
 
 	private function getWikiaResult(stdClass $amazonHit) {
 		$result = F::build( 'WikiaSearchResult', array( 'id' => $amazonHit->id ) );
-		$result->setCityId($amazonHit->cityId);
-		$result->setTitle($amazonHit->title);
-		$result->setText($amazonHit->text);
-		$result->setUrl($amazonHit->url);
+		$result->setCityId($amazonHit->data->cityid);
+		$result->setTitle($amazonHit->data->title);
+		$result->setText(substr($amazonHit->data->text, 0, 250).'...');
+		$result->setUrl($amazonHit->data->url);
+		if(isset($amazonHit->data->canonical)) {
+			$result->setCanonical($amazonHit->data->canonical);
+		}
 
-		$result->setVar('backlinks', $amazonHit->backlinks);
-		$result->setVar('text_rel', $amazonHit->text_relevance);
-		$result->setVar('rank_bl', $amazonHit->bl);
-		$result->setVar('rank_bl2', $amazonHit->bl2);
-		$result->setVar('rank_bl3', $amazonHit->bl3);
+		$result->setVar('backlinks', $amazonHit->data->backlinks);
+		$result->setVar('text_relevance', $amazonHit->data->text_relevance);
+		$result->setVar('rank_indextank', $amazonHit->data->indextank);
+		$result->setVar('rank_bl', $amazonHit->data->bl);
+		$result->setVar('rank_bl2', $amazonHit->data->bl2);
+		$result->setVar('rank_bl3', $amazonHit->data->bl3);
 
 		return $result;
 	}
