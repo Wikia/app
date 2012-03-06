@@ -118,7 +118,7 @@ class LatestPhotosModule extends Module {
 		$file = $element['file'];
 		$ret = true;
 
-		if (isset($file->title) && WikiaVideoService::isVideoFile($file)) {
+		if (isset($file->title) && !WikiaVideoService::isVideoFile($file)) {
 			// filter by filetype and filesize (RT #42075)
 			$minor_type = $file->minor_mime;
 			$renderable = $file->canRender();
