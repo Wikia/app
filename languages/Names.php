@@ -382,4 +382,5 @@
 	'kp' => 'Kamelopedia', # Kamelopedia for de.uncyclopedia, trec #801
 	'mu' => 'Mirror Universe', # Mirror Universe for Memory-Alpha, trac #2788
 	'de2' => 'Deutsch', # German, introduced for harrypoter, fb #9935
+	'pl2' => 'Polski', # Polish, introduced for naruto, fb #23283
 );
