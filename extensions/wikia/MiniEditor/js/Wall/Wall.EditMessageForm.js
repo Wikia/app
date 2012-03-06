@@ -84,6 +84,7 @@
 		},
 
 		afterClose: function(bubble) {
+			$('.follow', bubble).show();
 			bubble.find('.timestamp').show();
 			bubble.animate({
 				'padding-top': 10,
