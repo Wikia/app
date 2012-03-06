@@ -62,4 +62,5 @@ with(fooObject) {
 	pageUrl = wgServer + '/wiki/Foo';
 	css = '/extensions/wikia/Foo/bar.css';
 	js = '/skins/common/jquery/jquery.foo.js';
+	sass = $.getSassCommonURL(  '/skins/oasis/css/touchScreen.scss' ); // should not be caught
 })();

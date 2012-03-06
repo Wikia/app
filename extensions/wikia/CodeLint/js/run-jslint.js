@@ -96,6 +96,11 @@ for(var n=0, len = lines.length; n < len; n++) {
 	matches = lines[n].match(hardcodedRegExp);
 
 	if (matches) {
+		// ignore URLs to SASS files as they contain "hardcoded" /extensions and /skins paths
+		if (lines[n].indexOf('.scss') > -1) {
+			continue;
+		}
+
 		// add an issue to the list
 		result.errors.push({
 			id: '(error)',
