@@ -25,22 +25,27 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		*/
 
 		$query = $this->getVal('query');
-		$start = $this->getVal('start', 0);
+		$page = $this->getVal('page', 1);
 		$rankExpr = $this->getVal('rankExpr');
 		$crossWikia = $this->request->getBool('crossWikia');
+		$debug = $this->request->getBool('debug');
 		$groupResults = $this->request->getBool('groupResults');
 
 		$results = false;
+		$resultsFound = 0;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
-			$results = $this->wikiaSearch->doSearch( $query, $start, self::RESULTS_PER_PAGE, ( $crossWikia ? 0 : $this->wg->CityId ), $rankExpr, $groupResults );
-			if(!empty($results->found)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'start' => $start, 'count' => $results->found, 'crossWikia' => $crossWikia, 'rankExpr' => $rankExpr ) );
+			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $crossWikia ? 0 : $this->wg->CityId ), $rankExpr, $groupResults );
+			$resultsFound = $results->getResultsFound();
+
+			if(!empty($resultsFound)) {
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $crossWikia, 'rankExpr' => $rankExpr ) );
 			}
 		}
 
 		$this->setVal( 'results', $results );
-		$this->setVal( 'currentPage',  ( $start / self::RESULTS_PER_PAGE ) + 1 );
+		$this->setVal( 'resultsFound', $resultsFound );
+		$this->setVal( 'currentPage',  $page );
 		$this->setVal( 'paginationLinks', $paginationLinks );
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
@@ -48,26 +53,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'crossWikia', $crossWikia );
 		$this->setVal( 'rankExpr', $rankExpr );
 		$this->setVal( 'groupResults', $groupResults );
+		$this->setVal( 'debug', $debug );
 
 		$this->setVal( 'debug', $this->getVal('debug', false) );
 	}
 
 	public function pagination() {
 		$query = $this->getVal('query');
-		$start = $this->getVal( 'start', 0 );
+		$page = $this->getVal( 'page', 1 );
 		$rankExpr = $this->getVal('rankExpr');
-		$resultsPerPage = $this->getVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$resultsCount = $this->getVal( 'count', 0);
-		$pagesNum = ceil( $resultsCount / $resultsPerPage );
-		$currentPage = ( $start / $resultsPerPage ) + 1;
+		$pagesNum = ceil( $resultsCount / self::RESULTS_PER_PAGE );
 
 		$this->setVal( 'query', $query );
 		$this->setVal( 'pagesNum', $pagesNum );
 		$this->setVal( 'rankExpr', $rankExpr );
-		$this->setVal( 'currentPage', $currentPage );
-		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
-		$this->setVal( 'windowFirstPage', ( ( ( $currentPage - self::PAGES_PER_WINDOW ) > 0 ) ? ( $currentPage - self::PAGES_PER_WINDOW ) : 1 ) );
-		$this->setVal( 'windowLastPage', ( ( ( $currentPage + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $currentPage + self::PAGES_PER_WINDOW ) : $pagesNum ) );
+		$this->setVal( 'currentPage', $page );
+		$this->setVal( 'windowFirstPage', ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 ) );
+		$this->setVal( 'windowLastPage', ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) );
 		$this->setVal( 'pageTitle', $this->wg->Title );
 		$this->setVal( 'crossWikia', $this->getVal( 'crossWikia', false ) );
 	}

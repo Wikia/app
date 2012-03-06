@@ -3,6 +3,8 @@
 class WikiaSearch extends WikiaObject {
 
 	const RESULTS_PER_PAGE = 10;
+	const RESULTS_PER_WIKI = 4;
+	const GROUP_RESULTS_SEARCH_LIMIT = 500;
 
 	/**
 	 * Search client
@@ -15,40 +17,69 @@ class WikiaSearch extends WikiaObject {
 		parent::__construct();
 	}
 
-	public function doSearch( $query, $start = 0, $length = null, $cityId = 0, $rankExpr = '', $groupResults = false ) {
-		$results = $this->client->search( $query, $start, ( !empty($length) ? $length : self::RESULTS_PER_PAGE ), $cityId, $rankExpr );
-//var_dump($results);
-//exit;
+	/**
+	 * perform search
+	 *
+	 * @param string $query
+	 * @param int $page
+	 * @param int $length
+	 * @param int $cityId
+	 * @param string $rankExpr
+	 * @param bool $groupResults
+	 * @return WikiaSearchResultSet
+	 */
+	public function doSearch( $query, $page = 1, $length = null, $cityId = 0, $rankExpr = '', $groupResults = false ) {
+		$length = !empty($length) ? $length : self::RESULTS_PER_PAGE;
 
-		if(empty($cityId) && $groupResults) {
-			$results = $this->groupResults( $results );
+		if($groupResults) {
+			$start = 0;
+			$limit = self::GROUP_RESULTS_SEARCH_LIMIT;
+		}
+		else {
+			$start = ($page - 1) * $length;
+			$limit = $length;
 		}
 
-		return $results;
+		$results = $this->client->search( $query, $start, $limit, $cityId, $rankExpr );
+
+		if($results instanceof WikiaSearchResultSet) {
+			if(empty($cityId) && $groupResults) {
+				$results = $this->groupResultsPerWiki( $results );
+			}
+
+			$results->setCurrentPage($page);
+			$results->setResultsPerPage($length);
+
+			return $results;
+		}
+		else {
+			throw new WikiaException( 'WikiaSearchResultSet expected' );
+		}
 	}
 
-	private function groupResults(stdClass $results) {
+	private function groupResultsPerWiki(WikiaSearchResultSet $results) {
 		$wikiResults = array();
 
-		foreach( $results->hit as $hit) {
-			if(!isset($wikiResults[$hit->data->cityid])) {
-				$cityId = $hit->data->cityid;
-				$cityTitle = WikiFactory::getVarValueByName( 'wgSitename', $cityId );
-				$cityUrl = WikiFactory::getVarValueByName( 'wgServer', $cityId );
-				$wikiResults[$cityId] = array(
-					'cityId' => $cityId,
-					'cityTitle' => !empty($cityTitle) ? $cityTitle : '?',
-					'cityUrl' => !empty($cityUrl) ? $cityUrl : '#',
-					'hits' => array()
-				);
-			}
-			$wikiResults[$hit->data->cityid]['hits'][] = $hit;
-		}
-echo "<pre>";
-var_dump($wikiResults);
-exit;
+		foreach($results as $result) {
+			if($result instanceof WikiaSearchResult) {
+				$cityId = $result->getCityId();
+				if(!isset($wikiResults[$cityId])) {
+					$wikiResultSet = F::build( 'WikiaSearchResultSet' );
+					$wikiResultSet->setHeader('cityTitle', WikiFactory::getVarValueByName( 'wgSitename', $cityId ));
+					$wikiResultSet->setHeader('cityUrl', WikiFactory::getVarValueByName( 'wgServer', $cityId ));
+					$wikiResultSet->setHeader('cityArticlesNum', $result->getVar('cityArticlesNum', false));
 
-		return $results;
+					$wikiResults[$cityId] = $wikiResultSet;
+				}
+				$set = $wikiResults[$cityId];
+				if($set->getResultsNum() < self::RESULTS_PER_WIKI) {
+					$set->addResult($result);
+				}
+				$set->incrResultsFound();
+			}
+		}
+
+		return F::build( 'WikiaSearchResultSet', array( 'results' => $wikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart() ) );
 	}
 
 	private function groupWikiResults($wikiId, Array $resultsPerWiki) {

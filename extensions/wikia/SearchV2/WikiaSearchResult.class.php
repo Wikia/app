@@ -6,10 +6,15 @@ class WikiaSearchResult {
 	protected $title;
 	protected $text;
 	protected $url;
+	protected $canonical = null	;
 	protected $vars = array();
 
 	public function __construct($id) {
 		$this->id = $id;
+	}
+
+	public function getId() {
+		return $this->id;
 	}
 
 	public function getCityId() {
@@ -42,6 +47,18 @@ class WikiaSearchResult {
 
 	public function setUrl($value) {
 		$this->url = $value;
+	}
+
+	public function getCanonical() {
+		return $this->canonical;
+	}
+
+	public function setCanonical($value) {
+		$this->canonical = $value;
+	}
+
+	public function hasCanonical() {
+		return !empty($this->canonical) ? true : false;
 	}
 
 	public function setVar($name, $value) {

@@ -19,6 +19,9 @@ $app->registerClass('WikiaSearchClient', $dir . 'WikiaSearchClient.class.php');
 $app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
 $app->registerClass('WikiaSearchResult', $dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', $dir . 'WikiaSearchResultSet.class.php');
+//$app->registerClass('IndexTankClient', $dir . 'IndexTankClient.class.php');
+$app->registerClass('AmazonCSClient', $dir . 'AmazonCSClient.class.php');
+$app->registerClass('WikiaSolrClient', $dir . 'WikiaSolrClient.class.php');
 
 /**
  * special pages
@@ -29,8 +32,6 @@ $app->registerSpecialPage('WikiaSearch', 'WikiaSearchController');
  * IndexTank setup
  */
 //require_once( $dir . 'flaptor-indextank-php/indextank.php');
-//$app->registerClass('IndexTankClient', $dir . 'IndexTankClient.class.php');
-$app->registerClass('AmazonCSClient', $dir . 'AmazonCSClient.class.php');
 
 /**
  * DI setup
@@ -48,8 +49,19 @@ F::addClassConstructor( 'AmazonCSClient',
 	 'rankName' => '-indextank',
 	 'httpProxy' => ( !empty( $wgHTTPProxy ) ? $wgHTTPProxy : false )
 	));
+F::addClassConstructor( 'WikiaSolrClient',
+	array(
+	 'solrHost' => ( !empty( $wgSolrHost ) ? $wgSolrHost : 'localhost' ),
+	 'solrPost' => ( !empty( $wgSolrPost ) ? $wgSolrPort : 8180 )
+	));
 
-F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('AmazonCSClient') ) );
+//F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('AmazonCSClient') ) );
+F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('WikiaSolrClient') ) );
+
+/**
+ * message files
+ */
+$app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' );
 
 
 $wgExtensionCredits['other'][] = array(
