@@ -667,13 +667,13 @@ body.skin-monobook {
 		border: 1px solid $color-wall-border;
 		margin: 10px;
 		position: relative;
-		.avatar {
+		div.avatar {
 			display: block;
-			position: absolute;
-			left: 5px;
-			top: 5px;
+			float: left;
+			margin: 5px 0 0 5px;
 		}
 		.message {
+			@include clearfix;
 			display: block;
 			margin-left: 40px;
 			color: $color-alternate-text;
