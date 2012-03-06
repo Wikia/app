@@ -22,7 +22,7 @@ class ImagesService extends Service {
 		$data = ApiService::call(array(
 			'action' => 'query',
 			'list' => 'search',
-			'srnamespace' => implode('|', array_merge($wgContentNamespaces, array(NS_FILE))),
+			'srnamespace' => implode( '|', array_merge( $wgContentNamespaces, array( NS_FILE ) ) ),
 			'srlimit' => $limit,
 			'srsearch' => $query,
 		));
@@ -41,10 +41,11 @@ class ImagesService extends Service {
 
 			if($res->numRows() > 0) {
 				while( $row = $res->fetchObject() ) {
-					$images[] = $row->il_to;
-
-					if (count($images) == $limit) {
-						break;
+					if ( WikiaVideoService::isTitleVideo( $row->il_to, false ) ) {
+						$images[] = $row->il_to;
+						if (count($images) == $limit) {
+							break;
+						}
 					}
 				}
 			}
@@ -77,7 +78,7 @@ class ImagesService extends Service {
 			if (!empty($data['images'])) {
 				foreach($data['images'] as $entry) {
 					// ignore Video:foo entries from VET
-					if ($entry['ns'] == NS_IMAGE) {
+					if ( $entry['ns'] == NS_IMAGE && !WikiaVideoService::isTitleVideo($entry['title']) ) {
 						$images[] = $entry['title'];
 					}
 				}
