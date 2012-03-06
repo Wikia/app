@@ -166,7 +166,7 @@ class PhalanxHelper {
 					} else {
 						$reasons[ 'f' ] ++;
 					}
-					
+
 				}
 				$status = true;
 				$reason = "[" . $reasons['s'] . "] success and [" . $reasons['f'] . "] fails";
@@ -249,23 +249,23 @@ class PhalanxHelper {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	
+
 	/**
-	 * Updates Phalanx rules cache after one changing one rule (add, modify or delete)  
-	 * 
+	 * Updates Phalanx rules cache after one changing one rule (add, modify or delete)
+	 *
 	 * @param $oldData mixed Old rule data or null if adding a rule
 	 * @param $newData mixed New rule data or null if removing a rule
 	 */
 	static public function updateCache( $oldData, $newData ) {
 		global $wgMemc, $wgPhalanxSupportedLanguages;
-		
+
 		$allLanguages = array_keys( $wgPhalanxSupportedLanguages );
 		if (array_search('all',$allLanguages)) {
 			array_unshift($allLanguages, 'all');
 		}
-		
+
 		$list = array();
-		
+
 		// Find where the rule was removed from?
 		if ($oldData) {
 			$lang = $oldData['lang'] ? $oldData['lang'] : null;
@@ -279,7 +279,7 @@ class PhalanxHelper {
 				}
 			}
 		}
-		
+
 		// Find where the rule will be added to?
 		if ($newData) {
 			$lang = $newData['lang'] ? $newData['lang'] : null;
@@ -293,22 +293,22 @@ class PhalanxHelper {
 				}
 			}
 		}
-		
+
 		$id = intval( $oldData ? $oldData['id'] : $newData['id'] );
 
 		// Iterate through each affected cache case and update
 		foreach ($list as $moduleId => $list2) {
 			foreach ($list2 as $lang => $props) {
 				if (empty($lang) || $lang == 'all') $lang = null;
-				
+
 				$remove = !empty($props['remove']);
 				$save = !empty($props['save']);
-				
+
 				$sLang = $lang ? $lang : 'all';
 				$key = 'phalanx:' . $moduleId . ':' . $sLang;
-				Phalanx::clearCache($moduleId,$sLang); // clear local cache 
+				Phalanx::clearCache($moduleId,$sLang); // clear local cache
 				$blocksData = $wgMemc->get($key);
-				
+
 				if (empty($blocksData)) {
 					Phalanx::getFromFilter($moduleId, $lang, true /*use master to avoid lag - change was a moment ago*/);
 				} else {
@@ -387,35 +387,35 @@ class PhalanxHelper {
 
 		return $output;
 	}
-	
+
 	static public function logAdd( $data ) {
 		self::logUniversal( 'add', $data );
 	}
-	
+
 	static public function logEdit( $old, $data ) {
 		self::logUniversal( 'edit', $data );
 	}
-	
+
 	static public function logDelete( $data ) {
 		self::logUniversal( 'delete', $data );
 	}
-	
+
 	static public function logUniversal( $action, $data ) {
 		$title = Title::newFromText('PhalanxStats/' . $data['id'],NS_SPECIAL);
 		$types = implode(',', Phalanx::getTypeNames($data['type']));
 
-		if ( $data['type'] & Phalanx::BLOCK_EMAIL ) {
+		if ( $data['type'] & Phalanx::TYPE_EMAIL ) {
 			$logType = 'phalanxemail';
-		} else { 
+		} else {
 			$logType = 'phalanx';
 		}
 
 		$log = new LogPage( $logType );
-		$log->addEntry( $action, $title, wfMsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ), 
+		$log->addEntry( $action, $title, wfMsgExt( 'phalanx-rule-log-details', array( 'parsemag', 'content' ),
 			$data['text'], $types, $data['reason'] ) );
 		// Workaround lack of automatic COMMIT in Ajax requests
 		$db = wfGetDB( DB_MASTER );
 		$db->immediateCommit();
 	}
-	
+
 }

@@ -6,17 +6,17 @@ class AvatarService extends Service {
 	 */
 	static private function getUser($userName) {
 		wfProfileIn(__METHOD__);
-		
+
 		static $usersCache;
-		
+
 		if( isset($usersCache[$userName]) ) {
 			$user = $usersCache[$userName];
 		} else {
 			$user = User::newFromName($userName);
-			
+
 			$usersCache[$userName] = $user;
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $user;
 	}
@@ -77,7 +77,7 @@ class AvatarService extends Service {
 	 */
 	static function getAvatarUrl($user, $avatarSize = 20, $avoidUpscaling = false) {
 		wfProfileIn(__METHOD__);
-		
+
 		static $avatarsCache;
 		if( $user instanceof User ) {
 			$key = "{$user->getName()}::{$avatarSize}";
@@ -85,29 +85,29 @@ class AvatarService extends Service {
 		//assumes $user is a string with user name
 			$key = "{$user}::{$avatarSize}";
 		}
-		
+
 		if( isset($avatarsCache[$key]) ) {
 			$avatarUrl = $avatarsCache[$key];
 		} else {
 			if( !($user instanceof User) ) {
 				$user = self::getUser($user);
 			}
-			
+
 			// handle anon users - return default avatar
 			if( empty($user) || !class_exists('Masthead') ) {
 				$avatarUrl = self::getDefaultAvatar($avatarSize);
-				
+
 				wfProfileOut(__METHOD__);
 				return $avatarUrl;
 			}
-		
-			// fb#13710 don't add CB to default avatars	
+
+			// fb#13710 don't add CB to default avatars
 			$masthead = Masthead::newFromUser($user);
 			$avatarUrl = $masthead->getThumbnail($avatarSize, true, $avoidUpscaling);
 			if ( !$masthead->isDefault() ) {
 				$avatarUrl .= '?cb='.$user->getOption('avatar_rev', 0);
 			}
-			
+
 			$avatarsCache[$key] = $avatarUrl;
 		}
 
@@ -122,7 +122,7 @@ class AvatarService extends Service {
 		wfProfileIn(__METHOD__);
 
 		$avatarUrl = self::getAvatarUrl($userName, $avatarSize, $avoidUpscaling);
-		
+
 		if( $avoidUpscaling ) {
 			$ret = Xml::element('img', array(
 				'src' => $avatarUrl,
