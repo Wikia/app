@@ -69,7 +69,7 @@ class CodeLintJs extends CodeLint {
 		// file to perform lint on
 		$params['file'] = $fileName;
 
-		$output = $this->runUsingNodeJs($runScript, $params);
+		$output = $this->runUsingNodeJs($runScript, $params); //var_dump($output);
 
 		return $output;
 	}
@@ -81,6 +81,27 @@ class CodeLintJs extends CodeLint {
 	 * @return boolean returns true if the entry should be kept
 	 */
 	public function filterErrorsOut($error) {
+		/*
+		 * Error entry:
+		 *
+		array(7) {
+		  ["id"]=>
+		  string(7) "(error)"
+		  ["raw"]=>
+		  string(37) "'{a}' was used before it was defined."
+		  ["evidence"]=>
+		  string(68) "		if( confirm( 'Are you sure you want to delete this element?' ) ) {"
+		  ["line"]=>
+		  int(10)
+		  ["character"]=>
+		  int(13)
+		  ["a"]=>
+		  string(7) "confirm"
+		  ["reason"]=>
+		  string(41) "'confirm' was used before it was defined."
+		}
+		*/
+
 		$remove = is_null($error) || !isset($error['id']);
 
 		if (isset($error['raw'])) {
@@ -203,6 +224,11 @@ class CodeLintJs extends CodeLint {
 
 		// Unreachable 'XXX' after 'return'.
 		if (strpos($errorMsg, 'Unreachable ') === 0 && strpos($errorMsg, "after 'return'.") !== false) {
+			$ret = true;
+		}
+
+		// hardcoded values (BugId:12757)
+		if (strpos($errorMsg, 'Found hardcoded value') === 0) {
 			$ret = true;
 		}
 

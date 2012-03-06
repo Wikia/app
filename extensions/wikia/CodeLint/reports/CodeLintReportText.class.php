@@ -12,7 +12,7 @@
 
 class CodeLintReportText extends CodeLintReport {
 
-	const FORMAT = "%3d | %-90s %3s | %s\n";
+	const FORMAT = "%3d | %-100s %3s | %s\n";
 
 	/**
 	 * Return report for a given set of results
