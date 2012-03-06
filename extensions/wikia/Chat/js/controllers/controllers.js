@@ -326,7 +326,6 @@ var NodeRoomController = $.createClass(Observable,{
 	onChatAdd: function(message) {
 		var newChatEntry;
 		var dataObj = JSON.parse(message.data);
-
 		if(dataObj.attrs.isInlineAlert){
 			newChatEntry = new models.InlineAlert();
 		} else {
@@ -372,13 +371,12 @@ var NodeRoomController = $.createClass(Observable,{
 	onPart: function(message) {
 		var partedUser = new models.User();
 		partedUser.mport(message.data);
-		
 		this.partTimeOuts[partedUser.get('name')] = setTimeout(this.proxy(function(){
 			this.onPartBase(partedUser);
 		}), 8000);
 	},
 	
-	onPart: function(partedUser) {
+	onPartBase: function(partedUser) {
 		var connectedUser = this.model.users.findByName(partedUser.get('name'));
 
 		if(typeof connectedUser != "undefined"){
