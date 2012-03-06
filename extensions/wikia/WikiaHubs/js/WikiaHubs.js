@@ -211,8 +211,7 @@ var SuggestModal = {
 				
 				modal.find('button.cancel').click(function(e) {
 					e.preventDefault();
-					SuggestModal.closeModal();
-					modal.closeModal();
+					SuggestModal.closeModal(modal);
 				});
 		});
 	},
@@ -273,8 +272,7 @@ var SuggestModal = {
 				
 				modal.find('button.cancel').click(function(e) {
 					e.preventDefault();
-					SuggestModal.closeModal();
-					modal.closeModal();
+					SuggestModal.closeModal(modal);
 				});
 		});
 	},
@@ -295,7 +293,7 @@ var SuggestModal = {
 		});
 	},
 	
-	closeModal: function() {
+	closeModal: function(modal) {
 		if ( !window.wgUserName ) {
 			var searchstring = window.location.search;
 			if( typeof searchstring === "undefined" ) {
@@ -307,6 +305,8 @@ var SuggestModal = {
 			} else if( searchstring.substr(0,1) == '?' ) {
 				window.location = window.location + '&cb=' + Math.floor(Math.random()*10000);
 			}
+		} else if( typeof(modal.closeModal) === 'function' ) {
+			modal.closeModal();
 		}
 	}
 
