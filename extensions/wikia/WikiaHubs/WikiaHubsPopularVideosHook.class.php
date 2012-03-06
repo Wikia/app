@@ -15,7 +15,7 @@ class WikiaHubsPopularVideos {
 	 * @param Parser parser
 	 * @return true
 	 */
-	public function onParserBeforeTidy( Parser $parser ) {
+	public function onParserFirstCallInit( Parser $parser ) {
 		wfProfileIn(__METHOD__);
 
 		$parser->setHook('hubspopularvideos', array($this, 'renderTag'));

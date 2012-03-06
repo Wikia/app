@@ -28,7 +28,7 @@ $app->registerClass('WikiaHubsPopularVideos', $dir . 'WikiaHubsPopularVideosHook
 $wgExtensionMessagesFiles['WikiaHubs'] = $dir . 'WikiaHubs.i18n.php';
 
 // hooks
-$app->registerHook('ParserBeforeTidy', 'WikiaHubsPopularVideos', 'onParserBeforeTidy');
+$app->registerHook('ParserFirstCallInit', 'WikiaHubsPopularVideos', 'onParserFirstCallInit');
 
 // configuration
 $wgWikiaHubsPages = array(
