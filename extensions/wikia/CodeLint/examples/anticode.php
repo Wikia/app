@@ -30,4 +30,7 @@ $obj->bar('foo', 'bar');
 echo Foo::NOT_EXISTING_CONST;
 
 // calling private method from outside the class
-$obk->priv();
+$obj->priv();
+
+// typo
+$obk->bar();
