@@ -132,18 +132,20 @@
 			display: block;
 		}
 		
-		.lvl3{
+		.lvl3 {
 			top: 0;
 			left: 100%;
+			display: none;
 		}
 
 		.lvl2 {
 			top: 50px;
 			left: 100%;
+			display: none;
 		}
-		
+
 		.cur{
-			z-index: 1;
+			display: block;
 		}
 
 		&.cur1 {

@@ -638,12 +638,12 @@ var WikiaMobile = WikiaMobile || (function() {
 
 			if(wkNavMenu.className == 'cur2') {
 				wkNavMenu.className = 'cur1';
-				wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2';
+				setTimeout(function(){wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2'}, 800);
 				navBar.style.height = (lvl1.height() + 80) + 'px';
 				track('nav/level-1');
 			} else {
 				wkNavMenu.className = 'cur2';
-				wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3';
+				setTimeout(function(){wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3'}, 800);
 				current = $('.lvl2.cur');
 				wikiNavHeader.innerText = current.prev().text();
 				navBar.style.height = (current.height() + 130) + 'px';
