@@ -211,6 +211,7 @@ var SuggestModal = {
 				
 				modal.find('button.cancel').click(function(e) {
 					e.preventDefault();
+					SuggestModal.closeModal();
 					modal.closeModal();
 				});
 		});
@@ -272,6 +273,7 @@ var SuggestModal = {
 				
 				modal.find('button.cancel').click(function(e) {
 					e.preventDefault();
+					SuggestModal.closeModal();
 					modal.closeModal();
 				});
 		});
@@ -302,7 +304,7 @@ var SuggestModal = {
 			
 			if( searchstring === '' ) {
 				window.location = window.location + '?cb=' + Math.floor(Math.random()*10000);
-			} else if( window.location.search.substr(0,1) == '?' ) {
+			} else if( searchstring.substr(0,1) == '?' ) {
 				window.location = window.location + '&cb=' + Math.floor(Math.random()*10000);
 			}
 		}
