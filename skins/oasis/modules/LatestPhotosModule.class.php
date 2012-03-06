@@ -107,7 +107,7 @@ class LatestPhotosModule extends Module {
 
  	private function getImageData($element) {
 		$retval = array();
-		if (isset($element['title'])) {
+		if ( isset($element['title']) ) {
 			$title = Title::newFromText($element['title']);
 			$retval = array('url' => $title->getLocalUrl(), 'file' => wfFindFile ( $title ));
 		}
@@ -118,7 +118,7 @@ class LatestPhotosModule extends Module {
 		$file = $element['file'];
 		$ret = true;
 
-		if (isset($file->title)) {
+		if (isset($file->title) && WikiaVideoService::isVideoFile($file)) {
 			// filter by filetype and filesize (RT #42075)
 			$minor_type = $file->minor_mime;
 			$renderable = $file->canRender();
