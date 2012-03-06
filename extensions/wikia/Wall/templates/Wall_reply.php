@@ -1,6 +1,6 @@
 <? if( $userBlocked === false ): ?>
 	<li class="SpeechBubble new-reply" <?php echo ($showReplyForm ? '' : 'style="display:none"') ?>>
-		<? if ( $wg->enableMiniEditorExt ):
+		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Header', array(
 				'attributes' => array(
 					'data-min-height' => 100,
@@ -12,11 +12,11 @@
 			<?= AvatarService::renderAvatar($username, 30) ?>
 		</div>
 		<blockquote class="speech-bubble-message">
-			<? if ( $wg->enableMiniEditorExt ):
+			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
 			endif; ?>
 			<textarea class="body" placeholder="<?= wfMsg('wall-placeholder-reply') ?>"></textarea>
-			<? if ( $wg->enableMiniEditorExt ):
+			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
 			endif; ?>
 		</blockquote>
@@ -30,7 +30,7 @@
 			<? */ ?>
 			<div class="loadingAjax"></div>
 		</div>
-		<? if ( $wg->enableMiniEditorExt ):
+		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
 		endif; ?>
 	</li>
