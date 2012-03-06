@@ -246,7 +246,8 @@ class TopListItem extends TopListBase {
 	 * @return TopList
 	 */
 	public function getList() {
-		if( $this->mList == null ) {
+		
+		if( !( $this->mList instanceof TopList ) ) {
 			$this->mList = TopList::newFromText( $this->getListTitleText() );
 		}
 		return $this->mList;

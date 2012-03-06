@@ -565,7 +565,7 @@ class TopListHelper {
 		if( !empty( $titleText ) ) {
 			$item = TopListItem::newFromText( $titleText );
 
-			if( $item instanceof TopListItem && $item->getList()->exists() && $item->getList()->userCanVote()) {
+			if( $item instanceof TopListItem && $item->getList() instanceof TopList && $item->getList()->exists() && $item->getList()->userCanVote()) {
 				$result[ 'result' ] = $item->vote();
 				$result[ 'votedId' ] = $item->getTitle()->getSubpageText();
 				$result[ 'message' ] = wfMsg( 'toplists-list-item-voted' );
