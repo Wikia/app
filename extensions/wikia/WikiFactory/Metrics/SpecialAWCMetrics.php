@@ -275,7 +275,7 @@ class WikiMetrics {
 	 *
 	 */
 	public function getMainStatsRecords() {
-		global $wgExternalStatsDB, $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled;
 		
 		$res = array();
 		wfProfileIn( __METHOD__ );
