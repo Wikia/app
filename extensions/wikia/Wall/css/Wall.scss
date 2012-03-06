@@ -62,6 +62,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				}
 			}
 			.msg-body {
+				@include clearfix;
 				word-wrap: break-word;
 			}
 			> ul { margin-left: 75px; }
