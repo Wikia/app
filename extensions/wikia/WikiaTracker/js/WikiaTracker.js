@@ -94,6 +94,10 @@ WikiaTracker._track = function(page, profile, sample, events) {
 
 	sample = '10';
 
+	if (page != 'AnalyticsEngine::EVENT_PAGEVIEW' && profile != 'UA-288915-42') {
+		return;
+	}
+
 	_gaq.push(['WikiaTracker._setAccount', profile]);
 	_gaq.push(['WikiaTracker._setSampleRate', sample]);
 
@@ -122,7 +126,7 @@ WikiaTracker._track = function(page, profile, sample, events) {
 */
 	if (page == 'AnalyticsEngine::EVENT_PAGEVIEW') {
 		_gaq.push(['WikiaTracker._trackPageview']);
-		_gaq.push(['WikiaTracker._trackPageLoadTime']);
+//		_gaq.push(['WikiaTracker._trackPageLoadTime']);
 	} else if (page != null) {
 		if (page.indexOf('/') != 0) {
 			page = '/' + page;
