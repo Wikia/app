@@ -391,8 +391,7 @@ class CategoryExhibitionSection {
 			$this->getSortType(),
 			$this->isVerify(),
 			$wgCityId,
-			$wgVideoHandlersVideosMigrated ? 1 : 0,
-			1
+			$wgVideoHandlersVideosMigrated ? 1 : 0
 		);
 	}
 
