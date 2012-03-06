@@ -219,7 +219,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				elements : [
 					{
 						'type': 'html',
-						'html': '<p class="link-type-note"><span>...</span><img alt="Link Status" class="" src="http://images1.wikia.nocookie.net/__cb21710/common/skins/common/blank.gif" /></p>', // TODO: FIXME: use the same wgBlankImg URL.  This one won't be in the user's cache
+						'html': '<p class="link-type-note"><span>...</span><img alt="Link Status" class="" src="' + wgBlankImgUrl + '" /></p>',
 						'id': 'linkdisplay'
 					},
 					{
