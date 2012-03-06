@@ -30,8 +30,8 @@ class WikiaHubsSuggestController extends WikiaController {
 	public function modalRelatedVideos() {
 		if ( $this->request->getVal( 'submit', false ) && $_COOKIE['wikicitiesUserID'] == $_SESSION['wsUserID'] ) {
 			$hubname = $this->request->getVal( 'hubname', '' );
-			$videoUrl = $this->request->getVal( 'videourl', '' );
-			$wikiname = $this->request->getVal( 'wikiname', '' );
+			$videoUrl = trim( $this->request->getVal( 'videourl', '' ) );
+			$wikiname = trim( $this->request->getVal( 'wikiname', '' ) );
 			$submissiondate = date('r');
 
 			if ( $this->request->getVal( 'cancel', false ) ) {
@@ -72,8 +72,8 @@ class WikiaHubsSuggestController extends WikiaController {
 	public function modalArticle() {
 		if ( $this->request->getVal( 'submit', false ) && $_COOKIE['wikicitiesUserID'] == $_SESSION['wsUserID'] ) {
 			$hubname = $this->request->getVal( 'hubname', '' );
-			$articleUrl = $this->request->getVal( 'articleurl', '' );
-			$reason = $this->request->getVal( 'reason', '' );
+			$articleUrl = trim( $this->request->getVal( 'articleurl', '' ) );
+			$reason = trim( $this->request->getVal( 'reason', '' ) );
 			$submissiondate = date('r');
 
 			if ( $this->request->getVal( 'cancel', false ) ) {
@@ -83,7 +83,7 @@ class WikiaHubsSuggestController extends WikiaController {
 				$this->errParam = 'articleurl';
 				$this->msg = $this->wf->msg( 'wikiahubs-error-invalid-article-url-length' );
 				return;
-			} else if ( empty($reason) ) {
+			} else if ( empty($reason) || strlen($reason) > 140 ) {
 				$this->result = 'error';
 				$this->errParam = 'reason';
 				$this->msg = $this->wf->msg( 'wikiahubs-error-invalid-reason-length' );
