@@ -295,7 +295,7 @@ var SuggestModal = {
 	
 	closeModal: function(modal) {
 		if ( !window.wgUserName ) {
-			var searchstring = window.location.search;
+			var searchstring = window.location.search || '';
 			if( typeof searchstring === "undefined" ) {
 				searchstring = '';
 			}
