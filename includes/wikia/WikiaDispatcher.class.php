@@ -146,8 +146,9 @@ class WikiaDispatcher {
 				if ( $controllerName != $controllerLegacyName ) {
 					$app->runHook( ( "{$controllerLegacyName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
 				}
+				$app->wf->profileOut ( __METHOD__ . " ({$controllerName}_{$method})" );
 			} catch ( Exception $e ) {
-				$app->runFunction( 'wfProfileOut', ( __METHOD__ . " ({$controllerName}_{$method})" ) );
+				$app->wf->profileOut ( __METHOD__ . " ({$controllerName}_{$method})" );
 
 				// Work around for errors thrown inside modules -- remove when modules go away
 				if ( $response instanceof Module ) {
@@ -165,6 +166,7 @@ class WikiaDispatcher {
 					$request->setDispatched( false );
 				}
 			}
+
 		} while ( !$request->isDispatched() );
 
 		if ( $request->isInternal() && $response->hasException() ) {
@@ -172,7 +174,6 @@ class WikiaDispatcher {
 			throw new WikiaDispatchedException( 'Internal Throw', $response->getException() );
 		}
 
-		$app->runFunction( 'wfProfileOut', ( __METHOD__ . " ({$controllerName}_{$method})" ) );
 		return $response;
 	}
 }
