@@ -146,10 +146,10 @@ class WallHooksHelper {
 	 */
 	public function onSkinTemplateTabs($template, &$contentActions) {
 		$app = F::App();
-
-		$app->wg->request->setVal('dontGetUserFromSession', true);
-
+		
 		if( !empty($app->wg->EnableWallExt) ) {
+			$app->wg->request->setVal('dontGetUserFromSession', true);
+			
 			$helper = F::build('WallHelper', array());
 			$title = $app->wg->Title;
 
