@@ -30,7 +30,7 @@ class FacebookSignupController extends WikiaController {
 		else {
 			// no account connected - show FB sign up modal
 			$this->title = wfMsg('usersignup-facebook-heading');
-			$this->modal = $this->sendRequest('FacebookSignupController', 'modal')->__toString();
+			if ($fbUserId) $this->modal = $this->sendRequest('FacebookSignupController', 'modal')->__toString();
 			$this->cancelMsg = wfMsg('cancel');
 		}
 	}
@@ -40,6 +40,7 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function modal() {
 		// get an email from Facebook API
+
 		$resp = $this->sendRequest('FacebookSignupController', 'getFacebookData', array(
 			'fbUserId' => $this->getFacebookUserId(),
 		));
