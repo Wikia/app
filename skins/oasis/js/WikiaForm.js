@@ -18,7 +18,7 @@ var WikiaForm = function(el) {
 
 	// pre-cache known inputs by name (this could potentially cause a bug if the input is dynamic)
 	this.inputs = {};
-	var inputs = this.el.find('input, select');
+	var inputs = this.el.find('input, select, textarea');
 	for(var i = 0; i < inputs.length; i++) {
 		var input = $(inputs[i]),
 			name = input.attr('name');
