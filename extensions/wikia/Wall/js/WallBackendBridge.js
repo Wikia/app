@@ -13,7 +13,7 @@ var WallBackendBridge = $.createClass(Observable, {
 				username: username
 			},
 			callback: this.proxy(function(data) {
-				var html = innerShiv(data.html);
+				var html = innerShiv(data.html, false);
 				var page = $('.comments', html);
 				var pagination = $('.Pagination', html);
 				if(typeof callback == 'function') {
@@ -35,7 +35,7 @@ var WallBackendBridge = $.createClass(Observable, {
 				convertFormat: convertFormat
 			},
 			callback: this.proxy(function(data) {
-				var newmsg = $(innerShiv(data.message));
+				var newmsg = $(innerShiv(data.message, false));
 				if(typeof callback == 'function') {
 					callback(newmsg);
 				}
@@ -54,7 +54,7 @@ var WallBackendBridge = $.createClass(Observable, {
 				username: username,
 				convertFormat: convertFormat
 			}, callback: this.proxy(function(data) {
-				var newmsg = $(innerShiv(data.message));
+				var newmsg = $(innerShiv(data.message, false));
 				
 				if(typeof callback == 'function') {
 					callback(newmsg);

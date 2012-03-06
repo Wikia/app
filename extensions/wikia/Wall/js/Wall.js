@@ -110,15 +110,20 @@ var Wall = $.createClass(Object, {
 	},
 
 	afterPagination: function() {
-		WikiaButtons.init($('#Wall'));
-		$('#Wall').find('textarea,input').placeholder();
-		$('.timeago').timeago();
-		$('.new-reply textarea').autoResize(this.replyMessageForm.settings.reply);
+		var wall = $('#Wall');
+
+		wall.find('.timeago').timeago();
+		wall.find('textarea, input').placeholder();
+		wall.find('.new-reply textarea').autoResize(this.replyMessageForm.settings.reply);
+
+		if (!this.isMonobook) {
+			WikiaButtons.init(wall);
+		}
 	},
 
-	afterNewMessagePost: function() {
-		$('#Wall').find('textarea,input').placeholder();
-		$('.new-reply textarea').autoResize(this.replyMessageForm.settings.reply);
+	// TODO: refactor Wall so subclasses have access to settings, then this can go away
+	afterNewMessagePost: function(newmsg) {
+		newmsg.find('.new-reply textarea').autoResize(this.replyMessageForm.settings.reply);
 	},
 
 	initTextareas: function() {
