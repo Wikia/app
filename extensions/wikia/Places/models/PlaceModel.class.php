@@ -209,9 +209,6 @@ class PlaceModel {
 			return array();
 		}
 
-		$oArticleService = F::Build('ArticleService');
-		$oArticleService->setArticleById( $pageId );
-
 		// TODO: getImages() are not cached
 		$imageServing = new ImageServing( array( $pageId ), 100, array( 'w' => 1, 'h' => 1 ) );
 		$images = $imageServing->getImages(1);
@@ -222,9 +219,12 @@ class PlaceModel {
 			$imageUrl = '';
 		}
 
+		$oArticleService = F::Build('ArticleService');
+		$oArticleService->setArticleById( $pageId );
+
 		$textSnippet = $oArticleService->getTextSnippet( 120 );
-		$strPos = strrpos( $textSnippet, ' ' );
-		$textSnippet = substr( $textSnippet, 0, ( $strPos ) );
+		$strPos = mb_strrpos( $textSnippet, ' ' );
+		$textSnippet = mb_substr( $textSnippet, 0, ( $strPos ) );
 		$textSnippet.= ' ...';
 
 		$ret = array(

@@ -95,16 +95,22 @@ class PlacesController extends WikiaController {
 
 		foreach( $aMarkers as $oMarker ){
 			$aMapParams = $oMarker->getForMap();
-			if ( !empty( $aMapParams ) ){
-				$tmpArray = $oMarker->getForMap();
-				$tmpArray['tooltip'] = $this->sendRequest(
+			if ( !empty( $aMapParams ) ) {
+				// render tooltip bubble for each marker
+				$aMapParams['tooltip'] = $this->sendRequest(
 					'Places',
 					'getMapSnippet',
 					array(
-					    'data' => $tmpArray
+					    'data' => $aMapParams
 					)
 				)->toString();
-				$markers[] = $tmpArray;
+
+				// no need to emit everything in HTML
+				unset($aMapParams['articleUrl']);
+				unset($aMapParams['imageUrl']);
+				unset($aMapParams['textSnippet']);
+
+				$markers[] = $aMapParams;
 			}
 		}
 
