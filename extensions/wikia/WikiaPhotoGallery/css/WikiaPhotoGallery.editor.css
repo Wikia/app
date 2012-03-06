@@ -303,6 +303,7 @@ img.WikiaPhotoGalleryProgress {
 
 #WikiaPhotoGalleryEditorSave {
 	float: right;
+    position: relative;
 }
 
 /* tabs */
