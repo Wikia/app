@@ -110,8 +110,7 @@ class ImagesService extends Service {
 		if (!empty($res['query']['logevents'])) {
 			foreach($res['query']['logevents'] as $entry) {
 				// ignore Video:foo entries from VideoEmbedTool
-				//if ($entry['ns'] == NS_IMAGE) {
-				if( !WikiaVideoService::isTitleVideo($entry['title']) ) {
+				if( $entry['ns'] == NS_IMAGE && !WikiaVideoService::isTitleVideo($entry['title']) ) {
 					$image = Title::newFromText($entry['title']);
 					if (!empty($image)) {
 						// skip badges upload (RT #90607)
