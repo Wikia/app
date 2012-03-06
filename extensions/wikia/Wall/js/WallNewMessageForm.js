@@ -62,15 +62,14 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 			$('.new-message input').addClass('no-title');
 			return;
 		}
-		
-		if( this.WallMessageSubmit.hasClass('wall-require-login') ) {
-		//do nothing -- ajax combo box will take care of it starting from now
-			this.loginBeforeAction(this.proxy(function(){
+
+		if (this.WallMessageSubmit.hasClass('wall-require-login')) {
+			this.loginBeforeAction(this.proxy(function() {
 				this.doPostNewMessage(title, this.proxy(this.reloadAfterLogin));
 			}));
-			return;
+
 		} else {
-			this.doPostNewMessage(title, this.proxy(this.afterPost) );
+			this.doPostNewMessage(title, this.proxy(this.afterPost));
 		}
 	},
 	
@@ -92,39 +91,37 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 	},
 	
 	clearNewMessageBody: function() {
-		this.WallMessageBody.val("").trigger('blur');	
+		this.WallMessageBody.val('').trigger('blur');	
 	},
 	
 	clearNewMessageTitle: function() {
-		this.WallMessageTitle.val("").trigger('blur');	
+		this.WallMessageTitle.val('').trigger('blur');	
 	},
 	
-	afterPost: function(newmsg, indata) {
+	afterPost: function(newmsg) {
+		newmsg.hide();
+
 		this.clearNewMessageBody();
-		
-		if(window.skin && window.skin != "monobook") {
+		this.WallComments.prepend(newmsg);
+
+		// IE is too slow for animations
+		if ($.browser.msie) {
+			newmsg.show();
+
+		} else {
+			newmsg.css('opacity', 0).slideDown('slow').animate({ opacity: 1 }, 'slow');
+		}
+
+		newmsg.find('.timeago').timeago();
+		newmsg.find('textarea, input').placeholder();
+
+		if (window.skin && window.skin != 'monobook') {
 			WikiaButtons.init(newmsg);
 		}
 
-		this.WallComments.prepend(newmsg);
-		
-		if(!$.browser.msie) { // IE is too slow for that (even IE8)
-			newmsg.hide()
-				.css('opacity',0)
-				.slideDown('slow')
-				.animate({'opacity':1},'slow');
-		}
-		
-		
-		$('.timeago',newmsg).timeago();
-
 		this.enableNewMessage();
-		
-		if( typeof(href) == 'string' ) {
-			window.location.href = href;
-		}
 
-		this.fire('afterNewMessagePost');
+		this.fire('afterNewMessagePost', newmsg);
 	},
 	
 	postNewMessage_ChangeText_pre: function(e) {
