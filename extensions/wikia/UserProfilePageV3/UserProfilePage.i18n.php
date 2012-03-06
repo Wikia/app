@@ -54,6 +54,7 @@ $messages['en'] = array(
 	'user-identity-box-group-helper' => 'Helper',
 	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
 	'user-identity-box-group-authenticated' => 'Authenticated',
+	'user-identity-box-group-council' => 'Councilor',
 
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
