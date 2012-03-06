@@ -13,6 +13,9 @@
 	.tabberlive {
 		margin: 0;
 		.tabbernav {
+			font-family: helvetica;
+			font-size: 15px;
+			font-weight: normal;
 			border-bottom: none;
 			padding: 0;
 			li a {
@@ -25,12 +28,12 @@
 				vartical-align: middle;
 			}
 			li a:hover {
-				@include linear-gradient(false, top, #D9E3E9, 0, #a9b4b8, 100%);
+				background-color: #d8e3e7;
 				border: none;
 				color: $color-links;
 			}
 			li a:visited {
-				@include linear-gradient(false, top, #D9E3E9, 0, #a9b4b8, 100%);
+				background-color: #d8e3e7;
 				border: none;
 				color: $color-links;
 			}
@@ -40,12 +43,12 @@
 				color: $color-links;
 			}
 			li.tabberactive a {
-				@include linear-gradient(false, top, #D9E3E9, 0, #a9b4b8, 100%);
+				background-color: #d8e3e7;
 				border: none;
 				color: $color-text;
 			}
 			li.tabberactive a:hover {
-				@include linear-gradient(false, top, #D9E3E9, 0, #a9b4b8, 100%);
+				background-color: #d8e3e7;
 				border: none;
 				color: $color-text;
 			}
