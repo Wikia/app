@@ -102,12 +102,12 @@ class ArticleService extends Service {
 			// stripping leftover '[' & ']' as well as things between them
 			$content = preg_replace('/\[(.*?)\]/', '', $content);
 			// stripping leading non-alnum characters
-			$content = preg_replace('/^([^a-zA-Z0-9])+/', '', $content,1);
+			$content = preg_replace('/^[[:punct:][:space:][:cntrl:]]*/', "", $content);
 			// compress white characters
 			$content = preg_replace('/\s+/',' ',$content);
 			$content = trim( $content );
 			$content = mb_substr( $content, 0, $length-3 );
-			$content = mb_substr( $content, 0, strrpos($content,' ')) . '...';
+			$content = mb_substr( $content, 0, mb_strrpos($content,' ')) . '...';
 			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH-3 );
 
 			if ( $length <= self::MAX_CACHED_TEXT_LENGTH ){
