@@ -325,23 +325,25 @@ class VideoEmbedTool {
 		}
 
 		// sanitize name and init title objects
+		$title = null;
 		if (WikiaVideoService::useWikiaVideoExtForEmbed()) {
 			$titleLegacyVideo = PartnerVideoHelper::getInstance()->makeTitleSafe($name);
 			if (empty($titleLegacyVideo)) {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
+			$nameFile = $titleLegacyVideo->getText();
+			$title = $titleLegacyVideo;
 		}		
-		if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
+		if (!$title || WikiaVideoService::useVideoHandlersExtForEmbed()) {
 			$nameFile = VideoHandlersUploader::sanitizeTitle($name);
 			$titleFile = Title::newFromText($nameFile, NS_FILE);
 			if (empty($titleFile)) {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
-		}				
-		$nameSanitized = WikiaVideoService::isVideoStoredAsFile() ? $nameFile : $titleLegacyVideo->getText();
-		$title = WikiaVideoService::isVideoStoredAsFile() ? $titleFile : $titleLegacyVideo;
+			$title = $titleFile;
+		}
 
 		$extra = 0;
 		$metadata = array();
@@ -491,7 +493,7 @@ class VideoEmbedTool {
 					$gallery_split = explode( ':', $our_gallery );
 					$thumb = false;
 					
-					$tag = $gallery_split[0] . ":" . $nameSanitized;	
+					$tag = $gallery_split[0] . ":" . $nameFile;
 
 					if($size != 'full') {
 						$tag .= '|thumb';
@@ -530,7 +532,7 @@ class VideoEmbedTool {
 					preg_match_all( '/<videogallery[^>]*>[^<]*/s', $text, $matches, PREG_OFFSET_CAPTURE );
 					if( is_array( $matches ) ) {
 						$our_gallery = $matches[0][$gallery][0];				
-						$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $nameSanitized;	
+						$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $nameFile;
 						if( $caption != '' ) {
 							$our_gallery_modified .= '|' . $caption;
 						}				
@@ -548,7 +550,7 @@ class VideoEmbedTool {
 					}
 				} else {
 					header('X-screen-type: summary');				
-					$tag = $ns_vid . ":" . $nameSanitized;
+					$tag = $ns_vid . ":" . $nameFile;
 					if($caption != '') {
 						$tag .= "|".$caption;
 					}
@@ -566,7 +568,7 @@ class VideoEmbedTool {
 			if( 'gallery' != $layout ) {
 				if( '' == $mwInGallery ) { // not adding gallery, not in gallery
 					if ($provider == VideoPage::V_WIKIAVIDEO && !WikiaVideoService::isVideoStoredAsFile()) {
-						$tag = '{{:' . $wgWikiaVideoInterwikiPrefix . ':' . $nameSanitized;
+						$tag = '{{:' . $wgWikiaVideoInterwikiPrefix . ':' . $nameFile;
 						$params = array();
 						if($size != 'full') {
 							$params[] = 'thumb=1';
@@ -582,7 +584,7 @@ class VideoEmbedTool {
 						$tag .= '}}';
 					}
 					else {
-						$tag = '[[' . $ns_vid . ':'.$nameSanitized;
+						$tag = '[[' . $ns_vid . ':'.$nameFile;
 						if($size != 'full') {
 							$tag .= '|thumb';
 						}
@@ -597,7 +599,7 @@ class VideoEmbedTool {
 					}
 					$message = wfMsg( 'vet-single-success' );
 				} else { // we were in gallery
-					$tag = "\n" . $ns_vid . ":" . $nameSanitized ;
+					$tag = "\n" . $ns_vid . ":" . $nameFile ;
 					if($caption != '') {
 						$tag .= "|".$caption;
 					}
@@ -605,7 +607,7 @@ class VideoEmbedTool {
 				}	
 			} else { // gallery needs to be treated differently...
 				$tag = "<videogallery>\n";
-				$tag .= $ns_vid . ":" . $nameSanitized;			
+				$tag .= $ns_vid . ":" . $nameFile;
 				if($caption != '') {
 					$tag .= "|".$caption."\n</videogallery>";
 				} else {
