@@ -187,39 +187,54 @@ class PlaceModel {
 		return 'http://maps.googleapis.com/maps/api/staticmap?'.$sParams;
 	}
 
+	/**
+	 * Returns data needed to render marker for a given place on a map with multiple places
+	 *
+	 * This method returns article's URL, text snippet and an image for current place
+	 */
 	public function getForMap(){
-
 		if ( $this->isEmpty() ){
 			return false;
 		};
 
-		$oTitle = F::build('Title', array( $this->getPageId() ), 'newFromID' );
+		wfProfileIn(__METHOD__);
+
+		$pageId = $this->getPageId();
+		$oTitle = F::build('Title', array($pageId), 'newFromID' );
+
+		if (empty($oTitle) || !$oTitle->exists()) {
+			wfProfileOut(__METHOD__);
+			return array();
+		}
 
 		$oArticleService = F::Build('ArticleService');
-		$oArticleService->setArticleById( $this->getPageId() );
-		$imageServing = new ImageServing( array( $this->getPageId() ), 100, array( 'w' => 1, 'h' => 1 ) );
+		$oArticleService->setArticleById( $pageId );
+
+		$imageServing = new ImageServing( array( $pageId ), 100, array( 'w' => 1, 'h' => 1 ) );
 		$images = $imageServing->getImages(1);
-		$imageUrl = '';
-		$snippet = '';
-		if ( isset( $images[$this->getPageId()] ) && isset( $images[$this->getPageId()][0] ) && isset( $images[$this->getPageId()][0]['url'] ) ){
-			$imageUrl = $images[$this->getPageId()][0]['url'];
+		if ( !empty( $images[$pageId][0]['url'] ) ){
+			$imageUrl = $images[$pageId][0]['url'];
 		}
+		else {
+			$imageUrl = '';
+		}
+
 		$textSnippet = $oArticleService->getTextSnippet( 120 );
 		$strPos = strrpos( $textSnippet, ' ' );
-
 		$textSnippet = substr( $textSnippet, 0, ( $strPos ) );
 		$textSnippet.= ' ...';
-		
-		return ( !empty( $oTitle ) && $oTitle->exists() )
-			? array(
-					'lat' => $this->getLat(),
-					'lan' => $this->getLon(),
-					'label' => $oTitle->getText(),
-					'imageUrl' => $imageUrl,
-					'articleUrl' => $oTitle->getLocalUrl(),
-					'textSnippet' => $textSnippet
-				)
-			: array();
+
+		$ret = array(
+			'lat' => $this->getLat(),
+			'lan' => $this->getLon(),
+			'label' => $oTitle->getText(),
+			'imageUrl' => $imageUrl,
+			'articleUrl' => $oTitle->getLocalUrl(),
+			'textSnippet' => $textSnippet
+		);
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	public function getDistanceTo(PlaceModel $place) {
