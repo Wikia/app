@@ -1,17 +1,16 @@
 .WikiaArticle {
 	.wikiahubs-sponsored-video {
 		background: #f0f0f0;
-		width: 320px;
-		height: 295px;
 		overflow:hidden;
+		padding: 10px;
+		width: 300px;
 		.title-wrapper {
 			border: 0;
-			margin: 10px 10px 25px 10px;
 			overflow:hidden;
 			h2 {				
-				margin:0;
 				border:none;
 				float:left;
+				margin-bottom: 10px;
 			}
 			.sponsorbox {
 				float:right;
@@ -46,7 +45,6 @@
 		}
 		.sponsored-video-content {
 			clear: both;
-			margin: 10px 0 0 10px;
 			.thumbinner {
 				border:0;padding:0;
 			}
