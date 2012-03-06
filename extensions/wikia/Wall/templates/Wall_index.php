@@ -1,5 +1,5 @@
 <?
-if ( $wg->enableMiniEditorExt ) {
+if ( $wg->EnableMiniEditorExtForWall ) {
 	echo $app->renderView('MiniEditorController', 'EditorSetup');
 }
 

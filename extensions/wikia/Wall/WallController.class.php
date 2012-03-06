@@ -26,7 +26,7 @@ class WallController extends ArticleCommentsModule {
 		$this->response->addAsset('extensions/wikia/Wall/css/Wall.scss');
 
 		// Load MiniEditor assets, if enabled 
-		if ($this->wg->EnableMiniEditorExt) {
+		if ($this->wg->EnableMiniEditorExtForWall) {
 			$this->sendRequest('MiniEditor', 'loadAssets', array(
 				'additionalAssets' => array(
 					'extensions/wikia/MiniEditor/css/Wall/Wall.scss',

@@ -34,6 +34,9 @@ class MiniEditorController extends WikiaController {
 		$this->response->addAsset('extensions/wikia/RTE/css/RTE.scss');
 		$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
 
+		// If this function got called, MiniEditor is enabled
+		$this->response->setJSVar('wgEnableMiniEditorExt', true);
+
 		// Create a JS variable to let us know if we are loading on demand or not
 		$this->response->setJSVar('wgMiniEditorLoadOnDemand', $loadOnDemand);
 

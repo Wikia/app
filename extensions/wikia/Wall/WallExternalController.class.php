@@ -77,7 +77,6 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function postNewMessage() {
-		global $wgEnableMiniEditorExt;
 		$this->app->wf->ProfileIn(__METHOD__);
 		
 		$this->response->setVal('status', true);
@@ -87,7 +86,7 @@ class WallExternalController extends WikiaController {
 		
 		// If MiniEditor is enabled then we might get text in source or rte mode		
 		$convertFormat = $this->request->getVal('convertFormat');
-		if($wgEnableMiniEditorExt && !empty($convertFormat)) {
+		if($this->wg->EnableMiniEditorExtForWall && !empty($convertFormat)) {
 			$body = MiniEditorHelper::convertRequestText($this->request, 'body');
 		} else {
 			$body = $this->request->getVal('body');
@@ -243,7 +242,6 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function editMessage() {
-		global $wgEnableMiniEditorExt;
 		$msgid = $this->request->getVal('msgid');
 		$convertFormat = $this->request->getVal('convertFormat');
 		
@@ -264,7 +262,7 @@ class WallExternalController extends WikiaController {
 		$data = $ac->getData();
 		
 		// If MiniEditor is enabled then we might need to convert html or wikitext
-		if($wgEnableMiniEditorExt && !empty($convertFormat)) {
+		if($this->wg->EnableMiniEditorExtForWall && !empty($convertFormat)) {
 			$this->response->setVal('htmlorwikitext', MiniEditorHelper::convertRequestText($this->request, null, $data['rawtext']));
 		} else {
 			$this->response->setVal('htmlorwikitext', $data['rawtext']);		
@@ -274,7 +272,6 @@ class WallExternalController extends WikiaController {
 	}
 	
 	public function editMessageSave() {
-		global $wgEnableMiniEditorExt;
 		$helper = F::build('WallHelper', array());
 		
 		$msgid = $this->request->getVal('msgid');
@@ -282,7 +279,7 @@ class WallExternalController extends WikiaController {
 		$convertFormat = $this->request->getVal('convertFormat');
 
 		// If MiniEditor is enabled then we might need to convert html or wikitext
-		if($wgEnableMiniEditorExt && !empty($convertFormat)) {
+		if($this->wg->EnableMiniEditorExtForWall && !empty($convertFormat)) {
 			$newbody = MiniEditorHelper::convertRequestText($this->request, 'newbody');
 		} else {
 			$newbody = $this->request->getVal('newbody');
@@ -331,7 +328,6 @@ class WallExternalController extends WikiaController {
 	}
 		
 	public function replyToMessage() {
-		global $wgEnableMiniEditorExt;
 		$this->response->setVal('status', true);
 		
 		$parentTitle = F::build('Title', array( $this->request->getVal('parent') ), 'newFromId');
@@ -350,7 +346,7 @@ class WallExternalController extends WikiaController {
 		
 		// If MiniEditor is enabled then we might get text in source or rte mode
 		$convertFormat = $this->request->getVal('convertFormat');
-		if($wgEnableMiniEditorExt && !empty($convertFormat)) {
+		if($this->wg->EnableMiniEditorExtForWall && !empty($convertFormat)) {
 			$body = MiniEditorHelper::convertRequestText($this->request, 'body');
 		} else {
 			$body = $this->request->getVal('body');

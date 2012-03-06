@@ -4,7 +4,7 @@
 			<?= AvatarService::renderAvatar($username, 50) ?>
 		</div>
 		<blockquote class="speech-bubble-message">
-			<? if ( $wg->enableMiniEditorExt ):
+			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Header', array(
 					'attributes' => array(
 						'data-min-height' => 200,
@@ -16,13 +16,13 @@
 				<div class="no-title-warning" style="display:none"><?= wfMsg('wall-no-title-warning') ?></div>
 			</div>
 			<textarea id="WallMessageTitle" class="title" type="text" placeholder="<?= wfMsg('wall-placeholder-topic') ?>"></textarea>
-			<? if ( $wg->enableMiniEditorExt ):
+			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
 			endif; ?>
 			<textarea id="WallMessageBody" class="body" placeholder="<?=
 				User::isIP($wall_username) ? wfMsg('wall-placeholder-message-anon') : wfMsg('wall-placeholder-message', $wall_username)
 			?>" data-space-type="editarea"></textarea>
-			<? if ( $wg->enableMiniEditorExt ):
+			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
 			endif; ?>
 			<div id="WallMessageBodyButtons" class="speech-bubble-buttons" data-space-type="buttons">
@@ -35,7 +35,7 @@
 				<? */ ?>
 				<div class="loadingAjax"></div>
 			</div>
-			<? if ( $wg->enableMiniEditorExt ):
+			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
 			endif; ?>
 		</blockquote>

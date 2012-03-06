@@ -2,20 +2,6 @@
 
 class MiniEditorHelper extends WikiaModel {
 
-	// Logic to determine where to enable MiniEditor
-	public static function makeGlobalVariablesScript(&$vars) {
-		global $wgTitle;
-
-		$namespace = $wgTitle->getNamespace();
-
-		// Enable for Wall, Wall Threads and Special:MiniEditor
-		if ($namespace == NS_USER_WALL || $namespace == NS_USER_WALL_MESSAGE || $wgTitle->isSpecial( 'MiniEditor' )) {
-			$vars['wgEnableMiniEditorExt'] = true;
-		}
-
-		return true;
-	}
-
 	/**
 	 * Helper function for extensions integrating with the Mini Editor
 	 * This will look at the request 'format' parameter and will return 
@@ -26,7 +12,7 @@ class MiniEditorHelper extends WikiaModel {
 	public static function convertRequestText(WikiaRequest $request, $requestParam, $rawText = null) {
 		// $convertFormat is the desired format, i.e. convert to this format.  
 		$convertFormat = $request->getVal('convertFormat', 'wikitext');
-		
+
 		if ($rawText != null) {
 			$text = $rawText;
 
@@ -38,7 +24,7 @@ class MiniEditorHelper extends WikiaModel {
 			$text = RTE::WikitextToHtml($text);
 
 		} else {
-			$text = RTE::HtmlToWikitext($text);					
+			$text = RTE::HtmlToWikitext($text);
 		}
 
 		return $text;

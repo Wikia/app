@@ -40,7 +40,7 @@
 		</a>
 	</div>
 	<blockquote class="speech-bubble-message">
-		<? if ( $wg->enableMiniEditorExt ):
+		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Header', array(
 				'attributes' => array(
 					'data-min-height' => 100,
@@ -63,13 +63,13 @@
 				<span class="stafflogo"></span>
 			<?php endif; ?>
 		</div>
-		<? if ( $wg->enableMiniEditorExt ):
+		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
 		endif; ?>
 		<div class="msg-body" id="WallMessage_<?= $id ?>">
 			<? echo $body ?>
 		</div>
-		<? if ( $wg->enableMiniEditorExt ):
+		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
 		endif; ?>
 		<div class="msg-toolbar">
@@ -97,7 +97,7 @@
 				<button class="wikia-button cancel-edit secondary"><?php echo wfMsg('wall-button-cancel-changes'); ?></button>
 			</div>
 		</div>
-		<? if ( $wg->enableMiniEditorExt ):
+		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
 		endif; ?>
 	</blockquote>

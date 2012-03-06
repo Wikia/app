@@ -41,11 +41,6 @@ $app->registerSpecialPage('MiniEditorDemo', 'MiniEditorSpecialController');
 $app->registerExtensionMessageFile('MiniEditor', $dir . 'MiniEditor.i18n.php');
 
 /**
- * Hooks
- */
-$app->registerHook('MakeGlobalVariablesScript', 'MiniEditorHelper', 'makeGlobalVariablesScript');
-
-/**
  * Permissions
  */
 $wgAvailableRights[] = 'minieditor-specialpage';
