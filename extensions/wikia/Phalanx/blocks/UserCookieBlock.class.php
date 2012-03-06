@@ -19,11 +19,13 @@ class UserCookieBlock extends UserBlock {
 
 		// dependancy -- if this doesn't exist, quit early
 		if ( !class_exists( 'AccountCreationTracker' ) ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		// we don't block anons with this filter
 		if ( $user->isAnon() ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 

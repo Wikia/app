@@ -358,17 +358,12 @@ class AchConfig {
 	}
 
 	public function isSponsored( $badgeTypeId ) {
-		wfProfileIn(__METHOD__);
-
 		$badgeType = $this->getBadgeType($badgeTypeId);
 
 		if ( $badgeType == BADGE_TYPE_NOTINTRACKCOMMUNITYPLATINUM ) {
 			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'is_sponsored' ];
 		}
-
 		return false;
-
-		wfProfileOut(__METHOD__);
 	}
 
 	public function getLevelMsgKeyPart($level) {
@@ -544,39 +539,24 @@ class AchConfig {
 	}
 
 	public function getBadgeClickCommandUrl( $badgeTypeId ) {
-		wfProfileIn(__METHOD__);
-
 		if ( $this->isSponsored( $badgeTypeId ) ) {
 			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'click_tracking_url' ];
 		}
-
 		return false;
-
-		wfProfileOut(__METHOD__);
 	}
 
-	public function getBadgeTrackingUrl( $badgeTypeId ) {
-		wfProfileIn(__METHOD__);
-		
+	public function getBadgeTrackingUrl( $badgeTypeId ) {		
 		if ( $this->isSponsored( $badgeTypeId ) ) {
 			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'badge_tracking_url' ];
 		}
-
 		return false;
-
-		wfProfileOut(__METHOD__);
 	}
 
 	public function getBadgeHoverTrackingUrl( $badgeTypeId ) {
-		wfProfileIn(__METHOD__);
-
 		if ( $this->isSponsored( $badgeTypeId ) ) {
 			return $this->mNotInTrackCommunityPlatinum[ $badgeTypeId ][ 'hover_tracking_url' ];
 		}
-
 		return false;
-
-		wfProfileOut(__METHOD__);
 	}
 
 	public function refreshData($useMasterDb = false) {

@@ -43,9 +43,8 @@ class AchBadge {
 			$key = AchConfig::getInstance()->getBadgeNameKey(BADGE_EDIT, $lap);
 		}
 
-		return wfMsgForContent($key);
-
 		wfProfileOut(__METHOD__);
+		return wfMsgForContent($key);
 	}
 
 	public function getGiveFor() {
@@ -95,11 +94,10 @@ class AchBadge {
 
 			if($image) {
 				$thumb = $image->getThumbnail($width);
+				wfProfileOut(__METHOD__);
 				return $thumb->getUrl();
 			}
 		}
-
-		wfProfileOut(__METHOD__);
 
 		$pictureName = AchConfig::getInstance()->getBadgePictureName($badge_type_id, $realLap, null, false);
 
@@ -115,6 +113,7 @@ class AchBadge {
 			$subdir = '128';
 		}
 
+		wfProfileOut(__METHOD__);
 		return "{$wgExtensionsPath}/wikia/AchievementsII/images/badges/{$subdir}/{$pictureName}";
 	}
 
