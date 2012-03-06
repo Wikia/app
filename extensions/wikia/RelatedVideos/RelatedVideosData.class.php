@@ -117,7 +117,26 @@ class RelatedVideosData {
 
 		try {
 			if ( WikiaVideoService::isVideoStoredAsFile() ) {
-				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
+				// is it a WikiLink?
+				$title = Title::newFromText($url);
+				if ( !$title || !$title->exists() ) {
+					$title = Title::newFromText(str_replace(array('[[',']]'),array('',''),$url));
+				}
+				if ( !$title || !$title->exists() ) {
+					if ( ($pos = strpos($url,'Video:')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos) );
+					}
+					elseif ( ($pos = strpos($url,'File:')) !== false ) {
+						$title = Title::newFromText( substr($url,$pos) );
+					}
+				}
+				if( $title && $title->exists() && WikiaVideoService::isTitleVideo($title) ) {
+					$videoTitle = $title;
+					$videoPageId = $title->getArticleId();
+					$videoProvider = '';
+				} else {
+					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
+				}
 			} else {
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoPage( $url );
 			}
