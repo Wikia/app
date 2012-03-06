@@ -30,7 +30,6 @@ class ArticleService extends Service {
 	 * @return string
 	 */
 	public function getTextSnippet( $length = 100 ) {
-
 		wfProfileIn(__METHOD__);
 
 		$wgParser = F::App()->wg->parser;
@@ -51,6 +50,8 @@ class ArticleService extends Service {
 
 		$cachedResult = self::MAX_CACHED_TEXT_LENGTH >= $length ? $oMemCache->get( $sKey ) : false;
 		if(!is_string($cachedResult)){
+			wfProfileIn(__METHOD__ . '::miss');
+
 			$content = $this->mArticle->getContent();
 			// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
 			wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->mArticle, &$content, $length ) );
@@ -114,6 +115,8 @@ class ArticleService extends Service {
 			} else {
 				wfDebug(__METHOD__ . ": requested string to long to be cached. Served without cache \n");
 			}
+
+			wfProfileOut(__METHOD__ . '::miss');
 		} else {
 			$content = $cachedResult;
 		}
@@ -121,7 +124,6 @@ class ArticleService extends Service {
 		$content = mb_substr( $content, 0, $length );
 
 		// store first x characters of parsed content
-
 		if ($content == '') {
 			wfDebug(__METHOD__ . ": got empty snippet for article #{$this->mArticle->getID()}\n");
 		}
