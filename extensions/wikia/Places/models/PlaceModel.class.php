@@ -191,6 +191,8 @@ class PlaceModel {
 	 * Returns data needed to render marker for a given place on a map with multiple places
 	 *
 	 * This method returns article's URL, text snippet and an image for current place
+	 *
+	 * TODO: add caching
 	 */
 	public function getForMap(){
 		if ( $this->isEmpty() ){
@@ -210,6 +212,7 @@ class PlaceModel {
 		$oArticleService = F::Build('ArticleService');
 		$oArticleService->setArticleById( $pageId );
 
+		// TODO: getImages() are not cached
 		$imageServing = new ImageServing( array( $pageId ), 100, array( 'w' => 1, 'h' => 1 ) );
 		$images = $imageServing->getImages(1);
 		if ( !empty( $images[$pageId][0]['url'] ) ){
