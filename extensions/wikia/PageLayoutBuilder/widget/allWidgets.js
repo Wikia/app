@@ -276,7 +276,7 @@ PageLayoutBuilder.uploadGallery = function(element_id) {
 		return;
 	}
 	if (typeof window.WikiaPhotoGalleryView == 'undefined') {
-		$.getScript('/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', function() {
+		$.getScript(wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', function() {
 			WikiaPhotoGalleryView.loadEditorJS(function() {
 				PageLayoutBuilder.showGalleryForPLB(element_id);
 			});
