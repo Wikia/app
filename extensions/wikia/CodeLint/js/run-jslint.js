@@ -87,5 +87,26 @@ var result = {
 	tool: "JSLint edition " + jslint.edition  + ' (nodejs ' + process.version + ')'
 };
 
+// detect hardcoded stuff (BugId:12757)
+var lines = fileSrc.split("\n"),
+	hardcodedRegExp = /['"]([^"']+blank.gif|\/skins\/|\/extensions\/|\/wiki\/)/,
+	matches;
+
+for(var n=0, len = lines.length; n < len; n++) {
+	matches = lines[n].match(hardcodedRegExp);
+
+	if (matches) {
+		// add an issue to the list
+		result.errors.push({
+			id: '(error)',
+			raw: 'Found hardcoded value',
+			evidence: lines[n],
+			line: n + 1,
+			character: lines[n].indexOf(matches[1]) + 1,
+			reason: 'Found hardcoded value: "' + matches[1] + '"'
+		});
+	}
+}
+
 // return JSON-encoded result
 print(JSON.stringify(result));

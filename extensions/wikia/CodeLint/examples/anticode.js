@@ -55,3 +55,11 @@ var fooObject = {bar: true};
 with(fooObject) {
 	bar++;
 }
+
+// yay for hardcoding
+(function() {
+	elementText = elementText + '<a data-id="' + value + '" class="delete wikia-button secondary"><img src="http://images1.wikia.nocookie.net/__cb33534/common/skins/common/blank.gif" class="sprite trash"></a> ';
+	pageUrl = wgServer + '/wiki/Foo';
+	css = '/extensions/wikia/Foo/bar.css';
+	js = '/skins/common/jquery/jquery.foo.js';
+})();
