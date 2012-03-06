@@ -1,3 +1,4 @@
+
 //
 //Controllers
 //
@@ -169,6 +170,7 @@ var NodeRoomController = $.createClass(Observable,{
 	unreadMessage: 0,
 	roomId: null,
 	mainController: null,
+	partTimeOuts: {},
 	afterInitQueue: [],
 
 	constructor: function(roomId) {
@@ -341,6 +343,11 @@ var NodeRoomController = $.createClass(Observable,{
 		var joinedUser = new models.User();
 		joinedUser.mport(message.joinData);
 
+		if(this.partTimeOuts[joinedUser.get('name')]) {
+			clearTimeout(this.partTimeOuts[joinedUser.get('name')]);
+			$().log('user rejoined clear partTimeOut');
+		}
+		
 		var connectedUser = this.model.users.findByName(joinedUser.get('name'));
 		
 		if(typeof connectedUser == "undefined"){
@@ -361,11 +368,17 @@ var NodeRoomController = $.createClass(Observable,{
 			this.model.users.add(joinedUser);
 		}		
 	},
-
+	
 	onPart: function(message) {
 		var partedUser = new models.User();
 		partedUser.mport(message.data);
 		
+		this.partTimeOuts[partedUser.get('name')] = setTimeout(this.proxy(function(){
+			this.onPartBase(partedUser);
+		}), 8000);
+	},
+	
+	onPart: function(partedUser) {
 		var connectedUser = this.model.users.findByName(partedUser.get('name'));
 
 		if(typeof connectedUser != "undefined"){
