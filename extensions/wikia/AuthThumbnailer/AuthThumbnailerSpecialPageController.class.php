@@ -45,7 +45,10 @@ class AuthThumbnailerSpecialPageController extends WikiaSpecialPageController {
 			$content = Http::get( $thumb_url );
 			if ( $content ) {
 				$this->wf->ResetOutputBuffers();
-				$type = $this->wf->GetType( $img_thumb );
+				$magic = F::build( 'MimeMagic', array(), 'singleton');
+				$ext = strrchr($img_thumb, '.');
+				$ext = $ext === false ? '' : strtolower( substr( $ext, 1 ) );				
+				$type = $magic->guessTypesForExtension( $ext );
 				if ( $type and $type!="unknown/unknown") {
 					header("Content-type: $type");
 				} else {
