@@ -153,11 +153,12 @@ $wgVideoMigrationProviderMap = array(
 	6 => 'Hulu',
 	10 => 'Bliptv',
 	11 => 'Metacafe',
-	12 => 'Screenplay',
+	12 => 'Sevenload',
 	13 => 'Vimeo',
 	15 => 'Myvideo',
 	18 => 'Dailymotion',
 	19 => 'Viddler',
+	21 => 'Screenplay',
 	22 => 'Movieclips',
 	23 => 'Realgravity',
 );
