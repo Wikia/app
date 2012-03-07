@@ -105,7 +105,7 @@ class AvatarService extends Service {
 			$avatarUrl = $masthead->getThumbnail($avatarSize, true, $avoidUpscaling);
 
 			// use per-user cachebuster when custom avatar is used
-			$cb = !$masthead->isDefault() ? $user->getTouched() : 0;
+			$cb = !$masthead->isDefault() ? intval($user->getOption('avatar_rev')) : 0;
 
 			// make URLs consistent and using no-cookie domain (BugId:22190)
 			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : 1);
