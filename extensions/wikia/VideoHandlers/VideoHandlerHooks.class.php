@@ -36,7 +36,7 @@ class VideoHandlerHooks extends WikiaObject{
 	public function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
-		if ( get_class( $skin ) != 'SkinWikiaMobile' ) {
+		if ( !Wikia::isWikiaMobile( $skin ) ) {
 			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/VideoHandlers/css/VideoHandlers.scss' ) );
 		}
 

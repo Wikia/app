@@ -11,7 +11,7 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 
 		//cleanup page output from unwanted stuff
-		if ( $parser->getOptions()->getSkin() instanceof SkinWikiaMobile ) {
+		if ( Wikia::isWikiaMobile( $parser->getOptions()->getSkin() ) ) {
 			//remove inline styling to avoid weird results and optimize the output size
 			$text = preg_replace('/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text );
 
@@ -38,7 +38,7 @@ class WikiaMobileHooks extends WikiaObject{
 	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ){
 		$this->wf->profileIn( __METHOD__ );
 
-		if ( $skin instanceof SkinWikiaMobile ) {
+		if ( Wikia::isWikiaMobile( $skin ) ) {
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
@@ -59,7 +59,7 @@ class WikiaMobileHooks extends WikiaObject{
 	}
 
 	public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
-		if ( $skin instanceof SkinWikiaMobile && in_array( 'broken', $options ) ) {
+		if ( Wikia::isWikiaMobile( $skin ) && in_array( 'broken', $options ) ) {
 			$ret = $text;
 			return false;
 		}
