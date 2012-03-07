@@ -435,11 +435,9 @@ class TopList extends TopListBase {
 			}
 			else {
 				//reset vote counters for each items, to avoid caching issues
-				/*
-				foreach( $this->getItems() as $item ) {
+				foreach( $this->getItems( true ) as $item ) {
 					$item->resetVotesCount();
 				}
-				*/
 
 				$wgMemc->set( $this->_getNeedRefreshCacheKey(), true );
 			}
@@ -512,7 +510,7 @@ class TopList extends TopListBase {
 	 */
 	public function userCanVote() {
 		if( $this->mUserCanVote == null ) {
-			$this->getItems();
+			$this->getItems( true );
 		}
 
 		return $this->mUserCanVote;
