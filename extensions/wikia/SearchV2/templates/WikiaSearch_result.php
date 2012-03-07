@@ -1,14 +1,13 @@
 <!-- single search result -->
-<?php if(!is_object($result)) { var_dump($result); exit; } ?>
 <?php if($result->hasCanonical()): ?>
 	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a> (Redirect: <?=$result->getCanonical();?>)<br />
 <?php else: ?>
 	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a><br />
 <?php endif; ?>
-<div style="width: 80%">
+<div <?=empty($inGroup)?'class="searchresult"':'';?>>
 	<?= $result->getText(); ?>
 </div>
-<?php if(empty($hideUrl)): ?>
+<?php if(empty($inGroup)): ?>
 	<a href="<?= $result->getUrl(); ?>"><?=$result->getUrl();?></a><br />
 <?php endif; ?>
 

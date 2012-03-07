@@ -4,7 +4,8 @@ class WikiaSearch extends WikiaObject {
 
 	const RESULTS_PER_PAGE = 10;
 	const RESULTS_PER_WIKI = 4;
-	const GROUP_RESULTS_SEARCH_LIMIT = 200;
+	const GROUP_RESULTS_SEARCH_LIMIT = 500;
+	const GROUP_RESULTS_CACHE_TTL = 900; // 15 mins
 
 	/**
 	 * Search client
@@ -33,29 +34,35 @@ class WikiaSearch extends WikiaObject {
 		$groupResults = ( empty($cityId) && $groupResults );
 
 		if($groupResults) {
-			$start = 0;
-			$limit = self::GROUP_RESULTS_SEARCH_LIMIT;
-		}
-		else {
-			$start = ($page - 1) * $length;
-			$limit = $length;
-		}
-
-		$results = $this->client->search( $query, $start, $limit, $cityId, $rankExpr );
-
-		if($results instanceof WikiaSearchResultSet) {
-			if($groupResults) {
+			// check cache first
+			$results = $this->getGroupResultsFromCache($query, $rankExpr);
+			if(empty($results)) {
+				$results = $this->client->search( $query, 0, self::GROUP_RESULTS_SEARCH_LIMIT, $cityId, $rankExpr );
 				$results = $this->groupResultsPerWiki( $results );
-			}
 
+				$this->setGroupResultsToCahce( $query, $rankExpr, $results );
+			}
 			$results->setCurrentPage($page);
 			$results->setResultsPerPage($length);
-
-			return $results;
 		}
 		else {
-			throw new WikiaException( 'WikiaSearchResultSet expected' );
+			// no grouping, e.g. intra-wiki searching
+			$results = $this->client->search( $query, ( ($page - 1) * $length ), $length, $cityId, $rankExpr );
 		}
+
+		return $results;
+	}
+
+	private function getGroupResultsFromCache($query, $rankExpr) {
+		return $this->wg->Memc->get( $this->getGroupResultsCacheKey($query, $rankExpr) );
+	}
+
+	private function setGroupResultsToCahce($query, $rankExpr, WikiaSearchResultSet $resultSet) {
+		$this->wg->Memc->set( $this->getGroupResultsCacheKey($query, $rankExpr), $resultSet, self::GROUP_RESULTS_CACHE_TTL );
+	}
+
+	private function getGroupResultsCacheKey($query, $rankExpr) {
+		return $this->wf->SharedMemcKey( 'WikiaSearchResultSet', md5($query.$rankExpr) );
 	}
 
 	private function groupResultsPerWiki(WikiaSearchResultSet $results) {
@@ -80,7 +87,7 @@ class WikiaSearch extends WikiaObject {
 			}
 		}
 
-		return F::build( 'WikiaSearchResultSet', array( 'results' => $wikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart() ) );
+		return F::build( 'WikiaSearchResultSet', array( 'results' => $wikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete() ) );
 	}
 
 	private function groupWikiResults($wikiId, Array $resultsPerWiki) {

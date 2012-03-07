@@ -5,14 +5,15 @@
 		<?php if($resultSet->getHeader('cityArticlesNum')): ?>
 			| <?=$resultSet->getHeader('cityArticlesNum');?> <?= wfMsg( 'wikiasearch2-pages' ); ?>
 		<?php endif; ?>
-		| <?=$resultSet->getResultsFound();?> <?= wfMsg( 'wikiasearch2-results' ); ?>
+		| <?=$resultSet->getResultsFound();?> <?= wfMsg( 'wikiasearch2-results' ); ?><br />
+		<a href="<?=$resultSet->getHeader('cityUrl');?>"><?=$resultSet->getHeader('cityUrl');?></a>
 	</div>
 	<br clear="left">
 		<?php for($i = 1; $i < 5; $i++): ?>
 			<?php $result = $resultSet->next(); ?>
 			<?php if($result instanceof WikiaSearchResult): ?>
 				<div style="width: 350px; float: left; padding: 5px; margin-left: 20px; margin-right: 15px; ">
-					<?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $result, 'pos' => $i, 'rankExpr' => $rankExpr, 'debug' => $debug, 'hideUrl' => true )); ?>
+					<?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $result, 'pos' => $i, 'rankExpr' => $rankExpr, 'debug' => $debug, 'inGroup' => true )); ?>
 				</div>
 				<?php if(!($i%2)): ?>
 					<br clear="left">
