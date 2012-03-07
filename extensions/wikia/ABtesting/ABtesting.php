@@ -12,7 +12,7 @@ $wgHooks['BeforePageDisplay'][] = 'getABtestJSandCSS';
 
 function getABtestJSandCSS() {
 	global $wgOut, $wgExtensionsPath, $wgUser, $wgABTests;
-	
+
 	// For testing
 	//$wgABTests[] = 'noHistoryBar';
 
@@ -26,7 +26,7 @@ function getABtestJSandCSS() {
 		setrawcookie("wikia-ab", 'v6/name=loggedin/UA=UA-19473076-33/', $expire, "/", 'wikia.com');
 		return true;
 	}
-	
+
 	if (in_array('editbutton1', $wgABTests)) {
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton1.scss'));
 	}
@@ -49,11 +49,6 @@ function getABtestJSandCSS() {
 	if (in_array('editbutton5', $wgABTests)) {
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/editbutton5.scss'));
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ABtesting/js/editbutton5.js"></script>');
-	}
-
-	if (in_array('noHistoryBar', $wgABTests)) {
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/ABtesting/css/noHistoryBar.scss'));
-		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/ABtesting/js/noHistoryBar.js"></script>');
 	}
 
 	return true;
