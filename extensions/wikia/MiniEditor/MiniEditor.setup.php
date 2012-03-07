@@ -19,11 +19,6 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 /**
- * Class
- */
-$app->registerClass('MiniEditor', $dir . 'MiniEditor.class.php');
-
-/**
  * Controllers
  */
 $app->registerClass('MiniEditorController', $dir . '/MiniEditorController.class.php');
