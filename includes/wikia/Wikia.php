@@ -1404,13 +1404,13 @@ class Wikia {
 	 * Returns true if the currently set skin is WikiaMobile.  Do not call this before the skin
 	 * has been set on wgUser.
 	 */
-	public static function isWikiaMobile(){
+	public static function isWikiaMobile( Linker $skin = null ){
 		wfProfileIn( __METHOD__ );
-		global $wgUser;
 		static $isWikiaMobile = null;
 
-		if (is_null($isWikiaMobile)) {
-			$isWikiaMobile = (get_class($wgUser->getSkin()) == 'SkinWikiaMobile');
+		if ( is_null( $isWikiaMobile ) ) {
+			global $wgUser;
+			$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : $wgUser->getSkin() ) instanceof SkinWikiaMobile );
 		}
 
 		wfProfileOut( __METHOD__ );
