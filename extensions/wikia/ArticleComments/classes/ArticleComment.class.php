@@ -285,7 +285,7 @@ class ArticleComment {
 		$comment = false;
 		if ( $this->load($master) ) {
 			$articleDataKey = wfMemcKey( 'articlecomment', 'comm_data_v2', $this->mLastRevId, $wgUser->getId() );
-			#$data = $wgMemc->get( $articleDataKey );
+			$data = $wgMemc->get( $articleDataKey );
 			if(!empty($data)) {
 				wfProfileOut( __METHOD__ );
 				$data['timestamp'] = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $data['articleId'] ) ) . '#comm-' . $data['articleId'] . "' class='permalink'>" . wfTimeFormatAgo($data['rawmwtimestamp']) . "</a>";
