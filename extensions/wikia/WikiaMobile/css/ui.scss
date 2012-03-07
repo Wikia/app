@@ -2,6 +2,13 @@
 @import 'mixins/linear-gradient.scss';
 @import 'mixins/box-sizing.scss';
 
+*{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 /* Button */
 
 .wkBtn {
@@ -13,6 +20,11 @@
 	margin: 10px;
 	color: #6A6A6A;
 	@include linear-gradient(rgb(253,253,251), rgb(239,239,239));
+	
+	&.main {
+		@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
+		color: white;
+	}
 }
 
 /* List */
