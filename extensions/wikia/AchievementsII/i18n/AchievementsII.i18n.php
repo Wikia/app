@@ -262,10 +262,10 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	 * Badges' details for challenges list on user profile
 	 */
 	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|share link|get {{PLURAL:$1|one person|$1 people}} clicked on link you shared}}',
-	'achievements-badge-to-get-edit' => 'make $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}',
-	'achievements-badge-to-get-edit-plus-category' => 'make {{PLURAL:$1|one edit|$1 edits}} on {{PLURAL:$1|a $2 page|$2 pages}}',
-	'achievements-badge-to-get-picture' => 'add $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}',
-	'achievements-badge-to-get-category' => 'add $1 {{PLURAL:$1|page|pages}} to {{PLURAL:$1|a category|categories}}',
+	'achievements-badge-to-get-edit' => 'make $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|an article|articles}}',
+	'achievements-badge-to-get-edit-plus-category' => 'make {{PLURAL:$1|one edit|$1 edits}} on {{PLURAL:$1|a $2 article|$2 articles}}',
+	'achievements-badge-to-get-picture' => 'add $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|an article|articles}}',
+	'achievements-badge-to-get-category' => 'add $1 {{PLURAL:$1|article|articles}} to {{PLURAL:$1|a category|categories}}',
 	'achievements-badge-to-get-blogpost' => 'write $1 {{PLURAL:$1|blog post|blog posts}}',
 	'achievements-badge-to-get-blogcomment' => 'write a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}',
 	'achievements-badge-to-get-love' => 'contribute to the wiki every day for {{PLURAL:$1|one day|$1 days}}',
@@ -274,7 +274,7 @@ Check out your fancy new badge on your <a href=\"$5\">user profile page</a>.",
 	'achievements-badge-to-get-sayhi' => 'leave someone a message on their talk page',
 	'achievements-badge-to-get-creator' => 'be the creator of this wiki',
 	'achievements-badge-to-get-pounce' => 'be quick',
-	'achievements-badge-to-get-caffeinated' => 'make {{PLURAL:$1|one edit|$1 edits}} on pages in a single day',
+	'achievements-badge-to-get-caffeinated' => 'make {{PLURAL:$1|one edit|$1 edits}} on articles in a single day',
 	'achievements-badge-to-get-luckyedit' => 'be lucky',
 
 	/*
@@ -319,12 +319,12 @@ Keep editing!',
 	 */
 	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
 	'achievements-badge-hover-desc-edit' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}}<br />
-on {{PLURAL:$1|a page|pages}}!',
+on {{PLURAL:$1|an article|article}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}}<br />
-on {{PLURAL:$1|a $2 page|$2 pages}}!',
+on {{PLURAL:$1|a $2 article|$2 articles}}!',
 	'achievements-badge-hover-desc-picture' => 'Awarded for adding $1 {{PLURAL:$1|picture|pictures}}<br />
-to {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-hover-desc-category' => 'Awarded for adding $1 {{PLURAL:$1|page|pages}}<br />
+to {{PLURAL:$1|an article|articles}}!',
+	'achievements-badge-hover-desc-category' => 'Awarded for adding $1 {{PLURAL:$1|article|articles}}<br />
 to {{PLURAL:$1|a category|categories}}!',
 	'achievements-badge-hover-desc-blogpost' => 'Awarded for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
 	'achievements-badge-hover-desc-blogcomment' => 'Awarded for writing a comment<br />
@@ -337,7 +337,7 @@ your own user page!',
 on someone else\'s talk page!',
 	'achievements-badge-hover-desc-creator' => 'Awarded for creating the wiki!',
 	'achievements-badge-hover-desc-pounce' => 'Awarded for making edits on 100 pages within an hour of the page\'s creation!',
-	'achievements-badge-hover-desc-caffeinated' => 'Awarded for making 100 edits on pages in a single day!',
+	'achievements-badge-hover-desc-caffeinated' => 'Awarded for making 100 edits on articles in a single day!',
 	'achievements-badge-hover-desc-luckyedit' => 'Awarded for making the Lucky $1th Edit on the wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'This is a special Platinum badge that is only available for a limited time!',
 
@@ -345,10 +345,10 @@ on someone else\'s talk page!',
 	 * Badges' details for info in notification
 	 */
 	'achievements-badge-your-desc-sharing' => 'Awarded {{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
-	'achievements-badge-your-desc-edit' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-your-desc-edit-plus-category' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
-	'achievements-badge-your-desc-picture' => 'Awarded for adding {{PLURAL:$1|your first picture|$1 pictures}} to {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-your-desc-category' => 'Awarded for adding {{PLURAL:$1|your first page|$1 pages}} to {{PLURAL:$1|a category|categories}}!',
+	'achievements-badge-your-desc-edit' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|an article|articles}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'Awarded for making {{PLURAL:$1|your first edit|$1 edits}} on {{PLURAL:$1|a $2 article|$2 article}}!',
+	'achievements-badge-your-desc-picture' => 'Awarded for adding {{PLURAL:$1|your first picture|$1 pictures}} to {{PLURAL:$1|an article|articles}}!',
+	'achievements-badge-your-desc-category' => 'Awarded for adding {{PLURAL:$1|your first article|$1 articles}} to {{PLURAL:$1|a category|categories}}!',
 	'achievements-badge-your-desc-blogpost' => 'Awarded for writing {{PLURAL:$1|your first blog post|$1 blog posts}}!',
 	'achievements-badge-your-desc-blogcomment' => 'Awarded for writing a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}!',
 	'achievements-badge-your-desc-love' => 'Awarded for contributing to the wiki every day for {{PLURAL:$1|one day|$1 days}}!',
@@ -364,10 +364,10 @@ on someone else\'s talk page!',
 	 * Badges' details for recent badges list on leaderboard
 	 */
 	'achievements-badge-desc-sharing' => 'Awarded {{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
-	'achievements-badge-desc-edit' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-desc-edit-plus-category' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a $2 page|$2 pages}}!',
-	'achievements-badge-desc-picture' => 'Awarded for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|a page|pages}}!',
-	'achievements-badge-desc-category' => 'Awarded for adding $1 {{PLURAL:$1|page|pages}} to {{PLURAL:$1|a category|categories}}!',
+	'achievements-badge-desc-edit' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|an article|articles}}!',
+	'achievements-badge-desc-edit-plus-category' => 'Awarded for making $1 {{PLURAL:$1|edit|edits}} on {{PLURAL:$1|a $2 article|$2 articles}}!',
+	'achievements-badge-desc-picture' => 'Awarded for adding $1 {{PLURAL:$1|picture|pictures}} to {{PLURAL:$1|an article|article}}!',
+	'achievements-badge-desc-category' => 'Awarded for adding $1 {{PLURAL:$1|article|articles}} to {{PLURAL:$1|a category|categories}}!',
 	'achievements-badge-desc-blogpost' => 'Awarded for writing $1 {{PLURAL:$1|blog post|blog posts}}!',
 	'achievements-badge-desc-blogcomment' => 'Awarded for writing a comment on {{PLURAL:$1|a blog post|$1 different blog posts}}!',
 	'achievements-badge-desc-love' => 'Awarded for contributing to the wiki every day for {{PLURAL:$1|a day|$1 days}}!',
