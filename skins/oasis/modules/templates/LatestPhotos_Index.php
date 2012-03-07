@@ -64,7 +64,6 @@ else {
 		<?php
 
 	}?>
-
 			</ul>
 		</div>
 	</div>

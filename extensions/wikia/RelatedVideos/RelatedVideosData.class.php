@@ -172,10 +172,9 @@ class RelatedVideosData {
 	}
 
 	protected function addVideoVideoHandlers( $url ) {
-		$provider = null;
-		$title = VideoHandlersUploader::URLtoTitle( $url, $provider );
+		$title = VideoFileUploader::URLtoTitle( $url );
 		if (!$title) throw new Exception( wfMsg('related-videos-error-unknown', 876463) );
-		return array( $title, $title->getArticleID(), $provider );
+		return array( $title, $title->getArticleID(), null );
 
 	}
 

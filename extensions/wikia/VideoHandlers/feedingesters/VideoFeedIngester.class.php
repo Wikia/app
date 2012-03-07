@@ -87,7 +87,7 @@ abstract class VideoFeedIngester {
 			$metadata['ingestedFromFeed'] = true;
 			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata, true);
 			$uploadedTitle = null;
-			$result = VideoHandlersUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
+			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
 			if ($result->ok) {
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
 				return 1;
@@ -98,7 +98,7 @@ abstract class VideoFeedIngester {
 	}
 	
 	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
-		$sanitizedName = VideoHandlersUploader::sanitizeTitle($name);
+		$sanitizedName = VideoFileUploader::sanitizeTitle($name);
 		$title = $this->titleFromText($sanitizedName);
 		if(is_null($title)) {
 			$msg = "article title was null: clip id $videoId. name: $name";

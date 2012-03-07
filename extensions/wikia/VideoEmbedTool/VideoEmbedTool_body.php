@@ -326,7 +326,7 @@ class VideoEmbedTool {
 
 		// sanitize name and init title objects
 		if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
-			$nameFile = VideoHandlersUploader::sanitizeTitle($name);
+			$nameFile = VideoFileUploader::sanitizeTitle($name);
 			$titleFile = Title::newFromText($nameFile, NS_FILE);
 			if (empty($titleFile)) {
 				header('X-screen-type: error');
@@ -628,21 +628,30 @@ class VideoEmbedTool {
 	 * @param string $videoName
 	 * @return mixed FileRepoStatus or FALSE on error 
 	 */
-	private function uploadVideoAsFile($provider, $videoId, $videoName) {
-		global $IP;
-		require_once( "$IP/extensions/wikia/VideoHandlers/apiwrappers/ApiWrapperFactory.class.php" );
-		if (ctype_digit($provider)) {
-			$provider = ApiWrapperFactory::getInstance()->getProviderNameFromId($provider);
-			if (!$provider) {
-				// error
-				return false;
-			}
-		}
-		
-		$title = null;
-		//@todo call $apiWrapper to override metadata fields (e.g. name, description)
-		$result = VideoHandlersUploader::uploadVideo( $provider, $videoId, $title, null, false, array('title'=>$videoName) );
-		return $result;
+
+	private function uploadVideoAsFile( $provider, $videoId, $videoName ) {
+
+		$oUploader = new VideoFileUploader();
+		$oUploader->setProviderFromId( $provider );
+		$oUploader->setVideoId( $videoId );
+		$oUploader->setTargetTitle( $videoName );
+		return $oUploader->upload( $title );
+
+//		global $IP;
+//		require_once( "$IP/extensions/wikia/VideoHandlers/apiwrappers/ApiWrapperFactory.class.php" );
+//		if (ctype_digit($provider)) {
+//			$provider = ApiWrapperFactory::getInstance()->getProviderNameFromId($provider);
+//			if (!$provider) {
+//				// error
+//				return false;
+//			}
+//		}
+//
+//		$title = null;
+//		//@todo call $apiWrapper to override metadata fields (e.g. name, description)
+//		$result = VideoFileUploader::uploadVideo( $provider, $videoId, $title, null, false, array('title'=>$videoName) );
+//
+//		return $result;
 	}
 	
 	static function neatTrim($str, $n, $delim='...') { 
@@ -652,7 +661,7 @@ class VideoEmbedTool {
 			return rtrim($matches[1]) . $delim; 
 	   	} 
 	   	else { 
-	       	return $str; 
+			return $str;
 	   	} 
 	} 
 }

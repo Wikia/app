@@ -95,10 +95,16 @@ class WikiaVideoAddForm extends SpecialPage {
 					return;
 				}
 
-				$video = new VideoPage( $title );
-				$video->parseUrl( $this->mUrl );
-				$video->setName( $this->mName );
-				$video->save();
+				if ( WikiaVideoService::useVideoHandlersExtForEmbed() ){
+					VideoFileUploader::URLtoTitle( $this->mUrl, $this->mName );
+				}
+
+				if ( WikiaVideoService::useWikiaVideoExtForEmbed() ) {
+					$video = new VideoPage( $title );
+					$video->parseUrl( $this->mUrl );
+					$video->setName( $this->mName );
+					$video->save();
+				}
 
 				$sk = $wgUser->getSkin();
 				$link_back = $sk->makeKnownLinkObj( $title );

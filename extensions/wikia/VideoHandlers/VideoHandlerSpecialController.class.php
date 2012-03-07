@@ -35,7 +35,7 @@ class VideoHandlerSpecialController extends WikiaSpecialPageController {
 				$overrideMetadata['title'] = $videoTitle;
 			}
 			try {
-				$result = VideoHandlersUploader::uploadVideo($provider, $videoId, $title, null, $undercover, $overrideMetadata);
+				$result = VideoFileUploader::uploadVideo($provider, $videoId, $title, null, $undercover, $overrideMetadata);
 			}
 			catch (Exception $e) {
 				$result->ok = null;

@@ -51,7 +51,7 @@ class VideoHandlerController extends WikiaController {
 			$this->setVal( 'error', 1 );
 		}
 		
-		$sTitle = VideoHandlersUploader::sanitizeTitle($sTitle, '_');
+		$sTitle = VideoFileUploader::sanitizeTitle($sTitle, '_');
 
 		$this->setVal(
 			'result',
