@@ -40,9 +40,9 @@ var RelatedVideos = {
 			$('span[data-placeholder="RelatedVideosModule"]').replaceWith( relatedVideosModule );
 		}
 		if (
-				(!this.isHubExtEnabled && this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold) 
+				(!this.isHubExtEnabled && (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold)) 
 				||
-				(this.isHubExtEnabled && this.isHubExtPage && this.isHubVideos)				
+				(this.isHubExtEnabled && this.isHubExtPage && this.isHubVideos)
 		) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
 			relatedVideosModule.delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
