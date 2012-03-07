@@ -10,7 +10,6 @@ class WikiaLocalFileShared  {
 	var $forceMime = '';
 	var $oFile = null;
 	var $videoId = '';
-	const VIDEO_MEDIA_TYPE = 'VIDEO';
 
 	function __construct( $oWikiaLocalFile ){
 		$this->oFile = $oWikiaLocalFile;
@@ -113,7 +112,7 @@ class WikiaLocalFileShared  {
 	function afterGetHandler(){
 		if (!empty($this->oFile->handler) && $this->oFile->handler instanceof VideoHandler) {
 			// make sure that the new handler ( if video ) will have videoId
-			if ($this->oFile->media_type == self::VIDEO_MEDIA_TYPE) {
+			if ($this->oFile->media_type == MEDIATYPE_VIDEO) {
 				$videoId = $this->getVideoId();
 				if ( !empty( $videoId ) ){
 					$this->oFile->handler->setVideoId( $videoId );
@@ -148,7 +147,7 @@ class WikiaLocalFileShared  {
 			$handler->setVideoId( $this->oFile->videoId );
 
 			$this->oFile->metadata = ( isset( $this->forceMetadata ) ) ? $this->forceMetadata : $handler->getMetadata();
-			$this->oFile->media_type = self::VIDEO_MEDIA_TYPE;
+			$this->oFile->media_type = MEDIATYPE_VIDEO;
 			$this->forceMime = false;
 		}
 	}
