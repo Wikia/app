@@ -1,1 +1,1 @@
-<aside id=wkAdPlc><?= $adSlot ?><div id=wkAdCls>CLOSE<div></div></div></aside>
+<aside id=wkAdPlc><?= $adSlot ?><div id=wkAdCls><?= $wf->Msg('wikiamobile-ad-close') ?><div></div></div></aside>
