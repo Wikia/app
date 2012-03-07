@@ -130,7 +130,7 @@ var ImageLightbox = {
 				var html = '<div id="lightbox-image" style="text-align: center"><img src="' + imageSrc + '" alt="" /></div>' +
 					'<div id="lightbox-caption-content"></div>';
 				self.showLightbox(target.attr('data-image-name'), html, caption);
-			}
+			};
 			img.src = imageSrc;
 
 			// don't follow the link

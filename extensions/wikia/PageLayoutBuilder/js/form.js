@@ -1,5 +1,5 @@
 (function(window,$){
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	WE.plugins.plbpagecontrols = $.createClass(	WE.plugins.pagecontrols,{
 		init: function() {
