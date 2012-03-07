@@ -160,16 +160,24 @@ class WikiaQuizElement {
 			$this->mQuizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
 
 			if (!empty($videoName)) {
-				if (!$isVideoExternal) {
-					$videoTitle = Title::newFromText($videoName, NS_VIDEO);
-					if ($videoTitle && $videoTitle->exists()) {
-						$videoPage = new VideoPage($videoTitle);
-						$videoPage->load();
-						$videoEmbedCode = $videoPage->getEmbedCode(self::VIDEO_WIDTH, false, true);
+				if (WikiaVideoService::isVideoStoredAsFile()) {
+					$file = wfFindFile($videoName);
+					if (WikiaVideoService::isVideoFile($file)) {
+						$videoEmbedCode = $file->getEmbedCode($this->mQuizElementId, self::VIDEO_WIDTH);
 					}
-					else {
-						//@todo throw exception / return error
-					}
+				}
+				else {
+					if (!$isVideoExternal) {
+						$videoTitle = Title::newFromText($videoName, NS_VIDEO);
+						if ($videoTitle && $videoTitle->exists()) {
+							$videoPage = new VideoPage($videoTitle);
+							$videoPage->load();
+							$videoEmbedCode = $videoPage->getEmbedCode(self::VIDEO_WIDTH, false, true);
+						}
+						else {
+							//@todo throw exception / return error
+						}
+					}					
 				}
 			}
 
