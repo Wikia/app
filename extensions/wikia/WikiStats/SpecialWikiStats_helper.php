@@ -659,6 +659,8 @@ class WikiStats {
 				             ? $ns_actions[$ns][$date][$event] : 0;
 
 				// Add all NS 6 (File) create events
+				// NOTE: effective March 2012, NS 6 may include videos in addition to images.
+				// We should exclude files in NS 6 with Media Type 4 from the images
 				$ns = 6; $event = 2;
 				$data['P'] = array_key_exists($ns, $ns_actions) &&
 				             array_key_exists($date, $ns_actions[$ns]) &&
@@ -666,6 +668,8 @@ class WikiStats {
 				             ? $ns_actions[$ns][$date][$event] : 0;
 				             
 				// Add all NS 400 (Video) create events
+				// NOTE: effective March 2012, NS 400 will not be used anymore.
+				// Instead, we should count files in NS 6 with Media Type 4 as videos
 				$ns = 400;
 				$data['Q'] = array_key_exists($ns, $ns_actions) &&
 				             array_key_exists($date, $ns_actions[$ns]) &&

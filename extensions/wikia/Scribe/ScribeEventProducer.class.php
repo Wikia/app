@@ -400,22 +400,42 @@ class ScribeEventProducer {
 	}
 	
 	public function setMediaLinks( $oArticle ) {
+		wfProfileIn(__METHOD__);
+		
 		$links = array( 'image' => 0, 'video' => 0 );
 		if ( isset( $oArticle->mPreparedEdit ) && isset( $oArticle->mPreparedEdit->output ) ) {
 			$images = $oArticle->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
 				foreach ($images as $iname => $dummy) {
-					if ( substr($iname, 0, 1) == ':' ) {
-						$links['video']++;							
-					} else {
-						$links['image']++;
+					if (WikiaVideoService::isVideoStoredAsFile()) {
+						$file = wfFindFile($iname);
+						if ($file instanceof LocalFile) {
+							$mediaType = $file->getMediaType();
+							switch ($mediaType) {
+								case MEDIATYPE_VIDEO:
+									$links['video']++;
+									break;
+								default:
+									$links['image']++;
+							}
+						}						
 					}
+					else {
+						//@todo remove this code after video refactoring
+						if ( substr($iname, 0, 1) == ':' ) {
+							$links['video']++;							
+						} else {
+							$links['image']++;
+						}						
+					}										
 				}
 			}			
 		}
 		
 		$this->setImageLinks( $links['image'] );
 		$this->setVideoLinks( $links['video'] );
+		
+		wfProfileOut(__METHOD__);
 		
 		return $links;			
 	}
