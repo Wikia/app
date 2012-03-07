@@ -19,7 +19,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function initializeTemplate() {
-		$this->response->addAsset('extensions/wikia/UserLogin/css/UserLogin.scss');
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin' . ( ( Wikia::isWikiaMobile() ) ? '.wikiamobile' : '' ) . '.scss' );
 
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = false;
@@ -153,10 +153,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function providers() {
-		$this->context = $this->getVal('context', '');
+		$this->context = $this->getVal( 'context', '' );
+
 		// don't render FBconnect button when the extension is disabled
-		if (empty($this->wg->EnableFacebookConnectExt)) {
+		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
 			$this->skipRendering();
+		}
+
+		if ( Wikia::isWikiaMobile() ) {
+			$this->overrideTemplate( 'WikiaMobileProviders' );
 		}
 	}
 

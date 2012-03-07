@@ -1,0 +1,40 @@
+@import "../../WikiaMobile/css/variables.scss";
+
+//mixins
+@import "../../WikiaMobile/css/mixins/linear-gradient.scss";
+
+$spacing: 4px;
+
+#wkLgn{
+	text-align: center;
+
+	.ssoFbBtn{
+		@include linear-gradient(#5E7BB2, #3C62A1);
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAgCAYAAADnnNMGAAAB1klEQVR42r2Vu0oDQRSGNQmokCLaiOAFiZWNaSz0FaxFsBFtfALBylJB8BEsLBQLMWohWAgpfQHFIIl4wQsiGLSwyvhtmAOTQ6Kbya4/fMzM7p7zc87MJB1axphOZ74Ap/AJgaoBiKE22ev4RfnzKxPQ8CXBPXAMJsAx0PI3IbggBlAVEwH5mRCYtONiLaOVmCm1bXIBxsGtos6Q+UHL7SIuTWBZkqiWiSosP+z77ZZNCOoltgy6EtEqZHmWg0nmIz6VZAguSYuUyRv060Q+lWRIVHJ77xg9QzYSE2hm8gJjbZuQJEHCG+mVYyaVDHqZ2E1cgnlYJtGrPsLW7J1hlnECpizTPMv9acJHm6BPkr6I7ou6ER2GqWTDOGKtTfQ90SZrYSpZ1/GCfiaoymdCmxCgk1d1CwUkRt8M42FMtkBLDAS9JzIvM/SFMZnj4yPYhX3WFUnmgr4gDzv22xPmK17/JwReSjeU2S3LtO89SUAKkpAmUVESq/bcw6j9ZUhJjM+N7ybwWkzU5t/BkE7UrokYxGNiEIrPBNx2iaIzIbG0q9FdiaESpE5Z9Hsit9ytBCI/XUK8ewLmX+8JRFpJqckP5BMMR1FJF5yR9BGKzIUHKMCAj8kPNcxBpRzc084AAAAASUVORK5CYII=);
+		background-position: $spacing*2 $spacing;
+		background-repeat: no-repeat;
+		background-size: 10px;
+		border: 1px solid #AFBDD6;
+		border-radius: 2px;
+		color: #fff;
+		font-family: Helvetica, Arial, sans-serif;
+		font-weight: bold;
+		padding: $spacing $spacing*2 $spacing $spacing*6;
+	}
+
+	.ssoSep{
+		margin: 0 auto;
+		text-align: center;
+		width: 100%;
+
+		&::before, &::after{
+			border-top: 1px solid $border-color;
+			content: " ";
+			display: inline-block;
+			margin: 0 $page-padding;
+			position: relative;
+			top: -5px;
+			width: 130px;
+		}
+	}
+}
