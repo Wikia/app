@@ -82,21 +82,21 @@ JS
 		$feedProvider = new DataFeedProvider($feedProxy);
 
 		// WikiActivity.js is MyHome.js modified for Oasis
-		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgEnableWallExt;
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js?{$wgStyleVersion}\"></script>\n");
+		global $wgJsMimeType, $wgExtensionsPath, $wgEnableWallExt;
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js\"></script>\n");
 		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/MyHome/oasis.scss'));
-		
+
 		if( !empty($wgEnableWallExt) ) {
-			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Wall/js/WallWikiActivity.js?{$wgStyleVersion}\"></script>\n");
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Wall/js/WallWikiActivity.js\"></script>\n");
 			$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Wall/css/WallWikiActivity.scss'));
 		}
-		
+
 		$data = $feedProvider->get(50);  // this breaks when set to 60...
-		
+
 		// FIXME: do it in AchievementsII extension
 		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt;
 		if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css?{$wgStyleVersion}");
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/achievements_sidebar.css");
 		}
 
 		// use message from MyHome as special page title
@@ -141,7 +141,7 @@ JS
 
 		// RT #68074: show default view checkbox for logged-in users only
 		$showDefaultViewSwitch = $wgUser->isLoggedIn() && ($this->defaultView != $this->feedSelected);
-		
+
 		$template->set_vars(array(
 			'classWatchlist' => $this->classWatchlist,
 			'defaultView' => $this->defaultView,
