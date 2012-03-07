@@ -93,10 +93,11 @@ var Achievements = {
 		});
 		
 		$('input.c-enabled-flags').click(function(e) {
-			if($(this).attr('checked'))
+			if($(this).attr('checked')){
 				self.track('customize/enabled');
-			else
+			} else {
 				self.track('customize/disabled');
+			}
 		});
 		
 		$('.article-sidebar form.customize-edit-plus-category button').click(function(e) {
@@ -131,8 +132,9 @@ var Achievements = {
 		
 		$("#body").addClass("ajax");
 		
-		if(!$.browser.webkit)
+		if(!$.browser.webkit){
 			inputs.attr('disabled', 'disabled');
+		}
 		
 		return false;
 	},
@@ -141,8 +143,9 @@ var Achievements = {
 		var inputs = $(o).parent().parent().next().find('button, input[type=file]');
 		$("#body").addClass("ajax");
 		
-		if(!$.browser.webkit)
+		if(!$.browser.webkit){
 			inputs.attr('disabled', 'disabled');
+		}
 		
 		if (badge_lap == null && typeof(badge_lap) == "undefined") {
 			badge_lap = '';
@@ -151,7 +154,7 @@ var Achievements = {
 		var img = $(o).parent().prev().prev();
 
 		$.get(window.wgServer+wgScript+'?action=ajax&rs=AchAjax&method=resetBadge&type_id='+badge_type+'&lap='+badge_lap, function(response) {
-			var response = JSON.parse(response);
+			response = JSON.parse(response);
 			img.attr('src', response.output);
 			$("#body").removeClass("ajax");
 			inputs.attr('disabled', '');
@@ -178,8 +181,9 @@ var Achievements = {
 		var json = $.toJSON(dataStore);
 		var storeClass = '.c-messages';
 		
-		if(createInTrackEditPlusCategory == true)
+		if(createInTrackEditPlusCategory == true){
 			storeClass = '.c-messages-ec';
+		}
 		
 		$(storeClass).val(json);
 		return false;
