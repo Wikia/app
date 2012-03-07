@@ -26,7 +26,7 @@ class SpotlightsModule extends Module {
 		
 		//introducing new global var to remove
 		//spotlights on hubs
-		if( !empty($wgSuppressSpotlights) || /* fb#23736 */$this->spotlightsDisabled() ) {
+		if( !empty($wgSuppressSpotlights) || $this->spotlightsDisabled() ) {
 			$this->skipRendering();
 			return;
 		}
@@ -62,9 +62,10 @@ class SpotlightsModule extends Module {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	protected function spotlightsDisabled() {
-		global $wgTitle, $wgHubsWithoutSpotlightsList;
+		global $wgTitle, $wgHubsWithoutSpotlightsList, $wgEnableWikiaHubsExt;
 		
-		if( $wgTitle instanceof Title 
+		if( !empty($wgEnableWikiaHubsExt)
+		 && $wgTitle instanceof Title 
 		 && is_array($wgHubsWithoutSpotlightsList) 
 		 && in_array($wgTitle->getText(), $wgHubsWithoutSpotlightsList) 
 		) {
