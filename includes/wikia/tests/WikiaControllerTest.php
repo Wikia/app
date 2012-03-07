@@ -45,4 +45,23 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( isset($data['content']) );
 		}
 	}
+
+	public function testOverrideTemplate(){
+		$controllerName = 'Test';
+		$templateName = 'overridden';
+		$comparisonStone = 'ABC';
+
+		$response = F::app()->sendRequest(
+			$controllerName,
+			'overrideTemplateTest',
+			array(
+				'input' => $comparisonStone,
+				'template' => $templateName,
+				'format' => 'html'
+			)
+		);
+
+		$this->assertContains( "{$controllerName}_{$templateName}.php", $response->getView()->getTemplatePath() );
+		$this->assertEquals( "<p>{$comparisonStone}</p>", $response->toString() );
+	}
 }

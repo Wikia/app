@@ -61,8 +61,7 @@ class RelatedPagesModule extends Module {
 		}
 		
 		if ( Wikia::isWikiaMobile() ) {
-			//Render the WikiaMobile dedicated template
-			$this->response->getView()->setTemplate( __CLASS__, 'WikiaMobileIndex' );
+			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 	}
 

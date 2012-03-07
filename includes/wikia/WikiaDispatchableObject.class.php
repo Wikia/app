@@ -46,6 +46,17 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	}
 
 	/**
+	 * Shortcut to override the template for the current response
+	 *
+	 * @param string $templateName The name of the template without the
+	 * CONTROLLERNAME_ prefix and the .php suffix (e.g. pass Test for
+	 * the MyController_Test.php template file)
+	 */
+	protected function overrideTemplate( $templateName ){
+		$this->response->getView()->setTemplate( get_class( $this ), $templateName );
+	}
+
+	/**
 	 * send request to another controller/method
 	 *
 	 * @param string $controllerName
