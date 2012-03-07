@@ -155,6 +155,7 @@ if ( $rowCount ) {
 			while (
 					strlen( $sNewTitle ) < 2 ||
 					($firstCheck === false && isset ( $aAllFiles[ $sNewTitle ] ) ) ||
+					($firstCheck === true  && $sFile != $sNewTitle && isset( $aAllFiles[ $sNewTitle ]) ) ||
 					isset (	$aAllFiles[ substr($sNewTitle, 1 ) ] )
 			) {
 				$firstCheck = false;
