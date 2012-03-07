@@ -15,7 +15,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			'hl' => 'true',
 			'hl.fl' => 'html,title', // highlight field
 			'hl.snippets' => '1', // number of snippets per field
-			'hl.fragsize' => '250', // snippet size in characters
+			'hl.fragsize' => '150', // snippet size in characters
 			'hl.simple.pre' => '<span class="searchmatch">',
 			'hl.simple.post' => '</span>',
 			'f.html.hl.alternateField' => 'html',
@@ -83,8 +83,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 			// error logging, fallback etc.
 		}
 
-
 		$results = $this->getWikiaResults($response->response->docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
+
 		return F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->response->numFound, 'resultsStart' => $response->response->start ) );
 	}
 
@@ -105,6 +105,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 			$results[] = $result;
 		}
+
 		return $results;
 	}
 

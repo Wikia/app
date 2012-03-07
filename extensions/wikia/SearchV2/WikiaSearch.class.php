@@ -4,7 +4,7 @@ class WikiaSearch extends WikiaObject {
 
 	const RESULTS_PER_PAGE = 10;
 	const RESULTS_PER_WIKI = 4;
-	const GROUP_RESULTS_SEARCH_LIMIT = 500;
+	const GROUP_RESULTS_SEARCH_LIMIT = 200;
 
 	/**
 	 * Search client
@@ -30,6 +30,7 @@ class WikiaSearch extends WikiaObject {
 	 */
 	public function doSearch( $query, $page = 1, $length = null, $cityId = 0, $rankExpr = '', $groupResults = false ) {
 		$length = !empty($length) ? $length : self::RESULTS_PER_PAGE;
+		$groupResults = ( empty($cityId) && $groupResults );
 
 		if($groupResults) {
 			$start = 0;
@@ -43,7 +44,7 @@ class WikiaSearch extends WikiaObject {
 		$results = $this->client->search( $query, $start, $limit, $cityId, $rankExpr );
 
 		if($results instanceof WikiaSearchResultSet) {
-			if(empty($cityId) && $groupResults) {
+			if($groupResults) {
 				$results = $this->groupResultsPerWiki( $results );
 			}
 

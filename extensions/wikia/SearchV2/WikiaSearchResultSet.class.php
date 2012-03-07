@@ -3,7 +3,7 @@
 class WikiaSearchResultSet implements Iterator {
 	private $position = 0;
 	private $resultsPerPage = 25;
-	private $currentPage = 1;
+	private $currentPage = false;
 
 	protected $resultsFound = 0;
 	protected $resultsStart = 0;
@@ -101,8 +101,13 @@ class WikiaSearchResultSet implements Iterator {
 	}
 
 	public function valid() {
-		$maxPosition = ( ( $this->getCurrentPage() - 1) * $this->getResultsPerPage() ) + $this->getResultsPerPage();
-var_dump($maxPosition);
+		if($this->getCurrentPage() === false) {
+			$maxPosition = $this->getResultsNum();
+		}
+		else {
+			$maxPosition = ( ( $this->getCurrentPage() - 1) * $this->getResultsPerPage() ) + $this->getResultsPerPage();
+		}
+
 		if(($this->position < $maxPosition) && isset($this->results[$this->position])) {
 			return true;
 		}
@@ -127,7 +132,12 @@ var_dump($maxPosition);
 	}
 
 	private function resetPosition() {
-		$this->position = ($this->getCurrentPage() - 1) * $this->getResultsPerPage();
+		if($this->getCurrentPage() === false) {
+			$this->position = 0;
+		}
+		else {
+			$this->position = ($this->getCurrentPage() - 1) * $this->getResultsPerPage();
+		}
 	}
 
 }
