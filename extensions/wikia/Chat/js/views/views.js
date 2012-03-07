@@ -13,13 +13,9 @@ var ChatView = Backbone.View.extend({
 		_.bindAll(this, 'render');
 		this.model.bind('all', this.render);
 		// Load the mapping of emoticons.  This wiki has priority, then falls back to Messaging.  If both of those fail, uses some hardcoded fallback.
-		var wikiText = $.msg( WikiaEmoticons.EMOTICON_MESSAGE );
-		if(wikiText && (wikiText != "") && (wikiText != "<" + WikiaEmoticons.EMOTICON_MESSAGE + ">")){
-			this.emoticonMapping.loadFromWikiText( wikiText );
-		} else {
-			this.emoticonMapping.loadDefault();
-        }
+		this.emoticonMapping.loadFromWikiText( EMOTICONS );
 	},
+	
 
 	/**
 	 * All messages that are recieved are processed here before being displayed. This
