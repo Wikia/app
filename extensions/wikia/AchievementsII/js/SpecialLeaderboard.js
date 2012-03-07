@@ -1,4 +1,4 @@
-AchievementsLeaderboard = {
+var AchievementsLeaderboard = {
 	init: function() {
 		//Set correct initial state of page intro (visible or hidden)
 
@@ -8,7 +8,7 @@ AchievementsLeaderboard = {
 				.children(".hide, div").hide().end()
 				.children(".open").show();
 		}
-		
+
 		//Enable hiding/showing page intro
 		$("#about-achievements").children("span").click(function() {
 			var text = $("#about-achievements").children("div");
