@@ -17,7 +17,7 @@
 
 <?php if(!empty($results)): ?>
 	<?php if( $resultsFound > 0 ): ?>
-		<strong>Search results:</strong>&nbsp;<strong><?= $results->getResultsStart()+1; ?> - <?= (($results->getResultsStart()+$resultsPerPage) < $resultsFound) ? ($results->getResultsStart()+$resultsPerPage) : $resultsFound; ?></strong> of <strong><?= $resultsFound; ?></strong> document(s)<br />
+		<strong>Search results:</strong>&nbsp;<strong><?= $results->getStartPosition()+1; ?> - <?= (($results->getStartPosition()+$resultsPerPage) < $resultsFound) ? ($results->getStartPosition()+$resultsPerPage) : $resultsFound; ?></strong> of <strong><?= $resultsFound; ?></strong> document(s)<br />
 		<?= $paginationLinks; ?>
 		<?php $pos = 0; ?>
 		<?php foreach( $results as $result ): ?>
