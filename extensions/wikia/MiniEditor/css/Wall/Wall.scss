@@ -30,6 +30,10 @@
 			float: right;
 		}
 
+		.edit-buttons {
+			margin-top: 10px;
+		}
+
 		&.active {
 			.edited-by {
 				margin: 10px 0;
@@ -38,8 +42,13 @@
 			.msg-toolbar {
 				margin-top: 10px;
 			}
+			
+			.edit-buttons {
+				margin-top: 0px;
+			}
+				
 		}
-
+		
 		&.focused {
 			.editarea {
 				@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow);
