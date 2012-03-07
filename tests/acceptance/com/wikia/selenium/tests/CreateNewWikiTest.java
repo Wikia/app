@@ -257,8 +257,8 @@ public class CreateNewWikiTest extends BaseTest {
 		
 	//Test Case 002
 	//logged out in german wiki,domain appears in german,log in as QATestsStaff during CNW flow,verify domain is de.
-	@Test(groups={"envProduction"})
-	public void createWikiDefaultLanguageForAnonymousIsWikiLanguage() throws Exception {
+	//@Test(groups={"envProduction"}) removed by Patick Archbold 07-Mar-12
+		public void createWikiDefaultLanguageForAnonymousIsWikiLanguage() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
 		
