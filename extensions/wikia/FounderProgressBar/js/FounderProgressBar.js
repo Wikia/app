@@ -46,7 +46,7 @@ var FounderProgressList = {
 		FounderProgressList.seeFullList.hide();
 		FounderProgressList.hideFullList.show();
 		FounderProgressList.d.show();
-		FounderProgressList.article.hide()
+		FounderProgressList.article.hide();
 		FounderProgressList.drawMainTail();
 	},
 	hideListModal: function() {
@@ -54,7 +54,7 @@ var FounderProgressList = {
 		FounderProgressList.seeFullList.show();
 		FounderProgressList.hideFullList.hide();
 		FounderProgressList.d.hide();
-		FounderProgressList.article.show()
+		FounderProgressList.article.show();
 	},
 	collapseTask: function(task) {
 		var group = task.find('.task-group');
@@ -146,7 +146,7 @@ var FounderProgressList = {
 			c.lineTo(0, 40);
 			c.lineTo(0, 0);
 			c.fill();
-			c.stroke;
+			c.stroke();
 			c.closePath();
 			el.data('drawn', true);
 		}
@@ -165,7 +165,7 @@ var FounderProgressList = {
 			c.lineTo(20, 0);
 			c.lineTo(0, 0);
 			c.fill();
-			c.stroke;
+			c.stroke();
 			c.closePath();
 			el.data('drawn', true);
 		}

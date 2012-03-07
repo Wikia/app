@@ -1,6 +1,6 @@
 var DevBoxPanel = {
 	init: function() {
-		$(".tabs").find("li").click(function() { DevBoxPanel.switchTab($(this)) });
+		$(".tabs").find("li").click(function() { DevBoxPanel.switchTab($(this)); });
 	},
 
 	switchTab: function( elem ) {

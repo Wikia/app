@@ -1,6 +1,6 @@
 (function(window,$){
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
 	 * Collapsible modules handling
@@ -21,8 +21,9 @@
 		},
 
 		add: function( moduleObj, el ) {
-			if (!el.children('h3').exists()) // skip modules without header line
+			if (!el.children('h3').exists()) { // skip modules without header line
 				return;
+			}
 
 			this.lastId++;
 

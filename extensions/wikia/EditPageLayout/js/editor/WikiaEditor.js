@@ -83,8 +83,9 @@
 	WE.initAddons = (function(){
 		var done = false;
 		return function() {
-			if (!done)
+			if (!done){
 				window.GlobalTriggers.fire('wikiaeditoraddons',WE);
+			}
 			done = true;
 		};
 	})();
@@ -133,7 +134,7 @@
 			var order = [];
 			var loaded = {};
 			function queuePlugin(name){
-				if (loaded[name]) return;
+				if (loaded[name]){ return; }
 				var plugin = WE.plugins[name];
 				loaded[name] = true; // avoid recursion
 				if (!plugin) {

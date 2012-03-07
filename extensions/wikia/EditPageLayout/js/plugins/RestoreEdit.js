@@ -1,6 +1,6 @@
 (function(window,$){
 	
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
 	 * Automatically saves and restores non-saved edits across edit sections
@@ -41,7 +41,7 @@
 			
 				eds = new EditDataStore(wgTitle + '#' + wgEditPageSection, 5000, function(){
 					return {'rev' : wgRevisionId, 'con': editor.getContent(), 'mode': editor.mode };
-				}),
+				});
 				old = eds.getOldData();
 				
 				$('#editform').submit(function(){
