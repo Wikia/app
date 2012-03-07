@@ -156,25 +156,17 @@ $wgAutoloadClasses['CsvService'] = $IP . '/includes/wikia/services/CsvService.cl
 $wgAutoloadClasses['MobileService'] = $IP . '/includes/wikia/services/MobileService.class.php';
 $wgAutoloadClasses['TemplateService'] = $IP . '/includes/wikia/services/TemplateService.class.php';
 $wgAutoloadClasses['SpriteService'] = $IP . '/includes/wikia/services/SpriteService.class.php';
-$wgAutoloadClasses['SocialSharingService'] = $IP . '/includes/wikia/services/SocialSharingService.class.php';
-	$wgAutoloadClasses['FacebookSharing'] = $IP . '/includes/wikia/services/FacebookSharing.class.php';
-	$wgAutoloadClasses['TwitterSharing'] = $IP . '/includes/wikia/services/TwitterSharing.class.php';
-	$wgAutoloadClasses['PlusoneSharing'] = $IP . '/includes/wikia/services/PlusoneSharing.class.php';
-	$wgAutoloadClasses['StumbleuponSharing'] = $IP . '/includes/wikia/services/StumbleuponSharing.class.php';
-	$wgAutoloadClasses['RedditSharing'] = $IP . '/includes/wikia/services/RedditSharing.class.php';
-	$wgAutoloadClasses['EmailSharing'] = $IP . '/includes/wikia/services/EmailSharing.class.php';
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
-$wgAutoloadClasses['PageSpeedAPI'] = $IP . '/includes/wikia/services/PageSpeedAPI.class.php';
 
 // controllers
 $wgAutoloadClasses['SimpleSearchService']  =  $IP.'/includes/wikia/services/SimpleSearchService.class.php';
-	$wgAutoloadClasses['SimpleSearchTooManyResultsException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
-	$wgAutoloadClasses['SimpleSearchDisabledException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
-	$wgAutoloadClasses['SimpleSearchEngineException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
-	$wgAutoloadClasses['SimpleSearchEmptyKeyException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchTooManyResultsException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchDisabledException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchEngineException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
+$wgAutoloadClasses['SimpleSearchEmptyKeyException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
 $wgAutoloadClasses['MobileStatsController']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
-	$wgAutoloadClasses['MobileStatsExternalRequestException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
-	$wgAutoloadClasses['MobileStatsMissingParametersException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
+$wgAutoloadClasses['MobileStatsExternalRequestException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
+$wgAutoloadClasses['MobileStatsMissingParametersException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
 
 // modules
 $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';
@@ -387,7 +379,6 @@ include_once( "$IP/extensions/wikia/WidgetFramework/WidgetFramework.php" );
 include_once( "$IP/extensions/wikia/StaffSig/StaffSig.php" );
 include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );
-include_once( "$IP/extensions/wikia/Scribe/SpecialScribeEvents.php" );
 include_once( "$IP/extensions/wikia/AssetsManager/AssetsManager_setup.php" );
 include_once( "$IP/extensions/wikia/JSSnippets/JSSnippets_setup.php" );
 include_once( "$IP/extensions/wikia/WikiaTracker/WikiaTracker.setup.php" );
@@ -554,6 +545,7 @@ $wgExternalStatsDB = 'dbstats';
 $wgStatsDB = 'stats';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
+$wgDatamartDB = 'datamart';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
