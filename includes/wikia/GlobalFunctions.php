@@ -140,7 +140,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 					$timestamp = $matches[1];
 				} else {
 					// This results in no caching of the image.  Bad bad bad, but the best way to fail.
-					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to ".__METHOD__." without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the image won't be cacheable!");
+					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to ".__METHOD__." without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the '{$url}' image won't be cacheable!");
 					$timestamp = rand(0, 1000);
 				}
 			} else if(strtotime($timestamp) > strtotime("now -10 minute")){
@@ -929,7 +929,7 @@ function wfTimeFormatAgo($stamp){
 	global $wgLang;
 
 	$currenttime = time();
-	$stamptime = strtotime($stamp);	
+	$stamptime = strtotime($stamp);
 	$ago = time() - strtotime($stamp) + 1;
 	$sameyear = date('Y',$currenttime) == date('Y',$stamptime);
 
@@ -954,13 +954,13 @@ function wfTimeFormatAgo($stamp){
 		// Under 30 days: to the day (5 days ago)
 		$res = wfMsgExt('wikia-days-ago', array('parsemag'), floor($ago / 86400));
 	}
-	else if ($ago < 365 * 86400) {	
+	else if ($ago < 365 * 86400) {
 		// Under 365 days: date, with no year (July 26)
 		//remove year from user's date format
 		$format = trim($wgLang->getDateFormatString('date', 'default'), ' ,yY');
 		$res = $wgLang->sprintfDate($format, wfTimestamp(TS_MW, $stamp));
 	}
-	
+
 
 	wfProfileOut(__METHOD__);
 	return $res;
@@ -1134,7 +1134,7 @@ function wfSetWikiaPageProp($type, $pageID, $value, $dbname = '') {
 			'propname' => $type,
 			'props' => serialize($value)
 		)
-	);	
+	);
 }
 
 
