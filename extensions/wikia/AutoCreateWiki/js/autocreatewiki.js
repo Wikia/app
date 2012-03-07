@@ -71,9 +71,9 @@ ACWikiRequest.wikiLanguageChange = function(e) {
 	} else if (definedDomains['default']) {
 		subdomain = definedDomains['default'];
 	}
-	
+
 	var domain = ( subdomain ) ? subdomain + "." + defaultDomain : defaultDomain ;
-	
+
 	if (domainDiv) {
 		domainDiv.html(domain);
 	}
@@ -83,7 +83,7 @@ ACWikiRequest.wikiLanguageChange = function(e) {
 			_title = definedSitename[this.value];
 		} else {
 			_title = subdomain.charAt(0).toUpperCase() + subdomain.substr(1);
-		} 
+		}
 		subTitle.html(_title);
 	}
 
@@ -94,7 +94,7 @@ ACWikiRequest.wikiLanguageChange = function(e) {
 	} else {
 		value = "http://";
 	}
-	
+
 	prefixDiv.html(value);
 	ACWikiRequest.checkDomain(e);
 };
@@ -123,7 +123,7 @@ ACWikiRequest.wikiDomainKeyUp = function(e) {
 					ACWikiRequest.checkDomain(e);
 				}
 			}
-		};
+		}
 	};
 
 	if ( this.zid ) {
@@ -177,7 +177,7 @@ ACWikiRequest.wikiAccountKeyUp = function(e) {
 				e.preventDefault();
 				ACWikiRequest.checkAccount(e, id);
 			}
-		};
+		}
 	};
 	if ( this.zid ) {
 		clearTimeout(this.zid);
@@ -186,13 +186,14 @@ ACWikiRequest.wikiAccountKeyUp = function(e) {
 };
 
 ACWikiRequest.resetForm = function(e) {
-	var cnt = 0;
+	var cnt = 0,
+		i;
 	for (i in divErrors) {
 		var div = i.replace(/\'/g, "");
 		$("#" + div).css('display', 'none');
 		$("#" + div + "-status").html("");
 	}
-	divErrors = new Array();
+	divErrors = {};
 
 	var oF = document.forms['highlightform'];
 	var oElm = oF.getElementsByTagName('SPAN');
