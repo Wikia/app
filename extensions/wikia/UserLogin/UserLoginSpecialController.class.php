@@ -113,7 +113,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					// redirect page
 					UserLoginHelper::getInstance()->doRedirect();
 				} else if ( $this->result == 'unconfirm' ) {
-					$response = $this->app->sendRequest('UserLoginSpecial', 'getUnconfirmedUserRedirectUrl', array('username' => $this->username));
+					$response = $this->app->sendRequest('UserLoginSpecial', 'getUnconfirmedUserRedirectUrl', array('username' => $this->username, 'uselang' => $code));
 					$redirectUrl = $response->getVal('redirectUrl');
 					$this->wg->out->redirect( $redirectUrl );
 				} else if ( $this->result == 'resetpass') {
@@ -131,6 +131,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$params = array(
 			'method' => 'sendConfirmationEmail',
 			'username' => $this->getVal('username'),
+			'uselang' => $this->getVal('uselang'),
 		);
 		$this->redirectUrl = $title->getFullUrl( $params );
 	}
@@ -261,6 +262,12 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 							LoginForm::clearLoginToken();
 							$tempUser->setTempUserSession();
 							UserLoginHelper::getInstance()->clearPasswordThrottle( $loginForm->mName );
+
+							// set lang for unconfirmed user
+							$langCode = $user->getOption('language');
+							if ( $this->wg->User->getOption('language') != $langCode ) {
+								$this->wg->User->setOption( 'language', $langCode );
+							}
 
 							$this->result = 'unconfirm';
 							$this->msg = $this->wf->MsgExt( 'usersignup-confirmation-email-sent', array('parseinline'), $tempUser->getEmail() );
@@ -443,6 +450,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					return;
 				}
 
+				// from attemptReset() in SpecialResetpass
 				if( !$user->checkTemporaryPassword($this->password) && !$user->checkPassword($this->password) ) {
 					$this->result = 'error';
 					$this->msg = $this->wf->Msg( 'userlogin-error-wrongpassword' );
