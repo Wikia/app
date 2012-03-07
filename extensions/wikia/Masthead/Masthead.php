@@ -250,7 +250,9 @@ class Masthead {
 			return $this->avatarUrl;
 		} else {
 			$url = $this->getPurgeUrl($thumb); // get the basic URL
-			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
+
+			// use user-specific cache buster only for custom avatars (BugId:22190)
+			return wfReplaceImageServer( $url, !$this->isDefault() ? $this->mUser->getTouched() : 1 );
 		}
 	}
 
@@ -563,18 +565,18 @@ class Masthead {
 	 */
 	public function uploadByUrl($url){
 		$sTmpFile = '';
-		
+
 		$errorNo = $this->uploadByUrlToTempFile($url, $sTmpFile);
-		
+
 		if( $errorNo == UPLOAD_ERR_OK ) {
-			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);			
+			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);
 		}
 
 		wfProfileOut(__METHOD__);
 		return $errorNo;
 	} // end uploadByUrl()
-	
-	
+
+
 	public function uploadByUrlToTempFile($url, &$sTmpFile){
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
@@ -593,7 +595,7 @@ class Masthead {
 			return UPLOAD_ERR_CANT_WRITE;
 		}
 	}
-	
+
 	/**
 	 * uploadFile -- save file when is in proper format, do resize and
 	 * other stuffs
@@ -631,7 +633,7 @@ class Masthead {
 			wfProfileOut(__METHOD__);
 			return UPLOAD_ERR_NO_FILE;
 		}
-	
+
 		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
 //		Wikia::log( __METHOD__, 'tmp', "Temp file set to {$sTmpFile}" );
 		$sTmp = $request->getFileTempname($input);
@@ -716,12 +718,12 @@ class Masthead {
 			if ( $aOrigSize['width'] < $aOrigSize['height'] ) {
 				$iImgW = $iImgH * ( $aOrigSize['width'] / $aOrigSize['height'] );
 			}
-		
+
 			/* empty image with thumb size on white background */
 			$oImg = @imagecreatetruecolor($iImgW, $iImgH);
 			$white = imagecolorallocate($oImg, 255, 255, 255);
 			imagefill($oImg, 0, 0, $white);
-		
+
 			imagecopyresampled(
 				$oImg,
 				$oImgOrig,
@@ -840,7 +842,7 @@ class Masthead {
 
 		return $result;
 	}
-	
+
 	function purgeUrl() {
 		// Purge the avatar URL and the proportions commonly used in Oasis.
 		global $wgUseSquid;
@@ -855,9 +857,9 @@ class Masthead {
 			);
 
 			SquidUpdate::purge($urls);
-		}		
+		}
 	}
-	
+
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory, $wgEnableUserProfilePagesV3;
 
@@ -890,11 +892,11 @@ class Masthead {
 			'sFieldName'       => AVATAR_UPLOAD_FIELD,
 			'bUploadsPossible' => $bUploadsPossible,
 		) );
-		
+
 		if( empty($wgEnableUserProfilePagesV3) ) {
 		//when User Profile Pages version 3 is enabled don't show here avatar upload
-			$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE ); 
-			$html .= $oTmpl->execute('pref-avatar-form'); 
+			$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
+			$html .= $oTmpl->execute('pref-avatar-form');
 		}
 
 		$defaultPreferencesTemp = array();
@@ -902,11 +904,11 @@ class Masthead {
 		foreach($defaultPreferences as $k => $v) {
 			$defaultPreferencesTemp[$k] = $v;
 			if($k == 'showAds' && empty($wgEnableUserProfilePagesV3)) {
-				$defaultPreferencesTemp['avatarupload'] = array( 
-				'help' => $html, 
-				'label' => '&nbsp;', 
-				'type' => 'info', 
-				'section' => 'personal/avatarupload'); 
+				$defaultPreferencesTemp['avatarupload'] = array(
+				'help' => $html,
+				'label' => '&nbsp;',
+				'type' => 'info',
+				'section' => 'personal/avatarupload');
 			}
 		}
 

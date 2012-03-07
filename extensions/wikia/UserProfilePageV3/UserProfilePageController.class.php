@@ -34,7 +34,7 @@ class UserProfilePageController extends WikiaController {
 
 		$pageBody = $this->getVal( 'userPageBody' );
 		$wikiId = $this->getVal( 'wikiId' );
-		
+
 		if( $this->title instanceof Title ) {
 			$namespace = $this->title->getNamespace();
 			$isSubpage = $this->title->isSubpage();
@@ -42,7 +42,7 @@ class UserProfilePageController extends WikiaController {
 			$namespace = $this->app->wg->NamespaceNumber;
 			$isSubpage = false;
 		}
-		
+
 		$useOriginalBody = true;
 
 		if( $user instanceof User ) {
@@ -78,7 +78,7 @@ class UserProfilePageController extends WikiaController {
 
 		$this->app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss'));
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/UserProfilePageV3/js/UserProfilePage.js' );
-						
+
 		$sessionUser = $this->wg->User;
 
 		$this->setRequest( new WikiaRequest($this->app->wg->Request->getValues()) );
@@ -117,13 +117,13 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'canEditProfile', $canEditProfile );
 		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed('staff') );
 		$this->setVal( 'canEditProfile', ($isUserPageOwner || $sessionUser->isAllowed('staff') || $sessionUser->isAllowed('editprofilev3')) );
-		
+
 		if( !empty($this->title) ) {
 			$this->setVal( 'reloadUrl', htmlentities($this->title->getFullUrl(), ENT_COMPAT, 'UTF-8') );
 		} else {
 			$this->setVal( 'reloadUrl', '' );
 		}
-		
+
 		$this->app->wg->Out->addScript('<script type="'.$this->app->wg->JsMimeType.' src="'.$this->app->wg->StylePath.'/common/jquery/jquery.aim.js?'.$this->app->wg->StyleVersion.'"></script>');
 
 		$this->app->wf->ProfileOut( __METHOD__ );
@@ -141,7 +141,7 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setRequest( new WikiaRequest($this->app->wg->Request->getValues()) );
 		$user = $this->getUserFromTitle();
-		
+
 		$sessionUser = $this->wg->User;
 		$canRename = $sessionUser->isAllowed('renameprofilev3');
 		$canProtect = $sessionUser->isAllowed('protect');
@@ -248,7 +248,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$this->wf->RunHooks( 'UserProfilePageAfterGetActionButtonData', array(&$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner) );
-		
+
 		$actionButton = $this->wf->RenderModule('MenuButton', 'Index', $actionButtonArray);
 		$this->setVal('actionButton', $actionButton);
 
@@ -301,28 +301,28 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function renderLightbox() {
 		$this->app->wf->ProfileIn( __METHOD__ );
-		
+
 		$selectedTab = $this->getVal('tab');
 		$userId = $this->getVal('userId');
 		$sessionUser = $this->wg->User;
-		
+
 		$tabs = array(
 			array( 'id' => 'avatar', 'name' => $this->wf->msg('user-identity-box-avatar') ),
 			array( 'id' => 'about', 'name' => $this->wf->msg('user-identity-box-about-me') ),
 			//array( 'id' => 'interview', 'name' => 'User Interview' ), //not yet --nAndy, 2011-06-15
 		);
-		
+
 		$this->renderAvatarLightbox($userId);
 		$this->renderAboutLightbox($userId);
-		
+
 		$this->setVal( 'tabs', $tabs );
 		$this->setVal( 'selectedTab', $selectedTab );
 		$this->setVal( 'isUserPageOwner', ( ( $userId == $sessionUser->getId() ) ? true : false ) );
-		
+
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
-		
+
 		$this->setVal( 'facebookPrefsLink', Skin::makeSpecialUrl('Preferences'));
-		
+
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 
@@ -367,7 +367,7 @@ class UserProfilePageController extends WikiaController {
 
 		$user = F::build('User', array($this->getVal('userId')), 'newFromId');
 		$isAllowed = ( $this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()) );
-		
+
 		$userData = json_decode($this->getVal('data'));
 
 		$status = 'error';
@@ -450,10 +450,12 @@ class UserProfilePageController extends WikiaController {
 					$errorMsg = $this->app->wf->msg('userprofilepage-interview-save-internal-error');
 					break;
 			}
+
+			// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
 			$user->setOption('avatar_rev', date('U') );
 			$user->saveSettings();
 		}
-		
+
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return true;
 	}
@@ -549,22 +551,22 @@ class UserProfilePageController extends WikiaController {
 
 	protected function storeInTempImage($fileName, $fileuploader){
 		$this->app->wf->ProfileIn( __METHOD__ );
-		
+
 		if(filesize($fileName) > self::AVATAR_MAX_SIZE ) {
 			return UPLOAD_ERR_FORM_SIZE;
 		}
-		
-		$tempName = $fileuploader->tempFileName($this->wg->User); 
+
+		$tempName = $fileuploader->tempFileName($this->wg->User);
 		$title = Title::makeTitle(NS_FILE, $tempName);
 		$localRepo = RepoGroup::singleton()->getLocalRepo();
-		
+
 		$ioh = F::build('ImageOperationsHelper');
-		
+
 		$out = $ioh->postProcessFile($fileName);
 		if($out !== true) {
 			return $out;
 		}
-		
+
 		$file = new FakeLocalFile($title, $localRepo);
 		$file->upload( $fileName , '', '' );
 
@@ -575,7 +577,7 @@ class UserProfilePageController extends WikiaController {
 			'height' => $height,
 			'width' => $width,
 		));
-		
+
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $thumbnail;
 	}
@@ -756,38 +758,38 @@ class UserProfilePageController extends WikiaController {
 	 */
 	private function renderAboutLightbox($userId) {
 		$this->app->wf->ProfileIn( __METHOD__ );
-		
+
 		$user = F::build('User', array($userId), 'newFromId');
-		
+
 		$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 		$userData = $userIdentityBox->getData(true);
-		
+
 		$this->setVal('user', $userData);
 		$this->setVal( 'fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">'.$this->app->wf->Msg('user-identity-box-connect-to-fb').'</fb:login-button>' );
-		
+
 		$this->setVal('charLimits', array(
 			'name' => UserIdentityBox::USER_NAME_CHAR_LIMIT,
 			'location' => UserIdentityBox::USER_LOCATION_CHAR_LIMIT,
 			'occupation' => UserIdentityBox::USER_OCCUPATION_CHAR_LIMIT,
 			'gender' => UserIdentityBox::USER_GENDER_CHAR_LIMIT,
 		));
-		
+
 		if( !empty($userData['birthday']['month']) ) {
 			$this->setVal('days', cal_days_in_month( CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */ ) );
 		}
-		
+
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
-			
+
 	/**
 	 * @brief Get user object from given title
-	 * 
+	 *
 	 * @desc getUserFromTitle() is sometimes called in hooks therefore I added returnUser flag and when
 	 * it is set to true getUserFromTitle() will assign $this->user variable with a user object
-	 * 
+	 *
 	 * @requestParam Title $title title object
 	 * @requestParam Boolean $returnUser a flag set to true or false
-	 * 
+	 *
 	 * @return User
 	 *
 	 * @author ADi
@@ -795,10 +797,10 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function getUserFromTitle() {
 		$this->app->wf->ProfileIn( __METHOD__ );
-		
+
 		$title = $this->getVal('title');
 		$returnUserInData = (boolean) $this->getVal('returnUser');
-		
+
 		if( !empty($title) && is_string($title) && strpos($title, ':') !== false ) {
 			$title = F::build('Title', array($title), 'newFromText');
 		}
@@ -810,16 +812,16 @@ class UserProfilePageController extends WikiaController {
 				$title = $redirect;
 			}
 		}
-		
+
 		$user = null;
-		
+
 		if( $title instanceof Title && in_array( $title->getNamespace(), $this->allowedNamespaces ) ) {
 			// get "owner" of this user / user talk / blog page
 			$parts = explode('/', $title->getText());
 		} else if( $title instanceof Title && $title->getNamespace() == NS_SPECIAL && ($title->isSpecial('Following') || $title->isSpecial('Contributions')) ) {
 			$target = $this->getVal('target');
 			$target = ( empty($target) ) ? $this->app->wg->Request->getVal('target') : $target;
-			
+
 			if( !empty($target) ) {
 				// Special:Contributions?target=FooBar (RT #68323)
 				$parts = array($target);
@@ -827,24 +829,24 @@ class UserProfilePageController extends WikiaController {
 				// get user this special page referrs to
 				$titleVal = $this->app->wg->Request->getVal('title', false);
 				$parts = explode('/', $titleVal);
-				
+
 				// remove special page name
 				array_shift($parts);
 			}
-			
+
 			if( $title->isSpecial('Following') && !isset($parts[0]) ) {
 			//following pages are rendered only for profile owners
 				$user = $this->app->wg->User;
 				if( $returnUserInData ) {
 					$this->user = $user;
 				}
-				
+
 				$this->app->wf->ProfileOut( __METHOD__ );
 				return $user;
 			}
 		}
 
-		
+
 		if( !empty($parts[0]) ) {
 			$userName = str_replace('_', ' ', $parts[0]);
 			$user = F::build('User', array($userName), 'newFromName');
@@ -868,7 +870,7 @@ class UserProfilePageController extends WikiaController {
 		if( $returnUserInData ) {
 			$this->user = $user;
 		}
-		
+
 		$this->app->wf->ProfileOut( __METHOD__ );
 		return $user;
 	}
@@ -883,7 +885,7 @@ class UserProfilePageController extends WikiaController {
 
 		$title = $this->app->wg->Title;
 		$user = $this->getUserFromTitle();
-		
+
 		if( $user instanceof User ) {
 			$response = $this->app->sendRequest(
 			  'UserProfilePage',
@@ -893,7 +895,7 @@ class UserProfilePageController extends WikiaController {
 			    'userPageBody' => $template->data['bodytext'],
 			    'wikiId' => $this->app->wg->CityId,
 			  ));
-			
+
 			$template->data['bodytext'] = (string) $response;
 		}
 
@@ -1122,9 +1124,9 @@ class UserProfilePageController extends WikiaController {
 
 	public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
 		if( !empty($title) && $title->getNamespace() == NS_USER) {
-			$ptext = $title->getText();	
+			$ptext = $title->getText();
 		}
-		
+
 		return true;
 	}
 
@@ -1136,11 +1138,11 @@ class UserProfilePageController extends WikiaController {
 	public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if ($revision !== NULL) {	// do not count null edits
 			$wikiId = intval( $this->app->wg->CityId );
-	
+
 			if( $user instanceof User && $wikiId > 0 ) {
 				$userIdentityBox = F::build('UserIdentityBox', array($this->app, $user, self::MAX_TOP_WIKIS));
 				$userIdentityBox->addTopWiki($wikiId);
-			}			
+			}
 		}
 		return true;
 	}

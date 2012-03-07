@@ -101,12 +101,14 @@ class AvatarService extends Service {
 				return $avatarUrl;
 			}
 
-			// fb#13710 don't add CB to default avatars
 			$masthead = Masthead::newFromUser($user);
 			$avatarUrl = $masthead->getThumbnail($avatarSize, true, $avoidUpscaling);
-			if ( !$masthead->isDefault() ) {
-				$avatarUrl .= '?cb='.$user->getOption('avatar_rev', 0);
-			}
+
+			// use per-user cachebuster when custom avatar is used
+			$cb = !$masthead->isDefault() ? $user->getTouched() : 0;
+
+			// make URLs consistent and using no-cookie domain (BugId:22190)
+			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : 1);
 
 			$avatarsCache[$key] = $avatarUrl;
 		}
