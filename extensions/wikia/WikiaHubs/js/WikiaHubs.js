@@ -200,6 +200,8 @@ var SuggestModal = {
 								modal.find('.WikiaForm').replaceWith('<p>'+res['msg']+'</p>');
 								modal.find('.close-button').show();
 							} else if (res['result'] == 'error') {
+								wikiaForm.clearInputError('articleurl');
+								wikiaForm.clearInputError('reason');
 								wikiaForm.showInputError(res['errParam'], res['msg']);
 							} else {
 								// TODO: show error message
@@ -261,6 +263,8 @@ var SuggestModal = {
 								modal.find('.WikiaForm').replaceWith('<p>'+res['msg']+'</p>');
 								modal.find('.close-button').show();
 							} else if (res['result'] == 'error') {
+								wikiaForm.clearInputError('videourl');
+								wikiaForm.clearInputError('wikiname');
 								wikiaForm.showInputError(res['errParam'], res['msg']);
 							} else {
 								// TODO: show error message
