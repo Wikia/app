@@ -65,7 +65,7 @@ var ChatView = Backbone.View.extend({
 			article = article.replace(/%3a/ig, ":"); // make colons more human-readable (they don't really need to be escaped)
 			var url = path.replace("$1", article);
 			return '<a href="' + url + '">' + linkText + '</a>';			
-		}
+		};
 		
 		// Linkify [[Pipes|Pipe-notation]] in bracketed links.
 		var exp = /\[\[([^\[\|\]\r\n\t]*)\|([^\[\]\|\r\n\t]*)\]\]/ig;
