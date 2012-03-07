@@ -37,28 +37,35 @@ class AuthThumbnailerSpecialPageController extends WikiaSpecialPageController {
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( $this->wg->User->isLoggedIn() ) {
-
-			$path = sprintf( "%s/%s/images", substr( $this->wg->DBname, 0, 1 ), $this->wg->DBname );
+			# make proper thumb path: c/central/images/thumb/....
+			$path = sprintf( "%s/%s/images", "c", "central"); # substr( $this->wg->DBname, 0, 1 ), $this->wg->DBname );
+			# take thumb request from request
 			$img_thumb = $this->getVal( 'thumb' );
+			# and build proper thumb url for thumbnailer
 			$thumb_url = sprintf( "%s/%s/%s", $this->wg->ThumbnailerService, $path, $img_thumb );
 			
-			$content = Http::get( $thumb_url );
-			if ( $content ) {
-				$this->wf->ResetOutputBuffers();
-				$magic = F::build( 'MimeMagic', array(), 'singleton');
-				$ext = strrchr($img_thumb, '.');
-				$ext = $ext === false ? '' : strtolower( substr( $ext, 1 ) );				
-				$type = $magic->guessTypesForExtension( $ext );
-				if ( $type and $type!="unknown/unknown") {
-					header("Content-type: $type");
-				} else {
-					header('Content-type: application/x-wiki');
+			# call thumbnailer 
+			$options = array( 'method' => 'GET', 'timeout' => 'default' );
+			$thumb_request = HttpRequest::factory( $thumb_url, $options );
+			$status = $thumb_request->execute();
+			$headers = $thumb_request->getResponseHeaders();
+
+			if ( $status->isOK() ) {
+				if ( !empty( $headers ) ) {
+					foreach ( $headers as $header_name => $header_value ) {
+						if ( is_array( $header_value ) ) {
+							list( $value ) = $header_value;
+						} else {
+							$value = $header_value;
+						}
+						header( sprintf( "%s: %s", $header_name, $value ) );
+					}
 				}
-				echo $content;
-				exit;			
+				echo $thumb_request->getContent();
+				exit;
 			} else {
 				$this->wf->debug("Cannot generate auth thumb");
-				$this->wg->Out->showErrorPage( $this->wf->Msg('img-auth-accessdenied'), $this->wf->Msg('img-auth-nofile'));
+				$this->wg->Out->showErrorPage( 'img-auth-accessdenied', 'img-auth-nofile' );
 			}
 		} else {
 			#$this->wg->Out->showErrorPage( $this->wf->Msg('img-auth-accessdenied'), $this->wf->Msg('img-auth-public'));
@@ -67,6 +74,5 @@ class AuthThumbnailerSpecialPageController extends WikiaSpecialPageController {
 		}
 
 		$this->wf->profileOut( __METHOD__ );
-		return false;
 	}
 }
