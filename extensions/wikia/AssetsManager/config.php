@@ -221,7 +221,8 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js'
+		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js',
+		'//extensions/wikia/UserLogin/js/WikiaMobileUserLogin.js',
 	)
 );
 
