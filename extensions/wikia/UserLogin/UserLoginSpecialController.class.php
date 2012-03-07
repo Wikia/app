@@ -55,6 +55,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->redirect( $title->getFullURL() );
 			return false;
 		}
+		
+		if ( Wikia::isWikiaMobile() ) {
+			$this->overrideTemplate( 'WikiaMobileIndex' );
+		}
 
 		$this->initializeTemplate();
 
@@ -121,7 +125,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 		}
 	}
-	
+
 	public function getUnconfirmedUserRedirectUrl() {
 		$title = Title::newFromText('UserSignup', NS_SPECIAL);
 		$params = array(
