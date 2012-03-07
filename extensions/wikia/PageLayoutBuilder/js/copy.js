@@ -13,7 +13,7 @@ $(function() {
 	    emptyElement.find('span').text(text);
 	    emptyElement.find('input').val(val);
 	    
-	    listElement = emptyElement.clone().attr('id', '').show();
+	    var listElement = emptyElement.clone().attr('id', '').show();
 	    listElement.find('a').click(deleteElement);
 	    $('#PLBCopyLayout ul').append(listElement);
 	});
