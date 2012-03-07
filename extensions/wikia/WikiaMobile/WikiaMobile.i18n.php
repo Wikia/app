@@ -45,7 +45,9 @@ $messages['en'] = array(
 	'wikiamobile-sharing-email-text' => 'Hey,
 you should definitely check this out:
 
-$1',
+ $1',
+	//ad
+	'wikiamobile-ad-close' => 'close'
 );
 
 /** Message documentation (Message documentation) */
@@ -57,6 +59,7 @@ $messages['qqq'] = array(
 	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
 	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
 	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
+	'wikiamobile-ad-close' => 'text on the close button for the ad place'
 );
 
 /** адыгэбзэ (адыгэбзэ)
