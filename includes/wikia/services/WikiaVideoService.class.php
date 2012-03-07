@@ -114,6 +114,7 @@ class WikiaVideoService extends Service {
 	 * @return boolean
 	 */
 	public static function useVideoHandlersExtForEmbed() {
+		return true;
 		return static::isVideoStoredAsFile() || !empty(F::app()->wg->embedVideosUseVideoHandlersExt);
 	}
 

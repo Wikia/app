@@ -25,7 +25,7 @@ $dir = dirname( __FILE__ );
 $app->registerClass( 'ThumbnailVideo',		$dir . '/ThumbnailVideo.class.php' );
 $app->registerClass( 'VideoHandlerController',	$dir . '/VideoHandlerController.class.php' );
 $app->registerClass( 'VideoHandlerHooks',	$dir . '/VideoHandlerHooks.class.php' );
-$app->registerClass( 'VideoHandlersUploader',	$dir . '/VideoHandlersUploader.class.php' );
+$app->registerClass( 'VideoFileUploader',	$dir . '/VideoFileUploader.class.php' );
 $app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
 
 // api wrappers

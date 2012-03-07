@@ -76,6 +76,10 @@ abstract class ApiWrapper {
 	public function getProvider() {
 		return strtolower(str_replace('ApiWrapper', '', get_class($this)));
 	}
+
+	public function getMimeType() {
+		return 'video/'.$this->getProvider();
+	}
 	
 	public function getVideoId() {
 		if (!$this->videoId) {

@@ -10,7 +10,7 @@ class LatestPhotosModule extends Module {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	const THUMB_SIZE = 82;
-	
+
 	var $thumbUrls;
 	var $wgBlankImgUrl;
 	var $enableScroll;
@@ -35,6 +35,7 @@ class LatestPhotosModule extends Module {
 		$this->thumbUrls = $wgMemc->get( LatestPhotosModule::memcacheKey() );
 		if (empty($this->thumbUrls)) {
 			// api service
+
 			$params = array(
 				'action' => 'query',
 				'list' => 'logevents',
@@ -59,7 +60,7 @@ class LatestPhotosModule extends Module {
 
 			foreach ($fileList as $data) {
 				$sha = $data['file']->sha1;
-				if (! array_key_exists($sha, $shaList)) {
+				if ( !array_key_exists($sha, $shaList) && ( $data['file']->media_type != 'VIDEO' ) ) {
 					$shaList[$sha] = true;
 					$uniqueList[] = $data;
 				}
