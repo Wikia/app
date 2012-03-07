@@ -811,6 +811,10 @@ function VET_displayDetails(responseText) {
 			$G( 'VideoEmbedNameRow' ).style.display = 'none';
 		}
 	}
+	
+	if ( $G('VideoEmbedMain').innerHTML == '' ) {
+		VET_loadMain();		
+	}
 
 	VET_indicator(1, false);
 }
@@ -1004,6 +1008,7 @@ function VET_insertFinalVideo(e, type) {
 }
 
 function VET_switchScreen(to) {
+	
 	VET_prevScreen = VET_curScreen;
 	VET_curScreen = to;
 	$G('VideoEmbed' + VET_prevScreen).style.display = 'none';
@@ -1031,6 +1036,7 @@ function VET_switchScreen(to) {
 }
 
 function VET_back(e) {
+	
 	YAHOO.util.Event.preventDefault(e);
 	VET_track('back/' + VET_curScreen);
 	if(VET_curScreen == 'Details') {
@@ -1049,6 +1055,7 @@ function VET_previewClose(e) {
 }
 
 function VET_close(e) {
+	
 	if(e) {
 		YAHOO.util.Event.preventDefault(e);
 	}
