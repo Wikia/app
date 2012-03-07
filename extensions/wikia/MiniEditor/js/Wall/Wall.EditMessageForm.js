@@ -8,16 +8,18 @@
 		showEditTextArea: function(msg, text) {
 			var self = this,
 				body = $('.msg-body', msg).first(),
-				wikiaEditor = body.data('wikiaEditor');
+				wikiaEditor = body.data('wikiaEditor'),
+				isReply = msg.data('is-reply'),
+				animation = isReply ? {} : {
+					'padding-top': 10,
+					'padding-left': 10,
+					'padding-right': 10,
+					'padding-bottom': 10
+	
+				};
 
 			// See: http://stackoverflow.com/questions/4095475/jquery-animate-padding-to-zero
-			body.closest('.speech-bubble-message').animate({
-				'padding-top': 10,
-				'padding-left': 10,
-				'padding-right': 10,
-				'padding-bottom': 10
-
-			}, this.proxy(function() {
+			body.closest('.speech-bubble-message').animate(animation, this.proxy(function() {
 				if (!wikiaEditor) {
 					body.miniEditor({
 						events: {
@@ -86,12 +88,16 @@
 		afterClose: function(bubble) {
 			$('.follow', bubble).show();
 			bubble.find('.timestamp').show();
-			bubble.animate({
-				'padding-top': 10,
-				'padding-left': 20,
-				'padding-right': 20,
-				'padding-bottom': 10
-			});
+			
+			var isReply = bubble.parent().data('is-reply');
+			if(!isReply) {
+				bubble.animate({
+					'padding-top': 10,
+					'padding-left': 20,
+					'padding-right': 20,
+					'padding-bottom': 10
+				});
+			}
 		}
 	});
 
