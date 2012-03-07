@@ -13,6 +13,8 @@ var RelatedVideos = {
 	videosPerPage: 3,
 	rvModule: null,
 	isHubVideos: false,
+	isHubExtEnabled: false,
+	isHubExtPage: false,
 
 	init: function(relatedVideosModule) {
 		this.rvModule = $(relatedVideosModule);
@@ -25,12 +27,23 @@ var RelatedVideos = {
 			this.isHubVideos = true;
 		}
 		
+		if(typeof WikiaHubs != 'undefined' ) {
+			this.isHubExtEnabled = true;
+			if($('.WikiaHubs').length > 0 ) {
+				this.isHubExtPage = true;
+			}
+		}
+
 		var importantContentHeight = $('#WikiaArticle').height();
 		importantContentHeight += $('#WikiaArticleComments').height();
 		if ( !this.onRightRail && $('span[data-placeholder="RelatedVideosModule"]').length != 0 ){
 			$('span[data-placeholder="RelatedVideosModule"]').replaceWith( relatedVideosModule );
 		}
-		if (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold || this.isHubVideos) {
+		if (
+				(!this.isHubExtEnabled && this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold) 
+				||
+				(this.isHubExtEnabled && this.isHubExtPage && this.isHubVideos)				
+		) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
 			relatedVideosModule.delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
 			relatedVideosModule.delegate( '.scrollright', 'click', RelatedVideos.scrollright );
@@ -439,4 +452,6 @@ var RelatedVideos = {
 };
 
 //on content ready
-RelatedVideos.init($('#RelatedVideosRL').size() > 0 ? $('#RelatedVideosRL') : $('#RelatedVideos'));
+$().ready(function() {
+	RelatedVideos.init($('#RelatedVideosRL').size() > 0 ? $('#RelatedVideosRL') : $('#RelatedVideos'));
+});
