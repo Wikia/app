@@ -326,6 +326,10 @@ var WikiaMobile = WikiaMobile || (function() {
 			handle(shrData);
 		}
 	}
+	
+	function openLogin() {
+		console.log('This will open login soon');
+	}
 
 	/*
 	 * POPOVER
@@ -772,6 +776,7 @@ var WikiaMobile = WikiaMobile || (function() {
 	});
 
 	return {
+		openLogin: openLogin,
 		getImages: getImages,
 		getDeviceResolution: getDeviceResolution,
 		getClickEvent: getClickEvent,
