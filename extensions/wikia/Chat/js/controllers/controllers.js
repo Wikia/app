@@ -197,7 +197,7 @@ var NodeRoomController = $.createClass(Observable,{
 			}
 			
 			if(this.active == true) {
-				this.unreadMessage = 0
+				this.unreadMessage = 0;
 			}
 			
 			var data = {
