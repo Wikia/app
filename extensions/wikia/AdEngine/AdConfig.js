@@ -40,10 +40,11 @@ AdConfig = {
 	 * or a number of *milli*seconds until the cookie expires */
 	cookie: function(name, value, options){
 		// name and value given, set cookie
-	    if(arguments.length > 1)
+	    if(arguments.length > 1){
 			return Wikia.CookieCutter.set(name, value, options);
-		else
+		} else {
 			return Wikia.CookieCutter.get(name);
+		}
 	},
 
 	/* Pull the geo data from cookie */
@@ -153,8 +154,8 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 			src = 'direct';
 			mtfIFPath = 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
 			break;
-		default:
 		case 'Liftium':
+		default:
 			src = 'liftium';
 			mtfIFPath = 'mtfIFPath=/extensions/wikia/AdEngine/;';  // http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117857, http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=117427
 			break;
