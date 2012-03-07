@@ -48,11 +48,11 @@ var SpecialCustomizePlatinum = {
 				$("#body").removeClass("ajax");
 			},
 			'json'
-		)
+		);
 	},
 
 	switchSponsored: function(){
-		var source = $(this);;
+		var source = $(this);
 		var inputSet = source.closest('.sponsored-fields').find('.sponsored-fields-2, .sponsored-fields-3');
 		var descrSet = source.closest(".customize-platinum-badge").find('.description-fields');
 
@@ -70,8 +70,9 @@ var SpecialCustomizePlatinum = {
 		var badge = $(form).find(".customize-platinum-badge");
 		var msg = SpecialCustomizePlatinum.validateInput(badge);
 
-		if(msg != '') alert(msg);
-		else {
+		if(msg != ''){
+			alert(msg);
+		} else {
 			$.AIM.submit(form, {onComplete: SpecialCustomizePlatinum.onAdded});
 			
 			//unbind original html element handler to avoid loops
@@ -79,8 +80,9 @@ var SpecialCustomizePlatinum = {
 			
 			$(form).submit();
 			//block user input
-			if(!$.browser.webkit)
+			if(!$.browser.webkit){
 				badge.find('textarea, input').attr('disabled', 'disabled');
+			}
 			
 			$("#body").addClass("ajax");
 		}
@@ -135,7 +137,7 @@ var SpecialCustomizePlatinum = {
 		if(response.errors != null) {
 			//errros found, restore the form status and give feedback
 			badgeForm.find('textarea, input, checkbox').removeAttr('disabled');
-			badgeForm.attr('onsubmit', 'SpecialCustomizePlatinum.editSubmit(this)')
+			badgeForm.attr('onsubmit', 'SpecialCustomizePlatinum.editSubmit(this)');
 			
 			//rebind original html element handler previously unbinded
 			badgeForm[0].onsubmit =  function(){return SpecialCustomizePlatinum.editSubmit(this);};
@@ -177,7 +179,9 @@ var SpecialCustomizePlatinum = {
 			}
 		}
 
-		if(msg != '') msg = "Please fix the following issues:" + msg;
+		if(msg != ''){
+			msg = "Please fix the following issues:" + msg;
+		}
 
 		return msg;
 	}
