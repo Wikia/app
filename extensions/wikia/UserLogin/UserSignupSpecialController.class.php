@@ -88,6 +88,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					'method' => 'sendConfirmationEmail',
 					'username' => $this->username,
 					'byemail' => intval($this->byemail),
+					'uselang' => $this->uselang,
 				);
 				$redirectUrl = $this->wg->title->getFullUrl( $params );
 				$this->wg->out->redirect( $redirectUrl );
