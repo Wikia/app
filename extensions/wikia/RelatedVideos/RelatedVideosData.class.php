@@ -119,10 +119,10 @@ class RelatedVideosData {
 			if ( WikiaVideoService::isVideoStoredAsFile() ) {
 				// is it a WikiLink?
 				$title = Title::newFromText($url);
-				if ( !$title || !$title->exists() ) {
+				if ( !$title || !WikiaVideoService::isTitleVideo($title) ) {
 					$title = Title::newFromText(str_replace(array('[[',']]'),array('',''),$url));
 				}
-				if ( !$title || !$title->exists() ) {
+				if ( !$title || !WikiaVideoService::isTitleVideo($title) ) {
 					if ( ($pos = strpos($url,'Video:')) !== false ) {
 						$title = Title::newFromText( substr($url,$pos) );
 					}
@@ -130,7 +130,7 @@ class RelatedVideosData {
 						$title = Title::newFromText( substr($url,$pos) );
 					}
 				}
-				if( $title && $title->exists() && WikiaVideoService::isTitleVideo($title) ) {
+				if( $title && WikiaVideoService::isTitleVideo($title) ) {
 					$videoTitle = $title;
 					$videoPageId = $title->getArticleId();
 					$videoProvider = '';
