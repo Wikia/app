@@ -25,6 +25,10 @@ class TestController extends WikiaController {
 		$this->forward( 'AnotherTest', 'hello', $resetResponse);
 	}
 
+	public function overrideTemplateTest(){
+		$this->response->setVal( 'output', $this->request->getVal( 'input' ) );
+		$this->overrideTemplate( $this->request->getVal( 'template' ) );
+	}
 }
 
 class AnotherTestController extends WikiaController {
