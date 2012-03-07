@@ -10,7 +10,7 @@
  *	 --conf ${project.dir}/config/LocalSettings.php
  * 	 --output ${project.dir}/build/jslint/report.html
  *
- * Beware! It's still a hack :)
+ * Deprecated! Please use /maintenance/wikia/codelint.php script!
  *
  * @author Maciej Brencz
  */
