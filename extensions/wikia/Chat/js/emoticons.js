@@ -135,7 +135,7 @@ if(typeof EmoticonMapping === 'undefined'){
 				for(var imgSrc in self._settings){
 					var codes = self._settings[imgSrc];
 					var regexString = "";
-					for(var index = 0; codes.length < index; index ++){
+					for(var index = 0; codes.length > index; index ++){
 						var code = codes[index];
 						// Escape the string for use in the regex (thanks to http://simonwillison.net/2006/Jan/20/escape/#p-6).
 						code = code.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -152,121 +152,6 @@ if(typeof EmoticonMapping === 'undefined'){
 			}
 			
 			return self._regexes;
-		};
-		
-		/**
-		 * Loads a reasonable default of emoticons.
-		 *
-		 * Only used as an extreme fallback. Replaced at startup with loading Messaging Wiki's "MediaWiki:Emoticons"
-		 * which is used as the default for each client until the async request returns from their appropriate wiki.
-		 */
-		this.loadDefault = function(){
-			self.loadFromWikiText('* http://images2.wikia.nocookie.net/__cb20110904035827/messaging/images/7/79/Emoticon_angry.png\n\
-** (angry)\n\
-** >:O\n\
-** >:-O\n\
-* http://images1.wikia.nocookie.net/__cb20110904035827/messaging/images/a/a3/Emoticon_argh.png\n\
-** (argh)\n\
-* http://images3.wikia.nocookie.net/__cb20110904035827/messaging/images/e/ec/Emoticon_BA.png\n\
-** (ba)\n\
-* http://images2.wikia.nocookie.net/__cb20110904035827/messaging/images/7/76/Emoticon_batman.png\n\
-** (batman)\n\
-* http://images1.wikia.nocookie.net/__cb20110904035828/messaging/images/e/e2/Emoticon_blush.png\n\
-** (blush)\n\
-** :]\n\
-** :-]\n\
-* http://images2.wikia.nocookie.net/__cb20110904040557/messaging/images/e/ed/Emoticon_books.png\n\
-** (books)\n\
-* http://images4.wikia.nocookie.net/__cb20110904035828/messaging/images/c/cd/Emoticon_confused.png\n\
-** (confused)\n\
-** :S\n\
-** :-S\n\
-* http://images2.wikia.nocookie.net/__cb20110904035828/messaging/images/2/28/Emoticon_content.png\n\
-** (content)\n\
-* http://images4.wikia.nocookie.net/__cb20110904035828/messaging/images/a/a2/Emoticon_cool.png\n\
-** (cool)\n\
-** B)\n\
-** B-)\n\
-* http://images4.wikia.nocookie.net/__cb20110904035828/messaging/images/1/16/Emoticon_crying.png\n\
-** (crying)\n\
-** ;-(\n\
-** ;(\n\
-** :\'(\n\
-* http://images2.wikia.nocookie.net/__cb20110904040556/messaging/images/7/7d/Emoticon_fingers_crossed.png\n\
-** (fingers crossed)\n\
-** (yn)\n\
-* http://images1.wikia.nocookie.net/__cb20110904040557/messaging/images/0/07/Emoticon_frustrated.png\n\
-** (frustrated)\n\
-** >:-/\n\
-** >:/\n\
-* http://images3.wikia.nocookie.net/__cb20110904040557/messaging/images/7/78/Emoticon_ghost.png\n\
-** (ghost)\n\
-** (swayze)\n\
-* http://images1.wikia.nocookie.net/__cb20110905041806/messaging/images/3/31/Emoticon_happy.png\n\
-** (happy)\n\
-** :-)\n\
-** :)\n\
-* http://images2.wikia.nocookie.net/__cb20110904040557/messaging/images/1/1e/Emoticon_heart.png\n\
-** (heart)\n\
-** (h)\n\
-** <3\n\
-* http://images1.wikia.nocookie.net/__cb20110904040557/messaging/images/7/7b/Emoticon_hmm.png\n\
-** (hmm)\n\
-* http://images1.wikia.nocookie.net/__cb20110904040557/messaging/images/b/b5/Emoticon_indifferent.png\n\
-** (indifferent)\n\
-** :/\n\
-** :-/\n\
-* http://images1.wikia.nocookie.net/__cb20110904040558/messaging/images/a/ac/Emoticon_laughing.png\n\
-** (laughing)\n\
-** :D\n\
-** :-D\n\
-* http://images2.wikia.nocookie.net/__cb20110904041805/messaging/images/c/c1/Emoticon_mario.png\n\
-** (mario)\n\
-* http://images3.wikia.nocookie.net/__cb20110904041806/messaging/images/4/43/Emoticon_moon.png\n\
-** (moon)\n\
-* http://images3.wikia.nocookie.net/__cb20110904041806/messaging/images/1/1d/Emoticon_ninja.png\n\
-** (ninja)\n\
-* http://images3.wikia.nocookie.net/__cb20110905041806/messaging/images/9/92/Emoticon_nintendo.png\n\
-** (nintendo)\n\
-* http://images2.wikia.nocookie.net/__cb20110904041806/messaging/images/4/40/Emoticon_no.png\n\
-** (no)\n\
-** (n)\n\
-* http://images3.wikia.nocookie.net/__cb20110904041806/messaging/images/2/2d/Emoticon_owl.png\n\
-** (owl)\n\
-* http://images1.wikia.nocookie.net/__cb20110904041806/messaging/images/c/c2/Emoticon_pacmen.png\n\
-** (pacmen)\n\
-** (pacman)\n\
-** (redghost)\n\
-* http://images1.wikia.nocookie.net/__cb20110904041806/messaging/images/5/52/Emoticon_peace.png\n\
-** (peace)\n\
-* http://images3.wikia.nocookie.net/__cb20110904041806/messaging/images/7/74/Emoticon_pirate.png\n\
-** (pirate)\n\
-* http://images1.wikia.nocookie.net/__cb20110904041806/messaging/images/8/8a/Emoticon_sad.png\n\
-** (sad)\n\
-** :(\n\
-** :-(\n\
-* http://images1.wikia.nocookie.net/__cb20110904041912/messaging/images/c/c2/Emoticon_silly.png\n\
-** (silly)\n\
-** :P\n\
-** :-P\n\
-* http://images4.wikia.nocookie.net/__cb20110904041912/messaging/images/a/a9/Emoticon_stop.png\n\
-** (stop)\n\
-* http://images2.wikia.nocookie.net/__cb20110904041913/messaging/images/a/a2/Emoticon_unamused.png\n\
-** (unamused)\n\
-** :|\n\
-** :-|\n\
-* http://images1.wikia.nocookie.net/__cb20110904041913/messaging/images/d/dc/Emoticon_walter.png\n\
-** (walter)\n\
-** (wikia)\n\
-** (w)\n\
-* http://images1.wikia.nocookie.net/__cb20110904041913/messaging/images/8/87/Emoticon_wink.png\n\
-** (wink)\n\
-** ;)\n\
-** ;-)\n\
-* http://images2.wikia.nocookie.net/__cb20110904041913/messaging/images/1/1c/Emoticon_yes.png\n\
-** (yes)\n\
-** (y)\n\
-');
 		};
 	};
 }
