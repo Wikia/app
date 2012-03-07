@@ -78,9 +78,9 @@ class MiniEditorController extends WikiaController {
 		}
 
 		// if LinkSuggest ext is enabled, add that JS too
-		if (function_exists('AddLinkSuggest')) {
-			//AddLinkSuggest(0, 0, 0, '');
-		}
+		/*if (function_exists('AddLinkSuggest')) {
+			AddLinkSuggest(0, 0, 0, '');
+		}*/
 
 		// Required JS assets (should be loaded last!)
 		$this->response->addAsset('extensions/wikia/MiniEditor/js/MiniEditor.js');
