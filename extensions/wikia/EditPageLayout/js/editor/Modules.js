@@ -1,6 +1,6 @@
 (function(window,$){
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
 	 * Defines module base class
@@ -38,8 +38,8 @@
 		},
 
 		getHeaderText: function() {
-			if (this.headerTextId) return this.msg(this.headerTextId);
-			if (this.headerText) return this.headerText;
+			if (this.headerTextId){ return this.msg(this.headerTextId); }
+			if (this.headerText){ return this.headerText; }
 			return '';
 		},
 

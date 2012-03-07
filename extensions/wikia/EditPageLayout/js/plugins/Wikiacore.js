@@ -1,6 +1,6 @@
 (function(window,$){
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
 	 * Shortcut to automatically add all Wikia specific plugins

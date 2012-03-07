@@ -522,7 +522,7 @@ class SpecialApiGate extends SpecialPage {
 				$frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
 		}
 
-		$tableName = "rollup_apikey_events"; // TODO: PUT THIS IN ApiGate::Config
+		$tableName = "rollup_api_events"; // TODO: PUT THIS IN ApiGate::Config
 
 		// CHOOSE RIGHT period_id BASED ON $period (need some mapping of period ids in PHP... should be more global than just this extension though, probably).
 		// Should we hardcode or look this up from the db? (we'd have to make sure to export statsdb_etl DB to prod also).

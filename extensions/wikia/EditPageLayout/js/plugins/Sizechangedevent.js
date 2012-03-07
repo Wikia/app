@@ -1,6 +1,6 @@
 (function(window,$){
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
 	 * Adds a custom event "sizeChanged"

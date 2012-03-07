@@ -32,7 +32,7 @@
 			};
 
 			// mode switcher
-			if (data.rte) layout.tabs.push('ModeSwitch');
+			if (data.rte){ layout.tabs.push('ModeSwitch'); }
 			// source toolbar
 			layout.toolbar.push('ToolbarMediawiki');
 			// format toolbars

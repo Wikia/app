@@ -1,6 +1,6 @@
 (function(window,$){
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
 	 * Adds scroll bar to right rail if rail is shorter than the specified minimum

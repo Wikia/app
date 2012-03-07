@@ -9,8 +9,9 @@
 		moduleEls: false,
 		
 		init: function() {
-			if (this.options.items && !this.items) 
+			if (this.options.items && !this.items) {
 				this.items = this.options.items;
+			}
 			// Initialize
 			this.modules = {};
 			this.moduleEls = {};

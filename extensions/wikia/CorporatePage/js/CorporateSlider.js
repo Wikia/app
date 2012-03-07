@@ -1,6 +1,6 @@
 function trackTag( str ) {
 	WET.byStr( 'hub/' + str );
-};
+}
 
 function trackContainer ( ev ) {
 	var obj = $(ev.target);
