@@ -40,7 +40,7 @@ class Http {
 			/* Wikia change - begin (Sean, macbre) */
 			$errMsg = "Requested URL was: " . $req->getFinalUrl();
 			$errMsg .= " (err: " . json_encode($req->status->errors) . ')';
-			wfDebug(__METHOD__ . ": {$errMsg}\n");
+			Wikia::log(__METHOD__, 'error', $errMsg);
 			/* Wikia change - end (Sean, macbre) */
 			return false;
 		}
