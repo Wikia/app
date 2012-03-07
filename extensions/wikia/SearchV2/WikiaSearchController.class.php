@@ -39,7 +39,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$resultsFound = $results->getResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $crossWikia, 'rankExpr' => $rankExpr ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $crossWikia, 'rankExpr' => $rankExpr, 'groupResults' => $groupResults ) );
 			}
 		}
 
@@ -72,7 +72,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'windowFirstPage', ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 ) );
 		$this->setVal( 'windowLastPage', ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) );
 		$this->setVal( 'pageTitle', $this->wg->Title );
-		$this->setVal( 'crossWikia', $this->getVal( 'crossWikia', false ) );
+		$this->setVal( 'crossWikia', $this->request->getBool('crossWikia') );
+		$this->setVal( 'groupResults', $this->request->getBool('groupResults') );
 	}
 
 	public function getPage() {

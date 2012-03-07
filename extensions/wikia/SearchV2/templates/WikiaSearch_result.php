@@ -1,9 +1,9 @@
 <!-- single search result -->
 <?php if(!is_object($result)) { var_dump($result); exit; } ?>
 <?php if($result->hasCanonical()): ?>
-	<strong><?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a></strong> (Redirect: <?=$result->getCanonical();?>)<br />
+	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a> (Redirect: <?=$result->getCanonical();?>)<br />
 <?php else: ?>
-	<strong><?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a></strong><br />
+	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a><br />
 <?php endif; ?>
 <div style="width: 80%">
 	<?= $result->getText(); ?>

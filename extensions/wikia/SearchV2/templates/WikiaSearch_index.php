@@ -1,4 +1,3 @@
-<!-- <p><strong>Search Wikia</strong></p>-->
 <form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
 	<?php if($debug): ?>
 		Rank Expr:
