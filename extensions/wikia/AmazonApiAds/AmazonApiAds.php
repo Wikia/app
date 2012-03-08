@@ -84,8 +84,8 @@ function displayAdForTitle($title){
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title><?php print "$title on Amazon"; ?></title>
 		<style type='text/css'>
-			html,body{margin:0px;padding:0px;background-color:#ddd;font-family:Helvetica;}
-			img{border:0px;}
+			html,body{margin:0;padding:0;background-color:#ddd;font-family:Helvetica;}
+			img{border:0;}
 			<?php printCssByLayout(); ?>
 		</style>
 	</head>

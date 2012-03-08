@@ -7,7 +7,7 @@
 .save-title-button {
   position: absolute;
   top: 5px;
-  right:0px;
+  right:0;
 }
 
 ul.custom-badges {
@@ -25,7 +25,7 @@ ul.custom-badges li {
 }
 
 ul.custom-badges li.last {
-  border-bottom: 0px solid #AAAAAA;
+  border-bottom: 0 solid #AAAAAA;
 }
 
 ul.custom-badges li p {
@@ -58,7 +58,7 @@ ul.custom-badges li div.image-form {
 }
 
 ul.custom-badges li div.image-form form {
-	margin-left: 0px;
+	margin-left: 0;
 }
 
 ul.custom-badges li div.image-form p {

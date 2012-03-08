@@ -19,7 +19,7 @@ table.devBoxPanel ul{
 }
 
 table.devBoxPanel li {
-	margin:0px;
+	margin:0;
 	padding:5px;
 	border:1px #000 solid;
 }
@@ -42,7 +42,7 @@ span.dbp-rightButtons{
 }
 
 table.devbox-settings{
-	border-spacing:0px;
+	border-spacing:0;
 	border-collapse:collapse;
 }
 table.devbox-settings td{
