@@ -212,7 +212,7 @@ class LatestPhotosModule extends Module {
 				$data[] = array( 'ns' => $s->page_namespace, 'title' => $s->page_title );
 			}
 			// if used in more than one place, add "more" link
-			if ( $s = $res->fetchObject() ) {
+			if ( $res->fetchObject() ) {
 				$data[] = array( 'ns' => NS_FILE, 'title' => $name );
 			}
 
