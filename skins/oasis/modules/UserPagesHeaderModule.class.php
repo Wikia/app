@@ -90,7 +90,7 @@ class UserPagesHeaderModule extends Module {
 	 */
 	private function getTabs($userName) {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgUser, $wgEnableWikiaFollowedPages;
+		global $wgTitle, $wgEnableWikiaFollowedPages;
 
 		$tabs = array();
 		$namespace = $wgTitle->getNamespace();
@@ -347,7 +347,7 @@ class UserPagesHeaderModule extends Module {
 		// only show on user profile homepage
 		// only when the feature is enabled, the user is logged in, the user owns this profile page and the edit button (=user profile homepage) is enabled
 		if ($wgEnableFacebookSync == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && isset($this->content_actions['edit']) && $this->isUserProfilePageExt && $namespace == NS_USER) {
-			global $wgOut, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret;
+			global $wgOut, $wgFacebookSyncAppID;
 
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/ProfileSync.scss"));
 			$wgOut->addScriptFile('/skins/oasis/js/ProfileSync.js');
@@ -390,7 +390,7 @@ class UserPagesHeaderModule extends Module {
 	 * @param bool $arg Users has granted access (true or false)*
 	 */
 	public function executeFacebookConnect($arg) {
-		global $wgRequest, $wgTitle, $wgUser, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP;
+		global $wgRequest, $wgCityId, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP;
 
 		if ($arg['fbAccess'] == true) {
 			include($IP . '/extensions/FBConnect/facebook-sdk/facebook.php');
@@ -468,7 +468,7 @@ class UserPagesHeaderModule extends Module {
 	 *
 	 */
 	public static function saveFacebookConnectProfile($article, $outputDone, $userParserCache ) { //$fbContent
-		global $wgArticle, $wgUser, $wgTitle, $wgOut, $wgRequest;
+		global $wgArticle, $wgTitle, $wgOut, $wgRequest;
 
 		if ($wgRequest->getVal( 'fbrequest' ) != 'save') {
 			return true;
@@ -494,7 +494,7 @@ class UserPagesHeaderModule extends Module {
 			$summary = "Synced profile with Facebook.";
 			NotificationsModule::addConfirmation(wfMsg('fb-sync-success-message'));
 
-			$status = $wgArticle->doEdit($newUserProfileContent, $summary,
+			$wgArticle->doEdit($newUserProfileContent, $summary,
 					( 0 ) |
 					( 0 ) |
 					( 0 ) |

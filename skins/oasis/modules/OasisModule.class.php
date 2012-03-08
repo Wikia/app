@@ -50,7 +50,7 @@ class OasisModule extends Module {
 	var $wgOasisLastCssScripts;
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType, $wgEnableAdminDashboardExt, $wgDevelEnvironment, $wgEnableWikiaHubsExt;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
 		
 		if(!empty($wgEnableWikiaHubsExt)) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubs/css/WikiaHubs.scss'));

@@ -22,7 +22,7 @@ class LatestPhotosModule extends Module {
 	var $wgStylePath;
 
 	public function executeIndex() {
-		global $wgUser, $wgTitle, $wgOut, $wgStylePath, $wgMemc;
+		global $wgUser, $wgMemc;
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 

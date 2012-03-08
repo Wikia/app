@@ -66,7 +66,6 @@ class WikiNavigationModule extends Module {
 	 * @return array menu nodes
 	 */
 	private function parseMenu($menuName, Array $maxChildrenAtLevel, $filterInactiveSpecialPages = false) {
-		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
 		$inPreviewMode = ($this->previewMessage === $menuName);

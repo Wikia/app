@@ -136,9 +136,7 @@ class PageHeaderModule extends Module {
 	 * Get recent revisions of current article and format them
 	 */
 	private function getRecentRevisions() {
-		global $wgTitle, $wgMemc, $wgABTests;
-
-		$revisions = array();
+		global $wgTitle, $wgMemc;
 
 		// use service to get data
 		$service = new PageStatsService($wgTitle->getArticleId());
@@ -187,7 +185,7 @@ class PageHeaderModule extends Module {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex($params) {
-		global $wgTitle, $wgEnableUserProfilePagesV3, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgABTests, $wgEnableWallExt;
+		global $wgTitle, $wgEnableUserProfilePagesV3, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgEnableWallExt;
 		wfProfileIn(__METHOD__);
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();

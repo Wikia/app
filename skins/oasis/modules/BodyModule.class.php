@@ -148,9 +148,9 @@ class BodyModule extends Module {
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
-			$wgEnableWikiaCommentsExt, $wgExtraNamespaces, $wgExtraNamespacesLocal,
+			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt,
-			$wgEnableUserProfilePagesExt, $wgABTests, $wgEnableWikiAnswers,
+			$wgEnableUserProfilePagesExt, $wgEnableWikiAnswers,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3, $wgEnableWallExt, $wgRequest;
 
@@ -375,7 +375,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgSitename, $wgUser, $wgEnableBlog, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgEnableWikiAnswers, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableMessageWall, $wgEnableArticleCommentsExt;
+		global $wgOut, $wgTitle, $wgUser, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
