@@ -14,7 +14,7 @@ cat $TMPFILE | while read line; do
 		continue
 	fi
 	echo "Processing $line"
-	SERVER_ID=$cityid php videoPurgeOld.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.purgeold.log
+	sudo -u www-data SERVER_ID=$cityid php videoPurgeOld.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.purgeold.log
 	echo "\n\n"
 done
 rm -f $TMPFILE

@@ -18,8 +18,8 @@ cat $TMPFILE | while read line; do
 		continue
 	fi
 	echo "Processing $line"
-	SERVER_ID=$cityid php videoMigrateData.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.migratedata.log
-	SERVER_ID=$cityid php videoPostmigrate.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.postmigrate.log
+	sudo -u www-data SERVER_ID=$cityid php videoMigrateData.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.migratedata.log
+	sudo -u www-data SERVER_ID=$cityid php videoPostmigrate.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.postmigrate.log
 	echo "\n\n"
 done
 rm -f $TMPFILE
