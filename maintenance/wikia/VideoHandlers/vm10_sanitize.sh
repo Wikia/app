@@ -14,7 +14,7 @@ cat $TMPFILE | while read line; do
 		continue
 	fi
 	echo "Processing $line"
-	SERVER_ID=$cityid php videoSanitize.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.sanitize.log
+	sudo -u www-data SERVER_ID=$cityid php videoSanitize.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.sanitize.log
 	echo "\n\n"
 done
 rm -f $TMPFILE
