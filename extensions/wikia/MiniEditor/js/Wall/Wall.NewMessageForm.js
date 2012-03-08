@@ -6,7 +6,21 @@
 			var self = this;
 
 			this.WallMessageBody.focus(function() {
-				$(this).unbind('.placeholder').miniEditor();
+				$(this).unbind('.placeholder').miniEditor({
+					events: {
+						editorReady: function(event, wikiaEditor) {
+							if(!MiniEditor.ckeditorEnabled) {
+								wikiaEditor.getEditbox().bind('focus.initNewMessage', function() {
+									$(this).css('font-size','13px');
+								}).bind('blur.initNewMessage', function() {
+									if($(this).val() == "") {
+										$(this).css('font-size','14px');
+									}
+								}).triggerHandler('focus.initNewMessage');
+							}
+						}
+					}
+				});
 			});
 		},
 
