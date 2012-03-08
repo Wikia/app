@@ -10,7 +10,6 @@ class WikiaPollAjax {
 		//  *question 1\n
 		//  *question 2\n
 	 */
-
 	static public function create() {
 		wfProfileIn(__METHOD__);
 
@@ -21,7 +20,7 @@ class WikiaPollAjax {
 		$answers = $wgRequest->getArray ('answer');  // array
 
 		$title_object = F::build('Title', array($title, NS_WIKIA_POLL), 'newFromText');
-		
+
 		if (is_object ($title_object) && $title_object->exists() ) {
 			$res = array (
 				'success' => false,
@@ -31,7 +30,7 @@ class WikiaPollAjax {
 			$res = array (
 				'success' => false,
 				'error' => wfRenderModule('Error', 'Index', array(wfMsg('wikiapoll-error-invalid-title')))
-				);			
+				);
 		} else {
 
 			$content = "";
@@ -59,7 +58,6 @@ class WikiaPollAjax {
 	 * Update the contents of an existing poll
 	 * @param wgRequest pollId
 	 */
-
 	static public function update() {
 		wfProfileIn(__METHOD__);
 		$wgRequest = F::app()->getGlobal('wgRequest');
@@ -91,18 +89,17 @@ class WikiaPollAjax {
 			}
 		}
 
-		return $res;
 		wfProfileOut(__METHOD__);
+		return $res;
 	}
 
 	/**
 	 * checks for poll existing
 	 * returns contents of poll
-	 * 
+	 *
 	 * @param wgRequest pollId
 	 * @return array {exists, url, text}
 	 */
-
 	static public function get() {
 		wfProfileIn(__METHOD__);
 		$wgRequest = F::app()->getGlobal('wgRequest');
@@ -123,7 +120,7 @@ class WikiaPollAjax {
 				'question' => $title_object->getPrefixedText(),
 				'answer' => $article_object->getContent()
 			);
-		} 
+		}
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
@@ -186,5 +183,5 @@ class WikiaPollAjax {
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
-	
+
 }
