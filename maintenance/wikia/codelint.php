@@ -89,7 +89,7 @@ $report = $lint->formatReport($results, $format);
 // save it to file
 if (!empty($output)) {
 	file_put_contents($output, $report);
-	echo "\nReport saved in {$output}\n\n";
+	echo "\nReport saved to {$output}\n";
 }
 else {
 	echo $report;
