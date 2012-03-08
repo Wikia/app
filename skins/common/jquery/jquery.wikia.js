@@ -531,11 +531,12 @@ $(window).bind('load', function() {
  * A placeholder CSS class should be defined (use the forms mixin in Oasis)
  */
 jQuery.fn.placeholder = function() {
-	 //feature detection
+	//feature detection
 	var hasNativeSupport = 'placeholder' in document.createElement('input');
 
-	if(!hasNativeSupport){
-		this.each(function() {
+	return this.each(function() {
+	
+		if(!hasNativeSupport){
 			var input = $(this);
 			var text = input.attr('placeholder');
 
@@ -567,8 +568,8 @@ jQuery.fn.placeholder = function() {
 					input.val('');
 				}
 			});
-		});
-	}
+		}	
+	})
 }
 
 $(function() {
