@@ -7,6 +7,18 @@ $spacing: 4px;
 
 #wkLgn{
 	text-align: center;
+	
+	input {
+		-webkit-appearance: none;
+		width: 100%;
+		height: 40px;
+		display: block;
+		margin: 20px 0;
+		border: 1px solid $border-color;
+		font-size: large;
+		padding: 0 10px;
+		background-color: #F2F2F2;
+	}
 
 	//facebook button
 	#ssoFbBtn{
@@ -21,10 +33,12 @@ $spacing: 4px;
 		font-family: Helvetica, Arial, sans-serif;
 		font-weight: bold;
 		padding: $spacing $spacing*2 $spacing $spacing*6;
+		font-weight: 100;
+		margin-top: 20px;
 	}
 
 	#ssoSep{
-		margin: 0 auto;
+		margin: 20px auto;
 		text-align: center;
 		width: 100%;
 
@@ -35,7 +49,35 @@ $spacing: 4px;
 			margin: 0 $page-padding;
 			position: relative;
 			top: -5px;
-			width: 130px;
+			width: 110px;
 		}
 	}
+	
+	.inpErr {
+		margin-bottom: 0;
+		border: 2px solid $error-bg-color;
+	}
+	
+	.err{
+		background-color: $error-bg-color;
+		color: $error-color;
+		margin: 0 0 20px 0;
+		border-radius: 0 0 3px 3px;
+		text-align: left;
+		padding-left: 10px;
+	}
+	
+	a {
+		text-align: left;
+		padding-left: 10px;
+	}
+}
+
+#wkPwdRcv {
+	margin-top: -10px;
+	display: block;
+}
+
+#wkShrPag {
+	display: none;
 }

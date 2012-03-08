@@ -60,7 +60,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->redirect( $title->getFullURL() );
 			return false;
 		}
-		
+
 		if ( Wikia::isWikiaMobile() ) {
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
@@ -103,6 +103,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->msg = $response->getVal( 'msg', null );
 
 				$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
+
 			} else {	// login
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 

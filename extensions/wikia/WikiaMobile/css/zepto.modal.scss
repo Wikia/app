@@ -72,7 +72,6 @@
 	line-height: 20px;
 	z-index: $highest-z-index + 1005;
 	@include transition(bottom .5s ease-in);
-	@include box-sizing(border-box);
 	display: none;
 
 	&.hdn {

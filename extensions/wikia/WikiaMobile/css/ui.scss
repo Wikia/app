@@ -2,6 +2,8 @@
 @import 'mixins/linear-gradient.scss';
 @import 'mixins/box-sizing.scss';
 
+//I use it in a lot of places so it makes sense to have it here
+//The faster the better as it is not rendering but browser does calculation based on it
 *{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -37,7 +39,6 @@
 		line-height: 50px;
 		border-bottom: 1px solid $border-color;
 		padding-left: 10px;
-		@include box-sizing(border-box);
 
 		& > a, & > span {
 			width: 100%;
