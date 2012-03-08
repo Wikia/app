@@ -3,7 +3,7 @@
 class ChatAjax {
 	const INTERNAL_POLLING_DELAY_MICROSECONDS = 500000;
 	const CHAT_AVATAR_DIMENSION = 28;
-	
+
 	/**
 	 * This function is meant to just echo the COOKIES which are available to the apache server.
 	 *
@@ -41,31 +41,32 @@ class ChatAjax {
 	static public function getUserInfo(){
 		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
 		wfProfileIn( __METHOD__ );
-		
+
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 		if( empty($data) ) {
-			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
-		}
-		
-		$user = User::newFromId( $data['user_id'] );
-		
-		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
-			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 			wfProfileOut( __METHOD__ );
+			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
-		
+
+		$user = User::newFromId( $data['user_id'] );
+
+		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
+			wfProfileOut( __METHOD__ );
+			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
+		}
+
 		$isCanGiveChatMode = false;
 		$userChangeableGroups = $user->changeableGroups();
 		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
 			$isCanGiveChatMode = true;
 		}
-		
+
 		// First, check if they can chat on this wiki.
 		$retVal = array(
 			'canChat' => Chat::canChat($user),
 			'isLoggedIn' => $user->isLoggedIn(),
 			'isChatMod' => $user->isAllowed( 'chatmoderator' ),
-			'isCanGiveChatMode' => $isCanGiveChatMode, 
+			'isCanGiveChatMode' => $isCanGiveChatMode,
 			'isStaff' => $user->isAllowed( 'chatstaff' ),
 			'username' => $user->getName(),
 			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), self::CHAT_AVATAR_DIMENSION),
@@ -119,9 +120,9 @@ class ChatAjax {
 	} // end getUserInfo()
 
 	/**
-	 * Ajax endpoint for createing / accessing  private rooms  
+	 * Ajax endpoint for createing / accessing  private rooms
 	 */
-		
+
 	static public function getPrivateRoomID() {
 		global $wgRequest;
 
@@ -131,11 +132,11 @@ class ChatAjax {
 
 		$users = explode( ',', $wgRequest->getVal('users'));
 		$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic, 'private', $users );
-		
+
 		return array("id" => $roomId);
-	} 
-	
-	
+	}
+
+
 	/**
 	 * Ajax endpoint for kickbanning a user. This will change their permissions so that
 	 * they are not allowed to chat on the current wiki.
@@ -151,14 +152,14 @@ class ChatAjax {
 	static public function kickBan($private = false){
 		global $wgRequest, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
-		
+
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 		if( !empty($data) ) {
 			$kickingUser = User::newFromId( $data['user_id'] );
 		} else {
 			$kickingUser = $wgUser;
 		}
-		
+
 		$retVal = array();
 		$userToBan = $wgRequest->getVal('userToBan');
 
@@ -171,7 +172,7 @@ class ChatAjax {
 			} else {
 				$doKickAnyway = false; // might get changed by reference
 				$result = Chat::banUser($userToBan, $doKickAnyway, $kickingUser);
-				$retVal["doKickAnyway"] = ($doKickAnyway? 1:0);	
+				$retVal["doKickAnyway"] = ($doKickAnyway? 1:0);
 			}
 			if($result === true){
 				$retVal["success"] = true;
@@ -184,19 +185,19 @@ class ChatAjax {
 		return $retVal;
 	} // end kickBan()
 
-	
+
 	/**
 	 * Ajax endpoint for blocking private chat with user
 	 **/
-	
+
 	static public function blockPrivate(){
 		return self::kickBan(true);
 	}
-	
+
 	static public function getListOfBlockedPrivate() {
 		return Chat::getListOfBlockedPrivate();
 	}
-	
+
 	/**
 	 * Ajax endpoint to set a user as a chat moderator (ie: add them to the 'chatmoderator' group).
 	 *
@@ -206,14 +207,14 @@ class ChatAjax {
 	static public function giveChatMod() {
 		global $wgRequest, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
-		
+
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 		if( !empty($data) ) {
 			$promottingUser = User::newFromId( $data['user_id'] );
 		} else {
 			$promottingUser = $wgUser;
 		}
-		
+
 		$retVal = array();
 		$PARAM_NAME = "userToPromote";
 		$userToPromote = $wgRequest->getVal( $PARAM_NAME );
