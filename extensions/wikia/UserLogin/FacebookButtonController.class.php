@@ -13,6 +13,7 @@ class FacebookButtonController extends WikiaController {
 		$this->tooltip = $this->request->getVal('tooltip');
 
 		if ( Wikia::isWikiaMobile() ) {
+			$this->response->setVal( 'context', $this->request->getVal( 'context' ) );
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 	}
