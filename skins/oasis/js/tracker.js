@@ -239,7 +239,6 @@ var initTracker = function() {
 		if(!node.is('a')) {
 			return;
 		}
-		var fakeUrl = 'module/pagecount/';
 
 		// Create a Page
 		if (node.hasClass('wikia-button')) {

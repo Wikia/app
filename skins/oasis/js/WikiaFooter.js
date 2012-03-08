@@ -244,7 +244,6 @@ var WikiaFooterApp = {
 		},
 
 		onShowMenu: function( mgroup, li, ul ) {
-			var right = this.el.offset().left + this.el.innerWidth() - li.offset().left - li.outerWidth();
 			ul.css('left', (li.offset().left-this.el.offset().left)+'px');
 			ul.css('right','auto');
 		},

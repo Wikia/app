@@ -352,7 +352,6 @@ var WikiHeaderV2 = {
 		//Hide all subnavs except for this one
 		$('header.WikiHeaderRestyle nav ul li').removeClass('marked');
 		WikiHeaderV2.hideNavL3();
-		var index = $('header.WikiHeaderRestyle nav ul li').index(this);
 
 		$(this).addClass('marked');
 		event.preventDefault();
@@ -455,7 +454,6 @@ var WikiHeaderV2 = {
 	firstMenuValidator: function() {
 		var widthLevelFirst = 0,
 			returnVal = true,
-			maxWidth = $('#WikiaPage').width() - 420,
 			menuNodes = $('.ArticlePreview #WikiHeader > nav > ul > li');
 
 		menuNodes.reverse().each(function() {
