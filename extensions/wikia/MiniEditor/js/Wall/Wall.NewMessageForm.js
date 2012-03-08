@@ -6,21 +6,32 @@
 			var self = this;
 
 			this.WallMessageBody.focus(function() {
-				$(this).unbind('.placeholder').miniEditor({
-					events: {
-						editorReady: function(event, wikiaEditor) {
-							if(!MiniEditor.ckeditorEnabled) {
-								wikiaEditor.getEditbox().bind('focus.initNewMessage', function() {
+				if(!$(this).data('wikiaEditor')) {
+					$(this).unbind('.placeholder').miniEditor({
+						events: {
+							editorReady: function(event, wikiaEditor) {
+								if(!MiniEditor.ckeditorEnabled) {
+									wikiaEditor.getEditbox()
+										.placeholder()
+										.css('font-size','13px')
+										.triggerHandler('focus.placeholder');
+								}
+							},
+							editorFocus: function(event, wikiaEditor) {
+								if(!MiniEditor.ckeditorEnabled) {
 									$(this).css('font-size','13px');
-								}).bind('blur.initNewMessage', function() {
+								}
+							},
+							editorBlur: function(event, wikiaEditor) {
+								if(!MiniEditor.ckeditorEnabled) {
 									if($(this).val() == "") {
 										$(this).css('font-size','14px');
 									}
-								}).triggerHandler('focus.initNewMessage');
+								}
 							}
 						}
-					}
-				});
+					});
+				}
 			});
 		},
 
