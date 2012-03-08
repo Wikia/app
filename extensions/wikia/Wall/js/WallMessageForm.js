@@ -6,18 +6,16 @@ var WallMessageForm = $.createClass(Observable, {
 	},
 
 	loginBeforeAction: function(action) {
-		if( typeof(showComboAjaxForPlaceHolder) == 'function') {
-			showComboAjaxForPlaceHolder('', false, this.proxy(function() {
-				AjaxLogin.doSuccess = this.proxy(function() {
-					action();
-					return true;
-				});
-			}), false, true );
-		}
+		UserLoginModal.show({
+			callback: this.proxy(function() {
+				action();
+				return true;
+			})
+		});
 	},
 	
 	reloadAfterLogin: function() {
-		AjaxLogin.doReload();
+		UserLoginAjaxForm.prototype.reloadPage();
 	},
 
 	getFormat: function() {
