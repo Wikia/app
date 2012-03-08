@@ -35,5 +35,5 @@ function WidgetLanguages($id, $params) {
 	}
 
 	wfProfileOut(__METHOD__);
-	return WidgetFrameworkWrapLinks($list);
+	return WidgetFramework::wrapLinks($list);
 }

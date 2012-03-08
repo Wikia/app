@@ -72,7 +72,7 @@ function WidgetWikiPage($id, $params) {
 		// has a source value
 		
 		// get contents
-		$article = WidgetFrameworkGetArticle($params['source']);
+		$article = WidgetFramework::getArticle($params['source']);
 	
 		if ( $article == false ) {
 			// failed to get text, show error message, failed pagename is in $1

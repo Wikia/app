@@ -28,7 +28,7 @@ function WidgetActiveTalkPages($id, $params) {
 	wfProfileIn(__METHOD__);
 
 	// get last edits from API
-	$results = WidgetFrameworkCallAPI(array
+	$results = WidgetFramework::callAPI(array
 	(
 		'action'		=> 'query',
 		'list'			=> 'recentchanges',
@@ -66,5 +66,5 @@ function WidgetActiveTalkPages($id, $params) {
 	// 'more' link...
 	$more = Title::newFromText('Recentchanges', NS_SPECIAL)->getLocalURL('namespace=1');
 
-	return WidgetFrameworkWrapLinks($list) . WidgetFrameworkMoreLink($more);
+	return WidgetFramework::wrapLinks($list) . WidgetFramework::moreLink($more);
 }

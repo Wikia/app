@@ -64,7 +64,7 @@ function WidgetAncientPages($id, $params) {
 	}	
 	    
     wfProfileOut( __METHOD__ );
-    return WidgetFrameworkWrapLinks($items) . WidgetFrameworkMoreLink( Title::newFromText('Ancientpages', NS_SPECIAL)->getLocalURL() );
+    return WidgetFramework::wrapLinks($items) . WidgetFramework::moreLink( Title::newFromText('Ancientpages', NS_SPECIAL)->getLocalURL() );
 }
 
 class WidgetAncientPagesPage extends AncientPagesPage {

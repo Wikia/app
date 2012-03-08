@@ -32,7 +32,7 @@ function WidgetContribs($id, $params) {
 	$limit = ($limit <=0 || $limit > 50) ? 10 : $limit;
 
 	// get last edits from API
-	$results = WidgetFrameworkCallAPI(array
+	$results = WidgetFramework::callAPI(array
 	(
 		'action'	=> 'query',
 		'list'		=> 'usercontribs',
@@ -61,11 +61,11 @@ function WidgetContribs($id, $params) {
 			);
 		}
 
-		$ret = WidgetFrameworkWrapLinks($list);
+		$ret = WidgetFramework::wrapLinks($list);
 
 		// 'more' link...
 		$more = Title::newFromText('Contributions/' . $wgUser->getName(), NS_SPECIAL)->getLocalURL();
-		$ret .= WidgetFrameworkMoreLink($more);
+		$ret .= WidgetFramework::moreLink($more);
 	}
 	else {
 		$ret = wfMsg('widget-contribs-empty');

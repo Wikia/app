@@ -37,5 +37,5 @@ function WidgetNewPages($id, $params) {
 	}
 
 	wfProfileOut(__METHOD__);
-	return (count($items) > 0 ? WidgetFrameworkWrapLinks($items) . WidgetFrameworkMoreLink(Title::newFromText('Newpages', NS_SPECIAL)->getLocalURL()) : wfMsg('widget-empty-list'));
+	return (count($items) > 0 ? WidgetFramework::wrapLinks($items) . WidgetFramework::moreLink(Title::newFromText('Newpages', NS_SPECIAL)->getLocalURL()) : wfMsg('widget-empty-list'));
 }

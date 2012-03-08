@@ -45,7 +45,7 @@ function WidgetRecentChanges($id, $params) {
 		$api_params['rcshow'] = '!bot';
 	}
 
-    $res = WidgetFrameworkCallAPI($api_params);
+    $res = WidgetFramework::callAPI($api_params);
 
     $ret = '<ul>';
 

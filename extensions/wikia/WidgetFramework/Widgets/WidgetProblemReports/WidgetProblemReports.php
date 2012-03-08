@@ -80,7 +80,7 @@ function WidgetProblemReports($id, $params) {
 
     //print_pre($apiParams);
     
-    $data = WidgetFrameworkCallAPI( $apiParams );
+    $data = WidgetFramework::callAPI( $apiParams );
     
     $count = intval($data['query']['reports']);
     
@@ -144,5 +144,5 @@ function WidgetProblemReports($id, $params) {
     }        
 
     return array('title' => wfMsg('problemreports') . ' (' . $count . ')',
-                 'body' => WidgetFrameworkWrapLinks($items) . WidgetFrameworkMoreLink($moreUrl) );
+                 'body' => WidgetFramework::wrapLinks($items) . WidgetFramework::moreLink($moreUrl) );
 }
