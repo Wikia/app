@@ -77,8 +77,8 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 		return this.WallMessageBody.val();
 	},
 	
-	doPostNewMessage: function(title) {
-		this.model.postNew(this.username, title ? this.WallMessageTitle.val() : '', this.getMessageBody(), this.getFormat());
+	doPostNewMessage: function(title, callback) {
+		this.model.postNew(this.username, title ? this.WallMessageTitle.val() : '', this.getMessageBody(), this.getFormat(), callback);
 		this.clearNewMessageTitle();
 		this.disableNewMessage();
 
