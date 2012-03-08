@@ -320,9 +320,9 @@ var WikiBuilder = {
 		if(art) {
 			var markup = '<img src="';
 			if(art == 'spinner') {
-				markup += '/skins/common/images/ajax.gif';
+				markup += window.stylepath + '/common/images/ajax.gif';
 			} else if (art == 'ok') {
-				markup += '/extensions/wikia/CreateNewWiki/images/check.png';
+				markup += window.wgExtensionsPath + '/wikia/CreateNewWiki/images/check.png';
 			}
 			markup += '">';
 			$(el).html(markup);
