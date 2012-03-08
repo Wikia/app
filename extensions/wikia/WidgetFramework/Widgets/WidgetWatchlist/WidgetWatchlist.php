@@ -19,7 +19,7 @@ function WidgetWatchlist($id, $params) {
 	wfProfileIn(__METHOD__);
 
 	// get last edits from API
-	$results = WidgetFrameworkCallAPI(array
+	$results = WidgetFramework::callAPI(array
 	(
 		'action'	=> 'query',
 		'list'		=> 'watchlist',
@@ -42,7 +42,7 @@ function WidgetWatchlist($id, $params) {
 		);
 	    }
 	    
-	    $ret = WidgetFrameworkWrapLinks($list);
+	    $ret = WidgetFramework::wrapLinks($list);
 	}
 	else {
 	    $ret = wfMsg('nowatchlist');
@@ -51,7 +51,7 @@ function WidgetWatchlist($id, $params) {
 	// 'more' link...
 	$more = Title::newFromText('Watchlist', NS_SPECIAL)->getLocalURL();
 
-	$ret .= WidgetFrameworkMoreLink($more);
+	$ret .= WidgetFramework::moreLink($more);
 
 	wfProfileOut(__METHOD__);
 

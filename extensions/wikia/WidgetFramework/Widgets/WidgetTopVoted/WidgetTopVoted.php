@@ -34,5 +34,5 @@ function WidgetTopVoted($id, $params) {
 
 	wfProfileOut( __METHOD__ );
 	
-	return ( count($items) > 0 ? WidgetFrameworkWrapLinks($items)  : wfMsg('widget-empty-list'));
+	return ( count($items) > 0 ? WidgetFramework::wrapLinks($items)  : wfMsg('widget-empty-list'));
 }

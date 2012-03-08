@@ -35,7 +35,7 @@ function WidgetEditedRecently($id, $params) {
 
 	$title = ( ($wgTitle->getNamespace() != NS_MAIN) ? ($wgTitle->getNsText().':') : '' ) . $wgTitle->getText();
 
-	$res = WidgetFrameworkCallAPI(array(
+	$res = WidgetFramework::callAPI(array(
 		'action' => 'query',
 		'prop' => 'revisions',
 		'titles' => $title,
@@ -76,7 +76,7 @@ function WidgetEditedRecently($id, $params) {
 	wfProfileOut( __METHOD__ );
 
 	if ( count($items) > 0 ) {
-	    return WidgetFrameworkWrapLinks($items) . WidgetFrameworkMoreLink( $wgTitle->getLocalURL('action=history') );
+	    return WidgetFramework::wrapLinks($items) . WidgetFramework::moreLink( $wgTitle->getLocalURL('action=history') );
 	}
 	else {
 	    return wfMsg('nocontributors');

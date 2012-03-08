@@ -138,7 +138,7 @@ function WidgetSlideshowGetImagesFromSpecialPage()
 	$images = array();
 
 	// format: "*File_name.ext description goes here\n" (no spaces in the filename; no \newlines inside the description)
-	$content = WidgetFrameworkGetArticle('WidgetSlideshowImages', NS_MEDIAWIKI);
+	$content = WidgetFramework::getArticle('WidgetSlideshowImages', NS_MEDIAWIKI);
 
 	if ( empty($content) )
 		return array();

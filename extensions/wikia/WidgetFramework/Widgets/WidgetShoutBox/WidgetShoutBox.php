@@ -85,7 +85,7 @@ function WidgetShoutBox($id, $params) {
 
 		$more = Title::newFromText('WhosOnline', NS_SPECIAL);
 
-		$ret .= WidgetFrameworkWrapLinks($list) . WidgetFrameworkMoreLink($more->getLocalURL());
+		$ret .= WidgetFramework::wrapLinks($list) . WidgetFramework::moreLink($more->getLocalURL());
 
 		unset($list, $more);
 		$ret .= '</div>';
@@ -367,7 +367,7 @@ function WidgetShoutBoxGetOnline() {
 		return $online;
 	}
 
-	$online = WidgetFrameworkCallAPI(array(
+	$online = WidgetFramework::callAPI(array(
 		'action' => 'query',
 		'list'   => 'whosonline',
 		'wklimit'=> '10'

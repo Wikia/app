@@ -183,4 +183,81 @@ class WidgetFramework {
 		}
 		return implode('', $output);
 	}
+
+	/**
+	 * @return array
+	 * @author Maciej Brencz
+	 * @author Inez Korczynski <inez@wikia.com>
+	 */
+	public static function callAPI($params) {
+		wfProfileIn(__METHOD__);
+
+		try {
+			$api = new ApiMain(new FauxRequest($params));
+			$api->execute();
+			$output = $api->getResultData();
+		} catch(Exception $e) {
+			$output = array();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $output;
+	}
+
+	/**
+	 * @return string
+	 * @author Inez Korczynski <inez@wikia.com>
+	 */
+	public static function wrapLinks($links) {
+		wfProfileIn(__METHOD__);
+
+		$out = '';
+		if(is_array($links) && count($links) > 0) {
+			$out = '<ul>';
+			foreach($links as $link) {
+				$out .= '<li>';
+				$out .= '<a href="'.htmlspecialchars($link['href']).'"'.(isset($link['title']) ? ' title="'.htmlspecialchars($link['title']).'"' : '').(!empty($link['nofollow']) ? ' rel="nofollow"' : '').'>'.htmlspecialchars($link['name']).'</a>';
+				if(isset($link['desc'])) {
+					$out .= '<br/>'.$link['desc'];
+				}
+				$out .= '</li>';
+			}
+			$out .= '</ul>';
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $out;
+	}
+
+	/**
+	 * @return string
+	 * @author Maciej Brencz
+	 */
+	public static function moreLink($link) {
+		return '<div class="widgetMore"><a href="'.htmlspecialchars($link).'">'.wfMsg('moredotdotdot').'</a></div>';
+	}
+ 
+	/**
+	 * @return string
+	 * @author Inez Korczyński
+	 * @author Maciej Brencz
+	 */
+	public static function getArticle($title, $ns = NS_MAIN ) {
+		wfProfileIn(__METHOD__);
+
+		$titleObj = Title::newFromText($title, $ns);
+		if ( !is_object($titleObj) ) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+		$revision = Revision::newFromTitle( $titleObj );
+		if(is_object($revision)) {
+			wfProfileOut(__METHOD__);
+			return $revision->getText();
+		}
+
+		wfProfileOut(__METHOD__);
+		return false;
+	}
+
 }

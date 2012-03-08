@@ -60,7 +60,7 @@ function WidgetLastWikis($id, $params) {
 	wfProfileOut( __METHOD__ );
 	
 	if (count($items) > 0) {
-		$ret = WidgetFrameworkWrapLinks($items);
+		$ret = WidgetFramework::wrapLinks($items);
 	} else {
 		global $wgOut;
 		$ret = $wgOut->parse(wfMsg('wt_lastwikis_noresults'));

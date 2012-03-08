@@ -58,7 +58,7 @@ function WidgetTopContent($id, $params) {
     
     wfProfileOut(__METHOD__);
     
-    return array( 'body' => $section . $out_selector . WidgetFrameworkMoreLink($more) );
+    return array( 'body' => $section . $out_selector . WidgetFramework::moreLink($more) );
 }
 
 // AJAX support for dynamic change of widget "tabs"
@@ -83,7 +83,7 @@ function WidgetTopContentGetSection($id, $functionName) {
     
 	wfProfileOut(__METHOD__);
 
-	return WidgetFrameworkWrapLinks($items);
+	return WidgetFramework::wrapLinks($items);
 }
 
 // get list of sections

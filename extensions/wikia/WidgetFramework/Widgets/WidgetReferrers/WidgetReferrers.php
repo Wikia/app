@@ -81,7 +81,7 @@ function WidgetReferrers($id, $params) {
 		'wkfromdate'      => $wkfromdate,
 	);
 
-	$results = WidgetFrameworkCallAPI($api_param);
+	$results = WidgetFramework::callAPI($api_param);
 
 	if (count($results['query']['wkreferer']) == 0) {
 	    # show default link to wikia.com

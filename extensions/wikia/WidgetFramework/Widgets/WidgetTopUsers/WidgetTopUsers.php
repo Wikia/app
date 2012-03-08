@@ -35,5 +35,5 @@ function WidgetTopUsers($id, $params) {
 
     wfProfileOut( __METHOD__ );
     
-    return WidgetFrameworkWrapLinks($links);
+    return WidgetFramework::wrapLinks($links);
 }
