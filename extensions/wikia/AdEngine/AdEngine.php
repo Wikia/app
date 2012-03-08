@@ -8,7 +8,6 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczynski, Nick Sullivan'
 );
 
-$wgHooks['BeforePageDisplay'][] = 'adEngineAdditionalScripts';
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
@@ -55,16 +54,6 @@ function wfAdEngineSetupJSVars($vars) {
 
 	return true;
 }
-
-/**
- * Before the page is rendered this gives us a chance to cram some Javascript in.
- */
-function adEngineAdditionalScripts( &$out, &$sk ){
-	global $IP;
-	global $wgExtensionsPath,$wgStyleVersion;
-
-	return true;
-} // end adEngineAdditionalScripts()
 
 interface iAdProvider {
 	public static function getInstance();
