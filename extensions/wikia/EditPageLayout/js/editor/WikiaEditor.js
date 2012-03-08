@@ -336,7 +336,7 @@
 		buildClickHandler: function( config ) {
 			var editor = this.editor;
 
-			if (wgUserName == null && typeof UserLogin != 'undefined') {
+			if (config.forceLogin && wgUserName == null && typeof UserLogin != 'undefined') {
 				config.click = function() {
 					UserLogin.rteForceLogin();
 				}
