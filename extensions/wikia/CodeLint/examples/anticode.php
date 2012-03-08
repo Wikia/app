@@ -11,7 +11,8 @@ class Foo {
 	}
 
 	private function priv() {
-		return;
+		global $foo, $bar;
+		return $foo;
 	}
 }
 
