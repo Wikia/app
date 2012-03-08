@@ -179,7 +179,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		&.body { height: 70px; } 
 		&:focus { background: $color-wall-input-focus; color: $color-text; }
 	}
-	.new-reply textarea{ height: 30px; line-height: normal; }
+	.new-reply textarea{ height: 30px; }
 	ul.comments > li.message li.message textarea { border: 1px solid $color-wall-border; }
 	ul.comments > li.message > .speech-bubble-message textarea { font-size: 13px; }
 	ul.comments > li.message > .speech-bubble-message textarea.title { font-size: 18px; font-weight: bold; }
