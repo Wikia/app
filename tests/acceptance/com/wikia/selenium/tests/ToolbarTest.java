@@ -10,6 +10,7 @@ public class ToolbarTest extends BaseTest {
 
 	@Test(groups={"verified"})
 	public void testEnsuresThatToolbarIsNotPresentForAnonymousUsers() throws Exception {
+		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
 		assertTrue(session().isElementPresent("WikiaFooter"));
 		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
@@ -17,7 +18,7 @@ public class ToolbarTest extends BaseTest {
 
 	@Test(groups={"verified"})
 	public void testResetsDefaultsInCustomizedToolbar() throws Exception {
-		
+		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
 		login();
 		session().click("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='customize']");
@@ -40,7 +41,7 @@ public class ToolbarTest extends BaseTest {
 	
 	@Test(groups={"verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
 	public void testEnsuresThatSignedInUserCanAddAnItemToCustomizedToolbar() throws Exception {
-		
+		//Written by Aga Serowiec 02-Feb-2012
 		
 		openAndWait("/");	
 		login();
