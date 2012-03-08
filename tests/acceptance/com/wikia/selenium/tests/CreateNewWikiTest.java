@@ -291,7 +291,7 @@ public class CreateNewWikiTest extends BaseTest {
 		
 	//Test Case 003
 	//logged out in german wiki,change language to english in CNW flow,log in as QATestsStaff,verify domain is english
-	@Test(groups={"envProduction"})
+	//@Test(groups={"envProduction"})removed by Patick Archbold 07-Mar-12
 	public void createWikiDefaultLanguageForAnonymousIsWikiAndItCanBeChanged() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
