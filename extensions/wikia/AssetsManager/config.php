@@ -235,6 +235,14 @@ $config['wikiamobile_js_body_comments_ns'] = array(
 	)
 );
 
+$config['wikiamobile_js_userlogin'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
+	)
+);
+
 //WikiaApp JS and CSS
 $config['wikiaapp_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,

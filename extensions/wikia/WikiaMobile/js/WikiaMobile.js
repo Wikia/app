@@ -1,4 +1,4 @@
-var WikiaMobile = WikiaMobile || (function() {
+var WikiaMobile = (function() {
 	/** @private **/
 
 	var body,
@@ -424,6 +424,17 @@ var WikiaMobile = WikiaMobile || (function() {
 		}
 	}
 
+	function reloadPage(){
+		var location = window.location.href,
+			delim = '?';
+
+		if(location.indexOf(delim) > 0){
+			delim = '&';
+		}
+
+		window.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
+	}
+
 	//init
 	$(function(){
 		body = $(d.body);
@@ -784,6 +795,7 @@ var WikiaMobile = WikiaMobile || (function() {
 		track: track,
 		moveSlot: moveSlot,
 		popOver: popOver,
-		loadShare: loadShare
+		loadShare: loadShare,
+		reloadPage: reloadPage
 	};
 })();

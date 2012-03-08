@@ -19,7 +19,12 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function initializeTemplate() {
-		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin' . ( ( Wikia::isWikiaMobile() ) ? '.wikiamobile' : '' ) . '.scss' );
+		if ( !Wikia::isWikiaMobile() ) {
+			$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
+		}else{
+			$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss' );
+			$this->response->addAsset( 'wikiamobile_js_userlogin' );
+		}
 
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = false;
