@@ -286,11 +286,11 @@ class WikiaResponse {
 			$maxAge = (int) $maxAge;
 
 			if ( $targetBrowser ) {
-				$this->setHeader( 'Cache-Control', "max-age={$maxAge}", true );
+				$this->setHeader( 'Cache-Control', "public, max-age={$maxAge}", true );
 			}
 
 			if ( $targetVarnish) {
-				$this->setHeader( 'X-Pass-Cache-Control', "max-age={$maxAge}", true );
+				$this->setHeader( 'X-Pass-Cache-Control', "public, max-age={$maxAge}", true );
 			}
 		}
 	}
