@@ -53,14 +53,14 @@
 </tr>
 <tr>
 <td align="center" style="font-size:11px;color:#3a3a3a;line-height:16px">
-<?= wfMsgForContent('userlogin-email-footer-line1') ?>
+<?= wfMsgExt('userlogin-email-footer-line1', $msgParams) ?>
 <br>
-<?= wfMsgForContent('userlogin-email-footer-line2') ?>
+<?= wfMsgExt('userlogin-email-footer-line2', $msgParams) ?>
 </td>
 </tr>
 <tr>
 <td align="center" valign="middle" height="50">
-<?= wfMsgForContent('userlogin-email-footer-line3') ?>
+<?= wfMsgExt('userlogin-email-footer-line3', $msgParams) ?>
 </td>
 </tr>
 </table>

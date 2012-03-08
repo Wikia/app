@@ -18,9 +18,6 @@
 			$this->mockGlobalVariable('wgMemc', $mock_cache);
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 
-			$this->setUpMockObject( 'Language', array( 'getCode' => 'en' ), false, 'wgLang' );
-			$this->setUpMockObject( 'Language', array( 'getCode' => 'en' ), false, 'wgContLang' );
-
 			$this->mockApp();
 		}
 		
@@ -312,7 +309,6 @@
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
-			$this->setUpMockObject( 'UserLoginHelper', array( 'setUserLanguage' => null ), true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
 			}
@@ -330,7 +326,6 @@
 			
 			// tear down
 			$this->tearDownRequest();
-			$this->tearDownHelper();
 		}
 		
 		public function mailPasswordDataProvider() {
@@ -488,7 +483,6 @@
 					'mockExpTimes' => 1,
 					'mockExpValues' => null,
 				),
-				'setUserLanguage' => null,
 			);
 			
 			// 5 redirect page -- cancel request + returnto
@@ -608,7 +602,6 @@
 			$expMsg15 = wfMsg( 'resetpass_success' );
 			$mockHelperParams15 = array(
 				'doRedirect' => null,
-				'setUserLanguage' => null,
 			);
 			
 			// 16 success -- temp user

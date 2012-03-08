@@ -83,19 +83,7 @@ ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-confirmation-email_body-html' => 'Hi $1,
-
-You\'re one step away from creating your account on Wikia! Click the link below to confirm your email address and get started.
-
-<a style="color:#2C85D5;" href="$2">$2</a>
-
-The Wikia Team
-
-
-___________________________________________
-
-To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>
-Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
+	'usersignup-confirmation-email_body-html' => '',
 
 	// reconfirmation email
 	'usersignup-reconfirmation-email-sent' => "Your email address has been changed to $1. We've sent you a new confirmation email. Please confirm the new email address.",
@@ -122,21 +110,7 @@ ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-reconfirmation-email_body-HTML' => 'Hi $1,
-
-Please click the link below to confirm your change of email address on Wikia.
-
-<a style="color:#2C85D5;" href="$2">$2</a>
-
-You\'ll continue to recieve email at your old email address until you confirm this one.
-
-The Wikia Team
-
-
-___________________________________________
-
-To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>
-Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
+	'usersignup-reconfirmation-email_body-HTML' => '',
 
 	// welcome email
 	'usersignup-welcome-email-subject' => 'Wecome to Wikia, $USERNAME!',
@@ -235,24 +209,10 @@ ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-account-creation-email-body-HTML' => 'Hello,
-
-An account has been created for you on {{SITENAME}}. To access your account and change your temporary password click the link below and log in with username "$2" and password "$3".
-
-Please log in at <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
-
-If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.
-
-The Wikia Team
-
-
-___________________________________________
-
-To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>
-Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
+	'usersignup-account-creation-email-body-HTML' => '',
 
 	// confirmation reminder email
-	'usersignup-confirmation-reminder-email_subject' => "Don't be a strangerÉ",
+	'usersignup-confirmation-reminder-email_subject' => "Don't be a strangerÃ‰",
 	'usersignup-confirmation-reminder-email-greeting' => 'Hi $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'It\'s been a few days, but it looks like you haven\'t finished creating your account on Wikia yet. It\'s easy. Just click the confirmation link below:
 <br/><br/>
@@ -275,22 +235,7 @@ ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-confirmation-reminder-email_body-HTML' => 'Hi $1,
-
-It\'s been a few days, but it looks like you haven\'t finished creating your account on Wikia yet. It\'s easy. Just click the confirmation link below:
-
-<a style="color:#2C85D5;" href="$2">$2</a>
-
-If you don\'t confirm within 23 days your username, $1, will become available again, so don\'t wait!
-
-The Wikia Team
-
-
-___________________________________________
-
-To check out the latest happenings on Wikia, visit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>
-Want to control which emails you receive? Go to your <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
-
+	'usersignup-confirmation-reminder-email_body-HTML' => '',
 );
 
 

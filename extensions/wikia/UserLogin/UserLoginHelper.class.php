@@ -530,15 +530,4 @@ class UserLoginHelper extends WikiaModel {
 		$vars['wgEnableUserLoginExt'] = true;
 		return true;
 	}
-	
-	public function setUserLanguage( $lang ) {
-		if ( !empty( $lang ) ) {
-			if ( $this->wg->Lang->getCode() != $lang ) {
-				$this->wg->Lang = Language::factory( $lang );
-			}
-			if ( $this->wg->ContLang->getCode() != $lang ) {
-				$this->wg->ContLang = $this->wf->GetLangObj( $lang );
-			}
-		}
-	}
 }
