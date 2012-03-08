@@ -83,7 +83,6 @@
 		save: function() {
 			var all = this.el.children('li');
 			var stack = [[]];
-			var menu = false;
 			var level = 0;
 			all.each(function(i,v){
 				v = $(v);

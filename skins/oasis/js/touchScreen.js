@@ -3,8 +3,7 @@ var touchImprovements = {
 	init: function() {
 
 		//onload scroll to main content
-		var wikiUls = $('#WikiHeader nav > ul > li > ul'),
-		globalUls = $('#GlobalNavigation li > ul');
+		var globalUls = $('#GlobalNavigation li > ul');
 
 		//global nav fix: first click opens nav,  second redirects to a hub
 		$('#GlobalNavigation').delegate('li > a', 'click', function(event) {
