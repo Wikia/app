@@ -78,12 +78,14 @@ abstract class CodeLint {
 
 	/**
 	 * Run given JS file using nodejs
+	 * 
+	 * Decodes the output, adds run time information
 	 *
 	 * @param string $scriptName file to run
 	 * @param array $params parameters to pass to nodejs
-	 * @return string output from nodejs
+	 * @return array output from nodejs
 	 */
-	protected function runUsingNodeJs($scriptName, $params = array()) {
+	protected function runUsingNodeJs($scriptName, Array $params = array()) {
 		$timeStart = microtime(true /* $get_as_float */);
 
 		$scriptName = escapeshellcmd($scriptName);
@@ -113,6 +115,34 @@ abstract class CodeLint {
 		else {
 			throw new Exception($output);
 		}
+
+		return $res;
+	}
+
+	/**
+	 * Run given command
+	 *
+	 * @param string $cmd command to be run
+	 * @param array $params parameters to be passed
+	 * @return array output from command
+	 */
+	protected function runCommand($cmd, Array $params = array()) {
+		$timeStart = microtime(true /* $get_as_float */);
+
+		$cmd = escapeshellcmd($cmd);
+		$params = implode(' ', $params);
+
+		exec("{$cmd} {$params}", $output, $retVal);
+
+		wfDebug(__METHOD__ . ": {$cmd} returned #{$retVal} code\n");
+
+		$timeEnd = microtime(true /* $get_as_float */);
+
+		$res = array(
+			'retVal' => $retVal,
+			'output' => $output,
+			'time' => round($timeEnd - $timeStart, 4)
+		);
 
 		return $res;
 	}

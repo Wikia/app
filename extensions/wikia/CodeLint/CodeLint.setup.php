@@ -3,7 +3,7 @@
 /**
  * CodeLint
  *
- * Provides interface for linting JS and CSS code.
+ * Provides interface for linting PHP, JS and CSS code.
  *
  * Beware! JSLint will hurt your feelings.
  *
@@ -18,9 +18,9 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'CodeLint',
-	'version' => '1.0',
+	'version' => '1.1',
 	'author' => 'Maciej Brencz',
-	'description' => 'Provides an interface for linting JS and CSS code',
+	'description' => 'Provides an interface for linting PHP, JS and CSS code',
 );
 
 $dir = dirname(__FILE__);
@@ -34,6 +34,7 @@ $app->registerClass('CodeLint', $dir . '/CodeLint.class.php');
 // linters
 $app->registerClass('CodeLintCss', $dir . '/linters/CodeLintCss.class.php');
 $app->registerClass('CodeLintJs', $dir . '/linters/CodeLintJs.class.php');
+$app->registerClass('CodeLintPhp', $dir . '/linters/CodeLintPhp.class.php');
 
 // report formatters
 $app->registerClass('CodeLintReport', $dir . '/CodeLintReport.class.php');

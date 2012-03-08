@@ -58,7 +58,7 @@ class CodeLintJs extends CodeLint {
 	 * @param array $params additional params to be passed to JS
 	 * @return string output from jslint
 	 */
-	protected function runJsLint($fileName, $params = array()) {
+	protected function runJsLint($fileName, Array $params = array()) {
 		// generate path to "wrapper" script running jslint
 		$runScript = dirname(__FILE__) . '/../js/run-jslint.js';
 
