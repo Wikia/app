@@ -24,9 +24,10 @@ class RelatedHubsVideosController extends RelatedVideosController {
 				if( empty($videoData) ) {
 					Wikia::log( __METHOD__, 'Not from cache' );
 					$videoTitle = Title::newFromText($videoTitleTxt, NS_VIDEO);
-					$videoArticleId = $videoTitle->getArticleID();
-					
+
 					if( $videoTitle instanceof Title ) {
+						$videoArticleId = $videoTitle->getArticleID();
+
 						$result = F::app()->sendRequest(
 							'RelatedVideos',
 							'getVideoData',
