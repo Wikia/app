@@ -5,28 +5,21 @@
 class WidgetFramework {
 
 	// PRIVATE FIELDS
-
 	protected static $instance = false;
-
 	protected $skinname = null;
-
 	private $config;
 
-	// PRIVATE METHODS
+	public static function getInstance() {
+		if(self::$instance == false) {
+			self::$instance = new WidgetFramework();
+		}
+		return self::$instance;
+	}
 
 	protected function __construct() {
 		global $wgUser;
 
 		switch (get_class($wgUser->getSkin())) {
-			case "SkinMonaco":
-				$this->skinname = 'monaco';
-				break;
-			case "SkinAnswers":
-				$this->skinname = 'monaco';
-				break;
-			case "SkinQuartz":
-				$this->skinname = 'quartz';
-				break;
 			case "SkinOasis":
 				$this->skinname = 'oasis';
 				break;
@@ -37,165 +30,20 @@ class WidgetFramework {
 				# We do care for things like Special:WidgetDashboard
 				$this->skinname = 'monobook';
 		}
-
-		$this->loadConfig();
-	}
-
-	private function loadConfig() {
-		global $wgUser;
-
-		if($wgUser->isLoggedIn()) {
-			$this->config = unserialize($wgUser->getOption('widgets'));
-		}
-
-		// handle via ReorderWidgets hook... one day
-		global $wgEnableAnswers;
-		if (!empty($wgEnableAnswers)) $this->config = null;
-
-		if(empty($this->config) && !is_array($this->config)) {
-			if($this->skinname == "monaco") {
-				$this->config = array(
-					1 => array(
-						array('type' => 'WidgetSidebar', 'id' => 202),
-						array('type' => 'WidgetWikiaToolbox', 'id' => 203),
-						array('type' => 'WidgetWikiaPartners', 'id' => 204),
-						array('type' => 'WidgetCommunity', 'id' => 101),
-						array('type' => 'WidgetLeftNav', 'id' => 205),
-						array('type' => 'WidgetLanguages', 'id' => 103),
-					),
-				);
-
-				// Turn this widget on for anons if the wiki factory variable is on
-				global $wgEnableAnswersMonacoWidget;
-				if ($wgEnableAnswersMonacoWidget){
-					$last = array_pop($this->config[1]);
-					$this->config[1][] = array('type' => 'WidgetAnswers', 'id' => 142);
-					$this->config[1][] = $last;
-
-					// RT #36587
-					global $wgLanguageCode;
-					if (in_array($wgLanguageCode, array("fr", "it", "es"))) {
-						$config1 = array();
-						foreach ($this->config[1] as $widget) {
-							switch ($widget["type"]) {
-							default:
-								$config1[] = $widget;
-								break;
-							case "WidgetAnswers":
-								break;
-							case "WidgetCommunity":
-								$config1[] = array('type' => 'WidgetAnswers', 'id' => 142);
-								$config1[] = $widget;
-								break;
-							}
-						}
-						$this->config[1] = $config1;
-					}
-				}
-
-				/* simplify widget config array from config[1][](name, id) to (name, name, name) */
-				$widgets = array();
-				foreach ($this->config[1] as $c) {
-					$widgets[] = $c["type"];
-				}
-
-				wfRunHooks("ReorderWidgets", array(&$widgets));
-
-				/* rebuild proper(???) widget config array */
-				$config1 = array();
-				$id = 300;
-				foreach ($widgets as $w) {
-					$config1[] = array("type" => $w, "id" => $id++);
-				}
-
-				$this->config[1] = $config1;
-
-			} else if($this->skinname == "quartz") {
-				$this->config = array(
-					1 => array(
-						array('type' => 'WidgetCommunity', 'id' => 101),
-						array('type' => 'WidgetLanguages', 'id' => 103),
-						array('type' => 'WidgetRelatedCommunities', 'id' => 104),
-						array('type' => 'WidgetTopContent', 'id' => 201),
-						array('type' => 'WidgetSidebar', 'id' => 202),
-						array('type' => 'WidgetWikiaToolbox', 'id' => 203),
-						array('type' => 'WidgetWikiaPartners', 'id' => 204),
-						array('type' => 'WidgetAdvertiser', 'id' => 206),
-					),
-				);
-			}
-		}
-
-		// TEMPORARY FIX BY INEZ START
-		global $isWidgetCommunity, $isWidgetSidebar, $isWidgetWikiaToolbox, $isWidgetLanguages;
-		$isWidgetCommunity = $isWidgetSidebar = $isWidgetWikiaToolbox = $isWidgetLanguages = false;
-
-		if (!function_exists('tempFunc')) {
-			function tempFunc($item, $key) {
-				if($item == 'WidgetCommunity') {
-					global $isWidgetCommunity;
-					$isWidgetCommunity = true;
-				} else if($item == 'WidgetSidebar') {
-					global $isWidgetSidebar;
-					$isWidgetSidebar = true;
-				} else if($item == 'WidgetWikiaToolbox') {
-					global $isWidgetWikiaToolbox;
-					$isWidgetWikiaToolbox = true;
-				} else if($item == 'WidgetLanguages') {
-					global $isWidgetLanguages;
-					$isWidgetLanguages = true;
-				}
-			}
-		}
-
-		if( isset($this->config[1]) && is_array( $this->config[1] ) ) {
-			array_walk_recursive( $this->config[1], 'tempFunc' );
-		}
-
-		if(!$isWidgetCommunity) {
-			$this->config[1][] = array('type' => 'WidgetCommunity', 'id' => 101);
-		}
-		if(!$isWidgetSidebar) {
-			$this->config[1][] = array('type' => 'WidgetSidebar', 'id' => 202);
-		}
-		if(!$isWidgetWikiaToolbox) {
-			$this->config[1][] = array('type' => 'WidgetWikiaToolbox', 'id' => 203);
-		}
-		if(!$isWidgetLanguages) {
-			$this->config[1][] = array('type' => 'WidgetLanguages', 'id' => 103);
-		}
-		// TEMPORARY FIX BY INEZ STOP
-
-		if(!isset($this->config[3])) {
-			$this->config[3] = array(
-						array('type' => 'WidgetActiveTalkPages', 'id' => 301),
-						array('type' => 'WidgetShoutBox', 'id' => 302),
-						array('type' => 'WidgetMostVisited', 'id' => 303)
-					);
-		}
-		if(!isset($this->config[4])) {
-			$this->config[4] = array(
-						array('type' => 'WidgetNeedHelp', 'id' => 401),
-						array('type' => 'WidgetWatchlist', 'id' => 402),
-						array('type' => 'WidgetSlideshow', 'id' => 403)
-					);
-		}
-		if(!isset($this->config[5])) {
-			$this->config[5] = array(
-						array('type' => 'WidgetTopVoted', 'id' => 501),
-						array('type' => 'WidgetReferrers', 'id' => 502)
-					);
-		}
 	}
 
 	protected function load($name) {
+		wfProfileIn(__METHOD__);
 
 		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.php')) {
 			require_once(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.php');
-			return true;
+			$ret = true;
 		} else {
-			return false;
+			$ret = false;
 		}
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	protected function getParams($widget) {
@@ -214,14 +62,12 @@ class WidgetFramework {
 	}
 
 	protected function getJavascript($widget) {
-		global $wgJsMimeType, $wgExtensionsPath;
 		$name = $widget['type'];
 		$jsOut = "";
 		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.js')) {
-			$jsOut = "\n<script type=\"$wgJsMimeType\">
-			wgAfterContentAndJS.push(function() {
-				$.getScript(wgExtensionsPath + '/wikia/WidgetFramework/Widgets/$name/$name.js?' + wgStyleVersion);
-			});</script>\n";
+			$jsOut = F::build('JSSnippets')->addToStack(array(
+				"/extensions/wikia/WidgetFramework/Widgets/{$name}/{$name}.js"
+			));
 		}
 		return $jsOut;
 	}
@@ -309,17 +155,6 @@ class WidgetFramework {
 		}
 	}
 
-	private function getFreeId() {
-		$ids = array();
-		foreach($this->config as $_sidebar) {
-			foreach($_sidebar as $_widget) {
-				$ids[] = $_widget['id'];
-			}
-		}
-		$idsDiff = array_diff(range(1,150), $ids);
-		return array_pop(array_reverse($idsDiff));
-	}
-
 	private function DrawOne($widget, $wrap = true) {
 		global $wgWidgets;
 		$params = $this->getParams($widget);
@@ -332,29 +167,6 @@ class WidgetFramework {
 		} else {
 			return $widgetOut;
 		}
-	}
-
-	// PUBLIC METHODS
-
-	public function SetSkin($skinname) {
-
-		// macbre: temp fix
-		if ($skinname == 'awesome') {
-			$skinname = 'monaco';
-		}
-
-		$this->skinname = $skinname;
-	}
-
-	public function GetSkin() {
-		return $this->skinname;
-	}
-
-	public static function getInstance() {
-		if(self::$instance == false) {
-			self::$instance = new WidgetFramework();
-		}
-		return self::$instance;
 	}
 
 	public function Draw($sidebar) {
@@ -370,189 +182,5 @@ class WidgetFramework {
 			}
 		}
 		return implode('', $output);
-	}
-
-	public function Add($type, $sidebar, $index) {
-		global $wgWidgets;
-		if($this->load($type)) {
-			$id = $this->getFreeId();
-			$widget = array('type' => $type, 'id' => $id);
-			if(!isset($this->config[$sidebar])) {
-				$this->config[$sidebar] = array();
-			}
-			$this->config[$sidebar][] = $widget;
-			$this->Reorder($id, $sidebar, $index);
-			if(empty($wgWidgets[$type]['nofetch'])) {
-				return $this->DrawOne($widget);
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function Reorder($id, $sidebar, $index) {
-		if(!empty($id) && !empty($sidebar) && !empty($index)) {
-			foreach($this->config as $key1 => $val1) {
-				foreach($val1 as $key2 => $val2) {
-					if($id == $val2['id']) {
-						$widget = $val2;
-						unset($this->config[$key1][$key2]);
-						if(isset($this->config[$sidebar])) {
-							$sidebarList = $this->config[$sidebar];
-						} else {
-							$sidebarList = array();
-						}
-						if($index > count($sidebarList)) {
-							$sidebarList[] = $widget;
-						} else {
-							$sidebarList1 = array_slice($sidebarList, 0, $index - 1);
-							$sidebarList2 = array_slice($sidebarList, $index - 1);
-							$sidebarList = array_merge($sidebarList1, array($widget));
-							$sidebarList = array_merge($sidebarList, $sidebarList2);
-						}
-						$this->config[$sidebar] = $sidebarList;
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public function Save() {
-		global $wgUser;
-		$wgUser->setOption('widgets', serialize($this->config));
-		$wgUser->saveSettings();
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->commit(); // macbre: $dbw->close() was causing fatal error in MW1.13
-
-		return true;
-	}
-
-	public function Delete($id) {
-
-		global $wgWidgets;
-
-		if(!empty($id)) {
-			foreach($this->config as $key1 => $val1) {
-				foreach($val1 as $key2 => $val2) {
-					if($id == $val2['id']) {
-						$type = $val2['type'];
-						$this->load( $type );
-						if ($wgWidgets[$type]['closeable'] == true) {
-							unset($this->config[$key1][$key2]);
-							return true;
-						}
-						else {
-							return false;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public function GetEditForm($id) {
-		global $wgWidgets;
-		if(!empty($id)) {
-			foreach($this->config as $key1 => $val1) {
-				foreach($val1 as $key2 => $widget) {
-					if($id == $widget['id']) {
-						if($this->load($widget['type'])) {
-							$params = $this->getParams($widget);
-							$widget['id'] = 'widget_' . $widget['id'];
-							$out  = "<form onsubmit='return false;' id=\"{$widget['id']}_editor\">";
-							foreach($wgWidgets[$widget['type']]['params'] as $key => $val) {
-								$out .= '<label for="' . $widget['id'] . '_editor_' . $key  . '">' . wfMsg(!empty($val['msg']) ? $val['msg'] : $key) . ':</label>';
-								switch($val['type']) {
-									case 'text':
-										$out .= "<input id=\"{$widget['id']}_editor_{$key}\" name=\"{$key}\" type=\"text\" value=\"{$params[$key]}\"><br/><br/>";
-										break;
-									case 'select':
-										$out .= "<select id=\"{$widget['id']}_editor_{$key}\" name=\"{$key}\">";
-										while(list($key1, $val1) = each($val['values'])) {
-											$out .= "<option value=\"{$key1}\"".(($key1 == $params[$key]) ? ' selected="selected"' : "").">{$val1}</option>";
-										}
-										$out .= "</select><br/><br/>";
-										break;
-									case 'checkbox':
-										$out .= "<input id=\"{$widget['id']}_editor_{$key}\" name=\"{$key}\" class=\"checkbox\" type=\"checkbox\"".($params[$key] ? ' checked="checked"' : '')." /><br/><br/>";
-										break;
-								}
-							}
-
-							$out .= "<input id=\"{$widget['id']}_save\" class=\"editor_button\" type=\"button\" value=\"".wfMsg('saveprefs')."\">";
-							$out .= "<input id=\"{$widget['id']}_cancel\" class=\"editor_button\" type=\"button\" value=\"".wfMsg('Cancel')."\">";
-							$out .= "</form>";
-							return $out;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public function Configure($id) {
-		global $wgWidgets, $wgRequest;
-		if(!empty($id)) {
-			foreach($this->config as $key1 => $val1) {
-				foreach($val1 as $key2 => $widget) {
-					if($id == $widget['id']) {
-						$this->load($widget['type']);
-						$params = $this->getParams($widget);
-						foreach($wgWidgets[$widget['type']]['params'] as $key => $val) {
-							$paramName = $key;
-							$paramDefaultValue = $val['default'];
-							if($val['type'] == 'checkbox') {
-								$value = $wgRequest->getCheck($paramName, $paramDefaultValue);
-							} else if($val['type'] == 'text') {
-								$value = $wgRequest->getText($paramName, $paramDefaultValue);
-							} else if($val['type'] == 'select') {
-								$value = $wgRequest->getInt($paramName, $paramDefaultValue);
-							}
-
-							if((isset($widget['param'][$paramName]) && $widget['param'][$paramName] != $value && $wgRequest->getText($paramName) != '') || ($paramDefaultValue != $value)) {
-								$this->config[$key1][$key2]['param'][$paramName] = $value;
-							}
-						}
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public function GetWidgetBody($id) {
-		global $wgWidgets;
-		if(!empty($id)) {
-			foreach($this->config as $key1 => $val1) {
-				foreach($val1 as $key2 => $widget) {
-					if($id == $widget['id']) {
-						if($this->load($widget['type'])) {
-							$widgetOut = $this->DrawOne($widget, false);
-							$response = array();
-							if(is_array($widgetOut)) {
-								if(isset($widgetOut['title'])) {
-									$response['title'] = $widgetOut['title'];
-								}
-								if(isset($widgetOut['body'])) {
-									$response['body'] = $widgetOut['body'];
-								}
-							} else {
-								$response['body'] = $widgetOut;
-							}
-							$response['type'] = $widget['type'];
-							return $response;
-						}
-					}
-				}
-			}
-		}
-		return false;
 	}
 }
