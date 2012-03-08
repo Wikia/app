@@ -238,10 +238,7 @@ class AjaxPollClass {
 		// RT #20789
 		global $wgWysiwygTemplatesParserEnabled;
 		if (empty($wgWysiwygTemplatesParserEnabled)) {
-			global $wgExtensionsPath, $wgStyleVersion;
-
 			// load CSS/JS only when needed
-
 			$before .= F::build('JSSnippets')->addToStack(
 				array(
 					'/extensions/wikia/AjaxPoll/css/AjaxPoll.scss',
