@@ -496,9 +496,6 @@ class UserProfilePageController extends WikiaController {
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return $localPath;
 		}
-
-		$this->app->wf->ProfileOut( __METHOD__ );
-		return false;
 	}
 
 	/**

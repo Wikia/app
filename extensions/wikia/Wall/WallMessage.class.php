@@ -238,7 +238,6 @@ class WallMessage {
 				return $this->getArticleId();
 			}
 		}
-		return '';
 	}
 
 	public function getMessagePageUrl($withoutAnchor = false) {
