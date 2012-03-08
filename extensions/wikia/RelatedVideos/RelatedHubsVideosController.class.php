@@ -38,7 +38,10 @@ class RelatedHubsVideosController extends RelatedVideosController {
 							)
 						)->getData();
 						$result['data']['external'] = 0;
-						$result['data']['wiki'] = $hubVideoData['wikiUrl'];
+						$result['data']['wiki'] = (
+								(stripos($hubVideoData['wikiUrl'],'http://') === false)
+								&& (stripos($hubVideoData['wikiUrl'],'https://') === false)								 
+							)?('http://'.$hubVideoData['wikiUrl']):$hubVideoData['wikiUrl'];
 						
 						//overwrite owner's data (on Hub page we display name of user who suggested the video)
 						if( !empty($result['data']['owner'])
