@@ -62,7 +62,6 @@
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 	@include box-shadow(0 0 5px black);
-	@include box-sizing(border-box);
 
 	&.fllNav {
 		min-height: 100%;
@@ -115,7 +114,6 @@
 
 			li {
 				padding-right: 20px;
-				@include box-sizing(border-box);
 
 				//to remove redundancy style for .cld is moved to ui.scss
 				a {

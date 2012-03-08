@@ -1,12 +1,27 @@
+<?php
+	$userErr = $pwdErr = false;
+	if( !empty( $result ) && $result == 'error' ){
+		if($errParam == 'username'){
+			$userErr = true;
+		}else{
+			$pwdErr = true;
+		}
+	}
+?>
 <div id=wkLgn>
 	<!-- Facebook integration -->
 	<div id="fb-root"></div>
 	<?= $app->renderView('UserLoginSpecial', 'Providers') ;?>
-	<form method=post action='/wiki/Special:UserLogin?useskin=wikiamobile&action=login'>
+	<form method=post action="<?= $formPostAction ?>?action=login">
 		<input type=hidden name=loginToken value='<?= $loginToken ?>'>
-		<input type=text name=username placeholder='<?= $wf->Msg('yourname')?>'<?= ($username) ? ' value="'.$username.'"' : ''?>>
-		<input type=password name=password placeholder='<?= $wf->Msg('yourpassword') ?>'<?= ($password) ? ' value="'.$password.'"' : ''?>>
-		<a href=recovery.php id=wkPwdRcv><?= $wf->Msg('userlogin-forgot-password') ?></a>
+		<input type=text name=username placeholder='<?= $wf->Msg('yourname')?>'<?= ($username) ? ' value="'.$username.'"' : ''?> <?= ($userErr) ? ' class=inpErr' : ''?>>
+		<? if( $userErr ) : ?>
+			<div class=err><?= $msg ?></div>
+		<? endif; ?>
+			<input type=password name=password placeholder='<?= $wf->Msg('yourpassword') ?>'<?= ($password) ? ' value="'.$password.'"' : ''?> <?= ($pwdErr) ? ' class=inpErr' : ''?>>
+			<? if( $pwdErr ) : ?>
+				<div class=err><?= $msg ?></div>
+			<? endif; ?>
 		<input type=submit value='<?= $wf->Msg('login') ?>' class='wkBtn main'>
 	</form>
 </div>
