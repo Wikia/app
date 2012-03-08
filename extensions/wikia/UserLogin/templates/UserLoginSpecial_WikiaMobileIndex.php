@@ -1,4 +1,6 @@
 <div id=wkLgn>
+	<!-- Facebook integration -->
+	<div id="fb-root"></div>
 	<?= $app->renderView('UserLoginSpecial', 'Providers') ;?>
 	<form method=post action='/wiki/Special:UserLogin?useskin=wikiamobile&action=login'>
 		<input type=hidden name=loginToken value='<?= $loginToken ?>'>
