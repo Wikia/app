@@ -13,8 +13,6 @@ $messages['en'] = array(
 	'wall-message-undoremove' => 'Undo',
 	'wall-message-edited' => '<a href="$3" >Edited by</a> <a class="username" href="$1">$2</a>',
 	'wall-message-mywall' => 'My wall',
-	'wall-message-follow' => 'Follow',
-	'wall-message-following' => 'Following',
 	'wall-toolbar-history' => 'History',
 	
 	'wall-message-notify' => 'Notify admin',
@@ -1601,7 +1599,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada pos-pos Papan Pesanan',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (Norsk (bokmål))
  * @author Audun
  */
 $messages['nb'] = array(

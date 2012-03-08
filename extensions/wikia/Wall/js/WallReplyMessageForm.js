@@ -128,7 +128,7 @@ var WallReplyMessageForm = $.createClass(WallMessageForm, {
 			main.find('ul li.load-more .count').html(main.find('ul li.message').length);
 			$('.speech-bubble-message', newreply).css({'margin-left':'0px'});
 			$('.speech-bubble-avatar', newreply).hide();
-			$('.follow', main).text($.msg('wall-message-following')).removeClass('secondary');
+			$('.follow', main).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
 
 			//click tracking
 			this.track('wall/message/reply_post');

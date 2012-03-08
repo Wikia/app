@@ -158,13 +158,13 @@ var Wall = $.createClass(Object, {
 					element.attr('data-iswatched', isWatched ? 0:1);
 					if(isWatched) {
 						element.animate({'opacity':0.7},'slow', function() { element.css('opacity','');} );
-						$(e.target).text($.msg('wall-message-follow')).addClass('secondary');
+						$(e.target).text($.msg('oasis-follow')).addClass('secondary');
 						
 						//click tracking
 						this.track('wall/message/unfollow');
 					} else {
 						element.animate({'opacity':0.7},'slow', function() { element.css('opacity','');} );
-						$(e.target).text($.msg('wall-message-following')).removeClass('secondary');
+						$(e.target).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
 						
 						//click tracking
 						this.track('wall/message/follow');
@@ -175,14 +175,14 @@ var Wall = $.createClass(Object, {
 	},
 
 	hoverFollow: function(e) {
-		if( $(e.target).html() == $.msg('wall-message-following') ) {
+		if( $(e.target).html() == $.msg('wikiafollowedpages-following') ) {
 			$(e.target).html($.msg('wall-message-unfollow'));
 		}
 	},
 	
 	unhoverFollow: function(e) {
 		if( $(e.target).html() == $.msg('wall-message-unfollow') ) {
-			$(e.target).html($.msg('wall-message-following'));
+			$(e.target).html($.msg('wikiafollowedpages-following'));
 		}
 	},
 	

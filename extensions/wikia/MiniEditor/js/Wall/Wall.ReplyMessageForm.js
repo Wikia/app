@@ -28,7 +28,8 @@
 				}
 
 				main.find('ul li.load-more .count').html(main.find('ul li.message').length);
-				main.find('.follow').text($.msg('wall-message-following')).removeClass('secondary');
+				
+				main.find('.follow').text($.msg('wikiafollowedpages-following')).removeClass('secondary');
 
 				this.track('wall/message/reply_post');
 				
