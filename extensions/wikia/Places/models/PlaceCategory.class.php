@@ -63,7 +63,7 @@ class PlaceCategory {
 		} else {
 			return false;
 		}
-		
+
 		if ( !empty( $aCategories ) ){
 			$aCategories = array_keys( $aCategories );
 			foreach ( $aCategories as $sCategory ){
@@ -115,15 +115,15 @@ class PlaceCategory {
 			$this->app->wf->Debug(__METHOD__ . " - memcache hit for #{$this->pageId}\n");
 		}
 
-		return true;
 		wfProfileOut(__METHOD__);
+		return true;
 	}
 
 	public function store() {
 		wfProfileIn(__METHOD__);
 
 		if ( $this->isEnabled !== false ){
-			
+
 			$oTitle = F::build( 'Title', array( $this->sTitle ), 'newFromText' );
 			if ( $oTitle instanceof Title ){
 				$oTitle->exists();
@@ -140,8 +140,8 @@ class PlaceCategory {
 				}
 
 				$this->app->wf->setWikiaPageProp(
-					WPP_PLACES_CATEGORY_GEOTAGGED, 
-					$this->pageId, 
+					WPP_PLACES_CATEGORY_GEOTAGGED,
+					$this->pageId,
 					(int)$this->isEnabled
 				);
 
