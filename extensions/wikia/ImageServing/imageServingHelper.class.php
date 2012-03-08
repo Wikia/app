@@ -5,24 +5,24 @@
  */
 
 class ImageServingHelper{
-	static $hookOnOff = false; // parser hook are off 
-	
+	static $hookOnOff = false; // parser hook are off
+
 	public static function buildIndexOnPageEdit( $self ) {
 		wfProfileIn(__METHOD__);
-			
+
 		if(count($self->mImages) == 1) {
 			$images = array_keys($self->mImages);
 			self::bulidIndex( $self->mId, $images);
 			wfProfileOut(__METHOD__);
-			return true;			
-		} 
-		
+			return true;
+		}
+
 		$article = Article::newFromID( $self->mId );
 		self::buildAndGetIndex( $article );
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-	
+
 	public static function buildAndGetIndex($article, $ignoreEmpty = false ) {
 		if(!($article instanceof Article)) {
 			return;
@@ -42,84 +42,84 @@ class ImageServingHelper{
 		self::bulidIndex($article->getID(), $out[0], $ignoreEmpty);
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 *  replaceGallery - hook replace images with some easy to parse tag
-	 *  
+	 *
 	 *  return boolean
 	 */
-	
+
 	public static function replaceImages( $skin, $title, $file, $frameParams, $handlerParams, $time, $res ) {
 		if (!self::$hookOnOff) {
 			return true;
 		}
 		wfProfileIn(__METHOD__);
-		
+
 		if( $file instanceof File ||  $file instanceof LocalFile ) {
-			$res = " <image mw='".$file->getTitle()->getPartialURL()."' /> ";			
+			$res = " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
 		}
-		
-		wfProfileOut(__METHOD__); 
+
+		wfProfileOut(__METHOD__);
 		return false;
 	}
-	
+
 	/**
 	 *  replaceGallery - hook replace images from image gallery with some easy to parse tag :
-	 *  
+	 *
 	 *  return boolean
 	 */
-	
+
 	public static function replaceGallery( $parser, $ig) {
 		global $wgEnableWikiaPhotoGalleryExt;
-		
+
 		if ((!self::$hookOnOff) || empty($wgEnableWikiaPhotoGalleryExt)) {
 			return true;
 		}
-		
+
 		wfProfileIn(__METHOD__);
 
 		$ig->parse();
 		$data = $ig->getData();
-		
+
 		$ig = new fakeIGimageServing( $ig->mImages );
 		wfProfileOut(__METHOD__);
 		return false;
 	}
-	
+
 	private static function hookSwitch($onOff = true) {
 		self::$hookOnOff = $onOff;
 	}
-	
+
 	public static function isParsing() {
 		return self::$hookOnOff;
 	}
-	
+
 	/**
 	 * buildImages - helper function to help build list on images in parserHook
-	 * 
-	 * 
+	 *
+	 *
 	 * @param $files \type{\arrayof{\file}}
-	 * 
+	 *
 	 * @return string
 	 **/
-	
+
 	public static function buildImages($files) {
 		$res = '';
 		foreach($files as $file) {
 			if( $file instanceof File ||  $file instanceof LocalFile ) {
-				$res .= " <image mw='".$file->getTitle()->getPartialURL()."' /> ";			
+				$res .= " <image mw='".$file->getTitle()->getPartialURL()."' /> ";
 			}
 		}
 		return $res;
-	}	
+	}
 
 	/**
 	 * bulidIndex - save image index in db
-	 * 
-	 * @param $width \int 
+	 *
+	 * @param $width \int
 	 * @param $images \type{\arrayof{\string}}
 	 * @param $ignoreEmpty boolean
-	 * 
+	 *
 	 * @return boolean
 	 */
 
@@ -132,23 +132,23 @@ class ImageServingHelper{
 
 		if( (count($images) < 1) ) {
 			if ($ignoreEmpty) {
-				return true;	
 				wfProfileOut(__METHOD__);
+				return true;
 			}
-			$db->delete( 'page_wikia_props', 
-				array(		
+			$db->delete( 'page_wikia_props',
+				array(
 					'page_id' =>  $articleId,
 					'propname' => "0")
 			);
-			return true;
 			wfProfileOut(__METHOD__);
+			return true;
 		}
-		$db->delete( 'page_wikia_props', 
-			array(		
+		$db->delete( 'page_wikia_props',
+			array(
 				'page_id' =>  $articleId,
 				'propname' => "imageOrder")
 		);
-		
+
 		$db->replace('page_wikia_props','',
 			array(
 				'page_id' =>  $articleId,
@@ -156,7 +156,7 @@ class ImageServingHelper{
 				'props' => serialize($images)
 			)
 		);
-		
+
 		$db->commit();
 		wfProfileOut(__METHOD__);
 		return true;
@@ -168,7 +168,7 @@ class fakeIGimageServing extends ImageGallery {
 	private $in;
 
 	function __construct($in) {
-		$this->in = $in; 	
+		$this->in = $in;
 	}
 
 	function toHTML() {
@@ -177,12 +177,12 @@ class fakeIGimageServing extends ImageGallery {
 			$file =  $this->getImage($imageData[0]);
 
 			if($file) {
-				$res .= " <image mw='".$file->getTitle()->getDBkey()."' /> ";	
+				$res .= " <image mw='".$file->getTitle()->getDBkey()."' /> ";
 			}
 		}
 		return $res;
-	}	
-	
+	}
+
 	private function getImage($nt) {
 		wfProfileIn(__METHOD__);
 
