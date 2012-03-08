@@ -212,7 +212,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-account-creation-email-body-HTML' => '',
 
 	// confirmation reminder email
-	'usersignup-confirmation-reminder-email_subject' => "Don't be a strangerÉ",
+	'usersignup-confirmation-reminder-email_subject' => "Don't be a stranger…",
 	'usersignup-confirmation-reminder-email-greeting' => 'Hi $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'It\'s been a few days, but it looks like you haven\'t finished creating your account on Wikia yet. It\'s easy. Just click the confirmation link below:
 <br/><br/>
