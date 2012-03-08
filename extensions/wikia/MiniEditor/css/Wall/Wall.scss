@@ -80,6 +80,10 @@
 				display: block;
 			}
 		}
+		
+		.focused textarea {
+			line-height: inherit;
+		}
 
 		.editarea {
 			border: solid 1px $color-page-border;
