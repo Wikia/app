@@ -2,28 +2,30 @@
 
 class WidgetTagRenderer extends WidgetFramework {
 
-	private $count = 1000;
+	private $count = 1;
 	private $markers = array();
 
 	protected static $instanceTagRenderer = false;
 
 	public static function getInstance() {
 		if( !(self::$instanceTagRenderer instanceof WidgetTagRenderer) ) {
-                        self::$instanceTagRenderer = new WidgetTagRenderer();
-                }
-                return self::$instanceTagRenderer;
+	        self::$instanceTagRenderer = new WidgetTagRenderer();
+        }
+        return self::$instanceTagRenderer;
 	}
 
-
-        public function renderTag( $input, $args, $parser ) {
+	public function renderTag( $input, $args, Parser $parser ) {
+		wfProfileIn(__METHOD__);
 
 		// there must be something between tags
 		if ( empty($input) ) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
 		// we support only quartz & monaco skin in this feature
-		if ( ($this->skinname != 'monaco') && ($this->skinname != 'quartz') && $this->skinname != 'oasis' ) {
+		if (!Wikia::isOasis()) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
@@ -31,6 +33,7 @@ class WidgetTagRenderer extends WidgetFramework {
 
 		// try to load widget
 		if ( $this->load($widgetType) == false ) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
@@ -78,10 +81,10 @@ class WidgetTagRenderer extends WidgetFramework {
 		$output = "<div class=\"widgetTag reset\"{$style}>{$output}</div>";
 
 		// use markers to avoid RT #20855 when widget' HTML is multiline
-		global $wgParser;
-		$marker = $wgParser->uniqPrefix() . "-WIDGET-{$this->count}-\x7f";
+		$marker = $parser->uniqPrefix() . "-WIDGET-{$this->count}-\x7f";
 		$this->markers[$marker] = $output;
 
+		wfProfileOut(__METHOD__);
 		return $marker;
 	}
 
