@@ -3,13 +3,13 @@
 <tr>
 	<th rowspan="2" class="ecrowright" valign="bottom"><?=$total?></th>
 	<th colspan="2" class="ecrowcenter"><?=$wikiName?></th>
-	<th class="ecrowright" style="border-top:0px; border-bottom: 0px;">&nbsp;</th>
+	<th class="ecrowright" style="border-top:0; border-bottom: 0;">&nbsp;</th>
 	<th colspan="2" class="ecrowcenter"><?=wfMsg('editcount_allwikis')?></th>
 </tr>
 </tr>	
 	<th class="ecrowright"><?=$ftotal?></th>
 	<th class="ecrowright"><?=$percent?></th>
-	<th class="ecrowright" style="border-top:0px; border-bottom: 0px;">&nbsp;</th>
+	<th class="ecrowright" style="border-top:0; border-bottom: 0;">&nbsp;</th>
 	<th class="ecrowright"><?=$ftotalall?></th>
 	<th class="ecrowright"><?=$percentall?></th>
 </tr>
@@ -29,7 +29,7 @@
 	<td class="ecrowcenter"><?=$fns?></td>
 	<td class="ecrowright"><?=$fedits?></td>
 	<td class="ecrowright"><?=$fpercent?></td>
-	<td class="ecrowright" style="border-top:0px; border-bottom: 0px;">&nbsp;</td>
+	<td class="ecrowright" style="border-top:0; border-bottom: 0;">&nbsp;</td>
 	<td class="ecrowright"><?=$feditsall?></td>
 	<td class="ecrowright"><?=$fpercentall?></td>
 </tr>

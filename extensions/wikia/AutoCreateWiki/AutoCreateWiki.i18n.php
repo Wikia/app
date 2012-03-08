@@ -2063,7 +2063,7 @@ Wikia Community Team
 1. '''Crea la tua [[Utente:\$1|Pagina Utente]]''' - è il posto per parlare di te stesso e farti conoscere (e fare pratica!)
 
 2. '''Aggiungi un logo''' - impara [[w:c:aiuto:Aiuto:Theme_Designer|come creare un logo]], e poi <span class=\"plainlinks\">[[Speciale:Carica/Wiki.png|clicca qui]]</span> per aggiungerlo alla tua wiki.
-<div style=\"border: 1px solid black; margin: 0px 0px 5px 10px; padding: 5px; float: right; width: 30%;\"><center>Crea un articolo per questa wiki:</center><createbox>
+<div style=\"border: 1px solid black; margin: 0 0 5px 10px; padding: 5px; float: right; width: 30%;\"><center>Crea un articolo per questa wiki:</center><createbox>
 width=20
 </createbox></div>
 

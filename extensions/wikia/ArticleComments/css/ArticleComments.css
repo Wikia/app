@@ -50,7 +50,7 @@
 }
 
 #article-comments blockquote {
-	margin-top: 0px;
+	margin-top: 0;
 	margin-left: 65px;
 }
 
@@ -78,7 +78,7 @@ div.article-comm-input-text textarea {
 	float: left;
 	line-height: 1em;
 	overflow: hidden;
-	padding: 0px 4px 4px 10px;
+	padding: 0 4px 4px 10px;
 	width: 100px;
 }
 
@@ -186,7 +186,7 @@ a.article-comm-reply {
 
 div#article-comm-fbMonit {
 	height:100px;
-	margin: 0px 0px 5px 185px;
+	margin: 0 0 5px 185px;
 	width:450px;
 	padding:6px;
 	background-color: white;
@@ -242,9 +242,9 @@ div#article-comm-fbMonit {
 	line-height: 11px;
 	padding: 17px 10px;
 	position: absolute;
-	right: 0px;
+	right: 0;
 	text-align: right;
-	top: 0px;
+	top: 0;
 }
 
 .skin-monobook #article-comments .speech-bubble-avatar {

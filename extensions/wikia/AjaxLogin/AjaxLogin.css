@@ -60,7 +60,7 @@
 	padding: 10px;
 }
 .skin-oasis #AjaxLoginConnectMarketing div {
-	border-width:0px;
+	border-width:0;
 }
 #AjaxLoginConnectMarketing h1 {
 	font-size: 12pt;
@@ -151,11 +151,11 @@
 .wpAjaxLoginInput .captcha
 {
 	border: none;
-	padding: 0px;
+	padding: 0;
 }
 
 .wpAjaxLoginInput .captcha .captchadesc {
-	margin:0px;
+	margin:0;
 	width: 136px;
 }
 
