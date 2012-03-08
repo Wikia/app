@@ -3,8 +3,10 @@
  * @addto maintenance
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  * @see https://internal.wikia-inc.com/wiki/CodeLint
+ *
+ * SERVER_ID=1 php codelint.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php --mode=php --file=/home/macbre/trunk/extensions/wikia/CodeLint/examples/anticode.php
+ *
  */
-
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
@@ -26,7 +28,7 @@ USAGE: php codelint.php --file|--dir [--help] [--blacklist] [--mode] [--format] 
 		Comma separated list of directories / files to skip when performing lint check
 
 	--mode
-		Set working mode (can be either "js" or "css")
+		Set working mode (can be "php", "js" or "css")
 
 	--format[=text]
 		Report format (either text, json or html)

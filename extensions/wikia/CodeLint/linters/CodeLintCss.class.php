@@ -23,7 +23,7 @@ class CodeLintCss extends CodeLint {
 	 * @return string output from csslint
 	 */
 	protected function runCssLint($fileName, $params = array()) {
-		// generate path to "wrapper" script running jslint
+		// generate path to "wrapper" script running csslint
 		$runScript = dirname(__FILE__) . '/../js/run-csslint.js';
 
 		// generate path to csslint.js
@@ -41,7 +41,7 @@ class CodeLintCss extends CodeLint {
 	/**
 	 * Filter out message we don't really want in the report
 	 *
-	 * @param array $error error entry reported by jslint
+	 * @param array $error error entry reported by csslint
 	 * @return boolean returns true if the entry should be kept
 	 */
 	public function filterErrorsOut($error) {
