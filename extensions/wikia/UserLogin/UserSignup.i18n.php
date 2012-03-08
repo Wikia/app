@@ -236,6 +236,7 @@ ___________________________________________
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-confirmation-reminder-email_body-HTML' => '',
+	'usersignup-facebook-problem' => 'There was a problem communicating with Facebook. Please try again later.',
 );
 
 
