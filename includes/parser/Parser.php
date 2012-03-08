@@ -3596,7 +3596,20 @@ class Parser
 	 */
 	function interwikiTransclude( $title, $action ) {
 		global $wgEnableScaryTranscluding;
-
+		
+		# BEGIN WIKIA CHANGE
+		# wlee 2012/3/8 - log interwiki transclusions to video repo for debugging
+		global $wgCityId, $wgTitle, $wgExternalDatawareDB, $wgWikiaVideoInterwikiPrefix;
+		if ($title->getInterwiki() == $wgWikiaVideoInterwikiPrefix) {
+			// log for debugging purposes
+			$dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+			$res = $dbw_dataware->query(
+				"INSERT IGNORE INTO " .
+					"`video_interwiki` (city_id,article_id,video_title) " .
+				"VALUES (". $dbw_dataware->addQuotes($wgCityId). ",". $dbw_dataware->addQuotes($wgTitle->getArticleId()). ",".
+					$dbw_dataware->addQuotes($title->getText()). ") ", __METHOD__ );	
+		}
+		# END WIKIA CHANGE
 		if (!$wgEnableScaryTranscluding)
 			return wfMsg('scarytranscludedisabled');
 
