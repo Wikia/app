@@ -303,18 +303,18 @@ class ArticleAdLogic {
 
 
 	public function isMainPage(){
-                global $wgTitle;
-                if (is_object($wgTitle) &&
-		    $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() &&
-		    $wgTitle->getArticleId() != 0 && # caused problems on central due to NS_SPECIAL main page
-		    !self::isDiffPage() &&
-		    !self::isAnonPurgePrompt() &&
-		    !self::isActionPage()) {
+		global $wgTitle;
+		if ( is_object($wgTitle) &&
+			$wgTitle->getArticleId() == Title::newMainPage()->getArticleId() &&
+			$wgTitle->getArticleId() != 0 && # caused problems on central due to NS_SPECIAL main page
+			!self::isDiffPage() &&
+			!self::isAnonPurgePrompt() &&
+			!self::isActionPage()) {
 
 			return true;
-                } else {
-                        return false;
-                }
+		} else {
+			return false;
+		}
 	}
 
 	public function isArticlePage(){
@@ -331,7 +331,7 @@ class ArticleAdLogic {
 
 
 	public function isContentPage(){
-                global $wgTitle, $wgContentNamespaces;
+		global $wgTitle, $wgContentNamespaces;
 
 		// not a content page if one of the weird edge cases occurs
 		if ( self::isDiffPage() || self::isAnonPurgePrompt() || self::isActionPage() ) {
@@ -340,7 +340,7 @@ class ArticleAdLogic {
 
 		// actual content namespace check along with hardcoded override (main, image & category)
 		// note this is NOT used in isMainPage() since that is to ignore content namespaces
-                if (is_object($wgTitle)){
+		if (is_object($wgTitle)){
 			return in_array($wgTitle->getNamespace(), array_merge( $wgContentNamespaces, array(NS_MAIN, NS_IMAGE, NS_CATEGORY) ));
 		} else {
 			return false;
