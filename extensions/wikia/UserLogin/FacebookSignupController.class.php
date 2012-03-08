@@ -30,7 +30,7 @@ class FacebookSignupController extends WikiaController {
 		else {
 			// no account connected - show FB sign up modal
 			$this->title = wfMsg('usersignup-facebook-heading');
-			if ($fbUserId) $this->modal = $this->sendRequest('FacebookSignupController', 'modal')->__toString();
+			$this->modal = ($fbUserId) ? $this->sendRequest('FacebookSignupController', 'modal')->__toString() : wfMsg('usersignup-facebook-problem');
 			$this->cancelMsg = wfMsg('cancel');
 		}
 	}
