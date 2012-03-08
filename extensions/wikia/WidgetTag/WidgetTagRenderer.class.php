@@ -47,7 +47,7 @@ class WidgetTagRenderer extends WidgetFramework {
 		}
 
 		// create array for getParams method of widget framework
-		$id = 'widget_' . $this->count;
+		$id = 'widget_' . $this->count++;
 
 		$widget = array(
 			'type'  => $widgetType,
@@ -69,13 +69,10 @@ class WidgetTagRenderer extends WidgetFramework {
 		$output = $widgetType($id, $widgetParams);
 
 		// Add any required javascript for the widget
-		$output .= $this->getJavascript($widget);
+		#$output .= $this->getJavascript($widget); // we don't need <widget> to be interactive
 
 		// wrap widget content
 		$output = $this->wrap($widget, $output);
-
-		// so count returned widgets
-		$this->count++;
 
 		// wrap widget HTML
 		$output = "<div class=\"widgetTag reset\"{$style}>{$output}</div>";
