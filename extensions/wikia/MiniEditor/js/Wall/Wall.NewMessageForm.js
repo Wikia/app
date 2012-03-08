@@ -13,20 +13,7 @@
 								if(!MiniEditor.ckeditorEnabled) {
 									wikiaEditor.getEditbox()
 										.placeholder()
-										.css('font-size','13px')
 										.triggerHandler('focus.placeholder');
-								}
-							},
-							editorFocus: function(event, wikiaEditor) {
-								if(!MiniEditor.ckeditorEnabled) {
-									$(this).css('font-size','13px');
-								}
-							},
-							editorBlur: function(event, wikiaEditor) {
-								if(!MiniEditor.ckeditorEnabled) {
-									if($(this).val() == "") {
-										$(this).css('font-size','14px');
-									}
 								}
 							}
 						}
