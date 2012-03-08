@@ -117,7 +117,7 @@ class UploadPhotosModule extends Module {
 	 * This is practicaly a copy of UploadForm->processUpload(SpecialUpload.php), but just handles and returns status message
 	 */
 	private function uploadMessage($statusCode, $details) {
-		global $wgLang, $wgFileExtensions, $wgOut, $wgUser, $wgRequest;
+		global $wgLang, $wgFileExtensions;
 		$msg = '';
 		switch($statusCode) {
 			case UploadBase::SUCCESS:
