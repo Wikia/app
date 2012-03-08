@@ -21,7 +21,7 @@ document.onclick = function(event){
 	switch(target.id){
 		case 'searchGoButton':
 		case 'mw-searchButton':
-			eventToTrack += 'search'
+			eventToTrack += 'search';
 			WikiaPhoneOldTracker(eventToTrack);
 			break;
 		default:
