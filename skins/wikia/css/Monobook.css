@@ -13,9 +13,9 @@ body.with-adsense #content
 #column-google {
     clear: left;
     position: absolute;
-    padding: 35px 0px 0px 3px;
+    padding: 35px 0 0 3px;
     float: right;
-    right: 0px;
+    right: 0;
     top: 10px;
     z-index: 1;
 }
@@ -44,7 +44,7 @@ body.with-adsense #content
     position: absolute;
     margin-top: -250px;
     left: -200px;
-    padding: 8px 12px 0px 8px;
+    padding: 8px 12px 0 8px;
 }
 
 #notifyForm form
@@ -122,9 +122,9 @@ body.rtl #column-google {
     width: 120px;
     clear: right;
     position: absolute;
-    padding: 35px 3px 0px 0px;
+    padding: 35px 3px 0 0;
     float: left;
-    left: 0px;
+    left: 0;
     right: auto;
     top: 10px;
     z-index: 1;
@@ -188,7 +188,7 @@ body.rtl #column-google {
 	font-size: 9pt;
 	margin: 0 !important;
 	/*padding: 2px 5px !important;*/
-	padding: 1px 0px 0px 3px;
+	padding: 1px 0 0 3px;
 	cursor: default;
 	white-space: nowrap;
 }

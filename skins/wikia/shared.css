@@ -390,7 +390,7 @@ div.gallerybox div.thumb {
 
 .gallerybox .thumbcaption {
 	position: absolute !important;
-	bottom: 0px !important;
+	bottom: 0 !important;
 	padding: 5px !important;
 	font-size: 88%;
 }
