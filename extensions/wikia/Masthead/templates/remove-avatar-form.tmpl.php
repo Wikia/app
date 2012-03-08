@@ -2,7 +2,7 @@
 <!-- css part -->
 <style type="text/css">
 /*<![CDATA[*/
-#wba-upload {border: 1px solid lightgrey;margin: 1em; padding: 1em;}
+#wba-upload {border: 1px solid lightgray;margin: 1em; padding: 1em;}
 #wba-upload li {display: inline; padding-left: 2em;}
 /*]]>*/
 </style>
