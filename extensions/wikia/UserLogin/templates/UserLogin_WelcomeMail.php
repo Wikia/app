@@ -24,7 +24,7 @@
 </td>
 </tr>
 </table>
-<h1 style="color:#fa5c1f;font-size:19px;font-weight:normal"><?= wfMsgForContent('usersignup-welcome-email-greeting') ?></h1>
+<h1 style="color:#fa5c1f;font-size:19px;font-weight:normal"><?= wfMsgExt('usersignup-welcome-email-greeting', $msgParams) ?></h1>
 </td>
 <td width="30">
 &nbsp;
@@ -38,7 +38,7 @@
 </tr>
 <tr>
 <td width="30" height="40">&nbsp;</td>
-<td style="color:#2c85d5;font-size:17px;font-weight:bold" valign="top"><?= wfMsgForContent('usersignup-welcome-email-heading') ?></td>
+<td style="color:#2c85d5;font-size:17px;font-weight:bold" valign="top"><?= wfMsgExt('usersignup-welcome-email-heading', $msgParams) ?></td>
 <td width="30">&nbsp;</td>
 </tr>
 </table>
@@ -50,9 +50,9 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgForContent('usersignup-welcome-email-edit-profile-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgExt('usersignup-welcome-email-edit-profile-heading', $msgParams) ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= wfMsgForContent('usersignup-welcome-email-edit-profile-content') ?>
+				<?= wfMsgExt('usersignup-welcome-email-edit-profile-content', $msgParams) ?>
 			</span>
 		</td>
 		<td width="15">&nbsp;</td>
@@ -60,7 +60,7 @@
 			<a href="$EDITPROFILEURL" style="text-decoration:none">
 			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
 				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= wfMsgForContent('usersignup-welcome-email-edit-profile-button') ?></td>
+					<td style="color:#fff;font-size:14px"><?= wfMsgExt('usersignup-welcome-email-edit-profile-button', $msgParams) ?></td>
 				</tr>
 			</table>
 			</a>
@@ -79,9 +79,9 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgForContent('usersignup-welcome-email-learn-basic-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgExt('usersignup-welcome-email-learn-basic-heading', $msgParams) ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= wfMsgForContent('usersignup-welcome-email-learn-basic-content') ?>
+				<?= wfMsgExt('usersignup-welcome-email-learn-basic-content', $msgParams) ?>
 			</span>
 		</td>
 		<td width="15">&nbsp;</td>
@@ -89,7 +89,7 @@
 			<a href="$LEARNBASICURL" style="text-decoration:none">
 			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
 				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= wfMsgForContent('usersignup-welcome-email-learn-basic-button') ?></td>
+					<td style="color:#fff;font-size:14px"><?= wfMsgExt('usersignup-welcome-email-learn-basic-button', $msgParams) ?></td>
 				</tr>
 			</table>
 			</a>
@@ -108,9 +108,9 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td>
-			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgForContent('usersignup-welcome-email-explore-wiki-heading') ?></h2>
+			<h2 style="color:#2c85d5;font-size:24px;font-weight:normal;margin:0"><?= wfMsgExt('usersignup-welcome-email-explore-wiki-heading', $msgParams) ?></h2>
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= wfMsgForContent('usersignup-welcome-email-explore-wiki-content') ?>
+				<?= wfMsgExt('usersignup-welcome-email-explore-wiki-content', $msgParams) ?>
 			</span>
 		</td>
 		<td width="15">&nbsp;</td>
@@ -118,7 +118,7 @@
 			<a href="$EXPLOREWIKISURL" style="text-decoration:none">
 			<table cellpadding="0" cellspacing="0" background="http://images1.wikia.nocookie.net/wikianewsletter/images/9/9e/Founder_emails_button2.png" width="102" height="40">
 				<tr valign="middle" align="center">
-					<td style="color:#fff;font-size:14px"><?= wfMsgForContent('usersignup-welcome-email-explore-wiki-button') ?></td>
+					<td style="color:#fff;font-size:14px"><?= wfMsgExt('usersignup-welcome-email-explore-wiki-button', $msgParams) ?></td>
 				</tr>
 			</table>
 			</a>
@@ -138,7 +138,7 @@
 		<td width="30">&nbsp;</td>
 		<td colspan="2">
 			<span style="color:#3a3a3a;font-size:14px;line-height:20px">
-				<?= wfMsgForContent('usersignup-welcome-email-content') ?>
+				<?= wfMsgExt('usersignup-welcome-email-content', $msgParams) ?>
 			</span>
 		</td>
 		<td width="30">&nbsp;</td>
@@ -149,7 +149,7 @@
 	<tr>
 		<td width="30">&nbsp;</td>
 		<td style="color:#3a3a3a;font-size:14px;line-height:20px">
-			<?= wfMsgForContent('usersignup-welcome-email-signature') ?>
+			<?= wfMsgExt('usersignup-welcome-email-signature', $msgParams) ?>
 		</td>
 		<td valign="bottom" align="right">
 			<img alt="Wikia" src="http://images3.wikia.nocookie.net/wikianewsletter/images/2/28/Wikialogo.png">
@@ -167,14 +167,14 @@
 </tr>
 <tr>
 <td align="center" style="font-size:11px;color:#3a3a3a;line-height:16px">
-<?= wfMsgForContent('userlogin-email-footer-line1') ?>
+<?= wfMsgExt('userlogin-email-footer-line1', $msgParams) ?>
 <br>
-<?= wfMsgForContent('userlogin-email-footer-line2') ?>
+<?= wfMsgExt('userlogin-email-footer-line2', $msgParams) ?>
 </td>
 </tr>
 <tr>
 <td align="center" valign="middle" height="50">
-<?= wfMsgForContent('userlogin-email-footer-line3') ?>
+<?= wfMsgExt('userlogin-email-footer-line3', $msgParams) ?>
 </td>
 </tr>
 </table>

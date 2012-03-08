@@ -48,20 +48,22 @@ class UserLoginModule extends Module {
 	 */
 	public function executeGeneralMail( $params ) {
 		$this->type = $params['type'];
+		$this->language = $params['language'];
+		$this->msgParams = array( 'parsemag', 'language' => $this->language );
 
 		switch ( $params['type'] ) {
 			case 'password-email':
-				$this->greeting = $this->wf->MsgForContent( 'userlogin-'.$this->type.'-greeting' );
-				$this->content = $this->wf->MsgForContent( 'userlogin-'.$this->type.'-content' );
-				$this->signature = $this->wf->MsgForContent( 'userlogin-'.$this->type.'-signature' );
+				$this->greeting = $this->wf->MsgExt( 'userlogin-'.$this->type.'-greeting', $this->msgParams );
+				$this->content = $this->wf->MsgExt( 'userlogin-'.$this->type.'-content', $this->msgParams );
+				$this->signature = $this->wf->MsgExt( 'userlogin-'.$this->type.'-signature', $this->msgParams );
 				break;
 			case 'confirmation-email':
 			case 'reconfirmation-email':
 			case 'account-creation-email':
 			case 'confirmation-reminder-email' :
-				$this->greeting = $this->wf->MsgForContent( 'usersignup-'.$this->type.'-greeting' );
-				$this->content = $this->wf->MsgForContent( 'usersignup-'.$this->type.'-content' );
-				$this->signature = $this->wf->MsgForContent( 'usersignup-'.$this->type.'-signature' );
+				$this->greeting = $this->wf->MsgExt( 'usersignup-'.$this->type.'-greeting', $this->msgParams );
+				$this->content = $this->wf->MsgExt( 'usersignup-'.$this->type.'-content', $this->msgParams );
+				$this->signature = $this->wf->MsgExt( 'usersignup-'.$this->type.'-signature', $this->msgParams );
 				break;
 			default:
 				$this->greeting = '';
@@ -76,6 +78,8 @@ class UserLoginModule extends Module {
 	 * @requestParam Array params
 	 */
 	public function executeWelcomeMail( $params ) {
+		$this->language = $params['language'];
+		$this->msgParams = array( 'parsemag', 'language' => $this->language );
 	}
 
 }
