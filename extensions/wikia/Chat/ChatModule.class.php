@@ -2,7 +2,6 @@
 class ChatModule extends Module {
 
 	var $wgStylePath;
-	var $wgStyleVersion;
 	var $wgExtensionsPath;
 	var $wgBlankImgUrl;
 	var $globalVariablesScript;
@@ -120,7 +119,7 @@ class ChatModule extends Module {
 		$vars['wgChatMod'] = $this->isChatMod;
 		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;
 		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
-		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wgExtensionsPath.'/wikia/Chat/swf/WebSocketMainInsecure.swf?'.$this->wgStyleVersion;
+		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wgExtensionsPath.'/wikia/Chat/swf/WebSocketMainInsecure.swf';
 		$vars['EMOTICONS'] = wfMsgForContent('emoticons');
 		
 		$vars['pathToProfilePage'] = $this->pathToProfilePage;
