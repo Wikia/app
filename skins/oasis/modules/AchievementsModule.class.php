@@ -49,10 +49,7 @@ class AchievementsModule extends Module {
 			$this->challengesBadges = $userProfileService->mChallengesBadges;
 
 			// Let's prune the challengesBadges list to the correct length before passing it to the template
-			if ($this->max_challenges == "all") {
-				$this->challengesBadges = $this->challengesBadges;
-			}
-			else {
+			if ($this->max_challenges != "all") {
 				while (count($this->challengesBadges) > $this->max_challenges) array_pop($this->challengesBadges);
 			}
 		}
