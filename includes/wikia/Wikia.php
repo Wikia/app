@@ -472,6 +472,19 @@ class Wikia {
 	private static $vars = array();
 	private static $cachedLinker;
 
+	public static function isStagingServer() {
+		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
+	
+		if(
+				isset( $headers[ "X-Staging" ] )
+				&& ( $headers[ "X-Staging" ] === "preview" || $headers[ "X-Staging" ] === "verify" )
+		) { 
+			return true; 
+		} else {
+			return false;
+		}
+	}	
+	
 	public static function setVar($key, $value) {
 		Wikia::$vars[$key] = $value;
 	}
