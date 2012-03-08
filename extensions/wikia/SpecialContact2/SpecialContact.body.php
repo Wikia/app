@@ -127,12 +127,12 @@ class ContactForm extends SpecialPage {
 				$this->err[].= wfMsg('specialcontact-nomessage');
 				$this->errInputs['wpContactDesc'] = true;
 			}
-			
+
 			#captcha
 			if(!$wgUser->isLoggedIn()){ // logged in users don't need the captcha (RT#139647)
 				if( class_exists( $wgCaptchaClass ) && !( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
 					$this->err[].= wfMsg('specialcontact-captchafail');
-					$this->errInputs['wpCaptchaWord'] = true; 
+					$this->errInputs['wpCaptchaWord'] = true;
 				}
 			}
 
@@ -158,7 +158,7 @@ class ContactForm extends SpecialPage {
 		else {
 			$this->ContactFormPicker();
 		}
-		
+
 	}
 
 	/**
@@ -189,7 +189,7 @@ class ContactForm extends SpecialPage {
 
 		//always add the IP
 		$items[] = 'IP:' . wfGetIP();
-		
+
 		//if they are logged in, add the ID(and name) and their lang
 		$uid = $wgUser->getID();
 		if( !empty($uid) ) {
@@ -220,16 +220,21 @@ class ContactForm extends SpecialPage {
 		$screenshot = $wgRequest->getFileTempname( 'wpScreenshot' );
 
 		if ( !empty( $screenshot ) ) {
-			$body .= "\n\nScreenshot attached.";
 
 			$screenshots = array();
-			foreach($screenshot as $image) {
-				if(!empty($image)) {
-					$screenshots []= $image;
+			foreach ( $screenshot as $image ) {
+				if ( !empty( $image ) ) {
+					$screenshots[] = $image;
 				}
 			}
 
-			$error = UserMailer::sendWithAttachment( $mail_community, $subject, $screenshots, $mail_user, $mail_user, $body );
+			if ( !empty( $screenshots ) ) {
+				$body .= "\n\nScreenshot attached.";
+
+				$error = UserMailer::sendWithAttachment( $mail_community, $subject, $screenshots, $mail_user, $mail_user, $body );
+			} else {
+				$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
+			}
 		} else {
 			$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
 		}
@@ -270,12 +275,12 @@ class ContactForm extends SpecialPage {
 		global $wgOut, $wgUser, $SpecialContactSecMap;
 
 		$wgOut->setPageTitle( wfMsg( 'specialcontact-pagetitle' ) );
-		
+
 		$uskin = $wgUser->getSkin();
 
 		$secDat = array();
-		
-		foreach( $SpecialContactSecMap as $section ) 
+
+		foreach( $SpecialContactSecMap as $section )
 		{
 			if( empty($section['headerMsg']) ) {
 				continue;
@@ -331,7 +336,7 @@ class ContactForm extends SpecialPage {
 
 		$oTmpl->set_vars( $vars );
 		$wgOut->addHTML( $oTmpl->execute("picker") );
-		
+
 		return;
 	}
 
@@ -413,7 +418,7 @@ class ContactForm extends SpecialPage {
 
 		//global this, for use with unlocking a field
 		global $wgSpecialContactUnlockURL;
-		
+
 		# pre calc if these fields are 'errors' or not
 		$eclass = array();
 		$fields = array( 'wpContactWikiName', 'wpUserName', 'wpContactRealName',
@@ -482,36 +487,36 @@ class ContactForm extends SpecialPage {
 		);
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Contact' . '/' . $sub );
-		
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			'type' => $sub,
 			'intro' => wfMsgExt( 'specialcontact-intro-' . $sub, array('parse') ),
 			'footer' => wfMsgExt( 'specialcontact-noform-footer' , array('parse') ),
 		);
-		
+
 		$oTmpl->set_vars( $vars );
 
 		$wgOut->addHTML( $oTmpl->execute("noform") );
 
 		return;
 	}
-	
+
 	/* used by contact form for errors */
 	function formatError($err) {
 		$out = '';
-		if(is_array($err)) { 
+		if(is_array($err)) {
 			$out .= '<div class="errorbox">';
 				foreach($err as $value) {
 					$out .= $value . "<br/>";
 				}
 			$out .= '</div><br style="clear: both;">';
 		} else {
-			$out .= Wikia::errorbox( $err );	
+			$out .= Wikia::errorbox( $err );
 		}
 		return $out;
 	}
-	
+
 	/* used by contact form for errors */
 	function getClass($id) {
 		if(empty($this->errInputs[$id])) {
@@ -523,7 +528,7 @@ class ContactForm extends SpecialPage {
 	/* used by picker to check if a subpage passed is OK */
 	private function isAuthorizedSub( $par ) {
 		global $SpecialContactSecMap;
-		
+
 		foreach( $SpecialContactSecMap as $sec ) {
 			foreach($sec['links'] as $entry )
 			{
@@ -533,7 +538,7 @@ class ContactForm extends SpecialPage {
 				else {
 					$link = $entry;
 				}
-				
+
 				if( $link == $par ) {
 					if( is_array($entry) ) {
 						$this->secDat = array();
@@ -550,7 +555,7 @@ class ContactForm extends SpecialPage {
 					} else {
 						$this->secDat = array('link'=>$link, 'msg'=>$link, 'form'=>false);
 					}
-					
+
 					return true;
 				}
 			}
