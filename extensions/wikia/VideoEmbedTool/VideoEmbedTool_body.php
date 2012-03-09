@@ -179,7 +179,7 @@ class VideoEmbedTool {
 				return wfMsg( 'vet-non-existing' );				
 			}
 			
-			$embedCode = $file->getEmbedCode( $wgTitle->getArticleID(), VIDEO_PREVIEW, false, false, true );			
+			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );			
 			$props['id'] = $file->getVideoId();
 			$props['oname'] = '';			
 			$props['vname'] = $file->getTitle()->getText();
@@ -187,8 +187,7 @@ class VideoEmbedTool {
 			$props['metadata'] = '';
 			$props['href'] = $title->getPrefixedText();
 			// provider not needed
-		}
-		else {
+		} else {
 			$title = Title::newFromText( $itemTitle, NS_LEGACY_VIDEO );
 			$video = new VideoPage( $title );
 
@@ -274,7 +273,7 @@ class VideoEmbedTool {
 				return wfMsg( 'vet-non-existing' );				
 			}
 			
-			$embedCode = $file->getEmbedCode( $wgTitle->getArticleID(), VIDEO_PREVIEW, false, false, true );
+			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
 			
 			$props['id'] = $file->getVideoId();
 			$props['vname'] = $file->getTitle()->getText();

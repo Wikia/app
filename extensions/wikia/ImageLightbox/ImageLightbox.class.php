@@ -42,7 +42,7 @@ class ImageLightbox {
 		
 			if ( !empty($wgTitle) ) {
 				
-				$embedCode = $image->getEmbedCode( $wgTitle->getArticleId(), $maxWidth, true, true );
+				$embedCode = $image->getEmbedCode( $maxWidth, true, true );
 				$asset = $image->getPlayerAssetUrl();
 
 				if ( empty($asset) ) {
