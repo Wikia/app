@@ -40,7 +40,7 @@ class EditAccount extends SpecialPage {
 	 */
 	public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt;
-
+		
 		// Set page title and other stuff
 		$this->setHeaders();
 
@@ -94,11 +94,12 @@ class EditAccount extends SpecialPage {
 						$action = '';
 					}
 				}
-			} else {
-				$action = '';
 			}
 		}
-
+		
+		// FB:23860
+		if ( !( $this->mUser instanceof User ) ) $action = '';
+		
 		switch( $action ) {
 			case 'setemail':
 				$newEmail = $wgRequest->getVal( 'wpNewEmail' );
