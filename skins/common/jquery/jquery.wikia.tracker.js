@@ -11,44 +11,39 @@
  * @author Christian
  */
 jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
-	try {
-		// Require an event argument
-		if (!event) {
-			return;
-		}
-		
-		$().log('InternalTrack: ' + event);
-		if(data) $().log(data);
-	
-		// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
-		var params = {
-			'c': wgCityId,
-			'x': wgDB,
-			'a': wgArticleId,
-			'lc': wgContentLanguage,
-			'n': wgNamespaceNumber,
-			'u': window.trackID,
-			'beacon': window.beacon_id || ''
-		};
-	
-		// Add data object to params object
-		$.extend(params, data);
-	
-		// Make request
-		//$.get('http://a.wikia-beacon.com/__track/special/' + event, params, callback);
-		$.ajax({
-			cache: false,
-			timeout: 3000,
-			dataType: "script",
-			url: 'http://a.wikia-beacon.com/__track/special/' + event,
-			data: params,
-			error: callbackError,
-			success: callbackSuccess
-		});
-	} catch (e) {
-		$().log('Internal Tracking error');
-		$().log(e);
+	// Require an event argument
+	if (!event) {
+		return;
 	}
+	
+	$().log('InternalTrack: ' + event);
+	if(data) $().log(data);
+
+	// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
+	var params = {
+		'c': wgCityId,
+		'x': wgDB,
+		'a': wgArticleId,
+		'lc': wgContentLanguage,
+		'n': wgNamespaceNumber,
+		'u': window.trackID,
+		'beacon': window.beacon_id || ''
+	};
+
+	// Add data object to params object
+	$.extend(params, data);
+
+	// Make request
+	//$.get('http://a.wikia-beacon.com/__track/special/' + event, params, callback);
+	$.ajax({
+		cache: false,
+		timeout: 3000,
+		dataType: "script",
+		url: 'http://a.wikia-beacon.com/__track/special/' + event,
+		data: params,
+		error: callbackError,
+		success: callbackSuccess
+	});
 }
 
 
