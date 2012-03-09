@@ -76,6 +76,7 @@ class WikiaSearch extends WikiaObject {
 					$wikiResultSet->setHeader('cityTitle', WikiFactory::getVarValueByName( 'wgSitename', $cityId ));
 					$wikiResultSet->setHeader('cityUrl', WikiFactory::getVarValueByName( 'wgServer', $cityId ));
 					$wikiResultSet->setHeader('cityArticlesNum', $result->getVar('cityArticlesNum', false));
+					$wikiResultSet->setHeader('1stResultPos', $result->getVar('position', 0));
 
 					$wikiResults[$cityId] = $wikiResultSet;
 				}
@@ -84,14 +85,18 @@ class WikiaSearch extends WikiaObject {
 					$set->addResult($result);
 				}
 				$set->incrResultsFound();
+				$set->setHeader('cityRank', $this->getWikiRank($set));
 			}
 		}
 
 		return F::build( 'WikiaSearchResultSet', array( 'results' => $wikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete() ) );
 	}
 
-	private function groupWikiResults($wikiId, Array $resultsPerWiki) {
-		return $resultsPerWiki;
+	private function getWikiRank(WikiaSearchResultSet $wikiResults) {
+		$articlesNum = (int) $wikiResults->getHeader('cityArticlesNum');
+		$resultsNum = $wikiResults->getResultsFound();
+		$firstResultPos = $wikiResults->getHeader('1stResultPos');
+		return round(( 1 / $firstResultPos ) * ( 1 + log($articlesNum))) + $resultsNum; //round( ( ( 1 / $firstResultPos ) * ( 1 + ln($articlesNum) ) ) + $resultsNum );
 	}
 
 	public function setClient( WikiaSearchClient $client ) {

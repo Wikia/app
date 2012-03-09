@@ -45,6 +45,10 @@ class WikiaSearchResultSet implements Iterator {
 	}
 
 	public function getResultsFound() {
+		return $this->resultsFound;
+	}
+
+	public function getRealResultsFound() {
 		return $this->isComplete() ? $this->getResultsNum() : $this->resultsFound;
 	}
 

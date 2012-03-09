@@ -90,6 +90,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	private function getWikiaResults(Array $solrDocs, Array $solrHighlighting) {
 		$results = array();
+		$position = 1;
 		foreach($solrDocs as $doc) {
 			$result = F::build( 'WikiaSearchResult', array( 'id' => 'c'.$doc->wid.'p'.$doc->pageid ) );
 			$result->setCityId($doc->wid);
@@ -102,8 +103,10 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 			$result->setVar('backlinks', $doc->backlinks);
 			$result->setVar('cityArticlesNum', $doc->wikiarticles);
+			$result->setVar('position', $position);
 
 			$results[] = $result;
+			$position++;
 		}
 
 		return $results;

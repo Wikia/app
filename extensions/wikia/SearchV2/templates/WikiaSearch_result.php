@@ -1,9 +1,13 @@
 <!-- single search result -->
 <?php if($result->hasCanonical()): ?>
-	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a> (Redirect: <?=$result->getCanonical();?>)<br />
+	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a> (Redirect: <?=$result->getCanonical();?>)
 <?php else: ?>
-	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a><br />
+	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a>
 <?php endif; ?>
+<?php if(!empty($rank)): ?>
+	| <font color="red">WikiRank: <?=$rank;?></font>
+<?php endif; ?>
+<br />
 <div <?=empty($inGroup)?'class="searchresult"':'';?>>
 	<?= $result->getText(); ?>
 </div>
