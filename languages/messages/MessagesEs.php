@@ -63,6 +63,14 @@
  * @author לערי ריינהארט
  */
 
+$bookstoreList = array(
+
+	'Google Libros' => 'http://books.google.es/books?q=isbn:$1&hl=es',
+	'Fnac' => 'http://busqueda.fnac.es/search/quick.do?text=$1&category=book',
+	'Amazon.es' => 'http://www.amazon.es/gp/search/ref=sr_adv_b/?field-isbn=$1',
+	'WorldCat' => 'http://worldcatlibraries.org/wcpa/isbn/$1'
+)
+
 $namespaceNames = array(
 	NS_MEDIA            => 'Media',
 	NS_SPECIAL          => 'Especial',
