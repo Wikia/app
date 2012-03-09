@@ -1375,7 +1375,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				array($this->mData['id'])
 			);
 
-			// shouldn't this be checking for mobile phone? - hyun
+			//load WikiaMobile resources if needed usign JSSnippets filtering mechanism, see last parameter
 			$html .= F::build('JSSnippets')->addToStack(
 				array(
 					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss',
