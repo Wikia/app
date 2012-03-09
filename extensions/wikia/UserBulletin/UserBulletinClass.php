@@ -139,7 +139,7 @@ class UserBulletinList{
 			
 			$type_name = UserBulletin::$bulletin_types[ $row->ub_type ];
 			 $bulletins[] = array(
-				 "id"=>$row->ub_id,"timestamp"=>($row->timestamp ) , "ago" => get_time_ago( $row->timestamp ),
+				 "id"=>$row->ub_id,"timestamp"=>($row->timestamp ) , "ago" => wfTimeFormatAgo( $row->timestamp ),
 				 "type"=>($row->ub_type ), "type_name" => $type_name,
 				 "user_name" => $this->user_name, "user_id" => $this->user_id,
 				 "message" => $row->ub_message,
