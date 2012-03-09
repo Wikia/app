@@ -71,7 +71,9 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 	},
 	
 	showSourceTextArea: function(msg, text) {
-		$('.msg-body', msg).first().html('<textarea readonly="readonly" class="body">' + text + '</textarea>');
+		var sourceTextarea = $('<textarea readonly="readonly" class="body">' + text + '</textarea>');
+		$('.msg-body', msg).first().html("").append(sourceTextarea);
+		sourceTextarea.autoResize({minFocus:100, minContent: 100, limit: 9999, limitEmpty: 70, extraSpace: 30}).trigger('change');
 	},
 	
 	cancelEdit: function(e) {
