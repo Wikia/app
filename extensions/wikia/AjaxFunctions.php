@@ -65,7 +65,6 @@ function cxValidateUserName () {
  * those usernames to be valid (so that they can still login), but we just don't want NEW accounts to be created above the length of wgWikiaMaxNameChars.
  */
 function wfValidateUserName($uName){
-	global $wgWikiaMaxNameChars, $wgExternalSharedDB;
 	wfProfileIn(__METHOD__);
 
 	$result = true;#wfMsg ('username-valid');
