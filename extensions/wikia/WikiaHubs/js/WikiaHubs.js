@@ -1,5 +1,6 @@
 var WikiaHubs = {
 	trackingCategory: 'wikiahubs',
+	pageName: window.wgPageName ? window.wgPageName : 'unknown',
 	init: function() {
 		WikiaHubs.el = $('#WikiaHubs');
 		WikiaHubs.el.click(WikiaHubs.clickTrackingHandler);
@@ -9,10 +10,10 @@ var WikiaHubs = {
 			WikiaHubs.trackClick('pulse/search-submit');
 		});
 		//WikiaHubs.trackingCategory = 'video-games';
-		$.internalTrack(WikiaHubs.trackingCategory, { event:'view' });
+		$.internalTrack(WikiaHubs.trackingCategory, { page: WikiaHubs.pageName, event:'view' });
 	},
 	trackClick: function(label, value) {
-		$.internalTrack(WikiaHubs.trackingCategory, { event:'click', label:label});
+		$.internalTrack(WikiaHubs.trackingCategory, { page: WikiaHubs.pageName, event:'click', label:label});
 	},
 	clickTrackingHandler: function(e) {
 		var node = $(e.target);
