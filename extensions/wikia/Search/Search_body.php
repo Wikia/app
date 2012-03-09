@@ -253,9 +253,9 @@ class SolrSearchSet extends SearchResultSet {
 
 			$queryClauses[] = $widQuery;
 
-			$queryClauses[] = "lang:en"
+			$queryClauses[] = "lang:en";
 
-			$queryClauses[] = "iscontent:true"
+			$queryClauses[] = "iscontent:true";
 
 		} else {
 
@@ -277,15 +277,17 @@ class SolrSearchSet extends SearchResultSet {
 				      'mm'	=>	'66%',
 				      'ps'	=>	'3',
 				      'tie'	=>	'0.01',
-				      'bq'	=>	'\"'.str_replace('"', $sanitizedQuery).'\"'
+				      'bq'	=>	'\"'.str_replace('"', '', $sanitizedQuery).'\"'
 				     );
 
-		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s", 
-				  implode(' ', array_walk($dismaxParams, function($val,$key) {return "{$key}={$val}"; })),
-				  $sanitizedQuery);
-				  	   
-		$sanitizedQuery = implode(' AND ', $queryClauses);
+		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
 
+		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s"', 
+					  $paramString, 
+					  $sanitizedQuery);
+
+		$sanitizedQuery = implode(' AND ', $queryClauses);
+		
 		try {
 			wfRunHooks( 'Search-beforeBackendCall', array( &$sanitizedQuery, &$offset, &$limit, &$params ) );
 			$response = $solr->search($sanitizedQuery, $offset, $limit, $params);
