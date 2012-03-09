@@ -29,7 +29,7 @@ class CategoryExhibitionSection {
 
 		$this->categoryTitle = $oCategoryTitle;
 
-		if ( $wgUser->isAnon() ){
+		if ( $wgUser->isAnon() && empty($oCategoryTitle) ){
 			$this->setDisplayTypeFromParam();
 			$this->setSortTypeFromParam();
 		}
@@ -295,8 +295,12 @@ class CategoryExhibitionSection {
 	}
 
 	protected function getArticleData( $pageId ){
-
 		global $wgVideoHandlersVideosMigrated;
+		
+		$oTitle = Title::newFromID( $pageId );
+		if(!($oTitle instanceof Title)) {
+			return false;
+		}
 		
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
@@ -304,9 +308,8 @@ class CategoryExhibitionSection {
 			$pageId,
 			F::App()->wg->cityId,
 			$this->isVerify(),
-			$wgVideoHandlersVideosMigrated ? 1 : 0
-			
-			
+			$wgVideoHandlersVideosMigrated ? 1 : 0,
+			$this->getTouched($oTitle)	
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
@@ -322,12 +325,7 @@ class CategoryExhibitionSection {
 			$snippetService = new ArticleService ( $pageId );
 			$snippetText = $snippetService->getTextSnippet();
 		}
-
-		$oTitle = Title::newFromID( $pageId );
-		if(!($oTitle instanceof Title)) {
-			return false;
-		}
-
+		
 		$returnData = array(
 			'id'		=> $pageId,
 			'img'		=> $imageUrl,
@@ -380,9 +378,9 @@ class CategoryExhibitionSection {
 	 * Caching functions.
 	 */
 
-	protected function getKey( ) {
-		global $wgCityId, $wgVideoHandlersVideosMigrated;
-		return wfSharedMemcKey(
+	protected function getKey() {
+		global $wgVideoHandlersVideosMigrated;
+		return wfMemcKey(
 			'category_exhibition_section',
 			$this->categoryTitle->getDBKey(),
 			$this->templateName,
@@ -390,11 +388,30 @@ class CategoryExhibitionSection {
 			$this->getDisplayType(),
 			$this->getSortType(),
 			$this->isVerify(),
-			$wgCityId,
-			$wgVideoHandlersVideosMigrated ? 1 : 0
+			($wgVideoHandlersVideosMigrated ? 1 : 0),
+			$this->getTouched($this->categoryTitle)
 		);
 	}
-
+	
+	/**
+	 * this method help us to invalidate cache on any change on category, sub cat, page 
+	 */
+	
+	protected function getTouched($title) {
+		global $wgMemc;
+		return $wgMemc->get($this->getTouchedKey($title), 0);
+	}
+	
+	public function setTouched($title) {
+		global $wgMemc;
+		$wgMemc->get($this->getTouchedKey($title), time() . rand(0,9999), 60*60*24 );
+	} 
+	
+	protected function getTouchedKey($title) {
+		$key = wfMemcKey( 'category_touched', $title->getDBKey() );
+		return $key;		
+	}
+	
 	protected function saveToCache( $content ) {
 		
 		global $wgMemc;

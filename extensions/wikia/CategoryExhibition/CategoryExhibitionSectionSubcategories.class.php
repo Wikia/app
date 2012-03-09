@@ -41,13 +41,17 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 
 	protected function getArticleData( $pageId ){
 		global $wgVideoHandlersVideosMigrated;
+		
+		$oTitle = Title::newFromID( $pageId );
+				
 		$oMemCache = F::App()->wg->memc;
 		$sKey = F::App()->wf->sharedMemcKey(
 			'category_exhibition_article_cache',
 			$pageId,
 			F::App()->wg->cityId,
 			$this->isVerify(),
-			$wgVideoHandlersVideosMigrated ? 1 : 0
+			$wgVideoHandlersVideosMigrated ? 1 : 0,
+			$this->getTouched($oTitle)
 		);
 
 		$cachedResult = $oMemCache->get( $sKey );
@@ -69,8 +73,6 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 				$snippetText = $snippetService->getTextSnippet();
 			}
 		}
-
-		$oTitle = Title::newFromID( $pageId );
 
 		$returnData = array(
 		    'id'		=> $pageId,
