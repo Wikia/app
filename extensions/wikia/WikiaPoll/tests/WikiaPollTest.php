@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/../WikiaPoll_setup.php';
 wfLoadAllExtensions();
 
-class WikiaPollTest extends PHPUnit_Framework_TestCase {
+class WikiaPollTest extends WikiaBaseTest {
 
 	// Create a poll for all the other functions to use
 	public static function setUpBeforeClass() {
