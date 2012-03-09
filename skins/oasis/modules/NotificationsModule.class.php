@@ -95,7 +95,7 @@ class NotificationsModule extends Module {
 	 */
 	public static function addConfirmation($message, $type = 1) {
 		wfProfileIn(__METHOD__);
-		
+
 		$_SESSION[self::SESSION_KEY] = array(
 			'message' => $message,
 			'type' => $type,
@@ -104,11 +104,11 @@ class NotificationsModule extends Module {
 		wfDebug(__METHOD__ . " - {$message}\n");
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
-	 * Clear confirmation 
+	 * Clear confirmation
 	 */
-	
+
 	public static function clearConfirmation() {
 		$_SESSION[self::SESSION_KEY] = null;
 	}
@@ -346,7 +346,6 @@ class NotificationsModule extends Module {
 	 * Handle notifications about new message(s)
 	 */
 	public static function addMessageNotification(&$skin, &$tpl) {
-		global $wgUser, $wgOut;
 		wfProfileIn(__METHOD__);
 
 		if (Wikia::isOasis()) {

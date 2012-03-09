@@ -37,7 +37,7 @@ class EditPageModule extends Module {
 	 * Loads YUI on edit pages
 	 */
 	public static function onShowEditFormInitial($editPage) {
-		global $wgOut, $wgHooks, $wgJsMimeType;
+		global $wgOut, $wgHooks;
 		wfProfileIn(__METHOD__);
 
 		// BugId:2435 - add wgIsEditPage global JS variable on edit pages to simplify checks
