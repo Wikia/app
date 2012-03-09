@@ -5,7 +5,11 @@
 		<?php if($resultSet->getHeader('cityArticlesNum')): ?>
 			| <?=$resultSet->getHeader('cityArticlesNum');?> <?= wfMsg( 'wikiasearch2-pages' ); ?>
 		<?php endif; ?>
-		| <?=$resultSet->getResultsFound();?> <?= wfMsg( 'wikiasearch2-results' ); ?><br />
+		| <?=$resultSet->getResultsFound();?> <?= wfMsg( 'wikiasearch2-results' ); ?>
+		<?php if($resultSet->getHeader('cityRank')): ?>
+			| (1st pos: <?=$resultSet->getHeader('1stResultPos');?>) <font color="red">WikiRank: <?=$resultSet->getHeader('cityRank');?></font>
+		<?php endif; ?>
+		<br />
 		<a href="<?=$resultSet->getHeader('cityUrl');?>"><?=$resultSet->getHeader('cityUrl');?></a>
 	</div>
 	<br clear="left">
@@ -22,5 +26,5 @@
 		<?php endfor; ?>
 	<br clear="left">
 <?php else: ?>
-	<?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $resultSet->next(), 'pos' => $pos, 'rankExpr' => $rankExpr, 'debug' => $debug )); ?>
+	<?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $resultSet->next(), 'pos' => $pos, 'rankExpr' => $rankExpr, 'debug' => $debug, 'rank' =>  $resultSet->getHeader('cityRank'))); ?>
 <?php endif; ?>

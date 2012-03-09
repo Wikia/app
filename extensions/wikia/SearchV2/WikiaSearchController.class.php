@@ -36,7 +36,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
 			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $crossWikia ? 0 : $this->wg->CityId ), $rankExpr, $groupResults );
-			$resultsFound = $results->getResultsFound();
+			$resultsFound = $results->getRealResultsFound();
 
 			if(!empty($resultsFound)) {
 				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $crossWikia, 'rankExpr' => $rankExpr, 'groupResults' => $groupResults ) );
@@ -52,7 +52,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
 		$this->setVal( 'crossWikia', $crossWikia );
 		$this->setVal( 'rankExpr', $rankExpr );
-		$this->setVal( 'groupResults', $groupResults );
+		$this->setVal( 'groupResults', ($groupResults && $crossWikia) );
 		$this->setVal( 'debug', $debug );
 
 		$this->setVal( 'debug', $this->getVal('debug', false) );
