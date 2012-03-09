@@ -303,6 +303,7 @@ class CorporatePageHelper{
 			case 501: //NS_BLOG_ARTICLE_TALK
 			case 502: //NS_BLOG_LISTING
 			case 503: //NS_BLOG_LISTING_TALK
+			case 1200: // NS_WALL
 				if (!$title->exists() && !empty( $wgCorporatePageRedirectWiki )) {
 					$redirect = $wgCorporatePageRedirectWiki . $title->prefix($title->getPartialURL());
 				}
