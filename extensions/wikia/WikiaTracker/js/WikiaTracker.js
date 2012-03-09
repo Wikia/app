@@ -94,7 +94,7 @@ WikiaTracker._track = function(page, profile, sample, events) {
 
 	sample = '10';
 
-	if (page != 'AnalyticsEngine::EVENT_PAGEVIEW' && profile != 'UA-288915-42') {
+	if (page != 'AnalyticsEngine::EVENT_PAGEVIEW' && profile != 'UA-288915-42' && profile != 'UA-2871474-1') {
 		return;
 	}
 
