@@ -132,7 +132,8 @@ var WikiaMobile = (function() {
 					cap, img;
 					
 					self.attr('data-num', number);
-					this.getElementsByTagName('footer').insertAdjacentHTML('beforeend', l);
+
+					this.getElementsByTagName('footer')[0].insertAdjacentHTML('beforeend', l);
 
 					$.each(figures, function(i, fig){
 						img = fig.getElementsByClassName('image')[0];
