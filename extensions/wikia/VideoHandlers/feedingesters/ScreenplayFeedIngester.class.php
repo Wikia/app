@@ -87,6 +87,11 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$clipData['videoId'] = $clip->getElementsByTagName('EclipId')->item(0)->textContent;
 				$clipData['description'] = html_entity_decode( $clip->getElementsByTagName('Description')->item(0)->textContent );
 				$clipData['duration'] = $clip->getElementsByTagName('RunTime')->item(0)->textContent;
+				$clipData['trailerRating'] = $clip->getElementsByTagName('TrailerRating')->item(0)->textContent;
+				$clipData['industryRating'] = $clip->getElementsByTagName('MPAARating')->item(0)->textContent;
+				$ageGate = $clip->getElementsByTagName('AgeGate')->item(0)->textContent;
+				$clipData['ageGate'] = $ageGate && strtolower($ageGate) == "true";
+				$clipData['language'] = $clip->getElementsByTagName('Language')->item(0)->textContent;
 				$clipData['jpegBitrateCode'] = ScreenplayApiWrapper::MEDIUM_JPEG_BITRATE_ID;
 
 				$encodes = $clip->getElementsByTagName('Encode');
@@ -197,7 +202,11 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			    'hd'		=>	$doesHdExist,
 			    'duration'		=>	$data['duration'],
 			    'jpegBitrateCode'	=>	$data['jpegBitrateCode'],
-			    'published'		=>	strtotime($data['dateAdded'])
+			    'published'		=>	strtotime($data['dateAdded']),
+			    'trailerRating'	=>	$data['trailerRating'],
+			    'industryRating'	=>	$data['industryRating'],
+			    'ageGate'		=>	(int) $data['ageGate'],
+			    'language'		=>	$data['language']
 			    );
 		return $metadata;
 	}

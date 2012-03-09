@@ -26,6 +26,7 @@ class VideoFileUploader {
 	public function setExternalUrl ( $sUrl ){			$this->sExternalUrl = $sUrl; }
 	public function setProvider( $sProvider ){			$this->sProvider = $sProvider; }
 	public function setVideoId( $sVideoId ){			$this->sVideoId = $sVideoId; }
+	public function getVideoId( ){					return $this->sVideoId; }
 	public function setProviderFromId( $iProviderId ){
 		$sProvider = ApiWrapperFactory::getInstance()->getProviderNameFromId( $iProviderId );
 		if ( empty( $sProvider ) ) {
@@ -61,18 +62,18 @@ class VideoFileUploader {
 
 		/* create a reference to article that will contain uploaded file */
 		$titleText = self::sanitizeTitle( $this->getDestinationTitle() );
-		$title = Title::newFromText( $titleText, NS_FILE );
+		$oTitle = Title::newFromText( $titleText, NS_FILE );
 
 		$file = F::build( !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile',
 				array(
-					$title,
+					$oTitle,
 					RepoGroup::singleton()->getLocalRepo()
 				)
 			);
 
 		/* override thumbnail metadata with video metadata */
 		$file->forceMime( $this->getApiWrapper()->getMimeType() );
-		$file->setVideoId( $this->getApiWrapper()->getVideoId() );
+		$file->setVideoId( $this->getVideoId() );
 
 		/* real upload */
 		$result = $file->upload(
@@ -138,7 +139,7 @@ class VideoFileUploader {
 	 * @return FileRepoStatus On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file. 
 	 */
-	public static function uploadVideo( $provider, $videoId, $title, $description=null, $undercover=false, $overrideMetadata=array()) {
+	public static function uploadVideo( $provider, $videoId, &$title, $description=null, $undercover=false, $overrideMetadata=array()) {
 
 		$oUploader = new self();
 		$oUploader->setProvider( $provider );

@@ -237,6 +237,14 @@ abstract class ApiWrapper {
 			// for providers that use diffrent video id for embeded code
 			if (!isset($metadata['altVideoId']))
 				$metadata['altVideoId']		= $this->getAltVideoId();
+			if (!isset($metadata['trailerRating']))
+				$metadata['trailerRating']	= $this->getTrailerRating();
+			if (!isset($metadata['industryRating']))
+				$metadata['industryRating']	= $this->getIndustryRating();
+			if (!isset($metadata['ageGate']))
+				$metadata['ageGate']		= $this->isAgeGate();
+			if (!isset($metadata['language']))
+				$metadata['language']		= $this->getLanguage();
 		}
 		
 		if ( $cacheMe ) {
@@ -247,8 +255,8 @@ abstract class ApiWrapper {
 	}
 	
 	protected function getMetadataCacheKey() {
-		$key = static::$CACHE_KEY . '_metadata';
-		return $key . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoId;
+		$key = static::$CACHE_KEY . '_metadata' . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoId;
+		return $key;
 	}
 
 	protected function getVideoPublished(){
@@ -271,6 +279,10 @@ abstract class ApiWrapper {
 		return false;
 	}
 
+	/**
+	 * List of keywords, separated by comma
+	 * @return string
+	 */
 	protected function getVideoKeywords(){
 		return '';
 	}
@@ -284,6 +296,36 @@ abstract class ApiWrapper {
 	}
 
 	protected function getAltVideoId() {
+		return '';
+	}
+	
+	/**
+	 * MPAA trailer rating (e.g. "greenband", "redband") 
+	 * @return string 
+	 */
+	protected function getTrailerRating() {
+		return '';
+	}
+	
+	/**
+	 * Rating from industry board.
+	 * Examples from MPAA: R, PG-13
+	 * Examples from ESRB: E, T, AO
+	 * @return string 
+	 */
+	protected function getIndustryRating() {
+		return '';
+	}
+	
+	/**
+	 * Is clip age-gated?
+	 * @return boolean
+	 */
+	protected function isAgeGate() {
+		return false;
+	}
+	
+	protected function getLanguage() {
 		return '';
 	}
 }
@@ -368,8 +410,8 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 	}
 	
 	protected function getMetadataCacheKey() {
-		$key = static::$CACHE_KEY . '_metadata';
-		return $key . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoName;
+		$key = static::$CACHE_KEY . '_metadata' . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoName;
+		return $key;
 	}
 }
 
