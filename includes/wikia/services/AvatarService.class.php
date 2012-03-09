@@ -1,6 +1,10 @@
 <?php
 class AvatarService extends Service {
 
+	const AVATAR_SIZE_SMALL = 20;
+	const AVATAR_SIZE_MEDIUM = 50;
+	const AVATAR_SIZE_LARGE = 150;
+
 	/**
 	 * Internal method for getting user object with caching
 	 */
@@ -123,7 +127,17 @@ class AvatarService extends Service {
 	static function renderAvatar($userName, $avatarSize = 20, $avoidUpscaling = false) {
 		wfProfileIn(__METHOD__);
 
-		$avatarUrl = self::getAvatarUrl($userName, $avatarSize, $avoidUpscaling);
+		// For performance reasons, we only generate avatars that are of specific sizes.
+		// We allow HTML tag to resize to any size.
+		if ($avatarSize <= 20) {
+			$allowedSize = self::AVATAR_SIZE_SMALL;
+		} else if ($avatarSize <= 50) {
+			$allowedSize = self::AVATAR_SIZE_MEDIUM;
+		} else {
+			$allowedSize = self::AVATAR_SIZE_LARGE;
+		}
+
+		$avatarUrl = self::getAvatarUrl($userName, $allowedSize, $avoidUpscaling);
 
 		if( $avoidUpscaling ) {
 			$ret = Xml::element('img', array(
