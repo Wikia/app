@@ -14,7 +14,7 @@ class WikiaVideoPage extends ImagePage {
 
 	function openShowImage(){
 		global $wgOut, $wgTitle;
-		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$this->img->getEmbedCode($wgTitle->getArticleId(), self::$videoWidth).$this->getVideoInfoLine().'</div>' );
+		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$this->img->getEmbedCode( self::$videoWidth).$this->getVideoInfoLine().'</div>' );
 	}
 	
 	protected function getVideoInfoLine() {

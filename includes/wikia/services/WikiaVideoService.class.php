@@ -43,14 +43,7 @@ class WikiaVideoService extends Service {
 	 */
 	public static function isTitleVideo( $title, $allowOld = true ) {
 		
-		if ( !($title instanceof Title) ) {
-
-			$title = Title::newFromText( $title );
-			if ( !($title instanceof Title) ) {
-				return false;
-			}
-		}
-
+		$title = self::getTitle( $title );
 		if ( self::isVideoStoredAsFile() ) {
 
 			// video-as-file logic
@@ -66,6 +59,49 @@ class WikiaVideoService extends Service {
 		}
 		
 		return false;
+	}
+
+	/*
+	 * Checks if given Title is video
+	 * @return boolean
+	 */
+	public static function getEmbedCodefromTitle( $title, $width, $allowOld = true ) {
+
+		$title = self::getTitle( $title );
+		if ( self::isVideoStoredAsFile() ) {
+
+			// video-as-file logic
+			if ( self::isFileTypeVideo( $title ) ) {
+				$oVideoTitle = Title::newFromText( $videoName, NS_VIDEO );
+				if ( !empty( $oVideoTitle ) ) {
+					$oVideoPage = new VideoPage( $oVideoTitle );
+					$oVideoPage->load();
+					if ( $videoPage->checkIfVideoExists() ){
+						$videoEmbedCode = $oVideoPage->getEmbedCode( $width, false, true );
+					}
+				}
+			}
+			return false;
+
+		} elseif ( ( $title->getNamespace() == NS_VIDEO ) && $allowOld ) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static function getTitle( $mTitle ){
+
+		if ( !( $mTitle instanceof Title ) ) {
+
+			$mTitle = Title::newFromText( $mTitle );
+			if ( !($mTitle instanceof Title) ) {
+				return false;
+			}
+		}
+
+		return $mTitle;
 	}
 
 	public static function videoPlayButtonOverlay( $width, $height ) {

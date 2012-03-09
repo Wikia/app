@@ -10,6 +10,7 @@ class WikiaLocalFileShared  {
 	var $forceMime = '';
 	var $oFile = null;
 	var $videoId = '';
+	var $trackingArticleId = false;
 
 	function __construct( $oWikiaLocalFile ){
 		$this->oFile = $oWikiaLocalFile;
@@ -25,16 +26,21 @@ class WikiaLocalFileShared  {
 	/*
 	 * Returns embed HTML
 	 */
-	public function getEmbedCode( $articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false ){
+	public function getEmbedCode( $width, $autoplay = false, $isAjax = false, $postOnload = false ){
+		if ( ( $this->trackingArticleId !== false ) && ( F::app()->wg->title instanceof Title ) ){
+			$this->trackingArticleId = F::app()->wg->title->getArticleID();
+		}
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty($handler) ){
-			$handler->setThumbnailImage($this->oFile->getThumbnail($width));			
-			return $handler->getEmbed( $articleId, $width, $autoplay, $isAjax, $postOnload );
+			$handler->setThumbnailImage( $this->oFile->getThumbnail( $width ) );
+			$this->trackingArticleId = false;
+			return $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
 		} else {
+			$this->trackingArticleId = false;
 			return false;
 		}
 	}
-	
+
 	public function getPlayerAssetUrl() {
 		if ( $this->isVideo() ) {
 			return $this->oFile->getHandler()->getPlayerAssetUrl();
@@ -43,23 +49,23 @@ class WikiaLocalFileShared  {
 			return false;
 		}
 	}
-	
+
 	public function getProviderName() {
 		return $this->oFile->minor_mime;
 	}
-	
+
 	public function getProviderDetailUrl() {
 		$handler = $this->oFile->getHandler();
-		if ( $this->isVideo() && !empty($handler) ){
+		if ( $this->isVideo() && !empty( $handler ) ){
 			return $handler->getProviderDetailUrl();
 		}
 		
 		return false;
 	}
-	
+
 	public function getProviderHomeUrl() {
 		$handler = $this->oFile->getHandler();
-		if ( $this->isVideo() && !empty($handler) ){
+		if ( $this->isVideo() && !empty( $handler ) ){
 			return $handler->getProviderHomeUrl();
 		}
 		
@@ -73,7 +79,7 @@ class WikiaLocalFileShared  {
 	 * Need to alter this behavior for videos
 	 * as they are represented in filesystem by an image
 	 */
-	
+
 	function forceMime( $aMime ){
 		$this->forceMime = $aMime;
 	}
@@ -93,7 +99,7 @@ class WikiaLocalFileShared  {
 	}
 
 	function getVideoId(){
-		if (!empty($this->videoId)) {
+		if ( !empty( $this->videoId ) ) {
 			return $this->videoId;
 		}
 

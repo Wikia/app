@@ -505,20 +505,16 @@ class WikiaQuizAjax {
 	 * @return boolean
 	 */
 	private static function isValidVideo($name) {
-		if (WikiaVideoService::isVideoStoredAsFile()) {
-			$file = wfFindFile($name);
-			return WikiaVideoService::isVideoFile($file);
+
+		$bResult = WikiaVideoService::isTitleVideo( $name );
+		// double check if old video page exists
+		if ( !$bResult && !self::isVideoStoredAsFile() ) {
+			$videoTitle = Title::newFromText( $name, NS_LEGACY_VIDEO );
+			$videoPage = new VideoPage( $videoTitle );
+			$videoPage->load();
+			$bResult = $videoPage->checkIfVideoExists();
 		}
-		else {
-			$videoTitle = Title::newFromText($name, NS_LEGACY_VIDEO);
-			if ($videoTitle && $videoTitle->exists()) {
-				$videoPage = new VideoPage($videoTitle);
-				$videoPage->load();
-				return $videoPage->checkIfVideoExists();
-			}			
-		}
-		
-		return false;
+		return $bResult;
 	}
 
 	private static function getCategoryText($title, $order='') {

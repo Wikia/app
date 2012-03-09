@@ -147,8 +147,7 @@ class WikiaQuizElement {
 							'imageShort' => isset($answerChunks[1]) ? $answerChunks[1] : ''
 						);
 					}
-				}
-				elseif (substr($line, 0, strlen(self::REQUIRE_EMAIL_MARKER)) == self::REQUIRE_EMAIL_MARKER) {
+				}	elseif (substr($line, 0, strlen(self::REQUIRE_EMAIL_MARKER)) == self::REQUIRE_EMAIL_MARKER) {
 					$line = substr($line, strlen(self::REQUIRE_EMAIL_MARKER));
 					$requireEmail = ($line == 'true');
 				}
@@ -159,14 +158,14 @@ class WikiaQuizElement {
 
 			$this->mQuizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
 
-			if (!empty($videoName)) {
-				if (WikiaVideoService::isVideoStoredAsFile()) {
+			if ( !empty( $videoName ) ) {
+				if ( WikiaVideoService::isVideoStoredAsFile() ) {
 					$file = wfFindFile($videoName);
 					if (WikiaVideoService::isVideoFile($file)) {
-						$videoEmbedCode = $file->getEmbedCode($this->mQuizElementId, self::VIDEO_WIDTH);
+						$file->trackingArticleId = $this->mQuizElementId;
+						$videoEmbedCode = $file->getEmbedCode( self::VIDEO_WIDTH );
 					}
-				}
-				else {
+				} else {
 					if (!$isVideoExternal) {
 						$videoTitle = Title::newFromText($videoName, NS_VIDEO);
 						if ($videoTitle && $videoTitle->exists()) {
