@@ -15909,7 +15909,7 @@ Een korte beschrijving van de regel op basis waarvan uw bewerking is tegengehoud
 Als aanvullende veiligheidsmaatregel zijn een aantal automatisch toegekende rechten voor uw gebruiker tijdelijk ingetrokken.
 Een korte beschrijving van de regel op basis waarvan uw bewerking is tegengehouden volgt nu: $1',
 	'abusefilter-blocker' => 'Filter',
-	'abusefilter-blockreason' => 'Automatisch geblokeerd door het filter. Beschrijving van de regel die dit veroorzaakte: $1',
+	'abusefilter-blockreason' => 'Automatisch geblokkeerd door het filter. Beschrijving van de regel die dit veroorzaakte: $1',
 	'abusefilter-degroupreason' => 'Rechten zijn automatisch verwijderd door het filter. Regelbeschrijving: $1',
 	'abusefilter-accountreserved' => 'Deze gebruiker is gereserveerd voor het filter.',
 	'right-abusefilter-modify' => 'Filters wijzigen',
