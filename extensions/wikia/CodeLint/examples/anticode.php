@@ -35,3 +35,7 @@ $obj->priv();
 
 // typo
 $obk->bar();
+
+// missing semicolon
+$foo = bar
+$test = 123;
