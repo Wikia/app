@@ -278,7 +278,7 @@ class SolrSearchSet extends SearchResultSet {
 			      	      'pf'	=>	"'html^0.8 title^5'",
 				      'ps'	=>	'3',
 				      'tie'	=>	'0.01',
-				      'bq'	=>	"\'".'html:\"'.$queryNoQuotes.'\"^50 title:\"'.$queryNoQuotes.'\"'."\'"
+				      'bq'	=>	"\'".'html:\"'.$queryNoQuotes.'\"^5 title:\"'.$queryNoQuotes.'\"^10'."\'"
 				     );
 
 		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
