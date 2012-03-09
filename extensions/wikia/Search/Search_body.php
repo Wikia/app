@@ -276,9 +276,9 @@ class SolrSearchSet extends SearchResultSet {
 						." title^5'"
 						." pf='html^0.8"
 						." title^5'"
-						." mm=75"
-						." ps=10"
-						." tie=1"
+						." mm=66%"
+						." ps=3"
+						." tie=0.01"
 						. "}";
 
 		$queryClauses[] = '_query_:"' . $dismaxParams . $sanitizedQuery . '"';
