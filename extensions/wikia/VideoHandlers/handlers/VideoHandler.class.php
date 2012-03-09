@@ -94,7 +94,6 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	function getHeight( $width ){
-		return $this->thumbnailImage->height;
 		return (integer) ( $width / $this->getAspectRatio() );
 	}
 

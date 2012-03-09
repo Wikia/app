@@ -80,12 +80,11 @@ abstract class VideoFeedIngester {
 				$videoId = $name;
 			}
 			else {
-				$videoId = $id;
-				
+				$videoId = $id;				
 			}			
 
 			$metadata['ingestedFromFeed'] = true;
-			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata, true);
+			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata);
 			$uploadedTitle = null;
 			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
 			if ($result->ok) {
