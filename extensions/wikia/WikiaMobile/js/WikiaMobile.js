@@ -17,7 +17,7 @@ var WikiaMobile = (function() {
 		tableWrapperHTML = '<div class=bigTable>',
 		adSlot,
 		shrData,
-		pageUrl = wgServer + '/wiki/' + wgPageName,
+		pageUrl = wgServer + wgArticlePath.replace('$1', wgPageName),
 		shrImgTxt, shrPageTxt, shrMailPageTxt, shrMailImgTxt,
 		$1 =/__1__/g, $2 =/__2__/g, $3 =/__3__/g, $4 = /__4__/g,
 		shrOpenNum = 0, shrImgName = '',
@@ -39,7 +39,6 @@ var WikiaMobile = (function() {
 						var tmp = tmpQuery[i].split('=');
 						querystring.cache[tmp[0]] = tmp[1];
 					}
-					tmpQuery = tmp = null;
 				}
 				return querystring.cache[name] || defVal;
 			}
@@ -61,10 +60,8 @@ var WikiaMobile = (function() {
 	}
 
 	function processSections(){
-		var firstLevelSections = $('#wkMainCnt > h2');
-
 		//avoid running if there are no sections which are direct children of the article section
-		if(firstLevelSections.length > 0){
+		if(d.querySelector('#wkMainCnt > h2')){
 			var contents = article.childNodes,
 				wrapper = article.cloneNode(false),
 				root = wrapper,
@@ -606,15 +603,15 @@ var WikiaMobile = (function() {
 				page.style.height = 0;
 				ftr.style.display = adSlot.style.display = 'none';
 				//80px is for lvl1 without header
-				navBar.className = 'fllNav';
 				navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
 				window.location.hash = 'WikiNav';
+				navBar.className = 'fllNav';
 			}
 		});
 
 		function closeNav() {
-			if(window.location.hash == '#WikiNav') window.history.back();
 			track('nav/close');
+			if(window.location.hash == '#WikiNav') window.history.back();
 			wkNavMenu.className = 'cur1';
 			page.style.height = 'auto';
 			ftr.style.display = adSlot.style.display = 'block';
@@ -655,12 +652,12 @@ var WikiaMobile = (function() {
 				navBar.style.height = (ul.height() + 130) + 'px';
 
 				if(wkNavMenu.className == 'cur1'){
-					wkNavMenu.className = 'cur2';
 					lvl2Link = href;
 					track('nav/level-2');
+					wkNavMenu.className = 'cur2';
 				}else{
-					wkNavMenu.className = 'cur3';
 					track('nav/level-3');
+					wkNavMenu.className = 'cur3';
 				}
 			}
 		});
@@ -670,12 +667,11 @@ var WikiaMobile = (function() {
 			current;
 
 			if(wkNavMenu.className == 'cur2') {
-				wkNavMenu.className = 'cur1';
 				setTimeout(function(){wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2'}, 800);
 				navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
 				track('nav/level-1');
+				wkNavMenu.className = 'cur1';
 			} else {
-				wkNavMenu.className = 'cur2';
 				setTimeout(function(){wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3'}, 800);
 				current = wkNavMenu.querySelector('.lvl2.cur');
 				wikiNavHeader.innerText = current.previousSibling.text;
@@ -686,8 +682,8 @@ var WikiaMobile = (function() {
 				} else {
 					wikiNavLink.style.display = 'none';
 				}
-				
 				track('nav/level-2');
+				wkNavMenu.className = 'cur2';
 			}
 		});
 		//end of preparing the nav
