@@ -47,6 +47,7 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/LandingPagesAsContent.i18n.ph
 define('__NORAIL__', '__NORAIL__');
 define('__NONAV__', '__NONAV__');
 define('__NOHEADER__', '__NOHEADER__');
+define('__NOSPOTLIGHTS__', '__NOSPOTLIGHTS__');
 define('__INTERLANGTOP__', '__INTERLANGTOP__');
 
 /**
@@ -66,6 +67,7 @@ if ( empty( $app->wg->LandingPagesAsContentMagicWords ) ) {
 		__NORAIL__ => 'wgSuppressRail',
 		__NONAV__ => 'wgSuppressWikiHeader',
 		__NOHEADER__ => 'wgSuppressPageHeader',
+		__NOSPOTLIGHTS__ => 'wgSuppressSpotlights',
 		__INTERLANGTOP__ => 'wgInterlangOnTop',
 	);
 }
