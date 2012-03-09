@@ -41,7 +41,7 @@ if (isset($options['noexternals'])) {
 }
 
 // use GooglePage speed API
-$report = $service->getReportForURL($url);
+$report = $service->getReport($url);
 
 if (empty($report)) {
 	echo "API request failed!\n";
