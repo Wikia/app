@@ -51,12 +51,12 @@ $bookstoreList = array(
 	'Amazon.it' => 'http://www.amazon.it/gp/search/ref=sr_adv_b/?field-isbn=$1',
 	'Google Libri' => 'http://books.google.it/books?as_isbn=$1',
 	'Libreria Universitaria online' => 'http://www.libreriauniversitaria.it/x/libro/$1',
-	'laFeltrinelli' => 'http://www.lafeltrinelli.it/fcom/it/home/pages/catalogo/searchresults.html?prkw=$1&Cerca.x=6&Cerca.y=16&cat1=1'
+	'laFeltrinelli' => 'http://www.lafeltrinelli.it/fcom/it/home/pages/catalogo/searchresults.html?prkw=$1&Cerca.x=6&Cerca.y=16&cat1=1',
 	'ibs' => 'http://www.ibs.it/code/$1/x/y.html',
 	'HOEPLI' => 'http://www.hoepli.it/libro/x/$1.asp',
 	'Libreria Rizzoli' => 'http://libreriarizzoli.corriere.it/libro/libro.aspx?ean=$1&utm_source=Wikia&utm_medium=text_link&utm_campaign=Wiki'
+);
 
-)
 $namespaceNames = array(
 	NS_MEDIA            => 'Media',
 	NS_SPECIAL          => 'Speciale',
