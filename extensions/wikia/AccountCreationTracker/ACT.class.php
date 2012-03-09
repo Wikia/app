@@ -7,7 +7,7 @@ class AccountCreationTracker extends WikiaObject {
 	protected function getDb( $type = DB_SLAVE ) {
 		return $this->wf->getDb( $type, array(), $this->wg->ExternalDatawareDB );
 	}
-	
+
 	static function getTrackingDisplay( $tracking_const ) {
 		switch( $tracking_const ) {
 			case AccountCreationTracker::TRACKING_USER_CREATION:
@@ -42,7 +42,7 @@ class AccountCreationTracker extends WikiaObject {
 			$dbw->commit();
 		}
 	}
-	
+
 
 	public function getAccountsByUser( User $user ) {
 		$results = array();
@@ -72,11 +72,11 @@ class AccountCreationTracker extends WikiaObject {
 				);
 			}
 		}
-		
+
 		if(count($results_user_set) > 0) {
-		
+
 			$new_hashes = array();
-	
+
 			$table = array( 'user_tracker' );
 			$vars = array( 'utr_user_id', 'utr_user_hash' );
 			$conds = array( 'utr_user_id' => array_keys($results_user_set) );
@@ -88,8 +88,8 @@ class AccountCreationTracker extends WikiaObject {
 					$new_hashes[] = $row->utr_user_hash;
 				}
 			}
-			
-			if(count($new_hashes)>0) {		
+
+			if(count($new_hashes)>0) {
 				$vars = array( 'utr_user_id', 'utr_source', 'utr_user_hash' );
 				$conds = array( 'utr_user_hash' => $new_hashes );
 				$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
@@ -107,9 +107,9 @@ class AccountCreationTracker extends WikiaObject {
 					}
 				}
 			}
-			
+
 		}
-		
+
 		if( count($results) == 0) {
 			$results[] = array(
 				'user'=>$user,
@@ -126,7 +126,7 @@ class AccountCreationTracker extends WikiaObject {
 		$results = array();
 
 		$dbr = $this->getDb();
-		
+
 		$res = $dbr->query( "SELECT utr_user_hash FROM user_tracker WHERE utr_user_id = '" . $user->getId() . "'");
 
 		while( $row = $dbr->fetchObject($res) ) {
@@ -140,7 +140,7 @@ class AccountCreationTracker extends WikiaObject {
 		$wikis = array();
 
 		$dbr = $this->wf->getDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
-		$res = $dbr->select( 
+		$res = $dbr->select(
 			'city_list',
 			'city_id',
 			array( $dbr->makeList( array( 'city_founding_user' => $users), LIST_OR ) )
@@ -152,20 +152,18 @@ class AccountCreationTracker extends WikiaObject {
 
 		return $wikis;
 	}
-	
+
 	public function rollbackPage( $article, $user_name, $summary, &$messages = '' ) {
-		global $wgUser;
-		
 		// build article object and find article id
 		$a = $article;
 		$pageId = $a->getID();
-		
+
 		// check if article exists
 		if ( $pageId <= 0 ) {
 			$messages = 'page not found';
 			return false;
 		}
-		
+
 		// fetch revisions from this article
 		$dbw = wfGetDB( DB_MASTER );
 		$res = $dbw->select(
@@ -179,18 +177,18 @@ class AccountCreationTracker extends WikiaObject {
 				'ORDER BY' => 'rev_id DESC',
 			)
 		);
-		
+
 		// find the newest edit done by other user
 		$revertRevId = false;
 		while ( $row = $dbw->fetchObject($res) ) {
 			if ( $row->rev_user_text != $user_name ) {
 				$revertRevId = $row->rev_id;
 				break;
-			} 
+			}
 		}
 		$dbw->freeResult($res);
-		
-		
+
+
 		if ($revertRevId) { // found an edit by other user - reverting
 			$rev = Revision::newFromId($revertRevId);
 			$text = $rev->getRawText();
@@ -215,7 +213,7 @@ class AccountCreationTracker extends WikiaObject {
 	}
 
 	private function deleteArticle( $article, $reason, $suppress = false, &$error = '' ) {
-		global $wgOut, $wgUser;
+		global $wgUser;
 		$id = $article->getTitle()->getArticleID( GAID_FOR_UPDATE );
 
 		if ( wfRunHooks( 'ArticleDelete', array( &$article, &$wgUser, &$reason, &$error ) ) ) {
