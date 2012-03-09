@@ -2,30 +2,40 @@ var WikiaMobile = (function() {
 	/** @private **/
 
 	var body,
-	page,
-	article,
-	allImages = [],
-	handledTables,
-	deviceWidth = ($.os.ios) ? 268 : 300,
-	deviceHeight = ($.os.ios) ? 416 : 513,
-	realWidth = window.innerWidth || window.clientWidth,
-	realHeight = window.innerHeight || window.clientHeight,
-	//TODO: finalize the following line and update all references to it (also in extensions)
-	clickEvent = ('ontap' in window) ? 'tap' : 'click',
-	touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown',
-	sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
-	tableWrapperHTML = '<div class=bigTable>',
-	adSlot,
-	shrData,
-	pageUrl = wgServer + '/wiki/' + wgPageName,
-	shrImgTxt, shrPageTxt, shrMailPageTxt, shrMailImgTxt,
-	$1 =/__1__/g, $2 =/__2__/g, $3 =/__3__/g, $4 = /__4__/g,
-	shrOpenNum = 0, shrImgName = '',
-	fixed = Modernizr.positionfixed,
-	d = document,
-	byId = 'getElementById',
-	byClass = 'getElementsByClassName',
-	bind = 'addEventListener';
+		page,
+		article,
+		allImages = [],
+		handledTables,
+		deviceWidth = ($.os.ios) ? 268 : 300,
+		deviceHeight = ($.os.ios) ? 416 : 513,
+		realWidth = window.innerWidth || window.clientWidth,
+		realHeight = window.innerHeight || window.clientHeight,
+		//TODO: finalize the following line and update all references to it (also in extensions)
+		clickEvent = ('ontap' in window) ? 'tap' : 'click',
+		touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown',
+		sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
+		tableWrapperHTML = '<div class=bigTable>',
+		adSlot,
+		shrData,
+		pageUrl = wgServer + '/wiki/' + wgPageName,
+		shrImgTxt, shrPageTxt, shrMailPageTxt, shrMailImgTxt,
+		$1 =/__1__/g, $2 =/__2__/g, $3 =/__3__/g, $4 = /__4__/g,
+		shrOpenNum = 0, shrImgName = '',
+		fixed = Modernizr.positionfixed,
+		d = document,
+		byId = 'getElementById',
+		byClass = 'getElementsByClassName',
+		bind = 'addEventListener',
+
+		querystring = {
+			toString: function(){
+				return location.search;
+			},
+
+			getVal: function(name, defVal){
+				//TODO: implement
+			}
+		};
 
 	function getImages(){
 		return allImages;
@@ -796,6 +806,7 @@ var WikiaMobile = (function() {
 		moveSlot: moveSlot,
 		popOver: popOver,
 		loadShare: loadShare,
-		reloadPage: reloadPage
+		reloadPage: reloadPage,
+		querystring: querystring
 	};
 })();
