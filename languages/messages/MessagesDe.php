@@ -80,11 +80,10 @@ $namespaceAliases = array(
 
 
 $bookstoreList = array(
-	'abebooks.de' => 'http://www.abebooks.de/servlet/BookSearchPL?ph=2&isbn=$1',
-	'amazon.de' => 'http://www.amazon.de/gp/search/field-isbn=$1',
-	'buch.de' => 'http://www.buch.de/shop/home/suche/?sswg=BUCH&sq=$1',
-	'Karlsruher Virtueller Katalog (KVK)' => 'http://www.ubka.uni-karlsruhe.de/kvk.html?SB=$1',
-	'Lehmanns Fachbuchhandlung' => 'http://www.lob.de/cgi-bin/work/suche?flag=new&stich1=$1'
+	'Amazon.de' => 'http://www.amazon.de/s/url=search-alias%3Daps&field-keywords=$1',
+	'Buchhandel.de' => 'http://www.buchhandel.de/?caller=vlbPublic&strFrame=titelsuche&isbn=$1',
+	'German National Library' => 'https://portal.dnb.de/opac.htm?query=$1&method=simpleSearch',
+	'Google B%C3%BCcher' => 'http://books.google.de/books?as_isbn=$1'
 );
 
 $separatorTransformTable = array(',' => '.', '.' => ',' );

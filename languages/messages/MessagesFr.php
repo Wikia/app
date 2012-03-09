@@ -58,10 +58,12 @@
  */
 
 $bookstoreList = array(
-	'Amazon.fr'    => 'http://www.amazon.fr/exec/obidos/ISBN=$1',
-	'alapage.fr'   => 'http://www.alapage.com/mx/?tp=F&type=101&l_isbn=$1&donnee_appel=ALASQ&devise=&',
-	'fnac.com'     => 'http://www3.fnac.com/advanced/book.do?isbn=$1',
-	'chapitre.com' => 'http://www.chapitre.com/frame_rec.asp?isbn=$1',
+	'Google Livres' => 'http://books.google.fr/books?as_isbn=$1',
+	'Fnac' =>  'http://recherche.fnac.com/Search/SearchResult.aspx?SCat=2!1&Search=$1&sft=1',
+	'Amazon.fr' => 'http://www.amazon.fr/gp/search/ref=sr_adv_b/?field-isbn=$1',
+	'chaPitre.com' => 'http://www.chapitre.com/CHAPITRE/fr/search/Default.aspx?optSearch=BOOKS&reference=$1',
+	'PriceMinister' => 'http://www.priceminister.com/submit?action=submitadvert&productid=$1&stage=10',
+	'alapage.com' => 'http://search.alapage.com/search?bisbn=$1&a=15641648-0-0&adv=2'
 );
 
 $namespaceNames = array(
