@@ -4,8 +4,8 @@ wfLoadAllExtensions();
 
 class ScavengerHuntTest extends WikiaBaseTest {
 
-	public static function setUpBeforeClass() {
-		//ScavengerHuntSetup();
+	public function tearDown() {
+		F::unsetInstance('GlobalTitle');
 	}
 
 	public function getFakeSprite() {
