@@ -1541,6 +1541,7 @@ function wfAssetManagerGetSASShash( $file ) {
 	$processedFiles = array();
 	$hash = '';
 	wfAssetManagerGetSASShashCB( $file, $processedFiles, $hash );
+	//error_log("done $file = $hash");
 	return md5($hash); // shorten it
 }
 
@@ -1556,6 +1557,7 @@ function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
 		}
 	}
 	$file = realpath( $file );
+	//error_log("\t".$file);
 	if ( isset($processedFiles[$file]) ) return;
 	$processedFiles[$file] = true;
 
@@ -1563,7 +1565,7 @@ function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
 	$contents = file_get_contents($file);
 	$hash .= md5( $contents );
 
-	preg_replace_callback('/\\@import(\\s)*\\"([^\\"]*)\\"/', function($match) use($file, &$processedFiles, &$hash) {
+	preg_replace_callback('/\\@import(\\s)*[\\"\']([^\\"\']*)[\\"\']/', function($match) use($file, &$processedFiles, &$hash) {
 		global $IP;
 		if ( startsWith( $match[2], '/' ) ) {
 			$newfile = $IP . $match[2];
