@@ -8,18 +8,15 @@ class MyToolsModule extends Module {
 	var $nav_urls;
 
 	public function executeIndex($params) {
-		global $wgUser, $wgOut, $wgStylePath;
+		global $wgUser;
 
 		if(isset($params['tools'])) {
 			$wgUser->setOption('myTools', json_encode($params['tools']));
 			$wgUser->saveSettings();
 		}
-
+ 
 		$this->defaultTools = $this->getDefaultTools();
 		$this->customTools = $this->getCustomTools();
-
-		// Moved to StaticChute.
-		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/MyTools.js"></script>');
 	}
 
 	private function getCustomTools() {
