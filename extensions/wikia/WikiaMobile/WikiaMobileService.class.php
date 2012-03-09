@@ -14,6 +14,10 @@ class WikiaMobileService extends WikiaService {
 	static private $initialized = false;
 
 	private $templateObject;
+	
+	//TODO: remove whe multi-skin resource loading fixed
+	private $scripts;
+	private $styles;
 
 	function init(){
 		if ( !self::$initialized ) {
@@ -21,6 +25,10 @@ class WikiaMobileService extends WikiaService {
 			self::$initialized = true;
 			$this->wf->LoadExtensionMessages( 'WikiaMobile' );
 			F::build('JSMessages')->enqueuePackage('WkMbl', JSMessages::INLINE);
+
+			//TODO: remove when multi-skin resource loading fixed
+			$this->scripts = array();
+			$this->styles = array();
 		}
 	}
 
@@ -33,6 +41,46 @@ class WikiaMobileService extends WikiaService {
 		$this->templateObject = $this->getVal( 'templateObject') ;
 	}
 
+	//TODO: remove when multi-skin resource loading fixed
+	public function addAsset(){
+		$js = $this->request->getVal( 'js' );
+		$css = $this->request->getVal( 'css' );
+		$scss = $this->request->getVal( 'scss' );
+		$pkg = $this->request->getVal( 'package' );
+
+		if ( !empty( $pkg ) ) {
+			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$type = $this->app->getAssetsConfig()->getGroupType( $pkg );
+			$sources = array();
+
+			switch ( $type ) {
+				case AssetsManager::TYPE_JS:
+					$this->scripts += $assetsManager->getGroupCommonURL( $pkg );
+					break;
+
+				case AssetsManager::TYPE_CSS:
+					$this->styles += $assetsManager->getGroupCommonURL( $pkg );
+					break;
+
+				case AssetsManager::TYPE_SCSS:
+					$this->styles += $assetsManager->getSassCommonURL( $pkg );
+					break;
+			}
+		}
+
+		if ( !empty( $js ) ) {
+			$this->scripts[] = $assetsManager->getOneCommonURL( $js );
+		}
+
+		if ( !empty( $css ) ) {
+			$this->styles[$assetsManager->getOneCommonURL( $css )] =  array();
+		}
+
+		if ( !empty( $scss ) ) {
+			$this->styles[$assetsManager->getSassCommonURL( $scss )] = array();
+		}
+	}
+
 	public function index() {
 		$jsHeadPackageName = self::JS_PACKAGE_NAME_HEAD;
 		$jsBodyPackageName = self::JS_PACKAGE_NAME_BODY;
@@ -43,13 +91,16 @@ class WikiaMobileService extends WikiaService {
 		$cssFiles = '';
 		$tmpOut = new OutputPage();
 
-		$tmpOut->styles = array(  ) + $this->wg->Out->styles;
+		$tmpOut->styles = array() + $this->wg->Out->styles;
 
 		foreach( $tmpOut->styles as $style => $options ) {
 			if ( isset( $options['media'] ) || strstr( $style, 'shared' ) || strstr( $style, 'index' ) ) {
 				unset( $tmpOut->styles[$style] );
 			}
 		}
+
+		//TODO: remove when multi-skin resource loading fixed
+		$tmpOut->styles += $this->styles;
 
 		//let extensions change the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests
@@ -79,7 +130,7 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		//additional JS at the bottom of the body section
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL( $jsBodyPackageName );
+		$srcs = array_merge( AssetsManager::getInstance()->getGroupCommonURL( $jsBodyPackageName ), $this->scripts );
 
 		//TODO: add scripts from $wgOut as needed
 		foreach ( $srcs as $src ) {
