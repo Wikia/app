@@ -25,31 +25,26 @@ var UserLoginFacebook = (function(){
 
 	return {
 		login: function(){
-			/* DEBUG */console.log('FB.login START');
 			// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
 			FB.login(
 				function(response){
 					if(typeof response === 'object' && response.status){
-						/* DEBUG */console.log(response);
 						switch(response.status) {
 							case 'connected':
-								/* DEBUG */console.log('FB.login successful');
-
 								// now check FB account (is it connected with Wikia account?)
 								$.nirvana.postJson('FacebookSignupController', 'index', null, function(resp){
-									/* DEBUG */console.log(resp);
 									if(resp.loggedIn){
 										// logged in using FB account, reload the page or callback
 										var loginCallback = callbacks['login-success'];
-										/* DEBUG */console.log(loginCallback)
 
 										if (typeof loginCallback === 'function') {
 											loginCallback();
 										} else {
+											//TODO: handle redirect to home page and returnto querystring param
 											WikiaMobile.reloadPage();
 										}
 									}else{
-										//TODO: use the WikiaMobile
+										//TODO: use the WikiaMobile toast message when it will be ready
 										alert($.msg('wikiamobile-sso-login-fail'));
 									}
 								});
