@@ -1,7 +1,7 @@
 <?php
 class ChatRailModule extends Module {
 	const MAX_CHATTERS = 6;
-	const AVATAR_SIZE = 50;
+	const AVATAR_SIZE = 32;
 	var $linkToSpecialChat;
 	var $windowFeatures;
 	var $chatHeadline;
