@@ -11,7 +11,7 @@ var WikiaHubs = {
 		//WikiaHubs.trackingCategory = 'video-games';
 	},
 	trackClick: function(label, value) {
-		$.tracker.trackEvent(WikiaHubs.trackingCategory, 'click', label);
+		$.internalTrack(WikiaHubs.trackingCategory, { event:'click', label:label});
 	},
 	clickTrackingHandler: function(e) {
 		var node = $(e.target);
