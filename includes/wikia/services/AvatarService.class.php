@@ -129,9 +129,9 @@ class AvatarService extends Service {
 
 		// For performance reasons, we only generate avatars that are of specific sizes.
 		// We allow HTML tag to resize to any size.
-		if ($avatarSize <= 20) {
+		if ($avatarSize <= self::AVATAR_SIZE_SMALL) {
 			$allowedSize = self::AVATAR_SIZE_SMALL;
-		} else if ($avatarSize <= 50) {
+		} else if ($avatarSize <= self::AVATAR_SIZE_MEDIUM) {
 			$allowedSize = self::AVATAR_SIZE_MEDIUM;
 		} else {
 			$allowedSize = self::AVATAR_SIZE_LARGE;
