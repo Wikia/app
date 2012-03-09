@@ -5,7 +5,7 @@ var UserLoginFacebook = (function(){
 
 	//init
 	$(function(){
-		btn = $(document.getElementById('ssoFbBtn'));
+		btn = document.getElementById('ssoFbBtn');
 
 		//see fbconnect.js
 		FB.init({
@@ -16,10 +16,16 @@ var UserLoginFacebook = (function(){
 			xfbml  : window.fbUseMarkup, // Whether XFBML should be automatically parsed
 		});
 
-		btn.bind('click', function(){
+		btn.addEventListener('click', function(){
 			UserLoginFacebook.login();
 		});
 	});
+	
+	function goToUrl(url){
+		url = url || wgMainPageTitle;
+		url = wgArticlePath.replace('$1', url);
+		window.location.href = url;
+	}
 
 	/** @public **/
 
@@ -40,8 +46,7 @@ var UserLoginFacebook = (function(){
 										if (typeof loginCallback === 'function') {
 											loginCallback();
 										} else {
-											//TODO: handle redirect to home page and returnto querystring param
-											WikiaMobile.reloadPage();
+											goToUrl(WikiaMobile.querystring.getVal('returnto'));
 										}
 									}else{
 										//TODO: use the WikiaMobile toast message when it will be ready

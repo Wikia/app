@@ -4,7 +4,7 @@
 			<h1 class=collSec><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?><span class=chev></h1>
 			<a id=wkNavLink></a>
 		</header>
-	<ul class="lvl1 wkLst">
+	<ul id=lvl1 class=wkLst>
 <?
 	foreach ( array( $wikiaMenuNodes, $wikiMenuNodes ) as $menuNodes ) {
 		if ( is_array( $menuNodes ) && isset( $menuNodes[0] ) ) {
