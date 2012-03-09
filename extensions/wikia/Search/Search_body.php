@@ -253,9 +253,9 @@ class SolrSearchSet extends SearchResultSet {
 
 			$queryClauses[] = $widQuery;
 
-			$params['bf'] = 'map(backlinks,100,500,100)^2';
-			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en AND iscontent:true";
+			$queryClauses[] = "lang:en"
+
+			$queryClauses[] = "iscontent:true"
 
 		} else {
 
