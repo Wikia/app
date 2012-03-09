@@ -253,9 +253,9 @@ class SolrSearchSet extends SearchResultSet {
 
 			$queryClauses[] = $widQuery;
 
-			$params['bf'] = 'map(backlinks,100,500,100)^2';
-			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en AND iscontent:true";
+			$queryClauses[] = "lang:en";
+
+			$queryClauses[] = "iscontent:true";
 
 		} else {
 
@@ -272,16 +272,28 @@ class SolrSearchSet extends SearchResultSet {
 			array_unshift($queryClauses, "wid: {$onWikiId}");
 		}
 
-		$dismaxParams = "{!dismax qf='html^0.8"
-						." title^5'"
-						." pf='html^0.8"
-						." title^5'"
-						." mm=75"
-						." ps=10"
-						." tie=1"
-						. "}";
+		$queryNoQuotes = str_replace('"', '', $sanitizedQuery);
 
-		$queryClauses[] = '_query_:"' . $dismaxParams . $sanitizedQuery . '"';
+		$boostQueries = array('html:\"'.$queryNoQuotes.'\"^5', 
+				      'title:\"'.$queryNoQuotes.'\"^10');
+
+		if ($crossWikiaSearch) {
+		  // this is still pretty important!
+		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^10';
+		}
+
+		$dismaxParams = array('qf'	=>	"'html^0.8 title^5'",
+			      	      'pf'	=>	"'html^0.8 title^5'",
+				      'ps'	=>	'3',
+				      'tie'	=>	'0.01',
+				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'"
+				     );
+
+		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
+
+		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s"', 
+					  $paramString, 
+					  $sanitizedQuery);
 
 		$sanitizedQuery = implode(' AND ', $queryClauses);
 
