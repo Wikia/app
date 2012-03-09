@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class ToolbarTest extends BaseTest {
 
-	@Test(groups={"verified"})
+	@Test(groups={"envProduction","verified"})
 	public void testEnsuresThatToolbarIsNotPresentForAnonymousUsers() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
@@ -39,7 +39,7 @@ public class ToolbarTest extends BaseTest {
 	}
 	
 	
-	@Test(groups={"verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
+	@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
 	public void testEnsuresThatSignedInUserCanAddAnItemToCustomizedToolbar() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		
