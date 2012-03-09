@@ -60,8 +60,6 @@
 		insertOldHTML: function(id, bubble) {
 			$('.msg-title', bubble).html(this.oldTitle[id]);
 			$('.msg-body', bubble).html(this.oldBody[id]);
-
-			this.afterClose(bubble);
 		},
 
 		// Set current html in case edit or source view is cancelled.
@@ -73,8 +71,9 @@
 		afterCancel: function(body, isSource, target) {
 			if (isSource) {
 				target.parent().hide();
-
+				bubble.find('.timestamp').show();
 			} else {
+				this.afterClose(bubble);
 				body.data('wikiaEditor').fire('editorReset');
 			}
 		},
