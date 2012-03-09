@@ -57,8 +57,7 @@ function wfMakeGlobalVariablesScript($vars) {
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
 	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
 
-	// RT #21084: get URL to YUI StaticChute package
-	// thanks to $combine & $minify = true this will always return an array with just one URL in it
+	// RT #21084: get URL to YUI package 
 	$yuiUrl = array_pop(AssetsManager::getInstance()->getGroupCommonURL('yui', array(), true /* $combine */, true /* $minify */));
 	$vars['wgYUIPackageURL'] = $yuiUrl;
 
