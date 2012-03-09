@@ -73,8 +73,8 @@ class CodeLintPhp extends CodeLint {
 			$remove = false;
 		}
 
-		// notice: variable `$foo' assigned but never used
-		if (endsWith($error['error'], 'assigned but never used')) {
+		// FATAL ERROR: expected `;', found symbol sym_variable
+		if (startsWith($error['error'], 'FATAL ERROR')) {
 			$remove = false;
 		}
 
@@ -95,7 +95,12 @@ class CodeLintPhp extends CodeLint {
 	public function internalFormatReportEntry($entry) {
 		// remove entry type (error / warning / notice)
 		if (isset($entry['error'])) {
-			$entry['error'] = ucfirst(substr($entry['error'], strpos($entry['error'], ': ') + 2));
+			list($type, $msg) = explode(': ', $entry['error'], 2);
+			$entry['error'] = ucfirst($msg);
+
+			if ($type === 'FATAL ERROR') {
+				$entry['error'] = "FATAL ERROR: {$entry['error']}";
+			}
 		}
 
 		return $entry;
@@ -141,6 +146,10 @@ class CodeLintPhp extends CodeLint {
 		}
 
 		if (endsWith($errorMsg, 'declared global but not used')) {
+			$ret = true;
+		}
+
+		if (startsWith($errorMsg, 'FATAL ERROR')) {
 			$ret = true;
 		}
 
