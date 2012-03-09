@@ -13,14 +13,14 @@ var UserLoginFacebook = (function(){
 			oauth : true,
 			status : true, // Check login status
 			cookie : true, // Enable cookies to allow the server to access the session
-			xfbml  : window.fbUseMarkup, // Whether XFBML should be automatically parsed
+			xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
 		});
 
 		btn.addEventListener('click', function(){
 			UserLoginFacebook.login();
 		});
 	});
-	
+
 	function goToUrl(url){
 		url = url || wgMainPageTitle;
 		url = wgArticlePath.replace('$1', url);
