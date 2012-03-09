@@ -272,12 +272,13 @@ class SolrSearchSet extends SearchResultSet {
 			array_unshift($queryClauses, "wid: {$onWikiId}");
 		}
 
+		$queryNoQuotes = str_replace('"', '', $sanitizedQuery);
+
 		$dismaxParams = array('qf'	=>	"'html^0.8 title^5'",
 			      	      'pf'	=>	"'html^0.8 title^5'",
-				      'mm'	=>	'66%',
 				      'ps'	=>	'3',
 				      'tie'	=>	'0.01',
-				      'bq'	=>	'\"'.str_replace('"', '', $sanitizedQuery).'\"'
+				      'bq'	=>	"\'".'html:\"'.$queryNoQuotes.'\"^50 title:\"'.$queryNoQuotes.'\"'."\'"
 				     );
 
 		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
@@ -287,7 +288,7 @@ class SolrSearchSet extends SearchResultSet {
 					  $sanitizedQuery);
 
 		$sanitizedQuery = implode(' AND ', $queryClauses);
-		
+		#var_dump($sanitizedQuery);die;
 		try {
 			wfRunHooks( 'Search-beforeBackendCall', array( &$sanitizedQuery, &$offset, &$limit, &$params ) );
 			$response = $solr->search($sanitizedQuery, $offset, $limit, $params);
