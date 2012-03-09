@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Category Galleries II extension
  *
@@ -49,7 +48,8 @@ define('CATEXHIBITION_DISABLED', 'CATEXHIBITION_DISABLED');
 $wgHooks['LanguageGetMagic'][] = 'CategoryExhibitionHelper::onLanguageGetMagic';
 $wgHooks['InternalParseBeforeLinks'][] = 'CategoryExhibitionHelper::onInternalParseBeforeLinks';
 $wgHooks['ArticleFromTitle'][] = 'CategoryExhibitionHelper::onArticleFromTitle';
-$wgHooks['ArticlePurge'][] = 'CategoryExhibitionHelper::onArticlePurge';
+$wgHooks['onArticleSaveComplete'][] = 'CategoryExhibitionHelper::onArticleSaveComplete';
+$wgHooks['AfterCategoriesUpdate'][] = 'CategoryExhibitionHelper::onAfterCategoriesUpdate';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'CategoryExhibitionAjax';

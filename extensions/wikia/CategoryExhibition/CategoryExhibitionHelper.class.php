@@ -55,25 +55,29 @@
 		}
 
 		/**
-		 * Hook entry when article is purged (purge the gallery cache if purging the category page
+		 * Hook entry when article is change 
 		 */
-		static public function onArticlePurge( Article $article ) {
-			global $wgVideoHandlersVideosMigrated;
+		static public function onArticleSaveComplete(  &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId, &$redirect ) {
 			$title = $article->getTitle();
 
-			$a = new Title;
-
-			$oMemCache = F::App()->wg->memc;
-			$sKey = F::App()->wf->sharedMemcKey(
-				'category_exhibition_article_cache',
-				$title->getArticleId(),
-				F::App()->wg->cityId,
-				md5( F::app()->wg->server ),
-				$wgVideoHandlersVideosMigrated ? 1 : 0
-			);
-
-			$oMemCache->delete( $sKey );
-
+			$ce = new CategoryExhibitionSection(null);
+			$ce->setTouched($title);
+			
+			return true;
+		}
+		
+		static public function onAfterCategoriesUpdate($categoryInserts, $categoryDeletes, $title) {
+			$ce = new CategoryExhibitionSection(null);
+			$categores = $categoryInserts + $categoryDeletes;
+					
+			print_r($categores);
+			
+			
+			foreach(array_keys($categores) as $value) {
+				$title = Title::newFromText($value, NS_CATEGORY);
+				$ce->setTouched($title); 
+			}
+			
 			return true;
 		}
 	}
