@@ -16,7 +16,7 @@ public class ToolbarTest extends BaseTest {
 		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
 	}
 
-	@Test(groups={"verified"})
+	@Test(groups={"envProduction","verified"})
 	public void testResetsDefaultsInCustomizedToolbar() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
