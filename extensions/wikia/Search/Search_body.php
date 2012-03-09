@@ -277,6 +277,7 @@ class SolrSearchSet extends SearchResultSet {
 				      'mm'	=>	'66%',
 				      'ps'	=>	'3',
 				      'tie'	=>	'0.01',
+				      'bq'	=>	'\"'.str_replace('"', $sanitizedQuery).'\"'
 				     );
 
 		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s", 
