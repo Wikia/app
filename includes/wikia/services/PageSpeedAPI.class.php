@@ -19,7 +19,7 @@ class PageSpeedAPI extends Service {
 	 * @param string $url page URL
 	 * @return mixed report
 	 */
-	public function getReportForURL($url) {
+	public function getReport($url) {
 		$apiUrl = self::PAGESPPED_API_URL . '?' . http_build_query(array(
 			'url' => $url,
 			'key' => $this->apiKey,
@@ -39,18 +39,13 @@ class PageSpeedAPI extends Service {
 			'stats' => $resp['pageStats'],
 		);
 
+		// aggregate some of the stats
+		$report['stats']['totalResponseBytes'] = $resp['pageStats']['htmlResponseBytes'] +
+			$resp['pageStats']['cssResponseBytes'] +
+			$resp['pageStats']['imageResponseBytes'] +
+			$resp['pageStats']['javascriptResponseBytes'] +
+			$resp['pageStats']['otherResponseBytes'];
+
 		return $report;
-	}
-
-	/**
-	 * Return PageSpeed score for a given URL
-	 *
-	 * @param string $url page URL
-	 * @return integer score
-	 */
-	public function getPageSpeedScoreForURL($url) {
-		$report = $this->getReportForURL($url);
-
-		return $report !== false ? $report['score'] : false;
 	}
 }
