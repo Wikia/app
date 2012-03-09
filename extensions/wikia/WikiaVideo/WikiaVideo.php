@@ -3,11 +3,13 @@ if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-//Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'WikiaVideo_initParserHook';
-} else {
-	$wgExtensionFunctions[] = 'WikiaVideo_initParserHook';
+if (empty($wgVideoHandlersVideosMigrated)) {
+	//Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
+	if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+		$wgHooks['ParserFirstCallInit'][] = 'WikiaVideo_initParserHook';
+	} else {
+		$wgExtensionFunctions[] = 'WikiaVideo_initParserHook';
+	}
 }
 
 $wgExtensionFunctions[] = 'WikiaVideo_init';
