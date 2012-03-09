@@ -50,7 +50,7 @@ class SpecialTranslationCount extends SpecialPage {
 
 		// need to get child groups for this meta group
 		if ( !empty( $this->mBreakdown ) ) {
-			$data[] = MessageGroupStatistics::forGroup( /* ... */ );
+			$data[] = MessageGroupStatistics::forGroup( $this->mBreakdown );
 		}
 
 		if ( empty( $data ) ) {
