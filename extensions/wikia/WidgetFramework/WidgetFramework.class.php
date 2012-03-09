@@ -61,14 +61,28 @@ class WidgetFramework {
 		return $params;
 	}
 
-	protected function getJavascript($widget) {
+	protected function getAssets($widget) {
+		wfProfileIn(__METHOD__);
+
 		$name = $widget['type'];
-		$jsOut = "";
+		$assets = array();
+
 		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.js')) {
-			$jsOut = F::build('JSSnippets')->addToStack(array(
-				"/extensions/wikia/WidgetFramework/Widgets/{$name}/{$name}.js"
-			));
+			$assets[] = "/extensions/wikia/WidgetFramework/Widgets/{$name}/{$name}.js";
 		}
+
+		if(file_exists(dirname(__FILE__) . '/Widgets/' . $name . '/' . $name . '.css')) {
+			$assets[] = "/extensions/wikia/WidgetFramework/Widgets/{$name}/{$name}.css";
+		}
+
+		if (!empty($assets)) {
+			$jsOut = F::build('JSSnippets')->addToStack($assets);
+		}
+		else {
+			$jsOut = '';
+		}
+
+		wfProfileOut(__METHOD__);
 		return $jsOut;
 	}
 
@@ -161,7 +175,7 @@ class WidgetFramework {
 		$params['skinname'] = $this->skinname;
 
 		$widgetOut = $wgWidgets[$widget['type']]['callback']('widget_' . $widget['id'], $params);
-		$widgetOut .= $this->getJavascript($widget);
+		$widgetOut .= $this->getAssets($widget);
 		if($wrap) {
 			return $this->wrap($widget, $widgetOut);
 		} else {
@@ -236,7 +250,7 @@ class WidgetFramework {
 	public static function moreLink($link) {
 		return '<div class="widgetMore"><a href="'.htmlspecialchars($link).'">'.wfMsg('moredotdotdot').'</a></div>';
 	}
- 
+
 	/**
 	 * @return string
 	 * @author Inez Korczyński
