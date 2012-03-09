@@ -26,7 +26,7 @@ class SpotlightsModule extends Module {
 		
 		//introducing new global var to remove
 		//spotlights on hubs
-		if( !empty($wgSuppressSpotlights) || $this->spotlightsDisabled() ) {
+		if( !empty($wgSuppressSpotlights) ) {
 			$this->skipRendering();
 			return;
 		}
@@ -55,24 +55,4 @@ class SpotlightsModule extends Module {
 			}
 		}
 	}
-	
-	/**
-	 * @desc Allows to turn spotlights in the footer off fb#23736
-	 * @return Boolean
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	protected function spotlightsDisabled() {
-		global $wgTitle, $wgHubsWithoutSpotlightsList, $wgEnableWikiaHubsExt;
-		
-		if( !empty($wgEnableWikiaHubsExt)
-		 && $wgTitle instanceof Title 
-		 && is_array($wgHubsWithoutSpotlightsList) 
-		 && in_array($wgTitle->getText(), $wgHubsWithoutSpotlightsList) 
-		) {
-			return true;
-		}
-		
-		return false;
-	}
-	
 }
