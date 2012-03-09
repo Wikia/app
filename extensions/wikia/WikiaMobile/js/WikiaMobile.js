@@ -23,17 +23,25 @@ var WikiaMobile = (function() {
 		shrOpenNum = 0, shrImgName = '',
 		fixed = Modernizr.positionfixed,
 		d = document,
-		byId = 'getElementById',
-		byClass = 'getElementsByClassName',
-		bind = 'addEventListener',
 
 		querystring = {
+			srh: window.location.search,
+
 			toString: function(){
-				return location.search;
+				return querystring.srh;
 			},
 
 			getVal: function(name, defVal){
-				//TODO: implement
+				if(!querystring.cache){
+					querystring.cache = {};
+					var tmpQuery = querystring.srh.substr(1).split('&');
+					for(var i=0; i < tmpQuery.length; i++){
+						var tmp = tmpQuery[i].split('=');
+						querystring.cache[tmp[0]] = tmp[1];
+					}
+					tmpQuery = tmp = null;
+				}
+				return querystring.cache[name] || defVal;
 			}
 		};
 
@@ -112,10 +120,11 @@ var WikiaMobile = (function() {
 			className = this.className;
 			
 			if(className.indexOf('image') > -1){
-				self.attr('data-num', number++);
 				href = this.href;
 				name = this.attributes['data-image-name'].value.replace('.','-');
+				if(name === shrImgName) shrOpenNum = number;
 				allImages.push([href, name]);
+				self.attr('data-num', number++);
 			}else if(className.indexOf('wkImgStk') > -1){
 				if(className.indexOf('grp') > -1) {
 					var figures = self.find('figure'),
@@ -126,12 +135,12 @@ var WikiaMobile = (function() {
 					this.getElementsByTagName('footer').insertAdjacentHTML('beforeend', l);
 
 					$.each(figures, function(i, fig){
-						img = fig[byClass]('image')[0];
+						img = fig.getElementsByClassName('image')[0];
 						href = img.href;
 						name = img.id;
 						allImages.push([
 							href, name,
-							(cap = fig[byClass]('thumbcaption')[0])?cap.innerHTML:'',
+							(cap = fig.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
 							i, l
 						]);
 
@@ -159,18 +168,16 @@ var WikiaMobile = (function() {
 				}
 				number += l;
 			} else {
-				self.attr('data-num', number);
-
-				img = this[byClass]('image')[0];
+				img = this.getElementsByClassName('image')[0];
 				href = img.href;
 				name = img.id;
+				if(name === shrImgName) shrOpenNum = number;
 				allImages.push([
 					href, name,
-					(cap = this[byClass]('thumbcaption')[0])?cap.innerHTML:''
+					(cap = this.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:''
 				]);
+				self.attr('data-num', number++);
 			}
-
-			if(name === shrImgName) shrOpenNum = number;
 		});
 
 		//if there is only one image in the article hide the prev/next buttons
@@ -238,7 +245,7 @@ var WikiaMobile = (function() {
 			});
 
 			if(handledTables.length > 0)
-				window[bind](sizeEvent, processTables, false);
+				window.addEventListener(sizeEvent, processTables, false);
 		}else if(handledTables.length > 0){
 			var table, row, isWrapped, isBig, wasWrapped,
 				maxWidth = window.innerWidth || window.clientWidth;
@@ -337,7 +344,7 @@ var WikiaMobile = (function() {
 		}
 	}
 	
-	function openLogin() {
+	function openLogin(){
 		console.log('This will open login soon');
 	}
 
@@ -361,7 +368,7 @@ var WikiaMobile = (function() {
 		cnt;
 
 		if(elm){
-			elm[bind](clickEvent, function(event){
+			elm.addEventListener(clickEvent, function(event){
 				if(this.className.indexOf("on") > -1){
 					close(event);
 				}else{
@@ -373,7 +380,7 @@ var WikiaMobile = (function() {
 							style = options.style || '';
 
 						this.insertAdjacentHTML('afterbegin', '<div class=ppOvr></div>');
-						cnt = this[byClass]('ppOvr')[0];
+						cnt = this.getElementsByClassName('ppOvr')[0];
 
 						if(onCreate){
 							changeContent(onCreate);
@@ -448,26 +455,26 @@ var WikiaMobile = (function() {
 	//init
 	$(function(){
 		body = $(d.body);
-		page = d[byId]('wkPage');
-		article = d[byId]('wkMainCnt');
-		ftr = d[byId]('wkFtr');
-		adSlot = d[byId]('wkAdPlc');
+		page = d.getElementById('wkPage');
+		article = d.getElementById('wkMainCnt');
+		ftr = d.getElementById('wkFtr');
+		adSlot = d.getElementById('wkAdPlc');
 
-		var navigationSearch = $(d[byId]('wkNavSrh')),
-		searchToggle = $(d[byId]('wkSrhTgl')),
-		searchInput = $(d[byId]('wkSrhInp')),
-		searchForm = $(d[byId]('wkSrhFrm')),
-		wkNav = d[byId]('wkNav'),
-		wkNavMenu = d[byId]('wkNavMenu'),
+		var navigationSearch = $(d.getElementById('wkNavSrh')),
+		searchToggle = $(d.getElementById('wkSrhTgl')),
+		searchInput = $(d.getElementById('wkSrhInp')),
+		searchForm = $(d.getElementById('wkSrhFrm')),
+		wkNav = d.getElementById('wkNav'),
+		wkNavMenu = d.getElementById('wkNavMenu'),
 		wikiNavHeader = wkNavMenu.getElementsByTagName('h1')[0],
-		wikiNavLink = d[byId]('wkNavLink'),
-		navBar = d[byId]('wkTopNav'),
-		lvl1 = $('.lvl1'),
+		wikiNavLink = d.getElementById('wkNavLink'),
+		navBar = d.getElementById('wkTopNav'),
+		lvl1 = d.getElementById('lvl1'),
 		//to cache link in wiki nav
 		lvl2Link;
 
 		//replace menu from bottom to topBar - the faster the better
-		wkNav.replaceChild(wkNavMenu, d[byId]('wkWikiNav'));
+		wkNav.replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
 
 		//analytics
 		track('view');
@@ -481,13 +488,13 @@ var WikiaMobile = (function() {
 		d.body.className += ' js';
 
 		//handle ads
-		var close = d[byId]('wkAdCls'),
+		var close = d.getElementById('wkAdCls'),
 			i = 0;
 			adExist = function(){
 				if(adSlot.childElementCount > 3){
 					close.className = "show";
 					adSlot.style.height = '50px';
-					close[bind](clickEvent, function() {
+					close.addEventListener(clickEvent, function() {
 						track('ad/close');
 						adSlot.className += ' anim';
 						if(!fixed) {
@@ -501,7 +508,7 @@ var WikiaMobile = (function() {
 					if(fixed){
 						adSlot.style.position = 'fixed';
 					}else{
-						window[bind]('scroll', moveSlot, false);
+						window.addEventListener('scroll', moveSlot, false);
 					}
 					return true;
 				}
@@ -581,7 +588,7 @@ var WikiaMobile = (function() {
 
 		//preparing the navigation
 		wikiNavHeader.className = '';
-		$(wkNavMenu).delegate('.lvl1 a', clickEvent, function(){
+		$(wkNavMenu).delegate('#lvl1 a', clickEvent, function(){
 			track('link/nav/list');
 		})
 		.delegate('header > a', clickEvent, function(){
@@ -589,7 +596,7 @@ var WikiaMobile = (function() {
 		})
 		.find('ul ul').parent().addClass('cld');
 
-		d[byId]('wkNavTgl')[bind](clickEvent, function(event){
+		d.getElementById('wkNavTgl').addEventListener(clickEvent, function(event){
 			event.preventDefault();
 			if(navBar.className.indexOf('fllNav') > -1){
 				closeNav();
@@ -599,7 +606,7 @@ var WikiaMobile = (function() {
 				ftr.style.display = adSlot.style.display = 'none';
 				//80px is for lvl1 without header
 				navBar.className = 'fllNav';
-				navBar.style.height = (lvl1.height() + 80) + 'px';
+				navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
 				window.location.hash = 'WikiNav';
 			}
 		});
@@ -616,15 +623,15 @@ var WikiaMobile = (function() {
 		}
 
 		//close WikiNav on back button
-		if ("onhashchange" in window) {
-			window[bind]("hashchange", function() {
+		if('onhashchange' in window) {
+			window.addEventListener("hashchange", function() {
 				if(window.location.hash == "" && navBar.className.indexOf('fullNav') > -1) {
 					closeNav();
 				}
 			}, false);
 		}
 
-		lvl1.delegate('.cld', clickEvent, function(event) {
+		$(lvl1).delegate('.cld', clickEvent, function(event) {
 			if(event.target.parentNode.className.indexOf('cld') > -1) {
 				event.stopPropagation();
 				event.preventDefault();
@@ -657,21 +664,21 @@ var WikiaMobile = (function() {
 			}
 		});
 
-		d[byId]('wkNavBack')[bind](clickEvent, function() {
+		d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
 			var self = $(this),
 			current;
 
 			if(wkNavMenu.className == 'cur2') {
 				wkNavMenu.className = 'cur1';
 				setTimeout(function(){wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2'}, 800);
-				navBar.style.height = (lvl1.height() + 80) + 'px';
+				navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
 				track('nav/level-1');
 			} else {
 				wkNavMenu.className = 'cur2';
 				setTimeout(function(){wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3'}, 800);
-				current = $('.lvl2.cur');
-				wikiNavHeader.innerText = current.prev().text();
-				navBar.style.height = (current.height() + 130) + 'px';
+				current = wkNavMenu.querySelector('.lvl2.cur');
+				wikiNavHeader.innerText = current.previousSibling.text;
+				navBar.style.height = (current.offsetHeight + 130) + 'px';
 				if(lvl2Link) {
 					wikiNavLink.href = lvl2Link;
 					wikiNavLink.style.display = 'block';
@@ -684,20 +691,20 @@ var WikiaMobile = (function() {
 		});
 		//end of preparing the nav
 
-		page[bind](clickEvent, function(event){
+		page.addEventListener(clickEvent, function(event){
 			navBar.className = '';
 			searchInput.val('');
 		});
 
-		$(d[byId]('wkRelPag')).delegate('a', clickEvent, function(){
+		$(d.getElementById('wkRelPag')).delegate('a', clickEvent, function(){
 			track('link/related-page');
 		});
 
-		$(d[byId]('wkArtCat')).delegate('a', clickEvent, function(){
+		$(d.getElementById('wkArtCat')).delegate('a', clickEvent, function(){
 			track('link/category');
 		});
 
-		d[byId]('wkFllSite')[bind](clickEvent, function(event){
+		d.getElementById('wkFllSite').addEventListener(clickEvent, function(event){
 			event.preventDefault();
 			track('link/fullsite');
 			Wikia.CookieCutter.set('mobilefullsite', 'true');
@@ -756,7 +763,7 @@ var WikiaMobile = (function() {
 				});
 			});
 
-			d[byId]('expAll')[bind](clickEvent, function(event) {
+			d.getElementById('expAll').addEventListener(clickEvent, function(event) {
 				var elements = $('.alphaSec .artSec').add('.alphaSec .collSec');
 				if($(this).toggleClass('exp').hasClass('exp')){
 					elements.addClass('open');
@@ -767,14 +774,14 @@ var WikiaMobile = (function() {
 				}
 			});
 
-			$(d[byId]('wkCatExh')).bind(clickEvent, function(event) {
+			$(d.getElementById('wkCatExh')).bind(clickEvent, function(event) {
 				track('category/exhibition/click');
 			});
 		}
 		//end category pages
 
 		popOver({
-			on: d[byId]('wkShrPag'),
+			on: d.getElementById('wkShrPag'),
 			create: loadShare,
 			open: function(){
 				track('share/page/open');
@@ -786,10 +793,8 @@ var WikiaMobile = (function() {
 		});
 
 		//if url contains image=imageName - open modal with this image
-		var locationSearch = window.location.search;
-		if(locationSearch.indexOf('image=') > -1){
-			shrImgName = locationSearch.match('image=.*(?=&)|$')[0].substring(6);
-
+		shrImgName = querystring.getVal('image');
+		if(shrImgName){
 			if(allImages.length == 0) processImages();
 
 			setTimeout(function(){imgModal(shrOpenNum)}, 1000);

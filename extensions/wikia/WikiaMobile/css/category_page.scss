@@ -52,6 +52,14 @@
 	header {
 		line-height: 50px;
 	}
+	
+	.cnt {
+		display: block;
+		position: absolute;
+		bottom: 3px;
+		line-height: 15px;
+		left: 20px;
+	}
 
 	li {
 		&.sub {

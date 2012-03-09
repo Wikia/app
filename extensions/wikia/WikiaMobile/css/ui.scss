@@ -11,6 +11,15 @@
 	box-sizing: border-box;
 }
 
+/* Error Box */
+
+.wkErr {
+	background-color: $error-bg-color;
+	color: $error-color;
+	text-align: left;
+	padding-left: 10px;
+}
+
 /* Button */
 
 .wkBtn {
@@ -75,17 +84,15 @@ li.sub, li.cld > a, li.cld > span {
 }
 
 .cnt {
-	font-size: small;
-	padding: 2px 5px;
-	border-radius: 3px;
-	color: #999;
-	background: #F2F2F2;
-	position: absolute;
-	left: 35px;
-	height: 15px;
-	line-height: 15px;
-	top: 12px;
-	font-weight: 100;
+		font-size: small;
+		padding: 1px 4px;
+		border-radius: 3px;
+		color: #999;
+		background: #F2F2F2;
+		font-weight:100;
+		margin: 0 20px;
+		position: relative;
+		bottom: 1px;
 }
 
 .clsIco{

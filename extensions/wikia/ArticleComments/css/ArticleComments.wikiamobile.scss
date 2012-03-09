@@ -32,10 +32,6 @@ $comment-left-margin: $page-padding + 60px;
 	.collSec{
 		@include section-title-related;
 	}
-	
-	.cnt {
-		left: 110px;
-	}
 
 	form {
 		position: relative;

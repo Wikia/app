@@ -9,7 +9,7 @@
 @import "mixins/transition.scss";
 
 #wkWrdMrk {
-	line-height: 36px;
+	line-height: 40px;
 	font-size: x-large;
 	color: $navBarWordmarkText;
 	overflow: hidden;
@@ -22,10 +22,8 @@
 }
 
 #wkImgMrk {
-	height: 36px;
-	width: auto;
+	height: 40px;
 	padding: 2px 5px;
-	float: left;
 }
 
 #wkSrhTgl {
@@ -153,13 +151,13 @@
 		}
 
 		&.cur2 {
-			.lvl1 {
+			#lvl1 {
 				left:-100%;
 			}
 		}
 
 		&.cur3 {
-			.lvl1 {
+			#lvl1 {
 				left: -200%;
 			}
 		}

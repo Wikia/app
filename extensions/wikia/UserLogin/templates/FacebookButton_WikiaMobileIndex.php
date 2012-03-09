@@ -1,1 +1,1 @@
-<button id=ssoFbBtn><img src="<?= $wf->BlankImgUrl() ;?>"><?= $wf->Msg( 'fbconnect-connect-simple' ) ;?></button>
+<button id=ssoFbBtn><div id=fbLogo></div><img src="<?= $wf->BlankImgUrl() ;?>"><?= $wf->Msg( 'fbconnect-connect-simple' ) ;?></button>
