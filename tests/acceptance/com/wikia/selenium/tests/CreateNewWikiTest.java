@@ -257,7 +257,8 @@ public class CreateNewWikiTest extends BaseTest {
 		
 	//Test Case 002
 	//logged out in german wiki,domain appears in german,log in as QATestsStaff during CNW flow,verify domain is de.
-	//@Test(groups={"envProduction"}) removed by Patick Archbold 07-Mar-12
+	@Test(groups={"envProduction","broken"}) 
+	//added "broken" to groups Patick Archbold 08-Mar-12
 		public void createWikiDefaultLanguageForAnonymousIsWikiLanguage() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
@@ -291,7 +292,8 @@ public class CreateNewWikiTest extends BaseTest {
 		
 	//Test Case 003
 	//logged out in german wiki,change language to english in CNW flow,log in as QATestsStaff,verify domain is english
-	//@Test(groups={"envProduction"})removed by Patick Archbold 07-Mar-12
+	@Test(groups={"envProduction","broken"})
+	//added "broken" to groups Patick Archbold 08-Mar-12
 	public void createWikiDefaultLanguageForAnonymousIsWikiAndItCanBeChanged() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
