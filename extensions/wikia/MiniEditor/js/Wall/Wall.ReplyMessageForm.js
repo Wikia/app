@@ -13,18 +13,20 @@
 			// check if editor exists before unbinding placeholder (BugId:23781)
 			if(!target.data('wikiaEditor')) {
 				// Unbind placeholder and clear textarea before initing mini editor (BugId:23221)
-				target.unbind('.placeholder').val('').miniEditor({
-					events: {
-						editorReady: function(event, wikiaEditor) {
-							// Wait till after editor is loaded to know whether RTE is enabled. 
-							// If no RTE, re-enable placeholder on the textarea. 
-							if(!MiniEditor.ckeditorEnabled) {
-								wikiaEditor.getEditbox().placeholder();
-							}
+				target.unbind('.placeholder').val('');
+			}
+			
+			target.miniEditor({
+				events: {
+					editorReady: function(event, wikiaEditor) {
+						// Wait till after editor is loaded to know whether RTE is enabled. 
+						// If no RTE, re-enable placeholder on the textarea. 
+						if(!MiniEditor.ckeditorEnabled) {
+							wikiaEditor.getEditbox().placeholder();
 						}
 					}
-				});
-			}
+				}
+			});
 		},
 
 		doReplyToMessage: function(main, newreply, reload) {

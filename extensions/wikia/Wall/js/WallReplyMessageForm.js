@@ -22,7 +22,6 @@ var WallReplyMessageForm = $.createClass(WallMessageForm, {
 
 		this.init();
 
-		this.model.bind('newPosted', this.proxy(this.init));
 		this.model.bind('pageLoaded', this.proxy(function(page, data) {
 			this.init(page);
 		}));

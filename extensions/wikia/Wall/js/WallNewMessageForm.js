@@ -65,11 +65,11 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 
 		if (this.WallMessageSubmit.hasClass('wall-require-login')) {
 			this.loginBeforeAction(this.proxy(function() {
-				this.doPostNewMessage(title, this.proxy(this.reloadAfterLogin));
+				this.doPostNewMessage(title, true);
 			}));
 
 		} else {
-			this.doPostNewMessage(title, this.proxy(this.afterPost));
+			this.doPostNewMessage(title);
 		}
 	},
 	
@@ -77,8 +77,8 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 		return this.WallMessageBody.val();
 	},
 	
-	doPostNewMessage: function(title, callback) {
-		this.model.postNew(this.username, title ? this.WallMessageTitle.val() : '', this.getMessageBody(), this.getFormat(), callback);
+	doPostNewMessage: function(title, reload) {
+		this.model.postNew(this.username, title ? this.WallMessageTitle.val() : '', this.getMessageBody(), this.getFormat());
 		this.clearNewMessageTitle();
 		this.disableNewMessage();
 
@@ -87,7 +87,11 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 			this.track('wall/new_message/post_without_title');
 		} else {
 			this.track('wall/new_message/post');
-		}	
+		}
+		
+		if(reload) {
+			this.reloadAfterLogin;
+		}
 	},
 	
 	clearNewMessageBody: function() {
