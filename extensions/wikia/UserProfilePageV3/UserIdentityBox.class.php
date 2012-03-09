@@ -302,7 +302,7 @@ class UserIdentityBox {
 			
 			if( isset($data->name) ) {
 				//phalanx filtering; bugId:21358
-				$data->name = $this->doPhalanxFilter($data->name, Phalanx::TYPE_USER);
+				$data->name = $this->doPhalanxFilter($data->name, 'TYPE_USER');
 				//char limit added; bugId:15593
 				$data->name = mb_substr($data->name, 0, self::USER_NAME_CHAR_LIMIT);
 				
@@ -338,6 +338,7 @@ class UserIdentityBox {
 	 * @brief Uses Phalanx to filter spam texts
 	 * 
 	 * @param string $text the text to be filtered
+	 * @param string $type one of Phalanx static names consts: TYPE_CONTENT, TYPE_SUMMARY, TYPE_TITLE, TYPE_USER, TYPE_ANSWERS_QUESTION_TITLE, TYPE_ANSWERS_RECENT_QUESTIONS, TYPE_WIKI_CREATION, TYPE_COOKIE, TYPE_EMAIL; if $type is null it'll set to Phalanx::TYPE_CONTENT
 	 * 
 	 * @return string empty string if text was blocked; given text otherwise
 	 */
@@ -347,6 +348,9 @@ class UserIdentityBox {
 		if( !empty($this->app->wg->EnablePhalanxExt) && !empty($text) ) {
 			if( is_null($type) ) {
 				$type = Phalanx::TYPE_CONTENT;
+			} else {
+				//fb#23473
+				$type = constant("Phalanx::$type");
 			}
 			
 			$filters = Phalanx::getFromFilter($type);
@@ -446,7 +450,7 @@ class UserIdentityBox {
 		$userName = $this->user->getName();
 		if( $isBlocked === false && !empty($this->app->wg->EnablePhalanxExt) && !empty($userName) ) {
 		//blocked globally
-			$userName = $this->doPhalanxFilter($userName, Phalanx::TYPE_USER);
+			$userName = $this->doPhalanxFilter($userName, 'TYPE_USER');
 			$isBlocked = ( empty($userName) && !$this->user->isAllowed('phalanxexempt') ) ? true : false;
 		}
 		
