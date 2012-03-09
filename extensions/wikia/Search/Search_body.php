@@ -272,17 +272,17 @@ class SolrSearchSet extends SearchResultSet {
 			array_unshift($queryClauses, "wid: {$onWikiId}");
 		}
 
-		$dismaxParams = "{!dismax qf='html^0.8"
-						." title^5'"
-						." pf='html^0.8"
-						." title^5'"
-						." mm=66%"
-						." ps=3"
-						." tie=0.01"
-						. "}";
+		$dismaxParams = array('qf'	=>	"'html^0.8 title^5'",
+			      	      'pf'	=>	"'html^0.8 title^5'",
+				      'mm'	=>	'66%',
+				      'ps'	=>	'3',
+				      'tie'	=>	'0.01',
+				     );
 
-		$queryClauses[] = '_query_:"' . $dismaxParams . $sanitizedQuery . '"';
-
+		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s", 
+				  implode(' ', array_walk($dismaxParams, function($val,$key) {return "{$key}={$val}"; })),
+				  $sanitizedQuery);
+				  	   
 		$sanitizedQuery = implode(' AND ', $queryClauses);
 
 		try {
