@@ -114,7 +114,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 			// User - confirm email and redirect to user page
 			$user = User::newFromName( $this->username );
-			if ( $user->getId() != $expUser->getId() ) {
+			if ( ( !( $user instanceof User ) ) || ( $user->getId() != $expUser->getId() ) ) {
 				$this->result = 'error';
 				$this->msg = $this->wf->Msg( 'wikiaconfirmemail-error-user-not-match' );
 				$this->errParam = 'username';
