@@ -1,10 +1,3 @@
-<?php
-	global $wgExtensionsPath, $wgStyleVersion;
-
-	$StaticChute = new StaticChute('js');
-	$StaticChute->useLocalChuteUrl();
-	$YUIPackageURL = $StaticChute->getChuteUrlForPackage('yui');
-?>
 <!-- s:<?= __FILE__ ?> -->
 <style type="text/css">
 /*<![CDATA[*/
