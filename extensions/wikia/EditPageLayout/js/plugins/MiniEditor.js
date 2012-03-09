@@ -67,6 +67,7 @@
 				afterAnimation = function() {
 					this.showButtons();
 					this.showToolbar();
+					wikiaEditor.element.removeClass('editor-closed');
 				};
 
 			if (!wikiaEditor.element.hasClass('active')) {
@@ -173,6 +174,7 @@
 								element.animate(animation);
 							}
 						}
+						wikiaEditor.element.addClass('editor-closed');					
 					});
 				}
 			}

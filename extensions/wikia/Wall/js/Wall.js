@@ -71,9 +71,11 @@ var Wall = $.createClass(Object, {
 			this.newMessageForm = new WallNewMessageForm(this.username, this.model);
 			this.editMessageForm = new WallEditMessageForm(this.username, this.model);
 			this.replyMessageForm = new WallReplyMessageForm(this.username, this.model);
+
+			// This breaks stuff for MiniEditor instances.  See comment below, needs to be refactored. 
+			this.newMessageForm.on('afterNewMessagePost', this.proxy(this.afterNewMessagePost));
 		}
 
-		this.newMessageForm.on('afterNewMessagePost', this.proxy(this.afterNewMessagePost));
 
 		$().log(this.username, "Wall username");
 		

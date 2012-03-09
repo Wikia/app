@@ -85,6 +85,9 @@
 	}
 
 	.new-reply {
+		textarea {
+			line-height: normal; // Before activation
+		}
 		.active {
 			.speech-bubble-message {
 				margin-left: 40px;
@@ -94,11 +97,17 @@
 				display: block;
 			}
 		}
-		
-		.mode-source textarea {
-			line-height: inherit;
+		.mode-source {
+			textarea {
+				line-height: inherit; // After activation (RTE disabled)
+			}
 		}
-
+		.editor-closed {
+			textarea {
+				line-height: normal; // Editor is shrunken down
+			}
+		}
+		
 		.editarea {
 			border: solid 1px $color-page-border;
 			margin-bottom: 0px;
