@@ -9,6 +9,7 @@ var WikiaHubs = {
 			WikiaHubs.trackClick('pulse/search-submit');
 		});
 		//WikiaHubs.trackingCategory = 'video-games';
+		$.internalTrack(WikiaHubs.trackingCategory, { event:'view' });
 	},
 	trackClick: function(label, value) {
 		$.internalTrack(WikiaHubs.trackingCategory, { event:'click', label:label});
