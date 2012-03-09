@@ -71,4 +71,10 @@ class VideoHandlerHooks extends WikiaObject{
 		};
 		return true;
 	}
+
+	public function initParserHook(&$parser) {
+		$parser->setHook('videogallery', array($parser, 'renderImageGallery'));
+		return true;
+	}
+	
 }
