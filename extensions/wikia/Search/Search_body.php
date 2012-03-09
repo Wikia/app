@@ -274,11 +274,19 @@ class SolrSearchSet extends SearchResultSet {
 
 		$queryNoQuotes = str_replace('"', '', $sanitizedQuery);
 
+		$boostQueries = array('html:\"'.$queryNoQuotes.'\"^5', 
+				      'title:\"'.$queryNoQuotes.'\"^10');
+
+		if ($crossWikiaSearch) {
+		  // this is still pretty important!
+		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^10';
+		}
+
 		$dismaxParams = array('qf'	=>	"'html^0.8 title^5'",
 			      	      'pf'	=>	"'html^0.8 title^5'",
 				      'ps'	=>	'3',
 				      'tie'	=>	'0.01',
-				      'bq'	=>	"\'".'html:\"'.$queryNoQuotes.'\"^5 title:\"'.$queryNoQuotes.'\"^10'."\'"
+				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'"
 				     );
 
 		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
@@ -288,7 +296,7 @@ class SolrSearchSet extends SearchResultSet {
 					  $sanitizedQuery);
 
 		$sanitizedQuery = implode(' AND ', $queryClauses);
-		#var_dump($sanitizedQuery);die;
+
 		try {
 			wfRunHooks( 'Search-beforeBackendCall', array( &$sanitizedQuery, &$offset, &$limit, &$params ) );
 			$response = $solr->search($sanitizedQuery, $offset, $limit, $params);
