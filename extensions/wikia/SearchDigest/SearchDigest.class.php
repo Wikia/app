@@ -14,17 +14,14 @@ class SpecialSearchDigest extends SpecialPage {
 
 		switch ( $mode ) {
 			case self::MODE_CSV:
-				$pager = new SearchDigestCSVPager();
+				$csv = new SearchDigestCSV();
 
-				// display all results
-				$pager->setLimit( $pager->getNumRows() + 1 );
-
-				$csv = $pager->getBody();
+				$csvText = $csv->getCSVText();
 
 				$wgOut->setArticleBodyOnly( true );
-				$this->setDownloadHeaders( $csv );
+				$this->setDownloadHeaders( $csvText );
 
-				$wgOut->addHTML( $csv );
+				$wgOut->addHTML( $csvText );
 
 				break;
 			default:
@@ -88,10 +85,13 @@ class SearchDigestPager extends ReverseChronologicalPager {
 	function getQueryInfo() {
 		global $wgCityId;
 
+		// Get the date one week ago
+		$dateLimit = date( 'Y-m-d', ( wfTimestamp( TS_UNIX ) - 604800 ) );
+
 		return array(
 			'tables' => array( 'searchdigest' ),
 			'fields' => array( 'sd_query', 'sd_misses' ),
-			'conds' => array( 'sd_wiki' => $wgCityId ),
+			'conds' => array( 'sd_wiki' => $wgCityId, 'sd_lastseen > ' . $this->mDb->addQuotes( $dateLimit ) ),
 			'options' => array( 'ORDER_BY sd_misses DESC' ),
 		);
 	}
@@ -183,12 +183,55 @@ class SearchDigestPager extends ReverseChronologicalPager {
 	}
 }
 
-class SearchDigestCSVPager extends SearchDigestPager {
-	function getStartBody() { return ''; }
+class SearchDigestCSV {
+	function __construct() {
+		global $wgStatsDB, $wgDevelEnvironment;
 
-	function getEndBody() { return ''; }
+		if ( $wgDevelEnvironment ) {
+			$this->mDb = wfGetDB( DB_SLAVE );
+		} else {
+			$this->mDb = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+			$this->mDb->selectDB( 'specials' );
+		}
+	}
 
-	function formatRow( $row ) {
-		return $row->sd_query . "," . $row->sd_misses . "\n";
+	function getCSVText() {
+		global $wgMemc, $wgCityId;
+
+		$csvText = '';
+
+		$memkey = __METHOD__ . ":" . $wgCityId;
+		$cached = $wgMemc->get( $memkey );
+
+		if ( empty( $cached ) ) {
+			$res = $this->doQuery();
+
+			foreach ( $res as $row ) {
+				$csvText .= $row->sd_query . "," . $row->sd_misses . "\n";
+			}
+
+			$wgMemc->set( $memkey, $csvText, 60 * 60  );
+		} else {
+			$csvText = $cached;
+		}
+
+		return $csvText;
+	}
+
+	private function doQuery() {
+		global $wgCityId;
+
+		// Get the date one week ago
+		$dateLimit = date( 'Y-m-d', ( wfTimestamp( TS_UNIX ) - 604800 ) );
+
+		$res = $this->mDb->select(
+			array( 'searchdigest' ),
+			array( 'sd_query', 'sd_misses' ),
+			array( 'sd_wiki' => $wgCityId, 'sd_lastseen > ' . $this->mDb->addQuotes( $dateLimit ) ),
+			__METHOD__,
+			array( 'ORDER BY' => 'sd_misses DESC' )
+		);
+
+		return $res;
 	}
 }
