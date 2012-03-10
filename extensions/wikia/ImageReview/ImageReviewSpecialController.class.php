@@ -63,48 +63,15 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->redirect( $this->submitUrl.'?ts='.time() );
 			return;
 		}
-
-		if ( $action == 'questionable' ) {
-			$this->imageList = $this->getImageList( $ts, self::STATE_QUESTIONABLE );
-		} else 
-			$this->imageList = $this->getImageList( $ts );
-	}
-
-	/**
-	 * get image list from reviewer id
-	 * @param integer review_end
-	 * @return array images
-	 */
-	protected function getImagesFromReviewerId( $reviewEnd ) {
-		$this->wf->ProfileIn( __METHOD__ );
-
-		$imageList = array();
-
-		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
-
-		$result = $db->select(
-			array( 'image_review' ),
-			array( 'wiki_id, page_id, state' ),
-			array(
-				'reviewer_id' => $this->wg->user->getId(),
-				'review_end = '.$reviewEnd
-				),
-			__METHOD__,
-			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
-		);
-
-		while( $row = $db->fetchObject($result) ) {
-			$tmp['wikiId'] = $row->wiki_id;
-			$tmp['pageId'] = $row->page_id;
-			$tmp['state'] = $row->state;
-			$tmp['url'] = $this->getImageUrl( $row->wiki_id, $row->page_id );
-			$imageList[] = $tmp;
+		
+		$this->imageList = $this->refetchImageListByTimestamp($ts);
+		if (!count($this->imageList)) {
+			if ( $action == 'questionable' ) {
+				$this->imageList = $this->getImageList( $ts, self::STATE_QUESTIONABLE );
+			} else { 
+				$this->imageList = $this->getImageList( $ts, self::STATE_QUESTIONABLE );
+			}
 		}
-		$db->freeResult( $result );
-
-		$this->wf->ProfileOut( __METHOD__ );
-
-		return $images;
 	}
 
 	/**
@@ -190,6 +157,51 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
+	* get image list from reviewer id based on the timestamp
+	* @param integer review_end
+	* @return array images
+	*/	
+	protected function refetchImageListByTimestamp($timestamp) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
+		
+		// try to re-fetch the previuos set of images
+		// TODO: optimize it, so we don't do it on every request
+		
+		$result = $db->select(
+			array( 'image_review' ),
+			array( 'wiki_id, page_id, state' ),
+			array( 'review_start = FROM_UNIXTIME(' . $timestamp . ')', 'reviewer_id' =>  $this->wg->user->getId()),
+			__METHOD__,
+			array( 'ORDER BY' => 'priority desc, last_edited desc' )
+		);
+
+		$imageList = array();
+		while( $row = $db->fetchObject($result) ) {
+			$tmp = array(
+						'wikiId' => $row->wiki_id,
+						'pageId' => $row->page_id,
+						'state' => $row->state,
+						'src' => $this->getImageSrc( $row->wiki_id, $row->page_id ),
+						'url' => $this->getImagePage( $row->wiki_id, $row->page_id ),
+			);
+			$imageList[] = $tmp;
+		}
+		$db->freeResult( $result );
+		
+		error_log("ImageReview : refetched " . count($imageList) . " images based on timestamp");
+		$this->wf->ProfileOut( __METHOD__ );
+		
+		return $imageList;
+		
+	}
+	
+	/**
+	 * get image list
+	 * @return array imageList
+	 */
+	/**
 	 * get image list
 	 * @return array imageList
 	 */
@@ -244,6 +256,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			);
 			$db->commit();
 		}
+
+		error_log("ImageReview : fetched new " . count($imageList) . " images");	
 
 		$this->wf->ProfileOut( __METHOD__ );
 
