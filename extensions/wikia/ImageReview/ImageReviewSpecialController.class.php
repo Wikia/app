@@ -114,11 +114,13 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$sqlWhere = array();
 
 		foreach ( $images as $image ) {
-			if ( $image['state'] == self::FORM_STATE_OK ) {
+			if ( $image['state'] == self::STATE_APPROVED ) {
 				$sqlWhere[self::STATE_APPROVED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
-			} else if ( $image['state'] == self::FORM_STATE_DEL ) {
+			} else if ( $image['state'] == self::STATE_DELETED ) {
 				$sqlWhere[self::STATE_DELETED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$deletionList[$image['wikiId']] = $image['pageId'];
+			} else if ( $image['state'] == self::STATE_Q ) {
+				$sqlWhere[self::STATE_Q][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			}
 		}
 
