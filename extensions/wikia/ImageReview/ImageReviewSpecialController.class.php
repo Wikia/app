@@ -159,12 +159,16 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * reset state in abandoned work
-	 * @todo move this to a cron worker
+	 * @todo remove this this (cron worker to take over)
 	 */
 	protected function resetAbandonedWork() {
+		if ( !$this->wg->DevelEnvironment ) {
+			return true;
+		}
+
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
-		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600 ;
+		$timeLimit = 1800; // 30 min
 
 		$db->update(
 			'image_review',
@@ -180,8 +184,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			__METHOD__
 		);
 		$db->commit();
-
-		$this->wf->ProfileOut( __METHOD__ );
 	}
 
 	/**
