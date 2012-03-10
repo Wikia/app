@@ -3,7 +3,7 @@
  /**
   * SearchDigest
   *
-  * A short description of the SearchDigest extention
+  * A short description of the SearchDigest extension
   *
   * @author Lucas Garczewski <tor@wikia-inc.com>
   * @date 2011-08-03
@@ -11,13 +11,13 @@
   * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
   * @package MediaWiki
   */
- 
- // Extension credits
- $wgExtensionCredits['other'][] = array(
-		 'name' => 'SearchDigest',
-		 'author' => array( '[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]', '[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]' ),
-		 'descriptionmsg' => 'searchdigest-desc',
-		 );
+
+// Extension credits
+$wgExtensionCredits['other'][] = array(
+	'name' => 'SearchDigest',
+	'author' => array( '[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]', '[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]' ),
+	'descriptionmsg' => 'searchdigest-desc',
+);
 
 $dir = dirname(__FILE__);
 
