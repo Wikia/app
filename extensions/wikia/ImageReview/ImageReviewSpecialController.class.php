@@ -24,6 +24,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		$this->response->setVal( 'accessQuestionable', $this->wg->User->isAllowed( 'questionableimagereview' ) );
+
 		// get more space for images
 		$this->wg->SuppressSpotlights = true;
 		$this->wg->SuppressWikiHeader = true;
