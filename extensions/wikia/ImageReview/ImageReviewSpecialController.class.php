@@ -67,11 +67,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 		
 		$this->imageList = $this->refetchImageListByTimestamp($ts);
-		if (!count($this->imageList)) {
+		if ( empty($this->imageList) ) {
 			if ( $action == 'questionable' ) {
 				$this->imageList = $this->getImageList( $ts, self::STATE_QUESTIONABLE );
 			} else { 
-				$this->imageList = $this->getImageList( $ts, self::STATE_QUESTIONABLE );
+				$this->imageList = $this->getImageList( $ts );
 			}
 		}
 	}
@@ -167,10 +167,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
-		
+
 		// try to re-fetch the previuos set of images
 		// TODO: optimize it, so we don't do it on every request
-		
+
 		$result = $db->select(
 			array( 'image_review' ),
 			array( 'wiki_id, page_id, state' ),
@@ -182,21 +182,21 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$imageList = array();
 		while( $row = $db->fetchObject($result) ) {
 			$tmp = array(
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'state' => $row->state,
-						'src' => $this->getImageSrc( $row->wiki_id, $row->page_id ),
-						'url' => $this->getImagePage( $row->wiki_id, $row->page_id ),
+				'wikiId' => $row->wiki_id,
+				'pageId' => $row->page_id,
+				'state' => $row->state,
+				'src' => $this->getImageSrc( $row->wiki_id, $row->page_id ),
+				'url' => $this->getImagePage( $row->wiki_id, $row->page_id ),
 			);
 			$imageList[] = $tmp;
 		}
 		$db->freeResult( $result );
-		
+
 		error_log("ImageReview : refetched " . count($imageList) . " images based on timestamp");
+
 		$this->wf->ProfileOut( __METHOD__ );
-		
+
 		return $imageList;
-		
 	}
 	
 	/**
@@ -259,7 +259,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$db->commit();
 		}
 
-		error_log("ImageReview : fetched new " . count($imageList) . " images");	
+		error_log("ImageReview : fetched new " . count($imageList) . " images");
 
 		$this->wf->ProfileOut( __METHOD__ );
 
