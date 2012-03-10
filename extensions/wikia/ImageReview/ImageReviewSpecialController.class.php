@@ -38,7 +38,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			if ( $action == 'next' ) {
 				$data = $this->wg->request->getValues();
 				if ( !empty($data) ) {
-					$review_end = time();
+					$reviewEnd = time();
 					$images = array();
 
 					foreach( $data as $name => $value ) {
@@ -53,7 +53,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 						}
 					}
 
-					$this->updateImageState( $images, $review_end );
+					$this->updateImageState( $images, $reviewEnd );
 				}
 			} else if ( $action == 'back' ) {
 				$timestamp = $this->wg->request->getVal( 'reviewtime', '' );
@@ -61,7 +61,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->timestamp = ( empty($review_end) ) ? '' : $review_end;
+		$this->timestamp = ( empty($reviewEnd) ) ? '' : $reviewEnd;
 		$this->imageList = ( empty($imageList) ) ? $this->getImageList() : $imageList;
 	}
 
@@ -70,7 +70,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * @param integer review_end
 	 * @return array images
 	 */
-	protected function getImagesFromReviewerId( $review_end ) {
+	protected function getImagesFromReviewerId( $reviewEnd ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$imageList = array();
@@ -82,7 +82,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			array( 'wiki_id, page_id, state' ),
 			array(
 				'reviewer_id' => $this->wg->user->getId(),
-				'review_end = '.$review_end
+				'review_end = '.$reviewEnd
 				),
 			__METHOD__,
 			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
@@ -107,7 +107,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * @param array images
 	 * @param integer review_end
 	 */
-	protected function updateImageState( $images, $review_end ) {
+	protected function updateImageState( $images, $reviewEnd ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$deletionList = array();
@@ -131,7 +131,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					array(
 						'reviewer_id' => $this->wg->user->getId(),
 						'state' => $state,
-						'review_end' => $review_end,
+						'review_end' => $reviewEnd,
 					),
 					array( implode(' OR ', $where ) ),
 					__METHOD__
@@ -159,7 +159,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	protected function resetAbandonedWork() {
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
-		// update review to unreview
+		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600 ;
+
 		$db->update(
 			'image_review',
 			array(
@@ -167,7 +168,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				'state' => self::STATE_UNREVIEWED,
 			),
 			array(
-				"review_start < now() - interval 1 hour",
+				"review_start < now() - ".$timeLimit,
 				"review_end = '0000-00-00 00:00:00'",
 				'state' => self::STATE_IN_REVIEW,
 			),
