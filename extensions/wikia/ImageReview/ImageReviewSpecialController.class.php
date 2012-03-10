@@ -61,7 +61,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			array( 'wiki_id, page_id, state' ),
 			array(
 				'reviewer_id' => $this->wg->user->getId(),
-				'last_edited' => $timestamp
+				'review_end' => $timestamp
 				),
 			__METHOD__,
 			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
@@ -81,13 +81,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		return $images;
 	}
 	
-	/**
-	 * get image list
-	 * @return array imageList
+	/** 
+	 * reset state in abandoned work
 	 */
-	protected function getImageList() {
-		$this->wf->ProfileIn( __METHOD__ );
-
+	protected function resetAbandonedWork() {
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
 		// update review to unreview
@@ -99,18 +96,30 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					'state' => 0,
 				), 
 				array(
-					"last_edited < $lastHour",
+					"review_start < $lastHour",
+					"review_end = '0000-00-00 00:00:00'",
 					'state' => 10,
 				), 
 				__METHOD__
 		);
 		$db->commit();
-		
-		
+
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * get image list
+	 * @return array imageList
+	 */
+	protected function getImageList() {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
+
 		// get images
 		$imageList = array();
 		$reviewList = array();
-		
+
 		$result = $db->select(
 			array( 'image_review' ), 
 			array( 'wiki_id, page_id, state' ),
@@ -129,22 +138,21 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$db->freeResult( $result );
 		
 		// update state to review
-		foreach ($imageList as $image ) {
-			$db->update( 'image_review',
-					array(
-						'reviewer_id' => $this->wg->user->getId(),
-						'stats' => 10,
-						'last_edited' => $now,
-					), 
-					array(
-						'wiki_id' => $image['wikiId'],
-						'page_id' => $image['pageId'],
-					), 
-					__METHOD__
-			);
+		$sqlWhere = array();
+		foreach ( $imageList as $image ) {
+			$sqlWhere[] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 		}
+		$db->update( 'image_review',
+				array(
+					'reviewer_id' => $this->wg->user->getId(),
+					'stats' => 10,
+					'review_start' => $now,
+				), 
+				implode(' OR ', $sqlWhere ), 
+				__METHOD__
+		);
 		$db->commit();
-		
+
 		$this->wf->ProfileOut( __METHOD__ );
 
 		return $imageList;
