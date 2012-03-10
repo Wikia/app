@@ -41,6 +41,7 @@ $(function() {
 	/* Del */
 	#ImageReviewForm .state-4 {
 		background-color: #FF3333;
+		color: #fff;
 	}
 
 	/* Q */
