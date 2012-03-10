@@ -56,12 +56,12 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					$this->updateImageState( $images, $reviewEnd );
 				}
 			} else if ( $action == 'back' ) {
-				$timestamp = $this->wg->request->getVal( 'reviewtime', '' );
-				$imageList = $this->getImagesFromReviewerId( $timestamp );
+				$reviewEnd = $this->wg->request->getVal( 'reviewtime', '' );
+				$imageList = $this->getImagesFromReviewerId( $reviewEnd );
 			}
 		}
 
-		$this->timestamp = ( empty($reviewEnd) ) ? '' : $reviewEnd;
+		$this->reviewtime = ( empty($reviewEnd) ) ? '' : $reviewEnd;
 		$this->imageList = ( empty($imageList) ) ? $this->getImageList() : $imageList;
 	}
 
