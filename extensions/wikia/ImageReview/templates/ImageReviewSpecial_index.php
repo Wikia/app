@@ -76,7 +76,7 @@ $(function() {
 	#var_dump($imageList);
 ?>
 
-<form action="<?= $submitUrl ?>/submit" method="post" id="ImageReviewForm">
+<form action="<?= $submitUrl ?>" method="post" id="ImageReviewForm">
 	<table width=="980" cellspacing="5">
 		<colspan>
 			<col width="245">
