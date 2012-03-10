@@ -72,6 +72,14 @@ $(function() {
 	}
 </style>
 
+<header>
+	<?php if ( $accessQuestionable ) { ?>
+		<a href="<?= $submitUrl ?>/questionable" class="wikia-button">View questionable images</a>
+	<?php } ?>
+
+	<p>Click on images to mark them for deletion or as questionable (for staff review). When you're done with the batch, click "Review" below to get the next batch.</p>
+</header>
+
 <?php
 	#var_dump($imageList);
 ?>
