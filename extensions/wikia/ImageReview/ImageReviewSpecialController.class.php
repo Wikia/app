@@ -38,7 +38,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			if ( $action == 'submit' ) {
 				$data = $this->wg->request->getValues();
 				if ( !empty($data) ) {
-					$reviewEnd = time();
 					$images = array();
 
 					foreach( $data as $name => $value ) {
@@ -53,7 +52,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 						}
 					}
 
-					$this->updateImageState( $images, $reviewEnd );
+					$this->updateImageState( $images );
 					$this->wg->Out->redirect( $this->wg->Title->getFullUrl() . '?ts=' . time() );
 					return;
 				} 
@@ -110,7 +109,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * @param array images
 	 * @param integer review_end
 	 */
-	protected function updateImageState( $images, $reviewEnd ) {
+	protected function updateImageState( $images ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$deletionList = array();
@@ -136,7 +135,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					array(
 						'reviewer_id' => $this->wg->user->getId(),
 						'state' => $state,
-						'review_end' => $reviewEnd,
+						'review_end = now()',
 					),
 					array( implode(' OR ', $where ) ),
 					__METHOD__
@@ -223,7 +222,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 		$db->freeResult( $result );
 
-		if ( !empty($imageList) ) {
+		// NOT update state if the state is STATE_QUESTIONABLE
+		if ( !empty($imageList) && $state != self::STATE_QUESTIONABLE ) {
 			// update state to review
 			$sqlWhere = array();
 			foreach ( $imageList as $image ) {
