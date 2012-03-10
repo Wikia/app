@@ -90,7 +90,7 @@ $(function() {
 				<div>
 					<img src="<?= htmlspecialchars($image['src']) ?>">
 				</div>
-				<small><a href="<?= htmlspecialchars($image['url']) ?>" target="_blank">link</a></small>
+				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to image page"></a>
 
 				<label title="Ok"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_APPROVED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_APPROVED || $stateId == ImageReviewSpecialController::STATE_IN_REVIEW || $stateId == ImageReviewSpecialController::STATE_UNREVIEWED ? ' checked' :'') ?>>Ok</label>
 				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_DELETED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_DELETED ? ' checked' :'') ?>>Del</label>
