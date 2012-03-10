@@ -155,6 +155,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
+		// for testing
+		$this->resetAbandonedWork();
+		
 		// get images
 		$imageList = array();
 		$reviewList = array();
