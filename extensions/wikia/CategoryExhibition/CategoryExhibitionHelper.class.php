@@ -69,9 +69,6 @@
 		static public function onAfterCategoriesUpdate($categoryInserts, $categoryDeletes, $title) {
 			$ce = new CategoryExhibitionSection(null);
 			$categores = $categoryInserts + $categoryDeletes;
-					
-			print_r($categores);
-			
 			
 			foreach(array_keys($categores) as $value) {
 				$title = Title::newFromText($value, NS_CATEGORY);
