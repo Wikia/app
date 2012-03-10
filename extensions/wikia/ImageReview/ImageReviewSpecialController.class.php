@@ -36,7 +36,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$action = $this->wg->request->getVal( 'action', '' );
 			if ( $action == 'next' ) {
 				$review_end = time();
-				$this->updateImageState( $images, $review_end );
+//				$this->updateImageState( $images, $review_end );
 			} else if ( $action == 'back' ) {
 				$timestamp = $this->wg->request->getVal( 'reviewtime', '' );
 				$imageList = $this->getImagesFromReviewerId( $timestamp );
