@@ -7,7 +7,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
-//classes
+// classes
 $app->registerClass('ImageReviewSpecialController', $dir . 'ImageReviewSpecialController.class.php');
 $app->registerSpecialPage('ImageReview', 'ImageReviewSpecialController');
 

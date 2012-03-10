@@ -16,5 +16,12 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->submitUrl = $this->wg->Title->getLocalUrl();
+
+		// get more space for images
+		$this->wg->SuppressSpotlights = true;
+		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressPageHeader = true;
+		$this->wg->SuppressRail = true;
+		$this->wg->SuppressFooter = true;
 	}
 }
