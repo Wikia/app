@@ -91,7 +91,7 @@ $(function() {
 				</div>
 				<small><a href="<?= htmlspecialchars($image['url']) ?>" target="_blank">link</a></small>
 
-				<label title="Ok"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_APPROVED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_APPROVED ? ' checked' :'') ?>>Ok</label>
+				<label title="Ok"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_APPROVED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_APPROVED || $stateId == ImageReviewSpecialController::STATE_IN_REVIEW ? ' checked' :'') ?>>Ok</label>
 				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_DELETED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_DELETED ? ' checked' :'') ?>>Del</label>
 				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_Q ?>"<?= ($stateId == ImageReviewSpecialController::STATE_Q ? ' checked' :'') ?>>Q</label>
 			</td>
