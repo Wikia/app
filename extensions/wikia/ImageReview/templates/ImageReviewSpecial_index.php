@@ -1,11 +1,28 @@
+<script>
+$(function() {
+	var images = $('#ImageReviewForm img');
+
+	// cycle through radio fields on each image click
+	images.bind('click', function(ev) {
+		var img = $(this),
+			cell = img.parent(),
+			fields = cell.find('input'),
+			selectedField = fields.filter(':checked'),
+			selectedIndex = fields.index(selectedField);
+
+		// select the next radio
+		fields.eq( (selectedIndex + 1) % fields.length ).click();
+	});
+});
+</script>
+
 <style>
 	#ImageReviewForm table {
 		margin: 20px 0;
 	}
-	
-	#ImageReviewForm label {
+
+	#ImageReviewForm td {
 		border: solid 1px #ccc;
-		display: block;
 	}
 
 	#ImageReviewForm img {
@@ -18,7 +35,6 @@
 		float: right;
 	}
 </style>
-
 <?php
 	var_dump($imageList);
 ?>
@@ -37,11 +53,12 @@
 ?>
 		<tr>
 			<td>
-				<label>
-					<img src="http://images4.wikia.nocookie.net/__spotlights/images/0654911ff943af82aa614c6a44ded605.png">
-					<input type="checkbox" value="1">
-					<small><a href="#" target="_blank">link</a></small>
-				</label>
+				<img src="http://images4.wikia.nocookie.net/__spotlights/images/0654911ff943af82aa614c6a44ded605.png">
+				<small><a href="#" target="_blank">link</a></small>
+
+				<label><input type="radio" name="<?= $n ?>" value="1" title="Ok" checked="checked">Ok</label>
+				<label><input type="radio" name="<?= $n ?>" value="2" title="Delete">Del</label>
+				<label><input type="radio" name="<?= $n ?>" value="3" title="Questionable">Q</label>
 			</td>
 			<td>
 				<label>
