@@ -13,4 +13,5 @@ $app->registerSpecialPage('ImageReview', 'ImageReviewSpecialController');
 
 // rights
 $wgAvailableRights[] = 'imagereview';
-$wgGroupPermissions['staff']['imagereview'] = true;
+$wgGroupPermissions['util']['imagereview'] = true;
+$wgGroupPermissions['vstf']['imagereview'] = true;
