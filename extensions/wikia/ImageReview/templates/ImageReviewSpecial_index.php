@@ -50,7 +50,7 @@ $(function() {
 
 	/* Q */
 	#ImageReviewForm .state-5 {
-		background-color: yellow;
+		background-color: gold;
 	}
 
 	#ImageReviewForm div {
