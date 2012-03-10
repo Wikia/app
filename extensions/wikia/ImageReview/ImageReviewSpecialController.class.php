@@ -46,11 +46,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->timestamp = ( empty($review_end) ) ? '' : $review_end;
 		$this->imageList = ( empty($imageList) ) ? $this->getImageList() : $imageList;
 	}
-	
+
 	/**
 	 * get image list from reviewer id
 	 * @param integer review_end
-	 * @return array images 
+	 * @return array images
 	 */
 	protected function getImagesFromReviewerId( $review_end ) {
 		$this->wf->ProfileIn( __METHOD__ );
@@ -60,7 +60,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
 		$result = $db->select(
-			array( 'image_review' ), 
+			array( 'image_review' ),
 			array( 'wiki_id, page_id, state' ),
 			array(
 				'reviewer_id' => $this->wg->user->getId(),
@@ -78,26 +78,26 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$imageList[] = $tmp;
 		}
 		$db->freeResult( $result );
-		
+
 		$this->wf->ProfileOut( __METHOD__ );
 
 		return $images;
 	}
-	
+
 	/**
 	 * update image state
 	 * @param array images
-	 * @param integer review_end 
+	 * @param integer review_end
 	 */
 	protected function updateImageState( $images, $review_end ) {
 		$this->wf->ProfileIn( __METHOD__ );
-		
+
 		$sqlWhere = array();
 		foreach ( $images as $image ) {
 			if ( $image['state'] === true ) {
 				$sqlWhere[self::STATE_APPROVED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			} else if ( $image['state'] === false ) {
-				$sqlWhere[self::STATE_DELETED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";				
+				$sqlWhere[self::STATE_DELETED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			}
 		}
 
@@ -109,19 +109,19 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 						'reviewer_id' => $this->wg->user->getId(),
 						'state' => $state,
 						'review_end' => $review_end,
-					), 
-					array( implode(' OR ', $where ) ), 
+					),
+					array( implode(' OR ', $where ) ),
 					__METHOD__
 				);
 
 				$db->commit();
 			}
 		}
-		
+
 		$this->wf->ProfileOut( __METHOD__ );
 	}
-	
-	/** 
+
+	/**
 	 * reset state in abandoned work
 	 */
 	protected function resetAbandonedWork() {
@@ -133,12 +133,12 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			array(
 				'reviewer_id = null',
 				'state' => self::STATE_UNREVIEWED,
-			), 
+			),
 			array(
 				"review_start < now() - interval 1 hour",
 				"review_end = '0000-00-00 00:00:00'",
 				'state' => self::STATE_IN_REVIEW,
-			), 
+			),
 			__METHOD__
 		);
 		$db->commit();
@@ -160,7 +160,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$reviewList = array();
 
 		$result = $db->select(
-			array( 'image_review' ), 
+			array( 'image_review' ),
 			array( 'wiki_id, page_id, state' ),
 			array( "state = ".self::STATE_UNREVIEWED ),
 			__METHOD__,
@@ -172,11 +172,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$tmp['pageId'] = $row->page_id;
 			$tmp['state'] = $row->state;
 			$tmp['src'] = $this->getImageSrc( $row->wiki_id, $row->page_id );
-			$tmp['url'] = '';
+			$tmp['url'] = $this->getImagePage( $row->wiki_id, $row->page_id );
 			$imageList[] = $tmp;
 		}
 		$db->freeResult( $result );
-		
+
 		if ( !empty($imageList) ) {
 			// update state to review
 			$sqlWhere = array();
@@ -189,8 +189,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					'reviewer_id' => $this->wg->user->getId(),
 					'state' => self::STATE_IN_REVIEW,
 					'review_start = now()',
-				), 
-				array( implode(' OR ', $sqlWhere ) ), 
+				),
+				array( implode(' OR ', $sqlWhere ) ),
 				__METHOD__
 			);
 			$db->commit();
@@ -200,9 +200,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		return $imageList;
 	}
-	
+
 	/**
-	 * get image url
+	 * get image thumbnail
 	 * @param integer wikiId
 	 * @param integer pageId
 	 * @return string imageUrl
@@ -218,11 +218,28 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		);
 		$response = ApiService::foreignCall( $dbname, $param );
 
-		$imageUrl = ( empty($response['image']['imagecrop']) ) ? '' : $response['image']['imagecrop'] ;
+		$imageSrc = ( empty($response['image']['imagecrop']) ) ? '' : $response['image']['imagecrop'] ;
 
 		$this->wf->ProfileOut( __METHOD__ );
 
-		return $imageUrl;
+		return $imageSrc;
+	}
+
+
+	/**
+	 * get image page url
+	 * @param integer wikiId
+	 * @param integer pageId
+	 * @return string image page URL
+	 */
+	protected function getImageUrl( $wikiId, $pageId ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$title = GlobalTitle::newFromId($pageId, $wikiId);
+		$imagePage = ($title instanceof Title) ? $title->getFullURL() : '';
+
+		$this->wf->ProfileOut( __METHOD__ );
+		return $imagePage;
 	}
 
 }
