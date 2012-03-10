@@ -93,7 +93,7 @@ $(function() {
 
 				<label title="Ok"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_APPROVED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_APPROVED || $stateId == ImageReviewSpecialController::STATE_IN_REVIEW || $stateId == ImageReviewSpecialController::STATE_UNREVIEWED ? ' checked' :'') ?>>Ok</label>
 				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_DELETED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_DELETED ? ' checked' :'') ?>>Del</label>
-				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewSpecialController::STATE_Q ? ' checked' :'') ?>>Q</label>
+				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewSpecialController::STATE_QUESTIONABLE ? ' checked' :'') ?>>Q</label>
 			</td>
 <?php
 		if ($n % $perRow == $perRow - 1) {
