@@ -4,15 +4,12 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	const LIMIT_IMAGES = 20;
 
-	const FORM_STATE_OK = 0;
-	const FORM_STATE_DEL = 1;
-	const FORM_STATE_Q = 2;
-
 	const STATE_UNREVIEWED = 0;
-	const STATE_IN_REVIEW = 10;
-	const STATE_APPROVED = 20;
-	const STATE_REJECTED = 30;
-	const STATE_DELETED = 40;
+	const STATE_IN_REVIEW = 1;
+	const STATE_APPROVED = 2;
+	const STATE_REJECTED = 3;
+	const STATE_DELETED = 4;
+	const STATE_Q = 5;
 
 	public function __construct() {
 		parent::__construct('ImageReview', 'imagereview', false /* $listed */);
