@@ -48,43 +48,28 @@ $(function() {
 			<col width="245">
 		</colspan>
 
-<?php
-	for ($n=0; $n<5; $n++) {
-?>
 		<tr>
+<?php
+	$cells = 20;
+	$perRow = 4;
+
+	for ($n=0; $n<$cells; $n++) {
+?>
 			<td>
 				<img src="http://images4.wikia.nocookie.net/__spotlights/images/0654911ff943af82aa614c6a44ded605.png">
 				<small><a href="#" target="_blank">link</a></small>
 
-				<label><input type="radio" name="<?= $n ?>" value="1" title="Ok" checked="checked">Ok</label>
-				<label><input type="radio" name="<?= $n ?>" value="2" title="Delete">Del</label>
-				<label><input type="radio" name="<?= $n ?>" value="3" title="Questionable">Q</label>
+				<label title="Ok"><input type="radio" name="<?= $n ?>" value="1" checked="checked">Ok</label>
+				<label title="Delete"><input type="radio" name="<?= $n ?>" value="2">Del</label>
+				<label title="Questionable"><input type="radio" name="<?= $n ?>" value="3">Q</label>
 			</td>
-			<td>
-				<label>
-					<img src="http://images4.wikia.nocookie.net/__spotlights/images/0654911ff943af82aa614c6a44ded605.png">
-					<input type="checkbox" value="2">
-					<small><a href="#" target="_blank">link</a></small>
-				</label>
-			</td>
-			<td>
-				<label>
-					<img src="http://images4.wikia.nocookie.net/__spotlights/images/0654911ff943af82aa614c6a44ded605.png">
-					<input type="checkbox" value="3">
-					<small><a href="#" target="_blank">link</a></small>
-				</label>
-			</td>
-			<td>
-				<label>
-					<img src="http://images4.wikia.nocookie.net/__spotlights/images/0654911ff943af82aa614c6a44ded605.png">
-					<input type="checkbox" value="4">
-					<small><a href="#" target="_blank">link</a></small>
-				</label>
-			</td>
-		</tr>
 <?php
+		if ($n % $perRow == $perRow - 1) {
+			echo '</tr><tr>';
+		}
 	}
 ?>
+		</tr>
 	</table>
 
 	<input type="submit" value="Review and get next batch &raquo;" />
