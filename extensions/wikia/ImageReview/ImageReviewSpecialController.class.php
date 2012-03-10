@@ -92,12 +92,15 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	protected function updateImageState( $images, $review_end ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
+		$deletionList = array();
 		$sqlWhere = array();
+
 		foreach ( $images as $image ) {
 			if ( $image['state'] === true ) {
 				$sqlWhere[self::STATE_APPROVED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			} else if ( $image['state'] === false ) {
 				$sqlWhere[self::STATE_DELETED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
+				$deletionList[$image['wikiId']] = $image['pageId'];
 			}
 		}
 
@@ -118,6 +121,15 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
+		if ( !empty( $deletionList ) ) {
+			$task = new ImageReviewTask();
+			$task->createTask(
+				array(
+					'page_list' => $deletionList,
+				)
+			);
+		}
+		
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 
