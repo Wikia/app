@@ -67,12 +67,29 @@ $(function() {
 		float: right;
 	}
 
+	header .tally {
+		float: right;
+	}
+
+	header .tally span {
+		float: left;
+		padding-right: 0.5em;
+	}
+
+	header .tally em {
+		font-style: normal;
+	}
+
 	#ImageReviewForm footer {
 		text-align: right;
 	}
 </style>
 
 <header>
+	<div class="tally" style="float:right">
+		<span style="float: left">You reviewed<br>images</span> <em>250K</em>
+	</div>
+
 	<?php if ( $accessQuestionable ) { ?>
 		<a href="<?= $submitUrl ?>/questionable" class="wikia-button">View questionable images</a>
 	<?php } ?>
