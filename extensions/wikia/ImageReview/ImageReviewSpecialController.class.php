@@ -171,7 +171,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$tmp['wikiId'] = $row->wiki_id;
 			$tmp['pageId'] = $row->page_id;
 			$tmp['state'] = $row->state;
-			$tmp['url'] = $this->getImageUrl( $row->wiki_id, $row->page_id );
+			$tmp['src'] = $this->getImageSrc( $row->wiki_id, $row->page_id );
+			$tmp['url'] = '';
 			$imageList[] = $tmp;
 		}
 		$db->freeResult( $result );
@@ -206,13 +207,13 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * @param integer pageId
 	 * @return string imageUrl
 	 */
-	protected function getImageUrl( $wikiId, $pageId ) {
+	protected function getImageSrc( $wikiId, $pageId ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$dbname = WikiFactory::IDtoDB( $wikiId );
 		$param = array(
 			'action' => 'imagecrop',
-			'imagId' => $pageId,
+			'imgId' => $pageId,
 			'imgSize' => 250,
 		);
 		$response = ApiService::foreignCall( $dbname, $param );
