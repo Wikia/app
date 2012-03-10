@@ -4,7 +4,7 @@ $(function() {
 	var images = $('#ImageReviewForm img');
 	images.bind('click', function(ev) {
 		var img = $(this),
-			cell = img.parent(),
+			cell = img.closest('td'),
 			fields = cell.find('input'),
 			selectedField = fields.filter(':checked'),
 			selectedIndex = fields.index(selectedField);
@@ -46,8 +46,12 @@ $(function() {
 		background-color: yellow;
 	}
 
+	#ImageReviewForm div {
+		text-align: center;
+		line-height: 230px;
+	}
+
 	#ImageReviewForm img {
-		display: block;
 		max-height: 230px;
 		max-width: 230px;
 	}
@@ -58,7 +62,7 @@ $(function() {
 </style>
 
 <?php
-	var_dump($imageList);
+	#var_dump($imageList);
 ?>
 
 <form action="<?= $submitUrl ?>/submit" method="post" id="ImageReviewForm">
@@ -79,7 +83,9 @@ $(function() {
 		$id = "img-{$image['wikiId']}-{$image['pageId']}";
 ?>
 			<td>
-				<img src="<?= htmlspecialchars($image['src']) ?>">
+				<div>
+					<img src="<?= htmlspecialchars($image['src']) ?>">
+				</div>
 				<small><a href="<?= htmlspecialchars($image['url']) ?>" target="_blank">link</a></small>
 
 				<label title="Ok"><input type="radio" name="<?= $id ?>" value="0"<?= ($image['state'] == '0' ? ' checked' :'') ?>>Ok</label>
