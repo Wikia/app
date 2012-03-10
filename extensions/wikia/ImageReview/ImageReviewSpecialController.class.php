@@ -54,6 +54,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					}
 
 					$this->updateImageState( $images, $reviewEnd );
+					$this->wg->Out->redirect( $this->wg->Title->getFullUrl() );
+					return;
 				}
 			} else if ( $action == 'back' ) {
 				$reviewEnd = $this->wg->request->getVal( 'reviewtime', '' );
