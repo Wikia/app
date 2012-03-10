@@ -184,7 +184,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * get image list
 	 * @return array imageList
 	 */
-	protected function getImageList() {
+	protected function getImageList( $state = self::STATE_UNREVIEWED ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
@@ -199,7 +199,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$result = $db->select(
 			array( 'image_review' ),
 			array( 'wiki_id, page_id, state' ),
-			array( "state = ".self::STATE_UNREVIEWED ),
+			array( "state = ".$state ),
 			__METHOD__,
 			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
 		);
