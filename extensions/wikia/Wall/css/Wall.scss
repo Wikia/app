@@ -383,13 +383,13 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 
 	.loadingAjax {
-		vertical-align: center;
-		height: 21px;
+		background: url(/skins/common/images/ajax.gif) 0 2px; /* $wgCdnStylePath */
 		display: none;
 		float: right;
+		height: 20px;
 		margin: 10px 0 0 0;
 		padding: 0;
-		content: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */
+		width: 16px;
 	}
 
 	.load-more{
