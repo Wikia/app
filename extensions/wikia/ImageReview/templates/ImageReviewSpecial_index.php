@@ -58,7 +58,7 @@ $(function() {
 </style>
 
 <?php
-	#var_dump($imageList);
+	var_dump($imageList);
 ?>
 
 <form action="<?= $submitUrl ?>/submit" method="post" id="ImageReviewForm">
