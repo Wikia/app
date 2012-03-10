@@ -54,17 +54,18 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					}
 
 					$this->updateImageState( $images, $reviewEnd );
-					$this->wg->Out->redirect( $this->wg->Title->getFullUrl() );
+					$this->wg->Out->redirect( $this->wg->Title->getFullUrl() . '?ts=' . time() );
 					return;
-				}
-			} else if ( $action == 'back' ) {
-				$reviewEnd = $this->wg->request->getVal( 'reviewtime', '' );
-				$imageList = $this->getImagesFromReviewerId( $reviewEnd );
+				} 
 			}
 		}
+		$ts = $this->wg->request->getVal('ts');
+		if (!$ts || intval($ts) < 0 || intval($ts) > time()) {
+			$this->wg->Out->redirect( $this->wg->Title->getFullUrl() . '?ts=' . time() );
+			return;
+		}
 
-		$this->reviewtime = ( empty($reviewEnd) ) ? '' : $reviewEnd;
-		$this->imageList = ( empty($imageList) ) ? $this->getImageList() : $imageList;
+		$this->imageList = $this->getImageList($ts);
 	}
 
 	/**
@@ -190,7 +191,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * get image list
 	 * @return array imageList
 	 */
-	protected function getImageList( $state = self::STATE_UNREVIEWED ) {
+	protected function getImageList( $timestamp, $state = self::STATE_UNREVIEWED ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
@@ -233,7 +234,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				array(
 					'reviewer_id' => $this->wg->user->getId(),
 					'state' => self::STATE_IN_REVIEW,
-					'review_start = now()',
+					'review_start' => $timestamp,
 				),
 				array( implode(' OR ', $sqlWhere ) ),
 				__METHOD__
