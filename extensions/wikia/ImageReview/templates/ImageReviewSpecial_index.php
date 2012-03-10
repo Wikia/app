@@ -30,6 +30,10 @@ $(function() {
 </script>
 
 <style>
+	#ImageReviewForm {
+		margin: 1em 0;
+	}
+
 	#ImageReviewForm table {
 		margin: 20px 0;
 	}
@@ -59,12 +63,12 @@ $(function() {
 		max-width: 230px;
 	}
 
-	#ImageReviewForm a {
+	#ImageReviewForm table a {
 		float: right;
 	}
 
-	input[type="submit"] {
-		float: right;
+	#ImageReviewForm footer {
+		text-align: right;
 	}
 </style>
 
@@ -109,5 +113,8 @@ $(function() {
 		</tr>
 	</table>
 
-	<input type="submit" class="login-button big" value="Review & get next batch" />
+	<footer>
+		<a href="" class="wikia-button secondary">Back to previous batch</a>
+		<input type="submit" class="wikia-button" value="Review & get next batch" />
+	</footer>
 </form>
