@@ -58,7 +58,7 @@ $(function() {
 </style>
 
 <?php
-	var_dump($imageList);
+	#var_dump($imageList);
 ?>
 
 <form action="<?= $submitUrl ?>/submit" method="post" id="ImageReviewForm">
@@ -75,15 +75,16 @@ $(function() {
 	$cells = 20;
 	$perRow = 4;
 
-	for ($n=0; $n<$cells; $n++) {
+	foreach($imageList as $n => $image) {
+		$id = "img-{$image['wikiId']}-{$image['pageId']}";
 ?>
 			<td>
-				<img src="http://images4.wikia.nocookie.net/__spotlights/images/0654911ff943af82aa614c6a44ded605.png">
-				<small><a href="#" target="_blank">link</a></small>
+				<img src="<?= htmlspecialchars($image['src']) ?>">
+				<small><a href="<?= htmlspecialchars($image['url']) ?>" target="_blank">link</a></small>
 
-				<label title="Ok"><input type="radio" name="<?= $n ?>" value="0" checked="checked">Ok</label>
-				<label title="Delete"><input type="radio" name="<?= $n ?>" value="1">Del</label>
-				<label title="Questionable"><input type="radio" name="<?= $n ?>" value="2">Q</label>
+				<label title="Ok"><input type="radio" name="<?= $id ?>" value="0"<?= ($image['state'] == '0' ? ' checked' :'') ?>>Ok</label>
+				<label title="Delete"><input type="radio" name="<?= $id ?>" value="1"<?= ($image['state'] == '1' ? ' checked' :'') ?>>Del</label>
+				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="2"<?= ($image['state'] == '2' ? ' checked' :'') ?>>Q</label>
 			</td>
 <?php
 		if ($n % $perRow == $perRow - 1) {
