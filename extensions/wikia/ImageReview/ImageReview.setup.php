@@ -1,7 +1,14 @@
 <?php
 
+/**
+ * Special page-based tool to review images post-upload to screen against Terms of Use violations.
+ * 
+ * @date 2012-03-09
+ */
+
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Image Review',
+	'desc' => 'Internal tool to help review images post-upload and remove Terms of Use violations',
 	'authors' => array(
 		'[http://www.wikia.com/wiki/User:OwenDavis Owen Davis]',
 		'[http://www.wikia.com/wiki/User:TomekO Tomasz Odrobny]',
@@ -25,6 +32,9 @@ $wgAvailableRights[] = 'imagereview';
 $wgGroupPermissions['util']['imagereview'] = true;
 $wgGroupPermissions['vstf']['imagereview'] = true;
 $wgGroupPermissions['reviewer']['imagereview'] = true;
+
+$wgAvailableRights[] = 'questionableimagereview';
+$wgGroupPermissions['util']['questionableimagereview'] = true;
 
 // i18n
 $wgExtensionMessagesFiles['ImageReview'] = $dir . 'ImageReview.i18n.php';
