@@ -81,6 +81,7 @@ $(function() {
 
 	foreach($imageList as $n => $image) {
 		$id = "img-{$image['wikiId']}-{$image['pageId']}";
+		$stateId = intval($image['state']);
 ?>
 			<td>
 				<div>
@@ -88,9 +89,9 @@ $(function() {
 				</div>
 				<small><a href="<?= htmlspecialchars($image['url']) ?>" target="_blank">link</a></small>
 
-				<label title="Ok"><input type="radio" name="<?= $id ?>" value="0"<?= ($image['state'] == '0' ? ' checked' :'') ?>>Ok</label>
-				<label title="Delete"><input type="radio" name="<?= $id ?>" value="1"<?= ($image['state'] == '1' ? ' checked' :'') ?>>Del</label>
-				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="2"<?= ($image['state'] == '2' ? ' checked' :'') ?>>Q</label>
+				<label title="Ok"><input type="radio" name="<?= $id ?>" value="0"<?= ($stateId == ImageReviewSpecialController::STATE_APPROVED ? ' checked' :'') ?>>Ok</label>
+				<label title="Delete"><input type="radio" name="<?= $id ?>" value="1"<?= ($stateId == ImageReviewSpecialController::STATE_DELETED ? ' checked' :'') ?>>Del</label>
+				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="2"<?= ($stateId == ImageReviewSpecialController::STATE_Q ? ' checked' :'') ?>>Q</label>
 			</td>
 <?php
 		if ($n % $perRow == $perRow - 1) {
