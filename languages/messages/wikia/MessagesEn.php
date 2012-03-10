@@ -309,6 +309,10 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'group-util-member' => 'Wikia Utilities',
 'grouppage-util' => 'wikia:Community_Central:Staff',
 
+'group-reviewer' => 'Image Reviewers',
+'group-reviewer-member' => 'Image Reviewer',
+'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
+
 # AjaxLogin
 'ajaxLogin1' => 'To complete your log in, you must enter a new password.  This will take you away from this edit page and you may lose your current edit.',
 'ajaxLogin2' => 'Are you sure? You may lose your edits if you leave this page now.',
