@@ -4,6 +4,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	const LIMIT_IMAGES = 20;
 
+	const FORM_STATE_OK = 0;
+	const FORM_STATE_DEL = 1;
+	const FORM_STATE_Q = 2;
+
 	const STATE_UNREVIEWED = 0;
 	const STATE_IN_REVIEW = 10;
 	const STATE_APPROVED = 20;
@@ -35,8 +39,25 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		if( $this->wg->request->wasPosted() ) {
 			$action = $this->wg->request->getVal( 'action', '' );
 			if ( $action == 'next' ) {
-				$review_end = time();
-//				$this->updateImageState( $images, $review_end );
+				$data = $this->wg->request->getValues();
+				if ( !empty($data) ) {
+					$review_end = time();
+					$images = array();
+
+					foreach( $data as $name => $value ) {
+						if (preg_match('/img-(\d*)-(\d*)/', $name, $matches)) {
+							if ( !empty($matches[1]) && !empty($matches[2]) ) {
+								$images[] = array(
+									'wikiId' => $matches[1],
+									'pageId' => $matches[2],
+									'state' => $value,
+								);
+							}
+						}
+					}
+
+					$this->updateImageState( $images, $review_end );
+				}
 			} else if ( $action == 'back' ) {
 				$timestamp = $this->wg->request->getVal( 'reviewtime', '' );
 				$imageList = $this->getImagesFromReviewerId( $timestamp );
@@ -96,9 +117,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$sqlWhere = array();
 
 		foreach ( $images as $image ) {
-			if ( $image['state'] === true ) {
+			if ( $image['state'] == self::FORM_STATE_OK ) {
 				$sqlWhere[self::STATE_APPROVED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
-			} else if ( $image['state'] === false ) {
+			} else if ( $image['state'] == self::FORM_STATE_DEL ) {
 				$sqlWhere[self::STATE_DELETED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$deletionList[$image['wikiId']] = $image['pageId'];
 			}
