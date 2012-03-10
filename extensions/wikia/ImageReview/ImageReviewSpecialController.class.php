@@ -32,7 +32,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = true;
 
 		$imageList = array();
-		if($this->wg->request->wasPosted()) {
+		if( $this->wg->request->wasPosted() ) {
 			$action = $this->wg->request->getVal( 'action', '' );
 			if ( $action == 'next' ) {
 				$review_end = time();
@@ -107,7 +107,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					'image_review',
 					array(
 						'reviewer_id' => $this->wg->user->getId(),
-						'stats' => $state,
+						'state' => $state,
 						'review_end' => $review_end,
 					), 
 					array( implode(' OR ', $where ) ), 
@@ -170,7 +170,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		while( $row = $db->fetchObject($result) ) {
 			$tmp['wikiId'] = $row->wiki_id;
 			$tmp['pageId'] = $row->page_id;
-			$tmp['stats'] = $row->stats;
+			$tmp['state'] = $row->state;
 			$tmp['url'] = $this->getImageUrl( $row->wiki_id, $row->page_id );
 			$imageList[] = $tmp;
 		}
@@ -186,7 +186,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				'image_review',
 				array(
 					'reviewer_id' => $this->wg->user->getId(),
-					'stats' => self::STATE_IN_REVIEW,
+					'state' => self::STATE_IN_REVIEW,
 					'review_start = now()',
 				), 
 				array( implode(' OR ', $sqlWhere ) ), 
