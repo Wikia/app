@@ -34,8 +34,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$imageList = array();
 		if( $this->wg->request->wasPosted() ) {
-			$action = $this->wg->request->getVal( 'action', '' );
-			if ( $action == 'next' ) {
+			$action = $this->getPar();
+			if ( $action == 'submit' ) {
 				$data = $this->wg->request->getValues();
 				if ( !empty($data) ) {
 					$reviewEnd = time();
@@ -123,6 +123,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				$sqlWhere[self::STATE_QUESTIONABLE][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			}
 		}
+
+		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
 		foreach( $sqlWhere as $state => $where ) {
 			if ( !empty($where) ) {
