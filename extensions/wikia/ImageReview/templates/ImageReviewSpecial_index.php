@@ -2,15 +2,16 @@
 	#ImageReviewForm table {
 		margin: 20px 0;
 	}
+	
+	#ImageReviewForm label {
+		border: solid 1px #ccc;
+		display: block;
+	}
 
 	#ImageReviewForm img {
 		display: block;
-		max-height: 250px;
-		max-width: 240px;
-	}
-
-	#ImageReviewForm input:checked {
-		border: solid 3px #FF2020ff;
+		max-height: 230px;
+		max-width: 230px;
 	}
 
 	#ImageReviewForm a {
