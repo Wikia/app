@@ -62,7 +62,7 @@
 
 			// TODO: add caching for this data
 			$list = array();
-			$lines = explode("\n", wfMsg(self::PROMOTED_TEMPLATES_MESSAGE)); // we do not care if the message is empty
+			$lines = explode("\n", wfMsgForContent(self::PROMOTED_TEMPLATES_MESSAGE)); // we do not care if the message is empty
 
 			foreach ($lines as $line) {
 				if(strrpos($line, '*') === 0) {
