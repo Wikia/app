@@ -1,7 +1,7 @@
 <script>
 $(function() {
 	// cycle through radio fields on each image click
-	var images = $('#ImageReviewForm img');
+	var images = $('#ImageReviewForm div.img-container');
 	images.bind('click', function(ev) {
 		var img = $(this),
 			cell = img.closest('td'),
@@ -91,7 +91,7 @@ $(function() {
 		$stateId = intval($image['state']);
 ?>
 			<td class="state-<?= $stateId ?>">
-				<div>
+				<div class="img-container">
 					<img src="<?= htmlspecialchars($image['src']) ?>">
 				</div>
 				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to image page"></a>

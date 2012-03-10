@@ -168,7 +168,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
-		$timeLimit = 1800; // 30 min
+		$timeLimit = 1; // 1 sec
 
 		$db->update(
 			'image_review',
