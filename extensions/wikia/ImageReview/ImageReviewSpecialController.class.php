@@ -18,13 +18,20 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wg->Out->setPageTitle('Image Review tool');
 
+		$action = $this->getPar();
+
+		$accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
+
 		// check permissions
 		if (!$this->specialPage->userCanExecute($this->wg->User)) {
 			$this->specialPage->displayRestrictionError();
 			return false;
+		} elseif ( $action == 'questionable' && !$accessQuestionable ) {
+			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
+			return false;
 		}
 
-		$this->response->setVal( 'accessQuestionable', $this->wg->User->isAllowed( 'questionableimagereview' ) );
+		$this->response->setVal( 'accessQuestionable', $accessQuestionable );
 
 		// get more space for images
 		$this->wg->SuppressSpotlights = true;
@@ -33,7 +40,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = true;
 
 		$imageList = array();
-		$action = $this->getPar();
 		$ts = $this->wg->request->getVal( 'ts' );
 		
 		$query = ( empty($action) ) ? '' : '/'.$action ;
