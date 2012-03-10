@@ -114,7 +114,7 @@ $(function() {
 	</table>
 
 	<footer>
-		<a href="" class="wikia-button secondary">Back to previous batch</a>
+		<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>
 		<input type="submit" class="wikia-button" value="Review & get next batch" />
 	</footer>
 </form>
