@@ -44,11 +44,11 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$db->update( 'image_review',
 				array(
 					'reviewer_id = null',
-					'stats' => 0,
+					'state' => 0,
 				), 
 				array(
 					"last_edited < $lastHour",
-					'stats' => 10,
+					'state' => 10,
 				), 
 				__METHOD__
 		);
