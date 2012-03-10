@@ -1,8 +1,7 @@
 <script>
 $(function() {
-	var images = $('#ImageReviewForm img');
-
 	// cycle through radio fields on each image click
+	var images = $('#ImageReviewForm img');
 	images.bind('click', function(ev) {
 		var img = $(this),
 			cell = img.parent(),
@@ -11,9 +10,20 @@ $(function() {
 			selectedIndex = fields.index(selectedField);
 
 		// select the next radio
-		var stateId = (selectedIndex + 1) % fields.length; 
-		
+		var stateId = (selectedIndex + 1) % fields.length;
+
 		fields.eq(stateId).click();
+		cell.attr('class', 'state-' + stateId);
+	});
+
+	// do the same for checkboxes
+	var checkboxes = $('#ImageReviewForm input');
+	checkboxes.bind('click', function(ev) {
+		var checkbox = $(this),
+			cell = checkbox.closest('td');
+
+		var stateId = checkbox.val();
+
 		cell.attr('class', 'state-' + stateId);
 	});
 });
@@ -27,11 +37,11 @@ $(function() {
 	#ImageReviewForm td {
 		border: solid 1px #ccc;
 	}
-	
+
 	#ImageReviewForm .state-1 {
 		background-color: red;
 	}
-	
+
 	#ImageReviewForm .state-2 {
 		background-color: yellow;
 	}
@@ -46,6 +56,7 @@ $(function() {
 		float: right;
 	}
 </style>
+
 <?php
 	var_dump($imageList);
 ?>
@@ -76,7 +87,7 @@ $(function() {
 			</td>
 <?php
 		if ($n % $perRow == $perRow - 1) {
-			echo '</tr><tr>';
+			echo "\t\t</tr><tr>\n";
 		}
 	}
 ?>
