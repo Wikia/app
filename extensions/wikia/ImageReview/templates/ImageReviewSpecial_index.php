@@ -62,6 +62,10 @@ $(function() {
 	#ImageReviewForm a {
 		float: right;
 	}
+
+	input[type="submit"] {
+		float: right;
+	}
 </style>
 
 <?php
@@ -105,5 +109,5 @@ $(function() {
 		</tr>
 	</table>
 
-	<input type="submit" value="Review and get next batch &raquo;" />
+	<input type="submit" class="login-button big" value="Review & get next batch" />
 </form>
