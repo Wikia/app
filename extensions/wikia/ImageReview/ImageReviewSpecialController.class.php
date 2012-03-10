@@ -101,16 +101,24 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	
 	/**
 	 * get image url
-	 * @param string image
+	 * @param integer wikiId
+	 * @param integer pageId
 	 * @return string imageUrl
 	 */
 	protected function getImageUrl( $wikiId, $pageId ) {
-		$imageUrl = '';
-		$title =  F::build( 'GlobalTitle', array(pageId, wikiId), 'newFromId' );
-		$file = $this->wf->FindFile( $title );
-		if ( $file instanceof File && $file->exists() ) {
-			$imageUrl = $this->wf->ReplaceImageServer( $file->getURL(), $file->getTimestamp() );
-		}
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$dbname = WikiFactory::IDtoDB( $wikiId );
+		$param = array(
+			'action' => 'imagecrop',
+			'imagId' => $pageId,
+			'imgSize' => 250,
+		);
+		$response = ApiService::foreignCall( $dbname, $param );
+
+		$imageUrl = ( empty($response['image']['imagecrop']) ) ? '' : $response['image']['imagecrop'] ;
+
+		$this->wf->ProfileOut( __METHOD__ );
 
 		return $imageUrl;
 	}
