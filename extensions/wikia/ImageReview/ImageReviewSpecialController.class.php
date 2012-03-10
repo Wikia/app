@@ -24,8 +24,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->submitUrl = $this->wg->Title->getLocalUrl();
-
 		// get more space for images
 		$this->wg->SuppressSpotlights = true;
 		$this->wg->SuppressWikiHeader = true;
@@ -33,38 +31,43 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = true;
 
 		$imageList = array();
-		if( $this->wg->request->wasPosted() ) {
-			$action = $this->getPar();
-			if ( $action == 'submit' ) {
-				$data = $this->wg->request->getValues();
-				if ( !empty($data) ) {
-					$images = array();
+		$action = $this->getPar();
+		$ts = $this->wg->request->getVal( 'ts' );
+		
+		$query = ( empty($action) ) ? '' : '/'.$action ;
+		$this->submitUrl = $this->wg->Title->getFullUrl( $query );
 
-					foreach( $data as $name => $value ) {
-						if (preg_match('/img-(\d*)-(\d*)/', $name, $matches)) {
-							if ( !empty($matches[1]) && !empty($matches[2]) ) {
-								$images[] = array(
-									'wikiId' => $matches[1],
-									'pageId' => $matches[2],
-									'state' => $value,
-								);
-							}
+		if( $this->wg->request->wasPosted() ) {
+			$data = $this->wg->request->getValues();
+			if ( !empty($data) ) {
+				$images = array();
+
+				foreach( $data as $name => $value ) {
+					if (preg_match('/img-(\d*)-(\d*)/', $name, $matches)) {
+						if ( !empty($matches[1]) && !empty($matches[2]) ) {
+							$images[] = array(
+								'wikiId' => $matches[1],
+								'pageId' => $matches[2],
+								'state' => $value,
+							);
 						}
 					}
+				}
 
-					$this->updateImageState( $images );
-					$this->wg->Out->redirect( $this->wg->Title->getFullUrl() . '?ts=' . time() );
-					return;
-				} 
-			}
+				$this->updateImageState( $images );
+				$ts = null;
+			} 
 		}
-		$ts = $this->wg->request->getVal('ts');
-		if (!$ts || intval($ts) < 0 || intval($ts) > time()) {
-			$this->wg->Out->redirect( $this->wg->Title->getFullUrl() . '?ts=' . time() );
+		
+		if ( !$ts || intval($ts) < 0 || intval($ts) > time() ) {
+			$this->wg->Out->redirect( $this->submitUrl.'?ts='.time() );
 			return;
 		}
 
-		$this->imageList = $this->getImageList($ts);
+		if ( $action == 'questionable' ) {
+			$this->imageList = $this->getImageList( $ts, self::STATE_QUESTIONABLE );
+		} else 
+			$this->imageList = $this->getImageList( $ts );
 	}
 
 	/**
