@@ -11,7 +11,10 @@ $(function() {
 			selectedIndex = fields.index(selectedField);
 
 		// select the next radio
-		fields.eq( (selectedIndex + 1) % fields.length ).click();
+		var stateId = (selectedIndex + 1) % fields.length; 
+		
+		fields.eq(stateId).click();
+		cell.attr('class', 'state-' + stateId);
 	});
 });
 </script>
@@ -23,6 +26,14 @@ $(function() {
 
 	#ImageReviewForm td {
 		border: solid 1px #ccc;
+	}
+	
+	#ImageReviewForm .state-1 {
+		background-color: red;
+	}
+	
+	#ImageReviewForm .state-2 {
+		background-color: yellow;
 	}
 
 	#ImageReviewForm img {
@@ -59,9 +70,9 @@ $(function() {
 				<img src="http://images4.wikia.nocookie.net/__spotlights/images/0654911ff943af82aa614c6a44ded605.png">
 				<small><a href="#" target="_blank">link</a></small>
 
-				<label title="Ok"><input type="radio" name="<?= $n ?>" value="1" checked="checked">Ok</label>
-				<label title="Delete"><input type="radio" name="<?= $n ?>" value="2">Del</label>
-				<label title="Questionable"><input type="radio" name="<?= $n ?>" value="3">Q</label>
+				<label title="Ok"><input type="radio" name="<?= $n ?>" value="0" checked="checked">Ok</label>
+				<label title="Delete"><input type="radio" name="<?= $n ?>" value="1">Del</label>
+				<label title="Questionable"><input type="radio" name="<?= $n ?>" value="2">Q</label>
 			</td>
 <?php
 		if ($n % $perRow == $perRow - 1) {
