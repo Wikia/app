@@ -2,6 +2,14 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Image Review',
+	'authors' => array(
+		'[http://www.wikia.com/wiki/User:OwenDavis Owen Davis]',
+		'[http://www.wikia.com/wiki/User:TomekO Tomasz Odrobny]',
+		'Saipetch Kongkatong',
+		"[http://www.wikia.com/wiki/User:Macbre Maciej 'Macbre' Brencz]",
+		'[http://www.wikia.com/wiki/User:Mech.wikia Jacek Woźniak]',
+		"[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
+	),
 );
 
 $dir = dirname(__FILE__) . '/';
