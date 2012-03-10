@@ -171,11 +171,13 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		);
 
 		while( $row = $db->fetchObject($result) ) {
-			$tmp['wikiId'] = $row->wiki_id;
-			$tmp['pageId'] = $row->page_id;
-			$tmp['state'] = $row->state;
-			$tmp['src'] = $this->getImageSrc( $row->wiki_id, $row->page_id );
-			$tmp['url'] = $this->getImagePage( $row->wiki_id, $row->page_id );
+			$tmp = array(
+				'wikiId' => $row->wiki_id,
+				'pageId' => $row->page_id,
+				'state' => $row->state,
+				'src' => $this->getImageSrc( $row->wiki_id, $row->page_id ),
+				'url' => $this->getImagePage( $row->wiki_id, $row->page_id ),
+			);
 			$imageList[] = $tmp;
 		}
 		$db->freeResult( $result );
@@ -235,7 +237,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	 * @param integer pageId
 	 * @return string image page URL
 	 */
-	protected function getImageUrl( $wikiId, $pageId ) {
+	protected function getImagePage( $wikiId, $pageId ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$title = GlobalTitle::newFromId($pageId, $wikiId);
