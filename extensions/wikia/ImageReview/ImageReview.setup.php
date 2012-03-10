@@ -16,3 +16,6 @@ $wgAvailableRights[] = 'imagereview';
 $wgGroupPermissions['util']['imagereview'] = true;
 $wgGroupPermissions['vstf']['imagereview'] = true;
 $wgGroupPermissions['reviewer']['imagereview'] = true;
+
+// i18n
+$wgExtensionMessagesFiles['ImageReview'] = $dir . 'ImageReview.i18n.php';
