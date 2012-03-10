@@ -9,7 +9,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const STATE_APPROVED = 2;
 	const STATE_REJECTED = 3;
 	const STATE_DELETED = 4;
-	const STATE_Q = 5;
+	const STATE_QUESTIONABLE = 5;
 
 	public function __construct() {
 		parent::__construct('ImageReview', 'imagereview', false /* $listed */);
@@ -119,8 +119,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			} else if ( $image['state'] == self::STATE_DELETED ) {
 				$sqlWhere[self::STATE_DELETED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$deletionList[$image['wikiId']] = $image['pageId'];
-			} else if ( $image['state'] == self::STATE_Q ) {
-				$sqlWhere[self::STATE_Q][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
+			} else if ( $image['state'] == self::STATE_QUESTIONABLE ) {
+				$sqlWhere[self::STATE_QUESTIONABLE][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			}
 		}
 
@@ -155,6 +155,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * reset state in abandoned work
+	 * @todo move this to a cron worker
 	 */
 	protected function resetAbandonedWork() {
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
