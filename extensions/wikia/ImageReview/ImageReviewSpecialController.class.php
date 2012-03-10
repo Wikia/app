@@ -124,10 +124,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
-
 		foreach( $sqlWhere as $state => $where ) {
 			if ( !empty($where) ) {
+				$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
+
 				$db->update(
 					'image_review',
 					array(
