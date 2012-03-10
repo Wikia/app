@@ -7,13 +7,13 @@ $(function() {
 			cell = img.closest('td'),
 			fields = cell.find('input'),
 			selectedField = fields.filter(':checked'),
-			selectedIndex = fields.index(selectedField);
+			selectedIndex = Math.max(0, fields.index(selectedField));
 
 		// select the next radio
 		var stateId = (selectedIndex + 1) % fields.length;
 
 		fields.eq(stateId).click();
-		cell.attr('class', 'state-' + stateId);
+		cell.attr('class', 'state-' + fields.eq(stateId).val());
 	});
 
 	// do the same for checkboxes
@@ -38,11 +38,13 @@ $(function() {
 		border: solid 1px #ccc;
 	}
 
-	#ImageReviewForm .state-1 {
+	/* Del */
+	#ImageReviewForm .state-4 {
 		background-color: red;
 	}
 
-	#ImageReviewForm .state-2 {
+	/* Q */
+	#ImageReviewForm .state-5 {
 		background-color: yellow;
 	}
 
@@ -83,15 +85,15 @@ $(function() {
 		$id = "img-{$image['wikiId']}-{$image['pageId']}";
 		$stateId = intval($image['state']);
 ?>
-			<td>
+			<td class="state-<?= $stateId ?>">
 				<div>
 					<img src="<?= htmlspecialchars($image['src']) ?>">
 				</div>
 				<small><a href="<?= htmlspecialchars($image['url']) ?>" target="_blank">link</a></small>
 
-				<label title="Ok"><input type="radio" name="<?= $id ?>" value="0"<?= ($stateId == ImageReviewSpecialController::STATE_APPROVED ? ' checked' :'') ?>>Ok</label>
-				<label title="Delete"><input type="radio" name="<?= $id ?>" value="1"<?= ($stateId == ImageReviewSpecialController::STATE_DELETED ? ' checked' :'') ?>>Del</label>
-				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="2"<?= ($stateId == ImageReviewSpecialController::STATE_Q ? ' checked' :'') ?>>Q</label>
+				<label title="Ok"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_APPROVED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_APPROVED ? ' checked' :'') ?>>Ok</label>
+				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_DELETED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_DELETED ? ' checked' :'') ?>>Del</label>
+				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_Q ?>"<?= ($stateId == ImageReviewSpecialController::STATE_Q ? ' checked' :'') ?>>Q</label>
 			</td>
 <?php
 		if ($n % $perRow == $perRow - 1) {
