@@ -7,6 +7,8 @@
  *
  * @author tor
  * @date 2012-03-09
+ *
+ * @todo rewrite from shell exec to internal GlobalArticle::delete() call
  */
 
 class ImageReviewTask extends BatchTask {
@@ -53,7 +55,7 @@ class ImageReviewTask extends BatchTask {
 			$dbname = WikiFactory::getWikiByID( $wikiId );
 			if ( !$dbname ) continue;
 
-			$title = GlobalTitle::newFromId( $imageId );
+			$title = GlobalTitle::newFromId( $imageId, $wikiId );
 
 			$city_url = WikiFactory::getVarValueByName( "wgServer", $wikiId );
 			if ( empty($city_url) ) continue;
@@ -80,4 +82,8 @@ class ImageReviewTask extends BatchTask {
 			}
 		}
 	}
+
+	function getForm( $title, $errors = false ) {}
+
+	function submitForm() {} 
 }
