@@ -16,8 +16,6 @@ class ImageReviewTask extends BatchTask {
         var $records, $title, $namespace;
         var $mUser, $mUsername;
 
-	const REASON_MSG = 'imagereview-reason';
-
         /* constructor */
         function __construct( $params = array() ) {
                 $this->mType = 'imagereview';
@@ -63,7 +61,7 @@ class ImageReviewTask extends BatchTask {
 			$city_path = WikiFactory::getVarValueByName( "wgScript", $wikiId );
 
 			$city_lang = WikiFactory::getVarValueByName( "wgLanguageCode", $wikiId );
-			$reason = wfMsgExt( self::REASON_MSG, array( 'language' => $city_lang ) );
+			$reason = wfMsgExt( 'imagereview-reason', array( 'language' => $city_lang ) );
 
 			$sCommand  = "SERVER_ID={$wikiId} php $IP/maintenance/wikia/deleteOn.php ";
 			$sCommand .= "-u " . escapeshellarg( $this->mUser ) . " ";
