@@ -16,8 +16,10 @@
 			<em><?= $imageCount['reviewer']?></em> <span>reviewed<br>by you</span>
 		</div>
 	</div>
-
 	<p>Click on images to mark them for deletion or as questionable (for staff review). When you're done with the batch, click "Review" below to get the next batch.</p>
+	<? if($action == 'questionable') { ?>
+		<a href="<?= $baseUrl ?>">< Back to Image Review</a>
+	<? } ?>
 </header>
 
 <?php
