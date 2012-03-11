@@ -34,6 +34,8 @@ class WikiaApiCroppedImage extends ApiBase {
 		}
 		$result = $this->getResult();
 		$result->addValue( 'image', $this->getModuleName(), $imageUrl );
+		$result->addValue( 'imagepage', $this->getModuleName(), $tmpTitle->getFullUrl() );
+		
 		wfProfileOut(__METHOD__);
 	}
 

@@ -130,12 +130,13 @@ class ImageReviewHelper extends WikiaModel {
 
 		$imageList = array();
 		while( $row = $db->fetchObject($result) ) {
+			$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
 			$tmp = array(
 				'wikiId' => $row->wiki_id,
 				'pageId' => $row->page_id,
 				'state' => $row->state,
-				'src' => $this->getImageSrc( $row->wiki_id, $row->page_id ),
-				'url' => $this->getImagePage( $row->wiki_id, $row->page_id ),
+				'src' => $img['src'],
+				'url' => $img['page'],
 			);
 			$imageList[] = $tmp;
 		}
@@ -185,12 +186,13 @@ class ImageReviewHelper extends WikiaModel {
 		);
 
 		while( $row = $db->fetchObject($result) ) {
+			$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
 			$tmp = array(
 				'wikiId' => $row->wiki_id,
 				'pageId' => $row->page_id,
 				'state' => $row->state,
-				'src' => $this->getImageSrc( $row->wiki_id, $row->page_id ),
-				'url' => $this->getImagePage( $row->wiki_id, $row->page_id ),
+				'src' => $img['src'],
+				'url' => $img['page'],
 			);
 			$imageList[] = $tmp;
 		}
@@ -241,10 +243,11 @@ class ImageReviewHelper extends WikiaModel {
 		$response = ApiService::foreignCall( $dbname, $param );
 
 		$imageSrc = ( empty($response['image']['imagecrop']) ) ? '' : $response['image']['imagecrop'] ;
-
+		$imagePage = ( empty($response['imagepage']['imagecrop']) ) ? '' : $response['imagepage']['imagecrop'] ;
+		
 		$this->wf->ProfileOut( __METHOD__ );
 
-		return $imageSrc;
+		return array('src' => $imageSrc, 'page' => $imagePage );
 	}
 
 
