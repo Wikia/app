@@ -25,4 +25,8 @@ $(function() {
 
 		cell.attr('class', 'state-' + stateId);
 	});
+	
+    $('body').onImagesLoad( function($selector){ 
+    	$('#nextButton').removeAttr('disabled');
+    }); 
 });
