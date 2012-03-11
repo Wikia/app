@@ -2820,4 +2820,51 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $clusters;
 	}
+	
+	/**
+	 * fetching wiki list with selected variable set to $val
+	 * @param unknown_type $varId
+	 * @param unknown_type $type
+	 * @param unknown_type $val
+	 * @param unknown_type $likeVal
+	 */
+	
+	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '') {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		
+		$aWikis = array();
+		$selectedVal = serialize($val);
+
+		$aTables = array(
+			'city_variables',
+			'city_list',
+		);
+		$varId = mysql_real_escape_string($varId);
+		$aWhere = array('city_id = cv_city_id');
+		
+		if( $type == "full" ) {
+			$aWhere[] = "cv_value like '%".$dbr->escapeLike($likeVal)."%'";
+		} else {
+			$aWhere[] = "cv_value $selectedCond '$selectedVal'";	
+		}
+		
+		$aWhere[] = "cv_variable_id = '$varId'";
+
+
+		$oRes = $dbr->select(
+			$aTables,
+			array('city_id', 'city_title', 'city_url', 'city_public'),
+			$aWhere,
+			__METHOD__,
+			array('ORDER BY' => 'city_sitename')
+		);
+
+		while ($oRow = $dbr->fetchObject($oRes)) {
+			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ) );
+		}
+		$dbr->freeResult( $oRes );
+
+		return $aWikis;
+	}
 };

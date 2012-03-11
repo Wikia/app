@@ -168,10 +168,18 @@ class ImageReviewHelper extends WikiaModel {
 		$imageList = array();
 		$reviewList = array();
 
+		$where = array();
+		$list = $this->getWhitelistedWikis();
+		if(!empty($list)) {
+			$where[] = 'wiki_id not in('.implode(',', $list).')';
+		}
+
+		$where[] = "state = ".$state;  
+		
 		$result = $db->select(
 			array( 'image_review' ),
 			array( 'wiki_id, page_id, state' ),
-			array( "state = ".$state ),
+			$where,
 			__METHOD__,
 			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
 		);
@@ -256,4 +264,68 @@ class ImageReviewHelper extends WikiaModel {
 		return $imagePage;
 	}	
 
+	
+	protected function getWhitelistedWikis() {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$topWikis =  $this->getTopWikis();
+		$whitelistedWikis =  $this->getWhitelistedWikisFromWF();
+		
+		$out = $whitelistedWikis + $topWikis;
+		return array_keys($out);
+		$this->wf->ProfileOut( __METHOD__ );
+	}
+	
+	protected function getWhitelistedWikisFromWF() {
+		$this->wf->ProfileIn( __METHOD__ );
+		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__ );
+
+		$data = $this->wg->memc->get($key, null); 
+		
+		if(!empty($data)) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return $data;
+		}
+		
+		$oVariable = WikiFactory::getVarByName( 'wgImageReviewWhitelisted', 177 );
+		$fromWf = WikiFactory::getListOfWikisWithVar($oVariable->cv_variable_id, 'bool', '=' ,true);
+
+		$this->wg->memc->set($key, $fromWf, 60*10);
+		$this->wf->ProfileOut( __METHOD__ );
+		return $fromWf;
+	}
+	
+	protected function getTopWikis() {
+		$this->wf->ProfileIn( __METHOD__ );
+		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__ );
+		$data = $this->wg->memc->get($key, null); 		
+		if(!empty($data)) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return $data;
+		}
+		
+		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
+		$ids = array();
+		
+		if ( !$this->wg->DevelEnvironment ) {
+			$result = $db->select(
+				array( 'google_analytics.pageviews' ),
+				array( 'city_id', 'sum(pageviews) as cnt' ),
+				array( 'date > curdate() - interval 31 day' ),
+				__METHOD__,
+				array( 
+					'GROUP BY'=> 'city_id', 
+					'HAVING' => '150000'
+				)
+			);
+
+			while( $row = $db->fetchObject($result) ) {
+				$ids[$row['city_id']] = 1;
+			}
+		}
+ 	
+		$this->wg->memc->set($key,$ids, 60*60*24);
+		$this->wf->ProfileOut( __METHOD__ );
+		return $ids;
+	}
 }
