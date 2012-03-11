@@ -27,16 +27,9 @@
 <h2 style="clear: both"><?= wfMsg( "imagereview-header{$modeMsgSuffix}" ) ?></h2>
 
 <form action="<?= $submitUrl ?>" method="post" id="ImageReviewForm">
-	<table cellspacing="1">
-		<colspan>
-			<col width="245">
-			<col width="245">
-			<col width="245">
-			<col width="245">
-			<col width="245">
-		</colspan>
 
-		<tr>
+
+	<ul class="image-review-list">
 <?php
 if (is_array($imageList) && count($imageList) > 0):
 	$cells = 20;
@@ -47,7 +40,7 @@ if (is_array($imageList) && count($imageList) > 0):
 		$stateId = intval($image['state']);
 ?>
 
-			<td class="state-<?= $stateId ?>">
+			<li class="state-<?= $stateId ?>">
 				<div class="img-container">
 					<img src="<?= htmlspecialchars($image['src']) ?>">
 				</div>
@@ -65,16 +58,17 @@ if (is_array($imageList) && count($imageList) > 0):
 				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_APPROVED ?>"<?= ($stateId == ImageReviewHelper::STATE_APPROVED || $stateId == ImageReviewHelper::STATE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_QUESTIONABLE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
 				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_DELETED ?>"<?= ($stateId == ImageReviewHelper::STATE_DELETED ? ' checked' :'') ?>>Del</label>
 				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewHelper::STATE_QUESTIONABLE || $stateId == ImageReviewHelper::STATE_QUESTIONABLE_IN_REVIEW ? ' checked' :'') ?>>Q</label>
-			</td>
+			</li>
 <?php
+/*
 		if ($n % $perRow == $perRow - 1) {
 			echo "\t\t</tr><tr>\n";
 		}
+*/
 	}
 endif;
 ?>
-		</tr>
-	</table>
+	</ul>
 
 	<footer>
 		<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>

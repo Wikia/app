@@ -1,12 +1,20 @@
 @import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/clearfix";
 
 #ImageReviewForm {
 	margin: 1em 0;
 	clear: both;
-	
-	table {
+	.image-review-list {
+		@include clearfix;
+		list-style: none;
 		margin: 20px 0;
-		
+		li {
+			border: solid 1px #ccc;
+			float: left;
+			margin: 0 2px 2px 0;
+			min-height: 270px;
+			width: 245px;
+		}
 		label {
 			border: 1px solid #CCC;
 			@include border-radius(4px);
@@ -20,10 +28,6 @@
 			float: right;
 			margin: 3px;
 		}
-	}
-	
-	td {
-		border: solid 1px #ccc;
 	}
 	
 	/* Del */
