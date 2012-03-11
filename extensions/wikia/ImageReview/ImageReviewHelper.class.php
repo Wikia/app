@@ -99,6 +99,7 @@ class ImageReviewHelper extends WikiaModel {
 			array(
 				"review_start < now() - ".$timeLimit,
 				"review_end = '0000-00-00 00:00:00'",
+				'reviewer_id' =>  $this->wg->User->getId(),
 				'state' => self::STATE_IN_REVIEW,
 			),
 			__METHOD__
