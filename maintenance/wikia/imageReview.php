@@ -130,7 +130,7 @@ function insert($row) {
 	global $dbm, $added, $updated, $allowedWikis;
 	
 	if(empty($allowedWikis[$row['page_wikia_id']])) {
-		echo "This wiki was removed";
+		echo "This wiki was removed\n";
 		return true;
 	}
 	
