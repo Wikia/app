@@ -125,7 +125,7 @@ class ImageReviewHelper extends WikiaModel {
 			array( 'wiki_id, page_id, state' ),
 			array( 'review_start = FROM_UNIXTIME(' . $timestamp . ')', 'reviewer_id' =>  $this->wg->user->getId()),
 			__METHOD__,
-			array( 'ORDER BY' => 'priority desc, last_edited desc' )
+			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
 		);
 
 		$imageList = array();
@@ -208,7 +208,7 @@ class ImageReviewHelper extends WikiaModel {
 				array(
 					'reviewer_id' => $this->wg->user->getId(),
 					'state' => self::STATE_IN_REVIEW,
-					'review_start' => $timestamp,
+					"review_start = from_unixtime($timestamp)",
 				),
 				array( implode(' OR ', $sqlWhere ) ),
 				__METHOD__

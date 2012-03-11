@@ -66,8 +66,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 		
-		$this->imageList = ImageReviewHelper::getInstance()->refetchImageListByTimestamp($ts);
-		if ( empty($this->imageList) ) {
+		$this->imageList = ImageReviewHelper::getInstance()->refetchImageListByTimestamp( $ts );
+		if ( count($this->imageList) == 0 ) {
 			if ( $action == 'questionable' ) {
 				$this->imageList = ImageReviewHelper::getInstance()->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE );
 			} else { 
