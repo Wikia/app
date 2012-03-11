@@ -37,6 +37,27 @@ if(!empty($lastRun)) {
 }
 $startFrom = 0;
 
+$dbe = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+$oRes = $dbe->select(
+	'city_list',
+	array('city_id'),
+	array(),
+	__METHOD__,
+	array()
+);
+
+$allowedWikis = array();
+$wikiMax = 0;
+while ($oRow = $dbe->fetchRow($oRes)) {
+	if($wikiMax < $oRow['city_id'] ){
+		$wikiMax = $oRow['city_id'] ;
+	}
+	$allowedWikis[$oRow['city_id']] = true;
+}
+
+$wikisCount = count($allowedWikis); 
+
+echo "There is $wikisCount wikis the bigest id is $wikiMax \n";
 
 $dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 $dbm = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
@@ -106,7 +127,13 @@ function importSlice($wikiIdstart, $wikiIdEnd, $start, $slice) {
 }
 
 function insert($row) {
-	global $dbm, $added, $updated;
+	global $dbm, $added, $updated, $allowedWikis;
+	
+	if(empty($allowedWikis[$row['page_wikia_id']])) {
+		echo "This wiki was removed";
+		return true;
+	}
+	
 	$dbm->insert( 'image_review', array(
  		'wiki_id' => $row['page_wikia_id'],
  		'page_id' => $row['page_id'],
@@ -147,7 +174,7 @@ function insert($row) {
 	}
 }
 
-$wikisNumber = 2;
+$wikisNumber = $wikiMax;
 
 for($i = 0; $i < $wikisNumber; $i = $i + $sizeOfPack ) {
 	import($i, $sizeOfPack);
