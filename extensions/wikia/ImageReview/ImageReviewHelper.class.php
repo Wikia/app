@@ -379,7 +379,7 @@ class ImageReviewHelper extends WikiaModel {
 			$this->wf->ProfileOut( __METHOD__ );
 			return $total;
 		}
-		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
+		$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalDatawareDB );
 
 		// select by reviewer, state and total count with rollup and then pick the data we want out
 		$result = $db->select(
