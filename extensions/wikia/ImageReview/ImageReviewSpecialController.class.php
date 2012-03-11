@@ -34,6 +34,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 
+		$helper = F::build( 'ImageReviewHelper' );
 		$ts = $this->wg->request->getVal( 'ts' );
 		
 		$query = ( empty($action) ) ? '' : '/'.$action ;
@@ -56,7 +57,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					}
 				}
 
-				ImageReviewHelper::getInstance()->updateImageState( $images );
+				$helper->updateImageState( $images );
 				$ts = null;
 			}
 		}
@@ -65,28 +66,24 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->redirect( $this->submitUrl.'?ts='.time() );
 			return;
 		}
-				
-		$newestTs = $this->wg->memc->get($this->getUserTsKey(), null);
+
+		$newestTs = $this->wg->memc->get( $helper->getUserTsKey() );
 		
-		if ($ts > $newestTs) {
+		if ( $ts > $newestTs ) {
 			error_log("ImageReview: I've got the newest ts ($ts), I won't refetch the images");
 			$this->imageList = array();
-			$this->wg->memc->set($this->getUserTsKey(), $ts);
+			$this->wg->memc->set( $helper->getUserTsKey(), $ts, 60*60 );
 		} else {
-			$this->imageList = ImageReviewHelper::getInstance()->refetchImageListByTimestamp( $ts );
+			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
 		}
 		
 		if ( count($this->imageList) == 0 ) {
 			if ( $action == 'questionable' ) {
-				$this->imageList = ImageReviewHelper::getInstance()->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE );
+				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE );
 			} else { 
-				$this->imageList = ImageReviewHelper::getInstance()->getImageList( $ts );
+				$this->imageList = $helper->getImageList( $ts );
 			}
 		}
-	}
-	
-	private function getUserTsKey() {
-		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
 	}
 
 }
