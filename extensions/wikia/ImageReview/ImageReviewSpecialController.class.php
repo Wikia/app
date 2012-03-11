@@ -22,6 +22,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
+		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
+
 		$this->response->setVal( 'accessQuestionable', $accessQuestionable );
 
 		// get more space for images

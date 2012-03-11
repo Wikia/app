@@ -1,0 +1,67 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+
+#ImageReviewForm {
+	margin: 1em 0;
+	
+	table {
+		margin: 20px 0;
+		
+		label {
+			border: 1px solid #CCC;
+			@include border-radius(4px);
+			display: inline-block;
+			margin: 5px 0 5px 2px;
+			padding: 3px;
+			width: 55px;
+		}	
+		
+		a {
+			border: 1px solid #CCC;
+			float: right;
+			padding: 3px;
+		}
+	}
+	
+	td {
+		border: solid 1px #ccc;
+	}
+	
+	/* Del */
+	.state-4 {
+		background-color: #FF3333;
+		color: #fff;
+	}
+
+	/* Q */
+	.state-5 {
+		background-color: gold;
+	}
+
+	div {
+		text-align: center;
+		line-height: 230px;
+	}
+
+	img {
+		max-height: 230px;
+		max-width: 230px;
+	}
+	
+	footer {
+		text-align: right;
+	}
+}
+
+header .tally {
+	float: right;
+	
+	span {
+		float: left;
+		padding-right: 0.5em;
+	}
+	
+	em {
+		font-style: normal;
+	}
+	
+}
