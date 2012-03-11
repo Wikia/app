@@ -8,6 +8,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		$this->wg->OasisHD = true;
 		$this->wg->Out->setPageTitle('Image Review tool');
 
 		$action = $this->getPar();

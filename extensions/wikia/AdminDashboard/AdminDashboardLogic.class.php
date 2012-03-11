@@ -60,6 +60,7 @@ class AdminDashboardLogic {
 				"EditAccount",
 				"EditTopList",
 				"HuluVideoPanel",
+				"ImageReview",
 				"Invalidateemail",
 				"LandingPageSmurfs",
 				"LayoutBuilder",
