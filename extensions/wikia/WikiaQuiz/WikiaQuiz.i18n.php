@@ -312,13 +312,16 @@ $messages['es'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Editar Quiz Preguntas y Respuestas',
 	'wikiaquiz-title-label' => 'Título',
 	'wikiaquiz-titlescreentext-label' => 'Texto de pantalla de título',
+	'wikiaquiz-fbrecommendationtext-label' => 'Descripción en la recomendación de Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Imágenes de pantalla de título',
 	'wikiaquiz-moreinfoheading-label' => 'Encabezado de más información',
+	'wikiaquiz-requireemail-label' => 'Requiere que el jugador ingrese un correo electrónico al final del juego',
 	'wikiaquiz-moreinfolinks-label' => 'Más enlaces de información',
 	'wikiaquiz-moreinfoarticle-label' => 'Artículo',
 	'wikiaquiz-moreinfolinktext-label' => 'Texto de enlace',
 	'wikiaquiz-question-label' => 'Pregunta',
 	'wikiaquiz-image-label' => 'Imagen (opcional)',
+	'wikiaquiz-video-label' => 'Vídeo (opcional, sustituye la imagen)',
 	'wikiaquiz-explanation-label' => 'Explicación de la respuesta (opcional)',
 	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Preguntas',
@@ -332,6 +335,7 @@ $messages['es'] = array(
 	'wikiaquiz-error-duplicate-question' => 'Ya existe una pregunta con ese nombre.',
 	'wikiaquiz-error-invalid-question' => 'El texto de la pregunta es inválido.',
 	'wikiaquiz-error-invalid-image' => 'La imagen no es válida: $1',
+	'wikiaquiz-error-invalid-video' => 'Vídeo inválido: $1',
 	'wikiaquiz-error-missing-answers' => 'Debes proporcionar al menos una respuesta.',
 	'wikiaquiz-error-invalid-correct-answer' => 'Debes especificar una respuesta correcta.',
 	'wikiaquiz-error-invalid-quiz' => 'El nombre del quiz no es válido.',
@@ -353,7 +357,12 @@ $messages['es'] = array(
 	'wikiaquiz-game-thanks' => '¡Gracias por jugar!',
 	'wikiaquiz-game-provide-email' => 'Por favor, escribe una dirección de correo electrónico',
 	'wikiaquiz-game-email-placeholder' => 'tunombre@tucorreo.com',
+	'wikiaquiz-game-email-button' => 'Envíame cosas gratis',
 	'wikiaquiz-game-email-valid-please' => 'Por favor, escribe una dirección de correo electrónico válida',
+	'wikiaquiz-game-email-token-mismatch' => '¡Oops! El token no coincide.',
+	'wikiaquiz-game-email-subject' => '¡Gracias por tu reporte!',
+	'wikiaquiz-game-email-body' => 'Esto es un correo electrónico de confirmación. ¡Hemos recibido tu reporte y serás notificado si eres un ganador!',
+	'wikiaquiz-game-email-error' => 'Hubo un error al enviar este correo electrónico: $1',
 	'wikiaquiz-game-challenge' => '¡Desafía a tus amigos a jugar!',
 	'wikiaquiz-game-mute' => 'Mudo',
 );
@@ -650,6 +659,18 @@ $messages['it'] = array(
 	'wikiaquiz-game-continue-button' => 'Continua',
 	'wikiaquiz-game-thanks' => 'Grazie per aver giocato!',
 	'wikiaquiz-game-mute' => 'Muto',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'wikiaquiz-title-label' => 'ಶೀರ್ಷಿಕೆ',
+	'wikiaquiz-moreinfoarticle-label' => 'ಲೇಖನಗಳು',
+	'wikiaquiz-question-label' => 'ಪ್ರಶ್ನೆ',
+	'wikiaquiz-questions-label' => 'ಪ್ರಶ್ನೆಗಳು',
+	'wikiaquiz-cancel-label' => 'ವಜಾ ಮಾಡಿ',
+	'wikiaquiz-game-cadence-1' => 'ಹೋಗು!',
 );
 
 /** Korean (한국어)
@@ -1348,6 +1369,7 @@ $messages['sv'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Redigera frågor och svar för quizet',
 	'wikiaquiz-title-label' => 'Titel',
 	'wikiaquiz-titlescreentext-label' => 'Titelskärmstext',
+	'wikiaquiz-fbrecommendationtext-label' => 'Beskrivning av Facebook-rekommendation',
 	'wikiaquiz-titlescreenimages-label' => 'Titelskärmsbilder',
 	'wikiaquiz-moreinfoheading-label' => 'Mer info-rubrik',
 	'wikiaquiz-requireemail-label' => 'Kräver att spelare anger en e-postadress i slutet av spelet',
@@ -1400,6 +1422,24 @@ $messages['sv'] = array(
 	'wikiaquiz-game-email-error' => 'Ett fel uppstod när detta e-postmeddelande skulle skickas: $1',
 	'wikiaquiz-game-challenge' => 'Utmana dina vänner att spela!',
 	'wikiaquiz-game-mute' => 'Tyst',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'wikiaquiz-title-label' => 'தலைப்பு',
+	'wikiaquiz-moreinfoarticle-label' => 'கட்டுரைகள்',
+	'wikiaquiz-question-label' => 'கேள்வி',
+	'wikiaquiz-questions-label' => 'கேள்விகள்',
+	'wikiaquiz-answers-label' => 'விடைகள்',
+	'wikiaquiz-answer-label' => 'விடை',
+	'wikiaquiz-cancel-label' => 'ரத்து செய்',
+	'wikiaquiz-publish-label' => 'வெளியிடு',
+	'wikiaquiz-game-start-button' => 'விளையாட்டை ஆரம்பி',
+	'wikiaquiz-game-cadence-1' => 'செல்!',
+	'wikiaquiz-game-continue-button' => 'தொடரவும்',
+	'wikiaquiz-game-thanks' => 'விளையாடியதற்கு நன்றி!',
 );
 
 /** Telugu (తెలుగు)

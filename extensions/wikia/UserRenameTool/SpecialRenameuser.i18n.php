@@ -1506,6 +1506,7 @@ $messages['gsw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Ofekalef
  * @author Rotem Liss
  */
 $messages['he'] = array(
@@ -1527,7 +1528,7 @@ $messages['he'] = array(
 	'userrenametool-error-same-user' => 'אינכם יכולים לשנות את שם המשתמש לשם זהה לשמו הישן.',
 	'userrenametool-success' => 'שם המשתמש של "<nowiki>$1</nowiki>" שונה ל"<nowiki>$2</nowiki>".',
 	'userrenametool-page-exists' => 'הדף $1 כבר קיים ולא ניתן לדרוס אותו אוטומטית.',
-	'userrenametool-page-moved' => 'הדף $1 הועבר ל$2.',
+	'userrenametool-page-moved' => 'הדף $1 הועבר לדף $2.',
 	'userrenametool-page-unmoved' => 'לא ניתן היה להעביר את הדף $1 ל$2.',
 	'userrenametool-logpage' => 'יומן שינויי שמות משתמש',
 	'userrenametool-logpagetext' => 'זהו יומן השינויים בשמות המשתמשים.',

@@ -2929,6 +2929,11 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'multiwikiedit_button' => '編輯',
+	'multidelete_chinese_wikis' => '所有的中文wiki',
+	'multidelete_polish_wikis' => '所有的波蘭語wiki',
+	'multidelete_czech_wikis' => '所有的捷克語wiki',
+	'multidelete_portuguese_wikis' => '所有的葡萄牙語wiki',
+	'multidelete_dutch_wikis' => '所有的荷蘭語wiki',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

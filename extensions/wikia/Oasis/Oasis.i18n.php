@@ -2907,6 +2907,7 @@ Vel bekomme!
 );
 
 /** Dutch (Nederlands)
+ * @author AvatarTeam
  * @author SPQRobin
  * @author Siebrand
  */
@@ -2929,7 +2930,7 @@ $messages['nl'] = array(
 	'oasis-related-video-header' => "Gerelateerde video's",
 	'oasis-related-video-by-5min' => 'via 5min Video',
 	'oasis-total-articles-mainpage' => "<em>{{FORMATNUM:$1}} </em><span>{{PLURAL:$1|pagina|pagina's}}<br />op deze wiki</span>",
-	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em> <span class="$2">{{PLURAL:$1|foto|foto\'s}} op deze wiki</span>',
+	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em> <span class="$2">{{PLURAL:$1|afbeelding|afbeeldingen}} op deze wiki</span>',
 	'oasis-latest-photos-more' => 'Meer zien >',
 	'oasis-latest-photos-inner-message' => "Alle foto's bekijken",
 	'oasis-latest-photos-empty' => 'Iedereen kan ervoor zorgen dat deze wiki er fantastisch uitziet.<br /><span>Klik op een afbeelding toe te voegen.</span>',
@@ -3005,7 +3006,7 @@ Scroll naar beneden om door te gaan met bewerken.',
 	'oasis-toolbar-more' => 'meer&hellip;',
 	'oasis-toolbar-customize' => 'Aanpassen',
 	'oasis-toolbar-devinfo' => 'Informatie voor ontwikkelaars',
-	'oasis-comments-header' => '{{PLURAL:$1|opmerking|opmerkingen}}',
+	'oasis-comments-header' => '$1 {{PLURAL:$1|opmerking|opmerkingen}}',
 	'oasis-comments-showing-most-recent' => 'De $1 meest recente worden weergegeven',
 	'oasis-comments-anonymous-prompt' => 'Anonieme gebruiker<br /><a href="#">Aanmelden?</a>',
 	'oasis-comments-show-all' => 'Allemaal weergeven',
@@ -3982,6 +3983,21 @@ Ha det så kul!
 - Wikia-teamet',
 );
 
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'oasis-home' => 'முகப்பு',
+	'oasis-share' => 'பகிர்',
+	'oasis-signup' => 'பதிவுசெய்',
+	'oasis-button-random-page' => 'ஏதாவது ஒரு பக்கம்',
+	'oasis-button-wiki-activity' => 'விக்கி செயல்பாடு',
+	'oasis-latest-photos-more-dotdotdot' => 'மேலும்...',
+	'oasis-page-header-talk' => 'பேச்சு',
+	'oasis-page-header-add-topic' => 'தலைப்பைச் சேர்',
+	'oasis-page-header-edit-profile' => 'சுயவிவரத்தை திருத்து',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
@@ -4296,6 +4312,7 @@ Thưởng thức!
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
  * @author Breawycker
+ * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
  */
@@ -4320,6 +4337,7 @@ $messages['zh-hans'] = array(
 	'oasis-notification-youhavenewmessages' => '您有 $1 。',
 	'oasis-toolbar-edit-save' => '保存',
 	'oasis-toolbar-edit-cancel' => '取消',
+	'oasis-toolbar-edit-rename-item' => '重命名项目',
 	'oasis-comments-show-all' => '显示全部',
 	'oasis-create-page' => '在这个维基上创造一个新页面',
 	'oasis-add-page' => '添加一个页面',
@@ -4386,9 +4404,17 @@ $messages['zh-hant'] = array(
 	'oasis-page-header-subtitle-category' => '分類頁',
 	'oasis-page-header-subtitle-forum' => '論壇頁面',
 	'oasis-user-page-change-avatar' => '變更頭像',
+	'oasis-toolbar-edit-search-for-tool' => '搜索工具',
+	'oasis-toolbar-edit-popular-tools' => '熱門工具',
 	'oasis-toolbar-edit-hide-tools' => '隱藏工具',
-	'oasis-toolbar-edit-save' => '保存',
+	'oasis-toolbar-edit-save' => '儲存',
 	'oasis-toolbar-edit-cancel' => '取消',
+	'oasis-toolbar-edit-rename-item' => '重新命名項目',
+	'oasis-toolbar-for-admins-only' => '管理員可使用此工具',
+	'oasis-toolbar-not-enabled-here' => '這個wiki上不能使用此工具',
+	'oasis-toolbar-customize' => '自訂',
+	'oasis-toolbar-devinfo' => '開發人員資訊',
+	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|個評論}}',
 	'oasis-comments-show-all' => '顯示全部',
 	'oasis-random-wiki' => '隨機wiki',
 	'oasis-add-photo' => '新增圖片',
@@ -4398,6 +4424,7 @@ $messages['zh-hant'] = array(
 	'oasis-section-edit' => '編輯',
 	'oasis-section-edit-alt' => '編輯 $1 段落',
 	'oasis-popular-blogs-title' => '受歡迎的部落格文章',
+	'themedesigner' => '主題設計器',
 	'oasis-pages-on-wiki-header' => '個條目  在$1',
 	'oasis-interlang-languages' => '其他語言',
 );

@@ -1920,7 +1920,7 @@ $messages['pms'] = array(
 	'vet-imagelink' => '<b>Neuv!</b> Anserì dij filmà',
 	'vet-imagebutton' => 'Gionté dij filmà',
 	'vet-license-cc' => 'Licensià sota Creative Commons Attribution-Share Alike 3.0',
-	'vet-name-incorrect' => 'Ël nòm ëd cost filmà a conten dij caràter pa bon',
+	'vet-name-incorrect' => 'Ël nòm ëd cost filmà a conten dij caràter pa bon, com #',
 	'vet-description' => "Ch'a anserissa l'anliura completa da qualsëssìa dij sit mantnù. Vëdde",
 	'vet-uploadtext' => "'''Cost formolari a-j përmët ëd carié e visualisé an pressa dj'archivi ant j'artìcoj.'''
 
@@ -2384,6 +2384,25 @@ $messages['sv'] = array(
 $messages['sw'] = array(
 	'vet-left' => 'Kushoto',
 	'vet-right' => 'Kulia',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'vet-thiswiki' => 'இந்த விக்கி',
+	'vet-upload-btn' => 'அடுத்தது',
+	'vet-find-btn' => 'தேடுக',
+	'vet-insert' => 'உள்ளிடு',
+	'vet-name' => 'பெயர்',
+	'vet-license' => 'உரிமம்',
+	'vet-size' => 'அளவு',
+	'vet-thumbnail' => 'நகம் அளவு சிறுபடம்',
+	'vet-width' => 'அகலம்',
+	'vet-layout' => 'வடிவமைப்பு',
+	'vet-next' => 'அடுத்து  8',
+	'vet-back' => 'பின் செல்',
+	'vet-close' => 'மூடுக',
 );
 
 /** Telugu (తెలుగు)

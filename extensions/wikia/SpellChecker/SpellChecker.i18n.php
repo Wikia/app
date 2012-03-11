@@ -383,6 +383,14 @@ $messages['sv'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Stavningsförslag för "$1": $2',
 );
 
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'spellchecker-info-provider' => 'வழங்குபவர்',
+	'spellchecker-info-spellcheck-languages' => 'மொழி',
+);
+
 /** Telugu (తెలుగు)
  * @author Ravichandra
  * @author Veeven

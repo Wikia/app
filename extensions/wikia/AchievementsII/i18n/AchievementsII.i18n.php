@@ -389,6 +389,7 @@ on someone else\'s talk page!',
 );
 
 /** Message documentation (Message documentation)
+ * @author Ajdar
  * @author Aldnonymous
  * @author Avatar
  * @author Claudia Hattitten
@@ -401,10 +402,20 @@ on someone else\'s talk page!',
  * @author TK-999
  */
 $messages['qqq'] = array(
+	'achievementsii-desc' => 'Вики кулланучылары өчен бүләкләү тамгалары системасы',
+	'achievements-upload-error' => 'Гафу итегез!
+Бу рәсем дөрес укылмый.
+Ул .jpg яки .png форматында булырга тиеш.
+Әгәр ул дөрес укылмый икән, рәсем бик зур булырга мөмкин.
+Зинһар, яңадан тырышып карагыз!',
 	'achievements-edit-plus-category-track-exists' => '{{doc-important|Do not change the link itself.}}
 Parameters:
 * $1 is the ID of an existing track used to jump to.',
 	'right-platinum' => '{{doc-right}}',
+	'achievements-platinum' => 'Платина',
+	'achievements-gold' => 'Алтын',
+	'achievements-silver' => 'Көмеш',
+	'achievements-bronze' => 'Бронза',
 	'achievements-you-must' => 'Parameters:
 * $1 is the description of what needs to be achieved to earn a badge.
 
@@ -1534,7 +1545,7 @@ Prosím zkuste jiný!',
 	'achievements-profile-title-oasis' => 'úspěch  <br /> body',
 	'achievements-ranked-oasis' => '$1 je v žebříčku na [[Special:Leaderboard|místě číslo #$2]] na této wiki',
 	'achievements-viewall-oasis' => 'Zobrazit vše',
-	'achievements-toggle-hide' => 'Nezobrazovat body, odznaky a pořadí na mém profilu.',
+	'achievements-toggle-hide' => 'Skrýt body, odznaky a pořadí na mém profilu.',
 	'leaderboard-intro-hide' => 'skrýt',
 	'leaderboard-intro-open' => 'otevřít',
 	'leaderboard-intro-headline' => 'Co jsou úspěchy?',
@@ -1710,24 +1721,24 @@ Přečtěte si kterýkoliv nedávno přidaný blogový příspěvek a napište s
 	'achievements-badge-to-get-introduction-details' => 'Je vaše uživatelská stránka prázdná?
 Klikněte v horní části obrazovky  na své uživatelské jméno a podívejte se.
 Klikněte na tlačítko „{{int:edit}}“ a doplňte nějaké informace o sobě!',
-	'achievements-badge-to-get-sayhi-details' => 'Můžete poslat zprávu ostatním uživatelům kliknutím na tlačítko „{{int:tooltip-ca-addsection}}“ na jejich diskusní stránce.
+	'achievements-badge-to-get-sayhi-details' => 'Můžete ostatním zanechat zprávu klepnutím na  „{{int:addsection}}“ na jejich diskusní stránce.
 Požádejte o pomoc, poděkujte za spolupráci nebo jen pošlete pozdrav!',
 	'achievements-badge-to-get-creator-details' => 'Tento odznak je udělen osobě, jež založila wiki.
 Klikněte nahoře na tlačítko „{{int:createwiki}}“ a založte stránku o čemkoli, co vás zajímá!',
 	'achievements-badge-to-get-luckyedit-details' => 'Abyste získali tento odznak, musíte mít štěstí. 
 Editujte dál!',
-	'achievements-badge-hover-desc-introduction' => 'pro přidání na<br />
+	'achievements-badge-hover-desc-introduction' => 'Odměněn/a za přidání na<br />
 vaší uživatelskou stránku!',
-	'achievements-badge-your-desc-blogcomment' => 'pro komentování {{PLURAL:$1|blogového příspěvků|$1 jiných blogových příspěvků}}!',
-	'achievements-badge-your-desc-love' => 'pro každodenní přispívání na wiki po dobu {{PLURAL:$1|dne|$1 dnů}}!',
-	'achievements-badge-your-desc-welcome' => 'pro vstup na wiki!',
-	'achievements-badge-your-desc-introduction' => 'pro přidání na vaší uživatelskou stránku!',
-	'achievements-badge-your-desc-sayhi' => 'za napsání zprávy na diskusní stránce jiného uživatele!',
-	'achievements-badge-your-desc-creator' => 'pro založení wiki!',
-	'achievements-badge-desc-love' => 'za každodenní přispívání do wiki po dobu {{PLURAL:$1|dne|$1 dnů}}!',
-	'achievements-badge-desc-sayhi' => 'pro zanechání zprávy na diskusní stránce jiného uživatele!',
-	'achievements-badge-desc-creator' => 'pro vytvoření wiki!',
-	'achievements-badge-desc-caffeinated' => 'za provedení 100 editací v jediném dni!',
+	'achievements-badge-your-desc-blogcomment' => 'Odměněn/a za komentování {{PLURAL:$1|blogového příspěvku|$1 různých blogových příspěvků}}!',
+	'achievements-badge-your-desc-love' => 'Odměněn/a za každodenní přispívání na wiki po dobu {{PLURAL:$1|dne|$1 dnů}}!',
+	'achievements-badge-your-desc-welcome' => 'Odměněn/a za vstup na wiki!',
+	'achievements-badge-your-desc-introduction' => 'Odměněn/a za přidání na vaší uživatelskou stránku!',
+	'achievements-badge-your-desc-sayhi' => 'Odměněn/a za napsání zprávy na diskusní stránce jiného uživatele!',
+	'achievements-badge-your-desc-creator' => 'Odměněn/a za založení wiki!',
+	'achievements-badge-desc-love' => 'Odměněn/a za každodenní přispívání do wiki po dobu {{PLURAL:$1|dne|$1 dnů}}!',
+	'achievements-badge-desc-sayhi' => 'Odměněn/a za zanechání zprávy na diskusní stránce jiného uživatele!',
+	'achievements-badge-desc-creator' => 'Odměněn/a za vytvoření wiki!',
+	'achievements-badge-desc-caffeinated' => 'Odměněn/a za provedení 100 editací v jediném dni!',
 	'achievements-userprofile-no-badges-visitor' => 'Tento uživatel ještě nemá žádný odznak!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Hodnocení #$1]]<br />na této wiki',
 );
@@ -2976,7 +2987,7 @@ Jatka muokkaamista!',
 jotain omalle käyttäjäsivullesi!',
 	'achievements-badge-hover-desc-sayhi' => 'jättää viesti<br />
 jonkun henkilön keskustelusivulle!',
-	'achievements-badge-hover-desc-creator' => 'wikin luomisesta!',
+	'achievements-badge-hover-desc-creator' => 'Myönnetty wikin luomisesta!',
 	'achievements-badge-your-desc-edit' => 'tekemällä {{PLURAL:$1|ensimmäisen muokkauksesi|$1 muokkausta}} {{PLURAL:$1|sivulle|sivuille}}!',
 	'achievements-userprofile-title-no' => 'Käyttäjän $1 ansaitsemat kunniamerkit',
 );
@@ -5073,6 +5084,14 @@ $messages['km'] = array(
 	'achievements-badge-to-get-welcome' => 'ចូលរួមវិគី',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'achievements-viewless' => 'ಮುಚ್ಚಿ',
+	'leaderboard-intro-hide' => 'ಅಡಗಿಸು',
+);
+
 /** Korean (한국어)
  * @author Cwt96
  * @author Infinity
@@ -6307,6 +6326,32 @@ $messages['mzn'] = array(
 	'achievements-community-platinum-edit' => 'دچی‌ین',
 );
 
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Ianbu
+ */
+$messages['nan'] = array(
+	'achievementsii-desc' => '予Wiki用者的成就徽章系統',
+	'achievements-gold' => '金',
+	'achievements-silver' => '銀',
+	'achievements-bronze' => '銅',
+	'achievements-gold-points' => '100<br />點',
+	'achievements-silver-points' => '50<br />點',
+	'achievements-bronze-points' => '10<br />點',
+	'achievements-viewall-oasis' => '看全部',
+	'leaderboard-intro-hide' => '收',
+	'leaderboard-intro-open' => '開',
+	'achievements-leaderboard-member-label' => '成員',
+	'achievements-send' => '保存影像',
+	'achievements-save' => '共改的保存',
+	'achievements-enable-track' => '通用',
+	'achievements-revert' => '恢復做設便的',
+	'achievements-about-title' => '關係這頁...',
+	'achievements-community-platinum-edit' => '修改',
+	'achievements-community-platinum-save' => '保存',
+	'achievements-community-platinum-cancel' => '取消',
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => '點擊就通看另外的',
+);
+
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
@@ -6598,6 +6643,7 @@ på noen andres diskusjonsside!',
 );
 
 /** Dutch (Nederlands)
+ * @author AvatarTeam
  * @author McDutchie
  * @author Siebrand
  */
@@ -6651,8 +6697,7 @@ Kies dan een ander plaatje.',
 	'leaderboard-intro-hide' => 'verbergen',
 	'leaderboard-intro-open' => 'openen',
 	'leaderboard-intro-headline' => 'Wat zijn speldjes?',
-	'leaderboard-intro' => "U kunt speldjes verdienen door pagina's te bewerken, foto's te uploaden en reacties achter te laten. Voor ieder speldje krijgt u punten. Hoe meer puten u verdient, hoe hoger u komt te staan op het scorebord! Speldjes die u hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
-
+	'leaderboard-intro' => "U kunt speldjes verdienen door pagina's te bewerken, foto's te uploaden en reacties achter te laten. Voor ieder speldje krijgt u punten. Hoe meer punten u verdient, hoe hoger u komt te staan op het scorebord! Speldjes die u hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
 
 '''Wat zijn speldjes waard?'''",
 	'leaderboard' => 'Scorebord prestaties',
@@ -6890,7 +6935,7 @@ de overlegpagina van een andere gebruiker!',
 	'achievements-badge-desc-caffeinated' => 'Toegekend voor het maken van 100 bewerkingen op één dag.',
 	'achievements-badge-desc-luckyedit' => 'Toegekend voor het maken van de gelukkige bewerking nummer $1 op de wiki!',
 	'achievements-userprofile-title-no' => 'Door $1 verdiende speldjes',
-	'achievements-userprofile-title' => 'Door $1 {{PLURAL:$2|verdiend spelje|verdiende speldjes}} ($2)',
+	'achievements-userprofile-title' => 'Door $1 {{PLURAL:$2|verdiend speldje|verdiende speldjes}} ($2)',
 	'achievements-userprofile-no-badges-owner' => 'Hieronder staat de lijst met speldjes die u in deze wiki kunt verdienen!',
 	'achievements-userprofile-no-badges-visitor' => 'Deze gebruiker heeft nog geen speldje verdiend.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> prestatie<br />punten',
@@ -10012,6 +10057,7 @@ $5',
 	'achievements-community-platinum-cancel' => 'Кире кагу',
 	'achievements-community-platinum-sponsored-label' => 'Реклама казанышлары',
 	'achievements-community-platinum-sponsored-hover-content-label' => 'Рәсем якынлаштырылгач <small>(минималь зурлык: 270px х 100px)</small>',
+	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Тамгага сылтама <small>(DART URL-адрес командасына басыгыз)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Өстәмә мәгълүмат өчен чирттерегез',
 	'achievements-badge-name-edit-0' => 'Үзгәртүләр кертх',
 	'achievements-badge-name-edit-1' => 'Бу әле башы гына',
@@ -10067,10 +10113,22 @@ $5',
 Хаталар бармы?
 Кыенсынмагыз.
 Сәхифәнең эчтәлеген төзәтер өчен, "{{int:edit}}" төймәсенә басыгыз!',
+	'achievements-badge-to-get-community-platinum-details' => 'Бу билгеле бер вакыт эчендә генә эшләүче махсус платиналы тамга!',
+	'achievements-badge-hover-desc-edit' => ' {{PLURAL:$1|биттә}} $1  <br /> {{PLURAL:$1|төзәтмә}} ясаган өчен!',
+	'achievements-badge-hover-desc-edit-plus-category' => '{{PLURAL:$1|$2 мәкаләдә|$2 мәкаләләрендә}} $1 {{PLURAL:$1|төзәтмә}} <br /> ясаган өчен бүләк!',
+	'achievements-badge-hover-desc-picture' => '{{PLURAL:$1|биттә}} $1  <br /> {{PLURAL:$1|рәсем}} өстәгән өчен бүләк!',
+	'achievements-badge-hover-desc-category' => '{{PLURAL:$1|төркемгә}} $1 {{PLURAL:$1|мәкалә}} өстәгән өчен бүләк!',
+	'achievements-badge-hover-desc-blogpost' => 'Блогта $1 {{PLURAL:$1|хәбәр}} язган өчен бүләк!',
+	'achievements-badge-hover-desc-blogcomment' => ' {{PLURAL:$1|Блогта төрле хәбәрләргә}}<br />
+җаваплар язган өчен!',
+	'achievements-badge-hover-desc-love' => '{{PLURAL:$1|көн}} эчендә викигә ясаган кертем өчен бүләкк',
+	'achievements-badge-hover-desc-welcome' => 'Викигә кушылган өчен бүләк!',
+	'achievements-badge-hover-desc-introduction' => 'Үз битеңне<br />өстәгән өчен бүләк!',
+	'achievements-badge-hover-desc-creator' => 'Вики төзегән өчен бүләк!',
 	'achievements-badge-your-desc-welcome' => 'викигә кушылган өчен!',
 	'achievements-badge-your-desc-sayhi' => 'кемнең-дә булса бәхәс битендә язма калдырган өчен!',
 	'achievements-badge-your-desc-creator' => 'вики ясаган өчен!',
-	'achievements-badge-desc-creator' => 'вики ясаган өчен!',
+	'achievements-badge-desc-creator' => 'Вики төзегән өчен бүләк!',
 );
 
 /** Ukrainian (Українська)
@@ -10436,6 +10494,7 @@ $5",
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Dream
+ * @author Ffaarr
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(
@@ -10452,6 +10511,7 @@ $messages['zh-hant'] = array(
 	'leaderboard-title' => '排行榜',
 	'achievements-leaderboard-points-label' => '積分',
 	'achievements-leaderboard-points' => '{{PLURAL:$1|分|分}}',
+	'achievements-send' => '儲存圖片',
 	'achievements-about-title' => '關於本頁 ...',
 	'platinum' => '白金',
 	'achievements-community-platinum-edit' => '編輯',

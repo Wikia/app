@@ -33,6 +33,13 @@ $messages['arn'] = array(
 	'wikiawidget' => 'Wikia ñi widgets',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'wikiawidget' => 'Wikia Widgets',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */

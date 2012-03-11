@@ -810,7 +810,7 @@ $messages['pms'] = array(
 	'categoryselect-error-db-locked' => "La base ëd dàit a l'é blocà.",
 	'categoryselect-edit-abort' => "La modìfica ch'it l'has provà a fé a l'é stàita abortìa da n'agancc ëd n'estension",
 	'tog-disablecategoryselect' => "Disabilité ël mòdul dle categorìe (a s'àplica mach se ël modifiché an manera visual a l'é stàit disabilità)",
-	'tog-disablecategoryselect-v2' => 'Disabilité ël mòdul Categorìa an manera Sorgiss',
+	'tog-disablecategoryselect-v2' => "Disabilité ël mòdul Categorìa (a s'àplica mach se l'edission an manera visual a l'é disabilità)",
 );
 
 /** Pashto (پښتو)

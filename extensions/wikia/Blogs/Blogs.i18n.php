@@ -2715,7 +2715,7 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-readfullpost' => 'Meer lezen',
 	'blog-olderposts' => 'Oudere berichten',
 	'blog-newerposts' => 'Nieuwere berichten',
-	'blog-nbrcomments' => '$1 {{PLURAL:$1|opmerking|opmerkingen}}',
+	'blog-nbrcomments' => '{{PLURAL:$1|Eén opmerking|$1 opmerkingen}}',
 	'blog-nopostfound' => 'Geen berichten gevonden.',
 	'blog-writeone' => 'Schrijf er een!',
 	'blog-empty-user-blog' => 'Deze gebruiker heeft nog geen blogberichten geschreven.',
@@ -4299,5 +4299,20 @@ $messages['zh-hans'] = array(
 	'blog-movepage-badtitle' => '无效的博客帖子标题。',
 	'blog-comment-sending' => '正在发送...',
 	'blog-by' => '$1由$2',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'blog-page' => '部落格',
+	'blog-zero-comments' => '還沒有評論 ！',
+	'blog-comment-post' => '發表評論',
+	'blog-comments' => '評論',
+	'blog-rc-comments' => '部落格評論',
+	'blog-comments-new' => '部落格的新評論',
+	'blog-comments-save' => '在部落格中儲存評論',
+	'blog-comments-label' => '評論',
+	'blog-voting-label' => '投票',
 );
 

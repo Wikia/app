@@ -1367,6 +1367,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  * @author Pedroca cerebral
  */
 $messages['pt-br'] = array(
@@ -1411,6 +1412,7 @@ $messages['pt-br'] = array(
 	'chat-user-manu-private-block' => 'Bloquear mensagens privadas',
 	'chat-user-manu-private-allow' => 'Permitir mensagens privadas',
 	'chat-user-manu-private-close' => 'Fechar sala privada',
+	'group-chatmoderator' => 'Moderadores do chat',
 );
 
 /** Romanian (Română)
@@ -1564,6 +1566,18 @@ $messages['sv'] = array(
 	'group-chatmoderator-member' => 'Chattmoderator',
 	'group-bannedfromchat' => 'AvstängdFrånChatt',
 	'group-bannedfromchat-member' => 'AvstängdFrånChatt',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'chat' => 'அரட்டை',
+	'chat-you-are-banned' => 'அனுமதிப் பிழை',
+	'chat-user-manu-profile' => 'பயனர் விவரம்',
+	'chat-user-manu-contribs' => 'பங்களிப்புகள்',
+	'chat-user-manu-private' => 'தனிப்பட்ட தகவல்',
+	'chat-user-manu-private-allow' => 'தனிப்பட்ட தகவல்களை அனுமதி',
 );
 
 /** Telugu (తెలుగు)

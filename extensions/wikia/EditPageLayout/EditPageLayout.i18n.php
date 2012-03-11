@@ -107,15 +107,15 @@ $messages['qqq'] = array(
 	'editpagelayout-edit-summary-label' => "Label that appears above the input for summarizing the edit you're making.",
 	'editpagelayout-subject-headline-label' => "When you add a section to an existing page, this is the label that appears above the input to add a subject or headline to the section you're adding.",
 	'wikia-editor-media-slider' => 'This refers to a special kind of slideshow which is intended for the main page. See http://help.wikia.com/wiki/Help:Galleries_and_slideshows#Creating_a_main_page_slider.',
+	'wikia-editor-source-bold-tooltip' => 'Tooltip for the button used to bold text in source mode.',
+	'wikia-editor-source-italic-tooltip' => 'Tooltip for the button used to italicize text in source mode.',
+	'wikia-editor-source-link-tooltip' => 'Tooltip for the button used to add a link in source mode.',
 	'wikia-editor-modules-license-text' => 'Needs plural support.
 The first parameter is a placeholder for the license logo/image. The third parameter is the license name.',
 	'restore-edits-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'restore-edits-diff-notice' => "Please preserve the HTML markup as it's used to bind functionality via JS",
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
-	'wikia-editor-source-bold-tooltip' => 'Tooltip for the button used to bold text in source mode.',
-	'wikia-editor-source-italic-tooltip' => 'Tooltip for the button used to italicize text in source mode.',
-	'wikia-editor-source-link-tooltip' => 'Tooltip for the button used to add a link in source mode.',
 );
 
 /** Azerbaijani (Azərbaycanca)
@@ -139,8 +139,10 @@ $messages['az'] = array(
 $messages['bar'] = array(
 	'editpagelayout-more' => 'merer',
 	'editpagelayout-less' => 'weeniger',
-	'editpagelayout-helpLink-url' => 'Hüf:Beorweiten',
+	'editpagelayout-helpLink-url' => 'Help:Beorwaten',
 	'editpagelayout-helpLink' => '[[{{MediaWiki:Editpagelayout-helpLink-url}}|Brauchst a Hüf?]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Benoochrichtigung|Benoochrichtigunger}}',
+	'editpagelayout-notificationsLink-none' => 'Benoochrichtigunger',
 	'editpagelayout-edit-title' => 'Titel beorweiten',
 	'editpagelayout-edit-info' => 'Info beorweiten',
 	'editpagelayout-diff-header-url' => 'Help:Unterschiad',
@@ -154,6 +156,8 @@ $messages['bar'] = array(
 	'editpagelayout-pageControls-back' => 'Zruck zum Editor',
 	'editpagelayout-pageControls-changes' => 'Änderrungen',
 	'editpagelayout-blocked-user' => 'Deih Benutzernåm óder deih IP-Adress is gsperrd worn',
+	'editpagelayout-edit-summary-label' => 'Zaummfossung',
+	'editpagelayout-subject-headline-label' => 'Bedreff:',
 	'wikia-editor-media-image' => 'Büd',
 	'wikia-editor-media-gallery' => 'Galarie',
 	'wikia-editor-media-slideshow' => 'Diashow',
@@ -164,6 +168,9 @@ $messages['bar'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Diashow dazuadoah',
 	'wikia-editor-media-slider-tooltip' => 'Slider dazuadoah',
 	'wikia-editor-media-video-tooltip' => 'Videó dazuadoah',
+	'wikia-editor-source-bold-tooltip' => 'Fett',
+	'wikia-editor-source-italic-tooltip' => 'Kursiav',
+	'wikia-editor-source-link-tooltip' => 'Link dazuadoah',
 	'wikia-editor-modules-templates-title' => 'Vurlong',
 	'wikia-editor-modules-templates-add-tooltip' => "Vurlog '$1' dazuadoah",
 	'wikia-editor-modules-templates-otherTemplates' => 'Weiderne Vurlong',
@@ -172,16 +179,17 @@ $messages['bar'] = array(
 	'wikia-editor-modules-templates-makeLayout' => 'Neichs Layout aus derer Seiten',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Neichs Layout aus derer Seiten erstön',
 	'wikia-editor-modules-templates-makeLayout-confirmation-text' => "Du valosst iatz an Beorweitungsmódus, um a Layout basirnd auf derer Seiten z' erstön. Olle ungspeicherden Beorweitungen geengern valurn.",
-	'wikia-editor-modules-license-text' => 'Beitrég zu $1 wern unter CC-BY-SA gstöd (<a href="$2">Details</a>).',
+	'wikia-editor-modules-license-text' => '$1 Beiträg wern unter $3 lizenzierd (<a href="$2">Weiderne Details</a>).',
 	'wikia-editor-modules-insert-title' => 'Meedien und Extras dazuadoah',
 	'wikia-editor-modules-categories-title' => 'Kategorien',
 	'wikia-editor-loadingStates-loading' => 'Lood an Editor…',
 	'wikia-editor-loadingStates-toSource' => 'Wexel zum Quötext-Módus...',
 	'wikia-editor-loadingStates-toVisual' => 'Wexel zum graafischen Módus...',
 	'wikia-editor-loadingStates-saving' => 'Speicherd deih Beorweitung!',
-	'wikia-editor-edittools-caption' => 'Weiderne Code-Vurlong',
+	'wikia-editor-edittools-caption' => 'merer',
 	'wikia-editor-edittools-dialog-title' => 'Wikitext-Vurlong',
 	'wikia-editor-notices-dialog-title' => 'Hihweis-Details',
+	'wikia-editor-preview-editSummary' => 'Zaummfossung: $1',
 	'nonunicodebrowser-notice' => "'''Ówocht: Deih Browser is néd Unicode-kompatiwé.'''",
 	'rev-deleted-text-notice' => "Dé Versión is '''gléscht''' worn. [Merer Informaziónen]",
 	'readonlywarning-notice' => "'''Ówocht: Dé Daatenbånk is wéng Wartungsorweiten gsperrd worn.''' [Merer Informaziónen]",
@@ -342,6 +350,7 @@ $messages['ca'] = array(
  * @author Claudia Hattitten
  * @author LWChris
  * @author MF-Warburg
+ * @author MtaÄ
  * @author SVG
  * @author Tiin
  */
@@ -377,6 +386,9 @@ $messages['de'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Diashow hinzufügen',
 	'wikia-editor-media-slider-tooltip' => 'Slider hinzufügen',
 	'wikia-editor-media-video-tooltip' => 'Video hinzufügen',
+	'wikia-editor-source-bold-tooltip' => 'Fett',
+	'wikia-editor-source-italic-tooltip' => 'Kursiv',
+	'wikia-editor-source-link-tooltip' => 'Link hinzufügen',
 	'wikia-editor-modules-templates-title' => 'Vorlagen',
 	'wikia-editor-modules-templates-add-tooltip' => "Vorlage '$1' hinzufügen",
 	'wikia-editor-modules-templates-otherTemplates' => 'Weitere Vorlagen',
@@ -454,6 +466,9 @@ $messages['es'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Añadir presentación',
 	'wikia-editor-media-slider-tooltip' => 'Añadir diapositiva',
 	'wikia-editor-media-video-tooltip' => 'Añadir vídeo',
+	'wikia-editor-source-bold-tooltip' => 'Negrita',
+	'wikia-editor-source-italic-tooltip' => 'Itálica',
+	'wikia-editor-source-link-tooltip' => 'Añadir enlace',
 	'wikia-editor-modules-templates-title' => 'Plantillas',
 	'wikia-editor-modules-templates-add-tooltip' => "Añadir plantilla '$1'",
 	'wikia-editor-modules-templates-otherTemplates' => 'Añadir otras plantillas',
@@ -549,6 +564,9 @@ $messages['fr'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Ajouter un diaporama',
 	'wikia-editor-media-slider-tooltip' => 'Ajouter un carrousel',
 	'wikia-editor-media-video-tooltip' => 'Ajouter une vidéo',
+	'wikia-editor-source-bold-tooltip' => 'Gras',
+	'wikia-editor-source-italic-tooltip' => 'Italique',
+	'wikia-editor-source-link-tooltip' => 'Ajouter un lien',
 	'wikia-editor-modules-templates-title' => 'Modèles',
 	'wikia-editor-modules-templates-add-tooltip' => 'Ajouter le modèle « $1 »',
 	'wikia-editor-modules-templates-otherTemplates' => 'Ajouter d’autres modèles',
@@ -625,6 +643,9 @@ $messages['gl'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Engadir unha presentación de diapositivas',
 	'wikia-editor-media-slider-tooltip' => 'Engadir un presentador de diapositivas',
 	'wikia-editor-media-video-tooltip' => 'Engadir un vídeo',
+	'wikia-editor-source-bold-tooltip' => 'Negra',
+	'wikia-editor-source-italic-tooltip' => 'Cursiva',
+	'wikia-editor-source-link-tooltip' => 'Engadir unha ligazón',
 	'wikia-editor-modules-templates-title' => 'Modelos',
 	'wikia-editor-modules-templates-add-tooltip' => 'Engadir o modelo "$1"',
 	'wikia-editor-modules-templates-otherTemplates' => 'Engadir outros modelos',
@@ -768,6 +789,9 @@ $messages['ia'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Adder presentation de diapositivas',
 	'wikia-editor-media-slider-tooltip' => 'Adder glissator',
 	'wikia-editor-media-video-tooltip' => 'Adder video',
+	'wikia-editor-source-bold-tooltip' => 'Grasse',
+	'wikia-editor-source-italic-tooltip' => 'Italic',
+	'wikia-editor-source-link-tooltip' => 'Adder ligamine',
 	'wikia-editor-modules-templates-title' => 'Patronos',
 	'wikia-editor-modules-templates-add-tooltip' => "Adder patrono '$1'",
 	'wikia-editor-modules-templates-otherTemplates' => 'Adder altere patronos',
@@ -1042,6 +1066,9 @@ $messages['mk'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Додај подвижна галерија',
 	'wikia-editor-media-slider-tooltip' => 'Додај лизгач',
 	'wikia-editor-media-video-tooltip' => 'Додај видео',
+	'wikia-editor-source-bold-tooltip' => 'Задебелено',
+	'wikia-editor-source-italic-tooltip' => 'Закосено',
+	'wikia-editor-source-link-tooltip' => 'Додај врска',
 	'wikia-editor-modules-templates-title' => 'Шаблони',
 	'wikia-editor-modules-templates-add-tooltip' => 'Додај го шаблонот „$1“',
 	'wikia-editor-modules-templates-otherTemplates' => 'Додај други шаблони',
@@ -1118,6 +1145,9 @@ $messages['ms'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Buat Tayangan Slaid',
 	'wikia-editor-media-slider-tooltip' => 'Buat Gelangsar',
 	'wikia-editor-media-video-tooltip' => 'Bubuh Video',
+	'wikia-editor-source-bold-tooltip' => 'Tebal',
+	'wikia-editor-source-italic-tooltip' => 'Condong',
+	'wikia-editor-source-link-tooltip' => 'Bubuh Pautan',
 	'wikia-editor-modules-templates-title' => 'Templat',
 	'wikia-editor-modules-templates-add-tooltip' => "Bubuh Templat '$1'",
 	'wikia-editor-modules-templates-otherTemplates' => 'Tambahkan templat lain',
@@ -1159,7 +1189,7 @@ $messages['ms'] = array(
 	'tog-forceeditsummary' => 'Ingatkan saya jika ringkasan suntingan kosong',
 );
 
-/** Norwegian Bokmål (Norsk (bokmål))
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1195,6 +1225,9 @@ $messages['nb'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Legg til lysbildeserie',
 	'wikia-editor-media-slider-tooltip' => 'Legg til glidebryter',
 	'wikia-editor-media-video-tooltip' => 'Legg til video',
+	'wikia-editor-source-bold-tooltip' => 'Fet',
+	'wikia-editor-source-italic-tooltip' => 'Kursiv',
+	'wikia-editor-source-link-tooltip' => 'Legg til lenke',
 	'wikia-editor-modules-templates-title' => 'Maler',
 	'wikia-editor-modules-templates-add-tooltip' => "Legg til '$1'-mal",
 	'wikia-editor-modules-templates-otherTemplates' => 'Legg til andre maler',
@@ -1274,6 +1307,9 @@ $messages['nl'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Diavoorstelling toevoegen',
 	'wikia-editor-media-slider-tooltip' => 'Schuifdiashow toevoegen',
 	'wikia-editor-media-video-tooltip' => 'Video toevoegen',
+	'wikia-editor-source-bold-tooltip' => 'Vet',
+	'wikia-editor-source-italic-tooltip' => 'Cursief',
+	'wikia-editor-source-link-tooltip' => 'Verwijzing toevoegen',
 	'wikia-editor-modules-templates-title' => 'Sjablonen',
 	'wikia-editor-modules-templates-add-tooltip' => 'Sjabloon "$1" toevoegen',
 	'wikia-editor-modules-templates-otherTemplates' => 'Andere sjablonen toevoegen',
@@ -1315,7 +1351,7 @@ $messages['nl'] = array(
 	'tog-forceeditsummary' => 'Een melding geven bij een lege bewerkingssamenvatting',
 );
 
-/** Nederlands (informeel) (Nederlands (informeel))
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
  * @author MarkvA
  * @author McDutchie
  * @author Siebrand
@@ -1367,6 +1403,9 @@ $messages['pl'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Dodaj pokaz slajdów',
 	'wikia-editor-media-slider-tooltip' => 'Dodaj slider',
 	'wikia-editor-media-video-tooltip' => 'Dodaj film',
+	'wikia-editor-source-bold-tooltip' => 'Pogrubienie',
+	'wikia-editor-source-italic-tooltip' => 'Kursywa',
+	'wikia-editor-source-link-tooltip' => 'Dodaj link',
 	'wikia-editor-modules-templates-title' => 'Szablony',
 	'wikia-editor-modules-templates-add-tooltip' => "Dodaj szablon '$1'",
 	'wikia-editor-modules-templates-otherTemplates' => 'Dodaj inne szablony',
@@ -1606,6 +1645,9 @@ $messages['sv'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Lägg till bildspel',
 	'wikia-editor-media-slider-tooltip' => 'Lägg till reglage',
 	'wikia-editor-media-video-tooltip' => 'Lägg till video',
+	'wikia-editor-source-bold-tooltip' => 'Fet',
+	'wikia-editor-source-italic-tooltip' => 'Kursiv',
+	'wikia-editor-source-link-tooltip' => 'Lägg till länk',
 	'wikia-editor-modules-templates-title' => 'Mallar',
 	'wikia-editor-modules-templates-add-tooltip' => "Lägg till '$1'-mall",
 	'wikia-editor-modules-templates-otherTemplates' => 'Lägg till andra mallar',
@@ -1766,7 +1808,7 @@ $messages['vi'] = array(
 	'tog-forceeditsummary' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
  * @author Hzy980512
  */

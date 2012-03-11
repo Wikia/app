@@ -59,7 +59,7 @@ $messages['qqq'] = array(
 	'wikiamobile-sharing-page-text' => '$1 is the title of the article, $2 is the name of the wiki',
 	'wikiamobile-sharing-modal-text' => '$1 is the type of media, $2 is the title of the article, $3 is the name of the wiki',
 	'wikiamobile-sharing-email-text' => '$1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
-	'wikiamobile-ad-close' => 'text on the close button for the ad place'
+	'wikiamobile-ad-close' => 'text on the close button for the ad place',
 );
 
 /** адыгэбзэ (адыгэбзэ)
@@ -174,6 +174,7 @@ $messages['de'] = array(
 /** Spanish (Español)
  * @author Benfutbol10
  * @author Ciencia Al Poder
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'wikiamobile-search' => 'Buscar',
@@ -201,6 +202,11 @@ $messages['es'] = array(
 	'wikiamobile-categories-collapse' => 'Ocultar todo',
 	'wikiamobile-sharing-media-image' => 'Imagen',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 en $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Oye,
+definitivamente debes de ver esto:
+
+$1',
 );
 
 /** Persian (فارسی)
@@ -352,6 +358,8 @@ $messages['kn'] = array(
 	'wikiamobile-explore' => 'ಅನ್ವೇಷಿಸು',
 	'wikiamobile-article-categories' => 'ವರ್ಗಗಳು',
 	'wikiamobile-feedback' => 'ಮರುಮಾಹಿತಿ',
+	'wikiamobile-back' => 'ಹಿಂದಕ್ಕೆ',
+	'wikiamobile-hide-section' => 'ಅಡಗಿಸು',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|ಮನರಂಜನೆ]]',
 );
 
@@ -483,6 +491,7 @@ $messages['nb'] = array(
 	'wikiamobile-categories-collapse' => 'Skjul alle',
 	'wikiamobile-sharing-media-image' => 'Bilde',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 på $2 – $3',
 	'wikiamobile-sharing-email-text' => 'Hei,
 du burde definitivt sjekke ut dette:
 
@@ -527,6 +536,7 @@ $messages['nl'] = array(
 dit moet u echt zien:
 
 $1',
+	'wikiamobile-ad-close' => 'sluiten',
 );
 
 /** Polish (Polski)
@@ -680,9 +690,22 @@ $messages['sv'] = array(
 	'wikiamobile-article-comments-post' => 'Skriv',
 	'wikiamobile-article-comments-placeholder' => 'Skriv en kommentar',
 	'wikiamobile-article-comments-reply' => 'Skriv ett svar',
+	'wikiamobile-hide-section' => 'dölj',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Livsstil]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Underhållning]]',
 	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spel]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artikel|artiklar}}',
+	'wikiamobile-category-items-more' => 'Läs in fler',
+	'wikiamobile-category-items-prev' => 'Läs in föregående',
+	'wikiamobile-categories-expand' => 'Visa alla',
+	'wikiamobile-categories-collapse' => 'Dölj alla',
+	'wikiamobile-sharing-media-image' => 'Bild',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 på $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Hej,
+du borde definitivt spana in detta:
+
+$1',
 );
 
 /** Tulu (ತುಳು)

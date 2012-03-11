@@ -258,6 +258,7 @@ Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie 
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
  * @author Bola
  * @author Crazymadlover
  * @author Pertile
@@ -303,9 +304,11 @@ Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar
 	'welcome-message-wall-user' => '¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]].
 
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.',
-	'welcome-message-wall-user-staff' => '¡Hola, bienvenido a  {{SITENAME}}! Gracias por tu edición en la página $1.
+	'welcome-message-wall-user-staff' => '¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en la página $1.
 
-Si necesitas ayuda y no hay administradores, puedes visitar los [[w:c:es.wikia:Foro:Index|foros en la Central Hispana]]. También puedes consultar nuestro [[w:c:es.wikia:Categoría:Noticias de Wikia|blog de noticias]] para mantenerte al día con las últimas noticias y actividades en Wikia.',
+Si necesitas ayuda, y no hay ningún administrador local por aquí, podrías querer visitar los [[w:c:es:Foro:Índice|foros de la Central de Wikia en español]]. También podrías estar interesado en revisar nuestro [[w:c:es:Blog:Noticias_de_Wikia|blog del staff]] para estar al tanto de las últimas novedades y noticias sobre Wikia.
+
+¡Diviértete!',
 	'welcome-message-wall-anon' => "¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en $1.
 
 ¿Por qué no '''[[Special:Userlogin|te creas una cuenta y te identificas?]]'''. De esta forma será mucho más fácil saber qué páginas has editado y se te atribuirá tu trabajo en el wiki, además te será de ayuda a la hora de comunicarte con el resto de la comunidad.
@@ -975,6 +978,18 @@ Laat een bericht voor me achter als ik ergens mee kan helpen.',
 	'welcome-message-wall-user-staff' => 'Hallo en welkom bij {{SITENAME}}! Dank u wel voor uw bewerking aan de pagina $1.
 
 Als u hulp nodig hebt en als er hier geen lokale beheerders zijn, kom dan langs op de [[wikia:Forum:Community Central Forum|forums op Community Central Wiki]]. U kunt ook kijken op onze [[w:c:community:Blog:Wikia_Staff_Blog|Stafblog]] om op de hoogte te blijven van het laatste nieuws en evenementen rondom Wikia.',
+	'welcome-message-wall-anon' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina $1.
+
+'''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
+Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
+
+Laat alstublieft een bericht achter als ik u ergens mee kan helpen!",
+	'welcome-message-wall-anon-staff' => "Hallo, welkom bij {{SITENAME}}. Dank u wel voor uw werk aan de pagina [[:$1]].
+
+'''[[Special:Userlogin|Maak alstublieft een gebruiker aan of meld u aan]]'''.
+Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
+
+Laat alstublieft een bericht achter als ik u ergens mee kan helpen!",
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1394,9 +1409,9 @@ Hej $4, välkommen till {{SITENAME}}! Tack för din ändring till [[:$1]] sidan.
 
 Lämna ett meddelande på [[$2|min diskussionssida]] om jag kan hjälpa till med något! $3',
 	'welcome-message-anon' => "== Välkommen ==
-Hej, välkommen till {{SITENAME}}. Tack för din ändring till [[:$1]] sidan.
+Hej, välkommen till {{SITENAME}}. Tack för din redigering på sidan [[:$1]].
 
-'''[[:Special:UserLogin|Logga in och skapa ett användarnamn]]'''. Det är ett enkelt sätt att hålla koll på era inlägg och hjälper dig att kommunicera med resten av community.
+'''[[Special:Userlogin|Logga in och skapa ett användarnamn]]'''. Det är ett enkelt sätt att hålla koll på dina bidrag och hjälper dig att kommunicera med resten av gemenskapen.
 
 Lämna ett meddelande på [[$2|min diskussionssida]] om jag kan hjälpa till med något! $3",
 	'welcome-message-log' => 'välkomna nya bidragsgivare',
@@ -1427,6 +1442,16 @@ Lämna ett meddelande på min diskussionssida om jag kan hjälpa till med något
 Om du behöver hjälp och det inte finns några lokala administratörer här, kan du besöka [[wikia:Forum:Community Central Forum|forumen på Gemenskapscentralswikin]]. Du kna också spana in vår [[w:c:community:Blog:Wikia_Staff_Blog|personalblogg]] för att vara uppdaterad med de senast nyheterna och händelserna runtomkring Wikia.
 
 Glad redigering!',
+	'welcome-message-wall-anon' => "Hej, välkommen till {{SITENAME}}! Tack för din redigering på sidan $1.
+
+'''[[Special:Userlogin|Var god logga in och skapa ett användarnamn]]'''. Det är ett enkelt sätt att hålla koll på dina bidrag and hjälper dig att kommunicera med resten av gemenskapen.
+
+Lämna mig ett meddelande om jag kan hjälpa till med något!",
+	'welcome-message-wall-anon-staff' => "Hej, välkommen till {{SITENAME}}! Tack för din redigering på sidan [[:$1]].
+
+'''[[Special:Userlogin|Var god logga in och skapa ett användarnamn]]'''. Det är ett enkelt sätt att hålla koll på dina bidrag and hjälper dig att kommunicera med resten av gemenskapen.
+
+Lämna mig ett meddelande om jag kan hjälpa till med något!",
 );
 
 /** Thai (ไทย)

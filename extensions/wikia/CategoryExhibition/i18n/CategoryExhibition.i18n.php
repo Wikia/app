@@ -248,6 +248,14 @@ $messages['ja'] = array(
 	'category-exhibition-display-new' => 'カテゴリ展覧表示',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'category-exhibition-page-header' => '"$1" ವರ್ಗದಲ್ಲಿರುವ ಲೇಖನಗಳು',
+	'category-exhibition-subcategories-header' => 'ಉಪವರ್ಗಗಳು',
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $messages['lb'] = array(
 	'category-exhibition-alphabetical' => 'Alphabetesch',

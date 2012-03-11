@@ -288,12 +288,12 @@ De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een 
 $messages['pl'] = array(
 	'batchuserrights' => 'Wsadowe uprawnienia użytkowników',
 	'batchuserrights-desc' => 'Umożliwia dodawanie jednego lub większej liczby użytkowników do grupy w jednym ruchu',
-	'batchuserrights-names' => 'nazwy użytkowników do dodania do tej grupy (po jednej w wierszu):',
+	'batchuserrights-names' => 'Nazwy użytkowników do dodania do tej grupy (po jednej w wierszu):',
 	'batchuserrights-intro' => 'Ta strona pozwoli Ci dodać grupę do wielu użytkowników naraz.
 Ze względów bezpieczeństwa lista możliwych do dodania grup jest ustawiona w konfiguracji rozszerzenia i nie można jej zmieniać w wiki.
 Poproś administratora systemu jeśli należy zezwolić na dodawanie wsadowe innych grup.',
 	'batchuserrights-single-progress-update' => 'Dodano {{PLURAL:$1| grupę|grupy|grupy}} do <strong>$2</strong>.',
-	'batchuserrights-add-groups' => 'Dodawanie  {{PLURAL:$1| jejednego użytkownika| $1  użytkowników}} do {{PLURAL:$2|następującej grupy|następujących grup}}: <strong>$3</strong>.',
+	'batchuserrights-add-groups' => 'Dodawanie {{PLURAL:$1|jednego użytkownika|$1 użytkowników}} do {{PLURAL:$2|następującej grupy|następujących grup}}: <strong>$3</strong>.',
 	'batchuserrights-userload-error' => "Nie można wczytać użytkownika \"'''\$1'''\".",
 	'batchuserrights-no-groups' => 'Nie wybrano żadnych grup.
 Wykonanie nie spowoduje żadnych zmian.

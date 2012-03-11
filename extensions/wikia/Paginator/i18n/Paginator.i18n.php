@@ -241,6 +241,14 @@ $messages['sw'] = array(
 	'paginator-back' => 'Rudi',
 );
 
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'paginator-next' => 'அடுத்து',
+	'paginator-back' => 'பின் செல்',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

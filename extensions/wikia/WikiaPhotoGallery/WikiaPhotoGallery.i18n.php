@@ -2944,6 +2944,21 @@ $messages['ja'] = array(
 	'galery-slider-read-more' => '続きを読む >',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'wikiaPhotoGallery-back' => 'ಹಿಂದಕ್ಕೆ',
+	'wikiaPhotoGallery-error-caption' => 'ದೋಷ',
+	'wikiaPhotoGallery-upload-findtitle' => 'ಹುಡುಕು',
+	'wikiaPhotoGallery-upload-findbutton' => 'ಹುಡುಕು',
+	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'ಫೈಲಿನ ಹೆಸರು "$1" ಶೀರ್ಷಿಕೆಗಳಲ್ಲಿ ನಿಷಿದ್ಧವಾಗಿರುವ ಚಿಹ್ನೆಗಳನ್ನು ಹೊಂದಿದೆ.ದಯವಿಟ್ಟು ಫೈಲಿನ ಹೆಸರನ್ನು ಬದಲಾಯಿಸಿ ಮತ್ತೆ ಅಪ್ಲೋಡ್ ಮಾಡಲು ಪ್ರಯತ್ನಿಸಿ.',
+	'wikiaPhotoGallery-preview-hover-delete' => 'ಅಳಿಸಿ',
+	'wikiaPhotoGallery-preview-position-left' => 'ಎಡ',
+	'wikiaPhotoGallery-preview-position-right' => 'ಬಲ',
+	'wikiaPhotoGallery-preview-spacing-small' => 'ಸಣ್ಣದು',
+);
+
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  * @author Gomada
