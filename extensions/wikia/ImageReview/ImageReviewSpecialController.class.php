@@ -33,7 +33,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 
-		$imageList = array();
 		$ts = $this->wg->request->getVal( 'ts' );
 		
 		$query = ( empty($action) ) ? '' : '/'.$action ;
