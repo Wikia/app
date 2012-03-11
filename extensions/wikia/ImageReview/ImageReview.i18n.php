@@ -4,6 +4,8 @@ $messages = array();
 
 $messages['en'] = array(
 	'imagereview-reason' => "Violation of Wikia's [[wikia:Terms of Use|Terms of Use]]",
+	'imagereview-header' => 'Images awaiting review',
+	'imagereview-header-questionable' => 'Questionable images awaiting staff review',
 );
 
 $messages['pl'] = array(
