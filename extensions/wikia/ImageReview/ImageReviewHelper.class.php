@@ -207,7 +207,7 @@ class ImageReviewHelper extends WikiaModel {
 				'url' => $img['page'],
 			);
 
-			if(	!empty($tmp['src']) && !empty($tmp['url']) ) {
+			if( !empty($tmp['src']) && !empty($tmp['url']) ) {
 				$imageList[] = $tmp;
 			}
 		}
@@ -235,6 +235,7 @@ class ImageReviewHelper extends WikiaModel {
 			'imgId' => $pageId,
 			'imgSize' => 250,
 		);
+
 		$response = ApiService::foreignCall( $dbname, $param );
 
 		$imageSrc = ( empty($response['image']['imagecrop']) ) ? '' : $response['image']['imagecrop'] ;
