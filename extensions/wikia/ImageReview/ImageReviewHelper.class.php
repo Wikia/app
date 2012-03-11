@@ -109,10 +109,11 @@ class ImageReviewHelper extends WikiaModel {
 
 	/**
 	* get image list from reviewer id based on the timestamp
+	* Note: NOT update image state
 	* @param integer review_end
 	* @return array images
 	*/	
-	public function refetchImageListByTimestamp($timestamp) {
+	public function refetchImageListByTimestamp( $timestamp ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
@@ -138,7 +139,10 @@ class ImageReviewHelper extends WikiaModel {
 				'src' => $img['src'],
 				'url' => $img['page'],
 			);
-			$imageList[] = $tmp;
+
+			if(	!empty($tmp['src']) && !empty($tmp['url']) ) {
+				$imageList[] = $tmp;
+			}
 		}
 		$db->freeResult( $result );
 
@@ -149,10 +153,6 @@ class ImageReviewHelper extends WikiaModel {
 		return $imageList;
 	}
 	
-	/**
-	 * get image list
-	 * @return array imageList
-	 */
 	/**
 	 * get image list
 	 * @return array imageList
@@ -194,7 +194,10 @@ class ImageReviewHelper extends WikiaModel {
 				'src' => $img['src'],
 				'url' => $img['page'],
 			);
-			$imageList[] = $tmp;
+
+			if(	!empty($tmp['src']) && !empty($tmp['url']) ) {
+				$imageList[] = $tmp;
+			}
 		}
 		$db->freeResult( $result );
 
