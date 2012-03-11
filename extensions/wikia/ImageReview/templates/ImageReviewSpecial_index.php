@@ -39,7 +39,7 @@
 <?php
 if (is_array($imageList) && count($imageList) > 0):
 	$cells = 20;
-	$perRow = 4;
+	$perRow = 5;
 
 	foreach($imageList as $n => $image) {
 		$id = "img-{$image['wikiId']}-{$image['pageId']}";
