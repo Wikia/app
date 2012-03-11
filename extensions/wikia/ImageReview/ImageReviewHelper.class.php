@@ -307,7 +307,7 @@ class ImageReviewHelper extends WikiaModel {
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
 		$ids = array();
 		
-		if ( !$this->wg->DevelEnvironment ) {
+		if (!$this->wg->DevelEnvironment ) {
 			$result = $db->select(
 				array( 'google_analytics.pageviews' ),
 				array( 'city_id', 'sum(pageviews) as cnt' ),
@@ -315,7 +315,7 @@ class ImageReviewHelper extends WikiaModel {
 				__METHOD__,
 				array( 
 					'GROUP BY'=> 'city_id', 
-					'HAVING' => '150000'
+					'HAVING' => 'cnt > 150000'
 				)
 			);
 
