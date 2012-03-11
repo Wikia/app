@@ -7,12 +7,12 @@
 <?php } ?>
 
 <?php if ( $accessQuestionable ) { ?>
-		<div class="tally" style="clear: both">
+		<div class="tally">
 			<a href="<?= $fullUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
 		</div>
 <?php } ?>
 
-		<div class="tally" style="clear: both">
+		<div class="tally">
 			<em><?= $imageCount['reviewer']?></em> <span>reviewed<br>by you</span>
 		</div>
 	</div>
