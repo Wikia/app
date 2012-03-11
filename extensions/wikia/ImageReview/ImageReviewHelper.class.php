@@ -30,6 +30,12 @@ class ImageReviewHelper extends WikiaModel {
 		$deletionList = array();
 		$sqlWhere = array();
 
+		$sqlWhere = array(
+			self::STATE_APPROVED => array(),
+			self::STATE_DELETED => array(),
+			self::STATE_QUESTIONABLE => array(),
+		)
+
 		foreach ( $images as $image ) {
 			if ( $image['state'] == self::STATE_APPROVED ) {
 				$sqlWhere[self::STATE_APPROVED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
@@ -68,8 +74,7 @@ class ImageReviewHelper extends WikiaModel {
 				case '':
 					$stats['reviewer'] += count($images);
 					$stats['unreviewed'] -= count($images);
-					if (isset($sqlWhere[self::STATE_QUESTIONABLE]) )
-						$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
+					$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
 					break;
 				case ImageReviewSpecialController::ACTION_QUESTIONABLE:
 					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_DELETED] );
