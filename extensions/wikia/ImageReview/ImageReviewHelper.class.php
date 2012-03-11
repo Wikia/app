@@ -199,15 +199,20 @@ class ImageReviewHelper extends WikiaModel {
 			$where[] = 'wiki_id not in('.implode(',', $list).')';
 		}
 
-		// @TODO we need a STATE_QUESTIONABLE_IN_REVIEW
-		$newState = ( $state == self::STATE_QUESTIONABLE ) ? self::STATE_QUESTIONABLE_IN_REVIEW : self::STATE_IN_REVIEW ;
+		$where[] = "state = ". $state;
 
-		$where[] = "state = ". $state;  
 		$values = array(
-			'reviewer_id = ' . $this->wg->user->getId(),
-			'state = ' . $newState,
+			'reviewer_id = '.$this->wg->user->getId(),
 			"review_start = from_unixtime($timestamp)",
 		);
+
+		if ( $state == self::STATE_QUESTIONABLE ) {
+			$newState = self::STATE_QUESTIONABLE_IN_REVIEW;
+			$values[] = "review_end = '0000-00-00 00:00:00'";
+		} else {
+			$newState = self::STATE_IN_REVIEW ;
+		}
+		$values[] = 'state = '.$newState;
 
 		$sql = 'UPDATE image_review SET ' .
 			$db->makeList( $values, LIST_SET ) .
