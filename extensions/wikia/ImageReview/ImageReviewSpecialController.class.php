@@ -28,6 +28,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal( 'accessQuestionable', $accessQuestionable );
 		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
+		$this->response->setVal( 'modeMsgSuffix', empty( $action ) ? '' : '-' . $action );
 
 		// get more space for images
 		$this->wg->SuppressSpotlights = true;

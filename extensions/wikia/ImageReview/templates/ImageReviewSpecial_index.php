@@ -24,6 +24,8 @@
 	#var_dump($imageList);
 ?>
 
+<h2 style="clear: both"><?= wfMsg( "imagereview-header{$modeMsgSuffix}" ) ?></h2>
+
 <form action="<?= $submitUrl ?>" method="post" id="ImageReviewForm">
 	<table width=="980" cellspacing="5">
 		<colspan>
