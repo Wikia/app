@@ -44,7 +44,7 @@ if (is_array($imageList) && count($imageList) > 0):
 
 			<li class="state-<?= $stateId ?>">
 				<div class="img-container">
-					<img src="<?= htmlspecialchars($image['src']) ?>">
+					<img id="<?php echo $id ?>" src="<?= htmlspecialchars($image['src']) ?>">
 				</div>
 				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to image page"></a>
 				<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_USER ) { ?>
