@@ -57,18 +57,19 @@ class ImageReviewHelper extends WikiaModel {
 				);
 
 				$db->commit();
-				// update stats directly in memcache so they look nice without impacting the database
-				$key = wfMemcKey( 'ImageReviewSpecialController', 'ImageReviewHelper::getImageCount', $this->wg->user->getId() );
-				$stats = $this->wg->memc->get($key, null);
-				if ($stats) {
-					$stats['reviewer'] += count($images);
-					$stats['unreviewed'] -= count($images);
-					if (isset($sqlWhere[self::STATE_QUESTIONABLE]))
-						$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
-					$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
-				}
 			}
 		}
+		
+		// update stats directly in memcache so they look nice without impacting the database
+		$key = wfMemcKey( 'ImageReviewSpecialController', 'ImageReviewHelper::getImageCount', $this->wg->user->getId() );
+		$stats = $this->wg->memc->get($key, null);
+		if ($stats) {
+			$stats['reviewer'] += count($images);
+			$stats['unreviewed'] -= count($images);
+			if (isset($sqlWhere[self::STATE_QUESTIONABLE]))
+				$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
+			$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
+		}		
 
 		if ( !empty( $deletionList ) ) {
 			$task = new ImageReviewTask();
@@ -385,7 +386,7 @@ class ImageReviewHelper extends WikiaModel {
 		$total = array('reviewer' => 0, 'unreviewed' => 0, 'questionable' => 0);
 		while( $row = $db->fetchObject($result) ) {
 			// Rollup row with Reviewer total count
-			if ($row->reviewer_id == $reviewer_id && $row->state != self::STATE_IN_REVIEW) {
+			if ($row->reviewer_id == $reviewer_id && ($row->state > self::STATE_IN_REVIEW)) {
 				$total['reviewer'] += $row->total;
 			}
 			// Rollup row with total unreviewed
