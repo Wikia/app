@@ -24,7 +24,7 @@ class ImageReviewHelper extends WikiaModel {
 	 * @param array images
 	 * @param integer review_end
 	 */
-	public function updateImageState( $images ) {
+	public function updateImageState( $images, $action = '' ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$deletionList = array();
@@ -66,7 +66,7 @@ class ImageReviewHelper extends WikiaModel {
 		if ($stats) {
 			$stats['reviewer'] += count($images);
 			$stats['unreviewed'] -= count($images);
-			if (isset($sqlWhere[self::STATE_QUESTIONABLE]))
+			if (isset($sqlWhere[self::STATE_QUESTIONABLE]) && $action != ImageReviewSpecialController::ACTION_QUESTIONABLE )
 				$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
 			$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
 		}		

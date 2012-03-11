@@ -1,6 +1,7 @@
 <?php
 
 class ImageReviewSpecialController extends WikiaSpecialPageController {
+	const ACTION_QUESTIONABLE = 'questionable';
 
 	public function __construct() {
 		parent::__construct('ImageReview', 'imagereview', false /* $listed */);
@@ -17,7 +18,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		if (!$this->specialPage->userCanExecute($this->wg->User)) {
 			$this->specialPage->displayRestrictionError();
 			return false;
-		} elseif ( $action == 'questionable' && !$accessQuestionable ) {
+		} elseif ( $action == self::ACTION_QUESTIONABLE && !$accessQuestionable ) {
 			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
 			return false;
 		}
@@ -60,7 +61,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					}
 				}
 				if ( count($images) > 0 ) {
-					$helper->updateImageState( $images );
+					$helper->updateImageState( $images, self::MODE_QUESTIONABLE );
 				}
 				$ts = null;
 			}
@@ -82,7 +83,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 		
 		if ( count($this->imageList) == 0 ) {
-			if ( $action == 'questionable' ) {
+			if ( $action == self::ACTION_QUESTIONABLE ) {
 				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE );
 			} else { 
 				$this->imageList = $helper->getImageList( $ts );
