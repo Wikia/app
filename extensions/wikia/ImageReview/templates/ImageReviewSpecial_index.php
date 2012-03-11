@@ -2,18 +2,18 @@
 	<div style="float: right; text-align: left">
 <?php if ( $accessStats ) { ?>
 		<div class="tally">
-			<em>11M</em> <span>awaiting<br>review</span>
+			<em><?= $imageCount['unreviewed']?></em> <span>awaiting<br>review</span>
 		</div>
 <?php } ?>
 
 <?php if ( $accessQuestionable ) { ?>
 		<div class="tally" style="clear: both">
-			<a href="<?= $submitUrl ?>/questionable"><em>500K</em> <span>questionable<br>images</span></a>
+			<a href="<?= $submitUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
 		</div>
 <?php } ?>
 
 		<div class="tally" style="clear: both">
-			<em>250K</em> <span>reviewed<br>by you</span>
+			<em><?= $imageCount['reviewer']?></em> <span>reviewed<br>by you</span>
 		</div>
 	</div>
 

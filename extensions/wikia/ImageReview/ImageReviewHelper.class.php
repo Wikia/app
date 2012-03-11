@@ -53,6 +53,16 @@ class ImageReviewHelper extends WikiaModel {
 				);
 
 				$db->commit();
+				// update stats directly in memcache so they look nice without impacting the database
+				$key = wfMemcKey( 'ImageReviewSpecialController', 'ImageReviewHelper::getImageCount', $this->wg->user->getId() );
+				$stats = $this->wg->memc->get($key, null);
+				if ($stats) {
+					$stats['reviewer'] += count($images);
+					$stats['unreviewed'] -= count($images);
+					if (isset($sqlWhere[self::STATE_QUESTIONABLE]))
+						$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
+					$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
+				}
 			}
 		}
 
@@ -328,6 +338,51 @@ class ImageReviewHelper extends WikiaModel {
 		$this->wg->memc->set( $key, $ids, 86400 /* 24h */ );
 		$this->wf->ProfileOut( __METHOD__ );
 		return $ids;
+	}
+	
+	public function getImageCount($reviewer_id) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__, $reviewer_id );
+		$total = $this->wg->memc->get($key, null);
+		$total = null;
+		if(!empty($total)) {
+			$this->wf->ProfileOut( __METHOD__ );
+			return $total;
+		}
+		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
+
+		// select by reviewer, state and total count with rollup and then pick the data we want out
+		$result = $db->select(
+			array( 'image_review' ),
+			array( 'reviewer_id', 'state', 'count(*) as total' ),
+			null,
+			__METHOD__,
+			array( 'GROUP BY' => 'reviewer_id, state')
+				
+		);
+		$total = array('reviewer' => 0, 'unreviewed' => 0, 'questionable' => 0);
+		while( $row = $db->fetchObject($result) ) {
+			// Rollup row with Reviewer total count
+			if ($row->reviewer_id == $reviewer_id && $row->state != self::STATE_IN_REVIEW) {
+				$total['reviewer'] += $row->total;
+			}
+			// Rollup row with total unreviewed
+			if ($row->state == self::STATE_UNREVIEWED) {
+				$total['unreviewed'] += $row->total; 
+			}
+			// Rollup row with total questionable
+			if ($row->state == self::STATE_QUESTIONABLE) {
+				$total['questionable'] += $row->total; 
+			}
+		}
+		$total['reviewer'] = $this->wg->Lang->formatNum($total['reviewer']);
+		$total['unreviewed'] = $this->wg->Lang->formatNum($total['unreviewed']);
+		$total['questionable'] = $this->wg->Lang->formatNum($total['questionable']);				
+		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
+		
+		return $total;
+		$this->wf->ProfileOut( __METHOD__ );
 	}
 
 	public function getUserTsKey() {
