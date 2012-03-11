@@ -125,9 +125,9 @@ $(function() {
 				</div>
 				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to image page"></a>
 
-				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_APPROVED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_APPROVED || $stateId == ImageReviewSpecialController::STATE_IN_REVIEW || $stateId == ImageReviewSpecialController::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
-				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_DELETED ?>"<?= ($stateId == ImageReviewSpecialController::STATE_DELETED ? ' checked' :'') ?>>Del</label>
-				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewSpecialController::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewSpecialController::STATE_QUESTIONABLE ? ' checked' :'') ?>>Q</label>
+				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_APPROVED ?>"<?= ($stateId == ImageReviewHelper::STATE_APPROVED || $stateId == ImageReviewHelper::STATE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
+				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_DELETED ?>"<?= ($stateId == ImageReviewHelper::STATE_DELETED ? ' checked' :'') ?>>Del</label>
+				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewHelper::STATE_QUESTIONABLE ? ' checked' :'') ?>>Q</label>
 			</td>
 <?php
 		if ($n % $perRow == $perRow - 1) {

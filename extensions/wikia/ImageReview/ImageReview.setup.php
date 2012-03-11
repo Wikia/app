@@ -25,6 +25,7 @@ $app = F::app();
 // classes
 $app->registerClass('ImageReviewTask', $dir . 'ImageReviewTask.php');
 $app->registerClass('ImageReviewSpecialController', $dir . 'ImageReviewSpecialController.class.php');
+$app->registerClass('ImageReviewHelper', $dir . 'ImageReviewHelper.class.php');
 $app->registerSpecialPage('ImageReview', 'ImageReviewSpecialController');
 
 // rights
