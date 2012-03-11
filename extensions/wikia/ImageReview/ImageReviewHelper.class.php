@@ -171,15 +171,15 @@ class ImageReviewHelper extends WikiaModel {
 
 		$where[] = "state = ". $state;  
 		$values = array(
-			'reviewer_id' => $this->wg->user->getId(),
-			'state' => $newState,
+			'reviewer_id = ' . $this->wg->user->getId(),
+			'state = ' . $newState,
 			"review_start = from_unixtime($timestamp)",
 		);
 
 		$sql = 'UPDATE image_review SET ' .
-			$db->makeList( $values, $db->LIST_SET ) .
+			$db->makeList( $values, LIST_SET ) .
 			" WHERE " .
-			$db->makeList( $where, $db->LIST_AND ) .
+			$db->makeList( $where, LIST_AND ) .
 			" LIMIT " . self::LIMIT_IMAGES;
 
 		$db->query( $sql, __METHOD__ );
