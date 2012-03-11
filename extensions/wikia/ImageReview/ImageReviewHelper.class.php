@@ -83,14 +83,13 @@ class ImageReviewHelper extends WikiaModel {
 	 * @todo remove this this (cron worker to take over)
 	 */
 	public function resetAbandonedWork() {
-		if ( !$this->wg->DevelEnvironment ) {
-			return true;
-		}
+		$this->wf->ProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
-		$timeLimit = 1; // 1 sec
+		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600 ; // 1 sec
 
+		// for STATE_UNREVIEWED
 		$db->update(
 			'image_review',
 			array(
@@ -105,7 +104,23 @@ class ImageReviewHelper extends WikiaModel {
 			),
 			__METHOD__
 		);
+
+		// for STATE_QUESTIONABLE
+		$db->update(
+			'image_review',
+			array( 'state' => self::STATE_QUESTIONABLE ),
+			array(
+				"review_start < now() - ".$timeLimit,
+				"review_end = '0000-00-00 00:00:00'",
+				'reviewer_id' =>  $this->wg->User->getId(),
+				'state' => self::STATE_QUESTIONABLE_IN_REVIEW,
+			),
+			__METHOD__
+		);
+
 		$db->commit();
+
+		$this->wf->ProfileOut( __METHOD__ );
 	}
 
 	/**
