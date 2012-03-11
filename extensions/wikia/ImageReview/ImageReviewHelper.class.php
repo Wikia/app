@@ -160,6 +160,8 @@ class ImageReviewHelper extends WikiaModel {
 				'src' => $img['src'],
 				'url' => $img['page'],
 				'flags' => $row->flags,
+				'wiki_url' => '', // @TODO fill this with wiki url
+				'user_page' => '', // @TODO fill this with url to user page
 			);
 
 			if(	!empty($tmp['src']) && !empty($tmp['url']) ) {
