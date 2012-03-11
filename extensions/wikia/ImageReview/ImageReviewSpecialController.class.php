@@ -85,6 +85,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				$this->imageList = $helper->getImageList( $ts );
 			}
 		}
+		
+		$this->imageCount = $helper->getImageCount($this->wg->user->getId());
+		
 	}
 
 }
