@@ -35,7 +35,7 @@ if(!empty($lastRun)) {
 } else {
 	$startFrom = 0;
 }
-//$startFrom = 0;
+$startFrom = 0;
 
 
 $dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
@@ -63,19 +63,21 @@ function import($wikiIdstart, $size) {
 	echo "we are on: $wikiIdstart - $wikiIdEnd count: {$row['cnt']}\n";
 	
 	$count = (int) $row['cnt'];
-	for($i = 0; $i < $count; $i = $i + 10000 ) {
-		importSlice($wikiIdstart, $wikiIdEnd, $i, 10000);
+	for($i = 0; $i < $count; $i = $i + 10 ) {
+		importSlice($wikiIdstart, $wikiIdEnd, $i, 10);
 	}
 }
 
 
 function importSlice($wikiIdstart, $wikiIdEnd, $start, $slice) {
 	global $dbs, $startFrom;
+	echo "  offset: $start, limit: $slice \n";
 	$res = $dbs->select(
 			array( 'pages' ),
 			array( 
 				'page_id',
 				'page_wikia_id',
+				'page_title',
 				'page_last_edited',
 				'UNIX_TIMESTAMP(page_last_edited) as page_last_edited_unix'
 			),
@@ -91,9 +93,15 @@ function importSlice($wikiIdstart, $wikiIdEnd, $start, $slice) {
 				'LIMIT' => $slice
 			)
 	);
-
+	
+	$filter = array("png", "gif", "jpg", "jpeg", "ico", "svg");
 	while ($row = $dbs->fetchRow($res)) {
-		insert($row);
+		$path_parts = pathinfo($row['page_title']);
+		if(empty($path_parts['extension']) || in_array(strtolower($path_parts['extension']), $filter )) {
+			insert($row);			
+		} else {
+			echo "Extension {$path_parts['extension']} is not image\n";
+		}
 	}	
 }
 
@@ -139,7 +147,7 @@ function insert($row) {
 	}
 }
 
-$wikisNumber = 3;
+$wikisNumber = 2;
 
 for($i = 0; $i < $wikisNumber; $i = $i + $sizeOfPack ) {
 	import($i, $sizeOfPack);
