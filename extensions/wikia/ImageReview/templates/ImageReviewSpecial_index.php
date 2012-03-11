@@ -50,11 +50,14 @@ if (is_array($imageList) && count($imageList) > 0):
 				</div>
 				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to image page"></a>
 				<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_USER ) { ?>
-					<a href="<?= htmlspecialchars($image['user_profile']) ?>" target="_blank" class="internal sprite details magnify" title="Go to uploader's profile"></a>
+					<a href="<?= htmlspecialchars($image['user_page']) ?>" target="_blank" class="internal sprite details magnify" title="Flagged: Susicious user. Click to go to uploader's profile" style="clear: both"></a>
 				<?php } ?>
 				<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_WIKI ) { ?>
-					<a href="<?= htmlspecialchars($image['wiki_url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to wiki"></a>
+					<a href="<?= htmlspecialchars($image['wiki_url']) ?>" target="_blank" class="internal sprite details magnify" title="Flagged: Suspicious wiki. Click to go to wiki" style="clear: both"></a>
 				<?php } ?>
+                                <?php if ( $image['flags'] & ImageReviewHelper::FLAG_SKIN_DETECTED ) { ?>
+                                        <span class="internal sprite details magnify" title="Flagged: Skin detected." style="clear: both"></span>
+                                <?php } ?>
 
 				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_APPROVED ?>"<?= ($stateId == ImageReviewHelper::STATE_APPROVED || $stateId == ImageReviewHelper::STATE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_QUESTIONABLE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
 				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_DELETED ?>"<?= ($stateId == ImageReviewHelper::STATE_DELETED ? ' checked' :'') ?>>Del</label>
