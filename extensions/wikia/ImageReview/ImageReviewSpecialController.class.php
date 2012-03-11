@@ -22,6 +22,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
 		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
 		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
 
