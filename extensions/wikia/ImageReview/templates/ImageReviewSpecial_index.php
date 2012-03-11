@@ -8,7 +8,7 @@
 
 <?php if ( $accessQuestionable ) { ?>
 		<div class="tally" style="clear: both">
-			<a href="<?= $submitUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
+			<a href="<?= $fullUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
 		</div>
 <?php } ?>
 
