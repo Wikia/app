@@ -34,7 +34,7 @@ class ImageReviewHelper extends WikiaModel {
 			self::STATE_APPROVED => array(),
 			self::STATE_DELETED => array(),
 			self::STATE_QUESTIONABLE => array(),
-		)
+		);
 
 		foreach ( $images as $image ) {
 			if ( $image['state'] == self::STATE_APPROVED ) {
