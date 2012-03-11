@@ -63,7 +63,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 					}
 				}
 				if ( count($images) > 0 ) {
-					$helper->updateImageState( $images, self::ACTION_QUESTIONABLE );
+					$helper->updateImageState( $images, $action );
 				}
 				$ts = null;
 			}
