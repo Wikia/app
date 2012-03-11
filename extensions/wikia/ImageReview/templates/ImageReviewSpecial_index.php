@@ -1,6 +1,12 @@
 <header>
-	<div class="tally" style="float:right">
-		<span style="float: left">You reviewed<br>images</span> <em>250K</em>
+	<div style="float: left; text-align: left">
+	<div class="tally">
+		<em>11M</em> <span>awaiting<br>review</span>
+	</div>
+
+	<div class="tally" style="clear: both">
+		<em>250K</em> <span>you reviewed<br>images</span>
+	</div>
 	</div>
 
 	<?php if ( $accessQuestionable ) { ?>
