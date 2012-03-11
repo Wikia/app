@@ -277,9 +277,11 @@ class ImageReviewHelper extends WikiaModel {
 		$topWikis =  $this->getTopWikis();
 		$whitelistedWikis =  $this->getWhitelistedWikisFromWF();
 		
-		$out = $whitelistedWikis + $topWikis;
-		return array_keys($out);
+		$out = array_keys( $whitelistedWikis + $topWikis );
+
 		$this->wf->ProfileOut( __METHOD__ );
+
+		return $out;
 	}
 	
 	protected function getWhitelistedWikisFromWF() {
@@ -330,7 +332,7 @@ class ImageReviewHelper extends WikiaModel {
 			}
 		}
  	
-		$this->wg->memc->set($key,$ids, 60*60*24);
+		$this->wg->memc->set( $key, $ids, 86400 /* 24h */ );
 		$this->wf->ProfileOut( __METHOD__ );
 		return $ids;
 	}
