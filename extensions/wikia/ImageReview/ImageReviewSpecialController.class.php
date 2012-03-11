@@ -73,7 +73,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		if ( $ts > $newestTs ) {
 			error_log("ImageReview: I've got the newest ts ($ts), I won't refetch the images");
 			$this->imageList = array();
-			$this->wg->memc->set( $helper->getUserTsKey(), $ts, 60*60 );
+			$this->wg->memc->set( $helper->getUserTsKey(), $ts, 3600 /* 1h */ );
 		} else {
 			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
 		}

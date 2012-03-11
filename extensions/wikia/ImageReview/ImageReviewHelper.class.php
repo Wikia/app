@@ -15,6 +15,10 @@ class ImageReviewHelper extends WikiaModel {
 	const STATE_QUESTIONABLE = 5;
 	const STATE_QUESTIONABLE_IN_REVIEW = 6;
 
+	const FLAG_SUSPICOUS_USER = 2;
+	const FLAG_SUSPICOUS_WIKI = 4;
+	const FLAG_SKIN_DETECTED = 8;
+
 	/**
 	 * update image state
 	 * @param array images
@@ -139,7 +143,7 @@ class ImageReviewHelper extends WikiaModel {
 
 		$result = $db->select(
 			array( 'image_review' ),
-			array( 'wiki_id, page_id, state' ),
+			array( 'wiki_id, page_id, state, flags' ),
 			array( 'review_start = FROM_UNIXTIME(' . $timestamp . ')', 'reviewer_id' =>  $this->wg->user->getId()),
 			__METHOD__,
 			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
@@ -154,6 +158,7 @@ class ImageReviewHelper extends WikiaModel {
 				'state' => $row->state,
 				'src' => $img['src'],
 				'url' => $img['page'],
+				'flags' => $row->flags,
 			);
 
 			if(	!empty($tmp['src']) && !empty($tmp['url']) ) {
@@ -212,7 +217,7 @@ class ImageReviewHelper extends WikiaModel {
 	
 		$result = $db->select(
 			array( 'image_review' ),
-			array( 'wiki_id, page_id, state' ),
+			array( 'wiki_id, page_id, state, flags' ),
 			array(
 				'reviewer_id' => $this->wg->user->getId(),
 				'state' => $newState,
@@ -230,6 +235,7 @@ class ImageReviewHelper extends WikiaModel {
 				'state' => $row->state,
 				'src' => $img['src'],
 				'url' => $img['page'],
+				'flags' => $row->flags,
 			);
 
 			if( !empty($tmp['src']) && !empty($tmp['url']) ) {
