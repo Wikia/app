@@ -7,7 +7,7 @@ class ImageReviewHelper extends WikiaModel {
 
 	protected static $instance = NULL;
 
-	const LIMIT_IMAGES = 20;
+	const LIMIT_IMAGES = 3;
 
 	const STATE_UNREVIEWED = 0;
 	const STATE_IN_REVIEW = 1;
