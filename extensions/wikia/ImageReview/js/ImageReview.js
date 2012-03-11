@@ -3,7 +3,7 @@ $(function() {
 	var images = $('#ImageReviewForm div.img-container');
 	images.bind('click', function(ev) {
 		var img = $(this),
-			cell = img.closest('td'),
+			cell = img.closest('li'),
 			fields = cell.find('input'),
 			selectedField = fields.filter(':checked'),
 			selectedIndex = Math.max(0, fields.index(selectedField));
@@ -19,7 +19,7 @@ $(function() {
 	var checkboxes = $('#ImageReviewForm input');
 	checkboxes.bind('click', function(ev) {
 		var checkbox = $(this),
-			cell = checkbox.closest('td');
+			cell = checkbox.closest('li');
 
 		var stateId = checkbox.val();
 
@@ -41,7 +41,7 @@ $(function() {
 		$('#ImageReviewForm').submit(function(){
 			for(var i in imagesMap ) {
 				if(!imagesMap[i]) {
-					var radios = $('#' + i).closest('td').find('input');
+					var radios = $('#' + i).closest('li').find('input');
 						radios[0].checked = null;
 					 	radios[1].checked = null;
 					 	radios[2].checked = 'checked';
