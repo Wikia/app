@@ -5,8 +5,6 @@
  */
 class ImageReviewHelper extends WikiaModel {
 
-	protected static $instance = NULL;
-
 	const LIMIT_IMAGES = 3;
 
 	const STATE_UNREVIEWED = 0;
@@ -15,14 +13,6 @@ class ImageReviewHelper extends WikiaModel {
 	const STATE_REJECTED = 3;
 	const STATE_DELETED = 4;
 	const STATE_QUESTIONABLE = 5;
-
-	public static function getInstance() {
-		if (self::$instance === NULL) {
-			$class = __CLASS__;
-			self::$instance = F::build( $class );
-		}
-		return self::$instance;
-	}
 
 	/**
 	 * update image state
@@ -335,5 +325,9 @@ class ImageReviewHelper extends WikiaModel {
 		$this->wg->memc->set( $key, $ids, 86400 /* 24h */ );
 		$this->wf->ProfileOut( __METHOD__ );
 		return $ids;
+	}
+
+	public function getUserTsKey() {
+		return $this->wf->MemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
 	}
 }
