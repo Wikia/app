@@ -346,7 +346,6 @@ class ImageReviewHelper extends WikiaModel {
 
 		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__, $reviewer_id );
 		$total = $this->wg->memc->get($key, null);
-		$total = null;
 		if(!empty($total)) {
 			$this->wf->ProfileOut( __METHOD__ );
 			return $total;
