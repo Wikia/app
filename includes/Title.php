@@ -3650,7 +3650,6 @@ class Title {
 	public function getTouched( $db = null ) {
 		$db = isset($db) ? $db : wfGetDB( DB_SLAVE );
 		$touched = $db->selectField( 'page', 'page_touched', $this->pageCond(), __METHOD__ );
-		echo $touched;
 		return $touched;
 	}
 

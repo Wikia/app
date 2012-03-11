@@ -137,6 +137,7 @@ class WhereIsExtension extends SpecialPage {
 		return $msg;
 	}
 
+	//TODO: Use WikiFactory::getListOfWikisWithVar
 	//fetching wiki list with selected variable set to 'true'
 	private function getListOfWikisWithVar($varId, $type, $val, $likeVal) {
 		global $wgExternalSharedDB;
