@@ -38,7 +38,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$ts = $this->wg->request->getVal( 'ts' );
 		
 		$query = ( empty($action) ) ? '' : '/'.$action ;
-		$this->submitUrl = $this->wg->Title->getFullUrl( $query );
+		$this->submitUrl = $this->wg->Title->getFullUrl( ) . $query;
 
 		if( $this->wg->request->wasPosted() ) {
 			$data = $this->wg->request->getValues();
