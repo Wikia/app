@@ -11,7 +11,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle('Image Review tool');
 
 		$action = $this->getPar();
-
+		$this->response->setJsVar('wgImageReviewAction', $action);
+		
 		$accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
 
 		// check permissions
@@ -45,6 +46,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->submitUrl = $this->wg->Title->getFullUrl( ) . $query;
 
 		if( $this->wg->request->wasPosted() ) {
+			exit;
 			$data = $this->wg->request->getValues();
 			if ( !empty($data) ) {
 				$images = array();

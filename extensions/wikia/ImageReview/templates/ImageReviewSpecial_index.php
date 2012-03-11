@@ -77,6 +77,6 @@ endif;
 
 	<footer>
 		<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>
-		<input id="nextButton" disabled="disabled"  type="submit" class="wikia-button" value="Review & get next batch" />
+		<input id="nextButton"  type="submit" class="wikia-button" value="Review & get next batch" />
 	</footer>
 </form>

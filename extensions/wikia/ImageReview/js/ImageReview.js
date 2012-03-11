@@ -26,7 +26,27 @@ $(function() {
 		cell.attr('class', 'state-' + stateId);
 	});
 	
-    $('body').onImagesLoad( function($selector){ 
-    	$('#nextButton').removeAttr('disabled');
-    }); 
+	var images = $('.img-container img');
+	var imagesMap = {};
+	for(var i = 0; i < images.length; i++ ) {
+		imagesMap[$(images[i]).attr('id')] = false;
+	}
+
+	$('.img-container img').onImagesLoad({ 
+        each: function(e){
+			imagesMap[$(e).attr('id')] = true;
+		}
+	});
+	if(wgImageReviewAction != 'questionable') {
+		$('#ImageReviewForm').submit(function(){
+			for(var i in imagesMap ) {
+				if(!imagesMap[i]) {
+					var radios = $('#' + i).closest('td').find('input');
+						radios[0].checked = null;
+					 	radios[1].checked = null;
+					 	radios[2].checked = 'checked';
+				}
+			}
+		});	
+	}	
 });
