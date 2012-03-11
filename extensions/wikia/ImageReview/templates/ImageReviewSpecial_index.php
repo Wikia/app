@@ -27,8 +27,9 @@
 <h2 style="clear: both"><?= wfMsg( "imagereview-header{$modeMsgSuffix}" ) ?></h2>
 
 <form action="<?= $submitUrl ?>" method="post" id="ImageReviewForm">
-	<table width=="980" cellspacing="5">
+	<table cellspacing="1">
 		<colspan>
+			<col width="245">
 			<col width="245">
 			<col width="245">
 			<col width="245">
