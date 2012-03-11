@@ -165,15 +165,33 @@ class ImageReviewHelper extends WikiaModel {
 			$where[] = 'wiki_id not in('.implode(',', $list).')';
 		}
 
+		// @TODO we need a STATE_QUESTIONABLE_IN_REVIEW
 		$where[] = "state = ".$state;  
-		
+
+		$db->update(
+			'image_review',
+			array(
+				'reviewer_id' => $this->wg->user->getId(),
+				'state' => self::STATE_IN_REVIEW,
+				"review_start = from_unixtime($timestamp)",
+			     ),
+			$where,
+			__METHOD__,
+			array( 'LIMIT' => ImageReviewHelper::LIMIT_IMAGES ) 
+		);
+		$db->commit();
+	
 		$result = $db->select(
 			array( 'image_review' ),
 			array( 'wiki_id, page_id, state' ),
-			$where,
+			array(
+				'reviewer_id' => $this->wg->user->getId(),
+				'sate' => self::STATE_IN_REVIEW,
+				"review_start = from_unixtime($timestamp)",
+			),
 			__METHOD__,
 			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
-		);
+			);
 
 		while( $row = $db->fetchObject($result) ) {
 			$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
@@ -190,26 +208,6 @@ class ImageReviewHelper extends WikiaModel {
 			}
 		}
 		$db->freeResult( $result );
-
-		// NOT update state if the state is STATE_QUESTIONABLE
-		if ( !empty($imageList) && $state != self::STATE_QUESTIONABLE ) {
-			// update state to review
-			$sqlWhere = array();
-			foreach ( $imageList as $image ) {
-				$sqlWhere[] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
-			}
-			$db->update(
-				'image_review',
-				array(
-					'reviewer_id' => $this->wg->user->getId(),
-					'state' => self::STATE_IN_REVIEW,
-					"review_start = from_unixtime($timestamp)",
-				),
-				array( implode(' OR ', $sqlWhere ) ),
-				__METHOD__
-			);
-			$db->commit();
-		}
 
 		error_log("ImageReview : fetched new " . count($imageList) . " images");
 
