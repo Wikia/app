@@ -9,6 +9,7 @@
  * @date 2012-03-09
  *
  * @todo rewrite from shell exec to internal GlobalArticle::delete() call
+ * @todo flag all images by user and by wiki after deletion
  */
 
 class ImageReviewTask extends BatchTask {
@@ -78,7 +79,16 @@ class ImageReviewTask extends BatchTask {
 			} else {
 				$this->addLog('Removed: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($actual_title)  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 			}
+
+			$this->flagUser( $imageId, $wikiId );
+			$this->flagWiki( $wikiId );
 		}
+	}
+
+	function flagUser( $imageId, $wikiId ) {		
+	}
+
+	function flagWiki( $wikiId ) {
 	}
 
 	function getForm( $title, $errors = false ) {}

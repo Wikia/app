@@ -4,6 +4,8 @@
  * Special page-based tool to review images post-upload to screen against Terms of Use violations.
  * 
  * @date 2012-03-09
+ *
+ * @todo add logging of actions
  */
 
 $wgExtensionCredits['specialpage'][] = array(
