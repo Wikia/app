@@ -5,7 +5,7 @@
  */
 class ImageReviewHelper extends WikiaModel {
 
-	const LIMIT_IMAGES = 3;
+	const LIMIT_IMAGES = 20;
 
 	const STATE_UNREVIEWED = 0;
 	const STATE_IN_REVIEW = 1;
@@ -278,6 +278,7 @@ class ImageReviewHelper extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$topWikis =  $this->getTopWikis();
+
 		$whitelistedWikis =  $this->getWhitelistedWikisFromWF();
 		
 		$out = array_keys( $whitelistedWikis + $topWikis );
@@ -330,7 +331,7 @@ class ImageReviewHelper extends WikiaModel {
 				)
 			);
 
-			while( $row = $db->fetchObject($result) ) {
+			while( $row = $db->fetchRow($result) ) {
 				$ids[$row['city_id']] = 1;
 			}
 		}
