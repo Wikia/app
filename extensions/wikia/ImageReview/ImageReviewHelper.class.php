@@ -13,6 +13,7 @@ class ImageReviewHelper extends WikiaModel {
 	const STATE_REJECTED = 3;
 	const STATE_DELETED = 4;
 	const STATE_QUESTIONABLE = 5;
+	const STATE_QUESTIONABLE_IN_REVIEW = 6;
 
 	/**
 	 * update image state
@@ -166,10 +167,12 @@ class ImageReviewHelper extends WikiaModel {
 		}
 
 		// @TODO we need a STATE_QUESTIONABLE_IN_REVIEW
+		$newState = ( $state == self::STATE_QUESTIONABLE ) ? self::STATE_QUESTIONABLE_IN_REVIEW : self::STATE_IN_REVIEW ;
+
 		$where[] = "state = ". $state;  
 		$values = array(
 			'reviewer_id' => $this->wg->user->getId(),
-			'state' => self::STATE_IN_REVIEW,
+			'state' => $newState,
 			"review_start = from_unixtime($timestamp)",
 		);
 
@@ -187,7 +190,7 @@ class ImageReviewHelper extends WikiaModel {
 			array( 'wiki_id, page_id, state' ),
 			array(
 				'reviewer_id' => $this->wg->user->getId(),
-				'state' => self::STATE_IN_REVIEW,
+				'state' => $newState,
 				"review_start = from_unixtime($timestamp)",
 			),
 			__METHOD__,
