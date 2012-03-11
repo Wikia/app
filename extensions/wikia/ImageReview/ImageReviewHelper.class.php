@@ -186,7 +186,7 @@ class ImageReviewHelper extends WikiaModel {
 			array( 'wiki_id, page_id, state' ),
 			array(
 				'reviewer_id' => $this->wg->user->getId(),
-				'sate' => self::STATE_IN_REVIEW,
+				'state' => self::STATE_IN_REVIEW,
 				"review_start = from_unixtime($timestamp)",
 			),
 			__METHOD__,
