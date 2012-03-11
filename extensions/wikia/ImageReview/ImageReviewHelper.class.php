@@ -64,10 +64,19 @@ class ImageReviewHelper extends WikiaModel {
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'ImageReviewHelper::getImageCount', $this->wg->user->getId() );
 		$stats = $this->wg->memc->get($key, null);
 		if ($stats) {
-			$stats['reviewer'] += count($images);
-			$stats['unreviewed'] -= count($images);
-			if (isset($sqlWhere[self::STATE_QUESTIONABLE]) && $action != ImageReviewSpecialController::ACTION_QUESTIONABLE )
-				$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
+			switch ( $action ) {
+				case '':
+					$stats['reviewer'] += count($images);
+					$stats['unreviewed'] -= count($images);
+					if (isset($sqlWhere[self::STATE_QUESTIONABLE]) )
+						$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
+					break;
+				case ImageReviewSpecialController::ACTION_QUESTIONABLE:
+					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_DELETED] );
+					$stats['reviewer'] += $changedState;
+					$stats['questionable'] -= $changedState;
+					break;
+			}
 			$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
 			// Quick hack/fix for stats going negative -- FIXME
 			if ($stats['unreviewed'] < 0)
