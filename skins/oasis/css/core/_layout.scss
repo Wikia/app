@@ -8,6 +8,9 @@ $width-outside: 1000px;
 @if $oasisHD == 1 {
 	$width-outside: 1200px;
 }
+@if $oasisHD == 2 {
+	$width-outside: auto;
+}
 
 $width-rail: 300px;
 

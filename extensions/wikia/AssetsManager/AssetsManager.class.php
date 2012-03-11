@@ -34,11 +34,13 @@ class AssetsManager {
 	}
 
 	public static function onMakeGlobalVariablesScript(&$vars) {
-		global $wgOasisHD, $wgCdnRootUrl, $wgAssetsManagerQuery;
+		global $wgOasisHD, $wgOasisFluid, $wgCdnRootUrl, $wgAssetsManagerQuery;
 
 		$params = SassUtil::getOasisSettings();
 		if($wgOasisHD) {
 			$params['hd'] = 1;
+		} else if($wgOasisFluid) {
+			$params['hd'] = 2;
 		}
 
 		$vars['sassParams'] = $params;
@@ -59,11 +61,14 @@ class AssetsManager {
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
 	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null) {
-		global $wgOasisHD;
+		global $wgOasisHD, $wgOasisFluid;
 
 		$params = SassUtil::getOasisSettings();
 		if($wgOasisHD) {
 			$params['hd'] = 1;
+		}
+		if($wgOasisFluid) {
+			$params['hd'] = 2;
 		}
 
 		if($minify !== null ? !$minify : !$this->mMinify) {
