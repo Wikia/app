@@ -1,17 +1,21 @@
 <header>
-	<div style="float: left; text-align: left">
-	<div class="tally">
-		<em>11M</em> <span>awaiting<br>review</span>
-	</div>
+	<div style="float: right; text-align: left">
+<?php if ( $accessStats ) { ?>
+		<div class="tally">
+			<em>11M</em> <span>awaiting<br>review</span>
+		</div>
+<?php } ?>
 
-	<div class="tally" style="clear: both">
-		<em>250K</em> <span>you reviewed<br>images</span>
-	</div>
-	</div>
+<?php if ( $accessQuestionable ) { ?>
+		<div class="tally" style="clear: both">
+			<a href="<?= $submitUrl ?>/questionable"><em>500K</em> <span>questionable<br>images</span></a>
+		</div>
+<?php } ?>
 
-	<?php if ( $accessQuestionable ) { ?>
-		<a href="<?= $submitUrl ?>/questionable" class="wikia-button">View questionable images</a>
-	<?php } ?>
+		<div class="tally" style="clear: both">
+			<em>250K</em> <span>reviewed<br>by you</span>
+		</div>
+	</div>
 
 	<p>Click on images to mark them for deletion or as questionable (for staff review). When you're done with the batch, click "Review" below to get the next batch.</p>
 </header>

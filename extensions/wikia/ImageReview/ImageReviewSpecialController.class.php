@@ -26,6 +26,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
 
 		$this->response->setVal( 'accessQuestionable', $accessQuestionable );
+		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
 
 		// get more space for images
 		$this->wg->SuppressSpotlights = true;

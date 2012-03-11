@@ -2,6 +2,7 @@
 
 #ImageReviewForm {
 	margin: 1em 0;
+	clear: both;
 	
 	table {
 		margin: 20px 0;
@@ -61,10 +62,13 @@
 
 header .tally {	
 	margin-bottom: 1em;
+#	float: none;
+#	display: inline;
+#	border-right: 1px solid #ccc;
 
 	span {
 		float: left;
-		padding-right: 0.5em;
+		padding-left: 0.25em;
 	}
 	
 	em {

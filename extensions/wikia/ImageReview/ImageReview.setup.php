@@ -37,5 +37,8 @@ $wgGroupPermissions['reviewer']['imagereview'] = true;
 $wgAvailableRights[] = 'questionableimagereview';
 $wgGroupPermissions['util']['questionableimagereview'] = true;
 
+$wgAvailableRights[] = 'imagereviewstats';
+$wgGroupPermissions['util']['imagereviewstats'] = true;
+
 // i18n
 $wgExtensionMessagesFiles['ImageReview'] = $dir . 'ImageReview.i18n.php';
