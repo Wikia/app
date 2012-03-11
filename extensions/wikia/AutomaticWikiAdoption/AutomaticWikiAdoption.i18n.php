@@ -1449,6 +1449,7 @@ Ferramentas Úteis:
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  */
 $messages['pt-br'] = array(
 	'wikiadoption' => 'Adoção automática de wikis',
@@ -1496,9 +1497,9 @@ Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.',
 
 Infelizmente, há quase um mês que nenhum administrador visita a #WIKINAME. É importante que existam administradores ativos a colaborar na wiki para que ela continue a funcionar bem.
 
-Como já passaram tantos dias desde que um dos administradores apareceu, a #WIKINAME vai ser disponibilizada para adoção por outros utilizadores.
+Como já passaram tantos dias desde que um dos administradores apareceu, a #WIKINAME vai ser disponibilizada para adoção por outros usuários.
 
-A Equipa da Wikia
+A Equipe Wikia
 
 Para cancelar a subscrição de alterações a esta lista, clique o seguinte link: $3',
 	'wikiadoption-mail-second-content-HTML' => 'Olá $1,<br /><br />
@@ -1802,5 +1803,13 @@ $messages['zh-hans'] = array(
 	'wikiadoption-adoption-successed' => '恭喜！您现在是这个维基的管理员！',
 	'wikiadoption-log-reason' => '制动维基领养',
 	'wikiadoption-mail-first-subject' => '我们没有看到你在一段时间',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiadoption-header' => '認領這個wiki',
+	'wikiadoption-button-adopt' => '是的，我想要認領{{SITENAME}}!',
 );
 

@@ -2127,6 +2127,7 @@ $messages['pms'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Pàgine ëd MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Figure e filmà ($1)',
 	'wikiafollowedpages-special-namespace' => '(Pàgina $1)',
+	'wikiafollowedpages-special-heading-wall' => 'Muraja dij Mëssagi ($1)',
 	'wikiafollowedpages-special-empty' => 'La lista dle pàgine che chiel a ten sot-euj a l\'é veuida.
 Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò ëd na pàgina.',
 	'wikiafollowedpages-special-anon' => "Për piasì ch'a [[Special:Signup|intra ant ël sistema]] për creé o vardé soa lista dle pàgine tnùe sot euj.",

@@ -2962,6 +2962,7 @@ $messages['sv'] = array(
 	'plb-parser-image-size-too-big' => 'Din fotostorlek är för stor. Se hjälpsidan för rätt alternativ.',
 	'plb-parser-image-incorrect-align' => 'Felaktigt värde för justering. Välj vänster, mitten eller höger.',
 	'plb-parser-image-incorrect-frame' => 'Bildens raminställning är inte korrekt. Se hjälpsidan för rätt alternativ.',
+	'plb-parser-empty-value' => 'Redigera denna sektion för att slutföra denna sida.',
 	'plb-parser-default-instructions' => 'Instruktioner',
 	'plb-parser-empty-value-image' => 'Lägg till bild',
 	'plb-parser-preview-image-user' => 'Lades till av <b>$1</b>',
@@ -2971,16 +2972,21 @@ $messages['sv'] = array(
 	'plb-parser-preview-sinput' => 'Användarens val kommer att visas här.',
 	'plb-create-from-article-new' => '<span style="color:red">Ny!</span> Layoutbyggare',
 	'plb-create-from-article-button' => 'Skapa en layout från denna sida',
+	'plb-create-from-article-button-title' => 'Skapa en layout från denna sida',
 	'plb-create-from-article-button-desc' => 'Använd denna sida som grund för en layout. <a href="#">Läs mer></a>',
+	'plb-layout-usercant' => 'Tyvärr, du kan inte komma åt layoutbyggaren. Fråga en administratör på denna wiki om att hjälpa dig.',
 	'plb-editor-elements-in-the-editor' => '<span>OBJEKT</span> I REDIGERINGSFORMULÄRET',
 	'plb-editor-add-element' => 'Lägg till objekt',
 	'plb-editor-edit' => 'Redigera',
 	'plb-editor-toolbar-caption' => 'Sidlayouts-byggare',
+	'plb-editor-toolbar-formatting' => 'Formatering',
+	'plb-editor-toolbar-static' => 'Statisk',
 	'plb-editor-rte-caption' => 'Lägg till objekt',
 	'plb-editor-preview' => 'Förhandsgranska',
 	'plb-editor-preview-desc' => 'Extra redigeringshjälp',
 	'plb-editor-preview-info' => 'Info',
 	'plb-editor-overlay-edit' => 'redigera',
+	'plb-editor-left-sidebar-tutorial' => '<b>Välkommen till layoutbyggaren!</b><br /><br />För att börja lägga till objekt, klicka på knappen <em>Lägg till objekt</em> ovan och välj den önskade typen. <br /><br />När du lägger till dina objekt här, läggs nya frågor till i sidans skapandeprocess.',
 	'plb-editor-saving-as-draft' => 'Sparar utkastslayout',
 	'plb-widget-name-plb_input' => 'Inmatningsruta',
 	'plb-widget-name-plb_mlinput' => 'Avsnitt',
@@ -3029,7 +3035,7 @@ $messages['sv'] = array(
 	'plb-copy-submit-link' => 'Spara',
 	'wikia-editor-modules-plb-insert-title' => 'Infoga layoutobjekt',
 	'wikia-editor-modules-plb-list-title' => 'läser in lista...',
-	'wikia-editor-modules-plb-list-title-count' => '$1 objekt i layouten',
+	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1|$1}} objekt i layouten',
 	'wikia-editor-plb-show-static-buttons' => 'Återställ fler <i>statiska</i> mediaknappar',
 );
 
@@ -3273,5 +3279,15 @@ $messages['zh-hans'] = array(
 	'plb-copy-delete-link' => '删除',
 	'plb-copy-cat-add' => '添加：',
 	'plb-copy-submit-link' => '保存',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'plb-editor-overlay-edit' => '編輯',
+	'plb-property-editor-alignment-left' => '左',
+	'plb-property-editor-alignment-center' => '中間',
+	'plb-property-editor-alignment-right' => '右',
 );
 

@@ -257,6 +257,13 @@ $messages['it'] = array(
 	'error-json-parse' => "Spiacenti, E' stato riscontrato un problema con i dati inviati dai nostri server.\\n%s",
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'activityindicator-message' => 'កំពុងផ្ទុក​...',
+);
+
 /** Korean (한국어) */
 $messages['ko'] = array(
 	'activityindicator-message' => '로딩...',

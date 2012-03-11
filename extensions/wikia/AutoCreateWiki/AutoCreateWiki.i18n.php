@@ -2063,7 +2063,7 @@ Wikia Community Team
 1. '''Crea la tua [[Utente:\$1|Pagina Utente]]''' - è il posto per parlare di te stesso e farti conoscere (e fare pratica!)
 
 2. '''Aggiungi un logo''' - impara [[w:c:aiuto:Aiuto:Theme_Designer|come creare un logo]], e poi <span class=\"plainlinks\">[[Speciale:Carica/Wiki.png|clicca qui]]</span> per aggiungerlo alla tua wiki.
-<div style=\"border: 1px solid black; margin: 0 0 5px 10px; padding: 5px; float: right; width: 30%;\"><center>Crea un articolo per questa wiki:</center><createbox>
+<div style=\"border: 1px solid black; margin: 0px 0px 5px 10px; padding: 5px; float: right; width: 30%;\"><center>Crea un articolo per questa wiki:</center><createbox>
 width=20
 </createbox></div>
 
@@ -4231,16 +4231,20 @@ $messages['sw'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author Karthi.dr
  * @author TRYPPN
  * @author செல்வா
  */
 $messages['ta'] = array(
 	'autocreatewiki-category-select' => 'ஒன்றைத் தேர்வு செய்யவும்',
+	'autocreatewiki-language-all' => 'அனைத்து மொழிகள்',
 	'autocreatewiki-birthdate' => 'பிறந்த நாள்:',
 	'autocreatewiki-remember' => 'என்னை நினைவில் வைத்துக்கொள்ளவும்',
 	'autocreatewiki-create-account' => 'கணக்கு ஒன்றை உருவாக்கவும்',
 	'autocreatewiki-done' => 'செய்துமுடிக்கப்பட்டது',
 	'autocreatewiki-error' => 'தவறு',
+	'autocreatewiki-success-title-default' => 'தங்களது விக்கி உருவாக்கப்பட்டுவிட்டது',
+	'autocreatewiki-title-template' => '$1 விக்கி',
 	'autocreatewiki-category-label' => 'பகுப்பு:',
 	'autocreatewiki-category-other' => 'மற்றவை',
 	'autocreatewiki-log-title' => 'தங்களது விக்கி உருவாக்கப்பட்டுவிட்டது',
@@ -4394,6 +4398,7 @@ $messages['tt-cyrl'] = array(
 	'autocreatewiki-language-top' => '$1 иң күп кулланылган телләр',
 	'autocreatewiki-language-all' => 'Барлык телләр',
 	'autocreatewiki-birthdate' => 'Туган көн:',
+	'autocreatewiki-blurry-word' => 'Ярымсөртелгән сүз:',
 	'autocreatewiki-remember' => 'Мине истә калдыру',
 	'autocreatewiki-create-account' => 'Яңа кулланучы теркәү',
 	'autocreatewiki-done' => 'Эшләнде',
@@ -4401,12 +4406,60 @@ $messages['tt-cyrl'] = array(
 	'autocreatewiki-haveaccount-question' => 'Сезнең Викиядә хисап язмасы бармы?',
 	'autocreatewiki-success-title-default' => 'Сезнең вики ясалган!',
 	'autocreatewiki-success-title-answers' => 'Сезнең җаваплар сайты эшләнгән!',
+	'autocreatewiki-success-subtitle' => 'Хәзер сез, менә бу сәхифәгә күчеп, үз викиегездә эшне башлый аласыз:',
 	'autocreatewiki-success-has-been-created' => 'ясалган!',
 	'autocreatewiki-success-get-started' => 'Эшне башлау',
+	'autocreatewiki-info-domain' => 'Эләүдә сезнең тема өчен ачкыч сүз булырдай сүзне куллану яхшырак булыр.',
+	'autocreatewiki-info-topic' => 'Кыскача тасвирлама өстәгез, мәсәлән, "Габдулла Тукай" яки "ТВ тапшыруы".',
+	'autocreatewiki-info-category-default' => 'Бу кунакларга сезнең викине табарга ярдәм итәчәк.',
+	'autocreatewiki-info-category-answers' => 'Бу кунакларга сезнең җаваплар сайтын табарга ярдәм итәчәк.',
+	'autocreatewiki-info-language' => 'Сезнең вики кунаклары өчен интерфейс теле',
+	'autocreatewiki-info-email-address' => 'Сезнең электрон әрҗәгез, Викиядә беркемгә дә күрсәтелми.',
+	'autocreatewiki-info-realname' => 'Әгәр сез аны күрсәтсәгез, ул сезнең эшегезнең авторлыгын атар өчен кулланылачак.',
+	'autocreatewiki-info-birthdate' => 'Wikia барлык кулланучылардан да чын туган көннәрен күрсәтүне таләп итә, бу сайтның федераль таләпләргә туры килүен тәэмин итәр өчен кирәк һәм куркынычсызлык чарасы да булып тора.',
+	'autocreatewiki-info-blurry-word' => 'Сез бу урында күрә торган ярымсөртелгән сүзләрне, зинһар өчен, язсагыз иде. Бу хисап язмаларының автоматик рәвештә ясалуыннан сакланыр өчен эшләнелә.',
+	'autocreatewiki-info-terms-agree' => 'Викине оештырып һәм хисап язмасын төзеп, сез <a href="http://www.wikia.com/wiki/Terms_of_use">Wikia куллану шартлары</a> белән килешәсез.',
+	'autocreatewiki-info-staff-username' => '<b>Персонал өчен генә:</b> Әйтелгән кулланучы оештыручы буларак күрсәтелгән.',
+	'autocreatewiki-title-template' => '$1 Wiki',
+	'autocreatewiki-limit-day' => 'Wikia бер көн эчендә ясалырга мөмкин булган викилар санын узды ($1).',
+	'autocreatewiki-limit-creation' => 'Сез 24 сәгать эчендә ясарга мөмкин булган викилар санын уздыгыз ($1).',
+	'autocreatewiki-empty-field' => 'Зинһар өчен, бу кырны тутырыгыз.',
+	'autocreatewiki-bad-name' => 'Исемдә махсус символлар (мәсәлән, @ яки $) була алмый, һәм аны юл хәрефләре белән буш арасыз язылган бер сүз белән күрсәтергә кирәк',
+	'autocreatewiki-invalid-wikiname' => 'Исемдә махсус символлар (мәсәлән, $ яки #) була алмый һәм буш килеш калырга тиеш түгел.',
+	'autocreatewiki-violate-policy' => 'Бу вики исемендә исем кушу кагыйдәләрен бозучы сүзләр бар',
+	'autocreatewiki-name-too-short' => 'Бу исем артык кыска. Зинһар өчен, кимендә 3 символдан торган исем сайлагыз',
+	'autocreatewiki-name-too-long' => 'Бу исем артык озын. Зинһар өчен, 50 символдан артмаган исем сайлагыз.',
+	'autocreatewiki-similar-wikis' => 'Түбәндә бу темага кагылган һәм инде эшләп килүче викилар китерелгән. Без аларның берсендә катнашырга тәкъдим итәбез.',
+	'autocreatewiki-invalid-username' => 'Тыелган кулланучы исеме.',
+	'autocreatewiki-busy-username' => 'Бу кулланучы исеме кулланыла инде.',
+	'autocreatewiki-blocked-username' => 'Сезгә хисап язмасы төземәсәгез дә була.',
+	'autocreatewiki-user-notloggedin' => 'Сезнең хисап язмасы төзелгән, ләкин сез системага кермәдегез!',
+	'autocreatewiki-empty-language' => 'Зинһар өчен, викиегез өчен тел сайлагыз.',
+	'autocreatewiki-empty-category' => 'Зинһар өчен, бер төркемне сайлагыз.',
+	'autocreatewiki-empty-wikiname' => 'Вики исеме буш кала алмый.',
+	'autocreatewiki-empty-username' => 'Кулланучы исеме буш кала алмый.',
+	'autocreatewiki-empty-password' => 'Серсүз буш кала алмый',
+	'autocreatewiki-empty-retype-password' => 'Серсүзне кабатлау буш була алмый.',
 	'autocreatewiki-category-label' => 'Төркем:',
 	'autocreatewiki-category-other' => 'Башка',
+	'autocreatewiki-set-username' => 'Башта кулланучы исемен сайлагыз.',
+	'autocreatewiki-invalid-category' => 'Ялгыш төркем.
+Зинһар өчен, чыгучы исемлектән мөмкин булган вариантны сайлагыз.',
+	'autocreatewiki-invalid-language' => 'Ялгыш, мөмкин булмаган тел.
+Зинһар өчен, килеп чыгучы исемлектән мөмкин булган вариантны сайлагыз.',
+	'autocreatewiki-invalid-retype-passwd' => 'Зинһар өчен, шул ук серсүзне яңадан языгыз',
+	'autocreatewiki-invalid-birthday' => 'Хаталы туган көн.',
+	'autocreatewiki-limit-birthday' => 'Теркәлүне үткәреп булмый.',
 	'autocreatewiki-log-title' => 'Сезнең вики ясала',
+	'autocreatewiki-step0' => 'Инициализация...',
+	'autocreatewiki-stepdefault' => 'Эш бара, зинһар, көтегез...',
+	'autocreatewiki-errordefault' => 'Процесс тукталмады...',
+	'autocreatewiki-step1' => 'Сурәтләр директориясен эшләү . . .',
+	'autocreatewiki-step2' => 'Мәгълүматлар базасын оештыру ...',
+	'autocreatewiki-congratulation' => 'Котлыйбыз!',
+	'autocreatewiki-welcometalk-log' => 'Сәламләү хаты',
 	'newwikis' => 'Яңа викилар',
+	'autocreatewiki-subname-answers' => 'Җаваплар',
 );
 
 /** Ukrainian (Українська)
@@ -4667,11 +4720,13 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
  * @author Oapbtommy
  */
 $messages['zh-hant'] = array(
 	'autocreatewiki-page-title-default' => '建立一個新的維基',
 	'createwiki' => '建立一個新的維基',
+	'newwikis' => '新的 wiki',
 );
 
 /** Chinese (Hong Kong) (‪中文(香港)‬) */

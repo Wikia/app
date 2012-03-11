@@ -109,9 +109,11 @@ $messages['diq'] = array(
 /** Spanish (Español)
  * @author Benfutbol10
  * @author Bernardom
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'related-videos-tally' => 'Vídeos relacionados',
+	'related-videos-tally-article' => 'Vídeos en este artículo',
 	'related-videos-added-by' => 'Añadido por',
 	'related-videos-remove' => 'Eliminar',
 	'related-videos-add-video' => 'Añadir un vídeo',
@@ -120,13 +122,37 @@ $messages['es'] = array(
 	'related-videod-add-video-ok' => 'Hecho',
 	'related-videod-add-video-label-name' => 'Ingrese la dirección completa de cualquiera de los sitios soportados.',
 	'related-videod-add-video-label-all' => 'Ver todo',
+	'related-videos-add-video-error-bad-url' => 'La dirección URL ingresada es inválida.',
 	'related-videos-add-video-error-nonexisting' => 'Este vídeo no existe.',
+	'related-videos-add-video-error-bad-name' => 'El nombre del vídeo contiene caracteres inválidos. Por favor selecciona otra dirección URL.',
+	'related-videos-add-video-error-permission-video' => 'No tienes permisos para añadir un vídeo en este wiki.',
+	'related-videos-add-video-error-protected-video' => 'No puedes añadir un vídeo en este wiki.',
+	'related-videos-add-video-error-duplicate' => 'Este vídeo ya ha sido añadido.',
+	'related-videos-error-unknown' => 'Se ha producido un error desconocido: Código: $1.',
+	'related-videos-error-permission-article' => 'No puedes modificar este artículo.',
+	'related-videos-error-no-article-id' => 'No se indicó el ID del artículo.',
+	'related-videos-error-no-video-url' => 'No se indicó la dirección URL del vídeo.',
+	'related-videos-error-no-video-title' => 'No se indicó el título del vídeo.',
+	'related-videos-error-while-loading' => 'Error al cargar los datos. Por favor vuelve a comprobar tu conexión a internet y refresca la página.',
+	'related-videos-notify' => 'Por favor espera mientras procesamos este vídeo',
+	'related-videos-something-went-wrong' => 'Lo sentimos, pero algo ocurrió con la subida del vídeo.',
+	'related-videos-remove-video-error-duplicate' => 'Este vídeo ya ha sido borrado.',
+	'related-videos-remove-video-error-nonexisting' => 'El vídeo que intentas borrar no existe.',
 	'related-videos-remove-confirm' => '¿Estás seguro que quieres retirar este vídeo?',
+	'related-videos-remove-call' => 'Por favor espera mientras borramos el vídeo',
+	'related-videos-wiki-summary-blacklist' => 'Borrado [[:$2|$1]] de Vídeos Relacionados.',
+	'related-videos-wiki-summary-whitelist' => 'Añadido [[:$2|$1]] a Vídeos Relacionados.',
+	'related-videos-update-summary-blacklist' => 'Lista negra de Vídeos Relacionados actualizada',
+	'related-videos-update-summary-whitelist' => 'Lista blanca de Vídeos Relacionados actualizada',
 	'related-videos-tooltip-add' => 'Añadir un vídeo a esta página',
 	'related-videos-tooltip-remove' => 'Retirar este vídeo',
+	'related-videos-tooltip-embed' => 'Pega esta dirección URL en la herramienta de añadir vídeos',
 	'related-videos-beta-feature' => 'beta',
+	'related-videos-repo-name' => 'Videoteca de Wikia',
+	'related-videos-embed-text' => 'Insertar código',
 	'related-videos-video-is-new' => 'Nuevo',
 	'related-videos-pagination' => '$1 de $2',
+	'related-videos-empty' => 'Sé el primero en añadir un vídeo',
 );
 
 /** French (Français)
@@ -174,6 +200,7 @@ $messages['fr'] = array(
 	'related-videos-embed-text' => 'Incorporer le code',
 	'related-videos-video-is-new' => 'Nouveau',
 	'related-videos-pagination' => '$1 de $2',
+	'related-videos-empty' => 'Soyez le premier à ajouter une vidéo',
 );
 
 /** Galician (Galego)
@@ -267,6 +294,7 @@ $messages['ia'] = array(
 	'related-videos-embed-text' => 'Codice de incorporation',
 	'related-videos-video-is-new' => 'Nove',
 	'related-videos-pagination' => '$1 de $2',
+	'related-videos-empty' => 'Sia le prime a adder un video',
 );
 
 /** Macedonian (Македонски)
@@ -360,6 +388,7 @@ $messages['ms'] = array(
 	'related-videos-embed-text' => 'Benamkan teks',
 	'related-videos-video-is-new' => 'Baru',
 	'related-videos-pagination' => '$1 / $2',
+	'related-videos-empty' => 'Jadilah yang pertama untuk meletakkan video',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -406,6 +435,7 @@ $messages['nb'] = array(
 	'related-videos-embed-text' => 'Innebyggingskode',
 	'related-videos-video-is-new' => 'Ny',
 	'related-videos-pagination' => '$1 av $2',
+	'related-videos-empty' => 'Vær den første til å legge til en video',
 );
 
 /** Dutch (Nederlands)
@@ -593,12 +623,26 @@ $messages['sv'] = array(
 	'related-videos-remove-call' => 'Var god vänta medan vi tar bort videon',
 	'related-videos-wiki-summary-blacklist' => 'Tog bort [[:$2|$1]] from Relaterade videoklipp.',
 	'related-videos-wiki-summary-whitelist' => 'Lade till [[:$2|$1]] till Relaterade videoklipp.',
+	'related-videos-update-summary-blacklist' => 'Svarta listan över relaterade videoklipp har uppdaterats',
+	'related-videos-update-summary-whitelist' => 'Vita listan över relaterade videoklipp har uppdaterats',
 	'related-videos-tooltip-add' => 'Lägg till en video på denna sida',
+	'related-videos-tooltip-remove' => 'Ta bort detta videoklipp',
 	'related-videos-tooltip-embed' => 'Klistra in denna URL i verktyget för videoinbäddning',
 	'related-videos-beta-feature' => 'beta',
 	'related-videos-repo-name' => 'Wikia videobibliotek',
 	'related-videos-embed-text' => 'Inbäddningskod',
 	'related-videos-video-is-new' => 'Ny',
 	'related-videos-pagination' => '$1 av $2',
+	'related-videos-empty' => 'Bli först att lägga till ett videoklipp',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'related-videos-remove' => 'நீக்குக',
+	'related-videod-add-video-ok' => 'முடிந்தது',
+	'related-videod-add-video-label-all' => 'எல்லாவற்றையும் பார்க்கவும்',
+	'related-videos-video-is-new' => 'புதிய',
 );
 

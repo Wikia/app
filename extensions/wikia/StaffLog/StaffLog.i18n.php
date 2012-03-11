@@ -383,11 +383,17 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'stafflog-desc' => 'Centraliserad loggning för personal',
+	'stafflog' => 'Personallogg',
 	'stafflog-blockmsg' => '$1 $2 försökte blockera personalanvändaren $3 på wikin $4. Anledning: $5',
+	'right-stafflog' => 'Kan visa personalloggen',
+	'stafflog-wiki-status-change' => '$1 ändrade statusen för $2 till $3. Anledning: $4',
 	'stafflog-filter-label' => 'Filter',
 	'stafflog-filter-user' => 'Användare:',
 	'stafflog-filter-type' => 'Typ:',
+	'stafflog-filter-apply' => 'Verkställ filter',
 	'stafflog-filter-type-block' => 'Blockeringar',
+	'stafflog-filter-type-renameuser' => 'Användarnamnbyten',
 	'stafflog-filter-type-wikifactory' => 'Wiki-status',
 );
 

@@ -475,6 +475,46 @@ $messages['it'] = array(
 	'ringtone-matcher-by-song' => 'Invia la suoneria di %s sul tuo cellulare',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'app-loading' => 'កំពុងផ្ទុក​...',
+	'app-tab-search' => 'ស្វែង​រក​',
+	'app-tab-about' => 'អំពី',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'ចំរៀងប្រចាំថ្ងៃ',
+	'app-async-error-title' => 'ចុម',
+	'app-async-error-message' => 'មានបញ្ហាភ្ជាប់ទៅប្រព័ន្ធជាបណ្ដោះអាសន្ន។ សូមសាកល្បងម្ដងទៀតលើកក្រោយ។',
+	'app-nonetwork-dialog-title' => 'មិនអាចទាក់ទងទៅប្រព័ន្ធបាន',
+	'app-nonetwork-dialog-message' => 'រកមិនឃើញប្រព័ន្ធទាក់ទង។',
+	'app-nonetwork-dialog-close-button' => 'យល់ព្រម',
+	'search-go' => 'ទៅ​!',
+	'search-hint-text' => "ឧ. 'John Lennon:Imagine'",
+	'search-no-match-found' => 'រកមិនឃើញអ្វីដែលត្រូវគ្នា។',
+	'search-no-match-found-query' => 'បានស្វែងរក៖ %s',
+	'search-results-title' => 'ស្វែងរកលទ្ធផលសំរាប់៖ %s',
+	'login-label' => 'កត់ឈ្មោះចូលទៅ LyricWiki',
+	'login-username-hint' => 'អត្តនាម',
+	'login-password-hint' => 'ពាក្យសំងាត់',
+	'login-submit-button' => 'កត់ឈ្មោះចូល',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'ដោយ %s',
+	'about-heading-tips' => 'កំពុង​ស្វែងរក...',
+	'about-tips-0' => 'ចាប់ផ្ដើមវាយបញ្ចូលឈ្មោះអ្នកចំរៀងដើម្បីបំពេញដោយស្វ័យប្រវត្តិពេលកំពុងវាយបញ្ចូល។',
+	'about-tips-1' => 'រូបភាពនៅលើអេក្រង់មេជាចំរៀងពេញនិយមជាងគេទាំង៩នៅលើ iTunes នៅពេលឥឡូវនេះ។',
+	'about-heading-licensing' => 'រក្សាសិទ្ឋ',
+	'about-licensing-0' => 'កម្មវិធីនេះស្របច្បាប់១០០%។ ប្រាក់ចំណែត្រូវបង់ទៅម្ចាស់កម្មសិទ្ធបទចំរៀងតាមរយៈភ្នាក់ងារ Gracenote ដោយមើលទៅដូចធ្វើឡើងលើវិបសាយ LyricWiki ផ្ទាល់អញ្ចឹង។',
+	'about-heading-feedback' => 'មតិយោបល់',
+	'about-feedback-0' => 'ប្រសិនបើលោកអ្នកចង់ផ្ដល់យោបល់អំពីកម្មវិធីនេះ សូមអ៊ីមែលមកកាន់យើងខ្ញុំ៖ %s',
+	'about-heading-rate' => 'សូមដាក់ពិន្ទុដល់កម្មវិធីនេះ!',
+	'about-rate-0-android' => 'ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ សូមដាក់ពិន្ទុផ្កាយ៥ក្នុង Android Market!',
+	'about-rate-0-ios' => 'ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ សូមដាក់ពិន្ទុផ្កាយ៥ក្នុង App Store!',
+	'gracenote-takedown' => 'គួរអោយសោកស្ដាយណាស់ ដែលយើងខ្ញុំមិនមានអាជ្ញាប័ណ្ណអនុញ្ញាតអោយបង្ហាញ​ប៉ារ៉ូលពេញរបស់ចំរៀងនេះនៅពេលនេះ។ បញ្ហានេះកើតឡើងសំរាប់ចំរៀងប្រហែល១%របស់​យើងខ្ញុំ។ សូមសាកល្បងម្ដងទៀតនៅសប្ដាហ៍ក្រោយ។',
+	'lyrics-artist-byline' => 'ដោយ %s',
+	'ringtone-matcher-by-song' => 'ផ្ញើសំលេងរោទិ៍ %s ទៅកាន់ទូរស័ព្ទដៃរបស់អ្នក',
+);
+
 /** Korean (한국어)
  * @author Youree Jin
  */

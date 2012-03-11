@@ -1627,6 +1627,7 @@ $messages['sv'] = array(
 	'editaccount-error-close' => 'Ett problem uppstod när kontot skulle avslutas. Försök igen eller kontakta Tech Teamet.',
 	'editaccount-invalid-email' => '"$1" är inte en giltig e-postadress!',
 	'editaccount-nouser' => 'Konto "$1" existerar inte!',
+	'editaccount-remove-avatar-fail' => 'Problem med att ta bort avatar automatiskt.',
 	'editaccount-requested' => 'OBS: Användare har begärt en avslutning av sitt konto',
 	'editaccount-not-requested' => 'VARNING: Användaren har inte begärt att få kontot stängt',
 	'editaccount-labal-account-status' => 'Kontostatus',

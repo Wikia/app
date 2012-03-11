@@ -211,6 +211,13 @@ $messages['sv'] = array(
 	'signup' => 'Registrera',
 );
 
+/** Tamil (தமிழ்)
+ * @author Aswn
+ */
+$messages['ta'] = array(
+	'signup' => 'பதிவுசெய்',
+);
+
 /** Telugu (తెలుగు) */
 $messages['te'] = array(
 	'signup-desc' => '[[{{#Special:UserLogin}}/signup]]కి [[{{#Special:Signup}}]] అనే మారుపేరుని చేరుస్తుంది',

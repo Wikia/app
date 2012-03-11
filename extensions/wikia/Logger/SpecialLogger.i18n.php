@@ -353,6 +353,15 @@ $messages['sv'] = array(
 	'loggernoresult' => 'Inga resultat hittades',
 );
 
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'loggerselectlogname' => 'புகுபதிகைப் பெயரைத் தெரிவு செய்க:',
+	'loggergo' => 'காண்பி',
+	'loggernoresult' => 'முடிவுகள் எதுவும் காணப்படவில்லை',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

@@ -1350,12 +1350,17 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'admindashboard-header' => 'Идарәче бүлмәсе',
+	'admindashboard-toolbar-link' => 'Идарәче',
+	'admindashboard-tab-advanced' => 'Киңәйтелгән',
 	'admindashboard-tab-general' => 'Гомуми',
 	'admindashboard-controls-wiki-header' => 'Вики',
 	'admindashboard-control-theme-designer-label' => 'Темалар остаханәсе',
 	'admindashboard-control-theme-designer-tooltip' => 'Темалар остаханәсе викинең төсен, фон рәсем һ.б. көйләргә мөмкинлек бирә.',
 	'admindashboard-control-recent-changes-label' => 'Соңгы үзгәртүләр',
 	'admindashboard-control-recent-changes-tooltip' => 'Соңгы үзгәртүләр сәхифәсендә викидә соңгы вакытта эшләнгән барлык үзгәртүләр күрсәтелә.',
+	'admindashboard-control-top-navigation-label' => 'Навигация өчен меню',
+	'admindashboard-control-top-navigation-tooltip' => 'Бу викиның югары өлешендә урнашкан навигация өчен менюны көйләргә мөмкинлек бирә',
 	'admindashboard-control-wikia-labs-label' => 'Викия остаханәсе',
 	'admindashboard-control-wikia-labs-tooltip' => 'Викия остаханәсе сезгә Викиянең яңа өстәлмәләрен кушарга/аерырга мөмкинлек бирә',
 	'admindashboard-control-wiki-features-label' => 'Wiki Features',
@@ -1363,15 +1368,25 @@ $messages['tt-cyrl'] = array(
 	'admindashboard-control-page-layout-builder-label' => 'Кысалар эшләү сәхифәсе',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Кысалар эшләү остасы сезгә мәкалә кысаларын эшләргә мөмкинлек бирә. Катнашучылар аларны викинең яңа мәкаләләрен язганда куллана алалар.',
 	'admindashboard-controls-community-header' => 'Җәмгыять үзәге',
+	'admindashboard-control-user-list-label' => 'Кулланучылар исемлеге',
+	'admindashboard-control-user-list-tooltip' => 'Сезнең викидә төзәтмәләр ясаган кулланучыларның тулы исемлеген карагыз.',
 	'admindashboard-control-user-rights-label' => 'Кулланучы хокуклары',
 	'admindashboard-control-user-rights-tooltip' => 'Викинең башка кулланучыларына хокук тапшырырга яки хокукларны алырга мөмкинлек бирә',
 	'admindashboard-control-group-rights-label' => 'Төркем хокуклары',
+	'admindashboard-control-group-rights-tooltip' => 'Төрле төркем кулланучылар өчен хокуклар күргәзмәсе',
 	'admindashboard-control-invite-label' => 'Чакырырга',
 	'admindashboard-control-invite-tooltip' => 'Башка кешеләрне бу викидә эшләргә чакырырга',
 	'admindashboard-control-help-label' => 'Ярдәм',
 	'admindashboard-control-help-tooltip' => 'Ярдәм табарга',
 	'admindashboard-controls-content-header' => 'Вики эчтәлеге',
 	'admindashboard-control-community-corner-label' => 'Җәмгыять үзәге',
+	'admindashboard-control-community-corner-tooltip' => 'Кулланучыларны искәртер өчен, Кызыл почмакта текстны үзгәртергә',
+	'admindashboard-control-categories-list-label' => 'Бөтен төркемнәр',
+	'admindashboard-control-categories-list-tooltip' => 'Викидә хәзерге вакытта булган барлык төркемнәрне карарга',
+	'admindashboard-control-add-page-label' => 'Мәкалә өстәү',
+	'admindashboard-control-add-page-tooltip' => 'Викигә яңа сәхифә өстәү',
+	'admindashboard-control-add-photo-label' => 'Фото өстәү',
+	'admindashboard-control-add-photo-tooltip' => 'Викигә яңа рәсемнәр өстәү',
 );
 
 /** Ukrainian (Українська)
@@ -1522,5 +1537,12 @@ $messages['zh-hans'] = array(
 	'admindashboard-control-add-blog-tooltip' => '添加博客文章至您的维基。',
 	'admindashboard-control-multiple-upload-label' => '添加多个图片',
 	'admindashboard-back-to-dashboard' => '返回面板',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'admindashboard-control-top-navigation-label' => '頂部導航',
 );
 

@@ -264,6 +264,7 @@ $messages['sv'] = array(
 	'cacheepoch-submit' => 'Uppdatera värdet',
 	'cacheepoch-updated' => 'wgCacheEpoch uppdaterades till «$1».',
 	'cacheepoch-not-updated' => 'Misslyckades att uppdatera wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Värde uppdaterat via Special:CacheEpoch',
 );
 
 /** Tagalog (Tagalog)

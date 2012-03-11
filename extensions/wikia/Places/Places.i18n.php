@@ -57,15 +57,33 @@ $messages['diq'] = array(
 );
 
 /** Spanish (Español)
+ * @author Bea.miau
  * @author Benfutbol10
  * @author VegaDark
  */
 $messages['es'] = array(
 	'places' => 'Lugares en este wiki',
+	'places-desc' => 'Proporciona funciones del analizador <nowiki><place> y <places></nowiki> para geoetiquetar páginas y un [[Special:Places|mapa de todos los lugares etiquetados]]',
+	'places-in-category' => 'Lugares en la categoría $1',
+	'places-on-map' => '{{PLURAL:$1|$1 lugar|$1 lugares}} en este mapa',
+	'places-modal-go-to-special' => 'Mostrando  {{PLURAL:$1|$1 lugar|$1 lugares}} ([[Special:Places|ver todos]])',
+	'places-toolbar-button-tooltip' => 'Haz clic para agregar una geoetiqueta a esta página',
+	'places-toolbar-button-address' => 'Porfavor proporciona una dirección para utilizarla como una geoetiqueta en esta página',
 	'places-editor-search' => 'Buscar',
+	'places-editor-title-create-new' => 'Agregar una geoetiqueta',
+	'places-editor-title-edit' => 'Editar un geoetiqueta',
+	'places-editor-show-my-location' => 'Llévame a mi ubicación',
+	'places-editor-geoposition' => 'Ubicación actual:',
 	'places-geolocation-button-label' => 'Añadir localización',
 	'places-geolocation-modal-add-title' => 'Añadir localización',
 	'places-geolocation-modal-error-title' => 'Error',
+	'places-geolocation-modal-error' => 'Se produjo un error mientras se intentaba determinar tu posición:<br />$1',
+	'places-geolocation-modal-not-available' => 'Oops! Esta característica está actualmente disponible sólo en dispositivos móviles.<br /><br />¿Quieres probarlo? Simplemente visita esta página utilizando un dispositivo móvil de tu elección.',
+	'places-error-no-article' => 'Tienes que especificar una página',
+	'places-error-place-already-exists' => 'Esta página ya ha sido geoetiquetada',
+	'places-updated-geolocation' => 'Geoetiqueta esta página',
+	'places-category-switch' => 'Desactivar las geoetiquetas',
+	'places-category-switch-off' => 'Activar las geoetiquetas',
 );
 
 /** French (Français)
@@ -353,6 +371,14 @@ $messages['sv'] = array(
 	'places-updated-geolocation' => 'Geotagga denna sida',
 	'places-category-switch' => 'Inaktivera geotaggning',
 	'places-category-switch-off' => 'Aktivera geotaggning',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'places-editor-search' => 'தேடுக',
+	'places-geolocation-modal-error-title' => 'பிழை',
 );
 
 /** Telugu (తెలుగు)

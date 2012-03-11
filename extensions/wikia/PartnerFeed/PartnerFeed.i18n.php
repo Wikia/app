@@ -516,6 +516,7 @@ $messages['sv'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wikins topplista för utmärkelser',
 	'partner-feed-earned-badges' => 'Nyligen tjänade emblem för en viss Wiki',
 	'partner-feed-latest-images' => 'Galleri med de senaste bilderna som har laddats upp',
+	'partner-feed-recent-blog-comments' => 'Senaste kommentarer som anknyter till specifika blogginlägg.',
 	'partner-feed-recent-changes' => 'Senaste ändringar',
 	'feed-title-blogposts' => 'Senaste blogginlägg',
 	'feed-title-recent-badges' => 'Senaste emblem',
@@ -526,6 +527,16 @@ $messages['sv'] = array(
 	'feed-title-hot-content' => 'Hett innehåll - $1',
 	'feed-title-blogcomments' => 'Kommentarer till $1',
 	'feed-title-recentchanges' => 'Senaste ändringar',
+);
+
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'partner-feed-earned-badges' => 'குறிப்பிட்ட விக்கிக்காக அண்மையில் ஈட்டப்பட்ட பதக்கங்கள்',
+	'feed-title-recent-images' => 'அண்மைய படங்கள்',
+	'all-blog-posts' => 'அனைத்து பகுப்புகளும்',
+	'feed-title-recentchanges' => 'அண்மைய மாற்றங்கள்',
 );
 
 /** Telugu (తెలుగు)

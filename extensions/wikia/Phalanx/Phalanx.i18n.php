@@ -417,6 +417,8 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'phalanx-stats-row-per-wiki' => "usuario '''$2''' fue bloqueado en '''$4''' por el filtro ID '''$3''' ($5) (tipo: '''$1''')",
 	'phalanx-rule-log-name' => 'Registro de reglas de Phalanx',
 	'phalanx-rule-log-header' => 'Este es un registro de cambios a las reglas de Phalanx.',
+	'phalanx-email-rule-log-name' => 'Registro de correos en Phalanx',
+	'phalanx-email-rule-log-header' => 'Este es un registro de cambios de correos en las reglas de Phalanx.',
 	'phalanx-rule-log-add' => 'Regla de Phalanx añadida: $1',
 	'phalanx-rule-log-edit' => 'Regla de Phalanx editada: $1',
 	'phalanx-rule-log-delete' => 'Reglas de Phalanx borrada: $1',
@@ -425,8 +427,10 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'phalanx-stats-table-wiki-name' => 'Nombre de wiki',
 	'phalanx-stats-table-wiki-url' => 'URL de wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Última edición',
+	'phalanx-email-filter-hidden' => 'Filtro de correo ocultado. No tienes permisos para ver el texto.',
 	'right-phalanx' => 'Puede administrar bloqueos globales y filtros de spam',
 	'right-phalanxexempt' => 'Exento de las reglas de Phalanx',
+	'right-phalanxemailblock' => 'Crear, ver y administrar bloqueos de correos',
 );
 
 /** Finnish (Suomi)
@@ -442,7 +446,9 @@ Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wi
  * @author Balzac 40
  * @author Brunoperel
  * @author Crochet.david
+ * @author Gomoko
  * @author Iketsi
+ * @author McDutchie
  * @author Od1n
  * @author Urhixidur
  * @author Verdy p
@@ -543,6 +549,8 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
 	'phalanx-stats-row-per-wiki' => "L'utilisateur '''$2''' a été bloqué sur '''$4''' par le filtre d'identifiant '''$3''' ($5) (type: '''$1''')",
 	'phalanx-rule-log-name' => 'Journal des règles Phalanx',
 	'phalanx-rule-log-header' => 'Ceci est un journal des changements de règles de Phalanx.',
+	'phalanx-email-rule-log-name' => 'Journal des règles de courriel Phalanx',
+	'phalanx-email-rule-log-header' => 'Voici un journal des changements des règles Phalanx pour le type de courriel.',
 	'phalanx-rule-log-add' => 'Règle Phalanx ajoutée: $1',
 	'phalanx-rule-log-edit' => 'Règle Phalanx éditée: $1',
 	'phalanx-rule-log-delete' => 'Règle Phalanx supprimée: $1',
@@ -551,8 +559,10 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
 	'phalanx-stats-table-wiki-name' => 'Nom du wiki',
 	'phalanx-stats-table-wiki-url' => 'URL du wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Dernière modification',
+	'phalanx-email-filter-hidden' => "Filtre de courriel caché. Vous n'avez pas le droit de voir son contenu.",
 	'right-phalanx' => 'Peut gérer les blocages globaux et filtres de contenu indésirable',
 	'right-phalanxexempt' => 'Exonéré des règles Phalanx',
+	'right-phalanxemailblock' => 'Vous pouvez lister, voir et gérer les blocs basés sur les courriels.',
 );
 
 /** Galician (Galego)
@@ -730,6 +740,7 @@ $messages['ia'] = array(
 	'phalanx-type-summary' => 'summario de pagina',
 	'phalanx-type-title' => 'titulo de pagina',
 	'phalanx-type-user' => 'usator',
+	'phalanx-type-user-email' => 'e-mail',
 	'phalanx-type-answers-question-title' => 'titulo de question',
 	'phalanx-type-answers-recent-questions' => 'questiones recente',
 	'phalanx-type-wiki-creation' => 'creation de wiki',
@@ -783,6 +794,7 @@ Nota: functiona solmente in wikis del typo Responsas.',
 Illo non impedi le creation de tal paginas.
 
 Nota: functiona solmente in wikis del typo Answers.',
+	'phalanx-help-type-user-email' => 'Iste filtro impedi le creation de contos con un adresse de e-mail blocate.',
 	'phalanx-user-block-reason-ip' => 'Iste adresse IP es impedite de facer modificationes in tote le rete de Wikia pro causa de vandalismo o de altere disruption per te o per alcuno altere qui usa un adresse IP in commun con te.
 Si tu crede que isto es un error, per favor [[Special:Contact|contacta Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Iste nomine de usator o adresse IP es impedite de facer modificationes in tote le rete de Wikia pro causa de vandalismo o de altere disruption.
@@ -815,6 +827,8 @@ Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.<br />
 	'phalanx-stats-row-per-wiki' => "le usator '''$2''' esseva blocate a '''$4''' per le filtro con ID '''$3''' ($5) (typo: '''$1''')",
 	'phalanx-rule-log-name' => 'Registro de regulas Phalanx',
 	'phalanx-rule-log-header' => 'Isto es un registro de modificationes in le regulas de Phalanx.',
+	'phalanx-email-rule-log-name' => 'Registro de regulas de e-mail Phalanx',
+	'phalanx-email-rule-log-header' => 'Isto es un registro de cambios in regulas Phalanx pro le typo de e-mail.',
 	'phalanx-rule-log-add' => 'Regula de Phalanx addite: $1',
 	'phalanx-rule-log-edit' => 'Regula de Phalanx modificate: $1',
 	'phalanx-rule-log-delete' => 'Regula de Phalanx delite: $1',
@@ -823,8 +837,10 @@ Per favor [[Special:Contact|contacta Wikia]] a proposito de iste problema.<br />
 	'phalanx-stats-table-wiki-name' => 'Nomine del wiki',
 	'phalanx-stats-table-wiki-url' => 'URL del wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Ultime modification',
+	'phalanx-email-filter-hidden' => 'Le filtro de e-mail es celate. Tu non ha le permission de vider le texto.',
 	'right-phalanx' => 'Pote gerer global blocadas e filtros anti-spam',
 	'right-phalanxexempt' => 'Exempte de regulas de Phalanx',
+	'right-phalanxemailblock' => 'Pote submitter, vider e gerer blocadas a base de e-mail',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1121,6 +1137,7 @@ Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga m
 	'phalanx-stats-row-per-wiki' => "pengguna '''$2''' disekat pada '''$4''' oleh ID penapis '''$3''' ($5) (jenis: '''$1''')",
 	'phalanx-rule-log-name' => 'Log peraturan Phalanx',
 	'phalanx-rule-log-header' => 'Ini ialah log penukaran peraturan phalanx.',
+	'phalanx-email-rule-log-name' => 'Log peraturan e-mel Phalanx',
 	'phalanx-rule-log-add' => 'Peraturan Phalanx ditambahkan: $1',
 	'phalanx-rule-log-edit' => 'Peraturan Phalanx disunting: $1',
 	'phalanx-rule-log-delete' => 'Peraturan Phalanx dipadamkan: $1',
@@ -1129,8 +1146,10 @@ Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga m
 	'phalanx-stats-table-wiki-name' => 'Nama Wiki',
 	'phalanx-stats-table-wiki-url' => 'URL Wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Suntingan terkini',
+	'phalanx-email-filter-hidden' => 'Penapis e-mel disorokkan. Anda tidak dibenarkan untuk membaca teksnya.',
 	'right-phalanx' => 'Boleh menguruskan sekatan dan penapis spam sedunia',
 	'right-phalanxexempt' => 'Dikecualikan daripada peraturan Phalanx',
+	'right-phalanxemailblock' => 'Boleh memfailkan, melihat dan mengurus sekatan berasaskan e-mel',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -1199,6 +1218,7 @@ Note: fungerer kun på Svar-wikier.',
 Det hindrer ikke disse sidene i å opprettes.
 
 Note: fungerer kun på Svar-wikier.',
+	'phalanx-help-type-user-email' => 'Dette filteret hindrer kontoopprettelse med en blokkert e-postadresse.',
 	'phalanx-user-block-reason-ip' => 'Denne IP-adressen er forhindret i å redigere over hele Wikia-nettverket  grunnet vandalisme eller annt hærverk fra deg eller noen som deler din IP-adresse.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
 	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk. 
@@ -1229,8 +1249,10 @@ Vennligst [[Special:Contact|kontakt Wikia]] om problemet.<br />Blokkereren la i 
 	'phalanx-stats-table-reason' => 'Årsak',
 	'phalanx-stats-row' => "på $4, filtertype '''$1''' blokkerte '''$2''' på $3",
 	'phalanx-stats-row-per-wiki' => "bruker '''$2''' ble blokkert på '''$4''' av filter ID '''$3''' ($5) (type: '''$1''')",
-	'phalanx-rule-log-name' => 'Logg for Phalanx-regler',
+	'phalanx-rule-log-name' => 'Logg over regler i Phalanx',
 	'phalanx-rule-log-header' => 'Dette er en logg over endringer i phalanx-reglene.',
+	'phalanx-email-rule-log-name' => 'Logg over e-post-regler i Phalanx',
+	'phalanx-email-rule-log-header' => 'Dette er en logg over endringer på Phalanx-reglene for innskriving av e-post.',
 	'phalanx-rule-log-add' => 'Phalanx-regel lagt til: $1',
 	'phalanx-rule-log-edit' => 'Phalanx-regel redigert: $1',
 	'phalanx-rule-log-delete' => 'Phalanx-regel slettet: $1',
@@ -1239,8 +1261,10 @@ Vennligst [[Special:Contact|kontakt Wikia]] om problemet.<br />Blokkereren la i 
 	'phalanx-stats-table-wiki-name' => 'Wiki-navn',
 	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Sist redigert',
+	'phalanx-email-filter-hidden' => 'E-post-filteret er skjult. Du har ikke tillatelse til å vise teksten.',
 	'right-phalanx' => 'Kan administrere globale blokkeringer og spamfiltre',
 	'right-phalanxexempt' => 'Fritatt fra Phalanx-reglene',
+	'right-phalanxemailblock' => 'Kan ordne, vise og administrere e-post-baserte blokkeringer',
 );
 
 /** Dutch (Nederlands)
@@ -1764,6 +1788,7 @@ $messages['sv'] = array(
 	'phalanx-type-summary' => 'sidsammanfattning',
 	'phalanx-type-title' => 'sidtitel',
 	'phalanx-type-user' => 'användare',
+	'phalanx-type-user-email' => 'e-post',
 	'phalanx-type-answers-question-title' => 'frågetitel',
 	'phalanx-type-answers-recent-questions' => 'senaste frågorna',
 	'phalanx-type-wiki-creation' => 'wiki-skapande',
@@ -1800,6 +1825,7 @@ Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-reset-form' => 'Återställ formulär',
 	'phalanx-legend-input' => 'Skapa eller ändra filter',
 	'phalanx-unblock-message' => 'Block-ID #$1 har tagits bort',
+	'phalanx-help-type-user-email' => 'Detta filter förhindrar att konton skapas med en blockerad e-postadress.',
 	'phalanx-user-block-new-account' => 'Användarnamnet är inte tillgängligt för registrering. Välj ett annat.',
 	'phalanx-title-move-summary' => 'Anledningen du skrev in innehöll en blockerad fras.',
 	'phalanx-content-spam-summary' => 'Texten hittades i sidans sammanfattning.',

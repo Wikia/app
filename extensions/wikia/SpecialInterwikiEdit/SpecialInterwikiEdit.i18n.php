@@ -58,6 +58,19 @@ $messages['az'] = array(
 	'iwedit-all-interwikis' => 'bütün intervikilər',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'interwikiedit' => 'Interwiki-Editor',
+	'iwedit-title' => 'Interwiki-Editor',
+	'iwedit-language-interwikis' => 'netter Sprooch-Interwikis',
+	'iwedit-all-interwikis' => 'olle Interwikis',
+	'iwedit-update' => 'Aktualisiern',
+	'iwedit-error' => '<p>A Feeler is afdreen.</p>',
+	'iwedit-success' => '<p>Link-Erzeigung erfoigreich.</p>',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by

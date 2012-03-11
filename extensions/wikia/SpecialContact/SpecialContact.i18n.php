@@ -900,7 +900,7 @@ Thông tin thêm về cách báo cáo vấn đề cho Wikia có thể tìm đư�
 
 Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có tập tin đính kèm, bạn có thể liên lạc với chúng tôi theo địa chỉ [mailto:community@wikia.com community@wikia.com].
 
-Để nhận được sự hỗ trợ bằng ngôn ngữ Tiếng Việt, xin vui lòng truy cập Wikia Tiếng Việt <a href="http://vi.wikia.com/wiki/Trang_Chính">vi.wikia.com</a>.',
+Để nhận được sự hỗ trợ bằng ngôn ngữ của bạn, xin vui lòng truy cập Wikia Tiếng Việt http://vi.wikia.com',
 	'specialcontact-username' => 'Tên thành viên',
 	'specialcontact-wikiname' => 'Wiki nào',
 	'specialcontact-realname' => 'Tên của bạn',

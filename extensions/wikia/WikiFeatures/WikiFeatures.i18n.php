@@ -902,6 +902,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author AvatarTeam
  * @author SPQRobin
  * @author Siebrand
  * @author TBloemink
@@ -912,7 +913,7 @@ $messages['nl'] = array(
 	'wikifeatures-heading' => 'Additionele functionaliteit',
 	'wikifeatures-creative' => "In WikiFeatures kunt u selecteren welke van Wikia's optionele functies u wilt gebruiken op uw wiki. Neem een kijkje en vergeet niet om te spelen. U kunt of deze functies op elk gewenst moment uitschakelen.",
 	'wikifeatures-labs-heading' => 'Labs',
-	'wikifeatures-labs-creative' => 'In Labs kunt u functies en ideeën vinden waar we mee experimenteren. Aangezien we functies nog steeds in het lab aan het tweaken zijn, kunnen ze soms nog kuren hebben, maar willen u graag ook het plezier gunnen! Schakel ze in, en laat ons weten wat u van de functies vindt. We willen graag de goede en slechte dingen horen!',
+	'wikifeatures-labs-creative' => 'In Labs kunt u functies en ideeën vinden waar we mee experimenteren. Aangezien we functies nog steeds in het lab aan het testen zijn, kunnen ze soms nog kuren hebben, maar willen u graag ook het plezier gunnen! Schakel ze in, en laat ons weten wat u van de functies vindt. We willen graag de goede en slechte dingen horen!',
 	'wikifeatures-feedback' => 'Terugkoppeling geven',
 	'wikifeatures-error-permission' => 'U hebt geen toegang tot deze pagina.',
 	'wikifeatures-error-invalid-parameter' => 'Ongeldige parameter: $1. Probeer het opnieuw.',
@@ -948,7 +949,7 @@ $messages['nl'] = array(
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Categorietentoonstelling',
 	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => "De meest populaire acht pagina's in uw categorieën worden al weergegeven als afbeeldingen, maar deze functie biedt een lijst van al uw pagina's als afbeeldingskoppelingen, te sorteren op naam, leeftijd of populariteit!",
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chatten',
-	'wikifeatures-feature-description-wgEnableChat' => 'Communiceren direct met andere mensen ook net zo graag aan uw wiki werken als u! Iedereen met een Wikiagebruiker kan deelnemen aan de chat via de knop "Chatten" in de menubalk.',
+	'wikifeatures-feature-description-wgEnableChat' => 'Communiceer direct met andere gebruikers die net zo graag aan uw wiki werken als u! Iedereen met een Wikia-gebruiker kan deelnemen aan de chat via de knop "Chatten" in de menubalk.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia Editor Redesign',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => "Bewerken is de kern van een wiki en het hebben van een goede tekstverwerker is de sleutel tot een makkelijk aanvoelende en leuke ervaring bij het toevoegen van inhoud. Om uw ervaring te verbeteren, hebben wij de bewerkingspagina's opnieuw ontworpen.",
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Peilingen',
@@ -958,10 +959,13 @@ $messages['nl'] = array(
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => "De functie Blogs stelt gebruikers in staat eigen blogberichten toe te voegen aan hun profielpagina's. De functie is ook goed te gebruiken om nieuws en gebeurtenissen aan uw gemeenschap aan te kondigen.",
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Berichtenmuur',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Communicatie met de gebruikers van uw wiki is essentieel in het opbouwen en onderhouden van uw gemeenschap. De Berichtenmuur maakt gebruik van een draden en een meldingensysteem waarbij het mogelijk is om interessante gesprekken te volgen. U mist geen bericht meer!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Uitgebreide Wikinavigatie',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Krijg meer verwijzingen, een nieuwe voorvertoningshulpmiddel, een samengevoegde lijst met bijdrageverwijzingen een nieuw menu "Op de wiki" waarin de belangrijkste eigenschappen van uw pagina\'s en gemeenschap worden uitgelicht.',
 	'wikifeatures-feature-heading-emptylabs' => 'Het lijkt erop dat het lab even pauze aan het houden is',
 	'wikifeatures-feature-description-emptylabs' => 'Onze ontwikkelaars werken had aan het ontwerpen van nieuwe functies die u kunt uitproberen. Kom snel terug!',
+	'wikifeatures-log-name' => 'Logboek Wikifuncties',
+	'wikifeatures-log-header' => 'Hieronder staat een lijst met wijzigingen aan wikifuncties.',
 );
 
 /** Polish (Polski)
@@ -1102,18 +1106,23 @@ $messages['ru'] = array(
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Получите больше ссылок в верхнем меню, новый инструмент для работы на вики и новое меню «На вики». Всё это поможет вам гораздо лучше представить контент, находящийся на вашей вики.',
 	'wikifeatures-feature-heading-emptylabs' => 'Похоже, Wikia Labs взяла перерыв',
 	'wikifeatures-feature-description-emptylabs' => 'Наши инженеры напряжённо работают, разрабатывая новые расширения, которые вам будет интересно попробовать. Загляните в Wikia Labs в ближайшее время!',
+	'wikifeatures-log-name' => 'журнал Wiki Features',
+	'wikifeatures-log-header' => 'Ниже приводится список изменений параметров Wiki Features.',
 );
 
 /** Swedish (Svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikifeatures' => 'Wiki-funktioner',
 	'wikifeatures-title' => 'Wiki-funktioner',
 	'wikifeatures-heading' => 'Funktioner',
+	'wikifeatures-creative' => 'Wiki-funktioner låter dig välja vilken av Wikias valfria funktioner du vill ha på din wiki. Ta en titt och kom ihåg att leka, du kan aktivera eller inaktivera funktionerna när som helst.',
 	'wikifeatures-feedback' => 'Ge feedback',
 	'wikifeatures-error-invalid-parameter' => 'Ogiltig parameter: $1. Försök igen.',
 	'wikifeatures-error-message' => 'Din kommentar är antingen för kort eller för lång.',
 	'wikifeatures-error-spam-attempt' => 'Vänta 60 sekunder innan du skickar nästa feedback.',
+	'wikifeatures-error-invalid-category' => 'Hoppsan! Var god välj vad denna sak handlar om.',
 	'wikifeatures-toggle-active' => 'Aktiverad',
 	'wikifeatures-toggle-inactive' => 'Inaktiverad',
 	'wikifeatures-active-on' => 'Aktiv på $1 wikis',
@@ -1143,6 +1152,7 @@ $messages['sv'] = array(
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Utökad Wiki-navigering',
 	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
 	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
+	'wikifeatures-log-name' => 'Logg över Wiki-funktioner',
 );
 
 /** Vietnamese (Tiếng Việt)

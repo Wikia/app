@@ -194,6 +194,14 @@ $messages['sv'] = array(
 	'scribeeventsrecords' => 'Poster',
 );
 
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'scribeevents' => 'அண்மைய நிகழ்வுகள்',
+	'scribeeventsrecords' => 'பதிவுகள்',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
