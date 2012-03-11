@@ -177,7 +177,7 @@ class ImageReviewHelper extends WikiaModel {
 			     ),
 			$where,
 			__METHOD__,
-			array( 'LIMIT' => ImageReviewHelper::LIMIT_IMAGES ) 
+			array( 'LIMIT' => self::LIMIT_IMAGES ) 
 		);
 		$db->commit();
 	
