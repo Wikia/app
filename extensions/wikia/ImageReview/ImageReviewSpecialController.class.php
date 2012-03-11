@@ -65,8 +65,17 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->redirect( $this->submitUrl.'?ts='.time() );
 			return;
 		}
+				
+		$newestTs = $this->wg->memc->get($this->getUserTsKey(), null);
 		
-		$this->imageList = ImageReviewHelper::getInstance()->refetchImageListByTimestamp( $ts );
+		if ($ts > $newestTs) {
+			error_log("ImageReview: I've got the newest ts ($ts), I won't refetch the images");
+			$this->imageList = array();
+			$this->wg->memc->set($this->getUserTsKey(), $ts);
+		} else {
+			$this->imageList = ImageReviewHelper::getInstance()->refetchImageListByTimestamp( $ts );
+		}
+		
 		if ( count($this->imageList) == 0 ) {
 			if ( $action == 'questionable' ) {
 				$this->imageList = ImageReviewHelper::getInstance()->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE );
@@ -74,6 +83,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				$this->imageList = ImageReviewHelper::getInstance()->getImageList( $ts );
 			}
 		}
+	}
+	
+	private function getUserTsKey() {
+		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
 	}
 
 }
