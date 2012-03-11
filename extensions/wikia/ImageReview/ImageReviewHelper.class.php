@@ -69,6 +69,9 @@ class ImageReviewHelper extends WikiaModel {
 			if (isset($sqlWhere[self::STATE_QUESTIONABLE]) && $action != ImageReviewSpecialController::ACTION_QUESTIONABLE )
 				$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
 			$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
+			// Quick hack/fix for stats going negative -- FIXME
+			if ($stats['unreviewed'] < 0)
+				$this->wg->memc->delete( $key );
 		}		
 
 		if ( !empty( $deletionList ) ) {
