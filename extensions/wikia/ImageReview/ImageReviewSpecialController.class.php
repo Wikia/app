@@ -34,6 +34,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
 		$this->response->setVal( 'modeMsgSuffix', empty( $action ) ? '' : '-' . $action );
 
+		$order = $this->getVal( 'sortorder', 0 );
+		$this->response->setVal( 'order', $order );
+
 		// get more space for images
 		$this->wg->SuppressSpotlights = true;
 		$this->wg->SuppressWikiHeader = true;
@@ -88,9 +91,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		
 		if ( count($this->imageList) == 0 ) {
 			if ( $action == self::ACTION_QUESTIONABLE ) {
-				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE );
+				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE, $order );
 			} else { 
-				$this->imageList = $helper->getImageList( $ts );
+				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_UNREVIEWED, $order );
 			}
 		}
 		

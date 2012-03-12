@@ -20,6 +20,19 @@
 	<? if($action == 'questionable') { ?>
 		<a href="<?= $baseUrl ?>">< Back to Image Review</a>
 	<? } ?>
+
+<form action="<?php $submitUrl ?>" method="get" id="ImageReviewControls">
+	Sort order: <?php
+		$sort = new XmlSelect( 'sort', 'sort' );
+
+		$sort->addOptions( ImageReviewHelper::$sortOptions );
+
+		echo $sort->getHTML();
+	?>
+
+	<input type="submit" class="wikia-button secondary" value="Change sort order" />
+</form>
+
 </header>
 
 <?php
