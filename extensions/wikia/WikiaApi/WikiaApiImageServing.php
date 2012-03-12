@@ -42,7 +42,9 @@ class WikiaApiImageServing extends ApiBase {
 			// Automatically follow redirects.
 			if($article->isRedirect()){
 				$title = $article->followRedirect();
-				$Id = $title->getArticleID();
+				if(is_object($title)){ // if this is not an object, then we're pretty unlikely to get any good image matches, but more likely to get them for the original ID.
+					$Id = $title->getArticleID();
+				}
 			}
 
 			$imageUrl = null;
