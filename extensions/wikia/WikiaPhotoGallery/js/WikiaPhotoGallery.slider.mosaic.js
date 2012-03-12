@@ -20,11 +20,13 @@ WikiaMosaicSlider.prototype.init = function() {
 	// pre-cache DOM
 	this.thumbRegion = this.el.find('.wikia-mosaic-thumb-region');
 	this.slides = this.thumbRegion.find('.wikia-mosaic-slide');
+	this.slideLinks = this.thumbRegion.find('.wikia-mosaic-link');
 	this.slideDescriptions = this.slides.find('.wikia-mosaic-description');
 	this.largeThumbs = this.slides.find('.wikia-mosaic-hero-image');
 	this.sliderRegion = this.el.find('.wikia-mosaic-slider-region');
 	this.sliderPanorama = this.sliderRegion.find('.wikia-mosaic-slider-panorama');
 	this.sliderDescription = this.sliderRegion.find('.wikia-mosaic-slider-description');
+	this.sliderRegionLink = this.sliderRegion.find('.wikia-mosaic-link');
 	
 	// build slider region (DOM op)
 	this.sliderPanorama.append(this.largeThumbs);
@@ -34,7 +36,7 @@ WikiaMosaicSlider.prototype.init = function() {
 	this.timer = 5000;	// 3 seconds
 	
 	// attach event handler
-	this.slides.click($.proxy(this.handleSlideClick, this));
+	this.slides.hover($.proxy(this.handleSlideClick, this), function() {});
 	this.timerHandle = setInterval($.proxy(this.timedSlide, this), this.timer);
 	
 	// display
@@ -53,18 +55,23 @@ WikiaMosaicSlider.prototype.handleSlideClick = function(e) {
 };
 
 WikiaMosaicSlider.prototype.showSlide = function(index) {
+	this.sliderDescription.stop(true, true);
+	this.sliderPanorama.stop(true, true);
+
 	this.slides.removeClass('selected');
 	
 	var slide = $(this.slides[index]);
 	slide.addClass('selected');
 	
-	this.sliderDescription.fadeOut(200, $.proxy(function() {
+	this.sliderRegionLink.attr('href', $(this.slideLinks[index]).attr('href'));
+
+	this.sliderDescription.fadeTo(100, 0, $.proxy(function() {
 		this.sliderDescription.html(
-			'<a href="' + $(this.largeThumbs[index]).attr("href") + '">'
-			+ $(this.slideDescriptions[index]).html()
-			+ '</a>'
-		).fadeIn(200);
+			$(this.slideDescriptions[index]).html()
+		).fadeTo(100, 1);
 	}, this) );
+
+	this.sliderDescription.addClass('')
 	if ( ($.browser.msie) || ( $.browser.mozilla && $.browser.version.slice(0,3) == "1.9" ) ) { //jquery animate version for IE and FF 3.6
 		this.sliderPanorama.animate({left: -1*this._imageWidth*index}, 400);
 	}
