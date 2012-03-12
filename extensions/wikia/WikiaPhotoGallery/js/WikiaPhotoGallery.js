@@ -572,10 +572,10 @@ var WikiaPhotoGallery = {
 		switch (editor.currentPage) {
 			case this.UPLOAD_FIND_PAGE:
 				newPage = params.source;
-				if (params.imageId != null) newPageParams.imageId = params.imageId;
-				if (params.imageName) newPageParams.imageName = params.imageName;
-				if (params.caption) newPageParams.caption = params.caption;
-				if (params.link) newPageParams.link = params.link;
+				if (params.imageId != null) { newPageParams.imageId = params.imageId; }
+				if (params.imageName) { newPageParams.imageName = params.imageName; }
+				if (params.caption) { newPageParams.caption = params.caption; }
+				if (params.link) { newPageParams.link = params.link; }
 				break;
 
 			case this.UPLOAD_CONFLICT_PAGE:
@@ -734,8 +734,8 @@ var WikiaPhotoGallery = {
 		this.setupLinkSuggest('WikiaPhotoSlideshowLink');
 
 		// add handlers to buttons
-		$('#WikiaPhotoGalleryEditorSave').unbind('.save').bind('click.save', function() {self.onSave.apply(self)});
-		$('#WikiaPhotoGalleryEditorCancel').unbind('.cancel').bind('click.cancel', function() {self.onCancel.apply(self)});
+		$('#WikiaPhotoGalleryEditorSave').unbind('.save').bind('click.save', function() {self.onSave.apply(self);});
+		$('#WikiaPhotoGalleryEditorCancel').unbind('.cancel').bind('click.cancel', function() {self.onCancel.apply(self);});
 
 		// and render this page
 		this.selectPage(firstPage);
@@ -944,7 +944,7 @@ var WikiaPhotoGallery = {
 		// setup clicks on "Select" button
 		$('#WikiaPhotoGallerySearchResultsSelect').unbind('.selectImage').bind('click.selectImage', function(ev) {
 			var selected = results.find('input:checked');
-			self.log(selected.length + ' image(s) selected')
+			self.log(selected.length + ' image(s) selected');
 
 			if (!selected.exists()) {
 				// no images selected

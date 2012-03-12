@@ -25,7 +25,7 @@ var WikiaPhotoGallerySlider = {
 
 		//bind events
 		slider.delegate('.nav', 'click', function() {
-			WikiaPhotoGallerySlider.scroll($(this))
+			WikiaPhotoGallerySlider.scroll($(this));
 		});
 	},
 
