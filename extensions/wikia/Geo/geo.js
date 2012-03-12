@@ -1,7 +1,7 @@
 var Geo = {
 	cookieName : 'Geo',
 	geoData : {}
-}
+};
 
 Geo.getGeoData = function () {
 	if ($.isEmptyObject(Geo.geoData)) {
@@ -9,5 +9,4 @@ Geo.getGeoData = function () {
 		Geo.geoData = JSON.parse(jsonData);
 	}
 	return Geo.geoData;
-}
-
+};

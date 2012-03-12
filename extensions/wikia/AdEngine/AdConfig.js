@@ -1,14 +1,14 @@
 /* depends on raon.js */
-AdConfig = {
+var AdConfig = {
 	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
-	geo: null, 
+	geo: null,
 	geoCookieName: 'Geo',
 	quantcastSegmentCookieName: 'qcseg',
 
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
 		if (window.wgHighValueCountries) {
-			return country in window.wgHighValueCountries && window.wgHighValueCountries[country];			
+			return country in window.wgHighValueCountries && window.wgHighValueCountries[country];
 		}
 	},
 
@@ -50,16 +50,14 @@ AdConfig = {
 	/* Pull the geo data from cookie */
 	pullGeo: function (){
 		if (AdConfig.geo) {
-			return; 
-		}
-	
-		var cookie = decodeURIComponent(AdConfig.cookie(AdConfig.geoCookieName));
-		if (typeof cookie != 'undefined' && cookie) {
-			AdConfig.geo = eval('(' + cookie + ')');
 			return;
 		}
-	
-		return;
+
+		var cookie = decodeURIComponent(AdConfig.cookie(AdConfig.geoCookieName));
+		if (typeof cookie != 'undefined' && cookie) {
+			// consider using JSON.parse (BugId:9747)
+			AdConfig.geo = eval('(' + cookie + ')');
+		}
 	},
 
 	init: function() {
@@ -132,8 +130,8 @@ AdConfig.DART = {
 	   'PREFOOTER_RIGHT_BOXAD': {'tile': 5, 'loc': "footer"},
 	   'TOP_BUTTON': {'tile': 3, 'loc': 'top'},
 	   'TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
-	   'TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}, 
-	   'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"}, 
+	   'TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
+	   'TEST_HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 	   'TEST_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 	   'TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"}
 	}
@@ -406,7 +404,7 @@ AdConfig.DART.getHostnamePrefix = function (hostname) {
 	if (pieces.length) {
 		return 'hostpre=' + pieces[0] + ';';
 	}
-	
+
 	return '';
 }
 
