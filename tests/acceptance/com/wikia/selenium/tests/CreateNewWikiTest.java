@@ -257,8 +257,8 @@ public class CreateNewWikiTest extends BaseTest {
 		
 	//Test Case 002
 	//logged out in german wiki,domain appears in german,log in as QATestsStaff during CNW flow,verify domain is de.
-	@Test(groups={"broken"}) 
-	//added "broken" to groups Patick Archbold 08-Mar-12
+	@Test(groups={"envProduction", "verified"}) 
+	//fixed by Rodrigo Molinero 12-Mar-12
 		public void createWikiDefaultLanguageForAnonymousIsWikiLanguage() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
@@ -269,13 +269,11 @@ public class CreateNewWikiTest extends BaseTest {
 		//waitForElementVisible("//form[@name='label-wiki-form]//span[@class='domain-status-icon status-icon']/img[@src='/extensions/wikia/CreateNewWiki/images/check.png'");
 		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");
 		
-		session().click("//p[@class='login-msg']/a");
-		waitForElementVisible("AjaxLoginLoginForm");
-		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
-		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
-		session().click("//li[@id='Auth']/nav/input[@class='login']");
+		assertTrue(session().isTextPresent("account?"));
+		session().type("//div[@class='UserLoginModal']//input[@type='text']", getTestConfig().getString("ci.user.wikiastaff.username"));
+		session().type("//div[@class='UserLoginModal']//input[@type='password']", getTestConfig().getString("ci.user.wikiastaff.password"));
+		session().click("//div[@class='UserLoginModal']//input[@value='Anmelden']");
 		
-		waitForElementVisible("DescWiki");
 		session().select("//select[@name='wiki-category']", "value=3");
 		session().click("//li[@id='DescWiki']/form/nav/input[@class='next']");
 		waitForElementVisible("ThemeWiki", this.getTimeout());
@@ -292,8 +290,8 @@ public class CreateNewWikiTest extends BaseTest {
 		
 	//Test Case 003
 	//logged out in german wiki,change language to english in CNW flow,log in as QATestsStaff,verify domain is english
-	@Test(groups={"broken"})
-	//added "broken" to groups Patick Archbold 08-Mar-12
+	@Test(groups={"envProduction", "verified"})
+	//fixed by Rodrigo Molinero 12-Mar-12
 	public void createWikiDefaultLanguageForAnonymousIsWikiAndItCanBeChanged() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
 		clickAndWait("//header/nav//li[2]/a[@class='wikia-button']");
@@ -305,11 +303,10 @@ public class CreateNewWikiTest extends BaseTest {
 		session().select("//select[@name='wiki-language']", "value=en");
 		session().click("//ol[@class='steps']//nav[@class='next-controls']/input[@class='next']");
 		
-		session().click("//p[@class='login-msg']/a");
-		waitForElementVisible("AjaxLoginLoginForm");
-		session().type("wpName2Ajax", getTestConfig().getString("ci.user.wikiastaff.username"));
-		session().type("wpPassword2Ajax", getTestConfig().getString("ci.user.wikiastaff.password"));
-		session().click("//li[@id='Auth']/nav/input[@class='login']");
+		assertTrue(session().isTextPresent("account?"));
+		session().type("//div[@class='UserLoginModal']//input[@type='text']", getTestConfig().getString("ci.user.wikiastaff.username"));
+		session().type("//div[@class='UserLoginModal']//input[@type='password']", getTestConfig().getString("ci.user.wikiastaff.password"));
+		session().click("//div[@class='UserLoginModal']//input[@value='Anmelden']");
 		
 		waitForElementVisible("DescWiki");
 		session().select("//select[@name='wiki-category']", "value=3");
