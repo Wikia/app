@@ -26,7 +26,6 @@ class VideoFileUploader {
 	public function setExternalUrl ( $sUrl ){			$this->sExternalUrl = $sUrl; }
 	public function setProvider( $sProvider ){			$this->sProvider = $sProvider; }
 	public function setVideoId( $sVideoId ){			$this->sVideoId = $sVideoId; }
-	public function getVideoId( ){					return $this->sVideoId; }
 	public function setProviderFromId( $iProviderId ){
 		$sProvider = ApiWrapperFactory::getInstance()->getProviderNameFromId( $iProviderId );
 		if ( empty( $sProvider ) ) {
@@ -125,6 +124,14 @@ class VideoFileUploader {
 		if ( empty( $this->sDescription ) ) {
 			return '[[Category:Video]]'.$this->getApiWrapper()->getDescription();
 		}
+	}
+	
+	protected function getVideoId(){
+		if (empty($this->sVideoId)) {
+			$this->sVideoId = $this->getApiWrapper()->getVideoId();
+		}
+
+		return $this->sVideoId;
 	}
 
 	
