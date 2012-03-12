@@ -84,7 +84,7 @@ var requestMW = function(roomId, query, callback, errorcallback) {
 			);
 		}
 	});
-}
+};
 	
 
 var getUrl = function(method, params) {
@@ -100,7 +100,7 @@ var getUrl = function(method, params) {
 var WMBridge = function() {
 //	var KICKBAN_URL = "/?action=ajax&rs=ChatAjax&method=kickBan";
 //	var GIVECHATMOD_URL = "/?action=ajax&rs=ChatAjax&method=giveChatMod";
-}
+};
 
 
 WMBridge.prototype.getUser = function(roomId, name, key, success, error) {
@@ -113,7 +113,7 @@ WMBridge.prototype.getUser = function(roomId, name, key, success, error) {
 	console.log(requestUrl);
 	
 	requestMW(roomId, requestUrl, success, error);
-}
+};
 
 WMBridge.prototype.kickban = function(roomId, name, key, success, error) {
 	var requestUrl = getUrl('kickBan', {
@@ -130,7 +130,7 @@ WMBridge.prototype.kickban = function(roomId, name, key, success, error) {
 			success(data);
 		}
 	});
-}
+};
 
 
 WMBridge.prototype.giveChatMod = function(roomId, name, key, success, error) {

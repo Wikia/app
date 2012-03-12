@@ -14,10 +14,11 @@ jQuery.AIM = {
 		attr('target', iframeName).
 		log('AIM: uploading into "' + iframeName + '"');
 		
-		if (options && typeof(options.onStart) == 'function')
+		if (options && typeof(options.onStart) == 'function'){
 			return options.onStart();
-		else
+		} else {
 			return true;
+		}
 	},
 	
 	// create iframe to handle uploads and return value of its "name" attribute
@@ -36,8 +37,9 @@ jQuery.AIM = {
 		appendTo('body');
 		
 		// add custom callback to be fired when upload is completed
-		if (options && typeof(options.onComplete) == 'function')
+		if (options && typeof(options.onComplete) == 'function'){
 			iframe[0].onComplete = options.onComplete;
+		}
 		
 		return name;
 	},
@@ -46,24 +48,28 @@ jQuery.AIM = {
 	loaded : function(id) {
 		$().log('AIM: upload into "' + id + '" completed');
 		var i = document.getElementById(id);
+		var d;
 		
-		if (i.contentDocument)
-			var d = i.contentDocument;
-		else if (i.contentWindow)
-			var d = i.contentWindow.document;
-		else
-			var d = window.frames[id].document;
+		if (i.contentDocument) {
+			d = i.contentDocument;
+		} else if (i.contentWindow) {
+			d = i.contentWindow.document;
+		} else {
+			d = window.frames[id].document;
+		}
 		
-		if (d.location.href == "about:blank")
+		if (d.location.href == "about:blank"){
 			return;
+		}
 		
 		if (typeof(i.onComplete) == 'function') {
 			var response = null;
 			
-			if(typeof(d.responseContent) != "undefined")
+			if(typeof(d.responseContent) != "undefined") {
 				response = d.responseContent;
-			else
+			} else {
 				response = d.body.innerHtml;
+			}
 			
 			i.onComplete(response);
 		}

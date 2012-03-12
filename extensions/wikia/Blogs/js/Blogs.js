@@ -178,6 +178,7 @@ $(document).ready(function() {
 
 Blogs.render = function() {
 	setTimeout(function() {
-	$( ".blog-comm-hide" ).unbind().click( Blogs.toggle );
-	$( ".blog-comm-edit" ).unbind().click( Blogs.edit ); }, 1000 );
-}
+					$( ".blog-comm-hide" ).unbind().click( Blogs.toggle );
+					$( ".blog-comm-edit" ).unbind().click( Blogs.edit );
+				}, 1000 );
+};

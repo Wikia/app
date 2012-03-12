@@ -28,8 +28,9 @@ var ArticleComments = ArticleComments || (function(){
 			pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
 			condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
 
-		if(currentPage === 1)
-				firstPage = commsUl.innerHTML;
+		if(currentPage === 1) {
+			firstPage = commsUl.innerHTML;
+		}
 				
 		track(['comment', 'page', (forward)?'next':'previous']);
 
@@ -49,8 +50,9 @@ var ArticleComments = ArticleComments || (function(){
 				$.hideLoader(elm);
 
 				//there's a good reason to use display instead of show/hide in the following lines
-				if(finished)
+				if(finished) {
 					elm.css('display', 'none');
+				}
 
 				((forward) ? loadPrev : loadMore).style.display = 'block';
 
@@ -82,8 +84,9 @@ var ArticleComments = ArticleComments || (function(){
 				useskin:'wikiamobile'
 			};
 	
-			if(parentId)
+			if(parentId) {
 				data.parentId = parentId;
+			}
 	
 			$.post(wgScript, data, function(resp) {
 				var json = JSON.parse(resp);
@@ -133,7 +136,7 @@ var ArticleComments = ArticleComments || (function(){
 		loadMore = document.getElementById('commMore');
 		loadPrev = document.getElementById('commPrev');
 		commsUl = document.getElementById('wkComUl');
-		totalPages = ~~wrapper.data('pages');
+		totalPages = ~~wrapper.data('pages'); // double-tilde is a faster alternative to Math.floor()
 		postComm = document.getElementById('wkCommFrm');
 		rpl = document.getElementsByClassName('fkRpl')[0];
 
