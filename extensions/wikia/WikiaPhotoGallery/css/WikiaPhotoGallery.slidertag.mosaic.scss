@@ -5,6 +5,10 @@
 	color: white;
 	display: none;
 	
+	a {
+		color: #fff;
+		text-decoration: none;
+	}
 	.wikia-mosaic-slider-region {
 		float: left;
 		height: 210px;
@@ -55,10 +59,6 @@
 				margin: 0 5px;
 				padding: 0;
 			}
-			a {
-				color: #fff;
-				text-decoration: none;
-			}
 			.wikia-mosaic-short-title {
 				display: none;
 			}
@@ -90,9 +90,8 @@
 			.wikia-mosaic-hero-image {
 				display: none;
 			}
-			
-			> a {
-				position: relative;
+			a {
+				//position: relative;
 				z-index: 1;
 				.wikia-mosaic-thumb-image {
 					height: 100px;
