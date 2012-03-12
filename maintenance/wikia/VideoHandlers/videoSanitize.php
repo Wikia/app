@@ -83,7 +83,8 @@ $options = array('help');
 require_once ('videoSanitizerMigrationHelper.class.php');
 require_once( 'videolog.class.php' );
 
-global $IP, $wgCityId, $wgExternalDatawareDB;
+global $IP, $wgCityId, $wgDBname, $wgExternalDatawareDB;
+$devboxuser = 'DEVBOX';
 
 
 $sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgExternalDatawareDB);
@@ -300,7 +301,7 @@ foreach ( $aTranslation as $key => $val ) {
 				$sTextAfter = title_replacer( substr( $key, 1 ), substr( $val, 1), $sTextAfter  );
 
 				if ( $sTextAfter != $sText ) {
-					$allChangesArticleURLs[] = $oTitle->getFullURL();
+					$allChangesArticleURLs[ str_replace('localhost',$wgDBname.'.'.$devboxuser.'.wikia-dev.com',$oTitle->getFullURL()) ] = true;
 					echo "ARTICLE WAS CHANGED! \n";
 					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
 				} else {
@@ -365,7 +366,7 @@ videoLog( 'sanitize', 'RELATEDVIDEOS', "edits:$i");
 videoLog( 'sanitize', 'STOP', "");
 
 echo "Articles to check:\n";
-foreach( $allChangesArticleURLs as $url ) {
+foreach( $allChangesArticleURLs as $url => $v ) {
 	echo "  $url\n";
 }
 
