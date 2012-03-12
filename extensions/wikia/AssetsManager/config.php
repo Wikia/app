@@ -130,7 +130,6 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/Meebo/meebo.js',
 		'//skins/common/wikia/cookiecutter.js',
-		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/VisualDNA/vdnaaat.js',
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
@@ -182,7 +181,6 @@ $config['wikiaphone_js'] = array(
 	'assets' => array(
 		'#group_oasis_jquery',
 		'//skins/common/wikia/cookiecutter.js',
-		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
@@ -198,7 +196,6 @@ $config['wikiamobile_js_head'] = array(
 	'assets' => array(
 		'//skins/common/zepto/zepto-0.8.js',
 		'//skins/common/wikia/cookiecutter.js',
-		'//extensions/wikia/RadiumOne/raon.js',
 		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
