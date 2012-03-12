@@ -42,28 +42,7 @@ class ImageLightbox {
 		
 			if ( !empty($wgTitle) ) {
 				
-				$embedCode = $image->getEmbedCode( $maxWidth, true, true );
-				$asset = $image->getPlayerAssetUrl();
-
-				if ( empty($asset) ) {
-					// $image->getEmbedCode returns normal html
-					$html = $embedCode;
-					$jsonData = '';
-				} else {
-					// $image->getEmbedCode returns json
-					$html = ''; // You can still add here some code, it will be displayed under the video
-					$jsonData = $embedCode;
-				}
-				
-				$res = array(
-					'html' => $html,
-					'jsonData' => $jsonData,
-					'title' => $wgTitle->getText(),
-					'width' => $maxWidth,
-					'asset' => $asset
-				);		
-				wfProfileOut(__METHOD__);
-				return $res;				
+				return self::videoLightbox($image);
 			}
 		}		
 		
@@ -164,6 +143,53 @@ class ImageLightbox {
 		return $res;
 	}
 
+	
+	function videoLightbox($image) {
+		
+		global $wgTitle, $wgRequest, $wgExtensionsPath, $wgBlankImgUrl;
+		
+		if ( !empty($wgTitle) ) {
+			
+			$maxWidth = $wgRequest->getInt('maxwidth', 500);
+			
+			$embedCode = $image->getEmbedCode( $maxWidth, true, true );
+			$asset = $image->getPlayerAssetUrl();
+
+			if ( empty($asset) ) {
+				// $image->getEmbedCode returns normal html
+				$html = $embedCode;
+				$jsonData = '';
+			} else {
+				// $image->getEmbedCode returns json
+				$html = ''; // You can still add here some code, it will be displayed under the video
+				$jsonData = $embedCode;
+			}
+
+			$tmpl = new EasyTemplate(dirname(__FILE__));
+			
+			$tmpl->set_vars(array(
+				'showShareTools' => $wgRequest->getInt('share', 0),
+				'linkStd' => $wgTitle->getFullURL(),
+				'wgBlankImgUrl' => $wgBlankImgUrl
+			));
+			
+			$htmlUnderPlayer = $tmpl->render('VideoLightbox');
+			$html .= $htmlUnderPlayer;
+			
+			$res = array(
+				'html' => $html,
+				'jsonData' => $jsonData,
+				'title' => $wgTitle->getText(),
+				'width' => $maxWidth,
+				'asset' => $asset
+			);		
+			
+			wfProfileOut(__METHOD__);
+			return $res;			
+		}
+	}
+	
+	
 	/**
  	 * AJAX function for sending share e-mails
 	 *
