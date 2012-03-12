@@ -53,13 +53,16 @@ class MiniEditorController extends WikiaController {
 			$jsvars = $response->getData();
 
 			// Load any required assets
-			foreach ($jsvars['wgMiniEditorAssets'] as $value) {
+			// TODO: add a "raw_url" = true param to $response->addAsset so we can use that
+			foreach ($jsvars['wgMiniEditorAssets'] as $asset) {
 
-				// TODO: add a "raw_url" = true param to $response->addAsset so can just use that
-				if (endsWith($value, 'js')) {
-					$this->wg->Out->addScript( "<script type=\"{$this->wg->JsMimeType}\" src=\"{$value}\"></script>" );
-				} else {
-					$this->wg->Out->addStyle( $value );
+				// Load JavaScript files/AssetManager groups
+				if (preg_match("/(.js(\?(.*))?$)|(__am\/\d+\/group)/", $asset)) {
+					$this->wg->Out->addScript( "<script type=\"{$this->wg->JsMimeType}\" src=\"{$asset}\"></script>" );
+
+				// Load SASS/CSS files
+				} else if (preg_match("/.s?css(\?(.*))?$/", $asset)) {
+					$this->wg->Out->addStyle( $asset );
 				}
 			}
 
@@ -102,17 +105,16 @@ class MiniEditorController extends WikiaController {
 		RTE::init($ep);
 		RTE::makeGlobalVariablesScript(&$vars);
 
+		// FIXME: We have to force AssetsManager to combine scripts.
+		// MiniEditor will break in loadOnDemand mode because of improper script execution order.
+		$minify = empty($this->wg->DevelEnvironment);
+
 		// If RTE is disabled, fall back to the mediawiki editor
 		if (isset($vars['RTEDisabledReason'])) {
-			$assetList = AssetsManager::getInstance()->getGroupCommonURL('mini_editor_js', array(), true, false);
+			$assetList = AssetsManager::getInstance()->getGroupCommonURL('mini_editor_js', array(), true, $minify);
 
 		} else {
-			// JS/CSS assets for MiniEditor are loaded on demand via js which looks at this assetList variable
-			if ($this->wg->DevelEnvironment) {
-				$assetList = AssetsManager::getInstance()->getGroupCommonURL('mini_editor_rte_js', array(), true, false);
-			} else {
-				$assetList = AssetsManager::getInstance()->getGroupCommonURL('mini_editor_rte_js');
-			}
+			$assetList = AssetsManager::getInstance()->getGroupCommonURL('mini_editor_rte_js', array(), true, $minify);
 		}
 		
 		// Extension CSS
