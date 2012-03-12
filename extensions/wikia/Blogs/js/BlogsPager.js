@@ -54,7 +54,7 @@ if(!window.blogInitialized) {
 				BlogPaginator.init();
 			}
 		}, 500);
-	}
+	};
 
 	initializeBlogPaginator();
 }

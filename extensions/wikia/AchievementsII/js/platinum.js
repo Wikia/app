@@ -112,8 +112,9 @@ var SpecialCustomizePlatinum = {
 		var badge = $(form).children().first();
 		var msg = SpecialCustomizePlatinum.validateInput(badge);
 		
-		if(msg != '') alert(msg);
-		else {
+		if(msg != '') {
+			alert(msg);
+		} else {
 			$.AIM.submit(form, {onComplete: SpecialCustomizePlatinum.onEdited});
 			
 			//unbind original html element handler to avoid loops
@@ -121,8 +122,9 @@ var SpecialCustomizePlatinum = {
 			
 			$(form).submit();
 			//block user input
-			if(!$.browser.webkit)
+			if(!$.browser.webkit) {
 				badge.find('textarea, input, checkbox').attr('disabled', 'disabled');
+			}
 			
 			$("#body").addClass("ajax");
 		}

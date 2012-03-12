@@ -1,7 +1,7 @@
 var wgAjaxPath = wgScriptPath + wgScript;
 var ACWikiRequest = {};
 
-$('#highlightform').submit(function(e){e.preventDefault()});
+$('#highlightform').submit(function(e){e.preventDefault();});
 
 ACWikiRequest.NameCallback = function( res ) {
 	if (res) {

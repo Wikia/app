@@ -33,8 +33,8 @@ var ArticleComments = {
 			/*$('#article-comments').delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
 			$('#article-comments').delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});*/
 		}
-		$('#article-comm-fbMonit').mouseenter( function() {$('#fbCommentMessage').fadeIn( 'slow' )});
-		$('#article-comm-fbMonit').mouseleave( function() {$('#fbCommentMessage').fadeOut( 'slow' )});
+		$('#article-comm-fbMonit').mouseenter( function() {$('#fbCommentMessage').fadeIn( 'slow' );});
+		$('#article-comm-fbMonit').mouseleave( function() {$('#fbCommentMessage').fadeOut( 'slow' );});
 		ArticleComments.addHover();
 		ArticleComments.showEditLink();
 	},
@@ -63,7 +63,7 @@ var ArticleComments = {
 		ArticleComments.log('begin: save');
 		e.preventDefault();
 		ArticleComments.track('editSave');
-		if (ArticleComments.processing) return;
+		if (ArticleComments.processing) { return; }
 
 		if ($('#article-comm-form-' + e.data.id)) {
 
@@ -91,7 +91,7 @@ var ArticleComments = {
 				if (!json.error) {
 					if (json.commentId && json.commentId != 0) {
 						//replace
-						$('#comm-' + json.commentId).html(json.text)
+						$('#comm-' + json.commentId).html(json.text);
 					}
 					//clear error box
 					$('#article-comm-info').html('');
@@ -112,7 +112,7 @@ var ArticleComments = {
 		ArticleComments.log('begin: vote');
 		e.preventDefault();
 		ArticleComments.track('vote');
-		if (ArticleComments.processing) return;
+		if (ArticleComments.processing) { return; }
 
 		var data = {
 			action: 'insert',
@@ -144,7 +144,7 @@ var ArticleComments = {
 		ArticleComments.log('begin: edit');
 		e.preventDefault();
 		ArticleComments.track('edit');
-		if (ArticleComments.processing) return;
+		if (ArticleComments.processing) { return; }
 
 		var data = {
 			action: 'ajax',
@@ -192,7 +192,7 @@ var ArticleComments = {
 		ArticleComments.log('begin: reply');
 		e.preventDefault();
 		ArticleComments.track('reply');
-		if (ArticleComments.processing) return;
+		if (ArticleComments.processing) { return; }
 
 		var data = {
 			action: 'ajax',
@@ -226,8 +226,8 @@ var ArticleComments = {
 		ArticleComments.log('begin: postComment');
 		e.preventDefault();
 		ArticleComments.track('post');
-		if (ArticleComments.processing) return;
-		if ($.trim($(e.data.source).val()) == '') return;
+		if (ArticleComments.processing) { return; }
+		if ($.trim($(e.data.source).val()) == '') { return; }
 		$(e.data.source).attr('readonly', 'readonly');
 		$(e.target).attr('disabled', true);
 
@@ -285,10 +285,11 @@ var ArticleComments = {
 						$('#WikiaPageHeader').find('.commentsbubble').html(json.counter);
 
 						if(!parentId){
-							if(!ArticleComments.mostRecentCount)
+							if(!ArticleComments.mostRecentCount) {
 								ArticleComments.mostRecentCount = $('#article-comments-ul > li').length;
-							else
+							} else {
 								ArticleComments.mostRecentCount++;
+							}
 
 							$('#article-comments-counter-recent').html($.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount));
 						}
