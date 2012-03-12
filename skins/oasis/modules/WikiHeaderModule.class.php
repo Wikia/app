@@ -18,7 +18,7 @@ class WikiHeaderModule extends Module {
 	var $wordmarkFont;
 
 	public function executeIndex() {
-		global $wgOut, $wgCityId, $wgUser, $wgMemc, $wgIsPrivateWiki, $wgEnableAdminDashboardExt, $wgTitle;
+		global $wgCityId, $wgUser, $wgIsPrivateWiki, $wgEnableAdminDashboardExt, $wgTitle;
 
 		//fb#1090
 		$this->isInternalWiki = empty($wgCityId);
