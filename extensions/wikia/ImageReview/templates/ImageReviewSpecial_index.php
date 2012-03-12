@@ -23,11 +23,11 @@
 
 <form action="<?php $submitUrl ?>" method="get" id="ImageReviewControls">
 	Sort order: <?php
-		$sort = new XmlSelect( 'sort', 'sort' );
+		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $order ) );
 
-		$sort->addOptions( ImageReviewHelper::$sortOptions );
+		$sortSelect->addOptions( ImageReviewHelper::$sortOptions );
 
-		echo $sort->getHTML();
+		echo $sortSelect->getHTML();
 	?>
 
 	<input type="submit" class="wikia-button secondary" value="Change sort order" />

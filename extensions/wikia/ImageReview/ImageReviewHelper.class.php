@@ -20,13 +20,13 @@ class ImageReviewHelper extends WikiaModel {
 	const FLAG_SKIN_DETECTED = 8;
 
 	static $sortOptions = array(
-		'by priority and recency' => 0,
-		'latest first' => 1,
+		'latest first' => 0,
+		'by priority and recency' => 1,
 		'oldest first' => 2,
 	);
 
-	const ORDER_PRIORITY_LATEST = 0;
-	const ORDER_LATEST = 1;
+	const ORDER_LATEST = 0;
+	const ORDER_PRIORITY_LATEST = 1;
 	const ORDER_OLDEST = 2;
 
 	/**
@@ -453,15 +453,15 @@ class ImageReviewHelper extends WikiaModel {
 
 	private function getOrder( $order ) {
 		switch ( $order ) {
-			case self::ORDER_LATEST:
-				$ret = 'last_edited desc';
+			case self::ORDER_PRIORITY_LATEST:
+				$ret = 'priority desc, last_edited desc';
 				break;
 			case self::ORDER_OLDEST:
 				$ret = 'last_edited asc';
 				break;
-			case self::ORDER_PRIORITY_LATEST:
+			case self::ORDER_LATEST:
 			default:
-				$ret = 'priority desc, last_edited desc';
+				$ret = 'last_edited desc';
 		}
 		return $ret;
 	}
