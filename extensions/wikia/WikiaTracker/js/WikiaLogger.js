@@ -33,7 +33,7 @@ WikiaLogger._log = function(msg, group) {
 	else if (typeof opera != 'undefined') {
 		opera.postError(group + ': ' + msg);
 	}
-}
+};
 
 WikiaLogger.init = function() {
 	if (typeof jQuery == 'function') {
