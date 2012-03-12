@@ -34,7 +34,9 @@ $app->registerSpecialPage('ImageReview', 'ImageReviewSpecialController');
 $wgAvailableRights[] = 'imagereview';
 $wgGroupPermissions['util']['imagereview'] = true;
 $wgGroupPermissions['vstf']['imagereview'] = true;
+
 $wgGroupPermissions['reviewer']['imagereview'] = true;
+$wgGroupPermissions['reviewer']['edit'] = false;
 
 $wgAvailableRights[] = 'questionableimagereview';
 $wgGroupPermissions['util']['questionableimagereview'] = true;
