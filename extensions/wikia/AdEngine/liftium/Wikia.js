@@ -258,6 +258,7 @@ LiftiumDART.getQuantcastSegmentKV = function (){
 	}
 	if (!Liftium.e(Liftium.cookie(COOKIE_NAME))) {
 	try {
+		// consider using JSON.parse (BugId:9747)
 		var qc = eval("(" + Liftium.cookie(COOKIE_NAME) + ")");
 		if (!Liftium.e(qc) && !Liftium.e(qc.segments)) {
 			for (var i in qc.segments) {
