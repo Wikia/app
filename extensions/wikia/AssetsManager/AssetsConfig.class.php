@@ -65,17 +65,11 @@ class AssetsConfig {
 
 	public static function getEPLAssets( $combine ) {
 		// This class always exists at the moment, this is just in case it goes away at some point
-		if (class_exists('EditPageLayoutHelper'))
+		if (class_exists('EditPageLayoutHelper')) {
 			return EditPageLayoutHelper::getAssets();
-		else 
+		} else { 
 			return array();
-	}
-	
-	public static function getMiniEditorAssets ( $combine ) {
-		if (class_exists('MiniEditorHelper'))
-			return MiniEditorHelper::getAssets();
-		else 
-			return array();		
+		}
 	}
 
 	public static function getJQueryUrl( $combine, $minify, $params ) {

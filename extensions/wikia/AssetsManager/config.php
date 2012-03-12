@@ -28,7 +28,30 @@ $config['eplrte'] = array(
 $config['mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#function_AssetsConfig::getMiniEditorAssets'
+		'//skins/common/edit.js',
+		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+		'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
+		'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/MiniEditor.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
+		'//extensions/wikia/EditPageLayout/js/extras/Buttons.js',
+		'//extensions/wikia/EditPageLayout/js/modules/Container.js',
+		'//extensions/wikia/EditPageLayout/js/modules/ButtonsList.js',
+		'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditor.js',
+		'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditorSource.js',
+		'//extensions/wikia/EditPageLayout/js/modules/Insert.js',
+		'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
+		'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
+		// TODO: Load this on the fly with JSSnippets. Only thing really needed is slider (so far)
+		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
+		'//extensions/wikia/VideoEmbedTool/js/VET.js',
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
+		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
+		//'extensions/wikia/LinkSuggest/LinkSuggest.js'
 	)
 );
 
