@@ -1,6 +1,6 @@
 /**
  * Pure JS implementation of a cookie setter/getter to use in generic components
- * that shouldn't rely on jQuery's cookie plugin (e.g. AdEngine and RadiumOne)
+ * that shouldn't rely on jQuery's cookie plugin (e.g. AdEngine)
  *
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
