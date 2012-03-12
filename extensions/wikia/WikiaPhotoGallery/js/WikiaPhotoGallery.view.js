@@ -63,7 +63,7 @@ var WikiaPhotoGalleryView = {
 		var galleries = this.getArticle().find('.wikia-gallery').not('.template').not('.inited');
 		if (galleries.exists()) {
 			this.log('found ' + galleries.length + ' galleries');
-			$().log(galleries, "List of galleris")
+			$().log(galleries, "List of galleris");
 		}
 
 		var addButtonSelector = (window.skin == 'oasis') ? '.wikia-photogallery-add' : '.wikia-gallery-add';
@@ -122,7 +122,7 @@ var WikiaPhotoGalleryView = {
 					hover(
 						// onmousein - highlight the gallery
 						function(ev) {
-							if (window.skin == 'oasis') return;
+							if (window.skin == 'oasis') { return; }
 
 							var gallery = $(this).closest('.wikia-gallery');
 
@@ -137,7 +137,7 @@ var WikiaPhotoGalleryView = {
 
 						// onmouseout
 						function (ev) {
-							if (window.skin == 'oasis') return;
+							if (window.skin == 'oasis') { return; }
 
 							var gallery = $(this).closest('.wikia-gallery');
 
@@ -198,7 +198,7 @@ var WikiaPhotoGalleryView = {
 
 			if (typeof callback == 'function') {
 				callback(image);
-			};
+			}
 		};
 
 		// use local cache to speed up things
@@ -246,14 +246,16 @@ var WikiaPhotoGalleryView = {
 				self.loadAndResizeImage(image, thumbWidth, thumbHeight, function(image) {
 					var imageHeight = image.height();
 					var imageWidth = image.width();
+					var wrapperHeight;
+					var wrapperWidth;
 
 					if (crop) {
-						var wrapperHeight = Math.min(image.height(), thumbHeight);
-						var wrapperWidth = Math.min(image.width(), thumbWidth);
+						wrapperHeight = Math.min(image.height(), thumbHeight);
+						wrapperWidth = Math.min(image.width(), thumbWidth);
 					}
 					else {
-						var wrapperHeight = imageHeight;
-						var wrapperWidth = imageWidth;
+						wrapperHeight = imageHeight;
+						wrapperWidth = imageWidth;
 					}
 
 					// position image wrapper
