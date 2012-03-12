@@ -46,9 +46,13 @@
 
 	<ul class="image-review-list">
 <?php
-if (is_array($imageList) && count($imageList) > 0):
+if (is_array($imageList) && count($imageList) > 0) {
 	$cells = 20;
 	$perRow = 5;
+
+	?>
+	<ul class="image-review-list">
+	<?php 
 
 	foreach($imageList as $n => $image) {
 		$id = "img-{$image['wikiId']}-{$image['pageId']}";
@@ -81,9 +85,14 @@ if (is_array($imageList) && count($imageList) > 0):
 		}
 */
 	}
-endif;
-?>
+
+	?>
 	</ul>
+	<?php
+} else {
+	echo wfMsg( 'imagereview-noresults' );
+}
+?>
 
 	<footer>
 		<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>
