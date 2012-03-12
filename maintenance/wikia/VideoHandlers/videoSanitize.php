@@ -109,6 +109,7 @@ $i = 0;
 $timeStart = microtime( true );
 $aTranslation = array();
 $aAllFiles = array();
+$allChangesArticleURLs=array();
 $timeStart = microtime( true );
 
 $rows = $dbw->query( "SELECT img_name FROM image" );
@@ -280,6 +281,7 @@ foreach ( $aTranslation as $key => $val ) {
 
 	// Fixing links in article;
 	//echo "SELECT distinct il_from FROM imagelinks WHERE il_to ='{$key}'! /n";
+	
 	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
 	while( $file = $dbw->fetchObject( $rows ) ) {
 		echo "FETCH FROM DB il_from= ".$file->il_from." // ($key)\n";
@@ -298,6 +300,7 @@ foreach ( $aTranslation as $key => $val ) {
 				$sTextAfter = title_replacer( substr( $key, 1 ), substr( $val, 1), $sTextAfter  );
 
 				if ( $sTextAfter != $sText ) {
+					$allChangesArticleURLs[] = $oTitle->getFullURL();
 					echo "ARTICLE WAS CHANGED! \n";
 					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
 				} else {
@@ -360,6 +363,11 @@ while( $page = $dbw->fetchObject( $rows ) ) {
 videoLog( 'sanitize', 'RELATEDVIDEOS', "edits:$i");
 
 videoLog( 'sanitize', 'STOP', "");
+
+echo "Articles to check:\n";
+foreach( $allChangesArticleURLs as $url ) {
+	echo "  $url\n";
+}
 
 /*
  * wywala nam sie upload
