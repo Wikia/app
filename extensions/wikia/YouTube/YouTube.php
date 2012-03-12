@@ -121,7 +121,7 @@ function embedYouTube($input, $argv, $parser )
 
 	$ytid   = '';
 	$width_max  = 640;
-	$height_max = 360;
+	$height_max = 385;
 	$width  = 425;
 	$height = 355;
 
