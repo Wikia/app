@@ -34,7 +34,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
 		$this->response->setVal( 'modeMsgSuffix', empty( $action ) ? '' : '-' . $action );
 
-		$order = $this->getVal( 'sortorder', 0 );
+		$order = $this->getVal( 'sort', 0 );
 		$this->response->setVal( 'order', $order );
 
 		// get more space for images
@@ -75,7 +75,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 		
 		if ( !$ts || intval($ts) < 0 || intval($ts) > time() ) {
-			$this->wg->Out->redirect( $this->submitUrl.'?ts='.time() );
+			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . time() . '&sort=' . $order );
 			return;
 		}
 
