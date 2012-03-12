@@ -8,6 +8,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		
 		$this->wg->OasisFluid = true;
 		$this->wg->Out->setPageTitle('Image Review tool');
 
@@ -51,6 +52,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->submitUrl = $this->wg->Title->getFullUrl( ) . $query;
 		$this->baseUrl = Title::newFromText('ImageReview', NS_SPECIAL)->getFullURL();
 
+		
 		if( $this->wg->request->wasPosted() ) {
 			$data = $this->wg->request->getValues();
 			if ( !empty($data) ) {
@@ -96,7 +98,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_UNREVIEWED, $order );
 			}
 		}
-		
+
 		$this->imageCount = $helper->getImageCount($this->wg->user->getId());
 		
 	}
