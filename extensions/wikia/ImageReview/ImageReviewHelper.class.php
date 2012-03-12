@@ -390,7 +390,7 @@ class ImageReviewHelper extends WikiaModel {
 	public function getImageCount($reviewer_id) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__, $reviewer_id );
+		$key = wfMemcKey( 'ImageReviewSpecialController', 'v1', __METHOD__, $reviewer_id );
 		$total = $this->wg->memc->get($key, null);
 		if(!empty($total)) {
 			$this->wf->ProfileOut( __METHOD__ );
@@ -398,11 +398,17 @@ class ImageReviewHelper extends WikiaModel {
 		}
 		$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalDatawareDB );
 
+		$where = array();
+		$list = $this->getWhitelistedWikis();
+		if(!empty($list)) {
+			$where[] = 'wiki_id not in('.implode(',', $list).')';
+		}
+		
 		// select by reviewer, state and total count with rollup and then pick the data we want out
 		$result = $db->select(
 			array( 'image_review' ),
 			array( 'reviewer_id', 'state', 'count(*) as total' ),
-			null,
+			$where,
 			__METHOD__,
 			array( 'GROUP BY' => 'reviewer_id, state')
 				
