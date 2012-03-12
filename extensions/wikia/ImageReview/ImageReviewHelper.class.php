@@ -19,6 +19,16 @@ class ImageReviewHelper extends WikiaModel {
 	const FLAG_SUSPICOUS_WIKI = 4;
 	const FLAG_SKIN_DETECTED = 8;
 
+	static $sortOptions = array(
+		'by priority and recency' => 0,
+		'latest first' => 1,
+		'oldest first' => 2,
+	);
+
+	const ORDER_PRIORITY_LATEST = 0;
+	const ORDER_LATEST = 1;
+	const ORDER_OLDEST = 2;
+
 	/**
 	 * update image state
 	 * @param array images
@@ -151,7 +161,7 @@ class ImageReviewHelper extends WikiaModel {
 	* @param integer review_end
 	* @return array images
 	*/	
-	public function refetchImageListByTimestamp( $timestamp ) {
+	public function refetchImageListByTimestamp( $timestamp, $order = self::ORDER_PRIORITY_LATEST ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
@@ -164,7 +174,7 @@ class ImageReviewHelper extends WikiaModel {
 			array( 'wiki_id, page_id, state, flags' ),
 			array( 'review_start = FROM_UNIXTIME(' . $timestamp . ')', 'reviewer_id' =>  $this->wg->user->getId()),
 			__METHOD__,
-			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
+			array( 'ORDER BY' => $this->getOrder( $order ), 'LIMIT' => self::LIMIT_IMAGES )
 		);
 
 		$imageList = array();
@@ -198,7 +208,7 @@ class ImageReviewHelper extends WikiaModel {
 	 * get image list
 	 * @return array imageList
 	 */
-	public function getImageList( $timestamp, $state = self::STATE_UNREVIEWED ) {
+	public function getImageList( $timestamp, $state = self::STATE_UNREVIEWED, $order = self::ORDER_PRIORITY_LATEST ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
@@ -249,7 +259,7 @@ class ImageReviewHelper extends WikiaModel {
 				"review_start = from_unixtime($timestamp)",
 			),
 			__METHOD__,
-			array( 'ORDER BY' => 'priority desc, last_edited desc', 'LIMIT' => self::LIMIT_IMAGES )
+			array( 'ORDER BY' => $this->getOrder( $order ), 'LIMIT' => self::LIMIT_IMAGES )
 			);
 
 		while( $row = $db->fetchObject($result) ) {
@@ -439,5 +449,20 @@ class ImageReviewHelper extends WikiaModel {
 
 	public function getUserTsKey() {
 		return $this->wf->MemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
+	}
+
+	private function getOrder( $order ) {
+		switch ( $order ) {
+			case self::ORDER_LATEST:
+				$ret = 'last_edited desc';
+				break;
+			case self::ORDER_OLDEST:
+				$ret = 'last_edited asc';
+				break;
+			case self::ORDER_PRIORITY_LATEST:
+			default:
+				$ret = 'priority desc, last_edited desc';
+		}
+		return $ret;
 	}
 }
