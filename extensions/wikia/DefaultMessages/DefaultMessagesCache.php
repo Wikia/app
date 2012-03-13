@@ -325,7 +325,7 @@ class DefaultMessagesCache {
 			array( 'page_title', 'old_text', 'old_flags' ),
 			$smallConds, __METHOD__ );
 
-		for ( $row = $dbr->fetchObject( $res ); $row; $row = $dbr->fetchObject( $res ) ) {
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$cache[$row->page_title] = ' ' . Revision::getRevisionText( $row );
 		}
 		$dbr->freeResult( $res );
@@ -496,7 +496,7 @@ class DefaultMessagesCache {
 
 	function disable() { $this->mDisable = true; }
 	function enable() { $this->mDisable = false; }
- 
+
 	/**
 	 * Clear all stored messages. Mainly used after a mass rebuild.
 	 */
