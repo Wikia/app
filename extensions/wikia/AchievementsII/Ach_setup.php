@@ -142,8 +142,6 @@ function Ach_Setup() {
 }
 
 function Ach_GetMenu(&$nodes) {
-	global $wgScript;
-
 	$nodes[0]['children'][] = count($nodes);
 	$nodes[] = array(
 		//'original' => 'achievementsleaderboard',
@@ -175,8 +173,6 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 }
 
 function Ach_UploadVerification($destName, $tempPath, &$error) {
-	global $wgUser;
-
 	if (Ach_isBadgeImage($destName, true /* check user right to upload sponsored badge */ )) {
 		wfLoadExtensionMessages( 'AchievementsII' );
 		$error = wfMsgExt('achievements-upload-not-allowed', array('parse'));
