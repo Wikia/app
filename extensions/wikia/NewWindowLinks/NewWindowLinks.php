@@ -77,6 +77,11 @@ function efParserCreateLink( $parser, $target, $label = null ) {
     // The target is not a literal URI.  Create a Title object.
     $oTitle = Title::newFromText( $target );
 
+    // Title::newFromText may occasionally return null, which means something is really wrong with the $target.
+    if ( is_null( $oTitle ) ) {
+    	return $parser->insertStripItem( wfMsg( 'newwindowlinks-invalid-target' ), $parser->mStripState );
+    }
+
     // Process (or rule out) existing local articles.
     if ( $oTitle->exists() ) {
         return $parser->insertStripItem( $oLinker->link( $oTitle, $label, $attributes ), $parser->mStripState );
