@@ -340,8 +340,6 @@ function wfGetCategoriesSuggest( $query, $limit = 5 ){
 		$out["ResultSet"]["Result"][] = array("category" => $title->getText(), "count" => $row->cnt );
 	}
 	return json_encode( $out );
-
-	return true;
 }
 
 $wgAjaxExportList [] = 'wfGetQuestionsWidget';
