@@ -227,7 +227,7 @@ abstract class VideoFeedIngester {
 		// duration < MIN_VALUE
 		if (is_array(static::$CLIP_TYPE_BLACKLIST)) {
 			$arrayIntersect = array_intersect(static::$CLIP_TYPE_BLACKLIST, $clipData);
-			if ($arrayIntersect == static::$CLIP_TYPE_BLACKLIST) {
+			if (!empty($arrayIntersect) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST) {
 				return true;
 			}
 		}

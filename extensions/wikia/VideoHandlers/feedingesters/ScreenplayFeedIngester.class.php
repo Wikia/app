@@ -2,7 +2,7 @@
 
 class ScreenplayFeedIngester extends VideoFeedIngester {
 	private static $FEED_URL = 'https://secure.totaleclips.com/WebServices/GetDataFeed.aspx?customerId=$1&username=$2&password=$3&startDate=$4&endDate=$5';
-	protected static $CLIP_TYPE_BLACKLIST = array('trailerType'=>'Home Video', 'trailerVersion'=>'Trailer');
+	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
 
