@@ -8,9 +8,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$this->solrClient = F::build( 'Apache_Solr_Service', array( 'host' => $solrHost, 'port' => $solrPort, 'path' => '/solr' ) );
 	}
 
-	public function search( $query, $start, $size, $cityId = 0, $rankExpr = '' ) {
+	public function search( $query, $start, $size, $cityId = 0, $rankExpr = '', $skipBoostFunctions=false ) {
 		$params = array(
-			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,pageid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
+				'fl' => '*,score',
 			'qf' => 'title^5 html',
 			'hl' => 'true',
 			'hl.fl' => 'html,title', // highlight field
@@ -43,44 +43,76 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 			$queryClauses[] = $widQuery;
 
-			$params['bf'] = 'map(backlinks,100,1000,100)^2';
-			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en AND iscontent:true";
+			$queryClauses[] = "lang:en";
+
+			$queryClauses[] = "iscontent:true";
+
 		}
 		else {
-			// Intra-wiki searching mode
-
-			/* tmp hack: content namespaces only
-			if(count($namespaces)) {
-				$nsQuery = '';
-				foreach($namespaces as $namespace) {
-					$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
-				}
-				$queryClauses[] = "({$nsQuery})";
-			}
-			*/
 			$queryClauses[] = "iscontent: true";
 
 			array_unshift($queryClauses, "wid: {$onWikiId}");
 		}
 
-		$dismaxParams = "{!dismax qf='html^0.8"
-						." title^5'"
-						." pf='html^0.8"
-						." title^5'"
-						." mm=75"
-						." ps=10"
-						." tie=1"
-						. "}";
+		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', $query));
 
-		$queryClauses[] = '_query_:"' . $dismaxParams . $sanitizedQuery . '"';
+		$boostQueries = array('html:\"'.$queryNoQuotes.'\"^5', 
+				      'title:\"'.$queryNoQuotes.'\"^10');
+
+		$boostFunctions = array();
+
+		if (empty($onWikiId)) {
+		  // this is still pretty important!
+		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^15';		  
+
+		  # we can do this because the host is a text field
+		  if (!$this->includeAnswers($query)) {
+		    $boostQueries[] = '-host:\"answers\"^10';
+		  }
+
+		  if (!$skipBoostFunctions) {
+
+		    $boostFunctions[] = 'log(wikipages)^4';
+
+		    $boostFunctions[] = 'log(activeusers)^4';
+
+		    $boostFunctions[] = 'log(revcount)';
+
+		    $boostFunctions[] = 'log(views)^8';
+
+		    $boostFunctions[] = 'log(words)^0.5';
+		  }
+
+		}
+
+		$dismaxParams = array('qf'	=>	"'html^0.8 title^5'",
+			      	      'pf'	=>	"'html^0.8 title^5'",
+				      'ps'	=>	'3',
+				      'tie'	=>	'0.01',
+				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'"
+				     );
+
+		if (!empty($boostFunctions)) {
+		  $dismaxParams['bf'] = sprintf("'%s'", implode(' ', $boostFunctions));
+		}
+
+		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
+
+		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s"', 
+					  $paramString, 
+					  $sanitizedQuery);
+
 		$sanitizedQuery = implode(' AND ', $queryClauses);
+		#var_dump($sanitizedQuery);
+		#var_dump($params); die;
 
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
 		}
-		catch (Exception $exception) {
-			// error logging, fallback etc.
+		catch (Exception $exception) { 
+		  if (!$skipBoostFunctions) {
+		    return $this->search($query, $start, $size, $cityId, $rankExpr, true);
+		  }
 		}
 
 		$results = $this->getWikiaResults($response->response->docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
@@ -97,6 +129,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$result->setTitle($doc->title);
 			$result->setText($solrHighlighting[$doc->url]->html[0]);
 			$result->setUrl($doc->url);
+			$result->setScore(($doc->score) ?: 0);
+
 			if(!empty($doc->canonical)) {
 				$result->setCanonical($doc->canonical);
 			}
@@ -143,6 +177,15 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 		return count( $privateWikis ) ? array_merge( $privateWikis, $wg->CrossWikiaSearchExcludedWikis ) : $wg->CrossWikiaSearchExcludedWikis;
+	}
+
+	/**
+	 * Designed as a method so we can make it more complex if we want to -- ex: syntactic parsing to determine question
+	 *
+	 */
+	protected function includeAnswers($query)
+	{
+	  return substr_count($query, "answers") > 0;
 	}
 
 }

@@ -11,6 +11,9 @@ class WikiaSearchResultSet implements Iterator {
 	protected $header = null;
 	protected $results = array();
 
+	public $totalScore;
+	public $score = 0;
+
 	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $isComplete = false) {
 		$this->setResults($results);
 		$this->setResultsFound($resultsFound);

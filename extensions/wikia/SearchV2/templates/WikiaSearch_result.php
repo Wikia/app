@@ -7,6 +7,7 @@
 <?php if(!empty($rank)): ?>
 	| <font color="red">WikiRank: <?=$rank;?></font>
 <?php endif; ?>
+	| Score: <?=$result->score?>
 <br />
 <div <?=empty($inGroup)?'class="searchresult"':'';?>>
 	<?= $result->getText(); ?>

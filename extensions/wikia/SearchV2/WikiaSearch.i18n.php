@@ -9,5 +9,6 @@ $messages['en'] = array(
 	'wikiasearch2-debug-mode' => 'Debug mode',
 	'wikiasearch2-group-results' => 'Group Results per wiki',
 	'wikiasearch2-results' => 'Results',
-	'wikiasearch2-pages' => 'Pages'
+	'wikiasearch2-pages' => 'Pages',
+	'wikiasearch2-skip-cache' => "Skip Cache"
 );
