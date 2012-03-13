@@ -14,7 +14,8 @@ function wfAdEngineSetupJSVars($vars) {
 	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues, 
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
-		$wgCityId, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels;
+		$wgCityId, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
+		$wgEnableKruxTargeting;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 	$vars['wgNoExternals'] = $wgNoExternals;
@@ -51,6 +52,9 @@ function wfAdEngineSetupJSVars($vars) {
 
 	// Answers sites
 	$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
+	
+	// Krux
+	$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 
 	return true;
 }
