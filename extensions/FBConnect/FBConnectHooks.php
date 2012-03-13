@@ -93,14 +93,15 @@ class FBConnectHooks {
 			$fbIncludeJquery, $fbScriptEnableLocales, $wgJsMimeType,
 			$wgStyleVersion, $wgScriptPath, $wgUser, $wgTitle, $wgNoExternals;
 
-		if($wgTitle->getArticleID() > 0) {
-			$images = new ImageServing(array($wgTitle->getArticleId()), 100, array( 'w' => 1, 'h' => 1 ));
+		$pageId = $wgTitle->getArticleId();
+		if($pageId > 0) {
+			$images = new ImageServing(array($pageId), 100, array( 'w' => 1, 'h' => 1 ));
 			$image = $images->getImages(1);
-			if(!empty($image)) {
+			if(!empty($image[$pageId])) {
 				$out->addLink(
 					array(
 						'rel' => 'image_src',
-						'href' => $image[$wgTitle->getArticleId()][0]['url']
+						'href' => $image[$pageId][0]['url']
 					)
 				);
 			}
@@ -723,9 +724,9 @@ HTML;
 		}
 		return true;
 	}
-	
+
 	/**
-	 * clear facebook session 
+	 * clear facebook session
 	 */
 	public static function UserLogout(&$user){
 		F::build('FBConnectAPI')->logout();
