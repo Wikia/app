@@ -37,7 +37,8 @@ class WikiaVideoPage extends ImagePage {
 		$providerUrl = $this->img->getProviderHomeUrl();
 		
 		$link = '<a href="' . $detailUrl . '" class="external" target="_blank">' . $this->mTitle->getText() . '</a>';
-		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerUrl, $provider )  . '</div>';
+		$providerLink = '<a href="' . $providerUrl . '" class="external" target="_blank">' . $provider . '</a>';
+		$s = '<div id="VideoPageInfo">' . wfMsgExt( 'videohandler-video-details', array('replaceafter'), $link, $providerLink )  . '</div>';
 		return $s;
 	}
 
