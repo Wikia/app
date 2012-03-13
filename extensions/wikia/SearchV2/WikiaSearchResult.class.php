@@ -8,6 +8,7 @@ class WikiaSearchResult {
 	protected $url;
 	protected $canonical = null	;
 	protected $vars = array();
+	public $score = 0;
 
 	public function __construct($id) {
 		$this->id = $id;
@@ -59,6 +60,14 @@ class WikiaSearchResult {
 
 	public function hasCanonical() {
 		return !empty($this->canonical) ? true : false;
+	}
+
+	public function setScore($score) {
+	  $this->score = $score;
+	}
+
+	public function getScore() {
+	  return $this->score;
 	}
 
 	public function setVar($name, $value) {

@@ -34,9 +34,9 @@ class WikiaSearch extends WikiaObject {
 		$groupResults = ( empty($cityId) && $groupResults );
 
 		if($groupResults) {
-			// check cache first
 			$results = $this->getGroupResultsFromCache($query, $rankExpr);
-			if(empty($results)) {
+
+			if(empty($results) || isset($_GET['skipCache'])) {
 				$results = $this->client->search( $query, 0, self::GROUP_RESULTS_SEARCH_LIMIT, $cityId, $rankExpr );
 				$results = $this->groupResultsPerWiki( $results );
 
@@ -67,6 +67,7 @@ class WikiaSearch extends WikiaObject {
 
 	private function groupResultsPerWiki(WikiaSearchResultSet $results) {
 		$wikiResults = array();
+		$wikisByScore = array();
 
 		foreach($results as $result) {
 			if($result instanceof WikiaSearchResult) {
@@ -83,13 +84,30 @@ class WikiaSearch extends WikiaObject {
 				$set = $wikiResults[$cityId];
 				if($set->getResultsNum() < self::RESULTS_PER_WIKI) {
 					$set->addResult($result);
-				}
+				} 
+
+				$set->totalScore += $result->score;
+
 				$set->incrResultsFound();
 				$set->setHeader('cityRank', $this->getWikiRank($set));
+				$wikisByScore['id:'.$cityId] = $set->totalScore; //((1+$set->totalScore)/log($set->getHeader('1stResultPos')+1, 2));
+			} else {
+			  $wikisByScore['id'.$result->getCityId()] = $result->score; //(1+$result->score) / log($result->getVar('position')+1, 2);
 			}
 		}
 
-		return F::build( 'WikiaSearchResultSet', array( 'results' => $wikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete() ) );
+
+		arsort($wikisByScore);
+
+		$sortedWikiResults = array();
+
+		# create an ordered result set based on score
+		array_walk(array_keys($wikisByScore), 
+			   function($key) use (&$sortedWikiResults, &$wikiResults) { 
+			     $sortedWikiResults[] = $wikiResults[str_replace('id:', '', $key)];
+			   });
+
+		return F::build( 'WikiaSearchResultSet', array( 'results' => $sortedWikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete() ) );
 	}
 
 	private function getWikiRank(WikiaSearchResultSet $wikiResults) {

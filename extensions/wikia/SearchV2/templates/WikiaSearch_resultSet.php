@@ -9,6 +9,7 @@
 		<?php if($resultSet->getHeader('cityRank')): ?>
 			| (1st pos: <?=$resultSet->getHeader('1stResultPos');?>) <font color="red">WikiRank: <?=$resultSet->getHeader('cityRank');?></font>
 		<?php endif; ?>
+			| Total Score: <?=sprintf('%.3f',  $resultSet->totalScore)?>
 		<br />
 		<a href="<?=$resultSet->getHeader('cityUrl');?>"><?=$resultSet->getHeader('cityUrl');?></a>
 	</div>

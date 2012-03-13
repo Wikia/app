@@ -29,6 +29,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$rankExpr = $this->getVal('rankExpr');
 		$crossWikia = $this->request->getBool('crossWikia');
 		$debug = $this->request->getBool('debug');
+		$skipCache = $this->request->getBool('skipCache');
 		$groupResults = $this->request->getBool('groupResults');
 
 		$results = false;
@@ -54,6 +55,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'rankExpr', $rankExpr );
 		$this->setVal( 'groupResults', ($groupResults && $crossWikia) );
 		$this->setVal( 'debug', $debug );
+		$this->setVal( 'skipCache', $skipCache);
 
 		$this->setVal( 'debug', $this->getVal('debug', false) );
 	}

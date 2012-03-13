@@ -272,14 +272,30 @@ class SolrSearchSet extends SearchResultSet {
 			array_unshift($queryClauses, "wid: {$onWikiId}");
 		}
 
-		$queryNoQuotes = str_replace('"', '', $sanitizedQuery);
+		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', $query));
 
 		$boostQueries = array('html:\"'.$queryNoQuotes.'\"^5', 
 				      'title:\"'.$queryNoQuotes.'\"^10');
 
+		$boostFunctions = array();
+
 		if ($crossWikiaSearch) {
 		  // this is still pretty important!
-		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^10';
+		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^15';		  
+
+		  # we can do this because the host is a text field
+		  $boostQueries[] = '-host:\"answers\"^10';
+
+		  $boostFunctions[] = 'log(wikipages)^4';
+
+		  $boostFunctions[] = 'log(activeusers)^4';
+
+		  $boostFunctions[] = 'log(revcount)';
+
+		  $boostFunctions[] = 'log(views)^8';
+
+		  $boostFunctions[] = 'log(words)^0.5';
+
 		}
 
 		$dismaxParams = array('qf'	=>	"'html^0.8 title^5'",
@@ -288,6 +304,10 @@ class SolrSearchSet extends SearchResultSet {
 				      'tie'	=>	'0.01',
 				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'"
 				     );
+
+		if (!empty($boostFunctions)) {
+		  $dismaxParams['bf'] = sprintf("'%s'", implode(' ', $boostFunctions));
+		}
 
 		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
 
