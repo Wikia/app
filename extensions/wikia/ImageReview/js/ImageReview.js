@@ -40,11 +40,8 @@ $(function() {
 	if(wgImageReviewAction != 'questionable') {
 		$('#ImageReviewForm').submit(function(){
 			for(var i in imagesMap ) {
-				if(!imagesMap[i]) {
-					var radios = $('#' + i).closest('li').find('input');
-						radios[0].checked = null;
-					 	radios[1].checked = null;
-					 	radios[2].checked = 'checked';
+				if(!imagesMap[i]) {					
+					$('#' + i).closest('li').find('input').attr("disabled", true);
 				}
 			}
 		});	
