@@ -9,4 +9,4 @@ $options = array('help');
 
 global $wgDBname;
 
-echo $wgDBname;
+echo "dbname: $wgDBname\n";
