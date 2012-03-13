@@ -63,6 +63,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 				if( $this->ad->pageId == 0 ) {
 					return $value;
 					//TODO
+					/**
 					if( !$this->ad->closed && ( !$this->ad->expires || $this->ad->expires > time() ) ) {
 						$ret = "$value (" . Xml::element( 'a', array( 'href' => '#' ), '+' );
 						if( $this->ad->weight > 1 ) {
@@ -73,6 +74,7 @@ class AdSS_ManagerAdListPager extends TablePager {
 					} else {
 						return $value;
 					}
+					**/
 				} else {
 					return '-';
 				}
