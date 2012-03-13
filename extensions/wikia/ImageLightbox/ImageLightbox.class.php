@@ -25,26 +25,19 @@ class ImageLightbox {
 		$showShareTools = $wgRequest->getInt('share', 0);
 		$pageName = $wgRequest->getVal('pageName');
 
+		
 		$image = wfFindFile($wgTitle);
-
+		
 		if (empty($image)) {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
-
-		/* 
-		 * 2012-02-01 this is temporary.
-		 * ImageLightbox will be changed in a month (in lightbox project) ;-)
-		 * @author Jacek Jursza (VideoTeam) 
-		 */
 		
 		if ( F::build( 'WikiaVideoService' )->isFileTypeVideo( $image ) ) {
-		
 			if ( !empty($wgTitle) ) {
-				
 				return self::videoLightbox($image);
 			}
-		}		
+		}			
 		
 		// get original dimensions of an image
 		$width = $image->getWidth();
@@ -144,12 +137,28 @@ class ImageLightbox {
 	}
 
 	
-	function videoLightbox($image) {
+	function videoLightbox($img) {
 		
 		global $wgTitle, $wgRequest, $wgExtensionsPath, $wgBlankImgUrl;
 		
 		if ( !empty($wgTitle) ) {
+			wfProfileIn(__METHOD__);
 			
+			$revisionTimestamp = $wgRequest->getInt('t', 0);
+
+			if ( $revisionTimestamp > 0 ) { // support for old video revision
+				
+				$image = wfFindFile( $wgTitle, $revisionTimestamp );
+				if ( !($image instanceof LocalFile && $image->exists()) ) {
+					wfProfileOut( __METHOD__ );
+					return array();
+				}
+			} else {
+				
+				$image = $img;
+			}
+
+
 			$maxWidth = $wgRequest->getInt('maxwidth', 500);
 			
 			$embedCode = $image->getEmbedCode( $maxWidth, true, true );

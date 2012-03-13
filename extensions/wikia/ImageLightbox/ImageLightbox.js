@@ -199,10 +199,10 @@ var ImageLightbox = {
 		if (imageName != false) {
 			// RT #44281
 			imageName = decodeURIComponent(imageName);
-
+			var timestamp = target.attr("data-timestamp");
 			// find caption node and use it in lightbox popup
 			var showShareTools = target.hasParent('#WikiaArticle') ? 1 : 0;
-			this.fetchLightbox(imageName, caption, showShareTools);
+			this.fetchLightbox(imageName, caption, showShareTools, timestamp);
 
 			// don't follow href
 			ev.preventDefault();
@@ -253,7 +253,7 @@ var ImageLightbox = {
 	},
 
 	// fetch data and show lightbox
-	fetchLightbox: function(imageName, caption, showShareTools) {
+	fetchLightbox: function(imageName, caption, showShareTools, timestamp) {
 		var self = this;
 		this.log(imageName);
 
@@ -285,7 +285,8 @@ var ImageLightbox = {
 			'method': 'ajax',
 			'pageName': wgPageName,
 			'share': showShareTools,
-			'title': imageName
+			'title': imageName,
+			't': timestamp
 		}, function(res) {
 			if (res && ( res.html || res.jsonData ) ) {
 				if (res.asset) {
