@@ -1069,6 +1069,11 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$img = wfFindFile( $nt, $time );
+			
+			if ( WikiaVideoService::isFileTypeVideo($img) ) {
+				continue;
+			}
+			
 			$thumb = null;
 
 			// let's properly scale image (don't make it bigger than original size) and handle "crop" attribute
@@ -1307,7 +1312,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$img = wfFindFile( $nt, $time );
-			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
+			if ( !WikiaVideoService::isFileTypeVideo($img) && is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 				$pageId = $nt->getArticleID();
 
 				// generate cropped version of big image (fit within 660x360 box)

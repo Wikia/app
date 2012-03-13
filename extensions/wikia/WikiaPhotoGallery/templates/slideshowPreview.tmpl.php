@@ -16,6 +16,13 @@
 			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-modify') ?></a>
 			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-delete')?></a>
 		</span>
+		<span class="WikiaPhotoGallerySliderItemNumber">
+			<div><?php
+				if ( $image['isFileTypeVideo'] ) {
+					echo wfMsg('wikiaPhotoGallery-not-displayed');
+				} 
+			?></div>
+		</span>		
 <?php
 		}
 
