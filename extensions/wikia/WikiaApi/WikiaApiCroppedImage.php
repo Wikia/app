@@ -19,18 +19,12 @@ class WikiaApiCroppedImage extends ApiBase {
 		wfProfileIn(__METHOD__);
 
 		extract( $this->extractRequestParams() );
-		
 		$imageServing = new ImageServing( array( $Id ), $Size, array("w" => $Size, "h" => $Height));
 		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
 			$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 			$image = wfFindFile( $tmpTitle );
 			$imageInfo = getimagesize( $image->getPath() );
-			$imageUrl = wfReplaceImageServer(
-				$image->getThumbUrl(
-					$imageServing->getCut( $imageInfo[0], $imageInfo[1] )."-".$image->getName()
-				)
-			);
-
+			$imageUrl = $imageServing->getUrl($image->getName(), $imageInfo[0], $imageInfo[1]);
 		}
 		$result = $this->getResult();
 		$result->addValue( 'image', $this->getModuleName(), $imageUrl );
