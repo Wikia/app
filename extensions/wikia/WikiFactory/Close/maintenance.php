@@ -15,8 +15,8 @@ require_once( "commandLine.inc" );
 require_once( "Archive/Tar.php" );
 
 class CloseWikiMaintenance {
-	
-	const CLOSE_WIKI_DELAY = 14;
+
+	const CLOSE_WIKI_DELAY = 30;
 
 	private $mTarget, $mOptions;
 
@@ -243,8 +243,8 @@ class CloseWikiMaintenance {
 					/**
 					 * remove records from dataware
 					 */
-					global $wgExternalDatawareDB; 
-					$datawareDB = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB ); 
+					global $wgExternalDatawareDB;
+					$datawareDB = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 					$datawareDB->delete(
 						"pages",
 						array(
