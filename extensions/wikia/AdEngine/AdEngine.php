@@ -12,7 +12,7 @@ $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
 	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues, 
+		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues,
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 		$wgCityId, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 		$wgEnableKruxTargeting;
@@ -39,6 +39,8 @@ function wfAdEngineSetupJSVars($vars) {
 		$highValueCountries = $wgHighValueCountries;
 	}
 	$vars['wgHighValueCountries'] = $highValueCountries;
+
+	// TODO: emit the following two variables only when true (BugId:20558)
 	$vars['wgAdDriverUseExpiryStorage'] = $wgAdDriverUseExpiryStorage;
 	$vars['wgAdDriverUseCookie'] = $wgAdDriverUseCookie;
 
@@ -50,9 +52,10 @@ function wfAdEngineSetupJSVars($vars) {
 
 	$vars['wgUserShowAds'] = $wgUser->getOption('showAds');
 
+	// TODO: emit the following only when true (BugId:20558)
 	// Answers sites
 	$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
-	
+
 	// Krux
 	$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 
@@ -124,7 +127,7 @@ class AdEngine {
 		'diablo',
 		'blind'
 	);
-	
+
 	private $adProviders = array();
 
 	protected function __construct($slots = null) {
@@ -399,7 +402,7 @@ class AdEngine {
 		if (empty($this->adProviders[$slotname])) {
 			$this->adProviders[$slotname] = new AdProviderNull('Logic error in ' . __METHOD__, true);
 		}
-		
+
 		return $this->adProviders[$slotname];
 	}
 
@@ -455,7 +458,7 @@ class AdEngine {
 
 		// FIXME make it more general...
 		if ($AdProvider instanceof AdProviderGAM){
-			return "<!-- Fall back to getAd from " . __METHOD__ . "-->" . $this->getAd($slotname); 
+			return "<!-- Fall back to getAd from " . __METHOD__ . "-->" . $this->getAd($slotname);
 		}
 
 		$this->placeholders[$slotname]=$this->slots[$slotname]['load_priority'];
@@ -490,7 +493,7 @@ class AdEngine {
 		} else {
 			$slotdiv = "Wikia_" . $this->slots[$slotname]['size'] . "_" . $adnum;
 		}
-		
+
 		$slotiframe_class = '';
 		if (!empty($wgEnableAdsLazyLoad)) {
 			if (!empty($wgAdslotsLazyLoad[$slotname])) {
