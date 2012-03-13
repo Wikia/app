@@ -548,7 +548,6 @@ $wgWikiFactoryTags = array();
  */
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
-$wgExternalStatsDB = 'dbstats';
 $wgStatsDB = 'stats';
 $wgDatamartDB = 'datamart';
 $wgStatsDBEnabled = true;

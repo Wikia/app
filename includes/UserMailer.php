@@ -116,7 +116,7 @@ class UserMailer {
 	 */
 	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null, $category='unknown', $priority = 0 ) {
 		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal;
-		global $wgEnotifMaxRecips, $wgForceSendgridEmail, $wgForceSchwartzEmail;
+		global $wgEnotifMaxRecips, $wgForceSendgridEmail;
 
 		if ( is_array( $to ) ) {
 			wfDebug( __METHOD__.': sending mail to ' . implode( ',', $to ) . "\n" );
@@ -124,47 +124,21 @@ class UserMailer {
 			wfDebug( __METHOD__.': sending mail to ' . implode( ',', array( $to->toString() ) ) . "\n" );
 		}
 
-		/* Wikia change begin - @author: Marooned */
-		/* Send a message to the MQ */
-		global $wgReportMailViaStomp;
-		if(!empty($wgReportMailViaStomp)) {
-			wfProfileIn(__METHOD__ . '-stomp');
-			global $wgStompServer, $wgStompUser, $wgStompPassword, $wgCityId;
-			try {
-				$stomp = new Stomp($wgStompServer);
-				$stomp->connect($wgStompUser, $wgStompPassword);
-				$stomp->sync = false;
-				$key = 'wikia.email.' . $category;
-				$count = is_array($to) ? count($to) : count(explode("\n", $to));
-				$stomp->send($key,
-					Wikia::json_encode(array(
-						'category' => $category,
-						'wikiID' => $wgCityId,
-						'count' => $count
-					)),
-					array('exchange' => 'amq.topic', 'bytes_message' => 1)
-				);
-			}
-			catch( StompException $e ) {
-				Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
-			}
-			wfProfileOut(__METHOD__ . '-stomp');
-		}
-		/* Wikia change end */
-
-		if (is_array( $wgSMTP ) || $wgForceSendgridEmail || $wgForceSchwartzEmail) {
+		if( is_array( $wgSMTP ) || $wgForceSendgridEmail ) {
 			require_once( 'Mail.php' );
 
 			$msgid = str_replace(" ", "_", microtime());
 			if (function_exists('posix_getpid'))
 				$msgid .= '.' . posix_getpid();
 
-			if (is_array($to)) {
+			if( is_array( $to ) ) {
 				$dest = array();
-				foreach ($to as $u)
+				foreach( $to as $u ) {
 					$dest[] = $u->address;
-			} else
+				}
+			} else {
 				$dest = $to->address;
+			}
 
 			$headers['From'] = $from->toString();
 
@@ -206,8 +180,6 @@ class UserMailer {
 
 			if ( $wgForceSendgridEmail ) {
 				$mail_object =& Mail::factory('wikiadb');
-			} else if ( $wgForceSchwartzEmail ) {
-				$mail_object =& Mail::factory('theschwartzhttp');
 			} else {
 				$mail_object =& Mail::factory('smtp', $wgSMTP);
 			}
@@ -305,7 +277,7 @@ class UserMailer {
 	/**
 	 * This function will perform a direct (authenticated) login to
 	 * a SMTP Server to use for mail relaying if 'wgSMTP' specifies an
-	 * array of parameters. If wgSchwartzMailer is defined it will supersede wgSMTP.
+	 * array of parameters.
 	 * It sends e-mails in rich format using HTML syntax.
 	 *
 	 * @param $to MailAddress: recipient's email
@@ -318,41 +290,15 @@ class UserMailer {
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
 	static function sendHTML( $to, $from, $subject, $body, $bodyHTML, $replyto=null, $category='unknown', $priority = 0 ) {
-		global $wgSMTP, $wgForceSendgridEmail, $wgForceSchwartzEmail;
+		global $wgSMTP, $wgForceSendgridEmail;
 
 		//unlike mail(), this function takes only one recipient at the time
 		if (is_array($to)) {
 			return new WikiError('Parameter $to can not be an array.');
 		}
 
-		if (!is_array($wgSMTP) && !$wgForceSendgridEmail && !$wgForceSchwartzEmail) {
+		if (!is_array($wgSMTP) && !$wgForceSendgridEmail) {
 			return new WikiError('Sending HTML via PHP mail() is not supported.');
-		}
-
-		/* Send a message to the MQ */
-		global $wgReportMailViaStomp;
-		if(!empty($wgReportMailViaStomp)) {
-			wfProfileIn(__METHOD__ . '-stomp');
-			global $wgStompServer, $wgStompUser, $wgStompPassword, $wgCityId;
-			try {
-				$stomp = new Stomp($wgStompServer);
-				$stomp->connect($wgStompUser, $wgStompPassword);
-				$stomp->sync = false;
-				$key = 'wikia.email.' . $category;
-				$count = count(explode("\n", $to));
-				$stomp->send($key,
-					Wikia::json_encode(array(
-						'category' => $category,
-						'wikiID' => $wgCityId,
-						'count' => $count
-					)),
-					array('exchange' => 'amq.topic', 'bytes_message' => 1)
-				);
-			}
-			catch( StompException $e ) {
-				Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
-			}
-			wfProfileOut(__METHOD__ . '-stomp');
 		}
 
 		require_once( 'Mail.php' );
@@ -403,8 +349,6 @@ class UserMailer {
 
 		if ( $wgForceSendgridEmail ){
 			$mail_object =& Mail::factory('wikiadb');
-		} else if ( $wgForceSchwartzEmail ) {
-			$mail_object =& Mail::factory('theschwartzhttp');
 		} else {
 			$mail_object =& Mail::factory('smtp', $wgSMTP);
 		}
@@ -481,22 +425,22 @@ class UserMailer {
 
 		return $res;
 	}
-	
+
 	//pawelrychly, piotrp
 	/**
-	 * This is a method that allows senning e-mails with any number of attachments to one 
-	 * or more e-mail adresses. 
+	 * This is a method that allows senning e-mails with any number of attachments to one
+	 * or more e-mail adresses.
 	 * @param $emails Array of MailAddress objects - receivers of your e-mails
 	 * @param $subject String - subject of your e-mail
 	 * @param $attachments_dirs Array of Strings/String - full paths to files you want to send
 	 * with the filenames (e.g. '/home/myuser/mytextfile.txt')
-	 * @param $from_mail String ( optional ) - if not provided, sender is: yourdevbox@wikia.com (we guess :P) 
-	 * @param $from_name String ( optional ) - default value is sender alias 
+	 * @param $from_mail String ( optional ) - if not provided, sender is: yourdevbox@wikia.com (we guess :P)
+	 * @param $from_name String ( optional ) - default value is sender alias
 	 * @param $body String ( optional ) - text of your message. Default value is empty.
 	 */
 	public static function sendWithAttachment( $emails, $subject, $attachments_dirs, $from_mail='', $from_name='', $body = ''){
 		$uid = md5( uniqid( time() ) );
-		
+
 		$header="";
 		if ( !empty( $from_mail ) ) {
 			$header = "From: ".$from_name." <".$from_mail.">\r\n";
@@ -507,29 +451,29 @@ class UserMailer {
 		$header .= "Content-type:text/plain; charset=iso-8859-1\r\n";
 		$header .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
 		$header .= $body."\r\n\r\n";
-		
+
 		if ( !is_array( $attachments_dirs ) ) {
 			$attachments_dirs = array( $attachments_dirs );
 		}
-		
-		foreach ( $attachments_dirs as $key => $dir ) {	
-			if ( file_exists( $dir ) ) {		
-				$filename = basename( $dir );						
+
+		foreach ( $attachments_dirs as $key => $dir ) {
+			if ( file_exists( $dir ) ) {
+				$filename = basename( $dir );
 				$file_size = filesize( $dir );
 				$handle = fopen( $dir, "r" );
 				$content = fread( $handle, $file_size );
 				fclose( $handle );
 				$content = chunk_split( base64_encode( $content ) );
-				$header .= "--".$uid."\r\n";	
+				$header .= "--".$uid."\r\n";
 				$header .= "Content-Type: application/octet-stream; name=\"".$filename."\"\r\n"; // use diff. tyoes here
 				$header .= "Content-Transfer-Encoding: base64\r\n";
 				$header .= "Content-Disposition: attachment; filename=\"".$filename."\"\r\n\r\n";
 				$header .= $content."\r\n\r\n";
 			}
-		} 	
-		$header .= "--".$uid."--";	
-		UserMailer::sendMail( 'mail', $emails , $header, $subject, $body ); 
-	} 
+		}
+		$header .= "--".$uid."--";
+		UserMailer::sendMail( 'mail', $emails , $header, $subject, $body );
+	}
 }
 
 /**
@@ -583,7 +527,7 @@ class EmailNotification {
 
 		// Build a list of users to notfiy
 		$watchers = array();
-		
+
 		if(!empty($otherParam['watchers'])) {
 			$watchers = $otherParam['watchers'];
 		}
@@ -729,7 +673,7 @@ class EmailNotification {
 					if(!wfRunHooks('beforeEnotifWatchlist', array( $watchingUser,  $title ))){
 						continue;
 					}
-									
+
 					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
 						( !$minorEdit || $watchingUser->getOption('enotifminoredits') ) &&
 						$watchingUser->isEmailConfirmed() &&
