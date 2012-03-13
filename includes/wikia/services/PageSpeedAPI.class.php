@@ -33,11 +33,29 @@ class PageSpeedAPI extends Service {
 
 		$resp = json_decode($resp, true);
 
+		// prepare basic report
 		$report = array(
 			'url' => $resp['id'],
 			'score' => intval($resp['score']),
 			'stats' => $resp['pageStats'],
 		);
+
+		// serialized requests
+		// "The following requests are serialized. Try to break up the dependencies to make them load in parallel."
+		$report['stats']['serializedRequests'] = $this->countReportedUrl($resp, 'AvoidExcessSerialization');
+
+		// count redirects
+		$report['stats']['redirects'] = $this->countReportedUrl($resp, 'MinimizeRedirects');
+
+		// count assets with short (less than 7 days) expiry time
+		// "The following cacheable resources have a short freshness lifetime. Specify an expiration at least one week in the future for the following resources:"
+		$report['stats']['shortExpires'] = $this->countReportedUrl($resp, 'LeverageBrowserCaching');
+
+		// count assets served uncompressed
+		$report['stats']['notGzipped'] = $this->countReportedUrl($resp, 'EnableGzipCompression');
+
+		// count duplicated content served from different URLs
+		$report['stats']['duplicatedContent'] = $this->countReportedUrl($resp, 'ServeResourcesFromAConsistentUrl');
 
 		// aggregate some of the stats
 		$report['stats']['totalResponseBytes'] = $resp['pageStats']['htmlResponseBytes'] +
@@ -47,5 +65,14 @@ class PageSpeedAPI extends Service {
 			$resp['pageStats']['otherResponseBytes'];
 
 		return $report;
+	}
+
+	/**
+	 * Count number of entries under "urls" key for a given rule
+	 */
+	private function countReportedUrl(Array $resp, $ruleName) {
+		return (!empty($resp['formattedResults']['ruleResults'][$ruleName]['urlBlocks'][0]['urls']))
+			? count($resp['formattedResults']['ruleResults'][$ruleName]['urlBlocks'][0]['urls'])
+			: 0;
 	}
 }
