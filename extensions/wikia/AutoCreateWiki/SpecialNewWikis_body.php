@@ -20,7 +20,7 @@ class NewWikisSpecialPage extends SpecialPage {
 
 	function execute($par) {
 		global $wgOut, $wgRequest;
-		
+
 		$format = $wgRequest->getVal( "format", false );
 		if( $format === "xml" || $format === "csv" ) {
 			$this->generateList( $format );
@@ -105,7 +105,7 @@ class NewWikisPage extends AlphabeticPager {
 		$this->lang = ( $this->lang != '' ) ? $this->lang : $wgRequest->getVal( 'language' );
 		$this->firstChar = ( $this->firstChar != '' ) ? $this->firstChar : $wgRequest->getText( 'start' );
 		$this->hub = $wgRequest->getText( 'hub' );
-		
+
 		if ($wgUser->isAllowed('newwikislist'))
 			$this->more_details = true;
 
@@ -115,6 +115,9 @@ class NewWikisPage extends AlphabeticPager {
 		 * overwrite database handler
 		 */
 		$this->mDb = WikiFactory::db( DB_SLAVE );
+
+		// create a Linker object so we don't have to create it every time in formatRow
+		$this->linker = new Linker;
 	}
 
 
@@ -187,7 +190,7 @@ class NewWikisPage extends AlphabeticPager {
 
 	function formatRow( $row ) {
 		global $wgLang;
-		
+
 		$name = Xml::tags( 'a', array( 'href' => $row->city_url ), $row->city_title );
 		if ($this->more_details) {
 			$cuTitle = GlobalTitle::newFromText( 'CheckUser', NS_SPECIAL, $row->city_id );
@@ -196,12 +199,24 @@ class NewWikisPage extends AlphabeticPager {
 				array( 'href' => $cuTitle->getFullURL( 'user=' . urlencode( $row->user_name ) ) ),
 				$row->user_name
 			);
+			$emailLink = $this->linker->link(
+				Title::newFromText( 'LookupUser', NS_SPECIAL ),
+				$row->user_email,
+				array(),
+				'target=' . urlencode( $row->user_email )
+			);
 			$confirm = ($row->user_email_authenticated) ? 'Y' : 'N';
-			$detail = "$row->city_lang, $row->city_created, FounderName:$userLink, Email:$row->user_email, Confirm:$confirm";
-			
+			$detail = "$row->city_lang, $row->city_created, FounderName:$userLink, Email:$emailLink, Confirm:$confirm";
+
 			//FB#11896
-			if( !empty($row->city_founding_ip) ) {
-				$detail .= ', IP:'.long2ip($row->city_founding_ip);
+			if( !empty( $row->city_founding_ip ) ) {
+				$ipMlLink = $this->linker->link(
+					Title::newFromText( 'MultiLookup', NS_SPECIAL ),
+					long2ip( $row->city_founding_ip ),
+					array(),
+					'target=' . urlencode( long2ip( $row->city_founding_ip ) )
+				);
+				$detail .= ", IP:$ipMlLink";
 			}
 		} else {
 			$detail = $row->city_lang;
@@ -218,7 +233,7 @@ class NewWikisPage extends AlphabeticPager {
 		return parent::getBody();
 	}
 
-	function getPageHeader( ) {
+	function getPageHeader() {
 		global $wgScript, $wgRequest;
 		$self = $this->getTitle();
 		$this->getLangs();
@@ -264,7 +279,7 @@ class NewWikisPage extends AlphabeticPager {
 		foreach( $this->hubs as $sHub => $sHubName ) {
 			$out .= Xml::option( $sHubName, $sHub, $sHub == $this->hub );
 		}
-		
+
 		$out .= Xml::closeElement( 'select' );
 
 		$out .= '<br />';
