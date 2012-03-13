@@ -5,6 +5,7 @@ class ViddlerApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://api.viddler.com/api/v2/viddler.videos.getDetails.php?key=$1&add_embed_code=1&url=';
 	protected static $WATCH_URL = 'http://www.viddler.com/v/$1';
 	protected static $CACHE_KEY = 'viddlerapi';
+	protected static $aspectRatio = 1.56160458;
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "viddler.com") ? true : false;
@@ -83,7 +84,7 @@ class ViddlerApiWrapper extends ApiWrapper {
 		return implode(', ', $keywords);
 	}
 	
-	protected function getAspectRatio() {
+	public function getAspectRatio() {
 		$embed_code = $this->interfaceObj['video']['embed_code'];
 		$matches = array();
 		if (preg_match('/width="(\d+)"/', $embed_code, $matches)) {
@@ -98,6 +99,6 @@ class ViddlerApiWrapper extends ApiWrapper {
 			return $width / $height;
 		}
 			
-		return '';			
+		return parent::getAspectRatio();
 	}
 }

@@ -3,7 +3,6 @@
 class HuluVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'HuluApiWrapper';
-	protected static $aspectRatio = 1.7777778;
 	protected static $urlTemplate = 'http://www.hulu.com/embed/$1';
 	protected static $providerDetailUrlTemplate = 'http://www.hulu.com/watch/$1';
 	protected static $providerHomeUrl = 'http://www.hulu.com/';

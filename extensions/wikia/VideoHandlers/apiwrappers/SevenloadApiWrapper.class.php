@@ -3,6 +3,8 @@
 class SevenloadApiWrapper extends NullApiWrapper {
 	// inherit all functions from parent
 
+	protected static $aspectRatio = 1.59235669;	// 500 x 314
+	
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "sevenload.com") ? true : false;
 	}

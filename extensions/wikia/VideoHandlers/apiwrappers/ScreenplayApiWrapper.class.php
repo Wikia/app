@@ -13,6 +13,7 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	const ENCODEFORMATCODE_MP4 = 20;
 
 	protected static $CACHE_KEY = 'screenplayapi';
+	protected static $aspectRatio = 1.3333333;
 	protected static $THUMBNAIL_URL_TEMPLATE = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=$1&bitrateid=$2&vendorid=$3&type=$4';
 		
 	public function getDescription() {
@@ -23,8 +24,7 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 		$bitrateId = self::MEDIUM_JPEG_BITRATE_ID;
 		if (!empty($this->metadata['jpegBitrateCode'])) {
 			$bitrateId = $this->metadata['jpegBitrateCode'];
-		}
-		elseif (!empty($this->interfaceObj[3])) {
+		} elseif (!empty($this->interfaceObj[3])) {
 			$bitrateId = $this->interfaceObj[3];
 		}
 		$thumb = str_replace('$1', $this->videoId, self::$THUMBNAIL_URL_TEMPLATE);
@@ -41,12 +41,11 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 		return '';
 	}
 	
-	protected function getAspectRatio() {
+	public function getAspectRatio() {
 		$bitrateId = '';
 		if (!empty($this->metadata['stdBitrateCode'])) {
 			$bitrateId = $this->metadata['stdBitrateCode'];
-		}
-		elseif (!empty($this->interfaceObj[0])) {
+		} elseif (!empty($this->interfaceObj[0])) {
 			$bitrateId = $this->interfaceObj[0];
 		}
 
@@ -54,7 +53,7 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 			return 1.7777778;
 		}
 		
-		return '';		
+		return parent::getAspectRatio();
 	}
 	
 	protected function isHdAvailable() {

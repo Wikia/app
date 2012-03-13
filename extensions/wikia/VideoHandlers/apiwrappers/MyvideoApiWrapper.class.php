@@ -5,6 +5,7 @@ class MyvideoApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_XML;
 	protected static $API_URL = 'https://api.myvideo.de/prod/mobile/api2_rest.php?method=myvideo.videos.get_details&dev_id=$1&website_id=$2&movie_id=$3&player_size=3';
 	protected static $CACHE_KEY = 'myvideoapi';
+	protected static $aspectRatio = 1.59530026;	// 611 x 383
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "myvideo.de") ? true : false;

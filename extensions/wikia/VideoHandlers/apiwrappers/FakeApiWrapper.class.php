@@ -62,7 +62,7 @@ class FakeApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	protected function getAspectRatio(){
+	public function getAspectRatio(){
 		return '';
 	}
 

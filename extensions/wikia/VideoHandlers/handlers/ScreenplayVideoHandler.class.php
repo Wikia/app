@@ -3,7 +3,6 @@
 class ScreenplayVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'ScreenplayApiWrapper';
-	protected static $aspectRatio = 1.3333333;
 	protected static $urlTemplate = 'http://www.totaleclips.com/Player/Bounce.aspx?';
 	protected static $providerDetailUrlTemplate = 'http://screenplayinc.com/';
 	protected static $providerHomeUrl = 'http://screenplayinc.com/';
