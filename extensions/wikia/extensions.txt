@@ -299,6 +299,9 @@ file = UserRenameTool/SpecialRenameuser.i18n.php
 
 Video Embed Tool
 
+Video Handlers
+file = VideoHandlers/VideoHandlers.i18n.php
+
 Wall
 
 Watch Sub Pages

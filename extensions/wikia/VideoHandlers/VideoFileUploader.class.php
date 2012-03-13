@@ -137,24 +137,22 @@ class VideoFileUploader {
 
 	protected function getDestinationTitle(){
 
-		if ( !empty( $this->sTargetTitle ) ) {
-			return $this->sTargetTitle;
+		if ( empty( $this->sTargetTitle ) ) {
+			$this->sTargetTitle = $this->getApiWrapper()->getTitle();
 		}
 
-		if ( $this->getApiWrapper() instanceof ApiWrapper ) {
-			return $this->getApiWrapper()->getTitle();
-		}
-
-		return false;
+		return $this->sTargetTitle;
 	}
 
 	protected function getDescription(){
 		if ( empty( $this->sDescription ) ) {
-			return '[[Category:Video]]'.$this->getApiWrapper()->getDescription();
+			$this->sDescription = '[[Category:Video]]'.$this->getApiWrapper()->getDescription();
 		}
+		
+		return $this->sDescription;
 	}
 	
-	protected function getVideoId(){
+	public function getVideoId(){
 		if ( empty( $this->sVideoId ) ) {
 			$this->sVideoId = $this->getApiWrapper()->getVideoId();
 		}
