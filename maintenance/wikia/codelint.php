@@ -70,9 +70,11 @@ catch (Exception $e) {
 
 // perform code linting
 if (!empty($files)) {
+	echo "Checking files...\n";
 	$results = $lint->checkFiles($files, $blacklist);
 }
 else if (!empty($dirs)) {
+	echo "Checking directories...\n";
 	$results = $lint->checkDirectories($dirs, $blacklist);
 }
 else {
