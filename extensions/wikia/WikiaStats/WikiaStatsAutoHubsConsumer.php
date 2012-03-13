@@ -159,7 +159,7 @@ class WikiaStatsAutoHubsConsumer {
 									if ( !isset($user['name']) ) {
 										continue;
 									}
-									
+
 									if ( $user['name'] == $wgIP || User::isIP( $user['name'] ) ) {
 										continue;
 									}
@@ -268,7 +268,5 @@ class WikiaStatsAutoHubsConsumer {
 		$log = "php error: [$errno] $errstr; file: $errfile ; line: $errline \n";
 		Wikia::log( __METHOD__, 'php error', $log );
 		die( $log );
-		sleep(3);
-		return true;
 	}
 }

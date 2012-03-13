@@ -1,12 +1,12 @@
 <?php
 
 class MWLibMemcached {
-	
+
 	const SERIALIZED = 1;
 	const COMPRESSED = 2;
 	const COMPRESSION_SAVINGS = 0.20;
-	
-	
+
+
 	/**
 	 * Command statistics
 	 *
@@ -14,18 +14,18 @@ class MWLibMemcached {
 	 * @access  public
 	 */
 	public $stats;
-	
+
 	protected $keyPrefix = 'lm-';
-	
+
 	protected $servers;
 	protected $debug = false;
 	protected $persistent = false;
-	
+
 	protected $compression = true;
 	protected $binary = true;
-	
+
 	protected $cache = array();
-	
+
 	/**
 	 * Memcache initializer
 	 *
@@ -39,9 +39,9 @@ class MWLibMemcached {
 		$this->stats = array();
 		$this->debug = @$args['debug'];
 //		$this->persistent = $args['persistant'];
-		$this->set_servers( @$args['servers'] ); 
+		$this->set_servers( @$args['servers'] );
 	}
-	
+
 	/**
 	 * Adds a key/value to the memcache server if one isn't already set with
 	 * that key
@@ -59,7 +59,7 @@ class MWLibMemcached {
 //		xxlog("MEMC ADD    $key ".xxcl()."\n");
 		return $this->getMemcachedObject()->add($key,$val,$exp);
 	}
-	
+
 	/**
 	 * Decriment a value stored on the memcache server
 	 *
@@ -75,7 +75,7 @@ class MWLibMemcached {
 		$value = $this->getMemcachedObject()->decrement($key,$amt);
 		return isset($value) ? $value : null;
 	}
-	
+
 	/**
 	 * Deletes a key from the server, optionally after $time
 	 *
@@ -91,14 +91,14 @@ class MWLibMemcached {
 //		xxlog("MEMC DEL    $key ".xxcl()."\n");
 		return $this->getMemcachedObject()->delete($key,$time);
 	}
-	
+
 	/**
 	 * Disconnects all connected sockets
 	 */
 	public function disconnect_all() {
 		// not supported in pecl-memcached
 	}
-	
+
 	/**
 	 * Enable / Disable compression
 	 *
@@ -107,14 +107,14 @@ class MWLibMemcached {
 	public function enable_compress( $enable ) {
 		// we should not change this setting
 	}
-	
+
 	/**
 	 * Forget about all of the dead hosts
 	 */
 	public function forget_dead_hosts() {
 		// not supported in pecl-memcached
 	}
-	
+
 	/**
 	 * Retrieves the value associated with the key from the memcache server
 	 *
@@ -144,9 +144,8 @@ class MWLibMemcached {
 				// error accessing server
 				return false;
 		}
-		return $value;
 	}
-	
+
 	/**
 	 * Get multiple keys from the server(s)
 	 *
@@ -157,7 +156,7 @@ class MWLibMemcached {
 	public function get_multi( $keys ) {
 		@$this->stats['get_multi']++;
 		$this->prefixKeys($keys);
-		
+
 		$values = array();
 		$keys2 = array();
 		foreach ($keys as $k => $key) {
@@ -167,17 +166,17 @@ class MWLibMemcached {
 				$keys2[] = $key;
 			}
 		}
-		
+
 		if (count($keys2) > 0) {
 			$values2 = $this->getMemcachedObject()->getMulti($keys);
-			
+
 			$this->cache = array_merge( $this->cache, $values2 );
 			$values = array_merge( $values, $values2 );
 		}
-		
+
 		return $this->unprefixKeys($values);
 	}
-	
+
 	/**
 	 * Increments $key (optionally) by $amt
 	 *
@@ -193,7 +192,7 @@ class MWLibMemcached {
 		$value = $this->getMemcachedObject()->increment($key,$amt);
 		return isset($value) ? $value : null;
 	}
-	
+
 	/**
 	 * Overwrites an existing value for key; only works if key is already set
 	 *
@@ -211,7 +210,7 @@ class MWLibMemcached {
 		$value = $this->getMemcachedObject()->replace($key,$value,$exp);
 		return $value;
 	}
-	
+
 	/**
 	 * Passes through $cmd to the memcache server connected by $sock; returns
 	 * output as an array (null array if no output)
@@ -231,7 +230,7 @@ class MWLibMemcached {
 	function run_command( $sock, $cmd ) {
 		throw new Exception("Not implemented");
 	}
-	
+
 	/**
 	 * Unconditionally sets a key to a given value in the memcache.  Returns true
 	 * if set successfully.
@@ -249,7 +248,7 @@ class MWLibMemcached {
 //		xxlog("MEMC SET    $key ".xxcl()."\n");
 		return $this->getMemcachedObject()->set($key,$value,$exp);
 	}
-	
+
 	/**
 	 * Sets the compression threshold
 	 *
@@ -258,7 +257,7 @@ class MWLibMemcached {
 	public function set_compress_threshold( $thresh ) {
 		// we should not change this setting
 	}
-	
+
 	/**
 	 * Sets the debug flag
 	 *
@@ -269,7 +268,7 @@ class MWLibMemcached {
 	public function set_debug( $dbg ) {
 		$this->debug = $dbg;
 	}
-	
+
 	/**
 	 * Sets the server list to distribute key gets and puts between
 	 *
@@ -290,7 +289,7 @@ class MWLibMemcached {
 			$this->freeMemcachedObject();
 		}
 	}
-	
+
 	/**
 	 * Sets the timeout for new connections
 	 *
@@ -300,16 +299,16 @@ class MWLibMemcached {
 	public function set_timeout( $seconds, $microseconds ) {
 		// we don't support changing this setting
 	}
-	
-	
+
+
 	// NON-PUBLIC PART
-	
+
 	protected $memcached;
-	
+
 	protected function getPersistentId() {
 		return md5(serialize($this->servers));
 	}
-	
+
 	protected function getMemcachedObject() {
 		if (!$this->memcached) {
 			// clear the cache
@@ -320,7 +319,7 @@ class MWLibMemcached {
 			} else {
 				$memcached = new Memcached();
 			}
-			
+
 			// set options as desired
 			$memcached->setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE,true);
 			// the line above sets the next 2 options automatically
@@ -335,7 +334,7 @@ class MWLibMemcached {
 			$memcached->setOption(Memcached::OPT_RECV_TIMEOUT,$this->timeout);
 			$memcached->setOption(Memcached::OPT_POLL_TIMEOUT,$this->timeout);
 // 			$memcached->setOption();
-			
+
 			// allow settings override in configuration (eg. enable igbinary serializer)
 			global $wgLibMemCachedOptions;
 			if (is_array($wgLibMemCachedOptions)) {
@@ -343,7 +342,7 @@ class MWLibMemcached {
 					$memcached->setOption($key,$val);
 				}
 			}
-			
+
 			// add servers if required
 			if (!count($memcached->getServerList())) {
 				$memcached->addServers($this->servers);
@@ -352,12 +351,12 @@ class MWLibMemcached {
 		}
 		return $this->memcached;
 	}
-	
+
 	protected function freeMemcachedObject() {
 		$this->memcached = null;
 		$this->cache = array();
 	}
-	
+
 	protected function prefixKeys( &$keys ) {
 		if (is_array($keys)) {
 			$keys = array_map(array($this,'prefixKeys'), $keys);
@@ -366,7 +365,7 @@ class MWLibMemcached {
 		}
 		return $keys;
 	}
-	
+
 	protected function unprefixKeys( &$multi ) {
 		$l = strlen($this->keyPrefix);
 		$data = array();
@@ -378,7 +377,7 @@ class MWLibMemcached {
 		}
 		return $data;
 	}
-	
+
 }
 
 ini_set('memcached.compression_type','zlib');
