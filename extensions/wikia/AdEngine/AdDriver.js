@@ -67,7 +67,7 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 	}
 
 	// Answers sites
-	if (wgEnableWikiAnswers) {
+	if (window.wgEnableWikiAnswers) {
 		return AdDriver.adProviderLiftium;
 	}
 
