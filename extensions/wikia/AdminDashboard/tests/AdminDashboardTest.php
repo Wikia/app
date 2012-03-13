@@ -1,8 +1,11 @@
 <?php
-
-	require_once dirname(__FILE__) . '/../AdminDashboard.setup.php';
-
 	class AdminDashboardTest extends WikiaBaseTest {
+		
+		public function setUp() {
+			$this->setupFile = dirname(__FILE__) . '/../AdminDashboard.setup.php';
+			parent::setUp();
+		}
+		
 		const TEST_CITY_ID = 79860;
 		protected static $list = array('pageviews', 'edits', 'photos');
 
@@ -235,7 +238,7 @@
 					array(56756,'56.8K'),
 					array(56900,'56.9K'),
 					array(56990,'57K'),
-					array(123456789,'123456.8K'),
+					array(123456789,'123456.8K')
 				);
 		}
 
