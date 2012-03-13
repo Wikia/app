@@ -128,8 +128,7 @@ class LibmemcachedBagOStuff extends BagOStuff {
 				// error accessing server
 				return false;
 		}
-		return $value;
-	}
+	} 
 	
 	/**
 	 * Get multiple keys from the server(s)
