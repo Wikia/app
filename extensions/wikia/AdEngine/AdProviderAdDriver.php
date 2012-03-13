@@ -87,8 +87,6 @@ EOT;
 	}
 
 	public function getSetupHtml() {
-		global $wgCityId;
-
 		static $called = false;
 		if ($called) {
 			return false;
