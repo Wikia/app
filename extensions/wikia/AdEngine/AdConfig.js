@@ -231,6 +231,7 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getDcoptKV(slotname) +
 		mtfIFPath +
 		'src=' + src + ';' +
+		'ord=' + AdConfig.DART.ord + ';' +
 		'sz=' + size + ';' +
 		'mtfInline=true;' +	// http://www.google.com/support/richmedia/bin/answer.py?hl=en&answer=182220
 		AdConfig.DART.getTileKV(slotname, adProvider) +
