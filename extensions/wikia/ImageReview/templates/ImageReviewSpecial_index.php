@@ -21,6 +21,7 @@
 		<a href="<?= $baseUrl ?>">< Back to Image Review</a>
 	<? } ?>
 
+<?php if ( $accessControls ) { ?>
 <form action="<?php $submitUrl ?>" method="get" id="ImageReviewControls">
 	Sort order: <?php
 		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $order ) );
@@ -32,6 +33,8 @@
 
 	<input type="submit" class="wikia-button secondary" value="Change sort order" />
 </form>
+
+<?php } ?>
 
 </header>
 
