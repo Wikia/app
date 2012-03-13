@@ -20,13 +20,13 @@ function wfSetWikiaNewtalk( &$article ) {
 	$name = $article->mTitle->getDBkey();
 	$other = User::newFromName( $name );
 
-    if( is_null( $other ) && User::isIP( $name ) ) {
+    if( !($other instanceof User) && User::isIP( $name ) ) {
 		// An anonymous user
 		$other = new User();
 		$other->setName( $name );
 	}
 
-    if( $other ) {
+    if( $other instanceof User ) {
 		$other->setNewtalk( true );
 		$other->load();
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
