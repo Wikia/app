@@ -49,7 +49,7 @@
 
 	<ul class="image-review-list">
 <?php
-if (is_array($imageList) && count($imageList) > 0) {
+if ( is_array($imageList) && count($imageList) > 0) {
 	$cells = 20;
 	$perRow = 5;
 
@@ -91,14 +91,16 @@ if (is_array($imageList) && count($imageList) > 0) {
 
 	?>
 	</ul>
+
+<footer>
+	<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>
+	<input id="nextButton"  type="submit" class="wikia-button" value="Review & get next batch" />
+</footer>
 	<?php
 } else {
 	echo wfMsg( 'imagereview-noresults' );
+	echo Xml::element( 'a', array( 'href' => $fullUrl, 'class' => 'wikia-button', 'style' => 'float: none' ), 'Refresh page' );
 }
 ?>
 
-	<footer>
-		<a href="javascript:history.back()" class="wikia-button secondary">Back to previous batch</a>
-		<input id="nextButton"  type="submit" class="wikia-button" value="Review & get next batch" />
-	</footer>
 </form>
