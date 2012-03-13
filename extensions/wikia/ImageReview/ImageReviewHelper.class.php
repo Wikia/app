@@ -6,6 +6,10 @@
 class ImageReviewHelper extends WikiaModel {
 
 	const LIMIT_IMAGES = 20;
+	/*
+	 * LIMIT_IMAGES_FROM_DB should be a little greater than LIMIT_IMAGES, so if
+	 * we fetch a few icons from DB, we can skip them
+	 */
 	const LIMIT_IMAGES_FROM_DB = 23;
 	
 	const STATE_UNREVIEWED = 0;
