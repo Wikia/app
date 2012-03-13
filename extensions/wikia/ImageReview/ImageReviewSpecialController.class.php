@@ -33,6 +33,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal( 'accessQuestionable', $accessQuestionable );
 		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
+		$this->response->setVal( 'accessControls', $this->wg->user->isAllowed( 'imagereviewcontrols' ) );
 		$this->response->setVal( 'modeMsgSuffix', empty( $action ) ? '' : '-' . $action );
 
 		$order = $this->getVal( 'sort', 0 );
