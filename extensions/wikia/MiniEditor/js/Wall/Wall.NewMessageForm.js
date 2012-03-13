@@ -7,18 +7,19 @@
 
 			this.WallMessageBody.focus(function() {
 				if(!$(this).data('wikiaEditor')) {
-					$(this).unbind('.placeholder').miniEditor({
-						events: {
-							editorReady: function(event, wikiaEditor) {
-								if(!MiniEditor.ckeditorEnabled) {
-									wikiaEditor.getEditbox()
-										.placeholder()
-										.triggerHandler('focus.placeholder');
-								}
+					$(this).unbind('.placeholder');
+				}
+				$(this).miniEditor({
+					events: {
+						editorReady: function(event, wikiaEditor) {
+							if(!MiniEditor.ckeditorEnabled) {
+								wikiaEditor.getEditbox()
+									.placeholder()
+									.triggerHandler('focus.placeholder');
 							}
 						}
-					});
-				}
+					}
+				});
 			});
 		},
 
