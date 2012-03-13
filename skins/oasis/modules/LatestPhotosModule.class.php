@@ -2,6 +2,7 @@
 class LatestPhotosModule extends Module {
 
 	const BLACKLIST_MESSAGE = 'Photosblacklist';
+	
 	/**
 	 * The widht&height of cropped thumbnail fb#22163
 	 * 
@@ -10,6 +11,12 @@ class LatestPhotosModule extends Module {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	const THUMB_SIZE = 82;
+	
+	/**
+	 * Just a string concatanated with other in creation of Memc Key
+	 * @var String
+	 */
+	const MEMC_KEY_VER = '1.0';
 
 	var $thumbUrls;
 	var $wgBlankImgUrl;
@@ -242,8 +249,8 @@ class LatestPhotosModule extends Module {
 
 	private static function memcacheKey() {
 		// mech: bugfix for 19619 in getTemplateData method requires me to invalidate the cache,
-		// so I'm changing the memkey 
-		$mKey = wfMemcKey('mOasisLatestPhotosKey');
+		// so I'm changing the memkey
+		$mKey = wfMemcKey('mOasisLatestPhotosKey'.self::MEMC_KEY_VER);
 		return $mKey;
 	}
 
