@@ -201,9 +201,9 @@ class ActivityFeedHelper {
 
 	/**
 	 * @author Jakub Kurcek
+	 * @author Macbre
 	 */
-	static function filterTextBetweenTags( $text ) {
-
+	static function filterTextBetweenTags($text) {
 		$text = preg_replace(
 			array(
 				// Remove invisible content
@@ -216,15 +216,16 @@ class ActivityFeedHelper {
 				'@<noframes[^>]*?.*?</noframes>@siu',
 				'@<noscript[^>]*?.*?</noscript>@siu',
 				'@<noembed[^>]*?.*?</noembed>@siu',
+
+				// remove photo attribution (BugId:23781)
+				'@<figcaption[^>]*?.*?</figcaption>@siu',
+				'@<div class="picture-attribution">*?.*?</div>@siu',
 			),
-			array(
-			    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
-			),
+			' ',
 			$text
 		);
 
-		return $text;
-
+		return trim($text, ' ');
 	}
 }
 

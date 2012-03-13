@@ -92,7 +92,7 @@ class MyHome {
 				// remove <script> tags (RT #46350)
 				$content = preg_replace('#<script[^>]+>(.*)<\/script>#', '', $content);
 
-				// remove text between tags (RT #141394)
+				// remove text between tags (RT #141394) and get rid of photo attribution (BugId:23871)
 				$content = ActivityFeedHelper::filterTextBetweenTags( $content );
 
 				// remove HTML tags
