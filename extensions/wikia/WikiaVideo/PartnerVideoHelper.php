@@ -12,7 +12,7 @@ class PartnerVideoHelper {
 	private static $REALGRAVITY_VIDEOS_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.xml?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
 	private static $TEMP_DIR = '/tmp';
 	
-	private static $CLIP_TYPE_BLACKLIST = array( VideoPage::V_SCREENPLAY => array('trailerType'=>'Home Video', 'trailerVersion'=>'Trailer') );
+	private static $CLIP_TYPE_BLACKLIST = array( VideoPage::V_SCREENPLAY => array() );
 	
 	private static $PARTNER_VIDEO_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $PARTNER_VIDEO_INGEESTION_DATA_FIELDS = array('keyphrases', 'movieclipsIds');
@@ -395,7 +395,7 @@ class PartnerVideoHelper {
 		// duration < MIN_VALUE
 		if (is_array(self::$CLIP_TYPE_BLACKLIST[$provider])) {
 			$arrayIntersect = array_intersect(self::$CLIP_TYPE_BLACKLIST[$provider], $clipData);
-			if ($arrayIntersect == self::$CLIP_TYPE_BLACKLIST[$provider]) {
+			if (!empty($arrayIntersect) && $arrayIntersect == self::$CLIP_TYPE_BLACKLIST[$provider]) {
 				return true;
 			}
 		}
