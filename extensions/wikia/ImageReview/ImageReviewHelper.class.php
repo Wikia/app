@@ -10,7 +10,7 @@ class ImageReviewHelper extends WikiaModel {
 	 * LIMIT_IMAGES_FROM_DB should be a little greater than LIMIT_IMAGES, so if
 	 * we fetch a few icons from DB, we can skip them
 	 */
-	const LIMIT_IMAGES_FROM_DB = 23;
+	const LIMIT_IMAGES_FROM_DB = 24;
 	
 	const STATE_UNREVIEWED = 0;
 	const STATE_IN_REVIEW = 1;
@@ -19,6 +19,8 @@ class ImageReviewHelper extends WikiaModel {
 	const STATE_DELETED = 4;
 	const STATE_QUESTIONABLE = 5;
 	const STATE_QUESTIONABLE_IN_REVIEW = 6;
+	
+	const STATE_INVALID_IMAGE = 98;
 	const STATE_ICO_IMAGE = 99;
 	
 	const FLAG_SUSPICOUS_USER = 2;
@@ -263,7 +265,7 @@ class ImageReviewHelper extends WikiaModel {
 		$rows = array();
 		$updateWhere = array();
 		$iconsWhere = array();
-		while (( $row = $db->fetchObject($result) ) && ( count( $rows ) < self::LIMIT_IMAGES )) {
+		while ( $row = $db->fetchObject($result) ) {
 			if ( "ico" == pathinfo($row->page_title_lower, PATHINFO_EXTENSION) ) {
 				$iconsWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 			} else {
@@ -294,22 +296,53 @@ class ImageReviewHelper extends WikiaModel {
 		}
 		$db->commit();
 		
+		$invalidImages = array();
+		$unusedImages = array();
 		foreach( $rows as $row) {
-			$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
-			$tmp = array(
-				'wikiId' => $row->wiki_id,
-				'pageId' => $row->page_id,
-				'state' => $row->state,
-				'src' => $img['src'],
-				'url' => $img['page'],
-				'priority' => $row->priority,
-				'flags' => $row->flags,
-			);
-
-			if( !empty($tmp['src']) && !empty($tmp['url']) ) {
-				$imageList[] = $tmp;
+			if (count($imageList) < self::LIMIT_IMAGES) {
+				$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
+					
+				if (empty($img['src'])) {
+					$invalidImages[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+				} else {
+					$imageList[] = array(
+						'wikiId' => $row->wiki_id,
+						'pageId' => $row->page_id,
+						'state' => $row->state,
+						'src' => $img['src'],
+						'url' => $img['page'],
+						'priority' => $row->priority,
+						'flags' => $row->flags,
+					);
+				}
+			} else {
+				$unusedImages[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 			}
 		}
+		
+		$commit = false;
+		if ( count($invalidImages) > 0 ) {
+			$db->update(
+				'image_review', 
+				array( 'state' => self::STATE_INVALID_IMAGE),
+				array(implode(' OR ', $invalidImages)),
+				__METHOD__
+			);
+			$commit = true;
+		}
+
+		if ( count($unusedImages) > 0 ) {
+			$db->update(
+				'image_review', 
+				array( 'reviewer_id = null', 'state' => $state),
+				array(implode(' OR ', $unusedImages)),
+				__METHOD__
+			);
+			$commit = true;
+		}
+		
+		if ( $commit ) $db->commit();
+		
 		
 		error_log("ImageReview : fetched new " . count($imageList) . " images");
 
