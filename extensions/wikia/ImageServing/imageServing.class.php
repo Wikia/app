@@ -13,7 +13,7 @@ class ImageServing {
 	private $articles = array();
 	private $width;
 	private $proportion;
-	private $deltaY = 0;
+	private $deltaY = null;
 	private $db;
 	private $proportionString;
 
@@ -48,7 +48,6 @@ class ImageServing {
 		$this->memc =  $this->app->getGlobal( 'wgMemc' );
 		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
 
-		$this->deltaY = ( $this->proportion['w'] / $this->proportion['h'] - 1 ) * 0.1;
 		$this->db = $db;
 	}
 	/**
@@ -253,21 +252,29 @@ class ImageServing {
 	 * @return \string prefix for thumb image
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
-
 		//rescale of png always use width 512;
 		if( $issvg ) {
 			$height = round( ( 512 * $height) / $width );
 			$width = 512;
 		}
-
-		$iCroppedAspectRatio = $this->proportion['h'] / $this->proportion['w'];
-		$H = (float)$width / ($iCroppedAspectRatio);
-		$hDelta = ( ( $height - $H ) / 2 );
-
+		
 		// make sure these are numeric (BugId:20644)
 		$width = intval($width);
 		$height = intval($height);
 
+		
+		// in case we're missing some propotions, maintain the original aspect ratio
+		if (!$this->proportion['h']) {
+			$this->proportion['h'] = (float)$height * $this->proportion['w'] / $width;
+		} else if (!$this->proportion['w']) {
+			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
+		}
+
+		// mech: not sure what those 3 lines below were supposed to do, the result isn't used anyway
+		$iCroppedAspectRatio = $this->proportion['h'] / $this->proportion['w'];
+		$H = (float)$width / ($iCroppedAspectRatio);
+		$hDelta = ( ( $height - $H ) / 2 );
+		
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 
 		if( $pHeight >= $height ) {
@@ -282,7 +289,7 @@ class ImageServing {
 			$bottom = $height;
 		} else {
 			if ( $align == "center" ) {
-				$deltaY = isset( $this->tmpDeltaY ) ? $this->tmpDeltaY : $this->deltaY;
+				$deltaY = isset( $this->tmpDeltaY ) ? $this->tmpDeltaY : $this->getDeltaY();
 				unset( $this->tmpDeltaY );
 				$deltaYpx = round( $height * $deltaY );
 				$bottom = $pHeight + $deltaYpx;
@@ -303,7 +310,14 @@ class ImageServing {
 
 		return "{$this->width}px-$left,$right,$top,$bottom";
 	}
-
+	
+	public function getDeltaY() {
+		if (is_null($this->deltaY)) {
+			$this->deltaY = ( $this->proportion['w'] / $this->proportion['h'] - 1 ) * 0.1;
+		}
+		return $this->deltaY;
+	}
+	
 	public function setDeltaY( $iCenterPosition = 0 ){
 		$this->deltaY = $iCenterPosition;
 	}
