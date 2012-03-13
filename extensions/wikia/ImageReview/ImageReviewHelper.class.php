@@ -339,6 +339,7 @@ class ImageReviewHelper extends WikiaModel {
 				__METHOD__
 			);
 			$commit = true;
+			error_log("ImageReview : returning " . count($unusedImages) . " back to the queue");
 		}
 		
 		if ( $commit ) $db->commit();
