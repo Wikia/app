@@ -53,7 +53,6 @@ function wfUserProfilePageInit() {
 	 */
 	$wgAutoloadClasses['UserProfilePage'] = $dir . 'UserProfilePage.class.php';
 	$wgAutoloadClasses['UserProfilePageHelper'] = $dir . 'UserProfilePageHelper.class.php';
-	$wgAutoloadClasses['RecentChangeDetail'] = $dir . 'RecentChangeDetail.class.php';
 	$wgAutoloadClasses['UserProfilePageModule'] = $dir . 'UserProfilePageModule.class.php';
 	$wgAutoloadClasses['UserProfileRailModule'] = $dir . 'UserProfileRailModule.class.php';
 
@@ -87,4 +86,3 @@ $wgGroupPermissions['sysop']['editprofile'] = true;
 $wgGroupPermissions['staff']['editprofile'] = true;
 $wgGroupPermissions['helper']['editprofile'] = true;
 $wgGroupPermissions['vstf']['editprofile'] = true;
-
