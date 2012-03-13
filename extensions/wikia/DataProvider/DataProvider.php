@@ -187,11 +187,6 @@ class DataProvider
 		$id = 'recentchanges';
 		$links[] = array('url' => $url, 'text' => $text, 'id' => $id);
 
-		# Live wiki help
-		$url = Skin::makeInternalOrExternalUrl( wfMsgForContent( 'irc-url' ) );
-		$text = self::Translate( 'irc' );
-		$links[] = array('url' => $url, 'text' => $text, 'id' => 'irc-url');
-
 		if ( !is_null( $this->skin) && !empty($this->skin->data['nav_urls']) ) {
 			foreach( $this->skin->data['nav_urls'] as $key => $val ) {
 				if( !empty( $val ) && $key != 'mainpage' && $key != 'print' ) {
