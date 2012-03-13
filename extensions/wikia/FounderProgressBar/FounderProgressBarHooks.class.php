@@ -91,12 +91,12 @@ class FounderProgressBarHooks {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PROFILE_EDIT));				
 			}
 			// if page contains gallery tag
-			if (stripos ($text, "<gallery") > 0) {
+			if (stripos ($text, "<gallery") !== false) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_GALLERY_ADD));			
 			}
 			
 			// if page contains video tag
-			if (stripos ($text, "<video") > 0) {
+			if (stripos ($text, "<video") !== false || stripos($text, "[[Video:") !== false ) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_VIDEO_ADD));			
 			}
 			
