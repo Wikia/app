@@ -81,13 +81,13 @@ class ImageReviewHelper extends WikiaModel {
 		if ($stats) {
 			switch ( $action ) {
 				case '':
-					$stats['reviewer'] += count($images);
-					$stats['unreviewed'] -= count($images);
+				//	$stats['reviewer'] += count($images);
+				//	$stats['unreviewed'] -= count($images);
 					$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
 					break;
 				case ImageReviewSpecialController::ACTION_QUESTIONABLE:
 					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_DELETED] );
-					$stats['reviewer'] += $changedState;
+				//	$stats['reviewer'] += $changedState;
 					$stats['questionable'] -= $changedState;
 					break;
 			}
@@ -115,7 +115,6 @@ class ImageReviewHelper extends WikiaModel {
 	 */
 	public function resetAbandonedWork() {
 		$this->wf->ProfileIn( __METHOD__ );
-
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
 
 		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600 ; // 1 sec
@@ -208,7 +207,7 @@ class ImageReviewHelper extends WikiaModel {
 	 * get image list
 	 * @return array imageList
 	 */
-	public function getImageList( $timestamp, $state = self::STATE_UNREVIEWED ) {
+	public function getImageList( $timestamp, $state = self::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$db = $this->wf->GetDB( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
@@ -239,7 +238,8 @@ class ImageReviewHelper extends WikiaModel {
 		} else {
 			$newState = self::STATE_IN_REVIEW ;
 		}
-				$values[] = 'state = '.$newState;
+		
+		$values[] = 'state = '.$newState;
 
 		$result = $db->select(
 			array( 'image_review' ),
@@ -247,7 +247,7 @@ class ImageReviewHelper extends WikiaModel {
 			$where,
 			__METHOD__,
 			array(
-				'ORDER BY' => 'last_edited desc', 
+				'ORDER BY' => $this->getOrder($order), 
 				'LIMIT' => self::LIMIT_IMAGES )
 		);
 		
@@ -257,12 +257,14 @@ class ImageReviewHelper extends WikiaModel {
 			$rows[] = $row; 
 			$updateWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 		}
-		$db->update(
-			'image_review', 
-			$values,
-			array(implode(' OR ', $updateWhere)),
-			__METHOD__				
-		);
+		if(!empty($updateWhere)) {
+			$db->update(
+				'image_review', 
+				$values,
+				array(implode(' OR ', $updateWhere)),
+				__METHOD__				
+			);
+		}
 		
 		$db->commit();
 
@@ -403,10 +405,10 @@ class ImageReviewHelper extends WikiaModel {
 		return $ids;
 	}
 	
-	public function getImageCount($reviewer_id) {
+	public function getImageCount() {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$key = wfMemcKey( 'ImageReviewSpecialController', 'v1', __METHOD__, $reviewer_id );
+		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
 		$total = $this->wg->memc->get($key, null);
 		if(!empty($total)) {
 			$this->wf->ProfileOut( __METHOD__ );
@@ -420,19 +422,23 @@ class ImageReviewHelper extends WikiaModel {
 			$where[] = 'wiki_id not in('.implode(',', $list).')';
 		}
 		
+		$where['state'] = self::STATE_QUESTIONABLE;
+
 		// select by reviewer, state and total count with rollup and then pick the data we want out
 		$result = $db->select(
 			array( 'image_review' ),
-			array( 'reviewer_id', 'state', 'count(*) as total' ),
+			array( 'count(*) as total' ),
 			$where,
 			__METHOD__,
-			array( 'GROUP BY' => 'reviewer_id, state')
-				
+			array()
 		);
+		
 		$total = array('reviewer' => 0, 'unreviewed' => 0, 'questionable' => 0);
 		while( $row = $db->fetchObject($result) ) {
+			$total['questionable'] = $row->total;
+			
 			// Rollup row with Reviewer total count
-			if ($row->reviewer_id == $reviewer_id && ($row->state > self::STATE_IN_REVIEW)) {
+		/*	if ($row->reviewer_id == $reviewer_id && ($row->state > self::STATE_IN_REVIEW)) {
 				$total['reviewer'] += $row->total;
 			}
 			// Rollup row with total unreviewed
@@ -442,10 +448,10 @@ class ImageReviewHelper extends WikiaModel {
 			// Rollup row with total questionable
 			if ($row->state == self::STATE_QUESTIONABLE) {
 				$total['questionable'] += $row->total; 
-			}
+			} */
 		}
-		$total['reviewer'] = $this->wg->Lang->formatNum($total['reviewer']);
-		$total['unreviewed'] = $this->wg->Lang->formatNum($total['unreviewed']);
+	//	$total['reviewer'] = $this->wg->Lang->formatNum($total['reviewer']);
+	//	$total['unreviewed'] = $this->wg->Lang->formatNum($total['unreviewed']);
 		$total['questionable'] = $this->wg->Lang->formatNum($total['questionable']);				
 		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
 		
