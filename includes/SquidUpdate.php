@@ -82,7 +82,7 @@ class SquidUpdate {
 
 	static function purge( $urlArr ) {
 		global $wgSquidServers, $wgHTCPMulticastAddress, $wgHTCPPort;
-		global $wgPurgeSquidViaStomp, $wgPurgeSquidViaScribe;
+		global $wgPurgeSquidViaScribe;
 
 		/*if ( (@$wgSquidServers[0]) == 'echo' ) {
 			echo implode("<br />\n", $urlArr) . "<br />\n";

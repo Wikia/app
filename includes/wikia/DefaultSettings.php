@@ -497,14 +497,6 @@ include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" )
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/AutoCreateWiki/CreateWikiLocalJob.php" );
 
-$wgReportTimeViaStomp = false;
-$wgPurgeSquidViaStomp = false;
-$wgReportMailViaStomp = false;
-
-$wgStompServer = '';
-$wgStompUser = '';
-$wgStompPassword = '';
-$wgAutoloadClasses['Stomp'] = "$IP/lib/Stomp.php";
 
 // StaticChute used to generate merged JS/CSS files on-the-fly
 $wgAutoloadClasses['StaticChute'] = "$IP/extensions/wikia/StaticChute/StaticChute.php";
