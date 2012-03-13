@@ -341,7 +341,7 @@ class AdEngine {
 
 	// Logic for hiding/displaying ads should be here, not in the skin.
 	public function getAdProvider($slotname) {
-		global $wgShowAds, $wgUser, $wgLanguageCode, $wgNoExternals;
+		global $wgShowAds, $wgUser, $wgNoExternals;
 
 
 		/* Note: Don't throw an exception on error. Fail gracefully for ads,
@@ -595,7 +595,7 @@ class AdEngine {
 
 
 	public function getDelayedIframeLoadingCode(){
-		global $wgExtensionsPath, $wgEnableAdsLazyLoad;
+		global $wgExtensionsPath;
 
 		if (empty($this->placeholders)){
 			// No delayed ads on this page
