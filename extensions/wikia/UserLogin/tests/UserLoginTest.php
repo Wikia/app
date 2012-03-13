@@ -118,15 +118,8 @@
 		}
 
 		public function testWikiaMobileTemplate() {
-			$origUser = $this->app->wg->User;
-
-			$user = $this->getMock( 'User' , array( 'getSkin' ) );
-
-			$user->expects( $this->any() )
-				->method( 'getSkin' )
-				->will( $this->returnValue( Skin::newFromKey( 'wikiamobile' ) ) );
-
-			$this->app->wg->set( 'wgUser', $user );
+			$this->setUpMockObject( 'User', array( 'getSkin' => Skin::newFromKey( 'wikiamobile' ) ), true, 'wgUser' );
+			$this->setUpMock();
 
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html' ) );
 
@@ -134,11 +127,9 @@
 			$response->toString();
 
 			$this->assertEquals(
-				$response->getView()->getTemplatePath(),
-				'/usr/wikia/source/trunk/extensions/wikia/UserLogin/templates/UserLoginSpecial_WikiaMobileIndex.php'
+				dirname( $this->app->wg->AutoloadClasses['UserLoginSpecialController'] ) . '/templates/UserLoginSpecial_WikiaMobileIndex.php',
+				$response->getView()->getTemplatePath()
 			);
-
-			$this->app->wg->set( 'wgUser', $origUser );
 		}
 
 		public function loginDataProvider() {
