@@ -19,6 +19,15 @@ class ImageReviewHelper extends WikiaModel {
 	const FLAG_SUSPICOUS_WIKI = 4;
 	const FLAG_SKIN_DETECTED = 8;
 
+	static $sortOptions = array(
+                'latest first' => 0, 
+                'by priority and recency' => 1, 
+                'oldest first' => 2, 
+	);
+
+	const ORDER_LATEST = 0;
+	const ORDER_PRIORITY_LATEST = 1;
+	const ORDER_OLDEST = 2;
 	/**
 	 * update image state
 	 * @param array images
@@ -446,5 +455,21 @@ class ImageReviewHelper extends WikiaModel {
 
 	public function getUserTsKey() {
 		return $this->wf->MemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
+	}
+
+
+	private function getOrder( $order ) {
+		switch ( $order ) {
+			case self::ORDER_PRIORITY_LATEST:
+				$ret = 'priority desc, last_edited desc';
+				break;
+			case self::ORDER_OLDEST:
+				$ret = 'last_edited asc';
+				break;
+			case self::ORDER_LATEST:
+			default:
+				$ret = 'last_edited desc';
+		}
+		return $ret;
 	}
 }
