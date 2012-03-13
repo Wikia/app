@@ -678,6 +678,9 @@ AdDriverDelayedLoader.loadNext = function() {
 			AdDriverDelayedLoader.loadNext();
 		}
 	}
+	else {
+		AdDriverDelayedLoader.finalize();
+	}
 
 	if (!AdDriverDelayedLoader.adDriverItems.length && typeof Liftium != 'undefined' && Liftium) {
 		Liftium.hasMoreCalls = 0;
@@ -735,6 +738,13 @@ AdDriverDelayedLoader.reset = function() {
 
 AdDriverDelayedLoader.isRunning = function() {
 	return AdDriverDelayedLoader.started && AdDriverDelayedLoader.adDriverItems.length;
+}
+
+AdDriverDelayedLoader.finalize = function() {
+	if (window.wgEnableKruxTargeting) {
+		AdDriver.log('loading krux');
+		loadKrux();
+	}
 }
 //// END AdDriverDelayedLoader
 

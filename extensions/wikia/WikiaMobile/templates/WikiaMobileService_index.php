@@ -27,5 +27,6 @@
 		<?= $comscoreTracking ;?>
 		<?= $gaTracking ;?>
 		<?= $gaOneWikiTracking ;?>
+		<?= $kruxTargetingFinalize ;?>
 	</body>
 </html>
