@@ -112,9 +112,9 @@ class LoginForm {
 			{
 				$this->mReturnTo = '';
 				$this->mReturnToQuery = '';
-			}			
+			}
 		}
-		
+
 
 	}
 
@@ -271,11 +271,10 @@ class LoginForm {
 			}
 			return null;
 		}
-		
-		// check if username is in user_temp table
-		if ( empty($wgEnableUserLoginExt) ) {
-			global $wgExternalSharedDB;
-			
+
+		// check if username is in user_temp table (when new user login is disabled)
+		global $wgExternalSharedDB;
+		if ( empty($wgEnableUserLoginExt) && !empty($wgExternalSharedDB) ) {
 			$username = User::getCanonicalName( $this->mName, 'valid' );
 			if ( $username != false ) {
 				$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -287,7 +286,7 @@ class LoginForm {
 				);
 
 				if ( $row ) {
-					$this->mainLoginForm( wfMsg( $msgKeyPrefix.'userexists' ), 'error', 'username' ); 
+					$this->mainLoginForm( wfMsg( $msgKeyPrefix.'userexists' ), 'error', 'username' );
 					return false;
 				}
 			}
@@ -324,13 +323,13 @@ class LoginForm {
 			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'sessionfailure' ) );
 			return false;
 		}
-		
+
 		# The user didn't pass a createaccount token
 		if ( !$this->mToken ) {
 			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'sessionfailure' ) );
 			return false;
 		}
-		
+
 		# Validate the createaccount token
 		if ( $this->mToken !== self::getCreateaccountToken() ) {
 			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'sessionfailure' ) );
@@ -361,10 +360,10 @@ class LoginForm {
 		}
 
 		$this->mExtUser = ExternalUser::newFromName( $this->mName );
-		
+
 		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) ) {
 			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'userexists' ), 'error', 'username' );
-			return false;			
+			return false;
 		} elseif ( 0 != $u->idForName() ) {
 			$this->mainLoginForm( wfMsg( $msgKeyPrefix.'userexists' ), 'error', 'username' );
 			return false;
@@ -447,7 +446,7 @@ class LoginForm {
 		}
 
 		self::clearCreateaccountToken();
-		$u->mBirthDate = date('Y-m-d', $userBirthDay);	
+		$u->mBirthDate = date('Y-m-d', $userBirthDay);
 		$u = $this->initUser( $u, false );
 		$user_id = $u->getID();
 		if(!empty($user_id)) {
@@ -474,15 +473,15 @@ class LoginForm {
 	function initUser( $u, $autocreate ) {
 		global $wgAuth, $wgExternalAuthType;
 
-		if ( $wgExternalAuthType ) {			
+		if ( $wgExternalAuthType ) {
 			$u = ExternalUser::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
 			if ( is_object( $u ) ) {
-				$this->mExtUser = ExternalUser::newFromName( $this->mName );	
-			}	
+				$this->mExtUser = ExternalUser::newFromName( $this->mName );
+			}
 		} else{
 			$u->addToDatabase();
 		}
-		
+
 		if ( $wgAuth->allowPasswordChange() ) {
 			$u->setPassword( $this->mPassword );
 		}
@@ -540,12 +539,12 @@ class LoginForm {
 		if ( $this->mName == '' ) {
 			return self::NO_NAME;
 		}
-		
+
 		// We require a login token to prevent login CSRF
 		// Handle part of this before incrementing the throttle so
 		// token-less login attempts don't count towards the throttle
 		// but wrong-token attempts do.
-				
+
 		if ( !self::getLoginToken() ) {
 			self::setLoginToken();
 			return self::NEED_TOKEN;
@@ -554,7 +553,7 @@ class LoginForm {
 		if ( !$this->mToken ) {
 			return self::NEED_TOKEN;
 		}
-		
+
 		global $wgPasswordAttemptThrottle;
 
 		$throttleCount = 0;
@@ -573,7 +572,7 @@ class LoginForm {
 				return self::THROTTLED;
 			}
 		}
-		
+
 		// Validate the login token
 		if ( $this->mToken !== self::getLoginToken() ) {
 			return self::WRONG_TOKEN;
@@ -600,14 +599,14 @@ class LoginForm {
 			# password, so we assume they're the same.
 			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
 		}
-		
+
 		# TODO: Allow some magic here for invalid external names, e.g., let the
 		# user choose a different wiki name.
 		$u = User::newFromName( $this->mName );
 		if( !( $u instanceof User ) || !User::isUsableName( $u->getName() ) ) {
 			return self::ILLEGAL;
 		}
-			
+
 		$isAutoCreated = false;
 		if ( 0 == $u->getID() ) {
 			$status = $this->attemptAutoCreate( $u );
@@ -616,8 +615,8 @@ class LoginForm {
 			} else {
 				$isAutoCreated = true;
 			}
-		} 
-		
+		}
+
 		// Give general extensions, such as a captcha, a chance to abort logins
 		$abort = self::ABORTED;
 		if( !wfRunHooks( 'AbortLogin', array( $u, $this->mPassword, &$abort ) ) ) {
@@ -757,7 +756,7 @@ class LoginForm {
 					return $this->cookieRedirectCheck( 'login' );
 				}
 				break;
-			
+
 			case self::NEED_TOKEN:
 			case self::WRONG_TOKEN:
 				$this->mainLoginForm( wfMsg( 'sessionfailure' ) );
@@ -823,13 +822,13 @@ class LoginForm {
 			return;
 		}
 
-		# Check against blocked IPs so blocked users can't flood admins 
+		# Check against blocked IPs so blocked users can't flood admins
 		# with password resets
 		if( $wgUser->isBlocked() ) {
 			$this->mainLoginForm( wfMsg( 'blocked-mailpassword' ) );
 			return;
 		}
-		
+
 		# Check for hooks
 		$error = null;
 		if ( ! wfRunHooks( 'UserLoginMailPassword', array( $this->mName, &$error ) ) ) {
@@ -849,7 +848,7 @@ class LoginForm {
 			$this->mainLoginForm( wfMsg( 'sessionfailure' ) );
 			return;
 		}
-		
+
 		# Check against the rate limiter
 		if( $wgUser->pingLimiter( 'mailpassword' ) ) {
 			$wgOut->rateLimited();
@@ -930,11 +929,11 @@ class LoginForm {
 				$u = $tempUser->mapTempUserToUser();
 			}
 		}
-		
+
 		if ( empty($tempUser) ) {
 			$u->saveSettings();
 		}
-		
+
 		/* Wikia change begin - @author: Uberfuzzy */
 		/* use noReply address (if available) */
 			$nr = null;
@@ -1195,7 +1194,7 @@ class LoginForm {
 			}
 			$template->set( 'token', self::getLoginToken() );
 		}
-		
+
 		# Prepare language selection links as needed
 		if( $wgLoginLanguageSelector ) {
 			$template->set( 'languages', $this->makeLanguageSelector() );
@@ -1250,7 +1249,7 @@ class LoginForm {
 		global $wgDisableCookieCheck, $wgRequest;
 		return $wgDisableCookieCheck ? true : $wgRequest->checkSessionCookie();
 	}
-	
+
 	/**
 	 * Get the login token from the current session
 	 */
@@ -1258,7 +1257,7 @@ class LoginForm {
 		global $wgRequest;
 		return $wgRequest->getSessionData( 'wsLoginToken' );
 	}
-	
+
 	/**
 	 * Randomly generate a new login token and attach it to the current session
 	 */
@@ -1268,7 +1267,7 @@ class LoginForm {
 		// because the latter reuses $_SESSION['wsEditToken']
 		$wgRequest->setSessionData( 'wsLoginToken', User::generateToken() );
 	}
-	
+
 	/**
 	 * Remove any login token attached to the current session
 	 */
@@ -1284,7 +1283,7 @@ class LoginForm {
 		global $wgRequest;
 		return $wgRequest->getSessionData( 'wsCreateaccountToken' );
 	}
-	
+
 	/**
 	 * Randomly generate a new createaccount token and attach it to the current session
 	 */
@@ -1292,7 +1291,7 @@ class LoginForm {
 		global $wgRequest;
 		$wgRequest->setSessionData( 'wsCreateaccountToken', User::generateToken() );
 	}
-	
+
 	/**
 	 * Remove any createaccount token attached to the current session
 	 */
