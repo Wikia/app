@@ -35,8 +35,19 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
 		$this->response->setVal( 'accessControls', $this->wg->user->isAllowed( 'imagereviewcontrols' ) );
 		$this->response->setVal( 'modeMsgSuffix', empty( $action ) ? '' : '-' . $action );
-
-		$order = $this->getVal( 'sort', 0 );
+		
+		if($this->wg->user->isAllowed( 'imagereviewcontrols' )) {
+			$order = (int) $this->getVal( 'sort', -1 );
+			if($order > 0 ) {
+				$this->app->wg->User->setOption( 'imageReviewSort', $order );
+				$this->app->wg->User->saveSettings();
+			}
+		
+			$order = $this->app->wg->User->getOption( 'imageReviewSort' );	
+		} else {
+			$order = -1;
+		}
+		
 		$this->response->setVal( 'order', $order );
 
 		// get more space for images
@@ -78,7 +89,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 		
 		if ( !$ts || intval($ts) < 0 || intval($ts) > time() ) {
-			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . time() . '&sort=' . $order );
+			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . time() );
 			return;
 		}
 
@@ -100,8 +111,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->imageCount = $helper->getImageCount($this->wg->user->getId());
-		
+		if($accessQuestionable) {
+			$this->imageCount = $helper->getImageCount();			
+		}
 	}
 
 }

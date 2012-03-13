@@ -1,20 +1,10 @@
 <header>
 	<div style="float: right; text-align: left">
-<?php if ( $accessStats ) { ?>
-		<div class="tally">
-			<em><?= $imageCount['unreviewed']?></em> <span>awaiting<br>review</span>
-		</div>
-<?php } ?>
-
 <?php if ( $accessQuestionable ) { ?>
 		<div class="tally">
 			<a href="<?= $fullUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
 		</div>
 <?php } ?>
-
-		<div class="tally">
-			<em><?= $imageCount['reviewer']?></em> <span>reviewed<br>by you</span>
-		</div>
 	</div>
 	<p>Click on images to mark them for deletion or as questionable (for staff review). When you're done with the batch, click "Review" below to get the next batch.</p>
 	<? if($action == 'questionable') { ?>
@@ -22,7 +12,8 @@
 	<? } ?>
 
 <?php if ( $accessControls ) { ?>
-<form action="<?php $submitUrl ?>" method="get" id="ImageReviewControls">
+
+<form action="<?php echo $submitUrl ?>" method="get" id="ImageReviewControls">
 	Sort order: <?php
 		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $order ) );
 
