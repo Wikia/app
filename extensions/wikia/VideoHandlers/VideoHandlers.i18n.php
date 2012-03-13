@@ -13,5 +13,11 @@ $messages['en'] = array(
 	'videohandler-error-missing-width' => 'Required parameter "width" is missing',
 	'videohandler-error-video-no-exist' => 'Video specified by title does not exist',
 	'videohandler-unknown-title' => 'Unknown title',
-	'videohandler-video-details' => '$1 (provider: <a href="$2" class="external" target="_blank">$3</a>)',
+	'videohandler-video-details' => '$1 (provider: $2)',
+);
+
+$messages['qqq'] = array(
+	'videohandler-video-details' => 'Parameters:
+* $1 is a link to the video on its source page, with the label being the original title of the video
+* $2 is a link to the provider\'s homepage (e.g. [http://youtube.com/ youtube.com])',
 );
