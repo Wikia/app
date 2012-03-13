@@ -3,7 +3,8 @@
  * @usage: SERVER_ID=177 php videoSanitize.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
  * @usage: SERVER_ID=177 php videoSanitize.php --conf /usr/wikia/conf-current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
  *  */
-
+ 
+ 
 function title_replacer( $title, $replacement, $fulltext  ) {
 	$symbols = array(
 		array(' ','_','-','+','/'),
@@ -84,7 +85,7 @@ require_once ('videoSanitizerMigrationHelper.class.php');
 require_once( 'videolog.class.php' );
 
 global $IP, $wgCityId, $wgDBname, $wgExternalDatawareDB;
-$devboxuser = 'DEVBOX';
+$devboxuser = exec('hostname');
 
 
 $sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgExternalDatawareDB);
