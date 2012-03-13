@@ -1422,8 +1422,7 @@ class Wikia {
 		static $isWikiaMobile = null;
 
 		if ( is_null( $isWikiaMobile ) ) {
-			global $wgUser;
-			$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : $wgUser->getSkin() ) instanceof SkinWikiaMobile );
+			$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );
 		}
 
 		wfProfileOut( __METHOD__ );
