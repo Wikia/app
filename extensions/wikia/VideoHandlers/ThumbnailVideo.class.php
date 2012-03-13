@@ -146,6 +146,15 @@ class ThumbnailVideo extends ThumbnailImage {
 			'height' => $this->height,
 			'data-video' => $this->file->getTitle()->getText()
 		);
+		
+		if ( $this->file instanceof OldLocalFile ) {
+			$archive_name = $this->file->getArchiveName();
+			if ( !empty( $archive_name ) ) {
+				$linkAttribs['href'] .= '?t='.$this->file->getTimestamp();
+				$linkAttribs['data-timestamp'] = $this->file->getTimestamp();
+			}
+		}		
+		
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
 		}
@@ -200,11 +209,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			}
 
 		}
-		
-		//	$html .= F::build('JSSnippets')->addToStack(
-		//		array('/extensions/wikia/VideoHandlers/js/VideoHandlers.js')
-		//	);
-    
+ 
 		return $html;
 	}
 }
