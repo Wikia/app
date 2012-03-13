@@ -6,7 +6,8 @@
 class ImageReviewHelper extends WikiaModel {
 
 	const LIMIT_IMAGES = 20;
-
+	const LIMIT_IMAGES_FROM_DB = 23;
+	
 	const STATE_UNREVIEWED = 0;
 	const STATE_IN_REVIEW = 1;
 	const STATE_APPROVED = 2;
@@ -14,7 +15,8 @@ class ImageReviewHelper extends WikiaModel {
 	const STATE_DELETED = 4;
 	const STATE_QUESTIONABLE = 5;
 	const STATE_QUESTIONABLE_IN_REVIEW = 6;
-
+	const STATE_ICO_IMAGE = 99;
+	
 	const FLAG_SUSPICOUS_USER = 2;
 	const FLAG_SUSPICOUS_WIKI = 4;
 	const FLAG_SKIN_DETECTED = 8;
@@ -238,26 +240,37 @@ class ImageReviewHelper extends WikiaModel {
 		} else {
 			$newState = self::STATE_IN_REVIEW ;
 		}
-		
-		$values[] = 'state = '.$newState;
 
+		$values[] = 'state = '.$newState;
+		
+		$where[] = 'image_review.wiki_id=pages.page_wikia_id';
+		$where[] =  'image_review.page_id=pages.page_id';
+		
 		$result = $db->select(
-			array( 'image_review' ),
-			array( 'wiki_id, page_id, state, flags, priority' ),
+			array( 'image_review', 'pages' ),
+			array( 'image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, pages.page_title_lower',  ),
 			$where,
 			__METHOD__,
 			array(
 				'ORDER BY' => $this->getOrder($order), 
-				'LIMIT' => self::LIMIT_IMAGES )
+				'LIMIT' => self::LIMIT_IMAGES_FROM_DB )
 		);
 		
 		$rows = array();
 		$updateWhere = array();
-		while( $row = $db->fetchObject($result) ) {
-			$rows[] = $row; 
-			$updateWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+		$iconsWhere = array();
+		while (( $row = $db->fetchObject($result) ) && ( count( $rows ) < self::LIMIT_IMAGES )) {
+			if ( "ico" == pathinfo($row->page_title_lower, PATHINFO_EXTENSION) ) {
+				$iconsWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+			} else {
+				$rows[] = $row;
+				$updateWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
+			}
 		}
-		if(!empty($updateWhere)) {
+
+		$db->freeResult( $result );
+		
+		if ( count($updateWhere) > 0) {
 			$db->update(
 				'image_review', 
 				$values,
@@ -266,8 +279,17 @@ class ImageReviewHelper extends WikiaModel {
 			);
 		}
 		
+		
+		if ( count($iconsWhere) > 0 ) {
+			$db->update(
+				'image_review', 
+				array( 'state' => self::STATE_ICO_IMAGE),
+				array(implode(' OR ', $iconsWhere)),
+				__METHOD__
+			);
+		}
 		$db->commit();
-
+		
 		foreach( $rows as $row) {
 			$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
 			$tmp = array(
@@ -285,8 +307,6 @@ class ImageReviewHelper extends WikiaModel {
 			}
 		}
 		
-		$db->freeResult( $result );
-
 		error_log("ImageReview : fetched new " . count($imageList) . " images");
 
 		$this->wf->ProfileOut( __METHOD__ );
