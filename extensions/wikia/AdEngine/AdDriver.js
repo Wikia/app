@@ -50,7 +50,6 @@ AdDriver.getAdProviderForSpecialCase = function(slotname) {
 		case 'lostpedia':
 		case 'sexpositive':
 		case 'wswiki':
-		case 'valuewiki':
 			return AdDriver.adProviderLiftium;
 			break;
 		case 'cookbook_import':
@@ -421,10 +420,10 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 			break;
 		case 'HOME_TOP_RIGHT_BUTTON':
 			if ($('#'+slotname).height() >= AdDriver.standardTopButtonMinHeight) {
-				$('#'+slotname).addClass('home-top-right-button-visible');			
+				$('#'+slotname).addClass('home-top-right-button-visible');
 			}
 			break;
-			
+
 	}
 
 	return false;
