@@ -105,25 +105,24 @@ Please select proper from dropdown list.",
 	"requestwiki-filter-language" => "kh,kp,mu,als,an,ast,de-form,de-weig,dk,en-gb,ia,ie,ksh,mwl,pdc,pfl,simple,tokipona,tp,zh-cn,zh-hans,zh-hant,zh-hk,zh-mo,zh-my,zh-sg,zh-tw",
 // task
 	"autocreatewiki-protect-reason" => 'Part of the official interface',
-    "autocreatewiki-welcomesubject" => "$1 has been created!",
-    "autocreatewiki-welcomebody" => "Hello, $2,
+	"autocreatewiki-welcomesubject" => "$1 has been created!",
+	"autocreatewiki-welcomebody" => "Hello $2!
 
-The Wikia you requested is now available at <$1> We hope to see you editing there soon!
+Your wiki has been created! Take a look: <$1>
 
-We've added some Information and Tips on your User Talk Page (<$5>) to help you get started.
+Ready to get started? We’ve added some links to your talk page (<$5>) to help you get started and to encourage you to explore the many helpful areas around Wikia. If you have any questions or feel a bit lost, reply to this email or check out our Help pages <http://help.wikia.com>.
 
-If you have any problems, you can ask for community help on the wiki at <http://www.wikia.com/wiki/Forum:Help_desk>, or via email to community@wikia.com. You can also visit our live #wikia IRC chat channel <http://irc.wikia.com>.
+You can also check out the Founder & Admin blog <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> and the Wikia Staff blog <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> where you’ll find tips and tricks, info about new features and new things happening at Wikia.
 
-I can be contacted directly by email or on my talk page, if you have any questions or concerns.
-
-Good luck with the project!
+Happy editing!
 
 $3
+Wikia Community Support
+<http://community.wikia.com/wiki/User:$4>
 
-Wikia Community Team
-
-<http://www.wikia.com/wiki/User:$4>",
-    "autocreatewiki-welcometalk" => "== Welcome! ==
+___________________________________________
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences",
+	"autocreatewiki-welcometalk" => "== Welcome! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hi $1 -- we're excited to have '''$4''' as part of the Wikia community!
 
 Now you've got a whole website to fill up with information, pictures and videos about your favorite topic. But right now, it's just blank pages staring at you... Scary, right? Here are some ways to get started.
@@ -467,7 +466,7 @@ Ar Wikia zo bet savet ganeoc'h a gaver bremañ war <$1> Emichañs e kemerot perz
 
 Degaset hon eus un nebeud titouroù war ho pajenn gaozeal (<$5>) evit sikour ac'hanoc'h da gregiñ ganti.
 
-M'hoc'h eus goulennoù c'hoazh e c'hallit goulenn sikour ouzh ar gumuniezh war ar wiki <http://www.wikia.com /wiki/Forum:Help_desk>, pe dre bostel d'ar chomlec'h community@wikia.com. Gallout a rit respont pe sellet ouzh hor pajennoù skoazell : <http://irc.wikia.com>.
+M'hoc'h eus goulennoù c'hoazh e c'hallit goulenn sikour ouzh ar gumuniezh war ar wiki <http://www.wikia.com /wiki/Forum:Help_desk>, pe dre bostel d'ar chomlec'h community@wikia.com.
 
 Chañs vat deoc'h en ho raktres .
 
@@ -663,7 +662,7 @@ Das von dir erstellte Wikia ist nun unter <$1> erreichbar. Hoffentlich sehen wir
 
 Wir haben auf deiner Diskussionsseite (<$5>) ein paar Informationen und Tipps für den Start hinterlassen.
 
-Falls du irgendwelche Probleme hast, kannst du unter <http://de.wikia.com/wiki/Forum:Übersicht> die Gemeinschaft um Hilfe bitten oder dich per E-Mail an community@wikia.com wenden. Du kannst auch unseren #wikia IRC-Channel besuchen <http://irc.wikia.com>.
+Falls du irgendwelche Probleme hast, kannst du unter <http://de.wikia.com/wiki/Forum:Übersicht> die Gemeinschaft um Hilfe bitten oder dich per E-Mail an community@wikia.com wenden.
 
 Falls du noch weitere Fragen oder Probleme hast, kannst du dich auch direkt per Mail oder Diskussionsseite an mich wenden.
 
@@ -757,7 +756,7 @@ Das von Ihnen erstellte Wikia ist nun unter <$1> erreichbar. Hoffentlich sehen w
 
 Wir haben auf Ihrer Diskussionsseite (<$5>) ein paar Informationen und Tipps für den Start hinterlassen.
 
-Falls Sie irgendwelche Probleme haben, können Sie unter <http://de.wikia.com/wiki/Forum:Übersicht> die Gemeinschaft um Hilfe bitten oder sich per E-Mail an community@wikia.com wenden. Sie können auch unseren #wikia IRC-Channel besuchen <http://irc.wikia.com>.
+Falls Sie irgendwelche Probleme haben, können Sie unter <http://de.wikia.com/wiki/Forum:Übersicht> die Gemeinschaft um Hilfe bitten oder sich per E-Mail an community@wikia.com wenden.
 
 Falls Sie noch weitere Fragen oder Probleme haben, können Sie sich auch direkt per Mail oder Diskussionsseite an mich wenden.
 
@@ -890,7 +889,7 @@ La vikio, kiun vi volas krei, estas akcesebla ĉe <$1>. Ni esperas, ke vi redakt
 
 Ni donis iom da informoj kaj konsiloj ĉe via diskuta paĝo (<$5>) por helpi al vi komenci.
 
-Se vi havos iujn ajn problemojn, vi povas peti por helpo ĉe via vikio ĉe <http://www.wikia.com/wiki/Forum:Help_desk> (angle) aŭ via retpoŝtadreso al community@wikia.com. Vi ankaŭ povas viziti nian babilejon ĉe <http://irc.wikia.com> (angle).
+Se vi havos iujn ajn problemojn, vi povas peti por helpo ĉe via vikio ĉe <http://www.wikia.com/wiki/Forum:Help_desk> (angle) aŭ via retpoŝtadreso al community@wikia.com.
 
 Sukceson kun la projekto!
 
@@ -1158,7 +1157,7 @@ $messages['fa'] = array(
 
 ما یک سری اطلاعات و نکته‌هایی در صفحهٔ بحثتان (<$5>) اضافه کرده‌ایم تا به شما برای شروع ویکی‌تان کمک کند.
 
-اگر سوالی دارید، به این ایمیل پاسخ دهید یا در صفحات راهنمای ویکیا در <http://help.wikia.com> جستجو کنید یا با community@wikia.com نامه‌نگاری کنید. شما همچنین می‌توانید &lrm;#wikia کانال چت آی‌آرسی <http://irc.wikia.com> ما را ببینید.
+اگر سوالی دارید، به این ایمیل پاسخ دهید یا در صفحات راهنمای ویکیا در <http://help.wikia.com> جستجو کنید یا با community@wikia.com نامه‌نگاری کنید.
 
 با پروژه موفق باشید!
 
@@ -1486,7 +1485,7 @@ O wiki que solicitou xa está dispoñible en <$1>. Agardamos velo editando por a
 
 Vimos de engadir información e consellos na súa páxina de conversa de usuario (<$5>) para axudalo a dar os primeiros pasos.
 
-Se ten algún problema, pode pedir axuda da comunidade no wiki en <http://www.wikia.com/wiki/Forum:Help_desk> ou mediante correos electrónicos no enderezo community@wikia.com. Tamén pode visitar a nosa canle de conversa IRC #wikia en <http://irc.wikia.com>.
+Se ten algún problema, pode pedir axuda da comunidade no wiki en <http://www.wikia.com/wiki/Forum:Help_desk> ou mediante correos electrónicos no enderezo community@wikia.com.
 
 Se ten calquera dúbida ou problema, pode poñerse en contacto comigo directamente por correo electrónico ou na miña páxina de conversa.
 
@@ -1738,7 +1737,7 @@ Le Wikia que tu ha requestate es ora disponibile a <$1>. Nos spera vider te cont
 
 Nos ha addite alcun informationes e consilios in tu pagina de discussion personal (<$5>) pro adjutar te a comenciar.
 
-Si tu ha problemas, tu pote peter adjuta del communitate in le wiki a <http://www.wikia.com/wiki/Forum:Help_desk>, o via e-mail a community@wikia.com. Tu pote tamben visitar nostre canal de conversation in directo (IRC), #wikia <http://irc.wikia.com>.
+Si tu ha problemas, tu pote peter adjuta del communitate in le wiki a <http://www.wikia.com/wiki/Forum:Help_desk>, o via e-mail a community@wikia.com.
 
 Contacta me directemente per e-mail o in mi pagina de discussion si tu ha questiones o preoccupationes.
 
@@ -1886,7 +1885,7 @@ Permintaan Wikia Anda sekarang tersedia di <$1> Kami berharap dapat melihat Anda
 
 Kami telah menambahkan beberapa Informasi dan Tips pada halaman Pembicaraan Pengguna Anda (<$5>) untuk membantu Anda memulai. 
 
-Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com. Anda juga dapat mengunjungi kami ruang obrolan IRC #wikia <http://irc.wikia.com> . 
+Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com.
 
 Saya dapat dihubungi langsung melalui email atau di halaman pembicaraan saya, jika Anda memiliki pertanyaan atau masalah. 
 
@@ -2564,7 +2563,7 @@ $messages['mk'] = array(
 
 Додадовме и некои информации и совети на вашата корисничка страница за разговор (<$5>) за да ви помогнеме да започнете со работа.
 
-Ако имате било какви проблеми, слободно побарајте помош од заедницата на <http://www.wikia.com/wiki/Forum:Help_desk>, или по е-пошта, на адресата community@wikia.com. Можете и да го посетите нашиот ИРЦ-канал #wikia за разговори во живо<http://irc.wikia.com>.
+Ако имате било какви проблеми, слободно побарајте помош од заедницата на <http://www.wikia.com/wiki/Forum:Help_desk>, или по е-пошта, на адресата community@wikia.com.
 
 Ако имате било какви прашања и проблеми, можете да ме контактирате директно по е-пошта, или пак на мојата страница за разговор.
 
@@ -2742,7 +2741,7 @@ Wikia yang anda pohon kini terdapat di <$1> Mudah-mudahan anda mulai menyunting 
 
 Kami telah menambahkan beberapa Maklumat dan Petua pada Laman Perbincangan Pengguna anda (<$5>) untuk membantu anda bermula.
 
-Jika anda ada sebarang masalah, anda boleh meminta bantuan komuniti di <http://www.wikia.com/wiki/Forum:Help_desk>, atau secara menghantar e-mel ke community@wikia.com. Anda boleh juga mengunjungi saluran sembang IRC #wikia secara langsung di <http://irc.wikia.com>.
+Jika anda ada sebarang masalah, anda boleh meminta bantuan komuniti di <http://www.wikia.com/wiki/Forum:Help_desk>, atau secara menghantar e-mel ke community@wikia.com.
 
 Saya boleh dihubungi melalyu e-mel atau dalam laman perbincangan saya, jika anda ada apa-apa soalan atau kebimbangan.
 
@@ -2896,7 +2895,7 @@ Wikiaen du spør etter er nå tilgjengelig på <$1> Vi håper å se deg redigere
 
 Vi har lagt til litt informasjon og tips på brukerdiskusjonssiden din (<$5>) for å hjelpe deg med å komme i gang.
 
-Hvis du har problemer kan du spørre fellesskapet om hjelp på wikien på <http://www.wikia.com/wiki/Forum:Help_desk>, eller via e-post til community@wikia.com. Du kan også få svar direkte på #wikia IRC snakkekanal <http://irc.wikia.com>.
+Hvis du har problemer kan du spørre fellesskapet om hjelp på wikien på <http://www.wikia.com/wiki/Forum:Help_desk>, eller via e-post til community@wikia.com.
 
 Jeg kan kontaktes direkte på e-post eller på diskusjonssiden min hvis du har spørsmål eller bekymringer.
 
@@ -3049,7 +3048,7 @@ De Wikia die u hebt aangevraagd is nu beschikbaar op de volgende URL: <$1>. We h
 
 We hebben informatie en tips op uw overlegpagina toegevoegd (<$5>) om u op weg te helpen.
 
-Als u problemen ondervindt kunt u de gemeenschap om hulp vragen op de wiki (<http://www.wikia.com/wiki/Forum:Help_desk>), of via een e-mail naar community@wikia.com. U kunt ook ons live IRC-chatkanaal bezoeken via <http://irc.wikia.com>.
+Als u problemen ondervindt kunt u de gemeenschap om hulp vragen op de wiki (<http://www.wikia.com/wiki/Forum:Help_desk>), of via een e-mail naar community@wikia.com.
 
 U kunt ook direct contact met mij opnemen per e-mail of op mijn overlegpagina bij vragen of zorgen.
 
@@ -3119,7 +3118,7 @@ De Wikia die je hebt aangevraagd is nu beschikbaar op de volgende URL: <$1>. We 
 
 We hebben informatie en tips op je overlegpagina toegevoegd (<$5>) om je op weg te helpen.
 
-Als je problemen ondervindt kunt je de gemeenschap om hulp vragen op de wiki (<http://www.wikia.com/wiki/Forum:Help_desk>), of via een e-mail naar community@wikia.com. Je kunt ook ons live IRC-chatkanaal bezoeken via <http://irc.wikia.com>.
+Als je problemen ondervindt kunt je de gemeenschap om hulp vragen op de wiki (<http://www.wikia.com/wiki/Forum:Help_desk>), of via een e-mail naar community@wikia.com.
 
 Je kunt ook direct contact met mij opnemen per e-mail of op mijn overlegpagina bij vragen of zorgen.
 
@@ -3261,7 +3260,7 @@ Wiki, którą utworzyłeś, jest aktualnie dostępna na stronie <$1>. Mamy nadzi
 
 Umieściliśmy na Twojej stronie dyskusji (<$5>) trochę informacji i porad, aby pomóc Ci na początku.
 
-Jeśli napotkasz jakieś problemy, możesz poprosić o pomoc społeczność na stronie <http://www.wikia.com/wiki/Forum:Help_desk>, lub poprzez e‐mail wysłany na adres community@wikia.com. Możesz również odwiedzić na żywo kanał IRC #wikia na <http://irc.wikia.com>.
+Jeśli napotkasz jakieś problemy, możesz poprosić o pomoc społeczność na stronie <http://www.wikia.com/wiki/Forum:Help_desk>, lub poprzez e‐mail wysłany na adres community@wikia.com.
 
 Możesz się ze mną skontaktować bezpośrednio przez e-mail lub na mojej stronie dyskusji, jeśli masz jakiekolwiek pytania lub wątpliwości. 
 
@@ -3405,7 +3404,7 @@ la Wikia ch'a l'ha ciamà a l'é adess disponìbil a <$1> Noi i speroma ëd vëd
 
 Noi i l'oma giontà chèich Anformassion e sugeriment dzora a soa Ciaciarade (<$5>) për giutelo a ancaminé.
 
-S'a l'ha qualsëssìa problema, a peule ciamé agiut a la comunità dzora la wiki a <http://www.wikia.com/wiki/Forum:Help_desk>, o për pòsta eletrònica a community@wikia.com. A peul ëdcò visité nòsta canal #wikia IRC ëd ciaciarade dal viv <http://irc.wikia.com>.
+S'a l'ha qualsëssìa problema, a peule ciamé agiut a la comunità dzora la wiki a <http://www.wikia.com/wiki/Forum:Help_desk>, o për pòsta eletrònica a community@wikia.com.
 
 Mi i peusso esse contatà diretament për pòsta eletrònica o dzora a mia pàgina ëd discussion, s'a l'ha qualsëssìa chestion o dùbit.
 
@@ -3591,7 +3590,7 @@ A wiki que solicitou está agora disponível em <$1>. Esperamos vê-lo a editá-
 
 Adicionámos alguma Informação e Dicas na sua Página de Discussão (<$5>) para ajudá-lo a começar.
 
-Se tiver algum problema, pode pedir ajuda à comunidade de utilizadores da wiki em <http://www.wikia.com/wiki/Forum:Help_desk>, ou por correio electrónico para community@wikia.com. Também pode visitar o nosso canal IRC #wikia de conversação ao vivo <http://irc.wikia.com>.
+Se tiver algum problema, pode pedir ajuda à comunidade de utilizadores da wiki em <http://www.wikia.com/wiki/Forum:Help_desk>, ou por correio electrónico para community@wikia.com.
 
 Se tiver quaisquer questões, pode contactar-me directamente por correio electrónico ou na minha página de discussão.
 
@@ -3742,7 +3741,7 @@ O Wikia que você requisitou está agora disponível em <$1>. Nós esperamos vê
 
 Nós adicionamos algumas informações e dicas na sua página de discussão de usuário <$5> pra ajudar-lhe a começar.
 
-Se você tiver algum problema, você pode pedir a ajuda da comunidade na wiki em <http://www.wikia.com/wiki/Forum:Help_desk> ou via email para community@wikia.com . Você também pode visitar nosso canal de chat IRC #wikia IRC <http://irc.wikia.com>.
+Se você tiver algum problema, você pode pedir a ajuda da comunidade na wiki em <http://www.wikia.com/wiki/Forum:Help_desk> ou via email para community@wikia.com .
 
 Eu posso ser contatado diretamente por email ou na minha página de discussão, caso você tenha alguma pergunta ou preocupação.
 
@@ -3954,7 +3953,7 @@ $messages['ru'] = array(
 
 Мы добавили некоторую информацию и советы на вашу страницу обсуждения участника (<$5>), чтобы помочь вам начать работу.
 
-Если у вас возникнут какие-либо проблемы, вы можете попросить сообщество помочь в вики <http://www.wikia.com/wiki/Forum:Help_desk>, или по электронной почте community@wikia.com. Вы также можете посетить наш IRC чат-канал #wikia <http://irc.wikia.com>.
+Если у вас возникнут какие-либо проблемы, вы можете попросить сообщество помочь в вики <http://www.wikia.com/wiki/Forum:Help_desk>, или по электронной почте community@wikia.com.
 
 Со мной можно связаться напрямую по электронной почте или на моей странице обсуждения, если у вас есть вопросы или замечания.
 
@@ -4176,7 +4175,7 @@ Wikin du begärde finns nu tillgänglig på <$1> Vi hoppas att att få se dig re
 
 Vi har lagt till lite Information och Tips på din användares diskussionssida (<$5>) för att hjälpa dig komma igång.
 
-Om du har några problem, kan du fråga vår community om hjälp på <http://www.wikia.com/wiki/Forum:Help_desk>, eller via e-post till community@wikia.com. Du kan också besöka vår #wikia IRC chatt-kanal <http://irc.wikia.com>.
+Om du har några problem, kan du fråga vår community om hjälp på <http://www.wikia.com/wiki/Forum:Help_desk>, eller via e-post till community@wikia.com.
 
 Jag kan kontaktas direkt via e-post eller på min diskussionssida, om du har några frågor eller funderingar.
 
@@ -4562,7 +4561,7 @@ $messages['uk'] = array(
 
 Ми додали деяку інформацію та поради на вашу сторінку обговорення користувача (<$5>), щоб допомогти вам розпочати роботу.
 
-Якщо у вас виникли якісь проблеми, ви можете звернутися по допомогу до спільноти в вікі на <http: www.wikia.com/wiki/forum:help_desk="">, або за електронною поштою community@wikia.com. Ви можете також відвідати наш IRC чат-канал #wikia <http: irc.wikia.com="">.
+Якщо у вас виникли якісь проблеми, ви можете звернутися по допомогу до спільноти в вікі на <http: www.wikia.com/wiki/forum:help_desk="">, або за електронною поштою community@wikia.com.
 
 Зі мною можна зв’язатися напряму за електронною поштою або на моїй сторінці обговорення, якщо у вас є питання чи зауваження.
 
