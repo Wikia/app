@@ -269,11 +269,6 @@ class ImageServing {
 		} else if (!$this->proportion['w']) {
 			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
 		}
-
-		// mech: not sure what those 3 lines below were supposed to do, the result isn't used anyway
-		$iCroppedAspectRatio = $this->proportion['h'] / $this->proportion['w'];
-		$H = (float)$width / ($iCroppedAspectRatio);
-		$hDelta = ( ( $height - $H ) / 2 );
 		
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 
