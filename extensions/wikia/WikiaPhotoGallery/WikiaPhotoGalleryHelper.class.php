@@ -564,6 +564,8 @@ class WikiaPhotoGalleryHelper {
 
 				$imageTitle = Title::newFromText($image['name'], NS_FILE);
 				$img = wfFindFile($imageTitle);
+				
+				$image['isFileTypeVideo'] = WikiaVideoService::isFileTypeVideo($img);
 
 				if (empty($imageTitle) || empty($img)) {
 					continue;
@@ -626,7 +628,7 @@ class WikiaPhotoGalleryHelper {
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
 			$image['pageTitle'] = '';
 			$img = wfFindFile($imageTitle);
-
+			
 			if ( is_object( $img ) && ( $imageTitle->getNamespace() == NS_FILE ) ) {
 				// render thumbnail
 				$is = new ImageServing(null, self::STRICT_IMG_WIDTH_PREV, array(
@@ -637,6 +639,8 @@ class WikiaPhotoGalleryHelper {
 			} elseif ( is_object( $imageTitle ) ) {
 				$image[ 'pageTitle' ] = $imageTitle->getText();
 			}
+			
+			$image['isFileTypeVideo'] = WikiaVideoService::isFileTypeVideo($img);
 
 			//need to use parse() - see RT#44270
 			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
@@ -806,14 +810,23 @@ class WikiaPhotoGalleryHelper {
 		$slideshow['images'] = $slideshow['imagesShown'];
 
 		// go through the list of images and calculate width and height of slideshow
-		foreach ( $slideshow['images'] as &$image ) {
+		foreach ( $slideshow['images'] as $nr => &$image ) {
+
+			
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
 
-			// "broken" image - skip
+			$imageFile = wfFindFile($imageTitle);
+
+			if (WikiaVideoService::isFileTypeVideo( $imageFile )) {
+				unset( $slideshow['images'][$nr] ); 
+				continue;
+			}
+			
+			
 			if (!$imageTitle->exists()) {
 				continue;
 			}
-
+			
 			// get image dimensions
 			$imageFile = wfFindFile($imageTitle);
 
@@ -821,6 +834,9 @@ class WikiaPhotoGalleryHelper {
 			if ( empty( $imageFile ) ) {
 				continue;
 			}
+
+			
+			//if ( WikiaVideoService::isFileTypeVideo( $imageFile ) ) { unset($image); continue; }			
 
 			$imageWidth = $imageFile->getWidth();
 			$imageHeight = $imageFile->getHeight();
@@ -832,7 +848,10 @@ class WikiaPhotoGalleryHelper {
 			if ($height < $imageHeight) {
 				$height = $imageHeight;
 			}
+			
 		}
+		
+		
 
 		// recalculate width for maxHeight
 		$width = max($width, round($height * 4/3));
@@ -888,6 +907,8 @@ class WikiaPhotoGalleryHelper {
 		// filter out skipped images
 		$slideshow['images'] = array_filter($slideshow['images']);
 
+		
+		
 		wfDebug(__METHOD__.'::after' . "\n" . print_r($slideshow, true));
 
 		wfLoadExtensionMessages('WikiaPhotoGallery');

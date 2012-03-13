@@ -14,7 +14,7 @@
 
 		<span class="WikiaPhotoGallerySliderItemNumber<?=( ($i >= 4) && ($slider['params']['orientation'] !== 'mosaic') ) ? 'Warning' : ''; ?>">
 			<div><?php
-				if ( ($i < 4) || ($slider['params']['orientation'] == 'mosaic') ){
+				if (!$image['isFileTypeVideo'] && (($i < 4) || (isset($slider['params']['orientation']) && $slider['params']['orientation'] == 'mosaic')) ){
 					echo '#'.( $i+1 );
 				} else {
 					echo wfMsg('wikiaPhotoGallery-not-displayed');
