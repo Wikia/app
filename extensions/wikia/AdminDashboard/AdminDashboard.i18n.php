@@ -21,8 +21,6 @@ $messages['en'] = array(
 	'admindashboard-control-recent-changes-tooltip' => 'Recent Changes displays all of the changes made on your wiki in a single timeline.',
 	'admindashboard-control-top-navigation-label' => 'Top Navigation',
 	'admindashboard-control-top-navigation-tooltip' => 'Top Navigation allows you to customize the navigation menu at the top of your wiki.',
-	'admindashboard-control-wikia-labs-label' => 'Wikia Labs',
-	'admindashboard-control-wikia-labs-tooltip' => 'Wikia Labs lets you be the first to try out new beta features on your wiki.',
 	'admindashboard-control-wiki-features-label' => 'Wiki Features',
 	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features lets you enable additional features on your wiki.',
 	'admindashboard-control-page-layout-builder-label' => 'Page Layout Builder',
@@ -40,10 +38,10 @@ $messages['en'] = array(
 	'admindashboard-control-help-label' => 'Help',
 	'admindashboard-control-help-tooltip' => 'Find Help.',
 	'admindashboard-control-help-url' => 'http://community.wikia.com/wiki/Help:Contents',
-// Content Controls
-	'admindashboard-controls-content-header' => 'Content',
 	'admindashboard-control-community-corner-label' => 'Community Corner',
 	'admindashboard-control-community-corner-tooltip' => 'Edit the Community Corner section of your wiki and notify users.',
+// Content Controls
+	'admindashboard-controls-content-header' => 'Content',
 	'admindashboard-control-categories-list-label' => 'All Categories',
 	'admindashboard-control-categories-list-tooltip' => 'View all of the categories currently listed on your wiki.',
 	'admindashboard-control-add-page-label' => 'Add a Page',
@@ -54,8 +52,53 @@ $messages['en'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Add a blog post to your wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Add Multiple Photos',
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
-// Chrome
-	'admindashboard-back-to-dashboard' => 'Back to Dashboard'
+);
+
+$messages['qqq'] = array(
+	'admindashboard-title' => 'html <title> element displayed on admin dashboard pages ',
+	'admindashboard-header' => 'page header for Admin Dashboard - html <h1> element',
+	'admindashboard-toolbar-link' => 'used by wikia toolbar extension as a label for the link to the admin dashboard',
+	'admindashboard-tab-advanced' => 'label for advanced tab',
+	'admindashboard-tab-general' => 'label for general tab',
+// Wiki Controls
+	'admindashboard-controls-wiki-header' => 'label for the group of "wiki" tools on admin dashboard general page',
+	'admindashboard-control-theme-designer-label' => 'label for link to Theme Designer',
+	'admindashboard-control-theme-designer-tooltip' => 'tooltip for link to theme designer describing that tool',
+	'admindashboard-control-recent-changes-label' => 'label for link to Recent Changes',
+	'admindashboard-control-recent-changes-tooltip' => 'tooltip describing Recent Changes',
+	'admindashboard-control-top-navigation-label' => 'label for link to Top Navigation (a mediawiki message)',
+	'admindashboard-control-top-navigation-tooltip' => 'tooltip describing Top Navigation',
+	'admindashboard-control-wiki-features-label' => 'label for link to Wiki Features special page',
+	'admindashboard-control-wiki-features-tooltip' => 'tooltip describing Wiki Features special page.',
+	'admindashboard-control-page-layout-builder-label' => 'label for link to Page Layout Builder',
+	'admindashboard-control-page-layout-builder-tooltip' => 'tooltip describing Page Layout Builder',
+// Community Controls
+	'admindashboard-controls-community-header' => 'label for the group of "Community" tools on admin dashboard general page',
+	'admindashboard-control-user-list-label' => 'label for link to User List special page',
+	'admindashboard-control-user-list-tooltip' => 'tooltip describing User List',
+	'admindashboard-control-user-rights-label' => 'label for link to User Rights special page',
+	'admindashboard-control-user-rights-tooltip' => 'tooltip describing user rights special page.',
+	'admindashboard-control-group-rights-label' => 'label for link to Group Rights special page',
+	'admindashboard-control-group-rights-tooltip' => 'tooltip describing Group rights special page.',
+	'admindashboard-control-invite-label' => 'label for link to Invite special page',
+	'admindashboard-control-invite-tooltip' => 'tooltip describing Invite tool',
+	'admindashboard-control-help-label' => 'label for link to wikia community Help portal',
+	'admindashboard-control-help-tooltip' => 'tooltip for link to help portal',
+	'admindashboard-control-help-url' => 'http://community.wikia.com/wiki/Help:Contents',
+	'admindashboard-control-community-corner-label' => 'tooltip for link to Community Corner mediawiki message',
+	'admindashboard-control-community-corner-tooltip' => 'tooltip describing community corner mediawiki message',
+// Content Controls
+	'admindashboard-controls-content-header' => 'label for the group of "Content" tools on the admin dashboard general page',
+	'admindashboard-control-categories-list-label' => 'label for link to special:Categories',
+	'admindashboard-control-categories-list-tooltip' => 'tooltip/hover describing special:categories',
+	'admindashboard-control-add-page-label' => 'label for link to special:createpage',
+	'admindashboard-control-add-page-tooltip' => 'tooltip/hover describing special:createpage',
+	'admindashboard-control-add-photo-label' => 'label for link to special:upload',
+	'admindashboard-control-add-photo-tooltip' => 'tooltip/hover describing special:upload',
+	'admindashboard-control-add-blog-label' => 'label for link to special:createblogpost',
+	'admindashboard-control-add-blog-tooltip' => 'tooltip/hover describing special:createblogpost',
+	'admindashboard-control-multiple-upload-label' => 'label for link to special:MultipleUpload',
+	'admindashboard-control-multiple-upload-tooltip' => 'tooltip/hover describing special:multipleupload',
 );
 
 /** толышә зывон (толышә зывон)
