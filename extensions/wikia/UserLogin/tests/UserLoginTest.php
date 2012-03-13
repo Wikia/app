@@ -5,9 +5,9 @@
 	class UserLoginTest extends WikiaBaseTest {
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';
-		
+
 		protected $wgRequest_org = null;
-		
+
 		protected function setUpMock() {
 			$mock_cache = $this->getMock('stdClass', array('set', 'delete'));
 			$mock_cache->expects($this->any())
@@ -20,18 +20,18 @@
 
 			$this->mockApp();
 		}
-		
+
 		protected function setUpMockObject( $objectName, $objectParams=null, $needSetInstance=false, $globalVarName=null, $objectValues=array(), $callOriginalConstructor=true ) {
 			$mockObject = $objectParams;
 			if ( is_array($objectParams) ) {
 				$methods = array_keys( $objectParams );
-				
+
 				if ( $callOriginalConstructor ) {
 					$mockObject = $this->getMock( $objectName, $methods, $objectValues );
 				} else {
 					$mockObject = $this->getMock( $objectName, $methods, $objectValues, '', false );
 				}
-				
+
 				foreach( $objectParams as $method => $value ) {
 					if ( $value === null ) {
 						$mockObject->expects( $this->any() )
@@ -44,7 +44,7 @@
 							$mockObject->expects( $this->exactly($value['mockExpTimes']) )
 										->method( $method )
 										->will( $this->returnValue($value['mockExpValues']) );
-							
+
 						}
 					} else {
 						$mockObject->expects( $this->any() )
@@ -65,16 +65,16 @@
 
 		protected function setUpRequest( $params=array() ) {
 			global $wgRequest;
-			
+
 			$this->wgRequest_org = $wgRequest;
 			foreach( $params as $key => $value ) {
 				$wgRequest->setVal( $key, $value );
 			}
 		}
-		
+
 		protected function tearDownRequest() {
 			global $wgRequest;
-			
+
 			$wgRequest = $this->wgRequest_org;
 		}
 
@@ -99,24 +99,48 @@
 			$this->mockGlobalFunction( 'MsgExt', $expMsg, $mockMsgExtCount );
 
 			$this->setUpMock();
-			
+
 			// test
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
-			
+
 			$responseData = $response->getVal( 'result' );
 			$this->assertEquals( $expResult, $responseData );
-			
+
 			$responseData = $response->getVal( 'msg' );
 			$this->assertEquals( $expMsg, $responseData );
-			
+
 			$responseData = $response->getVal( 'errParam' );
 			$this->assertEquals( $expErrParam, $responseData );
-			
+
 			// tear down
 			$this->tearDownRequest();
 			$this->tearDownHelper();
 		}
-		
+
+		public function testWikiaMobileTemplate() {
+			$origUser = $this->app->wg->User;
+
+			$user = $this->getMock( 'User' , array( 'getSkin' ) );
+
+			$user->expects( $this->any() )
+				->method( 'getSkin' )
+				->will( $this->returnValue( Skin::newFromKey( 'wikiamobile' ) ) );
+
+			$this->app->wg->set( 'wgUser', $user );
+
+			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html' ) );
+
+			//needed to set up templatePath
+			$response->toString();
+
+			$this->assertEquals(
+				$response->getView()->getTemplatePath(),
+				'/usr/wikia/source/trunk/extensions/wikia/UserLogin/templates/UserLoginSpecial_WikiaMobileIndex.php'
+			);
+
+			$this->app->wg->set( 'wgUser', $origUser );
+		}
+
 		public function loginDataProvider() {
 			// submit request
 			// no username
@@ -130,7 +154,7 @@
 			$mockHelperParams1 = null;
 			$expMsg1 = wfMsg('userlogin-error-noname');
 			$expErrParam1 = 'username';
-			
+
 			// not pass token
 			$reqParams2 = array(
 				'username' => 'testUser',
@@ -145,8 +169,8 @@
 				'loginToken' => '',
 			);
 
-			
-			
+
+
 			// mock authenticateUserData()
 			// error - NO_NAME
 			$reqParams101 = array(
@@ -206,7 +230,7 @@
 			// error - NOT_EXISTS
 			$mockLoginFormParams114 = array( 'authenticateUserData' => LoginForm::NOT_EXISTS );
 			$mockTempUserParams114 = false;
-			
+
 			// error - NOT_EXISTS - Temp User account with password throttled
 			$mockTempUserParams115 = array( 'getTempUserFromName' => true );
 			$mockHelperParams115 = array( 'isPasswordThrottled' => true );
@@ -220,7 +244,7 @@
 			);
 			$mockTempUserParams116 = array( 'setTempUserSession' => null );
 			$mockHelperParams116 = array( 'isPasswordThrottled' => false );
-			
+
 			// reset - NOT_EXISTS - Temp User account with temporary password
 			$mockUserParams117 = array(
 				'load' => null,
@@ -228,7 +252,7 @@
 				'checkPassword' => false,
 				'checkTemporaryPassword' => true,
 			);
-			
+
 			// unconfirm - NOT_EXISTS - Temp User account with temporary password
 			$mockUserParams118 = array(
 				'load' => null,
@@ -251,7 +275,7 @@
 				'invalidateCache' => null,
 			);
 			$mockHelperParams120 = array( 'clearPasswordThrottle' => null );
-			
+
 			return array(
 				// error - no username
 				array($reqParams1, $mockLoginFormParams1, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg1, $expErrParam1),
@@ -259,7 +283,7 @@
 				array($reqParams2, $mockLoginFormParams1, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg2),
 				// error - empty token
 				array($reqParams3, $mockLoginFormParams1, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg2),
-				
+
 				// mock authenticateUserData()
 				// error - NO_NAME
 				array($reqParams101, $mockLoginFormParams101, $mockUserParams1, $mockTempUserParams1, $mockHelperParams1, 'error', $expMsg1, $expErrParam1),
@@ -299,7 +323,7 @@
 				array($reqParams101, $mockLoginFormParams120, $mockUserParams120, $mockTempUserParams1, $mockHelperParams120, 'ok', null),
 			);
 		}
-		
+
 		/**
 		 * @dataProvider mailPasswordDataProvider
 		 */
@@ -317,21 +341,21 @@
 
 			// test
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
-			
+
 			$responseData = $response->getVal( 'result' );
 			$this->assertEquals( $expResult, $responseData );
-			
+
 			$responseData = $response->getVal( 'msg' );
 			$this->assertEquals( $expMsg, $responseData );
-			
+
 			// tear down
 			$this->tearDownRequest();
 		}
-		
+
 		public function mailPasswordDataProvider() {
 			$testUser = User::newFromName( self::TEST_USERNAME );
 			$testUserId = $testUser->getId();
-			
+
 			// empty username
 			$reqParams1 = array( 'username' => '', 'action' => 'mailpassword' );
 			$mockWgUserParams1 = null;		// not mock $wgUser
@@ -340,7 +364,7 @@
 			$mockUserParams1 = null;		// not mock User Object
 			$mockLoginFormParams1 = null;	// not mock LoginForm Object
 			$expMsg1 = wfMsg('userlogin-error-noname');
-			
+
 			// not allow user to change password
 			$reqParams2 = array( 'username' => 'WikiaUser', 'action' => 'mailpassword' );
 			$mockAuthParams2 = array( 'allowPasswordChange' => false );
@@ -350,7 +374,7 @@
 			$mockWgUserParams3 = array( 'isBlocked' => true );
 			$mockAuthParams3 = array( 'allowPasswordChange' => true );
 			$expMsg3 = wfMsg('userlogin-error-blocked-mailpassword');
-			
+
 			// user not found
 			$mockWgUserParams4 = array( 'isBlocked' => false );
 			$mockTempUserParams4 = false;
@@ -417,7 +441,7 @@
 				array( $reqParams2, $mockWgUserParams4, $mockAuthParams3, $mockTempUserParams9, $mockUserParams7, $mockLoginFormParams8, 'ok', $expMsg8 ),
 			);
 		}
-		
+
 		/**
 		 * @dataProvider changePasswordDataProvider
 		 */
@@ -428,21 +452,21 @@
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
-			
+
 			$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
 
 			if ( $expResult == 'ok' ) {
 				$this->setUpMockObject( 'UserLoginSpecialController', array( 'login' => null ), true );
 			}
-			
+
 			$this->setUpMock();
 
 			// test
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'changePassword', $params );
-			
+
 			$responseData = $response->getVal( 'result' );
 			$this->assertEquals( $expResult, $responseData );
-			
+
 			$responseData = $response->getVal( 'msg' );
 			$this->assertEquals( $expMsg, $responseData );
 
@@ -461,18 +485,18 @@
 			$mockTempUserParams1 = null;
 			$mockUserParams1 = null;
 			$mockHelperParams1 = null;
-			
+
 			// 2 do nothing -- POST + not empty fakeGet
 			$params2 = array(
 				'username' => 'WikiaUser',
 				'fakeGet' => '1',
 			);
 			$mockWebRequest2 = array( 'wasPosted' => true, 'setVal' => null );
-			
+
 			// 3 error -- POST + empty fakeGet + not allow password change
 			$mockAuthParams3 = array( 'allowPasswordChange' => false );
 			$expMsg3 = wfMsg( 'resetpass_forbidden' );
-			
+
 			// 4 redirect page -- cancel request + empty returnto
 			$params4 = array(
 				'cancel' => true,
@@ -484,30 +508,30 @@
 					'mockExpValues' => null,
 				),
 			);
-			
+
 			// 5 redirect page -- cancel request + returnto
 			$params5 = array(
 				'cancel' => true,
 				'returnto' => 'Special:WikiFeatures',
 			);
-			
+
 			// 6 do nothing -- not match edit token
 			$mockAuthParams6 = array( 'allowPasswordChange' => true );
 			$mockWgUserParams6 = array( 'matchEditToken' => false );
-			
+
 			// 7 error -- real user + user not found
 			$mockWgUserParams7 = array( 'matchEditToken' => true );
 			$mockTempUserParams7 = false;
 			$mockUserParams7 = false;
 			$expMsg7 = wfMsg( 'userlogin-error-nosuchuser' );
-			
+
 			// 8 error -- real user + anon user
 			$mockUserParams8 = array(
 				'load' => null,
 				'loadFromDatabase' => null,
 				'isAnon' => true
 			);
-			
+
 			// 9 error -- retype != newpassword
 			$params9 = array(
 				'username' => 'WikiaUser',
@@ -520,7 +544,7 @@
 				'isAnon' => false
 			);
 			$expMsg9 = wfMsg( 'badretype' );
-			
+
 			// 10 error --  not match temporary password (checkTemporaryPassword = false)
 			$params10 = array(
 				'username' => 'WikiaUser',
@@ -535,7 +559,7 @@
 				'checkPassword' => true,
 			);
 			$expMsg10 = wfMsg( 'userlogin-error-wrongpassword' );
-			
+
 			// 11 error -- not correct password (checkPassword = false)
 			$mockUserParams11 = array(
 				'load' => null,
@@ -544,7 +568,7 @@
 				'checkTemporaryPassword' => true,
 				'checkPassword' => false,
 			);
-			
+
 			// 1011 error -- [10] not match temporary password (checkTemporaryPassword = false) + [11] not correct password (checkPassword = false)
 			$mockUserParams1011 = array(
 				'load' => null,
@@ -553,7 +577,7 @@
 				'checkTemporaryPassword' => false,
 				'checkPassword' => false,
 			);
-			
+
 			// 12 error -- not valid new password (passwordtooshort)
 			$mockUserParams12 = array(
 				'load' => null,
@@ -603,10 +627,10 @@
 			$mockHelperParams15 = array(
 				'doRedirect' => null,
 			);
-			
+
 			// 16 success -- temp user
-			
-			
+
+
 			return array(
 				// 1 do nothing -- GET
 				array( $params1, $mockWebRequest1, $mockWgUserParams1, $mockAuthParams1, $mockTempUserParams1, $mockUserParams1, $mockHelperParams1, '', '' ),
@@ -641,7 +665,7 @@
 				// 15 success -- real user
 				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockTempUserParams7, $mockUserParams15, $mockHelperParams15, 'ok', $expMsg15 ),
 				// 16 success -- temp user
-				
+
 			);
 		}
 
