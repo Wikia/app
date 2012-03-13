@@ -26,6 +26,7 @@ class VideoFileUploader {
 	public function setExternalUrl ( $sUrl ){			$this->sExternalUrl = $sUrl; }
 	public function setProvider( $sProvider ){			$this->sProvider = $sProvider; }
 	public function setVideoId( $sVideoId ){			$this->sVideoId = $sVideoId; }
+
 	public function setProviderFromId( $iProviderId ){
 		$sProvider = ApiWrapperFactory::getInstance()->getProviderNameFromId( $iProviderId );
 		if ( empty( $sProvider ) ) {
@@ -59,6 +60,8 @@ class VideoFileUploader {
 		$upload->fetchFile();
 		$upload->verifyUpload();
 
+		$this->adjustThumbnailToVideoRatio( $upload );
+
 		/* create a reference to article that will contain uploaded file */
 		$titleText = self::sanitizeTitle( $this->getDestinationTitle() );
 		$oTitle = Title::newFromText( $titleText, NS_FILE );
@@ -83,6 +86,31 @@ class VideoFileUploader {
 			);
 
 		return $result;
+	}
+
+	protected function adjustThumbnailToVideoRatio( $upload ){
+
+		$data = file_get_contents( $upload->getTempPath() );
+		$src = imagecreatefromstring( $data );
+
+		$orgWidth = $upload->mFileProps['width'];
+		$orgHeight = $upload->mFileProps['height'];
+		$finalWidth = $upload->mFileProps['width'];
+		$finalHeight = $finalWidth / $this->getApiWrapper()->getAspectRatio();
+
+		$dest = imagecreatetruecolor ( $finalWidth, $finalHeight );
+		imagecopy( $dest, $src, 0, 0, 0, ( $orgHeight - $finalHeight ) / 2 , $finalWidth, $finalHeight );
+
+		$sTmpPath = $upload->getTempPath();
+		switch ( $upload->mFileProps['minor_mime'] ) {
+			case 'jpeg':	imagejpeg( $dest, $sTmpPath ); break;
+			case 'gif':	imagegif ( $dest, $sTmpPath ); break;
+			case 'png':	imagepng ( $dest, $sTmpPath ); break;
+		}
+
+		imagedestroy( $src );
+		imagedestroy( $dest );
+		
 	}
 
 	protected function getApiWrapper(){
@@ -127,7 +155,7 @@ class VideoFileUploader {
 	}
 	
 	protected function getVideoId(){
-		if (empty($this->sVideoId)) {
+		if ( empty( $this->sVideoId ) ) {
 			$this->sVideoId = $this->getApiWrapper()->getVideoId();
 		}
 

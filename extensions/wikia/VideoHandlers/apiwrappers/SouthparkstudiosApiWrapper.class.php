@@ -2,6 +2,7 @@
 
 class SouthparkstudiosApiWrapper extends NullApiWrapper {
 	// inherit all functions from parent
+	protected static $aspectRatio = 1.22866894;	// 360 x 293
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "southparkstudios.com" ) ? true : false;

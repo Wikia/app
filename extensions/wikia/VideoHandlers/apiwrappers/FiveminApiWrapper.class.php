@@ -5,6 +5,7 @@ class FiveminApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_XML;
 	protected static $API_URL = 'http://api.5min.com/video/$1/info.xml?thumbnail_sizes=true';
 	protected static $CACHE_KEY = 'fivemin';
+	protected static $aspectRatio = 1.3636;	// 480 x 352
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "5min.com") ? true : false;

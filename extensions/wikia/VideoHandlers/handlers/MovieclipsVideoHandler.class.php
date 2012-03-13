@@ -3,7 +3,6 @@
 class MovieclipsVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'MovieclipsApiWrapper';
-	protected static $aspectRatio = 1.84210526;	// 560 x 304
 	protected static $urlTemplate = 'http://movieclips.com/e/';
 	protected static $providerDetailUrlTemplate = 'http://movieclips.com/$1';
 	protected static $providerHomeUrl = 'http://movieclips.com/';

@@ -4,6 +4,8 @@ class DailymotionApiWrapper extends ApiWrapper {
 
 	protected static $API_URL = 'https://api.dailymotion.com/video/$1?fields=id,title,tags,created_time,duration,channel,description,thumbnail_url,thumbnail_large_url,aspect_ratio';
 	protected static $CACHE_KEY = 'dailymotionapi';
+	protected static $aspectRatio = 1.7777778;
+	
 
 	public static function isMatchingHostname( $hostname ) {
 		return strpos($hostname, "www.dailymotion") ? true : false;
@@ -139,12 +141,10 @@ class DailymotionApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	protected function getAspectRatio() {
+	public function getAspectRatio() {
 		if ( !empty( $this->interfaceObj['aspect_ratio'] ) ) {
-
 			return $this->interfaceObj['aspect_ratio'];
 		}
-		return '';
+		return parent::getAspectRatio();
 	}
-
 }

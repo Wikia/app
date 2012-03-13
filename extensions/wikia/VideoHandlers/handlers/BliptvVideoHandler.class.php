@@ -3,7 +3,7 @@
 class BliptvVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'BliptvApiWrapper';
-	protected static $aspectRatio = 1.7777778;
+
 	protected static $providerDetailUrlTemplate = 'http://blip.tv/play/$1';
 	protected static $providerHomeUrl = 'http://blip.tv/';
 	

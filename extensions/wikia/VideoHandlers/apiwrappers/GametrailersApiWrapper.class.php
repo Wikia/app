@@ -2,6 +2,7 @@
 
 class GametrailersApiWrapper extends NullApiWrapper {
 	// inherit all functions from parent
+	protected static $aspectRatio = 1.77777778;	// 512 x 288
 
 	public static function isMatchingHostname( $hostname ) {
 		return strpos($hostname, "gametrailers") !== false ? true : false;

@@ -4,6 +4,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1?v=2&alt=json';
 	protected static $CACHE_KEY = 'youtubeapi';
+	protected static $aspectRatio = 1.7777778;
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "youtube.com")

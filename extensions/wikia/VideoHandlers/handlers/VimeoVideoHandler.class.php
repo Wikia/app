@@ -3,7 +3,6 @@
 class VimeoVideoHandler extends VideoHandler {
 	
 	protected $apiName = 'VimeoApiWrapper';
-	protected static $aspectRatio = 1.7777778;
 	protected static $urlTemplate = 'http://vimeo.com/api/v2/video/%s.json';
 	protected static $providerDetailUrlTemplate = 'http://vimeo.com/$1';
 	protected static $providerHomeUrl = 'http://vimeo.com/';

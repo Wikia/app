@@ -6,6 +6,7 @@ class MovieclipsApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://api.movieclips.com/v2/videos/$1';
 	protected static $CACHE_KEY = 'movieclipsapi';
 	protected static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
+	protected static $aspectRatio = 1.84210526;	// 560 x 304
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "movieclips.com" ) ? true : false;

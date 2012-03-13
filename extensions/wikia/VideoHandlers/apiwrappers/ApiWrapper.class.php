@@ -6,6 +6,8 @@ abstract class ApiWrapper {
 	const RESPONSE_FORMAT_XML = 1;
 	const RESPONSE_FORMAT_PHP = 2;
 
+	protected static $aspectRatio = 1.7777778;
+
 	protected $videoId;
 	protected $metadata;
 	protected $interfaceObj = null;
@@ -41,19 +43,18 @@ abstract class ApiWrapper {
 	 * @param array $overrideMetadata one or more metadata fields that override API response
 	 * In this case, metadata is passed through constructor, so $orverrideMetadata should be set.
 	 */
-	public function __construct( $videoId, $overrideMetadata=array() ) {
+	public function __construct( $videoId, $overrideMetadata = array() ) {
 		$this->videoId = $this->sanitizeVideoId( $videoId );
-		if (!empty($overrideMetadata['ingestedFromFeed'])
-		|| $this->isIngestedFromFeed()) {
+		if ( !empty( $overrideMetadata[ 'ingestedFromFeed' ] )
+			|| $this->isIngestedFromFeed()) {
 			// don't connect to api
-		}
-		else {
+		} else {
 			$this->initializeInterfaceObject();
 		}
-		if (!is_array($overrideMetadata)) {
+		if ( !is_array( $overrideMetadata ) ) {
 			$overrideMetadata = array();
 		}
-		$this->loadMetadata($overrideMetadata);
+		$this->loadMetadata( $overrideMetadata );
 	}
 
 	/**
@@ -61,7 +62,7 @@ abstract class ApiWrapper {
 	 * @return string 
 	 */
 	public function getTitle() {
-		if (!empty($this->metadata['title'])) {
+		if ( !empty( $this->metadata['title'] ) ) {
 			return $this->metadata['title'];
 		}
 		return $this->getVideoTitle();
@@ -291,8 +292,8 @@ abstract class ApiWrapper {
 		return '';
 	}
 
-	protected function getAspectRatio(){
-		return '';
+	public function getAspectRatio(){
+		return static::$aspectRatio;
 	}
 
 	protected function getAltVideoId() {

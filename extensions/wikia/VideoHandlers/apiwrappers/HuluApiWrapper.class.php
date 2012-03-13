@@ -5,6 +5,7 @@ class HuluApiWrapper extends ApiWrapper {
 	protected static $API_URL = 'http://www.hulu.com/api/oembed.json?url=';
 	protected static $WATCH_URL = 'http://www.hulu.com/watch/$1';
 	protected static $CACHE_KEY = 'huluapi';
+	protected static $aspectRatio = 1.7777778;
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "hulu.com") ? true : false;

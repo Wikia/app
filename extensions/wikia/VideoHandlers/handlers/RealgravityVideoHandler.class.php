@@ -8,7 +8,6 @@ class RealgravityVideoHandler extends VideoHandler {
 	const REALGRAVITY_PLAYER_VIDEOEMBEDTOOL_ID = '49321a60-d897-012e-f9bf-12313d18e962';
 
 	protected $apiName = 'RealgravityApiWrapper';
-	protected static $aspectRatio = 1.3333333;
 	protected static $providerDetailUrlTemplate = 'http://www.realgravity.com/';
 	protected static $providerHomeUrl = 'http://www.realgravity.com/';
 

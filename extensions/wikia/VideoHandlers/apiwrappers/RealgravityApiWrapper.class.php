@@ -3,6 +3,7 @@
 class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 
 	protected static $CACHE_KEY = 'realgravityapi';
+	protected static $aspectRatio = 1.3333333;
 	
 	public function getDescription() {
 		$description = $this->getOriginalDescription();
@@ -40,8 +41,8 @@ class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 		return '';
 	}
 
-	protected function getAspectRatio() {
-		$ratio = '';
+	public function getAspectRatio() {
+		$ratio = parent::getAspectRatio();
 		if (!empty($this->metadata['dimensions'])) {
 			$ratio = $this->metadata['dimensions'];
 		}

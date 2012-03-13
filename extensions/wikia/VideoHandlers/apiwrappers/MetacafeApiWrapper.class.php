@@ -65,12 +65,12 @@ class MetacafeApiWrapper extends ApiWrapper {
 	}
 
 	
-	protected function getAspectRatio(){
+	public function getAspectRatio(){
 		if (!empty($this->interfaceObj)) {
 			return ( $this->interfaceObj['width'] / $this->interfaceObj['height'] );
 		}
 
-		return '';
+		return parent::getAspectRatio();
 	}
 
 	protected function getVideoKeywords() {
