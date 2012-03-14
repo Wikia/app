@@ -310,8 +310,6 @@ test('getLanguage', function() {
 
 // TODO: getPrefooterStatus
 
-// TODO: getQuantcastSegmentKV
-
 // TODO: getImpressionCount
 
 test('getPartnerKeywords', function() {
@@ -435,7 +433,7 @@ test('getUrl', function() {
   + 'pos=TOP_LEADERBOARD;wpage='
   + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
-  + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus() + AdConfig.DART.getQuantcastSegmentKV()
+  + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus()
   + AdConfig.DART.getImpressionCount('TOP_LEADERBOARD') + AdConfig.DART.getCategories()
   + 'loc=top;dcopt=ist;src=driver;sz=728x90,468x60,980x130,980x65;mtfInline=true;tile=1;endtag=$;ord='+AdConfig.DART.ord+'?';
   equal( AdConfig.DART.getUrl('TOP_LEADERBOARD', '728x90', false, 'AdDriver'), expectedResult, 'AdDriver, TOP_LEADERBOARD' );
@@ -462,7 +460,7 @@ test('getUrl', function() {
   + 'pos=HOME_TOP_RIGHT_BOXAD;wpage='
   + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
-  + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus() + AdConfig.DART.getQuantcastSegmentKV()
+  + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus()
   + AdConfig.DART.getImpressionCount('HOME_TOP_RIGHT_BOXAD')
   + 'loc=top;mtfIFPath=/extensions/wikia/AdEngine/;src=liftium;sz=300x250,300x600;mtfInline=true;tile=1;endtag=$;ord='+AdConfig.DART.ord+'?';
   equal( AdConfig.DART.getUrl('HOME_TOP_RIGHT_BOXAD', '300x250', true, 'Liftium'), expectedResult, 'Liftium, HOME_TOP_RIGHT_BOXAD' );
@@ -490,7 +488,7 @@ test('getUrl', function() {
   + 'pos=LEFT_SKYSCRAPER_2;wpage='
   + encodeURIComponent(window.wgPageName)
   + ';lang=en;'
-  + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus() + AdConfig.DART.getQuantcastSegmentKV()
+  + AdConfig.DART.getResolution() + AdConfig.DART.getPrefooterStatus()
   + AdConfig.DART.getImpressionCount('LEFT_SKYSCRAPER_2')
   + 'loc=middle;mtfIFPath=/extensions/wikia/AdEngine/;src=direct;sz=160x600,120x600;mtfInline=true;tile=3;endtag=$;ord='+AdConfig.DART.ord+'?';
   equal( AdConfig.DART.getUrl('LEFT_SKYSCRAPER_2', '160x600', true, 'DART'), expectedResult, 'DART, LEFT_SKYSCRAPER_2' );

@@ -250,28 +250,6 @@ LiftiumDART.getDomainKV = function (hostname){
 };
 
 
-LiftiumDART.getQuantcastSegmentKV = function (){
-	var COOKIE_NAME = 'qcseg';
-	var kv = '';
-	if (typeof(wgIntegrateQuantcastSegments) === 'undefined' || Liftium.e(wgIntegrateQuantcastSegments)) {
-		return kv;
-	}
-	if (!Liftium.e(Liftium.cookie(COOKIE_NAME))) {
-	try {
-		// consider using JSON.parse (BugId:9747)
-		var qc = eval("(" + Liftium.cookie(COOKIE_NAME) + ")");
-		if (!Liftium.e(qc) && !Liftium.e(qc.segments)) {
-			for (var i in qc.segments) {
-				kv += 'qcseg=' + qc.segments[i].id + ';';
-			}
-		}
-	} catch (e) {
-	}
-	}
-
-	return kv;
-};
-
 // depends on jquery.expirystorage.js and jquery.store.js
 LiftiumDART.getImpressionCount = function (slotname) {
 	// return key-value only if impression cookie exists
