@@ -38,12 +38,16 @@ class WikiaSearch extends WikiaObject {
 
 			if(empty($results) || isset($_GET['skipCache'])) {
 				$results = $this->client->search( $query, 0, self::GROUP_RESULTS_SEARCH_LIMIT, $cityId, $rankExpr );
+//echo "<pre>";
+//var_dump($results);
+//exit;
 				$results = $this->groupResultsPerWiki( $results );
 
 				$this->setGroupResultsToCahce( $query, $rankExpr, $results );
 			}
 			$results->setCurrentPage($page);
 			$results->setResultsPerPage($length);
+var_dump($results->valid());
 		}
 		else {
 			// no grouping, e.g. intra-wiki searching
@@ -153,12 +157,26 @@ class WikiaSearch extends WikiaObject {
 			$canonical = '';
 		}
 
+		$html = $this->wg->Out->getHTML();
+		$result['wid'] = (int) $this->wg->CityId;
+		$result['pageid'] = $page->getId();
 		$result['sitename'] = $this->wg->Sitename;
 		$result['title'] = $page->getTitle()->getText();
 		$result['canonical'] = $canonical;
-		$result['text'] = $this->wg->Out->getHTML();
+		$result['html'] = $html;
+		$result['bytes'] = strlen($html);
+		$result['words'] = count( preg_split('/\w+/', $html) );
 		$result['url'] = $page->getTitle()->getFullUrl();
 		$result['ns'] = $page->getTitle()->getNamespace();
+		$result['host'] = substr($this->wg->Server, 7);
+
+		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces );
+		if($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) {
+			$result['ismainpage'] = true;
+		}
+		else {
+			$result['ismainpage'] = false;
+		}
 
 		if( $withMetaData ) {
 			$result['metadata'] = $this->getPageMetaData( $page );
@@ -179,22 +197,22 @@ class WikiaSearch extends WikiaObject {
 			'bltitle' => $page->getTitle(),
 			'action' => 'query',
 			'list' => 'backlinks',
-			'bllimit' => 600
+			'blcount' => 1
 		));
 
-		if( is_array( $data['query']['backlinks'] ) ) {
-			$result['backlinks'] = count( $data['query']['backlinks'] );
+		if( isset($data['query']['backlinks_count'] ) ) {
+			$result['backlinks'] = $data['query']['backlinks_count'];
 		}
 		else {
 			$result['backlinks'] = 0;
 		}
 
-		/*
+
 		$data = $this->callMediaWikiAPI( array(
 			'pageids' => $page->getId(),
 			'action' => 'query',
 			'prop' => 'info',
-			'inprop' => 'url|created|views|revcount|redirect'
+			'inprop' => 'url|created|views|revcount'
 		));
 
 		if( isset( $data['query']['pages'][$page->getId()] ) ) {
@@ -204,8 +222,22 @@ class WikiaSearch extends WikiaObject {
 			$result['created'] = $pageData['created'];
 			$result['touched'] = $pageData['touched'];
 		}
-		*/
-		$result['views'] = 1;
+
+		$data = $this->callMediaWikiAPI( array(
+			'action' => 'query',
+			'meta' => 'siteinfo',
+			'siprop' => 'statistics|wikidesc|variables|namespaces|category'
+		));
+
+		$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
+		$result['wikititle'] = isset($data['query']['wikidesc']['pagetitle']) ? $data['query']['wikidesc']['pagetitle'] : '';
+
+		$statistics = $data['query']['statistics'];
+		if(is_array($statistics)) {
+			$result['wikipages'] = $statistics['pages'];
+			$result['wikiarticles'] = $statistics['articles'];
+			$result['activeusers'] = $statistics['activeusers'];
+		}
 
 		return $result;
 	}
