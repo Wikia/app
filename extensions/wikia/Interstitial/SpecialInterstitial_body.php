@@ -16,7 +16,7 @@ class Interstitial extends UnlistedSpecialPage {
 		parent::__construct( INTERSTITIALS_SP /*class*/ );
 		wfLoadExtensionMessages( INTERSTITIALS_SP ); // Load internationalization messages
 	}
-	
+
 	/**
 	 * Returns the HTML for importing the CSS needed to make interstitials/exitstitials look right.
 	 * The results of this function should be displayed inside of the <head> tag.
@@ -27,7 +27,7 @@ class Interstitial extends UnlistedSpecialPage {
 
 		$skin = $wgUser->getSkin();
 		$skinName = get_class($skin);
-		
+
 		// this may not be set yet (and needs to be before setupUserCss in order for the right CSS file to be included)
 		if ($skin->getSkinName() == '') {
 			$skin->skinname = substr($skinName, 4);
@@ -78,7 +78,7 @@ class Interstitial extends UnlistedSpecialPage {
 
 		$url = trim($wgRequest->getVal( 'u' ));
 		$noAutoRedirect = ( $wgRequest->getText( 'noredirect' ) == 1 ) ? true : false;
-		
+
 		if(($wgAdsInterstitialsEnabled) && (!$wgUser->isLoggedIn())){
 			global $wgExtensionsPath;
 			wfLoadExtensionMessages(INTERSTITIALS_SP);
@@ -110,12 +110,12 @@ class Interstitial extends UnlistedSpecialPage {
 
 			$skin = $wgUser->getSkin();
 			$skinName = get_class($skin);
-			
+
 			// this may not be set yet (and needs to be before setupUserCss in order for the right CSS file to be included)
 			if ($skin->getSkinName() == '') {
 				$skin->skinname = substr($skinName, 4);
 			}
-			
+
 			if ($skinName == 'SkinMonaco') {
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
@@ -137,18 +137,11 @@ class Interstitial extends UnlistedSpecialPage {
 
 				// Create the JS-includes for the tracking code and jQuery - will just use StaticChute because it should be in user's cache by now.
 				$adCode = $oTmpl->execute($adTemplate);
-				$StaticChute = new StaticChute('js');
-				$StaticChute->useLocalChuteUrl();
-				$package = 'monaco_anon_article_js';
-				$jsIncludes = $StaticChute->getChuteHtmlForPackage($package);
-				$jsGlobals = Skin::makeGlobalVariablesScript( array('skinname' => $skinName) );
 				$oTmpl->set_vars(
 					array(
 						'adCode' => $adCode,
 						'athenaInitStuff' => $athenaInitStuff,
 						'css' => Interstitial::getCss(),
-						'jsGlobals' => $jsGlobals,
-						'jsIncludes' => $jsIncludes,
 						'pageType' => 'interstitial',
 						'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
 						'skip' => wfMsg('interstitial-skip-ad'),
