@@ -155,6 +155,12 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$altDescription .= !empty($data['trailerVersion']) ? $data['trailerVersion'] . ' ' : '';
 		$altDescription .= "({$data['videoId']})";
 		$description = ($data['description']) ? $data['description'] : $altDescription;
+		if (startsWith($description, 'Trailer ')) {
+			// add trailer type to description
+			if (!empty($data['trailerType'])) {
+				$description = $data['trailerType'] . ' ' . $description;
+			}
+		}
 		$name = sprintf("%s - %s", $this->generateTitleName($data), $description);	
 		
 		// per parent class's definition, do not sanitize
