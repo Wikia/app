@@ -4,10 +4,11 @@ class ShareButtonsTest extends WikiaBaseTest {
 	
 	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../ShareButtons.setup.php';
+
+		parent::setUp();
+
 		$this->mockGlobalVariable('wgTitle', Title::newMainPage());
 		$this->mockApp();
-		
-		parent::setUp();		
 	}
 
 	public function testFactory() {
