@@ -79,10 +79,12 @@ var AdSS = {
 	getPrevNext: function(idx) {
 		var prevIdx = idx-1;
 		var nextIdx = idx+1;
-		if(prevIdx<0)
+		if (prevIdx<0) {
 			prevIdx = AdSS.siteAds.length-1;
-		if(nextIdx==AdSS.siteAds.length)
+		}
+		if (nextIdx==AdSS.siteAds.length) {
 			nextIdx = 0;
+		}
 
 		var prevnext = $('<div class="prevnext"><a href="#" class="prev" rel="'+prevIdx+'">&lt;</a>&nbsp;<a href="#" class="next" rel="'+nextIdx+'">&gt;</a></div>');
 		prevnext.css({"float":"right", "font-size":"80%"});
@@ -122,7 +124,7 @@ var AdSS = {
 			$("#wpType").val("site");
 			$("#wpWeight").val("1").removeAttr("disabled").parent().show();
 			$('.box .corner-right, .box .corner-left').show();
-			$('#wpSelectHub').parents('.box').find('.corner-left').hide()
+			$('#wpSelectHub').parents('.box').find('.corner-left').hide();
 		} );
 		$("#wpSelectSitePremium").click( function() {
 			$(".SponsoredLinkDesc section").removeClass("selected");
@@ -137,7 +139,7 @@ var AdSS = {
 			$("#wpType").val("hub");
 			$("#wpWeight").val("1").removeAttr("disabled").parent().show();
 			$('.box .corner-right, .box .corner-left').show();
-			$('#wpSelectSitePremium').parents('.box').find('.corner-left').hide()
+			$('#wpSelectSitePremium').parents('.box').find('.corner-left').hide();
 		} );
 		$("#adssLoginAction > a").click( function(e) {
 			e.preventDefault();
@@ -172,7 +174,7 @@ var AdSS = {
 				$(this).css('left', leftPosition+'px');
 				$('div#green-dot').fadeIn(dotSpeed, function() {
 					leftPosition = leftPosition + 24;
-					if (leftPosition == 249) leftPosition = 129;
+					if (leftPosition == 249) { leftPosition = 129; }
 					dotMove(leftPosition);
 				});
 			});
@@ -205,12 +207,12 @@ var AdSS = {
 								}
 							}
 						}
-					)
+					);
 				},
 				success: function(data) {
 					$('.paypal-error').text('');
 					if (data.status == 'error') {
-						for(property in data.form.errors) {
+						for(var property in data.form.errors) {
 							$('.paypal-error.error-'+property).text(data.form.errors[property]);
 						}
 						$('#paypalModal').closeModal();
