@@ -22,7 +22,9 @@ function wfMakeGlobalVariablesScript($vars) {
 
 	$vars['wgCityId'] = $wgCityId;
 	$vars['wgID'] = isset($wgCityId) ? (int) $wgCityId : -1; // this one or one above should be deleted
-	$vars['wgEnableAjaxLogin'] = (is_array($wgEnableAjaxLogin)) ? in_array($vars['skin'], $wgEnableAjaxLogin) : false;
+	if (is_array($wgEnableAjaxLogin) && in_array($vars['skin'], $wgEnableAjaxLogin)) {
+		$vars['wgEnableAjaxLogin'] = true;
+	}
 	$vars['wgDB'] = $wgDBname;
 	$vars['wgDBname'] = $wgDBname;
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
@@ -35,13 +37,8 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['ajaxLogin2'] = wfMsg('ajaxLogin2');
 	}
 	$vars['wgMainpage'] = wfMsgForContent( 'mainpage' );
-	$vars['wgIsMainpage'] = ($wgTitle->getArticleId() == Title::newMainPage()->getArticleId() && $wgTitle->getArticleId() != 0);
-	if(!$vars['wgIsMainpage']) {
-		if(!empty($wgArticle->mRedirectedFrom)) {
-			if($vars['wgMainpage'] == $wgArticle->mRedirectedFrom->getPrefixedText()) {
-				$vars['wgIsMainpage'] = true;
-			}
-		}
+	if (Wikia::isMainPage()) {
+		$vars['wgIsMainpage'] = true;
 	}
 
 	$vars['wgStyleVersion'] = isset($wgStyleVersion) ? $wgStyleVersion : '' ;

@@ -134,7 +134,7 @@ $.pjax = function( options ) {
 			try {
 				$('script').eq(0).replaceWith(data.globalVariablesScript);
 
-				if(wgIsMainpage == true || window.wgNamespaceNumber !== 0) {
+				if(window.wgIsMainpage == true || window.wgNamespaceNumber !== 0) {
 					ArticleAjaxLoading.track('/aal/NavigatedToMainPage');
 					return window.location = options.url;
 				}
