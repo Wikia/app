@@ -12,6 +12,7 @@ abstract class VideoFeedIngester {
 	
 	protected static $CACHE_KEY = 'videofeedingester';
 	protected static $CACHE_EXPIRY = 3600;
+	protected static $THROTTLE_INTERVAL = 1;	// seconds
 
 	private static $WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases', 'movieclipsIds');
@@ -89,6 +90,8 @@ abstract class VideoFeedIngester {
 			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
 			if ($result->ok) {
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
+				print "sleeping " . self::$THROTTLE_INTERVAL . " second(s)...\n";
+				sleep(self::$THROTTLE_INTERVAL);
 				return 1;
 			}
 		}

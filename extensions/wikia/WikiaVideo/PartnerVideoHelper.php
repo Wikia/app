@@ -17,6 +17,8 @@ class PartnerVideoHelper {
 	private static $PARTNER_VIDEO_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $PARTNER_VIDEO_INGEESTION_DATA_FIELDS = array('keyphrases', 'movieclipsIds');
 	
+	private static $THROTTLE_INTERVAL = 1;	// seconds
+	
 	protected static $instance;
 	
 	const CACHE_KEY = 'partnervideoingestion';
@@ -626,6 +628,8 @@ class PartnerVideoHelper {
 			else {
 				$video->save($categoryStr);
 				print "Ingested {$title->getText()} from partner clip id $id. {$title->getFullURL()}\n\n";
+				print "sleeping " . self::$THROTTLE_INTERVAL . " second(s)...\n";
+				sleep(self::$THROTTLE_INTERVAL);
 			}
 			return 1;
 		}
