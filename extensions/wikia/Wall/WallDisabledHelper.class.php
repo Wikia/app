@@ -122,6 +122,7 @@ class WallDisabledHooksHelper {
 				if($wikiData['unread'] > 0) {
 					$link = GlobalTitle::newFromText( $userName, NS_USER_WALL, $wikiData['id'] );
 					$talks[ $wikiData['id'] ] =
+						array( 'wiki' => $wikiData['sitename'], 'link' => $link->getFullURL( array('showNotifications'=>1) ) );
 				}
 			}
 		}
