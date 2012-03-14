@@ -98,12 +98,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	  $metaData = $this->getVal('meta', true);
 
 	  if ( !empty( $ids ) ) {
-
 	    $this->response->setData( $this->wikiaSearch->getPages($ids) );
-	    $this->getResponse()->setFormat('json');
-
-
 	  }
+	  $this->getResponse()->setFormat('json');
 
 	}
 
