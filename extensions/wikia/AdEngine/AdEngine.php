@@ -54,14 +54,10 @@ function wfAdEngineSetupJSVars($vars) {
 
 	// TODO: emit the following only when true (BugId:20558)
 	// Answers sites
-	if ($wgEnableWikiAnswers) {
-		$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
-	}
+	$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
 
 	// Krux
-	if ($wgEnableKruxTargeting) {
-		$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
-	}
+	$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 
 	return true;
 }
