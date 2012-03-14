@@ -13,7 +13,7 @@ var LatestQuestions = {
 			}
 
 			html += "</ul>";
-			html += "<a href='/wiki/Special:WikiActivity' title='Special:WikiActivity' class='more'>"+wgOasisMoreMsg+"</a>";
+			html += "<a href='" + wgArticlePath.replace('$1', 'Special:WikiActivity') + "' title='Special:WikiActivity' class='more'>"+wgOasisMoreMsg+"</a>";
 			html += "</section>";
 
 			if ($.browser.msie) {
