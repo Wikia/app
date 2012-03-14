@@ -173,7 +173,7 @@ var Places = Places || (function(){
 					aInfoWindows = [];
 
 				$.each( options.markers, function( index, value ){
-					if ( ( typeof value.lat != 'undefined' ) && ( typeof value.lat != 'undefined' ) && ( typeof value.label != 'undefined' ) && ( typeof value.tooltip != 'undefined' ) ){
+					if ( ( typeof value.lat != 'undefined' ) && ( typeof value.lan != 'undefined' ) && ( typeof value.label != 'undefined' ) && ( typeof value.tooltip != 'undefined' ) ){
 						var marker = new google.maps.Marker({
 								position:	new google.maps.LatLng( value.lat, value.lan ),
 								map:		map,
