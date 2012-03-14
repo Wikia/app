@@ -432,6 +432,12 @@ class PartnerVideoHelper {
 				$altDescription .= !empty($data['trailerVersion']) ? $data['trailerVersion'] . ' ' : '';
 				$altDescription .= "({$data['eclipId']})";
 				$description = ($data['description']) ? $data['description'] : $altDescription;
+				if (startsWith($description, 'Trailer ')) {
+					// add trailer type to description
+					if (!empty($data['trailerType'])) {
+						$description = $data['trailerType'] . ' ' . $description;
+					}
+				}
 				$name = sprintf("%s - %s", self::generateTitleNameForPartnerVideo($provider, $data), $description);										
 				break;
 			case VideoPage::V_MOVIECLIPS:
