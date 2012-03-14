@@ -83,10 +83,6 @@ class RTEReverseParser {
 					$out = mb_convert_encoding($out, 'UTF-8', 'UTF-8');
 				}
 
-				// bugID: 11537 revised
-				// losing newline before : and * following h[1-6] or div
-				// $out = mb_ereg_replace("(</h[1-6]>|</div>)([*|:])","\\1\n\\2", $out);
-				
 				wfProfileOut(__METHOD__.'::postFixes');
 
 				RTE::log('wikitext', $out);
@@ -1073,6 +1069,12 @@ class RTEReverseParser {
 					$out = "\n{$out}";
 				}
 
+				// bugfix: fogbugz BugID 11537
+				// losing newline before : and * following h[1-6] or div				
+				if(self::wasHtml($node->previousSibling)) {
+					$out = "\n{$out}";
+				}
+
 				// this list is indented list (RT #38268)
 				// <dl><dd>foo<ul><li>bar...
 				if ( self::isChildOf($node, array('dd', 'dt')) && !self::isFirstChild($node) && !self::isListNode($node->previousSibling) ) {
@@ -1125,6 +1127,12 @@ class RTEReverseParser {
 			// definition lists
 			case 'dl':
 				$out = rtrim($textContent, "\n");
+
+				// bugfix: fogbugz BugID 11537
+				// losing newline before : and * following h[1-6] or div 
+				if(self::wasHtml($node->previousSibling)) {
+					$out = "\n{$out}";
+				}
 
 				// handle nested intended list
 				// :1
