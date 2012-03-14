@@ -1,8 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../FounderProgressBar.setup.php';
-wfLoadAllExtensions();
-
-class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
+class FounderProgressBarTest extends WikiaBaseTest {
         const TEST_DATA = 1;
         const TEST_CITY_ID = 79860;
 
@@ -11,13 +8,15 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
          * @var FounderProgressBarTest
          */
         protected $object = null;
-        protected $app = null;
 		protected $mock_db = null;
 
         protected function setUp() {
 			global $wgCityId;
 			
 			$this->wgCityId = $wgCityId;
+			
+			$this->setupFile = dirname(__FILE__) . '/../FounderProgressBar.setup.php';
+			parent::setUp();
 			
 			// Mock response using $this->getValCallBack()
 			$mockR = $this->getMock('WikiaResponse', array('getVal'), array('raw'));
@@ -61,9 +60,7 @@ class FounderProgressBarTest extends PHPUnit_Framework_TestCase {
 			F::setInstance("FounderProgressBarController", $mock);			
 			
 			$this->object = F::build( 'FounderProgressBarController' );
-			$this->app = F::build( 'App' );
 			$this->task_id = 0;
-			
         }
 
 		protected function tearDown() {
