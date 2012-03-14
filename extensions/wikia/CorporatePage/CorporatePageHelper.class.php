@@ -243,6 +243,7 @@ class CorporatePageHelper{
 		global $wgStylePath;
 		$image = Title::newFromText($name);
 		$image = wfFindFile($image);
+		/// TODO: use $wgBlankImgUrl instead
 		$imageName = $wgStylePath."/common/dot.gif";
 		if (($image) && ($image->exists())){
 			$imageName = $image->getViewURL();
@@ -350,13 +351,13 @@ class CorporatePageHelper{
 
 	/**
  	 * Get hot blog post for a given hub
-	 * 
+	 *
 	 * @param string hub name to get blog post for
 	 * @return mixed blog post data or false when there's no blog post chosen
  	 */
  	public static function getHotNews($hubName) {
  		wfProfileIn(__METHOD__);
-		
+
  		wfProfileOut(__METHOD__);
 		return $data;
  	}
