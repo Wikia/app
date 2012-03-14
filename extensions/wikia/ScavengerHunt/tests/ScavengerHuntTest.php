@@ -101,8 +101,6 @@ class ScavengerHuntTest extends WikiaBaseTest {
 
 	public function mockDatabaseResponse( $isEmpty = false) {
 
-		$app = WF::build('App');
-
 		$fakeRow = ( $isEmpty ) ? array() : $this->getFakeRow();
 
 		$db = $this->getMock( 'DatabaseBase' );
@@ -110,7 +108,7 @@ class ScavengerHuntTest extends WikiaBaseTest {
 			->method( 'selectRow' )
 			->will( $this->returnValue( $fakeRow ) );
 
-		$games = $this->getMock( 'ScavengerHuntGames', array( 'getDb' ), array( $app ) );
+		$games = $this->getMock( 'ScavengerHuntGames', array( 'getDb' ), array( $this->app ) );
 		$games->expects( $this->any() )
 			->method( 'getDb' )
 			->will( $this->returnValue( $db ) );
