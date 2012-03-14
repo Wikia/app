@@ -129,8 +129,6 @@ class StaticChute {
 	/* Static JS for Oasis (which doesn't need StaticChute CSS because it uses SASS). */
 	private function generateConfigSkinOasis(){
 
-		// NOTE: Decided not to pre-load YUI in Oasis.
-
 		// The jquery files we need in every JS package of Oasis.
 		$this->config['oasis_jquery'] = array(
 			"common/jquery/jquery-1.6.1.js",
