@@ -35,7 +35,7 @@
 
 <h2 style="clear: both"><?= wfMsg( "imagereview-header{$modeMsgSuffix}" ) ?></h2>
 
-<form action="<?= $submitUrl ?>" method="post" id="ImageReviewForm">
+<form action="<?= $submitUrl ?>" method="post" id="ImageReviewForm" class="<?= $action ?>">
 
 
 	<ul class="image-review-list">
@@ -53,7 +53,7 @@ if ( is_array($imageList) && count($imageList) > 0) {
 		$stateId = intval($image['state']);
 ?>
 
-			<li class="state-<?= $stateId ?>">
+			<li class="state-<?= $stateId ?> <?= $action ?>">
 				<div class="img-container">
 					<img id="<?php echo $id ?>" src="<?= htmlspecialchars($image['src']) ?>">
 				</div>
@@ -68,9 +68,9 @@ if ( is_array($imageList) && count($imageList) > 0) {
                                         <span class="internal sprite details magnify" title="Flagged: Skin detected." style="clear: both"></span>
                                 <?php } ?>
 
-				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_APPROVED ?>"<?= ($stateId == ImageReviewHelper::STATE_APPROVED || $stateId == ImageReviewHelper::STATE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_QUESTIONABLE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
+				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_APPROVED ?>"<?= ($stateId == ImageReviewHelper::STATE_APPROVED || $stateId == ImageReviewHelper::STATE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_QUESTIONABLE_IN_REVIEW || ( $stateId == ImageReviewHelper::STATE_QUESTIONABLE && $action == 'questionable' ) || $stateId == ImageReviewHelper::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
 				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_DELETED ?>"<?= ($stateId == ImageReviewHelper::STATE_DELETED ? ' checked' :'') ?>>Del</label>
-				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewHelper::STATE_QUESTIONABLE || $stateId == ImageReviewHelper::STATE_QUESTIONABLE_IN_REVIEW ? ' checked' :'') ?>>Q</label>
+				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewHelper::STATE_QUESTIONABLE && $action != 'questionable' ? ' checked' :'') ?>>Q</label>
 			</li>
 <?php
 /*
