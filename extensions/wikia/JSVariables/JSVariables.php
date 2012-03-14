@@ -36,6 +36,8 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['ajaxLogin1'] = wfMsg('ajaxLogin1');
 		$vars['ajaxLogin2'] = wfMsg('ajaxLogin2');
 	}
+
+	// TODO: use wgMainPageTitle instead?
 	$vars['wgMainpage'] = wfMsgForContent( 'mainpage' );
 	if (Wikia::isMainPage()) {
 		$vars['wgIsMainpage'] = true;
