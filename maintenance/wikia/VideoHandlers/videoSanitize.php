@@ -304,7 +304,7 @@ foreach ( $aTranslation as $key => $val ) {
 				if ( $sTextAfter != $sText ) {
 					$allChangesArticleURLs[ str_replace('localhost',$wgDBname.'.'.$devboxuser.'.wikia-dev.com',$oTitle->getFullURL()) ] = true;
 					echo "ARTICLE WAS CHANGED! \n";
-					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
+					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 				} else {
 					$sanitizeHelper->logVideoTitle($key, $val, 'UNKNOWN', $oTitle);
 				}
@@ -345,7 +345,7 @@ while( $page = $dbw->fetchObject( $rows ) ) {
 		$oArticle = new Article ( $oTitleRV );
 		if ( $oArticle instanceof Article ){
 			$sTextAfter = $sText = $oArticle->getContent();
-			echo "\n ========== ART(RV):" .$oTitle." =============\n";
+			echo "\n ========== ART(RV):" .$oTitleRV." =============\n";
 
 			foreach ( $aTranslation as $key => $val ) {
 				$sTextAfter = title_replacer_rv( substr( $key, 1 ), substr( $val, 1), $sTextAfter  );
@@ -353,7 +353,7 @@ while( $page = $dbw->fetchObject( $rows ) ) {
 
 			if ( $sTextAfter != $sText ) {
 				echo "ARTICLE WAS CHANGED! \n";
-				$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_UPDATE, false, $botUser );
+				$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 				$i++;
 			}
 		} else {

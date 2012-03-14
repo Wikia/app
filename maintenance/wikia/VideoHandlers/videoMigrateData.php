@@ -200,7 +200,7 @@ while( $page = $dbw->fetchObject($rows) ) {
 
 			if ( $sTextAfter != $sText ) {
 				echo "ARTICLE WAS CHANGED! \n";
-				$status = $oArticle->doEdit( $sTextAfter, 'Changing cross-wiki links to local links', EDIT_UPDATE, false, $botUser );
+				$status = $oArticle->doEdit( $sTextAfter, 'Changing cross-wiki links to local links', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 				$i++;
 			}
 		}
