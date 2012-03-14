@@ -68,7 +68,7 @@
 			this.oldBody[id] = bubble.find('.msg-body').html();
 		},
 
-		afterCancel: function(body, isSource, target) {
+		afterCancel: function(body, isSource, target, bubble) {
 			if (isSource) {
 				target.parent().hide();
 				bubble.find('.timestamp').show();
