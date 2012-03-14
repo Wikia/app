@@ -220,13 +220,13 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 <br/><br/>
 If you don\'t confirm within 23 days your username, $USERNAME, will become available again, so don\'t wait!',
 	'usersignup-confirmation-reminder-email-signature' => 'The Wikia Team',
-	'usersignup-confirmation-reminder-email_body' => 'Hi $1,
+	'usersignup-confirmation-reminder-email_body' => 'Hi $2,
 
 It\'s been a few days, but it looks like you haven\'t finished creating your account on Wikia yet. It\'s easy. Just click the confirmation link below:
 
-$2
+$3
 
-If you don\'t confirm within 23 days your username, $1, will become available again, so don\'t wait!
+If you don\'t confirm within 23 days your username, $2, will become available again, so don\'t wait!
 
 The Wikia Team
 
