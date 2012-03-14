@@ -123,7 +123,7 @@
 
 			// Bartek - for RT #43217
 			if (typeof WikiaEnableAutoPageCreate != 'undefined') {
-				RTE.contentsCss.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
+				RTE.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css');
 			}
 
 			var contentsCss = '',
