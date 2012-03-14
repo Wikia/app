@@ -51,8 +51,6 @@ class StaticChute {
 
 
 	private function generateConfig(){
-		$widgetsAssets = $this->getWidgetsAssets();
-
 		$this->config = array();
 		// YUI package
 		$this->config['yui'] = array(
@@ -566,32 +564,6 @@ class StaticChute {
 		$checksum = $this->getChecksum($files);
 
 		return $this->getChuteUrlPath() . "/static/$type/$packages/$checksum.$type";
-	}
-
-	private function getWidgetsAssets() {
-		$js = $css = array();
-		$dir = dirname(__FILE__) . '/../WidgetFramework/Widgets/';
-		if(is_dir($dir)) {
-			if($dh = opendir($dir)) {
-				while(($file = readdir($dh)) !== false) {
-					if(filetype($dir.$file) == 'dir') {
-						if(file_exists($dir.$file.'/'.$file.'.js')) {
-							$js[] = '../extensions/wikia/WidgetFramework/Widgets/'.$file.'/'.$file.'.js';
-						}
-						if(file_exists($dir.$file.'/'.$file.'.css')) {
-							$css[] = '../extensions/wikia/WidgetFramework/Widgets/'.$file.'/'.$file.'.css';
-						}
-					}
-				}
-			}
-			closedir($dh);
-		}
-
-		// Nick wrote: opendir will sort the files differently on different servers.
-		// Force them to a consistent order so that get checksum works properly
-		sort($js);
-		sort($css);
-		return array('js' => $js, 'css' => $css);
 	}
 
 	private function getPackageMediaType($package) {
