@@ -50,7 +50,7 @@ var UserLoginFacebook = (function(){
 										}
 									}else{
 										//TODO: use the WikiaMobile toast message when it will be ready
-										alert($.msg('wikiamobile-sso-login-fail'));
+										alert($.msg('wikiamobile-facebook-connect-fail'));
 									}
 								});
 								break;
