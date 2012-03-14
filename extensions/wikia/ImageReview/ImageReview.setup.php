@@ -26,7 +26,9 @@ $app = F::app();
 
 // classes
 $app->registerClass('ImageReviewTask', $dir . 'ImageReviewTask.php');
-extAddBatchTask( $dir . "../ImageReview/ImageReviewTask.php", "imagereview", "ImageReviewTask" );
+if ( function_exists( 'extAddBatchTask' ) ) {
+	extAddBatchTask( $dir . "../ImageReview/ImageReviewTask.php", "imagereview", "ImageReviewTask" );
+}
 $app->registerClass('ImageReviewSpecialController', $dir . 'ImageReviewSpecialController.class.php');
 $app->registerClass('ImageReviewHelper', $dir . 'ImageReviewHelper.class.php');
 $app->registerSpecialPage('ImageReview', 'ImageReviewSpecialController');
