@@ -25,8 +25,8 @@ class ImageServing {
 	 * @param $proportionOrHight can by array with proportion(example: array("w" => 1, "h" => 1)) or just height in pixels (example: 100)  proportion will be
 	 * calculated automatically
 	 */
-	function __construct($articles = null, $width = 100, $proportionOrHeight = array("w" => 1, "h" => 1), $db = null){
-		if(!is_array($proportionOrHeight)) {
+	function __construct( $articles = null, $width = 100, $proportionOrHeight = array( "w" => 1, "h" => 1 ), $db = null ){
+		if( !is_array( $proportionOrHeight ) ) {
 			$height = (int) $proportionOrHeight;
 			$this->proportion = array("w" => $width, "h" => $height);
 			$this->proportionString = $width.":".$height;
@@ -37,9 +37,9 @@ class ImageServing {
 		$this->articles = array();
 
 		if( is_array( $articles ) ) {
-			foreach($articles as $article){
+			foreach( $articles as $article ){
 				$articleId = ( int ) $article;
-				$this->articles[$articleId] = $articleId;
+				$this->articles[ $articleId ] = $articleId;
 			}
 		}
 
@@ -276,7 +276,8 @@ class ImageServing {
 			$pWidth =  round( $height * ( $this->proportion['w'] / $this->proportion['h'] ) );
 			$top = 0;
 			if ( $align == "center" ) {
-				$left = round( $width / 2 - $pWidth / 2 ) + 1;
+				$left = round( $width / 2 - $pWidth / 2 );
+				if ( $pHeight != $height ) $left++;
 			} else if ( $align == "origin" ) {
 				$left = 0;
 			}
