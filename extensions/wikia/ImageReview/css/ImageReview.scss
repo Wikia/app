@@ -40,14 +40,22 @@
 	}
 
 	/* Q */
-	.state-5,
-	.state-6 {
+	.state-5 {
 		border-color: #000;
 		background-color: gold;
 		label {
 			border-color: #000;
 		}
 	}
+
+        .state-2,
+        .questionable {
+                border-color: #ccc;
+                background-color: transparent;
+                label {
+                        border-color: #ccc;
+                }
+        }
 
 	div {
 		text-align: center;
@@ -61,6 +69,16 @@
 	
 	footer {
 		text-align: right;
+	}
+}
+
+#ImageReviewForm .questionable {
+	.state-5 {
+		border-color: #ccc;
+		background-color: transparent;
+		label {
+			border-color: #ccc;
+		}
 	}
 }
 
