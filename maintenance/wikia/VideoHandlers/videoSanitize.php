@@ -84,10 +84,11 @@ $options = array('help');
 require_once ('videoSanitizerMigrationHelper.class.php');
 require_once( 'videolog.class.php' );
 
-global $IP, $wgCityId, $wgDBname, $wgExternalDatawareDB;
+global $IP, $wgCityId, $wgDBname, $wgExternalDatawareDB, $wgVideoHandlersVideosMigrated;
+
+$wgVideoHandlersVideosMigrated = false; // be sure we are working on old files
+
 $devboxuser = exec('hostname');
-
-
 $sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgExternalDatawareDB);
 $previouslyProcessed = $sanitizeHelper->getRenamedVideos("old", " operation_status='OK'");
 
@@ -285,7 +286,10 @@ foreach ( $aTranslation as $key => $val ) {
 	//echo "SELECT distinct il_from FROM imagelinks WHERE il_to ='{$key}'! /n";
 	
 	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
+	$count = $rows->numRows();
+	$current = 0;
 	while( $file = $dbw->fetchObject( $rows ) ) {
+		$current++;
 		echo "FETCH FROM DB il_from= ".$file->il_from." // ($key)\n";
 		$articleId = $file->il_from;
 		$oTitle = Title::newFromId( $articleId );
@@ -297,7 +301,7 @@ foreach ( $aTranslation as $key => $val ) {
 			$oArticle = new Article ( $oTitle );
 			if ( $oArticle instanceof Article ){
 				$sTextAfter = $sText = $oArticle->getContent();
-				echo "\n ========== ART:" .$oTitle." =============\n";
+				echo "\n ={$count}/{$current}==== ART:" .$oTitle." =======\n";
 
 				$sTextAfter = title_replacer( substr( $key, 1 ), substr( $val, 1), $sTextAfter  );
 
