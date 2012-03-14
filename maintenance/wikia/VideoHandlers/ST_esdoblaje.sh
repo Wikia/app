@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd /tmp
-php /usr/wikia/source/wiki/maintenance/wikia/getDatabase.php -f esdoblaje
+php /usr/wikia/source/wiki/maintenance/wikia/getDatabase.php -c B -f esdoblaje
 php /usr/wikia/source/wiki/maintenance/wikia/getDatabase.php -i esdoblaje.sql.gz
 rm esdoblaje.sql.gz
 
