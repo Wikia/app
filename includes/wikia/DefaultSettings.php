@@ -355,7 +355,6 @@ $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
-$wgAPIModules[ "riakaccess"        ] = "WikiaApiRiakAccess";
 
 
 if( $wgUseFakeExternalStoreDB !== true ) {
