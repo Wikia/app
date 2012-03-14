@@ -236,7 +236,7 @@ var WikiaPhotoGallery = {
 
 			// Slider preview page
 			case this.SLIDER_PREVIEW_PAGE:
-
+				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
 				title = msg['wikiaPhotoGallery-sliderpreview-title'];
 
 				saveButton.show().text(msg['wikiaPhotoGallery-finish']);
@@ -752,6 +752,9 @@ var WikiaPhotoGallery = {
 				// tracking
 				var trackerSuffix = self.getPageTrackerSuffix();
 				self.track('/dialog/' + trackerSuffix + '/upload/button');
+				if ( self.isSlider() ) {
+				 	$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+				}
 			});
 
 		// upload form submittion
@@ -1175,6 +1178,9 @@ var WikiaPhotoGallery = {
 		// TODO: update?
 		if (query != '') {
 			this.track('/dialog/upload/find/find/' + query.replace(/[^A-Za-z0-9]/g, '_'));
+			if ( self.isSlider() ) {
+				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+			}
 		}
 	},
 
