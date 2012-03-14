@@ -44,6 +44,11 @@ class WikiaVideoService extends Service {
 	public static function isTitleVideo( $title, $allowOld = true ) {
 		
 		$title = self::getTitle( $title );
+		
+		if ( empty($title) ) {
+			return false;
+		}
+		
 		if ( self::isVideoStoredAsFile() ) {
 
 			// video-as-file logic
