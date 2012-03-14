@@ -225,7 +225,6 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getResolution() +
 		AdConfig.DART.getPrefooterStatus() +
 //		AdConfig.DART.getQuantcastSegmentKV() +	// wlee 2011/10/25: no need to pass to DART for now
-		(window.wgEnableKruxTargeting ? AdConfig.DART.getKruxKV() : '') +
 		AdConfig.DART.getImpressionCount(slotname) +
 		AdConfig.DART.getPartnerKeywords() +
 		AdConfig.DART.getCategories() +
@@ -597,15 +596,5 @@ AdConfig.DART.getUniqueId = function () {
 //console.log('unique id not available');
 	return '';
 };
-
-
-if (window.wgEnableKruxTargeting) {
-	// krux ad targeting. must come before dart urls are constructed
-	var _kx = _kx || {};
-	(function(){
-		function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
-		var segs = store('segs'), key = ';ksgmnt='; _kx.dartkeys = segs ? key+segs.split(',').join(key) + ';u='+store('user')+';' : '';
-	})();
-}
 
 AdConfig.init();
