@@ -13,7 +13,6 @@ require_once dirname(__FILE__) . '/AnalyticsProviderQuantServe.php';
 require_once dirname(__FILE__) . '/AnalyticsProviderGA_Urchin.php';
 require_once dirname(__FILE__) . '/AnalyticsProviderComscore.php';
 require_once dirname(__FILE__) . '/AnalyticsProviderExelate.php';
-require_once dirname(__FILE__) . '/AnalyticsProviderKrux.php';
 
 class AnalyticsEngine {
 
