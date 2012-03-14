@@ -3,7 +3,6 @@ var AdConfig = {
 	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null,
 	geoCookieName: 'Geo',
-	quantcastSegmentCookieName: 'qcseg',
 
 	isHighValueCountry: function(country) {
 		country = country.toUpperCase();
@@ -179,7 +178,6 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		// TODO when we get better at search, support "kw" key-value
 		AdConfig.DART.getResolution() +
 		AdConfig.DART.getPrefooterStatus() +
-//		AdConfig.DART.getQuantcastSegmentKV() +	// wlee 2011/10/25: no need to pass to DART for now
 		(window.wgEnableKruxTargeting ? AdConfig.DART.getKruxKV() : '') +
 		AdConfig.DART.getImpressionCount(slotname) +
 		AdConfig.DART.getPartnerKeywords() +
@@ -224,7 +222,6 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		// TODO when we get better at search, support "kw" key-value
 		AdConfig.DART.getResolution() +
 		AdConfig.DART.getPrefooterStatus() +
-//		AdConfig.DART.getQuantcastSegmentKV() +	// wlee 2011/10/25: no need to pass to DART for now
 		AdConfig.DART.getImpressionCount(slotname) +
 		AdConfig.DART.getPartnerKeywords() +
 		AdConfig.DART.getCategories() +
@@ -450,27 +447,6 @@ AdConfig.DART.getPrefooterStatus = function () {
 	}
 
 	return "hasp=" + AdConfig.DART.hasPrefooters + ";";
-};
-
-AdConfig.DART.getQuantcastSegmentKV = function (){
-	var kv = '';
-	if (typeof wgIntegrateQuantcastSegments == 'undefined' || !wgIntegrateQuantcastSegments) {
-		return kv;
-	}
-	var cookie = AdConfig.cookie(AdConfig.quantcastSegmentCookieName);
-	if (typeof cookie != 'undefined' && cookie) {
-		try {
-			var qc = eval('(' + cookie + ')');
-			if (qc && qc.segments) {
-				for (var i in qc.segments) {
-					kv += 'qcseg=' + qc.segments[i].id + ';';
-				}
-			}
-		} catch (e) {
-		}
-	}
-
-	return kv;
 };
 
 AdConfig.DART.getKruxKV = function() {
