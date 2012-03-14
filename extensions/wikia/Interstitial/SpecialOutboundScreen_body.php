@@ -87,16 +87,6 @@ class Outbound extends UnlistedSpecialPage {
 
 			$athenaInitStuff = AdProviderAthena::getInstance()->getSetupHtml();
 
-			// Create the JS-includes for the tracking code and jQuery - will just use StaticChute because it should be in user's cache by now.
-			$StaticChute = new StaticChute('js');
-			$StaticChute->useLocalChuteUrl();
-			if($wgUser->isLoggedIn()){
-				$package = 'monaco_loggedin_js';
-			} else {
-				$package = 'monaco_anon_article_js';
-			}
-			$jsIncludes = $StaticChute->getChuteHtmlForPackage($package);
-
 			$adCode = $oTmpl->execute($adTemplate);
 			$loginMsg = wfMsgExt('outbound-screen-login-text', array('parseinline', 'content'));
 			$pageBarMsg = wfMsg('outbound-screen-you-are-leaving');
@@ -108,7 +98,6 @@ class Outbound extends UnlistedSpecialPage {
 					'css' => Interstitial::getCss(),
 					'loginMsg' => $loginMsg,
 					'jsGlobals' => $jsGlobals,
-					'jsIncludes' => $jsIncludes,
 					'pageBarMsg' => $pageBarMsg,
 					'pageType' => 'exitPage',
 					'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
