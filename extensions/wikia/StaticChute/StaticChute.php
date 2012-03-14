@@ -75,9 +75,6 @@ class StaticChute {
 
 		$this->generateConfigSkinMonobook();
 		$this->generateConfigSkinOasis();
-		$this->generateConfigSkinCorporate();
-		$this->generateConfigSkinWikiaApp();
-		$this->generateConfigSkinWikiaPhone();
 	}
 
 	private function generateConfigSkinMonobook() {
@@ -255,75 +252,6 @@ class StaticChute {
 			$oasisPrintCss
 		);
 	} // end generateConfigSkinOasis()
-
-	/* build st for corporate page */
-	private function generateConfigSkinCorporate(){
-		//JS
-		$this->config['corporate_page_js'] = array(
-			'common/jquery/jquery-1.6.1.js',
-			'common/jquery/jquery.getcss.js',
-			'common/jquery/jquery.wikia.js',
-			'common/wikibits.js',
-			'corporate/js/main.js',
-			'common/jquery/jquery.wikia.tracker.js',
-			'corporate/js/tracker.js',
-			'common/ajax.js',
-			'common/ajaxwatch.js',
-			'common/mwsuggest.js',
-			'../extensions/FBConnect/fbconnect.js',
-		);
-
-		$this->config['corporate_specialpage_js'] = array(
-			'common/jquery/jquery-1.6.1.js',
-			'common/jquery/jquery.getcss.js',
-			'common/jquery/jquery.wikia.js',
-			'common/wikibits.js',
-			'corporate/js/main.js',
-			'common/jquery/jquery.wikia.tracker.js',
-			'corporate/js/tracker.js',
-			'common/yui_2.5.2/utilities/utilities.js',
-			'common/yui_extra/tools-min.js',
-			'common/ajax.js',
-			'common/ajaxwatch.js',
-			'common/mwsuggest.js',
-			'../extensions/FBConnect/fbconnect.js',
-		);
-		//CSS
-		$this->config['corporate_page_css'] = array(
-			'common/yui300css-reset-min.css',
-			'common/wikia_ui/buttons.css',
-			'common/shared.css',
-			'common/successerror.css',
-			'common/sprite.css',
-			'corporate/css/modal.css',
-			'corporate/css/main.css',
-			'../extensions/FBConnect/css/fbModal.css',
-		);
-
-	}
-
-	// For rich-client mobile apps
-	private function generateConfigSkinWikiaApp() {
-		//CSS for Mobile app skin, both anon and user
-		$this->config['wikiaapp_css'] = array(
-			'wikiaapp/main.css',
-			'wikiaapp/skin.css'
-		);
-	}
-
-	// For thin-client mobile apps
-	private function generateConfigSkinWikiaPhone() {
-		//CSS
-		$this->config['wikiaphone_css'] = array(
-			'wikiaphone/main.css',
-			'wikiaphone/skin.css'
-		);
-		//JS
-		$this->config['wikiaphone_js'] = array(
-			'common/jquery/jquery-1.6.1.js',
-			'wikiaphone/main.js'
-		);
-	}
 
 	/* message function that will print the message appropriately based on the format */
 	public function comment ($msg){
