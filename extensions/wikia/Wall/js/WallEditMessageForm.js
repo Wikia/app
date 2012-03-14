@@ -95,7 +95,7 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 			WikiaButtons.init(bubble);
 		}
 		
-		this.afterCancel(body, isSource, target);
+		this.afterCancel(body, isSource, target, bubble);
 		
 		//click tracking
 		this.track('wall/message/edit/cancel');
