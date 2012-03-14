@@ -10,7 +10,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	public function search( $query, $start, $size, $cityId = 0, $rankExpr = '', $skipBoostFunctions=false ) {
 		$params = array(
-				'fl' => '*,score',
+			'fl' => '*,score',
 			'qf' => 'title^5 html',
 			'hl' => 'true',
 			'hl.fl' => 'html,title', // highlight field
@@ -44,9 +44,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$queryClauses[] = $widQuery;
 
 			$queryClauses[] = "lang:en";
-
 			$queryClauses[] = "iscontent:true";
-
 		}
 		else {
 			$queryClauses[] = "iscontent: true";
@@ -56,14 +54,14 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', $query));
 
-		$boostQueries = array('html:\"'.$queryNoQuotes.'\"^5', 
+		$boostQueries = array('html:\"'.$queryNoQuotes.'\"^5',
 				      'title:\"'.$queryNoQuotes.'\"^10');
 
 		$boostFunctions = array();
 
 		if (empty($onWikiId)) {
 		  // this is still pretty important!
-		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^15';		  
+		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^15';
 
 		  # we can do this because the host is a text field
 		  if (!$this->includeAnswers($query)) {
@@ -86,7 +84,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 		$dismaxParams = array('qf'	=>	"'html^0.8 title^5'",
-			      	      'pf'	=>	"'html^0.8 title^5'",
+				      'pf'	=>	"'html^0.8 title^5'",
 				      'ps'	=>	'3',
 				      'tie'	=>	'0.01',
 				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'"
@@ -98,8 +96,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
 
-		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s"', 
-					  $paramString, 
+		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s"',
+					  $paramString,
 					  $sanitizedQuery);
 
 		$sanitizedQuery = implode(' AND ', $queryClauses);
@@ -109,7 +107,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
 		}
-		catch (Exception $exception) { 
+		catch (Exception $exception) {
 		  if (!$skipBoostFunctions) {
 		    return $this->search($query, $start, $size, $cityId, $rankExpr, true);
 		  }
@@ -138,6 +136,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$result->setVar('backlinks', $doc->backlinks);
 			$result->setVar('cityArticlesNum', $doc->wikiarticles);
 			$result->setVar('position', $position);
+			$result->setVar('cityHost', 'http://'.$doc->host);
 
 			$results[] = $result;
 			$position++;
