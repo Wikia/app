@@ -1,7 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../ScavengerHunt_setup.php';
 require_once dirname(__FILE__) . '/../tests/ScavengerHuntTest.php';
-wfLoadAllExtensions();
 
 class ScavengerHuntGetFinalModalArrayTest extends ScavengerHuntTest {
 
