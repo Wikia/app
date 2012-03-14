@@ -39,20 +39,6 @@ class ImportPartnerVideoTest extends PHPUnit_Framework_TestCase {
 		$mock->importFromScreenplay($screenplayXml);
 	}
 	
-	/**
-	 *
-	 * @dataProvider validFileBlacklistedContents
-	 */
-	public function testImportFromScreenplayValidFileBlacklistedContent($testXmlFile) {
-		// test case: one title, one clip
-		$screenplayXml = file_get_contents(dirname(__FILE__) . '/' . $testXmlFile);
-		$mock = $this->getMock('PartnerVideoHelper', array('createVideoPageForPartnerVideo'));
-		$mock->expects($this->never())
-			->method('createVideoPageForPartnerVideo');
-		$result = $mock->importFromScreenplay($screenplayXml);
-		$this->assertEquals(0, $result);
-	}
-	
 	public function validFileContents() {
 		return array(
 			array('screenplay2.xml',
