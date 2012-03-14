@@ -279,20 +279,6 @@ class StaticChute {
 							$out[] = $file;
 						}
 					}
-
-					// macbre: rt #18765
-					// add possibility to add more files to current package
-					$moreFiles = $this->getMoreFileList($package, $args);
-					if (!empty($moreFiles)) {
-						foreach ($moreFiles as $f) {
-							$file = realpath($basedir . '/' . $f);
-							if (empty($file)) {
-								//Wikia::log(__FUNCTION__, __LINE__, "Empty filename for package=$package, basedir=$basedir, file=$f", true);
-							} else {
-								$out[] = $file;
-							}
-						}
-					}
 				}
 			}
 
@@ -312,17 +298,6 @@ class StaticChute {
 		}
 
 		return $out;
-	}
-
-	private function getMoreFileList($package, $args) {
-		switch($package) {
-			case 'monaco_css':
-				if (!empty($args['usetheme'])) {
-					return array('monaco/' . basename($args['usetheme']) . '/css/main.css');
-				}
-				break;
-		}
-		return false;
 	}
 
 	/* Walk through a list of files and get the latest modified time in the list
@@ -382,13 +357,6 @@ class StaticChute {
 			// include files separately
 			global $wgStyleVersion;
 			$urls = $this->config[$package];
-
-			// get more files (rt #18765)
-			$moreUrls = $this->getMoreFileList($package, array('usetheme' => $this->theme));
-			if (!empty($moreUrls)) {
-				//Don't include theme with CoreCSS request
-				//$urls = array_merge($urls, $moreUrls);
-			}
 
 			$prefix = $wgStylePath . '/';
 			$cb = "?{$wgStyleVersion}";
