@@ -53,9 +53,9 @@ function wfAdEngineSetupJSVars($vars) {
 	// Custom KeyValues (for DART requests)
 	$vars['wgDartCustomKeyValues'] = $wgDartCustomKeyValues;
 
+	// TODO: emit the following variables only when true (BugId:20558)
 	$vars['wgUserShowAds'] = $wgUser->getOption('showAds');
 
-	// TODO: emit the following only when true (BugId:20558)
 	// Answers sites
 	$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
 
