@@ -1403,11 +1403,8 @@ class Wikia {
 	public static function isOasis(){
 		wfProfileIn( __METHOD__ );
 		global $wgUser;
-		static $isOasis = null;
 
-		if (is_null($isOasis)) {
-			$isOasis = (get_class($wgUser->getSkin()) == 'SkinOasis');
-		}
+		$isOasis = (get_class($wgUser->getSkin()) == 'SkinOasis');
 
 		wfProfileOut( __METHOD__ );
 		return $isOasis;
@@ -1419,11 +1416,8 @@ class Wikia {
 	 */
 	public static function isWikiaMobile( Linker $skin = null ){
 		wfProfileIn( __METHOD__ );
-		static $isWikiaMobile = null;
-
-		if ( is_null( $isWikiaMobile ) ) {
-			$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );
-		}
+		
+		$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );			
 
 		wfProfileOut( __METHOD__ );
 		return $isWikiaMobile;
