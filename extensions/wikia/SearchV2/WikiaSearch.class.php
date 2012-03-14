@@ -121,6 +121,29 @@ class WikiaSearch extends WikiaObject {
 		$this->client = $client;
 	}
 
+	public function getPages( $pageIds, $withMetaData = true ) {
+
+	  $result = array('pages'=>array(), 'missingPages'=>array());
+
+	  foreach (explode('|', $pageIds) as $pageId) {
+	    try {
+	      $result['pages'][$pageId] = $this->getPage( $pageId, $withMetaData );
+	    } catch (WikiaException $e) {
+	      /**
+	       * here's how we will pretend that a page is empty for now. the risk is that if any of the 
+	       * API code is broken in the getPage() method, it will tell the indexer to queue the page up 
+	       * for removal from the index.
+	       **/
+
+	      $result['missingPages'][] = $pageId;
+	    }
+
+	  }
+
+	  return $result;
+
+	}
+
 	public function getPage( $pageId, $withMetaData = true ) {
 		$result = array();
 
@@ -160,23 +183,22 @@ class WikiaSearch extends WikiaObject {
 		$result['title'] = $page->getTitle()->getText();
 		$result['canonical'] = $canonical;
 		$result['html'] = $html;
-		$result['bytes'] = strlen($html);
-		$result['words'] = count( preg_split('/\w+/', $html) );
 		$result['url'] = $page->getTitle()->getFullUrl();
 		$result['ns'] = $page->getTitle()->getNamespace();
 		$result['host'] = substr($this->wg->Server, 7);
 
 		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces );
-		if($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) {
-			$result['ismainpage'] = true;
-		}
-		else {
-			$result['ismainpage'] = false;
-		}
+
+		$result['is_main_page'] = ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0);
+
 
 		if( $withMetaData ) {
-			$result['metadata'] = $this->getPageMetaData( $page );
+		  
+		  $result = array_merge($result, $this->getPageMetaData($page));
+
 		}
+
+		
 
 		// restore global state
 		$this->wg->Title = $wgTitle;
@@ -208,7 +230,9 @@ class WikiaSearch extends WikiaObject {
 			'pageids' => $page->getId(),
 			'action' => 'query',
 			'prop' => 'info',
-			'inprop' => 'url|created|views|revcount'
+			'inprop' => 'url|created|views|revcount',
+			'meta' => 'siteinfo',
+			'siprop' => 'statistics|wikidesc|variables|namespaces|category'
 		));
 
 		if( isset( $data['query']['pages'][$page->getId()] ) ) {
@@ -218,12 +242,6 @@ class WikiaSearch extends WikiaObject {
 			$result['created'] = $pageData['created'];
 			$result['touched'] = $pageData['touched'];
 		}
-
-		$data = $this->callMediaWikiAPI( array(
-			'action' => 'query',
-			'meta' => 'siteinfo',
-			'siprop' => 'statistics|wikidesc|variables|namespaces|category'
-		));
 
 		$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
 		$result['wikititle'] = isset($data['query']['wikidesc']['pagetitle']) ? $data['query']['wikidesc']['pagetitle'] : '';
