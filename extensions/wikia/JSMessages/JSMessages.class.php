@@ -74,6 +74,24 @@ class JSMessages {
 		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
+	/*
+	 * Returns a package as a JS tag
+	 *
+	 * @param array $packages - list packages names
+	 * 
+	 * @return string A string containing the package as an inline-able tag to use in templates
+	 */
+	public function printPackages( Array $packages ) {
+		$this->app->wf->ProfileIn(__METHOD__);
+
+		$pkgs = implode(',', $packages);
+		$ret = '<script>' . $this->app->sendRequest( 'JSMessagesController', 'getMessages', array( 'packages' => $pkgs ), true )->toString() . '</script>';
+
+		$this->app->wf->ProfileOut(__METHOD__);
+
+		return $ret;
+	}
+
 	/**
 	 * Return list of messages matching given pattern
 	 *
