@@ -252,6 +252,7 @@ class CloseWikiMaintenance {
 						),
 						__METHOD__
 					);
+					$datawareDB->commit();
 					Wikia::log( __CLASS__, "info", "{$row->city_id} removed from dataware tables" );
 
 					/**
