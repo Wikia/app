@@ -206,7 +206,6 @@ $config['wikiaphone_js'] = array(
 		'#group_oasis_jquery',
 		'//skins/common/wikia/cookiecutter.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
-		'//extensions/wikia/Krux/krux.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
@@ -221,8 +220,7 @@ $config['wikiamobile_js_head'] = array(
 	'assets' => array(
 		'//skins/common/zepto/zepto-0.8.js',
 		'//skins/common/wikia/cookiecutter.js',
-		'//extensions/wikia/AdEngine/AdConfig.js',
-		'//extensions/wikia/Krux/krux.js'
+		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
 

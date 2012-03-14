@@ -171,6 +171,5 @@ class WikiaMobileService extends WikiaService {
 		$this->comscoreTracking = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 		$this->gaTracking = AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW );
 		$this->gaOneWikiTracking = AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->CityId ) );
-		$this->kruxTargetingFinalize = '<script>if (window.wgEnableKruxTargeting) { loadKrux(); }</script>';	// must run after all ads are written
 	}
 }

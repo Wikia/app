@@ -57,10 +57,10 @@ function wfAdEngineSetupJSVars($vars) {
 	$vars['wgUserShowAds'] = $wgUser->getOption('showAds');
 
 	// Answers sites
-	$vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
+	if (!empty($wgEnableWikiAnswers)) $vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
 
 	// Krux
-	$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
+	if (!empty($wgEnableKruxTargeting)) $vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 
 	return true;
 }

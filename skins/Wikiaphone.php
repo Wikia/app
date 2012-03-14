@@ -124,9 +124,6 @@ class SkinWikiaphone extends SkinTemplate {
 		// onewiki GA
 		$data .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 		
-		// krux ad targeting. must run after all ads have been written
-		$data .= '<script>if (window.wgEnableKruxTargeting) { loadKrux(); }</script>';
-		
 		return $data;
 	}
 	

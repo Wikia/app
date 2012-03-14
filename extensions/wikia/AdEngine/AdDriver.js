@@ -748,6 +748,15 @@ AdDriverDelayedLoader.finalize = function() {
 }
 //// END AdDriverDelayedLoader
 
+if (window.wgEnableKruxTargeting) {
+	// krux ad targeting. must come before dart urls are constructed
+	var _kx = _kx || {};
+	(function(){
+		function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
+		var segs = store('segs'), key = ';ksgmnt='; _kx.dartkeys = segs ? key+segs.split(',').join(key) + ';u='+store('user')+';' : '';
+	})();
+}
+
 $(window).bind('load', function() {
 	AdDriverDelayedLoader.load();
 });
