@@ -11,11 +11,6 @@ class AuthThumbnailerSpecialPageController extends WikiaSpecialPageController {
 	private $controllerData = array();
 
 	public function __construct() {
-		$this->controllerData[] = 'foo';
-		$this->controllerData[] = 'bar';
-		$this->controllerData[] = 'baz';
-
-		// standard SpecialPage constructor call
 		parent::__construct( 'AuthThumbnailer', '', false );
 	}
 
@@ -38,7 +33,7 @@ class AuthThumbnailerSpecialPageController extends WikiaSpecialPageController {
 
 		if ( $this->wg->User->isLoggedIn() ) {
 			# make proper thumb path: c/central/images/thumb/....
-			$path = sprintf( "%s/%s/images", "c", "central"); # substr( $this->wg->DBname, 0, 1 ), $this->wg->DBname );
+			$path = sprintf( "%s/%s/images", substr( $this->wg->DBname, 0, 1 ), $this->wg->DBname );
 			# take thumb request from request
 			$img_thumb = $this->getVal( 'thumb' );
 			# and build proper thumb url for thumbnailer
