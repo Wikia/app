@@ -17,60 +17,6 @@ class Interstitial extends UnlistedSpecialPage {
 		wfLoadExtensionMessages( INTERSTITIALS_SP ); // Load internationalization messages
 	}
 
-	/**
-	 * Returns the HTML for importing the CSS needed to make interstitials/exitstitials look right.
-	 * The results of this function should be displayed inside of the <head> tag.
-	 */
-	static public function getCss(){
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		$css = "";
-
-		$skin = $wgUser->getSkin();
-		$skinName = get_class($skin);
-
-		// this may not be set yet (and needs to be before setupUserCss in order for the right CSS file to be included)
-		if ($skin->getSkinName() == '') {
-			$skin->skinname = substr($skinName, 4);
-		}
-
-		//load this for all skins, even non-monaco.
-		//exit page depends on having a .color1 and .color2 defined.
-		//needs to be before call to setupUserCss so that other css can override
-		$wgOut->addStyle('monaco/css/root.css');
-
-		// add MW CSS
-		$skin->setupUserCss($wgOut);
-
-		$StaticChute = new StaticChute('css');
-		$StaticChute->useLocalChuteUrl();
-
-		// Monaco themes
-		if ($skinName == 'SkinMonaco' && !empty($skin->themename)) {
-			switch($skin->themename) {
-				case 'custom':
-					//custom skin is included via setupUserCss
-					//which is ontop of root base, included above that
-					break;
-
-				case 'sapphire':
-					//is just root on its own, included above
-					break;
-
-				default:
-					//themes layer ontop of root
-					$wgOut->addStyle('monaco/' . $skin->themename . '/css/main.css');
-					$StaticChute->setTheme($skin->themename);
-					break;
-			}
-		}
-		$wgOut->addStyle( "$wgExtensionsPath/wikia/Interstitial/Interstitial.css?$wgStyleVersion" );
-
-		$css = $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n\t\t";
-		$css .= $wgOut->buildCssLinks();
-
-		return $css;
-	}
-
 	function execute(){
 		global $wgRequest, $wgOut;
 		global $wgAdsInterstitialsEnabled;
@@ -141,7 +87,6 @@ class Interstitial extends UnlistedSpecialPage {
 					array(
 						'adCode' => $adCode,
 						'athenaInitStuff' => $athenaInitStuff,
-						'css' => Interstitial::getCss(),
 						'pageType' => 'interstitial',
 						'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
 						'skip' => wfMsg('interstitial-skip-ad'),
