@@ -185,6 +185,7 @@ $.fn.extend({
 
 		blackout
 			.height($(document).height())
+			.width($(document).width())
 			.css({zIndex: zIndex})
 			.fadeTo("fast", blackoutOpacity)
 			.bind("click", function() {
@@ -288,6 +289,7 @@ $.fn.extend({
 		}
 		blackout
 			.height($(document).height())
+			.width($(document).width())
 			.css({
 				display: 'block',
 				opacity: blackoutOpacity,
