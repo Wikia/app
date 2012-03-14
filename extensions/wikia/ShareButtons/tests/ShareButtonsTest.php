@@ -1,7 +1,14 @@
 <?php
-require_once dirname(__FILE__) . '/../ShareButtons.setup.php';
 
 class ShareButtonsTest extends WikiaBaseTest {
+	
+	public function setUp() {
+		$this->setupFile = dirname(__FILE__) . '/../ShareButtons.setup.php';
+		$this->mockGlobalVariable('wgTitle', Title::newMainPage());
+		$this->mockApp();
+		
+		parent::setUp();		
+	}
 
 	public function testFactory() {
 		$facebook = F::build('ShareButton', array('app' => $this->app, 'id' => 'Facebook'), 'factory');

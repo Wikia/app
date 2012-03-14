@@ -1,13 +1,14 @@
 <?php
 
-	require_once dirname(__FILE__) . '/../UserLogin.setup.php';
-
 	class UserSignupTest extends WikiaBaseTest {
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';
 		const TEST_EMAIL = 'devbox+test@wikia-inc.com';
-
-		protected $wgRequest_org = null;
+		
+		public function setUp() {
+			$this->setupFile = dirname(__FILE__) . '/../UserLogin.setup.php';
+			parent::setUp();
+		}
 		
 		protected function setUpMock( $cacheParams=null ) {
 			// mock cache
@@ -93,19 +94,13 @@
 			}
 		}
 
-		protected function setUpRequest( $params=array() ) {
-			global $wgRequest;
-			
-			$this->wgRequest_org = $wgRequest;
+		protected function setUpRequest( $params=array() ) {			
+
+			$wgRequest = F::build('WebRequest', $params);
 			foreach( $params as $key => $value ) {
 				$wgRequest->setVal( $key, $value );
 			}
-		}
-		
-		protected function tearDownRequest() {
-			global $wgRequest;
-			
-			$wgRequest = $this->wgRequest_org;
+			$this->mockGlobalVariable('wgRequest', $wgRequest);
 		}
 		
 		protected function setUpSession( $params=array() ) {
@@ -155,8 +150,6 @@
 			$responseData = $response->getVal( 'errParam' );
 			$this->assertEquals( $expErrParam, $responseData );
 
-			// tear down
-			$this->tearDownRequest();
 		}
 		
 		public function signupDataProvider() {
