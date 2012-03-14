@@ -560,7 +560,8 @@ class StaticChute {
 		$files = $this->getFileList(array('packages'=>$packages));
 
 		if (empty($files)){
-			trigger_error("Invalid package(s) for " . __METHOD__, E_USER_WARNING);
+			Wikia::logBacktrace(__METHOD__);
+			trigger_error("Invalid package(s) '{$packages}' for " . __METHOD__, E_USER_WARNING);
 			return false;
 		}
 
