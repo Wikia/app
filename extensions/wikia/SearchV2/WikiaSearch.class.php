@@ -38,16 +38,12 @@ class WikiaSearch extends WikiaObject {
 
 			if(empty($results) || isset($_GET['skipCache'])) {
 				$results = $this->client->search( $query, 0, self::GROUP_RESULTS_SEARCH_LIMIT, $cityId, $rankExpr );
-//echo "<pre>";
-//var_dump($results);
-//exit;
 				$results = $this->groupResultsPerWiki( $results );
 
 				$this->setGroupResultsToCahce( $query, $rankExpr, $results );
 			}
 			$results->setCurrentPage($page);
 			$results->setResultsPerPage($length);
-var_dump($results->valid());
 		}
 		else {
 			// no grouping, e.g. intra-wiki searching
