@@ -124,6 +124,7 @@ $wgAutoloadClasses['PaginationController'] = "$IP/includes/wikia/services/Pagina
 $wgAutoloadClasses['MemcacheSync'] = "$IP/includes/wikia/MemcacheSync.class.php";
 $wgAutoloadClasses['LibmemcachedBagOStuff'] = "$IP/includes/wikia/LibmemcachedBagOStuff.php";
 $wgAutoloadClasses['LibmemcachedSessionHandler'] = "$IP/includes/wikia/LibmemcachedSessionHandler.php";
+$wgAutoloadClasses['WikiaAssets'] = "$IP/includes/wikia/WikiaAssets.class.php";
 
 
 //AutomaticWikiAdoption
