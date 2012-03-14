@@ -17,13 +17,16 @@ function wfAdEngineSetupJSVars($vars) {
 		$wgCityId, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 		$wgEnableKruxTargeting;
 
+	// TODO: emit the following only when true (BugId:20558)
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
-	$vars['wgNoExternals'] = $wgNoExternals;
-	$vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
+	$vars["wgNoExternals"] = $wgNoExternals;
+
+	if (!empty($wgEnableAdsInContent))          $vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 	if (!empty($wgEnableAdMeldAPIClient))       $vars["wgEnableAdMeldAPIClient"] = $wgEnableAdMeldAPIClient;
 	if (!empty($wgEnableAdMeldAPIClientPixels)) $vars["wgEnableAdMeldAPIClientPixels"] = $wgEnableAdMeldAPIClientPixels;
 
 	// OpenX SPC (init in AdProviderOpenX.js)
+	// TODO: emit the following only when true (BugId:20558)
 	$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
 
 	// category/hub
