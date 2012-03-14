@@ -67,12 +67,6 @@ class StaticChute {
 			'common/yui_extra/carousel-min.js',
 		);
 
-		// YUI css
-		$this->config['yui_css'] = array(
-			'common/yui_2.5.2/container/assets/container.css',
-			'common/yui_2.5.2/tabview/assets/tabview.css',
-		);
-
 		$this->generateConfigSkinMonobook();
 		$this->generateConfigSkinOasis();
 	}
