@@ -179,6 +179,7 @@ class ImageLightbox {
 			$tmpl->set_vars(array(
 				'showShareTools' => $wgRequest->getInt('share', 0),
 				'linkStd' => $wgTitle->getFullURL(),
+				'wgExtensionsPath' => $wgExtensionsPath,
 				'wgBlankImgUrl' => $wgBlankImgUrl
 			));
 			
