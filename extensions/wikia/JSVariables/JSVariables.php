@@ -8,7 +8,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 function wfMakeGlobalVariablesScript($vars) {
 	wfProfileIn(__METHOD__);
 
-	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing, $wgGroupPermissions, $wgBlankImgUrl;
+	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing, $wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -57,7 +57,7 @@ function wfMakeGlobalVariablesScript($vars) {
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
 	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
 
-	// RT #21084: get URL to YUI package 
+	// RT #21084: get URL to YUI package
 	$yuiUrl = array_pop(AssetsManager::getInstance()->getGroupCommonURL('yui', array(), true /* $combine */, true /* $minify */));
 	$vars['wgYUIPackageURL'] = $yuiUrl;
 
@@ -77,6 +77,10 @@ function wfMakeGlobalVariablesScript($vars) {
 	} else {
 		$vars['wgDisableAnonymousEditing'] = false;
 	}
+
+	// moved from Interstitial.php
+	$vars['wgCookieDomain'] = $wgCookieDomain;
+	$vars['wgCookiePath'] = $wgCookiePath;
 
 	wfProfileOut(__METHOD__);
 
