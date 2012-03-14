@@ -94,7 +94,6 @@ class Outbound extends UnlistedSpecialPage {
 				array(
 					'adCode' => $adCode,
 					'athenaInitStuff' => $athenaInitStuff,
-					'css' => Interstitial::getCss(),
 					'loginMsg' => $loginMsg,
 					'pageBarMsg' => $pageBarMsg,
 					'pageType' => 'exitPage',

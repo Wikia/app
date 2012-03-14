@@ -26,7 +26,7 @@ if (!empty($wgEnableOutboundScreenExt)) {
 	$wgHooks['LinkerMakeExternalLink'][] = 'efOutboundScreen';
 }
 
-// For shared page code (such as Interstitial::getCss() and definition of INTERSTITIALS_SP).
+// For shared page code (such as definition of INTERSTITIALS_SP).
 include_once dirname(__FILE__) . '/Interstitial.php';
 include_once dirname(__FILE__) . '/SpecialInterstitial_body.php';
 

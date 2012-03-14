@@ -206,7 +206,7 @@ class AdEngine {
 				$skin_name = $wgUser->getSkin()->getSkinName();
 		}
 
-		// sometimes no skin set yet; hack copied from Interstitial::getCss
+		// sometimes no skin set yet
 		if (empty($skin_name)) $skin_name = substr(get_class($wgUser->getSkin()), 4);
 
 		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'monaco'){
