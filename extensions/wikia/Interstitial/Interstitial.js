@@ -1,8 +1,9 @@
-if((typeof wgAdsInterstitialsEnabled != 'undefined') && wgAdsInterstitialsEnabled){
+(function() {
+if(window.wgAdsInterstitialsEnabled) {
 	var COOKIE_NAME = 'IntPgCounter';
 	var count = $.cookies.get(COOKIE_NAME);
 	count = parseInt((!count)?1:count);
-	
+
 	count += 1;
 	$.cookies.set(COOKIE_NAME, count + '', {
 		path: wgCookiePath,
@@ -21,3 +22,4 @@ if((typeof wgAdsInterstitialsEnabled != 'undefined') && wgAdsInterstitialsEnable
 		});
 	}
 }
+})();
