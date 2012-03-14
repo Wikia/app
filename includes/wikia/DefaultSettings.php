@@ -252,33 +252,29 @@ include_once("$IP/extensions/wikia/CodeLint/CodeLint.setup.php");
  * API classes
  */
 
-$wgAutoloadClasses["WikiaApiQuery"] = "extensions/wikia/WikiaApi/WikiaApiQuery.php";
-$wgAutoloadClasses["WikiaApiQueryConfGroups"] = "extensions/wikia/WikiaApi/WikiaApiQueryConfGroups.php";
-$wgAutoloadClasses["WikiaApiQueryDomains"] = "extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
-$wgAutoloadClasses["WikiaApiQueryPopularPages"]  = "extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
-$wgAutoloadClasses["WikiaApiQueryVoteArticle"] = "extensions/wikia/WikiaApi/WikiaApiQueryVoteArticle.php";
-$wgAutoloadClasses["WikiaApiQueryWrite"] = "extensions/wikia/WikiaApi/WikiaApiQueryWrite.php";
-$wgAutoloadClasses["WikiaApiQueryMostAccessPages"] = "extensions/wikia/WikiaApi/WikiaApiQueryMostAccessPages.php";
-$wgAutoloadClasses["WikiaApiQueryLastEditPages"] = "extensions/wikia/WikiaApi/WikiaApiQueryLastEditPages.php";
-$wgAutoloadClasses["WikiaApiQueryTopEditUsers"] = "extensions/wikia/WikiaApi/WikiaApiQueryTopEditUsers.php";
-$wgAutoloadClasses["WikiaApiQueryMostVisitedPages"] = "extensions/wikia/WikiaApi/WikiaApiQueryMostVisitedPages.php";
-$wgAutoloadClasses["ApiFeaturedContent"] = "extensions/wikia/FeaturedContent/ApiFeaturedContent.php";
-$wgAutoloadClasses["ApiPartnerWikiConfig"] = "extensions/wikia/FeaturedContent/ApiPartnerWikiConfig.php";
-$wgAutoloadClasses["WikiaApiAjaxLogin"] = "extensions/wikia/WikiaApi/WikiaApiAjaxLogin.php";
-$wgAutoloadClasses["WikiaApiQuerySiteInfo"] = "extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
-$wgAutoloadClasses["WikiaApiQueryPageinfo"] = "extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
-$wgAutoloadClasses[ "WikiaApiReportEmail"          ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
-$wgAutoloadClasses[ "WikiaApiCreatorReminderEmail" ] = "{$IP}/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
-$wgAutoloadClasses[ "WikiFactoryTags"              ] = "{$IP}/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
-$wgAutoloadClasses[ "WikiaApiQueryEventsData"      ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
-$wgAutoloadClasses[ "WikiaApiQueryAllUsers"        ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
-$wgAutoloadClasses[ "WikiaApiQueryLastEditors"     ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
-$wgAutoloadClasses[ "ApiRunJob"                    ] = "{$IP}/extensions/wikia/WikiaApi/ApiRunJob.php";
-$wgAutoloadClasses[ "WikiaApiRiakAccess"           ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiRiakAccess.php";
-$wgAutoloadClasses[ "ExternalUser_Wikia"           ] = "{$IP}/includes/wikia/ExternalUser_Wikia.php";
+$wgAutoloadClasses[ "WikiaApiQuery"                 ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQuery.php";
+$wgAutoloadClasses[ "WikiaApiQueryConfGroups"       ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryConfGroups.php";
+$wgAutoloadClasses[ "WikiaApiQueryDomains"          ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryDomains.php";
+$wgAutoloadClasses[ "WikiaApiQueryPopularPages"     ]  = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryPopularPages.php";
+$wgAutoloadClasses[ "WikiaApiQueryVoteArticle"      ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryVoteArticle.php";
+$wgAutoloadClasses[ "WikiaApiQueryWrite"            ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryWrite.php";
+$wgAutoloadClasses[ "WikiaApiQueryMostAccessPages"  ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryMostAccessPages.php";
+$wgAutoloadClasses[ "WikiaApiQueryLastEditPages"    ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryLastEditPages.php";
+$wgAutoloadClasses[ "WikiaApiQueryTopEditUsers"     ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryTopEditUsers.php";
+$wgAutoloadClasses[ "WikiaApiQueryMostVisitedPages" ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryMostVisitedPages.php";
+$wgAutoloadClasses[ "WikiaApiAjaxLogin"             ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiAjaxLogin.php";
+$wgAutoloadClasses[ "WikiaApiQuerySiteInfo"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
+$wgAutoloadClasses[ "WikiaApiQueryPageinfo"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
+$wgAutoloadClasses[ "WikiaApiReportEmail"           ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
+$wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "{$IP}/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
+$wgAutoloadClasses[ "WikiFactoryTags"               ] = "{$IP}/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
+$wgAutoloadClasses[ "WikiaApiQueryEventsData"       ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
+$wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
+$wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
+$wgAutoloadClasses[ "ApiRunJob"                     ] = "{$IP}/extensions/wikia/WikiaApi/ApiRunJob.php";
 
 if( $wgUseFakeExternalStoreDB !== true ) {
-	$wgAutoloadClasses[ "WikiaApiQueryBlob"            ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryBlob.php";
+	$wgAutoloadClasses[ "WikiaApiQueryBlob"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiQueryBlob.php";
 }
 
 /*
@@ -303,6 +299,7 @@ $wgAutoloadClasses["WikiaValidatorListValue"] = "includes/wikia/validators/Wikia
 $wgAutoloadClasses["WikiaValidatorCompare"] = "includes/wikia/validators/WikiaValidatorCompare.class.php";
 $wgAutoloadClasses["WikiaValidatorCompareValueIF"] = "includes/wikia/validators/WikiaValidatorCompareValueIF.class.php";
 $wgAutoloadClasses["WikiaValidatorCompareEmptyIF"] = "includes/wikia/validators/WikiaValidatorCompareEmptyIF.class.php";
+$wgAutoloadClasses[ "ExternalUser_Wikia"            ] = "{$IP}/includes/wikia/ExternalUser_Wikia.php";
 
 /*
 $wgAutoloadClasses["WikiaValidationError"] = "includes/wikia/validators/WikiaValidationError.class.php";
