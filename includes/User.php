@@ -3213,7 +3213,7 @@ class User {
 			return $this->sendConfirmationMail( 'ReConfirmationMail', 'reconfirmemail' );
 		} else {
 			$emailTextTemplate = UserLoginHelper::getInstance()->getReconfirmationEmailTempalte( $this );
-			return $this->sendConfirmationMail("ReConfirmationMail", 'usersignup-reconfirmation-email', false, $emailTextTemplate);
+			return $this->sendConfirmationMail("ReConfirmationMail", 'usersignup-reconfirmation-email', true, $emailTextTemplate);
 		}
 		/* Wikia change - end */
 	}

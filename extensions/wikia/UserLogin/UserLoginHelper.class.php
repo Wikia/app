@@ -313,7 +313,7 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-email') );
-		$response = $user->sendConfirmationMail("ConfirmationMail", 'usersignup-confirmation-email', false, $emailTextTemplate);
+		$response = $user->sendConfirmationMail("ConfirmationMail", 'usersignup-confirmation-email', true, $emailTextTemplate);
 		$tempUser->saveSettingsTempUserToUser( $user );
 		if( WikiError::isError( $response ) ) {
 			$result['result'] = 'error';
@@ -364,7 +364,7 @@ class UserLoginHelper extends WikiaModel {
 		}
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-reminder-email') );
 		$user->setOption( "cr_mailed","1" );
-		return $user->sendConfirmationMail("ConfirmationReminderMail", 'usersignup-confirmation-reminder-email', false, $emailTextTemplate);
+		return $user->sendConfirmationMail("ConfirmationReminderMail", 'usersignup-confirmation-reminder-email', true, $emailTextTemplate);
 	}
 
 	/**
