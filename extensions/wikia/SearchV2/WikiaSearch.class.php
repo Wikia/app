@@ -84,7 +84,7 @@ class WikiaSearch extends WikiaObject {
 				$set = $wikiResults[$cityId];
 				if($set->getResultsNum() < self::RESULTS_PER_WIKI) {
 					$set->addResult($result);
-				} 
+				}
 
 				$set->totalScore += $result->score;
 
@@ -102,8 +102,8 @@ class WikiaSearch extends WikiaObject {
 		$sortedWikiResults = array();
 
 		# create an ordered result set based on score
-		array_walk(array_keys($wikisByScore), 
-			   function($key) use (&$sortedWikiResults, &$wikiResults) { 
+		array_walk(array_keys($wikisByScore),
+			   function($key) use (&$sortedWikiResults, &$wikiResults) {
 			     $sortedWikiResults[] = $wikiResults[str_replace('id:', '', $key)];
 			   });
 
