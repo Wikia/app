@@ -1,19 +1,20 @@
 <?php
-require_once dirname(__FILE__) . '/../WikiaPoll_setup.php';
-wfLoadAllExtensions();
-
 class WikiaPollTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile =  dirname(__FILE__) . '/../WikiaPoll_setup.php';
+		parent::setUp();
+	}
+	
 	// Create a poll for all the other functions to use
 	public static function setUpBeforeClass() {
-		$wgUser = User::newFromName('WikiaStaff');
-		F::setInstance( 'User', $wgUser);
+		$user = User::newFromName('WikiaStaff');
+		F::setInstance( 'User', $user);
 	}
 
 	public static function tearDownAfterClass() {
-		global $wgTitle;
-		$wgTitle = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
-		$article = new Article($wgTitle, NS_WIKIA_POLL);
+		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
+		$article = new Article($title, NS_WIKIA_POLL);
 		$article->doDelete("Unit Testing", true);
 
 		F::unsetInstance( 'User');
@@ -22,27 +23,21 @@ class WikiaPollTest extends WikiaBaseTest {
 	/* These are all part of one giant test call because the $pollId variable is shared */
 
 	public function testWikiaPollAjax() {
-		global $wgUser, $wgTitle;
+//		global $wgUser, $wgTitle;
 
 		$poll = WF::build('WikiaPollAjax');
 
 		// Sometimes the tear down doesn't execute?  Delete any old data before running create...
-		$wgTitle = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
-		$article = new Article($wgTitle, NS_WIKIA_POLL);
+		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
+		$article = new Article($title, NS_WIKIA_POLL);
 		$article->doDelete("Unit Testing", true);
 
 		/* TODO: mock these objects more agressively
 		 * for now, just use a "real" title and article, as an integration test
-		 *
-		$title = Title::newFromText("Unit Testing", NS_WIKIA_POLL);
-		F::setInstance( 'Title', $title);
-
-		$wgArticle = $this->getMock('Article', array('doEdit'), array($title, NS_WIKIA_POLL));
-		$wgArticle->expects($this->once())
-				->method('doEdit')
-				->will($this->returnValue(true));
-		F::setInstance( 'Article', $wgArticle );
 		 */
+		$title = Title::newFromText("Unit Testing", NS_WIKIA_POLL);
+		F::setInstance('Title', $title);
+		$this->mockGlobalVariable("wgTitle", $title);
 
 		$wgRequest = $this->getMock('WebRequest', array('getVal', 'getArray'));
 		$wgRequest->expects($this->at(0))
@@ -53,7 +48,10 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getArray')
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(array("One", "Two", "Three")));
-		F::app()->setGlobal('wgRequest', $wgRequest );
+		F::setInstance('WebRequest', $wgRequest);
+		$this->mockGlobalVariable('wgRequest', $wgRequest);
+		
+		$this->mockApp();
 
 		$result = $poll->create();
 
@@ -71,8 +69,8 @@ class WikiaPollTest extends WikiaBaseTest {
 				->with($this->equalTo('pollId'))
 				->will($this->returnValue($pollId));
 
-		//F::setInstance( 'WebRequest', $wgRequest );
-		F::app()->setGlobal('wgRequest', $wgRequest );
+		F::setInstance( 'WebRequest', $wgRequest );
+		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$result = $poll->get();
 
@@ -93,8 +91,8 @@ class WikiaPollTest extends WikiaBaseTest {
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(array("Three", "Two", "One")));
 
-		//F::setInstance( 'WebRequest', $wgRequest );
-		F::app()->setGlobal('wgRequest', $wgRequest );
+		$this->mockGlobalVariable('wgRequest', $wgRequest);
+		F::setInstance( 'WebRequest', $wgRequest );
 
 		$result = $poll->update();
 
@@ -109,11 +107,12 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getVal')
 				->with($this->equalTo('pollId'))
 				->will($this->returnValue($pollId));
-		$wgRequest->expects($this->at(2))
+		$wgRequest->expects($this->at(1))
 				->method('getVal')
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(2));
-		F::app()->setGlobal('wgRequest', $wgRequest );
+		F::setInstance( 'WebRequest', $wgRequest );		
+		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$result = $poll->vote();
 		$this->assertType("array", $result, "Vote result is array");
@@ -126,7 +125,8 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getVal')
 				->with($this->equalTo('pollId'))
 				->will($this->returnValue($pollId));
-		F::app()->setGlobal('wgRequest', $wgRequest );
+		F::setInstance( 'WebRequest', $wgRequest );
+		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$result = $poll->hasVoted();
 		$this->assertType("array", $result, "HasVoted result is array");

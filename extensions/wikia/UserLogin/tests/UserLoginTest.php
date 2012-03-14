@@ -1,13 +1,14 @@
 <?php
 
-	require_once dirname(__FILE__) . '/../UserLogin.setup.php';
-
 	class UserLoginTest extends WikiaBaseTest {
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';
 
-		protected $wgRequest_org = null;
-
+		public function setUp() {
+			$this->setupFile = dirname(__FILE__) . '/../UserLogin.setup.php';
+			parent::setUp();
+		}
+		
 		protected function setUpMock() {
 			$mock_cache = $this->getMock('stdClass', array('set', 'delete'));
 			$mock_cache->expects($this->any())
@@ -63,19 +64,13 @@
 			}
 		}
 
-		protected function setUpRequest( $params=array() ) {
-			global $wgRequest;
+		protected function setUpRequest( $params=array() ) {			
 
-			$this->wgRequest_org = $wgRequest;
+			$wgRequest = F::build('WebRequest', $params);
 			foreach( $params as $key => $value ) {
 				$wgRequest->setVal( $key, $value );
 			}
-		}
-
-		protected function tearDownRequest() {
-			global $wgRequest;
-
-			$wgRequest = $this->wgRequest_org;
+			$this->mockGlobalVariable('wgRequest', $wgRequest);
 		}
 
 		protected function tearDownHelper() {
@@ -113,7 +108,6 @@
 			$this->assertEquals( $expErrParam, $responseData );
 
 			// tear down
-			$this->tearDownRequest();
 			$this->tearDownHelper();
 		}
 
@@ -339,8 +333,6 @@
 			$responseData = $response->getVal( 'msg' );
 			$this->assertEquals( $expMsg, $responseData );
 
-			// tear down
-			$this->tearDownRequest();
 		}
 
 		public function mailPasswordDataProvider() {
