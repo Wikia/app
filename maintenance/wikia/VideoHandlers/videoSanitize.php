@@ -186,11 +186,14 @@ print_r( $aTranslation );
 $botUser = User::newFromName( 'WikiaBot' );
 
 $i=0;
+
+$count = count( $aTranslation );
+$current = 0;
 foreach ( $aTranslation as $key => $val ) {
 	echo "aTranslation[$key]=$val\n";
 	
-	$strippedNew = str_replace( ':', '', $val );
-	$strippedOld = str_replace( ':', '', $key );
+	$strippedNew = ( substr( $val, 0, 1 ) == ':' ) ? substr( $val, 1 ) : $val;
+	$strippedOld = ( substr( $key, 0, 1 ) == ':' ) ? substr( $key, 1 ) : $key;
 
 	$aTablesMove = array();
 	$aTablesMove['archive']	= array (
@@ -262,8 +265,7 @@ foreach ( $aTranslation as $key => $val ) {
 		'where' => array( 'wl_namespace' => NS_LEGACY_VIDEO, 'wl_title' => $strippedOld ),
 		'update' => array( 'wl_title' => $strippedNew )
 	);
-
-
+	
 	foreach(  $aTablesMove as $table => $actions ){
 		if( $dbw->tableExists($table)) {
 			$res = $dbw->update(
@@ -286,10 +288,8 @@ foreach ( $aTranslation as $key => $val ) {
 	//echo "SELECT distinct il_from FROM imagelinks WHERE il_to ='{$key}'! /n";
 	
 	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
-	$count = $rows->numRows();
-	$current = 0;
+	$current++;
 	while( $file = $dbw->fetchObject( $rows ) ) {
-		$current++;
 		echo "FETCH FROM DB il_from= ".$file->il_from." // ($key)\n";
 		$articleId = $file->il_from;
 		$oTitle = Title::newFromId( $articleId );
