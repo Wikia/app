@@ -302,7 +302,7 @@ foreach ( $aTranslation as $key => $val ) {
 				$sTextAfter = title_replacer( substr( $key, 1 ), substr( $val, 1), $sTextAfter  );
 
 				if ( $sTextAfter != $sText ) {
-					$allChangesArticleURLs[ str_replace('localhost',$wgDBname.'.'.$devboxuser.'.wikia-dev.com',$oTitle->getFullURL()) ] = true;
+					$allChangesArticleURLs[ str_replace('localhost',$wgDBname.'.'.str_replace('dev-','', $devboxuser).'.wikia-dev.com',$oTitle->getFullURL()) ] = true;
 					echo "ARTICLE WAS CHANGED! \n";
 					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
 				} else {
