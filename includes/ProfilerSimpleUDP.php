@@ -15,6 +15,11 @@ class ProfilerSimpleUDP extends ProfilerSimple {
 	function getFunctionReport() {
 		global $wgUDPProfilerHost, $wgUDPProfilerPort;
 
+		if ( !isset($this->mCollated['-total']) ) {
+			# no stats gathered
+			return;
+		}
+
 		if ( $this->mCollated['-total']['real'] < $this->mMinimumTime ) {
 			# Less than minimum, ignore
 			return;
