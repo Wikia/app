@@ -73,9 +73,6 @@ function wfMakeGlobalVariablesScript($vars) {
 	// is anon editing disabled?
 	if ( $wgDisableAnonymousEditing || $wgGroupPermissions['user']['edit'] === false ) {
 		$vars['wgDisableAnonymousEditing'] = true;
-	} else {
-		$vars['wgDisableAnonymousEditing'] = false;
-	}
 
 	// moved from Interstitial.php
 	$vars['wgCookieDomain'] = $wgCookieDomain;
