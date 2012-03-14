@@ -37,5 +37,8 @@ function interstitialsJsGlobalVariables(&$vars){
 	$vars['wgExitstitialRegister'] = wfMsg('exitstitial-register');
 	$vars['wgExitstitialButton'] = wfMsg('exitstitial-button');
 
+	$special = SpecialPage::getTitleFor( INTERSTITIALS_SP );
+	$vars['wgInterstitialPath'] = $special->getFullUrl("u=");
+
 	return true;
 } // end interstitialsJsGlobalVariables()
