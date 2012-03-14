@@ -54,7 +54,7 @@ AdProviderOpenX.getUrl2 = function() {
 	return AdProviderOpenX.url2;
 }
 
-if (!wgNoExternals && wgEnableOpenXSPC) {
+if (!window.wgNoExternals && window.wgEnableOpenXSPC) {
 	setTimeout(function() {
 		$.getScript(AdProviderOpenX.getUrl2(), function() {
 			if (typeof window.spcCallbacks != 'undefined') {
