@@ -10,6 +10,11 @@
 			$page = SpecialPage::getPageByAlias($this->name);
 			if (!is_object($page)) {
 				$this->buildExternalData();
+				// BugId:22989 - we don't want the PageLayoutBuilder to be shown if disabled.
+				if ( 'LayoutBuilder' == $this->name ) {
+					// do not show PLB if it's not available on the wiki
+					$this->available = $this->enabled;
+				}
 				return;
 			}
 
@@ -26,10 +31,6 @@
 					break;
 				case 'Contributions':
 					$this->href .= '/' . $wgUser->getTitleKey();
-					break;
-				case 'PageLayoutBuilder':
-					// do not show PLB if it's not available on the wiki
-					$this->available = $this->enabled;
 					break;
 			}
 
