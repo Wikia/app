@@ -10,14 +10,21 @@ class WikiaPollTest extends WikiaBaseTest {
 	public static function setUpBeforeClass() {
 		$user = User::newFromName('WikiaStaff');
 		F::setInstance( 'User', $user);
+		
+		// Really bad style, but this test currently depends on the global title object
+		global $wgTitle;
+		$wgTitle = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
 	}
 
 	public static function tearDownAfterClass() {
 		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
 		$article = new Article($title, NS_WIKIA_POLL);
-		$article->doDelete("Unit Testing", true);
+		if ($article->exists())
+			$article->doDelete("Unit Testing", true);
 
 		F::unsetInstance( 'User');
+		global $wgTitle;
+		unset($wgTitle);
 	}
 
 	/* These are all part of one giant test call because the $pollId variable is shared */
@@ -30,7 +37,8 @@ class WikiaPollTest extends WikiaBaseTest {
 		// Sometimes the tear down doesn't execute?  Delete any old data before running create...
 		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
 		$article = new Article($title, NS_WIKIA_POLL);
-		$article->doDelete("Unit Testing", true);
+		if ($article->exists())
+			$article->doDelete("Unit Testing", true);
 
 		/* TODO: mock these objects more agressively
 		 * for now, just use a "real" title and article, as an integration test
@@ -60,6 +68,10 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertEquals('Poll:Unit Testing', $result['question'], 'Create Question matches input');
 		$this->assertType("int",  $result['pollId'], "Create returned a valid pollId");
 
+		$title = Title::newFromText("Unit Testing", NS_WIKIA_POLL);
+		$this->assertNotNull($title);
+		$this->assertEquals($title->getText(), 'Unit Testing');
+		
 		// Second part of test is to see if we can "get" the same poll we created
 		$pollId = $result['pollId'];
 
