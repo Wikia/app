@@ -339,7 +339,7 @@ var AjaxLogin = {
 	showFromDOM: function() {
 		$('#AjaxLoginBoxWrapper').showModal();
 		$('#wpName1Ajax').focus();
-		return true
+		return true;
 	},
 	tabOrderHack: function(event,name) {
 		if( event.keyCode == 9 ){
@@ -379,7 +379,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#wpGoLogin').removeClass('selected');
 					$('#AjaxLoginLoginForm').hide();
 					$('#AjaxLoginRegisterForm').show();
-					if ($('#wpName2').length > 0) $('#wpName2').focus();
+					if ($('#wpName2').length > 0) { $('#wpName2').focus(); }
 
 		        	WET.byStr(AjaxLogin.WET_str + '/choosecreateaccount');
 

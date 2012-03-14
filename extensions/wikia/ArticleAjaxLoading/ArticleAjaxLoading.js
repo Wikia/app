@@ -53,7 +53,7 @@ ArticleAjaxLoading = {
 	linkClickHandler: function(e) {
 		// Do not change behaviour for middle click, cmd click and ctrl click
 		if(e.which == 2 || e.metaKey) {
-			return true
+			return true;
 		}
 
 		if(ArticleAjaxLoading.counter > 100) {
@@ -82,31 +82,33 @@ ArticleAjaxLoading = {
 /* PJAX */
 (function($){
 	$.fn.pjax = function( container, options ) {
-		if ( options )
-			options.container = container
-		else
-			options = $.isPlainObject(container) ? container : {container:container}
-
-	return this.live('click', function(event){
-		if ( event.which > 1 || event.metaKey )
-			return true
-
-		var defaults = {
-				url: this.href,
-				container: $(this).attr('data-pjax')
+		if ( options ) {
+			options.container = container;
+		} else {
+			options = $.isPlainObject(container) ? container : {container:container};
 		}
 
-		$.pjax($.extend({}, defaults, options))
+		return this.live('click', function(event){
+			if ( event.which > 1 || event.metaKey ) {
+				return true;
+			}
 
-		event.preventDefault()
-	})
-}
+			var defaults = {
+					url: this.href,
+					container: $(this).attr('data-pjax')
+			};
+
+			$.pjax($.extend({}, defaults, options));
+
+			event.preventDefault();
+		});
+	}
 
 $.pjax = function( options ) {
 	var $container = $(options.container),
 		success = options.success || $.noop
 
-	delete options.success
+	delete options.success;
 
 	var defaults = {
 		timeout: 15000,
@@ -121,11 +123,11 @@ $.pjax = function( options ) {
 		},
 
 		error: function(){
-			window.location = options.url
+			window.location = options.url;
 		},
 
 		complete: function(){
-			$container.trigger('end.pjax')
+			$container.trigger('end.pjax');
 		},
 
 		success: function(data){
@@ -199,75 +201,79 @@ $.pjax = function( options ) {
 			var state = {
 					pjax: options.container,
 					timeout: options.timeout
+			};
+
+			if ( $.isPlainObject(state.pjax) ) {
+				state.pjax = state.pjax.selector;
 			}
 
-			if ( $.isPlainObject(state.pjax) )
-				state.pjax = state.pjax.selector
-
-			var query = $.param(options.data)
-			if ( query != "_pjax=true" )
-				state.url = options.url + (/\?/.test(options.url) ? "&" : "?") + query
+			var query = $.param(options.data);
+			if ( query != "_pjax=true" ) {
+				state.url = options.url + (/\?/.test(options.url) ? "&" : "?") + query;
+			}
 
 			if ( options.replace ) {
-				window.history.replaceState(state, document.title, options.url)
+				window.history.replaceState(state, document.title, options.url);
 			} else if ( options.push ) {
 				if ( !$.pjax.active ) {
-					window.history.replaceState($.extend({}, state, {url:null}), oldTitle)
-					$.pjax.active = true
+					window.history.replaceState($.extend({}, state, {url:null}), oldTitle);
+					$.pjax.active = true;
 				}
-				window.history.pushState(state, document.title, options.url)
+				window.history.pushState(state, document.title, options.url);
 			}
 
-			success.apply(this, arguments)
+			success.apply(this, arguments);
 		}
 	}
 
-	options = $.extend(true, {}, defaults, options)
+	options = $.extend(true, {}, defaults, options);
 
 	if ( $.isFunction(options.url) ) {
-		options.url = options.url()
+		options.url = options.url();
 	}
 
-	var xhr = $.pjax.xhr
+	var xhr = $.pjax.xhr;
 	if ( xhr && xhr.readyState < 4) {
-		xhr.onreadystatechange = $.noop
-		xhr.abort()
+		xhr.onreadystatechange = $.noop;
+		xhr.abort();
 	}
 
-	$.pjax.xhr = $.ajax(options)
-	$(document).trigger('pjax', $.pjax.xhr, options)
+	$.pjax.xhr = $.ajax(options);
+	$(document).trigger('pjax', $.pjax.xhr, options);
 
-	return $.pjax.xhr
+	return $.pjax.xhr;
 }
 
 var popped = ('state' in window.history), initialURL = location.href
 $(window).bind('popstate', function(event) {
-	var initialPop = !popped && location.href == initialURL
-	popped = true
-	if ( initialPop ) return
+	var initialPop = !popped && location.href == initialURL;
+	popped = true;
+	if ( initialPop ) { return; }
 
-	var state = event.state
+	var state = event.state;
 
 	if ( state && state.pjax ) {
 		var $container = $(state.pjax+'')
-		if ( $container.length )
+		if ( $container.length ) {
 			$.pjax({
 				url: state.url || location.href,
 				container: $container,
 				push: false,
 				timeout: state.timeout
-			})
-		else
-			window.location = location.href
+			});
+		} else {
+			window.location = location.href;
+		}
 	}
 })
 
-if ( $.inArray('state', $.event.props) < 0 )
+if ( $.inArray('state', $.event.props) < 0 ) {
 	Array.prototype.push.call($.event.props, 'state');
+}
 
 if ( !window.history || !window.history.pushState ) {
-	$.pjax = $.noop
-	$.fn.pjax = function() { return this }
+	$.pjax = $.noop;
+	$.fn.pjax = function() { return this; };
 }
 
 })(jQuery);
