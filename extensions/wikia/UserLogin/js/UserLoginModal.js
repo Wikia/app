@@ -80,7 +80,7 @@ var UserLoginModal = {
 		var editpromptable = $("#ca-viewsource, #te-editanon, .loginToEditProtectedPage, .upphotoslogin");
 
 		// add .editsection on wikis with anon editing disabled
-		if ( (typeof wgDisableAnonymousEditing !== 'undefined') && (wgDisableAnonymousEditing) ) {
+		if ( window.wgDisableAnonymousEditing ) {
 			editpromptable = editpromptable.add(".editsection");
 		}
 
