@@ -37,7 +37,9 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
-		F::setInstance('App', $this->appOrig);
+		if (is_object($this->appOrig)) {
+			F::setInstance('App', $this->appOrig);
+		}
 		$this->unsetClassInstances();
 	}
 
