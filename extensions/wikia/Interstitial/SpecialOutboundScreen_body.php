@@ -90,14 +90,12 @@ class Outbound extends UnlistedSpecialPage {
 			$adCode = $oTmpl->execute($adTemplate);
 			$loginMsg = wfMsgExt('outbound-screen-login-text', array('parseinline', 'content'));
 			$pageBarMsg = wfMsg('outbound-screen-you-are-leaving');
-			$jsGlobals = Skin::makeGlobalVariablesScript( array('skinname' => $skinName) );
 			$oTmpl->set_vars(
 				array(
 					'adCode' => $adCode,
 					'athenaInitStuff' => $athenaInitStuff,
 					'css' => Interstitial::getCss(),
 					'loginMsg' => $loginMsg,
-					'jsGlobals' => $jsGlobals,
 					'pageBarMsg' => $pageBarMsg,
 					'pageType' => 'exitPage',
 					'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
