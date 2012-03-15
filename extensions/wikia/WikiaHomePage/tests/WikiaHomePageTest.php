@@ -1,9 +1,12 @@
 <?php
 
-	require_once dirname(__FILE__) . '/../WikiaHomePage.setup.php';
-
 	class WikiaHomePageTest extends WikiaBaseTest {
 		const TEST_CITY_ID = 79860;
+
+		public function setUp() {
+			$this->setupFile = dirname(__FILE__) . '/../WikiaHomePage.setup.php';
+			parent::setUp();
+		}
 
 		protected function setUpMock( $cacheParams=null ) {
 			// mock cache
@@ -84,17 +87,14 @@
 		/**
 		 * @dataProvider getHubImagesDataProvider
 		 */
-		public function testGetHubImages( $mockRawText, $mockFileParams, $mockReplaceImageServerTime, $expHubImages ) {
-			$this->markTestSkipped(__METHOD__ . ' throws fatal error');
-
+		public function testGetHubImages( $mockRawText, $mockFileParams, $mockImageServingParams, $expHubImages ) {
 			// setup
 			$this->setUpMockObject( 'Title', array( 'newFromText' => null ), true );
 			$this->setUpMockObject( 'Article', array( 'getRawText' => $mockRawText ), true, null, false );
+			$this->setUpMockObject( 'ImageServing', $mockImageServingParams, true, null, false );
 
 			$mockFindFileTime = empty($mockFileParams) ? 0 : count($expHubImages);
 			$this->setUpMockObject( 'File', $mockFileParams, true, null, false, array( 'name' => 'FindFile', 'time' => $mockFindFileTime ) );
-
-			$this->mockGlobalFunction( 'ReplaceImageServer', '', $mockReplaceImageServerTime );
 
 			$this->setUpMock();
 
@@ -114,7 +114,7 @@
 				'Lifestyle' => '',
 			);
 			$mockFileParams1 = false;
-			$mockReplaceImageServerTime1 = 0;
+			$mockImageServingParams1 = 0;
 
 			// 2 - not empty html + gallery tag not exist
 			$mockRawText2 = <<<TXT
@@ -129,11 +129,11 @@ TXT;
 <div class="grid-3 alpha">
 
 <section style="margin-bottom:20px" class="grid-3 alpha"></html><gallery type="slider" orientation="right">
-Gears.png|Cool beans|link=dragonage.wikia.com|linktext=Coolest thing ever
-Slider-hub-entourage.jpg|This is a very very long title that should be cut off at some point|link=dragonage.wikia.com|linktext=This is a very very long title that should be cut off at some point cause it is very very long.
-Slider-hub-dragonball.jpg|DBZ|link=dragonage.wikia.com|linktext=OVER 9000!
-Slider-hub-dragonage.jpg|don\'t play this game|link=dragonage.wikia.com|linktext=cause it sucks
-Slider-hub-catherine.jpg|Catherine|link=dragonage.wikia.com|linktext=is hard
+ninjagaiden_hero_030212.jpg|Ninja Gaiden 3 Starter Guide|link=http://ninjagaiden.wikia.com/wiki/User_blog:MarkvA/Ninja_Gaiden_Starter_Guide|linktext=Ryu Hayabusa is ready to spill more blood.|shorttext=Ninja Gaiden
+halo_hero_030212_a.jpg|Which is the Best Halo Game?|link=http://halo.wikia.com/wiki/User_blog:MarkvA/Halo_Versus_Halo_-_Which_Game_is_Best|linktext=This is one fight Master Chief might lose.|shorttext=Halo vs. Halo
+tombraider_hero_030212.jpg|Tomb Raider Quiz|link=http://laracroft.wikia.com/wiki/PlayQuiz:Tomb_Raider_Quiz|linktext=Get to know Lara Croft inside and out.|shorttext=Lara Croft Quiz
+masseffect3_hero_030212_b.jpg|Mass Effect 3 Walkthrough|link=http://masseffect.wikia.com/wiki/Mass_Effect_3_Guide|linktext=Save the galaxy with our in-depth guide.|shorttext=Mass Effect 3
+legobatman2_hero_031212.jpg|LEGO Batman 2 Details|link=http://lego.wikia.com/wiki/LEGO_Batman_2:_DC_Super_Heroes|linktext=The Man of Steel comes to Gotham City.|shorttext=LEGO Batman 2
 </gallery><html></section>
 </div>
 TXT;
@@ -143,11 +143,11 @@ TXT;
 <div class="grid-3 alpha">
 
 <section style="margin-bottom:20px" class="grid-3 alpha"></html><gallery type="slider" orientation="mosaic">
-Gears.png|Cool beans|link=dragonage.wikia.com|linktext=Coolest thing ever
-Slider-hub-entourage.jpg|This is a very very long title that should be cut off at some point|link=dragonage.wikia.com|linktext=This is a very very long title that should be cut off at some point cause it is very very long.
-Slider-hub-dragonball.jpg|DBZ|link=dragonage.wikia.com|linktext=OVER 9000!
-Slider-hub-dragonage.jpg|don\'t play this game|link=dragonage.wikia.com|linktext=cause it sucks
-Slider-hub-catherine.jpg|Catherine|link=dragonage.wikia.com|linktext=is hard
+ninjagaiden_hero_030212.jpg|Ninja Gaiden 3 Starter Guide|link=http://ninjagaiden.wikia.com/wiki/User_blog:MarkvA/Ninja_Gaiden_Starter_Guide|linktext=Ryu Hayabusa is ready to spill more blood.|shorttext=Ninja Gaiden
+halo_hero_030212_a.jpg|Which is the Best Halo Game?|link=http://halo.wikia.com/wiki/User_blog:MarkvA/Halo_Versus_Halo_-_Which_Game_is_Best|linktext=This is one fight Master Chief might lose.|shorttext=Halo vs. Halo
+tombraider_hero_030212.jpg|Tomb Raider Quiz|link=http://laracroft.wikia.com/wiki/PlayQuiz:Tomb_Raider_Quiz|linktext=Get to know Lara Croft inside and out.|shorttext=Lara Croft Quiz
+masseffect3_hero_030212_b.jpg|Mass Effect 3 Walkthrough|link=http://masseffect.wikia.com/wiki/Mass_Effect_3_Guide|linktext=Save the galaxy with our in-depth guide.|shorttext=Mass Effect 3
+legobatman2_hero_031212.jpg|LEGO Batman 2 Details|link=http://lego.wikia.com/wiki/LEGO_Batman_2:_DC_Super_Heroes|linktext=The Man of Steel comes to Gotham City.|shorttext=LEGO Batman 2
 </gallery><html></section>
 </div>
 TXT;
@@ -160,20 +160,124 @@ TXT;
 				'exists' => true,
 				'getURL' => '',
 				'getTimestamp' => '',
+				'getName' => null,
+				'getZoneUrl' => null,
+				'getThumbUrl' => null,
 			);
-			$mockReplaceImageServerTime5 = 3;
+			$mockImageServingParams5 = array(
+				'getUrl' => array(
+					'mockExpTimes' => 3,
+					'mockExpValues' => null,
+				),
+			);
 
 			return array (
 				// 1 - empty html
-				array( $mockRawText1, $mockFileParams1, $mockReplaceImageServerTime1, $expHubImages1 ),
+				array( $mockRawText1, $mockFileParams1, $mockImageServingParams1, $expHubImages1 ),
 				// 2 - not empty html + gallery tag not exists
-				array( $mockRawText2, $mockFileParams1, $mockReplaceImageServerTime1, $expHubImages1 ),
+				array( $mockRawText2, $mockFileParams1, $mockImageServingParams1, $expHubImages1 ),
 				// 3 - not empty html + gallery tag exists with orientation="right"
-				array( $mockRawText3, $mockFileParams1, $mockReplaceImageServerTime1, $expHubImages1 ),
+				array( $mockRawText3, $mockFileParams1, $mockImageServingParams1, $expHubImages1 ),
 				// 4 - not empty html + gallery tag exists with orientation="mosaic" + file NOT exist
-				array( $mockRawText4, $mockFileParams4, $mockReplaceImageServerTime1, $expHubImages1 ),
+				array( $mockRawText4, $mockFileParams4, $mockImageServingParams1, $expHubImages1 ),
 				// 5 - not empty html + gallery tag exists with orientation="mosaic" + file exists
-				array( $mockRawText4, $mockFileParams5, $mockReplaceImageServerTime5, $expHubImages1 ),
+				array( $mockRawText4, $mockFileParams5, $mockImageServingParams5, $expHubImages1 ),
+			);
+		}
+
+		/**
+		 * @dataProvider getListDataProvider
+		 */
+		public function testGetList($mediaWikiMsg, $expectedStatus, $expectedResult, $expectedExceptionMsg) {
+			$this->setUpMockObject( 'WikiaHomePageController', array( 'getMediaWikiMessage' => $mediaWikiMsg ), true );
+
+			$this->setUpMock();
+
+			$response = $this->app->sendRequest('WikiaHomePageController', 'getList', array());
+
+			$responseData = $response->getVal('data');
+			$this->assertEquals($expectedResult, $responseData);
+
+			$responseData = $response->getVal('exception');
+			$this->assertEquals($expectedExceptionMsg, $responseData);
+
+			$responseData = $response->getVal('status');
+			$this->assertEquals($expectedStatus, $responseData);
+		}
+
+		public function getListDataProvider() {
+			return array(
+				array(																			//mediawiki msg is empty
+					'', 
+					0, 
+					null, 
+					wfMsg('wikia-home-parse-source-empty-exception')
+				),
+				array(																			//percentage in verticals' lines as a sum < 100%
+					"*Gaming|50
+	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
+	*Entertainment|25
+	**Muppet Wiki|http://muppet.wikia.com|image|description", 
+					0, 
+					null, 
+					wfMsg('wikia-home-parse-source-invalid-percentage')
+				),
+				array(																			//percentage in verticals' lines as a sum > 100%
+					"*Gaming|60
+	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
+	*Entertainment|60
+	**Muppet Wiki|http://muppet.wikia.com|image|description", 
+					0, 
+					null, 
+					wfMsg('wikia-home-parse-source-invalid-percentage')
+				),
+				array(																			//two parameters have to be set (seperated with a |) for a vertical (vertical name and percentage)
+					"*Gaming
+	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
+	*Entertainment
+	**Muppet Wiki|http://muppet.wikia.com|image|description", 
+					0, 
+					null, 
+					wfMsg('wikia-home-parse-vertical-invalid-data')
+				),
+				array(																			//at least three parameters have to be set (seperated with a |) for a wiki (wiki name, wiki url, wiki image)
+					"*Gaming|50
+	**The Call of Duty Wiki
+	*Entertainment|50
+	**Muppet Wiki|http://muppet.wikia.com", 
+					0, 
+					null, 
+					wfMsg('wikia-home-parse-wiki-too-few-parameters')
+				),
+				array(																			//percentage in verticals' lines as a sum incorrect after overriding a vertical
+					"*Gaming|50
+	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
+	*Entertainment|50
+	**Muppet Wiki|http://muppet.wikia.com|image|description
+	*Gaming|250
+	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description", 
+					0, 
+					null, 
+					wfMsg('wikia-home-parse-source-invalid-percentage')
+				),
+				array(																			//everything's OK
+					"*Gaming|50
+	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
+	*Entertainment|50
+	**Muppet Wiki|http://muppet.wikia.com|image|description", 
+					1, 
+					'[{"vertical":"gaming","percentage":50,"wikilist":[{"wikiname":"The Call of Duty Wiki","wikiurl":"http:\/\/callofduty.wikia.com\/","wikidesc":"description","wikinew":false,"wikihot":false,"imagesmall":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagemedium":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagebig":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"}]},{"vertical":"entertainment","percentage":50,"wikilist":[{"wikiname":"Muppet Wiki","wikiurl":"http:\/\/muppet.wikia.com","wikidesc":"description","wikinew":false,"wikihot":false,"imagesmall":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagemedium":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagebig":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"}]}]', 
+					null
+				),
+				array(																			//everything's OK but data has spacebars here and there
+					"    *Gaming|    50
+				**The Call of Duty Wiki|   http://callofduty.wikia.com/   |    image    |     description     
+							   *          Entertainment       |    50
+						  **          Muppet Wiki       |    http://muppet.wikia.com       |    image        |      description      ", 
+					1, 
+					'[{"vertical":"gaming","percentage":50,"wikilist":[{"wikiname":"The Call of Duty Wiki","wikiurl":"http:\/\/callofduty.wikia.com\/","wikidesc":"description","wikinew":false,"wikihot":false,"imagesmall":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagemedium":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagebig":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"}]},{"vertical":"entertainment","percentage":50,"wikilist":[{"wikiname":"Muppet Wiki","wikiurl":"http:\/\/muppet.wikia.com","wikidesc":"description","wikinew":false,"wikihot":false,"imagesmall":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagemedium":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagebig":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"}]}]', 
+					null
+				),
 			);
 		}
 
