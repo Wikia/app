@@ -394,7 +394,6 @@ var wgCatId = 3;
 var wgParentCatId = 0;
 var wgCurse = null;
 var wgCityId = "376";
-var wgID = 376;
 var wgEnableAjaxLogin = true;
 var wgReturnTo = "";
 var wgDB = "familyguy";
