@@ -1,6 +1,6 @@
 <?php
 
-class ReverseParserTest extends PHPUnit_Framework_TestCase {
+class ReverseParserTest extends WikiaBaseTest {
 	var $reverseParser;
 
 	function setUp() {

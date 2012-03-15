@@ -1,6 +1,6 @@
 <?php
 
-class MyHomeTest extends PHPUnit_Framework_TestCase {
+class MyHomeTest extends WikiaBaseTest {
 	function setUp() {
 		global $IP;
 		require_once("$IP/extensions/wikia/MyHome/MyHome.class.php");

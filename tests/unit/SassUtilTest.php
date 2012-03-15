@@ -1,6 +1,6 @@
 <?php
 
-class SassUtilTest extends PHPUnit_Framework_TestCase {
+class SassUtilTest extends WikiaBaseTest {
 
 	function testSassUtil() {
 		$sassParams = SassUtil::getSassParams();

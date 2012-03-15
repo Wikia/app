@@ -1,6 +1,6 @@
 <?php
 
-class ModuleDataAnonTest extends PHPUnit_Framework_TestCase {
+class ModuleDataAnonTest extends WikiaBaseTest {
 
 	// initialize skin only once
 	public static function setUpBeforeClass() {
@@ -53,7 +53,7 @@ class ModuleDataAnonTest extends PHPUnit_Framework_TestCase {
 		if ( empty( $wgOasisNavV2 ) ) {
 			$this->assertEquals( $railList[1450][0], 'PagesOnWiki' );
 		} else {
-			$this->assertNotEquals( $railList[1450][0], 'PagesOnWiki' );
+			$this->assertTrue(empty($railList[1450]));
 		}
 
 		$this->assertEquals($railList[1250][0], 'LatestActivity');

@@ -1,5 +1,5 @@
 <?php
-class ServiceTest extends PHPUnit_Framework_TestCase {
+class ServiceTest extends WikiaBaseTest {
 
 	// reinitialize memcache
 	public static function setUpBeforeClass() {
@@ -37,7 +37,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase {
 
 		// macbre: perform this test only for existing pages
 		if (!$wgTitle->exists()) {
-			$this->markTestSkipped();
+			$this->markTestSkipped('Main page cannot be found');
 			return;
 		}
 
