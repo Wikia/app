@@ -124,17 +124,23 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	}
 	
 	protected function generateMetadata(array $data, &$errorMsg) {
+		$keywords = explode(',', $data['keywords']);	// keywords is a comma-delimited string
+		array_walk($keywords, array($this, 'trimArrayItem'));
 		$parsedData = array(
 		    'videoId'		=> $data['videoId'],
 		    'thumbnail'		=> $data['thumbnail'],
 		    'duration'		=> $data['duration'],
 		    'published'		=> strtotime($data['published']),
 		    'category'		=> $data['category'],
-		    'keywords'		=> $data['keywords'],
+		    'keywords'		=> implode(', ', $keywords),
 		    'dimensions'	=> $data['dimensions'],
 		    'description'	=> $data['description']
 		    );
 		
 		return $parsedData;
+	}
+	
+	private function trimArrayItem(&$item, $key) {
+		$item = trim($item);
 	}
 }
