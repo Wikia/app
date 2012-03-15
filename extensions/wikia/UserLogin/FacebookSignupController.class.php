@@ -28,9 +28,11 @@ class FacebookSignupController extends WikiaController {
 			$this->userName = $user->getName();
 		}
 		else {
+			$modal = $this->sendRequest('FacebookSignupController', 'modal')->__toString();
+
 			// no account connected - show FB sign up modal
 			$this->title = wfMsg('usersignup-facebook-heading');
-			$this->modal = ($fbUserId) ? $this->sendRequest('FacebookSignupController', 'modal')->__toString() : wfMsg('usersignup-facebook-problem');
+			$this->modal = !empty($modal) ? $modal : wfMsg('usersignup-facebook-problem');
 			$this->cancelMsg = wfMsg('cancel');
 		}
 	}
@@ -40,10 +42,16 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function modal() {
 		// get an email from Facebook API
-
 		$resp = $this->sendRequest('FacebookSignupController', 'getFacebookData', array(
 			'fbUserId' => $this->getFacebookUserId(),
 		));
+
+		// BugId:24400
+		$data = $resp->getData();
+		if (empty($data)) {
+			$this->skipRendering();
+			return false;
+		}
 
 		$this->fbEmail = $resp->getVal('contact_email', false);
 		$email = $resp->getVal('email', false);
@@ -111,22 +119,27 @@ class FacebookSignupController extends WikiaController {
 	 * Return Facebook account data like email, gender, real name
 	 */
 	public function getFacebookData() {
-		$fbUserId = $this->request->getVal('fbUserId');
+		$fbUserId = intval($this->request->getVal('fbUserId'));
 
-		// call Facebook API
-		$FBApi = F::build('FBConnectAPI');
-		$data = $FBApi->getUserInfo($this->fbUserId, array(
-			'first_name',
-			'name',
-			'sex',
-			'timezone',
-			'locale',
-			'username',
-			'contact_email',
-			'email',
-		));
+		if ($fbUserId > 0) {
+			// call Facebook API
+			$FBApi = F::build('FBConnectAPI');
+			$data = $FBApi->getUserInfo($this->fbUserId, array(
+				'first_name',
+				'name',
+				'sex',
+				'timezone',
+				'locale',
+				'username',
+				'contact_email',
+				'email',
+			));
 
-		$this->response->setData($data);
+			// BugId:24400
+			if (!empty($data)) {
+				$this->response->setData($data);
+			}
+		}
 	}
 
 	/**
