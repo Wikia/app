@@ -7,12 +7,12 @@
  *		$this->mockGlobalVariable( 'wgCityId', '12345' );
  *		$this->mockGlobalFunction( 'getDB', $dbMock );
  *      // If you do not call this helper, $app is a real App object
- *		$this->mockApp();  
+ *		$this->mockApp();
  *      // Now $this->app in a test case is the mock App object
  *
  * Complications: Most extensions have a setup file.  If this setup file is NOT globally included, you will have to
  * include it yourself in the constructor for your unit test.  PHPUnit interacts weirdly with autoloader.
- * 
+ *
  * function __construct() {
  *    $this->setupFile = dirname(__FILE__) . '/../MyExtension_setup.php';
  * }
@@ -33,7 +33,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		if ($this->setupFile != null) {
 			global $wgAutoloadClasses;
 			require_once($this->setupFile);
-		}		
+		}
 	}
 
 	protected function tearDown() {
@@ -65,7 +65,7 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	// After calling this, any reference to $this->app in a test now uses the mocked object
 	protected function mockApp() {
 		$this->appMock->init();
-		$this->app = F::app(); 
+		$this->app = F::app();
 	}
 
 	private function unsetClassInstances() {
@@ -74,6 +74,11 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		}
 		$this->mockedClasses = array();
 	}
+
+	public static function markTestSkipped($message = '') {
+		Wikia::log(__METHOD__, '', $message);
+        parent::markTestSkipped($message);
+    }
 }
 
 class WikiaAppMock {
