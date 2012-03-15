@@ -3,8 +3,8 @@
  * @usage: SERVER_ID=177 php videoSanitize.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
  * @usage: SERVER_ID=177 php videoSanitize.php --conf /usr/wikia/conf-current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
  *  */
- 
- 
+
+
 function title_replacer( $title, $replacement, $fulltext  ) {
 	$symbols = array(
 		array(' ','_','-','+','/'),
@@ -84,12 +84,12 @@ $options = array('help');
 require_once ('videoSanitizerMigrationHelper.class.php');
 require_once( 'videolog.class.php' );
 
-global $IP, $wgCityId, $wgDBname, $wgExternalDatawareDB, $wgVideoHandlersVideosMigrated;
+global $IP, $wgCityId, $wgDBname, $wgExternalDatawareDB, $wgVideoHandlersVideosMigrated, $wgDBname;
 
 $wgVideoHandlersVideosMigrated = false; // be sure we are working on old files
 
 $devboxuser = exec('hostname');
-$sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgExternalDatawareDB);
+$sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgDBname, $wgExternalDatawareDB);
 $previouslyProcessed = $sanitizeHelper->getRenamedVideos("old", " operation_status='OK'");
 
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
@@ -293,6 +293,7 @@ foreach ( $aTranslation as $key => $val ) {
 		echo "FETCH FROM DB il_from= ".$file->il_from." // ($key)\n";
 		$articleId = $file->il_from;
 		$oTitle = Title::newFromId( $articleId );
+
 		if ( $oTitle instanceof Title && $oTitle->exists() ){
 			global $wgTitle;
 			// in some cases hooks depend on wgTitle (hook for article edit)
@@ -308,13 +309,43 @@ foreach ( $aTranslation as $key => $val ) {
 				if ( $sTextAfter != $sText ) {
 					$allChangesArticleURLs[ str_replace('localhost',$wgDBname.'.'.str_replace('dev-','', $devboxuser).'.wikia-dev.com',$oTitle->getFullURL()) ] = true;
 					echo "ARTICLE WAS CHANGED! \n";
-					$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+
+					// isolating doEdit, because it's possible it will result in Fatal Error for some articles
+					// in case of misconfiguration (doEdit running from maintenance scripts instead of directly
+					// in context of browser web request is not used much so it's not very reliable)
+					$pid = pcntl_fork();
+					if ($pid == -1) {
+						die('Could not fork');
+					} else if ($pid) {
+						// we are the parent
+						//echo "parent\n";
+						$status = null;
+						pcntl_wait($status); //Protect against Zombie children
+						$st = pcntl_wexitstatus($status);
+						if ($st != 0) {
+							// need to log those fatal errors here
+							$sanitizeHelper->logFailedEdit($articleId, $oTitle->getText(), $oTitle->getNamespace(), $val, $key);
+						}
+						//echo "parent end of fork\n";
+					} else {
+						// we are the child, process doEdit in child
+						//echo "child\n";
+						$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+						//echo "child end of fork\n";
+						exit();
+					}
+					//echo "outside of fork\n";
+
 				} else {
 					$sanitizeHelper->logVideoTitle($key, $val, 'UNKNOWN', $oTitle);
 				}
 			} else {
 				var_dump( $oArticle );
 			}
+
+
+
+
 		} else {
 			var_dump( $oTitle );
 		}
