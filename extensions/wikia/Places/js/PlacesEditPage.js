@@ -1,5 +1,5 @@
 /*global PlacesEditor: true*/
-if (window.mwCustomEditButtons) {
+if (window.mwCustomEditButtons && window.skin === 'oasis') {
 	window.mwCustomEditButtons.push({
 		imageId: 'mw-editbutton-places',
 		imageFile: wgExtensionsPath + '/wikia/Places/images/button_place.png',
