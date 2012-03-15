@@ -140,6 +140,8 @@ file = LookupContribs/SpecialLookupContribs.i18n.php
 
 Masthead
 
+Mini Editor
+
 Mobile - Game Guides
 file = MobileAppTranslations/GameGuides.i18n.php
 ignored = windowwikicontents-title
