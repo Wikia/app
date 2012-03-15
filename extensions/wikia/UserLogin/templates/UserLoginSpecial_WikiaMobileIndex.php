@@ -1,21 +1,25 @@
 <?php
-$userErr = $pwdErr = false;
+$userErr = $pwdErr = $toastErr = false;
 
-if ( !empty( $result ) && $result == 'error' ) {
-	if ( !empty( $errParam ) ) {
-		if ( $errParam == 'username' ) {
+if ( !empty( $result )  ) {
+	if ( $result == 'error' ) {
+		if ( !empty( $errParam ) ) {
+			if ( $errParam == 'username' ) {
+				$userErr = true;
+			} else {
+				$pwdErr = true;
+			}
+		} elseif ( !empty( $msg ) ) {
+			//error from send new password
 			$userErr = true;
-		} else {
-			$pwdErr = true;
 		}
-	} elseif ( !empty( $msg ) ) {
-		//error from send new password
-		$userErr = true;
+	} else {
+		$toastErr = true;
 	}
 }
 ?>
 <div id=wkLgn>
-	<? if ( !empty( $result ) && !empty( $msg ) && $result == 'ok' ) :?>
+	<? if ( $toastErr ) :?>
 		<div id=wkLgnMsg><?= $msg ;?></div>
 	<? endif ;?>
 	<? if ( !$recoverPassword ) :?>
