@@ -1,6 +1,6 @@
 <?php
 
-class JSSnippetsTest extends PHPUnit_Framework_TestCase {
+class JSSnippetsTest extends WikiaBaseTest {
 	public function testAppBuild() {
 		F::unsetInstance('JSSnippets');
 		$instance = F::build('JSSnippets');
