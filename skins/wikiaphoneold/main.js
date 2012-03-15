@@ -5,7 +5,7 @@ function WikiaPhoneOldTracker(str) {
 
 username = wgUserName == null ? 'anon' : 'user';
 WikiaPhoneOldTracker('/1_wikiaphone/' + username + '/view');
-if(wgPrivateTracker) {
+if(window.wgPrivateTracker) {
 	WikiaPhoneOldTracker('/1_wikiaphone/' + wgDBname + '/' + username + '/view');
 }
 

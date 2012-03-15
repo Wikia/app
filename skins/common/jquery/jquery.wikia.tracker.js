@@ -372,7 +372,7 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 	if (unsampled) {
 		WikiaTracker.track(str, 'main.unsampled');
 	}
-	if(wgPrivateTracker) {
+	if(window.wgPrivateTracker) {
 		WikiaTracker.track(wgDBname + '/' + str, 'main.private');
 		if (unsampled) {
 			WikiaTracker.track(wgDBname + '/' + str, 'main.unsampled');
