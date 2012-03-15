@@ -5,17 +5,18 @@
 			<li class="WikiaLogo">
 				<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wgBlankImgUrl ?>" class="sprite logo" height="23" width="91" alt="Wikia"></a>
 			</li>
-			<li>
+			<li class="hiddenStartWikiBtn">
 				<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="wikia-button"><?= wfMsgHtml('oasis-global-nav-create-wiki'); ?></a>
 			</li>
 			<li>
-				<ul id="GlobalNavigation" class="GlobalNavigation">
+				<ul id="GlobalNavigation" class="GlobalNavigation<?php if($isCorporatePage): ?> WikiaComNav<?php endif; ?>">
 <?php
 if(is_array($menuNodes) && isset($menuNodes[0])) {
 	$i = 0;
+	
 	foreach($menuNodes[0]['children'] as $level0) {
 ?>
-					<li>
+					<li <?php if($isCorporatePage): ?>class="<?= str_replace(' ', '_', $menuNodes[$level0]['text']); ?>"<?php endif; ?>>
 						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wgBlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
 						<ul class="subnav">
 							<? /*

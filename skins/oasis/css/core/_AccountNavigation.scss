@@ -8,7 +8,7 @@
 		border: 0;
 		height: 30px;
 		margin-top: 0;
-		padding: 6px 0 0;
+		padding: 4px 0 0;
 		position: relative;
 		&:hover {
 			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
@@ -28,6 +28,10 @@
 			&:hover {
 				text-decoration: none;
 			}
+		}
+		& .chevron {
+			position: relative;
+			left: 6px;
 		}
 	}
 	#fbconnect {

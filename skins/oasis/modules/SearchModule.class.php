@@ -15,10 +15,11 @@ class SearchModule extends Module {
 	var $wgTitle;
 	var $isCrossWikiaSearch;
 
-	public function executeIndex() {
+	public function executeIndex($noautocomplete = false) {
 		global $wgRequest, $wgSitename, $wgSearchDefaultFulltext;
 
 		$this->searchterm = $this->wg->request->getVal('search');
+		$this->noautocomplete = $noautocomplete;
 
 		$this->fulltext = !empty($wgSearchDefaultFulltext) ? 1 : 0;
 		$this->placeholder = wfMsg('Tooltip-search', $wgSitename);

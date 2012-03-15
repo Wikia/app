@@ -50,9 +50,9 @@ class AccountNavigationModule extends Module {
 				$attributes['accesskey'] = 'o';
 				break;
 		}
-
+		
 		$ret = Xml::element('a', $attributes, $personalUrl['text']);
-
+		
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
