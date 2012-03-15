@@ -1,21 +1,21 @@
 <?php
-	$userErr = $pwdErr = false;
+$userErr = $pwdErr = false;
 
-	if ( !empty( $result ) && $result == 'error' ) {
-		if ( !empty( $errParam ) ) {
-			if ( $errParam == 'username' ) {
-				$userErr = true;
-			} else {
-				$pwdErr = true;
-			}
-		} elseif ( !empty( $msg ) ) {
-			//error from send new password
+if ( !empty( $result ) && $result == 'error' ) {
+	if ( !empty( $errParam ) ) {
+		if ( $errParam == 'username' ) {
 			$userErr = true;
+		} else {
+			$pwdErr = true;
 		}
+	} elseif ( !empty( $msg ) ) {
+		//error from send new password
+		$userErr = true;
 	}
+}
 ?>
 <div id=wkLgn>
-	<? if ( !empty( $result ) && $result == 'ok' ) :?>
+	<? if ( !empty( $result ) && !empty( $msg ) && $result == 'ok' ) :?>
 		<div id=wkLgnMsg><?= $msg ;?></div>
 	<? endif ;?>
 	<? if ( !$recoverPassword ) :?>
@@ -25,17 +25,17 @@
 	<form method=post action="<?= $formPostAction ?>">
 		<input type=hidden name=loginToken value='<?= $loginToken ?>'>
 		<input type=hidden name=keeploggedin value=true>
-		<input type=text name=username placeholder='<?= $wf->Msg('yourname')?>'<?= ($username) ? ' value="'.$username.'"' : ''?> <?= ($userErr) ? ' class=inpErr' : ''?>>
+		<input type=text name=username placeholder='<?= $wf->Msg('yourname')?>'<?= ($username) ? ' value="'.$username.'"' : ''?><?= ($userErr) ? ' class=inpErr' : ''?>>
 		<? if( $userErr ) : ?>
 			<div class=wkErr><?= $msg ?></div>
 		<? endif; ?>
 		<? if ( !$recoverPassword ) :?>
-			<input type=password name=password placeholder='<?= $wf->Msg('yourpassword') ?>'<?= ($password) ? ' value="'.$password.'"' : ''?> <?= ($pwdErr) ? ' class=inpErr' : ''?>>
+			<input type=password name=password placeholder='<?= $wf->Msg('yourpassword') ?>'<?= ($password) ? ' value="'.$password.'"' : ''?><?= ($pwdErr) ? ' class=inpErr' : ''?>>
 			<? if( $pwdErr ) : ?>
 				<div class=wkErr><?= $msg ?></div>
 			<? endif; ?>
 		<? endif ;?>
-		<a id=wkLgnRcvLnk href="?recover=1"<?= ( $recoverPassword ) ? ' class=hide' : null ?>><?= $wf->Msg( 'userlogin-forgot-password' ) ;?></a>
+		<a id=wkLgnRcvLnk href="<?= $recoverParam ;?>"<?= ( $recoverPassword ) ? ' class=hide' : null ?>><?= $wf->Msg( 'userlogin-forgot-password' ) ;?></a>
 		<input id=wkLgnBtn name=action type=submit value='<?= $wf->Msg( 'login' ) ?>' class='wkBtn main<?= ( $recoverPassword ) ? ' hide' : null ?>'>
 		<input id=wkLgnRcvBtn name=action type=submit value='<?= $wf->Msg( 'wikiamobile-sendpassword-label' ) ?>' class='wkBtn<?= ( $recoverPassword ) ? ' show' : null ?>'>
 	</form>
