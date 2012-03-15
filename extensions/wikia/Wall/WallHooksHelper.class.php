@@ -98,7 +98,6 @@ class WallHooksHelper {
 			//user talk page -> redirect to message wall
 			$outputDone = true;
 
-			$app->wg->request->setVal('dontGetUserFromSession', true);
 			$app->wg->Out->redirect($this->getWallTitle()->getFullUrl(), 301);
 			return true;
 		}
@@ -148,8 +147,6 @@ class WallHooksHelper {
 		$app = F::App();
 		
 		if( !empty($app->wg->EnableWallExt) ) {
-			$app->wg->request->setVal('dontGetUserFromSession', true);
-			
 			$helper = F::build('WallHelper', array());
 			$title = $app->wg->Title;
 
@@ -436,8 +433,6 @@ class WallHooksHelper {
 	public function onUserPagesHeaderModuleAfterGetTabs(&$tabs, $namespace, $userName) {
 		$app = F::App();
 
-		$app->wg->request->setVal('dontGetUserFromSession', true);
-
 		foreach($tabs as $key => $tab) {
 			if( !empty($tab['data-id']) && $tab['data-id'] === 'talk' ) {
 				$userWallTitle = $this->getWallTitle();
@@ -584,13 +579,7 @@ class WallHooksHelper {
 		$helper = F::build('WallHelper', array());
 		$app = F::app();
 
-		$userFromSession = !$app->wg->request->getVal('dontGetUserFromSession', false);
-
-		if( $userFromSession ) {
-			return $helper->getTitle(NS_USER_WALL, null, $app->wg->User);
-		} else {
-			return $helper->getTitle(NS_USER_WALL);
-		}
+		return $helper->getTitle(NS_USER_WALL);
 	}
 
 	/**
@@ -1401,7 +1390,6 @@ class WallHooksHelper {
 			//user talk page was edited -> redirect to user talk archive
 			$helper = F::build('WallHelper', array());
 
-			$app->wg->request->setVal('dontGetUserFromSession', true);
 			$app->wg->Out->redirect($this->getWallTitle()->getFullUrl().'/'.$helper->getArchiveSubPageText(), 301);
 			$app->wg->Out->enableRedirects(false);
 		}
