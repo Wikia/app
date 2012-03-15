@@ -34,7 +34,7 @@ $wgCaches = array();
 
 /**
  * Get a cache object.
- * @param $inputType Integer: cache type, one the the CACHE_* constants. 
+ * @param $inputType Integer: cache type, one the the CACHE_* constants.
  */
 function &wfGetCache( $inputType ) {
 	global $wgCaches, $wgMemCachedServers, $wgMemCachedDebug, $wgMemCachedPersistent;
@@ -88,17 +88,6 @@ function &wfGetCache( $inputType ) {
 	}
 
 	/* Wikia change begin - @author: eloy */
-	if( defined( "CACHE_RIAK" ) ) {
-		if ( $type == CACHE_RIAK ) {
-			if ( !array_key_exists( CACHE_RIAK, $wgCaches ) ) {
-				$wgCaches[ CACHE_RIAK ] = new RiakCache;
-			}
-			$cache =& $wgCaches[ CACHE_RIAK ];
-		}
-	}
-	/* Wikia change end */
-
-	/* Wikia change begin - @author: eloy */
 	if( defined( "CACHE_LIBMEMCACHED" ) ) {
 		if ( $type == CACHE_LIBMEMCACHED ) {
 			if ( !array_key_exists( CACHE_LIBMEMCACHED, $wgCaches ) ) {
@@ -112,7 +101,7 @@ function &wfGetCache( $inputType ) {
 		}
 	}
 	/* Wikia change end */
-	
+
 	if ( $cache === false ) {
 		if ( !array_key_exists( CACHE_NONE, $wgCaches ) ) {
 			$wgCaches[CACHE_NONE] = new FakeMemCachedClient;
