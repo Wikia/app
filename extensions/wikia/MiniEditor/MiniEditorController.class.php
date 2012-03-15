@@ -100,11 +100,15 @@ class MiniEditorController extends WikiaController {
 		$vars['wgIsArticle'] = false;
 		$vars['wgAction'] = 'edit'; // needed for image uploading
 
-		// Need to call RTE::init to get Disabled reason (if any, usually preferences)
-		$ep = new EditPage(new Article(new Title())); 
-		RTE::init($ep);
-		RTE::makeGlobalVariablesScript(&$vars);
-
+		// RTE has been disabled but minieditor is enabled.  probably shouldn't be allowed to happen
+		if ( !class_exists('RTE') ) {
+			$vars['RTEDisabledReason'] = 'sitedisabled';
+		} else {
+			// Need to call RTE::init to get Disabled reason (if any, usually preferences)
+			$ep = new EditPage(new Article(new Title())); 
+			RTE::init($ep);
+			RTE::makeGlobalVariablesScript(&$vars);
+		}
 		// FIXME: We have to force AssetsManager to combine scripts.
 		// MiniEditor will break in loadOnDemand mode because of improper script execution order.
 		$minify = empty($this->wg->DevelEnvironment);
