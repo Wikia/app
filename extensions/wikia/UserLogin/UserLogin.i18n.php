@@ -105,6 +105,9 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'userlogin-facebook-hide-preferences' => 'Hide Facebook feed preferences',
 
 	'userlogin-changepassword-needlogin' => 'You need to $1 to change your password.',
+	
+	//WikiaMobile skin
+	'wikiamobile-sendpassword-label' => 'Send new password',
 	'wikiamobile-facebook-connect-fail' => 'Mobile signup is not currently available.
 Please register on our desktop site.
 
@@ -175,5 +178,6 @@ $messages['qqq'] = array(
 	'userlogin-facebook-show-preferences' => 'Action anchor text to show facebook feed preference section of the UI when near facebook signup completion.',
 	'userlogin-facebook-hide-preferences' => 'Action anchor text to hide facebook feed preference section of the UI when near facebook signup completion.',
 	'userlogin-changepassword-needlogin' => '$1 is an action link using the message loginreqlink.', // where is the "loginrequlink" defined? if this is a core MW message then we should NOT be re-using it in a different context!
-	'wikiamobile-facebook-connect-fail' => 'Shown when a user tries to log in via FBConnect but there\'s no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited'
+	'wikiamobile-facebook-connect-fail' => 'Shown when a user tries to log in via FBConnect but there\'s no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited',
+	'wikiamobile-sendpassword-label' => 'Label for the button used to request a new password for recovery'
 );

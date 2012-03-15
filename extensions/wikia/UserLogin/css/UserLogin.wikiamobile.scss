@@ -5,10 +5,17 @@
 
 $spacing: 5px;
 
+.js{
+	//hide the message box in case JS is enabled, we'll use the toast notification instead
+	#wkLgnMsg{
+		display: none;
+	}
+}
+
 #wkLgn{
 	text-align: center;
+
 	padding: 10px;
-	
 	input {
 		-webkit-appearance: none;
 		width: 100%;
@@ -20,20 +27,28 @@ $spacing: 5px;
 		padding: 0 10px;
 		background-color: #F2F2F2;
 	}
-	
+
 	.inpErr {
 		margin-bottom: 0;
 		border: 2px solid $error-bg-color;
 	}
-	
+
 	.wkErr{
 		margin: 0 0 20px 0;
 		border-radius: 0 0 3px 3px;
 	}
-	
+
 	a {
 		text-align: left;
 		padding-left: 10px;
+	}
+
+	.hide {
+		display: none;
+	}
+
+	.show {
+		display: block;
 	}
 }
 
@@ -79,9 +94,17 @@ $spacing: 5px;
 	}
 }
 
-#wkPwdRcv {
-	margin-top: -10px;
+#wkLgnRcvLnk {
 	display: block;
+}
+
+//needs to select parent to override "#wkLgn input" rule
+#wkLgn #wkLgnRcvBtn {
+	display: none;
+
+	&.show {
+		display: block;
+	}
 }
 
 #wkShrPag {
