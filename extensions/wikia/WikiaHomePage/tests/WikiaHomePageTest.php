@@ -55,7 +55,7 @@
 							$mockObject->expects( $this->exactly($value['mockExpTimes']) )
 										->method( $method )
 										->will( $this->returnValue($value['mockExpValues']) );
-							
+
 						}
 					} else {
 						$mockObject->expects( $this->any() )
@@ -85,13 +85,15 @@
 		 * @dataProvider getHubImagesDataProvider
 		 */
 		public function testGetHubImages( $mockRawText, $mockFileParams, $mockReplaceImageServerTime, $expHubImages ) {
+			$this->markTestSkipped();
+
 			// setup
 			$this->setUpMockObject( 'Title', array( 'newFromText' => null ), true );
 			$this->setUpMockObject( 'Article', array( 'getRawText' => $mockRawText ), true, null, false );
 
 			$mockFindFileTime = empty($mockFileParams) ? 0 : count($expHubImages);
 			$this->setUpMockObject( 'File', $mockFileParams, true, null, false, array( 'name' => 'FindFile', 'time' => $mockFindFileTime ) );
-			
+
 			$this->mockGlobalFunction( 'ReplaceImageServer', '', $mockReplaceImageServerTime );
 
 			$this->setUpMock();
@@ -102,7 +104,7 @@
 			$responseData = $response->getVal( 'hubImages' );
 			$this->assertEquals( $expHubImages, $responseData );
 		}
-		
+
 		public function getHubImagesDataProvider() {
 			// 1 - empty html
 			$mockRawText1 = '';
