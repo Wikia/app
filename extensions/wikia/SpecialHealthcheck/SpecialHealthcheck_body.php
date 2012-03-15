@@ -100,31 +100,6 @@ class HealthCheck extends UnlistedSpecialPage {
 			}
 		}
 
-		// check for riak if riak is using as sessions provider
-		// @author Krzysztof Krzyżaniak (eloy)
-		global $wgSessionsInRiak, $wgRiakSessionNode, $wgRiakStorageNodes, $wgSolidCacheType;
-		if( 0  ) { // disabled, original condition: $wgSessionsInRiak || $wgSolidCacheType == CACHE_RIAK
-			// get data for connection
-			$riakNode = $wgRiakStorageNodes[ $wgRiakSessionNode ];
-
-			// build url
-			$riakPing = sprintf( "http://%s:%s/ping", $riakNode[ "host"], $riakNode[ "port" ] );
-
-			// set proxy if needed, for local riak we have to pass request directly
-			$options = array();
-			if( isset( $riakNode[ "proxy"] ) && $riakNode[ "proxy" ] ) {
-				$options[ "proxy" ] = $riakNode[ "proxy" ];
-			}
-			else {
-				$options[ "noProxy" ] = true;
-			}
-
-			$content = Http::get( $riakPing, 'default', $options );
-			if( $content === false ) {
-				$statusCode = 503;
-				$statusMsg = "Server status is: NOT OK - Riak is down";
-			}
-		}
 
 		// don't check POST on Iowa (i.e. when ready only mode is on)
 		if (wfReadOnly()) {

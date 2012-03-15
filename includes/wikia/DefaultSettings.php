@@ -640,37 +640,6 @@ $wgWikiaCombinedPrefix = "index.php?action=ajax&rs=WikiaAssets::combined&";
  */
 $wgUseExternalEditor = false;
 
-/**
- * riak section
- * @see lib/riak/riak.php
- * @see lib/riak/docs/index.html
- * @see http://riak.basho.com/edoc/raw-http-howto.txt for HTTP interface
- */
-define( "CACHE_RIAK", 10 );
-$wgSessionsInRiak = false;
-
-$wgRiakStorageNodes = array(
-	"default" => array(
-		"host" => "127.0.0.1",
-		"port" => "8098",
-		"prefix" => "riak",
-		"proxy" => false
-	)
-);
-/**
- * riak connection data used in RiakCache handler or wfGetSolidCacheStorage
- *
- * @see includes/wikia/GlobalFunctions.php
- * @see includes/wikia/RiakCache.php
- *
- */
-$wgRiakDefaultNode = "default";
-
-/**
- * riak connection data used in session handler
- * @see includes/wikia/RiakSessionsHandler.php
- */
-$wgRiakSessionNode = "default";
 
 /**
  * libmemcached related stuff
@@ -679,9 +648,6 @@ define( "CACHE_LIBMEMCACHED", 11 );
 $wgSessionsInLibmemcached = false;
 
 
-$wgAutoloadClasses[ "RiakClient" ] = "{$IP}/lib/riak/riak.php";
-$wgAutoloadClasses[ "RiakCache"  ] = "{$IP}/includes/wikia/RiakCache.php";
-$wgAutoloadClasses[ "ExternalStoreRiak"  ] = "{$IP}/includes/wikia/ExternalStoreRiak.php";
 $wgSolidCacheType = CACHE_MEMCACHED;
 $wgWikiFactoryCacheType = CACHE_MEMCACHED;
 
