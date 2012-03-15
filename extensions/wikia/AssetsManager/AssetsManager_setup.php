@@ -15,6 +15,15 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczyński'
 );
 
+$dir = dirname(__FILE__).'/';
+
+$wgAutoloadClasses['AssetsManagerBaseBuilder'] = $dir.'builders/AssetsManagerBaseBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerGroupBuilder'] = $dir.'builders/AssetsManagerGroupBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = $dir.'builders/AssetsManagerGroupsBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerServer'] = $dir.'AssetsManagerServer.class.php';
+
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
 $wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
@@ -28,22 +37,8 @@ function AssetsManagerClearCookie( $user, &$result ) {
 }
 
 function AssetsManagerEntryPoint() {
-	global $wgRequest, $wgAutoloadClasses;
-
-	$dir = dirname(__FILE__).'/';
-
-	// Temporary logging
-	// error_log("Temp log - #1 - AssetsManagerEntryPoint: " . $wgRequest->getFullRequestURL());
-
-	$wgAutoloadClasses['AssetsManagerBaseBuilder'] = $dir.'builders/AssetsManagerBaseBuilder.class.php';
-	$wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneBuilder.class.php';
-	$wgAutoloadClasses['AssetsManagerGroupBuilder'] = $dir.'builders/AssetsManagerGroupBuilder.class.php';
-	$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = $dir.'builders/AssetsManagerGroupsBuilder.class.php';
-	$wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';
-	$wgAutoloadClasses['AssetsManagerServer'] = $dir.'AssetsManagerServer.class.php';
-
+	global $wgRequest;
 	AssetsManagerServer::serve($wgRequest);
-
 	exit();
 }
 

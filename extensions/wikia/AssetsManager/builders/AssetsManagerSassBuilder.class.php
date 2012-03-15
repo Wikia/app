@@ -11,9 +11,6 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		global $wgDevelEnvironment, $wgSpeedBox;
 		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
 
-		global $wgDevelEnvironment, $wgSpeedBox;
-		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
-
 		parent::__construct($request);
 
 		if (strpos($this->mOid, '..') !== false) {
