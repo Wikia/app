@@ -23,7 +23,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 		}else{
 			//TODO: remove when multi-skin resource loading fixed
-			$this->app->sendRequest( 'WikiaMobileService', 'addAsset', array( 'package' => 'wikiamobile_js_userlogin', 'scss' => 'extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss' ) );
+			$this->app->sendRequest( 'WikiaMobileService', 'addAsset', array( 'package' => ( $this->wg->request->getInt( 'recover' ) !== 1 ) ? 'wikiamobile_js_userlogin' : 'wikiamobile_js_userlogin_recover', 'scss' => 'extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss' ) );
 		}
 
 		// hide things in the skin
@@ -61,10 +61,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		if ( Wikia::isWikiaMobile() ) {
-			$this->overrideTemplate( 'WikiaMobileIndex' );
-		}
-
 		$this->initializeTemplate();
 
 		// set page title
@@ -81,7 +77,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		// process login
 		if($this->wg->request->wasPosted()) {
 			$action = $this->request->getVal( 'action', null );
-			if ( $action === $this->wf->Msg('userlogin-forgot-password') ) {	// send temporary password
+			if (
+				$action === $this->wf->Msg('userlogin-forgot-password') ||
+				$action === $this->wf->Msg('wikiamobile-sendpassword-label')
+			) {	// send temporary password
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
 
 				$this->result = $response->getVal( 'result', '' );
@@ -129,6 +128,19 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
 				}
 			}
+		}
+
+		if ( Wikia::isWikiaMobile() ) {
+			$recover = ( $this->wg->request->getInt( 'recover' ) === 1 );
+
+			$this->response->setVal( 'recoverPassword', $recover );
+
+			if ( $recover ) {
+				//we use different AssetsManager packages for recover and login, so make sure the page URL is different to avoid Varnish clashes
+				$this->formPostAction .= '?recover=1';
+			}
+
+			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 	}
 

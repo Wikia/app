@@ -240,7 +240,10 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js'
+		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js',
+
+		//extensions with assets to load on every page
+		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js'
 	)
 );
 
@@ -257,8 +260,15 @@ $config['wikiamobile_js_userlogin'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#external_http://connect.facebook.net/en_US/all.js',
-		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
+		'//extensions/wikia/UserLogin/js/UserLoginSpecial.wikiamobile.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
+	)
+);
+
+$config['wikiamobile_js_userlogin_recover'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/UserLogin/js/UserLoginSpecial.wikiamobile.js'
 	)
 );
 
