@@ -1,6 +1,6 @@
 <?php
 
-class ModuleDataTest extends PHPUnit_Framework_TestCase {
+class ModuleDataTest extends WikiaBaseTest {
 	private $wgDevelEnv;
 
 	// initialize skin only once
@@ -396,7 +396,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	function testAchievementsModule() {
 		global $wgUser, $wgTitle, $wgEnableAchievementsExt;
 		$userName = 'WikiaUser';
-		if (!$wgEnableAchievementsExt) $this->markTestSkipped();
+		if (!$wgEnableAchievementsExt) $this->markTestSkipped('$wgEnableAchievementsExt set to false');
 
 		$wgUser = $this->getMock('User', array('isBlocked', 'isLoggedIn', 'getId', 'isBot'));
 		$wgUser->mName = $userName;
@@ -531,7 +531,9 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	function testHotSpotsModule() {
 		$moduleData = Module::get('HotSpots', 'Index')->getData();
 		// No edits means no hot spots to test
-		if (!isset($moduleData['data']['results'])) {  $this->markTestSkipped(); }
+		if (!isset($moduleData['data']['results'])) {
+			$this->markTestSkipped('No edits means no hot spots to test');
+		}
 
 		$this->assertType('array', $moduleData['data']['results']);
 		$this->assertEquals(count($moduleData['data']['results']), 5);
@@ -828,7 +830,7 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	function testArticleCommentsModule() {
 		global $wgTitle, $wgDevelEnvironment, $wgEnableArticleCommentsExt;
 		$wgDevelEnvironment = false;  // Suppress memkey logic that uses SERVER_NAME
-		if (!$wgEnableArticleCommentsExt) $this->markTestSkipped();
+		if (!$wgEnableArticleCommentsExt) $this->markTestSkipped('$wgEnableArticleCommentsExt set to false');
 
 		$wgTitle = Title::newFromText("Foo");
 		ArticleCommentInit::$enable = true;

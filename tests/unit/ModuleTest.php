@@ -1,6 +1,6 @@
 <?php
 
-class ModuleTest extends PHPUnit_Framework_TestCase {
+class ModuleTest extends WikiaBaseTest {
 
 	function setUp() {
 		global $wgAutoloadClasses, $IP;

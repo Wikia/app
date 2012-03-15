@@ -1,5 +1,5 @@
 <?php
-class NavigationServiceTest extends PHPUnit_Framework_TestCase {
+class NavigationServiceTest extends WikiaBaseTest {
 
 	function testParseLines() {
 		$service = new NavigationService();
@@ -281,7 +281,7 @@ class NavigationServiceTest extends PHPUnit_Framework_TestCase {
 	function testParseErrors() {
 		global $wgOasisNavV2;
 		if (empty($wgOasisNavV2)) {
-			$this->markTestSkipped();
+			$this->markTestSkipped('wgOasisNavV2 set to false');
 			return;
 		}
 

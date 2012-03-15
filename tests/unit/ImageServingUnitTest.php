@@ -1,6 +1,6 @@
 <?php
 
-class ImageServingUnitTest extends PHPUnit_Framework_TestCase {
+class ImageServingUnitTest extends WikiaBaseTest {
 
 	function setUp() {
 		global $IP;
