@@ -11,7 +11,7 @@
 	<textarea class="body" placeholder="<?= wfMsg( 'minieditor-placeholder-new' ) ?>"></textarea>
 	<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); ?>
 	<div class="buttons" data-space-type="buttons">
-		<button type="button">Post</button>
+		<button type="button">Post<!-- DO NOT HARDCODE TEXT IN ENGLISH! --></button>
 	</div>
 	<?= $app->getView( 'MiniEditorController', 'Footer' )->render(); ?>
 	<?= $app->getView( 'MiniEditorController', 'Header', array(
@@ -23,11 +23,11 @@
 	))->render(); ?>
 	<?= $app->getView( 'MiniEditorController', 'Editor_Header')->render(); ?>
 	<div class="body">
-		<p><span style="font-weight: bold;"><?= wfMsg( 'minieditor-message-edit' ) ?></span></p>
+		<p><span style="font-weight: bold;"><?= wfMsg( 'minieditor-message-edit' ) ?></span></p> <!-- why the span? -->
 	</div>
 	<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); ?>
 	<div class="buttons" data-space-type="buttons">
-		<button type="button" class="wikia-menu-button contribute secondary">Edit</button>
+		<button type="button" class="wikia-menu-button contribute secondary">Edit<!-- DO NOT HARDCODE TEXT IN ENGLISH! --></button>
 	</div>
 	<?= $app->getView( 'MiniEditorController', 'Footer' )->render(); ?>
 	<?= $app->getView( 'MiniEditorController', 'Header', array(
@@ -41,7 +41,7 @@
 	<textarea class="body" placeholder="<?= wfMsg( 'minieditor-placeholder-reply' ) ?>"></textarea>
 	<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); ?>
 	<div class="buttons" data-space-type="buttons">
-		<button type="button">Reply</button>
+		<button type="button">Reply<!-- DO NOT HARDCODE TEXT IN ENGLISH! --></button>
 	</div>
 	<?= $app->getView( 'MiniEditorController', 'Footer' )->render(); ?>
 </section>
