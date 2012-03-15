@@ -44,7 +44,7 @@ var AdDriver = {
 }
 
 AdDriver.getAdProviderForSpecialCase = function(slotname) {
-	switch (wgDB) {
+	switch (wgDBname) {
 		case 'geekfeminism':
 		case 'kinkontap':
 		case 'lostpedia':
