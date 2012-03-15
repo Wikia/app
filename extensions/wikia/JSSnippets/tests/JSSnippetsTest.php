@@ -2,11 +2,13 @@
 
 class JSSnippetsTest extends PHPUnit_Framework_TestCase {
 	public function testAppBuild() {
+		F::unsetInstance('JSSnippets');
 		$instance = F::build('JSSnippets');
 		$this->assertInstanceOf('JSSnippets', $instance);
 	}
 
 	public function testAddToStack() {
+		F::unsetInstance('JSSnippets');
 		$instance = F::build('JSSnippets');
 
 		$snippet = $instance->addToStack(
