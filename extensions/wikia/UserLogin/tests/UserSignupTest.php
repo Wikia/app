@@ -95,7 +95,7 @@
 		}
 
 		protected function setUpRequest( $params=array() ) {			
-
+			F::unsetInstance('WebRequest');
 			$wgRequest = F::build('WebRequest', $params);
 			foreach( $params as $key => $value ) {
 				$wgRequest->setVal( $key, $value );
