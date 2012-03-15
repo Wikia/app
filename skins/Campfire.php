@@ -10,7 +10,6 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-$wgExtensionMessagesFiles['Campfire'] = dirname( __FILE__ ) . '/../extensions/wikia/Campfire/Campfire.i18n.php';
 
 class SkinCampfire extends SkinTemplate {
 
@@ -19,6 +18,17 @@ class SkinCampfire extends SkinTemplate {
 		$this->stylename = 'campfire';
 		$this->template  = 'CampfireTemplate';
 		$this->themename = 'campfire';
+
+		global $IP, $wgAutoloadClasses, $wgExtensionMessagesFiles;
+		$dir = dirname( __FILE__ );
+
+		$wgExtensionMessagesFiles['Campfire'] = $IP . '/extensions/wikia/Campfire/Campfire.i18n.php';
+
+		$wgAutoloadClasses['CampfireModule'] = $dir . '/campfire/modules/CampfireModule.class.php';
+		$wgAutoloadClasses['CampfireBodyModule'] = $dir . '/campfire/modules/CampfireBodyModule.class.php';
+		$wgAutoloadClasses['CampfireHeaderModule'] = $dir . '/campfire/modules/CampfireHeaderModule.class.php';
+		$wgAutoloadClasses['CampfireCategoriesModule'] = $dir . '/campfire/modules/CampfireCategoriesModule.class.php';
+		$wgAutoloadClasses['CampfireFooterModule'] = $dir . '/campfire/modules/CampfireFooterModule.class.php';
 	}
 
 	function setupSkinUserCss( OutputPage $out ) {}
@@ -28,6 +38,7 @@ class CampfireTemplate extends QuickTemplate {
 
 	function execute() {
 		Module::setSkinTemplateObj($this);
+
 
 		$entryModuleName = Wikia::getVar( 'CampfireEntryModuleName', 'Campfire' );
 
