@@ -250,3 +250,18 @@ blockquote {
 		}
 	}
 }
+
+#wkTst{
+	display: none;
+	position: absolute;
+	position: fixed;
+	margin: 10px;
+	padding: 10px;
+	border-radius: 3px;
+	top: 0;
+	width: 100%;
+	background-color: white;
+	
+	border: 1px solid $link-color;
+	box-shadow: 0 0 20px $shadow-color;
+}

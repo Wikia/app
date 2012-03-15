@@ -26,8 +26,9 @@
 		animation: cute .3s ease-in;
 		-webkit-transform: transform3d(0px,0px,0px);
 		-moz-transform: transform3d(0px,0px,0px);
-		-ms-transform: transform3d(0px,0px,0px);
 		transform: transform3d(0px,0px,0px);
+		-webkit-backface-visibility: hidden;
+		-webkit-perspective-origin: 1000;
 	}
 
 	&.open .chev {

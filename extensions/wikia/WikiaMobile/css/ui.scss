@@ -11,8 +11,7 @@
 	box-sizing: border-box;
 }
 
-/* Error Box */
-
+// Error Box
 .wkErr {
 	background-color: $error-bg-color;
 	color: $error-color;
@@ -20,8 +19,7 @@
 	padding-left: 10px;
 }
 
-/* Button */
-
+// Button
 .wkBtn {
 	font-size: medium;
 	padding: 5px 10px;
@@ -38,8 +36,7 @@
 	}
 }
 
-/* List */
-
+// List
 .wkLst {
 	list-style: none;
 
@@ -67,7 +64,7 @@ li.sub, li.cld > a, li.cld > span {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAPCAQAAACcwS2GAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAI5JREFUGFdtyGEKgjAYBuD3CB1lR/EIO0o3ioxQQqGogVbwMct0A73CjvD2o8wJPT8fAFuVJoilKgsFSxXVXo6seQ9mzkxdgmVHG+dJSXB0yzTK/ssmePpl1uuOIz1l841cG7YcOUizAgDsdMkbew7ipihY8Uk/RfqL/hNATsOGbg7goCs+5DUHAJyT6yLe6k5upkdIkZgAAAAASUVORK5CYII=);
 }
 
-/* Pop over menu */
+//Pop over menu
 .ppOvr {
 	display: none;
 	position: absolute;

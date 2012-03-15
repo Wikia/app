@@ -1,17 +1,33 @@
-<section id=wkTopNav <?= ($searchOpen) ? 'class=srhOpn' : ''?>>
-   <section id=wkTopBar>
+<?php
+   $loggedIn = $wg->User->getId() > 0;
+?>
+<section id=wkTopNav<?= ($searchOpen) ? ' class=srhOpn' : ''?>>
+   <div id=wkTopBar>
    <? if( $wordmarkType == "graphic" ) :?>
-	   <img id=wkImgMrk src="<?= $wordmarkUrl ;?>">
+	  <img id=wkImgMrk src="<?= $wordmarkUrl ;?>">
    <? else :?>
 	   <div id=wkWrdMrk><?= $wikiName ;?></div>
    <? endif ;?>
    <a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
    <a href=#wkNavMenu id=wkNavTgl class=tgl></a>
-   </section>
-   <section id=wkNav>
-	  <ul id=wkTabs>
-		 <li class=act>Menu
-	  </ul>
+   <a href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogin')->getPrefixedText(), $wg->ArticlePath ) ;?>" id=wkPrfTgl class='tgl <?= ($loggedIn ? 'lgdin' : 'lgdout') ?>'></a>
+   </div>
+   <div id=wkNav>
+		 <header class="wkPrfHead up"><?= $wf->Msg('wikiamobile-menu') ?></header>
 	  <nav id=wkWikiNav></nav>
-   </section>
+   </div>
+   <div id=wkPrf>
+	  <header class="wkPrfHead<?= (!$loggedIn) ? ' up' : '' ?>">
+		 <? if($loggedIn) {
+			$userName = $wg->User->getName();
+			echo AvatarService::renderAvatar( $userName, 22 ) . $userName;
+		 } else {
+			echo $wf->Msg('userlogin-login-heading');
+		 }
+		 ?>
+	  </header>
+	  <? if($loggedIn) :?>
+		 <a id=wkLogOut href=<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogout')->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>><?= $wf->Msg('logout'); ?></a>
+	  <? endif; ?>
+   </div>
 </section>

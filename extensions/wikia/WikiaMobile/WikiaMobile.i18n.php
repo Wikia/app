@@ -9,7 +9,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiamobile-page-header-title' => '$1',
 	'wikiamobile-search' => 'Search',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',

@@ -20,8 +20,7 @@
 		WikiaTracker.track('/1_mobile/'+(what?(what+'/'):'')+'modal/' + ev, 'main.sampled');
 	},
 	sharePopOver,
-	d = document,
-	byId = 'getElementById';
+	d = document;
 
 	createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution();
@@ -32,11 +31,11 @@
 		images = WikiaMobile.getImages();
 		clickEvent = WikiaMobile.getClickEvent();
 
-		modal = $(d[byId]('wkMdlWrp'));
-		modalClose = $(d[byId]('wkMdlClo'));
-		modalTopBar = $(d[byId]('wkMdlTB'));
-		modalContent = $(d[byId]('wkMdlCnt'));
-		modalFooter = $(d[byId]('wkMdlFtr'));
+		modal = $(d.getElementById('wkMdlWrp'));
+		modalClose = $(d.getElementById('wkMdlClo'));
+		modalTopBar = $(d.getElementById('wkMdlTB'));
+		modalContent = $(d.getElementById('wkMdlCnt'));
+		modalFooter = $(d.getElementById('wkMdlFtr'));
 		allToHide = modalTopBar.add(modalFooter);
 		thePage = $('#wkAdPlc, #wkTopNav, #wkPage, #wkFtr');
 
@@ -85,7 +84,7 @@
 		});
 		
 		sharePopOver = WikiaMobile.popOver({
-			on: d[byId]('wkShrImg'),
+			on: d.getElementById('wkShrImg'),
 			style: 'left:3px;',
 			create: function(cnt){
 				$(cnt).delegate('li', clickEvent, function(){
@@ -129,13 +128,13 @@
 		var image = images[current],
 		img = new Image();
 
-		$.showLoader(fullScreen,{center: true});
+		WikiaMobile.loader.show(fullScreen[0], {center: true});
 
 		img.src = image[0];
 		fullScreen.css('background-image','url()');
 		img.onload =  function() {
 			fullScreen.css('background-image','url("' + img.src + '")').data('num', current);
-			$.hideLoader(fullScreen);
+			WikiaMobile.loader.hide(fullScreen[0]);
 			img.onload = img = null;
 		};
 
