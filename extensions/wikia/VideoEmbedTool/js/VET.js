@@ -1008,7 +1008,6 @@ function VET_insertFinalVideo(e, type) {
 }
 
 function VET_switchScreen(to) {
-	debugger;
 	
 	VET_prevScreen = VET_curScreen;
 	VET_curScreen = to;
