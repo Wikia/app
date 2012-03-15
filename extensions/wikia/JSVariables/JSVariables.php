@@ -30,7 +30,7 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgDBname'] = $wgDBname; // TODO: the one above will be deleted - please use wgDBname
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
 
-	// NOTE: This doesn't appear to be used in the code anywhere. If that's true, we can probably remove it.  It is set by the AdEngine though, so perhaps Athena uses it?
+	// TODO: emit the following only when true (BugId:20558)
 	$vars['wgPrivateTracker'] = !empty($wgPrivateTracker) ? $wgPrivateTracker : false;
 
 	if($vars['wgIsArticle'] == false && $vars['wgEnableAjaxLogin']) {
