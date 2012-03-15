@@ -39,19 +39,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			if ( $obj = $memc->get( $cacheId ) ) {
 				$this->mContent = $obj;
 			} else {
-				$this->sassProcessing();
-				$this->importsProcessing();
-				$this->stylePathProcessing();
-				$this->base64Processing();
-				$this->janusProcessing();
+				$this->processContent();
 				$memc->set( $cacheId, $this->mContent );
 			}
 		} else {
-			$this->sassProcessing();
-			$this->importsProcessing();
-			$this->stylePathProcessing();
-			$this->base64Processing();
-			$this->janusProcessing();
+			$this->processContent();
 		}
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
@@ -64,6 +56,14 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			error_log( "{$this->mOid}\t{$time}ms {$contentLen}b" );
 		}
 
+	}
+
+	private function processContent() {
+		$this->sassProcessing();
+		$this->importsProcessing();
+		$this->stylePathProcessing();
+		$this->base64Processing();
+		$this->janusProcessing();
 	}
 
 	private function sassProcessing() {
@@ -167,8 +167,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				break;
 
 			// not supported image type provided
-	        default:
-                return false;
+			default:
+				return false;
 		}
 
 		$content = file_get_contents($fileName);
