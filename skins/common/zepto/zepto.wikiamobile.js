@@ -163,23 +163,4 @@
 			callback();
 		}
 	};
-
-	$.showLoader = function(elm, options) {
-		options = options || {};
-
-		if(elm.attr('data-hasLdr')) {
-			elm.find('.wkMblLdr').show();
-		} else {
-			elm.append('<div class="wkMblLdr' + (options.center?' center':'') +'"><img ' +
-						   (options.size?'style="width:' + options.size + '"':'') + ' src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>').attr('data-hasLdr', true);
-		}
-	};
-
-	$.hideLoader = function(elm) {
-		elm.find('.wkMblLdr').hide();
-	};
-
-	$.removeLoader = function(elm) {
-		elm.removeAttr('data-hasLdr').find('.wkMblLdr').remove();
-	};
 })(Zepto);

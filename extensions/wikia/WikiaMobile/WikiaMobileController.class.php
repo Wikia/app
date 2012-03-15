@@ -3,6 +3,7 @@
  * WikiaMobile public API
  *
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ * @author Jakub Olek <jolek(at)wikia-inc.com>
  */
 class WikiaMobileController extends WikiaController{
 	/**
@@ -34,5 +35,12 @@ class WikiaMobileController extends WikiaController{
 		 * unneeded headers
 		 */
 		$this->response->setCacheValidity( $cacheDuration, $cacheDuration, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
+	}
+	
+	public function getLoginPage(){
+		//allow proxying request to a service (shared method implementation)
+		$this->request->setInternal( true );
+
+		$this->forward( 'UserLoginSpecialController', 'index' );
 	}
 }

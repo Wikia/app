@@ -1,5 +1,6 @@
 var WikiaPhotoGallerySlider = {
 	sliderId: null,
+	loader: WikiaMobile.loader,
 
 	init: function(sliderId) {
 		this.sliderId = sliderId;
@@ -10,9 +11,9 @@ var WikiaPhotoGallerySlider = {
 		image = initialSlider.find('a img');
 
 		image.one('load',function() {
-			$.hideLoader(slider);
+			WikiaPhotoGallerySlider.loader.hide(slider[0]);
 		});
-		$.showLoader(slider,{center:true});
+		this.loader.show(slider[0],{center:true});
 
 		//select nav
 		initialSlider.find('.nav').addClass('selected');
@@ -48,10 +49,10 @@ var WikiaPhotoGallerySlider = {
 		slider.find('a img').hide();
 		if( imageData && imageData != image.attr('src')) {
 			image.one('load',function() {
-				$.hideLoader(slider);
+				WikiaPhotoGallerySlider.loader.hide(slider[0]);
 			});
 			image.attr('src', imageData);
-			$.showLoader(slider,{center:true});
+			this.loader.show(slider[0],{center:true});
 		}
 		image.show();
 	}

@@ -73,7 +73,7 @@ F::build('JSMessages')->registerPackage( 'WkMbl', array(
 	'wikiamobile-sharing-media-image',
 	'wikiamobile-sharing-page-text',
 	'wikiamobile-sharing-modal-text',
-	'wikiamobile-sharing-email-text'
+	'wikiamobile-sharing-email-text',
 ) );
 
 /**
