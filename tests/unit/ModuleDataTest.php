@@ -2,7 +2,7 @@
 
 class ModuleDataTest extends PHPUnit_Framework_TestCase {
 	private $wgDevelEnv;
-	
+
 	// initialize skin only once
 	public static function setUpBeforeClass() {
 		global $wgTitle, $wgUser, $wgForceSkin, $wgOut;
@@ -444,11 +444,11 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgTitle = Title::newFromText('Special:Search');
 		$moduleData = Module::get('Body')->getData();
 		$railList = $moduleData['railModuleList'];
-		
+
 		if( empty($wgOasisNavV2) ) {
 			$this->assertEquals($railList[1450][0], 'PagesOnWiki');
 		}
-		
+
 		$this->assertEquals($railList[1300][0], 'LatestActivity');
 		$this->assertEquals($railList[1250][0], 'LatestPhotos');
 
@@ -833,8 +833,8 @@ class ModuleDataTest extends PHPUnit_Framework_TestCase {
 		$wgTitle = Title::newFromText("Foo");
 		ArticleCommentInit::$enable = true;
 		$moduleData = Module::get('ArticleComments')->getData();
-		$this->assertEquals("Title", get_class($moduleData['wgTitle']));
-		$this->assertEquals("Foo", $moduleData['wgTitle']->getText());
+		$this->assertInstanceOf('Title', $moduleData['title']);
+		$this->assertEquals('Foo', $moduleData['title']->getText());
 		$this->assertEquals(count($moduleData['commentListRaw']), $moduleData['countComments']);
 
 	}
