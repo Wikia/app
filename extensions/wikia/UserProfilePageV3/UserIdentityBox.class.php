@@ -341,6 +341,7 @@ class UserIdentityBox {
 	 * @param string $type one of Phalanx static names consts: TYPE_CONTENT, TYPE_SUMMARY, TYPE_TITLE, TYPE_USER, TYPE_ANSWERS_QUESTION_TITLE, TYPE_ANSWERS_RECENT_QUESTIONS, TYPE_WIKI_CREATION, TYPE_COOKIE, TYPE_EMAIL; if $type is null it'll set to Phalanx::TYPE_CONTENT
 	 *
 	 * @return string empty string if text was blocked; given text otherwise
+	 * @FIXME this needs to be MOVED to Phalanx and called using hooks
 	 */
 	private function doPhalanxFilter($text, $type = null) {
 		$this->app->wf->ProfileIn( __METHOD__ );
@@ -440,36 +441,30 @@ class UserIdentityBox {
 	 * @param array reference to user data array
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
+	 * @author tor
 	 */
 	private function getUserGroup(&$data) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 
-		//blocked locally
-		$isBlocked = $this->user->isBlocked();
+		// check if the user is blocked locally, if not, also check if they're blocked globally (via Phalanx)
+		$isBlocked = $this->user->isBlocked() || $this->user->isBlockedGlobally();
 
-		$userName = $this->user->getName();
-		if( $isBlocked === false && !empty($this->app->wg->EnablePhalanxExt) && !empty($userName) ) {
-		//blocked globally
-			$userName = $this->doPhalanxFilter($userName, 'TYPE_USER');
-			$isBlocked = ( empty($userName) && !$this->user->isAllowed('phalanxexempt') ) ? true : false;
-		}
-
-		if( $isBlocked === false ) {
+		if ( $isBlocked ) {
+			$data['blocked'] = true;
+			$data['group'] = $this->app->wf->Msg('user-identity-box-group-blocked');
+		} else {
 			$data['blocked'] = false;
-			$userGroups = $this->user->getEffectiveGroups();
 
-			if( true !== $this->isFounder() ) {
+			if ( $this->isFounder() ) {
+				$data['group'] = $this->app->wf->Msg('user-identity-box-group-founder');
+			} else {
 				$group = $this->getUserGroups($this->user);
-				if( false !== $group ) {
+				if( $group ) {
 					$data['group'] = $this->app->wf->Msg('user-identity-box-group-'.$group);
 				} else {
 					$data['group'] = '';
 				}
-			} else {
-				$data['group'] = $this->app->wf->Msg('user-identity-box-group-founder');
 			}
-		} else {
-			$data['group'] = $this->app->wf->Msg('user-identity-box-group-blocked');
 		}
 
 		$this->app->wf->ProfileOut( __METHOD__ );
