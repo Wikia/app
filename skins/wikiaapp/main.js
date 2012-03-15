@@ -14,7 +14,7 @@ var MobileAppSkin = {
 	
 	trackEvent: function(eventName) {
 		MobileAppSkin.track(MobileAppSkin.trackingPrefix + eventName);
-		if(wgPrivateTracker) MobileAppSkin.track(MobileAppSkin.trackingPrefix + wgDBname + '/' + eventName);
+		if(window.wgPrivateTracker) MobileAppSkin.track(MobileAppSkin.trackingPrefix + wgDBname + '/' + eventName);
 	},
 	
 	track: function(str) {

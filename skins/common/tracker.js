@@ -120,7 +120,7 @@ YAHOO.Wikia.Tracker = {
 			username = wgUserName == null ? 'anon' : 'user';
 			//YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
 			_wtq.push(['/1_' + skinname + '/' + username + '/' + fakeurl, 'main.sampled']);
-			if(typeof wgPrivateTracker!="undefined") {
+			if(window.wgPrivateTracker) {
 				//YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + wgDBname + '/' + username + '/' + fakeurl);
 				_wtq.push(['/1_' + skinname + '/' + wgDBname + '/' + username + '/' + fakeurl, 'main.sampled']);
 			}
