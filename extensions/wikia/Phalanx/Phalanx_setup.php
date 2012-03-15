@@ -52,15 +52,16 @@ $wgLogActions['phalanxemail/delete'] = 'phalanx-rule-log-delete';
 function efPhalanxInit() {
 	global $wgUser, $wgHooks, $wgPhalanxDisableContent;
 
+	// these need to be initialized for UI-level checks to work
+	// former RegexBlock (TYPE_USER)
+	$wgHooks['GetBlockedStatus'][] = 'UserBlock::blockCheck';
+	$wgHooks['GetBlockedStatus'][] = 'UserCookieBlock::blockCheck';
+
 	// don't bother initializing hooks if user is immune to Phalanx
 	if ( $wgUser->isAllowed( 'phalanxexempt' ) ) {
 		wfDebug(__METHOD__.": user has 'phalanxexempt' right - no block will be applied\n");
 		return;
 	}
-
-	// former RegexBlock (TYPE_USER)
-	$wgHooks['GetBlockedStatus'][] = 'UserBlock::blockCheck';
-	$wgHooks['GetBlockedStatus'][] = 'UserCookieBlock::blockCheck';
 
 	// allow for per wiki disable the content checks
 		// (mainly for vstf wiki, causes pain when reporting block issues)
