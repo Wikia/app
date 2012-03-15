@@ -16,8 +16,10 @@ jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
 		return;
 	}
 
-	$().log('InternalTrack: ' + event);
-	if(data) $().log(data);
+	$().log(event, 'InternalTrack');
+	if(data) {
+		$().log(data);
+	}
 
 	// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
 	var params = {
@@ -44,19 +46,19 @@ jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
 		error: callbackError,
 		success: callbackSuccess
 	});
-}
+};
 
 
 // Port of getTarget and resolveTextNode function (altogether) from YUI Event lib
 // @author: Inez
 // TODO: Move it to some more general place because it is not realted only to tracking
-function getTarget(ev) {
+var getTarget = function (ev) {
     var t = ev.target || ev.srcElement;
     if(t && 3 == t.nodeType) {
         t = t.parentNode;
     }
     return t;
-}
+};
 
 /*
 @#@
@@ -218,7 +220,7 @@ jQuery.tracker = function() {
 			var track = function(fakeUrl) {
 				var root = isOasis ? 'contentpage/contentlink/' : 'articleActions/contentLink/';
 				$.tracker.byStr(root + fakeUrl);
-			}
+			};
 
 			var link = $(e.target);
 
