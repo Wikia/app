@@ -1,14 +1,13 @@
 <?php
 
 class MovieclipsFeedIngester extends VideoFeedIngester {
-	
-	private $rssContent;
-	
 	protected static $API_WRAPPER = 'MovieclipsApiWrapper';
 	protected static $PROVIDER = 'movieclips';
-	private static $VIDEOS_LISTING_FOR_MOVIE_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
-	private static $MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
-	private static $API_REQUEST_DELAY = 2;	// seconds
+	protected static $FEED_URL = 'http://api.movieclips.com/v2/movies/$1/videos';
+	const MOVIECLIPS_XMLNS = 'http://api.movieclips.com/schemas/2010';
+	const API_REQUEST_DELAY = 2;	// seconds
+	
+	private $rssContent;
 	
 	public function import($file='', $params=array()) {	
 		$numCreated = 0;
@@ -29,9 +28,9 @@ class MovieclipsFeedIngester extends VideoFeedIngester {
 
 		$articlesCreated = 0;
 
-		$url = str_replace('$1', $movieId, self::$VIDEOS_LISTING_FOR_MOVIE_URL);
+		$url = str_replace('$1', $movieId, static::$FEED_URL);
 		print("Connecting to $url...\n");
-		sleep(self::$API_REQUEST_DELAY);	// making too quick requests results in 503 errors
+		sleep(self::API_REQUEST_DELAY);	// making too quick requests results in 503 errors
 		$this->rssContent = $this->getUrlContent($url);
 		
 		if (!$this->rssContent) {
@@ -54,7 +53,7 @@ class MovieclipsFeedIngester extends VideoFeedIngester {
 			$clipData['clipTitle'] = html_entity_decode( $item->get_title() );
 
 			// id
-			$mcIds = $item->get_item_tags(self::$MOVIECLIPS_XMLNS, 'id');
+			$mcIds = $item->get_item_tags(self::MOVIECLIPS_XMLNS, 'id');
 			$clipData['videoId'] = $mcIds[0]['data'];
 			
 			// title and year, description

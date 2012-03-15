@@ -1,10 +1,10 @@
 <?php
 
 class ScreenplayFeedIngester extends VideoFeedIngester {
-	private static $FEED_URL = 'https://secure.totaleclips.com/WebServices/GetDataFeed.aspx?customerId=$1&username=$2&password=$3&startDate=$4&endDate=$5';
-	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
+	protected static $FEED_URL = 'https://secure.totaleclips.com/WebServices/GetDataFeed.aspx?customerId=$1&username=$2&password=$3&startDate=$4&endDate=$5';
+	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	public function downloadFeed($startDate, $endDate) {
 		$url = $this->initFeedUrl($startDate, $endDate);
@@ -24,7 +24,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	private function initFeedUrl($startDate, $endDate) {
 		global $wgScreenplayApiConfig;
 		
-		$url = str_replace('$1', $wgScreenplayApiConfig['customerId'], self::$FEED_URL );
+		$url = str_replace('$1', $wgScreenplayApiConfig['customerId'], static::$FEED_URL );
 		$url = str_replace('$2', $wgScreenplayApiConfig['username'], $url);
 		$url = str_replace('$3', $wgScreenplayApiConfig['password'], $url);
 		$url = str_replace('$4', $startDate, $url);
