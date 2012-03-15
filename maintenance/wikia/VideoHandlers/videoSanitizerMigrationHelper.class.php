@@ -5,10 +5,13 @@ class videoSanitizerMigrationHelper {
 	private $city_id;
 	
 	
-	public function __construct($city_id, $wgExternalDatawareDB) {
-		
+	public function __construct($city_id, $city_name, $wgExternalDatawareDB) {
+		if(!isset($_SERVER['QUERY_STRING'])) {
+			$_SERVER['QUERY_STRING'] = '(maintenance script)';
+		}
 		$this->dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		$this->city_id = (int)$city_id;
+		$this->city_name = $city_name;
 	}
 	
 	/*
@@ -47,21 +50,39 @@ class videoSanitizerMigrationHelper {
 	 */
 	public function logVideoTitle($oldTitle, $sanitizedTitle, $operationStatus="UNKNOWN", $articleTitle="") {
 		
-			$this->dbw_dataware->replace('video_migration_sanitization',
-				array( 'city_id', 'old_title' ),	
-				array( 
-					'city_id'			=> $this->city_id,
-					'old_title'			=> $oldTitle,
-					'sanitized_title'	=> $sanitizedTitle,
-					'operation_status'	=> $operationStatus,
-					'operation_time'	=> date("YmdHis"),
-					'article_title'		=> $articleTitle
-				),
-				'videoSanitizerMigrationHelper::logVideoTitle'	
-			);		
+		$this->dbw_dataware->replace('video_migration_sanitization',
+			array( 'city_id', 'old_title' ),
+			array(
+				'city_id'			=> $this->city_id,
+				'old_title'			=> $oldTitle,
+				'sanitized_title'	=> $sanitizedTitle,
+				'operation_status'	=> $operationStatus,
+				'operation_time'	=> date("YmdHis"),
+				'article_title'		=> $articleTitle
+			),
+			'videoSanitizerMigrationHelper::logVideoTitle'
+		);
 		
 	}
-	
+
+
+	public function logFailedEdit($articleId, $articleTitleText, $articleNamespace, $from, $to) {
+
+		$this->dbw_dataware->insert('video_sanitization_failededit',
+			array(
+				'city_id'			=> $this->city_id,
+				'city_name'			=> $this->city_name,
+				'article_id'		=> $articleId,
+				'article_title'		=> $articleTitleText,
+				'article_namespace'	=> $articleNamespace,
+				'rename_from'		=> $from,
+				'rename_to'			=> $to,
+			),
+			'videoSanitizerMigrationHelper::logFailedEdit'
+		);
+
+	}
+
 	
 }
 
