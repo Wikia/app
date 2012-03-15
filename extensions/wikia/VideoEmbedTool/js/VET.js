@@ -1008,6 +1008,7 @@ function VET_insertFinalVideo(e, type) {
 }
 
 function VET_switchScreen(to) {
+	debugger;
 	
 	VET_prevScreen = VET_curScreen;
 	VET_curScreen = to;
@@ -1073,10 +1074,12 @@ function VET_close(e) {
 
 	// Handle MiniEditor focus
 	// (BugId:18713)
-	var wikiaEditor = WikiaEditor.getInstance();
-	if(wikiaEditor.config.isMiniEditor) {
-		wikiaEditor.editorFocus();
-		wikiaEditor.plugins.MiniEditor.hasFocus = false;
+	if (window.WikiaEditor) {
+		var wikiaEditor = WikiaEditor.getInstance();
+		if(wikiaEditor.config.isMiniEditor) {
+			wikiaEditor.editorFocus();
+			wikiaEditor.plugins.MiniEditor.hasFocus = false;
+		}
 	}
 }
 
