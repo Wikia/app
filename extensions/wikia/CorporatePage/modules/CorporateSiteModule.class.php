@@ -224,6 +224,7 @@ class CorporateSiteModule extends Module {
 			// render it
 			$this->sliderHtml = $slider->toHTML();
 		}
+
 		if (ArticleAdLogic::isMainPage()) {
 			$this->isMainPage = true;
 			$this->slider_class = "big";

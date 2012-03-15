@@ -1,0 +1,425 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/transition";
+@import "../../../../skins/oasis/css/mixins/transform";
+
+$wikiahomepage-line-height: 16px;
+$color-wikiahome-border-primary-brand-color: #c7d1d8;
+$color-wikiahome-community: #002e54; 
+
+.WikiaHomePage {
+	font-size: 13px;	/* reset font size */
+	line-height: $wikiahomepage-line-height;	/* reset line height */
+
+	/* reset article styling */
+	p {
+		margin: 0;
+		padding: 0;
+	}
+	h2 {	/* TODO: hyun - we have to UI Styleguide this and share with hubs.  Need to talk to Tim and Mika */
+		border-bottom: 4px solid #d8e3e9;
+		font-size: 18px;
+		font-weight: bold;
+		line-height: 23px;
+		margin: 0;
+		padding-bottom: 5px;
+	}
+	/* resets */
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			line-height: $wikiahomepage-line-height;
+			margin: 0;
+			padding: 0;
+		}
+	}
+	
+	/* page header */
+	.wikiahomepage-header {
+		@include clearfix;
+		margin-top: 45px;
+		position: relative;
+		.wikiahompage-heading-group {
+			float: left;
+			margin-left: 15px;
+			h1 {
+				font-size: 27px;
+				font-weight: bold;
+				left: -1px;
+				position: relative;
+			}
+		}
+		.button {
+			font-size: 14px;
+			height: 22px;
+			line-height: 14px;
+			margin: 9px 0 0 20px;
+			padding: 7px 20px 0;
+		}
+		.WikiaSearch {
+			position: absolute;
+			right: 0;
+			top: 11px;
+			input[type=text] {
+				width: 267px;
+			}
+		}
+	}
+
+	.wikiahomepage-wikis {
+		@include clearfix;
+		border-bottom: 4px solid $color-wikiahome-border-primary-brand-color;
+		margin-top: 25px;
+	}
+	
+	/* visualization */
+	#visualization {
+		.grid-6 {
+			.slot-small {
+				height: 100px;
+			}
+			.slot-medium {
+				height: 210px;
+			}
+			.slot-big {
+				height: 320px;
+			}
+			.remix {
+				width:155px;
+				height:210px;
+				background-image: url("/extensions/wikia/WikiaHomePage/images/brush.png");/* $wgCdnStylePath */
+				text-align:center;
+				position: relative;
+				a.wikia-button.secondary {
+					@include box-shadow(0, 0, 2px, #aaa, false, 0 );
+					@include linear-gradient(white, top, white, 35%, #e5e5e5, 100%);
+					bottom: 15px;
+					left: 17px;
+					font-size: 16px;
+					font-weight: bold; 
+					margin: 0 auto; 
+					padding: 11px 23px 15px 20px;
+					position: absolute;
+					.arrow {
+						background: url("/extensions/wikia/WikiaHomePage/images/sprite.png") no-repeat 0 -53px;/* $wgCdnStylePath */
+						height: 22px;
+						margin-right: 5px;
+						position: relative;
+						top: 1px;
+						width: 20px;
+					}
+					&:hover {	
+						@include box-shadow(0, 0, 5px, #aaa, false, 0 );
+						@include linear-gradient(white, top, white, 35%, #ddd, 100%);
+						.arrow {
+							background-position: -27px -53px;
+						}
+					}
+					&:active {
+						@include box-shadow(0, 0, 5px, #aaa, false, 0 );
+						@include linear-gradient(#ddd, top, #ddd, 20%, white, 100%);
+					}
+				}
+				h2 {
+					background: url("/extensions/wikia/WikiaHomePage/images/sprite.png") no-repeat;/* $wgCdnStylePath */
+					border-bottom: none;
+					font-size: 20px;
+					padding: 15px 17px 0;
+					text-align: left;
+				}
+				h3 {
+					font-size: 13px;
+					font-weight: normal;
+					line-height: 18px;
+					margin-top: 5px;
+					padding: 0 15px 0 17px;
+					text-align: left;
+				}
+			}
+			.stats {
+				background-image: url("/extensions/wikia/WikiaHomePage/images/brush.png");/* $wgCdnStylePath */
+				border-top: 4px solid $color-wikiahome-community;
+				height: 186px;
+				padding: 10px 15px;
+				width: 290px;
+				h2 {
+					border-bottom: none;
+					margin-top: 5px;
+					padding: 0;
+					text-align: left;
+				}
+				h3 {
+					font-size: 13px;
+					font-weight: normal;
+					line-height: 1em;
+					margin: 0;
+					text-align: left;
+				}
+				.statisticdata {
+					margin-top: 5px;
+					.datasection {
+						float: left;
+						height: 50px;
+						margin-top: 18px;
+						padding-left: 15px;
+						width: 127px;
+						h4 {
+							font-size: 14px;
+						}
+						strong {
+							display: block;
+							font-size: 21px;
+							margin-top: 5px;
+						}
+					}
+					.firstrowcell {
+						padding-left: 0px;
+						border-right: 1px dotted #B9B9B9;
+						width: 142px;
+					}
+				}
+			}
+		}
+		.wikia-slot {
+			display: block;
+			margin-bottom: 10px;
+			position: relative;
+			span {
+				background-color: rgba(#000, .5);
+				bottom: 0;
+				color: #fff;
+				font-weight: bold;
+				left: 0;
+				padding: 5px;
+				position: absolute;
+				strong {
+					font-size: 9px;
+					margin-right: 5px;
+					padding: 3px;
+					@include border-radius(2px);
+				}
+				.hot {
+					background-color: #993399;
+				}
+				.new {
+					background-color: #1c629b;
+				}
+			}
+			img {
+				position: absolute;
+			}
+			&:hover {
+				text-decoration: none;
+				span {
+					background-color: #000;
+				}
+			}
+		}
+		.slot-small:hover {
+			&:before {
+				border: 5px solid rgba(#000,0.5);  
+        		content: '';  
+        		position: absolute;
+        		width:145px;
+				height:90px;
+			}
+			&:after {
+				border: 5px solid rgba(#000,0.5);  
+        		content: '';  
+        		position: absolute;
+				width:145px;
+				height:90px;
+			}
+		}
+		.slot-medium:hover {
+			&:before {
+				border: 5px solid rgba(#000,0.5);  
+        		content: '';  
+        		position: absolute;
+				width:310px;
+				height:200px;
+			}
+			&:after {
+				border: 5px solid rgba(#000,0.5);  
+        		content: '';  
+        		position: absolute;
+				width:310px;
+				height:200px;
+			}
+		}
+		.slot-big:hover {
+			&:before {
+				border: 5px solid rgba(#000,0.5);  
+        		content: '';  
+        		position: absolute;
+				width:310px;
+				height:310px;
+			}
+			&:after {
+				border: 5px solid rgba(#000,0.5);  
+        		content: '';  
+        		position: absolute;
+				width:310px;
+				height:310px;
+			}
+		}
+	}
+	
+	/* hub */
+	.wikiahomepage-hubs {
+		@include clearfix;
+		clear: both;
+		margin-top: 60px;
+		.wikiahomepage-hubs-section {
+			border-bottom: 1px dotted $color-page-border;
+			.wikiahomepage-hubs-hero-image {
+				height: 160px;
+				width: 320px;
+			}
+			p {
+				margin: 10px 0;
+			}
+			h4 {
+				font-weight: bold;
+				margin-top: 25px;
+			}
+			ul {
+				height: 110px;
+				position: relative;
+				top: 1px;
+				li {
+					margin-top: 4px;
+				}
+			}
+			&:first-child {
+				margin-left: 0;
+			}
+			&.videogames {
+				h2 {
+					border-bottom-color: $color-wikiahome-videogames;
+				}
+				ul li a{
+					color: $color-wikiahome-videogames;
+				}
+			}
+			&.entertainment {
+				h2 {
+					border-bottom-color: $color-wikiahome-entertainment;
+				}
+				ul li a{
+					color: $color-wikiahome-entertainment;
+				}
+			}
+			&.lifestyle {
+				h2 {
+					border-bottom-color: $color-wikiahome-lifestyle;
+				}
+				ul li a{
+					color: $color-wikiahome-lifestyle;
+				}
+			}
+		}
+	}
+	
+	/* community */
+	.wikiahomepage-community {
+		@include clearfix;
+		margin-top: 50px;
+		.wikiahomepage-community-section {
+			h2 {
+				border-bottom-color: $color-wikiahome-community;
+			}
+			.wikiahomepage-community-hero {
+				background-color: #f4f4f4;
+				display: block;
+				height: 95px;
+				position: relative;
+				&.wikiahomepage-community-social-hero {
+					background: none;
+				}
+				.wikiahomepage-community-social {
+					li {
+						float: left;
+						height: 30px;
+						margin-top: 9px;
+						padding: 5px 0 0 18px;
+						width: 142px;
+						.wikiahomepage-community-social-wikia-blog,
+						.wikiahomepage-community-social-twitter,
+						.wikiahomepage-community-social-facebook,
+						.wikiahomepage-community-social-googleplus {
+							background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png);	/* $wgCdnStylePath */
+							height: 32px;
+							margin-right: 12px;
+							width: 32px;
+						}
+						.wikiahomepage-community-social-wikia-blog {
+							background-position: -273px -32px;
+						}
+						.wikiahomepage-community-social-twitter {
+							background-position: -273px 0px;
+						}
+						.wikiahomepage-community-social-facebook {
+							background-position: -273px -64px;
+						}
+						.wikiahomepage-community-social-googleplus {
+							background-position: -273px -96px;
+						}
+					}
+				}
+				.wikiahomepage-community-hero-image {
+					background-image: url(/extensions/wikia/WikiaHomePage/images/community-sprite.png);	/* $wgCdnStylePath */
+					position: absolute;
+					&.wikiahomepage-community-image {
+						background-position: 0px 0px;
+						height: 50px;
+						left: 41px;
+						top: 21px;
+						width: 235px;
+					}
+					&.wikiahomepage-highlight-image {
+						background-position: 0px -50px;
+						bottom: 0;
+						height: 73px;
+						left: 25px;
+						width: 272px;
+					}
+				}
+			}
+			p {
+				margin-top: 10px;
+			}
+		}
+	}
+	
+	/* footer */
+	.wikiahomepage-footer {
+		border-top: 4px solid $color-wikiahome-border-primary-brand-color;
+		margin-top: 30px;
+		padding-top: 30px;
+		@include clearfix;
+		h3 {
+			font-size: 12px;
+			font-weight: bold;
+			.editsection {
+				display: none;
+			}
+		}
+		ul {
+			li {
+				margin-top: 5px
+			}
+		}
+		p {
+			margin: 5px 0;
+		}
+		a.external:after {
+			display: none;
+		}
+	}
+}

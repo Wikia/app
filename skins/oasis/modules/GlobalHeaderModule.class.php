@@ -39,7 +39,9 @@ class GlobalHeaderModule extends Module {
 		} else {
 			$messageName = 'shared-Globalnavigation';
 		}
-
+		
+		$this->isCorporatePage = ($wgCityId === '80433') ? true : false;
+		
 		$service = new NavigationService();
 		$this->menuNodes = $service->parseMessage($messageName, array(3, 4, 5), 60*60*3 /* 3 hours */);
 	}

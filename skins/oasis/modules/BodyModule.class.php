@@ -17,7 +17,7 @@ class BodyModule extends Module {
 	var $wgABTests;
 	var $wgEnableTopButton;
 	var $wgOasisNavV2;
-
+	
 	// skin vars
 	var $content;
 
@@ -375,7 +375,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgUser, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition;
+		global $wgOut, $wgTitle, $wgUser, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableWikiaHomePageExt;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
@@ -451,6 +451,16 @@ class BodyModule extends Module {
 					$this->headerModuleAction = 'Corporate';
 				}
 			}
+
+			if ($wgEnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
+				$this->wgSuppressFooter = true;
+				$this->wgSuppressArticleCategories = true;
+				$this->displayComments = false;
+				$this->wgSuppressPageHeader = true;
+				$this->wgSuppressWikiHeader = true;
+				$this->bodytext = F::App()->sendRequest( 'WikiaHomePageController', 'index' );
+			}
+
 		}
 
 		// use one column layout for pages with no right rail modules

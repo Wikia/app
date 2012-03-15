@@ -1,4 +1,4 @@
-<form id="WikiaSearch" class="WikiaSearch" action="index.php?title=Special:Search" method="get">
+<form id="WikiaSearch" class="WikiaSearch<?= empty($noautocomplete) ? '' : ' noautocomplete' ?>" action="index.php?title=Special:Search" method="get">
 	<input type="text" name="search" placeholder="<?= $placeholder ?>" autocomplete="off" accesskey="f" value="<?= htmlspecialchars( $searchterm ) ?>">
 	<input type="hidden" name="fulltext" value="<?= $fulltext ?>">
 	<input type="submit">

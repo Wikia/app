@@ -1,6 +1,6 @@
 <?php
 /**
- * WikiaBaseTest class - part of Wikia UnitTest Fraework - W(U)TF
+ * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
  * @author ADi
  * @author Owen
  * Usage:
