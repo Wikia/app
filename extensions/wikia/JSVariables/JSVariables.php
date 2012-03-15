@@ -21,7 +21,6 @@ function wfMakeGlobalVariablesScript($vars) {
 	}
 
 	$vars['wgCityId'] = $wgCityId;
-	$vars['wgID'] = isset($wgCityId) ? (int) $wgCityId : -1; // TODO: this one or one above should be deleted
 	if (is_array($wgEnableAjaxLogin) && in_array($vars['skin'], $wgEnableAjaxLogin)) {
 		$vars['wgEnableAjaxLogin'] = true;
 	} else {
