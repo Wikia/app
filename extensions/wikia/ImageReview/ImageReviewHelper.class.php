@@ -110,7 +110,8 @@ class ImageReviewHelper extends WikiaModel {
 			$task->createTask(
 				array(
 					'page_list' => $deletionList,
-				)
+				),
+				TASK_QUEUED
 			);
 		}
 		
