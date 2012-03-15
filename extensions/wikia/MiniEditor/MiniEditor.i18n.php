@@ -14,4 +14,4 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	// please document the messages
-)
+);
