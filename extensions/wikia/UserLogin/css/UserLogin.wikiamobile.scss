@@ -16,18 +16,25 @@ $spacing: 5px;
 	text-align: center;
 
 	padding: 10px;
+
 	input {
 		-webkit-appearance: none;
 		width: 100%;
 		height: 40px;
 		display: block;
-		margin: 20px 0;
+		margin-bottom: 20px;
 		border: 1px solid $border-color;
 		font-size: large;
 		padding: 0 10px;
 		background-color: #F2F2F2;
 	}
 
+	label {
+		color: $page-text-alternate-color;
+		display: block;
+		font-size: medium;
+		text-align: left;
+	}
 	.inpErr {
 		margin-bottom: 0;
 		border: 2px solid $error-bg-color;

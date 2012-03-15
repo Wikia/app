@@ -75,7 +75,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->returntoquery = $this->request->getVal( 'returntoquery', '' );
 
 		// process login
-		if($this->wg->request->wasPosted()) {
+		if ( $this->wg->request->wasPosted() ) {
 			$action = $this->request->getVal( 'action', null );
 			if (
 				$action === $this->wf->Msg('userlogin-forgot-password') ||
@@ -131,16 +131,23 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( Wikia::isWikiaMobile() ) {
+			$recoverParam = '?recover=1';
 			$recover = ( $this->wg->request->getInt( 'recover' ) === 1 );
 
+			$this->response->setVal( 'recoverParam', $recoverParam );
 			$this->response->setVal( 'recoverPassword', $recover );
+			
 
 			if ( $recover ) {
 				//we use different AssetsManager packages for recover and login, so make sure the page URL is different to avoid Varnish clashes
-				$this->formPostAction .= '?recover=1';
+				$this->formPostAction .= $recoverParam;
 			}
 
-			$this->overrideTemplate( 'WikiaMobileIndex' );
+			if ( !empty( $action ) && ( $action === $this->wf->Msg( 'resetpass_submit' )  || $this->result == 'resetpass' ) ) {
+				$this->overrideTemplate( 'WikiaMobileChangePassword' );
+			} else {
+				$this->overrideTemplate( 'WikiaMobileIndex' );
+			}
 		}
 	}
 
