@@ -5,16 +5,17 @@ abstract class VideoFeedIngester {
 	const PROVIDER_MOVIECLIPS = 'movieclips';
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_MOVIECLIPS, self::PROVIDER_REALGRAVITY);
-	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
+	protected static $FEED_URL;
+	protected static $CLIP_TYPE_BLACKLIST = array();
 	private static $instances = array();
 	
-	protected static $CACHE_KEY = 'videofeedingester';
-	protected static $CACHE_EXPIRY = 3600;
-	protected static $THROTTLE_INTERVAL = 1;	// seconds
+	const CACHE_KEY = 'videofeedingester';
+	const CACHE_EXPIRY = 3600;
+	const THROTTLE_INTERVAL = 1;	// seconds
 
-	private static $WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
+	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases', 'movieclipsIds');
 
 	abstract public function import($file, $params);
@@ -67,7 +68,9 @@ abstract class VideoFeedIngester {
 		$categoryStr = '';
 		foreach ($categories as $categoryName) {
 			$category = Category::newFromName($categoryName);
-			$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
+			if ($category instanceof Category) {
+				$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
+			}
 		}
 		
 		if ($debug) {
@@ -90,8 +93,8 @@ abstract class VideoFeedIngester {
 			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
 			if ($result->ok) {
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
-				print "sleeping " . self::$THROTTLE_INTERVAL . " second(s)...\n";
-				sleep(self::$THROTTLE_INTERVAL);
+				print "sleeping " . self::THROTTLE_INTERVAL . " second(s)...\n";
+				sleep(self::THROTTLE_INTERVAL);
 				return 1;
 			}
 		}
@@ -149,7 +152,7 @@ abstract class VideoFeedIngester {
 		global $wgExternalSharedDB, $wgMemc;
 		
 		
-		$memcKey = wfMemcKey( self::$CACHE_KEY );
+		$memcKey = wfMemcKey( self::CACHE_KEY );
 		$aWikis = $wgMemc->get( $memcKey );
 		if ( !empty( $aWikis ) ) {
 			return $aWikis;
@@ -168,7 +171,7 @@ abstract class VideoFeedIngester {
 			'city_variables_pool',
 			'city_list',
 		);
-		$varName = mysql_real_escape_string(self::$WIKI_INGESTION_DATA_VARNAME);
+		$varName = mysql_real_escape_string(self::WIKI_INGESTION_DATA_VARNAME);
 		$aWhere = array('city_id = cv_city_id', 'cv_id = cv_variable_id');
 		
 		$aWhere[] = "cv_value is not null";	
@@ -189,7 +192,7 @@ abstract class VideoFeedIngester {
 		}
 		$dbr->freeResult( $oRes );
 		
-		$wgMemc->set( $memcKey, $aWikis, self::$CACHE_EXPIRY );
+		$wgMemc->set( $memcKey, $aWikis, self::CACHE_EXPIRY );
 
 		return $aWikis;
 	}

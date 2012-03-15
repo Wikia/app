@@ -3,10 +3,9 @@
 class RealgravityFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'RealgravityApiWrapper';
 	protected static $PROVIDER = 'realgravity';
-	private static $REALGRAVITY_API_KEY = '4bd3e310-9c30-012e-b52b-12313d017962';
+	protected static $FEED_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.xml?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
 	private static $API_PROVIDER_IDS = array('MACHINIMA'=>240);
-	private static $API_PAGE_SIZE = 100;
-	private static $API_VIDEOS_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.xml?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
+	const API_PAGE_SIZE = 100;
 	
 	public function import($file='', $params=array()) {
 		$numCreated = 0;
@@ -83,7 +82,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 				}
 			}
 		}
-		while ($numVideos == self::$API_PAGE_SIZE);
+		while ($numVideos == self::API_PAGE_SIZE);
 		
 		return $articlesCreated;
 	}
@@ -91,10 +90,10 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	private function initFeedUrl($keyword, $startDate, $endDate, $page=1) {
 		global $wgRealgravityApiKey;
 		
-		$url = str_replace('$1', $wgRealgravityApiKey, self::$API_VIDEOS_URL);
+		$url = str_replace('$1', $wgRealgravityApiKey, static::$FEED_URL);
 		$url = str_replace('$2', self::$API_PROVIDER_IDS['MACHINIMA'], $url);
 		$url = str_replace('$3', urlencode($keyword), $url);
-		$url = str_replace('$4', self::$API_PAGE_SIZE, $url);
+		$url = str_replace('$4', self::API_PAGE_SIZE, $url);
 		$url = str_replace('$5', $page, $url);
 		if ($startDate && $endDate) {
 			$url .= '&date_range=' . $startDate . '..' . $endDate;
