@@ -33,7 +33,7 @@ class WallHelper {
 	 */
 	public function getTitle($namespace = null, $subpage = null, $user = null) {
 		$app = F::App();
-		
+
 		if( empty($user) ) {
 			$user = $this->getUser();
 		}
@@ -41,7 +41,7 @@ class WallHelper {
 		if( empty($namespace) ) {
 			$namespace2 = $this->getVal('namespace');
 			$this->title = F::build('Title', array($user->getName(), $namespace2), 'newFromText');
-			
+
 			return $this->title;
 		}
 		
