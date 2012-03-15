@@ -13,5 +13,11 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	// please document the messages
+	'minieditor-hello-msg' => 'A welcome message shown on a special page',
+	'minieditor-specialpage-title' => 'Title of a special page',
+
+	'minieditor-new-heading' => 'Heading of a form area',
+	'minieditor-placeholder-new' => 'Placeholder text, showin in an input field, disappears when clicked',
+	'minieditor-message-edit' => 'Notification text shown when a message is being edited (as opposed to created)',
+	'minieditor-placeholder-reply' => 'Placeholder text, showin in an input field, disappears when clicked',
 );
