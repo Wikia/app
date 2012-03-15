@@ -603,8 +603,13 @@ class PageHeaderModule extends Module {
 	 * Called instead of executeIndex when the CorporatePage extension is enabled.
 	 */
 	public function executeCorporate() {
-		global $wgTitle, $wgOut, $wgSuppressNamespacePrefix;
+		global $wgTitle, $wgOut, $wgUser, $wgSuppressNamespacePrefix;
 		wfProfileIn( __METHOD__ );
+
+		$this->canAct = $wgUser->isAllowed('edit');
+		if ( $this->canAct ) {
+			$this->prepareActionButton();
+		}
 
 		// page namespace
 		$ns = $wgTitle->getNamespace();
