@@ -1,4 +1,4 @@
-ArticleAjaxLoading = {
+var ArticleAjaxLoading = {
 
 	counter: 0,
 
@@ -102,11 +102,11 @@ ArticleAjaxLoading = {
 
 			event.preventDefault();
 		});
-	}
+	};
 
 $.pjax = function( options ) {
 	var $container = $(options.container),
-		success = options.success || $.noop
+		success = options.success || $.noop;
 
 	delete options.success;
 
@@ -118,8 +118,8 @@ $.pjax = function( options ) {
 		type: 'GET',
 		dataType: 'json',
 		beforeSend: function(xhr){
-			$container.trigger('start.pjax')
-			xhr.setRequestHeader('X-PJAX', 'true')
+			$container.trigger('start.pjax');
+			xhr.setRequestHeader('X-PJAX', 'true');
 		},
 
 		error: function(){
@@ -138,7 +138,7 @@ $.pjax = function( options ) {
 
 				if(window.wgIsMainpage == true || window.wgNamespaceNumber !== 0) {
 					ArticleAjaxLoading.track('/aal/NavigatedToMainPage');
-					return window.location = options.url;
+					return (window.location = options.url);
 				}
 
 				wgUserName = ArticleAjaxLoading.cache.wgUserName;
@@ -149,9 +149,8 @@ $.pjax = function( options ) {
 				document.title = data.title;
 			} catch(err) {
 				ArticleAjaxLoading.track('/aal/ErrorInResponse');
-				return window.location = options.url;
+				return (window.location = options.url);
 			}
-
 
 			$('body').css('cursor', 'auto');
 
@@ -242,9 +241,9 @@ $.pjax = function( options ) {
 	$(document).trigger('pjax', $.pjax.xhr, options);
 
 	return $.pjax.xhr;
-}
+};
 
-var popped = ('state' in window.history), initialURL = location.href
+var popped = ('state' in window.history), initialURL = location.href;
 $(window).bind('popstate', function(event) {
 	var initialPop = !popped && location.href == initialURL;
 	popped = true;
@@ -253,7 +252,7 @@ $(window).bind('popstate', function(event) {
 	var state = event.state;
 
 	if ( state && state.pjax ) {
-		var $container = $(state.pjax+'')
+		var $container = $(state.pjax+'');
 		if ( $container.length ) {
 			$.pjax({
 				url: state.url || location.href,
@@ -265,7 +264,7 @@ $(window).bind('popstate', function(event) {
 			window.location = location.href;
 		}
 	}
-})
+});
 
 if ( $.inArray('state', $.event.props) < 0 ) {
 	Array.prototype.push.call($.event.props, 'state');
