@@ -1321,10 +1321,12 @@ function WMU_close(e) {
 
 	// Handle MiniEditor focus
 	// (BugId:18713)
-	var wikiaEditor = WikiaEditor.getInstance();
-	if(wikiaEditor.config.isMiniEditor) {
-		wikiaEditor.editorFocus();
-		wikiaEditor.plugins.MiniEditor.hasFocus = false;
+	if (window.WikiaEditor) {
+		var wikiaEditor = WikiaEditor.getInstance();
+		if(wikiaEditor.config.isMiniEditor) {
+			wikiaEditor.editorFocus();
+			wikiaEditor.plugins.MiniEditor.hasFocus = false;
+		}
 	}
 }
 
