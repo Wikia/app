@@ -85,7 +85,7 @@
 		 * @dataProvider getHubImagesDataProvider
 		 */
 		public function testGetHubImages( $mockRawText, $mockFileParams, $mockReplaceImageServerTime, $expHubImages ) {
-			$this->markTestSkipped();
+			$this->markTestSkipped(__METHOD__ . ' throws fatal error');
 
 			// setup
 			$this->setUpMockObject( 'Title', array( 'newFromText' => null ), true );
