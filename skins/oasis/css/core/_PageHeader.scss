@@ -113,11 +113,13 @@
 	}
 	&.oasis-one-column {
 		.WikiaPageHeader {
-			margin-right: 330px;
-			padding-right: 175px;
+			padding-right: 505px;
 			&.WikiaPageHeaderDiffHistory {
 				margin-right: 10px;
 				padding-right: 320px;
+			}
+			.tally {
+				right: 330px;
 			}
 		}
 		.WikiaSearchHeader {
@@ -125,6 +127,11 @@
 			right: 10px;
 			top: 0;
 			width: 300px;
+			form {
+				margin-bottom: 0;
+				padding-bottom: 0;
+				border-bottom: 0;
+			}
 		}
 	}
 }
