@@ -18,7 +18,7 @@ test('isHighValueCountry', function() {
   window.wgHighValueCountries['SE'] = 3;
   window.wgHighValueCountries['UK'] = 3;
   window.wgHighValueCountries['US'] = 3;
-  
+
 	// commented-out tests may pass in production, but not dev
 //  ok( AdConfig.isHighValueCountry('AT'), 'AT' );
 //  ok( AdConfig.isHighValueCountry('BE'), 'BE' );
@@ -89,7 +89,7 @@ test('pullGeo', function() {
   equal( AdConfig.geo.country, 'AU', 'country: AU' );
 
   AdConfig.geo = null;
-  AdConfig.cookie('Geo', null); 
+  AdConfig.cookie('Geo', null);
 });
 
 module('AdConfig.DART');
@@ -141,9 +141,9 @@ test('getSubdomain', function() {
   equal( AdConfig.DART.getSubdomain(), 'ad', 'US' );
   AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"AR","continent":"SA"}'); AdConfig.pullGeo();
   equal( AdConfig.DART.getSubdomain(), 'ad', 'AR' );
-  
+
   AdConfig.geo = null;
-  AdConfig.cookie('Geo', null); 
+  AdConfig.cookie('Geo', null);
 });
 
 test('getAdType', function() {
@@ -154,7 +154,7 @@ test('getAdType', function() {
 test('initSiteAndZones', function() {
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
   window.cityShort = 'ent';
-  window.wgDB = 'muppet';
+  window.wgDBname = 'muppet';
   window.adLogicPageType = 'home';
   AdConfig.DART.initSiteAndZones();
   equal( AdConfig.DART.site, 'wka.ent', 'Muppet:home, site' );
@@ -162,7 +162,7 @@ test('initSiteAndZones', function() {
   equal( AdConfig.DART.zone2, 'home', 'Muppet:home, zone2' );
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
   window.cityShort = 'gaming';
-  window.wgDB = 'fallout';
+  window.wgDBname = 'fallout';
   window.adLogicPageType = 'article';
   AdConfig.DART.initSiteAndZones();
   equal( AdConfig.DART.site, 'wka.gaming', 'Fallout:article, site' );
@@ -170,7 +170,7 @@ test('initSiteAndZones', function() {
   equal( AdConfig.DART.zone2, 'article', 'Fallout:article, zone2' );
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
   window.cityShort = 'wikia';
-  window.wgDB = 'wikiaglobal';
+  window.wgDBname = 'wikiaglobal';
   window.adLogicPageType = 'article';
   window.wgPageName = 'PC_games';
   window.wgHubsPages = {"fanfiction": {"name": "fanfic", "site": "ent"}, "handheld_games": {"name": "handheld", "site": "gaming"}, "pc_games": {"name": "pc", "site": "gaming"}, "xbox_360_games": {"name": "xbox360", "site": "gaming"}, "ps3_games": {"name": "ps3", "site": "gaming"}, "recipes": {"name": "recipes", "site": "life"}, "mobile_games": {"name": "mobile", "site": "gaming"}, "movie": {"name": "movie", "site": "ent"}, "tv": {"name": "tv", "site": "ent"}, "entertainment": {"name": "entertainment", "site": "ent"}, "music": {"name": "music", "site": "ent"}, "animation": {"name": "anime", "site": "ent"}, "anime": {"name": "anime", "site": "ent"}, "sci-fi": {"name": "sci_fi", "site": "ent"}, "horror": {"name": "horror", "site": "ent"}, "gaming": {"name": "gaming", "site": "gaming"}, "casual_games": {"name": "casual", "site": "gaming"}, "casual": {"name": "casual", "site": "gaming"}, "lifestyle": {"name": "lifestyle", "site": "life"}, "wii_games": {"name": "wii", "site": "gaming"}, "e3": {"name": "e3", "site": "gaming"}, "oscar": {"name": "oscar", "site": "ent"}, "square_enix_games": {"name": "squareenix", "site": "gaming"}, "pl": {"name": "pl", "langcode": "pl"}};
@@ -182,7 +182,7 @@ test('initSiteAndZones', function() {
 });
 
 test('isHub', function() {
-  window.wgDB = 'wikiaglobal';
+  window.wgDBname = 'wikiaglobal';
   window.wgHubsPages = {"fanfiction": {"name": "fanfic", "site": "ent"}, "handheld_games": {"name": "handheld", "site": "gaming"}, "pc_games": {"name": "pc", "site": "gaming"}, "xbox_360_games": {"name": "xbox360", "site": "gaming"}, "ps3_games": {"name": "ps3", "site": "gaming"}, "recipes": {"name": "recipes", "site": "life"}, "mobile_games": {"name": "mobile", "site": "gaming"}, "movie": {"name": "movie", "site": "ent"}, "tv": {"name": "tv", "site": "ent"}, "entertainment": {"name": "entertainment", "site": "ent"}, "music": {"name": "music", "site": "ent"}, "animation": {"name": "anime", "site": "ent"}, "anime": {"name": "anime", "site": "ent"}, "sci-fi": {"name": "sci_fi", "site": "ent"}, "horror": {"name": "horror", "site": "ent"}, "gaming": {"name": "gaming", "site": "gaming"}, "casual_games": {"name": "casual", "site": "gaming"}, "casual": {"name": "casual", "site": "gaming"}, "lifestyle": {"name": "lifestyle", "site": "life"}, "wii_games": {"name": "wii", "site": "gaming"}, "e3": {"name": "e3", "site": "gaming"}, "oscar": {"name": "oscar", "site": "ent"}, "square_enix_games": {"name": "squareenix", "site": "gaming"}, "pl": {"name": "pl", "langcode": "pl"}};
   window.wgPageName = 'Fanfiction';
   ok( AdConfig.DART.isHub(), 'Fan Fiction' );
@@ -235,9 +235,9 @@ test('isHub', function() {
   window.wgPageName = 'Movie';
   window.wgHubsPages = null;
   ok (!AdConfig.DART.isHub(), 'no wgHubsPages' );
-  window.wgDB = 'muppet';
+  window.wgDBname = 'muppet';
   ok( !AdConfig.DART.isHub(), 'Wiki: Muppet' );
-  window.wgDB = null;
+  window.wgDBname = null;
   window.wgPageName = null;
 });
 
@@ -415,7 +415,7 @@ test('getUrl', function() {
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
   AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"US","continent":"NA"}'); AdConfig.pullGeo();
   window.cityShort = 'ent';
-  window.wgDB = 'muppet';
+  window.wgDBname = 'muppet';
   window.adLogicPageType = 'article';
   window.wgArticleId = 37414;
   window.wgPageName = 'Adriana_Karembeu';
@@ -442,7 +442,7 @@ test('getUrl', function() {
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
   AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"LB","continent":"AS"}'); AdConfig.pullGeo();
   window.cityShort = 'life';
-  window.wgDB = 'healthyrecipes';
+  window.wgDBname = 'healthyrecipes';
   window.adLogicPageType = 'home';
   window.wgArticleId = 1461;
   window.wgPageName = 'Healthy_Recipes_Wiki';
@@ -469,7 +469,7 @@ test('getUrl', function() {
   AdConfig.DART.site = AdConfig.DART.zone1 = AdConfig.DART.zone2 = null;
   AdConfig.geo = null; AdConfig.cookie('Geo', '{"country":"AU","continent":"OC"}'); AdConfig.pullGeo();
   window.cityShort = 'gaming';
-  window.wgDB = 'wowwiki';
+  window.wgDBname = 'wowwiki';
   window.adLogicPageType = 'article';
   window.wgArticleId = 119514;
   window.wgPageName = 'Drenna_Riverwind';

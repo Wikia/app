@@ -121,12 +121,12 @@ YAHOO.Wikia.Tracker = {
 			//YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + username + '/' + fakeurl, 'UA-2871474-1');
 			_wtq.push(['/1_' + skinname + '/' + username + '/' + fakeurl, 'main.sampled']);
 			if(typeof wgPrivateTracker!="undefined") {
-				//YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl);
-				_wtq.push(['/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl, 'main.sampled']);
+				//YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/' + wgDBname + '/' + username + '/' + fakeurl);
+				_wtq.push(['/1_' + skinname + '/' + wgDBname + '/' + username + '/' + fakeurl, 'main.sampled']);
 			}
 			/**
 			if(wgServer.indexOf('-abc') > 0) {
-				//YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/abc-' + wgDB + '/' + username + '/' + fakeurl);
+				//YAHOO.Wikia.Tracker.trackStr('/1_' + skinname + '/abc-' + wgDBname + '/' + username + '/' + fakeurl);
 			}
 			**/
 		}

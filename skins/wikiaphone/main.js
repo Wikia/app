@@ -26,7 +26,7 @@ var MobileSkin = {
 		_wtq.push(['/1_mobile/' + MobileSkin.GA.userName + '/view', 'main.sampled']);
 
 		if(wgPrivateTracker) {
-			_wtq.push(['/1_mobile/' + wgDB + '/' + MobileSkin.GA.userName + '/view', 'main.sampled']);
+			_wtq.push(['/1_mobile/' + wgDBname + '/' + MobileSkin.GA.userName + '/view', 'main.sampled']);
 		}
 
 		MobileSkin.track('pageview', 'view', wgPageName);

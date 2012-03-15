@@ -17,7 +17,7 @@ AdProviderOpenX.getUrl = function (baseUrl, slotname, zoneId, affiliateId, hub, 
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;
 	// varnish handles this url += "&browser_lang=X-BROWSER";
-	url += "&dbname=" + wgDB;
+	url += "&dbname=" + wgDBname;
 	url += "&tags=" + wgWikiFactoryTagNames.join(",");
 	url += additionalParams;
 	if(slotname != ''){ url += "&slotname=" + slotname; }
@@ -44,7 +44,7 @@ AdProviderOpenX.getUrl2 = function() {
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;
 	// varnish handles this url += "&browser_lang=X-BROWSER";
-	url += "&dbname=" + wgDB;
+	url += "&dbname=" + wgDBname;
 	url += "&tags=" + escape(wgWikiFactoryTagNames.join(","));
 	url += "&block=1";
 	url += (document.charset ? '&charset='+document.charset : (document.characterSet ? '&charset='+document.characterSet : ''));

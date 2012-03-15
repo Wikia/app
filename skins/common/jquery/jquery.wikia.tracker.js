@@ -15,14 +15,14 @@ jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
 	if (!event) {
 		return;
 	}
-	
+
 	$().log('InternalTrack: ' + event);
 	if(data) $().log(data);
 
 	// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
 	var params = {
 		'c': wgCityId,
-		'x': wgDB,
+		'x': wgDBname,
 		'a': wgArticleId,
 		'lc': wgContentLanguage,
 		'n': wgNamespaceNumber,
@@ -160,7 +160,7 @@ jQuery.tracker = function() {
             $.tracker.byStr('userengagement/editSimilar/editSimilarPrefs');
         }
     });
-    
+
 
     // TODO: Verify if it works
     // Special:Userlogin (Macbre)
@@ -373,9 +373,9 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 		WikiaTracker.track(str, 'main.unsampled');
 	}
 	if(wgPrivateTracker) {
-		WikiaTracker.track(wgDB + '/' + str, 'main.private');
+		WikiaTracker.track(wgDBname + '/' + str, 'main.private');
 		if (unsampled) {
-			WikiaTracker.track(wgDB + '/' + str, 'main.unsampled');
+			WikiaTracker.track(wgDBname + '/' + str, 'main.unsampled');
 		}
 	}
 	WikiaTracker.AB(str);

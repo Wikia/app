@@ -305,7 +305,7 @@ AdConfig.DART.initSiteAndZones = function() {
 		AdConfig.DART.site = AdConfig.DART.getSite(window.cityShort);
 	}
 	if (!AdConfig.DART.zone1) {
-		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgDB);
+		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgDBname);
 	}
 	if (!AdConfig.DART.zone2) {
 		AdConfig.DART.zone2 = AdConfig.DART.getZone2(window.adLogicPageType);
@@ -313,11 +313,11 @@ AdConfig.DART.initSiteAndZones = function() {
 }
 
 AdConfig.DART.isHub = function() {
-	if (wgDB != AdConfig.DART.corporateDbName) {
+	if (wgDBname != AdConfig.DART.corporateDbName) {
 		return false;
 	}
 
-	if (typeof wgHubsPages == 'undefined' || !wgHubsPages) {
+	if (!window.wgHubsPages) {
 		return false;
 	}
 
