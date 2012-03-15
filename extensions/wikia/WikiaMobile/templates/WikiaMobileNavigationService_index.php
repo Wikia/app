@@ -10,12 +10,15 @@
    <? endif ;?>
    <a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
    <a href=#wkNavMenu id=wkNavTgl class=tgl></a>
+   <? if($wg->EnableUserLoginExt) : ?>
    <a href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogin')->getPrefixedText(), $wg->ArticlePath ) ;?>" id=wkPrfTgl class='tgl <?= ($loggedIn ? 'lgdin' : 'lgdout') ?>'></a>
+   <? endif ; ?>
    </div>
    <div id=wkNav>
 		 <header class="wkPrfHead up"><?= $wf->Msg('wikiamobile-menu') ?></header>
 	  <nav id=wkWikiNav></nav>
    </div>
+   <? if($wg->EnableUserLoginExt) : ?>
    <div id=wkPrf>
 	  <header class="wkPrfHead<?= (!$loggedIn) ? ' up' : '' ?>">
 		 <? if($loggedIn) {
@@ -30,4 +33,5 @@
 		 <a id=wkLogOut href=<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogout')->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>><?= $wf->Msg('logout'); ?></a>
 	  <? endif; ?>
    </div>
+   <? endif ; ?>
 </section>

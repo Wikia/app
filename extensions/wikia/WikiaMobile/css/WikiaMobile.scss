@@ -19,6 +19,7 @@
 
 //mixins
 @import "mixins/transition.scss";
+@import "mixins/box-shadow.scss";
 
 html {
 	border: none;
@@ -170,7 +171,6 @@ blockquote {
 	position: relative;
 	width: 50px;
 	height: 25px;
-	z-index: $top-layer-z-index+1000;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	background-position: center;
 	background-repeat: no-repeat;
@@ -252,16 +252,37 @@ blockquote {
 }
 
 #wkTst{
-	display: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	position: absolute;
-	position: fixed;
-	margin: 10px;
+	margin: 10px auto;
 	padding: 10px;
-	border-radius: 3px;
-	top: 0;
-	width: 100%;
+	border-radius: 5px;
+	top: 75px;
+	left:10px;
+	right: 10px;
 	background-color: white;
+	-webkit-transition: opacity .5s ease-out, -webkit-transform .5s;
+	-webkit-transform: translate3d(0px,0px,0px);
+	@include box-shadow(0 0 30px -10px $shadowColor);
+	text-align: center;
+	border: 2px solid grey;
+	background-position: 99% 10%;
+	background-size: 10px;
 	
-	border: 1px solid $link-color;
-	box-shadow: 0 0 20px $shadow-color;
+	
+	&.show {
+		border-color: $link-color;
+		pointer-events: auto;
+		opacity: 1;
+	}
+	
+	&.hide {
+		pointer-events: none;
+		opacity: 0;
+		-webkit-transform: translateY(20px);
+	}
+	
+	&.err{
+		border-color: red;
+	}
 }
