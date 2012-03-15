@@ -19,6 +19,7 @@ $app->registerExtensionMessageFile('FounderProgressBar', $dir . '/FounderProgres
 // Hooks
 $wgHooks[ 'ArticleSaveComplete' ][] = 'FounderProgressBarHooks::onArticleSaveComplete';
 $wgHooks[ 'UploadComplete' ][] = 'FounderProgressBarHooks::onUploadComplete';
+$wgHooks[ 'UploadWordmarkComplete' ][] = 'FounderProgressBarHooks::onUploadWordmarkComplete';
 $wgHooks[ 'AddNewAccount' ][] = 'FounderProgressBarHooks::onAddNewAccount';
 
 

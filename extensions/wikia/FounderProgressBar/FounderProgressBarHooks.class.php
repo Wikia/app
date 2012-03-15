@@ -107,7 +107,7 @@ class FounderProgressBarHooks {
 	/**
 	 * @desc Counts the following actions
 	 * 
-	 * Adding a photo or uploading a new wordmark X
+	 * Adding a photo
 	 * 
 	 */
 	function onUploadComplete (&$image) {
@@ -121,10 +121,6 @@ class FounderProgressBarHooks {
 		// Any image counts for these
 		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PHOTO_ADD_10));
 		$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_PHOTO_ADD_20));
-		// Only workmark counts for this one
-		if ($image && $image->getTitle()->getText() == "Wiki-wordmark.png") {
-			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_WORDMARK_EDIT));
-		}
 		if (self::bonusTaskEnabled(FT_BONUS_PHOTO_ADD_10)) {
 			$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PHOTO_ADD_10));		
 		}		
@@ -132,6 +128,23 @@ class FounderProgressBarHooks {
 		return true;
 	}
 	
+	/**
+	 * @desc Counts the following actions
+	 * 
+	 * uploading a new wordmark
+	 * 
+	 */
+	function onUploadWordmarkComplete(&$image) {
+		// Quick exit if tasks are all completed
+		if (self::allTasksComplete()) {
+			return true;
+		}
+
+		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_WORDMARK_EDIT));
+
+		return true;
+	}
+
 	function onAddNewAccount ($user) {
 
 		// Quick exit if tasks are all completed

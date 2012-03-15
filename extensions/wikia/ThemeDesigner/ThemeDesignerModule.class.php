@@ -213,6 +213,8 @@ class ThemeDesignerModule extends Module {
 			if ( empty( $this->wordmarkImageUrl ) || empty( $this->wordmarkImageName ) ) {
 				$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
 			}
+			
+			wfRunHooks( 'UploadWordmarkComplete', array( &$upload ) );
 		} else if ($status['status'] === 'error') {
 			$this->errors = $status['errors'];
 		}
