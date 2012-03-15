@@ -42,6 +42,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				$this->sassProcessing();
 				$this->importsProcessing();
 				$this->stylePathProcessing();
+				$this->base64Processing();
 				$this->janusProcessing();
 				$memc->set( $cacheId, $this->mContent );
 			}
@@ -49,6 +50,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			$this->sassProcessing();
 			$this->importsProcessing();
 			$this->stylePathProcessing();
+			$this->base64Processing();
 			$this->janusProcessing();
 		}
 
@@ -111,8 +113,69 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	private function stylePathProcessing() {
 		global $IP;
 
+		// TODO: move here once StaticChute is removed
 		require "$IP/extensions/wikia/StaticChute/wfReplaceCdnStylePathInCss.php";
 		$this->mContent = wfReplaceCdnStylePathInCss($this->mContent);
+	}
+
+	/**
+	 * Tries to base64 encode images marked with "base64" comment
+	 */
+	private function base64Processing() {
+		wfProfileIn(__METHOD__);
+
+		$this->mContent = preg_replace_callback("/([, ]url[^\n]*?)(\s*\/\*\s*base64\s*\*\/)/is", function($matches) {
+			global $IP;
+			$fileName = $IP . trim(substr($matches[1], 4, -1), '\'"() ');
+
+			$encoded = AssetsManagerSassBuilder::base64EncodeFile($fileName);
+			if ($encoded !== false) {
+				return "url({$encoded});";
+			}
+			else {
+				return $matches[0] . '/* encoding failed! */';
+			}
+		}, $this->mContent);
+
+		wfProfileOut(__METHOD__);
+	}
+
+
+	/**
+	 * Base64 encodes given file
+	 *
+	 * @param string $fileName file absolute path
+	 * @return mixed encoded file content or false (if file doesn't exist)
+	 */
+	public static function base64EncodeFile($fileName) {
+		wfProfileIn(__METHOD__);
+
+		if (!file_exists($fileName)) {
+			return false;
+		}
+
+		$ext = end(explode('.', $fileName));
+
+		switch($ext) {
+			case 'gif':
+			case 'png':
+		        $type = $ext;
+		        break;
+
+			case 'jpg':
+				$type = 'jpeg';
+				break;
+
+			// not supported image type provided
+	        default:
+                return false;
+		}
+
+		$content = file_get_contents($fileName);
+		$encoded = base64_encode($content);
+
+		wfProfileOut(__METHOD__);
+		return "data:image/{$type};base64,{$encoded}";
 	}
 
 	private function janusProcessing() {
