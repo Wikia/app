@@ -63,33 +63,46 @@ class WallHelper {
 	 * 
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
-	
 	//TODO: remove call to UserProfilePage
 	public function getUser($title = false) {
 		$title = $title ? $title : F::App()->wg->Title;
 		$ns = $title->getNamespace();
-		if( $ns == NS_USER_WALL ) {
+        $user = null;
+
+        if( $ns == NS_USER_WALL ) {
 			$w = F::build( 'Wall', array( $title ), 'newFromTitle' );
-			return $w->getUser(); 
-		}
-		elseif( $ns == NS_USER_WALL_MESSAGE) {
+			$user = $w->getUser();
+		} else if( $ns == NS_USER_WALL_MESSAGE) {
 			$wm = F::build( 'WallMessage', array( $title ), 'newFromTitle' );
-			return $wm->getWallOwner();
-		} else {
-			// this is last resort
-			// should no longer be needed
-			
-			$response = F::App()->sendRequest(
-				'UserProfilePage',
-				'getUserFromTitle',
-				array(
-					'title' => $title,
-					'returnUser' => true
-				)
-			);
-			
-			return $response->getVal('user');
+            $user = $wm->getWallOwner();
 		}
+
+        if( is_null($user) ) {
+            // this is last resort
+            // should no longer be needed
+            $response = F::App()->sendRequest(
+                'UserProfilePage',
+                'getUserFromTitle',
+                array(
+                    'title' => $title,
+                    'returnUser' => true
+                )
+            );
+
+            return $response->getVal('user');
+        }
+
+        return $user;
+        /*
+        var_dump(array(
+            '$ns' => $ns,
+            'NS_USER_WALL' => NS_USER_WALL,
+            'NS_USER_WALL_MESSAGE' => NS_USER_WALL_MESSAGE,
+            '$user' => $user,
+            '$title' => $title,
+        ));
+        die;
+        */
 	}
 	
 	/**

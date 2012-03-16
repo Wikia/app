@@ -24,7 +24,7 @@ class StaffLogger {
 		$wgHooks['BlockIpStaffPowersCancel'][] = 'StaffLogger::eventlogBlockIp';
 		$wgHooks['PiggybackLogOut'][] = 'StaffLogger::eventlogPiggybackLogOut';
 		$wgHooks['PiggybackLogIn'][] = 'StaffLogger::eventlogPiggybackLogIn';
-                $wgHooks['WikiFactoryPublicStatusChange'][] = 'StaffLogger::eventlogWFPublicStatusChange';
+        $wgHooks['WikiFactoryPublicStatusChange'][] = 'StaffLogger::eventlogWFPublicStatusChange';
 	}
 
 	static public function eventlogPiggybackLogIn($user,$userdst) {
