@@ -8,16 +8,19 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $providerHomeUrl = 'http://www.youtube.com/';
 	
 	public function getPlayerAssetUrl() {
-		return JWPlayer::getJavascriptPlayerUrl();
+		return '';
+//		return JWPlayer::getJavascriptPlayerUrl();
 	}
 	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
-		$height =  $this->getHeight( $width );
-		return JWPlayer::getEmbedCode($articleId, $this->getVideoId(), self::$urlTemplate.$this->getVideoId(), $this->getTitle(), $width, $height, false, $this->getDuration(), $this->isHd(), null, null, null, $autoplay, $isAjax, $postOnload);
+		return $this->getEmbedNative($width, $autoplay);
+//		$height =  $this->getHeight( $width );
+//		return JWPlayer::getEmbedCode($articleId, $this->getVideoId(), self::$urlTemplate.$this->getVideoId(), $this->getTitle(), $width, $height, false, $this->getDuration(), $this->isHd(), null, null, null, $autoplay, $isAjax, $postOnload);
 	}
 		
 	private function getEmbedNative($width, $autoplay=false) {
 		// YouTube parameters: http://code.google.com/apis/youtube/player_parameters.html
+		$height =  $this->getHeight( $width );
 		$params = array('rel'=>0);
 		if ($autoplay) $params['autoplay'] = 1;		
 		$qs = http_build_query($params);
