@@ -183,10 +183,10 @@ class AdEngine {
 			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js"></script>'. "\n";
 
 			foreach($this->slots as $slotname => $slot) {
-            	$AdProvider = $this->getAdProvider($slotname);
-            	// Get setup HTML for each provider. May be empty.
-            	$out .= $AdProvider->getSetupHtml();
-            }
+				$AdProvider = $this->getAdProvider($slotname);
+				// Get setup HTML for each provider. May be empty.
+				$out .= $AdProvider->getSetupHtml();
+			}
 		}
 
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
