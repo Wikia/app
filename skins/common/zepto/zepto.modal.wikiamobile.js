@@ -25,6 +25,7 @@
 	createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution();
 
+		//TODO: decouple sharing code, it could be grabbed from the underlying page
 		d.body.insertAdjacentHTML('beforeend', '<div id=wkMdlWrp><div id=wkMdlTB><div class=wkShr id=wkShrImg></div><div id=wkMdlClo class=clsIco></div></div><div id=wkMdlCnt></div><div id=wkMdlFtr></div>\
 			</div><style>#wkMdlWrp{min-height:' + resolution[1] + 'px;}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + resolution[0] + 'px;}}</style>');
 
