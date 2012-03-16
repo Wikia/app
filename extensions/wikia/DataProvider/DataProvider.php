@@ -16,19 +16,17 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['other'][] = array(
-	'name' => 'DataProvider',
-	'description' => 'data provider for wikia skins',
-	'author' => 'Inez Korczyński, Tomasz Klim'
+		'name' => 'DataProvider',
+		'description' => 'data provider for wikia skins',
+		'author' => 'Inez Korczyński, Tomasz Klim'
 );
 
-
-class DataProvider
-{
+class DataProvider {
 	private $skin;
 
 	/*
 	 * Author: Tomasz Klim (tomek at wikia.com)
-	 */
+	*/
 	final public static function &singleton( &$skin = false ) {
 		static $instance;
 		if ( !isset( $instance ) ) {
@@ -43,24 +41,24 @@ class DataProvider
 
 	/*
 	 * Author: Tomasz Klim (tomek at wikia.com)
-	 */
+	*/
 	final public function /* array */ GetData() {
 		return $this->skin->data;
 	}
 
 	/*
 	 * Author: Tomasz Klim (tomek at wikia.com)
-	 *
-	 * Deprecated. Use getContext() instead.
-	 */
+	*
+	* Deprecated. Use getContext() instead.
+	*/
 	final public function /* object */ GetSkinObject() {
 		return $this->skin;
 	}
 
 	/*
 	 * Returns original translation or translation used in monobook if original is not found
-	 * Author: Gerard, Inez, Tomek
-	 */
+	* Author: Gerard, Inez, Tomek
+	*/
 	final public static function /* string */ Translate( $key ) {
 		wfProfileIn( __METHOD__ );
 		global $wgLang, $wgSkinTranslationMap;
@@ -86,14 +84,14 @@ class DataProvider
 
 	/*
 	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	*/
 	final public static function /* array */ GetTopFiveArray() {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
 
 		$links = array();
-        $links['most_popular'] = 'GetMostPopularArticles';
-        $links['most_visited'] = 'GetMostVisitedArticles';
+		$links['most_popular'] = 'GetMostPopularArticles';
+		$links['most_visited'] = 'GetMostVisitedArticles';
 		$links['newly_changed'] = 'GetNewlyChangedArticles';
 		$links['highest_ratings'] = 'GetTopVotedArticles';
 		$links['community'] = 'GetTopFiveUsers';
@@ -101,8 +99,8 @@ class DataProvider
 		if ( isset ( $_COOKIE['topfive'] ) && isset ( $links[$_COOKIE['topfive']] ) ) {
 			$active = $_COOKIE['topfive'];
 		} else {
-            $active = 'most_visited';
-        }
+			$active = 'most_visited';
+		}
 
 		wfProfileOut( __METHOD__ );
 		return array($links, $active);
@@ -110,8 +108,8 @@ class DataProvider
 
 	/*
 	 * Return array of links (href, text, id) for this wiki box
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	*/
 	final public static function /* array */ GetThisWiki() {
 		wfProfileIn( __METHOD__ );
 		global $wgWikiaUsePHPBB;
@@ -145,8 +143,8 @@ class DataProvider
 
 	/*
 	 * Return array of links (href, text, id) for my stuff box
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	*/
 	final public function /* array */ GetMyStuff() {
 		wfProfileIn( __METHOD__ );
 
@@ -165,11 +163,10 @@ class DataProvider
 		return $links;
 	}
 
-
 	/*
 	 * Return array of links (href, text, id) for expert tools box
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	*/
 	final public function /* array */ GetExpertTools() {
 		wfProfileIn( __METHOD__ );
 
@@ -207,11 +204,10 @@ class DataProvider
 		return $links;
 	}
 
-
 	/*
 	 * Return array of top voted articles
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	*/
 	final public static function /* array */ GetTopVotedArticles($limit = 7) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
@@ -251,8 +247,8 @@ class DataProvider
 
 	/*
 	 * Return array of most popular articles
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	*/
 	final public static function /* array */ GetMostPopularArticles($limit = 7) {
 		wfProfileIn( __METHOD__ );
 		global $wgDBname, $wgMemc;
@@ -264,7 +260,7 @@ class DataProvider
 			$results = array();
 			$templateTitle = Title::newFromText ('Most popular articles', NS_MEDIAWIKI);
 			if( $templateTitle->exists() ) {
-			    /* take data from MW articles */
+				/* take data from MW articles */
 				$templateArticle = new Article ($templateTitle);
 				$templateContent = $templateArticle->getContent();
 				$lines = explode( "\n\n", $templateContent );
@@ -280,32 +276,31 @@ class DataProvider
 			}
 
 			if ( count( $results ) < $limit ) {
-			    if ( function_exists("wfGetMostPopularArticlesFromCache") ) {
-                    $most_popular = wfGetMostPopularArticlesFromCache($limit, 0);
-                    if ( is_array($most_popular) && (!empty($most_popular)) ) {
-                        foreach ($most_popular as $row_title => $cnt) {
-                            $title = Title::makeTitleSafe( NS_MAIN, $row_title );
+				if ( function_exists("wfGetMostPopularArticlesFromCache") ) {
+					$most_popular = wfGetMostPopularArticlesFromCache($limit, 0);
+					if ( is_array($most_popular) && (!empty($most_popular)) ) {
+						foreach ($most_popular as $row_title => $cnt) {
+							$title = Title::makeTitleSafe( NS_MAIN, $row_title );
 
-                            if(is_object($title)) {
-                                if(wfMsg("mainpage") != $title->getText()) {
-                                    $article['url'] = $title->getLocalUrl();
-                                    $article['text'] = $title->getPrefixedText();
-                                    $results[] = $article;
-                                }
-                            }
-                        }
-                    }
-                }
+							if(is_object($title)) {
+								if(wfMsg("mainpage") != $title->getText()) {
+									$article['url'] = $title->getLocalUrl();
+									$article['text'] = $title->getPrefixedText();
+									$results[] = $article;
+								}
+							}
+						}
+					}
+				}
 			}
 
 			self::removeAdultPages($results);
 
-            if (!empty($results)) {
-			    $results = array_slice( $results, 0, $limit );
-            }
+			if (!empty($results)) {
+				$results = array_slice( $results, 0, $limit );
+			}
 			$wgMemc->set( $memckey, $results, 60 * 60 * 3);
 		}
-
 
 		wfProfileOut( __METHOD__ );
 		return $results;
@@ -313,18 +308,18 @@ class DataProvider
 
 	/*
 	 * Return array newly created articles
-	 * Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
-	 */
+	* Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
+	*/
 	public static function GetNewlyCreatedArticles( $limit = 5, $ns = array( NS_MAIN ) ) {
 		wfProfileIn( __METHOD__ );
 
 		$dbr = wfGetDB(DB_SLAVE);
 
 		$res = $dbr->select('recentchanges', // table name
-			array('rc_title', 'rc_namespace'), // fields to get
-			array('rc_type = 1', 'rc_namespace' => $ns), // WHERE conditions [only new articles in main namespace]
-			__METHOD__, // for profiling
-			array('ORDER BY' => 'rc_cur_time DESC', 'LIMIT' => $limit) // ORDER BY creation timestamp
+				array('rc_title', 'rc_namespace'), // fields to get
+				array('rc_type = 1', 'rc_namespace' => $ns), // WHERE conditions [only new articles in main namespace]
+				__METHOD__, // for profiling
+				array('ORDER BY' => 'rc_cur_time DESC', 'LIMIT' => $limit) // ORDER BY creation timestamp
 		);
 
 		$items = array();
@@ -343,9 +338,9 @@ class DataProvider
 
 	/*
 	 * Return array of most visited articles
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 * Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	* Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
+	*/
 	final public static function /* array */ GetMostVisitedArticles( $limit = 7, $ns = array( NS_MAIN ), $fillUpMostPopular = true ) {
 		wfProfileIn( __METHOD__ );
 		global $wgDBname, $wgMemc;
@@ -355,7 +350,7 @@ class DataProvider
 
 		if ( !is_array( $results ) ) {
 			global $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
-			
+
 			if ( !empty( $wgStatsDBEnabled ) ) {
 				// production version
 				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
@@ -373,18 +368,18 @@ class DataProvider
 								'LIMIT' => $limit,
 						)
 				);
-			} 
+			}
 
 			$articlepages = array();
 			while ($row = $res->fetchObject($res)) {
 				$articlepages[$row->pv_page_id] = $row->pv_views;
 			}
-			
+
 			$results = array();
 			foreach ($articlepages as $articleid => $cnt) {
 				$title = Title::newFromID($articleid);
 				if(is_object($title)) {
-                	if(wfMsg("mainpage") != $title->getText()) {
+					if(wfMsg("mainpage") != $title->getText()) {
 						$article['url'] = $title->getLocalUrl();
 						$article['text'] = $title->getPrefixedText();
 						$article['count'] = $cnt;
@@ -393,11 +388,11 @@ class DataProvider
 				}
 			}
 
-            self::removeAdultPages($results);
+			self::removeAdultPages($results);
 
-            if (!empty($results)) {
-                $results = array_slice ($results, 0, $limit);
-            }
+			if (!empty($results)) {
+				$results = array_slice ($results, 0, $limit);
+			}
 
 			$wgMemc->set( $memckey, $results, 60 * 60 * 3);
 		}
@@ -408,8 +403,8 @@ class DataProvider
 
 	/*
 	 * Return array of newly changed articles
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	*/
 	final public static function /* array */ GetNewlyChangedArticles($limit = 7) {
 		wfProfileIn( __METHOD__ );
 		global $wgExternalDatawareDB, $wgMemc, $wgCityId;
@@ -420,17 +415,17 @@ class DataProvider
 		if ( !is_array( $results ) ) {
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 			$res = $dbr->select(
-				'pages',
-				array( 'page_namespace, page_title' ),
-				array(
-					'page_wikia_id'		=> $wgCityId,
-					'page_namespace' 	=> 0
-				),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'page_latest desc',
-					'LIMIT'    => $limit * 2
-				)
+					'pages',
+					array( 'page_namespace, page_title' ),
+					array(
+							'page_wikia_id'		=> $wgCityId,
+							'page_namespace' 	=> 0
+					),
+					__METHOD__,
+					array(
+							'ORDER BY' => 'page_latest desc',
+							'LIMIT'    => $limit * 2
+					)
 			);
 
 			$results = array();
@@ -457,8 +452,8 @@ class DataProvider
 
 	/*
 	 * Return array of top five users
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	*/
 	final public static function /* array */ GetTopFiveUsers($limit = 7) {
 		wfProfileIn( __METHOD__ );
 		global $wgStatsDB, $wgMemc, $wgCityId, $wgStatsDBEnabled;
@@ -484,8 +479,8 @@ class DataProvider
 					$user = User::newFromID( $row->rev_user );
 
 					if (!$user->isBlocked() && !$user->isAllowed('bot')
-					&& ( $user->getName() != 'Wikia' ) # rt24706
-					&& $user->getUserPage()->exists() ) {
+							&& ( $user->getName() != 'Wikia' ) # rt24706
+							&& $user->getUserPage()->exists() ) {
 						$article['url'] = $user->getUserPage()->getLocalUrl();
 						$article['text'] = $user->getName();
 						$results[] = $article;
@@ -503,45 +498,45 @@ class DataProvider
 
 	/*
 	 * Return array of top content
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 */
+	* Author: Inez Korczynski (inez at wikia.com)
+	*/
 	final private static function /* array */ GetTopContentQuery(&$results, $query, $limit, $exists_table = "") {
 		wfProfileIn( __METHOD__ );
 
-        $dbr = &wfGetDB( DB_SLAVE );
+		$dbr = &wfGetDB( DB_SLAVE );
 
-        /* check if table exists */
-        if (!empty($exists_table)) {
-            if ($dbr->tableExists($exists_table) === false) {
-                return false;
-            }
-        }
-        /* check query */
-        if (!empty($query)) {
-            $res = $dbr->query( $dbr->limitResult($query, $limit * 2, 0) );
+		/* check if table exists */
+		if (!empty($exists_table)) {
+			if ($dbr->tableExists($exists_table) === false) {
+				return false;
+			}
+		}
+		/* check query */
+		if (!empty($query)) {
+			$res = $dbr->query( $dbr->limitResult($query, $limit * 2, 0) );
 
-            while($row = $dbr->fetchObject($res)) {
-                $title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
+			while($row = $dbr->fetchObject($res)) {
+				$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
 
-                if(is_object($title)) {
-                    if(wfMsg("mainpage") != $title->getText()) {
-                        $article['url'] = $title->getLocalUrl();
-                        $article['text'] = $title->getPrefixedText();
-                        $results[] = $article;
-                    }
-                }
-            }
-            $dbr->freeResult( $res );
-        }
+				if(is_object($title)) {
+					if(wfMsg("mainpage") != $title->getText()) {
+						$article['url'] = $title->getLocalUrl();
+						$article['text'] = $title->getPrefixedText();
+						$results[] = $article;
+					}
+				}
+			}
+			$dbr->freeResult( $res );
+		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
-    }
+	}
 
 	/*
 	 * Return array of user's messages
-	 * Author: Piotr Molski (moli at wikia.com)
-	 */
+	* Author: Piotr Molski (moli at wikia.com)
+	*/
 	static public function GetUserEventMessages($limit = 1)
 	{
 		global $wgDBname, $wgShareDB, $wgMessageCache, $wgOut;
@@ -719,7 +714,7 @@ class DataProvider
 	/**
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
-	 public static function getCategoryList() {
+	public static function getCategoryList() {
 		wfProfileIn(__METHOD__);
 		global $wgCat;
 		$cat['text'] = isset($wgCat['name']) ? $wgCat['name'] : '';
@@ -755,11 +750,11 @@ class DataProvider
 
 		// get list of recent log entries (type = 'upload')
 		$params = array(
-			'action' => 'query',
-			'list' => 'logevents',
-			'letype' => 'upload',
-			'leprop' => 'title',
-			'lelimit' => $limit,
+				'action' => 'query',
+				'list' => 'logevents',
+				'letype' => 'upload',
+				'leprop' => 'title',
+				'lelimit' => $limit,
 		);
 
 		try {
@@ -792,8 +787,8 @@ class DataProvider
 
 						// use keys to remove duplicates
 						$ret[$image->getDBkey()] = array(
-							'name' => $image->getText(),
-							'url' => $image->getFullUrl()
+								'name' => $image->getText(),
+								'url' => $image->getFullUrl()
 						);
 
 					}
@@ -803,7 +798,8 @@ class DataProvider
 				$ret = array_values($ret);
 			}
 		}
-		catch(Exception $e) {};
+		catch(Exception $e) {
+		};
 
 		wfProfileOut(__METHOD__);
 		return $ret;
