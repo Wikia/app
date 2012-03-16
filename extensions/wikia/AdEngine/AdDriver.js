@@ -743,18 +743,25 @@ AdDriverDelayedLoader.isRunning = function() {
 AdDriverDelayedLoader.finalize = function() {
 	if (window.wgEnableKruxTargeting) {
 		AdDriver.log('loading krux');
-		loadKrux();
+		Krux.load();
 	}
 }
 //// END AdDriverDelayedLoader
 
 if (window.wgEnableKruxTargeting) {
 	// krux ad targeting. must come before dart urls are constructed
-	var _kx = _kx || {};
+	window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
+	Krux.load = function(){
+		var k=document.createElement('script');k.type='text/javascript';k.async=true;var m,src=(m=location.href.match(/kxsrc=([^&]+)/))&&decodeURIComponent(m[1]);
+		k.src=src||(location.protocol==='https:'?'https:':'http:')+'//cdn.krxd.net/controltag?confid='+window.wgKruxCategoryId;
+		var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
+	};
+
+	window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
 	(function(){
 		function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
-		var segs = store('segs'), key = ';ksgmnt='; _kx.dartkeys = segs ? key+segs.split(',').join(key) + ';u='+store('user')+';' : '';
-	})();
+		var segs = store('segs'), key = ';ksgmnt='; Krux.dartKeyValues = segs ? key+segs.split(',').join(key) + ';u='+store('user')+';' : '';
+	})(); 
 }
 
 $(window).bind('load', function() {

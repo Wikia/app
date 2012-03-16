@@ -178,7 +178,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		// TODO when we get better at search, support "kw" key-value
 		AdConfig.DART.getResolution() +
 		AdConfig.DART.getPrefooterStatus() +
-		(window.wgEnableKruxTargeting ? AdConfig.DART.getKruxKV() : '') +
+		(window.wgEnableKruxTargeting ? Krux.dartKeyValues : '') +
 		AdConfig.DART.getImpressionCount(slotname) +
 		AdConfig.DART.getPartnerKeywords() +
 		AdConfig.DART.getCategories() +
@@ -447,10 +447,6 @@ AdConfig.DART.getPrefooterStatus = function () {
 	}
 
 	return "hasp=" + AdConfig.DART.hasPrefooters + ";";
-};
-
-AdConfig.DART.getKruxKV = function() {
-	return _kx.dartkeys;
 };
 
 AdConfig.DART.getImpressionCount = function (slotname) {
