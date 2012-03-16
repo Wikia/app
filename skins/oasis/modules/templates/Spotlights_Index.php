@@ -1,9 +1,9 @@
 <? if (!$wgNoExternals) { ?>
 <section<? if (!empty($sectionId)) { ?> id="<?= $sectionId ?>"<? } ?>>
-	<header>
+	<div class="header-container">
 		<h1><?= wfMsg($titleMsg) ?></h1>
 		<?= wfRenderModule('RandomWiki') ?>
-	</header>
+	</div>
 	<ul<? if (!empty($adGroupName)) { ?> id="<?= $adGroupName ?>"<? if ($useLazyLoadAdClass) { ?> class="<?= AdEngine::lazyLoadAdClass ?><?= $wgEnableSpotlightsV2_Footer ? ' SPOTLIGHT_FOOTER' : '' ?>"<? } } ?>>
 		<?= AdEngine::getInstance()->getLazyLoadableAdGroup($adGroupName, $adslots) ?>
 		<? for ($i=0; $i<$n_adslots; $i++) { ?>
