@@ -71,6 +71,7 @@ class StaticChute {
 	}
 
 	/* Static JS for Oasis (which doesn't need StaticChute CSS because it uses SASS). */
+	// TODO: used only by WikiaAssets class -> remove
 	private function generateConfigSkinOasis(){
 		// The jquery files we need in every JS package of Oasis.
 		$this->config['oasis_jquery'] = array(
