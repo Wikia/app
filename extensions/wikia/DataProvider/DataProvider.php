@@ -385,10 +385,10 @@ class DataProvider
 				$title = Title::newFromID($articleid);
 				if(is_object($title)) {
                 	if(wfMsg("mainpage") != $title->getText()) {
-                		$article['url'] = $title->getLocalUrl();
-                    	$article['text'] = $title->getPrefixedText();
-                    	$article['count'] = $cnt;
-                    	$results[] = $article;
+						$article['url'] = $title->getLocalUrl();
+						$article['text'] = $title->getPrefixedText();
+						$article['count'] = $cnt;
+						$results[] = $article;
                    	}
                  }
 			}
