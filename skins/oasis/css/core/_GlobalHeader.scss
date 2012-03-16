@@ -41,7 +41,8 @@
 		border-top-color: mix($color-header-text, $color-header);
 	}
 	.WikiaLogo {
-		padding-left: 30px;
+		padding-left: 25px;
+		padding-right: 23px;
 		a {
 			position: relative;
 			top: -4px;
@@ -91,7 +92,7 @@
 		display: inline-block;
 		height: 22px;
 		line-height: 24px;
-		padding: 0 21px;
+		padding: 0 14px;
 		&:hover {
 			text-decoration: none;
 		}
@@ -101,11 +102,11 @@
 		@include clearfix;
 		@include box-shadow(0, 5px, 10px, rgba(#000, .5));
 		background: $color-page;
-		border-width: 0px 2px 4px 4px;
+		border-width: 2px 4px 4px;
 		border-style: solid;
 		border-color: #000;
 		display: none;
-		left: 10px;
+		left: 13px;
 		padding: 10px 0;
 		position: absolute;
 		top: -9999px;
@@ -132,9 +133,12 @@
 		}
 		.catnav {
 			li {
-				border-top: 1px solid $color-page-border;
+				border-top: 1px dotted $color-page-border;
 				font-size: 14px;
 				margin: 0;
+				&:first-child {
+					border-top-style: solid;
+				}
 			}
 			a {
 				font-weight: normal;
@@ -157,9 +161,8 @@
 			display: block;
 		}
 	}
-}
-
-.GlobalNavigation {
+	
+	/* Corporate Wiki Global heading styling */
 	&.WikiaComNav {
 		.Video_Games .subnav a {
 			color: $color-wikiahome-videogames;
@@ -180,11 +183,11 @@
 			& .chevron {
 				border-top-color: $color-header-text;
 			}
-			& a {
+			& >a {
 				border-left: 1px solid transparent;
 			}
 			+ li {
-				a {
+				>a {
 					border-left: 1px solid transparent;
 				}
 			}
@@ -192,12 +195,21 @@
 		
 		.Video_Games:hover {
 			background-color: $color-wikiahome-videogames;
+			.catnav li a:hover{
+				background-color: mix($color-page, $color-wikiahome-videogames, 90%);
+			}
 		}
 		.Entertainment:hover {
 			background-color: $color-wikiahome-entertainment;
+			.catnav li a:hover{
+				background-color: mix($color-page, $color-wikiahome-entertainment, 90%);
+			}
 		}
 		.Lifestyle:hover {
 			background-color: $color-wikiahome-lifestyle;
+			.catnav li a:hover{
+				background-color: mix($color-page, $color-wikiahome-lifestyle, 90%);
+			}
 		}
 	}
 }
