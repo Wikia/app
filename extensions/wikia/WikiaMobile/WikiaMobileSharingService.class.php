@@ -18,4 +18,10 @@ class WikiaMobileSharingService extends WikiaService{
 
 		$this->wf->profileOut( __METHOD__ );
 	}
+
+	public function button(){
+		if ( $this->wg->title->getNamespace() == NS_SPECIAL ) {
+			$this->skipRendering();
+		}
+	}
 }
