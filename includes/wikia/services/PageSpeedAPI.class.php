@@ -36,29 +36,33 @@ class PageSpeedAPI extends Service {
 		// prepare basic report
 		$report = array(
 			'url' => $resp['id'],
-			'score' => intval($resp['score']),
-			'stats' => $resp['pageStats'],
+			'metrics' => array(
+				'pageSpeed' => intval($resp['score'])
+			)
 		);
+
+		// add the rest of the metrics
+		$report['metrics'] += $resp['pageStats'];
 
 		// serialized requests
 		// "The following requests are serialized. Try to break up the dependencies to make them load in parallel."
-		$report['stats']['serializedRequests'] = $this->countReportedUrl($resp, 'AvoidExcessSerialization');
+		$report['metrics']['serializedRequests'] = $this->countReportedUrl($resp, 'AvoidExcessSerialization');
 
 		// count redirects
-		$report['stats']['redirects'] = $this->countReportedUrl($resp, 'MinimizeRedirects');
+		$report['metrics']['redirects'] = $this->countReportedUrl($resp, 'MinimizeRedirects');
 
 		// count assets with short (less than 7 days) expiry time
 		// "The following cacheable resources have a short freshness lifetime. Specify an expiration at least one week in the future for the following resources:"
-		$report['stats']['shortExpires'] = $this->countReportedUrl($resp, 'LeverageBrowserCaching');
+		$report['metrics']['shortExpires'] = $this->countReportedUrl($resp, 'LeverageBrowserCaching');
 
 		// count assets served uncompressed
-		$report['stats']['notGzipped'] = $this->countReportedUrl($resp, 'EnableGzipCompression');
+		$report['metrics']['notGzipped'] = $this->countReportedUrl($resp, 'EnableGzipCompression');
 
 		// count duplicated content served from different URLs
-		$report['stats']['duplicatedContent'] = $this->countReportedUrl($resp, 'ServeResourcesFromAConsistentUrl');
+		$report['metrics']['duplicatedContent'] = $this->countReportedUrl($resp, 'ServeResourcesFromAConsistentUrl');
 
 		// aggregate some of the stats
-		$report['stats']['totalResponseBytes'] = $resp['pageStats']['htmlResponseBytes'] +
+		$report['metrics']['totalResponseBytes'] = $resp['pageStats']['htmlResponseBytes'] +
 			$resp['pageStats']['cssResponseBytes'] +
 			$resp['pageStats']['imageResponseBytes'] +
 			$resp['pageStats']['javascriptResponseBytes'] +
