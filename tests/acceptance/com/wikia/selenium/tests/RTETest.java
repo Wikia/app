@@ -265,6 +265,14 @@ public class RTETest extends BaseTest {
 				"<gallery caption=\"Sample\" widths=\"200px\" heights=100 perrow=\"3\" captionalign=\"right\">\nSpiderpig.jpg\n</gallery>",
 				"{{{text}}}hgjhgjgh{{{text|test}}}\nasas",
 				"asdasdasdasd\n\n{{{text|Hmmm... This is a test}}}\nasdasd",
+				// task BugID 24543, test for BugID: 22872
+				"==heading==\n*item 1\n*item 2",
+				"==heading==\n\n*item 1\n*item 2",
+				"==heading==\n\n\n*item 1\n*item 2",
+				"==heading==\n\n\n\n*item 1\n*item 2",
+				// BugID: 11537
+				"<div><h2>Test</h2>\n* Test\n</div>",
+				"<div><h2>Test</h2>\n: Test\n</div>",
 		};
 	}
 
