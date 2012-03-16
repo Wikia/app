@@ -389,8 +389,8 @@ class DataProvider
 						$article['text'] = $title->getPrefixedText();
 						$article['count'] = $cnt;
 						$results[] = $article;
-                   	}
-                 }
+					}
+				}
 			}
 
             self::removeAdultPages($results);
