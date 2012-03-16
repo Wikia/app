@@ -1,4 +1,4 @@
-<form action="<?= !empty($form['action']) ? $form['action'] : '' ?>" method="<?= !empty($form['method']) ? $form['method'] : '' ?>" name="<?= !empty($form['name']) ? $form['name'] : '' ?>" class="WikiaForm <?= !empty($form['class']) ? $form['class'] : '' ?>" id="<?= !empty($form['id']) ? $form['id'] : '' ?>">
+<form action="<?= !empty($form['action']) ? $form['action'] : '' ?>" method="<?= !empty($form['method']) ? $form['method'] : '' ?>" name="<?= !empty($form['name']) ? $form['name'] : '' ?>" class="WikiaForm <?= !empty($form['class']) ? $form['class'] : '' ?>" <?= !empty($form['id']) ? 'id="' . $form['id'] . '"' : '' ?>>
 	<fieldset>
 		<? if(!empty($form['isInvalid'])) { ?>
 			<div class="input-group error general-errors">
