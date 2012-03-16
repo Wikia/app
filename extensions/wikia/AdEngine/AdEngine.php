@@ -179,18 +179,14 @@ class AdEngine {
 		if ($this->loadType == 'inline'){
 			// for loadType set to inline we have to load AdEngine.js here
 			// for loadType set to delayed AdEngine.js should be inside of allinone.js
-			global $wgExtensionsPath, $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
-			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
-                        if ($wgEnableAdsLazyLoad && sizeof($wgAdslotsLazyLoad)) {
-				// LazyLoadAds.js moved to StaticChute.php
-                        	//$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/LazyLoadAds.js?' . self::cacheKeyVersion . '"></script>'. "\n";
-                        }
+			global $wgExtensionsPath;
+			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js"></script>'. "\n";
 
 			foreach($this->slots as $slotname => $slot) {
-                        	$AdProvider = $this->getAdProvider($slotname);
-                        	// Get setup HTML for each provider. May be empty.
-                        	$out .= $AdProvider->getSetupHtml();
-                        }
+            	$AdProvider = $this->getAdProvider($slotname);
+            	// Get setup HTML for each provider. May be empty.
+            	$out .= $AdProvider->getSetupHtml();
+            }
 		}
 
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
