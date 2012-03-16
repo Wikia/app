@@ -18,7 +18,7 @@
 	<?php
 		$srcs = AssetsManager::getInstance()->getGroupLocalURL($isUserLoggedIn ? 'site_user_css' : 'site_anon_css');
 		foreach($srcs as $src) {
-			echo '<link rel="stylesheet" href="'.$src.'">';
+			echo '<link rel="stylesheet" href="'. htmlspecialchars( $src ) .'">';
 		}
 
 		// Add the wiki and user-specific overrides last.  This is a special case in Oasis because the modules run
