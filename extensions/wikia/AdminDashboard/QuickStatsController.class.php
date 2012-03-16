@@ -172,9 +172,13 @@ class QuickStatsController extends WikiaController {
 	
 	public static function shortenNumberDecorator($number) {
 		$number = intval($number);
-		$d = $number / 1000;
-		if ($d >= 10) {
-			return wfMsg('quickstats-number-shortening', array(round($d, 1)));
+
+		if ( $number >= 1000000000 ) {
+			return wfMsg('quickstats-number-shortening-billions', array(round( $number / 1000000000, 1)));
+		} elseif ($number >= 1000000 ) {
+			return wfMsg('quickstats-number-shortening-millions', array(round( $number / 1000000, 1)));
+		} elseif ($d >= 10000 ) {
+			return wfMsg('quickstats-number-shortening', array(round( $number / 10000 , 1)));
 		} else {
 			return $number;
 		}
