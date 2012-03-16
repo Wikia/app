@@ -51,7 +51,7 @@ public class CreateNewWikiTest extends BaseTest {
 		return languageList.iterator();
 	}
 	
-	@Test(groups={"envProduction", "verified"},dataProvider="wikiLanguages")
+	@Test(groups={"envProduction"},dataProvider="wikiLanguages")
 	public void testCreateWikiComprehensive(String language) throws Exception {
 		loginAsStaff();
 		
@@ -91,7 +91,7 @@ public class CreateNewWikiTest extends BaseTest {
 		testedLanguages.add(language);
 	}
 	
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiComprehensive"},alwaysRun=true)
+	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiComprehensive"},alwaysRun=true)
 	public void testDeleteComprehensive() throws Exception {
 		loginAsStaff();
 		
@@ -102,7 +102,7 @@ public class CreateNewWikiTest extends BaseTest {
 		wikiName = null;
 	}
 
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteComprehensive"})
+	@Test(groups={"envProduction"},dependsOnMethods={"testDeleteComprehensive"})
 	public void testCreateWikiAsLoggedOutUser() throws Exception {
 		session().open("/wiki/Special:CreateNewWiki");
 		waitForElement("//input[@name='wiki-name']");
@@ -135,7 +135,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
 	
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
+	@Test(groups={"envProduction"},dependsOnMethods={"testCreateWikiAsLoggedOutUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsLoggedOutUser() throws Exception {
 		loginAsStaff();
 		
@@ -257,7 +257,7 @@ public class CreateNewWikiTest extends BaseTest {
 		
 	//Test Case 002
 	//logged out in german wiki,domain appears in german,log in as QATestsStaff during CNW flow,verify domain is de.
-	@Test(groups={"envProduction", "verified"}) 
+	@Test(groups={"envProduction"}) 
 	//fixed by Rodrigo Molinero 12-Mar-12
 		public void createWikiDefaultLanguageForAnonymousIsWikiLanguage() throws Exception {
 		openAndWait("http://de.fallout.wikia.com/wiki/Fallout_Wiki");
