@@ -3,7 +3,6 @@ $(function(){
 		msg = msgBox && msgBox.innerText;
 
 	if(msg){
-		//TODO: use toast notification when it will be completed
-		alert(msgBox.innerText);
+		WikiaMobile.toast.show(msg);
 	}
 });

@@ -12,6 +12,7 @@
 	padding: 0;
 	background-color: rgba(0,0,0,.6);
 	z-index: $top-layer-z-index;
+	-webkit-transition: opacity .75s, -webkit-transform .75s;
 
 	*:nth-last-child(n+2) {
 		width: 320px;
@@ -24,7 +25,8 @@
 	}
 
 	&.anim{
-		@include transition(all .6s);
+	    opacity: 0;
+	 	-webkit-transform: translate3d(0,75px,0);
 	}
 }
 

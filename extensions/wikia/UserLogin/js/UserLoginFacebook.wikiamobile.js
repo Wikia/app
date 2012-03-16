@@ -6,9 +6,9 @@ var UserLoginFacebook = (function(){
 	//init
 	$(function(){
 		btn = document.getElementById('ssoFbBtn');
-		JSSnippetsStack.push({
-			dependencies: ['http://connect.facebook.net/en_US/all.js'],
-			callback: function() {
+		$.getResources(
+			['http://connect.facebook.net/en_US/all.js'],
+			function() {
 				//see fbconnect.js
 				FB.init({
 					appId : window.fbAppId,
@@ -19,13 +19,12 @@ var UserLoginFacebook = (function(){
 				});
 
 				btn.addEventListener(WikiaMobile.getClickEvent(), function(){
-					UserLoginFacebook.login();
 					WikiaMobile.track('facebook/connect/login');
+					UserLoginFacebook.login();
 				});
 				btn.disabled = false;
 			}
-		});
-		JSSnippets.init();
+		);
 	});
 
 	function goToUrl(url){
@@ -55,12 +54,11 @@ var UserLoginFacebook = (function(){
 										if (typeof loginCallback === 'function') {
 											loginCallback();
 										} else {
-											goToUrl(WikiaMobile.querystring.getVal('returnto'));
+											goToUrl(WikiaMobile.querystring().getVal('returnto'));
 										}
 									}else{
-										//TODO: use the WikiaMobile toast message when it will be ready
 										WikiaMobile.track('facebook/connect/fail');
-										alert($.msg('wikiamobile-facebook-connect-fail'));
+										WikiaMobile.toast.show($.msg('wikiamobile-facebook-connect-fail'), {error: true});
 									}
 								});
 								break;

@@ -26,13 +26,9 @@
 	.emailShr{
 		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAeCAYAAABTwyyaAAAEuklEQVR42s2Y30tTYRjHB4PBQBAEYXRMnU6zTaGrXQVCEAhBV4Lg1a4ql1ZqlmWWS0PwKgiCrrwKAv8Ab5q/SnP9UJsuAq8EQQgCYTAYCG/f79Fzes9TbqZbc/DQaed93+ez97zf7/McXdan5tZCWd3d5enA/Y/qlMagS/+cufa2zLrGTXfT47UXwdi6Cj49NZFBtOvMZ2/OhgmeMq6/Deg3zo8ku0Njqb3mZ99UiWMHEdbZqrvn240b8Yyr6kZcnY3O/qzqmml1wD/52gb4nyWETiKqnTs9N2js8yr+AlXX/0HV3nmfrYrORPSBODaB0OjGZgmgpxH2Efb3LXoAO0lowJu8rprb71Tj0Io692hF+fuW+GvGdXh8XwH4uf8I/aJ5LOW28mNDK3Aa5gjNTa4fSChs6D44LwCnmobXFJwFA+amMdD+xY0Pv3ggkEksWExgaqpb2zOyBQC9yeMM1zPd5fzIVxUChw3OyfwCZ1vV30uo6p75JOAdZywYSw4WCT6NaHNA9yy0Ij+1p2rB2PDgs0J+ZeXXwW14uIpqGPykcG8HE8NOxzFFmy4g9BaiRThHBNDQHKB7FxWeOG3RhpbgdnAAvBwTPlO0GcB3CNG2hEZTWwWATiB8wqPHLeeA5qg9HmMxT4CLwK/cMIULVf8p2uFVHxZMnAB6CuG1naN30VsVnZ0CNDVGrVFzAjoHuIgD0a5ioQ9ckAvbyRqHvnjxCKeOAT3B+Zpz+PBUE4SGtqgxU2shqaf84BI+pZp+i5YJKp2iXY/heB3LOeAWfrjGlu0c0BY0JqCPAS5Ey4WZwEwu2oR2jMnkdQ7xwSYMYLepJdXwkM5hi/DE4FK0q3CcciuxEG0YT2cnp3NI8Ovxsppb7xIwAjqHmFcYcEYK8JXabpWjSbuog0AP1dBFMo9zXEJjV64JswIMSaxdFPBNhKEViErs1ncAKMQkrjXRrpTBkZ5j/NjfnANj1cFcexNQYHzY8c1Cg28j/FYSVDIvXQBBsbJQ0XEoWsfOHuIcHMtqyLlcQ28tDMBvFwr8B+KcBuBBsjhcwCrFLBLsIyjaLdyTZ5lPp0V3Do5FHeBcrsG1PBp8AE9rJy94bW7wXcQFDdoNsNcGAQh9ICg6DvsIgmBMGmOuWnN4jfFp4Rycw7n8P9d6gzFurT60QCc53wUIcxh4Rrx9EOKlsb9rgPxEAMccgiCpwllWOMuvcIYZvOZ3vCedg2twLa75UrTTYcDv/is4oS8J6JhV2fCo9U5NVloeAzb7HMvgNb/jvUMs1qwPGLsQE/CtmJM5KngWccUBHZ3pgguwkT/oiU3ofJWWR4fBa36Xqz5wTa7NHF2iJ2oDfDYf+B6iwwk92wnoPTgBS77VyB+pWCEhg9dHrMxmW8FcnaI2tOOH7+UCjzgKRZSFIp7le179wLJofAoa+osMczHnZSf8WgTwfwW/LaDDgM7gX3aGHCOgiwbPXMyZIYNoKbp5XwcfEn8GCAL6h+kG/UtoawV08eGZE6JeIkNQwA/xPsEnBLQB6G0Iki8Qwg2KHtKdyEAWQ/zNZ9xR4SAK9h8pWB99V742lQKeDGQhk93XCOh5L6ATVoVDsRDQJYMnC5nIZjdsvwDBdwS6SUrg+wAAAABJRU5ErkJggg==);
 	}
-	.shrClsBtn{
-		color: grey;
-	}
 </style>
 <ul class=wkLst>
 <? foreach ( $networks as $n ) :?>
 	<li class=<?= $n->getId() ;?>Shr><a href="<?= ($n->getId() == 'email' ? $n->getUrl( '__1__&subject=__4__', '__3__' ) : $n->getUrl('__1__', '__2__'));/*param substitution happens in JS*/ ;?>" target=_blank>&nbsp;</a></li>
 <? endforeach ;?>
-	<div class=shrClsBtn>&times;</div>
 </ul>
