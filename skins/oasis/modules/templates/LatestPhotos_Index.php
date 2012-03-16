@@ -32,7 +32,7 @@ else {
 	foreach ($thumbUrls as $i => $url) {?>
 		<li class="thumbs"><a class="image" ref="<?= $url["image_filename"] ?> " href="<?= $url["file_url"] ?>">
 			<? if ( isset( $url['isVideoThumb'] ) && $url['isVideoThumb'] ) echo WikiaVideoService::videoPlayButtonOverlay( LatestPhotosModule::THUMB_SIZE, LatestPhotosModule::THUMB_SIZE ); ?>
-			<img class="thumbimage" height="<?= LatestPhotosModule::THUMB_SIZE; ?>" width="<?= LatestPhotosModule::THUMB_SIZE; ?>" <?= $i < $load ? 'src' : 'data-src' ?>="<?= $url["thumb_url"] ?>" />
+			<img class="thumbimage" height="<?= LatestPhotosModule::THUMB_SIZE; ?>" width="<?= LatestPhotosModule::THUMB_SIZE; ?>" <?= $i < $load ? 'src' : "src='$wgBlankImgUrl' data-src" ?>="<?= $url["thumb_url"] ?>" />
 		</a>
 
 		<span class="thumbcaption">
@@ -55,7 +55,7 @@ else {
 	if (count($thumbUrls) > 2) { ?>
 		<li class="see-all">
 			<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-inner-message') ?>
-			<img data-src="<?= $wgStylePath ?>/oasis/images/empty_gallery.png" />
+			<img src="<?= $wgBlankImgUrl ?>" data-src="<?= $wgStylePath ?>/oasis/images/empty_gallery.png" />
 		</li>
 	<?php
 	}
