@@ -271,8 +271,8 @@ public class RTETest extends BaseTest {
 				"==heading==\n\n\n*item 1\n*item 2",
 				"==heading==\n\n\n\n*item 1\n*item 2",
 				// BugID: 11537
-				"<div><h2>Test</h2>\n* Test\n</div>",
-				"<div><h2>Test</h2>\n: Test\n</div>",
+				"<div>\n<h2>Test</h2>\n* Test\n</div>",
+				"<div>\n<h2>Test</h2>\n: Test\n</div>",
 		};
 	}
 
