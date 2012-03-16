@@ -19,7 +19,7 @@ class ArticleService extends Service {
 	}
 
 	public function setArticleById( $articleId ) {
-		$this->mArticle = Article::newFromID( $articleId );
+		$this->mArticle = F::build('Article',array($articleId), 'newFromID');
 	}
 
 	/**
@@ -106,8 +106,11 @@ class ArticleService extends Service {
 			// compress white characters
 			$content = preg_replace('/\s+/',' ',$content);
 			$content = trim( $content );
-			$content = mb_substr( $content, 0, $length-3 );
-			$content = mb_substr( $content, 0, mb_strrpos($content,' ')) . '...';
+			if(mb_strlen($content) > $length) {
+				$content = mb_substr( $content, 0, $length-3 );
+				$content = mb_substr( $content, 0, mb_strrpos($content,' ')) . '...';
+			}
+
 			$cacheContent = mb_substr( $content, 0, self::MAX_CACHED_TEXT_LENGTH-3 );
 
 			if ( $length <= self::MAX_CACHED_TEXT_LENGTH ){
