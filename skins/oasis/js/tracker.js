@@ -520,7 +520,7 @@ var initTracker = function() {
 			// yes, we need to do matching of ID here
 			var placeholderId = node.parent().parent().attr('id');
 
-			if (placeholderId.indexOf('WikiaImagePlaceholder') > -1) {
+			if (placeholderId && placeholderId.indexOf('WikiaImagePlaceholder') > -1) {
 				// image placeholder
 				$.tracker.byStr(fakeUrl + 'addphoto/placeholder');
 			}
