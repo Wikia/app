@@ -62,7 +62,7 @@ class PageSpeedAPI extends Service {
 			$resp['pageStats']['cssResponseBytes'] +
 			$resp['pageStats']['imageResponseBytes'] +
 			$resp['pageStats']['javascriptResponseBytes'] +
-			$resp['pageStats']['otherResponseBytes'];
+			(!empty($resp['pageStats']['otherResponseBytes']) ? $resp['pageStats']['otherResponseBytes'] : 0);
 
 		return $report;
 	}
