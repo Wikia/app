@@ -64,7 +64,7 @@
 			}
 		}
 
-		protected function setUpRequest( $params=array() ) {			
+		protected function setUpRequest( $params=array() ) {
 			F::unsetInstance('WebRequest');
 			$wgRequest = F::build('WebRequest', $params);
 			foreach( $params as $key => $value ) {
@@ -111,17 +111,29 @@
 			$this->tearDownHelper();
 		}
 
-		public function testWikiaMobileTemplate() {
+		public function testWikiaMobileLoginTemplate() {
 			$this->setUpMockObject( 'User', array( 'getSkin' => Skin::newFromKey( 'wikiamobile' ) ), true, 'wgUser' );
 			$this->setUpMock();
 
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html' ) );
-
-			//needed to set up templatePath
-			$response->toString();
+			$response->toString();//triggers set up of template path
 
 			$this->assertEquals(
 				dirname( $this->app->wg->AutoloadClasses['UserLoginSpecialController'] ) . '/templates/UserLoginSpecial_WikiaMobileIndex.php',
+				$response->getView()->getTemplatePath()
+			);
+		}
+
+		public function testWikiaMobileChangePasswordTemplate(){
+			$this->setUpMockObject( 'User', array( 'getSkin' => Skin::newFromKey( 'wikiamobile' ) ), true, 'wgUser' );
+			$this->setUpMockObject( 'WebRequest', array( 'wasPosted' => true ), false, 'wgRequest' );
+			$this->setUpMock();
+
+			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html', 'action' => $this->app->wf->Msg( 'resetpass_submit' ) ) );
+			$response->toString();//triggers set up of template path
+
+			$this->assertEquals(
+				dirname( $this->app->wg->AutoloadClasses['UserLoginSpecialController'] ) . '/templates/UserLoginSpecial_WikiaMobileChangePassword.php',
 				$response->getView()->getTemplatePath()
 			);
 		}
