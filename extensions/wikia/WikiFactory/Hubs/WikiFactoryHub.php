@@ -16,11 +16,49 @@ class WikiFactoryHub {
 	private static $mInstance = false;
 	private static $mCategories = array();
 
+	const CATEGORY_ID_HUMOR = 1;
 	const CATEGORY_ID_GAMING = 2;
 	const CATEGORY_ID_ENTERTAINMENT = 3;
 	const CATEGORY_ID_CORPORATE = 4;
+	const CATEGORY_ID_TOYS = 5;
+	const CATEGORY_ID_FOODANDDRINK = 6;
+	const CATEGORY_ID_TRAVEL = 7;
+	const CATEGORY_ID_EDUCATION = 8;
 	const CATEGORY_ID_LIFESTYLE = 9;
+	const CATEGORY_ID_FINANCE = 10;
+	const CATEGORY_ID_POLITICS = 11;
+	const CATEGORY_ID_TECHNOLOGY = 12;
+	const CATEGORY_ID_SCIENCE = 13;
+	const CATEGORY_ID_PHILOSOPHY = 14;
+	const CATEGORY_ID_SPORTS = 15;
 	const CATEGORY_ID_MUSIC = 16;
+	const CATEGORY_ID_CREATIVE = 17;
+	const CATEGORY_ID_AUTO = 18;
+	const CATEGORY_ID_GREEN = 19;
+	const CATEGORY_ID_ANSWERS = 20;
+	
+	private static $mCategoryKruxMap = array(
+	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
+	    self::CATEGORY_ID_GAMING		=> 'Hi0kJsuv',
+	    self::CATEGORY_ID_ENTERTAINMENT	=> 'Hi0kPhMT',
+	    self::CATEGORY_ID_CORPORATE		=> 'HixzfXzM',
+	    self::CATEGORY_ID_TOYS		=> 'Hixy7C6A',
+	    self::CATEGORY_ID_FOODANDDRINK	=> 'HixwQQcI',
+	    self::CATEGORY_ID_TRAVEL		=> 'HixzKvV0',
+	    self::CATEGORY_ID_EDUCATION		=> 'Hixv3Pm6',
+	    self::CATEGORY_ID_LIFESTYLE		=> 'HixxTik3',
+	    self::CATEGORY_ID_FINANCE		=> 'HixwC0-o',
+	    self::CATEGORY_ID_POLITICS		=> 'Hixx8x9B',
+	    self::CATEGORY_ID_TECHNOLOGY	=> 'HixyqEjH',
+	    self::CATEGORY_ID_SCIENCE		=> 'HixyJ7zV',
+	    self::CATEGORY_ID_PHILOSOPHY	=> 'HixxvJVY',
+	    self::CATEGORY_ID_SPORTS		=> 'HixyZtmZ',
+	    self::CATEGORY_ID_MUSIC		=> 'HixxfWsd',
+	    self::CATEGORY_ID_CREATIVE		=> 'HixvqnFP',
+	    self::CATEGORY_ID_AUTO		=> 'Hixvb8MR',
+	    self::CATEGORY_ID_GREEN		=> 'Hixwf6fL',
+	    self::CATEGORY_ID_ANSWERS		=> 'Hix9Xb-P'
+	);
 
 	/**
 	 * private constructor
@@ -312,5 +350,18 @@ class WikiFactoryHub {
 		}
 
 		return;
+	}
+	
+	/**
+	 * Get Krux id for given category
+	 * @param int $categoryId
+	 * @return string Krux category id 
+	 */
+	public function getKruxId($categoryId) {
+		if (isset(self::$mCategoryKruxMap[$categoryId])) {
+			return self::$mCategoryKruxMap[$categoryId];
+		}
+		
+		return '';
 	}
 }
