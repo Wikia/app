@@ -169,6 +169,7 @@ blockquote {
 .wkShr {
 	display: none;
 	position: relative;
+	z-index: 1;
 	width: 50px;
 	height: 25px;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -255,19 +256,20 @@ blockquote {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	position: absolute;
 	margin: 10px auto;
-	padding: 10px;
+	padding: 10px 20px;
 	border-radius: 5px;
 	top: 75px;
 	left:10px;
 	right: 10px;
+	font-weight: 100;
 	background-color: white;
 	-webkit-transition: opacity .5s ease-out, -webkit-transform .5s;
 	-webkit-transform: translate3d(0px,0px,0px);
 	@include box-shadow(0 0 30px -10px $shadowColor);
 	text-align: center;
-	border: 2px solid grey;
-	background-position: 99% 10%;
-	background-size: 10px;
+	border: 1px solid grey;
+	background-position: 98% 20%;
+	background-size: 8px;
 	
 	
 	&.show {

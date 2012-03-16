@@ -136,7 +136,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 			$this->response->setVal( 'recoverParam', $recoverParam );
 			$this->response->setVal( 'recoverPassword', $recover );
-			
 
 			if ( $recover ) {
 				//we use different AssetsManager packages for recover and login, so make sure the page URL is different to avoid Varnish clashes

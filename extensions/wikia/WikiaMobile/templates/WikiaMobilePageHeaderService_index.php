@@ -1,1 +1,1 @@
-<header id=wkMainCntHdr><h1><?=  $pageTitle; ?></h1><div id=wkShrPag class=wkShr></div></header>
+<header id=wkMainCntHdr><h1><?=  $pageTitle; ?></h1><? if( $wg->Title->getNamespace() !== NS_SPECIAL) : ?><div id=wkShrPag class=wkShr></div><? endif; ?></header>
