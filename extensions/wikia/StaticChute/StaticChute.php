@@ -67,62 +67,11 @@ class StaticChute {
 			'common/yui_extra/carousel-min.js',
 		);
 
-		$this->generateConfigSkinMonobook();
 		$this->generateConfigSkinOasis();
-	}
-
-	private function generateConfigSkinMonobook() {
-		// JS for monobook (both anons/logged-in)
-		$this->config['monobook_js'] = array(
-			'common/yui_2.5.2/utilities/utilities.js',
-			'common/yui_2.5.2/cookie/cookie-beta.js',
-			'common/yui_2.5.2/container/container.js',
-			'common/yui_2.5.2/autocomplete/autocomplete.js',
-			'common/yui_2.5.2/logger/logger.js',
-			'common/yui_2.5.2/menu/menu.js',
-			'common/yui_2.5.2/tabview/tabview.js',
-			'common/yui_extra/tools-min.js',
-
-			'common/jquery/jquery-1.6.1.js',
-			'common/jquery/jquery.json-2.2.js',
-			'common/jquery/jquery.cookies.2.1.0.js',
-			'common/jquery/jquery.dump.js',
-			'common/jquery/jquery.getcss.js',
-			'common/jquery/jquery.wikia.js',
-			'common/jquery/jquery.timeago.js',
-
-			'common/jquery/jquery.store.js',
-
-			'common/wikibits.js',
-			'common/ajax.js',
-			'common/ajaxwatch.js',
-			'monobook/main.js',
-			'monobook/tracker.js',
-			'common/tracker.js',
-			'common/contributed.js',
-			'common/mwsuggest.js',
-			'../extensions/wikia/JSMessages/js/JSMessages.js',
-			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-			'../extensions/FBConnect/fbconnect.js',
-			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
-			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
-			'../extensions/wikia/GlobalNotification/GlobalNotification.js',
-			'../extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-			'../extensions/wikia/WikiaTracker/js/WikiaLogger.js',
-			'../extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-			'../extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
-
-			// UserLogin
-			'../extensions/wikia/UserLogin/js/UserLogin.js',
-			'../extensions/wikia/UserLogin/js/UserLoginFacebook.js',
-			'../extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-		);
 	}
 
 	/* Static JS for Oasis (which doesn't need StaticChute CSS because it uses SASS). */
 	private function generateConfigSkinOasis(){
-
 		// The jquery files we need in every JS package of Oasis.
 		$this->config['oasis_jquery'] = array(
 			"common/jquery/jquery-1.6.1.js",

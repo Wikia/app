@@ -289,6 +289,68 @@ $config['wikiaapp_js'] = array(
 	)
 );
 
+// monobook
+$config['monobook_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_jquery',
+
+		'//skins/common/yui_2.5.2/utilities/utilities.js',
+		'//skins/common/yui_2.5.2/cookie/cookie-beta.js',
+		'//skins/common/yui_2.5.2/container/container.js',
+		'//skins/common/yui_2.5.2/autocomplete/autocomplete.js',
+		'//skins/common/yui_2.5.2/logger/logger.js',
+		'//skins/common/yui_2.5.2/menu/menu.js',
+		'//skins/common/yui_2.5.2/tabview/tabview.js',
+		'//skins/common/yui_extra/tools-min.js',
+
+		'//skins/common/wikibits.js',
+		'//skins/common/ajax.js',
+		'//skins/common/ajaxwatch.js',
+		'//skins/monobook/main.js',
+		'//skins/monobook/tracker.js',
+		'//skins/common/tracker.js',
+		'//skins/common/contributed.js',
+		'//skins/common/mwsuggest.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
+		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
+		'//extensions/FBConnect/fbconnect.js',
+		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
+		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'//extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
+		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
+
+		// UserLogin
+		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
+		'//extensions/wikia/UserLogin/js/UserLogin.js',
+	)
+);
+
+// YUI (deprecated - see BugId:3116)
+$config['yui'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins/common/yui_2.5.2/utilities/utilities.js',
+		'//skins/common/yui_2.5.2/cookie/cookie-beta.js',
+		'//skins/common/yui_2.5.2/container/container.js',
+		'//skins/common/yui_2.5.2/autocomplete/autocomplete.js',
+		'//skins/common/yui_2.5.2/animation/animation-min.js',
+		'//skins/common/yui_2.5.2/logger/logger.js',
+		'//skins/common/yui_2.5.2/menu/menu.js',
+		'//skins/common/yui_2.5.2/tabview/tabview.js',
+		'//skins/common/yui_2.5.2/slider/slider.js',
+		'//skins/common/yui_extra/tools-min.js',
+		'//skins/common/yui_extra/carousel-min.js',
+	)
+);
+
+// extensions
 $config['chat_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -317,23 +379,6 @@ $config['theme_designer_js'] = array(
 		'//skins/common/jquery/jquery.wikia.tooltip.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 		'//extensions/wikia/ThemeDesigner/js/aim.js',
-	)
-);
-
-$config['yui'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//skins/common/yui_2.5.2/utilities/utilities.js',
-		'//skins/common/yui_2.5.2/cookie/cookie-beta.js',
-		'//skins/common/yui_2.5.2/container/container.js',
-		'//skins/common/yui_2.5.2/autocomplete/autocomplete.js',
-		'//skins/common/yui_2.5.2/animation/animation-min.js',
-		'//skins/common/yui_2.5.2/logger/logger.js',
-		'//skins/common/yui_2.5.2/menu/menu.js',
-		'//skins/common/yui_2.5.2/tabview/tabview.js',
-		'//skins/common/yui_2.5.2/slider/slider.js',
-		'//skins/common/yui_extra/tools-min.js',
-		'//skins/common/yui_extra/carousel-min.js',
 	)
 );
 
