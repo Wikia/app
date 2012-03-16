@@ -35,7 +35,7 @@
 	/*]]>*/</script><?php
 		if(!$jsAtBottom) {
 			print $wikiaScriptLoader; // needed for jsLoader and for the async loading of CSS files.
-			print "\n\n\t<!-- Combined JS files (StaticChute) and head scripts -->\n";
+			print "\n\n\t<!-- Combined JS files and head scripts -->\n";
 			print $jsFiles . "\n";
 		}
 	?>
@@ -52,7 +52,7 @@
 <?php
 	if($jsAtBottom) {
 		print $wikiaScriptLoader; // needed for jsLoader and for the async loading of CSS files.
-		print "\n\n\t<!-- Combined JS files (StaticChute) and head scripts -->\n";
+		print "\n\n\t<!-- Combined JS files and head scripts -->\n";
 		print $jsFiles . "\n";
 	}
 ?>
