@@ -89,11 +89,11 @@ class JWPlayer {
 
 		// jwplayer embed code
 		$sJSON = '{'
-			. '"flashplayer": "'.$jwplayerData['player'].'",'
 			. '"id": "'.$jwplayerData['playerId'].'",'
 			. '"width": "'.$width.'",'
 			. '"height": "'.$height.'",'
 			. '"file": ' . self::initJWPlayerURL($jwplayerData['file'], true) . ','
+			. '"modes": [ {"type": "flash", "src": "'.$jwplayerData['player'].'"}, {"type": "html5"}, {"type": "download"} ],'
 			. (!empty($jwplayerData['image']) ? '"image": ' . self::initJWPlayerURL($jwplayerData['image'], true) . ',' : '')
 			. (!empty($jwplayerData['provider']) ? '"provider": "' . $jwplayerData['provider'] . '",' : '')
 			. (!empty($jwplayerData['duration']) ? '"duration": "' . $jwplayerData['duration'] . '",' : '')
