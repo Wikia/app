@@ -108,10 +108,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	
 	//WikiaMobile skin
 	'wikiamobile-sendpassword-label' => 'Send new password',
-	'wikiamobile-facebook-connect-fail' => 'Mobile signup is not currently available.
-Please register on our desktop site.
-
-Thanks!'
+	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.'
 );
 
 $messages['qqq'] = array(
