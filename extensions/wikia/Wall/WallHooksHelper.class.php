@@ -387,16 +387,11 @@ class WallHooksHelper {
 	 */
 	public function onPersonalUrls(&$personalUrls, &$title) {
 		$app = F::App();
-
+        $user = $app->wg->User;
 		F::build('JSMessages')->enqueuePackage('Wall', JSMessages::EXTERNAL);
 
-		//if( !empty($personalUrls['mytalk']) ) {
-		//	unset($personalUrls['mytalk']);
-		//}
-
-
-		if($app->wg->User->isLoggedIn()) {
-			$userWallTitle = $this->getWallTitle();
+		if( $user instanceof User && $user->isLoggedIn() ) {
+			$userWallTitle = $this->getWallTitle(null, $user);
 			if( $userWallTitle instanceof Title ) {
 				$personalUrls['mytalk']['href'] = $userWallTitle->getLocalUrl();
 			}
@@ -575,11 +570,11 @@ class WallHooksHelper {
 	 *
 	 * @return Title | null
 	 */
-	protected function getWallTitle() {
+	protected function getWallTitle($subpage = null, $user = null) {
 		$helper = F::build('WallHelper', array());
 		$app = F::app();
 
-		return $helper->getTitle(NS_USER_WALL);
+		return $helper->getTitle(NS_USER_WALL, $subpage, $user);
 	}
 
 	/**
