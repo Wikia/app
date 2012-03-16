@@ -93,16 +93,6 @@ class WallHelper {
         }
 
         return $user;
-        /*
-        var_dump(array(
-            '$ns' => $ns,
-            'NS_USER_WALL' => NS_USER_WALL,
-            'NS_USER_WALL_MESSAGE' => NS_USER_WALL_MESSAGE,
-            '$user' => $user,
-            '$title' => $title,
-        ));
-        die;
-        */
 	}
 	
 	/**
