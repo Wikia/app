@@ -87,53 +87,46 @@ class JWPlayer {
 		// addl params
 		$jwplayerData = array_merge($jwplayerData, $playerOptions);
 
-		// jwplayer embed code
-		$sJSON = '{'
-			. '"id": "'.$jwplayerData['playerId'].'",'
-			. '"width": "'.$width.'",'
-			. '"height": "'.$height.'",'
-			. '"file": ' . self::initJWPlayerURL($jwplayerData['file'], true) . ','
-			. '"modes": [ {"type": "flash", "src": "'.$jwplayerData['player'].'"}, {"type": "html5"}, {"type": "download"} ],'
-			. (!empty($jwplayerData['image']) ? '"image": ' . self::initJWPlayerURL($jwplayerData['image'], true) . ',' : '')
-			. (!empty($jwplayerData['provider']) ? '"provider": "' . $jwplayerData['provider'] . '",' : '')
-			. (!empty($jwplayerData['duration']) ? '"duration": "' . $jwplayerData['duration'] . '",' : '')
-			. '"autostart": "' . ($autoplay ? 'true' : 'false') . '",'
-			. '"stretching": "uniform",'
-			. '"controlbar.position": "over",'
-			. '"dock": false,'
-			. '"skin": "' . $jwplayerData['skin'] . '",';
-		$sJSON .= '"plugins": {';
-		$pluginTexts = array();
-		foreach ($jwplayerData['plugins'] as $plugin=>$options) {
-			$pluginText = '"'.$plugin.'": {';
-			$pluginOptionTexts = array();
-			foreach ($options as $key=>$val) {
-				$text = '"'.$key.'": ';
-				if (startsWith($val, 'http://')
-				|| startsWith($val, 'https://')) {
-					$text .= self::initJWPlayerURL($val, true);
-				}
-				else {
-					$text .= '"'.$val.'"';
-				}
-				$pluginOptionTexts[] = $text;
-			}
-			$pluginText .= implode(',', $pluginOptionTexts);
-			$pluginText .= '}';
-			$pluginTexts[] = $pluginText;
+		// jwplayer config
+		// NOTE: if the JW Player is embedded in an article (not loaded
+		// by AJAX), all URLs within the config need to be escaped
+		// to prevent the parser from linkifying them. One way to do
+		// this is decodeURIComponent($url)
+		$jwplayerConfig = array(
+		    'id'	=> $jwplayerData['playerId'],
+		    'width'	=> $width,
+		    'height'	=> $height,
+		    'file'	=> $jwplayerData['file'],
+		    'modes'	=> array(
+			array('type'=>'flash','src'=>$jwplayerData['player']),
+			array('type'=>'html5'),
+			array('type'=>'download')
+			),
+		    'autostart'	=> $autoplay ? 'true' : 'false',
+		    'stretching'=> 'uniform',
+		    'controlbar.position' => 'over',
+		    'dock'	=> 'false',
+		    'skin'	=> $jwplayerData['skin']		    
+		);
+		if (!empty($jwplayerData['image'])) {
+			$jwplayerConfig['image'] = $jwplayerData['image'];
 		}
-		$sJSON .= implode(',', $pluginTexts)
-			. '}'	// end plugins
-			. '}';
-
-		
-		//@todo return html if $isAjax == false
-		
+		if (!empty($jwplayerData['provider'])) {
+			$jwplayerConfig['provider'] = $jwplayerData['provider'];
+		}
+		if (!empty($jwplayerData['duration'])) {
+			$jwplayerConfig['duration'] = $jwplayerData['duration'];
+		}
+		if (!empty($jwplayerData['plugins'])) {
+			$jwplayerConfig['plugins'] = $jwplayerData['plugins'];
+		}
+				
 		$code = '';
 		if ($isAjax) {
-			$code = json_decode($sJSON);
+			$code = $jwplayerConfig;
 		}
 		else {
+			$jwplayerConfigJSON = json_encode($jwplayerConfig);
 			$code = <<<EOT
 <div id="{$jwplayerData['playerId']}"></div>
 <script type="text/javascript">
@@ -145,7 +138,7 @@ EOT;
 			}
 			
 			$code .= <<<EOT
-		$.getScript("{$jwplayerData['jwplayerjs']}", function() { jwplayer("{$jwplayerData['playerId']}").setup($sJSON); });
+		$.getScript("{$jwplayerData['jwplayerjs']}", function() { jwplayer("{$jwplayerData['playerId']}").setup($jwplayerConfigJSON); });
 EOT;
 		
 			if (!$postOnload) {
@@ -165,22 +158,6 @@ EOT;
 	protected static function getAssetUrl($url, $version) {
 		//@todo use cachebusting value or cachebuster framework
 		return $url . '?v=' . $version;
-	}
-	
-	/**
-	 * MediaWiki parser tries to linkify any URL it encounters.
-	 * This method escapes URLs for use in JW Player to avoid this linkification.
-	 * @param string $url
-	 * @param boolean $useJSON
-	 * @return string 
-	 */
-	protected static function initJWPlayerURL($url, $useJSON) {
-		if (!empty($useJSON)) {
-			return '"' . $url . '"';
-		}
-		else {
-			return 'decodeURIComponent("' . urlencode($url) . '")';  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior
-		}
 	}
 	
 	protected static function initGoogleIMAAdTag($articleId, $cityShort='life') {
