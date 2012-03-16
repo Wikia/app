@@ -458,6 +458,7 @@ var WikiaMobile = (function() {
 				},
 				callback: function(result){
 					wkPrf.insertAdjacentHTML('beforeend', result);
+					wkPrf.executeScripts();
 					$.getResources(
 						['/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
 						'/extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'],

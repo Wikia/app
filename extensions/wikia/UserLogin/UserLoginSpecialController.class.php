@@ -23,7 +23,16 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 		}else{
 			//TODO: remove when multi-skin resource loading fixed
-			$this->app->sendRequest( 'WikiaMobileService', 'addAsset', array( 'package' => ( $this->wg->request->getInt( 'recover' ) !== 1 ) ? 'wikiamobile_js_userlogin' : 'wikiamobile_js_userlogin_recover', 'scss' => 'extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss' ) );
+			$this->app->sendRequest(
+				'WikiaMobileService',
+				'addAsset',
+				array(
+					'package' => ( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookConnectExt ) ) ?
+						'wikiamobile_js_userlogin_nofb' :
+						'wikiamobile_js_userlogin',
+					'scss' => 'extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss'
+				)
+			);
 		}
 
 		// hide things in the skin

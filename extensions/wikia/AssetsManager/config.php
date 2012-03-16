@@ -264,7 +264,7 @@ $config['wikiamobile_js_userlogin'] = array(
 	)
 );
 
-$config['wikiamobile_js_userlogin_recover'] = array(
+$config['wikiamobile_js_userlogin_nofb'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/UserLogin/js/UserLoginSpecial.wikiamobile.js'

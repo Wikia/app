@@ -24,8 +24,7 @@ if ( !empty( $result ) ) {
 	<? endif;?>
 	<? if ( !$recoverPassword ) : ?>
 	<div id=fb-root></div>
-	<?= $app->renderView( 'UserLoginSpecial', 'Providers' )
-	; ?>
+	<?= $app->renderView( 'UserLoginSpecial', 'Providers' ) ;?>
 	<? endif;?>
 	<form method=post action="<?= $formPostAction ?>">
 		<input type=hidden name=loginToken value='<?= $loginToken ?>'>
