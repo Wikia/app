@@ -13,7 +13,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$loginTitle = Title::newFromText('UserLogin', NS_SPECIAL);
+		$loginTitle = SpecialPage::getTitleFor( 'UserLogin' );
 		$this->formPostAction = $loginTitle->getLocalUrl();
 		$this->isMonobook = ($this->wg->User->getSkin() instanceof SkinMonobook);
 	}
@@ -56,7 +56,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		// redirect if signup
 		$type = $this->request->getVal('type', '');
 		if($type === 'signup') {
-			$title = Title::newFromText('UserSignup', NS_SPECIAL);
+			$title = SpecialPage::getTitleFor( 'UserSignup' );
 			$this->wg->Out->redirect( $title->getFullURL() );
 			return false;
 		}
@@ -131,15 +131,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( Wikia::isWikiaMobile() ) {
-			$recoverParam = '?recover=1';
+			$recoverParam = 'recover=1';
 			$recover = ( $this->wg->request->getInt( 'recover' ) === 1 );
 
-			$this->response->setVal( 'recoverParam', $recoverParam );
+			$this->response->setVal( 'recoverLink', SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL( $recoverParam ) );
 			$this->response->setVal( 'recoverPassword', $recover );
 
 			if ( $recover ) {
 				//we use different AssetsManager packages for recover and login, so make sure the page URL is different to avoid Varnish clashes
-				$this->formPostAction .= $recoverParam;
+				$this->formPostAction .= "?{$recoverParam}";
 			}
 
 			if ( !empty( $action ) && ( $action === $this->wf->Msg( 'resetpass_submit' )  || $this->result == 'resetpass' ) ) {

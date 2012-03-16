@@ -401,7 +401,7 @@ var WikiaMobile = (function() {
 	}
 
 	function loadShare(cnt){
-		var handle = function(html){
+		function handle(html){
 			if(cnt.parentNode.id == 'wkShrPag'){
 				cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt).replace($4, shrPageTxt);
 
