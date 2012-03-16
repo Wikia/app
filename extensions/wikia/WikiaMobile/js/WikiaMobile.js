@@ -444,8 +444,7 @@ var WikiaMobile = (function() {
 
 	function openLogin(){
 		if(wkPrf.className.indexOf('loaded') > -1){
-			navBar.style.height = '100%';
-			navBar.style.minHeight = (wkLgn.offsetHeight + 70) + 'px';
+			navBar.style.minHeight = (WikiaMobile.wkLgn.offsetHeight + 70) + 'px';
 		}else{
 			loader.show(wkPrf, {center: true});
 			$.nirvana.sendRequest({
@@ -465,7 +464,6 @@ var WikiaMobile = (function() {
 						function() {
 							loader.remove(wkPrf);
 							WikiaMobile.wkLgn = document.getElementById('wkLgn');
-							navBar.style.height = '100%';
 							navBar.style.minHeight = (WikiaMobile.wkLgn.offsetHeight + 70) + 'px';
 							WikiaMobile.wkLgn.style.opacity = 1;
 							wkPrf.className += 'loaded';
@@ -479,16 +477,15 @@ var WikiaMobile = (function() {
 				}
 			});
 		}
-
 		track('login/open');
 	}
 
 	function openProfile(){
 		closeNav();
-		navBar.style.height = '100%';
 		hidePage();
 		navBar.className = 'prf';
 		window.location.hash = 'pop';
+		navBar.style.height = '100%';
 
 		if(wgUserName){
 			track('profile/open');
@@ -613,7 +610,6 @@ var WikiaMobile = (function() {
 				}
 				isOpen = true;
 			}
-
 		}
 
 		return {
@@ -786,9 +782,9 @@ var WikiaMobile = (function() {
 				hidePage();
 				track('nav/open');
 				navBar.className = 'fllNav';
+				navBar.style.minHeight = '100%';
 				//80px is for lvl1 without header
 				navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
-				navBar.style.minHeight = '100%';
 				window.location.hash = 'pop';
 			}
 		});

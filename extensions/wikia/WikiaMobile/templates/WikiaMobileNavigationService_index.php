@@ -11,7 +11,7 @@
    <a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
    <a href=#wkNavMenu id=wkNavTgl class=tgl></a>
    <? if($wg->EnableUserLoginExt) : ?>
-   <a href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogin')->getPrefixedText(), $wg->ArticlePath ) ;?>" id=wkPrfTgl class='tgl <?= ($loggedIn ? 'lgdin' : 'lgdout') ?>'></a>
+   <a href="<?= SpecialPage::getTitleFor('UserLogin')->getLocalURL() ;?>" id=wkPrfTgl class='tgl <?= ($loggedIn ? 'lgdin' : 'lgdout') ?>'></a>
    <? endif ; ?>
    </div>
    <div id=wkNav>
