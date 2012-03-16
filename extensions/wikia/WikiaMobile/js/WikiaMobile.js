@@ -539,7 +539,6 @@ var WikiaMobile = (function() {
 	 * options.on - (required) element that opens popover - throws an exception if not provided
 	 * options.style - allows you to pass cssText for a content wrapper
 	 * options.create - content of popover, either string or function that gets content wrapper as an attribute
-	 * options.position - position of popover relative to the button 'bottom', 'top', 'left' , 'right'
 	 * options.open - callback on open
 	 * options.close - callback on close
 	*/
@@ -553,7 +552,7 @@ var WikiaMobile = (function() {
 
 		if(elm){
 			elm.addEventListener(clickEvent, function(event){
-				if(this.className.indexOf("on") > -1){
+				if(this.className.indexOf('on') > -1){
 					close(event);
 				}else{
 					if(!initialized){

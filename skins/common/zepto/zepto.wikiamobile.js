@@ -13,9 +13,9 @@
 	};
 
 	$.getResources = function( resources, callback ) {
-		var isJs = /.js(\?(.*))?$/,
-			isCss = /.css(\?(.*))?$/,
-			isSass = /.scss/,
+		var isJs = /\.js(\?(.*))?$/,
+			isCss = /\.css(\?(.*))?$/,
+			isSass = /\.scss/,
 			remaining = length = resources.length;
 
 		var onComplete = function(){
@@ -29,13 +29,16 @@
 		// download files
 		for ( var n = 0; n < length; n++ ) {
 			var resource = resources[n];
-
 			if(typeof resource == 'function'){
 				resource.call($, onComplete);
 			}else if(isJs.test(resource)){
 				$.getScript(resource, onComplete);
-			}else if(isCss.test(resource) || isSass.test(resource)){
+			}else if(isCss.test(resource)){
 				$.getCSS(resource, onComplete);
+			}else if(isSass.test(resource)){
+				$.getCSS($.getSassCommonURL(resource), onComplete);
+			}else{
+				throw 'unknown resource format';
 			}
 		};
 	};
@@ -125,42 +128,6 @@
 				callback: callback,
 				onErrorCallback: onErrorCallback
 			});
-		}
-	};
-
-	// show modal dialog with content fetched via AJAX request
-	//id is here only to keep compatibility with Oasis' JS code
-	$.fn.getModal = function(url, id, options) {
-		// get modal content via AJAX
-		$.get(url, function(html){
-			$.showModal(null, html, options);
-		});
-	};
-
-	//Dummy implementation to keep compatibility with Oasis' JS code
-	$.fn.log = function(){return};
-
-	// show modal popup with provided content
-	//the title parameter is not used and is here
-	//only for maintaining compatibility with Oasis' JS code
-	$.showModal = function(title, content, options){
-		options = $.isObject(options) ? options : {};
-
-		var callbackBefore = options.callbackBefore,
-		callback = options.callback;
-
-		options.html = content;
-
-		// fire callbackBefore if provided
-		if ($.isFunction(callbackBefore)) {
-			callbackBefore();
-		}
-
-		$.openModal(options);
-
-		// fire callback if provided
-		if ($.isFunction(callback)) {
-			callback();
 		}
 	};
 })(Zepto);
