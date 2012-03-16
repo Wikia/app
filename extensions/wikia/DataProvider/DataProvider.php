@@ -354,34 +354,43 @@ class DataProvider
 		$results = $wgMemc->get( $memckey );
 
 		if ( !is_array( $results ) ) {
+			global $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
+			
+			if ( !empty( $wgStatsDBEnabled ) ) {
+				// production version
+				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
+				$res = $dbr->select(
+						array( 'page_views_articles' ),
+						array( 'pv_page_id', 'sum(pv_views) as pv_views', 'pv_namespace' ),
+						array(
+								'pv_city_id' => $wgCityId,
+								'pv_namespace' => (!empty($ns)?$ns:array())
+						),
+						__METHOD__,
+						array(
+								'GROUP BY' => 'pv_page_id, pv_namespace',
+								'ORDER BY' => 'pv_views DESC',
+								'LIMIT' => $limit,
+						)
+				);
+			} 
+
+			$articlepages = array();
+			while ($row = $res->fetchObject($res)) {
+				$articlepages[$row->pv_page_id] = $row->pv_views;
+			}
+			
 			$results = array();
-	           $nsClause = '';
-            $dbr = wfGetDB( DB_SLAVE );
-            if( count( $ns) ) {
-            	$nsClause = "page_namespace IN (" . $dbr->makeList( $ns ) . ")";
-            }
-
-            /* take data from 'page_visited' table */
-            $query = "SELECT page_namespace, page_title, page_id, count as cnt FROM page, page_visited WHERE " . ( !empty($nsClause) ? $nsClause . " AND" : "" ) . " article_id = page_id ORDER BY cnt DESC";
-            self::GetTopContentQuery($results, $query, $limit, 'page_visited');
-
-			if ( ( count( $results ) < $limit ) && $fillUpMostPopular ) {
-				if ( function_exists("wfGetMostPopularArticlesFromCache") ) {
-                    $most_popular = wfGetMostPopularArticlesFromCache($limit, 0);
-                    if ( is_array($most_popular) && (!empty($most_popular)) ) {
-                        foreach ($most_popular as $row_title => $cnt) {
-                            $title = Title::makeTitleSafe( NS_MAIN, $row_title );
-
-                            if(is_object($title)) {
-                                if(wfMsg("mainpage") != $title->getText()) {
-                                    $article['url'] = $title->getLocalUrl();
-                                    $article['text'] = $title->getPrefixedText();
-                                    $results[] = $article;
-                                }
-                            }
-                        }
-                    }
-				}
+			foreach ($articlepages as $articleid => $cnt) {
+				$title = Title::newFromID($articleid);
+				if(is_object($title)) {
+                	if(wfMsg("mainpage") != $title->getText()) {
+                		$article['url'] = $title->getLocalUrl();
+                    	$article['text'] = $title->getPrefixedText();
+                    	$article['count'] = $cnt;
+                    	$results[] = $article;
+                   	}
+                 }
 			}
 
             self::removeAdultPages($results);
