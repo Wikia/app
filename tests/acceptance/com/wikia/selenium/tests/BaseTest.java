@@ -31,6 +31,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 
+
 /**
  * Base class for all tests in Selenium Grid Java examples.
  */
@@ -136,10 +137,21 @@ public class BaseTest {
 	}
 
 	protected void login(String username, String password) throws Exception {
-		// open new login page
-		openAndWait("index.php?title=Special:UserLogin");
+		// check if we're already logged in
+		String curUser = session().getEval("window.wgUserName");
+		if (username.equals(curUser)) {
+			return;
+		}
+		
+		// unlogin, if we want to login 
+		if ( username != null && !username.isEmpty() ) {
+			this.logout();
+		}
+			
+		openAndWait("/index.php?title=Special:UserLogin");
+		
 		// if new login page does not exist, try with old one
-		if (session().isElementPresent("//div[@class='WikiaArticle']//div[@class='UserLogin']")) {
+		if (session().isElementPresent("//div[@class='WikiaArticle']//div[@class='UserLogin']")) {			
 			session().type("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@name='username']", username);
 			session().type("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@name='password']", password);
 			clickAndWait("//div[@class='WikiaArticle']//div[@class='UserLogin']//input[@type='submit']");
@@ -150,7 +162,7 @@ public class BaseTest {
 			}
 
 		} else {
-			openAndWait("index.php?title=Special:Signup"); 
+			openAndWait("/index.php?title=Special:Signup"); 
 			waitForElement("wpName2Ajax"); 
 			session().type("wpName2Ajax", username); 
 			session().type("wpPassword2Ajax", password); 
@@ -359,10 +371,10 @@ public class BaseTest {
 	}
 
 	protected void clickAndWait(String location) throws Exception {
-		session().getEval("window.wikiaSeleniumUniqueKey = Math.random();");
+		session().getEval("window.wgNow = null;");
 		session().click(location);
 		session().waitForPageToLoad(this.getTimeout());
-		session().waitForCondition("typeof window != 'undefined' && typeof window.wikiaSeleniumUniqueKey == 'undefined'", this.getTimeout());
+		session().waitForCondition("typeof window != 'undefined' && window.wgNow != null", this.getTimeout());
 		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
 		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
 		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
@@ -371,6 +383,9 @@ public class BaseTest {
 	protected void openAndWait(String url) throws Exception {
 		session().getEval("window.wikiaSeleniumUniqueKey = Math.random();");
 		session().open(url);
+		session().waitForPageToLoad(this.getTimeout());
+		// this desn't seem to work
+		// maybe we shoudl wait for #footer #WikiaFooter elements 
 		session().waitForCondition("typeof window != 'undefined' && typeof window.wikiaSeleniumUniqueKey == 'undefined'", this.getTimeout());
 		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
 		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
@@ -443,6 +458,7 @@ public class BaseTest {
 	 * "mode" can be either "wysiwyg" or "source"
 	 */
 	protected void switchWysiwygMode(String mode) throws Exception {
+		session().waitForCondition("(window.RTE && window.RTE.getInstance()).mode", this.getTimeout());
 		if (!session().getEval("window.RTE && (window.RTE.instance || window.RTE.getInstance()).mode").equals(mode)) {
 			session().runScript("(window.RTE.instance || window.RTE.getInstance()).switchMode('" + mode + "')");
 			session().waitForCondition("(window.RTE.instance || window.RTE.getInstance()).mode == '" + mode + "'", this.getTimeout());
@@ -467,6 +483,8 @@ public class BaseTest {
 	protected void doEdit(String wikitext) throws Exception {
 		if (isWysiwygEditor()) {
 			// Visual Editor - switch to source mode (if needed)
+			// wait for RTE to be fully loaded
+			session().waitForCondition("window.CKEDITOR && window.CKEDITOR.status == 'basic_ready'", this.getTimeout());
 			this.switchWysiwygMode("source");
 			session().runScript("(window.RTE.instance || window.RTE.getInstance()).setData(\"" + wikitext.replace("\n", "\\n").replace("\"", "\\\"") + "\");");
 		} else {

@@ -1,5 +1,6 @@
 /**
- * ArticleComment_v2 test
+ * ArticleC@omment_v2 test
+
  *
  * @author Adrian Jaroszewicz
  * @date 2010-08-10
@@ -21,12 +22,13 @@ import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertEquals;
 
+
 /**
  * To enable the extension used by this test, in LocalSettings.php or WikiFactory, set:
  * $wgEnableArticleCommentsExt = true;
  * $wgArticleCommentsMaxPerPage = 5; // the default varies (right now it's 20 in production and 25 on dev boxes).
  */
-public class ArticleCommentTest extends BaseTest {
+public class ArticleCommentTest extends MiniEditorBaseTest {
 
 	public static int articleCommentsMaxPerPage = 25; // = $wgArticleCommentsMaxPerPage
 	public static String articlePath = "index.php?title=Special:Random";
@@ -98,43 +100,91 @@ public class ArticleCommentTest extends BaseTest {
 	}
 
 	private void addComment(String commentContent) throws Exception {
-		session().type("article-comm", commentContent);
-		session().click("article-comm-submit");
+		if(!("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
+			session().type("article-comm", commentContent);
+		} else {
+			this.loadEditor("//div[@id='article-comments-minieditor-newpost']", false);
+			this.switchToSourceMode("//div[@id='article-comments-minieditor-newpost']");
+			this.miniEditorType("//div[@id='article-comments-minieditor-newpost']", commentContent);
+		}
 
+		session().click("article-comm-submit");
+		
 		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'SpeechBubble')]" +
-						"//div[@class='article-comm-text']" +
-						"/p[contains(text(), '" + commentContent + "')]");
+				"/li[1 and contains(@class,'SpeechBubble')]" +
+				"//div[contains(@class,'article-comm-text')]" +
+				"/p[contains(text(), '" + commentContent + "')]");
+	}
+	
+	private String editComment(String parent, int liNumber, String commentContent, String prefix) throws Exception {
+		String newComment = prefix + "(" + commentContent + ")";
+		String fullParent = parent + "/li["+Integer.toString(liNumber)+"]";
+		
+		session().click(fullParent + "//a[@class='article-comm-edit']");
+
+		waitForElement(fullParent + "//textarea[@name='wpArticleComment']");
+		
+		if(!("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
+			if (commentContent.length() != 0) {
+				assertTrue(commentContent.equals(session().getValue(fullParent + "//textarea[@name='wpArticleComment']")));
+			}
+			assertFalse(session().getEval("this.browserbot.findElement(\"" + fullParent + "//textarea[@name='wpArticleComment']\").hasAttribute('readonly')").equals("true"));
+			session().type(fullParent + "//textarea[@name='wpArticleComment']", newComment);
+		} else {
+			this.loadEditor(fullParent, false);
+			this.switchToSourceMode(fullParent);
+			if (commentContent.length() != 0) {
+				assertTrue(commentContent.equals(this.getMiniEditorText(fullParent)));
+			}
+			this.miniEditorType(fullParent, newComment);
+		}
+		session().click(fullParent + "//input[@name='wpArticleSubmit']");
+		
+		waitForElement(parent +
+						"/li[" + Integer.toString(liNumber) + " and contains(@class,'SpeechBubble')]" +
+						"//div[contains(@class,'article-comm-text')]" +
+						"/p[contains(text(), '" + newComment + "')]");
+		return newComment;
+	}
+	
+	private String editComment(String parent, int liNumber, String commentContent) throws Exception {
+		return editComment(parent, liNumber, commentContent, "edit");
 	}
 
 	private void addReply(String replyContent) throws Exception {
-		session().click("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class,'SpeechBubble')]" +
-			"//a[contains(@class, 'article-comm-reply')]");
-		waitForElement("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class,'SpeechBubble')]" +
-			"//textarea[@name='wpArticleReply']");
+		String parent = "//ul[@id='article-comments-ul']";
+		int liNumber = 1;
+		String fullParent = parent + "/li["+Integer.toString(liNumber)+" and contains(@class,'SpeechBubble')]";
+		
+		session().click(fullParent + "//a[contains(@class, 'article-comm-reply')]");
+		waitForElement(fullParent + "//textarea[@name='wpArticleReply']");
 
-		session().type("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class,'SpeechBubble')]" +
-			"//textarea[@name='wpArticleReply']", replyContent);
+		if(!("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
+			session().type(fullParent + "//textarea[@name='wpArticleReply']", replyContent);
+		} else {
+			this.loadEditor(fullParent, false);
+			this.switchToSourceMode(fullParent);
+			this.miniEditorType(fullParent, replyContent);
+		}
+		session().click(fullParent + "//input[@name='wpArticleSubmit' and @value='Post comment']");
 
-		session().click("//ul[@id='article-comments-ul']" +
-			"/li[1 and contains(@class,'SpeechBubble')]" +
-			"//input[@name='wpArticleSubmit' and @value='Post comment']");
-
-		waitForElement("//ul[@id='article-comments-ul']" +
-			"/ul[@class='sub-comments']/li[1 and contains(@class,'SpeechBubble')]" +
-			"//div[@class='article-comm-text']" +
+		waitForElement(parent +
+			"//ul[@class='sub-comments']/li[contains(@class,'SpeechBubble')]" +
+			"//div[contains(@class,'article-comm-text')]" +
 			"/p[contains(text(), '" + replyContent + "')]");
+		/*
+		waitForElement(fullParent +
+			"//div[contains(@class,'article-comm-text')]" +
+			"/p[contains(text(), '" + replyContent + "')]");
+		*/
 	}
-
+	
 	// tests for article comments
-
+	
 	@Test(groups={"CI", "verified"})
 	public void testa1CommentSection() throws Exception {
 		openAndWait(articlePath);
-
+		
 		assertTrue(session().isElementPresent("WikiaArticleComments"));
 	}
 
@@ -187,7 +237,7 @@ public class ArticleCommentTest extends BaseTest {
 	@Test(groups={"CI", "verified"})
 	public void testf6EditButtonPresence() throws Exception {
 		loginAsRegular();
-
+		
 		openAndWait(articlePath + "&showall=1");
 
 		String commentContent = "test comment: " + new Date().toString();
@@ -212,7 +262,7 @@ public class ArticleCommentTest extends BaseTest {
 	}
 
 	@Test(groups={"CI", "verified"})
-	public void testg7EditArticleComment() throws Exception {
+	public void testg7EditArticleCommentTwice() throws Exception {
 		loginAsRegular();
 
 		openAndWait(articlePath);
@@ -223,19 +273,15 @@ public class ArticleCommentTest extends BaseTest {
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]" +
 				"//a[@class='article-comm-edit']"));
 		
+		commentContent = this.editComment("//ul[@id='article-comments-ul']", 1, commentContent);
+		// edit for the second time (FB 24506)
+		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]" +
+				"//a[@class='article-comm-edit']"));
+		
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
 				"//a[@class='article-comm-edit']");
-
-		waitForElement("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']");
-
-		session().type("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']", "edit(" + commentContent + ")");
-
-		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
-
-		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'SpeechBubble')]" +
-						"//div[@class='article-comm-text']" +
-						"/p[contains(text(), 'edit(" + commentContent + ")')]");
+		
+		this.editComment("//ul[@id='article-comments-ul']", 1, commentContent);
 	}
 
 	@Test(groups={"CI", "verified"})
@@ -256,21 +302,16 @@ public class ArticleCommentTest extends BaseTest {
 				"//a[@class='article-comm-edit']");
 
 		waitForElement("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']");
-
-		session().type("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']", "edit(" + this.commentContent + ")");
-
-		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
-
-		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'SpeechBubble')]" +
-						"//div[@class='article-comm-text']" +
-						"/p[contains(text(), 'edit(" + this.commentContent + ")')]");
+		
+		this.editComment("//ul[@id='article-comments-ul']", 1, this.commentContent);
 	}
 	
 	@Test(groups={"CI", "verified"},dependsOnMethods={"testh8StaffEditArticleCommentPart1"})
 	public void testh8StaffEditArticleCommentPart2() throws Exception {
 		loginAsStaff();
 		openAndWait(this.location);
+		
+		session().waitForCondition("(typeof window.ArticleComments != 'undefined') && window.ArticleComments.initCompleted", this.getTimeout());
 
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
 				"//a[@class='article-comm-edit']");
@@ -283,7 +324,7 @@ public class ArticleCommentTest extends BaseTest {
 
 		waitForElement("//ul[@id='article-comments-ul']" +
 						"/li[1 and contains(@class,'SpeechBubble')]" +
-						"//div[@class='article-comm-text']" +
+						"//div[contains(@class,'article-comm-text')]" +
 						"/p[contains(text(), 'edit(" + this.commentContent + ")')]");
 	}
 
@@ -302,14 +343,7 @@ public class ArticleCommentTest extends BaseTest {
 
 		waitForElement("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']");
 
-		session().type("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']", "edit(" + commentContent + ")");
-
-		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit']");
-
-		waitForElement("//ul[@id='article-comments-ul']" +
-						"/li[1 and contains(@class,'SpeechBubble')]" +
-						"//div[@class='article-comm-text']" +
-						"/p[contains(text(), 'edit(" + commentContent + ")')]");
+		commentContent = this.editComment("//ul[@id='article-comments-ul']", 1, commentContent);
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]//a[@class='article-comm-history']"));
 
@@ -340,7 +374,7 @@ public class ArticleCommentTest extends BaseTest {
 		openAndWait(articlePath);
 		waitForElement("article-comm");
 
-		String commentContent = "test comment: " + new Date().toString();
+		String commentContent = "XXX + test comment: " + new Date().toString();
 		addComment(commentContent);
 
 		clickAndWait("//ul[@id='article-comments-ul']" +
@@ -429,9 +463,9 @@ public class ArticleCommentTest extends BaseTest {
 		}
 
 		String articleCommentHeader = session().getText("//h1[@id='article-comments-counter-header']");
-
+		
 		String stringToCompare = numberOfComments + " comments";
-		assertEquals(articleCommentHeader, stringToCompare);
+		assertTrue(stringToCompare.indexOf(articleCommentHeader) == 0);
 	}
 		
 	@Test(groups={"CI", "verified"})
@@ -457,8 +491,8 @@ public class ArticleCommentTest extends BaseTest {
 	public void tests19EditButtonPresence() throws Exception {
 		// Re-open in showall mode.
 		loginAsRegular();
-		openAndWait("/wiki/User_blog:WikiaStaff/Blog_post_number_1?showall=1");
-
+		openAndWait("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName_1 + "?showall=1");
+		
 		Number numberOfComments = session().getXpathCount("//ul[@id='article-comments-ul']//li[contains(@class, 'SpeechBubble')]");
 
 		if (numberOfComments.intValue() == 0) {
@@ -496,18 +530,7 @@ public class ArticleCommentTest extends BaseTest {
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 
-		String id = session().getAttribute("//ul[@id='article-comments-ul']/li[1]@id");
-		session().click("//li[@id='" + id + "']" + "//a[@class='article-comm-edit']");
-
-		waitForElement("//li[@id='" + id + "']" + "//textarea[@name='wpArticleComment']");
-
-		session().type("//li[@id='" + id + "']" + "//textarea[@name='wpArticleComment']", "edit(" + commentContent + ")");
-
-		session().click("//li[@id='" + id + "']" + "//input[@name='wpArticleSubmit']");
-
-		waitForElement("//li[@id='" + id + "']" +
-						"//div[@class='article-comm-text']" +
-						"/p[contains(text(), 'edit(" + commentContent + ")')]");
+		editComment("//ul[@id='article-comments-ul']", 1, commentContent, "edit");
 	}
 
 	@Test(groups={"CI", "verified"},dependsOnMethods={"testt20EditBlogComment"})
@@ -515,21 +538,9 @@ public class ArticleCommentTest extends BaseTest {
 		loginAsStaff();
 
 		openAndWait("/wiki/User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/" + blogPostName + "?showall=1");
-
-		String id = session().getAttribute("//ul[@id='article-comments-ul']/li[1]@id");
-		String commentContent = "test comment: " + new Date().toString();
-
-		session().click("//li[@id='" + id + "']" + "//a[@class='article-comm-edit']");
-
-		waitForElement("//li[@id='" + id + "']" + "//textarea[@name='wpArticleComment']");
-
-		session().type("//li[@id='" + id + "']" + "//textarea[@name='wpArticleComment']", "staff edit(" + commentContent + ")");
-
-		session().click("//li[@id='" + id + "']" + "//input[@name='wpArticleSubmit']");
-
-		waitForElement("//li[@id='" + id + "']" +
-			"//div[@class='article-comm-text']" +
-			"/p[contains(text(), 'staff edit(" + commentContent + ")')]");
+		session().waitForCondition("(typeof window.ArticleComments != 'undefined') && window.ArticleComments.initCompleted", this.getTimeout());
+		
+		editComment("//ul[@id='article-comments-ul']", 1, "", "staff edit");
 	}
 
 	@Test(groups={"CI", "verified"})
@@ -545,11 +556,8 @@ public class ArticleCommentTest extends BaseTest {
 		String commentContent = "test comment: " + new Date().toString();
 		addComment(commentContent);
 
-		session().click("//ul[@id='article-comments-ul']/li[1]//span[@class='edit-link']/a");
-
-		session().type("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']", "edit(" + commentContent + ")");
 		
-		session().click("//ul[@id='article-comments-ul']/li[1]//input[@name='wpArticleSubmit' and @value='Post comment']");
+		editComment("//ul[@id='article-comments-ul']", 1, commentContent);
 		
 		waitForElement("//ul[@id='article-comments-ul']/li[1]//a[@class='article-comm-history']");
 

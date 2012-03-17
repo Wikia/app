@@ -1,8 +1,8 @@
 var WallBackendBridge = $.createClass(Observable, {
 	constructor: function() {
-		WallNewMessageForm.superclass.constructor.apply(this,arguments);
+		WallNewMessageForm.superclass.constructor.apply(this, arguments);
 	},
-	
+
 	loadPage: function(username, page, callback) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
@@ -13,18 +13,20 @@ var WallBackendBridge = $.createClass(Observable, {
 				username: username
 			},
 			callback: this.proxy(function(data) {
-				var html = innerShiv(data.html, false);
-				var page = $('.comments', html);
-				var pagination = $('.Pagination', html);
-				if(typeof callback == 'function') {
+				var html = innerShiv(data.html, false),
+					page = $('.comments', html),
+					pagination = $('.Pagination', html);
+
+				if ($.isFunction(callback)) {
 					callback(page, pagination);
 				}
+
 				this.fire('pageLoaded', page, pagination);
 			})
 		});
 	},
-	
-	postNew: function(username, title, body, convertFormat, callback) {
+
+	postNew: function(username, title, body, convertToFormat, callback) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'postNewMessage',
@@ -32,19 +34,21 @@ var WallBackendBridge = $.createClass(Observable, {
 				body: body,
 				messagetitle: title,
 				username: username,
-				convertFormat: convertFormat
+				convertToFormat: convertToFormat
 			},
 			callback: this.proxy(function(data) {
 				var newmsg = $(innerShiv(data.message, false));
-				if(typeof callback == 'function') {
+
+				if ($.isFunction(callback)) {
 					callback(newmsg);
 				}
+
 				this.fire('newPosted', newmsg);
 			})
 		});
 	},
-	
-	postReply: function(username, body, convertFormat, parent, callback) {
+
+	postReply: function(username, body, convertToFormat, parent, callback) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'replyToMessage',
@@ -52,82 +56,85 @@ var WallBackendBridge = $.createClass(Observable, {
 				body: body,
 				parent: parent,
 				username: username,
-				convertFormat: convertFormat
-			}, callback: this.proxy(function(data) {
+				convertToFormat: convertToFormat
+			},
+			callback: this.proxy(function(data) {
 				var newmsg = $(innerShiv(data.message, false));
-				
-				if(typeof callback == 'function') {
+
+				if ($.isFunction(callback)) {
 					callback(newmsg);
 				}
-				
+
 				this.fire('postReply', newmsg);
 			})
 		});
 	}, 
-	
+
 	cancelEdit: function(username, id, callback) {
-		if(typeof callback == 'function') {
+		if ($.isFunction(callback)) {
 			callback(newmsg);
 		}
-		
+
 		this.fire('editCanceled', newmsg);
 	},
-	
-	loadEditData: function(username, id, mode, convertFormat, callback) {
-		var data = {
-				'msgid': id,
-				'username': this.username,
-				'convertFormat': convertFormat
-		};
-		
+
+	loadEditData: function(username, id, mode, convertToFormat, callback) {
 		this.fire('beforeEditDataLoad', id);
-				
+
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'editMessage',
 			format: 'json',
-			data: data,
+			data: {
+				msgid: id,
+				username: this.username,
+				convertToFormat: convertToFormat
+			},
 			callback: this.proxy(function(data) {
+
 				// backend error lets reload the page
-				if(data.status == false && data.forcereload == true) {
+				if (data.status == false && data.forcereload == true) {
 					var url = window.location.href;
+
 					if (url.indexOf('#') >= 0) {
-						url = url.substring( 0, url.indexOf('#') );
+						url = url.substring(0, url.indexOf('#'));
 					}
-					window.location.href = url + '?reload=' + Math.floor(Math.random()*999);
+
+					window.location.href = url + '?reload=' + Math.floor(Math.random() * 999);
 				}
 				
 				data.mode = mode;
 				data.id = id;
 
-				if(typeof callback == 'function') {
+				if ($.isFunction(callback)) {
 					callback(data);
 				}
+
 				this.fire('editDataLoaded', data);
 			})
 		});
 	},
-	
-	saveEdit: function(username, id, title, body, isreply, convertFormat, callback) {
-		var data = {
-			'msgid': id,
-			'newtitle': title,
-			'newbody': body,
-			'isreply': isreply,
-			'username': username,
-			'convertFormat': convertFormat
-		};
 
+	saveEdit: function(username, id, title, body, isreply, convertToFormat, callback) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'editMessageSave',
 			format: 'json',
-			data: data,
+			data: {
+				msgid: id,
+				newtitle: title,
+				newbody: body,
+				isreply: isreply,
+				username: username,
+				convertToFormat: convertToFormat
+			},
 			callback: this.proxy(function(data) {
 				data.body = innerShiv(data.body);
-				if(typeof callback == 'function') {
+
+				if ($.isFunction(callback)) {
 					callback(data);
 				}
+
 				this.fire('editSaved', data);
 			})
 		});

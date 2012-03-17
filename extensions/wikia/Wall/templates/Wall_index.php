@@ -1,6 +1,6 @@
 <?
 if ( $wg->EnableMiniEditorExtForWall ) {
-	echo $app->renderView('MiniEditorController', 'EditorSetup');
+	echo $app->renderView('MiniEditorController', 'Setup');
 }
 
 if (!empty(F::app()->wg->WallBrickHeader)){

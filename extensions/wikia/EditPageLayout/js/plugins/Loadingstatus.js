@@ -17,14 +17,11 @@
 			if ((this.el = this.editor.getSpace('loading-status'))) {
 				this.textEl = this.el.find('.loading-text');
 
-				// Only bind if needed
-				this.editor.on('state',this.proxy(this.stateChanged));
-				this.editor.on('extraState',this.proxy(this.extraStateChanged));
-
 				// overlay just an edit area (BugId:6349)
-				if ((this.editarea = this.editor.getSpace('editarea'))) {
-					this.set('loading');
-				}
+				this.editarea = this.editor.getSpace('editarea');
+
+				this.editor.on('state', this.proxy(this.stateChanged));
+				this.editor.on('extraState', this.proxy(this.extraStateChanged));
 			}
 		},
 
@@ -71,13 +68,6 @@
 
 		set: function( state ) {
 			this.editor.log('loading-status: ', state);
-			
-			// Don't allow typing while mode switching (BugId:23061)
-			var editArea = this.editor.config.body; // this.editor.textarea may not be available yet
-			// If the editor is fully initialized, we will have a getEditbox method.
-			try {
-				editArea = editArea.add(this.editor.getEditbox());
-			} catch (e) {}
 
 			if ((this.state = state)) {
 				var text = this.editor.msg(this.MESSAGE_PREFIX + state);
@@ -88,14 +78,9 @@
 				}
 
 				this.textEl.text(text);
-
-				// Don't allow typing while mode switching (BugId:23061)
-				editArea.bind('keydown.LoadingStatus', function(e) {
-					e.preventDefault();
-				});
 				this.el.show();
+
 			} else {
-				editArea.unbind('keydown.LoadingStatus');
 				this.el.hide();
 				this.editor.fire('afterLoadingStatus');
 			}

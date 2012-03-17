@@ -226,7 +226,7 @@ var Wall = $.createClass(Object, {
 		});
 	},	
 	
-	doRestor: function(id, target, formdata) {
+	doRestore: function(id, target, formdata) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'restoreMessage',
@@ -421,7 +421,7 @@ var Wall = $.createClass(Object, {
 	doAction: function(id, mode, msg, target, formdata){
 		switch(mode) {
 			case 'restore':
-				this.doRestor(id, target, formdata);
+				this.doRestore(id, target, formdata);
 			break;
 			default:
 				this.doDelete(id, mode, msg, formdata);

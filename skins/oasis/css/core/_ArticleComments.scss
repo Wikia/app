@@ -1,58 +1,93 @@
 @import "color";
 @import "../mixins/clearfix";
 @import "../mixins/border-radius";
+@import "../mixins/opacity";
 
-// /** everything above the comment bubbles **/
 .WikiaArticleComments {
 	border-top: 1px solid $color-page-border;
 	margin: 10px;
 	padding-top: 10px;
+
 	h1 {
 		font-size: 22px;
 		margin-left: 5px;
 	}
+
 	.controls {
 		float: right;
 		font-size: 11px;
 		line-height: 25px;
 		list-style: none;
+
 		li {
 			float: left;
 			margin-left: 5px;
+
 			a {
 				border-left: 1px solid $color-page-border;
 				padding: 0 5px;
 			}
+
 			&:first-child {
 				a {
 					border: 0;
 				}
 			}
 		}
+
 		.selected {
 			color: $color-text;
 			cursor: default;
 		}
 	}
+
 	.session {
 		@include clearfix;
 		font-size: 12px;
 		line-height: 14px;
-		margin-top: 5px;
-		padding: 5px;
+		padding-right: 5px;
 		float: left;
 		width: 60px;
-		a:first-child {
-			float: right;
-		}
+
 		.avatar {
-			float: left;
-			margin-right: 4px;
 			vertical-align: middle;
 		}
 	}
-	#article-comm-info { // /** error message container **/
+
+	// Error message container
+	#article-comm-info {
 		display: none;
+	}
+
+	#article-comments {
+		border-top: 1px solid $color-page-border;
+		margin-top: 10px;
+		padding-top: 15px;
+	}
+
+	form {
+		@include clearfix;
+		margin: 10px 0;
+	}
+
+	textarea {
+		border: 1px solid $color-page-border;
+		height: 75px;
+		margin: 15px 5px;
+		line-height: 21px;
+		margin: 5px 0 15px 0;
+		padding: 2px;
+		font-size: 12px;
+		font-family: "Helvetica", "Arial", sans-serif;
+	}
+
+	#article-comm-form {
+		margin-top: 0;
+
+		textarea {
+			margin-top: 0;
+			width: 584px;
+		}
 	}
 
 	.throbber {
@@ -62,73 +97,49 @@
 		float: right;
 	}
 
-	#article-comments {
-		margin-top: 7px;
-		border-top: 1px solid $color-page-border;
-	}
-	form {
-		@include clearfix;
-		margin: {
-			top: 6px;
-			bottom: 10px;
-		}
-	}
-	textarea {
-		border: 1px solid $color-page-border;
-		height: 75px;
-		margin: 15px 5px;
-		line-height: 21px;
-		margin: {
-			top: 5px;
-			left: 0px;
-			right: 0px;
-			bottom: 15px;
-		}
-		padding: 2px;
-		font-size: 12px !important;
-		font-family: "Helvetica", "Arial", sans-serif;
-	}
-	.article-comm-form{
-		textarea {
-			width: 574px;
-		}
-	}
 	.wikia-button {
 		float: right;
+	}
+
+	.edited-by .wikia-button {
 		margin-right: 5px;
 	}
 
+	.loading {
+		@include opacity(50);
+	}
+	
+	.article-comm-history {
+		padding-left: 10px;
+	}
 }
 
-
-// /** the comment bubble list **/
 #article-comments .comments {
 	clear: both;
 	list-style: none;
-	& > li{
-		list-style: none;
+
+	.article-comm-text {
+		padding: 0;
+		min-height: 0;
+		width: 100%;
 	}
 }
+
 #article-comments .sub-comments {
 	list-style: none;
 	margin-bottom: 20px;
 	margin-left: 85px;
 
 	textarea {
-		width: 444px!important;
+		width: 420px;
 	}
+
 	.article-comm-text {
 		overflow: hidden;
-		width: 468px;
-	}
-	& > li{
-		list-style: none;
+		padding: 0;
+		width: 100%;
 	}
 }
-
-
-
-
 
 .upper-pagination {
 	padding-top: 15px;
@@ -137,101 +148,29 @@
 }
 
 #article-comments-pagination, .article-comments-pagination {
-	margin: {
-		left: auto;
-		right: auto;
-	}
+	margin: 0 auto;
 	text-align: center;
 	color: $color-links;
+
 	a {
 		color: $color-links;
-
 		border-right: solid 1px $color-links;
-
-		padding: {
-			left: 4px;
-			right: 5px;
-		}
-		margin: {
-			left: 2px;
-			right: 5px;
-		}
+		padding: 0 5px;
+		margin: 0 5px;
 
 		&.accent {
 			color: White;
 			background-color: $color-links;
 		}
-
-		&#article-comments-pagination-link-prev {
-			border: none;
-			margin-right: 10px;
-			&:before {
-				// content: "< ";
-			}
-		}
-		&#article-comments-pagination-link-next {
-			border: none;
-			margin-left: 10px;
-			&:after {
-				// content: " >";
-			}
-		}
 	}
 }
 
-#article-comments .withVoting {
-	.article-comm-voteup-btn {
-		color: #999999;
-		float: left;
-		font-size: 20px;
-		font-weight: bold;
-		margin-right: 15px;
-		position: absolute;
+#article-comments-pagination-link-prev {
+	border: none;
+	margin-right: 10px;
+}
 
-		span {
-			display: block;
-			margin-left: 25px;
-		}
-
-		button {
-			max-width: 80px;
-			overflow: hidden;
-
-			.chevron {
-				border-color: transparent transparent $color-page transparent;
-				border-width: 8px 4px;
-				left: -3px;
-				position: relative;
-				top: -5px;
-			}
-		}
-
-		&.No1 {
-			background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll 10px 0 transparent;/* $wgCdnStylePath */
-			color: #000000;
-			font-size: 18px;
-			height: 65px;
-			line-height: 30px;
-			padding-top: 13px;
-			position: absolute;
-			top: -5px;
-			width: 60px;
-		}
-	}
-
-	.article-comm-text {
-		font-size: 17px;
-		overflow: hidden;
-		padding-left: 87px;
-		width: 288px;
-	}
-
-	.article-comm-votes {
-		line-height: 11px;
-		padding: 17px 10px;
-		position: absolute;
-		right: 0px;
-		text-align: right;
-		top: 0px;
-	}
+#article-comments-pagination-link-next {
+	border: none;
+	margin-left: 10px;
 }

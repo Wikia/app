@@ -79,7 +79,7 @@ public class WallTest extends BaseTest {
 		assertTrue(session().isTextPresent(replybody + " 4"));
 		assertTrue(session().isTextPresent(replybody + " 5"));
 	}
-	
+
 	@Test(groups={"CI"})
 	public void testEditMessage() throws Exception {
 		String msgbody = "ThisIsTestEditMessage: " + new Date().toString();
@@ -101,7 +101,7 @@ public class WallTest extends BaseTest {
 		waitForWallEntryFields();
 		assertTrue( !session().isElementPresent(firstMsg + " .edit-message") );
 		
-		msgbody = "ThisIsTestEditMessage: " + new Date().toString();
+		msgbody = "TestEditMessage: " + new Date().toString();
 		
 		// send new message
 		writeNewPost("test message", msgbody);
@@ -119,7 +119,7 @@ public class WallTest extends BaseTest {
 		//check if message title and body are the same after clicking edit button
 		String prevTitle = session().getText(firstMsg + " .msg-title a");
 		String prevBody = session().getText(firstMsg + " .msg-body");
-		String titleArea = firstMsg + " .msg-title textarea:not([tabindex=-1])";
+		String titleArea = firstMsg + " .msg-title textarea:nth-child(2)";
 		String bodyArea = firstMsg + " .msg-body textarea:not([tabindex=-1])";
 		String saveBtn = firstMsg + " .save-edit";
 		
@@ -137,6 +137,8 @@ public class WallTest extends BaseTest {
 		session().type(bodyArea, prevBody + " (edited)");
 		session().click(saveBtn);
 		
+		// wait for follow link to reappear
+		waitForElement(firstMsg + " .follow");
 		assertTrue( session().isTextPresent(prevTitle + " (edited)") );
 		assertTrue( session().isTextPresent(prevBody + " (edited)") );
 		
@@ -161,7 +163,7 @@ public class WallTest extends BaseTest {
 		String msgbody = "ThisIsTestEditReply (message): " + new Date().toString();
 		String firstMsg = "css=.comments > .message:first-child";
 		String replybody = "ThisIsTestEditReply (reply): " + new Date().toString();
-		String firstReply = "css=.comments > .message:first-child .replies .message:first-child";
+		String firstReply = firstMsg +" .replies .message:first-child";
 		
 		//post a message as "A Wikia Contributor"
 		logout();
@@ -222,7 +224,7 @@ public class WallTest extends BaseTest {
 		session().type(replyBodyArea, prevReplyBody + " (reply edited)");
 		session().click(saveBtn);
 		
-		waitForElement(firstMsg);
+		waitForElement(firstReply + " .msg-body p");
 		assertTrue( session().isTextPresent(prevReplyBody + " (reply edited)") );
 		
 		//reload and check if the new reply text is still there
@@ -326,6 +328,7 @@ public class WallTest extends BaseTest {
 		quickRemoveAndReload(removeBtn, modal, msgBody,  getTestWallUrl() + "&reload" );
 		
 		//check if there is NO our message
+		waitForElement(firstMsg);
 		assertFalse( session().getText(firstMsg + " .msg-title").equals(msgTitle) );
 		assertFalse( session().getText(firstMsg + " .msg-body").equals(msgBody) );
 	}
@@ -374,7 +377,7 @@ public class WallTest extends BaseTest {
 		
 		//undo removing
 		session().click(firstMsg + " .message-undo-remove");
-		waitForElement(firstMsg);
+		waitForElement(firstMsg + ":not(.message-removed)");
 		
 		//check if message is back
 		checkIfMessageIsBack(firstMsg, msgBody, msgTitle);
@@ -422,7 +425,7 @@ public class WallTest extends BaseTest {
 		
 		//undo removing
 		session().click(firstMsgReplies + " .message-undo-remove");
-		waitForElement(firstMsgReplies + " .message:first-child");
+		waitForElement(firstMsgReplies + " .message:first-child:not(.message-removed)");
 		
 		//check if message is back
 		assertFalse( session().isElementPresent(firstMsgReplies + " .speech-bubble-message-removed") );
@@ -489,7 +492,7 @@ public class WallTest extends BaseTest {
 		//is the text of removed message correct
 		assertTrue( session().getText(removedReply + " .speech-bubble-message .msg-body").equals(msgBody + " (reply)") );
 	}
-	
+
 	@Test(groups={"CI"})
 	public void testAdminDeleteThread() throws Exception {
 		String newDate = new Date().toString();
@@ -553,12 +556,12 @@ public class WallTest extends BaseTest {
 		session().click(modal + " #WikiaConfirmOk");
 		openAndWait(threadPageLink + "?reload2");
 		
-		assertTrue( session().isTextPresent("The message you are trying to reach has been deleted.") );
+		assertTrue( session().isTextPresent("The message you are trying to view has been deleted.") );
 		
 		if( isDevBox() ) {
 		//TODO: remove this condition when UserRanemTool starts working 
 		//and WikiaBot will be renamed to QATestsBot on devboxes
-			assertTrue( session().isElementPresent("link=Return to WikiaBot's Wall.") );
+			assertTrue( session().isElementPresent("//div[@id='WikiaArticle']/a[contains(@href,'Message_Wall:WikiaBot')]") );
 		} else {
 			assertTrue( session().isElementPresent("link=Return to QATestsBot's Wall.") );
 		}
@@ -580,8 +583,11 @@ public class WallTest extends BaseTest {
 		session().click(firstMsg + " .message-restore");
 		waitForElement(firstMsg + " .new-reply");
 		
+		// wait for element to fade in
+		Thread.sleep(1000);
 		assertTrue( session().isVisible(firstMsg + " .new-reply") );
 	}
+
 	
 	private void writeNewPost(String title, String body) throws Exception {
 		session().type("WallMessageTitle", title);

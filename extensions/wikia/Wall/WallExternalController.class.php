@@ -83,15 +83,9 @@ class WallExternalController extends WikiaController {
 		
 		$titleMeta = $this->helper->strip_wikitext($this->request->getVal('messagetitle', null));
 		$titleMeta = substr($titleMeta, 0, 200);
-		
-		// If MiniEditor is enabled then we might get text in source or rte mode		
-		$convertFormat = $this->request->getVal('convertFormat');
-		if($this->wg->EnableMiniEditorExtForWall && !empty($convertFormat)) {
-			$body = MiniEditorHelper::convertRequestText($this->request, 'body');
-		} else {
-			$body = $this->request->getVal('body');
-		}
-		
+
+		$body = $this->getConvertedContent($this->request->getVal('body'));
+
 		$helper = F::build('WallHelper', array());
 		
 		if( empty($titleMeta) ) {
@@ -243,7 +237,6 @@ class WallExternalController extends WikiaController {
 
 	public function editMessage() {
 		$msgid = $this->request->getVal('msgid');
-		$convertFormat = $this->request->getVal('convertFormat');
 		
 		//TODO: remove call to ac
 		$ac = ArticleComment::newFromId($msgid);
@@ -260,14 +253,10 @@ class WallExternalController extends WikiaController {
 		
 		$ac->load();
 		$data = $ac->getData();
-		
-		// If MiniEditor is enabled then we might need to convert html or wikitext
-		if($this->wg->EnableMiniEditorExtForWall && !empty($convertFormat)) {
-			$this->response->setVal('htmlorwikitext', MiniEditorHelper::convertRequestText($this->request, null, $data['rawtext']));
-		} else {
-			$this->response->setVal('htmlorwikitext', $data['rawtext']);		
-		}
+
+		$this->response->setVal('htmlorwikitext', $this->getConvertedContent($data['rawtext']));
 		$this->response->setVal('status', true);
+		
 		return true;
 	}
 	
@@ -276,14 +265,8 @@ class WallExternalController extends WikiaController {
 		
 		$msgid = $this->request->getVal('msgid');
 		$newtitle = trim($this->request->getVal('newtitle'));
-		$convertFormat = $this->request->getVal('convertFormat');
 
-		// If MiniEditor is enabled then we might need to convert html or wikitext
-		if($this->wg->EnableMiniEditorExtForWall && !empty($convertFormat)) {
-			$newbody = MiniEditorHelper::convertRequestText($this->request, 'newbody');
-		} else {
-			$newbody = $this->request->getVal('newbody');
-		}	
+		$newbody = $this->getConvertedContent($this->request->getVal('newbody'));
 		
 		if( empty($newtitle) ) {
 			$newtitle = $helper->getDefaultTitle();
@@ -343,15 +326,7 @@ class WallExternalController extends WikiaController {
 		}
 	
 		$wallMessage = F::build('WallMessage', array($parentTitle), 'newFromTitle');
-		
-		// If MiniEditor is enabled then we might get text in source or rte mode
-		$convertFormat = $this->request->getVal('convertFormat');
-		if($this->wg->EnableMiniEditorExtForWall && !empty($convertFormat)) {
-			$body = MiniEditorHelper::convertRequestText($this->request, 'body');
-		} else {
-			$body = $this->request->getVal('body');
-		}
-		
+		$body = $this->getConvertedContent($this->request->getVal('body'));
 		$reply = $wallMessage->addNewReply($body, $this->wg->User);
 				
 		if($reply === false) {
@@ -364,10 +339,10 @@ class WallExternalController extends WikiaController {
 		// after successfully posting a reply		
 		// remove notification for this thread (if user is following it)
 		$wn = F::build('WallNotifications', array());
-		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent') );		
+		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent'));		
 		
 	}
-	
+
 	private function getDisplayName() {
 		$displayname = $this->wg->User->getRealName();
 		if(empty($displayname))  {
@@ -379,5 +354,22 @@ class WallExternalController extends WikiaController {
 		return array( $displayname, $displayname2 );
 		
 	}
-	
-} // end class Wall
+
+	/**
+	 * Handles converting wikitext to richtext and vice versa.
+	 *
+	 * @param string $text - the text to convert
+	 * @return string - the converted text
+	 */
+	private function getConvertedContent($content) {
+		if ($this->wg->EnableMiniEditorExtForWall && !empty($content)) {
+			$convertToFormat = $this->request->getVal('convertToFormat', '');
+
+			if (!empty($convertToFormat)) {
+				$content = MiniEditorHelper::convertContent($content, $convertToFormat);
+			}
+		}
+
+		return $content;
+	}
+}

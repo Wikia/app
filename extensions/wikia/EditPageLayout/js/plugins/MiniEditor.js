@@ -4,9 +4,10 @@
 	WE.plugins.MiniEditor = $.createClass(WE.plugin, {
 
 		proxyEvents: [
-			'ck-instanceReady', 'ck-wysiwygModeReady', 'editorActivated', 
-			'editorBlur', 'editorClear', 'editorDeactivated', 'editorFocus',
-			'editorReady', 'editorReset', 'editorResize'
+			'ck-instanceReady', 'ck-wysiwygModeReady', 'editorActivated',
+			'editorBeforeReady', 'editorBlur', 'editorClear',
+			'editorDeactivated', 'editorFocus', 'editorReady',
+			'editorReset', 'editorResize'
 		],
 
 		beforeInit: function() {
@@ -86,6 +87,7 @@
 					// If editor already has content, editorResize will handle animations
 					if (hasContent) {
 						afterAnimation.call(self);
+
 					} else {
 						wrapper.animate(animation, function() {
 							wikiaEditor.getEditbox().focus();
@@ -101,18 +103,21 @@
 					// If element isn't a textarea, we are dealing with content
 					// editing. Instead of animating we will need to do a swap.
 					if (!element.is('textarea')) {
-						element.hide();
-						
 						var textarea = wikiaEditor.getEditbox();
+
+						element.hide();
+
 						// Only animate on first time showing the edit instance
-						if(isFirstActivation){
+						if (isFirstActivation) {
 							// Temporary solution to show scrollbar in the textarea 
 							// until we enable autoresizing when RTE is disabled. 
-							textarea.css('overflow','auto').animate(animation, this.proxy(afterAnimation));
+							textarea.css('overflow', 'auto').animate(animation, this.proxy(afterAnimation));
+
 						} else {
 							textarea.show();
 							afterAnimation.call(this);
 						}
+
 					} else {
 						element.animate(animation, this.proxy(afterAnimation));
 					}
@@ -124,6 +129,9 @@
 
 			// Mark as active
 			wikiaEditor.element.addClass('active');
+		},
+
+		editorBeforeReady: function() {
 		},
 
 		editorBlur: function() {
@@ -150,6 +158,7 @@
 			this.hideToolbar();
 
 			if (wikiaEditor.element.hasClass('active') || force) {
+
 				// Don't animate or hide buttons if there is content
 				if (!wikiaEditor.getContent()) {
 					this.hideButtons(function() {
@@ -174,6 +183,7 @@
 								element.animate(animation);
 							}
 						}
+
 						wikiaEditor.element.addClass('editor-closed');					
 					});
 				}
@@ -194,17 +204,17 @@
 		editorReady: function() {
 			var wikiaEditor = this.editor,
 				ckeditor = wikiaEditor.ck;
-			
-			// Remove visibility styles that we added for the loading status indicator
-			wikiaEditor.config.body.css('visibility', '');
-
-			// Trigger editorActivated
-			wikiaEditor.fire('editorActivated', true);
 
 			// Finish benchmarking initialization time
 			MiniEditor.initTime = (new Date().getTime() - MiniEditor.initTimer.getTime());
 			$().log('End initialization (' + MiniEditor.initTime + 'ms)', 'MiniEditor');
 			$().log('Time consumed until ready: ' + ((MiniEditor.loadTime + MiniEditor.initTime) / 1000) + 's', 'MiniEditor');
+
+			// Remove visibility styles that we added for the loading status indicator
+			wikiaEditor.config.body.css('visibility', '');
+
+			// Trigger editorActivated
+			wikiaEditor.fire('editorActivated', true);
 		},
 
 		editorReset: function() {
@@ -229,8 +239,13 @@
 		},
 
 		hideButtons: function(callback) {
-			this.buttons.attr('disabled', true);
-			this.buttonsWrapper.slideUp(this.proxy(callback));
+			if (this.buttonsWrapper.length) {
+				this.buttons.attr('disabled', true);
+				this.buttonsWrapper.slideUp(this.proxy(callback));
+
+			} else {
+				callback.call(this);
+			}
 		},
 
 		hideToolbar: function() {
@@ -238,8 +253,10 @@
 		},
 
 		showButtons: function() {
-			this.buttonsWrapper.slideDown();
-			this.buttons.show().removeAttr('disabled');
+			if (this.buttonsWrapper.length) {
+				this.buttonsWrapper.slideDown();
+				this.buttons.show().removeAttr('disabled');
+			}
 		},
 
 		showToolbar: function() {

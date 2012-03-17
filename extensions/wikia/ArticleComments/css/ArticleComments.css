@@ -50,7 +50,7 @@
 }
 
 #article-comments blockquote {
-	margin-top: 0;
+	margin-top: 0px;
 	margin-left: 65px;
 }
 
@@ -78,7 +78,7 @@ div.article-comm-input-text textarea {
 	float: left;
 	line-height: 1em;
 	overflow: hidden;
-	padding: 0 4px 4px 10px;
+	padding: 0px 4px 4px 10px;
 	width: 100px;
 }
 
@@ -186,7 +186,7 @@ a.article-comm-reply {
 
 div#article-comm-fbMonit {
 	height:100px;
-	margin: 0 0 5px 185px;
+	margin: 0px 0px 5px 185px;
 	width:450px;
 	padding:6px;
 	background-color: white;
@@ -203,48 +203,6 @@ div#article-comm-fbMonit {
 
 #fbCommentText{
 	padding-top:38px;
-}
-
-#article-comments .withVoting .article-comm-voteup-btn {
-	color: #999;
-	float: left;
-	font-size: 20px;
-	font-weight: bold;
-	margin-right: 15px;
-	position: absolute;
-}
-
-#article-comments .withVoting .article-comm-voteup-btn.No1 {
-	background: url("/extensions/wikia/TopLists/images/sprites.png") no-repeat scroll 10px 0 transparent;/* $wgCdnStylePath */
-	color: #000000;
-	font-size: 18px;
-	height: 65px;
-	line-height: 30px;
-	padding-top: 13px;
-	position: absolute;
-	top: -5px;
-	width: 60px;
-}
-
-#article-comments .withVoting .article-comm-voteup-btn span {
-	display: block;
-	margin-left: 25px;
-}
-
-#article-comments .withVoting .article-comm-text {
-	font-size: 17px;
-	overflow: hidden;
-	padding-left: 87px;
-	width: 288px;
-}
-
-#article-comments .withVoting .article-comm-votes {
-	line-height: 11px;
-	padding: 17px 10px;
-	position: absolute;
-	right: 0;
-	text-align: right;
-	top: 0;
 }
 
 .skin-monobook #article-comments .speech-bubble-avatar {

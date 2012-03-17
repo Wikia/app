@@ -5,14 +5,17 @@
 		initEvents: function() {
 			var self = this;
 
-			this.WallMessageBody.focus(function() {
-				if(!$(this).data('wikiaEditor')) {
-					$(this).unbind('.placeholder');
+			this.WallMessageBody.click(function() {
+				var $element = $(this);
+
+				if (!$element.data('wikiaEditor')) {
+					$element.unbind('.placeholder');
 				}
-				$(this).miniEditor({
+
+				$element.miniEditor({
 					events: {
 						editorReady: function(event, wikiaEditor) {
-							if(!MiniEditor.ckeditorEnabled) {
+							if (!MiniEditor.ckeditorEnabled) {
 								wikiaEditor.getEditbox()
 									.placeholder()
 									.triggerHandler('focus.placeholder');
@@ -27,7 +30,8 @@
 			return this.WallMessageBody.data('wikiaEditor').getContent();
 		},
 
-		// Return desired format for saving message.
+		// Return an empty string if we don't need to convert, 
+		// or 'wikitext' if we need to convert to wikitext.
 		getFormat: function() { 
 			return this.WallMessageBody.data('wikiaEditor').mode == 'wysiwyg' ? 'wikitext' : '';
 		},

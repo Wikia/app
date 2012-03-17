@@ -43,7 +43,18 @@
 		return WE.instances[instanceId || WE.instanceId];
 	};
 
-	WE.create = function( plugins, config ) {
+	// Helper function for converting text format to mode
+	WE.formatToMode = function(format) {
+		return format == 'richtext' ? 'wysiwyg' : 'source';
+	};
+
+	// Helper function for converting mode to text format
+	WE.modeToFormat = function(mode) {
+		return mode == 'wysiwyg' ? 'richtext' : 'wikitext';
+	};
+
+	// Constructor
+	WE.create = function(plugins, config) {
 		var instance = new WE.Editor(plugins, config),
 			instanceId = config.body.attr('id');
 
@@ -57,6 +68,8 @@
 		WE.instances[instanceId] = instance;
 		WE.setInstanceId(instance.instanceId = instanceId);
 		WE.instanceCount++;
+
+		instance.fire('instanceCreated');
 
 		instance.show();
 
@@ -114,6 +127,7 @@
 			RELOADING: 6
 		},
 
+		ready: false,
 		editorElement: false,
 
 		constructor: function( plugins, config ) {
@@ -123,10 +137,12 @@
 			this.pluginConfigs = plugins;
 			this.config = $.extend(true, {}, WE.config, config); // clone
 			this.initialized = false;
-			this.ready = false;
 			this.state = false;
 			this.mode = false;
-			//this.debugEvents(['fire']);
+		},
+
+		getFormat: function() {
+			return WE.modeToFormat(this.mode);
 		},
 
 		initPlugins: function() {
@@ -171,6 +187,17 @@
 				}
 			}
 			return this.plugins[name];
+		},
+
+		markAsReady: function() {
+			if (!this.ready) {
+				this.ready = true;
+				this.setState(this.states.IDLE);
+				this.fire('editorReady', this);
+
+				GlobalTriggers.fire('WikiaEditorReady', this);
+				$().log('Editor is ready!', 'WikiaEditor');
+			}
 		},
 
 		setState: function( state ) {
@@ -235,7 +262,6 @@
 			throw arguments[0];
 		}
 	});
-	
 
 	/**
 	 * Base plugin class
@@ -686,13 +712,7 @@
 				.click(this.proxy(this.editorClicked));
 
 			// Editor is ready now
-			this.editor.ready = true;
-			this.editor.setState(this.editor.states.IDLE);
-			this.editor.fire('editorReady', this.editor);
-
-			GlobalTriggers.fire('WikiaEditorReady', this.editor);
-
-			$().log('editor is ready!', 'WikiaEditor');
+			this.editor.markAsReady();
 		},
 
 		initDom: function() {
@@ -788,10 +808,18 @@
 			this.editor.on('ckInstanceCreated', this.proxy(this.ckInstanceCreated));
 
 			// Properly detect when we are finished loading (BugId:20297)
-			this.editor.on('afterLoadingStatus', this.proxy(this.editorReady));
+			this.editor.on('afterLoadingStatus', this.proxy(this.afterLoadingStatus));
 
 			// Init RTE for this wikiaEditor instance
 			RTE.init(this.editor);
+		},
+
+		afterLoadingStatus: function() {
+			this.editor.markAsReady();
+
+			// Loading is done, editor container can be visible again
+			// And typing can be re-enabled (BugId:23061)
+			$(this.editor.ck.container.$).addClass('visible').unbind('keydown.preventTyping');
 		},
 
 		// ckeditor instance is now available
@@ -834,6 +862,14 @@
 		},
 
 		beforeModeChange: function() {
+
+			// Hide the editor container while we switch modes
+			$(this.editor.ck.container.$).removeClass('visible')
+
+				// Don't allow typing while switching modes (BugId:23061)
+				// We can't use readOnly because it's too buggy so just prevent typing.
+				.bind('keydown.preventTyping', function(e) { e.preventDefault(); });
+
 			this.editor.setState(this.editor.ck.mode == 'wysiwyg' ?
 				this.editor.states.LOADING_SOURCE : this.editor.states.LOADING_VISUAL);
 		},
@@ -841,7 +877,6 @@
 		modeChanged: function() {
 			this.editor.setMode(this.editor.ck.mode);
 			this.editor.setState(this.editor.states.IDLE);
-
 			this.getEditbox().click(this.proxy(this.editorClicked)).addClass('focused');
 		},
 
@@ -892,17 +927,6 @@
 
 		editorClicked: function() {
 			this.editor.fire('editorClick', this.editor);
-		},
-
-		editorReady: function() {
-			if (!this.editor.ready) {
-				this.editor.ready = true;
-				this.editor.fire('editorReady', this.editor);
-
-				GlobalTriggers.fire('WikiaEditorReady', this.editor);
-
-				$().log('editor is ready!', 'WikiaEditor');
-			}
 		}
 	});
 

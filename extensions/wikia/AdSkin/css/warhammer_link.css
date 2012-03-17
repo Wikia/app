@@ -1,0 +1,11 @@
+#request_wiki {
+	display: none;
+}
+#warhammer_link {
+	color: #fec423 !important;
+	font-weight: bold;
+	left: 221px;
+	position: absolute;
+	top: 10px;
+	white-space: nowrap;
+}

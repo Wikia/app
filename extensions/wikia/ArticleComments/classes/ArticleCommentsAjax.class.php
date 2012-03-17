@@ -57,7 +57,7 @@ class ArticleCommentsAjax {
 		if ( $comment ) {
 			$comment->load(true);
 			if ( $comment->canEdit() ) {
-				$text = $wgRequest->getText('wpArticleComment', false);
+				$text = self::getConvertedContent($wgRequest->getVal('wpArticleComment'));
 				$commentId = $wgRequest->getText('id', false);
 				$response = $comment->doSaveComment( $text, $wgUser, $title, $commentId );
 				if ( $response !== false ) {
@@ -190,8 +190,8 @@ class ArticleCommentsAjax {
 		if ( !$commentingAllowed ) {
 			return $result;
 		}
-
-		$response = ArticleComment::doPost( $wgRequest->getText( 'wpArticleComment', false ), $wgUser, $title, $parentId );
+ 
+		$response = ArticleComment::doPost( self::getConvertedContent($wgRequest->getVal('wpArticleComment')), $wgUser, $title, $parentId );
 
 		if ( $response !== false ) {
 /**/
@@ -259,5 +259,24 @@ class ArticleCommentsAjax {
 		$result = array('error' => $error, 'text' => $text, 'pagination' => $pagination);
 
 		return $result;
+	}
+
+	/**
+	 * Handles converting wikitext to richtext and vice versa.
+	 *
+	 * @param string $text - the text to convert
+	 * @return string - the converted text
+	 */
+	static public function getConvertedContent($content) {
+		global $wgEnableMiniEditorExtForArticleComments, $wgRequest;
+		if ($wgEnableMiniEditorExtForArticleComments && !empty($content)) {
+			$convertToFormat = $wgRequest->getVal('convertToFormat', '');
+
+			if (!empty($convertToFormat)) {
+				$content = MiniEditorHelper::convertContent($content, $convertToFormat);
+			}
+		}
+
+		return $content;
 	}
 }

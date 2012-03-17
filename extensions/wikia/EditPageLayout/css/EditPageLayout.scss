@@ -237,37 +237,35 @@ body {
 	}
 
 	.loading-indicator {
-		display: none;
-
 		.loading-background, .loading-message {
+			background-color: $color-page;
 			position: absolute;
-			background: $color-page;
 			display: block;
 		}
+
 		.loading-background {
 			z-index: 100;
-			@include opacity(75);
+			//@include opacity(75);
 			display: block;
 			left: 0;
 			right: 0;
 			top: 0;
 			bottom: 0;
 		}
+
 		.loading-message {
 			background: transparent;
 			z-index: 101;
 			top: 20%;
 			width: 100%;
 			text-align: center;
-
 			color: $color-links;
 
 			.loading-throbber, .loading-text {
 				display: inline-block;
-				zoom: 1;
 				vertical-align: middle;
-				background: $color-page;
 				padding: 10px;
+				zoom: 1;
 			}
 
 			.loading-throbber {

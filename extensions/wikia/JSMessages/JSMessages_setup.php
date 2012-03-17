@@ -28,7 +28,6 @@ $app->registerClass('JSMessagesController', $dir . '/JSMessagesController.class.
 
 // hooks
 $app->registerHook('MakeGlobalVariablesScript', 'JSMessages', 'onMakeGlobalVariablesScript');
-$app->registerHook('SkinAfterBottomScripts', 'JSMessages', 'onSkinAfterBottomScripts');
 $app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');
 
 // register instances

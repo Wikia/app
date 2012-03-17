@@ -76,6 +76,8 @@
 				'rte-toolbar,' +
 				'rte-tools,' +
 				'rte-track',
+			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
+			//readOnly: true,
 			resize_enabled: false,
 			richcomboCss: $.getSassCommonURL('extensions/wikia/RTE/css/richcombo.scss'),
 			skin: 'wikia',
@@ -326,7 +328,7 @@
 
 	// Create overlayNode when the DOM is ready
 	$(function() {
-		// used to be RTEStuff and stuffNode
+		$('body').addClass('javascript');
 		RTE.overlayNode = $('<div>', {id: 'RTEOverlay'}).appendTo('body');
 	});
 
