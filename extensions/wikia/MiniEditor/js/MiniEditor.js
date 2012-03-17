@@ -8,7 +8,8 @@
 	// This object handles the bootstrapping of MiniEditor for on-demand loading
 	// As well as creating new wikiaEditor instances
 	var MiniEditor = {
-		initialized: false,
+		assetsLoaded: false,
+		loadingAssets: false,
 
 		// The selector used for the MiniEditor wrapper
 		wrapperSelector: '.MiniEditorWrapper',
@@ -44,8 +45,7 @@
 		// Should be called after all dependencies are satisfied.
 		configure: function() {
 
-			// Must be initialized!
-			if (!this.initialized) {
+			if (!this.assetsLoaded) {
 				return;
 			}
 
@@ -79,9 +79,9 @@
 		loadAssets: function(callback) {
 			var self = this;
 
-			if (this.initialized) {
+			if (this.loadingAssets || this.assetsLoaded) {
 				if ($.isFunction(callback)) {
-					callback.call(this);
+					callback();
 				}
 
 				return;
@@ -90,6 +90,9 @@
 			// Start load timer
 			this.loadTimer = new Date();
 			$().log('Start resource loading', 'MiniEditor');
+
+			// Mark assets as loading
+			this.loadingAssets = true;
 
 			// Grab all of the global variables needed for mini editor functionality
 			$.nirvana.sendRequest({
@@ -115,38 +118,43 @@
 					// Load scripts and css. wgMiniEditorAssets is an array set by the makeGlobalVariables
 					// FIXME: when loading scripts without allinone mode on, errors will occur because
 					// scripts are not executed in the proper order.
-					$.getResources(window.wgMiniEditorAssets, function() {
+					$.getResources(window.wgMiniEditorAssets, $.proxy(function() {
 
 						// End load timer
-						self.loadTime = (new Date().getTime() - self.loadTimer.getTime());
-						$().log('End resource loading (' + self.loadTime + 'ms)', 'MiniEditor');
+						this.loadTime = (new Date().getTime() - this.loadTimer.getTime());
+						$().log('End resource loading (' + this.loadTime + 'ms)', 'MiniEditor');
+
+						this.assetsLoaded = true;
+						this.loadingAssets = false;
 
 						// Now we can configure MiniEditor
-						self.configure.call(self);
+						this.configure();
 
 						// Fire the callback
 						if ($.isFunction(callback)) {
-							callback.call(self);
+							callback();
 						}
-					});
+					}, self));
 				}
 			});
-
-			// Don't initialize again
-			this.initialized = true;
 		},
 
 		initEditor: function(element, options) {
 			var $element = $(element);
 
+			// If assets are loading, disregard this call
+			if (this.loadingAssets) {
+				return;
+			}
+
 			// Assets haven't been loaded yet, load them now
-			if (!this.initialized) {
+			if (!this.assetsLoaded) {
 				loading($element);
 
 				// Load all the required assets then call this method again
-				return this.loadAssets(function() {
+				return this.loadAssets($.proxy(function() {
 					this.initEditor(element, options);
-				});
+				}, this));
 			}
 
 			var wikiaEditor = $element.data('wikiaEditor');
