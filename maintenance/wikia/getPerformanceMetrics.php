@@ -74,7 +74,9 @@ PageSpeed report for <$reportUrl>:
 REPORT;
 
 // make the score green
-echo "\nPageSpeed score is: \033[32m{$report['metrics']['pageSpeed']}\033[0m\n";
+if (isset($report['metrics']['pageSpeed'])) {
+	echo "\nPageSpeed score is: \033[32m{$report['metrics']['pageSpeed']}\033[0m\n";
+}
 
 // print key/value details
 echo "\nDetails:\n--------\n";
