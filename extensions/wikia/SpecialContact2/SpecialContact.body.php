@@ -78,8 +78,8 @@ class ContactForm extends SpecialPage {
 
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
 			$this->mUserName = $wgRequest->getText( 'wpUserName' );
-			$wgRequest->setVal( 'wpUrlencUserName', urlencode( $wgRequest->getText( 'wpUserName' ) ) );
-			$wgRequest->setVal( 'wpUrlencUserNameNew', urlencode( $wgRequest->getText( 'wpUserNameNew' ) ) );
+			$wgRequest->setVal( 'wpUrlencUserName', urlencode( str_replace( ' ', '_', $wgRequest->getText( 'wpUserName' ) ) ) );
+			$wgRequest->setVal( 'wpUrlencUserNameNew', urlencode( str_replace( ' ', '_', $wgRequest->getText( 'wpUserNameNew' ) ) ) );
 
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName', $wgServer );
