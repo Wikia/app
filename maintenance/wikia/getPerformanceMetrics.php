@@ -13,6 +13,8 @@
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
+require $IP . '/extensions/wikia/PerformanceMetrics/PerformanceMetrics.setup.php';
+
 function printHelp() {
 		echo <<<HELP
 Returns performance metrics for a given page
@@ -37,7 +39,6 @@ if (!isset($options['url'])) {
 	die(1);
 }
 
-$service = new PageSpeedAPI();
 $url = $options['url'];
 
 // support --noexternals option
@@ -46,11 +47,11 @@ if (isset($options['noexternals'])) {
 }
 
 // use GooglePage speed API
-// TODO: get metrics from all providers
-$report = $service->getReport($url);
+$metrics = F::build('PerformanceMetrics');
+$report = $metrics->getReport($url);
 
 if (empty($report)) {
-	echo "API request failed!\n";
+	echo "Get metrics request failed!\n";
 	die(1);
 }
 
