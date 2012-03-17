@@ -19,9 +19,10 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 	initEditForm: function(msg, data, mode) {
 		if(mode != 'source') {
 			$('.msg-title', msg).first().html('<textarea class="title">'+$('.msg-title a', msg).html()+'</textarea>');
-			this.showEditTextArea(msg, data.htmlorwikitext );
+			this.showEditTextArea(msg, data.htmlorwikitext);
+
 		} else {
-			this.showSourceTextArea(msg, data.htmlorwikitext );
+			this.showSourceTextArea(msg, data.htmlorwikitext);
 			$('.edit-buttons.sourceview', msg).first().show();
 		}
 		
@@ -45,17 +46,16 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 		var msg = $(e.target).closest('li.message');
 		var id = msg.attr('data-id');
 		var isreply = msg.attr('data-is-reply');
+		var bubble = $('.speech-bubble-message', msg).first();
 
 		// If we're viewing source, we want wikitext and no conversion.
-		var convertFormat = mode == 'source' ? '' : this.getEditFormat(msg);
+		var format = mode == 'source' ? '' : this.getEditFormat(msg);
 
 		$('.buttons', msg).first().hide();
 		msg.find('.wikia-menu-button').removeClass("active");
 
-		this.model.loadEditData(this.username, id, mode, convertFormat, this.proxy(function(data) {
-			var bubble = $('.speech-bubble-message', msg).first();
+		this.model.loadEditData(this.username, id, mode, format, this.proxy(function(data) {
 			this.setOldHTML(id, bubble);
-					
 			this.initEditForm(msg, data, mode);
 
 			//click tracking
@@ -121,11 +121,11 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 		var isreply = msg.attr('data-is-reply');
 		var newtitle = $('.msg-title textarea.title', msg).val();
 		var newbody = this.getNewBodyVal(msg);
-		var convertFormat = this.getSaveFormat(msg);
+		var format = this.getSaveFormat(msg);
 
 		buttons.attr('disabled', true);
 
-		this.model.saveEdit( this.username, id, newtitle, newbody, isreply, convertFormat, this.proxy(function(data) {
+		this.model.saveEdit( this.username, id, newtitle, newbody, isreply, format, this.proxy(function(data) {
 			var bubble = $('.speech-bubble-message', msg).first();
 
 			this.resetHTMLAfterEdit(id, bubble);

@@ -78,7 +78,7 @@
 		
 		modeChanged: function() {
 			var mode = this.editor.mode;
-			this.editor.log('modeChanged: ',mode);
+
 			for (var name in this.modules) {
 				if (this.modules[name] && this.moduleEls[name]) {
 					var module = this.modules[name];
@@ -129,7 +129,7 @@
 				}
 			}
 			
-			this.editor.on('mode',this.modeChanged,this);
+			this.editor.on('mode', this.modeChanged, this);
 			this.modeChanged();
 		},
 		

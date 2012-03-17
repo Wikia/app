@@ -199,7 +199,9 @@ class JSMessages {
 	}
 
 	/**
-	 * Emit messages from the queue as JS object in <head> section of the page
+	 * Emit messages from the queue as 
+	 *   - JS object in <head> section of the page
+	 *   - JS requested via <script> tag at the bottom of the page
 	 */
 	public function onMakeGlobalVariablesScript($vars) {
 		$this->app->wf->ProfileIn(__METHOD__);
@@ -215,17 +217,8 @@ class JSMessages {
 		// messages cache buster used by JSMessages (BugId:6324)
 		$vars['wgJSMessagesCB'] = $this->helper->getMessagesCacheBuster();
 
-		$this->app->wf->ProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
-	 * Emit messages from the queue as external JS requested via <script> tag at the bottom of the page
-	 */
-	public function onSkinAfterBottomScripts($skin, $text) {
-		$this->app->wf->ProfileIn(__METHOD__);
 		$this->log(__METHOD__, 'preparing list of external packages...');
-
+		
 		$url = $this->getExternalPackagesUrl();
 		if ($url != "") {
 			// request a script

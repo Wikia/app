@@ -3,9 +3,18 @@ class ArticleCommentsModule extends WikiaService {
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
-
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
 			$isMobile = Wikia::isWikiaMobile();
+
+			// Load MiniEditor assets, if enabled (don't enable for Mobile)
+			if ($this->wg->EnableMiniEditorExtForArticleComments && !$isMobile) {
+				$this->sendRequest('MiniEditor', 'loadAssets', array(
+					'loadOnDemand' => true,
+					'additionalAssets' => array(
+						'/extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'
+					)
+				));
+			}
 
 			if ($this->wg->Request->wasPosted()) {
 				// for non-JS version !!! (used also for Monobook and WikiaMobile)

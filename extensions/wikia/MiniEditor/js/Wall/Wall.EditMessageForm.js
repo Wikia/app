@@ -5,12 +5,14 @@
 		oldTitle: {},
 		oldBody: {},
 
-		showEditTextArea: function(msg, text) {
+		editMessage: function(e) {
 			var self = this,
-				body = $('.msg-body', msg).first(),
+				msg = $(e.target).closest('li.message'),
+				body = msg.find('.msg-body').first(),
 				wikiaEditor = body.data('wikiaEditor'),
-				isReply = msg.data('is-reply'),
-				animation = isReply ? {} : {
+				id = msg.attr('data-id'),
+				bubble = msg.find('.speech-bubble-message').first(),
+				animation = msg.data('is-reply') ? {} : {
 					'padding-top': 10,
 					'padding-left': 10,
 					'padding-right': 10,
@@ -18,24 +20,27 @@
 	
 				};
 
+			e.preventDefault();
+
+			this.setOldHTML(id, bubble);
+			this.track('wall/message/action/edit');
+
+			msg.find('.timestamp').hide();
+			msg.find('.buttons').first().hide();
+			msg.find('.wikia-menu-button').removeClass('active');
+
 			// See: http://stackoverflow.com/questions/4095475/jquery-animate-padding-to-zero
 			body.closest('.speech-bubble-message').animate(animation, this.proxy(function() {
-				if (!wikiaEditor) {
-					body.miniEditor({
-						events: {
-							editorReady: function(event, wikiaEditor) {
-								wikiaEditor.setContent(text);
-							}
-						}
-					});
-	
-				} else {
-					body.miniEditor();
-					wikiaEditor.setContent(text);
-				}
+				body.miniEditor({
+					events: {
+						editorActivated: self.proxy(function(event, wikiaEditor) {
+							this.model.loadEditData(this.username, id, 'edit', wikiaEditor.getFormat(), this.proxy(function(data) {
+								wikiaEditor.setContent(data.htmlorwikitext);
+							}));
+						})
+					}
+				});
 			}));
-
-			$('.timestamp', msg).hide();
 		},
 
 		getNewBodyVal: function(msg) {
@@ -47,7 +52,7 @@
 
 			// Format starts as wikitext, so let's check if we need to convert it to RTEHtml
 			// Return the desired message format or empty string if no conversion is necessary.
-			return (MiniEditor.ckeditorEnabled && (!wikiaEditor || (wikiaEditor && wikiaEditor.mode != 'source'))) ? 'RTEHtml' : '';
+			return (MiniEditor.ckeditorEnabled && (!wikiaEditor || (wikiaEditor && wikiaEditor.mode != 'source'))) ? 'richtext' : '';
 		},
 
 		// if we're in wysiwyg mode, convert message to wikitext to save. 
@@ -87,9 +92,8 @@
 		afterClose: function(bubble) {
 			$('.follow', bubble).show();
 			bubble.find('.timestamp').show();
-			
-			var isReply = bubble.parent().data('is-reply');
-			if(!isReply) {
+
+			if (!bubble.parent().data('is-reply')) {
 				bubble.animate({
 					'padding-top': 10,
 					'padding-left': 20,

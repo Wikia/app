@@ -1,3 +1,9 @@
+<?
+if ( $wg->EnableMiniEditorExtForArticleComments ) {
+	echo $app->renderView('MiniEditorController', 'Setup');
+}
+?>
+
 <section id="WikiaArticleComments" class="WikiaArticleComments noprint">
 
 	<ul class="controls">
@@ -18,7 +24,15 @@
 	if ( $canEdit && !$isBlocked && $commentingAllowed ) {
 	?>
 		<div id="article-comm-info">&nbsp;</div>
-
+		<? if ( $wg->EnableMiniEditorExtForArticleComments ):
+			echo $app->getView( 'MiniEditorController', 'Header', array(
+				'attributes' => array(
+					'id' => 'article-comments-minieditor-newpost',
+					'data-min-height' => 100,
+					'data-max-height' => 400
+				)
+			))->render();
+		endif; ?>
 		<div class="session">
 			<?php
 				echo $avatar;
@@ -32,15 +46,25 @@
 				}
 			?>
 		</div>
-
 		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
+			<? if ( $wg->EnableMiniEditorExtForArticleComments ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+			endif; ?>
 			<textarea name="wpArticleComment" id="article-comm"></textarea>
+			<? if ( $wg->EnableMiniEditorExtForArticleComments ):
+				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
+			endif; ?>
 			<? if (!$isReadOnly) { ?>
-				<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button" value="<?= wfMsg('article-comments-post') ?>" />
+				<div class="buttons">
+					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button" value="<?= wfMsg('article-comments-post') ?>" />
+					<img src="<?= $ajaxicon ?>" class="throbber" />
+				</div>
 			<? } ?>
-			<img src="<?= $ajaxicon ?>" class="throbber" />
 		</form>
+		<? if ( $wg->EnableMiniEditorExtForArticleComments ):
+			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
+		endif; ?>
 	<?php
 	} else {
 		if ( $isBlocked ) {

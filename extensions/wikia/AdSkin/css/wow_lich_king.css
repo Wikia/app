@@ -1,0 +1,19 @@
+body.mainpage {
+	background: #000 url(../images/wow_lich_king.jpg) top center no-repeat !important;
+}
+body.mainpage .monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -486px;
+	width: 972px;
+}
+body.mainpage #background_strip {
+	background: transparent;
+	border: 0;
+	margin-top: 186px;
+}
+body.mainpage #userData, body.mainpage #request_wiki {
+	top: 20px;
+}
+body.mainpage #wikia_footer, body.mainpage #wikia_footer a {
+	color: #fff
+}

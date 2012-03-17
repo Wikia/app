@@ -333,8 +333,7 @@ class ArticleComment {
 			}
 
 			if ( !$this->mTitle->isNewPage(GAID_FOR_UPDATE) ) {
-				$img = '<img class="history sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
-				$buttons[] = $img . $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
+				$buttons[] = $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
 
 			$commentId = $this->getTitle()->getArticleId();
@@ -548,7 +547,7 @@ class ArticleComment {
 			wfLoadExtensionMessages('ArticleComments');
 			$vars = array(
 				'canEdit'			=> $this->canEdit(),
-				'comment'			=> $this->mLastRevision->getText(),
+				'comment'			=> ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText()),
 				'isReadOnly'		=> wfReadOnly(),
 				'stylePath'			=> $wgStylePath,
 				'articleId'			=> $this->mTitle->getArticleId(),
@@ -1215,5 +1214,4 @@ class ArticleComment {
 
 		return null;
 	}
-
 }

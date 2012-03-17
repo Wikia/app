@@ -149,9 +149,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 }
 
 /* Restore the container visibility */
-html .cke_skin_wikia,
-html.cke_skin_wikia_container
-{
-	//clear: both;
+html .cke_skin_wikia {
 	visibility: visible;
 }

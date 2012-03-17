@@ -3,25 +3,25 @@
 	// Reply Message
 	var MiniEditorReplyMessageForm = $.createClass(WallReplyMessageForm, {
 		init: function() {
-			this.replyBoxes.live('focus.MiniEditor', this.proxy(this.focus));
+			this.replyBoxes.live('click.MiniEditor', this.proxy(this.click));
 			this.replyButtons.live('click.MiniEditor', this.proxy(this.replyToMessage));
 		},
 
-		focus: function(e) {
-			var target = $(e.target);
-			
+		click: function(e) {
+			var $target = $(e.target);
+
 			// check if editor exists before unbinding placeholder (BugId:23781)
-			if(!target.data('wikiaEditor')) {
+			if (!$target.data('wikiaEditor')) {
 				// Unbind placeholder and clear textarea before initing mini editor (BugId:23221)
-				target.unbind('.placeholder').val('');
+				$target.unbind('.placeholder').val('');
 			}
-			
-			target.miniEditor({
+
+			$target.miniEditor({
 				events: {
 					editorReady: function(event, wikiaEditor) {
 						// Wait till after editor is loaded to know whether RTE is enabled. 
 						// If no RTE, re-enable placeholder on the textarea. 
-						if(!MiniEditor.ckeditorEnabled) {
+						if (!MiniEditor.ckeditorEnabled) {
 							wikiaEditor.getEditbox().placeholder();
 						}
 					}

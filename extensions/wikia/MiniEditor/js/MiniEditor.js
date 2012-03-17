@@ -1,5 +1,10 @@
 (function(window, $, undefined) {
 
+	// Private helper function for element loading status indicators
+	function loading($element) {
+		$element.css('visibility', 'hidden').closest(MiniEditor.wrapperSelector).find('.loading-indicator').show();
+	}
+
 	// This object handles the bootstrapping of MiniEditor for on-demand loading
 	// As well as creating new wikiaEditor instances
 	var MiniEditor = {
@@ -18,6 +23,7 @@
 		// CKEDITOR will be used if RTE is detected after loading assets
 		ckeditorEnabled: false,
 		editorSuite: 'mweditorsuite',
+		editorIsLoading: false,
 
 		// Default configuration settings.
 		// These will be modified after assets are loaded and per instance
@@ -69,24 +75,18 @@
 			GlobalTriggers.fire('MiniEditorReady');
 		},
 
-		// The main point of this function is load the resources needed for MiniEditor
-		// and then pass off the init call for a specific id to the initEditor function.
-		init: function(element, options) {
+		// Loads the resources needed for MiniEditor
+		loadAssets: function(callback) {
 			var self = this;
 
-			// Already initialized
 			if (this.initialized) {
-				return this.initEditor(element, options);
+				if ($.isFunction(callback)) {
+					callback.call(this);
+				}
+
+				return;
 			}
 
-			// Show the loading indicator and hide the textarea while we load stuff
-			element.css('visibility', 'hidden');
-			element.bind('keydown.LoadingStatus', function(e) {
-				e.preventDefault();
-			});
-
-			element.closest(this.wrapperSelector).find('.loading-indicator').show();
-			
 			// Start load timer
 			this.loadTimer = new Date();
 			$().log('Start resource loading', 'MiniEditor');
@@ -103,7 +103,7 @@
 					// extension we are implementing into. Merge these into whatever editor assets
 					// we got from the makeGlobalVariables function here.
 					if (typeof window.wgMiniEditorAssets != 'undefined' && $.isArray(window.wgMiniEditorAssets)) {
-						window.wgMiniEditorAssets = data.wgMiniEditorAssets.concat(window.wgMiniEditorAssets);
+						data.wgMiniEditorAssets = data.wgMiniEditorAssets.concat(window.wgMiniEditorAssets);
 					}
 
 					// Globalize
@@ -124,8 +124,10 @@
 						// Now we can configure MiniEditor
 						self.configure.call(self);
 
-						// Initialize the editor for this element
-						self.initEditor(element, options);
+						// Fire the callback
+						if ($.isFunction(callback)) {
+							callback.call(self);
+						}
 					});
 				}
 			});
@@ -135,17 +137,27 @@
 		},
 
 		initEditor: function(element, options) {
-			var wikiaEditor = element.data('wikiaEditor');
+			var $element = $(element);
+
+			// Assets haven't been loaded yet, load them now
+			if (!this.initialized) {
+				loading(element);
+
+				// Load all the required assets then call this method again
+				return this.loadAssets(function() {
+					this.initEditor(element, options);
+				});
+			}
+
+			var wikiaEditor = $element.data('wikiaEditor');
 
 			// Already exists
-			if (wikiaEditor) {
+			if (wikiaEditor && wikiaEditor.ready) {
 				wikiaEditor.fire('editorActivated');
 
 			// Current instance is not done initializing
-			} else if ((wikiaEditor = WikiaEditor.getInstance()) && !wikiaEditor.ready) {
-
-				// Attempt to blur the element
-				element.trigger('blur');
+			} else if ((wikiaEditor || (wikiaEditor = WikiaEditor.getInstance())) && !wikiaEditor.ready) {
+				wikiaEditor.fire('editorBeforeReady');
 
 			// Current instance does not exist or is done initializing, we can initialize
 			// another instance at this point.
@@ -155,34 +167,57 @@
 				this.initTimer = new Date();
 				$().log('Start initialization', 'MiniEditor');
 
-				var wrapper = element.closest(this.wrapperSelector);
+				var self = this,
+					$wrapper = $element.closest(this.wrapperSelector),
+					events = $.extend({}, options.events);
+
+				// Wrap existing editorReady function with our own
+				events.editorReady = function() {
+					self.editorIsLoading = false;
+
+					if ($.isFunction(options.events.editorReady)) {
+						options.events.editorReady.apply(self, arguments);
+					}
+				}
 
 				// Bind events to the element before we initialize
-				if (options.events) {
-					element.bind(options.events);
-				}
+				$element.bind(events);
+
+				// An editor instance is loading
+				loading($element);
+				this.editorIsLoading = true;
 
 				// Create the instance for this element
 				wikiaEditor = WikiaEditor.create(this.plugins, $.extend(true, {}, this.config, {
-					body: element,
-					element: wrapper,
-					minHeight: element.data('min-height') || 200,
-					maxHeight: element.data('max-height') || 400,
+					body: $element,
+					element: $wrapper.addClass(this.editorSuite),
+					minHeight: $element.data('min-height') || 200,
+					maxHeight: $element.data('max-height') || 400,
 					tabIndex: false // (BugID:19737) - IE doesn't like it when there's a tab index attribute so just get rid of it. 
 				}));
 
-				// Store ID and a reference to wikiaEditor in element
-				element.addClass('wikiaEditor').data('wikiaEditor', wikiaEditor);
+				// Store a reference to wikiaEditor in element
+				$element.addClass('wikiaEditor').data('wikiaEditor', wikiaEditor).triggerHandler('editorInit', [wikiaEditor]);
 			}
 		},
 
-		show: function(element, options) {
-			if (!this.initialized) {
-				this.init(element, options);
+		// Return the proper format to use when populating an editor with data
+		getIncomingFormat: function(element) {
+			if (element && element.length) {
+				var wikiaEditor = element.data('wikiaEditor');
 
-			} else {
-				this.initEditor(element, options);
+				if (wikiaEditor) {
+					return wikiaEditor.getFormat();
+				}
 			}
+
+			return WikiaEditor.modeToFormat(MiniEditor.config.mode);
+		},
+
+		// Outgoing format should always be wikitext. However, if the element already
+		// contains wikitext, passing an empty string will prevent us from trying to parse it again.
+		getOutgoingFormat: function(element) {
+			return this.getIncomingFormat(element) == 'richtext' ? 'wikitext' : '';
 		}
 	};
 
@@ -191,7 +226,7 @@
 		options = $.extend(true, {}, $.fn.miniEditor.options, options);
 
 		return this.each(function() {
-			MiniEditor.show($(this), options);
+			MiniEditor.initEditor(this, options);
 		});
 	};
 
@@ -202,8 +237,11 @@
 		events: {}
 	};
 
-	// If not loading on demand, configure on DOM ready
+	// On DOM ready...
 	$(function() {
+
+		// If assets have been included on page load, mark as
+		// initialized and configure now.
 		if (!window.wgMiniEditorLoadOnDemand) {
 			MiniEditor.initialized = true;
 			MiniEditor.configure();

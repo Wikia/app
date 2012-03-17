@@ -11,7 +11,6 @@
  *
 
  */
-
 error_reporting(E_ALL);
 define("package_size", 100);
 $optionsWithArgs = array( 'list' );
@@ -35,29 +34,8 @@ if(!empty($lastRun)) {
 } else {
 	$startFrom = 0;
 }
-$startFrom = 0;
+//$startFrom = 0;
 
-$dbe = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-$oRes = $dbe->select(
-	'city_list',
-	array('city_id'),
-	array(),
-	__METHOD__,
-	array()
-);
-
-$allowedWikis = array();
-$wikiMax = 0;
-while ($oRow = $dbe->fetchRow($oRes)) {
-	if($wikiMax < $oRow['city_id'] ){
-		$wikiMax = $oRow['city_id'] ;
-	}
-	$allowedWikis[$oRow['city_id']] = true;
-}
-
-$wikisCount = count($allowedWikis); 
-
-echo "There is $wikisCount wikis the bigest id is $wikiMax \n";
 
 $dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 $dbm = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
@@ -84,21 +62,19 @@ function import($wikiIdstart, $size) {
 	echo "we are on: $wikiIdstart - $wikiIdEnd count: {$row['cnt']}\n";
 	
 	$count = (int) $row['cnt'];
-	for($i = 0; $i < $count; $i = $i + 10 ) {
-		importSlice($wikiIdstart, $wikiIdEnd, $i, 10);
+	for($i = 0; $i < $count; $i = $i + 10000 ) {
+		importSlice($wikiIdstart, $wikiIdEnd, $i, 10000);
 	}
 }
 
 
 function importSlice($wikiIdstart, $wikiIdEnd, $start, $slice) {
 	global $dbs, $startFrom;
-	echo "  offset: $start, limit: $slice \n";
 	$res = $dbs->select(
 			array( 'pages' ),
 			array( 
 				'page_id',
 				'page_wikia_id',
-				'page_title',
 				'page_last_edited',
 				'UNIX_TIMESTAMP(page_last_edited) as page_last_edited_unix'
 			),
@@ -114,26 +90,14 @@ function importSlice($wikiIdstart, $wikiIdEnd, $start, $slice) {
 				'LIMIT' => $slice
 			)
 	);
-	
-	$filter = array("png", "gif", "jpg", "jpeg", "ico", "svg");
+
 	while ($row = $dbs->fetchRow($res)) {
-		$path_parts = pathinfo($row['page_title']);
-		if(empty($path_parts['extension']) || in_array(strtolower($path_parts['extension']), $filter )) {
-			insert($row);			
-		} else {
-			echo "Extension {$path_parts['extension']} is not image\n";
-		}
+		insert($row);
 	}	
 }
 
 function insert($row) {
-	global $dbm, $added, $updated, $allowedWikis;
-	
-	if(empty($allowedWikis[$row['page_wikia_id']])) {
-		echo "This wiki was removed\n";
-		return true;
-	}
-	
+	global $dbm, $added, $updated;
 	$dbm->insert( 'image_review', array(
  		'wiki_id' => $row['page_wikia_id'],
  		'page_id' => $row['page_id'],
@@ -174,7 +138,7 @@ function insert($row) {
 	}
 }
 
-$wikisNumber = $wikiMax;
+$wikisNumber = 3;
 
 for($i = 0; $i < $wikisNumber; $i = $i + $sizeOfPack ) {
 	import($i, $sizeOfPack);

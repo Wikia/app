@@ -4,6 +4,11 @@
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
+// Required outside assets
+@import "../../RTE/css/RTE";
+@import "../../VideoEmbedTool/css/VET";
+@import "/extensions/wikia/WikiaMiniUpload/css/WMU.css";
+
 @import "core/colors";
 @import "mixins/sprite-MiniEditor";
 
@@ -14,8 +19,10 @@
 		// Needed for loading status indicator positioning
 		position: relative;
 
-		.body {
+		.wikiaEditor {
 			border: 0;
+			font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
+			font-size: 13.5px;
 			outline: none;
 			resize: none;
 		}

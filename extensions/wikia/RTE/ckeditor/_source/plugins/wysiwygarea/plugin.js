@@ -806,7 +806,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							});
 
 						var keystrokeHandler = editor.keystrokeHandler;
-						// Prevent backspace from navigating off the page.
+						// Prevent backspace from navigating off the page. 
 						keystrokeHandler.blockedKeystrokes[ 8 ] = !editable;
 						keystrokeHandler.attach( domDocument );
 
@@ -1197,6 +1197,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						var wysiwyg = editor.getMode();
 						wysiwyg.loadData( wysiwyg.getData() );
 					}
+
+					// wikia change start: re-enable backspace if not read only
+					editor.keystrokeHandler.blockedKeystrokes[ 8 ] = editor.readOnly;
+					// wikia change end
 				});
 
 			// IE>=8 stricts mode doesn't have 'contentEditable' in effect

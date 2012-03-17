@@ -1,0 +1,15 @@
+body.mainpage .monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -486px;
+	width: 972px;
+}
+body.mainpage #background_strip {
+	background: transparent;
+	border: 0;
+}
+body.mainpage #wikia_footer, body.mainpage #wikia_footer a {
+	color: #fff
+}
+body.mainpage #background_accent1, body.mainpage #background_accent2 {
+	display: none;
+}
