@@ -70,9 +70,8 @@ var ArticleComments = {
 		ArticleComments.track('edit');
 		if (ArticleComments.processing) return;
 
-		// If MiniEditor is enabled, we need to determine the correct content format
-		// before we load anything. To do this, MiniEditor must be initialized.
-		if (ArticleComments.miniEditorEnabled && !MiniEditor.initialized) {
+		// If MiniEditor is enabled, we need to determine the correct content format before making the request
+		if (ArticleComments.miniEditorEnabled && !MiniEditor.assetsLoaded) {
 			MiniEditor.loadAssets(makeRequest);
 
 		} else {
