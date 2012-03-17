@@ -1,5 +1,3 @@
-alert("dsdds");
-
 var Blogs = {};
 
 Blogs.callback = function( data ) {
