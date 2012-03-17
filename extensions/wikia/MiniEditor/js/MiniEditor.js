@@ -141,7 +141,7 @@
 
 			// Assets haven't been loaded yet, load them now
 			if (!this.initialized) {
-				loading(element);
+				loading($element);
 
 				// Load all the required assets then call this method again
 				return this.loadAssets(function() {
