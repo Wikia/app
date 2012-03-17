@@ -272,8 +272,13 @@ LiftiumDART.getImpressionCount = function (slotname) {
 			}
 		}
 		if (!Liftium.e(storage)) {
-			Liftium.adDriverNumCall = eval('(' + storage + ')');
-			Liftium.d('AdDriver data loaded:', 7, Liftium.AdDriverNumCall);
+			try {
+				Liftium.adDriverNumCall = JSON.parse(storage);
+				Liftium.d('AdDriver data loaded:', 7, Liftium.AdDriverNumCall);
+			} catch (e) {
+				Liftium.d('AdDriver data load failed', 1);
+				WikiaTracker.track([LiftiumOptions.pubid, 'error', 'impctparse', slotname], 'liftium.errors');
+			}
 		}
 		
 		if (window.wgAdDriverUseExpiryStorage && window.wgAdDriverUseCookie) {
