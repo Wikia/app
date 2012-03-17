@@ -160,7 +160,6 @@ $wgAutoloadClasses['StumbleuponSharing'] = $IP . '/includes/wikia/services/Stumb
 $wgAutoloadClasses['RedditSharing'] = $IP . '/includes/wikia/services/RedditSharing.class.php';
 $wgAutoloadClasses['EmailSharing'] = $IP . '/includes/wikia/services/EmailSharing.class.php';
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
-$wgAutoloadClasses['PageSpeedAPI'] = $IP . '/includes/wikia/services/PageSpeedAPI.class.php';
 
 // controllers
 $wgAutoloadClasses['SimpleSearchService']  =  $IP.'/includes/wikia/services/SimpleSearchService.class.php';

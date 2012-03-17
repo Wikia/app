@@ -1,14 +1,14 @@
 <?php
 
-class PageSpeedAPI extends Service {
+class PerformanceMetricsGooglePageSpeed extends PerformanceMetricsProvider {
 
 	const PAGESPPED_API_URL = 'https://www.googleapis.com/pagespeedonline/v1/runPagespeed';
 
 	private $apiKey;
 
 	function __construct() {
-		global $wgGooglePageSpeedKey;
-		$this->apiKey = $wgGooglePageSpeedKey;
+		parent::__construct();
+		$this->apiKey = $this->wg->GooglePageSpeedKey;
 	}
 
 	/**
