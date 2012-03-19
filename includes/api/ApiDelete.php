@@ -138,7 +138,7 @@ class ApiDelete extends ApiBase {
 
 		$error = '';
 		if ( !wfRunHooks( 'ArticleDelete', array( &$article, &$wgUser, &$reason, &$error ) ) ) {
-			return array( ( array( 'hookaborted', $error ) ) );
+			return array( array( 'hookaborted', $error ) );
 		}
 
 		// Luckily, Article.php provides a reusable delete function that does the hard work for us
