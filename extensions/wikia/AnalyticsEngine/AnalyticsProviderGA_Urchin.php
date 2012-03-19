@@ -41,6 +41,7 @@ SCRIPT2;
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-30014103-1']);
+  _gaq.push(['_setSampleRate', '10']);
   _gaq.push(['_trackPageview']);
 
   (function() {
