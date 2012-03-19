@@ -31,4 +31,17 @@ class MiniEditorHelper extends WikiaModel {
 
 		return $content;
 	}
+
+	/**
+	 * Returns any edge cases found for the previous conversion from wikitext to richtext.
+	 */
+	public static function getEdgeCases() {
+		$edgeCases = array();
+
+		if (class_exists('RTE') && !empty(RTE::$edgeCases)) {
+			$edgeCases = RTE::$edgeCases;
+		}
+
+		return $edgeCases;
+	}
 }
