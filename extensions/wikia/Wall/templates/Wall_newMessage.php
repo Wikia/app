@@ -7,6 +7,7 @@
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Header', array(
 					'attributes' => array(
+						'id' => 'wall-new-message',
 						'data-min-height' => 200,
 						'data-max-height' => 400
 					)
