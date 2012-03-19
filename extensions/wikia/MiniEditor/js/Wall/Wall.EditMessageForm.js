@@ -52,7 +52,7 @@
 						config: {
 
 							// If edge cases were found when loading our content, use source mode
-							mode: typeof data.edgeCases != 'undefined' ? 'source' : MiniEditor.startupMode,
+							mode: typeof data.edgeCases != 'undefined' ? 'source' : MiniEditor.config.mode,
 						},
 						events: {
 							editorActivated: function(event, wikiaEditor) {
