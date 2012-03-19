@@ -13,6 +13,10 @@ cat $TMPFILE | while read line; do
 	then
 		continue
 	fi
+	if [ "$cityid" = "298117" ];
+	then
+		continue
+	fi
 	echo "Processing $line"
 	sudo -u www-data SERVER_ID=$cityid php videoSanitize.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.sanitize.log
 	echo "\n\n"

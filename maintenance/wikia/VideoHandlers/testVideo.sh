@@ -8,5 +8,5 @@ php /usr/wikia/source/wiki/maintenance/wikia/getDatabase.php -i video151.sql.gz
 rm video151.sql.gz
 
 cd $DIR
-sh doAll.sh 298117 | tee video.log.txt
+sh doAllVideo.sh 298117 | tee video.log.txt
 
