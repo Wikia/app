@@ -44,6 +44,9 @@
 			// Initialize the editor after assets are loaded
 			function initEditor() {
 
+				// show message title textarea
+				$('.msg-title', msg).first().html('<textarea class="title">'+$('.msg-title a', msg).html()+'</textarea>');
+
 				// Load the editor data in the proper mode
 				self.model.loadEditData(self.username, id, 'edit', MiniEditor.getIncomingFormat(), function(data) {
 
