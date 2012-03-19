@@ -54,8 +54,10 @@ var AdConfig = {
 
 		var cookie = decodeURIComponent(AdConfig.cookie(AdConfig.geoCookieName));
 		if (typeof cookie != 'undefined' && cookie) {
-			// consider using JSON.parse (BugId:9747)
-			AdConfig.geo = eval('(' + cookie + ')');
+			try {
+				AdConfig.geo = JSON.parse(cookie);
+			} catch (e) {
+			}
 		}
 	},
 
