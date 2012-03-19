@@ -439,82 +439,80 @@
 
 /**
  * FB#24380 - Make wikia-infobox styling work in RTE popup previews (out of .WikiaArticle)
- * Do we really need to limit this rule? .wikia-infobox could be easily defined as a global rule
+ * Actually now it's a global rule as agreed with Liz
  */
-.WikiaArticle, .RTEPlaceholderPreview{
-	.wikia-infobox {
-		$cell-width: 225px;
+.wikia-infobox {
+	$cell-width: 225px;
 
-		border: 1px $color-page-border solid;
-		float: right;
-		line-height: 12px;
-		padding: 15px;
+	border: 1px $color-page-border solid;
+	float: right;
+	line-height: 12px;
+	padding: 15px;
 
-		margin: {
-			top: 0px;
-			right: 0px;
-			bottom: 16px;
-			left: 16px;
+	margin: {
+		top: 0px;
+		right: 0px;
+		bottom: 16px;
+		left: 16px;
+	}
+
+	@include bodytext;
+	line-height: 15px;
+	width: $cell-width + 20 +2;
+
+	td {
+		overflow: hidden;
+		padding: {
+			bottom: 7px;
+			left: 3px;
+			right: 3px;
+			top: 7px;
 		}
+		vertical-align: top;
+	}
 
-		@include bodytext;
-		line-height: 15px;
-		width: $cell-width + 20 +2;
+	th {
+		@extend td;
+		font-weight: bold;
+		text-align: left;
+		vertical-align: top;
+		width: 20%;
 
-		td {
-			overflow: hidden;
+		&.wikia-infobox-header {
+			font-size: 17px;
+			font-weight: bold;
+			margin-top: 20px;
 			padding: {
-				bottom: 7px;
+				bottom: 8px;
+				top: 5px;
 				left: 3px;
 				right: 3px;
-				top: 7px;
 			}
-			vertical-align: top;
-		}
-
-		th {
-			@extend td;
-			font-weight: bold;
 			text-align: left;
-			vertical-align: top;
-			width: 20%;
-
-			&.wikia-infobox-header {
-				font-size: 17px;
-				font-weight: bold;
-				margin-top: 20px;
-				padding: {
-					bottom: 8px;
-					top: 5px;
-					left: 3px;
-					right: 3px;
-				}
-				text-align: left;
-			}
-			// sections separator
-			.wikia-infobox-section-header {
-				border-top: 1px $color-page-border solid;
-				margin-top: 7px;
-				padding-top: 20px;
-			}
 		}
-
-		.wikia-infobox-image {
-			text-align: center;
-			overflow: hidden;
-			padding: 0;
-			width: $cell-width;
+		// sections separator
+		.wikia-infobox-section-header {
+			border-top: 1px $color-page-border solid;
+			margin-top: 7px;
+			padding-top: 20px;
 		}
-
-		.wikia-infobox-caption {
-			text-align: center;
-			font-size: 12px;
-		}
-
-		.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
-
 	}
+
+	.wikia-infobox-image {
+		text-align: center;
+		overflow: hidden;
+		padding: 0;
+		width: $cell-width;
+	}
+
+	.wikia-infobox-caption {
+		text-align: center;
+		font-size: 12px;
+	}
+
+	.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
 }
+
 // RT #70017: wikitable class for skinning normal tables
 table.wikitable {
 	background: darken($color-page, 2%);
