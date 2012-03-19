@@ -381,12 +381,10 @@ public class BaseTest {
 	}
 
 	protected void openAndWait(String url) throws Exception {
-		session().getEval("window.wikiaSeleniumUniqueKey = Math.random();");
+		session().getEval("window.wgNow = null;");
 		session().open(url);
 		session().waitForPageToLoad(this.getTimeout());
-		// this desn't seem to work
-		// maybe we shoudl wait for #footer #WikiaFooter elements 
-		session().waitForCondition("typeof window != 'undefined' && typeof window.wikiaSeleniumUniqueKey == 'undefined'", this.getTimeout());
+		session().waitForCondition("typeof window != 'undefined' && window.wgNow != null", this.getTimeout());
 		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
 		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
 		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
