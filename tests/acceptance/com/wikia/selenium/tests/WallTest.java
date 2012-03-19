@@ -11,7 +11,7 @@ import java.util.*;
 public class WallTest extends MiniEditorBaseTest {
 	private String testWallDevboxUrl = "wiki/Message_Wall:WikiaBot?useskin=oasis";
 	private String testWallUrl = "wiki/Message_Wall:QATestsBot?useskin=oasis";
-	
+
 	@Test(groups={"CI"})
 	public void testPostingOnWall() throws Exception {
 		openAndWait( getTestWallUrl() );
@@ -208,23 +208,8 @@ public class WallTest extends MiniEditorBaseTest {
 		openAndWait( getTestWallUrl() + "&reload" );
 		waitForWallEntryFields();
 		assertTrue( session().isElementPresent(firstReply + " .edit-message") );
-		
-		//check if message title and body are the same after clicking edit button
-		String prevReplyBody = session().getText(firstReply + " .msg-body");
-		String replyBodyArea = firstReply + " .msg-body textarea:not([tabindex=-1])";
-		String saveBtn = firstReply + " .save-edit";
-		
-		session().click(firstReply + " .edit-message");
-		
-		assertTrue( session().isElementPresent(replyBodyArea) );
-		assertTrue( session().isElementPresent(saveBtn) );
-		assertTrue( session().isElementPresent(firstReply + " .cancel-edit") );
-		//assertEquals( session().getText(replyBodyArea), prevReplyBody );
-		assertTrue( session().getText(replyBodyArea).equals(prevReplyBody) );
-		
-		//edit the message
-		session().type(replyBodyArea, prevReplyBody + " (reply edited)");
-		session().click(saveBtn);
+
+		String prevReplyBody = editFirstReply(" (reply edited)");
 		
 		waitForElement(firstReply + " .msg-body p");
 		assertTrue( session().isTextPresent(prevReplyBody + " (reply edited)") );
@@ -615,11 +600,12 @@ public class WallTest extends MiniEditorBaseTest {
 	
 	private void writeReplyToFirstMsg(String body) throws Exception {
 		String firstmsg = "css=.comments > .message:first-child > .replies .new-reply ";
+		String firstmsg_xpatch = "//ul[@class='comments']//li[1]/ul/li";
 		
 		if(("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
-			this.loadEditor("//ul[@class='comments']//li[1]/ul/li", false);
-			this.switchToSourceMode("//ul[@class='comments']//li[1]/ul/li");
-			this.miniEditorType("//ul[@class='comments']//li[1]/ul/li", body);			
+			this.loadEditor(firstmsg_xpatch, false);
+			this.switchToSourceMode(firstmsg_xpatch);
+			this.miniEditorType(firstmsg_xpatch, body);			
 		} else {
 			session().type(firstmsg + "textarea:not([tabindex=-1])",body);	
 		}
@@ -628,6 +614,43 @@ public class WallTest extends MiniEditorBaseTest {
 		
 		// make sure it was send
 		waitForElementNotVisible(firstmsg + ".replyButton");
+	}
+	
+	private String editFirstReply(String add) throws Exception {
+		String firstReply = "css=.comments > .message:first-child  .replies .message:first-child";
+		String firstReply_xpatch = "//ul[@class='comments']//li[1]/ul/li[1]";
+
+		String prevReplyBody = "";
+		
+		String saveBtn = firstReply_xpatch + "//button[contains(@class,'save-edit')]";
+		
+		session().click(firstReply_xpatch + "//li//a[1 and @class='edit-message']");
+		
+		//check if message title and body are the same after clicking edit button
+
+		if(("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
+			waitForMiniEditor(firstReply_xpatch);
+			 this.switchToSourceMode(firstReply_xpatch);
+			 prevReplyBody = this.getMiniEditorText(firstReply_xpatch);
+			 this.miniEditorType(firstReply_xpatch, prevReplyBody + add);
+			 
+			session().click(saveBtn);
+			waitForElementVisible(firstReply_xpatch + "//div[@class='editarea']//div[contains(@class,'msg-body')]" );			 
+		} else {
+			prevReplyBody = session().getText(firstReply + " .msg-body");
+			String replyBodyArea = firstReply + " .msg-body textarea:not([tabindex=-1])";
+			
+			assertTrue( session().isElementPresent(replyBodyArea) );
+			assertTrue( session().isElementPresent(saveBtn) );
+			assertTrue( session().isElementPresent(firstReply + " .cancel-edit") );
+			//assertEquals( session().getText(replyBodyArea), prevReplyBody );
+			assertTrue( session().getText(replyBodyArea).equals(prevReplyBody) );			
+			//edit the message
+			session().type(replyBodyArea, prevReplyBody + add);
+			session().click(saveBtn);
+		}
+		
+		return prevReplyBody;
 	}
 	
 	private void writeNewPostWithReplyAndForward(String title, String body, String url) throws Exception {
