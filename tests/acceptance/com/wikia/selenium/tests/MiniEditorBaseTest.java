@@ -22,8 +22,8 @@ public class MiniEditorBaseTest extends BaseTest {
 		}
 
 		session().click(parent + "//div[@class='editarea']/textarea");
-
-		waitForElement(parent + "//div[@class='toolbar']//span[contains(@class,'cke_buttons')]");
+		
+		waitForMiniEditor(parent);
 		
 		if (meticulously) {
 			if (minieditor) {
@@ -37,6 +37,10 @@ public class MiniEditorBaseTest extends BaseTest {
 				assertTrue(session().isVisible(parent + "//div[@class='editarea']/textarea"));
 			}
 		}
+	}
+	
+	protected void waitForMiniEditor(String parent)  throws Exception {
+		waitForElement(parent + "//div[@class='toolbar']//span[contains(@class,'cke_buttons')]");
 	}
 	
 	protected String getMiniEditorText(String parent) throws Exception {
