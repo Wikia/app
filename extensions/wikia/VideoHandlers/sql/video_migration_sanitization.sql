@@ -9,7 +9,7 @@ CREATE TABLE dataware.video_migration_sanitization (
   city_id INT NOT NULL,
   old_title VARCHAR(255) NOT NULL,
   sanitized_title VARCHAR(255) NOT NULL,
-  operation_status ENUM(8) NOT NULL default 'UNKNOWN',
+  operation_status CHAR(14) NOT NULL default 'UNKNOWN',
   operation_time CHAR(14) NOT NULL,
   article_title VARCHAR(255) NOT NULL,
   primary key (id)
