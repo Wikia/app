@@ -43,7 +43,7 @@ class SpecialResetpass extends SpecialPage {
 				$skin = $wgUser->getSkin();
 				$llink = $skin->linkKnown(
 					$title,
-					wfMsgHtml( 'loginreqlink' ),
+					wfMsgHtml( 'userlogin-loginreqlink' ),
 					array(),
 					array( 'returnto' => $this->getTitle()->getPrefixedText() )
 				);
