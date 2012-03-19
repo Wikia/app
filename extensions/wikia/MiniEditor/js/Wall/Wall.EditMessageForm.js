@@ -29,18 +29,39 @@
 			msg.find('.buttons').first().hide();
 			msg.find('.wikia-menu-button').removeClass('active');
 
-			// See: http://stackoverflow.com/questions/4095475/jquery-animate-padding-to-zero
-			body.closest('.speech-bubble-message').animate(animation, this.proxy(function() {
-				body.miniEditor({
-					events: {
-						editorActivated: self.proxy(function(event, wikiaEditor) {
-							this.model.loadEditData(this.username, id, 'edit', wikiaEditor.getFormat(), this.proxy(function(data) {
+			// Animate to proper size
+			body.closest('.speech-bubble-message').animate(animation, function() {
+
+				// We need to load assets first in order to determine the proper startup mode
+				if (!MiniEditor.assetsLoaded) {
+					MiniEditor.loadAssets(initEditor);
+	
+				} else {
+					initEditor();
+				}
+			});
+
+			// Initialize the editor after assets are loaded
+			function initEditor() {
+
+				// Load the editor data in the proper mode
+				self.model.loadEditData(self.username, id, 'edit', MiniEditor.getIncomingFormat(), function(data) {
+
+					// Now we can initialize the editor
+					body.miniEditor({
+						config: {
+
+							// If edge cases were found when loading our content, use source mode
+							mode: typeof data.edgeCases != 'undefined' ? 'source' : MiniEditor.startupMode,
+						},
+						events: {
+							editorActivated: function(event, wikiaEditor) {
 								wikiaEditor.setContent(data.htmlorwikitext);
-							}));
-						})
-					}
+							}
+						}
+					});
 				});
-			}));
+			}
 		},
 
 		getNewBodyVal: function(msg) {
