@@ -309,7 +309,7 @@ foreach ( $aTranslation as $key => $val ) {
 				if ( $sTextAfter != $sText ) {
 					$allChangesArticleURLs[ str_replace('localhost',$wgDBname.'.'.str_replace('dev-','', $devboxuser).'.wikia-dev.com',$oTitle->getFullURL()) ] = true;
 					echo "ARTICLE WAS CHANGED! \n";
-
+					$sanitizeHelper->logVideoTitle($key, $val, 'OK', $oTitle);
 					// isolating doEdit, because it's possible it will result in Fatal Error for some articles
 					// in case of misconfiguration (doEdit running from maintenance scripts instead of directly
 					// in context of browser web request is not used much so it's not very reliable)
@@ -325,6 +325,7 @@ foreach ( $aTranslation as $key => $val ) {
 						if ($st != 0) {
 							// need to log those fatal errors here
 							$sanitizeHelper->logFailedEdit($articleId, $oTitle->getText(), $oTitle->getNamespace(), $val, $key);
+							$sanitizeHelper->logVideoTitle($key, $val, 'FAIL', $oTitle);
 						}
 						//echo "parent end of fork\n";
 					} else {
