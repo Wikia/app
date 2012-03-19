@@ -46,6 +46,7 @@ class ImageReviewHelper extends WikiaModel {
 
 		$deletionList = array();
 		$sqlWhere = array();
+		$statsInsert = array();
 
 		$sqlWhere = array(
 			self::STATE_APPROVED => array(),
@@ -62,6 +63,13 @@ class ImageReviewHelper extends WikiaModel {
 			} else if ( $image['state'] == self::STATE_QUESTIONABLE ) {
 				$sqlWhere[self::STATE_QUESTIONABLE][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			}
+
+			$statsInsert[] = array(
+				'wiki_id' => $image['wikiId'],
+				'page_id' => $image['pageId'],
+				'review_state' => $image['state'],
+				'reviewer_id' => $this->wg->user->getId(),
+			);
 		}
 
 		foreach( $sqlWhere as $state => $where ) {
@@ -82,6 +90,12 @@ class ImageReviewHelper extends WikiaModel {
 				$db->commit();
 			}
 		}
+
+		$db->insert(
+			'image_review_stats',
+			$statsInsert,
+			__METHOD__
+		);
 		
 		// update stats directly in memcache so they look nice without impacting the database
 		$key = wfMemcKey( 'ImageReviewSpecialController', 'ImageReviewHelper::getImageCount', $this->wg->user->getId() );
@@ -302,8 +316,8 @@ class ImageReviewHelper extends WikiaModel {
 		foreach( $rows as $row) {
 			if (count($imageList) < self::LIMIT_IMAGES) {
 				$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
-					
-				if (empty($img['src'])) {
+
+				if ( empty($img['src'])) {
 					$invalidImages[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 				} else {
 					$imageList[] = array(

@@ -25,6 +25,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} elseif ( $action == self::ACTION_QUESTIONABLE && !$accessQuestionable ) {
 			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
 			return false;
+		} elseif ( $action == 'stats' ) {
+			$this->forward( get_class( $this ), 'stats' );
+			return true;
 		}
 
 		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
@@ -116,4 +119,80 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
+
+	function stats() {
+		if ( !$this->wg->User->isAllowed( 'imagereviewstats' )) {
+			$this->specialPage->displayRestrictionError( 'imagereviewstats' );
+			return false;
+		}
+
+		$startDay = $this->request->getVal( 'startDay', date( 'd' ) );
+		$startMonth = $this->request->getVal( 'startMonth', date( 'n' ) );
+		$startYear = $this->request->getVal( 'startYear', date( 'Y' ) );
+
+		$endDay = $this->request->getVal( 'endDay', date( 'd' ) );
+		$endMonth = $this->request->getVal( 'endMonth', date( 'n' ) );
+		$endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
+
+		$startDate = $startYear . '-' . $startMonth . '-' . $startDay . ' 00:00:00';
+		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
+
+		$summary = array(
+			'all' => 0,
+			ImageReviewHelper::STATE_APPROVED => 0,
+			ImageReviewHelper::STATE_DELETED => 0,
+			ImageReviewHelper::STATE_QUESTIONABLE => 0,
+			'avg' => 0,
+		);
+		$data = array();
+		$userCount = 0;
+
+		$this->wg->Out->setPageTitle('Image Review tool statistics');
+
+		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalDatawareDB );
+		$res = $dbr->query( "select review_state, reviewer_id, count( page_id ) as count from 
+		image_review_stats WHERE review_end BETWEEN '{$startDate}' AND '{$endDate}' group by review_state, reviewer_id with rollup" );
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			if ( is_null( $row['review_state'] ) ) {
+				// total
+				$summary['all'] = $row['count'];
+			} elseif ( is_null( $row['reviewer_id'] ) ) {
+				$summary[$row['review_state']] = $row['count'];
+			} else {
+				if ( empty( $data[$row['reviewer_id']] ) ) {
+					$user = User::newFromId( $row['reviewer_id'] );
+					$userLink = Xml::element( 
+						'a',
+						array( 'href' => $user->getUserPage()->getFullUrl() ),
+						$user->getName()
+					);
+
+					$data[$row['reviewer_id']] = array(
+						'name' => $user->getName(),
+						'total' => 0,
+						ImageReviewHelper::STATE_APPROVED => 0,
+						ImageReviewHelper::STATE_DELETED => 0,
+						ImageReviewHelper::STATE_QUESTIONABLE => 0,
+					);
+				}
+				$data[$row['reviewer_id']][$row['review_state']] = $row['count'];
+				$data[$row['reviewer_id']]['total'] += $row['count'];
+				$userCount++;
+			}
+		}	
+
+		$summary['avg'] = $userCount > 0 ? $summary['all'] / $userCount;
+
+		foreach ( $data as $reviewer => &$stats ) {
+			$stats['toavg'] = $stats['total'] - $summary['avg'];
+		}
+
+		// setup response data for table rendering
+		$this->response->setVal( 'summary', $summary );
+		$this->response->setVal( 'summaryHeaders', array( 'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user' ) );
+
+		$this->response->setVal( 'data', $data );
+		$this->response->setVal( 'headers', array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' ) );
+	}
 }
