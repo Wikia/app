@@ -2,7 +2,7 @@
 	global $wgBlankImgUrl;
 ?>
 <div class="clearfix accent wikia-slideshow-popout-caption-wrapper">
-	<a href="#" class="wikia-button secondary wikia-slideshow-popout-add-image" hash="<?= $slideshow['hash'] ?>"><?= wfMsg('wikiaPhotoGallery-slideshow-view-addphoto') ?></a>
+	<a href="#" class="wikia-button secondary wikia-slideshow-popout-add-image" data-hash="<?= $slideshow['hash'] ?>"><?= wfMsg('wikiaPhotoGallery-slideshow-view-addphoto') ?></a>
 	<div class="wikia-slideshow-popout-caption"></div>
 </div>
 

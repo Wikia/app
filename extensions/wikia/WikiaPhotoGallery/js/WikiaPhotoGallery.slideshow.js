@@ -5,7 +5,7 @@ var WikiaPhotoGallerySlideshow = {
 
 	init: function(params) {
 		var slideshow = $('#' + params.id),
-		hash = slideshow.attr('hash'),
+		hash = slideshow.attr('data-hash'),
 		item = slideshow.find('li').first();
 
 		if (item.attr('title') != '') {
@@ -143,7 +143,7 @@ var WikiaPhotoGallerySlideshow = {
 
 		// load popout
 		WikiaPhotoGalleryView.loadEditorJS(function() {
-			WikiaPhotoGallery.showSlideshowPopOut(slideshow.attr('id'), slideshow.attr('hash'), index, WikiaPhotoGalleryView.isViewPage(), isFromFeed);
+			WikiaPhotoGallery.showSlideshowPopOut(slideshow.attr('id'), slideshow.attr('data-hash'), index, WikiaPhotoGalleryView.isViewPage(), isFromFeed);
 		});
 	}
 };
