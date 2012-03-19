@@ -435,7 +435,13 @@
 			}
 		}
 	}	
+}
 
+/**
+ * FB#24380 - Make wikia-infobox styling work in RTE popup previews (out of .WikiaArticle)
+ * Do we really need to limit this rule? .wikia-infobox could be easily defined as a global rule
+ */
+.WikiaArticle, .RTEPlaceholderPreview{
 	.wikia-infobox {
 		$cell-width: 225px;
 
@@ -509,7 +515,6 @@
 
 	}
 }
-
 // RT #70017: wikitable class for skinning normal tables
 table.wikitable {
 	background: darken($color-page, 2%);
