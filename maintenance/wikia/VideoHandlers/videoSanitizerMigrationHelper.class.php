@@ -9,6 +9,9 @@ class videoSanitizerMigrationHelper {
 		if(!isset($_SERVER['QUERY_STRING'])) {
 			$_SERVER['QUERY_STRING'] = '(maintenance script)';
 		}
+		if(!isset($_SERVER['SERVER_NAME'])) {
+			$_SERVER['SERVER_NAME'] = '';
+		}
 		$this->dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		$this->city_id = (int)$city_id;
 		$this->city_name = $city_name;
@@ -22,7 +25,8 @@ class videoSanitizerMigrationHelper {
 	 * @param string $filter - extra param to where statment
 	 */
 	public function getRenamedVideos($key="old", $filter=" 1=1") {
-		
+		$this->dbw_dataware->ping();
+
 		$rows = $this->dbw_dataware->query( "SELECT old_title, sanitized_title 
 											 FROM video_migration_sanitization
 											 WHERE city_id=".$this->city_id." AND $filter" );
@@ -49,7 +53,8 @@ class videoSanitizerMigrationHelper {
 	 * @param string $operationStatus (UNKNOWN,OK,FAIL) - status of appending changes to articles and related tables
 	 */
 	public function logVideoTitle($oldTitle, $sanitizedTitle, $operationStatus="UNKNOWN", $articleTitle="") {
-		
+		$this->dbw_dataware->ping();
+
 		$this->dbw_dataware->replace('video_migration_sanitization',
 			array( 'city_id', 'old_title' ),
 			array(
@@ -67,6 +72,7 @@ class videoSanitizerMigrationHelper {
 
 
 	public function logFailedEdit($articleId, $articleTitleText, $articleNamespace, $from, $to) {
+		$this->dbw_dataware->ping();
 
 		$this->dbw_dataware->insert('video_sanitization_failededit',
 			array(

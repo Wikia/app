@@ -406,6 +406,7 @@ foreach( $allChangesArticleURLs as $url => $v ) {
 	echo "  $url\n";
 }
 
+
 /*
  * wywala nam sie upload
  * check if new name will be available
