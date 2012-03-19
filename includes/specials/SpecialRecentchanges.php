@@ -393,9 +393,9 @@ class SpecialRecentChanges extends SpecialPage {
 
 		// And now for the content
 		$wgOut->setFeedAppendQuery( $this->getFeedQuery() );
-
+		
 		if( $wgAllowCategorizedRecentChanges ) {
-			$this->filterByCategories( $rows, $opts );
+			$rows = $this->filterByCategories( $rows, $opts );
 		}
 
 		$showWatcherCount = $wgRCShowWatchingUsers && $wgUser->getOption( 'shownumberswatching' );
@@ -586,13 +586,13 @@ class SpecialRecentChanges extends SpecialPage {
 	 * @param $rows array of database rows
 	 * @param $opts FormOptions
 	 */
-	function filterByCategories( &$rows, FormOptions $opts ) {
+	function filterByCategories( $rows, FormOptions $opts ) {
 		$categories = array_map( 'trim', explode( "|" , $opts['categories'] ) );
 
 		if( empty($categories) ) {
-			return;
+			return $rows;
 		}
-
+				
 		# Filter categories
 		$cats = array();
 		foreach( $categories as $cat ) {
@@ -600,10 +600,15 @@ class SpecialRecentChanges extends SpecialPage {
 			if( $cat == "" ) continue;
 			$cats[] = $cat;
 		}
-
+		
+		if ( !count($cats) ) {
+			return $rows;
+		}
+		
 		# Filter articles
 		$articles = array();
 		$a2r = array();
+		$rowsArray = array(); 
 		foreach( $rows AS $k => $r ) {
 			$nt = Title::makeTitle( $r->rc_namespace, $r->rc_title );
 			$id = $nt->getArticleID();
@@ -615,11 +620,12 @@ class SpecialRecentChanges extends SpecialPage {
 				$a2r[$id] = array();
 			}
 			$a2r[$id][] = $k;
+			$rowsArray[$k] = $r;
 		}
-
+		
 		# Shortcut?
-		if( !count($articles) || !count($cats) )
-			return ;
+		if( !count($articles) )
+			return array();
 
 		# Look up
 		$c = new Categoryfinder ;
@@ -631,10 +637,10 @@ class SpecialRecentChanges extends SpecialPage {
 		foreach( $match AS $id ) {
 			foreach( $a2r[$id] AS $rev ) {
 				$k = $rev;
-				$newrows[$k] = $rows[$k];
+				$newrows[$k] = $rowsArray[$k];
 			}
 		}
-		$rows = $newrows;
+		return $newrows;
 	}
 
 	/**
