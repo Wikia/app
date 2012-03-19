@@ -22,8 +22,8 @@ public class MiniEditorBaseTest extends BaseTest {
 		}
 
 		session().click(parent + "//div[@class='editarea']/textarea");
-		
-		waitForElementVisible(parent + "//div[@class='toolbar']");
+
+		waitForElement(parent + "//div[@class='toolbar']//span[contains(@class,'cke_buttons')]");
 		
 		if (meticulously) {
 			if (minieditor) {

@@ -7,7 +7,8 @@ import static org.testng.AssertJUnit.assertFalse;
 import org.testng.annotations.Test;
 import java.util.*;
 
-public class WallTest extends BaseTest {
+
+public class WallTest extends MiniEditorBaseTest {
 	private String testWallDevboxUrl = "wiki/Message_Wall:WikiaBot?useskin=oasis";
 	private String testWallUrl = "wiki/Message_Wall:QATestsBot?useskin=oasis";
 	
@@ -119,6 +120,7 @@ public class WallTest extends BaseTest {
 		//check if message title and body are the same after clicking edit button
 		String prevTitle = session().getText(firstMsg + " .msg-title a");
 		String prevBody = session().getText(firstMsg + " .msg-body");
+				
 		String titleArea = firstMsg + " .msg-title textarea:nth-child(2)";
 		String bodyArea = firstMsg + " .msg-body textarea:not([tabindex=-1])";
 		String saveBtn = firstMsg + " .save-edit";
@@ -591,9 +593,16 @@ public class WallTest extends BaseTest {
 	
 	private void writeNewPost(String title, String body) throws Exception {
 		session().type("WallMessageTitle", title);
-		session().type("WallMessageBody", body);
+		if(("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
+			this.loadEditor("//div[@id='wall-new-message']", false);
+			this.switchToSourceMode("//div[@id='wall-new-message']");
+			this.miniEditorType("//div[@id='wall-new-message']", body);			
+		} else {
+			session().type("WallMessageBody", body);			
+		}
+
 		session().click("css=#WallMessageSubmit");
-		
+	
 		// make sure that it was send
 		waitForElementNotPresent("css=textarea#WallMessageBody:contains('" + body + "')");
 		waitForElementNotVisible("css=#WallMessageSubmit");
@@ -607,7 +616,14 @@ public class WallTest extends BaseTest {
 	private void writeReplyToFirstMsg(String body) throws Exception {
 		String firstmsg = "css=.comments > .message:first-child > .replies .new-reply ";
 		
-		session().type(firstmsg + "textarea:not([tabindex=-1])",body);
+		if(("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
+			this.loadEditor("//ul[@class='comments']//li[1]/ul/li", false);
+			this.switchToSourceMode("//ul[@class='comments']//li[1]/ul/li");
+			this.miniEditorType("//ul[@class='comments']//li[1]/ul/li", body);			
+		} else {
+			session().type(firstmsg + "textarea:not([tabindex=-1])",body);	
+		}
+		
 		session().click(firstmsg+ ".replyButton");
 		
 		// make sure it was send
