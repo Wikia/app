@@ -686,17 +686,27 @@ class Linker {
 		/* Wikia change begin - @author: Marooned, Federico "Lox" Lucignano */
 		/* Images SEO project */
 		if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
+			$showCaption = !empty( $fp['caption'] );
+
 			if ( Wikia::isOasis() ) {
 				$s .= $zoomicon;
 			}
 
-			if ( !empty( $fp[ 'caption' ] ) ) {
-				$s .= '<figcaption class="thumbcaption">' . $fp['caption'] . '</figcaption>';
+			if ( Wikia::isOasis() || $showCaption ) {
+				$s .= '<figcaption class="thumbcaption">'; 
+			}
+
+			if ( $showCaption ) {
+				$s .= $fp['caption'];
 			}
 
 			//picture attribution placeholder is processed only by Oasis
 			if ( Wikia::isOasis() ) {
 				$s .= '<!-- picture-attribution -->';
+			}
+
+			if ( Wikia::isOasis() || $showCaption ) {
+				$s .= '</figcaption>';
 			}
 
 			$s .= '</figure>';
