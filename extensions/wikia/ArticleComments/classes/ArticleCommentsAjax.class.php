@@ -81,7 +81,7 @@ class ArticleCommentsAjax {
 	 * @return String -- html -> textarea
 	 */
 	static public function axEdit() {
-		global $wgRequest;
+		global $wgEnableMiniEditorExtForArticleComments, $wgRequest;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
@@ -111,6 +111,11 @@ class ArticleCommentsAjax {
 				$result['error'] = 0;
 				$result['show'] = true;
 				$result['text'] = $comment->editPage();
+
+				if ($wgEnableMiniEditorExtForArticleComments) {
+					$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
+				}
+
 				$result['emptyMsg'] = wfMsg('article-comments-empty-comment', $comment->getTitle()->getLocalUrl('redirect=no&action=delete'));
 			}
 		}
@@ -267,7 +272,7 @@ class ArticleCommentsAjax {
 	 * @param string $text - the text to convert
 	 * @return string - the converted text
 	 */
-	static public function getConvertedContent($content) {
+	static public function getConvertedContent($content = '') {
 		global $wgEnableMiniEditorExtForArticleComments, $wgRequest;
 		if ($wgEnableMiniEditorExtForArticleComments && !empty($content)) {
 			$convertToFormat = $wgRequest->getVal('convertToFormat', '');

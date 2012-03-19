@@ -80,12 +80,13 @@ var ArticleComments = {
 
 		function makeRequest() {
 			var commentId = e.target.id.replace(/^comment/, ''),
-				textfield = $('#article-comm-textfield-' + commentId);
+				textfield = $('#article-comm-textfield-' + commentId),
+				format = ArticleComments.getIncomingFormat(textfield);
 
 			$.getJSON(wgScript, {
 				action: 'ajax',
 				article: wgArticleId,
-				convertToFormat: ArticleComments.getIncomingFormat(textfield),
+				convertToFormat: format,
 				id: commentId,
 				method: 'axEdit',
 				rs: 'ArticleCommentsAjax'
@@ -109,7 +110,7 @@ var ArticleComments = {
 
 					var textfield = $(textfieldSelector);
 					if (ArticleComments.miniEditorEnabled) {
-						ArticleComments.editorInit(textfield, content);
+						ArticleComments.editorInit(textfield, content, json.edgeCases);
 
 					} else {
 						textfield.val(content);
@@ -482,7 +483,7 @@ var ArticleComments = {
 	},
 
 	// Used to initialize MiniEditor
-	editorInit: function(node, content) {
+	editorInit: function(node, content, edgeCases) {
 		var element = $(node),
 			wikiaEditor = element.data('wikiaEditor'),
 			allActions = $('#article-comm-submit, .article-comm-buttons, .speech-bubble-message div.buttons');
@@ -499,6 +500,11 @@ var ArticleComments = {
 
 		} else {
 			element.miniEditor({
+				config: {
+
+					// If edge cases were found when loading our content, use source mode
+					mode: $.isArray(edgeCases) && edgeCases.length ? 'source' : MiniEditor.config.mode
+				},
 				events: {
 					editorReady: function(event, wikiaEditor) {
 						if (content) {
