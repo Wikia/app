@@ -513,6 +513,8 @@ HTML
 		// disable headings numbering
 		$options->setNumberHeadings(false);
 
+		// reset edgeCases
+		RTE::$edgeCases = array();
 		RTE::$parser = new RTEParser();
 
 		$html = RTE::$parser->parse($wikitext, $wgTitle, $options)->getText();

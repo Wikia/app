@@ -51,9 +51,9 @@
 
 			// If RTE is present, we are using the CKEDITOR suite
 			if (typeof RTE != 'undefined') {
-				this.editorSuite = 'ckeditorsuite';
 				this.ckeditorEnabled = true;
-				this.config.mode = window.RTEInitMode || 'wysiwyg';
+				this.editorSuite = 'ckeditorsuite';
+				this.config.mode = 'wysiwyg';
 				this.config.toolbars.toolbar = ['ModeSwitch', 'FormatMiniEditor'].concat(this.config.toolbars.toolbar);
 
 				// Add CSS for ckeditor iframe
@@ -175,6 +175,9 @@
 				this.initTimer = new Date();
 				$().log('Start initialization', 'MiniEditor');
 
+				// Make sure we have an options object
+				options = $.extend(true, {}, $.fn.miniEditor.options, options);
+
 				var self = this,
 					$wrapper = $element.closest(this.wrapperSelector),
 					events = $.extend({}, options.events);
@@ -202,7 +205,7 @@
 					minHeight: $element.data('min-height') || 200,
 					maxHeight: $element.data('max-height') || 400,
 					tabIndex: false // (BugID:19737) - IE doesn't like it when there's a tab index attribute so just get rid of it. 
-				}));
+				}, options.config));
 
 				// Store a reference to wikiaEditor in element
 				$element.addClass('wikiaEditor').data('wikiaEditor', wikiaEditor).triggerHandler('editorInit', [wikiaEditor]);
@@ -219,7 +222,7 @@
 				}
 			}
 
-			return WikiaEditor.modeToFormat(MiniEditor.config.mode);
+			return WikiaEditor.modeToFormat(this.config.mode);
 		},
 
 		// Outgoing format should always be wikitext. However, if the element already
@@ -231,8 +234,6 @@
 
 	// jQuery fn bridge for use like $(...).miniEditor();
 	$.fn.miniEditor = function(options) {
-		options = $.extend(true, {}, $.fn.miniEditor.options, options);
-
 		return this.each(function() {
 			MiniEditor.initEditor(this, options);
 		});
@@ -240,6 +241,9 @@
 
 	// Default options
 	$.fn.miniEditor.options = {
+
+		// Use this to override default configuration options
+		config: {},
 
 		// Use this to bind to any of the wikiaEditor events
 		events: {}

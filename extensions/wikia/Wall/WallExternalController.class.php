@@ -361,12 +361,12 @@ class WallExternalController extends WikiaController {
 	 * @param string $text - the text to convert
 	 * @return string - the converted text
 	 */
-	private function getConvertedContent($content) {
+	private function getConvertedContent($content = '') {
 		if ($this->wg->EnableMiniEditorExtForWall && !empty($content)) {
 			$convertToFormat = $this->request->getVal('convertToFormat', '');
 
 			if (!empty($convertToFormat)) {
-				$content = MiniEditorHelper::convertContent($content, $convertToFormat);
+				$content = MiniEditorHelper::convertContent($content, $convertToFormat, $this->response);
 			}
 		}
 
