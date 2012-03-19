@@ -165,9 +165,5 @@ videoLog( 'sanitize', 'DUPLICATED', "duplicated:$i");
 
 videoLog( 'sanitize', 'STOP', "");
 
-echo "Articles to check:\n";
-foreach( $allChangesArticleURLs as $url => $v ) {
-	echo "  $url\n";
-}
 
 ?>
