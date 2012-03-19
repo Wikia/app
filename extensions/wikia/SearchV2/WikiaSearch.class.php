@@ -53,6 +53,11 @@ class WikiaSearch extends WikiaObject {
 		return $results;
 	}
 
+	/**
+	 * @param string $query
+	 * @param string $rankExpr
+	 * @return WikiaSearchResultSet
+	 */
 	private function getGroupResultsFromCache($query, $rankExpr) {
 		return $this->wg->Memc->get( $this->getGroupResultsCacheKey($query, $rankExpr) );
 	}
@@ -177,6 +182,9 @@ class WikiaSearch extends WikiaObject {
 		}
 
 		$html = $this->wg->Out->getHTML();
+		// clear output buffer in case we want get more pages
+		$this->wg->Out->clearHTML();
+
 		$result['wid'] = (int) $this->wg->CityId;
 		$result['pageid'] = $page->getId();
 		$result['sitename'] = $this->wg->Sitename;
