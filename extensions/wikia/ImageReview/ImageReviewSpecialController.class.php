@@ -182,7 +182,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			}
 		}	
 
-		$summary['avg'] = $userCount > 0 ? $summary['all'] / $userCount;
+		$summary['avg'] = $userCount > 0 ? $summary['all'] / $userCount : 0;
 
 		foreach ( $data as $reviewer => &$stats ) {
 			$stats['toavg'] = $stats['total'] - $summary['avg'];
