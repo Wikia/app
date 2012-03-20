@@ -10,6 +10,7 @@
 				msg = $(e.target).closest('li.message'),
 				body = msg.find('.msg-body').first(),
 				wikiaEditor = body.data('wikiaEditor'),
+				mode = MiniEditor.getLoadConversionFormat(body),
 				id = msg.attr('data-id'),
 				bubble = msg.find('.speech-bubble-message').first(),
 				animation = msg.data('is-reply') ? {} : {
@@ -17,7 +18,6 @@
 					'padding-left': 10,
 					'padding-right': 10,
 					'padding-bottom': 10
-	
 				};
 
 			e.preventDefault();
@@ -46,24 +46,31 @@
 			function initEditor() {
 
 				// show message title textarea
-				$('.msg-title', msg).first().html('<textarea class="title">'+$('.msg-title a', msg).html()+'</textarea>');
+				msg.find('.msg-title').first().html('<textarea class="title">' + msg.find('.msg-title a').html() + '</textarea>');
 
 				// Load the editor data in the proper mode
-				self.model.loadEditData(self.username, id, 'edit', MiniEditor.getIncomingFormat(), function(data) {
+				self.model.loadEditData(self.username, id, 'edit', mode, function(data) {
 
-					// Now we can initialize the editor
-					body.miniEditor({
-						config: {
+					// If edgecases were found, force source mode
+					if (typeof data.edgeCases != 'undefined') {
+						mode = 'source';
+					}
 
-							// If edge cases were found when loading our content, use source mode
-							mode: typeof data.edgeCases != 'undefined' ? 'source' : MiniEditor.config.mode,
-						},
-						events: {
-							editorActivated: function(event, wikiaEditor) {
-								wikiaEditor.setContent(data.htmlorwikitext);
+					if (wikiaEditor) {
+						wikiaEditor.fire('editorActivated');
+						wikiaEditor.ck.setMode(mode);
+						wikiaEditor.ck.setData(data.htmlorwikitext);
+
+					} else {
+						body.miniEditor({
+							config: { mode: mode },
+							events: {
+								editorReady: function(event, wikiaEditor) {
+									wikiaEditor.setContent(data.htmlorwikitext);
+								}
 							}
-						}
-					});
+						});
+					}
 				});
 			}
 		},

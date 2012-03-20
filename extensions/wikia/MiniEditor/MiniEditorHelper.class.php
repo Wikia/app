@@ -10,22 +10,26 @@ class MiniEditorHelper extends WikiaModel {
 	 * @param $response (optional) The response object to add edgeCases to
 	 */
 	public static function convertContent($content = '', $convertToFormat = '', WikiaResponse $response = null) {
-		if (class_exists('RTE') && !empty($content) && !empty($convertToFormat)) {
+		if (class_exists('RTE')) {
 
-			// If converting to richtext, handle edge cases
-			if ($convertToFormat == 'richtext') {
-				$html = RTE::WikitextToHtml($content);
+			// Clear out edge cases to avoid polluting future requests
+			RTE::$edgeCases = array();
 
-				if (empty(RTE::$edgeCases)) {
-					$content = $html;
+			if (!empty($content) && !empty($convertToFormat)) {
+				if ($convertToFormat == 'richtext') {
+					$html = RTE::WikitextToHtml($content);
 
-				// Edge cases were found, add them to the response object (if provided)
-				} else if (!is_null($response)) {
-					$response->setVal('edgeCases', RTE::$edgeCases);
+					if (empty(RTE::$edgeCases)) {
+						$content = $html;
+
+					// Edge cases were found, add them to the response object (if provided)
+					} else if (!is_null($response)) {
+						$response->setVal('edgeCases', RTE::$edgeCases);
+					}
+
+				} else if ($convertToFormat == 'wikitext') {
+					$content = RTE::HtmlToWikitext($content);
 				}
-
-			} else {
-				$content = RTE::HtmlToWikitext($content);
 			}
 		}
 

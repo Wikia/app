@@ -212,23 +212,32 @@
 			}
 		},
 
-		// Return the proper format to use when populating an editor with data
-		getIncomingFormat: function(element) {
-			if (element && element.length) {
-				var wikiaEditor = element.data('wikiaEditor');
+		// Return the startup mode for an editor instance
+		getStartupMode: function(element) {
+			var $element = $(element);
+
+			if ($element.length) {
+				var wikiaEditor = $element.data('wikiaEditor');
 
 				if (wikiaEditor) {
-					return wikiaEditor.getFormat();
+				console.log(wikiaEditor);
+					return wikiaEditor.mode;
 				}
 			}
 
-			return WikiaEditor.modeToFormat(this.config.mode);
+			return this.config.mode;
 		},
 
-		// Outgoing format should always be wikitext. However, if the element already
-		// contains wikitext, passing an empty string will prevent us from trying to parse it again.
-		getOutgoingFormat: function(element) {
-			return this.getIncomingFormat(element) == 'richtext' ? 'wikitext' : '';
+		// Return the 'convertToFormat' parameter for loading content.
+		// Either 'richtext' or empty string (because it comes to use as wikitext already)
+		getLoadConversionFormat: function(element) {
+			return WikiaEditor.modeToFormat(this.getStartupMode(element)) == 'richtext' ? 'richtext' : '';
+		},
+
+		// Return the 'convertToFormat' parameter for saving content.
+		// Either 'wikitext' or an empty string (because we always save as wikitext)
+		getSaveConversionFormat: function(element) {
+			return this.getLoadConversionFormat(element) == 'richtext' ? 'wikitext' : '';
 		}
 	};
 
