@@ -55,6 +55,7 @@ $wgVideoHandlersVideosMigrated = false; // be sure we are working on old files
 
 $devboxuser = exec('hostname');
 $sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgDBname, $wgExternalDatawareDB);
+$botUser = User::newFromName( 'WikiaBot' );
 
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 // echo( "$IP\n" );
@@ -85,8 +86,6 @@ if ( $rowCount ) {
 	while( $file = $dbw->fetchObject( $rows ) ) {
 		$aAllFiles[ $file->img_name ] = 1;
 	}
-
-	echo "[".intval( microtime( true ) - $timeStart)." s] table created \n";
 
 	$i = 0;
 	foreach( $aAllFiles as $sFile => $val ) {
@@ -123,11 +122,23 @@ if ( $rowCount ) {
 			echo "Going to make a duplicate for $sFile as $sNewTitle \n";
 			$aTranslation[ $sFile ] = $sNewTitle;
 			$aAllFiles[ substr($sNewTitle, 1 ) ] = 1;
+
+			$oldtitle = Title::newFromText( substr($sFile, 1 ), NS_LEGACY_VIDEO );
+
+			if( $oldtitle && $oldtitle->exists() ) {
+				$oldarticle = new Article( $oldtitle );
+				$content = $oldarticle->getContent();
+
+				$title = Title::newFromText( substr($sNewTitle, 1 ), NS_LEGACY_VIDEO );
+				$article = new Article( $title );
+				$article->doEdit( $content, 'duplicating Video (sanitization)', EDIT_FORCE_BOT, false, $botUser );
+				echo "Video duplicated\n";
+			}
+
 		}
 	}
 }
 $dbw->freeResult( $rows );
-echo "[".intval( microtime( true ) - $timeStart)." s] get translation table!\n";
 
 print_r( $aTranslation );
 
@@ -142,8 +153,8 @@ foreach ( $aTranslation as $key => $val ) {
 	$strippedNew = ( substr( $val, 0, 1 ) == ':' ) ? substr( $val, 1 ) : $val;
 	$strippedOld = ( substr( $key, 0, 1 ) == ':' ) ? substr( $key, 1 ) : $key;
 
-	$row = $dbw->selectRow( 'image', '*', array('img_name'=>$key) );
-
+	$oRow = $dbw->selectRow( 'image', '*', array('img_name'=>$key) );
+	$row = (array)$oRow;
 	$row['img_name'] = $val;
 
 	$res = $dbw->insert(
