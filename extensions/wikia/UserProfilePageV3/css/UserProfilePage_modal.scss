@@ -87,7 +87,7 @@
 		margin-left: 265px;
 		background-color: $color-buttons;
 		img {
-			background: url(/extensions/wikia/UserProfilePageV3/images/icon-return.png);
+			background: url(/extensions/wikia/UserProfilePageV3/images/icon-return.png); /* $wgCdnStylePath */
 			height: 12px;
 			left: 3px;
 			top: 3px;
