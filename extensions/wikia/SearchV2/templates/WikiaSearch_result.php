@@ -5,12 +5,17 @@
 	<?=$debug?$pos.'. ':'';?><a href="<?= $result->getUrl(); ?>"><?=$result->getTitle();?></a>
 <?php endif; ?>
 
-<?php if(!empty($rank) && $debug): ?>
-	| <font color="red">WikiRank: <?=$rank;?></font>
-<?php endif; ?>
-	| Score: <?=$result->score?>
 <?php if(empty($inGroup) && ($result->getVar('cityHost', false) !== false)): ?>
 	| <a href="<?= $result->getVar('cityHost') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"><?= wfMsg( 'wikiasearch2-search-on-wiki')?></a>
+<?php endif; ?>
+
+
+<?php if($debug): ?>
+<br/>
+<?php if(!empty($rank)): ?>
+	<font color="red">WikiRank: <?=$rank;?></font> |
+<?php endif; ?>
+	Score: <?=$result->score?>
 <?php endif; ?>
 
 <br />
