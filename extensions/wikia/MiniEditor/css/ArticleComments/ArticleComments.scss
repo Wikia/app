@@ -12,12 +12,13 @@
 				padding: 5px;
 
 				textarea {
+					background-color: $color-page;
 					border: 0;
+					color: $color-text;
 					margin: 0;
 					outline: none;
 					padding: 0;
 					resize: none;
-					background-color: $color-page;
 				}
 
 				> br {
