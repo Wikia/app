@@ -102,16 +102,26 @@
 
 		// Editing
 		.article-comm-input {
-			form {
-				margin-bottom: 0;
-			}
+			.MiniEditorWrapper {
+				form {
+					margin-bottom: 0;
+				}
+	
+				.buttons {
+					margin-top: 10px;
+				}
+	
+				.loading-indicator {
+					display: block;
+				}
 
-			.buttons {
-				margin-top: 10px;
-			}
-
-			.loading-indicator {
-				display: block;
+				&.ckeditorsuite {
+					.editarea {
+						textarea.wikiaEditor {
+							visibility: hidden;
+						}
+					}
+				}
 			}
 		}
 	}
