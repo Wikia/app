@@ -510,6 +510,11 @@ var ArticleComments = {
 		} else {
 			var actionButtons = $('#WikiaArticleComments .actionButton').addClass('disabled').attr('disabled', true);
 
+			// Set content on element before initializing to keep focus in editbox (BugId:24188).
+			if (content !== undefined) {
+				$element.val(content);
+			}
+
 			$element.miniEditor({
 				config: {
 
@@ -517,11 +522,6 @@ var ArticleComments = {
 					mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
 				},
 				events: {
-					editorReady: function(event, wikiaEditor) {
-						if (content !== undefined) {
-							wikiaEditor.setContent(content);
-						}
-					},
 					editorActivated: function(event, wikiaEditor) {
 						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message');
 						actionButtons.removeClass('disabled').removeAttr('disabled');
