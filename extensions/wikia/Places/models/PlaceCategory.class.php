@@ -109,8 +109,8 @@ class PlaceCategory {
 		// if memc was empty
 		if ( $this->isEnabled === false ) {
 			$this->app->wf->Debug(__METHOD__ . " - memcache miss for #{$this->pageId}\n");
-			$this->isEnabled = $this->app->wf->GetWikiaPageProp( WPP_CATEGORY_GEOTAGGED, $this->pageId );
-			$this->memc->set( $this->getMemcKey(), $value, self::CACHE_TTL );
+			$this->isEnabled = $this->app->wf->GetWikiaPageProp( WPP_PLACES_CATEGORY_GEOTAGGED, $this->pageId );
+			$this->memc->set( $this->getMemcKey(), $this->isEnabled, self::CACHE_TTL );
 		} else {
 			$this->app->wf->Debug(__METHOD__ . " - memcache hit for #{$this->pageId}\n");
 		}
