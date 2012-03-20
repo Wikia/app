@@ -53,7 +53,7 @@
 			if (typeof RTE != 'undefined') {
 				this.ckeditorEnabled = true;
 				this.editorSuite = 'ckeditorsuite';
-				this.config.mode = 'wysiwyg';
+				this.config.mode = window.RTEInitMode || 'wysiwyg';
 				this.config.toolbars.toolbar = ['ModeSwitch', 'FormatMiniEditor'].concat(this.config.toolbars.toolbar);
 
 				// Add CSS for ckeditor iframe
