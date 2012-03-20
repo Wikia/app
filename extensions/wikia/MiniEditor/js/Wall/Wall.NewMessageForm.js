@@ -9,7 +9,7 @@
 				self.initEditor(this.WallMessageBody);	
 			}
 			
-			this.WallMessageBody.click(function() {
+			this.WallMessageBody.focus(function() {
 				var element = $(this);
 				self.initEditor(element);
 			});
@@ -27,6 +27,14 @@
 							wikiaEditor.getEditbox()
 								.placeholder()
 								.triggerHandler('focus.placeholder');
+							self.WallMessageTitle
+								.keydown(function(e) {
+									if ( e.which == 9 ) {
+										e.preventDefault();
+										wikiaEditor.editorFocus();
+										return false;
+									}
+							 })
 						}
 					}
 				}

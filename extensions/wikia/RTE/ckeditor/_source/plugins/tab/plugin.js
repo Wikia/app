@@ -134,8 +134,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				});
 			}
 
-			if ( CKEDITOR.env.webkit || CKEDITOR.env.gecko )
-			{
+			// Wikia Start - commented out browser check b/c we need this code in IE too. 
+			//if ( CKEDITOR.env.webkit || CKEDITOR.env.gecko )
+			//{
 				editor.on( 'key', function( ev )
 					{
 						var keyCode = ev.data.keyCode;
@@ -152,7 +153,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							ev.cancel();
 						}
 					});
-			}
+			//}
 
 			editor.addCommand( 'blur', CKEDITOR.tools.extend( blurCommand, meta ) );
 			editor.addCommand( 'blurBack', CKEDITOR.tools.extend( blurBackCommand, meta ) );
@@ -176,7 +177,7 @@ CKEDITOR.dom.element.prototype.focusNext = function( ignoreChildren, indexToUse 
 		passedCurrent, enteredCurrent,
 		elected, electedTabIndex,
 		element, elementTabIndex;
-
+	
 	if ( curTabIndex <= 0 )
 	{
 		// If this element has tabindex <= 0 then we must simply look for any

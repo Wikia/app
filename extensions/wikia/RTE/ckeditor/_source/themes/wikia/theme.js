@@ -24,9 +24,6 @@ CKEDITOR.themes.add( 'wikia', (function()
 
 			var tabIndex = editor.config.tabIndex || editor.element.getAttribute( 'tabindex' ) || 0;
 			
-			// Optional tabindex attribute (BugID:19737)
-			var tabIndexHtml = editor.config.tabIndex !== false ? ' tabindex="' + tabIndex + '"' : "";
-			
 			// The editor height is considered only if the contents space got filled.
 			if ( !contentsHtml )
 				height = 'auto';
@@ -51,7 +48,7 @@ CKEDITOR.themes.add( 'wikia', (function()
 					' dir="', editor.lang.dir, '"' +
 					' title="', ( CKEDITOR.env.gecko ? ' ' : '' ), '"' +
 					' lang="', editor.langCode, '"' +
-					tabIndexHtml + 
+					' tabindex="' + tabIndex + '"' + 
 					( style ? ' style="' + style + '"' : '' ) +
 					'>' +
 					'<div class="' , CKEDITOR.env.cssClass, '">' +
