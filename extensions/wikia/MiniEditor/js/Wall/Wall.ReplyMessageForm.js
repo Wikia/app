@@ -5,18 +5,31 @@
 		init: function() {
 			this.replyBoxes.live('click.MiniEditor', this.proxy(this.click));
 			this.replyButtons.live('click.MiniEditor', this.proxy(this.replyToMessage));
+			
+			$.each(this.replyBoxes,
+				function(index, value) { 
+					var element = $(value);
+					if(element.is(":focus")){
+						this.initEditor(element);	
+					}
+				}
+			);
+			
 		},
 
 		click: function(e) {
 			var $target = $(e.target);
-
+			this.initEditor($target);
+		},
+		
+		initEditor: function(target) {
 			// check if editor exists before unbinding placeholder (BugId:23781)
-			if (!$target.data('wikiaEditor')) {
+			if (!target.data('wikiaEditor')) {
 				// Unbind placeholder and clear textarea before initing mini editor (BugId:23221)
-				$target.unbind('.placeholder').val('');
+				target.unbind('.placeholder').val('');
 			}
 
-			$target.miniEditor({
+			target.miniEditor({
 				events: {
 					editorReady: function(event, wikiaEditor) {
 						// Wait till after editor is loaded to know whether RTE is enabled. 
@@ -26,7 +39,7 @@
 						}
 					}
 				}
-			});
+			});			
 		},
 
 		doReplyToMessage: function(main, newreply, reload) {

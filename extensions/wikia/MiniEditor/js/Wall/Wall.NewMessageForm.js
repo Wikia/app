@@ -5,24 +5,31 @@
 		initEvents: function() {
 			var self = this;
 
+			if(this.WallMessageBody.is(":focus")) {
+				self.initEditor(this.WallMessageBody);	
+			}
+			
 			this.WallMessageBody.click(function() {
-				var $element = $(this);
+				var element = $(this);
+				self.initEditor(element);
+			});
+		},
+		
+		initEditor: function(element) {
+			if (!element.data('wikiaEditor')) {
+				element.unbind('.placeholder');
+			}
 
-				if (!$element.data('wikiaEditor')) {
-					$element.unbind('.placeholder');
-				}
-
-				$element.miniEditor({
-					events: {
-						editorReady: function(event, wikiaEditor) {
-							if (!MiniEditor.ckeditorEnabled) {
-								wikiaEditor.getEditbox()
-									.placeholder()
-									.triggerHandler('focus.placeholder');
-							}
+			element.miniEditor({
+				events: {
+					editorReady: function(event, wikiaEditor) {
+						if (!MiniEditor.ckeditorEnabled) {
+							wikiaEditor.getEditbox()
+								.placeholder()
+								.triggerHandler('focus.placeholder');
 						}
 					}
-				});
+				}
 			});
 		},
 
