@@ -98,8 +98,7 @@
 			$.nirvana.sendRequest({
 				controller: 'MiniEditorController',
 				method: 'makeGlobalVariables',
-				type: 'GET',
-				data: { cb: window.wgStyleVersion },
+				type: 'POST', //this cann't be cache
 				callback: function(data) {
 
 					// wgMiniEditorAssets might already contain assets to load, as given by the
