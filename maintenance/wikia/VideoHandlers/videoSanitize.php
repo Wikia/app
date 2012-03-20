@@ -33,7 +33,7 @@ function title_replacer( $title, $replacement, $fulltext  ) {
 		}
 	}
 
-	$regexp = '/(\\[\\[Video\\:)' . $regexp . '(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
+	$regexp = '/(\\[\\[Video\\:)[ ]{0,}' . $regexp . '[ ]{0,}(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
 	
 	$new = preg_replace( $regexp, '$1' . $replacement . '$4', $fulltext );
 	if($new === null) return $fulltext;
