@@ -8,12 +8,17 @@
 		<?php if($debug): ?>
 			| <?=$resultSet->getResultsFound();?> <?= wfMsg( 'wikiasearch2-results' ); ?>
 		<?php endif; ?>
-		<?php if($resultSet->getHeader('cityRank') && $debug): ?>
-			| (1st pos: <?=$resultSet->getHeader('1stResultPos');?>) <font color="red">WikiRank: <?=$resultSet->getHeader('cityRank');?></font>
-		<?php endif; ?>
-			| Total Score: <?=sprintf('%.3f',  $resultSet->totalScore)?>
 			| <a href="<?= $resultSet->getHeader('cityUrl') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"><?= wfMsg( 'wikiasearch2-search-on-wiki')?></a>
 		<br />
+<?php if ($debug): ?>
+		<?php if($resultSet->getHeader('cityRank')): ?>
+			(1st pos: <?=$resultSet->getHeader('1stResultPos');?>) <font color="red">WikiRank: <?=$resultSet->getHeader('cityRank');?></font> |
+		<?php endif; ?>
+			Total Score: <?=sprintf('%.3f',  $resultSet->totalScore)?>
+
+                <br />
+
+<?php endif;?>
 		<a href="<?=$resultSet->getHeader('cityUrl');?>"><?=$resultSet->getHeader('cityUrl');?></a>
 	</div>
 	<br clear="left">
