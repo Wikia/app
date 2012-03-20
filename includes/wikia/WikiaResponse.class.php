@@ -284,13 +284,14 @@ class WikiaResponse {
 
 		if( !is_null( $maxAge ) ) {
 			$maxAge = (int) $maxAge;
-
+			$cacheControl = ( $maxAge > 0 ) ? "public, max-age={$maxAge}" : 'no-cache, no-store, max-age=0, must-revalidate';
+			
 			if ( $targetBrowser ) {
-				$this->setHeader( 'Cache-Control', "public, max-age={$maxAge}", true );
+				$this->setHeader( 'Cache-Control', $cacheControl, true );
 			}
 
 			if ( $targetVarnish) {
-				$this->setHeader( 'X-Pass-Cache-Control', "public, max-age={$maxAge}", true );
+				$this->setHeader( 'X-Pass-Cache-Control', $cacheControl, true );
 			}
 		}
 	}
