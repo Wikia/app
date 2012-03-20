@@ -54,17 +54,17 @@ class Wikia {
 
 	public static function isStagingServer() {
 		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
-	
+
 		if(
 				isset( $headers[ "X-Staging" ] )
 				&& ( $headers[ "X-Staging" ] === "preview" || $headers[ "X-Staging" ] === "verify" )
-		) { 
-			return true; 
+		) {
+			return true;
 		} else {
 			return false;
 		}
-	}	
-	
+	}
+
 	public static function setVar($key, $value) {
 		Wikia::$vars[$key] = $value;
 	}
@@ -996,8 +996,8 @@ class Wikia {
 	 */
 	public static function isWikiaMobile( Linker $skin = null ){
 		wfProfileIn( __METHOD__ );
-		
-		$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );			
+
+		$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );
 
 		wfProfileOut( __METHOD__ );
 		return $isWikiaMobile;
@@ -1585,10 +1585,10 @@ class Wikia {
 
 		return $result;
 	}
-	
+
 	/**
 	 * informJobQueue
-	 * Send information to the backend script what job was added 
+	 * Send information to the backend script what job was added
 	 *
 	 * @static
 	 * @access public
@@ -1625,7 +1625,7 @@ class Wikia {
 
 		return true;
 	}
-	
+
 	/**
 	 * get_const_values
 	 * Returns some stats values from const_values table
@@ -1633,41 +1633,41 @@ class Wikia {
 	 * @static
 	 * @access public
 	 * @author Piotr Molski
-	 * 
+	 *
 	 * @param $name String
-	 * @return int 
+	 * @return int
 	 *
 	 */
 	static public function get_const_values( $name = '' ) {
 		global $wgMemc;
 		$key = wfSharedMemcKey('const_values', $name);
 		$value = $wgMemc->get($key);
-		
+
 		if ( is_null($value) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), 'specials' );
-			
+
 			$oRes = $dbr->select('const_values', array('val'), array( 'name' =>  $name ), __METHOD__ );
 
 			$value = 0;
 			if ( $oRow = $dbr->fetchRow( $oRes ) ) {
 				$value = $oRow['val'];
-				$wgMemc->set( $key, $value, 60 * 60 * 5 ); 
+				$wgMemc->set( $key, $value, 60 * 60 * 5 );
 			}
 		}
-		
-		return $value;	
+
+		return $value;
 	}
-	
-	
+
+
 	/**
-	 * get_content_ns
+	 * get_content_page
 	 * Returns number of pages in content namespaces
 	 *
 	 * @static
 	 * @access public
 	 * @author Piotr Molski
-	 * 
-	 * @return int 
+	 *
+	 * @return int
 	 *
 	 */
 	static public function get_content_pages( ) {
