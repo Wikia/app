@@ -24,6 +24,9 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 	--url
 		Page to be checked
 
+	--mobile
+		Force wikiamobile skin
+
 	--csv
 		Return in CSV format
 
@@ -44,6 +47,11 @@ $url = $options['url'];
 // support --noexternals option
 if (isset($options['noexternals'])) {
 	$url .= (strpos($url, '?') !== false ? '&' : '?') . 'noexternals=1';
+}
+
+// support --mobile option
+if (isset($options['mobile'])) {
+	$url .= (strpos($url, '?') !== false ? '&' : '?') . 'useskin=wikiamobile';
 }
 
 // use GooglePage speed API
