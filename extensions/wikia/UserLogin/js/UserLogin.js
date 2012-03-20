@@ -2,6 +2,8 @@
 var UserLogin = {
 	rteForceLogin: function() {
 		if (!window.wgComboAjaxLogin) {
+			//prevent onbeforeunload from being called when user is loging in
+			window.onbeforeunload = function() {};
 			UserLoginModal.show({
 				callback: function() {
 					window.WikiaEditor && WikiaEditor.reloadEditor();
