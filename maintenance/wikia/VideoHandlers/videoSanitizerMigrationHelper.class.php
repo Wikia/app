@@ -55,16 +55,21 @@ class videoSanitizerMigrationHelper {
 	public function logVideoTitle($oldTitle, $sanitizedTitle, $operationStatus="UNKNOWN", $articleTitle="") {
 		$this->dbw_dataware->ping();
 
+		$cols = array(
+			'city_id'		=> $this->city_id,
+			'old_title'		=> $oldTitle,
+			'sanitized_title'	=> $sanitizedTitle,
+			'operation_status'	=> $operationStatus,
+			'operation_time'	=> date("YmdHis"),
+		);
+
+		if ( $articleTitle != "" ) {
+			$cols['article_title'] = $articleTitle;
+		}
+
 		$this->dbw_dataware->replace('video_migration_sanitization',
 			array( 'city_id', 'old_title' ),
-			array(
-				'city_id'			=> $this->city_id,
-				'old_title'			=> $oldTitle,
-				'sanitized_title'	=> $sanitizedTitle,
-				'operation_status'	=> $operationStatus,
-				'operation_time'	=> date("YmdHis"),
-				'article_title'		=> $articleTitle
-			),
+			$cols,
 			'videoSanitizerMigrationHelper::logVideoTitle'
 		);
 		
