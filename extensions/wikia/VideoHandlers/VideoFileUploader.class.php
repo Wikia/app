@@ -2,7 +2,7 @@
 
 class VideoFileUploader {
 	
-	protected static $ILLEGAL_TITLE_CHARS = array( '/', ':', '#', '?' );
+	protected static $ILLEGAL_TITLE_CHARS = array( '/', ':', '#' );
 	protected static $IMAGE_NAME_MAX_LENGTH = 255;
 	
 	const SANITIZE_MODE_FILENAME = 1;
