@@ -45,7 +45,7 @@ Follow the links below to learn more about how to use Wikia, make changes to you
 
 	/* titles (overrides normal page title) */
 	'specialcontact-sectitle' => "Wikia Support - $1",
-                'specialcontact-sectitle-general' => "Contact form",
+		'specialcontact-sectitle-general' => "Contact form",
 		'specialcontact-sectitle-content-issue' => "Content issue",
 		'specialcontact-sectitle-user-conflict' => "User interactions",
 		'specialcontact-sectitle-adoption' => "Admin rights",
@@ -192,8 +192,8 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
 	'specialcontact-label-screenshot' => 'Did you take a screenshot? If so, please upload here.',
 	'specialcontact-label-additionalscreenshot' => 'If you have another screenshot please upload it here.',
 	'specialcontact-label-bad-ad-description' => 'Please describe the problem with the ad',
-	'specialcontact-label-bad-ad-link' => 'Please provide a link to the page where you saw the bad ad',
-	'specialcontact-label-bug-link' => 'Please provide a link to the page where you are having the problem',
+	'specialcontact-label-bad-ad-link' => 'Please provide the URL of the page where you saw the bad ad',
+	'specialcontact-label-bug-link' => 'Please provide the URL of the page where you are having the problem',
 	'specialcontact-label-bug-feature' => 'What feature is this related to?',
 	'specialcontact-label-bug-description' => 'Please describe the problem you are having',	
 	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my Wikia account',	
