@@ -64,16 +64,13 @@
 						wikiaEditor.setContent(data.htmlorwikitext);
 
 					} else {
-						body.miniEditor({
+
+						// Set content on element before initializing to keep focus in editbox (BugId:24188).
+						body.html(data.htmlorwikitext).miniEditor({
 							config: {
 
 								// Force source mode if edge cases are found.
 								mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
-							},
-							events: {
-								editorReady: function(event, wikiaEditor) {
-									wikiaEditor.setContent(data.htmlorwikitext);
-								}
 							}
 						});
 					}
