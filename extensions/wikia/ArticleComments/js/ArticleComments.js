@@ -485,28 +485,30 @@ var ArticleComments = {
 	editorInit: function(node, content, edgeCases) {
 		var element = $(node),
 			wikiaEditor = element.data('wikiaEditor'),
-			allActions = $('#article-comm-submit, .article-comm-buttons, .speech-bubble-message div.buttons'),
-			mode = MiniEditor.getLoadConversionFormat(element);
+			allActions = $('#article-comm-submit, .article-comm-buttons, .speech-bubble-message div.buttons');
+
+		// Force source mode if edge cases are found.
+		function getMode() {
+			return $.isArray(edgeCases) && edgeCases.length ? 'source' : MiniEditor.getLoadConversionFormat(element);
+		}
 
 		allActions.addClass('loading').attr('disabled', true);
-
-		// If edgecases were found, force source mode
-		if ($.isArray(edgeCases) && edgeCases.length) {
-			mode = 'source';
-		}
 
 		// Already exists
 		if (wikiaEditor) {
 			wikiaEditor.fire('editorActivated');
-			wikiaEditor.ck.setMode(mode);
-			wikiaEditor.ck.setData(content);
+
+			if (content) {
+				wikiaEditor.ck.setMode(getMode());
+				wikiaEditor.ck.setData(content);
+			}
 
 		} else {
 			element.miniEditor({
-				config: { mode: mode },
 				events: {
 					editorReady: function(event, wikiaEditor) {
 						if (content) {
+							wikiaEditor.ck.setMode(getMode());
 							wikiaEditor.ck.setData(content);
 						}
 					},

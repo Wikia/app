@@ -220,7 +220,6 @@
 				var wikiaEditor = $element.data('wikiaEditor');
 
 				if (wikiaEditor) {
-				console.log(wikiaEditor);
 					return wikiaEditor.mode;
 				}
 			}
