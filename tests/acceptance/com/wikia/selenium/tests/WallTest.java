@@ -121,18 +121,45 @@ public class WallTest extends MiniEditorBaseTest {
 		String prevTitle = session().getText(firstMsg + " .msg-title a");
 		String prevBody = session().getText(firstMsg + " .msg-body");
 				
-		String titleArea = firstMsg + " .msg-title textarea:nth-child(2)";
-		String bodyArea = firstMsg + " .msg-body textarea:not([tabindex=-1])";
 		String saveBtn = firstMsg + " .save-edit";
+		String bodyArea = "";
+		String titleArea = "";
 		
 		session().click(firstMsg + " .edit-message");
-		
-		assertTrue( session().isElementPresent(titleArea) );
-		assertTrue( session().isElementPresent(bodyArea) );
+
+		if(("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
+			String xPathParent = "//ul[@class='comments']/li[1]/blockquote";
+			titleArea = firstMsg + " .msg-title textarea";
+			
+			// wait for editor to load
+			waitForElement(firstMsg + " span.cke_buttons");
+			// title textarea may load after editor is done loading
+			waitForElement (titleArea);
+			
+			this.switchToSourceMode(xPathParent);
+			
+			bodyArea = xPathParent + "//div[@class='cke_contents']/textarea";
+	
+			assertTrue( this.getMiniEditorText(xPathParent).equals(prevBody) );
+		} else {
+			titleArea = firstMsg + " .msg-title textarea:nth-child(2)";
+			bodyArea = firstMsg + " .msg-body textarea:not([tabindex=-1])";
+
+			assertTrue( session().isElementPresent(titleArea) );
+			assertTrue( session().isElementPresent(bodyArea) );
+	
+			assertTrue( (session().getText(bodyArea).equals(prevBody)) );	
+		}
+
 		assertTrue( session().isElementPresent(saveBtn) );
 		assertTrue( session().isElementPresent(firstMsg + " .cancel-edit") );
+
+		System.out.println("PRINT BODY AREA" );
+		System.out.println(session().getText(bodyArea));
+
+
 		assertTrue( (session().getText(titleArea).equals(prevTitle)) );
-		assertTrue( (session().getText(bodyArea).equals(prevBody)) );
+		
 		
 		//edit the message
 		session().type(titleArea, prevTitle + " (edited)");
