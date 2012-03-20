@@ -17,25 +17,26 @@ table {
 		<legend><?= ucfirst( $prefix ) ?> date</legend>
 		<select name="<?= $prefix ?>Day">
 			<?php for ( $i = 1; $i <= 31; ++$i ) {
-				echo Xml::option( $i, $i, $i == date( 'd' ) );
+				echo Xml::option( $i, $i, $i == ${$prefix . "Day"} );
 			} ?>
 		</select>
 		<select name="<?= $prefix ?>Month">
 <?php
 		global $wgLang;
 		for( $i = 1; $i < 13; $i++ )
-                       echo Xml::option( $wgLang->getMonthName( $i ), $i, date( 'n' ) == $i );
+                       echo Xml::option( $wgLang->getMonthName( $i ), $i, $i == ${$prefix . "Month"} );
 ?>
 		</select>
 		<select name="<?= $prefix ?>Year">
 			<?php for ( $i = 2012; $i <= $currentYear; ++$i ) {
-				echo Xml::option( $i, $i, $i == $currentYear );
+				echo Xml::option( $i, $i, $i == ${$prefix . "Year"} );
 			} ?>
 		</select>
 	</fieldset>
 <?php	} ?>
 
-	<?= Xml::submitButton( 'Generate stats' ) ?>
+	<?= Xml::submitButton( 'Show stats' ) ?>
+	<?= Xml::submitButton( 'Download as CSV', array( 'formaction' => 'csvstats', 'class' => 'secondary' )  ); ?>
 </form>
 
 <h2>Summary</h2>

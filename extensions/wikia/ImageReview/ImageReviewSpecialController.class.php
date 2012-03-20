@@ -3,6 +3,8 @@
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
 
+	var $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
+
 	public function __construct() {
 		parent::__construct('ImageReview', 'imagereview', false /* $listed */);
 	}
@@ -28,6 +30,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} elseif ( $action == 'stats' ) {
 			$this->forward( get_class( $this ), 'stats' );
 			return true;
+		} elseif ( $action == 'csvstats' ) {
+			$this->forward( get_class( $this ), 'csvStats' );
 		}
 
 		$this->wg->Out->enableClientCache( false );
@@ -124,19 +128,74 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 
-	function stats() {
+	public function stats() {
 		if ( !$this->wg->User->isAllowed( 'imagereviewstats' )) {
 			$this->specialPage->displayRestrictionError( 'imagereviewstats' );
 			return false;
 		}
+
+                $startDay = $this->request->getVal( 'startDay', date( 'd' ) );
+                $startMonth = $this->request->getVal( 'startMonth', date( 'n' ) );
+                $startYear = $this->request->getVal( 'startYear', date( 'Y' ) );
+
+                $endDay = $this->request->getVal( 'endDay', date( 'd' ) );
+                $endMonth = $this->request->getVal( 'endMonth', date( 'm' ) );
+                $endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
+
+		$stats = $this->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
+
+                // setup response data for table rendering
+                $this->response->setVal( 'summary', $stats['summary'] );
+                $this->response->setVal( 'summaryHeaders', array( 'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user' ) );
+
+                $this->response->setVal( 'data', $stats['data'] );
+                $this->response->setVal( 'headers', $this->statsHeaders );
+
+		$this->response->setVal( 'startDay', $startDay );
+		$this->response->setVal( 'startMonth', $startMonth );
+		$this->response->setVal( 'startYear', $startYear );
+
+		$this->response->setVal( 'endDay', $endDay );
+		$this->response->setVal( 'endMonth', $endMonth );
+		$this->response->setVal( 'endYear', $endYear );
+	}
+
+	public function csvStats() {
+                if ( !$this->wg->User->isAllowed( 'imagereviewstats' )) {
+                        $this->specialPage->displayRestrictionError( 'imagereviewstats' );
+                        return false;
+                }
 
 		$startDay = $this->request->getVal( 'startDay', date( 'd' ) );
 		$startMonth = $this->request->getVal( 'startMonth', date( 'n' ) );
 		$startYear = $this->request->getVal( 'startYear', date( 'Y' ) );
 
 		$endDay = $this->request->getVal( 'endDay', date( 'd' ) );
-		$endMonth = $this->request->getVal( 'endMonth', date( 'n' ) );
+		$endMonth = $this->request->getVal( 'endMonth', date( 'm' ) );
 		$endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
+
+		$stats = $this->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
+
+		$name = "ImageReviewStats-$startYear-$startMonth-$startDay-to-$endYear-$endMonth-$endDay";
+
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header('Content-Type: text/force-download');
+
+		header('Content-Disposition: attachment; filename="' . $name . '.csv"');
+
+		echo implode( ",", $this->statsHeaders ) . "\n";
+
+		foreach ( $stats['data'] as $reviewer => $dataRow ) {
+			echo implode( ",", $dataRow ) . "\n";
+		}
+
+		exit;
+	}
+
+
+	private function getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay ) {
 
 		$startDate = $startYear . '-' . $startMonth . '-' . $startDay . ' 00:00:00';
 		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
@@ -154,6 +213,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle('Image Review tool statistics');
 
 		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalDatawareDB );
+
 		$res = $dbr->query( "select review_state, reviewer_id, count( page_id ) as count from 
 		image_review_stats WHERE review_end BETWEEN '{$startDate}' AND '{$endDate}' group by review_state, reviewer_id with rollup" );
 
@@ -192,11 +252,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$stats['toavg'] = $stats['total'] - $summary['avg'];
 		}
 
-		// setup response data for table rendering
-		$this->response->setVal( 'summary', $summary );
-		$this->response->setVal( 'summaryHeaders', array( 'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user' ) );
-
-		$this->response->setVal( 'data', $data );
-		$this->response->setVal( 'headers', array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' ) );
+		return array(
+			'summary' => $summary,
+			'data' => $data,
+		);
 	}
 }
