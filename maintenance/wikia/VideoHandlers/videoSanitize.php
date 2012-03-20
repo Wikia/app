@@ -5,7 +5,7 @@
  *  */
 
 
-function title_replacer( $title, $replacement, $fulltext  ) {
+function get_regexp( $title, $replacement ) {
 	$symbols = array(
 		array(' ','_','-','+','/'),
 	);
@@ -16,9 +16,9 @@ function title_replacer( $title, $replacement, $fulltext  ) {
 			$refs[$symbol] = '[\\' . $imp .']';
 		}
 	}
-	
+
 	$regexp = '';
-	
+
 	$j = mb_strlen($title);
 	for ($k = 0; $k < $j; $k++) {
 		$char = mb_substr($title, $k, 1);
@@ -33,47 +33,35 @@ function title_replacer( $title, $replacement, $fulltext  ) {
 		}
 	}
 
+	return $regexp;
+}
+
+function title_replacer( $title, $replacement, $fulltext  ) {
+
+	$regexp = get_regexp( $title, $replacement );
 	$regexp = '/(\\[\\[Video\\:)[ ]{0,}' . $regexp . '[ ]{0,}(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
-	
 	$new = preg_replace( $regexp, '$1' . $replacement . '$4', $fulltext );
-	if($new === null) return $fulltext;
+	if( $new === null ) return $fulltext;
 	return $new;	
 }
 
 function title_replacer_rv( $title, $replacement, $fulltext  ) {
-	$symbols = array(
-		array(' ','_','-','+','/'),
-	);
-	$refs = array();
-	foreach( $symbols as $id => $val ) {
-		foreach( $val as $id2 => $symbol ) {
-			$imp = implode('\\',$val);
-			$refs[$symbol] = '[\\' . $imp .']';
-		}
-	}
 
-	$regexp = '';
-
-	$j = mb_strlen($title);
-	for ($k = 0; $k < $j; $k++) {
-		$char = mb_substr($title, $k, 1);
-		if(isset($refs[$char])) {
-			$regexp .= $refs[$char];
-		} else {
-			if(ctype_alnum($char)) {
-				$regexp .= $char;
-			} else {
-				$regexp .= '\\' . $char;
-			}
-		}
-	}
-
+	$regexp = get_regexp( $title, $replacement );
 	$regexp = '/(\\*\\ (VM\\:|))' . $regexp . '(\\|)/';
 	$new = preg_replace( $regexp, '$1' . $replacement . '$3', $fulltext );
-	if($new === null) return $fulltext;
+	if( $new === null ) return $fulltext;
 	return $new;
 }
 
+function title_replacer_vg( $title, $replacement, $fulltext  ) {
+
+	$regexp = get_regexp( $title, $replacement );
+	$regexp = "/^\\h*[vV][iI][dD][eE][oO]\\:" . $regexp . '(\\||\\h*$)/m';
+	$new = preg_replace( $regexp, "Video:" . $replacement . "$1", $fulltext );
+	if( $new === null ) return $fulltext;
+	return $new;
+}
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 //require_once( 'commandLine.inc' );
@@ -84,7 +72,7 @@ $options = array('help');
 require_once ('videoSanitizerMigrationHelper.class.php');
 require_once( 'videolog.class.php' );
 
-global $IP, $wgCityId, $wgDBname, $wgExternalDatawareDB, $wgVideoHandlersVideosMigrated, $wgDBname;
+global $IP, $wgCityId, $wgDBname, $wgExternalDatawareDB, $wgVideoHandlersVideosMigrated, $wgDBname, $wgStatsDB;
 
 $wgVideoHandlersVideosMigrated = false; // be sure we are working on old files
 
@@ -107,6 +95,7 @@ require_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbw = wfGetDB( DB_MASTER );
 $dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+$dbw_stats = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 
 $i = 0;
 $timeStart = microtime( true );
@@ -191,7 +180,7 @@ $count = count( $aTranslation );
 $current = 0;
 foreach ( $aTranslation as $key => $val ) {
 	echo "aTranslation[$key]=$val\n";
-	
+
 	$strippedNew = ( substr( $val, 0, 1 ) == ':' ) ? substr( $val, 1 ) : $val;
 	$strippedOld = ( substr( $key, 0, 1 ) == ':' ) ? substr( $key, 1 ) : $key;
 
@@ -265,7 +254,7 @@ foreach ( $aTranslation as $key => $val ) {
 		'where' => array( 'wl_namespace' => NS_LEGACY_VIDEO, 'wl_title' => $strippedOld ),
 		'update' => array( 'wl_title' => $strippedNew )
 	);
-	
+
 	foreach(  $aTablesMove as $table => $actions ){
 		if( $dbw->tableExists($table)) {
 			$res = $dbw->update(
@@ -286,7 +275,7 @@ foreach ( $aTranslation as $key => $val ) {
 
 	// Fixing links in article;
 	//echo "SELECT distinct il_from FROM imagelinks WHERE il_to ='{$key}'! /n";
-	
+
 	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
 	$current++;
 	while( $file = $dbw->fetchObject( $rows ) ) {
@@ -366,9 +355,39 @@ foreach ( $aTranslation as $key => $val ) {
 	$i++;
 }
 
-echo(": {$rowCount} videos processed.\n");
-videoLog( 'sanitize', 'RENAMED', "renamed:$i");
+//echo(": {$rowCount} videos processed.\n");
+//videoLog( 'sanitize', 'RENAMED', "renamed:$i");
 
+echo "Fixing Videogalleries\n";
+$rows = $dbw_stats->query( "SELECT ct_page_id FROM city_used_tags WHERE ct_wikia_id = $wgCityId AND ct_kind = 'videogallery'" );
+
+$i=0;
+while( $page = $dbw_stats->fetchObject( $rows ) ) {
+	global $wgTitle;
+	$oTitleVG = Title::newFromID( $page->ct_page_id );
+	$wgTitle = $oTitleVG;
+	if ( $oTitleVG instanceof Title && $oTitleVG->exists() ){
+		$oArticle = new Article ( $oTitleVG );
+		if ( $oArticle instanceof Article ){
+			$sTextAfter = $sText = $oArticle->getContent();
+			echo "\n ========== ART(VG):" .$oTitleVG." =============\n";
+
+			foreach ( $aTranslation as $key => $val ) {
+				$sTextAfter = title_replacer_vg( substr( $key, 1 ), substr( $val, 1), $sTextAfter );
+			}
+
+			if ( $sTextAfter != $sText ) {
+				echo "ARTICLE WAS CHANGED! \n";
+				$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken videogallery tag', EDIT_MINOR | EDIT_UPDATE | EDIT_FORCE_BOT, false, $botUser );
+				$i++;
+			}
+		} else {
+			var_dump( $oArticle );
+		}
+	}
+}
+
+videoLog( 'sanitize', 'VIDEOGALLERY', "edits:$i");
 
 echo "Fixing Related Videos\n";
 $rows = $dbw->query( "SELECT page_id FROM page WHERE page_namespace = 1100" );
