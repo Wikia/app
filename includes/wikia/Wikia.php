@@ -1651,6 +1651,7 @@ class Wikia {
 			$value = 0;
 			if ( $oRow = $dbr->fetchRow( $oRes ) ) {
 				$value = $oRow['val'];
+				$wgMemc->set( $key, $value, 60 * 60 * 5 ); 
 			}
 		}
 		
