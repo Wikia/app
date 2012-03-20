@@ -89,6 +89,7 @@ if ( $rowCount ) {
 
 	$i = 0;
 	foreach( $aAllFiles as $sFile => $val ) {
+		wfWaitForSlaves( 2 );
 		if ( strpos ( $sFile, ':' ) === 0 ) {
 			// var_dump(':');
 
@@ -148,6 +149,7 @@ $i=0;
 
 $count = count( $aTranslation );
 foreach ( $aTranslation as $key => $val ) {
+	wfWaitForSlaves( 2 );
 	echo "aTranslation[$key]=$val\n";
 
 	$strippedNew = ( substr( $val, 0, 1 ) == ':' ) ? substr( $val, 1 ) : $val;

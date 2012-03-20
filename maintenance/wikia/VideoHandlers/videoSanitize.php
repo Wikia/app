@@ -290,6 +290,7 @@ foreach ( $aTranslation as $key => $val ) {
 	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
 	$current++;
 	while( $file = $dbw->fetchObject( $rows ) ) {
+		wfWaitForSlaves( 2 );
 		echo "FETCH FROM DB il_from= ".$file->il_from." // ($key)\n";
 		$articleId = $file->il_from;
 		$oTitle = Title::newFromId( $articleId );
@@ -374,6 +375,7 @@ $rows = $dbw->query( "SELECT page_id FROM page WHERE page_namespace = 1100" );
 
 $i=0;
 while( $page = $dbw->fetchObject( $rows ) ) {
+	wfWaitForSlaves( 2 );
 	global $wgTitle;
 	$oTitleRV = Title::newFromID( $page->page_id );
 	$wgTitle = $oTitleRV;
@@ -396,7 +398,6 @@ while( $page = $dbw->fetchObject( $rows ) ) {
 			var_dump( $oArticle );
 		}
 	}
-
 }
 videoLog( 'sanitize', 'RELATEDVIDEOS', "edits:$i");
 

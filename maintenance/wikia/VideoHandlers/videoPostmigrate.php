@@ -63,6 +63,7 @@ foreach( $tables as $tableName => $tableData ) {
 	
 		
 	foreach( $rows_preloaded as $row ) {
+		wfWaitForSlaves( 2 );
 		$idField = $tableData['id'];
 		$id = $row->$idField;
 		echo "  row $idField => $id\n";
@@ -118,6 +119,7 @@ $rows = $dbw->query( "SELECT img_name FROM image WHERE img_media_type = 'VIDEO'"
 while( $image = $dbw->fetchObject( $rows ) ) {
 	$rows2 = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($image->img_name)."'");
 	while( $page = $dbw->fetchObject( $rows2 ) ) {
+		wfWaitForSlaves( 2 );
 		global $wgTitle;
 		$oTitle = Title::newFromId( $page->il_from );
 		$wgTitle = $oTitle;
