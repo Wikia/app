@@ -21,14 +21,17 @@
 
 		.wikiaEditor {
 			border: 0;
-			font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
-			font-size: 13.5px;
 			outline: none;
 			resize: none;
 		}
 
 		.msg-body {
 			@include clearfix;
+		}
+
+		.cke_source {
+			font-family: Consolas, "Eupheima UCAS", Ayuthaya, Menlo, monospace;
+			font-size: 13.5px;
 		}
 	}
 

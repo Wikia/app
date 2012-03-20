@@ -80,13 +80,12 @@ var ArticleComments = {
 
 		function makeRequest() {
 			var commentId = e.target.id.replace(/^comment/, ''),
-				textfield = $('#article-comm-textfield-' + commentId),
-				format = ArticleComments.getIncomingFormat(textfield);
+				textfield = $('#article-comm-textfield-' + commentId);
 
 			$.getJSON(wgScript, {
 				action: 'ajax',
 				article: wgArticleId,
-				convertToFormat: format,
+				convertToFormat: ArticleComments.getLoadConversionFormat(textfield),
 				id: commentId,
 				method: 'axEdit',
 				rs: 'ArticleCommentsAjax'
@@ -184,7 +183,7 @@ var ArticleComments = {
 			$.postJSON(wgScript, {
 				action: 'ajax',
 				article: wgArticleId,
-				convertToFormat: ArticleComments.getOutgoingFormat(textfield),
+				convertToFormat: ArticleComments.getSaveConversionFormat(textfield),
 				id: commentId,
 				method: 'axSave',
 				rs: 'ArticleCommentsAjax',
@@ -305,7 +304,7 @@ var ArticleComments = {
 		var data = {
 			action: 'ajax',
 			article: wgArticleId,
-			convertToFormat: ArticleComments.getOutgoingFormat(source),
+			convertToFormat: ArticleComments.getSaveConversionFormat(source),
 			method: 'axPost',
 			rs: 'ArticleCommentsAjax',
 			title: wgPageName,
@@ -486,29 +485,29 @@ var ArticleComments = {
 	editorInit: function(node, content, edgeCases) {
 		var element = $(node),
 			wikiaEditor = element.data('wikiaEditor'),
-			allActions = $('#article-comm-submit, .article-comm-buttons, .speech-bubble-message div.buttons');
+			allActions = $('#article-comm-submit, .article-comm-buttons, .speech-bubble-message div.buttons'),
+			mode = MiniEditor.getLoadConversionFormat(element);
 
 		allActions.addClass('loading').attr('disabled', true);
+
+		// If edgecases were found, force source mode
+		if ($.isArray(edgeCases) && edgeCases.length) {
+			mode = 'source';
+		}
 
 		// Already exists
 		if (wikiaEditor) {
 			wikiaEditor.fire('editorActivated');
-
-			if (content) {
-				wikiaEditor.setContent(content);
-			}
+			wikiaEditor.ck.setMode(mode);
+			wikiaEditor.ck.setData(content);
 
 		} else {
 			element.miniEditor({
-				config: {
-
-					// If edge cases were found when loading our content, use source mode
-					mode: $.isArray(edgeCases) && edgeCases.length ? 'source' : MiniEditor.config.mode
-				},
+				config: { mode: mode },
 				events: {
 					editorReady: function(event, wikiaEditor) {
 						if (content) {
-							wikiaEditor.setContent(content);
+							wikiaEditor.ck.setData(content);
 						}
 					},
 					editorActivated: function(event, wikiaEditor) {
@@ -533,12 +532,12 @@ var ArticleComments = {
 		return ArticleComments.miniEditorEnabled ? element.data('wikiaEditor').getContent() : element.val();
 	},
 
-	getIncomingFormat: function(element) {
-		return ArticleComments.miniEditorEnabled ? MiniEditor.getIncomingFormat(element) : '';
+	getLoadConversionFormat: function(element) {
+		return ArticleComments.miniEditorEnabled ? MiniEditor.getLoadConversionFormat(element) : '';
 	},
 
-	getOutgoingFormat: function(element) {
-		return ArticleComments.miniEditorEnabled ? MiniEditor.getOutgoingFormat(element) : '';
+	getSaveConversionFormat: function(element) {
+		return ArticleComments.miniEditorEnabled ? MiniEditor.getSaveConversionFormat(element) : '';
 	}
 };
 
