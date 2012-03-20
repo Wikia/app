@@ -203,8 +203,7 @@
 					body: $element,
 					element: $wrapper.addClass(this.editorSuite),
 					minHeight: $element.data('min-height') || 200,
-					maxHeight: $element.data('max-height') || 400,
-					tabIndex: false // (BugID:19737) - IE doesn't like it when there's a tab index attribute so just get rid of it. 
+					maxHeight: $element.data('max-height') || 400
 				}, options.config));
 
 				// Store a reference to wikiaEditor in element
