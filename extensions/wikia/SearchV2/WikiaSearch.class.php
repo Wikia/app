@@ -91,7 +91,7 @@ class WikiaSearch extends WikiaObject {
 					$set->addResult($result);
 				}
 
-				$set->totalScore += $result->score;
+				$set->totalScore += ($result->score > 0) ? $result->score : 0;
 
 				$set->incrResultsFound();
 				$set->setHeader('cityRank', $this->getWikiRank($set));
