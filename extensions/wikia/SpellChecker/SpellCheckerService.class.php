@@ -99,7 +99,7 @@ class SpellCheckerService extends Service {
 			$info = $this->dict->describe();
 			$ret['info'] = array(
 				'lang' => $info['lang'],
-				'provider' => $info['desc'],
+				'provider' => !empty($info['desc'])?$info['desc']:false,
 			);
 		}
 
