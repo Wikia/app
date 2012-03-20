@@ -177,8 +177,8 @@ class QuickStatsController extends WikiaController {
 			return wfMsg('quickstats-number-shortening-billions', array(round( $number / 1000000000, 1)));
 		} elseif ($number >= 1000000 ) {
 			return wfMsg('quickstats-number-shortening-millions', array(round( $number / 1000000, 1)));
-		} elseif ($d >= 10000 ) {
-			return wfMsg('quickstats-number-shortening', array(round( $number / 10000 , 1)));
+		} elseif ($number >= 10000 ) {
+			return wfMsg('quickstats-number-shortening', array(round( $number / 1000 , 1)));
 		} else {
 			return $number;
 		}

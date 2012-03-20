@@ -18,15 +18,16 @@ $messages['en'] = array(
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|See more stats]]',
 	'quickstats-number-shortening' => '$1K',
-	'uickstats-number-shortening-millions' => '$1M',
-	'uickstats-number-shortening-billions' => '$1B',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
-	'uickstats-number-shortening-billions' => 'his is a shortend number notiation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
-	'uickstats-number-shortening-millions' => 'This is a shortend number notiation shown in a stats table. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
+	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)',
+	'quickstats-number-shortening-millions' => 'This is a shortend number abbreviation shown in a stats table. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
+	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
 /** толышә зывон (толышә зывон)
