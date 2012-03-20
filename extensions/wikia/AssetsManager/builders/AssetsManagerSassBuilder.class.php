@@ -10,10 +10,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	public function __construct(WebRequest $request) {
 		global $wgDevelEnvironment, $wgSpeedBox;
 		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
-print("r: " . $request->getVal('oid') . "\n");		
-print("bc: " . $this->mOid . "\n");
+
 		parent::__construct($request);
-print("ac: " . $this->mOid . "\n");
 
 		if (strpos($this->mOid, '..') !== false) {
 			throw new Exception('File path must not contain \'..\'.');
