@@ -23,6 +23,8 @@ class WikiaPollTest extends WikiaBaseTest {
 			$article->doDelete("Unit Testing", true);
 
 		F::unsetInstance( 'User');
+		F::unsetInstance( 'WebRequest' );
+		F::unsetInstance( 'Title' );
 		global $wgTitle;
 		unset($wgTitle);
 	}
