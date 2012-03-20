@@ -83,9 +83,6 @@ class ContactForm extends SpecialPage {
 
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName', $wgServer );
-			if ( strpos( $this->mWhichWiki, 'http' ) !== 0  ) {
-				$this->mWhichWiki = 'http://' . $this->mWhichWiki;
-			}
 
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
 
@@ -166,10 +163,10 @@ class ContactForm extends SpecialPage {
 	 */
 	function processCreation() {
 		global $wgUser, $wgOut, $wgCityId, $wgSpecialContactEmail;
-		global $wgLanguageCode, $wgRequest;
+		global $wgLanguageCode, $wgRequest, $wgServer;
 
 		// If not configured, fall back to a default just in case.
-		$wgSpecialContactEmail = (empty($wgSpecialContactEmail)?"community@wikia.com":$wgSpecialContactEmail);
+		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@wikia.com" : $wgSpecialContactEmail );
 
 		$wgOut->setPageTitle( wfMsg( 'specialcontact-pagetitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -177,9 +174,9 @@ class ContactForm extends SpecialPage {
 
 		//build common top of both emails
 		$m_shared = '';
-		$m_shared .= ( !empty($this->mRealName) )?( $this->mRealName ): ( (( !empty($this->mUserName) )?( $this->mUserName ): ('--')) );
+		$m_shared .= ( !empty( $this->mRealName ) ) ? ( $this->mRealName ) : ( ( ( !empty( $this->mUserName ) ) ? ( $this->mUserName ) : ('--') ) );
 		$m_shared .= " ({$this->mEmail})";
-		$m_shared .= " ". (( !empty($this->mUserName) ) ? $this->mWhichWiki . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mUserName)) : $this->mWhichWiki) . "\n";
+		$m_shared .= " " . ( ( !empty($this->mUserName) ) ? $wgServer . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mUserName)) : $wgServer ) . "\n";
 
 
 		//start wikia debug info, sent only to the internal email, not cc'd
