@@ -408,8 +408,13 @@ class CategoryExhibitionSection {
 	} 
 	
 	protected function getTouchedKey($title) {
-		$key = wfMemcKey( 'category_touched', $title->getDBKey() );
-		return $key;		
+        //fb#24914
+        if( !($title instanceof Title) ) {
+		    $key = wfMemcKey( 'category_touched', $title->getDBKey() );
+		    return $key;
+        } else {
+            return null;
+        }
 	}
 	
 	protected function saveToCache( $content ) {
