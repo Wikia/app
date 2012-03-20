@@ -547,7 +547,8 @@ class WikiFactory {
 						var_export( $value, true ),
 						$reason_extra
 					),
-					$city_id
+					$city_id,
+					$cv_variable_id
 				);
 			}
 			else {
@@ -558,7 +559,8 @@ class WikiFactory {
 						var_export( $value, true ),
 						$reason_extra
 					),
-					$city_id
+					$city_id,
+					$cv_variable_id
 				);
 			}
 			wfProfileOut( __METHOD__."-changelog" );
@@ -1935,7 +1937,7 @@ class WikiFactory {
 	 *
 	 * @return boolean	status of insert operation
 	 */
-	static public function log( $type, $msg, $city_id = false ) {
+	static public function log( $type, $msg, $city_id = false, $variable_id = null ) {
 		global $wgUser, $wgCityId, $wgWikicitiesReadOnly;
 
 		if( ! self::isUsed() ) {
@@ -1957,7 +1959,8 @@ class WikiFactory {
 				"cl_city_id" => $city_id,
 				"cl_user_id" => $wgUser->getId(),
 				"cl_type" => $type,
-				"cl_text" => $msg
+				"cl_text" => $msg,
+				"cl_var_id" => $variable_id,
 			),
 			__METHOD__
 		);
