@@ -1640,7 +1640,7 @@ class Wikia {
 	 */
 	static public function get_const_values( $name = '' ) {
 		global $wgMemc;
-		$key = wfMemcKey('const_values', $name);
+		$key = wfSharedMemcKey('const_values', $name);
 		$value = $wgMemc->get($key);
 		
 		if ( is_null($value) ) {
@@ -1670,7 +1670,7 @@ class Wikia {
 	 * @return int 
 	 *
 	 */
-	static public function get_content_ns( ) {
+	static public function get_content_pages( ) {
 		return self::get_const_values( 'content_ns' );
 	}
 }
