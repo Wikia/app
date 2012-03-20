@@ -263,7 +263,7 @@
 		// If assets have been included on page load, mark as
 		// initialized and configure now.
 		if (!window.wgMiniEditorLoadOnDemand) {
-			MiniEditor.initialized = true;
+			MiniEditor.assetsLoaded = true;
 			MiniEditor.configure();
 		}
 	});
