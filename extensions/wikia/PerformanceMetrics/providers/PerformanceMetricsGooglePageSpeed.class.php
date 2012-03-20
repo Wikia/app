@@ -64,8 +64,8 @@ class PerformanceMetricsGooglePageSpeed extends PerformanceMetricsProvider {
 		// aggregate some of the stats
 		$report['metrics']['totalResponseBytes'] = $resp['pageStats']['htmlResponseBytes'] +
 			$resp['pageStats']['cssResponseBytes'] +
-			$resp['pageStats']['imageResponseBytes'] +
-			$resp['pageStats']['javascriptResponseBytes'] +
+			(!empty($resp['pageStats']['imageResponseBytes']) ? $resp['pageStats']['imageResponseBytes'] : 0) +
+			(!empty($resp['pageStats']['javascriptResponseBytes']) ? $resp['pageStats']['javascriptResponseBytes'] : 0) +
 			(!empty($resp['pageStats']['otherResponseBytes']) ? $resp['pageStats']['otherResponseBytes'] : 0);
 
 		return $report;
