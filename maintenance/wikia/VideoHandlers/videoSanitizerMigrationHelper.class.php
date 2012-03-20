@@ -94,6 +94,25 @@ class videoSanitizerMigrationHelper {
 
 	}
 
+
+	public function logFailedEditRemove($articleId, $articleTitleText, $articleNamespace, $from, $to) {
+		$this->dbw_dataware->ping();
+
+		$this->dbw_dataware->delete('video_sanitization_failededit',
+			array(
+				'city_id'			=> $this->city_id,
+				'city_name'			=> $this->city_name,
+				'article_id'		=> $articleId,
+				'article_title'		=> $articleTitleText,
+				'article_namespace'	=> $articleNamespace,
+				'rename_from'		=> $from,
+				'rename_to'			=> $to,
+			),
+			'videoSanitizerMigrationHelper::logFailedEditRemove'
+		);
+
+	}
+
 	
 }
 
