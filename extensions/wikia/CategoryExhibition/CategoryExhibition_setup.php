@@ -18,7 +18,6 @@ $wgExtensionCredits['other'][] = array(
 	"author" => array('Jakub Kurcek')
 );
 
-
 // Calculate the base directory and use it later a few times
 $dir = dirname(__FILE__).'/';
 
