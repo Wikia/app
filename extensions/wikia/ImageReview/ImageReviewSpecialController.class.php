@@ -15,6 +15,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$action = $this->getPar();
 		$this->action = $action;
 		$this->response->setJsVar('wgImageReviewAction', $action);
+		$this->wg->Out->enableClientCache( false );
+		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		$this->response->sendHeaders();
 		
 		$accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
 
