@@ -105,7 +105,6 @@ if ( count($aVideosToBeRemoved) > 0 ) {
 	
 	echo "DELETE FROM image WHERE img_name=? AND img_media_type='VIDEO' for ".count($aVideosToBeRemoved)." titles \n";
 	foreach ($aVideosToBeRemoved as $videoTitleToRemove) {
-		wfWaitForSlaves( 2 );
 		$dbw->delete(
 			'image',
 			array(
@@ -132,7 +131,6 @@ if ( count($aArticleToRemove) > 0 ) {
 	);
 
 	foreach( $tables as $tableName => $tableData ) {
-		wfWaitForSlaves( 2 );
 		echo( "Processing $tableName\n" );
 
 		if( !$dbw->tableExists($tableName) ) {
@@ -157,6 +155,7 @@ if ( count($aArticleToRemove) > 0 ) {
 	
 }
 
+wfWaitForSlaves( 2 );
 
 
 
