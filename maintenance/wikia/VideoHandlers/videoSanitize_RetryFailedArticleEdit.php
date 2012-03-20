@@ -75,11 +75,6 @@ $dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 $botUser = User::newFromName( 'WikiaBot' );
 
-$i=0;
-
-$count = count( $aTranslation );
-$current = 0;
-
 $res = $dbw_dataware->select(
 	'video_sanitization_failededit',
 	'*',
@@ -100,7 +95,6 @@ foreach( $articlesToProcess as $failed ) {
 	$val = $failed->rename_to;
 
 	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
-	$current++;
 	while( $file = $dbw->fetchObject( $rows ) ) {
 		wfWaitForSlaves( 2 );
 		echo "FETCH FROM DB il_from= ".$file->il_from." // ($key)\n";
@@ -115,7 +109,7 @@ foreach( $articlesToProcess as $failed ) {
 			$oArticle = new Article ( $oTitle );
 			if ( $oArticle instanceof Article ){
 				$sTextAfter = $sText = $oArticle->getContent();
-				echo "\n ={$count}/{$current}==== ART:" .$oTitle." =======\n";
+				echo "\n ======= ART:" .$oTitle." =======\n";
 
 				$sTextAfter = title_replacer( substr( $key, 1 ), substr( $val, 1), $sTextAfter  );
 
