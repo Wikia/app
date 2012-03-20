@@ -8,9 +8,14 @@ var ArticleComments = {
 	
 	init: function() {
 		if (ArticleComments.miniEditorEnabled) {
-			$('#article-comm').bind('focus', function(e) {
+			var newcomment = $('#article-comm'); 
+			newcomment.bind('focus', function(e) {
 				ArticleComments.editorInit(this);
 			});
+			
+			if(newcomment.is(":focus")) {
+				ArticleComments.editorInit(newcomment);
+			}	
 		}
 
 		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.actionProxy(ArticleComments.postComment));
