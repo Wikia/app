@@ -51,20 +51,25 @@
 
 				// Load the editor data in the proper mode
 				self.model.loadEditData(self.username, id, 'edit', format, function(data) {
-
-					// If edgecases were found, force source mode
-					if (typeof data.edgeCases != 'undefined') {
-						mode = 'source';
-					}
+					var hasEdgeCases = typeof data.edgeCases != 'undefined';
 
 					if (wikiaEditor) {
 						wikiaEditor.fire('editorActivated');
-						wikiaEditor.ck.setMode(mode);
-						wikiaEditor.ck.setData(data.htmlorwikitext);
+
+						// Force source mode if edge cases are found.
+						if (hasEdgeCases) {
+							wikiaEditor.ck.setMode('source');
+						}
+
+						wikiaEditor.setContent(data.htmlorwikitext);
 
 					} else {
 						body.miniEditor({
-							config: { mode: mode },
+							config: {
+
+								// Force source mode if edge cases are found.
+								mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
+							},
 							events: {
 								editorReady: function(event, wikiaEditor) {
 									wikiaEditor.setContent(data.htmlorwikitext);

@@ -487,47 +487,53 @@ var ArticleComments = {
 	},
 
 	// Used to initialize MiniEditor
-	editorInit: function(node, content, edgeCases) {
-		var element = $(node),
-			wikiaEditor = element.data('wikiaEditor'),
-			allActions = $('#article-comm-submit, .article-comm-buttons, .speech-bubble-message div.buttons');
-
-		// Force source mode if edge cases are found.
-		function getMode() {
-			return $.isArray(edgeCases) && edgeCases.length ? 'source' : MiniEditor.getStartupMode(element);
-		}
-
-		allActions.addClass('loading').attr('disabled', true);
+	editorInit: function(element, content, edgeCases) {
+		var $element = $(element),
+			wikiaEditor = $element.data('wikiaEditor'),
+			hasEdgeCases = $.isArray(edgeCases) && edgeCases.length;
 
 		// Already exists
 		if (wikiaEditor) {
 			wikiaEditor.fire('editorActivated');
 
-			if (content) {
-				wikiaEditor.ck.setMode(getMode());
-				wikiaEditor.ck.setData(content);
+			if (content !== undefined) {
+
+				// Force source mode if edge cases are found.
+				if (hasEdgeCases) {
+					wikiaEditor.ck.setMode('source');
+				}
+
+				wikiaEditor.setContent(content);
 			}
 
+		// Needs initializing
 		} else {
-			element.miniEditor({
+			var actionButtons = $('#WikiaArticleComments .actionButton').addClass('disabled').attr('disabled', true);
+
+			$element.miniEditor({
+				config: {
+
+					// Force source mode if edge cases are found
+					mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
+				},
 				events: {
 					editorReady: function(event, wikiaEditor) {
-						if (content) {
-							wikiaEditor.ck.setMode(getMode());
-							wikiaEditor.ck.setData(content);
+						if (content !== undefined) {
+							wikiaEditor.setContent(content);
 						}
 					},
 					editorActivated: function(event, wikiaEditor) {
-						allActions.removeClass('loading').removeAttr('disabled');
-						var articleComm = wikiaEditor.element.closest('.speech-bubble-message');
-						articleComm.find('.edited-by .buttons').hide();
+						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message');
+						actionButtons.removeClass('disabled').removeAttr('disabled');
 					},
 					editorDeactivated: function(event, wikiaEditor) {
-						allActions.removeClass('loading').removeAttr('disabled');
-						var articleComm = wikiaEditor.element.closest('.speech-bubble-message');
-						if (!wikiaEditor.getContent()) {
-							articleComm.find('.article-comm-edit-box').hide();
-							articleComm.find('.edited-by .buttons').show();
+						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message'),
+							editbox = speechBubble.find('.article-comm-edit-box');
+
+						// Reply
+						if (editbox.length) {
+							editbox.hide();
+							speechBubble.find('.buttons').show();
 						}
 					}
 				}

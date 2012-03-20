@@ -310,11 +310,10 @@ class ArticleComment {
 			if (defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) {
 				$props = BlogArticle::getProps($title->getArticleID());
 				$commentingAllowed = isset($props['commenting']) ? (bool)$props['commenting'] : true;
-
 			}
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
-				$replyButton = '<a href="#" class="article-comm-reply wikia-button secondary">' . wfMsg('article-comments-reply') . '</a>';
+				$replyButton = '<a href="#" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</a>';
 			}
 			if( defined('NS_QUESTION_TALK') && ( $this->mTitle->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
@@ -329,7 +328,7 @@ class ArticleComment {
 			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
-				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
+				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit actionButton" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
 			}
 
 			if ( !$this->mTitle->isNewPage(GAID_FOR_UPDATE) ) {

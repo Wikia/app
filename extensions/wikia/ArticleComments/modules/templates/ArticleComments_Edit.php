@@ -21,8 +21,8 @@
 				endif; ?>
 				<? if (!$isReadOnly) { ?>
 					<div class="buttons">
-						<input type="submit" name="wpArticleSubmit" id="article-comm-submit-<?=$articleId?>" value="<? echo wfMsg('article-comments-post') ?>" />
-						<input type="submit" name="wpArticleCancel" id="article-comm-edit-cancel-<?=$articleId?>" class="wikia-button secondary" value="<? echo wfMsg('article-comments-cancel') ?>" />
+						<input type="submit" class="actionButton" name="wpArticleSubmit" id="article-comm-submit-<?=$articleId?>" value="<? echo wfMsg('article-comments-post') ?>" />
+						<input type="submit" class="actionButton" name="wpArticleCancel" id="article-comm-edit-cancel-<?=$articleId?>" class="wikia-button secondary" value="<? echo wfMsg('article-comments-cancel') ?>" />
 						<img src="<?= $stylePath ?>/common/images/ajax.gif" class="throbber" />
 					</div>
 				<? } ?>
