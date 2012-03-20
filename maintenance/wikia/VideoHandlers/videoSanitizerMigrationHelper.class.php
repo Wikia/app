@@ -101,7 +101,6 @@ class videoSanitizerMigrationHelper {
 		$this->dbw_dataware->delete('video_sanitization_failededit',
 			array(
 				'city_id'			=> $this->city_id,
-				'city_name'			=> $this->city_name,
 				'article_id'		=> $articleId,
 				'article_title'		=> $articleTitleText,
 				'article_namespace'	=> $articleNamespace,
