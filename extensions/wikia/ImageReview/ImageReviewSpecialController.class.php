@@ -15,9 +15,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$action = $this->getPar();
 		$this->action = $action;
 		$this->response->setJsVar('wgImageReviewAction', $action);
-		$this->wg->Out->enableClientCache( false );
-		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
-		$this->response->sendHeaders();
 		
 		$accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
 
@@ -33,6 +30,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return true;
 		}
 
+		$this->wg->Out->enableClientCache( false );
+		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		$this->response->sendHeaders();
+		
 		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
 		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
 		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
