@@ -34,10 +34,6 @@ function render_fbconnect_button($size='medium') {
 return '<a href="#" onclick="FB.Connect.requireSession(); return false;" >
   <img id="fb_login_image" src="http://static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_medium_long.gif" alt="Connect"/>
 </a>';
-
-  return '<fb:login-button '.
-           'size="'.$size.'" background="light" length="long" '.
-           'onlogin="facebook_onlogin_ready();"></fb:login-button>';
 }
 
 /*
