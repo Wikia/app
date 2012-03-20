@@ -2249,6 +2249,11 @@ EOD;
 	}
 	
 	private function getYoutubeData() {
+		// do not connect from maintenance script
+		// this is TEMPORARY until video migration is finish, afterwards this can be removed
+		global $wgCommandLineMode;
+		if ( $wgCommandLineMode ) return;
+
 		// We are using a non-standard version of the API for 
 		// getting details for a single video. This is because this
 		// version returns a proper RSS feed. YouTube's recommended
