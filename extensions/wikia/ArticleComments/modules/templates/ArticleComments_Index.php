@@ -57,7 +57,7 @@ if ( $wg->EnableMiniEditorExtForArticleComments ) {
 			endif; ?>
 			<? if (!$isReadOnly) { ?>
 				<div class="buttons">
-					<input type="submit" class="actionButton" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button" value="<?= wfMsg('article-comments-post') ?>" />
+					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button actionButton" value="<?= wfMsg('article-comments-post') ?>" />
 					<img src="<?= $ajaxicon ?>" class="throbber" />
 				</div>
 			<? } ?>
