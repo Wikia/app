@@ -117,8 +117,8 @@ class MiniEditorController extends WikiaController {
 		// To load ONLY the vars we need and not all of them we will call the setup functions directly
 		VETSetupVars(&$vars);
 		WMUSetupVars(&$vars);
-
-		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+//TODO: fix the cache problem
+//		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		$this->response->setData($vars);
 	}	
 }
