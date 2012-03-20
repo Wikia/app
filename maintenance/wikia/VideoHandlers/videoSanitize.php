@@ -331,7 +331,7 @@ foreach ( $aTranslation as $key => $val ) {
 					} else {
 						// we are the child, process doEdit in child
 						//echo "child\n";
-						$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+						$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_FORCE_BOT, false, $botUser );
 						//echo "child end of fork\n";
 						exit();
 					}
@@ -389,7 +389,7 @@ while( $page = $dbw->fetchObject( $rows ) ) {
 
 			if ( $sTextAfter != $sText ) {
 				echo "ARTICLE WAS CHANGED! \n";
-				$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+				$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_FORCE_BOT, false, $botUser );
 				$i++;
 			}
 		} else {
