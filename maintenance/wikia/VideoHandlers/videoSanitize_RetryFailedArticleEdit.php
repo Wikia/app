@@ -93,10 +93,10 @@ $j = 0;
 foreach( $articlesToProcess as $failed ) {
 	$key = $failed->rename_from;
 	$val = $failed->rename_to;
-
-	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
+	$q = "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'";
+	echo "query:$q\n";
+	$rows = $dbw->query( $q );
 	while( $file = $dbw->fetchObject( $rows ) ) {
-		wfWaitForSlaves( 2 );
 		echo "FETCH FROM DB il_from= ".$file->il_from." // ($key)\n";
 		$articleId = $file->il_from;
 		$oTitle = Title::newFromId( $articleId );
@@ -160,7 +160,7 @@ foreach( $articlesToProcess as $failed ) {
 	}
 }
 
-echo "Reedit of articles - success:$i,failed:$j";
+echo "Reedit of articles - success:$i,failed:$j\n";
 videoLog( 'sanitize', 'REEDIT', "success:$i,failed:$j");
 
 videoLog( 'sanitize', 'STOP', "");

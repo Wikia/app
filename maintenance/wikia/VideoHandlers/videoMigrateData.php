@@ -86,7 +86,6 @@ if( $rowCount ) {
 			//echo "Aleardy migrated\n";
 			continue;
 		}
-		wfWaitForSlaves( 2 );
 
 		// check if we have premigration data
 		// (this shouldn't happen, because this script is supposed to be
@@ -187,7 +186,6 @@ $botUser = User::newFromName( 'WikiaBot' );
 $i=0;
 $rows = $dbw->query( 'select page_id FROM page WHERE page_namespace = 1100' );
 while( $page = $dbw->fetchObject($rows) ) {
-	wfWaitForSlaves( 2 );
 	$articleId = $page->page_id;
 	$oTitle = Title::newFromId( $articleId );
 	if ( $oTitle instanceof Title && $oTitle->exists() ){
@@ -217,6 +215,9 @@ videoLog( 'migration', 'STOP', "");
 foreach ( $failures as $failure ){
 	echo ( "$failure \n" );
 }
+
+wfWaitForSlaves( 2 );
+
 /*
  * wywala nam sie upload
  * check if new name will be available
