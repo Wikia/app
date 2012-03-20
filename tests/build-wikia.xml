@@ -24,7 +24,7 @@
     <property name="threadCount" value="1" />
     <property name="timeout" value="120000" />
 
-    <property name="noCloseAfterFail" value="1" />
+    <property name="noCloseAfterFail" value="0" />
 
     <target name="setup">
         <copy file="${basedir}/phpunit.xml.dist" tofile="${basedir}/phpunit.xml" />
