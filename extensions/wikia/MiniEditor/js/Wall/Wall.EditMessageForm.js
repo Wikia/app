@@ -27,6 +27,7 @@
 
 			msg.find('.timestamp').hide();
 			msg.find('.buttons').first().hide();
+			$('.follow', bubble).hide();
 			msg.find('.wikia-menu-button').removeClass('active');
 
 			// Animate to proper size
