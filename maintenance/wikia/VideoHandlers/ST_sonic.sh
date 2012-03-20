@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd /tmp
-php /usr/wikia/source/wiki/maintenance/wikia/getDatabase.php -f sonic
+php /usr/wikia/source/wiki/maintenance/wikia/getDatabase.php -f B -f sonic
 php /usr/wikia/source/wiki/maintenance/wikia/getDatabase.php -i sonic.sql.gz
 rm sonic.sql.gz
 
