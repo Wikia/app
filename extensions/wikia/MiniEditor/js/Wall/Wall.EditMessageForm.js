@@ -10,7 +10,6 @@
 				msg = $(e.target).closest('li.message'),
 				body = msg.find('.msg-body').first(),
 				wikiaEditor = body.data('wikiaEditor'),
-				mode = MiniEditor.getLoadConversionFormat(body),
 				id = msg.attr('data-id'),
 				bubble = msg.find('.speech-bubble-message').first(),
 				animation = msg.data('is-reply') ? {} : {
@@ -44,12 +43,14 @@
 
 			// Initialize the editor after assets are loaded
 			function initEditor() {
+				var mode = MiniEditor.getStartupMode(body),
+					format = WikiaEditor.modeToFormat(mode);
 
 				// show message title textarea
 				msg.find('.msg-title').first().html('<textarea class="title">' + msg.find('.msg-title a').html() + '</textarea>');
 
 				// Load the editor data in the proper mode
-				self.model.loadEditData(self.username, id, 'edit', mode, function(data) {
+				self.model.loadEditData(self.username, id, 'edit', format, function(data) {
 
 					// If edgecases were found, force source mode
 					if (typeof data.edgeCases != 'undefined') {

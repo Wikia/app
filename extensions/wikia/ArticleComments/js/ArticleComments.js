@@ -489,7 +489,7 @@ var ArticleComments = {
 
 		// Force source mode if edge cases are found.
 		function getMode() {
-			return $.isArray(edgeCases) && edgeCases.length ? 'source' : MiniEditor.getLoadConversionFormat(element);
+			return $.isArray(edgeCases) && edgeCases.length ? 'source' : MiniEditor.getStartupMode(element);
 		}
 
 		allActions.addClass('loading').attr('disabled', true);
