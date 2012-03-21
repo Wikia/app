@@ -743,7 +743,7 @@ AdDriverDelayedLoader.isRunning = function() {
 AdDriverDelayedLoader.finalize = function() {
 	if (window.wgEnableKruxTargeting) {
 		AdDriver.log('loading krux');
-		Krux.load();
+		Krux.load(window.wgKruxCategoryId);
 	}
 }
 //// END AdDriverDelayedLoader
@@ -757,13 +757,13 @@ if (window.wgEnableKruxTargeting) {
 		var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
 	};
 
-window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
-	(function(){
-		function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
-		var segs = store('segs'), key = 'ksgmnt='; Krux.dartKeyValues = segs ? key+segs.split(',').join(key) + ';u='+store('user')+';' : '';
-	})(); 
-}
+	window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
+		(function(){
+			function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
+			var segs = store('segs'), key = 'ksgmnt='; Krux.dartKeyValues = segs ? key+segs.split(',').join(key) + ';u='+store('user')+';' : '';
+		})(); 
+	}
 
 $(window).bind('load', function() {
-	AdDriverDelayedLoader.load(window.wgKruxCategoryId);
+	AdDriverDelayedLoader.load();
 });
