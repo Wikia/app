@@ -1,3 +1,4 @@
+console.log("PREVIEW TEST")
 (function(window, $, undefined) {
 
 	// Private helper function for element loading status indicators
