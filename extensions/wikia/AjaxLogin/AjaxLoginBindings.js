@@ -55,7 +55,7 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 
 	if ((typeof  AjaxLogin != 'undefined') && AjaxLogin.showComboFromDOM()) {
 		// show ajax login dialog if already in DOM
-		if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
+		if (isPlaceholder) { AjaxLogin.setPlaceHolder(element); }
 		WET.byStr('signupActions/signup/open');
 
 		// Show the tab that was configured to be shown first (defaults to login).
