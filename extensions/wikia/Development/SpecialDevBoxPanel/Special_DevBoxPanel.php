@@ -39,6 +39,7 @@ $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 $wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+$wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
 
 $wgExtensionFunctions[] = 'wfSetupDevBoxPanel';
 $wgExtensionCredits['specialpage'][] = array(
@@ -134,6 +135,20 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 	return true;
 } // end wfDevBoxForceWiki()
 
+/**
+ * Modify parser cache key to be different on each devbox (BugId:24647)
+ *
+ * @param string $hash part of parser cache key to be modified
+ * @param User $user current user instance
+ * @return boolean true
+ */
+function wfDevBoxSeparateParserCache(&$hash, User &$user) {
+	global $wgDevelEnvironmentName;
+
+	$hash .= "!dev-{$wgDevelEnvironmentName}";
+	return true;
+}
+
 
 /**
  * @return Parts of host. used to set $wgDevelEnvironmentName;
@@ -161,15 +176,15 @@ function getHostParts() {
 function getForcedWikiValue(){
 	global $wgDevelEnvironmentName;
 	$aHostParts = getHostParts();
-	
+
 	if(!empty($hostParts)) {
-		$wgDevelEnvironmentName = array_pop($hostParts);	
+		$wgDevelEnvironmentName = array_pop($hostParts);
 	} else {
 		$host = exec('hostname'); //TODO: replce it by gethostname php >= 5.3.0
 		$host = explode("-", $host);
 		$wgDevelEnvironmentName = trim($host[1]);
 	}
-		
+
 	if(empty($aHostParts)) {
 		return "";
 	}
