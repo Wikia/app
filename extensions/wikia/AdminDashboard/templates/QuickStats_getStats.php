@@ -1,5 +1,8 @@
 <section id="QuickStatsWidget" class="QuickStatsWidget">
 	<h1><?= wfMsg('quickstats-header-label') ?></h1>
+    <div id="GATooltip">
+        <?= wfMsgExt('quickstats-ga-broken-message', array('parseinline'), array('Help Page')); ?>
+    </div>
 	<table class="WikiaDataTable">
 		<thead class="AdminDashboardGeneralHeader">
 			<tr>

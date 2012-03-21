@@ -371,6 +371,10 @@ $color-admin-global-header-text: white;
 			&:first-child {
 				color: $color-alternate-text;	/* ng */
 			}
+            &:nth-child(2) {
+            	color: $color-alternate-text;	/* ng */
+                @include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 10%, $color-admin-header-highlight, 90%, $color-admin-header-shadow, 100%);
+            }
 		}
 		thead {
 			th {
@@ -390,12 +394,50 @@ $color-admin-global-header-text: white;
 						}
 					}
 				}
+	            &:nth-child(2) {
+	                @include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 10%, $color-admin-header-highlight, 90%, $color-admin-header-shadow, 100%);
+                    color: $color-alternate-text;	/* ng */
+                    border-color: transparent;
+                }
 			}
 		}
 		tbody {
 			tr {
-				border-top: 1px solid $color-admin-rail-border; /* ng */
+				td {
+                    border-top: 1px solid $color-admin-rail-border; /* ng */
+                    &:nth-child(2) {
+                        border-color: transparent;
+                    }
+				}
 			}
 		}
 	}
+    #GATooltip {
+        font-size: 13px;
+        line-spacing: 23px;
+        border: 1px solid $color-admin-rail-border;
+        padding: 9px;
+        margin: 0 0 5px 0;
+        position: relative;
+        &:before {
+            content: ' ';
+            position: absolute;
+            width: 0;
+            height: 0;
+            left: 108px;
+            top: 100%;
+            border: 10px solid transparent;
+            border-color: $color-admin-rail-border transparent transparent;
+        }
+        &:after {
+        	content: ' ';
+            position: absolute;
+            width: 0;
+            height: 0;
+            left: 109px;
+            top: 100%;
+            border: 9px solid transparent;
+            border-color: #fff transparent transparent transparent;
+        }
+    }
 }

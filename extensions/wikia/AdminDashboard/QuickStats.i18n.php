@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+    'quickstats-ga-broken-message' => "The views column is currently out of order.  We're working on bringing it back soon! [[$1|More info]]",
 );
 
 /** Message documentation (Message documentation) */
@@ -28,6 +29,7 @@ $messages['qqq'] = array(
 	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)',
 	'quickstats-number-shortening-millions' => 'This is a shortend number abbreviation shown in a stats table. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
+    'quickstats-ga-broken-message' => 'This is a message we display in Admin Dashboard above Quick Stats; It is temporary till we fix our Google Analytics issues',
 );
 
 /** толышә зывон (толышә зывон)
