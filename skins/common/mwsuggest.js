@@ -24,8 +24,8 @@ var os_mouse_moved = false;
 // delay between keypress and suggestion (in ms)
 var os_search_timeout = 250;
 // these pairs of inputs/forms will be autoloaded at startup
-var os_autoload_inputs = new Array('searchInput', 'searchInput2', 'powerSearchText', 'searchText');
-var os_autoload_forms = new Array('searchform', 'searchform2', 'powersearch', 'search' );
+var os_autoload_inputs = ['searchInput', 'searchInput2', 'powerSearchText', 'searchText'];
+var os_autoload_forms = ['searchform', 'searchform2', 'powersearch', 'search'];
 // if we stopped the service
 var os_is_stopped = false;
 // max lines to show in suggest table
@@ -99,10 +99,10 @@ function os_AnimationTimer( r, target ) {
 
 /** Initialization, call upon page onload */
 function os_MWSuggestInit() {
-	for( i = 0; i < os_autoload_inputs.length; i++ ) {
+	for( var i = 0; i < os_autoload_inputs.length; i++ ) {
 		var id = os_autoload_inputs[i];
 		var form = os_autoload_forms[i];
-		element = document.getElementById( id );
+		var element = document.getElementById( id );
 		if( element != null ) {
 			os_initHandlers( id, form, element );
 		}
@@ -255,7 +255,7 @@ function os_eventOnsubmit( e ) {
 		os_timer = null;
 	}
 	// Hide all suggestions
-	for( i = 0; i < os_autoload_inputs.length; i++ ) {
+	for( var i = 0; i < os_autoload_inputs.length; i++ ) {
 		var r = os_map[os_autoload_inputs[i]];
 		if( r != null ) {
 			var b = document.getElementById( r.searchform );
@@ -317,7 +317,7 @@ function os_updateResults( r, query, text, cacheKey ) {
 		os_hideResults( r );
 	} else {
 		try {
-			var p = eval( '(' + text + ')' ); // simple json parse, could do a safer one
+			var p = JSON.parse(text); // Wikia change (macbre)
 			if( p.length < 2 || p[1].length == 0 ) {
 				r.results = null;
 				r.resultCount = 0;
@@ -358,7 +358,7 @@ function os_setupDatalist( r, results ) {
 	r.results = new Array();
 	r.resultCount = results.length;
 	r.visible = true;
-	for ( i = 0; i < results.length; i++ ) {
+	for ( var i = 0; i < results.length; i++ ) {
 		var title = os_decodeValue( results[i] );
 		var opt = document.createElement( 'option' );
 		opt.value = title;
@@ -372,7 +372,7 @@ function os_setupDatalist( r, results ) {
 function os_getNamespaces( r ) {
 	var namespaces = '';
 	var elements = document.forms[r.searchform].elements;
-	for( i = 0; i < elements.length; i++ ) {
+	for( var i = 0; i < elements.length; i++ ) {
 		var name = elements[i].name;
 		if( typeof name != 'undefined' && name.length > 2 && name[0] == 'n' &&
 			name[1] == 's' && (
@@ -456,7 +456,7 @@ function os_fetchResults( r, query, timeout ) {
 	}
 	// schedule delayed fetching of results
 	if( timeout != 0 ) {
-		os_timer = new os_Timer( setTimeout( "os_delayedFetch()", timeout ), r, query );
+		os_timer = new os_Timer( setTimeout(os_delayedFetch, timeout ), r, query ); // Wikia change (macbre)
 	} else {
 		os_timer = new os_Timer( null, r, query );
 		os_delayedFetch(); // do it now!
