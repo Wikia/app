@@ -41,7 +41,7 @@ $wikiahubs-line-height: 16px;
 
 	#suggestArticle {
 		position:relative;
-		top:-3px;
+		top:-2px;
 	}
 	#suggestVideo {
 		position:relative;
@@ -81,6 +81,9 @@ $wikiahubs-line-height: 16px;
 				border-bottom: none;
 			}
 		}
+	}
+	.RelatedHubsVideos {
+		height: 170px;
 	}
 }
 
