@@ -382,17 +382,19 @@ public class BaseTest {
 		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
 		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
 	}
-	
+
 	protected void openAndWait(String url) throws Exception {
+		String curSpeed = session().getSpeed();
+		session().setSpeed("0");
 		session().getEval("window.wgNow = null;");
 		session().open(url);
 		session().waitForPageToLoad(this.getTimeout());
 		session().waitForCondition("typeof window != 'undefined' && window.wgNow != null", this.getTimeout());
-		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
-		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
+		session().getEval("window.$(function() {window.wikiaSeleniumUniqueKey = 'ready';})");
 		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
+		session().setSpeed(curSpeed);
 	}
-
+	
 	protected String md5(InputStream is) throws NoSuchAlgorithmException,
 			IOException {
 		String output;
