@@ -157,12 +157,20 @@ div.article-comm-input-text {
 	margin-left: 67px;
 }
 
-a.article-comm-reply {
+.article-comm-reply {
+	border: 0;
+	background-color: transparent;
+	color: #333;
+	cursor: pointer;
 	display: inline-block;
+	font-size: 12px;
 	margin-right: 10px;
-	padding: 0 20px;
+	text-decoration: none;
 }
 
+.article-comm-reply:hover {
+	text-decoration: underline;
+}
 
 .speech-bubble-message:hover .tools{
 	visibility: visible;
