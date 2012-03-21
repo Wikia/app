@@ -79,7 +79,7 @@ class WikiaHomePageController extends WikiaController {
 			$stats['visitors'] =  $this->getStatsFromArticle( 'StatsVisitors' );
 			$stats['edits'] = $this->getEdits();
 			$stats['communities'] = $this->getStatsFromArticle( 'StatsCommunities' );
-			$stats['totalPages'] = $this->getTotalPages();
+			$stats['totalPages'] = Wikia::get_content_pages();
 			
 			$this->wg->Memc->set( $memKey, $stats, 60*60*1 );
 		}
@@ -175,34 +175,6 @@ class WikiaHomePageController extends WikiaController {
 		$this->wf->ProfileOut( __METHOD__ );
 
 		return intval($stats);
-	}
-
-	/**
-	 * get total number of pages across Wikia
-	 * @return integer totalPages 
-	 */
-	protected function getTotalPages() {
-		$this->wf->ProfileIn( __METHOD__ );
-
-		$totalPages = 0;
-		if ( !empty( $this->wg->StatsDBEnabled ) ) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-
-			$row = $db->selectRow( 
-				array( 'wikia_monthly_stats' ), 
-				array( 'sum(articles) cnt' ),
-				array( "stats_date = date_format(curdate(),'%Y%m')" ),
-				__METHOD__
-			);
-
-			if ( $row ) {
-				$totalPages = $row->cnt;
-			}
-		}
-
-		$this->wf->ProfileOut( __METHOD__ );
-
-		return $totalPages;
 	}
 
 	/**
