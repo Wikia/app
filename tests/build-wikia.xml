@@ -23,6 +23,7 @@
     <property name="phpunitexcludegroups" value="deprecated" />
     <property name="threadCount" value="1" />
     <property name="timeout" value="120000" />
+    <property name="seleniumSpeed" value="1000" />
 
     <property name="noCloseAfterFail" value="0" />
 
@@ -121,6 +122,7 @@
             <sysproperty key="threadCount" value="${threadCount}" />
             <sysproperty key="timeout" value="${timeout}" />
             <sysproperty key="noCloseAfterFail" value="${noCloseAfterFail}" />
+            <sysproperty key="seleniumSpeed" value="${seleniumSpeed}" />
             <env key="TESTSCONFIG" value="${testsconfig}" />
         </testng>
     </target>
@@ -141,6 +143,7 @@
             <sysproperty key="threadCount" value="${threadCount}" />
             <sysproperty key="timeout" value="${timeout}" />
             <sysproperty key="noCloseAfterFail" value="${noCloseAfterFail}" />
+            <sysproperty key="seleniumSpeed" value="${seleniumSpeed}" />
             <env key="TESTSCONFIG" value="${testsconfig}" />
         </testng>
     </target>
@@ -174,6 +177,7 @@
             <sysproperty key="browser" value="${browser}" />
             <sysproperty key="timeout" value="${timeout}" />
             <sysproperty key="noCloseAfterFail" value="${noCloseAfterFail}" />
+            <sysproperty key="seleniumSpeed" value="${seleniumSpeed}" />
             <env key="TESTSCONFIG" value="${testsconfig}" />
         </testng>
         <junitreport todir="${build.logs}">
