@@ -18,23 +18,26 @@ class WikiaSpecialPageController extends WikiaController {
 		return $this->getVal( self::PAR );
 	}
 
-	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
+	public function __construct( $name = null, $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
+		if ($name == null) {
+			throw new WikiaException('First parameter of WikiaSpecialPage constructor must not be null');
+		}
 		$this->specialPage = F::build( 'SpecialPage', array( $name, $restriction, $listed, $function, $file, $includable ) );
+		parent::__construct();
 	}
 
 	public function execute( $par ) {
-		$this->app = F::app();
-		$out = $this->app->wg->Out;
-		$response = $this->sendRequest( get_class( $this ), null, array( 'par' => $par /* to be compatibile with MW core */ ) );
+	
+		$response = $this->sendRequest( get_class( $this ), null, array( self::PAR => $par /* to be compatibile with MW core */ ) );
 		$this->response = $response;
 
 		if( $response->getFormat() == WikiaResponse::FORMAT_HTML ) {
 			try {
-				$out->addHTML( $response->toString() );
+				$this->wg->Out->addHTML( $response->toString() );
 			} catch( Exception $exception ) {
 				// in case of exception thrown by WikiaView, just render standard error controller response
 				$response->setException( $exception );
-				$out->addHTML( $this->app->getView( 'WikiaError', 'error', array( 'response' => $response, 'devel' => $this->app->wg->DevelEnvironment ) )->render() );
+				$this->wg->Out->addHTML( $this->app->getView( 'WikiaError', 'error', array( 'response' => $response, 'devel' => $this->wg->DevelEnvironment ) )->render() );
 			}
 		}
 		else {
