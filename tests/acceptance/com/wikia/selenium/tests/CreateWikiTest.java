@@ -29,7 +29,7 @@ public class CreateWikiTest extends BaseTest {
 	
 	public void enforceWebsite(String website) throws Exception {
 		closeSeleniumSession();
-		startSession(this.seleniumHost, this.seleniumPort, this.browser, website, this.timeout, this.noCloseAfterFail, this.seleniumTimeout);
+		startSession(this.seleniumHost, this.seleniumPort, this.browser, website, this.timeout, this.noCloseAfterFail, this.seleniumSpeed);
 	}
 	
 	private static String getWikiName() {
