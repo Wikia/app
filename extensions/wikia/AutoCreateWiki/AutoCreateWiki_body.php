@@ -53,7 +53,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const SESSION_TIME      = 60;
 	const DAILY_LIMIT       = 1000;
 	const DAILY_USER_LIMIT  = 5; /** 2->5 vs rt#54707 **/
-	const DEFAULT_STAFF     = "Angela";
+	const DEFAULT_STAFF     = "Sannse";
 	const DEFAULT_USER      = 'Default';
 	const DEFAULT_DOMAIN    = "wikia.com";
 	const CACHE_LOGIN_KEY   = 'awc_beforelog';
