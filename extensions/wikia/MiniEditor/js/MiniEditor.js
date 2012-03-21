@@ -193,6 +193,11 @@
 				// Bind events to the element before we initialize
 				$element.bind(events);
 
+				// Set content
+				if (options.content !== undefined) {
+					$element.html(options.content);
+				}
+
 				// An editor instance is loading
 				loading($element);
 				this.editorIsLoading = true;
@@ -202,6 +207,9 @@
 					body: $element,
 					element: $wrapper.addClass(this.editorSuite),
 					minHeight: $element.data('min-height') || 200,
+
+					// Force source mode if edge cases were found (BugId:24375)
+					mode: $.isArray(options.edgeCases) && options.edgeCases.length ? 'source' : this.config.mode,
 					maxHeight: $element.data('max-height') || 400
 				}, options.config));
 

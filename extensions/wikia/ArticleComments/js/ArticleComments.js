@@ -8,14 +8,15 @@ var ArticleComments = {
 	
 	init: function() {
 		if (ArticleComments.miniEditorEnabled) {
-			var newcomment = $('#article-comm'); 
+			var newcomment = $('#article-comm');
+
 			newcomment.bind('focus', function(e) {
 				ArticleComments.editorInit(this);
 			});
-			
-			if(newcomment.is(":focus")) {
+
+			if (newcomment.is(':focus')) {
 				ArticleComments.editorInit(newcomment);
-			}	
+			}
 		}
 
 		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.actionProxy(ArticleComments.postComment));
@@ -52,9 +53,10 @@ var ArticleComments = {
 	actionProxy: function(callback) {
 		return function(e) {
 			e.preventDefault();
-			
+
 			// Prevent the action if MiniEditor is enabled and loading
 			if (ArticleComments.miniEditorEnabled && MiniEditor.editorIsLoading) {
+				ArticleComments.log('Event cancelled because editor is loading: ', e);
 				return true;
 			}
 
@@ -97,7 +99,7 @@ var ArticleComments = {
 
 			}, function(json) {
 				if (!json.error) {
-					var buttons = $(e.target).closest('.buttons').hide(),
+					var buttons = $(e.target).closest('.buttons'),
 						divFormSelector = '#article-comm-div-form-' + json.id,
 						textfieldSelector = '#article-comm-textfield-' + json.id,
 						commentTextDiv = $('#comm-text-' + json.id).hide(),
@@ -121,6 +123,7 @@ var ArticleComments = {
 					}
 
 					editDivForm.show();
+					buttons.hide();
 
 					$('#article-comm-submit-' + json.id).bind('click', {
 						id: json.id,
@@ -274,7 +277,22 @@ var ArticleComments = {
 
 			var textfield = $('#article-comm-reply-textfield-' + json.id);
 			if (ArticleComments.miniEditorEnabled) {
-				ArticleComments.editorInit(textfield);
+				ArticleComments.editorInit(textfield, {
+					editorActivated: function(event, wikiaEditor) {
+						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message'),
+							editbox = speechBubble.find('.article-comm-edit-box');
+
+						editbox.show();
+						speechBubble.find('.buttons').hide();
+					},
+					editorDeactivated: function(event, wikiaEditor) {
+						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message'),
+							editbox = speechBubble.find('.article-comm-edit-box');
+
+						editbox.hide();
+						speechBubble.find('.buttons').show();
+					}
+				});
 
 			} else {
 				textfield.focus();
@@ -487,10 +505,19 @@ var ArticleComments = {
 	},
 
 	// Used to initialize MiniEditor
-	editorInit: function(element, content, edgeCases) {
+	editorInit: function(element, events, content, edgeCases) {
 		var $element = $(element),
-			wikiaEditor = $element.data('wikiaEditor'),
-			hasEdgeCases = $.isArray(edgeCases) && edgeCases.length;
+			wikiaEditor = $element.data('wikiaEditor');
+
+		// Allow ommission of 'events' parameter
+		if (typeof events === 'string') {
+			edgeCases = content;
+			content = events;
+			events = {};
+		}
+
+		// Check for edge cases
+		var hasEdgeCases = $.isArray(edgeCases) && edgeCases.length;
 
 		// Already exists
 		if (wikiaEditor) {
@@ -524,28 +551,22 @@ var ArticleComments = {
 			}
 
 			function initEditor() {
-				$element.miniEditor({
-					config: {
-	
-						// Force source mode if edge cases are found
-						mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
-					},
-					events: {
-						editorActivated: function(event, wikiaEditor) {
-							var speechBubble = wikiaEditor.element.closest('.speech-bubble-message');
-							actionButtons.removeClass('disabled').removeAttr('disabled');
-						},
-						editorDeactivated: function(event, wikiaEditor) {
-							var speechBubble = wikiaEditor.element.closest('.speech-bubble-message'),
-								editbox = speechBubble.find('.article-comm-edit-box');
-	
-							// Reply
-							if (editbox.length) {
-								editbox.hide();
-								speechBubble.find('.buttons').show();
-							}
-						}
+				events = events || {};
+
+				// Wrap editorActivated with our own function
+				var editorActivated = events.editorActivated;
+				events.editorActivated = function(event, wikiaEditor) {
+					actionButtons.removeClass('disabled').removeAttr('disabled');
+
+					if ($.isFunction(editorActivated)) {
+						editorActivated.apply(this, arguments);
 					}
+				};
+
+				// Initialize the editor
+				$element.miniEditor({
+					config: { mode: hasEdgeCases ? 'source' : MiniEditor.config.mode },
+					events: events
 				});
 			}
 		}

@@ -313,7 +313,7 @@ class ArticleComment {
 			}
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
-				$replyButton = '<a href="#" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</a>';
+				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
 			}
 			if( defined('NS_QUESTION_TALK') && ( $this->mTitle->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
