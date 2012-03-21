@@ -460,7 +460,7 @@ var WikiaMobile = (function() {
 					wkPrf.insertAdjacentHTML('beforeend', result);
 					wkPrf.executeScripts();
 					$.getResources(
-						['/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
+						[$.getSassCommonURL('/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss'),
 						'/extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'],
 						function() {
 							loader.remove(wkPrf);
