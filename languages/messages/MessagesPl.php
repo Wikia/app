@@ -35,7 +35,7 @@
  */
 
 $bookstoreList = array(
-	'Google Ksi%C4%85%C5%BCki' => 'http://books.google.pl/books?as_isbn=$1',
+	'Google Ksi..ki' => 'http://books.google.pl/books?as_isbn=$1',
 	'Biblioteka Narodowa' => 'http://alpha.bn.org.pl/search*pol/i?SEARCH=$1',
 	'NUKAT' => 'http://www.nukat.edu.pl/cgi-bin/gw_2010_1_3_1/chameleon?&t2=&u1=1035&t1=$1&skin=reader&function=INITREQ&search=KEYWORD&rootsearch=KEYWORD',
 	'WorldCat' => 'http://worldcatlibraries.org/wcpa/isbn/$1'
