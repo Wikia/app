@@ -23,7 +23,7 @@ function get_regexp( $title, $replacement ) {
 	for ($k = 0; $k < $j; $k++) {
 		$char = mb_substr($title, $k, 1);
 		if(isset($refs[$char])) {
-			$regexp .= $refs[$char];
+			$regexp .= $refs[$char] . "{1,}";
 		} else {
 			if(ctype_alnum($char)) {
 				$regexp .= $char;
