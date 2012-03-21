@@ -16,6 +16,7 @@
 		},
 		
 		initEditor: function(element) {
+			var self = this;
 			if (!element.data('wikiaEditor')) {
 				element.unbind('.placeholder');
 			}
@@ -23,18 +24,18 @@
 			element.miniEditor({
 				events: {
 					editorReady: function(event, wikiaEditor) {
-						if (!MiniEditor.ckeditorEnabled) {
+						if(!MiniEditor.ckeditorEnabled) {
 							wikiaEditor.getEditbox()
 								.placeholder()
 								.triggerHandler('focus.placeholder');
-							self.WallMessageTitle
-								.keydown(function(e) {
-									if ( e.which == 9 ) {
-										e.preventDefault();
-										wikiaEditor.editorFocus();
-										return false;
-									}
-							 })
+						}
+						if($.browser.msie) {
+							self.WallMessageTitle.keydown(function(e) {
+								if( e.keyCode == 9 ) {
+									e.preventDefault();
+									wikiaEditor.editorFocus();
+								}
+							});
 						}
 					}
 				}
