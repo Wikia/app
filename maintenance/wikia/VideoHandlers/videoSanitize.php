@@ -5,7 +5,8 @@
  *  */
 
 
-function get_regexp( $title, $replacement ) {
+function get_regexp( $title, $replacement, &$wsc ) {
+	$wsc = 0;
 	$symbols = array(
 		array(' ','_','-','+','/'),
 	);
@@ -23,7 +24,8 @@ function get_regexp( $title, $replacement ) {
 	for ($k = 0; $k < $j; $k++) {
 		$char = mb_substr($title, $k, 1);
 		if(isset($refs[$char])) {
-			$regexp .= $refs[$char] . "{1,}";
+			$wsc++;
+			$regexp .= '('.$refs[$char] . "|%20){1,}";
 		} else {
 			if(ctype_alnum($char)) {
 				if ( $k == 0 ) {
@@ -32,37 +34,47 @@ function get_regexp( $title, $replacement ) {
 					$regexp .= $char;
 				}
 			} else {
-				$regexp .= '\\' . $char;
+				//$int = ord($char);
+				//echo "-------------- Escaping $char ($int)\n";
+				if( $char == '?') {
+					$regexp .= '(\\' . $char . '|%3f|%3F)';
+					$wsc++;
+				} else {
+					$regexp .= '\\' . $char;
+				}
 			}
 		}
 	}
-
+	echo "Full regexp: $regexp\n";
 	return $regexp;
 }
 
 function title_replacer( $title, $replacement, $fulltext  ) {
 
-	$regexp = get_regexp( $title, $replacement );
+	$wsc = 0;
+	$regexp = get_regexp( $title, $replacement, $wsc );
 	$regexp = '/(\\[\\[Video\\:)[ ]{0,}' . $regexp . '[ ]{0,}(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
-	$new = preg_replace( $regexp, '$1' . $replacement . '$4', $fulltext );
+	$new = preg_replace( $regexp, '$1' . $replacement . '$'.(4+$wsc), $fulltext );
 	if( $new === null ) return $fulltext;
 	return $new;	
 }
 
 function title_replacer_rv( $title, $replacement, $fulltext  ) {
 
-	$regexp = get_regexp( $title, $replacement );
+	$wsc = 0;
+	$regexp = get_regexp( $title, $replacement, $wsc );
 	$regexp = '/(\\*\\ (VM\\:|))' . $regexp . '(\\|)/';
-	$new = preg_replace( $regexp, '$1' . $replacement . '$3', $fulltext );
+	$new = preg_replace( $regexp, '$1' . $replacement . '$'.(3+$wsc), $fulltext );
 	if( $new === null ) return $fulltext;
 	return $new;
 }
 
 function title_replacer_vg( $title, $replacement, $fulltext  ) {
 
-	$regexp = get_regexp( $title, $replacement );
+	$wsc = 0;
+	$regexp = get_regexp( $title, $replacement, $wsc );
 	$regexp = "/^\\h*[vV][iI][dD][eE][oO]\\:" . $regexp . '(\\||\\h*$)/m';
-	$new = preg_replace( $regexp, "Video:" . $replacement . "$1", $fulltext );
+	$new = preg_replace( $regexp, "Video:" . $replacement . "$".(1+$wsc), $fulltext );
 	if( $new === null ) return $fulltext;
 	return $new;
 }
@@ -300,18 +312,19 @@ foreach ( $aTranslation as $key => $val ) {
 				$sTextAfter = title_replacer( substr( $key, 1 ), substr( $val, 1), $sTextAfter  );
 
 				if ( $sTextAfter != $sText ) {
-					$allChangesArticleURLs[ str_replace('localhost',$wgDBname.'.'.str_replace('dev-','', $devboxuser).'.wikia-dev.com',$oTitle->getFullURL()) ] = true;
 					echo "ARTICLE WAS CHANGED! \n";
+					$allChangesArticleURLs[ str_replace('localhost',$wgDBname.'.'.str_replace('dev-','', $devboxuser).'.wikia-dev.com',$oTitle->getFullURL()) ] = true;
 					$sanitizeHelper->logVideoTitle($key, $val, 'OK', $oTitle);
 					// isolating doEdit, because it's possible it will result in Fatal Error for some articles
 					// in case of misconfiguration (doEdit running from maintenance scripts instead of directly
 					// in context of browser web request is not used much so it's not very reliable)
 					$pid = pcntl_fork();
 					if ($pid == -1) {
+						echo "I think I'm gonna die\n";
 						die('Could not fork');
 					} else if ($pid) {
 						// we are the parent
-						//echo "parent\n";
+						echo "Parent waiting for edit to finish\n";
 						$status = null;
 						pcntl_wait($status); //Protect against Zombie children
 						$st = pcntl_wexitstatus($status);
@@ -324,6 +337,7 @@ foreach ( $aTranslation as $key => $val ) {
 					} else {
 						// we are the child, process doEdit in child
 						//echo "child\n";
+						echo "Preparing for edit\n";
 						$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_FORCE_BOT, false, $botUser );
 						//echo "child end of fork\n";
 						exit();
@@ -331,6 +345,7 @@ foreach ( $aTranslation as $key => $val ) {
 					//echo "outside of fork\n";
 
 				} else {
+					echo "ARTICLE NOT CHANGED! (status UNKNOWN) \n";
 					$sanitizeHelper->logVideoTitle($key, $val, 'UNKNOWN', $oTitle);
 				}
 			} else {
