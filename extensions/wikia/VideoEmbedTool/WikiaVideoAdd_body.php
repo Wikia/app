@@ -83,6 +83,10 @@ class WikiaVideoAddForm extends SpecialPage {
 
 		if ( ( '' != $this->mName ) && ( '' != $this->mUrl ) ) {
 			$this->mName = ucfirst($this->mName);
+
+			// sanitize all video titles
+			$this->mName = VideoFileUploader::sanitizeTitle( $this->mName );
+
 			$title = Title::makeTitleSafe( NS_VIDEO, $this->mName );
 			if ( $title instanceof Title ) {
 				$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
