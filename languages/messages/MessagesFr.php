@@ -62,7 +62,7 @@ $bookstoreList = array(
 	'Fnac' =>  'http://recherche.fnac.com/Search/SearchResult.aspx?SCat=2!1&Search=$1&sft=1',
 	'Amazon.fr' => 'http://www.amazon.fr/gp/search/ref=sr_adv_b/?field-isbn=$1',
 	'chaPitre.com' => 'http://www.chapitre.com/CHAPITRE/fr/search/Default.aspx?optSearch=BOOKS&reference=$1',
-	'PriceMinister' => 'http://www.priceminister.com/submit?action=submitadvert&productid=$1&stage=10',
+	'PriceMinister' => 'http://www.priceminister.com/s/$1',
 	'alapage.com' => 'http://search.alapage.com/search?bisbn=$1&a=15641648-0-0&adv=2'
 );
 
