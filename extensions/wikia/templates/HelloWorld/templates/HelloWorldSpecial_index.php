@@ -1,10 +1,10 @@
 <h1><?= $header ?></h1>
 <p>This is the <strong>HelloWorld_Hello</strong> Template!</p>
 <br>
-Wiki data:<br>
+Helper Controller data:<br>
 <ul>
-	<li><strong>Title:</strong> <?= $wikiData['title'] ?></li>
-	<li><strong>Url:</strong> <a href="<?= $wikiData['url'] ?>"><?= $wikiData['url'] ?></a></li>
+	<li><strong>Title:</strong> <?= $helperData['title'] ?></li>
+	<li><strong>Url:</strong> <a href="<?= $helperData['url'] ?>"><?= $helperData['url'] ?></a></li>
 </ul>
 
 <div id="HelloWorldAjax" class="HelloWorldAjax">
