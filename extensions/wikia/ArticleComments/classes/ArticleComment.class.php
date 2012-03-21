@@ -887,7 +887,7 @@ class ArticleComment {
 				!empty($article_id)) {
 
 				$comment = ArticleComment::newFromId( $article_id );
-				if ( !is_null($comment) ) {
+				if ( $comment instanceof ArticleComment ) {
 					$oArticlePage = $comment->getArticleTitle();
 					$mAttribs = $oRC->mAttribs;
 					$mAttribs['rc_title'] = $oArticlePage->getDBkey();
