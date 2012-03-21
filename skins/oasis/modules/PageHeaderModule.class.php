@@ -50,14 +50,13 @@ class PageHeaderModule extends Module {
 	private function prepareActionButton() {
 		global $wgTitle, $wgRequest;
 
-		$namespace = $wgTitle->getNamespace();
 		$isDiff = !is_null($wgRequest->getVal('diff'));
 
 		// "Add topic" action
-		if (isset($this->content_actions['addsection'])) {
-			// remove on Forum namespace pages / diff pages (RT #72666)
-			if ($namespace == NS_FORUM || $isDiff) {
-				unset($this->content_actions['addsection']);
+		if ( isset( $this->content_actions['addsection'] ) ) {
+			// remove on diff pages (RT #72666)
+			if ( $isDiff ) {
+				unset ($this->content_actions['addsection'] );
 			}
 		}
 
