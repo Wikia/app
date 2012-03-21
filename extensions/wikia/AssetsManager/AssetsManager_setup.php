@@ -24,6 +24,8 @@ $wgAutoloadClasses['AssetsManagerGroupsBuilder'] = $dir.'builders/AssetsManagerG
 $wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerServer'] = $dir.'AssetsManagerServer.class.php';
 
+$wgAutoloadClasses['AssetsManagerController'] = $dir.'AssetsManagerController.class.php';
+
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
 $wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
@@ -41,5 +43,3 @@ function AssetsManagerEntryPoint() {
 	AssetsManagerServer::serve($wgRequest);
 	exit();
 }
-
-
