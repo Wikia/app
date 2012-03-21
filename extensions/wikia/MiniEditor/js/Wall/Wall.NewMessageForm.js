@@ -29,7 +29,7 @@
 								.placeholder()
 								.triggerHandler('focus.placeholder');
 						}
-						if($.browser.msie) {
+						if(!$.browser.webkit) {
 							self.WallMessageTitle.keydown(function(e) {
 								if( e.keyCode == 9 ) {
 									e.preventDefault();
