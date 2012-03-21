@@ -1,9 +1,47 @@
 (function($){
 	//TODO: split this library in different files: zepto.resources.js, zepto.loader.js, etc.
 	//then use AssetsManager config to group them together
-	$.getSassCommonURL = function( scssFilePath, params ) {
-		return wgCdnRootUrl + wgAssetsManagerQuery.replace('%1$s', 'sass').replace('%4$d', wgStyleVersion).replace('%3$s', escape($.param(params ? params : sassParams))).replace('%2$s', scssFilePath);
-	};
+
+	/** @private **/
+
+	var processedSassUrls = {},
+		isProcessedSassUrl = new RegExp(getAssetsManagerQuery('.*', 'sass', '###').replace(encodeURIComponent($.param('###')), '.*').replace(/\//g, '\\/')),
+		isJs = /\.js(\?(.*))?$/,
+		isCss = /\.css(\?(.*))?$/,
+		isSass = /\.scss/;
+
+	function getAssetsManagerQuery(path, type, params){
+		return window.wgAssetsManagerQuery.
+			replace('%1$s', type).
+			replace('%2$s', path).
+			replace('%3$s', encodeURIComponent($.param(params || window.sassParams))).
+			replace('%4$d', window.wgStyleVersion);
+	}
+
+	/* @public */
+
+	$.getSassURL = function(rootURL, scssFilePath, params) {
+
+		var url = processedSassUrls[scssFilePath];
+
+		if(!url){
+			//a regex check is faster than a useless function call, inform the caller he's doing it wrong ;)
+			if(isProcessedSassUrl.test(scssFilePath))
+				throw 'the specified path is already a valid SASS URL';
+
+			url = processedSassUrls[scssFilePath] = rootURL + getAssetsManagerQuery(scssFilePath, 'sass', params);
+		}
+
+		return url;
+	}
+
+	$.getSassCommonURL = function(scssFilePath, params) {
+		return $.getSassURL(wgCdnRootUrl, scssFilePath, params);
+	}
+
+	$.getSassLocalURL = function(scssFilePath, params) {
+		return $.getSassURL(wgServer, scssFilePath, params);
+	}
 
 	$.getScript = function( resource, onComplete ) {
 		var scriptElement = document.createElement( 'script' );
@@ -13,12 +51,11 @@
 	};
 
 	$.getResources = function( resources, callback ) {
-		var isJs = /\.js(\?(.*))?$/,
-			isCss = /\.css(\?(.*))?$/,
-			isSass = /\.scss/,
-			remaining = length = resources.length;
+		var length = resources.length,
+			remaining = length,
+			resource;
 
-		var onComplete = function(){
+		function onComplete(){
 			remaining--;
 
 			// all files have been downloaded
@@ -28,15 +65,14 @@
 
 		// download files
 		for ( var n = 0; n < length; n++ ) {
-			var resource = resources[n];
+			resource = resources[n];
+
 			if(typeof resource == 'function'){
 				resource.call($, onComplete);
 			}else if(isJs.test(resource)){
 				$.getScript(resource, onComplete);
-			}else if(isCss.test(resource)){
+			}else if(isCss.test(resource) || isSass.test(resource)){
 				$.getCSS(resource, onComplete);
-			}else if(isSass.test(resource)){
-				$.getCSS($.getSassCommonURL(resource), onComplete);
 			}else{
 				throw 'unknown resource format';
 			}
