@@ -32,6 +32,11 @@ class EditPageService extends Service {
 		// parse wikitext using MW parser
 		$html = $wgParser->parse($wikitext, $this->mTitle, $parserOptions)->getText();
 
+		// we should also render categories
+		$parserOutput = $wgParser->getOutput();
+		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
+		$html = $html . $catbox;
+
 		wfProfileOut(__METHOD__);
 		return $html;
 	}
@@ -67,5 +72,24 @@ class EditPageService extends Service {
 
 		wfProfileOut(__METHOD__);
 		return $diff;
+	}
+
+	protected function renderCategoryBoxFromParserOutput($parserOutput) {
+		global $wgOut, $wgUser;
+
+		wfProfileIn(__METHOD__);
+
+		$wgOut->addParserOutput($parserOutput);
+		$skin = $wgUser->getSkin();
+		$categories = $wgOut->getCategories();
+
+		$catbox = null;
+		if(!empty($categories ) && ($skin instanceof SkinOasis)) {
+			$catlinks = $skin->getCategoryLinks();
+			$catbox = F::app()->sendRequest('ArticleCategoriesModule','Index',array('catlinks' => $catlinks))->toString();
+		}
+
+		wfProfileOut(__METHOD__);
+		return $catbox;
 	}
 }

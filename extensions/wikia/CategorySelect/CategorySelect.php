@@ -128,9 +128,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
 		$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
 		$wgHooks['EditPageGetDiffText'][] = 'CategorySelectDiffArticle';
-		$wgHooks['EditPageBeforeDiffText'][] = 'CategorySelectBeforeDiffArticle';
 		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
-
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
 
 		/**
@@ -434,17 +432,6 @@ function CategorySelectDiffArticle($editPage, $newtext) {
 	if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {
 		$newtext .= $wgCategorySelectCategoriesInWikitext;
 	}
-	return true;
-}
-
-/**
- * Removes categories from article for DiffEngine fogBugz:5412
- *
- * @author Andrzej 'nAndy' Łukaszewski
- */
-function CategorySelectBeforeDiffArticle($editPage, $newtext, $oldtext, $newtitle, $oldtitle) {
-	CategorySelectReplaceContent($editPage, $oldtext);
-
 	return true;
 }
 
