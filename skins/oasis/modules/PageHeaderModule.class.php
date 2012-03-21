@@ -56,7 +56,7 @@ class PageHeaderModule extends Module {
 		if ( isset( $this->content_actions['addsection'] ) ) {
 			// remove on diff pages (RT #72666)
 			if ( $isDiff ) {
-				unset ($this->content_actions['addsection'] );
+				unset( $this->content_actions['addsection'] );
 			}
 		}
 
@@ -452,7 +452,7 @@ class PageHeaderModule extends Module {
 			$pipe = wfMsg('pipe-separator');
 			$this->pageSubtitle = implode(" {$pipe} ", $subtitle);
 		}
-		
+
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty($this->wgDisableAnonymousEditing) ? ' require-login' : '';
 
@@ -568,7 +568,7 @@ class PageHeaderModule extends Module {
 			// comments
 			$this->comments = $service->getCommentsCount();
 		}
-		
+
 		/** start of wikia changes @author nAndy */
 		wfRunHooks('PageHeaderEditPage', array(&$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory));
 		/** end of wikia changes */
@@ -617,9 +617,9 @@ class PageHeaderModule extends Module {
 		if ($ns == NS_FORUM) {
 			$this->title = $wgTitle->getText();
 			$this->displaytitle = false;
-                // we don't want htmlspecialchars for SpecialPages (BugId:6012)
-                } else if ($ns == NS_SPECIAL) {
-                    $this->displaytitle = true;
+		// we don't want htmlspecialchars for SpecialPages (BugId:6012)
+		} else if ($ns == NS_SPECIAL) {
+			$this->displaytitle = true;
 		} else if ($ns != NS_SPECIAL) {
 			$this->displaytitle = true;
 			$this->title = $wgOut->getPageTitle();
