@@ -44,7 +44,9 @@ public class BaseTest {
 	protected String webSite;
 	protected String timeout;
 	protected String noCloseAfterFail;
+	protected String seleniumSpeed;
 	private XMLConfiguration testConfig;
+	
 
 	/**
 	 * Thread local Selenium driver instance so that we can run in multi-threaded mode.
@@ -90,18 +92,19 @@ public class BaseTest {
 	}
 
 	@BeforeMethod(alwaysRun = true)
-	@Parameters( { "seleniumHost", "seleniumPort", "browser", "webSite", "timeout", "noCloseAfterFail" })
+	@Parameters( { "seleniumHost", "seleniumPort", "browser", "webSite", "timeout", "noCloseAfterFail", "seleniumSpeed" })
 	protected void startSession(String seleniumHost, int seleniumPort,
-			String browser, String webSite, String timeout, String noCloseAfterFail) throws Exception {
+			String browser, String webSite, String timeout, String noCloseAfterFail, String seleniumSpeed) throws Exception {
 		this.seleniumHost = seleniumHost;
 		this.seleniumPort = seleniumPort;
 		this.browser = browser;
 		this.webSite = webSite;
 		this.noCloseAfterFail = noCloseAfterFail;
+		this.seleniumSpeed = seleniumSpeed;
 		this.setTimeout(timeout);
 		startSeleniumSession(seleniumHost, seleniumPort, browser, webSite);
 		session().setTimeout(timeout);
-		session().setSpeed("1000");
+		session().setSpeed(this.seleniumSpeed);
 		session().open("/");
 
 	}
@@ -379,7 +382,7 @@ public class BaseTest {
 		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
 		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
 	}
-
+	
 	protected void openAndWait(String url) throws Exception {
 		session().getEval("window.wgNow = null;");
 		session().open(url);
