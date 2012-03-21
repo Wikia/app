@@ -672,6 +672,7 @@ function WMU_recentlyUploaded(param, pagination) {
 }
 
 function WMU_changeSource(e) {
+	e.preventDefault();
 	var el = YAHOO.util.Event.getTarget(e);
 	if(el.nodeName == 'A') {
 		var sourceId = el.id.substring(11);
