@@ -319,7 +319,6 @@ global $wgAjaxExportList;
 global $wgAPIPropModules;
 $wgAPIPropModules[ "info"         ] = "WikiaApiQueryPageinfo";
 $wgAPIPropModules[ "wkevinfo"     ] = "WikiaApiQueryEventsData";
-$wgAPIPropModules[ "wkevents"     ] = "WikiaApiQueryScribeEvents";
 $wgAPIPropModules[ "wklasteditors"] = "WikiaApiQueryLastEditors";
 
 /*
