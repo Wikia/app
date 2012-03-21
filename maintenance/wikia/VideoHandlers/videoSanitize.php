@@ -26,7 +26,11 @@ function get_regexp( $title, $replacement ) {
 			$regexp .= $refs[$char] . "{1,}";
 		} else {
 			if(ctype_alnum($char)) {
-				$regexp .= $char;
+				if ( $k == 0 ) {
+					$regexp .= '['.strtolower($char).strtoupper($char).']';
+				} else {
+					$regexp .= $char;
+				}
 			} else {
 				$regexp .= '\\' . $char;
 			}
