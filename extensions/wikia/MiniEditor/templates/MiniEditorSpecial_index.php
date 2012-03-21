@@ -41,7 +41,7 @@
 	<textarea class="body" placeholder="<?= wfMsg( 'minieditor-placeholder-reply' ) ?>"></textarea>
 	<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); ?>
 	<div class="buttons" data-space-type="buttons">
-		<button type="button">Reply</button>
+		<button type="button"><?= wfMsg('minieditor-reply') ?></button>
 	</div>
 	<?= $app->getView( 'MiniEditorController', 'Footer' )->render(); ?>
 </section>
