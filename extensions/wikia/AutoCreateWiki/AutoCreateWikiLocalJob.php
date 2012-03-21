@@ -190,7 +190,7 @@ class AutoCreateWikiLocalJob extends Job {
 			 * set apropriate staff member
 			 */
 			$wgUser = Wikia::staffForLang( $this->wikiaLang );
-			$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
+			$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Sannse" );
 
 			$talkParams = array(
 				$this->mFounder->getName(),
@@ -399,7 +399,7 @@ class AutoCreateWikiLocalJob extends Job {
 		 * set apropriate staff member
 		 */
 		$oStaffUser = Wikia::staffForLang( $this->mParams[ "language" ] );
-		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : User::newFromName( "Angela" );
+		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : User::newFromName( "Sannse" );
 
 		$sFrom = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
 		$sTo = $oReceiver->getEmail();
