@@ -542,15 +542,7 @@ var ArticleComments = {
 				$element.val(content);
 			}
 
-			// Load assets first so we have the proper config.mode (BugId:25182)
-			if (!MiniEditor.assetsLoaded) {
-				MiniEditor.loadAssets(initEditor);
-
-			} else {
-				initEditor();
-			}
-
-			function initEditor() {
+			var initEditor = function() {
 				events = events || {};
 
 				// Wrap editorActivated with our own function
@@ -568,6 +560,14 @@ var ArticleComments = {
 					config: { mode: hasEdgeCases ? 'source' : MiniEditor.config.mode },
 					events: events
 				});
+			}
+			
+			// Load assets first so we have the proper config.mode (BugId:25182)
+			if (!MiniEditor.assetsLoaded) {
+				MiniEditor.loadAssets(initEditor);
+
+			} else {
+				initEditor();
 			}
 		}
 	},
