@@ -78,7 +78,7 @@ class JSMessages {
 	 * Returns a package as a JS tag
 	 *
 	 * @param array $packages - list packages names
-	 * 
+	 *
 	 * @return string A string containing the package as an inline-able tag to use in templates
 	 */
 	public function printPackages( Array $packages ) {
@@ -101,7 +101,9 @@ class JSMessages {
 	 * @return array - key/value list of matching messages
 	 */
 	private function resolveMessagesPattern($pattern) {
-		$this->app->wf->ProfileIn(__METHOD__ . "::$pattern");
+		$fname = __METHOD__ . "::$pattern";
+		$this->app->wf->ProfileIn($fname);
+
 		$this->log(__METHOD__, $pattern);
 
 		$pattern = substr($pattern, 0, -1);
@@ -128,7 +130,7 @@ class JSMessages {
 			}
 		}
 
-		$this->app->wf->ProfileOut(__METHOD__ . "::$pattern");
+		$this->app->wf->ProfileOut($fname);
 		return $ret;
 	}
 
@@ -199,7 +201,7 @@ class JSMessages {
 	}
 
 	/**
-	 * Emit messages from the queue as 
+	 * Emit messages from the queue as
 	 *   - JS object in <head> section of the page
 	 *   - JS requested via <script> tag at the bottom of the page
 	 */
@@ -218,7 +220,7 @@ class JSMessages {
 		$vars['wgJSMessagesCB'] = $this->helper->getMessagesCacheBuster();
 
 		$this->log(__METHOD__, 'preparing list of external packages...');
-		
+
 		$url = $this->getExternalPackagesUrl();
 		if ($url != "") {
 			// request a script
