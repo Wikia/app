@@ -6,6 +6,12 @@ import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertEquals;
 
+/*
+ * testEditing
+ * testEditorLoading
+ * 
+ */
+
 public class MiniEditorTest extends MiniEditorBaseTest {
 	private static final String existingMessage = "<span style=\"font-weight: bold;\">This is an existing message</span>";
 	
@@ -35,7 +41,7 @@ public class MiniEditorTest extends MiniEditorBaseTest {
 		waitForElementVisible("//div[@id='Edit']/div[@class='toolbar']");
 		// wait for editor to load
 		if (minieditor) {
-			assertTrue(session().isElementPresent("//div[@id='Edit']/div[@class='editarea']/div[@class='cke_skin_wikia']"));
+			assertTrue(session().isElementPresent("//div[@id='Edit']/div[@class='editarea']/div[contains(@class,'cke_skin_wikia')]"));
 		} else {
 			assertTrue(session().isVisible("//div[@id='Edit']/div[@class='editarea']/textarea"));
 		}
