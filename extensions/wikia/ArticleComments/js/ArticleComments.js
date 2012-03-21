@@ -542,7 +542,7 @@ var ArticleComments = {
 				$element.val(content);
 			}
 
-			var initEditor = function() {
+			function initEditor() {
 				events = events || {};
 
 				// Wrap editorActivated with our own function
