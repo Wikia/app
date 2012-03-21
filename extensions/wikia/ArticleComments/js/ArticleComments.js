@@ -515,29 +515,39 @@ var ArticleComments = {
 				$element.val(content);
 			}
 
-			$element.miniEditor({
-				config: {
+			// Load assets first so we have the proper config.mode (BugId:25182)
+			if (!MiniEditor.assetsLoaded) {
+				MiniEditor.loadAssets(initEditor);
 
-					// Force source mode if edge cases are found
-					mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
-				},
-				events: {
-					editorActivated: function(event, wikiaEditor) {
-						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message');
-						actionButtons.removeClass('disabled').removeAttr('disabled');
+			} else {
+				initEditor();
+			}
+
+			function initEditor() {
+				$element.miniEditor({
+					config: {
+	
+						// Force source mode if edge cases are found
+						mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
 					},
-					editorDeactivated: function(event, wikiaEditor) {
-						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message'),
-							editbox = speechBubble.find('.article-comm-edit-box');
-
-						// Reply
-						if (editbox.length) {
-							editbox.hide();
-							speechBubble.find('.buttons').show();
+					events: {
+						editorActivated: function(event, wikiaEditor) {
+							var speechBubble = wikiaEditor.element.closest('.speech-bubble-message');
+							actionButtons.removeClass('disabled').removeAttr('disabled');
+						},
+						editorDeactivated: function(event, wikiaEditor) {
+							var speechBubble = wikiaEditor.element.closest('.speech-bubble-message'),
+								editbox = speechBubble.find('.article-comm-edit-box');
+	
+							// Reply
+							if (editbox.length) {
+								editbox.hide();
+								speechBubble.find('.buttons').show();
+							}
 						}
 					}
-				}
-			});
+				});
+			}
 		}
 	},
 
