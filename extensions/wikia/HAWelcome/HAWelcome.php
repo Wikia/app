@@ -386,21 +386,6 @@ class HAWelcomeJob extends Job {
 						);
 						Wikia::log( __METHOD__, "query", $dbr->lastQuery() );
 
-						// if we have no active admins, fetch most recently active staff member
-						if ( empty( $user ) ) {
-							$staff = self::getStaffAccounts();
-
-							$user = $dbr->selectField(
-								"revision",
-								"rev_user",
-								array(
-									$dbr->makeList( $staff, LIST_OR )
-								),
-								__METHOD__,
-								array( "ORDER BY" => "rev_timestamp DESC", "DISTINCT" )
-							);
-						}
-
 						// if there are no active staff members, fall back to default staffers per language
 						if ( empty( $user ) ) {
 							$staffUser = Wikia::staffForLang( $wgLanguageCode );
