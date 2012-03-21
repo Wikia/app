@@ -870,6 +870,13 @@ abstract class BaseFacebook
     } else {
       $opts[CURLOPT_HTTPHEADER] = array('Expect:');
     }
+    
+  	// adding Wikias proxy settings
+	if ( $GLOBALS["wgHTTPProxy"] ) {
+		$opts[CURLOPT_PROXY] = $GLOBALS["wgHTTPProxy"]; ;
+	} elseif ( getenv( "http_proxy" ) ) {
+		$opts[CURLOPT_PROXY] = getenv( "http_proxy" );
+	}
 
     curl_setopt_array($ch, $opts);
     $result = curl_exec($ch);

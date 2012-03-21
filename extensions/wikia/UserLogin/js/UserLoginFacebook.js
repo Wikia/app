@@ -30,9 +30,8 @@ var UserLoginFacebook = {
 			ev.preventDefault();
 
 			this.log('FBConnect clicked');
-
 			// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
-			FB.login($.proxy(this.loginCallback, this), {scope:'email'});
+			FB.login($.proxy(this.loginCallback, this), {scope:'publish_stream,email'});
 		}, this));
 	},
 

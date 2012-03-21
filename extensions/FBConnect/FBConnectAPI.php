@@ -102,7 +102,7 @@ class FBConnectAPI {
 	}
 	
 	/**
-	 * Calls users.getInfo. Requests information about the user from Facebook.
+	 * Calls users.getInfo. Requests information about the user from 	.
 	 */
 	public function getUserInfo( $user = 0, $fields = null ) {
 		if ($user == 0) {
@@ -264,24 +264,20 @@ class FBConnectAPI {
 	 * Publish message on facebook wall 
 	 */	
 	public function publishStream($href, $description, $short, $link, $img) {
+		$fb = $this->Facebook();
+
 		$attachment = array(
-		      'name' => $link,
-		      'href' => $href,
-		      'description' => $description,
-		      'media' => array(array('type' => 'image',
-		                             'src' => $img,
-		                             'href' => $href)));
-		$attachment = json_encode($attachment);
-		
-		try {		
-			$this->Facebook()->api_client->stream_publish($short, $attachment, null);
-		} catch ( FacebookRestClientException $e ) {			
-			if( $e->getCode() != 506 ){ 
-				//unknow error http://forum.developers.facebook.com/viewtopic.php?pid=230061
-				return $e->getCode();
-			}
-		}
-		
+				'name' => $link,
+				'access_token' => $fb->getAccessToken(),
+                'message' => $short,
+				'description' => $description,
+                'icon'=> $img,
+                'link'=> $href
+        );
+        
+
+		$UserId = $this->user();
+		$fb->api("/$UserId/feed", 'POST', $attachment);
 		return 0;
 	}
 	
