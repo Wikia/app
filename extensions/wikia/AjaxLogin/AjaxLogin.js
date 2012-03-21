@@ -269,13 +269,16 @@ var AjaxLogin = {
 				AjaxLogin.blockLoginForm(false);
 				$('#wpPassword1n').attr('value', '');
 				$('#wpName1').attr('value', '').focus();
+				// continue on...
 
 			case 'WrongPass':
 				AjaxLogin.blockLoginForm(false);
 				$('#wpPassword1').attr('value', '').focus();
+				// continue on...
 
 			case 'Throttled':
 				AjaxLogin.blockLoginForm(false);
+				// continue on...
 
 			default:
 				// Bartek: tracking
@@ -390,7 +393,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 							find('a[href="#"]').
 							click(function(ev) {
 								ev.preventDefault();
-								AjaxLogin.showLogin()
+								AjaxLogin.showLogin();
 							});
 					}
 				},
@@ -400,7 +403,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#wpGoRegister').removeClass('selected');
 					$('#AjaxLoginRegisterForm').hide();
 					$('#AjaxLoginLoginForm').show();
-					if ($('#wpName2Ajax').length > 0) $('#wpName2Ajax').focus();
+					if ($('#wpName2Ajax').length > 0) { $('#wpName2Ajax').focus(); }
 
 					WET.byStr(AjaxLogin.WET_str + '/chooselogin');
 				},

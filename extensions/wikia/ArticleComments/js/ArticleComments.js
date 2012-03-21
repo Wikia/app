@@ -29,8 +29,8 @@ var ArticleComments = {
 		$('#article-comments-pagination').find('div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
 		/*$('#article-comments').delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
 		$('#article-comments').delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});*/
-		$('#article-comm-fbMonit').mouseenter(function() {$('#fbCommentMessage').fadeIn( 'slow' )});
-		$('#article-comm-fbMonit').mouseleave(function() {$('#fbCommentMessage').fadeOut( 'slow' )});
+		$('#article-comm-fbMonit').mouseenter(function() {$('#fbCommentMessage').fadeIn( 'slow' );});
+		$('#article-comm-fbMonit').mouseleave(function() {$('#fbCommentMessage').fadeOut( 'slow' );});
 
 		ArticleComments.addHover();
 		ArticleComments.showEditLink();
@@ -61,7 +61,7 @@ var ArticleComments = {
 			}
 
 			callback.apply(this, arguments);
-		} 
+		};
 	},
 
 	showEditLink: function() {
@@ -75,7 +75,7 @@ var ArticleComments = {
 		ArticleComments.log('begin: edit');
 		e.preventDefault();
 		ArticleComments.track('edit');
-		if (ArticleComments.processing) return;
+		if (ArticleComments.processing) { return; }
 
 		// If MiniEditor is enabled, we need to determine the correct content format before making the request
 		if (ArticleComments.miniEditorEnabled && !MiniEditor.assetsLoaded) {
@@ -166,7 +166,7 @@ var ArticleComments = {
 		ArticleComments.log('begin: saveEdit');
 		e.preventDefault();
 		ArticleComments.track('editSave');
-		if (ArticleComments.processing) return;
+		if (ArticleComments.processing) { return; }
 
 		var commentId = e.data.id,
 			commentFormDiv = $('#article-comm-form-' + commentId);
@@ -235,7 +235,7 @@ var ArticleComments = {
 		ArticleComments.log('begin: reply');
 		e.preventDefault();
 		ArticleComments.track('reply');
-		if (ArticleComments.processing) return;
+		if (ArticleComments.processing) { return; }
 
 		$.getJSON(wgScript, {
 			action: 'ajax',
