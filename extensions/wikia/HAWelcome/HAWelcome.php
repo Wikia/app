@@ -386,7 +386,10 @@ class HAWelcomeJob extends Job {
 						);
 						Wikia::log( __METHOD__, "query", $dbr->lastQuery() );
 
-						// if there are no active staff members, fall back to default staffers per language
+						/** if there are no active wiki admins, fall back to default staffers per language
+						* Note: We used to first go to any active staff member first and then go to this method if still empty
+						* However, that was removed in revision 50184 per FB:25277
+						*/
 						if ( empty( $user ) ) {
 							$staffUser = Wikia::staffForLang( $wgLanguageCode );
 							if ($staffUser instanceof User) {
