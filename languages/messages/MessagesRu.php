@@ -103,10 +103,10 @@ $dateFormats = array(
 );
 
 $bookstoreList = array(
-	'%D0%9F%D0%BE%D0%B8%D1%81%D0%BA%20%D0%BF%D0%BE%20%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D0%BC%20%C2%AB%D0%A1%D0%B8%D0%B3%D0%BB%D0%B0%C2%BB' => 'http://www.sigla.ru/results.jsp?f=7&t=3&v0=$1',
+	'Поиск по библиотекам «Сигла»' => 'http://www.sigla.ru/results.jsp?f=7&t=3&v0=$1',
 	'Findbook.ru' => 'http://findbook.ru/search/d0?ptype=4&pvalue=$1',
-	'%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%9C%D0%B0%D1%80%D0%BA%D0%B5%D1%82' => 'http://market.yandex.ru/search.xml?text=$1',
-	'%D0%9E%D0%97%D0%9E%D0%9D' => 'http://www.ozon.ru/?context=advsearch_book&isbn=$1',
+	'Яндекс.Маркет' => 'http://market.yandex.ru/search.xml?text=$1',
+	'ОЗОН' => 'http://www.ozon.ru/?context=advsearch_book&isbn=$1',
 	'Books.Ru' => 'http://www.books.ru/shop/search?query=$1',
 	'Amazon' => 'http://www.amazon.com/exec/obidos/ISBN=$1'
 );
