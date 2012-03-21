@@ -476,13 +476,21 @@
 
 			callback = callback || function() {};
 
+			var csCategoryText = '';
+			if($('#csWikitext').exists()) {
+			    if(mode=='source') {
+			        csCategoryText += "\n";
+			    }
+			    csCategoryText += $('#csWikitext').val();
+			}
+
 			switch(mode) {
 				case 'mw':
-					callback($('#wpTextbox1').val());
+					callback($('#wpTextbox1').val() + csCategoryText);
 					return;
 				case 'source':
 				case 'wysiwyg':
-					callback(editor.getData());
+					callback(editor.getData() + csCategoryText);
 					return;
 			}
 		}

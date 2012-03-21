@@ -11,6 +11,11 @@ class ArticleCategoriesModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
+		$catlinks = $this->request->getVal('catlinks');
+		if(!empty($catlinks)) {
+			$this->catlinks = $catlinks;
+		}
+
 		// MW1.16 always returns non empty $catlinks
 		if (strpos($this->catlinks, ' catlinks-allhidden\'></div>') !== false) {
 			$this->catlinks = '';
