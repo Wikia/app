@@ -120,7 +120,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		String newComment = prefix + "(" + commentContent + ")";
 		String fullParent = parent + "/li["+Integer.toString(liNumber)+"]";
 		
-		session().click(fullParent + "//a[@class='article-comm-edit']");
+		session().click(fullParent + "//a[contains(@class,'article-comm-edit')]");
 
 		waitForElement(fullParent + "//textarea[@name='wpArticleComment']");
 		
@@ -156,7 +156,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		int liNumber = 1;
 		String fullParent = parent + "/li["+Integer.toString(liNumber)+" and contains(@class,'SpeechBubble')]";
 		
-		session().click(fullParent + "//a[contains(@class, 'article-comm-reply')]");
+		session().click(fullParent + "//button[contains(@class, 'article-comm-reply')]");
 		waitForElement(fullParent + "//textarea[@name='wpArticleReply']");
 
 		if(!("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
@@ -253,10 +253,10 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 				getTestConfig().getString("ci.user.regular.username") + "')]")) {
 				assertFalse(session().isVisible("//li[@id='" + commentId + "']//span[@class='tools']"));
 				assertTrue(session().isElementPresent("//li[@id='" + commentId + "']//span[@class='tools']" +
-						"/span[@class='edit-link']/a[@class='article-comm-edit']"));
+						"/span[@class='edit-link']/a[contains(@class,'article-comm-edit')]"));
 			}
 			else {
-				assertFalse(session().isElementPresent("//li[@id='" + commentId + "']//a[@class='article-comm-edit']"));
+				assertFalse(session().isElementPresent("//li[@id='" + commentId + "']//a[contains(@class,'article-comm-edit')]"));
 			}
 		}
 	}
@@ -271,15 +271,12 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		addComment(commentContent);
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]" +
-				"//a[@class='article-comm-edit']"));
+				"//a[contains(@class,'article-comm-edit')]"));
 		
 		commentContent = this.editComment("//ul[@id='article-comments-ul']", 1, commentContent);
 		// edit for the second time (FB 24506)
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]" +
-				"//a[@class='article-comm-edit']"));
-		
-		session().click("//ul[@id='article-comments-ul']/li[1]" +
-				"//a[@class='article-comm-edit']");
+				"//a[contains(@class,'article-comm-edit')]"));
 		
 		this.editComment("//ul[@id='article-comments-ul']", 1, commentContent);
 	}
@@ -296,10 +293,10 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		addComment(this.commentContent);
 
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]" +
-				"//a[@class='article-comm-edit']"));
+				"//a[contains(@class,'article-comm-edit')]"));
 
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
-				"//a[@class='article-comm-edit']");
+				"//a[contains(@class,'article-comm-edit')]");
 
 		waitForElement("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']");
 		
@@ -314,7 +311,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		session().waitForCondition("(typeof window.ArticleComments != 'undefined') && window.ArticleComments.initCompleted", this.getTimeout());
 
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
-				"//a[@class='article-comm-edit']");
+				"//a[contains(@class,'article-comm-edit')]");
 
 		waitForElement("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']");
 
@@ -339,7 +336,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		addComment(commentContent);
 
 		session().click("//ul[@id='article-comments-ul']/li[1]" +
-				"//a[@class='article-comm-edit']");
+				"//a[contains(@class,'article-comm-edit')]");
 
 		waitForElement("//ul[@id='article-comments-ul']/li[1]//textarea[@name='wpArticleComment']");
 
@@ -512,11 +509,11 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 				assertFalse(session().isVisible("//li[@id='" + commentId + "']//span[@class='tools']"));
 
 				assertTrue(session().isElementPresent("//li[@id='" + commentId + "']//span[@class='tools']" +
-						"/span[@class='edit-link']/a[@class='article-comm-edit']"));
+						"/span[@class='edit-link']/a[contains(@class,'article-comm-edit')]"));
 			}
 
 			else {
-				assertFalse(session().isElementPresent("//li[@id='" + commentId + "']//a[@class='article-comm-edit']"));
+				assertFalse(session().isElementPresent("//li[@id='" + commentId + "']//a[contains(@class,'article-comm-edit')]"));
 			}
 		}
 	}

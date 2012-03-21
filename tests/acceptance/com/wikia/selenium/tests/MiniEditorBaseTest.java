@@ -27,7 +27,7 @@ public class MiniEditorBaseTest extends BaseTest {
 		
 		if (meticulously) {
 			if (minieditor) {
-				assertTrue(session().isElementPresent(parent + "//div[@class='editarea']/div[@class='cke_skin_wikia']"));
+				assertTrue(session().isElementPresent(parent + "//div[@class='editarea']/div[contains(@class,'cke_skin_wikia')]"));
 			}
 			assertTrue(session().isVisible(parent + "//div[@class='buttons']"));
 			assertFalse(session().isVisible(parent + "//div[@class='editarea']/div[@class='loading-indicator']"));
