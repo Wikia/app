@@ -1,11 +1,10 @@
-(function(window,$){
+(function($, window) {
 	var LayoutBuilderFormEditorLoader = $.createClass(Object,{
 
 		element: false,
 
 		constructor: function() {
-			this.body = $('<div/>'); // FIXME!!
-			this.element = $('<div/>');
+			this.body = this.element = $('<div/>');
 		},
 
 		getData: function() {
@@ -21,16 +20,16 @@
 		
 		init: function() {
 			var data = this.getData();
-			var e = window.editorInstance = window.WikiaEditor.create(data.plugins,data.config);
-			this.element.data('wikiaeditor',e);
+
+			window.WikiaEditor.create(data.plugins,data.config);
+
 			$('#wpSave').removeAttr('disabled');
 		}
 	});
 
-	$(function(){
+	$(function() {
 		var editor = new LayoutBuilderFormEditorLoader();
-		$().log(editor);
 		editor.init();
 	});
 
-})(this,jQuery);
+})(jQuery, window);

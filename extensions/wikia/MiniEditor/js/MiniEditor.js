@@ -214,7 +214,7 @@
 				}, options.config));
 
 				// Store a reference to wikiaEditor in element
-				$element.addClass('wikiaEditor').data('wikiaEditor', wikiaEditor).triggerHandler('editorInit', [wikiaEditor]);
+				$element.addClass('wikiaEditor').triggerHandler('editorInit', [wikiaEditor]);
 			}
 		},
 

@@ -1,4 +1,4 @@
-(function(window,$){
+(function($, window) {
 
 	/**
 	 * Wikia Editor loader for Edit pages
@@ -13,17 +13,16 @@
 		},
 
 		getToolbarsConfig: function() {
-			var WE = window.WikiaEditor;
-
 			var data = {
 				main: !!window.wgEditPageIsWidePage,
 				rte: typeof window.RTE != 'undefined',
 				wide: false,
 				readOnly: window.wgEditPageIsReadOnly
 			};
+
 			data.wide = data.rte && data.main;
 
-			WE.fire('wikiaeditorspacesbeforelayout',this.element,data);
+			window.WikiaEditor.fire('wikiaeditorspacesbeforelayout',this.element,data);
 
 			var layout = {
 				tabs: [],
@@ -50,7 +49,7 @@
 				layout.rail.push('RailInsert','RailCategories','RailTemplates','RailLicense');
 			}
 
-			WE.fire('wikiaeditorspaceslayout',this.element,layout,data);
+			window.WikiaEditor.fire('wikiaeditorspaceslayout',this.element,layout,data);
 
 			// Wraps all modules in right rail for the plugin "railminimumheight"
 			if (layout.rail.length > 0) {
@@ -114,12 +113,10 @@
 
 		init: function() {
 			var data = this.getData();
-			
-			var e = window.editorInstance = window.WikiaEditor.create(data.plugins,data.config);
-			this.element.data('wikiaeditor',e);
+
+			window.WikiaEditor.create(data.plugins, data.config);
 		}
 	});
-
 
 	$(function(){
 		if (!window.WikiaAutostartDisabled) {
@@ -128,4 +125,4 @@
 		}
 	});
 
-})(this,jQuery);
+})(jQuery, this);
