@@ -106,12 +106,13 @@ function modifyCategory(e) {
 				var sortkey = $('#csInfoboxSortKey').val();
 				extractedParams = extractSortkey(category);
 				category = extractedParams['name'];
-
 				if (category == '') {
 					//TODO: use jQuery dialog
 					alert(csEmptyName);
 					return;
 				}
+				
+				
 
 				$().log(category, "Cat");
 				if (categories[catId].category != category) {
@@ -138,6 +139,7 @@ function modifyCategory(e) {
 					categories[catId].sortkey = sortkey;
 				}
 
+				$('#csWikitext').val(generateWikitextForCategories());
 				$('#sortDialog').closeModal();
 			}}
 		]
