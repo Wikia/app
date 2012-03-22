@@ -33,7 +33,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	
 	static protected $conditions = array(
 		self::DELETE_NOW => array(
-			array(
+			'created' => array(
 				'type' => 'datetime',
 				'key' => 'created',
 				'max' => '-350 days',
@@ -60,7 +60,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			),
 		),
 		self::DELETE_SOON => array(
-			array(
+			'created' => array(
 				'type' => 'datetime',
 				'key' => 'created',
 				'max' => '-342 days',
@@ -87,6 +87,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			),
 		)
 	);
+	static protected $FETCH_TIME_LIMIT = '-340 days';
 	
 	protected $options = array();
 	protected $flags = array(
@@ -109,6 +110,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	protected $mailing = true;
 
 	public function __construct( $options ) {
+		self::adjustSettings();
 		// read command line arguments
 		$this->options = $options;
 		foreach ($this->options as $k => $v) {
@@ -277,7 +279,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			'city_public' => 1,
 			'city_flags & 512 = 0',
 			// it could be -55 days, but leaving the margin for TZs
-			"city_created < \"".wfTimestamp(TS_DB,strtotime('-340 days'))."\""
+			"city_created < \"".wfTimestamp(TS_DB,strtotime(self::$FETCH_TIME_LIMIT))."\""
 		);
 		if (!is_null($this->from))
 			$where[] = "city_id >= ".intval($this->from);
@@ -401,9 +403,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$toAddress = new MailAddress($to);
 
 		if (!empty($wikis)) {
-			$csv = "ID,DatabaseName,URL\r\n";
+			$csv = "ID;DatabaseName;URL\r\n";
 			foreach ($wikis as $wiki) {
-				$csv .= "\"{$wiki['id']}\",\"{$wiki['dbname']}\",\"{$wiki['url']}\"\r\n";
+				$csv .= "\"{$wiki['id']}\";\"{$wiki['dbname']}\";\"{$wiki['url']}\"\r\n";
 			}
 			$fileName = "/tmp/$fname.csv";
 			file_put_contents($fileName,$csv);
@@ -492,6 +494,27 @@ class AutomatedDeadWikisDeletionMaintenance {
 			default:
 				$this->error("error: invalid action provided: \"{$this->action}\"",true);
 		}
+	}
+	
+	static protected function adjustSettings() {
+		$secondsPerDay = 24 * 60 * 60;
+		$maxWeek = 51;
+		$minWeek = 36;
+
+		$start = strtotime('20.03.2012 00:00:00 UTC');
+		$time = time();
+		$passed = intval(($time - $start) / $secondsPerDay);
+		
+		$shift = max(0,intval($passed/7)*4 + min($passed%7,3));
+		$weeks = max($minWeek,$maxWeek-$shift);
+	
+		$days = $weeks * 7;
+		$ndays = max($weeks-1,$minWeek) * 7;
+		$kdays = $ndays - 2;
+	
+		self::$conditions[self::DELETE_NOW]['created']['max'] = "-$days days";
+		self::$conditions[self::DELETE_SOON]['created']['max'] = "-$ndays days";
+		self::$FETCH_TIME_LIMIT = "-$kdays days";
 	}
 
 }
