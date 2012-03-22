@@ -108,12 +108,35 @@ class WallNotificationsController extends WikiaController {
 			}
 		}
 		
-		$this->response->setVal( 'url', $data->url );
+		$this->response->setVal( 'url', $this->fixNotificationURL($data->url) );
 		$this->response->setVal( 'msg', $msg );
 		$this->response->setVal( 'authors', $authors );
 		$this->response->setVal( 'title',  $data->title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
 	}
+	
+	private function fixNotificationURL($url) {
+		global $wgStagingList;
+		$hostOn = getHostPrefix();
+		
+		$hosts = $wgStagingList;
+		foreach($hosts as $host){
+			$prefix = 'http://'.$host.'.';
+			if(strpos($url, $prefix)  !== false ) {
+				if(empty($hostOn)) {
+					return str_replace($prefix, 'http://', $url );					
+				} else {
+					return str_replace($prefix, 'http://'.$hostOn.'.', $url );	
+				}
+			}			
+		}
+
+		if(!empty($hostOn)){
+			return str_replace('http://', 'http://'.$hostOn.'.', $url );
+		}
+		
+		return $url;
+	}	
 	
 	public function Notification() {
 		$notify = $this->request->getVal('notify');
@@ -199,7 +222,7 @@ class WallNotificationsController extends WikiaController {
 		$msg = wfMsgExt($msgid, array( 'parsemag'), $params);
 		$this->response->setVal( 'msg', $msg );
 		if ( empty( $data->url ) ) $data->url = '';
-		$this->response->setVal( 'url', $data->url );
+		$this->response->setVal( 'url', $this->fixNotificationURL($data->url) );
 		$this->response->setVal( 'authors', array_reverse($authors) );
 		$this->response->setVal( 'title',  $data->thread_title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
