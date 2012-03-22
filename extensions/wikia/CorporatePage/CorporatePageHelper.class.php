@@ -289,7 +289,6 @@ class CorporatePageHelper{
 		switch ($title->getNamespace()) {
 			case NS_USER:
 			case NS_USER_TALK:
-			case NS_FILE:
 			case NS_FILE_TALK:
 			case NS_HELP:
 			case NS_HELP_TALK:
@@ -309,7 +308,12 @@ class CorporatePageHelper{
 					$redirect = $wgCorporatePageRedirectWiki . $title->prefix($title->getPartialURL());
 				}
 				break;
-
+			case NS_FILE:
+				$file = wfFindFile($title);
+				if (empty($file) && !empty( $wgCorporatePageRedirectWiki )) {
+					$redirect = $wgCorporatePageRedirectWiki . $title->prefix($title->getPartialURL());					
+				}
+				break;
 			case NS_PROJECT:
 			case NS_PROJECT_TALK:
 				if (!$title->exists()) {
