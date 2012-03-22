@@ -79,6 +79,11 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		Wikia::log(__METHOD__, '', $message);
         parent::markTestSkipped($message);
     }
+
+	public static function markTestIncomplete($message = '') {
+		Wikia::log(__METHOD__, '', $message);
+        parent::markTestIncomplete($message);
+    }
 }
 
 class WikiaAppMock {
