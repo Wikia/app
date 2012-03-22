@@ -34,7 +34,7 @@ function get_regexp( $title, $replacement, &$wsc ) {
 					$regexp .= $char;
 				}
 			} else {
-				//$int = ord($char);
+				$int = ord($char);
 				echo "-------------- Escaping $char ($int)\n";
 				if( $char == '?') {
 					$regexp .= '(\\' . $char . '|%3f|%3F)';
@@ -58,7 +58,6 @@ function title_replacer( $title, $replacement, $fulltext  ) {
 	if( $new === null ) return $fulltext;
 	return $new;
 }
-
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 //require_once( 'commandLine.inc' );
@@ -153,7 +152,7 @@ foreach( $articlesToProcess as $failed ) {
 							$sanitizeHelper->logVideoTitle($key, $val, 'FAIL', $oTitle);
 							$i++;
 						} else {
-							$sanitizeHelper->logFailedEditRemove($articleId, $oTitle->getText(), $oTitle->getNamespace(), $val, $key);
+							$sanitizeHelper->logFailedEditRemove($articleId, $oTitle->getText(), $oTitle->getNamespace(), $key, $val );
 							$j++;
 						}
 						//echo "parent end of fork\n";
@@ -168,6 +167,7 @@ foreach( $articlesToProcess as $failed ) {
 
 				} else {
 					$sanitizeHelper->logVideoTitle($key, $val, 'UNKNOWN', $oTitle);
+					$j++;
 				}
 			} else {
 				var_dump( $oArticle );
