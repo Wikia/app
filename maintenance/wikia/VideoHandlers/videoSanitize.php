@@ -174,7 +174,7 @@ if ( $rowCount ) {
 			) {
 				$firstCheck = false;
 				$newNameCandidate = substr( $newNameCandidate, 0, 255-strlen( '_' . $sufix) );
-				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 1  ? '_' : 'video_' ) . $sufix;
+				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 1  ? '_' : 'Video_' ) . $sufix;
 				if ( strpos($sNewTitle,':') === 0 ) {
 					$sNewTitle = substr( $sNewTitle, 1 );
 					$sNewTitle = trim( str_replace( '_', ' ', $sNewTitle ) );

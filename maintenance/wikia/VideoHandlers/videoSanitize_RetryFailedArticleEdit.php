@@ -52,8 +52,8 @@ function get_regexp( $title, $replacement, &$wsc ) {
 function title_replacer( $title, $replacement, $fulltext  ) {
 
 	$wsc = 0;
-	$regexp = get_regexp( $title, $replacement, $wsc );
-	$regexp = '/(\\[\\[Video\\:)[ ]{0,}' . $regexp . '[ ]{0,}(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
+	$regexp_org = get_regexp( $title, $replacement, $wsc );
+	$regexp = '/(\\[\\[Video\\:)[ ]{0,}' . $regexp_org . '[ ]{0,}(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
 	echo "Full regexp: $regexp\n";
 	$new = preg_replace( $regexp, '$1' . $replacement . '$'.(4+$wsc), $fulltext );
 
@@ -62,7 +62,7 @@ function title_replacer( $title, $replacement, $fulltext  ) {
 		echo "Original is:\n";
 		echo $fulltext;
 		echo "\n";
-		$res = preg_match($regexp, $fulltext);
+		$res = preg_match($regexp_org, $fulltext);
 		$res = var_export($res,1);
 		echo "Pregmatch result:$res\n";
 		return $fulltext;
