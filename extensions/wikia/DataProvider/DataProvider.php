@@ -369,28 +369,28 @@ class DataProvider {
 				while ($row = $res->fetchObject($res)) {
 					$articlepages[$row->page_id] = $row->pv_views;
 				}
-			}
 
-			$results = array();
-			foreach ($articlepages as $articleid => $cnt) {
-				$title = Title::newFromID($articleid);
-				if (is_object($title)) {
-					if (wfMsg("mainpage") != $title->getText()) {
-						$article['url'] = $title->getLocalUrl();
-						$article['text'] = $title->getPrefixedText();
-						$article['count'] = $cnt;
-						$results[] = $article;
+				$results = array();
+				foreach ($articlepages as $articleid => $cnt) {
+					$title = Title::newFromID($articleid);
+					if (is_object($title)) {
+						if (wfMsg("mainpage") != $title->getText()) {
+							$article['url'] = $title->getLocalUrl();
+							$article['text'] = $title->getPrefixedText();
+							$article['count'] = $cnt;
+							$results[] = $article;
+						}
 					}
 				}
+
+				self::removeAdultPages($results);
+
+				if (!empty($results)) {
+					$results = array_slice($results, 0, $limit);
+				}
+
+				$wgMemc->set($memckey, $results, 60 * 60 * 3);
 			}
-
-			self::removeAdultPages($results);
-
-			if (!empty($results)) {
-				$results = array_slice($results, 0, $limit);
-			}
-
-			$wgMemc->set($memckey, $results, 60 * 60 * 3);
 		}
 
 		wfProfileOut(__METHOD__);
