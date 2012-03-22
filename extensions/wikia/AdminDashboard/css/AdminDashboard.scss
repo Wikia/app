@@ -59,6 +59,8 @@ $color-admin-global-header-text: white;
 	$color-admin-tab-inactive: mix($color-page, $color-admin-light-mix, 90%);
 }
 
+$color-highlight-column: rgba($color-page, 0);
+
 .AdminDashboardHeader {
 	@include box-shadow(0, -4px, 2px, $color-admin-global-header-shadow, true, 0);
 	background: $color-admin-global-header;
@@ -373,12 +375,15 @@ $color-admin-global-header-text: white;
 			}
             &:nth-child(2) {
             	color: $color-alternate-text;	/* ng */
-                @include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 10%, $color-admin-header-highlight, 90%, $color-admin-header-shadow, 100%);
+                @include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
             }
 		}
 		thead {
 			th {
 				color: $color-text;	/* ng */
+	            &:nth-child(2) {
+                    padding: 0;
+                }
 			}
 		}
 		.totals {
@@ -395,9 +400,10 @@ $color-admin-global-header-text: white;
 					}
 				}
 	            &:nth-child(2) {
-	                @include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 10%, $color-admin-header-highlight, 90%, $color-admin-header-shadow, 100%);
-                    color: $color-alternate-text;	/* ng */
+	                color: $color-alternate-text;	/* ng */
                     border-color: transparent;
+                    @include linear-gradient($color-page, left, $color-admin-header-shadow, 0%, $color-admin-header-highlight, 15%, $color-admin-header-highlight, 85%, $color-admin-header-shadow, 100%);
+                    padding: 0;
                 }
 			}
 		}
@@ -414,11 +420,12 @@ $color-admin-global-header-text: white;
 	}
     #GATooltip {
         font-size: 13px;
-        line-spacing: 23px;
+        line-height: 23px;
         border: 1px solid $color-admin-rail-border;
         padding: 9px;
         margin: 0 0 5px 0;
         position: relative;
+        @include box-shadow(1px, 1px, 3px, $color-admin-header-box-shadow);
         &:before {
             content: ' ';
             position: absolute;
@@ -437,7 +444,27 @@ $color-admin-global-header-text: white;
             left: 109px;
             top: 100%;
             border: 9px solid transparent;
-            border-color: #fff transparent transparent transparent;
+            border-color: $color-page transparent transparent transparent;
         }
+    }
+    .highlight-top {
+        background: -moz-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
+        background: linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
+        display: block;
+        padding: 10px 10px 7px 0;
+    }
+    .highlight-bottom {
+        background: -moz-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* IE10+ */
+        background: linear-gradient(bottom, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* W3C */
+        display: block;
+        padding: 10px 10px 7px 0;
     }
 }
