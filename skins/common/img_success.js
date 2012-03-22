@@ -1,7 +1,7 @@
 var undefined;
 
 function getFirstNodeOfType(nodeType,parent) {
-	parent = (parent) ? parent : document;
+	parent = parent || document;
 	for ( var m = parent.firstChild; m != null; m = m.nextSibling ) {
 		switch (nodeType) {
 			case Node.ELEMENT_NODE:
@@ -168,16 +168,16 @@ function initImageInsert() {
 	slider = document.getElementById("slider");
 	image = document.getElementById("imgThumbnail");
 	wrapper = document.getElementById("wrapper");
-	
+
 	var imgWidth = image.getAttribute("wpWidth");
 	var imgHeight = image.getAttribute("wpHeight");
 	if ( imgWidth < kMaxSliderValue )
         kMaxSliderValue = imgWidth;
     if ( imgWidth < kMinSliderValue )
         kMinSliderValue = imgWidth;
-	
+
 	updateImageDim(image, dimensionsForMaximumSize(image, (kMaxSliderValue - kMinSliderValue)/2.0 + kMinSliderValue));
-	
+
 	addEventListeners(slider,"mousedown",slideDownHandle);
 }
 
@@ -192,10 +192,10 @@ function dimensionsForMaximumSize(image, maxValue)
     var scaleFactor;
     var nativeWidth = image.getAttribute("wpWidth");
     var nativeHeight = image.getAttribute("wpHeight");
-    
+
     if ( nativeWidth < maxValue && nativeHeight < maxValue )
         return {width: nativeWidth, height: nativeHeight};
-        
+
     if ( nativeWidth > nativeHeight )
     {
         scaleFactor = maxValue / nativeWidth;
@@ -217,20 +217,20 @@ function updateImageDim(imgElem, dim)
 {
     var thumbSize = document.getElementById('thumbSizeValue');
     var imgName = document.getElementById('imgName').value;
-    
+
     var wrapperWidth = parseInt(wrapper.style.width);
     var wrapperHeight = parseInt(wrapper.style.height);
-    
+
     var imgX = Math.floor(wrapperWidth / 2.0 - dim.width / 2.0);
     var imgY = Math.floor(wrapperHeight / 2.0 - dim.height / 2.0);
-    
+
     imgElem.style.left = imgX + "px";
     imgElem.style.top = imgY + "px";
     imgElem.style.width = dim.width + "px";
     imgElem.style.height = dim.height + "px";
-    
+
     //alert("set new image size: " + imgX + ", " + imgY + ", " + dim.width + ", " + dim.height);
-    
+
 	thumbSize.innerHTML = dim.width + "px";
 }
 
@@ -257,25 +257,25 @@ function doInsertImage(localizedImageTag)
     var caption = document.getElementById('captionText').value;
     var align = "";
     var insertText = "";
-    
+
     if ( caption && caption.length > 0 )
-        caption = "|" + caption;  
-    
+        caption = "|" + caption;
+
     if ( insertFullSize.checked && !insertThumbnail.checked ) {
         insertText = caption + ']]';
     }
     else if ( !insertFullSize.checked && insertThumbnail.checked )
-    {     
+    {
         if ( imgElem.style.cssFloat )
             align = "|" + imgElem.style.cssFloat;
         else if ( imgElem.style.styleFloat )
             align = "|" + imgElem.style.styleFloat;
-        
+
         insertText = align + '|thumb|' + thumbSizeValue.innerHTML + caption +  ']]';
     }
     else
         alert("error with radios!");
-            
+
     if ( window.opener ) {
       window.opener.insertTags('[[' + localizedImageTag + ':', insertText, imgName);
 //        insertTags('[[' + localizedImageTag + ':', insertText, imgName);
@@ -285,11 +285,11 @@ function doInsertImage(localizedImageTag)
 
 function slideDownHandle(evt) {
     var imgElem = document.getElementById('imgThumbnail');
-    
+
  	evt = getEvent(evt);
  	target = getTarget(evt);
-	target.src = "/skins/common/slider_thumb_bg_on.png";
-	
+	target.src = stylepath + "/common/slider_thumb_bg_on.png";
+
 	posX = getPos('X',evt);
 	deltaX = posX - parseInt(target.style.left);
 	addEventListeners(document,"mousemove",slideMoveHandle);
@@ -304,24 +304,24 @@ function slideDownHandle(evt) {
 		posX = (posX > kMaxXPos) ? kMaxXPos: posX;
 		target.style.left = posX + "px";
 		delta = Math.abs(posX - kMinXPos);
-		
+
 		var sliderValue = valueForSliderPos(delta);
 		var dim = dimensionsForMaximumSize(imgElem, sliderValue);
-		
+
 		//alert("dim for sliderValue: " + sliderValue + ", " + dim.width + ", " + dim.height);
 		//imgElem.style.width = (delta/.5 + 16) + "px";
     	//imgElem.style.height = (delta/.5 + 16) + "px";
-    	
+
     	updateImageDim(imgElem, dim);
 		bubbleCancel(evt);
 	}
 
 	function slideUpHandle(evt) {
 		evt = getEvent(evt);
-		target.src = "/skins/common/slider_thumb_bg.png";
-		
+		target.src = stylepath + "/common/slider_thumb_bg.png";
+
 		removeEventListeners(document,"mousemove",slideMoveHandle);
-		removeEventListeners(document,"mouseup",slideUpHandle);		
+		removeEventListeners(document,"mouseup",slideUpHandle);
 		bubbleCancel(evt);
 	}
 }
