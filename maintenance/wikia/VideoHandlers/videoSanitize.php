@@ -167,16 +167,22 @@ if ( $rowCount ) {
 			$sufix = 2;
 			$firstCheck = true;
 			while (
-					strlen( $sNewTitle ) < 2 ||
+					strlen( $sNewTitle ) < 3 ||
 					($firstCheck === false && isset ( $aAllFiles[ $sNewTitle ] ) ) ||
 					($firstCheck === true  && $sFile != $sNewTitle && isset( $aAllFiles[ $sNewTitle ]) ) ||
 					isset (	$aAllFiles[ substr($sNewTitle, 1 ) ] )
 			) {
 				$firstCheck = false;
 				$newNameCandidate = substr( $newNameCandidate, 0, 255-strlen( '_' . $sufix) );
-				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 0  ? '_' : 'video_' ) . $sufix;
-				$sNewTitle = trim( str_replace( '_', ' ', $sNewTitle ) );
-				$sNewTitle = str_replace( ' ', '_', $sNewTitle );
+				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 1  ? '_' : 'video_' ) . $sufix;
+				if ( strpos($sNewTitle,':') === 0 ) {
+					$sNewTitle = substr( $sNewTitle, 1 );
+					$sNewTitle = trim( str_replace( '_', ' ', $sNewTitle ) );
+					$sNewTitle = ':' . str_replace( ' ', '_', $sNewTitle );
+				} else {
+					$sNewTitle = trim( str_replace( '_', ' ', $sNewTitle ) );
+					$sNewTitle = str_replace( ' ', '_', $sNewTitle );
+				}
 				$sufix++;
 				echo "Current candidate: $sNewTitle\n";
 			}
