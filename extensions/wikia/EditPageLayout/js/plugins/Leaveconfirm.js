@@ -19,7 +19,7 @@
 		leaveMessage: false,
 
 		init: function() {
-            this.leaveMessage = $.msg('wikia-editor-leaveconfirm-message');
+			this.leaveMessage = $.msg('wikia-editor-leaveconfirm-message');
 			this.editor.on('editorReady', this.proxy(this.onEditorReady));
 
 			// allow other plugins to mark content as changed
