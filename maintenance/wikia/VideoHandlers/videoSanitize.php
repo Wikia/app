@@ -344,7 +344,7 @@ foreach ( $aTranslation as $key => $val ) {
 						$st = pcntl_wexitstatus($status);
 						if ($st != 0) {
 							// need to log those fatal errors here
-							$sanitizeHelper->logFailedEdit($articleId, $oTitle->getText(), $oTitle->getNamespace(), $val, $key);
+							$sanitizeHelper->logFailedEdit($articleId, $oTitle->getText(), $oTitle->getNamespace(), $key, $val);
 							$sanitizeHelper->logVideoTitle($key, $val, 'FAIL', $oTitle);
 						}
 						//echo "parent end of fork\n";
@@ -361,7 +361,7 @@ foreach ( $aTranslation as $key => $val ) {
 
 				} else {
 					echo "ARTICLE NOT CHANGED! (status UNKNOWN) \n";
-					$sanitizeHelper->logFailedEdit($articleId, $oTitle->getText(), $oTitle->getNamespace(), $val, $key);
+					$sanitizeHelper->logFailedEdit($articleId, $oTitle->getText(), $oTitle->getNamespace(), $key, $val);
 					$sanitizeHelper->logVideoTitle($key, $val, 'UNKNOWN', $oTitle);
 				}
 			} else {
