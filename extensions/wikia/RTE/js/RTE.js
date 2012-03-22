@@ -96,6 +96,9 @@
 		// CK loading time
 		loadTime: false,
 
+		// The key in local storage where RTE related things are kept (BugId:25289)
+		localStorageKey: 'WikiaRichTextEditor',
+
 		// use firebug / opera console to log events / dump objects
 		log: function(msg) {
 			$().log(msg, 'RTE');
@@ -118,7 +121,8 @@
 		track: function(action, label, value) {
 		},
 
-		contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss ], // load MW:Common.css / MW:Wikia.css (RT #77759)
+		// load MW:Common.css / MW:Wikia.css (RT #77759)
+		contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss ],
 
 		// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
 		getContentsCss: function(editor) {
@@ -142,6 +146,12 @@
 					// Done loading
 					} else {
 						RTE.config.contentsCss = contentsCss;
+
+						// Cache the generated content to speed up load times (BugId:25289)
+						$.storage.set(RTE.localStorageKey, {
+							styleVersion: wgStyleVersion,
+							contentsCss: contentsCss
+						})
 	
 						// disable object resizing in IE. IMPORTANT! use local path
 						if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
@@ -162,11 +172,23 @@
 			if (CKEDITOR.instances[instanceId]) {
 				return;
 			}
-			
-			if(!RTE.config.contentsCss) {
-				RTE.getContentsCss(editor);
-			} else {
+
+			if (RTE.config.contentsCss) {
 				RTE.initCk(editor);
+
+			} else {
+				var cached = $.storage.get(RTE.localStorageKey);
+
+				// Use cached version if style version hasn't changed (BugId:25289)
+				if (cached && cached.styleVersion === wgStyleVersion) {
+					RTE.config.contentsCss = cached.contentsCss;
+					RTE.log('Using cached contentCss: ' + cached.styleVersion);
+					RTE.initCk(editor);
+
+				// Otherwise, re-generate our content styles
+				} else {
+					RTE.getContentsCss(editor);
+				}
 			}
 		},
 		
