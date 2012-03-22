@@ -172,6 +172,8 @@ class WallNotifications {
 
 	
 	private function getWgServer($id) {
+		global $wgStagingList;
+		
 		$url = WikiFactory::getVarValueByName("wgServer", $id );
 		if (!empty($this->app->wg->DevelEnvironment)) {
 			$url = str_replace('wikia.com', $this->app->wg->DevelEnvironmentName.'.wikia-dev.com',$url);
@@ -179,7 +181,7 @@ class WallNotifications {
 		
 		//HACK for preview
 		//TODO: create helper general function for
-		$hosts = array('verify', 'preview', 'sandbox-s1'); 
+		$hosts = $wgStagingList;
 		foreach($hosts as $host) {
 			$prefix = 'http://'.$host.'.';
 			if(strpos($this->app->wg->Server, $prefix)  !== false ) {
