@@ -113,6 +113,9 @@ $dbw = wfGetDB( DB_MASTER );
 $dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 $dbw_stats = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 
+//$dbw->setFlag( DBO_PERSISTENT );
+//$dbw_dataware->setFlag( DBO_PERSISTENT );
+
 $i = 0;
 $timeStart = microtime( true );
 $aTranslation = array();
@@ -338,6 +341,7 @@ foreach ( $aTranslation as $key => $val ) {
 						// we are the child, process doEdit in child
 						//echo "child\n";
 						echo "Preparing for edit\n";
+						sleep(0.25);
 						$status = $oArticle->doEdit( $sTextAfter, 'Fixing broken video names', EDIT_MINOR | EDIT_UPDATE | EDIT_FORCE_BOT, false, $botUser );
 						//echo "child end of fork\n";
 						exit();
@@ -346,6 +350,7 @@ foreach ( $aTranslation as $key => $val ) {
 
 				} else {
 					echo "ARTICLE NOT CHANGED! (status UNKNOWN) \n";
+					$sanitizeHelper->logFailedEdit($articleId, $oTitle->getText(), $oTitle->getNamespace(), $val, $key);
 					$sanitizeHelper->logVideoTitle($key, $val, 'UNKNOWN', $oTitle);
 				}
 			} else {
