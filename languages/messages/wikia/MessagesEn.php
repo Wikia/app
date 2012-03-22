@@ -920,7 +920,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 # Hub names
 'hub-Entertainment' => 'Entertainment',
-'hub-Gaming' => 'Gaming',
+'hub-Gaming' => 'Video Games',
 'hub-Lifestyle' => 'Lifestyle',
 'hub-Wikia' => 'Wikia',
 'hub-Food_and_Drink' => 'Food and Drink',
@@ -993,7 +993,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 ***w:c:Entertainment:Entertainment_Giveaways|Giveaways!
 ***w:c:www:Entertainment:Wikia_Entertainment|More...
 
-*w:c:www:Gaming|Gaming
+*w:c:www:Video_Games|Video Games
 
 **w:c:www:Xbox_360_Games|Xbox 360 Games
 ***w:c:bulletstorm:Bulletstorm_Wiki|Bulletstorm
