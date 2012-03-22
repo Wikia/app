@@ -5,6 +5,7 @@ var UserLogin = {
 			//prevent onbeforeunload from being called when user is loging in
 			window.onbeforeunload = function() {};
 			UserLoginModal.show({
+				persistModal: true,
 				callback: function() {
 					window.WikiaEditor && WikiaEditor.reloadEditor();
 				}

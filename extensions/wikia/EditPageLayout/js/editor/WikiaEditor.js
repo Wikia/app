@@ -69,8 +69,8 @@
 		WE.setInstanceId(instance.instanceId = instanceId);
 		WE.instanceCount++;
 
+		config.body.data('wikiaEditor', instance);
 		instance.fire('instanceCreated');
-
 		instance.show();
 
 		return instance;
@@ -105,7 +105,7 @@
 
 	// reload the edit page (used by AjaxLogin / UserLogin) - BugId:5307
 	WE.reloadEditor = function() {
-		var editorInstance = $('#EditPage').data('wikiaeditor'),
+		var editorInstance = $('#wpTextbox1').data('wikiaEditor'),
 			editorForm = editorInstance.ui.getForm();
 
 		// clear the edit token - reload will be forced
@@ -113,11 +113,14 @@
 
 		// set the state and submit the edit form
 		editorInstance.setState(editorInstance.states.RELOADING);
-		editorForm.submit();
+
+		// Post the form via AJAX, then reload the page to avoid chrome security errors (BugId:22955)
+		$.post(wgScriptPath + editorForm.attr('action'), editorForm.serialize(), function() {
+			window.location.reload(true);
+		});
 	};
 
-	WE.Editor = $.createClass(Observable,{
-
+	WE.Editor = $.createClass(Observable, {
 		states: {
 			IDLE: 1,
 			INITIALIZING: 2,
