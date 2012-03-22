@@ -28,7 +28,7 @@ $messages['en'] = array(
 	//footer
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entertainment]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Video Games]]',
 
 	//categories
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
@@ -76,7 +76,7 @@ $messages['ady-cyrl'] = array(
 	'wikiamobile-article-categories' => 'Катэгорий',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entertainment]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Video Games]]',
 );
 
 /** Afrikaans (Afrikaans)
@@ -167,7 +167,7 @@ $messages['de'] = array(
 	'wikiamobile-feedback' => 'Rückmeldung',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entertainment]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spiele]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Spiele]]',
 );
 
 /** Spanish (Español)
@@ -193,7 +193,7 @@ $messages['es'] = array(
 	'wikiamobile-hide-section' => 'ocultar',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Estilo de vida]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entretenimiento]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Videojuegos]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Videojuegos]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artículo|artículos}}',
 	'wikiamobile-category-items-more' => 'Cargar más',
 	'wikiamobile-category-items-prev' => 'Cargar el anterior',
@@ -235,7 +235,7 @@ $messages['fi'] = array(
 	'wikiamobile-feedback' => 'Palaute',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Elämäntyyli]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Viihde]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Pelaaminen]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Pelaaminen]]',
 );
 
 /** French (Français)
@@ -263,7 +263,7 @@ $messages['fr'] = array(
 	'wikiamobile-hide-section' => 'masquer',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Divertissement]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Jeu]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Jeu]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
 	'wikiamobile-category-items-more' => 'Lire la suite',
 	'wikiamobile-category-items-prev' => 'Lire le précédent',
@@ -299,7 +299,7 @@ $messages['gl'] = array(
 	'wikiamobile-hide-section' => 'agochar',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Estilo de vida]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Entretemento]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Xogos]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Xogos]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artigo|artigos}}',
 	'wikiamobile-category-items-more' => 'Cargar máis',
 	'wikiamobile-category-items-prev' => 'Cargar os anteriores',
@@ -335,7 +335,7 @@ $messages['ia'] = array(
 	'wikiamobile-hide-section' => 'celar',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Stilo de vita]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Intertenimento]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Joco]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Joco]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|articulo|articulos}}',
 	'wikiamobile-category-items-more' => 'Cargar plus',
 	'wikiamobile-category-items-prev' => 'Cargar precedente',
@@ -410,7 +410,7 @@ $messages['mk'] = array(
 	'wikiamobile-hide-section' => 'скриј',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Животен стил]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Забава]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игри]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Игри]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|статија|статии}}',
 	'wikiamobile-category-items-more' => 'Вчитај уште',
 	'wikiamobile-category-items-prev' => 'Вчитај претходни',
@@ -446,7 +446,7 @@ $messages['ms'] = array(
 	'wikiamobile-hide-section' => 'sorokkan',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Gaya Hidup]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Hiburan]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Permainan]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Permainan]]',
 	'wikiamobile-categories-items-total' => '$1 rencana',
 	'wikiamobile-category-items-more' => 'Muatkan banyak lagi',
 	'wikiamobile-category-items-prev' => 'Muatkan yang sebelumnya',
@@ -482,7 +482,7 @@ $messages['nb'] = array(
 	'wikiamobile-hide-section' => 'skjul',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Livsstil]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Underholdning]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spill]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Spill]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artikkel|artikler}}',
 	'wikiamobile-category-items-more' => 'Last inn mer',
 	'wikiamobile-category-items-prev' => 'Last inn forrige',
@@ -521,7 +521,7 @@ $messages['nl'] = array(
 	'wikiamobile-hide-section' => 'verbergen',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Vermaak]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gaming]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Video Games]]',
 	'wikiamobile-categories-items-total' => "{{PLURAL:$1|Eén pagina|$1 pagina's}}",
 	'wikiamobile-category-items-more' => 'Meer laden',
 	'wikiamobile-category-items-prev' => 'Vorige laden',
@@ -561,7 +561,7 @@ $messages['pl'] = array(
 	'wikiamobile-hide-section' => 'ukryj',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Styl]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Rozrywka]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Gry]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Gry]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artykuł|artykuły|artykułów}}',
 	'wikiamobile-category-items-more' => 'Załaduj więcej',
 	'wikiamobile-category-items-prev' => 'Załaduj poprzednie',
@@ -626,7 +626,7 @@ $messages['ru'] = array(
 	'wikiamobile-hide-section' => 'скрыть',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Увлечения]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Кино и сериалы]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игры]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Игры]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|статья|статьи|статей}}',
 	'wikiamobile-category-items-more' => 'Загрузить ещё',
 	'wikiamobile-category-items-prev' => 'Загрузить предыдущие',
@@ -668,7 +668,7 @@ $messages['sr-ec'] = array(
 	'wikiamobile-article-comments-reply' => 'Постави одговор',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Животни стил]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Забава]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Игре]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Игре]]',
 );
 
 /** Swedish (Svenska)
@@ -692,7 +692,7 @@ $messages['sv'] = array(
 	'wikiamobile-hide-section' => 'dölj',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|Livsstil]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|Underhållning]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|Spel]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|Spel]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artikel|artiklar}}',
 	'wikiamobile-category-items-more' => 'Läs in fler',
 	'wikiamobile-category-items-prev' => 'Läs in föregående',
@@ -743,7 +743,7 @@ $messages['te'] = array(
 	'wikiamobile-feedback' => 'ప్రతిస్పందన',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|జీవనవిధానం]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|వినోదం]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|ఆటలు]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Video_Games|ఆటలు]]',
 );
 
 /** Thai (ไทย)
@@ -776,7 +776,7 @@ $messages['zh-hans'] = array(
 	'wikiamobile-feedback' => '反馈',
 	'wikiamobile-footer-link1' => '[[w:c:www:Lifestyle|生活时尚]]',
 	'wikiamobile-footer-link2' => '[[w:c:www:Entertainment|影音娱乐]]',
-	'wikiamobile-footer-link3' => '[[w:c:www:Gaming|电玩游戏]]',
+	'wikiamobile-footer-link3' => '[[w:c:www:Vido_Games|电玩游戏]]',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
