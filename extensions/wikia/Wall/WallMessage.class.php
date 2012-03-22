@@ -594,6 +594,9 @@ class WallMessage {
 			$wn = new WallNotifications;
 			$uniqueId = $this->getId();
 			$wn->remNotificationsForUniqueID( null, $this->cityId, $uniqueId, false );
+			
+			$wna = new WallNotificationsAdmin;
+			$wna->removeForThread( $this->cityId, $this->getId() );
 		}
 	}
 
