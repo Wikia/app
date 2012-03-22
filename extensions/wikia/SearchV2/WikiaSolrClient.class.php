@@ -113,6 +113,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		  }
 		}
 
+
 		$results = $this->getWikiaResults($response->response->docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
 
 		return F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->response->numFound, 'resultsStart' => $response->response->start ) );
@@ -142,7 +143,37 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$position++;
 		}
 
-		return $results;
+		return $this->deDupeResults($results);
+	}
+
+	private function deDupeResults(Array $results) {
+		$canonicals = array();
+		$deDupedResults = array();
+
+		/**
+		 * @var $result WikiaSearchResult
+		 */
+		foreach($results as $result) {
+			if(!isset($canonicals[$result->getCityId()])) {
+				$canonicals[$result->getCityId()] = array();
+			}
+
+			if($result->hasCanonical()) {
+				if(!in_array($result->getCanonical(), $canonicals[$result->getCityId()])) {
+					$canonicals[$result->getCityId()][] = $result->getCanonical();
+					$deDupedResults[] = $result->deCanonize();
+				}
+				else {
+					continue;
+				}
+			}
+			else if(!in_array($result->getTitle(), $canonicals[$result->getCityId()])) {
+				$canonicals[$result->getCityId()][] = $result->getTitle();
+				$deDupedResults[] = $result;
+			}
+		}
+
+		return $deDupedResults;
 	}
 
 

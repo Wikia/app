@@ -44,6 +44,11 @@ class WikiaSearch extends WikiaObject {
 			}
 			$results->setCurrentPage($page);
 			$results->setResultsPerPage($length);
+			//var_dump($results->valid());
+			if(!$results->valid() && $results->hasResults()) {
+				// no more results in set, fetch more from backend
+				// @todo implement
+			}
 		}
 		else {
 			// no grouping, e.g. intra-wiki searching
@@ -94,7 +99,6 @@ class WikiaSearch extends WikiaObject {
 				$set->totalScore += ($result->score > 0) ? $result->score : 0;
 
 				$set->incrResultsFound();
-				$set->setHeader('cityRank', $this->getWikiRank($set));
 				$wikisByScore['id:'.$cityId] = $set->totalScore; //((1+$set->totalScore)/log($set->getHeader('1stResultPos')+1, 2));
 			} else {
 			  $wikisByScore['id'.$result->getCityId()] = $result->score; //(1+$result->score) / log($result->getVar('position')+1, 2);
@@ -113,13 +117,6 @@ class WikiaSearch extends WikiaObject {
 			   });
 
 		return F::build( 'WikiaSearchResultSet', array( 'results' => $sortedWikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete() ) );
-	}
-
-	private function getWikiRank(WikiaSearchResultSet $wikiResults) {
-		$articlesNum = (int) $wikiResults->getHeader('cityArticlesNum');
-		$resultsNum = $wikiResults->getResultsFound();
-		$firstResultPos = $wikiResults->getHeader('1stResultPos');
-		return round(( 1 / $firstResultPos ) * ( 1 + log($articlesNum))) + $resultsNum; //round( ( ( 1 / $firstResultPos ) * ( 1 + ln($articlesNum) ) ) + $resultsNum );
 	}
 
 	public function setClient( WikiaSearchClient $client ) {
