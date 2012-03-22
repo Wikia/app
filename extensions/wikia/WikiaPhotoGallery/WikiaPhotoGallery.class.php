@@ -1003,7 +1003,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$attribs = Sanitizer::mergeAttributes(
 			array(
 				'class' => $class,
-				'hash' => $this->mData['hash'],
+				'data-hash' => $this->mData['hash'],
 				'id' => $id,
 			),
 			$this->mAttribs );
