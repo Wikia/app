@@ -1,6 +1,105 @@
 /*global WikiaLogger: true, WikiaTracker_ABtests: true, _gaq: true */
 var WikiaTracker = {
+
+	/**
+	 * DO NOT ADD TO THIS LIST WITHOUT CONSULTATION FROM JONATHAN
+	 * Keep it in alphabetical order
+	 */
+	ACTIONS: {
+		// Generic add
+		ADD: 'add',
+		
+		// Generic click, mostly javascript clicks
+		CLICK: 'click',
+				
+		// Click on image link
+		CLICK_LINK_IMAGE: 'click-link-image',
+		
+		// Click on text link
+		CLICK_LINK_TEXT: 'click-link-text',
+		
+		// Video play
+		PLAY_VIDEO: 'play-video',
+		
+		// Removal
+		REMOVE: 'remove',
+		
+		// Generic paginate
+		PAGINATE: 'paginate',
+		
+		// Form submit, usually a post method
+		SUBMIT: 'submit',
+		
+		// Action to take a survey
+		TAKE_SURVEY: 'take-survey',
+		
+		// View
+		VIEW: 'view'
+	},
+
+	/**
+	 *	params - json of key value pairs
+	 *  keys:
+	 *		tracking_method - tracking method [both/ga/internal/none] (optional, default:internal)
+	 *		ga_category - GA Category (required)
+	 *		ga_action - GA Action (required), use one of the values from WikiaTracker.ACTIONS
+	 *		ga_label - GA Label (optional)
+	 *		ga_value = GA Value (optional)
+	 *		internal_params - JSON (optional)
+	 */
+	trackEvent: function(params) {	
+		var trackingMethod = params['tracking_method'] || 'none',
+			ga_category = params['ga_category'],
+			ga_action = params['ga_action'],
+			ga_label = params['ga_label'],
+			ga_value = params['ga_value'];
+			
+		if(!ga_category || !ga_action || trackingMethod === 'none' || !WikiaTracker.ACTIONS_REVERSE[ga_action]) {
+			$().log('Required parameters are missing or invalid');
+			return;
+		}
+		
+		var gaqArgs = [
+			ga_category,
+			ga_action
+		], internalParamsObj = {
+			ga_category: ga_category,
+			ga_action: ga_action
+		};
+		
+		if(ga_label) {
+			internalParamsObj['ga_label'] = ga_label;
+			gaqArgs.push(ga_label);
+		}
+		if(ga_value) {
+			internalParamsObj['ga_value'] = ga_value;
+			gaqArgs.push(ga_value);
+		}
+			
+		if(trackingMethod == 'internal' || trackingMethod == 'both') {
+			$.extend(internalParamsObj, params['internal_params'] || {});
+			$().log('internal tracked');
+			$.internalTrack('trackingevent', internalParamsObj);
+		}
+		
+		if(trackingMethod == 'ga' || trackingMethod == 'both') {
+			$().log('ga tracked');
+			// uncomment the next line later when GA is re-implemented
+			// WikiaTracker.track(null, 'main.sampled', gaqArgs);
+		}
+		
+		$().log(Array.prototype.join.call(gaqArgs, '/'), 'tracker [event]');
+	}
 };
+
+WikiaTracker.ACTIONS_REVERSE = (function() {
+	var actions_reverse = {},
+		actions = WikiaTracker.ACTIONS;
+	for(key in actions) {
+		actions_reverse[actions[key]] = key;
+	}
+	return actions_reverse;
+})();
 
 // FIXME refactor inGroup / userGroup / isTracked, it should be much simpler now
 WikiaTracker.debug = function (msg, level, obj) {
@@ -48,6 +147,8 @@ WikiaTracker._abData = function() {
 WikiaTracker.AB = function(page) {
 	return true;
 };
+
+
 
 /*
 if (typeof jQuery == 'function') {

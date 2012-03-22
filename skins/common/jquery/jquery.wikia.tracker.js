@@ -383,6 +383,10 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 	WikiaTracker.AB(str);
 };
 
+
+/**
+ * DEPRACATED, use WikiaTracker.trackEvent instead
+ */
 jQuery.tracker.trackEvent = function(category, action, opt_label, opt_value) {
 	var gaqArgs = [], logStr = Array.prototype.join.call(arguments, '/');
 
