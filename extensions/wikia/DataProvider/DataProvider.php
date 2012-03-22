@@ -358,7 +358,8 @@ class DataProvider {
 					array('page_id', 'pv_views', 'page_ns'),
 					array(
 						'city_id' => $wgCityId,
-						'page_ns' => (!empty($ns) ? $ns : array())
+						'page_ns' => (!empty($ns) ? $ns : array()),
+						'pv_views > 0'
 					),
 					__METHOD__,
 					array(
