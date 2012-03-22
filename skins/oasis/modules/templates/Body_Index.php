@@ -21,7 +21,10 @@
 		if ($wgEnableTopButton) {
 			echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'" id="WikiaTopAds">';
 		}
-		if ($wgEnableCorporatePageExt) {
+		if (ArticleAdLogic::isWikiaHub()) {
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'HUB_TOP_LEADERBOARD'));
+		}
+		elseif ($wgEnableCorporatePageExt) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
 		} else {
 			if (in_array('leaderboard', $wgABTests)) {
