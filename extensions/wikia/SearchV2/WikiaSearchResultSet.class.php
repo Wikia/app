@@ -79,6 +79,10 @@ class WikiaSearchResultSet implements Iterator {
 		return count($this->results);
 	}
 
+	public function hasResults() {
+		return (bool) $this->getResultsNum();
+	}
+
 	public function getResultsPerPage() {
 		return $this->resultsPerPage;
 	}

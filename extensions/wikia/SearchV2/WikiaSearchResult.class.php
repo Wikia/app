@@ -62,6 +62,12 @@ class WikiaSearchResult {
 		return !empty($this->canonical) ? true : false;
 	}
 
+	public function deCanonize() {
+		$this->setTitle($this->getCanonical());
+		$this->setCanonical(null);
+		return $this;
+	}
+
 	public function setScore($score) {
 	  $this->score = $score;
 	}
