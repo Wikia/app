@@ -171,6 +171,7 @@ if ( $rowCount ) {
 					($firstCheck === true  && $sFile != $sNewTitle && isset( $aAllFiles[ $sNewTitle ]) ) ||
 					isset (	$aAllFiles[ substr($sNewTitle, 1 ) ] )
 			) {
+				if ( $firstCheck === true && $newNameCandidate == '' ) $newNameCandidate = 'video';
 				$firstCheck = false;
 				$newNameCandidate = substr( $newNameCandidate, 0, 255-strlen( '_' . $sufix) );
 				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 0  ? '_' : '' ) . $sufix;
