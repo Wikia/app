@@ -97,7 +97,7 @@
 		loadTime: false,
 
 		// The key in local storage where RTE related things are kept (BugId:25289)
-		localStorageKey: 'WikiaRichTextEditor',
+		localStorageKey: 'WikiaRichTextEditor|' + wgServer,
 
 		// use firebug / opera console to log events / dump objects
 		log: function(msg) {
@@ -182,7 +182,7 @@
 				// Use cached version if style version hasn't changed (BugId:25289)
 				if (cached && cached.styleVersion === wgStyleVersion) {
 					RTE.config.contentsCss = cached.contentsCss;
-					RTE.log('Using cached contentCss: ' + cached.styleVersion);
+					RTE.log('Using cached contentCss (' + cached.styleVersion + '): "' + RTE.localStorageKey + '"');
 					RTE.initCk(editor);
 
 				// Otherwise, re-generate our content styles
