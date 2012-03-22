@@ -595,4 +595,10 @@ class ArticleAdLogic {
 
 		return $type;
 	}
+	
+	public static function isWikiaHub() {
+		global $wgEnableWikiaHubsExt, $wgWikiaHubsPages, $wgTitle;
+
+		return !empty($wgEnableWikiaHubsExt) && in_array($wgTitle->getDBkey(), $wgWikiaHubsPages);
+	}
 }

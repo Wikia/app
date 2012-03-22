@@ -14,16 +14,16 @@ class AdModule extends Module {
 		if(!$wgOut->isArticle() && !$wgTitle->isSpecial('Search') && !$wgTitle->isSpecial('Leaderboard')){ // RT#74422 Run ads on search results page
 			return;
 		}
+		if(ArticleAdLogic::isWikiaHub()) {
+			self::$config['HUB_TOP_LEADERBOARD'] = true;
+			return;
+		}
 		// Ads on corporate hub pages only
-		if($wgEnableCorporatePageExt) {
+		elseif($wgEnableCorporatePageExt) {
 			if (BodyModule::isHubPage()) {
 				self::$config['CORP_TOP_LEADERBOARD'] = true;
 				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
-				// wlee: we can serve Skins and Footer Ads out of TOP_LEADERBOARD, using option dcopt=ist, Don't need INVISIBLE_* slots
-				//self::$config['INVISIBLE_1'] = true;
-				//self::$config['INVISIBLE_2'] = true;
-				//self::$config['INVISIBLE_TOP'] = true;
 			}
 			return;
 		}

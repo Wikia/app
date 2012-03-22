@@ -396,6 +396,7 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 	switch (slotname) {
 		case 'CORP_TOP_LEADERBOARD':
 		case 'HOME_TOP_LEADERBOARD':
+		case 'HUB_TOP_LEADERBOARD':
 		case 'TOP_LEADERBOARD':
 			$('#'+slotname).removeClass(AdDriver.classNameDefaultHeight);
 			// if jumbo/expanding leaderboard, eliminate white space
@@ -432,6 +433,7 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 AdDriver.canCallLiftium = function(slotname) {
 	switch (slotname) {
 		case 'HOME_INVISIBLE_TOP':
+		case 'HUB_TOP_LEADERBOARD':
 		case 'INVISIBLE_MODAL':
 		case 'INVISIBLE_TOP':
 		case 'MIDDLE_RIGHT_BOXAD':

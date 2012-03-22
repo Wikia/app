@@ -19,6 +19,7 @@ var AdConfig = {
 			case 'HOME_INVISIBLE_TOP':
 			case 'HOME_TOP_LEADERBOARD':
 			case 'HOME_TOP_RIGHT_BOXAD':
+			case 'HUB_TOP_LEADERBOARD':
 			case 'INVISIBLE_MODAL':
 			case 'INVISIBLE_TOP':	// skin
 			case 'LEFT_SKYSCRAPER_2':
@@ -107,6 +108,7 @@ AdConfig.DART = {
 	   'HOME_TOP_LEADERBOARD': {'tile': 2, 'loc': "top", 'dcopt': "ist"},
 	   'HOME_TOP_RIGHT_BOXAD': {'tile': 1, 'loc': "top"},
 	   'HOME_TOP_RIGHT_BUTTON': {'tile': 3, 'loc': "top"},
+	   'HUB_TOP_LEADERBOARD': {'tile':2, 'loc': 'top', 'dcopt': 'ist'},
 	   'INCONTENT_BOXAD_1': {'tile':4, 'loc': "middle"},
 	   'INCONTENT_BOXAD_2': {'tile':5, 'loc': "middle"},
 	   'INCONTENT_BOXAD_3': {'tile':6, 'loc': "middle"},

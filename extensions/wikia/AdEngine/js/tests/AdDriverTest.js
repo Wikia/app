@@ -54,6 +54,7 @@ test('isHighValueSlot', function() {
   ok( AdConfig.isHighValueSlot('EXIT_STITIAL_BOXAD_1'), 'EXIT_STITIAL_BOXAD_1' );
   ok( AdConfig.isHighValueSlot('HOME_TOP_LEADERBOARD'), 'HOME_TOP_LEADERBOARD' );
   ok( AdConfig.isHighValueSlot('HOME_TOP_RIGHT_BOXAD'), 'HOME_TOP_RIGHT_BOXAD' );
+  ok( AdConfig.isHighValueSlot('HUB_TOP_LEADERBOARD'), 'HUB_TOP_LEADERBOARD' );
   ok( AdConfig.isHighValueSlot('INVISIBLE_MODAL'), 'INVISIBLE_MODAL' );
   ok( AdConfig.isHighValueSlot('MIDDLE_RIGHT_BOXAD'), 'MIDDLE_RIGHT_BOXAD' );
   ok( AdConfig.isHighValueSlot('MODAL_VERTICAL_BANNER'), 'MODAL_VERTICAL_BANNER' );
