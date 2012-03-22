@@ -297,9 +297,14 @@ AdConfig.DART.getAdType = function(useIframe) {
 }
 
 AdConfig.DART.initSiteAndZones = function() {
-	if (AdConfig.DART.isHub()) {
-		AdConfig.DART.site = AdConfig.DART.getSite(wgHubsPages[wgPageName.toLowerCase()]['site']);
-		AdConfig.DART.zone1 = AdConfig.DART.getZone1(wgHubsPages[wgPageName.toLowerCase()]['name']);
+	if (AdConfig.DART.isWikiaHub()) {
+		AdConfig.DART.site = AdConfig.DART.getSite('hub');
+		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgWikiaHubType+'_hub');
+		AdConfig.DART.zone2 = 'hub';
+	}
+	else if (AdConfig.DART.isAutoHub()) {
+		AdConfig.DART.site = AdConfig.DART.getSite(window.wgHubsPages[wgPageName.toLowerCase()]['site']);
+		AdConfig.DART.zone1 = AdConfig.DART.getZone1(window.wgHubsPages[wgPageName.toLowerCase()]['name']);
 		AdConfig.DART.zone2 = 'hub';
 	}
 
@@ -314,7 +319,15 @@ AdConfig.DART.initSiteAndZones = function() {
 	}
 }
 
-AdConfig.DART.isHub = function() {
+AdConfig.DART.isWikiaHub = function() {
+	if (window.wgWikiaHubType) {	// defined in source of hub article
+		return true;
+	}
+	
+	return false;
+}
+
+AdConfig.DART.isAutoHub = function() {
 	if (wgDBname != AdConfig.DART.corporateDbName) {
 		return false;
 	}
@@ -323,7 +336,7 @@ AdConfig.DART.isHub = function() {
 		return false;
 	}
 
-	for (var key in wgHubsPages) {
+	for (var key in window.wgHubsPages) {
 		if (typeof key == 'object' && key['name']) {
 			key = key['name'];
 		}
