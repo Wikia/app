@@ -56,11 +56,15 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	private function processContent() {
+		wfProfileIn(__METHOD__);
+
 		$this->sassProcessing();
 		$this->importsProcessing();
 		$this->stylePathProcessing();
 		$this->base64Processing();
 		$this->janusProcessing();
+
+		wfProfileOut(__METHOD__);
 	}
 
 	private function sassProcessing() {
