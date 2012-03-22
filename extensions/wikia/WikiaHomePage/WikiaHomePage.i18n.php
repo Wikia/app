@@ -34,9 +34,9 @@ $messages['en'] = array(
 	'wikiahome-hubs-videogames-creative' => 'Wikia is where it all starts when it comes to the world of video games.  Prepare to lose yourself.',
 	'wikiahome-hubs-videogames-more-heading' => 'More in Video Games',
 	'wikiahome-hubs-videogames-more-list' => '
-*[http://www.wikia.com/Gaming Game Guides]
-*[http://www.wikia.com/Gaming What\'s Hot]
-*[http://www.wikia.com/Gaming Best of 2011]',
+*[http://www.wikia.com/Video_Games Game Guides]
+*[http://www.wikia.com/Video_Games What\'s Hot]
+*[http://www.wikia.com/Video_Games Best of 2011]',
 
 	'wikiahome-hubs-entertainment-heading' => 'Entertainment',
 	'wikiahome-hubs-entertainment-url' => 'http://www.wikia.com/Entertainment',

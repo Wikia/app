@@ -33,6 +33,6 @@ $app->registerHook('ParserFirstCallInit', 'WikiaHubsPopularVideos', 'onParserFir
 // configuration
 $wgWikiaHubsPages = array(
 	'Entertainment',
-	'Gaming',
+	'Video_Games',
 	'Lifestyle',
 );
