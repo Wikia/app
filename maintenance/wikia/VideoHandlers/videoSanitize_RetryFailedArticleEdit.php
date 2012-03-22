@@ -45,7 +45,7 @@ function get_regexp( $title, $replacement, &$wsc ) {
 			}
 		}
 	}
-	echo "Full regexp: $regexp\n";
+	#echo "Full regexp: $regexp\n";
 	return $regexp;
 }
 

@@ -4,6 +4,7 @@
  * @usage: SERVER_ID=177 php videoSanitize.php --conf /usr/wikia/conf-current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf-current/AdminSettings.php
  *  */
 
+echo "-s-";
 
 function get_regexp( $title, $replacement, &$wsc ) {
 	$wsc = 0;
@@ -45,7 +46,7 @@ function get_regexp( $title, $replacement, &$wsc ) {
 			}
 		}
 	}
-	echo "Full regexp: $regexp\n";
+	#echo "Full regexp: $regexp\n";
 	return $regexp;
 }
 

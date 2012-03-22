@@ -9,6 +9,7 @@ group by wiki_id order by count(*) desc;" | slave stats > $TMPFILE
 cat $TMPFILE
 cat $TMPFILE | while read line; do
 	cityid=`echo "$line" | cut -f 1`
+	dbname=`echo "$line" | cut -f 3`
 	if [ "$cityid" = "city_id" ];
 	then
 		continue
@@ -18,7 +19,8 @@ cat $TMPFILE | while read line; do
 		continue
 	fi
 	echo "Processing $line"
-	sudo -u www-data SERVER_ID=$cityid php videoSanitize.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.sanitize.log
-	echo "\n\n"
+	#sudo -u www-data SERVER_ID=$cityid php videoSanitize.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.sanitize.log
+	withcity --maintenance-script='./wikia/VideoHandlers/videoSanitize.php' --usedb=$dbname | tee -a logs/${cityid}.sanitize.log
+	echo "---"
 done
 rm -f $TMPFILE
