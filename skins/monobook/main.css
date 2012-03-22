@@ -1400,3 +1400,6 @@ div.mw-lag-warn-high {
 	padding: 3px;
 }
 
+.MiniEditorWrapper .loading-indicator {
+	display: none;
+}
