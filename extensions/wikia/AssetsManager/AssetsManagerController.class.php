@@ -1,11 +1,32 @@
 <?php
 
+/**
+ * Handles fetching:
+ *  - output of Nirvana controllers (HTML / JSON)
+ *  - AssetsManager packages
+ *  - SASS files
+ *  - JS messages
+ *  in a single request as JSON object
+ *
+ * @author Macbre
+ */
+
 class AssetsManagerController extends WikiaController {
 
-	const TTL = 86400;
+	const CACHE_TTL = 86400;
 
 	/**
 	 * Return different type of assets in a single request
+	 *
+	 * @requestParam string templates - JSON encoded array of controllerName / methodName and optional params used to render a templaye
+	 * @requestParam string styles - comma-separated list of SASS files
+	 * @requestParam string scripts - comma-separated list of AssetsManager groups
+	 * @requestParam string messages - comma-separated list of JSMessages packages
+	 * @requestParam integer ttl - cache period for both varnish and browser (in seconds)
+	 * @responseParam array templates - rendered templates (either HTML or JSON encoded string)
+	 * @responseParam array styles - minified styles
+	 * @responseParam array scripts - minified AssetsManager  packages
+	 * @responseParam array messages - JS messages
 	 */
 	public function getMultiTypePackage() {
 		$key = 'multitypepackage::' . md5(json_encode($this->request->getParams()));
@@ -74,7 +95,7 @@ class AssetsManagerController extends WikiaController {
 				$this->response->setCacheValidity($ttl, $ttl, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 			}
 
-			$this->wg->Memc->set($key, $this->response->getData(), self::TTL);
+			$this->wg->Memc->set($key, $this->response->getData(), self::CACHE_TTL);
 		}
 		else {
 			$this->response->setData($data);
