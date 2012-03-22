@@ -161,7 +161,7 @@ if ( $rowCount ) {
 			if( isset( $response['error'] ) ) continue;
 
 			$newNameCandidate = $response['result'];
-			echo "Sanitizers candidate: $newNameCandidate\n";
+			//echo "Sanitizers candidate: $newNameCandidate\n";
 			$sNewTitle = $newNameCandidate;
 
 			$sufix = 2;
@@ -184,7 +184,7 @@ if ( $rowCount ) {
 					$sNewTitle = str_replace( ' ', '_', $sNewTitle );
 				}
 				$sufix++;
-				echo "Current candidate: $sNewTitle\n";
+				//echo "Current candidate: $sNewTitle\n";
 			}
 
 			if( $sFile != $sNewTitle ) {
