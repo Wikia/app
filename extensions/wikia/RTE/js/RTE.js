@@ -97,7 +97,7 @@
 		loadTime: false,
 
 		// The key in local storage where RTE related things are kept (BugId:25289)
-		localStorageKey: 'WikiaRichTextEditor|' + wgServer,
+		localStorageKey: 'WikiaRichTextEditor',
 
 		// use firebug / opera console to log events / dump objects
 		log: function(msg) {
