@@ -20,7 +20,7 @@ cat $TMPFILE | while read line; do
 	fi
 	echo "Processing $line"
 	#sudo -u www-data SERVER_ID=$cityid php videoSanitize.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.sanitize.log
-	/usr/wikia/backend/bin/withcity --maintenance-script='./wikia/VideoHandlers/videoSanitize.php' --usedb=$dbname | tee -a logs/${cityid}.sanitize.log
+	/usr/wikia/backend/bin/withcity --maintenance-script='../../../../home/release/video_refactoring/trunk/maintenance/wikia/VideoHandlers/videoSanitize.php' --usedb=$dbname | tee -a logs/${cityid}.sanitize.log
 	echo "---"
 done
 rm -f $TMPFILE
