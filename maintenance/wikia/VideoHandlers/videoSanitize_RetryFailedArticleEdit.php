@@ -35,7 +35,7 @@ function get_regexp( $title, $replacement, &$wsc ) {
 				}
 			} else {
 				//$int = ord($char);
-				//echo "-------------- Escaping $char ($int)\n";
+				echo "-------------- Escaping $char ($int)\n";
 				if( $char == '?') {
 					$regexp .= '(\\' . $char . '|%3f|%3F)';
 					$wsc++;
@@ -45,7 +45,7 @@ function get_regexp( $title, $replacement, &$wsc ) {
 			}
 		}
 	}
-	#echo "Full regexp: $regexp\n";
+	echo "Full regexp: $regexp\n";
 	return $regexp;
 }
 

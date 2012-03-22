@@ -167,7 +167,7 @@ if ( $rowCount ) {
 			$sufix = 2;
 			$firstCheck = true;
 			while (
-					strlen( $sNewTitle ) < 3 ||
+					strlen( $sNewTitle ) < 2 ||
 					($firstCheck === false && isset ( $aAllFiles[ $sNewTitle ] ) ) ||
 					($firstCheck === true  && $sFile != $sNewTitle && isset( $aAllFiles[ $sNewTitle ]) ) ||
 					isset (	$aAllFiles[ substr($sNewTitle, 1 ) ] )
