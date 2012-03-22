@@ -7,7 +7,7 @@
 		<thead class="AdminDashboardGeneralHeader">
 			<tr>
 				<th><?= wfMsg('quickstats-header-date') ?></th>
-				<th><?= wfMsg('quickstats-header-views') ?></th>
+				<th><div class="highlight-top"><?= wfMsg('quickstats-header-views'); ?></div></th>
 				<th><?= wfMsg('quickstats-header-edits') ?></th>
 				<th><?= wfMsg('quickstats-header-photos') ?></th>
 				<?php if(isset($totals['likes'])) { ?>
@@ -22,7 +22,7 @@
 						<?= wfMsg('quickstats-totals-label') ?>
 					</div>
 				</td>
-				<td><?= QuickStatsController::shortenNumberDecorator($totals['pageviews']) ?></td>
+				<td><div class="highlight-bottom"><?= QuickStatsController::shortenNumberDecorator($totals['pageviews']) ?></div></td>
 				<td><?= QuickStatsController::shortenNumberDecorator($totals['edits']) ?></td>
 				<td><?= QuickStatsController::shortenNumberDecorator($totals['photos']) ?></td>
 				<?php if(isset($totals['likes'])) { ?>
