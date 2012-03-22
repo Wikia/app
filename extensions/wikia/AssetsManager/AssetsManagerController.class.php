@@ -6,7 +6,22 @@ class AssetsManagerController extends WikiaController {
 	 * Return different type of assets in a single request
 	 */
 	public function getMultiTypePackage() {
-		// TODO: handle templates via sendRequest
+		// handle templates via sendRequest
+		$templates = $this->request->getVal('templates');
+		if (!is_null($templates)) {
+			if (!is_array($templates)) {
+				$templates = json_decode($templates, true /* $assoc */);
+			}
+			$templatesOutput = array();
+
+			foreach($templates as $template) {
+				$params = !empty($template['params']) ? $template['params'] : array();
+				$res = $this->sendRequest($template['controllerName'], $template['methodName'], $params);
+				$templatesOutput[] = $res->__toString();
+			}
+
+			$this->response->setVal('templates', $templatesOutput);
+		}
 
 		// handle SASS files
 		$styles = $this->request->getVal('styles');
@@ -65,6 +80,8 @@ class AssetsManagerController extends WikiaController {
 	 */
 	private function getBuilder($type, $oid) {
 		$type = ucfirst($type);
+
+		// TODO: add a factory method to AssetsManager
 		$className = "AssetsManager{$type}Builder";
 
 		if (class_exists($className)) {
