@@ -32,10 +32,12 @@ class EditPageService extends Service {
 		// parse wikitext using MW parser
 		$html = $wgParser->parse($wikitext, $this->mTitle, $parserOptions)->getText();
 
-		// we should also render categories
+		// we should also render categories and interlanguage links
 		$parserOutput = $wgParser->getOutput();
 		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
-		$html = $html . $catbox;
+		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
+
+		$html = implode('',array($html,$catbox,$interlanglinks));
 
 		wfProfileOut(__METHOD__);
 		return $html;
@@ -91,5 +93,42 @@ class EditPageService extends Service {
 
 		wfProfileOut(__METHOD__);
 		return $catbox;
+	}
+
+	protected function renderInterlangBoxFromParserOutput($parserOutput) {
+		global $wgOut, $wgUser, $wgContLang, $wgHideInterlanguageLinks;
+
+		wfProfileIn(__METHOD__);
+
+		$wgOut->addParserOutput($parserOutput);
+		$skin = $wgUser->getSkin();
+		$languagelinks= $wgOut->getLanguageLinks();
+
+		$language_urls = array();
+
+		if ( !$wgHideInterlanguageLinks ) {
+			foreach( $languagelinks as $l ) {
+				$tmp = explode( ':', $l, 2 );
+				$class = 'interwiki-' . $tmp[0];
+				unset( $tmp );
+				$nt = Title::newFromText( $l );
+				if ( $nt ) {
+					$language_urls[] = array(
+						'href' => $nt->getFullURL(),
+						'text' => ( $wgContLang->getLanguageName( $nt->getInterwiki() ) != '' ?
+							$wgContLang->getLanguageName( $nt->getInterwiki() ) : $l ),
+						'class' => $class
+					);
+				}
+			}
+		}
+
+		$langbox = null;
+		if(!empty($language_urls) && ($skin instanceof SkinOasis)) {
+			$langbox = F::app()->sendRequest('ArticleInterlangModule','Index',array('request_language_urls' => $language_urls))->toString();
+		}
+
+		wfProfileOut(__METHOD__);
+		return $langbox;
 	}
 }

@@ -24,6 +24,11 @@ class ArticleInterlangModule extends Module {
 
 		$this->request_all = $wgRequest->getVal('interlang') == 'all';
 
+		$request_language_urls = $this->request->getVal('request_language_urls');
+		if(!empty($request_language_urls)) {
+			$this->language_urls = $request_language_urls;
+		}
+
 		$language_urls = $this->language_urls;
 
 		// only display the interlang links if there are interlanguage links
