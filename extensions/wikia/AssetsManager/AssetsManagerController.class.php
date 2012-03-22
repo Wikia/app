@@ -8,7 +8,21 @@ class AssetsManagerController extends WikiaController {
 	public function getMultiTypePackage() {
 		// TODO: handle templates via sendRequest
 
-		// TODO: handle CSS/SASS files
+		// handle SASS files
+		$styles = $this->request->getVal('styles');
+		if (!is_null($styles)) {
+			$styleFiles = explode(',', $styles);
+			$stylesOutput = '';
+
+			foreach($styleFiles as $styleFile) {
+				$builder = $this->getBuilder('sass', $styleFile);
+				if (!is_null($builder)) {
+					 $stylesOutput .= $builder->getContent();
+				}
+			}
+
+			$this->response->setVal('styles', $stylesOutput);
+		}
 
 		// handle assets manager packages
 		$scripts = $this->request->getVal('scripts');
