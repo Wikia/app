@@ -323,6 +323,8 @@ class VideoEmbedTool {
 			$name = $oname;
 		}
 
+		$name = VideoFileUploader::sanitizeTitle($name);
+
 		// sanitize name and init title objects
 		if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
 			$nameFile = VideoFileUploader::sanitizeTitle($name);
