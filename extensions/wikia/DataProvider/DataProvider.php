@@ -1,6 +1,8 @@
 <?php
 
-if (!defined('MEDIAWIKI')) die();
+if (!defined('MEDIAWIKI')) {
+	die();
+}
 /**
  * Data Provider for Wikia skins
  *
@@ -16,77 +18,82 @@ if (!defined('MEDIAWIKI')) die();
  */
 
 $wgExtensionCredits['other'][] = array(
-		'name' => 'DataProvider',
-		'description' => 'data provider for wikia skins',
-		'author' => 'Inez Korczyński, Tomasz Klim'
+	'name' => 'DataProvider',
+	'description' => 'data provider for wikia skins',
+	'author' => 'Inez Korczyński, Tomasz Klim'
 );
+
 
 class DataProvider {
 	private $skin;
 
-	/*
+	/**
 	 * Author: Tomasz Klim (tomek at wikia.com)
-	*/
-	final public static function &singleton( &$skin = false ) {
+	 */
+	final public static function &singleton(&$skin = false) {
 		static $instance;
-		if ( !isset( $instance ) ) {
-			$instance = new DataProvider( $skin );
+		if (!isset($instance)) {
+			$instance = new DataProvider($skin);
 		}
 		return $instance;
 	}
 
-	final private function DataProvider( &$skin ) {
+	final private function DataProvider(&$skin) {
 		$this->skin =& $skin;
 	}
 
-	/*
+	/**
 	 * Author: Tomasz Klim (tomek at wikia.com)
-	*/
-	final public function /* array */ GetData() {
+	 * @return array
+	 */
+	final public function GetData() {
 		return $this->skin->data;
 	}
 
-	/*
+	/**
 	 * Author: Tomasz Klim (tomek at wikia.com)
-	*
-	* Deprecated. Use getContext() instead.
-	*/
-	final public function /* object */ GetSkinObject() {
+	 *
+	 * Deprecated. Use getContext() instead.
+	 * @return Skin
+	 */
+	final public function GetSkinObject() {
 		return $this->skin;
 	}
 
-	/*
+	/**
 	 * Returns original translation or translation used in monobook if original is not found
-	* Author: Gerard, Inez, Tomek
-	*/
-	final public static function /* string */ Translate( $key ) {
-		wfProfileIn( __METHOD__ );
+	 * Author: Gerard, Inez, Tomek
+	 * @return string
+	 */
+	final public static function Translate($key) {
+		wfProfileIn(__METHOD__);
 		global $wgLang, $wgSkinTranslationMap;
 
-		if( $wgLang->getCode() == 'en' ) {
-			wfProfileOut( __METHOD__ );
-			return wfMsg( $key );
+		if ($wgLang->getCode() == 'en') {
+			wfProfileOut(__METHOD__);
+			return wfMsg($key);
 		}
-		if ( ( $message = $wgLang->getMessage( $key ) ) === false || ( trim( $message ) == '' ) ) {
-			if ( array_key_exists( $key, $wgSkinTranslationMap ) ) {
-				$message = wfMsg( $wgSkinTranslationMap[ $key ] );
+		if (($message = $wgLang->getMessage($key)) === false || (trim($message) == '')) {
+			if (array_key_exists($key, $wgSkinTranslationMap)) {
+				$message = wfMsg($wgSkinTranslationMap[$key]);
 			} else {
-				$message = wfMsg( $key );
+				$message = wfMsg($key);
 			}
 		}
-		if ( !isset( $message ) || trim( $message ) == '' ) {
+		if (!isset($message) || trim($message) == '') {
 			$message = $key;
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $message;
 	}
 
-	/*
+	/**
 	 * Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final public static function /* array */ GetTopFiveArray() {
-		wfProfileIn( __METHOD__ );
+	 * @return array
+	 */
+	final public static function GetTopFiveArray() {
+		wfProfileIn(__METHOD__);
 		global $wgMemc;
 
 		$links = array();
@@ -96,138 +103,144 @@ class DataProvider {
 		$links['highest_ratings'] = 'GetTopVotedArticles';
 		$links['community'] = 'GetTopFiveUsers';
 
-		if ( isset ( $_COOKIE['topfive'] ) && isset ( $links[$_COOKIE['topfive']] ) ) {
+		if (isset ($_COOKIE['topfive']) && isset ($links[$_COOKIE['topfive']])) {
 			$active = $_COOKIE['topfive'];
 		} else {
 			$active = 'most_visited';
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return array($links, $active);
 	}
 
-	/*
+	/**
 	 * Return array of links (href, text, id) for this wiki box
-	* Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final public static function /* array */ GetThisWiki() {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * @return array
+	 */
+	final public static function GetThisWiki() {
+		wfProfileIn(__METHOD__);
 		global $wgWikiaUsePHPBB;
 
 		$data = array();
-		$data['header'] = self::Translate( 'this_wiki' );
+		$data['header'] = self::Translate('this_wiki');
 
 		$data['home']['url'] = Skin::makeMainPageUrl();
-		$data['home']['text'] = self::Translate( 'home' );
+		$data['home']['text'] = self::Translate('home');
 
 		if (!empty($wgWikiaUsePHPBB)) {
 			$data['forum']['url'] = '/forum/';
-			$data['forum']['text'] = self::Translate( 'forum' );
+			$data['forum']['text'] = self::Translate('forum');
 		} else {
-			$data['forum']['url'] = Skin::makeInternalOrExternalUrl( wfMsgForContent( 'forum-url' ) );
-			$data['forum']['text'] = self::Translate( 'forum' );
+			$data['forum']['url'] = Skin::makeInternalOrExternalUrl(wfMsgForContent('forum-url'));
+			$data['forum']['text'] = self::Translate('forum');
 		}
 
-		$data['randompage']['url'] = Skin::makeSpecialUrl( 'Randompage' );
-		$data['randompage']['text'] = self::Translate( 'randompage' );
+		$data['randompage']['url'] = Skin::makeSpecialUrl('Randompage');
+		$data['randompage']['text'] = self::Translate('randompage');
 
 		$data['help']['url'] = 'http://www.wikia.com/wiki/Help:Tutorial_1';
-		$data['help']['text'] = self::Translate( 'helpfaq' );
+		$data['help']['text'] = self::Translate('helpfaq');
 
-		$data['joinnow']['url'] = Skin::makeSpecialUrl( 'Userlogin', "type=signup" );
+		$data['joinnow']['url'] = Skin::makeSpecialUrl('Userlogin', "type=signup");
 		$data['joinnow']['text'] = self::Translate('joinnow');
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $data;
 	}
 
-	/*
+	/**
 	 * Return array of links (href, text, id) for my stuff box
-	* Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final public function /* array */ GetMyStuff() {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * @return array
+	 */
+	final public function GetMyStuff() {
+		wfProfileIn(__METHOD__);
 
 		$links = array();
-		if ( !is_null( $this->skin ) ) {
+		if (!is_null($this->skin)) {
 			$links_temp = $this->skin->data['personal_urls'];
 			unset($links_temp['login']);
 			unset($links_temp['switchskin']);
 
-			foreach ( $links_temp as $key => $val ) {
-				$links[] = array( 'id' => $key, 'href' => $val['href'], 'text' => $val['text'] );
+			foreach ($links_temp as $key => $val) {
+				$links[] = array('id' => $key, 'href' => $val['href'], 'text' => $val['text']);
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $links;
 	}
 
-	/*
+
+	/**
 	 * Return array of links (href, text, id) for expert tools box
-	* Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final public function /* array */ GetExpertTools() {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * @return array
+	 */
+	final public function GetExpertTools() {
+		wfProfileIn(__METHOD__);
 
 		$links = array();
 
 		# Create page
-		$url = Skin::makeSpecialUrl( 'Createpage' );
+		$url = Skin::makeSpecialUrl('Createpage');
 		$text = self::Translate('createpage');
 		$id = 'createpage';
 		$links[] = array('url' => $url, 'text' => $text, 'id' => $id);
 
 		# Recent changes
-		$url = SpecialPage::getTitleFor( 'Recentchanges' )->getLocalURL();
+		$url = SpecialPage::getTitleFor('Recentchanges')->getLocalURL();
 		$text = self::Translate('recentchanges');
 		$id = 'recentchanges';
 		$links[] = array('url' => $url, 'text' => $text, 'id' => $id);
 
-		if ( !is_null( $this->skin) && !empty($this->skin->data['nav_urls']) ) {
-			foreach( $this->skin->data['nav_urls'] as $key => $val ) {
-				if( !empty( $val ) && $key != 'mainpage' && $key != 'print' ) {
-					$links[] = array( 'url' => $val['href'], 'text' => self::Translate( $key ), 'id' => $key );
+		if (!is_null($this->skin) && !empty($this->skin->data['nav_urls'])) {
+			foreach ($this->skin->data['nav_urls'] as $key => $val) {
+				if (!empty($val) && $key != 'mainpage' && $key != 'print') {
+					$links[] = array('url' => $val['href'], 'text' => self::Translate($key), 'id' => $key);
 				}
 			}
 		}
 
-		if ( !is_null( $this->skin) && !empty($this->skin->data['feeds']) ) {
-			foreach( $this->skin->data['feeds'] as $key => $val ) {
-				if( !empty( $val ) && $key != 'mainpage' && $key != 'print' ) {
-					$links[] = array( 'url' => $val['href'], 'text' => $val['text'], 'id' => $key );
+		if (!is_null($this->skin) && !empty($this->skin->data['feeds'])) {
+			foreach ($this->skin->data['feeds'] as $key => $val) {
+				if (!empty($val) && $key != 'mainpage' && $key != 'print') {
+					$links[] = array('url' => $val['href'], 'text' => $val['text'], 'id' => $key);
 				}
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $links;
 	}
 
-	/*
+
+	/**
 	 * Return array of top voted articles
-	* Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final public static function /* array */ GetTopVotedArticles($limit = 7) {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * @return array
+	 */
+	final public static function GetTopVotedArticles($limit = 7) {
+		wfProfileIn(__METHOD__);
 		global $wgMemc;
 
 		$memckey = wfMemcKey("TopVoted", $limit);
-		$results = $wgMemc->get( $memckey );
+		$results = $wgMemc->get($memckey);
 
-		if( !is_array( $results ) ) {
+		if (!is_array($results)) {
 
-			$oApi = new ApiMain( new FauxRequest( array( "action" => "query", "list" => "wkvoteart", "wklimit" => $limit * 2, "wktopvoted" => 1 ) ) );
+			$oApi = new ApiMain(new FauxRequest(array("action" => "query", "list" => "wkvoteart", "wklimit" => $limit * 2, "wktopvoted" => 1)));
 			$oApi->execute();
 			$aResult = &$oApi->GetResultData();
 
 			$results = array();
 
-			if ( count( $aResult['query']['wkvoteart'] ) > 0 ) {
-				foreach ( $aResult['query']['wkvoteart'] as $key => $val ) {
-					$title = Title::newFromID( $key );
+			if (count($aResult['query']['wkvoteart']) > 0) {
+				foreach ($aResult['query']['wkvoteart'] as $key => $val) {
+					$title = Title::newFromID($key);
 
-					if( is_object( $title ) ) {
+					if (is_object($title)) {
 						$article['url'] = $title->getLocalUrl();
 						$article['text'] = $title->getPrefixedText();
 						$results[] = $article;
@@ -237,59 +250,41 @@ class DataProvider {
 
 			self::removeAdultPages($results);
 
-			$results = array_slice( $results, 0, $limit );
-			$wgMemc->set( $memckey, $results, 60 * 60);
+			$results = array_slice($results, 0, $limit);
+			$wgMemc->set($memckey, $results, 60 * 60);
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
-	/*
+	/**
 	 * Return array of most popular articles
-	* Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final public static function /* array */ GetMostPopularArticles($limit = 7) {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * @return array
+	 */
+	final public static function GetMostPopularArticles($limit = 7) {
+		wfProfileIn(__METHOD__);
 		global $wgDBname, $wgMemc;
 
 		$memckey = wfMemcKey("MostPopular", $limit);
-		$results = $wgMemc->get( $memckey );
+		$results = $wgMemc->get($memckey);
 
-		if ( !is_array( $results ) ) {
+		if (!is_array($results)) {
 			$results = array();
-			$templateTitle = Title::newFromText ('Most popular articles', NS_MEDIAWIKI);
-			if( $templateTitle->exists() ) {
+			$templateTitle = Title::newFromText('Most popular articles', NS_MEDIAWIKI);
+			if ($templateTitle->exists()) {
 				/* take data from MW articles */
 				$templateArticle = new Article ($templateTitle);
 				$templateContent = $templateArticle->getContent();
-				$lines = explode( "\n\n", $templateContent );
-				foreach( $lines as $line ) {
-					$title = Title::NewFromText( $line );
+				$lines = explode("\n\n", $templateContent);
+				foreach ($lines as $line) {
+					$title = Title::NewFromText($line);
 
-					if( is_object( $title) ) {
+					if (is_object($title)) {
 						$article['url'] = $title->getLocalUrl();
 						$article['text'] = $title->getPrefixedText();
 						$results[] = $article;
-					}
-				}
-			}
-
-			if ( count( $results ) < $limit ) {
-				if ( function_exists("wfGetMostPopularArticlesFromCache") ) {
-					$most_popular = wfGetMostPopularArticlesFromCache($limit, 0);
-					if ( is_array($most_popular) && (!empty($most_popular)) ) {
-						foreach ($most_popular as $row_title => $cnt) {
-							$title = Title::makeTitleSafe( NS_MAIN, $row_title );
-
-							if(is_object($title)) {
-								if(wfMsg("mainpage") != $title->getText()) {
-									$article['url'] = $title->getLocalUrl();
-									$article['text'] = $title->getPrefixedText();
-									$results[] = $article;
-								}
-							}
-						}
 					}
 				}
 			}
@@ -297,89 +292,90 @@ class DataProvider {
 			self::removeAdultPages($results);
 
 			if (!empty($results)) {
-				$results = array_slice( $results, 0, $limit );
+				$results = array_slice($results, 0, $limit);
 			}
-			$wgMemc->set( $memckey, $results, 60 * 60 * 3);
+			// set memcache validity to 24 hours
+			$wgMemc->set($memckey, $results, 60 * 60 * 24);
 		}
 
-		wfProfileOut( __METHOD__ );
+
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
-	/*
+	/**
 	 * Return array newly created articles
-	* Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
-	*/
-	public static function GetNewlyCreatedArticles( $limit = 5, $ns = array( NS_MAIN ) ) {
-		wfProfileIn( __METHOD__ );
+	 * Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
+	 */
+	public static function GetNewlyCreatedArticles($limit = 5, $ns = array(NS_MAIN)) {
+		wfProfileIn(__METHOD__);
 
 		$dbr = wfGetDB(DB_SLAVE);
 
 		$res = $dbr->select('recentchanges', // table name
-				array('rc_title', 'rc_namespace'), // fields to get
-				array('rc_type = 1', 'rc_namespace' => $ns), // WHERE conditions [only new articles in main namespace]
-				__METHOD__, // for profiling
-				array('ORDER BY' => 'rc_cur_time DESC', 'LIMIT' => $limit) // ORDER BY creation timestamp
+			array('rc_title', 'rc_namespace'), // fields to get
+			array('rc_type = 1', 'rc_namespace' => $ns), // WHERE conditions [only new articles in main namespace]
+			__METHOD__, // for profiling
+			array('ORDER BY' => 'rc_cur_time DESC', 'LIMIT' => $limit) // ORDER BY creation timestamp
 		);
 
 		$items = array();
 		while ($row = $dbr->fetchObject($res)) {
 			$title = Title::makeTitleSafe($row->rc_namespace, $row->rc_title);
-			if(is_object($title)) {
+			if (is_object($title)) {
 				$items[] = array('href' => $title->getLocalUrl(), 'name' => $title->getPrefixedText());
 			}
 		}
 
 		$dbr->freeResult($res);
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $items;
 	}
 
-	/*
+	/**
 	 * Return array of most visited articles
-	* Author: Inez Korczynski (inez at wikia.com)
-	* Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
-	*/
-	final public static function /* array */ GetMostVisitedArticles( $limit = 7, $ns = array( NS_MAIN ), $fillUpMostPopular = true ) {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * Author: Adrian 'ADi' Wieczorek (adi(at)wikia.com)
+	 * @return array
+	 */
+	final public static function GetMostVisitedArticles($limit = 7, $ns = array(NS_MAIN), $fillUpMostPopular = true) {
+		wfProfileIn(__METHOD__);
 		global $wgDBname, $wgMemc;
 
-		$memckey = wfMemcKey("MostVisited", $limit, implode(",",$ns), $fillUpMostPopular);
-		$results = $wgMemc->get( $memckey );
+		$memckey = wfMemcKey("MostVisited", $limit, implode(",", $ns), $fillUpMostPopular);
+		$results = $wgMemc->get($memckey);
 
-		if ( !is_array( $results ) ) {
+		if (!is_array($results)) {
 			global $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
 
-			if ( !empty( $wgStatsDBEnabled ) ) {
-				// production version
-				$dbr = wfGetDB( DB_SLAVE, null, $wgStatsDB );
-				$res = $dbr->select(
-						array( 'page_views_articles' ),
-						array( 'pv_page_id', 'sum(pv_views) as pv_views', 'pv_namespace' ),
-						array(
-								'pv_city_id' => $wgCityId,
-								'pv_namespace' => (!empty($ns)?$ns:array())
-						),
-						__METHOD__,
-						array(
-								'GROUP BY' => 'pv_page_id, pv_namespace',
-								'ORDER BY' => 'pv_views DESC',
-								'LIMIT' => $limit,
-						)
-				);
-			}
-
 			$articlepages = array();
-			while ($row = $res->fetchObject($res)) {
-				$articlepages[$row->pv_page_id] = $row->pv_views;
+			if (!empty($wgStatsDBEnabled)) {
+				// production version
+				$dbr = wfGetDB(DB_SLAVE, null, $wgStatsDB);
+				$res = $dbr->select(
+					array('specials.page_views_summary_articles'),
+					array('page_id', 'pv_views', 'page_ns'),
+					array(
+						'city_id' => $wgCityId,
+						'page_ns' => (!empty($ns) ? $ns : array())
+					),
+					__METHOD__,
+					array(
+						'ORDER BY' => 'pv_views DESC',
+						'LIMIT' => $limit,
+					)
+				);
+				while ($row = $res->fetchObject($res)) {
+					$articlepages[$row->page_id] = $row->pv_views;
+				}
 			}
 
 			$results = array();
 			foreach ($articlepages as $articleid => $cnt) {
 				$title = Title::newFromID($articleid);
-				if(is_object($title)) {
-					if(wfMsg("mainpage") != $title->getText()) {
+				if (is_object($title)) {
+					if (wfMsg("mainpage") != $title->getText()) {
 						$article['url'] = $title->getLocalUrl();
 						$article['text'] = $title->getPrefixedText();
 						$article['count'] = $cnt;
@@ -391,119 +387,124 @@ class DataProvider {
 			self::removeAdultPages($results);
 
 			if (!empty($results)) {
-				$results = array_slice ($results, 0, $limit);
+				$results = array_slice($results, 0, $limit);
 			}
 
-			$wgMemc->set( $memckey, $results, 60 * 60 * 3);
+			$wgMemc->set($memckey, $results, 60 * 60 * 3);
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
-	/*
+	/**
 	 * Return array of newly changed articles
-	* Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final public static function /* array */ GetNewlyChangedArticles($limit = 7) {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * @return array
+	 */
+	final public static function GetNewlyChangedArticles($limit = 7) {
+		wfProfileIn(__METHOD__);
 		global $wgExternalDatawareDB, $wgMemc, $wgCityId;
 
 		$memckey = wfMemcKey("NewlyChanged", $limit);
-		$results = $wgMemc->get( $memckey );
+		$results = $wgMemc->get($memckey);
 
-		if ( !is_array( $results ) ) {
-			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+		if (!is_array($results)) {
+			$dbr = wfGetDB(DB_SLAVE, 'blobs', $wgExternalDatawareDB);
 			$res = $dbr->select(
-					'pages',
-					array( 'page_namespace, page_title' ),
-					array(
-							'page_wikia_id'		=> $wgCityId,
-							'page_namespace' 	=> 0
-					),
-					__METHOD__,
-					array(
-							'ORDER BY' => 'page_latest desc',
-							'LIMIT'    => $limit * 2
-					)
+				'pages',
+				array('page_namespace, page_title'),
+				array(
+					'page_wikia_id' => $wgCityId,
+					'page_namespace' => 0
+				),
+				__METHOD__,
+				array(
+					'ORDER BY' => 'page_latest desc',
+					'LIMIT' => $limit * 2
+				)
 			);
 
 			$results = array();
-			while ( $row = $dbr->fetchObject($res) ) {
-				$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
+			while ($row = $dbr->fetchObject($res)) {
+				$title = Title::makeTitleSafe($row->page_namespace, $row->page_title);
 
-				if ( is_object( $title ) ) {
+				if (is_object($title)) {
 					$article['url'] = $title->getLocalUrl();
 					$article['text'] = $title->getPrefixedText();
 					$results[] = $article;
 				}
 			}
-			$dbr->freeResult( $res );
+			$dbr->freeResult($res);
 
 			self::removeAdultPages($results);
 
-			$results = array_slice( $results, 0, $limit );
+			$results = array_slice($results, 0, $limit);
 			$wgMemc->set($memckey, $results, 60 * 10);
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
-	/*
+	/**
 	 * Return array of top five users
-	* Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final public static function /* array */ GetTopFiveUsers($limit = 7) {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * @return array
+	 */
+	final public static function GetTopFiveUsers($limit = 7) {
+		wfProfileIn(__METHOD__);
 		global $wgStatsDB, $wgMemc, $wgCityId, $wgStatsDBEnabled;
 
-		if ( empty( $wgStatsDB ) || empty( $wgStatsDBEnabled ) ) {
+		if (empty($wgStatsDB) || empty($wgStatsDBEnabled)) {
 			$result = array();
 		}
 		else {
 			$memckey = wfMemcKey("TopFiveUsers", $limit);
-			$results = $wgMemc->get( $memckey );
+			$results = $wgMemc->get($memckey);
 
-			if ( !is_array( $results ) ) {
-				$dbr = wfGetDB( DB_SLAVE );
-				$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__ );
+			if (!is_array($results)) {
+				$dbr = wfGetDB(DB_SLAVE);
+				$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__);
 
-				$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-				$query = "SELECT user_id AS rev_user, edits AS cnt FROM specials.events_local_users WHERE wiki_id = '" . $wgCityId . "' " . ( !empty($row->user_list) ? "AND user_id NOT IN (" . $row->user_list . ",'0','929702')" : "" ) . " ORDER BY edits DESC";
+				$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+				$query = "SELECT user_id AS rev_user, edits AS cnt FROM specials.events_local_users WHERE wiki_id = '" . $wgCityId . "' " . (!empty($row->user_list) ? "AND user_id NOT IN (" . $row->user_list . ",'0','929702')" : "") . " ORDER BY edits DESC";
 
-				$res = $dbs->query( $dbs->limitResult($query, $limit * 4, 0) );
+				$res = $dbs->query($dbs->limitResult($query, $limit * 4, 0));
 
 				$results = array();
-				while ( $row = $dbs->fetchObject( $res ) ) {
-					$user = User::newFromID( $row->rev_user );
+				while ($row = $dbs->fetchObject($res)) {
+					$user = User::newFromID($row->rev_user);
 
 					if (!$user->isBlocked() && !$user->isAllowed('bot')
-							&& ( $user->getName() != 'Wikia' ) # rt24706
-							&& $user->getUserPage()->exists() ) {
+						&& ($user->getName() != 'Wikia') # rt24706
+						&& $user->getUserPage()->exists()
+					) {
 						$article['url'] = $user->getUserPage()->getLocalUrl();
 						$article['text'] = $user->getName();
 						$results[] = $article;
 					}
 				}
-				$dbs->freeResult( $res );
+				$dbs->freeResult($res);
 
-				$results = array_slice( $results, 0, $limit );
+				$results = array_slice($results, 0, $limit);
 				$wgMemc->set($memckey, $results, 60 * 60 * 12);
 			}
-			wfProfileOut( __METHOD__ );
+			wfProfileOut(__METHOD__);
 		}
 		return $results;
 	}
 
-	/*
+	/**
 	 * Return array of top content
-	* Author: Inez Korczynski (inez at wikia.com)
-	*/
-	final private static function /* array */ GetTopContentQuery(&$results, $query, $limit, $exists_table = "") {
-		wfProfileIn( __METHOD__ );
+	 * Author: Inez Korczynski (inez at wikia.com)
+	 * @return array
+	 */
+	final private static function
+	GetTopContentQuery(&$results, $query, $limit, $exists_table = "") {
+		wfProfileIn(__METHOD__);
 
-		$dbr = &wfGetDB( DB_SLAVE );
+		$dbr = &wfGetDB(DB_SLAVE);
 
 		/* check if table exists */
 		if (!empty($exists_table)) {
@@ -513,66 +514,61 @@ class DataProvider {
 		}
 		/* check query */
 		if (!empty($query)) {
-			$res = $dbr->query( $dbr->limitResult($query, $limit * 2, 0) );
+			$res = $dbr->query($dbr->limitResult($query, $limit * 2, 0));
 
-			while($row = $dbr->fetchObject($res)) {
-				$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
+			while ($row = $dbr->fetchObject($res)) {
+				$title = Title::makeTitleSafe($row->page_namespace, $row->page_title);
 
-				if(is_object($title)) {
-					if(wfMsg("mainpage") != $title->getText()) {
+				if (is_object($title)) {
+					if (wfMsg("mainpage") != $title->getText()) {
 						$article['url'] = $title->getLocalUrl();
 						$article['text'] = $title->getPrefixedText();
 						$results[] = $article;
 					}
 				}
 			}
-			$dbr->freeResult( $res );
+			$dbr->freeResult($res);
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	/*
 	 * Return array of user's messages
-	* Author: Piotr Molski (moli at wikia.com)
-	*/
-	static public function GetUserEventMessages($limit = 1)
-	{
+	 * Author: Piotr Molski (moli at wikia.com)
+	 */
+	static public function GetUserEventMessages($limit = 1) {
 		global $wgDBname, $wgShareDB, $wgMessageCache, $wgOut;
 
-		wfProfileIn( __METHOD__ );
+		wfProfileIn(__METHOD__);
 
 		#$memckey = "{$wgDBname}:UserEventMessages";
 		#$results = $wgMemc->get( $memckey );
 
-		$oApi = new ApiMain( new FauxRequest( array( "action" => "query", "list" => "wkevents", "wklimit" => $limit) ) );
+		$oApi = new ApiMain(new FauxRequest(array("action" => "query", "list" => "wkevents", "wklimit" => $limit)));
 		$oApi->execute();
 		$aResult = &$oApi->GetResultData();
 
 		$results = array();
 
-		if ( count( $aResult['query']['wkevents'] ) > 0 ) {
+		if (count($aResult['query']['wkevents']) > 0) {
 			#---
 			#$wgMessageCache->loadFromDB();
 			#---
-			foreach ( $aResult['query']['wkevents'] as $eventType => $val )
+			foreach ($aResult['query']['wkevents'] as $eventType => $val)
 			{
 				#--- title
-				if (!empty($val['title']))
-				{
+				if (!empty($val['title'])) {
 					$parseTitle = wfMsg($val['title']);
-					if (!empty($parseTitle))
-					{
+					if (!empty($parseTitle)) {
 						$val['title'] = $wgOut->parse($parseTitle, false, true);
 					}
 				}
 				#--- content
-				if (!empty($val['content']))
-				{
+				if (!empty($val['content'])) {
 					$parseContent = wfMsg($val['content']);
-					if (!empty($parseContent))
-					{
+					if (!empty($parseContent)) {
 						$val['content'] = $wgOut->parse($parseContent, false, true);
 					}
 				}
@@ -581,7 +577,7 @@ class DataProvider {
 		}
 		#$wgMemc->set( $memckey, $results, 300 );
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
@@ -598,15 +594,12 @@ class DataProvider {
 	 *
 	 * @param array $articles: data to check out (by reference!)
 	 */
-	public static function removeAdultPages(&$articles)
-	{
-		wfProfileIn( __METHOD__ );
+	public static function removeAdultPages(&$articles) {
+		wfProfileIn(__METHOD__);
 
 		global $wgAdultPages, $wgAdultPagesDepreciationLevel;
-		if (!empty($wgAdultPages) && is_array($wgAdultPages))
-		{
-			if (!empty($wgAdultPagesDepreciationLevel) && is_integer($wgAdultPagesDepreciationLevel))
-			{
+		if (!empty($wgAdultPages) && is_array($wgAdultPages)) {
+			if (!empty($wgAdultPagesDepreciationLevel) && is_integer($wgAdultPagesDepreciationLevel)) {
 				$articles = self::removeAdultPagesGradually($articles, $wgAdultPages, $wgAdultPagesDepreciationLevel);
 			} else
 			{
@@ -614,7 +607,7 @@ class DataProvider {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -630,15 +623,13 @@ class DataProvider {
 	 *
 	 * @param array
 	 */
-	public static function removeAdultPagesAtOnce($data, $to_remove)
-	{
-		wfProfileIn( __METHOD__ );
+	public static function removeAdultPagesAtOnce($data, $to_remove) {
+		wfProfileIn(__METHOD__);
 
 		$output = array();
 		foreach ($data as $row)
 		{
-			if (in_array($row['text'], $to_remove))
-			{
+			if (in_array($row['text'], $to_remove)) {
 				wfDebug(sprintf("%s: page '%s' removed.\n", __METHOD__, $row['text']));
 			} else
 			{
@@ -646,7 +637,7 @@ class DataProvider {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $output;
 	}
 
@@ -665,9 +656,8 @@ class DataProvider {
 	 *
 	 * @param array
 	 */
-	public static function removeAdultPagesGradually($data, $to_remove, $depreciate_by)
-	{
-		wfProfileIn( __METHOD__ );
+	public static function removeAdultPagesGradually($data, $to_remove, $depreciate_by) {
+		wfProfileIn(__METHOD__);
 
 		$depreciated_to = array();
 		$i = 0;
@@ -675,8 +665,7 @@ class DataProvider {
 		$output = array();
 		foreach ($data as $row)
 		{
-			if (in_array($row['text'], $to_remove))
-			{
+			if (in_array($row['text'], $to_remove)) {
 				$depreciated_to[$i + $depreciate_by] = $row;
 
 				wfDebug(sprintf("%s: page '%s' will be moved to #%d.\n", __METHOD__, $row['text'], $i + $depreciate_by));
@@ -693,8 +682,7 @@ class DataProvider {
 		$output2 = array();
 		while ($j < $i)
 		{
-			if (!empty($depreciated_to[$j]))
-			{
+			if (!empty($depreciated_to[$j])) {
 				$output2[] = $depreciated_to[$j];
 
 				wfDebug(sprintf("%s: page '%s' put at #%d from depreciated_to array.\n", __METHOD__, $depreciated_to[$j]['text'], $j));
@@ -707,7 +695,7 @@ class DataProvider {
 		}
 		$output = $output2;
 
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return $output;
 	}
 
@@ -722,39 +710,41 @@ class DataProvider {
 		$message_key = 'shared-Monaco-category-list';
 		$nodes = array();
 
-		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
-			if(null == ($lines = getMessageAsArray($message_key))) {
+		if (!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key . '-' . $wgCat['id']))) {
+			wfDebugLog('monaco', $message_key . '-' . $wgCat['id'] . ' - seems to be empty');
+			if (null == ($lines = getMessageAsArray($message_key))) {
 				wfDebugLog('monaco', $message_key . ' - seems to be empty');
-				wfProfileOut( __METHOD__ );
+				wfProfileOut(__METHOD__);
 				return $nodes;
 			}
 		}
 
-		foreach($lines as $line) {
+		foreach ($lines as $line) {
 			$depth = strrpos($line, '*');
-			if($depth === 0) {
+			if ($depth === 0) {
 				$cat = parseItem($line);
-			} else if($depth === 1) {
-				$nodes[] = parseItem($line);
+			} else {
+				if ($depth === 1) {
+					$nodes[] = parseItem($line);
+				}
 			}
 		}
-		wfProfileOut( __METHOD__ );
+		wfProfileOut(__METHOD__);
 		return array('nodes' => $nodes, 'cat' => $cat);
 	}
 
-	public static function GetRecentlyUploadedImages( $limit = 50, $includeThumbnails = true ) {
+	public static function GetRecentlyUploadedImages($limit = 50, $includeThumbnails = true) {
 		wfProfileIn(__METHOD__);
 
 		$ret = false;
 
 		// get list of recent log entries (type = 'upload')
 		$params = array(
-				'action' => 'query',
-				'list' => 'logevents',
-				'letype' => 'upload',
-				'leprop' => 'title',
-				'lelimit' => $limit,
+			'action' => 'query',
+			'list' => 'logevents',
+			'letype' => 'upload',
+			'leprop' => 'title',
+			'lelimit' => $limit,
 		);
 
 		try {
@@ -766,29 +756,29 @@ class DataProvider {
 
 			wfProfileOut(__METHOD__ . '::apiCall');
 
-			if( !empty($res['query']['logevents']) ) {
-				foreach( $res['query']['logevents'] as $entry ) {
+			if (!empty($res['query']['logevents'])) {
+				foreach ($res['query']['logevents'] as $entry) {
 
 					// ignore Video:foo entries from VET
-					if(  $entry['ns'] == NS_IMAGE ) {
+					if ($entry['ns'] == NS_IMAGE) {
 						$image = Title::newFromText($entry['title']);
 
-						$imageFile = wfFindFile( $image->getText() );
-						if( is_object( $imageFile ) ) {
+						$imageFile = wfFindFile($image->getText());
+						if (is_object($imageFile)) {
 
 							$imageType = $imageFile->minor_mime;
 							$imageSize = $imageFile->size;
 
 							// don't show PNG files / files smaller than 2 kB
-							if( ($imageType == 'png') || ($imageSize < 2048) ) {
+							if (($imageType == 'png') || ($imageSize < 2048)) {
 								continue;
 							}
 						}
 
 						// use keys to remove duplicates
 						$ret[$image->getDBkey()] = array(
-								'name' => $image->getText(),
-								'url' => $image->getFullUrl()
+							'name' => $image->getText(),
+							'url' => $image->getFullUrl()
 						);
 
 					}
@@ -797,9 +787,10 @@ class DataProvider {
 				// use numeric keys
 				$ret = array_values($ret);
 			}
+		} catch (Exception $e) {
+
 		}
-		catch(Exception $e) {
-		};
+
 
 		wfProfileOut(__METHOD__);
 		return $ret;
