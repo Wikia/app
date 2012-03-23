@@ -1,6 +1,4 @@
 <?php
-$preIP = dirname( __FILE__ );
-require_once ("$preIP/extensions/wikia/LangRedirect/LangRedirect.php") ;
 /**
  * This is the main web entry point for MediaWiki.
  *
@@ -39,6 +37,7 @@ require_once ("$preIP/extensions/wikia/LangRedirect/LangRedirect.php") ;
 
 
 # Initialise common code
+$preIP = dirname( __FILE__ );
 require_once( "$preIP/includes/WebStart.php" );
 # Initialize MediaWiki base class
 require_once( "$preIP/includes/Wiki.php" );
