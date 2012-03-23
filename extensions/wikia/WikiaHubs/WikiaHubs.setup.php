@@ -22,13 +22,15 @@ $wgExtensionCredits['other'][] = array(
 
 //classes
 $app->registerClass('WikiaHubsSuggestController', $dir.'WikiaHubsSuggestController.class.php');
-$app->registerClass('WikiaHubsPopularVideos', $dir . 'WikiaHubsPopularVideosHook.class.php');
+$app->registerClass('WikiaHubsPopularVideos', $dir . 'WikiaHubsHook.class.php');
+$app->registerClass('WikiaHubsMobile', $dir . 'WikiaHubsHook.class.php');
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHubs'] = $dir . 'WikiaHubs.i18n.php';
 
 // hooks
 $app->registerHook('ParserFirstCallInit', 'WikiaHubsPopularVideos', 'onParserFirstCallInit');
+$app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsMobile', 'onWikiaMobileAssetsPackages');
 
 // configuration
 $wgWikiaHubsPages = array(
