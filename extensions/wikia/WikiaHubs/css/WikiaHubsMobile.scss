@@ -1,0 +1,78 @@
+// For WikiaHubs - TODO: Move this
+@import "../../WikiaHubs/css/ColorsPerVertical.scss";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+
+// TODO: Move this to it's own file within WikiaHubs extension
+.WikiaHubs {
+	/* reset article styling */
+	p {
+		margin: 0;
+		padding: 0;
+	}
+	h2, .title-wrapper {
+		//border-bottom: 5px solid #d8e3e9;
+		background: #484848;
+		color: #FFF;
+		font-weight: bold;
+		font-size: 14px;
+		line-height: 30px;
+		margin: 0;
+		padding: 0;
+		text-transform: uppercase;
+	}
+
+	.wikiahubs-pulse {
+		position: relative;
+		padding-bottom: 9px;
+		border-bottom: 1px solid #D8E3E7;
+		margin-bottom: 20px;
+		.social {
+			display: none;
+		}
+		.title-wrapper {
+			margin-top: 10px;
+			width: 100%;
+			position: relative;
+			@include clearfix;			
+		}
+		.pulse-content {
+			.search {
+				display: none;
+			}
+			.boxes {
+				margin-top:10px;
+				overflow:hidden;
+				clear:both;
+			}
+			.box{
+				width:144px;
+				float:left;
+				margin-left:10px;
+				border-left: 1px dotted #808080;
+				padding-left:10px;			
+				h5 {
+					font-size: 15px;
+					line-height:1.5em;
+					color:#7E7E7E;
+					margin: .5em 0 .2em;
+				}
+				big {
+					font-size: 23px;
+					color:#3A3A3A;
+					font-weight:bold;
+				}
+				&:first-child {
+					width:155px;
+					margin-left:0;
+					border-left: 0;
+					padding-left: 0;
+				}
+			}		
+		}	
+	}
+	
+	.wikiahubs-popular-videos, .wikiahubs-from-the-community h2 button, .wikiacorporatefooter {
+		display: none;
+	}
+}
