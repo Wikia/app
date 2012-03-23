@@ -20,7 +20,7 @@ class ArticleInterlangModule extends Module {
 
 	function WidgetLanguages() {
 		wfProfileIn( __METHOD__ );
-		global $wgUser, $wgRequest;
+		global $wgRequest;
 
 		$this->request_all = $wgRequest->getVal('interlang') == 'all';
 
