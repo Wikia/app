@@ -184,6 +184,11 @@ var WikiHeaderV2 = {
 	isDisplayed: false,
 	activeL1: null,
 
+	settings: {
+		mouseoverDelay: 200,
+		mouseoutDelay: 350
+	},
+
 	log: function(msg) {
 		$().log(msg, 'WikiHeaderV2');
 	},
@@ -367,7 +372,7 @@ var WikiHeaderV2 = {
 			}
 			WikiHeaderV2.activeL1 = self;
 			WikiHeaderV2.showSubNavL2(self);
-		}, WikiHeader.settings.mouseoverDelay);
+		}, WikiHeaderV2.settings.mouseoverDelay);
 	},
 
 	mouseoutL1: function(event) {
@@ -412,7 +417,7 @@ var WikiHeaderV2 = {
 			$(self).siblings().removeClass('marked2');
 
 			WikiHeaderV2.showSubNavL3(self);
-		}, WikiHeader.settings.mouseoverDelay);
+		}, WikiHeaderV2.settings.mouseoverDelay);
 	},
 
 	mouseoutL2: function() {
@@ -421,7 +426,7 @@ var WikiHeaderV2 = {
 
 		WikiHeader.mouseoutTimer = setTimeout(function() {
 			WikiHeaderV2.hideNavL3();
-		}, WikiHeader.settings.mouseoutDelay);
+		}, WikiHeaderV2.settings.mouseoutDelay);
 	},
 
 	showSubNavL2: function(parent) {
