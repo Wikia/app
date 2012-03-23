@@ -216,3 +216,7 @@ div#article-comm-fbMonit {
 .skin-monobook #article-comments .speech-bubble-avatar {
 	float: left;
 }
+
+.MiniEditorWrapper .loading-indicator {
+	display: none;
+}
