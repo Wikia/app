@@ -15,7 +15,7 @@ var RelatedVideos = {
 	isHubVideos: false,
 	isHubExtEnabled: false,
 	isHubExtPage: false,
-	gaCat:			'RelatedVideos',
+	gaCat:			'related-videos',
 
 	init: function(relatedVideosModule) {
 		this.rvModule = $(relatedVideosModule);
@@ -47,10 +47,12 @@ var RelatedVideos = {
 		) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
 			relatedVideosModule.delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
+			relatedVideosModule.delegate( 'a.added-by', 'click', RelatedVideos.handleAddedByClick );
 			relatedVideosModule.delegate( '.scrollright', 'click', RelatedVideos.scrollright );
 			relatedVideosModule.delegate( '.scrollleft', 'click', RelatedVideos.scrollleft );
 			relatedVideosModule.delegate( '.addVideo', 'click', RelatedVideos.addVideoLoginWrapper );
 			relatedVideosModule.delegate( '.remove', 'click', RelatedVideos.removeVideoLoginWrapper );
+			relatedVideosModule.delegate( '.requestvideos button', 'click', RelatedVideos.handleRequestButtonClick );
 			$('body').delegate( '#relatedvideos-video-player-embed-show', 'click', function() {
 				$('#relatedvideos-video-player-embed-code').show();
 				$('#relatedvideos-video-player-embed-show').hide();
@@ -67,6 +69,11 @@ var RelatedVideos = {
 			}
 		}
 		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.VIEW } );
+	},
+	
+	handleAddedByClick : function(e) {
+		var owner = $(this).attr('data-owner');
+		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'ga_label':'added-by', 'internal_params':{ 'username':owner } } );		
 	},
 
 	// Scrolling modal items
@@ -464,7 +471,12 @@ var RelatedVideos = {
 				RelatedVideos.showError();
 			}
 		);
+	},
+	
+	handleRequestButtonClick : function(e) {
+		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.TAKE_SURVEY, 'ga_label':'request-new-videos' } );		
 	}
+
 };
 
 //on content ready

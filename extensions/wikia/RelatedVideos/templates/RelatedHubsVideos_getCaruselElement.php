@@ -23,7 +23,7 @@
 				if ( empty( $video['external'] ) || isset( $video['externalByUser'] ) ){
 					$ownerUrl = $video['ownerUrl'];
 					if ( !empty( $ownerUrl ) ) {
-						?><a href="<?=$video['ownerUrl'];?>"><?=$video['owner'];?></a><?
+						?><a class="added-by" data-owner="<?=$video['owner'];?>" href="<?=$video['ownerUrl'];?>"><?=$video['owner'];?></a><?
 					} else {
 						echo $video['owner'];
 					}

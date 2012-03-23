@@ -44,6 +44,8 @@ $messages['en'] = array(
 	'related-videos-video-is-new' => 'New',
 	'related-videos-pagination' => '$1 of $2',
 	'related-videos-empty' => 'Be the first to add a video',
+        'related-videos-requestbutton' => 'Request New Videos',
+        'related-videos-requesttext' => 'What else would you like to see?'
 );
 
 /** Message documentation (Message documentation) */
