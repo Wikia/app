@@ -27,7 +27,7 @@ class RelatedVideosHookHandler {
 		}
 		
 		$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/RelatedVideos/js/RelatedVideos.js"></script>' );
-		$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/JWPlayer/jwplayer.min.js"></script>' );
+		$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/JWPlayer/jwplayer.min.js"></script>' );	//@todo post-migration, might be able to remove this
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/RelatedVideos/css/RelatedVideos.scss' ) );
 
 		wfProfileOut(__METHOD__);

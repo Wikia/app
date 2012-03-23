@@ -13,7 +13,7 @@ class RelatedVideosData {
 		wfProfileIn( __METHOD__ );
 
 		$data = array();
-		if ( empty( $title ) || !is_object( $title ) || !( $title instanceof Title ) || !$title->exists() ){
+		if ( !( $title instanceof Title ) || !$title->exists() ){
 			$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
 		} else {
 

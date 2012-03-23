@@ -15,6 +15,7 @@ var RelatedVideos = {
 	isHubVideos: false,
 	isHubExtEnabled: false,
 	isHubExtPage: false,
+	gaCat:			'RelatedVideos',
 
 	init: function(relatedVideosModule) {
 		this.rvModule = $(relatedVideosModule);
@@ -65,18 +66,19 @@ var RelatedVideos = {
 				$('.remove',this.rvModule).wikiaTooltip( $('.removeVideoTooltip',this.rvModule).html() );
 			}
 		}
+		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.VIEW } );
 	},
 
 	// Scrolling modal items
 
 	scrollright: function(){
 		RelatedVideos.showImages();
-		RelatedVideos.track( 'module/scrollRight' );
+		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.PAGINATE, 'ga_label':'paginate-next', 'ga_value':RelatedVideos.currentRoom+1 } );
 		RelatedVideos.scroll( 1, false );
 	},
 
 	scrollleft: function(){
-		RelatedVideos.track( 'module/scrollLight' );
+		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.PAGINATE, 'ga_label':'paginate-prev', 'ga_value':RelatedVideos.currentRoom-1 } );
 		RelatedVideos.scroll( -1, false );
 	},
 
@@ -215,12 +217,7 @@ var RelatedVideos = {
 		}
 	},
 
-	track: function(fakeUrl) {
-		$.tracker.byStr('relatedVideos/' + fakeUrl);
-	},
-
 	showError: function(){
-		$().log('asd');
 		GlobalNotification.warn( $('.errorWhileLoading').html() );
 	},
 
@@ -228,7 +225,6 @@ var RelatedVideos = {
 
 	displayVideoModal : function(e) {
 		e.preventDefault();
-		RelatedVideos.track( 'module/thumbnailClick' );
 		var url = $(this).attr('data-ref');
 		var external = $(this).attr('data-external');
 		var link = $(this).attr('href');
@@ -241,6 +237,24 @@ var RelatedVideos = {
 			var controlerName = 'RelatedVideosController';
 		}
 		
+		// get index of clicked item
+		var eventTarget = $(e.target);
+		var localItem = eventTarget.closest('.item');
+		var localGroup = localItem.closest('.group');
+		var container = localGroup.closest('.container');
+		var allGroups = container.children();
+		var localAllItems = localGroup.children();
+		var localItemIndex = localAllItems.index(localItem);
+		var localGroupIndex = allGroups.index(localGroup);
+		var clickedIndex = (localGroupIndex * RelatedVideos.videosPerPage) + localItemIndex;
+
+		WikiaTracker.trackEvent( { 'tracking_method':'both', 
+			'ga_category':RelatedVideos.gaCat, 
+			'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO, 
+			'ga_label':($(this).hasClass('video-thumbnail') ? 'thumbnail' : 'title'), 
+			'ga_value':clickedIndex+1, // tracked values must be one-indexed
+			'internal_params':{'video_title':url} } );
+
 		$.nirvana.getJson(
 			controlerName,
 			'getVideo',
@@ -294,7 +308,6 @@ var RelatedVideos = {
 
 	addVideoLoginWrapper: function( e ){
 		e.preventDefault();
-		RelatedVideos.track( 'module/addVideo/beforeLogin' );
 		RelatedVideos.loginWrapper( RelatedVideos.addVideoModal, this );
 	},
 
@@ -316,7 +329,7 @@ var RelatedVideos = {
 
 	},
 	addVideoModal: function( target ){
-		RelatedVideos.track( 'module/addVideo/afterLogin' );
+		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.ADD, 'ga_label':'add-video' } );
 		$(this.rvModule).undelegate( '.addVideo', 'click' );
 		$.nirvana.postJson(
 			'RelatedVideosController',
@@ -356,6 +369,7 @@ var RelatedVideos = {
 				url: $('#relatedvideos-add-video input').val()
 			},
 			function( formRes ) {
+				WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.ADD, 'ga_label':'add-video-success' } );
 				GlobalNotification.hide();
 				if ( formRes.error ) {
 					$('#relatedvideos-add-video').addClass( 'error-mode' );
@@ -402,17 +416,19 @@ var RelatedVideos = {
 
 	removeVideoLoginWrapper: function( e ){
 		e.preventDefault();
-		RelatedVideos.track( 'module/removeVideo/beforeLogin' );
+		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.REMOVE, 'ga_label':'remove-video' } );
 		RelatedVideos.loginWrapper( RelatedVideos.removeVideoClick, this );
 	},
 
 	removeVideoClick: function( target ){
-		RelatedVideos.track( 'module/removeVideo/afterLogin' );
 		var parentItem = $(target).parents('.item');
+		var item = $(parentItem).find('a.video-thumbnail');
+		var title = item.attr('data-ref');
 		$.confirm({
 			content: $( '.deleteConfirm',RelatedVideos.rvModule ).html(),
 			onOk: function(){
 				RelatedVideos.removeVideoItem( parentItem );
+				WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.REMOVE, 'ga_label':'remove-video-success', 'internal_params':{ 'video_title':title } } );
 			}
 		});
 	},
