@@ -1,34 +1,39 @@
-// For WikiaHubs - TODO: Move this
 @import "../../WikiaMobile/css/WikiaMobile.scss";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../WikiaHubs/css/ColorsPerVertical.scss";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
-
-// TODO: Move this to it's own file within WikiaHubs extension
 .WikiaHubs {
 	/* reset article styling */
 	p {
 		margin: 0;
 		padding: 0;
 	}
-	h2, .title-wrapper {
+
+	h2 {
 		//border-bottom: 5px solid #d8e3e9;
 		background: #484848;
 		color: #FFF;
 		font-weight: bold;
 		font-size: 14px;
 		line-height: 30px;
-		margin: 0;
-		padding: 0;
+		margin: 20px 0 0 0;
+		padding: 0 0 0 10px;
 		text-transform: uppercase;
 	}
 
+	h4 {
+		font-weight: bold;
+		//font-size: 13px;
+		color: #3A3A3A;
+		margin: 1.5em 0 0 0;
+		&:first-child {
+			margin: 0;
+		}
+	}
+
 	.wikiahubs-pulse {
-		position: relative;
 		padding-bottom: 9px;
-		border-bottom: 1px solid #D8E3E7;
-		margin-bottom: 20px;
 		.social {
 			display: none;
 		}
@@ -43,16 +48,11 @@
 				display: none;
 			}
 			.boxes {
-				margin-top:10px;
-				overflow:hidden;
-				clear:both;
+				margin-top: 15px;
 			}
 			.box{
-				width:144px;
-				float:left;
-				margin-left:10px;
-				border-left: 1px dotted #808080;
-				padding-left:10px;			
+				padding-bottom: 5px;
+				border-bottom: 1px dotted #808080;
 				h5 {
 					font-size: 15px;
 					line-height:1.5em;
@@ -64,16 +64,50 @@
 					color:#3A3A3A;
 					font-weight:bold;
 				}
-				&:first-child {
-					width:155px;
-					margin-left:0;
-					border-left: 0;
-					padding-left: 0;
-				}
 			}		
 		}	
 	}
 	
+	/* From the Community Module */
+	.wikiahubs-from-the-community {
+		h1 {
+			margin-bottom: 10px;
+		}
+		.wikiahubs-ftc-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			.wikiahubs-ftc-item {
+				@include clearfix;
+				border-bottom: 1px solid $color-page-border;
+				list-style: none;
+				margin: 0;
+				padding: 10px 0;
+				img {
+					height: 100px;
+					width: 155px;
+				}
+				.floatleft {
+					display: inline-block;
+					margin: 0 10px 10px 0;
+				}
+				.wikiahubs-ftc-subtitle {
+					clear: left;
+				}
+				.wikiahubs-ftc-title {
+					font-size: 14px;
+					font-weight: bold;
+				}
+				.wikiahubs-ftc-creative {
+					margin-top: 10px;
+				}
+				&:last-child {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+
 	.wikiahubs-popular-videos, .wikiahubs-from-the-community h2 button, .wikiacorporatefooter {
 		display: none;
 	}
