@@ -142,6 +142,7 @@ class SolrSearchSet extends SearchResultSet {
 	private $mOffset = 0;
 	private $suggestions = null;
 	private $mRelevancyFunctionId = 1;
+	private $mArticleMatch = null;
 
 	/**
 	 * any query string transformation before sending to backend should be placed here
@@ -166,6 +167,30 @@ class SolrSearchSet extends SearchResultSet {
 		else {
 			return $modes[ ( $diceRoll % count($modes) ) ];
 		}
+	}
+
+	public static function createArticleMatch( $term ) {
+		// Try to go to page as entered.
+		$title = Title::newFromText( $term );
+		# If the string cannot be used to create a title
+		if( is_null( $title ) ) {
+			return null;
+		}
+
+		$searchWithNamespace = $title->getNamespace() != 0 ? true : false;
+		// If there's an exact or very near match, jump right there.
+		$title = SearchEngine::getNearMatch( $term );
+		if( !is_null( $title ) && ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) ) {
+			$article = new Article( $title );
+			if($article->isRedirect()) {
+				return new Article($article->getRedirectTarget());
+			}
+			else {
+				return $article;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -330,13 +355,16 @@ class SolrSearchSet extends SearchResultSet {
 			wfProfileOut( $fname );
 			return 100;
 		}
+
 		$resultDocs = $response->response->docs;
 		$resultSnippets = is_object($response->highlighting) ? get_object_vars($response->highlighting) : array();
 		$resultSuggestions = is_object($response->spellcheck) ? $response->spellcheck->suggestions : null;
 		$resultCount = count($resultDocs);
 		$totalHits = $response->response->numFound;
 
-		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits, $crossWikiaSearch );
+		// check if exact match is available (similar to MW "go-result" feature)
+		$articleMatch = self::createArticleMatch($query);
+		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits, $crossWikiaSearch, $articleMatch);
 
 		if( empty( $offset ) ) {
 			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), array( 'sterm' => $query, 'rver' => $relevancyFunctionId, 'stype' => ( $crossWikiaSearch ? 'inter' : 'intra' ) ) );
@@ -344,6 +372,27 @@ class SolrSearchSet extends SearchResultSet {
 
 		wfProfileOut( $fname );
 		return $resultSet;
+	}
+
+	public static function onSpecialSearchResults( $term, &$titleMatches, &$textMatches ) {
+		global $wgOut, $wgUser;
+		if($textMatches->hasArticleMatch()) {
+			$skin = $wgUser->getSkin();
+			$article = $textMatches->getArticleMatch();
+			$title = $article->getTitle();
+
+			//$link_title = clone $title;
+			$link = $skin->linkKnown( $title, null );
+
+			$wgOut->addHTML( "<div style='background: #f4f4f4'><strong>{$link}</strong>\n" );
+			if( $title->userCanRead() ) {
+				$articleService = new ArticleService($article->getID());
+
+				$wgOut->addHTML( "<div class='searchresult'>" . $articleService->getTextSnippet( 250 ) . "</div>" );
+			}
+			$wgOut->addHTML( "</div>" );
+		}
+		return true;
 	}
 
 	/**
@@ -380,9 +429,10 @@ class SolrSearchSet extends SearchResultSet {
 	 * @param bool $crossWikiaSearch
 	 * @access private
 	 */
-	private function __construct( $query, $results, $snippets, $suggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits = null, $crossWikiaSearch = false) {
+	private function __construct( $query, $results, $snippets, $suggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits = null, $crossWikiaSearch = false, $exactMatch = null) {
 		$this->mQuery               = $query;
 		$this->mTotalHits           = $totalHits;
+		$this->mArticleMatch          = $exactMatch;
 		if(is_array($results)) {
 			$this->mResults            = $this->deDupe($results);
 		}
@@ -404,6 +454,14 @@ class SolrSearchSet extends SearchResultSet {
 	private function deDupe(Array $results) {
 		$deDupedResults = array();
 		foreach($results as $result) {
+			if($this->hasArticleMatch() && ($result->pageid == $this->getArticleMatch()->getID() ) ) {
+				// remove exact match from set
+				continue;
+			}
+			if($this->hasArticleMatch() && ($result->canonical == $this->getArticleMatch()->getTitle()->getText() ) ) {
+				// remove redirect to exact match from set
+				continue;
+			}
 			if(!isset($this->mCanonicals[$result->wid])) {
 				$this->mCanonicals[$result->wid] = array();
 			}
@@ -456,6 +514,22 @@ class SolrSearchSet extends SearchResultSet {
 
 	function numRows() {
 		return $this->mResultCount;
+	}
+
+	/**
+	 * get article match
+	 * @return Title
+	 */
+	function getArticleMatch() {
+		return $this->mArticleMatch;
+	}
+
+	function setArticleMatch(Article $article) {
+		$this->mArticleMatch = $article;
+	}
+
+	function hasArticleMatch() {
+		return !is_null($this->mArticleMatch);
 	}
 
 	/**
