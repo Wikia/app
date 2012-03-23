@@ -195,6 +195,8 @@ $config['oasis_user_js'] = array(
 	'assets' => array(
 		'//skins/common/ajaxwatch.js',
 		'//extensions/wikia/ArticleAjaxLoading/ArticleAjaxLoading.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	)
 );
 

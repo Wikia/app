@@ -127,3 +127,7 @@ var UserLoginFacebook = {
 		}
 	}
 };
+
+$(function() { 
+	UserLoginFacebook.init(); 
+});
