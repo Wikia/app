@@ -29,7 +29,7 @@ function get_regexp( $title, $replacement, &$wsc ) {
 			$regexp .= '('.$refs[$char] . "|%20){1,}";
 		} else {
 			if(ctype_alnum($char)) {
-				if ( $k == 0 ) {
+				if ( $k == 0 && ctype_alpha($char) ) {
 					$regexp .= '['.strtolower($char).strtoupper($char).']';
 				} else {
 					$regexp .= $char;
@@ -55,7 +55,7 @@ function title_replacer( $title, $replacement, $fulltext  ) {
 	$wsc = 0;
 	$regexp = get_regexp( $title, $replacement, $wsc );
 	$regexp = '/(\\[\\[Video\\:)[ ]{0,}' . $regexp . '[ ]{0,}(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
-	$new = preg_replace( $regexp, '$1' . $replacement . '$'.(4+$wsc), $fulltext );
+	$new = preg_replace( $regexp, '${1}' . $replacement . '${'.(4+$wsc).'}', $fulltext );
 	if( $new === null ) return $fulltext;
 	return $new;	
 }
