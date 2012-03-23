@@ -156,13 +156,13 @@ class ImageMap {
 				} elseif ( preg_match( '/^ \[  ([^\]]*+) \] \w* $ /x', $link, $m ) ) {
 					$title = $alt = trim( $m[1] );
 					$externLink = true;
-				}
-			} else {
+				} // end nested elseif
+			} // end external link elseif condition
+			     else {
 				return self::error( 'imagemap_no_link', $lineNum );
 			}
-			if ( !($title instanceof Title) ) {
-				return self::error( 'imagemap_invalid_title', $lineNum );
-			}
+			      if ( !$title)
+                                        return self::error('imagemap_invalid_title', $lineNum);
 
 			$shapeSpec = substr( $line, 0, -strlen( $link ) );
 
@@ -215,13 +215,13 @@ class ImageMap {
 				if ( $wgNoFollowLinks ) {
 					$attribs['rel'] = 'nofollow';
 				}
-			} else if ( $title->getFragment() != '' && $title->getPrefixedDBkey() == '' ) {
+			} elseif ( $title->getFragment() != '' && $title->getPrefixedDBkey() == '' ) {
 				# XXX: kluge to handle [[#Fragment]] links, should really fix getLocalURL()
 				# in Title.php to return an empty string in this case
 				$attribs['href'] = $title->getFragmentForURL();
 			} else {
 				$attribs['href'] = $title->escapeLocalURL() . $title->getFragmentForURL();
-			}
+				}
 			if ( $shape != 'default' ) {
 				$attribs['shape'] = $shape;
 			}
