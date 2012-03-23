@@ -11,23 +11,23 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
 
 function wfAdEngineSetupJSVars($vars) {
+	wfProfileIn(__METHOD__);
+
 	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues,
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 		$wgCityId, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 		$wgEnableKruxTargeting;
 
-	// TODO: emit the following only when true (BugId:20558)
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
-	$vars["wgNoExternals"] = $wgNoExternals;
 
+	if (!empty($wgNoExternals))                 $vars["wgNoExternals"] = $wgNoExternals;
 	if (!empty($wgEnableAdsInContent))          $vars["wgEnableAdsInContent"] = $wgEnableAdsInContent;
 	if (!empty($wgEnableAdMeldAPIClient))       $vars["wgEnableAdMeldAPIClient"] = $wgEnableAdMeldAPIClient;
 	if (!empty($wgEnableAdMeldAPIClientPixels)) $vars["wgEnableAdMeldAPIClientPixels"] = $wgEnableAdMeldAPIClientPixels;
 
 	// OpenX SPC (init in AdProviderOpenX.js)
-	// TODO: emit the following only when true (BugId:20558)
-	$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
+	if (!empty($wgEnableOpenXSPC))				$vars["wgEnableOpenXSPC"] = $wgEnableOpenXSPC;
 
 	// category/hub
 	$cat = AdEngine::getCachedCategory();
@@ -43,9 +43,8 @@ function wfAdEngineSetupJSVars($vars) {
 	}
 	$vars['wgHighValueCountries'] = $highValueCountries;
 
-	// TODO: emit the following two variables only when true (BugId:20558)
-	$vars['wgAdDriverUseExpiryStorage'] = $wgAdDriverUseExpiryStorage;
-	$vars['wgAdDriverUseCookie'] = $wgAdDriverUseCookie;
+	if (!empty($wgAdDriverUseExpiryStorage)) $vars["wgAdDriverUseExpiryStorage"] = $wgAdDriverUseExpiryStorage;
+	if (!empty($wgAdDriverUseCookie))        $vars["wgAdDriverUseCookie"] = $wgAdDriverUseCookie;
 
 	// ArticleAdLogic
 	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
@@ -53,8 +52,7 @@ function wfAdEngineSetupJSVars($vars) {
 	// Custom KeyValues (for DART requests)
 	$vars['wgDartCustomKeyValues'] = $wgDartCustomKeyValues;
 
-	// TODO: emit the following variables only when true (BugId:20558)
-	$vars['wgUserShowAds'] = $wgUser->getOption('showAds');
+	if ($wgUser->getOption('showAds')) $vars['wgUserShowAds'] = true;
 
 	// Answers sites
 	if (!empty($wgEnableWikiAnswers)) $vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
@@ -63,8 +61,9 @@ function wfAdEngineSetupJSVars($vars) {
 	if (!empty($wgEnableKruxTargeting)) {
 		$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 		$vars['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
-	}	
+	}
 
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
@@ -167,7 +166,7 @@ class AdEngine {
 	// Load up all the providers. For each one, set up
 
 	public function getSetupHtml(){
-		global $wgExtensionsPath, $wgCityId;
+		global $wgExtensionsPath;
 
 		static $called = false;
 		if ($called) {
@@ -182,7 +181,6 @@ class AdEngine {
 		if ($this->loadType == 'inline'){
 			// for loadType set to inline we have to load AdEngine.js here
 			// for loadType set to delayed AdEngine.js should be inside of allinone.js
-			global $wgExtensionsPath;
 			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js"></script>'. "\n";
 
 			foreach($this->slots as $slotname => $slot) {
@@ -555,8 +553,6 @@ class AdEngine {
 	}
 
 	public function getDelayedLoadingCode(){
-		global $wgExtensionsPath;
-
 		if (empty($this->placeholders)){
 			// No delayed ads on this page
 			return '<!-- No placeholders called for ' . __METHOD__ . " -->\n";
@@ -568,17 +564,15 @@ class AdEngine {
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
-		global $wgCityId;
-
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
-		foreach ($this->placeholders as $slotname => $load_priority){
-	                $AdProvider = $this->getAdProvider($slotname);
+		foreach ($this->placeholders as $slotname => $load_priority) {
+			$AdProvider = $this->getAdProvider($slotname);
 
 			// Get setup HTML for each provider. May be empty.
 			$out .= $AdProvider->getSetupHtml();
 		}
 
-		foreach ($this->placeholders as $slotname => $load_priority){
+		foreach ($this->placeholders as $slotname => $load_priority) {
 			$AdProvider = $this->getAdProvider($slotname);
 
 			// Hmm. Should we just use: class="wikia_$adtype"?
@@ -604,8 +598,6 @@ class AdEngine {
 
 
 	public function getDelayedIframeLoadingCode(){
-		global $wgExtensionsPath;
-
 		if (empty($this->placeholders)){
 			// No delayed ads on this page
 			return '<!-- No iframe placeholders called for ' . __METHOD__ . " -->\n";
