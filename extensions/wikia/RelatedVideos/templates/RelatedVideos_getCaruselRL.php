@@ -63,5 +63,11 @@
 					'<span class="maxcount">'.($pageCount > 0 ? $pageCount : '1').'</span>');?>
 			</div>
 		</div>
+		<div class="requestvideos">
+			<a href="http://www.surveygizmo.com/s3/862695/Related-Videos-Module" target="_blank">
+				<button class="secondary"><?= wfMsg('related-videos-requestbutton') ?></button>
+			</a>
+			<p><?= wfMsg('related-videos-requesttext') ?></p>
+		</div>
 	</div>
 </div>
