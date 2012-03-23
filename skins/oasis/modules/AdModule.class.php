@@ -14,7 +14,7 @@ class AdModule extends Module {
 		if(!$wgOut->isArticle() && !$wgTitle->isSpecial('Search') && !$wgTitle->isSpecial('Leaderboard')){ // RT#74422 Run ads on search results page
 			return;
 		}
-		if(ArticleAdLogic::isWikiaHub()) {
+		if(ArticleAdLogic::isWikiaHub() && ArticleAdLogic::isAdsEnabledOnWikiaHub()) {
 			self::$config['HUB_TOP_LEADERBOARD'] = true;
 			return;
 		}

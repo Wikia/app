@@ -601,4 +601,16 @@ class ArticleAdLogic {
 
 		return !empty($wgEnableWikiaHubsExt) && in_array($wgTitle->getDBkey(), $wgWikiaHubsPages);
 	}
+	
+	public static function isAdsEnabledOnWikiaHub() {
+		global $wgHubsAdsEnabled, $wgEnableWikiaHubsExt, $wgTitle;
+		
+		if (!empty($wgEnableWikiaHubsExt) && !empty($wgHubsAdsEnabled)) {
+			if (in_array($wgTitle->getDBkey(), $wgHubsAdsEnabled)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

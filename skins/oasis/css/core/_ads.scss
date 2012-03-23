@@ -1,7 +1,7 @@
 @import "../mixins/clearfix";
 
 /** Leaderboards **/
-#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
 	text-align: center;
 	>div {
 		margin-left: auto;
@@ -14,7 +14,7 @@
 		*display: inline;	// IE7 hack
 	}
 }
-#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD {
+#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
 	padding: 20px 0 0;
 	&.jumbo-leaderboard {
 		margin: 0 auto; 
@@ -26,7 +26,7 @@
 	margin-top: -20px;
 	margin-bottom: -20px;
 }
-#CORP_TOP_LEADERBOARD.default-height, #HOME_TOP_LEADERBOARD.default-height, #TOP_LEADERBOARD.default-height {
+#CORP_TOP_LEADERBOARD.default-height, #HOME_TOP_LEADERBOARD.default-height, #HUB_TOP_LEADERBOARD.default-height, #TOP_LEADERBOARD.default-height {
 	height: 90px;
 }
 .WikiaTopAds {
@@ -34,7 +34,7 @@
 	padding-top: 10px;
 	position: relative;
 	&.WikiaTopButtonLeft {
-		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD {
+		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD, #TOP_LEADERBOARD {
 			float: right;
 			margin: 0 10px 0 0;
 			padding: 0;
@@ -45,7 +45,7 @@
 		}
 	}
 	&.WikiaTopButtonRight {
-		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD {
+		#CORP_TOP_LEADERBOARD, #HOME_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD, #TOP_LEADERBOARD {
 			float: left;
 			margin: 0 0 0 10px;
 			padding: 0;
