@@ -89,21 +89,6 @@ class Phalanx {
 			$blocksData = $wgMemc->get($key);
 		}
 
-		// BugId:1138
-		// Michał Roszka (Mix) <michal@wikia-inc.com>
-		// My conclusion is, that the following block should be refactored:
-		//
-		// * first, we should query for an exact block ($cond[] = "p_exact = 1"; $cond[] = "p_text = '<given text>')
-		//   (which would give us zero or one result
-		// * then we should query for non exact blocks ($cond[] = "p_exact = 0")
-		//
-		// The following would result with much shorter result. Currently we iterate through dozens
-		// of exact rules which does not make sense. We query for all and check whether any of those does match instead of
-		// querying for the matching one.
-		//
-		// I am not changing the code, because I am not sure if this is the right place.
-		// Just making a note for future grepping.
-
 		//cache miss (or we have expired blocks in cache), get from DB
 		if (empty($blocksData) || (!is_null($blocksData['closestExpire']) && $blocksData['closestExpire'] < $timestampNow && $blocksData['closestExpire'])) {
 			$blocks = $cond = array();
