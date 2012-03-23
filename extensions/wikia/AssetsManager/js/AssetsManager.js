@@ -49,3 +49,33 @@ window.Wikia.getMultiTypePackage = function(request, callback) {
 		}
 	});
 }
+
+
+/**
+ * Evaluate given JS code by adding an inline <script> tag to document <body> tag
+ *
+ * code - JS code to be evaluated
+ */
+window.Wikia.processScript = function(code) {
+	var node = document.createElement('script'),
+		firstScript = document.getElementsByTagName('script')[0];
+
+	node.innerHTML = code;
+
+	// add it to DOM
+	firstScript.parentNode.insertBefore(node, firstScript);
+}
+
+/**
+ * Apply given CSS code by adding an inline <style> tag to document <body> tag
+ *
+ * code - CSS code to be applied
+ */
+window.Wikia.processStyle = function(code) {
+	var node = document.createElement('style');
+
+	node.innerHTML = code;
+
+	// add it to DOM
+	document.body.appendChild(node);
+}
