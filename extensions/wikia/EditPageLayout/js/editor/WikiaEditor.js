@@ -114,10 +114,7 @@
 		// set the state and submit the edit form
 		editorInstance.setState(editorInstance.states.RELOADING);
 
-		// Post the form via AJAX, then reload the page to avoid chrome security errors (BugId:22955)
-		$.post(wgScriptPath + editorForm.attr('action'), editorForm.serialize(), function() {
-			window.location.reload(true);
-		});
+		window.location.reload(true);
 	};
 
 	WE.Editor = $.createClass(Observable, {
