@@ -1399,7 +1399,3 @@ div.mw-lag-warn-high {
 .WikiaTable td, .WikiaTable th, .article-table td, .article-table th {
 	padding: 3px;
 }
-
-.MiniEditorWrapper .loading-indicator {
-	display: none;
-}
