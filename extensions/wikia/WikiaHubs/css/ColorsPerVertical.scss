@@ -1,0 +1,83 @@
+@mixin hubs-vertical-coloring($color-wikiahome-hubcolor) {
+	$activetabcolor: #fff;
+	.WikiaHubs {
+		.wikiahubs-explore {
+			h2 {
+				border-bottom: 5px solid $color-wikiahome-hubcolor;
+			}
+			a {
+				color: $color-wikiahome-hubcolor;
+			}
+		}
+		.wikiahubs-pulse {
+			h2 {
+				border-bottom: 5px solid $color-wikiahome-hubcolor;
+			}
+		}
+		.wikiahubs-popular-videos {
+			.title-wrapper {
+				border-bottom: 5px solid $color-wikiahome-hubcolor;
+			}
+			a {
+				color: $color-wikiahome-hubcolor;
+			}
+		}
+		.wikiahubs-sponsored-video {
+			a {
+				color: $color-wikiahome-hubcolor;
+			}
+		}
+		.wikiahubs-top-wikis {
+			h2 {
+				border-bottom: 5px solid $color-wikiahome-hubcolor;
+			}
+			a {
+				color: $color-wikiahome-hubcolor;
+			}
+		}
+		.wikiahubs-from-the-community {
+			h2 {
+				border-bottom: 5px solid $color-wikiahome-hubcolor;
+			}
+			a {
+				color: $color-wikiahome-hubcolor;
+			}
+		}
+		.wikiahubs-newstabs {
+			.title-wrapper {
+				border-bottom: 5px solid $color-wikiahome-hubcolor;
+			}
+			.tabberlive {
+				li a:hover {
+					background-color: $color-wikiahome-hubcolor;
+					color: $activetabcolor;
+				}
+				li a:visited {
+					background-color: $color-wikiahome-hubcolor;
+				}
+				li.tabberactive a {
+					background-color: $color-wikiahome-hubcolor;
+					color: $activetabcolor;
+				}
+				li.tabberactive a:hover {
+					background-color: $color-wikiahome-hubcolor;
+				}
+			}
+		}
+	}
+}
+
+.page-Video_Games {
+	$color-wikiahome-hubcolor: $color-wikiahome-videogames;
+	@include hubs-vertical-coloring($color-wikiahome-hubcolor);
+}
+
+.page-Entertainment {
+	$color-wikiahome-hubcolor: $color-wikiahome-entertainment;
+	@include hubs-vertical-coloring($color-wikiahome-hubcolor);
+}
+
+.page-Lifestyle {
+	$color-wikiahome-hubcolor: $color-wikiahome-lifestyle;
+	@include hubs-vertical-coloring($color-wikiahome-hubcolor);
+}
