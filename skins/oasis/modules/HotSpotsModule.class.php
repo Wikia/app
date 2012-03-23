@@ -5,7 +5,7 @@ class HotSpotsModule extends Module {
 	var $data;
 
 	public function executeIndex($params) {
-		global $wgUser, $wgTitle, $wgOut, $wgStylePath;
+		global $wgOut;
 		wfProfileIn(__METHOD__);
 
 		// add CSS for this module
@@ -18,5 +18,4 @@ class HotSpotsModule extends Module {
 
 		wfProfileOut(__METHOD__);
 	}
-
 }
