@@ -200,9 +200,6 @@ var WikiHeaderV2 = {
 		WikiHeaderV2.subnav2LI = WikiHeaderV2.subnav2.children('li');
 		WikiHeaderV2.subnav3 = WikiHeaderV2.nav.find('.subnav-3');
 
-		// Grab HoverMenu properties from new (fake) instance
-		WikiHeaderV2.hoverMenu = new HoverMenu();
-
 		WikiHeaderV2.positionNav();
 
 		//Events
@@ -299,8 +296,8 @@ var WikiHeaderV2 = {
 	mouseclickL1: function(event) {
 		if( !$(this).hasClass('marked') ){
 			event.preventDefault();
-			$('header.WikiHeaderRestyle nav ul li ul li').removeClass('marked2');
-			$('header.WikiHeaderRestyle nav ul li').removeClass('marked');
+			WikiHeaderV2.subnav2LI.removeClass('marked2');
+			WikiHeaderV2.navLI.removeClass('marked');
 			WikiHeaderV2.hideNavL3();
 			$(this).addClass('marked');
 
@@ -352,12 +349,10 @@ var WikiHeaderV2 = {
 		if (WikiHeaderV2.activeL1 === self) {
 			return;
 		}
-		
-		var hoverMenu = WikiHeaderV2.hoverMenu;
-		
-		hoverMenu.mouseoverTimer = setTimeout(function() {
+				
+		WikiHeader.mouseoverTimer = setTimeout(function() {
 			//Hide all subnavs except for this one
-			$('header.WikiHeaderRestyle nav ul li').removeClass('marked');
+			WikiHeaderV2.navLI.removeClass('marked');
 			WikiHeaderV2.hideNavL3();
 		
 			$(self).addClass('marked');
@@ -372,13 +367,12 @@ var WikiHeaderV2 = {
 			}
 			WikiHeaderV2.activeL1 = self;
 			WikiHeaderV2.showSubNavL2(self);
-		}, hoverMenu.settings.mouseoverDelay);
+		}, WikiHeader.settings.mouseoverDelay);
 	},
 
 	mouseoutL1: function(event) {
-		var hoverMenu = WikiHeaderV2.hoverMenu;
 		//Stop mouseoverTimer
-		clearTimeout(hoverMenu.mouseoverTimer);
+		clearTimeout(WikiHeader.mouseoverTimer);
 	},
 
 	mouseclickL2: function(event) {
@@ -399,32 +393,35 @@ var WikiHeaderV2 = {
 	},
 
 	mouseoverL2: function() {
-		var self = this,
-			hoverMenu = WikiHeaderV2.hoverMenu;
+		var self = this;
 		
-		hoverMenu.mouseoverTimer = setTimeout(function() {
+		//Stop mouseoverTimer
+		clearTimeout(WikiHeader.mouseoutTimer);
+
+		WikiHeader.mouseoverTimer = setTimeout(function() {
 			//Hide all subnavs except for this one
 			var otherSubnavs = WikiHeaderV2.subnav3.not($(self).find('.subnav'));
 	
-			if ( $(self).find('.subnav').exists() ){
-				$(self).addClass('marked2');
-				if($('body').data('accessible')) {
-					otherSubnavs.css('top', '-9999px');
-				} else {
-					otherSubnavs.hide();
-				}
-	
-				WikiHeaderV2.showSubNavL3(self);
+			if($('body').data('accessible')) {
+				otherSubnavs.css('top', '-9999px');
+			} else {
+				otherSubnavs.hide();
 			}
-		}, hoverMenu.settings.mouseoverDelay);
+
+			// remove other active states
+			$(self).siblings().removeClass('marked2');
+
+			WikiHeaderV2.showSubNavL3(self);
+		}, WikiHeader.settings.mouseoverDelay);
 	},
 
 	mouseoutL2: function() {
-		WikiHeaderV2.hideNavL3();
-
-		var hoverMenu = WikiHeaderV2.hoverMenu;
 		//Stop mouseoverTimer
-		clearTimeout(hoverMenu.mouseoverTimer);
+		clearTimeout(WikiHeader.mouseoverTimer);
+
+		WikiHeader.mouseoutTimer = setTimeout(function() {
+			WikiHeaderV2.hideNavL3();
+		}, WikiHeader.settings.mouseoutDelay);
 	},
 
 	showSubNavL2: function(parent) {
@@ -438,6 +435,7 @@ var WikiHeaderV2 = {
 	},
 
 	showSubNavL3: function(parent) {
+
 		var subnav = $(parent).children('ul');
 
 		if (subnav.exists()) {
@@ -454,7 +452,7 @@ var WikiHeaderV2 = {
 	hideNavL3: function() {
 		WikiHeaderV2.isDisplayed = false;
 		WikiHeaderV2.lastSubnavClicked = -1;
-		$('header.WikiHeaderRestyle nav ul li ul li').removeClass('marked2');
+		WikiHeaderV2.subnav2LI.removeClass('marked2');
 
 		//Hide subnav
 		if($('body').data('accessible')) {
@@ -489,9 +487,10 @@ var WikiHeaderV2 = {
 			}
 		});
 
-		$.each($('.ArticlePreview #WikiHeader > nav > ul > li'), function(menuItemKey, menuItem) {
+		menuNotes.each(function(menuItemKey, menuItem) {
 			widthLevelFirst += $(menuItem).width();
 		});
+		
 		if (widthLevelFirst > 550) {
 			returnVal = false;
 			WikiHeaderV2.log('menu level #1 not valid');
