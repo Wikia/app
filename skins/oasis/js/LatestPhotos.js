@@ -82,7 +82,7 @@ var UploadPhotos = {
 
 				var url = wgScriptPath + '/api' + wgScriptExtension
 					+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-					+ '&title=' + encodeURIComponent( title )
+					+ '&title=' + encodeURIComponent( title.replace(/\./g, "%2E") )
 					+ '&prop=text&pst&format=json';
 
 				$.get(url, function(data) {

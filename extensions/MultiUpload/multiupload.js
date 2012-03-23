@@ -346,7 +346,7 @@ var wgUploadLicenseObj = {
 
 		var url = wgScriptPath + '/api' + wgScriptExtension
 			+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-			+ '&title=' + encodeURIComponent( title )
+			+ '&title=' + encodeURIComponent( title.replace(/\./g, "%2E") )
 			+ '&prop=text&pst&format=json';
 
 		var req = sajax_init_object();
