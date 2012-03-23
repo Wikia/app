@@ -403,9 +403,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$toAddress = new MailAddress($to);
 
 		if (!empty($wikis)) {
-			$csv = "ID;DatabaseName;URL\r\n";
+			$csv = "ID,DatabaseName,URL\r\n";
 			foreach ($wikis as $wiki) {
-				$csv .= "\"{$wiki['id']}\";\"{$wiki['dbname']}\";\"{$wiki['url']}\"\r\n";
+				$csv .= "\"{$wiki['id']}\",\"{$wiki['dbname']}\",\"{$wiki['url']}\"\r\n";
 			}
 			$fileName = "/tmp/$fname.csv";
 			file_put_contents($fileName,$csv);
@@ -498,10 +498,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 	
 	static protected function adjustSettings() {
 		$secondsPerDay = 24 * 60 * 60;
-		$maxWeek = 51;
+		$maxWeek = 52;
 		$minWeek = 36;
 
-		$start = strtotime('20.03.2012 00:00:00 UTC');
+		$start = strtotime('19.03.2012 00:00:00 UTC');
 		$time = time();
 		$passed = intval(($time - $start) / $secondsPerDay);
 		
