@@ -177,10 +177,10 @@
 				RTE.initCk(editor);
 
 			} else {
-				var cached = $.storage.get(RTE.localStorageKey);
+				var cached = $.storage.get(RTE.localStorageKey) || {};
 
 				// Use cached version if style version hasn't changed (BugId:25289)
-				if (cached && cached.styleVersion === wgStyleVersion) {
+				if (cached.contentsCss && cached.styleVersion === wgStyleVersion) {
 					RTE.config.contentsCss = cached.contentsCss;
 					RTE.log('Using cached contentCss (' + cached.styleVersion + '): "' + RTE.localStorageKey + '"');
 					RTE.initCk(editor);
