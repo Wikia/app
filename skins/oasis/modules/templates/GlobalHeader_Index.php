@@ -5,7 +5,7 @@
 			<li class="WikiaLogo">
 				<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wgBlankImgUrl ?>" class="sprite logo" height="23" width="91" alt="Wikia"></a>
 			</li>
-			<li class="hiddenStartWikiBtn">
+			<li class="start-a-wiki">
 				<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="wikia-button"><?= wfMsgHtml('oasis-global-nav-create-wiki'); ?></a>
 			</li>
 			<li>
