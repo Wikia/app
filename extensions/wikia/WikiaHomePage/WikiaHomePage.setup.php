@@ -25,3 +25,6 @@ $app->registerClass('WikiaHomePageController', $dir.'WikiaHomePageController.cla
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHomePage'] = $dir . 'WikiaHomePage.i18n.php';
+
+$app->registerHook('GetHTMLAfterBody', 'WikiaHomePageController', 'onGetHTMLAfterBody');
+$app->registerHook('WikiaMobileAssetsPackages', 'WikiaHomePageController', 'onWikiaMobileAssetsPackages');
