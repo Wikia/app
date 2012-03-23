@@ -234,7 +234,7 @@ class ScavengerHunt {
 			return -1;
 		}
 		$oTitle = F::build( 'Title', array( $articleId ), 'newFromId' );
-		if ( !$oTitle->exists() ){
+		if ( (!$oTitle instanceof Title) || !$oTitle->exists() ) {
 			return -1;
 		}
 		foreach( $game->getArticles() as $index => $article ){
