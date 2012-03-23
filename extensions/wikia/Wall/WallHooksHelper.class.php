@@ -160,6 +160,11 @@ class WallHooksHelper {
 					if( $userWallTitle instanceof Title ) {
 						$contentActions['talk']['href'] = $userWallTitle->getLocalUrl();
 					}
+
+					// BugId:23000 Remove the class="new" to prevent the link from being displayed as a redlink in monobook.
+					if ( $app->wg->User->getSkin() instanceof SkinMonoBook ) {
+						unset( $contentActions['talk']['class'] );
+					}
 				}
 			}
 
