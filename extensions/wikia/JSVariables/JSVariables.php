@@ -23,17 +23,15 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgCityId'] = $wgCityId;
 	if (is_array($wgEnableAjaxLogin) && in_array($vars['skin'], $wgEnableAjaxLogin)) {
 		$vars['wgEnableAjaxLogin'] = true;
-	} else {
-		$vars['wgEnableAjaxLogin'] = false;
 	}
-	$vars['wgDB'] = $wgDBname;
-	$vars['wgDBname'] = $wgDBname; // TODO: the one above will be deleted - please use wgDBname
+	$vars['wgDBname'] = $wgDBname;
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
 
-	// TODO: emit the following only when true (BugId:20558)
-	$vars['wgPrivateTracker'] = !empty($wgPrivateTracker) ? $wgPrivateTracker : false;
+	if (!empty($wgPrivateTracker)) {
+		$vars['wgPrivateTracker'] = true;
+	}
 
-	if($vars['wgIsArticle'] == false && $vars['wgEnableAjaxLogin']) {
+	if($vars['wgIsArticle'] == false && !empty($vars['wgEnableAjaxLogin'])) {
 		$vars['ajaxLogin1'] = wfMsg('ajaxLogin1');
 		$vars['ajaxLogin2'] = wfMsg('ajaxLogin2');
 	}
