@@ -65,10 +65,53 @@
 	}
 
 	&.logo {
-		background-position: -999px -72px;
-		height: 24px;
-		width: 91px;
+		background-position: -269px 0px;
+		height: 26px;
+		width: 90px;
 	}
+    //.logo1, .logo2, .logo3, .logo4 -- corporate footer's logos
+    &.logo9,
+    &.logo2,
+    &.logo3,
+    &.logo4 {
+        height: 16px;
+        width: 55px;
+        margin: 2px 5px;
+    }
+    &.logo9 { //lifestyle
+        background-position: -210px 0px;
+    }
+    &.logo2 { //video games
+        background-position: -60px 0px;
+    }
+    &.logo3 { //entertainment
+        background-position: -130px 0px;
+    }
+    //"default" logo -- com logo
+    &.logo4 {
+        background-position: 0px 0px;
+    }
+    &.hub9,
+    &.hub2,
+    &.hub3 {
+        display: block;
+        text-indent: -9999px;
+        height: 11px;
+        position: relative;
+    }
+    &.hub9 {
+        background-position: -210px -16px;
+        width: 52px;
+
+    }
+    &.hub2 {
+        background-position: -60px -16px;
+        width: 65px;
+    }
+    &.hub3 {
+        background-position: -130px -16px;
+        width: 77px;
+    }
 
 	//My Tools Configuration
 	&.drag {
