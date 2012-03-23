@@ -228,7 +228,8 @@ class ImageMap {
 				}
 			} else {
 				$attribs['href'] = '#';
-				Wikia::log(__METHOD__, false, '$title empty in imagemap' . "\n" . wfDebugBacktrace());
+				Wikia::log(__METHOD__, false, '$title empty in imagemap');
+				Wikia::logBacktrace(__METHOD__);
 			}
 
 			if ($shape != 'default') {
@@ -367,7 +368,8 @@ class ImageMap {
 					$parser->mOutput->addLink($title);
 				}
 			} else {
-				Wikia::log(__METHOD__, false, '$title is not an instance of Title in $links' . "\n" . wfDebugBacktrace());
+				Wikia::log(__METHOD__, false, '$title is not an instance of Title in $links');
+				Wikia::logBacktrace(__METHOD__);
 			}
 		}
 		if (isset($extLinks)) {
