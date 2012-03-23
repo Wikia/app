@@ -618,7 +618,6 @@ public class WallTest extends MiniEditorBaseTest {
 		
 		waitForElement("//ul[@class='comments']" +
 				"/li[1 and contains(@class,'SpeechBubble')]" +
-				"//div[contains(@class,'editarea')]" +
 				"//p[contains(text(), '" + body + "')]");		
 	}
 	
