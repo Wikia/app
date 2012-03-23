@@ -51,8 +51,7 @@ public class MiniEditorTest extends MiniEditorBaseTest {
 	public void testEditorLoading() throws Exception {
 		loginAsStaff();
 		enableVisualMode();
-		session().open("/wiki/Special:MiniEditorDemo");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/wiki/Special:MiniEditorDemo");
 		
 		doTestEditorLoading();
 	}
@@ -62,8 +61,7 @@ public class MiniEditorTest extends MiniEditorBaseTest {
 		loginAsStaff();
 		disableVisualMode();
 		try {
-			session().open("/wiki/Special:MiniEditorDemo");
-			session().waitForPageToLoad(this.getTimeout());
+			openAndWait("/wiki/Special:MiniEditorDemo");
 
 			doTestEditorLoading();
 			
@@ -80,8 +78,7 @@ public class MiniEditorTest extends MiniEditorBaseTest {
 	public void testEditing() throws Exception {
 		loginAsStaff();
 		enableVisualMode();
-		session().open("/wiki/Special:MiniEditorDemo");
-		session().waitForPageToLoad(this.getTimeout());
+		openAndWait("/wiki/Special:MiniEditorDemo");
 		
 		clickTheEditButton();
 		
@@ -107,7 +104,7 @@ public class MiniEditorTest extends MiniEditorBaseTest {
 		loginAsStaff();
 		disableVisualMode();
 		try {
-			session().open("/wiki/Special:MiniEditorDemo");
+			openAndWait("/wiki/Special:MiniEditorDemo");
 			session().waitForPageToLoad(this.getTimeout());
 
 			assertTrue(session().isVisible("//div[@id='Edit']/div[@class='editarea']/div[@class='body']"));
