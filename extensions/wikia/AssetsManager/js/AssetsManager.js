@@ -50,7 +50,6 @@ window.Wikia.getMultiTypePackage = function(request, callback) {
 	});
 }
 
-
 /**
  * Evaluate given JS code by adding an inline <script> tag to document <body> tag
  *
@@ -61,6 +60,7 @@ window.Wikia.processScript = function(code) {
 		firstScript = document.getElementsByTagName('script')[0];
 
 	node.innerHTML = code;
+	node.setAttribute('type', 'text/javascript');
 
 	// add it to DOM
 	firstScript.parentNode.insertBefore(node, firstScript);
@@ -69,13 +69,17 @@ window.Wikia.processScript = function(code) {
 /**
  * Apply given CSS code by adding an inline <style> tag to document <body> tag
  *
- * code - CSS code to be applied
+ * css - CSS code to be applied
  */
-window.Wikia.processStyle = function(code) {
-	var node = document.createElement('style');
+window.Wikia.processStyle = function(css) {
+	var style = document.createElement('style');
+	style.type = 'text/css';
 
-	node.innerHTML = code;
+	if (style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		style.appendChild(document.createTextNode(css));
+	}
 
-	// add it to DOM
-	document.body.appendChild(node);
+	document.getElementsByTagName('head')[0].appendChild(style);
 }
