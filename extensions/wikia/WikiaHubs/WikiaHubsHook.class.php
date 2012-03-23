@@ -99,3 +99,15 @@ class WikiaHubsPopularVideos {
 	
 
 }
+
+/**
+ * WikiaHubs Mobile
+ */
+class WikiaHubsMobile {	
+	public static function onWikiaMobileAssetsPackages( &$jsHeadPackageName, &$jsBodyPackageName, &$scssPackageName ) {
+		if( Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHubsExt ) {
+			$scssPackageName = 'extensions/wikia/WikiaHubs/css/WikiaHubsMobile.scss';
+		}
+		return true;
+	}
+}
