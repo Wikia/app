@@ -10,14 +10,14 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		
+
 		$this->wg->OasisFluid = true;
 		$this->wg->Out->setPageTitle('Image Review tool');
 
 		$action = $this->getPar();
 		$this->action = $action;
 		$this->response->setJsVar('wgImageReviewAction', $action);
-		
+
 		$accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
 
 		// check permissions
@@ -37,7 +37,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->enableClientCache( false );
 		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		$this->response->sendHeaders();
-		
+
 		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
 		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
 		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
@@ -46,19 +46,19 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
 		$this->response->setVal( 'accessControls', $this->wg->user->isAllowed( 'imagereviewcontrols' ) );
 		$this->response->setVal( 'modeMsgSuffix', empty( $action ) ? '' : '-' . $action );
-		
+
 		if($this->wg->user->isAllowed( 'imagereviewcontrols' )) {
 			$order = (int) $this->getVal( 'sort', -1 );
-			if($order > 0 ) {
+			if ( $order >= 0 ) {
 				$this->app->wg->User->setOption( 'imageReviewSort', $order );
 				$this->app->wg->User->saveSettings();
 			}
-		
-			$order = $this->app->wg->User->getOption( 'imageReviewSort' );	
+
+			$order = $this->app->wg->User->getOption( 'imageReviewSort' );
 		} else {
 			$order = -1;
 		}
-		
+
 		$this->response->setVal( 'order', $order );
 
 		// get more space for images
@@ -69,13 +69,13 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		$helper = F::build( 'ImageReviewHelper' );
 		$ts = $this->wg->request->getVal( 'ts' );
-		
+
 		$query = ( empty($action) ) ? '' : '/'.$action ;
 		$this->fullUrl = $this->wg->Title->getFullUrl( );
 		$this->submitUrl = $this->wg->Title->getFullUrl( ) . $query;
 		$this->baseUrl = Title::newFromText('ImageReview', NS_SPECIAL)->getFullURL();
 
-		
+
 		if( $this->wg->request->wasPosted() ) {
 			$data = $this->wg->request->getValues();
 			if ( !empty($data) ) {
@@ -98,14 +98,14 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				$ts = null;
 			}
 		}
-		
+
 		if ( !$ts || intval($ts) < 0 || intval($ts) > time() ) {
 			$this->wg->Out->redirect( $this->submitUrl. '?ts=' . time() );
 			return;
 		}
 
 		$newestTs = $this->wg->memc->get( $helper->getUserTsKey() );
-		
+
 		if ( $ts > $newestTs ) {
 			error_log("ImageReview: I've got the newest ts ($ts), I won't refetch the images");
 			$this->imageList = array();
@@ -113,7 +113,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} else {
 			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
 		}
-		
+
 		if ( count($this->imageList) == 0 ) {
 			if ( $action == self::ACTION_QUESTIONABLE ) {
 				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE, $order );
@@ -123,7 +123,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		}
 
 		if($accessQuestionable) {
-			$this->imageCount = $helper->getImageCount();			
+			$this->imageCount = $helper->getImageCount();
 		}
 	}
 
@@ -134,22 +134,22 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-                $startDay = $this->request->getVal( 'startDay', date( 'd' ) );
-                $startMonth = $this->request->getVal( 'startMonth', date( 'n' ) );
-                $startYear = $this->request->getVal( 'startYear', date( 'Y' ) );
+		$startDay = $this->request->getVal( 'startDay', date( 'd' ) );
+		$startMonth = $this->request->getVal( 'startMonth', date( 'n' ) );
+		$startYear = $this->request->getVal( 'startYear', date( 'Y' ) );
 
-                $endDay = $this->request->getVal( 'endDay', date( 'd' ) );
-                $endMonth = $this->request->getVal( 'endMonth', date( 'm' ) );
-                $endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
+		$endDay = $this->request->getVal( 'endDay', date( 'd' ) );
+		$endMonth = $this->request->getVal( 'endMonth', date( 'm' ) );
+		$endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
 
 		$stats = $this->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
 
-                // setup response data for table rendering
-                $this->response->setVal( 'summary', $stats['summary'] );
-                $this->response->setVal( 'summaryHeaders', array( 'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user' ) );
+		// setup response data for table rendering
+		$this->response->setVal( 'summary', $stats['summary'] );
+		$this->response->setVal( 'summaryHeaders', array( 'total reviewed', 'approved', 'deleted', 'questionable', 'avg per user' ) );
 
-                $this->response->setVal( 'data', $stats['data'] );
-                $this->response->setVal( 'headers', $this->statsHeaders );
+		$this->response->setVal( 'data', $stats['data'] );
+		$this->response->setVal( 'headers', $this->statsHeaders );
 
 		$this->response->setVal( 'startDay', $startDay );
 		$this->response->setVal( 'startMonth', $startMonth );
@@ -161,10 +161,10 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function csvStats() {
-                if ( !$this->wg->User->isAllowed( 'imagereviewstats' )) {
-                        $this->specialPage->displayRestrictionError( 'imagereviewstats' );
-                        return false;
-                }
+		if ( !$this->wg->User->isAllowed( 'imagereviewstats' )) {
+				$this->specialPage->displayRestrictionError( 'imagereviewstats' );
+				return false;
+		}
 
 		$startDay = $this->request->getVal( 'startDay', date( 'd' ) );
 		$startMonth = $this->request->getVal( 'startMonth', date( 'n' ) );
@@ -244,7 +244,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 				$data[$row['reviewer_id']]['total'] += $row['count'];
 				$userCount++;
 			}
-		}	
+		}
 
 		$summary['avg'] = $userCount > 0 ? $summary['all'] / $userCount : 0;
 
