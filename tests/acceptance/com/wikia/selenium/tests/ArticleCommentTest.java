@@ -481,7 +481,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 	public void pre19EditButtonPresence() throws Exception {
 		loginAsStaff();
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName_1);
-		logout();
+		logout();		
 	}
 
 	@Test(groups={"CI", "verified"}, dependsOnMethods={"pre19EditButtonPresence"})

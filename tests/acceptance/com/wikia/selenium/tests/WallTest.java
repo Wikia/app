@@ -26,7 +26,6 @@ public class WallTest extends MiniEditorBaseTest {
 		
 		// send new message
 		writeNewPost("test message", msgbody);
-		
 		// check if there is new element on a page containing posted message
 		assertTrue(session().isTextPresent(msgbody));
 		
@@ -105,7 +104,7 @@ public class WallTest extends MiniEditorBaseTest {
 		msgbody = "TestEditMessage: " + new Date().toString();
 		
 		// send new message
-		writeNewPost("test message", msgbody);
+		writeNewPost("test message " + new Date().toString(), msgbody);
 		// check if there is new element on a page containing posted message
 		assertTrue( session().isTextPresent(msgbody) );
 		
@@ -128,7 +127,7 @@ public class WallTest extends MiniEditorBaseTest {
 		session().click(firstMsg + " .edit-message");
 
 		if(("true".equals(session().getEval("window.wgEnableMiniEditorExt")))){
-			String xPathParent = "//ul[@class='comments']/li[1]/blockquote";
+			bodyArea = "//ul[@class='comments']/li[1]/blockquote";
 			titleArea = firstMsg + " .msg-title textarea";
 			
 			// wait for editor to load
@@ -136,11 +135,9 @@ public class WallTest extends MiniEditorBaseTest {
 			// title textarea may load after editor is done loading
 			waitForElement (titleArea);
 			
-			this.switchToSourceMode(xPathParent);
+			this.switchToSourceMode(bodyArea);
 			
-			bodyArea = xPathParent + "//div[@class='cke_contents']/textarea";
-	
-			assertTrue( this.getMiniEditorText(xPathParent).equals(prevBody) );
+			assertTrue( this.getMiniEditorText(bodyArea).equals(prevBody) );
 		} else {
 			titleArea = firstMsg + " .msg-title textarea:nth-child(2)";
 			bodyArea = firstMsg + " .msg-body textarea:not([tabindex=-1])";
@@ -154,22 +151,22 @@ public class WallTest extends MiniEditorBaseTest {
 		assertTrue( session().isElementPresent(saveBtn) );
 		assertTrue( session().isElementPresent(firstMsg + " .cancel-edit") );
 
-		System.out.println("PRINT BODY AREA" );
-		System.out.println(session().getText(bodyArea));
-
-
 		assertTrue( (session().getText(titleArea).equals(prevTitle)) );
-		
 		
 		//edit the message
 		session().type(titleArea, prevTitle + " (edited)");
-		session().type(bodyArea, prevBody + " (edited)");
+		if ("true".equals(session().getEval("window.wgEnableMiniEditorExt"))) {
+			this.miniEditorType(bodyArea, prevBody + " (edited)");			
+		} else {
+			session().type(bodyArea, prevBody + " (edited)");
+		}
+
 		session().click(saveBtn);
 		
 		// wait for follow link to reappear
 		waitForElement(firstMsg + " .follow");
+		waitForTextPresent(prevBody + " (edited)");
 		assertTrue( session().isTextPresent(prevTitle + " (edited)") );
-		assertTrue( session().isTextPresent(prevBody + " (edited)") );
 		
 		//reload and check if the new textes are still there
 		openAndWait( getTestWallUrl() + "&reload2" );
@@ -200,7 +197,7 @@ public class WallTest extends MiniEditorBaseTest {
 		waitForWallEntryFields();
 		
 		//send new message
-		writeNewPost("test message", msgbody);
+		writeNewPost("test message " + new Date().toString(), msgbody);
 		//check if there is new element on a page containing posted message
 		assertTrue( session().isTextPresent(msgbody) );
 		
@@ -219,7 +216,7 @@ public class WallTest extends MiniEditorBaseTest {
 		replybody = "ThisIsTestEditReply (reply): " + new Date().toString();
 		
 		// send new message
-		writeNewPost("test message", msgbody);
+		writeNewPost("test message " + new Date().toString(), msgbody);
 		// check if there is new element on a page containing posted message
 		assertTrue( session().isTextPresent(msgbody) );
 		
@@ -618,6 +615,11 @@ public class WallTest extends MiniEditorBaseTest {
 		// make sure that it was send
 		waitForElementNotPresent("css=textarea#WallMessageBody:contains('" + body + "')");
 		waitForElementNotVisible("css=#WallMessageSubmit");
+		
+		waitForElement("//ul[@class='comments']" +
+				"/li[1 and contains(@class,'SpeechBubble')]" +
+				"//div[contains(@class,'editarea')]" +
+				"//p[contains(text(), '" + body + "')]");		
 	}
 	
 	private void writeNewPostAndForward(String title, String body, String url) throws Exception {
@@ -751,8 +753,9 @@ public class WallTest extends MiniEditorBaseTest {
 	}
 	
 	private void checkIfMessageIsBack(String message, String content, String title) throws Exception {
+		waitForElement( message + " .msg-title");
 		assertFalse( session().isElementPresent(message + " .speech-bubble-message-removed") );
-		assertTrue( session().isElementPresent(message + " .msg-title") );
+		//assertTrue( session().isElementPresent( message + " .msg-title" ) );
 		assertTrue( session().getText(message + " .msg-body").equals(content) );
 		
 		if( !title.equals("") ) {
