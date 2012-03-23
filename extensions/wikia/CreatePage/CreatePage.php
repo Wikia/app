@@ -43,12 +43,7 @@ $wgExtensionFunctions[] = 'wfCreatePageInit';
 
 // initialize create page extension
 function wfCreatePageInit() {
-	global $wgHooks,
-		$wgAjaxExportList,
-		$wgWikiaEnableNewCreatepageExt;
-
-	// load messages from file
-	wfLoadExtensionMessages( 'CreatePage' );
+	global $wgHooks, $wgAjaxExportList;
 
 	/**
 	 * hooks
@@ -102,7 +97,11 @@ function wfCreatePageSetupVars( $vars ) {
 	}
 
 	$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
-	$vars['WikiaDisableDynamicLinkCreatePagePopup'] = !empty( $wgWikiaDisableDynamicLinkCreatePagePopup ) ? true : false;
+
+	if (!empty( $wgWikiaDisableDynamicLinkCreatePagePopup )) {
+		$vars['WikiaDisableDynamicLinkCreatePagePopup'] = true;
+	}
+
 	$vars['ContentNamespacesText'] = $contentNamespaces;
 
 	return true;
@@ -135,17 +134,16 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 }
 
 function wfCreatePageAjaxGetDialog() {
-	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgCdnStylePath, $wgScript;
+	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
 	$standardOptions = array();
 
-
 	$standardOptions['format'] = array(
 		'namespace' => NS_MAIN,
 		'label' => wfMsg( 'createpage-dialog-format' ),
-		'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_format.png",
+		'icon' => "{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_format.png",
 		'trackingId' => 'standardlayout',
 		'submitUrl' => "{$wgScript}?title=$1&action=edit&useFormat=1"
 	);
@@ -153,7 +151,7 @@ function wfCreatePageAjaxGetDialog() {
 	$standardOptions['blank'] = array(
 		'namespace' => NS_MAIN,
 		'label' => wfMsg( 'createpage-dialog-blank' ),
-		'icon' => "{$wgCdnStylePath}/extensions/wikia/CreatePage/images/thumbnail_blank.png",
+		'icon' => "{$wgExtensionsPath}/wikia/CreatePage/images/thumbnail_blank.png",
 		'trackingId' => 'blankpage',
 		'submitUrl' => "{$wgScript}?title=$1&action=edit"
 	);
