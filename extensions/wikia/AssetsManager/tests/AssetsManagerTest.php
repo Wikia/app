@@ -23,10 +23,11 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	public function testGetGroupsCommonURL() {
-		$url =  reset($this->instance->getGroupsCommonURL(array('foo', 'bar'), array(), true /* $combine */, true /* $minify */));
+		$url =  $this->instance->getGroupsCommonURL(array('foo', 'bar'), array(), true /* $combine */, true /* $minify */);
 
-		$this->assertContains('__am', $url);
-		$this->assertContains("/{$this->cb}/", $url);
-		$this->assertContains('foo,bar', $url);
+		$this->assertEquals(1, count($url));
+		$this->assertContains('__am', $url[0]);
+		$this->assertContains("/{$this->cb}/", $url[0]);
+		$this->assertContains('foo,bar', $url[0]);
 	}
 }
