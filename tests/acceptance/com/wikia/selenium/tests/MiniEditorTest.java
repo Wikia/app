@@ -105,7 +105,6 @@ public class MiniEditorTest extends MiniEditorBaseTest {
 		disableVisualMode();
 		try {
 			openAndWait("/wiki/Special:MiniEditorDemo");
-			session().waitForPageToLoad(this.getTimeout());
 
 			assertTrue(session().isVisible("//div[@id='Edit']/div[@class='editarea']/div[@class='body']"));
 			assertFalse(session().isElementPresent("//div[@id='Edit']/div[@class='editarea']/textarea"));
