@@ -198,8 +198,20 @@ public class BaseTest {
 		openAndWait("index.php?useskin=oasis");
 
 		if (isLoggedIn()) {
-			clickAndWait("link=Log out");
-			waitForTextPresent("You have been logged out.");
+			// new logout method doesn't always work - sometimes we have to click logout twice
+			for(int i = 0 ; i < 3 ; i++) {
+				/*
+				 * mech - I simply cannot get it working without this sleep :( When selenium tries to logout too fast after
+				 * the page is realoded, the logout action on the server does not work and we're still logged
+				 */
+				Thread.sleep(3000);
+				
+				//openAndWait(href);
+				clickAndWait("link=Log out");
+				if (session().isTextPresent("You have been logged out.")) {
+					break;
+				}
+			}
 			assertFalse(isLoggedIn());
 		}
 	}
@@ -373,25 +385,42 @@ public class BaseTest {
 		waitForElementNotVisible(elementId, this.getTimeout());
 	}
 
-	protected void clickAndWait(String location) throws Exception {
-		session().getEval("window.wgNow = null;");
-		session().click(location);
+	protected void waitForPageToLoad() throws Exception {
 		session().waitForPageToLoad(this.getTimeout());
-		session().waitForCondition("typeof window != 'undefined' && window.wgNow != null", this.getTimeout());
-		session().waitForCondition("(document.readyState == 'complete') && (typeof document.body != 'undefined')", this.getTimeout());
-		session().getEval("setTimeout(function() {window.wikiaSeleniumUniqueKey = Math.random()}, 100)");
-		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
-	}
+		long startTimestamp = (new Date()).getTime();
+		int timeOut = Integer.parseInt(this.getTimeout());
+		while (true) {
+			long curTimestamp = (new Date()).getTime();
+			if (curTimestamp-startTimestamp > timeOut) {
+				assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']") || session().isElementPresent("//div[@id='footer']"));
+				break;
+			}
 
+			try{
+				if(session().isElementPresent("//footer[@id='WikiaFooter']") || session().isElementPresent("//div[@id='footer']")) {
+					break;
+				}
+			} catch( SeleniumException e ) {}
+			Thread.sleep(1000);
+		}
+		session().waitForCondition("typeof window != 'undefined' && typeof window.wgWikiaDOMReady != 'undefined'", this.getTimeout());		
+	}
+	
+	protected void clickAndWait(String location) throws Exception {
+		String curSpeed = session().getSpeed();
+		session().setSpeed("50");
+		session().getEval("delete window.wgWikiaDOMReady");
+		session().click(location);
+		waitForPageToLoad();
+		session().setSpeed(curSpeed);
+	}
+	
 	protected void openAndWait(String url) throws Exception {
 		String curSpeed = session().getSpeed();
-		session().setSpeed("0");
-		session().getEval("window.wgNow = null;");
+		session().setSpeed("50");
+		session().getEval("delete window.wgWikiaDOMReady");
 		session().open(url);
-		session().waitForPageToLoad(this.getTimeout());
-		session().waitForCondition("typeof window != 'undefined' && window.wgNow != null", this.getTimeout());
-		session().getEval("window.$(function() {window.wikiaSeleniumUniqueKey = 'ready';})");
-		session().waitForCondition("typeof window.wikiaSeleniumUniqueKey != 'undefined'", this.getTimeout());
+		waitForPageToLoad();
 		session().setSpeed(curSpeed);
 	}
 	
