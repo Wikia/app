@@ -98,7 +98,9 @@ class WallHooksHelper {
 			//user talk page -> redirect to message wall
 			$outputDone = true;
 
-			$app->wg->Out->redirect($this->getWallTitle()->getFullUrl(), 301);
+			$title = $this->getWallTitle();
+			if ( empty($title) ) return true;
+			$app->wg->Out->redirect($title->getFullUrl(), 301);
 			return true;
 		}
 
