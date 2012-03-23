@@ -1078,11 +1078,12 @@ if (typeof [].indexOf == 'undefined') {
 	}
 }
 
-//beacon_id cookie
 $(function() {
+	//beacon_id cookie
 	if ( window.beacon_id ) {
 		$.cookies.set( 'wikia_beacon_id', window.beacon_id, { path: wgCookiePath, domain: wgCookieDomain });
 	}
+	window.wgWikiaDOMReady = true;	// for selenium tests
 });
 
 // http://bit.ly/ishiv | WTFPL License
