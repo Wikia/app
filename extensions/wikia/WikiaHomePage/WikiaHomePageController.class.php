@@ -62,6 +62,12 @@ class WikiaHomePageController extends WikiaController {
 		$response = $this->app->sendRequest( 'WikiaHomePageController', 'getHubImages' );
 		$this->hubImages = $response->getVal( 'hubImages' , '' );
 	}
+	
+	public function mobileIndex() {
+		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
+		$response = $this->app->sendRequest( 'WikiaHomePageController', 'getHubImages' );
+		$this->hubImages = $response->getVal( 'hubImages' , '' );
+	}
 
 	/**
 	 * get stats
@@ -454,5 +460,20 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	final private function getFailoverWikiList() {
 		return file_get_contents(dirname(__FILE__) . '/text_files/FailOverWikiList.txt');
+	}
+	
+	public static function onGetHTMLAfterBody($skin, &$html) {
+		if (Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
+			$html .= F::app()->sendRequest( 'WikiaHomePage', 'mobileIndex' )->toString();
+		}
+		return true;
+	}
+	
+	public static function onWikiaMobileAssetsPackages(&$jsHeadPackageName, &$jsBodyPackageName, &$scssPackageName) {
+		// include css regardless of whether it is main page or not
+		if(Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHomePageExt) {
+			$scssPackageName = 'extensions/wikia/WikiaHomePage/css/WikiaHomePage.wikiamobile.scss';
+		}
+		return true;
 	}
 }
