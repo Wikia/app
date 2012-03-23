@@ -90,7 +90,7 @@
 		// See RTE::getInstanceID() for details
 		instanceId: null,
 
-		// array of fully loaded editor instances. 
+		// array of fully loaded editor instances.
 		loaded: [],
 
 		// CK loading time
@@ -110,7 +110,7 @@
 				params = {};
 			}
 			params.method = method;
-	
+
 			jQuery.post(window.wgScript + '?action=ajax&rs=RTEAjax', params, function(data) {
 				if (typeof callback == 'function') {
 					callback(data);
@@ -128,8 +128,8 @@
 		getContentsCss: function(editor) {
 
 			// Bartek - for RT #43217
-			if (typeof WikiaEnableAutoPageCreate != 'undefined') {
-				RTE.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css');
+			if (window.WikiaEnableAutoPageCreate) {
+				RTE.contentsCss.push(wgExtensionsPath + '/wikia/AutoPageCreate/AutoPageCreate.css');
 			}
 
 			var contentsCss = '',
@@ -152,16 +152,16 @@
 							styleVersion: wgStyleVersion,
 							contentsCss: contentsCss
 						})
-	
+
 						// disable object resizing in IE. IMPORTANT! use local path
 						if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
 							RTE.config.contentsCss += 'img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}';
 						}
-	
+
 						RTE.initCk(editor);
 					}
 				});
-			})();		
+			})();
 		},
 
 		// start editor in mode provided
@@ -191,16 +191,16 @@
 				}
 			}
 		},
-		
+
 		initCk: function(editor) {
-		
+
 			// Editor specific config overrides
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}
-			
+
 			if(typeof editor.config.tabIndex != "undefined") {
-				RTE.config.tabIndex = editor.config.tabIndex;			
+				RTE.config.tabIndex = editor.config.tabIndex;
 			}
 
 			RTE.config.startupMode = editor.config.mode;
@@ -222,7 +222,7 @@
 		// TODO: work this into getContentsCss()
 		loadExtraCss: function(editor) {
 			var css = [];
-			
+
 			GlobalTriggers.fire('rterequestcss', css);
 
 			for (var n=0; n<css.length; n++) {
@@ -251,7 +251,7 @@
 				if (editor.mode == 'wysiwyg') {
 					editor.fire('saveSnapshot');
 				}
-	
+
 				editor.fire('modeSwitch');
 			}
 
@@ -295,12 +295,12 @@
 		// reposition #RTEOverlay div
 		repositionRTEOverlay: function() {
 			RTE.overlayNode.css({left:0,top:0});
-	
+
 			var wikiaEditor = WikiaEditor.getInstance(),
-				editorWrapper =  wikiaEditor.getEditboxWrapper(),		
+				editorWrapper =  wikiaEditor.getEditboxWrapper(),
 				bodyPadding = RTE.overlayNode.offset(),
 				editorPosition = editorWrapper.offset();
-	
+
 			RTE.overlayNode.css({
 				'left': parseInt(editorPosition.left - bodyPadding.left) + 'px',
 				'top': parseInt(editorPosition.top - bodyPadding.top) + 'px'
