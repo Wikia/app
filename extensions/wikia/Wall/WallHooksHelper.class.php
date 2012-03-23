@@ -95,11 +95,10 @@ class WallHooksHelper {
 		if( $title->getNamespace() === NS_USER_TALK
 				&& !$title->isSubpage()
 		) {
-			//user talk page -> redirect to message wall
-			$outputDone = true;
-
 			$title = $this->getWallTitle();
 			if ( empty($title) ) return true;
+			//user talk page -> redirect to message wall
+			$outputDone = true;
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
 			return true;
 		}
