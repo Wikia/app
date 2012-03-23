@@ -413,6 +413,7 @@ class CategoryExhibitionSection {
 		    $key = wfMemcKey( 'category_touched', $title->getDBKey() );
 		    return $key;
         } else {
+            Wikia::log(__METHOD__, '', '$title not an instance of Title' . "\nBacktrace:\n" . wfDebugBacktrace());
             return null;
         }
 	}
