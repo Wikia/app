@@ -17,6 +17,7 @@ class BodyModule extends Module {
 	var $wgABTests;
 	var $wgEnableTopButton;
 	var $wgOasisNavV2;
+	var $wgSuppressSlider;
 	
 	// skin vars
 	var $content;
@@ -433,7 +434,15 @@ class BodyModule extends Module {
 			}
 
 			// FIXME: move to separate module
-			if ($wgEnableCorporatePageExt) {
+			if ( $wgEnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
+				$this->wgSuppressFooter = true;
+				$this->wgSuppressArticleCategories = true;
+				$this->displayComments = false;
+				$this->wgSuppressPageHeader = true;
+				$this->wgSuppressWikiHeader = true;
+				$this->wgSuppressSlider = true;
+				$this->bodytext = F::App()->sendRequest( 'WikiaHomePageController', 'index' );
+			} else if ($wgEnableCorporatePageExt) {
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
 				wfLoadExtensionMessages( 'AutoHubsPages' );
 
@@ -451,16 +460,6 @@ class BodyModule extends Module {
 					$this->headerModuleAction = 'Corporate';
 				}
 			}
-
-			if ($wgEnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
-				$this->wgSuppressFooter = true;
-				$this->wgSuppressArticleCategories = true;
-				$this->displayComments = false;
-				$this->wgSuppressPageHeader = true;
-				$this->wgSuppressWikiHeader = true;
-				$this->bodytext = F::App()->sendRequest( 'WikiaHomePageController', 'index' );
-			}
-
 		}
 
 		// use one column layout for pages with no right rail modules

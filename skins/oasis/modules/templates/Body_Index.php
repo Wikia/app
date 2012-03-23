@@ -117,7 +117,7 @@
 					echo wfRenderModule('ArticleInfoBox');
 				}
 
-				if ($wgEnableCorporatePageExt) {
+				if ($wgEnableCorporatePageExt && empty($wgSuppressSlider)) {
 					echo wfRenderModule('CorporateSite', 'Slider');
 				} ?>
 
