@@ -105,7 +105,7 @@ class WikiaHubsPopularVideos {
  */
 class WikiaHubsMobile {	
 	public static function onWikiaMobileAssetsPackages( &$jsHeadPackageName, &$jsBodyPackageName, &$scssPackageName ) {
-		if( Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHubsExt ) {
+		if( Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHubsExt && ArticleAdLogic::isWikiaHub() ) {
 			$scssPackageName = 'extensions/wikia/WikiaHubs/css/WikiaHubsMobile.scss';
 		}
 		return true;
