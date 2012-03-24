@@ -68,7 +68,7 @@
 	&.wkMobile {
 		.WikiaHubs {
 			h2 {
-				border-left: 6px solid $color-wikiahome-hubcolor;
+				border-left-color: $color-wikiahome-hubcolor;
 				border-bottom: 0;
 			}
 			.title-wrapper {
