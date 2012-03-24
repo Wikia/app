@@ -15,6 +15,14 @@ var WikiaPhotoGallerySlider = {
 		});
 		this.loader.show(slider[0],{center:true});
 
+		//ensure that there are no more than 4 images in the slider
+		//the 'mosaic' style slider for www hubs has 5 images
+		slider.find('li').each(function(index, element) {
+			if (index > 3) {
+				$(element).remove();
+			}
+		});
+
 		//select nav
 		initialSlider.find('.nav').addClass('selected');
 
