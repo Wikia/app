@@ -17,7 +17,7 @@
 		<?= $globalVariablesScript ;?>
 		<?= $jsHeadFiles ;?>
 	</head>
-	<body class=wkMobile>
+	<body class="<?= implode(' ', $bodyClasses) ?>">
 		<?= $advert ;?>
 		<?= $wikiaNavigation ;?>
 		<?= $pageContent ;?>
