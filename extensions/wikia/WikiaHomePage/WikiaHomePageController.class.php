@@ -464,7 +464,7 @@ class WikiaHomePageController extends WikiaController {
 	
 	public static function onGetHTMLAfterBody($skin, &$html) {
 		if (Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
-			$html .= F::app()->sendRequest( 'WikiaHomePage', 'WikiaMobileIndex' )->toString();
+			$html .= F::app()->sendRequest( 'WikiaHomePage', 'wikiaMobileIndex' )->toString();
 		}
 		return true;
 	}
