@@ -63,7 +63,7 @@ class WikiaHomePageController extends WikiaController {
 		$this->hubImages = $response->getVal( 'hubImages' , '' );
 	}
 	
-	public function mobileIndex() {
+	public function WikiaMobileIndex() {
 		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
 		$response = $this->app->sendRequest( 'WikiaHomePageController', 'getHubImages' );
 		$this->hubImages = $response->getVal( 'hubImages' , '' );
@@ -464,7 +464,7 @@ class WikiaHomePageController extends WikiaController {
 	
 	public static function onGetHTMLAfterBody($skin, &$html) {
 		if (Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
-			$html .= F::app()->sendRequest( 'WikiaHomePage', 'mobileIndex' )->toString();
+			$html .= F::app()->sendRequest( 'WikiaHomePage', 'WikiaMobileIndex' )->toString();
 		}
 		return true;
 	}
