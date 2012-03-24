@@ -63,7 +63,7 @@ class WikiaHomePageController extends WikiaController {
 		$this->hubImages = $response->getVal( 'hubImages' , '' );
 	}
 	
-	public function WikiaMobileIndex() {
+	public function wikiaMobileIndex() {
 		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
 		$response = $this->app->sendRequest( 'WikiaHomePageController', 'getHubImages' );
 		$this->hubImages = $response->getVal( 'hubImages' , '' );
