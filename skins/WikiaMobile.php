@@ -39,6 +39,7 @@ class WikiaMobileTemplate extends QuickTemplate {
 	}
 	
 	function execute() {
+		Module::setSkinTemplateObj($this);
 
 		$this->app->sendRequest( 'WikiaMobileService', 'setTemplateObject', array( 'templateObject' => $this ) );
 		
