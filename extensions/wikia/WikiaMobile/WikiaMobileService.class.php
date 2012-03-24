@@ -19,6 +19,8 @@ class WikiaMobileService extends WikiaService {
 	private $scripts;
 	private $styles;
 
+	private static $extraBodyClasses = array();
+
 	function init(){
 		if ( !self::$initialized ) {
 			F::setInstance( __CLASS__, $this );
@@ -171,5 +173,16 @@ class WikiaMobileService extends WikiaService {
 		$this->comscoreTracking = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 		$this->gaTracking = AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW );
 		$this->gaOneWikiTracking = AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->CityId ) );
+
+		$skinVars = Module::getSkinTemplateObj()->data;
+		$this->bodyClasses = array('wkMobile', $skinVars['pageclass'] );
+		$this->bodyClasses = array_merge($this->bodyClasses, self::$extraBodyClasses);
+	}
+
+	/**
+	 * Add extra CSS classes to <body> tag
+	 */
+	public static function addBodyClass( $className ) {
+		self::$extraBodyClasses[] = $className;
 	}
 }
