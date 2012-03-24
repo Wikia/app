@@ -470,8 +470,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 	
 	public static function onWikiaMobileAssetsPackages(&$jsHeadPackageName, &$jsBodyPackageName, &$scssPackageName) {
-		// include css regardless of whether it is main page or not
-		if(Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHomePageExt) {
+		if(Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
 			$scssPackageName = 'extensions/wikia/WikiaHomePage/css/WikiaHomePage.wikiamobile.scss';
 		}
 		return true;
