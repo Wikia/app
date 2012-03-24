@@ -80,23 +80,26 @@
 			.wikiahubs-ftc-item {
 				@include clearfix;
 				border-bottom: 1px solid $color-page-border;
+				font-size: 13px;
+				line-height: 20px;
 				list-style: none;
 				margin: 0;
 				padding: 10px 0;
 				img {
-					height: 100px;
-					width: 155px;
+					height: 65px;
+					width: 100px;
 				}
 				.floatleft {
 					display: inline-block;
+					float: left;
 					margin: 0 10px 10px 0;
+				}
+				.wikiahubs-ftc-title {
+					font-size: medium;
+					font-weight: bold;
 				}
 				.wikiahubs-ftc-subtitle {
 					clear: left;
-				}
-				.wikiahubs-ftc-title {
-					font-size: 14px;
-					font-weight: bold;
 				}
 				.wikiahubs-ftc-creative {
 					margin-top: 10px;
