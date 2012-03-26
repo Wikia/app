@@ -36,7 +36,7 @@ var ArticleComments = ArticleComments || (function(){
 
 		if(condition){
 			elm.toggleClass('active');
-			WikiaMobile.loader.show(elm);
+			WikiaMobile.loader.show(elm[0]);
 
 			$.getJSON(ajaxUrl + '&page=' + pageIndex.toString(), function(result){
 				var finished;
@@ -47,7 +47,7 @@ var ArticleComments = ArticleComments || (function(){
 				commsUl.innerHTML = result.text;
 
 				elm.toggleClass('active');
-				WikiaMobile.loader.hide(elm);
+				WikiaMobile.loader.hide(elm[0]);
 
 				//there's a good reason to use display instead of show/hide in the following lines
 				if(finished) {
