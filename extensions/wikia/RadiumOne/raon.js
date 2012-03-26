@@ -12,8 +12,9 @@ var RadiumOne = {};
 			(window.cscoreCat in RadiumOne.enabledComscoreCats)
 		){
 			// if no cookie, get pixel (which sets cookie)
-			if(Wikia.CookieCutter.get(RadiumOne.cookieName) === null)
+			if(Wikia.CookieCutter.get(RadiumOne.cookieName) === null){
 				new Image().src = RadiumOne.pixelUrl+Math.round(Math.random()*10000000);
+			}
 		}
 	};
 	

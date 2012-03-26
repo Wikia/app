@@ -310,7 +310,7 @@ var ArticleComments = {
 		e.preventDefault();
 		ArticleComments.track('post');
 
-		if (ArticleComments.processing) return;
+		if (ArticleComments.processing) { return; }
 
 		var source = $(e.data.source),
 			target = $(e.target),
@@ -318,7 +318,7 @@ var ArticleComments = {
 			content = ArticleComments.getContent(source),
 			showall = $.getUrlVar('showall');
 
-		if ($.trim(content) == '') return;
+		if ($.trim(content) == '') { return; }
 
 		throbber.css('visibility', 'visible');
 		source.attr('readonly', 'readonly');

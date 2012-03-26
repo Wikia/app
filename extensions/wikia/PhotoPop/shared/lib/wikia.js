@@ -18,8 +18,9 @@ var Wikia = {};
 	clickEvent;
 
 	try{
-		if(document.createElement( 'div' ).hasOwnProperty('ontouchstart'))
+		if(document.createElement( 'div' ).hasOwnProperty('ontouchstart')){
 			clickEvent = 'ontouchstart';
+		}
 	}catch(err){}
 
 	clickEvent = clickEvent || 'onmousedown';
@@ -79,8 +80,9 @@ var Wikia = {};
 
 	ns.i18n = {
 		setup: function(data){
-			if(Wikia.Platform.is('app'))
+			if(Wikia.Platform.is('app')){
 				wgMessages = data;
+			}
 		},
 
 		Msg: function(messageId){
@@ -89,11 +91,12 @@ var Wikia = {};
 	};
 
 	ns.log = function(msg){
-		if(Wikia.Platform.is('app'))
+		if(Wikia.Platform.is('app')) {
 			Titanium.API.debug(msg);
-		else if(console && console.log)
+		} else if(console && console.log) {
 			console.log(msg);
-	}
+		}
+	};
 
 	/**
 	 * XPlatform/platform-specific fixes and polyfills

@@ -14,7 +14,7 @@ define.call(exports, function(){
 		constructor: function(id, manager){
 			this._domElement = document.getElementById(id + 'Screen');
 
-			if(!this._domElement) throw "Couldn't find screen '" + id + "'";
+			if(!this._domElement) { throw "Couldn't find screen '" + id + "'"; }
 
 			this._manager = manager;
 			this._screenId = id;
@@ -28,7 +28,7 @@ define.call(exports, function(){
 					return new HomeScreen(this);
 				case 'highscore':
 					return new HighscoreScreen(this);
-			};
+			}
 			return this;
 		},
 
@@ -46,8 +46,9 @@ define.call(exports, function(){
 			var modalWrapper = document.getElementById('modalWrapper');
 			this._manager._currentId = this._screenId;
 
-			if(Wikia.Platform.is('app'))
+			if(Wikia.Platform.is('app')){
 				Titanium.App.fireEvent('ScreenManager:showScreen', {id: this._screenId});
+			}
 
 			if(this._screenId == 'game' && modalWrapper.state && !modalWrapper.isProgress) {
 				this._manager.reopenModal();
@@ -64,7 +65,7 @@ define.call(exports, function(){
 			return this._domElement;
 		}
 
-	}),
+	});
 
 	GameScreen = my.Class({
 		_barWrapperHeight: 0,
@@ -495,7 +496,7 @@ define.call(exports, function(){
 			}, 1001);
 		}
 
-	}),
+	});
 
 	HomeScreen = my.Class({
 
@@ -535,7 +536,7 @@ define.call(exports, function(){
 			}
 		}
 
-	}),
+	});
 
 	HighscoreScreen = my.Class({
 
@@ -576,7 +577,7 @@ define.call(exports, function(){
 			}
 
 		}
-	}),
+	});
 
 	ScreenManager = my.Class({
 		_progressTotal: null,

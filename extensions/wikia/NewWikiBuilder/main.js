@@ -104,10 +104,10 @@ NWB.changeTheme = function (theme, changeData){
 /* Wrap up and redirect them to their wiki */
 NWB.finalize = function (redir){
 	/* Issue a purge request */
-        Mediawiki.updateStatus(NWB.msg("nwb-finalizing"));
+	Mediawiki.updateStatus(NWB.msg("nwb-finalizing"));
 	Mediawiki.waiting();
-        var mainPageEnd = Mediawiki.followRedirect(window.wgMainpage, false); // Should be cached.
-        var result = Mediawiki.apiCall({
+	var mainPageEnd = Mediawiki.followRedirect(window.wgMainpage, false); // Should be cached.
+	var result = Mediawiki.apiCall({
 		"action" : "purge",
 		"titles" : mainPageEnd});
 

@@ -88,7 +88,7 @@ function showComboAjaxForPlaceHolder(element, isPlaceholder, callback, showRegis
 			callback: function() {
 				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {
 					//$("#loadmask").remove();
-					if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
+					if (isPlaceholder) { AjaxLogin.setPlaceHolder(element); }
 					AjaxLogin.init( $('#AjaxLoginLoginForm form:first') );
 					AjaxLogin.show();
 					showComboAjaxForPlaceHolder.statusAjaxLogin = false;

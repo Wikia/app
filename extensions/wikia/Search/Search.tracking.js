@@ -12,7 +12,7 @@ var SearchClickTracking = {
 					var callback = function() {
 						$().log('Result click tracked, redirecting ..');
 						window.location.href = element.attr('href');
-					}
+					};
 					$.tracker.byStr('search/result/click/pos/'+element.attr('data-pos'));
 					$.internalTrack('search_click', {
 						'pos': element.attr('data-pos'),

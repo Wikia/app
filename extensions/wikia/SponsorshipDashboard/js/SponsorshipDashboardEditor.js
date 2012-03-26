@@ -10,14 +10,14 @@ var SponsorshipDashboardEditor = {
 	
 	init: function() {
 
-		$( '.sd-addNewGapi' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetGapiForm' )} );
-		$( '.sd-addNewGapiCu' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetGapiCuForm' )} );
-		$( '.sd-addWikiStats' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetStatsForm' )} );
-		$( '.sd-addOneDot' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetOneDotForm' )} );
-		$( '.sd-addMobile' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetMobileForm' )} );
-		$( '.sd-save' ).click( function(){ SponsorshipDashboardEditor.generateSave( false ) } );
-		$( '.sd-save-as-new' ).click( function(){ SponsorshipDashboardEditor.generateSave( true ) } );
-		$( '.sd-preview' ).click( function(){ SponsorshipDashboardEditor.generatePreview() } );
+		$( '.sd-addNewGapi' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetGapiForm' );} );
+		$( '.sd-addNewGapiCu' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetGapiCuForm' );} );
+		$( '.sd-addWikiStats' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetStatsForm' );} );
+		$( '.sd-addOneDot' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetOneDotForm' );} );
+		$( '.sd-addMobile' ).click( function(){SponsorshipDashboardEditor.addSource( 'axGetMobileForm' );} );
+		$( '.sd-save' ).click( function(){ SponsorshipDashboardEditor.generateSave( false ); } );
+		$( '.sd-save-as-new' ).click( function(){ SponsorshipDashboardEditor.generateSave( true ); } );
+		$( '.sd-preview' ).click( function(){ SponsorshipDashboardEditor.generatePreview(); } );
 
 
 		$( '#sd-source' ).click( function(e){
@@ -114,7 +114,7 @@ var SponsorshipDashboardEditor = {
 		if ( SponsorshipDashboardEditor.intId != null ){
 			clearInterval( SponsorshipDashboardEditor.intId );
 		}
-		SponsorshipDashboardEditor.sourceData = [],
+		SponsorshipDashboardEditor.sourceData = [];
 		$( 'form.sd-form' ).each( function( index ){
 			SponsorshipDashboardEditor.sourceData.push( $( this ).serialize() );
 		});
