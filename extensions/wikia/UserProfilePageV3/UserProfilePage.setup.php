@@ -5,6 +5,13 @@
 $app = F::app();
 $dir = dirname( __FILE__ );
 
+define ('AVATAR_DEFAULT_WIDTH', 200);
+define ('AVATAR_DEFAULT_HEIGHT', 200);
+define ('AVATAR_LOG_NAME', 'useravatar');
+define ('AVATAR_USER_OPTION_NAME', 'avatar');
+define ('AVATAR_MAX_SIZE', 512000 );
+define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
+
 /**
  * model
  */
@@ -16,10 +23,13 @@ $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
 $app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
 $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
 
+
 /**
  * controllers
  */
 $app->registerClass('UserProfilePageController', $dir . '/UserProfilePageController.class.php');
+$app->registerClass('Masthead', $dir . '/Masthead.class.php');
+
 //we'll implement interview later
 //$app->registerClass('InterviewSpecialPageController', $dir . '/InterviewSpecialPageController.class.php');
 
@@ -38,6 +48,7 @@ $app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticl
 //we'll implement interview later
 //$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
 $app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
+$app->registerHook('ArticleSaveComplete', 'Masthead', 'userMastheadInvalidateCache');
 
 /**
  * messages
@@ -75,3 +86,10 @@ $app->getLocalRegistry()->set( 'UserProfilePageNamespaces', $UPPNamespaces );
 $wgLogTypes[] = 'usermasthead';
 $wgLogHeaders['usermasthead'] = 'usermasthead-log-alt';
 $wgLogNames['usermasthead'] = 'usermasthead-log';
+
+$wgLogTypes[] = AVATAR_LOG_NAME;
+$wgLogHeaders[AVATAR_LOG_NAME] = 'blog-avatar-alt';
+$wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";
+$wgLogActions[AVATAR_LOG_NAME . '/avatar_chn'] = 'blog-avatar-changed-log';
+$wgLogActions[AVATAR_LOG_NAME . '/avatar_rem'] = 'blog-avatar-removed-log';
+

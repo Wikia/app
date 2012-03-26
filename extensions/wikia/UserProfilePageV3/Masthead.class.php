@@ -1,60 +1,4 @@
-<?php
-/**
- * Masthead extension
- *
- * @author Piotr Molski <moli@wikia-inc.com>
- * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
- * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
- */
-
-if( !defined( 'MEDIAWIKI' ) ) {
-	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
-	die( 1 );
-}
-
-define ('AVATAR_DEFAULT_WIDTH', 200);
-define ('AVATAR_DEFAULT_HEIGHT', 200);
-define ('AVATAR_LOG_NAME', 'useravatar');
-define ('AVATAR_USER_OPTION_NAME', 'avatar');
-define ('AVATAR_MAX_SIZE', 512000 );
-define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
-
-$wgLogTypes[] = AVATAR_LOG_NAME;
-$wgLogHeaders[AVATAR_LOG_NAME] = 'blog-avatar-alt';
-$wgHooks['GetPreferences'][] = 'Masthead::onGetPreferences';
-$wgHooks['SavePreferences'][] = 'Masthead::onSavePreferences';
-$wgHooks['SkinGetPageClasses'][] = 'Masthead::SkinGetPageClasses';
-$wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
-
-$wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";
-
-$wgLogActions[AVATAR_LOG_NAME . '/avatar_chn'] = 'blog-avatar-changed-log';
-$wgLogActions[AVATAR_LOG_NAME . '/avatar_rem'] = 'blog-avatar-removed-log';
-
-$wgExtensionCredits['specialpage'][] = array(
-	'name' => 'Masthead',
-	'description' => 'Displays masthead with avatar and useful links',
-	'author' => array('Krzysztof Krzyzaniak (eloy) <eloy@wikia-inc.com>', 'Piotr Molski (moli) <moli@wikia-inc.com>', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
-);
-
-#--- register special page (MW 1.10 way)
-if ( !function_exists( 'extAddSpecialPage' ) ) {
-	require( "$IP/extensions/ExtensionFunctions.php" );
-}
-
-/**
- * messages file
- */
-$wgExtensionMessagesFiles['Masthead'] = dirname(__FILE__) . '/Masthead.i18n.php';
-$wgExtensionAliasesFiles['Masthead'] = __DIR__ . '/Masthead.aliases.php';
-
-#--- permissions
-$wgAvailableRights[] = 'removeavatar';
-$wgGroupPermissions['staff']['removeavatar'] = true;
-#$wgGroupPermissions['sysop']['removeavatar'] = true;
-$wgGroupPermissions['helper']['removeavatar'] = true;
-extAddSpecialPage( '', 'RemoveUserAvatar', 'UserAvatarRemovePage' );
-$wgSpecialPageGroups['RemoveUserAvatar'] = 'users';
+<?php 
 
 class Masthead {
 
@@ -250,9 +194,7 @@ class Masthead {
 			return $this->avatarUrl;
 		} else {
 			$url = $this->getPurgeUrl($thumb); // get the basic URL
-
-			// use user-specific cache buster only for custom avatars (BugId:22190)
-			return wfReplaceImageServer( $url, !$this->isDefault() ? $this->mUser->getTouched() : 1 );
+			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
 		}
 	}
 
@@ -565,18 +507,18 @@ class Masthead {
 	 */
 	public function uploadByUrl($url){
 		$sTmpFile = '';
-
+		
 		$errorNo = $this->uploadByUrlToTempFile($url, $sTmpFile);
-
+		
 		if( $errorNo == UPLOAD_ERR_OK ) {
-			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);
+			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);			
 		}
 
 		wfProfileOut(__METHOD__);
 		return $errorNo;
 	} // end uploadByUrl()
-
-
+	
+	
 	public function uploadByUrlToTempFile($url, &$sTmpFile){
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
@@ -595,7 +537,7 @@ class Masthead {
 			return UPLOAD_ERR_CANT_WRITE;
 		}
 	}
-
+	
 	/**
 	 * uploadFile -- save file when is in proper format, do resize and
 	 * other stuffs
@@ -633,7 +575,7 @@ class Masthead {
 			wfProfileOut(__METHOD__);
 			return UPLOAD_ERR_NO_FILE;
 		}
-
+	
 		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
 //		Wikia::log( __METHOD__, 'tmp', "Temp file set to {$sTmpFile}" );
 		$sTmp = $request->getFileTempname($input);
@@ -718,12 +660,12 @@ class Masthead {
 			if ( $aOrigSize['width'] < $aOrigSize['height'] ) {
 				$iImgW = $iImgH * ( $aOrigSize['width'] / $aOrigSize['height'] );
 			}
-
+		
 			/* empty image with thumb size on white background */
 			$oImg = @imagecreatetruecolor($iImgW, $iImgH);
 			$white = imagecolorallocate($oImg, 255, 255, 255);
 			imagefill($oImg, 0, 0, $white);
-
+		
 			imagecopyresampled(
 				$oImg,
 				$oImgOrig,
@@ -780,69 +722,7 @@ class Masthead {
 		return $errorNo;
 	} // end postProcessImageInternal()
 
-	public static function onSavePreferences($formData, $error) {
-		global $wgRequest, $wgUser;
-
-		$result = true;
-
-		$sUrl = wfBasename( $wgRequest->getVal( 'wkDefaultAvatar' ) );
-		$sUploadedAvatar = $wgRequest->getFileName( AVATAR_UPLOAD_FIELD );
-
-		/**
-		 * we store in different way default and uploaded pictures
-		 *
-		 * default: we store only filename
-		 * uploaded: we store relative path to filename
-		 */
-
-		/**
-		 * is user trying to upload something
-		 */
-		$isNotUploaded = ( empty( $sUploadedAvatar ) && empty( $sUrl ) );
-		if ( !$isNotUploaded ) {
-			$oAvatarObj = Masthead::newFromUser( $wgUser );
-			/* check is set default avatar for user */
-			if ( empty($sUrl) ) {
-				/* upload user avatar */
-				$errorMsg = "";
-				$errorNo = $oAvatarObj->uploadFile( $wgRequest, AVATAR_UPLOAD_FIELD, $errorMsg );
-				if ( $errorNo != UPLOAD_ERR_OK ) {
-					switch( $errorNo ) {
-						case UPLOAD_ERR_NO_FILE:
-							$error = wfMsg( 'blog-avatar-error-nofile');
-							break;
-
-						case UPLOAD_ERR_CANT_WRITE:
-							$error = wfMsg( 'blog-avatar-error-cantwrite');
-							break;
-
-						case UPLOAD_ERR_FORM_SIZE:
-							$error = wfMsg( 'blog-avatar-error-size', (int)(AVATAR_MAX_SIZE/1024) );
-							break;
-
-						case UPLOAD_ERR_EXTENSION:
-							$error = $errorMsg;
-							break;
-
-						default:
-							$error = wfMsg( 'blog-avatar-error-cantwrite');
-					}
-					$result = false;
-				} else {
-					$sUrl = $oAvatarObj->getLocalPath();
-					$oAvatarObj->purgeUrl();
-				}
-			}
-
-			if ( !empty($sUrl) ) {
-				/* set user option */
-				$formData[AVATAR_USER_OPTION_NAME] = $sUrl;
-			}
-		}
-
-		return $result;
-	}
-
+	
 	function purgeUrl() {
 		// Purge the avatar URL and the proportions commonly used in Oasis.
 		global $wgUseSquid;
@@ -857,329 +737,7 @@ class Masthead {
 			);
 
 			SquidUpdate::purge($urls);
-		}
-	}
-
-	public static function onGetPreferences($user, &$defaultPreferences) {
-		global $wgUser, $wgCityId, $wgEnableUploads, $wgUploadDirectory, $wgEnableUserProfilePagesV3;
-
-		$oAvatarObj = Masthead::newFromUser( $wgUser );
-		$aDefAvatars = $oAvatarObj->getDefaultAvatars();
-
-		if ( $wgUser->isBlocked() ) {
-			# if user is blocked - don't show avatar form
-			return true;
-		}
-
-		// List of conditions taken from
-		// extensions/wikia/UserProfile_NY/SpecialUploadAvatar.php */
-		// RT#53727: Avatar uploads not disabled
-		$bUploadsPossible = $wgEnableUploads && $wgUser->isAllowed( 'upload' ) && is_writeable( $wgUploadDirectory );
-
-		/**
-		 * run template
-		 */
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$oTmpl->set_vars( array(
-			'wgUser'           => $wgUser,
-			'sUserAvatar'      => $wgUser->getOption(AVATAR_USER_OPTION_NAME),
-			'cityId'           => $wgCityId,
-			'aDefAvatars'      => $aDefAvatars,
-			'oAvatarObj'       => $oAvatarObj,
-			'sUserImg'         => $oAvatarObj->getURL(),
-			'imgH'             => AVATAR_DEFAULT_HEIGHT,
-			'imgW'             => AVATAR_DEFAULT_WIDTH,
-			'sFieldName'       => AVATAR_UPLOAD_FIELD,
-			'bUploadsPossible' => $bUploadsPossible,
-		) );
-
-		if( empty($wgEnableUserProfilePagesV3) ) {
-		//when User Profile Pages version 3 is enabled don't show here avatar upload
-			$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
-			$html .= $oTmpl->execute('pref-avatar-form');
-		}
-
-		$defaultPreferencesTemp = array();
-
-		foreach($defaultPreferences as $k => $v) {
-			$defaultPreferencesTemp[$k] = $v;
-			if($k == 'showAds' && empty($wgEnableUserProfilePagesV3)) {
-				$defaultPreferencesTemp['avatarupload'] = array(
-				'help' => $html,
-				'label' => '&nbsp;',
-				'type' => 'info',
-				'section' => 'personal/avatarupload');
-			}
-		}
-
-		$defaultPreferences = $defaultPreferencesTemp;
-
-		return true;
-	}
-
-	static public function SkinGetPageClasses(&$classes) {
-		global $wgTitle;
-
-		$namespace = $wgTitle->getNamespace();
-		$dbKey = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
-
-		$allowedNamespaces = array( NS_USER, NS_USER_TALK );
-		if ( defined('NS_BLOG_ARTICLE') ) {
-			$allowedNamespaces[] = NS_BLOG_ARTICLE;
-		}
-
-		# special pages visible only for the current user
-		# /$par is used for other things here
-		$allowedPagesSingle = array (
-			'Watchlist',
-			'WidgetDashboard',
-			'Preferences',
-			'MyHome',
-		);
-
-		# special pages visible for other users
-		# /$par or target paramtere are used for username
-		$allowedPagesMulti = array (
-			'Contributions',
-			'Emailuser',
-			'SavedPages',
-			'Following'
-		);
-
-		if (in_array($namespace, $allowedNamespaces)) {
-			$mastheadClass = ' masthead-regular';
-		} elseif ($namespace == NS_SPECIAL && (in_array($dbKey, $allowedPagesSingle) || in_array($dbKey, $allowedPagesMulti))) {
-			$mastheadClass = ' masthead-special';
-		}
-
-		if (!empty($mastheadClass)) {
-			$classes .= $mastheadClass;
-			global $wgHooks;
-			$wgHooks['MonacoBeforePageBar'][] = 'Masthead::userMasthead';
-		}
-
-		return true;
-	}
-
-	/**
-	 * userMasthead -- Hook handler
-	 *
-	 * @param
-	 *
-	 */
-	static public function userMasthead() {
-		global $wgTitle, $wgUser, $wgOut, $wgRequest, $wgLang;
-
-		$namespace = $wgTitle->getNamespace();
-		$dbKey = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
-		$isAnon = $wgUser->isAnon();
-
-		$allowedNamespaces = array( NS_USER, NS_USER_TALK );
-		if ( defined('NS_BLOG_ARTICLE') ) {
-			$allowedNamespaces[] = NS_BLOG_ARTICLE;
-		}
-
-		# special pages visible only for the current user
-		# /$par is used for other things here
-		$allowedPagesSingle = array (
-			'Watchlist',
-			'WidgetDashboard',
-			'Preferences',
-			'MyHome',
-		);
-
-		# special pages visible for other users
-		# /$par or target paramtere are used for username
-		$allowedPagesMulti = array (
-			'Contributions',
-			'Emailuser',
-			'SavedPages',
-			'Following',
-		);
-
-		if( in_array( $namespace, $allowedNamespaces ) ||
-			( $namespace == NS_SPECIAL && ( in_array( $dbKey, $allowedPagesSingle ) || in_array( $dbKey, $allowedPagesMulti ) ) )
-		) {
-			/**
-			 * change dbkey for nonspecial articles, in this case we use NAMESPACE
-			 * as key
-			 */
-			if ( $namespace != NS_SPECIAL ) {
-				$dbKey = $namespace;
-			}
-
-			/* hides article/talk tabs in Monaco.php */
-			$Avatar = null;
-			$userspace = "";
-			$out = array();
-			/* check conditions */
-			if ( in_array( $namespace, $allowedNamespaces ) ) {
-				# Title::getBaseText only backs up one step, we need the leftmost part
-				list( $userspace ) = explode( "/", $wgTitle->getText(), 2 );
-				$Avatar = Masthead::newFromUserName( $userspace );
-			} elseif ( in_array( $dbKey, $allowedPagesSingle ) ) {
-				$userspace = $wgUser->getName();
-				$Avatar = Masthead::newFromUser( $wgUser );
-			} elseif ( in_array( $dbKey, $allowedPagesMulti ) ) {
-				$reqTitle = $wgRequest->getText('title', false);
-
-				# try to get a target user name
-				$userspace = $wgRequest->getText('target', false);
-				if ( empty( $userspace ) && strpos( $reqTitle, '/') !== false ) {
-					list ( , $userspace ) = explode( '/', $reqTitle, 2 );
-				}
-
-				if (empty($userspace)) {
-					$userspace = $wgUser->getName();
-				}
-				$userspace = str_replace('_', ' ', $userspace);
-				$Avatar = Masthead::newFromUserName( $userspace );
-			}
-
-			if ($userspace != '') {
-				$isDestinationUserAnon = User::isIP($userspace);
-				$isUserOnOwnPage = $wgUser->getName() == $userspace;
-				$out['userspace'] = $userspace;
-				$out['nav_links'] = array();
-
-				global $wgEnableMyHomeExt;
-				if ( !empty($wgEnableMyHomeExt) && $wgUser->isLoggedIn() && $isUserOnOwnPage) {
-					$out['nav_links'][] = array('text' => wfMsg('myhome'), 'href' => Title::newFromText('MyHome', NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'MyHome', 'tracker' => 'myhome');
-				}
-				$oTitle = Title::newFromText( $userspace, NS_USER );
-				if ($oTitle instanceof Title) {
-					$out['nav_links'][] = array('text' => wfMsg('nstab-user'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => NS_USER, 'tracker' => 'user');
-				}
-				$oTitle = Title::newFromText( $userspace, NS_USER_TALK );
-				if ($oTitle instanceof Title) {
-					$out['nav_links'][] = array('text' => wfMsg('talkpage'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => NS_USER_TALK, 'tracker' => 'usertalk');
-				}
-				if ( defined('NS_BLOG_ARTICLE') && !$isDestinationUserAnon) {
-					$oTitle = Title::newFromText( $userspace, NS_BLOG_ARTICLE );
-					if ($oTitle instanceof Title) {
-						$out['nav_links'][] = array('text' => wfMsg('blog-page'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => NS_BLOG_ARTICLE, 'tracker' => 'userblog');
-					}
-				}
-
-				global $wgEnableWikiaFollowedPages;
-				if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages) {
-					$follow = FollowHelper::getMasthead($userspace);
-					if (!empty($follow)) {
-						$out['nav_links'][] = $follow;
-					}
-				}
-
-				// macbre: hide "Contributions" tab on Recipes Wiki
-				global $wgEnableRecipesTweaksExt;
-				$oTitle = Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL );
-				if ($oTitle instanceof Title && empty($wgEnableRecipesTweaksExt)) {
-					$out['nav_links'][] = array('text' => wfMsg('contris'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => 'Contributions', 'tracker' => 'contributions');
-				}
-
-				// macbre: add "Saved Pages" tab
-				if (!empty($wgEnableRecipesTweaksExt)) {
-					$out['nav_links'][] = array('text' => wfMsg('savedpages'), 'href' => Skin::makeSpecialUrl("SavedPages/{$userspace}"), 'dbkey' => 'SavedPages', 'tracker' => 'savedpages');
-				}
-
-				$avatarActions = array();
-				//no actions for anon's page
-				if (!$isDestinationUserAnon) {
-					if (!$isUserOnOwnPage) {
-						$user = User::newFromName( $userspace );
-						if ($user) {
-							$avatarActions[] = array(
-								'tracker' => 'newsection',
-								'href' => $user->getTalkPage()->getLocalURL('action=edit&amp;section=new'),
-								'text' => wfMsg('addnewtalksection-link')
-							);
-						}
-					}
-
-					if (!$isUserOnOwnPage && !$isAnon) {
-						$user = User::newFromName($userspace);
-						if ($user) {
-							$destinationUserId = $user->getId();
-							$skin = $wgUser->getSkin();
-							if ($skin->showEmailUser($destinationUserId)) {
-								$oTitle = Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL );
-								if ($oTitle instanceof Title) {
-									$avatarActions[] = array(
-										'tracker' => 'emailuser',
-										'href' => $oTitle->getLocalUrl(),
-										'text' => wfMsg('emailpage')
-									);
-								}
-							}
-						}
-
-						if ($wgUser->isAllowed( 'block' )) {
-							$oTitle = Title::newFromText( "Block/{$userspace}", NS_SPECIAL );
-							if ($oTitle instanceof Title) {
-								$avatarActions[] = array(
-									'tracker' => 'blockip',
-									'href' => $oTitle->getLocalUrl(),
-									'text' => wfMsg('blockip')
-								);
-							}
-						}
-					}
-
-					if ($isUserOnOwnPage) {
-						$avatarActions[] = array(
-							'tracker' => 'editavatar',
-							'href' => Title::newFromText('Preferences', NS_SPECIAL)->getLocalUrl(),
-							'text' => wfMsg('blog-avatar-edit')
-						);
-					}
-
-					if ( !$Avatar->isDefault() && $wgUser->isAllowed( 'removeavatar' ) ) {
-						$avatarActions[] = array(
-							'tracker' => 'removeavatar',
-							'href' => Title::newFromText('RemoveUserAvatar', NS_SPECIAL)->getLocalUrl('action=search_user&amp;av_user=' . $Avatar->getUserName()),
-							'text' => wfMsg('blog-avatar-delete')
-						);
-					}
-				}
-
-				//stats
-				$firstDate = $editCount = 0;
-				if (!$isDestinationUserAnon) {
-					$userStats = Masthead::getUserStatsData($userspace);
-					$editCount = $userStats['editCount'];
-					$firstDate = $userStats['firstDate'];
-				}
-
-				$editCounter = $wgLang->formatNum($editCount);
-				$out['edit_counter_date'] = $editCounter;
-
-				wfRunHooks('Masthead::editCounter', array(&$editCounter, User::newFromName($userspace)));
-				$out['edit_counter_main'] = $editCounter;
-				$out['edit_since'] = wfMsg('masthead-edits-since');
-				$out['edit_date'] = $firstDate ? $firstDate : $wgLang->date(wfTimestamp(TS_MW));
-
-				$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-				$tmpl->set_vars( array(
-					'data'      => $out,
-					'username'  => $isDestinationUserAnon ? wfMsg('masthead-anonymous-user') : $userspace,
-					'avatar'    => $Avatar->display( 50, 50, false, 'avatar', false, /*( ( $userspace == $wgUser->getName() ) || ( $wgUser->isAllowed( 'removeavatar' ) && ( !$Avatar->isDefault() ) ) )*/ true, 'usermasthead/user' ),
-					'current'   => $dbKey,
-					'avatarActions' => $avatarActions,
-					'anonymousUser' => $isDestinationUserAnon ? $userspace : '',
-				));
-				echo $tmpl->render('UserMasthead');
-
-				global $wgMastheadVisible, $wgSupressPageTitle, $wgSupressSiteNotice;
-				//hide #page_tabs
-				if (!$wgTitle->isSubpage()) {
-					$wgMastheadVisible = true;
-				}
-				//hide .firstHeading [except for blogs]
-				$wgSupressPageTitle = !($wgTitle->isSubpage());
-				//hide sitenotice
-				$wgSupressSiteNotice = true;
-			}
-		}
-		return true;
+		}		
 	}
 
 	static public function getUserStatsData( $userName, $useMasterDb = false ) {
@@ -1248,56 +806,6 @@ class Masthead {
 	}
 
 	/**
-	 * Check if masthead should be shown on current page
-	 *
-	 * TODO: use this method inside Masthead class
-	 */
-	public static function isMastheadShown() {
-		global $wgTitle;
-
-		wfProfileIn(__METHOD__);
-
-		$namespace = $wgTitle->getNamespace();
-		$dbKey = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
-
-		$allowedNamespaces = array( NS_USER, NS_USER_TALK );
-		if ( defined('NS_BLOG_ARTICLE') ) {
-			$allowedNamespaces[] = NS_BLOG_ARTICLE;
-		}
-
-		# special pages visible only for the current user
-		# /$par is used for other things here
-		$allowedPagesSingle = array (
-			'Watchlist',
-			'WidgetDashboard',
-			'Preferences',
-			'MyHome',
-		);
-
-		# special pages visible for other users
-		# /$par or target paramtere are used for username
-		$allowedPagesMulti = array (
-			'Contributions',
-			'Emailuser',
-			'SavedPages',
-		);
-
-		// not shown by default
-		$shown = false;
-
-		if (in_array($namespace, $allowedNamespaces)) {
-			$shown = true;
-		}
-		elseif ($namespace == NS_SPECIAL && (in_array($dbKey, $allowedPagesSingle) || in_array($dbKey, $allowedPagesMulti))) {
-			$shown = true;
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $shown;
-	}
-
-	/**
 	 * @brief remove thumbnails for avatar by cleaning up whole folder
 	 *
 	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
@@ -1342,7 +850,7 @@ class Masthead {
 		wfProfileOut( __METHOD__ );
 	}
 }
-
+/*
 class UserAvatarRemovePage extends SpecialPage {
 	var $mAvatar;
 	var $mTitle;
@@ -1439,3 +947,4 @@ class UserAvatarRemovePage extends SpecialPage {
 		$wgOut->addHTML( $oTmpl->execute('remove-avatar-form') );
 	}
 }
+*/
