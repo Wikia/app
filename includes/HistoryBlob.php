@@ -217,6 +217,10 @@ class HistoryBlobStub {
 				$obj = unserialize( $obj );
 			}
 
+			if( !is_object( $obj ) ) {
+				return false;
+			}
+
 			// Save this item for reference; if pulling many
 			// items in a row we'll likely use it again.
 			$obj->uncompress();
