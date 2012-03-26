@@ -22,6 +22,7 @@ $wgVideoHandlersVideosMigrated = false; // be sure we are working on old files
 $devboxuser = exec('hostname');
 $sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgDBname, $wgExternalDatawareDB);
 $previouslyProcessed = $sanitizeHelper->getRenamedVideos("new", " 1 ");
+$previouslyProcessed2 = $sanitizeHelper->getRenamedVideos("old", " 1 ");
 
 
 
@@ -74,8 +75,9 @@ if ( $rowCount ) {
 	$i = 0;
 	foreach( $aAllFiles as $sFile => $val ) {
 		if ( strpos ( $sFile, ':' ) === 0 ) {
-
-			$aTranslation[ $sFile ] = true;
+			if ( !empty( $previouslyProcessed[ $sFile ] ) || !empty( $previouslyProcessed2[ $sFile ] ) ) {
+				$aTranslation[ $sFile ] = true;
+			}
 		}
 	}
 }
