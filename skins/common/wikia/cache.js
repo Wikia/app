@@ -54,7 +54,7 @@ window.Wikia.Cache = (function(){
 			value;
 
 			if(ttl === null || typeof ttl == 'undefined' || (typeof ttl == 'string' && JSON.parse(ttl) > getTimestamp())){
-				value = ls.getItem(getKey(key))
+				value = ls.getItem(getKey(key));
 				value = (typeof value == 'undefined' || value === null) ? null : JSON.parse(value);
 			}else{
 				this.del(key);
@@ -102,5 +102,5 @@ window.Wikia.Cache = (function(){
 
 			clean = true;
 		}
-	}
+	};
 })();
