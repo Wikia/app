@@ -69,8 +69,13 @@
 
 		beforeRender: function() {
 			// set up label
-			this.label || (this.label = $.msg(this.labelId));
-			this.label = this.label || '';
+            this.label || (this.label = $.msg(this.label));
+            if(typeof this.label != 'undefined') {
+                if(this.label.match(/<.*>/)) {
+                    this.label = $.msg(this.label.replace('<','').replace('>',''));
+                }
+            }
+            this.label = this.label || '';
 			// set up title
 			this.title || (this.titleId && (this.title = $.msg(this.titleId))) || (this.title = this.label);
 			this.title = this.title || '';
