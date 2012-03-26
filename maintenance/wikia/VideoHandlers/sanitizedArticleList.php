@@ -72,11 +72,15 @@ if ( $rowCount ) {
 		$aAllFiles[ $file->img_name ] = 1;
 	}
 
+	print_r($aAllFiles);
+
 	$i = 0;
 	foreach( $aAllFiles as $sFile => $val ) {
 		if ( strpos ( $sFile, ':' ) === 0 ) {
 			if ( !empty( $previouslyProcessed[ $sFile ] ) || !empty( $previouslyProcessed2[ $sFile ] ) ) {
 				$aTranslation[ $sFile ] = true;
+			} else {
+				echo "skipping: ".$sFile."\n";
 			}
 		}
 	}
@@ -117,7 +121,7 @@ foreach ( $aTranslation as $key => $val ) {
 if (count ($allChangesArticleURLs) > 0 ) {
 	echo( "Article List for cityId: $wgCityId  ( $wikiUrl ) \n" );
 	foreach( $allChangesArticleURLs as $url => $v ) {
-		echo "$url -> Video:$v \n";
+		echo "$url -> Video$v \n";
 	}
 }
 ?>
