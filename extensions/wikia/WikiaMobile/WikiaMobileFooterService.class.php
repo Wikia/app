@@ -8,9 +8,9 @@ class WikiaMobileFooterService extends WikiaService {
 	public function index(){
 		$this->response->setVal( 'copyrightLink', $this->request->getVal( 'copyrightLink' ) );
 		$this->response->setVal( 'links', array(
-			$this->getLinkFromMessage( 'wikiamobile-footer-link1' ),
-			$this->getLinkFromMessage( 'wikiamobile-footer-link2' ),
-			$this->getLinkFromMessage( 'wikiamobile-footer-link3' )
+			$this->getLinkFromMessage( 'wikiamobile-footer-link-videogames' ),
+			$this->getLinkFromMessage( 'wikiamobile-footer-link-entertainment' ),
+			$this->getLinkFromMessage( 'wikiamobile-footer-link-lifestyle' )
 		) );
 		$this->response->setVal( 'feedbackLink', 'https://docs.google.com/a/wikia-inc.com/spreadsheet/viewform?hl=en_US&formkey=dDlxWlYwLV8zTGszZmZPN3hEYTVDMFE6MQ&entry_1=' . urlencode( $_SERVER['HTTP_USER_AGENT'] ) . "&entry_2={$this->wg->Title->getFullURL()}" );
 	}
