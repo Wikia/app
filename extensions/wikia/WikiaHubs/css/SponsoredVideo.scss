@@ -46,7 +46,13 @@
 		.sponsored-video-content {
 			clear: both;
 			.thumbinner {
-				border:0;padding:0;
+				background: black;
+				border: 0;
+				display: table-cell;
+				height: 225px;
+				padding: 0;
+				vertical-align: middle;
+				width: 300px;
 			}
 			h4 {
 				font-size: 13px;
