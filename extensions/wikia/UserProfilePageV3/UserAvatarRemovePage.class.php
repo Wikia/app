@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 class UserAvatarRemovePage extends SpecialPage {
 	var $mAvatar;
