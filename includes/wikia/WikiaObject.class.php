@@ -19,13 +19,13 @@ abstract class WikiaObject {
 	 * @var WikiaApp
 	 */
 	protected $app = null;
-	
+
 	/**
 	 * global registry object
 	 * @var WikiaGlobalRegistry
 	 */
 	protected $wg = null;
-	
+
 	/**
 	 * function wrapper object
 	 * @var WikiaFunctionWrapper
@@ -43,7 +43,7 @@ abstract class WikiaObject {
 		$this->wg = $this->app->wg;
 		$this->wf = $this->app->wf;
 	}
-	
+
 	/**
 	 * get application
 	 * @return WikiaApp
@@ -63,5 +63,4 @@ abstract class WikiaObject {
 		$this->wg = $app->wg;
 		$this->wf = $app->wf;
 	}
-	
 }

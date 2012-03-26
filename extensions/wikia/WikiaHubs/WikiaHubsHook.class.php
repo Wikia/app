@@ -104,10 +104,12 @@ class WikiaHubsPopularVideos {
  * WikiaHubs Mobile
  */
 class WikiaHubsMobile {	
-	public static function onWikiaMobileAssetsPackages( &$jsHeadPackageName, &$jsBodyPackageName, &$scssPackageName ) {
-		if( Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHubsExt && ArticleAdLogic::isWikiaHub() ) {
-			$scssPackageName = 'extensions/wikia/WikiaHubs/css/WikiaHubsMobile.scss';
+	public static function onWikiaMobileAssetsPackages( &$jsPackages, &$scssPackages ) {
+		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
+		if ( F::app()->wg->EnableWikiaHubsExt && ArticleAdLogic::isWikiaHub() ) {
+			$scssPackages[] = 'wikiahubs_scss_wikiamobile';
 		}
+
 		return true;
 	}
 }

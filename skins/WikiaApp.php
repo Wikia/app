@@ -28,19 +28,23 @@ $wgHooks['SkinGetHeadScripts'][] = 'SkinWikiaApp::onSkinGetHeadScripts';
  * @todo document
  * @ingroup Skins
  */
-class SkinWikiaApp extends SkinTemplate {
+class SkinWikiaApp extends WikiaSkin {
 	const COOKIE_NAME = 'mobileapp';
 	const COOKIE_DURATION = 86400;/*24h*/
 	
 	function __construct() {
-		parent::__construct();
+		parent::__construct( 'MonoBookTemplate', 'wikiaapp');
+
+		//non-strict checks of css/js/scss assets/packages
+		$this->strictAssetUrlCheck = false;
+
 		$this->mRenderColumnOne = false;
 		$this->useHeadElement = true;
 	}
 	
 	function initPage( OutputPage $out ) {
 		global $wgRequest, $wgCookiePrefix;
-		
+
 		//this will force the skin after the first visit, only for selected mobile platforms
 		if( empty( $_COOKIE[ $wgCookiePrefix . self::COOKIE_NAME ] ) ) {	
 			$mobServ = MobileService::getInstance();
@@ -49,14 +53,9 @@ class SkinWikiaApp extends SkinTemplate {
 				$wgRequest->response()->setcookie( self::COOKIE_NAME, 1, time() + self::COOKIE_DURATION );
 			}
 		}
-		
+
 		SkinTemplate::initPage( $out );
-		
-		$this->skinname  = 'wikiaapp';
-		$this->stylename = 'wikiaapp';
-		$this->themename = 'wikiaapp';
-		$this->template  = 'MonoBookTemplate';
-		
+
 		$out->addMeta("viewport", "width=320");
 	}
 	

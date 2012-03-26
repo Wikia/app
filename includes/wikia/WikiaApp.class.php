@@ -21,33 +21,31 @@ class WikiaApp {
 	 * @var WikiaLocalRegistry
 	 */
 	private $localRegistry = null;
+
 	/**
 	 * hook dispatcher
 	 * @var WikiaHookDispatcher
 	 */
 	private $hookDispatcher = null;
+
 	/**
 	 * dispatcher
 	 * @var WikiaDispatcher
 	 */
 	private $dispatcher = null;
-	/**
-	 * reference for AssetsConfig
-	 * @var AssetsConfig
-	 */
-	private $assetsConfig = null;
-	
+
 	/**
 	 * flag for Skin initializationn
 	 * @var Bool
 	 */
 	private $skinInitialized = null;
-	
+
 	/**
 	 * global MW variables helper accessor
 	 * @var WikiaGlobalRegistry
 	 */
 	public $wg = null;
+
 	/**
 	 * global MW functions helper accessor
 	 * @var WikiaFunctionWrapper
@@ -248,27 +246,7 @@ class WikiaApp {
 	public function setDispatcher(WikiaDispatcher $dispatcher) {
 		$this->dispatcher = $dispatcher;
 	}
-	
-	/**
-	 * get global AssetsConfig
-	 * @return AssetsConfig
-	 */
-	public function getAssetsConfig() {
-		if ( empty( $this->assetsConfig ) ) {
-			$this->assetsConfig = F::build( 'AssetsConfig' );
-		}
-		
-		return $this->assetsConfig;
-	}
 
-	/**
-	 * set global AssetsConfig
-	 * @param AssetsConfig $assetsConfig
-	 */
-	public function setAssetsConfig(AssetsConfig $assetsConfig) {
-		$this->assetsConfig = $assetsConfig;
-	}
-	
 	/**
 	 * register hook (alias: WikiaHookDispatcher::registerHook)
 	 * @param string $hookName

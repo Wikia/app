@@ -1,14 +1,14 @@
 <?php
-
 /**
  * AssetsConfig
- *
+ * 
  * In this class word 'item' stands for single entry in configuration array while 'asset' stand for specific path or url
- *
+ * 
  * @author Inez Korczyński <korczynski@gmail.com>
  */
 
 class AssetsConfig {
+	private /* array */ $mConfig;
 
 	public static function getSiteCSS( $combine, $minify = null, $params = null, $skinname = 'oasis', $articleName = 'Wikia.css') {
 		$srcs = array();
@@ -79,30 +79,57 @@ class AssetsConfig {
 			$url = $minify
 				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'
 				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js';
-		}
-		else {
+		} else {
 			$url = 'skins/common/jquery/jquery-1.6.1.js';
 		}
 
 		return array($url);
 	}
 
-	private /* array */ $mConfig;
-
 	/**
-	 * Returns type of particular group. If group does not exists then return null
+	 * Loads packages definitions from config.php
 	 *
-	 * @author Inez Korczyński <korczynski@gmail.com>
- 	 */
-	public function getGroupType( $groupName ) {
+	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+	 */
+	private function load(){
+		wfProfileIn( __METHOD__ );
+
 		if( empty( $this->mConfig ) ) {
 			include( 'config.php' );
 			$this->mConfig = $config;
 		}
 
-		if( isset( $this->mConfig[$groupName] ) ) {
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Returns the skin(s) which a package is registered for
+	 *
+	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+	 */
+	public function getGroupSkin( $groupName ) {
+		$this->load();
+
+		if ( isset( $this->mConfig[$groupName] ) ) {
+			return ( isset( $this->mConfig[$groupName]['skin'] ) ) ? $this->mConfig[$groupName]['skin'] : null;
+		} else {
+			//this is being called on non-defined groups programmatically, so no need to log failure
+			return null;
+		}
+	}
+
+	/**
+	 * Returns type of particular group. If group does not exists then return null
+	 * 
+	 * @author Inez Korczyński <korczynski@gmail.com>
+	 */
+	public function getGroupType( $groupName ) {
+		$this->load();
+
+		if ( isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['type'];
 		} else {
+			//this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
 		}
 	}
@@ -111,14 +138,11 @@ class AssetsConfig {
 	 * Returns assets array for particular group. If group does not exists in config then returns empty array
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
- 	 */
+	 */
 	protected function getGroupAssets( $groupName ) {
-		if(empty( $this->mConfig ) ) {
-			include('config.php');
-			$this->mConfig = $config;
-		}
+		$this->load();
 
-		if(isset( $this->mConfig[$groupName] ) ) {
+		if (isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['assets'];
 		} else {
 			$requestDetails = AssetsManager::getRequestDetails();
@@ -129,9 +153,9 @@ class AssetsConfig {
 
 	/**
 	 * Based on the group name get items assigned to it and pass to resolveItemsToAssets mathod for resolving into particular assets
-	 *
+	 * 
 	 * @author Inez Korczyński <korczynski@gmail.com>
- 	 */
+	 */
 	public function resolve( /* string */ $groupName, /* boolean */ $combine = true, /* boolean */ $minify = true, /* array */ $params = array() ) {
 		return $this->resolveItemsToAssets( $this->getGroupAssets( $groupName ), $combine, $minify, $params );
 	}
@@ -141,41 +165,29 @@ class AssetsConfig {
 	 * Parameters $combine, $minify and $params are eventually passed to custom function (look at #function_) which may deliver different set of assets based on them
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
- 	 */
+	 */
 	private function resolveItemsToAssets( /* array */ $items, /* boolean */ $combine, /* boolean */ $minify, /* array */ $params ) {
-
 		$assets = array();
 
-		foreach( $items as $item ) {
-			if( substr( $item, 0, 2 ) == '//' ) {
-
+		foreach ( $items as $item ) {
+			if ( substr( $item, 0, 2 ) == '//' ) {
 				// filepath - most typical case
 				$assets[] = substr( $item, 2 );
-
-			} else if(substr($item, 0, 7) == '#group_') {
-
+			} elseif ( substr( $item, 0, 7 ) == '#group_' ) {
 				// reference to another group
 				$assets = array_merge( $assets, $this->resolve( substr( $item, 7 ), $combine, $minify, $params ) );
-
-			} else if( substr ($item, 0, 10 ) == '#function_' ) {
-
+			} elseif ( substr ($item, 0, 10 ) == '#function_' ) {
 				// reference to a function that returns array of URIs
 				$assets = array_merge( $assets, call_user_func( substr( $item, 10 ), $combine, $minify, $params ) );
-
-			} else if( substr ($item, 0, 10 ) == '#external_' ) {
-
+			} elseif ( substr ($item, 0, 10 ) == '#external_' ) {
 				// reference to a file to be fetched by the browser from external server (BugId:9522)
 				$assets[] = $item;
-
-			} else if( Http::isValidURI( $item ) ) {
-
+			} elseif ( Http::isValidURI( $item ) ) {
 				// reference to remote file (http and https)
 				$assets[] = $item;
-
 			}
 		}
 
 		return $assets;
 	}
-
 }

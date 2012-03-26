@@ -19,21 +19,18 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function initializeTemplate() {
-		if ( !Wikia::isWikiaMobile() ) {
-			$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
-		}else{
-			//TODO: remove when multi-skin resource loading fixed
-			$this->app->sendRequest(
-				'WikiaMobileService',
-				'addAsset',
-				array(
-					'package' => ( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookConnectExt ) ) ?
-						'wikiamobile_js_userlogin_nofb' :
-						'wikiamobile_js_userlogin',
-					'scss' => 'extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss'
-				)
-			);
-		}
+		//Oasis/Monobook, will be filtered in AssetsManager :)
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
+
+		//Wikiamobile, will be filtered in AssetsManager by config :)
+		$this->response->addAsset(
+				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookConnectExt ) ) ?
+					'userlogin_js_wikiamobile' :
+					'userlogin_js_wikiamobile_fbconnect'
+		);
+
+		//Wikiamobile, will be filtered in AssetsManager by config :)
+		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = false;

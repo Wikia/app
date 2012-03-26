@@ -1,76 +1,18 @@
 <?php
 $config = array();
 
-// Reskinned rich text editor
-$config['rte'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#function_AssetsConfig::getRTEAssets'
-	)
-);
-// Generic edit page JavaScript
-$config['epl'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#function_AssetsConfig::getEPLAssets',
-	)
-);
-// Generic edit page JavaScript + reskined rich text editor
-$config['eplrte'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_epl',
-		'#group_rte'
-	)
-);
+/******** Shared libraries and assets *******/
 
-// Javascript for the MiniEditor
-$config['mini_editor_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//skins/common/edit.js',
-		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
-		'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
-		'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
-		'//extensions/wikia/EditPageLayout/js/plugins/MiniEditor.js',
-		'//extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
-		'//extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
-		'//extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
-		'//extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
-		'//extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
-		'//extensions/wikia/EditPageLayout/js/extras/Buttons.js',
-		'//extensions/wikia/EditPageLayout/js/modules/Container.js',
-		'//extensions/wikia/EditPageLayout/js/modules/ButtonsList.js',
-		'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditor.js',
-		'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditorSource.js',
-		'//extensions/wikia/EditPageLayout/js/modules/Insert.js',
-		'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
-		'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
-		// TODO: Load this on the fly with JSSnippets. Only thing really needed is slider (so far)
-		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
-		'//extensions/wikia/VideoEmbedTool/js/VET.js',
-		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
-		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
-		//'extensions/wikia/LinkSuggest/LinkSuggest.js'
-	)
-);
+/** Site specific CSS **/
 
-// Javascript for the MiniEditor with RTE enabled
-$config['mini_editor_rte_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_mini_editor_js',
-		'#group_rte'
-	)
-);
-
-// Site specific CSS
 $config['site_anon_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => array(
 		'#function_AssetsConfig::getSiteCSS'
 	)
 );
+
+/** User specific CSS **/
 
 $config['site_user_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
@@ -79,7 +21,8 @@ $config['site_user_css'] = array(
 	)
 );
 
-// WikiaScriptLoader
+/** WikiaScriptLoader **/
+
 $config['wsl'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -87,7 +30,8 @@ $config['wsl'] = array(
 	)
 );
 
-// jQuery
+/** jQuery **/
+
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -104,7 +48,31 @@ $config['oasis_jquery'] = array(
 	)
 );
 
-// Oasis core shared JS
+/** YUI **/
+//(deprecated - see BugId:3116)
+
+$config['yui'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'//skins/common/yui_2.5.2/utilities/utilities.js',
+				'//skins/common/yui_2.5.2/cookie/cookie-beta.js',
+				'//skins/common/yui_2.5.2/container/container.js',
+				'//skins/common/yui_2.5.2/autocomplete/autocomplete.js',
+				'//skins/common/yui_2.5.2/animation/animation-min.js',
+				'//skins/common/yui_2.5.2/logger/logger.js',
+				'//skins/common/yui_2.5.2/menu/menu.js',
+				'//skins/common/yui_2.5.2/tabview/tabview.js',
+				'//skins/common/yui_2.5.2/slider/slider.js',
+				'//skins/common/yui_extra/tools-min.js',
+				'//skins/common/yui_extra/carousel-min.js',
+		)
+);
+
+/******** Skins *******/
+
+/** Oasis **/
+
+//core shared JS
 $config['oasis_shared_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -139,7 +107,7 @@ $config['oasis_shared_js'] = array(
 	)
 );
 
-// Oasis extensions shared JS
+//extensions shared JS
 $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -175,10 +143,9 @@ $config['oasis_extensions_js'] = array(
 	)
 );
 
+//anon JS
 // Note: Owen moved getSiteJS call from both anon_js and user_js to OasisModule::loadJS
 // so that common.js is loaded last so it has less chance of breaking other things
-
-// Oasis anon JS
 $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -189,7 +156,7 @@ $config['oasis_anon_js'] = array(
 	)
 );
 
-// Oasis user JS
+//user JS
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -200,7 +167,9 @@ $config['oasis_user_js'] = array(
 	)
 );
 
-//Wikiaphone JS
+/** Wikiaphone **/
+//TODO: remove when Wikiaphone will be deleted
+
 $config['wikiaphone_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -215,9 +184,20 @@ $config['wikiaphone_js'] = array(
 	)
 );
 
-//WikiaMobile JS, loaded at the top of the page in the head section
+/** WikiaMobile **/
+
+$config['wikiamobile_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/css/WikiaMobile.scss'
+	)
+);
+
+//loaded at the top of the page in the head section
 $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//skins/common/zepto/zepto-0.8.js',
 		'//skins/common/wikia/cookiecutter.js',
@@ -225,9 +205,10 @@ $config['wikiamobile_js_head'] = array(
 	)
 );
 
-//WikiaMobile JS, loaded at the bottom of the page in the body section
+//loaded at the bottom of the page in the body section
 $config['wikiamobile_js_body'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//skins/common/modernizr/modernizr.wikiamobile.min.js',
 		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
@@ -250,32 +231,8 @@ $config['wikiamobile_js_body'] = array(
 	)
 );
 
-//WikiaMobile JS, loaded at the bottom of the page in the body section for namespaces with comments
-$config['wikiamobile_js_body_comments_ns'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#group_wikiamobile_js_body',
-		'//extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js'
-	)
-);
+/** WikiaApp **/
 
-$config['wikiamobile_js_userlogin'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'#external_http://connect.facebook.net/en_US/all.js',
-		'//extensions/wikia/UserLogin/js/UserLoginSpecial.wikiamobile.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
-	)
-);
-
-$config['wikiamobile_js_userlogin_nofb'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/UserLogin/js/UserLoginSpecial.wikiamobile.js'
-	)
-);
-
-//WikiaApp JS and CSS
 $config['wikiaapp_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
 	'assets' => array(
@@ -292,7 +249,8 @@ $config['wikiaapp_js'] = array(
 	)
 );
 
-// monobook
+/** MonoBook **/
+
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -335,25 +293,95 @@ $config['monobook_js'] = array(
 	)
 );
 
-// YUI (deprecated - see BugId:3116)
-$config['yui'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//skins/common/yui_2.5.2/utilities/utilities.js',
-		'//skins/common/yui_2.5.2/cookie/cookie-beta.js',
-		'//skins/common/yui_2.5.2/container/container.js',
-		'//skins/common/yui_2.5.2/autocomplete/autocomplete.js',
-		'//skins/common/yui_2.5.2/animation/animation-min.js',
-		'//skins/common/yui_2.5.2/logger/logger.js',
-		'//skins/common/yui_2.5.2/menu/menu.js',
-		'//skins/common/yui_2.5.2/tabview/tabview.js',
-		'//skins/common/yui_2.5.2/slider/slider.js',
-		'//skins/common/yui_extra/tools-min.js',
-		'//skins/common/yui_extra/carousel-min.js',
-	)
+/********** Extensions packages **********/
+
+/** Article Comments **/
+
+$config['articlecomments_js_wikiamobile'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'//extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js'
+		)
 );
 
-// extensions
+$config['articlecomments_scss_wikiamobile'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'//extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss'
+		)
+);
+
+/** EditPageLayout **/
+
+// Reskinned rich text editor
+$config['rte'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'#function_AssetsConfig::getRTEAssets'
+		)
+);
+// Generic edit page JavaScript
+$config['epl'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'#function_AssetsConfig::getEPLAssets',
+		)
+);
+// Generic edit page JavaScript + reskined rich text editor
+$config['eplrte'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'#group_epl',
+				'#group_rte'
+		)
+);
+
+/** MiniRTE **/
+
+// Javascript for the MiniEditor
+$config['mini_editor_js'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'//skins/common/edit.js',
+				'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+				'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
+				'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
+				'//extensions/wikia/EditPageLayout/js/plugins/MiniEditor.js',
+				'//extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
+				'//extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
+				'//extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
+				'//extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
+				'//extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
+				'//extensions/wikia/EditPageLayout/js/extras/Buttons.js',
+				'//extensions/wikia/EditPageLayout/js/modules/Container.js',
+				'//extensions/wikia/EditPageLayout/js/modules/ButtonsList.js',
+				'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditor.js',
+				'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditorSource.js',
+				'//extensions/wikia/EditPageLayout/js/modules/Insert.js',
+				'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
+				'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
+				// TODO: Load this on the fly with JSSnippets. Only thing really needed is slider (so far)
+'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
+'//extensions/wikia/VideoEmbedTool/js/VET.js',
+'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
+'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
+//'extensions/wikia/LinkSuggest/LinkSuggest.js'
+)
+);
+
+// Javascript for the MiniEditor with RTE enabled
+$config['mini_editor_rte_js'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'#group_mini_editor_js',
+				'#group_rte'
+		)
+);
+
+/** Chat **/
+
 $config['chat_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -368,6 +396,8 @@ $config['chat_js'] = array(
 		'//extensions/wikia/Chat/js/views/views.js',
 	)
 );
+
+/** ThemeDesigner **/
 
 $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -384,6 +414,8 @@ $config['theme_designer_js'] = array(
 		'//extensions/wikia/ThemeDesigner/js/aim.js',
 	)
 );
+
+/** PhotoPop **/
 
 $config['photopop'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -402,6 +434,8 @@ $config['photopop'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js'
 	)
 );
+
+/** MessageWall **/
 
 $config['walljs'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -426,4 +460,89 @@ $config['wallhistoryjs'] = array(
 		'//extensions/wikia/Wall/js/WallHistory.js',
 		'//extensions/wikia/Wall/js/WallSortingBar.js'
 	)
+);
+
+/** RelatedVideos **/
+
+$config['relatedvideos_js'] = array(
+	'skin' => array( 'monobook', 'oasis' ),//this package need to be reviewed before inclusion in WikiaMobile, JWplayer is not needed and too big
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js',
+		'//extensions/wikia/JWPlayer/jwplayer.min.js' //@todo post-migration, might be able to remove this
+	)
+);
+
+$config['relatedvideos_js_tooltips'] = array(
+	'skin' => 'oasis',
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins/common/jquery/jquery.wikia.tooltip.js',
+		'#group_relatedvideos_js'
+	)
+);
+
+$config['relatedvideos_scss'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => array( 'monobook', 'oasis', 'wikiamobile' ),
+		'assets' => array(
+			'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
+		)
+);
+
+$config['relatedvideos_scss_tooltips'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => 'oasis',
+		'assets' => array(
+			'//skins/oasis/css/modules/WikiaTooltip.scss',
+			'#group_relatedvideos_scss'
+		)
+);
+
+/** UserLogin **/
+
+$config['userlogin_scss_wikiamobile'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'//extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss'
+		)
+);
+
+$config['userlogin_js_wikiamobile'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'//extensions/wikia/UserLogin/js/UserLoginSpecial.wikiamobile.js'
+		)
+);
+
+$config['userlogin_js_wikiamobile_fbconnect'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'#external_http://connect.facebook.net/en_US/all.js',
+				'#group_userlogin_js_wikiamobile_noFB',
+				'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
+		)
+);
+
+/** WikiaHomepage **/
+
+$config['wikiahomepage_scss_wikiamobile'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'//extensions/wikia/WikiaHomePage/css/WikiaHomePage.wikiamobile.scss'
+		)
+);
+
+/** WikiaHubs **/
+
+$config['wikiahubs_scss_wikiamobile'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'//extensions/wikia/WikiaHubs/css/WikiaHubsMobile.scss'
+		)
 );

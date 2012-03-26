@@ -431,60 +431,21 @@ class WikiaResponse {
 		return true;
 	}
 
-	public function addAsset( $assetName ){
+	/**
+	 * Add an asset to the current response
+	 * 
+	 * @param mixed $assetName the name of a configured package or path to an asset file or an array of them
+	 * @param bool $local [OPTIONAL] wether to fetch per-wiki local URL's,
+	 * (false by default, i.e. the method returns a shared host URL's for our network);
+	 * please note that this parameter has no effect on SASS assets, those will always produce shared host URL's.
+	 */
+	public function addAsset( $assetName, $local = false ){
+		$app = F::app();
+		$app->wf->profileIn( __METHOD__ );
+		$type = false;
+
 		if ( $this->format == 'html' ) {
-			//check if is a configured package
-			$app = F::app();
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-			$type = $app->getAssetsConfig()->getGroupType( $assetName );
-			$isGroup = true;
-
-			if ( empty( $type ) ) {
-				//single asset
-				$isGroup = false;
-
-				//get the resource type from the file extension
-				$tokens = explode( '.', $assetName );
-				$tokensCount = count( $tokens );
-
-				if ( $tokensCount > 1 ) {
-					$extension = strtolower( $tokens[$tokensCount - 1] );
-
-					if( in_array( $extension, $assetsManager->getAllowedAssetExtensions() ) ){
-						switch ( $extension ) {
-							case 'js':
-								$type = AssetsManager::TYPE_JS;
-								break;
-							case 'css':
-								$type = AssetsManager::TYPE_CSS;
-								break;
-							case 'scss':
-								$type = AssetsManager::TYPE_SCSS;
-								break;
-							default:
-								throw new WikiaException( 'Unknown asset type' );
-						}
-					}
-				}
-			}
-
-			//asset type not recognized
-			if ( empty( $type ) ) {
-				throw new WikiaException( 'Unknown asset type' );
-			}
-
-			$sources = array();
-
-			if ( $isGroup ) {
-				// Allinone == 0 ? returns array of URLS : returns url string
-				$sources =  $assetsManager->getGroupCommonURL( $assetName );
-			} else {
-				if ( $type == AssetsManager::TYPE_SCSS ) {
-					$sources[] =  $assetsManager->getSassCommonURL( $assetName );
-				} else {
-					$sources[] =  $assetsManager->getOneCommonURL( $assetName );
-				}
-			}
+			$sources = F::build( 'AssetsManager', array(), 'getInstance' )->getURL( $assetName, $type, $local );
 
 			foreach($sources as $src){
 				switch ( $type ) {
@@ -498,6 +459,8 @@ class WikiaResponse {
 				}
 			}
 		}
+
+		$app->wf->profileOut( __METHOD__ );
 	}
 
 	private function isStandardHTTPCode($code){

@@ -330,10 +330,10 @@ class ArticleCommentInit {
 
 	//when comments are enabled on the current namespace make the WikiaMobile skin enriched assets
 	//while keeping the response size (assets minification) and the number of external requests low (aggregation)
-	static public function onWikiaMobileAssetsPackages( &$jsHeadPackageName, &$jsBodyPackageName, &$scssPackageName ){
+	static public function onWikiaMobileAssetsPackages( Array &$jsPackages, Array &$scssPackages ){
 		if ( self::ArticleCommentCheck() ) {
-			$jsBodyPackageName = 'wikiamobile_js_body_comments_ns';
-			$scssPackageName = 'extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss';
+			$jsPackages[] = 'articlecomments_js_wikiamobile';
+			$scssPackages[] = 'articlecomments_scss_wikiamobile';
 		}
 
 		return true;

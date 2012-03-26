@@ -6,183 +6,167 @@
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 class WikiaMobileService extends WikiaService {
-	const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCacheController&method=serveManifest&format=html';
-	const JS_PACKAGE_NAME_HEAD = 'wikiamobile_js_head';
-	const JS_PACKAGE_NAME_BODY = 'wikiamobile_js_body';
-	const SCSS_PACKAGE_NAME = 'extensions/wikia/WikiaMobile/css/WikiaMobile.scss';
+	//AppCache will be disabled for the first several releases
+	//const CACHE_MANIFEST_PATH = 'wikia.php?controller=WikiaMobileAppCacheController&method=serveManifest&format=html';
+	const LYRICSWIKI_ID = 43339;
 
-	static private $initialized = false;
+	static protected $initialized = false;
 
-	private $templateObject;
-	
-	//TODO: remove whe multi-skin resource loading fixed
-	private $scripts;
-	private $styles;
+	//holds an instance to WikiaMobileTemplate
+	protected $templateObject;
 
-	private static $extraBodyClasses = array();
-
-	function init(){
+	function __construct(){
 		if ( !self::$initialized ) {
+			//singleton
 			F::setInstance( __CLASS__, $this );
 			self::$initialized = true;
-			$this->wf->LoadExtensionMessages( 'WikiaMobile' );
-			F::build('JSMessages')->enqueuePackage('WkMbl', JSMessages::INLINE);
-
-			//TODO: remove when multi-skin resource loading fixed
-			$this->scripts = array();
-			$this->styles = array();
 		}
+	}
+
+	function init(){
+		$this->wf->LoadExtensionMessages( 'WikiaMobile' );
+		F::build('JSMessages')->enqueuePackage('WkMbl', JSMessages::INLINE);
 	}
 
 	/**
-	 * @brief Sets the template object for internal use
+	 * @brief Sets the template object (WikiaMobileTemplate)
 	 *
-	 * @requestParam QuickTeamplate $templateObject
+	 * @requestParam WikiaQuickTemplate $templateObject
 	 */
-	public function setTemplateObject(){
-		$this->templateObject = $this->getVal( 'templateObject') ;
+	public function setTemplateObject( WikiaMobileTemplate $template ){
+		$this->templateObject = $template;
 	}
 
-	//TODO: remove when multi-skin resource loading fixed
-	public function addAsset(){
-		$js = $this->request->getVal( 'js' );
-		$css = $this->request->getVal( 'css' );
-		$scss = $this->request->getVal( 'scss' );
-		$pkg = $this->request->getVal( 'package' );
-
-		if ( !empty( $pkg ) ) {
-			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-			$type = $this->app->getAssetsConfig()->getGroupType( $pkg );
-			$sources = array();
-
-			switch ( $type ) {
-				case AssetsManager::TYPE_JS:
-					$this->scripts += $assetsManager->getGroupCommonURL( $pkg );
-					break;
-
-				case AssetsManager::TYPE_CSS:
-					$this->styles += $assetsManager->getGroupCommonURL( $pkg );
-					break;
-
-				case AssetsManager::TYPE_SCSS:
-					$this->styles += $assetsManager->getSassCommonURL( $pkg );
-					break;
-			}
-		}
-
-		if ( !empty( $js ) ) {
-			$this->scripts[] = $assetsManager->getOneCommonURL( $js );
-		}
-
-		if ( !empty( $css ) ) {
-			$this->styles[$assetsManager->getOneCommonURL( $css )] =  array();
-		}
-
-		if ( !empty( $scss ) ) {
-			$this->styles[$assetsManager->getSassCommonURL( $scss )] = array();
-		}
+	/**
+	 * @brief Gets the template object (WikiaMobileTemplate)
+	 *
+	 * @return WikiaQuickTeamplate the Template instance
+	 */
+	public function getTemplateObject(){
+		return $this->templateObject;
 	}
 
 	public function index() {
-		$jsHeadPackageName = self::JS_PACKAGE_NAME_HEAD;
-		$jsBodyPackageName = self::JS_PACKAGE_NAME_BODY;
-		$scssPackageName = self::SCSS_PACKAGE_NAME;
+		$skin = $this->wg->user->getSkin();
+		$jsBodyPackages = array( 'wikiamobile_js_body' );
+		$scssPackages = array( 'wikiamobile_scss' );
 		$bottomscripts = '';
 		$jsBodyFiles = '';
 		$jsHeadFiles = '';
-		$cssFiles = '';
-		$tmpOut = new OutputPage();
+		$cssLinks = '';
+		$styles = $skin->getStyles();
+		$scripts = $skin->getScripts();
+		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		
 
-		$tmpOut->styles = array() + $this->wg->Out->styles;
+		//let extensions manipulate the asset packages (e.g. ArticleComments,
+		//this is done to cut down the number or requests)
+		$this->app->runHook(
+				'WikiaMobileAssetsPackages',
+				array(
+						//no access to js packages in the head, those can slow down the page sensibly, sorry ;)
+						&$jsBodyPackages,
+						&$scssPackages
+				)
+		);
 
-		foreach( $tmpOut->styles as $style => $options ) {
-			if ( isset( $options['media'] ) || strstr( $style, 'shared' ) || strstr( $style, 'index' ) ) {
-				unset( $tmpOut->styles[$style] );
+		//force main SCSS as first to make overriding it possible
+		foreach ( $assetsManager->getURL( $scssPackages ) as $s ) {
+			//packages/assets are enqueued via an hook, let's make sure we should actually let them through
+			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin->getSkinName(), $skin->isStrict() ) ) {
+				//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
+				$cssLinks .= "<link rel=stylesheet href=\"" . $s . "\"/>";
 			}
 		}
 
-		//TODO: remove when multi-skin resource loading fixed
-		$tmpOut->styles += $this->styles;
+		foreach ( $styles as $s ) {
+			//safe URL's as getStyles performs all the required checks
+			//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
+			$cssLinks .= "<link rel=stylesheet href=\"{$s['url']}\"/>";//this is a strict skin, getStyles returns only elements with a set URL
+		}
 
-		//let extensions change the asset packages (e.g. ArticleComments,
-		//this is done to cut down the number or requests
-		//until AssetsManager won't support arbitrary file group requests)
-		$this->app->runHook(
-			'WikiaMobileAssetsPackages',
-			array(
-				&$jsHeadPackageName,
-				&$jsBodyPackageName,
-				&$scssPackageName
-			)
-		);
+		//core JS in the head section, definitely safe
+		$srcs = $assetsManager->getURL( 'wikiamobile_js_head' );
+
+		foreach ( $srcs as $src ) {
+			//HTML5 standard, no type attribute required == smaller output
+			$jsHeadFiles .= "<script src=\"{$src}\"></script>";
+		}
+
+		foreach ( $assetsManager->getURL( $jsBodyPackages ) as $s ) {
+			//packages/assets are enqueued via an hook, let's make sure we should actually let them through
+			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin->getSkinName(), $skin->isStrict() ) ) {
+				//HTML5 standard, no type attribute required == smaller output
+				$jsBodyFiles .= "<script src=\"{$s}\"></script>";
+			}
+		}
+
+		foreach ( $scripts as $s ) {
+			//safe URL's as getScripts performs all the required checks
+			//HTML5 standard, no type attribute required == smaller output
+			$jsBodyFiles .= "<script src=\"{$s['url']}\"></script>";
+		}
 
 		//Bottom Scripts
 		$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
+		$matches = array();
 
-		//force skin main CSS file to be the first so it will be always overridden by other files
-		$cssFiles .= "<link rel=\"stylesheet\" href=\"" . AssetsManager::getInstance()->getSassCommonURL( $scssPackageName ) . "\"/>";
-		$cssFiles .= $tmpOut->buildCssLinks();
-
-		//core JS in the head section
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL( $jsHeadPackageName );
-
-		//TODO: add scripts from $wgOut as needed
-		foreach ( $srcs as $src ) {
-			$jsHeadFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
-		}
-
-		//additional JS at the bottom of the body section
-		$srcs = array_merge( AssetsManager::getInstance()->getGroupCommonURL( $jsBodyPackageName ), $this->scripts );
-
-		//TODO: add scripts from $wgOut as needed
-		foreach ( $srcs as $src ) {
-			$jsBodyFiles .= "<script type=\"{$this->wg->JsMimeType}\" src=\"$src\"></script>\n";
+		//find the src if set
+		preg_match_all( '/<script[^>]+src=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $bottomscripts, $matches );
+		
+		if ( !empty( $matches[1] ) ) {
+			foreach ( $matches[1] as $s ) {
+				//packages/assets are enqueued via an hook, let's make sure we should actually let them through
+				if ( $assetsManager->checkAssetUrlForSkin( $s, $skin->getSkinName(), $skin->isStrict() ) ) {
+					//HTML5 standard, no type attribute required == smaller output
+					$jsBodyFiles .= "<script src=\"{$s}\"></script>";
+				}
+			}
 		}
 
 		//AppCache will be disabled for the first several releases
 		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
-		$this->mimeType = $this->templateObject->data['mimetype'];
-		$this->charSet = $this->templateObject->data['charset'];
+		$this->mimeType = $this->templateObject->get( 'mimetype' );
+		$this->charSet = $this->templateObject->get( 'charset' );
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $this->templateObject->data['skinname'] );
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $this->templateObject->get( 'skinname' ) );
+		$this->bodyClasses = array( 'wkMobile', $this->templateObject->get( 'pageclass' ) );
 		$this->pageTitle = $this->wg->Out->getHTMLTitle();
-		$this->cssLinks = $cssFiles;
+		$this->cssLinks = $cssLinks;
 		$this->headLinks = $this->wg->Out->getHeadLinks();
 		$this->jsHeadFiles = $jsHeadFiles;
-		$this->languageCode = $this->templateObject->data['lang'];
-		$this->languageDirection = $this->templateObject->data['dir'];
-		$this->wikiaNavigation = $this->sendRequest( 'WikiaMobileNavigationService', 'index' )->toString();
-		$this->advert = $this->sendRequest( 'WikiaMobileAdService', 'index' )->toString();
-		$this->pageContent = $this->sendRequest( 'WikiaMobileBodyService', 'index', array(
-			'bodyText' => $this->templateObject->data['bodytext'],
-			'categoryLinks' => $this->templateObject->data['catlinks']
-		) )->toString();
-		$this->wikiaFooter = $this->sendRequest( 'WikiaMobileFooterService', 'index', array(
-			'copyrightLink' => $this->templateObject->data['copyright']
-		))->toString();
+		$this->languageCode = $this->templateObject->get( 'lang' );
+		$this->languageDirection = $this->templateObject->get( 'dir' );
+		$this->wikiaNavigation = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
+		$this->advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
+		$this->pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
+			'bodyText' => $this->templateObject->get( 'bodytext' ),
+			'categoryLinks' => $this->templateObject->get( 'catlinks')
+		) );
+		$this->wikiaFooter = $this->app->renderView( 'WikiaMobileFooterService', 'index', array(
+			'copyrightLink' => $this->templateObject->get( 'copyright' )
+		) );
 		$this->jsBodyFiles = $jsBodyFiles;
 		$this->bottomscripts = $bottomscripts;
 
 		//tracking
-		$this->quantcastTracking = AnalyticsEngine::track(
-			'QuantServe',
-			AnalyticsEngine::EVENT_PAGEVIEW,
-			array(),
-			array( 'extraLabels'=> array( 'mobilebrowser' ) )
-		);
-		$this->comscoreTracking = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+		$isEditing = in_array( $this->wg->request->getVal( 'action' ), array( 'edit', 'submit' ) );
+
+		$this->quantcastTracking = ( !$isEditing ) ?
+			AnalyticsEngine::track(
+					'QuantServe',
+					AnalyticsEngine::EVENT_PAGEVIEW,
+					array(),
+					array( 'extraLabels'=> array( 'mobilebrowser' ) )
+			) :
+			'';
+		$this->comscoreTracking = ( !$isEditing ) ? AnalyticsEngine::track( 'Comscore', AnalyticsEngine::EVENT_PAGEVIEW ) : '';
+		$this->gaOneWikiTracking = AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->cityId ) );
 		$this->gaTracking = AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW );
-		$this->gaOneWikiTracking = AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->CityId ) );
 
-		$skinVars = Module::getSkinTemplateObj()->data;
-		$this->bodyClasses = array('wkMobile', $skinVars['pageclass'] );
-		$this->bodyClasses = array_merge($this->bodyClasses, self::$extraBodyClasses);
-	}
-
-	/**
-	 * Add extra CSS classes to <body> tag
-	 */
-	public static function addBodyClass( $className ) {
-		self::$extraBodyClasses[] = $className;
+		//Stats for Gracenote reporting
+		if ( $this->wg->cityId == self::LYRICSWIKI_ID ){
+			$this->gaTracking .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
+		}
 	}
 }

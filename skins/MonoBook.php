@@ -54,7 +54,10 @@ class SkinMonoBook extends WikiaSkinMonoBook {
  * @todo document
  * @ingroup Skins
  */
-class MonoBookTemplate extends QuickTemplate {
+/* Wikia change begin - @author: Federico */
+/* use Wikia specific class between MonoBookTemplate and QuickTemplate */
+class MonoBookTemplate extends WikiaMonoBookTemplate {
+/* Wikia change end */
 	var $skin;
 
 	/**

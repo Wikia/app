@@ -22,7 +22,7 @@ class WikiaMobileBodyService extends WikiaService {
 			$afterContentHookText = '';
 		}
 
-		$this->pageHeaderContent = $this->sendRequest( 'WikiaMobilePageHeaderService', 'index' )->toString();
+		$this->pageHeaderContent = $this->app->renderView( 'WikiaMobilePageHeaderService', 'index' );
 		$this->bodyContent = $bodyContent;
 		$this->response->setVal(
 			'relatedPages',
@@ -31,28 +31,28 @@ class WikiaMobileBodyService extends WikiaService {
 				empty( $this->wg->EnableAnswers ) ) ? $this->app->renderView( 'RelatedPagesModule', 'index' ) : null);
 		$this->response->setVal(
 			'categoryLinks',
-			$this->sendRequest(
+			$this->app->renderView(
 				'WikiaMobileCategoryService',
 				'index',
 				array( 'categoryLinks' => $categoryLinks )
-			)->toString()
+			)
 		);
 		$this->response->setVal(
 			'navMenu',
-			$this->sendRequest(
+			$this->app->renderView(
 				'WikiaMobileNavigationService',
 				'navMenu'
-			)->toString()
+			)
 		);
 		$this->afterBodyContent = $afterBodyHtml;
 		$this->afterContentHookText = $afterContentHookText;
 		$this->response->setVal(
 			'comments',
 			( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) ?
-				$this->sendRequest(
+				$this->app->renderView(
 					'ArticleComments',
 					'index'
-				)->toString() :
+				) :
 				''
 		);
 	}
