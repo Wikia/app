@@ -62,7 +62,7 @@ $wiki = WikiFactory::getWikiByDB($wgDBname);
 $wikiUrl = $wiki->city_url;
 
 
-echo( "Article List for cityId: $wikiUrl \n" );
+
 
 
 if ( $rowCount ) {
@@ -74,9 +74,8 @@ if ( $rowCount ) {
 	$i = 0;
 	foreach( $aAllFiles as $sFile => $val ) {
 		if ( strpos ( $sFile, ':' ) === 0 ) {
-			if ( !empty( $previouslyProcessed[ $sFile ] ) ) {
-				$aTranslation[ $sFile ] = true;
-			}
+
+			$aTranslation[ $sFile ] = true;
 		}
 	}
 }
@@ -113,10 +112,10 @@ foreach ( $aTranslation as $key => $val ) {
 
 	$i++;
 }
-
-
-foreach( $allChangesArticleURLs as $url => $v ) {
-	echo "$url -> Video:$v \n";
+if (count ($allChangesArticleURLs) > 0 ) {
+	echo( "Article List for cityId: $wgCityId  ( $wikiUrl ) \n" );
+	foreach( $allChangesArticleURLs as $url => $v ) {
+		echo "$url -> Video:$v \n";
+	}
 }
-
 ?>
