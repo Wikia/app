@@ -102,7 +102,7 @@ foreach ( $aTranslation as $key => $val ) {
 
 		$articleId = $file->il_from;
 		$oTitle = Title::newFromId( $articleId );
-
+		echo "ARTICLE ID: $articleId \n";
 		if ( $oTitle instanceof Title && $oTitle->exists() ){
 			global $wgTitle;
 
