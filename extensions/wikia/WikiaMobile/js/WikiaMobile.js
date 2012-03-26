@@ -460,9 +460,9 @@ var WikiaMobile = (function() {
 					wkPrf.insertAdjacentHTML('beforeend', result);
 					wkPrf.executeScripts();
 					$.getResources(
-						[$.getSassCommonURL('/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss'),
-						'/extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'],
-						function() {
+						[$.getSassCommonURL('extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss'),
+							wgExtensionsPath + '/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'],
+						function(){
 							loader.remove(wkPrf);
 							WikiaMobile.wkLgn = document.getElementById('wkLgn');
 							navBar.style.minHeight = (WikiaMobile.wkLgn.offsetHeight + 70) + 'px';
