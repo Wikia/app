@@ -132,12 +132,14 @@ var Wall = $.createClass(Object, {
 		setTimeout( function() { // make sure all textareas are inicialized already
 			//$('.new-message textarea.body').trigger('focus');
 			$('.new-reply textarea').each( function() {
-				if( $(this).is(':focus') ) $(this).trigger('focus');
+				if( $(this).is(':focus') ) {
+					$(this).trigger('focus');
+				}
 			});
 			var title = $('#WallMessageTitle');
-			if( title.is(':focus') ) title.trigger('focus');
+			if( title.is(':focus') ) { title.trigger('focus'); }
 			var body = $('#WallMessageBody');
-			if( body.is(':focus') ) body.trigger('focus');
+			if( body.is(':focus') ) { body.trigger('focus'); }
 		}, 50);
 	},
 
@@ -293,7 +295,7 @@ var Wall = $.createClass(Object, {
 		var type = isreply ? 'reply':'thread';
 		var mode = target.attr('data-mode').split('-');
 		
-		var submode = ''
+		var submode = '';
 		if(mode[1]) {
 			submode = mode[1]; 
 		} 
@@ -321,7 +323,7 @@ var Wall = $.createClass(Object, {
 		if(mode != 'restore') {
 			form.append( $('<div>').text( $.msg('wall-action-'+mode+'-'+ type +'-confirm-info') ).addClass('subtle') );
 			if(mode == 'admin' || mode == 'remove' ) {
-				form.append( $('<input>').attr({'name':'notify-admin', 'id':'notify-admin','type':'checkbox'}) )
+				form.append( $('<input>').attr({'name':'notify-admin', 'id':'notify-admin','type':'checkbox'}) );
 				form.append( $('<label>').text( $.msg('wall-action-all-confirm-notify') ) );
 			}
 		}
@@ -373,7 +375,7 @@ var Wall = $.createClass(Object, {
 				this.doAction(id, 'rev', wallMsg);
 			}
 		} if( mode == 'restore' || mode == 'admin' || mode == 'adminnotify' || mode == 'remove' || mode == 'removenotify' ) {
-			var formdata = []
+			var formdata = [];
 			
 			if(mode == 'adminnotify' || mode == 'removenotify') {
 				formdata.push({name:'notify-admin', 'value': true});	

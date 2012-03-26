@@ -10,8 +10,9 @@ var UserLogin = {
 					window.WikiaEditor && WikiaEditor.reloadEditor();
 				}
 			});
+		} else {
+			showComboAjaxForPlaceHolder("",false, "", false, true);
 		}
-		else showComboAjaxForPlaceHolder("",false, "", false, true);
 	},
 
 	isForceLogIn: function() {

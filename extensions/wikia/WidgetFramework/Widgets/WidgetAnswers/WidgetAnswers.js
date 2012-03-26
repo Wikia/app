@@ -1,5 +1,5 @@
 function WidgetAnswers_load(data) {
-	if (data.query == "undefined") return;
+	if (data.query == "undefined") { return; }
 	if(data.query.categoriesonanswers) {
 		for(var recent_q in data.query.categoriesonanswers ) {
 			var page = data.query.categoriesonanswers[recent_q];

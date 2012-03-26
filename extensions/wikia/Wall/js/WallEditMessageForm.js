@@ -102,7 +102,7 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 	},
 	
 	getNewBodyVal: function(container) {
-		return $('.msg-body textarea.body', container).val()
+		return $('.msg-body textarea.body', container).val();
 	},
 	
 	getEditFormat: function() {

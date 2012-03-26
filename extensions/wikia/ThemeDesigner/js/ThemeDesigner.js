@@ -616,13 +616,12 @@ var ThemeDesigner = {
 
 		if (ThemeDesigner.settings["background-image"] == "") {
 			//no background image
-			// TODO: FIXME: Use wgBlankImgUrl and test that it still works
-			$("#swatch-image-background").attr("src", "/skins/common/blank.gif");
+			$("#swatch-image-background").attr("src", wgBlankImgUrl);
 		} else if (ThemeDesigner.settings["background-image"].indexOf("images/themes") > 0) {
 			//wikia background image
 			var file = ThemeDesigner.settings["background-image"].substring(ThemeDesigner.settings["background-image"].lastIndexOf("/") + 1);
 			var theme = file.substr(0, file.length - 4);
-			$("#swatch-image-background").attr("src", "/extensions/wikia/ThemeDesigner/images/" + theme + "_swatch.jpg");
+			$("#swatch-image-background").attr("src", wgExtensionsPath + "/wikia/ThemeDesigner/images/" + theme + "_swatch.jpg");
 		} else {
 			//admin background image
 			$("#swatch-image-background").attr("src", ThemeDesigner.settings["user-background-image-thumb"]);

@@ -41,7 +41,7 @@ var VideoHandlers = {
 			},
 			function( res ) {
 				thumbParent.stopThrobbing();
-				VideoHandlers.handleResponse(res, thumbParent)
+				VideoHandlers.handleResponse(res, thumbParent);
 			},
 			function(){
 				//@todo show error msg

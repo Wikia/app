@@ -27,7 +27,7 @@ var UserInterview = {
 	},
 	
 	addQuestion: function() {
-		var newDate = new Date;
+		var newDate = new Date();
 		var uniqueID = newDate.getTime();
 		$('.user-interview-container tr:first-child input').attr('name', uniqueID);
 		$('.user-interview-container tr:first-child').clone().insertBefore('.submit-column');
@@ -37,7 +37,7 @@ var UserInterview = {
 	saveQuestionValues: function() {
 		var values = $('.user-interview-container td input').not('.user-interview-container .submit-column td input').not('.user-interview-container td:first-child');
 		
-		var ids = Array();
+		var ids = new Array();
 		jQuery.each(values, function() {
 			var val = $(this).attr('name');
 			if (val != '' && jQuery.inArray(val, ids) == -1) {
