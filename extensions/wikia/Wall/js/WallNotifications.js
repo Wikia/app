@@ -22,10 +22,12 @@ var WallNotifications = $.createClass(Object, {
 				.click( this.proxy( this.updateCounts ) )
 				.click( this.proxy( this.fetchForCurrentWiki ) );
 			var bgcolor = $('#wall-notifications-dropdown').css('background-color');
-			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)')
+			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)') {
 				bgcolor = $('body').css('background-color');
-			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)')
+			}
+			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)') {
 				bgcolor = 'white';
+			}
 			
 			$('#wall-notifications-dropdown')
 				.css('background-color',bgcolor)
@@ -87,7 +89,9 @@ var WallNotifications = $.createClass(Object, {
 					username: wgTitle
 				},
 				callback: this.proxy(function(data) {
-					if(data.status != true || data.html == '') return;
+					if(data.status != true || data.html == '') {
+						return;
+					}
 					this.updateCountsHtml(data);
 
 					// if we already have data for some Wikis, show it

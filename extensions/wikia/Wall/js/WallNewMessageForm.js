@@ -133,7 +133,7 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 		if(trg.hasClass('title')) {
 			var topic_str = trg.val();
 			var topic_len = topic_str.length;
-			if(topic_len >= 200) trg.val( topic_str.slice(0,200) );
+			if(topic_len >= 200) { trg.val( topic_str.slice(0,200) ); }
 		}
 		setTimeout( this.proxy(this.postNewMessage_ChangeText), 50 );
 	},
@@ -166,8 +166,9 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 		this.track('wall/new_message/body');
 		//if($(e.target).hasClass('title'))
 		//	$(e.target).css('line-height','170%');
-		if($(e.target).hasClass('body'))
+		if($(e.target).hasClass('body')) {
 			$('.new-message textarea.body').css('font-size','13px');
+		}
 	},
 
 	postNewMessage_blur: function() {

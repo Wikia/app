@@ -57,7 +57,7 @@ var UserProfilePage = {
 				$('body').unbind('click.UserProfilePage_boxClose').bind('click.boxClose', function(event) {
 					if (!$(event.target).closest('#profile-top-wikis-hidden').length) {
 						UserProfilePage._hiddenWikisWrapper.removeClass('user-profile-box');
-					};
+					}
 				});
 			}
 		});
@@ -70,7 +70,7 @@ var UserProfilePage = {
 				$('body').unbind('click.UserProfilePage_boxClose').bind('click.boxClose', function(event) {
 					if (!$(event.target).closest('#profile-top-pages-hidden').length) {
 						UserProfilePage._hiddenTopPagesWrapper.removeClass('user-profile-box');
-					};
+					}
 				});
 			}
 		});

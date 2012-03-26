@@ -29,7 +29,7 @@ var TopListsEditor = {
 					TopListsEditor._mAutocompleteFieldChanged = true;
 					TopListsEditor.autoSelectImage(v);
 				}
-			})
+			});
 		});
 
 		$.loadJQueryUI(function(){
@@ -167,8 +167,9 @@ var TopListsImageBrowser = {
 	},
 
 	_destroy: function(){
-		if( !TopListsImageBrowser._uploadInProgress )
+		if( !TopListsImageBrowser._uploadInProgress ) {
 			TopListsImageBrowser._mDialog.closeModal();
+		}
 
 		return !TopListsImageBrowser._uploadInProgress;
 	},
@@ -176,8 +177,8 @@ var TopListsImageBrowser = {
 	_onSelect: function(){
 		if( !TopListsImageBrowser._uploadInProgress ){
 			TopListsEditor.track('image-browser-picture-selected');
-			elm = $(this);
-			selectedPicture = null;
+			var elm = $(this);
+			var selectedPicture = null;
 
 			if(!elm.hasClass('NoPicture')){
 				selectedPicture = {
@@ -186,7 +187,9 @@ var TopListsImageBrowser = {
 				}
 			}
 
-			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') TopListsImageBrowser._mOnSelectCallback(selectedPicture);
+			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') {
+				TopListsImageBrowser._mOnSelectCallback(selectedPicture);
+			}
 			TopListsImageBrowser._destroy();
 		}
 	},

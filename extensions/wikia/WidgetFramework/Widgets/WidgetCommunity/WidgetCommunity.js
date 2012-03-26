@@ -13,7 +13,7 @@ function WidgetCommunity_init(id, widget) {
 	// Latest Activity links
 	$('#widget_' + id + '-recently-edited').find('a').each(function(n) {
 		$(this).click( function(e) {
-			url = (n%2 == 0 ? 'RAlink/' : 'RAuser/') + parseInt(Math.floor(n/2) + 1);
+			var url = (n%2 == 0 ? 'RAlink/' : 'RAuser/') + parseInt(Math.floor(n/2) + 1);
 			WET.byStr('widget/WidgetCommunity/' + url);
 		});
 	});
@@ -28,7 +28,7 @@ function WidgetCommunity_init(id, widget) {
 				$('#widget_' + id + '-recently-edited').after(json.data).remove();
 			}
 		});
-	}
+	};
 
 	if (wgUserName == null) {
 		loadFreshData(id, window['timestamp_widget_'+id]);

@@ -8,7 +8,7 @@
 
 var VET_panel = null;
 var VET_curSourceId = 0;
-var VET_lastQuery = new Array;
+var VET_lastQuery = new Array();
 var VET_asyncTransaction = null;
 var VET_curScreen = 'Main';
 var VET_prevScreen = null;
@@ -38,7 +38,7 @@ function VET_getTextarea() {
 function VET_getTextareaValue() {
 	var ckeditor = WikiaEditor.getInstance().ck;
 	if(ckeditor) {
-		return ckeditor.getData()
+		return ckeditor.getData();
 	} else {
 		return VET_getTextarea().value;
 	}
@@ -399,7 +399,9 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 	if(typeof gallery == "undefined") {
 		if (typeof showComboAjaxForPlaceHolder == 'function') {
-			if (showComboAjaxForPlaceHolder("",false)) return false;
+			if (showComboAjaxForPlaceHolder("",false)) {
+				return false;
+			}
 		}
 	}
 
@@ -513,8 +515,8 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		VET_panel.center();
 		if(VET_refid != null && VET_wysiwygStart == 2) {
 			VET_editVideo();
-		} else {
-			if($G('VideoEmbedUrl')) $G('VideoEmbedUrl').focus();
+		} else if($G('VideoEmbedUrl')) {
+			$G('VideoEmbedUrl').focus();
 		}
 		return;
 	}
@@ -722,6 +724,7 @@ function VET_preQuery(e) {
 			VET_sendQueryEmbed( query );
 			return false;
 		}
+		// TODO: FIXME: WHY IS THIS HERE?  This is unreachable.
 		var element = document.createElement('div');
 		element.style.height = '500px';
 	}
@@ -766,7 +769,7 @@ function VET_displayDetails(responseText) {
 		max: 500,
 		value: 300,
 		slide: function(event, ui) {
-			$('#VideoEmbedManualWidth').val(ui.value)
+			$('#VideoEmbedManualWidth').val(ui.value);
 		},
 		create: function(event, ui) {
 			$('#VideoEmbedManualWidth').val(300);
@@ -824,7 +827,7 @@ function VET_insertFinalVideo(e, type) {
 
 	YAHOO.util.Event.preventDefault(e);
 
-	var params = Array();
+	var params = new Array();
 	params.push('type='+type);
 
 	if(!$G('VideoEmbedName')) {
@@ -846,7 +849,7 @@ function VET_insertFinalVideo(e, type) {
 	params.push('provider='+$G('VideoEmbedProvider').value);
 
 	if( $G( 'VideoEmbedMetadata' ) ) {
-		var metadata = Array();
+		var metadata = new Array();
 		metadata = $G( 'VideoEmbedMetadata' ).value.split( "," );
 		for( var i=0; i < metadata.length; i++ ) {
 			params.push( 'metadata' + i  + '=' + metadata[i] );
