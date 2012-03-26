@@ -116,8 +116,12 @@ class MiniEditorController extends WikiaController {
 
 		// Extensions use hooks to load their setup only on edit pages (VideoEmbedTool, WikiaMiniUploader)
 		// To load ONLY the vars we need and not all of them we will call the setup functions directly
-		if ($app->wg->EnableVideoToolExt) VETSetupVars(&$vars);
-		if ($app->wg->EnableWikiaMiniUploadExt) WMUSetupVars(&$vars);
+		if ($app->wg->EnableVideoToolExt) {
+			VETSetupVars(&$vars);
+		}
+		if ($app->wg->EnableWikiaMiniUploadExt) {
+			WMUSetupVars(&$vars);
+		}
 //TODO: fix the cache problem
 //		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		$this->response->setData($vars);
