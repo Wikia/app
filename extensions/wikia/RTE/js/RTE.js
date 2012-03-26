@@ -129,7 +129,7 @@
 
 			// Bartek - for RT #43217
 			if (window.WikiaEnableAutoPageCreate) {
-				// Must use wgServer (or extension path equivalent) to get wiki's subdomain in URL. (BugId:24403)
+				// Must use wgServer to get wiki's subdomain in URL. (BugId:24403)
 				RTE.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css');
 			}
 
