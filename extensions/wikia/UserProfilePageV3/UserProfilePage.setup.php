@@ -22,6 +22,8 @@ $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
 //$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
 $app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
 $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
+$app->registerClass('UserAvatarRemovePage', $dir . '/UserAvatarRemovePage.class.php');
+
 
 
 /**
@@ -93,3 +95,10 @@ $wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";
 $wgLogActions[AVATAR_LOG_NAME . '/avatar_chn'] = 'blog-avatar-changed-log';
 $wgLogActions[AVATAR_LOG_NAME . '/avatar_rem'] = 'blog-avatar-removed-log';
 
+#--- permissions
+$wgAvailableRights[] = 'removeavatar';
+$wgGroupPermissions['staff']['removeavatar'] = true;
+#$wgGroupPermissions['sysop']['removeavatar'] = true;
+$wgGroupPermissions['helper']['removeavatar'] = true;
+extAddSpecialPage( '', 'RemoveUserAvatar', 'UserAvatarRemovePage' );
+$wgSpecialPageGroups['RemoveUserAvatar'] = 'users';
