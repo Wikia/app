@@ -43,6 +43,8 @@ class ChatRailModule extends Module {
 		global $wgUser, $wgSitename, $wgOut, $wgExtensionsPath, $wgContLang, $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 		
+
+		
 		// Since there is no chat in the backup datacenter yet, if we're in read-only, disable the entry-point.
 		// Depending on the actual failure, chat may or may not work, but the user would have to get there via URL which
 		// is essentially saying that they accept some risk since they're going somewhere our interface doesn't direct them to.
@@ -67,6 +69,10 @@ class ChatRailModule extends Module {
 			
 			// Gets array of users currently in chat to populate rail module and user stats menus
 			$chatters = NodeApiClient::getChatters($roomId, ChatRailModule::MAX_CHATTERS, $this->totalInRoom);
+			
+			print_r($chatters);
+			exit;
+			
 			for ($i = 0; $i < count($chatters); $i++) {
 				// avatar
 				$chatters[$i]['avatarUrl'] = AvatarService::getAvatarUrl($chatters[$i]['username'], ChatRailModule::AVATAR_SIZE);
