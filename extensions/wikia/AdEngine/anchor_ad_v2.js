@@ -56,7 +56,7 @@ var displayAnchorAd = function(){
 						top: 10px;\
 					}\
 					.close {\
-						background: url("/extensions/wikia/AdEngine/close_button.png");\
+						background: url("' + window.wgExtensionsPath + '/wikia/AdEngine/close_button.png");\
 						cursor: pointer;\
 						height: 18px;\
 						left: ' + parseInt(AnchorAd.settings.width-18 + AnchorAd.settings.close.yoffset) + 'px;\
