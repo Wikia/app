@@ -61,7 +61,7 @@ var displayAnchorAd = function(){
 						height: 18px;\
 						left: ' + parseInt(AnchorAd.settings.width-18 + AnchorAd.settings.close.yoffset) + 'px;\
 						position: absolute;\
-						top: ' + parseInt(0 + AnchorAd.settings.close.yoffset) + 'px;\
+						top: ' + parseInt(AnchorAd.settings.close.yoffset) + 'px;\
 						width: 18px;\
 						z-index: 1;\
 					}\
@@ -106,8 +106,8 @@ var displayAnchorAd = function(){
 
 				$(".wikia_anchor_ad .close").click(function() {
 					WET.byStr("anchor_ad/closed");
-					var top = new Number(AnchorAd.settings.height+21);
-					$(".wikia_anchor_ad").animate({"top": top.toString()+"px"}, AnchorAd.settings.speed);
+					var top = AnchorAd.settings.height + 21;
+					$(".wikia_anchor_ad").animate({"top": top+"px"}, AnchorAd.settings.speed);
 				});
 						
 				WET.byStr("anchor_ad/started");
