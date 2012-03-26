@@ -100,5 +100,7 @@ $wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
 #$wgGroupPermissions['sysop']['removeavatar'] = true;
 $wgGroupPermissions['helper']['removeavatar'] = true;
-extAddSpecialPage( '', 'RemoveUserAvatar', 'UserAvatarRemovePage' );
+
+$wgSpecialPages['RemoveUserAvatar'] = 'UserAvatarRemovePage'; # Let MediaWiki know about your new special page.
+	
 $wgSpecialPageGroups['RemoveUserAvatar'] = 'users';
