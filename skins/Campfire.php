@@ -10,14 +10,13 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-
-class SkinCampfire extends SkinTemplate {
+class SkinCampfire extends WikiaSkin {
 
 	function __construct() {
-		$this->skinname  = 'campfire';
-		$this->stylename = 'campfire';
-		$this->template  = 'CampfireTemplate';
-		$this->themename = 'campfire';
+		parent::__construct( 'CampfireTemplate', 'campfire' );
+
+		//non-strict checks of css/js/scss assets/packages
+		$this->strictAssetUrlCheck = false;
 
 		global $IP, $wgAutoloadClasses, $wgExtensionMessagesFiles;
 		$dir = dirname( __FILE__ );
@@ -34,18 +33,11 @@ class SkinCampfire extends SkinTemplate {
 	function setupSkinUserCss( OutputPage $out ) {}
 }
 
-class CampfireTemplate extends QuickTemplate {
-
+class CampfireTemplate extends WikiaQuickTemplate {
 	function execute() {
 		Module::setSkinTemplateObj($this);
-
-
-		$entryModuleName = Wikia::getVar( 'CampfireEntryModuleName', 'Campfire' );
-
-		$response = F::app()->sendRequest( $entryModuleName, 'index', null, false );
-
+		$response = $this->app->sendRequest( Wikia::getVar( 'CampfireEntryModuleName', 'Campfire' ), 'index', null, false );
 		$response->sendHeaders();
 		$response->render();
 	}
-
 }

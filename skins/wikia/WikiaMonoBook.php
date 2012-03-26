@@ -13,9 +13,20 @@ if(!defined('MEDIAWIKI')) {
 	die(-1);
 }
 
-class WikiaSkinMonoBook extends SkinTemplate {
+abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	protected $ads;
+
+	function __construct(){
+		//required to let Common.css and MonoBook.css be output
+		//@see Skin::setupUserCss
+		$this->themename = '';
+
+		parent::__construct();
+	
+		//allow non-strick asset check agains skin, @see WikiaSkin::getScripts and WikiaSkin::getStyles
+		$this->strictAssetUrlCheck = false;
+	}
 
 	function initPage(&$out) {
 		global $wgHooks, $wgShowAds, $wgUseAdServer, $wgRequest, $wgOut;
@@ -89,7 +100,7 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		global $wgStylePath;
 		$scripts .= "\n<!--[if lt IE 8]><script src=\"". $wgStylePath ."/common/json2.js\"></script><![endif]-->";
 
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('monobook_js');
+		$srcs = AssetsManager::getInstance()->getURL( 'monobook_js' );
 		foreach($srcs as $src) {
 			$scripts .= "\n<script src=\"$src\"></script>";
 		}
@@ -282,3 +293,33 @@ HTML;
 	}
 
 } // end of class
+
+abstract class WikiaMonoBookTemplate extends WikiaQuickTemplate{
+	public function set( $name, $value ) {
+		if ( $name == 'headelement' ) {
+			$this->wf->profileIn( __METHOD__ );
+
+			//filter out assets specifically registered for other skins
+			$skin = $this->wg->user->getSkin();
+			$styleTags = $skin->getStyles();
+			$scriptTags = $skin->getScripts();
+			$out = $this->wg->out;
+			$allowedScripts = '';
+			$allowedStyles = '';
+
+			foreach ( $styleTags as $s ) {
+				$allowedStyles .= "{$s['tag']}\n";
+			}
+
+			foreach ( $scriptTags as $s ) {
+				$allowedScripts .= "{$s['tag']}\n";
+			}
+
+			$value =  str_replace( array( $out->buildCssLinks(), $out->getScriptsOnly() ), array( $allowedStyles, $allowedScripts ), $value );
+
+			$this->wf->profileOut( __METHOD__ );
+		}
+
+		parent::set( $name, $value );
+	}
+}

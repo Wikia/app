@@ -19,16 +19,23 @@ class RelatedVideosHookHandler {
 
 	public function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
-		
-		$skinName = get_class( F::app()->wg->user->getSkin() );
-		if ($skinName == 'SkinOasis') {
-			$out->addScript( '<script src="' . F::app()->wg->stylePath . '/common/jquery/jquery.wikia.tooltip.js?' . F::app()->wg->styleVersion . '"></script>');
-			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/WikiaTooltip.scss' ) );
+
+		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		$scssPackage = 'relatedvideos_scss';
+		$jsPackage = 'relatedvideos_js';
+
+		if ( get_class( F::app()->wg->user->getSkin() ) == 'SkinOasis' ) {
+			$scssPackage = 'relatedvideos_scss_tooltips';
+			$jsPackage = 'relatedvideos_js_tooltips';
 		}
-		
-		$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/RelatedVideos/js/RelatedVideos.js"></script>' );
-		$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/JWPlayer/jwplayer.min.js"></script>' );	//@todo post-migration, might be able to remove this
-		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/RelatedVideos/css/RelatedVideos.scss' ) );
+
+		foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
+			$out->addStyle( $url );
+		}
+
+		foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+			$out->addScript( "<script src=\"{$url}\"></script>" );
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;

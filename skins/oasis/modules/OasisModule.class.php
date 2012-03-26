@@ -52,6 +52,7 @@ class OasisModule extends Module {
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
 		
+		// TODO: move to WikiaHubs extension - this code should use a hook
 		if(!empty($wgEnableWikiaHubsExt)) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubs/css/WikiaHubs.scss'));
 			$wgOut->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiaHubs/js/WikiaHubs.js');
@@ -96,19 +97,19 @@ class OasisModule extends Module {
 
 		$this->setupStaticChute();
 
-		// Remove the media="print CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
+
+		//reset, this ensures no duplication in CSS links
 		$this->printStyles = array();
-		$tmpOut = new OutputPage();
-		$tmpOut->styles = $wgOut->styles;
-		foreach($tmpOut->styles as $style => $options) {
-			if (isset($options['media']) && $options['media'] == 'print') {
-				unset($tmpOut->styles[$style]);
-				$this->printStyles[$style] = $options;
+		$this->csslinks = '';
+
+		foreach ( $skin->getStyles() as $s ) {
+			// Remove the non-inlined media="print" CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
+			if ( !empty( $s['url'] ) && stripos($s['tag'], 'media="print"')!== false) {
+				$this->printStyles[] = $s['url'];
+			} else {
+				$this->csslinks .= $s['tag'];
 			}
 		}
-
-		// render CSS <link> tags
-		$this->csslinks = $tmpOut->buildCssLinks();
 
 		$this->headlinks = $wgOut->getHeadLinks();
 
@@ -126,9 +127,10 @@ class OasisModule extends Module {
 		// FIXME: move to renderPrintCSS() method
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
+
 		$oasisPrintStyles = $StaticChute->config['oasis_css_print'];
 		foreach($oasisPrintStyles as $cssUrl){
-			$this->printStyles[$cssUrl] = array("media" => "print");
+			$this->printStyles[] = $cssUrl;
 		}
 
 		// If this is an anon article view, use the combined version of the print files.
@@ -145,9 +147,7 @@ class OasisModule extends Module {
 			}
 
 			// Completely replace the print styles with the combined version.
-			$this->printStyles = array(
-				"/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS&isOasis=true" => array("media" => "print")
-			);
+			$this->printStyles = array( "/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS&isOasis=true" );
 		}
 
 		$this->printableCss = $this->renderPrintCSS(); // The HTML for the CSS links (whether async or not).
@@ -205,14 +205,16 @@ class OasisModule extends Module {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
+		$ret = '';
+
 		if ($wgRequest->getVal('printable')) {
 			// render <link> tags for print preview
-			$tmpOut = new OutputPage();
-			$tmpOut->styles = $this->printStyles;
-			$ret = $tmpOut->buildCssLinks();
+			foreach ( $this->printStyles as $url ) {
+				$ret .= "<link rel=\"stylesheet\" href=\"{$url}\" media=\"print\"/>\n";
+			}
 		} else {
 			// async download
-			$cssReferences = Wikia::json_encode(array_keys($this->printStyles));
+			$cssReferences = Wikia::json_encode( $this->printStyles );
 
 			$ret = "<script type=\"text/javascript\">/*<![CDATA[*/ setTimeout(function(){wsl.loadCSS({$cssReferences}, 'print');}, 100); /*]]>*/</script>";
 		}
@@ -239,17 +241,20 @@ class OasisModule extends Module {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function rewriteJSlinks( &$link ) {
+	private function rewriteJSlinks( $link ) {
 		global $IP;
+		wfProfileIn( __METHOD__ );
+
 		$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
-		if( count($parts) == 2 ) {
+
+		if ( count( $parts ) == 2 ) {
 			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
 			$hash = filemtime( $IP . '/' . $parts[0]);
 			$link = $parts[0].'?cb='.$hash;
 		} else {
 			$ret = preg_replace_callback(
 				'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
-				function($matches) {
+				function ( $matches ) {
 					global $IP, $wgStyleVersion;
 					$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
 					//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
@@ -258,11 +263,15 @@ class OasisModule extends Module {
 				},
 				$link
 			);
+
 			if ( $ret ) {
 				$link = $ret;
 			}
 		}
 		//error_log( $link );
+
+		wfProfileOut( __METHOD__ );
+		return $link;
 	}
 
 	// TODO: implement as a separate module?
@@ -280,79 +289,74 @@ class OasisModule extends Module {
 			$this->jsAtBottom = true;
 		}
 
+		//store StaticChute output and reset jsFiles
+		$staticChuteAssets = $this->jsFiles;
+		$this->jsFiles = '';
+
 		// load WikiaScriptLoader
 		$this->wikiaScriptLoader = '';
-		$wslFiles = AssetsManager::getInstance()->getGroupCommonURL('wsl');
+		$wslFiles = AssetsManager::getInstance()->getGroupCommonURL( 'wsl' );
+
 		foreach($wslFiles as $wslFile) {
 			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				$this->rewriteJSlinks( $wslFile );
+				$wslFile = $this->rewriteJSlinks( $wslFile );
 			}
+
 			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$wslFile\"></script>";
 		}
 
-		wfProfileIn(__METHOD__ . '::regexp');
-
 		// get JS files from <script> tags returned by StaticChute
 		// TODO: get StaticChute package (and other JS files to be loaded) here
-		$jsReferences = array();
-		preg_match_all("/src=\"([^\"]+)/", $this->jsFiles, $matches, PREG_SET_ORDER);
-		foreach($matches as $scriptSrc) {
-			$jsReferences[] = str_replace('&amp;', '&', $scriptSrc[1]);
-		}
+		preg_match_all("/src=\"([^\"]+)/", $staticChuteAssets, $matches, PREG_SET_ORDER);
 
-		// move JS files added by extensions to list of files to be loaded using WSL
-		$headscripts = $wgOut->getScript();
+		foreach($matches as $scriptSrc) {
+			$url = str_replace('&amp;', '&', $scriptSrc[1]);
+			$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $url ) : $url;
+		}
 
 		// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.js and Common.js.
 		$oTitleWikiaJs	= Title::newFromText( 'Wikia.js',  NS_MEDIAWIKI );
 		$oTitleCommonJs	= Title::newFromText( 'Common.js', NS_MEDIAWIKI );
 		$iMaxRev = max( (int) $oTitleWikiaJs->getLatestRevID(), (int) $oTitleCommonJs->getLatestRevID() );
 		unset( $oTitleWikiaJs, $oTitleCommonJs );
-
+		
 		// Load SiteJS / common.js separately, after all other js files (moved here from oasis_shared_js)
-		$headscripts .= "<script type=\"$wgJsMimeType\" src=\"".Title::newFromText('-')->getFullURL('action=raw&smaxage=86400&maxrev=' . $iMaxRev . '&gen=js&useskin=oasis')."\"></script>";
+		$siteJS = Title::newFromText('-')->getFullURL('action=raw&smaxage=86400&maxrev=' . $iMaxRev . '&gen=js&useskin=oasis');
+		$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $siteJS ) : $siteJS;
 
-		// find <script> tags with src attribute
-		preg_match_all("#<script[^>]+src=\"([^\"]+)\"></script>#", $headscripts, $matches, PREG_SET_ORDER);
-		foreach($matches as $scriptSrc) {
-			$jsReferences[] = str_replace('&amp;', '&', $scriptSrc[1]);
-			$headscripts = str_replace($scriptSrc[0], '', $headscripts);
+		// move JS files added to OutputPage to list of files to be loaded using WSL
+		$scripts = $wgUser->getSkin()->getScripts();
+
+		foreach ( $scripts as $s ) {
+			//add inline scripts to jsFiles and move non-inline to WSL queue
+			if ( !empty( $s['url'] ) ) {
+				$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $s['url'] ) : $s['url'];
+			} else {
+				$this->jsFiles .= $s['tag'];
+			}
 		}
-
-		// move <link> tags from headscripts to csslinks (fix SMW issue)
-		preg_match_all("#<link ([^>]+)>#", $headscripts, $matches, PREG_SET_ORDER);
-		foreach($matches as $linkTag) {
-			$this->csslinks .= "\n\t" . trim($linkTag[0]);
-			$headscripts = str_replace($linkTag[0], '', $headscripts);
-		}
-
-		wfProfileOut(__METHOD__ . '::regexp');
 
 		// add user JS (if User:XXX/wikia.js page exists)
 		// copied from Skin::getHeadScripts
 		if($wgUser->isLoggedIn()){
 			wfProfileIn(__METHOD__ . '::checkForEmptyUserJS');
-
-			$userJS = $wgUser->getUserPage()->getPrefixedText().'/wikia.js';
-			$userJStitle = Title::newFromText($userJS);
-
-			if ($userJStitle->exists()) {
+		
+			$userJS = $wgUser->getUserPage()->getPrefixedText() . '/wikia.js';
+			$userJStitle = Title::newFromText( $userJS );
+		
+			if ( $userJStitle->exists() ) {
 				global $wgSquidMaxage;
+
 				$siteargs = array(
 					'action' => 'raw',
 					'maxage' => $wgSquidMaxage,
 				);
 
-				$jsReferences[] = Skin::makeUrl($userJS, wfArrayToCGI($siteargs));
+				$userJS = Skin::makeUrl( $userJS, wfArrayToCGI( $siteargs ) );
+				$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $userJS ) : $userJS;
 			}
-
+		
 			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
-		}
-
-		if( $wgSpeedBox && $wgDevelEnvironment ) {
-			foreach($jsReferences as &$ref) {
-				$this->rewriteJSlinks( $ref );
-			}
 		}
 
 		// generate code to load JS files
@@ -360,10 +364,7 @@ class OasisModule extends Module {
 		$jsLoader = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ wsl.loadScript({$jsReferences}); })(); /*]]>*/</script>";
 
 		// use loader script instead of separate JS files
-		$this->jsFiles = $jsLoader;
-
-		// add inline scripts
-		$this->jsFiles .= trim($headscripts);
+		$this->jsFiles = $jsLoader . $this->jsFiles;
 
 		wfProfileOut(__METHOD__);
 	}

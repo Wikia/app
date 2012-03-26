@@ -8,7 +8,6 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-/** */
 require_once( dirname(__FILE__) . '/MonoBook.php' );
 
 global $wgHooks, $wgEnableArticleCommentsExt, $wgEnableFacebookConnectExt,
@@ -28,22 +27,22 @@ $wgHooks['SkinGetHeadScripts'][] = 'SkinWikiaphone::onSkinGetHeadScripts';
  * @todo document
  * @ingroup Skins
  */
-class SkinWikiaphone extends SkinTemplate {
+class SkinWikiaphone extends WikiaSkin {
 	function __construct() {
-		parent::__construct();
+		parent::__construct( 'MonoBookTemplate', 'wikiaphone', ''/* this makes Common.css and WikiaPhone.css get added to the page */ );
+
+		//non-strict checks of css/js/scss assets/packages
+		$this->strictAssetUrlCheck = false;
+
 		$this->mRenderColumnOne = false;
 		$this->useHeadElement = true;
 	}
 
 	function initPage( OutputPage $out ) {
 		global $wgHooks, $wgUseSiteCss;
-		
+
 		SkinTemplate::initPage( $out );
-		
-		$this->skinname  = 'wikiaphone';
-		$this->stylename = 'wikiaphone';
-		$this->template  = 'MonoBookTemplate';
-		
+
 		$out->addMeta("viewport", "width=320");
 	}
 

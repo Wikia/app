@@ -93,6 +93,8 @@ $wgAutoloadClasses['WikiaErrorController'] = $IP . '/includes/wikia/WikiaErrorCo
 $wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/WikiaRequest.class.php';
 $wgAutoloadClasses['WikiaResponse'] = $IP . '/includes/wikia/WikiaResponse.class.php';
 $wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/WikiaView.class.php';
+$wgAutoloadClasses['WikiaSkin'] = $IP . '/includes/wikia/WikiaSkin.class.php';
+$wgAutoloadClasses['WikiaQuickTemplate'] = $IP . '/includes/wikia/WikiaQuickTemplate.class.php';
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/WikiaFunctionWrapper.class.php';
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
 

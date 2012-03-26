@@ -71,6 +71,13 @@ class OutputPage {
 		$this->mAllowUserJs = $wgAllowUserJs;
 	}
 
+	/* Wikia change start - author: Federico */
+	//Ensure access to queued scripts
+	public function getScriptsOnly(){
+		return $this->mScripts;
+	}
+	/* Wikia change end */
+
 	public function enableRedirects($state = true) {
 		$returnval = $this->mRedirectsEnabled;
 		$this->mRedirectsEnabled = $state;

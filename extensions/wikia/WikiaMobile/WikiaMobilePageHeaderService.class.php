@@ -8,6 +8,6 @@
 class  WikiaMobilePageHeaderService extends WikiaService {
 	public function index() {
 		$this->response->setVal( 'pageTitle', $this->wg->Out->getPageTitle() );
-		$this->response->setVal( 'sharingButton', $this->sendRequest( 'WikiaMobileSharingService', 'button' )->toString() );
+		$this->response->setVal( 'sharingButton', $this->app->renderView( 'WikiaMobileSharingService', 'button' ) );
 	}
 }

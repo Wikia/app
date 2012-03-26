@@ -179,82 +179,67 @@ class CampfireModule extends Module {
 			$this->jsAtBottom = true;
 		}
 
+		//store StaticChute output and reset jsFiles
+		$staticChuteAssets = $this->jsFiles;
+		$this->jsFiles = '';
+
 		// load WikiaScriptLoader
-		// macbre: this is minified version of /skins/wikia/js/WikiaScriptLoader.js using Google Closure
-		$this->wikiaScriptLoader = <<<JS
-var WikiaScriptLoader=function(){var b=navigator.userAgent.toLowerCase();this.useDOMInjection=b.indexOf("opera")!=-1||b.indexOf("firefox/3.")!=-1;this.isIE=b.indexOf("opera")==-1&&b.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(b,c){this.useDOMInjection?this.loadScriptDOMInjection(b,c):this.loadScriptDocumentWrite(b,c)},loadScriptDOMInjection:function(b,c){var a=document.createElement("script");a.type="text/javascript";a.src=b;var d=function(){a.onloadDone=true;typeof c=="function"&&c()};a.onloadDone=false;a.onload=d;a.onreadystatechange=function(){a.readyState=="loaded"&&!a.onloadDone&&d()};this.headNode.appendChild(a)},loadScriptDocumentWrite:function(b,c){document.write('<script src="'+ b+'" type="text/javascript"><\/script>');var a=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",a)},loadScriptAjax:function(b,c){var a=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(a.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;a.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",b,true);d.send("")},loadCSS:function(b,c){var a=document.createElement("link"); a.rel="stylesheet";a.type="text/css";a.media=c||"";a.href=b;this.headNode.appendChild(a)},addHandler:function(b,c,a){if(window.addEventListener)window.addEventListener(c,a,false);else window.attachEvent&&window.attachEvent("on"+c,a)},getXHRObject:function(){var b=false;try{b=new XMLHttpRequest}catch(c){for(var a=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=a.length,e=0;e<d;e++){try{b=new ActiveXObject(a[e])}catch(f){continue}break}}return b}};window.wsl=new WikiaScriptLoader;
-JS;
-
-		$this->wikiaScriptLoader = "\n\n\t<script type=\"text/javascript\">/*<![CDATA[*/{$this->wikiaScriptLoader}/*]]>*/</script>";
-
-		wfProfileIn(__METHOD__ . '::regexp');
+		$this->wikiaScriptLoader = '';
+		$wslFiles = AssetsManager::getInstance()->getGroupCommonURL( 'wsl' );
+		
+		foreach($wslFiles as $wslFile) {
+			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$wslFile\"></script>";
+		}
 
 		// get JS files from <script> tags returned by StaticChute
 		// TODO: get StaticChute package (and other JS files to be loaded) here
-		$jsReferences = array();
-		preg_match_all("/src=\"([^\"]+)/", $this->jsFiles, $matches, PREG_SET_ORDER);
+		preg_match_all("/src=\"([^\"]+)/", $staticChuteAssets, $matches, PREG_SET_ORDER);
+		
 		foreach($matches as $scriptSrc) {
-			$jsReferences[] = str_replace('&amp;', '&', $scriptSrc[1]);
+			$jsReferences[] = str_replace('&amp;', '&', $scriptSrc[1]);;
 		}
 
-		// move JS files added by extensions to list of files to be loaded using WSL
-		$headscripts = $wgOut->getScript();
-
-		// find <script> tags with src attribute
-		preg_match_all("#<script[^>]+src=\"([^\"]+)\"></script>#", $headscripts, $matches, PREG_SET_ORDER);
-		foreach($matches as $scriptSrc) {
-			$jsReferences[] = str_replace('&amp;', '&', $scriptSrc[1]);
-			$headscripts = str_replace($scriptSrc[0], '', $headscripts);
+		// move JS files added to OutputPage to list of files to be loaded using WSL
+		$scripts = $wgUser->getSkin()->getScripts();
+		
+		foreach ( $scripts as $s ) {
+			//add inline scripts to jsFiles and move non-inline to WSL queue
+			if ( !empty( $s['url'] ) ) {
+				$jsReferences[] = $s['url'];
+			} else {
+				$this->jsFiles .= $s['tag'];
+			}
 		}
-
-		// move <link> tags from headscripts to csslinks (fix SMW issue)
-		preg_match_all("#<link ([^>]+)>#", $headscripts, $matches, PREG_SET_ORDER);
-		foreach($matches as $linkTag) {
-			$this->csslinks .= "\n\t" . trim($linkTag[0]);
-			$headscripts = str_replace($linkTag[0], '', $headscripts);
-		}
-
-		wfProfileOut(__METHOD__ . '::regexp');
-
+		
 		// add user JS (if User:XXX/wikia.js page exists)
 		// copied from Skin::getHeadScripts
 		if($wgUser->isLoggedIn()){
 			wfProfileIn(__METHOD__ . '::checkForEmptyUserJS');
-
-			$userJS = $wgUser->getUserPage()->getPrefixedText().'/wikia.js';
-			$userJStitle = Title::newFromText($userJS);
-
-			if ($userJStitle->exists()) {
+		
+			$userJS = $wgUser->getUserPage()->getPrefixedText() . '/wikia.js';
+			$userJStitle = Title::newFromText( $userJS );
+		
+			if ( $userJStitle->exists() ) {
 				global $wgSquidMaxage;
+		
 				$siteargs = array(
-					'action' => 'raw',
-					'maxage' => $wgSquidMaxage,
+						'action' => 'raw',
+						'maxage' => $wgSquidMaxage,
 				);
-
-				$jsReferences[] = Skin::makeUrl($userJS, wfArrayToCGI($siteargs));
+		
+				$userJS = Skin::makeUrl( $userJS, wfArrayToCGI( $siteargs ) );
+				$jsReferences[] = Skin::makeUrl( $userJS, wfArrayToCGI( $siteargs ) );;
 			}
-
+		
 			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
-
+		
 		// generate code to load JS files
 		$jsReferences = Wikia::json_encode($jsReferences);
-		$jsLoader = <<<JS
-	<script type="text/javascript">/*<![CDATA[*/
-		(function(){
-			var jsReferences = $jsReferences;
-			var len = jsReferences.length;
-			for(var i=0; i<len; i++)
-				wsl.loadScript(jsReferences[i]);
-		})();
-	/*]]>*/</script>
-JS;
-
+		$jsLoader = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ wsl.loadScript({$jsReferences}); })(); /*]]>*/</script>";
+		
 		// use loader script instead of separate JS files
-		$this->jsFiles = $jsLoader;
-
-		// add inline scripts
-		$this->jsFiles .= trim($headscripts);
+		$this->jsFiles = $jsLoader . $this->jsFiles;
 
 		wfProfileOut(__METHOD__);
 	}

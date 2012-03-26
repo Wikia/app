@@ -469,10 +469,12 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 	
-	public static function onWikiaMobileAssetsPackages(&$jsHeadPackageName, &$jsBodyPackageName, &$scssPackageName) {
-		if(Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
-			$scssPackageName = 'extensions/wikia/WikiaHomePage/css/WikiaHomePage.wikiamobile.scss';
+	public static function onWikiaMobileAssetsPackages( Array &$jsPackages, Array &$scssPackages ) {
+		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
+		if ( F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
+			$scssPackages[] = 'wikiahomepage_scss_wikiamobile';
 		}
+
 		return true;
 	}
 }
