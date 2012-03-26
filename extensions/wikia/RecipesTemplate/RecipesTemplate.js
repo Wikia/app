@@ -346,10 +346,11 @@ var RecipesTemplate = {
 
 		if (document.selection  && document.selection.createRange) { // IE/Opera
 			//save window scroll position
-			if (document.documentElement && document.documentElement.scrollTop)
+			if (document.documentElement && document.documentElement.scrollTop){
 				var winScroll = document.documentElement.scrollTop
-			else if (document.body)
+			} else if (document.body) {
 				var winScroll = document.body.scrollTop;
+			}
 			//get current selection
 			txtarea.focus();
 			var range = document.selection.createRange();
@@ -366,10 +367,11 @@ var RecipesTemplate = {
 			}
 			range.select();
 			//restore window scroll position
-			if (document.documentElement && document.documentElement.scrollTop)
+			if (document.documentElement && document.documentElement.scrollTop) {
 				document.documentElement.scrollTop = winScroll
-			else if (document.body)
+			} else if (document.body) {
 				document.body.scrollTop = winScroll;
+			}
 
 		} else if (txtarea.selectionStart || txtarea.selectionStart == '0') { // Mozilla
 
@@ -403,7 +405,7 @@ var RecipesTemplate = {
 				isSample = true;
 			} else if (selText.charAt(selText.length - 1) == ' ') { //exclude ending space char
 				selText = selText.substring(0, selText.length - 1);
-				tagClose += ' '
+				tagClose += ' ';
 			}
 		}
 	},

@@ -31,9 +31,11 @@
       extend(Class, SuperClass, false);
     }
 
-    if (hasImplementClasses)
-      for (var i = 1; i < len - 1; i++)
-        extend(Class.prototype, arguments[i].prototype, false);    
+	if (hasImplementClasses){
+		for (var i = 1; i < len - 1; i++){
+			extend(Class.prototype, arguments[i].prototype, false);    
+		}
+	}
 
     extendClass(Class, body);
 

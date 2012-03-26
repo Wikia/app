@@ -14,16 +14,16 @@
 	};
 	
 	Xml.element = function(name,content,attributes){
-	    var att_str = ''
+	    var att_str = '';
         if (attributes) { // tests false if this arg is missing!
             att_str = Xml.attributes(attributes);
         }
-        var xml
+        var xml;
         if (!content){
-            xml='<' + name + att_str + ' />'
+            xml='<' + name + att_str + ' />';
         }
         else {
-            xml='<' + name + att_str + '>' + content + '</'+name+'>'
+            xml='<' + name + att_str + '>' + content + '</'+name+'>';
         }
         return xml;
     };

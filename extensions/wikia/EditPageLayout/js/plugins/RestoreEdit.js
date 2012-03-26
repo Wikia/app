@@ -60,7 +60,7 @@
 					}		
 					//attaching handlers for the short notices
 					var editorEl = $('#EditPageEditor');
-						editorEl.find('.restoreeditlink').bind('click', restoreHandler)
+						editorEl.find('.restoreeditlink').bind('click', restoreHandler);
 						editorEl.find('.difflink').bind('click', diffHandler);
 							
 					//attaching handlers for the long notices in the modal dialog (bind/delegate don't work in this case)

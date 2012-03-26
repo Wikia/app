@@ -39,8 +39,7 @@ var SponsorshipDashboardUserEditor = {
 	reportItemText : function( value ){
 
 		var elementText = '<li>';
-		// TODO: FIXME: Use wgBlankImgUrl and test that it still works
-		elementText = elementText + '<a data-id="' + value + '" class="delete wikia-button secondary"><img src="http://images1.wikia.nocookie.net/__cb33534/common/skins/common/blank.gif" class="sprite trash"></a> ';
+		elementText = elementText + '<a data-id="' + value + '" class="delete wikia-button secondary"><img src="'+wgBlankImgUrl+'" class="sprite trash"></a> ';
 		elementText = elementText + $( "#groupReportList option[value=" + value + "]" ).html();
 		elementText = elementText + '</li>';
 		$( '#groupReportList option[value=' + value + ']' ).hide();

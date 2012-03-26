@@ -328,7 +328,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 	},
 	
 	addChat: function(chat) {
-		if (chat.attributes.name == wgUserName) this.forceScroll = true;
+		if (chat.attributes.name == wgUserName) { this.forceScroll = true; }
 		
 		// Add message to chat
 		var view = new ChatView({model: chat});
@@ -357,8 +357,11 @@ var NodeChatDiscussion = Backbone.View.extend({
 			isAtBottom = true;
 		}
 		
-		if(isAtBottom)	this.forceScroll = true;
-		else			this.forceScroll = false;
+		if(isAtBottom){
+			this.forceScroll = true;
+		} else {
+			this.forceScroll = false;
+		}
 	}
 });
 //TODO: rename it to frame NodeChatFrame ? 

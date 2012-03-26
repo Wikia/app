@@ -35,14 +35,14 @@ define.call(exports, ['modules/settings'],function(settings){
 		},
 
 		get: function(key){
-			if(Wikia.Platform.is('app'))
+			if(Wikia.Platform.is('app')){
 				Titanium.App.fireEvent('Storage:get', {key: key});
-			else{
+			}else{
 				var value;
 				try {
 					value = store.get(key);
 				} catch(err) {
-					Wikia.log(err)
+					Wikia.log(err);
 					value = null;
 				}
 
@@ -92,12 +92,13 @@ define.call(exports, ['modules/settings'],function(settings){
 						}
 					}
 
-					if(needsRequest && event.source == 'web')
+					if(needsRequest && event.source == 'web'){
 						alert('Error, invalid response from ' + event.url);
-					else if(needsRequest)
+					}else if(needsRequest){
 						that._sendRequest(event.url, event.options);
-					else
+					}else{
 						that.fire('success', {url: event.url, response: data});
+					}
 				});
 			}
 		},
@@ -125,10 +126,11 @@ define.call(exports, ['modules/settings'],function(settings){
 		load: function(url, options){
 			this.fire('beforeLoad', {url: url, options: options});
 
-			if(Wikia.Platform.is('app'))
+			if(Wikia.Platform.is('app')){
 				Titanium.App.fireEvent('XDomainLoader:load', {url: url, options: options, id: this._id});
-			else
+			}else{
 				this._sendRequest(url, options);
+			}
 		}
 	});
 
