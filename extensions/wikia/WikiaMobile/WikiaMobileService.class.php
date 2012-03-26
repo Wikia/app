@@ -144,7 +144,7 @@ class WikiaMobileService extends WikiaService {
 			'categoryLinks' => $this->templateObject->get( 'catlinks')
 		) );
 		$this->wikiaFooter = $this->app->renderView( 'WikiaMobileFooterService', 'index', array(
-			'copyrightLink' => $this->templateObject->get( 'copyright' )
+			'copyrightLink' => str_replace( 'CC-BY-SA', $this->wf->msg( 'wikiamobile-footer-link-license' ), $this->templateObject->get( 'copyright' ) )
 		) );
 		$this->jsBodyFiles = $jsBodyFiles;
 		$this->bottomscripts = $bottomscripts;
