@@ -262,7 +262,8 @@ class AdEngine {
 				return $id;
 			}
 		}
-		return false;
+		// default provider: Null
+		return '-1';
 	}
 
 
@@ -272,10 +273,6 @@ class AdEngine {
 			$name = 'wgAdslot_' . $slotname;
 			if (!empty($GLOBALS[$name])){
 				$provider_id = $this->getProviderid($GLOBALS[$name]);
-				if ($provider_id === false ){
-					trigger_error("Invalid value for $name ({$GLOBALS[$name]})", E_USER_WARNING);
-					continue;
-				}
 				$this->slots[$slotname]['provider_id'] = $provider_id;
 				$this->slots[$slotname]['provider'] = $GLOBALS[$name];
 				$this->slots[$slotname]['overridden_by'] = $name;
