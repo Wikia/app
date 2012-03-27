@@ -59,8 +59,19 @@ class HubService extends Service {
 			if (empty($catInfo)) {
 				$lifestyleHub = WikiFactoryHub::getInstance()->getCategory(WikiFactoryHub::CATEGORY_ID_LIFESTYLE);
 				$catInfo = self::initCategoryInfo(WikiFactoryHub::CATEGORY_ID_LIFESTYLE, $lifestyleHub['name']);
-			}
-			else {
+			} else {
+				global $wgWikiaHubsPages, $wgTitle;
+				if(!empty($wgWikiaHubsPages)) {
+					if ($wgTitle instanceof Title ) {
+						$reverseHubs = array_flip($wgWikiaHubsPages);
+						$textTitle = $wgTitle->getDBKey();
+						if(!empty($textTitle) && !empty($reverseHubs[$textTitle])) {
+							$catInfo->cat_id = $reverseHubs[$textTitle];
+							$catInfo->cat_name = $textTitle;
+						}
+					}
+				}
+
 				switch ($catInfo->cat_id) {
 					// leave these categories alone
 					case WikiFactoryHub::CATEGORY_ID_GAMING:
