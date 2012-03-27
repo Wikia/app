@@ -33,7 +33,7 @@ class RebuildLocalisationCacheTask extends BatchTask {
 		$this->mData = $params;
 		$this->log( 'RebuildLocalisationCacheTask started.' );
 		$out = wfShellExec(
-			"pdsh -g all_web touch /tmp/l10n-rebuild"
+			"pdsh -g all_web 'echo {$this->mTaskID} > /tmp/l10n-rebuild'"
 		/*
 			'pdsh -g all_web -f5 \'SERVER_ID=4036 php '
 			. '/usr/wikia/source/wiki/maintenance/rebuildLocalisationCache.php '
