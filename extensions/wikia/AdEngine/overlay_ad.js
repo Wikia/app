@@ -12,15 +12,15 @@ var displayOverlayAd = function(){
 				type: "image",
 				xoffset: 0,
 				width: 500,
-				yoffset: 58 
+				yoffset: 58
 			},
 
 			getCreative: function() {
 				var html = '<style type="text/css">\
 					#wikia_overlay_ad {\
 						background: ';
-				if (OverlayAd.settings.type == "image") { 
-					html += 'url(' + OverlayAd.settings.creative + ') center #000000'; 
+				if (OverlayAd.settings.type == "image") {
+					html += 'url(' + OverlayAd.settings.creative + ') center #000000';
 				}
 				else if (OverlayAd.settings.type == "flash") {
 					html += 'transparent';
@@ -50,7 +50,7 @@ var displayOverlayAd = function(){
 					.close {';
 				if (OverlayAd.settings.close) {
 					html += '\
-						background: url("/extensions/wikia/AdEngine/close_button.png");\
+						background: url("' + wgExtensionsPath + '/wikia/AdEngine/close_button.png");\
 						cursor: pointer;\
 						height: 18px;\
 						left: ' + parseInt(OverlayAd.settings.width-18 + OverlayAd.settings.close.xoffset) + 'px;\
@@ -129,7 +129,7 @@ var displayOverlayAd = function(){
 					var attributes = {};
 					swfobject.embedSWF(OverlayAd.settings.creative, "wikia_overlay_ad_flash", OverlayAd.settings.width, OverlayAd.settings.height, "9.0.0", false, flashvars, params, attributes);
 				}
-						
+
 				WET.byStr("overlay_ad/started");
 				$(".wikia_overlay_ad").show(OverlayAd.settings.speed, function() {
 					if (OverlayAd.settings.duration > 0) {
