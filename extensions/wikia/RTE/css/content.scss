@@ -149,6 +149,11 @@ img.image-gallery {
 	display: block;
 }
 
+img.image-gallery-slider {
+	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slider-placeholder.png);/* $wgCdnStylePath */
+	display: block;
+}
+
 img.image-slideshow {
 	background-image: url(/extensions/wikia/WikiaPhotoGallery/images/slideshow-placeholder.png);/* $wgCdnStylePath */
 
