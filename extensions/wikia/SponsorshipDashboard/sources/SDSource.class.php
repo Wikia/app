@@ -420,7 +420,6 @@ abstract class SponsorshipDashboardSource {
 
 	/*
 	 * returns source builder form data.
-	 *
 	 * @return string - html
 	 */
 
@@ -431,7 +430,7 @@ abstract class SponsorshipDashboardSource {
 		$aVars['hubs'] = $this->getGeneralHubList();
 		$aVars['data'] = $this->getParamsArray();
 		$oTmpl->set_vars( $aVars );
-		
+
 		return $oTmpl->execute( $this->getMenuTemplateLink() );
 	}
 
@@ -443,13 +442,7 @@ abstract class SponsorshipDashboardSource {
 
 	protected function getGeneralHubList() {
 
-		$wgExternalSharedDB = $this->App->getGlobal( 'wgExternalSharedDB' );
-		$wgHubsPages = $this->App->getGlobal('wgHubsPages');
-		if ( empty( $wgHubsPages ) || !is_array( $wgHubsPages ) || !isset( $wgHubsPages['en'] ) ) {
-			return array();
-		}
-
-		return array_flip( SponsorshipDashboardService::getPopularHubs( true ) );
+		Wikia::log( __METHOD__, 'Depreciated' );
 	}
 
 	/*
@@ -495,7 +488,6 @@ abstract class SponsorshipDashboardSource {
 	}
 
 	protected function loadDataFromCache() {
-
 		$wgMemc = $this->App->getGlobal('wgMemc');
 		$memcData = $wgMemc->get( $this->getCacheKey() );
 

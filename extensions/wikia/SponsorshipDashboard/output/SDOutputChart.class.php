@@ -17,10 +17,10 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	public $showActionsButton = true;
 	public $chartNumericId; // So that multiple charts can be on the same page, each chart needs a unique numeric id
 	public $emptyChartMsg;
-        public $active;
+	public $active;
 
 	protected $actualDate;
-	
+
 	public function  __construct() {
 		parent::__construct();
 		static $nextChartId = 1; // this var will count up as Charts are initialized
@@ -33,14 +33,13 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	const TEMPLATE_CHART_INFOONLY = 'chart_info';
 	const TEMPLATE_CHART = 'chart';
 	const TEMPLATE_CHART_EMPTY = 'chart_empty';
-        
-        protected function getTemplate() {
-            // TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
-            return F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
-        }
+
+	protected function getTemplate() {
+		// TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
+		return F::build( 'EasyTemplate', array( ( dirname( __FILE__ )."/templates/" ) ) );
+	}
 
 	public function getHTML( $setHtmlTitle=true ) {
-
 		wfProfileIn( __METHOD__ );
 		$wgTitle = $this->App->getGlobal('wgTitle');
 		$wgOut = $this->App->getGlobal('wgOut');
@@ -76,7 +75,6 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 
 			return $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART_INFOONLY );
 
-
 		} elseif ( ( !isset ( $aData['ticks'] ) || !isset ( $aData['serie'] ) || !isset ( $aData['fullTicks'] ) ||
 			empty ( $aData['ticks'] ) || empty ( $aData['serie'] ) || empty ( $aData['fullTicks'] ) ) )
 		{
@@ -87,7 +85,6 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 			);
 			return $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART_EMPTY );
 		} else {
-
 			$datasets = isset($aData['serie']) ? $aData['serie'] : array();
 			$ticks = isset($aData['ticks']) ? $aData['ticks'] : array();;
 			$fullTicks = isset($aData['fullTicks']) ? $aData['fullTicks'] : array();

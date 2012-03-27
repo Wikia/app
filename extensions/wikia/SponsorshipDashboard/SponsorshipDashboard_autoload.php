@@ -1,22 +1,13 @@
 <?php 
 
 $dir = dirname(__FILE__) . '/';
-$wgAutoloadClasses['SponsorshipDashboard']	= $dir . 'SponsorshipDashboard.body.php';
+
 $wgAutoloadClasses['SponsorshipDashboardService'] = $dir . 'SponsorshipDashboardService.class.php';
 
 // report class
-$wgAutoloadClasses['SponsorshipDashboardReports'] = $dir . 'SDReports.class.php';
 $wgAutoloadClasses['SponsorshipDashboardReport'] = $dir . 'SDReport.class.php';
-$wgAutoloadClasses['SponsorshipDashboardGroups'] = $dir . 'SDGroups.class.php';
-$wgAutoloadClasses['SponsorshipDashboardGroup'] = $dir . 'SDGroup.class.php';
-$wgAutoloadClasses['SponsorshipDashboardUsers'] = $dir . 'SDUsers.class.php';
-$wgAutoloadClasses['SponsorshipDashboardUser'] = $dir . 'SDUser.class.php';
 
 // report sources
-$wgAutoloadClasses['SponsorshipDashboardSourceGapi'] = $dir . 'sources/SDSourceGapi.class.php';
-$wgAutoloadClasses['SponsorshipDashboardSourceGapiCu'] = $dir . 'sources/SDSourceGapiCu.class.php';
-$wgAutoloadClasses['SponsorshipDashboardSourceStats'] = $dir . 'sources/SDSourceStats.class.php';
-$wgAutoloadClasses['SponsorshipDashboardSourceOneDot'] = $dir . 'sources/SDSourceOneDot.class.php';
 $wgAutoloadClasses['SponsorshipDashboardSourceMobile'] = $dir . 'sources/SDSourceMobile.class.php';
 $wgAutoloadClasses['SponsorshipDashboardSource'] = $dir . 'sources/SDSource.class.php';
 $wgAutoloadClasses['SponsorshipDashboardSourceDatabase'] = $dir . 'sources/SDSourceDatabase.class.php';
