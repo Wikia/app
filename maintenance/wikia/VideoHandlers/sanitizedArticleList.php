@@ -73,7 +73,7 @@ foreach ( $aAllFiles as $key => $fileRow ) {
 			$wgTitle = $oTitle;
 			$wikiUrl = WikiFactory::getWikiByID( $fileRow->city_id )->city_url;
 			//$allChangesArticleURLs[ str_replace('http://localhost/', $wikiUrl, $oTitle->getFullURL()) ] = $fileRow->sanitized_title;
-			$allChangesArticleURLs[ $wikiUrl . '/wiki/'. $fileRow->article_title ] = $fileRow->sanitized_title;
+			$allChangesArticleURLs[ $wikiUrl . '/wiki/'. Title::escapeFragmentForURL($fileRow->article_title) ] = $fileRow->sanitized_title;
 		//}
 }
 if (count ($allChangesArticleURLs) > 0 ) {
