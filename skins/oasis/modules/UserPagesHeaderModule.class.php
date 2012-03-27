@@ -177,25 +177,17 @@ class UserPagesHeaderModule extends Module {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgEnableUserProfilePagesExt, $wgEnableUserProfilePagesV3, $wgRequest, $wgUser, $wgOut, $wgCityId, $wgIsPrivateWiki;
+		global $wgTitle, $wgRequest, $wgUser, $wgOut, $wgCityId, $wgIsPrivateWiki;
 
 		//fb#1090
 		$this->isInternalWiki = empty($wgCityId);
 		$this->isUserAnon = $wgUser->isAnon();
 		$this->isPrivateWiki = $wgIsPrivateWiki;
-
-		if( empty($wgEnableUserProfilePagesV3) ) {
-		//controller of User Profile Page v3 includes its own css so if it's disabled,
-		//empty($wgEnableUserProfilePagesV3) === false, we include standard css
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
-		}
-
+		
 		$namespace = $wgTitle->getNamespace();
 
 		// get user name to display in header
 		$this->userName = self::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
-		$this->isUserProfilePageExt = ( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() && empty($wgEnableUserProfilePagesV3) );
-		$this->isUserProfilePageV3Enabled = !empty($wgEnableUserProfilePagesV3);
 
 		// render avatar (100x100)
 		$this->avatar = AvatarService::renderAvatar($this->userName, 100);

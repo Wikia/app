@@ -120,41 +120,19 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 			// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
 			$masthead = Masthead::newFromUser($wgUser);
 			if( !$masthead->hasAvatar() ) {
-				global $wgEnableUserProfilePagesV3;
-				
-				if( !empty($wgEnableUserProfilePagesV3) ) {
-				//bugId:10580
-					// Attempt to store the facebook profile pic as the Wikia avatar.
-					$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_BIG);
-				} else {
-					// Attempt to store the facebook profile pic as the Wikia avatar.
-					$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_SQUARE);
-				}
+				// Attempt to store the facebook profile pic as the Wikia avatar.
+				$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_BIG);
 				
 				if( $picUrl != "" ) {
-					if( !empty($wgEnableUserProfilePagesV3) ) {
 					//bugId:10580
-						$tmpFile = '';
-						$sUrl = $masthead->uploadByUrlToTempFile($picUrl, $tmpFile);
-						
-						$app = F::app();
-						$userProfilePageV3 = new UserProfilePageController($app);
-						$data->source = 'facebook';
-						$data->file = $tmpFile;
-						$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
-					} else {
-						$errorNo = $masthead->uploadByUrl($picUrl);
-						
-						// Apply this as the user's new avatar if the image-pull went okay.
-						if($errorNo == UPLOAD_ERR_OK){
-							$sUrl = $masthead->getLocalPath();
-							if ( !empty($sUrl) ) {
-								/* set user option */
-								$wgUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
-								$wgUser->saveSettings();
-							}
-						}
-					}
+					$tmpFile = '';
+					$sUrl = $masthead->uploadByUrlToTempFile($picUrl, $tmpFile);
+					
+					$app = F::app();
+					$userProfilePageV3 = new UserProfilePageController($app);
+					$data->source = 'facebook';
+					$data->file = $tmpFile;
+					$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
 				}
 			}
 		}
