@@ -88,16 +88,17 @@ function wfMobileSearches(){
 			$artist = str_replace("'", "\\'", $artist);
 			$song = str_replace("'", "\\'", $song);
 
-			$db = &wfGetDB(DB_MASTER)->getProperty('mConn');
-
 			print "<html><head><title>Success</title></head><body>\n"; // TODO: i18n
 			print "Deleting record... ";
-			$queryString = "DELETE FROM $TABLE_NAME WHERE request_artist='".mysql_real_escape_string($artist)."' AND request_song='".mysql_real_escape_string($song)."'";
-			if(mysql_query($queryString, $db)){
-				print "Deleted using query:<br/>$queryString<br/>\n";
-			} else {
-				print "Failed. ".mysql_error();
-			}
+			$dbw = &wfGetDB(DB_MASTER);
+			$dbw->delete( $TABLE_NAME,
+						array(
+							'request_artist' => $artist,
+							'request_song' => $song,
+						),
+						__METHOD__
+			);
+
 			print "<br/>Clearing the cache... ";
 			
 			$wgMemc->delete($CACHE_KEY_DATA); // purge the entry from memcached
