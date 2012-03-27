@@ -115,10 +115,15 @@ $messages['en'] = array(
 	'usermasthead-log' => 'User Masthead',
 	'usermasthead-log-message' => 'added profile information',
 	'usermasthead-log-alt' => 'Logs of user masthead edits',
+
+	'user-identity-remove-confirmation' => 'Are you sure ?',
+	'user-identity-remove-fail' => 'There was some problem when removing the avatar'
 );
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'user-identity-remove-confirmation' => 'appears when user is trying to remove avatar',
+	'user-identity-remove-fail' => 'appears in alert box when there ware some when removing the avatar',
 	'userprofilepage-question-caption' => 'Parameters:
 * $1 is the number of the current question
 * $2 is the total number of questions in the interview.',

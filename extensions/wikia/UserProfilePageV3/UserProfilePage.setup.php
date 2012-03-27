@@ -22,7 +22,6 @@ $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
 //$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
 $app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
 $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
-$app->registerClass('UserAvatarRemovePage', $dir . '/UserAvatarRemovePage.class.php');
 
 
 
@@ -100,7 +99,9 @@ $wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
 #$wgGroupPermissions['sysop']['removeavatar'] = true;
 $wgGroupPermissions['helper']['removeavatar'] = true;
-
-$wgSpecialPages['RemoveUserAvatar'] = 'UserAvatarRemovePage'; # Let MediaWiki know about your new special page.
 	
 $wgSpecialPageGroups['RemoveUserAvatar'] = 'users';
+
+F::build('JSMessages')->registerPackage('UserProfilePage', array(
+	'user-identity-remove-*'
+));
