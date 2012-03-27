@@ -497,12 +497,18 @@ var WikiaMobile = (function() {
 
 	function hidePage() {
 		page.style.height = 0;
-		ftr.style.display = adSlot.style.display = 'none';
+		if(adSlot){
+			adSlot.style.display = 'none';
+		}
+		ftr.style.display = 'none';
 	}
 
 	function closePullDown() {
 		page.style.height = 'auto';
-		ftr.style.display = adSlot.style.display = 'block';
+		if(adSlot){
+			adSlot.style.display = 'block';
+		}
+		ftr.style.display = 'block';
 		if(!fixed) moveSlot();
 		navBar.style.height = '40px';
 		navBar.style.minHeight = 0;
@@ -669,7 +675,8 @@ var WikiaMobile = (function() {
 		d.body.className += ' js';
 
 		//handle ads
-		var close = d.getElementById('wkAdCls'),
+		if(adSlot){
+			var close = d.getElementById('wkAdCls'),
 			i = 0;
 			adExist = function(){
 				if(adSlot.childElementCount > 3){
@@ -690,15 +697,16 @@ var WikiaMobile = (function() {
 				}
 			};
 
-		if(!adExist()) {
-			var inter = setInterval(function() {
-				if(!adExist() && i < 5) {
-					i += 1;
-				}else{
-					d.body.removeChild(adSlot);
-					clearInterval(inter);
-				}
-			}, 1000);
+			if(!adExist()) {
+				var inter = setInterval(function() {
+					if(!adExist() && i < 5) {
+						i += 1;
+					}else{
+						d.body.removeChild(adSlot);
+						clearInterval(inter);
+					}
+				}, 1000);
+			}
 		}
 		//end of handling ads
 
@@ -982,7 +990,7 @@ var WikiaMobile = (function() {
 	});
 
 	return {
-		openLogin: openLogin,
+		openProfile: openProfile,
 		getImages: getImages,
 		getDeviceResolution: getDeviceResolution,
 		getClickEvent: getClickEvent,

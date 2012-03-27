@@ -7,6 +7,14 @@
 class WikiaMobileAdService extends WikiaService {
 				
 	public function index() {
-		$this->response->setVal( 'adSlot', AdEngine::getInstance()->getAd( 'MOBILE_TOP_LEADERBOARD' ) );
+		$this->wf->profileIn( __METHOD__ );
+
+		if ( $this->wg->title->getNamespace() != NS_SPECIAL ) {
+			$this->response->setVal( 'adSlot', AdEngine::getInstance()->getAd( 'MOBILE_TOP_LEADERBOARD' ) );
+		} else {
+			$this->skipRendering();
+		}
+
+		$this->wf->profileOut( __METHOD__ );
 	}
 }

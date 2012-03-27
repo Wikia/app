@@ -1,7 +1,7 @@
 var UserLogin = UserLogin || {
 	isForceLogIn: function(){
 		if(wgUserName == null){
-			WikiaMobile.openLogin();
+			WikiaMobile.openProfile();
 			return true;
 		}
 		return false;
