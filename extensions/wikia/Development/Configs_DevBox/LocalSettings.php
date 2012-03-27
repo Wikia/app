@@ -11,6 +11,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 $wgShowExceptionDetails = true;
 
+$wgWikiaDatacenter = 'sjc';
 $IP = '/usr/wikia/source/wiki';
 $wgWikiaLocalSettingsPath  = __FILE__;
 $wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
