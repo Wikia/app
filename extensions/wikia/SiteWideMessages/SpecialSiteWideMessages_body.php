@@ -18,9 +18,9 @@
  *     require_once("$IP/extensions/wikia/SiteWideMessages/SpecialSiteWideMessages.php");
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named SiteWideMessages.\n";
-	exit(1) ;
+	exit( 1 ) ;
 }
 
 define('MSG_TEXT_DB', 'messages_text');
@@ -66,6 +66,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
 		$formData['userName'] = $wgRequest->getText('mUserName');
+		$formData['listUserNames'] = $wgRequest->getText( 'mUserNames' );
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
 		$formData['mLang'] = $wgRequest->getArray('mLang');
 
@@ -187,7 +188,9 @@ class SiteWideMessages extends SpecialPage {
 				//TODO: if $mRecipientId == 0 => error - no such user
 				$mText = $wgRequest->getText('mContent');
 				$groupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
-				$result = $this->sendMessage($wgUser, $mRecipientId, $mText, $formData['expireTime'], $formData['wikiName'], $formData['userName'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'], $formData['hubId'], $formData['mLang'], $formData['clusterId']);
+				$result = $this->sendMessage( $wgUser, $mRecipientId, $mText, $formData['expireTime'], $formData['wikiName'],
+					$formData['userName'], $formData['listUserNames'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'],
+					$formData['hubId'], $formData['mLang'], $formData['clusterId'] );
 
 				if (is_null($result['msgId'])) {	//we have an error
 					$formData['messageContent'] = $wgRequest->getText('mContent');
@@ -265,7 +268,7 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
-	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId) {
+	private function sendMessage( $mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mUserNames, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId ) {
 		global $wgExternalSharedDB, $wgStatsDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
@@ -273,9 +276,10 @@ class SiteWideMessages extends SpecialPage {
 		if ( is_array( $mLang ) ) {
 			$mLang = implode( ',', $mLang );
 		}
+		$mUserNamesArr = array_unique( explode( "\n", $mUserNames ) );
 
 		//remove unnecessary data
-		switch ($mSendModeWikis) {
+		switch ( $mSendModeWikis ) {
 			case 'ALL':
 				$mWikiName = '';
 				$mHubId = null;
@@ -294,16 +298,24 @@ class SiteWideMessages extends SpecialPage {
 				$mClusterId = null;
 		}
 
-		switch($mSendModeUsers) {
+		switch ( $mSendModeUsers ) {
 			case 'ALL':
 			case 'ACTIVE':
 				$mRecipientName = '';
 				$mGroupName = '';
+				$mUserNames = '';
 				break;
 			case 'GROUP':
 				$mRecipientName = '';
+				$mUserNames = '';
 				break;
 			case 'USER':
+				$mGroupName = '';
+				$mUserNames = '';
+				$mLang = array( MSG_LANG_ALL );
+				break;
+			case 'USERS':
+				$mRecipientName = count( $mUserNamesArr ) . ' users';
 				$mGroupName = '';
 				$mLang = array( MSG_LANG_ALL );
 		}
@@ -335,6 +347,8 @@ class SiteWideMessages extends SpecialPage {
 			$result['errMsg'] = wfMsg('swm-error-no-such-wiki');
 		} elseif ($mSendModeUsers == 'USER' && !User::idFromName($mRecipientName)) {
 			$result['errMsg'] = wfMsg('swm-error-no-such-user');
+		} elseif ( $mSendModeUsers == 'USERS' && empty( $mUserNames ) ) {
+			$result['errMsg'] = wfMsg( 'swm-error-no-user-list' );
 		} else {
 			global $wgParser, $wgUser;
 			$title = Title::newFromText(uniqid('tmp'));
@@ -384,6 +398,23 @@ class SiteWideMessages extends SpecialPage {
 						);
 						$dbInsertResult &= $dbResult;
 					}
+				} elseif ( $mSendModeUsers == 'USERS' ) {
+					$oTask = new SWMSendToGroupTask();
+					$oTask->createTask(
+						array(
+							'messageId'		=> $result['msgId'],
+							'sendModeWikis'	=> $mSendModeWikis,
+							'sendModeUsers'	=> $mSendModeUsers,
+							'wikiName'		=> $mWikiName,
+							'groupName'		=> $mGroupName,
+							'userNames'     => $mUserNamesArr,
+							'senderId'		=> $mSender->GetID(),
+							'senderName'	=> $mSender->GetName(),
+							'hubId'			=> $mHubId,
+							'clusterId'     => $mClusterId,
+						),
+						TASK_QUEUED
+					);
 				} else {
 					switch ($mSendModeWikis) {
 						case 'ALL':

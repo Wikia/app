@@ -25,7 +25,10 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SiteWideMessages',
-	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
+	'author' => array(
+		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
+		'[http://www.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
+	),
 	'description' => 'This extension provides an interface for sending messages seen on all wikis.'
 );
 //Allow group STAFF to use this extension.
