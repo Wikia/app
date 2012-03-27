@@ -546,3 +546,13 @@ $config['wikiahubs_scss_wikiamobile'] = array(
 				'//extensions/wikia/WikiaHubs/css/WikiaHubsMobile.scss'
 		)
 );
+
+/** Weinre web inspector **/
+
+$config['weinre_js'] = array(
+		'skin' => array( 'oasis', 'wikiamobile', 'wikiaphone' ),
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'#function_AssetsConfig::getWeinreJS'
+		)
+);
