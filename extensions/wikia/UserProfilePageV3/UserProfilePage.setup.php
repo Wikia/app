@@ -17,7 +17,7 @@ define ('AVATAR_UPLOAD_FIELD', 'wkUserAvatar');
  */
 $app->registerClass('UserProfilePage', $dir . '/UserProfilePage.class.php');
 $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
-//we'll implement interview later
+//TODO: we'll implement interview later
 //$app->registerClass('Interview', $dir . '/Interview.class.php');
 //$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
 $app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
@@ -31,13 +31,13 @@ $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.clas
 $app->registerClass('UserProfilePageController', $dir . '/UserProfilePageController.class.php');
 $app->registerClass('Masthead', $dir . '/Masthead.class.php');
 
-//we'll implement interview later
+//TODO: we'll implement interview later
 //$app->registerClass('InterviewSpecialPageController', $dir . '/InterviewSpecialPageController.class.php');
 
 /**
  * special pages
  */
-//we'll implement interview later
+//TODO: we'll implement interview later
 //$app->registerSpecialPage('Interview', 'InterviewSpecialPageController');
 
 /**
@@ -46,10 +46,12 @@ $app->registerClass('Masthead', $dir . '/Masthead.class.php');
 $app->registerHook('SkinTemplateOutputPageBeforeExec', 'UserProfilePageController', 'onSkinTemplateOutputPageBeforeExec');
 $app->registerHook('SkinSubPageSubtitleAfterTitle', 'UserProfilePageController', 'onSkinSubPageSubtitleAfterTitle');
 $app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticleSaveComplete');
-//we'll implement interview later
+//TODO: we'll implement interview later
 //$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
 $app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
-$app->registerHook('ArticleSaveComplete', 'Masthead', 'userMastheadInvalidateCache');
+
+// macbre: Masthead uses the old coding-style, need to register hook using $wgHooks
+$wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 
 /**
  * messages
@@ -99,7 +101,7 @@ $wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
 #$wgGroupPermissions['sysop']['removeavatar'] = true;
 $wgGroupPermissions['helper']['removeavatar'] = true;
-	
+
 $wgSpecialPageGroups['RemoveUserAvatar'] = 'users';
 
 F::build('JSMessages')->registerPackage('UserProfilePage', array(
