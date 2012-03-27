@@ -116,8 +116,8 @@
 							<td>
 								<select name="mGroupNameS" id="mGroupNameS" style="width:116px">
 								<?php
-								foreach ($formData['groupNames'] as $groupName) {
-									$groupName = htmlspecialchars($groupName);
+								foreach ( $formData['groupNames'] as $groupName ) {
+									$groupName = htmlspecialchars( $groupName );
 									$selected = $groupName == $formData['groupNameS'] ? ' selected="selected"' : '';
 									echo "\t\t\t\t\t\t\t\t<option value=\"$groupName\"$selected>$groupName</option>\n";
 								}
@@ -142,6 +142,20 @@
 							</td>
 							<td>
 								<?= wfMsg('swm-label-mode-users-user-hint') ?>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input name="mSendModeUsers" id="mSendModeUsersM" type="radio" value="USERS"<?= $formData['sendModeUsers'] == 'USERS' ? ' checked="checked"' : ''?>/>
+							</td>
+							<td>
+								<label for="mSendModeUsersM"><?= wfMsg( 'swm-label-mode-users-user-multi' ) ?></label>
+							</td>
+							<td>
+								<textarea name="mUserNames" id="mUserNames" type="text" rows="10" cols="40" value="<?= $formData['listUserNames'] ?>"></textarea>
+							</td>
+							<td>
+								<?= wfMsg( 'swm-label-mode-users-user-multi-hint' ) ?>
 							</td>
 						</tr>
 					</table>
@@ -227,30 +241,33 @@
 </div>
 
 <script type="text/javascript">
-function grayOut(e) {
-	switch (e.target.id) {
+function grayOut( e ) {
+	switch ( e.target.id ) {
 		case 'mSendModeWikisH':
 		case 'mSendModeWikisC':
 		case 'mSendModeWikisW':
-			$('#mSendModeUsersA').attr('disabled',true);
-			if ($('#mSendModeUsersA').attr('checked'))
-				$('#mSendModeUsersC').attr('checked',true);
+			$( '#mSendModeUsersA' ).prop( 'disabled', true );
+			if ( $( '#mSendModeUsersA' ).prop( 'checked' ) ) {
+				$( '#mSendModeUsersC' ).prop( 'checked', true );
+			}
 			break;
 		case 'mSendModeUsersU':
-			$('#mSendModeWikisA').attr('disabled',true);
-			$('#mSendModeWikisH').attr('disabled',true);
-			$('#mSendModeWikisW').attr('disabled',true);
-			$('input.swm-lang-checkbox').attr('disabled',true);
+		case 'mSendModeUsersM':
+			$( '#mSendModeWikisA' ).prop( 'disabled', true );
+			$( '#mSendModeWikisH' ).prop( 'disabled', true );
+			$( '#mSendModeWikisW' ).prop( 'disabled', true );
+			$( 'input.swm-lang-checkbox' ).prop( 'disabled', true );
 			break;
 		default:
-			if ($('#mSendModeWikisA').attr('checked'))
-				$('#mSendModeUsersA').attr('disabled',false);
-			$('#mSendModeWikisA').attr('disabled',false);
-			$('#mSendModeWikisH').attr('disabled',false);
-			$('#mSendModeWikisW').attr('disabled',false);
-			$('input.swm-lang-checkbox').attr('disabled',false);
+			if ( $( '#mSendModeWikisA' ).prop( 'checked' ) ) {
+				$( '#mSendModeUsersA' ).prop( 'disabled', false );
+			}
+			$( '#mSendModeWikisA' ).prop( 'disabled', false );
+			$( '#mSendModeWikisH' ).prop( 'disabled', false );
+			$( '#mSendModeWikisW' ).prop( 'disabled', false );
+			$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
 	}
 }
-$('#mSendModeWikisA').add('#mSendModeWikisH').add('#mSendModeWikisC').add('#mSendModeWikisW').add('#mSendModeUsersA').add('#mSendModeUsersC').add('#mSendModeUsersG').add('#mSendModeUsersU').bind('click', grayOut);
+$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' ).add( '#mSendModeWikisW' ).add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' ).bind( 'click', grayOut );
 </script>
 <!-- e:<?= __FILE__ ?> -->
