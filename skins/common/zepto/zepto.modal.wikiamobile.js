@@ -20,7 +20,7 @@
 		WikiaTracker.track('/1_mobile/'+(what?(what+'/'):'')+'modal/' + ev, 'main.sampled');
 	},
 	sharePopOver,
-	d = document;
+	d = document,
 
 	createModal =  function() {
 		var resolution = WikiaMobile.getDeviceResolution();
