@@ -20,9 +20,11 @@ $app->registerClass('PerformanceMetricsProvider', $dir . '/PerformanceMetricsPro
 // providers
 $app->registerClass('PerformanceMetricsGooglePageSpeed', $dir . '/providers/PerformanceMetricsGooglePageSpeed.class.php');
 $app->registerClass('PerformanceMetricsDOMComplexity', $dir . '/providers/PerformanceMetricsDOMComplexity.class.php');
+$app->registerClass('PerformanceMetricsPhantom', $dir . '/providers/PerformanceMetricsPhantom.class.php');
 
 // list of all available providers
 $wgPerformanceMetricsProviders = array(
 	'PerformanceMetricsGooglePageSpeed',
-	'PerformanceMetricsDOMComplexity'
+	#'PerformanceMetricsDOMComplexity',
+	'PerformanceMetricsPhantom'
 );
