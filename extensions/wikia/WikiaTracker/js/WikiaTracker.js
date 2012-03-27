@@ -18,6 +18,9 @@ var WikiaTracker = {
 		// Click on text link
 		CLICK_LINK_TEXT: 'click-link-text',
 
+		// impression of item on page/module
+		IMPRESSION: 'impression',
+		
 		// Video play
 		PLAY_VIDEO: 'play-video',
 
