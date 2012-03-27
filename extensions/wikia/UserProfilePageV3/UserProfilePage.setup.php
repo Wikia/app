@@ -51,8 +51,7 @@ $app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticl
 //$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
 $app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
 
-// macbre: Masthead uses the old coding-style, need to register hook using $wgHooks
-$wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
+$app->registerHook('ArticleSaveComplete', 'Masthead', 'userMastheadInvalidateCache');
 
 /**
  * messages

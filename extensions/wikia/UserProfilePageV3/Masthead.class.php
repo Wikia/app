@@ -37,10 +37,11 @@ class Masthead {
 	 */
 	public $userPageUrl = null;
 
-	public function __construct( User $User ) {
+	public function __construct( $user ) {
 		wfProfileIn( __METHOD__ );
-		$this->mUser = $User;
-		wfLoadExtensionMessages('Masthead');
+		if(!empty($user) && ($user instanceof User)) {
+			$this->mUser = $user;			
+		}
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -759,7 +760,7 @@ class Masthead {
 		return $result;
 	}
 
-	static public function userMastheadInvalidateCache(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public function userMastheadInvalidateCache(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		if (!$user->isAnon()) {
 			if(count($status->errors) == 0) {
 				global $wgMemc;
