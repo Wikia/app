@@ -82,6 +82,18 @@
 	}
 	.CorporateFooter {
 		font-size: 11px;
+		ul {
+			li {
+				a {
+					color: $color-wikiahome-community;
+				}
+			}
+		}
+	}
+	.wikiacorporatefooter {
+		a {
+			color: $color-wikiahome-community;
+		}
 	}
 	.start-a-wiki {
 		border-left: 1px solid mix($color-header-text, $color-header, 20%);

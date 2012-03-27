@@ -61,14 +61,12 @@ class HubService extends Service {
 				$catInfo = self::initCategoryInfo(WikiFactoryHub::CATEGORY_ID_LIFESTYLE, $lifestyleHub['name']);
 			} else {
 				global $wgWikiaHubsPages, $wgTitle;
-				if(!empty($wgWikiaHubsPages)) {
-					if ($wgTitle instanceof Title ) {
-						$reverseHubs = array_flip($wgWikiaHubsPages);
-						$textTitle = $wgTitle->getDBKey();
-						if(!empty($textTitle) && !empty($reverseHubs[$textTitle])) {
-							$catInfo->cat_id = $reverseHubs[$textTitle];
-							$catInfo->cat_name = $textTitle;
-						}
+				if(!empty($wgWikiaHubsPages) && $wgTitle instanceof Title ) {
+					$reverseHubs = array_flip($wgWikiaHubsPages);
+					$textTitle = $wgTitle->getDBKey();
+					if(!empty($textTitle) && !empty($reverseHubs[$textTitle])) {
+						$catInfo->cat_id = $reverseHubs[$textTitle];
+						$catInfo->cat_name = $textTitle;
 					}
 				}
 
