@@ -70,9 +70,6 @@ class ChatRailModule extends Module {
 			// Gets array of users currently in chat to populate rail module and user stats menus
 			$chatters = NodeApiClient::getChatters($roomId, ChatRailModule::MAX_CHATTERS, $this->totalInRoom);
 			
-			print_r($chatters);
-			exit;
-			
 			for ($i = 0; $i < count($chatters); $i++) {
 				// avatar
 				$chatters[$i]['avatarUrl'] = AvatarService::getAvatarUrl($chatters[$i]['username'], ChatRailModule::AVATAR_SIZE);
