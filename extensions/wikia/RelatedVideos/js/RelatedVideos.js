@@ -62,6 +62,7 @@ var RelatedVideos = {
 			if ( RelatedVideos.maxRooms < 1 ) {
 				RelatedVideos.maxRooms = 1;
 			}
+			RelatedVideos.trackItemImpressions(RelatedVideos.currentRoom);
 			RelatedVideos.checkButtonState();
 			$('.addVideo',this.rvModule).wikiaTooltip( $('.addVideoTooltip',this.rvModule).html() );
 			if(this.onRightRail) {
@@ -103,6 +104,7 @@ var RelatedVideos = {
 
 		// button vertical secondary left
 		var futureState = RelatedVideos.currentRoom + param;
+		RelatedVideos.trackItemImpressions(futureState);
 		//if (( $('#RelatedVideosRL .container').queue().length == 0 ) &&
 		//	(( futureState >= 1 ) && ( futureState <= RelatedVideos.maxRooms ))) {
 		if( futureState >= 1 && futureState <= RelatedVideos.maxRooms ) {
@@ -122,8 +124,29 @@ var RelatedVideos = {
 				}
 			});
 		} else if (futureState == 0 && RelatedVideos.maxRooms == 1) {
-            $('.page',this.rvModule).text(1);
-        }
+			$('.page',this.rvModule).text(1);
+		}
+	},
+	
+	trackItemImpressions: function(room) {
+		var titles = [];
+		var orders = [];
+		var group = $( $('.container .group', this.rvModule)[room-1] );
+		var itemLinks = group.find('a.video-thumbnail');
+		itemLinks.each( function(i) {
+			titles.push( $(this).data('ref') );
+			orders.push( (room-1)*RelatedVideos.videosPerPage + i+1 );
+		});
+		
+		if (titles.length) {
+			WikiaTracker.trackEvent( { 
+				'tracking_method':'internal',
+				'ga_category':RelatedVideos.gaCat,
+				'ga_action':WikiaTracker.ACTIONS.IMPRESSION,
+				'ga_label':'video', 
+				'internal_params': {'video_titles': "'" + titles.join("','") + "'", 'orders': orders.join(',') }
+			});
+		}
 	},
 
 	regroup: function() {
@@ -170,7 +193,7 @@ var RelatedVideos = {
 		});
 	},
 
-	recalculateLenght: function(){
+	recalculateLength: function(){
 		var numberItems = $( '.container .item',this.rvModule ).size();
 		$( '.tally em',this.rvModule ).html( numberItems );
         if ( numberItems == 0 ) {
@@ -408,7 +431,7 @@ var RelatedVideos = {
 					.prependTo( $('.container',RelatedVideos.rvModule) )
 					.fadeOut( 0 )
 					.fadeIn( 'slow', function(){
-						RelatedVideos.recalculateLenght();
+						RelatedVideos.recalculateLength();
 					});
 				RelatedVideos.regroup();
 			}
@@ -461,7 +484,7 @@ var RelatedVideos = {
 					});
 				} else {
 					$(parentItem).remove();
-					RelatedVideos.recalculateLenght();
+					RelatedVideos.recalculateLength();
 					RelatedVideos.showImages();
 					RelatedVideos.regroup();
 				}
