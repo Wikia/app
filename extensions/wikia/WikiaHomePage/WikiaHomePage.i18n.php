@@ -40,7 +40,7 @@ $messages['en'] = array(
 
 	'wikiahome-hubs-entertainment-heading' => 'Entertainment',
 	'wikiahome-hubs-entertainment-url' => 'http://www.wikia.com/Entertainment',
-	'wikiahome-hubs-entertainment-creative' => 'Look no further for your daily dose of entertainment buzz staright from the communities who know.',
+	'wikiahome-hubs-entertainment-creative' => 'Look no further for your daily dose of entertainment buzz straight from the communities who know.',
 	'wikiahome-hubs-entertainment-more-heading' => 'More in Entertainment',
 	'wikiahome-hubs-entertainment-more-list' => '
 *[http://www.wikia.com/Movie Movies]
