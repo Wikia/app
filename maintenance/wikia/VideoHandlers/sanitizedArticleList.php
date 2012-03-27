@@ -30,7 +30,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
-//$IP = '/home/release/video_refactoring/trunk'; // HACK TO RUN ON SANDBOX
+$IP = '/home/release/video_refactoring/trunk'; // HACK TO RUN ON SANDBOX
 require_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbw = wfGetDB( DB_MASTER );
@@ -98,7 +98,7 @@ foreach ( $aAllFiles as $key => $fileRow ) {
 			$wgTitle = $oTitle;
 
 
-			$allChangesArticleURLs[ str_replace('http://localhost/', $wikiUrl, $oTitle->getFullURL()) ] = $key;
+			$allChangesArticleURLs[ str_replace('http://localhost/', $wikiUrl, $oTitle->getFullURL()) ] = $fileRow->sanitized_title;
 
 
 		}
