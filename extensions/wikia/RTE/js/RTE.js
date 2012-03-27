@@ -148,11 +148,16 @@
 					} else {
 						RTE.config.contentsCss = contentsCss;
 
-						// Cache the generated content to speed up load times (BugId:25289)
-						$.storage.set(RTE.localStorageKey, {
-							styleVersion: wgStyleVersion,
-							contentsCss: contentsCss
-						})
+						// Cache the generated content to speed up load times (BugId:25289 BugId:)
+						try {
+							$.storage.set(RTE.localStorageKey, {
+								styleVersion: wgStyleVersion,
+								contentsCss: contentsCss
+							})
+						} catch (e) {
+							$.storage.flush();
+							RTE.log('Local Storage Exception:' + e.message);
+						}
 
 						// disable object resizing in IE. IMPORTANT! use local path
 						if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
