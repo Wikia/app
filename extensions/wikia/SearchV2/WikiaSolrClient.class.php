@@ -69,14 +69,20 @@ class WikiaSolrClient extends WikiaSearchClient {
 		  }
 
 		  if (!$skipBoostFunctions) {
+		    global $wikipagesBoost, $activeusersBoost, $revcountBoost, $viewBoost;
 
-		    $boostFunctions[] = 'log(wikipages)^4';
+		    $wikipagesBoost = isset($_GET['page_boost']) ? $_GET['page_boost'] : 4 ;
+		    $boostFunctions[] = 'log(wikipages)^'.$wikipagesBoost;
 
-		    $boostFunctions[] = 'log(activeusers)^4';
+		    $activeusersBoost = isset($_GET['activeusers_boost']) ? $_GET['activeusers_boost'] : 4;
+		    $boostFunctions[] = 'log(activeusers)^'.$activeusersBoost;
 
-		    $boostFunctions[] = 'log(revcount)';
+		    $revcountBoost = isset($_GET['revcount_boost']) ? $_GET['revcount_boost'] : 1;
+		    $boostFunctions[] = 'log(revcount)^'.$revcountBoost;
 
-		    $boostFunctions[] = 'log(views)^8';
+
+		    $viewBoost = isset($_GET['views_boost']) ? $_GET['views_boost'] : 8;
+		    $boostFunctions[] = 'log(views)^'.$viewBoost;
 
 		    $boostFunctions[] = 'log(words)^0.5';
 		  }

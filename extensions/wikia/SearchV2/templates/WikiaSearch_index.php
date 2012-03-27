@@ -8,13 +8,25 @@
 			<option value="-bl3" <?= ($rankExpr == '-bl3') ? 'selected' : ''; ?> >backlinks only</option>
 		</select>
 	<?php endif; ?>
-	<input type="text" name="query" value="<?=$query;?>" /><a class="wikia-button" id="search-v2-button"><?= wfMsg( 'wikiasearch2-search-btn' ); ?></a><br />
+			<input type="text" name="query" value="<?=$query;?>" /><input type="submit" class="wikia-button" id="search-v2-button" style="display: inline;" value="<?= wfMsg( 'wikiasearch2-search-btn' ); ?>" /><br/>
 	<input type="checkbox" name="crossWikia" value="1" <?= ( $crossWikia ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-search-all-wikia' ); ?>
 	<input type="checkbox" name="groupResults" value="1" <?= ( $groupResults ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-group-results' ); ?>
 	<input type="checkbox" name="debug" value="1" <?= ( $debug ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-debug-mode' ); ?>
 	<input type="checkbox" name="skipCache" value="1" <?= ($skipCache ? 'checked' : ''); ?>/><?= wfMsg( 'wikiasearch2-skip-cache' ); ?>
+<?php if($debug && $crossWikia) : ?>
+<br />
+<?php  global $wikipagesBoost, $activeusersBoost, $revcountBoost, $viewBoost; ?>
+<b>Interwiki Boost Settings</b><br/>
+WikiPages: <input type="text" value="<?=$wikipagesBoost?>" id="page_boost" name="page_boost" style="width: 25px; padding-right: 0px;" /> | 
+ActiveUsers: <input type="text" value="<?=$activeusersBoost?>" id="activeusers_boost" name="activeusers_boost" style="width: 25px;  padding-right: 0px;"/> | 
+RevCount: <input type="text" value="<?=$revcountBoost?>" id="revcount_boost" name="revcount_boost" style="width: 25px; padding-right: 0px;"/> | 
+Views: <input type="text" value="<?=$viewBoost?>" id="views_boost" name="views_boost" style="width: 25px;  padding-right: 0px;"/>
+<br />
+
+    <?php endif; ?>
 </form>
 <br />
+
 
 <?php if(!empty($results)): ?>
 	<?php if( $resultsFound > 0 ): ?>
