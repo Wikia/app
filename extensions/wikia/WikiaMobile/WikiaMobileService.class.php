@@ -16,6 +16,8 @@ class WikiaMobileService extends WikiaService {
 	protected $templateObject;
 
 	function __construct(){
+		parent::__construct();
+
 		if ( !self::$initialized ) {
 			//singleton
 			F::setInstance( __CLASS__, $this );
