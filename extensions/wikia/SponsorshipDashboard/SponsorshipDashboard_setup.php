@@ -25,15 +25,7 @@ require_once( $dir . '/SponsorshipDashboard_autoload.php' );
 
 $wgExtensionMessagesFiles['SponsorshipDashboard'] = $dir . 'SponsorshipDashboard.i18n.php';
 
-$wgSpecialPages['SponsorshipDashboard']		= 'SponsorshipDashboard';
-$wgSpecialPageGroups['SponsorshipDashboard']	= 'wikia';
-
 $wgAjaxExportList[] = 'SponsorshipDashboardAjax';
-
-// permissions
-$wgAvailableRights[] = 'wikimetrics';
-$wgGroupPermissions['*']['wikimetrics'] = false;
-$wgGroupPermissions['staff']['wikimetrics'] = true;
 
 function SponsorshipDashboardAjax() {
 	global $wgRequest;

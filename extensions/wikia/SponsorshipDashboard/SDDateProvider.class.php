@@ -73,7 +73,7 @@ class SponsorshipDashboardDateProviderDay extends SponsorshipDashboardDateProvid
 	}
 
 	public function getGapiSamplingDateFromResult( $result ){
-		return mktime( 0,0,0, $result->getMonth(), $result->getDay(), $result->getYear() );
+		return mktime( 0, 0, 0, $result->getMonth(), $result->getDay(), $result->getYear() );
 	}
 
 	public function getGapiSortingDate(){

@@ -81,6 +81,8 @@ class SponsorshipDashboardReport {
 
 	public function fillFromSerializedData( $serializedData ){
 
+		Wikia::log( __METHOD__, 'Depreciated?' );
+
 		$deserializedData = unserialize( $serializedData );
 		
 		parse_str( $deserializedData[0], $mainSerie );
@@ -143,45 +145,12 @@ class SponsorshipDashboardReport {
 
 	public function save(){
 
-		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-
-		if ( !is_null( $db ) ) {
-			if( !empty( $this->id ) ){
-
-				$db->update(
-					'specials.wmetrics_report',
-					$this->getTableFromParams(),
-					array( 'wmre_id' => (int) $this->id ),
-					__METHOD__
-				);
-			} else {
-
-				$db->insert(
-					'specials.wmetrics_report',
-					$this->getTableFromParams(),
-					__METHOD__
-				);
-				$this->sourceId = $db->insertId();
-				$this->setId( $db->insertId() );
-				$db->commit();
-			}		
-
-			$this->saveSources();
-		}
+		Wikia::log( __METHOD__, 'Depreciated' );
 	}
 
 	public function delete(){
-		
-		if( !empty( $this->id ) ){
-			$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-			if ( !is_null( $db ) ) {
-				$db->delete(
-					'specials.wmetrics_report',
-					array( 'wmre_id' => $this->id )
-				);
-				$this->setId( 0 );
-			}
-		}
+
+		Wikia::log( __METHOD__, 'Depreciated' );
 	}
 
 	public function setId( $id ){
@@ -202,31 +171,12 @@ class SponsorshipDashboardReport {
 
 	public function getTableFromParams(){
 
-		$array = array(
-		    'wmre_id'		=> ( int )$this->id,
-		    'wmre_name'		=>  $this->name ,
-		    'wmre_description'	=>  $this->description,
-		    'wmre_steps'	=> ( int )$this->dateUnits,
-		    'wmre_frequency'	=> ( int )$this->frequency
-		);
-
-		return $array;
+		Wikia::log( __METHOD__, 'Depreciated' );
 	}
 
 	public function saveSources(){
 
-		$db = wfGetDB( DB_MASTER, array(), SponsorshipDashboardService::getDatabase() );
-		if ( !is_null( $db ) ) {
-			$db->delete(
-				'specials.wmetrics_source',
-				array( 'wmso_report_id' => $this->id )
-			);
-			foreach( $this->reportSources as $source ){
-				if( is_object( $source ) ){
-					$source->save( $this->id );
-				}
-			}
-		}
+		Wikia::log( __METHOD__, 'Depreciated' );
 	}
 
 	public function getProgress(){
@@ -277,69 +227,12 @@ class SponsorshipDashboardReport {
 
 	public function loadReportParams(){
 
-		if( empty( $this->id ) ){
-			return false;
-		}
-
-		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		if ( !is_null( $dbr ) ) {
-			$res = $dbr->select(
-				'specials.wmetrics_report',
-				array(
-					'wmre_id as id',
-					'wmre_name as name',
-					'wmre_description as description',
-					'wmre_frequency as frequency',
-					'wmre_steps as steps'
-				),
-				array( 'wmre_id = '. $this->id ),
-				__METHOD__,
-				array()
-			);
-
-			$returnArray = array();
-			while ( $row = $res->fetchObject( $res ) ) {
-				$this->description = ( $row->description );
-				$this->name = ( $row->name );
-				$this->frequency = ( $row->frequency );
-				$this->setLastDateUnits( $row->steps );
-			}
-		}
+		Wikia::log( __METHOD__, 'Depreciated' );
 	}
 
 	public function loadSources(){
 
-		if( empty( $this->id ) ){
-			return false;
-		}
-
-		if( $this->sourcesLoaded ){
-			return true;
-		}
-
-		$this->sourcesLoaded = true;
-		$dbr = wfGetDB( DB_SLAVE, array(), SponsorshipDashboardService::getDatabase() );
-		if ( !is_null( $dbr ) ) {
-			$res = $dbr->select(
-				'specials.wmetrics_source',
-				array( 'wmso_id as id', 'wmso_type as type' ),
-				array( 'wmso_report_id = '. $this->id ),
-				__METHOD__,
-				array()
-			);
-
-			$returnArray = array();
-			while ( $row = $res->fetchObject( $res ) ) {
-				$this->newSource(
-					SponsorshipDashboardSource::sourceClassFromDBKey( $row->type )
-				);
-				if ( in_array( get_class( $this->tmpSource ), $this->availableSources )){
-					$this->tmpSource->sourceId = $row->id;
-					$this->tmpSource->loadSource();
-					$this->acceptSource( $this->getCitiesList( $this->tmpSource ) );
-				}
-			}
-		}
+		Wikia::log( __METHOD__, 'Depreciated' );
 	}
 
 	public function setLastDateUnits( $number ){
@@ -434,83 +327,8 @@ class SponsorshipDashboardReport {
 
 	public function getCurrentTopXRelatedCities( $number = false, $cityId = false, $hubId = false ){
 
-		if ( empty( $number ) ){
-			$number = 10;
-		}
-		
-		$wgStatsDB = $this->App->getGlobal('wgStatsDB');
-		$wgStatsDBEnabled = $this->App->getGlobal('wgStatsDBEnabled');
-		$returnArray = array();
-		
-		if ( !empty( $wgStatsDBEnabled ) ) {
+		Wikia::log( __METHOD__, 'Depreciated' );
 
-			// never use current data. use data from last week.
-			
-			$week = date( "YW", strtotime( "-1 week" ) );
-			
-			$week = '201101';
-			
-			$cityId = (int) $cityId;
-			if ( empty( $cityId ) ){
-				$cityId = $this->App->getGlobal('wgCityId');
-			}
-
-			$number = (int)$number;
-			if ( $number < 0 ) {
-				$number = 10;
-			}
-
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-
-			if ( $hubId == -1 ){
-				$hubId = SponsorshipDashboardService::getPopularHub();
-			}
-
-			if ( empty( $hubId ) ){
-
-				$sql = "SELECT t2.pv_city_id as cityId, count(t1.pv_user_id) AS citycommonusers
-					FROM page_views_weekly_user AS t1
-					INNER JOIN page_views_weekly_user AS t2
-						ON t1.pv_user_id = t2.pv_user_id
-						AND t1.pv_week = t2.pv_week
-					WHERE t1.pv_city_id = {$cityId} AND t1.pv_week = {$week}
-					GROUP BY t2.pv_city_id
-					ORDER BY citycommonusers DESC
-					LIMIT ".( $number + 1 );
-			} else {
-
-				$currentHub = (int) $hubId;
-				
-				$sql1 ="SELECT pv_city_id as cityId, count(pv_user_id) AS citycommonusers
-					FROM page_views_weekly_user
-					WHERE pv_week = {$week} AND pv_city_id = {$cityId}";
-
-				$sql = "SELECT t2.pv_city_id as cityId, count(t1.pv_user_id) AS citycommonusers
-					FROM page_views_weekly_user AS t1
-					INNER JOIN page_views_weekly_user AS t2
-						ON t1.pv_user_id = t2.pv_user_id
-						AND t1.pv_week = t2.pv_week
-					INNER JOIN wikicities.city_tag_map AS ctm
-						ON ctm.city_id = t2.pv_city_id
-						AND ( ctm.tag_id = {$currentHub} )
-					WHERE t1.pv_city_id = {$cityId} AND t1.pv_week = {$week}
-					GROUP BY t2.pv_city_id
-					ORDER BY citycommonusers DESC
-					LIMIT ".( $number );
-
-				$res1 = $dbr->query( $sql1, __METHOD__ );
-				while ( $row = $res1->fetchObject( $res1 ) ) {
-					$returnArray[] = $row->cityId;
-				}
-			}
-
-			$res = $dbr->query( $sql, __METHOD__ );
-
-			while ( $row = $res->fetchObject( $res ) ) {
-				$returnArray[] = $row->cityId;
-			}
-		}
-
-		return $returnArray;
+		return false;
 	}
 }
