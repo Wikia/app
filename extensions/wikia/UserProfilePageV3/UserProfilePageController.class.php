@@ -1148,8 +1148,8 @@ class UserProfilePageController extends WikiaController {
 	
 	public function removeavatar() {
 		wfProfileIn( __METHOD__ );
+		$this->setVal('status', false);
 		if ( !$this->app->wg->User->isAllowed( 'removeavatar' ) ) {
-			$this->setVal('status', false);
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -1158,15 +1158,14 @@ class UserProfilePageController extends WikiaController {
 			$avUser = User::newFromName($this->request->getVal('av_user'));
 			if ($avUser->getID() !== 0) {
 				$avatar = Masthead::newFromUser($avUser);
-				if (!$avatar->removeFile( true )) {
+				if ($avatar->removeFile( true )) {
 					wfProfileOut( __METHOD__ );
-					$this->setVal('status', false);
+					$this->setVal('status', "ok");
 					return true;
 				}
 			}
 		}
 		
-		$this->setVal('status', "ok");		
 		wfProfileOut( __METHOD__ );
 		return true;
 	}

@@ -650,11 +650,11 @@ var UserProfilePage = {
 				method: 'removeavatar',
 				format: 'json',
 				data: {
-					av_name: name
+					av_user: name
 				},
 				callback: function(data) {
 					if(data.status == "ok") {
-						alert("OK");
+						window.location.reload();
 					} else {
 						alert($.msg('user-identity-remove-fail'));
 					}
