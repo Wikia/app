@@ -89,13 +89,12 @@ class BodyModule extends Module {
 	public static function showUserPagesHeader() {
 		wfProfileIn(__METHOD__);
 
-		global $wgTitle, $wgEnableUserProfilePagesV3;
+		global $wgTitle;
 
 		// perform namespace and special page check
 		$isUserPage = in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces());
 
-		$ret =  ($isUserPage && empty($wgEnableUserProfilePagesV3))
-				|| ($isUserPage && !empty($wgEnableUserProfilePagesV3) && !$wgTitle->isSubpage() )
+		$ret = ($isUserPage && !$wgTitle->isSubpage() )
 				|| $wgTitle->isSpecial( 'Following' )
 				|| $wgTitle->isSpecial( 'Contributions' )
 				|| (defined('NS_BLOG_LISTING') && $wgTitle->getNamespace() == NS_BLOG_LISTING)
@@ -151,9 +150,9 @@ class BodyModule extends Module {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt,
-			$wgEnableUserProfilePagesExt, $wgEnableWikiAnswers,
+			$wgEnableWikiAnswers,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
-			$wgEnableGamingCalendarExt, $wgEnableUserProfilePagesV3, $wgEnableWallExt, $wgRequest;
+			$wgEnableGamingCalendarExt, $wgEnableWallExt, $wgRequest;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -239,7 +238,7 @@ class BodyModule extends Module {
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
-		if(	(!empty($wgEnableUserProfilePagesV3) && $wgTitle->isSubpage() && $wgTitle->getNamespace() == NS_USER)  ||
+		if(	$wgTitle->isSubpage() && $wgTitle->getNamespace() == NS_USER)  ||
 			in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP)) ||
 			in_array($subjectNamespace, $wgContentNamespaces) ||
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
@@ -257,7 +256,7 @@ class BodyModule extends Module {
 		}
 
 		// User page namespaces
-		if( empty( $wgEnableUserProfilePagesExt ) && in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces() ) ) {
+		if( in_array($wgTitle->getNamespace(), self::getUserPagesNamespaces() ) ) {
 			$page_owner = User::newFromName($wgTitle->getText());
 
 			if($page_owner) {
@@ -376,7 +375,7 @@ class BodyModule extends Module {
 
 
 	public function executeIndex() {
-		global $wgOut, $wgTitle, $wgUser, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableUserProfilePagesV3, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableWikiaHomePageExt;
+		global $wgOut, $wgTitle, $wgUser, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableWikiaHomePageExt;
 
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
@@ -500,9 +499,6 @@ class BodyModule extends Module {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;
 		}
-
-		$this->isUserProfilePageV3Enabled = !empty($wgEnableUserProfilePagesV3);
-
 
 		$namespace = $wgTitle->getNamespace();
 		// extra logic for subpages (RT #74091)
