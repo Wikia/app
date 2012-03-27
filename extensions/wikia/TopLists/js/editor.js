@@ -219,7 +219,9 @@ var TopListsImageBrowser = {
 
 		if(response.success === true){
 			TopListsEditor.track('image-browser-upload-completed');
-			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') TopListsImageBrowser._mOnSelectCallback(response);
+			if(typeof TopListsImageBrowser._mOnSelectCallback === 'function') {
+				TopListsImageBrowser._mOnSelectCallback(response);
+			}
 			TopListsImageBrowser._destroy();
 		} else if (response.error === true || response.conflict === true){
 			TopListsEditor.track('image-browser-upload-file-failed');

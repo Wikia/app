@@ -378,7 +378,7 @@ function VET_inGallery() {
 }
 
 function VET_getFirstFree( gallery, box ) {
-	for (i=box; i >= 0; i--) {
+	for (var i=box; i >= 0; i--) {
 		if ( ! $G( 'WikiaVideoGalleryPlaceholder' + gallery + 'x' + i ) ) {
 			return i + 1;
 		}
@@ -591,7 +591,9 @@ function VET_loadMain() {
 		success: function(o) {
 			$G('VideoEmbedMain').innerHTML = o.responseText;
 			VET_indicator(1, false);
-			if($G('VideoEmbedUrl') && VET_panel.element.style.visibility == 'visible') $G('VideoEmbedUrl').focus();
+			if($G('VideoEmbedUrl') && VET_panel.element.style.visibility == 'visible') {
+				$G('VideoEmbedUrl').focus();
+			}
 
 			// macbre: RT #19150
 			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
@@ -673,7 +675,7 @@ function VET_sendQuery(query, page, sourceId, pagination) {
 	}
 	VET_lastQuery[sourceId] = query;
 	VET_indicator(1, true);
-	YAHOO.util.Connect.abort(VET_asyncTransaction)
+	YAHOO.util.Connect.abort(VET_asyncTransaction);
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
 }
 
@@ -702,7 +704,7 @@ function VET_chooseImage(sourceId, itemId, itemLink, itemTitle) {
 		}
 	}
 	VET_indicator(1, true);
-	YAHOO.util.Connect.abort(VET_asyncTransaction)
+	YAHOO.util.Connect.abort(VET_asyncTransaction);
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId + '&itemLink=' + itemLink + '&itemTitle=' + itemTitle, callback);
 }
 

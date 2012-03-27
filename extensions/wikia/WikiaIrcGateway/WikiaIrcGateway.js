@@ -19,16 +19,18 @@ function setjs() {
  }
 }
 function nickvalid() {
-   var nick = document.loginform.Nickname.value;
-   if(nick.match(/^[A-Za-z0-9\[\]\{\}^\\\|\_\-`]{1,32}$/))
-      return true;
-   alert('Please enter a valid nickname');
-   document.loginform.Nickname.value = nick.replace(/[^A-Za-z0-9\[\]\{\}^\\\|\_\-`]/g, '');
-   return false;
+	var nick = document.loginform.Nickname.value;
+	if(nick.match(/^[A-Za-z0-9\[\]\{\}^\\\|\_\-`]{1,32}$/)) {
+		return true;
+	}
+	alert('Please enter a valid nickname');
+	document.loginform.Nickname.value = nick.replace(/[^A-Za-z0-9\[\]\{\}^\\\|\_\-`]/g, '');
+	return false;
 }
 function setcharset() {
-	if(document.charset && document.loginform["Character set"])
-		document.loginform['Character set'].value = document.charset
+	if(document.charset && document.loginform["Character set"]) {
+		document.loginform['Character set'].value = document.charset;
+	}
 }
 
 // credit: http://www.netlobo.com/url_query_string_javascript.html
@@ -38,16 +40,19 @@ function gup( name )
 	var regexS = "[\\?&]"+name+"=([^&#]*)";
 	var regex = new RegExp( regexS );
 	var results = regex.exec( window.location.href );
-	if( results == null )
+	if( results == null ) {
 		return "";
-	else
+	} else {
 		return results[1];
+	}
 }
 
 function set_chan()
 {
 	var wanted = gup('select');
-	if(wanted == '') return;
+	if (wanted == '') {
+		return;
+	}
 	
 	var selector = document.getElementsByName('Channel')[0];
 	

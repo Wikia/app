@@ -9,7 +9,7 @@
 
 var WMU_panel = null;
 var WMU_curSourceId = 0;
-var WMU_lastQuery = new Array;
+var WMU_lastQuery = new Array();
 var WMU_asyncTransaction = null;
 var WMU_curScreen = 'Main';
 var WMU_prevScreen = null;
@@ -36,7 +36,9 @@ var WMU_widthChanges = 1;
 var WMU_inGalleryPosition = false;
 var WMU_skipDetails = false;
 
-if (typeof WMU_box_filled == 'undefined') WMU_box_filled = [];
+if (typeof WMU_box_filled == 'undefined') {
+	WMU_box_filled = [];
+}
 
 if( 'view' == wgAction ) {
 	var wmu_back = '';
@@ -112,9 +114,9 @@ function WMU_loadDetails() {
 		}
 	}
 
-	YAHOO.util.Connect.abort(WMU_asyncTransaction)
+	YAHOO.util.Connect.abort(WMU_asyncTransaction);
 
-	var params = Array();
+	var params = new Array();
 	params.push('sourceId=0');
 	params.push('itemId=' + encodeURIComponent(FCK.wysiwygData[WMU_refid].href.split(":")[1]));
 
@@ -305,12 +307,12 @@ function WMU_inGallery() {
 }
 
 function WMU_getFirstFree( gallery, box ) {
-        for (i=box; i >= 0; i--) {
-                if ( ! $G( 'WikiaImageGalleryPlaceholder' + gallery + 'x' + i ) ) {
-                        return i + 1;
-                }
-        }
-        return box;
+	for (var i=box; i >= 0; i--) {
+		if ( ! $G( 'WikiaImageGalleryPlaceholder' + gallery + 'x' + i ) ) {
+			return i + 1;
+		}
+	}
+	return box;
 }
 
 function WMU_loadMainFromView() {
@@ -384,7 +386,9 @@ function WMU_loadMainFromView() {
 				WMU_indicator(1, false);
 
 				WMU_indicator(1, false);
-				if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') $G('ImageQuery').focus();
+				if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') {
+					$G('ImageQuery').focus();
+				}
 				var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 				if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 					$G('ImageUploadTextCont').style.display = 'none';

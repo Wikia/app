@@ -346,10 +346,11 @@ var RecipesTemplate = {
 
 		if (document.selection  && document.selection.createRange) { // IE/Opera
 			//save window scroll position
+			var winScroll;
 			if (document.documentElement && document.documentElement.scrollTop){
-				var winScroll = document.documentElement.scrollTop
+				winScroll = document.documentElement.scrollTop;
 			} else if (document.body) {
-				var winScroll = document.body.scrollTop;
+				winScroll = document.body.scrollTop;
 			}
 			//get current selection
 			txtarea.focus();
@@ -360,15 +361,16 @@ var RecipesTemplate = {
 			range.text = tagOpen + selText + tagClose;
 			//mark sample text as selected
 			if (isSample && range.moveStart) {
-				if (window.opera)
+				if (window.opera) {
 					tagClose = tagClose.replace(/\n/g,'');
+				}
 				range.moveStart('character', - tagClose.length - selText.length);
 				range.moveEnd('character', - tagClose.length);
 			}
 			range.select();
 			//restore window scroll position
 			if (document.documentElement && document.documentElement.scrollTop) {
-				document.documentElement.scrollTop = winScroll
+				document.documentElement.scrollTop = winScroll;
 			} else if (document.body) {
 				document.body.scrollTop = winScroll;
 			}
