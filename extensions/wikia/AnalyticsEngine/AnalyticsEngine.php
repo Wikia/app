@@ -38,18 +38,25 @@ class AnalyticsEngine {
 			return '<!-- AnalyticsEngine::track - externals disabled -->';
 		}
 
+		$AP = self::getProvider($provider);
+		if (empty($AP)) {
+			return '<!-- Invalid provider for AnalyticsEngine::getTrackCode -->';
+		}
+		$out = "<!-- Start for $provider, $event -->\n";
+		$out .= $AP->getSetupHtml($setupParams);			
+		$out .= $AP->trackEvent($event, $eventDetails) . "\n";
+		return $out;
+	}
+	
+	private static function getProvider($provider) {
 		switch ($provider){
 		  case 'GA_Urchin': $AP = new AnalyticsProviderGA_Urchin(); break;
 		  case 'QuantServe': $AP = new AnalyticsProviderQuantServe(); break;
 		  case 'Comscore': $AP = new AnalyticsProviderComscore(); break;
 		  case 'Exelate': $AP = new AnalyticsProviderExelate(); break;
-		  default: return '<!-- Invalid provider for AnalyticsEngine::getTrackCode -->';
+		  default: return null;
 		}
-
-		$out = "<!-- Start for $provider, $event -->\n";
-		$out .= $AP->getSetupHtml($setupParams);
-		$out .= $AP->trackEvent($event, $eventDetails) . "\n";
-		return $out;
+		
+		return $AP;
 	}
-
 }
