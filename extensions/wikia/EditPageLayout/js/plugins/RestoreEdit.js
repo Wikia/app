@@ -205,8 +205,13 @@
 	    	var alldata = $.storage.get(this.mainKey) || {};
 			
 	    	alldata[this.dataKey] = data;
-	    	$.storage.set(this.mainKey, alldata);
-			//$().log('Data stored', 'RestoreEdit');
+			try {
+				$.storage.set(this.mainKey, alldata);
+				//$().log('Data stored', 'RestoreEdit');
+			} catch (e) {
+				$.storage.flush();
+				$().log('Local Storage Exception:' + e.message);
+			}
 	    },
 		
 	    getOldData: function() {
