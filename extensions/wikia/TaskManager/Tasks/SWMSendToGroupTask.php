@@ -67,6 +67,10 @@ class SWMSendToGroupTask extends BatchTask {
 					case 'GROUP':
 						$result = $this->sendMessageToGroup($args);
 						break;
+
+					case 'USERS':
+						$result = $this->sendMessageToList( $args );
+						break;
 				}
 				break;
 
@@ -221,6 +225,16 @@ class SWMSendToGroupTask extends BatchTask {
 									$args['senderId']
 								);
 								break;
+
+							case 'USERS':
+								$desc = sprintf('SiteWideMessages :: Send to a list of users on all wikis<br/>' .
+									'Number of users: %s, Wiki: <i>ALL</i><br/>' .
+									'Sender: %s [id: %d]',
+									count( $args['userNames'] ),
+									$args['senderName'],
+									$args['senderId']
+								);
+								break;
 						}
 						break;
 
@@ -332,6 +346,41 @@ class SWMSendToGroupTask extends BatchTask {
 		$DB->FreeResult($dbResult);
 
 		$result = $this->sendMessageHelperToGroup($DB, $wikisDB, $params);
+
+		return $result;
+	}
+
+	/**
+	 * sendMessageToList
+	 *
+	 * sends a message to specified group of users
+	 *
+	 * @access private
+	 * @author Daniel Grunwell (grunny)
+	 *
+	 * @param mixed $params - task arguments
+	 *
+	 * @return boolean: result of sending
+	 */
+	private function sendMessageToList( $params ) {
+		$result = true;
+		$wikiID = null;
+		$sqlValues = array();
+
+		$this->addLog("Step 1 of 2: make list of user ids from given " . count( $params['userNames'] ) ."users.");
+		foreach ( $params['userNames'] as $userName ) {
+			$userId = User::idFromName( trim( $userName ) );
+			if ( !$userId ) {
+				$this->addLog("Given user $userName does not exist.");
+			} else {
+				$sqlValues[] = "($wikiID, $userId, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			}
+		}
+
+		$this->addLog("Step 2 of 2: add records about new message to right users [number of users = " . count( $sqlValues ) . "]");
+		$result = $this->sendMessageHelperToUsers( $sqlValues );
+
+		unset( $sqlValues );
 
 		return $result;
 	}
@@ -720,7 +769,7 @@ class SWMSendToGroupTask extends BatchTask {
 
 		//step 2 of 3: get list of users that belong to a specified group (on specified wikis)
 		$this->addLog('Step 2 of 3: get list of users that belong to a specified group (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
-	
+
 		$sqlValues = array();
 		if ( !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
