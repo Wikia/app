@@ -34,7 +34,7 @@ $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsMobile', 'onWikiaMobil
 
 // configuration
 $wgWikiaHubsPages = array(
-	'Entertainment',
-	'Video_Games',
-	'Lifestyle',
+	1 => 'Lifestyle',
+	2 => 'Video_Games',
+	3 => 'Entertainment',
 );

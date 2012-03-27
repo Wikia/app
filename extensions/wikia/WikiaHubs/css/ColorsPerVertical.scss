@@ -3,7 +3,7 @@
 	.WikiaHubs {
 		.wikiahubs-explore {
 			h2 {
-				border-bottom: 5px solid $color-wikiahome-hubcolor;
+				border-bottom: 4px solid $color-wikiahome-hubcolor;
 			}
 			a {
 				color: $color-wikiahome-hubcolor;
@@ -11,16 +11,25 @@
 		}
 		.wikiahubs-pulse {
 			h2 {
-				border-bottom: 5px solid $color-wikiahome-hubcolor;
+				border-bottom: 4px solid $color-wikiahome-hubcolor;
+				a {
+					color: $color-wikiahome-hubcolor;
+				}
 			}
 		}
 		.wikiahubs-popular-videos {
 			.title-wrapper {
-				border-bottom: 5px solid $color-wikiahome-hubcolor;
+				border-bottom: 4px solid $color-wikiahome-hubcolor;
 			}
 			a {
 				color: $color-wikiahome-hubcolor;
 			}
+			.RelatedVideos .RVBody .button .chevron {
+   				border-color: transparent $color-wikiahome-hubcolor transparent transparent;
+   			}
+			.RelatedVideos .RVBody .button.left .chevron {
+   				border-color: transparent transparent transparent $color-wikiahome-hubcolor ;
+   			}
 		}
 		.wikiahubs-sponsored-video {
 			a {
@@ -29,7 +38,7 @@
 		}
 		.wikiahubs-top-wikis {
 			h2 {
-				border-bottom: 5px solid $color-wikiahome-hubcolor;
+				border-bottom: 4px solid $color-wikiahome-hubcolor;
 			}
 			a {
 				color: $color-wikiahome-hubcolor;
@@ -37,7 +46,7 @@
 		}
 		.wikiahubs-from-the-community {
 			h2 {
-				border-bottom: 5px solid $color-wikiahome-hubcolor;
+				border-bottom: 4px solid $color-wikiahome-hubcolor;
 			}
 			a {
 				color: $color-wikiahome-hubcolor;
@@ -45,9 +54,12 @@
 		}
 		.wikiahubs-newstabs {
 			.title-wrapper {
-				border-bottom: 5px solid $color-wikiahome-hubcolor;
+				border-bottom: 4px solid $color-wikiahome-hubcolor;
 			}
 			.tabberlive {
+			    li a {
+					color: $color-wikiahome-hubcolor;
+			    }
 				li a:hover {
 					background-color: $color-wikiahome-hubcolor;
 					color: $activetabcolor;
@@ -62,8 +74,17 @@
 				li.tabberactive a:hover {
 					background-color: $color-wikiahome-hubcolor;
 				}
+				.tabbertab a {
+					color: $color-wikiahome-hubcolor;
+				}
 			}
 		}
+	}
+	.CorporateFooter {
+		font-size: 11px;
+	}
+	.start-a-wiki {
+		border-left: 1px solid mix($color-header-text, $color-header, 20%);
 	}
 	&.wkMobile {
 		.WikiaHubs {
