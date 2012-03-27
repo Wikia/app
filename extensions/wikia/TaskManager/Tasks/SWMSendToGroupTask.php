@@ -364,7 +364,6 @@ class SWMSendToGroupTask extends BatchTask {
 	 */
 	private function sendMessageToList( $params ) {
 		$result = true;
-		$wikiID = null;
 		$sqlValues = array();
 
 		$this->addLog("Step 1 of 2: make list of user ids from given " . count( $params['userNames'] ) ."users.");
@@ -373,7 +372,7 @@ class SWMSendToGroupTask extends BatchTask {
 			if ( !$userId ) {
 				$this->addLog("Given user $userName does not exist.");
 			} else {
-				$sqlValues[] = "($wikiID, $userId, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+				$sqlValues[] = "(NULL, $userId, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
 		}
 
