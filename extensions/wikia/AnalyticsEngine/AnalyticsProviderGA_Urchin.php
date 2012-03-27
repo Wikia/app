@@ -14,13 +14,11 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		$script = '';
 
 		$setDomainName = '';
-		/*
 		if(strpos($_SERVER['SCRIPT_URI'], '.wikia.com/') !== false) {
 			$setDomainName = '_gaq.push([\'_setDomainName\', \'.wikia.com\']);';
 		} else {
 			$setDomainName = '';
 		}
-		*/
 
 		// TODO: use asynchronous approach (BugId:20216)
 		// @see http://code.google.com/intl/pl/apis/analytics/docs/tracking/asyncTracking.html
@@ -48,6 +46,8 @@ SCRIPT2;
   _gaq.push(['_setCustomVar', 3, 'AB',   'unknown', 3]);
   _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['_setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
+
+  $setDomainName
 
   _gaq.push(['_trackPageview']);
 
