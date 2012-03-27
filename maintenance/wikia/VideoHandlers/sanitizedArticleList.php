@@ -49,6 +49,7 @@ $rows = $dbw_dataware->query( "SELECT sanitized_title, operation_time, article_t
 	sanitized_title LIKE ':7%' OR
 	sanitized_title LIKE ':8%' OR
 	sanitized_title LIKE ':9%' )
+	ORDER BY city_id
 " );
 
 $rowCount = $rows->numRows();
@@ -73,7 +74,7 @@ foreach ( $aAllFiles as $key => $fileRow ) {
 			$wgTitle = $oTitle;
 			$wikiUrl = WikiFactory::getWikiByID( $fileRow->city_id )->city_url;
 			//$allChangesArticleURLs[ str_replace('http://localhost/', $wikiUrl, $oTitle->getFullURL()) ] = $fileRow->sanitized_title;
-			$allChangesArticleURLs[ $wikiUrl . '/wiki/'. Title::escapeFragmentForURL($fileRow->article_title) ] = $fileRow->sanitized_title;
+			$allChangesArticleURLs[ $wikiUrl . 'wiki/'. str_replace(" ", "_",$fileRow->article_title) ] = $fileRow->sanitized_title;
 		//}
 }
 if (count ($allChangesArticleURLs) > 0 ) {
