@@ -1,5 +1,5 @@
 @mixin hubs-vertical-coloring($color-wikiahome-hubcolor) {
-	$activetabcolor: #fff;
+	$whitecolor: #fff;
 	.WikiaHubs {
 		.wikiahubs-explore {
 			h2 {
@@ -62,14 +62,14 @@
 			    }
 				li a:hover {
 					background-color: $color-wikiahome-hubcolor;
-					color: $activetabcolor;
+					color: $whitecolor;
 				}
 				li a:visited {
 					background-color: $color-wikiahome-hubcolor;
 				}
 				li.tabberactive a {
 					background-color: $color-wikiahome-hubcolor;
-					color: $activetabcolor;
+					color: $whitecolor;
 				}
 				li.tabberactive a:hover {
 					background-color: $color-wikiahome-hubcolor;
@@ -93,7 +93,11 @@
 	.wikiacorporatefooter {
 		a {
 			color: $color-wikiahome-community;
+			&.wikia-button {
+				color: $whitecolor;
+			}
 		}
+
 	}
 	.start-a-wiki {
 		border-left: 1px solid mix($color-header-text, $color-header, 20%);
