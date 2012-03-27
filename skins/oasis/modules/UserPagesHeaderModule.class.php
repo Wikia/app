@@ -241,40 +241,15 @@ class UserPagesHeaderModule extends Module {
 
 		// page type specific stuff
 		if ($namespace == NS_USER) {
-			if ( !$this->isUserProfilePageExt ) {
-				// edit button
-				if (isset($this->content_actions['edit'])) {
-					$this->actionMenu['action'] = array(
-							'href' => $this->content_actions['edit']['href'],
-							'text' => wfMsg('oasis-page-header-edit-profile'),
-							);
+			// edit button
+			if (isset($this->content_actions['edit'])) {
+				$this->actionMenu['action'] = array(
+						'href' => $this->content_actions['edit']['href'],
+						'text' => wfMsg('oasis-page-header-edit-profile'),
+						);
 
-					$this->actionImage = MenuButtonModule::EDIT_ICON;
-					$this->actionName = 'editprofile';
-				}
-			}
-			else {
-				// UserProfilePage extension stuff
-				if( !self::isItMe( $this->userName ) ) {
-
-					$title = Title::newFromText( $this->userName, NS_USER_TALK );
-					$this->actionMenu['action'] = array(
-						'href' => $title->getLocalUrl( 'action=edit&section=new' ),
-						'text' => wfMsg('userprofilepage-leave-message'),
-					);
-
-					$this->actionImage = MenuButtonModule::MESSAGE_ICON;
-					$this->actionName = 'leavemessage';
-				}
-				else {
-					$this->actionMenu['action'] = array(
-							'href' => $this->content_actions['edit']['href'],
-							'text' => wfMsg('oasis-page-header-edit-profile'),
-							);
-
-					$this->actionImage = MenuButtonModule::EDIT_ICON;
-					$this->actionName = 'editprofile';
-				}
+				$this->actionImage = MenuButtonModule::EDIT_ICON;
+				$this->actionName = 'editprofile';
 			}
 		}
 		else if ($namespace == NS_USER_TALK) {
@@ -332,43 +307,6 @@ class UserPagesHeaderModule extends Module {
 		// don't show stats for user pages with too long titles (RT #68818)
 		if (mb_strlen($this->title) > 35) {
 			$this->stats = false;
-		}
-
-		global $wgEnableFacebookSync;
-		// Facebook profile Sync
-		// only show on user profile homepage
-		// only when the feature is enabled, the user is logged in, the user owns this profile page and the edit button (=user profile homepage) is enabled
-		if ($wgEnableFacebookSync == true && $wgUser->isLoggedIn() && self::isItMe( $this->userName ) && isset($this->content_actions['edit']) && $this->isUserProfilePageExt && $namespace == NS_USER) {
-			global $wgOut, $wgFacebookSyncAppID;
-
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/ProfileSync.scss"));
-			$wgOut->addScriptFile('/skins/oasis/js/ProfileSync.js');
-
-			// Facebook sync info
-			define('FACEBOOK_REDIRECT_URL', $wgTitle->getFullURL() .'?fbrequest=sent&action=purge');
-
-			// requested permissions
-			$facebookScope = array('user_birthday','user_interests', 'user_relationships', 'user_work_history' ,'user_education_history','user_hometown','user_photos','user_religion_politics', 'user_website', 'user_likes');
-			$facebookScope = implode(",", $facebookScope);
-
-			// sync button
-			$fbAccessRequestURL = "https://graph.facebook.com/oauth/authorize?client_id=".$wgFacebookSyncAppID."&scope=".$facebookScope."&redirect_uri=".FACEBOOK_REDIRECT_URL;
-			$this->fbAccessRequestURL = $fbAccessRequestURL;
-
-			if ($wgRequest->getVal( 'fbrequest' ) == 'sent') {
-				if (!$wgRequest->getVal( 'error_reason' ) == 'user_denied') {
-					$html = wfRenderModule('UserPagesHeader', 'FacebookConnect', array('fbAccess' => true));
-					$this->fbData = $html;
-				}
-				else {
-					// no access
-					$html = wfRenderModule('UserPagesHeader', 'FacebookConnect', array('fbAccess' => false));
-					$this->fbData = $html;
-				}
-			}
-			else if ($wgRequest->getVal( 'fbrequest' ) == 'save') {
-					// moved to extensions/Wikia/Oasis/Oasis_setup.php as hook ArticleViewHeader
-			}
 		}
 
 		wfProfileOut(__METHOD__);
