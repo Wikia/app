@@ -44,7 +44,7 @@ $aAllFiles = array();
 $allChangesArticleURLs=array();
 $timeStart = microtime( true );
 
-$rows = $dbw_dataware->query( "SELECT sanitized_title, operation_time, article_title
+$rows = $dbw_dataware->query( "SELECT sanitized_title, operation_time, article_title, city_id
 	FROM video_migration_sanitization
 	WHERE operation_status = 'OK' AND
       ( sanitized_title LIKE ':0%' OR
@@ -60,14 +60,6 @@ $rows = $dbw_dataware->query( "SELECT sanitized_title, operation_time, article_t
 " );
 
 $rowCount = $rows->numRows();
-
-$wiki = WikiFactory::getWikiByDB($wgDBname);
-$wikiUrl = $wiki->city_url;
-
-
-
-
-
 if ( $rowCount ) {
 
 	while( $file = $dbw->fetchObject( $rows ) ) {
@@ -94,13 +86,9 @@ foreach ( $aAllFiles as $key => $fileRow ) {
 
 		if ( $oTitle instanceof Title && $oTitle->exists() ){
 			global $wgTitle;
-
 			$wgTitle = $oTitle;
-
-
+			$wikiUrl = WikiFactory::getWikiByID( $fileRow->city_id )->city_url;
 			$allChangesArticleURLs[ str_replace('http://localhost/', $wikiUrl, $oTitle->getFullURL()) ] = $fileRow->sanitized_title;
-
-
 		}
 //	}
 
