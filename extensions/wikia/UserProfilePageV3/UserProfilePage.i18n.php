@@ -116,8 +116,8 @@ $messages['en'] = array(
 	'usermasthead-log-message' => 'added profile information',
 	'usermasthead-log-alt' => 'Logs of user masthead edits',
 
-	'user-identity-remove-confirmation' => 'Are you sure ?',
-	'user-identity-remove-fail' => 'There was some problem when removing the avatar'
+	'user-identity-remove-confirmation' => 'Are you sure you want to remove avatar?',
+	'user-identity-remove-fail' => 'There was some problem when removing the avatar!'
 );
 
 /** Message documentation (Message documentation) */
