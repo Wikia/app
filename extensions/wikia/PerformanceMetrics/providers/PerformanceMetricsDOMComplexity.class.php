@@ -33,10 +33,7 @@ class PerformanceMetricsDOMComplexity extends PerformanceMetricsProvider {
 			return false;
 		}
 
-		$report = array(
-			#'url' => $url,
-			'metrics' => $this->getDOMDepthReport($dom)
-		);
+		$report['metrics'] = $this->getDOMDepthReport($dom);
 
 		return $report;
 	}
