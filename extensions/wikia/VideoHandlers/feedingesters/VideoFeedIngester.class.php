@@ -64,7 +64,7 @@ abstract class VideoFeedIngester {
 		}
 
 		$categories = $this->generateCategories($data, $addlCategories);
-		$categories[] = 'Video';
+		$categories[] = 'Videos';
 		$categoryStr = '';
 		foreach ($categories as $categoryName) {
 			$category = Category::newFromName($categoryName);

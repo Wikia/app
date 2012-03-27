@@ -146,7 +146,7 @@ class VideoFileUploader {
 
 	protected function getDescription(){
 		if ( empty( $this->sDescription ) ) {
-			$this->sDescription = '[[Category:Video]]'.$this->getApiWrapper()->getDescription();
+			$this->sDescription = '[[Category:Videos]]'.$this->getApiWrapper()->getDescription();
 		}
 		
 		return $this->sDescription;
