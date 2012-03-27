@@ -522,7 +522,7 @@ $config['userlogin_js_wikiamobile_fbconnect'] = array(
 		'skin' => 'wikiamobile',
 		'assets' => array(
 				'#external_http://connect.facebook.net/en_US/all.js',
-				'#group_userlogin_js_wikiamobile_noFB',
+				'#group_userlogin_js_wikiamobile',
 				'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
 		)
 );
