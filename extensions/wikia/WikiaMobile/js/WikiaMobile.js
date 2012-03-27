@@ -1,4 +1,8 @@
 var WikiaMobile = (function() {
+
+	//as fast as possible to avoid flickering
+	document.documentElement.className += ' js';
+
 	/** @private **/
 
 	var body,
@@ -672,7 +676,7 @@ var WikiaMobile = (function() {
 		//add class for styling to be applied only if JS is enabled
 		//(e.g. collapse sections)
 		//must be done AFTER detecting size of elements on the page
-		d.body.className += ' js';
+		//d.htm.className += ' js';
 
 		//handle ads
 		if(adSlot){
