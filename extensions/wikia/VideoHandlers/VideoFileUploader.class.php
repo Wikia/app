@@ -7,6 +7,7 @@ class VideoFileUploader {
 	
 	const SANITIZE_MODE_FILENAME = 1;
 	const SANITIZE_MODE_ARTICLETITLE = 2;
+	const VIDEOS_CATEGORY = 'Videos';
 
 	protected $sTargetTitle;
 	protected $sDescription;
@@ -146,7 +147,7 @@ class VideoFileUploader {
 
 	protected function getDescription(){
 		if ( empty( $this->sDescription ) ) {
-			$this->sDescription = '[[Category:Videos]]'.$this->getApiWrapper()->getDescription();
+			$this->sDescription = '[[Category:'.self::VIDEOS_CATEGORY.']]'.$this->getApiWrapper()->getDescription();
 		}
 		
 		return $this->sDescription;
