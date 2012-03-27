@@ -14,7 +14,7 @@
 		<? endif; ?>
 		<?php if( $canRemoveAvatar ): ?>
 			<span>
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a href="<?= $deleteAvatarLink ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a id="UserAvatarRemove" data-name="<?= $user['name']; ?>"  href="#"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
 			</span>
 		<?php endif; ?>
 	</div>

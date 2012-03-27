@@ -30,6 +30,8 @@ class UserProfilePageController extends WikiaController {
 	public function index() {
 		$this->app->wf->ProfileIn( __METHOD__ );
 
+		F::build('JSMessages')->enqueuePackage('UserProfilePage', JSMessages::INLINE);
+		
 		$user = $this->getVal('user');
 
 		$pageBody = $this->getVal( 'userPageBody' );
@@ -1143,5 +1145,29 @@ class UserProfilePageController extends WikiaController {
 		}
 		return true;
 	}
+	
+	public function removeavatar() {
+		wfProfileIn( __METHOD__ );
+		if ( !$this->app->wg->User->isAllowed( 'removeavatar' ) ) {
+			$this->setVal('status', false);
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
 
+		if ($this->request->getVal('av_user')) {
+			$avUser = User::newFromName($this->request->getVal('av_user'));
+			if ($avUser->getID() !== 0) {
+				$avatar = Masthead::newFromUser($avUser);
+				if (!$avatar->removeFile( true )) {
+					wfProfileOut( __METHOD__ );
+					$this->setVal('status', false);
+					return true;
+				}
+			}
+		}
+		
+		$this->setVal('status', "ok");		
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }

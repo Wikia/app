@@ -29,6 +29,11 @@ var UserProfilePage = {
 			UserProfilePage.renderLightbox('about');
 		});
 		
+		$('#UserAvatarRemove').click(function(event) {
+			event.preventDefault();
+			UserProfilePage.removeAvatar($(event.target).attr('data-name'));
+		});
+		
 		$('#userAvatarEdit').click(function(event) {
 			event.preventDefault();
 			UserProfilePage.renderLightbox('avatar');
@@ -634,6 +639,28 @@ var UserProfilePage = {
 				modal.closeModal();
 			});
 		});
+	},
+	
+	removeAvatar: function(name) {
+		var answer = confirm($.msg('user-identity-remove-confirmation'));	
+		
+		if(answer){
+			$.nirvana.sendRequest({
+				controller: 'UserProfilePage',
+				method: 'removeavatar',
+				format: 'json',
+				data: {
+					av_name: name
+				},
+				callback: function(data) {
+					if(data.status == "ok") {
+						alert("OK");
+					} else {
+						alert($.msg('user-identity-remove-fail'));
+					}
+				}
+			});
+		}
 	}
 }
 
