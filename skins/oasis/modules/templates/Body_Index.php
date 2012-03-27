@@ -62,7 +62,7 @@
 		?>
 
 		<?php
-		if ( $headerModuleName == 'UserPagesHeader' && ($headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing') ) {
+		if ($headerModuleName == 'UserPagesHeader' && ($headerModuleAction != 'BlogPost' && $headerModuleAction != 'BlogListing') ) {
 			echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 		}
 		?>
@@ -83,6 +83,8 @@
 							// Show just the edit button
 							echo F::app()->renderView( 'UserProfilePage', 'renderActionButton', array() );
 						}
+					} else {
+						echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 					}
 				}
 			?>

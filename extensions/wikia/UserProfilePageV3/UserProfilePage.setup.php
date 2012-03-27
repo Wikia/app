@@ -22,6 +22,7 @@ $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
 //$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
 $app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
 $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
+$app->registerClass('UserAvatarRemovePage', $dir . '/UserAvatarRemovePage.class.php');
 
 
 
@@ -101,6 +102,23 @@ $wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
 #$wgGroupPermissions['sysop']['removeavatar'] = true;
 $wgGroupPermissions['helper']['removeavatar'] = true;
+
+
+//new right for dropdown menu of action button
+$wgGroupPermissions['sysop']['renameprofilev3'] = true;
+$wgGroupPermissions['vstf']['renameprofilev3'] = true;
+$wgGroupPermissions['staff']['renameprofilev3'] = true;
+$wgGroupPermissions['helper']['renameprofilev3'] = true;
+
+$wgGroupPermissions['sysop']['deleteprofilev3'] = true;
+$wgGroupPermissions['vstf']['deleteprofilev3'] = true;
+$wgGroupPermissions['staff']['deleteprofilev3'] = true;
+$wgGroupPermissions['helper']['deleteprofilev3'] = true;
+
+//new right to edit profile v3
+$wgGroupPermissions['staff']['editprofilev3'] = true;
+$wgGroupPermissions['vstf']['editprofilev3'] = true;
+$wgGroupPermissions['helper']['editprofilev3'] = true;
 
 $wgSpecialPageGroups['RemoveUserAvatar'] = 'users';
 
