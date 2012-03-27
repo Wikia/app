@@ -21,8 +21,8 @@ $wgVideoHandlersVideosMigrated = false; // be sure we are working on old files
 
 $devboxuser = exec('hostname');
 $sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgDBname, $wgExternalDatawareDB);
-$previouslyProcessed = $sanitizeHelper->getRenamedVideos("new", " 1 ");
-$previouslyProcessed2 = $sanitizeHelper->getRenamedVideos("old", " 1 ");
+//$previouslyProcessed = $sanitizeHelper->getRenamedVideos("new", " 1 ");
+
 
 
 
@@ -30,7 +30,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
-$IP = '/home/release/video_refactoring/trunk'; // HACK TO RUN ON SANDBOX
+//$IP = '/home/release/video_refactoring/trunk'; // HACK TO RUN ON SANDBOX
 require_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbw = wfGetDB( DB_MASTER );
@@ -44,17 +44,19 @@ $aAllFiles = array();
 $allChangesArticleURLs=array();
 $timeStart = microtime( true );
 
-$rows = $dbw->query( "SELECT img_name FROM image WHERE img_media_type='VIDEO' AND
-      ( img_name LIKE ':0%' OR
-	img_name LIKE ':1%' OR
-	img_name LIKE ':2%' OR
-	img_name LIKE ':3%' OR
-	img_name LIKE ':4%' OR
-	img_name LIKE ':5%' OR
-	img_name LIKE ':6%' OR
-	img_name LIKE ':7%' OR
-	img_name LIKE ':8%' OR
-	img_name LIKE ':9%' )
+$rows = $dbw_dataware->query( "SELECT sanitized_title, operation_time, article_title
+	FROM video_migration_sanitization
+	WHERE operation_status = 'OK' AND
+      ( sanitized_title LIKE ':0%' OR
+	sanitized_title LIKE ':1%' OR
+	sanitized_title LIKE ':2%' OR
+	sanitized_title LIKE ':3%' OR
+	sanitized_title LIKE ':4%' OR
+	sanitized_title LIKE ':5%' OR
+	sanitized_title LIKE ':6%' OR
+	sanitized_title LIKE ':7%' OR
+	sanitized_title LIKE ':8%' OR
+	sanitized_title LIKE ':9%' )
 " );
 
 $rowCount = $rows->numRows();
@@ -69,20 +71,7 @@ $wikiUrl = $wiki->city_url;
 if ( $rowCount ) {
 
 	while( $file = $dbw->fetchObject( $rows ) ) {
-		$aAllFiles[ $file->img_name ] = 1;
-	}
-
-	print_r($aAllFiles);
-
-	$i = 0;
-	foreach( $aAllFiles as $sFile => $val ) {
-		if ( strpos ( $sFile, ':' ) === 0 ) {
-			if ( !empty( $previouslyProcessed[ $sFile ] ) || !empty( $previouslyProcessed2[ $sFile ] ) ) {
-				$aTranslation[ $sFile ] = true;
-			} else {
-				echo "skipping: ".$sFile."\n";
-			}
-		}
+		$aAllFiles[] = $file;
 	}
 }
 
@@ -94,34 +83,33 @@ $i=0;
 
 $count = count( $aTranslation );
 $current = 0;
-foreach ( $aTranslation as $key => $val ) {
+foreach ( $aAllFiles as $key => $fileRow ) {
 
-	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
+//	$rows = $dbw->query( "SELECT distinct il_from FROM imagelinks WHERE il_to ='".mysql_real_escape_string($key)."'");
 
-	while( $file = $dbw->fetchObject( $rows ) ) {
+//	while( $file = $dbw->fetchObject( $rows ) ) {
 
-		$articleId = $file->il_from;
-		$oTitle = Title::newFromId( $articleId );
-		echo "ARTICLE ID: $articleId \n";
+
+		$oTitle = Title::newFromText($fileRow->article_title);
+
 		if ( $oTitle instanceof Title && $oTitle->exists() ){
 			global $wgTitle;
 
 			$wgTitle = $oTitle;
-			$oArticle = new Article ( $oTitle );
-			if ( $oArticle instanceof Article ){
 
-				$allChangesArticleURLs[ str_replace('http://localhost/', $wikiUrl, $oTitle->getFullURL()) ] = $key;
-			}
+
+			$allChangesArticleURLs[ str_replace('http://localhost/', $wikiUrl, $oTitle->getFullURL()) ] = $key;
+
 
 		}
-	}
+//	}
 
-	$i++;
+//	$i++;
 }
 if (count ($allChangesArticleURLs) > 0 ) {
 	echo( "Article List for cityId: $wgCityId  ( $wikiUrl ) \n" );
 	foreach( $allChangesArticleURLs as $url => $v ) {
-		echo "$url -> Video$v \n";
+		echo str_replace("::", ":", "$url -> Video:$v \n");
 	}
 }
 ?>
