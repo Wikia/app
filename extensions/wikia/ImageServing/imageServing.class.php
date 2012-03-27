@@ -211,7 +211,7 @@ class ImageServing {
 	 * @return  \string url for image
 	 */
 
-	public function getUrl( $name, $width = 0, $height = 0 ) {
+	public function getUrl( $name, $width = 1, $height = 1 ) {
 		if ( $name instanceof File ) {
 			$img = $name;
 		} else {
@@ -258,10 +258,9 @@ class ImageServing {
 			$width = 512;
 		}
 		
-		// make sure these are numeric (BugId:20644)
-		$width = intval($width);
-		$height = intval($height);
-
+		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
+		$width = max(1, intval($width));
+		$height = max(1, intval($height));
 		
 		// in case we're missing some propotions, maintain the original aspect ratio
 		if (!$this->proportion['h']) {
@@ -277,7 +276,9 @@ class ImageServing {
 			$top = 0;
 			if ( $align == "center" ) {
 				$left = round( $width / 2 - $pWidth / 2 );
-				if ( $pHeight != $height ) $left++;
+				if ( $pHeight != $height ) {
+					$left++;
+				}
 			} else if ( $align == "origin" ) {
 				$left = 0;
 			}
