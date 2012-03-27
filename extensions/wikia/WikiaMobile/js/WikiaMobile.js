@@ -949,20 +949,27 @@ var WikiaMobile = (function() {
 				});
 			});
 
-			d.getElementById('expAll').addEventListener(clickEvent, function(event) {
-				var elements = $('.alphaSec .artSec').add('.alphaSec .collSec');
-				if($(this).toggleClass('exp').hasClass('exp')){
-					elements.addClass('open');
-					track('category/expandAll');
-				}else{
-					elements.removeClass('open');
-					track('category/collapseAll');
-				}
-			});
+			var expAll = d.getElementById('expAll'),
+				wkCatExh = d.getElementById('wkCatExh');
 
-			d.getElementById('wkCatExh').addEventListener(clickEvent, function(event) {
-				track('category/exhibition/click');
-			});
+			if(expAll){
+				var elements = $('.alphaSec .artSec, .alphaSec .collSec');
+				expAll.addEventListener(clickEvent, function(event) {
+					if($(this).toggleClass('exp').hasClass('exp')){
+						elements.addClass('open');
+						track('category/expandAll');
+					}else{
+						elements.removeClass('open');
+						track('category/collapseAll');
+					}
+				});
+			}
+
+			if(wkCatExh){
+				wkCatExh.addEventListener(clickEvent, function(event) {
+					track('category/exhibition/click');
+				});
+			}
 		}
 		//end category pages
 
