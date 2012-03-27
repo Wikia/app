@@ -40,6 +40,31 @@ class AssetsConfig {
 		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
 	}
 
+	/**
+	 * Generates the URL for the Winre inspector script
+	 * 
+	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+	 * @see http://phonegap.github.com/weinre/
+	 * @param bool $combine
+	 * 
+	 * @return array an array containing the asset url
+	 */
+	public static function getWeinreJS( $combine ) {
+		global $wgDevelEnvironment, $wgRequest, $wgWeinrePort, $wgEnableWeinre;
+
+		$host = $wgRequest->getVal( 'weinrehost' );
+		$url = '';
+
+		//allow testing from non-owned test environment or production/staging
+		if ( empty( $host ) && !empty( $wgDevelEnvironment ) && !empty ( $wgEnableWeinre ) ) {
+			$host = "{$_SERVER['SERVER_ADDR']}:{$wgWeinrePort}";
+		} elseif( empty( $host ) ) {
+			return array();
+		}
+
+		return array( "http://{$host}/target/target-script-min.js" );
+	}
+
 	public static function getRTEAssets( $combine ) {
 		global $IP;
 		$path = "extensions/wikia/RTE";
