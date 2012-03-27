@@ -51,18 +51,31 @@ class AssetsConfig {
 	 */
 	public static function getWeinreJS( $combine ) {
 		global $wgDevelEnvironment, $wgRequest, $wgWeinrePort, $wgEnableWeinre;
+		$app = F::app();
+		$server = '';
+		$ret = array();
 
-		$host = $wgRequest->getVal( 'weinrehost' );
-		$url = '';
+		//this asset request is generated only by the wiki and not served by AssetsManagerServer, so it's safe to rely on conf
+		if ( !empty( $app->wg->enableWeinre ) ) {
+			$weinre = F::build( 'Weinre' );
 
-		//allow testing from non-owned test environment or production/staging
-		if ( empty( $host ) && !empty( $wgDevelEnvironment ) && !empty ( $wgEnableWeinre ) ) {
-			$host = "{$_SERVER['SERVER_ADDR']}:{$wgWeinrePort}";
-		} elseif( empty( $host ) ) {
-			return array();
+			if ( $weinre->isEnabled() ) {
+				$host = $weinre->getRequestedHost();
+
+				//allow testing from non-owned test environment or production/staging
+				if ( !empty( $host ) ) {
+					$server = $host;
+				} else if ( !empty( $app->wg->develEnvironment ) ) {
+					$server = "{$_SERVER['SERVER_ADDR']}:{$app->wg->weinrePort}";
+				}
+			}
 		}
 
-		return array( "http://{$host}/target/target-script-min.js" );
+		if ( !empty( $server ) ) {
+			$ret[] = "http://{$server}/target/target-script-min.js";
+		}
+
+		return $ret;
 	}
 
 	public static function getRTEAssets( $combine ) {

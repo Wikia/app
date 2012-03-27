@@ -10,6 +10,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $app = F::app();
+$dir = dirname( __FILE__ );
 
 $app->wg->append(
 	'ExtensionCredits',
@@ -25,20 +26,13 @@ $app->wg->append(
 	'other'
 );
 
+/**
+ * classes
+ */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/Weinre.class.php", 'Weinre' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WeinreHooks.class.php", 'WeinreHooks' );
+
+/**
+ * hooks
+ */
 $app->registerHook( 'SkinAfterBottomScripts', 'WeinreHooks', 'onSkinAfterBottomScripts' );
-
-class WeinreHooks extends WikiaObject {
-	public function onSkinAfterBottomScripts( WikiaSkin $sk, &$scripts ) {
-		$host = $this->wg->request->getVal( 'weinrehost' );
-
-		//allow testing from non-owned test environment or production/staging
-		if ( !empty( $host ) || !empty( $this->wg->develEnvironment ) ) {
-			//this would be filtered on a per-skin basis by AssetManager config
-			foreach ( F::build( 'AssetsManager', array(), 'getInstance' )->getURL( 'weinre_js' ) as $s ) {
-				$scripts .= "<script src=\"{$s}\"></script>";
-			}
-		}
-
-		return true;
-	}
-}
