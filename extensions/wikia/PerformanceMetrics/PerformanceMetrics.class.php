@@ -40,6 +40,7 @@ class PerformanceMetrics extends WikiaObject {
 			}
 		}
 
+		$metrics['url'] = reset($metrics['url']);
 		return $metrics;
 	}
 }
