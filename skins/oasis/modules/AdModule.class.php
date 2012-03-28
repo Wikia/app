@@ -137,6 +137,9 @@ class AdModule extends Module {
 			if (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'AdDriver') {
 				$this->ad = AdEngine::getInstance()->getAd($this->slotname, $params);
 			}
+			elseif (AdEngine::getInstance()->getProviderNameForSlotname($this->slotname) == 'LiftDNA') {
+				$this->ad = AdEngine::getInstance()->getPlaceHolderDiv($this->slotname);
+			}
 			else {
 				if (in_array($this->slotname, self::$slotsUseGetAd)) {
 					$this->ad = AdEngine::getInstance()->getAd($this->slotname);

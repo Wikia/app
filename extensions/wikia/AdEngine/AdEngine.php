@@ -113,6 +113,7 @@ class AdEngine {
 		'8' => 'DARTMobile',
 		'9' => 'Liftium',
 		'10' => 'AdDriver',
+		'11' => 'LiftDNA',
 		'-1' => 'Null'
 	);
 
@@ -416,6 +417,7 @@ class AdEngine {
 			case 'dartmobile': return AdProviderDARTMobile::getInstance();
 			case 'liftium': return AdProviderLiftium::getInstance();
 			case 'addriver': return AdProviderAdDriver::getInstance();
+			case 'liftdna': return AdProviderLiftDNA::getInstance();
 			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
