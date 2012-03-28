@@ -46,9 +46,11 @@ class Track {
 	public function getViewJS ($param=null) {
 		$url = Track::getURL('view', '', $param);
 
+		// TODO: is beaconCookie used anywhere?
 		$script = <<<SCRIPT1
 <noscript><img src="$url" width="1" height="1" border="0" alt="" /></noscript>
 <script type="text/javascript">
+(function() {
 	var beaconCookie;
 	if (! beaconCookie) {
 		var result = RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})").exec(document.cookie);
@@ -62,6 +64,7 @@ class Track {
 
 	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (beaconCookie ? "&amp;beacon=" + beaconCookie : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
 	document.write('<'+'script type="text/javascript" src="' + trackUrl + '"><'+'/script>');
+})();
 </script>
 SCRIPT1;
 
@@ -85,8 +88,7 @@ SCRIPT1;
 
 	public function addGlobalVars($vars) {
 		global $wgUser;
-		// TODO: conside using wg prefix for global JS variables
-		$vars['trackID'] = $wgUser->getId() ? $wgUser->getId() : 0;
+		$vars['wgTrackID'] = $wgUser->getId() ? $wgUser->getId() : 0;
 		return true;
 	}
 }
