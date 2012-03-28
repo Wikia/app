@@ -455,7 +455,7 @@ class ImageReviewHelper extends WikiaModel {
 
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
 		$ids = array();
-
+		$cnt = 0;
 		if (!$this->wg->DevelEnvironment ) {
 			$result = $db->select(
 				array( 'google_analytics.pageviews' ),
@@ -464,11 +464,13 @@ class ImageReviewHelper extends WikiaModel {
 				__METHOD__,
 				array(
 					'GROUP BY'=> 'city_id',
+					'ORDER BY' => 'priority desc', 
 					'HAVING' => 'cnt > 150000'
 				)
 			);
 
-			while( $row = $db->fetchRow($result) ) {
+			while( $cnt < 200 && $row = $db->fetchRow($result) ) {
+				$cnt++;
 				$ids[$row['city_id']] = 1;
 			}
 		}
