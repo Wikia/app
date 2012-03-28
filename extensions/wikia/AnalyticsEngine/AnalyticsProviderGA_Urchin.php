@@ -41,8 +41,7 @@ SCRIPT2;
   _gaq.push(['_setAccount', 'UA-30014103-1']);
   _gaq.push(['_setSampleRate', '10']);
 
-  var wiki = 'db=' + (window.wgDBname || 'unknown') + ';hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown');
-  _gaq.push(['_setCustomVar', 1, 'wiki',  wiki, 3]);
+  _gaq.push(['_setCustomVar', 1, 'wiki', 'db=' + (window.wgDBname || 'unknown') + ';hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 3, 'AB',   'unknown', 3]);
   _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['_setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
