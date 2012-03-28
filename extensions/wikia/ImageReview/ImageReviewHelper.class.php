@@ -446,7 +446,7 @@ class ImageReviewHelper extends WikiaModel {
 
 	protected function getTopWikis() {
 		$this->wf->ProfileIn( __METHOD__ );
-		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__ );
+		$key = wfMemcKey( 'ImageReviewSpecialController','v2', __METHOD__ );
 		$data = $this->wg->memc->get($key, null);
 		if(!empty($data)) {
 			$this->wf->ProfileOut( __METHOD__ );
