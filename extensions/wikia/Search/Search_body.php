@@ -362,8 +362,12 @@ class SolrSearchSet extends SearchResultSet {
 		$resultCount = count($resultDocs);
 		$totalHits = $response->response->numFound;
 
-		// check if exact match is available (similar to MW "go-result" feature)
-		$articleMatch = self::createArticleMatch($query);
+		$articleMatch = null;
+		if( !$crossWikiaSearch ) {
+			// check if exact match is available (similar to MW "go-result" feature)
+			$articleMatch = self::createArticleMatch($query);
+		}
+
 		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits, $crossWikiaSearch, $articleMatch);
 
 		if( empty( $offset ) ) {
@@ -375,22 +379,33 @@ class SolrSearchSet extends SearchResultSet {
 	}
 
 	public static function onSpecialSearchResults( $term, &$titleMatches, &$textMatches ) {
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgCityId;
 		if($textMatches->hasArticleMatch()) {
 			$skin = $wgUser->getSkin();
 			$article = $textMatches->getArticleMatch();
 			$title = $article->getTitle();
 
-			//$link_title = clone $title;
-			$link = $skin->linkKnown( $title, null );
+			$link = $skin->linkKnown( $title, null,
+				array(
+					'class' => 'mw-search-result-title',
+					'data-wid' => $wgCityId,
+					'data-pageid' => $article->getID(),
+					'data-pagens' => $title->getNamespace(),
+					'data-title' => $title->getText(),
+					'data-pos' => 0,
+					'data-sterm' => urlencode($term),
+					'data-stype' => 'intra',
+					'data-rver' => 0,
+					'data-event' => 'search_click_match'
+				));
 
-			$wgOut->addHTML( "<div style='background: #f4f4f4'><strong>{$link}</strong>\n" );
+			$wgOut->addHTML( "<div><strong>{$link}</strong>\n" );
 			if( $title->userCanRead() ) {
 				$articleService = new ArticleService($article->getID());
 
-				$wgOut->addHTML( "<div class='searchresult'>" . $articleService->getTextSnippet( 250 ) . "</div>" );
+				$wgOut->addHTML( "<div class='searchresult'>" . $articleService->getTextSnippet( 250 ) . "</div>\n" );
 			}
-			$wgOut->addHTML( "</div>" );
+			$wgOut->addHTML( "</div><br />" );
 		}
 		return true;
 	}

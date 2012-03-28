@@ -14,7 +14,9 @@ var SearchClickTracking = {
 						window.location.href = element.attr('href');
 					};
 					$.tracker.byStr('search/result/click/pos/'+element.attr('data-pos'));
-					$.internalTrack('search_click', {
+
+					var eventName = (typeof element.attr('data-event') == 'undefined') ? 'search_click' : element.attr('data-event');
+					$.internalTrack(eventName, {
 						'pos': element.attr('data-pos'),
 						'sterm': element.attr('data-sterm'),
 						'stype': element.attr('data-stype'),
