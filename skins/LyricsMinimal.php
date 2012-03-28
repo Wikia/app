@@ -25,6 +25,7 @@
  * TODO: Should this just _EXTEND_ Monaco?  It would be fairly straightforward... anything that's left in this file after the deletions should still be in here.  This would have
  *			the benefits of picking up any improvements to Monaco and running any monaco-specific extensions, but it would also pick up new page-elements, etc.  Monaco is probably fairly "done" with though, so this is probably a moot point.
  * TODO: See if we need to strip ad tags in printContent() because only the top leaderboard belongs in the minimal skin.
+ * TODO: Remove dependency on StaticChute / WikiaAssets (added by macbre)
  */
 
 if( !defined( 'MEDIAWIKI' ) )
@@ -92,10 +93,10 @@ class SkinLyricsMinimal extends SkinTemplate {
 		}
 
 		// TODO: SWC: This might be a good place to load app-specific CSS in cases that we have that.
-		
-		
-		
-		
+
+
+
+
 	}
 
 	/**
@@ -505,7 +506,7 @@ EOF;
 		if ($wgContLang->isRTL()) {
 			$css[] = array('url' => $wgStylePath.'/monaco/rtl.css?'.$wgStyleVersion);
 		}
-		
+
 		// NOTE: Added custom LyricsMinimal CSS to override existing stuff in Monaco.
 		$css[] = array('url' => $wgStylePath.'/lyricsminimal/article.css?'.$wgStyleVersion);
 
@@ -708,7 +709,7 @@ EOF;
 		// loops lets it expect anything starting with "fb*" (because we need that for facebook connect).
 		// Perhaps we should have some system to let PersonalUrls hook work again on its own?
 		// - Sean Colombo
-		
+
 		foreach($tpl->data['personal_urls'] as $urlName => $urlData){
 			if(strpos($urlName, "fb") === 0){
 				$data[$urlName] = $urlData;
@@ -829,7 +830,7 @@ class LyricsMinimalTemplate extends QuickTemplate {
 $allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
 echo WikiaAssets::GetExtensionsCSS($this->data['csslinks-urls']);
-echo WikiaAssets::GetThemeCSS($skin->themename, $skin->skinname); 
+echo WikiaAssets::GetThemeCSS($skin->themename, $skin->skinname);
 echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone); // Common.css, Monaco.css, -
 echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
 ?>
@@ -883,7 +884,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 		$body_css_action = '';
 	}
 
-	
+
 	if(!isset($this->extraBodyClasses)){
 		// For extra classes to put on the body tag.  This allows overriding sub-skins to create selectors specific to their sub-skin (such as custom answers).
 		$this->extraBodyClasses = array();

@@ -82,6 +82,7 @@ class WikiaAssets {
 		$contentType = "";
 		$hadAnError = false;
 		if($type == 'CoreCSS') {
+			// used by LyricsMinimal only
 			$contentType = "text/css";
 			$themename = $wgRequest->getVal('themename');
 			$browser = $wgRequest->getVal('browser');
@@ -123,6 +124,7 @@ class WikiaAssets {
 				$hadAnError |= $errorOnThisCall;
 			}
 		} else if($type == 'SiteCSS') {
+			// used by LyricsMinimal only
 			$contentType = "text/css";
 			$out = '';
 			$themename = $wgRequest->getVal('themename');
@@ -134,6 +136,7 @@ class WikiaAssets {
 				$hadAnError |= $errorOnThisCall;
 			}
 		} else if($type == 'PrintCSS') {
+			// TODO: used by Oasis
 			$contentType = "text/css";
 			$out = '';
 			$cb = $wgRequest->getVal('cb');
@@ -144,6 +147,7 @@ class WikiaAssets {
 				$hadAnError |= $errorOnThisCall;
 			}
 		} else if($type == 'CoreJS') {
+			// used by LyricsMinimal only
 			$contentType = "text/javascript";
 			$references = array();
 
