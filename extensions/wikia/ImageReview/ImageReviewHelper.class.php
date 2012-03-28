@@ -465,7 +465,7 @@ class ImageReviewHelper extends WikiaModel {
 				array(
 					'GROUP BY'=> 'city_id',
 					'ORDER BY' => 'cnt desc', 
-					'HAVING' => 'cnt > 2000'
+					'HAVING' => 'cnt > 10000'
 				)
 			);
 
