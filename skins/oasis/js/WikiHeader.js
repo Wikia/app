@@ -492,7 +492,7 @@ var WikiHeaderV2 = {
 			}
 		});
 
-		menuNotes.each(function(menuItemKey, menuItem) {
+		menuNodes.each(function(menuItemKey, menuItem) {
 			widthLevelFirst += $(menuItem).width();
 		});
 		
