@@ -198,6 +198,19 @@ CKEDITOR.dialog.add( 'paste', function( editor )
 								container.setStyle( 'display', 'block' );
 								container.setStyle( 'height', ( iframe.$.offsetHeight + 2 ) + 'px' );
 							}
+							
+							var body = iframe.getFrameDocument().getBody();
+							body.on('paste', function(e) {
+							
+								setTimeout(function() {
+									var content = body.getHtml();
+	
+									editor.fire('pastedRemoveBG', content);
+						 			// TODO: get a return value from editor.fire instead of using RTE.tmpPasted
+						 			body.setHtml(RTE.tmpPasted);								
+									
+								}, 0);
+							});
 						},
 						commit : function( data )
 						{
