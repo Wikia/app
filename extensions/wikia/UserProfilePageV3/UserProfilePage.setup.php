@@ -22,7 +22,6 @@ $app->registerClass('UserIdentityBox', $dir . '/UserIdentityBox.class.php');
 //$app->registerClass('InterviewQuestion', $dir . '/InterviewQuestion.class.php');
 $app->registerClass('UserProfilePageRailHelper', $dir . '/UserProfilePageRailHelper.class.php');
 $app->registerClass('ImageOperationsHelper', $dir . '/ImageOperationsHelper.class.php');
-$app->registerClass('UserAvatarRemovePage', $dir . '/UserAvatarRemovePage.class.php');
 
 
 
