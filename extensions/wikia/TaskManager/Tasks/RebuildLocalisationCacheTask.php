@@ -62,6 +62,7 @@ class RebuildLocalisationCacheTask extends BatchTask {
 			. $this->mType
 			. '" /><fieldset>'
 			. '<legend>Add Rebuild Localisation Cache task</legend>'
+			. "<p>You are about to add a Rebuild Localisation Cache task to the TaskManager's queue. The task will be marked as successfully done immediately after form submission. It only means it has been successfully <em>queued</em> not performed. The localisation cache rebuild is performed on multiple servers independently. Each of the servers will report to the task log, once the process has been completed on that particular server. The notification will go to the log which corresponds to the <em>most recent</em> task of type rebuild_localisation_cache.</p>"
 			. '<div style="text-align: center;">'
 			. '<input type="submit" name="wpSubmit" value="Add task to queue" />'
 			. '</div></fieldset></form>';
