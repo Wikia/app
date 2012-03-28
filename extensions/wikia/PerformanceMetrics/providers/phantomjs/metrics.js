@@ -65,6 +65,7 @@ function getDomComplexity(page) {
 	var sum = 0, len = metrics.depthStack.length, pos = parseInt(len / 2);
 	metrics.depthStack.forEach(function(val) {sum += val});
 
+	metrics.maxElementsDepth = metrics.depthStack[metrics.depthStack.length - 1];
 	metrics.avgElementsDepth = (sum / len).toFixed(2);
 	metrics.medElementsDepth = (pos % 2 == 1) ? metrics.depthStack[pos] : ((metrics.depthStack[pos] + metrics.depthStack[pos-1]) / 2);
 
