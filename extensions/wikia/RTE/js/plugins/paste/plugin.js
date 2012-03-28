@@ -40,7 +40,7 @@ CKEDITOR.plugins.add('rte-paste',
 				// store HTML before paste
 				self.htmlBeforePaste = self.getHtml();
 
-				// handle pasted HTML (mainly for tracking stuff)
+				// handle pasted HTML for tracking and dom fixes
 				setTimeout(function() {
 					self.handlePaste(editor);
 				}, 250);
@@ -52,6 +52,10 @@ CKEDITOR.plugins.add('rte-paste',
 			if (typeof ev.data.text != 'undefined') {
 				self.track('plainText');
 			}
+		});
+		
+		editor.on('pastedRemoveBG', function(ev) {
+			RTE.tmpPasted = self.removeBG(ev.data);
 		});
 
 		// remove CSS added by WebKit when pasting the content (BugId:9841)
@@ -96,7 +100,7 @@ CKEDITOR.plugins.add('rte-paste',
 		}
 
 		var pasted = diff.pasted;
-
+		
 		// try to get instance data (city ID and RTE instance ID)
 		var matches = pasted.match(/data-rte-instance="([a-z0-9-]+)"/);
 		if (matches) {
@@ -122,14 +126,25 @@ CKEDITOR.plugins.add('rte-paste',
 			this.track('plainText');
 		}
 
+		var html;
 		// double single line breaks (<br />) - RT #38978
-		if (typeof diff.pasted == 'string') {
-			if ((/<br>/).test(diff.pasted)) {
+		if (typeof pasted == 'string') {
+			if ((/<br>/).test(pasted)) {
 				RTE.log('paste: detected line breaks in pasted content');
 
 				// let's replace single linebreaks with HTML <br />
-				var html = diff['new'].replace(/([^>])<br>([^<])/g, '$1<br data-rte-washtml="1" />$2');
-				editor.setData(html,function(){
+				html = diff['new'].replace(/([^>])<br>([^<])/g, '$1<br data-rte-washtml="1" />$2');
+				editor.setData(html, function(){
+					editor.fire('afterPaste');
+				});
+				afterPasteScheduled = true;
+			}
+
+			var newPasted = this.removeBG(pasted);
+			if(newPasted != pasted) {
+				html = diff.prefix + newPasted + diff.suffix;
+	
+				editor.setData(html, function(){
 					editor.fire('afterPaste');
 				});
 				afterPasteScheduled = true;
@@ -184,7 +199,7 @@ CKEDITOR.plugins.add('rte-paste',
 
 		if (/^[^<]*>/.test(suffix)) {
 			// go to first > in suffix
-			idx.end += suffix.indexOf('>') + 1;
+			idx.end += suffix.indexOf('>');
 		}
 
 		// get changed fragment
@@ -195,6 +210,26 @@ CKEDITOR.plugins.add('rte-paste',
 		suffix = n.substring(idx.end + 1, n.length);
 
 		return {pasted: pasted, prefix: prefix, suffix: suffix, 'new': n, 'old': o, 'start': idx.start, 'end': idx.end};
+	},
+	
+	// remove all incoming background-color style rules (BugId:23788)
+	removeBG: function(pasted) {
+		var doRemove = function(content) {
+			var bgIndex = content.indexOf('background-color');
+
+			if (bgIndex > -1) {
+				var startPos = bgIndex,
+					// include the ";" in the string to remove
+					endPos = content.indexOf(";",bgIndex) + 1,
+					// get the text before and after the background-color styles
+					newContent = content.substring(0,startPos) + content.substring(endPos, content.length);
+				// make sure we got all instances
+				return doRemove(newContent);
+			} else {
+				return content;
+			}
+		}
+		return doRemove(pasted);
 	}
 });
 
@@ -206,3 +241,5 @@ CKEDITOR.plugins.add('rte-paste',
  * config.forcePasteInDialog = false;
  */
 CKEDITOR.config.forcePasteInDialog = false;
+
+RTE.tmpPasted = '';
