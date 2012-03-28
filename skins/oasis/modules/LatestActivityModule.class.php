@@ -11,24 +11,9 @@ class LatestActivityModule extends Module {
 		wfProfileIn(__METHOD__);
 		$maxElements = 4;
 		
-		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgOut, $wgTitle, $wgEnableUserProfilePagesExt, $wgUserProfilePagesNamespaces;
+		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgOut, $wgTitle, $wgUserProfilePagesNamespaces;
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestActivity.js"></script>');
 		$this->moduleHeader = wfMsg('oasis-activity-header');
-		
-		// TODO: add comment
-		// I think it could be removed
-		// because it seems to be a wiki activity of a user
-		// in rail module on his profile page -- fb#12692
-		if( !empty( $wgEnableUserProfilePagesExt ) && UserProfilePage::isAllowed() ) {
-			$userPage = UserProfilePage::getInstance( $wgTitle );
-			$user = ( !empty( $userPage ) ) ? $userPage->getUser() : null;
-			$userId = ( !empty( $user ) ) ? $user->getId() : 0;
-			
-			if( !empty( $userId ) ) {
-				$this->userName = $user->getName();
-				$this->moduleHeader = wfMsg('userprofilepage-recent-activity-title', array( $this->userName ));
-			}
-		}
 		
 		if( empty($this->userName) ) {
 			$mKey = wfMemcKey('mOasisLatestActivity');
