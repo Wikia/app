@@ -46,7 +46,6 @@ class Track {
 	public function getViewJS ($param=null) {
 		$url = Track::getURL('view', '', $param);
 
-		// TODO: is beaconCookie used anywhere?
 		$script = <<<SCRIPT1
 <noscript><img src="$url" width="1" height="1" border="0" alt="" /></noscript>
 <script type="text/javascript">
