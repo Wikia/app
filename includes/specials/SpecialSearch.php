@@ -30,7 +30,7 @@
  */
 function wfSpecialSearch( $par = '' ) {
 	global $wgRequest, $wgUser;
-	global $wgUseWikiaSearchUI, $wgOut;
+	global $wgUseWikiaSearchUI, $wgOut, $wgDisableGoResult;
 	// Strip underscores from title parameter; most of the time we'll want
 	// text form here. But don't strip underscores from actual text params!
 	$titleParam = str_replace( '_', ' ', $par );
@@ -40,7 +40,8 @@ function wfSpecialSearch( $par = '' ) {
 	$searchPage = new $class( $wgRequest, $wgUser );
 	if( $wgRequest->getVal( 'fulltext' )
 		|| !is_null( $wgRequest->getVal( 'offset' ))
-		|| !is_null( $wgRequest->getVal( 'searchx' )) )
+		|| !is_null( $wgRequest->getVal( 'searchx' ))
+		|| !empty($wgDisableGoResult))
 	{
 		$searchPage->showResults( $search );
 	} else {
