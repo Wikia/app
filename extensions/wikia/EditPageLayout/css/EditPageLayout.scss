@@ -298,6 +298,21 @@ body {
 				min-height: 320px;
 				padding: 10px;
 			}
+			/**
+			 *	FB#8087 - styling for interlanguage links in RTE popup preview
+			 */
+			.WikiaArticleInterlang {
+			    h3 {
+			        margin: 2px 14px 0 0;
+					font: {
+						size: 14px;
+						weight: normal;
+					}
+				}
+				ul {
+					list-style: none;
+				}
+			}
 		}
 	}
 }
