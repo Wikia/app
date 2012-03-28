@@ -163,6 +163,7 @@
 .CorporateFooter  {
 	@include clearfix;
 	clear: both;
+	font-size: 11px;
 	padding-bottom: 10px;
 	nav {
 		margin-top: 15px;
@@ -194,8 +195,8 @@
 		float: right;
 		list-style: none outside none;
 		margin: {
-			top: 5px;
-			bottom: 10px;
+			top: 8px;
+			bottom: 7px;
 		}
 		display: inline-block;
 		*width: 1000px; // /** IE 7  **/

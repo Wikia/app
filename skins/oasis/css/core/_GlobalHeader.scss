@@ -26,6 +26,10 @@
 		&:first-child {
 			border: 0;
 		}
+		&.start-a-wiki {
+			border-left: 1px solid mix($color-header-text, $color-header, 20%);
+			margin-top: 5px;
+		}
 	}
 	li > .wikia-button {
 		border: 1px solid mix($color-buttons, $color-page, 35%);
@@ -35,7 +39,7 @@
 		line-height: 16px;
 		padding: 1px 12px 0px;
 		position: relative;
-		top: 1px;
+		top: 2px;
 	}
 	.chevron {
 		border-top-color: mix($color-header-text, $color-header);
@@ -45,7 +49,7 @@
 		padding-right: 23px;
 		a {
 			position: relative;
-			top: -4px;
+			top: -5px;
 		}
 	}
 	.banner-corner-left,
@@ -102,7 +106,7 @@
 		@include clearfix;
 		@include box-shadow(0, 5px, 10px, rgba(#000, .5));
 		background: $color-page;
-		border-width: 2px 4px 4px;
+		border-width: 0px 4px 4px;
 		border-style: solid;
 		border-color: #000;
 		display: none;
