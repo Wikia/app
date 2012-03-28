@@ -432,7 +432,7 @@ class ModuleDataTest extends WikiaBaseTest {
 	}
 
 	function testBodyModule() {
-		global $wgTitle, $wgEnableUserProfilePagesExt, $wgOasisNavV2;
+		global $wgTitle,  $wgOasisNavV2;
 
 		//Special pages should have no modules
 		$wgTitle = Title::newFromText('Special:SpecialPages');
@@ -458,9 +458,6 @@ class ModuleDataTest extends WikiaBaseTest {
 		$railList = $moduleData['railModuleList'];
 		$this->assertEquals($railList[1101][0], 'FollowedPages');
 
-		if( !empty($wgEnableUserProfilePagesExt) ) {
-			$this->assertEquals($railList[1350][0], 'Achievements');
-		}
 
 		// Assert that content page has a Search Module
 		$wgTitle = Title::newFromText('Foo');
