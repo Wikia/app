@@ -266,6 +266,7 @@ class ImageReviewHelper extends WikiaModel {
 
 		$where[] = 'image_review.wiki_id=pages.page_wikia_id';
 		$where[] =  'image_review.page_id=pages.page_id';
+		$random = rand(0, 10000);
 
 		$result = $db->select(
 			array( 'image_review', 'pages' ),
@@ -274,7 +275,9 @@ class ImageReviewHelper extends WikiaModel {
 			__METHOD__,
 			array(
 				'ORDER BY' => $this->getOrder($order),
-				'LIMIT' => self::LIMIT_IMAGES_FROM_DB )
+				'LIMIT' => self::LIMIT_IMAGES_FROM_DB,
+				'OFFSET' => $random
+				)
 		);
 
 		$rows = array();
