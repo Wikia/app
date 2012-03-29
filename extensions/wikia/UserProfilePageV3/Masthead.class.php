@@ -37,7 +37,7 @@ class Masthead {
 	 */
 	public $userPageUrl = null;
 
-	public function __construct( $user ) {
+	public function __construct( $user = null ) {
 		wfProfileIn( __METHOD__ );
 		if(!empty($user) && ($user instanceof User)) {
 			$this->mUser = $user;			
