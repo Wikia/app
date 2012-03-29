@@ -266,7 +266,12 @@ class ImageReviewHelper extends WikiaModel {
 
 		$where[] = 'image_review.wiki_id=pages.page_wikia_id';
 		$where[] =  'image_review.page_id=pages.page_id';
-		$random = rand(0, 10000);
+
+		// Temporary fix for lots of reviewers getting duplicate images (due to slow queries)
+		// Using a random offset on the query makes it much less likely (remove when fixed for real)
+		$random_offset = 0;
+		if ($state == self::STATE_UNREVIEWED)
+			$random_offset = rand(0, 10000);
 
 		$result = $db->select(
 			array( 'image_review', 'pages' ),
@@ -276,7 +281,7 @@ class ImageReviewHelper extends WikiaModel {
 			array(
 				'ORDER BY' => $this->getOrder($order),
 				'LIMIT' => self::LIMIT_IMAGES_FROM_DB,
-				'OFFSET' => $random
+				'OFFSET' => $random_offset
 				)
 		);
 
