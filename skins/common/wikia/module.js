@@ -35,6 +35,7 @@ if(!window.require && !window.define){
 					modules[mod] = m;
 			}
 
+			//if undefined this will trigger an error in the calling code, making debugging easier
 			return m;
 		}
 
