@@ -1643,7 +1643,7 @@ class Wikia {
 		$key = wfSharedMemcKey('const_values', $name);
 		$value = $wgMemc->get($key);
 
-		if ( !is_int($value) ) {
+		if ( is_null($value) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), 'specials' );
 
 			$oRes = $dbr->select('const_values', array('val'), array( 'name' =>  $name ), __METHOD__ );
