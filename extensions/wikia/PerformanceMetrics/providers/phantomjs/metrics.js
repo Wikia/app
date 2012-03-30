@@ -78,10 +78,36 @@ page.onLoadStarted = function () {
     page.startTime = new Date();
 };
 
-// count requests made
-page.requests = 0;
+// monitor requests made (BugId:26332)
+page.requests = [];
 page.onResourceRequested = function(res) {
-	page.requests++;
+	//console.log('req [#' + res.id + ']: ' + res.url  + ' (' +  JSON.stringify({time:res.time}) + ')');
+
+	page.requests[res.id] = {
+		url: res.url,
+		sendTime: res.time
+	};
+};
+
+page.onResourceReceived = function(res) {
+	var entry = page.requests[res.id];
+
+	//console.log('recv [' + res.stage + ' #' + res.id + ']: ' + res.url + ' (' +  JSON.stringify({time:res.time}) + ')');
+
+	switch (res.stage) {
+		case 'start':
+			entry.recvStartTime = res.time;
+			entry.timeToFirstByte = res.time - entry.sendTime;
+			break;
+
+		case 'end':
+			entry.recvEndTime = res.time;
+			entry.lastByte = res.time - entry.sendTime;
+			entry.receive = entry.lastByte - entry.timeToFirstByte;
+
+			//console.log('resource [#' + res.id +'] ' + JSON.stringify(entry));
+			break;
+	}
 };
 
 // load the emit and print out the metrics
@@ -95,7 +121,8 @@ page.open(address, function(status) {
 			}),
 			metrics = {
 				loadTime: new Date() - page.startTime,
-				requests: page.requests
+				requests: page.requests.length,
+				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte)
 			};
 
 			// evaluate DOM complexity
