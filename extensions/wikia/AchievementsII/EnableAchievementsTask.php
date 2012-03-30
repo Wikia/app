@@ -35,15 +35,15 @@ class EnableAchievementsTask extends BatchTask {
 
 		$this->mTaskID = $params->task_id;
 
-		// task params 
+		// task params
 		$data = unserialize($params->task_arguments);
-				
+
                 // start task
 		$this->addLog('Starting task.');
 
 		// command
-		$sCommand  = "SERVER_ID={$data["wiki"]} php " . dirname( __FILE__ ) . "/awardCreatorBadge.php --conf $wgWikiaLocalSettingsPath";
-                $this->addLog( $sCommand );
+		$sCommand  = "SERVER_ID={$data['wiki']} php " . dirname( __FILE__ ) . "/awardCreatorBadge.php --conf $wgWikiaLocalSettingsPath";
+		$this->addLog( $sCommand );
 
 		$log = wfShellExec( $sCommand, $retval );
 		if ($retval) {
