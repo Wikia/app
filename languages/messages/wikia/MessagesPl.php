@@ -148,11 +148,4 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 
 # Wikia.php
 'rcshowhidelogs' => '$1 logi',
-
-# Hub names
-'hub-Entertainment' => 'Rozrywka',
-'hub-Gaming' => 'Gry wideo',
-'hub-Video_Games' => 'Gry wideo',
-'hub-Lifestyle' => 'Lifestyle',
-'hub-Wikia' => 'Wikia',
 ) );
