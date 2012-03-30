@@ -1,21 +1,3 @@
-// profile jQuery selectors
-jQuery.findOrig = jQuery.find;
-jQuery.selectors = 0;
-jQuery.selectorsTime = 0;
-
-jQuery.find = function() {
-	var time = new Date(),
-		ret = this.findOrig.apply(this, arguments);
-
-	time = (new Date() - time);
-	$().log(arguments, '$.find [' + time + ' ms]');
-
-	jQuery.selectors++;
-	jQuery.selectorsTime += time;
-
-	return ret;
-}
-
 jQuery.getSassCommonURL = function(scssFilePath, params) {
 	return jQuery.getSassURL(wgCdnRootUrl, scssFilePath, params);
 }
@@ -553,7 +535,7 @@ jQuery.fn.placeholder = function() {
 	var hasNativeSupport = 'placeholder' in document.createElement('input');
 
 	return this.each(function() {
-
+	
 		if(!hasNativeSupport){
 			var input = $(this);
 			var text = input.attr('placeholder');
@@ -586,7 +568,7 @@ jQuery.fn.placeholder = function() {
 					input.val('');
 				}
 			});
-		}
+		}	
 	})
 }
 
@@ -741,7 +723,7 @@ Observable = $.createClass(Object,{
 		}
 		return true;
 	},
-
+	
 	proxy: function(func) {
 		return $.proxy(func, this);
 	},
@@ -1105,7 +1087,7 @@ $(function() {
 });
 
 // http://bit.ly/ishiv | WTFPL License
-// IE < 9 fix for inserting HTML5 elements into the dom.
+// IE < 9 fix for inserting HTML5 elements into the dom. 
 
 // Add 2nd param of False to return jQuery-friendly object instead of document fragment
 
