@@ -7,7 +7,7 @@
 	 */
 	WE.plugins.wikiacore = $.createClass(WE.plugin,{
 
-		requires: ['core', 'noticearea', 'loadingstatus','pagecontrols', 'restoreedit', 'autoresizer','edittools',
+		requires: ['core', 'noticearea', 'loadingstatus','pagecontrols', /*'restoreedit',*/ 'autoresizer','edittools',
 			'widemodemanager', 'railminimumheight', 'tracker', 'cssloadcheck', 'preloads',
 			'leaveconfirm']
 
