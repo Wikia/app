@@ -79,7 +79,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		$res = array();
 
 		//find all the script tags, including inlined and conditionals
-		preg_match_all( '/(<!--\[if[^>]+>)?<script[^>]*>.*<\/script>(<!\[[^>]*endif[^>]+-->)?/imsU', $scriptTags, $matches );
+		preg_match_all( '/(<!--\[\s*if[^>]+>.*<!\[\s*endif[^>]+-->|<script[^>]*>.*<\/script>)/imsU', $scriptTags, $matches );
 
 		if ( !empty( $matches[0] ) ) {
 			foreach ( $matches[0] as $m ) {
@@ -119,7 +119,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		$res = array();
 
 		//find all the link tags, including conditionals
-		preg_match_all( '/(<!--\[if[^>]+>)?<link[^>]*>(<!\[[^>]*endif[^>]+-->)?/im', $stylesTags, $matches );
+		preg_match_all( '/(<!--\[\s*if[^>]+>\s*<link[^>]*>\s*<!\[\s*endif[^>]+-->|<link[^>]*>)/imsU', $stylesTags, $matches );
 
 		if ( !empty( $matches[0] ) ) {
 			foreach ( $matches[0] as $m ) {
@@ -138,7 +138,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		}
 
 		//find all the inline style tags, including conditionals
-		preg_match_all( '/(<!--\[if[^>]+>)?<style[^>]*>.*<\/style>(<!\[[^>]*endif[^>]+-->)?/imsU', $stylesTags, $matches );
+		preg_match_all( '/(<!--\[\s*if[^>]+>\s*<style[^>]*>.*<\/style>\s*<!\[\s*endif[^>]+-->|<style[^>]*>.*<\/style>)/imsU', $stylesTags, $matches );
 
 		if ( !empty( $matches[0] ) ) {
 			foreach ( $matches[0] as $m ) {

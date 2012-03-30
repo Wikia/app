@@ -52,7 +52,6 @@ class WikiaMobileService extends WikiaService {
 		$skin = $this->wg->user->getSkin();
 		$jsBodyPackages = array( 'wikiamobile_js_body' );
 		$scssPackages = array( 'wikiamobile_scss' );
-		$bottomscripts = '';
 		$jsBodyFiles = '';
 		$jsHeadFiles = '';
 		$cssLinks = '';
@@ -110,21 +109,8 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		//Bottom Scripts
-		$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
-		$matches = array();
-
-		//find the src if set
-		preg_match_all( '/<script[^>]+src=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $bottomscripts, $matches );
-		
-		if ( !empty( $matches[1] ) ) {
-			foreach ( $matches[1] as $s ) {
-				//packages/assets are enqueued via an hook, let's make sure we should actually let them through
-				if ( $assetsManager->checkAssetUrlForSkin( $s, $skin->getSkinName(), $skin->isStrict() ) ) {
-					//HTML5 standard, no type attribute required == smaller output
-					$jsBodyFiles .= "<script src=\"{$s}\"></script>";
-				}
-			}
-		}
+		//do not run this hook, all the functionalities hooking in this don't take into account the pecularity of the mobile skin
+		//$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
 
 		//AppCache will be disabled for the first several releases
 		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
@@ -149,7 +135,6 @@ class WikiaMobileService extends WikiaService {
 			'copyrightLink' => str_replace( 'CC-BY-SA', $this->wf->msg( 'wikiamobile-footer-link-license' ), $this->templateObject->get( 'copyright' ) )
 		) );
 		$this->jsBodyFiles = $jsBodyFiles;
-		$this->bottomscripts = $bottomscripts;
 
 		//tracking
 		$isEditing = in_array( $this->wg->request->getVal( 'action' ), array( 'edit', 'submit' ) );
