@@ -1,3 +1,8 @@
+<?php if(!empty($subHeaderText )): ?>
+<h2 id="lightbox-subheader">
+	<?= $subHeaderText ?><?php if(!empty($subHeaderLinkAnchor)): ?> <a href='<?= $subHeaderLinkAnchor; ?>'><?= $subHeaderLinkText; ?></a><?php endif; ?>
+</h2>
+<?php endif; ?>
 <?php if ($showShareTools) { ?>
 <style type="text/css">
 #lightbox-share-buttons a {
@@ -62,15 +67,22 @@
 	width: 100% !important;
 	*width: auto !important;
 }
+#lightbox-subheader {
+	position: absolute;
+	top: 45px;
+	font-size:12px;
+}
 </style>
 <div id="lightbox-share">
+	<?php if(!$showEmbedCodeInstantly): ?>
 	<div id="lightbox-share-buttons" class="neutral modalToolbar clearfix">
 		<a class="wikia-button secondary" data-func="embed">
 			<img width="0" height="0" class="sprite embed" src="<?= $wgBlankImgUrl ?>">
 			<?= wfMsg('lightbox-share-button-embed') ?>
 		</a>
 	</div>
-	<div class="lightbox-share-area" data-func="embed" style="display:none">
+	<?php endif; ?>
+	<div class="lightbox-share-area" data-func="embed" <?php if(!$showEmbedCodeInstantly): ?>style="display:none"<?php endif; ?>>
 		<table class="share-code">
 			<colspan>
 				<col width="*" />
