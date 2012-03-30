@@ -210,21 +210,31 @@ $config['wikiamobile_js_body'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		//feature detection and polifills go first
 		'//skins/common/modernizr/modernizr.wikiamobile.min.js',
 		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
 		'//skins/common/wikia/outerhtml.js',
+
+		//platform components
+		'//skins/common/wikia/module.js',
 		'//skins/common/wikia/cache.js',
+		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
+		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js',
+
+		//framework
 		'//skins/common/zepto/zepto.getcss.js',
 		'//skins/common/zepto/zepto.wikiamobile.js',
 		'//skins/common/zepto/zepto.modal.wikiamobile.js',
-		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
+
+		//tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
+
+		//skin entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js',
 
 		//extensions with assets to load on every page
 		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js'
@@ -342,33 +352,33 @@ $config['eplrte'] = array(
 
 // Javascript for the MiniEditor
 $config['mini_editor_js'] = array(
-		'type' => AssetsManager::TYPE_JS,
-		'assets' => array(
-				'//skins/common/edit.js',
-				'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
-				'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
-				'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
-				'//extensions/wikia/EditPageLayout/js/plugins/MiniEditor.js',
-				'//extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
-				'//extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
-				'//extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
-				'//extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
-				'//extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
-				'//extensions/wikia/EditPageLayout/js/extras/Buttons.js',
-				'//extensions/wikia/EditPageLayout/js/modules/Container.js',
-				'//extensions/wikia/EditPageLayout/js/modules/ButtonsList.js',
-				'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditor.js',
-				'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditorSource.js',
-				'//extensions/wikia/EditPageLayout/js/modules/Insert.js',
-				'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
-				'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
-				// TODO: Load this on the fly with JSSnippets. Only thing really needed is slider (so far)
-'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
-'//extensions/wikia/VideoEmbedTool/js/VET.js',
-'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
-'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
-//'extensions/wikia/LinkSuggest/LinkSuggest.js'
-)
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins/common/edit.js',
+		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
+		'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
+		'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/MiniEditor.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
+		'//extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
+		'//extensions/wikia/EditPageLayout/js/extras/Buttons.js',
+		'//extensions/wikia/EditPageLayout/js/modules/Container.js',
+		'//extensions/wikia/EditPageLayout/js/modules/ButtonsList.js',
+		'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditor.js',
+		'//extensions/wikia/EditPageLayout/js/modules/FormatMiniEditorSource.js',
+		'//extensions/wikia/EditPageLayout/js/modules/Insert.js',
+		'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
+		'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
+		// TODO: Load this on the fly with JSSnippets. Only thing really needed is slider (so far)
+		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
+		'//extensions/wikia/VideoEmbedTool/js/VET.js',
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
+		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
+		//'extensions/wikia/LinkSuggest/LinkSuggest.js'
+	)
 );
 
 // Javascript for the MiniEditor with RTE enabled
