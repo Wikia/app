@@ -1,0 +1,52 @@
+//mixins
+@import "mixins/transition.scss";
+
+#fllScrImg {
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.chnImg {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 15%;
+	background-repeat: no-repeat;
+	background-position: center;
+	@include transition(all .5s ease-in);
+
+	.hdn & {
+		opacity: .2;
+	}
+
+	div{
+		bottom: 50%;
+    	border-width: 10px;
+    	border-style: solid;
+    	position: absolute;
+	}
+}
+
+#nxtImg {
+	right: 0;
+	div {
+		border-color: transparent transparent transparent rgb(157,157,157);
+		right: 10px;
+	}
+}
+
+#prvImg {
+	left: 0;
+	div {
+		border-color: transparent rgb(157,157,157) transparent transparent;
+		left: 10px;
+	}
+}
+
+#wkShrImg {
+	float: left;
+	margin: 2px 0;
+}

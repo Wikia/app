@@ -46,9 +46,6 @@ if(!window.require && !window.define){
 		window.require = function(mod, callback){
 			var m;
 
-			if(!(callback instanceof Function))
-				throw "Missing or wrong callback referenced";
-
 			if(typeof mod === 'string'){
 				m = getModule(mod);
 			}else if(mod instanceof Array){
@@ -62,6 +59,8 @@ if(!window.require && !window.define){
 
 			if(callback instanceof Function)
 				callback.apply(window, m);
+
+			return m;
 		};
 
 		/**
@@ -95,5 +94,6 @@ if(!window.require && !window.define){
 				throw "module name missing";
 			}
 		};
+		window.mod = modules;
 	})();
 }

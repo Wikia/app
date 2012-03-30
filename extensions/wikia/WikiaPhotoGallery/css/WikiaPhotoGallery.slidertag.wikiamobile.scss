@@ -7,7 +7,7 @@
 	overflow: hidden;
 	margin: 5px auto;
 }
-.wikiaPhotoGallery-slider-body {
+.wikiaPhotoGallery-slider-body{
 	clear:both;
 	overflow: hidden;
 	position: relative;
@@ -32,8 +32,8 @@
 		bottom: 5px;
 		height: 60px;
 		width: 24%;
-		z-index: 10;
 		text-align:center;
+		z-index:1;
 
 		img {
 			cursor: pointer;
@@ -63,10 +63,14 @@
 		opacity: 0;
 		position: absolute;
 		width: 100%;
-		z-index: 1;
 		line-height: 1.2em;
 		background-color: $descriptionBackgroundColor;
 		pointer-events: none;
+		z-index:1;
+		-webkit-transition: opacity .6s;
+		-moz-transition: opacity .6s;
+		-o-transition: opacity .6s;
+		transition: opacity .6s;
 
 		h2, p {
 			margin: 0 0 0 5px;

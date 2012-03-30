@@ -25,7 +25,7 @@
 	width: 135px;
 	height: 135px;
 	background-color: $link-color;
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAALElEQVQImW3KwQkAMAzDQHe/7L/O9VUoSQz6SD7Isgo6hayyh/pPq3xhSOQCT55ebZXPf+gAAAAASUVORK5CYII=);
+	background-image:  url('/extensions/wikia/WikiaMobile/images/exhibition-placeholder.png.png'); /* base64 */
 	display: inline-block;
 }
 
@@ -116,6 +116,7 @@
 	font-size: medium;
 	color: $page-text-alternate-color;
 	font-weight: 100;
+	margin-left: 5px;
 }
 
 header {

@@ -3,7 +3,6 @@
 
 //mixins
 @import "mixins/transition.scss";
-@import "mixins/box-sizing.scss";
 
 #wkMdlWrp {
 	position:absolute;
@@ -18,7 +17,7 @@
 	z-index: $highest-z-index + 1000;
 	@include transition(opacity 1s);
 
-	&.mdlShw {
+	&.open {
 		opacity: 1;
 		display: block;
 	}
@@ -36,7 +35,7 @@
 	background-color: rgba(0,0,0,.8);
 	@include transition(top .5s ease-in);
 
-	&.hdn {
+	.hdn & {
 		top: -100%;
 	}
 }
@@ -45,14 +44,6 @@
 	width: 100%;
 	height: 100%;
 	background-color: $footerBackground;
-
-	.fllScrImg {
-		width: 100%;
-		height: 100%;
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: contain;
-	}
 
 	&>p{
 		margin: 0;
@@ -71,10 +62,11 @@
 	color: white;
 	line-height: 20px;
 	z-index: $highest-z-index + 1005;
+	font-weight: 100;
 	@include transition(bottom .5s ease-in);
 	display: none;
 
-	&.hdn {
+	.hdn & {
 		bottom: -100%;
 	}
 }
@@ -87,56 +79,7 @@
 	background-position: 27px 7px;
 }
 
-.chnImgBtn {
-	position: absolute;
-	top: 0;
-	height: 100%;
-	width: 15%;
-	background-repeat: no-repeat;
-	background-position: center;
-
-	@include transition(all .5s ease-in);
-	&.hdn {
-		opacity: .2;
-	}
-}
-
-.oneImg {
-	.chnImgBtn {
-		display:none;
-	}
-}
-
-.chnImgChv {
-	bottom: 50%;
-	border-width: 10px;
-	border-style: solid;
-	position: absolute;
-}
-
-#nxtImg {
-	right: 0;
-	.chnImgChv {
-		border-color: transparent transparent transparent rgb(157,157,157);
-		right: 10px;
-	}
-}
-
-
-#prvImg {
-	left: 0;
-	.chnImgChv {
-		border-color: transparent rgb(157,157,157) transparent transparent;
-		left: 10px;
-	}
-}
-
-.imgMdl #wkShrImg {
-	display: block;
-}
-
-#wkShrImg {
-	display: none;
+#wkMdlTlBar{
+	margin-right: 51px;
 	float: left;
-	margin: 2px 0;
 }

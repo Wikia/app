@@ -9,45 +9,77 @@ window.Wikia = window.Wikia || {};
 /**
  *	request - json of key value pairs
  *  keys:
- *		templates - an array of object with the following fields: controllerName, methodName and an optional params
+ *		templates - an array of objects with the following fields: controllerName, methodName and an optional params
  *		styles - comma-separated list of SASS files
  *		scripts - comma-separated list of AssetsManager groups
  *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
  *		ttl - cache period for both varnish and browser (in seconds)
- *
- *  callback - function to be called with fetched JSON object
+ *		callback - function to be called with fetched JSON object
  *
  *  Returns object with all requested resources
  *
  *  Example: Wikia.getMultiTypePackage({
- * 		messages: 'EditPageLayout',
- * 		scripts: 'oasis_jquery,yui',
- * 		templates: [{
- * 			controllerName: 'UserLoginSpecialController',
- * 			methodName: 'index'
+ *		messages: 'EditPageLayout',
+ *		scripts: 'oasis_jquery,yui',
+ *		templates: [{
+ *			controllerName: 'UserLoginSpecialController',
+ *			methodName: 'index'
  *		}]
- * 	});
+ *	});
  */
-window.Wikia.getMultiTypePackage = function(request, callback) {
-	// add a cache buster
-	request = request || {};
-	request.cb = wgStyleVersion;
+window.Wikia.getMultiTypePackage = function(options) {
+	var request = {},
+		styles = options.styles,
+		scripts = options.scripts,
+		messages = options.messages,
+		templates = options.templates,
+		callback = options.callback,
+		ttl = options.ttl,
+		send = false;
 
-	// JSON encode templates entry
-	if (typeof request.templates === 'object') {
-		request.templates = JSON.stringify(request.templates);
+	if(typeof styles === 'string'){
+		request.styles = styles;
+		send = true;
 	}
 
-	$.nirvana.getJson('AssetsManagerController', 'getMultiTypePackage', request, function(resources) {
-		// "register" JS messages
-		if (resources.messages) {
-			wgMessages = $.extend(wgMessages, resources.messages);
+	if(typeof scripts === 'string'){
+		request.scripts = scripts;
+		send = true;
+	}
+
+	if(typeof messages === 'string'){
+		request.messages = messages;
+		send = true;
+	}
+
+	if(templates instanceof Array){
+		// JSON encode templates entry
+		request.templates = (typeof templates === 'object') ? JSON.stringify(templates) : templates;
+		send = true;
+	}
+
+	if(send){
+		// add a cache buster
+		request.cb = wgStyleVersion;
+
+		if(typeof ttl === 'string'){
+			request.ttl = ttl;
 		}
 
-		if (typeof callback === 'function') {
-			callback(resources);
-		}
-	});
+		$.nirvana.getJson('AssetsManagerController', 'getMultiTypePackage', request, function(resources) {
+			// "register" JS messages
+			if (resources.messages) {
+				wgMessages = $.extend(wgMessages, resources.messages);
+			}
+
+			if (typeof callback === 'function') {
+				callback(resources);
+			}
+		});
+	}else{
+		throw 'No resources to load specified';
+	}
+
 };
 
 /**
