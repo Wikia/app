@@ -91,6 +91,27 @@
     &.logo4 {
         background-position: 0px 0px;
     }
+    &.hub9,
+    &.hub2,
+    &.hub3 {
+        display: block;
+        text-indent: -9999px;
+        height: 11px;
+        position: relative;
+    }
+    &.hub9 {
+        background-position: -210px -16px;
+        width: 52px;
+
+    }
+    &.hub2 {
+        background-position: -60px -16px;
+        width: 65px;
+    }
+    &.hub3 {
+        background-position: -130px -16px;
+        width: 77px;
+    }
 
 	//My Tools Configuration
 	&.drag {
