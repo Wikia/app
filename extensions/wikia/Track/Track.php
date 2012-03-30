@@ -88,6 +88,7 @@ SCRIPT1;
 	public function addGlobalVars($vars) {
 		global $wgUser;
 		$vars['wgTrackID'] = $wgUser->getId() ? $wgUser->getId() : 0;
+		$vars['wgUserIP'] = wfGetIp();
 		return true;
 	}
 }
