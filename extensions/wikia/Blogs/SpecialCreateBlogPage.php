@@ -141,6 +141,14 @@ class CreateBlogPage extends SpecialCustomEditPage {
 				$this->invalidateCacheConnected( $article );
 				$this->createListingPage();
 
+				// BugID:25123 purge the main blog listing pages cache
+				global $wgMemc;
+				$user = $article->getTitle()->getBaseText();
+				$ns = $article->getTitle()->getNSText();
+				foreach( range(0, 5) as $page ) {
+					$wgMemc->delete( wfMemcKey( 'blog', 'listing', $ns, $user, $page ) );
+				}
+
 				$this->out->redirect($article->getTitle()->getFullUrl());
 				break;
 
