@@ -19,7 +19,7 @@ $messages['en'] = array(
 
 	'wikiahome-stats-heading' => 'Collaboration in action',
 	'wikiahome-stats-content' => 'Measuring the revolution of media.',
-	'wikiahome-stats-visitors' => 'People this month',
+	'wikiahome-stats-visitors' => 'People in a month',
 	'wikiahome-stats-edits' => 'Changes today',
 	'wikiahome-stats-communities' => 'Communities',
 	'wikiahome-stats-totalpages' => 'Total Pages',

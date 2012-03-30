@@ -85,20 +85,26 @@ class WikiaHomePageController extends WikiaController {
 			$stats['visitors'] =  $this->getStatsFromArticle( 'StatsVisitors' );
 			$stats['edits'] = $this->getEdits();
 			$stats['communities'] = $this->getStatsFromArticle( 'StatsCommunities' );
-			$stats['totalPages'] = Wikia::get_content_pages();
+
+			$defaultTotalPages = $this->getStatsFromArticle( 'StatsTotalPages' );
+			$totalPages = Wikia::get_content_pages();
+			$stats['totalPages'] = ( $totalPages > $defaultTotalPages ) ? $totalPages : $defaultTotalPages ;
 			
 			$this->wg->Memc->set( $memKey, $stats, 60*60*1 );
 		}
 
 		foreach( $stats as $key => $value ) {
 			$this->$key = $this->wg->Lang->formatNum( $value );
+			if ( $key == 'communities' ) {
+				$this->$key = $this->$key.'+';
+			}
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
 	}
 
 	/**
-	 * get unique visitors last 30 days
+	 * get unique visitors last 30 days (exclude today)
 	 * @return integer edits 
 	 */
 	protected function getVisitors() {
@@ -110,19 +116,17 @@ class WikiaHomePageController extends WikiaController {
 
 			// for testing
 			if ( $this->wg->DevelEnvironment ) {
-				// include today
 				$row = $db->selectRow( 
 					array( 'page_views' ), 
 					array( 'sum(pv_views) cnt' ),
-					array( "pv_use_date > date_format(curdate() - interval 31 day,'%Y%m%d')" ),
+					array( "pv_use_date between date_format(curdate() - interval 30 day,'%Y%m%d') and date_format(curdate(),'%Y%m%d')" ),
 					__METHOD__
 				);
 			} else {
-				// exclude today
 				$row = $db->selectRow( 
 					array( 'google_analytics.pageviews' ), 
 					array( 'sum(pageviews) cnt' ),
-					array( "date > curdate() - interval 31 day" ),
+					array( "date between curdate() - interval 30 day and curdate()" ),
 					__METHOD__
 				);
 			}
@@ -138,7 +142,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	/**
-	 * get number of edits made in the last 24 hours
+	 * get number of edits made yesterday
 	 * @return integer edits 
 	 */
 	protected function getEdits() {
@@ -151,7 +155,7 @@ class WikiaHomePageController extends WikiaController {
 			$row = $db->selectRow( 
 				array( 'events' ), 
 				array( 'count(*) cnt' ),
-				array( 'event_date > now() - interval 1 day' ),
+				array( 'event_date between curdate() - interval 1 day and curdate()' ),
 				__METHOD__
 			);
 
