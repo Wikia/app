@@ -185,7 +185,24 @@
 			background: $color-page;
 			float: left;
 			height: 10px;
-            padding: 6px 6px 7px 6px;
+            padding: 5px 6px 8px 6px;
+            .hub2,
+            .hub3,
+            .hub9 {
+                font-weight: bold;
+                letter-spacing: -0.5px;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+            .hub2 {
+                color: $color-wikiahome-videogames;
+            }
+            .hub3 {
+                color: $color-wikiahome-entertainment;
+            }
+            .hub9 {
+                color: $color-wikiahome-lifestyle;
+            }
 		}
 	}
     .HubBrandingBlackBackground {
