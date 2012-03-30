@@ -25,7 +25,7 @@ class ImageLightbox {
 		$showShareTools = $wgRequest->getInt('share', 0);
 		$pageName = $wgRequest->getVal('pageName');
 
-		
+
 		$image = wfFindFile($wgTitle);
 		
 		if (empty($image)) {
@@ -175,17 +175,33 @@ class ImageLightbox {
 			}
 
 			$tmpl = new EasyTemplate(dirname(__FILE__));
-			
+
+			// Make it possible to assign a subheader with link.
+			if($wgRequest->getVal('wikiAddress') && $wgRequest->getVal('wikiAddress') != 'false') {
+				$subHeaderText = wfMsg('lightbox-visit-the-wiki');
+				$subHeaderLinkAnchor = $wgRequest->getVal('wikiAddress');
+				$parsedUrl = parse_url($subHeaderLinkAnchor);
+				$subHeaderLinkText = (!empty($parsedUrl['host']))?($parsedUrl['host']):$subHeaderLinkAnchor;
+			} else {
+				$subHeaderText = null;
+				$subHeaderLinkText = null;
+				$subHeaderLinkAnchor = null;
+			}
+
 			$tmpl->set_vars(array(
 				'showShareTools' => $wgRequest->getInt('share', 0),
 				'linkStd' => $wgTitle->getFullURL(),
 				'wgExtensionsPath' => $wgExtensionsPath,
-				'wgBlankImgUrl' => $wgBlankImgUrl
+				'wgBlankImgUrl' => $wgBlankImgUrl,
+				'subHeaderText' => $subHeaderText,
+				'subHeaderLinkText' => $subHeaderLinkText,
+				'subHeaderLinkAnchor' => $subHeaderLinkAnchor,
+				'showEmbedCodeInstantly' => $wgRequest->getVal('showEmbedCodeInstantly')
 			));
 			
 			$htmlUnderPlayer = $tmpl->render('VideoLightbox');
 			$html .= $htmlUnderPlayer;
-			
+
 			$res = array(
 				'html' => $html,
 				'jsonData' => $jsonData,

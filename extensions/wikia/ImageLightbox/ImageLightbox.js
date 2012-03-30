@@ -3,6 +3,9 @@ var ImageLightbox = {
 	target: false,
 	afterLoadOpened : false,
 	videoThumbWidthThreshold: 320,
+    wikiAddress: false,
+    showEmbedCodeInstantly: true,
+
 	log: function(msg) {
 		$().log(msg, 'ImageLightbox');
 	},
@@ -194,7 +197,18 @@ var ImageLightbox = {
 				return false;
 			}
 		}
-		
+
+        if (target.hasClass('video-hubs-video')) {
+            if(target[0] && target[0].dataset['wiki']) {
+                if(typeof target[0].dataset['wiki'] !== 'undefined') {
+                    var wikiaddress = target[0].dataset['wiki'];
+
+                    this.wikiAddress = wikiaddress;
+                    this.showEmbedCodeInstantly = true;
+                }
+            }
+        }
+
 		//imageName = "File:acat.jpg";
 		if (imageName != false) {
 			// RT #44281
@@ -286,8 +300,10 @@ var ImageLightbox = {
 			'pageName': wgPageName,
 			'share': showShareTools,
 			'title': imageName,
-			't': timestamp
-		}, function(res) {
+			't': timestamp,
+            'showEmbedCodeInstantly' : this.showEmbedCodeInstantly,
+            'wikiAddress' : this.wikiAddress
+    }, function(res) {
 			if (res && ( res.html || res.jsonData ) ) {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
@@ -403,6 +419,10 @@ var ImageLightbox = {
 				});
 
 				$('#lightbox-caption-content').html(caption);
+
+                if($('#lightbox-subtitle').text() != '') {
+                    $('#lightbox-subtitle').show();
+                }
 
 				// resize lightbox (used mostly for external images)
 				lightbox.resizeModal(lightbox.width());
