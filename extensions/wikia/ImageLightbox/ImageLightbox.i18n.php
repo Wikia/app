@@ -28,7 +28,8 @@ $1
 	'lightbox-share-email-error-caption' => 'Error',
 	'lightbox-share-email-error-content' => "Error sending {{PLURAL:$1|email|emails}}.\nDetails: $2",
 	'lightbox-share-email-error-login' => 'To send emails you need to login',
-	'lightbox-share-email-error-noaddress' => 'No addresses have been specified.'
+	'lightbox-share-email-error-noaddress' => 'No addresses have been specified.',
+	'lightbox-visit-the-wiki' => 'Visit the wiki:'
 );
 
 /** Message documentation (Message documentation)
