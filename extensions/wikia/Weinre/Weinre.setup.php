@@ -36,3 +36,4 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WeinreHooks.class.php", 'WeinreHooks
  * hooks
  */
 $app->registerHook( 'SkinAfterBottomScripts', 'WeinreHooks', 'onSkinAfterBottomScripts' );
+$app->registerHook( 'WikiaMobileAssetsPackages', 'WeinreHooks', 'onWikiaMobileAssetsPackages' );
