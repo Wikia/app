@@ -8,10 +8,7 @@ var WikiaMobile = (function() {
 	var body,
 		page,
 		article,
-		allImages = [],
 		handledTables,
-		deviceWidth = ($.os.ios) ? 268 : 300,
-		deviceHeight = ($.os.ios) ? 416 : 513,
 		realWidth = window.innerWidth || window.clientWidth,
 		realHeight = window.innerHeight || window.clientHeight,
 		clickEvent = ('ontap' in window) ? 'tap' : 'click',
@@ -23,11 +20,9 @@ var WikiaMobile = (function() {
 		pageUrl = wgServer + wgArticlePath.replace('$1', wgPageName),
 		shrImgTxt, shrPageTxt, shrMailPageTxt, shrMailImgTxt,
 		$1 =/__1__/g, $2 =/__2__/g, $3 =/__3__/g, $4 = /__4__/g,
-		shrOpenNum = 0, shrImgName = '',
 		fixed = Modernizr.positionfixed,
 		d = document,
-		ftr,
-		navBar, wkPrf, wkLgn,
+		ftr, navBar, wkPrf, wkLgn,
 
 		querystring = function(url){
 			var srh = '',
@@ -90,11 +85,17 @@ var WikiaMobile = (function() {
 			},
 
 			hide: function(elm) {
-				elm.getElementsByClassName('wkMblLdr')[0].style.display = 'none';
+				elm = elm.getElementsByClassName('wkMblLdr')[0];
+				if(elm){
+					elm.style.display = 'none';
+				}
 			},
 
 			remove: function(elm) {
-				elm.removeChild(elm.getElementsByClassName('wkMblLdr')[0]);
+				var ldr = elm.getElementsByClassName('wkMblLdr')[0];
+				if(ldr){
+					elm.removeChild(ldr);
+				}
 			}
 		},
 
@@ -137,11 +138,7 @@ var WikiaMobile = (function() {
 			hide: function(){
 				toast.wkTst.className = 'hide clsIco';
 			}
-		}
-
-	function getImages(){
-		return allImages;
-	}
+		};
 
 	//slide up the addressbar on webkit mobile browsers for maximum reading area
 	//setTimeout is necessary to make it work on ios...
@@ -203,91 +200,6 @@ var WikiaMobile = (function() {
 		}
 	}
 
-	function processImages(){
-		var number = 0,
-		href = '', name = '', nameMatch = /[^\/]*\.\w*$/,
-		i, j = 0, elm,
-		elements = $('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure'),
-		l = elements.length;
-
-		for(; j < l; j++){
-			var element = elements[j],
-				className = element.className;
-
-			if(className.indexOf('image') > -1){
-				href = element.href;
-				name = element.attributes['data-image-name'].value.replace('.','-');
-				if(name === shrImgName) shrOpenNum = number;
-				allImages.push([href, name]);
-				element.setAttribute('data-num', number++);
-			}else if(className.indexOf('wkImgStk') > -1){
-				if(className.indexOf('grp') > -1) {
-					var figures = element.getElementsByTagName('figure'),
-					l = figures.length,
-					cap, img;
-
-					element.setAttribute('data-num', number);
-
-					element.getElementsByTagName('footer')[0].insertAdjacentHTML('beforeend', l);
-
-
-					for(i=0; i < l; i++ ){
-						elm = figures[i];
-						img = elm.getElementsByClassName('image')[0];
-						href = img.href;
-						name = img.id;
-						allImages.push([
-							href, name,
-							(cap = elm.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
-							i, l
-						]);
-
-						if(name === shrImgName) shrOpenNum = number + i;
-					};
-				} else {
-					var l = parseInt(element.attributes['data-img-count'].value, 10),
-					lis = element.getElementsByTagName('li');
-
-					element.setAttribute('data-num', number);
-
-					for(i=0; i < l; i++){
-						elm = lis[i];
-						href = elm.attributes['data-img'].value;
-						name = href.match(nameMatch)[0].replace('.','-');
-						allImages.push([
-							href,
-							name,
-							elm.innerHTML,
-							//I need these number to show counter in a modal
-							i, l
-						]);
-
-						if(name === shrImgName) shrOpenNum = number + i;
-					};
-				}
-				number += l;
-			} else {
-				img = element.getElementsByClassName('image')[0];
-				if(img){
-					href = img.href;
-					name = img.id;
-					if(name === shrImgName) shrOpenNum = number;
-					allImages.push([
-						href, name,
-						(cap = element.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:''
-					]);
-					element.setAttribute('data-num', number++);
-				}
-
-			}
-		}
-
-		//if there is only one image in the article hide the prev/next buttons
-		//in the image modal
-		//TODO: move to a modal API call
-		if(allImages.length <= 1) body.className += ' oneImg';
-	}
-
 	function processTables(){
 		if(typeof handledTables == 'undefined'){
 			handledTables = [];
@@ -332,7 +244,7 @@ var WikiaMobile = (function() {
 				table.computedWidth = firstRowWidth;
 				table.computedHeight = tableHeight;
 
-				if(firstRowWidth > realWidth || table.height() > deviceWidth){
+				if(firstRowWidth > realWidth || table.height() > realWidth){
 					//remove scripts to avoid re-parsing
 					table.find('script').remove();
 					table.wrap(tableWrapperHTML);
@@ -376,18 +288,6 @@ var WikiaMobile = (function() {
 		}
 	}
 
-	function getDeviceResolution(){
-		return [deviceWidth, deviceHeight];
-	}
-
-	function imgModal(number){
-		$.openModal({
-			imageNumber: number,
-			toHide: '.chnImgBtn',
-			addClass: 'imgMdl'
-		});
-	}
-
 	function getClickEvent(){
 		return clickEvent;
 	}
@@ -413,7 +313,7 @@ var WikiaMobile = (function() {
 					track('share/page/'+this.className.replace('Shr',''));
 				});
 			}else{
-				var imgUrl = pageUrl + '?image=' + allImages[$.getCurrentImg()][1];
+				var imgUrl = pageUrl + '?image=' + Media.getCurrentImg()[1];
 				cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);
 			}
 		};
@@ -592,7 +492,7 @@ var WikiaMobile = (function() {
 
 					open(event);
 				}
-			});
+			}, true);
 		}else{
 			throw 'Non existing element';
 		}
@@ -737,19 +637,16 @@ var WikiaMobile = (function() {
 			event.preventDefault();
 			event.stopPropagation();
 
-			if(allImages.length == 0) processImages();
-
-			var img = $(this),
-				num = img.data('num') || img.parent().data('num');
-			if(num) imgModal(num);
+			var num = (this.attributes['data-num'] || this.parentElement.attributes['data-num']).value;
+			if(num) media.openModal(num);
 		})
 		.delegate('.bigTable', clickEvent, function(event){
 				event.preventDefault();
 
-				$.openModal({
-					addClass: 'wideTable',
-					html: this.innerHTML
-					});
+				modal.open({
+					classes: 'wideTable',
+					content: this.innerHTML
+				});
 		});
 
 		searchForm.bind('submit', function(){
@@ -856,8 +753,7 @@ var WikiaMobile = (function() {
 		});
 
 		d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
-			var self = $(this),
-			current;
+			var current;
 
 			if(wkNavMenu.className == 'cur2') {
 				setTimeout(function(){wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2'}, 800);
@@ -990,20 +886,10 @@ var WikiaMobile = (function() {
 				style: 'right:0;'
 			});
 		}
-
-		//if url contains image=imageName - open modal with this image
-		shrImgName = WikiaMobile.querystring().getVal('image');
-		if(shrImgName){
-			if(0 == allImages.length) processImages();
-
-			setTimeout(function(){imgModal(shrOpenNum)}, 1000);
-		}
 	});
 
 	return {
 		openProfile: openProfile,
-		getImages: getImages,
-		getDeviceResolution: getDeviceResolution,
 		getClickEvent: getClickEvent,
 		getTouchEvent: getTouchEvent,
 		track: track,

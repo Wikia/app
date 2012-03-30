@@ -36,6 +36,8 @@ var WikiaPhotoGallerySlider = {
 		slider.delegate('.nav', 'click', function() {
 			WikiaPhotoGallerySlider.scroll($(this));
 		});
+
+		slider.show();
 	},
 
 	scroll: function(nav) {

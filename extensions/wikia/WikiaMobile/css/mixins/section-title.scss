@@ -15,7 +15,7 @@
 		height: 22px;
 		background-position: center;
 		background-repeat: no-repeat;
-		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAATCAYAAABsmQZ/AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAkZJREFUSIm9lM2NIjEQhc0/xw5h9waIw3DkaCLYEAhhMpkQ0CbAvwAhQYewHcKE0Ef+2fesKstND6jnMpYebtxFfa7nMuX7/W5+WuXJZGKm06mZzWZmPp9nxDW+oxg3Ho9zejUWi0UEvT+ulzFMoI9KpfIPiiC3xrlUKnkVHcvlkjniWq32sdlsRl9Cq9XqCAHv9Xr9DWJwBPkNfQe8Wq3425i5mAMa7nY7Dy4ziQCHEmAewVp1EfB6vXZAiDlMo9EwzWaTOYdxHI+0Ulo6ZGIGaSDBmD0YG8uBH+EhkCDmkVxGCvqz3+9/EfoXSpmU0iDZnQNjzoBDBcC3sMJg8wpMUZgdDAaftDeBLBa46KwMbDZyLrmKQygaRY/DW6o5GM/ciLX9fj9x9spG+cUCntIyaSwPRhJ/xrpzdWa73fpNPQKlF5jT9nq9xDfS7XZzF/Z6vSZ4tnhO+UIaLIQ7sHZk6ALt/wrIIpDPdrtdD/RQAJ0ul0uC2UIMdgGh3Voxzptn7c4birRhAjsdkEV0Op0MMAMF0Ol8PieYLcQfGWnxEBwJzAGl4TIVYqTcfLvdzgFdPrFWgeZ0OlEZMK3WisVGwjxQodwc8tGt38+AvlJKoQo+Ho8Jnh2Ym9KKaZ+en14JrsmddX0BYPoM6Ct9BmbFCg6t1qulkquTiKUvgR5aANzjWWunc4T/SFgvDHRQfhQAf7Jigmm1wqUJC1magxYB44xTgqVy955ANlyr1SoMzEBfgaVaczgcUswOzEbDd97DbwE5/gPTHE7RspTtSwAAAABJRU5ErkJggg==);
+		background-image:  url('/extensions/wikia/WikiaMobile/images/chev_2x.png'); /* base64 */
 		background-size: 75%;
 		position: absolute;
 		right: 0;
@@ -32,7 +32,7 @@
 	}
 
 	&.open .chev {
-		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAATCAYAAABsmQZ/AAABy0lEQVR42rXV/06CUBQH8B7BP4MLzkfg71IiUzF/bD4Cj9Ib0DJXuVJXls71g1zOVWyU9T+P0CPwCKcDpwGWBVH+8R2Tee+Hey7nsgIAiZJR9FTSsYkGsTVd4tZ3Hbxqy0YDMNd0uFwL+NwBcPK+vjSUwJbEyS2H32gDv3mC6VCUdncJKIG8fOh4WP4MWGEArDik61Yf4V5s+JdgB4FzYKVLEFQDM6aUDHqA/Gn3X9DVbFPh5SOH5XvuqjxAKE9ArDyAWH2kbE/x/i3CI6xCPxKOWOGexsttCIMIIGRCuvYEYu2ZUrXwIe7dVceCE4Pp+uubWH8BzK/heKBKIJXTQvTZzih2SqzPtHR9BhhaeUx4MbjxA1i1ELT800isWJqH+TEj4e/B4jAS9OHyVKMXy4wFxy0pxpwb+BUea5/+H36r59rpA9QRPAzAUjQYDZtBO6nUx3SAIMrn9AaX3ccbx+7JguBNqA/N2GAA38zDOA/OR/Nu9R2mtCXvE4XNby/exwBMAiPo7S2V2UDwXPLL68Jss2cj6u0BDZj6YFJYUO9olerEyRRHUnhPCW50U6xwYbtlEMsGgX8MK15pQuk6AMNoGBYKgx36vby8A5M2doupc6Y1AAAAAElFTkSuQmCC);
+		background-image:  url('/extensions/wikia/WikiaMobile/images/chev-a_2x.png'); /* base64 */
 		-webkit-animation: cute .3s ease-out;
 		-moz-animation: cute .3s ease-out;
 		-ms-animation: cute .3s ease-out;
