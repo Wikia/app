@@ -220,6 +220,30 @@ var ImageLightbox = {
 
 			// don't follow href
 			ev.preventDefault();
+
+			// click tracking
+			var eventValue = 0;
+			// Related Videos module
+			var rvModule = target.closest('.RelatedVideosModule');
+			if (rvModule && rvModule.length) {
+				var localItem = target.closest('.item');
+				var localGroup = localItem.closest('.group');
+				var container = localGroup.closest('.container');
+				var allGroups = container.children();
+				var localAllItems = localGroup.children();
+				var localItemIndex = localAllItems.index(localItem);
+				var localGroupIndex = allGroups.index(localGroup);
+				var clickedIndex = (localGroupIndex * RelatedVideos.videosPerPage) + localItemIndex;
+				eventValue = clickedIndex+1;	// tracked values must be one-indexed
+
+				WikiaTracker.trackEvent( { 'tracking_method':'both', 
+					'ga_category':RelatedVideos.gaCat, 
+					'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO, 
+					'ga_label':(target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'), 
+					'ga_value':eventValue,
+					'internal_params':{'video_title':imageName} } );
+			}
+
 		}
 	},
 	

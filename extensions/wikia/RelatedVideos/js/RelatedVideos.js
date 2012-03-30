@@ -268,21 +268,25 @@ var RelatedVideos = {
 		}
 		
 		// get index of clicked item
+		var eventValue = 0;
 		var eventTarget = $(e.target);
-		var localItem = eventTarget.closest('.item');
-		var localGroup = localItem.closest('.group');
-		var container = localGroup.closest('.container');
-		var allGroups = container.children();
-		var localAllItems = localGroup.children();
-		var localItemIndex = localAllItems.index(localItem);
-		var localGroupIndex = allGroups.index(localGroup);
-		var clickedIndex = (localGroupIndex * RelatedVideos.videosPerPage) + localItemIndex;
+		if (eventTarget) {
+			var localItem = eventTarget.closest('.item');
+			var localGroup = localItem.closest('.group');
+			var container = localGroup.closest('.container');
+			var allGroups = container.children();
+			var localAllItems = localGroup.children();
+			var localItemIndex = localAllItems.index(localItem);
+			var localGroupIndex = allGroups.index(localGroup);
+			var clickedIndex = (localGroupIndex * RelatedVideos.videosPerPage) + localItemIndex;
+			eventValue = clickedIndex+1;	// tracked values must be one-indexed
+		}
 
 		WikiaTracker.trackEvent( { 'tracking_method':'both', 
 			'ga_category':RelatedVideos.gaCat, 
 			'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO, 
 			'ga_label':($(this).hasClass('video-thumbnail') ? 'thumbnail' : 'title'), 
-			'ga_value':clickedIndex+1, // tracked values must be one-indexed
+			'ga_value':eventValue,
 			'internal_params':{'video_title':url} } );
 
 		$.nirvana.getJson(
