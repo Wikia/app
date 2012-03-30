@@ -1639,14 +1639,14 @@ class Wikia {
 	 *
 	 */
 	static public function get_const_values( $name = '' ) {
-		global $wgMemc, $wgStatsDBEnabled, $wgStatsDB;
+		global $wgMemc;
 		$key = wfSharedMemcKey('const_values', $name);
 		$value = $wgMemc->get($key);
 
 		if ( !is_int($value) ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+			$dbr = wfGetDB( DB_SLAVE, array(), 'specials' );
 
-			$oRes = $dbr->select('specials.const_values', array('val'), array( 'name' =>  $name ), __METHOD__ );
+			$oRes = $dbr->select('const_values', array('val'), array( 'name' =>  $name ), __METHOD__ );
 
 			$value = 0;
 			if ( $oRow = $dbr->fetchRow( $oRes ) ) {
