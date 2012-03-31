@@ -7,11 +7,13 @@ var WikiaQuiz = {
 	imgLargeSize: '245px',
 	imgScaleFactor: '+=90',
 	score: 0,
-	trackerUrlPrefix: '',
 	vars: {},
-	init: function() {
+	init: function() {	
 		// class vars
-		WikiaQuiz.trackerUrlPrefix = 'wikiaquiz/'+window.wgDBname+'/'+window.wgTitle.replace(/\//g, '_')+'/';
+		WikiaQuiz.trackerLabelPrefix = window.wgDBname + '/' + window.wgTitle.replace(/\//g, '_') + '/';
+		
+		//tracking
+		WikiaQuiz.trackEvent('impression', 'titlecard');
 
 		//DOM
 		jQuery.fx.interval = 13; // 16 is roughly 60 fps, 32 is roughly 30 fps
@@ -53,10 +55,15 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.startButton.click(WikiaQuiz.handleStart);
 		WikiaQuiz.ui.muteToggle.click(WikiaQuiz.toggleSound);
 
+		WikiaQuiz.ui.thanksScreen.add(WikiaQuiz.ui.emailScreen).find('.more-info').click(function(e) {
+			$().log('more info');
+			WikiaQuiz.trackEvent('click-link-text', 'moreinfo', -1, $(e.target).attr('href') );
+		});
+
+
 		$().log('init', 'WikiaQuiz');
 	},
 	handleStart: function() {
-		WikiaQuiz.trackByStr('start');
 		WikiaQuiz.ui.startButton.hide();
 		WikiaQuiz.ui.progressBar.show();
 		WikiaQuiz.countDown();
@@ -80,7 +87,7 @@ var WikiaQuiz = {
 		WikiaQuiz.ui.questions.add(WikiaQuiz.ui.countDown).animate({left:"-=840px"}, WikiaQuiz.animationTiming + 200);
 	},
 	initializeQuestion: function(cq) {
-		WikiaQuiz.trackByStr('view/q'+WikiaQuiz.cqNum);
+		WikiaQuiz.trackEvent('impression', 'question' + (WikiaQuiz.cqNum + 1));
 		WikiaQuiz.cq = cq;
 		WikiaQuiz.ui.questionLabel = cq.find('.question-label, .question-image');
 		WikiaQuiz.ui.questionBubble = cq.find('.question-bubble');
@@ -130,15 +137,14 @@ var WikiaQuiz = {
 			answer.addClass('selected');
 			WikiaQuiz.ui.chosenAnswer = answer;
 			if(answer.data('correct') == '1') {
-				WikiaQuiz.trackByStr('correct/q'+WikiaQuiz.cqNum);
 				WikiaQuiz.correct = true;
 				WikiaQuiz.score++;
 				WikiaQuiz.ui.answerResponse.text(WikiaQuiz.vars.correctLabel);
 			} else {
-				WikiaQuiz.trackByStr('wrong/q'+WikiaQuiz.cqNum);
 				WikiaQuiz.correct = false;
 				WikiaQuiz.ui.answerResponse.text(WikiaQuiz.vars.incorrectLabel);
 			}
+			WikiaQuiz.trackEvent('impression', 'answer' + (WikiaQuiz.cqNum + 1));
 
 			WikiaQuiz.showSelection(answer);
 		}
@@ -210,7 +216,7 @@ var WikiaQuiz = {
 	},
 	// show screen with user's score
 	showEnd: function() {
-		WikiaQuiz.trackByStr('finalscore/'+WikiaQuiz.score);
+		WikiaQuiz.trackEvent('impression', 'scorecard', WikiaQuiz.score);
 		var score = Math.floor((WikiaQuiz.score / WikiaQuiz.totalQ) * 100);
 		var scoreUI = $("#FinalScore");
 		scoreUI.find('.number').text(score);
@@ -232,7 +238,7 @@ var WikiaQuiz = {
 	},
 	// show screen with email field
 	showEmail: function() {
-		WikiaQuiz.trackByStr('emailscreen');
+		WikiaQuiz.trackEvent('impression', 'emailcard');
 		WikiaQuiz.ui.endScreen.fadeOut(WikiaQuiz.animationTiming);
 		WikiaQuiz.ui.emailScreen.fadeIn(WikiaQuiz.animationTiming, function() {
 			// submit an email and proceed to thank you screen
@@ -266,14 +272,10 @@ var WikiaQuiz = {
 
 	// show thank you screen (the last one)
 	showThanks: function() {
-		WikiaQuiz.trackByStr('endscreen');
+		WikiaQuiz.trackEvent('impression', 'marketingcard');
 
 		(window.WikiaQuizEmailRequired ? WikiaQuiz.ui.emailScreen : WikiaQuiz.ui.endScreen).fadeOut(WikiaQuiz.animationTiming, function() {
-			WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming, function() {
-				WikiaQuiz.ui.thanksScreen.find('.more-info').click(function() {
-					WikiaQuiz.trackByStr('moreinfo');
-				});
-			});
+			WikiaQuiz.ui.thanksScreen.fadeIn(WikiaQuiz.animationTiming);
 		});
 	},
 	playSound: function(soundElement) {
@@ -284,10 +286,22 @@ var WikiaQuiz = {
 	},
 	toggleSound: function() {
 		WikiaQuiz.isMuted = $(this).find('input').attr('checked');
-		WikiaQuiz.trackByStr('mute/'+WikiaQuiz.isMuted);
 	},
-	trackByStr: function(str) {
-		$.tracker.byStr(WikiaQuiz.trackerUrlPrefix+str, true);
+	trackEvent: function(action, label, value, href) {
+		var params = {
+			tracking_method: 'both',
+			ga_category: 'wikia-quiz',
+			ga_action: action,
+			ga_label: WikiaQuiz.trackerLabelPrefix + label
+		};
+		if(value > -1) {
+			params['ga_value'] = value;
+		}
+		if(href) {
+			params['internal_params'] = {href:href};
+		}
+
+		WikiaTracker.trackEvent(params);
 	}
 };
 
