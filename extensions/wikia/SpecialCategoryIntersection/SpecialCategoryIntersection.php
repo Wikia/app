@@ -69,13 +69,22 @@ class SpecialCategoryIntersection extends SpecialPage {
 					word-wrap:break-word; /* so that the API query doesn't make the cell grow in Chrome */
 				}
 				td.form{
-					background-color:#eee;
+					padding: 20px 20px;
+					background-color:#efefef;
+					width:475px;
 				}
 				td.form input[type=text]{
 					width:95%;
+					height:30px;
+					font-size:13px;
+					padding-left:5px;
 				}
 				td.results{
-					background-color:#ccc;
+					opacity:0.8;
+					filter:alpha(opacity=80); /* For IE8 and earlier */
+					padding: 20px 20px;
+					background-color:#efefef;
+					font-size:13px;
 				}
 				.autoCompleteWrapper{
 					position: relative;
@@ -83,6 +92,10 @@ class SpecialCategoryIntersection extends SpecialPage {
 				div.autoCompleteWrapper div{
 					background-color:#000;
 					background-color:#fff; /* Do we need to use an Oasis theme mixin? */
+				}
+				.autocomplete{
+					border:1px solid;
+					padding:3px;
 				}
 			</style>
 		");
@@ -96,8 +109,13 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$wgOut->addHTML("<table><tr><td class='form'>"); // oh snap, tables for layout!
 			$this->showForm( $wgOut );
 		$wgOut->addHTML("</td><td class='results'>");
-			$this->showResults( $wgOut );
+		
+		$wgOut->addHTML("<h3>" . wfMsg('categoryintersection-instructions-title') . "</h3>");
+		$wgOut->addHTML(wfMsg('categoryintersection-instructions'));
+		
 		$wgOut->addHTML("</td></tr></table>\n");
+
+		$this->showResults( $wgOut );
 
 		// Show a footer w/links to more info and some example queries
 		$this->showFooter( $wgOut );
@@ -122,7 +140,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$html .= "<h3>". wfMsg('categoryintersection-form-title') ."</h3>";
 		
 		$html .= "<div>\n";
-		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' action='' method='GET'>\n";
+		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' class='WikiaForm' action='' method='GET'>\n";
 		
 			// Display a couple of rows
 			$html .= $this->getHtmlForCategoryBox(1);
@@ -133,7 +151,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 // TODO: Display a button to make more rows....
 
 			// Display limit (default to this->defaultLimit)
-			$html .= wfMsg('categoryintersection-limit') . " <select name='limit'>";
+			$html .= wfMsg('categoryintersection-limit') . " <select name='limit' style='margin:10px 0 35px 0'>";
 			$limit = $wgRequest->getVal('limit', $this->defaultLimit);
 			$limits = array(10, 25, 50, 100);
 			foreach($limits as $currLimit){
@@ -180,7 +198,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$html = "";
 		$html .= "<div class='ci_results'>\n";
 		
-			$html .= "<h3>". wfMsg('categoryintersection-results-title') ."</h3>\n";
+			$html .= "<h2>". wfMsg('categoryintersection-results-title') ."</h2>\n";
 
 			$submit = $wgRequest->getVal('wpSubmit');
 			if(!empty($submit)){
