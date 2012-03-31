@@ -546,7 +546,7 @@ class SpecialApiGate extends SpecialPage {
 		
 		// Build the query.
 		if( $aggregate ){
-			$queryString = "SELECT SUM(events) as number, time_id as creation_date FROM $tableName WHERE period_id=$periodId ORDER BY creation_date GROUP BY creation_date";
+			$queryString = "SELECT SUM(events) as number, time_id as creation_date FROM $tableName WHERE period_id=$periodId GROUP BY creation_date ORDER BY creation_date";
 		} else {
 			$whereClause = "WHERE period_id=$periodId";
 			$whereClause .= " AND api_key=hex('$apiKey')";
