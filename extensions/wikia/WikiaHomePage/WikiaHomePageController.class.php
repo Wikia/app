@@ -142,7 +142,7 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	/**
-	 * get number of edits made yesterday
+	 * get number of edits made the day before yesterday
 	 * @return integer edits 
 	 */
 	protected function getEdits() {
@@ -155,7 +155,7 @@ class WikiaHomePageController extends WikiaController {
 			$row = $db->selectRow( 
 				array( 'events' ), 
 				array( 'count(*) cnt' ),
-				array( 'event_date between curdate() - interval 1 day and curdate()' ),
+				array( 'event_date between curdate() - interval 2 day and curdate() - interval 1 day' ),
 				__METHOD__
 			);
 
