@@ -5,16 +5,17 @@
  */
 
 (function(){
-	//if(define){
+	if(define){
 		//AMD
-	//	define('media', ['modal'], media);//late binding
-	//}else{
-		window.media = media();//late binding
-	//}
+		define('media', ['modal'], media);//late binding
+	}else{
+		window.Media = media();//late binding
+	}
 
 
-	function media(){
-		/* setup */
+	function media(modal){
+		/** @private **/
+
 		var	images = [],
 			fllScrImg,
 			imagesLength,
@@ -27,7 +28,7 @@
 			sharePopOver,
 			content = '<div id=fllScrImg></div>';
 
-		$(function(){
+		function processImages(){
 			var	number = 0, href = '', name = '', nameMatch = /[^\/]*\.\w*$/,
 				i, j = 0, elm,
 				elements = $('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure'),
@@ -110,8 +111,7 @@
 
 			//if url contains image=imageName - open modal with this image
 			if(shrImg) setTimeout(function(){openModal(shrImg)}, 1000);
-		});
-		/* end of setup */
+		}
 
 		function loadImage(){
 			var image = images[current],
@@ -208,6 +208,8 @@
 			});
 		}
 
+		/** @public **/
+
 		return {
 			openModal: openModal,
 			getImages: function(){
@@ -215,7 +217,8 @@
 			},
 			getCurrentImg: function(){
 				return images[current];
-			}
+			},
+			processImages: processImages
 		}
 	}
 })();

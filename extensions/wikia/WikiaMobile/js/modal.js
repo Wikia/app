@@ -5,12 +5,12 @@
  */
 
 (function(){
-	//if(define){
+	if(define){
 		//AMD
-	//	define('modal', modal);//late binding
-	//}else{
-		window.modal = modal();//late binding
-	//}
+		define('modal', modal);//late binding
+	}else{
+		window.Modal = modal();//late binding
+	}
 
 
 function modal(){
