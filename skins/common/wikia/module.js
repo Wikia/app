@@ -45,22 +45,25 @@ if(!window.require && !window.define){
 		 * @see http://requirejs.org/docs/api.html for example and docs
 		 */
 		window.require = function(mod, callback){
-			var m;
+			var m,
+				f;
 
 			if(typeof mod === 'string'){
 				m = getModule(mod);
+				if(callback instanceof Function) callback.call(window, m);
 			}else if(mod instanceof Array){
 				m = [];
 
 				for(var x = 0, y = mod.length; x < y; x++){
 					//faster than .push
 					m[x] = getModule(mod[x]);
+					f = 'apply';
 				}
+
+				if(callback instanceof Function) callback.apply(window, m);
 			}
 
-			if(callback instanceof Function)
-				callback.apply(window, m);
-
+			//needed internally for dependencies, the usage of the return value is deprecated in the public API
 			return m;
 		};
 
@@ -83,9 +86,9 @@ if(!window.require && !window.define){
 				}
 
 				if(f instanceof Function){
-					m = (d instanceof Array) ? {__def__: f, __deps__: d} : {__def__: d};
+					m = (d instanceof Array) ? {__def__: f, __deps__: d} : {__def__: f};
 				}else if(typeof f !== 'undefined'){
-					m = d;
+					m = f;
 				}else{
 					throw "missing definition for module" + mod;
 				}
@@ -95,6 +98,5 @@ if(!window.require && !window.define){
 				throw "module name missing";
 			}
 		};
-		window.mod = modules;
 	})();
 }

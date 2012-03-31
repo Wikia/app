@@ -1,6 +1,6 @@
 var WikiaMobile = (function() {
 
-	//as fast as possible to avoid flickering
+	//as fast as possible to avoid screen flickering
 	document.documentElement.className += ' js';
 
 	/** @private **/
@@ -305,45 +305,49 @@ var WikiaMobile = (function() {
 	}
 
 	function loadShare(cnt){
-		function handle(html){
-			if(cnt.parentNode.id == 'wkShrPag'){
-				cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt).replace($4, shrPageTxt);
+		require(['cache', 'media'], function(cache, media){
+			var cacheKey = 'shareButtons' + wgStyleVersion;
 
-				$(cnt).delegate('li', clickEvent, function(){
-					track('share/page/'+this.className.replace('Shr',''));
-				});
-			}else{
-				var imgUrl = pageUrl + '?image=' + Media.getCurrentImg()[1];
-				cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);
-			}
-		};
+			function handle(html){
+				if(cnt.parentNode.id == 'wkShrPag'){
+					cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt).replace($4, shrPageTxt);
 
-		if(!shrData){
-			shrData = Wikia.Cache.get('shareButtons' + wgStyleVersion);
-			shrPageTxt = $.msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
-			shrMailPageTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrPageTxt));
-			shrImgTxt = $.msg('wikiamobile-sharing-modal-text', $.msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
-			shrMailImgTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrImgTxt));
-		}
-
-		if(shrData){
-			handle(shrData);
-		}else{
-			$.nirvana.sendRequest({
-				controller: 'WikiaMobileController',
-				method: 'getShareButtons',
-				format: 'html',
-				type: 'GET',
-				data: {
-					'cb': wgStyleVersion
-				},
-				callback: function(result){
-					Wikia.Cache.set('shareButtons' + wgStyleVersion, result, 604800/*7 days*/);
-					shrData = result;
-					handle(shrData);
+					$(cnt).delegate('li', clickEvent, function(){
+						track('share/page/'+this.className.replace('Shr',''));
+					});
+				}else{
+					var imgUrl = pageUrl + '?image=' + media.getCurrentImg()[1];
+					cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);
 				}
-			});
-		}
+			};
+
+			if(!shrData){
+				shrData = cache.get(cacheKey);
+				shrPageTxt = $.msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
+				shrMailPageTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrPageTxt));
+				shrImgTxt = $.msg('wikiamobile-sharing-modal-text', $.msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
+				shrMailImgTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrImgTxt));
+			}
+
+			if(shrData){
+				handle(shrData);
+			}else{
+				$.nirvana.sendRequest({
+					controller: 'WikiaMobileController',
+					method: 'getShareButtons',
+					format: 'html',
+					type: 'GET',
+					data: {
+						'cb': wgStyleVersion
+					},
+					callback: function(result){
+						cache.set(cacheKey, result, 604800/*7 days*/);
+						shrData = result;
+						handle(shrData);
+					}
+				});
+			}
+		});
 	}
 
 	function openLogin(){
@@ -542,350 +546,355 @@ var WikiaMobile = (function() {
 
 	//init
 	$(function(){
-		body = $(d.body);
-		page = d.getElementById('wkPage');
-		article = d.getElementById('wkMainCnt');
-		ftr = d.getElementById('wkFtr');
-		adSlot = d.getElementById('wkAdPlc');
-		navBar = d.getElementById('wkTopNav');
-		wkPrf = d.getElementById('wkPrf');
+		require('media', function(media){
+			body = $(d.body);
+			page = d.getElementById('wkPage');
+			article = d.getElementById('wkMainCnt');
+			ftr = d.getElementById('wkFtr');
+			adSlot = d.getElementById('wkAdPlc');
+			navBar = d.getElementById('wkTopNav');
+			wkPrf = d.getElementById('wkPrf');
 
-		var navigationSearch = $(d.getElementById('wkNavSrh')),
-		searchToggle = $(d.getElementById('wkSrhTgl')),
-		searchInput = $(d.getElementById('wkSrhInp')),
-		searchForm = $(d.getElementById('wkSrhFrm')),
-		wkNav = d.getElementById('wkNav'),
-		wkNavMenu = d.getElementById('wkNavMenu'),
-		wikiNavHeader = wkNavMenu.getElementsByTagName('h1')[0],
-		wikiNavLink = d.getElementById('wkNavLink'),
-		wkPrfTgl = d.getElementById('wkPrfTgl'),
-		lvl1 = d.getElementById('lvl1'),
-		wkShrPag = d.getElementById('wkShrPag'),
-		//to cache link in wiki nav
-		lvl2Link;
+			var navigationSearch = $(d.getElementById('wkNavSrh')),
+			searchToggle = $(d.getElementById('wkSrhTgl')),
+			searchInput = $(d.getElementById('wkSrhInp')),
+			searchForm = $(d.getElementById('wkSrhFrm')),
+			wkNav = d.getElementById('wkNav'),
+			wkNavMenu = d.getElementById('wkNavMenu'),
+			wikiNavHeader = wkNavMenu.getElementsByTagName('h1')[0],
+			wikiNavLink = d.getElementById('wkNavLink'),
+			wkPrfTgl = d.getElementById('wkPrfTgl'),
+			lvl1 = d.getElementById('lvl1'),
+			wkShrPag = d.getElementById('wkShrPag'),
+			//to cache link in wiki nav
+			lvl2Link;
 
-		//replace menu from bottom to topBar - the faster the better
-		wkNav.replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
+			//replace menu from bottom to topBar - the faster the better
+			wkNav.replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
 
-		//analytics
-		track('view');
+			//analytics
+			track('view');
 
-		processSections();//NEEDS to run before table wrapping!!!
-		processTables();
+			processSections();//NEEDS to run before table wrapping!!!
+			processTables();
+			media.processImages();
 
-		//add class for styling to be applied only if JS is enabled
-		//(e.g. collapse sections)
-		//must be done AFTER detecting size of elements on the page
-		//d.htm.className += ' js';
+			//add class for styling to be applied only if JS is enabled
+			//(e.g. collapse sections)
+			//must be done AFTER detecting size of elements on the page
+			//d.htm.className += ' js';
 
-		//handle ads
-		if(adSlot){
-			var close = d.getElementById('wkAdCls'),
-			i = 0;
-			adExist = function(){
-				if(adSlot.childElementCount > 3){
-					close.className = "show";
-					adSlot.style.height = '50px';
-					close.addEventListener(clickEvent, function() {
-						track('ad/close');
-						adSlot.className += ' anim';
-						setTimeout(function(){d.body.removeChild(adSlot);},800);
-						window.removeEventListener('scroll', moveSlot);
-					}, false);
-					if(fixed){
-						adSlot.style.position = 'fixed';
-					}else{
-						window.addEventListener('scroll', moveSlot, false);
+			//handle ads
+			if(adSlot){
+				var close = d.getElementById('wkAdCls'),
+				i = 0;
+				adExist = function(){
+					if(adSlot.childElementCount > 3){
+						close.className = "show";
+						adSlot.style.height = '50px';
+						close.addEventListener(clickEvent, function() {
+							track('ad/close');
+							adSlot.className += ' anim';
+							setTimeout(function(){d.body.removeChild(adSlot);},800);
+							window.removeEventListener('scroll', moveSlot);
+						}, false);
+						if(fixed){
+							adSlot.style.position = 'fixed';
+						}else{
+							window.addEventListener('scroll', moveSlot, false);
+						}
+						return true;
 					}
-					return true;
-				}
-			};
+				};
 
-			if(!adExist()) {
-				var inter = setInterval(function() {
-					if(!adExist() && i < 5) {
-						i += 1;
+				if(!adExist()) {
+					var inter = setInterval(function() {
+						if(!adExist() && i < 5) {
+							i += 1;
+						}else{
+							d.body.removeChild(adSlot);
+							clearInterval(inter);
+						}
+					}, 1000);
+				}
+			}
+			//end of handling ads
+
+			hideURLBar();
+
+			//get search input
+			navigationSearch.remove().appendTo('#wkTopBar');
+
+			//TODO: optimize selectors caching for this file
+			body.delegate('.collSec', clickEvent, function(){
+				var self = $(this);
+
+				track(['section', self.hasClass('open')?'close':'open']);
+				self.toggleClass('open').next().toggleClass('open');
+			})
+			.delegate('.goBck', clickEvent, function(){
+				var top = $(this).parent().removeClass('open').prev().removeClass('open').offset().top;
+				window.scrollTo(0, top);
+			})
+			.delegate('#wkMainCnt a', clickEvent, function(){
+				track('link/content');
+			})
+			.delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
+				event.preventDefault();
+				event.stopPropagation();
+				var num = (this.attributes['data-num'] || this.parentElement.attributes['data-num']).value;
+
+				if(num) media.openModal(num);
+			})
+			.delegate('.bigTable', clickEvent, function(event){
+					event.preventDefault();
+
+					require('modal', function(modal){
+						modal.open({
+							classes: 'wideTable',
+							content: this.innerHTML
+						});
+					});
+			});
+
+			searchForm.bind('submit', function(){
+				track('search/submit');
+			});
+
+			searchToggle.bind(clickEvent, function(event){
+				event.preventDefault();
+				if(navBar.className.indexOf('srhOpn') > -1){
+					track('search/toggle/close');
+					if(searchInput.val()){
+						searchForm.submit();
 					}else{
-						d.body.removeChild(adSlot);
-						clearInterval(inter);
+						navBar.className = '';
+						searchInput.val('');
 					}
-				}, 1000);
-			}
-		}
-		//end of handling ads
-
-		hideURLBar();
-
-		//get search input
-		navigationSearch.remove().appendTo('#wkTopBar');
-
-		//TODO: optimize selectors caching for this file
-		body.delegate('.collSec', clickEvent, function(){
-			var self = $(this);
-
-			track(['section', self.hasClass('open')?'close':'open']);
-			self.toggleClass('open').next().toggleClass('open');
-		})
-		.delegate('.goBck', clickEvent, function(){
-			var top = $(this).parent().removeClass('open').prev().removeClass('open').offset().top;
-			window.scrollTo(0, top);
-		})
-		.delegate('#wkMainCnt a', clickEvent, function(){
-			track('link/content');
-		})
-		.delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
-			event.preventDefault();
-			event.stopPropagation();
-
-			var num = (this.attributes['data-num'] || this.parentElement.attributes['data-num']).value;
-			if(num) media.openModal(num);
-		})
-		.delegate('.bigTable', clickEvent, function(event){
-				event.preventDefault();
-
-				modal.open({
-					classes: 'wideTable',
-					content: this.innerHTML
-				});
-		});
-
-		searchForm.bind('submit', function(){
-			track('search/submit');
-		});
-
-		searchToggle.bind(clickEvent, function(event){
-			event.preventDefault();
-			if(navBar.className.indexOf('srhOpn') > -1){
-				track('search/toggle/close');
-				if(searchInput.val()){
-					searchForm.submit();
 				}else{
-					navBar.className = '';
-					searchInput.val('');
-				}
-			}else{
-				track('search/toggle/open');
-				closePullDown();
-				navBar.className = 'srhOpn';
-				navBar.style.height = '40px';
-				searchInput.focus();
-			}
-		});
-
-		//preparing the navigation
-		wikiNavHeader.className = '';
-		$(wkNavMenu).delegate('#lvl1 a', clickEvent, function(){
-			track('link/nav/list');
-		})
-		.delegate('header > a', clickEvent, function(){
-			track('link/nav/header');
-		})
-		.find('ul ul').parent().addClass('cld');
-
-		d.getElementById('wkNavTgl').addEventListener(clickEvent, function(event){
-			event.preventDefault();
-			event.stopPropagation();
-			if(navBar.className.indexOf('fllNav') > -1){
-				closePullDown();
-			}else{
-				closeProfile();
-				hidePage();
-				track('nav/open');
-				navBar.className = 'fllNav';
-				navBar.style.minHeight = '100%';
-				//80px is for lvl1 without header
-				navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
-				window.location.hash = 'pop';
-			}
-		});
-
-		//close WikiNav on back button
-		if('onhashchange' in window) {
-			window.addEventListener("hashchange", function() {
-				if(window.location.hash == "" && navBar.className.length > 0){
+					track('search/toggle/open');
 					closePullDown();
-				}
-			}, false);
-		}
-
-		if(wkPrfTgl){
-			d.getElementById('wkPrfTgl').addEventListener(clickEvent, function(event){
-				event.preventDefault();
-				if(navBar.className.indexOf('prf') > -1){
-					closePullDown();
-				}else{
-					openProfile();
+					navBar.className = 'srhOpn';
+					navBar.style.height = '40px';
+					searchInput.focus();
 				}
 			});
-		}
 
-		$(lvl1).delegate('.cld', clickEvent, function(event) {
-			if(event.target.parentNode.className.indexOf('cld') > -1) {
-				event.stopPropagation();
+			//preparing the navigation
+			wikiNavHeader.className = '';
+			$(wkNavMenu).delegate('#lvl1 a', clickEvent, function(){
+				track('link/nav/list');
+			})
+			.delegate('header > a', clickEvent, function(){
+				track('link/nav/header');
+			})
+			.find('ul ul').parent().addClass('cld');
+
+			d.getElementById('wkNavTgl').addEventListener(clickEvent, function(event){
 				event.preventDefault();
-
-				var self = $(this),
-				element = self.children().first(),
-				href = element.attr('href'),
-				ul = self.find('ul').first().addClass('cur');
-
-				wikiNavHeader.innerText = element.text();
-
-				if(href) {
-					wikiNavLink.href = href;
-					wikiNavLink.style.display = 'block';
+				event.stopPropagation();
+				if(navBar.className.indexOf('fllNav') > -1){
+					closePullDown();
 				}else{
-					wikiNavLink.style.display = 'none';
+					closeProfile();
+					hidePage();
+					track('nav/open');
+					navBar.className = 'fllNav';
+					navBar.style.minHeight = '100%';
+					//80px is for lvl1 without header
+					navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
+					window.location.hash = 'pop';
 				}
+			});
 
-				//130px is for lvl2/3 with a header
-				navBar.style.height = (ul.height() + 130) + 'px';
+			//close WikiNav on back button
+			if('onhashchange' in window) {
+				window.addEventListener("hashchange", function() {
+					if(window.location.hash == "" && navBar.className.length > 0){
+						closePullDown();
+					}
+				}, false);
+			}
 
-				if(wkNavMenu.className == 'cur1'){
-					lvl2Link = href;
+			if(wkPrfTgl){
+				d.getElementById('wkPrfTgl').addEventListener(clickEvent, function(event){
+					event.preventDefault();
+					if(navBar.className.indexOf('prf') > -1){
+						closePullDown();
+					}else{
+						openProfile();
+					}
+				});
+			}
+
+			$(lvl1).delegate('.cld', clickEvent, function(event) {
+				if(event.target.parentNode.className.indexOf('cld') > -1) {
+					event.stopPropagation();
+					event.preventDefault();
+
+					var self = $(this),
+					element = self.children().first(),
+					href = element.attr('href'),
+					ul = self.find('ul').first().addClass('cur');
+
+					wikiNavHeader.innerText = element.text();
+
+					if(href) {
+						wikiNavLink.href = href;
+						wikiNavLink.style.display = 'block';
+					}else{
+						wikiNavLink.style.display = 'none';
+					}
+
+					//130px is for lvl2/3 with a header
+					navBar.style.height = (ul.height() + 130) + 'px';
+
+					if(wkNavMenu.className == 'cur1'){
+						lvl2Link = href;
+						track('nav/level-2');
+						wkNavMenu.className = 'cur2';
+					}else{
+						track('nav/level-3');
+						wkNavMenu.className = 'cur3';
+					}
+				}
+			});
+
+			d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
+				var current;
+
+				if(wkNavMenu.className == 'cur2') {
+					setTimeout(function(){wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2'}, 800);
+					navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
+					track('nav/level-1');
+					wkNavMenu.className = 'cur1';
+				} else {
+					setTimeout(function(){wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3'}, 800);
+					current = wkNavMenu.querySelector('.lvl2.cur');
+					wikiNavHeader.innerText = current.previousSibling.text;
+					navBar.style.height = (current.offsetHeight + 130) + 'px';
+					if(lvl2Link) {
+						wikiNavLink.href = lvl2Link;
+						wikiNavLink.style.display = 'block';
+					} else {
+						wikiNavLink.style.display = 'none';
+					}
 					track('nav/level-2');
 					wkNavMenu.className = 'cur2';
-				}else{
-					track('nav/level-3');
-					wkNavMenu.className = 'cur3';
 				}
-			}
-		});
+			});
+			//end of preparing the nav
 
-		d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
-			var current;
+			page.addEventListener(clickEvent, function(event){
+				navBar.className = '';
+				searchInput.val('');
+			});
 
-			if(wkNavMenu.className == 'cur2') {
-				setTimeout(function(){wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2'}, 800);
-				navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
-				track('nav/level-1');
-				wkNavMenu.className = 'cur1';
-			} else {
-				setTimeout(function(){wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3'}, 800);
-				current = wkNavMenu.querySelector('.lvl2.cur');
-				wikiNavHeader.innerText = current.previousSibling.text;
-				navBar.style.height = (current.offsetHeight + 130) + 'px';
-				if(lvl2Link) {
-					wikiNavLink.href = lvl2Link;
-					wikiNavLink.style.display = 'block';
-				} else {
-					wikiNavLink.style.display = 'none';
-				}
-				track('nav/level-2');
-				wkNavMenu.className = 'cur2';
-			}
-		});
-		//end of preparing the nav
+			$(d.getElementById('wkRelPag')).delegate('a', clickEvent, function(){
+				track('link/related-page');
+			});
 
-		page.addEventListener(clickEvent, function(event){
-			navBar.className = '';
-			searchInput.val('');
-		});
+			$(d.getElementById('wkArtCat')).delegate('a', clickEvent, function(){
+				track('link/category');
+			});
 
-		$(d.getElementById('wkRelPag')).delegate('a', clickEvent, function(){
-			track('link/related-page');
-		});
-
-		$(d.getElementById('wkArtCat')).delegate('a', clickEvent, function(){
-			track('link/category');
-		});
-
-		d.getElementById('wkFllSite').addEventListener(clickEvent, function(event){
-			event.preventDefault();
-			track('link/fullsite');
-			Wikia.CookieCutter.set('mobilefullsite', 'true');
-			location.reload();
-		});
-
-		//category pages
-		if(wgCanonicalNamespace == 'Category'){
-			$('.pagMore, .pagLess').bind(clickEvent, function(event) {
+			d.getElementById('wkFllSite').addEventListener(clickEvent, function(event){
 				event.preventDefault();
-				var self = $(this),
-					forward = self.hasClass('pagMore'),
-					parent = self.parent(),
-					prev = (forward) ? parent.children('.pagLess') : self,
-					prevBatch = ~~(prev.attr('data-batch')),
-					next = (forward) ? self : parent.children('.pagMore'),
-					nextBatch = prevBatch + 2,
-					batch = (forward) ? nextBatch : prevBatch,
-					add = (forward ? 1 : -1),
-					id = parent.attr('id'),
-					container = parent.find('ul');
+				track('link/fullsite');
+				Wikia.CookieCutter.set('mobilefullsite', 'true');
+				location.reload();
+			});
 
-				prev.attr('data-batch', prevBatch + add);
-				next.attr('data-batch', nextBatch + add);
+			//category pages
+			if(wgCanonicalNamespace == 'Category'){
+				$('.pagMore, .pagLess').bind(clickEvent, function(event) {
+					event.preventDefault();
+					var self = $(this),
+						forward = self.hasClass('pagMore'),
+						parent = self.parent(),
+						prev = (forward) ? parent.children('.pagLess') : self,
+						prevBatch = ~~(prev.attr('data-batch')),
+						next = (forward) ? self : parent.children('.pagMore'),
+						nextBatch = prevBatch + 2,
+						batch = (forward) ? nextBatch : prevBatch,
+						add = (forward ? 1 : -1),
+						id = parent.attr('id'),
+						container = parent.find('ul');
 
-				self.toggleClass('active');
-				loader.show(this);
+					prev.attr('data-batch', prevBatch + add);
+					next.attr('data-batch', nextBatch + add);
 
-				$.nirvana.sendRequest({
-					controller: 'WikiaMobileController',
-					method: 'getCategoryBatch',
-					format: 'html',
-					data:{
-						category: wgTitle,
-						batch: batch,
-						index: encodeURIComponent(id.substr(-1, 1))
-					},
-					callback: function(result){
-						container.remove();
-						next.before(result);
+					self.toggleClass('active');
+					loader.show(this);
 
-						if(forward) {
-							window.scrollTo(0, parent.prev().offset().top);
-							track('category/next');
-						}else{
-							track('category/prev');
+					$.nirvana.sendRequest({
+						controller: 'WikiaMobileController',
+						method: 'getCategoryBatch',
+						format: 'html',
+						data:{
+							category: wgTitle,
+							batch: batch,
+							index: encodeURIComponent(id.substr(-1, 1))
+						},
+						callback: function(result){
+							container.remove();
+							next.before(result);
+
+							if(forward) {
+								window.scrollTo(0, parent.prev().offset().top);
+								track('category/next');
+							}else{
+								track('category/prev');
+							}
+
+							self.toggleClass('active');
+							loader.hide(self[0]);
+
+							(batch > 1) ? prev.addClass('visible') : prev.removeClass('visible');
+
+							(batch < ~~(parent.attr('data-batches'))) ? next.addClass('visible') : next.removeClass('visible');
 						}
-
-						self.toggleClass('active');
-						loader.hide(self[0]);
-
-						(batch > 1) ? prev.addClass('visible') : prev.removeClass('visible');
-
-						(batch < ~~(parent.attr('data-batches'))) ? next.addClass('visible') : next.removeClass('visible');
-					}
+					});
 				});
-			});
 
-			var expAll = d.getElementById('expAll'),
-				wkCatExh = d.getElementById('wkCatExh');
+				var expAll = d.getElementById('expAll'),
+					wkCatExh = d.getElementById('wkCatExh');
 
-			if(expAll){
-				var elements = $('.alphaSec .artSec, .alphaSec .collSec');
-				expAll.addEventListener(clickEvent, function(event) {
-					if($(this).toggleClass('exp').hasClass('exp')){
-						elements.addClass('open');
-						track('category/expandAll');
-					}else{
-						elements.removeClass('open');
-						track('category/collapseAll');
-					}
+				if(expAll){
+					var elements = $('.alphaSec .artSec, .alphaSec .collSec');
+					expAll.addEventListener(clickEvent, function(event) {
+						if($(this).toggleClass('exp').hasClass('exp')){
+							elements.addClass('open');
+							track('category/expandAll');
+						}else{
+							elements.removeClass('open');
+							track('category/collapseAll');
+						}
+					});
+				}
+
+				if(wkCatExh){
+					wkCatExh.addEventListener(clickEvent, function(event) {
+						track('category/exhibition/click');
+					});
+				}
+			}
+			//end category pages
+
+			if(wkShrPag){
+				popOver({
+					on: wkShrPag,
+					create: loadShare,
+					open: function(){
+						track('share/page/open');
+					},
+					close: function(){
+						track('share/page/close');
+					},
+					style: 'right:0;'
 				});
 			}
-
-			if(wkCatExh){
-				wkCatExh.addEventListener(clickEvent, function(event) {
-					track('category/exhibition/click');
-				});
-			}
-		}
-		//end category pages
-
-		if(wkShrPag){
-			popOver({
-				on: wkShrPag,
-				create: loadShare,
-				open: function(){
-					track('share/page/open');
-				},
-				close: function(){
-					track('share/page/close');
-				},
-				style: 'right:0;'
-			});
-		}
+		});
 	});
 
 	return {
