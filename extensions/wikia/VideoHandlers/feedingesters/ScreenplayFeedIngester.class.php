@@ -71,15 +71,11 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$clip = $clips->item($j);
 				$clipData['trailerType'] = $clip->getElementsByTagName('TrailerType')->item(0)->textContent;
 				$clipData['trailerVersion'] = $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent;
-				// if the title is not one that we explicitly target, ingest this clip only if it is a Movie Trailer
 				if (empty($addlCategories)) {
 					if (strtolower($clipData['trailerVersion']) == 'trailer'
 					&& (strtolower($clipData['trailerType']) != 'video game' && stripos($clipData['titleName'], '(VG)') === false)
 					) {
 						$addlCategories[] = 'Movie Trailers';
-					}
-					else {
-						continue;
 					}
 				}
 				if (strtolower($clipData['trailerType']) == 'not set') unset($clipData['trailerType']);

@@ -3,7 +3,7 @@
 class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 
 	protected static $CACHE_KEY = 'realgravityapi';
-	protected static $aspectRatio = 1.3333333;
+	protected static $aspectRatio = 1.7777778;
 	
 	public function getDescription() {
 		$description = $this->getOriginalDescription();
@@ -44,18 +44,13 @@ class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 	public function getAspectRatio() {
 		$ratio = parent::getAspectRatio();
 		if (!empty($this->metadata['dimensions'])) {
-			$ratio = $this->metadata['dimensions'];
+			list($width, $height) = explode('x', $this->metadata['dimensions']);
 		}
 		elseif (!empty($this->interfaceObj[0])) {
-			$ratio = $this->interfaceObj[0];
+			list($width, $height) = explode('x', $this->interfaceObj[0]);
 		}
-		if ($ratio) {
-			list($width, $height) = explode('x', $ratio);
-			if(empty($height)) {
-				$ratio = 16/9;
-			} else {
-				$ratio = $width / $height;
-			}
+		if(!empty($height) && !(empty($height))) {
+			$ratio = $width / $height;
 		}
 		return $ratio;
 	}

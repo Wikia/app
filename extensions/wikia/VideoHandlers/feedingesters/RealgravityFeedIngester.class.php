@@ -133,9 +133,11 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		    'published'		=> strtotime($data['published']),
 		    'category'		=> $data['category'],
 		    'keywords'		=> implode(', ', $keywords),
-		    'dimensions'	=> $data['dimensions'],
 		    'description'	=> $data['description']
 		    );
+		if (!empty($data['dimensions'])) {
+		    $parsedData['dimensions'] = $data['dimensions'];
+		}
 		
 		return $parsedData;
 	}

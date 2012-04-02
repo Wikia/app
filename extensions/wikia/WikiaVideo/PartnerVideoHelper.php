@@ -10,6 +10,7 @@ class PartnerVideoHelper {
 	private static $REALGRAVITY_PROVIDER_IDS = array('MACHINIMA'=>240);
 	private static $REALGRAVITY_PAGE_SIZE = 100;
 	private static $REALGRAVITY_VIDEOS_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.xml?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
+	private static $REALGRAVITY_DIMENSIONS = '512x288';
 	private static $TEMP_DIR = '/tmp';
 	
 	private static $CLIP_TYPE_BLACKLIST = array( VideoPage::V_SCREENPLAY => array() );
@@ -167,15 +168,11 @@ class PartnerVideoHelper {
 				$clip = $clips->item($j);
 				$clipData['trailerType'] = $clip->getElementsByTagName('TrailerType')->item(0)->textContent;
 				$clipData['trailerVersion'] = $clip->getElementsByTagName('TrailerVersion')->item(0)->textContent;
-				// if the title is not one that we explicitly target, ingest this clip only if it is a Movie Trailer
 				if (empty($addlCategories)) {
 					if (strtolower($clipData['trailerVersion']) == 'trailer'
 					&& (strtolower($clipData['trailerType']) != 'video game' && stripos($clipData['titleName'], '(VG)') === false)
 					) {
 						$addlCategories[] = 'Movie Trailers';
-					}
-					else {
-						continue;
 					}
 				}
 				if (strtolower($clipData['trailerType']) == 'not set') unset($clipData['trailerType']);
@@ -354,6 +351,9 @@ class PartnerVideoHelper {
 					if (sizeof($sourceVideoProps)) {
 						$clipData['aspectRatio'] = $sourceVideoProps[0];
 					}
+				}
+				if (empty($clipData['aspectRatio'])) {
+					$clipData['aspectRatio'] = self::$REALGRAVITY_DIMENSIONS;
 				}
 				
 				$description = $video->getElementsByTagName('description')->item(0)->textContent;
