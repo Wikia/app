@@ -242,13 +242,13 @@ class SpecialCategoryIntersection extends SpecialPage {
 					// Summary of the query and the results.
 					$html .= "<small><em>".wfMsg('categoryintersection-summary', implode($categories, ", "), $limit, count($articles))."</em></small><br/>\n";
 
-					print "<ul>\n";
+					$html .= "<ul>\n";
 					foreach($articles as $articleData){
 						$title = $articleData['title'];
 						$titleObj = Title::newFromText($title);
 						$html .= "<li><a href='".$titleObj->getFullURL()."'>$title</a></li>\n";
 					}
-					print "</ul>\n";
+					$html .= "</ul>\n";
 				}
 
 				// Display the URL that could be used to make that API call.
