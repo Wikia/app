@@ -25,7 +25,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
-$defaultThumbnailUrl = 'http://images4.wikia.nocookie.net/szeryftest/images/0/0a/Videoclip.jpg'; // TODO: CHANGEME
+$defaultThumbnailUrl = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/BrokenVideo_Icon_Large.png'; // TODO: CHANGEME
 
 
 //@include( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
