@@ -17,6 +17,10 @@ cat $TMPFILE | while read line; do
 	then
 		continue
 	fi
+	if [ "$cityid" = "80433" ];
+	then
+		continue
+	fi
 	echo "Processing $line"
 	sudo -u www-data SERVER_ID=$cityid php videoMigrateData.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.migratedata.log
 	sudo -u www-data SERVER_ID=$cityid php videoPostmigrate.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.postmigrate.log
