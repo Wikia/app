@@ -51,7 +51,11 @@ class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 		}
 		if ($ratio) {
 			list($width, $height) = explode('x', $ratio);
-			$ratio = $width / $height;
+			if(empty($height)) {
+				$ratio = 16/9;
+			} else {
+				$ratio = $width / $height;
+			}
 		}
 		return $ratio;
 	}
