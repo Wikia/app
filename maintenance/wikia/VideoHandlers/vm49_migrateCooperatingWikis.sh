@@ -5,7 +5,7 @@ echo "select
 c.city_id, count(*), c.city_dbname
 from events, wikicities.city_list as c
 where c.city_id = wiki_id and page_ns = 400 and event_type = 2 and (wiki_id = 3125 OR wiki_id = 7414 OR wiki_id = 95889)
-group by wiki_id order by count(*) desc;" | slave stats > $TMPFILE
+group by wiki_id order by count(*) desc;" | /usr/wikia/backend/bin/slave stats > $TMPFILE
 cat $TMPFILE
 cat $TMPFILE | while read line; do
 	cityid=`echo "$line" | cut -f 1`
