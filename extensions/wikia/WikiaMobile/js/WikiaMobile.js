@@ -546,7 +546,7 @@ var WikiaMobile = (function() {
 
 	//init
 	$(function(){
-		require('media', function(media){
+		require(['modal', 'media'], function(modal, media){
 			body = $(d.body);
 			page = d.getElementById('wkPage');
 			article = d.getElementById('wkMainCnt');
@@ -649,11 +649,9 @@ var WikiaMobile = (function() {
 			.delegate('.bigTable', clickEvent, function(event){
 					event.preventDefault();
 
-					require('modal', function(modal){
-						modal.open({
-							classes: 'wideTable',
-							content: this.innerHTML
-						});
+					modal.open({
+						classes: 'wideTable',
+						content: this.innerHTML
 					});
 			});
 
