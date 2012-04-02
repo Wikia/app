@@ -23,7 +23,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		$this->themename = '';
 
 		parent::__construct();
-	
+
 		//allow non-strick asset check agains skin, @see WikiaSkin::getScripts and WikiaSkin::getStyles
 		$this->strictAssetUrlCheck = false;
 	}
@@ -99,6 +99,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	public function onSkinGetHeadScripts(&$scripts) {
 		global $wgStylePath;
 		$scripts .= "\n<!--[if lt IE 8]><script src=\"". $wgStylePath ."/common/json2.js\"></script><![endif]-->";
+		$scripts .= "\n<!--[if lt IE 9]><script src=\"". $wgStylePath ."/common/wikia/html5.js\"></script><![endif]-->";
 
 		$srcs = AssetsManager::getInstance()->getURL( 'monobook_js' );
 		foreach($srcs as $src) {

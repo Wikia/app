@@ -51,14 +51,17 @@
 		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
 	<![endif]-->
 
-	<?php
-		if( !$jsAtBottom ):?>
-			<!--[if lt IE 8]>
+	<?php if( !$jsAtBottom ):?>
+		<!--[if lt IE 8]>
 			<script src="<?= $wgStylePath ?>/common/json2.js"></script>
-			<![endif]-->
+		<![endif]-->
 
-			<!-- Combined JS files (StaticChute) and head scripts -->
-			<?= $jsFiles ;?>
+		<!--[if lt IE 9]>
+			<script src="<?= $wgStylePath ?>/common/wikia/html5.js"></script>
+		<![endif]-->
+
+		<!-- Combined JS files (StaticChute) and head scripts -->
+		<?= $jsFiles ;?>
 	<?endif;?>
 	<? if($displayAdminDashboard) { ?>
 		<!--[if IE]><script src="<?= $wgStylePath ?>/common/excanvas.js"></script><![endif]-->
@@ -78,8 +81,13 @@
 
 <?if( $jsAtBottom ):?>
 		<!--[if lt IE 8]>
-		<script src="<?= $wgStylePath ?>/common/json2.js"></script>
+			<script src="<?= $wgStylePath ?>/common/json2.js"></script>
 		<![endif]-->
+
+		<!--[if lt IE 9]>
+			<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
 		<!-- Combined JS files (StaticChute) and head scripts -->
 		<?= $jsFiles ;?>
 <?endif;?>
