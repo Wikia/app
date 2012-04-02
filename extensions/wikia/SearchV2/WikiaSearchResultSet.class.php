@@ -10,14 +10,16 @@ class WikiaSearchResultSet implements Iterator {
 	protected $resultsStart = 0;
 	protected $header = null;
 	protected $results = array();
+	protected $query;
 
 	public $totalScore;
 	public $score = 0;
 
-	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $isComplete = false) {
+	public function __construct(Array $results = array(), $resultsFound = 0, $resultsStart = 0, $isComplete = false, $query = null) {
 		$this->setResults($results);
 		$this->setResultsFound($resultsFound);
 		$this->setResultsStart($resultsStart);
+		$this->setQuery($query);
 
 		if($isComplete || ($this->getResultsNum() == $resultsFound)) {
 			$this->markAsComplete();
@@ -166,6 +168,14 @@ class WikiaSearchResultSet implements Iterator {
 		else {
 			return ($this->getCurrentPage() - 1) * $this->getResultsPerPage();
 		}
+	}
+
+	public function getQuery() {
+	        return $this->query;
+	}
+
+	public function setQuery($query) {
+	        $this->query = $query;
 	}
 
 	public function __sleep() {

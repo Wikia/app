@@ -23,6 +23,12 @@ Views: <input type="text" value="<?=$viewBoost?>" id="views_boost" name="views_b
 <?php if(!empty($results)): ?>
 	<?php if( $resultsFound > 0 ): ?>
 		<strong>Search results:</strong>&nbsp;<strong><?= $results->getStartPosition()+1; ?> - <?= (($results->getStartPosition()+$resultsPerPage) < $resultsFound) ? ($results->getStartPosition()+$resultsPerPage) : $resultsFound; ?></strong> of <strong><?= $resultsFound; ?></strong> document(s)<br />
+
+		<? if ($query != $results->getQuery()) : ?>
+                     No results were found for <em><?=$query?></em>.
+                     <strong>Showing results for <em><?=$results->getQuery()?></em>.</strong>
+	        <? endif; ?>
+
 		<?= $paginationLinks; ?>
 		<?php $pos = 0; ?>
 		<?php foreach( $results as $result ): ?>

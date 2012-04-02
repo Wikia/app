@@ -29,6 +29,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$queryClauses = array();
 		$sanitizedQuery = $this->sanitizeQuery($query);
 
+		$params['spellcheck'] = 'true';
+		$params['spellcheck.q'] = $sanitizedQuery;
+		$params['spellcheck.onlyMorePopular'] = 'true';
+		$params['spellcheck.collate'] = 'true';
+
 		$onWikiId = ( !empty( $this->wg->SolrDebugWikiId ) ) ? $this->wg->SolrDebugWikiId : $cityId;
 
 		if( empty($onWikiId) ) {
@@ -127,9 +132,14 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 
+		if (empty($response->response->docs)) {
+		  return $this->trySpellcheck($response, $start, $size, $cityId, $rankExpr, false);
+		  // set a global variable that we automatically searched
+		}
+
 		$results = $this->getWikiaResults($response->response->docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
 
-		return F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->response->numFound, 'resultsStart' => $response->response->start ) );
+		return F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->response->numFound, 'resultsStart' => $response->response->start, 'isComplete' => false, 'query' => $query ) );
 	}
 
 	private function getWikiaResults(Array $solrDocs, Array $solrHighlighting) {
@@ -192,6 +202,22 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 		return array_values($deDupedResults);
+	}
+
+	private function trySpellCheck(Apache_Solr_Response $response, $start, $size, $cityId, $rankExpr ) 
+	{
+
+	  if (empty($response->spellcheck->suggestions)) {
+
+	    // we know how to handle responses
+	    return $response;
+
+	  }
+
+	  $query = $response->spellcheck->suggestions->collation;
+
+	  return $this->search($query, $start, $size, $cityId, $rankExpr);
+
 	}
 
 
