@@ -3,17 +3,17 @@
 class WikiaValidatorsSet extends  WikiaValidatorListBase
 {
 	protected function config( array $options = array() ) {
-	
+
 		if(isset($options['validators'])) {
 			throw new Exception( 'WikiaValidatorsSet: to add validators use addValidator' );
-		}			
-		
+		}
+
 		$this->setOption( 'validators' , array());
 		$this->setOption( 'required', true );
 	}
-	
+
 	protected function configMsgs( array $msgs = array() ) {
-		
+
 	}
 
 	public function isValidInternal($value = null) {
@@ -21,9 +21,8 @@ class WikiaValidatorsSet extends  WikiaValidatorListBase
 
 		if(!is_array($value)) {
 			throw new Exception( 'WikiaValidatorsSet: $value is not array' );
-			return false;
 		}
-		
+
 		foreach( $this->getOption('validators') as $key => $validators ) {
 			foreach($validators as $validator ) {
 				$data =  $this->prepareField($value, $validator['passFields'] );
@@ -34,46 +33,46 @@ class WikiaValidatorsSet extends  WikiaValidatorListBase
 					throw new Exception( 'WikiaValidatorArray: one of validators is not implements of WikiaValidator' );
 				}
 
-				$this->isValidListElement($key, $data);		
+				$this->isValidListElement($key, $data);
 			}
 		}
-		
+
 		return empty($this->error);
 	}
 
 	protected function isValidListElement($key, $value) {
 		if(!$this->validator->isValid( $value )) {
 			$this->addError($key, $this->validator->getError());
-		}	
+		}
 	}
-	
+
 	protected function prepareField($value, $passFields) {
-		
+
 		if( count($passFields) == 1 ) {
 			return isset($value[$passFields[0]]) ? $value[$passFields[0]]:"";
 		}
-		
+
 		$out =  array();
 		foreach($value as $key => $subvalue) {
 			if(in_array( $key, $passFields )) {
 				$out[$key] = $subvalue;
 			}
 		}
-		
+
 		return $out;
 	}
-	
-	public function addValidator($field, WikiaValidator $validator, array $passFields = array() ) {	
+
+	public function addValidator($field, WikiaValidator $validator, array $passFields = array() ) {
 		if(empty($passFields)) {
 			$passFields[] = $field;
 		}
-		 
-		$this->options['validators'][$field][] = array( 
+
+		$this->options['validators'][$field][] = array(
 			'validator' =>  $validator,
 			"passFields" => $passFields
 		);
 	}
-	
+
 	public function addValidatorsFromHTMLformFields( $fields ) {
 		foreach($fields as $key => $value ) {
 			if(!empty($value['validator'])) {
@@ -81,25 +80,25 @@ class WikiaValidatorsSet extends  WikiaValidatorListBase
 			}
 		}
 	}
-	
+
 	public function isValid($value = null) {
 		if(is_a($value, 'HTMLForm') ) {
 			$value = $value->mFieldData;
 		}
 		return parent::isValid($value);
 	}
-	
+
 	static public  function arrayWalk($val, $key, $obj) {
 		array_push($obj, $val);
 	}
-	
+
 	public function getErrors() {
 		return $this->getError();
 	}
-	
+
 	public function getErrorsFlat(){
 		$output = array();
 		array_walk_recursive($this->getError(), 'WikiaValidatorsSet::arrayWalk', &$output);
 		return $output;
-	} 
+	}
 }
