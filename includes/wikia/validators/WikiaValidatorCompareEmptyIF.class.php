@@ -68,14 +68,13 @@ class WikiaValidatorCompareEmptyIF extends WikiaValidatorCompareValueIF {
 		{
 			case self::EMPTY_VALUE:
 				return empty($value);
-				break;
+
 			case self::NOT_EMPTY_VALUE:
 				return !empty($value);
-				break;
+
 			default:
 				$this->throwException( 'WikiaValidatorCompareEmptyIF: no expression ' . $this->getOption('condition') );
 		}
 	}
 
 }
-?>
