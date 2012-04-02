@@ -311,7 +311,7 @@ class CorporatePageHelper{
 			case NS_FILE:
 				$file = wfFindFile($title);
 				if (empty($file) && !empty( $wgCorporatePageRedirectWiki )) {
-					$redirect = $wgCorporatePageRedirectWiki . $title->prefix($title->getPartialURL());					
+					$redirect = $wgCorporatePageRedirectWiki . $title->prefix($title->getPartialURL());
 				}
 				break;
 			case NS_PROJECT:
@@ -322,19 +322,10 @@ class CorporatePageHelper{
 				}
 				break;
 
-			case NS_CATEGORY:
-			case NS_MAIN:
-				if (!$title->exists()) {
-					$redirect = 'http://www.wikia.com/wiki/Special:Search?search=' . wfUrlencode($title->getText());
-				}
-				break;
-
 			case NS_TALK:
 				$t = $title->getSubjectPage();
 				if ($t->exists()) {
-					$redirect = 'http://www.wikia.com/wiki/' . $t->getPartialURL();
-				} else {
-					$redirect = 'http://www.wikia.com/wiki/Special:Search?search=' . wfUrlencode($t->getText());
+					$redirect = 'http://www.wikia.com/' . $t->getPartialURL();
 				}
 				break;
 		}
