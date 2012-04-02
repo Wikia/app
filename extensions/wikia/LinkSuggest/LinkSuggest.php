@@ -177,7 +177,7 @@ function getLinkSuggest() {
 
 	$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 	$res = $dbs->select(
-		array( "pages" ),
+		array( "pages USE KEY (page_wikia_title_lower)" ),
 		array( "page_namespace", "page_title" ),
 		array(
 			" page_wikia_id " => $wgCityId,
@@ -186,7 +186,7 @@ function getLinkSuggest() {
 			" page_title_lower < '{$queryUpper}' ",
 			" page_namespace IN (" . implode(',', $namespaces) . ")",
 			" page_status = 0 ",
-                        " page_is_redirect = 0"
+			" page_is_redirect = 0 "
 		),
 		__METHOD__,
 		array(
