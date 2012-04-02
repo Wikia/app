@@ -9,6 +9,7 @@ group by wiki_id order by count(*) desc;" | slave stats > $TMPFILE
 cat $TMPFILE
 cat $TMPFILE | while read line; do
 	cityid=`echo "$line" | cut -f 1`
+	dbname=`echo "$line" | cut -f 3`
 	if [ "$cityid" = "city_id" ];
 	then
 		continue
@@ -22,8 +23,12 @@ cat $TMPFILE | while read line; do
 		continue
 	fi
 	echo "Processing $line"
-	sudo -u www-data SERVER_ID=$cityid php videoMigrateData.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.migratedata.log
-	sudo -u www-data SERVER_ID=$cityid php videoPostmigrate.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.postmigrate.log
-	echo "\n\n"
+	#sudo -u www-data SERVER_ID=$cityid php videoMigrateData.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.migratedata.log
+	#sudo -u www-data SERVER_ID=$cityid php videoPostmigrate.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.postmigrate.log
+
+	/usr/wikia/backend/bin/withcity --maintenance-script='../../../../../home/release/video_refactoring/trunk/maintenance/wikia/VideoHandlers/videoMigrateData.php' --usedb=$dbname | tee -a logs/${cityid}.migratedata.log
+	/usr/wikia/backend/bin/withcity --maintenance-script='../../../../../home/release/video_refactoring/trunk/maintenance/wikia/VideoHandlers/videoPostmigrate.php' --usedb=$dbname | tee -a logs/${cityid}.postmigrate.log
+
+	echo "---"
 done
 rm -f $TMPFILE
