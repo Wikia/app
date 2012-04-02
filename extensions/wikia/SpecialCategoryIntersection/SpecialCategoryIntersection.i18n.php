@@ -23,7 +23,32 @@ $messages['en'] = array(
 	'categoryintersection-noresults' => 'No results. Please check that the category names are correct if you think there should be results.',
 	'categoryintersection-query-used' => 'API query used:',
 	'categoryintersection-footer-title' => 'Examples',
-	'categoryintersection-footer-body' => 'Here are some example queries, just to show a few of the types of things that can be done with this API. There are numerous other cool possibilies though... Be creative!',
+	'categoryintersection-footer-body' => 'Here are some example queries, just to show a few of the types of things that can be done with this API. There are numerous other cool possibilies though... Be creative!<br/><br/>The default examples are for LyricWiki. Please edit [[MediaWiki:categoryintersection-footer-examples]] to make examples for this wiki.',
+	'categoryintersection-footer-examples' => '
+Category:Artists_S
+Category:Hometown/Sweden/Stockholm
+
+Category:Artist
+Category:Hometown/United_States/Pennsylvania/Pittsburgh
+
+Category:Hometown/Germany/North_Rhine-Westphalia
+Category:Genre/Rock
+
+Category:Artists_S
+Category:Genre/Rock
+Category:Hometown/United_States/
+
+Category:Album
+Category:Genre/Nerdcore_Hip_Hop
+
+Category:Language/Simlish
+
+Category:Label/Ultra_Records
+Category:Hometown/Canada
+
+Category:Genre/Hip_Hop
+Category:Hometown/United_States/California
+',
 	'categoryintersection-summary' => 'Searched for categories: $1; limit: $2; number of results returned: $3',
 );
 
@@ -32,5 +57,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'categoryintersection-desc' => '{{desc}}',
-	'categoryintersection-and' => 'Displayed between consecutive boxes for categories. Separates the categories visually but shows that adding more of them is a logical-and operation (ie: articles will have to be in ALL of the categories to be in the result set.'
+	'categoryintersection-and' => 'Displayed between consecutive boxes for categories. Separates the categories visually but shows that adding more of them is a logical-and operation (ie: articles will have to be in ALL of the categories to be in the result set.',
+	
+	'categoryintersection-footer-examples' => 'No need to translate this.  This is a specially-formatted wikitext message which can be used by various wikis to customize the CategoryIntersection examples to work on their wiki. The format is that one-or-more lines in a row will be combined into an example. Each example should be separated by a blank line.',
 );
