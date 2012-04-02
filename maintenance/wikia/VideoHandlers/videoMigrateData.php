@@ -11,6 +11,32 @@ require_once( '../../commandLine.inc' );
 require_once( 'premigrate.class.php' );
 require_once( 'videolog.class.php' );
 
+function adjustThumbnailToVideoRatio( $upload, $ratio ){
+
+	$data = file_get_contents( $upload->getTempPath() );
+	$src = imagecreatefromstring( $data );
+
+	$orgWidth = $upload->mFileProps['width'];
+	$orgHeight = $upload->mFileProps['height'];
+	$finalWidth = $upload->mFileProps['width'];
+	$finalHeight = $finalWidth / $ratio;
+
+	$dest = imagecreatetruecolor ( $finalWidth, $finalHeight );
+	imagecopy( $dest, $src, 0, 0, 0, ( $orgHeight - $finalHeight ) / 2 , $finalWidth, $finalHeight );
+
+	$sTmpPath = $upload->getTempPath();
+	switch ( $upload->mFileProps['minor_mime'] ) {
+		case 'jpeg':	imagejpeg( $dest, $sTmpPath ); break;
+		case 'gif':	imagegif ( $dest, $sTmpPath ); break;
+		case 'png':	imagepng ( $dest, $sTmpPath ); break;
+	}
+
+	imagedestroy( $src );
+	imagedestroy( $dest );
+
+}
+
+
 
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 // echo( "$IP\n" );
@@ -133,6 +159,8 @@ if( $rowCount ) {
 		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
 		$upload->fetchFile();
 		$upload->verifyUpload();
+
+		adjustThumbnailToVideoRatio( $upload, $metadata['aspectRatio'] );
 
 		/* create a reference to article that will contain uploaded file */
 		$title = Title::newFromText( $video->img_name, NS_FILE );
