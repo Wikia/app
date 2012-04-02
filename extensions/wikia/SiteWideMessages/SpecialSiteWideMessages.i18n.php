@@ -37,6 +37,7 @@ $messages['en'] = array(
 	'swm-label-recipient-wikis'	=> 'Wikis',
 	'swm-label-recipient-users'	=> 'Users',
 	'swm-label-expiration'		=> 'Expiration time',
+	'swm-label-expiration-hint' => '<i>Pick an expiry time from the drop down or write a time by hand to overwrite the drop down selection. Time written manually must be in the form 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all'	=> 'All wikis',
 	'swm-label-mode-wikis-hub'	=> 'Selected hub',
 	'swm-label-mode-wikis-cluster'=> 'Selected cluster',
@@ -88,6 +89,7 @@ $messages['en'] = array(
 	'swm-error-empty-message'	=> 'Enter the content of the message.',
 	'swm-error-long-message'	=> 'Messages are limited to 500 characters.',
 	'swm-error-empty-group'		=> 'Enter the name of the group.',
+	'swm-error-invalid-time'    => 'Invalid time provided.',
 	'swm-lang-other'		=> 'all remaining languages'
 );
 

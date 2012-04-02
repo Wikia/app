@@ -189,6 +189,8 @@
 				}
 				?>
 				</select>
+				<input name="mExpireTimeS" id="mExpireTimeS" type="text" size="20" value="<?= $formData['expireTimeS'] ?>"/>
+				<span><?= wfMsg( 'swm-label-expiration-hint' ) ?></span>
 			</fieldset>
 
 			<fieldset>
