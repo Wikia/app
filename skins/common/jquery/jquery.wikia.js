@@ -535,7 +535,7 @@ jQuery.fn.placeholder = function() {
 	var hasNativeSupport = 'placeholder' in document.createElement('input');
 
 	return this.each(function() {
-	
+
 		if(!hasNativeSupport){
 			var input = $(this);
 			var text = input.attr('placeholder');
@@ -568,7 +568,7 @@ jQuery.fn.placeholder = function() {
 					input.val('');
 				}
 			});
-		}	
+		}
 	})
 }
 
@@ -723,7 +723,7 @@ Observable = $.createClass(Object,{
 		}
 		return true;
 	},
-	
+
 	proxy: function(func) {
 		return $.proxy(func, this);
 	},
@@ -1087,10 +1087,14 @@ $(function() {
 });
 
 // http://bit.ly/ishiv | WTFPL License
-// IE < 9 fix for inserting HTML5 elements into the dom. 
-
+// IE < 9 fix for inserting HTML5 elements into the dom.
+//
 // Add 2nd param of False to return jQuery-friendly object instead of document fragment
-
+//
+// http://jdbartlett.com/innershiv/ says:
+//
+// STOP! Don't use innerShiv!
+// html5shiv now patches for the innerHTML issue! Update html5shiv and you won't have to use innerShiv anymore
 var innerShiv = function(){
 	function h(c,e,b){
 		return /^(?:area|br|col|embed|hr|img|input|link|meta|param)$/i.test(b)?c:e+"></"+b+">";
@@ -1117,4 +1121,3 @@ var innerShiv = function(){
 	    return f;
 	}
 }();
-
