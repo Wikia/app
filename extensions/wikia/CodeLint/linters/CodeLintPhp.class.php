@@ -149,7 +149,7 @@ class CodeLintPhp extends CodeLint {
 			$ret = true;
 		}
 
-		if (startsWith($errorMsg, 'FATAL ERROR')) {
+		if (startsWith($errorMsg, 'FATAL ERROR') && strpos($errorMsg, 'old-style syntax') === false) {
 			$ret = true;
 		}
 
