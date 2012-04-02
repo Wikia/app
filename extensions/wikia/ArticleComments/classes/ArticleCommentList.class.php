@@ -153,8 +153,8 @@ class ArticleCommentList {
 		wfProfileIn( __METHOD__ );
 
 		$action = $wgRequest->getText( 'action', false );
- 
-		$memckey = wfMemcKey( 'articlecomment', 'comm', $this->getTitle()->getDBkey(), 'v1' );
+        $title = $this->getTitle();
+		$memckey = wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), $title->getNamespace(), 'v2' );
 		
 		/**
 		 * skip cache if purging or using master connection or in case of single comment
