@@ -19,8 +19,6 @@ $app->registerClass('WikiaSearchClient', $dir . 'WikiaSearchClient.class.php');
 $app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class.php');
 $app->registerClass('WikiaSearchResult', $dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', $dir . 'WikiaSearchResultSet.class.php');
-//$app->registerClass('IndexTankClient', $dir . 'IndexTankClient.class.php');
-$app->registerClass('AmazonCSClient', $dir . 'AmazonCSClient.class.php');
 $app->registerClass('WikiaSolrClient', $dir . 'WikiaSolrClient.class.php');
 
 /**
@@ -28,34 +26,22 @@ $app->registerClass('WikiaSolrClient', $dir . 'WikiaSolrClient.class.php');
  */
 $app->registerSpecialPage('WikiaSearch', 'WikiaSearchController');
 
-/**
- * IndexTank setup
- */
-//require_once( $dir . 'flaptor-indextank-php/indextank.php');
+$wgSolrHost = isset($_GET['solrhost']) ? $_GET['solrhost'] : $wgSolrHost;
 
-/**
- * DI setup
- */
-/*
-F::addClassConstructor( 'IndexTankClient',
-	array(
-	 'apiUrl' => ( !empty( $wgWikiaSearchIndexTankApiUrl ) ? $wgWikiaSearchIndexTankApiUrl : false ),
-	 'httpProxy' => ( !empty( $wgHTTPProxy ) ? $wgHTTPProxy : false )
-	));
-*/
-F::addClassConstructor( 'AmazonCSClient',
-	array(
-	 'searchEndpoint' => 'http://search-wikia-test-dq6m57jtoklr4ajzy7zj2phhzi.us-east-1.cloudsearch.amazonaws.com/2011-02-01/search',
-	 'rankName' => '-indextank',
-	 'httpProxy' => ( !empty( $wgHTTPProxy ) ? $wgHTTPProxy : false )
-	));
+if (isset($_GET['solrhost']) || isset($_GET['solrport'])) {
+     $wgSolrPort = isset($_GET['solrport']) ? $_GET['solrport'] : 8983;
+
+     global $wikiaSearchUseProxy;
+     $wgWikiaSearchUseProxy = false;
+}
+
 F::addClassConstructor( 'WikiaSolrClient',
 	array(
 	 'solrHost' => ( !empty( $wgSolrHost ) ? $wgSolrHost : 'localhost' ),
-	 'solrPost' => ( !empty( $wgSolrPost ) ? $wgSolrPort : 8180 )
+	 'solrPort' => ( !empty( $wgSolrPort ) ? $wgSolrPort : 8180 )
 	));
 
-//F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('AmazonCSClient') ) );
+
 F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('WikiaSolrClient') ) );
 
 /**

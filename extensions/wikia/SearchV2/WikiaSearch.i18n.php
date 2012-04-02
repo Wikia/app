@@ -11,5 +11,6 @@ $messages['en'] = array(
 	'wikiasearch2-results' => 'Results',
 	'wikiasearch2-pages' => 'Pages',
 	'wikiasearch2-search-on-wiki' => 'Search within this wiki',
-	'wikiasearch2-skip-cache' => "Skip Cache"
+	'wikiasearch2-skip-cache' => "Skip Cache",
+	'wikiasearch2-use-s1' => "Use Search-S1"
 );

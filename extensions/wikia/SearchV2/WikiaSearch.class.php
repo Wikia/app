@@ -179,6 +179,7 @@ class WikiaSearch extends WikiaObject {
 		}
 
 		$html = $this->wg->Out->getHTML();
+
 		// clear output buffer in case we want get more pages
 		$this->wg->Out->clearHTML();
 
@@ -187,10 +188,11 @@ class WikiaSearch extends WikiaObject {
 		$result['sitename'] = $this->wg->Sitename;
 		$result['title'] = $page->getTitle()->getText();
 		$result['canonical'] = $canonical;
-		$result['html'] = $html;
+		$result['html'] = html_entity_decode($html, ENT_COMPAT, 'UTF-8'); // where are the other constants?
 		$result['url'] = $page->getTitle()->getFullUrl();
 		$result['ns'] = $page->getTitle()->getNamespace();
 		$result['host'] = substr($this->wg->Server, 7);
+		$result['lang'] = $this->wg->Lang->mCode;
 
 		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces );
 

@@ -1,18 +1,10 @@
 <form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
-	<?php if($debug): ?>
-		Rank Expr:
-		<select name="rankExpr">
-			<option value="-indextank" <?= (empty($rankExpr) || ($rankExpr == '-indextank')) ? 'selected' : ''; ?> >indextank</option>
-			<option value="-bl" <?= ($rankExpr == '-bl') ? 'selected' : ''; ?> >backlinks</option>
-			<option value="-bl2" <?= ($rankExpr == '-bl2') ? 'selected' : ''; ?> >backlinks (Mike)</option>
-			<option value="-bl3" <?= ($rankExpr == '-bl3') ? 'selected' : ''; ?> >backlinks only</option>
-		</select>
-	<?php endif; ?>
-			<input type="text" name="query" value="<?=$query;?>" /><input type="submit" class="wikia-button" id="search-v2-button" style="display: inline;" value="<?= wfMsg( 'wikiasearch2-search-btn' ); ?>" /><br/>
+	<input type="text" name="query" value="<?=$query;?>" /><input type="submit" class="wikia-button" id="search-v2-button" style="display: inline;" value="<?= wfMsg( 'wikiasearch2-search-btn' ); ?>" /><br/>
 	<input type="checkbox" name="crossWikia" value="1" <?= ( $crossWikia ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-search-all-wikia' ); ?>
 	<input type="checkbox" name="groupResults" value="1" <?= ( $groupResults ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-group-results' ); ?>
 	<input type="checkbox" name="debug" value="1" <?= ( $debug ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-debug-mode' ); ?>
 	<input type="checkbox" name="skipCache" value="1" <?= ($skipCache ? 'checked' : ''); ?>/><?= wfMsg( 'wikiasearch2-skip-cache' ); ?>
+	<input type="checkbox" name="solrhost" value="search-s1" <?= ($solrHost == 'search-s1') ? 'checked' : '' ?> /><?= wfMsg( 'wikiasearch2-use-s1' ) ?>
 <?php if($debug && $crossWikia) : ?>
 <br />
 <?php  global $wikipagesBoost, $activeusersBoost, $revcountBoost, $viewBoost; ?>

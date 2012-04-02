@@ -2,9 +2,11 @@
 
 class WikiaSolrClient extends WikiaSearchClient {
 
-	protected $solrClient = null;
+        protected $solrClient, $solrPort, $solrHost;
 
 	public function __construct( $solrHost, $solrPort ) {
+	        $this->solrHost = $solrHost;
+	        $this->solrPort = $solrPort;
 		$this->solrClient = F::build( 'Apache_Solr_Service', array( 'host' => $solrHost, 'port' => $solrPort, 'path' => '/solr' ) );
 	}
 
@@ -43,7 +45,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 			$queryClauses[] = $widQuery;
 
-			$queryClauses[] = "lang:en";
+			// disabled because of indexing problem
+			
+			if ($this->solrHost != 'search-s1') {
+			    $queryClauses[] = "lang:en";
+			}
 			$queryClauses[] = "iscontent:true";
 		}
 		else {
@@ -66,6 +72,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		  # we can do this because the host is a text field
 		  if (!$this->includeAnswers($query)) {
 		    $boostQueries[] = '-host:\"answers\"^10';
+		    $boostQueries[] = '-host:\"respuestas\"^10';
 		  }
 
 		  if (!$skipBoostFunctions) {
