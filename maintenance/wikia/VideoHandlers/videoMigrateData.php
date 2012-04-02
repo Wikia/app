@@ -176,6 +176,10 @@ if( $rowCount ) {
 			$upload->verifyUpload();
 		}
 
+		if( !is_array($res) || $res['status'] != UploadFromUrl::OK ) {
+			continue;
+		}
+
 		adjustThumbnailToVideoRatio( $upload, $metadata['aspectRatio'] );
 
 		/* create a reference to article that will contain uploaded file */
