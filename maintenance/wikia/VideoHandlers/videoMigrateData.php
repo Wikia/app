@@ -177,7 +177,7 @@ if( $rowCount ) {
 			echo "Using default thumbnail (could not get from url: " . $video->thumbnail_url . " )\n";
 		}
 
-		if( !is_array($res) || $res['status'] != UploadFromUrl::OK || $res['status'] != UploadFromUrl::VERIFICATION_ERROR ) {
+		if( !is_array($res) || ($res['status'] != UploadFromUrl::OK && $res['status'] != UploadFromUrl::VERIFICATION_ERROR) ) {
 			echo "Thumbnail upload fail\n";
 			var_dump( $res );
 			continue;
