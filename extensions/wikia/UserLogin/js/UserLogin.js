@@ -17,6 +17,8 @@ var UserLogin = {
 
 	isForceLogIn: function() {
 		if (wgUserName == null) {
+			//prevent onbeforeunload from being called when user is loging in
+			window.onbeforeunload = function() {};
 			if (!window.wgComboAjaxLogin) {
 				UserLoginModal.show();
 				return true;
