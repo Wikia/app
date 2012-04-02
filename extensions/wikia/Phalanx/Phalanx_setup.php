@@ -43,7 +43,7 @@ $wgLogActions['phalanx/delete']     = 'phalanx-rule-log-delete';
 
 $wgLogTypes[]                       = 'phalanxemail';
 $wgLogNames['phalanxemail']         = 'phalanx-email-rule-log-name';
-$wgLogHeaders['phalanxemail']       = 'phalanx-emial-rule-log-header';
+$wgLogHeaders['phalanxemail']       = 'phalanx-email-rule-log-header';
 $wgLogRestrictions['phalanxemail']  = 'phalanxemailblock';
 $wgLogActions['phalanxemail/add']   = 'phalanx-rule-log-add';
 $wgLogActions['phalanxemail/edit']  = 'phalanx-rule-log-edit';
