@@ -173,12 +173,13 @@ if( $rowCount ) {
 			$upload = F::build( 'UploadFromUrl' );
 			$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
 			$upload->fetchFile();
-			$upload->verifyUpload();
-			echo "Using default thumbnail (could not get from url: " . $video->thumbnail_url . "\n";
+			$res = $upload->verifyUpload();
+			echo "Using default thumbnail (could not get from url: " . $video->thumbnail_url . " )\n";
 		}
 
 		if( !is_array($res) || $res['status'] != UploadFromUrl::OK ) {
 			echo "Thumbnail upload fail\n";
+			var_dump( $res );
 			continue;
 		}
 
