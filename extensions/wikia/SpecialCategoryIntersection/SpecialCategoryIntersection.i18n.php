@@ -36,7 +36,7 @@ Category:Genre/Rock
 
 Category:Artists_S
 Category:Genre/Rock
-Category:Hometown/United_States/
+Category:Hometown/United_States/California
 
 Category:Album
 Category:Genre/Nerdcore_Hip_Hop
