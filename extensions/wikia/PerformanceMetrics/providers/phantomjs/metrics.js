@@ -73,9 +73,17 @@ function getDomComplexity(page) {
 	return metrics;
 };
 
-// log total page load time
-page.onLoadStarted = function () {
-    page.startTime = new Date();
+// track onDOMready event
+page.onInitialized = function () {
+	page.startTime = Date.now();
+
+	// emulate window.performance
+    page.evaluate(function() {
+    	window.timingLoadStarted = Date.now();
+        document.addEventListener("DOMContentLoaded", function() {
+        	window.timingDOMContentLoaded = Date.now();
+        }, false);
+    });
 };
 
 // monitor requests made (BugId:26332)
@@ -114,16 +122,23 @@ page.onResourceReceived = function(res) {
 address = system.args[1];
 
 page.open(address, function(status) {
+	var now = Date.now();
+
 	switch(status) {
 		case 'success':
 			var url = page.evaluate(function() {
 				return document.location.toString();
 			}),
 			metrics = {
-				loadTime: new Date() - page.startTime,
 				requests: page.requests.length,
-				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte)
+				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte),
+				loadTime: now  - page.startTime
 			};
+
+			// onDOMready
+			metrics.onDOMready = page.evaluate(function() {
+				return window.timingDOMContentLoaded - window.timingLoadStarted;
+			});
 
 			// evaluate DOM complexity
 			var domMetrics = getDomComplexity(page);
