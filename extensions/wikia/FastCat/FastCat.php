@@ -44,7 +44,7 @@ function efFastCatInit($out, $categories, $links) {
 
 	if ( $wgUser->isAnon() || $wgTitle->getNamespace() != NS_MAIN || $wgTitle->isRedirect() ) {
 		return true;
-	}	
+	}
 
 	wfLoadExtensionMessages( 'FastCat' );
 
@@ -63,20 +63,21 @@ function efFastCatInit($out, $categories, $links) {
  * Display the selector
  */
 function efFastCatSelector( &$categories ) {
+	global $wgTitle, $wgArticle;
 
-  global $wgTitle, $wgArticle;
+	// BugId:26491
+	if (empty($wgTitle) || empty($wgArticle)) {
+		return true;
+	}
 
-  $kat = explode( "\n", wfMsgForContent( 'fastcat-categories-list' ) );
+	$artname = $wgTitle->getText();
+	$artid = $wgArticle->getID();
 
-  $artname = $wgTitle->getText();
-  $artid = $wgArticle->getID();
+	$spice = sha1("Kroko-katMeNot-" . $artid . "-" . $artname . "-NotMekat-Schnapp");
 
+	$catUrl = Title::newFromText( 'FastCat', NS_SPECIAL )->getFullURL();
 
-  $spice = sha1("Kroko-katMeNot-" . $artid . "-" . $artname . "-NotMekat-Schnapp");
-
-  $catUrl = Title::newFromText( 'FastCat', NS_SPECIAL )->getFullURL();
-
-  $ret = "<form action=\"$catUrl\" method='post'>
+	$ret = "<form action=\"$catUrl\" method='post'>
 <p><b>" . wfMsg( 'fastcat-box-title' ) . "</b><br>
 <small>" . wfMsg( 'fastcat-box-intro' ) . "</small>
 </p>
@@ -85,23 +86,25 @@ function efFastCatSelector( &$categories ) {
 <input type='hidden' name='artname' value='$artname'>
 <p style=\"text-indent:-1em;margin-left:1em\">";
 
-  foreach($kat as $k) {
+	$kat = explode( "\n", wfMsgForContent( 'fastcat-categories-list' ) );
 
-    if( strpos( $k, '* ' ) === 0 ) {
-      $k = trim( $k, '* ' );
-      $ret .= "</p><p style=\"text-indent:-1em;margin-left:1em\">\n";
-      $ret .= "<button style=\"font-size:smaller;\" name=\"cat\" value=\"$k\"><b>$k</b></button>\n";
-    } else {
-      $k = trim( $k, '* ' );
-      $ret .= "<button style=\"font-size:smaller;\" name=\"cat\" value=\"$k\">$k</button>\n";
-    }
+	foreach($kat as $k) {
 
-  }
+		if( strpos( $k, '* ' ) === 0 ) {
+			$k = trim( $k, '* ' );
+			$ret .= "</p><p style=\"text-indent:-1em;margin-left:1em\">\n";
+			$ret .= "<button style=\"font-size:smaller;\" name=\"cat\" value=\"$k\"><b>$k</b></button>\n";
+		} else {
+			$k = trim( $k, '* ' );
+			$ret .= "<button style=\"font-size:smaller;\" name=\"cat\" value=\"$k\">$k</button>\n";
+		}
 
-  $ret .=<<< EORET
-</p>
-</form>
-EORET;
+	}
+
+	$ret .=<<< EORET
+		</p>
+		</form>
+		EORET;
 
 	$categories = $ret;
 
