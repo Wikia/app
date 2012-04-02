@@ -6,7 +6,7 @@ class AdSS_AdminController {
 	private $selectedTab = 'adList';
 
 	function execute( $sub ) {
-		global $wgOut, $wgAdSS_templatesDir, $wgUser;
+		global $wgOut, $wgUser;
 
 		if( !$wgUser->isAllowed( 'adss-admin' ) ) {
 			$wgOut->permissionRequired( 'adss-admin' );
@@ -167,9 +167,7 @@ class AdSS_AdminController {
 	}
 
 	static function acceptAdAjax( $id, $token ) {
-		global $wgUser, $wgAdSS_DBname, $wgAdSS_ReadOnly;
-
-		wfLoadExtensionMessages( 'AdSS' );
+		global $wgUser, $wgAdSS_ReadOnly;
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
@@ -224,8 +222,6 @@ class AdSS_AdminController {
 	static function closeAdAjax( $id, $token ) {
 		global $wgUser, $wgAdSS_ReadOnly;
 
-		wfLoadExtensionMessages( 'AdSS' );
-
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -262,8 +258,6 @@ class AdSS_AdminController {
 	static function getAdAjax( $id ) {
 		global $wgUser;
 
-		wfLoadExtensionMessages( 'AdSS' );
-
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -284,8 +278,6 @@ class AdSS_AdminController {
 
 	static function editAdAjax( $id, $url, $text, $desc ) {
 		global $wgUser, $wgAdSS_ReadOnly;
-
-		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
@@ -328,8 +320,6 @@ class AdSS_AdminController {
 	static function getAdChangeAjax( $id ) {
 		global $wgUser;
 
-		wfLoadExtensionMessages( 'AdSS' );
-
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -355,8 +345,6 @@ class AdSS_AdminController {
 
 	static function approveAdChangeAjax( $id, $url, $text, $desc ) {
 		global $wgUser, $wgAdSS_ReadOnly;
-
-		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
@@ -397,8 +385,6 @@ class AdSS_AdminController {
 
 	static function rejectAdChangeAjax( $id ) {
 		global $wgUser, $wgAdSS_ReadOnly;
-
-		wfLoadExtensionMessages( 'AdSS' );
 
 		$response = new AjaxResponse();
 		$response->setContentType( 'application/json; charset=utf-8' );
