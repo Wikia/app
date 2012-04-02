@@ -242,12 +242,12 @@ class Premigrate {
 			'backlinks'		=> $bl,
 		);
 
-		if(isset($previouslyProcessed[$videoName])) {
+		if(isset(static::$previouslyProcessed[$videoName])) {
 			// update
 
 			// if status was unsupported and still is
 			// no need to update
-			if( $previouslyProcessed[$videoName]['status'] == STATUS_NOT_SUPPORTED && $status == STATUS_NOT_SUPPORTED ) {
+			if( static::$previouslyProcessed[$videoName]['status'] == STATUS_NOT_SUPPORTED && $status == STATUS_NOT_SUPPORTED ) {
 				return (object)$video;
 			}
 
