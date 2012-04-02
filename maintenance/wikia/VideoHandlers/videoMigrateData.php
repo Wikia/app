@@ -158,10 +158,23 @@ if( $rowCount ) {
 			'wpSourceType' => 'web',
 			'wpUploadFileURL' => !empty( $video->thumbnail_url ) ? $video->thumbnail_url : $defaultThumbnailUrl
 		);
-		$upload = F::build( 'UploadFromUrl' );
+
+		$upload = F::build( 'UploadFromUrl' ); /* @var $upload UploadFromUrl */
 		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
 		$upload->fetchFile();
-		$upload->verifyUpload();
+		$res = $upload->verifyUpload();
+
+		if( is_array($res) && $res['status'] != UploadFromUrl::OK ) {
+			$data = array(
+				'wpUpload' => 1,
+				'wpSourceType' => 'web',
+				'wpUploadFileURL' => $defaultThumbnailUrl
+			);
+			$upload = F::build( 'UploadFromUrl' );
+			$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
+			$upload->fetchFile();
+			$upload->verifyUpload();
+		}
 
 		adjustThumbnailToVideoRatio( $upload, $metadata['aspectRatio'] );
 
