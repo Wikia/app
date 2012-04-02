@@ -177,6 +177,7 @@ if( $rowCount ) {
 		}
 
 		if( !is_array($res) || $res['status'] != UploadFromUrl::OK ) {
+			echo "Thumbnail upload fail\n";
 			continue;
 		}
 
