@@ -35,10 +35,15 @@ class SpecialCategoryIntersection extends SpecialPage {
 	
 	static private $CAT_PREFIX = "category_";
 	static private $CATEGORY_NS_PREFIX = "Category:"; // the actual namespace prefix (includes the colon at the end).  FIXME: There must be a way to get this programatically. - perhaps: MWNamespace::getCanonicalIndex(strtolower($namespaceName)) mixed with  $wgContLang->getNamespaces()?
-	static private $DOCUMENTATION_URL = "http://lyrics.wikia.com/api.php"; // TODO: URL OF DOCS HERE.
 
 	public function __construct() {
 		parent::__construct( 'CategoryIntersection' );
+	}
+	
+	public function getDocumentationUrl(){
+		// TODO: Ideally, we should create documentation for the extension on MediaWiki.org, then instead of this function, we should use a static member var (string) for the URL.
+		global $wgServer;
+		return $wgServer."/api.php";
 	}
 
 	/**
@@ -102,7 +107,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		// Show the header
 		$wgOut->addHTML( "<h2>" . wfMsg('categoryintersection-header-title') . "</h2>" );
-		$docLink = "<a href='".self::$DOCUMENTATION_URL."'>". wfMsg('categoryintersection-docs-linktext') ."</a>";
+		$docLink = "<a href='".$this->getDocumentationUrl()."'>". wfMsg('categoryintersection-docs-linktext') ."</a>";
 		$wgOut->addHTML( wfMsg('categoryintersection-header-body', $docLink) );
 		$wgOut->addHTML( "<br/><br/>" );
 
