@@ -26,7 +26,7 @@ class EnableAchievementsTask extends BatchTask {
 	}
 
 	function execute ($params = null) {
-		global $IP, $wgWikiaLocalSettingsPath, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
+		global $wgWikiaLocalSettingsPath, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
 
 		// per moli, seriously frakked
 		$wgMaxShellMemory = 0;
