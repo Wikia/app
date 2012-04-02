@@ -422,7 +422,7 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
  */
 abstract class NullApiWrapper extends PseudoApiWrapper {
 	//@todo change this url
-	protected static $THUMBNAIL_URL = 'http://pinside.com/img/no_thumbnail.jpg';
+	protected static $THUMBNAIL_URL = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/BrokenVideo_Icon_Large.png';
 	
 	
 	public function __construct($videoId, array $overrideMetadata=array()) {
