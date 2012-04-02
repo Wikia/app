@@ -409,7 +409,7 @@ class CategoryExhibitionSection {
 	
 	protected function getTouchedKey($title) {
         //fb#24914
-        if( !($title instanceof Title) ) {
+        if( $title instanceof Title ) {
 		    $key = wfMemcKey( 'category_touched', $title->getDBKey() );
 		    return $key;
         } else {
