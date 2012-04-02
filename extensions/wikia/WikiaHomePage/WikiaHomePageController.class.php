@@ -83,11 +83,16 @@ class WikiaHomePageController extends WikiaController {
 		$stats = $this->wg->Memc->get( $memKey );
 		if ( empty($stats) ) {
 			$stats['visitors'] =  $this->getStatsFromArticle( 'StatsVisitors' );
+
 			$stats['edits'] = $this->getEdits();
+			if ( empty($stats['edits']) ) {
+				$stats['editsDefault'] = $this->getStatsFromArticle( 'StatsEdits' );
+			}
+
 			$stats['communities'] = $this->getStatsFromArticle( 'StatsCommunities' );
 
 			$defaultTotalPages = $this->getStatsFromArticle( 'StatsTotalPages' );
-			$totalPages = Wikia::get_content_pages();
+			$totalPages = intval( Wikia::get_content_pages() );
 			$stats['totalPages'] = ( $totalPages > $defaultTotalPages ) ? $totalPages : $defaultTotalPages ;
 			
 			$this->wg->Memc->set( $memKey, $stats, 60*60*1 );
@@ -95,9 +100,11 @@ class WikiaHomePageController extends WikiaController {
 
 		foreach( $stats as $key => $value ) {
 			$this->$key = $this->wg->Lang->formatNum( $value );
-			if ( $key == 'communities' ) {
-				$this->$key = $this->$key.'+';
-			}
+		}
+
+		$this->communities = $this->communities.'+';
+		if ( empty($stats['edits']) && in_array('editsDefault', $stats) ) {
+			$this->edits = $this->editsDefault.'+';
 		}
 
 		$this->wf->ProfileOut( __METHOD__ );
@@ -132,7 +139,7 @@ class WikiaHomePageController extends WikiaController {
 			}
 
 			if ( $row ) {
-				$visitors = $row->cnt;
+				$visitors = intval( $row->cnt );
 			}
 		}
 
@@ -160,7 +167,7 @@ class WikiaHomePageController extends WikiaController {
 			);
 
 			if ( $row ) {
-				$edits = $row->cnt;
+				$edits = intval( $row->cnt );
 			}
 		}
 
