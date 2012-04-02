@@ -12,6 +12,9 @@ require_once( 'premigrate.class.php' );
 require_once( 'videolog.class.php' );
 
 function adjustThumbnailToVideoRatio( $upload, $ratio ){
+	if(empty($ratio)) {
+		$ratio = 16/9;
+	}
 
 	$data = file_get_contents( $upload->getTempPath() );
 	$src = imagecreatefromstring( $data );
