@@ -42,6 +42,13 @@ SCRIPT2;
   _gaq.push(['_setSampleRate', '10']);
   _gaq.push(['_trackPageview']);
 
+  _gaq.push(['_setCustomVar', 1, 'wiki', 'db=' + (window.wgDBname || 'unknown') + ';hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
+  _gaq.push(['_setCustomVar', 3, 'AB',   'unknown', 3]);
+  _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
+  _gaq.push(['_setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
+
+  $setDomainName
+
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
