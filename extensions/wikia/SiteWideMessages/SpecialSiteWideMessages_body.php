@@ -68,6 +68,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['userName'] = $wgRequest->getText('mUserName');
 		$formData['listUserNames'] = $wgRequest->getText( 'mUserNames' );
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
+		$formData['expireTimeS'] = $wgRequest->getVal('mExpireTimeS');
 		$formData['mLang'] = $wgRequest->getArray('mLang');
 
 		//fetching hub list
@@ -188,7 +189,8 @@ class SiteWideMessages extends SpecialPage {
 				//TODO: if $mRecipientId == 0 => error - no such user
 				$mText = $wgRequest->getText('mContent');
 				$groupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
-				$result = $this->sendMessage( $wgUser, $mRecipientId, $mText, $formData['expireTime'], $formData['wikiName'],
+				$expiryArr = array( 'manual' => $formData['expireTimeS'], 'preset' => $formData['expireTime'] );
+				$result = $this->sendMessage( $wgUser, $mRecipientId, $mText, $expiryArr, $formData['wikiName'],
 					$formData['userName'], $formData['listUserNames'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'],
 					$formData['hubId'], $formData['mLang'], $formData['clusterId'] );
 
@@ -268,7 +270,7 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
-	private function sendMessage( $mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mUserNames, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId ) {
+	private function sendMessage( $mSender, $mRecipientId, $mText, $mExpireArray, $mWikiName, $mRecipientName, $mUserNames, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang, $mClusterId ) {
 		global $wgExternalSharedDB, $wgStatsDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
@@ -335,6 +337,18 @@ class SiteWideMessages extends SpecialPage {
 			}
 		}
 
+		$validDateTime = true;
+		if ( $mExpireArray['manual'] !== '' ) {
+			$timestamp = wfTimestamp( TS_UNIX, $mExpireArray['manual'] );
+			if ( !$timestamp ) {
+				$validDateTime = false;
+			}
+			$mExpire = wfTimestamp( TS_DB, $timestamp );
+		} else {
+			//null => expire never
+			$mExpire = $mExpireArray['preset'] != '0' ? date('Y-m-d H:i:s', strtotime(ctype_digit($mExpireArray['preset']) ? " +{$mExpireArray['preset']} day" : ' +' . substr($mExpireArray['preset'], 0, -1) . ' hour')) : null;
+		}
+
 		if (wfReadOnly()) {
 			$reason = wfReadOnlyReason();
 			$result['errMsg'] = wfMsg('readonlytext', $reason);
@@ -349,6 +363,8 @@ class SiteWideMessages extends SpecialPage {
 			$result['errMsg'] = wfMsg('swm-error-no-such-user');
 		} elseif ( $mSendModeUsers == 'USERS' && empty( $mUserNames ) ) {
 			$result['errMsg'] = wfMsg( 'swm-error-no-user-list' );
+		} elseif ( !$validDateTime ) {
+			$result['errMsg'] = wfMsg( 'swm-error-invalid-time' );
 		} else {
 			global $wgParser, $wgUser;
 			$title = Title::newFromText(uniqid('tmp'));
@@ -356,9 +372,6 @@ class SiteWideMessages extends SpecialPage {
 
 			//Parse some wiki markup [eg. ~~~~]
 			$mText = $wgParser->preSaveTransform($mText, $title, $wgUser, $options);
-
-			//null => expire never
-			$mExpire = $mExpire != '0' ? date('Y-m-d H:i:s', strtotime(ctype_digit($mExpire) ? " +$mExpire day" : ' +' . substr($mExpire, 0, -1) . ' hour')) : null;
 
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbResult = (boolean)$DB->Query (
