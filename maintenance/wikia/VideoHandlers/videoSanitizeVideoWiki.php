@@ -5,7 +5,8 @@
  *  */
 
 
-function title_replacer( $title, $replacement, $fulltext  ) {
+function get_regexp( $title, $replacement, &$wsc ) {
+	$wsc = 0;
 	$symbols = array(
 		array(' ','_','-','+','/'),
 	);
@@ -23,20 +24,38 @@ function title_replacer( $title, $replacement, $fulltext  ) {
 	for ($k = 0; $k < $j; $k++) {
 		$char = mb_substr($title, $k, 1);
 		if(isset($refs[$char])) {
-			$regexp .= $refs[$char];
+			$wsc++;
+			$regexp .= '('.$refs[$char] . "|%20){1,}";
 		} else {
 			if(ctype_alnum($char)) {
-				$regexp .= $char;
+				if ( $k == 0 ) {
+					$regexp .= '['.strtolower($char).strtoupper($char).']';
+				} else {
+					$regexp .= $char;
+				}
 			} else {
-				$regexp .= '\\' . $char;
+				//$int = ord($char);
+				//echo "-------------- Escaping $char ($int)\n";
+				if( $char == '?') {
+					$regexp .= '(\\' . $char . '|%3f|%3F)';
+					$wsc++;
+				} else {
+					$regexp .= '\\' . $char;
+				}
 			}
 		}
 	}
+	#echo "Part of regexp: $regexp\n";
+	return $regexp;
+}
 
-	$regexp = '/(\\[\\[Video\\:)' . $regexp . '(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
+function title_replacer( $title, $replacement, $fulltext  ) {
 
-	$new = preg_replace( $regexp, '$1' . $replacement . '$4', $fulltext );
-	if($new === null) return $fulltext;
+	$wsc = 0;
+	$regexp = get_regexp( $title, $replacement, $wsc );
+	$regexp = '/(\\[\\[Video\\:)[ ]{0,}' . $regexp . '[ ]{0,}(( *)?#.*?)?'.'(\\]\\]|\\|[^]]+\\]\\])/';
+	$new = preg_replace( $regexp, '$1' . $replacement . '$'.(4+$wsc), $fulltext );
+	if( $new === null ) return $fulltext;
 	return $new;
 }
 
@@ -57,12 +76,12 @@ $devboxuser = exec('hostname');
 $sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgDBname, $wgExternalDatawareDB);
 $botUser = User::newFromName( 'WikiaBot' );
 
-// $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
 // echo( "$IP\n" );
 echo( "Video name sanitizer script running for $wgCityId\n" );
 videoLog( 'sanitize', 'START', '');
 
 
+// $IP = '/home/release/video_refactoring/trunk'; // HACK TO RUN ON CRON-S3
 require_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbw = wfGetDB( DB_MASTER );
