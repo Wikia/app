@@ -284,43 +284,20 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		$html = "";
 		$html .= "<h2>" . wfMsg('categoryintersection-footer-title') . "</h2>";
-		$html .= wfMsg('categoryintersection-footer-body') . "<br/>\n";
+		$html .= wfMsgExt('categoryintersection-footer-body', 'parse');
 
-// TODO: Think of some other cool examples (with more than 2 dimensions)
-// TODO: Think of some other cool examples (with more than 2 dimensions)
-		$examples = array(
-			array(
-				"Category:Artists_S",
-				"Category:Hometown/Sweden/Stockholm",
-			),
-			array(
-				"Category:Artist",
-				"Category:Hometown/United_States/Pennsylvania/Pittsburgh",
-			),
-			array(
-				"Category:Hometown/Germany/North_Rhine-Westphalia",
-				"Category:Genre/Rock"
-			),
-			array(
-				"Category:Artists_S",
-				"Category:Genre/Rock"
-			),
-			array(
-				"Category:Album",
-				"Category:Genre/Nerdcore_Hip_Hop"
-			),
-			array(
-				"Category:Language/Simlish"
-			),
-			array(
-				"Category:Label/Ultra_Records",
-				"Category:Hometown/Canada"
-			),
-			array(
-				"Category:Genre/Hip_Hop",
-				"Category:Hometown/United_States/California"
-			),
-		);
+		// Examples will be an array of arrays where each sub-array contains items for a single example.
+		$examples = array();
+		
+		// Examples are now kept in wikitext so that each wiki can have its own examples if it wishes.
+		$exampleText = wfMsg('categoryintersection-footer-examples');
+		$rawExamples = explode("\n\n", $exampleText);
+		foreach($rawExamples as $singleExample){
+			$items = explode("\n", trim($singleExample));
+			if(count($items) > 0){
+				$examples[] = $items;
+			}
+		}
 
 		// Format and output the examples.
 		$html .= "<ul>\n";
