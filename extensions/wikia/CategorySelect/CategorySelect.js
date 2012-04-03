@@ -613,7 +613,7 @@ function showCSpanel() {
 	$.loadYUI(function() {
 		initCatSelect();
 		csType = 'view';
-		$.post(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView'}, function(result){
+		$.get(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}, function(result) {
 			//prevent multiple instances when user click very fast
 			if ($('#csMainContainer').exists()) {
 				return;
@@ -626,10 +626,9 @@ function showCSpanel() {
 			initAutoComplete();
 			initializeDragAndDrop();
 			initializeCategories();
+			replaceAddToInput();
+			positionSuggestBox();
 
-			// TODO: remove setTimeout
-			setTimeout(replaceAddToInput, 60);
-			setTimeout(positionSuggestBox, 666); //sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
 			$('#catlinks').removeClass('csLoading');
 		}, "html");
 

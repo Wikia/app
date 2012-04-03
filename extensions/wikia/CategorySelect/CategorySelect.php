@@ -495,9 +495,6 @@ wgAfterContentAndJS.push(function() {
 		ev.preventDefault();
 
 		$.getResources([
-			function(callback) {
-				$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories', callback);
-			},
 			$.loadYUI,
 			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js',
 			$.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss')
