@@ -1,11 +1,11 @@
-var oAutoComp;
-var categories = [];
-var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
-var ajaxUrl = wgServer + wgScript + '?action=ajax';
-var csType = 'edit';
-var csMaxTextLength = 28;
-var csDraggingEvent = false;
-var csMode = 'wysiwyg';
+var oAutoComp,
+	categories = [],
+	fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i'),
+	csAjaxUrl = wgServer + wgScript + '?action=ajax',
+	csType = 'edit',
+	csMaxTextLength = 28,
+	csDraggingEvent = false,
+	csMode = 'wysiwyg';
 
 // macbre: generic tracking for CategorySelect (refs RT #68550)
 function csTrack(fakeUrl) {
@@ -25,6 +25,8 @@ function initCatSelect() {
 		return true;
 	}
 	initCatSelect.isint = true;
+
+	// TODO: remove
 	YAHOO.namespace('CategorySelect');
 }
 
@@ -399,7 +401,7 @@ function toggleCodeView() {
 	} else {	//switch to visual code
 		$.tracker.byStr('editpage/visualviewCategory');
 
-		$.post(ajaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: [$('#csWikitext').val() + ' ']}, function(result){
+		$.post(csAjaxUrl, {rs: "CategorySelectAjaxParseCategories", rsargs: [$('#csWikitext').val() + ' ']}, function(result){
 			if (typeof result.error !== 'undefined') {
 				alert(result.error);
 			} else if (typeof result.categories !== 'undefined') {
@@ -613,7 +615,7 @@ function showCSpanel() {
 	$.loadYUI(function() {
 		initCatSelect();
 		csType = 'view';
-		$.get(ajaxUrl, {rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}, function(result) {
+		$.get(csAjaxUrl, {rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}, function(result) {
 			//prevent multiple instances when user click very fast
 			if ($('#csMainContainer').exists()) {
 				return;
@@ -643,9 +645,8 @@ function csSave() {
 		addCategory($('#csCategoryInput').attr('value'));
 	}
 	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent($.toJSON(categories));
-	//$.post(ajaxUrl, {rs: 'CategorySelectAjaxSaveCategories', 'rsargs[]': [wgArticleId, $.toJSON(categories)]}, function(result){
 	$.ajax({
-		url: ajaxUrl,
+		url: csAjaxUrl,
 		data: pars,
 		dataType: "json",
 		success: function(result){
