@@ -85,6 +85,7 @@ F::build('JSMessages')->registerPackage('Places', array(
 	'ok',
 ));
 
+F::build('JSMessages')->registerPackage('PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
 F::build('JSMessages')->registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
 
 /**
