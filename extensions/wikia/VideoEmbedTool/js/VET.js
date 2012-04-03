@@ -119,13 +119,13 @@ function VET_doEditVideo() {
 		extraData.thumb = 1;
 	}
 
-	if (extraData.thumb) {
+	//if (extraData.thumb) { // bugId:26619
 		if( $G('VideoEmbedLayoutLeft').checked ) {
 			extraData.align = 'left';
 		} else {
 			extraData.align = 'right';
 		}
-	}
+	//}
 
 	if ($G('VideoEmbedCaption').value) {
 		 extraData.caption = $G('VideoEmbedCaption').value;
