@@ -61,6 +61,8 @@ abstract class CodeLint {
 	 * @param string $pattern - pattern to glob for
 	 */
 	protected function findFiles($dir, $pattern) {
+		wfProfileIn(__METHOD__);
+
 		// escape any character in a string that might be used to trick
 		// a shell command into executing arbitrary commands
 		$dir = escapeshellcmd($dir);
@@ -72,13 +74,16 @@ abstract class CodeLint {
 		    $arr   = $this->findFiles($sub_dir, $pattern);  // resursive call
 		    $files = array_merge($files, $arr); // merge array with files from subdirectory
 		}
+
+		wfProfileOut(__METHOD__);
+
 		// return all found files
 	    return $files;
 	}
 
 	/**
 	 * Run given JS file using nodejs
-	 * 
+	 *
 	 * Decodes the output, adds run time information
 	 *
 	 * @param string $scriptName file to run
@@ -86,6 +91,8 @@ abstract class CodeLint {
 	 * @return array output from nodejs
 	 */
 	protected function runUsingNodeJs($scriptName, Array $params = array()) {
+		wfProfileIn(__METHOD__);
+
 		$timeStart = microtime(true /* $get_as_float */);
 
 		$scriptName = escapeshellcmd($scriptName);
@@ -113,8 +120,11 @@ abstract class CodeLint {
 			}
 		}
 		else {
+			wfProfileOut(__METHOD__);
 			throw new Exception($output);
 		}
+
+		wfProfileOut(__METHOD__);
 
 		return $res;
 	}
@@ -127,6 +137,8 @@ abstract class CodeLint {
 	 * @return array output from command
 	 */
 	protected function runCommand($cmd, Array $params = array()) {
+		wfProfileIn(__METHOD__);
+
 		$timeStart = microtime(true /* $get_as_float */);
 
 		$cmd = escapeshellcmd($cmd);
@@ -144,6 +156,7 @@ abstract class CodeLint {
 			'time' => round($timeEnd - $timeStart, 4)
 		);
 
+		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -155,14 +168,18 @@ abstract class CodeLint {
 	 * @return boolean is entry blacklisted
 	 */
 	protected function isBlacklisted($entry, $blacklist) {
+		wfProfileIn(__METHOD__);
+
 		if (!empty($blacklist) && is_array($blacklist)) {
 			foreach($blacklist as $item) {
 				if (strpos($entry, $item) !== false) {
+					wfProfileOut(__METHOD__);
 					return true;
 				}
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
@@ -205,6 +222,8 @@ abstract class CodeLint {
 	 * @return array list of reported warnings
 	 */
 	public function checkFile($fileName) {
+		wfProfileIn(__METHOD__);
+
 		$output = $this->internalCheckFile($fileName);
 
 		// cleanup the list of errors reported
@@ -250,6 +269,7 @@ abstract class CodeLint {
 
 		$output['fileChecked'] = $fileName;
 
+		wfProfileOut(__METHOD__);
 		return $output;
 	}
 
@@ -261,6 +281,8 @@ abstract class CodeLint {
 	 * @return array list of reported warnings
 	 */
 	public function checkFiles($fileNames, $blacklist = array()) {
+		wfProfileIn(__METHOD__);
+
 		$results = array();
 
 		foreach($fileNames as $fileName) {
@@ -269,6 +291,7 @@ abstract class CodeLint {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
@@ -281,6 +304,7 @@ abstract class CodeLint {
 	 */
 	public function checkDirectory($directoryName, $blacklist = array()) {
 		global $wgCommandLineMode;
+		wfProfileIn(__METHOD__);
 
 		$files = $this->findFiles(rtrim($directoryName, '/'), $this->filePattern);
 		$results = array();
@@ -317,6 +341,7 @@ abstract class CodeLint {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
@@ -328,6 +353,7 @@ abstract class CodeLint {
 	 * @return array list of reported warnings
 	 */
 	public function checkDirectories($directoryNames, $blacklist = array()) {
+		wfProfileIn(__METHOD__);
 		$results = array();
 
 		foreach($directoryNames as $directoryName) {
@@ -336,6 +362,7 @@ abstract class CodeLint {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
@@ -347,6 +374,7 @@ abstract class CodeLint {
 	 * @return string report
 	 */
 	public function formatReport($results, $format = 'text') {
+		wfProfileIn(__METHOD__);
 		$report = CodeLintReport::factory($format);
 
 		// get the first row of results to get 'tool' entry
@@ -358,6 +386,9 @@ abstract class CodeLint {
 			$tool = '';
 		}
 
-		return $report->render($results, $tool);
+		$ret = $report->render($results, $tool);
+
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 }

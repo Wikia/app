@@ -10,6 +10,8 @@
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
+require $IP . '/extensions/wikia/CodeLint/CodeLint.setup.php';
+
 function printHelp() {
 		echo <<<HELP
 Performs lint check on given file / directory
