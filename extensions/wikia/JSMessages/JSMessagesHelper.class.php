@@ -30,13 +30,18 @@ class JSMessagesHelper {
 	 * @return string - cache buster value
 	 */
 	public function getMessagesCacheBuster() {
+		$this->app->wf->ProfileIn(__METHOD__);
+
 		$parts = array(
 			$this->app->wg->StyleVersion,
 			$this->getWikiRevisionId(),
 			$this->getWikiRevisionId(self::MESSAGING),
 		);
 
-		return implode('.', $parts);
+		$ret = implode('.', $parts);
+
+		$this->app->wf->ProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	/**
