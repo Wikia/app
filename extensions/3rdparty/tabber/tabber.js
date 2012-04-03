@@ -294,6 +294,8 @@ tabberObj.prototype.init = function(e)
     this.onLoad({tabber:this});
   }
 
+  $(".wikiahubs-newstabs").click(this.clickTrackingHandler);
+
   return this;
 };
 
@@ -433,6 +435,44 @@ tabberObj.prototype.navClearActive = function(tabberIndex)
   this.tabs[tabberIndex].li.className = '';
 
   return this;
+};
+
+
+tabberObj.prototype.clickTrackingHandler = function(e) {
+	var node = $(e.target);
+	var startTime = new Date();
+
+	if (node.closest('.tabbernav').length > 0) {
+		var liNode = node.closest('li');
+		var allLiNode = node.closest('.tabbernav').find('li');
+		var tabIndex = allLiNode.index(liNode) + 1;
+		WikiaTracker.trackEvent({
+			ga_category: 'Tabber',
+			ga_action: WikiaTracker.ACTIONS.CLICK,
+			ga_label: 'tab',
+			ga_value: tabIndex,
+			tracking_method: 'internal'
+		});
+	} else if (node.is('img') && node.hasParent('a')) {
+		var url = node.closest('a').attr('href');
+		WikiaTracker.trackEvent({
+			ga_category: 'Tabber',
+			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_IMAGE,
+			ga_label: 'image',
+			tracking_method: 'internal',
+			internal_params: {href:url}
+		});
+	} else if (node.is('a') || node.hasParent('a')) {
+		var url = node.closest('a').attr('href');
+		WikiaTracker.trackEvent({
+			ga_category: 'Tabber',
+			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
+			ga_label: 'content',
+			tracking_method: 'internal',
+			internal_params: {href:url}
+		});
+	}
+	$().log('tracking took ' + (new Date() - startTime) + ' ms');
 };
 
 

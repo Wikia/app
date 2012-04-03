@@ -11,9 +11,6 @@ var WikiaHubs = {
 		});
 
 		$('body >.modalWrapper').live('click', WikiaHubs.modalClickTrackingHandler);
-		$('#WikiaSearch').submit(function(e) {
-			WikiaHubs.trackClick('Pulse', WikiaTracker.ACTIONS.SUBMIT, 'search');
-		});
 	},
 
 	trackClick: function(category, action, label, value, params) {
@@ -36,31 +33,7 @@ var WikiaHubs = {
 		var node = $(e.target);
 		var startTime = new Date();
 		
-		if (node.closest('.WikiaMosaicSlider').length > 0) {	// Slider
-			if (node.closest('.wikia-mosaic-slider-region').length > 0 && node.closest('a').length > 0) {
-				var url = node.closest('a').attr('href');
-				WikiaHubs.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hero', null, {href:url});
-			} else if (node.closest('.wikia-mosaic-slide').length > 0) {
-				var liNode = node.closest('.wikia-mosaic-slide');
-				var allLiNode = node.closest('.wikia-mosaic-thumb-region').find('.wikia-mosaic-slide');
-				var imageIndex = allLiNode.index(liNode) + 1;
-				var url = node.closest('a').attr('href');
-				WikiaHubs.trackClick('MosaicSlider', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'thumbnail', imageIndex, {href:url});
-			}
-		} else if (node.closest('.wikiahubs-newstabs').length > 0) { // news tabs
-			if (node.closest('.tabbernav').length > 0) {
-				var liNode = node.closest('li');
-				var allLiNode = node.closest('.tabbernav').find('li');
-				var tabIndex = allLiNode.index(liNode) + 1;
-				WikiaHubs.trackClick('Tabber', WikiaTracker.ACTIONS.CLICK, 'tab', tabIndex);
-			} else if (node.is('img') && node.hasParent('a')) {
-				var url = node.closest('a').attr('href');
-				WikiaHubs.trackClick('Tabber', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'image', null, {href:url});
-			} else if (node.is('a') || node.hasParent('a')) {
-				var url = node.closest('a').attr('href');
-				WikiaHubs.trackClick('Tabber', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'content', null, {href:url});
-			}
-		} else if (node.closest('.wikiahubs-sponsored-video').length > 0) {	// featured video
+		if (node.closest('.wikiahubs-sponsored-video').length > 0) {	// featured video
 			if (node.hasClass('thumbinner') || node.hasParent('.thumbinner')) {
 				var url = node.closest('.thumbinner').find('a').attr('href');
 				var videoTitle = url.substr(url.indexOf(':')+1);
