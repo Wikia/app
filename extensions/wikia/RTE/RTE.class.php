@@ -384,6 +384,7 @@ HTML
 
 				case 'wysiwyg':
 				case 'visual':
+					$forcedWysiwyg = true;
 					self::setInitMode('wysiwyg');
 					break;
 			}
@@ -418,7 +419,7 @@ HTML
 
 		// check user preferences option
 		$userOption = $wgUser->getOption('enablerichtext');
-		if( ($userOption != true) && ($useEditor != 'wysiwyg') ) {
+		if( ($userOption != true) && empty($forcedWysiwyg) ) {
 			RTE::log('editor is disabled because of user preferences');
 			self::disableEditor('userpreferences');
 		}
@@ -535,7 +536,7 @@ HTML
 
 		return $wikitext;
 	}
-	
+
 	/**
 	 * Add given message / dump given variable to MW log
 	 *
