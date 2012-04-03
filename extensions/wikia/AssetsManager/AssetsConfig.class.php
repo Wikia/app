@@ -1,9 +1,9 @@
 <?php
 /**
  * AssetsConfig
- * 
+ *
  * In this class word 'item' stands for single entry in configuration array while 'asset' stand for specific path or url
- * 
+ *
  * @author Inez Korczyński <korczynski@gmail.com>
  */
 
@@ -41,16 +41,15 @@ class AssetsConfig {
 	}
 
 	/**
-	 * Generates the URL for the Winre inspector script
-	 * 
+	 * Generates the URL for the Weinre inspector script
+	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 * @see http://phonegap.github.com/weinre/
 	 * @param bool $combine
-	 * 
+	 *
 	 * @return array an array containing the asset url
 	 */
 	public static function getWeinreJS( $combine ) {
-		global $wgDevelEnvironment, $wgRequest, $wgWeinrePort, $wgEnableWeinre;
 		$app = F::app();
 		$server = '';
 		$ret = array();
@@ -105,7 +104,7 @@ class AssetsConfig {
 		// This class always exists at the moment, this is just in case it goes away at some point
 		if (class_exists('EditPageLayoutHelper')) {
 			return EditPageLayoutHelper::getAssets();
-		} else { 
+		} else {
 			return array();
 		}
 	}
@@ -158,7 +157,7 @@ class AssetsConfig {
 
 	/**
 	 * Returns type of particular group. If group does not exists then return null
-	 * 
+	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
 	 */
 	public function getGroupType( $groupName ) {
@@ -191,7 +190,7 @@ class AssetsConfig {
 
 	/**
 	 * Based on the group name get items assigned to it and pass to resolveItemsToAssets mathod for resolving into particular assets
-	 * 
+	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
 	 */
 	public function resolve( /* string */ $groupName, /* boolean */ $combine = true, /* boolean */ $minify = true, /* array */ $params = array() ) {

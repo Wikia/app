@@ -94,7 +94,6 @@ class DataProvider {
 	 */
 	final public static function GetTopFiveArray() {
 		wfProfileIn(__METHOD__);
-		global $wgMemc;
 
 		$links = array();
 		$links['most_popular'] = 'GetMostPopularArticles';
@@ -265,7 +264,7 @@ class DataProvider {
 	 */
 	final public static function GetMostPopularArticles($limit = 7) {
 		wfProfileIn(__METHOD__);
-		global $wgDBname, $wgMemc;
+		global $wgMemc;
 
 		$memckey = wfMemcKey("MostPopular", $limit);
 		$results = $wgMemc->get($memckey);
@@ -341,7 +340,7 @@ class DataProvider {
 	 */
 	final public static function GetMostVisitedArticles($limit = 7, $ns = array(NS_MAIN), $fillUpMostPopular = true) {
 		wfProfileIn(__METHOD__);
-		global $wgDBname, $wgMemc;
+		global $wgMemc;
 
 		$memckey = wfMemcKey("MostVisited", $limit, implode(",", $ns), $fillUpMostPopular);
 		$results = $wgMemc->get($memckey);
@@ -540,7 +539,7 @@ class DataProvider {
 	 * Author: Piotr Molski (moli at wikia.com)
 	 */
 	static public function GetUserEventMessages($limit = 1) {
-		global $wgDBname, $wgShareDB, $wgMessageCache, $wgOut;
+		global $wgOut;
 
 		wfProfileIn(__METHOD__);
 
