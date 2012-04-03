@@ -91,10 +91,11 @@ class ArticleServiceTest extends WikiaBaseTest {
 	 * @param $expSnippetText expected output text snippet
 	 */
 	public function testGetTextSnippetTest($snippetLength, $articleText, $expSnippetText) {
-		$this->setUpMockObject('Title', array('newFromText' => null), true);
+
 		$this->setUpMockObject('Article', array(
 			'getContent' => $articleText,
-			'getTitle' => F::build('Title')
+			'getTitle' => F::build('Title'),
+			'getID' => 0 
 		), true, null, false);
 		$this->setUpMock();
 
