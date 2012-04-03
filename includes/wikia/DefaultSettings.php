@@ -237,11 +237,6 @@ include_once( "$IP/extensions/wikia/TimeAgoMessaging/TimeAgoMessaging_setup.php"
 include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
 
 /**
- * Code lint
- */
-include_once("$IP/extensions/wikia/CodeLint/CodeLint.setup.php");
-
-/**
  * API classes
  */
 

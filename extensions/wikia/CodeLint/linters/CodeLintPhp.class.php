@@ -38,6 +38,9 @@ class CodeLintPhp extends CodeLint {
 	protected function runPhpLint($fileName) {
 		$output = $this->runCommand('phplint', array(
 			'--no-overall',
+			 '--no-print-source',
+			 '--no-print-context',
+			 '--no-print-file-name',
 			$fileName
 		));
 
