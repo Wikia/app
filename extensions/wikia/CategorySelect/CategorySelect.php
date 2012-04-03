@@ -198,11 +198,11 @@ function CategorySelectGetCategories() {
 		while($row = $dbr->fetchObject($res)) {
 			$categories[] = str_replace('_', ' ', addslashes($row->cat_title));
 		}
-		
+
 		$out = 'var categoryArray = ["'.join('","', $categories).'"];';
-		// TODO: refactor CategorySelect.js to receive object 
+		// TODO: refactor CategorySelect.js to receive object
 		// via ajax rather than variable via $.getScript
-		//$out = join(',', $categories); // categoryArray 
+		//$out = join(',', $categories); // categoryArray
 
 		// Cache for a day
 		$wgMemc->set($key, $out, 86400);
@@ -486,6 +486,7 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="background:#DDD;position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 5px;line-height: 16px;"><img src="'.$wgBlankImgUrl.'" class="sprite-small add" /><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;display:inline-block;" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 
 		// TODO: REMOVE THE loadYUI wrapper around the .getScript call after YUI is removed.
+		// TODO: move to external JS (BugId:24567)
 		$wgOut->addInlineScript(<<<JS
 /* CategorySelect */
 wgAfterContentAndJS.push(function() {
@@ -498,8 +499,8 @@ wgAfterContentAndJS.push(function() {
 				$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories', callback);
 			},
 			$.loadYUI,
-			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion,
-			(window.skin == 'oasis' ? $.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss') : wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.css?' + wgStyleVersion)
+			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js',
+			$.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss')
 		],
 		function() {
 			csTrack('addCategory');
