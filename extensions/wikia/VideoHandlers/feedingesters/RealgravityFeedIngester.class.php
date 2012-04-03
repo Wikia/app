@@ -3,7 +3,7 @@
 class RealgravityFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'RealgravityApiWrapper';
 	protected static $PROVIDER = 'realgravity';
-	protected static $FEED_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.xml?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
+	protected static $FEED_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.json?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
 	private static $API_PROVIDER_IDS = array('MACHINIMA'=>240);
 	const API_PAGE_SIZE = 100;
 	
@@ -37,42 +37,34 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		do {
 			$numVideos = 0;
 	
+			// connect to provider API
 			$url = $this->initFeedUrl($keyword, $startDate, $endDate, $page++);
-
-			$info = array();
 			print("Connecting to $url...\n");
-
-			$xmlContent = $this->getUrlContent($url);
-
-			if (!$xmlContent) {
+			$req = HttpRequest::factory( $url );
+			$status = $req->execute();
+			if( $status->isOK() ) {
+				$response = $req->getContent();
+			}
+			else {
 				print("ERROR: problem downloading content!\n");
-				return 0;
+				return 0;				
 			}
 
-			$doc = new DOMDocument( '1.0', 'UTF-8' );
-			@$doc->loadXML( $xmlContent );
-			$videos = $doc->getElementsByTagName('video');
-			$numVideos = $videos->length;
+			// parse response
+			$videos = json_decode( $response, true );
+			$numVideos = sizeof($videos);
 			print("Found $numVideos videos...\n");
 			for ($i=0; $i<$numVideos; $i++) {
 				$clipData = array();
-				$video = $videos->item($i);
-				$clipData['clipTitle'] = $video->getElementsByTagName('title')->item(0)->textContent;
-				$clipData['videoId'] = $video->getElementsByTagName('guid')->item(0)->textContent;
-				$clipData['thumbnail'] = $video->getElementsByTagName('thumbnail-url')->item(0)->textContent;
-				$clipData['duration'] = $video->getElementsByTagName('duration')->item(0)->textContent;
-				$clipData['published'] = $video->getElementsByTagName('published-at')->item(0)->textContent;
-				$clipData['category'] = $video->getElementsByTagName('category-name')->item(0)->textContent;
-				$clipData['keywords'] = $video->getElementsByTagName('tag-list')->item(0)->textContent;
-				if ($video->getElementsByTagName('source-video-props')->item(0)) {			
-					$sourceVideoPropsTxt = $video->getElementsByTagName('source-video-props')->item(0)->textContent;
-					$sourceVideoProps = explode('|', $sourceVideoPropsTxt);
-					if (sizeof($sourceVideoProps)) {
-						$clipData['dimensions'] = $sourceVideoProps[0];
-					}
-				}
-				
-				$clipData['description'] = $video->getElementsByTagName('description')->item(0)->textContent;
+				$video = $videos[$i]['video'];
+				$clipData['clipTitle'] = trim($video['title']);
+				$clipData['videoId'] = $video['guid'];
+				$clipData['thumbnail'] = $video['thumbnail_url'];
+				$clipData['duration'] = $video['duration'];
+				$clipData['published'] = $video['published_at'];
+				$clipData['category'] = $video['category_name'];
+				$clipData['keywords'] = trim($video['tag_list']);
+				$clipData['description'] = trim($video['description']);
 
 				$msg = '';
 				$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);
