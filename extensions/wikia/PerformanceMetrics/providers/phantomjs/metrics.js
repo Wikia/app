@@ -78,10 +78,14 @@ page.onInitialized = function () {
 	page.startTime = Date.now();
 
 	// emulate window.performance
+	// @see https://groups.google.com/d/topic/phantomjs/WnXZLIb_jVc/discussion
     page.evaluate(function() {
     	window.timingLoadStarted = Date.now();
         document.addEventListener("DOMContentLoaded", function() {
         	window.timingDOMContentLoaded = Date.now();
+        }, false);
+        window.addEventListener("load", function(){
+        	window.timingOnLoad = Date.now();
         }, false);
     });
 };
@@ -118,6 +122,10 @@ page.onResourceReceived = function(res) {
 	}
 };
 
+page.onConsoleMessage = function (msg) {
+	console.log(msg);
+};
+
 // load the emit and print out the metrics
 address = system.args[1];
 
@@ -137,7 +145,11 @@ page.open(address, function(status) {
 
 			// onDOMready
 			metrics.onDOMready = page.evaluate(function() {
-				return window.timingDOMContentLoaded - window.timingLoadStarted;
+				return window.timingDOMContentLoaded - (window.wgNow || window.timingLoadStarted);
+			});
+
+			metrics.onLoad = page.evaluate(function() {
+				return (window.timingOnLoad || Date.now()) - (window.wgNow || window.timingLoadStarted);
 			});
 
 			// evaluate DOM complexity

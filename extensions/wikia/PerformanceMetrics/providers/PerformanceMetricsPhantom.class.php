@@ -26,8 +26,8 @@ class PerformanceMetricsPhantom extends PerformanceMetricsProvider {
 
 		exec($cmd, $output, $retVal);
 
-		// decode the first line
-		$report = json_decode(reset($output), true);
+		// decode the last line
+		$report = json_decode(end($output), true);
 		return $report;
 	}
 }
