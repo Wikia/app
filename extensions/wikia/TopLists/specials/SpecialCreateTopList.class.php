@@ -48,6 +48,7 @@ class SpecialCreateTopList extends SpecialPage {
 		$errors = array();
 		$listName = null;
 		$relatedArticleName = null;
+        $description = null;
 		$selectedPictureName = null;
 		$selectedImage = null;
 		$imageTitle = null;
@@ -58,6 +59,7 @@ class SpecialCreateTopList extends SpecialPage {
 			$listName = $wgRequest->getText( 'list_name' );
 			$relatedArticleName = $wgRequest->getText( 'related_article_name' );
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
+            $description = $wgRequest->getText( 'description' );
 			$itemsNames = array_filter(
 				$wgRequest->getArray( 'items_names', array() ),
 				'purgeInput'
@@ -126,6 +128,10 @@ class SpecialCreateTopList extends SpecialPage {
 					}
 				}
 
+                if ( !empty( $description ) ) {
+                    $setResult = $list->setDescription($description);
+                }
+
 				$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_CREATE );
 
 				if ( $checkResult !== true ) {
@@ -190,7 +196,6 @@ class SpecialCreateTopList extends SpecialPage {
 								}
 							}
 
-
 							//update page's cache, items where added
 							$list->invalidateCache();
 
@@ -236,6 +241,7 @@ class SpecialCreateTopList extends SpecialPage {
 			'mode' => 'create',
 			'listName' => $listName,
 			'relatedArticleName' => $relatedArticleName,
+            'description' => $description,
 			'selectedImage' => $selectedImage,
 			'errors' => $errors,
 			//always add an empty item at the beginning to create the clonable template

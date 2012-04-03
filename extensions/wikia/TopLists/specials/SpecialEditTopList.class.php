@@ -59,6 +59,7 @@ class SpecialEditTopList extends SpecialPage {
 		$listName = null;
 		$listUrl = null;
 		$relatedArticleName = null;
+        $description = null;
 		$selectedPictureName = null;
 		$items = array();
 		$listItems = array();
@@ -71,6 +72,7 @@ class SpecialEditTopList extends SpecialPage {
 		} else {
 			$title = $list->getTitle();
 			$listName = $title->getText();
+            $description = $list->getDescription();
 			$listUrl = $title->getFullURL();
 			$listItems = $list->getItems();
 			$userCanEditItems = $list->checkUserItemsRight( 'edit' );
@@ -80,6 +82,7 @@ class SpecialEditTopList extends SpecialPage {
 				TopListHelper::clearSessionItemsErrors();
 
 				$relatedArticleName = $wgRequest->getText( 'related_article_name' );
+                $selectedDescription = $wgRequest->getText( 'description' );
 				$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
 				$itemsNames = $wgRequest->getArray( 'items_names', array() );
 				$removedItems = ( $userCanDeleteItems ) ? $wgRequest->getArray( 'removed_items', array() ) : array();
@@ -143,6 +146,18 @@ class SpecialEditTopList extends SpecialPage {
 						$list->setPicture( null );
 					}
 				}
+
+                //handle description
+                $curValue = null;
+                if ( !empty($description) ) {
+                    $curValue = $description;
+                }
+
+                $selectedDescriptionChanged = ( $curValue != $selectedDescription );
+
+                if ( $selectedDescriptionChanged ) {
+                    $list->setDescription($selectedDescription);
+                }
 
 				//check the list for processability
 				$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_UPDATE );
@@ -281,7 +296,7 @@ class SpecialEditTopList extends SpecialPage {
 
 				//if no errors proceed with saving, list comes first
 				if ( empty( $errors ) || $itemTouched ) {
-					if ( $relatedArticleChanged || $selectedPictureChanged || $itemTouched ) {
+					if ( $relatedArticleChanged || $selectedPictureChanged || $selectedDescriptionChanged || $itemTouched ) {
 						$saveResult = $list->save();
 
 						if ( $saveResult !== true ) {
@@ -371,6 +386,7 @@ class SpecialEditTopList extends SpecialPage {
 				'listName' => $listName,
 				'listUrl' => $listUrl,
 				'relatedArticleName' => $relatedArticleName,
+                'description' => $description,
 				'selectedImage' => $selectedImage,
 				'errors' => $errors,
 				//always add an empty item at the beginning to create the clonable template

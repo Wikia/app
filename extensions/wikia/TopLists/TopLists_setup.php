@@ -143,11 +143,13 @@ $wgHooks[ 'UserGetRights' ][] = 'TopListHelper::onUserGetRights';
 $wgHooks[ 'getUserPermissionsErrors' ][] = 'TopListHelper::onGetUserPermissionsErrors';
 $wgHooks[ 'FBConnect::BeforePushEvent' ][] = 'TopListHelper::onBeforePushEvent';
 $wgHooks[ 'CategoryPage::AddPage' ][] = 'TopListHelper::onAddPage';
+$wgHooks[ 'ArticleService::getTextSnippet::beforeStripping' ][] = 'TopListHelper::onArticleServicebeforeStripping';
 
 //parser functions, tags and attributes
 define( 'TOPLIST_TAG', 'toplist' );
 define( 'TOPLIST_ATTRIBUTE_RELATED', 'related');
 define( 'TOPLIST_ATTRIBUTE_PICTURE', 'picture');
 define( 'TOPLIST_ATTRIBUTE_LASTUPDATE', 'lastupdate');
+define( 'TOPLIST_ATTRIBUTE_DESCRIPTION', 'description');
 
 $wgHooks['ParserFirstCallInit'][] = "TopListParser::onParserFirstCallInit";

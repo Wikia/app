@@ -64,6 +64,10 @@ class TopListParser {
 			}
 		}
 
+        if ( !empty( $args[ TOPLIST_ATTRIBUTE_DESCRIPTION ] ) ) {
+            self::$mAttributes[ TOPLIST_ATTRIBUTE_DESCRIPTION ] = $args[ TOPLIST_ATTRIBUTE_DESCRIPTION ];
+        }
+
 		if( !empty( self::$mList ) ) {
 			$list = self::$mList;
 			self::$mList = null;
