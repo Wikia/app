@@ -132,6 +132,7 @@ class PlacesHooks extends WikiaObject{
 
 		// load JS messages
 		F::build('JSMessages')->enqueuePackage('Places', JSMessages::EXTERNAL);
+		F::build('JSMessages')->enqueuePackage('PlacesEditPageButton', JSMessages::INLINE);
 		return true;
 	}
 
