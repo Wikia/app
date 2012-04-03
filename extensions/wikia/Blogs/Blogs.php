@@ -104,6 +104,8 @@ $wgSpecialPages['CreateBlogListingPage'] = 'CreateBlogListingPage';
 $wgAutoloadClasses['SpecialBlogPage'] = $dir . '/SpecialBlogPage.php';
 $wgAutoloadClasses['CreateBlogPage'] = $dir . '/SpecialCreateBlogPage.php';
 $wgSpecialPages['CreateBlogPage'] = 'CreateBlogPage';
+$wgSpecialPages['SpecialMyblog'] = 'Myblog';
+$wgAutoloadClasses['SpecialMyblog'] = $dir . '/SpecialMyblog.php';
 
 // initialize blogs special pages (BugId:7604)
 $wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
