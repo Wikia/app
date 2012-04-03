@@ -177,7 +177,7 @@ function getLinkSuggest() {
 
 	$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 	$res = $dbs->select(
-		array( "pages USE KEY (page_wikia_title_lower)" ),
+		array( "pages" ),
 		array( "page_namespace", "page_title" ),
 		array(
 			" page_wikia_id " => $wgCityId,
@@ -191,7 +191,8 @@ function getLinkSuggest() {
 		__METHOD__,
 		array(
 			"ORDER BY" => "page_title_lower ASC",
-			"LIMIT" => (15 - count($results))
+			"LIMIT" => (15 - count($results)),
+			"USE INDEX" => "page_wikia_title_lower"
 		)
 	);
 	while($row = $dbs->fetchObject($res)) {
