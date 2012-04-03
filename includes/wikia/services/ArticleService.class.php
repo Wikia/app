@@ -45,6 +45,7 @@ class ArticleService extends Service {
 		$sKey = F::App()->wf->sharedMemcKey(
 			self::CACHE_KEY,
 			$this->mArticle->getID(),
+            $this->mArticle->getTouched(),
 			F::App()->wg->cityId
 		);
 

@@ -8,6 +8,7 @@
 class TopList extends TopListBase {
 	const ITEM_TITLE_PREFIX = 'toplist-item-';
 	protected $mRelatedArticle = null;
+    protected $mDescription = null;
 	protected $mPicture = null;
 	protected $mItems = array();
 	protected $mUserCanVote = false;
@@ -89,12 +90,16 @@ class TopList extends TopListBase {
 				$this->setRelatedArticle( $relatedArticle );
 
 				$picture = TopListParser::getAttribute( TOPLIST_ATTRIBUTE_PICTURE );
-
 				if( !empty( $picture ) ) {
 					$picture =  Title::newFromText( $picture );
 				}
 
 				$this->setPicture( $picture );
+
+                $description = TopListParser::getAttribute( TOPLIST_ATTRIBUTE_DESCRIPTION );
+                if( !empty( $description ) ) {
+                    $this->setDescription( $description );
+                }
 			}
 
 			$this->mDataLoaded = true;
@@ -183,6 +188,34 @@ class TopList extends TopListBase {
 		$this->mPicture = $picture;
 		return true;
 	}
+
+    /**
+     * Returns a string with description of the list
+     *
+     * @param bool $forceReload if set to true the local cache will be refreshed
+     *
+     * @return String
+     *
+     * @author Andrzej 'nAndy' Łukaszewski
+     */
+    public function getDescription( $forceReload = false ) {
+        $this->_loadData( $forceReload );
+        return $this->mDescription;
+    }
+
+    /**
+     * Sets description field of TopList class
+     *
+     * @param Title $relatedArticle a Title instance for the article to reference
+     *
+     * @return mixed true in case of success, otherwise a multidimensional array of error messages in this form: array( array( 'msg' => MESSAGE_KEY, 'params' => array() ) )
+     *
+     * @author Andrzej 'nAndy' Łukaszewski
+     */
+    public function setDescription( $description = '' ) {
+        $this->mDescription = $description;
+        return true;
+    }
 	
 	/**
 	 * @author Federico "Lox" Lucignano
@@ -392,16 +425,19 @@ class TopList extends TopListBase {
 			$contentText = '';
 
 			$relatedArticle = $this->getRelatedArticle();
-			
 			if ( !empty( $relatedArticle ) ) {
 				$contentText .= ' ' . TOPLIST_ATTRIBUTE_RELATED . '="' . htmlspecialchars( $relatedArticle->getPrefixedText() ) . '"';
 			}
 
 			$picture = $this->getPicture();
-			
 			if ( !empty( $picture ) ) {
 				$contentText .= ' ' . TOPLIST_ATTRIBUTE_PICTURE . '="' . htmlspecialchars( $picture->getText() ) . '"';
 			}
+
+            $description = $this->getDescription();
+            if ( !empty( $description ) ) {
+                $contentText .= ' ' . TOPLIST_ATTRIBUTE_DESCRIPTION . '="' . htmlspecialchars( $description ) . '"';
+            }
 
 			$contentText .= ' ' . TOPLIST_ATTRIBUTE_LASTUPDATE . '="' . wfTimestampNow() . '"';
 

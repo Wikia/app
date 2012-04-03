@@ -61,6 +61,22 @@
 		<? endif ;?>
 	</div>
 
+    <div class="InputSet AutoCompleteWrapper">
+        <label for="description">
+            <?= wfMsg( 'toplists-editor-social-description-label' ) ;?>
+        </label>
+
+        <input type="text" name="description" placeholder="<?= wfMsg( 'toplists-editor-social-description-placeholder' ) ;?>"
+               autocomplete="off" value="<?= $description ;?>"
+            <?= ( !empty( $errors[ 'description' ] ) ) ? ' class="error"' : null ;?> />
+
+        <? if ( !empty( $errors[ 'description' ] ) ) :?>
+        <? foreach( $errors[ 'description' ] as $errorMessage ) :?>
+            <p class="error"><?= $errorMessage ;?></p>
+            <? endforeach ;?>
+        <? endif ;?>
+    </div>
+
 	<ul class="ItemsList">
 		<? foreach( $items as $position => $item ): ?>
 			<?$isDraggable = $isDeletable = $isEditable = ( in_array( $item['type'], array( 'new', 'template' ) ) ) ;?>

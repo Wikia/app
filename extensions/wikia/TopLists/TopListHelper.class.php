@@ -232,6 +232,37 @@ class TopListHelper {
 		return true;
 	}
 
+    /**
+     * @static
+     * @brief Hook: Customizes description and og:description metatags for Top10Lists fb#23281
+     * @desc Checks if namespace of an article title is NS_TOPLIST and if it's true overwrites $content variable which is passed to description metatag later along with og:description metatag
+     *
+     * @param Article $oArticle
+     * @param string $content
+     * @param integer $length
+     *
+     * @return bool
+     *
+     * @author Andrzej 'nAndy' Łukaszewski
+     */
+    static public function onArticleServicebeforeStripping(&$oArticle, &$content, $length) {
+        $title = $oArticle->getTitle();
+        if( $title instanceof Title && $title->getNamespace() == NS_TOPLIST ) {
+            $topList = TopList::newFromTitle($title);
+
+            $desc = $topList->getDescription();
+            if( empty($desc) ) {
+                $desc = $topList->getDescription(true);
+            }
+
+            if( !empty($desc) ) {
+                $content = $desc;
+            }
+        }
+
+        return true;
+    }
+
 	/**
 	 * formats a timespan in a seconds/minutes/hours/days/weeks count string
 	 *
