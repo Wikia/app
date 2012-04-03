@@ -371,16 +371,16 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 	var str = ['1_' + skinname, username, fakeurl].join('/');
 
 	WikiaTracker.track(str, 'main.sampled');
-	if (unsampled) {
+	/*if (unsampled) {
 		WikiaTracker.track(str, 'main.unsampled');
-	}
-	if(window.wgPrivateTracker) {
+	}*/
+	/*if(window.wgPrivateTracker) {
 		WikiaTracker.track(wgDBname + '/' + str, 'main.private');
 		if (unsampled) {
 			WikiaTracker.track(wgDBname + '/' + str, 'main.unsampled');
 		}
-	}
-	WikiaTracker.AB(str);
+	}*/
+	//WikiaTracker.AB(str);
 };
 
 
