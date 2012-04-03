@@ -12,6 +12,7 @@ class WikiaSearch extends WikiaObject {
 	 * @var WikiaSearchClient
 	 */
 	protected $client = null;
+	protected $parserHookActive = false;
 
 	public function __construct( WikiaSearchClient $client ) {
 		$this->client = $client;
@@ -146,6 +147,18 @@ class WikiaSearch extends WikiaObject {
 
 	}
 
+	/**
+	 * ParserClearState hook handler
+	 * @static
+	 * @param $parser Parser
+	 * @return bool
+	 */
+	public static function onParserClearState( &$parser ) {
+		// prevent from caching when indexer is running to avoid infrastructure overload
+		$parser->getOutput()->setCacheTime(-1);
+		return true;
+	}
+
 	public function getPage( $pageId, $withMetaData = true ) {
 		$result = array();
 
@@ -153,6 +166,11 @@ class WikiaSearch extends WikiaObject {
 
 		if(!($page instanceof Article)) {
 			throw new WikiaException('Invalid Article ID');
+		}
+
+		if(!$this->parserHookActive) {
+			$this->app->registerHook('ParserClearState', 'WikiaSearch', 'onParserClearState');
+			$this->parserHookActive = true;
 		}
 
 		// hack: setting wgTitle as rendering fails otherwise
