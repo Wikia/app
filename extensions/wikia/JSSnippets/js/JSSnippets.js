@@ -43,7 +43,6 @@ var JSSnippets = {
 		}
 
 		this.log('init');
-		this.log(this.stack);
 
 		// create unique list of dependiences (both static files and libraries loader functions) and callbacks
 		var dependencies = [],
@@ -96,23 +95,15 @@ var JSSnippets = {
 		// remove duplicated dependencies
 		dependencies = this.unique(dependencies);
 
-		this.log(dependencies);
-		this.log(callbacks);
-
-		this.log('loading dependencies...');
-
 		// load all dependencies in parallel and then fire all callbacks
 		$.getResources(dependencies, function() {
 			self.log('dependencies loaded, running callbacks...');
 
 			$.each(callbacks, function(id, callback) {
 				$.each(options[id], function(oid, option) {
-					self.log(id + '()');
 					callback(option);
 				});
 			});
-
-			self.log('done');
 		});
 
 		// clear the stack
