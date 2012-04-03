@@ -215,6 +215,7 @@ class VideoEmbedTool {
 		$ns = $wgTitle->getNamespace();
 
 		$url = $wgRequest->getVal( 'url' );
+
 		if ( !WikiaVideoService::isVideoStoredAsFile()
 		|| ( !WikiaVideoService::isUrlMatchThisWiki($url) && !WikiaVideoService::isUrlMatchWikiaVideoRepo($url) ) ) {
 			$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
@@ -261,7 +262,10 @@ class VideoEmbedTool {
 			// get the video name
 			$pattern = '/(File:|Video:)(.+)$/';
 			if (preg_match($pattern, $url, $matches)) {
-				$file = wfFindFile( $matches[2] );					
+				$file = wfFindFile( $matches[2] );
+				if ( !$file ) { // bugID: 26721
+					$file = wfFindFile( urldecode($matches[2]) );
+				}
 			}
 			else {
 				header('X-screen-type: error');
