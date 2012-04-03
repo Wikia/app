@@ -111,8 +111,8 @@ function modifyCategory(e) {
 					alert(csEmptyName);
 					return;
 				}
-				
-				
+
+
 
 				$().log(category, "Cat");
 				if (categories[catId].category != category) {
@@ -209,8 +209,8 @@ function ignoreCapitalization(str){
 function addCategoryBase(category, params, index, checkdupes) {
 	if (params === undefined) {
 		params = {
-			'namespace': csDefaultNamespace, 
-			'outerTag': '', 
+			'namespace': csDefaultNamespace,
+			'outerTag': '',
 			'sortkey': ''
 		};
 	}
@@ -221,7 +221,7 @@ function addCategoryBase(category, params, index, checkdupes) {
 
 	//replace full wikitext that user may provide (eg. [[category:abc]]) to just a name (abc)
 	category = category.replace(fixCategoryRegexp, '$1');
-	
+
 	//if user provides "abc|def" explode this into category "abc" and sortkey "def"
 	extractedParams = extractSortkey(category);
 	category = extractedParams.name;
@@ -236,20 +236,20 @@ function addCategoryBase(category, params, index, checkdupes) {
 	if(checkdupes){
 		for (var c=0; c < categories.length; c++) {
 			if (categories[c] === null) continue;
-			
+
 			if(ignoreCapitalization(category) == ignoreCapitalization(categories[c].category) && params.outerTag == categories[c].outerTag && params.sortkey == categories[c].sortkey){
 				return;
 			}
 		}
 	}
-	
+
 	categories[index] = {
-		'namespace': params.namespace ? params.namespace : csDefaultNamespace, 
-		'category': category, 
-		'outerTag': params.outerTag, 
+		'namespace': params.namespace ? params.namespace : csDefaultNamespace,
+		'category': category,
+		'outerTag': params.outerTag,
 		'sortkey': params.sortkey
 	};
-	
+
 	var categoryText = category;
 	if(csType == 'module') {
 
@@ -346,7 +346,7 @@ function initializeCategories(cats) {
 
 	// Only on view page, not on edit page
 	addAddCategoryButton();
-	
+
 	for (var c=0; c < categories.length; c++) {
 		addCategoryBase(categories[c].category, {'namespace': categories[c].namespace, 'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
 	}
@@ -550,7 +550,7 @@ function initAutoComplete() {
 			$.loadYUI(function() {
 				// Init datasource
 				var oDataSource = getCategoriesDataSource();
-		
+
 				// Init AutoComplete object and assign datasource object to it
 				oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
 				oAutoComp.autoHighlight = false;
@@ -627,15 +627,7 @@ function showCSpanel() {
 			initializeDragAndDrop();
 			initializeCategories();
 
-			// Dynamically load & apply the CSS.
-			if (window.skin == 'oasis') {
-				var cssPath = $.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
-			} else {
-				var cssPath = wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion;
-			}
-
-			importStylesheetURI(cssPath);
-
+			// TODO: remove setTimeout
 			setTimeout(replaceAddToInput, 60);
 			setTimeout(positionSuggestBox, 666); //sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
 			$('#catlinks').removeClass('csLoading');
