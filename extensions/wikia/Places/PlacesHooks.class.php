@@ -16,7 +16,7 @@ class PlacesHooks extends WikiaObject{
 		$app = F::app();
 		if (	( $app->wg->title->getNamespace() == NS_CATEGORY ) &&
 			$app->wg->user->isAllowed('places-enable-category-geolocation') ){
-			
+
 			$isGeotaggingEnabled =
 				F::build(
 					'PlaceCategory',
@@ -131,7 +131,7 @@ class PlacesHooks extends WikiaObject{
 		$this->wg->Out->addScript( "<script type=\"{$this->app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
 
 		// load JS messages
-		F::build( 'JSMessages' )->enqueuePackage( 'Places', JSMessages::INLINE );
+		F::build('JSMessages')->enqueuePackage('Places', JSMessages::EXTERNAL);
 		return true;
 	}
 
