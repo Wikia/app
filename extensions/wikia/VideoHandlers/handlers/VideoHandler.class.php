@@ -138,6 +138,10 @@ abstract class VideoHandler extends BitmapHandler {
 		return $this->api;
 	}
 
+	function isMetadataValid( $image, $metadata ) {
+		return true;
+	}
+
 	/**
 	 *
 	 * @return boolean
