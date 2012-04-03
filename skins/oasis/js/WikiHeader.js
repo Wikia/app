@@ -361,7 +361,6 @@ var WikiHeaderV2 = {
 			WikiHeaderV2.hideNavL3();
 		
 			$(self).addClass('marked');
-			event.preventDefault();
 		
 			//Hide all subnavs except for this one
 			var otherSubnavs = WikiHeaderV2.subnav2.not(  );
