@@ -41,7 +41,7 @@ class ImagesService extends Service {
 
 			if($res->numRows() > 0) {
 				while( $row = $res->fetchObject() ) {
-					if ( WikiaVideoService::isTitleVideo( $row->il_to, false ) ) {
+					if ( ! WikiaVideoService::isTitleVideo( $row->il_to, false ) ) {
 						$images[] = $row->il_to;
 						if (count($images) == $limit) {
 							break;
