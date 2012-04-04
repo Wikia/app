@@ -1,20 +1,26 @@
-<?php 
+<?php
 class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected $queryLimit = 50;
 	protected $maxCount = 10;
 	protected $minSize = 75;
-	
+
 	protected function getImagesFromDB($articles = array()) {
+		wfProfileIn( __METHOD__ );
+
 		$props = $this->getArticleProbs($articles, 2*$this->queryLimit);
 		foreach($props as  $article => $prop) {
 			foreach( $prop as $key => $image  ) {
 				$this->addImagesList(  $image, $article, $key, $this->queryLimit );
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
-	
+
 	protected function getArticleProbs($articles, $limit) {
-		$out = array();		
+		wfProfileIn( __METHOD__ );
+
+		$out = array();
 		if ( !empty ( $articles ) && is_array( $articles) ) {
 			$res = $this->db->select(
 				array( 'page_wikia_props' ),
@@ -38,12 +44,15 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				}
 			}
 		}
-		
+
+		wfProfileOut( __METHOD__ );
 		return $out;
 	}
-	
+
 	protected function filterImages($imagesList = array()) {
-		# get image names from imagelinks table		
+		wfProfileIn( __METHOD__ );
+
+		# get image names from imagelinks table
 		$imagesName = array_keys($imagesList);
 		if ( !empty($imagesName) ) {
 			foreach ( $imagesName as $img_name ) {
@@ -81,5 +90,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				}
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 }
