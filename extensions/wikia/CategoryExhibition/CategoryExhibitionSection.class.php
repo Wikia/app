@@ -64,7 +64,11 @@ class CategoryExhibitionSection {
 		}
 
 		switch ( $this->getSortType() ){
-			case 'mostvisited': return CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $negative );
+			case 'mostvisited':
+				$res = CategoryDataService::getMostVisited( $sCategoryDBKey, $mNamespace, false, $negative );
+
+				//FB#26239 - fall back to alphabetical order if most visited data is empty
+				return ( !empty( $res ) ) ? $res : CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
 			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative );
 			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative );
 		}
