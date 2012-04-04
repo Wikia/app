@@ -113,7 +113,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-reconfirmation-email_body-HTML' => '',
 
 	// welcome email
-	'usersignup-welcome-email-subject' => 'Wecome to Wikia, $USERNAME!',
+	'usersignup-welcome-email-subject' => 'Welcome to Wikia, $USERNAME!',
 	'usersignup-welcome-email-greeting' => 'Hi $USERNAME',
 	'usersignup-welcome-email-heading' => 'We\'re happy to welcome you to Wikia and {{SITENAME}}! Here are some things you can do to get started.',
 	'usersignup-welcome-email-edit-profile-heading' => 'Edit your profile.',
