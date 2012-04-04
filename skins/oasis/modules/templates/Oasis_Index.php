@@ -74,10 +74,10 @@
 <!-- quantServe -->
 <?= $quantServe ?>
 
-<?= $body ?>
-
 <!-- googleAnalytics -->
 <?= $googleAnalytics ?>
+
+<?= $body ?>
 
 <?if( $jsAtBottom ):?>
 		<!--[if lt IE 8]>
