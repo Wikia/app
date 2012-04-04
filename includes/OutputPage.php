@@ -2218,10 +2218,10 @@ class OutputPage {
 		global $wgXhtmlDefaultNamespace, $wgXhtmlNamespaces, $wgHtml5Version;
 		global $wgContLang, $wgUseTrackbacks, $wgStyleVersion, $wgHtml5, $wgWellFormedXml;
 		global $wgUser, $wgRequest, $wgLang, $wgDevelEnvironment;
-		
+
 		$this->addMeta( "http:Content-Type", "$wgMimeType; charset={$wgOutputEncoding}" );
 		if( $wgDevelEnvironment ) $this->addMeta( 'robots', 'noindex, nofollow' );
-		
+
 		if ( $sk->commonPrintStylesheet() ) {
 			$this->addStyle( 'common/wikiprintable.css', 'print' );
 		}
@@ -2340,7 +2340,7 @@ class OutputPage {
 		/* allow old skins to inject JS code before files from MW core (BugId:960) */
 		wfRunHooks('SkinGetHeadScripts', array(&$scripts));
 
-		// wikibits is a part of StaticChute package for monobook - don't load it twice
+		// wikibits is a part of AssetsManager package - don't load it twice
 		$skinName = get_class($sk);
 		$skipWikiaSkins = array('SkinMonoBook', 'SkinUncyclopedia');
 

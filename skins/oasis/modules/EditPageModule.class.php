@@ -48,10 +48,8 @@ class EditPageModule extends Module {
 
 		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
 		// PLB has problems with $.loadYUI not working correctly in Firefox (callback is fired to early)
-		$staticChute = new StaticChute('js');
-		$staticChute->useLocalChuteUrl();
-
-		$wgOut->addScript($staticChute->getChuteHtmlForPackage('yui'));
+		$yuiUrl = array_pop(AssetsManager::getInstance()->getGroupCommonURL('yui', array(), true /* $combine */, true /* $minify */));
+		$wgOut->addScript($yuiUrl);
 
 		wfProfileOut(__METHOD__);
 		return true;

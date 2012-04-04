@@ -60,7 +60,7 @@
 			<script src="<?= $wgStylePath ?>/common/wikia/html5.js"></script>
 		<![endif]-->
 
-		<!-- Combined JS files (StaticChute) and head scripts -->
+		<!-- Combined JS files and head scripts -->
 		<?= $jsFiles ;?>
 	<?endif;?>
 	<? if($displayAdminDashboard) { ?>
@@ -88,7 +88,7 @@
 			<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
-		<!-- Combined JS files (StaticChute) and head scripts -->
+		<!-- Combined JS files and head scripts -->
 		<?= $jsFiles ;?>
 <?endif;?>
 
