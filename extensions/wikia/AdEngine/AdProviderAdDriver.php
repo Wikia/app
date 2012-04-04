@@ -20,7 +20,7 @@ class AdProviderAdDriver implements iAdProvider {
 		switch ($slotname) {
 			case 'CORP_TOP_LEADERBOARD':
 			case 'HOME_TOP_LEADERBOARD':
-			case 'HUB_TOP_LEADERBOARD':
+			//case 'HUB_TOP_LEADERBOARD':	// do not reserve space
 			case 'TOP_LEADERBOARD':
 			case 'CORP_TOP_RIGHT_BOXAD':
 			case 'HOME_TOP_RIGHT_BOXAD':
