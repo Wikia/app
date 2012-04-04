@@ -5,6 +5,8 @@
  *
  * This extension is OBSOLETE. It is being phased out or is kept only for backward compatibility.
  * See OBSOLETE file for details.
+ *
+ * This extension is being removed (BugId:25943)
  */
 
 class StaticChute {
@@ -49,7 +51,6 @@ class StaticChute {
 		$this->generateConfig();
 	}
 
-
 	private function generateConfig(){
 		$this->config = array();
 		// YUI package
@@ -66,134 +67,7 @@ class StaticChute {
 			'common/yui_extra/tools-min.js',
 			'common/yui_extra/carousel-min.js',
 		);
-
-		$this->generateConfigSkinOasis();
 	}
-
-	/* Static JS for Oasis (which doesn't need StaticChute CSS because it uses SASS). */
-	// TODO: used only by WikiaAssets class -> remove
-	private function generateConfigSkinOasis(){
-		// The jquery files we need in every JS package of Oasis.
-		$this->config['oasis_jquery'] = array(
-			"common/jquery/jquery-1.6.1.js",
-			"common/jquery/jquery.json-2.2.js",
-			'common/jquery/jquery.getcss.js',
-			"common/jquery/jquery.wikia.js",
-			"common/jquery/jquery.cookies.2.1.0.js", // needed by geo.js
-			'common/jquery/jquery.timeago.js',
-			'common/jquery/jquery.store.js',
-			'oasis/js/tables.js',
-			'oasis/js/common.js',
-			'../extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
-		);
-
-		// JS served for anon on article view
-		$this->config['oasis_anon_article_js'] = array(
-			"common/wikibits.js",
-			'common/mwsuggest.js',
-			"oasis/js/tracker.js",
-			//"oasis/js/modal.js",
-			"common/jquery/jquery.wikia.modal.js",
-			"common/jquery/jquery.wikia.tracker.js",
-			"oasis/js/hoverMenu.js",
-			"oasis/js/PageHeader.js",
-			"oasis/js/Search.js",
-			"oasis/js/WikiaFooter.js",
-			"oasis/js/buttons.js",
-			"oasis/js/WikiHeader.js",
-			"oasis/js/LatestPhotos.js",
-			"oasis/js/Interlang.js",
-			"oasis/js/LatestActivity.js", // only for Anons
-			"../extensions/wikia/ArticleComments/js/ArticleComments.js",
-			"../extensions/wikia/RelatedPages/js/RelatedPages.js",
-			"oasis/js/WikiaNotifications.js",
-			"oasis/js/Spotlights.js",
-
-			'common/ajax.js',
-			'../extensions/wikia/CreatePage/js/CreatePage.js',
-			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
-			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-			'../extensions/FBConnect/fbconnect.js',
-			'../extensions/wikia/AdEngine/AdConfig.js',
-			'../extensions/wikia/AdEngine/AdEngine.js',
-			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
-			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
-			'../extensions/wikia/Geo/geo.js',
-			'../extensions/wikia/AdEngine/liftium/Liftium.js',
-			'../extensions/wikia/AdEngine/liftium/Wikia.js',
-			'../extensions/wikia/AdEngine/AdDriver.js',
-			'../extensions/wikia/AdSS/adss.js',
-			'../extensions/wikia/Interstitial/Exitstitial.js',
-			'../extensions/wikia/PageLayoutBuilder/js/view.js',
-			'oasis/js/GlobalModal.js', // load this last
-		);
-		$this->config['oasis_anon_article_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_article_js']); // order matters here: load jQuery first.
-
-		// JS served for logged-in
-		$this->config['oasis_loggedin_js'] = array(
-			"common/wikibits.js",
-			'common/mwsuggest.js',
-			"oasis/js/tracker.js",
-			//"oasis/js/modal.js",
-			"common/jquery/jquery.wikia.modal.js",
-			"common/jquery/jquery.wikia.tracker.js",
-			"oasis/js/hoverMenu.js",
-			"oasis/js/PageHeader.js",
-			"oasis/js/Search.js",
-			"oasis/js/WikiaFooter.js",
-			"oasis/js/buttons.js",
-			"oasis/js/WikiHeader.js",
-			"oasis/js/LatestPhotos.js",
-			"oasis/js/Interlang.js",
-			"../extensions/wikia/ArticleComments/js/ArticleComments.js",
-			"../extensions/wikia/RelatedPages/js/RelatedPages.js",
-			"oasis/js/WikiaNotifications.js",
-			"oasis/js/Spotlights.js",
-
-			'common/ajax.js',
-			'common/ajaxwatch.js',
-			'../extensions/wikia/CreatePage/js/CreatePage.js',
-			'../extensions/wikia/ImageLightbox/ImageLightbox.js',
-			'../extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-			'../extensions/FBConnect/fbconnect.js',
-			'../extensions/wikia/AdEngine/AdConfig.js',
-			'../extensions/wikia/AdEngine/AdEngine.js',
-			'../extensions/wikia/AdEngine/AdProviderOpenX.js',
-			'../extensions/wikia/AdEngine/LazyLoadAds.js',
-			'../extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
-			'../extensions/wikia/Geo/geo.js',
-			'../extensions/wikia/AdEngine/liftium/Liftium.js',
-			'../extensions/wikia/AdEngine/liftium/Wikia.js',
-			'../extensions/wikia/AdEngine/AdDriver.js',
-			'../extensions/wikia/AdSS/adss.js',
-			'../extensions/wikia/PageLayoutBuilder/js/view.js',
-			'oasis/js/GlobalModal.js',
-		);
-		$this->config['oasis_loggedin_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_loggedin_js']);
-
-		// JS served for anon for everything that's not an article view
-		//$this->config['oasis_anon_everything_else_js'] = array(
-		//);
-		//$this->config['oasis_anon_everything_else_js'] = array_merge($this->config['oasis_jquery'], $this->config['oasis_anon_everything_else_js']);
-		// UNTIL WE NEED TO CUSTOMIZE IT, JUST STARTING WITH THE SAME AS ANON_ARTICLE.
-		$this->config['oasis_anon_everything_else_js'] = $this->config['oasis_anon_article_js'];
-
-		// Sometimes we load StaticChute from outside of the MediaWiki stack (eg: /static/404handler), but fortunately
-		// during those times, we don't need the oasis_print_css, so just skip it.
-		if(class_exists('AssetsManager')){
-			$oasisPrintCss = AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/print.scss');
-		} else {
-			$oasisPrintCss = "";
-		}
-
-		// Although this will probably always be one file (since sass can combine files), this is defined
-		// here so that multiple code-paths (the combiner and OasisModule.class) can access the same definition
-		// of what the print-css is.
-		$this->config['oasis_css_print'] = array(
-			$oasisPrintCss
-		);
-	} // end generateConfigSkinOasis()
 
 	/* message function that will print the message appropriately based on the format */
 	public function comment ($msg){

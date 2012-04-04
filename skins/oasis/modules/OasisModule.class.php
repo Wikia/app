@@ -173,37 +173,14 @@ class OasisModule extends Module {
 	} // end executeIndex()
 
 	/**
-	 * @author Sean Colombo
+	 * @author Sean Colombo. Macbre
 	 */
 	private function renderPrintCSS() {
-		global $wgRequest, $wgAllInOne;
+		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
-		// If this is an anon article view, use the combined version of the print files.
-		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
-
-		if($allInOne) {
-			// Create the combined URL.
-			global $parserMemc, $wgStyleVersion;
-			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-
-			if( empty($this->wgDevelEnvironment) ) {
-				$prefix = "__wikia_combined/";
-			} else {
-				global $wgWikiaCombinedPrefix;
-				$prefix = $wgWikiaCombinedPrefix;
-			}
-
-			// Completely replace the print styles with the combined version.
-			// TODO: use AssetsManager (BugId:25943)
-			$this->printStyles = array(
-				"/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS"
-			);
-		}
-		else {
-			// add SASS for printable version of Oasis
-			$this->printStyles[] = AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/print.scss');;
-		}
+		// add SASS for printable version of Oasis
+		$this->printStyles[] = AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/print.scss');
 
 		// render the output
 		$ret = '';
@@ -216,8 +193,7 @@ class OasisModule extends Module {
 		} else {
 			// async download
 			$cssReferences = Wikia::json_encode( $this->printStyles );
-
-			$ret = "<script type=\"text/javascript\">/*<![CDATA[*/ setTimeout(function(){wsl.loadCSS({$cssReferences}, 'print');}, 100); /*]]>*/</script>";
+			$ret = Html::inlineScript("setTimeout(function(){wsl.loadCSS({$cssReferences}, 'print')}, 100)");
 		}
 
 		wfProfileOut( __METHOD__ );
