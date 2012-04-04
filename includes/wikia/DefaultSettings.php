@@ -467,7 +467,7 @@ $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/AutoCreateWiki/CreateWikiLocalJob.php" );
 
 
-// StaticChute used to generate merged JS/CSS files on-the-fly
+// StaticChute used to generate merged JS/CSS files on-the-fly (DEPRECATED)
 $wgAutoloadClasses['StaticChute'] = "$IP/extensions/wikia/StaticChute/StaticChute.php";
 
 /*

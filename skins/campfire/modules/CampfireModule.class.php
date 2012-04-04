@@ -67,7 +67,7 @@ class CampfireModule extends Module {
 			$this->bodyClasses[] = "oasis-{$skin->themename}";
 		}
 
-		$this->setupStaticChute();
+		$this->setupJavaScript();
 
 		$this->printStyles = array();
 
@@ -83,10 +83,6 @@ class CampfireModule extends Module {
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
 
 		// printable CSS (to be added at the bottom of the page)
-		// FIXME: move to renderPrintCSS() method
-		$StaticChute = new StaticChute('css');
-		$StaticChute->useLocalChuteUrl();
-
 		// If this is an anon article view, use the combined version of the print files.
 		if($allInOne){
 			// Create the combined URL.
@@ -148,7 +144,7 @@ class CampfireModule extends Module {
 
 	private function renderPrintCSS() { return ''; }
 
-	private function setupStaticChute() {
+	private function setupJavaScript() {
 		global $wgJsMimeType, $wgUser;
 
 		wfProfileIn(__METHOD__);
@@ -179,29 +175,29 @@ class CampfireModule extends Module {
 			$this->jsAtBottom = true;
 		}
 
-		//store StaticChute output and reset jsFiles
-		$staticChuteAssets = $this->jsFiles;
+		//store AssetsManager output and reset jsFiles
+		$jsAssets = $this->jsFiles;
 		$this->jsFiles = '';
 
 		// load WikiaScriptLoader
 		$this->wikiaScriptLoader = '';
 		$wslFiles = AssetsManager::getInstance()->getGroupCommonURL( 'wsl' );
-		
+
 		foreach($wslFiles as $wslFile) {
 			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$wslFile\"></script>";
 		}
 
-		// get JS files from <script> tags returned by StaticChute
-		// TODO: get StaticChute package (and other JS files to be loaded) here
-		preg_match_all("/src=\"([^\"]+)/", $staticChuteAssets, $matches, PREG_SET_ORDER);
-		
+		// get JS files from <script> tags returned by AssetsManager
+		// TODO: get AssetsManager package (and other JS files to be loaded) here
+		preg_match_all("/src=\"([^\"]+)/", $jsAssets, $matches, PREG_SET_ORDER);
+
 		foreach($matches as $scriptSrc) {
 			$jsReferences[] = str_replace('&amp;', '&', $scriptSrc[1]);;
 		}
 
 		// move JS files added to OutputPage to list of files to be loaded using WSL
 		$scripts = $wgUser->getSkin()->getScripts();
-		
+
 		foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to WSL queue
 			if ( !empty( $s['url'] ) ) {
@@ -210,34 +206,34 @@ class CampfireModule extends Module {
 				$this->jsFiles .= $s['tag'];
 			}
 		}
-		
+
 		// add user JS (if User:XXX/wikia.js page exists)
 		// copied from Skin::getHeadScripts
 		if($wgUser->isLoggedIn()){
 			wfProfileIn(__METHOD__ . '::checkForEmptyUserJS');
-		
+
 			$userJS = $wgUser->getUserPage()->getPrefixedText() . '/wikia.js';
 			$userJStitle = Title::newFromText( $userJS );
-		
+
 			if ( $userJStitle->exists() ) {
 				global $wgSquidMaxage;
-		
+
 				$siteargs = array(
 						'action' => 'raw',
 						'maxage' => $wgSquidMaxage,
 				);
-		
+
 				$userJS = Skin::makeUrl( $userJS, wfArrayToCGI( $siteargs ) );
 				$jsReferences[] = Skin::makeUrl( $userJS, wfArrayToCGI( $siteargs ) );;
 			}
-		
+
 			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
-		
+
 		// generate code to load JS files
 		$jsReferences = Wikia::json_encode($jsReferences);
 		$jsLoader = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ wsl.loadScript({$jsReferences}); })(); /*]]>*/</script>";
-		
+
 		// use loader script instead of separate JS files
 		$this->jsFiles = $jsLoader . $this->jsFiles;
 

@@ -195,9 +195,8 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 			return;
 		}
 
-		$staticChute = new StaticChute('js');
-		$staticChute->useLocalChuteUrl();
-		$this->out->addScript($staticChute->getChuteHtmlForPackage('yui'));
+		$yuiUrl = array_pop(AssetsManager::getInstance()->getGroupCommonURL('yui', array(), true /* $combine */, true /* $minify */));
+		$this->out->addScript($yuiUrl);
 
 		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/form.scss'));
 		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));

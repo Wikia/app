@@ -25,7 +25,6 @@
  * TODO: Should this just _EXTEND_ Monaco?  It would be fairly straightforward... anything that's left in this file after the deletions should still be in here.  This would have
  *			the benefits of picking up any improvements to Monaco and running any monaco-specific extensions, but it would also pick up new page-elements, etc.  Monaco is probably fairly "done" with though, so this is probably a moot point.
  * TODO: See if we need to strip ad tags in printContent() because only the top leaderboard belongs in the minimal skin.
- * TODO: Remove dependency on StaticChute / WikiaAssets (added by macbre)
  */
 
 if( !defined( 'MEDIAWIKI' ) )
@@ -228,7 +227,7 @@ EOS;
 		$tpl->set('WikiaScriptLoader', "\t\t" . '<script type="text/javascript">/*<![CDATA[*/var WikiaScriptLoader=function(){var b=navigator.userAgent.toLowerCase();this.useDOMInjection=b.indexOf("opera")!=-1||b.indexOf("firefox")!=-1;this.isIE=b.indexOf("opera")==-1&&b.indexOf("msie")!=-1;this.headNode=document.getElementsByTagName("HEAD")[0]}; WikiaScriptLoader.prototype={loadScript:function(b,c){this.useDOMInjection?this.loadScriptDOMInjection(b,c):this.loadScriptDocumentWrite(b,c)},loadScriptDOMInjection:function(b,c){var a=document.createElement("script");a.type="text/javascript";a.src=b;var d=function(){a.onloadDone=true;typeof c=="function"&&c()};a.onloadDone=false;a.onload=d;a.onreadystatechange=function(){a.readyState=="loaded"&&!a.onloadDone&&d()};this.headNode.appendChild(a)},loadScriptDocumentWrite:function(b,c){document.write(\'<script src="\'+ b+\'" type="text/javascript"><\/script>\');b=function(){typeof c=="function"&&c()};typeof c=="function"&&this.addHandler(window,"load",b)},loadScriptAjax:function(b,c){var a=this,d=this.getXHRObject();d.onreadystatechange=function(){if(d.readyState==4){var e=d.responseText;if(a.isIE)eval(e);else{var f=document.createElement("script");f.type="text/javascript";f.text=e;a.headNode.appendChild(f)}typeof c=="function"&&c()}};d.open("GET",b,true);d.send("")},loadCSS:function(b,c){var a=document.createElement("link"); a.rel="stylesheet";a.type="text/css";a.media=c||"";a.href=b;this.headNode.appendChild(a)},addHandler:function(b,c,a){if(window.addEventListener)window.addEventListener(c,a,false);else window.attachEvent&&window.attachEvent("on"+c,a)},getXHRObject:function(){var b=false;try{b=new XMLHttpRequest}catch(c){for(var a=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],d=a.length,e=0;e<d;e++){try{b=new ActiveXObject(a[e])}catch(f){continue}break}}return b}};window.wsl=new WikiaScriptLoader;/*]]>*/</script>');
 
 
-		// use WikiaScriptLoader to load StaticChute in parallel with other scripts added by wgOut->addScript
+		// use WikiaScriptLoader to load JS files in parallel with other scripts added by wgOut->addScript
 		global $wgAllInOne;
 		wfProfileIn(__METHOD__ . '::JSloader');
 
@@ -715,15 +714,15 @@ class LyricsMinimalTemplate extends QuickTemplate {
 		$jsFiles .= "<script type=\"$wgJsMimeType\" src=\"$src\"></script>";
 	}
 	print $jsFiles;
-	
+
 	if($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL) {
 		$this->html('WikiaScriptLoader');
 		$this->html('JSloader');
-		
+
 		$this->html('headscripts');
 	}
-	
-	
+
+
 
 	$this->printAdditionalHead();
 ?>
