@@ -10,7 +10,7 @@
 (function($) {
 	$.fn.dump = function() {
 		return $.dump(this);
-	}
+	};
 
 	$.dump = function(object) {
 		var recursion = function(obj, level) {
@@ -97,9 +97,8 @@
 					dump += 'N/A: ' + t;
 			}
 			return dump;
-		}
-
-		var type = function(obj) {
+		},
+		type = function(obj) {
 			var type = typeof(obj);
 
 			if(type != "object") {
@@ -145,20 +144,20 @@
 			}
 
 			return 'Unknown';
-		}
+		};
 
 		return recursion(object);
-	}
+	};
 
 	function trim(str) {
 		return ltrim(rtrim(str));
-	}
+	};
 
 	function ltrim(str) {
 		return str.replace(new RegExp("^[\\s]+", "g"), "");
-	}
+	};
 
 	function rtrim(str) {
 		return str.replace(new RegExp("[\\s]+$", "g"), "");
-	}
+	};
 })(jQuery);
