@@ -8,44 +8,27 @@ class WikiaAssets {
 	 * be set to true if the actual request returns an empty string.
 	 */
 	private static function get($url, $resultWasEmpty=false) {
-		global $wgRequest;
+		global $wgRequest, $wgServer;
 
-		//$useNginx = !$wgRequest->getBool('nia');
-		$useNginx = false; // we don't use nginx.  TODO: Delete the nginx code if we're sure we're never going back.
-		if($useNginx) {
+		$url = str_replace('&amp;', '&', $url);
 
-			$out = "\n/* Version: nginx Call to: {$url} */\n";
-			$out .= '<!--# include virtual="'.$url.'" -->';
-
-			$resultWasEmpty = true; // always empty now... we don't have nginx anymore.
-
-			return $out;
-
-		} else {
-
-			global $wgServer;
-
-			$url = str_replace('&amp;', '&', $url);
-
-			// Re-write local URLs to have the server name at the beginning.
-			if(preg_match("/^https?:\/\//i", $url) == 0){
-				if(stripos($url, '/') === 0) {
-					$url = $wgServer.$url;
-				} else {
-					$url = $wgServer.'/'.$url;
-				}
+		// Re-write local URLs to have the server name at the beginning.
+		if(preg_match("/^https?:\/\//i", $url) == 0){
+			if(stripos($url, '/') === 0) {
+				$url = $wgServer.$url;
+			} else {
+				$url = $wgServer.'/'.$url;
 			}
-
-			$out = "\n/* Version: not-nginx Call to: {$url} */\n";
-			$content = trim(Http::get($url));
-			if($content == ""){
-				$resultWasEmpty = true;
-			}
-			$out .= $content;
-
-			return $out;
-
 		}
+
+		$out = "\n/* Version: not-nginx Call to: {$url} */\n";
+		$content = trim(Http::get($url));
+		if($content == ""){
+			$resultWasEmpty = true;
+		}
+		$out .= $content;
+
+		return $out;
 	}
 
 	public static function combined() {
