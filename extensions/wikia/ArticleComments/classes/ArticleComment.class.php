@@ -338,7 +338,7 @@ class ArticleComment {
 			$commentId = $this->getTitle()->getArticleId();
 			$rawmwtimestamp = $this->mFirstRevision->getTimestamp();
 			$rawtimestamp = wfTimeFormatAgo($rawmwtimestamp);
-			$timestamp = "<a href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($rawmwtimestamp) . "</a>";
+			$timestamp = "<a rel='nofollow' href='" . $this->getTitle()->getFullUrl( array( 'permalink' => $commentId ) ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo($rawmwtimestamp) . "</a>";
 
 			$comment = array(
 				'id' => $commentId,
