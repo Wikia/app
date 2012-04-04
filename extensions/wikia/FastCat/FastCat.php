@@ -104,7 +104,7 @@ function efFastCatSelector( &$categories ) {
 	$ret .=<<< EORET
 		</p>
 		</form>
-		EORET;
+EORET;
 
 	$categories = $ret;
 
