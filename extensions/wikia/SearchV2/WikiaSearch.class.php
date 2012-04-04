@@ -117,7 +117,7 @@ class WikiaSearch extends WikiaObject {
 			     $sortedWikiResults[] = $wikiResults[str_replace('id:', '', $key)];
 			   });
 
-		return F::build( 'WikiaSearchResultSet', array( 'results' => $sortedWikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete() ) );
+		return F::build( 'WikiaSearchResultSet', array( 'results' => $sortedWikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete(), 'query' => $results->getQuery() ) );
 	}
 
 	public function setClient( WikiaSearchClient $client ) {
