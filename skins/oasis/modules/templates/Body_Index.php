@@ -170,6 +170,7 @@
 		}
 	?>
 
+		<? if(!empty($wgEnableWikiaHomePageExt)) echo F::App()->renderView('WikiaHomePage', 'footer') ?>
 		<?= empty($wgSuppressFooter) ? wfRenderModule('Footer') : '' ?>
 		<?= wfRenderModule('CorporateFooter') ?>
 	</div>

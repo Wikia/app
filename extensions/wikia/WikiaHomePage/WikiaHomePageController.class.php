@@ -48,14 +48,15 @@ class WikiaHomePageController extends WikiaController {
 	);
 
 	public function __construct() {
+		parent::__construct();
 		$this->blankImgUrl = F::app()->wg->BlankImgUrl;
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
 	}
 	
 	public function index() {
 		//cache response on varnish for 1h to enable rolling of stats
 		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 
-		$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss');
 		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/WikiaHomePage.js');
 		$this->response->addAsset('skins/oasis/css/wikiagrid.scss');
 
@@ -69,6 +70,9 @@ class WikiaHomePageController extends WikiaController {
 		$this->hubImages = $response->getVal( 'hubImages' , '' );
 	}
 
+	public function footer() {
+	}
+	
 	/**
 	 * get stats
 	 * @responseParam integer visitors

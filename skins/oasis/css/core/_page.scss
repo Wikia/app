@@ -1,4 +1,5 @@
 @import "../mixins/box-shadow";
+@import "../mixins/clearfix";
 .WikiaPage {
 	border-bottom: 1px solid $color-page-border;
 	border-left: 1px solid $color-page-border;
@@ -25,6 +26,7 @@
 		width: 100%;
 	}
 	.WikiaPageContentWrapper {
+		@include clearfix;
 		position: relative;
 	}
 }

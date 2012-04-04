@@ -18,6 +18,7 @@ class BodyModule extends Module {
 	var $wgEnableTopButton;
 	var $wgOasisNavV2;
 	var $wgSuppressSlider;
+	var $wgEnableWikiaHomePageExt;
 	
 	// skin vars
 	var $content;

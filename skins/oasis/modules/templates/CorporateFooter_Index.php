@@ -6,7 +6,7 @@
 				<img src="<?= $wgBlankImgUrl; ?>" class="sprite logo<?= (($hub && $hub->cat_id) ? "$hub->cat_id" : '4'); // 4: Corporate ?>">
 			</div>
 			<?php if( $hub && $hub->cat_id != 4): // 4: Corporate ?>
-			    <div class="hub"><a class="sprite hub<?= $hub->cat_id; ?>" href="<?=$hub->cat_link?>"><?=$hub->cat_name?></a></div>
+			    <div class="hub"><a class="hub<?= $hub->cat_id; ?>" href="<?=$hub->cat_link?>">[ <?=$hub->cat_name?> ]</a></div>
 			<?php endif; ?>
 		</div>
 		<ul>
