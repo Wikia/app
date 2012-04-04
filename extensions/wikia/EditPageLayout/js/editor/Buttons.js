@@ -69,7 +69,7 @@
 
 		beforeRender: function() {
 			// set up label
-			this.label || (this.label = $.msg(this.label));
+			this.label || (this.label = $.msg(this.labelId));
 			if(typeof this.label != 'undefined') {
 				if(this.label.match(/<.*>/)) {
 					this.label = $.msg(this.label.replace('<','').replace('>',''));
@@ -96,7 +96,7 @@
 
 		renderHtml: function() {
 			var html = '';
-			
+
 			html += '<span class="' + this.buttonClass + ' ' + this.classes + '">';
 			html += '<a id="' + this.id + '" class="cke_off ' + this.classes + '"'
 				+ ' title="' + this.title + '"'
