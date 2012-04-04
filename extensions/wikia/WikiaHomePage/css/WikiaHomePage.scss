@@ -426,39 +426,40 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			}
 		}
 	}
-	
-	/* footer */
-	.wikiahomepage-footer {
-		border-top: 4px solid $color-wikiahome-border-primary-brand-color;
-		margin-top: 30px;
-		padding-top: 30px;
-		@include clearfix;
-		h3 {
-			font-size: 12px;
-			font-weight: bold;
-			margin-bottom: 10px;
-			.editsection {
-				display: none;
-			}
-		}
-		ul {
-			li {
-				margin-top: 5px;
-				font-size: 12px;
-				line-height: 19px;
-				a {
-					color: $color-text;
-				}
-			}
-		}
-		p {
-			font-size: 12px;
-			line-height: 19px;
-			margin: 5px 0;
-		}
-		a.external:after {
+}
+
+/* footer */
+.wikiahomepage-footer {
+	@include clearfix;
+	border-top: 4px solid $color-wikiahome-border-primary-brand-color;
+	clear: both;
+	margin: 30px 10px 0;
+	padding-top: 30px;
+	h3 {
+		font-size: 12px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		.editsection {
 			display: none;
 		}
+	}
+	ul {
+		li {
+			margin-top: 5px;
+			font-size: 12px;
+			line-height: 19px;
+			a {
+				color: $color-text;
+			}
+		}
+	}
+	p {
+		font-size: 12px;
+		line-height: 19px;
+		margin: 5px 0;
+	}
+	a.external:after {
+		display: none;
 	}
 }
 
