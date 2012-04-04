@@ -42,6 +42,16 @@ class WikiaVideoPage extends ImagePage {
 		return $s;
 	}
 
+	public function getDuplicates() {
+
+		if ( $this->img->getHandler()->isBroken() ) {
+			return $this->dupes = array();
+		}
+		else {
+			return parent::getDuplicates();
+		}
+	}
+
 	public function getUploadUrl() {
 		$this->loadFile();
 		$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
