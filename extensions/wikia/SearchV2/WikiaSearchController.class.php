@@ -44,8 +44,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 
-		global $wgSolrHost;
-
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
 		$this->setVal( 'currentPage',  $page );
@@ -58,7 +56,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'groupResults', ($groupResults && $crossWikia) );
 		$this->setVal( 'debug', $debug );
 		$this->setVal( 'skipCache', $skipCache);
-		$this->setVal( 'solrHost', $wgSolrHost);
+		$this->setVal( 'solrHost', $this->wg->SolrHost);
 		$this->setVal( 'debug', $this->getVal('debug', false) );
 	}
 
