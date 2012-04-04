@@ -395,16 +395,14 @@ class WikiaHomePageController extends WikiaController {
 					$lines = StringUtils::explode("\n", $matches[1]);
 				} else {
 					// no gallery tag found directly in hub, so there is possibility of transclusion
-					$pattern = '%\{\{:(' . str_replace('_', '[ _]',$hubname) . '/[_a-zA-Z0-9]*)\}\}%';
-					if (preg_match($pattern, $content, $transclusionmatches)) {
-						$transcludedArticleName = $transclusionmatches[1];
-						$transcludedTitle = F::build( 'Title', array($transcludedArticleName), 'newFromText' );
-						$transcludedArticle = F::build( 'Article', array($transcludedTitle) );
-						$transcludedContent = $transcludedArticle->getRawText();
-						if (preg_match('/\<gallery.+mosaic.+\>([\s\S]+)\<\/gallery\>/', $transcludedContent, $matches)) {
-							$lines = StringUtils::explode("\n", $matches[1]);
-						}
-					}
+					$today = date('j_F_Y');
+					$transcludedArticleName = $hubname . "/" . $today;
+					$transcludedTitle = F::build( 'Title', array($transcludedArticleName), 'newFromText' );
+					$transcludedArticle = F::build( 'Article', array($transcludedTitle) );
+					$transcludedContent = $transcludedArticle->getRawText();
+					if (preg_match('/\<gallery.+mosaic.+\>([\s\S]+)\<\/gallery\>/', $transcludedContent, $matches)) {
+						$lines = StringUtils::explode("\n", $matches[1]);
+					}					
 				}
 				
 				// either we have the gallery content in $lines or that an empty array
