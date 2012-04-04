@@ -112,7 +112,7 @@ class SkinLyricsMinimal extends SkinTemplate {
 		wfDebugLog('lyricsminimal', sprintf('Cache: %s, wgLang: %s, wgContLang %s', (int) $cache, $wgLang->getCode(), $wgContLang->getCode()));
 
 		if($cache) {
-// TODO: SWC: What is this data-old thing?  Is it just normal memcaching?
+			// TODO: SWC: What is this data-old thing?  Is it just normal memcaching?
 			$key = wfMemcKey('LyricsMinimalDataOld');
 			$data_array = $parserMemc->get($key);
 		}
@@ -192,19 +192,11 @@ EOS;
 		// This is for WidgetLanguages
 		$this->language_urls = $tpl->data['language_urls'];
 
-		// JS and CSS references
-		$tpl->set('references', $this->getReferencesLinks($tpl));
-
 		// Article content links (View, Edit, Delete, Move, etc.)
 		$tpl->set('articlelinks', $this->getArticleLinks($tpl));
 
 		// User actions links
 		$tpl->set('userlinks', $this->getUserLinks($tpl));
-
-		// marged JS files
-		// get the right package from StaticChute
-		$StaticChute = new StaticChute('js');
-		$StaticChute->useLocalChuteUrl();
 
 		if ($wgUser->isLoggedIn()) {
 			$package = 'monaco_loggedin_js';
@@ -243,50 +235,6 @@ EOS;
 		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 
 		$jsReferences = array();
-
-		if($allinone && $package == 'monaco_anon_article_js') {
-			global $parserMemc, $wgStyleVersion, $wgEnableViewYUI;
-			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-
-			$addParam = "";
-			if (!empty($wgEnableViewYUI)) {
-				$addParam = "&yui=1";
-			}
-
-			global $wgDevelEnvironment;
-			if(empty($wgDevelEnvironment)){
-				$prefix = "__wikia_combined/";
-			} else {
-				global $wgWikiaCombinedPrefix;
-				$prefix = $wgWikiaCombinedPrefix;
-			}
-			$jsReferences[] = "/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS";
-		} else {
-			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
-
-			if ($package == "monaco_anon_article_js") {
-				$jsHtml .= $StaticChute->getChuteHtmlForPackage("yui");
-			}
-
-			// get URL of StaticChute package (or a list of separated files) and use WSL to load it
-			preg_match_all("/src=\"([^\"]+)/", $jsHtml, $matches, PREG_SET_ORDER);
-
-			foreach($matches as $script) {
-				$jsReferences[] = str_replace('&amp;', '&', $script[1]);
-			}
-		}
-
-
-		// scripts from getReferencesLinks() method
-		foreach($tpl->data['references']['js'] as $script) {
-			if (!empty($script['url'])) {
-				$url = $script['url'];
-				if($allinone && $package == 'monaco_anon_article_js' && strpos($url, 'title=-') > 0) {
-					continue;
-				}
-				$jsReferences[] = $url;
-			}
-		}
 
 		// scripts from $wgOut->mScripts
 		// <script type="text/javascript" src="URL"></script>
@@ -465,105 +413,6 @@ EOF;
 		}
 		wfProfileOut(__METHOD__);
 		return null;
-	}
-
-	/**
-	 * Create arrays containing refereces to JS and CSS files used in skin
-	 *
-	 * @return array
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
-	private function getReferencesLinks(&$tpl) {
-		wfProfileIn( __METHOD__ );
-		global $wgStylePath, $wgStyleVersion, $wgExtensionsPath, $wgContLang;
-		$js = $css = $cssstyle = array();
-
-		// CSS - begin
-
-		// merged CSS - use StaticChute
-		$StaticChute = new StaticChute('css');
-		$StaticChute->useLocalChuteUrl();
-
-		// RT #18765
-		if(isset($this->themename)) {
-			if($this->themename == 'custom') {
-				// ...do nothing - CSS will be added by MW core
-			} else if($this->themename == 'sapphire') {
-				 // ...do nothing
-			} else if($this->themename != '') {
-				$StaticChute->setTheme($this->themename);
-			}
-		}
-		else {
-			// macbre: kill notice in calls to WikiaAssets
-			$this->themename = 'sapphire';
-		}
-
-		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n" );
-		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css_print') );
-
-		// RTL support
-		if ($wgContLang->isRTL()) {
-			$css[] = array('url' => $wgStylePath.'/monaco/rtl.css?'.$wgStyleVersion);
-		}
-
-		// NOTE: Added custom LyricsMinimal CSS to override existing stuff in Monaco.
-		$css[] = array('url' => $wgStylePath.'/lyricsminimal/article.css?'.$wgStyleVersion);
-
-		// CSS - end
-
-		// CSS style - begin
-		if($tpl->data['pagecss']) {
-			$cssstyle[] = array('content' => $tpl->data['pagecss']);
-		}
-		if($tpl->data['usercss']) {
-			$cssstyle[] = array('content' => $tpl->data['usercss']);
-		}
-		// CSS style - end
-
-		// JS - begin
-		if($tpl->data['jsvarurl']) {
-			wfProfileIn(__METHOD__ . '::siteJS');
-
-			// macbre: check for empty merged JS file - don't use hardcoded skin name (RT #48040)
-			$skinName = ucfirst($this->skinname);
-
-			$s = '';
-			$s .= !isMsgEmpty('Common.js') ? wfMsgForContent('Common.js') : '';
-			$s .= !isMsgEmpty("{$skinName}.js") ? wfMsgForContent("{$skinName}.js") : '';
-
-			// eliminate multi-line comments in '/* ... */' form, at start of string
-			// taken from includes/api/ApiFormatJson_json.php
-			$s = trim(preg_replace('#^\s*/\*(.+)\*/#Us', '', $s));
-
-			if ($s != '') {
-				$js[] = array('url' => $tpl->data['jsvarurl'], 'mime' => 'text/javascript');
-			}
-
-			wfProfileOut(__METHOD__ . '::siteJS');
-		}
-		if($tpl->data['userjs']) {
-			wfProfileIn(__METHOD__ . '::userJS');
-
-			// macbre: check for empty User:foo/skin.js - don't use hardcoded skin name (RT #48040)
-			$userJStitle = Title::newFromText("{$this->userpage}/{$this->skinname}.js");
-
-			if ($userJStitle->exists()) {
-				$rev = Revision::newFromTitle($userJStitle, $userJStitle->getLatestRevID());
-				if (!empty($rev) && $rev->getText() != '') {
-					$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
-				}
-			}
-
-			wfProfileOut(__METHOD__ . '::userJS');
-		}
-		if($tpl->data['userjsprev']) {
-			$js[] = array('content' => $tpl->data['userjsprev'], 'mime' => 'text/javascript');
-		}
-		// JS - end
-
-		wfProfileOut( __METHOD__ );
-		return array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle);
 	}
 
 	/**
@@ -827,39 +676,54 @@ class LyricsMinimalTemplate extends QuickTemplate {
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 <?php
-$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
-echo WikiaAssets::GetExtensionsCSS($this->data['csslinks-urls']);
-echo WikiaAssets::GetThemeCSS($skin->themename, $skin->skinname);
-echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone); // Common.css, Monaco.css, -
-echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
-?>
-<?php
-	foreach($this->data['references']['cssstyle'] as $cssstyle) {
-?>
-		<style type="text/css"><?= $cssstyle['content'] ?></style>
-<?php
+	$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+
+	// Getting the extension CSS in a similar way to Oasis (whole skin should ideally be ported to Oasis soon).
+
+	// Remove the media="print CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
+	global $wgOut;
+	$printStyles = array();
+	$tmpOut = new OutputPage();
+	$tmpOut->styles = $wgOut->styles;
+	foreach($tmpOut->styles as $style => $options) {
+		if (isset($options['media']) && $options['media'] == 'print') {
+			unset($tmpOut->styles[$style]);
+			$printStyles[$style] = $options;
+		}
 	}
 
-	foreach($this->data['references']['css'] as $css) {
-?>
-		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
+	// render CSS <link> tags
+	$csslinks = $tmpOut->buildCssLinks();
 
-<?php
+	// Extension css
+	print $csslinks;
+
+	// Site-CSS.
+	global $wgUser, $wgStylePath, $wgJsMimeType;
+	$srcs = AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'site_user_css' : 'site_anon_css');
+	$srcs[] = $wgStylePath."/lyricsminimal/article.css"; // Probably ghetto.  This whole skin needs to just be rewritten as Oasis modifications anyway though.
+	foreach($srcs as $src) {
+		echo '<link rel="stylesheet" href="'. htmlspecialchars( $src ) .'">';
 	}
 
+	// Javascript (Oasis Style).
+	$jsFiles =  '';
+	$srcs = AssetsManager::getInstance()->getGroupCommonURL('oasis_shared_js');
+	$srcs = array_merge($srcs, AssetsManager::getInstance()->getGroupCommonURL('oasis_extensions_js'));
+	$srcs = array_merge($srcs, AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'oasis_user_js' : 'oasis_anon_js'));
+	foreach($srcs as $src) {
+		$jsFiles .= "<script type=\"$wgJsMimeType\" src=\"$src\"></script>";
+	}
+	print $jsFiles;
+	
 	if($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL) {
 		$this->html('WikiaScriptLoader');
 		$this->html('JSloader');
-		foreach($this->data['references']['js'] as $script) {
-			if (!empty($script['content'])) {
-?>
-		<script type="<?= $script['mime'] ?>"><?= $script['content'] ?></script>
-<?php
-			}
-		}
+		
 		$this->html('headscripts');
 	}
+	
+	
 
 	$this->printAdditionalHead();
 ?>
@@ -1087,7 +951,6 @@ wfRunHooks('SpecialFooter');
 ?>
 		<div id="positioned_elements" class="reset"></div>
 <?php
-$this->delayedPrintCSSdownload();
 $this->html('reporttime');
 wfProfileOut( __METHOD__ . '-body');
 ?>
@@ -1097,54 +960,6 @@ wfProfileOut( __METHOD__ . '-body');
 <?php
 		wfProfileOut( __METHOD__ );
 	} // end execute()
-
-	//@author Marooned
-	function delayedPrintCSSdownload() {
-		global $wgRequest;
-
-		//regular download
-		if ($wgRequest->getVal('printable')) {
-			// RT #18411
-			$this->html('mergedCSSprint');
-			// RT #25638
-			echo "\n\t\t";
-			$this->html('csslinksbottom');
-		} else {
-			$cssMediaWiki = $this->data['csslinksbottom-urls'];
-			$cssStaticChute = $this->data['mergedCSSprint'];
-
-			$cssReferences = array_keys($cssMediaWiki);
-
-			// detect whether to use merged JS/CSS files
-			global $wgAllInOne;
-			if(empty($wgAllInOne)) {
-				$wgAllInOne = false;
-			}
-			$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-
-			if(!$allinone) {
-				preg_match_all("/url\(([^?]+)/", $cssStaticChute, $matches);
-				foreach($matches[1] as $match) {
-					$cssReferences[] = $match;
-				}
-			} else {
-				preg_match("/href=\"([^\"]+)/", $cssStaticChute, $matches);
-				$cssReferences[] = str_replace('&amp;', '&', $matches[1]);
-			}
-			$cssReferences = Wikia::json_encode($cssReferences);
-
-			echo <<<EOF
-		<script type="text/javascript">/*<![CDATA[*/
-			(function(){
-				var cssReferences = $cssReferences;
-				var len = cssReferences.length;
-				for(var i=0; i<len; i++)
-					setTimeout("wsl.loadCSS.call(wsl, '" + cssReferences[i] + "', 'print')", 100);
-			})();
-		/*]]>*/</script>
-EOF;
-		}
-	}
 
 	// curse like cobranding
 	function printCustomHeader() {}

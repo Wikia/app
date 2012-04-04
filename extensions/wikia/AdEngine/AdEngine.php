@@ -207,7 +207,7 @@ class AdEngine {
 		// sometimes no skin set yet
 		if (empty($skin_name)) $skin_name = substr(get_class($wgUser->getSkin()), 4);
 
-		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'monaco'){
+		if ($skin_name == 'awesome' || $skin_name == 'answers' || $skin_name == 'monaco' || $skin_name == 'lyricsminimal' ){
 			$skin_name = 'oasis';
 		}
 
