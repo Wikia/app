@@ -212,6 +212,8 @@ class ImageServing {
 	 */
 
 	public function getUrl( $name, $width = 1, $height = 1 ) {
+		wfProfileIn( __METHOD__ );
+
 		if ( $name instanceof File ) {
 			$img = $name;
 		} else {
@@ -219,6 +221,7 @@ class ImageServing {
 			$file_title = Title::newFromText( $name, NS_FILE );
 			$img = wfFindFile( $file_title  );
 			if( empty( $img ) ) {
+				wfProfileOut( __METHOD__ );
 				return "";
 			}
 		}
@@ -237,8 +240,11 @@ class ImageServing {
 			$H = ( float )( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 			$this->tmpDeltaY = 0.5 - $H / $height / 2;
 		}
-		
-		return wfReplaceImageServer( $img->getThumbUrl( $sPrefix . $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
+
+		$url = wfReplaceImageServer( $img->getThumbUrl( $sPrefix . $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
+
+		wfProfileOut( __METHOD__ );
+		return $url;
 	}
 
 	/**
@@ -252,23 +258,25 @@ class ImageServing {
 	 * @return \string prefix for thumb image
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
+		wfProfileIn( __METHOD__ );
+
 		//rescale of png always use width 512;
 		if( $issvg ) {
 			$height = round( ( 512 * $height) / $width );
 			$width = 512;
 		}
-		
+
 		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
 		$width = max(1, intval($width));
 		$height = max(1, intval($height));
-		
+
 		// in case we're missing some propotions, maintain the original aspect ratio
 		if (!$this->proportion['h']) {
 			$this->proportion['h'] = (float)$height * $this->proportion['w'] / $width;
 		} else if (!$this->proportion['w']) {
 			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
 		}
-		
+
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 
 		if( $pHeight >= $height ) {
@@ -305,16 +313,17 @@ class ImageServing {
 			$right = $width;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return "{$this->width}px-$left,$right,$top,$bottom";
 	}
-	
+
 	public function getDeltaY() {
 		if (is_null($this->deltaY)) {
 			$this->deltaY = ( $this->proportion['w'] / $this->proportion['h'] - 1 ) * 0.1;
 		}
 		return $this->deltaY;
 	}
-	
+
 	public function setDeltaY( $iCenterPosition = 0 ){
 		$this->deltaY = $iCenterPosition;
 	}
