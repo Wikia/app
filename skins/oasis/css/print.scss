@@ -7,14 +7,16 @@
 	overflow: visible !important;
 }
 
-html {
+html,
+#WikiaPageBackground {
 	background: #fff;
 }
 
 #WikiaHeader,
 #WikiHeader,
 #WikiaRail,
-#WikiaFooter {
+#WikiaFooter,
+.CorporateFooter {
 	display: none;
 }
 
@@ -38,7 +40,8 @@ html {
 	p,
 	h2,
 	a,
-	ul {
+	ul,
+	.tally {
 		display: none;
 	}
 }
