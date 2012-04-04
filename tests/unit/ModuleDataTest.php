@@ -358,8 +358,8 @@ class ModuleDataTest extends WikiaBaseTest {
 
 		// assertions
 		$this->assertTrue(in_array('testCssClass', $moduleData['bodyClasses']));
-		$this->assertRegExp('/wsl\.loadCSS\(\[.+\], ?\'print\'\);/', $moduleData['printableCss']);
-		$this->assertRegExp('/wsl\.loadScript\(\[.+\]\);/', $moduleData['jsFiles']);
+		$this->assertRegExp('/wsl\.loadCSS\(\[.+\], ?\'print\'\)/', $moduleData['printableCss']);
+		$this->assertRegExp('/wsl\.loadScript\(\[.+\]\)/', $moduleData['jsFiles']);
 		$this->assertType('string', $moduleData['body']);
 		$this->assertType('string', $moduleData['csslinks']);
 		$this->assertType('string', $moduleData['headlinks']);
