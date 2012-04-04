@@ -51,7 +51,7 @@ class OasisModule extends Module {
 
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
-		
+
 		// TODO: move to WikiaHubs extension - this code should use a hook
 		if(!empty($wgEnableWikiaHubsExt)) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubs/css/WikiaHubs.scss'));
@@ -95,8 +95,7 @@ class OasisModule extends Module {
 			$this->bodyClasses[] = 'oasis-dark-theme';
 		}
 
-		$this->setupStaticChute();
-
+		$this->setupJavaScript();
 
 		//reset, this ensures no duplication in CSS links
 		$this->printStyles = array();
@@ -125,31 +124,6 @@ class OasisModule extends Module {
 
 		// printable CSS (to be added at the bottom of the page)
 		// FIXME: move to renderPrintCSS() method
-		$StaticChute = new StaticChute('css');
-		$StaticChute->useLocalChuteUrl();
-
-		$oasisPrintStyles = $StaticChute->config['oasis_css_print'];
-		foreach($oasisPrintStyles as $cssUrl){
-			$this->printStyles[] = $cssUrl;
-		}
-
-		// If this is an anon article view, use the combined version of the print files.
-		if($allInOne){
-			// Create the combined URL.
-			global $parserMemc, $wgStyleVersion;
-			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-
-			if( empty($this->wgDevelEnvironment) ) {
-				$prefix = "__wikia_combined/";
-			} else {
-				global $wgWikiaCombinedPrefix;
-				$prefix = $wgWikiaCombinedPrefix;
-			}
-
-			// Completely replace the print styles with the combined version.
-			$this->printStyles = array( "/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS&isOasis=true" );
-		}
-
 		$this->printableCss = $this->renderPrintCSS(); // The HTML for the CSS links (whether async or not).
 
 		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
@@ -202,15 +176,42 @@ class OasisModule extends Module {
 	 * @author Sean Colombo
 	 */
 	private function renderPrintCSS() {
-		global $wgRequest;
+		global $wgRequest, $wgAllInOne;
 		wfProfileIn( __METHOD__ );
 
+		// If this is an anon article view, use the combined version of the print files.
+		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
+
+		if($allInOne) {
+			// Create the combined URL.
+			global $parserMemc, $wgStyleVersion;
+			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
+
+			if( empty($this->wgDevelEnvironment) ) {
+				$prefix = "__wikia_combined/";
+			} else {
+				global $wgWikiaCombinedPrefix;
+				$prefix = $wgWikiaCombinedPrefix;
+			}
+
+			// Completely replace the print styles with the combined version.
+			// TODO: use AssetsManager (BugId:25943)
+			$this->printStyles = array(
+				"/{$prefix}cb={$cb}{$wgStyleVersion}&type=PrintCSS"
+			);
+		}
+		else {
+			// add SASS for printable version of Oasis
+			$this->printStyles[] = AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/print.scss');;
+		}
+
+		// render the output
 		$ret = '';
 
 		if ($wgRequest->getVal('printable')) {
 			// render <link> tags for print preview
 			foreach ( $this->printStyles as $url ) {
-				$ret .= "<link rel=\"stylesheet\" href=\"{$url}\" media=\"print\"/>\n";
+				$ret .= "<link rel=\"stylesheet\" href=\"{$url}\" />\n";
 			}
 		} else {
 			// async download
@@ -221,9 +222,9 @@ class OasisModule extends Module {
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
-	} // end delayedPrintCSSdownload()
+	}
 
-	private function setupStaticChute() {
+	private function setupJavaScript() {
 		global $wgJsMimeType, $wgUser;
 
 		wfProfileIn(__METHOD__);
@@ -275,9 +276,7 @@ class OasisModule extends Module {
 	}
 
 	// TODO: implement as a separate module?
-
 	private function loadJs() {
-
 		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment;
 		wfProfileIn(__METHOD__);
 
@@ -289,8 +288,8 @@ class OasisModule extends Module {
 			$this->jsAtBottom = true;
 		}
 
-		//store StaticChute output and reset jsFiles
-		$staticChuteAssets = $this->jsFiles;
+		//store AssetsManager output and reset jsFiles
+		$jsAssets = $this->jsFiles;
 		$this->jsFiles = '';
 
 		// load WikiaScriptLoader
@@ -305,9 +304,8 @@ class OasisModule extends Module {
 			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$wslFile\"></script>";
 		}
 
-		// get JS files from <script> tags returned by StaticChute
-		// TODO: get StaticChute package (and other JS files to be loaded) here
-		preg_match_all("/src=\"([^\"]+)/", $staticChuteAssets, $matches, PREG_SET_ORDER);
+		// get JS files from <script> tags returned by AssetsManager / extensions
+		preg_match_all("/src=\"([^\"]+)/", $jsAssets, $matches, PREG_SET_ORDER);
 
 		foreach($matches as $scriptSrc) {
 			$url = str_replace('&amp;', '&', $scriptSrc[1]);
@@ -319,7 +317,7 @@ class OasisModule extends Module {
 		$oTitleCommonJs	= Title::newFromText( 'Common.js', NS_MEDIAWIKI );
 		$iMaxRev = max( (int) $oTitleWikiaJs->getLatestRevID(), (int) $oTitleCommonJs->getLatestRevID() );
 		unset( $oTitleWikiaJs, $oTitleCommonJs );
-		
+
 		// Load SiteJS / common.js separately, after all other js files (moved here from oasis_shared_js)
 		$siteJS = Title::newFromText('-')->getFullURL('action=raw&smaxage=86400&maxrev=' . $iMaxRev . '&gen=js&useskin=oasis');
 		$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $siteJS ) : $siteJS;
@@ -340,10 +338,10 @@ class OasisModule extends Module {
 		// copied from Skin::getHeadScripts
 		if($wgUser->isLoggedIn()){
 			wfProfileIn(__METHOD__ . '::checkForEmptyUserJS');
-		
+
 			$userJS = $wgUser->getUserPage()->getPrefixedText() . '/wikia.js';
 			$userJStitle = Title::newFromText( $userJS );
-		
+
 			if ( $userJStitle->exists() ) {
 				global $wgSquidMaxage;
 
@@ -355,7 +353,7 @@ class OasisModule extends Module {
 				$userJS = Skin::makeUrl( $userJS, wfArrayToCGI( $siteargs ) );
 				$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $userJS ) : $userJS;
 			}
-		
+
 			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
 

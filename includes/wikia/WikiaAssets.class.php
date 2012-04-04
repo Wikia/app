@@ -82,17 +82,9 @@ class WikiaAssets {
 
 		$cssReferences[] = array('url' => urldecode(Skin::makeNSUrl('Print.css', $query, NS_MEDIAWIKI)));
 
-		// Sometimes, this function is called on the page itself, sometimes it's called by the combiner.
-		// The page can use Wikia::isOasis(), but the combiner needs the request param.
-		$isOasis = (Wikia::isOasis() || $wgRequest->getBool('isOasis'));
-		if($isOasis){
-			$package = "oasis_css_print";
-		} else {
-			$package = "monaco_css_print";
-		}
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
-		foreach($StaticChute->config[$package] as $url){
+		foreach($StaticChute->config['oasis_css_print'] as $url){
 			$cssReferences[] = array('url' => $url);
 		}
 
