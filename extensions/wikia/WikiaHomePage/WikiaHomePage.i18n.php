@@ -88,8 +88,12 @@ $messages['en'] = array(
 *[http://www.wikia.com/Mobile Wikia Mobile]
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
-*[http://api.wikia.com/wiki/Wikia_API_Wiki API]
-',
+*[http://api.wikia.com/wiki/Wikia_API_Wiki API]',
+    'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Advertise]===
+*[http://mediakit.wikia.com/Solutions/Audience Audience]
+*[http://mediakit.wikia.com/Solutions Solutions]
+*[http://mediakit.wikia.com/Advertising-Products Ad products]
+*[http://www.wikia.com/Advertising/Self_Service Self Service]',
 );
 
 $messages['qqq'] = array(

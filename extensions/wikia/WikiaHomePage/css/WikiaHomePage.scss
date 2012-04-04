@@ -10,6 +10,8 @@ $wikiahomepage-line-height: 16px;
 $color-wikiahome-border-primary-brand-color: #c7d1d8;
 
 .WikiaHomePage {
+	@include clearfix;
+	clear: both;
 	font-size: 13px;	/* reset font size */
 	line-height: $wikiahomepage-line-height;	/* reset line height */
 
@@ -434,16 +436,24 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		h3 {
 			font-size: 12px;
 			font-weight: bold;
+			margin-bottom: 10px;
 			.editsection {
 				display: none;
 			}
 		}
 		ul {
 			li {
-				margin-top: 5px
+				margin-top: 5px;
+				font-size: 12px;
+				line-height: 19px;
+				a {
+					color: $color-text;
+				}
 			}
 		}
 		p {
+			font-size: 12px;
+			line-height: 19px;
 			margin: 5px 0;
 		}
 		a.external:after {

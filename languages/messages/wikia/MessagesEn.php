@@ -921,6 +921,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 # Hub names
 'hub-Entertainment' => 'Entertainment',
 'hub-Gaming' => 'Video Games',
+'hub-Video_Games' => 'Video Games',
 'hub-Lifestyle' => 'Lifestyle',
 'hub-Wikia' => 'Wikia',
 'hub-Food_and_Drink' => 'Food and Drink',

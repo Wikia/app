@@ -79,7 +79,9 @@ class LandingPagesParser {
 	private function process(){
 		//TODO: skip in case action=edit?
 		foreach ( $this->switches as $wordID => $value ) {
+			if ($value == true) {
 			$this->app->wg->set( $this->app->wg->LandingPagesAsContentMagicWords[$wordID], $value );
+			}
 		}
 		
 		$this->switches = null;
