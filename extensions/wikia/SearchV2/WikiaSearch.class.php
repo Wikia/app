@@ -6,6 +6,7 @@ class WikiaSearch extends WikiaObject {
 	const RESULTS_PER_WIKI = 4;
 	const GROUP_RESULTS_SEARCH_LIMIT = 500;
 	const GROUP_RESULTS_CACHE_TTL = 900; // 15 mins
+	const WIKIPAGES_CACHE_TTL = 604800; // 7 days
 
 	/**
 	 * Search client
@@ -278,27 +279,56 @@ class WikiaSearch extends WikiaObject {
 			$result['activeusers'] = $statistics['activeusers'];
 			$result['wiki_images'] = $statistics['images'];
 		}
-
-
+		
 		$result['redirect_titles'] = $this->getRedirectTitles($page);
+
+		$wikiViews = $this->getWikiViews($page);
+
+		$result['wikiviews_weekly'] = $wikiViews->weekly;
+		$result['wikiviews_monthly'] = $wikiViews->monthly;
 
 		return $result;
 	}
 
 	
-	private function getRedirectTitles(Article $page) {
-		$dbr = wfGetDB( DB_SLAVE );
+	private function getRedirectTitles( Article $page ) {
 
-		$redirectTitles = $dbr->select(array('redirect', 'page'), 
-					       array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'), 
-					       array(),
-					       __METHOD__,
-					       array('GROUP'=>'rd_title'),
-					       array('page' => array('INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from')))
-					       );
+	        $result = $page->getDB()->selectRow(array('redirect', 'page'), 
+						    array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'), 
+						    array(),
+						    __METHOD__,
+						    array('GROUP'=>'rd_title'),
+						    array('page' => array('INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from')))
+						    );
 
-		return ($redirectTitles->numRows() > 0 && ($row = $redirectTitles->fetchRow())) ? str_replace('_', ' ', $row['redirect_titles']) : '';
+		return (!empty($result)) ? str_replace('_', ' ', $result->redirect_titles) : '';
 
+	}
+
+
+	private function getWikiViews( Article $page ) {
+
+	        $key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
+
+	        if ( $result = $this->wg->Memc->get( $key ) ) {
+
+		    return $result;
+
+		}
+
+	        $db = wfGetDB( DB_SLAVE, array(), $this->wg->statsDB );
+		
+	        $row = $db->selectRow(array('page_views'),
+				      array('SUM(pv_views) as "monthly"',
+					    'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"'),
+				      array('pv_city_id' => (int) $this->wg->CityId,
+					    'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)'),
+				      __METHOD__
+						 );
+
+		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
+
+		return $row;
 	}
 
 	private function callMediaWikiAPI( Array $params ) {
