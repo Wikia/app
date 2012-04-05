@@ -52,19 +52,20 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 
 			// parse response
 			$videos = json_decode( $response, true );
-			$numVideos = sizeof($videos);
+			$numVideos = sizeof($videos['videos']);
 			print("Found $numVideos videos...\n");
 			for ($i=0; $i<$numVideos; $i++) {
 				$clipData = array();
-				$video = $videos[$i]['video'];
+				$video = $videos['videos'][$i];
 				$clipData['clipTitle'] = trim($video['title']);
 				$clipData['videoId'] = $video['guid'];
-				$clipData['thumbnail'] = $video['thumbnail_url'];
+				$clipData['thumbnail'] = $video['image'];
 				$clipData['duration'] = $video['duration'];
-				$clipData['published'] = $video['published_at'];
+				$clipData['published'] = $video['date'];
 				$clipData['category'] = $video['category_name'];
-				$clipData['keywords'] = trim($video['tag_list']);
+				$clipData['keywords'] = trim($video['tags']);
 				$clipData['description'] = trim($video['description']);
+				$clipData['aspectRatio'] = $video['aspect_ratio'];
 
 				$msg = '';
 				$createParams = array('addlCategories'=>$addlCategories, 'debug'=>$debug);
@@ -125,11 +126,9 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		    'published'		=> strtotime($data['published']),
 		    'category'		=> $data['category'],
 		    'keywords'		=> implode(', ', $keywords),
-		    'description'	=> $data['description']
+		    'description'	=> $data['description'],
+		    'aspectRatio'	=> $data['aspectRatio']
 		    );
-		if (!empty($data['dimensions'])) {
-		    $parsedData['dimensions'] = $data['dimensions'];
-		}
 		
 		return $parsedData;
 	}
