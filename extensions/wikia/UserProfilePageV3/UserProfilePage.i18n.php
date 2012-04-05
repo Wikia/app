@@ -115,6 +115,10 @@ $messages['en'] = array(
 	'usermasthead-log' => 'User Masthead',
 	'usermasthead-log-message' => 'added profile information',
 	'usermasthead-log-alt' => 'Logs of user masthead edits',
+	'useravatar-log' => 'User avatar log',
+	'blog-avatar-changed-log' => "Added or changed avatar",
+	'blog-avatar-removed-log' => "Removed $1's avatars",
+	'blog-avatar-alt' => 'Logs of user avatar additions or removals',
 
 	'user-identity-remove-confirmation' => 'Are you sure you want to remove avatar?',
 	'user-identity-remove-fail' => 'There was some problem when removing the avatar!'
