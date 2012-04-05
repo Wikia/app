@@ -34,12 +34,12 @@ EOT;
 }
 
 $userName = isset( $options['u'] ) ? $options['u'] : 'Maintenance script';
-// default date range - start: yesterday, end: tomorrow
+// default date range - start: three days ago, end: tomorrow
 $now = date_create();
 $di = new DateInterval('P1D');
 date_add($now, $di);
 $endDateTS = isset( $options['e'] ) ? $options['e'] : date_timestamp_get($now);
-$di = new DateInterval('P1D');
+$di = new DateInterval('P2D');
 date_sub($now, $di); // for some reason, this subtracts twice the date interval!
 $startDateTS = isset( $options['s'] ) ? $options['s'] : date_timestamp_get($now);
 $debug = isset($options['d']);
