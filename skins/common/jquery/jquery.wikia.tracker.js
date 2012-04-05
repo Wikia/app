@@ -29,6 +29,7 @@ jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
 		'lc': wgContentLanguage,
 		'n': wgNamespaceNumber,
 		'u': window.trackID || window.wgTrackID || 0,
+		's': skin,
 		'beacon': window.beacon_id || ''
 	};
 
