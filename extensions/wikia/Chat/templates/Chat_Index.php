@@ -101,5 +101,7 @@
 	<?php foreach($srcs as $src): ?>
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach;?>
+
+	<script src="<?php echo $jsMessagePackagesUrl ?>"></script>
 </body>
 </html>
