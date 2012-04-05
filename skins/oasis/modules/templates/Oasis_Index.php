@@ -57,7 +57,7 @@
 		<![endif]-->
 
 		<!--[if lt IE 9]>
-			<script src="<?= $wgStylePath ?>/common/wikia/html5.js"></script>
+			<script src="<?= $wgStylePath ?>/common/wikia/html5.min.js"></script>
 		<![endif]-->
 
 		<!-- Combined JS files and head scripts -->
@@ -85,7 +85,7 @@
 		<![endif]-->
 
 		<!--[if lt IE 9]>
-			<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="<?= $wgStylePath ?>/common/wikia/html5.min.js"></script>
 		<![endif]-->
 
 		<!-- Combined JS files and head scripts -->
