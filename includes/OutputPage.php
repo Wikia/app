@@ -52,7 +52,7 @@ class OutputPage {
 	/**
 	 * Whether to load jQuery core.
 	 *
-	 * Wikia change: jQuery is a part of StaticChute
+	 * Wikia change: jQuery is a part of AssetsManager
 	 */
 	protected $mJQueryDone = true;
 
