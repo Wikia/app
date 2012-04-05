@@ -276,6 +276,7 @@ class WikiaSearch extends WikiaObject {
 			$result['wikipages'] = $statistics['pages'];
 			$result['wikiarticles'] = $statistics['articles'];
 			$result['activeusers'] = $statistics['activeusers'];
+			$result['wiki_images'] = $statistics['images'];
 		}
 
 
