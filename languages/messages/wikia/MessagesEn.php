@@ -294,7 +294,7 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 
 # wikia groups
 'group-vstf' => 'VSTF',
-'grouproup-vstf-member' => 'VSTF',
+'group-vstf-member' => 'VSTF',
 'grouppage-vstf' => 'wikia:Help:SpamTaskForce',
 
 'group-helper' => 'Wikia Helpers',
