@@ -1,10 +1,10 @@
 jQuery.getSassCommonURL = function(scssFilePath, params) {
 	return jQuery.getSassURL(wgCdnRootUrl, scssFilePath, params);
-}
+};
 
 jQuery.getSassLocalURL = function(scssFilePath, params) {
 	return jQuery.getSassURL(wgServer, scssFilePath, params);
-}
+};
 
 jQuery.getSassURL = function(rootURL, scssFilePath, params) {
 	return rootURL + wgAssetsManagerQuery.
@@ -12,7 +12,7 @@ jQuery.getSassURL = function(rootURL, scssFilePath, params) {
 		replace('%2$s', scssFilePath).
 		replace('%3$s', encodeURIComponent($.param(params || window.sassParams))).
 		replace('%4$d', wgStyleVersion);
-}
+};
 
 //see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
@@ -39,7 +39,7 @@ jQuery.getScript = function(url, callback, failureFn) {
 		error: (typeof failureFn == 'function' ? failureFn : $.noop),
 		dataType: 'script'
 	});
-}
+};
 
 jQuery.fn.log = function (msg, group) {
 	if (typeof console != 'undefined') {
@@ -59,7 +59,7 @@ jQuery.fn.log = function (msg, group) {
 
 jQuery.fn.exists = function() {
 	return this.length > 0;
-}
+};
 
 // show modal dialog with content fetched via AJAX request
 jQuery.fn.getModal = function(url, id, options) {
@@ -88,7 +88,7 @@ jQuery.fn.getModal = function(url, id, options) {
 			options.callback();
 		}
 	});
-}
+};
 
 // show modal popup with static title and content provided
 jQuery.showModal = function(title, content, options) {
@@ -117,7 +117,7 @@ jQuery.showModal = function(title, content, options) {
 	if (typeof options.callback == 'function') {
 		options.callback();
 	}
-}
+};
 
 // show modal version of confirm()
 jQuery['confirm'] = function(options) {
@@ -164,7 +164,7 @@ jQuery['confirm'] = function(options) {
 	if (typeof options.callback == 'function') {
 		options.callback();
 	}
-}
+};
 
 /* example of usage
 $.showCustomModal('title', '<b>content</b>',
@@ -203,12 +203,12 @@ jQuery.showCustomModal = function(title, content, options) {
 	if (typeof options.callback == 'function') {
 		options.callback(modal);
 	}
-}
+};
 
 // send POST request and parse returned JSON
 jQuery.postJSON = function(u, d, callback) {
 	return jQuery.post(u, d, callback, "json");
-}
+};
 
 // load YUI if not yet loaded
 $.loadYUI = (function() {
@@ -251,6 +251,11 @@ $.loadYUI = (function() {
 	};
 })();
 
+// jquery.wikia.modal.js in now a part of AssetsManager package
+$.loadModalJS = function(callback) {
+	callback && callback();
+};
+
 // load various jQuery libraries (if not yet loaded)
 $.loadJQueryUI = function(callback) {
 	return $.loadLibrary('jQueryUI',
@@ -266,7 +271,7 @@ $.loadJQueryAutocomplete = function(callback) {
 		typeof jQuery.fn.pluginAutocomplete,
 		callback
 	);
-}
+};
 
 $.loadWikiaTooltip = function(callback) {
 	return $.loadLibrary('Wikia Tooltip',
@@ -277,7 +282,7 @@ $.loadWikiaTooltip = function(callback) {
 		typeof jQuery.fn.wikiaTooltip,
 		callback
 	);
-}
+};
 
 $.loadJQueryAIM = function(callback) {
 	return $.loadLibrary('jQuery AIM',
@@ -285,12 +290,7 @@ $.loadJQueryAIM = function(callback) {
 		typeof jQuery.AIM,
 		callback
 	);
-}
-
-// jquery.wikia.modal.js in now a part of AssetsManager package
-$.loadModalJS = function(callback) {
-	callback && callback();
-}
+};
 
 $.loadGoogleMaps = function(callback) {
 	var dfd = new jQuery.Deferred(),
@@ -323,7 +323,7 @@ $.loadGoogleMaps = function(callback) {
 	}
 
 	return dfd.promise();
-}
+};
 
 $.loadFacebookAPI = function(callback) {
 	return $.loadLibrary('Facebook API',
@@ -331,7 +331,7 @@ $.loadFacebookAPI = function(callback) {
 		typeof window.FB,
 		callback
 	);
-}
+};
 
 $.loadGooglePlusAPI = function(callback) {
 	return $.loadLibrary('Google Plus API',
@@ -339,7 +339,7 @@ $.loadGooglePlusAPI = function(callback) {
 		typeof (window.gapi && window.gapi.plusone),
 		callback
 	);
-}
+};
 
 $.loadTwitterAPI = function(callback) {
 	return $.loadLibrary('Twitter API',
@@ -347,7 +347,7 @@ $.loadTwitterAPI = function(callback) {
 		typeof (window.twttr && window.twttr.widgets),
 		callback
 	);
-}
+};
 
 /**
  * Loads library file if it's not already loaded and fires callback
@@ -387,7 +387,7 @@ $.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
 	}
 
 	return dfd.promise();
-}
+};
 
 $.chainFn = function(fn1,fn2) {
 	var fns = Array.prototype.slice.call(arguments,0);
@@ -408,7 +408,7 @@ $.chainFn = function(fn1,fn2) {
 		}
 		return true;
 	};
-}
+};
 
 $.bulkLoad = function(list,success,failure) {
 	var count = list.length, done = 0;
@@ -444,7 +444,7 @@ $.bulkLoad = function(list,success,failure) {
 		}
 	}
 	return true;
-}
+};
 
 
 /**
@@ -592,7 +592,7 @@ jQuery.fn.placeholder = function() {
 			});
 		}
 	})
-}
+};
 
 $(function() {
 	$('input[placeholder], textarea[placeholder]').placeholder();
@@ -607,15 +607,15 @@ $(function() {
  */
 jQuery.fn.startThrobbing = function() {
 	this.append('<div id="wikiaThrobber"></div>');
-}
+};
 jQuery.fn.stopThrobbing = function() {
 	this.find('#wikiaThrobber').remove();
-}
+};
 
 $.htmlentities = function ( s ) {
 	return String(s).replace(/\&/g,'&'+'amp;').replace(/</g,'&'+'lt;')
     	.replace(/>/g,'&'+'gt;').replace(/\'/g,'&'+'apos;').replace(/\"/g,'&'+'quot;');
-}
+};
 
 $.extend({
 	createClass: function (sc,o) {
@@ -654,7 +654,7 @@ $.extend({
 	}
 });
 
-Observable = $.createClass(Object,{
+var Observable = $.createClass(Object,{
 	constructor: function() {
 		Observable.superclass.constructor.apply(this,arguments);
 		this.events = {};
@@ -767,7 +767,7 @@ Observable = $.createClass(Object,{
 
 });
 
-GlobalTriggers = (function(){
+var GlobalTriggers = (function(){
 	var GlobalTriggersClass = $.createClass(Observable,{
 
 		fired: null,
@@ -804,7 +804,7 @@ GlobalTriggers = (function(){
 	return new GlobalTriggersClass();
 })();
 
-Timer = $.createClass(Object,{
+var Timer = $.createClass(Object,{
 
 	callback: null,
 	timeout: 1000,
@@ -950,7 +950,7 @@ jQuery.uniqueId = function(prefix, more_entropy) {
     }
 
     return retId;
-}
+};
 
 
 //Extension to jQuery.support to detect browsers/platforms that don't support
@@ -1031,7 +1031,7 @@ jQuery.nirvana.sendRequest = function(attr) {
 		success: callback,
 		error: onErrorCallback
 	});
-}
+};
 
 jQuery.nirvana.getJson = function(controller, method, data, callback, onErrorCallback) {
 	return jQuery.nirvana.ajaxJson(
@@ -1042,7 +1042,7 @@ jQuery.nirvana.getJson = function(controller, method, data, callback, onErrorCal
 		onErrorCallback,
 		'GET'
 	);
-}
+};
 
 jQuery.nirvana.postJson = function(controller, method, data, callback, onErrorCallback) {
 	return jQuery.nirvana.ajaxJson(
@@ -1053,7 +1053,7 @@ jQuery.nirvana.postJson = function(controller, method, data, callback, onErrorCa
 		onErrorCallback,
 		'POST'
 	);
-}
+};
 
 jQuery.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCallback, requestType) {
 	// data parameter can be omitted
@@ -1071,7 +1071,7 @@ jQuery.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCa
 		callback: callback,
 		onErrorCallback: onErrorCallback
 	});
-}
+};
 
 jQuery.openPopup = function(url, name, moduleName, width, height) {
 	if (wgUserName) {
@@ -1107,7 +1107,7 @@ if (typeof [].indexOf == 'undefined') {
 		}
 		return -1;
 	}
-}
+};
 
 $(function() {
 	//beacon_id cookie
