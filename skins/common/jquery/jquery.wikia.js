@@ -211,38 +211,45 @@ jQuery.postJSON = function(u, d, callback) {
 }
 
 // load YUI if not yet loaded
-$.loadYUI = function(callback) {
-	if (typeof YAHOO == 'undefined') {
-		if ( (typeof isYUIloading != 'undefined') && isYUIloading ) {
-			$().log('is loading add call back to line', 'YUI');
-			loadYUICallBackFIFO.push(callback);
-			return true;
-		}
+$.loadYUI = (function() {
+	var queue = false;
 
-		isYUIloading = true;
-		loadYUICallBackFIFO = new Array();
-		loadYUICallBackFIFO.push(callback)
+	return function(callback) {
+		// we need load YUI and use callbacks queue
+		if (typeof YAHOO === 'undefined') {
+			if (queue === false) {
+				queue = $.getScript(wgYUIPackageURL);
+				$().log('loading on-demand', 'YUI');
 
-		$().log('loading on-demand', 'YUI');
-
-		var YUIloadingCallBack = function(){
-			$().log('loaded', 'YUI');
-
-			for (var i = 0; i < loadYUICallBackFIFO.length; i++ ){
-				loadYUICallBackFIFO[i].caller = $.loadYUI;
-				loadYUICallBackFIFO[i]();
+				queue.then(function() {
+					$().log('loaded', 'YUI');
+				});
 			}
-			loadYUICallBackFIFO = null;
-			isYUIloading = false;
-		};
-		$().log('rq start', 'YUI');
 
-		$.getScript(wgYUIPackageURL, YUIloadingCallBack);
-	} else {
-		$().log('already loaded', 'YUI');
-		callback();
-	}
-}
+			// add to queue
+			if (typeof callback === 'function') {
+				queue.then(callback);
+			}
+
+			// return the same deferred object when loading YUI
+			return queue;
+		}
+		else {
+			$().log('already loaded', 'YUI');
+
+			// YUI is loaded
+			if (typeof callback === 'function') {
+				callback();
+			}
+
+			// promise is resolved
+			var dfd = new jQuery.Deferred();
+			dfd.resolve();
+
+			return dfd.promise();
+		}
+	};
+})();
 
 // load various jQuery libraries (if not yet loaded)
 $.loadJQueryUI = function(callback) {
