@@ -27,7 +27,7 @@ class ChatModule extends Module {
 	const CHAT_WORDMARK_HEIGHT = 30;
 	const CHAT_AVATAR_DIMENSION = 41;
 	public $wordmarkThumbnailUrl;
-	
+
 	public function executeIndex() {
 		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon;
 		wfProfileIn( __METHOD__ );
@@ -38,7 +38,10 @@ class ChatModule extends Module {
 		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
 
 		// add messages (fetch them using <script> tag)
-		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::INLINE); // package defined in Chat_setup.php
+		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
+
+		// Since we don't emit all of the JS headscripts or so, fetch the URL to load the JS Messages packages.
+		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
@@ -51,7 +54,7 @@ class ChatModule extends Module {
 		$this->roomId = NodeApiClient::getDefaultRoomId($this->roomName, $this->roomTopic);
 		$this->roomId = (int) $this->roomId;
 		$this->roomId = (int) $this->roomId;
-		
+
 		// Set the hostname of the node server that the page will connect to.
 		$this->nodePort = NodeApiClient::PORT;
 		if($wgDevelEnvironment){
@@ -81,11 +84,11 @@ class ChatModule extends Module {
 		if (in_array('chatmoderator', $userChangeableGroups['add'])) {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
-		
+
 		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatModule', 'onMakeGlobalVariablesScript', array(), false, $this);
-		
+
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
-	
+
 		//Theme Designer stuff
 		$themeSettings = new ThemeSettings();
 		$this->themeSettings = $themeSettings->getSettings();
@@ -100,20 +103,17 @@ class ChatModule extends Module {
 				}
 			}
 			if (!$this->wordmarkThumbnailUrl) {
-				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($this->themeSettings['wordmark-image-url']);			
+				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($this->themeSettings['wordmark-image-url']);
 			}
 		}
-		
-		// Since we don't emit all of the JS headscripts or so, fetch the URL to load the JS Messages packages.
-		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/*
 	 * adding js variable
 	 */
-	
+
 	function onMakeGlobalVariablesScript($vars) {
 		$vars['roomId'] = $this->roomId;
 		$vars['wgChatMod'] = $this->isChatMod;
@@ -121,7 +121,7 @@ class ChatModule extends Module {
 		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
 		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wgExtensionsPath.'/wikia/Chat/swf/WebSocketMainInsecure.swf';
 		$vars['EMOTICONS'] = wfMsgForContent('emoticons');
-		
+
 		$vars['pathToProfilePage'] = $this->pathToProfilePage;
 		$vars['pathToContribsPage'] = $this->pathToContribsPage;
 		$vars['wgAvatarUrl'] = $this->avatarUrl;
