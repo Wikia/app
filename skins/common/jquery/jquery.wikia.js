@@ -64,32 +64,29 @@ jQuery.fn.exists = function() {
 // show modal dialog with content fetched via AJAX request
 jQuery.fn.getModal = function(url, id, options) {
 	// get modal plugin
-	$.loadModalJS(function() {
-		$().log('getModal: plugin loaded');
 
-		// where should modal be inserted?
-		var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
+	// where should modal be inserted?
+	var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
 
-		// get modal content via AJAX
-		$.get(url, function(html) {
-			$(insertionPoint).append(html);
+	// get modal content via AJAX
+	$.get(url, function(html) {
+		$(insertionPoint).append(html);
 
-			// fire callbackBefore if provided
-			if (typeof options == 'object' && typeof options.callbackBefore == 'function') {
-				options.callbackBefore();
-			}
+		// fire callbackBefore if provided
+		if (typeof options == 'object' && typeof options.callbackBefore == 'function') {
+			options.callbackBefore();
+		}
 
-			// makeModal() if requested
-			if (typeof id == 'string') {
-				$(id).makeModal(options);
-				$().log('getModal: ' + id + ' modal made');
-			}
+		// makeModal() if requested
+		if (typeof id == 'string') {
+			$(id).makeModal(options);
+			$().log('getModal: ' + id + ' modal made');
+		}
 
-			// fire callback if provided
-			if (typeof options == 'object' && typeof options.callback == 'function') {
-				options.callback();
-			}
-		});
+		// fire callback if provided
+		if (typeof options == 'object' && typeof options.callback == 'function') {
+			options.callback();
+		}
 	});
 }
 
@@ -97,31 +94,29 @@ jQuery.fn.getModal = function(url, id, options) {
 jQuery.showModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
-	$.loadModalJS(function() {
-		var dialog, header;
+	var dialog, header;
 
-		$().log('showModal: plugin loaded');
+	$().log('showModal: plugin loaded');
 
-		if (skin == 'oasis') {
-			header = $('<h1>').html(title);
-			dialog = $('<div>').html(content).prepend(header).appendTo('body');
-		}
-		else {
-			dialog = $('<div class="modalContent">').html(content).attr('title', title).appendTo('#positioned_elements');
-		}
+	if (skin == 'oasis') {
+		header = $('<h1>').html(title);
+		dialog = $('<div>').html(content).prepend(header).appendTo('body');
+	}
+	else {
+		dialog = $('<div class="modalContent">').html(content).attr('title', title).appendTo('#positioned_elements');
+	}
 
-		// fire callbackBefore if provided
-		if (typeof options.callbackBefore == 'function') {
-			options.callbackBefore();
-		}
+	// fire callbackBefore if provided
+	if (typeof options.callbackBefore == 'function') {
+		options.callbackBefore();
+	}
 
-		dialog.makeModal(options);
+	dialog.makeModal(options);
 
-		// fire callback if provided
-		if (typeof options.callback == 'function') {
-			options.callback();
-		}
-	});
+	// fire callback if provided
+	if (typeof options.callback == 'function') {
+		options.callback();
+	}
 }
 
 // show modal version of confirm()
@@ -130,49 +125,45 @@ jQuery['confirm'] = function(options) {
 	options = (typeof options != 'object') ? {} : options;
 	options.id = 'WikiaConfirm';
 
-	$.loadModalJS(function() {
-		$().log('confirm: plugin loaded');
+	var html = '<p>' + (options.content || '') + '</p>' +
+		'<div class="neutral modalToolbar">' +
+		'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</button>' +
+		'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</button>' +
+		'</div>';
 
-		var html = '<p>' + (options.content || '') + '</p>' +
-			'<div class="neutral modalToolbar">' +
-			'<button id="WikiaConfirmCancel" class="wikia-button secondary">' + (options.cancelMsg || 'Cancel') + '</button>' +
-			'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</button>' +
-			'</div>';
+	var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
 
-		var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
+	var dialog = $('<div>').
+		appendTo(insertionPoint).
+		html(html).
+		attr('title', options.title || '');
 
-		var dialog = $('<div>').
-			appendTo(insertionPoint).
-			html(html).
-			attr('title', options.title || '');
+	// fire callbackBefore if provided
+	if (typeof options.callbackBefore == 'function') {
+		options.callbackBefore();
+	}
 
-		// fire callbackBefore if provided
-		if (typeof options.callbackBefore == 'function') {
-			options.callbackBefore();
-		}
+	// handle clicks on Ok
+	$('#WikiaConfirmOk').click(function() {
+		 $('#WikiaConfirm').closeModal();
 
-		// handle clicks on Ok
-		$('#WikiaConfirmOk').click(function() {
-			 $('#WikiaConfirm').closeModal();
-
-			 // try to call callback when Ok is pressed
-			 if (typeof options.onOk == 'function') {
-				 options.onOk();
-			 }
-		});
-
-		// handle clicks on Cancel
-		$('#WikiaConfirmCancel').click(function() {
-			$('#WikiaConfirm').closeModal();
-		});
-
-		dialog.makeModal(options);
-
-		// fire callback if provided
-		if (typeof options.callback == 'function') {
-			options.callback();
-		}
+		 // try to call callback when Ok is pressed
+		 if (typeof options.onOk == 'function') {
+			 options.onOk();
+		 }
 	});
+
+	// handle clicks on Cancel
+	$('#WikiaConfirmCancel').click(function() {
+		$('#WikiaConfirm').closeModal();
+	});
+
+	dialog.makeModal(options);
+
+	// fire callback if provided
+	if (typeof options.callback == 'function') {
+		options.callback();
+	}
 }
 
 /* example of usage
@@ -187,35 +178,31 @@ $.showCustomModal('title', '<b>content</b>',
 jQuery.showCustomModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
-	$.loadModalJS(function() {
-		$().log('showCustomModal: plugin loaded');
-
-		var buttons = '';
-		if (options.buttons) {
-			buttons = $('<div class="neutral modalToolbar"></div>');
-			for (var buttonNo = 0; buttonNo < options.buttons.length; buttonNo++) {
-				var button = '<a id="' + options.buttons[buttonNo].id + '" class="wikia-button' + (options.buttons[buttonNo].defaultButton ? '' : ' secondary') + '">' + options.buttons[buttonNo].message + '</a>';
-				$(button).bind('click', options.buttons[buttonNo].handler).appendTo(buttons);
-			}
+	var buttons = '';
+	if (options.buttons) {
+		buttons = $('<div class="neutral modalToolbar"></div>');
+		for (var buttonNo = 0; buttonNo < options.buttons.length; buttonNo++) {
+			var button = '<a id="' + options.buttons[buttonNo].id + '" class="wikia-button' + (options.buttons[buttonNo].defaultButton ? '' : ' secondary') + '">' + options.buttons[buttonNo].message + '</a>';
+			$(button).bind('click', options.buttons[buttonNo].handler).appendTo(buttons);
 		}
+	}
 
-		var dialog = $('<div>').html(content).attr('title', title).append(buttons);
+	var dialog = $('<div>').html(content).attr('title', title).append(buttons);
 
-		var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
-		$(insertionPoint).append(dialog);
+	var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
+	$(insertionPoint).append(dialog);
 
-		// fire callbackBefore if provided
-		if (typeof options.callbackBefore == 'function') {
-			options.callbackBefore();
-		}
+	// fire callbackBefore if provided
+	if (typeof options.callbackBefore == 'function') {
+		options.callbackBefore();
+	}
 
-		var modal = dialog.makeModal(options);
+	var modal = dialog.makeModal(options);
 
-		// fire callback if provided
-		if (typeof options.callback == 'function') {
-			options.callback(modal);
-		}
-	});
+	// fire callback if provided
+	if (typeof options.callback == 'function') {
+		options.callback(modal);
+	}
 }
 
 // send POST request and parse returned JSON
@@ -293,12 +280,9 @@ $.loadJQueryAIM = function(callback) {
 	);
 }
 
+// jquery.wikia.modal.js in now a part of AssetsManager package
 $.loadModalJS = function(callback) {
-	return $.loadLibrary('makeModal()',
-		stylepath + '/common/jquery/jquery.wikia.modal.js',
-		typeof jQuery.fn.makeModal,
-		callback
-	);
+	callback && callback();
 }
 
 $.loadGoogleMaps = function(callback) {
@@ -426,30 +410,30 @@ $.bulkLoad = function(list,success,failure) {
 	for (var i=0;i<list.length;i++) {
 		var el = list[i];
 		switch (typeof el) {
-		case 'string':
-			var fn = {
-				'yui': $.loadYUI,
-				'autocomplete': $.loadJQueryAutocomplete,
-				'tooltip': $.loadWikiaTooltip,
-				'jquery-ui': $.loadJQueryUI,
-				'jquery-aim': $.loadJQueryAIM,
-				'modal': $.loadModalJS
-			}[el];
-			if (fn) {
-				fn.call(window,successFn,failureFn);
-				continue;
-			}
-			$().log(el,'$.bulkLoad(): unknown list item');
-			break;
-		case 'object':
-			var options = $.extend({},el,{
-				success: $.chainFn(el.success,successFn),
-				error: $.chainFn(el.error,failureFn)
-			});
-			$.ajax(options);
-			break;
-		default:
-			$().log(el,'$.bulkLoad(): unknown list item');
+			case 'string':
+				var fn = {
+					'yui': $.loadYUI,
+					'autocomplete': $.loadJQueryAutocomplete,
+					'tooltip': $.loadWikiaTooltip,
+					'jquery-ui': $.loadJQueryUI,
+					'jquery-aim': $.loadJQueryAIM,
+					'modal': $.loadModalJS
+				}[el];
+				if (fn) {
+					fn.call(window,successFn,failureFn);
+					continue;
+				}
+				$().log(el,'$.bulkLoad(): unknown list item');
+				break;
+			case 'object':
+				var options = $.extend({},el,{
+					success: $.chainFn(el.success,successFn),
+					error: $.chainFn(el.error,failureFn)
+				});
+				$.ajax(options);
+				break;
+			default:
+				$().log(el,'$.bulkLoad(): unknown list item');
 		}
 	}
 	return true;
@@ -864,7 +848,7 @@ $.extend(Timer,{
  * @author macbre
  * FIXME: added support for asset manager groups, but it assumes they are javascript (which is not always true)
  */
-jQuery.getResources = function(resources, callback) {
+jQuery.getResources = function(resources, callback, failureFn) {
 	var isJs = /.js(\?(.*))?$/,
 		isCss = /.css(\?(.*))?$/,
 		isSass = /.scss/,
@@ -901,7 +885,7 @@ jQuery.getResources = function(resources, callback) {
 			// error handling
 			fail(function() {
 				dfd.reject();
-			})
+			});
 		}
 		// CSS /SASS files
 		else if (isCss.test(resource) || isSass.test(resource)) {
