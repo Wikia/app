@@ -142,6 +142,10 @@ abstract class VideoHandler extends BitmapHandler {
 		return true;
 	}
 
+	public function isBroken() {
+		return strlen( (string) $this->videoId ) <= 3 ? true : false;
+	}
+
 	/**
 	 *
 	 * @return boolean
