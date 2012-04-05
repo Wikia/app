@@ -256,14 +256,22 @@
 		},
 
 		show: function() {
-			importStylesheetURI($.getSassCommonURL("skins/oasis/css/core/_ToolbarCustomize.scss"));
-
-			$.bulkLoad(['autocomplete','jquery-ui','modal',{
-				type: "POST",
-				url: wgScript + "?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarConfiguration&outputType=data",
-				success: $.proxy(this.onDataLoaded,this),
-				dataType: 'json'
-			}],$.proxy(this.checkLoad,this),$.proxy(this.onLoadFailure,this));
+			// load CSS, JS libraries and make AJAX request in one request
+			$.when(
+				$.loadJQueryAutocomplete(),
+				$.loadJQueryUI(),
+				$.getResources([
+					$.getSassCommonURL("skins/oasis/css/core/_ToolbarCustomize.scss")
+				]),
+				$.ajax({
+					type: "POST",
+					url: wgScript + "?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarConfiguration&outputType=data",
+					success: $.proxy(this.onDataLoaded,this),
+					dataType: 'json'
+				})
+			).
+			then($.proxy(this.checkLoad,this)).
+			fail($.proxy(this.onLoadFailure,this));
 		},
 
 		onDataLoaded: function(data,textStatus,req) {
