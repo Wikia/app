@@ -66,6 +66,8 @@
 	<? if($displayAdminDashboard) { ?>
 		<!--[if IE]><script src="<?= $wgStylePath ?>/common/excanvas.js"></script><![endif]-->
 	<? } ?>
+
+	<?= $headitems ?>
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
 <!-- comScore -->

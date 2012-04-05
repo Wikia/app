@@ -6,6 +6,10 @@
  */
 
 abstract class WikiaSkin extends SkinTemplate {
+	const SCRIPT_REGEX = '/(<!--\[\s*if[^>]+>.*<!\[\s*endif[^>]+-->|<script[^>]*>.*<\/script>)/imsU';
+	const LINK_REGEX = '/(<!--\[\s*if[^>]+>\s*<link[^>]*rel=["\']?stylesheet["\']?[^>]*>\s*<!\[\s*endif[^>]+-->|<link[^>]*rel=["\']?stylesheet["\']?[^>]*>)/imsU';
+	const STYLE_REGEX = '/(<!--\[\s*if[^>]+>\s*<style[^>]*>.*<\/style>\s*<!\[\s*endif[^>]+-->|<style[^>]*>.*<\/style>)/imsU';
+
 	protected $app = null;
 	protected $wg = null;
 	protected $wf = null;
@@ -64,6 +68,21 @@ abstract class WikiaSkin extends SkinTemplate {
 	}
 
 	/**
+	 * Rerturns misc items to be added to the head element
+	 *
+	 * @return string an html fragment containing the elements
+	 */
+	public function getHeadItems() {
+		$this->wf->profileIn( __METHOD__ );
+
+		//filter out elements that will be processed by getScripts or getStyles
+		$res = preg_replace( array( self::SCRIPT_REGEX, self::LINK_REGEX, self::STYLE_REGEX ), '', $this->wg->out->getHeadItems() );
+		
+		$this->wf->profileOut( __METHOD__ );
+		return $res;
+	}
+
+	/**
 	 * Rerturns the scripts to be output for this template as an array
 	 * 
 	 * @return array an array with the following format:
@@ -73,13 +92,13 @@ abstract class WikiaSkin extends SkinTemplate {
 		$this->wf->profileIn( __METHOD__ );
 
 		$skinName = $this->getSkinName();
-		$scriptTags = $this->wg->out->getScriptsOnly();
+		$scriptTags = $this->wg->out->getScriptsOnly() . $this->wg->out->getHeadItems();
 		$am = F::build( 'AssetsManager', array(), 'getInstance' );
 		$matches = array();
 		$res = array();
 
 		//find all the script tags, including inlined and conditionals
-		preg_match_all( '/(<!--\[\s*if[^>]+>.*<!\[\s*endif[^>]+-->|<script[^>]*>.*<\/script>)/imsU', $scriptTags, $matches );
+		preg_match_all( self::SCRIPT_REGEX, $scriptTags, $matches );
 
 		if ( !empty( $matches[0] ) ) {
 			foreach ( $matches[0] as $m ) {
@@ -113,13 +132,13 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		$skinName = $this->getSkinName();
 		//there are a number of extension that use addScript to append link tags for stylesheets, need to include those too
-		$stylesTags = $this->wg->out->buildCssLinks() . $this->wg->out->getScriptsOnly();
+		$stylesTags = $this->wg->out->buildCssLinks(). $this->wg->out->getHeadItems() . $this->wg->out->getScriptsOnly();
 		$am = F::build( 'AssetsManager', array(), 'getInstance' );
 		$matches = array();
 		$res = array();
 
 		//find all the link tags, including conditionals
-		preg_match_all( '/(<!--\[\s*if[^>]+>\s*<link[^>]*>\s*<!\[\s*endif[^>]+-->|<link[^>]*>)/imsU', $stylesTags, $matches );
+		preg_match_all( self::LINK_REGEX, $stylesTags, $matches );
 
 		if ( !empty( $matches[0] ) ) {
 			foreach ( $matches[0] as $m ) {
@@ -138,7 +157,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		}
 
 		//find all the inline style tags, including conditionals
-		preg_match_all( '/(<!--\[\s*if[^>]+>\s*<style[^>]*>.*<\/style>\s*<!\[\s*endif[^>]+-->|<style[^>]*>.*<\/style>)/imsU', $stylesTags, $matches );
+		preg_match_all( self::STYLE_REGEX, $stylesTags, $matches );
 
 		if ( !empty( $matches[0] ) ) {
 			foreach ( $matches[0] as $m ) {

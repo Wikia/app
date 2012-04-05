@@ -122,6 +122,7 @@ class WikiaMobileService extends WikiaService {
 		$this->pageTitle = $this->wg->Out->getHTMLTitle();
 		$this->cssLinks = $cssLinks;
 		$this->headLinks = $this->wg->Out->getHeadLinks();
+		$this->headItems = $skin->getHeadItems();
 		$this->jsHeadFiles = $jsHeadFiles;
 		$this->languageCode = $this->templateObject->get( 'lang' );
 		$this->languageDirection = $this->templateObject->get( 'dir' );
