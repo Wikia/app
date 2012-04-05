@@ -20,7 +20,7 @@ $.ajaxSetup({cache: true});
 // replace stock function for getting rid of response-speed related issues in Firefox
 // @see http://stackoverflow.com/questions/1130921/is-the-callback-on-jquerys-getscript-unreliable-or-am-i-doing-something-wrong
 jQuery.getScript = function(url, callback, failureFn) {
-	jQuery.ajax({
+	return jQuery.ajax({
 		type: "GET",
 		url: url,
 		success: function(xhr) {
@@ -36,7 +36,7 @@ jQuery.getScript = function(url, callback, failureFn) {
 				}
 			}
 		},
-		error: typeof failureFn == 'function' ? failureFn : $.noop,
+		error: (typeof failureFn == 'function' ? failureFn : $.noop),
 		dataType: 'script'
 	});
 }
@@ -259,7 +259,7 @@ $.loadYUI = function(callback) {
 
 // load various jQuery libraries (if not yet loaded)
 $.loadJQueryUI = function(callback) {
-	$.loadLibrary('jQueryUI',
+	return $.loadLibrary('jQueryUI',
 		stylepath + '/common/jquery/jquery-ui-1.8.14.custom.js',
 		typeof jQuery.ui,
 		callback
@@ -267,7 +267,7 @@ $.loadJQueryUI = function(callback) {
 }
 
 $.loadJQueryAutocomplete = function(callback) {
-	$.loadLibrary('jQuery Autocomplete',
+	return $.loadLibrary('jQuery Autocomplete',
 		stylepath + '/common/jquery/jquery.autocomplete.js',
 		typeof jQuery.fn.pluginAutocomplete,
 		callback
@@ -275,7 +275,7 @@ $.loadJQueryAutocomplete = function(callback) {
 }
 
 $.loadWikiaTooltip = function(callback) {
-	$.loadLibrary('Wikia Tooltip',
+	return $.loadLibrary('Wikia Tooltip',
 		[
 			stylepath + '/common/jquery/jquery.wikia.tooltip.js',
 			$.getSassCommonURL("skins/oasis/css/modules/WikiaTooltip.scss")
@@ -286,7 +286,7 @@ $.loadWikiaTooltip = function(callback) {
 }
 
 $.loadJQueryAIM = function(callback) {
-	$.loadLibrary('jQuery AIM',
+	return $.loadLibrary('jQuery AIM',
 		stylepath + '/common/jquery/jquery.aim.js',
 		typeof jQuery.AIM,
 		callback
@@ -294,7 +294,7 @@ $.loadJQueryAIM = function(callback) {
 }
 
 $.loadModalJS = function(callback) {
-	$.loadLibrary('makeModal()',
+	return $.loadLibrary('makeModal()',
 		stylepath + '/common/jquery/jquery.wikia.modal.js',
 		typeof jQuery.fn.makeModal,
 		callback
@@ -302,26 +302,40 @@ $.loadModalJS = function(callback) {
 }
 
 $.loadGoogleMaps = function(callback) {
-	window.onGoogleMapsLoaded = function() {
-		delete window.onGoogleMapsLoaded;
-		if (typeof callback === 'function') {
-			callback();
-		}
-	}
+	var dfd = new jQuery.Deferred(),
+		onLoaded = function() {
+			if (typeof callback === 'function') {
+				callback();
+			}
+			dfd.resolve();
+		};
 
-	$.loadLibrary('GoogleMaps',
-		'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
-		typeof (window.google && google.maps),
-		function() {}
-	);
-
+	// Google Maps API is loaded
 	if (typeof (window.google && google.maps) != 'undefined') {
-		callback();
+		onLoaded();
 	}
+	else {
+		window.onGoogleMapsLoaded = function() {
+			delete window.onGoogleMapsLoaded;
+			onLoaded();
+		}
+
+		// load GoogleMaps main JS and provide a name of the callback to be called when API is fully initialized
+		$.loadLibrary('GoogleMaps',
+			'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+			typeof (window.google && google.maps)
+		).
+		// error handling
+		fail(function() {
+			dfd.reject();
+		});
+	}
+
+	return dfd.promise();
 }
 
 $.loadFacebookAPI = function(callback) {
-	$.loadLibrary('Facebook API',
+	return $.loadLibrary('Facebook API',
 		window.fbScript || '//connect.facebook.net/en_US/all.js',
 		typeof window.FB,
 		callback
@@ -329,7 +343,7 @@ $.loadFacebookAPI = function(callback) {
 }
 
 $.loadGooglePlusAPI = function(callback) {
-	$.loadLibrary('Google Plus API',
+	return $.loadLibrary('Google Plus API',
 		'//apis.google.com/js/plusone.js',
 		typeof (window.gapi && window.gapi.plusone),
 		callback
@@ -337,7 +351,7 @@ $.loadGooglePlusAPI = function(callback) {
 }
 
 $.loadTwitterAPI = function(callback) {
-	$.loadLibrary('Twitter API',
+	return $.loadLibrary('Twitter API',
 		'//platform.twitter.com/widgets.js',
 		typeof (window.twttr && window.twttr.widgets),
 		callback
@@ -348,6 +362,8 @@ $.loadTwitterAPI = function(callback) {
  * Loads library file if it's not already loaded and fires callback
  */
 $.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
+	var dfd = new jQuery.Deferred();
+
 	if (typeCheck === 'undefined') {
 		$().log('loading ' + name, 'loadLibrary');
 
@@ -357,14 +373,29 @@ $.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
 		$.getResources(files, function() {
 			$().log(name + ' loaded', 'loadLibrary');
 
-			if (typeof callback == 'function') callback();
-		},failureFn);
+			if (typeof callback == 'function') {
+				callback();
+			}
+		},failureFn).
+			// implement promise pattern
+			then(function() {
+				dfd.resolve();
+			}).
+			fail(function() {
+				dfd.reject();
+			});
 	}
 	else {
 		$().log(name + ' already loaded', 'loadLibrary');
 
-		if (typeof callback == 'function') callback();
+		if (typeof callback == 'function') {
+			callback();
+		}
+
+		dfd.resolve();
 	}
+
+	return dfd.promise();
 }
 
 $.chainFn = function(fn1,fn2) {
@@ -838,16 +869,21 @@ jQuery.getResources = function(resources, callback) {
 		isCss = /.css(\?(.*))?$/,
 		isSass = /.scss/,
 		isGroup = /__am\/\d+\/group/,
-		remaining = resources.length;
+		remaining = resources.length,
+		dfd = new jQuery.Deferred();
 
 	var onComplete = function() {
 		remaining--;
 
 		// all files have been downloaded
+		// TODO: add error handling
 		if (remaining == 0) {
 			if (typeof callback == 'function') {
 				callback();
 			}
+
+			// resolve deferred object
+			dfd.resolve();
 		}
 	};
 
@@ -861,13 +897,19 @@ jQuery.getResources = function(resources, callback) {
 		}
 		// JS files and Asset Manager groups are scripts
 		else if (isJs.test(resource) || isGroup.test(resource)) {
-			$.getScript(resource, onComplete);
+			$.getScript(resource, onComplete).
+			// error handling
+			fail(function() {
+				dfd.reject();
+			})
 		}
 		// CSS /SASS files
 		else if (isCss.test(resource) || isSass.test(resource)) {
 			$.getCSS(resource, onComplete);
 		}
 	}
+
+	return dfd.promise();
 };
 
 /**
