@@ -22,6 +22,7 @@ class OasisModule extends Module {
 
 	var $googleAnalytics;
 	var $headlinks;
+	var $headitems;
 	var $jsAtBottom;
 	var $pagecss;
 	var $printableCss;
@@ -111,6 +112,7 @@ class OasisModule extends Module {
 		}
 
 		$this->headlinks = $wgOut->getHeadLinks();
+		$this->headitems = $skin->getHeadItems();
 
 		$this->pagetitle = htmlspecialchars( $this->pagetitle );
 		$this->displaytitle = htmlspecialchars( $this->displaytitle );

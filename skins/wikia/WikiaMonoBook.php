@@ -312,6 +312,7 @@ abstract class WikiaMonoBookTemplate extends WikiaQuickTemplate{
 			$out = $this->wg->out;
 			$allowedScripts = '';
 			$allowedStyles = '';
+			$allowedHeadItems = $skin->getHeadItems();
 
 			foreach ( $styleTags as $s ) {
 				$allowedStyles .= "{$s['tag']}\n";
@@ -321,7 +322,8 @@ abstract class WikiaMonoBookTemplate extends WikiaQuickTemplate{
 				$allowedScripts .= "{$s['tag']}\n";
 			}
 
-			$value =  str_replace( array( $out->buildCssLinks(), $out->getScriptsOnly() ), array( $allowedStyles, $allowedScripts ), $value );
+			//headitems need to be replaced BEFORE csslinks and scripts as it might be a subset of those!!!
+			$value =  str_replace( array( $out->getHeadItems(), $out->buildCssLinks(), $out->getScriptsOnly()  ), array( $allowedHeadItems, $allowedStyles, $allowedScripts ), $value );
 
 			$this->wf->profileOut( __METHOD__ );
 		}
