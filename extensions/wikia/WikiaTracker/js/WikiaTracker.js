@@ -49,6 +49,7 @@ var WikiaTracker = {
 	 *		ga_label - GA Label (optional)
 	 *		ga_value = GA Value (optional)
 	 *		internal_params - JSON (optional)
+	 *		internal_params.href - (optional) if present, delay following outbound link 100ms
 	 */
 	trackEvent: function(params) {
 
