@@ -43,13 +43,10 @@ class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 
 	public function getAspectRatio() {
 		$ratio = parent::getAspectRatio();
-		if (!empty($this->metadata['dimensions'])) {
-			list($width, $height) = explode('x', $this->metadata['dimensions']);
-		}
-		elseif (!empty($this->interfaceObj[0])) {
+		if (!empty($this->interfaceObj[0])) {
 			list($width, $height) = explode('x', $this->interfaceObj[0]);
 		}
-		if(!empty($height) && !(empty($height))) {
+		if(!empty($width) && !(empty($height))) {
 			$ratio = $width / $height;
 		}
 		return $ratio;
