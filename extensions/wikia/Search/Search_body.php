@@ -380,9 +380,11 @@ class SolrSearchSet extends SearchResultSet {
 
 	public static function onSpecialSearchResults( $term, &$titleMatches, &$textMatches ) {
 		global $wgOut, $wgUser, $wgCityId;
-		if( !empty( $textMatches )  && $textMatches->hasArticleMatch()) {
+
+		$matches = is_object($textMatches) ? $textMatches : ( is_object($titleMatches) ? $titleMatches : null );
+		if( ( $matches instanceof SolrSearchSet )  && $matches->hasArticleMatch() ) {
 			$skin = $wgUser->getSkin();
-			$article = $textMatches->getArticleMatch();
+			$article = $matches->getArticleMatch();
 			$title = $article->getTitle();
 
 			$link = $skin->linkKnown( $title, null,
