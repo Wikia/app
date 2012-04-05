@@ -26,11 +26,9 @@ ActivityFeedTag.loadVideoPlayer = function(ev) {
 
 	ActivityFeedTag.ajax('getVideoPlayer', {'title': url}, function(res) {
 		if (res.html) {
-			$.loadModalJS(function() {
-				$.showModal(res.title, res.html, {
-					'id': 'myhome-video-player-popup',
-					'width': res.width
-				});
+			$.showModal(res.title, res.html, {
+				'id': 'myhome-video-player-popup',
+				'width': res.width
 			});
 
 			// remove lock
@@ -66,13 +64,11 @@ ActivityFeedTag.loadFullSizeImage = function(ev) {
 		if (res.html) {
 			// open modal
 			desc = desc.replace(/_/g, ' ');
-			$.loadModalJS(function() {
-				var html = '<div id="myhome-image-preview" title="' + desc  +'">' + res.html + '</div>';
-				$("#positioned_elements").append(html);
-				$('#myhome-image-preview').makeModal({
-					'id': 'myhome-image-preview-popup',
-					'width': res.width
-				});
+			var html = '<div id="myhome-image-preview" title="' + desc  +'">' + res.html + '</div>';
+			$("#positioned_elements").append(html);
+			$('#myhome-image-preview').makeModal({
+				'id': 'myhome-image-preview-popup',
+				'width': res.width
 			});
 
 			// remove lock
