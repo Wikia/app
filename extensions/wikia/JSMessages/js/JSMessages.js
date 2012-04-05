@@ -52,8 +52,12 @@
 		 * @param string/array packages - package name or list of packages
 		 * @param function callback - function to call when request is completed
 		 * @param string language - optionally language code (fallbacks to user language)
+		 * @return $.Deferred - promise object
 		 */
 		getMessages: function(packages, callback, language) {
+			// set up deferred object
+			var dfd = new jQuery.Deferred();
+
 			// single of the single package was given
 			if (typeof packages == 'string') {
 				packages = [packages];
@@ -81,6 +85,9 @@
 				if (typeof callback == 'function') {
 					callback();
 				}
+
+				// resolve deferred object
+				dfd.resolve();
 			}
 			else {
 				$.get(wgScriptPath + '/wikia.php', {
@@ -98,10 +105,18 @@
 						callback();
 					}
 
+					// resolve deferred object
+					dfd.resolve();
+
 					// these packages are loaded
 					loadedPackages = loadedPackages.concat(packagesToLoad);
-				}, 'script');
+				}, 'script').error(function() {
+					// error handling
+					dfd.reject();
+				});
 			}
+
+			return dfd.promise();
 		},
 
 		/**
