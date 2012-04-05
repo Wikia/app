@@ -123,7 +123,7 @@
 		 * Load messages from given package(s) using content language
 		 */
 		getMessagesForContent: function(packages, callback) {
-			this.getMessages(packages, callback, window.wgContentLanguage);
+			return this.getMessages(packages, callback, window.wgContentLanguage);
 		}
 	});
 
