@@ -47,7 +47,7 @@ class Track {
 		$url = Track::getURL('view', '', $param);
 
 		$script = <<<SCRIPT1
-<noscript><img src="$url" width="1" height="1" border="0" alt="" /></noscript>
+<noscript><img src="$url&amp;nojs=1" width="1" height="1" border="0" alt="" /></noscript>
 <script type="text/javascript">
 (function() {
 	var beaconCookie;
