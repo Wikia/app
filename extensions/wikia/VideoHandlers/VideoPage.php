@@ -44,7 +44,9 @@ class WikiaVideoPage extends ImagePage {
 
 	public function getDuplicates() {
 
-		if ( $this->img->getHandler()->isBroken() ) {
+		$handler = $this->img->getHandler();
+
+		if ( $handler instanceof VideoHandler && $handler->isBroken() ) {
 			return $this->dupes = array();
 		}
 		else {
