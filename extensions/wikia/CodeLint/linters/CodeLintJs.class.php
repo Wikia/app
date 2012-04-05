@@ -47,6 +47,7 @@ class CodeLintJs extends CodeLint {
 			'ThemeDesigner',
 			'Timer',
 			'WET',
+			'WikiaTracker',
 			'YAHOO',
 		);
 	}
