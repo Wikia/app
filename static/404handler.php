@@ -18,6 +18,8 @@
  * /static/js/oasis_loggedin_js/abf89dac064128285033a8fc80bfc638.js
  *
  * @author Sean Colombo
+ *
+ * Deprecated, to be removed (BugId:10548)
  */
 
 error_reporting(E_ALL);
@@ -41,7 +43,7 @@ require $dir . "/../extensions/wikia/StaticChute/StaticChute.php";
 if(count($data) < $MIN_NUM_PARAMS){
 	// Not enough parameters.  Return an error (but don't cache it).
 	header('HTTP/1.0 400 Bad Request');
-	
+
 	$params["type"] = (isset($data[0])?$data[0]:'js');
 	$StaticChute = new StaticChute($params['type']);
 
