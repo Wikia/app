@@ -55,10 +55,18 @@
 		</component>
 		<component name="display">
 			<settings>
+				<setting name="backgroundcolor" value="0xFFFFFF" />
+				<setting name="bufferinterval" value="5" />
+				<setting name="bufferrotation" value="3" />
 			</settings>
 			<elements>
-				<element name='playIcon' src='displayplay.png'/>
-				<element name='playIconOver' src='displayplayover.png'/>
+				<element name="playIcon" src="displayplay.png"/>
+				<element name="playIconOver" src="displayplayover.png"/>
+				<element name="bufferIcon" src="bufferIcon.png" />
+				<!-- Enable for 5.0 compatibility --> 
+				<element name="background" src="backgroundtransparent.png" />
+				<element name="muteIcon" src="backgroundtransparent.png" />
+				<element name="errorIcon" src="backgroundtransparent.png" />
 			</elements>
 		</component>
 		<component name='hd'>
