@@ -1024,9 +1024,9 @@ jQuery.nirvana.sendRequest = function(attr) {
 
 	$().log(data, 'request to nirvana');
 
-	var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath:attr.scriptPath;
+	var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath : attr.scriptPath;
 
-	$.ajax({
+	return $.ajax({
 		url: url + '/wikia.php?' + $.param({
 			//Iowa strips out POST parameters, Nirvana requires these to be set
 			//so we're passing them in the GET part of the request
@@ -1043,7 +1043,7 @@ jQuery.nirvana.sendRequest = function(attr) {
 }
 
 jQuery.nirvana.getJson = function(controller, method, data, callback, onErrorCallback) {
-	jQuery.nirvana.ajaxJson(
+	return jQuery.nirvana.ajaxJson(
 		controller,
 		method,
 		data,
@@ -1054,7 +1054,7 @@ jQuery.nirvana.getJson = function(controller, method, data, callback, onErrorCal
 }
 
 jQuery.nirvana.postJson = function(controller, method, data, callback, onErrorCallback) {
-	jQuery.nirvana.ajaxJson(
+	return jQuery.nirvana.ajaxJson(
 		controller,
 		method,
 		data,
@@ -1065,14 +1065,13 @@ jQuery.nirvana.postJson = function(controller, method, data, callback, onErrorCa
 }
 
 jQuery.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCallback, requestType) {
-
 	// data parameter can be omitted
 	if ( typeof data == 'function' ) {
 		callback = data;
 		data = {};
 	}
 
-	jQuery.nirvana.sendRequest({
+	return jQuery.nirvana.sendRequest({
 		controller: controller,
 		method: method,
 		data: data,
@@ -1081,7 +1080,6 @@ jQuery.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCa
 		callback: callback,
 		onErrorCallback: onErrorCallback
 	});
-
 }
 
 jQuery.openPopup = function(url, name, moduleName, width, height) {
