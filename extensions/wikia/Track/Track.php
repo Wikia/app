@@ -28,7 +28,8 @@ class Track {
 			'y='.$wgDBcluster.$sep.
 			'u='.$wgUser->getID().$sep.
 			'ip='.wfGetIp().$sep.
-			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).
+			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
+			's='.$wgUser->getSkin()->getSkinName().
 			($wgTitle && !is_object($wgArticle) ? $sep.'pg='.urlencode($wgTitle->getPrefixedDBkey()) : '').
 			($wgTitle ? $sep.'n='.$wgTitle->getNamespace() : '').
 			(!empty($wgAdServerTest) ? $sep.'db_test=1' : '');
