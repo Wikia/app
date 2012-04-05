@@ -2,9 +2,9 @@
 
 class JWPlayer {
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
-	const JWPLAYER_VERSION = '5.9';
+	const JWPLAYER_VERSION = '5.9.1';
 	const INFOBOX_VERSION = '1';
-	const SKIN_VERSION = '1';
+	const SKIN_VERSION = '2';
 
 	private static $JWPLAYER_DIR = '/wikia/JWPlayer/';
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
@@ -52,7 +52,7 @@ class JWPlayer {
 			$wikiaSkinZip = 'wikia-medium.zip';			
 		}
 		$jwplayerData['skin'] = self::getAssetUrl( $wgExtensionsPath . self::$JWPLAYER_DIR . 'skins/wikia/'.$wikiaSkinZip, self::SKIN_VERSION );
-	
+		
 		// thumb
 		if (!empty($thumbUrl) && empty($autoplay)) {
 			$jwplayerData['image'] = $thumbUrl;
@@ -99,8 +99,8 @@ class JWPlayer {
 		    'file'	=> $jwplayerData['file'],
 		    'modes'	=> array(
 			array('type'=>'flash','src'=>$jwplayerData['player']),
-			array('type'=>'html5'),
-			array('type'=>'download')
+			array('type'=>'html5', 'config'=>array( 'file'=>$jwplayerData['file'], 'provider'=>'video') ),
+			array('type'=>'download', 'config'=>array( 'file'=>$jwplayerData['file'], 'provider'=>'video') )
 			),
 		    'autostart'	=> $autoplay ? 'true' : 'false',
 		    'stretching'=> 'uniform',

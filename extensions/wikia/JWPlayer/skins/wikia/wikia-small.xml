@@ -43,9 +43,22 @@
 				<element name='timeSliderCapRight' src='timeslidercapright.png'/>
 				<element name='volumeSliderRail' src='volumesliderrail.png'/>
 				<element name='volumeSliderProgress' src='volumesliderprogress.png'/>
-				<element name='volumeSliderThumb' src='volumesliderthumb.png'/>
+				<element name='volumeSliderThumb' src='backgroundtransparent.png'/>
 				<element name='blankButton' src='backgroundtransparent.png'/>
 				<element name='blankButtonOver' src='hdover.png'/>
+			</elements>
+		</component>
+		<component name="display">
+			<settings>
+			</settings>
+			<elements>
+				<!-- Enable for 5.0 compatibility --> 
+				<element name="playIcon" src="backgroundtransparent.png"/>
+				<element name="playIconOver" src="backgroundtransparent.png"/>
+				<element name="bufferIcon" src="backgroundtransparent.png" />
+				<element name="background" src="backgroundtransparent.png" />
+				<element name="muteIcon" src="backgroundtransparent.png" />
+				<element name="errorIcon" src="backgroundtransparent.png" />
 			</elements>
 		</component>
 		<component name='hd'>
