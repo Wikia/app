@@ -389,64 +389,6 @@ $.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
 	return dfd.promise();
 };
 
-$.chainFn = function(fn1,fn2) {
-	var fns = Array.prototype.slice.call(arguments,0);
-	return function() {
-		var args = Array.prototype.slice.call(arguments,0);
-		var ex = {};
-		for (var i=0;i<fns.length;i++) {
-			if (typeof fns[i] != 'function')
-				continue;
-			try {
-				fns[i].apply(this,args);
-			} catch (e) {
-				ex[i] = e;
-			}
-		}
-		for (var i=0;i<fns.length;i++) {
-			if (ex[i]) throw ex[i];
-		}
-		return true;
-	};
-};
-
-$.bulkLoad = function(list,success,failure) {
-	var count = list.length, done = 0;
-	var successFn = function() { if (done >= 0) done++; if (done >= count) success(); };
-	var failureFn = function() { failure(); done = -1; };
-	for (var i=0;i<list.length;i++) {
-		var el = list[i];
-		switch (typeof el) {
-			case 'string':
-				var fn = {
-					'yui': $.loadYUI,
-					'autocomplete': $.loadJQueryAutocomplete,
-					'tooltip': $.loadWikiaTooltip,
-					'jquery-ui': $.loadJQueryUI,
-					'jquery-aim': $.loadJQueryAIM,
-					'modal': $.loadModalJS
-				}[el];
-				if (fn) {
-					fn.call(window,successFn,failureFn);
-					continue;
-				}
-				$().log(el,'$.bulkLoad(): unknown list item');
-				break;
-			case 'object':
-				var options = $.extend({},el,{
-					success: $.chainFn(el.success,successFn),
-					error: $.chainFn(el.error,failureFn)
-				});
-				$.ajax(options);
-				break;
-			default:
-				$().log(el,'$.bulkLoad(): unknown list item');
-		}
-	}
-	return true;
-};
-
-
 /**
 * Finds the event in the window object, the caller's arguments, or
 * in the arguments of another method in the callstack.  This is
