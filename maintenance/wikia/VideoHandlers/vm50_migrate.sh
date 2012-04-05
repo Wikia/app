@@ -22,10 +22,23 @@ cat $TMPFILE | while read line; do
 	then
 		continue
 	fi
+	if [ "$cityid" = "3125" ];
+	then
+		continue
+	fi
+	if [ "$cityid" = "7414" ];
+	then
+		continue
+	fi
+	if [ "$cityid" = "95889" ];
+	then
+		continue
+	fi
 	echo "Processing $line"
 	#sudo -u www-data SERVER_ID=$cityid php videoMigrateData.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.migratedata.log
 	#sudo -u www-data SERVER_ID=$cityid php videoPostmigrate.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php | tee -a logs/${cityid}.postmigrate.log
 
+	/usr/wikia/backend/bin/withcity --maintenance-script='../../../../../home/release/video_refactoring/trunk/maintenance/wikia/VideoHandlers/videoSanitize.php' --usedb=$dbname | tee -a logs/${cityid}.sanitize.log
 	/usr/wikia/backend/bin/withcity --maintenance-script='../../../../../home/release/video_refactoring/trunk/maintenance/wikia/VideoHandlers/videoMigrateData.php' --usedb=$dbname | tee -a logs/${cityid}.migratedata.log
 	/usr/wikia/backend/bin/withcity --maintenance-script='../../../../../home/release/video_refactoring/trunk/maintenance/wikia/VideoHandlers/videoPostmigrate.php' --usedb=$dbname | tee -a logs/${cityid}.postmigrate.log
 

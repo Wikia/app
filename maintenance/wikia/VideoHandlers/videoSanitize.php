@@ -125,7 +125,7 @@ $aAllFiles = array();
 $allChangesArticleURLs=array();
 $timeStart = microtime( true );
 
-$rows = $dbw->query( "SELECT img_name FROM image" );
+$rows = $dbw->query( "SELECT img_name, img_timestamp FROM image" );
 
 $rowCount = $rows->numRows();
 echo( ": {$rowCount} videos found\n" );
@@ -137,25 +137,31 @@ if ( $rowCount ) {
 	//echo "Fetching data about previously processed videos\n";
 
 	while( $file = $dbw->fetchObject( $rows ) ) {
-		$aAllFiles[ $file->img_name ] = 1;
+		$aAllFiles[ $file->img_name ] = $file->img_timestamp;
 	}
 
 	echo "[".intval( microtime( true ) - $timeStart)." s] table created \n";
 
 	$i = 0;
 	foreach( $aAllFiles as $sFile => $val ) {
-		if ( strpos ( $sFile, ':' ) === 0 ) {
+		if ( strpos ( $sFile, ':' ) === 0 || strpos( $sFile, 'Video:' ) === 0 ) {
 			// var_dump(':');
 
 			if ( !empty( $previouslyProcessed[$sFile] ) ) {
 				continue;
 			}
-			
+
+			if( strpos( $sFile, 'Video:' ) === 0 ) {
+				$processName = substr($sFile, 5);
+			} else {
+				$processName = $sFile;
+			}
+
 			$response = F::app()->sendRequest(
 				'VideoHandlerController',
 				'getSanitizedOldVideoTitleString',
 				array(
-					'videoText' => $sFile
+					'videoText' => $processName
 				)
 			)->getData();
 
@@ -173,6 +179,12 @@ if ( $rowCount ) {
 					($firstCheck === true  && $sFile != $sNewTitle && isset( $aAllFiles[ $sNewTitle ]) ) ||
 					isset (	$aAllFiles[ substr($sNewTitle, 1 ) ] )
 			) {
+				if( isset( $aAllFiles[ substr($sNewTitle, 1 ) ] ) &&
+					isset( $aAllFiles[ $sNewTitle ] ) &&
+					wfTimestamp( TS_MW, $aAllFiles[ substr($sNewTitle, 1 ) ] ) > wfTimestamp( TS_MW, "20120323211614" ) ) {
+					echo "Ignoring this title - duplicated entry is legal and sanitized\n";
+					break;
+				}
 				$firstCheck = false;
 				$newNameCandidate = substr( $newNameCandidate, 0, 255-strlen( '_' . $sufix) );
 				$sNewTitle = $newNameCandidate . ( strlen( $newNameCandidate ) > 1  ? '_' : 'Video_' ) . $sufix;
@@ -188,6 +200,11 @@ if ( $rowCount ) {
 				//echo "Current candidate: $sNewTitle\n";
 			}
 
+			if( strpos( $sFile, 'Video:' ) === 0 ) {
+				$sNewTitle = str_replace(' ', '_', $sNewTitle);
+			}
+
+
 			if( $sFile != $sNewTitle ) {
 				echo "Doing translation $sFile to $sNewTitle \n";
 				$aTranslation[ $sFile ] = $sNewTitle;
@@ -198,6 +215,7 @@ if ( $rowCount ) {
 		}
 	}
 }
+
 $dbw->freeResult( $rows );
 echo "[".intval( microtime( true ) - $timeStart)." s] get translation table!\n";
 
