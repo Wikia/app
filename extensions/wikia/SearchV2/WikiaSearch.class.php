@@ -284,8 +284,8 @@ class WikiaSearch extends WikiaObject {
 
 		$wikiViews = $this->getWikiViews($page);
 
-		$result['wikiviews_weekly'] = $wikiViews->weekly;
-		$result['wikiviews_monthly'] = $wikiViews->monthly;
+		$result['wikiviews_weekly'] = (int) $wikiViews->weekly;
+		$result['wikiviews_monthly'] = (int) $wikiViews->monthly;
 
 		return $result;
 	}
@@ -310,7 +310,8 @@ class WikiaSearch extends WikiaObject {
 
 	        $key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
-	        if ( $result = $this->wg->Memc->get( $key ) ) {
+		// should probably re-poll for wikis without much love
+	        if ( ($result = $this->wg->Memc->get( $key )) && ($result->weekly > 0 || $result->monthly > 0) ) {
 
 		    return $result;
 
@@ -325,6 +326,15 @@ class WikiaSearch extends WikiaObject {
 					    'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)'),
 				      __METHOD__
 						 );
+
+		// a pinch of defensive programming
+		if (!$row) {
+
+		   $row = new stdClass();
+		   $row->weekly = 0;
+		   $row->monthly = 0;
+
+		}
 
 		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
 
