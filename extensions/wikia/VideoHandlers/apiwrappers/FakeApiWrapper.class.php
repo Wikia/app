@@ -15,7 +15,7 @@ class FakeApiWrapper extends ApiWrapper {
 		$videoId = '';
 		if ( $meta ) {
 			$metaArray = explode(',', $meta);
-			$videoId = $metaArray[0];
+			$videoId = $metaArray[1];
 		}
 
 		$this->videoId		= $videoId;
