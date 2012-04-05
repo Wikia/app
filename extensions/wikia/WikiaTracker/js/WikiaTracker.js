@@ -51,6 +51,15 @@ var WikiaTracker = {
 	 *		internal_params - JSON (optional)
 	 */
 	trackEvent: function(params) {
+
+		// If clicking a link that will unload the page before tracking can happen… delay 100ms.
+		if (params.internal_params.href !== undefined) {
+			event.preventDefault();
+			setTimeout(function() {
+				document.location = params.internal_params.href;
+			}, 100);
+		}		
+		
 		var trackingMethod = params['tracking_method'] || 'none',
 			ga_category = params['ga_category'],
 			ga_action = params['ga_action'],
