@@ -278,7 +278,26 @@ class WikiaSearch extends WikiaObject {
 			$result['activeusers'] = $statistics['activeusers'];
 		}
 
+
+		$result['redirect_titles'] = $this->getRedirectTitles($page);
+
 		return $result;
+	}
+
+	
+	private function getRedirectTitles(Article $page) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$redirectTitles = $dbr->select(array('redirect', 'page'), 
+					       array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'), 
+					       array(),
+					       __METHOD__,
+					       array('GROUP'=>'rd_title'),
+					       array('page' => array('INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from')))
+					       );
+
+		return ($redirectTitles->numRows() > 0 && ($row = $redirectTitles->fetchRow())) ? str_replace('_', ' ', $row['redirect_titles']) : '';
+
 	}
 
 	private function callMediaWikiAPI( Array $params ) {
