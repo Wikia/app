@@ -497,10 +497,8 @@ wgAfterContentAndJS.push(function() {
 		$.getResources([
 			$.loadYUI,
 			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js',
-			$.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss')
 		],
 		function() {
-			csTrack('addCategory');
 			showCSpanel();
 		});
 
