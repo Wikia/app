@@ -20,7 +20,7 @@ var WikiaTracker = {
 
 		// impression of item on page/module
 		IMPRESSION: 'impression',
-		
+
 		// Video play
 		PLAY_VIDEO: 'play-video',
 
@@ -54,13 +54,13 @@ var WikiaTracker = {
 	trackEvent: function(params) {
 
 		// If clicking a link that will unload the page before tracking can happen… delay 100ms.
-		if (params.internal_params.href !== undefined) {
+		if (typeof params.internal_params === 'object' && typeof params.internal_params.href !== 'undefined') {
 			event.preventDefault();
 			setTimeout(function() {
 				document.location = params.internal_params.href;
 			}, 100);
-		}		
-		
+		}
+
 		var trackingMethod = params['tracking_method'] || 'none',
 			ga_category = params['ga_category'],
 			ga_action = params['ga_action'],
