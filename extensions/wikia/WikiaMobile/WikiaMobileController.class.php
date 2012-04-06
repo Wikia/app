@@ -21,26 +21,4 @@ class WikiaMobileController extends WikiaController{
 		$this->request->setInternal( true );
 		$this->forward( 'WikiaMobileCategoryService', 'getBatch' );
 	}
-	
-	public function getShareButtons(){
-		$cacheDuration = 86400; //24h
-
-		//allow proxying request to a service (shared method implementation)
-		$this->request->setInternal( true );
-		$this->forward( 'WikiaMobileSharingService', 'index' );
-
-		/**
-		 * chache the result in Varnish, in the browser we use loalStorage to avoid
-		 * re-requesting this data, so no need to cripple the response with
-		 * unneeded headers
-		 */
-		$this->response->setCacheValidity( $cacheDuration, $cacheDuration, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
-	}
-	
-	public function getLoginPage(){
-		//allow proxying request to a service (shared method implementation)
-		$this->request->setInternal( true );
-
-		$this->forward( 'UserLoginSpecialController', 'index' );
-	}
 }

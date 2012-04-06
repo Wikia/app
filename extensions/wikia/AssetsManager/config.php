@@ -244,6 +244,14 @@ $config['wikiamobile_js_body'] = array(
 	)
 );
 
+$config['wikiamobile_facebook'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'
+	)
+);
+
 /** WikiaApp **/
 
 $config['wikiaapp_css'] = array(
@@ -315,6 +323,14 @@ $config['articlecomments_js_wikiamobile'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 			'//extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js'
+	)
+);
+
+$config['articlecomments_js_wikiamobile_init'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/ArticleComments/js/ArticleComments.init.wikiamobile.js'
 	)
 );
 

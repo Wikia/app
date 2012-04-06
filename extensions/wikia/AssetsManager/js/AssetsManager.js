@@ -21,9 +21,13 @@ window.Wikia = window.Wikia || {};
  *  Example: Wikia.getMultiTypePackage({
  *		messages: 'EditPageLayout',
  *		scripts: 'oasis_jquery,yui',
+ *		styles: 'path/to/style/file'
  *		templates: [{
  *			controllerName: 'UserLoginSpecialController',
- *			methodName: 'index'
+ *			methodName: 'index',
+ *			param: {
+ *				useskin: 'wikiamobile'
+ *			}
  *		}]
  *	});
  */

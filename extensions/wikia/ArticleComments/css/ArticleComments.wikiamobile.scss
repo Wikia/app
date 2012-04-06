@@ -1,16 +1,15 @@
 //mixins
-@import "../../WikiaMobile/css/mixins/section-title.scss";
 @import "../../WikiaMobile/css/mixins/box-shadow.scss";
-@import "../../WikiaMobile/css/mixins/linear-gradient.scss";
-@import "../../WikiaMobile/css/mixins/transition.scss";
+@import "../../WikiaMobile/css/variables.scss";
 
 //vars
 $comment-left-margin: $page-padding + 60px;
+$comment-top-margin: 10px;
+$submit-border-radius: 5px;
+$commentBg: rgb(246,246,246);
 
 .js{
 	#wkComm {
-		display: none;
-
 		.rpl {
 			display: block;
 		}
@@ -19,158 +18,167 @@ $comment-left-margin: $page-padding + 60px;
 	#commMore{
 		display: block;
 	}
+
+	.sub-comments{
+ 	    display: none;
+ 	}
 }
 
-.fkRpl {
-	display: none;
+.viewAll::before{
+	content: '|';
+	margin-right: 7px;
+	color: grey;
 }
 
-#wkArtCom{
-	.collSec{
-		@include section-title-related;
-	}
+.commFrm{
+    margin: 5px;
+    position: relative;
 
-	form {
-		position: relative;
-		margin: 5px 0;
+	&::before, &::after{
+	    content: "";
+		display: table;
+		clear: both;
 	}
 
 	textarea {
-		margin: 0;
-		padding: 0;
-		border: 1px solid $border-color;
+	    padding: 9px;
+	 	border: 1px solid $border-color;
 		@include box-shadow(inset 2px 2px 8px -3px grey);
-		border-radius: 5px 0 0 5px;
-		height: 30px;
-		font-size: 18pt;
-		font-weight: 100;
-		padding-left: 5px;
-		position: relative;
-		width: 82%;
+        border-radius: $submit-border-radius 0 0 $submit-border-radius;
+        font-size: 1em;
+        font-weight: 100;
+        height: 40px;
+        float: left;
+        width: 85%;
+        -webkit-appearance: none;
 
-		&:focus {
-			height: 140px;
+		&:focus{
+			height: 96px;
 		}
 	}
 
-	input {
-		height: 32px;
-		width: 17%;
-		padding: 0;
-		font-size: small;
-		border-radius: 0 5px 5px 0;
+	.wkMblLdr{
 		position: absolute;
-		right: 0;
-		margin: 0;
-		@include box-shadow(-2px 0 5px -2px grey);
-	}
-
-	.rpl {
-		margin: 0 0 0 70px;
-		border-top: 1px solid $border-color;
-		color: $link-color;
-		height: 44px;
-		line-height: 40px;
-		font-weight: 100;
-		padding-left: 5px;
-		width: 100%;
-		display: none;
-
-		&:active, &.fkAct {
-			color: white;
-			@include linear-gradient($activeGradient1, $activeGradient2);
-		}
 	}
 }
 
-#wkComm.open{
-	display:block;
+.commSbt{
+	height: 40px;
+	padding: 0;
+	font-size: small;
+	border-radius: 0 $submit-border-radius $submit-border-radius 0;
+	margin: 0;
+	float: right;
+	width: 15%;
+	@include box-shadow(-2px 0 5px -2px grey);
+}
+
+.rpl {
+    margin: $comment-top-margin 0 0 60px;
+	border-top: 1px solid $border-color;
+	color: $link-color;
+	line-height: 40px;
+	font-weight: 100;
+	padding-left: 5px;
+	width: 100%;
+	display: none;
+	position: relative;
+
+	span {
+		height: 100%;
+		display: inline-block;
+		padding-right: 7px;
+	}
+
+	&::after, &::before {
+		border-style: solid;
+		border-width: 10px;
+		content: "";
+		height: 0;
+		position: absolute;
+		left: 10px;
+		width: 0;
+	}
+
+	&::before {
+		border-color: transparent transparent $border-color transparent;
+		top: -21px;
+	}
+
+	&::after{
+		border-color: transparent transparent $page-background-color transparent;
+		top: -19px;
+	}
 }
 
 #wkComUl{
 	margin: 0;
 	padding: 0;
 	list-style: none;
+}
+
+.sub-comments{
+	list-style: none;
+	padding: 0;
+	margin: 10px 0 1px 0;
 
 	&>.comment:first-child{
-		border: none;
-	}
+		position: relative;
 
-	.sub-comments{
-		list-style: none;
+		&::after, &::before {
+			border-style: solid;
+			border-width: 10px;
+			content: "";
+			height: 0;
+			position: absolute;
+			left: 80px;
+			width: 0;
+		}
 
-		&>.comment:first-child{
-			position: relative;
+		&::before {
+			border-color: transparent transparent $border-color transparent;
+			top: -21px;
+		}
 
-			&::before {
-				border-color: transparent transparent $border-color transparent;
-				border-style: solid;
-				border-width: 11px;
-				content: " ";
-				height: 0;
-				position: absolute;
-				top: -22px;
-				left: 40px;
-				width: 0;
-			}
-
-			&::after {
-				border-color: transparent transparent $page-background-color transparent;
-				border-style: solid;
-				border-width: 10px;
-				content: " ";
-				height: 0;
-				position: absolute;
-				top: -19px;
-				left: 41px;
-				width: 0;
-			}
+		&::after{
+			border-color: transparent transparent $page-background-color transparent;
+			top: -19px;
 		}
 	}
+}
 
-	.comment{
-		border-top: 1px solid $border-color;
-		padding: $page-padding 0;
+.comment{
+	border-top: 1px solid $border-color;
+	padding-top: $page-padding;
 
-		.msg{
-			border-left: none;
-			margin: 0 0 0 $comment-left-margin;
-			padding-left: 0;
-
-			.by{
-				font-weight: bold;
-			}
-
-			.txt{
-				p:first-child{
-					margin: 0;
-					padding: 0;
-				}
-			}
-
-			.date{
-				color: $page-text-alternate-color;
-				font-size: small;
-
-				a{
-					color: $page-text-alternate-color;
-				}
-			}
-		}
-
-		.avatar{
-			float: left;
-			margin-right: $page-padding;
-		}
-
-		.buttons{
-			display: none;
-		}
-	}
-
-	.sub-comments{
+	.msg{
+		border-left: none;
 		margin: 0 0 0 $comment-left-margin;
-		padding: 0;
+		padding-left: 0;
+
+		.by{
+			font-weight: bold;
+		}
+
+		.txt{
+			p:first-child{
+				margin: 0;
+				padding: 0;
+			}
+		}
+
+		.date{
+			color: $page-text-alternate-color;
+			font-size: small;
+
+			a{
+				color: $page-text-alternate-color;
+			}
+		}
+	}
+
+	.avatar{
+		float: left;
 	}
 }
 
@@ -186,6 +194,7 @@ $comment-left-margin: $page-padding + 60px;
 	text-align: center;
 	vertical-align: middle;
 	width: 110%;
+	-webkit-transition: background-color .5s;
 
 	&.pag{
 		display: block;
@@ -195,7 +204,6 @@ $comment-left-margin: $page-padding + 60px;
 		@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
 		background-color: $border-color;
 		padding: $page-padding 0;
-		height: 70px;
 
 		//hide the text and make it take no space without adding
 		//yet another wrapping element...
@@ -205,11 +213,64 @@ $comment-left-margin: $page-padding + 60px;
 }
 
 #commMore{
-	&.active{
-		margin-bottom: $page-padding;
-	}
+	margin-bottom: $page-padding;
 }
 
-#commPrev{
-	border-bottom: 1px solid $border-color;
+#wkMdlWrp.cmnMdl{
+   	background-color: white;
+   	min-height: 100%;
+   	height: auto;
+   	max-width: 100%;
+
+   	#wkMdlTB{
+   		line-height: 30px;
+   		padding-left: 10px;
+		text-transform: uppercase;
+		font-size: 0.9em;
+		position: absolute;
+   	}
+
+    #wkMdlCnt{
+        background-color: inherit;
+        margin-top: 30px;
+    	color: #000;
+
+		& > li{
+			list-style: none;
+			background-color: $commentBg;
+    		margin-bottom: 10px;
+       		padding-bottom: 1px;
+		}
+    }
+
+    blockquote{
+    	margin-left: 70px;
+    	border: none;
+    }
+
+    .sub-comments{
+    	display: block;
+    	background-color: white;
+    	padding-left: 10px;
+    }
+
+    .comment{
+    	padding-bottom: 10px;
+    }
+
+    .avatar{
+    	margin-left: 5px;
+    }
+
+    .rpl{
+    	display: none;
+    }
+
+    .msg{
+    	padding-right: 10px;
+    }
+
+    .commFrm {
+    	margin: 10px;
+    }
 }
