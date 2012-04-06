@@ -134,11 +134,10 @@ class PlacesParserHookHandler {
 		$am = F::build( 'AssetsManager', array(), 'getInstance' );
 
 		$html = F::build('JSSnippets')->addToStack(
-			array_merge( $am->getURL( 'places_css' ), $am->getURL( 'places_js' ) ),
+			array( 'places_css', 'places_js' ),
 			array(),
 			'Places.init',
-			$options,
-			array(JSSnippets::FILTER_NONE, 'wikiamobile')
+			$options
 		);
 
 		return $html;

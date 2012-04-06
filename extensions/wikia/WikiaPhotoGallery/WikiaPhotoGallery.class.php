@@ -556,7 +556,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$out .= F::build('JSSnippets')->addToStack(
-			array('/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js'),
+			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js' ),
 			array(),
 			'WikiaPhotoGalleryView.init'
 		);
@@ -1384,10 +1384,10 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			//load WikiaMobile resources if needed usign JSSnippets filtering mechanism, see last parameter
 			$html .= F::build('JSSnippets')->addToStack(
-				array_merge( $am->getURL( 'wikiaphotogallery_slider_js_wikiamobile' ), $am->getURL( 'wikiaphotogallery_slider_scss_wikiamobile' ) ),
+				array( 'wikiaphotogallery_slider_js_wikiamobile', 'wikiaphotogallery_slider_scss_wikiamobile' ),
 				array(),
 				'WikiaPhotoGallerySlider.init',
-				array($this->mData['id'])
+				array( $this->mData['id'] )
 			);
 		}
 

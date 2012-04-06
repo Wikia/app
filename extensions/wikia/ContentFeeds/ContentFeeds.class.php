@@ -73,7 +73,7 @@ class ContentFeeds {
 		$tagBody.= '</ul>';
 
 		$tagBody .= F::build('JSSnippets')->addToStack(
-			array('/extensions/wikia/ContentFeeds/js/ContentFeeds.js'),
+			array( '/extensions/wikia/ContentFeeds/js/ContentFeeds.js' ),
 			array(),
 			'ContentFeeds.getTweets',
 			array(
@@ -109,7 +109,7 @@ class ContentFeeds {
 		$tagBody.= '</ul>';
 
 		$tagBody .= F::build('JSSnippets')->addToStack(
-			array('/extensions/wikia/ContentFeeds/js/ContentFeeds.js'),
+			array( '/extensions/wikia/ContentFeeds/js/ContentFeeds.js' ),
 			array(),
 			'ContentFeeds.getUserTweets',
 			array(

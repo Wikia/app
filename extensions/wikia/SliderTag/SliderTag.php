@@ -90,7 +90,7 @@ SLIDERITEM;
 		$html .= '</ul></div>';
 
 		$html .= F::build('JSSnippets')->addToStack(
-			array('/extensions/wikia/SliderTag/js/slidertag.js', '/extensions/wikia/SliderTag/css/slidertag.css'),
+			array( '/extensions/wikia/SliderTag/js/slidertag.js', '/extensions/wikia/SliderTag/css/slidertag.css' ),
 			array(),
 			'spotlightSlider_setup'
 		);

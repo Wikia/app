@@ -485,7 +485,7 @@ class AssetsManager {
 		$group = null;
 		$skinName = $skin->getSkinName();
 		$strict = $skin->isStrict();
-		
+
 		if ( !empty( $this->mGeneratedUrls[$url] ) ) {
 			$group = $this->mGeneratedUrls[$url];
 		} else {

@@ -3,8 +3,8 @@
 	$am = F::build( 'AssetsManager', array(), 'getInstance' );
 
 	echo F::build('JSSnippets')->addToStack(
-		array_merge( $am->getURL( 'places_css' ), $am->getURL( 'places_js' ) ),
-		array('$.loadGoogleMaps'),
+		array( 'places_css', 'places_js' ),
+		array( '$.loadGoogleMaps' ),
 		'Places.renderMap',
 		array_merge(array(
 			'mapId' => $mapId,

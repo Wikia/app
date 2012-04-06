@@ -105,8 +105,8 @@ function tabviewRender($input, $params, $parser ) {
 
 	// lazy load JS
 	$out .= F::build('JSSnippets')->addToStack(
-		array('/extensions/wikia/TabView/js/TabView.js'),
-		array('$.loadJQueryUI'),
+		array( '/extensions/wikia/TabView/js/TabView.js' ),
+		array( '$.loadJQueryUI' ),
 		'TabView.init',
 		array(
 			'id' => 'flytabs_'.$id,

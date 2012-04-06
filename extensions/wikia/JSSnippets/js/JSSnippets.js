@@ -148,7 +148,7 @@ var JSSnippets = (function(){
 					var msg = 'Skipping running callback, cause: ' + e;
 
 					//mobile skin doesn't have jQuery + extensions and can rely on console
-					if(console){
+					if(window.console){
 						console.warn(msg);
 					}else{
 						$().log(msg);

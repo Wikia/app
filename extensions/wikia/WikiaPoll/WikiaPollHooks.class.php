@@ -80,7 +80,7 @@ class WikiaPollHooks {
 				$css = '<link rel="stylesheet" type="text/css" href="' . htmlspecialchars($sassUrl) . ' " />';
 
 				$jsFile = F::build('JSSnippets')->addToStack(
-					array('/extensions/wikia/WikiaPoll/js/WikiaPoll.js'),
+					array( '/extensions/wikia/WikiaPoll/js/WikiaPoll.js' ),
 					array(),
 					'WikiaPoll.init'
 				);

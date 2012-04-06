@@ -23,7 +23,7 @@ class JSSnippetsTest extends WikiaBaseTest {
 			$snippet);
 
 		$snippet = $instance->addToStack(
-			array('/extensions/wikia/Feature/js/Feature.js'),
+			array( '/extensions/wikia/Feature/js/Feature.js' ),
 			array('$.loadJQueryUI'),
 			'Feature.init',
 			array(
