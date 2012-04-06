@@ -12,13 +12,6 @@ if( !defined( 'MEDIAWIKI' ) )
 global $wgHtml5;
 $wgHtml5 = true;
 
-/**
- * Set filters for JSSnippets
- * Has to be that early as it has to be set
- * before ANY JSSnippet addToStack is called
- */
-F::build("JSSnippets")->setFilters("wikiamobile");
-
 class SkinWikiaMobile extends WikiaSkin {
 	function __construct() {
 		parent::__construct( 'WikiaMobileTemplate', 'wikiamobile' );

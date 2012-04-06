@@ -1,10 +1,9 @@
 <div id="<?= $mapId ?>" class="places-map" style="width:100%; height:<?= $height; ?>px"></div>
 <?
+	$am = F::build( 'AssetsManager', array(), 'getInstance' );
+
 	echo F::build('JSSnippets')->addToStack(
-		array(
-			'/extensions/wikia/Places/css/Places.css',
-			'/extensions/wikia/Places/js/Places.js',
-		),
+		array_merge( $am->getURL( 'places_css' ), $am->getURL( 'places_js' ) ),
 		array('$.loadGoogleMaps'),
 		'Places.renderMap',
 		array_merge(array(

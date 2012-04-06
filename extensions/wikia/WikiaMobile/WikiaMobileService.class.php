@@ -74,7 +74,7 @@ class WikiaMobileService extends WikiaService {
 		//force main SCSS as first to make overriding it possible
 		foreach ( $assetsManager->getURL( $scssPackages ) as $s ) {
 			//packages/assets are enqueued via an hook, let's make sure we should actually let them through
-			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin->getSkinName(), $skin->isStrict() ) ) {
+			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin ) ) {
 				//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
 				$cssLinks .= "<link rel=stylesheet href=\"" . $s . "\"/>";
 			}
@@ -96,7 +96,7 @@ class WikiaMobileService extends WikiaService {
 
 		foreach ( $assetsManager->getURL( $jsBodyPackages ) as $s ) {
 			//packages/assets are enqueued via an hook, let's make sure we should actually let them through
-			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin->getSkinName(), $skin->isStrict() ) ) {
+			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin ) ) {
 				//HTML5 standard, no type attribute required == smaller output
 				$jsBodyFiles .= "<script src=\"{$s}\"></script>";
 			}

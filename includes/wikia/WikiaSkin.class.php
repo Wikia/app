@@ -91,7 +91,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function getScripts(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$skinName = $this->getSkinName();
 		$scriptTags = $this->wg->out->getScriptsOnly() . $this->wg->out->getHeadItems();
 		$am = F::build( 'AssetsManager', array(), 'getInstance' );
 		$matches = array();
@@ -107,7 +106,7 @@ abstract class WikiaSkin extends SkinTemplate {
 				//find the src if set
 				preg_match( '/<script[^>]+src=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $srcMatch );
 
-				if ( !empty( $srcMatch[1] ) && $am->checkAssetUrlForSkin( $srcMatch[1], $skinName, $this->strictAssetUrlCheck ) ) {
+				if ( !empty( $srcMatch[1] ) && $am->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
 					//fix HTML::inlineScript's expansion of ampersands in the src attribute
 					$res[] = array( 'url' => str_replace( '&amp;', '&', $srcMatch[1] ), 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $srcMatch[1] ) && !$this->strictAssetUrlCheck ) {
@@ -130,7 +129,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	public function getStyles(){
 		$this->wf->profileIn( __METHOD__ );
 
-		$skinName = $this->getSkinName();
 		//there are a number of extension that use addScript to append link tags for stylesheets, need to include those too
 		$stylesTags = $this->wg->out->buildCssLinks(). $this->wg->out->getHeadItems() . $this->wg->out->getScriptsOnly();
 		$am = F::build( 'AssetsManager', array(), 'getInstance' );
@@ -147,7 +145,7 @@ abstract class WikiaSkin extends SkinTemplate {
 				//find the src if set
 				preg_match( '/<link[^>]+href=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $hrefMatch );
 
-				if ( !empty( $hrefMatch[1] ) && $am->checkAssetUrlForSkin( $hrefMatch[1], $skinName, $this->strictAssetUrlCheck ) ) {
+				if ( !empty( $hrefMatch[1] ) && $am->checkAssetUrlForSkin( $hrefMatch[1], $this ) ) {
 					//fix HTML::element's expansion of ampersands in the src attribute
 					$res[] = array( 'url' => str_replace( '&amp;', '&', $hrefMatch[1] ), 'tag' => str_replace( '&amp;', '&', $m ) );
 				} elseif ( empty( $hrefMatch[1] ) && !$this->strictAssetUrlCheck ) {

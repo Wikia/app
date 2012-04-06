@@ -131,11 +131,10 @@ class PlacesParserHookHandler {
 	 * Get JavaScript code snippet to be loaded
 	 */
 	static public function getJSSnippet(Array $options = array()) {
+		$am = F::build( 'AssetsManager', array(), 'getInstance' );
+
 		$html = F::build('JSSnippets')->addToStack(
-			array(
-				'/extensions/wikia/Places/css/Places.css',
-				'/extensions/wikia/Places/js/Places.js',
-			),
+			array_merge( $am->getURL( 'places_css' ), $am->getURL( 'places_js' ) ),
 			array(),
 			'Places.init',
 			$options,

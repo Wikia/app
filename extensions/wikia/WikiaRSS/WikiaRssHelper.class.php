@@ -42,8 +42,7 @@ class WikiaRssHelper {
 			),
 			array(),
 			'WikiaRss.init',
-			$options,
-			null
+			$options
 		);
 
 		return $html;
