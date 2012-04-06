@@ -1,5 +1,5 @@
 (function($, window, undefined) {
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable);
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	// Rich Text Editor
 	// See also: RTE.preferences.js
@@ -139,7 +139,8 @@
 
 			(function load() {
 				$.get(RTE.contentsCss[index], function(css) {
-					contentsCss += css, index++;
+					contentsCss += css;
+					index++;
 
 					if (index < length) {
 						load();
@@ -153,7 +154,7 @@
 							$.storage.set(RTE.localStorageKey, {
 								styleVersion: wgStyleVersion,
 								contentsCss: contentsCss
-							})
+							});
 						} catch (e) {
 							$.storage.flush();
 							RTE.log('Local Storage Exception:' + e.message);
