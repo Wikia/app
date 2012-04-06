@@ -431,10 +431,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 /* footer */
 .wikiahomepage-footer {
 	@include clearfix;
+	border-bottom: 4px solid #ccc;
 	border-top: 4px solid $color-wikiahome-border-primary-brand-color;
 	clear: both;
-	margin: 30px 10px 0;
-	padding-top: 30px;
+	margin: 30px 10px 0 10px;
+	padding: 30px 0 95px 0;
 	h3 {
 		font-size: 12px;
 		font-weight: bold;
@@ -445,11 +446,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	}
 	ul {
 		li {
-			margin-top: 5px;
+			margin-top: 3px;
 			font-size: 12px;
 			line-height: 19px;
 			a {
-				color: $color-text;
+				color: $color-links;
 			}
 		}
 	}
