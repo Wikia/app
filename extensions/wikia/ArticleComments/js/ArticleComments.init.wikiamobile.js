@@ -9,7 +9,6 @@
 	/** @private **/
 
 	var wkArtCom = document.getElementById('wkArtCom'),
-		wrapper = $(wkArtCom),
 		loadMore = document.getElementById('commMore'),
 		loadPrev = document.getElementById('commPrev'),
 		totalPages = ~~wkArtCom.getAttribute('data-pages'), //double-tilde is a faster alternative to Math.floor()
@@ -69,6 +68,7 @@
 
 	function post(ev) {
 		ev.preventDefault();
+		ev.stopPropagation();
 		if(!loginRequired(ev)){
 
 			var form = this,
@@ -160,8 +160,8 @@
 	}
 
 	function loginRequired(ev){
-
 		if(window.wgDisableAnonymousEditing && UserLogin.isForceLogIn()){
+			ev.stopPropagation();
 			WikiaMobile.toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
 
 			var elm = (ev.currentTarget.nodeName == 'FORM') ? ev.currentTarget : ev.currentTarget.parentElement,
@@ -198,17 +198,16 @@
 	}
 
 	if(totalPages > 1 && wgArticleId){
-		loadMore.addEventListener(clickEvent, clickHandler);
-		loadPrev.addEventListener(clickEvent, clickHandler);
+		loadMore.addEventListener(clickEvent, clickHandler, true);
+		loadPrev.addEventListener(clickEvent, clickHandler, true);
 	}
 
-	wrapper.on(clickEvent, '.viewAll', function(){
+	$(wkArtCom).on(clickEvent, '.viewAll', function(){
 		openModal(this);
 		window.scroll(0,0);
 		track('comment/modal/open');
 	})
 	.on(clickEvent, '.cmnRpl', function(ev){
-		ev.stopPropagation();
 		if(!loginRequired(ev)){
 			openModal(this, true);
 			track('comment/modal/open/reply');
