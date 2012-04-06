@@ -49,6 +49,11 @@ class VideoFileUploader {
 
 	public function upload( &$oTitle ){
 
+		if( !$this->getApiWrapper() ) {
+			/* can't upload without proper ApiWrapper */
+			return;
+		}
+
 		/* prepare temporary file */
 		$data = array(
 			'wpUpload' => 1,
@@ -125,13 +130,15 @@ class VideoFileUploader {
 			if ( !empty( $this->oApiWrapper ) ) return $this->oApiWrapper;
 		}
 
-		$this->oApiWrapper = F::build(
-			ucfirst( $this->sProvider ) . 'ApiWrapper',
-			array(
-				$this->sVideoId,
-				$this->aOverrideMetadata
-			)
-		);
+		if ( !empty($this->sProvider ) ) {
+			$this->oApiWrapper = F::build(
+				ucfirst( $this->sProvider ) . 'ApiWrapper',
+				array(
+					$this->sVideoId,
+					$this->aOverrideMetadata
+				)
+			);
+		}
 
 		return $this->oApiWrapper;
 	}

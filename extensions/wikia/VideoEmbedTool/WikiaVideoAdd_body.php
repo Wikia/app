@@ -100,7 +100,11 @@ class WikiaVideoAddForm extends SpecialPage {
 				}
 
 				if ( WikiaVideoService::useVideoHandlersExtForEmbed() ){
-					VideoFileUploader::URLtoTitle( $this->mUrl, $this->mName );
+					$res = VideoFileUploader::URLtoTitle( $this->mUrl, $this->mName );
+					if( !$res ) {
+						$wgOut->addHTML( wfMsg( 'wva-failure' ) );
+						return;
+					}
 				}
 
 				if ( WikiaVideoService::useWikiaVideoExtForEmbed() ) {
