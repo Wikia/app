@@ -76,7 +76,7 @@ class WidgetFramework {
 		}
 
 		if (!empty($assets)) {
-			$jsOut = F::build('JSSnippets')->addToStack($assets);
+			$jsOut = F::build('JSSnippets')->addToStack( $assets );
 		}
 		else {
 			$jsOut = '';

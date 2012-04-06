@@ -1,10 +1,13 @@
 <?php
 
 class JSSnippets extends WikiaObject{
+	const resourceRegex = '/\.(css|scss|js)$/i';
+	const urlRegex = '/^http[s]?:\/\//i';
+	const cbRegex = '/\?cb=[0-9]+$/i';
 	/**
 	 * @brief Returns inline JS snippet
 	 *
-	 * @param array $dependencies list of JS/CSS/SASS files to be loaded (using $.getResources)
+	 * @param array $dependencies list of JS/CSS/SASS files or AssetsManager packages names to be loaded (using $.getResources)
 	 * @param array $loaders list of required JS loader functions ($.loadYUI, $.loadJQueryUI, ...)
 	 * @param string $callback name of the JS function to be called when dependencies will be loaded
 	 * @param array $options set of options to be passed to JS callback
@@ -12,6 +15,7 @@ class JSSnippets extends WikiaObject{
 	 *
 	 * @description
 	 * F::build('JSSnippets')->addToStack(array(
+	 *	'my_ext_js_package',
 	 *  '/extensions/wikia/Feature/js/Feature.js',
 	 *  '/extensions/wikia/Feature/css/Feature.css',
 	 *  '/skins/common/jquery/jquery.foo.js'
@@ -28,6 +32,7 @@ class JSSnippets extends WikiaObject{
 		$js = "";
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$skin = $this->wg->user->getSkin();
+		$isWikiaSkin = ( $skin instanceof WikiaSkin );
 
 		$entry = array(
 			'dependencies' => array(),
@@ -37,13 +42,23 @@ class JSSnippets extends WikiaObject{
 
 		// add static files
 		foreach ( $dependencies as $dependency ) {
-			if ( !( $skin instanceof WikiaSkin ) || $assetsManager->checkAssetUrlForSkin( $dependency, $skin ) ) {
+			$isURL = ( preg_match( self::urlRegex, $dependency ) > 0 || preg_match( self::cbRegex, $dependency ) > 0);
+			$isResource = ( !$isURL && ( preg_match( self::resourceRegex, $dependency ) > 0 ) );//run after url check since is a subset
+
+			if ( !( $isURL || $isResource ) ) {
+				//an AssetsManager package name
+				foreach( $assetsManager->getURL( $dependency ) as $dep ) {
+					if ( !$isWikiaSkin || $assetsManager->checkAssetUrlForSkin( $dep, $skin ) ) {
+						$entry['dependencies'][] = Xml::encodeJsVar($dep);
+					}
+				}
+			} elseif ( !$isWikiaSkin || $assetsManager->checkAssetUrlForSkin( $dependency, $skin ) ) {
 				$entry['dependencies'][] = Xml::encodeJsVar($dependency);
 			}
 		}
 
 		// add libraries loaders / dependency functions
-		if (!empty($loaders)) {
+		if ( !empty($loaders) ) {
 			$entry['loaders'] = ',getLoaders:function(){return [' . implode(',', $loaders) . ']}';
 		}
 
