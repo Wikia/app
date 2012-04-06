@@ -64,9 +64,15 @@ var JSSnippets = {
 
 						// paths rewrite for CSS and JS files
 						default:
-							dependency = dependency.
-								replace(/^\/extensions/, wgExtensionsPath).
-								replace(/^\/skins/, stylepath);
+							// use AssetsManager to get minified CSS and JS files (when relative path is provided)
+							// for instance: /extensions/wikia/FooFeature/js/Foo.js
+							if (/^\//.test(dependency)) {
+								dependency = wgAssetsManagerQuery.
+									replace('%1$s', 'one').
+									replace('%2$s', dependency.replace(/^\//, '')). // remove first slash
+									replace('%3$s', '-').
+									replace('%4$d', wgStyleVersion);
+							}
 					}
 				}
 
