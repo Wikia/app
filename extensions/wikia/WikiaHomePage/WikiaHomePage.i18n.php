@@ -74,7 +74,7 @@ $messages['en'] = array(
 *[http://www.wikia.com/Careers Careers]
 *[http://www.wikia.com/Press Press]',
 	'wikiahome-footer-get-started-heading' => '===Get Started===',
-	'wikiahome-footer-get-started-creative' => 'Find your community, start something epic.',
+	'wikiahome-footer-get-started-creative' => 'Find your community,<br />start something epic.',
 	'wikiahome-footer-follow-us' => '===Follow Us===
 *[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog Wikia Blog]
 *[http://www.facebook.com/Wikia Facebook]
