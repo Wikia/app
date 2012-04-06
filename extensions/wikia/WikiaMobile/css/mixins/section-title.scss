@@ -10,7 +10,7 @@
 	position: relative;
 
 	.chev {
-		/*border: 1px solid mix($border-color, $page-background-color, 30%);*/
+		display: none;/* hidden by default, will be revealed via JS */
 		width: 22px;
 		height: 22px;
 		background-position: center;

@@ -145,13 +145,9 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if (wfReadOnly()) {
-			$result['error'] = 1;
-			$result['msg'] = wfMsg('readonlytext');
-		} elseif (!$wgUser->isAllowed('edit')) {
-			$result['error'] = 2;
-			$result['msg'] = wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl('returnto=' . $title->getPrefixedUrl()));
-		} else {
+		$canComment = ArticleCommentInit::userCanComment( $result, $title );
+
+		if ( $canComment == true ) {
 			$articleId = $wgRequest->getVal( 'article', false );
 
 			$vars = array (
@@ -249,6 +245,11 @@ class ArticleCommentsAjax {
 		$articleId = $wgRequest->getVal('article', false);
 		$error = 0;
 		$text = $pagination = '';
+		$method = 'CommentList';
+
+		if(Wikia::isWikiaMobile()){
+			$method = 'WikiaMobile' . $method;
+		}
 
 		$title = Title::newFromID($articleId);
 		if ( !$title ) {
@@ -257,7 +258,7 @@ class ArticleCommentsAjax {
 			wfLoadExtensionMessages('ArticleComments');
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
-			$text = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
+			$text = wfRenderPartial('ArticleComments', $method, array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
 			$pagination = $listing->doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title);
 		}
 

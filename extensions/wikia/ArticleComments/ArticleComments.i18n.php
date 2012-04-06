@@ -38,6 +38,13 @@ $messages = array();$messages['en'] = array(
 	'wikiamobile-article-comments-more' => 'Load more',
 	'wikiamobile-article-comments-prev' => 'Load previous',
 	'wikiamobile-article-comments-none' => 'No comments',
+	'wikiamobile-article-comments-view' => 'View replies',
+	'wikiamobile-article-comments-replies' => 'replies',
+	'wikiamobile-article-comments-post-reply' => 'Post a reply',
+	'wikiamobile-article-comments-post' => 'Post',
+	'wikiamobile-article-comments-placeholder' => 'Post a comment',
+	'wikiamobile-article-comments-show' => 'Show',
+	'wikiamobile-article-comments-login-post' => 'Please log in to post a comment.',
 	
 	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
@@ -72,6 +79,9 @@ Wikia
 $messages['qqq'] = array(
 	'wikiamobile-article-comments-header' => "The header of the Comments section shown in Wikia's mobile skin. Parameters:
 * $1 is the number of the comments.",
+	'wikiamobile-article-comments-view' => 'Message to open all replies to a comment. Parameters: $1 is the number of comments.',
+	'wikiamobile-article-comments-replies' => 'Messege in Top Bar in a modal with all replies to comment',
+	'wikiamobile-article-comments-show' => 'Label for the link that will reveal the list of comments, keep it as short as possible'
 );
 
 /** толышә зывон (толышә зывон)

@@ -6,8 +6,17 @@ h1, h2, h3{
 	margin: $section-title-margin;
 }
 
-.js .artSec {
-	display: none;
+.js{
+	.artSec {
+		display: none;
+	}
+
+	/* reveal section chevrons when JS is enabled */
+	.collSec{
+		.chev{
+			display: inline;
+		}
+	}
 }
 
 .collSec {
@@ -16,7 +25,7 @@ h1, h2, h3{
 
 body {
 	//TODO: css alias
-	&>.colSec &>.artSec {
+	&>.collSec &>.artSec {
 		margin-left: $page-padding;
 		margin-right: $page-padding;
 	}

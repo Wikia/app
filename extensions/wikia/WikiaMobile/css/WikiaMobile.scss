@@ -113,7 +113,7 @@ blockquote {
 }
 
 .wkMblLdr {
-	width:100%;
+	width: 100%;
 	height: 100%;
 
 	&.center {
@@ -127,13 +127,17 @@ blockquote {
 			margin-right: -0.25em;
 		}
 
-		img {
-			display: inline-block;
+		span {
 			vertical-align: middle;
 		}
 	}
 
-	img {
+	span {
+	    display: inline-block;
+	    height: 50px;
+	 	width: 50px;
+	    background-image: url('/extensions/wikia/WikiaMobile/images/loader50x50.png'); /* base64 */
+		background-size: contain;
 		-webkit-animation: rotate $loaderSpeed infinite linear;
 		-moz-animation: rotate $loaderSpeed infinite linear;
 	}
@@ -293,4 +297,33 @@ blockquote {
 //small overhead on for a page load but sliders don't flicker that much with it
 .wikiaPhotoGallery-slider-body{
 	display: none;
+}
+
+//article comments header
+#wkArtCom{
+    margin: 10px 0;
+
+	.collSec{
+		@include section-title-related;
+	}
+}
+.js{
+   	#wkComm {
+   		display: none;
+
+   		&.open{
+   			display: block;
+   		}
+    }
+
+	#wkShowCom{
+ 		display: none;
+ 	}
+}
+
+#wkShowCom{
+	text-transform: none;
+	font-size: small;
+	display: blaock;
+	float: right;
 }

@@ -1,6 +1,9 @@
 <?php
 
 class ArticleCommentInit {
+	const ERROR_READONLY = 1;
+	const ERROR_USER_CANNOT_EDIT = 2;
+
 	public static $enable = null;
 
 	static public function ArticleCommentCheck( $title=null ) {
@@ -328,12 +331,43 @@ class ArticleCommentInit {
 		return true;
 	}
 
+	/**
+	 * Checks if a user can comment, producing an error code and a related message
+	 *
+	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+	 *
+	 * @param array $info [Optional] If passed this will be filled in with an error code and related message in case of negative result
+	 * @param Title $title [Optional] Title to use to create login counter redirect
+	 * @param User $user [Optional] The user to check, if not passed it will use the global user
+	 *
+	 * @return bool
+	 */
+	static public function userCanComment( Array &$info = array(), Title $title = null, User $user = null ) {
+		$ret = true;
+
+		if ( !( $user instanceof User ) ) {
+			global $wgUser;
+			$user = $wgUser;
+		}
+
+		if (wfReadOnly()) {
+			$info['error'] = self::ERROR_READONLY;
+			$info['msg'] = wfMsg('readonlytext');
+			$ret = false;
+		} elseif ( !$user->isAllowed( 'edit' ) ) {
+			$info['error'] = self::ERROR_USER_CANNOT_EDIT;
+			$info['msg'] = wfMsg( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl( ( $title instanceof Title ) ? 'returnto=' . $title->getPrefixedUrl() : null ) );
+			$ret = false;
+		}
+
+		return $ret;
+	}
+
 	//when comments are enabled on the current namespace make the WikiaMobile skin enriched assets
 	//while keeping the response size (assets minification) and the number of external requests low (aggregation)
 	static public function onWikiaMobileAssetsPackages( Array &$jsPackages, Array &$scssPackages ){
 		if ( self::ArticleCommentCheck() ) {
 			$jsPackages[] = 'articlecomments_js_wikiamobile';
-			$scssPackages[] = 'articlecomments_scss_wikiamobile';
 		}
 
 		return true;

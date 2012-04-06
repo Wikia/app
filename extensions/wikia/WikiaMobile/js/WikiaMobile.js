@@ -26,9 +26,11 @@ var WikiaMobile = (function() {
 
 		querystring = function(url){
 			var srh = '',
+				location = window.location,
 				cache = {},
 				link = '',
-				tmp;
+				tmp,
+				hash = location.hash;
 
 			if(url) {
 				tmp = url.split('?');
@@ -36,7 +38,8 @@ var WikiaMobile = (function() {
 				link = tmp[0];
 				srh = tmp[1];
 			}else{
-				srh = window.location.search.substr(1);
+				link = location.href;
+				srh = location.search.substr(1);
 			}
 
 			if(srh){
@@ -55,7 +58,7 @@ var WikiaMobile = (function() {
 					for(attr in cache){
 						ret += attr + '=' + cache[attr] + '&';
 					}
-					return ret.slice(0, -1);
+					return ret.slice(0, -1) + hash;
 				},
 
 				getVal: function(name, defVal){
@@ -66,8 +69,16 @@ var WikiaMobile = (function() {
 					cache[name] = val;
 				},
 
+				getHash: function(){
+					return hash;
+				},
+
+				setHash: function(h){
+					hash = h;
+				},
+
 				goTo: function(){
-					window.location.search = this.toString();
+					window.location.href = this.toString();
 				}
 			};
 		},
@@ -79,8 +90,8 @@ var WikiaMobile = (function() {
 				if(ldr) {
 					ldr.style.display = 'block';
 				} else {
-					elm.insertAdjacentHTML('beforeend', '<div class="wkMblLdr' + (options.center?' center':'') +'"><img ' +
-								   (options.size?'style="width:' + options.size + '"':'') + ' src=../extensions/wikia/WikiaMobile/images/loader50x50.png></img></div>');
+					elm.insertAdjacentHTML('beforeend', '<div class="wkMblLdr' + (options.center?' center':'') +'"><span ' +
+								   (options.size?'style="width:' + options.size + ';height:'+options.size+'"':'') + '></span></div>');
 				}
 			},
 
@@ -323,6 +334,7 @@ var WikiaMobile = (function() {
 
 			if(!shrData){
 				shrData = cache.get(cacheKey);
+				Wikia.processStyle(cache.get(cacheKey+'style'));
 				shrPageTxt = $.msg('wikiamobile-sharing-page-text', wgTitle, wgSitename);
 				shrMailPageTxt = encodeURIComponent($.msg('wikiamobile-sharing-email-text', shrPageTxt));
 				shrImgTxt = $.msg('wikiamobile-sharing-modal-text', $.msg('wikiamobile-sharing-media-image'), wgTitle, wgSitename);
@@ -332,18 +344,21 @@ var WikiaMobile = (function() {
 			if(shrData){
 				handle(shrData);
 			}else{
-				$.nirvana.sendRequest({
-					controller: 'WikiaMobileController',
-					method: 'getShareButtons',
-					format: 'html',
-					type: 'GET',
-					data: {
-						'cb': wgStyleVersion
-					},
-					callback: function(result){
-						cache.set(cacheKey, result, 604800/*7 days*/);
-						shrData = result;
-						handle(shrData);
+				Wikia.getMultiTypePackage({
+					templates: [{
+						controllerName: 'WikiaMobileSharingService',
+						methodName: 'index'
+					}],
+					styles: '//extensions/wikia/WikiaMobile/css/sharing.scss',
+					callback: function(res){
+						var html = res.templates[0],
+							style = res.styles;
+
+						Wikia.processStyle(style);
+						cache.set(cacheKey, html, 604800/*7 days*/);
+						cache.set(cacheKey+'style', style, 604800);
+						shrData = html;
+						handle(html);
 					}
 				});
 			}
@@ -352,37 +367,34 @@ var WikiaMobile = (function() {
 
 	function openLogin(){
 		if(wkPrf.className.indexOf('loaded') > -1){
-			navBar.style.minHeight = (WikiaMobile.wkLgn.offsetHeight + 70) + 'px';
+			navBar.style.minHeight = (wkLgn.offsetHeight + 70) + 'px';
 		}else{
 			loader.show(wkPrf, {center: true});
-			$.nirvana.sendRequest({
-				controller: 'WikiaMobileController',
-				method: 'getLoginPage',
-				format: 'html',
-				type: 'GET',
-				data: {
-					cb: window.wgStyleVersion,
-					useskin: 'wikiamobile'
-				},
-				callback: function(result){
-					wkPrf.insertAdjacentHTML('beforeend', result);
-					wkPrf.executeScripts();
-					$.getResources(
-						[$.getSassCommonURL('extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss'),
-							wgExtensionsPath + '/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'],
-						function(){
-							loader.remove(wkPrf);
-							WikiaMobile.wkLgn = document.getElementById('wkLgn');
-							navBar.style.minHeight = (WikiaMobile.wkLgn.offsetHeight + 70) + 'px';
-							WikiaMobile.wkLgn.style.opacity = 1;
-							wkPrf.className += 'loaded';
-							var form = WikiaMobile.wkLgn.getElementsByTagName('form')[0],
-								query = WikiaMobile.querystring( form.getAttribute('action') );
 
-							query.setVal('returnto', ((window.wgPageName == 'Special:UserLogout' || window.wgPageName == 'Special:UserLogin') ? window.wgMainPageTitle : window.wgPageName));
-							form.setAttribute('action', query.toString());
-						}
-					);
+			Wikia.getMultiTypePackage({
+				templates: [{
+					controllerName: 'UserLoginSpecialController',
+					methodName: 'index'
+				}],
+				styles: '//extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
+				scripts: 'wikiamobile_facebook',
+				callback: function(res){
+					loader.remove(wkPrf);
+
+					Wikia.processStyle(res.styles);
+					wkPrf.insertAdjacentHTML('beforeend', res.templates[0]);
+					Wikia.processScript(res.scripts);
+
+					wkLgn = document.getElementById('wkLgn');
+					navBar.style.minHeight = (wkLgn.offsetHeight + 70) + 'px';
+					wkLgn.style.opacity = 1;
+					wkPrf.className += 'loaded';
+
+					var form = wkLgn.getElementsByTagName('form')[0],
+						query = querystring( form.getAttribute('action') );
+
+					query.setVal('returnto', ((window.wgPageName == 'Special:UserLogout' || window.wgPageName == 'Special:UserLogin') ? window.wgMainPageTitle : window.wgPageName));
+					form.setAttribute('action', query.toString());
 				}
 			});
 		}
@@ -390,6 +402,9 @@ var WikiaMobile = (function() {
 	}
 
 	function openProfile(){
+		require('modal', function(modal){
+			modal.close();
+		});
 		closeNav();
 		hidePage();
 		navBar.className = 'prf';
@@ -633,8 +648,12 @@ var WikiaMobile = (function() {
 				self.toggleClass('open').next().toggleClass('open');
 			})
 			.delegate('.goBck', clickEvent, function(){
-				var top = $(this).parent().removeClass('open').prev().removeClass('open').offset().top;
-				window.scrollTo(0, top);
+				var parent = this.parentElement,
+					prev = parent.previousElementSibling;
+
+				parent.className = parent.className.replace(' open', '');
+				prev.className = prev.className.replace(' open' , '');
+				prev.scrollIntoView();
 			})
 			.delegate('#wkMainCnt a', clickEvent, function(){
 				track('link/content');
@@ -715,7 +734,7 @@ var WikiaMobile = (function() {
 			}
 
 			if(wkPrfTgl){
-				d.getElementById('wkPrfTgl').addEventListener(clickEvent, function(event){
+				wkPrfTgl.addEventListener(clickEvent, function(event){
 					event.preventDefault();
 					if(navBar.className.indexOf('prf') > -1){
 						closePullDown();
@@ -800,30 +819,33 @@ var WikiaMobile = (function() {
 				event.preventDefault();
 				track('link/fullsite');
 				Wikia.CookieCutter.set('mobilefullsite', 'true');
-				location.reload();
+				var url = querystring();
+				url.setVal('cb', wgStyleVersion);
+				url.goTo();
 			});
 
 			//category pages
 			if(wgCanonicalNamespace == 'Category'){
 				$('.pagMore, .pagLess').bind(clickEvent, function(event) {
 					event.preventDefault();
-					var self = $(this),
-						forward = self.hasClass('pagMore'),
-						parent = self.parent(),
-						prev = (forward) ? parent.children('.pagLess') : self,
-						prevBatch = ~~(prev.attr('data-batch')),
-						next = (forward) ? self : parent.children('.pagMore'),
+					var self = this,
+						forward = (self.className.indexOf('pagMore') > -1),
+						parent = self.parentElement,
+						prev = (forward) ? parent.getElementsByClassName('pagLess')[0] : self,
+						prevBatch = ~~(prev.getAttribute('data-batch')),
+						next = (forward) ? self : parent.getElementsByClassName('pagMore')[0],
 						nextBatch = prevBatch + 2,
 						batch = (forward) ? nextBatch : prevBatch,
 						add = (forward ? 1 : -1),
-						id = parent.attr('id'),
-						container = parent.find('ul');
+						id = parent.id,
+						container = parent.getElementsByTagName('ul')[0];
 
-					prev.attr('data-batch', prevBatch + add);
-					next.attr('data-batch', nextBatch + add);
+					prev.setAttribute('data-batch', prevBatch + add);
+					next.setAttribute('data-batch', nextBatch + add);
 
-					self.toggleClass('active');
-					loader.show(this);
+					loader.show(self, {size: '40px'});
+
+					self.className += ' active';
 
 					$.nirvana.sendRequest({
 						controller: 'WikiaMobileController',
@@ -835,22 +857,21 @@ var WikiaMobile = (function() {
 							index: encodeURIComponent(id.substr(-1, 1))
 						},
 						callback: function(result){
-							container.remove();
-							next.before(result);
+							container.parentElement.removeChild(container);
+							next.insertAdjacentHTML('beforebegin', result);
 
 							if(forward) {
-								window.scrollTo(0, parent.prev().offset().top);
+								parent.previousElementSibling.scrollIntoView();
 								track('category/next');
 							}else{
 								track('category/prev');
 							}
 
-							self.toggleClass('active');
-							loader.hide(self[0]);
+							loader.hide(self);
 
-							(batch > 1) ? prev.addClass('visible') : prev.removeClass('visible');
+							prev.className = 'pagLess' + (batch > 1 ? ' visible' : '');
 
-							(batch < ~~(parent.attr('data-batches'))) ? next.addClass('visible') : next.removeClass('visible');
+							next.className = 'pagMore' + (batch < ~~(parent.getAttribute('data-batches')) ? ' visible' : '');
 						}
 					});
 				});
