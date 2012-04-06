@@ -68,13 +68,10 @@ CKEDITOR.plugins.add('rte-paste',
 						return false;
 					}
 				},
-
 				attributes: {
-					// remove style attributes added by WebKit browsers
+					// remove style attributes added by WebKit browsers (BugId:18789)
 					style: function(value, element) {
-						if (value.indexOf('border-top-width: 0px; border-right-width: 0px;') === 0) {
-							return false;
-						}
+						return false;
 					}
 				}
 			});
