@@ -31,7 +31,7 @@ class WikiaSearchResult {
 	}
 
 	public function setText($value) {
-		$this->text = $value;
+	        $this->text = $this->fixSnippeting($value);
 	}
 
 	public function getTitle() {
@@ -39,7 +39,7 @@ class WikiaSearchResult {
 	}
 
 	public function setTitle($value) {
-		$this->title = $value;
+	       $this->title = $this->fixSnippeting($value);
 	}
 
 	public function getUrl() {
@@ -91,6 +91,10 @@ class WikiaSearchResult {
 
 	public function getVars() {
 		return $this->vars;
+	}
+
+	private function fixSnippeting($val) {
+	        return preg_replace("/(<\/span>)('s)/i", '$2$1', $val);
 	}
 
 }

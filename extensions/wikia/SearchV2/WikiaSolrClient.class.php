@@ -105,7 +105,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 				      'pf'	=>	"'html^0.8 title^5'",
 				      'ps'	=>	'3',
 				      'tie'	=>	'0.01',
-				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'"
+				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'",
+				      'mm'      =>      '66%'
 				     );
 
 		if (!empty($boostFunctions)) {

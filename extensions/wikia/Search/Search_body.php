@@ -213,51 +213,21 @@ class SolrSearchSet extends SearchResultSet {
 		$sanitizedQuery = self::sanitizeQuery($query);
 
 		$ABTestMode = false;
-		//if( !empty( $wgWikiaSearchABTestEnabled ) ) {
-		//	$ABTestMode = self::getABTestMode( $wgWikiaSearchABTestModes );
-		//}
-
-		if(!$ABTestMode) {
-			$relevancyFunctionId = 5;
-			$params = array(
-				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,pageid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
-				'qf' => $queryFields,
-				'hl' => 'true',
-				'hl.fl' => 'html,title', // highlight field
-				'hl.snippets' => '2', // number of snippets per field
-				'hl.fragsize' => '150', // snippet size in characters
-				'hl.simple.pre' => '<span class="searchmatch">',
-				'hl.simple.post' => '</span>',
-				'f.html.hl.alternateField' => 'html',
-				'f.html.hl.maxAlternateFieldLength' => 300,
-				'indent' => 1,
-				'timeAllowed' => 5000
-			);
-		}
-		else {
-			switch($ABTestMode) {
-				case 'AB_VANILLA':
-					$relevancyFunctionId = 4;
-					$params = array(
-						'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,pageid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
-						'qf' => $queryFields,
-						'hl' => 'true',
-						'hl.fl' => 'html,title', // highlight field
-						'hl.snippets' => '2', // number of snippets per field
-						'hl.fragsize' => '150', // snippet size in characters
-						'hl.simple.pre' => '<span class="searchmatch">',
-						'hl.simple.post' => '</span>',
-						'f.html.hl.alternateField' => 'html',
-						'f.html.hl.maxAlternateFieldLength' => 300,
-						'indent' => 1,
-						'timeAllowed' => 5000
-					);
-					break;
-				default:
-					// error !?
-					$relevancyFunctionId = 11;
-			}
-		}
+		$relevancyFunctionId = 5;
+		$params = array(
+			'fl' => '*,score', // fields we want to fetch back
+			'qf' => $queryFields,
+			'hl' => 'true',
+			'hl.fl' => 'html,title', // highlight field
+			'hl.snippets' => '2', // number of snippets per field
+			'hl.fragsize' => '150', // snippet size in characters
+			'hl.simple.pre' => '<span class="searchmatch">',
+			'hl.simple.post' => '</span>',
+			'f.html.hl.alternateField' => 'html',
+			'f.html.hl.maxAlternateFieldLength' => 300,
+			'indent' => 1,
+			'timeAllowed' => 5000
+		);
 
 		$queryClauses = array();
 
@@ -291,6 +261,7 @@ class SolrSearchSet extends SearchResultSet {
 				}
 
 				$queryClauses[] = "({$nsQuery})";
+
 
 			}
 
@@ -327,7 +298,8 @@ class SolrSearchSet extends SearchResultSet {
 			      	      'pf'	=>	"'html^0.8 title^5'",
 				      'ps'	=>	'3',
 				      'tie'	=>	'0.01',
-				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'"
+				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'",
+				      'mm'      =>      '66%'
 				     );
 
 		if (!empty($boostFunctions)) {
@@ -690,7 +662,7 @@ class SolrResult extends SearchResult {
 				$this->mHighlightText .= $snippet . '... ';
 			}
 		}
-		return strip_tags($this->mHighlightText, '<span>');
+		return preg_replace("/(<\/span>)('s)/i", '$2$1' , strip_tags($this->mHighlightText, '<span>'));
 	}
 
 	public function getWikiId() {
@@ -784,6 +756,10 @@ class SolrResult extends SearchResult {
 		else {
 			$data = '';
 		}
+
+		// snippeting ugliness
+		$link = preg_replace("/(<\/span>)('s)/", "$2$1", $link);
+
 		return true;
 	}
 
