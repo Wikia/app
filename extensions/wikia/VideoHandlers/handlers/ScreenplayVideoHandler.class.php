@@ -14,7 +14,7 @@ class ScreenplayVideoHandler extends VideoHandler {
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
 				
-		$file = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, $this->getAspectRatio() <= (4/3) ? ScreenplayApiWrapper::STANDARD_43_BITRATE_ID : ScreenplayApiWrapper::STANDARD_BITRATE_ID);
+		$file = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, $this->getStandardBitrateCode());
 		$hdfile = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, ScreenplayApiWrapper::HIGHDEF_BITRATE_ID);
 		
 		$thumbUrl = '';
@@ -39,6 +39,16 @@ class ScreenplayVideoHandler extends VideoHandler {
 		
 		$urlCommonPart = self::$urlTemplate . http_build_query($fileParams);
 		return $urlCommonPart . '&type=' . $type . '&bitrateid=' . $bitrateid;		
+	}
+	
+	protected function getStandardBitrateCode() {
+		if ($metadata = $this->getMetadata(true)) {
+			if (!empty($metadata['stdBitrateCode'])) {
+				return $metadata['stdBitrateCode'];
+			}
+		}
+		
+		return $this->getAspectRatio() <= (4/3) ? ScreenplayApiWrapper::STANDARD_43_BITRATE_ID : ScreenplayApiWrapper::STANDARD_BITRATE_ID;
 	}
 		
 }
