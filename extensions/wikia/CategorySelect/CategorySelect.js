@@ -25,15 +25,13 @@ function initCatSelect() {
 		return true;
 	}
 	initCatSelect.isint = true;
-
-	// TODO: remove
-	YAHOO.namespace('CategorySelect');
 }
 
 function positionSuggestBox() {
 	if(csType != 'module') {
-		$('#csSuggestContainer').css('top', ($('#csCategoryInput').get(0).offsetTop + $('#csCategoryInput').height() + 5) + 'px');
-		$('#csSuggestContainer').css('left', Math.min($('#csCategoryInput').get(0).offsetLeft, ($(window).width() - $('#csItemsContainer').get(0).offsetLeft - $('#csSuggestContainer').width() - 10)) + 'px');
+		$('#csSuggestContainer').
+			css('top', ($('#csCategoryInput').get(0).offsetTop + $('#csCategoryInput').height() + 5) + 'px').
+			css('left', Math.min($('#csCategoryInput').get(0).offsetLeft, ($(window).width() - $('#csItemsContainer').get(0).offsetLeft - $('#csSuggestContainer').width() - 10)) + 'px');
 	}
 }
 
@@ -612,27 +610,38 @@ function initHandlers() {
 
 //`view article` mode
 function showCSpanel() {
-	$.loadYUI(function() {
+	csTrack('addCategory');
+
+	$.when(
+		$.get(csAjaxUrl, {rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}, $.noop, 'html'),
+		$.loadJQueryUI(),
+		$.getResources([
+			$.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss')
+		])
+	).
+	then(function(ajaxResults) {
 		initCatSelect();
 		csType = 'view';
-		$.get(csAjaxUrl, {rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}, function(result) {
-			//prevent multiple instances when user click very fast
-			if ($('#csMainContainer').exists()) {
-				return;
-			}
 
-			var el = document.createElement('div');
-			el.innerHTML = result;
-			$('#catlinks').get(0).appendChild(el);
-			initHandlers();
-			initAutoComplete();
-			initializeDragAndDrop();
-			initializeCategories();
-			replaceAddToInput();
-			positionSuggestBox();
+		//prevent multiple instances when user click very fast
+		if ($('#csMainContainer').exists()) {
+			return;
+		}
 
-			$('#catlinks').removeClass('csLoading');
-		}, "html");
+		$('#catlinks').removeClass('csLoading');
+
+		var el = document.createElement('div');
+		el.innerHTML = ajaxResults[0];
+		$('#catlinks').get(0).appendChild(el);
+
+		initHandlers();
+		initAutoComplete();
+		initializeDragAndDrop();
+		initializeCategories();
+		replaceAddToInput();
+
+		// give browser some time before repositioning the tooltip
+		setTimeout(positionSuggestBox, 0);
 
 		$('#csAddCategorySwitch').hide();
 	});
