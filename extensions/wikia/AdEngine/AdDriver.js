@@ -399,8 +399,7 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 		case 'HUB_TOP_LEADERBOARD':
 		case 'TOP_LEADERBOARD':
 			$('#'+slotname).removeClass(AdDriver.classNameDefaultHeight);
-			// if jumbo/expanding leaderboard, eliminate white space
-			// above ad, and center ad
+			// if jumbo/expanding leaderboard, center ad
 			if (($('#'+slotname).height() >= 0 && $('#'+slotname).height() < AdDriver.standardLeaderboardMinHeight) // expandable leaderboard, minimized state
 			|| $('#'+slotname).height() > AdDriver.standardLeaderboardMaxHeight) { // jumbo leaderboard or expandable leaderboard, maximized state
 				$('#'+slotname).addClass('jumbo-leaderboard');

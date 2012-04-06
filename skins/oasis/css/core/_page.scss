@@ -31,34 +31,6 @@
 	}
 }
 
-.WikiaAdvertPage {
-	margin: 0px auto;
-	padding-bottom: 0px;
-	position: relative;
-	width: $width-outside;
-	z-index: 1;
-	>h1:first-child {
-		display: none;
-	}
-	.WikiaPageBackground {
-		@include opacity($page-opacity);
-		background: $color-page;
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
-
-	.WikiaPageContentWrapper {
-		position: relative;
-	}
-
-	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
-		padding: 10px 0 10px 0;
-	}
-}
-
 .WikiaMainContent {
 	float: left;
 	position: relative;
