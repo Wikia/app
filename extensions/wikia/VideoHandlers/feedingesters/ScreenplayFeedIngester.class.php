@@ -195,6 +195,16 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	}
 	
 	protected function generateMetadata(array $data, &$errorMsg) {
+		//error checking
+		if (empty($data['videoId'])) {
+			$errorMsg = 'no video id exists';
+			return 0;
+		}
+		if (empty($data['stdBitrateCode'])) {
+			$errorMsg = 'no supported bitrate code for video id ' . $data['videoId'];
+			return 0;
+		}		
+		
 		$metadata = array();
 		$doesHdExist = (int) !empty($data['hdMp4Url']);
 		$metadata = 
