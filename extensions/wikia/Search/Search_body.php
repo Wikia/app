@@ -812,7 +812,7 @@ class SolrResultTitle extends Title {
 	}
 
 	private function sanitizeUrl($url) {
-		$url = wfUrlEncodeExt( $url );
+		//$url = wfUrlEncodeExt( $url );
 
 		// RT #25474, #46891, #52759 ..damn you question marks!
 		$url = str_replace( '?', '%3F', $url );
