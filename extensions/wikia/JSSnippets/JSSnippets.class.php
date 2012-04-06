@@ -1,26 +1,6 @@
 <?php
 
-class JSSnippets {
-
-	private $app, $filters;
-	const FILTER_NONE = -1;
-
-	function __construct() {
-		$this->app = F::build('App');
-	}
-	
-	/**
-	* Set filter to filter JS snippets by given filter
-	* Needed for mobile skin development
-	* as we need to load changed extension resources
-	*/
-	public function setFilters( $filters ) {
-		if ( !is_array( $filters ) ) {
-			$filters = array( $filters );
-		}
-		if( $filters ) $this->filters = $filters;
-	}
-
+class JSSnippets extends WikiaObject{
 	/**
 	 * @brief Returns inline JS snippet
 	 *
@@ -43,70 +23,48 @@ class JSSnippets {
 	 *
 	 */
 	
-	public function addToStack($dependencies, $loaders = array(), $callback = null, $options = null, $filters = null) {
-		wfProfileIn(__METHOD__);
-		/**
-		 * setting empty output
-		 * in case of:
-		 * $filters and !$this->filters
-		 * !$filters and $this->filters
-		 */
+	public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
+		$this->wf->profileIn( __METHOD__ );
 		$js = "";
-		$generateJSSnippet = false;
-		$filterIsSet = !empty( $this->filters );
-		$stackFiltersSet = !empty( $filters );
+		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		$skin = $this->wg->user->getSkin();
 
-		if ( $stackFiltersSet && !is_array( $filters ) ) {
-			$filters = array( $filters );
-		}
+		$entry = array(
+			'dependencies' => array(),
+			'loaders' => '',
+			'callback' => '',
+		);
 
-		//check wether this stack should be added
-		//both are empty or filters set to output all stacks
-		if (
-			( !$filterIsSet || in_array( self::FILTER_NONE, $this->filters ) ) &&
-			( !$stackFiltersSet || in_array( self::FILTER_NONE, $filters ) )
-		) {
-			$generateJSSnippet = true;
-		} elseif ( $filterIsSet && $stackFiltersSet ) {
-			$intersection = array_intersect( $this->filters, $filters );
-
-			if ( !empty( $intersection ) ) {
-				$generateJSSnippet = true;
-			}
-		}
-
-		if ( $generateJSSnippet ) {
-			$entry = array(
-				'dependencies' => array(),
-				'loaders' => '',
-				'callback' => '',
-			);
-
-			// add static files
-			foreach($dependencies as $dependency) {
+		// add static files
+		foreach ( $dependencies as $dependency ) {
+			if ( !( $skin instanceof WikiaSkin ) || $assetsManager->checkAssetUrlForSkin( $dependency, $skin ) ) {
 				$entry['dependencies'][] = Xml::encodeJsVar($dependency);
 			}
-
-			// add libraries loaders / dependency functions
-			if (!empty($loaders)) {
-				$entry['loaders'] = ',getLoaders:function(){return [' . implode(',', $loaders) . ']}';
-			}
-
-			// add callback
-			if (!is_null($callback)) {
-				$optionsJSON = is_null($options) ? '' : (',options:' . Wikia::json_encode($options));
-				$entry['callback'] = ',callback:function(json){' . $callback .'(json)},id:' . Xml::encodeJsVar($callback) . $optionsJSON;
-			}
-
-			// generate JS snippet
-			$js = Html::inlineScript('JSSnippetsStack.push({'.
-				'dependencies:[' . implode(',', $entry['dependencies']) . ']' .
-				$entry['loaders'] .
-				$entry['callback'] .
-			'})');
 		}
 
-		wfProfileOut(__METHOD__);
+		// add libraries loaders / dependency functions
+		if (!empty($loaders)) {
+			$entry['loaders'] = ',getLoaders:function(){return [' . implode(',', $loaders) . ']}';
+		}
+
+		if ( empty( $entry['dependencies'] ) && empty( $entry['loaders'] ) ) {
+			return $js;
+		}
+
+		// add callback
+		if (!is_null($callback)) {
+			$optionsJSON = is_null($options) ? '' : (',options:' . Wikia::json_encode($options));
+			$entry['callback'] = ',callback:function(json){' . $callback .'(json)},id:' . Xml::encodeJsVar($callback) . $optionsJSON;
+		}
+
+		// generate JS snippet
+		$js = Html::inlineScript('JSSnippetsStack.push({'.
+			'dependencies:[' . implode(',', $entry['dependencies']) . ']' .
+			$entry['loaders'] .
+			$entry['callback'] .
+		'})');
+
+		$this->wf->profileOut( __METHOD__ );
 		return $js;
 	}
 

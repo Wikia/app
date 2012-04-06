@@ -220,7 +220,7 @@ $config['wikiamobile_js_body'] = array(
 		'//skins/common/wikia/cache.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.wikiamobile.js',
+		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//framework
 		'//skins/common/zepto/zepto.getcss.js',
@@ -583,5 +583,40 @@ $config['weinre_js'] = array(
 		'type' => AssetsManager::TYPE_JS,
 		'assets' => array(
 				'#function_AssetsConfig::getWeinreJS'
+		)
+);
+
+/** Places **/
+$config['places_js'] = array(
+		'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'wikiaphone' ),
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'//extensions/wikia/Places/js/Places.js'
+		)
+);
+
+$config['places_css'] = array(
+		'type' => AssetsManager::TYPE_CSS,
+		'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'wikiaphone' ),
+		'assets' => array(
+				'//extensions/wikia/Places/css/Places.css',
+		)
+);
+
+/** WikiaPhotoGallery **/
+
+$config['wikiaphotogallery_slider_js_wikiamobile'] = array(
+		'skin' => array( 'wikiamobile' ),
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+				'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.wikiamobile.js'
+		)
+);
+
+$config['wikiaphotogallery_slider_scss_wikiamobile'] = array(
+		'type' => AssetsManager::TYPE_SCSS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss'
 		)
 );

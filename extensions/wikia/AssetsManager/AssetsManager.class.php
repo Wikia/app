@@ -471,20 +471,20 @@ class AssetsManager {
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 * 
 	 * @param string $url the url to get the package config for
-	 * @param string $skin the skin name to check the package against
-	 * @param bool $strict true (default) means only packages explicitely registered for $skin are positive (i.e. also excluding those not associated to any skin),
-	 * false means all the packages which are not registered for a different skin are positive (i.e. also including those not associated to any skin)
+	 * @param WikiaSkin $skin the skin instance
 	 * 
 	 * @throws WikiaException
 	 * 
 	 * @return bool wether the package has been registered for the specified skin or not
 	 */
-	public function checkAssetUrlForSkin( $url, $skinName, $strict = true ) {
+	public function checkAssetUrlForSkin( $url, WikiaSkin $skin ) {
 		wfProfileIn( __METHOD__ );
 
 		//lazy loading of AssetsConfig
 		$this->loadConfig();
 		$group = null;
+		$skinName = $skin->getSkinName();
+		$strict = $skin->isStrict();
 		
 		if ( !empty( $this->mGeneratedUrls[$url] ) ) {
 			$group = $this->mGeneratedUrls[$url];
@@ -505,10 +505,10 @@ class AssetsManager {
 		}
 
 		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
-		$check = ( is_array( $registeredSkin ) ) ? in_array( $skinName, $registeredSkin ) : $skinName == $registeredSkin;
+		$check = ( is_array( $registeredSkin ) ) ? in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
 
 		//if not strict packages with no skin registered are positive
-		if ( $strict == false ) {
+		if ( $strict === false ) {
 			$check = $check || empty( $registeredSkin );
 		}
 

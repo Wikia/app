@@ -1380,16 +1380,14 @@ class WikiaPhotoGallery extends ImageGallery {
 				array($this->mData['id'])
 			);
 
+			$am = F::build( 'AssetsManager', array(), 'getInstance' );
+
 			//load WikiaMobile resources if needed usign JSSnippets filtering mechanism, see last parameter
 			$html .= F::build('JSSnippets')->addToStack(
-				array(
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss',
-					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.wikiamobile.js'
-				),
+				array_merge( $am->getURL( 'wikiaphotogallery_slider_js_wikiamobile' ), $am->getURL( 'wikiaphotogallery_slider_scss_wikiamobile' ) ),
 				array(),
 				'WikiaPhotoGallerySlider.init',
-				array($this->mData['id']),
-				"wikiamobile"
+				array($this->mData['id'])
 			);
 		}
 

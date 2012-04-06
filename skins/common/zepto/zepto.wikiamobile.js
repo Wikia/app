@@ -20,6 +20,36 @@
 
 	/* @public */
 
+	//console polyfill
+	if(!window.console){
+		function nil(){
+			void(0);
+		}
+
+		window.console = {error: nil, warn: nil, info: nil, log: nil};
+	}
+	
+	//process scripts injected via innerHTML which are not executed by default
+	//this would run once again also the ones that where not added to the element
+	//dynamically so use with care.
+	HTMLElement.prototype.executeScripts = function(){
+		var scripts = this.getElementsByTagName('script'),
+			x = 0,
+			y = scripts.length,
+			d = document,
+			h = d.head,
+			o,
+			s;
+
+		for(; x < y; x++){
+			o = scripts[x];
+			s = d.createElement('script');
+			s.innerText = o.innerText;
+			h.appendChild(s);
+			o.parentNode.removeChild(o);
+		}
+	}
+
 	$.getSassURL = function(rootURL, scssFilePath, params) {
 
 		var url = processedSassUrls[scssFilePath];
@@ -74,7 +104,7 @@
 			}else if(isCss.test(resource) || isSass.test(resource)){
 				$.getCSS(resource, onComplete);
 			}else{
-				throw 'unknown resource format';
+				throw 'unknown resource format (' + resource + ')';
 			}
 		};
 	};
@@ -166,25 +196,4 @@
 			});
 		}
 	};
-
-	//process scripts injected via innerHTML which are not executed by default
-	//this would run once again also the ones that where not added to the element
-	//dynamically so use with care.
-	HTMLElement.prototype.executeScripts = function(){
-		var scripts = this.getElementsByTagName('script'),
-			x = 0,
-			y = scripts.length,
-			d = document,
-			h = d.head,
-			o,
-			s;
-
-		for(; x < y; x++){
-			o = scripts[x];
-			s = d.createElement('script');
-			s.innerText = o.innerText;
-			h.appendChild(s);
-			o.parentNode.removeChild(o);
-		}
-	}
 })(Zepto);
