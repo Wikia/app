@@ -16,11 +16,9 @@
 	<div class="WikiaPageContentWrapper">
 		<?= wfRenderModule('Notifications', 'Confirmation') ?>
 
-		<div class="WikiaAdvertPage">
 		<?php
-		if ($wgEnableTopButton) {
-			echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'" id="WikiaTopAds">';
-		}
+		echo '<div class="WikiaTopAds'.$topAdsExtraClasses.'" id="WikiaTopAds">';
+
 		if (ArticleAdLogic::isWikiaHub()) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'HUB_TOP_LEADERBOARD'));
 		}
@@ -36,10 +34,10 @@
 		}
 		if ($wgEnableTopButton) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_BUTTON'));
-			echo '</div>';
 		}
+
+		echo '</div>';
 		?>
-		</div>
 
 		<?php
 			if ( empty( $wgSuppressWikiHeader ) ) {

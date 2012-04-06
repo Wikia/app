@@ -14,18 +14,6 @@
 		*display: inline;	// IE7 hack
 	}
 }
-#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
-	padding: 20px 0 0;
-	&.jumbo-leaderboard {
-		margin: 0 auto; 
-		padding-top: 0;
-		width: 980px;
-	}
-}
-#TOP_LEADERBOARD .jumbo {
-	margin-top: -20px;
-	margin-bottom: -20px;
-}
 #CORP_TOP_LEADERBOARD.default-height, #HOME_TOP_LEADERBOARD.default-height, #HUB_TOP_LEADERBOARD.default-height, #TOP_LEADERBOARD.default-height {
 	height: 90px;
 }
