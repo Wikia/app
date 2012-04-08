@@ -67,6 +67,14 @@ $messages['ba'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'ircgate-username' => 'Benutzernaum:',
+	'ircgate-channel' => 'Chat-Kanoi:',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */

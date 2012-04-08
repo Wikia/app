@@ -399,3 +399,13 @@ $messages['uk'] = array(
 	'places' => 'Місця на цій wiki',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'places-editor-search' => '搜索',
+	'places-editor-geoposition' => '当前地理位置：',
+	'places-geolocation-button-label' => '添加位置',
+	'places-geolocation-modal-error-title' => '错误',
+);
+

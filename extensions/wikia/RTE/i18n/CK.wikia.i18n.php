@@ -1326,7 +1326,7 @@ $messages['ia'] = array(
 	'rte-ck-format-tag_h5' => 'Titulo 5',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -1402,6 +1402,7 @@ $messages['ja'] = array(
 	'rte-ck-link-add' => 'リンクの追加',
 	'rte-ck-link-error-badPageTitle' => 'ページ名を入力してください',
 	'rte-ck-link-error-badUrl' => 'URLを認識できません - 入力したURLが正しいか確認してください',
+	'rte-ck-link-title' => 'リンクの作成もしくは編集',
 	'rte-ck-link-label-target' => '対象ページもしくはURL',
 	'rte-ck-link-label-display' => '表示するテキスト',
 	'rte-ck-link-label-internal' => 'ウィキページへのリンク',
@@ -1412,8 +1413,10 @@ $messages['ja'] = array(
 	'rte-ck-link-status-external' => '外部リンク',
 	'rte-ck-media-delete' => '削除',
 	'rte-ck-media-edit' => '編集',
-	'rte-ck-modeSwitch-toSource' => 'ソースモードに切り替え',
-	'rte-ck-modeSwitch-toWysiwyg' => 'WYSIWYG モードに切り替え',
+	'rte-ck-modeSwitch-toSource' => 'ソース',
+	'rte-ck-modeSwitch-toWysiwyg' => 'ビジュアル',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'ソースモードに切り替え',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'ビジュアルモードに切り替え',
 	'rte-ck-photoGallery-confirmDelete' => '本当にページからギャラリーを削除しますか？',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'ギャラリーを削除しますか？',
 	'rte-ck-photoGallery-tooltip' => 'これはギャラリーです',
@@ -1437,12 +1440,18 @@ $messages['ja'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'プレビュー',
 	'rte-ck-templateEditor-editor-viewTemplate' => '（テンプレートページを見る - 新しいウィンドウが開きます）',
 	'rte-ck-templateEditor-title' => 'テンプレートエディタ',
+	'rte-ck-unlink' => 'リンクを解除',
 	'rte-ck-video-add' => '動画の追加',
 	'rte-ck-video-confirmDelete' => '本当にページから動画を削除しますか？',
 	'rte-ck-video-confirmDeleteTitle' => '動画を削除しますか？',
 	'rte-ck-videoPlaceholder-confirmDelete' => '本当にページから動画のプレースホルダを削除しますか？',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => '動画のプレースホルダを削除しますか？',
 	'rte-ck-videoPlaceholder-tooltip' => 'これは動画のプレースホルダです',
+	'rte-ck-format-tag_p' => '通常テキスト',
+	'rte-ck-format-tag_h2' => 'レベル2見出し',
+	'rte-ck-format-tag_h3' => 'レベル3見出し',
+	'rte-ck-format-tag_h4' => 'レベル4見出し',
+	'rte-ck-format-tag_h5' => 'レベル5見出し',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -2072,6 +2081,7 @@ $messages['pfl'] = array(
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Holek
+ * @author Sovq
  * @author Sp5uhe
  * @author TOR
  */
@@ -2092,7 +2102,7 @@ $messages['pl'] = array(
 	'rte-ck-hoverPreview-template-intro' => 'To jest szablon.',
 	'rte-ck-hoverPreview-template-notExisting' => 'Taki szablon nie istnieje!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Taki film nie istnieje!',
-	'rte-ck-image-add' => 'Dodaj grafikę',
+	'rte-ck-image-add' => 'Dodaj obraz',
 	'rte-ck-image-photo' => 'Zdjęcie',
 	'rte-ck-image-confirmDelete' => 'Czy na pewno chcesz usunąć grafikę z tej strony?',
 	'rte-ck-image-confirmDeleteTitle' => 'Usunąć tę grafikę?',
@@ -2400,6 +2410,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -2447,14 +2458,18 @@ $messages['pt-br'] = array(
 	'rte-ck-link-status-external' => 'Link externo',
 	'rte-ck-media-delete' => 'remover',
 	'rte-ck-media-edit' => 'modificar',
-	'rte-ck-modeSwitch-toSource' => 'Mudar para o modo fonte',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Mudar para o modo WYSIWYG',
+	'rte-ck-modeSwitch-toSource' => 'Fonte',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
+	'rte-ck-modeSwitch-toSourceTooltip' => 'Mudar para o modo Fonte',
+	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Mudar para o modo Visual',
 	'rte-ck-modeSwitch-error' => 'Ocorreu um erro durante a mudança de modo. Tente novamente, por favor.',
+	'rte-ck-photoGallery-gallery' => 'Galeria',
 	'rte-ck-photoGallery-confirmDelete' => 'Tem certeza de que deseja remover a galeria desta página?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remover esta galeria?',
 	'rte-ck-photoGallery-tooltip' => 'Isto é uma galeria.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Isto é uma apresentação de slides.',
 	'rte-ck-poll-add' => 'Adicionar uma enquete',
+	'rte-ck-poll-poll' => 'Enquete',
 	'rte-ck-signature-add' => 'Adicionar a sua assinatura',
 	'rte-ck-signature-label' => 'Assinatura',
 	'rte-ck-table-alignNotSet' => 'Não definido',

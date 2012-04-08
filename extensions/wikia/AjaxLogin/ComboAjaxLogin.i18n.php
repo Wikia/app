@@ -382,7 +382,7 @@ $messages['ia'] = array(
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Connecter tu conto de Wikia a Facebook</h1>
 <ul>
 <li>Mantene tu actual nomine de usator, historia, modificationes... Nihil cambia excepte como aperir un session</li>
-<li>Condivide tu activitate in Wikia con tu amicos in Facebook, con controlo complete de lo que es publicate</li>
+<li>Divide tu activitate in Wikia con tu amicos in Facebook, con controlo complete de lo que es publicate</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retro',
 	'comboajaxlogin-connectmarketing-forward' => 'Comenciar &raquo;',
@@ -952,12 +952,14 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hzy980512
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
 	'comboajaxlogin-createlog' => '登录或创建新账号',
 	'comboajaxlogin-actionmsg' => '若要执行此操作，您必须先登录或创建一个新帐号',
+	'comboajaxlogin-actionmsg-protected' => '若执行此操作，您必须登录或创建一个新账户。',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>用Facebook Connect登入</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>连接您的Wikia到Facebook</h1>
 <ul>

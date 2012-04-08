@@ -82,6 +82,7 @@ $messages['de'] = array(
 
 /** Spanish (Español)
  * @author Absay
+ * @author Benfutbol10
  * @author Peter17
  */
 $messages['es'] = array(
@@ -91,6 +92,11 @@ $messages['es'] = array(
 	'landingpage-readfaq' => '¿Preguntas? Lee nuestro FAW &gt;',
 	'landingpage-text' => 'En Wikia puedes <strong>conectarte con personas</strong> quienes comparten tus <strong>pasiones e intereses</strong>. Encuentra tu grupo, haz comentarios y ediciones, incluso <strong>comienza tu propio sitio web</strong> y la comunidad.',
 	'landingpage-buttons-learn-more' => 'Aprende más &gt;',
+	'landingpage-language-links' => '* English|en
+* Español|es
+* Deutsch|de
+* Français|fr',
+	'landingpage-buttons-about-wikia-url' => 'http://es.wikia.com/wiki/Acerca_de_Wikia',
 );
 
 /** Persian (فارسی)
@@ -100,9 +106,16 @@ $messages['fa'] = array(
 	'landingpage' => 'به ویکیا خوش آمدید',
 );
 
-/** Finnish (Suomi) */
+/** Finnish (Suomi)
+ * @author Ilkea
+ */
 $messages['fi'] = array(
 	'landingpage' => 'Tervetuloa Wikiaan',
+	'landingpage-start-exploring' => 'Valmis aloittamaan tutkimisen?',
+	'landingpage-start-exploring-text' => 'Etsi lempiaiheellasi tai selaa suosittuja yhteisöjä alta.',
+	'landingpage-readfaq' => 'Kysyttävää? Lue FAQ &gt;',
+	'landingpage-text' => 'Wikiassa voit <strong>verkostoitua ihmisten kanssa,</strong> jotka jakavat sinulle <strong>tunteitaan ja kiinnostuksien kohteita</strong>. Etsi ryhmäsi, kommentoi ja muokkaa, voit jopa <strong>aloittaa oman internetsivun</strong> ja yhteisön.',
+	'landingpage-buttons-learn-more' => 'Lue lisää &gt;',
 );
 
 /** French (Français)
@@ -393,12 +406,14 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Liangent
  */
 $messages['zh-hans'] = array(
 	'landingpage' => '欢迎光临Wikia',
 	'landingpage-start-exploring' => '准备好开始探索了？',
 	'landingpage-readfaq' => '有问题？阅读我们的常见问题 &gt;',
+	'landingpage-text' => '在Wikia，你可以 <strong>与人们联系</strong>，分享你的<strong>兴趣与爱好</strong>，寻找到你的集体，做出注释和编辑，甚至 <strong>建立你自己的网站</strong>和社区。',
 	'landingpage-buttons-learn-more' => '了解更多 &gt;',
 );
 

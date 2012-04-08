@@ -256,3 +256,10 @@ $messages['uk'] = array(
 	'sitemap-desc' => 'Створює мапу сайту вікі на льоту',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'sitemap-desc' => '联机生成站点地图',
+);
+

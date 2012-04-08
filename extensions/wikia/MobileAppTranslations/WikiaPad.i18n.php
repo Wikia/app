@@ -152,7 +152,7 @@ $messages['ia'] = array(
 	'browser-loading-message' => 'Cargamento…',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(

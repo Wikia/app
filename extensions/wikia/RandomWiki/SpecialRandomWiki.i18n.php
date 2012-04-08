@@ -158,6 +158,13 @@ $messages['ja'] = array(
 	'randomwiki' => 'おまかせウィキ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'randomwiki' => 'ಯಾದೃಚ್ಛಿಕ ವಿಕಿ',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

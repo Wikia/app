@@ -2904,36 +2904,69 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'multitasks-link-back-label' => '这里',
+	'multiwikiedit' => '批量编辑页面',
+	'multiwikiedit_button' => '编辑',
 	'multiwikiedit_confirm' => '确定',
+	'multiwikiedit_caption' => '页面列表',
 	'multiwikiedit_on' => '在',
+	'multiwikiedit_reason' => '编辑原因',
+	'multiwikiedit_list_caption' => '维基列表',
+	'multiwikiedit_botedit_caption' => '机器人(隐藏)编辑',
+	'multiwikiedit_autosummary_caption' => '启用自动概要功能',
 	'multiwikiedit_this_wiki' => '这个维基',
+	'multiwikiedit_inbox_caption' => '以逗号隔开',
 	'multiwikiedit_all_wikis' => '所有维基',
 	'multiwikiedit_selected_wikis' => '被选中的维基',
+	'multiwikiedit_file_bad_format' => '该文件应为纯文本',
+	'multiwikiedit_file_missing' => '无法读取指定文件',
+	'multiwikiedit_select_script' => '编辑页面脚本',
 	'multiwikiedit_select_yourself' => '您',
+	'multidelete' => '批量删除页面',
 	'multidelete_button' => '删除',
+	'multidelete_caption' => '页面列表',
+	'multidelete_title' => '删除多项',
 	'multidelete_reason' => '删除原因',
 	'multidelete_select_all' => '选择全部',
+	'multidelete_page' => '待删除页面',
 	'multidelete_this_wiki' => '这个维基',
+	'multidelete_inbox_caption' => '或以逗号隔开',
 	'multidelete_all_wikis' => '所有维基',
 	'multidelete_chinese_wikis' => '所有华文维基',
+	'multidelete_czech_wikis' => '所有捷克文维基',
+	'multidelete_italian_wikis' => '所有意大利文维基',
 	'multidelete_english_wikis' => '所有英文维基',
 	'multidelete_japanese_wikis' => '所有日文维基',
+	'multidelete_french_wikis' => '所有法文维基',
+	'multiwikienterpagename' => '输入页面名称：',
+	'multiwikirecords' => '找到了$1个维基',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'multitasks-link-back-label' => '這裡',
 	'multiwikiedit_button' => '編輯',
+	'multidelete_hebrew_wikis' => '所有希伯來文的wiki',
 	'multidelete_chinese_wikis' => '所有的中文wiki',
 	'multidelete_polish_wikis' => '所有的波蘭語wiki',
 	'multidelete_czech_wikis' => '所有的捷克語wiki',
 	'multidelete_portuguese_wikis' => '所有的葡萄牙語wiki',
 	'multidelete_dutch_wikis' => '所有的荷蘭語wiki',
+	'multidelete_italian_wikis' => '所有的義大利語wiki',
+	'multidelete_russian_wikis' => '所有的俄語wiki',
+	'multidelete_english_wikis' => '所有的英語wiki',
+	'multidelete_japanese_wikis' => '所有的日語wiki',
+	'multidelete_finnish_wikis' => '所有的芬蘭語wiki',
+	'multidelete_spanish_wikis' => '所有的西班牙語wiki',
+	'multidelete_french_wikis' => '所有的法語wiki',
+	'multidelete_swedish_wikis' => '所有的瑞典語wiki',
+	'multidelete_german_wikis' => '所有的德語wiki',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

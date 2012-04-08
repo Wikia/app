@@ -381,7 +381,7 @@ $messages['ia'] = array(
 	'right-multilookup' => 'Cercar information super usatores in multiple wikis',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(

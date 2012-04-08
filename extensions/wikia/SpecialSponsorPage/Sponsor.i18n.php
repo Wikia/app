@@ -173,12 +173,14 @@ $messages['de-formal'] = array(
 );
 
 /** Spanish (Español)
+ * @author Benfutbol10
  * @author Crazymadlover
  */
 $messages['es'] = array(
 	'sponsorpage-desc' => 'Permite a los usuarios comprar patrocinios para las páginas',
 	'sponsor-header' => '<h2>Vínculos a patrocinador externo</h2>',
 	'sponsor-msg' => '<li><a href="$1" rel="nofollow">Patrocinar esta página</a></li>',
+	'sponsor-template' => '<li><a href="http://$1" rel="nofollow">$2</a><br />$3</li>',
 	'sponsor-preview-prompt' => 'Aquí está como tu patrocinio se verá - haz click en "Editar" para regresar y hacer cambios, o "Grabar" para guardarlo e ir a PayPal.',
 	'sponsor-preview-errors' => 'Hay errores en tu envío:',
 	'sponsor-form-url' => 'URL del sitio wed del patrocinio (tu sitio web):',

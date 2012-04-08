@@ -777,6 +777,13 @@ $messages['lb'] = array(
 	'owb-status-saving' => 'Späicheren',
 );
 
+/** Lezghian (Лезги)
+ * @author Migraghvi
+ */
+$messages['lez'] = array(
+	'owb-headline' => 'Ассаламу алейкум,  $1',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

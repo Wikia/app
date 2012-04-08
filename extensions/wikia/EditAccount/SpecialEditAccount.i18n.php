@@ -1612,6 +1612,8 @@ $messages['sv'] = array(
 	'editaccount-submit-email' => 'Spara e-postadress',
 	'editaccount-submit-pass' => 'Spara lösenord',
 	'editaccount-submit-realname' => 'Spara riktigt namn',
+	'editaccount-submit-clearunsub' => 'Rensa avprenumerering',
+	'editaccount-submit-cleardisable' => 'Rensa inaktiveringsflagga',
 	'editaccount-submit-close' => 'Stäng konto',
 	'editaccount-usage-close' => 'Du kan också inaktivera ett användarkonto genom att förvränga lösenordet och ta bort e-postadressen. Observera att på detta sätt gåt data förlorad och kommer inte att återvinnas.',
 	'editaccount-warning-close' => '<b>Varning!</b> Du håller på att permanent inaktivera kontot för användare <b>$1</b>. Detta kan inte återställas. Är du säker på att det är vad du vill göra?',
@@ -1855,6 +1857,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
@@ -1867,6 +1870,7 @@ $messages['zh-hans'] = array(
 	'editaccount-usage' => '用户数据被每个Wiki分别储存。当您修改密码或电子邮箱时，只会在修改的Wiki上生效。请直接使用新密码登入该Wiki，以避免缓存问题。',
 	'editaccount-label-select' => '选择一个用户',
 	'editaccount-submit-account' => '管理用户',
+	'editaccount-frame-account' => '编辑用户帐户:$1',
 	'editaccount-label-email' => '设置新电子邮件地址',
 	'editaccount-label-pass' => '设置新密码',
 	'editaccount-label-realname' => '设置新真实姓名',
@@ -1875,8 +1879,19 @@ $messages['zh-hans'] = array(
 	'editaccount-submit-pass' => '保存密码',
 	'editaccount-submit-realname' => '保存真名',
 	'editaccount-submit-close' => '关闭户口',
+	'editaccount-success-email-blank' => '成功为帐户 $1 删除电子邮件地址。',
+	'editaccount-success-pass' => '帐户$1已成功更改密码。',
+	'editaccount-success-realname' => '帐户$1的真实姓名已成功更改。',
+	'editaccount-success-close' => '成功禁用帐户 $1 。',
+	'editaccount-nouser' => '帐户"$1"不存在！',
+	'editaccount-labal-account-status' => '帐户状态',
+	'editaccount-labal-email-status' => '电子邮件状态',
+	'editaccount-status-confirmed' => '已确认',
+	'editaccount-status-unconfirmed' => '未确认',
 	'editaccount-status-realuser' => '活跃用户',
 	'editaccount-status-tempuser' => '非活跃用户',
+	'editaccount-log' => '用户帐户日志',
+	'right-editaccount' => '编辑其他用户的信息',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

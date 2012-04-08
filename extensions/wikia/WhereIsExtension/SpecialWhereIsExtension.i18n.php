@@ -653,13 +653,16 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'whereisextension' => 'Var är tillägg',
 	'whereisextension-submit' => 'Sök',
 	'whereisextension-list' => 'Lista över wikis med matchade kriterier',
 	'whereisextension-isset' => 'är inställd på',
 	'whereisextension-filter' => 'Filter',
 	'whereisextension-all-groups' => 'Alla grupper',
+	'whereisextension-name-contains' => 'variabelnamn innehåller',
 	'whereisextension-search-like-value' => 'Gilla:',
 	'whereisextension-search-type' => 'Typ:',
+	'whereisextension-search-type-bool' => 'Boolesk',
 	'whereisextension-search-type-full' => 'Gilla',
 );
 

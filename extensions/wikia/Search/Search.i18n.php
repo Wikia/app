@@ -630,3 +630,23 @@ $messages['vi'] = array(
 	'wikiasearch-search-all-wikia' => 'Tìm kiếm tất cả Wikia',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'search-desc' => '跨Wikia搜索引擎（使用Solr后端）',
+	'wikiasearch-titles-only' => '仅在页面标题中搜索',
+	'wikiasearch-system-error-msg' => '系统错误，无法完成您的搜索',
+	'wikiasearch-search-wikia' => '搜索Wikia',
+	'wikiasearch-search-all-wikia' => '搜索所有Wikia',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiasearch-search-wikia' => '搜尋Wikia',
+	'wikiasearch-search-all-wikia' => '搜尋整個 Wikia',
+);
+

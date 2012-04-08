@@ -565,7 +565,7 @@ $messages['id'] = array(
 	'lookupcontribscontent' => 'isi',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(

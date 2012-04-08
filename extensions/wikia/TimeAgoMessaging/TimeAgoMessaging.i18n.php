@@ -95,12 +95,15 @@ $messages['es'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Ilkea
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'timeagomessaging-desc' => 'Antaa i18n jquery.timeago.js lisäosan',
 	'timeago-day' => '{{PLURAL:$1|päivä|$1 päivää}} sitten',
 	'timeago-hour' => '{{PLURAL:$1|tunti|$1 tuntia}} sitten',
 	'timeago-minute' => '{{PLURAL:$1|minuutti|$1 minuuttia}} sitten',
+	'timeago-month' => '{{PLURAL:$1|kuukausi|$1 kuukautta}} sitten',
 	'timeago-second' => 'minuutti sitten',
 );
 

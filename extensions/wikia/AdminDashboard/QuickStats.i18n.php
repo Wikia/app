@@ -29,19 +29,7 @@ $messages['qqq'] = array(
 	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)',
 	'quickstats-number-shortening-millions' => 'This is a shortend number abbreviation shown in a stats table. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
-    'quickstats-ga-broken-message' => 'This is a message we display in Admin Dashboard above Quick Stats; It is temporary till we fix our Google Analytics issues',
-);
-
-/** толышә зывон (толышә зывон)
- * @author Гусейн
- */
-$messages['tly'] = array(
-	'quickstats-header-date' => 'Тарых',
-	'quickstats-header-views' => 'Тәмшо кардеј',
-	'quickstats-header-edits' => 'Дәгишон',
-	'quickstats-header-photos' => 'Шикилон',
-	'quickstats-header-likes' => 'Хош омејдә',
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-ga-broken-message' => 'This is a message we display in Admin Dashboard above Quick Stats; It is temporary till we fix our Google Analytics issues',
 );
 
 /** Arabic (العربية)
@@ -254,6 +242,7 @@ $messages['hu'] = array(
 	'quickstats-header-photos' => 'Képek',
 	'quickstats-totals-label' => 'Összesítés',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Részletes statisztika]]',
+	'quickstats-number-shortening' => '$1,000',
 );
 
 /** Interlingua (Interlingua)
@@ -305,8 +294,23 @@ $messages['ja'] = array(
 	'quickstats-header-views' => '閲覧数',
 	'quickstats-header-edits' => '編集数',
 	'quickstats-header-photos' => '新規画像数',
+	'quickstats-date-format' => 'n月j日',
 	'quickstats-totals-label' => '合計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|さらに詳しい統計をみる]]',
+);
+
+/** Korean (한국어)
+ * @author Excalibur777
+ */
+$messages['ko'] = array(
+	'quickstats-header-label' => '간단한 통계',
+	'quickstats-header-date' => '날짜',
+	'quickstats-header-views' => '페이지뷰',
+	'quickstats-header-edits' => '편집',
+	'quickstats-header-photos' => '사진',
+	'quickstats-header-likes' => 'Facebook Likes',
+	'quickstats-totals-label' => '합계',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|더 많은 통계 보기]]',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -404,6 +408,8 @@ $messages['nl'] = array(
 	'quickstats-totals-label' => 'Totalen',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Meer statistieken bekijken]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1*10ˆ6',
+	'quickstats-number-shortening-billions' => '$1*10ˆ9',
 );
 
 /** Polish (Polski)
@@ -564,6 +570,18 @@ $messages['te'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|మరిన్ని గణాంకాలను చూడండి]]',
 );
 
+/** Толышә зывон (Толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'quickstats-header-date' => 'Тарых',
+	'quickstats-header-views' => 'Тәмшо кардеј',
+	'quickstats-header-edits' => 'Дәгишон',
+	'quickstats-header-photos' => 'Шикилон',
+	'quickstats-header-likes' => 'Хош омејдә',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** Tatar (Cyrillic script) (Татарча)
  * @author Ajdar
  */
@@ -590,7 +608,7 @@ $messages['uk'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
@@ -624,6 +642,21 @@ $messages['zh-hans'] = array(
 	'quickstats-header-likes' => '喜欢数',
 	'quickstats-totals-label' => '总计',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多统计]]',
+	'quickstats-number-shortening' => '$1K',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'quickstats-header-label' => '快速統計資訊',
+	'quickstats-header-date' => '日期',
+	'quickstats-header-views' => '瀏覽次數',
+	'quickstats-header-edits' => '編輯次數',
+	'quickstats-header-photos' => '圖片數',
+	'quickstats-header-likes' => '按讚的數目',
+	'quickstats-totals-label' => '總計',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多統計]]',
 	'quickstats-number-shortening' => '$1K',
 );
 

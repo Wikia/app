@@ -405,7 +405,7 @@ $messages['ia'] = array(
 	'app-tab-about' => 'A proposito',
 	'app-tab-browse' => 'A..Z',
 	'app-tab-sotd' => 'CdD',
-	'app-async-error-title' => 'Ups',
+	'app-async-error-title' => 'Error',
 	'app-async-error-message' => 'Problema temporari con le connexion. Per favor reproba plus tarde.',
 	'app-nonetwork-dialog-title' => 'Rete indisponibile',
 	'app-nonetwork-dialog-message' => 'Nulle connexion al rete detegite.',
@@ -436,7 +436,7 @@ $messages['ia'] = array(
 	'ringtone-matcher-by-song' => 'Inviar le tono de appello %s a tu telephono',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -790,6 +790,18 @@ $messages['ps'] = array(
 	'login-username-hint' => 'کارن-نوم',
 	'login-password-hint' => 'پټنوم',
 	'login-submit-button' => 'ننوتل',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Caio1478
+ */
+$messages['pt-br'] = array(
+	'login-username-hint' => 'Nome de usuário',
+	'login-password-hint' => 'Senha',
+	'login-submit-button' => 'Login',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'por %s',
+	'about-heading-tips' => 'Procurando',
 );
 
 /** Russian (Русский)

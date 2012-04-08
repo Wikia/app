@@ -547,6 +547,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Ilkea
  * @author Nike
  * @author VezonThunder
  */
@@ -585,7 +586,7 @@ $messages['fi'] = array(
 	'themedesigner-upload-your-own' => 'Lähetä oma',
 	'themedesigner-button-upload' => 'Lähetä',
 	'themedesigner-button-upload-wordmark' => 'Lataa',
-	'themedesigner-rules-background' => 'jpg, gif tai png. Enintään $1 kilotavua',
+	'themedesigner-rules-background' => 'jpg, gif tai png. {{PLURAL:$1|$1 kilobitti|$1 kilobittiä}} rajana',
 	'themedesigner-default' => 'Oletus',
 	'themedesigner-font' => 'kirjasin',
 	'themedesigner-size' => 'koko',
@@ -597,6 +598,7 @@ $messages['fi'] = array(
 	'themedesigner-dont-use-a-graphic' => 'poista',
 	'themedesigner-history-item' => '$1 : $2',
 	'themedesigner-button-change-text' => 'Vaihda tekstiä',
+	'themedesigner-wodmark-preview' => 'Esikatselu',
 );
 
 /** French (Français)
@@ -824,7 +826,7 @@ $messages['ia'] = array(
 	'themedesigner-wodmark-preview' => 'Previsualisar',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -1835,5 +1837,46 @@ $messages['zh-hans'] = array(
 	'themedesigner-button-ok' => '好',
 	'themedesigner-button-upload' => '上载',
 	'themedesigner-button-save' => '保存',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'themedesigner-or' => '或',
+	'themedesigner-title' => 'Wikia 主題設計器',
+	'themedesigner-background' => '背景',
+	'themedesigner-page' => '頁面',
+	'themedesigner-color' => '顏色',
+	'themedesigner-buttons' => '按鈕',
+	'themedesigner-links' => '連結',
+	'themedesigner-medium' => '中',
+	'themedesigner-large' => '大',
+	'themedesigner-tile-background' => '標題',
+	'themedesigner-fix-background' => '修復',
+	'themedesigner-transparency' => '透明度',
+	'themedesigner-tab-customize' => '自訂',
+	'themedesigner-preview-mode' => '預覽模式...',
+	'themedesigner-previous-versions' => '以前的版本',
+	'themedesigner-button-save-im-done' => '已完成，儲存',
+	'themedesigner-button-cancel' => '取消',
+	'themedesigner-pick-a-color' => '選取一種顏色',
+	'themedesigner-button-ok' => '好',
+	'themedesigner-pick-an-image' => '選取一個圖像',
+	'themedesigner-dont-use-a-background' => '不要使用背景',
+	'themedesigner-button-upload' => '上傳',
+	'themedesigner-button-upload-wordmark' => '上傳',
+	'themedesigner-default' => '預設',
+	'themedesigner-font' => '字型',
+	'themedesigner-size' => '大小',
+	'themedesigner-button-save' => '儲存',
+	'themedesigner-rules-wordmark' => '上傳一個250 x 65 圖元或更少的.png 檔 。',
+	'themedesigner-rules-favicon-learn-more-link' => '了解更多',
+	'themedesigner-dont-use-a-graphic' => '移除',
+	'themedesigner-button-change-text' => '更改文本',
+	'themedesigner-size-error' => '不正確的檔案大小',
+	'themedesigner-dimensions-error' => '圖像超過尺寸的限制',
+	'themedesigner-type-error' => '不正確的檔案大小',
+	'themedesugber-uknown-error' => '發生了錯誤，不幸的是我們無法識別它，請再試一次',
 );
 

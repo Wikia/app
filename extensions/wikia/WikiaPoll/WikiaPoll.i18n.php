@@ -93,6 +93,26 @@ $messages['az'] = array(
 	'wikiapoll-publish-label' => 'Naşir',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'wikiapoll-desc' => 'Biatt a oahfoche Méglichkeid zan Erstejn und da Vawoitung vah Umfrong',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 Persón hat|$1 Leitt haum}} obgstimmt',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Daunkscheh!',
+	'wikiapoll-vote' => 'Obstimmer!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 Stimm|$1 Stimmer}}',
+	'wikiapoll-createpoll-headline' => 'Umfrog erstejn',
+	'wikiapoll-editpoll-headline' => 'Umfrog beorwaten',
+	'wikiapoll-question-label' => 'Frog',
+	'wikiapoll-addnewitem-label' => 'An neichen Eihtrog dazuadoah',
+	'wikiapoll-cancel-label' => 'Obbrecher',
+	'wikiapoll-publish-label' => 'Vaéffmtlicher',
+	'wikiapoll-error-duplicate' => 'A Umfrog mid dém Naum is bereits vurhaunden.',
+	'wikiapoll-error-invalid-title' => 'Da Text vah da Frog is néd gijtig.',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -625,6 +645,23 @@ $messages['te'] = array(
 	'wikiapoll-question-label' => 'ప్రశ్న',
 	'wikiapoll-cancel-label' => 'రద్దుచేయి',
 	'wikiapoll-publish-label' => 'ప్రచురించు',
+);
+
+/** Thai (ไทย)
+ * @author Saipetch
+ */
+$messages['th'] = array(
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 คน| $1 คน} } ลงคะแนน',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'ขอบคุณ!',
+	'wikiapoll-vote' => 'ลงคะแนน!',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 คะแนน|$1 คะแนน}}',
+	'wikiapoll-createpoll-headline' => 'สร้างแบบสำรวจ',
+	'wikiapoll-editpoll-headline' => 'แก้ไขแบบสำรวจ',
+	'wikiapoll-question-label' => 'คำถาม',
+	'wikiapoll-addnewitem-label' => 'เพิ่มรายการใหม่',
+	'wikiapoll-cancel-label' => 'ยกเลิก',
+	'wikiapoll-publish-label' => 'เผยแพร่',
 );
 
 /** Tagalog (Tagalog)

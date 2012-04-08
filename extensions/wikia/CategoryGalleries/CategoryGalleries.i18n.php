@@ -9,6 +9,13 @@ $messages['en'] = array(
 	'categorygalleries-desc' => 'Shows a pages gallery on category pages',
 );
 
+/**    زَوُن (   زَوُن)
+ * @author Csisc
+ */
+$messages['aeb'] = array(
+	'categorygalleries-desc' => 'twarri el galerie mte3 les pages fil les pages de catégories',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */

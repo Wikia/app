@@ -171,7 +171,7 @@ $messages['nl'] = array(
 $messages['pl'] = array(
 	'skinchooser-desc' => 'Pozwala użytkownikom wybrać skórkę w swoich preferencjach',
 	'skinchooser-customcss' => 'Aby zdefiniować niestandardową skórkę, wybierz opcję powyżej i dodaj swój kod CSS do [[MediaWiki:Monaco.css]].',
-	'new-look' => 'Nowy wygląd Wikii',
+	'new-look' => 'Wikia/Oasis',
 	'site-layout' => 'Skórka',
 );
 
@@ -207,11 +207,13 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'skinchooser-desc' => 'Позволяет участникам выбирать оболочки в личных настройках',
 	'skinchooser-customcss' => 'Для настройки тем выберите настраиваемый параметр в меню выше и укажите пользовательский CSS со страницы [[MediaWiki:Monaco.css]].',
+	'new-look' => 'Новое оформление Викии',
 	'site-layout' => 'Оформления сайта',
 );
 

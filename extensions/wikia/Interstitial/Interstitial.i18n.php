@@ -312,3 +312,12 @@ $messages['tl'] = array(
 	'exitstitial-button' => 'Laktawan ang Patalastas na Ito',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'interstitial-default-campaign-code' => 'Wikia爱你！',
+	'interstitial-skip-ad' => '跳过这则广告',
+	'exitstitial-button' => '跳过这则广告',
+);
+

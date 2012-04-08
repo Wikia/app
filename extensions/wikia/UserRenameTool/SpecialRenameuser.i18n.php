@@ -103,14 +103,6 @@ $messages['qqq'] = array(
 	'right-renameuser' => '{{doc-right}}',
 );
 
-/** толышә зывон (толышә зывон)
- * @author Гусейн
- */
-$messages['tly'] = array(
-	'userrenametool-confirm-yes' => 'Бәле',
-	'userrenametool-confirm-no' => 'Не',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  * @author SPQRobin
@@ -843,6 +835,8 @@ $messages['da'] = array(
 
 /** German (Deutsch)
  * @author Avatar
+ * @author Geitost
+ * @author Inkowik
  * @author Kghbln
  * @author LWChris
  * @author Lyzzy
@@ -866,6 +860,8 @@ Siehe [[Special:Stafflog|Mitarbeiterlog]] für Logs.',
 	'userrenametool-warnings' => 'Warnungen:',
 	'userrenametool-requested-rename' => 'Benutzer $1 hat eine Umbenennung beantragt',
 	'userrenametool-did-not-request-rename' => 'Benutzer $1 hat keine Umbenennung beantragt',
+	'userrenametool-previously-renamed' => 'Benutzer $1 wurde bereits einmal umbenannt',
+	'userrenametool-phalanx-matches' => '$1 zuzuordnende Phalanx-Filter:',
 	'userrenametool-confirm' => 'Ja, Benutzer umbenennen',
 	'userrenametool-submit' => 'Umbenennen',
 	'userrenametool-errordoesnotexist' => 'Der Benutzername „<nowiki>$1</nowiki>“ existiert nicht.',
@@ -875,8 +871,8 @@ Siehe [[Special:Stafflog|Mitarbeiterlog]] für Logs.',
 	'userrenametool-errortoomany' => 'Der Benutzer „<nowiki>$1</nowiki>“ hat $2 {{PLURAL:$2|Bearbeitung|Bearbeitungen}}. Die Namensänderung eines Benutzers mit mehr als $3 {{PLURAL:$3|Bearbeitung|Bearbeitungen}} kann die Serverleistung nachteilig beeinflussen.',
 	'userrenametool-errorprocessing' => 'Der umbenennungs-Prozess für Benutzer <nowiki>$1</nowiki> bis <nowiki>$2</nowiki> ist bereits im Gange.',
 	'userrenametool-errorblocked' => 'Benutzer <nowiki>$1</nowiki> wird von <nowiki>$2</nowiki> für $3 blockiert.',
-	'userrenametool-errorlocked' => 'Benutzer <nowiki>$ 1</nowiki> ist gesperrt.',
-	'userrenametool-errorbot' => 'Benutzer <nowiki>$ 1</nowiki> ist ein Bot.',
+	'userrenametool-errorlocked' => 'Benutzer <nowiki>$1</nowiki> ist gesperrt.',
+	'userrenametool-errorbot' => 'Benutzer <nowiki>$1</nowiki> ist ein Bot.',
 	'userrenametool-error-request' => 'Es gab ein Problem beim Empfang der Anfrage. Bitte nochmal versuchen.',
 	'userrenametool-error-same-user' => 'Alter und neuer Benutzername sind identisch.',
 	'userrenametool-error-extension-abort' => 'Eine Erweiterung verhinderte den Umbenennungsprozess.',
@@ -3732,6 +3728,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-requested-rename' => 'Användaren $1 begärde ett namnbyte',
 	'userrenametool-did-not-request-rename' => 'Användaren $1 begärde inte ett namnbyte',
 	'userrenametool-previously-renamed' => 'Användaren $1 har redan haft ett namnbyte',
+	'userrenametool-phalanx-matches' => 'Phalanx-filter matchar $1:',
 	'userrenametool-confirm' => 'Ja, byt namn på användaren',
 	'userrenametool-submit' => 'Verkställ',
 	'userrenametool-errordoesnotexist' => 'Användaren "<nowiki>$1</nowiki>" finns inte',
@@ -3869,7 +3866,7 @@ $messages['tg-cyrl'] = array(
 	'right-renameuser' => 'Тағйири номи корбарон',
 );
 
-/** Tajik (Latin script) (tojikī) */
+/** Tajik (Latin script) (Tojikī) */
 $messages['tg-latn'] = array(
 	'renameuser' => 'Taƣjiri nomi korbarī',
 	'right-renameuser' => 'Taƣjiri nomi korbaron',
@@ -3945,6 +3942,14 @@ Pababatiran ka sa pamamagitan ng e-liham kapag nabuo na ito.',
 	'userrenametool-log' => '{{PLURAL:$1|1 pagbabago|$1 mga pagbabago}}. Dahilan: $2',
 	'userrenametool-move-log' => 'Kusang inilipat ang pahina habang muling pinapangalanan ang tagagamit na si "[[User:$1|$1]]" patungo sa "[[User:$2|$2]]"',
 	'right-renameuser' => 'Muling pangalanan ang mga tagagamit',
+);
+
+/** Толышә зывон (Толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'userrenametool-confirm-yes' => 'Бәле',
+	'userrenametool-confirm-no' => 'Не',
 );
 
 /** Tongan (lea faka-Tonga) */
@@ -4091,7 +4096,7 @@ $messages['vec'] = array(
 	'right-renameuser' => 'Rinomina utenti',
 );
 
-/** Veps (Vepsän kel') */
+/** Veps (Vepsän kel’) */
 $messages['vep'] = array(
 	'right-renameuser' => 'Udesnimitada kävutajid',
 );

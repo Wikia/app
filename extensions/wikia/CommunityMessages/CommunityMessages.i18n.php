@@ -29,6 +29,14 @@ $messages['qqq'] = array(
 	'communitymessages-notice-msg' => 'A message about updating Community Messages',
 );
 
+/**    زَوُن (   زَوُن)
+ * @author Csisc
+ */
+$messages['aeb'] = array(
+	'communitymessages-desc' => 'extension mte3 el mosa3ed lil messages mte3 el communauté',
+	'communitymessages-notice-msg' => "[[Special:WikiActivity|el Messages mte3 el communauté ss'artelhom mise-à-jour]].",
+);
+
 /** Asturian (Asturianu)
  * @author Xuacu
  */

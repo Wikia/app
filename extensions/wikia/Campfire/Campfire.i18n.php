@@ -31,6 +31,14 @@ $messages['es'] = array(
 	'campfire-licensed-under' => 'Bajo la licencia $1',
 );
 
+/** Finnish (Suomi)
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'campfire-page-header' => '$1 $2',
+	'campfire-licensed-under' => 'Lisensoitu $1',
+);
+
 /** French (Français)
  * @author Wyz
  */
@@ -145,11 +153,12 @@ $messages['ru'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Lokal Profil
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'campfire-page-header' => '$1 från $2',
-	'campfire-licensed-under' => 'Licensierad under $1',
+	'campfire-licensed-under' => 'Gjord tillgänglig under licensen $1',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -158,6 +167,13 @@ $messages['sv'] = array(
 $messages['vi'] = array(
 	'campfire-page-header' => '$1 từ $2',
 	'campfire-licensed-under' => 'Theo giấy phép $1',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'campfire-licensed-under' => '在 $1 的许可之下',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

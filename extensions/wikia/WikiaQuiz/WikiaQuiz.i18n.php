@@ -1151,12 +1151,13 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Caio1478
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
 	'wikiaquiz-desc' => 'Uma forma fácil de criar e gerir testes',
 	'wikiaquiz-createquiz-headline' => 'Criar Teste',
-	'wikiaquiz-editquiz-headline' => 'Editar Teste',
+	'wikiaquiz-editquiz-headline' => 'Editar Quiz',
 	'wikiaquiz-createquizarticle-headline' => 'Criar Pergunta e Respostas de Teste',
 	'wikiaquiz-editquizarticle-headline' => 'Editar Pergunta e Respostas de Teste',
 	'wikiaquiz-title-label' => 'Título',
@@ -1229,6 +1230,7 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -1283,6 +1285,7 @@ $messages['ru'] = array(
 	'wikiaquiz-game-continue-button' => 'Продолжить',
 	'wikiaquiz-game-thanks' => 'Спасибо за игру!',
 	'wikiaquiz-game-provide-email' => 'Пожалуйста, введите ваш адрес электронной почты',
+	'wikiaquiz-game-email-placeholder' => 'vasya@pupkin.ru',
 	'wikiaquiz-game-email-button' => 'Выслать мне свободный материал',
 	'wikiaquiz-game-email-valid-please' => 'Пожалуйста введите действительный адрес электронной почты.',
 	'wikiaquiz-game-email-token-mismatch' => 'Символ не соответствует',

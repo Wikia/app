@@ -398,7 +398,7 @@ Si tu prefere usar e-mail normal o ha annexos, tu pote contactar nos a [mailto:c
 	'specialcontact-submitcomplete' => 'Gratias pro contactar Wikia.',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -936,5 +936,31 @@ $messages['zh-hans'] = array(
 	'specialcontact-yourmail' => '电子邮件地址',
 	'specialcontact-problemdesc' => '信息',
 	'specialcontact-notyou' => '不是您？',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'contact' => '聯絡Wikia',
+	'specialcontact-wikia' => '聯絡Wikia',
+	'specialcontact-pagetitle' => '聯絡Wikia',
+	'specialcontact-username' => '用戶名',
+	'specialcontact-wikiname' => '哪個 wiki',
+	'specialcontact-realname' => '您的名字',
+	'specialcontact-yourmail' => '電擬郵件地址',
+	'specialcontact-problem' => '主旨',
+	'specialcontact-problemdesc' => '訊息',
+	'specialcontact-mail' => '發送到 Wikia',
+	'specialcontact-ccme' => '向我發送此郵件的副本',
+	'specialcontact-ccdisabled' => '被停用: 請驗證您的電子郵件地址，以便能使用這個功能',
+	'specialcontact-notyou' => '不是您？',
+	'specialcontact-formtitle' => '聯繫Wikia 支援人員',
+	'specialcontact-nomessage' => '請填寫留言',
+	'specialcontact-captchafail' => '驗證碼錯誤或遺失。',
+	'specialcontact-mailsub' => 'Wikia 連絡郵件',
+	'specialcontact-mailsubcc' => 'Wikia 連絡郵件的副本',
+	'specialcontact-ccheader' => '這是你送往 Wikia 支援人員的訊息的副本',
+	'specialcontact-submitcomplete' => '謝謝你聯繫 Wikia。',
 );
 

@@ -211,6 +211,7 @@ $messages['br'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author DaSch
+ * @author Geitost
  * @author George Animal
  * @author LWChris
  * @author SVG
@@ -249,7 +250,7 @@ $messages['de'] = array(
 	'phalanx-modify-success' => 'Die Sperre wurde erfolgreich geändert',
 	'phalanx-modify-failure' => 'Es gab einen Fehler beim Ändern der Sperre',
 	'phalanx-modify-warning' => 'Du bearbeitest die Sperre mit der ID #$1.
-Ein Klick auf "{{int:phalanx-add-block}}" speichert deine Änderungen!',
+Ein Klick auf „{{int:phalanx-edit-block}}“ speichert deine Änderungen!',
 	'phalanx-test-description' => 'Teste gegebenen Text mit aktuellen Sperren.',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-test-results-legend' => 'Testergebnisse',
@@ -317,6 +318,14 @@ Bitte [[Special:Contact|kontaktiere Wikia]] im Falle eines Versehens!<br />Als S
 	'phalanx-stats-table-wiki-last-edited' => 'Zuletzt bearbeitet',
 	'right-phalanx' => 'Kann globale Benutzersperren und Spamfilter verwalten',
 	'right-phalanxexempt' => 'Von Phalanx-Regelungen ausgenommen',
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Geitost
+ */
+$messages['de-formal'] = array(
+	'phalanx-modify-warning' => 'Sie bearbeiten die Sperre mit der ID #$1.
+Ein Klick auf „{{int:phalanx-edit-block}}“ speichert Ihre Änderungen!',
 );
 
 /** Spanish (Español)
@@ -1138,6 +1147,7 @@ Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga m
 	'phalanx-rule-log-name' => 'Log peraturan Phalanx',
 	'phalanx-rule-log-header' => 'Ini ialah log penukaran peraturan phalanx.',
 	'phalanx-email-rule-log-name' => 'Log peraturan e-mel Phalanx',
+	'phalanx-email-rule-log-header' => 'Inilah log perubahan pada peraturan Phalanx untuk e-mel jenis.',
 	'phalanx-rule-log-add' => 'Peraturan Phalanx ditambahkan: $1',
 	'phalanx-rule-log-edit' => 'Peraturan Phalanx disunting: $1',
 	'phalanx-rule-log-delete' => 'Peraturan Phalanx dipadamkan: $1',
@@ -1645,6 +1655,7 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 
 /** Russian (Русский)
  * @author Byulent
+ * @author DCamer
  * @author Engineering
  * @author Kuzura
  * @author Lvova
@@ -1710,6 +1721,7 @@ $messages['ru'] = array(
 Это не мешает созданию данных страниц.
 
 Примечание: работает только на Вики-ответах.',
+	'phalanx-help-type-user-email' => 'Этот фильтр предотвращает создание учетной записи, с использованием заблокированного электронного адреса.',
 	'phalanx-user-block-reason-ip' => 'Участник с данным IP-адресом не может редактировать на всей Викия из-за вандализма или других нарушений, которые совершил он или некто с таким же IP-адресом.
 Если Вы считаете, что произошла ошибка, то, пожалуйста, [[Special:Contact|свяжитесь с сотрудниками Викия]].',
 	'phalanx-user-block-reason-exact' => 'Этот участник или участник с данным IP-адресом не может редактировать на всей Викия из-за вандализма или других нарушений.
@@ -1781,6 +1793,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author VickyC
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1824,7 +1837,17 @@ Klicka på "{{int:phalanx-edit-block}}" för att spara dina ändringar!',
 	'phalanx-link-stats' => 'statistik',
 	'phalanx-reset-form' => 'Återställ formulär',
 	'phalanx-legend-input' => 'Skapa eller ändra filter',
+	'phalanx-legend-listing' => 'För närvarande tillämpade filter',
 	'phalanx-unblock-message' => 'Block-ID #$1 har tagits bort',
+	'phalanx-help-type-title' => 'Detta filter förhindrar en sida från att skapas, om dess titel matchar någon av de svartlistade fraserna.
+
+Filtret förhindrar inte möjligheten att redigera en tidigare skapad sida.',
+	'phalanx-help-type-answers-question-title' => 'Detta filter förhindrar att en fråga (sida) skapas, om dess titel matchar någon av de svartlistade fraserna.
+Anmärkning: fungerar endast på Svar-typ wikier.',
+	'phalanx-help-type-answers-recent-questions' => 'Detta filter förhindrar att frågor (sidor) visas i ett antal listor (widgets, listor, tag-baserade listor).
+Filtret förhindrar inte att dessa sidor skapas.
+
+Anmärkning: fungerar endast på Svar-typ wikier.',
 	'phalanx-help-type-user-email' => 'Detta filter förhindrar att konton skapas med en blockerad e-postadress.',
 	'phalanx-user-block-new-account' => 'Användarnamnet är inte tillgängligt för registrering. Välj ett annat.',
 	'phalanx-title-move-summary' => 'Anledningen du skrev in innehöll en blockerad fras.',

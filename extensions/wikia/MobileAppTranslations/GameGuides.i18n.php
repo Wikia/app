@@ -511,3 +511,11 @@ $messages['te'] = array(
 	'alert-download-updated-wikis-button-ok' => 'సరే',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'activityindicator-message' => '载入中……',
+	'window-article-button-back' => '返回',
+);
+

@@ -383,6 +383,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author Claudia Hattitten
+ * @author Geitost
  * @author George Animal
  * @author LWChris
  * @author Pill
@@ -409,12 +410,14 @@ $messages['de'] = array(
 	'plb-special-form-error-info' => 'Bitte korrigiere die folgenden Fehler:',
 	'plb-special-form-new' => 'Neues Layout',
 	'plb-special-form-session-fail' => 'Es scheint ein Problem mit deiner Anmeldesitzung zu geben',
+	'plb-special-form-save-as-draft' => 'Eine zwischengespeicherte Version erstellen',
+	'plb-special-form-preview-form' => 'Vorschauansicht',
 	'plb-special-no-layout' => 'Kein Layout angegeben.',
 	'plb-special-no-layout-body' => 'Anscheinend versuchst du, eine neue Seite mit einem Layout zu erstellen, aber wir können dir nicht sagen, welches Layout du verwenden solltest. Tut uns leid!',
 	'plb-special-no-article' => 'Ungültige Seite angegeben.',
 	'plb-special-no-article-body' => 'Anscheinend versuchst du eine Seite zu ändern, die auf keinem Layout basiert.',
 	'plb-special-no-login' => 'Bitte anmelden um den Layout-Generator zu verwenden.',
-	'plb-login-required' => 'Du musst dich [[Special:Signup|anmelden]] um den Layout-Generator zu verwenden.',
+	'plb-login-required' => 'Du musst dich <span class="plainlinks">[{{fullurl:Special:Signup|$1}} anmelden]</span>, um den Layout-Generator zu verwenden.',
 	'plb-empty-page' => 'Unbenannt',
 	'plb-create-empty-body-error' => 'Dieses Layout scheint leer zu sein.',
 	'plb-create-empty-desc' => 'Gib bitte eine Beschreibung für dieses Layout ein.',
@@ -447,7 +450,7 @@ $messages['de'] = array(
 	'plb-list-name' => 'Layoutname',
 	'plb-list-desc' => 'Beschreibung',
 	'plb-list-last-editor' => 'Letzter Bearbeiter',
-	'plb-list-count' => '#Artikel',
+	'plb-list-count' => 'Artikelanzahl',
 	'plb-list-last-edit' => 'Zuletzt bearbeitet',
 	'plb-list-action-edit' => 'Bearbeiten',
 	'plb-list-action-delete' => 'Löschen',
@@ -550,6 +553,14 @@ $messages['de'] = array(
 	'plb-copy-delete-link' => 'Löschen',
 	'plb-copy-cat-add' => 'Hinzufügen:',
 	'plb-copy-submit-link' => 'Speichern',
+	'wikia-editor-modules-plb-list-title' => 'Liste wird geladen …',
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Geitost
+ */
+$messages['de-formal'] = array(
+	'plb-login-required' => 'Sie müssen sich <span class="plainlinks">[{{fullurl:Special:Signup|$1}} anmelden]</span>, um den Layout-Generator zu verwenden.',
 );
 
 /** Zazaki (Zazaki)
@@ -2892,6 +2903,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'pagelayoutbuilder' => 'Sidlayouts-byggare',
+	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Guide för att skapa sidlayouter]]',
 	'plb-special-form-article-name' => 'Vad kommer denna sida att kallas?',
 	'plb-special-form-title-empty' => 'Ange i en titel för den här sidan.',
 	'plb-special-form-invalid-title-error' => 'Rubriken du har angett för denna sida är ogiltig.',
@@ -2987,6 +2999,7 @@ $messages['sv'] = array(
 	'plb-editor-preview-info' => 'Info',
 	'plb-editor-overlay-edit' => 'redigera',
 	'plb-editor-left-sidebar-tutorial' => '<b>Välkommen till layoutbyggaren!</b><br /><br />För att börja lägga till objekt, klicka på knappen <em>Lägg till objekt</em> ovan och välj den önskade typen. <br /><br />När du lägger till dina objekt här, läggs nya frågor till i sidans skapandeprocess.',
+	'plb-editor-read-only-selection-info' => 'Var god kontrollera att din markör inte är placerad inom ett existerande layoutobjekt',
 	'plb-editor-saving-as-draft' => 'Sparar utkastslayout',
 	'plb-widget-name-plb_input' => 'Inmatningsruta',
 	'plb-widget-name-plb_mlinput' => 'Avsnitt',
@@ -3016,6 +3029,13 @@ $messages['sv'] = array(
 	'plb-parser-gallery-size-too-big' => 'Galleristorleken är för stor. Se hjälpsidan för rätt alternativ.',
 	'plb-parser-gallery-incorrect-spacing' => 'Galleriets avståndsparameter är inte korrekt. Se hjälpsidan för rätt alternativ.',
 	'plb-parser-gallery-incorrect-align' => 'Gallerijusteringen är inte korrekt inställd. Se hjälpsidan för rätt alternativ.',
+	'plb-property-editor-help-caption' => 'När användare skapar en sida från din layout, kommer detta vara inmatningsrutans titel för detta objekt.',
+	'plb-property-editor-help-instructions' => 'När användare skapar en sida från din layout, kommer detta visas i inmatningsrutan för detta objekt.',
+	'plb-property-editor-help-required' => 'Detta bestämmer om ett objekt krävs för att skapa en sida från din layout.',
+	'plb-property-editor-help-alignment' => 'Detta bestämmer bildens justering på den sista sidan.',
+	'plb-property-editor-help-maximum-width' => 'Detta bestämmer bildens maximala bredd på den sista sidan.',
+	'plb-property-editor-help-thumbnail' => 'Detta bestämmer om en bild på sista sidan är en miniatyr eller inte.',
+	'plb-property-editor-help-choices' => 'När användare skapar en sida från din layout är detta listan med alternativ som visas för denna artikel.',
 	'plb-property-editor-help-spacing' => 'Detta bestämmer avståndet mellan bilderna i galleriet.',
 	'plb-helpbox-title' => 'Vad är Wiki-layouter?',
 	'plb-helpbox-makesense' => 'Låter förnuftigt för mig! <br /> Fortsätt till Layout-byggaren',
@@ -3025,11 +3045,13 @@ $messages['sv'] = array(
 	'plb-helpbox-buttton-head1' => 'Låter vettigt för mig!',
 	'plb-helpbox-buttton-head2' => 'Fortsätt till Layout-byggaren.',
 	'plb-helpbox-checkboxinfo1' => 'Visa inte denna guide igen.',
+	'plb-helpbox-box3' => '<h1>Sidvisning</h1>När en redigerare har skapat en ny sida, kommer besökarna på din wiki se den färdiga sidan i layouten som du valde.',
 	'plb-helpbox-help-button-head3' => 'Redo att prova i layout-byggaren?',
 	'plb-helpbox-checkboxinfo2' => 'Visa inte denna guide igen.',
 	'plb-helpbox-help-desc' => 'Har du fortfarande frågor?',
 	'plb-helpbox-help-link' => 'Läs guiden för layout-byggaren.',
 	'plb-list-action-copy' => 'Ny wiki-kategori',
+	'plb-copy-confirm' => 'Genom att trycka på spara läggs denna sidlayout till på varje ny wiki som skapas i kategori(er) som du har valt. Var försiktig när du använder detta verktyg. Är du säker på att du vill spara?',
 	'plb-copy-delete-link' => 'Radera',
 	'plb-copy-cat-add' => 'Lägg till:',
 	'plb-copy-submit-link' => 'Spara',
@@ -3257,15 +3279,25 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'plb-special-form-cant-edit' => '您不能编辑此页。',
+	'plb-special-form-save-as-draft' => '保存为草稿',
 	'plb-special-form-submit-button' => '保存页面',
 	'plb-form-title' => '标题：',
+	'plb-list-count' => '文章数目',
 	'plb-list-action-delete' => '删除',
+	'plb-list-action-publish' => '发布',
 	'plb-list-action-create' => '创造页面',
 	'plb-parser-empty-value-image' => '添加话题',
+	'plb-parser-preview-image-user' => '由<b>$1</b>添加',
 	'plb-parser-preview-image-username' => '用户名',
+	'plb-parser-preview-image-add' => '选择一张图片',
+	'plb-parser-preview-sinput' => '用户的选择在此处显示。',
+	'plb-editor-add-element' => '添加项目',
+	'plb-editor-edit' => '编辑',
 	'plb-editor-preview-info' => '资料',
 	'plb-widget-name-plb_image' => '图片',
 	'plb-property-editor-spacing-small' => '小',
@@ -3276,9 +3308,16 @@ $messages['zh-hans'] = array(
 	'plb-property-editor-alignment-right' => '右',
 	'plb-property-editor-save' => '保存',
 	'plb-property-editor-cancel' => '取消',
+	'plb-parser-gallery-size-not-int' => '图库大小须为一个整数。请访问帮助页寻找纠正方案。',
+	'plb-parser-gallery-size-too-small' => '本图库过小。请访问帮助页寻找纠正方案。',
+	'plb-parser-gallery-size-too-big' => '本图库过大。请访问帮助页寻找纠正方案。',
+	'plb-parser-gallery-incorrect-align' => '图库的对齐方式设置有误。请访问帮助页寻找纠正方案。',
+	'plb-helpbox-dontshow' => '不再显示此教程。',
+	'plb-helpbox-help-desc' => '仍有问题？',
 	'plb-copy-delete-link' => '删除',
 	'plb-copy-cat-add' => '添加：',
 	'plb-copy-submit-link' => '保存',
+	'wikia-editor-modules-plb-list-title' => '正在加载列表...',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

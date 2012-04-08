@@ -163,8 +163,16 @@ $messages['bs'] = array(
 	'wikiadoption-adoption-successed' => 'Čestitke! Sada ste administator na ovoj wiki!',
 );
 
+/** Czech (Česky)
+ * @author Jezevec
+ */
+$messages['cs'] = array(
+	'wikiadoption-adoption-successed' => 'Blahopřejeme! Pro tento okamžik jste správce této wiki.',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
+ * @author Geitost
  * @author LWChris
  * @author MF-Warburg
  * @author Quedel
@@ -191,7 +199,7 @@ Bist du bereit, einen weiteren Schritt zu tun, um {{SITENAME}} zu helfen?',
 	'wikiadoption-not-enough-edits' => 'Auweia! Du musst mehr als 10 Bearbeitungen getätigt haben, um dieses Wiki adoptieren zu können.',
 	'wikiadoption-adopted-recently' => 'Auweia! Du hast in letzter Zeit bereits ein anderes Wiki adoptiert. Du musst eine Weile warten, bevor du ein weiteres Wiki adoptieren kannst.',
 	'wikiadoption-log-reason' => 'Automatische Wiki-Adoption',
-	'wikiadoption-notification' => '{{SITENAME}} kann adoptiert werden. Möchtest du hier Leiter werden? Adoptiere dieses Wiki, um loszulegen!  $2',
+	'wikiadoption-notification' => '{{SITENAME}} kann adoptiert werden. Möchtest du hier Leiter werden? Adoptiere dieses Wiki, um loszulegen! $2',
 	'wikiadoption-mail-first-subject' => 'Wir haben dich eine Weile nicht gesehen',
 	'wikiadoption-mail-first-content' => 'Hallo $1,
 
@@ -264,9 +272,11 @@ Hilfreiche Werkzeuge:
 [[Special:UserRights|Rechteverwaltung]]',
 );
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬) */
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Geitost
+ */
 $messages['de-formal'] = array(
-	'wikiadoption-notification' => "$1 kann adoptiert werden. Sie können der neue Verwalter werden. ''Jetzt adoptieren!''",
+	'wikiadoption-notification' => '{{SITENAME}} kann adoptiert werden. Möchten Sie hier Leiter werden? Adoptieren Sie dieses Wiki, um anzufangen! $2',
 );
 
 /** Spanish (Español)
@@ -728,6 +738,7 @@ $messages['it'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'wikiadoption-header' => 'Dës Wiki adoptéieren',
 	'wikiadoption-adopt-inquiry' => 'Fir méi ze wëssen!',
 	'wikiadoption-know-more-header' => 'Wann Dir méi wësse wëllt.',
 	'wikiadoption-mail-first-subject' => 'Mir hunn Iech schonn eng Zäit net méi gesinn.',
@@ -1792,6 +1803,7 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1800,16 +1812,38 @@ $messages['zh-hans'] = array(
 	'wikiadoption-button-adopt' => '是，我想要领养{{SITENAME}}！',
 	'wikiadoption-adopt-inquiry' => '了解更多！',
 	'wikiadoption-know-more-header' => '想知道更多吗？',
+	'wikiadoption-know-more-description' => '查询这些链接获取更多信息。当然，如果您遇到任何问题，请随时和我们联系！',
 	'wikiadoption-adoption-successed' => '恭喜！您现在是这个维基的管理员！',
+	'wikiadoption-not-allowed' => '我们很抱歉。您现在不能认领此维基。',
+	'wikiadoption-not-enough-edits' => '糟糕！您需要编辑10次以上方能领养此维基。',
 	'wikiadoption-log-reason' => '制动维基领养',
+	'wikiadoption-notification' => '{{SITENAME}}正等待认领。您是否对领导此维基感兴趣？那就从认领它开始吧！$2',
 	'wikiadoption-mail-first-subject' => '我们没有看到你在一段时间',
+	'wikiadoption-mail-second-subject' => '#WIKINAME 将很快被公示认领',
+	'wikiadoption-mail-second-content' => '嗨，$1,
+
+噢，不！现役管理员上一次在#WIKINAME上出现已经是60天前的事情了。管理员经常出现并有所贡献是很重要的，这样才能使维基持续顺利的运行。
+
+由于当前管理员已经多天没有出现，#WIKINAME将由其他编辑者认领。
+
+Wikia小组
+
+您可以退订本列表的改动，点击这里：$3',
+	'wikiadoption-welcome-header' => '恭喜！你已认领了{{SITENAME}}！',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'wikiadoption' => '自動wiki認領',
 	'wikiadoption-header' => '認領這個wiki',
 	'wikiadoption-button-adopt' => '是的，我想要認領{{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => '瞭解更多 ！',
+	'wikiadoption-know-more-header' => '想知道更多嗎？',
+	'wikiadoption-adoption-successed' => '恭喜 ！你現在是這個 wiki 的管理員了 ！',
+	'wikiadoption-adoption-failed' => '我們很抱歉。我們試圖使您成為管理員，但它並不成功。請 [http://community.wikia.com/Special:Contact 聯繫我們]，我們會儘量幫助你。',
+	'wikiadoption-not-allowed' => '很抱歉。你現在不能認領此 wiki。',
+	'wikiadoption-not-enough-edits' => '哎呀 ！您需要有超過 10 次對本wiki的編輯才能認領它。',
 );
 

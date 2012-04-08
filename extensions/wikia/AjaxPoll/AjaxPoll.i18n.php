@@ -40,11 +40,11 @@ $messages['ar'] = array(
 $messages['ast'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;del total de votos',
 	'ajaxpoll-thankyou' => '¡Gracies por votar!',
-	'ajaxpoll-error' => 'Hebo un problema al procesar el to votu; téntalo otra vuelta, por favor.',
+	'ajaxpoll-error' => 'Hebo un problema al procesar el to votu; tentalo otra vuelta, por favor.',
 	'ajaxpoll-summary' => 'La encuesta se creó a les $1 del $2, y de momentu votaron $3 persones.',
 	'ajaxpoll-submit' => '¡Vota!',
 	'ajaxpoll-closed' => 'Anguaño la encuesta ta zarrada. Esfruta los resultaos.',
-	'ajaxpoll-submitting' => "Aguarda, por favor, se ta unviando'l to votu...",
+	'ajaxpoll-submitting' => "Aguarda, por favor, ta unviandose'l to votu...",
 );
 
 /** Azerbaijani (Azərbaycanca)
@@ -466,15 +466,17 @@ $messages['oc'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Sp5uhe
  * @author Vae
  */
 $messages['pl'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;wszystkich głosów',
-	'ajaxpoll-thankyou' => 'Dziękujemy za Twój głos!',
+	'ajaxpoll-thankyou' => 'Dziękujemy za oddanie głosu!',
 	'ajaxpoll-error' => 'Wystąpił problem w trakcie przetwarzania głosu – spróbuj jeszcze raz.',
-	'ajaxpoll-summary' => 'Głosowanie utworzono dnia $2, o godzinie $1. {{PLURAL:$3|Głosowała $3 osoba|Głosowały $3 osoby|Głosowało $3 osób}}.',
-	'ajaxpoll-submit' => 'Zapisz głos!',
+	'ajaxpoll-summary' => 'Ankieta stworzona dnia $2, o godzinie $1.<br />
+Oddanych głosów: <i>$3</i>',
+	'ajaxpoll-submit' => 'Głosuj!',
 	'ajaxpoll-closed' => 'Głosowanie jest już zakończone. Życzymy przyjemnej lektury wyników.',
 	'ajaxpoll-submitting' => 'Proszę czekać – trwa zapisywanie głosu...',
 );
@@ -670,5 +672,17 @@ $messages['zh-hans'] = array(
 	'ajaxpoll-submit' => '投票！',
 	'ajaxpoll-closed' => '调查现已封闭。享受结果。',
 	'ajaxpoll-submitting' => '请稍候，正在递交您的投票……',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'ajaxpoll-thankyou' => '感謝您的投票 ！',
+	'ajaxpoll-error' => '處理您的投票發生問題，請再試一次。',
+	'ajaxpoll-summary' => '這項投票由 $1 在 $2上發起 ，目前為止有 $3 人投票。',
+	'ajaxpoll-submit' => '投票 ！',
+	'ajaxpoll-closed' => '投票現已封閉。享受結果。',
+	'ajaxpoll-submitting' => '請稍候，正提交您的投票...',
 );
 

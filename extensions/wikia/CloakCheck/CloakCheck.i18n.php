@@ -316,6 +316,9 @@ $messages['lb'] = array(
 	'cloakcheck-form-check' => 'Benotzernumm nokucken',
 	'cloakcheck-process-empty' => 'De Benotzernumm däerf net eidel sinn.',
 	'cloakcheck-process-username' => 'Benotzernumm: $1',
+	'cloakcheck-process-accountage-yes' => 'De Benotzerkont ass al genuch.',
+	'cloakcheck-process-accountage-no' => 'De Benotzerkont ass ze nei.',
+	'cloakcheck-process-edits-yes' => 'De Benotzer huet genuch Ännerungen.',
 );
 
 /** Macedonian (Македонски)
@@ -624,14 +627,18 @@ $messages['tr'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'cloakcheck-form-username' => '用户名：',
 	'cloakcheck-form-check' => '检查用户名',
+	'cloakcheck-process-empty' => '用户名不能为空。',
 	'cloakcheck-process-notexist' => '用户名不存在',
 	'cloakcheck-process-username' => '用户名：$1',
 	'cloakcheck-process-accountage-yes' => '用户够旧',
 	'cloakcheck-process-accountage-no' => '用户太新',
+	'cloakcheck-process-emailconf-yes' => '电子邮件地址已确认。',
+	'cloakcheck-process-edits-no' => '用户编辑数不足。',
 );
 

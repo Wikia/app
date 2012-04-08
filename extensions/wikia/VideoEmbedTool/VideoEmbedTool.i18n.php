@@ -110,7 +110,7 @@ $messages['qqq'] = array(
 	'vet-gallery' => '{{Identical|Gallery}}',
 );
 
-/** Abkhazian (Аҧсуа)
+/** Abkhazian (Аҧсшәа)
  * @author Temuri rajavi
  */
 $messages['ab'] = array(
@@ -1157,7 +1157,7 @@ $messages['ig'] = array(
 	'vet-find-btn' => 'Chọwa',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -1165,6 +1165,7 @@ $messages['inh'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author HalphaZ
  */
 $messages['it'] = array(
@@ -1191,7 +1192,7 @@ $messages['it'] = array(
 	'vet-insert3' => 'Inserisci questo video',
 	'vet-recent-inf' => 'Video inseriti recentemente',
 	'vet-back' => 'indietro',
-	'vet-close' => 'chiudi',
+	'vet-close' => 'Chiudi',
 	'vet-imagebutton' => 'Inserisci video',
 	'vet-show-message' => 'mostra messaggio',
 	'vet-hide-message' => 'nascondi messaggio',
@@ -2299,6 +2300,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Jopparn
+ * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -2345,7 +2347,7 @@ $messages['sv'] = array(
 	'vet-warn3' => 'Vänligen ange namnet på den video du vill lägga till',
 	'vet-imagelink' => '<b>Nytt!</b> Infoga videoklipp',
 	'vet-imagebutton' => 'Infoga videoklipp',
-	'vet-license-cc' => 'Licensierad under Creative Commons Attribution-Share Alike 3.0',
+	'vet-license-cc' => 'Gjord tillgänglig under licensen Creative Commons Erkännande-Dela Lika 3.0',
 	'vet-name-incorrect' => 'Detta videonamn innehåller ogiltiga tecken, som #',
 	'vet-description' => 'Skriv in den fulla URL-adressen från någon av de stödjande sidorna. Se',
 	'vet-uploadtext' => "'''Detta formulär tillåter dig att snabbt ladda upp och visa filer i artiklar.'''
@@ -2424,6 +2426,23 @@ $messages['te'] = array(
  */
 $messages['tet'] = array(
 	'vet-name' => 'Naran',
+);
+
+/** Thai (ไทย)
+ * @author Saipetch
+ */
+$messages['th'] = array(
+	'vet-find' => 'ค้นหาวิดีโอ',
+	'vet-find-btn' => 'ค้นหา',
+	'vet-rename' => 'เปลี่ยนชื่อวิดีโอ',
+	'vet-name' => 'ชื่อ',
+	'vet-size' => 'ขนาด',
+	'vet-width' => 'ความกว้าง',
+	'vet-close' => 'ปิด',
+	'vet-warn3' => 'กรุณาใส่ชื่อของวิดีโอที่คุณต้องการเพิ่ม',
+	'vet-show-message' => 'แสดงข้อความ',
+	'vet-hide-message' => 'ซ่อนข้อความ',
+	'vet-see-all' => 'ทั้งหมด',
 );
 
 /** Tagalog (Tagalog)

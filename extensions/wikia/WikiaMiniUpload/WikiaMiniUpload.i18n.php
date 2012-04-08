@@ -706,6 +706,7 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Geitost
  * @author Inkowik
  * @author LWChris
  * @author Sebastian Wallroth
@@ -750,7 +751,7 @@ $messages['de'] = array(
 	'wmu-success' => '<h1>Bild eingefügt</h1>Das von dir ausgesuchte Bild wurde erfolgreich in den Artikel eingefügt.',
 	'wmu-success-placeholder' => '<h1>Erfolg</h1>',
 	'wmu-return' => 'Zurück zur Bearbeitung',
-	'wmu-back' => 'Wählen Sie ein anderes Foto',
+	'wmu-back' => 'Ein weiteres Foto auswählen',
 	'wmu-close' => 'schließen',
 	'wmu-warn1' => 'Du musst zuerst einen Suchbegriff eingeben!',
 	'wmu-warn2' => 'Du musst zuerst eine Datei auswählen!',
@@ -777,17 +778,18 @@ $messages['de'] = array(
 	'wmu-gallery-btn2' => 'Galerie in Seite einfügen',
 	'wmu-no-preview' => 'Du kannst aus dem Vorschaumodus kein Bild hinzufügen',
 	'wmu-no-protect' => 'Diese Seite ist geschützt, du kannst ihr kein Bild hinzufügen',
-	'wmu-no-rights' => 'Du bist nicht berechtigt Bilder auf dieser Seite hinzuzufügen',
+	'wmu-no-rights' => 'Du bist nicht berechtigt, Bilder auf dieser Seite hinzuzufügen.',
 	'wmu-more-options' => 'Weitere Optionen',
 	'wmu-fewer-options' => 'Weniger Optionen',
 	'wmu-replace-default-caption' => 'Standard-Bildunterschrift ersetzen',
 	'wmu-appearance-in-article' => 'Aussehen im Artikel',
 	'wmu-alignment' => 'Ausrichtung',
-	'wmu-file-protected' => 'Dieses Bild ist geschützt',
+	'wmu-file-protected' => 'Dieses Bild ist geschützt.',
 	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuche es erneut.',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Geitost
  * @author LWChris
  * @author Tiin
  */
@@ -827,7 +829,7 @@ $messages['de-formal'] = array(
 	'wmu-success' => '<h1>Bild eingefügt</h1>Das von Ihnen ausgesuchte Bild wurde erfolgreich in den Artikel eingefügt.',
 	'wmu-success-placeholder' => '<h1>Erfolg</h1>',
 	'wmu-return' => 'Zurück zur Bearbeitung',
-	'wmu-back' => 'zurück',
+	'wmu-back' => 'Ein weiteres Foto auswählen',
 	'wmu-close' => 'schließen',
 	'wmu-warn1' => 'Sie müssen zuerst einen Suchbegriff eingeben!',
 	'wmu-warn2' => 'Sie müssen zuerst eine Datei auswählen!',
@@ -854,7 +856,7 @@ $messages['de-formal'] = array(
 	'wmu-gallery-btn2' => 'Galerie in Seite einfügen',
 	'wmu-no-preview' => 'Sie können aus dem Vorschaumodus kein Bild hinzufügen',
 	'wmu-no-protect' => 'Diese Seite ist geschützt, Sie können ihr kein Bild hinzufügen',
-	'wmu-no-rights' => 'Sie sind nicht berechtigt Bilder auf dieser Seite hinzuzufügen',
+	'wmu-no-rights' => 'Sie sind nicht berechtigt, Bilder auf dieser Seite hinzuzufügen.',
 	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuchen Sie es erneut.',
 );
 
@@ -1457,7 +1459,7 @@ $messages['id'] = array(
 	'wmu-no-rights' => 'Anda tidak diperbolehkan menambahkan gambar ke halaman ini',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -2043,41 +2045,42 @@ $messages['pfl'] = array(
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'wmu-upload-image' => 'Prześlij zdjęcie',
 	'wmu-title' => 'Prześlij fotografię',
 	'wmu-upload' => 'Prześlij',
-	'wmu-notlogged' => 'Zaloguj się lub Zarejestruj, aby wysłać obrazy z komputera',
+	'wmu-notlogged' => 'Zaloguj się lub zarejestruj, aby przesyłać obrazy z komputera',
 	'wmu-find' => 'Znajdź',
 	'wmu-thiswiki' => 'Ta wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Prześlij',
 	'wmu-find-btn' => 'Znajdź',
 	'wmu-flickr-inf' => 'Znajdź w serwisie Flickr pliki na odpowiedniej wolnej licencji i umieść je na wiki.',
-	'wmu-conflict-inf' => '<h1>Ups, plik o tej nazwie już istnieje.</h1>Co chcesz zrobić z <b>$1</b>?',
+	'wmu-conflict-inf' => '<h1>Plik o tej nazwie już istnieje.</h1>Co chcesz zrobić z <b>$1</b>?',
 	'wmu-rename' => 'Zmień nazwę obrazu',
-	'wmu-existing' => 'Skorzystaj z istniejącego obrazu',
-	'wmu-overwrite' => 'Nadpisz istniejącą grafikę',
+	'wmu-existing' => 'Użyj istniejącego obrazu',
+	'wmu-overwrite' => 'Zastąp istniejący obraz własnym',
 	'wmu-insert' => 'Wstaw',
-	'wmu-details-inf' => '<h1>Szczegóły pliku</h1>Podaj nazwę dla tego pliku. Może to być np. opis jego zawartości.',
+	'wmu-details-inf' => '<h1>Szczegóły pliku</h1>Podaj nazwę pliku. Może to być np. opis jego zawartości.',
 	'wmu-name' => 'Nazwa',
 	'wmu-license' => 'Licencja',
 	'wmu-licensing' => 'Licencjonowanie',
 	'wmu-details-inf2' => '<h1>Opcje artykułu</h1>Wybierz sposób wyświetlania tego pliku na stronie.',
 	'wmu-size' => 'Rozmiar',
 	'wmu-thumbnail' => 'Miniatura',
-	'wmu-fullsize' => 'Pełnowymiarowy ($1x$2pks.)',
+	'wmu-fullsize' => 'Pełen wymiar ($1x$2px)',
 	'wmu-width' => 'Szerokość',
-	'wmu-layout' => 'Orientacja',
-	'wmu-caption' => 'Podpis',
+	'wmu-layout' => 'Układ',
+	'wmu-caption' => 'Nagłówek',
 	'wmu-link' => 'Link',
 	'wmu-optional' => '(opcjonalne)',
 	'wmu-insert2' => 'Wstaw plik',
 	'wmu-prev' => 'Poprzednie 8',
 	'wmu-next' => 'Następne 8',
 	'wmu-flickr2' => 'Obrazy z Flickr ($1 {{PLURAL:$1|rezultat|rezultaty|rezultatów}})',
-	'wmu-insert3' => 'Wstaw ten obrazek',
+	'wmu-insert3' => 'Wstaw ten obraz',
 	'wmu-recent-inf' => 'Ostatnio przesłane obrazy',
 	'wmu-thiswiki2' => 'Obrazy z tej wiki ($1 {{PLURAL:$1|rezultat|rezultaty|rezultatów}})',
 	'wmu-success' => '<h1>Sukces</h1>Obraz został wstawiony.',
@@ -2088,22 +2091,22 @@ $messages['pl'] = array(
 	'wmu-warn1' => 'Należy najpierw określić zapytanie!',
 	'wmu-warn2' => 'Musisz najpierw wybrać plik!',
 	'wmu-warn3' => 'Musisz najpierw określić nazwę pliku!',
-	'wmu-imagelink' => '<b>Nowe!</b> Dodaj obrazy',
+	'wmu-imagelink' => '<b>Nowość!</b> Dodaj obrazy',
 	'wmu-imagebutton' => 'Dodaj obrazy',
-	'wmu-license-cc' => 'Udostępniane na licencji Creative Commons Uznanie autorstwa – Na tych samych warunkach 3.0',
-	'wmu-bad-extension' => 'Próbowano wysłać plik niedopuszczalnego typu. Spróbuj ponownie.',
-	'wmu-filetype-missing' => 'Brak rozszerzenia w nazwie przesyłanego pliku.',
-	'wmu-filetype-incorrect' => 'Przesyłany plik ma nieprawidłowe rozszerzenie.',
+	'wmu-license-cc' => 'Na licencji Creative Commons Attribution-Share Alike 3.0',
+	'wmu-bad-extension' => 'Nieprawidłowe rozszerzenie pliku. Spróbuj ponownie.',
+	'wmu-filetype-missing' => 'Brak rozszerzenia w nazwie pliku',
+	'wmu-filetype-incorrect' => 'Nieprawidłowe rozszerzenie pliku',
 	'wmu-hide-license-msg' => 'ukryj treść licencji',
 	'wmu-show-license-msg' => 'pokaż treść licencji',
-	'wmu-max-thumb' => 'przekroczony maksymalny rozmiar dla miniatury, przywrócono wielkość pierwotną',
+	'wmu-max-thumb' => 'przekroczono maksymalny rozmiar miniatury, przywrócono wielkość pierwotną',
 	'wmu-notallowed' => 'Nie można przesyłać obrazów na tą wiki',
-	'wmu-readonly' => 'Nie można przesyłać grafik ponieważ wiki jest w trybie tylko do odczytu.',
+	'wmu-readonly' => 'Nie można przesłać obrazów ponieważ wiki jest obecnie w trybie tylko do odczytu.',
 	'wmu-placeholder' => 'Wypełniacz',
 	'wmu-gallery' => 'Galeria',
 	'wmu-columns' => '$1 {{PLURAL:$1|kolumna|kolumny|kolumn}}',
 	'wmu-column' => 'Kolumny',
-	'wmu-added-from-plc' => 'Dokument dodany przez pole obrazka',
+	'wmu-added-from-plc' => 'Plik dodany przez pole obrazka',
 	'wmu-uploaddisabled' => 'Przesyłanie plików zostało na tej wiki zablokowane.',
 	'wmu-gallery-success' => 'Dodano obraz do nowej galerii. Kliknij poniżej, aby dodać więcej obrazów lub wstawić galerię',
 	'wmu-gallery-btn1' => 'Dodaj kolejny obraz',
@@ -2308,11 +2311,13 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'wmu-upload-image' => 'Enviar Imagem',
+	'wmu-title' => 'Carregar Foto',
 	'wmu-upload' => 'Carregar',
 	'wmu-notlogged' => 'Autentique-se ou registre-se para importar imagens do seu computador',
 	'wmu-find' => 'Procurar',
@@ -2326,7 +2331,7 @@ $messages['pt-br'] = array(
 	'wmu-existing' => 'Usar imagem existente',
 	'wmu-overwrite' => 'Substituir a imagem existente pela sua',
 	'wmu-insert' => 'Inserir',
-	'wmu-details-inf' => '<h1>Detalhes do ficheiro</h1>Especifique um nome descritivo para este ficheiro.',
+	'wmu-details-inf' => '<h1>Detalhes do arquivo</h1>Especifique um nome descritivo para este arquivo.',
 	'wmu-name' => 'Nome',
 	'wmu-license' => 'Licença',
 	'wmu-licensing' => 'Licenciamento',
@@ -2554,6 +2559,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -2603,7 +2609,7 @@ $messages['sv'] = array(
 	'wmu-warn3' => 'Du måste ange filnamn först!',
 	'wmu-imagelink' => '<b>Nytt!</b> Lägg till bilder',
 	'wmu-imagebutton' => 'Lägg till bilder',
-	'wmu-license-cc' => 'Licensierad under Creative Commons Attribution-Share Alike 3.0',
+	'wmu-license-cc' => 'Gjord tillgänglig under licensen Creative Commons Erkännande-Dela Lika 3.0',
 	'wmu-bad-extension' => 'Du försökte ladda upp en olaglig filtyp. Försök igen.',
 	'wmu-filetype-missing' => 'Denna uppladdning saknas dess filnamnstillägg',
 	'wmu-filetype-incorrect' => 'Denna uppladdning har en felaktig filändelse',
@@ -2877,5 +2883,14 @@ $messages['zh-hans'] = array(
 	'wmu-alignment' => '对齐',
 	'wmu-file-protected' => '本图片受到保护',
 	'wmu-file-error' => '抱歉，上传过程中出错了。请再试一次。',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wmu-upload-image' => '上傳圖片',
+	'wmu-title' => '上傳圖片',
+	'wmu-upload' => '上傳',
 );
 

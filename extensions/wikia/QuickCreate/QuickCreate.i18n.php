@@ -305,3 +305,10 @@ $messages['uk'] = array(
 	'quickcreate-desc' => 'Додає кнопку створення нової сторінки з можливістю увійти в систему для анонімних користувачів',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'quickcreate-desc' => '添加“创建新页面”按钮，它具有使匿名用户登录的功能。',
+);
+

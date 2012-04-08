@@ -506,21 +506,47 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Ilkea
  */
 $messages['fi'] = array(
+	'createpage-desc' => 'Mahdollistaa uusien sivujen luonnin käyttäen Wikian WYSIWYG muokkainta',
 	'createpage-sp-title' => 'Luo uusi artikkeli',
 	'createpage_title' => 'Luo uusi artikkeli',
 	'createpage_title_caption' => 'Otsikko',
 	'createpage_enter_text' => 'Kirjoita tekstiä tähän:',
 	'createpage_empty_title_error' => 'Otsikko vaadittu',
+	'createpage_empty_article_body_error' => 'Sivulla pitää olla tekstiä',
 	'createpage_invalid_title_error' => 'Virheellinen otsikko',
 	'createpage_article_already_exists' => 'Artikkeli tuolla nimellä on jo olemassa.
 Valitse eri nimi.',
 	'createpage_spam' => 'Muokkaustasi ei valitettavasti voitu tallentaa',
+	'createpage_cant_edit' => 'Ei voitu suorittaa muokkausta',
 	'createpage-dialog-title' => 'Luo uusi artikkeli',
 	'createpage-dialog-message1' => 'Olet luomassa uutta sivua.',
+	'createpage-dialog-message2' => 'Miksi haluat kutsua sitä?',
+	'createpage-dialog-choose' => 'Valitse sivun ulkoasu:',
+	'createpage-dialog-format' => 'Oletus ulkoasu',
 	'createpage-dialog-blank' => 'Tyhjä sivu',
 	'createpage-error-empty-title' => 'Kirjoita artikkelisi otsikko',
+	'createpage-error-invalid-title' => 'Sivun otsikko ei valitettavasti kelpaa.
+Käytä jotain muuta otsikkoa.',
+	'createpage-error-article-exists' => 'Tämän niminen sivu on jo olemassa.
+Voit siirtyä <a href="$1">$2</a>, tai nimetä sivusi uudelleen',
+	'createpage-error-article-spam' => 'Valitettavasti spam-suodatin hylkäsi antamasi sivun otsikon.
+Käytä eri otsikkoa.',
+	'createpage-error-article-blocked' => 'Valitettavasti et pysty luomaan sivua tällä hetkellä.',
+	'tog-createpagedefaultblank' => 'Käytä tyhjää sivua oletuksena uutta sivua luodessa',
+	'tog-createpagepopupdisabled' => 'Poista käytöstä "Luo uusi artikkeli" virta (Ei suositeltu)',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Kirjoita sivusi ensimmäinen kappale tähän.
+
+==Väliotsikko==
+
+Kirjoita sivusi ensimmäinen osio tähän.
+
+==Väliotsikko==
+
+Kirjoita sivusi toinen osio tähän.',
 );
 
 /** French (Français)
@@ -819,7 +845,7 @@ $messages['ja'] = array(
 	'createpage-desc' => 'ウィキアのWYSIWYGエディターを使って、新しいページを作成できるようにする',
 	'createpage-sp-title' => '新規記事を作成',
 	'createpage_title' => '新規記事を作成',
-	'createpage_title_caption' => 'タイトル:',
+	'createpage_title_caption' => 'タイトル',
 	'createpage_enter_text' => '本文:',
 	'createpage_empty_title_error' => 'タイトルが必要です',
 	'createpage_empty_article_body_error' => '本文にテキストが必要です',
@@ -839,7 +865,7 @@ $messages['ja'] = array(
 	'createpage-error-article-spam' => 'このタイトルはスパムフィルターによって拒否されました。他のタイトルに変更してください。',
 	'createpage-error-article-blocked' => '現在、記事が作成できなくなっています。',
 	'tog-createpagedefaultblank' => '白紙ページを新規記事の作成にデフォルトで使用する',
-	'tog-createpagepopupdisabled' => 'ポップアップウィンドウによるページの作成を無効にする',
+	'tog-createpagepopupdisabled' => '新規記事作成支援機能を無効にする（非推奨）',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 ここに導入部分（第一段落）を書く。
 
@@ -944,6 +970,46 @@ Schreiwt déi éischt Sektioun vun Ärem Artikel hei.
 == Iwwerschrëft vun der Sektioun ==
 
 Schreiwt déi zweet Sektioun vun Ärem Artikel hei.',
+);
+
+/** Lushai (Mizo ţawng)
+ * @author RMizo
+ */
+$messages['lus'] = array(
+	'createpage-desc' => 'Wikia WYSIWYG ziahna hmanga phêk thar siam theihna',
+	'createpage-sp-title' => 'Phêk thar siamna',
+	'createpage_title' => 'Phêk thar siam rawh le',
+	'createpage_title_caption' => 'Thupui',
+	'createpage_enter_text' => 'Thu:',
+	'createpage_empty_title_error' => 'Thupui neihtir a ngai',
+	'createpage_empty_article_body_error' => 'Thuziak a awm a ngai',
+	'createpage_invalid_title_error' => 'Hming pawm loh',
+	'createpage_article_already_exists' => 'Hemi phêk hming pu hi a awm tawh.
+Hming thar khawngaihin thlang rawh.',
+	'createpage_spam' => 'A pawi hle mai, i thuziak a dahţhat theih loh tlat',
+	'createpage_cant_edit' => 'Siamţhat a tlawlh',
+	'createpage-dialog-title' => 'Phêk thar siamna',
+	'createpage-dialog-message1' => 'Lè lé lè le, phêk thar i siam e!',
+	'createpage-dialog-message2' => 'Engtinnge i koh dawn le?',
+	'createpage-dialog-choose' => 'Phêk intàrphung thlang rawh le:',
+	'createpage-dialog-format' => 'Intàrphung pangngai',
+	'createpage-dialog-blank' => 'Phêk ruak',
+	'createpage-error-empty-title' => 'Phêk hming khawngaihin ziak rawh',
+	'createpage-error-invalid-title' => 'A pawi hle mai, phêk hming pawm loh i thlang palh.
+Hming thar khawngaihin thlang rawh.',
+	'createpage-error-article-exists' => 'Hemi hming pu phêk hi a awm tawh tlat.
+<a href="$1">$2</a>-ah i kal thei ang, a nih loh paw\'n a phêk hming i thlâk thei bawk ang.',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+
+I phêk hläwm hmasa ber hetah hian ziak la.
+
+==Ţhen hming==
+
+I phêk ţhen hmasa ber hetah.
+
+==Ţhen hming==
+
+Hetah hian a ţhen hnihna.',
 );
 
 /** Malagasy (Malagasy)
@@ -1738,7 +1804,7 @@ $messages['uk'] = array(
 Напишіть тут другий розділ вашої статті.',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
@@ -1810,6 +1876,7 @@ $messages['zh-cn'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1817,12 +1884,25 @@ $messages['zh-hans'] = array(
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '标题',
 	'createpage_enter_text' => '输入文字',
+	'createpage_cant_edit' => '无法执行编辑',
 	'createpage-dialog-title' => '创造一个新页面',
+	'createpage-dialog-message1' => '喔~ 您将创建一个新页面！',
 	'createpage-dialog-blank' => '空白页面',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+在这里撰写第一段落。
+
+==标题项==
+
+在这里撰写第一项。
+
+==标题项==
+
+在这里撰写第二项。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Anakmalaysia
+ * @author Ffaarr
  * @author Oapbtommy
  */
 $messages['zh-hant'] = array(
@@ -1830,6 +1910,17 @@ $messages['zh-hant'] = array(
 	'createpage_title' => '建立一個新的頁面',
 	'createpage_title_caption' => '標題',
 	'createpage_enter_text' => '輸入文字',
+	'createpage_empty_title_error' => '需要標題',
+	'createpage_empty_article_body_error' => '需要頁面文本',
+	'createpage_invalid_title_error' => '無效的標題',
+	'createpage_article_already_exists' => '已存在具有該名稱的頁面。 
+請選擇不同的名稱。',
+	'createpage_spam' => '抱歉，你的編輯無法儲存',
+	'createpage_cant_edit' => '不能執行編輯',
+	'createpage-dialog-title' => '建立一個新的頁面',
+	'createpage-dialog-message2' => '你想叫它什麼？',
+	'createpage-error-article-blocked' => '對不起，您不能在這個時候創建該頁面。',
+	'tog-createpagedefaultblank' => '使用空白頁作為預設創建新頁面',
 );
 
 /** Chinese (Hong Kong) (‪中文(香港)‬)
