@@ -486,60 +486,6 @@ $(window).bind('load', function() {
 	}
 });
 
-
-
-/**
- * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
- *
- * HTML5 placeholder attribute fallback for HTML5-disabled browsers.
- * A placeholder CSS class should be defined (use the forms mixin in Oasis)
- */
-jQuery.fn.placeholder = function() {
-	//feature detection
-	var hasNativeSupport = 'placeholder' in document.createElement('input');
-
-	return this.each(function() {
-
-		if(!hasNativeSupport){
-			var input = $(this);
-			var text = input.attr('placeholder');
-
-			if(input.val() == ''){
-				input
-					.addClass('placeholder')
-					.val(text);
-			}
-
-			input.bind('focus.placeholder', function(){
-				if(input.val() == text){
-					input.val('');
-				}
-
-				input.removeClass('placeholder');
-			});
-
-			input.bind('blur.placeholder', function(){
-				if(input.val() == ''){
-					input
-						.addClass('placeholder')
-						.val(text);
-				}
-			});
-
-			//clear the field is a submit event is fired somewhere around here
-			input.closest('form').bind('submit.placeholder', function(){
-				if(input.val() == text){
-					input.val('');
-				}
-			});
-		}
-	})
-};
-
-$(function() {
-	$('input[placeholder], textarea[placeholder]').placeholder();
-});
-
 /**
  * @author Marcin Maciejewski <marcin@wikia-inc.com>
  *

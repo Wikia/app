@@ -30,6 +30,9 @@
 			<? if( !empty($user['group']) ): ?>
 				<span class="group"><?= $user['group']; ?></span>
 			<? endif; ?>
+			<? if(!empty($user['chatBanned'])): ?>
+				<span class="group"><?= wfMsg('user-identity-box-banned-from-chat'); ?></span>
+			<? endif; ?>
 		</hgroup>
 
 		<? if( $canEditProfile ): ?>

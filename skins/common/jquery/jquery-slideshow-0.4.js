@@ -87,9 +87,7 @@
 		topZIndex: 100,							//z-index of top slide
 		stayOn: false,							//stay on a particular slide (e.g. 1,2,3) if false, slideshow automatically animates
 		stopOnSelect: true,						//stop slideshow if user presses controls
-		direction: 1,							//direction: 1 forward, -1 backward
-		transitionType: 'crossFade',			//crossFade, crossWipe
-		slideWidth:	'575px'						//it was either this or require the dimensions plugin
+		direction: 1							//direction: 1 forward, -1 backward
 	};
 	var slideshowId = 0;
 
@@ -108,8 +106,7 @@
 			num_slides = 0,
 			num_buttons = 0,
 			slide_width = '0px',
-			obj = jQuery(this),
-			objId = obj.attr('id');
+			obj = jQuery(this);
 
 		obj.data('slideshowed',true);
 
@@ -139,14 +136,8 @@
 			});
 		});
 
-		function doSlide(objId, enqueueNextSlide) {
-			var thisObj = jQuery('#'+objId);
-
-			if (!thisObj.exists()) {
-				return;
-			}
-
-			thisObj.find(button_selector).
+		function doSlide(enqueueNextSlide) {
+			obj.find(button_selector).
 				removeClass('selected').
 				eq(curslide).addClass('selected');
 
@@ -154,7 +145,7 @@
 				options.slideCallback(curslide);
 			}
 
-			thisObj.find('.'+ options.slidesClass).each(function(){
+			obj.find('.'+ options.slidesClass).each(function(){
 				var childNodes = jQuery(this).children('li');
 
 				childNodes.eq(curslide).animate({opacity:'show'}, options.fadeDuration, enqueueNextSlide === true ? startAnimation : undefined);
@@ -163,14 +154,13 @@
 
 			// Wikia
 			fireEvent('slide');
-			thisObj.data('currentSlide', curslide);
+			obj.data('currentSlide', curslide);
 		}
 
-		function moveSlide(direction,objId, enqueueNextSlide) {
-			jQuery('ul.debug').append('<li>moveSlide +  / ' + direction+'</li>');
-
+		function moveSlide(direction, enqueueNextSlide) {
 			curslide = curslide + direction;
 			prevslide = curslide - direction;
+
 			switch(direction){
 				case 1:
 					if(curslide==num_slides){
@@ -186,12 +176,12 @@
 					break;
 			}
 
-			doSlide(objId, enqueueNextSlide);
+			doSlide(enqueueNextSlide);
 		}
 
 		function startAnimation() {
 			everyTime(options.slideDuration, obj, function() {
-				moveSlide(options.direction,objId, true /* enqueue next slide */);
+				moveSlide(options.direction, true /* enqueue next slide */);
 			});
 		}
 
@@ -205,29 +195,29 @@
 			doSlide();
 		} else {
 			startAnimation();
-
 			fireEvent('onStart');
 		}
-
 
 		obj.find('.'+options.prevClass).click(function(){
 			if(!$(this).hasClass('inactive')){
 				stopTime(obj);
-				moveSlide(-1,objId);
+				moveSlide(-1);
 
 				fireEvent('onPrev');
 				fireEvent('onStop');
 			}
 		});
+
 		obj.find('.'+options.nextClass).click(function(){
 			if(!$(this).hasClass('inactive')){
 				stopTime(obj);
-				moveSlide(1,objId);
+				moveSlide(1);
 
 				fireEvent('onNext');
 				fireEvent('onStop');
 			}
 		});
+
 		obj.find('.'+options.pauseClass).click(function(){
 				stopTime(obj);
 
@@ -235,6 +225,7 @@
 				$(this).addClass(options.blockedClass);
 				obj.find('.'+options.startClass).removeClass(options.blockedClass);
 		});
+
 		obj.find('.'+options.startClass).click(function(){
 			startAnimation();
 
@@ -248,14 +239,13 @@
 		});
 
 		obj.find(button_selector).click(function(){
-			var thisObj = jQuery('#'+objId);
 			if(options.stopOnSelect){
 				stopTime(obj);
 
 				fireEvent('onStop');
 			}
-			curslide = jQuery(thisObj.find(button_selector)).index(this);
-			doSlide(objId);
+			curslide = obj.find(button_selector).index(this);
+			doSlide();
 		});
 
 		/**
@@ -264,9 +254,7 @@
 
 		// fire custom event so we can handle slideshow animation
 		function fireEvent(eventType) {
-			var slideshow = jQuery('#'+objId);
-
-			slideshow.trigger(eventType, {
+			obj.trigger(eventType, {
 				currentSlideId: curslide,
 				totalSlides: num_slides
 			});
@@ -276,7 +264,7 @@
 		// usage: $('#foo').trigger('selectSlide', {slideId: 2});
 		obj.bind('selectSlide', function(ev, data) {
 			curslide = parseInt(data.slideId);
-			doSlide(objId);
+			doSlide();
 		});
 
 		// add method to (re)start slideshow animation

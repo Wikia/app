@@ -42,6 +42,7 @@ $config['oasis_jquery'] = array(
 		'//skins/common/jquery/jquery.timeago.js',
 		'//skins/common/jquery/jquery.store.js',
 		'//skins/common/jquery/jquery.wikia.js',
+		'//skins/common/jquery/jquery.wikia.placeholder.js',
 		'//skins/common/jquery/jquery.expirystorage.js',
 		'//skins/oasis/js/tables.js',
 		'//skins/oasis/js/common.js'
@@ -415,6 +416,7 @@ $config['chat_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
+		'//skins/common/jquery/jquery.wikia.placeholder.js',
 		'//extensions/wikia/Chat/js/lib/socket.io.client.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/Chat/js/emoticons.js', // must be before controllers.js
@@ -423,11 +425,19 @@ $config['chat_js'] = array(
 		'//extensions/wikia/Chat/js/models/models.js',
 		'//extensions/wikia/Chat/js/controllers/controllers.js',
 		'//extensions/wikia/Chat/js/views/views.js',
+		'//extensions/wikia/Chat/js/views/ChatBanModal.js',
+	)
+);
+
+$config['chat_ban_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Chat/js/views/ChatBanModal.js',
+		'//extensions/wikia/Chat/js/controllers/ChatBanModalLogs.js'
 	)
 );
 
 /** ThemeDesigner **/
-
 $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(

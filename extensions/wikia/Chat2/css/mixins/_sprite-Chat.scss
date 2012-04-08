@@ -1,0 +1,238 @@
+
+// @autosprite-start
+@mixin sprite-Chat-base() {
+	background-color: transparent;
+	background-image: url('/extensions/wikia/Chat/images/sprite-Chat.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+@mixin sprite-Chat($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: allow-dark.png@72,0,964716a6240bf5866e21426f3d3faac4
+	@if $imageName == 'allow-dark' {
+		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: allow-light.png@103,0,a48c0dcf10563fd193767544fb3a8060
+	@if $imageName == 'allow-light' {
+		$image-x: 103px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: ban-dark.png@134,0,4b0ed7a1b6bda335fd8336cc99b0148e
+	@if $imageName == 'ban-dark' {
+		$image-x: 134px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: ban-light.png@165,0,56a4a9197aea0d72c726bbeddaaa7e7a
+	@if $imageName == 'ban-light' {
+		$image-x: 165px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: chat_mod-dark.png@196,0,acbab603bf3b3bdd17006ef64dd3443a
+	@if $imageName == 'chat_mod-dark' {
+		$image-x: 196px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: chat_mod-light.png@227,0,3693b0a1bd6bc006a063b2832da4514c
+	@if $imageName == 'chat_mod-light' {
+		$image-x: 227px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: contributions-dark.png@258,0,444105d21ec22b2417f35030bc789969
+	@if $imageName == 'contributions-dark' {
+		$image-x: 258px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: contributions-light.png@289,0,21e26857ffc55aabf061d1efd0bf9403
+	@if $imageName == 'contributions-light' {
+		$image-x: 289px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: kick-dark.png@320,0,08688633eccef69a7791b861c09a7e16
+	@if $imageName == 'kick-dark' {
+		$image-x: 320px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: kick-light.png@351,0,3c438874c328ad695f13828e1bf04ea4
+	@if $imageName == 'kick-light' {
+		$image-x: 351px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: message_wall-dark.png@382,0,2efa835a2716775812132890de3ac503
+	@if $imageName == 'message_wall-dark' {
+		$image-x: 382px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: message_wall-light.png@413,0,ea313a4fd3b8b9d11861673c91054093
+	@if $imageName == 'message_wall-light' {
+		$image-x: 413px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: private_message-dark.png@444,0,1584461e1e346ae4c1855f0410bd232f
+	@if $imageName == 'private_message-dark' {
+		$image-x: 444px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: private_message-light.png@475,0,ee382fe97cf254c985e3794829d02dbc
+	@if $imageName == 'private_message-light' {
+		$image-x: 475px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: private_message_block-dark.png@506,0,c29ef7c8880272ab227424efd6b6f9d1
+	@if $imageName == 'private_message_block-dark' {
+		$image-x: 506px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: private_message_block-light.png@533,0,ce976b00e00150b609509b4e18bd3468
+	@if $imageName == 'private_message_block-light' {
+		$image-x: 533px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: wikia_bracket_i_blue.png@560,0,6e260bd30c9e5eb54ab11680b20c15e1
+	@if $imageName == 'wikia_bracket_i_blue' {
+		$image-x: 560px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: wikia_bracket_i_white.png@588,0,c8b9024e5b0f56d8cdb11c79d059b905
+	@if $imageName == 'wikia_bracket_i_white' {
+		$image-x: 588px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: wikia_favicon-dark.png@616,0,c554cce0763d724e8e7450aa575fcf63
+	@if $imageName == 'wikia_favicon-dark' {
+		$image-x: 616px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: wikia_favicon_white-dark.png@644,0,4e520cc2a3fbb0f6625a6abb28804dbc
+	@if $imageName == 'wikia_favicon_white-dark' {
+		$image-x: 644px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0px - $image-x;
+		$position-y: 0px - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-Chat-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-Chat-base;
+	@include sprite-Chat($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-Chat-deep($width: 0,$height: 0) {
+	@include sprite-Chat-base;
+	&.allow-dark {
+		@include sprite-Chat('allow-dark',$width,$height);
+	}
+	&.allow-light {
+		@include sprite-Chat('allow-light',$width,$height);
+	}
+	&.ban-dark {
+		@include sprite-Chat('ban-dark',$width,$height);
+	}
+	&.ban-light {
+		@include sprite-Chat('ban-light',$width,$height);
+	}
+	&.chat-mod-dark {
+		@include sprite-Chat('chat_mod-dark',$width,$height);
+	}
+	&.chat-mod-light {
+		@include sprite-Chat('chat_mod-light',$width,$height);
+	}
+	&.contributions-dark {
+		@include sprite-Chat('contributions-dark',$width,$height);
+	}
+	&.contributions-light {
+		@include sprite-Chat('contributions-light',$width,$height);
+	}
+	&.kick-dark {
+		@include sprite-Chat('kick-dark',$width,$height);
+	}
+	&.kick-light {
+		@include sprite-Chat('kick-light',$width,$height);
+	}
+	&.message-wall-dark {
+		@include sprite-Chat('message_wall-dark',$width,$height);
+	}
+	&.message-wall-light {
+		@include sprite-Chat('message_wall-light',$width,$height);
+	}
+	&.private-message-dark {
+		@include sprite-Chat('private_message-dark',$width,$height);
+	}
+	&.private-message-light {
+		@include sprite-Chat('private_message-light',$width,$height);
+	}
+	&.private-message-block-dark {
+		@include sprite-Chat('private_message_block-dark',$width,$height);
+	}
+	&.private-message-block-light {
+		@include sprite-Chat('private_message_block-light',$width,$height);
+	}
+	&.wikia-bracket-i-blue {
+		@include sprite-Chat('wikia_bracket_i_blue',$width,$height);
+	}
+	&.wikia-bracket-i-white {
+		@include sprite-Chat('wikia_bracket_i_white',$width,$height);
+	}
+	&.wikia-favicon-dark {
+		@include sprite-Chat('wikia_favicon-dark',$width,$height);
+	}
+	&.wikia-favicon-white-dark {
+		@include sprite-Chat('wikia_favicon_white-dark',$width,$height);
+	}
+}
+// @autosprite-end

@@ -31,6 +31,7 @@ $messages['en'] = array(
 	'user-identity-box-avatar-cancel' => 'Cancel',
 	'user-identity-box-avatar-anon-user-error' => 'You have to log-in before you change anything',
 	'user-identity-box-hide-edits-wikis' => 'Hide All',
+	'user-identity-box-banned-from-chat' => 'Banned From Chat',
 
 	'user-identity-box-aka-label' => '<span>aka</span> $1',
 	'user-identity-box-my-twitter' => 'My Twitter',
@@ -1027,7 +1028,7 @@ $messages['ms'] = array(
 	'usermasthead-log-alt' => 'Log suntingan inulangan pengguna',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (Norsk (bokmål))
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1745,7 +1746,7 @@ $messages['vi'] = array(
 	'usermasthead-log-message' => 'bổ sung thông tin hồ sơ',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Anakmalaysia
  * @author Hzy980512
  */
