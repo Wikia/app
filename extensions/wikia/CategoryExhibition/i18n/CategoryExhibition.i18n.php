@@ -491,10 +491,15 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'category-exhibition-mostvisited' => '最多访问',
+	'category-exhibition-recentedits' => '最近编辑',
+	'category-exhibition-page-header' => '分类"$1"中的页面',
 	'category-exhibition-subcategories-header' => '子类别',
 	'category-exhibition-blogs-header' => '博客帖子',
+	'category-exhibition-display-old' => '分类（列表视图）',
 );
 

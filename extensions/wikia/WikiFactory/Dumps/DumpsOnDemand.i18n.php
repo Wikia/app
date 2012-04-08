@@ -534,6 +534,7 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Marcin Łukasz Kiejzik
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -548,7 +549,7 @@ $messages['pl'] = array(
 	'dump-database-request-submit' => 'Wyślij zapytanie',
 	'dump-database-request-already-submitted' => 'Zrzut był pobierany niedawno (mniej niż 7 dni temu)',
 	'dump-database-request-requested' => 'Wniosek o wysłanie zrzutu bazy danych',
-	'dump-database-info-more' => 'Proszę zobaczyć<a href="http://community.wikia.com/wiki/Help:Database_download">tę stronę</a> po więcej informacji',
+	'dump-database-info-more' => 'Zobacz <a href="http://community.wikia.com/wiki/Help:Database_download">tę stronę</a> aby uzyskać więcej informacji.',
 );
 
 /** Piedmontese (Piemontèis)

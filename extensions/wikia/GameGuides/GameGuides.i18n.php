@@ -173,6 +173,13 @@ $messages['ru'] = array(
 	'wikiagameguides-desc' => 'Модули мобильного приложения Wikia Game Guides',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Yerpo
+ */
+$messages['sl'] = array(
+	'wikiagameguides-desc' => 'Moduli za mobilno aplikacijo Wikia Game Guides',
+);
+
 /** Swedish (Svenska)
  * @author WikiPhoenix
  */

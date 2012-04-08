@@ -586,10 +586,24 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'mostvisitedpagessearchbtn' => '搜寻',
+	'mostvisitedpageslatest' => '在最近$1分钟内',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'mostvisitedpages' => '訪問次數最多的頁面',
+	'mostvisitedpagessearchtext' => '文章名稱：',
+	'mostvisitedpagessearchbtn' => '搜尋',
+	'mostvisitedpageslatest' => '在最近 $1 分鐘',
+	'mostvisitedpageslatestlink' => '查詢最近被訪問的網頁',
+	'mostvisitedpagesalllink' => '查詢訪問數最多的頁面',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

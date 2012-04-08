@@ -284,9 +284,10 @@ De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een 
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
-	'batchuserrights' => 'Wsadowe uprawnienia użytkowników',
+	'batchuserrights' => 'Masowe zarządzanie uprawnieniami',
 	'batchuserrights-desc' => 'Umożliwia dodawanie jednego lub większej liczby użytkowników do grupy w jednym ruchu',
 	'batchuserrights-names' => 'Nazwy użytkowników do dodania do tej grupy (po jednej w wierszu):',
 	'batchuserrights-intro' => 'Ta strona pozwoli Ci dodać grupę do wielu użytkowników naraz.

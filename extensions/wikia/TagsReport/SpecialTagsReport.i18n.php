@@ -466,12 +466,13 @@ $messages['pt'] = array(
  * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'tagsreport' => 'Relatório de etiquetas',
 	'tagsreporttitle' => 'Relatório de etiquetas',
 	'tagsreportselecttag' => 'Selecionar etiqueta:',
-	'tagsreportgo' => 'Mostrar',
+	'tagsreportgo' => 'Exibir',
 	'tagsreportnotspecify' => 'Você ainda não selecionou nenhum etiqueta especial',
 	'tagsreportnoresults' => 'Nenhum resultado encontrado',
 	'tagsreportmainnspace' => 'Principal',
@@ -584,7 +585,7 @@ $messages['uk'] = array(
 	'tagsreportgenerated' => 'Створено $1 о $2',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

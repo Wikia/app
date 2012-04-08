@@ -189,6 +189,13 @@ $messages['br'] = array(
 	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'categoryselect-code-view-placeholder' => 'Afegeix categories aquí, p.e. [[Categoria:Nom]]',
+);
+
 /** Sorani (کوردی) */
 $messages['ckb'] = array(
 	'categoryselect-button-save' => 'پاشەکەوت',
@@ -320,6 +327,7 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Crt
+ * @author Ilkea
  * @author Tm T
  * @author Tofu II
  * @author VezonThunder
@@ -346,7 +354,7 @@ $messages['fi'] = array(
 	'categoryselect-error-db-locked' => 'Tietokanta on lukittu.',
 	'categoryselect-edit-abort' => 'Laajennusriippuvuus keskeytti yrittämäsi muutoksen',
 	'tog-disablecategoryselect' => 'Poista luokkamoduuli käytöstä (koskee vain, jos visuaalisessa tilassa muokkaaminen on poistettu käytöstä)',
-	'tog-disablecategoryselect-v2' => 'Poista luokkamoduuli käytöstä lähdekooditilassa',
+	'tog-disablecategoryselect-v2' => 'Poista luokkamoduuli käytöstä (koskee vain jos visuaalinen muokkaus on poistettu käytöstä)',
 );
 
 /** French (Français)
@@ -537,6 +545,7 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'categoryselect-desc' => '記事を編集することなくカテゴリを操作するためのインターフェースを提供する',
 	'categoryselect-code-view' => 'ウィキコードを表示',
+	'categoryselect-code-view-placeholder' => 'ここにカテゴリを追加（例: [[Category:カテゴリ名]]）',
 	'categoryselect-visual-view' => 'ビジュアルモードで表示',
 	'categoryselect-infobox-caption' => 'カテゴリのオプション',
 	'categoryselect-infobox-category' => 'カテゴリ名を入力',
@@ -555,12 +564,14 @@ $messages['ja'] = array(
 	'categoryselect-error-db-locked' => 'データベースがロックされています',
 	'categoryselect-edit-abort' => '拡張機能のフックによって、修正が中断されました',
 	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする（ビジュアルモードでの編集を無効にしている場合にのみ適用）',
+	'tog-disablecategoryselect-v2' => 'カテゴリモジュールを無効にする（ビジュアルモードでの編集を無効にしている場合にのみ適用）',
 );
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
 $messages['kn'] = array(
+	'categoryselect-button-save' => 'ಉಳಿಸಿ',
 	'categoryselect-button-cancel' => 'ರದ್ದು ಮಾಡು',
 );
 
@@ -769,7 +780,7 @@ $messages['pl'] = array(
 	'categoryselect-infobox-sortkey' => 'Umieść artykuł na alfabetycznej liście kategorii "$1" pod nazwą:',
 	'categoryselect-addcategory-button' => 'Dodaj kategorię',
 	'categoryselect-addcategory-edit' => 'Dodaj kategorię',
-	'categoryselect-suggest-hint' => 'Naciśnij Enter po zakończeniu',
+	'categoryselect-suggest-hint' => 'Zatwierdź wciskając Enter',
 	'categoryselect-tooltip' => "'''Nowość!''' Pasek dodawania kategorii. Wypróbuj lub zobacz [[Help:CategorySelect|stronę pomocy]] aby dowiedzieć się więcej",
 	'categoryselect-unhandled-syntax' => 'Wykryto nieobsługiwaną składnię - powrót do trybu wizualnego niemożliwy.',
 	'categoryselect-edit-summary' => 'Dodawanie kategorii',
@@ -1071,7 +1082,7 @@ $messages['ur'] = array(
 	'categoryselect-button-cancel' => 'منسوخ',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
@@ -1122,15 +1133,34 @@ $messages['zh'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'categoryselect-addcategory-button' => '添加分类',
 	'categoryselect-addcategory-edit' => '添加分类',
+	'categoryselect-edit-summary' => '添加分类',
 	'categoryselect-button-save' => '保存',
 	'categoryselect-button-cancel' => '取消',
 	'categoryselect-error-user-rights' => '用户权限错误。',
 	'categoryselect-error-db-locked' => '数据库已锁定。',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'categoryselect-infobox-caption' => '分類選項',
+	'categoryselect-infobox-category' => '提供的分類的名稱：',
+	'categoryselect-addcategory-button' => '增加分類',
+	'categoryselect-addcategory-edit' => '增加一個分類',
+	'categoryselect-suggest-hint' => '完成時按 Enter',
+	'categoryselect-edit-summary' => '增加分類',
+	'categoryselect-button-save' => '儲存',
+	'categoryselect-button-cancel' => '取消',
+	'categoryselect-error-not-exist' => '文章 [id = $1 ] 不存在。',
+	'categoryselect-error-user-rights' => '用戶權限錯誤。',
+	'categoryselect-error-db-locked' => '資料庫已鎖定。',
 );
 

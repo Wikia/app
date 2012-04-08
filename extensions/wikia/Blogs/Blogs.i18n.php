@@ -603,6 +603,35 @@ $messages['ckb'] = array(
 	'blog-comment-delete' => 'سڕینەوە',
 );
 
+/** Czech (Česky)
+ * @author Jezevec
+ */
+$messages['cs'] = array(
+	'createblogpage' => 'Vytvořit blog',
+	'create-blog-post-recent-listing' => 'Poslední příspěvky',
+	'create-blog-post-recent-listing-title' => 'Poslední příspěvky',
+	'create-blog-no-login' => 'Nepřihlášen(a)',
+	'create-blog-categories-textinput' => 'Přidat novou kategorii',
+	'create-blog-preview' => 'Zobrazit náhled',
+	'create-blog-listing-preview' => 'Náhled',
+	'create-blog-listing-sortby' => 'Řadit dle',
+	'create-blog-listing-sortby-author' => 'Autor',
+	'create-blog-listing-sortby-comments' => 'Počet komentářů',
+	'blog-added' => 'přidáno',
+	'blog-edited' => 'upraveno',
+	'blog-comment-post' => 'Odeslat komentář',
+	'blog-comments' => 'Komentáře',
+	'blog-comments-label' => 'Komentování',
+	'blog-comment-hide' => 'skrýt',
+	'blog-comment-unhide' => 'odkrýt',
+	'blog-comment-history' => 'historie',
+	'blog-comment-edit' => 'upravit',
+	'blog-comment-error' => 'Komentář nemohl být uložen',
+	'blog-comment-cannot-add' => 'Nemůžete přidat komentář do blogu.',
+	'blog-refresh-label' => 'Obnovit',
+	'blog-comment-sending' => 'Odesílá se…',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris
@@ -780,6 +809,7 @@ $messages['el'] = array(
 
 /** Spanish (Español)
  * @author Armando-Martin
+ * @author Benfutbol10
  * @author Crazymadlover
  * @author Danke7
  * @author Locos epraix
@@ -801,8 +831,7 @@ $messages['es'] = array(
 	'create-blog-post-title-edit' => 'Editar una entrada de blog',
 	'create-blog-form-title' => '¿Qué es una entrada de blog?',
 	'create-blog-form-post-text' => 'Contenido de la entrada',
-	'create-blog-form-info' => 'Las entradas de blog son la mejor forma de escribir cualquier cosa que no quieres que sea editado por la comunidad.
-Las entradas de blog pueden ser agregadas a una página con una lista de blogs basada en las etiquetas de las entradas. Puedes elegir si quieres permitir que se vote o se comente tu entrada.',
+	'create-blog-form-info' => 'Las entradas de blog son la mejor forma de escribir cualquier cosa que no quieres que sea editado por la comunidad. Las entradas de blog pueden ser agregadas a una página con una lista de blogs basada en las etiquetas de las entradas. Puedes elegir si quieres permitir que se vote o se comente tu entrada.',
 	'create-blog-form-post-title' => 'Título de la entrada',
 	'create-blog-empty-title-error' => 'Título requerido',
 	'create-blog-empty-post-error' => 'El contenido de la entrada está vacío',
@@ -877,6 +906,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-comment-edit' => '(editar)',
 	'blog-comment-error' => 'El comentario no pudo ser guardado',
 	'blog-comment-cannot-add' => 'No puedes añadir un comentario al blog.',
+	'blug-cut-sign' => '…',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Valora esta entrada:',
 	'blog-create-post-label' => 'Crear nueva entrada',
@@ -981,6 +1011,7 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Ilkea
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -998,8 +1029,7 @@ $messages['fi'] = array(
 	'create-blog-post-title-edit' => 'Muokkaa blogikirjoitusta',
 	'create-blog-form-title' => 'Mikä on blogiartikkeli?',
 	'create-blog-form-post-text' => 'Blogiteksti',
-	'create-blog-form-info' => 'Blogiartikkelit ovat paras tapa kirjoittaa tekstiä, jota koko yhteisö ei pääse muokkaamaan.
-Blogiartikkeleita voidaan luokitella listasivuille blogiartikkelin tunnisteiden mukaan. Voit sallia arvostelun ja kommentoinnin blogiartikkeli kohtaisesti.',
+	'create-blog-form-info' => 'Blogiartikkelit ovat hyvä tapa jakaa uutisia, mielipiteitä ja muita luovia töitä yhteisölle.',
 	'create-blog-form-post-title' => 'Blogiartikkelin otsikko',
 	'create-blog-empty-title-error' => 'Otsikko vaaditaan',
 	'create-blog-empty-post-error' => 'Blogiartikkeli on viallinen',
@@ -1554,7 +1584,7 @@ $messages['ia'] = array(
 	'create-blog-post-title-edit' => 'Modificar un articulo de blog',
 	'create-blog-form-title' => 'Que es un articulo de blog?',
 	'create-blog-form-post-text' => 'Texto del articulo',
-	'create-blog-form-info' => 'Le articulos de blog es un bon modo de condivider novas, opiniones e pecias creative con le communitate.',
+	'create-blog-form-info' => 'Le articulos de blog es un bon modo de divider novas, opiniones e pecias creative con le communitate.',
 	'create-blog-form-post-title' => 'Titulo del articulo',
 	'create-blog-empty-title-error' => 'Titulo requirite',
 	'create-blog-empty-post-error' => 'Le articulo non contine texto',
@@ -1619,7 +1649,7 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blog-voting-label' => 'Votation',
 	'blog-comments-info' => 'Iste quadro usa le notation wiki',
 	'blog-comments-login' => '<a href="$1" rel="nofollow">Aperi un session</a> pro commentar',
-	'blog-comments-dsc' => 'Le plus recentes al initio',
+	'blog-comments-dsc' => 'Le plus recentes primo',
 	'blog-comments-asc' => 'Le plus recentes al fin',
 	'blog-comments-anonymous' => 'Usator anonyme',
 	'blog-comment-delete' => 'deler',
@@ -1785,7 +1815,7 @@ $messages['ig'] = array(
 	'blog-comment-edit' => 'mèzi',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -1811,8 +1841,8 @@ $messages['it'] = array(
 	'create-blog-post-title-edit' => 'Modifica un blog',
 	'create-blog-form-title' => "Che cos'è un blog?",
 	'create-blog-form-post-text' => 'Testo blog',
-	'create-blog-form-info' => 'I blog sono un modo efficacie per condividere notizie, opinioni e pensieri originali con la comunità.',
-	'create-blog-form-post-title' => 'Titolo del blog',
+	'create-blog-form-info' => 'I blog sono un modo efficace per condividere notizie, opinioni e pensieri originali con la community.',
+	'create-blog-form-post-title' => 'Titolo del post',
 	'create-blog-empty-title-error' => 'Titolo richiesto',
 	'create-blog-empty-post-error' => 'Il corpo del post è vuoto',
 	'create-blog-empty-article-log' => "Articolo creato per l'elenco blog",
@@ -1827,7 +1857,7 @@ $messages['it'] = array(
 	'create-blog-preview' => 'Visualizza anteprima',
 	'create-blog-updated' => 'Blog creato o aggiornato.',
 	'create-blog-permission-denied' => 'Errore durante il salvataggio della pagina blog: permesso negato',
-	'create-blog-article-already-exists' => 'Un blog con questo nome esiste già, per favore scegli un titolo diverso',
+	'create-blog-article-already-exists' => 'Un post con questo nome esiste già, per favore scegli un titolo diverso',
 	'create-blog-listing-title' => 'Crea una nuova lista blog',
 	'create-blog-listing-form-title' => "Che cos'è una lista blog?",
 	'create-blog-listing-form-info' => 'Le liste blog hanno il compito di raccogliere assieme ed elencare in un\'unica pagina i blog di diversi autori.
@@ -1849,8 +1879,8 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'create-blog-listing-output-as-page' => 'Crea lista come nuova pagina',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Tag lista blog non riconosciuto nella pagina',
 	'blog-header' => 'Post nella categoria "$1"',
-	'blog-subheader' => 'I seguenti $1 post sono in questa categoria.',
-	'blog-subheader-all' => 'I seguenti $1 post sono in questa categoria, su un totatle di $2',
+	'blog-subheader' => "{{PLURAL:$1|C'è un blog post|I seguenti $1 blog post sono}} in questa categoria.",
+	'blog-subheader-all' => "{{PLURAL:$1|C'è un blog in questa categoria|I seguenti $1 blog sono in questa categoria}} su un totale di $2.",
 	'blog-invalidparam' => "Il parametro '$1' è stato ignorato. Scegli uno dei parametri disponibili: <code>$2</code>.",
 	'blog-emptyparam' => 'Il parametro non può essere vuoto',
 	'blog-defaulttitle' => 'Blog',
@@ -1862,7 +1892,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'blog-nopostfound' => 'Nessun post trovato.',
 	'blog-writeone' => 'Aggiungine uno!',
 	'blog-empty-user-blog' => 'Questo utente non ancora ha scritto nessun post!',
-	'blog-last-edited' => '<strong>Ultima modific:</strong> $1',
+	'blog-last-edited' => '<strong>Ultima modifica:</strong> $1',
 	'blog-added' => 'aggiunto',
 	'blog-edited' => 'modificato',
 	'blog-page' => 'Blog',
@@ -1912,6 +1942,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 );
 
 /** Japanese (日本語)
+ * @author McDutchie
  * @author Tommy6
  * @author 青子守歌
  */
@@ -2100,6 +2131,7 @@ $messages['lb'] = array(
 	'create-blog-no-login' => 'Net ageloggt',
 	'create-blog-categories-textinput' => 'Eng Kategorie derbäisetzen',
 	'create-blog-save' => 'Säit späicheren',
+	'create-blog-preview' => 'Kucken ouni ofzespäicheren',
 	'create-blog-listing-preview' => 'Kucken ouni ofzespäicheren',
 	'create-blog-listing-matches-calculate' => 'Berechnen',
 	'create-blog-listing-matches-recalculate' => 'Nei berechnen',
@@ -3097,6 +3129,7 @@ $messages['ps'] = array(
  * @author Giro720
  * @author Hamilton Abreu
  * @author Luckas Blade
+ * @author McDutchie
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -3599,7 +3632,7 @@ $messages['sv'] = array(
 	'create-blog-post-title' => 'Skapa ett nytt blogginlägg',
 	'create-blog-post-title-edit' => 'Redigera ett blogginlägg',
 	'create-blog-form-title' => 'Vad är ett blogginlägg?',
-	'create-blog-form-post-text' => 'Blogg-text',
+	'create-blog-form-post-text' => 'Bloggtext',
 	'create-blog-form-info' => 'Bloggar är ett utmärkt sätt att dela med nyheter, åsikter och kreativa saker med samhället.',
 	'create-blog-form-post-title' => 'Blogginläggets rubrik',
 	'create-blog-empty-title-error' => 'Rubrik krävs',
@@ -3619,8 +3652,8 @@ $messages['sv'] = array(
 	'create-blog-article-already-exists' => 'Ett blogginlägg med det namnet finns redan, var god välj ett annat namn',
 	'create-blog-listing-title' => 'Skapa en ny sida för blogglistor',
 	'create-blog-listing-form-title' => 'Vad är en sida för blogglistor?',
-	'create-blog-listing-form-info' => 'Sidor om blogg-listor används för att samla ihop blogg-listor från olika författare tillsammans på en enda sida.
-Skapa blogg-listor för kategorier som "Barack Obama", "Fan Fiction", eller kombinera flera kategorier.',
+	'create-blog-listing-form-info' => 'Sidor om blogglistor används för att samla ihop blogglistor från olika författare tillsammans på en enda sida.
+Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombinera flera kategorier.',
 	'create-blog-listing-page-title' => 'Sidtitel för blogglista',
 	'create-blog-listing-preview' => 'Förhandsgranska',
 	'create-blog-listing-authors' => 'Få blogginlägg skapade av dessa författare (avgränsade med semikolon)',
@@ -3650,7 +3683,7 @@ Skapa blogg-listor för kategorier som "Barack Obama", "Fan Fiction", eller komb
 	'blog-nbrcomments' => '{{PLURAL:$1|En kommentar|$1 kommentarer}}',
 	'blog-nopostfound' => 'Inga inlägg hittades.',
 	'blog-writeone' => 'Skriv en!',
-	'blog-empty-user-blog' => 'Denna användare har inte skrivit några blogg-inlägg ännu!',
+	'blog-empty-user-blog' => 'Denna användare har inte skrivit några blogginlägg ännu!',
 	'blog-last-edited' => '<strong>Senast ändrad:</strong> $1',
 	'blog-added' => 'tillagd',
 	'blog-edited' => 'redigerad',
@@ -3683,7 +3716,7 @@ Skapa blogg-listor för kategorier som "Barack Obama", "Fan Fiction", eller komb
 	'blog-create-listing-label' => 'Skapa blogglista',
 	'blog-refresh-label' => 'Uppdatera',
 	'blog-widgets-label' => 'Instrumentpanel för gränssnittskomponenter',
-	'blog-listing-zero-other' => 'Denna användare har inte skrivit några blogg-inlägg ännu!',
+	'blog-listing-zero-other' => 'Denna användare har inte skrivit några blogginlägg ännu!',
 	'blog-listing-created' => 'Blogglistsida skapades',
 	'blog-userblog' => '$1s blogg',
 	'blog-fromsitename' => 'Från $1',
@@ -4038,7 +4071,7 @@ $messages['uk'] = array(
 	'blogs-reportproblem' => 'Повідомити про проблему',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
@@ -4183,6 +4216,7 @@ Tạo trang danh sách blog cho thể loại chẳng hạn như "Fan tưởng t�
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
  * @author Liangent
@@ -4206,7 +4240,7 @@ $messages['zh-hans'] = array(
 	'create-blog-form-info' => '博客张贴内容与社区分享新闻意见和建议创意件的好方法。',
 	'create-blog-form-post-title' => '博客文章标题',
 	'create-blog-empty-title-error' => '所需的标题',
-	'create-blog-empty-post-error' => '后身体为空',
+	'create-blog-empty-post-error' => '正文是空的帖子',
 	'create-blog-empty-article-log' => '博客列表创建的文章',
 	'create-blog-invalid-title-error' => '无效的标题',
 	'create-listing-confirm-info' => '复制并粘贴以下代码：',
@@ -4305,6 +4339,43 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'createblogpage' => '創建部落格',
+	'createbloglistingpage' => '創建部落格清單',
+	'create-blog-spam' => '看起來像垃圾郵件',
+	'create-blog-cant-edit' => '無法執行編輯',
+	'create-blog-post-category' => '部落格文章',
+	'create-blog-post-category-body' => '這是一個自動生成的部落格清單',
+	'create-blog-post-category-log' => '已創建部落格文章的分類',
+	'create-blog-post-recent-listing' => '最新文章',
+	'create-blog-post-recent-listing-title' => '最新文章',
+	'create-blog-post-title' => '創建新的部落格文章',
+	'create-blog-post-title-edit' => '編輯一篇部落格文章',
+	'create-blog-form-title' => '部落格文章什麼？',
+	'create-blog-form-post-text' => '部落格文本',
+	'create-blog-form-post-title' => '部落格文章標題',
+	'create-blog-empty-title-error' => '需要標題',
+	'create-blog-empty-post-error' => '正文是空的文章',
+	'create-blog-invalid-title-error' => '無效的標題',
+	'create-blog-no-login' => '未登入',
+	'create-blog-login-required' => '您必須 [{{fullurl:Special:Signup|$1}} 登入]才能部落格文章或列表。',
+	'create-blog-categories-title' => '這篇文章添加到這些分類 （按一下可選擇）',
+	'create-blog-listing-sortby-date' => '最新',
+	'create-blog-listing-sortby-author' => '作者',
+	'create-blog-listing-sortby-comments' => '評論數',
+	'create-blog-listing-output-as-box' => '為復製貼上產生代码',
+	'blog-header' => '“$1”分類中的部落格文章',
+	'blog-emptyparam' => '參數名不能為空',
+	'blog-defaulttitle' => '部落格',
+	'blog-continuereading' => '繼續閱讀 &raquo;',
+	'blog-readfullpost' => '看更多',
+	'blog-olderposts' => '較舊的文章',
+	'blog-newerposts' => '較新的文章',
+	'blog-nopostfound' => '沒有找到文章',
+	'blog-writeone' => '寫一個 ！',
+	'blog-empty-user-blog' => '此使用者還未寫任何部落格文章 ！',
+	'blog-last-edited' => '<strong>最後編輯：</strong> $1',
+	'blog-added' => '增加',
+	'blog-edited' => '編輯',
 	'blog-page' => '部落格',
 	'blog-zero-comments' => '還沒有評論 ！',
 	'blog-comment-post' => '發表評論',
@@ -4314,5 +4385,36 @@ $messages['zh-hant'] = array(
 	'blog-comments-save' => '在部落格中儲存評論',
 	'blog-comments-label' => '評論',
 	'blog-voting-label' => '投票',
+	'blog-comments-dsc' => '從最近的開始',
+	'blog-comments-asc' => '最新的排最後',
+	'blog-comments-anonymous' => '匿名用戶',
+	'blog-comment-delete' => '刪除',
+	'blog-comment-hide' => '隱藏',
+	'blog-comment-unhide' => '取消隱藏',
+	'blog-comment-history' => '歷史',
+	'blog-comment-edit' => '編輯',
+	'blog-comment-error' => '評論無法儲存',
+	'blog-comment-cannot-add' => '您不能在部落格增加評論。',
+	'blog-avatar-preferences-title' => '頭像',
+	'blog-page-rate' => '幫這篇文章評分：',
+	'blog-create-post-label' => '創建部落格文章',
+	'blog-create-label' => '創建部落格文章',
+	'blog-create-next-label' => '創建新的部落格文章',
+	'blog-create-listing-label' => '創建部落格清單',
+	'blog-refresh-label' => '重新整理',
+	'blog-listing-zero-other' => '此使用者還未寫任何部落格文章 ！',
+	'blog-listing-created' => '部落格列表已創建',
+	'blog-userblog' => '$1 的部落格',
+	'blog-fromsitename' => '來自 $1',
+	'blogs-reportproblem' => '報告問題',
+	'blogs-comment-hidden' => '評論已隱藏。',
+	'right-blog-comments-delete' => '刪除部落格文章的評論',
+	'right-blog-articles-edit' => '編輯部落格文章',
+	'right-blog-articles-move' => '移動部落格文章',
+	'blogs-undeleted-comment' => '恢復部落格文章 $1 的評論',
+	'blogs-recent-url-text' => '最新部落格文章',
+	'blog-desc' => '部落格文章',
+	'blog-movepage-badtitle' => '無效的部落格文章標題。',
+	'blog-comment-sending' => '正在發送...',
 );
 

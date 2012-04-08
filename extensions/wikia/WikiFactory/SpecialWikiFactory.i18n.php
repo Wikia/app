@@ -453,6 +453,70 @@ $messages['az'] = array(
 	'closed-reason' => 'Səbəb:',
 );
 
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'wikifactorypagetitle' => 'Wiki Factory-Kónfigurator',
+	'wikifactory' => 'Wiki Factory-Kónfigurator',
+	'closewiki' => 'Wiki schliassen.',
+	'wf_city_url' => 'Adress',
+	'wf_city_id' => 'ID',
+	'wf_city_title' => 'Titel',
+	'wf_city_created' => 'Erstejd',
+	'wf_city_founding_user' => 'Grynder',
+	'wf_city_founding_email' => 'E-Mail-Adress vam Grynder',
+	'wf_city_public' => 'Staatus',
+	'wf_city_lang' => 'Sprooch',
+	'wf_cc_name' => 'Kategorie',
+	'wikifactory_removevariable' => "Wikidaaten aus'm Cache léschen",
+	'wikifactory_removeconfirm' => "Wikidaaten aus'm Cache éntfernd!",
+	'wikifactory-label-info' => 'Infó',
+	'wikifactory-label-variables' => 'Variaablen',
+	'wikifactory-label-variables2' => 'Oigmoah',
+	'wikifactory-label-hubs' => 'Hubs',
+	'wikifactory-label-domains' => 'Domains',
+	'wikifactory-label-return' => 'Zruck za da Listen',
+	'wikifactory-label-clog' => 'Änderrungslógbiaché',
+	'wikifactory-label-actions' => 'Akziónen',
+	'wikifactory-label-google' => 'Google-Tools',
+	'wikifactory-label-close' => 'Schliassen',
+	'wikifactory-label-tags' => 'Tags',
+	'wikifactory-label-tags2' => 'Tags',
+	'wikifactory-label-masstags' => 'MassTags',
+	'wikifactory-label-findtags' => 'Find Tags',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Vagleicher',
+	'right-wikifactory' => 'Interne Eihstejunger fyrs Wiki ändern',
+	'wikifactory-domain-edit' => 'Beorwat dé URL',
+	'wikifactory-domain-remove' => "Éntfern dé URL aus'm Wiki",
+	'wikifactory-domain-setmain' => 'Sétz dé URL in wgServer eih',
+	'closewiki-check-and-confirm' => 'Wikis ywerpriaffer und Akzión bstäting',
+	'closewiki-redirect-to' => 'Weiderloatten af',
+	'closewiki-message' => 'Domainnaum $1',
+	'closewiki-confirm-button' => 'Bstätig „$1” vah $2',
+	'closewiki-nbr-wiki' => '$1 Wikis',
+	'closewiki-wiki-closed' => "'''$1''' is gschlossen worn ($2)",
+	'closewiki-wiki-closed_removed' => "'''$1''' ist iatz gschlóssen und es is plaant, gléscht zan wern ($2)",
+	'closewiki-wiki-closed_redirect' => "'''$1''' is gschlóssen worn ($2) und loatt iatz weider af: $3",
+	'closewiki-dump-url' => 'Daatenbank-Dump: $1',
+	'closewiki-images-url' => 'Bijderarchiav: $1',
+	'closewiki-unknown' => 'néd bekaunnt',
+	'closewiki-return' => 'Zruck af $1',
+	'wikifactory-button-saveparse' => 'Aswerten &amp; Änderrungern speichern',
+	'wikifactory-button-save' => 'Änderrunger speichern',
+	'awc-metrics-wikis' => 'Wikis auhzoang',
+	'awc-metrics-select' => 'Wikis auhzoang:',
+	'awc-metrics-by-language' => 'noch Sprooch:',
+	'awc-metrics-category' => 'und Kategorie:',
+	'awc-metrics-all' => 'oj Wikis',
+	'awc-metrics-all-languages' => 'oj Sproochen',
+	'awc-metrics-search' => 'Suachopzióner',
+	'awc-metrics-one-week' => 'vur < 1 Wocher erstejd',
+	'awc-metrics-two-weeks' => 'vur < 2 Wocher erstejd',
+	'closed-wiki-create-wiki' => 'A neichs Wiki erstejn',
+);
+
 /** Belarusian (Беларуская)
  * @author Тест
  */
@@ -2482,10 +2546,17 @@ $messages['kn'] = array(
 	'wf_city_public' => 'ಸ್ಥಾನಮಾನ',
 	'wf_city_lang' => 'ಭಾಷೆ',
 	'wf_cc_name' => 'ವರ್ಗ',
+	'wikifactory-label-close' => 'ಮುಚ್ಚಿ',
+	'closewiki-unknown' => 'ಅಜ್ಞಾತ',
 	'awc-metrics-category' => 'ಮತ್ತು ವರ್ಗ:',
+	'awc-metrics-all' => 'ಎಲ್ಲಾ ವಿಕಿಗಳು',
 	'awc-metrics-all-languages' => 'ಎಲ್ಲಾ ಭಾಷೆಗಳು',
 	'awc-metrics-nbr-result' => 'ಫಲಿತಾಂಶಗಳು:',
 	'awc-metrics-articles' => 'ಲೇಖನಗಳು',
+	'awc-metrics-edits' => 'ಸಂಪಾದನೆಗಳು',
+	'awc-metrics-images' => 'ಚಿತ್ರಗಳು',
+	'awc-metrics-close' => 'ಮುಚ್ಚಿ',
+	'awc-metrics-close-action' => 'ಮುಚ್ಚಿ',
 	'closed-reason' => 'ಕಾರಣ:',
 );
 
@@ -3356,11 +3427,12 @@ $messages['pdc'] = array(
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Marcin Łukasz Kiejzik
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'wikifactorypagetitle' => 'Konfigurator Wiki Factory',
-	'wikifactory' => 'Konfigurator Wiki Factory',
+	'wikifactorypagetitle' => 'Konfiguracja WikiFactory',
+	'wikifactory' => 'Konfiguracja WikiFactory',
 	'closewiki' => 'Zamknij wiki',
 	'wf_city_url' => 'Adres',
 	'wf_city_id' => 'ID',
@@ -3814,6 +3886,7 @@ regist.',
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  * @author Daemorris
  * @author Giro720
  * @author Jesielt
@@ -3921,7 +3994,7 @@ $messages['pt-br'] = array(
 	'awc-metrics-recordspager' => "Mostrando os registos '''$1''' a '''$2''' de '''$3'''",
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Essa wiki foi fechada',
-	'disabled-wiki-info' => 'Essa wiki foi desativada',
+	'disabled-wiki-info' => 'Essa wiki foi desabilitada',
 	'closed-wiki-dump-exists' => 'Por favor, clique [$1 aqui] se quiser recuperar seu conteúdo',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. O esvaziamento do conteúdo estará disponível em 24 horas. Cheque novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Crie uma nova Wiki',
@@ -3936,6 +4009,11 @@ $messages['pt-br'] = array(
 	'closed-confirm-btn' => 'Confirmar fechamento',
 	'closed-redirect-alert' => 'Por favor digite a nova URL para o redirecionamento!',
 	'closed-reason' => 'Motivo:',
+	'newwikisgraph' => 'Novo Wikis Graph',
+	'newwikisgraph-report-title' => 'criações de wiki por dia',
+	'newwikisgraph-wikis-created' => 'wikis criadas',
+	'newwikisgraph-param-all' => 'Todas',
+	'newwikisgraph-param-other' => 'Outra',
 );
 
 /** Romanian (Română)
@@ -4757,23 +4835,84 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'closewiki' => '關閉 Wiki',
+	'wf_city_id' => 'id',
+	'wf_city_title' => '標題',
+	'wf_city_created' => '已建立',
 	'wf_city_founding_user' => '創辦人',
 	'wf_city_founding_email' => '創辦人電郵',
 	'wf_city_public' => '狀態',
+	'wf_city_lang' => '語言',
+	'wf_cc_name' => '分類',
+	'wikifactory_removevariable' => '從緩存中移除 wiki 資料',
+	'wikifactory_removeconfirm' => 'Wiki 資料從緩存中刪除 ！',
+	'wikifactory-label-info' => '資訊',
+	'wikifactory-label-variables' => '變數',
+	'wikifactory-label-variables2' => '一般',
+	'wikifactory-label-domains' => '域名',
 	'wikifactory-label-return' => '返回清單',
+	'wikifactory-label-google' => 'Google 工具',
 	'wikifactory-label-close' => '關閉',
+	'wikifactory-label-tags' => '標籤',
+	'wikifactory-label-tags2' => '標籤',
 	'wikifactory-label-compare' => '比較',
+	'wikifactory-domain-edit' => '編輯此網址',
+	'wikifactory-domain-remove' => '從 wiki 刪除此網址',
+	'closewiki-redirect-to' => '重定向到',
+	'closewiki-wiki-closed' => "'''$1''' 已關閉 ($2)",
+	'closewiki-wiki-closed_removed' => "' ' $1 '' 現在關閉並將會刪除 ( $2 )",
+	'closewiki-wiki-closed_redirect' => "' ' $1 '' 被關閉 （ $2 ） ，現在重定向到：$3",
+	'closewiki-unknown' => '未知',
 	'closewiki-return' => '回到 $1',
+	'awc-metrics-wikis' => '顯示 Wiki',
+	'awc-metrics-select' => '顯示 Wiki:',
+	'awc-metrics-by-language' => '依照語言：',
+	'awc-metrics-category' => '和類別：',
 	'awc-metrics-all' => '所有 Wiki',
 	'awc-metrics-all-languages' => '所有語言',
 	'awc-metrics-search' => '搜尋選項：',
+	'awc-metrics-two-weeks' => '創建 < 2 周前',
+	'awc-metrics-three-weeks' => '創建 < 3 周前',
+	'awc-metrics-one-months' => '創建 < 1 個月前',
+	'awc-metrics-two-months' => '創建 < 2 個月前',
+	'awc-metrics-three-months' => '創建 < 3 個月前',
+	'awc-metrics-wikians' => 'Wikia人<br />(>10 次編輯)',
 	'awc-metrics-articles' => '條目',
+	'awc-metrics-articles-per-day' => '文章數<br>(每日平均)',
+	'awc-metrics-revisions-per-page' => '修改<br />(平均每頁)',
+	'awc-metrics-edits' => '編輯次數',
+	'awc-metrics-db-size' => '資料庫大小',
+	'awc-metrics-images' => '圖像',
+	'awc-metrics-close' => '關閉',
+	'awc-metrics-close-action' => '關閉',
+	'awc-metrics-active' => '活躍',
+	'awc-metrics-closed' => '已關閉',
+	'awc-metrics-redirected' => '已關閉並重定向',
+	'awc-metrics-removed' => '已被移除',
+	'awc-metrics-hubs' => '新的 wiki (每月)',
+	'awc-metrics-news-day' => '新的 wiki (每日)',
+	'awc-metrics-sum-month' => '計數 (每月)',
+	'awc-metrics-sum-day' => '計數 (每日)',
+	'awc-metrics-this-month' => '本月',
+	'closed-wiki' => '已關閉的wiki',
+	'closed-wiki-info' => '此wiki已關閉',
+	'disabled-wiki-info' => '此wiki已禁用',
+	'closed-wiki-create-wiki' => '創建一個新的 wiki',
+	'closed-wiki-policy' => '查看 Wikia 的關站政策',
+	'closed-create-dump' => 'Create a database dump',
+	'closed-delete-database-images' => '刪除資料庫和圖像',
+	'closed-delete-images' => '刪除圖像',
+	'closed-free-url' => '把這個網址讓給新的創站人',
+	'closed-redirect-url' => '重定向網址',
 	'closed-confirm-btn' => '確認關閉',
 	'closed-reason' => '原因：',
+	'newwikisgraph-wikis-created' => '已創建的wiki',
+	'newwikisgraph-param-all' => '全部',
+	'newwikisgraph-param-other' => '其他',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

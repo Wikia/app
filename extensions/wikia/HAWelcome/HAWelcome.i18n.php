@@ -1641,3 +1641,23 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
 Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp về bất cứ điều gì!",
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'welcome-user-page' => "==关于我==
+
+''这是您的用户页面。请编辑本页向整个社区介绍您！''
+
+==我的贡献==
+
+* [[Special:Contributions/$1|User contributions]]
+
+==我喜爱的页面==
+
+* 在此为您喜爱的页面添加链接！
+* 喜爱的页面 #2
+* 喜爱的页面 #3",
+	'welcome-message-log' => '欢迎新贡献者',
+);
+

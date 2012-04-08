@@ -2660,7 +2660,7 @@ $messages['ig'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'kàcha',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -2671,6 +2671,7 @@ $messages['inh'] = array(
  * @author Gifh
  * @author HalphaZ
  * @author Minerva Titani
+ * @author Nemo bis
  */
 $messages['it'] = array(
 	'wikiaphotogallery-desc' => "Fornisce un'interfaccia per la gestione di gallerie nelle pagine",
@@ -2724,7 +2725,7 @@ $messages['it'] = array(
 È possibile copiare questo testo, fare clic su "$1" e incollarlo nella posizione corretta al fine di ripristinare le modifiche. 
 In alternativa, è possibile fare clic su "$2" per vedere la pagina nella sua forma attuale.',
 	'wikiaPhotoGallery-conflict-edit' => 'Visita la modalità di modifica',
-	'wikiaPhotoGallery-conflict-view' => 'Visualizza la pagina corrente',
+	'wikiaPhotoGallery-conflict-view' => 'Visualizza la pagina attuale',
 	'wikiaPhotoGallery-preview-delete-title' => 'Rimuovi questa foto?',
 	'wikiaPhotoGallery-preview-delete' => 'Sicuro di voler rimuovere la foto da questa galleria?',
 	'wikiaPhotoGallery-preview-saving-title' => 'Salvataggio in corso ...',
@@ -4013,11 +4014,11 @@ $messages['pl'] = array(
 Odśwież stronę i spróbuj ponownie.',
 	'wikiaPhotoGallery-error-wrong-title' => 'Brak tytułu dla artykułu o tym ID',
 	'wikiaPhotoGallery-error-user-rights' => 'Błąd uprawnień użytkownika.',
-	'wikiaPhotoGallery-upload-title' => 'Znajdź i prześlij grafikę',
+	'wikiaPhotoGallery-upload-title' => 'Znajdź i prześlij obraz',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''LUB''' wybierz",
-	'wikiaPhotoGallery-upload-info-images-label' => 'grafiki z tej strony',
-	'wikiaPhotoGallery-upload-info-upload' => "'''Albo''' prześlij grafikę ze swojego komputera",
-	'wikiaPhotoGallery-upload-info-uploaded-label' => 'najnowsze grafiki',
+	'wikiaPhotoGallery-upload-info-images-label' => 'obrazy z tej strony',
+	'wikiaPhotoGallery-upload-info-upload' => "'''Albo''' prześlij obraz ze swojego komputera",
+	'wikiaPhotoGallery-upload-info-uploaded-label' => 'najnowsze obrazy',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Znajdź swoje zdjęcie',
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Prześlij zdjęcie',
 	'wikiaPhotoGallery-upload-findtitle' => 'Znajdź',
@@ -4033,7 +4034,7 @@ Odśwież stronę i spróbuj ponownie.',
 Zmień nazwę pliku i spróbuj ponownie.',
 	'wikiaPhotoGallery-upload-error-filetype-incorrect' => 'Plik ma nieprawidłowe rozszerzenie.',
 	'wikiaPhotoGallery-upload-error-filetype missing' => 'Brak rozszerzenia w nazwie pliku.',
-	'wikiaPhotoGallery-upload-error-readonly' => 'W tej chwili nie można przesyłać grafik ponieważ wiki jest w trybie tylko do odczytu.',
+	'wikiaPhotoGallery-upload-error-readonly' => 'W tej chwili nie można przesyłać obrazów ponieważ wiki jest w trybie tylko do odczytu.',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Plik o takiej nazwie już istnieje! 
 Co chcesz zrobić?',
 	'wikiaPhotoGallery-upload-error-filetype-missing' => 'W nazwie przesłanego pliku brak jest rozszerzenia.',
@@ -4154,7 +4155,7 @@ Alternatywnie, możesz kliknąć „$2”, aby zobaczyć stronę w jej uaktualni
 	'wikiaPhotoGallery-upload-title-slideshow' => 'Budowniczy pokazu slajdów – odnajdź i prześlij zdjęcie',
 	'wikiaPhotoGallery-upload-title-gallery' => 'Budowniczy galerii – odnajdź i prześlij zdjęcie',
 	'wikiaPhotoGallery-upload-title-slider' => 'Edytor galerii - znajdź i prześlij zdjęcie',
-	'wikiaPhotoGallery-upload-uploadtext' => "'''Albo''' prześlij grafikę ze swojego komputera",
+	'wikiaPhotoGallery-upload-uploadtext' => "'''Albo''' prześlij obraz ze swojego komputera",
 	'wikiaPhotoGallery-upload-existingtext' => "'''Lub''' kliknij, aby wybrać zdjęcia z",
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ta strona',
 	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'ostatnio przesłane pliki',
@@ -4696,7 +4697,7 @@ O que pretende fazer?',
  * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'wikiaPhotoGallery-preview-delete-title' => 'Eliminaţi această fotografie?',
+	'wikiaPhotoGallery-preview-delete-title' => 'Eliminați această fotografie?',
 	'wikiaPhotoGallery-quit-savequit' => 'Salvează şi ieşi',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Adaugă fotografie',
 	'wikiaPhotoGallery-slideshow-view-title' => 'Prezentare diapozitive',

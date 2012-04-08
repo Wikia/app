@@ -584,13 +584,14 @@ Groet, Wikia
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'globalwatchlist-desc' => 'Wysyła e-maile z tygodniowym streszczeniem listy obserwowanych stron ze wszystkich wiki',
 	'tog-watchlistdigest' => 'Proszę przesyłać mi co tydzień e-mail ze streszczeniem',
 	'tog-watchlistdigestclear' => 'Oznacz wszystkie strony z mojego tygodniowego streszczenia obserwowanych jako odwiedzone',
 	'globalwatchlist-see-more' => 'Sprawdź, czy zmieniło się coś jeszcze na twojej lokalnej liście obserwowanych stron',
-	'globalwatchlist-digest-email-subject' => 'Tygodniowe streszczenie',
+	'globalwatchlist-digest-email-subject' => 'Tygodniowe zestawienie',
 	'globalwatchlist-digest-email-body' => 'Witaj $1,
 
 To jest lista obserwowanych stron z Wikia, które zostały zmienione od twojej ostatniej wizyty.
@@ -850,5 +851,12 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|puna|mga puna}})',
 	'globalwatchlist-no-page-found' => 'Walang natagpuang pahina.',
 	'globalwatchlist-no-blog-page-found' => 'Walang natagpuang pahina ng blog.',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'globalwatchlist-digest-email-subject' => '每周文摘',
 );
 

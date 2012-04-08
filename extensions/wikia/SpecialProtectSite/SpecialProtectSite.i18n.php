@@ -574,6 +574,7 @@ $messages['pdc'] = array(
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -585,11 +586,11 @@ $messages['pl'] = array(
 	'protectsite-allowall' => 'Wszyscy użytkownicy',
 	'protectsite-allowusersysop' => 'Zarejestrowani użytkownicy i administratorzy',
 	'protectsite-allowsysop' => 'Tylko administratorzy',
-	'protectsite-createaccount' => 'Pozwól na tworzenie nowych kont przez',
-	'protectsite-createpage' => 'Umożliwia tworzenie stron przez',
-	'protectsite-edit' => 'Zezwalaj na edycję stron przez',
-	'protectsite-move' => 'Pozwól na przenoszenie stron przez',
-	'protectsite-upload' => 'Pozwól na przesyłanie plików przez',
+	'protectsite-createaccount' => 'Zezwól na tworzenie nowych kont',
+	'protectsite-createpage' => 'Zezwól na tworzenie stron',
+	'protectsite-edit' => 'Zezwól na edycję stron',
+	'protectsite-move' => 'Zezwól na przenoszenie stron',
+	'protectsite-upload' => 'Zezwól na przesyłanie plików',
 	'protectsite-timeout' => 'Limit czasu:',
 	'protectsite-timeout-error' => "'''Niepoprawny limit czasu.'''",
 	'protectsite-maxtimeout' => 'Maksimum:',
@@ -598,7 +599,7 @@ $messages['pl'] = array(
 	'protectsite-until' => 'Chronione aż do:',
 	'protectsite-protect' => 'Zabezpiecz',
 	'protectsite-unprotect' => 'Nie chroń',
-	'protectsite-nologs' => 'nie wyświetlaj w dziennikach',
+	'protectsite-nologs' => 'nie pokazuj w rejestrze',
 );
 
 /** Piedmontese (Piemontèis)

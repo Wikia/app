@@ -45,8 +45,10 @@ Try once again.',
  * @author EugeneZelenko
  * @author Siebrand
  * @author Umherirrender
+ * @author WikiPhoenix
  */
 $messages['qqq'] = array(
+	'textregex' => '"Regex" is a abbreviation for "regular expression".',
 	'textregex-desc' => '{{desc}}',
 	'textregex-addedby-user' => 'If $2 is a time stamp, split date and time',
 	'textregex-remove-url' => '{{Identical|Remove}}',
@@ -790,6 +792,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'textregex' => 'Reguljära uttryck för text',
 	'textregex-desc' => '[[Special:textregex/XXXX|Filtrera ut]] oönskade fraser i redigerade sidor, baserade på reguljära uttryck',
 	'textregex-page-title' => 'Lista över oönskade uttryck',
 	'textregex-error-unblocking' => 'Fel med avblockeringen ($1).

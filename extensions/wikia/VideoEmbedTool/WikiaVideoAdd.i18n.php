@@ -22,13 +22,6 @@ $messages['qqq'] = array(
 	'wva-add' => '{{Identical|Add}}',
 );
 
-/** толышә зывон (толышә зывон)
- * @author Гусейн
- */
-$messages['tly'] = array(
-	'wva-add' => 'Зијод кардеј',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -717,6 +710,13 @@ $messages['tl'] = array(
 	'wva-notlogged' => 'Kailangan mong lumagda o magpatala upang makapagsingit ng mga bidyo.',
 	'wva-notallowed' => 'Hindi ka makapagsisingit ng mga bidyo sa wiking ito.',
 	'wva-protected' => 'Ang bidyo ay nakaprutekta.',
+);
+
+/** Толышә зывон (Толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'wva-add' => 'Зијод кардеј',
 );
 
 /** Ukrainian (Українська)

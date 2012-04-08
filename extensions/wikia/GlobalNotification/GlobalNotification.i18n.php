@@ -133,9 +133,11 @@ $messages['pt'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'globalnotification-desc' => 'Отображает системные уведомления для события, таких как сбои AJAX',
 	'globalnotification-general-ajax-failure' => 'Браузер не смог подключиться к Викия. Попробуйте еще раз позже.',
 );
 
@@ -145,5 +147,12 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'globalnotification-desc' => 'Visar systemmeddelanden för händelser som AJAX-fel',
 	'globalnotification-general-ajax-failure' => 'Webbläsaren kunde inte ansluta till Wikia. Försök igen senare.',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'globalnotification-general-ajax-failure' => '瀏覽器無法連接到 Wikia。請稍後再試。',
 );
 

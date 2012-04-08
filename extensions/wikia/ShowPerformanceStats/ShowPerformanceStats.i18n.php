@@ -232,10 +232,13 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'performancestat-total' => 'Итого: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'ЦП: $1s',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

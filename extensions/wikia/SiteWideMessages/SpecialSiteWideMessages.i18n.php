@@ -1224,7 +1224,7 @@ $messages['ig'] = array(
 	'swm-button-save' => '[ Domá ]',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -1662,6 +1662,7 @@ $messages['nl'] = array(
 	'swm-label-mode-users-group-hint' => '<i>Kies een groep uit de lijst of voer de naam handmatig in.</i>',
 	'swm-label-mode-users-user' => 'Geselecteerde gebruiker',
 	'swm-label-mode-users-user-hint' => '<i>Door gebruik van deze optie wordt de selectie in de groep "Wiki\'s" genegeerd.</i>',
+	'swm-label-mode-users-user-multi' => 'Gebruikerslijst',
 	'swm-label-content' => 'Inhoud',
 	'swm-label-comment' => 'Opmerking',
 	'swm-label-dismissed' => 'Verlaten',

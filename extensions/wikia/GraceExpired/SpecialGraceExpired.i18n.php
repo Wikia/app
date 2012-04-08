@@ -252,10 +252,14 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author VickyC
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'graceexpired-row' => '$1 (i $2, senast redigerad kl. $3)',
+	'graceexpired-header' => 'På denna sida återges alla build-versioner som antingen är [[:Category:Abandoned|abandoned]], [[:Category:Trash_builds|trash]], [[:Category:Build stubs|stubs]] eller [[:Category:Trial Builds|trial]] och som inte har redigerats under de senaste två veckorna.
+
+Betygssättning av sidor beaktas inte här.',
 );
 
 /** Tagalog (Tagalog)

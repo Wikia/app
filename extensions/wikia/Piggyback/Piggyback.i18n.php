@@ -245,10 +245,11 @@ Controleer je schrijfwijze.',
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'piggybac-desc' => 'Umożliwia zalogowanie się jako inny użytkownik',
-	'piggyback' => 'Podłączenie',
+	'piggyback' => 'Piggyback',
 	'piggyback-otherusername' => 'Inna nazwa użytkownika:',
 	'piggyback-nosuchuser' => 'Brak użytkownika o nazwie „$1”.
 W nazwie użytkownika ma znaczenie wielkość znaków.
@@ -310,11 +311,15 @@ Verifique a ortografia.',
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Kuzura
  * @author MaxSem
  */
 $messages['ru'] = array(
 	'piggybac-desc' => 'Позволяет войти в качестве другого пользователя',
+	'piggyback-nosuchuser' => 'Не существует участника с именем «$1».
+Имя участника чувствительно к регистру символов.
+Проверьте написание.',
 	'piggyback-wronguser' => '$1 — не ваше имя пользователя.',
 );
 
@@ -323,6 +328,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'piggybac-desc' => 'Tillåter att logga in som en annan användare',
 	'piggyback-otherusername' => 'Annat användarnamn:',
 	'piggyback-nosuchuser' => 'Det finns ingen användare med namnet "$1".
 Användarnamn är skriftlägeskänsliga.

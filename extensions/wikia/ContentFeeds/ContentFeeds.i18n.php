@@ -185,9 +185,12 @@ $messages['ku-latn'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Nivîs',
 );
 
-/** Luxembourgish (Lëtzebuergesch) */
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
 $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
+	'contentfeeds-firstfewarticles-tag-next' => 'Weider',
 );
 
 /** Macedonian (Македонски) */
@@ -386,7 +389,7 @@ $messages['tl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang  isang pamagat ng pahina',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

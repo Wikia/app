@@ -346,6 +346,9 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'logger-desc' => 'Loggare för systemskript',
+	'logger' => 'Systemloggare',
+	'loggertitle' => 'Systemloggare',
 	'loggerselectlogname' => 'Välj loggnamn:',
 	'loggerrecordswithpercent' => "'''$1''' poster ('''$2''' procent färdigt)",
 	'loggerrecords' => '$1 poster',

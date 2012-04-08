@@ -128,6 +128,17 @@ A wengerl experimentiern - du kauhst dert jeederzeid d' Tools deaktiviern, dé d
 	'wikifeatures-error-permission' => 'Tschuidige, ower du host koah Berechtigung daast dé Seiten aufruaffer kauhst.',
 	'wikifeatures-error-invalid-parameter' => 'Néd gijtiger Paarameeter: $1. Bitscheh vasuachs daneit.',
 	'wikifeatures-error-message' => "Der Kómmentar is z' kurz óder z' laung.",
+	'wikifeatures-error-spam-attempt' => 'Bittscheh wort 60 Sekunden vurm Obsenden vahra weidern Ryckmejdung.',
+	'wikifeatures-error-invalid-category' => 'Eha! Bittscheh wej as, um woss ba dém Ticket geet.',
+	'wikifeatures-toggle-active' => 'Aktivierd',
+	'wikifeatures-toggle-inactive' => 'Deaktivierd',
+	'wikifeatures-active-on' => 'Aktiav in $1 Wikis',
+	'wikifeatures-category-choose-one' => 'Wej oane...',
+	'wikifeatures-love-this-project' => 'Mir gfoid dés Prójekt.',
+	'wikifeatures-hate-this-project' => 'Mir gfoid dés Prójekt néd.',
+	'wikifeatures-problem-with-project' => "I ho' a Próblém mid dém Prójekt",
+	'wikifeatures-an-idea-for-project' => "I ho' a Idee fyr dés Prójekt",
+	'wikifeatures-feedback-heading' => 'Ryckmejdung',
 	'wikifeatures-promotion-new' => 'Neich',
 );
 
@@ -693,6 +704,14 @@ $messages['ja'] = array(
 	'wikifeatures-feedback-comment-label' => 'コメント',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'wikifeatures-category-choose-one' => 'ಒಂದನ್ನು ಆರಿಸಿ...',
+	'wikifeatures-promotion-new' => 'ಹೊಸ',
+);
+
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author Gomada
  */
@@ -959,7 +978,7 @@ $messages['nl'] = array(
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => "De functie Blogs stelt gebruikers in staat eigen blogberichten toe te voegen aan hun profielpagina's. De functie is ook goed te gebruiken om nieuws en gebeurtenissen aan uw gemeenschap aan te kondigen.",
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Berichtenmuur',
-	'wikifeatures-feature-description-wgEnableWallExt' => 'Communicatie met de gebruikers van uw wiki is essentieel in het opbouwen en onderhouden van uw gemeenschap. De Berichtenmuur maakt gebruik van een draden en een meldingensysteem waarbij het mogelijk is om interessante gesprekken te volgen. U mist geen bericht meer!',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Communicatie met de gebruikers van uw wiki is essentieel voor het opbouwen en onderhouden van uw gemeenschap. Het prikbord maakt gebruik van draden en een meldingensysteem waarbij het mogelijk is om interessante gesprekken te volgen. U mist geen bericht meer!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Uitgebreide Wikinavigatie',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Krijg meer verwijzingen, een nieuwe voorvertoningshulpmiddel, een samengevoegde lijst met bijdrageverwijzingen een nieuw menu "Op de wiki" waarin de belangrijkste eigenschappen van uw pagina\'s en gemeenschap worden uitgelicht.',
 	'wikifeatures-feature-heading-emptylabs' => 'Het lijkt erop dat het lab even pauze aan het houden is',
@@ -988,7 +1007,7 @@ $messages['pl'] = array(
 	'wikifeatures-error-invalid-category' => 'Wybierz rodzaj zgłoszenia.',
 	'wikifeatures-toggle-active' => 'włączone',
 	'wikifeatures-toggle-inactive' => 'wyłączone',
-	'wikifeatures-active-on' => 'aktywne na $1 wikiach',
+	'wikifeatures-active-on' => 'aktywne na $1 wiki',
 	'wikifeatures-category-choose-one' => 'Wybierz jedną...',
 	'wikifeatures-love-this-project' => 'Kocham to rozszerzenie',
 	'wikifeatures-hate-this-project' => 'Nienawidzę tego rozszerzenia',
@@ -999,7 +1018,7 @@ $messages['pl'] = array(
 	'wikifeatures-feedback-type-label' => 'Co to?',
 	'wikifeatures-feedback-comment-label' => 'Zostaw komentarz',
 	'wikifeatures-feedback-success' => 'Dziękujemy za przesłaną opinię!',
-	'wikifeatures-deactivate-heading' => 'Wyłączyć  $1?',
+	'wikifeatures-deactivate-heading' => 'Wyłączyć rozszerzenie $1?',
 	'wikifeatures-deactivate-description' => 'Wyłączenie rozszerzenia usunie je z Twojej wiki. Użytkownicy nie będą mogli z niego korzystać i nie zobaczą go nigdzie na wiki.',
 	'wikifeatures-deactivate-notification' => 'Możesz włączyć rozszerzenie ponownie w dowolnej chwili.',
 	'wikifeatures-deactivate-confirm-button' => 'Tak, wyłącz',
@@ -1008,8 +1027,8 @@ $messages['pl'] = array(
 	'wikifeatures-oasis-only' => 'Rozszerzenia Wiki nie są dostępne w skórce Monobook. Jeśli chcesz skorzystać z tego rozszerzenia, zmień skórkę na "Wikia".',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Listy Top 10',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Listy Top 10 pozwalają każdemu edytorowi na Twojej wiki utworzyć ranking. Jeśli szukasz sposobu aby zaangażować innych użytkowników, oto on! Włączenie tego rozszerzenia doda opcję "Lista Top 10" przy tworzeniu nowego artykułu.',
-	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Osiągnięcia',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Osiągnięcia pomogą Twojej wiki rosnąć poprzez motywowanie użytkowników do edycji różnego typu artykułów. Możesz tworzyć własne, unikatowe osiągnięcia, a nawet modyfikować obrazy dla poszczególnych odznaczeń.',
+	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Odznaczenia',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Odznaczenie pomogą Twojej wiki rosnąć poprzez motywowanie użytkowników do edycji różnego typu artykułów. Możesz tworzyć własne, unikatowe odznaki, a nawet modyfikować obrazy dla poszczególnych odznaczeń.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Komentarze',
 	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'To rozszerzenie pozwoli użytkownikom dodawać komentarze na dole strony. Inni mogą na nie odpowiadać, a podpisy i daty zostają dodane automatycznie. To rozszerzenie zastąpi strony dyskusji na Twojej wiki.',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Galeria Kategorii',
@@ -1019,7 +1038,7 @@ $messages['pl'] = array(
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Nowy Styl Edytora',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Sercem każdej wiki jest edytowanie, a posiadanie odpowiedniego narzędzia do edycji jest kluczem do łatwego i przyjemnego dodawania treści. Aby ulepszyć to doświadczenie, zmieniliśmy wygląd edytora.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Ankiety',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Ankiety pozwalają każdemu na Twojej wiki na utworzenie sondy. Edytorzy mogą używać [http://help.wikia.com/wiki/Help:Poll tagów poll] aby dodawać sondy do dowolnej strony. To rozszerzenie to świetny sposób aby zachęcić nowych edytorów.',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Ankiety pozwalają każdemu na Twojej wiki na utworzenie sondy. Edytorzy mogą używać [http://pomoc.wikia.com/wiki/Pomoc:Ankiety tagów poll] aby dodawać sondy do dowolnej strony. To rozszerzenie to świetny sposób aby zachęcić nowych edytorów.',
 	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Kreator Układu',
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Pomóż edytorom na Twojej wiki w tworzeniu świetnie wyglądających artykułów w krótkim czasie. Kreator Układu pozwala administratorom na Twojej wiki tworzyć wcześniej sformatowane układy artykułów, z których edytorzy mogą wybierać przy tworzeniu stron.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogi',
@@ -1030,7 +1049,7 @@ $messages['pl'] = array(
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Więcej linków, narzędzie do podglądu menu, zestaw narzędzi do edycji i nowe menu "Na Wiki", zawierające linki do istotnych stron na Twojej wiki.',
 	'wikifeatures-feature-heading-emptylabs' => 'Wygląda na to, że Laboratorium ma przerwę',
 	'wikifeatures-feature-description-emptylabs' => 'Nasi technicy ciężko pracują aby stworzyć dla Ciebie nowe rozszerzenia. Zajrzyj wkrótce!',
-	'wikifeatures-log-name' => 'Dziennik Rozszerzeń Wiki',
+	'wikifeatures-log-name' => 'Rejestr Rozszerzeń Wiki',
 	'wikifeatures-log-header' => 'Poniżej znajduje się lista zmian ustawień w Rozszerzeniach Wiki.',
 );
 
@@ -1045,6 +1064,52 @@ $messages['ps'] = array(
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'د سر 10 لړليکونه',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'برياوې',
 	'wikifeatures-feature-heading-wgEnableChat' => 'بانډار',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Caio1478
+ * @author Pedroca cerebral
+ */
+$messages['pt-br'] = array(
+	'wikifeatures' => 'Recursos da Wiki',
+	'wikifeatures-title' => 'Recursos da Wiki',
+	'wikifeatures-heading' => 'Recursos',
+	'wikifeatures-creative' => 'Os Recursos da Wiki permite que você selecione qual dos recursos opcionais da Wikia você gostaria de ter na sua wiki. Dê uma olhada e lembre-se de brincar, você pode ativar ou desativar esses recursos a qualquer momento.',
+	'wikifeatures-labs-heading' => 'Laboratórios',
+	'wikifeatures-labs-creative' => 'Os Laboratórios é onde você pode encontrar recursos e idéias que estamos experimentando. Uma vez que estamos ainda ajustando esses recursos no laboratório, eles poderiam ter algumas torções, mas queremos que divirtam-se! Liguem eles e enviem-nos o seu feedback sobre o bom, o mau, e o comportamento absolutamente peculiar desses produtos.',
+	'wikifeatures-feedback' => 'Dar Feedback',
+	'wikifeatures-error-permission' => 'Desculpe, você não tem permissão para exibir esta página.',
+	'wikifeatures-error-invalid-parameter' => 'Parâmetro inválido: $1. Por favor, tente novamente.',
+	'wikifeatures-error-message' => 'Seu comentário é muito curto ou muito longo.',
+	'wikifeatures-error-spam-attempt' => 'Por favor, aguarde 60 segundos antes de enviar mais feedback.',
+	'wikifeatures-error-invalid-category' => 'Ops!  Por favor, escolha do que esse ticket fala.',
+	'wikifeatures-toggle-active' => 'Habilitado',
+	'wikifeatures-toggle-inactive' => 'Desabilitado',
+	'wikifeatures-active-on' => 'Ativo em $1 wikis',
+	'wikifeatures-category-choose-one' => 'Escolha um...',
+	'wikifeatures-love-this-project' => 'Eu amo esse recurso',
+	'wikifeatures-hate-this-project' => 'Eu odeio esse recurso',
+	'wikifeatures-problem-with-project' => 'Eu tenho um problema para reportar',
+	'wikifeatures-an-idea-for-project' => 'Eu tenho uma ideia para esse recurso',
+	'wikifeatures-feedback-heading' => 'Feedback',
+	'wikifeatures-feedback-description' => 'Gostamos de ouvir feedback sobre os recursos que estão em Laboratórios! Você tem uma ideia de como podemos melhorar este recurso, um relatório de problema, ou simplesmente algum feedback sobre o que você gosta ou não? Diga-nos usando a caixa abaixo.',
+	'wikifeatures-feedback-type-label' => 'O que é isso?',
+	'wikifeatures-feedback-comment-label' => 'Deixe-nos um comentário',
+	'wikifeatures-feedback-success' => 'Obrigado por seu feedback!',
+	'wikifeatures-deactivate-heading' => 'Desabilitar $1?',
+	'wikifeatures-deactivate-description' => 'Desabilitando um recurso irá removê-lo da sua wiki. Seus usuários não serão capazes de usar esse recurso mais, e eles não vão ver o recurso em qualquer parte da wiki.',
+	'wikifeatures-deactivate-notification' => 'Você pode habilitar o recurso novamente a qualquer momento.',
+	'wikifeatures-deactivate-confirm-button' => 'Sim, desabilitar',
+	'wikifeatures-deactivate-cancel-button' => 'Cancelar',
+	'wikifeatures-promotion-new' => 'Novo',
+	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Listas Top 10',
+	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Conquistas',
+	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Comentários de Artigo',
+	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Exibição de Categoria',
+	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Enquetes',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mural de Mensagens',
+	'wikifeatures-log-name' => 'Registro Recursos da Wiki',
 );
 
 /** Russian (Русский)
@@ -1111,6 +1176,7 @@ $messages['ru'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author VickyC
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1118,7 +1184,9 @@ $messages['sv'] = array(
 	'wikifeatures-title' => 'Wiki-funktioner',
 	'wikifeatures-heading' => 'Funktioner',
 	'wikifeatures-creative' => 'Wiki-funktioner låter dig välja vilken av Wikias valfria funktioner du vill ha på din wiki. Ta en titt och kom ihåg att leka, du kan aktivera eller inaktivera funktionerna när som helst.',
+	'wikifeatures-labs-heading' => 'Labbet',
 	'wikifeatures-feedback' => 'Ge feedback',
+	'wikifeatures-error-permission' => 'Tyvärr, du har inte åtkomstbehörighet för att visa denna sida.',
 	'wikifeatures-error-invalid-parameter' => 'Ogiltig parameter: $1. Försök igen.',
 	'wikifeatures-error-message' => 'Din kommentar är antingen för kort eller för lång.',
 	'wikifeatures-error-spam-attempt' => 'Vänta 60 sekunder innan du skickar nästa feedback.',
@@ -1132,6 +1200,7 @@ $messages['sv'] = array(
 	'wikifeatures-problem-with-project' => 'Jag har ett problem att rapportera',
 	'wikifeatures-an-idea-for-project' => 'Jag har en idé för den här funktionen',
 	'wikifeatures-feedback-heading' => 'Feedback',
+	'wikifeatures-feedback-description' => 'Vi älskar att få feedback om funktioner som finns på labbet! Har du en idé till att förbättra denna funktion, ett problem att rapportera, eller helt enkelt lite feedback om vad du gillar eller inte gillar? Låt oss veta med hjälp av rutan nedan.',
 	'wikifeatures-feedback-type-label' => 'Vad handlar detta om?',
 	'wikifeatures-feedback-comment-label' => 'Lämna en kommentar',
 	'wikifeatures-feedback-success' => 'Tack för din feedback!',
@@ -1140,15 +1209,18 @@ $messages['sv'] = array(
 	'wikifeatures-deactivate-confirm-button' => 'Ja, inaktivera',
 	'wikifeatures-deactivate-cancel-button' => 'Avbryt',
 	'wikifeatures-promotion-new' => 'Ny',
+	'wikifeatures-oasis-only' => 'Wiki-funktioner är inte tillgänglig för Monobook. Om du vill använda denna funktion, var god byt till Wikia-skalet i dina inställningar.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Topp 10-listor',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Utmärkelser',
 	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Utmärkelser kommer att hjälpa din wiki att växa genom att uppfordra användarna till att bidra en mängd innehåll. Du kan skapa dina egna utmaningar som är unika för din wiki och även ladda upp dina egna bilder till emblemen.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Artikelkommentarer',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chatt',
+	'wikifeatures-feature-description-wgEnableChat' => 'Kommunicera direkt med andra användare som älskar din wiki och dess ämne lika mycket som du! Vem som helst med ett Wikia användarkonto kan chatta genom att klicka på knappen "Chat" till höger i menyn.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Omröstningar',
 	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Layout-byggare',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Bloggar',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Meddelandevägg',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Att kommunicera med bidragsgivarna på din wiki är en viktig del i att bygga och underhålla din gemenskap. Meddelandeväggen använder ett trådat konversationsformat och ett meddelandesystem som låter dig kontrollera vilka konversationer du är intresserade att följa. Inga fler missade meddelanden!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Utökad Wiki-navigering',
 	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
 	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
@@ -1218,5 +1290,36 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'wikifeatures' => 'Wikia功能',
 	'wikifeatures-title' => 'Wikia功能',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikifeatures' => 'Wiki功能',
+	'wikifeatures-title' => 'Wiki功能',
+	'wikifeatures-heading' => '功能',
+	'wikifeatures-toggle-active' => '已啟用',
+	'wikifeatures-toggle-inactive' => '已停用',
+	'wikifeatures-category-choose-one' => '選擇一個...',
+	'wikifeatures-love-this-project' => '我愛這項功能',
+	'wikifeatures-hate-this-project' => '我討厭這項功能',
+	'wikifeatures-problem-with-project' => '我有一個問題要回報',
+	'wikifeatures-an-idea-for-project' => '對於此功能，我有個想法。',
+	'wikifeatures-feedback-heading' => '回饋',
+	'wikifeatures-feedback-comment-label' => '留給我們一個評論',
+	'wikifeatures-feedback-success' => '感謝您的回饋 ！',
+	'wikifeatures-deactivate-heading' => '停用 $1 嗎？',
+	'wikifeatures-deactivate-description' => '停用一個功能將其從你的 wiki移除。您的使用者將無法再使用此功能，他們不會在這個 wiki 上的任何地方看到該功能。',
+	'wikifeatures-deactivate-notification' => '您可以隨時再次開啟該功能。',
+	'wikifeatures-deactivate-confirm-button' => '是，停用',
+	'wikifeatures-deactivate-cancel-button' => '取消',
+	'wikifeatures-promotion-new' => '新',
+	'wikifeatures-oasis-only' => '在Wiki功能Monobook無法使用，如果您想使用這一功能，請把您的外觀改為Wikia skin。.',
+	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => '文章評論',
+	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => '類別展覽',
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => '民調',
+	'wikifeatures-feature-heading-wgEnableBlogArticles' => '部落格',
+	'wikifeatures-feature-heading-wgEnableWallExt' => '訊息牆',
 );
 

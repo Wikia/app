@@ -56,6 +56,7 @@ $messages['az'] = array(
 );
 
 /** German (Deutsch)
+ * @author George Animal
  * @author Tiin
  */
 $messages['de'] = array(
@@ -77,6 +78,7 @@ $1
 	'lightbox-share-button-www' => 'Teilen',
 	'lightbox-share-button-embed' => 'Einbinden',
 	'lightbox-share-email-label' => 'Dieses Bild an einen Freund senden',
+	'lightbox-share-email-page-label-address' => 'E-Mail-Adresse',
 	'lightbox-share-email-ok-caption' => 'Bestätigung',
 	'lightbox-share-email-ok-content' => 'Die {{PLURAL:$1|E-Mail wurde|E-Mails wurden}} gesendet.',
 	'lightbox-share-email-error-caption' => 'Fehler',
@@ -301,6 +303,8 @@ $1
 	'lightbox-share-button-www' => '共有',
 	'lightbox-share-button-embed' => '埋め込み',
 	'lightbox-share-email-label' => 'この画像をメールで友人に送信',
+	'lightbox-share-email-page-label' => '友達にメールでこのページを送信',
+	'lightbox-share-email-page-label-address' => 'メールアドレス',
 	'lightbox-share-email-ok-caption' => '確認',
 	'lightbox-share-email-ok-content' => 'メールを送信しました。',
 	'lightbox-share-email-error-caption' => 'エラー',
@@ -442,6 +446,7 @@ $1
 Details: $2',
 	'lightbox-share-email-error-login' => 'U moet aanmelden om e-mail te kunnen verzenden',
 	'lightbox-share-email-error-noaddress' => 'Er zijn geen adressen opgegeven.',
+	'lightbox-visit-the-wiki' => 'Bezoek de wiki:',
 );
 
 /** Polish (Polski)
@@ -560,5 +565,13 @@ Detaljer: $2',
  */
 $messages['tr'] = array(
 	'lightbox-share-email-error-caption' => 'Hata',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'lightbox_details_tooltip' => '查看图片细节',
+	'lightbox-share-button-www' => '分享',
 );
 

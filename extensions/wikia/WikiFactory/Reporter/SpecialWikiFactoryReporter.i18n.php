@@ -11,7 +11,7 @@ $messages['en'] = array(
 	 'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
-/** адыгэбзэ (адыгэбзэ)
+/** Адыгэбзэ (Адыгэбзэ)
  * @author Peserey
  */
 $messages['ady-cyrl'] = array(
@@ -331,10 +331,11 @@ $messages['pap'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'wikifactoryreporter' => 'WikiFabryka — raporty',
+	'wikifactoryreporter' => 'Raporty WikiFactory',
 );
 
 /** Piedmontese (Piemontèis)

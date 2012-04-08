@@ -574,12 +574,15 @@ $messages['fa'] = array(
 
 /** Finnish (Suomi)
  * @author Centerlink
+ * @author Ilkea
  * @author Nike
  */
 $messages['fi'] = array(
 	'toplists-desc' => 'Top 10 -luettelot',
 	'right-toplists-create-edit-list' => 'Luo ja muokkaa Top 10 -luettelosivuja',
 	'right-toplists-create-item' => 'Luo ja lisää kohteita Top 10 -luettelosivulle',
+	'right-toplists-edit-item' => 'Muokkaa kohtia top-10 lista sivulla',
+	'right-toplists-delete-item' => 'Poista kohdat top-10 lista sivulta',
 	'createtoplist' => 'Luo uusi Top 10 -luettelo',
 	'edittoplist' => 'Muokkaa Top 10 -luetteloa',
 	'toplists-category' => 'Top 10 -luettelot',
@@ -597,6 +600,7 @@ $messages['fi'] = array(
 	'toplists-error-add-item-anon' => 'Anonyymit käyttäjät eivät voi lisätä kohteita luetteloihin. Ole hyvä ja <a class="ajaxLogin" id="login" href="$1">kirjaudu sisään</a> tai <a class="ajaxLogin" id="signup" href="$2">rekisteröi uusi tunnus</a>.',
 	'toplists-error-add-item-permission' => 'Käyttöoikeusvirhe: Tilille ei ole myönnetty oikeutta luoda uusia kohteita.',
 	'toplists-error-add-item-list-not-exists' => 'Top10-listaa $1 ei ole olemassa.',
+	'toplists-upload-error-unknown' => 'Tapahtui virhe lataus prosessissa. Yritä uudestaan.',
 	'toplists-editor-title-label' => 'Luettelonimi',
 	'toplists-editor-title-placeholder' => 'Kirjoita luettelon nimi',
 	'toplists-editor-related-article-label' => 'Liittyvä sivu <small>(valinnainen, mutta valitsee kuvan)</small>',
@@ -651,6 +655,8 @@ Voit <a href="$4">perua päivitykset</a> luettelon muutoksista.',
 	'toplists-days' => '$1 {{PLURAL:$1|päivä|päivää}} sitten',
 	'toplists-weeks' => '$1 {{PLURAL:$1|viikko|viikkoa}} sitten',
 	'toplists-msg-fb-OnRateArticle-short' => 'on äänestänyt Top10-listaa wikissä $WIKINAME!',
+	'toplists-create-heading' => '<em>Uutta!</em> Luo oma top-10',
+	'toplists-create-button-msg' => 'Luo lista',
 );
 
 /** French (Français)
@@ -1390,6 +1396,7 @@ $messages['nl'] = array(
 	'toplists-editor-title-placeholder' => 'Voer een naam in voor de lijst',
 	'toplists-editor-related-article-label' => 'Gerelateerde pagina <small>(optioneel, maar selecteert een afbeelding)</small>',
 	'toplists-editor-related-article-placeholder' => 'Voer een bestaande paginanaam in',
+	'toplists-editor-social-description-placeholder' => 'Geef een beschrijving op',
 	'toplists-editor-image-browser-tooltip' => 'Afbeelding toevoegen',
 	'toplists-editor-remove-item-tooltip' => 'Item verwijderen',
 	'toplists-editor-drag-item-tooltip' => 'Sleep om de volgorde te wijzigen',
@@ -1547,7 +1554,7 @@ Możesz <a href="$4">anulować subskrypcję</a> zmian na liście.',
 	'toplists-minutes' => '$1 {{PLURAL:$1|minuta|minuty|minut}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|godzina|godziny|godzin}}',
 	'toplists-days' => '$1 {{PLURAL:$1|dzień|dni}}',
-	'toplists-weeks' => '{{PLURAL:$1|tydzień|tygodnie|tygodni}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|tydzień|tygodnie|tygodni}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'zagłosowało na liście Top 10 na $WIKINAME!',
 	'toplists-create-heading' => '<em>Nowość!</em> Utwórz własne Top Dziesięć',
 	'toplists-create-button-msg' => 'Utwórz listę',
@@ -2090,18 +2097,41 @@ $messages['uk'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'toplists-editor-title-label' => '列表名称',
+	'toplists-editor-title-placeholder' => '为列表命名',
+	'toplists-editor-image-browser-tooltip' => '添加图片',
 	'toplists-create-button' => '创建列表',
 	'toplists-update-button' => '保存列表',
 	'toplists-cancel-button' => '取消',
+	'toplits-image-browser-no-picture-selected' => '没有图片被选中',
 	'toplists-image-browser-upload-btn' => '选择',
 	'toplists-image-browser-upload-label' => '上载您自己的',
+	'toplists-item-creation-summary' => '创建新的列表项',
 	'toplists-list-add-item-label' => '添加东西',
 	'toplists-list-item-voted' => '投票了',
+	'toplists-email-body' => '来自Wikia的问候！
+
+该列表<a href="$1">$2</a>在Wikia上已被修改。
+
+ $3
+
+前往Wikia去查看改变吧！$1
+
+- Wikia
+
+您可以<a href="$4">退订</a>本列表的变动。',
 	'toplists-create-button-msg' => '创建列表',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'toplists-list-item-voted' => '投票了',
 );
 

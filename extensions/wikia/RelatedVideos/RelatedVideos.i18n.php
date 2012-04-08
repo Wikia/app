@@ -487,6 +487,7 @@ $messages['nl'] = array(
 	'related-videos-video-is-new' => 'Nieuw',
 	'related-videos-pagination' => '$1 van $2',
 	'related-videos-empty' => 'Wees de eerste om een video toe te voegen',
+	'related-videos-requestbutton' => "Nieuwe video's aanvragen",
 );
 
 /** Polish (Polski)
@@ -538,6 +539,7 @@ $messages['pl'] = array(
 );
 
 /** Russian (Русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -580,6 +582,8 @@ $messages['ru'] = array(
 	'related-videos-repo-name' => 'Видео библиотека Викия',
 	'related-videos-embed-text' => 'Добавить код',
 	'related-videos-video-is-new' => 'Новое',
+	'related-videos-pagination' => '$1 из $2',
+	'related-videos-empty' => 'Будьте первым, кто добавит видео',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

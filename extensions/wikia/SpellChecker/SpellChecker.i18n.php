@@ -191,7 +191,7 @@ $messages['ia'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Suggestiones de orthographia pro "$1": $2',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(

@@ -251,3 +251,10 @@ $messages['uk'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Сторінку обговорення створено автоматично',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'sharedhelp-autotalkcreate-summary' => '讨论页已自动创建',
+);
+

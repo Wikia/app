@@ -140,3 +140,10 @@ $messages['sv'] = array(
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'centralhelpsearch-placeholder' => '搜索帮助……',
+);
+

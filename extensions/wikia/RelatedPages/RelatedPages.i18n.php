@@ -312,13 +312,23 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'wikiarelatedpages-desc' => 'Thêm danh sách đến các trang liên quan của những bài viết',
-	'wikiarelatedpages-heading' => 'Xem thêm',
+	'wikiarelatedpages-heading' => 'Đọc nhiều hơn',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'wikiarelatedpages-desc' => '向页面添加相关页列表',
 	'wikiarelatedpages-heading' => '读更多',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiarelatedpages-desc' => '增加一個相關頁面的清單。',
+	'wikiarelatedpages-heading' => '讀更多',
 );
 

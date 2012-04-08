@@ -346,8 +346,18 @@ $messages['ca'] = array(
 	'tog-forceeditsummary' => "Pregunta'm si deixo en blanc el resum d'edició",
 );
 
+/** Czech (Česky)
+ * @author Jezevec
+ */
+$messages['cs'] = array(
+	'editpagelayout-more' => 'více',
+	'editpagelayout-less' => 'méně',
+	'wikia-editor-edittools-caption' => 'více',
+);
+
 /** German (Deutsch)
  * @author Claudia Hattitten
+ * @author Geitost
  * @author LWChris
  * @author MF-Warburg
  * @author MtaÄ
@@ -410,13 +420,15 @@ $messages['de'] = array(
 	'wikia-editor-preview-editSummary' => 'Zusammenfassung: $1',
 	'wikia-editor-leaveconfirm-message' => 'Du hast einige unveröffentlichte Bearbeitungen getätigt. Bis du sicher, dass du gehen willst, ohne sie zu veröffentlichen?',
 	'nonunicodebrowser-notice' => "'''Achtung: Dein Browser ist nicht Unicode-kompatibel.'''",
-	'rev-deleted-text-notice' => "Diese Version wurde '''gelöscht'''. [Mehr Informationen]",
-	'readonlywarning-notice' => "'''Warnung: Die Datenbank wurde wegen Wartungsarbeiten gesperrt.''' [Mehr Informationen]",
+	'rev-deleted-text-notice' => "Warnung: Diese Version wurde '''gelöscht.''' [Mehr Informationen]",
+	'readonlywarning-notice' => "'''Warnung: Die Datenbank wurde wegen Wartungsarbeiten gesperrt.''' Wenn diese beendet sind, werden Bearbeitungen wieder möglich sein. [Mehr Informationen]",
 	'userinvalidcssjstitle-notice' => "'''Achtung:''' Den Skin \"\$1\" gibt es nicht. [Mehr Informationen]",
-	'semiprotectedpagewarning-notice' => "'''Hinweis:''' Diese Seite wurde für unangemeldete Bearbeiter gesperrt. [Mehr Informationen]",
+	'semiprotectedpagewarning-notice' => "'''Hinweis:''' Diese Seite wurde für unangemeldete Bearbeiter gesperrt. Melde dich bitte an, um sie zu bearbeiten. [Mehr Informationen]",
 	'protectedpagewarning-notice' => "'''Hinweis:''' Diese Seite wurde gesperrt, sodass nur Administratoren diese bearbeiten können. Lokale Administratoren können diesen Status ändern. [Mehr Informationen]",
-	'titleprotectedwarning-notice' => "'''Hinweis:''' Diese Seite wurde gesperrt und kann nur von ausgewählten Benutzern bearbeitet werden. [Mehr Informationen]",
+	'titleprotectedwarning-notice' => "'''Warnung:''' Diese Seite wurde geschützt und kann nur von Administratoren angelegt werden. Lokale Administratoren können diesen Seitenschutz ändern. [Mehr Informationen]",
 	'recreate-moveddeleted-warn-notice' => "'''Hinweis:''' Du erstellst eine Seite, die zuvor gelöscht wurde. [Mehr Informationen]",
+	'restore-edits-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die du nicht veröffentlicht hattest. <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und eine neue Bearbeitung beginnen.</a>",
+	'restore-edits-diff-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die du nicht veröffentlicht hattest. Allerdings ist seitdem die Seite aktualisiert worden. Was möchtest du tun?: <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und mit der aktuellen Textversion beginnen</a> oder <a class='notice-action difflink'>einen Vergleich der Änderungen mit der aktuellen Seite ansehen.</a>",
 	'prefs-general' => 'Allgemein',
 	'prefs-starting-an-edit' => 'Bearbeitung beginnen',
 	'prefs-editing-experience' => 'Bearbeitungsart',
@@ -426,6 +438,15 @@ $messages['de'] = array(
 	'tog-editwidth' => 'Quelltext-Bearbeitungs-Fenster auf volle Breite',
 	'tog-minordefault' => 'Eigene Änderungen standardmäßig als geringfügig markieren',
 	'tog-forceeditsummary' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
+);
+
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Geitost
+ */
+$messages['de-formal'] = array(
+	'semiprotectedpagewarning-notice' => "'''Hinweis:''' Diese Seite wurde für unangemeldete Bearbeiter gesperrt. Melden Sie sich bitte an, um sie zu bearbeiten. [Mehr Informationen]",
+	'restore-edits-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die Sie nicht veröffentlicht hatten. <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und eine neue Bearbeitung beginnen.</a>",
+	'restore-edits-diff-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die Sie nicht veröffentlicht hatten. Allerdings ist seitdem die Seite aktualisiert worden. Was möchten Sie tun?: <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und mit der aktuellen Textversion beginnen</a> oder <a class='notice-action difflink'>einen Vergleich der Änderungen mit der aktuellen Seite ansehen.</a>",
 );
 
 /** Spanish (Español)
@@ -525,6 +546,49 @@ $messages['fa'] = array(
 	'editpagelayout-blocked-user' => 'نام کاربری یا نشانی IP شما مسدود شده است',
 	'wikia-editor-modules-templates-title' => 'الگوها',
 	'wikia-editor-edittools-caption' => 'بیشتر',
+);
+
+/** Finnish (Suomi)
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'editpagelayout-more' => 'lisää',
+	'editpagelayout-less' => 'vähemmän',
+	'editpagelayout-helpLink-url' => 'Help:Editing',
+	'editpagelayout-helpLink' => 'Tarvitsetko [[{{MediaWiki:Editpagelayout-helpLink-url}}|apua?]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Ilmoitus|Ilmoitukset}}',
+	'editpagelayout-notificationsLink-none' => 'Ilmoitukset',
+	'editpagelayout-edit-title' => 'Muokkaa otsikkoa',
+	'editpagelayout-edit-info' => 'Muokkaa tietoja',
+	'editpagelayout-diff-header-url' => 'Help:Diff',
+	'editpagelayout-captcha-title' => 'Captcha',
+	'editpagelayout-pageControls-pageLink' => 'palaa sivulle',
+	'editpagelayout-pageControls-minorEdit' => 'Pieni muutos',
+	'editpagelayout-pageControls-summaryLabel' => 'Lisää yhteenveto muokkauksestasi',
+	'editpagelayout-pageControls-newSectionLabel' => 'Lisää väliotsikko',
+	'editpagelayout-pageControls-back' => 'Takaisin editoriin',
+	'editpagelayout-pageControls-changes' => 'Muutokset',
+	'editpagelayout-blocked-user' => 'Käyttäjätunnuksesi tai IP osoitteesi on estetty',
+	'editpagelayout-edit-summary-label' => 'Yhteenveto muokkauksesta',
+	'editpagelayout-subject-headline-label' => 'Aihe/otsikko:',
+	'wikia-editor-media-image' => 'Kuva',
+	'wikia-editor-media-gallery' => 'Galleria',
+	'wikia-editor-media-slideshow' => 'Diaesitys',
+	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-image-tooltip' => 'Lisää kuva',
+	'wikia-editor-media-gallery-tooltip' => 'Lisää galleria',
+	'wikia-editor-media-slideshow-tooltip' => 'Lisää diaesitys',
+	'wikia-editor-media-video-tooltip' => 'Lisää video',
+	'wikia-editor-source-bold-tooltip' => 'Lihavointi',
+	'wikia-editor-source-italic-tooltip' => 'Kursivointi',
+	'wikia-editor-source-link-tooltip' => 'Lisää linkki',
+	'wikia-editor-modules-templates-title' => 'Mallineet',
+	'wikia-editor-modules-templates-add-tooltip' => 'Lisää "$1" malline',
+	'wikia-editor-modules-templates-otherTemplates' => 'Lisää muu malline',
+	'wikia-editor-modules-templates-showUsedList' => 'Näytä lista käytetyistä mallineista',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lista käytetyistä mallineista',
+	'wikia-editor-modules-templates-makeLayout' => 'Tee uusi malli tästä sivusta',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Luo malli tästä sivusta',
 );
 
 /** French (Français)
@@ -833,7 +897,7 @@ $messages['ia'] = array(
 	'tog-forceeditsummary' => 'Avisar me si io non entra un summario de modification',
 );
 
-/** Ingush (ГІалгІай Ğalğaj)
+/** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
@@ -867,6 +931,8 @@ $messages['ja'] = array(
 	'editpagelayout-less' => '折り畳む',
 	'editpagelayout-helpLink-url' => 'Help:編集',
 	'editpagelayout-helpLink' => '[[{{MediaWiki:Editpagelayout-helpLink-url}}|ヘルプ]]が必要ですか？',
+	'editpagelayout-notificationsLink' => '<span>$1</span> 通知',
+	'editpagelayout-notificationsLink-none' => '通知',
 	'editpagelayout-captcha-title' => '画像認証',
 	'editpagelayout-pageControls-pageLink' => 'ページに戻る',
 	'editpagelayout-pageControls-minorEdit' => 'これは細部の編集です',
@@ -875,6 +941,7 @@ $messages['ja'] = array(
 	'editpagelayout-pageControls-back' => 'エディタに戻る',
 	'editpagelayout-pageControls-changes' => '差分',
 	'editpagelayout-blocked-user' => 'お使いの利用者名またはIPアドレスはブロックされています',
+	'editpagelayout-edit-summary-label' => '編集内容の要約',
 	'wikia-editor-media-image' => '画像',
 	'wikia-editor-media-gallery' => 'ギャラリー',
 	'wikia-editor-media-slideshow' => 'スライドショー',
@@ -895,11 +962,12 @@ $messages['ja'] = array(
 	'wikia-editor-modules-categories-title' => 'カテゴリ',
 	'wikia-editor-loadingStates-loading' => 'エディタを読み込んでいます',
 	'wikia-editor-loadingStates-toSource' => 'ソースモードに切り替えています',
-	'wikia-editor-loadingStates-toVisual' => 'ビジュアルモードの切り替えています',
+	'wikia-editor-loadingStates-toVisual' => 'ビジュアルモードに切り替えています',
 	'wikia-editor-loadingStates-saving' => '編集を保存しています',
 	'wikia-editor-edittools-caption' => 'ショートカットをさらに表示',
 	'wikia-editor-edittools-dialog-title' => 'ウィキテキストショートカット',
 	'wikia-editor-notices-dialog-title' => '通知の詳細',
+	'wikia-editor-preview-editSummary' => '編集内容の要約: $1',
 	'nonunicodebrowser-notice' => "'''警告:''' 使用中のブラウザがUnicodeに対応していません。",
 	'rev-deleted-text-notice' => "この版は'''削除されています'''。[詳細]",
 	'readonlywarning-notice' => "'''警告:''' データベースがメンテナンスのためにロックされています。[詳細]",
@@ -1374,7 +1442,7 @@ $messages['nl-informal'] = array(
 $messages['pl'] = array(
 	'editpagelayout-more' => 'więcej',
 	'editpagelayout-less' => 'mniej',
-	'editpagelayout-helpLink-url' => 'Help:Edycja',
+	'editpagelayout-helpLink-url' => 'Help:Edytowanie',
 	'editpagelayout-helpLink' => 'Potrzebujesz [[{{MediaWiki:Editpagelayout-helpLink-url}}|pomocy?]]',
 	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Powiadomienie|Powiadomienia|Powiadomie}}',
 	'editpagelayout-notificationsLink-none' => 'Powiadomienia',
@@ -1393,12 +1461,12 @@ $messages['pl'] = array(
 	'editpagelayout-blocked-user' => 'Twoja nazwa użytkownika lub adres IP zostały zablokowane',
 	'editpagelayout-edit-summary-label' => 'Opis Zmian',
 	'editpagelayout-subject-headline-label' => 'Temat/nagłówek:',
-	'wikia-editor-media-image' => 'Grafiki',
+	'wikia-editor-media-image' => 'Obraz',
 	'wikia-editor-media-gallery' => 'Galeria',
 	'wikia-editor-media-slideshow' => 'Pokaz slajdów',
 	'wikia-editor-media-slider' => 'Slider',
 	'wikia-editor-media-video' => 'Filmy',
-	'wikia-editor-media-image-tooltip' => 'Dodaj grafikę',
+	'wikia-editor-media-image-tooltip' => 'Dodaj obraz',
 	'wikia-editor-media-gallery-tooltip' => 'Dodaj galerię',
 	'wikia-editor-media-slideshow-tooltip' => 'Dodaj pokaz slajdów',
 	'wikia-editor-media-slider-tooltip' => 'Dodaj slider',
@@ -1533,6 +1601,14 @@ $messages['pt'] = array(
 	'tog-forceeditsummary' => 'Avisar-me se deixar o resumo da edição vazio',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Caio1478
+ */
+$messages['pt-br'] = array(
+	'editpagelayout-notificationsLink-none' => 'Notificações',
+	'restore-edits-notice' => "Bem-vindo de volta! Nós restauramos algumas alterações que você não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
+);
+
 /** Russian (Русский)
  * @author Express2000
  * @author Kuzura
@@ -1569,6 +1645,9 @@ $messages['ru'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Добавить слайдшоу',
 	'wikia-editor-media-slider-tooltip' => 'Добавить слайдер',
 	'wikia-editor-media-video-tooltip' => 'Добавить видео',
+	'wikia-editor-source-bold-tooltip' => 'Полужирный',
+	'wikia-editor-source-italic-tooltip' => 'Курсив',
+	'wikia-editor-source-link-tooltip' => 'Добавить ссылку',
 	'wikia-editor-modules-templates-title' => 'Шаблоны',
 	'wikia-editor-modules-templates-add-tooltip' => "Добавить шаблон '$1'",
 	'wikia-editor-modules-templates-otherTemplates' => 'Добавить другие шаблоны',
@@ -1583,7 +1662,7 @@ $messages['ru'] = array(
 	'wikia-editor-loadingStates-loading' => 'Загрузка редактора',
 	'wikia-editor-loadingStates-toSource' => 'В режим исходного кода...',
 	'wikia-editor-loadingStates-toVisual' => 'В режим визуального редактора...',
-	'wikia-editor-loadingStates-saving' => 'Записать правки',
+	'wikia-editor-loadingStates-saving' => 'Запись правок',
 	'wikia-editor-edittools-caption' => 'подробнее',
 	'wikia-editor-edittools-dialog-title' => 'Вставка викитекста',
 	'wikia-editor-notices-dialog-title' => 'Уведомления',
@@ -1717,7 +1796,7 @@ $messages['uk'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Додати слайдшоу',
 );
 
-/** Veps (Vepsän kel')
+/** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
@@ -1810,18 +1889,50 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'editpagelayout-more' => '更多',
 	'editpagelayout-less' => '更少',
+	'editpagelayout-edit-title' => '编辑标题',
+	'editpagelayout-edit-info' => '编辑信息',
 	'editpagelayout-captcha-title' => '验证码',
+	'editpagelayout-pageControls-pageLink' => '返回页面',
+	'editpagelayout-pageControls-summaryLabel' => '简要概括您的编辑',
+	'editpagelayout-pageControls-back' => '返回编辑器',
+	'editpagelayout-blocked-user' => '您的用户名或IP地址已被封禁',
 	'editpagelayout-subject-headline-label' => '标题：',
 	'wikia-editor-media-image' => '照片',
 	'wikia-editor-media-gallery' => '图库',
 	'wikia-editor-media-slideshow' => '幻灯片',
 	'wikia-editor-media-slider' => '滑块',
 	'wikia-editor-media-video' => '视频',
+	'wikia-editor-media-image-tooltip' => '添加照片',
+	'wikia-editor-media-gallery-tooltip' => '添加图库',
+	'wikia-editor-media-slider-tooltip' => '添加滑块',
+	'wikia-editor-media-video-tooltip' => '添加视频',
+	'wikia-editor-source-bold-tooltip' => '粗体',
+	'wikia-editor-source-italic-tooltip' => '斜体',
+	'wikia-editor-source-link-tooltip' => '添加链接',
 	'wikia-editor-modules-templates-title' => '模板',
+	'wikia-editor-modules-templates-add-tooltip' => '添加模板" $1 "',
+	'wikia-editor-modules-templates-otherTemplates' => '添加其他模板',
+	'wikia-editor-modules-templates-showUsedList' => '显示曾使用的模板列表',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用过的模板 列表',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => '创建基于此页面的布局',
+	'wikia-editor-modules-categories-title' => '分类',
+	'wikia-editor-loadingStates-toSource' => '切换到源模式...',
+	'wikia-editor-loadingStates-saving' => '发布您的编辑',
+	'wikia-editor-edittools-caption' => '更多',
+	'rev-deleted-text-notice' => "警告：本项页面修订已被'''删除'''。[详细内容]",
+	'semiprotectedpagewarning-notice' => "'''注：''' 本页面已被锁定，仅注册用户可以编辑。您可能需要登录以进行编辑。[详细内容]",
+	'protectedpagewarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以编辑。本地管理员可以更改此状态。[详细内容]",
+	'titleprotectedwarning-notice' => "'''注：''' 本页面已被锁定，只有管理员可以创建。本地管理员可以更改此状态。[详细内容]",
+	'recreate-moveddeleted-warn-notice' => "'''注：'''您正在重新创建一个已删除页面。[详细内容]",
+	'restore-edits-notice' => "欢迎回来！我们保存了一些您尚未发布的更改。<a class='notice-action restoreeditlink'>删除我的更改，开始新的编辑</a>",
+	'prefs-starting-an-edit' => '开始编辑',
+	'tog-minordefault' => '默认将所有编辑标为“小编辑”',
+	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
 );
 

@@ -123,20 +123,6 @@ The parameter $1 is replaced by either:
 * {{msg-wikia|Myhome-watchlist-feed}}",
 );
 
-/** толышә зывон (толышә зывон)
- * @author Гусейн
- */
-$messages['tly'] = array(
-	'myhome-user-contributions-feed' => 'Гәнҹ',
-	'myhome-feed-newpage' => 'тожә сәһифә',
-	'myhome-feed-edit' => 'сәрост кардеј',
-	'myhome-feed-delete' => 'рәдд кардә быә',
-	'myhome-feed-new-page-details' => 'Тожә сәһифә',
-	'myhome-feed-summary-details' => 'Дәгишон тәсвир',
-	'myhome-feed-move-details' => 'Ном дәгиш кардә быә',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Зијод кардә быә категоријә|Зијод кардә быән категоријон}}',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -1009,6 +995,7 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Ilkea
  * @author Nike
  * @author Tofu II
  * @author Varusmies
@@ -1026,10 +1013,11 @@ $messages['fi'] = array(
 	'myhome-watchlist-feed-empty' => 'Voit lisätä sivuja tarkkailulistallesi napsauttamalla »{{int:watch}}»-linkkiä palkista sivun yläreunassa.
 Tarkkailulistan avulla pysyt ajan tasalla viimeisimmistä muutoksista välittämilläsi sivuilla.',
 	'myhome-user-contributions-feed' => 'Muokkaukset',
+	'myhome-hot-spots-feed' => 'Kohdevalo',
 	'myhome-hot-spots-feed-empty' => "Tämä wiki odottaa osallistumistasi.
 Aloita kirjoittaminen luomalla '''[[Special:CreatePage|uusi sivu]]'''.",
 	'myhome-hot-spots-newest' => 'Wikin uudet sivut',
-	'tog-myhomedisableredirect' => 'Poista kotisivulle ohjaus käytöstä',
+	'tog-myhomedisableredirect' => 'Poista käytöstä ohjaus Wikin viimeisimpiin tapahtumiin',
 	'prefs-myhome' => 'Kotisivu',
 	'myhome-feed-newpage' => 'uusi sivu',
 	'myhome-feed-edit' => 'muokkaa',
@@ -1068,6 +1056,8 @@ Wiki on yhteisön rakentama, ja kun painat muokkausnappia, olet osa yhteisöä.
 Kokeile!',
 	'myhome-hot-spots-number-of-editors' => 'muokkaajaa',
 	'myhome-log-in' => "<center>Kotisivutoiminto on saatavilla vain, kun olet kirjautunut sisään.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Ole hyvä ja kirjaudu sisään nähdäksesi tämän sivun!]'''</big></center>",
+	'myhome-switch-to-monaco' => "Viimeisimmät tapahtumat ominaisuus on käytössä vain jos käytät Wikian teemaa.
+Jos haluat nähdä My Homen, käy '''[[Special:Preferences|asetuksissasi]]''' vaihtaaksesi teemaa.",
 	'myhome-namespace-blog' => 'Blogi',
 	'myhome-community-corner-header' => 'Yhteisön viestit',
 	'oasis-myhome-community-corner-edit' => 'muokkaa viestiä &gt;',
@@ -1091,6 +1081,8 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 	'myhome-default-view-checkbox' => 'Tee sivusta $1 oletusnäkymäni.',
 	'myhome-default-view-success' => 'Ok, tämä on uusi oletusnäkymäsi nyt.',
 	'tooltip-pt-myhome' => 'Palaa kotisivulle',
+	'activityfeed' => 'Toimintasyöte',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|viesti|$1 viestiä}}',
 );
 
 /** French (Français)
@@ -1727,6 +1719,21 @@ $messages['ja'] = array(
 	'myhome-default-view-success' => 'このページがデフォルトに設定されました',
 	'tooltip-pt-myhome' => 'My Home',
 	'activityfeed' => 'アクティビティフィード',
+	'wiki-activity-message-wall-messages-count' => '$1件のメッセージ',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'myhome-watchlist-feed' => 'ವೀಕ್ಷಣಾಪಟ್ಟಿ',
+	'myhome-feed-newpage' => 'ಹೊಸ ಪುಟ',
+	'myhome-feed-edit' => 'ಸಂಪಾದಿಸು',
+	'myhome-feed-talkpage' => 'ಚರ್ಚಾ ಪುಟ',
+	'myhome-feed-delete' => 'ಅಳಿಸಲಾಗಿದೆ',
+	'myhome-feed-categorization' => 'ವರ್ಗೀಕರಣ',
+	'myhome-hot-spots-number-of-editors' => 'ಸಂಪಾದಕರು',
+	'myhome-community-corner-edit' => 'ಸಂದೇಶವನ್ನು ಸಂಪಾದಿಸು',
 );
 
 /** Colognian (Ripoarisch)
@@ -2607,6 +2614,7 @@ Pode, por exemplo:
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  * @author Giro720
  * @author Jesielt
  */
@@ -2688,6 +2696,7 @@ Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem 
 	'myhome-default-view-success' => 'OK, esse é o seu padrão agora',
 	'tooltip-pt-myhome' => 'Ir para Minha Página Inicial',
 	'activityfeed' => 'Feed das mudanças',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
 );
 
 /** Tarandíne (Tarandíne)
@@ -3161,6 +3170,20 @@ Halimbawa, maaari kang:
 	'activityfeed' => 'Pakain ng paggalaw',
 );
 
+/** Толышә зывон (Толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'myhome-user-contributions-feed' => 'Гәнҹ',
+	'myhome-feed-newpage' => 'тожә сәһифә',
+	'myhome-feed-edit' => 'сәрост кардеј',
+	'myhome-feed-delete' => 'рәдд кардә быә',
+	'myhome-feed-new-page-details' => 'Тожә сәһифә',
+	'myhome-feed-summary-details' => 'Дәгишон тәсвир',
+	'myhome-feed-move-details' => 'Ном дәгиш кардә быә',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Зијод кардә быә категоријә|Зијод кардә быән категоријон}}',
+);
+
 /** Turkish (Türkçe)
  * @author Joseph
  */
@@ -3425,6 +3448,64 @@ $messages['zh-hans'] = array(
 	'tooltip-pt-myhome' => '转到我的主页',
 	'activityfeed' => '活动供稿',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|一条信息|$1 条信息}}',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'myhome' => '我的首頁',
+	'wikiactivity' => 'wiki動作',
+	'myhome-activity-more' => '查看更多最新動作',
+	'myhome-activity-feed-empty' => "本wiki在等待您的參與。
+點擊'''[[Special:CreatePage|新頁面]]'''開始撰寫！",
+	'myhome-watchlist-feed' => '監視列表',
+	'myhome-user-contributions-feed' => '貢獻',
+	'myhome-hot-spots-feed' => '熱點',
+	'myhome-hot-spots-feed-empty' => "本wiki在等待您的參與。
+點擊'''[[Special:CreatePage|新頁面]]'''開始撰寫！",
+	'myhome-hot-spots-newest' => 'Wiki 上的新頁面',
+	'tog-myhomedisableredirect' => '禁用重定向到 Wiki 動作',
+	'prefs-myhome' => '我的首頁',
+	'myhome-feed-newpage' => '新頁面',
+	'myhome-feed-edit' => '編輯',
+	'myhome-feed-move' => '頁面已移動',
+	'myhome-feed-talkpage' => '討論頁',
+	'myhome-feed-blogcomment' => '部落格評論',
+	'myhome-feed-delete' => '已刪除',
+	'myhome-feed-image' => '圖像已增加',
+	'myhome-feed-video' => '影片已增加',
+	'myhome-feed-categorization' => '分類',
+	'myhome-feed-created-by' => '由$1創建',
+	'myhome-feed-added-by' => '由 $1增加',
+	'myhome-feed-edited-by' => '由 $1編輯',
+	'myhome-feed-posted-by' => '由 $1發布',
+	'myhome-feed-comment-by' => '$1的評論',
+	'myhome-feed-deleted-by' => '被 $1刪除',
+	'myhome-feed-moved-by' => '由 $1移動',
+	'myhome-feed-article-comment-created-by' => '$1的新評論',
+	'myhome-feed-article-comment-edited-by' => '$1編輯的評論',
+	'myhome-feed-by' => '由$1',
+	'myhome-feed-new-page-details' => '新頁面',
+	'myhome-feed-summary-details' => '摘要',
+	'myhome-feed-section-edit-details' => '編輯段落',
+	'myhome-feed-new-blog-post-details' => '新的部落格',
+	'myhome-feed-new-blog-comment-details' => '評論',
+	'myhome-feed-new-article-comment-details' => '評論',
+	'myhome-feed-move-details' => '重新命名',
+	'myhome-feed-redirect-details' => '重定向',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|增加的圖片|增加的圖片}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|增加的影片|增加的影片}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|增加的分類|增加的分類}}',
+	'myhome-hot-spots-number-of-editors' => '編輯者',
+	'myhome-log-in' => "<center>我的首頁功能只有在登入後才可使用。<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} 請登入後查看本頁！]'''</big></center>",
+	'myhome-namespace-blog' => '部落格',
+	'myhome-community-corner-header' => '社群訊息',
+	'oasis-myhome-community-corner-edit' => '編輯訊息 &gt;',
+	'myhome-community-corner-edit' => '編輯訊息',
+	'myhome-hot-spots-definition' => '最近$1天編輯者最多的頁面',
+	'myhome-default-view-success' => '好了，現在這是您的預設值',
+	'tooltip-pt-myhome' => '轉到我的首頁',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)
