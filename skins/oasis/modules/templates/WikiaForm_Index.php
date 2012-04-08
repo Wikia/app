@@ -23,6 +23,17 @@
 					<input type="hidden" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>">
 				<? } else { ?>
 					<div class="input-group <?= empty($input['isRequired']) ? '' : 'required' ?> <?= empty($input['isInvalid']) ? '' : 'error' ?> <?= empty($input['class']) ? '' : $input['class'] ?> ">
+						<?php 
+							// get string for extra html attributes (i.e. placeholder, maxlength)
+							$extraAttrs = ' ';
+							if(!empty($input['attributes'])) {
+								$attrsArr = $input['attributes'];
+								foreach($attrsArr as $attr => $val) {
+									$extraAttrs .= $attr . '="' . $val . '" ';
+								}
+							} 
+						?>
+						<?php // text inputs ?>
 						<? if($input['type'] === 'text') { ?>
 							<label><?= !empty($input['label']) ? $input['label'] : '' ?></label>
 							<input type="text" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>">

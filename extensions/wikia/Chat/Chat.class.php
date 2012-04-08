@@ -332,6 +332,14 @@ class Chat {
 	}
 	
 	/**
+	 * Backward compatibility
+	 */
+	
+	public static function getBanInformation()  {
+		return false;
+	}
+	
+	/**
 	 * Since the permission essentially has to be implemented as an anti-permission, this function removes the
 	 * need for confusing double-negatives in the code.
 	 *

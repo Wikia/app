@@ -1,0 +1,45 @@
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/core/reset";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/buttons";
+@import "../../../../skins/oasis/css/core/typography";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+$roundness: 2px;
+
+.failover-warning{
+	@include clearfix;
+	border-style: none;
+	padding: 5px 12px;
+	@include border-radius($roundness);
+	background: mix($color-buttons, $color-page, 15%);
+	border-width: 1px;
+	h2 {
+		margin-top:5px;
+	}
+	img{
+		float: right;
+		width: 150px;
+	}
+}
+
+.failover-from{
+	textarea {
+		width: 99%;
+		height: 100px;
+	}
+}
+
+h2.mode-info-regular {
+	span{
+		background: green; 
+	}
+}
+
+h2.mode-info-failover {
+	span{
+		background: red; 
+	}
+}

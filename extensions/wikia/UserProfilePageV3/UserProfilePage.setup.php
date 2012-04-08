@@ -85,10 +85,6 @@ if( defined('NS_BLOG_ARTICLE') ) {
 
 $app->getLocalRegistry()->set( 'UserProfilePageNamespaces', $UPPNamespaces );
 
-$wgLogTypes[] = 'usermasthead';
-$wgLogHeaders['usermasthead'] = 'usermasthead-log-alt';
-$wgLogNames['usermasthead'] = 'usermasthead-log';
-
 $wgLogTypes[] = AVATAR_LOG_NAME;
 $wgLogHeaders[AVATAR_LOG_NAME] = 'blog-avatar-alt';
 $wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";

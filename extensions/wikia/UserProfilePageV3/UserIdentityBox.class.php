@@ -465,6 +465,11 @@ class UserIdentityBox {
 					$data['group'] = '';
 				}
 			}
+			 
+			/* See if user is banned from chat */ 
+			if(!empty($this->app->wg->EnableChat) && Chat::getBanInformation($wikiId, $this->user) !== false) { 
+				$data['group'] = wfMsg('user-identity-box-banned-from-chat');    
+			} 
 		}
 
 		$this->app->wf->ProfileOut( __METHOD__ );

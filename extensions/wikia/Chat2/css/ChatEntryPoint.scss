@@ -1,0 +1,188 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+@import "UserStatsMenu";
+
+$color-chat-live: $color-buttons;
+$color-chat-live-text: $color-button-text;
+$color-chat-live-corner: mix($color-chat-live, #000);
+$color-chat-avatar-border: $color-page-border;
+
+body.skin-monobook .ChatEntryPoint {
+	display: none;
+}
+
+body.skin-oasis .ChatMonobookEntryPoint {
+	display: none;
+}
+
+.ChatModule {
+	.chat-contents {
+		position: relative;
+
+		&.chat-room-empty {
+			.avatar {
+				@include opacity(50);
+			}
+
+			.chat-total {
+				display: none;
+			}
+		}
+
+		&.chat-user-anonymous {
+			.chat-whos-here {
+				display: none;
+			}
+		}
+	}
+
+	h1.chat-headline {
+		@include clearfix;
+		margin: 0;
+
+		span {
+			float: left;
+		}
+
+		.chat-total {
+			@include border-radius(15px);
+			background-color: $color-chat-live;
+			color: $color-button-text;
+			display: inline-block;
+			font-size: 12px;
+			font-weight: normal;
+			line-height: 14px;
+			margin-left: 8px;
+			padding: 1px 4px;
+		}
+	}
+
+	.chat-name {
+		margin: 0;
+		padding: 0;
+	}
+
+	.chat-join {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
+	.chat-whos-here {
+		@include clearfix;
+		border: 1px solid $color-page-border;
+		margin: 10px 0;
+		padding: 5px;
+		position: relative;
+
+		.arrow-left,
+		.arrow-right {
+			cursor: pointer;
+			line-height: 34px;
+			position: absolute;
+
+			&.inactive {
+				@include opacity(50);
+				cursor: auto;
+			}
+		}
+
+		.arrow-left {
+			left: 0;
+			padding-left: 10px;
+
+			img {
+				@include arrow(6px, $color-chat-live, 'left');
+			}
+		}
+
+		.arrow-right {
+			right: 0;
+			padding-right: 10px;
+
+			img {
+				@include arrow(6px, $color-chat-live, 'right');
+			}
+		}
+
+		.avatar {
+			border: 1px solid $color-chat-avatar-border;
+			height: 32px;
+			vertical-align: middle;
+			width: 32px;
+		}
+
+		.slider {
+			height: 34px;
+			list-style: none;
+			margin: 0 auto;
+			width: 230px;
+
+			.slide, .chatter {
+				line-height: 34px;
+				margin: 0;
+			}
+
+			.chatters {
+				@include clearfix;
+				list-style: none;
+				margin: 0;
+			}
+
+			.chatter {
+				float: left;
+				margin-right: 5px;
+				position: relative;
+
+				&.last {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+
+	&.module h2 {
+		font-size: 13px;
+		padding: 0;
+	}
+
+	.UserStatsMenu {
+		left: 0;
+		top: 34px;
+		z-index: 1000;
+	}
+}
+
+// Note: a lot of this is borrowed from .WikiaRail .module
+.ChatEntryPoint {
+	@include clearfix;
+	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	@if lightness($color-page) < 50 {
+		@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
+		background: $color-module-background;
+		border: 1px solid $color-page-border;
+	}
+	margin: 0 auto;
+	margin-bottom: 10px;
+	padding: 16px 8px 8px;
+	position: relative;
+	width: 284px;
+	word-wrap: break-word;
+}
+
+/* IE7 hackery */
+.WikiaRail {
+	*position: relative;
+	*z-index: 1;
+}
+.ChatModule {
+	*position: relative;
+	*z-index: 1;
+}
