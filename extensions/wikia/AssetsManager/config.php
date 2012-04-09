@@ -432,7 +432,7 @@ $config['chat_js'] = array(
 $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_oasis_jquery',
+		'#group_oasis_shared_js',
 		'//skins/common/jquery/jquery.wikia.placeholder.js',
 		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
