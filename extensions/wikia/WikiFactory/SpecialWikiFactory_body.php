@@ -8,8 +8,8 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension and cannot be used standalone.\n";
-    exit( 1 ) ;
+	echo "This is MediaWiki extension and cannot be used standalone.\n";
+	exit( 1 ) ;
 }
 
 
@@ -284,7 +284,7 @@ class WikiFactoryPage extends SpecialPage {
 				case "masstags":
 						$this->mMassTag = $wgRequest->getVal('wpMassTag');
 						$this->mMassTagWikis = $wgRequest->getVal('wfMassTagWikis');
-						
+
 					if( $this->mMassTag != null && $this->mMassTagWikis != null ) {
 						$info = $this->doMassTag();
 					}
@@ -399,7 +399,7 @@ class WikiFactoryPage extends SpecialPage {
 		}
 		if( $this->mTab === "google" ) {
 			global $wgGoogleWebToolsAccts;
-		
+
 			$api = new WebmasterToolsAPI('', '', $this->mWiki);
 			$info = $api->site_info();
 
@@ -464,12 +464,12 @@ class WikiFactoryPage extends SpecialPage {
 			$hub = WikiFactoryHub::getInstance();
 			$hub->setCategory( $this->mWiki->city_id, $cat_id, $reason );
 			$categories = $hub->getCategories();
-			
+
 			// ugly fast fix for fb#9937 (until all the hub management is cleaned up)
 			global $wgMemc;
 			$key = sprintf("%s:%d", 'WikiFactory::getCategory', intval($this->mWiki->city_id));
 			$wgMemc->delete( $key );
-			
+
 			return Wikia::successbox( "Hub is now set to: ". $categories[ $cat_id ]['name'] );
 		}
 		else {
@@ -509,16 +509,16 @@ class WikiFactoryPage extends SpecialPage {
 		}
 	}
 
-    /**
-     * doUpdateDomains
-     *
-     * Store changes connected with domains
-     *
-     * @access private
-     * @author eloy@wikia
-     *
-     * @return mixed	info when change, null when not changed
-     */
+	/**
+	 * doUpdateDomains
+	 *
+	 * Store changes connected with domains
+	 *
+	 * @access private
+	 * @author eloy@wikia
+	 *
+	 * @return mixed	info when change, null when not changed
+	 */
 	private function doUpdateDomains( &$request ) {
 		$action = $request->getText( "wpAction", null );
 		$reason = $request->getText( "wpReason", wfMsg( 'wikifactory-public-status-change-default-reason' ) );
@@ -602,7 +602,7 @@ class WikiFactoryPage extends SpecialPage {
 
 		$this->mMassTagWikis = explode("\n", $this->mMassTagWikis);
 		global $wgOut;
-		
+
 		$msg  = false;
 		$added=0;
 
@@ -632,7 +632,7 @@ class WikiFactoryPage extends SpecialPage {
 
 		return Wikia::successbox( $msg );
 	}
-	
+
 	/**
 	 * doSearchTags
 	 *
@@ -673,7 +673,7 @@ class WikiFactoryPage extends SpecialPage {
 			$this->mRemoveTag; has the tag to remove
 			$this->mRemoveTags; has int array of wiki id to remove from
 		*/
-		
+
 		/* in theory, these should never trigger, but BSTS */
 		if( empty( $this->mRemoveTag ) ) {
 			return Wikia::errorbox( "no tag to remove?" );
@@ -708,14 +708,14 @@ class WikiFactoryPage extends SpecialPage {
 			force the search results for this pageload to be empty. */
 		$this->mTagWikiIds = array();
 		#print "(forcing mTagWikiIds to null at ".gmdate('r').")";
-		
+
 		if( empty($fails) ) {
 			return Wikia::successbox( "ok!" );
 		}else{
 			return Wikia::errorbox( "ok, but failed at ".count($fails)." wikis".
 									" (" . implode(", ", $fails ) . ")" );
 		}
-		
+
 	}
 
 	/**
@@ -910,7 +910,7 @@ class WikiFactoryPage extends SpecialPage {
 			$cv_access_level = $wgRequest->getVal("cv_access_level");
 			$cv_variable_group = $wgRequest->getVal("cv_variable_group");
 			$cv_description = $wgRequest->getval("cv_description");
-                        $cv_is_unique = $wgRequest->getval("cv_is_unique", "0");
+			$cv_is_unique = $wgRequest->getval("cv_is_unique", "0");
 
 			// Verify that the form is filled out, then add the variable if it is (display an error if it isn't).
 			$err = "";
@@ -958,10 +958,10 @@ class WikiFactoryPage extends SpecialPage {
 	private function doAddToWebmasterTools () {
 		global $wgRequest, $wgGoogleWebToolsAccts;
 		$acct_name = $wgRequest->getVal('wt-account-name');
-		
+
 		if (array_key_exists($acct_name, $wgGoogleWebToolsAccts)) {
 			$acct_pass = $wgGoogleWebToolsAccts[$acct_name]['pass'];
-	
+
 			$api = new WebmasterToolsAPI($acct_name, $acct_pass, $this->mWiki);
 			$api->add_site();
 			return true;
@@ -970,18 +970,18 @@ class WikiFactoryPage extends SpecialPage {
 			return false;
 		}
 	}
-	
+
 	private function doRemoveFromWebmasterTools () {
 		$api = new WebmasterToolsAPI('', '', $this->mWiki);
 		$api->remove_site();
-		
+
 		return true;
 	}
-	
+
 	private function doVerifyWithWebmasterTools () {
 		$api = new WebmasterToolsAPI('', '', $this->mWiki);
 		$api->verify_site();
-		
+
 		return true;
 	}
 }
@@ -1026,7 +1026,7 @@ class ChangeLogPager extends TablePager {
 	 * getTitle
 	 *
 	 * @return Title object
-     */
+	 */
 	function getTitle() {
 		return $this->mTitle;
 	}
@@ -1057,7 +1057,7 @@ class ChangeLogPager extends TablePager {
 	 * @param string $field: field name
 	 *
 	 * @return boolean: flag if $field is sortable of not
-     */
+	*/
 	public function isFieldSortable( $field ) {
 		static $aSortable = array( "city_url", "cl_type", "cl_timestamp", "cl_user_id" );
 		return in_array( $field, $aSortable );
@@ -1250,7 +1250,7 @@ class CityListPager {
 class WebmasterToolsAPI {
 
 	const FEED_URI = 'https://www.google.com/webmasters/tools/feeds';
-	
+
 	private $mAuth, $mEmail, $mPass, $mType, $mSource, $mService, $mWiki, $mSiteURI;
 
 	/**
@@ -1261,7 +1261,7 @@ class WebmasterToolsAPI {
 	 */
 	public function __construct( $email, $pass, $wiki ) {
 		global $wgGoogleWebToolsAccts;
-		
+
 		// If email and password weren't specified, use the preferred account.
 		if(empty($email) && empty($pass)){
 			if(is_array($wgGoogleWebToolsAccts)){
@@ -1272,7 +1272,7 @@ class WebmasterToolsAPI {
 						break;
 					}
 				}
-				
+
 				// If no preferred email/pass was found, just grab the first one
 				if(empty($email) && empty($pass) && (count($wgGoogleWebToolsAccts) > 0)){
 					$keys = array_keys($wgGoogleWebToolsAccts);
@@ -1298,54 +1298,54 @@ class WebmasterToolsAPI {
 		$this->mSiteURI = $this->make_site_uri();
 		$this->mAuth    = $this->getAuthToken();
 	}
-	
+
 	private function getAuthToken () {
 		$content = Http::post('https://www.google.com/accounts/ClientLogin',
-							  null,
-							  array(CURLOPT_POSTFIELDS => array(
+							null,
+							array(CURLOPT_POSTFIELDS => array(
 										"Email"       => $this->mEmail,
-                                		"Passwd"      => $this->mPass,
-                                		"accountType" => $this->mType,
-                                		"source"      => $this->mSource,
-                                		"service"     => $this->mService,
-							 		)
-							 )
-			 	   );	
+										"Passwd"      => $this->mPass,
+										"accountType" => $this->mType,
+										"source"      => $this->mSource,
+										"service"     => $this->mService,
+									)
+							)
+					);
 
 		if (preg_match('/Auth=(\S+)/', $content, $matches)) {
-    		return $matches[1];
-    	} else {
-    		return;
-    	}
-    }
-	
+			return $matches[1];
+		} else {
+			return;
+		}
+	}
+
 	private function normalize_site ($site) {
 		if (!preg_match('!^http://!', $site)) $site = 'http://'.$site;
 		if (!preg_match('!/$!', $site))       $site = $site.'/';
-		
+
 		return $site;
 	}
-	
+
 	private function make_site_uri () {
 		$site = $this->normalize_site($this->mWiki->city_url);
-    	$uri = self::FEED_URI . '/sites/' . urlencode($site);
-    	return $uri;
+		$uri = self::FEED_URI . '/sites/' . urlencode($site);
+		return $uri;
 	}
-	
+
 	private function make_site_id () {
 		return $this->normalize_site($this->mWiki->city_url).'sitemap-index.xml';
 	}
- 
-	public function site_info () {   	
+
+	public function site_info () {
 		$content = Http::get($this->mSiteURI,
-							 null,
-							 array(CURLOPT_HTTPHEADER => array('Authorization: GoogleLogin auth='.$this->mAuth))
-				   );
+							null,
+							array(CURLOPT_HTTPHEADER => array('Authorization: GoogleLogin auth='.$this->mAuth))
+					);
 		if (!$content) return;
 
 		$doc = new DOMDocument();
 		$doc->loadXML($content);
-    	
+
 		$e = $doc->documentElement;
 		$info = array();
 
@@ -1380,24 +1380,24 @@ class WebmasterToolsAPI {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array( "site" => $this->normalize_site($this->mWiki->city_url)));
 		$xml = $oTmpl->execute("wt-add-request");
-		
+
 		$content = Http::post($uri = self::FEED_URI . '/sites/',
-							  null,
-							  array(CURLOPT_POSTFIELDS => $xml,
-							  		CURLOPT_HTTPHEADER => array('Content-type: application/atom+xml',
-							  									'Authorization: GoogleLogin auth='.$this->mAuth)
-							 )
-			 	   );
+							null,
+							array(CURLOPT_POSTFIELDS => $xml,
+									CURLOPT_HTTPHEADER => array('Content-type: application/atom+xml',
+																'Authorization: GoogleLogin auth='.$this->mAuth)
+							)
+					);
 
 		if ($content) {
 			WikiFactory::setVarByName('wgGoogleWebToolsAccount', $this->mWiki->city_id, $this->mEmail);
-		
+
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public function remove_site () {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
 
@@ -1410,7 +1410,7 @@ class WebmasterToolsAPI {
 		curl_setopt($c, CURLOPT_TIMEOUT, $wgHTTPTimeout);
 		curl_setopt($c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion");
 		curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'DELETE' );				
+		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'DELETE' );
 		curl_setopt($c, CURLOPT_HTTPHEADER, array('Authorization: GoogleLogin auth='.$this->mAuth));
 
 		curl_exec( $c );
@@ -1425,14 +1425,14 @@ class WebmasterToolsAPI {
 			return true;
 		}
 	}
-	
+
 	public function verify_site ($code = null) {
 
 		if (!$code) {
 			$info = $this->site_info();
 			$code = $info['verification_code'];
 		}
-		
+
 		// Update the wgGoogleSiteVerification variable with this code
 		WikiFactory::setVarByName('wgGoogleSiteVerification', $this->mWiki->city_id, $code);
 
@@ -1447,7 +1447,7 @@ class WebmasterToolsAPI {
 			return false;
 		}
 	}
-	
+
 	private function put_verify ( $xml ) {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgTitle, $wgVersion;
 
@@ -1457,7 +1457,7 @@ class WebmasterToolsAPI {
 		curl_setopt($c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion");
 		curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
 		curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'PUT' );
-				
+
 		curl_setopt($c, CURLOPT_HTTPHEADER, array('Authorization: GoogleLogin auth='.$this->mAuth,
 												  'Content-type: application/atom+xml'));
 
@@ -1483,7 +1483,7 @@ class WebmasterToolsAPI {
 			$text = false;
 		}
 		curl_close( $c );
-		
+
 		return $text;
 	}
 };
