@@ -154,7 +154,7 @@ class WikiFactoryPage extends SpecialPage {
 				$domain = $subpage;
 			}
 
-			if( is_numeric( $subpage ) ) {
+			if( ctype_digit( $subpage ) ) {
 				$cityid = $subpage;
 			}
 			else {
