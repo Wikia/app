@@ -33,16 +33,16 @@ class ChatModule extends Module {
 		wfProfileIn( __METHOD__ );
 
 		$this->app = WF::build('App');
-
-	//	Chat::banUserDB($wgCityId, $wgUser, User::newFromName('dymsza'), 60*60*2);
-		
-		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::INLINE); // package defined in Chat_setup.php 
 		                
 		// String replacement logic taken from includes/Skin.php
 		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
 		
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 		
+		// add messages (fetch them using <script> tag)
+		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
+		
+		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();
 		// Variables for this user
 		$this->username = $wgUser->getName();
 		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, ChatModule::CHAT_AVATAR_DIMENSION);
