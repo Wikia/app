@@ -10,7 +10,7 @@
 	<![endif]-->
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/Chat/css/Chat.scss')?>">
+	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/Chat2/css/Chat.scss')?>">
 
 	<!-- JS -->
 	<?= $globalVariablesScript ?>

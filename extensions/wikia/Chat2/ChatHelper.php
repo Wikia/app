@@ -158,20 +158,21 @@ class ChatHelper {
 
 		foreach($sp as $value) {
 			if($wgTitle->isSpecial($value)) {
+				// For Chat2 (doesn't exist in Chat(1))
 				$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_ban_js', array());
 				
 				foreach($srcs as $val) {
 					$out->addScript('<script src="' .$val. '"></script>');	
 				}
 				F::build('JSMessages')->enqueuePackage('ChatBanModal', JSMessages::EXTERNAL); 
-				$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat/css/ChatModal.scss'));
+				$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatModal.scss'));
 				break;
 			}		
 		}
 
 		// TODO: move these to asset manager when we release chat globally
 		$out->addScriptFile($wgStylePath . '/common/jquery/jquery-slideshow-0.4.js');
-		$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat/css/ChatEntryPoint.scss'));
+		$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatEntryPoint.scss'));
 
 		wfProfileOut(__METHOD__);
 		return true;

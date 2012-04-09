@@ -446,6 +446,7 @@ $config['chat_js2'] = array(
 	)
 );
 
+// For Chat2 (doesn't exist in Chat(1))
 $config['chat_ban_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
