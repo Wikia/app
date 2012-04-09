@@ -477,7 +477,11 @@ function clientDisconnect(client, socket) {
 function broadcastDisconnectionInfo(client, socket){
 	// Delay before sending part messages because there are occasional disconnects/reconnects or just ppl refreshing their browser
 	// and that's really not useful information to anyone that under-the-hood they were disconnected for a moment (BugzId 5753).
-	// Broadcast the 'part' to all clients. 
+	// Broadcast the 'part' to all clients.
+	if(client.donotSendPart) {
+		return true;
+	}
+	
 	broadcastToRoom(client, socket, { 
 		event: 'part',
 		data: client.myUser.xport()
@@ -520,11 +524,11 @@ function logout(client, socket, msg) {
 	broadcastToRoom(client, socket, {
 			event: 'logout', 
 			data: logoutEvent.xport()
-		}/*,
+		},
 		null,
 		function() {
-			kickUserFromRoom(client, socket, client.myUser, client.roomId);
-		}*/
+			client.donotSendPart = true;
+		}
 	);
 }
 
@@ -552,6 +556,7 @@ function kick(client, socket, msg){
     		},
     		null,
     		function() {
+    			client.donotSendPart = true;
     			kickUserFromRoom(client, socket, kickedUser, client.roomId);
     		}
     	);
@@ -583,6 +588,7 @@ function ban(client, socket, msg){
 		},
 		null,
 		function() {
+			client.donotSendPart = true;
 			kickUserFromRoom(client, socket, userToBanObj, client.roomId);
 		});
 		

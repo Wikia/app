@@ -169,6 +169,7 @@ var NodeRoomController = $.createClass(Observable,{
 	partTimeOuts: {},
 	afterInitQueue: [],
 	banned: {},
+	userMain: null,
 	constructor: function(roomId) {
 		
 		NodeRoomController.superclass.constructor.apply(this,arguments);
@@ -248,6 +249,7 @@ var NodeRoomController = $.createClass(Observable,{
 			this.model.chats.trigger('clear');
 			// On first connection, just update the entire model.
 			this.model.mport(message.data);
+
 			this.isInitialized = true;
 			$().log(this.isInitialized, "isInitialized");
 			if(this.isMain()) {
@@ -355,7 +357,11 @@ var NodeRoomController = $.createClass(Observable,{
 			clearTimeout(this.partTimeOuts[joinedUser.get('name')]);
 			$().log('user rejoined clear partTimeOut');
 		}
-		
+
+		if(joinedUser.get('name') == wgUserName) {
+			this.userMain = joinedUser;			
+		}
+
 		var connectedUser = this.model.users.findByName(joinedUser.get('name'));
 		
 		if(typeof connectedUser == "undefined"){
@@ -414,10 +420,9 @@ var NodeRoomController = $.createClass(Observable,{
 	},
 	
 	onKickOrBan: function(kickEvent, mode) {
-		var userMain = this.model.users.findByName(wgUserName);
 		if ( kickEvent.get('kickedUserName') != wgUserName  ) {
 			var undoLink = "";
-			if(userMain.get('isModerator') && mode == 'banned' ) {
+			if(this.userMain.get('isModerator') && mode == 'banned' ) {
 				undoLink = ' (<a href="#" data-type="ban-undo" data-user="' + kickEvent.get('kickedUserName') + '" >' + $.msg('chat-ban-undolink') + '</a>)';
 			}
 
@@ -595,11 +600,11 @@ var NodeChatController = $.createClass(NodeRoomController,{
 			actions.regular.push( 'private-allow' );	
 		}
 
-		if(userMain.get('isCanGiveChatMode') === true && user.get('isModerator') === false ){
+		if(this.userMain.get('isCanGiveChatMode') === true && user.get('isModerator') === false ){
 			actions.admin.push('give-chat-mod');
 		}
 		
-		if(userMain.get('isModerator') === true && user.get('isModerator') === false ) {
+		if(this.userMain.get('isModerator') === true && user.get('isModerator') === false ) {
 			actions.admin.push('kick');
 			actions.admin.push('ban');
 		}
@@ -613,7 +618,6 @@ var NodeChatController = $.createClass(NodeRoomController,{
 	
 	privateListClick: function(obj) {
 		var user = this.model.users.findByName(obj.name);
-		var userMain = this.model.users.findByName(wgUserName);
 		
 		var actions = { regular: ['profile', 'contribs', 'private-block'] };
 		
