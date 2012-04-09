@@ -17,7 +17,7 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 
 	// Controllers can all have an optional init method
 	public function init() {
-		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::INLINE);
+		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::EXTERNAL);
 		$this->response->addAsset( 'extensions/wikia/Chat/css/ChatFailover.scss' );
 		$this->response->addAsset( 'extensions/wikia/Chat/js/controllers/ChatFailover.js' );
 	}
