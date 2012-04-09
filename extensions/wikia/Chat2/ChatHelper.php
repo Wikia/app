@@ -171,9 +171,13 @@ class ChatHelper {
 		}
 
 		// TODO: move these to asset manager when we release chat globally
+		$out->addScriptFile($wgExtensionsPath . '/wikia/Chat2/js/ChatEntryPoint.js');
 		$out->addScriptFile($wgStylePath . '/common/jquery/jquery-slideshow-0.4.js');
 		$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatEntryPoint.scss'));
+		
+		$out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat2/css/ChatEntryPoint.scss'));
 
+		
 		wfProfileOut(__METHOD__);
 		return true;
 	}
