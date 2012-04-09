@@ -385,7 +385,7 @@ var NodeRoomController = $.createClass(Observable,{
 		
 		this.partTimeOuts[partedUser.get('name')] = setTimeout(this.proxy(function(){
 			this.onPartBase(partedUser);
-		}), 8000);
+		}), 15000);
 	},
 	
 	onLogout: function(message) {

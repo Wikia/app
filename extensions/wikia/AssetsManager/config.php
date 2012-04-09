@@ -424,8 +424,25 @@ $config['chat_js'] = array(
 		'//extensions/wikia/Chat/js/lib/backbone.js',
 		'//extensions/wikia/Chat/js/models/models.js',
 		'//extensions/wikia/Chat/js/controllers/controllers.js',
-		'//extensions/wikia/Chat/js/views/views.js',
-		'//extensions/wikia/Chat/js/views/ChatBanModal.js',
+		'//extensions/wikia/Chat/js/views/views.js'
+	)
+);
+
+
+$config['chat_js2'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_jquery',
+		'//skins/common/jquery/jquery.wikia.placeholder.js',
+		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
+		'//extensions/wikia/Chat2/js/emoticons.js', // must be before controllers.js
+		'//extensions/wikia/Chat2/js/lib/underscore.js',
+		'//extensions/wikia/Chat2/js/lib/backbone.js',
+		'//extensions/wikia/Chat2/js/models/models.js',
+		'//extensions/wikia/Chat2/js/controllers/controllers.js',
+		'//extensions/wikia/Chat2/js/views/views.js',
+		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
 	)
 );
 

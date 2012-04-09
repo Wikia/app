@@ -109,11 +109,11 @@
 	</script>
 	<!-- Load these after the DOM is built -->
 	<?php
-		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js', array());
+		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('chat_js2', array());
 	?>
 	<?php foreach($srcs as $src): ?>
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach;?>
-	
+	<script src="<?php echo $jsMessagePackagesUrl ?>"></script>
 </body>
 </html>

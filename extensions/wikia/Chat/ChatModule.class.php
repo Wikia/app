@@ -38,7 +38,7 @@ class ChatModule extends Module {
 		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
 
 		// add messages (fetch them using <script> tag)
-		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::EXTERNAL); // package defined in Chat_setup.php
+		F::build('JSMessages')->enqueuePackage('Chat', JSMessages::INLINE); // package defined in Chat_setup.php
 
 		// Since we don't emit all of the JS headscripts or so, fetch the URL to load the JS Messages packages.
 		$this->jsMessagePackagesUrl = F::build('JSMessages')->getExternalPackagesUrl();
