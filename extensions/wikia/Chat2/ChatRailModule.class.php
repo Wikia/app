@@ -19,9 +19,9 @@ class ChatRailModule extends Module {
 	 * Render placeholder. Content will be ajax-loaded for freshness
 	 */
 	public function executePlaceholder() {
-		//global $wgOut, $wgExtensionsPath;
-		//$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat/css/ChatRailModule.scss'));
-		//$this->jsInitializer = F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Chat/js/ChatEntryPoint.js" ), array(), 'ChatEntryPoint.init' );
+		global $wgOut, $wgExtensionsPath;
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Chat/css/ChatRailModule.scss'));
+		$this->jsInitializer = F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Chat/js/ChatEntryPoint.js" ), array(), 'ChatEntryPoint.init' );
 	}
 
 	public function executeAnonLoginSuccess() {
