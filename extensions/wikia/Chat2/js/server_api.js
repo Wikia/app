@@ -31,8 +31,8 @@ http.createServer(function (req, res) {
 		res.end();
 	});
 
-}).listen(config.API_SERVER_PORT, config.CHAT_SERVER_HOST, function(data) {
-	logger.info("API server running on " + config.CHAT_SERVER_HOST + ':' + config.API_SERVER_PORT);
+}).listen(config.API_SERVER_PORT, config.API_SERVER_HOST, function(data) {
+	logger.info("API server running on " + config.API_SERVER_HOST + ':' + config.API_SERVER_PORT);
 });
 
 /**

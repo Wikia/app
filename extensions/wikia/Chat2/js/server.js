@@ -86,7 +86,7 @@ storage.getRuntimeStats(function(data) {
 var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
 
 io.configure(function () {
-	io.set('origins', config.CHAT_SERVER_HOST + ":*");
+	io.set('polling duration', 10 );
 	io.set('flash policy port', config.FLASH_POLICY_PORT );
 	io.set('transports', [  'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ]);	
 	io.set('log level', loggerModule.getSocketIOLogLevel());
