@@ -475,6 +475,12 @@ class BodyModule extends Module {
 			$this->bodytext = wfRenderModule('Search') . $this->bodytext;
 		}
 
+		// Inter-wiki search
+		if($wgTitle && $wgTitle->isSpecial( 'WikiaSearch' )) {
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/WikiaSearch.scss"));
+			$this->headerModuleName = null;
+		}
+
 		// load CSS for Special:Preferences
 		if (!empty($wgTitle) && $wgTitle->isSpecial('Preferences')) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialPreferences.scss'));
