@@ -161,12 +161,6 @@ blockquote {
 	}
 }
 
-#wkMainCntFtr {
-	.collSec {
-		@include section-title-related;
-	}
-}
-
 .js .wkShr {
 	display: inline-block;
 }
@@ -302,10 +296,6 @@ blockquote {
 //article comments header
 #wkArtCom{
     margin: 10px 0;
-
-	.collSec{
-		@include section-title-related;
-	}
 }
 .js{
    	#wkComm {

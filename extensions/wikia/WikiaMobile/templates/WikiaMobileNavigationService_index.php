@@ -15,7 +15,7 @@
    <? endif ; ?>
    </div>
    <div id=wkNav>
-		 <header class="wkPrfHead up"><?= $wf->Msg('wikiamobile-menu') ?></header>
+	   <header class="wkPrfHead up"><?= $wf->Msg('wikiamobile-menu') ?></header>
 	  <nav id=wkWikiNav></nav>
    </div>
    <? if($wg->EnableUserLoginExt) : ?>

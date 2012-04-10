@@ -1,5 +1,4 @@
-//mixins
-@import "mixins/section-title.scss";
+@import 'variables.scss';
 
 h1, h2, h3{
 	font-weight: normal;
@@ -17,10 +16,6 @@ h1, h2, h3{
 			display: inline;
 		}
 	}
-}
-
-.collSec {
-	@include section-title;
 }
 
 body {
@@ -54,4 +49,52 @@ body {
 	color: $page-text-alternate-color;
 	float: right;
 	padding: 5px;
+}
+
+.collSec {
+	border-top: 1px solid $border-color;
+	color: $section-text-color;
+	font-size: $section-title-font-size;
+	padding: $page-padding 27px 0 0;
+	position: relative;
+
+	.chev {
+		display: none;/* hidden by default, will be revealed via JS */
+		width: 22px;
+		height: 22px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
+		background-size: 75%;
+		position: absolute;
+		right: 0;
+		top: 37%;
+		-webkit-animation: cute .3s ease-in;
+		-moz-animation: cute .3s ease-in;
+		-webkit-transform: transform3d(0px,0px,0px);
+		-moz-transform: transform3d(0px,0px,0px);
+		-webkit-backface-visibility: hidden;
+		-webkit-perspective-origin: 1000;
+	}
+
+	&.open .chev {
+		background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-up.png'); /* base64 */
+		-webkit-animation: cute .3s ease-out;
+		-moz-animation: cute .3s ease-out;
+	}
+}
+
+@-webkit-keyframes cute {
+	0%{-webkit-transform: rotate(180deg);}
+	100%{-webkit-transform: rotate(0);}
+}
+
+@-moz-keyframes cute {
+	0%{-moz-transform: rotate(180deg);}
+	100%{-moz-transform: rotate(0);}
+}
+
+#wkMainCntFtr .collSec{
+	text-transform: uppercase;
+	font-size: medium;
 }
