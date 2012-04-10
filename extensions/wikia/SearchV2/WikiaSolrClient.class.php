@@ -133,12 +133,19 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 
-		if (empty($response->response->docs)) {
-		  return $this->trySpellcheck($response, $start, $size, $cityId, $rankExpr, false);
-		  // set a global variable that we automatically searched
-		}
+		if (empty($response->response->docs) &&
+		   !empty($response->spellcheck->suggestions) && 
+		    $response instanceOf Apache_Solr_Response) {
 
-		$results = $this->getWikiaResults($response->response->docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
+		    $newQuery = $response->spellcheck->suggestions->collation;
+
+		    return $this->search($newQuery, $start, $size, $cityId, $rankExpr);
+
+		} 
+
+		$docs = ($response->response->docs) ?: array();
+
+		$results = $this->getWikiaResults($docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
 
 		return F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->response->numFound, 'resultsStart' => $response->response->start, 'isComplete' => false, 'query' => $query ) );
 	}
@@ -208,16 +215,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 	private function trySpellCheck(Apache_Solr_Response $response, $start, $size, $cityId, $rankExpr ) 
 	{
 
-	  if (empty($response->spellcheck->suggestions)) {
-
-	    // we know how to handle responses
-	    return $response;
-
-	  }
-
-	  $query = $response->spellcheck->suggestions->collation;
-
-	  return $this->search($query, $start, $size, $cityId, $rankExpr);
 
 	}
 
