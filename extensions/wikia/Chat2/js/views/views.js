@@ -376,11 +376,11 @@ var NodeChatUsers = Backbone.View.extend({
 	actionTemplate: _.template( $('#user-action-template').html() ),
 	actionTemplateNoUrl: _.template( $('#user-action-template-no-url').html() ),
 	initialize: function(options) {
-		this.model.users.bind('add', this.addUser);
-		this.model.users.bind('remove', this.removeUser);
+		this.model.users.bind('add', $.proxy(this.addUser,this));
+		this.model.users.bind('remove', $.proxy(this.removeUser, this));
 		
-		this.model.privateUsers.bind('add', this.addUser);
-		this.model.privateUsers.bind('remove', this.removeUser);
+		this.model.privateUsers.bind('add', $.proxy(this.addUser, this));
+		this.model.privateUsers.bind('remove', $.proxy(this.removeUser, this));
 		
         $("#ChatHeader a").click($.proxy(function(e) { 
             this.trigger('clickAnchor', e); 
@@ -429,13 +429,13 @@ var NodeChatUsers = Backbone.View.extend({
  	},
 		
 	addUser: function(user) {
-		var view = new UserView({model: user});
-		var list = (user.attributes.isPrivate) ? $('#PrivateChatList') : $('#WikiChatList');
-		
-		var el = $(view.render().el);
+		var view = new UserView({model: user}),
+			list = (user.attributes.isPrivate) ? $('#PrivateChatList') : $('#WikiChatList'),
+			isPrivate = user.get('isPrivate'),
+			el = $(view.render().el);
 
 		// For private chats, show private headline and possibly select the chat		
-		if(user.get('isPrivate')) {
+		if(isPrivate) {
 			$('#Rail h1.private').show();
 			if(user.get('active')) {
 				el.addClass('selected');	
@@ -472,18 +472,32 @@ var NodeChatUsers = Backbone.View.extend({
 			$().log('UserView SCROLL DOWN!!!');
 			$('#Rail').scrollTop($('#Rail').get(0).scrollHeight);		
 		}
-		
-		// Only show chevron in public chat if there is anyone to talk to
-		if (list.children().length > 1) {
-			$('#Rail .public .chevron').show();
-		} else {
-			$('#Rail .public .chevron').hide();
-		}		
+
+		if(!isPrivate) {
+			this.toggleChevron(list);
+		}
 	},
 	
 	removeUser: function(user) {
-		var view = new UserView({model: user});
+		var list = (user.attributes.isPrivate) ? $('#PrivateChatList') : $('#WikiChatList'),
+			isPrivate = user.get('isPrivate'),
+			view = new UserView({model: user});
+		
 		view.getUserElement().remove();
+		
+		if(!isPrivate) {
+			this.toggleChevron(list);
+		}	
+	},
+	
+	// Only show chevron in public chat if there is anyone to talk to
+	toggleChevron: function(list) { 
+		var chevron = $('#Rail .public .chevron');
+		if (list.children().length > 1) {
+			chevron.show();
+		} else {
+			chevron.hide();
+		}	
 	},
 
 	showMenu: function(element, actions) {
