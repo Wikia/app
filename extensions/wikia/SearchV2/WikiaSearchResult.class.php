@@ -94,7 +94,8 @@ class WikiaSearchResult {
 	}
 
 	private function fixSnippeting($val) {
-	        return preg_replace("/(<\/span>)('s)/i", '$2$1', $val);
+	        return preg_replace("/^\W+ /", '',
+			      preg_replace("/(<\/span>)('s)/i", '$2$1', $val));
 	}
 
 }
