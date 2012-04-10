@@ -49,14 +49,10 @@ class ChatRailModule extends Module {
 		// If it's just, eg: a database problem, then they may get lucky and be able to use most of the chat features (kickbanning wouldn't work, etc.).
 		if(empty($wgReadOnly)){
 			// Main variables
-			$this->profileType = isset($wgEnableWallExt) ? 'message-wall' : 'talk-page';
+			$this->profileType = !empty($wgEnableWallExt) ? 'message-wall' : 'talk-page';
 			$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
 			$this->isLoggedIn = $wgUser->isLoggedIn();
-			if($wgUser->isLoggedIn()){
-				$this->profileAvatar = AvatarService::renderAvatar($wgUser->getName(), ChatRailModule::AVATAR_SIZE);
-			} else {
-				$this->profileAvatar = "";
-			}
+			$this->profileAvatar = $this->isLoggedIn ? AvatarService::renderAvatar($wgUser->getName(), ChatRailModule::AVATAR_SIZE) : '';
 
 			// List of other people in chat
 			$this->totalInRoom = 0;
@@ -89,7 +85,7 @@ class ChatRailModule extends Module {
 					if($this->profileType == 'message-wall') {
 						$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER_WALL, $chatters[$i]['username'] )->getFullURL();						
 					} else {
-						$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER, $chatters[$i]['username'] )->getFullURL();
+						$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER_TALK, $chatters[$i]['username'] )->getFullURL();
 					}
 
 					// contribs page
