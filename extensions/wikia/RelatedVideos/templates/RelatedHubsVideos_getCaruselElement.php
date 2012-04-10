@@ -8,7 +8,7 @@
 			$duration = $mins.':'.( ( $secs < 10 ) ? '0'.$secs : $secs );
 		} else {
 			$duration = 0;
-		}if( !empty( $duration ) ){  ?><div class="timer"><?=$duration;?></div><? }if( !empty( $video['isNew'] ) ){  ?><div class="new"><?=wfMsg('related-videos-video-is-new');?><div  class="newRibbon" ></div></div><? } ?><div class="playButton"></div><img data-src="<?=$video['thumbnailData']['thumb'];?>" src="<?=( $preloaded ) ? $video['thumbnailData']['thumb'] : wfBlankImgUrl();?>" style="margin-top:<?= floor( ( $elementHeight - $video['thumbnailData']['height'] ) / 2 ); ?>px; height:<?=$video['thumbnailData']['height'];?>px; width:<?=$video['thumbnailData']['width'];?>px;" /></a>
+		}if( !empty( $duration ) ){  ?><div class="timer"><?=$duration;?></div><? }if( !empty( $video['isNew'] ) ){  ?><div class="new"><?=wfMsg('related-videos-video-is-new');?><div  class="newRibbon" ></div></div><? } ?><div class="playButton"></div><img class="Wikia-video-thumb" data-src="<?=$video['thumbnailData']['thumb'];?>" src="<?=( $preloaded ) ? $video['thumbnailData']['thumb'] : wfBlankImgUrl();?>" style="margin-top:<?= floor( ( $elementHeight - $video['thumbnailData']['height'] ) / 2 ); ?>px; height:<?=$video['thumbnailData']['height'];?>px; width:<?=$video['thumbnailData']['width'];?>px;" /></a>
 	<div class="description">
 		<?=( strlen( $video['title'] ) > $maxDescriptionLength )
 			? substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
