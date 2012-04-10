@@ -13,15 +13,15 @@ public class ToolbarTest extends BaseTest {
 	/**
 	 * selenium training test
 	 */ 
-	////@Test
+	@Test
 	public void testEditToolbarEntry() throws Exception {
-		login();
-		openAndWait(randomArticlePath);
 		
+		openAndWait(randomArticlePath);
+		login();
 		logout();
 	}
 	
-	//@Test(groups={"envProduction","verified"})
+	@Test(groups={"envProduction","verified"})
 	public void testEnsuresThatToolbarIsNotPresentForAnonymousUsers() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
@@ -29,7 +29,7 @@ public class ToolbarTest extends BaseTest {
 		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
 	}
 
-	//@Test(groups={"envProduction","verified"})
+	@Test(groups={"envProduction","verified"})
 	public void testResetsDefaultsInCustomizedToolbar() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
@@ -53,7 +53,7 @@ public class ToolbarTest extends BaseTest {
 	}
 	
 	
-	//@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
+	@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
 	public void testEnsuresThatSignedInUserCanAddAnItemToCustomizedToolbar() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		
@@ -110,13 +110,14 @@ public class ToolbarTest extends BaseTest {
 	}
 	
 //@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
-	@Test(groups={"envProduction","verified"}
+	//@Test(groups={"envProduction","verified"})
 	public void testVerifiesThatSignedInUserCanDeleteAnItemInCustomizedToolbar() throws Exception {
 		//WIP Written by Patrick Archbold 10-Apr-2012
 		
-		//openAndWait("/");	
+		
 		openAndWait(randomArticlePath);
 		login();
+		
 		assertTrue(session().isElementPresent("WikiaFooter"));
 		
 		//"ul.tools a.tools-customize"
@@ -128,6 +129,11 @@ public class ToolbarTest extends BaseTest {
 		session().click("ul.tools link=Customize");
 		//waitForElement("//section[@id='MyToolsConfigurationWrapper']");
 		assertTrue(session().isElementPresent("section#MyToolsConfigurationWrapper"));
+		session().click("div.popular-toggle.toggle-1");
+		
+		session().click("a#PageAction:Edit ul."popular-list"));
+				session().click("input.save-button");
+		assertTrue(session().isElementPresent("a#PageAction:Edit ul."popular-list"));
 		
 		//waitForElement("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']");
 		//assertTrue(session().isVisible("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
