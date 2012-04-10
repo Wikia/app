@@ -27,19 +27,19 @@
 }
 
 #wkSrhTgl {
-	background-image:  url('/extensions/wikia/WikiaMobile/images/search_hi.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_search.png'); /* base64 */
 }
 
 #wkNavTgl {
-	background-image:  url('/extensions/wikia/WikiaMobile/images/menu_hi.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_menu.png'); /* base64 */
 }
 
 #wkPrfTgl.lgdin{
-	background-image:  url('/extensions/wikia/WikiaMobile/images/loggedin.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedin.png'); /* base64 */
 }
 
 #wkPrfTgl.lgdout{
-	background-image:  url('/extensions/wikia/WikiaMobile/images/user_2x.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedout.png'); /* base64 */
 }
 
 #wkSrhInp {
@@ -276,17 +276,15 @@
 		white-space: nowrap;
 		margin: 0 50px 0 80px;
 	}
+}
 
-	a {
-		position: absolute;
-		right: 0;
-		top: 0;
-		width: 50px;
-		height: 50px;
-		background-repeat: no-repeat;
-		background-position: center;
-		background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-right.png'); /* base64 */
-	}
+#wkNavLink {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50px;
+	height: 50px;
+	background-position: center;
 }
 
 #wkNavBack {

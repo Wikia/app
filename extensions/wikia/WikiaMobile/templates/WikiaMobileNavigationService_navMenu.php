@@ -2,7 +2,7 @@
 		<header>
 			<button id=wkNavBack class=wkBtn><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>
 			<h1 class=collSec><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?><span class=chev></h1>
-			<a id=wkNavLink></a>
+			<a id=wkNavLink class=chvRgt></a>
 		</header>
 	<ul id=lvl1 class=wkLst>
 <?

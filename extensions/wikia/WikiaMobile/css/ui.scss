@@ -44,7 +44,7 @@
 		width: 100%;
 		line-height: 50px;
 		border-bottom: 1px solid $border-color;
-		padding-left: 10px;
+		padding: 0 10px;
 
 		& > a, & > span {
 			width: 100%;
@@ -58,10 +58,9 @@
 	}
 }
 
-li.sub, li.cld > a, li.cld > span {
-	background-repeat: no-repeat;
-	background-position: right;
-	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-right.png'); /* base64 */
+.cld {
+background-position: right;
+background-origin: content-box;
 }
 
 //Pop over menu
@@ -81,18 +80,25 @@ li.sub, li.cld > a, li.cld > span {
 }
 
 .cnt {
-		font-size: small;
-		padding: 1px 4px;
-		border-radius: 3px;
-		color: #999;
-		background: #F2F2F2;
-		font-weight:100;
-		margin: 0 20px;
-		position: relative;
-		bottom: 1px;
+	font-size: small;
+	padding: 1px 4px;
+	border-radius: 3px;
+	color: #999;
+	background: #F2F2F2;
+	font-weight:100;
+	margin: 0 20px;
+	position: relative;
+	bottom: 1px;
 }
 
+//classes with images to avoid loading them more than once
 .clsIco{
 	background-repeat: no-repeat;
-	background-image: url('/extensions/wikia/WikiaMobile/images/close_ccc.png'); /* base64 */
+	background-image: url('/extensions/wikia/WikiaMobile/images/close.png'); /* base64 */
+}
+
+#wkNavLink, .cld {
+	background-repeat: no-repeat;
+	background-size: 10px;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-right.png'); /* base64 */
 }
