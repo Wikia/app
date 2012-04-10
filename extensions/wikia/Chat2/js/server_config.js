@@ -101,7 +101,7 @@ exports.getKeyPrefix_room = function(){ return "room"; }
 
 
 exports.getKey_userCount = function(){ return "UserCounts_" + exports.INSTANCE; }
-exports.getKey_runtimeStats = function(){ return "runtimeStats"; }
+exports.getKey_runtimeStats = function(){ return "runtimeStats_"  + exports.INSTANCE; }
 
 exports.getKey_sessionData = function(key){ return "session_data:" + key; }
 
