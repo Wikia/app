@@ -60,7 +60,7 @@ class ChatModule extends Module {
 		$this->nodeHostname = $server['host'];
 
 		// Some building block for URLs that the UI needs.
-		$this->pathToProfilePage = Title::makeTitle( isset($this->wg->EnableWallExt) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
+		$this->pathToProfilePage = Title::makeTitle( !empty($this->wg->EnableWallExt) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
 		$this->pathToContribsPage = SpecialPage::getTitleFor( 'Contributions', '$1' )->getFullURL();
 
 		if ($wgUser->isAllowed( 'chatmoderator' )) {
