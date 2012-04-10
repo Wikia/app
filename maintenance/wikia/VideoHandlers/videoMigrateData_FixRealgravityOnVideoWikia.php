@@ -55,7 +55,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 }
 
 $defaultThumbnailUrl = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/BrokenVideo_Icon_Large.png'; // TODO: CHANGEME
-
+$botUser = User::newFromName( 'WikiaBot' );
 
 //@include( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
@@ -67,10 +67,10 @@ $dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 echo( "Loading list of videos to process\n" );
 
 $rows = $dbw_dataware->select( 'video_premigrate',
-		array( 'img_name', 'provider', 'new_metadata', 'thumbnail_url', 'video_id' ),
-		array( "(status = 1 OR backlinks > 0) AND is_name_taken = 0 AND wiki_id = $wgCityId"),
-		__METHOD__
-	);
+	array( 'img_name', 'provider', 'new_metadata', 'thumbnail_url', 'video_id' ),
+	array( "(status = 1 OR backlinks > 0) AND is_name_taken = 0 AND wiki_id = $wgCityId"),
+	__METHOD__
+);
 
 $rowCount = $rows->numRows();
 echo(": {$rowCount} videos found\n");
@@ -94,7 +94,7 @@ if( $rowCount ) {
 	// which contains information about previously processed
 	// videos on this wiki
 	echo "Fetching data about previously processed videos\n";
-	
+
 	$existingRows = $dbw->query( 'select img_name FROM image WHERE img_major_mime = "video" AND  img_name NOT LIKE ":%"' );
 
 	$alreadyExisting = array();
@@ -102,7 +102,7 @@ if( $rowCount ) {
 		$alreadyExisting[] = $row->img_name;
 	}
 	$numb = count( $alreadyExisting );
-	
+
 	echo "Found $numb videos already migrated\n";
 	$dbw_dataware->freeResult($existingRows);
 
@@ -135,6 +135,14 @@ if( $rowCount ) {
 			continue;
 		}
 
+		if ( $video->provider != "Realgravity" ) {
+			// only handle RealGravity
+			continue;
+		} else {
+			echo "Found Realgravity\n";
+			sleep(2);
+		}
+
 		// debugging info
 
 		$timeEnd = microtime( true );
@@ -142,9 +150,9 @@ if( $rowCount ) {
 		$vps = intval($i / ($timeEnd - $timeStart) * 60);
 		$timeString = "[$time s, $vps vpm]";
 		echo( "- [$i / $rowCount]\t $timeString \tVideo: {$video->img_name} \n" );
-		
+
 		// start processing video
-		
+
 		$provider = $video->provider;
 		$undercover = true;
 		$metadata = unserialize( $video->new_metadata );
@@ -189,25 +197,27 @@ if( $rowCount ) {
 		$title = Title::newFromText( $video->img_name, NS_FILE );
 
 		$file = F::build(
-				!empty( $undercover )
-					? 'WikiaNoArticleLocalFile'
-					: 'WikiaLocalFile',
-				array(	$title, RepoGroup::singleton()->getLocalRepo() )
-			); /* @var $file WikiaLocalFile */
-
+			!empty( $undercover )
+				? 'WikiaNoArticleLocalFile'
+				: 'WikiaLocalFile',
+			array(	$title, RepoGroup::singleton()->getLocalRepo() )
+		); /* @var $file WikiaLocalFile */
 
 		/* override thumbnail metadata with video metadata */
 		$file->setVideoId( $metadata['videoId'] );
 		$file->forceMime( 'video/'.strtolower( $provider ) );
 		$file->forceMetadata( serialize($metadata) );
-		
+
 		/* real upload */
 		$result = $file->upload(
-				$upload->getTempPath(),
-				'',
-				'',
-				File::DELETE_SOURCE
-			);
+			$upload->getTempPath(),
+			'',
+			'',
+			File::DELETE_SOURCE,
+			false,
+			false,
+			$botUser
+		);
 
 		if ( $result->ok ){
 			// echo( "- Success! \n" );
@@ -231,36 +241,6 @@ echo(": {$rowCount} videos processed.\n");
 videoLog( 'migration', 'MIGRATED', "migrated:$i,total:$rowCount,errors:$er");
 
 
-echo "Migrating RelatedVideos from cross-wiki links to regular links\n";
-
-$botUser = User::newFromName( 'WikiaBot' );
-
-$i=0;
-$rows = $dbw->query( 'select page_id FROM page WHERE page_namespace = 1100' );
-while( $page = $dbw->fetchObject($rows) ) {
-	$articleId = $page->page_id;
-	$oTitle = Title::newFromId( $articleId );
-	if ( $oTitle instanceof Title && $oTitle->exists() ){
-		global $wgTitle;
-		// in some cases hooks depend on wgTitle (hook for article edit)
-		// but normally it wouldn't be set for maintenance script
-		$wgTitle = $oTitle;
-		$oArticle = new Article ( $oTitle );
-		if ( $oArticle instanceof Article ){
-			$sTextAfter = $sText = $oArticle->getContent();
-			$sTextAfter = str_replace( '* VW:', '* ', $sTextAfter  );
-
-			if ( $sTextAfter != $sText ) {
-				echo "ARTICLE WAS CHANGED! \n";
-				$status = $oArticle->doEdit( $sTextAfter, 'Changing cross-wiki links to local links', EDIT_MINOR | EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
-				$i++;
-			}
-		}
-	}
-}
-
-echo "Done\n";
-videoLog( 'migration', 'RELATEDVIDEOS', "edits:$i");
 videoLog( 'migration', 'STOP', "");
 
 
