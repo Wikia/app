@@ -64,7 +64,7 @@ public class ToolbarTest extends BaseTest {
 		//"ul.tools a.tools-customize"
 		
 		assertTrue(session().isElementPresent("footer#WikiaFooter div.toolbar"));
-		assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
+		//assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
 		
 		//footer#WikiaFooter div.toolbar
 		session().click("ul.tools link=Customize");
@@ -108,5 +108,60 @@ public class ToolbarTest extends BaseTest {
 		assertTrue(session().isVisible("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
 		logout();
 	}
+	
+	//@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
+	public void testVerifiesThatSignedInUserCanDeleteAnItemToCustomizedToolbar() throws Exception {
+		//Written by Patrick Archbold 10-Apr-2012
 		
+		openAndWait("/");	
+		login();
+		assertTrue(session().isElementPresent("WikiaFooter"));
+		
+		//"ul.tools a.tools-customize"
+		
+		assertTrue(session().isElementPresent("footer#WikiaFooter div.toolbar"));
+		//assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
+		
+		//footer#WikiaFooter div.toolbar
+		session().click("ul.tools link=Customize");
+		waitForElement("//section[@id='MyToolsConfigurationWrapper']");
+		session().click("//section[@id='MyToolsConfigurationWrapper']//div[contains(@class, 'popular-toggle toggle-1')]");
+		waitForElementVisible("//section[@id='MyToolsConfigurationWrapper']//ul[contains(@class, 'popular-list')]");
+		session().click("//section[@id='MyToolsConfigurationWrapper']//ul[contains(@class, 'popular-list')]//a[@data-tool-id='PageAction:Edit']");
+		waitForElement("//section[@id='MyToolsConfigurationWrapper']//ul[contains(@class, 'options-list ui-sortable')]//li[@data-tool-id='PageAction:Edit']");
+		assertTrue(session().isVisible("//section[@id='MyToolsConfigurationWrapper']//ul[contains(@class, 'options-list ui-sortable')]//li[@data-tool-id='PageAction:Edit']"));
+		session().click("//section[@id='MyToolsConfigurationWrapper']//div[contains(@class, 'buttons')]/input[@type='submit']");
+		waitForElement("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']");
+		assertTrue(session().isVisible("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
+		logout();
+		
+		loginAsRegular();
+		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
+		logout();
+		
+		login();
+		assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
+		logout();
+		
+		
+		openAndWait("/");
+		loginAsRegular();
+		openAndWait("wiki/Special:Upload");
+		session().click("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='customize']");
+		waitForElement("//section[@id='MyToolsConfigurationWrapper']");
+		session().click("//section[@id='MyToolsConfigurationWrapper']//div[contains(@class, 'popular-toggle toggle-1')]");
+		waitForElementVisible("//section[@id='MyToolsConfigurationWrapper']//ul[contains(@class, 'popular-list')]");
+		session().click("//section[@id='MyToolsConfigurationWrapper']//ul[contains(@class, 'popular-list')]//a[@data-tool-id='PageAction:Edit']");
+		waitForElement("//section[@id='MyToolsConfigurationWrapper']//ul[contains(@class, 'options-list ui-sortable')]//li[@data-tool-id='PageAction:Edit']");
+		assertTrue(session().isVisible("//section[@id='MyToolsConfigurationWrapper']//ul[contains(@class, 'options-list ui-sortable')]//li[@data-tool-id='PageAction:Edit']"));
+		session().click("//section[@id='MyToolsConfigurationWrapper']//div[contains(@class, 'buttons')]/input[@type='submit']");
+		waitForElementNotPresent("//section[@id='MyToolsConfigurationWrapper']");
+		waitForElement("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]");
+		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
+		
+		editArticle("toolbartest", "testujemy toolbar");
+		waitForElement("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]");
+		assertTrue(session().isVisible("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
+		logout();
+	}
 }
