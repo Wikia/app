@@ -71,8 +71,8 @@ var ImageLightbox = {
 	// handle clicks on article content and handle clicks on links only
 	onClick: function(ev) {
 		var target = $(ev.target);
-		
-			
+        this.wikiAddress = false;
+
 		// move to parent of an image -> anchor
 		if ( target.is('span') || target.is('img') ) {
 			if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
@@ -178,7 +178,6 @@ var ImageLightbox = {
 		
 		// for Video Thubnails:
 		var targetChildImg = target.find('img').eq(0);
-		
 		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
 			
 			if ( target.attr('data-video-name') ) {
