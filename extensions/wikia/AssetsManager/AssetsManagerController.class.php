@@ -29,10 +29,10 @@ class AssetsManagerController extends WikiaController {
 	 * @responseParam array messages - JS messages
 	 */
 	public function getMultiTypePackage() {
-		$key = 'multitypepackage::' . md5(json_encode($this->request->getParams()));
+		$key = $this->getMultiTypePackageMemcacheKey( $this->request->getParams() );
 		$data = $this->wg->Memc->get($key);
 
-		if (empty($data)) {
+		if ( empty( $data ) ) {
 			// handle templates via sendRequest
 			$templates = $this->request->getVal('templates');
 			if (!is_null($templates)) {
@@ -102,6 +102,20 @@ class AssetsManagerController extends WikiaController {
 		}
 
 		$this->response->setFormat('json');
+	}
+
+	private function getMultiTypePackageMemcacheKey(Array $params){
+		return 'multitypepackage::' . md5( F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( $params, true ) );
+	}
+
+	/**
+	 * Purges Varnish and Memcached data mapping to the specified set of paramenters
+	 * 
+	 * @param array $options @see getMultiTypePackage
+	 */
+	public function purgeMultiTypePackageCache( Array $options ) {
+		SquidUpdate::purge( array ( F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( $options ) ) );
+		$this->wg->Memc->delete( $this->getMultiTypePackageMemcacheKey( $options ) );
 	}
 
 	/**

@@ -29,6 +29,7 @@
 					page: 1
 				}
 			}],
+			ttl: 86400, /*24h caching in Varnish/Browser*/
 			callback: function(res){
 				WikiaMobile.loader.remove(wkArtCom);
 				Wikia.processStyle(res.styles);

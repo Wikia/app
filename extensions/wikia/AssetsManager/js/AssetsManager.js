@@ -56,19 +56,19 @@ window.Wikia.getMultiTypePackage = function(options) {
 		send = true;
 	}
 
-	if(templates instanceof Array){
+	if(typeof templates != 'undefined'){
 		// JSON encode templates entry
 		request.templates = (typeof templates === 'object') ? JSON.stringify(templates) : templates;
 		send = true;
 	}
 
+	if(typeof ttl === 'string'){
+		request.ttl = ttl;
+	}
+
 	if(send){
 		// add a cache buster
 		request.cb = wgStyleVersion;
-
-		if(typeof ttl === 'string'){
-			request.ttl = ttl;
-		}
 
 		$.nirvana.getJson('AssetsManagerController', 'getMultiTypePackage', request, function(resources) {
 			// "register" JS messages
@@ -83,7 +83,6 @@ window.Wikia.getMultiTypePackage = function(options) {
 	}else{
 		throw 'No resources to load specified';
 	}
-
 };
 
 /**
