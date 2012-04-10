@@ -21,6 +21,9 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	}
 	
 	public function getThumbnailUrl() {
+
+		return 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/BlankVideo_Icon_Large.png';
+
 		$bitrateId = self::MEDIUM_JPEG_BITRATE_ID;
 		if (!empty($this->metadata['jpegBitrateCode'])) {
 			$bitrateId = $this->metadata['jpegBitrateCode'];
