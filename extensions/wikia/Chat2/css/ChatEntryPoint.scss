@@ -32,11 +32,11 @@ body.skin-oasis .ChatMonobookEntryPoint {
 			.chat-total {
 				display: none;
 			}
-		}
 
-		&.chat-user-anonymous {
-			.chat-whos-here {
-				display: none;
+			&.chat-user-anonymous {
+				.chat-whos-here {
+					display: none;
+				}
 			}
 		}
 	}
