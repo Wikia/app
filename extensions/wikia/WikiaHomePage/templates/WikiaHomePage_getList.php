@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 	var wikiaHomePageVisualizationStatus = <?= $status; ?>;
 	var wikiaHomePageVisualizationData = <?= $data; ?>;
 	var wikiaHomeFailoverPageVisualizationData = <?= $failoverData; ?>;	
