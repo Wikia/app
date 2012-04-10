@@ -597,7 +597,7 @@ var WikiaMobile = (function() {
 			//add class for styling to be applied only if JS is enabled
 			//(e.g. collapse sections)
 			//must be done AFTER detecting size of elements on the page
-			//d.htm.className += ' js';
+			//d.body.className += ' js';
 
 			//handle ads
 			if(adSlot){

@@ -136,7 +136,7 @@ blockquote {
 	    display: inline-block;
 	    height: 50px;
 	 	width: 50px;
-	    background-image: url('/extensions/wikia/WikiaMobile/images/loader50x50.png'); /* base64 */
+	    background-image: url('/extensions/wikia/WikiaMobile/images/spinner.png'); /* base64 */
 		background-size: contain;
 		-webkit-animation: rotate $loaderSpeed infinite linear;
 		-moz-animation: rotate $loaderSpeed infinite linear;
@@ -180,11 +180,11 @@ blockquote {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	background-position: center;
 	background-repeat: no-repeat;
-	background-image:  url('/extensions/wikia/WikiaMobile/images/share2.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/share_grey.png'); /* base64 */
 	background-size: 50%;
 	
 	&.on {
-		background-image:  url('/extensions/wikia/WikiaMobile/images/share2_a.png'); /* base64 */
+		background-image:  url('/extensions/wikia/WikiaMobile/images/share_blue.png'); /* base64 */
 
 		&::before {
 			border-style: solid;

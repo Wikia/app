@@ -15,7 +15,7 @@
 		height: 22px;
 		background-position: center;
 		background-repeat: no-repeat;
-		background-image:  url('/extensions/wikia/WikiaMobile/images/chev_2x.png'); /* base64 */
+		background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
 		background-size: 75%;
 		position: absolute;
 		right: 0;
@@ -32,7 +32,7 @@
 	}
 
 	&.open .chev {
-		background-image:  url('/extensions/wikia/WikiaMobile/images/chev-a_2x.png'); /* base64 */
+		background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-up.png'); /* base64 */
 		-webkit-animation: cute .3s ease-out;
 		-moz-animation: cute .3s ease-out;
 		-ms-animation: cute .3s ease-out;
