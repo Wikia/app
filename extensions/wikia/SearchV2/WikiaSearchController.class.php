@@ -16,7 +16,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function index() {
 	
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
-		$this->app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SearchV2/css/Search.scss'));
+		//$this->app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SearchV2/css/Search.scss'));
 		/*
 		if( !in_array( 'staff', $this->wg->User->getEffectiveGroups() ) ) {
 			$this->displayRestrictionError($this->user);
