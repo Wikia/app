@@ -246,9 +246,15 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		}
 	}
 	
-	&.zero-state .masthead-info > div {
-		padding-top: 10px;
-		padding-bottom: 10px;
+	&.zero-state {
+		.masthead-info > div {
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+		
+		#userIdentityBoxEdit {
+			display: block;
+		}
 	}
 }
 
