@@ -433,7 +433,6 @@ $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_shared_js',
-		'//skins/common/jquery/jquery.wikia.placeholder.js',
 		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/Chat2/js/emoticons.js', // must be before controllers.js

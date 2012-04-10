@@ -36,24 +36,35 @@
 						<?php // text inputs ?>
 						<? if($input['type'] === 'text') { ?>
 							<label><?= !empty($input['label']) ? $input['label'] : '' ?></label>
-							<input type="text" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>">
+							<input type="text" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>" <?= $extraAttrs ?>>
+
+						<?php // password inputs ?>
 						<? } elseif($input['type'] === 'password') { ?>
 							<label><?= !empty($input['label']) ? $input['label'] : '' ?></label>
-							<input type="password" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>">
+							<input type="password" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>" <?= $extraAttrs ?>>
+
+						<?php // textareas ?>
 						<? } elseif($input['type'] === 'textarea') { ?>
 							<label><?= !empty($input['label']) ? $input['label'] : '' ?></label>
-							<textarea><?= !empty($input['value']) ? $input['value'] : '' ?></textarea>
+							<textarea <?= $extraAttrs ?>><?= !empty($input['value']) ? $input['value'] : '' ?></textarea>
+
 						<? } elseif($input['type'] === 'display') { ?>
 							<label><?= !empty($input['label']) ? $input['label'] : '' ?><?= $tooltip ?></label>
 							<strong><?= !empty($input['value']) ? $input['value'] : '' ?></strong>
+
+						<?php // checkboxes ?>
 						<? } elseif($input['type'] === 'checkbox') { ?>
 							<label>
-								<input type="checkbox" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>" <?= !empty($input['checked']) ? 'checked' : '' ?>> <?= !empty($input['label']) ? $input['label'] : '' ?>
+								<input type="checkbox" name="<?= $input['name'] ?>" value="<?= !empty($input['value']) ? $input['value'] : '' ?>" <?= !empty($input['checked']) ? 'checked' : '' ?> <?= $extraAttrs ?>> <?= !empty($input['label']) ? $input['label'] : '' ?>
 							</label>
+							
+						<?php // custom form text ?>
 						<? } elseif($input['type'] === 'custom') { ?>
 							<?= $input['output'] ?>
+
 						<? } elseif($input['type'] === 'nirvanaview') { ?>
 							<?= F::app()->getView( $input['controller'], $input['view'], empty($input['params']) ? array() : $input['params'] ) ?>
+
 						<? } elseif($input['type'] === 'nirvana') { ?>
 							<?= (string)F::app()->sendRequest( $input['controller'], $input['method'], empty($input['params']) ? array() : $input['params'] ) ?>
 						<? } ?>
