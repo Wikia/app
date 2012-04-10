@@ -467,7 +467,7 @@ class UserIdentityBox {
 			}
 			 
 			/* See if user is banned from chat */ 
-			if(!empty($this->app->wg->EnableChat) && Chat::getBanInformation($wikiId, $this->user) !== false) { 
+			if(!empty($this->app->wg->EnableChat) && Chat::getBanInformation($this->app->wg->CityId, $this->user) !== false) { 
 				$data['group'] = wfMsg('user-identity-box-banned-from-chat');    
 			} 
 		}
