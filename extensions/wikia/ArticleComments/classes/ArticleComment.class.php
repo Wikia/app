@@ -773,6 +773,25 @@ class ArticleComment {
 		if ($parentTitle) {
 			$parentTitle->invalidateCache();
 			$parentTitle->purgeSquid();
+
+			//FB#27827 - purge the multi-type request cache in Varnish for WikiaMobile
+			//@see ArticleComments.wikiamobile.js
+			F::build( 'AssetsManagerController' )->purgeMultiTypePackageCache( array(
+				'styles' => '/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
+				'messages' => 'WikiaMobileComments',
+				'scripts' => 'articlecomments_js_wikiamobile_init',
+				'templates' => array(
+					array(
+						'controllerName' => 'ArticleCommentsModule',
+						'methodName' => 'WikiaMobileCommentsPage',
+						'params' => array(
+							'articleID' => $parentTitle->getArticleID(),
+							'useskin' => 'wikiamobile',
+							'page' => 1
+						)
+					)
+				)
+			) );
 		}
 	}
 

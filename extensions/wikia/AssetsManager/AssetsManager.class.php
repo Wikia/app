@@ -515,4 +515,80 @@ class AssetsManager {
 		wfProfileOut( __METHOD__ );
 		return $check;
 	}
+
+	/**
+	 * Returns a multi-type requested resources, @see AssetsManager.js
+	 * 
+	 * @param Array $options an hash with the following keys:
+	 * templates - an array of hashes with the following fields: controllerName, methodName and an optional params
+	 * styles - comma-separated list of SASS files
+	 * scripts - comma-separated list of AssetsManager groups
+	 * messages - comma-separated list of JSMessages packages (messages are registered automagically)
+	 * ttl - cache period for both varnish and browser (in seconds)
+	 * 
+	 * @param bool $local wheter to fetch the URL with or without domain
+	 * 
+	 * @return string the multi-type URL
+	 *
+	 * @example
+	 * 	F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( array (
+	 *		'messages' => 'EditPageLayout',
+	 *		'scripts' => 'oasis_jquery,yui',
+	 *		'styles' => 'path/to/style/file'
+	 *		'templates' => array(
+	 *			array(
+	 *				'controllerName' => 'UserLoginSpecialController',
+	 *				'methodName' => 'index',
+	 *				'param' => array(
+	 *					'useskin' => 'wikiamobile'
+	 *				)
+	 *			)
+	 *		)
+	 *	) );
+	 */
+	public function getMultiTypePackageURL( Array $options, $local = false ) {
+		wfProfileIn( __METHOD__ );
+
+		global $wgServer, $wgStyleVersion;
+		$request = array();
+
+		if ( !empty( $options['styles'] ) ) {
+			$request['styles'] = $options['styles'];
+		}
+
+		if ( !empty( $options['scripts'] ) ) {
+			$request['scripts'] = $options['scripts'];
+		}
+
+		if ( !empty( $options['messages'] ) ) {
+			$request['messages'] = $options['messages'];
+		}
+
+		if ( !empty( $options['templates'] ) ) {
+			$request['templates'] = ( is_array( $options['templates'] ) || is_object( $options['templates'] ) ) ?
+				json_encode( $options['templates'] ) :
+				$options['templates'];
+		}
+
+		$request['cb'] = $wgStyleVersion;
+
+		if ( !empty( $options['ttl'] ) ) {
+			$request['ttl'] = $options['ttl'];
+		}
+
+		if ( !empty( $request ) ) {
+			$url = ( empty( $local ) ) ? $wgServer : '';
+			$url .= "/wikia.php?controller=AssetsManagerController&method=getMultiTypePackage&format=json";
+
+			foreach ( $request as $key => $item ) {
+				$url .= "&{$key}=" . urlencode( $item );
+			}
+
+			wfProfileOut( __METHOD__ );
+			return $url;
+		} else {
+			wfProfileOut( __METHOD__ );
+			throw new WikiaException( 'No resources to load specified' );
+		}
+	}
 }
