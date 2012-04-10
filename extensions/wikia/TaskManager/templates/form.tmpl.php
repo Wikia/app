@@ -3,6 +3,15 @@
 /*<![CDATA[*/
 /*]]>*/
 </style>
+<script type="text/javascript">
+jQuery( document ).ready( function ( $ ) { 
+	$( '#tm-invert' ).click( function () {
+		$( '#tm-form' ).find( 'input[type="checkbox"]' ).each( function () {
+			$( this ).prop( 'checked', !$( this ).prop( 'checked' ) );
+		} );
+	} );
+} );
+</script>
 <form id="tm-form" action="<?= $title->getLocalURL() ?>" method="post">
 	<fieldset>
 		<legend>
@@ -44,6 +53,7 @@
 		?>
 		<label><input type="checkbox" name="wpType[]" value="<?= $id ?>"<?= $selected ?>/><?= $id ?></label>
 		<?php endforeach ?>
+		<input type="button" value="<?= wfMsg( 'taskmanager-invert' ) ?>" id="tm-invert" />
 	</fieldset>
 </form>
 <!-- e:<?= __FILE__ ?> -->

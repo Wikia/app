@@ -13,6 +13,7 @@ $messages['en'] = array(
 	"taskmanager_tasklist" => "Return to Task List",
 	'right-taskmanager' => "Can display background tasks",
 	'right-taskmanager-action' => "Can manage background tasks",
+	'taskmanager-invert' => 'Invert selection',
 );
 
 /** Afrikaans (Afrikaans)
