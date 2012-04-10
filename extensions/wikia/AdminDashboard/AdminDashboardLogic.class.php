@@ -83,6 +83,7 @@ class AdminDashboardLogic {
 				"Preferences",
 				"ScavengerHunt",
 				"Search",
+				"WikiaSearch",
 				"Signup",
 				"SiteWideMessages",
 				"SponsorshipDashboard",
