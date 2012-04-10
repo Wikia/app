@@ -616,22 +616,8 @@ class UserIdentityBox {
 			$this->clearHiddenTopWikis();
 		}
 
-		/*
-		 * mech: fixing bug 21198
-		 * right now the memcache has current numer of edits, but urls are incorrect (they point do main wiki page instead of user talk page)
-		 * so we combine both - take number of edits from memcache and links from db
-		 * later (f.e. in a month) once the links in memcache are correct, we can revert this change
-		 */
-		//$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis());
-		$dbWikis = $this->getTopWikisFromDb();
-		$memcWikis = $this->getEditsWikis();
-		foreach($memcWikis as $wiki) {
-			if (array_key_exists($wiki['id'], $dbWikis)) {
-				$wiki['wikiUrl'] = $dbWikis[$wiki['id']]['wikiUrl'];
-			}
-		}
-		$wikis = array_merge($dbWikis, $memcWikis);
-
+		$wikis = array_merge( $this->getTopWikisFromDb(), $this->getEditsWikis());
+		
 		$ids = array();
 		foreach($wikis as $key => $wiki) {
 			if( $this->isTopWikiHidden($wiki['id']) || in_array((int) $wiki['id'], $ids) ) {
