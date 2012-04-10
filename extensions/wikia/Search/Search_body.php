@@ -662,7 +662,9 @@ class SolrResult extends SearchResult {
 				$this->mHighlightText .= $snippet . '... ';
 			}
 		}
-		return preg_replace("/(<\/span>)('s)/i", '$2$1' , strip_tags($this->mHighlightText, '<span>'));
+		return preg_replace("/^\W+ /", '', 
+				    preg_replace("/(<\/span>)('s)/i", '$2$1' , 
+						 strip_tags($this->mHighlightText, '<span>')));
 	}
 
 	public function getWikiId() {
