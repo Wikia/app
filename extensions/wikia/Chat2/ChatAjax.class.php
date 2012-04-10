@@ -110,8 +110,7 @@ class ChatAjax {
 			} else {
 				// this results goes to chat server, which obiously has no user lang
 				// so we just return a short month name key - it has to be translated on client side
-				$date = getdate( strtotime($stats['date']) );
-				global $wgLang;
+				$date = getdate( wfTimestamp( TS_UNIX, $stats['date'] ) );
 				$retVal['since'] =  $date;							
 			}
 

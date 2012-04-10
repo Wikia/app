@@ -182,8 +182,10 @@ var UserView = Backbone.View.extend({
 		//$().log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
 		
 		var model = this.model.toJSON();
-		
-		model['since'] = wgLangtMonthAbbreviation[model['since']['mon']] + ' ' + model['since']['year']; 
+		$().log(model);
+		if(model['editCount'] > 0) {
+			model['since'] = wgLangtMonthAbbreviation[model['since']['mon']] + ' ' + model['since']['year'];	
+		}
 		
 		$(this.el).html( this.template(model) );
 		
