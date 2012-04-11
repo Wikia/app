@@ -114,7 +114,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	private function stylePathProcessing() {
 		global $IP;
 
-		// TODO: move here once StaticChute is removed
+		// TODO: make it a method of AssetsManager builder (BugId:10548)
 		require "$IP/extensions/wikia/StaticChute/wfReplaceCdnStylePathInCss.php";
 		$this->mContent = wfReplaceCdnStylePathInCss($this->mContent);
 	}
