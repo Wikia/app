@@ -151,6 +151,7 @@ class BodyModule extends Module {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt,
+			$wgEnableWikiaHomePageExt,
 			$wgEnableWikiAnswers,
 			$wgSalesTitles, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableWallExt, $wgRequest;
@@ -175,7 +176,7 @@ class BodyModule extends Module {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		if($namespace == NS_SPECIAL) {
-			if ($wgTitle->isSpecial('Search')) {
+			if ($wgTitle->isSpecial('Search') || ($wgTitle->isSpecial('WikiaSearch') && empty($wgEnableWikiaHomePageExt))) {
 				$railModuleList = array(
 					$latestActivityKey => array('LatestActivity', 'Index', null),
 				);

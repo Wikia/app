@@ -28,7 +28,7 @@ $color-search-form-background: darken($color-page, 5%);
 			height: 24px;
 			margin-right: 12px;
 			padding: 3px 10px;
-			width: 516px;
+			width: 536px;
 			background-color: $color-page;
 		}
 		
@@ -40,6 +40,11 @@ $color-search-form-background: darken($color-page, 5%);
 			height: 31px;
 			position: static;
 			width: 62px;
+
+			&:hover {
+				@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
+				text-decoration: none;
+			}
 
 			img {
 				background: url(/skins/oasis/images/sprite.png) -1055px -80px no-repeat; /* $wgCdnStylePath */
@@ -133,6 +138,10 @@ $color-search-form-background: darken($color-page, 5%);
 			}
 		}
 	}
+	.pagination {
+		border-top: 1px solid $color-page-border;
+		padding-top: 5px;
+	}
 }
 
 .oasis-one-column {
@@ -143,6 +152,6 @@ $color-search-form-background: darken($color-page, 5%);
 	}
 	// TODO: Remove this later, it's just for dev
 	.WikiaMainContent {
-		width: 660px;
+		width: 680px;
 	}
 }
