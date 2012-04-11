@@ -261,4 +261,40 @@ class WikiaSolrClient extends WikiaSearchClient {
 	  return substr_count($query, "answers") > 0;
 	}
 
+	public function getSimilarPages($wid, $pageId, array $params = array())
+	{
+
+	      $query = sprintf('wid:%d AND pageid:%d', $wid, $pageId);
+
+	      if (isset($params['start'])) {
+		  $start = $params['start'];
+		  unset($params['start']);
+	      } else {
+		  $start = 0;
+	      }
+
+	      if (isset($params['size'])) {
+		  $size = $params['size'];
+		  unset($params['size']);
+	      } else {
+		  $size = 10;
+	      }
+
+	      $params = array('mlt.match.include' => 'false',
+			      'mlt.fl' => 'html',
+			     ) + $params;
+	      
+
+	      try {
+		$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);
+	      } catch (Exception $e) {
+		echo $e; die;
+	      }
+
+
+	      return $response->response->docs;
+
+	}
+
+
 }

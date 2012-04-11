@@ -114,6 +114,23 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->response->setData( $metaData );
 		}
 	}
+
+
+	public function getRelatedVideos() {
+
+	        $pageId = $this->getVal('id');
+
+		if ( !empty( $pageId ) ) {
+
+		     $responseData = $this->wikiaSearch->getRelatedVideos( $pageId );
+
+		     $this->response->setData( $responseData );
+
+		}
+
+		$this->getResponse()->setFormat('json');
+
+	}
 	
 	public function boostSettings() {
 	}
