@@ -87,30 +87,51 @@ var result = {
 	tool: "JSLint edition " + jslint.edition  + ' (nodejs ' + process.version + ')'
 };
 
-// detect hardcoded stuff (BugId:12757)
+// additional checks
+var regExpRules = [
+	// detect hardcoded stuff (BugId:12757)
+	{
+		name: 'Found hardcoded value',
+		regexp: /['"]([^"']+blank.gif|\/skins\/|\/extensions\/|\/wiki\/)/,
+		dontMatch: /.scss/, // ignore URLs to SASS files as they contain "hardcoded" /extensions and /skins paths
+		reason: function(matches) {
+			return 'Found hardcoded value: "' + matches[1] + '"';
+		}
+	},
+	// detect $.live (BugId:28034)
+	{
+		name: 'Found $.live',
+		regexp: /.live\(\s?['"]/,
+		reason: 'jQuery.live() is deprecated'
+	}
+];
+
+// scan each line
 var lines = fileSrc.split("\n"),
-	hardcodedRegExp = /['"]([^"']+blank.gif|\/skins\/|\/extensions\/|\/wiki\/)/,
 	matches;
 
 for(var n=0, len = lines.length; n < len; n++) {
-	matches = lines[n].match(hardcodedRegExp);
 
-	if (matches) {
-		// ignore URLs to SASS files as they contain "hardcoded" /extensions and /skins paths
-		if (lines[n].indexOf('.scss') > -1) {
-			continue;
+	regExpRules.forEach(function(rule) {
+		matches = lines[n].match(rule.regexp);
+
+		if (matches) {
+			// omit lines that match 'dontMatch' rule field
+			if (rule.dontMatch && rule.dontMatch.test(lines[n])) {
+				return;
+			}
+
+			// add an issue to the list
+			result.errors.push({
+				id: '(error)',
+				raw: rule.name,
+				evidence: lines[n],
+				line: n + 1,
+				character: lines[n].indexOf(matches[1]) + 1,
+				reason: (typeof rule.reason === 'function') ? rule.reason.call(this, matches) : rule.reason
+			});
 		}
-
-		// add an issue to the list
-		result.errors.push({
-			id: '(error)',
-			raw: 'Found hardcoded value',
-			evidence: lines[n],
-			line: n + 1,
-			character: lines[n].indexOf(matches[1]) + 1,
-			reason: 'Found hardcoded value: "' + matches[1] + '"'
-		});
-	}
+	});
 }
 
 // return JSON-encoded result

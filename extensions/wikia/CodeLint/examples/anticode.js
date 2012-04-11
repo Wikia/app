@@ -64,3 +64,10 @@ with(fooObject) {
 	js = '/skins/common/jquery/jquery.foo.js';
 	sass = $.getSassCommonURL(  '/skins/oasis/css/touchScreen.scss' ); // should not be caught
 })();
+
+// $.live
+$('#foo').live('click', $.noop);
+$('#foo').live( "click", $.noop);
+
+$('#foo').
+	live( "click", $.noop);
