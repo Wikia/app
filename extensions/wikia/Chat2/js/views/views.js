@@ -33,7 +33,6 @@ var ChatView = Backbone.View.extend({
 		// Prepare a regexp we use to match local wiki links
 		var localWikiLinkReg = wgServer + wgArticlePath;
 		localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "(\\S+[^.\\s\\?\\,])");
-		window.localWikiLinkReg = localWikiLinkReg;
 		localWikiLinkReg = new RegExp(localWikiLinkReg, "i");
 		
 		
