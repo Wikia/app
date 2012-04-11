@@ -195,9 +195,7 @@ class VideoFileUploader {
 
 	/**
 	 * Translate URL to Title object
-	 * can transparently upload new video if it doesn't exist
-	 * @param $requestedTitle if new Video will be created you can optionally request
-	 *  it's title (otherwise Video name from provider is used)
+	 * can transparently upload new video if it doesn't exis)
 	 */
 	public static function URLtoTitle( $url, $sTitle = '' ) {
 
