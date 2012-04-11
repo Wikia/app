@@ -208,11 +208,11 @@ class Skin extends Linker {
 
 		if( false !== $wgFavicon ) {
 			/* Wikia change begin - @author: hyun */
-			$out->addLink( 
-				array( 
-					'rel' => 'shortcut icon', 
+			$out->addLink(
+				array(
+					'rel' => 'shortcut icon',
 					'href' => wfReplaceImageServer($wgFavicon)
-				) 
+				)
 			);
 			/* Wikia change end */
 		}
@@ -550,7 +550,10 @@ class Skin extends Linker {
 
 		$s = "/* generated javascript */\n";
 		$s .= "var skin = '" . Xml::escapeJsString( $skinName ) . "';\n";
-		$s .= "var stylepath = '" . Xml::escapeJsString( $wgStylePath ) . "';";
+		/* Wikia change begin - @author: macbre */
+		/* Don't emit the following variable that can be outdated (BugId:28025) */
+		//$s .= "var stylepath = '" . Xml::escapeJsString( $wgStylePath ) . "';";
+		/* Wikia change end */
 		$s .= "\n\n/* MediaWiki:Common.js */\n";
 		$s .= "try{\n";
 		$commonJs = wfMsgExt( 'common.js', 'content' );
@@ -1237,7 +1240,7 @@ CSS;
 		if( !wfRunHooks( 'SkinSubPageSubtitle', array( &$subpages ) ) ) {
 			return $subpages;
 		}
-		
+
 		global $wgOut, $wgEnableWallExt;
 		if( $wgOut->isArticle() && MWNamespace::hasSubpages( $this->mTitle->getNamespace() ) ) {
 			$ptext = $this->mTitle->getPrefixedText();
@@ -1277,7 +1280,7 @@ CSS;
 				}
 			}
 		}
-		
+
 		return $subpages;
 	}
 
