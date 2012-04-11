@@ -15,4 +15,5 @@ $messages['en'] = array(
 	'wikiasearch2-use-s1' => "Use Search-S1",
 	'wikiasearch2-results-count' => '$1 results for $2',
 	'wikiasearch2-global-search-headline' => 'Find wikis on Wikia',
+	'wikiasearch2-wiki-search-headline' => 'Search this wiki',
 );
