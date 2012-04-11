@@ -25,26 +25,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		*/
 		
-		$isCorporateWiki = !empty($wgEnableWikiaHomePageExt); // TODO: work this into values below
-
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
 		$rankExpr = $this->getVal('rankExpr');
 		$debug = $this->request->getBool('debug');
-		$skipCache = $this->request->getBool('skipCache');
-
-		$groupResults = $this->request->getBool('groupResults');
 		$crossWikia = $this->request->getBool('crossWikia');
+
+		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
+		$isInterWiki = $crossWikia ? true : !empty($wgEnableWikiaHomePageExt);
 		
 		$results = false;
 		$resultsFound = 0;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
-			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $crossWikia ? 0 : $this->wg->CityId ), $rankExpr, $groupResults );
+			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $rankExpr, $isInterWiki );
 			$resultsFound = $results->getRealResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $crossWikia, 'rankExpr' => $rankExpr, 'groupResults' => $groupResults ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'rankExpr' => $rankExpr, 'groupResults' => $isInterWiki ) );
 			}
 		}
 
@@ -55,17 +53,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
-		$this->setVal( 'crossWikia', $crossWikia );
 		$this->setVal( 'rankExpr', $rankExpr );
-		$this->setVal( 'groupResults', ($groupResults && $crossWikia) );
 		$this->setVal( 'debug', $debug );
-		$this->setVal( 'skipCache', $skipCache);
 		$this->setVal( 'solrHost', $this->wg->SolrHost);
 		$this->setVal( 'debug', $this->getVal('debug', false) );
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
+		$this->setVal( 'isInterWiki', $isInterWiki );
 	}
 
 	public function pagination() {
+		$isInterWiki = !empty($wgEnableWikiaHomePageExt); // For now, just checking if we're on wikia.com wiki
 		$query = $this->getVal('query');
 		$page = $this->getVal( 'page', 1 );
 		$rankExpr = $this->getVal('rankExpr');
@@ -79,8 +76,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'windowFirstPage', ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 ) );
 		$this->setVal( 'windowLastPage', ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) );
 		$this->setVal( 'pageTitle', $this->wg->Title );
-		$this->setVal( 'crossWikia', $this->request->getBool('crossWikia') );
-		$this->setVal( 'groupResults', $this->request->getBool('groupResults') );
+		$this->setVal( 'isInterWiki', $isInterWiki);
 	}
 
 	public function getPage() {

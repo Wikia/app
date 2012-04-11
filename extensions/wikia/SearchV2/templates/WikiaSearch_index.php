@@ -1,7 +1,7 @@
 <section class="Search">
 
 	<form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
-		<?php if($crossWikia): ?>
+		<?php if($isInterWiki): ?>
 			<p><?= wfMsg('wikiasearch2-global-search-headline') ?></p>
 		<?php endif; ?>
 		<input type="text" name="query" value="<?=$query;?>" />
@@ -10,14 +10,10 @@
 
 		<?php if($debug): ?>
 		<fieldset>
-			<?php // TODO: Hook these up properly ?>
-			<input type="checkbox" name="crossWikia" value="1" <?= ( $crossWikia ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-search-all-wikia' ); ?>
-			<input type="checkbox" name="groupResults" value="1" <?= ( $groupResults ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-group-results' ); ?>
-			<input type="checkbox" name="debug" value="1" <?= ( $debug ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-debug-mode' ); ?>
-			<input type="checkbox" name="skipCache" value="1" <?= ($skipCache ? 'checked' : ''); ?>/><?= wfMsg( 'wikiasearch2-skip-cache' ); ?>
-			<input type="checkbox" name="solrhost" value="search-s1" <?= ($solrHost == 'search-s1') ? 'checked' : '' ?> /><?= wfMsg( 'wikiasearch2-use-s1' ) ?>
-	
-			<?php if($crossWikia) : ?>
+			<label><input type="checkbox" name="crossWikia" value="1" <?= ( $isInterWiki ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-search-all-wikia' ); ?></label>
+			<label><input type="checkbox" name="debug" value="1" <?= ( $debug ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-debug-mode' ); ?></label>
+			
+			<?php if($isInterWiki) : ?>
 				<?php echo $app->renderView('WikiaSearchController', 'boostSettings'); ?>
 		    <?php endif; ?>
 		</fieldset>
