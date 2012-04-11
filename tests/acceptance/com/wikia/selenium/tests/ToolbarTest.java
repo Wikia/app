@@ -21,7 +21,7 @@ public class ToolbarTest extends BaseTest {
 		logout();
 	}
 	
-	@Test(groups={"envProduction","verified"})
+	//@Test(groups={"envProduction","verified"})
 	public void testEnsuresThatToolbarIsNotPresentForAnonymousUsers() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
@@ -29,7 +29,7 @@ public class ToolbarTest extends BaseTest {
 		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
 	}
 
-	@Test(groups={"envProduction","verified"})
+	//@Test(groups={"envProduction","verified"})
 	public void testResetsDefaultsInCustomizedToolbar() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
@@ -53,7 +53,7 @@ public class ToolbarTest extends BaseTest {
 	}
 	
 	
-	@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
+	//@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
 	public void testEnsuresThatSignedInUserCanAddAnItemToCustomizedToolbar() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		
@@ -109,8 +109,8 @@ public class ToolbarTest extends BaseTest {
 		logout();
 	}
 	
-//@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
-	//@Test(groups={"envProduction","verified"})
+////@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
+	@Test(groups={"envProduction","verified"})
 	public void testVerifiesThatSignedInUserCanDeleteAnItemInCustomizedToolbar() throws Exception {
 		//WIP Written by Patrick Archbold 10-Apr-2012
 		
@@ -120,38 +120,28 @@ public class ToolbarTest extends BaseTest {
 		
 		assertTrue(session().isElementPresent("WikiaFooter"));
 		
-		//"ul.tools a.tools-customize"
+		
 		
 		assertTrue(session().isElementPresent("footer#WikiaFooter div.toolbar"));
-		//assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
+				
 		
-		//footer#WikiaFooter div.toolbar
-		session().click("ul.tools link=Customize");
-		//waitForElement("//section[@id='MyToolsConfigurationWrapper']");
+		session().click("ul.tools a.tools-customize");
+	
 		assertTrue(session().isElementPresent("section#MyToolsConfigurationWrapper"));
 		session().click("div.popular-toggle.toggle-1");
 		
-		session().click("a#PageAction:Edit ul."popular-list"));
+		session().click("ul.popular-list a.PageAction:Edit");
 				session().click("input.save-button");
-		assertTrue(session().isElementPresent("a#PageAction:Edit ul."popular-list"));
+		assertTrue(session().isElementPresent("ul.popular-list a.PageAction:Edit"));
+		session().click("ul.tools a.tools-customize");
 		
-		//waitForElement("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']");
-		//assertTrue(session().isVisible("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
+				
 		logout();
 		
-		//loginAsRegular();
-		//assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
-		//logout();
-		
-		//login();
-		//assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
-		//logout();
 		
 		
 		
-		//editArticle("toolbartest", "testujemy toolbar");
-		//waitForElement("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]");
-		//assertTrue(session().isVisible("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
-		//logout();
+		
+	
 	}
 }
