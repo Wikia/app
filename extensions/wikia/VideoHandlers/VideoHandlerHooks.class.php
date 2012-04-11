@@ -76,5 +76,20 @@ class VideoHandlerHooks extends WikiaObject{
 		$parser->setHook('videogallery', array($parser, 'renderImageGallery'));
 		return true;
 	}
+
+	public function convertOldInterwikiToNewInterwiki(&$parser, &$text) {
+		global $wgRTEParserEnabled;
+		if($wgRTEParserEnabled) {
+			return true;
+		}
+
+		$newtext = preg_replace('/\{\{:wikiavideo:([^}]*)\}\}/','[[File:$1]]', $text);
+		if(!empty($newtext)) {
+			$text = $newtext;
+		}
+
+		return true;
+
+	}
 	
 }
