@@ -161,9 +161,11 @@
 					</table>
 				</fieldset>
 			</fieldset>
+			<?php } //do not show this info when editing ?>
 
 			<fieldset>
 				<legend><?= wfMsg('swm-label-expiration') ?></legend>
+				<?php if (!$editMsgId) { ?>
 				<select name="mExpireTime" id="mExpireTime">
 				<?php
 				$days = explode(',', wfMsg('swm-days'));
@@ -189,10 +191,12 @@
 				}
 				?>
 				</select>
+				<?php } //do not show this info when editing ?>
 				<input name="mExpireTimeS" id="mExpireTimeS" type="text" size="20" value="<?= $formData['expireTimeS'] ?>"/>
 				<span><?= wfMsg( 'swm-label-expiration-hint' ) ?></span>
 			</fieldset>
 
+			<?php if (!$editMsgId) { ?>
 			<fieldset>
 				<legend><?= wfMsg('swm-label-language') ?></legend>
 				<?php

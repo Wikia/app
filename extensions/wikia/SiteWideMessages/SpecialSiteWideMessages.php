@@ -119,7 +119,7 @@ function SiteWideMessagesGetUserMessagesContent($dismissLink = true, $parse = tr
  *
  */
 function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
-	global $wgTitle, $wgOut, $wgUser;
+	global $wgTitle, $wgUser;
 	if (SiteWideMessages::$hasMessages && wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot') && !$wgTitle->exists()) {
 		//replace message about empty UserTalk only if we have a messages to display
 		$text = '';
@@ -198,7 +198,7 @@ function SiteWideMessagesUserNewTalks(&$user, &$talks) {
  *
  */
 function SiteWideMessagesDiff($oTitle, $uMessages) {
-	global $wgUser, $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgStyleVersion;
+	global $wgUser, $wgTitle, $wgRequest;
 	if ($wgTitle->getNamespace() == NS_USER_TALK &&                      //user talk page?
 		$wgUser->getTitleKey() == $wgTitle->getPartialURL() &&           //*my* user talk page?
 		!$wgUser->isAllowed('bot') &&                                    //user is not a bot?

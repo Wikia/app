@@ -7,6 +7,7 @@
  * Provides an interface for sending messages seen on all wikis
  *
  * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
+ * @author Daniel Grunwell (Grunny)
  * @date 2008-01-09
  * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -175,8 +176,9 @@ class SiteWideMessages extends SpecialPage {
 				} else {
 					$mText = $wgRequest->getText('mContent');
 					$editMsgId = isset($_POST['editMsgId']) ? $_POST['editMsgId'] : 0;
+					$mExpiry = $wgRequest->getText( 'mExpireTimeS' );
 					if ($editMsgId) {	//editing?
-						$result = $this->saveMessage($editMsgId, $mText);
+						$result = $this->saveMessage( $editMsgId, $mText, $mExpiry );
 					}
 					$redirect = $wgTitle->getLocalUrl('action=list');
 					$wgOut->redirect($redirect, 200);
@@ -250,6 +252,7 @@ class SiteWideMessages extends SpecialPage {
 			case 'edit':
 				$mId = $wgRequest->getText('id');
 				$formData['messageContent'] = $mId ? $this->getMessageText($mId) : null;
+				$formData['expireTimeS'] = $mId ? $this->getMessageExpiry( $mId ) : null;
 				$editMsgId = $mId;
 				//no break - go to 'default' => editor
 
@@ -577,7 +580,7 @@ class SiteWideMessages extends SpecialPage {
 		return $result;
 	}
 
-	private function saveMessage($editMsgId, $mText) {
+	private function saveMessage( $editMsgId, $mText, $mExpiry ) {
 		global $wgUser, $wgParser, $wgExternalSharedDB;
 		$title = Title::newFromText(uniqid('tmp'));
 		$options = ParserOptions::newFromUser($wgUser);
@@ -585,11 +588,22 @@ class SiteWideMessages extends SpecialPage {
 		//Parse some wiki markup [eg. ~~~~]
 		$mText = $wgParser->preSaveTransform($mText, $title, $wgUser, $options);
 
+		// Validate date and time
+		$validDateTime = true;
+		if ( $mExpiry !== '' ) {
+			$timestamp = wfTimestamp( TS_UNIX, $mExpiry );
+			if ( !$timestamp ) {
+				$validDateTime = false;
+			}
+			$mExpire = wfTimestamp( TS_DB, $timestamp );
+		}
+
 		$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbResult = (boolean)$DB->Query (
 			  'UPDATE ' . MSG_TEXT_DB
 			. ' SET msg_text = ' . $DB->AddQuotes($mText)
 			. ' , msg_sender_id = ' . $DB->AddQuotes($wgUser->GetID())
+			. ( $validDateTime ? ' , msg_expire = ' . $DB->addQuotes( $mExpire ) : '' )
 			. ' WHERE msg_id = ' . $DB->AddQuotes($editMsgId)
 			. ';'
 			, __METHOD__
@@ -620,6 +634,38 @@ class SiteWideMessages extends SpecialPage {
 		}
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);
+		}
+		return $result;
+	}
+
+	/**
+	 * Get message expiry time
+	 *
+	 * @access private
+	 * @author Daniel Grunwell (grunny)
+	 * @param $mId int the message ID
+	 * @param $master boolean whether to use the master or slave database (default: false)
+	 *
+	 */
+	private function getMessageExpiry( $mId, $master = false ) {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
+
+		$dbResult = $dbr->query(
+			  'SELECT msg_expire'
+			. ' FROM ' . MSG_TEXT_DB
+			. ' WHERE msg_id = ' . $dbr->addQuotes( $mId )
+			. ';'
+			, __METHOD__
+		);
+
+		$result = null;
+
+		if ( $oMsg = $dbr->fetchObject( $dbResult ) ) {
+			$result = $oMsg->msg_expire;
+		}
+		if ( $dbResult !== false ) {
+			$dbr->freeResult($dbResult);
 		}
 		return $result;
 	}
