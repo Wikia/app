@@ -71,3 +71,7 @@ $('#foo').live( "click", $.noop);
 
 $('#foo').
 	live( "click", $.noop);
+
+
+// $.css
+$('ul li').css('color', 'red');

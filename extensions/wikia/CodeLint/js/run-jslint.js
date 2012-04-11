@@ -103,6 +103,12 @@ var regExpRules = [
 		name: 'Found $.live',
 		regexp: /.live\(\s?['"]/,
 		reason: 'jQuery.live() is deprecated'
+	},
+	// detect $.css (BugId:28035)
+	{
+		name: 'Found $.css',
+		regexp: /.css\(\s?['"]/,
+		reason: 'jQuery.css() should not be used (use CSS classes instead)'
 	}
 ];
 
