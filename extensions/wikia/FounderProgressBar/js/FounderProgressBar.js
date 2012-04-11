@@ -146,7 +146,6 @@ var FounderProgressList = {
 			c.lineTo(0, 40);
 			c.lineTo(0, 0);
 			c.fill();
-			c.stroke();
 			c.closePath();
 			el.data('drawn', true);
 		}
@@ -165,7 +164,6 @@ var FounderProgressList = {
 			c.lineTo(20, 0);
 			c.lineTo(0, 0);
 			c.fill();
-			c.stroke();
 			c.closePath();
 			el.data('drawn', true);
 		}
