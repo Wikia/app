@@ -7,6 +7,7 @@ class WikiaSearch extends WikiaObject {
 	const GROUP_RESULTS_SEARCH_LIMIT = 500;
 	const GROUP_RESULTS_CACHE_TTL = 900; // 15 mins
 	const WIKIPAGES_CACHE_TTL = 604800; // 7 days
+	const VIDEO_WIKI_ID = 298117;
 
 	/**
 	 * Search client
@@ -340,6 +341,32 @@ class WikiaSearch extends WikiaObject {
 
 		return $row;
 	}
+
+
+	public function getRelatedVideos($pageId, $start=0, $size=20) {
+
+	         # going to need an "is_video" field
+	         $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^10) '
+		               . 'AND ns:6 AND -title:(jpg gif png jpeg)';
+		 $params['mlt.boost'] = 'true';
+		 $params['mpt.maxnpt'] = '200';
+		 $params['mlt.fl'] = 'title,html';
+		 $params['start'] = $start;
+		 $params['size'] = $size;
+
+	         $similarPages = $this->client->getSimilarPages($this->wg->cityId, $pageId, $params);
+
+		 $response = array();
+		 foreach ($similarPages as $similarPage)
+		 {
+		     $response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
+		 }
+
+		 return $response;
+	}
+
+
+
 
 	private function callMediaWikiAPI( Array $params ) {
 		$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
