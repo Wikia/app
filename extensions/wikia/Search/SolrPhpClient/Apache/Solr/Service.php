@@ -102,6 +102,7 @@ class Apache_Solr_Service
 	const PING_SERVLET = 'admin/ping';
 	const UPDATE_SERVLET = 'update';
 	const SEARCH_SERVLET = 'select';
+	const MORELIKETHIS_SERVLET = 'mlt';
 	const THREADS_SERVLET = 'admin/threads';
 
 	/**
@@ -277,6 +278,7 @@ class Apache_Solr_Service
 		//Initialize our full servlet URLs now that we have server information
 		$this->_updateUrl = $this->_constructUrl(self::UPDATE_SERVLET, array('wt' => self::SOLR_WRITER ));
 		$this->_searchUrl = $this->_constructUrl(self::SEARCH_SERVLET);
+		$this->_mltUrl = $this->_constructUrl(self::MORELIKETHIS_SERVLET);
 		$this->_threadsUrl = $this->_constructUrl(self::THREADS_SERVLET, array('wt' => self::SOLR_WRITER ));
 
 		$this->_urlsInited = true;
@@ -955,4 +957,38 @@ class Apache_Solr_Service
 
 		return $this->_sendRawGet($this->_searchUrl . $this->_queryDelimiter . $queryString);
 	}
+
+	public function moreLikeThis($query, $offset = 0, $limit = 10, $params = array()) 
+	{
+		if (!is_array($params))
+		{
+			$params = array();
+		}
+
+		// construct our full parameters
+		// sending the version is important in case the format changes
+		$params['version'] = self::SOLR_VERSION;
+
+		// common parameters in this interface
+		$params['wt'] = self::SOLR_WRITER;
+		$params['json.nl'] = $this->_namedListTreatment;
+
+		$params['q'] = $query;
+		$params['start'] = $offset;
+		$params['rows'] = $limit;
+
+		// use http_build_query to encode our arguments because its faster
+		// than urlencoding all the parts ourselves in a loop
+		$queryString = http_build_query($params, null, $this->_queryStringDelimiter);
+
+		// because http_build_query treats arrays differently than we want to, correct the query
+		// string by changing foo[#]=bar (# being an actual number) parameter strings to just
+		// multiple foo=bar strings. This regex should always work since '=' will be urlencoded
+		// anywhere else the regex isn't expecting it
+		$queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $queryString);
+
+		return $this->_sendRawGet($this->_mltUrl . $this->_queryDelimiter . $queryString);
+
+	}
+
 }
