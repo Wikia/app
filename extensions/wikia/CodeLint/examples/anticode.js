@@ -75,3 +75,9 @@ $('#foo').
 
 // $.css
 $('ul li').css('color', 'red');
+
+// browser sniffing
+if ($.browser.msie &&
+	jQuery.browser.version == "9.0") {
+	alert('msie');
+}

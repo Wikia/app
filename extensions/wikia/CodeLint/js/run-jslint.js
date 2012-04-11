@@ -109,6 +109,12 @@ var regExpRules = [
 		name: 'Found $.css',
 		regexp: /.css\(\s?['"]/,
 		reason: 'jQuery.css() should not be used (use CSS classes instead)'
+	},
+	// detect $.browser (BugId:28056)
+	{
+		name: 'Found $.browser',
+		regexp: /(\$|jQuery).browser./,
+		reason: 'jQuery.browser should not be used (use feature detection instead)'
 	}
 ];
 
