@@ -25,7 +25,7 @@ class WikiaVideoService extends Service {
 		
 		if ( self::isVideoStoredAsFile() ) {
 			// File can be video only when new video logic is enabled for the wiki
-			if ( $file instanceof Title && $file->exists() ) {
+			if ( $file instanceof Title ) {
 				$file = wfFindFile( $file );
 			}
 			return self::isVideoFile( $file );
