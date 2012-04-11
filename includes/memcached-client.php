@@ -412,9 +412,9 @@ class MWMemcached {
 
 		@$this->stats['get']++;
 
-		// If action=mpurge, flush memcache too @author owen
-		global $wgPurgeDisablesMemcache;
-		if (isset($wgPurgeDisablesMemcache) && $wgPurgeDisablesMemcache == true) {
+		// Wikia::memcachePurge hook on MediawikiPerformAction @author owen
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads;
+		if ($wgAllowMemcacheDisable && ($wgAllowMemcacheReads == false)) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -606,6 +606,13 @@ class MWMemcached {
 	 * @return  boolean  TRUE on success
 	 */
 	public function set( $key, $value, $exp = 0 ) {
+		
+		// Wikia::memcachePurge hook on MediawikiPerformAction @author owen
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheWrites;
+		if ($wgAllowMemcacheDisable && ($wgAllowMemcacheWrites == false)) {
+			return false;
+		}
+		
 		return $this->_set( 'set', $key, $value, $exp );
 	}
 

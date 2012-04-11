@@ -28,6 +28,7 @@ $wgHooks['EmailConfirmed']           [] = "Wikia::isEmailConfirmedHook";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
+$wgHooks['MediaWikiPerformAction']   [] = "Wikia::memcachePurge";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -1672,5 +1673,37 @@ class Wikia {
 	 */
 	static public function get_content_pages( ) {
 		return self::get_const_values( 'content_ns' );
+	}
+	
+	/* add some extra request parameters to control memcache behavior @author: owen
+	 * mcache=none disables memcache for the duration of the request (not really that useful)
+	 * mcache=writeonly disables memcache reads for the duration of the request
+	 * mcache=readonly disables memcache writes for the duration of the request 
+	 * TODO: allow disabling specific keys?
+	 */
+ 		
+	static public function memcachePurge($output, $article, $title, $user, $request, $wiki ) {
+		global $wgRequest, $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
+
+		$mcachePurge = $wgRequest->getVal("mcache", null);
+		if ($wgAllowMemcacheDisable && $mcachePurge !== null) {
+			switch( $mcachePurge ) {
+				case 'writeonly':
+					$wgAllowMemcacheReads = false;
+					$wgAllowMemcacheWrites = true;
+					break;
+				case 'readonly':
+					$wgAllowMemcacheReads = true;
+					$wgAllowMemcacheWrites = false;
+					break;
+				case 'none':
+					$wgAllowMemcacheReads = $wgAllowMemcacheWrites = false;
+					break;
+				default: // anything else defaults to mcache on
+					$wgAllowMemcacheReads = $wgAllowMemcacheWrites = true;
+					break;
+			}
+		}
+		return true;
 	}
 }

@@ -523,14 +523,6 @@ class MediaWiki {
 			$action = 'view';
 			$request->setVal('action', $action);
 		}
-		/* action=mpurge disables memcache for the duration of the request @author: owen*/
-		/* for now, use mpurge and always disable.  
-		 * TODO: use action=purge and add to config so flag works like a normal WikiFactory var */
-		global $wgPurgeDisablesMemcache;
-		if ($action == 'mpurge') {
-			$wgPurgeDisablesMemcache = true;
-			$action = 'purge';
-		}
 		/* Wikia change end */
 
 		# Workaround for bug #20966: inability of IE to provide an action dependent
