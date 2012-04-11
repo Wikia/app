@@ -575,14 +575,15 @@ var NodeChatUsers = Backbone.View.extend({
 		});
 		
 		// Handle clicking the profile and contrib links
-		menu.find('.profile').add('.contribs').click(function(event) {
+			
+		menu.find('.talk-page').add('.contribs').add('.message-wall').click(function(event) {
 			event.preventDefault();
 			var target = $(event.currentTarget);
 			var menu = target.closest('.UserStatsMenu');
 			var username = menu.find('.username').text();
 			var location = '';
 			
-			if (target.hasClass('profile')) {
+			if (target.hasClass('talk-page') || target.hasClass('message-wall')) {
 				location = pathToProfilePage.replace('$1', username);
 			} else if (target.hasClass('contribs')) {
 				location = pathToContribsPage.replace('$1', username);
