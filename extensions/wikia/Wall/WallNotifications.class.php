@@ -345,7 +345,7 @@ class WallNotifications {
 				if( $notification->data->msg_author_username == $notification->data->msg_author_displayname) {
 					$author_signature = $notification->data->msg_author_username;
 				} else {
-					$author_signature = $notification->data->msg_author_displayname . '(' . $notification->data->msg_author_username . ')';
+					$author_signature = $notification->data->msg_author_displayname . ' (' . $notification->data->msg_author_username . ')';
 				}
 				
 				$data = array(
