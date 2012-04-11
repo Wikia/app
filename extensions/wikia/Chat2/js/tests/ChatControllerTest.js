@@ -1,9 +1,9 @@
 /*
 @test-framework QUnit
-@test-require-file extensions/wikia/Chat/js/emoticons.js
-@test-require-file extensions/wikia/Chat/js/lib/underscore.js
-@test-require-file extensions/wikia/Chat/js/lib/backbone.js
-@test-require-file extensions/wikia/Chat/js/views/views.js
+@test-require-file extensions/wikia/Chat2/js/emoticons.js
+@test-require-file extensions/wikia/Chat2/js/lib/underscore.js
+@test-require-file extensions/wikia/Chat2/js/lib/backbone.js
+@test-require-file extensions/wikia/Chat2/js/views/views.js
 */
 module("ChatView Test");
 test("processText links", function() {
@@ -77,4 +77,35 @@ test("processText links", function() {
  		   '<a href="http://poznan.mech.wikia-dev.com/wiki/Benutzer_Blog:Mta%C3%84/%C3%84nderungen_am_Geschichtsseiten-Layout">Benutzer Blog:MtaÄ/Änderungen am Geschichtsseiten-Layou</a>',
  		   'pipelined bracket link with national characters');
 
+    equal(c.processText('http://poznan.mech.wikia-dev.com/wiki/Benutzer:MtaÄ'), 
+   		   '<a href="http://poznan.mech.wikia-dev.com/wiki/Benutzer:MtaÄ">Benutzer:MtaÄ</a>',
+   		   'local url with non-ascii characters');
+    
+    equal(c.processText('http://de.community.wikia.com/wiki/Benutzer:MtaÄ'), 
+  		   '<a href="http://de.community.wikia.com/wiki/Benutzer:MtaÄ">http://de.community.wikia.com/wiki/Benutzer:MtaÄ</a>',
+  		   'external url with non-ascii characters');
+
+    equal(c.processText('http://www.wikia.com'), 
+   		   '<a href="http://www.wikia.com">http://www.wikia.com</a>',
+   		   'server only');
+
+    equal(c.processText('http://www.wikia.com:443'), 
+    		   '<a href="http://www.wikia.com:443">http://www.wikia.com:443</a>',
+    		   'server with port');
+
+    equal(c.processText('http://www.wikia.com/'), 
+    		   '<a href="http://www.wikia.com/">http://www.wikia.com/</a>',
+    		   'root document');
+
+    equal(c.processText('go to http://www.wikia.com/.'), 
+ 		   'go to <a href="http://www.wikia.com/">http://www.wikia.com/</a>.',
+ 		   'dot at the end');
+
+    equal(c.processText('Did you see the news on http://www.wikia.com/?'), 
+  		   'Did you see the news on <a href="http://www.wikia.com/">http://www.wikia.com/</a>?',
+  		   'question mark at the end');
+
+    equal(c.processText('http://www.wikia.com/, http://www.google.pl'), 
+   		   '<a href="http://www.wikia.com/">http://www.wikia.com/</a>, <a href="http://www.google.pl">http://www.google.pl</a>',
+   		   'coma separated addresses');
 });
