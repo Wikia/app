@@ -19,9 +19,7 @@ class ImageServing {
 
 	/**
 	 * @param $articles \type{\arrayof{\int}} List of articles ids to get images
-	 * @param $articles \type{\arrayof{\int}} List of articles ids to get images
 	 * @param $width \int image width
-	 * @param $width \int
 	 * @param $proportionOrHight can by array with proportion(example: array("w" => 1, "h" => 1)) or just height in pixels (example: 100)  proportion will be
 	 * calculated automatically
 	 */
