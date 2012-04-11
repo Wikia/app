@@ -14,7 +14,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-	
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
 		//$this->app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SearchV2/css/Search.scss'));
 		/*
@@ -24,7 +23,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return false;
 		}
 		*/
-		
+				
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
 		$rankExpr = $this->getVal('rankExpr');
@@ -77,6 +76,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'windowLastPage', ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) );
 		$this->setVal( 'pageTitle', $this->wg->Title );
 		$this->setVal( 'isInterWiki', $isInterWiki);
+		$this->setVal( 'resultsCount', $resultsCount);
 	}
 
 	public function getPage() {

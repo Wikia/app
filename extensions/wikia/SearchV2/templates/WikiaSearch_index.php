@@ -3,6 +3,8 @@
 	<form class="WikiaSearch" id="search-v2-form" action="<?=$pageUrl;?>">
 		<?php if($isInterWiki): ?>
 			<p><?= wfMsg('wikiasearch2-global-search-headline') ?></p>
+		<?php else: ?>
+			<p><?= wfMsg('wikiasearch2-wiki-search-headline') ?></p>
 		<?php endif; ?>
 		<input type="text" name="query" value="<?=$query;?>" />
 
