@@ -32,12 +32,14 @@ var ChatView = Backbone.View.extend({
 		
 		// Prepare a regexp we use to match local wiki links
 		var localWikiLinkReg = wgServer + wgArticlePath;
-		localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "([-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|'])");		
+		localWikiLinkReg = localWikiLinkReg.replace(/\$1/, "(\\S+[^.\\s\\?\\,])");
+		window.localWikiLinkReg = localWikiLinkReg;
 		localWikiLinkReg = new RegExp(localWikiLinkReg, "i");
+		
 		
 		if (!allowHtml) {
 			// Linkify http://links
-			var exp = /\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|'!:,.;]*[-A-Z0-9+&@#\/%=~_|']/ig;
+			var exp = /\b(ftp|http|https):\/\/(\w+:{0,1}\w*@)?[a-zA-Z0-9\-\.]+(:[0-9]+)?\S+[^.\s\?\,]/ig;
 			text = text.replace(exp, function(link) {
 				var linkName = link;
 				// Linkify local wiki links (eg: http://thiswiki.wikia.com/wiki/Page_Name ) as shortened links (like bracket links)
