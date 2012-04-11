@@ -33,6 +33,11 @@
 		p {
 			margin-top: 0;
 		}
+		fieldset {
+			border: 0;
+			padding: 5px 0;
+			margin: 0;
+		}
 	}
 	.result-count {
 		color: $color-alternate-text;
@@ -51,22 +56,35 @@
 		@include clearfix;
 		margin-bottom: 19px;
 
-		header {
-			@include clearfix;
-			
+		header {			
 			h1 {
-				margin-top: 0;
+				font-size: 16px;
+				margin: 0;
 			}
 		}
+		h2 {
+			border: none;
+			font-size: inherit;
+			margin: 0;
+			padding: 0;
+		}
 		nav {
+			@include clearfix;
+
+			ul {
+				margin: 0;
+			}
+
 			li {
 				color: $color-alternate-text;
 				float: left;
 				list-style: none;
+				margin: 0;
 				
 				&:before {
 					content: "\00a0|\00a0";
 				}
+
 				&:first-child:before {
 					content: "";
 				}
@@ -100,11 +118,5 @@
 	// TODO: Remove this later, it's just for dev
 	.WikiaMainContent {
 		width: 660px;
-	}
-}
-
-.WikiaArticle {
-	ul {
-		margin-left: 0px;
 	}
 }
