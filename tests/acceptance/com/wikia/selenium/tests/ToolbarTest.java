@@ -108,7 +108,37 @@ public class ToolbarTest extends BaseTest {
 		assertTrue(session().isVisible("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
 		logout();
 	}
-	
+	//@Test(groups={"envProduction","verified"})
+	public void testEnsuresThatSignedInUserCanSearchFindAndAddAnItemToCustomizedToolbar() throws Exception {
+		//Written by Rodrigo 11-Apr-2012
+		openAndWait("/");
+		login();
+		assertTrue(session().isElementPresent("//footer[@id='WikiaFooter']/div[@class='toolbar']"));
+		
+		session().click("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='customize']");
+		waitForElement("//section[@id='MyToolsConfigurationWrapper']");
+		session().click("//input[@class='search']");
+		session().type("//div[@id='MyToolsConfiguration']/form/div[2]/div/input", "up");		
+		session().keyUp("//div[@id='MyToolsConfiguration']/form/div[2]/div/input", "s");
+		
+		assertTrue(session().isVisible("//div[@title='Upload photo']"));
+		session().click("//div[@title='Upload photo']");
+		assertTrue(session().isElementPresent("//div[@id='MyToolsConfiguration']//li[@data-caption='Upload photo']"));
+		
+		session().click("//form[@class='toolbar-customize']//input[@class='save-button']");
+		assertTrue(session().isVisible("//div[@class='toolbar']//a[@data-name='upload']"));
+		
+		logout();
+		
+		loginAsRegular();
+		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='upload']"));
+		logout();
+		
+		login();
+		assertTrue(session().isVisible("//div[@class='toolbar']//a[@data-name='upload']"));
+		logout();
+		
+	}	
 ////@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
 	@Test(groups={"envProduction","verified"})
 	public void testVerifiesThatSignedInUserCanDeleteAnItemInCustomizedToolbar() throws Exception {
