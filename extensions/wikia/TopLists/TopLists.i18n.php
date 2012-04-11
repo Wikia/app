@@ -37,14 +37,14 @@ $messages['en'] = array(
 	'toplists-error-add-item-anon' => 'Anonymous users are not allowed to add items to lists. Please <a class="ajaxLogin" id="login" href="$1">Log in</a> or <a class="ajaxLogin" id="signup" href="$2">register a new account</a>.',
 	'toplists-error-add-item-permission' => 'Permission error: Your account has not been granted the right to create new items.',
 	'toplists-error-add-item-list-not-exists' => 'The "$1" Top 10 list does not exist.',
-	'toplists-upload-error-unknown' => 'An error occurred while processing the upload request. Please try again.', 
+	'toplists-upload-error-unknown' => 'An error occurred while processing the upload request. Please try again.',
 
 	//editor
 	'toplists-editor-title-label' => 'List name',
 	'toplists-editor-title-placeholder' => 'Enter a name for the list',
 	'toplists-editor-related-article-label' => 'Related page <small>(optional, but selects an image)</small>',
 	'toplists-editor-related-article-placeholder' => 'Enter an existing page name',
-    'toplists-editor-social-description-label' => 'Social media description (will display i.e. on Facebook)',
+    'toplists-editor-social-description-label' => 'Social media description (will display for example on Facebook)',
     'toplists-editor-social-description-placeholder' => 'Enter a description',
 	'toplists-editor-image-browser-tooltip' => 'Add a picture',
 	'toplists-editor-remove-item-tooltip' => 'Remove item',
@@ -110,7 +110,7 @@ Head to Wikia to check out the changes! $1
 	'toplists-msg-fb-OnRateArticle-link' => '$ARTICLENAME',
 	'toplists-msg-fb-OnRateArticle-short' =>  'has voted on a Top 10 list on $WIKINAME!', // @todo FIXME: If possible add username as a variable here.
 	'toplists-msg-fb-OnRateArticle' => '$TEXT',
-	
+
 	//Create list call to action
 	'toplists-create-heading' => '<em>New!</em> Create Your Own Top Ten',
 	'toplists-create-button-msg' => 'Create a list'
@@ -2067,15 +2067,15 @@ $messages['tl'] = array(
 	'toplists-list-item-voted' => 'Nakaboto na',
 	'toplists-createpage-dialog-label' => 'Talaan ng Pinakamataas na 10',
 	'toplists-email-subject' => 'Binago ang isang talaan ng Pinakamataas na 10',
-	'toplists-email-body' => 'Kumusta mula sa Wikia! 
+	'toplists-email-body' => 'Kumusta mula sa Wikia!
 
-Ang talaang <a href="$1">$2</a> sa Wikia ay nabago. 
+Ang talaang <a href="$1">$2</a> sa Wikia ay nabago.
 
- $3 
+ $3
 
-Tumungo sa Wikia upang suriin ang mga pagbabago! $1 
+Tumungo sa Wikia upang suriin ang mga pagbabago! $1
 
- - Wikia 
+ - Wikia
 
  Maaari kang <a href="$4">huwag tumanggap</a> ng mga pagbabago sa talaan.',
 	'toplists-seconds' => '$1 {{PLURAL:$1|segundo|mga segundo}}',
