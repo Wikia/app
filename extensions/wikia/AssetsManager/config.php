@@ -449,8 +449,8 @@ $config['chat_js2'] = array(
 $config['chat_ban_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/Chat/js/views/ChatBanModal.js',
-		'//extensions/wikia/Chat/js/controllers/ChatBanModalLogs.js'
+		'//extensions/wikia/Chat2/js/views/ChatBanModal.js',
+		'//extensions/wikia/Chat2/js/controllers/ChatBanModalLogs.js'
 	)
 );
 
