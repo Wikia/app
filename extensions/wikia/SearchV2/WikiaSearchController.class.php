@@ -24,15 +24,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return false;
 		}
 		*/
+		
+		$isCorporateWiki = !empty($wgEnableWikiaHomePageExt); // TODO: work this into values below
 
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
 		$rankExpr = $this->getVal('rankExpr');
-		$crossWikia = $this->request->getBool('crossWikia');
 		$debug = $this->request->getBool('debug');
 		$skipCache = $this->request->getBool('skipCache');
-		$groupResults = $this->request->getBool('groupResults');
 
+		$groupResults = $this->request->getBool('groupResults');
+		$crossWikia = $this->request->getBool('crossWikia');
+		
 		$results = false;
 		$resultsFound = 0;
 		$paginationLinks = '';

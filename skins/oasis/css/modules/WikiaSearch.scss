@@ -1,29 +1,105 @@
-// Inter-wiki search
+// Inter-wiki search - currently for the SearchV2 extension
 // Mixins
 @import "../mixins/gradient";
 @import "../mixins/bodytext";
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
 
 // Oasis Page Modules //
 @import "../core/color";
 
-.mw-search-results {
-	.searchresult {
-		@include bodytext;
+.Search {
+	// Search form
+	.WikiaSearch {
+		background: #F3F4F3;
+		padding: 11px 12px;
+		
+		input[type="search"], input[type="text"] {
+			height: 24px;
+			margin-right: 12px;
+			padding: 3px 10px;
+			width: 516px;
+			
+		}
+		
+		button {
+			@include border-radius(3px);
+			float: right;		
+			height: 31px;
+			position: static;
+			width: 62px;
+		}
+		
+		p {
+			margin-top: 0;
+		}
 	}
-}
+	.result-count {
+		color: $color-alternate-text;
+		margin-bottom: 0;
+		text-align: right;
+		
+		span {
+			text-transform: capitalize;
+		}
+	}
+	// TODO: Make this a global style?
+	.subtle {
+		color: $color-alternate-text;
+	}
+	.Result {
+		@include clearfix;
+		margin-bottom: 19px;
 
-// increase search box width just on this page
-.WikiaSearch {
-	input[type="search"], input[type="text"] {
-		width: 608px;
+		header {
+			@include clearfix;
+			
+			h1 {
+				margin-top: 0;
+			}
+		}
+		nav {
+			li {
+				color: $color-alternate-text;
+				float: left;
+				list-style: none;
+				
+				&:before {
+					content: "\00a0|\00a0";
+				}
+				&:first-child:before {
+					content: "";
+				}
+				
+				a {
+					color: $color-alternate-text;
+					&:hover {
+						color: $color-links;
+					}
+				}
+			}
+		}
+		.grouped-result {
+			width: 280px; 
+			float: left; 
+			margin: 9px 0 9px 40px; 
+
+			&.new-row {
+				clear: left;
+			}
+		}
 	}
 }
 
 .oasis-one-column {
 	.WikiaSearch {
 		input[type="search"], input[type="text"] {
-			width: 928px;
+			//width: 928px; // TODO: Put this back in so it looks okay in wide modes
 		}	
+	}
+	// TODO: Remove this later, it's just for dev
+	.WikiaMainContent {
+		width: 660px;
 	}
 }
 
