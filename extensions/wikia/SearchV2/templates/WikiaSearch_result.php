@@ -47,4 +47,3 @@
 	?>
 	<i>[id: <?=$result->getId();?>, text_relevance: <?=$result->getVar('text_relevance', '?');?>, backlinks: <?=$result->getVar('backlinks', '?');?>, rank: <?= $rankValue; ?>]</i><br />
 <?php endif; //debug ?>
-<br />
