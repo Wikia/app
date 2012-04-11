@@ -98,7 +98,7 @@ class TopList extends TopListBase {
 
 				$description = TopListParser::getAttribute( TOPLIST_ATTRIBUTE_DESCRIPTION );
 				// BugId:27831 - set the description even if null returned
-				if ( is_null( $description ) {
+				if ( is_null( $description ) ) {
 					$description = '';
 				}
 				$this->setDescription( $description );
