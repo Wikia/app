@@ -8,10 +8,20 @@
 // Oasis Page Modules //
 @import "../core/color";
 
+$use-dark-icons: false;
+@if lightness($color-buttons) > 50 {
+	$use-dark-icons: true;
+}
+
+$color-search-form-background: darken($color-page, 5%);
+@if $is-dark-wiki {
+	$color-search-form-background: darken(lighten($color-page, 20%), 15%);
+}
+
 .Search {
 	// Search form
 	.WikiaSearch {
-		background: #F3F4F3;
+		background: $color-search-form-background;
 		padding: 11px 12px;
 		
 		input[type="search"], input[type="text"] {
@@ -19,15 +29,26 @@
 			margin-right: 12px;
 			padding: 3px 10px;
 			width: 516px;
-			
+			background-color: $color-page;
 		}
 		
 		button {
 			@include border-radius(3px);
+			// needed to override gray search button override (from skins/oasis/css/core/_Search.scss)
+			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 			float: right;		
 			height: 31px;
 			position: static;
 			width: 62px;
+
+			img {
+				background: url(/skins/oasis/images/sprite.png) -1055px -80px no-repeat; /* $wgCdnStylePath */
+				height: 15px;
+				width: 19px;
+				@if $use-dark-icons {
+					background-position:  -1076px -80px;
+				}
+			}
 		}
 		
 		p {
@@ -56,11 +77,9 @@
 		@include clearfix;
 		margin-bottom: 19px;
 
-		header {			
-			h1 {
-				font-size: 16px;
-				margin: 0;
-			}
+		h1 {
+			font-size: 16px;
+			margin: 0;
 		}
 		h2 {
 			border: none;
@@ -97,10 +116,17 @@
 				}
 			}
 		}
+		article {
+			line-height: 19px;
+		}
 		.grouped-result {
 			width: 280px; 
 			float: left; 
-			margin: 9px 0 9px 40px; 
+			margin: 9px 0 9px 40px;
+			
+			h1 {
+				font-size: inherit;
+			}
 
 			&.new-row {
 				clear: left;
