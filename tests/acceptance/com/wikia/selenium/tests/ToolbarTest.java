@@ -140,12 +140,12 @@ public class ToolbarTest extends BaseTest {
 		
 	}	
 ////@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
-	@Test(groups={"envProduction","verified"})
-	public void testVerifiesThatSignedInUserCanDeleteAnItemInCustomizedToolbar() throws Exception {
+	//@Test(groups={"envProduction","verified"})
+	//public void testVerifiesThatSignedInUserCanDeleteAnItemInCustomizedToolbar() throws Exception {
 		//WIP Written by Patrick Archbold 10-Apr-2012
 		
 		
-		openAndWait(randomArticlePath);
+		/*openAndWait(randomArticlePath);
 		login();
 		
 		assertTrue(session().isElementPresent("WikiaFooter"));
@@ -173,5 +173,5 @@ public class ToolbarTest extends BaseTest {
 		
 		
 	
-	}
+	}*/
 }
