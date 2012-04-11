@@ -4,7 +4,7 @@
 		(!empty($profileAvatar) ? 'logged-in' : 'anonymous')
 	?>">
 	<h1 class="chat-headline">
-		<span class="chat-live"><?= wfMsg('chat-live') ?></span>
+		<span class="chat-live"><?= wfMsg('chat-live2') ?></span>
 		<span class="chat-total"><?= $totalInRoom ?></span>
 	</h1>
 
