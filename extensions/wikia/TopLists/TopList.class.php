@@ -96,12 +96,10 @@ class TopList extends TopListBase {
 
 				$this->setPicture( $picture );
 
-				$description = TopListParser::getAttribute( TOPLIST_ATTRIBUTE_DESCRIPTION );
-				// BugId:27831 - set the description even if null returned
-				if ( is_null( $description ) ) {
-					$description = '';
-				}
-				$this->setDescription( $description );
+                $description = TopListParser::getAttribute( TOPLIST_ATTRIBUTE_DESCRIPTION );
+                if( !empty( $description ) ) {
+                    $this->setDescription( $description );
+                }
 			}
 
 			$this->mDataLoaded = true;
