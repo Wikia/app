@@ -651,12 +651,11 @@ class SiteWideMessages extends SpecialPage {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
 
-		$dbResult = $dbr->query(
-			  'SELECT msg_expire'
-			. ' FROM ' . MSG_TEXT_DB
-			. ' WHERE msg_id = ' . $dbr->addQuotes( $mId )
-			. ';'
-			, __METHOD__
+		$dbResult = $dbr->select(
+			array( MSG_TEXT_DB ),
+			array( 'msg_expire' ),
+			array( 'msg_id' => $mId ),
+			__METHOD__
 		);
 
 		$result = null;
