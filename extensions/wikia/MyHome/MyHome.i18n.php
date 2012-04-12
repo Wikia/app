@@ -2376,7 +2376,7 @@ Spróbuj!',
 	'myhome-switch-to-monaco' => "Funkcjonalność WikiActivity dostępna jest wyłącznie jeśli używasz skórki Wikia.
 Jeśli chcesz widzieć „Moja strona domowa” zmień '''[[Special:Preferences|w preferencjach]]''' używaną skórkę.",
 	'myhome-namespace-blog' => 'Blog',
-	'myhome-community-corner-header' => 'Aktualności społeczności',
+	'myhome-community-corner-header' => 'Zakątek Społeczności',
 	'oasis-myhome-community-corner-edit' => 'edytuj wiadomość &gt;',
 	'myhome-community-corner-edit' => 'edytuj wiadomość',
 	'community-corner' => "Witaj na '''My Home'''!

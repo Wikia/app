@@ -1673,6 +1673,21 @@ $messages['tr'] = array(
 	'chat-user-manu-contribs' => 'Katkılar',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'chat-great-youre-logged-in' => 'Шәп! Сез системага кердегез.',
+	'chat-user-manu-profile' => 'Кулланучы сәхифәсе',
+	'chat-user-manu-contribs' => 'Кертем',
+	'chat-user-manu-private' => 'Шәхси хәбәр',
+	'chat-user-manu-give-chat-mod' => 'Модератор статусы бирергә',
+	'chat-user-manu-kickban' => 'Тыярга',
+	'chat-user-manu-private-block' => 'Шәхси хәбәрләрне тыярга',
+	'chat-user-manu-private-allow' => 'Шәхси хәбәрләрне рөхсәт итәргә',
+	'chat-user-manu-private-close' => 'Аерым бүлмәне ябарга',
+);
+
 /** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
@@ -1743,12 +1758,13 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Liangent
  * @author Yanmiao liu
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'chat' => '聊天',
 	'chat-desc' => '[[Special:Chat|在线聊天]]',
-	'chat-no-login' => '您必须登录以聊天。',
-	'chat-no-login-text' => '请登录以聊天。',
+	'chat-no-login' => '您必须登录才能聊天。',
+	'chat-no-login-text' => '请登录来聊天。',
 	'chat-default-topic' => '欢迎来到$1聊天',
 	'chat-user-joined' => '$1 已经加入聊天。',
 	'chat-read-only' => '维基是只读模式，聊天暂时不可用。',
@@ -1762,8 +1778,8 @@ $messages['zh-hans'] = array(
 	'chat-err-communicating-with-mediawiki' => '与 MediaWiki 服务器通讯出错。',
 	'chat-ban-cant-ban-moderator' => '您不能踢出另一个聊天主持人。',
 	'chat-ban-already-banned' => '$1 已经在此维基的聊天中被禁止。',
-	'chat-ban-you-need-permission' => '您没有 $1 权限，这是要踢出用户必需的。',
-	'chat-missing-required-parameter' => "'$1' 是必需的，但在请求中未找到。",
+	'chat-ban-you-need-permission' => '您没有$1权限，不能踢出/封禁用户。',
+	'chat-missing-required-parameter' => '“$1”是必需的，但在请求中未找到。',
 	'chat-err-already-chatmod' => '错误："$1" 已经在 "$2" 组。',
 	'chat-err-no-permission-to-add-chatmod' => '错误：您不具备给此用户添加 "$1" 组的权限。',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 推举 $2 为本维基上的聊天主持人。',

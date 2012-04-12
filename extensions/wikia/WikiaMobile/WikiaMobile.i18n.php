@@ -192,6 +192,7 @@ $1',
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
  * @author Kflorence
@@ -210,6 +211,7 @@ $messages['es'] = array(
 	'wikiamobile-feedback' => 'Sugerencias',
 	'wikiamobile-back' => 'Atrás',
 	'wikiamobile-hide-section' => 'ocultar',
+	'wikiamobile-footer-link-license' => 'Licencia',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Estilo de vida]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entretenimiento]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Videojuegos]]',
@@ -312,6 +314,7 @@ $messages['gl'] = array(
 	'wikiamobile-feedback' => 'Comentarios',
 	'wikiamobile-back' => 'Volver',
 	'wikiamobile-hide-section' => 'agochar',
+	'wikiamobile-footer-link-license' => 'Licenza',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Estilo de vida]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entretemento]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Xogos]]',
@@ -346,6 +349,7 @@ $messages['ia'] = array(
 	'wikiamobile-feedback' => 'Commentario',
 	'wikiamobile-back' => 'Retro',
 	'wikiamobile-hide-section' => 'celar',
+	'wikiamobile-footer-link-license' => 'Licentia',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Stilo de vita]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Intertenimento]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Joco]]',
@@ -426,6 +430,7 @@ $messages['mk'] = array(
 	'wikiamobile-feedback' => 'Мислења',
 	'wikiamobile-back' => 'Назад',
 	'wikiamobile-hide-section' => 'скриј',
+	'wikiamobile-footer-link-license' => 'Лиценцирање',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Животен стил]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Забава]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Игри]]',
@@ -460,6 +465,7 @@ $messages['ms'] = array(
 	'wikiamobile-feedback' => 'Maklum balas',
 	'wikiamobile-back' => 'Kembali',
 	'wikiamobile-hide-section' => 'sorokkan',
+	'wikiamobile-footer-link-license' => 'Perlesenan',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Gaya Hidup]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Hiburan]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Permainan]]',
@@ -531,6 +537,7 @@ $messages['nl'] = array(
 	'wikiamobile-feedback' => 'Terugkoppeling',
 	'wikiamobile-back' => 'Terug',
 	'wikiamobile-hide-section' => 'verbergen',
+	'wikiamobile-footer-link-license' => 'Licentie',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Vermaak]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
@@ -568,7 +575,8 @@ $messages['pl'] = array(
 	'wikiamobile-feedback' => 'Opinie',
 	'wikiamobile-back' => 'Wstecz',
 	'wikiamobile-hide-section' => 'ukryj',
-	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Styl]]',
+	'wikiamobile-footer-link-license' => 'Licencja',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Rozrywka]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Gry]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artykuł|artykuły|artykułów}}',
@@ -649,6 +657,7 @@ $messages['ru'] = array(
 	'wikiamobile-feedback' => 'Отзыв',
 	'wikiamobile-back' => 'Назад',
 	'wikiamobile-hide-section' => 'скрыть',
+	'wikiamobile-footer-link-license' => 'Лицензирование',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Увлечения]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Кино и сериалы]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Игры]]',
@@ -710,6 +719,7 @@ $messages['sv'] = array(
 	'wikiamobile-feedback' => 'Feedback',
 	'wikiamobile-back' => 'Tillbaka',
 	'wikiamobile-hide-section' => 'dölj',
+	'wikiamobile-footer-link-license' => 'Licensiering',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Livsstil]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Underhållning]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Spel]]',

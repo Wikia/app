@@ -29,6 +29,14 @@ $messages['es'] = array(
 	'centralhelpsearch-placeholder' => 'Buscar en Ayuda...',
 );
 
+/** Finnish (Suomi)
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'centralhelpsearch-desc' => 'Sallii lomakkeen sisällyttämisen etsintää Community Central Help',
+	'centralhelpsearch-placeholder' => 'Etsi ohjeita...',
+);
+
 /** French (Français)
  * @author Gomoko
  */

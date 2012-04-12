@@ -109,6 +109,7 @@ $messages['diq'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Benfutbol10
  * @author Bernardom
  * @author VegaDark
@@ -155,6 +156,8 @@ $messages['es'] = array(
 	'related-videos-video-is-new' => 'Nuevo',
 	'related-videos-pagination' => '$1 de $2',
 	'related-videos-empty' => 'Sé el primero en añadir un vídeo',
+	'related-videos-requestbutton' => 'Solicitud de nuevos vídeos',
+	'related-videos-requesttext' => '¿Qué más le gustaría ver?',
 );
 
 /** French (Français)
@@ -250,6 +253,8 @@ $messages['gl'] = array(
 	'related-videos-video-is-new' => 'Novo',
 	'related-videos-pagination' => '$1 de $2',
 	'related-videos-empty' => 'Sexa o primeiro en engadir un vídeo',
+	'related-videos-requestbutton' => 'Solicitar os novos vídeos',
+	'related-videos-requesttext' => 'Que máis quere ver?',
 );
 
 /** Interlingua (Interlingua)
@@ -297,6 +302,8 @@ $messages['ia'] = array(
 	'related-videos-video-is-new' => 'Nove',
 	'related-videos-pagination' => '$1 de $2',
 	'related-videos-empty' => 'Sia le prime a adder un video',
+	'related-videos-requestbutton' => 'Requestar nove videos',
+	'related-videos-requesttext' => 'Que altere vole tu vider?',
 );
 
 /** Macedonian (Македонски)
@@ -344,6 +351,8 @@ $messages['mk'] = array(
 	'related-videos-video-is-new' => 'Нова',
 	'related-videos-pagination' => '$1 од $2',
 	'related-videos-empty' => 'Бидете првиот што ќе додаде видео',
+	'related-videos-requestbutton' => 'Побарајте нови видеа',
+	'related-videos-requesttext' => 'Што друго би сакале да видите?',
 );
 
 /** Malay (Bahasa Melayu)
@@ -391,6 +400,8 @@ $messages['ms'] = array(
 	'related-videos-video-is-new' => 'Baru',
 	'related-videos-pagination' => '$1 / $2',
 	'related-videos-empty' => 'Jadilah yang pertama untuk meletakkan video',
+	'related-videos-requestbutton' => 'Pohon Video Baru',
+	'related-videos-requesttext' => 'Apakah lagi yang ingin anda lihat?',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -488,6 +499,7 @@ $messages['nl'] = array(
 	'related-videos-pagination' => '$1 van $2',
 	'related-videos-empty' => 'Wees de eerste om een video toe te voegen',
 	'related-videos-requestbutton' => "Nieuwe video's aanvragen",
+	'related-videos-requesttext' => 'Wat wilt u graag zien?',
 );
 
 /** Polish (Polski)
@@ -536,6 +548,8 @@ $messages['pl'] = array(
 	'related-videos-video-is-new' => 'Nowy',
 	'related-videos-pagination' => '$1 z $2',
 	'related-videos-empty' => 'Bądź pierwszym dodającym film',
+	'related-videos-requestbutton' => 'Nowe Filmy',
+	'related-videos-requesttext' => 'Chcesz obejrzeć coś innego?',
 );
 
 /** Russian (Русский)
@@ -584,6 +598,8 @@ $messages['ru'] = array(
 	'related-videos-video-is-new' => 'Новое',
 	'related-videos-pagination' => '$1 из $2',
 	'related-videos-empty' => 'Будьте первым, кто добавит видео',
+	'related-videos-requestbutton' => 'Запрос нового видео',
+	'related-videos-requesttext' => 'Что ещё вы хотели бы увидеть?',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

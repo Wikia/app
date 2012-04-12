@@ -76,6 +76,13 @@ $messages['eu'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Orrialde berezia]] zerbitzariaren egoera egiaztatzeko',
 );
 
+/** Finnish (Suomi)
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'healthcheck-desc' => '[[Special:HealthCheck|Toimintosivu]] palvelimen tilan tarkastukseen',
+);
+
 /** French (Français)
  * @author IAlex
  */

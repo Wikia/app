@@ -164,9 +164,11 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Ilkea
  * @author Silvonen
  */
 $messages['fi'] = array(
+	'ircgate-username' => 'Käyttäjänimi:',
 	'ircgate-channel' => 'Kanava:',
 );
 

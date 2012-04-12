@@ -255,3 +255,10 @@ $messages['vi'] = array(
 	'categorygalleries-desc' => 'Hiển thị một trang thư viện ảnh trên các trang thể loại',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'categorygalleries-desc' => '於分類頁面上顯示頁面庫',
+);
+

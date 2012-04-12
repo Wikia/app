@@ -4671,35 +4671,36 @@ $messages['zh-cn'] = array(
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Dimension
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'autocreatewiki' => '创建一个新的维基',
 	'autocreatewiki-desc' => '通过用户的请求，在维基工厂中创建维基',
-	'autocreatewiki-page-title-default' => '申请wiki',
-	'autocreatewiki-page-title-answers' => '创建一个新的解答网站',
-	'createwiki' => '申请wiki',
+	'autocreatewiki-page-title-default' => '创建一个新的维基',
+	'autocreatewiki-page-title-answers' => '创建一个新的问答网站',
+	'createwiki' => '创建一个新的维基',
 	'autocreatewiki-chooseone' => '请选择一个',
-	'autocreatewiki-required' => '$1 = 所需',
+	'autocreatewiki-required' => '$1 = 必须的',
 	'autocreatewiki-web-address' => '网站地址：',
 	'autocreatewiki-category-select' => '选择一个',
 	'autocreatewiki-language-top' => '顶部$1语言',
 	'autocreatewiki-language-all' => '所有语言',
 	'autocreatewiki-birthdate' => '出生日期：',
 	'autocreatewiki-blurry-word' => '模糊的词：',
-	'autocreatewiki-remember' => '记得我',
+	'autocreatewiki-remember' => '记住我',
 	'autocreatewiki-create-account' => '创建帐户',
-	'autocreatewiki-done' => '搞定',
+	'autocreatewiki-done' => '完成',
 	'autocreatewiki-error' => '错误',
 	'autocreatewiki-haveaccount-question' => '您已经有一个 Wikia 帐户吗？',
-	'autocreatewiki-success-title-default' => '您的维基已创造了！',
-	'autocreatewiki-success-title-answers' => '您的解答网站已创造了！',
+	'autocreatewiki-success-title-default' => '您维基已创建！',
+	'autocreatewiki-success-title-answers' => '您的问答网站已创建！',
 	'autocreatewiki-success-subtitle' => '您可以开始在您的新维基开工。请点击：',
 	'autocreatewiki-success-has-been-created' => '已创建！',
 	'autocreatewiki-success-get-started' => '开始',
 	'autocreatewiki-info-domain' => '最好使用一个词可能是你的主题的搜索关键字。',
-	'autocreatewiki-info-topic' => '添加一个短的描述，如"星球大战"或"的电视节目。',
-	'autocreatewiki-info-category-default' => '这将有助于找到你的维基访客。',
-	'autocreatewiki-info-category-answers' => '这将有助于找到您的答案的网站的访问者。',
+	'autocreatewiki-info-topic' => '添加简短的描述，如“星球大战”或“电视节目”。',
+	'autocreatewiki-info-category-default' => '这将有助于访客找到你的维基。',
+	'autocreatewiki-info-category-answers' => '这将有助于访客找到您的问答网站。',
 	'autocreatewiki-info-language' => '这将是你的维基访客的默认语言。',
 	'autocreatewiki-info-email-address' => '您的电子邮件地址不会显示给Wikia上的任何人。',
 	'autocreatewiki-info-realname' => '如果提供这将用于为您提供了归因你的工作。',
@@ -4709,17 +4710,17 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-invalid-username' => '此用户名无效。',
 	'autocreatewiki-busy-username' => '已采取此用户名。',
 	'autocreatewiki-blocked-username' => '您不能创建帐户。',
-	'autocreatewiki-user-notloggedin' => '您的帐户已创建，但未登录 ！',
+	'autocreatewiki-user-notloggedin' => '您的帐户已创建，但未登录！',
 	'autocreatewiki-empty-language' => '请选择维基语言。',
 	'autocreatewiki-empty-category' => '请选择一个类别。',
 	'autocreatewiki-empty-wikiname' => '维基的名称不能为空。',
 	'autocreatewiki-empty-username' => '用户名不能为空。',
 	'autocreatewiki-empty-password' => '密码不能为空。',
 	'autocreatewiki-empty-retype-password' => '重新键入密码不能为空。',
-	'autocreatewiki-category-label' => '类别：',
+	'autocreatewiki-category-label' => '分类：',
 	'autocreatewiki-category-other' => '其他',
 	'autocreatewiki-set-username' => '请先设置用户名。',
-	'autocreatewiki-invalid-category' => '类别的值无效。
+	'autocreatewiki-invalid-category' => '分类的值无效。
 请从下拉列表中适当的选择。',
 	'autocreatewiki-invalid-language' => '语言的值无效。
 请从下拉列表中适当的选择。',
@@ -4737,8 +4738,8 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-step5' => '在数据库中设置默认变量...',
 	'autocreatewiki-step6' => '在数据库中设置默认表...',
 	'autocreatewiki-step7' => '设置语言起动器...',
-	'autocreatewiki-step8' => '设置用户群体和类别...',
-	'autocreatewiki-step9' => '新的维基的设置变量...',
+	'autocreatewiki-step8' => '设置用户组和分类...',
+	'autocreatewiki-step9' => '为新维基设置变量...',
 	'autocreatewiki-step10' => '中央维基上设置页...',
 	'autocreatewiki-step11' => '将电子邮件发送到用户...',
 	'autocreatewiki-redirect' => '将重定向到新的维基： $1...',
@@ -4767,7 +4768,7 @@ $messages['zh-hans'] = array(
 
 
 <p>-- Wikia社区小组</p>',
-	'autocreatewiki-subname-answers' => '答案网站',
+	'autocreatewiki-subname-answers' => '问答网站',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

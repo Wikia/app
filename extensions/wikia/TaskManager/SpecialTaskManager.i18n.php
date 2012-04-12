@@ -79,6 +79,7 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Translationista
  * @author VegaDark
  */
@@ -88,6 +89,7 @@ $messages['es'] = array(
 	'taskmanager_tasklist' => 'Volver al listado de tareas',
 	'right-taskmanager' => 'Puede mostrar tareas en segundo plano',
 	'right-taskmanager-action' => 'Puede administrar tareas en segundo plano',
+	'taskmanager-invert' => 'Invertir selección',
 );
 
 /** Finnish (Suomi)
@@ -120,6 +122,7 @@ $messages['gl'] = array(
 	'taskmanager_tasklist' => 'Volver á lista de tarefas',
 	'right-taskmanager' => 'Pode ver as tarefas en segundo plano',
 	'right-taskmanager-action' => 'Pode xestionar as tarefas en segundo plano',
+	'taskmanager-invert' => 'Inverter a selección',
 );
 
 /** Hebrew (עברית) */
@@ -156,6 +159,7 @@ $messages['ia'] = array(
 	'taskmanager_tasklist' => 'Retornar al lista de processos',
 	'right-taskmanager' => 'Pote examinar le processos de secunde plano',
 	'right-taskmanager-action' => 'Pote gerer le processos de secunde plano',
+	'taskmanager-invert' => 'Inverter selection',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -210,6 +214,7 @@ $messages['mk'] = array(
 	'taskmanager_tasklist' => 'Назад кон Списокот на задачи',
 	'right-taskmanager' => 'Може да прикажува позадински задачи',
 	'right-taskmanager-action' => 'Може да раководи со позадински задачи',
+	'taskmanager-invert' => 'Обратен избор',
 );
 
 /** Malay (Bahasa Melayu)
@@ -244,6 +249,7 @@ $messages['nl'] = array(
 	'taskmanager_tasklist' => 'Terugkeren naar de takenlijst',
 	'right-taskmanager' => 'Kan achtergrondtaken bekijken',
 	'right-taskmanager-action' => 'Kan achtergrondtaken beheren',
+	'taskmanager-invert' => 'Selectie omkeren',
 );
 
 /** Occitan (Occitan)
@@ -257,6 +263,7 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'taskmanager' => 'Zarządzanie zadaniami uruchamianymi w tle',
@@ -264,6 +271,7 @@ $messages['pl'] = array(
 	'taskmanager_tasklist' => 'Wróc do listy zadań',
 	'right-taskmanager' => 'Można wyświetlić zadania w tle',
 	'right-taskmanager-action' => 'Można zarządzać zadaniami w tle',
+	'taskmanager-invert' => 'Odwróć zaznaczenie',
 );
 
 /** Piedmontese (Piemontèis)
@@ -336,6 +344,7 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Per
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'taskmanager' => 'Visa och hantera bakgrundsuppgifter',
@@ -343,6 +352,7 @@ $messages['sv'] = array(
 	'taskmanager_tasklist' => 'Återgå till uppgiftslistan',
 	'right-taskmanager' => 'Kan visa bakgrundsaktiviteter',
 	'right-taskmanager-action' => 'Kan hantera bakgrundsaktiviteter',
+	'taskmanager-invert' => 'Invertera markering',
 );
 
 /** Telugu (తెలుగు)

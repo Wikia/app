@@ -903,6 +903,30 @@ Kapag natapos ka na, maginhawa kang makakalagda na ginagamit ang anumang pinduta
 Pakisubukan uli o [[Special:Contact|iulat ito]].',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'comboajaxlogin-createlog' => 'Керү/теркәлү',
+	'comboajaxlogin-actionmsg' => 'Бу гамәлне башкару өчен, башта системага керергә яки теркәлергә кирәк.',
+	'comboajaxlogin-actionmsg-protected' => 'Бу якланган битне төзәтер өчен, башта системага керергә яки хисап язмасы төзергә кирәк.',
+	'comboajaxlogin-connectmarketing' => "<h1>Хисап язмаларыгызны берләштерегез</h1>
+<ul>
+<li>Үзегезнең кулланучы исемен, тарихыгызны, төзәтмәләрне саклагыз... Сезнең системага керү рәвешеннән кала берни үзгәрмәячәк.</li>
+<li>Дусларыгызны Wikia эшчәнлеге белән Facebook'та таныштырыгыз.</li>
+<li>Нәшер ителәчәк һәрнәрсә өстеннән тулы контроль</li>
+</ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Системага Facebook Connect ярдәмендә керү</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Wikia хисап язмасын Facebook ка тоташтырыгыз</h1>
+<ul>
+<li>Үзегезне кулланучы исемен, тарихны, төзәтмәләрне һ.б. саклап калыгыз. Керү рәвешеннән кала берни дә үзгәрмәячәк</li>
+<li>Wikia эшчәнлеге белән Facebook'та дусларыгызны таныштырып барыгыз һәм нәшер ителгән һәрнәрсә өстеннән идарәне саклагыз.</li>
+</ul>",
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Артка',
+	'comboajaxlogin-connectmarketing-forward' => 'Эшне башлау &raquo;',
+	'comboajaxlogin-ajaxerror' => 'Викия җавап бирми. Зинһар, пәрәвезгә керү мөмкинлеген тикшерегез.',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

@@ -2895,6 +2895,7 @@ Kokeile toista kuvaa.',
 	'achievements-upload-not-allowed' => 'Ylläpitäjät voivat vaihtaa kunniamerkkien nimiä ja kuvia [[Special:AchievementsCustomize|Muokkaa kunniamerkkejä]] sivulla.',
 	'achievements-non-existing-category' => 'Määritettyä kategoriaa ei ole olemassa.',
 	'right-platinum' => 'Luoda ja muokata platinakunniamerkkejä',
+	'right-sponsored-achievements' => 'Hallitse sponsoroituja kunniamerkkejä',
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Kulta',
 	'achievements-silver' => 'Hopea',
@@ -2903,11 +2904,12 @@ Kokeile toista kuvaa.',
 	'achievements-silver-points' => '50<br />pistettä',
 	'achievements-bronze-points' => '10<br />pistettä',
 	'achievements-you-must' => 'Ansaitaksesi tämän kunniamerkin sinun täytyy $1.',
+	'leaderboard-button' => 'Kunniamerkkien arvoasteikko',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|piste|pistettä}}</small>',
 	'achievements-profile-title-no' => 'Käyttäjän $1 kunniamerkit',
 	'achievements-no-badges' => 'Tutustu alla olevasta listasta kunniamerkkeihin, jotka voit ansaita tässä wikissä!',
 	'achievements-notification-subtitle' => 'Ansaitsit juuri kunniamerkin $1 $2',
-	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Katso kuinka monta kunniamerkkiä voit saada]]!</big></strong>',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Katso lisää kunniamerkkejä joita voit saada]]!</big></strong>',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|piste|pistettä}}',
 	'achievements-earned' => 'Tämän kunniamerkin on ansainnut {{PLURAL:$1|1 käyttäjä|$1 käyttäjää}}.',
 	'achievements-profile-title' => 'Käyttäjän $1 {{PLURAL:$2|ansaitsema kunniamerkki|ansaitsemat $2 kunniamerkkiä}}',
@@ -2921,7 +2923,7 @@ Kokeile toista kuvaa.',
 	'achievements-toggle-hide' => 'Piilota kunniamerkit profiilistani',
 	'leaderboard-intro-hide' => 'piilota',
 	'leaderboard-intro-open' => 'avaa',
-	'leaderboard-intro-headline' => 'Mikä on kunniamerkintä?',
+	'leaderboard-intro-headline' => 'Mitä kunniamerkinnät ovat?',
 	'leaderboard-intro' => "Voit ansaita kunniamerkkejä tässä wikissä muokkaamalla sivuja, lataamalla kuvia ja jättämällä kommentteja. Saat jokaisesta kunniamerkistä pisteitä – mitä enemmän pisteitä ansaitset sitä ylemmäs pääset arvoasteikolla! Löydät ansaitsemasi kunniamerkit [[$1|käyttäjäsivultasi]].
 
 '''Minkä arvoisia kunniamerkit ovat?'''",
@@ -2964,7 +2966,7 @@ Näytä käyttäjän tuki $1 sivuilla!!',
 	'achievements-badge-to-get-introduction-details' => 'Onko käyttäjäsivusi tyhjä?
 Omalle sivullesi pääset napsauttamalla omaa nimeäsi sivun yläosassa.
 Napsauta "{{int:edit}}" ja lisää tietoa itsestäsi.',
-	'achievements-badge-to-get-sayhi-details' => 'Voit jättää muille käyttäjille viestejä napsauttamalla »{{int:tooltip-ca-addsection}}» heidän keskustelusivulla.
+	'achievements-badge-to-get-sayhi-details' => 'Voit jättää muille käyttäjille viestejä napsauttamalla "{{int:addsection}}" heidän keskustelusivulla.
 Voit kysyä apua, kiittää heitä työstä, tai sanoa hei!',
 	'achievements-badge-to-get-creator-details' => 'Tämä kunniamerkki annetaan henkilölle, joka perusti wikin.
 Napsauta "{{int:createwiki}}"-painiketta yläreunasta aloittaaksesi sivuston lempiaiheestasi!',
@@ -2973,13 +2975,13 @@ Napsauta »{{Int:activityfeed}}»-painiketta nähdäksesi uudet sivut, joita kä
 	'achievements-badge-to-get-luckyedit-details' => 'Sinun täytyy olla onnekas ansaitaksesi tämän kunniamerkin.
 Jatka muokkaamista!',
 	'achievements-badge-to-get-community-platinum-details' => 'Tämä on erityinen platinakunniamerkki, joka on saatavissa vain rajoitetun ajan!',
-	'achievements-badge-hover-desc-picture' => 'lisätä $1 {{PLURAL:$1|kuvan|kuvaa}}<br />{{PLURAL:$1|sivulle}}!',
-	'achievements-badge-hover-desc-introduction' => 'lisätä<br />
+	'achievements-badge-hover-desc-picture' => 'Palkittiin $1 {{PLURAL:$1|lisätystä kuvasta|lisätystä kuvasta}}<br />{{PLURAL:$1|artikkeliin|artikkeliin}}!',
+	'achievements-badge-hover-desc-introduction' => 'Palkittiin lisäämisestä<br />
 jotain omalle käyttäjäsivullesi!',
-	'achievements-badge-hover-desc-sayhi' => 'jättää viesti<br />
+	'achievements-badge-hover-desc-sayhi' => 'Palkittiin jätetystä viestistä<br />
 jonkun henkilön keskustelusivulle!',
 	'achievements-badge-hover-desc-creator' => 'Myönnetty wikin luomisesta!',
-	'achievements-badge-your-desc-edit' => 'tekemällä {{PLURAL:$1|ensimmäisen muokkauksesi|$1 muokkausta}} {{PLURAL:$1|sivulle|sivuille}}!',
+	'achievements-badge-your-desc-edit' => 'Palkittiin {{PLURAL:$1|ensimmäisen muokkauksesi|$1 muokkausta}} {{PLURAL:$1|artikkeliin|artikkeliin}}!',
 	'achievements-userprofile-title-no' => 'Käyttäjän $1 ansaitsemat kunniamerkit',
 );
 

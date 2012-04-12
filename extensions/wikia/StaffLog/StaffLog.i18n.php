@@ -287,6 +287,7 @@ $messages['nl'] = array(
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Nandy
+ * @author Odder
  */
 $messages['pl'] = array(
 	'stafflog-desc' => 'Scentralizowane logowanie dla personelu',
@@ -294,7 +295,7 @@ $messages['pl'] = array(
 	'stafflog-blockmsg' => '$1 $2 próbował zablokować użytkownika z grupy Staff $3 na wiki $4. Powód: $5',
 	'stafflog-piggybackloginmsg' => 'Podłączenie $1 - użytkownik $2 zalogowany jako $3',
 	'stafflog-piggybacklogoutmsg' => 'Podłączenie $1 - użytkownik $2 wylogowany z konta $3',
-	'right-stafflog' => 'Można wyświetlić dziennik grupy Staff',
+	'right-stafflog' => 'Można wyświetlić rejestr aktywności dla grupy <tt>staff</tt>',
 	'stafflog-wiki-status-change' => '$1 zmienił status  $2  na  $3 . Przyczyna: $4',
 	'stafflog-filter-label' => 'Filtr',
 	'stafflog-filter-user' => 'Użytkownik:',

@@ -1396,7 +1396,7 @@ $messages['nl'] = array(
 	'toplists-editor-title-placeholder' => 'Voer een naam in voor de lijst',
 	'toplists-editor-related-article-label' => 'Gerelateerde pagina <small>(optioneel, maar selecteert een afbeelding)</small>',
 	'toplists-editor-related-article-placeholder' => 'Voer een bestaande paginanaam in',
-	'toplists-editor-social-description-placeholder' => 'Geef een beschrijving op',
+	'toplists-editor-description-placeholder' => 'Geef een beschrijving op',
 	'toplists-editor-image-browser-tooltip' => 'Afbeelding toevoegen',
 	'toplists-editor-remove-item-tooltip' => 'Item verwijderen',
 	'toplists-editor-drag-item-tooltip' => 'Sleep om de volgorde te wijzigen',
@@ -1481,7 +1481,7 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 $messages['pl'] = array(
 	'toplists-desc' => 'Listy Top 10',
 	'right-toplists-create-edit-list' => 'Stwórz i edytuj listy Top 10',
-	'right-toplists-create-item' => 'Dodawaj elementy do do list Top 10',
+	'right-toplists-create-item' => 'Dodawaj elementy do list Top 10',
 	'right-toplists-edit-item' => 'Edytuj elementy na listach Top 10',
 	'right-toplists-delete-item' => 'Usuwaj elementy z listy Top 10',
 	'createtoplist' => 'Utwórz nową listę Top 10',
@@ -2067,15 +2067,15 @@ $messages['tl'] = array(
 	'toplists-list-item-voted' => 'Nakaboto na',
 	'toplists-createpage-dialog-label' => 'Talaan ng Pinakamataas na 10',
 	'toplists-email-subject' => 'Binago ang isang talaan ng Pinakamataas na 10',
-	'toplists-email-body' => 'Kumusta mula sa Wikia!
+	'toplists-email-body' => 'Kumusta mula sa Wikia! 
 
-Ang talaang <a href="$1">$2</a> sa Wikia ay nabago.
+Ang talaang <a href="$1">$2</a> sa Wikia ay nabago. 
 
- $3
+ $3 
 
-Tumungo sa Wikia upang suriin ang mga pagbabago! $1
+Tumungo sa Wikia upang suriin ang mga pagbabago! $1 
 
- - Wikia
+ - Wikia 
 
  Maaari kang <a href="$4">huwag tumanggap</a> ng mga pagbabago sa talaan.',
 	'toplists-seconds' => '$1 {{PLURAL:$1|segundo|mga segundo}}',

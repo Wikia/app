@@ -953,6 +953,7 @@ $messages['eu'] = array(
  * @author BlueDevil
  * @author Ebraminio
  * @author Huji
+ * @author Taranet
  */
 $messages['fa'] = array(
 	'createblogpage' => 'ایجاد وبلاگ',
@@ -961,7 +962,7 @@ $messages['fa'] = array(
 	'create-blog-post-title' => 'ایجاد یک پست جدید',
 	'create-blog-form-info' => 'پست وبلاگ‌ها راه بسیار خوبی برای به اشتراک گذاشتن اخبار، نظرات، و مطالب بدیع با جامعه است.',
 	'create-blog-form-post-title' => 'عنوان پست وبلاگ',
-	'create-blog-no-login' => 'به سامانه وارد نشده‌اید',
+	'create-blog-no-login' => 'وارد سامانه نشده‌اید',
 	'create-blog-login-required' => 'برای ایجاد پست جدید در وبلاگ یا فهرست‌ها باید [{{fullurl:Special:Signup|$1}} به سامانه وارد شوید].',
 	'create-blog-save' => 'صفحه ذخیره شود',
 	'create-blog-preview' => 'پیش‌نمایش',
@@ -4042,6 +4043,21 @@ $messages['tr'] = array(
 	'blog-comment-hide' => 'gizle',
 	'blog-comment-history' => 'geçmiş',
 	'blog-refresh-label' => 'Yenile',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'create-blog-listing-sortby-author' => 'авторга',
+	'blog-added' => 'өстәлгән',
+	'blog-edited' => 'төзәтелгән',
+	'blog-page' => 'Блог',
+	'blog-zero-comments' => 'Шәрехләр әлегә юк!',
+	'blog-comment-post' => 'Фикер калдырырга',
+	'blog-comments' => 'Фикерләр',
+	'blog-rc-comments' => 'Блогка карата фикерләр',
+	'blog-comments-new' => 'Блогта яңа фикер',
 );
 
 /** Ukrainian (Українська)

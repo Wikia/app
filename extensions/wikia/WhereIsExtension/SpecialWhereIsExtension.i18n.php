@@ -228,6 +228,7 @@ $messages['eu'] = array(
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
+ * @author Ilkea
  */
 $messages['fi'] = array(
 	'whereisextension' => 'Missä on laajennus',
@@ -237,6 +238,10 @@ $messages['fi'] = array(
 	'whereisextension-filter' => 'Suodatin',
 	'whereisextension-all-groups' => 'Kaikki ryhmät',
 	'whereisextension-name-contains' => 'muuttujanimi sisältää',
+	'whereisextension-search-like-value' => 'Kuten:',
+	'whereisextension-search-type' => 'Tyyppi:',
+	'whereisextension-search-type-bool' => 'Totuusarvo',
+	'whereisextension-search-type-full' => 'Kuten',
 );
 
 /** French (Français)

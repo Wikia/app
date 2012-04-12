@@ -60,6 +60,13 @@ $messages['eu'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides mugikorrerako app modukuak',
 );
 
+/** Finnish (Suomi)
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'wikiagameguides-desc' => 'Wikia Game Guides mobiilisovellus moduulit',
+);
+
 /** French (Français)
  * @author Wyz
  */

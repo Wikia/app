@@ -428,6 +428,7 @@ $messages['diq'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
  * @author CuBaN VeRcEttI
@@ -463,6 +464,7 @@ $messages['es'] = array(
 	'user-identity-box-avatar-cancel' => 'Cancelar',
 	'user-identity-box-avatar-anon-user-error' => 'Tienes que iniciar sesión antes de modificar algo',
 	'user-identity-box-hide-edits-wikis' => 'Ocultar todo',
+	'user-identity-box-banned-from-chat' => 'Prohibido del chat',
 	'user-identity-box-aka-label' => '<span>conocido como</span> $1',
 	'user-identity-box-my-twitter' => 'Mi Twitter',
 	'user-identity-box-my-website' => 'Mi web',
@@ -539,6 +541,8 @@ $messages['es'] = array(
 	'blog-avatar-changed-log' => '(Avatar añadido o cambiado)',
 	'blog-avatar-removed-log' => 'Quitados avatares de $1',
 	'blog-avatar-alt' => 'Registros de adiciones o borrados de avatar de usuario',
+	'user-identity-remove-confirmation' => '¿Está seguro que desea eliminar el avatar?',
+	'user-identity-remove-fail' => '¡Hubo un problema al eliminar el avatar!',
 );
 
 /** Finnish (Suomi)
@@ -574,6 +578,7 @@ $messages['fi'] = array(
 	'user-identity-box-avatar-cancel' => 'Peruuta',
 	'user-identity-box-avatar-anon-user-error' => 'Sinun pitää kirjautua sisään ennen kuin muutat mitään',
 	'user-identity-box-hide-edits-wikis' => 'Piilota kaikki',
+	'user-identity-box-banned-from-chat' => 'Estetty chatistä',
 	'user-identity-box-aka-label' => '<span>alias</span> $1',
 	'user-identity-box-my-twitter' => 'Twitter',
 	'user-identity-box-my-website' => 'Kotisivu',
@@ -584,7 +589,7 @@ $messages['fi'] = array(
 	'user-identity-box-was-born-in' => '<span>Syntymäpaikkani on</span> $1',
 	'user-identity-box-occupation' => '<span>Ammattini on</span> $1',
 	'user-identity-i-am' => '<span>Olen</span> $1',
-	'user-identity-box-edits-since-joining' => 'Muokkauksia liittymisen jälkeen <br />$1',
+	'user-identity-box-edits-since-joining' => 'Muokkausta liittymisen jälkeen <br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>MUOKKAUKSET</span>',
 	'user-identity-box-group-blocked' => 'Lukittu',
 	'user-identity-box-group-chatmoderator' => 'Chat moderaattori',
@@ -650,6 +655,8 @@ $messages['fi'] = array(
 	'blog-avatar-changed-log' => 'Avatar lisätty tai vaihdettu',
 	'blog-avatar-removed-log' => 'Poistettu käyttäjän $1 avatarit',
 	'blog-avatar-alt' => 'Avatar',
+	'user-identity-remove-confirmation' => 'Haluatko varmasti poistaa avatarin?',
+	'user-identity-remove-fail' => 'Ongelma poistaessa avataria!',
 );
 
 /** French (Français)
@@ -795,6 +802,7 @@ $messages['gl'] = array(
 	'user-identity-box-avatar-cancel' => 'Cancelar',
 	'user-identity-box-avatar-anon-user-error' => 'Ten que acceder ao sistema para poder cambiar cousas',
 	'user-identity-box-hide-edits-wikis' => 'Agochar todo',
+	'user-identity-box-banned-from-chat' => 'Expulsado do chat',
 	'user-identity-box-aka-label' => '<span>alias</span> $1',
 	'user-identity-box-my-twitter' => 'O meu Twitter',
 	'user-identity-box-my-website' => 'A miña páxina web',
@@ -871,6 +879,8 @@ $messages['gl'] = array(
 	'blog-avatar-changed-log' => 'Engadiu ou cambiou o avatar',
 	'blog-avatar-removed-log' => 'Eliminou o avatar de $1',
 	'blog-avatar-alt' => 'Rexistros das adicións e eliminacións de avatares de usuario',
+	'user-identity-remove-confirmation' => 'Está seguro de querer eliminar o avatar?',
+	'user-identity-remove-fail' => 'Houbo un problema ao eliminar o avatar!',
 );
 
 /** Hungarian (Magyar)
@@ -917,6 +927,7 @@ $messages['ia'] = array(
 	'user-identity-box-avatar-cancel' => 'Cancellar',
 	'user-identity-box-avatar-anon-user-error' => 'Tu debe aperir session ante de poter cambiar qualcosa',
 	'user-identity-box-hide-edits-wikis' => 'Celar totes',
+	'user-identity-box-banned-from-chat' => 'Bannite del chat',
 	'user-identity-box-aka-label' => '<span>alias</span> $1',
 	'user-identity-box-my-twitter' => 'Mi Twitter',
 	'user-identity-box-my-website' => 'Mi sito web',
@@ -993,6 +1004,8 @@ $messages['ia'] = array(
 	'blog-avatar-changed-log' => 'addeva o cambiava su avatar',
 	'blog-avatar-removed-log' => 'Removeva le avatares de $1',
 	'blog-avatar-alt' => 'Registro de additiones o remotiones de avatares de usatores',
+	'user-identity-remove-confirmation' => 'Es tu secur de voler remover le avatar?',
+	'user-identity-remove-fail' => 'Un problema occurreva con le remotion del avatar!',
 );
 
 /** Italian (Italiano)
@@ -1123,6 +1136,7 @@ $messages['mk'] = array(
 	'user-identity-box-avatar-cancel' => 'Откажи',
 	'user-identity-box-avatar-anon-user-error' => 'Мора да се најавите за да вршите измени',
 	'user-identity-box-hide-edits-wikis' => 'Скриј ги сите',
+	'user-identity-box-banned-from-chat' => 'Забранети во разговорот',
 	'user-identity-box-aka-label' => '<span>Вистинско име:</span> $1',
 	'user-identity-box-my-twitter' => 'Мој Twitter',
 	'user-identity-box-my-website' => 'Мое мреж. место',
@@ -1199,6 +1213,8 @@ $messages['mk'] = array(
 	'blog-avatar-changed-log' => 'Додаден или изменет аватар',
 	'blog-avatar-removed-log' => 'Отстранети аватарите на $1',
 	'blog-avatar-alt' => 'Дневници на додавања и отстранувања на кориснички аватари',
+	'user-identity-remove-confirmation' => 'Дали сте сигурни дека сакате да го отстраните аватарот?',
+	'user-identity-remove-fail' => 'Се појави некаков проблем при отстранувањето на аватарот!',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1233,6 +1249,7 @@ $messages['ms'] = array(
 	'user-identity-box-avatar-cancel' => 'Batalkan',
 	'user-identity-box-avatar-anon-user-error' => 'Anda perlu log masuk sebelum mengubah apa-apa',
 	'user-identity-box-hide-edits-wikis' => 'Sorokkan Semua',
+	'user-identity-box-banned-from-chat' => 'Dilarang Daripada Bersembang',
 	'user-identity-box-aka-label' => '<span>aka</span> $1',
 	'user-identity-box-my-twitter' => 'Twitter Saya',
 	'user-identity-box-my-website' => 'Tapak Web Saya',
@@ -1309,6 +1326,8 @@ $messages['ms'] = array(
 	'blog-avatar-changed-log' => 'Avatar disisipkan atau ditukar',
 	'blog-avatar-removed-log' => 'Avatar $1 digugurkan',
 	'blog-avatar-alt' => 'Log penambahan atau pengguguran avatar pengguna',
+	'user-identity-remove-confirmation' => 'Adakah anda benar-benar ingin menggugurkan avatar ini?',
+	'user-identity-remove-fail' => 'Ada sedikit masalah ketika menggugurkan avatar!',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -1455,6 +1474,7 @@ $messages['nl'] = array(
 	'user-identity-box-avatar-cancel' => 'Annuleren',
 	'user-identity-box-avatar-anon-user-error' => 'U moet aanmelden voor u iets kunt wijzigen',
 	'user-identity-box-hide-edits-wikis' => 'Alles verbergen',
+	'user-identity-box-banned-from-chat' => 'Verbannen uit chat',
 	'user-identity-box-aka-label' => '<span>ook bekend als</span> $1',
 	'user-identity-box-my-twitter' => 'Mijn Twitter',
 	'user-identity-box-my-website' => 'Mijn website',
@@ -1532,6 +1552,7 @@ $messages['nl'] = array(
 	'blog-avatar-removed-log' => 'heeft de avatars van $1 verwijderd',
 	'blog-avatar-alt' => 'Logboek van toegevoegde en verwijderde avatars',
 	'user-identity-remove-confirmation' => 'Weet u zeker dat u de avatar wilt verwijderen?',
+	'user-identity-remove-fail' => 'Er is een probleem opgetreden tijdens het verwijderen van de avatar.',
 );
 
 /** Polish (Polski)
@@ -1568,6 +1589,7 @@ $messages['pl'] = array(
 	'user-identity-box-avatar-cancel' => 'Anuluj',
 	'user-identity-box-avatar-anon-user-error' => 'Musisz się zalogować zanim cokolwiek zmienisz',
 	'user-identity-box-hide-edits-wikis' => 'Ukryj wszystko',
+	'user-identity-box-banned-from-chat' => 'Zablokowany na czacie',
 	'user-identity-box-aka-label' => '<span>alias</span> $1',
 	'user-identity-box-my-twitter' => 'Mój Twitter',
 	'user-identity-box-my-website' => 'Moja strona',
@@ -1644,6 +1666,8 @@ $messages['pl'] = array(
 	'blog-avatar-changed-log' => 'zmiana lub dodanie avatara',
 	'blog-avatar-removed-log' => 'Usunięto avatary użytkownika $1',
 	'blog-avatar-alt' => 'Avatar',
+	'user-identity-remove-confirmation' => 'Czy na pewno chcesz usunąć avatar?',
+	'user-identity-remove-fail' => 'Wystąpił błąd podczas usuwania avatara!',
 );
 
 /** Piedmontese (Piemontèis) */
@@ -1726,6 +1750,7 @@ $messages['ru'] = array(
 	'user-identity-box-avatar-cancel' => 'Отмена',
 	'user-identity-box-avatar-anon-user-error' => 'Вы должны войти в систему прежде, чем изменить что-либо',
 	'user-identity-box-hide-edits-wikis' => 'Скрыть всё',
+	'user-identity-box-banned-from-chat' => 'Забанен в чате',
 	'user-identity-box-aka-label' => '<span>aka</span> $1',
 	'user-identity-box-my-twitter' => 'Мой Твиттер',
 	'user-identity-box-my-website' => 'Мой веб-сайт',
@@ -1802,6 +1827,8 @@ $messages['ru'] = array(
 	'blog-avatar-changed-log' => 'добавил или изменил аватару',
 	'blog-avatar-removed-log' => 'Удалённые аватары $1',
 	'blog-avatar-alt' => 'Журналы добавлений или удалений аватар участников',
+	'user-identity-remove-confirmation' => 'Вы уверены, что вы хотите удалить аватар?',
+	'user-identity-remove-fail' => 'Возникли некоторые проблемы при удалении аватара!',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

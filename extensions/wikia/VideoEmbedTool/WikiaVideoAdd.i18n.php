@@ -501,6 +501,7 @@ $messages['nl'] = array(
 	'wva-notlogged' => "U moet aanmelden of registreren om video's te kunnen toevoegen.",
 	'wva-notallowed' => "U kunt geen video's toevoegen in deze wiki.",
 	'wva-protected' => 'Deze video is beveiligd.',
+	'wva-thumbnail-upload-failed' => 'Het inbedden van de video is mislukt. Het was niet mogelijk om een miniatuurafbeelding te maken',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
