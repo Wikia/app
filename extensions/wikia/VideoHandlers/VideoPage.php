@@ -44,12 +44,9 @@ class WikiaVideoPage extends ImagePage {
 
 	public function getDuplicates() {
 
-		$handler = $this->img->getHandler();
-
-		if ( $handler instanceof VideoHandler && $handler->isBroken() ) {
+		if ( $this->img->isBroken() ) {
 			return $this->dupes = array();
-		}
-		else {
+		} else {
 			return parent::getDuplicates();
 		}
 	}
@@ -57,8 +54,10 @@ class WikiaVideoPage extends ImagePage {
 	public function getUploadUrl() {
 		$this->loadFile();
 		$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
-		return $uploadTitle->getFullUrl( array(
-			'name' => $this->img->getName()
-		 ) );
+		return $uploadTitle->getFullUrl(
+			array(
+				'name' => $this->img->getName()
+			)
+		);
 	}
 }
