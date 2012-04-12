@@ -77,6 +77,16 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
+	/*
+	 *  hack for old format interwiki videos
+	 *  examples of input:
+	 *  {{:wikiavideo:Titanic 3-D Re-Release (1997) - Theatrical Trailer for Titanic 3D/width=220px&align=}}
+	 *  {{:wikiavideo:Titanic 3-D Re-Release (1997) - Theatrical Trailer for Titanic 3D}}
+	 *
+	 *  examples of output:
+	 *  [[File:Titanic 3-D Re-Release (1997) - Theatrical Trailer for Titanic 3D]]
+	 *  [[Titanic 3-D Re-Release (1997) - Theatrical Trailer for Titanic 3D|220px]]
+	 */
 	function convertOldInterwikiToNewInterwikiCB( $matches ) {
 
 		if ( !empty ( $matches[1] ) ) {
