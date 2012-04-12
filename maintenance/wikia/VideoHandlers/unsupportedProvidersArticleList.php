@@ -40,6 +40,9 @@ $rows = $dbw_dataware->query( "SELECT img_name, wiki_id, provider
 " );
 
 $rowCount = $rows->numRows();
+
+echo $rowCount . " files found. \n\n" ;
+
 if ( $rowCount ) {
 
 	while( $file = $dbw_dataware->fetchObject( $rows ) ) {
@@ -83,7 +86,7 @@ foreach ( $aAllFiles as $key => $fileRow ) {
 				$articleId = $file->il_from;
 				$oTitle = GlobalTitle::newFromId($articleId, $fileRow->wiki_id); //::newFromId( $articleId );
 
-				echo $oTitle->getFullURL() . " [contains File:{$fileRow->img_name} ] \n";
+				echo "* " . $oTitle->getFullURL() . " [contains File:{$fileRow->img_name} ] \n";
 			}
 
 
