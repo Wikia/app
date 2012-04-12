@@ -19,8 +19,7 @@
 				?>, '<?= $linkToSpecialChat ?>')"<?=
 					($isLoggedIn ? '' : ' class="loginToChat"')
 				?>>
-				<img width="17" height="15" src="<?= $buttonIconUrl ?>" />
-				<?= $buttonText ?>
+				<?= wfMsg($totalInRoom ? 'chat-join-the-chat' : 'chat-start-a-chat'); ?>
 			</button>
 		</div>
 		<div class="chat-whos-here">

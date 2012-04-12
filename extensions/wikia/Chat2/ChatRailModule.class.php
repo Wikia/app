@@ -24,15 +24,10 @@ class ChatRailModule extends Module {
 	public function executeAnonLoginSuccess() {
 		global $wgExtensionsPath; 
 		wfProfileIn( __METHOD__ );
-		
+
 		$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
-		$this->buttonIconUrl = $wgExtensionsPath .'/wikia/Chat/images/chat_icon.png';
-		if ( !empty($this->totalInRoom) ) {
-			$this->buttonText = wfMsg('chat-join-the-chat');
-		} else {
-			$this->buttonText = wfMsg('chat-start-a-chat');		
-		}
 		$this->chatClickAction = "window.open('{$this->linkToSpecialChat}', 'wikiachat', '".self::CHAT_WINDOW_FEATURES."'); $('.modalWrapper').closeModal();";
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -94,14 +89,6 @@ class ChatRailModule extends Module {
 			}
 
 			$this->chatters = $chatters;
-
-			// Button setup
-			$this->buttonIconUrl = $wgExtensionsPath .'/wikia/Chat/images/chat_icon.png';
-			if ( !empty($this->totalInRoom) ) {
-				$this->buttonText = wfMsg('chat-join-the-chat');
-			} else {
-				$this->buttonText = wfMsg('chat-start-a-chat');
-			}
 		}
 
 		wfProfileOut( __METHOD__ );

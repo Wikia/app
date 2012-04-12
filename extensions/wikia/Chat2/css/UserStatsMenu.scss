@@ -3,15 +3,7 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
-@import "mixins/sprite-Chat";
-
-// Default and hover icons depend on theme darkness
-$sprite-normal: '-dark';
-$sprite-hover: '-light';
-@if ($is-dark-wiki) {
-	$sprite-normal: '-light';
-	$sprite-hover: '-dark';
-}
+@import "ChatSprite";
 
 .UserStatsMenu {
 	@include box-shadow(0, 0, 12px, $color-body);
@@ -51,7 +43,7 @@ $sprite-hover: '-light';
 			.username {
 				font-size: 13px;
 				font-weight: bold;
-				line-height: 23px;
+				margin-bottom: 2px;
 			}
 		}
 	}
@@ -90,31 +82,31 @@ $sprite-hover: '-light';
 
 				&.message-wall .icon,
 				&.talk-page .icon {
-					@include sprite-Chat('message_wall' + $sprite-normal);
+					@include sprite-Chat('menu-message_wall' + $sprite-normal);
 				}
 
 				&.contribs .icon {
-					@include sprite-Chat('contributions' + $sprite-normal);
+					@include sprite-Chat('menu-contributions' + $sprite-normal);
 				}
 
 				&.private .icon {
-					@include sprite-Chat('private_message' + $sprite-normal);
+					@include sprite-Chat('menu-private_message' + $sprite-normal);
 				}
 
 				&.private-block .icon {
-					@include sprite-Chat('private_message_block' + $sprite-normal);
+					@include sprite-Chat('menu-private_message_block' + $sprite-normal);
 				}
 
 				&.give-chat-mod .icon {
-					@include sprite-Chat('chat_mod' + $sprite-normal);
+					@include sprite-Chat('menu-chat_mod' + $sprite-normal);
 				}
 
 				&.kick .icon {
-					@include sprite-Chat('kick' + $sprite-normal);
+					@include sprite-Chat('menu-kick' + $sprite-normal);
 				}
 
 				&.ban .icon {
-					@include sprite-Chat('ban' + $sprite-normal);
+					@include sprite-Chat('menu-ban' + $sprite-normal);
 				}
 
 				&:hover {
@@ -126,31 +118,31 @@ $sprite-hover: '-light';
 
 					&.message-wall .icon,
 					&.talk-page .icon {
-						@include sprite-Chat('message_wall' + $sprite-hover);
+						@include sprite-Chat('menu-message_wall' + $sprite-hover);
 					}
 
 					&.contribs .icon {
-						@include sprite-Chat('contributions' + $sprite-hover);
+						@include sprite-Chat('menu-contributions' + $sprite-hover);
 					}
 
 					&.private .icon {
-						@include sprite-Chat('private_message' + $sprite-hover);
+						@include sprite-Chat('menu-private_message' + $sprite-hover);
 					}
 
 					&.private-block .icon {
-						@include sprite-Chat('private_message_block' + $sprite-hover);
+						@include sprite-Chat('menu-private_message_block' + $sprite-hover);
 					}
 
 					&.give-chat-mod .icon {
-						@include sprite-Chat('chat_mod' + $sprite-hover);
+						@include sprite-Chat('menu-chat_mod' + $sprite-hover);
 					}
 
 					&.kick .icon {
-						@include sprite-Chat('kick' + $sprite-hover);
+						@include sprite-Chat('menu-kick' + $sprite-hover);
 					}
 
 					&.ban .icon {
-						@include sprite-Chat('ban' + $sprite-hover);
+						@include sprite-Chat('menu-ban' + $sprite-hover);
 					}
 				}
 			}
