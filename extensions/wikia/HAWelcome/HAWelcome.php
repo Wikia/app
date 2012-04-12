@@ -467,6 +467,7 @@ class HAWelcomeJob extends Job {
 			$groups = $wgUser->getEffectiveGroups();
 			$invalid = array(
 				"bot" => true,
+				"bot-global" => true,
 				"staff" => true,
 				"helper" => true,
 				"sysop" => true,
