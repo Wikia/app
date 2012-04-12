@@ -9,8 +9,7 @@ if ( $wg->EnableMiniEditorExtForArticleComments ) {
 	<ul class="controls">
 		<li id="article-comments-counter-recent"><?= wfMsg('oasis-comments-showing-most-recent', count($commentListRaw)) ?></li>
 	<?php
-	global $wgLang;
-	$countCommentsNestedFormatted = $wgLang->formatNum($countCommentsNested);
+	$countCommentsNestedFormatted = $wg->Lang->formatNum($countCommentsNested);
 	 /*see RT#64641*/  /*see RT#65179*/  /*see RT#68572 */
 	if ( $countCommentsNested > 1 && $countCommentsNested <= 200 && $countComments > $commentsPerPage ) {
 	?>
@@ -87,9 +86,9 @@ if ( $wg->EnableMiniEditorExtForArticleComments ) {
 	}
 ?>
 <ul id="article-comments-ul" class="comments">
-<?= wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false)) ;?>
+<?= $app->getView('ArticleComments', 'CommentList', array('commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false));?>
 </ul>
-<?php
+>?php
 	if ($countComments) {
 		echo '<div class="article-comments-pagination"><div>' . $pagination . '</div></div>';
 	}

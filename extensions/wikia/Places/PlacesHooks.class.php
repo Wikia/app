@@ -12,8 +12,10 @@ class PlacesHooks extends WikiaObject{
 		self::$modelToSave = $model;
 	}
 
-	public function onPageHeaderIndexExtraButtons( $extraButtons ){
+	public function onPageHeaderIndexExtraButtons( $response ){
 		$app = F::app();
+		$extraButtons = $response->getVal('extraButtons');
+		
 		if (	( $app->wg->title->getNamespace() == NS_CATEGORY ) &&
 			$app->wg->user->isAllowed('places-enable-category-geolocation') ){
 
@@ -48,6 +50,7 @@ class PlacesHooks extends WikiaObject{
 				)
 			);
 		}
+		$response->setVal('extraButtons', $extraButtons);
 		// do hook logic;
 		return true;
 	}

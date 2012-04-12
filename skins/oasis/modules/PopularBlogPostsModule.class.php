@@ -1,16 +1,13 @@
 <?php
-class PopularBlogPostsModule extends Module {
-
-	var $body;
+class PopularBlogPostsModule extends WikiaController {
 
 	public function executeIndex() {
-		wfProfileIn(__METHOD__);
-		global $wgParser, $wgMemc, $wgLang;
-
-		$mcKey = wfMemcKey( "OasisPopularBlogPosts", $wgLang->getCode() );
-		$this->body = $wgMemc->get($mcKey);
+		$this->wf->ProfileIn(__METHOD__);
+		
+		$mcKey = $this->wf->MemcKey( "OasisPopularBlogPosts", $this->wg->Lang->getCode() );
+		$this->body = $this->wg->Memc->get($mcKey);
 		if (empty ($this->body)) {
-			$input = "	<title>" .wfMsg('oasis-popular-blogs-title') ."</title>
+			$input = "	<title>" .$this->wf->Msg('oasis-popular-blogs-title') ."</title>
 						<type>box</type>
 						<order>date</order>";
 
@@ -33,10 +30,10 @@ class PopularBlogPostsModule extends Module {
 			if (substr($this->body, 0, 45) !== '<section class="WikiaBlogListingBox module ">') {
 				$this->body = '<section class="WikiaBlogListingBox module ">'.$this->body.'</section>';
 			}
-			$wgMemc->set ($mcKey, $this->body, 60*60);  // cache for 1 hour
+			$this->wg->Memc->set ($mcKey, $this->body, 60*60);  // cache for 1 hour
 		}
 
-		wfProfileOut(__METHOD__);
+		$this->wf->ProfileOut(__METHOD__);
 	}
 
 }

@@ -8,7 +8,7 @@
 	}
 
 	// "Add a photo" button
-	if (!empty($isNewFiles) && !empty($wgEnableUploads)) {
+	if (!empty($isNewFiles) && !empty($wg->EnableUploads)) {
 		echo Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo');
 	}
 
@@ -37,16 +37,10 @@
 	}
 
 	// MW subtitle
+	// include undelete message (BugId:1137)
 	if ($subtitle != '') {
 ?>
 	<div class="subtitle"><?= $subtitle ?></div>
-<?php
-	}
-
-	// include undelete message (BugId:1137)
-	if ($undelete != '') {
-?>
-	<div id="contentSub2"><?= $undelete ?></div>
 <?php
 	}
 ?>

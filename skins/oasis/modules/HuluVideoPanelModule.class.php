@@ -1,15 +1,10 @@
 <?php
-class HuluVideoPanelModule extends Module {
-	
-	var $partnerId = 'Wikia';
-	var $wgHuluVideoPanelShow;
-	var $wgHuluVideoPanelAttributes;
+class HuluVideoPanelModule extends WikiaController {
 	
 	public function executeIndex() {
-		global $wgOut;
-		
 		wfProfileIn(__METHOD__);
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/HuluVideoPanel.scss'));
+		$this->partnerId = "Wikia";
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/HuluVideoPanel.scss'));
 		wfProfileOut( __METHOD__ );
 	}
 }

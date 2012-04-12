@@ -1,12 +1,17 @@
 <?php
-class LatestActivityModule extends Module {
-
+class LatestActivityModule extends WikiaController {
+	/*
 	var $changeList;
 
 	var $wgBlankImgUrl;
 	var $moduleHeader;
 	var $userName = '';
-
+	*/
+	
+	public function init() {
+		$this->userName = '';
+	}
+	
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		$maxElements = 4;
@@ -47,6 +52,7 @@ class LatestActivityModule extends Module {
 		}
 		
 		if(empty($this->changeList) && !empty($feedData) && is_array($feedData['results'])) {
+			$changeList = array();
 			foreach( $feedData['results'] as $change ) {
 				$item = array();
 				$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']);
@@ -86,9 +92,9 @@ class LatestActivityModule extends Module {
 						$item['changemessage'] = $item['time_ago'];
 						break;
 				}
-				$this->changeList[] = $item;
+				$changeList[] = $item;
 			}
-			
+			$this->changeList = $changeList;
 			if( empty($this->userName) ) {
 				$wgMemc->set($mKeyTimes, $this->changeList, 60);
 			}

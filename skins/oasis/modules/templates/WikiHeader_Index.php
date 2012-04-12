@@ -10,7 +10,7 @@ if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 ?>
 			<li>
 				<a href="<?= $menuNodes[$level0]['href'] ?>">
-					<?= $menuNodes[$level0]['text'] ?><?php /*cannot be space between text and &nbsp;*/ if(isset($menuNodes[$level0]['children'])) { ?>&nbsp;<img src="<?= $wgBlankImgUrl; ?>" class="chevron" width="0" height="0"><?php } ?>
+					<?= $menuNodes[$level0]['text'] ?><?php /*cannot be space between text and &nbsp;*/ if(isset($menuNodes[$level0]['children'])) { ?>&nbsp;<img src="<?= $wg->BlankImgUrl; ?>" class="chevron" width="0" height="0"><?php } ?>
 				</a>
 <?php
 		if(isset($menuNodes[$level0]['children'])) {
@@ -47,7 +47,7 @@ if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 		</ul>
 	</nav>
 	<div class="buttons">
-<?php if ($wgEnableCorporatePageExt) {
+<?php if ($wg->EnableCorporatePageExt) {
 		if (ArticleAdLogic::isMainPage()) echo wfRenderModule('Search');
 		echo wfRenderModule('RandomWiki');
 } else { ?>
@@ -60,5 +60,5 @@ if( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 		<?= Wikia::specialPageLink('RecentChanges', 'recentchanges', array('accesskey' => 'r')) ?>
 	</div>
 	<?= $displaySearch ? wfRenderModule('Search') : '' ?>
-	<img class="shadow-mask" src="<?= $wgBlankImgUrl ?>" width="0" height="0">
+	<img class="shadow-mask" src="<?= $wg->BlankImgUrl ?>" width="0" height="0">
 </header>

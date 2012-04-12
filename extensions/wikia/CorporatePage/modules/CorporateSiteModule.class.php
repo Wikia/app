@@ -4,21 +4,7 @@
  *
  * @author owen
  */
-class CorporateSiteModule extends Module {
-
-	var $slider;
-	var $slider_class;
-	var $data;
-
-	var $is_manager;  // fix this typo
-
-	// fix these
-	var $hidehotspots;
-	var $hidetopwikis;
-	var $hidetopblogs;
-	var $hidetopeditors;
-
-	var $wgLang;
+class CorporateSiteModule extends WikiaController {
 
 	// These are just templates
 	// FIXME: refactor the common functionality out of these
@@ -40,10 +26,10 @@ class CorporateSiteModule extends Module {
 			$temp['value'] = array_slice($temp['value'], 0, 10);
 		}
 		$this->hidetopwikis = false;
-		$this->data['title'] = $wgTitle;
-		$this->data['topWikis1'] = $temp['value'];
-		$this->data['tag_id'] = $tag_id;
-		$this->data['is_manager'] = $isManager;
+		$this->title = $wgTitle->getText();
+		$this->topWikis1 = $temp['value'];
+		$this->tag_id = $tag_id;
+		$this->is_manager = $isManager;
 	}
 
 	public function executeTopHubUsers() {
@@ -60,9 +46,10 @@ class CorporateSiteModule extends Module {
 		foreach ($temp['value'] as &$value) {
 			$value['avatar'] = AvatarService::renderAvatar($value['username'], 33);
 		}
-		$this->data['title'] = $wgTitle;
-		$this->data['topEditors'] = $temp['value'];
-		$this->data['is_manager'] = $isManager;
+		$this->hidetopeditors = false;
+		$this->title = $wgTitle->getText();
+		$this->topEditors = $temp['value'];
+		$this->is_manager = $isManager;
 	}
 
 	public function executePopularHubPosts () {
@@ -79,12 +66,9 @@ class CorporateSiteModule extends Module {
 		} else {
 			$temp = $datafeeds->getTopBlogs($tag_id, $lang, 3, 1);
 		}
-		$this->data['title'] = $wgTitle;
-//		$this->data['topBlogs'] = $temp['value'];
-		$this->data['is_manager'] = $isManager;
-
-		$this->wgStylePath = $wgStylePath;
-		$this->wgTitle = $wgTitle;
+		$this->title = $wgTitle->getText();
+//		$this->topBlogs = $temp['value'];
+		$this->is_manager = $isManager;
 
 		// Swizzle data into format used by BlogListing template
 		$posts = array();
@@ -159,9 +143,7 @@ class CorporateSiteModule extends Module {
 			$posts[] = $post;
 		}
 		$this->posts = $posts;
-		$this->data['title'] = 'Popular Staff Blogs';
-		$this->wgStylePath = $wgStylePath;
-		$this->wgTitle = $wgTitle;
+		$this->title = 'Popular Staff Blogs';
 	}
 
 	public function executeHotSpots () {
@@ -180,10 +162,11 @@ class CorporateSiteModule extends Module {
 			$temp = $datafeeds->getTopArticles( $tag_id, $lang, 5, 1, false, false, true );
 		}
 
-		$this->data['title'] = $wgTitle;
-		$this->data['hotSpots'] = $temp['value'];
-		$this->data['tag_id'] = $tag_id;
-		$this->data['is_manager'] = $isManager;
+		$this->hidehotspots = false;
+		$this->title = $wgTitle;
+		$this->hotSpots = $temp['value'];
+		$this->tag_id = $tag_id;
+		$this->is_manager = $isManager;
 	}
 
 	public function executeSlider() {

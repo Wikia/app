@@ -1,17 +1,14 @@
 <?php
 
-class CommunityCornerModule extends Module {
+class CommunityCornerModule extends WikiaController {
 
-	var $isAdmin;
-
-	public function executeIndex($params) {
-		global $wgUser, $wgOut;
+	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
 		// add CSS for this module
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/CommunityCorner.scss"));
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/CommunityCorner.scss"));
 
-		$this->isAdmin = $wgUser->isAllowed('editinterface');
+		$this->isAdmin = $this->wg->User->isAllowed('editinterface');
 
 		wfProfileOut(__METHOD__);
 	}

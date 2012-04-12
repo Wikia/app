@@ -89,6 +89,7 @@
 		 */
 		public function testGetHubImages( $mockRawText, $mockFileParams, $mockImageServingParams, $expHubImages ) {
 			// setup
+			//$this->markTestSkipped();
 			$this->setUpMockObject( 'Title', array( 'newFromText' => null ), true );
 			$this->setUpMockObject( 'Article', array( 'getRawText' => $mockRawText ), true, null, false );
 			$this->setUpMockObject( 'ImageServing', $mockImageServingParams, true, null, false );

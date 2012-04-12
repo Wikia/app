@@ -41,6 +41,12 @@ class WikiaApp {
 	private $skinInitialized = null;
 
 	/**
+	 * This reference is necessary for some Controllers that need access to Skin $data
+	 * @var SkinTemplate
+	 */
+	protected static $skinTemplateObj = null;
+
+	/**
 	 * global MW variables helper accessor
 	 * @var WikiaGlobalRegistry
 	 */
@@ -226,6 +232,17 @@ class WikiaApp {
 		}
 		
 		return $this->skinInitialized;
+	}
+	/** Getter/Setter for global/static skin template object 
+	 *
+	 * @param SkinTemplate $skinTemplate 
+	 */
+	public static function setSkinTemplateObj(&$skinTemplate) {
+		self::$skinTemplateObj = $skinTemplate;
+	}
+
+	public static function getSkinTemplateObj() {
+		return self::$skinTemplateObj;
 	}
 	
 	/**

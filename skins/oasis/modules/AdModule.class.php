@@ -1,6 +1,6 @@
 <?php
 
-class AdModule extends Module {
+class AdModule extends WikiaController {
 
 	private static $config;
 	private static $slotsUseGetAd = array( 'HOME_INVISIBLE_TOP', 'INVISIBLE_TOP', 'INVISIBLE_1', 'INVISIBLE_2', 'HOME_TOP_RIGHT_BUTTON', 'TOP_RIGHT_BUTTON' );
@@ -111,10 +111,11 @@ class AdModule extends Module {
 		}
 	}
 
-
+	/*
 	public $slotname;
 
 	public $ad;
+	 */
 
 	public function executeIndex(array $params) {
 		global $wgShinyAdsSelfServeUrl;
@@ -153,7 +154,7 @@ class AdModule extends Module {
 
 	}
 
-	public $conf;
+	//public $conf;
 
 	public function executeConfig($params) {
 

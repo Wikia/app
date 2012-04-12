@@ -1,38 +1,17 @@
 <?php
-class ChatModule extends Module {
+class ChatModule extends WikiaController {
 
-	var $wgStylePath;
-	var $wgExtensionsPath;
-	var $wgBlankImgUrl;
-	var $globalVariablesScript;
-	var $username;
-	var $roomId;
-	var $roomName;
-	var $roomTopic;
-	var $userList;
-	var $messages;
-	var $isChatMod;
-	var $bodyClasses = '';
-	var $themeSettings;
-	var $avatarUrl;
-	var $nodeHostname;
-	var $nodePort;
-	var $pathToProfilePage;
-	var $pathToContribsPage;
-	var $mainPageURL;
-	var $wgFavicon = '';
-	var $jsMessagePackagesUrl = '';
-	var $app;
 	const CHAT_WORDMARK_WIDTH = 115;
 	const CHAT_WORDMARK_HEIGHT = 30;
 	const CHAT_AVATAR_DIMENSION = 41;
-	public $wordmarkThumbnailUrl;
 
+	public function init() {
+		$this->bodyClasses = '';
+	}
+	
 	public function executeIndex() {
 		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon;
 		wfProfileIn( __METHOD__ );
-
-		$this->app = WF::build('App');
 
 		// String replacement logic taken from includes/Skin.php
 		$this->wgFavicon = str_replace('images.wikia.com', 'images1.wikia.nocookie.net', $wgFavicon);
@@ -50,11 +29,10 @@ class ChatModule extends Module {
 		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, ChatModule::CHAT_AVATAR_DIMENSION);
 
 		// Find the chat for this wiki (or create it, if it isn't there yet).
-		$this->roomName = $this->roomTopic = "";
-		$this->roomId = NodeApiClient::getDefaultRoomId($this->roomName, $this->roomTopic);
-		$this->roomId = (int) $this->roomId;
-		$this->roomId = (int) $this->roomId;
-
+		$roomName = $roomTopic = "";
+		$this->roomId = (int) NodeApiClient::getDefaultRoomId($roomName, $roomTopic);
+		$this->roomName = $roomName;
+		$this->roomTopic = $roomTopic;
 		// Set the hostname of the node server that the page will connect to.
 		$this->nodePort = NodeApiClient::PORT;
 		if($wgDevelEnvironment){
@@ -87,7 +65,7 @@ class ChatModule extends Module {
 
 		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatModule', 'onMakeGlobalVariablesScript', array(), false, $this);
 
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
 
 		//Theme Designer stuff
 		$themeSettings = new ThemeSettings();

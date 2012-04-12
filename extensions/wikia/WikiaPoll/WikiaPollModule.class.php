@@ -1,22 +1,21 @@
 <?php
 
-class WikiaPollModule extends Module {
+class WikiaPollModule extends WikiaController {
 
-	var $data;
-	var $embedded;
-	var $poll;
-	var $wgBlankImgUrl;
-	var $wgLang;
-
+	public function init() {
+		$this->data = null;
+		$this->poll = null;
+		$this->embedded = null;
+	}
 	/**
 	 * Render HTML Poll namespace pages
 	 */
 	public function executeIndex($params) {
 		if (!empty($params['poll'])) {
 			$this->poll = $params['poll'];
-			$this->data = $this->poll->getData();
-
-			$this->formatResults();
+			$data = $this->poll->getData();
+			$this->formatResults($data);
+			$this->data = $data;
 		}
 
 		$this->embedded = !empty($params['embedded']);
@@ -38,11 +37,11 @@ class WikiaPollModule extends Module {
 	/**
 	 * Calculate percantage for votes and scale bars
 	 */
-	private function formatResults() {		
+	private function formatResults($data) {		
 		// format results
-		foreach($this->data['answers'] as &$answer) {
-			if ($this->data['votes'] > 0) {
-				$answer['percentage'] = round($answer['votes'] / $this->data['votes'] * 100);
+		foreach($data['answers'] as &$answer) {
+			if ($data['votes'] > 0) {
+				$answer['percentage'] = round($answer['votes'] / $data['votes'] * 100);
 			}
 			else {
 				$answer['percentage'] = 0;

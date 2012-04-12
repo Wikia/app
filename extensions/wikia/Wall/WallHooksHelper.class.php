@@ -473,13 +473,15 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onPageHeaderIndexAfterActionButtonPrepared(&$action, &$dropdown, $ns, $skin) {
+	public function onPageHeaderIndexAfterActionButtonPrepared($response, $ns, $skin) {
 		$app = F::App();
 		$helper = F::build('WallHelper', array());
 
 		if( !empty($app->wg->EnableWallExt) ) {
 			$title = $app->wg->Title;
 			$parts = explode( '/', $title->getText() );
+			$action = $response->getVal('action');
+			$dropdown = $response->getVal('dropdown');
 			$canEdit = $app->wg->User->isAllowed('editwallarchivedpages');
 
 			if( $title->getNamespace() === NS_USER_WALL
@@ -535,6 +537,9 @@ class WallHooksHelper {
 					$action['id'] = 'talkArchiveEditButton';
 				}
 			}
+			// update the response object with any changes
+			$response->setVal('action', $action);
+			$response->setVal('dropdown', $dropdown);
 		}
 
 		return true;
@@ -1276,7 +1281,7 @@ class WallHooksHelper {
 							'users'			=> $users
 					);
 
-					$header = wfRenderPartial('Wall', 'renderRCHeaderBlock', $vars);
+					$header = $app->getView('Wall', 'renderRCHeaderBlock', $vars)->render();
 				}
 			}
 		}

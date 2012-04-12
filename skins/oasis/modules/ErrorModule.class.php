@@ -1,9 +1,5 @@
 <?php
-class ErrorModule extends Module {
-
-	var $wgBlankImgUrl;
-	var $headline;
-	var $errors;
+class ErrorModule extends WikiaController {
 
 	public function executeIndex($errors) {
 		if (isset($errors['controller'])) unset ($errors['controller']);

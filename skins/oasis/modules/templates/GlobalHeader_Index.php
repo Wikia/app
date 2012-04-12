@@ -3,7 +3,7 @@
 		<h1>Wikia Navigation</h1>
 		<ul>
 			<li class="WikiaLogo">
-				<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wgBlankImgUrl ?>" class="sprite logo" height="23" width="91" alt="Wikia"></a>
+				<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wg->BlankImgUrl ?>" class="sprite logo" height="23" width="91" alt="Wikia"></a>
 			</li>
 			<li class="start-a-wiki">
 				<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="wikia-button"><?= wfMsgHtml('oasis-global-nav-create-wiki'); ?></a>
@@ -17,10 +17,10 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 	foreach($menuNodes[0]['children'] as $level0) {
 ?>
 					<li <?php if($isCorporatePage): ?>class="<?= str_replace(' ', '_', $menuNodes[$level0]['text']); ?>"<?php endif; ?>>
-						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wgBlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
+						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wg->BlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
 						<ul class="subnav">
 							<? /*
-							<li id="SPOTLIGHT_GLOBALNAV_<?= ++$i?>"<?= $wgEnableSpotlightsV2_GlobalNav ? ' class="SPOTLIGHT_GLOBALNAV"' : '' ?>>
+							<li id="SPOTLIGHT_GLOBALNAV_<?= ++$i?>"<?= $wg->EnableSpotlightsV2_GlobalNav ? ' class="SPOTLIGHT_GLOBALNAV"' : '' ?>>
 								<?= AdEngine::getInstance()->getAd('SPOTLIGHT_GLOBALNAV_'.$i) ?>
 							</li>
 							*/ ?>
@@ -56,7 +56,7 @@ if(is_array($menuNodes) && isset($menuNodes[0])) {
 		</ul>
 	</nav>
 	<?= wfRenderModule('AccountNavigation') ?>
-	<? if( $wgEnableWallExt ) echo wfRenderModule('WallNotifications'); ?>
-	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
-	<img src="<?= $wgBlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
+	<? if( $wg->EnableWallExt ) echo wfRenderModule('WallNotifications'); ?>
+	<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
+	<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
 </header>

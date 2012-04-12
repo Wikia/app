@@ -1,18 +1,8 @@
 <?php
-class ChatRailModule extends Module {
+class ChatRailModule extends WikiaController {
 	const MAX_CHATTERS = 6;
 	const AVATAR_SIZE = 32;
-	var $linkToSpecialChat;
-	var $windowFeatures;
-	var $chatHeadline;
-	var $profileAvatar;
-	var $totalInRoom;
-	var $chatters;
-	var $buttonIconUrl;
-	var $buttonText;
-	var $isLoggedIn;
-	var $chatClickAction;	
-
+	
 	/**
 	 * Render placeholder. Content will be ajax-loaded for freshness
 	 */
@@ -63,12 +53,13 @@ class ChatRailModule extends Module {
 			}
 
 			// List of other people in chat
-			$this->totalInRoom = 0;
+			$totalInRoom = 0;
 			$roomName = $roomTopic = ""; // just needed for pass-by-reference... will be ignored
 			$roomId = NodeApiClient::getDefaultRoomId($roomName, $roomTopic); // get id of default chat for the wiki
 			
 			// Gets array of users currently in chat to populate rail module and user stats menus
-			$chatters = NodeApiClient::getChatters($roomId, ChatRailModule::MAX_CHATTERS, $this->totalInRoom);
+			$chatters = NodeApiClient::getChatters($roomId, ChatRailModule::MAX_CHATTERS, $totalInRoom);
+			$this->totalInRoom = $totalInRoom;
 			
 			for ($i = 0; $i < count($chatters); $i++) {
 				// avatar

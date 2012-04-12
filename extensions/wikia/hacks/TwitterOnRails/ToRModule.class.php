@@ -1,21 +1,8 @@
 <?php
 
-class ToRModule extends Module {
+class ToRModule extends WikiaController {
 	const DEFAULT_TWEETS_LIMIT = 5;
 	const DEFAULT_REFRESH_INTERVAL = 5;
-
-	/**
-	 * WikiaApp instance
-	 * @var WikiaApp
-	 */
-	protected $app = null;
-	public $keywords = null;
-	public $limit = null;
-	public $refreshInterval = null;
-
-	public function __construct(WikiaApp $app) {
-		$this->app = $app;
-	}
 
 	public function executeIndex() {
 		$this->keywords = wfMsg( 'tor-module-default-keywords' );

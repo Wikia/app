@@ -1,7 +1,5 @@
 <?php
-class FounderEmailsModule extends Module {
-
-	var $language;
+class FounderEmailsModule extends WikiaController {
 
 	// This function is only used for testing / previewing / debugging the FounderEmails templates
 	public function executeIndex() {
@@ -46,6 +44,7 @@ class FounderEmailsModule extends Module {
 	}
 
 	public function executeDayZero($params) {
+		// FIXME: I think this language var is not used
 		$this->language = $params['language'];
 	}
 	

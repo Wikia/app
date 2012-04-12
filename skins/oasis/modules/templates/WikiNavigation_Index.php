@@ -91,4 +91,4 @@ if ( is_array($menuNodes) && isset($menuNodes[0]) && $showMenu) {
 ?>
 		</ul>
 
-		<div class="navbackground"><div></div><img src="<?= $wgBlankImgUrl; ?>" class="chevron" width="0" height="0"></div>
+		<div class="navbackground"><div></div><img src="<?= $wg->BlankImgUrl; ?>" class="chevron" width="0" height="0"></div>

@@ -1,5 +1,5 @@
 <aside class="errorbox">
-	<img src="<?= $wgBlankImgUrl ?>" class="sprite error">
+	<img src="<?= $wg->BlankImgUrl ?>" class="sprite error">
 	<div>
 		<? if (is_array($errors)) { ?>
 		<h1><?= $headline ?></h1>

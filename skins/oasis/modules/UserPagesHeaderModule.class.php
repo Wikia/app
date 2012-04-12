@@ -5,35 +5,19 @@
  * @author Maciej Brencz
  */
 
-class UserPagesHeaderModule extends Module {
+class UserPagesHeaderModule extends WikiaController {
 
-	var $wgBlankImgUrl;
-	var $wgStylePath;
-
+	// This is really a local class var
 	var $content_actions;
-	var $displaytitle;
-	var $title;
 
-	var $actionButton;
-	var $actionImage;
-	var $actionMenu;
-	var $actionName;
-	var $avatar;
-	var $avatarMenu;
-	var $comments;
-	var $editTimestamp;
-	var $likes;
-	var $stats;
-	var $tabs;
-	var $userName;
-	var $userPage;
-	var $isUserProfilePageExt = false;
-
-
-	var $fbAccessRequestURL;
-	var $fbUser;
-	var $fbData;
-
+	public function init() {
+		$this->content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
+		$this->isUserProfilePageExt = false;
+		$this->actionMenu = array();
+		
+		$this->fbAccessRequestURL = '';
+	}
+	
 	/**
 	 * Checks whether given user name is the current user
 	 */
@@ -218,7 +202,7 @@ class UserPagesHeaderModule extends Module {
 		// no "user" likes
 		$this->likes = false;
 
-		$this->actionMenu = array(
+		$actionMenu = array(
 				'action' => array(),
 				'dropdown' => array(),
 				);
@@ -255,7 +239,7 @@ class UserPagesHeaderModule extends Module {
 		else if ($namespace == NS_USER_TALK) {
 			// "Leave a message" button
 			if (isset($this->content_actions['addsection']['href'])) {
-				$this->actionMenu['action'] = array(
+				$actionMenu['action'] = array(
 						'href' => $this->content_actions['addsection']['href'],
 						'text' => wfMsg('add_comment'),
 						);
@@ -265,8 +249,8 @@ class UserPagesHeaderModule extends Module {
 
 				// different handling for "My talk page"
 				if (self::isItMe($this->userName)) {
-					$this->actionMenu['action']['text'] = wfMsg('edit');
-					$this->actionMenu['action']['href'] = $this->content_actions['edit']['href'];
+					$actionMenu['action']['text'] = wfMsg('edit');
+					$actionMenu['action']['href'] = $this->content_actions['edit']['href'];
 
 					$this->actionImage = MenuButtonModule::EDIT_ICON;
 					$this->actionName = 'edit';
@@ -299,10 +283,11 @@ class UserPagesHeaderModule extends Module {
 
 			foreach($actions as $action) {
 				if (isset($this->content_actions[$action])) {
-					$this->actionMenu['dropdown'][$action] = $this->content_actions[$action];
+					$actionMenu['dropdown'][$action] = $this->content_actions[$action];
 				}
 			}
 		}
+		$this->actionMenu = $actionMenu;
 
 		// don't show stats for user pages with too long titles (RT #68818)
 		if (mb_strlen($this->title) > 35) {
@@ -470,18 +455,20 @@ class UserPagesHeaderModule extends Module {
 			$this->likes = true;
 		}
 
+		$actionMenu = array();
 		// edit button / dropdown
 		if (isset($this->content_actions['edit'])) {
-			$this->actionMenu['action'] = $this->content_actions['edit'];
+			$actionMenu['action'] = $this->content_actions['edit'];
 		}
 
 		// dropdown actions
 		$actions = array('move', 'protect', 'unprotect', 'delete', 'undelete', 'history');
 		foreach($actions as $action) {
 			if (isset($this->content_actions[$action])) {
-				$this->actionMenu['dropdown'][$action] = $this->content_actions[$action];
+				$actionMenu['dropdown'][$action] = $this->content_actions[$action];
 			}
 		}
+		$this->actionMenu = $actionMenu;
 
 		// load CSS for .WikiaUserPagesHeader (BugId:9212, 10246)
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));

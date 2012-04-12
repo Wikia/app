@@ -1,15 +1,7 @@
 <?php
 
-class AdminDashboardModule extends Module {
-	
-	var $wordmarkText;
-	var $wordmarkType;
-	var $wordmarkSize;
-	var $tab;
-	var $adminDashboardUrl;
-	var $adminDashboardUrlGeneral;
-	var $adminDashboardUrlAdvanced;
-	
+class AdminDashboardModule extends WikiaController {
+		
 	// Render the Admin Dashboard chrome
 	public function executeChrome () {
 		global $wgRequest, $wgTitle;

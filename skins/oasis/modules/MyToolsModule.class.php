@@ -1,12 +1,14 @@
 <?php
-class MyToolsModule extends Module {
+class MyToolsModule extends WikiaController {
 
-	var $defaultTools;
-	var $customTools;
-	var $wgBlankImgUrl;
-	var $content_actions;
-	var $nav_urls;
+	protected $content_actions;
+	protected $nav_urls;
 
+	public function init() {
+		$this->content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
+		$this->nav_urls = $this->app->getSkinTemplateObj()->data['nav_urls'];
+	}
+	
 	public function executeIndex($params) {
 		global $wgUser;
 
@@ -104,11 +106,6 @@ class MyToolsModule extends Module {
 		return $out;
 	}
 
-	var $configurationScssUrl;
-	var $userCustomTools;
-	var $wgScriptPath;
-	var $allMyTools;
-
 	public function executeConfiguration() {
 		$this->userCustomTools = $this->getUserCustomTools();
 	}
@@ -130,10 +127,6 @@ class MyToolsModule extends Module {
 
 		return $out;
 	}
-
-	var $query;
-	var $suggestions;
-	var $data;
 
 	public function executeSuggestions() {
 		global $wgRequest;

@@ -26,8 +26,7 @@
 				<div class="page-activity-badge">
 					<div class="page-activity-level-<?php echo $value['level']; ?>">
 						<?php
-							global $wgLang;
-							echo wfMsgExt('hub-editors', 'parsemag', $wgLang->formatNum( $value['all_count'] ) ); ?>
+							echo wfMsgExt('hub-editors', 'parsemag', $wg->Lang->formatNum( $value['all_count'] ) ); ?>
 					</div>
 				</div>
 				<span class="page-activity-sources">

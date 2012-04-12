@@ -2,7 +2,7 @@
 <section id="WikiaPage" class="WikiaPage">
 	<article id="WikiaMainContent" class="WikiaMainContent" style="float:none">
 		<header id="EditPageHeader">
-			<span class="wordmark <?= $wordmark['wordmarkSize'] ?> <?= $wordmark['wordmarkType'] ?> font-<?= $wordmark['wordmarkFont'] ?>" <?= $wordmark['wordmarkStyle'] ?>>
+			<span class="wordmark <?= $wordmark['wordmarkSize'] ?> <?= $wordmark['wordmarkType'] ?> font-<?= $wordmark['wordmarkFont'] ?>" ?>>
 				<a accesskey="z" href="<?= htmlspecialchars($wordmark['mainPageURL']) ?>" title="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
 				<? if (!empty($wordmark['wordmarkUrl'])) { ?>
 					<img src="<?= $wordmark['wordmarkUrl'] ?>" alt="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
@@ -27,7 +27,7 @@
 			</h1>
 			<!-- pencil icon -->
 			<a id="EditPageTitle" title="<?= wfMsg('editpagelayout-edit-title') ?>">
-				<img class="sprite edit-pencil-small" src="<?= $wgBlankImgUrl ?>">
+				<img class="sprite edit-pencil-small" src="<?= $wg->BlankImgUrl ?>">
 			</a>
 			<!-- mode switching tabs -->
 			<nav id="EditPageTabs" class="editpage-tabs" data-space-type="tabs" data-space-autoshow="true" style="display:none"></nav>
@@ -184,14 +184,14 @@
 		</form>
 	</article>
 	
-	<? if ($wgUser->isLoggedIn()) { ?>
+	<? if ($wg->User->isLoggedIn()) { ?>
 	<footer id="WikiaFooter" class="WikiaFooter">
 		<div class="toolbar">
 			<ul class="tools">
 				<?= wfRenderModule('Footer','Toolbar') ?>
 			</ul>
-			<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
-			<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
+			<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
+			<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 		</div>
 	</footer>
 	<? } ?>

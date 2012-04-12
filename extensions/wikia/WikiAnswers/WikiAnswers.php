@@ -80,7 +80,7 @@ function wfWikiAnswersAnswerBox( &$out, &$html ) {
 	if( $answerObj->isQuestion() &&
 	    in_array( ucfirst(Answer::getSpecialCategory("unanswered")), $out->getCategories() ) ) {
 		wfLoadExtensionMessages('WikiAnswers');
-		$html = wfRenderPartial( 'WikiAnswers', 'AnswerBox' );
+		$html = F::app()->getView( 'WikiAnswers', 'AnswerBox' )->render();
 	}
 	return true;
 }

@@ -2,9 +2,7 @@
 /**
  * SSW Gaming Calendar (rail module)
  */
-class GamingCalendarRailModule extends Module {
-    
-	public $moduleTitle;
+class GamingCalendarRailModule extends WikiaController {
     
 	public function executeIndex() {
 		global $wgCityId;

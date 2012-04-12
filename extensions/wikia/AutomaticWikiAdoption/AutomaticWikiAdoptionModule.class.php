@@ -1,8 +1,6 @@
 <?php
-class AutomaticWikiAdoptionModule extends Module {
-	
-	var $wgSitename;
-	
+class AutomaticWikiAdoptionModule extends WikiaController {
+		
 	public function executeAdoptWelcomeDialog() {
 
 	}

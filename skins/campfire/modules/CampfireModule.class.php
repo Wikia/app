@@ -1,6 +1,6 @@
 <?php
 
-class CampfireModule extends Module {
+class CampfireModule extends WikiaController {
 
 	private static $extraBodyClasses = array();
 
@@ -14,35 +14,23 @@ class CampfireModule extends Module {
 		self::$extraBodyClasses[] = $className;
 	}
 
-	// template vars
-	var $body;
-	var $bodyClasses;
-	var $csslinks;
-	var $globalVariablesScript;
-
-	var $googleAnalytics;
-	var $headlinks;
-	var $jsAtBottom;
-	var $pagecss;
-	var $printableCss;
-	var $comScore;
-	var $quantServe;
-
-	// skin/template vars
-	var $pagetitle;
-	var $displaytitle;
-	var $mimetype;
-	var $charset;
-	var $body_ondblclick;
-	var $dir;
-	var $lang;
-	var $pageclass;
-	var $skinnameclass;
-	var $bottomscripts;
-
-	// global vars
-	var $wgEnableOpenXSPC;
-	var $wgEnableCorporatePageExt;
+	public function init() {
+		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->pagetitle = $skinVars['pagetitle'];
+		$this->displaytitle = $skinVars['displaytitle'];
+		$this->mimetype = $skinVars['mimetype'];
+		$this->charset = $skinVars['charset'];
+		$this->body_ondblclick = $skinVars['body_ondblclick'];
+		$this->dir = $skinVars['dir'];
+		$this->lang = $skinVars['lang'];
+		$this->pageclass = $skinVars['pageclass'];
+		$this->pagecss = $skinVars['pagecss'];
+		$this->skinnameclass = $skinVars['skinnameclass'];
+		$this->bottomscripts = $skinVars['bottomscripts'];
+		// initialize variables
+		$this->comScore = null;
+		$this->quantServe = null;
+	}
 
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType;
@@ -80,7 +68,7 @@ class CampfireModule extends Module {
 		$this->mimetype = htmlspecialchars( $this->mimetype );
 		$this->charset = htmlspecialchars( $this->charset );
 
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
 
 		// printable CSS (to be added at the bottom of the page)
 		// If this is an anon article view, use the combined version of the print files.

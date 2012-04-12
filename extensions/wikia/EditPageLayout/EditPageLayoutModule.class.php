@@ -5,32 +5,20 @@
  *
  * Renders modified HTML for edit pages
  */
-class EditPageLayoutModule extends Module {
+class EditPageLayoutModule extends WikiaController {
 
 	const TITLE_MAX_LENGTH = 30;
-
-	// globals
-	var $wgBlankImgUrl, $wgUser;
-
-	// template variables
-	var $bodytext;
-
-	// action for edit form
-	var $editFormAction;
-
-	// rendered summary box
-	var $summaryBox;
-
-	// notices
-	var $notices;
-
+	
+	public function init() {
+		$this->bodytext = F::app()->getSkinTemplateObj()->data['bodytext'];
+	}
 	
 	/**
 	 * Render HTML for whole edit page
 	 */
 	public function executeIndex() {
 		// render edit page content
-		$body = wfRenderModule('EditPageLayout', 'EditPage');
+		$body = F::app()->renderView('EditPageLayout', 'EditPage');
 
 		// page has one column
 		OasisModule::addBodyClass('oasis-one-column');

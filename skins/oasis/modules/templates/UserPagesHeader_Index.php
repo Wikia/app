@@ -2,7 +2,7 @@
 
 <?php if ($fbAccessRequestURL) { ?>
 <a data-href="<?= $fbAccessRequestURL?>" data-id="syncprofile" class="wikia-button sync-profile-button" accesskey="s">
-	<img src="<?= $wgStylePath ?>/oasis/images/icon_fb_sync.png" class="popout"><?=wfMsg('fb-sync-button')?></a>
+	<img src="<?= $wg->StylePath ?>/oasis/images/icon_fb_sync.png" class="popout"><?=wfMsg('fb-sync-button')?></a>
 <?php } ?>
 
 
@@ -18,7 +18,7 @@
 			<li<?= !empty($tab['selected']) ? ' class="selected"' : '' ?><?= !empty($tab['data-id']) ? ' data-id="'.$tab['data-id'].'"' : '' ?>><?= $tab['link'] ?><?php
 			if (!empty($tab['selected'])) {
 ?>
-				<img class="chevron" src="<?= $wgBlankImgUrl; ?>">
+				<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 <?php
 			}
 ?></li>
@@ -31,6 +31,6 @@
 
 	<a name="EditPage"></a>
 	
-<?php if ($fbData) {?>
+<?php if (isset($fbData)) {?>
 	<?= $fbData ?>
 <?php } ?>

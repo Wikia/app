@@ -1,5 +1,5 @@
 <?php
-class LatestPhotosModule extends Module {
+class LatestPhotosModule extends WikiaController {
 
 	const BLACKLIST_MESSAGE = 'Photosblacklist';
 	
@@ -17,16 +17,6 @@ class LatestPhotosModule extends Module {
 	 * @var String
 	 */
 	const MEMC_KEY_VER = '1.0';
-
-	var $thumbUrls;
-	var $wgBlankImgUrl;
-	var $enableScroll;
-	var $enableEmptyGallery;
-	var $total;
-	var $isUserLoggedIn;
-
-	var $wgEnableUploads;
-	var $wgStylePath;
 
 	public function executeIndex() {
 		global $wgUser, $wgMemc;
@@ -86,6 +76,8 @@ class LatestPhotosModule extends Module {
 
 		if (count($this->thumbUrls)  <= 0) {
 			$this->enableEmptyGallery = true;
+		} else {
+			$this->enableEmptyGallery = false;
 		}
 	}
 

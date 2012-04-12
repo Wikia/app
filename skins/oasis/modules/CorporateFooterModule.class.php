@@ -1,13 +1,8 @@
 <?php
 
-class CorporateFooterModule extends Module {
-	var $wgBlankImgUrl;
-
-	var $footer_links;
-	var $hub;
-	var $copyright;
-
-	public function executeIndex() {
+class CorporateFooterModule extends WikiaController {
+	
+	public function index() {
 		global $wgLangToCentralMap, $wgContLang, $wgCityId, $wgUser, $wgLang, $wgMemc;
 		$catId = WikiFactoryHub::getInstance()->getCategoryId($wgCityId);
 		$mKey = wfSharedMemcKey('mOasisFooterLinks', $wgLang->getCode(), $catId);

@@ -318,9 +318,9 @@ class EditPageLayoutHelper {
 		if ( !Wikia::isOasis() ) {
 			return true;
 		}
-		$html = wfRenderPartial('EditPageLayout', 'Loader', array(
+		$html = $this->app->getView('EditPageLayout', 'Loader', array(
 					'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
-				));
+				))->render();
 		$html .= '</div>';
 		$this->out->addHtml($html);
 		return true;

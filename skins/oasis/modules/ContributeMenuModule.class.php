@@ -1,16 +1,15 @@
 <?php
 
-class ContributeMenuModule extends Module {
-
-	var $dropdownItems = array();
-	var $content_actions;
+class ContributeMenuModule extends WikiaController {
 
 	public function executeIndex() {
 		// add "edit this page" item
-		if (isset($this->content_actions['edit'])) {
-			$this->dropdownItems['edit'] = array(
+		$dropdownItems = array();
+		$content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
+		if (isset($content_actions['edit'])) {
+			$dropdownItems['edit'] = array(
 				'text' => wfMsg('oasis-navigation-v2-edit-page'),
-				'href' => $this->content_actions['edit']['href'],
+				'href' => $content_actions['edit']['href'],
 				// don't use MenuButton module magic to get accesskey for this item (BugId:15698)
 				'accesskey' => false,
 			);
@@ -50,17 +49,18 @@ class ContributeMenuModule extends Module {
 				$attrs['class'] = $link['class'];
 			}
 
-			$this->dropdownItems[strtolower($specialPageName)] = $attrs;
+			$dropdownItems[strtolower($specialPageName)] = $attrs;
 		}
 
 		// show menu edit links
 		$wgUser = F::app()->wg->User;
 
 		if($wgUser->isAllowed('editinterface')) {
-			$this->dropdownItems['wikinavedit'] = array(
+			$dropdownItems['wikinavedit'] = array(
 				'text' => wfMsg('oasis-navigation-v2-edit-this-menu'),
 				'href' => Title::newFromText(WikiNavigationService::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
 			);
 		}
+		$this->response->setVal('dropdownItems', $dropdownItems);
 	}
 }

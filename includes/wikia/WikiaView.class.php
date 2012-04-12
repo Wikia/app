@@ -114,7 +114,7 @@ class WikiaView {
 				$controllerClass = "{$controllerName}Controller";
 			}
 
-			// Workaround for wfRenderPartial while Module still exists
+			// Workaround for Dispatching Module classes while Module still exists
 			if( empty( $autoloadClasses[$controllerClass] ) ) {
 				$controllerClass = "{$controllerName}Module";
 			}

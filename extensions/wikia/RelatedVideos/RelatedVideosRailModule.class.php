@@ -1,5 +1,5 @@
 <?php 
-class RelatedVideosRailModule extends Module {
+class RelatedVideosRailModule extends WikiaController {
 	static $usersData = array();
 	static $anonsData = array();
 	

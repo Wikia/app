@@ -1,5 +1,5 @@
 <?php 
-class WallRailModule extends Module {
+class WallRailModule extends WikiaController {
 	static $usersData = array();
 	static $anonsData = array();
 	
@@ -7,7 +7,7 @@ class WallRailModule extends Module {
 		$app = F::App();
 		$app->wf->ProfileIn(__METHOD__);
 		
-		$this->realResponse->addAsset('extensions/wikia/Wall/css/WallHistoryRail.scss');
+		$this->response->addAsset('extensions/wikia/Wall/css/WallHistoryRail.scss');
 		$this->usersInvolved = array_merge($this->getUsersData(self::$usersData), $this->getUsersData(self::$anonsData));
 		
 		$app->wf->ProfileOut(__METHOD__);

@@ -5,45 +5,26 @@
  * @author Maciej Brencz
  */
 
-class PageHeaderModule extends Module {
-
-	var $wgDisableAnonymousEditing;
-	var $wgEnableWikiAnswers;
-	var $wgStylePath;
+class PageHeaderModule extends WikiaController {
 
 	var $content_actions;
-	var $displaytitle; // if true - don't encode HTML
-	var $title;
-	var $subtitle;
-	var $undelete;
-
-	// RT #72366 - line with page type, redirect info, link to subject page and old revision data
-	var $pageType;
-	var $pageTalkSubject;
-	var $pageSubject;
-	var $pageRedirect;
-
-	var $pageSubtitle;
-
-	var $action;
-	var $actionName;
-	var $actionImage;
-	var $categories;
-	var $comments;
-	var $dropdown;
-	var $extraButtons;
-	var $likes;
-	var $pageExists;
-	var $showSearchBox;
-	var $isMainPage;
-	var $total;
-	var $isNewFiles;
-	var $isUserLoggedIn;
-
-	var $wgABTests;
-	var $wgEnableUploads;
-	var $wgOasisNavV2;
-
+	
+	public function init() {
+		$this->isMainPage = null;
+		$this->likes = null;
+		$this->total = null;
+		
+		$this->action = null;
+		$this->actionImage = null;
+		$this->actionName = null;
+		
+		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->content_actions = $skinVars['content_actions'];
+		$this->displaytitle = $skinVars['displaytitle']; // if true - don't encode HTML
+		$this->title = $skinVars['title'];
+		$this->subtitle = $skinVars['subtitle'];		
+	}
+	
 	/**
 	 * Use MW core variable to generate action button
 	 */
@@ -206,12 +187,12 @@ class PageHeaderModule extends Module {
 		$this->dropdown = $this->getDropdownActions();
 
 		/** start of wikia changes @author nAndy */
-		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array(&$this->action, &$this->dropdown, $ns, $skin) );
+		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array($this->getResponse(), $ns, $skin) );
 		/** end of wikia changes */
 
 		/** start of wikia changes @author Jakub */
 		$this->extraButtons = array();
-		wfRunHooks( 'PageHeaderIndexExtraButtons', array( &$this->extraButtons ) );
+		wfRunHooks( 'PageHeaderIndexExtraButtons', array( $this->getResponse() ) );
 		/** end of wikia changes */
 
 		// for not existing pages page header is a bit different
@@ -253,13 +234,14 @@ class PageHeaderModule extends Module {
 			}
 
 			// render links to most linked category page
-			$this->categories = array();
+			$categoriesVar = array();
 			foreach($categories as $category => $cnt) {
 				$title = Title::newFromText($category, NS_CATEGORY);
 				if($title) {
-					$this->categories[] = Wikia::link($title, $title->getText());
+					$categoriesVar[] = Wikia::link($title, $title->getText());
 				}
 			}
+			$this->categories = $categoriesVar;
 
 			// get info about current revision and list of authors of recent five edits
 			$this->revisions = $this->getRecentRevisions();

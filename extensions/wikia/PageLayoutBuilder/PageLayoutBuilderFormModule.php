@@ -1,6 +1,6 @@
 <?php
 
-class PageLayoutBuilderFormModule extends Module {
+class PageLayoutBuilderFormModule extends WikiaController {
 	public function executeIndex() {
 		global $wgRequest, $wgContLang;
 

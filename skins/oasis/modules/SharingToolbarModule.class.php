@@ -1,8 +1,6 @@
 <?php
 
-class SharingToolbarModule extends Module {
-
-	var $shareButtons;
+class SharingToolbarModule extends WikiaController {
 
 	/**
 	 * Check whether sharing toolbar can be shown on the current page
@@ -59,15 +57,16 @@ class SharingToolbarModule extends Module {
 			'Mail',
 		);
 
-		$this->shareButtons = array();
+		$shareButtons = array();
 
 		foreach($shareNetworks as $network) {
 			$instance = F::build('ShareButton', array($this->app, $network), 'factory');
 
 			if ($instance instanceof ShareButton) {
-				$this->shareButtons[] = $instance;
+				$shareButtons[] = $instance;
 			}
 		}
+		$this->response->setVal('shareButtons', $shareButtons);
 	}
 
 	public function executeShareButton() {

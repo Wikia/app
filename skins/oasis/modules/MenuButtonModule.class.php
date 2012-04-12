@@ -5,7 +5,7 @@
  * @author Maciej Brencz
  */
 
-class MenuButtonModule extends Module {
+class MenuButtonModule extends WikiaController {
 
 	const ADD_ICON = 1;
 	const EDIT_ICON = 2;
@@ -15,6 +15,7 @@ class MenuButtonModule extends Module {
 	const CONTRIBUTE_ICON = 6;
 	const FACEBOOK_ICON = 7;
 
+	/*
 	var $wgStylePath;
 	var $wgBlankImgUrl;
 
@@ -28,6 +29,12 @@ class MenuButtonModule extends Module {
 	var $loginURL;
 	var $loginToEditURL;
 	var $loginTitle;
+	*/
+	
+	public function init() {
+		$this->action = null;
+		$this->icon = null;
+	}
 
 	public function executeIndex($data) {
 		global $wgTitle, $wgUser;
@@ -103,7 +110,7 @@ class MenuButtonModule extends Module {
 				'alt' => '',
 				'class' => $img_class,
 				'height' => $height,
-				'src' => $this->wgBlankImgUrl,
+				'src' => $this->wg->BlankImgUrl,
 				'width' => $width,
 			));
 
@@ -111,16 +118,16 @@ class MenuButtonModule extends Module {
 		}
 
 		if (!empty($data['dropdown'])) {
-			$this->dropdown = $data['dropdown'];
 
 			// add accesskeys for dropdown items
-			foreach($this->dropdown as $key => &$item) {
+			foreach($data['dropdown'] as $key => &$item) {
 				$accesskey = MenuButtonModule::accessKey($key);
 
 				if ($accesskey != false && !isset($item['accesskey'])) {
 					$item['accesskey'] = $accesskey;
 				}
 			}
+			$this->dropdown = $data['dropdown'];
 			#print_pre($this->dropdown);
 
 			$this->class = 'wikia-menu-button';
@@ -128,12 +135,12 @@ class MenuButtonModule extends Module {
 
 		// modify edit URL if the action is edit
 		if ( $this->actionName == 'edit' &&
-			isset($this->action['href']) /* BugId:12613 */ &&
+			isset($data['action']['href']) /* BugId:12613 */ &&
 			!$wgTitle->userCan( 'edit' ) ) {
 				$signUpTitle = SpecialPage::getTitleFor('SignUp');
 				$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');
-
-				$this->action['href'] = $signUpTitle->getLocalUrl($loginUrl);
+				$data['action']['href'] = $signUpTitle->getLocalUrl($loginUrl);
+				$this->action = $data['action'];
 				$this->class .= ' loginToEditProtectedPage';
 		}
 
