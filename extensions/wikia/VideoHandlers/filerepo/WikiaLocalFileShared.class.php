@@ -190,4 +190,10 @@ class WikiaLocalFileShared  {
 			}
 		}
 	}
+
+	function isBroken(){
+		return 	$this->oFile->getSize() == 0
+			? true
+			: $this->oFile->getHandler()->isBroken();
+	}
 }
