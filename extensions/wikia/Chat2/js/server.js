@@ -308,10 +308,7 @@ function authConnection(handshakeData, authcallback){
 					handshakeData.clientData = client;
 					logger.debug("User authentication success.");
 					monitoring.incrEventCounter('logins');
-					
-					// for testing purposes we execute it in parallel with authcallback
-					mwBridge.onUserLogin(roomId, name, key, handshakeData.address.address, function() {});
-					
+										
 					authcallback(null, true); // error first callback style 
 				} else {
 					errback();
@@ -326,7 +323,7 @@ function authConnection(handshakeData, authcallback){
 		}
 	};
 
-	mwBridge.getUser(roomId, name, key, callback, function(){
+	mwBridge.authenticateUser(roomId, name, key, handshakeData.address.address, callback, function(){
 		logger.error("User failed authentication: Wrong call to media wiki");
 		authcallback(null, false); // error first callback style
 	});

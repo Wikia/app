@@ -21,43 +21,9 @@ class ChatAjax {
 		return array("key" => $key ) ;
 	} // end echoCookies()
 	
+	
 	static protected function getUserIPMemcKey($userId, $address, $date) {
 		return $userId . '_' .  $address . '_' . $date . '_v1';
-	}
-	
-	/**
-	 * Called by Chat server after a user connects to the Chat room
-	 * This function should record the IP of the connecting user.
-	 * We use the memcache to 
-	 */
-	static public function onUserLogin() {
-		global $wgMemc, $wgRequest, $wgCityId;
-		
-		wfProfileIn( __METHOD__ );
-		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
-		if( empty($data) ) {
-			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
-		}
-		$user = User::newFromId( $data['user_id'] );
-		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
-			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
-			wfProfileOut( __METHOD__ );
-		}
-		
-		$retVal = array('status' => true);
-		
-		$memcKey = self::getUserIPMemcKey($data['user_id'], $wgRequest->getVal('address'), date("Y-m-d"));
-		$entry = $wgMemc->get( $memcKey, false );
-		
-		if ( empty($entry) ) {
-			$wgMemc->set($memcKey, true, 86400 /*24h*/);
-			$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
-			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', 
-					array($wgRequest->getVal('address')), $user);
-		}
-		
-		wfProfileOut( __METHOD__ );
-		return $retVal;		
 	}
 	
 	/**
@@ -165,7 +131,17 @@ class ChatAjax {
 		}
 		
 		if ($retVal['isLoggedIn'] && $retVal['canChat']) {
-			// maybe we can record the ip here...
+			// record the IP of the connecting user.
+			// use memcache so we order only one (user, ip) pair each day
+			$memcKey = self::getUserIPMemcKey($data['user_id'], $wgRequest->getVal('address'), date("Y-m-d"));
+			$entry = $wgMemc->get( $memcKey, false );
+			
+			if ( empty($entry) ) {
+				$wgMemc->set($memcKey, true, 86400 /*24h*/);
+				$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
+				$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', 
+						array($wgRequest->getVal('address')), $user);
+			}			
 		}
 		
 		wfProfileOut( __METHOD__ );
