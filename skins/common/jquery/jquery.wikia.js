@@ -784,23 +784,28 @@ jQuery.getResources = function(resources, callback, failureFn) {
 
 	// download files
 	for (var n=0; n<resources.length; n++) {
-		var resource = resources[n];
+		var resource = resources[n],
+			type = null;
 
-		// "loader" function: $.loadYUI, $.loadJQueryUI
-		if (typeof resource == 'function') {
-			resource.call(jQuery, onComplete);
+		if(resource && resource.type && resource.url){
+			//AssetsManager package object (e.g. as passed by JSSnippets)
+			type = resource.type;
+			resource = resource.url;
 		}
-		// JS files and Asset Manager groups are scripts
-		else if (isJs.test(resource) || isGroup.test(resource)) {
+
+		if (typeof resource == 'function') {
+			// "loader" function: $.loadYUI, $.loadJQueryUI
+			resource.call(jQuery, onComplete);
+		} else if (type == 'css' || isCss.test(resource) || isSass.test(resource)) {
+			// CSS /SASS files
+			$.getCSS(resource, onComplete);
+		} else if (type == 'js' || isJs.test(resource) || isGroup.test(resource)) {
+			// JS files and Asset Manager groups are scripts
 			$.getScript(resource, onComplete).
 			// error handling
 			fail(function() {
 				dfd.reject();
 			});
-		}
-		// CSS /SASS files
-		else if (isCss.test(resource) || isSass.test(resource)) {
-			$.getCSS(resource, onComplete);
 		}
 	}
 
