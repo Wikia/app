@@ -5,17 +5,11 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
+@import "ChatColor";
+@import "ChatSprite";
 @import "UserStatsMenu";
 
-$color-chat-live: $color-buttons;
-$color-chat-live-text: $color-button-text;
-$color-chat-live-corner: mix($color-chat-live, #000);
-$color-chat-avatar-border: $color-page-border;
-
-body.skin-monobook .ChatEntryPoint {
-	display: none;
-}
-
+body.skin-monobook .ChatEntryPoint,
 body.skin-oasis .ChatMonobookEntryPoint {
 	display: none;
 }
@@ -76,8 +70,14 @@ body.skin-oasis .ChatMonobookEntryPoint {
 		top: 0;
 		right: 0;
 
-		img {
-			vertical-align: text-bottom;
+		button:before {
+			@include sprite-Chat-full('icon-chat_bubble');
+			content: "";
+			display: inline-block;
+			height: 15px;
+			margin-right: 5px;
+			vertical-align: middle;
+			width: 17px;
 		}
 	}
 

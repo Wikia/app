@@ -8,7 +8,7 @@ ini_set('include_path', dirname(__FILE__).'/../../../../maintenance');
 require_once('commandLine.inc');
 
 $name = 'Chat';
-$dir = "{$IP}/extensions/wikia/{$name}";
+$dir = "{$IP}/extensions/wikia/{$name}2";
 
 $srv = new SpriteService(array(
 	'name' => $name,

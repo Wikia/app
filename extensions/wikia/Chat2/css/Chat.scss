@@ -12,17 +12,11 @@
 @import "../../../../skins/oasis/css/core/modal";
 @import "../../../../skins/oasis/css/core/typography";
 @import "../../../../skins/oasis/css/core/WikiaForm";
-@import "UserStatsMenu.scss";
-@import "ChatModal.scss";
 
-@import "mixins/sprite-Chat";
-
-$color-chat-gray: mix($color-text, $color-page);
-$color-chat-you: mix($color-text, $color-page, 5);
-
-$color-rail-headline-top: mix($color-text, $color-page, 5);
-$color-rail-headline-bottom: mix($color-text, $color-page, 20);
-$color-rail-headline-border: mix($color-text, $color-page, 35);
+@import "ChatColor";
+@import "ChatSprite";
+@import "ChatModal";
+@import "UserStatsMenu";
 
 ._avatar {
 	border: 1px solid $color-page-border;
@@ -56,7 +50,6 @@ a {
 		text-decoration: underline;
 	}
 }
-
 
 .wordmark {
 	color: $color-links;
@@ -116,6 +109,12 @@ a {
 	font-size: 11px;
 	padding: 7px 5px 7px 32px;
 	position: relative;
+	&.away {
+		color: $color-chat-gray;
+		.status {
+			display: inline;
+		}
+	}
 	img {
 		@extend ._avatar;
 		height: 22px;
@@ -126,9 +125,25 @@ a {
 	}
 	.username {
 		display: block;
+		margin-right: 15px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+
+		&:after {
+			content: '';
+			height: 15px;
+			position: absolute;
+			right: 5px;
+			top: 5px;
+			width: 15px;
+		}
+	}
+	&.chat-mod .username:after {
+		@include sprite-Chat-full('icon-chat_mod');
+	}
+	&.staff .username:after {
+		@include sprite-Chat-full('icon-staff' + $sprite-normal);
 	}
 	.details {
 		font-size: 11px;
@@ -136,40 +151,10 @@ a {
 	.status {
 		display: none;
 	}
-	&.chat-mod .username {
-		margin-right: 15px;
-		&:after {
-			content: url(/extensions/wikia/Chat2/images/icon-chatmod.png);
-			position: absolute;
-			right: 5px;
-			top: 5px;
-		}
-	}
-	&.staff .username {
-		margin-right: 15px;
-		&:after {
-			@if $is-dark-wiki {
-				@include sprite-Chat-full('wikia_bracket_i_white');
-			}
-			@else {
-				@include sprite-Chat-full('wikia_bracket_i_blue');
-			}
-			content: "";
-			width: 16px;
-			height: 16px;
-		}
-	}
-	&.away {
-		color: $color-chat-gray;
-		.status {
-			display: inline;
-		}
-	}
 	.UserStatsMenu {
 		display: none;	
 	}
 }	
-
 
 .WikiaPage {
 	@include border-radius-se(5px);
@@ -356,7 +341,6 @@ a {
 			display:none;
 		}	
 	}
-
 	.unread {
 		.splotch {
 			display: block;
@@ -365,11 +349,9 @@ a {
 			display: none;
 		}
 	}
-
 	.blocked {
 	    opacity: 0.3;
 	}
-	
 	.splotch {
 		@include border-radius(10px);
 		@include linear-gradient(#dc0d0e, top, #e63031, 0, #dc0d0e, 50%, #e63031, 100%);
@@ -388,6 +370,7 @@ a {
 		min-width: 8px;
 	}
 }
+
 .PrivateChatList {
 	.splotch {
 		top: 6px;
