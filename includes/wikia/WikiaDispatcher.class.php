@@ -39,11 +39,7 @@ class WikiaDispatcher {
 		if (empty($autoloadClasses)) {
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
 		}
-		if ($request->isXmlHttp()) {
-			$format = $request->getVal( 'format', WikiaResponse::FORMAT_JSON );
-		} else {
-			$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
-		}
+		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );		
 		$response = F::build( 'WikiaResponse', array( 'format' => $format, 'request' => $request ) );
 		if ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
 			$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
