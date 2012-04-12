@@ -77,13 +77,55 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 	}
 
+	function convertOldInterwikiToNewInterwikiCB( $matches ) {
+
+		if ( !empty ( $matches[1] ) ) {
+
+			$addtionalParams = array();
+
+			$parts = explode( "/", $matches[1] );
+			if ( count( $parts ) > 1 ) {
+
+				$params = explode( "&", $parts[1] );
+				foreach ( $params as $pv ) {
+
+					$param = explode( "=", $pv );
+
+					if ( $param[0] == "width" && !empty( $param[1] ) ) {
+
+						$addtionalParams[] = $param[1];
+					}
+
+					if ( $param[0] == "align" && !empty( $param[1] ) ) {
+
+						$addtionalParams[] = $param[1];
+					}
+				}
+
+				$paramsString = '';
+				if ( count( $addtionalParams ) > 0 ) {
+					$paramsString .= '|' . implode( "|", $addtionalParams );
+				}
+
+				return '[[File:' . $parts[0] . $paramsString . ']]';
+
+			} else {
+
+				return '[[File:' . $matches[1] . ']]';
+			}
+
+		}
+
+		return false;
+	}
+
 	public function convertOldInterwikiToNewInterwiki(&$parser, &$text) {
 		global $wgRTEParserEnabled;
 		if($wgRTEParserEnabled) {
 			return true;
 		}
 
-		$newtext = preg_replace('/\{\{:wikiavideo:([^}]*)\}\}/','[[File:$1]]', $text);
+		$newtext = preg_replace_callback('/\{\{:wikiavideo:([^}]*)\}\}/', array($this, 'convertOldInterwikiToNewInterwikiCB'), $text);
 		if(!empty($newtext)) {
 			$text = $newtext;
 		}
