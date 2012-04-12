@@ -128,6 +128,15 @@ WMBridge.prototype.getUser = function(roomId, name, key, success, error) {
 	requestMW('GET', roomId, {}, requestUrl, success, error);
 }
 
+WMBridge.prototype.onUserLogin = function(roomId, name, key, address, success, error) {
+	var requestUrl = getUrl( 'onUserLogin', {
+		name: urlencode(name),
+		key: key,
+		address: urlencode(address)
+	});
+	requestMW('GET', roomId, {}, requestUrl, success, error);
+}
+
 WMBridge.prototype.ban = function(roomId, name, time, reason, key, success, error) {
 	var requestUrl = getUrl('blockOrBanChat', {
 		roomId: roomId,

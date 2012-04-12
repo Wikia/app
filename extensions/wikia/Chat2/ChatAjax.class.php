@@ -20,7 +20,46 @@ class ChatAjax {
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*24);
 		return array("key" => $key ) ;
 	} // end echoCookies()
-
+	
+	static protected function getUserIPMemcKey($userId, $address, $date) {
+		return $userId . '_' .  $address . '_' . $date . '_v1';
+	}
+	
+	/**
+	 * Called by Chat server after a user connects to the Chat room
+	 * This function should record the IP of the connecting user.
+	 * We use the memcache to 
+	 */
+	static public function onUserLogin() {
+		global $wgMemc, $wgRequest, $wgCityId;
+		
+		wfProfileIn( __METHOD__ );
+		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
+		if( empty($data) ) {
+			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
+		}
+		$user = User::newFromId( $data['user_id'] );
+		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
+			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
+			wfProfileOut( __METHOD__ );
+		}
+		
+		$retVal = array('status' => true);
+		
+		$memcKey = self::getUserIPMemcKey($data['user_id'], $wgRequest->getVal('address'), date("Y-m-d"));
+		$entry = $wgMemc->get( $memcKey, false );
+		
+		if ( empty($entry) ) {
+			$wgMemc->set($memcKey, true, 86400 /*24h*/);
+			$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
+			$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', 
+					array($wgRequest->getVal('address')), $user);
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $retVal;		
+	}
+	
 	/**
 	 * This is the ajax-endpoint that the node server will connect to in order to get the currently logged-in user's info.
 	 * The node server will pass the same cookies that the client has set, and this will allow this ajax request to be
@@ -46,7 +85,15 @@ class ChatAjax {
 		if( empty($data) ) {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
-		
+		foreach($data as $k=>$v) {
+			if (is_array($v)) {
+				foreach($v as $k2=>$v2) {
+					error_log('MECH key data ' . $k . '.'.$k2 . ' => ' . $v2);
+				}
+			} else {
+				error_log('MECH key data ' . $k . ' => ' . $v);
+			}
+		}
 		$user = User::newFromId( $data['user_id'] );
 		
 		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
@@ -116,6 +163,11 @@ class ChatAjax {
 
 			$retVal['editCount'] = $stats['edits'];
 		}
+		
+		if ($retVal['isLoggedIn'] && $retVal['canChat']) {
+			// maybe we can record the ip here...
+		}
+		
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	} // end getUserInfo()
