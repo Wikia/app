@@ -713,3 +713,19 @@ $messages['zh-hans'] = array(
 	'wikiapoll-error-invalid-title' => '问题文本无效。',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiapoll-thanks-for-vote' => '謝謝！',
+	'wikiapoll-vote' => '投票 ！',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 票}}',
+	'wikiapoll-createpoll-headline' => '創建民調',
+	'wikiapoll-editpoll-headline' => '編輯民調',
+	'wikiapoll-question-label' => '問題',
+	'wikiapoll-cancel-label' => '取消',
+	'wikiapoll-publish-label' => '發佈',
+	'wikiapoll-error-duplicate' => '已存在同名的民調',
+	'wikiapoll-error-invalid-title' => '問題文本無效。',
+);
+

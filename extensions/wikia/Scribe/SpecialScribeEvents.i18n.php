@@ -58,6 +58,15 @@ $messages['fa'] = array(
 	'scribeevents' => 'رویدادهای اخیر',
 );
 
+/** Finnish (Suomi)
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Työkalu]] jolla etsiä tietyn sivun otsikkoa kaikista wikeistä',
+	'scribeevents' => 'Viimeisimmät tapahtumat',
+	'scribeeventsrecords' => 'Tiedotteet',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Outil]] pour chercher un titre de page spécifique à travers les wikis',

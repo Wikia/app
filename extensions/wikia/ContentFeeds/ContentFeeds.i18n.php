@@ -389,6 +389,15 @@ $messages['tl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang  isang pamagat ng pahina',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Исем',
+	'contentfeeds-firstfewarticles-tag-next' => 'Киләсе',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Хата: мәкалә  исеме кирәк',
+);
+
 /** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */

@@ -2016,7 +2016,7 @@ $messages['pl'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Strony MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Obrazy i filmy ($1)',
 	'wikiafollowedpages-special-namespace' => '(strona $1)',
-	'wikiafollowedpages-special-heading-wall' => 'Tablice wiadomości ($1)',
+	'wikiafollowedpages-special-heading-wall' => 'Tablice Wiadomości ($1)',
 	'wikiafollowedpages-special-empty' => 'Twoja lista stron obserwowanych jest pusta.
 Dodaj strony do listy klikając „{{int:watch}}“ na górze strony.',
 	'wikiafollowedpages-special-anon' => 'Proszę, [[Special:Signup|zaloguj się]] żeby stworzyć lub przeglądać swoją listę obserwowanych stron.',

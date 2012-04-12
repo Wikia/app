@@ -113,6 +113,7 @@ $messages['diq'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
  * @author VegaDark
@@ -145,9 +146,11 @@ $1
 Detalles: $2',
 	'lightbox-share-email-error-login' => 'Para enviar correos electrónicos debes iniciar sesión.',
 	'lightbox-share-email-error-noaddress' => 'No has especificado ninguna dirección.',
+	'lightbox-visit-the-wiki' => 'Visite el wiki:',
 );
 
 /** Finnish (Suomi)
+ * @author Ilkea
  * @author Nike
  * @author VezonThunder
  */
@@ -179,6 +182,7 @@ $1
 Tiedot: $2',
 	'lightbox-share-email-error-login' => 'Sähköpostien lähettäminen vaatii sisäänkirjautumisen',
 	'lightbox-share-email-error-noaddress' => 'Osoitteita ei ole määritetty.',
+	'lightbox-visit-the-wiki' => 'Siirry wikiin:',
 );
 
 /** French (Français)
@@ -245,6 +249,7 @@ $1
 Detalles: $2',
 	'lightbox-share-email-error-login' => 'Para enviar correos ten que rexistrarse',
 	'lightbox-share-email-error-noaddress' => 'Non se especificou ningún enderezo.',
+	'lightbox-visit-the-wiki' => 'Visite o wiki:',
 );
 
 /** Interlingua (Interlingua)
@@ -278,6 +283,7 @@ $1
 Detalios: $2',
 	'lightbox-share-email-error-login' => 'Pro inviar messages de e-mail es necessari aperir session',
 	'lightbox-share-email-error-noaddress' => 'Nulle adresse ha essite specificate.',
+	'lightbox-visit-the-wiki' => 'Visita le wiki:',
 );
 
 /** Japanese (日本語)
@@ -346,6 +352,7 @@ $1
 Поподробно: $2',
 	'lightbox-share-email-error-login' => 'Треба да се најавите за да испраќате е-пошта',
 	'lightbox-share-email-error-noaddress' => 'Немате наведено адреси.',
+	'lightbox-visit-the-wiki' => 'Посетете го викито:',
 );
 
 /** Malay (Bahasa Melayu)
@@ -379,6 +386,7 @@ $1
 Butiran: $2',
 	'lightbox-share-email-error-login' => 'Untuk menghantar e-mel, anda perlu log masuk',
 	'lightbox-share-email-error-noaddress' => 'Tiada alamat yang dinyatakan.',
+	'lightbox-visit-the-wiki' => 'Lawati wiki:',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -480,6 +488,7 @@ $1
 Szczegóły: $2',
 	'lightbox-share-email-error-login' => 'Aby wysyłać e-maile musisz się zalogować',
 	'lightbox-share-email-error-noaddress' => 'Adresy nie zostały określone.',
+	'lightbox-visit-the-wiki' => 'Odwiedź wiki:',
 );
 
 /** Pashto (پښتو)
@@ -525,6 +534,7 @@ $1
 Подробнее: $2',
 	'lightbox-share-email-error-login' => 'Для отправки писем вам нужно войти на сайт',
 	'lightbox-share-email-error-noaddress' => 'Не был указан адрес(а).',
+	'lightbox-visit-the-wiki' => 'Посетите вики:',
 );
 
 /** Swedish (Svenska)

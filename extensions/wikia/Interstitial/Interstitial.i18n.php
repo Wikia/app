@@ -272,6 +272,7 @@ $messages['ru'] = array(
 	'interstitial-default-campaign-code' => 'Викия любит вас!',
 	'interstitial-skip-ad' => 'Пропустить эту рекламу',
 	'interstitial-already-logged-in-no-link' => 'Вы уже вошли в систему, и не можете выбирать другие учётные записи.',
+	'interstitial-disabled-no-link' => 'Не существует назначения набора и междоузлия не включены на этой вики.',
 	'interstitial-link-away' => 'Здесь ничего увидеть нельзя!<br /><br />Вы хотите перейти к [[{{MediaWiki:Mainpage}}|Заглавной странице]] или возможно [[Special:Random|случайной странице]]?',
 	'exitstitial-register' => '<a href="#" class="register">Зарегистрироваться</a> или <a href="#" class="login">войти</a>, чтобы пропустить рекламу.',
 	'exitstitial-button' => 'Пропустить эту рекламу',

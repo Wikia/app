@@ -78,11 +78,16 @@ Desearías ir a la [[{{MediaWiki:Mainpage}}|Página principal]] o tal vez a una 
 );
 
 /** Finnish (Suomi)
+ * @author Ilkea
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Luo uusi tunnus]] tai [[Special:UserLogin|kirjaudu sisään]] niin ohitat tämän sivun vastaisuudessa.',
+	'outbound-screen-already-logged-in-no-link' => 'Kohdetta ei ole määritelty.
+Täällä ei ole mitään nähtävää!
+
+Haluaisitko mennä [[{{MediaWiki:Mainpage}}|etusivulle]] tai kenties [[Special:Random|satunnaiselle sivulle]]?',
 	'outbound-screen-you-are-leaving' => 'Olet poistumassa Wikiasta.',
 );
 

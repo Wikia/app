@@ -626,6 +626,23 @@ $messages['tr'] = array(
 	'cloakcheck-process-username' => 'Kullanıcı adı: $1',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'cloakcheck-form-username' => 'Кулланучы исеме',
+	'cloakcheck-form-check' => 'Кулланучы исемен тикшерергә',
+	'cloakcheck-process-empty' => 'Кулланучы исеме буш кала алмый.',
+	'cloakcheck-process-notexist' => 'Мондый исемле кулланучы юк.',
+	'cloakcheck-process-username' => 'Кулланучы исеме: $1',
+	'cloakcheck-process-accountage-yes' => 'Хисап язмасы бик иске.',
+	'cloakcheck-process-accountage-no' => 'Хисап язмасы артык яңа.',
+	'cloakcheck-process-emailconf-yes' => 'Электрон почта адресы расланган.',
+	'cloakcheck-process-emailconf-no' => 'Элеткрон почта адресы расланмаган.',
+	'cloakcheck-process-edits-yes' => 'Кулланучы тарафыннан тиешле күләмдә төзәтмәләр эшләнгән.',
+	'cloakcheck-process-edits-no' => 'Кулланучы тарафыннан тиешле күләмдә төзәтмәләр эшләнмәгән.',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Dimension
  * @author Hydra

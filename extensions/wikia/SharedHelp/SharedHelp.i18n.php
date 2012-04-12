@@ -79,6 +79,14 @@ $messages['es'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Página de discusión creada automáticamente',
 );
 
+/** Finnish (Suomi)
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'sharedhelp-desc' => 'Ottaa sivut[[w:c:Help|Help Wikiasta]] ja liittää ne {{ns:help}} nimiavaruuteen tässä wikissä',
+	'sharedhelp-autotalkcreate-summary' => 'Keskustelusivu luotiin automaattisesti',
+);
+
 /** French (Français)
  * @author Peter17
  * @author Yumeki

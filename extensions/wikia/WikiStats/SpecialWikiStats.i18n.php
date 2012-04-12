@@ -1740,7 +1740,36 @@ Bitte [[Special:UserLogin|anmelden oder ein Konto anlegen]] falls Sie noch keine
  */
 $messages['diq'] = array(
 	'wikistats_panel_close_btn' => 'Racnê',
+	'wikistats_other' => 'Zewmi',
+	'wikistats_video' => 'Video',
+	'wikistats_uploaded_images' => 'Bar bı',
+	'wikistats_connection_error' => 'Grêdayış de xeta',
+	'wikistats_distrib_edits' => 'Vurnayışi >=',
+	'wikistats_distrib_wikians' => 'Vurnayışkari',
+	'wikistats_date' => 'Wext',
+	'wikistats_namespace' => 'Cayênameyî',
+	'wikistats_show' => 'Bımocne',
+	'wikistats_stats' => 'Bımocne %i defiyê',
+	'wikistats_hide' => 'Bınımne',
+	'wikistats_wikiname' => 'Name:',
+	'wikistats_wikidbname' => 'DBName:',
+	'wikistats_wikicategory' => 'Kategori:',
+	'wikistats_wikiid' => 'ID:',
+	'wikistats_mean' => 'vatış',
 	'wikistats_username' => 'Karber',
+	'wikistats_usernames' => 'Karberi',
+	'wikistats_edits' => 'bıvurne',
+	'wikistats_bytes' => 'Bayti',
+	'wikistats_size' => 'Ebat',
+	'wikistats_words' => 'Nusni',
+	'wikistats_image' => 'resım',
+	'wikistats_redirects' => 'Raçarnayışi',
+	'wikistats_image_namespace' => 'resım',
+	'wikistats_page_requests' => 'Pela wastış',
+	'wikistats_visits' => 'Ziyaret',
+	'wikistats_new_per_day' => 'newe<br />Roc roc',
+	'wikistats_official' => 'Şexsi',
+	'wikistats_more_200_ch' => '&gt;200 ch',
 	'wikistats_userns' => 'karber',
 );
 
@@ -4461,6 +4490,74 @@ $messages['ltg'] = array(
 	'wikistats_website' => 'Teiklavīta',
 );
 
+/** Lushai (Mizo ţawng)
+ * @author RMizo
+ */
+$messages['lus'] = array(
+	'wikistats_active_wikians_date' => 'Ni/thla/hun heti zât kal tâa tihdanglamnate hi pho lang rawh:',
+	'wikistats_active_day' => 'ni',
+	'wikistats_active_month' => 'thlà',
+	'wikistats_active_year' => 'kum',
+	'wikistats_active_months' => 'thla',
+	'wikistats_number_editors' => 'siamṭhatu zât',
+	'wikistats_number_anons' => 'hriatloh zât',
+	'wikistats_wikians' => 'Kuttthawhtu inziaklûtte',
+	'wikistats_articles' => 'Thuziak (hruailuhna phâk tiam lohvin)',
+	'wikistats_articles_text' => 'Thuziak',
+	'wikistats_archived' => 'Hluihlâwn',
+	'wikistats_other' => 'A dang',
+	'wikistats_database' => 'Database',
+	'wikistats_links' => 'Zawmnate',
+	'wikistats_reg_users' => 'Hming khat chauhva inziaklûtte',
+	'wikistats_images' => 'Thlalâkte',
+	'wikistats_video' => 'Thlachë',
+	'wikistats_media' => 'Thlalâk leh thlachë',
+	'wikistats_video_embeded' => 'bilh tel',
+	'wikistats_uploaded_images' => 'hlànkài',
+	'wikistats_with_links' => 'zawmna telin',
+	'wikistats_connection_error' => 'Thlunzawm tlawlh',
+	'wikistats_distrib_edits' => 'Siamṭhat >=',
+	'wikistats_distrib_wikians' => 'Kuttthawhtu inziaklûtte',
+	'wikistats_distrib_edits_total' => 'Siamṭhat zawng zawng',
+	'wikistats_date' => 'Ni',
+	'wikistats_namespace' => 'Hminghmun',
+	'wikistats_show' => 'Tihlanna',
+	'wikistats_stats' => '%s lepsena  tilang rawh',
+	'wikistats_hide' => 'Tihbona',
+	'wikistats_wikiname' => 'Hming:',
+	'wikistats_wikidbname' => 'DBHming:',
+	'wikistats_wikicategory' => 'Pawl:',
+	'wikistats_wikiid' => 'ID:',
+	'wikistats_mean' => 'chawhrual',
+	'wikistats_largerthan' => 'aia lian',
+	'wikistats_username' => 'Hmangtu',
+	'wikistats_usernames' => 'Hmangtute',
+	'wikistats_edits' => 'siamţhatna',
+	'wikistats_bytes' => 'bait',
+	'wikistats_size' => 'lenzawng',
+	'wikistats_words' => 'thumalte',
+	'wikistats_internal' => 'chhunglam',
+	'wikistats_interwiki' => 'wikiteinkar',
+	'wikistats_image' => 'thlalâk',
+	'wikistats_external' => 'pawnlam',
+	'wikistats_rollups' => 'Bilhchhoh',
+	'wikistats_namespaces' => 'hminghmun',
+	'wikistats_redirects' => 'hruailuhnate',
+	'wikistats_edited_in_namespace' => 'he hminghmun chhunga siamṭhatte',
+	'wikistats_main_namespace' => '<br /> hminghmun chhunga thuziakte',
+	'wikistats_image_namespace' => 'thlalâk',
+	'wikistats_page_requests' => 'phêk dilnate',
+	'wikistats_visits' => 'tlawh zât',
+	'wikistats_new_per_day' => 'ni khata thar  <br />  zël',
+	'wikistats_video_uploads' => 'Thlache hlankaite',
+	'wikistats_per_namespace' => 'Hminghmun hriatna pakhat zëlah',
+	'wikistats_months_edits' => 'Tùn thla chhunga siamṭhatute',
+	'wikistats_content' => 'a chhunga thu awmte',
+	'wikistats_content_editors' => 'Thuziak siamṭhatute',
+	'wikistats_userns' => 'hmangtu',
+	'wikistats_other_namespace' => 'hminghmun  <br /> dang',
+);
+
 /** Maithili (मैथिली)
  * @author Vinitutpal
  */
@@ -5670,6 +5767,16 @@ $messages['pdc'] = array(
 	'wikistats_search_text' => 'Guck uff:',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'wikistats_other' => 'Onare',
+	'wikistats_show' => 'Zaische',
+	'wikistats_hide' => 'Vaschdegle',
+	'wikistats_edits' => 'Bearwaidunge',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Deejay1
@@ -6616,6 +6723,19 @@ $messages['ro'] = array(
 	'wikistats_language_all' => 'Toate limbile',
 	'wikistats_title' => 'Titlu',
 	'wikistats_namespaces_top10list' => 'Lista top 10',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikistats' => 'Uicchia Statisteche',
+	'wikistats_wikia' => 'Uicchia',
+	'wikistats_pagetitle' => 'Uicchia Statisteche',
+	'wikistats_showstats_btn' => 'Fà vedè le statisteche',
+	'wikistats_export_xls' => "Esporte jndr'à XLS",
+	'wikistats_daterange_from' => 'Da:',
+	'wikistats_daterange_to' => 'A:',
 );
 
 /** Russian (Русский)
@@ -7822,6 +7942,19 @@ $messages['tt-cyrl'] = array(
 	'wikistats_panel_close_btn' => 'Ябу',
 	'wikistats_daterange_from' => 'Кемнән:',
 	'wikistats_daterange_to' => 'Кемгә:',
+);
+
+/** Tuvinian (Тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'wikistats_panel_close_btn' => 'Хаг',
+	'wikistats_daterange_from' => 'Кайыын:',
+	'wikistats_daterange_to' => 'Кайнаар:',
+	'wikistats_pviews_notfound' => 'Көөр арыннар чок',
+	'wikistats_invalid_date' => 'Таарышпас үе аразын шилээн',
+	'wikistats_namespace' => 'Ат делгеми',
+	'wikistats_show' => 'Көргүзери',
 );
 
 /** Ukrainian (Українська)

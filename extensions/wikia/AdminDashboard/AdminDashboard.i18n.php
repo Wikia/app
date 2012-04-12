@@ -1542,13 +1542,14 @@ $messages['vi'] = array(
  * @author Anakmalaysia
  * @author Dimension
  * @author Hzy980512
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'admindashboard-title' => '{{SITENAME}}面板',
 	'admindashboard-header' => '管理员控制面板',
 	'admindashboard-toolbar-link' => '管理员',
-	'admindashboard-tab-advanced' => '进阶',
-	'admindashboard-tab-general' => '一般',
+	'admindashboard-tab-advanced' => '高级',
+	'admindashboard-tab-general' => '常规',
 	'admindashboard-controls-wiki-header' => '维基',
 	'admindashboard-control-theme-designer-label' => '主题设计器',
 	'admindashboard-control-theme-designer-tooltip' => '主题设计器允许您自定义您的wiki颜色、背景以及更多。',

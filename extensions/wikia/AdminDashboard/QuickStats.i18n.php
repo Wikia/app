@@ -150,6 +150,7 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Bola
  */
 $messages['es'] = array(
@@ -162,6 +163,9 @@ $messages['es'] = array(
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver más estadísticas]]',
 	'quickstats-number-shortening' => '$1m',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+	'quickstats-ga-broken-message' => 'La columna de las páginas vistas está actualmente fuera de servicio.  ¡Estamos trabajando para su pronto restablecimiento! [ $1  Más información]',
 );
 
 /** Persian (فارسی)
@@ -174,6 +178,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Ilkea
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -186,9 +191,13 @@ $messages['fi'] = array(
 	'quickstats-totals-label' => 'Yhteensä',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Katso lisää tilastoja]]',
 	'quickstats-number-shortening' => '$1k',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+	'quickstats-ga-broken-message' => 'Näkymä-sarakkeet ei tällähetkellä ole järjestyksessä. Työskentelemme palauttaaksemme ne pian! [$1 Lisää tietoa]',
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -201,6 +210,8 @@ $messages['fr'] = array(
 	'quickstats-totals-label' => 'Totaux',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Voir plus de stats]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1 milliard',
 );
 
 /** Galician (Galego)
@@ -216,6 +227,9 @@ $messages['gl'] = array(
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ollar máis estatísticas]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+	'quickstats-ga-broken-message' => 'A columna das visitas está fóra de servizo nestes intres. Estamos traballando para restablecela axiña! [$1 Máis información]',
 );
 
 /** Hebrew (עברית)
@@ -258,6 +272,9 @@ $messages['ia'] = array(
 	'quickstats-totals-label' => 'Totales',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Vider plus statisticas]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1mln',
+	'quickstats-number-shortening-billions' => '$1mld',
+	'quickstats-ga-broken-message' => 'Le columna de vistas es temporarimente foras de servicio. Nos nos effortia a restabilir lo tosto! [$1 Plus info]',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -360,6 +377,9 @@ $messages['mk'] = array(
 	'quickstats-totals-label' => 'Вкупно',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Повеќе статистики]]',
 	'quickstats-number-shortening' => '$1 К',
+	'quickstats-number-shortening-millions' => '$1 млн.',
+	'quickstats-number-shortening-billions' => '$1 млд',
+	'quickstats-ga-broken-message' => 'Колоната за посети моментално не функционира. Работиме на тоа да проработи набргу! [$1 Повеќе инфо]',
 );
 
 /** Malay (Bahasa Melayu)
@@ -375,6 +395,9 @@ $messages['ms'] = array(
 	'quickstats-totals-label' => 'Jumlah',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Lihat banyak lagi statistik]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1J',
+	'quickstats-number-shortening-billions' => '$1B',
+	'quickstats-ga-broken-message' => 'Kolum kunjungan (views) sekarang tidak boleh digunakan. Kami sedang berusaha untuk membaikinya secepat mungkin! [$1 Maklumat lanjut]',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -391,6 +414,8 @@ $messages['nb'] = array(
 	'quickstats-totals-label' => 'Totalt',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Se mer statistikk]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1 M',
+	'quickstats-number-shortening-billions' => '$1 B',
 );
 
 /** Dutch (Nederlands)
@@ -415,6 +440,7 @@ $messages['nl'] = array(
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Cloudissimo
+ * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
@@ -428,6 +454,9 @@ $messages['pl'] = array(
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Więcej statystyk]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1mln',
+	'quickstats-number-shortening-billions' => '$1mlrd',
+	'quickstats-ga-broken-message' => 'Kolumna z licznikiem odwiedzin obecnie nie działa. Ciężko pracujemy aby przywrócić jej sprawność. [$1  Więcej...]',
 );
 
 /** Piedmontese (Piemontèis)
@@ -484,6 +513,9 @@ $messages['ru'] = array(
 	'quickstats-totals-label' => 'Итого',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ещё статистика]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1милл.',
+	'quickstats-number-shortening-billions' => '$1миллиард',
+	'quickstats-ga-broken-message' => 'Статистика просмотров страниц вики в настоящее время недоступна. Мы работаем над тем, чтобы исправить это! [$1 Подробнее]',
 );
 
 /** Serbo-Croatian (Srpskohrvatski)
@@ -539,9 +571,13 @@ $messages['sv'] = array(
 	'quickstats-header-edits' => 'Redigeringar',
 	'quickstats-header-photos' => 'Foton',
 	'quickstats-header-likes' => 'Gilla',
+	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Totalt',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Se mer statistik]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+	'quickstats-ga-broken-message' => 'Visningskolumnen är för tillfället ur funktion. Vi arbetar på att få tillbaka den snart! [$1 Mer info]',
 );
 
 /** Tamil (தமிழ்)

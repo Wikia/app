@@ -463,10 +463,10 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author 555
  * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
- * @author 555
  */
 $messages['pt-br'] = array(
 	'tagsreport' => 'Relatório de etiquetas',
@@ -594,7 +594,7 @@ $messages['vep'] = array(
 	'tagsreportselecttag' => 'Valikat virg:',
 	'tagsreportgo' => 'Ozutada',
 	'tagsreportnotspecify' => 'Tö ei ole völ valinuded konkretišt virgad',
-	'tagsreportnoresults' => "Rezul'tatad ei olgoi löutud",
+	'tagsreportnoresults' => "Rezul'tatoid ei ole löutud",
 	'tagsreportmainnspace' => 'Päsüdäimišt',
 	'tagsreportpages' => "(<strong>$1</strong> {{PLURAL:$1|lehtpol'|lehtpol't}})",
 	'tagsreportpagesfound' => "Om löutud <strong>$1</strong> {{PLURAL:$1|lehtpol'|lehtpol't}}, kus om specialižid virgoid (DPL, YouTube, etc.)",

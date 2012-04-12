@@ -1466,6 +1466,7 @@ $messages['ru'] = array(
 	'editaccount-submit-pass' => 'Сохранить пароль',
 	'editaccount-submit-realname' => 'Сохранить настоящее имя',
 	'editaccount-submit-clearunsub' => 'Снять отказ от подписки',
+	'editaccount-submit-cleardisable' => 'Очистить отключённый флаг',
 	'editaccount-submit-close' => 'Закрыть учётную запись',
 	'editaccount-usage-close' => 'Вы также можете приостановить действие учётной записи, заменив её пароль и удалив адрес электронной почты. Обратите внимание, что эти данные будет невозможно восстановить.',
 	'editaccount-warning-close' => '<b>Внимание!</b> Вы собираетесь навсегда отключить учётную запись пользователя <b>$1</b>. Это действие не может быть отменено. Вы уверены, что хотите сделать именно это?',
@@ -1475,6 +1476,7 @@ $messages['ru'] = array(
 	'editaccount-success-pass' => 'Пароль для учётной записи $1 успешно изменён.',
 	'editaccount-success-realname' => 'Настоящее имя для учётной записи $1 успешно изменено.',
 	'editaccount-success-unsub' => 'Успешно удалена блокировка подписки для учётной записи $1.',
+	'editaccount-success-disable' => 'Успешно удалён отключённый бит блокировки для учётной записи  $1 .',
 	'editaccount-success-close' => 'Учётная запись $1 успешно отключена.',
 	'editaccount-error-email' => 'Адрес эл. почты не был изменён. Попробуйте ещё раз или свяжитесь с технической командой.',
 	'editaccount-error-pass' => 'Пароль не был изменён. Попробуйте ещё раз или свяжитесь с технической командой.',
@@ -1860,6 +1862,7 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'editaccount' => '编辑账户',
@@ -1878,18 +1881,18 @@ $messages['zh-hans'] = array(
 	'editaccount-submit-email' => '保存电子邮件地址',
 	'editaccount-submit-pass' => '保存密码',
 	'editaccount-submit-realname' => '保存真名',
-	'editaccount-submit-close' => '关闭户口',
-	'editaccount-success-email-blank' => '成功为帐户 $1 删除电子邮件地址。',
-	'editaccount-success-pass' => '帐户$1已成功更改密码。',
-	'editaccount-success-realname' => '帐户$1的真实姓名已成功更改。',
-	'editaccount-success-close' => '成功禁用帐户 $1 。',
-	'editaccount-nouser' => '帐户"$1"不存在！',
+	'editaccount-submit-close' => '关闭帐户',
+	'editaccount-success-email-blank' => '成功移除帐户 $1 的电子邮件地址。',
+	'editaccount-success-pass' => '帐户 $1 的密码更改成功。',
+	'editaccount-success-realname' => '帐户 $1 的真实姓名更改成功。',
+	'editaccount-success-close' => '成功禁用了帐户 $1 。',
+	'editaccount-nouser' => '帐户“$1”不存在！',
 	'editaccount-labal-account-status' => '帐户状态',
 	'editaccount-labal-email-status' => '电子邮件状态',
 	'editaccount-status-confirmed' => '已确认',
 	'editaccount-status-unconfirmed' => '未确认',
 	'editaccount-status-realuser' => '活跃用户',
-	'editaccount-status-tempuser' => '非活跃用户',
+	'editaccount-status-tempuser' => '临时用户',
 	'editaccount-log' => '用户帐户日志',
 	'right-editaccount' => '编辑其他用户的信息',
 );

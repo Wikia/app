@@ -1410,6 +1410,7 @@ Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met 
 
 /** Polish (Polski)
  * @author BeginaFelicysym
+ * @author Odder
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1506,7 +1507,7 @@ Prosimy [[Special:Contact|skontaktuj się z Wikia]] w sprawie problemu.<br />Blo
 	'phalanx-stats-row' => "w $4, typ filtru '''$1''' zablokowano '''$2''' na $3",
 	'phalanx-stats-row-per-wiki' => "użytkownik '''$2''' zablokował na '''$4''' wedle ID filtru '''$3''' ($5) (typ: '''$1''')",
 	'phalanx-rule-log-name' => 'Dzienni reguł Phalanx',
-	'phalanx-rule-log-header' => 'Jest to dziennik zmian reguł Phalanx.',
+	'phalanx-rule-log-header' => 'Jest to rejestr zmian reguł Phalanx.',
 	'phalanx-email-rule-log-name' => 'rejestr filtrów e-mailowych Phalanx',
 	'phalanx-email-rule-log-header' => 'To jest rejestr zmian w filtrach Phalanx dotyczących e-maili.',
 	'phalanx-rule-log-add' => 'Reguła Phalanx dodana: $1',
@@ -1754,6 +1755,8 @@ $messages['ru'] = array(
 	'phalanx-stats-row-per-wiki' => "участник '''$2''' был заблокирован на '''$4''' с ID фильтра '''$3''' ($5) (тип: '''$1''')",
 	'phalanx-rule-log-name' => 'журнал правил Phalanx',
 	'phalanx-rule-log-header' => 'Это журнал изменений правил phalanx.',
+	'phalanx-email-rule-log-name' => 'Журнал правил Phalanx для e-mail',
+	'phalanx-email-rule-log-header' => 'Это журнал изменений правил Phalanx для e-mail.',
 	'phalanx-rule-log-add' => 'Правило Phalanx добавлено: $1',
 	'phalanx-rule-log-edit' => 'Правило Phalanx отредактировано: $1',
 	'phalanx-rule-log-delete' => 'Правило Phalanx удалено: $1',
@@ -1762,8 +1765,10 @@ $messages['ru'] = array(
 	'phalanx-stats-table-wiki-name' => 'Имя вики',
 	'phalanx-stats-table-wiki-url' => 'URL-адрес вики',
 	'phalanx-stats-table-wiki-last-edited' => 'Последняя правка',
+	'phalanx-email-filter-hidden' => 'Фильтр для e-mail скрыт. У вас нет разрешения на просмотр текста.',
 	'right-phalanx' => 'Можно управлять глобальными блоками и спам-фильтрами',
 	'right-phalanxexempt' => 'Освобождено от правил Phalanx',
+	'right-phalanxemailblock' => 'Можно обратиться, просмотреть и управлять e-mail на основе блоков',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
