@@ -431,7 +431,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 /* footer */
 .wikiahomepage-footer {
 	@include clearfix;
-	border-bottom: 4px solid #ccc;
+	border-bottom: 1px solid #f1f1f1;
 	border-top: 4px solid $color-wikiahome-border-primary-brand-color;
 	clear: both;
 	margin: 30px 10px 0 10px;
