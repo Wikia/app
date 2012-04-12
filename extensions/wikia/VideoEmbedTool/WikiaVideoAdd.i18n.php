@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'wva-notlogged' => 'You need to log in or register to insert videos.',
 	'wva-notallowed' => 'You cannot insert videos on this wiki.',
 	'wva-protected' => 'This video is protected.',
+	'wva-thumbnail-upload-failed' => 'Video embed failed, unable to get proper thumbnail'
 );
 
 /** Message documentation (Message documentation)

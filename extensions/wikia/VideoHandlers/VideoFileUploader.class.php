@@ -47,24 +47,51 @@ class VideoFileUploader {
 		$this->oApiWrapper = null;
 	}
 
-	public function upload( &$oTitle ){
+	protected function tmpUpload ( $urlFrom ){
 
-		if( !$this->getApiWrapper() ) {
-			/* can't upload without proper ApiWrapper */
-			return;
-		}
-
-		/* prepare temporary file */
 		$data = array(
 			'wpUpload' => 1,
 			'wpSourceType' => 'web',
-			'wpUploadFileURL' => $this->getApiWrapper()->getThumbnailUrl()
+			'wpUploadFileURL' => $urlFrom
 		);
 
 		$upload = F::build( 'UploadFromUrl' );
 		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
-		$upload->fetchFile();
-		$upload->verifyUpload();
+
+		return $upload;
+	}
+
+	public function upload( &$oTitle ){
+
+		wfProfileIn();
+		if( !$this->getApiWrapper() ) {
+			/* can't upload without proper ApiWrapper */
+			wfProfileOut();
+			return Status::newFatal('');
+		}
+		$retries = 3;
+
+		for ( $i = 0; $i < $retries; $i++ ){
+			/* prepare temporary file */
+			$upload = $this->tmpUpload( $this->getApiWrapper()->getThumbnailUrl() );
+			$upload->fetchFile();
+			$status = $upload->verifyUpload();
+			if ( isset( $status['status'] ) && ( $status['status'] != UploadBase::EMPTY_FILE ) ){
+				break;
+			}
+			sleep( 3 );
+		}
+
+		if ( $i == $retries ) {
+			/* prepare temporary file with default thumbnail */
+			$upload = $this->tmpUpload( NullApiWrapper::$THUMBNAIL_URL );
+			$upload->fetchFile();
+			$status = $upload->verifyUpload();
+			if ( isset( $status['status'] ) && ( $status['status'] == UploadBase::EMPTY_FILE ) ){
+				wfProfileOut();
+				return Status::newFatal('');
+			};
+		}
 
 		$this->adjustThumbnailToVideoRatio( $upload );
 
@@ -72,12 +99,13 @@ class VideoFileUploader {
 		$titleText = self::sanitizeTitle( $this->getDestinationTitle() );
 		$oTitle = Title::newFromText( $titleText, NS_FILE );
 
-		$file = F::build( !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile',
-				array(
-					$oTitle,
-					RepoGroup::singleton()->getLocalRepo()
-				)
-			);
+		$file = F::build(
+			!empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile',
+			array(
+				$oTitle,
+				RepoGroup::singleton()->getLocalRepo()
+			)
+		);
 
 		/* override thumbnail metadata with video metadata */
 		$file->forceMime( $this->getApiWrapper()->getMimeType() );
@@ -85,12 +113,13 @@ class VideoFileUploader {
 
 		/* real upload */
 		$result = $file->upload(
-				$upload->getTempPath(),
-				'created video',
-				$this->getDescription(),
-				File::DELETE_SOURCE
-			);
+			$upload->getTempPath(),
+			'created video',
+			$this->getDescription(),
+			File::DELETE_SOURCE
+		);
 
+		wfProfileOut();
 		return $result;
 	}
 
@@ -195,7 +224,9 @@ class VideoFileUploader {
 
 	/**
 	 * Translate URL to Title object
-	 * can transparently upload new video if it doesn't exis)
+	 * can transparently upload new video if it doesn't exist
+	 * @param $requestedTitle if new Video will be created you can optionally request
+	 *  it's title (otherwise Video name from provider is used)
 	 */
 	public static function URLtoTitle( $url, $sTitle = '' ) {
 
