@@ -36,7 +36,9 @@ $timeStart = microtime( true );
 $rows = $dbw_dataware->query( "SELECT img_name, wiki_id, provider
 			       FROM video_premigrate
 			       WHERE provider IN ('1', '16', '20')
+			       GROUP BY img_name, wiki_id
 			       ORDER BY wiki_id, provider
+
 " );
 
 $rowCount = $rows->numRows();
