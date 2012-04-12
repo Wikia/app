@@ -114,10 +114,10 @@ class AssetsConfig {
 
 		if (!empty($wgUseJQueryFromCDN)) {
 			$url = $minify
-				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'
-				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js';
+				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'
+				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js';
 		} else {
-			$url = 'skins/common/jquery/jquery-1.6.1.js';
+			$url = 'skins/common/jquery/jquery-1.7.2.js';
 		}
 
 		return array($url);
