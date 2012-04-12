@@ -143,15 +143,3 @@ $color-search-form-background: darken($color-page, 5%);
 		padding-top: 5px;
 	}
 }
-
-.oasis-one-column {
-	.WikiaSearch {
-		input[type="search"], input[type="text"] {
-			//width: 928px; // TODO: Put this back in so it looks okay in wide modes
-		}	
-	}
-	// TODO: Remove this later, it's just for dev
-	.WikiaMainContent {
-		width: 680px;
-	}
-}
