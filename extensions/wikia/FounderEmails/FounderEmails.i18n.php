@@ -14,6 +14,8 @@ Congratulations! $EDITORNAME has just joined $WIKINAME.
 
 Take this opportunity to welcome them to your wiki and encourage them to help edit. The more the merrier, and the faster your wiki will grow.
 
+$EDITORPAGEURL
+
 The Wikia Team',
 	'founderemails-email-user-registered-greeting' => 'Hi $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Congratulations! $EDITORNAME has just joined $WIKINAME.',
@@ -26,17 +28,17 @@ It looks like $EDITORNAME has registered on your wiki! Why don\'t you drop by th
 	'founderemails-email-0-days-passed-subject' => 'Welcome to Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Nice to meet you $USERNAME,
 
-Congratulations on creating $WIKINAME!
+Congratulations on creating $WIKINAME, $WIKIURL.
 
 Here are a few helpful tips to get you started:
 
-Add pages. A wiki is all about sharing information about your unique topic. Create pages by clicking on “Add a Page” and fill out more specific information about your topic.
+Add pages. A wiki is all about sharing information about your unique topic.
 
-Add photos. Pages are always better when they have visuals! Add images to your pages and to your main page. You can click Add a Photo to add a photo, a photo gallery, or a slideshow.
+Add photos. Pages are always better when they have visuals! Add photos to your pages and to your main page.
 
 Customize your theme. Customize your wiki’s theme and wordmark to make your wiki stand out! Use the Theme Designer to add custom colors to your wiki and make it unique to your topic.
 
-We won’t leave you out in the cold. We’re here to help you make $WIKINAME successful every step of the way. Visit community.wikia.com for forums, advice and help, or to email us your questions!
+We won’t leave you out in the cold. We’re here to help you make $WIKINAME successful every step of the way. Visit http://community.wikia.com for forums, advice and help, or to email us your questions!
 
 Happy wiki building! The Wikia Team
 
@@ -50,7 +52,7 @@ Click the following link to unsubscribe from all Wikia emails: $UNSUBSCRIBEURL',
 	'founderemails-email-3-days-passed-subject' => 'How\'s it going on your wiki',
 	'founderemails-email-3-days-passed-body' => 'Hi there $USERNAME,
 
-We wanted to check in and see how things are going at $WIKINAME.
+We wanted to check in and see how things are going at $WIKINAME, $WIKIURL.
 
 It\'s been 3 days since you started and we thought we\'d drop by to
 offer some more tips on building your wiki:
@@ -68,7 +70,7 @@ they\'ve worked out their main page, articles pages and more. Here are
 some of our favorites: Muppet Wiki, Pop Tarts Wiki, Monster High Wiki.
 
 Need help figuring out how something works? We\'re always here for you!
-Come ask us for help and advice at community.wikia.com.
+Come ask us for help and advice at http://community.wikia.com.
 
 Keep up the great work!
 The Wikia Team 
@@ -83,17 +85,17 @@ Now that you\'re a few days into your wiki, we thought you might want to check o
 	'founderemails-email-10-days-passed-subject' => 'Happy 10 day anniversary!',
 	'founderemails-email-10-days-passed-body' => 'How\'s it going $USERNAME?
 
-Whoa, time flies!  It\'s already been 10 days since you started $WIKINAME.  
+Whoa, time flies!  It\'s already been 10 days since you started $WIKINAME, $WIKIURL.
 
-Get others involved in your project and show off all the awesome work you’ve been doing!  Here are some ways to spread the word:
+Get others involved in your project and show off all the awesome work you\'ve been doing!  Here are some ways to spread the word:
 
-Didn\'t your mother tell you to Share? Use the Share button on your toolbar, article pages and photos to show them off to your friends and Followers on Facebook, Twitter or other popular sites.
+Didn\'t your mother tell you to Share? Use the Share button on your wiki\'s main page, article pages and photos to show them off to your friends and Followers on Facebook, Twitter or other popular sites.
 
 Harness the power of email.  Email others you know who are interested in your topic or interested in helping you, like a friend from school or a co-worker.  You can also email specific photos from your wiki using the email button.
 
 Join up with similar websites. Ask people on other forums or websites that are about your topic for help by posting in their forums or comments.  If possible, contact the administrator and see if they\'re interested in link-sharing — they\'ll put your wiki link on their website if you put their link on your wiki.
 
-You can also ask other Wikians to help out on your wiki by posting in the forums on community.wikia.com.  
+You can also ask other Wikians to help out on your wiki by posting in the forums on http://community.wikia.com.  
 
 Keep up the good work!
 
@@ -112,6 +114,8 @@ All right! $EDITORNAME has just made their very first edit on $WIKINAME.
 
 Head over to $PAGETITLE to check out what they added.
 
+$PAGEURL
+
 The Wikia Team',
 	'founderemails-email-first-edit-greeting' => 'Hi $USERNAME,',
 	'founderemails-email-first-edit-headline' => 'All right! $EDITORNAME has just made their very first edit on $WIKINAME.',
@@ -129,6 +133,8 @@ $EDITORNAME just made another edit to the $WIKINAME on $PAGETITLE.
 
 Head over to $PAGETITLE to see what they\'ve changed.
 
+$PAGEURL
+
 The Wikia Team',
 	'founderemails-email-general-edit-greeting' => 'Hi $USERNAME,',
 	'founderemails-email-general-edit-headline' => '$EDITORNAME just made another edit to the $WIKINAME on $PAGETITLE.',
@@ -145,6 +151,8 @@ It looks like registered user $EDITORNAME has edited your wiki! Why don\'t you d
 A Wikia Contributor has just made an edit to $PAGETITLE on $WIKINAME.
 
 Wikia Contributors are people who make edits without logging in to a Wikia account. Go see what this mysterious friend added!
+
+$PAGEURL
 
 The Wikia Team',
 	'founderemails-email-anon-edit-greeting' => 'Hi $USERNAME,',
@@ -220,9 +228,9 @@ It looks like someone has edited your wiki! Why don\'t you <a href="$MYHOMEURL">
 	'founderemails-lot-happening-subject' => '$WIKINAME is heating up!',
 	'founderemails-lot-happening-body' => 'Hi $USERNAME,
 
-Congratulations! there\'s a lot going on at $WIKINAME today!
+Congratulations there\'s a lot going on at $WIKINAME, $WIKIURL.
 
-If you haven\'t already you can go to Wiki Activity see all of the great work that\'s been happening.
+If you haven\'t already, you can go to Wiki Activity and see all of the great work that\'s been happening.
 
 Since there\'s so much going on, you might also want to change your email preferences to digest mode. With digest mode on you\'ll receive one email that lists all of the activity on your wiki each day.
 
@@ -231,8 +239,8 @@ The Wikia Team',
 There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s been going on.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-lot-happening-greeting' => 'Hi $USERNAME,',
-	'founderemails-email-lot-happening-headline' => 'Congratulations! there\'s a lot going on at $WIKINAME today!',
-	'founderemails-email-lot-happening-content' => 'If you haven\'t already you can go to Wiki Activity see all of the great work that\'s been happening.  Since there\'s so much going on, you might also want to change your email preferences to digest mode. With digest mode on you\'ll receive one email that lists all of the activity on your wiki each day.',
+	'founderemails-email-lot-happening-headline' => 'Congratulations there\'s a lot going on at $WIKINAME today!',
+	'founderemails-email-lot-happening-content' => 'If you haven\'t already, you can go to Wiki Activity and see all of the great work that\'s been happening.  Since there\'s so much going on, you might also want to change your email preferences to digest mode. With digest mode on you\'ll receive one email that lists all of the activity on your wiki each day.',
 	'founderemails-email-lot-happening-signature' => 'The Wikia Team',
 	'founderemails-email-lot-happening-button' => 'See Activities',
 // New Founder email messages
@@ -261,7 +269,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-0-day-addpages-content' => 'A wiki is all about sharing information about your unique topic.  Create pages by clicking on <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPAGEURL">"Add a Page"</a> and fill out more specific information about your topic.',
 	'founderemails-email-0-day-addpages-button' => 'Add a Page',
 	'founderemails-email-0-day-addphotos-heading' => 'Add photos.',
-	'founderemails-email-0-day-addphotos-content' => 'Pages are always better when they have visuals!  Add images to your pages and to your main page.  You can click <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"Add a Photo"</a> to add a photo, a photo gallery, or a slideshow.',
+	'founderemails-email-0-day-addphotos-content' => 'Pages are always better when they have visuals!  Add photos to your pages and to your main page.  You can click <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"Add a Photo"</a> to add a photo, a photo gallery, or a slideshow.',
 	'founderemails-email-0-day-addphotos-button' => 'Add a Photo',
 	'founderemails-email-0-day-customizetheme-heading' => 'Customize your theme.',
 	'founderemails-email-0-day-customizetheme-content' => 'Customize your wiki\'s theme and wordmark to make your wiki stand out!  Use the <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">Theme Designer</a> to add custom colors to your wiki and make it unique to your topic.',
@@ -288,7 +296,7 @@ There\'s a lot happening on your wiki today! Drop by $MYHOMEURL to see what\'s b
 	'founderemails-email-10-day-congratulations' => 'Whoa, time flies!  It\'s already been 10 days since you started $HDWIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Get others involved in your project and show off all the awesome work you\'ve been doing!  Here are some ways to spread the word:',
 	'founderemails-email-10-day-share-heading' => 'Didn\'t your mother tell you to Share?',
-	'founderemails-email-10-day-share-content' => 'Use the Facebook Like button on your wiki\'s main page, article pages and photos to show them off to your friends and followers on Facebook.',
+	'founderemails-email-10-day-share-content' => 'Use the Share button on your wiki\'s main page, article pages and photos to show them off to your friends and followers on Facebook.',
 	'founderemails-email-10-day-email-heading' => 'Harness the power of email.',
 	'founderemails-email-10-day-email-content' => 'Email others you know who are interested in your topic or interested in helping you, like a friend from school or a co-worker.  You can also email specific photos from your wiki using the email button',
 	'founderemails-email-10-day-join-heading' => 'Join up with similar websites.',
@@ -303,6 +311,8 @@ Today $WIKINAME was viewed by $1 {{PLURAL:$1|person|people}}.
 
 Keep adding new content and promoting your wiki to encourage more people to read, edit and spread the word.
 
+$WIKIURL
+
 The Wikia Team',
 	'founderemails-email-views-digest-greeting' => 'Hi $USERNAME,',
 	'founderemails-email-views-digest-headline' => 'Today $WIKINAME was viewed by $1 {{PLURAL:$1|person|people}}.',
@@ -313,7 +323,7 @@ The Wikia Team',
 	'founderemails-email-complete-digest-subject' => 'The latest activity on $WIKINAME',
 	'founderemails-email-complete-digest-body' => 'Hi $USERNAME,
 
-It\'s time for your daily dose of activity from $WIKINAME.
+It\'s time for your daily dose of activity from $WIKINAME, $WIKIURL.
 
 $1 {{PLURAL:$1|person|people}} viewed your wiki.
 
@@ -327,7 +337,7 @@ $3 {{PLURAL:$3|person|people}} joined your wiki.
 
 Welcome new people to your wiki with a talk page message.
 
-You can always head over to wiki activity to view all of the exiting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.
+You can always head over to wiki activity to view all of the exciting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.
 
 The Wikia Team',
 	'founderemails-email-complete-digest-greeting' => 'Hi $USERNAME,',
@@ -339,7 +349,7 @@ The Wikia Team',
 	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|person|people}} joined your wiki.',
 	'founderemails-email-complete-digest-content3' => 'Welcome new people to your wiki with a talk page message.
 <br /><br />
-You can always head over to wiki activity to view all of the exiting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.',
+You can always head over to wiki activity to view all of the exciting changes being made on $WIKINAME. Check in often, as the founder your community looks to you to help guide and run the wiki.',
 	'founderemails-email-complete-digest-signature' => 'The Wikia Team',
 	'founderemails-email-complete-digest-button' => 'Go to wiki activity',
 // founder emails preferences
