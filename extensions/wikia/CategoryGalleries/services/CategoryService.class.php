@@ -121,8 +121,10 @@
 			}
 
 			$data = array();
-			while ($row = $res->fetchObject($res)) {
-				$data[intval($row->page_id)] = intval($row->pv_views);
+			if( $res !== false ){
+				while ($row = $res->fetchObject($res)) {
+					$data[intval($row->page_id)] = intval($row->pv_views);
+				}
 			}
 
 			// If asked with plain integer return a single integer too
