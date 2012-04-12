@@ -143,3 +143,10 @@ $color-search-form-background: darken($color-page, 5%);
 		padding-top: 5px;
 	}
 }
+
+.oasis-one-column {
+	// Remove this later if we add a right rail
+	.WikiaMainContent {
+		width: 680px;
+	}
+}
