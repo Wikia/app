@@ -1,10 +1,5 @@
 <?php
-class PagesOnWikiModule extends Module {
-
-	var $wgDisableAnonymousEditing;
-	var $wgEnableWikiAnswers;
-	var $wgSitename;
-	var $total;
+class PagesOnWikiModule extends WikiaController {
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);

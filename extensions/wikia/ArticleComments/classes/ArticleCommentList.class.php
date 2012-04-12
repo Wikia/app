@@ -389,7 +389,7 @@ class ArticleCommentList {
 
 		$commentListHTML = '';
 		if(!empty($wgTitle)) {
-			$commentListHTML = wfRenderPartial('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false  ));			
+			$commentListHTML = F::app()->getView('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false  ))->render();
 		}		
 
 		$commentingAllowed = true;
@@ -822,7 +822,7 @@ class ArticleCommentList {
 							'users'			=> $users
 					);
 					
-					$header = wfRenderPartial('ArticleComments', 'RCHeaderBlock', $vars);
+					$header = F::app()->getView('ArticleComments', 'RCHeaderBlock', $vars)->render();
 				}
 			}
 		}

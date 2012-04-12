@@ -1,11 +1,5 @@
 <?php
-class FooterModule extends Module {
-
-	var $wgBlankImgUrl;
-
-	var $showToolbar;
-	var $showNotifications;
-	var $showLoadTime;
+class FooterModule extends WikiaController {
 
 	public function executeIndex() {
 		global $wgTitle, $wgContentNamespaces, $wgUser, $wgSuppressToolbar, $wgShowMyToolsOnly;
@@ -97,8 +91,9 @@ class FooterModule extends Module {
 	}
 
 	public function executeMenu( $params ) {
-		$this->items = (array)$params['items'];
-		wfRunHooks('BeforeToolbarMenu', array(&$this->items));
+		$items = (array)$params['items'];
+		wfRunHooks('BeforeToolbarMenu', array(&$items));
+		$this->items = $items;
 	}
 
 }

@@ -1,18 +1,11 @@
 <?php
-require_once dirname(__FILE__) . '/../CreateNewWikiModule.class.php';
 
-class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
+class CreateNewWikiModuleTest extends WikiaBaseTest {
 
-	protected function setUp() {
-		$this->originalApp = F::build('App');
+	public function __construct() {
+		$this->setupFile = dirname(__FILE__) . '/../CreateNewWiki_setup.php';
 	}
-
-	protected function tearDown() {
-		F::setInstance('App', $this->originalApp);
-		F::unsetInstance('CreateWiki');
-		F::unsetInstance('GlobalTitle');
-	}
-
+	
 	/**
 	 * @group hyun
 	 */
@@ -63,23 +56,11 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 
 		$wgUser = $this->getMock('User');
 
-		$cnwModule = $this->getMock( 'CreateNewWikiModule', array( 'countCreatedWikis', 'getStoredAnswer' ), array($app) );
-		/*
-		$cnwModule->expects($this->once())
-			->method('getStoredAnswer')
-			->will($this->returnValue($wikiAnswer));
-			*/
-		/*
-		$cnwModule->expects($this->once())
-			->method('countCreatedWikis')
-			->with($this->equalTo(6))
-			->will($this->returnValue(1));
-		*/
-		$cnwModule->executeCreateWiki();
+		$response = $app->sendRequest('CreateNewWiki', 'executeCreateWiki');
 
-		$this->assertEquals("ok", $cnwModule->status);
-		$this->assertEquals($siteName, $cnwModule->siteName);
-		$this->assertEquals($mainPageUrl, $cnwModule->finishCreateUrl);
+		$this->assertEquals("ok", $response->getVal('status'));
+		$this->assertEquals($siteName, $response->getVal('siteName'));
+		$this->assertEquals($mainPageUrl, $response->getval('finishCreateUrl'));
 
 	}
 
@@ -103,11 +84,9 @@ class CreateNewWikiModuleTest extends PHPUnit_Framework_TestCase {
 			->with($this->equalTo('AutoCreateWiki::checkWikiNameIsCorrect'), $this->equalTo($wikiName), $this->equalTo($wikiLang))
 			->will($this->returnValue(""));
 
-		$cnwModule = new CreateNewWikiModule($app);
+		$response = $app->sendRequest('CreateNewWiki', 'executeCheckWikiName');
 
-		$cnwModule->executeCheckWikiName();
-
-		$this->assertEquals("", $cnwModule->res);
+		$this->assertEquals("", $response->getVal('res'));
 	}
 
 }

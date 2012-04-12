@@ -1,6 +1,6 @@
 <section class="LatestPhotosModule module">
 	<h1>Latest Photos</h1>
-	<?= (!empty($wgEnableUploads)) ? Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo') : '' ?>
+	<?= (!empty($wg->EnableUploads)) ? Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo') : '' ?>
 	<div class="tally counter">
 		<?= wfMsgExt('oasis-latest-photos-header', array( 'parsemag' ), $total, ($total < 100000 ? 'fixedwidth' : '') ) ?>
 	</div>
@@ -21,8 +21,8 @@ else {
 		$class = " hidden";
 	}
 		?>
-		<a href="#" class="previous<?= $class ?>"><img src="<?= $wgBlankImgUrl; ?>" class="latest-images-left" height="0" width="0"></a>
-		<a href="#" class="next<?= $class ?>"><img src="<?= $wgBlankImgUrl; ?>" class="latest-images-right" height="0" width="0"></a>
+		<a href="#" class="previous<?= $class ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="latest-images-left" height="0" width="0"></a>
+		<a href="#" class="next<?= $class ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="latest-images-right" height="0" width="0"></a>
 	<div class="carousel-container">
 		<div>
 			<ul class="carousel">
@@ -32,7 +32,7 @@ else {
 	foreach ($thumbUrls as $i => $url) {?>
 		<li class="thumbs"><a class="image" data-ref="<?= $url["image_filename"] ?> " href="<?= $url["file_url"] ?>">
 			<? if ( isset( $url['isVideoThumb'] ) && $url['isVideoThumb'] ) echo WikiaVideoService::videoPlayButtonOverlay( LatestPhotosModule::THUMB_SIZE, LatestPhotosModule::THUMB_SIZE ); ?>
-			<img class="thumbimage" height="<?= LatestPhotosModule::THUMB_SIZE; ?>" width="<?= LatestPhotosModule::THUMB_SIZE; ?>" <?= $i < $load ? 'src' : "src='$wgBlankImgUrl' data-src" ?>="<?= $url["thumb_url"] ?>" />
+			<img class="thumbimage" height="<?= LatestPhotosModule::THUMB_SIZE; ?>" width="<?= LatestPhotosModule::THUMB_SIZE; ?>" <?= $i < $load ? 'src' : "src='$wg->BlankImgUrl' data-src" ?>="<?= $url["thumb_url"] ?>" />
 		</a>
 
 		<span class="thumbcaption">
@@ -55,7 +55,7 @@ else {
 	if (count($thumbUrls) > 2) { ?>
 		<li class="see-all">
 			<?= Wikia::specialPageLink('NewFiles', 'oasis-latest-photos-inner-message') ?>
-			<img src="<?= $wgBlankImgUrl ?>" data-src="<?= $wgStylePath ?>/oasis/images/empty_gallery.png" />
+			<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $wg->StylePath ?>/oasis/images/empty_gallery.png" />
 		</li>
 	<?php
 	}

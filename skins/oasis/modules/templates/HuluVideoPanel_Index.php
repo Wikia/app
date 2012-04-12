@@ -1,10 +1,10 @@
 <section class="HuluVideoPanelModule">
 
-<div id="huluPanel" panelpartner="<?= $partnerId ?>" panelLayout="vertical" panelItems="2" panelShow="<?= $wgHuluVideoPanelShow ?>" panelAllowMature="false" 
+<div id="huluPanel" panelpartner="<?= $partnerId ?>" panelLayout="vertical" panelItems="2" panelShow="<?= $wg->HuluVideoPanelShow ?>" panelAllowMature="false" 
      panelAutoPlay="true" panelsortdefault="recentlyAdded" panelSearchEnabled="false" panelSortEnabled="true" panelScaleX="1.1" panelScaleY="1.1"
 <?php
-if (is_array($wgHuluVideoPanelAttributes)) {
-	$implodedAttribs = array_map(create_function('$key, $value', 'return $key."=\"".$value."\" ";'), array_keys($wgHuluVideoPanelAttributes), array_values($wgHuluVideoPanelAttributes));
+if (is_array($wg->HuluVideoPanelAttributes)) {
+	$implodedAttribs = array_map(create_function('$key, $value', 'return $key."=\"".$value."\" ";'), array_keys($wg->HuluVideoPanelAttributes), array_values($wg->HuluVideoPanelAttributes));
 	echo implode($implodedAttribs);
 }
 ?>

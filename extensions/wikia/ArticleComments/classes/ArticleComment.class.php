@@ -552,7 +552,7 @@ class ArticleComment {
 				'articleId'			=> $this->mTitle->getArticleId(),
 				'articleFullUrl'	=> $this->mTitle->getFullUrl(),
 			);
-			$text = wfRenderPartial('ArticleComments', 'Edit', $vars);
+			$text = F::app()->getView('ArticleComments', 'Edit', $vars)->render();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -808,7 +808,7 @@ class ArticleComment {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
-				$text = wfRenderPartial( 'ArticleComments', ( Wikia::isWikiaMobile() ) ? 'WikiaMobileComment' : 'Comment', array('comment' => $comment->getData(true), 'commentId' => $commentId, 'rowClass' => '', 'level' => ( $parentId ) ? 2 : 1 ) );
+				$text = F::app()->getView( 'ArticleComments', ( Wikia::isWikiaMobile() ) ? 'WikiaMobileComment' : 'Comment', array('comment' => $comment->getData(true), 'commentId' => $commentId, 'rowClass' => '', 'level' => ( $parentId ) ? 2 : 1 ) )->render();
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}

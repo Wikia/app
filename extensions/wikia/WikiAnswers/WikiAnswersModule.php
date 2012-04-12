@@ -1,6 +1,6 @@
 <?php
 
-class WikiAnswersModule extends Module {
+class WikiAnswersModule extends WikiaController {
 
 	public function executeQuestionBox() { 
 		// no-op

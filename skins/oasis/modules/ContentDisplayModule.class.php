@@ -1,13 +1,11 @@
 <?php
 /**
- * Renders page content: adds picture attribution info and replaces section edit links with pencil icon and link
- *
+ * Helper Functions: adds picture attribution info and replaces section edit links with pencil icon and link
+ * Fixme: this is not really a proper module
  * @author Maciej Brencz
  */
 
-class ContentDisplayModule extends Module {
-
-	var $bodytext;
+class ContentDisplayModule extends WikiaController {
 
 	/**
 	 * Render picture attribution
@@ -134,7 +132,5 @@ class ContentDisplayModule extends Module {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-
-	public function executeIndex() {}
 
 }

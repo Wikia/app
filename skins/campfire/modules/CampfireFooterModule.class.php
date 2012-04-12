@@ -1,8 +1,6 @@
 <?php
 
-class CampfireFooterModule extends Module {
-	var $wgRightsUrl;
-	var $wgRightsText;
+class CampfireFooterModule extends WikiaController {
 
 	public function executeIndex() {}
 }

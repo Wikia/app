@@ -1,13 +1,9 @@
 <?php
 
-class AskYourQuestionModule extends Module {
-
-	var $loginToUse;
-	var $specialPageLink;
+class AskYourQuestionModule extends WikiaController {
 
 	public function executeRailModule() {
-		global $wgUser;
-		$this->loginToUse = !$wgUser->isAllowed( 'ask-questions' );
+		$this->loginToUse = !$this->wg->User->isAllowed( 'ask-questions' );
 	}
 
 	public function executeModalWindow() {

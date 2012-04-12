@@ -5,39 +5,25 @@
  * @author Maciej Brencz
  */
 
-class CampfireHeaderModule extends Module {
-
-	var $wgEnableWikiAnswers;
-	var $wgStylePath;
+class CampfireHeaderModule extends WikiaController {
 
 	var $content_actions;
-	var $displaytitle; // if true - don't encode HTML
-	var $title;
-	var $subtitle;
-
-	// RT #72366 - line with page type, redirect info, link to subject page and old revision data
-	var $pageType;
-	var $pageTalkSubject;
-	var $pageSubject;
-	var $pageRedirect;
-
-	var $pageSubtitle;
-
-	var $action;
-	var $actionName;
-	var $actionImage;
-	var $categories;
-	var $comments;
-	var $dropdown;
-	var $likes;
-	var $pageExists;
-	var $showSearchBox;
-	var $isMainPage;
-	var $total;
-
-	var $wgUser;
-	var $isNewFiles;
-	var $wgABTests;
+	
+	public function init() {
+		$this->isMainPage = null;
+		$this->likes = null;
+		$this->total = null;
+		
+		$this->action = null;
+		$this->actionImage = null;
+		$this->actionName = null;
+		
+		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->content_actions = $skinVars['content_actions'];
+		$this->displaytitle = $skinVars['displaytitle']; // if true - don't encode HTML
+		$this->title = $skinVars['title'];
+		$this->subtitle = $skinVars['subtitle'];		
+	}
 
 	public static function formatTimestamp($stamp) {
 

@@ -7,7 +7,7 @@
  * @author macbre
  */
 
-class BlogsInHubsModule extends Module {
+class BlogsInHubsModule extends WikiaController {
 
 	/**
 	 * Renders single content team selected blog post

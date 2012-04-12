@@ -1,38 +1,13 @@
 <?php
-class CampfireBodyModule extends Module {
-
-	// global vars
-	var $wgBlankImgUrl;
-	var $wgSitename;
-	var $wgUser;
-	var $wgTitle;
-	var $wgNoExternals;
-	var $wgSuppressWikiHeader;
-	var $wgSuppressPageHeader;
-	var $wgSuppressRail;
-	var $wgSuppressFooter;
-	var $wgSuppressArticleCategories;
-	var $wgEnableCorporatePageExt;
-	var $wgEnableWikiAnswers;
-	var $wgABTests;
-
-	// skin vars
-	var $content;
-
-	// Module vars
-	var $afterBodyHtml;
-
-	var $headerModuleName;
-	var $headerModuleAction;
-	var $headerModuleParams;
-	var $leaderboardToShow;
-	var $railModuleList;
-	var $displayComments;
-	var $noexternals;
-
-	var $isMainPage;
+class CampfireBodyModule extends WikiaController {
 
 	private static $onEditPage;
+	
+	public function init() {
+		
+		$this->afterBodyHtml = '';
+	}
+	
 
 	/**
 	 * This method is called when edit form is rendered
@@ -91,7 +66,8 @@ class CampfireBodyModule extends Module {
 
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 
-		$this->bodytext = Module::get('ContentDisplay')->getData('bodytext');
+		// Replaces ContentDisplayModule->index()
+		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
 
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing

@@ -5,24 +5,15 @@
  * @author Maciej Brencz
  */
 
-class CommentsLikesModule extends Module {
-
-	var $wgBlankImgUrl;
-
-	var $comments;
-	var $commentsBubble;
-	var $formattedComments;
-	var $commentsAccesskey;
-	var $commentsEnabled;
-	var $commentsLink;
-	var $commentsTooltip;
-
-	var $showLike;
-	var $likeHref;
-	var $likeRef;
-	var $likeTheme;
+class CommentsLikesModule extends WikiaController {
 
 	private $contextTitle;
+	
+	public function init() {
+		$this->commentsAccesskey = null;
+		$this->commentsBubble = null;
+		$this->showLike = null;
+	}
 
 	/**
 	 * Are article comments enabled for context title?

@@ -1,12 +1,12 @@
 <div id="UploadPhotos" class="UploadPhotos">
-	<form onsubmit="return AIM.submit(this, UploadPhotos.uploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=UploadPhotos&actionName=Upload&outputType=html" method="POST" enctype="multipart/form-data">
+	<form onsubmit="return AIM.submit(this, UploadPhotos.uploadCallback)" action="<?= $wg->ScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=UploadPhotos&actionName=Upload&outputType=html" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="wpSourceType" value="file">
 		
 		<div class="step-1">
 			<h1><?= wfMsg('oasis-upload-photos-title') ?></h1>
 			<input type="file" name="wpUploadFile" size="60">
 			<input type="submit" value="<?= wfMsg('Upload') ?>">
-			<img class="ajaxwait" src="<?= $wgStylePath ?>/common/images/ajax.gif"><br>
+			<img class="ajaxwait" src="<?= $wg->StylePath ?>/common/images/ajax.gif"><br>
 			<label class="override"><input type="checkbox" name="wpDestFileWarningAck">Overwrite File</label>
 			<div class="status"></div>
 
@@ -23,7 +23,7 @@
 		</div>
 
 		<div class="advanced">
-			<img src="<?=$wgBlankImgUrl?>" class="chevron">
+			<img src="<?=$wg->BlankImgUrl?>" class="chevron">
 			<a href="#" data-more="<?= wfMsg('oasis-upload-photos-more-options') ?>" data-fewer="<?= wfMsg('oasis-upload-photos-fewer-options') ?>"><?= wfMsg('oasis-upload-photos-more-options') ?></a>
 		</div>
 

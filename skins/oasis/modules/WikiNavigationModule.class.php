@@ -1,9 +1,6 @@
 <?php
 
-class WikiNavigationModule extends Module {
-
-	var $showMenu;
-	var $wgBlankImgUrl;
+class WikiNavigationModule extends WikiaController {
 
 	private $service;
 

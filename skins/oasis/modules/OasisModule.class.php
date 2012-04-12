@@ -1,6 +1,6 @@
 <?php
 
-class OasisModule extends Module {
+class OasisModule extends WikiaController {
 
 	private static $extraBodyClasses = array();
 
@@ -13,42 +13,25 @@ class OasisModule extends Module {
 	public static function addBodyClass($className) {
 		self::$extraBodyClasses[] = $className;
 	}
-
-	// template vars
-	var $body;
-	var $bodyClasses;
-	var $csslinks;
-	var $globalVariablesScript;
-
-	var $googleAnalytics;
-	var $headlinks;
-	var $headitems;
-	var $jsAtBottom;
-	var $pagecss;
-	var $printableCss;
-	var $comScore;
-	var $quantServe;
-	var $isUserLoggedIn;
-
-	// skin/template vars
-	var $pagetitle;
-	var $displaytitle;
-	var $mimetype;
-	var $charset;
-	var $body_ondblclick;
-	var $dir;
-	var $lang;
-	var $pageclass;
-	var $skinnameclass;
-	var $bottomscripts;
-	var $displayAdminDashboard;
-
-	// global vars
-	var $wgEnableOpenXSPC;
-	var $wgEnableCorporatePageExt;
-	var $wgStylePath;
-	var $wgDevelEnvironment;
-	var $wgOasisLastCssScripts;
+	
+	public function init() {
+		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->pagetitle = $skinVars['pagetitle'];
+		$this->displaytitle = $skinVars['displaytitle'];
+		$this->mimetype = $skinVars['mimetype'];
+		$this->charset = $skinVars['charset'];
+		$this->body_ondblclick = $skinVars['body_ondblclick'];
+		$this->dir = $skinVars['dir'];
+		$this->lang = $skinVars['lang'];
+		$this->pageclass = $skinVars['pageclass'];
+		$this->pagecss = $skinVars['pagecss'];
+		$this->skinnameclass = $skinVars['skinnameclass'];
+		$this->bottomscripts = $skinVars['bottomscripts'];
+		// initialize variables
+		$this->comScore = null;
+		$this->quantServe = null;
+	}
+	
 
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
@@ -77,25 +60,25 @@ class OasisModule extends Module {
 		$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
 
 		// generate list of CSS classes for <body> tag
-		$this->bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
-		$this->bodyClasses = array_merge($this->bodyClasses, self::$extraBodyClasses);
-		$this->bodyClasses[] = $this->skinnameclass;
+		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
+		$bodyClasses = array_merge($bodyClasses, self::$extraBodyClasses);
+		$bodyClasses[] = $this->skinnameclass;
 
 		if(Wikia::isMainPage()) {
-			$this->bodyClasses[] = 'mainpage';
+			$bodyClasses[] = 'mainpage';
 		}
 
 		// add skin theme name
 		$skin = $wgUser->getSkin();
 		if(!empty($skin->themename)) {
-			$this->bodyClasses[] = "oasis-{$skin->themename}";
+			$bodyClasses[] = "oasis-{$skin->themename}";
 		}
 
 		// mark dark themes
 		if (SassUtil::isThemeDark()) {
-			$this->bodyClasses[] = 'oasis-dark-theme';
+			$bodyClasses[] = 'oasis-dark-theme';
 		}
-
+		$this->bodyClasses = $bodyClasses;
 		$this->setupJavaScript();
 
 		//reset, this ensures no duplication in CSS links
@@ -119,11 +102,11 @@ class OasisModule extends Module {
 		$this->mimetype = htmlspecialchars( $this->mimetype );
 		$this->charset = htmlspecialchars( $this->charset );
 
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
-
 		/* allow extensions to inject JS just after global JS variables - copied here from OutputPage.php */
-		wfRunHooks('SkinGetHeadScripts', array(&$this->globalVariablesScript));
-
+		$globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
+		wfRunHooks('SkinGetHeadScripts', array(&$globalVariablesScript));
+		$this->globalVariablesScript = $globalVariablesScript;
+		
 		// printable CSS (to be added at the bottom of the page)
 		// FIXME: move to renderPrintCSS() method
 		$this->printableCss = $this->renderPrintCSS(); // The HTML for the CSS links (whether async or not).

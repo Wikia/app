@@ -5,7 +5,7 @@
  * @author Maciej Brencz
  */
 
-class NotificationsModule extends Module {
+class NotificationsModule extends WikiaController {
 
 	const SESSION_KEY = 'oasisConfirmation';
 
@@ -27,15 +27,14 @@ class NotificationsModule extends Module {
 	// stack for notifications
 	static private $notificationsStack;
 
-	// HTML of user messages notification (render my MW core)
-	var $usernewmessages;
+	// HTML of user messages notification (rendered by MW core -- skin variable)
 
-	var $wgBlankImgUrl;
-
-	var $confirmation;
-	var $confirmationClass;
-	var $notifications;
-
+	public function init() {
+		$this->notifications = null;
+		$this->confirmation = null;
+		$this->confirmationClass = null;
+		$this->usernewmessages = $this->app->getSkinTemplateObj()->data['usernewmessages'];
+	}
 	/**
 	 * Add notification message to the stack
 	 */

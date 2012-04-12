@@ -154,7 +154,7 @@ class ArticleCommentsAjax {
 				'commentId' => $commentId,
 				'stylePath' => $wgStylePath
 			);
-			$result['html'] = wfRenderPartial('ArticleComments', 'Reply', $vars);
+			$result['html'] = F::app()->getView('ArticleComments', 'Reply', $vars)->render();
 		}
 
 		return $result;
@@ -258,7 +258,7 @@ class ArticleCommentsAjax {
 			wfLoadExtensionMessages('ArticleComments');
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
-			$text = wfRenderPartial('ArticleComments', $method, array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
+			$text = F::app()->getView('ArticleComments', $method, array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
 			$pagination = $listing->doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title);
 		}
 

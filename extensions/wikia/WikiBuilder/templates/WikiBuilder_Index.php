@@ -5,7 +5,7 @@
 		<li class="step1 current-step">
 			<span class="step-name"><?= wfMsg('owb-step1') ?></span>
 			<span class="step-label"><?= wfMsg('owb-step1-label-formatted') ?></span>
-			<img src="<?= $wgBlankImgUrl ?>" class="chevron">
+			<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
 		</li>
 		<li class="step2">
 			<span class="step-name"><?= wfMsg('owb-step2') ?></span>
@@ -27,7 +27,7 @@
 			<p><?= wfMsg('owb-step1-instruction') ?></p>
 			<div class="sample">
 				<h3><?= wfMsg('owb-step1-sample') ?></h3>
-				<img src="<?= $wgExtensionsPath?>/wikia/WikiBuilder/images/step1.jpg">
+				<img src="<?= $wg->ExtensionsPath?>/wikia/WikiBuilder/images/step1.jpg">
 			</div>
 			<form name="step1-form">
 				<textarea id="Description"></textarea>
@@ -81,10 +81,10 @@
 			<div class="wb-basic box">
 				<header>
 					<h1>
-						<img class="sprite logo" src="<?= $wgBlankImgUrl ?>" height="15" width="61">
+						<img class="sprite logo" src="<?= $wg->BlankImgUrl ?>" height="15" width="61">
 						<span>Basic</span>
 					</h1>
-					<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 				</header>
 				<details>
 					<?= wfMsg('owb-step4-basic-price') ?>
@@ -97,30 +97,30 @@
 			<div class="wb-plus box">
 				<header>
 					<h1>
-						<img class="sprite logo" src="<?= $wgBlankImgUrl ?>" height="15" width="61">
+						<img class="sprite logo" src="<?= $wg->BlankImgUrl ?>" height="15" width="61">
 						<span><em>+</em>Plus!</span>
 					</h1>
-					<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 				</header>
 				<details>
-					<?= wfMsg('owb-step4-plus-price', $wgWikiPaymentAdsFreePrice) ?>
+					<?= wfMsg('owb-step4-plus-price', $wg->WikiPaymentAdsFreePrice) ?>
 				</details>
 				<div class="details">
 				<?= wfMsg('owb-step4-plus-details') ?>
 				</div>
 				<input type="button" value="<?= wfMsg('owb-button-plus') ?>" class="wb-plus">
-				<img src="<?= $wgStylePath ?>/common/images/ajax.gif" class="throbber">
+				<img src="<?= $wg->StylePath ?>/common/images/ajax.gif" class="throbber">
 			</div>
 			<div class="status"></div>
 		</div>
 	</div>
 
-	<img src="<?= $wgExtensionsPath ?>/wikia/WikiBuilder/images/new_wiki_builder_1.png" class="collage1">
-	<img src="<?= $wgExtensionsPath ?>/wikia/WikiBuilder/images/new_wiki_builder_2.png" class="collage2">
+	<img src="<?= $wg->ExtensionsPath ?>/wikia/WikiBuilder/images/new_wiki_builder_1.png" class="collage1">
+	<img src="<?= $wg->ExtensionsPath ?>/wikia/WikiBuilder/images/new_wiki_builder_2.png" class="collage2">
 
 </section>
 <script>
-	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
+	var themes = <?= Wikia::json_encode($wg->OasisThemes) ?>;
 	var redirect = window.wgArticlePath.replace(/\$1/, window.wgMainpage.replace(/ /g, '_') );
 	var messages = <?= json_encode($messages) ?>;
 </script>

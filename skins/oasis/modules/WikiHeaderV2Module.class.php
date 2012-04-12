@@ -1,20 +1,6 @@
 <?php
 
-class WikiHeaderV2Module extends Module {
-
-	var $wgBlankImgUrl;
-	var $wgEnableCorporatePageExt;
-
-	var $mainPageURL;
-	var $wgSitename;
-
-	var $wordmarkText;
-	var $wordmarkType;
-	var $wordmarkSize;
-	var $wordmarkStyle;
-	var $wordmarkUrl;
-	var $wordmarkFont;
-	var $displaySearch;
+class WikiHeaderV2Module extends WikiaController {
 
 	public function executeIndex() {
 		OasisModule::addBodyClass('wikinav2');

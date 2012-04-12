@@ -389,7 +389,7 @@ class WallNotifications {
 		$keys[] = '$SUBJECT';
 		$values[] = $subject;
 		$data['$SUBJECT'] = $subject; 
-		$html = wfRenderPartial('WallExternal', 'mail', array('data' => $data));
+		$html = $this->app->getView('WallExternal', 'mail', array('data' => $data))->render();
 		$text = str_replace($keys, $values, $text);
 		
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );

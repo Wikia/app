@@ -25,8 +25,8 @@
 		// later than normal extensions and therefore add themselves later than the wiki/user specific CSS is
 		// normally added.
 		// See Skin::setupUserCss()
-		if (!empty($wgOasisLastCssScripts)) {
-			foreach($wgOasisLastCssScripts as $src) {
+		if (!empty($wg->OasisLastCssScripts)) {
+			foreach($wg->OasisLastCssScripts as $src) {
 				echo '<link rel="stylesheet" href="'.$src.'">';
 			}
 		}
@@ -53,18 +53,18 @@
 
 	<?php if( !$jsAtBottom ):?>
 		<!--[if lt IE 8]>
-			<script src="<?= $wgStylePath ?>/common/json2.js"></script>
+			<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
 		<![endif]-->
 
 		<!--[if lt IE 9]>
-			<script src="<?= $wgStylePath ?>/common/wikia/html5.min.js"></script>
+			<script src="<?= $wg->StylePath ?>/common/wikia/html5.min.js"></script>
 		<![endif]-->
 
 		<!-- Combined JS files and head scripts -->
 		<?= $jsFiles ;?>
 	<?endif;?>
 	<? if($displayAdminDashboard) { ?>
-		<!--[if IE]><script src="<?= $wgStylePath ?>/common/excanvas.js"></script><![endif]-->
+		<!--[if IE]><script src="<?= $wg->StylePath ?>/common/excanvas.js"></script><![endif]-->
 	<? } ?>
 
 	<?= $headitems ?>
@@ -83,11 +83,11 @@
 
 <?if( $jsAtBottom ):?>
 		<!--[if lt IE 8]>
-			<script src="<?= $wgStylePath ?>/common/json2.js"></script>
+			<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
 		<![endif]-->
 
 		<!--[if lt IE 9]>
-			<script src="<?= $wgStylePath ?>/common/wikia/html5.min.js"></script>
+			<script src="<?= $wg->StylePath ?>/common/wikia/html5.min.js"></script>
 		<![endif]-->
 
 		<!-- Combined JS files and head scripts -->
@@ -95,9 +95,9 @@
 <?endif;?>
 
 <?php
-	if (empty($wgSuppressAds)) {
+	if (empty($wg->SuppressAds)) {
 		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
-		if (!$wgEnableCorporatePageExt) {
+		if (!$wg->EnableCorporatePageExt) {
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
 		}
 	}

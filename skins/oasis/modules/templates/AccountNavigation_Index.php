@@ -12,7 +12,7 @@
 		<a accesskey="." href="<?= $profileLink ?>">
 			<?= $profileAvatar ?>
 			<?= $username ?>
-			<img class="chevron" src="<?= $wgBlankImgUrl; ?>">
+			<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		</a>
 		<ul class="subnav WikiaMenuElement">
 <?php

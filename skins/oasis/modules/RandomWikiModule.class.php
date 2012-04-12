@@ -5,13 +5,12 @@
  * @author Maciej Brencz
  */
 
-class RandomWikiModule extends Module {
-
-	var $url;
+class RandomWikiModule extends WikiaController {
 
 	public function executeIndex() {
 		global $wgEnableRandomWikiOasisButton, $wgCityId;
 
+		$this->url = null;
 		if (!empty($wgEnableRandomWikiOasisButton)) {
 			$this->url = "http://community.wikia.com/wiki/Special:RandomWiki/{$wgCityId}";
 		}

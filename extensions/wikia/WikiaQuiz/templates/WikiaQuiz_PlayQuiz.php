@@ -189,6 +189,6 @@
 <script>
 	var WikiaQuizVars = <?= json_encode($quizVars) ?>, WikiaQuizEmailRequired = <?= !empty($data['requireEmail']) ? 'true' : 'false' ?>;
 </script>
-<audio id="SoundAnswerCorrect" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/correct.ogg" preload="auto"></audio>
-<audio id="SoundAnswerWrong" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/wrong.ogg" preload="auto"></audio>
-<audio id="SoundApplause" src="<?= $wgExtensionsPath ?>/wikia/WikiaQuiz/sounds/applause.ogg" preload="auto"></audio>
+<audio id="SoundAnswerCorrect" src="<?= $wg->ExtensionsPath ?>/wikia/WikiaQuiz/sounds/correct.ogg" preload="auto"></audio>
+<audio id="SoundAnswerWrong" src="<?= $wg->ExtensionsPath ?>/wikia/WikiaQuiz/sounds/wrong.ogg" preload="auto"></audio>
+<audio id="SoundApplause" src="<?= $wg->ExtensionsPath ?>/wikia/WikiaQuiz/sounds/applause.ogg" preload="auto"></audio>

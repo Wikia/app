@@ -3,7 +3,7 @@
 		<h1>Wikia Inc Navigation</h1>
 		<div class="WikiaHubBranding <?= (($hub && $hub->cat_id && $hub->cat_id != 4) ? 'HubBrandingBlackBackground' : ''); ?>">
 			<div class="wordmark">
-				<img src="<?= $wgBlankImgUrl; ?>" class="sprite logo<?= (($hub && $hub->cat_id) ? "$hub->cat_id" : '4'); // 4: Corporate ?>">
+				<img src="<?= $wg->BlankImgUrl; ?>" class="sprite logo<?= (($hub && $hub->cat_id) ? "$hub->cat_id" : '4'); // 4: Corporate ?>">
 			</div>
 			<?php if( $hub && $hub->cat_id != 4): // 4: Corporate ?>
 			    <div class="hub"><a class="hub<?= $hub->cat_id; ?>" href="<?=$hub->cat_link?>">[ <?=$hub->cat_name?> ]</a></div>

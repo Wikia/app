@@ -1,5 +1,5 @@
 <?php
-class WikiaFormModule extends Module {
+class WikiaFormModule extends WikiaController {
 
 
 	/**

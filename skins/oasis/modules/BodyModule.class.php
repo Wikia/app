@@ -1,50 +1,15 @@
 <?php
-class BodyModule extends Module {
-
-	// global vars
-	var $wgBlankImgUrl;
-	var $wgSitename;
-	var $wgTitle;
-	var $wgNoExternals;
-	var $wgSuppressWikiHeader;
-	var $wgSuppressPageHeader;
-	var $wgSuppressRail;
-	var $wgSuppressFooter;
-	var $wgSuppressArticleCategories;
-	var $wgInterlangOnTop;
-	var $wgEnableCorporatePageExt;
-	var $wgEnableWikiAnswers;
-	var $wgABTests;
-	var $wgEnableTopButton;
-	var $wgOasisNavV2;
-	var $wgSuppressSlider;
-	var $wgEnableWikiaHomePageExt;
-	
-	// skin vars
-	var $content;
-
-	// Module vars
-	var $afterBodyHtml;
-	var $afterContentHookText;
-	var $afterCommentsHookText;
-
-	var $headerModuleName;
-	var $headerModuleAction;
-	var $headerModuleParams;
-	var $leaderboardToShow;
-	var $railModuleList;
-	var $displayComments;
-	var $noexternals;
-	var $displayAdminDashboard;
-	var $displayAdminDashboardChromedArticle;
-	var $isMainPage;
-	var $topAdsExtraClasses;
-	var $displayWall = false;
-
-	var $subtitle;
+class BodyModule extends WikiaController {
 
 	private static $onEditPage;
 
+	public function init() {
+		$this->subtitle = $this->app->getSkinTemplateObj()->data['subtitle'];
+		
+		$this->afterBodyHtml = '';
+		$this->afterContentHookText = '';
+		$this->afterCommentsHookText = '';
+	}
 	/**
 	 * This method is called when edit form is rendered
 	 */
@@ -162,10 +127,10 @@ class BodyModule extends Module {
 
 		/** @TODO should be done via a hook instead **/
 		if ( !empty($wgEnableWallExt) && $namespace === NS_USER_WALL_MESSAGE && $isDiff ) {
-			$this->wgSuppressRail = true;
+			$this->wg->SuppressRail = true;
 		}
 
-		if ( $this->wgSuppressRail ) {
+		if ( $this->wg->SuppressRail ) {
 			return array();
 		}
 
@@ -390,22 +355,22 @@ class BodyModule extends Module {
 		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 
-		$this->bodytext = Module::get('ContentDisplay')->getData('bodytext');
+		// Replaces ContentDisplayModule->index()
+		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
 
 		$this->railModuleList = $this->getRailModuleList();
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
 		// (taken from Monaco skin)
-		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$this->afterBodyHtml));
+		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$afterBodyHtml) );
+		$this->afterBodyHtml = $afterBodyHtml;
 
 		// this hook is needed for SMW's factbox
-		if (!wfRunHooks('SkinAfterContent', array( &$this->afterContentHookText ) )) {
-			$this->afterContentHookText = '';
-		}
+		wfRunHooks('SkinAfterContent', array( &$afterContentHookText ) );
+		$this->afterContentHookText = $afterContentHookText;
 
-		if (!wfRunHooks('SkinAfterComments', array( &$wgOut, &$this->afterCommentsHookText ) )) {
-			$this->afterCommentsHookText = '';
-		}
+		wfRunHooks('SkinAfterComments', array( &$wgOut, &$afterCommentsHookText ) );
+		$this->afterCommentsHookText = $afterCommentsHookText;
 
 		$this->headerModuleAction = 'Index';
 		$this->headerModuleParams = array ('showSearchBox' => false);

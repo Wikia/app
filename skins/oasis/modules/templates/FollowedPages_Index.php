@@ -14,16 +14,12 @@ for ($i=0; $i < $max_followed_pages; $i++) {
 			<div>
 				<a href="<?= $item['url'] ?>">
 					<?= $item['wl_title'] ?>
-				</a><?php /*&nbsp;<span class="wikia-chiclet-button"><img src="<?= $wgStylePath ?>/oasis/images/icon_article_comments.png"></span> 5<?= $comments ?> */ ?>
+				</a>
 			</div>
-			<!--<div class="controls">
-				<?php /** out for now **/ /*<img src="<?= $wgStylePath ?>/oasis/images/icon_article_like.png"> 12<?= $likes ?> */ ?>
-				<?php /** moved up for now **/ /*  */ ?>
-			</div>-->
 		</li>
 <?php	} 
 	}
 ?>
 	</ul>
-	<?= $follow_all_link ?>
+	<?= isset($follow_all_link) ? $follow_all_link : '' ?>
 </section>

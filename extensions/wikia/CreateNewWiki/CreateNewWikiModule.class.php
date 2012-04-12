@@ -1,42 +1,7 @@
 <?php
-class CreateNewWikiModule extends Module {
-
-	// global imports
-	var $IP;
-	var $isUserLoggedIn;
-	var $wgLanguageCode;
-	var $wgOasisThemes;
-	var $wgSitename;
-	var $wgExtensionsPath;
-	var $wgComboAjaxLogin;
-	var $wgEnableUserLoginExt;
-
-	// form fields
-	var $aCategories;
-	var $aTopLanguages;
-	var $aLanguages;
-
-	// form field values
-	var $wikiName;
-	var $wikiDomain;
-	var $wikiLanguage;
-	var $wikiCategory;
-	var $params;
-
-	// state variables
-	var $currentStep;
-	var $skipWikiaPlus;
-
-	// ajax call response - previously: 'response' (conflicting name with WikiaController::response)
-	var $res;
-
-	var $app;
+class CreateNewWikiModule extends WikiaController {
 
 	const DAILY_USER_LIMIT = 2;
-
-	public function __construct($app) {
-		$this->app = $app;
-	}
 
 	public function executeIndex() {
 		global $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressAds, $wgSuppressToolbar, $fbOnLoginJsOverride, $wgRequest, $wgUser;
@@ -62,21 +27,19 @@ class CreateNewWikiModule extends Module {
 
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
-                $this->aCategories = $hubs->getCategories();
+        $this->aCategories = $hubs->getCategories();
 
-                $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$this->aLanguages = wfGetFixedLanguageNames();
-		asort($this->aLanguages);
+        $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
+		$this->aLanguages = asort(wfGetFixedLanguageNames());
 
 		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
 
-                // falling back to english (BugId:3538)
-                if ( !array_key_exists($useLang, $this->aLanguages) ) {
-                    $useLang = 'en';
-                }
-		$this->params['wikiLanguage'] = empty($this->params['wikiLanguage']) ? $useLang: $this->params['wikiLanguage'];
-		$this->params['wikiLanguage'] = empty($useLang) ? $this->wgLanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
-
+		// falling back to english (BugId:3538)
+		if ( !array_key_exists($useLang, $this->aLanguages) ) {
+			$useLang = 'en';
+		}
+		$params['wikiLanguage'] = empty($useLang) ? $this->wg->LanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
+		$this->params = $params;
 		// facebook callback overwrite on login.  CreateNewWiki re-uses current login stuff.
 		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback();';
 
@@ -210,8 +173,8 @@ class CreateNewWikiModule extends Module {
 
 			$createWiki = F::build('CreateWiki', array($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory']));
 			$error_code = $createWiki->create();
-			$this->cityId = $createWiki->getWikiInfo('city_id');
-			if(empty($this->cityId)) {
+			$cityId = $createWiki->getWikiInfo('city_id');
+			if(empty($cityId)) {
 				$this->status = 'backenderror';
 				$this->statusMsg = $this->app->runFunction('wfMsg', 'cnw-error-database', $error_code).
 					'<br>'.
@@ -221,7 +184,8 @@ class CreateNewWikiModule extends Module {
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
-				$finishCreateTitle = F::build('GlobalTitle', array("FinishCreate", NS_SPECIAL, $this->cityId), 'newFromText');
+				$this->cityId = $cityId;
+				$finishCreateTitle = F::build('GlobalTitle', array("FinishCreate", NS_SPECIAL, $cityId), 'newFromText');
 				$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
 			}
 		}

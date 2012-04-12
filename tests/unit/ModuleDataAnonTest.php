@@ -26,16 +26,10 @@ class ModuleDataAnonTest extends WikiaBaseTest {
 		global $wgUser;
 		$userName = $wgUser->getName();
 
-		$moduleData = Module::get('AccountNavigation')->getData();
-
-		// there should be no avatar or profile link
-		$this->assertNull($moduleData['profileLink']);
-		$this->assertNull($moduleData['profileAvatar']);
-		$this->assertNull($moduleData['dropdown']);
-
+		$moduleData = F::app()->sendRequest('AccountNavigation')->getData();
 		// log in / register links
-		$this->assertRegExp('/Special:UserLogin(.*)type=login/', $moduleData['personal_urls']['login']['href']);
-		$this->assertRegExp('/Special:UserLogin(.*)type=signup/', $moduleData['personal_urls']['register']['href']);
+		$this->assertRegExp('/Special:UserLogin(.*)type=login/', $moduleData['loginLink']);
+		$this->assertRegExp('/Special:UserLogin(.*)type=signup/', $moduleData['registerLink']);
 
 		// user data
 		$this->assertTrue($moduleData['isAnon']);

@@ -469,13 +469,11 @@ class ModuleDataTest extends WikiaBaseTest {
 	function testAccountNavigationModule() {
 		global $wgUser;
 		$userName = $wgUser->getName();
+		$app = F::build('WikiaApp');
+		$response = $app->sendRequest('AccountNavigationController', 'Index');
+		$moduleData = $response->getData();
 
-		$moduleData = Module::get('AccountNavigation')->getData();
-
-		// user urls
-		$this->assertEquals(6, count($moduleData['personal_urls']));
-		$this->assertRegExp("/User:{$userName}$/", $moduleData['personal_urls']['userpage']['href']);
-
+		$this->assertEquals($userName, $moduleData['username']);		
 		// dropdown
 		$this->assertRegExp("/(User_talk|Message_Wall):{$userName}/", $moduleData['dropdown'][0]);
 
@@ -497,10 +495,6 @@ class ModuleDataTest extends WikiaBaseTest {
 	}
 
 	function testContentDisplayModule() {
-		$moduleData = Module::get('ContentDisplay')->getData();
-
-		// content display
-		$this->assertType ('string', $moduleData['bodytext']);
 
 		// picture attribution
 		$html = 'TEST<!-- picture-attribution -->TESTTESTTEST';
@@ -732,7 +726,6 @@ class ModuleDataTest extends WikiaBaseTest {
 		$this->assertEquals($userName, $moduleData['userName']);
 		$this->assertEquals($userName, $moduleData['title']);
 		$this->assertType('array', $moduleData['stats']);
-		$this->assertNull($moduleData['comments']);
 
 		// blog posts
 		$wgTitle = Title::newFromText('User_Blog:WikiaBotBlogger/BlogPost/foo');
@@ -740,7 +733,7 @@ class ModuleDataTest extends WikiaBaseTest {
 		$moduleData = Module::get('UserPagesHeader', 'BlogPost')->getData();
 
 		$this->assertRegExp('/WikiaBotBlogger/', $moduleData['avatar']);
-		$this->assertNull($moduleData['avatarMenu']);
+		$this->assertArrayNotHasKey('avatarMenu', $moduleData);
 		$this->assertEquals('BlogPost/foo', $moduleData['title']);
 		$this->assertEquals('WikiaBotBlogger', $moduleData['userName']);
 
@@ -748,7 +741,7 @@ class ModuleDataTest extends WikiaBaseTest {
 		$moduleData = Module::get('UserPagesHeader', 'BlogListing')->getData();
 
 		$this->assertRegExp('/Special:CreateBlogPage/', $moduleData['actionButton']['href']);
-		$this->assertNull($moduleData['userName']);
+		$this->assertArrayNotHasKey('userName', $moduleData);
 	}
 
 	function testBlogListingModule() {
@@ -867,7 +860,7 @@ class ModuleDataTest extends WikiaBaseTest {
 		$this->assertEquals($settings["wordmark-type"], $moduleData['wordmarkType']);
 		$this->assertEquals($settings["wordmark-font-size"], $moduleData['wordmarkSize']);
 
-		$this->assertArrayHasKey('editURL', $moduleData);
+		$this->assertArrayHasKey('mainPageURL', $moduleData);
 	}
 
 	function testMyToolsModule() {

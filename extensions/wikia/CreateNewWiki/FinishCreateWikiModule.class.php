@@ -1,8 +1,5 @@
 <?php
-class FinishCreateWikiModule extends Module {
-	
-	// global imports
-	var $wgSitename;
+class FinishCreateWikiModule extends WikiaController {
 	
 	// form field values
 	var $params;

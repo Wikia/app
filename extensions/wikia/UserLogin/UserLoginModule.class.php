@@ -6,7 +6,7 @@
  * @author Saipetch
  *
  */
-class UserLoginModule extends Module {
+class UserLoginModule extends WikiaController {
 	
 	// This function is only used for testing / previewing / debugging the email templates
 	public function executeIndex() {

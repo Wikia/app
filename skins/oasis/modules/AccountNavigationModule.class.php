@@ -5,21 +5,11 @@
  * @author Maciej Brencz
  */
 
-class AccountNavigationModule extends Module {
+class AccountNavigationModule extends WikiaController {
 
+	// This one really is a local class variable
 	var $personal_urls;
-	var $wgBlankImgUrl;
-	var $wgStylePath;
-	var $wgLanguageCode;
-	var $wgAvailableHelpLang;
-
-	var $dropdown;
-	var $isAnon;
-	var $itemsBefore;
-	var $profileLink;
-	var $profileAvatar;
-	var $username;
-
+	
 	/**
 	 * Render personal URLs item as HTML link
 	 */
@@ -62,7 +52,9 @@ class AccountNavigationModule extends Module {
 	 */
 	private function setupPersonalUrls() {
 		global $wgUser, $wgComboAjaxLogin;
-
+		
+		// Import the starting set of urls from the skin template
+		$this->personal_urls = $this->app->getSkinTemplateObj()->data['personal_urls'];
 		if ($wgUser->isAnon()) {
 			// add login and register links for anons
 			$skin = $wgUser->getSkin();
@@ -107,7 +99,7 @@ class AccountNavigationModule extends Module {
 		if ($this->isAnon) {
 			// facebook connect
 			if (!empty($this->personal_urls['fbconnect']['html'])) {
-				$this->itemsBefore[] = $this->personal_urls['fbconnect']['html'];
+				$this->itemsBefore = array($this->personal_urls['fbconnect']['html']);
 			}
 
 			// render Login and Register links
@@ -124,20 +116,21 @@ class AccountNavigationModule extends Module {
 			$this->profileAvatar = AvatarService::renderAvatar($this->username, 20);
 
 			// dropdown items
-			$dropdownItems = array('mytalk', 'following', 'preferences');
+			$possibleItems = array('mytalk', 'following', 'preferences');
+			$dropdownItems = array();
 
 			// Allow hooks to modify the dropdown items.
-			$this->wf->RunHooks( 'AccountNavigationModuleAfterDropdownItems', array(&$dropdownItems, &$this->personal_urls) );
+			$this->wf->RunHooks( 'AccountNavigationModuleAfterDropdownItems', array(&$possibleItems, &$this->personal_urls) );
 
-			foreach($dropdownItems as $item) {
+			foreach($possibleItems as $item) {
 				if (isset($this->personal_urls[$item])) {
-					$this->dropdown[] = $this->renderPersonalUrl($item);
+					$dropdownItems[] = $this->renderPersonalUrl($item);
 				}
 			}
 
 			// link to Help:Content (never render as redlink)
 			$helpLang = array_key_exists( $this->wg->LanguageCode, $this->wg->AvailableHelpLang ) ? $this->wg->LanguageCode : 'en';
-			$this->dropdown[] = Wikia::link(
+			$dropdownItems[] = Wikia::link(
 				Title::newFromText( wfMsgExt( 'helppage', array( 'parsemag', 'language' => $helpLang ) ) ),
 				wfMsg('help'),
 				array('title' => '', 'data-id' => 'help'),
@@ -146,7 +139,8 @@ class AccountNavigationModule extends Module {
 			);
 
 			// logout link
-			$this->dropdown[] = $this->renderPersonalUrl('logout');
+			$dropdownItems[] = $this->renderPersonalUrl('logout');
+			$this->dropdown = $dropdownItems;
 		}
 
 		wfProfileOut(__METHOD__);

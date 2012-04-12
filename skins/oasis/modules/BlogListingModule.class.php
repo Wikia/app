@@ -1,15 +1,5 @@
 <?php
-class BlogListingModule extends Module {
-
-	var $wgTitle;
-	var $wgBlankImgUrl;
-	var $wgStylePath;
-
-	var $posts;
-	var $blogListingClass;
-	var $title;
-	var $pager;
-	var $seeMoreUrl;
+class BlogListingModule extends WikiaController {
 
 	/**
 	 * Modify results from Blogs
@@ -70,9 +60,9 @@ class BlogListingModule extends Module {
 
 		$seeMoreUrl = (isset($aOptions['seemore']) ? $aOptions['seemore'] : "");
 		if ($aOptions['type'] == 'box') {
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox module $additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title'], 'seeMoreUrl' => $seeMoreUrl));
+			$html .= F::app()->getView( 'BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListingBox module $additionalClass", 'title' => $aOptions['title'], 'seeMoreUrl' => $seeMoreUrl))->render();
 		} else {
-			$html .= wfRenderPartial('BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing$additionalClass", 'wgTitle' => $wgTitle, 'wgStylePath' => $wgStylePath, 'title' => $aOptions['title'], 'pager' => $sPager, 'seeMoreUrl' => $seeMoreUrl));
+			$html .= F::app()->getView( 'BlogListing', 'Index', array('posts' => $posts, 'blogListingClass' => "WikiaBlogListing$additionalClass", 'title' => $aOptions['title'], 'pager' => $sPager, 'seeMoreUrl' => $seeMoreUrl))->render();
 		}
 
 		wfProfileOut(__METHOD__);

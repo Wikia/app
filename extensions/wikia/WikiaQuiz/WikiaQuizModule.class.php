@@ -1,16 +1,18 @@
 <?php
 
-class WikiaQuizModule extends Module {
-
-	var $data;
-	var $wgBlankImgUrl;
-	var $wgExtensionsPath;
-	var $isAnonUser;
+class WikiaQuizModule extends WikiaController {
 
 	/**
 	 * Render HTML Quiz namespace pages
 	 */
 
+	public function init() {
+		$this->wgBlankImgUrl = $this->wg->BlankImgUrl;
+		$this->quiz = null;
+		$this->quizElement = null;
+		$this->data = null;
+	}
+	
 	public function executeIndex($params) {
 		if (!$this->checkPermissions()) {
 			return;

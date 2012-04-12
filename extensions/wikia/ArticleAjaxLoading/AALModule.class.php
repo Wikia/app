@@ -1,21 +1,16 @@
 <?php
 
-class AALModule extends Module {
-
-	var $globalVariablesScript;
-	var $pagetitle;
-	var $data;
-	var $jsFiles;
+class AALModule extends WikiaController {
 
 	public function executeIndex($params) {
-		$this->data = array();
+		$data = array();
 
 		$body = wfRenderModule('Body');
 		$start = strpos($body, '<article ');
 		$stop = strpos($body, '</article>');
-		$this->data['body'] = substr($body, $start, $stop-$start+10);
-		$this->data['title'] = $this->pagetitle;
-		$this->data['globalVariablesScript'] = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
+		$data['body'] = substr($body, $start, $stop-$start+10);
+		$data['title'] = WikiaApp::getSkinTemplateObj()->data['pagetitle'];
+		$data['globalVariablesScript'] = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
 
 		global $wgOut;
 		$scripts = $wgOut->getScript();
@@ -25,6 +20,7 @@ class AALModule extends Module {
 		//$scripts = preg_replace("#<link(.*)\/>#", '', $scripts);
 		//$scripts = preg_replace("/<style>(.*)<\/style>/s", '', $scripts);
 
-		$this->data['body'] .= $scripts . $csslinks;
+		$data['body'] .= $scripts . $csslinks;
+		$this->data = $data;
 	}
 }

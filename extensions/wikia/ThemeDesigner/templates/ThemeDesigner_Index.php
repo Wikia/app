@@ -21,11 +21,11 @@
 		var returnTo = <?= Xml::encodeJSVar($returnTo) ?>;
 		var themeHistory = <?= Wikia::json_encode($themeHistory) ?>;
 		var themeSettings = <?= Wikia::json_encode($themeSettings) ?>;
-		var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
+		var themes = <?= Wikia::json_encode($wg->OasisThemes) ?>;
 	</script>
 
 	<!--[if lt IE 8]>
-		<script src="<?= $wgStylePath ?>/common/json2.js"></script>
+		<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
 	<![endif]-->
 
 <?php
@@ -65,7 +65,7 @@
 				<span class="history">
 					<span class="revisions"><?= count($themeHistory) ?></span>
 					<?= wfMsg('themedesigner-previous-versions') ?>
-					<img class="chevron" src="<?= $wgBlankImgUrl ?>">
+					<img class="chevron" src="<?= $wg->BlankImgUrl ?>">
 					<ul>
 					<?php
 					foreach($themeHistory as $themeHistoryItem) {
@@ -90,7 +90,7 @@
 
 	<?= wfRenderModule('ThemeDesigner', 'Picker') ?>
 
-	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= str_replace('$1', 'Special:ThemeDesignerPreview', $wgArticlePath) ?>?noexternals=1"></iframe>
+	<iframe frameborder=0 id="PreviewFrame" class="PreviewFrame" src="<?= str_replace('$1', 'Special:ThemeDesignerPreview', $wg->ArticlePath) ?>?noexternals=1"></iframe>
 
 <?= $analytics ?>
 

@@ -1,6 +1,6 @@
 <section class="LandingPage">
 	<div class="LandingPageSearch">
-		<?= wfRenderPartial("Search", "Index", array ("placeholder" => "Search Wikia", "fulltext" => "0", "wgBlankImgUrl" => $wgBlankImgUrl, "wgTitle" => $wgTitle)); ?>
+		<?= $app->getView("SearchModule", "Index", array ("placeholder" => "Search Wikia", "fulltext" => "0", "wgBlankImgUrl" => $wgBlankImgUrl, "wgTitle" => $wgTitle)); ?>
 	</div>
 
 	<ul class="LandingPageLanguageLinks">

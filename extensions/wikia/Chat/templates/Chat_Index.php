@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<title><?= $roomName ?>: <?= $roomTopic ?></title>
-	<link rel="shortcut icon" href="<?= $wgFavicon ?>">
+	<link rel="shortcut icon" href="<?= $wg->Favicon ?>">
 
 	<!-- Make IE recognize HTML5 tags. -->
 	<!--[if IE]>
@@ -37,7 +37,7 @@
 
 		<div id="Rail" class="Rail">
 			<h1 class="public wordmark selected">
-				<img src="<?= $wgBlankImgUrl ?>" class="chevron">
+				<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
 				<? if ($themeSettings['wordmark-type'] == 'graphic') { ?>
 				<img width="<?= ChatModule::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatModule::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>" class="wordmark">
 				<? } else { ?>

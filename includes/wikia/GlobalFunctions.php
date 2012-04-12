@@ -1002,11 +1002,6 @@ function wfMsgWithFallback( $key ) {
 }
 
 // TODO: remove this
-function wfRenderPartial($name, $action = 'Index', $data = array()) {
-	return F::app()->getView( $name, $action, $data )->render();
-}
-
-// TODO: remove this
 function wfRenderModule($name, $action = 'Index', $params = null) {
 	return F::app()->renderView( $name, $action, $params);
 }

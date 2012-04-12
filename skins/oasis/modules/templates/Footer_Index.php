@@ -4,16 +4,16 @@
 	<div class="FooterAd"></div>
 <?php if($showToolbar) { ?>
 	<div class="toolbar">
-		<?php if ($showNotifications) {
+		<?php 
 	 		echo wfRenderModule('Notifications');
-	 	} ?>
+	 	?>
 		<ul class="tools">
 			<?php
 				echo wfRenderModule('Footer','Toolbar');
 			?>
 		</ul>
-		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
-		<img src="<?= $wgBlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
+		<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-left" height="0" width="0">
+		<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 	</div>
 <?php
 	}

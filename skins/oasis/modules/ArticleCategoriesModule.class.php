@@ -5,12 +5,11 @@
  * @author Maciej Brencz
  */
 
-class ArticleCategoriesModule extends Module {
-	var $catlinks;
+class ArticleCategoriesModule extends WikiaController {
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
-
+		$this->catlinks = $this->app->getSkinTemplateObj()->data['catlinks'];
 		$catlinks = $this->request->getVal('catlinks');
 		if(!empty($catlinks)) {
 			$this->catlinks = $catlinks;

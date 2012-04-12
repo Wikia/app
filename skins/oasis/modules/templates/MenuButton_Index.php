@@ -34,7 +34,7 @@
 ?>
 
 	<span class="drop">
-		<img src="<?= $wgBlankImgUrl ?>" class="chevron">
+		<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
 	</span>
 	<ul class="WikiaMenuElement">
 <?php

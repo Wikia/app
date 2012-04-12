@@ -21,7 +21,7 @@
 					<span class="percentage"><?= $answer['percentage'] ?>%</span>
 					<span class="votes">
 <?php
-	echo wfMsgExt('wikiapoll-votes', array('parsemag'), $wgLang->formatNum( $answer['votes']) );
+	echo wfMsgExt('wikiapoll-votes', array('parsemag'), $wg->Lang->formatNum( $answer['votes']) );
 ?>
 					</span>
 				</span>
@@ -31,7 +31,7 @@
 ?>
 		</ul>
 		<div class="details">
-			<span class="votes"><?= wfMsgExt( 'wikiapoll-people-voted', array( 'parsemag' ), $wgLang->formatNum( $data['votes'] ) ) ?></span>
+			<span class="votes"><?= wfMsgExt( 'wikiapoll-people-voted', array( 'parsemag' ), $wg->Lang->formatNum( $data['votes'] ) ) ?></span>
 			<input type="submit" name="wpVote" value="<?= wfMsg('wikiapoll-vote') ?>" style="display:none" />
 		</div>
 	</form>

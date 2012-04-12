@@ -1,21 +1,6 @@
 <?php
 
-class WikiHeaderModule extends Module {
-
-	var $wgBlankImgUrl;
-	var $wgEnableCorporatePageExt;
-
-	var $mainPageURL;
-	var $wgSitename;
-	var $menuNodes;
-	var $editURL;
-
-	var $wordmarkText;
-	var $wordmarkType;
-	var $wordmarkSize;
-	var $wordmarkStyle;
-	var $wordmarkUrl;
-	var $wordmarkFont;
+class WikiHeaderModule extends WikiaController {
 
 	public function executeIndex() {
 		global $wgCityId, $wgUser, $wgIsPrivateWiki, $wgEnableAdminDashboardExt, $wgTitle;
@@ -25,8 +10,9 @@ class WikiHeaderModule extends Module {
 		$this->showMenu = !(($this->isInternalWiki || $wgIsPrivateWiki) && $wgUser->isAnon());
 
 		if($wgUser->isAllowed('editinterface')) {
-			$this->editURL['href'] = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL();
-			$this->editURL['text'] = wfMsg('oasis-edit-this-menu');
+			$editURL['href'] = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL();
+			$editURL['text'] = wfMsg('oasis-edit-this-menu');
+			$this->editURL = $editURL;
 		}
 
 		$service = new NavigationService();
@@ -44,7 +30,7 @@ class WikiHeaderModule extends Module {
 		$this->wordmarkSize = $settings['wordmark-font-size'];
 		$this->wordmarkFont = $settings['wordmark-font'];
 		$this->wordmarkFontClass = !empty($settings["wordmark-font"]) ? "font-{$settings['wordmark-font']}" : '';
-
+		$this->wordmarkUrl = '';
 		if ($this->wordmarkType == "graphic") {
 			wfProfileIn(__METHOD__ . 'graphicWordmark');
 			$this->wordmarkUrl = wfReplaceImageServer($settings['wordmark-image-url'], SassUtil::getCacheBuster());			

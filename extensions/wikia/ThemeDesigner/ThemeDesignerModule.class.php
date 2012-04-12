@@ -1,36 +1,19 @@
 <?php
-class ThemeDesignerModule extends Module {
-
-	var $wgCdnRootUrl;
-	var $wgBlankImgUrl;
-	var $wgExtensionsPath;
-	var $wgScript;
-	var $wgServer;
-	var $wgStylePath;
-	var $wgOut;
-	var $wgScriptPath;
-	var $wgOasisThemes;
-	var $wgCdnStylePath;
-	var $wgStyleVersion;
-	var $wgArticlePath;
-
-	var $dir;
-	var $mimetype;
-	var $charset;
-
-	var $themeSettings;
-	var $themeHistory;
-	var $returnTo;
-	var $analytics;
-	var $globalVariablesScript;
+class ThemeDesignerModule extends WikiaController {
 	
-	var $backgroundImageName = null;
-	var $backgroundImageUrl = null;
-	var $backgroundImageAlign = null;
-	var $backgroundImageThumb = null;
-	var $wordmarkImageName = null;
-	var $wordmarkImageUrl = null;
-	var $errors;
+	public function init() {
+		$this->backgroundImageName = null;
+		$this->backgroundImageUrl = null;
+		$this->backgroundImageAlign = null;
+		$this->backgroundImageThumb = null;
+		$this->wordmarkImageName = null;
+		$this->wordmarkImageUrl = null;	
+		$this->errors = array();		
+		
+		$this->dir = $this->wg->ContLang->getDir();
+		$this->mimetype = $this->wg->Mimetype;
+		$this->charset = $this->wg->OutputEncoding;
+	}
 
 	public function executeIndex() {
 		wfProfileIn( __METHOD__ );
@@ -42,10 +25,10 @@ class ThemeDesignerModule extends Module {
 		$this->themeSettings = $themeSettings->getSettings();
 
 		// recent versions
-		$this->themeHistory = array_reverse($themeSettings->getHistory());
+		$themeHistory = array_reverse($themeSettings->getHistory());
 
 		// format time (for edits older than 30 days - show timestamp)
-		foreach($this->themeHistory as &$entry) {
+		foreach($themeHistory as &$entry) {
 			$diff = time() - strtotime( $entry['timestamp'] );
 
 			if($diff < 30 * 86400) {
@@ -54,6 +37,7 @@ class ThemeDesignerModule extends Module {
 				$entry['timeago'] = $wgLang->date($entry['timestamp']);
 			}
 		}
+		$this->themeHistory = $themeHistory;
 
 		// URL user should be redirected to when settings are saved
 		if(isset($_SERVER['HTTP_REFERER'])) {
@@ -62,7 +46,7 @@ class ThemeDesignerModule extends Module {
 			$this->returnTo = $this->wgScript;
 		}
 
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
 
 		// load Google Analytics code
 		$this->analytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
@@ -224,7 +208,6 @@ class ThemeDesignerModule extends Module {
 	public function executeFaviconUpload() {
 		$upload = new UploadFaviconFromFile();
 		
-		$this->errors = array();
 		$this->faviconImageName = '';
 		$this->faviconImageUrl = '';
 		

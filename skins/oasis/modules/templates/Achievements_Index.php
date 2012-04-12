@@ -54,7 +54,7 @@
 			</ul>
 
 			<? if ( count( $ownerBadges ) > $max_badges ) :?>
-				<a class="more view-all"><span><?= wfMsg('achievements-viewall-oasis', $ownerName) ?></span> <img src="<?= $wgBlankImgUrl; ?>" class="chevron"> </a>
+				<a class="more view-all"><span><?= wfMsg('achievements-viewall-oasis', $ownerName) ?></span> <img src="<?= $wg->BlankImgUrl; ?>" class="chevron"> </a>
 			<? endif ;?>
 		</div>
 	<? endif ;?>
@@ -66,7 +66,7 @@
 		<h1><?= wfMsg('achievements-profile-title-challenges', $ownerName) ?></h1>
 
 		<ul class="badges-tracks badges">
-			<?= wfRenderPartial('LatestEarnedBadges', 'ListBadges', array('badges'=> $challengesBadges, 'displayMode'=> 'Achievements' )); ?>
+			<?= $app->getView('LatestEarnedBadges', 'ListBadges', array('badges'=> $challengesBadges, 'displayMode'=> 'Achievements' )); ?>
 		</ul>
 		
 		<a href="<?= $customize_url ?>" class="more"><?= wfMsg('achievements-profile-customize') ?></a>

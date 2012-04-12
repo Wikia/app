@@ -1,27 +1,20 @@
 <?php
-class LatestEarnedBadgesModule extends Module {
+class LatestEarnedBadgesModule extends WikiaController {
 
-	var $wgBlankImgUrl;
-	var $recents;
-
-	public function executeIndex() {
-		global $wgOut;
+	public function Index() {
 		$maxBadgesToDisplay = 6;  // Could make this a global if we want
 
 		wfProfileIn(__METHOD__);
 
 		// include oasis.css override
-		if (Wikia::isOasis()) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AchievementsII/css/oasis.scss'));
-		}
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AchievementsII/css/oasis.scss'));
 
 		// This code was taken from SpecialLeaderboard so it can be used by both the module and the old Monaco .tmpl
 		$rankingService = new AchRankingService();
 
 		// ignore welcome badges
-		// FIXME: picking badges up to 30 days old for testing.  change to 3 days for production.
 		$blackList = array(BADGE_WELCOME);
-		$awardedBadges = $rankingService->getRecentAwardedBadges(null, $maxBadgesToDisplay, 30, $blackList);
+		$awardedBadges = $rankingService->getRecentAwardedBadges(null, $maxBadgesToDisplay, 3, $blackList);
 
 		$this->recents = array();
 		$count = 1;

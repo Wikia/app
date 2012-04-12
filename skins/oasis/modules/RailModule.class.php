@@ -2,9 +2,7 @@
 
 /* This module encapsulates the right rail.  BodyModule handles the business logic for turning modules on or off */
 
-class RailModule extends Module {
-
-	var $railModuleList;  // array of rail modules
+class RailModule extends WikiaController {
 
 	public function executeIndex($params) {
 		wfProfileIn(__METHOD__);

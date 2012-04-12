@@ -5,12 +5,11 @@
  * @author Maciej Brencz
  */
 
-class CampfireCategoriesModule extends Module {
-	var $catlinks;
+class CampfireCategoriesModule extends WikiaController {
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
-
+		$this->catlinks = $this->app->getSkinTemplateObj()->data['catlinks'];
 		// MW1.16 always returns non empty $catlinks
 		if (strpos($this->catlinks, ' catlinks-allhidden\'></div>') !== false) {
 			$this->catlinks = '';

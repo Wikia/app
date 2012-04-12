@@ -39,8 +39,11 @@ class WikiaDispatcher {
 		if (empty($autoloadClasses)) {
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
 		}
-
-		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
+		if ($request->isXmlHttp()) {
+			$format = $request->getVal( 'format', WikiaResponse::FORMAT_JSON );
+		} else {
+			$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
+		}
 		$response = F::build( 'WikiaResponse', array( 'format' => $format, 'request' => $request ) );
 		if ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
 			$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
@@ -84,9 +87,7 @@ class WikiaDispatcher {
 					if ( !empty( $autoloadClasses[$controllerClassName] ) ) {
 						$moduleTemplatePath = dirname( $autoloadClasses[$controllerClassName] ) . "/templates/{$controllerLegacyName}_{$method}.php";
 						$response->getView()->setTemplatePath( $moduleTemplatePath );
-					}
-
-					$method = "execute{$method}";
+					}					
 					$params = $request->getParams();
 				}
 
@@ -100,6 +101,11 @@ class WikiaDispatcher {
 
 				$controller = F::build( $controllerClassName );
 
+				// Temporary remap of executeX methods for modules
+				if ($app->isModule( $controllerClassName ) && !method_exists($controller, $method)) {
+					$method = "execute{$method}";
+				} 
+				
 				if (
 					( !$request->isInternal() && !$controller->allowsExternalRequests() ) ||
 					in_array( $method, array(

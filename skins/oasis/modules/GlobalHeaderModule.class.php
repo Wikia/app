@@ -1,16 +1,6 @@
 <?php
 
-class GlobalHeaderModule extends Module {
-
-	var $wgBlankImgUrl;
-	var $wgStylePath;
-	var $wgCdnStylePath;
-	var $wgEnableSpotlightsV2_GlobalNav;
-	var $wgABTests;
-
-	var $centralUrl;
-	var $createWikiUrl;
-	var $menuNodes;
+class GlobalHeaderModule extends WikiaController {
 
 	public function executeIndex() {
 		global $wgLangToCentralMap, $wgCityId, $wgLang;

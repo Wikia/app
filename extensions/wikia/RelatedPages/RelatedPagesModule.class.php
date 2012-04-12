@@ -1,10 +1,12 @@
 <?php
 
-class RelatedPagesModule extends Module {
+class RelatedPagesModule extends WikiaController {
 
-	public $addAfterSection;
-	public $pages = null;
-	public $skipRendering = false;
+	public function init() {
+		$this->addAfterSection = null;
+		$this->pages = array();
+		$this->skipRendering = false;
+	}
 
 	public function executeIndex() {
 		global $wgOut, $wgTitle, $wgArticle, $wgContentNamespaces, $wgRequest, $wgMemc, $wgRelatedPagesAddAfterSection;
@@ -18,7 +20,7 @@ class RelatedPagesModule extends Module {
 
 		// check for content namespaces
 		if( !empty($wgTitle) && !in_array($wgTitle->getNamespace(), $wgContentNamespaces) ) {
-				$this->skipRendering = true;
+			$this->skipRendering = true;
 		}
 
 		// check if we have any categories
@@ -55,9 +57,6 @@ class RelatedPagesModule extends Module {
 			if (!empty($wgRelatedPagesAddAfterSection) && is_numeric($wgRelatedPagesAddAfterSection)) {
 				$this->addAfterSection = intval($wgRelatedPagesAddAfterSection);
 			}
-		}
-		else {
-			$this->pages = array();
 		}
 		
 		if ( Wikia::isWikiaMobile() ) {

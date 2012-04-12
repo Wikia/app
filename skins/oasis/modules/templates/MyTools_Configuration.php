@@ -10,7 +10,7 @@
 			<label><?= wfMsg('oasis-edit-my-tools-list') ?></label>
 			<ul class="list">
 <?php foreach($userCustomTools as $tool) { ?>
-				<li class="<?= $tool['name'] ?>"><img src="<?= $wgBlankImgUrl ?>" class="sprite drag"><?= $tool['desc'] ?><img src="<?= $wgBlankImgUrl ?>" class="sprite trash"></li>
+				<li class="<?= $tool['name'] ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite drag"><?= $tool['desc'] ?><img src="<?= $wg->BlankImgUrl ?>" class="sprite trash"></li>
 <?php } ?>
 			</ul>
 		</fieldset>

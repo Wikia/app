@@ -1,5 +1,5 @@
 <?php
-	$selectedLang = empty($params['wikiLanguage']) ? $wgLanguageCode : $params['wikiLanguage'];
+	$selectedLang = empty($params['wikiLanguage']) ? $wg->LanguageCode : $params['wikiLanguage'];
 ?>
 <section id="CreateNewWiki">
 	<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
@@ -70,7 +70,7 @@
 		</li>
 <?php
 	if (!$isUserLoggedIn) {
-		if($wgComboAjaxLogin) {
+		if($wg->ComboAjaxLogin) {
 ?>
 		<li id="Auth" class="step">
 			<h2 class="headline login"><?= wfMsg('cnw-auth-headline') ?></h2>
@@ -100,7 +100,7 @@
 		</li>
 <?php
 		} // $wgComboAjaxLogin
-		else if($wgEnableUserLoginExt){
+		else if($wg->EnableUserLoginExt){
 ?>
 	<li id="UserAuth" class="step">
 		<h2 class="headline"><?= wfMsg('cnw-userauth-headline') ?></h2>
@@ -199,7 +199,7 @@
 			}
 		?>
 	</ul>
-	<img class="awesome-box" src="<?= $wgExtensionsPath ?>/wikia/CreateNewWiki/images/box_art.png">
+	<img class="awesome-box" src="<?= $wg->ExtensionsPath ?>/wikia/CreateNewWiki/images/box_art.png">
 </section>
 <script>
 	WikiBuilderCfg = {
@@ -212,5 +212,5 @@
 		'cnw-error-general-heading':'<?= wfMsg('cnw-error-general-heading') ?>',
 		'cnw-keys': <?= Wikia::json_encode($keys) ?>
 	};
-	var themes = <?= Wikia::json_encode($wgOasisThemes) ?>;
+	var themes = <?= Wikia::json_encode($wg->OasisThemes) ?>;
 </script>

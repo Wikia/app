@@ -6,7 +6,7 @@
 		foreach ($changeList as $item) {
 ?>
 		<li>
-			<img src="<?= $wgBlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
+			<img src="<?= $wg->BlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
 			<em><?= $item['page_href'] ?></em>
 			<div class="edited-by"><?= $item['changemessage'] ?></div>
 		</li>

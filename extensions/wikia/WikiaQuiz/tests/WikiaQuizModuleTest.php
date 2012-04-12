@@ -1,43 +1,28 @@
 <?php
-require_once dirname(__FILE__) . '/../WikiaQuizModule.class.php';
-require_once dirname(__FILE__) . '/../WikiaQuizElement.class.php';
-wfLoadAllExtensions();
 
-class WikiaQuizModuleTest extends PHPUnit_Framework_TestCase {
-	protected function setUp() {
-		$this->app = F::app();
+class WikiaQuizModuleTest extends WikiaBaseTest {
+	
+	public function __construct() {
+		$this->setupFile = dirname(__FILE__) . '/../WikiaQuiz_setup.php';
 	}
-
-	protected function tearDown() {
-		F::unsetInstance('WebRequest');
-		F::unsetInstance('WikiaQuizElement');
-		F::setInstance('App', $this->app);
-	}
-
+	
 	public function testExecuteGetQuizElement() {
 		$wgRequest = $this->getMock('WebRequest', array('getVal'), array(), '', false);
 		$wgRequest->expects($this->any())
 			->method('getVal')
 			->will($this->returnValue('10001'));
 
-		$app = $this->getMock('WikiaApp', array('getGlobal'), array(), '', false);
-		$app->expects($this->once())
-			->method('getGlobal')
-			->with($this->equalTo('wgRequest'))
-			->will($this->returnValue($wgRequest));
-
-		F::setInstance('App', $app);
+		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$quizElement = $this->getMock('WikiaQuizElement', array('getData'), array(), '', false);
 		$quizElement->expects($this->once())
 			->method('getData')
 			->will($this->returnValue(array('foo'=>'bar', 'baz'=>'asdf')));
+		$this->mockClass('WikiaQuizElement', $quizElement);
 
-		F::setInstance('WikiaQuizElement', $quizElement);
-
-		$quizModule = new WikiaQuizModule();
-		$quizModule->executeGetQuizElement();
-		$this->assertNotNull($quizModule->data);
+		$this->mockApp();
+		$response = $this->app->sendRequest('WikiaQuiz', 'executeGetQuizElement');
+		$this->assertNotNull($response->getData());
 	}
 
 	public function testExecuteGetQuizElementInvalidRequest() {
@@ -45,15 +30,12 @@ class WikiaQuizModuleTest extends PHPUnit_Framework_TestCase {
 		$wgRequest->expects($this->once())
 			->method('getVal')
 			->will($this->returnValue(null));
-		$app = $this->getMock('WikiaApp', array('getGlobal'), array(), '', false);
-		$app->expects($this->once())
-			->method('getGlobal')
-			->will($this->returnValue($wgRequest));
-		F::setInstance('App', $app);
+		
+		$this->mockGlobalVariable('wgRequest', $wgRequest);
+		$this->mockApp();
 
-		$quizModule = new WikiaQuizModule();
-		$quizModule->executeGetQuizElement();
-		$this->assertNull($quizModule->data);
+		$response = $this->app->sendRequest('WikiaQuiz', 'executeGetQuizElement');
+		$this->assertNull($response->getVal('data'));
 
 	}
 
