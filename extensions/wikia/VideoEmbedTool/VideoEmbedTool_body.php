@@ -397,7 +397,11 @@ class VideoEmbedTool {
 							}
 							
 							if (!empty($titleFile)) {
-								$this->uploadVideoAsFile($provider, $id, $name);	// file uploader will sanitize as needed
+								$status = $this->uploadVideoAsFile($provider, $id, $name);	// file uploader will sanitize as needed
+								if ( !$status->ok ) {
+									header('X-screen-type: error');
+									return wfMsg( 'wva-thumbnail-upload-failed' );
+								}
 							}
 						} else if($type == 'existing') {
 							header('X-screen-type: existing');
@@ -457,7 +461,11 @@ class VideoEmbedTool {
 						}
 						
 						if (!empty($titleFile)) {
-							$this->uploadVideoAsFile($provider, $id, $name);
+							$status = $this->uploadVideoAsFile($provider, $id, $name);
+							if ( !$status->ok ) {
+								header('X-screen-type: error');
+								return wfMsg( 'wva-thumbnail-upload-failed' );
+							}
 						}
 						
 					}
