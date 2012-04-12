@@ -63,10 +63,10 @@
 
     <div class="InputSet AutoCompleteWrapper">
         <label for="description">
-            <?= wfMsg( 'toplists-editor-social-description-label' ) ;?>
+            <?= wfMsg( 'toplists-editor-description-label' ) ;?>
         </label>
 
-        <input type="text" name="description" placeholder="<?= wfMsg( 'toplists-editor-social-description-placeholder' ) ;?>"
+        <input type="text" name="description" placeholder="<?= wfMsg( 'toplists-editor-description-placeholder' ) ;?>"
                autocomplete="off" value="<?= $description ;?>"
             <?= ( !empty( $errors[ 'description' ] ) ) ? ' class="error"' : null ;?> />
 
