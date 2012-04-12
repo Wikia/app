@@ -28,7 +28,14 @@ class YoutubeVideoHandler extends VideoHandler {
 		$code = <<<EOT
 <iframe width="$width" height="$height" src="http://www.youtube.com/embed/{$this->videoId}?$qs" frameborder="0" allowfullscreen></iframe>
 EOT;
-		
 		return $code;
-	}	
+	}
+
+	public function addExtraBorder( $width ){
+		if ( $width > 320 ){
+			return 15;
+		} else {
+			return 0;
+		};
+	}
 }

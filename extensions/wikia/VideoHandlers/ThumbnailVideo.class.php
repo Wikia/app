@@ -163,11 +163,17 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
+		$extraBorder = $this->file->addExtraBorder( $this->width );
+		if ( !empty( $extraBorder ) ) {
+			if ( !isset( $attribs['style'] ) ) $attribs['style'] = '';
+			$attribs['style'] .= 'border-top: 15px solid black; border-bottom: '.$extraBorder.'px solid black;';
+		}
+
 		$html = ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::openElement( 'a', $linkAttribs ) : '';
 			$html .= WikiaVideoService::videoPlayButtonOverlay( $this->width, $this->height );
 			$html .= Xml::element( 'img', $attribs, '', true );
-		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : ''; 
-		
+		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';
+
 		if ( $useThmbnailInfoBar ) {
 
 			$titleBar = array(

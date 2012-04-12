@@ -63,7 +63,7 @@ class VideoFileUploader {
 
 	public function upload( &$oTitle ){
 
-		wfProfileIn();
+		wfProfileIn(__METHOD__);
 		if( !$this->getApiWrapper() ) {
 			/* can't upload without proper ApiWrapper */
 			wfProfileOut();
@@ -88,7 +88,7 @@ class VideoFileUploader {
 			$upload->fetchFile();
 			$status = $upload->verifyUpload();
 			if ( isset( $status['status'] ) && ( $status['status'] == UploadBase::EMPTY_FILE ) ){
-				wfProfileOut();
+				wfProfileOut(__METHOD__);
 				return Status::newFatal('');
 			};
 		}
@@ -119,7 +119,7 @@ class VideoFileUploader {
 			File::DELETE_SOURCE
 		);
 
-		wfProfileOut();
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
