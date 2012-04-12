@@ -94,7 +94,10 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	function getHeight( $width ){
-		return (integer) ( $width / $this->getAspectRatio() );
+		return (integer) (
+			( $width / $this->getAspectRatio() ) +
+			( 2 * $this->addExtraBorder( $width ) )
+		);
 	}
 
 	/**
@@ -238,5 +241,9 @@ abstract class VideoHandler extends BitmapHandler {
 			$oThumbnailImage->page,
 			$this::$aspectRatio
 		);		
+	}
+
+	public function addExtraBorder( $width ){
+		return 0;
 	}
 }

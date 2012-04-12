@@ -23,6 +23,13 @@ class WikiaLocalFileShared  {
 		return ($this->oFile->getHandler() instanceof VideoHandler);
 	}
 
+	public function addExtraBorder( $width ){
+		if ( $this->isVideo() ){
+			return ($this->oFile->getHandler()->addExtraBorder( $width ));
+		}
+		return 0;
+	}
+
 	/*
 	 * Returns embed HTML
 	 */
