@@ -1,4 +1,3 @@
-
 /** REQUIRES, OTHER SETUP **/
 
 var config = require("./server_config.js");
@@ -256,7 +255,7 @@ function authConnection(handshakeData, authcallback){
 	var roomId = handshakeData.query.roomId;
 	var name = handshakeData.query.name;
 	var key = handshakeData.query.key;
-
+	
 	var callback = function(data) {
 		if(!config.validateConnection(data.wgCityId)) {
 			logger.warning("User failed authentication. Wrong node js server for : " + data.wgCityId);
@@ -309,6 +308,10 @@ function authConnection(handshakeData, authcallback){
 					handshakeData.clientData = client;
 					logger.debug("User authentication success.");
 					monitoring.incrEventCounter('logins');
+					
+					// for testing purposes we execute it in parallel with authcallback
+					mwBridge.onUserLogin(roomId, name, key, handshakeData.address.address, function() {});
+					
 					authcallback(null, true); // error first callback style 
 				} else {
 					errback();
@@ -353,7 +356,7 @@ function clearChatBuffer(client) {
  * This adds the user to the room in redis and sends the initial state to the client.
  */
 function finishConnectingUser(client, socket ){
-	logger.debug(new Date().getTime());
+	logger.debug( 'finishConnectingUser:' + (new Date().getTime()));
 	
 	storage.getRoomState(client.roomId, function(nodeChatModel) {
 		// this is called after getUsersInRoom callback
@@ -394,11 +397,10 @@ function finishConnectingUser(client, socket ){
 		// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
 		var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 		
-		logger.debug(sessionIdsByKey, "OLD_ID:" + existingId);
+		var oldClient = existingId != "undefined" ? socket.socket(existingId):false;
 
-		if(typeof existingId != "undefined"){
+		if(oldClient && oldClient.userKey != client.userKey ){
 			// Send the old client a notice that they're about to be disconnected and why.
-			var oldClient = socket.socket(existingId);
 			sendInlineAlertToClient(oldClient, '', 'chat-err-connected-from-another-browser', [], function(){
 				// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
 				// this will only kick the other instance of this same user connected to the room.
@@ -415,6 +417,7 @@ function finishConnectingUser(client, socket ){
 			// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
 			formallyAddClient(client, socket, connectedUser);
 		}
+
 	});
 } // end finishConnectingUser()
 

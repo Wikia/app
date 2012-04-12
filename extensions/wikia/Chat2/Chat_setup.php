@@ -105,6 +105,11 @@ $wgLogTypes[] = 'chatban';
 $wgLogHeaders['chatban'] = 'chat-chatban-log';  
 $wgLogNames['chatban'] = 'chat-chatban-log';
 
+$wgLogTypes[] = 'chatconnect';
+$wgLogHeaders['chatconnect'] = 'chat-chatconnect-log';
+$wgLogNames['chatconnect'] = 'chat-chatconnect-log';
+$wgLogActions['chatconnect/chatconnect'] = 'chat-chatconnect-log-entry';
+
 $wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
 
 $wgLogActionsHandlers['chatban/chatbanchange'] = "ChatHelper::formatLogEntry";
