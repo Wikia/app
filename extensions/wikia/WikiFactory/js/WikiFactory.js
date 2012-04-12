@@ -55,7 +55,9 @@ $Factory.ReplaceCallback = {
         $Factory.Busy(0);
         // other conditions
         if ( Data["div-name"] == "wf-clear-cache") {
-            setTimeout("var alink = function(){$Dom.get('wf-clear-cache').innerHTML = removeVarMsg;};alink();",2000);
+            setTimeout(function() {
+            	$Dom.get('wf-clear-cache').innerHTML = removeVarMsg;
+            }, 2000);
         }
     },
     failure: function( oResponse ) {
