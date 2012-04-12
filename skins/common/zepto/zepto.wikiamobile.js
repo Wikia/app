@@ -83,7 +83,8 @@
 	$.getResources = function( resources, callback ) {
 		var length = resources.length,
 			remaining = length,
-			resource;
+			resource,
+			type;
 
 		function onComplete(){
 			remaining--;
@@ -97,12 +98,20 @@
 		for ( var n = 0; n < length; n++ ) {
 			resource = resources[n];
 
+			if(resource && resource.type && resource.url){
+				// JS files and Asset Manager groups are scripts
+				type = resource.type;
+				resource = resource.url;
+			}else{
+				type = null;
+			}
+
 			if(typeof resource == 'function'){
 				resource.call($, onComplete);
-			}else if(isJs.test(resource)){
-				$.getScript(resource, onComplete);
-			}else if(isCss.test(resource) || isSass.test(resource)){
+			}else if(type == 'css' || isCss.test(resource) || isSass.test(resource)){
 				$.getCSS(resource, onComplete);
+			}else if(type == 'js' || isJs.test(resource)){
+				$.getScript(resource, onComplete);
 			}else{
 				throw 'unknown resource format (' + resource + ')';
 			}

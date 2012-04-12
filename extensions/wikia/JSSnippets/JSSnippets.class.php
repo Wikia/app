@@ -47,19 +47,38 @@ class JSSnippets extends WikiaObject{
 
 			if ( !( $isURL || $isResource ) ) {
 				//an AssetsManager package name
-				foreach( $assetsManager->getURL( $dependency ) as $dep ) {
+				$type = null;
+				$assets = $assetsManager->getURL( $dependency, $type );
+
+				switch ( $type ) {
+					case AssetsManager::TYPE_CSS:
+					case AssetsManager::TYPE_SCSS:
+						$type = 'css';
+						break;
+					case AssetsManager::TYPE_JS:
+						$type = 'js';
+						break;
+					default:
+						throw new WikiaException( 'unknown package type' );
+				}
+
+				foreach ( $assets as $dep ) {
 					if ( !$isWikiaSkin || $assetsManager->checkAssetUrlForSkin( $dep, $skin ) ) {
-						$entry['dependencies'][] = Xml::encodeJsVar($dep);
+						$d = new stdClass();
+						$d->url = $dep;
+						$d->type = $type;
+
+						$entry['dependencies'][] = Xml::encodeJsVar( $d );
 					}
 				}
 			} elseif ( !$isWikiaSkin || $assetsManager->checkAssetUrlForSkin( $dependency, $skin ) ) {
-				$entry['dependencies'][] = Xml::encodeJsVar($dependency);
+				$entry['dependencies'][] = Xml::encodeJsVar( $dependency );
 			}
 		}
 
 		// add libraries loaders / dependency functions
-		if ( !empty($loaders) ) {
-			$entry['loaders'] = ',getLoaders:function(){return [' . implode(',', $loaders) . ']}';
+		if ( !empty( $loaders ) ) {
+			$entry['loaders'] = ',getLoaders:function(){return [' . implode( ',', $loaders ) . ']}';
 		}
 
 		if ( empty( $entry['dependencies'] ) && empty( $entry['loaders'] ) ) {
