@@ -14,7 +14,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		global $wgEnableWikiaHomePageExt;
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
 		//$this->app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SearchV2/css/Search.scss'));
 		/*
@@ -32,7 +31,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$crossWikia = $this->request->getBool('crossWikia');
 
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
-		$isInterWiki = $crossWikia ? true : !empty($wgEnableWikiaHomePageExt);
+		$isInterWiki = $crossWikia ? true : !empty($this->wg->EnableWikiaHomePageExt);
 				
 		$results = false;
 		$resultsFound = 0;
@@ -62,8 +61,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function pagination() {
-		global $wgEnableWikiaHomePageExt;
-		$isInterWiki = !empty($wgEnableWikiaHomePageExt); // For now, just checking if we're on wikia.com wiki
+		$isInterWiki = !empty($this->wg->EnableWikiaHomePageExt); // For now, just checking if we're on wikia.com wiki
 		$query = $this->getVal('query');
 		$page = $this->getVal( 'page', 1 );
 		$rankExpr = $this->getVal('rankExpr');
