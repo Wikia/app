@@ -245,10 +245,16 @@ class TopListHelper {
      *
      * @author Andrzej 'nAndy' Łukaszewski
      */
-    static public function onArticleServicebeforeStripping(&$oArticle, &$content, $length) {
+    static public function onArticleServiceBeforeStripping(&$oArticle, &$content, $length) {
         $title = $oArticle->getTitle();
         if( $title instanceof Title && $title->getNamespace() == NS_TOPLIST ) {
             $topList = TopList::newFromTitle($title);
+
+            if( !$topList ) {
+            //fb#27831 when the title is a subpage of toplist (its item)
+            //TopList::newFromTitle will return false
+                return true;
+            }
 
             $desc = $topList->getDescription();
             if( empty($desc) ) {
