@@ -300,6 +300,14 @@ $.loadJQueryAIM = function(callback) {
 	);
 };
 
+$.loadMustache = function(callback) {
+	return $.loadLibrary('Mustache',
+		stylepath + '/common/jquery/jquery.mustache.js',
+		typeof jQuery.mustache,
+		callback
+	);
+};
+
 $.loadGoogleMaps = function(callback) {
 	var dfd = new jQuery.Deferred(),
 		onLoaded = function() {
