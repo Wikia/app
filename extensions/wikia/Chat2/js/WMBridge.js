@@ -116,24 +116,16 @@ var WMBridge = function() {
 }
 
 
-WMBridge.prototype.getUser = function(roomId, name, key, success, error) {
+WMBridge.prototype.authenticateUser = function(roomId, name, key, address, success, error) {
 	var requestUrl = getUrl( 'getUserInfo', {
 		roomId: roomId,
-		name: urlencode(name),
-		key: key
-	});
-	
-	logger.debug(requestUrl);
-	
-	requestMW('GET', roomId, {}, requestUrl, success, error);
-}
-
-WMBridge.prototype.onUserLogin = function(roomId, name, key, address, success, error) {
-	var requestUrl = getUrl( 'onUserLogin', {
 		name: urlencode(name),
 		key: key,
 		address: urlencode(address)
 	});
+	
+	logger.debug(requestUrl);
+	
 	requestMW('GET', roomId, {}, requestUrl, success, error);
 }
 
