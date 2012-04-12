@@ -234,6 +234,11 @@ class CodeLintJs extends CodeLint {
 			$ret = true;
 		}
 
+		// Don't pass a string to setInterval/setTimeout (implied eval)
+		if (strpos($errorMsg, 'implied eval') !== false) {
+			$ret = true;
+		}
+
 		return $ret;
 	}
 }

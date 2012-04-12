@@ -115,6 +115,14 @@ var regExpRules = [
 		name: 'Found $.browser',
 		regexp: /(\$|jQuery).browser./,
 		reason: 'jQuery.browser should not be used (use feature detection instead)'
+	},
+	// detect setTimeout / setInterval with implied eval
+	{
+		name: 'Implied eval',
+		regexp: /set(Timeout|Interval)\(\s?["']/,
+		reason: function(matches) {
+			return 'Don\'t pass a string to set' + matches[1] + ' (implied eval)';
+		}
 	}
 ];
 
