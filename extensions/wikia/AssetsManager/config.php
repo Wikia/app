@@ -254,14 +254,6 @@ $config['wikiamobile_scroll_js'] = array(
 	)
 );
 
-$config['wikiamobile_facebook'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'
-	)
-);
-
 /** WikiaApp **/
 
 $config['wikiaapp_css'] = array(
@@ -586,9 +578,17 @@ $config['userlogin_js_wikiamobile_fbconnect'] = array(
 		'type' => AssetsManager::TYPE_JS,
 		'skin' => 'wikiamobile',
 		'assets' => array(
-				'#external_http://connect.facebook.net/en_US/all.js',
-				'#group_userlogin_js_wikiamobile',
-				'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
+			'#external_http://connect.facebook.net/en_US/all.js',
+			'#group_userlogin_js_wikiamobile',
+			'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
+		)
+);
+
+$config['userlogin_facebook_js_wikiamobile'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'skin' => 'wikiamobile',
+		'assets' => array(
+				'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'
 		)
 );
 
@@ -598,7 +598,7 @@ $config['wikiahomepage_scss_wikiamobile'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
 		'skin' => 'wikiamobile',
 		'assets' => array(
-				'//extensions/wikia/WikiaHomePage/css/WikiaHomePage.wikiamobile.scss'
+			'//extensions/wikia/WikiaHomePage/css/WikiaHomePage.wikiamobile.scss'
 		)
 );
 
