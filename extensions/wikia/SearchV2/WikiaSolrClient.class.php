@@ -4,7 +4,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
         protected $solrClient, $solrPort, $solrHost, $query;
 	protected $namespaces = array();
-	protected $isInterwiki = false;
+	protected $isInterWiki = false;
 
 	public function __construct( $solrHost, $solrPort ) {
 	        $this->solrHost = $solrHost;
@@ -14,7 +14,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	public function search( $query, $start, $size, $cityId = 0, $rankExpr = '', $skipBoostFunctions=false ) {
 	        $this->query = $query;
-		$this->isInterwiki = false;
+		$this->isInterWiki = false;
 
 		$params = array(
 			'fl' => '*,score',
@@ -174,7 +174,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$articleMatchId = '';
 
-		if ((!$this->isInterwiki) && ($article = self::createArticleMatch($this->query))) {
+		if ((!$this->isInterWiki) && ($article = self::createArticleMatch($this->query))) {
 		        global $wgCityId, $wgUser;
 			$title = $article->getTitle();
 			if (in_array($title->getNamespace(), $this->namespaces)) {
