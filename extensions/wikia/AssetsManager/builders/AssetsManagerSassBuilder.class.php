@@ -21,15 +21,15 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			throw new Exception('Requested file must be .scss.');
 		}
 
-		if (startsWith($this->mOid, '/', false)) {
-			$this->mOid = substr( $this->mOid, 1);
-		}
+		//remove slashes at the beginning of the string, we need a pure relative path to open the file
+		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
 
 		if( $wgDevelEnvironment && $wgSpeedBox ) {
 			$hash = wfAssetManagerGetSASShash( $this->mOid );
 			$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
 
 			$cacheId = "/Sass-$inputHash-$hash";
+
 			//$cacheFile = $tempDir . $cacheId;
 			$memc = F::App()->wg->Memc;
 
