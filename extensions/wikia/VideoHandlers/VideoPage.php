@@ -44,20 +44,26 @@ class WikiaVideoPage extends ImagePage {
 
 	public function getDuplicates() {
 
-		if ( $this->img->isBroken() ) {
+		$handler = $this->img->getHandler();
+		if ( $handler instanceof VideoHandler && $handler->isBroken() ) {
 			return $this->dupes = array();
 		} else {
-			return parent::getDuplicates();
+			$dupes = parent::getDuplicates();
+			$finalDupes = array();
+			foreach( $dupes as $dupe ){
+				if ( $dupe->getProviderName() != $this->img->getProviderName() ) continue;
+				if ( $dupe->getVideoId() != $this->img->getVideoId() ) continue;
+				$finalDupes[] = $dupe;
+			}
+			return $finalDupes;
 		}
 	}
 
 	public function getUploadUrl() {
 		$this->loadFile();
 		$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
-		return $uploadTitle->getFullUrl(
-			array(
-				'name' => $this->img->getName()
-			)
-		);
+		return $uploadTitle->getFullUrl( array(
+			'name' => $this->img->getName()
+		 ) );
 	}
 }
