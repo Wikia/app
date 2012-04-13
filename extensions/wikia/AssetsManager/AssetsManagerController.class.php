@@ -12,9 +12,6 @@
  */
 
 class AssetsManagerController extends WikiaController {
-
-	const CACHE_TTL = 86400;
-
 	/**
 	 * Return different type of assets in a single request
 	 *
@@ -22,15 +19,22 @@ class AssetsManagerController extends WikiaController {
 	 * @requestParam string styles - comma-separated list of SASS files
 	 * @requestParam string scripts - comma-separated list of AssetsManager groups
 	 * @requestParam string messages - comma-separated list of JSMessages packages
-	 * @requestParam integer ttl - cache period for both varnish and browser (in seconds)
+	 * @requestParam integer ttl - cache period for memcache, varnish and browser (in seconds), no caching will be used if not specified or 0
+	 * 
 	 * @responseParam array templates - rendered templates (either HTML or JSON encoded string)
 	 * @responseParam array styles - minified styles
 	 * @responseParam array scripts - minified AssetsManager  packages
 	 * @responseParam array messages - JS messages
 	 */
 	public function getMultiTypePackage() {
-		$key = $this->getMultiTypePackageMemcacheKey( $this->request->getParams() );
-		$data = $this->wg->Memc->get($key);
+		$key = null;
+		$data = null;
+		$ttl = $this->request->getInt( 'ttl', 0 );
+
+		if ( $ttl > 0 ) {
+			$key = $this->getMultiTypePackageMemcacheKey( $this->request->getParams() );
+			$data = $this->wg->Memc->get( $key );
+		}
 
 		if ( empty( $data ) ) {
 			// handle templates via sendRequest
@@ -90,21 +94,21 @@ class AssetsManagerController extends WikiaController {
 			}
 
 			// handle cache time
-			$ttl = $this->request->getVal('ttl');
-			if ($ttl > 0) {
-				$this->response->setCacheValidity($ttl, $ttl, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+			if ( $ttl > 0 ) {
+				$this->wg->Memc->set( $key, $this->response->getData(), $ttl );
+				$this->response->setCacheValidity( $ttl, $ttl, array( WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH ) );
 			}
 
-			$this->wg->Memc->set($key, $this->response->getData(), self::CACHE_TTL);
+			
 		}
 		else {
-			$this->response->setData($data);
+			$this->response->setData( $data );
 		}
 
-		$this->response->setFormat('json');
+		$this->response->setFormat( 'json' );
 	}
 
-	private function getMultiTypePackageMemcacheKey(Array $params){
+	private function getMultiTypePackageMemcacheKey( Array $params ) {
 		return 'multitypepackage::' . md5( F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( $params, true ) );
 	}
 
@@ -125,7 +129,7 @@ class AssetsManagerController extends WikiaController {
 	 * @param string $oid assets / group name
 	 * @return AssetsManagerBaseBuilder instance of builder
 	 */
-	private function getBuilder($type, $oid) {
+	private function getBuilder( $type, $oid ) {
 		$type = ucfirst($type);
 
 		// TODO: add a factory method to AssetsManager

@@ -346,7 +346,8 @@ var WikiaMobile = (function() {
 						controllerName: 'WikiaMobileSharingService',
 						methodName: 'index'
 					}],
-					styles: '//extensions/wikia/WikiaMobile/css/sharing.scss',
+					styles: '/extensions/wikia/WikiaMobile/css/sharing.scss',
+					ttl: 86400,
 					callback: function(res){
 						var html = res.templates[0],
 							style = res.styles;
@@ -373,8 +374,11 @@ var WikiaMobile = (function() {
 					controllerName: 'UserLoginSpecialController',
 					methodName: 'index'
 				}],
-				styles: '//extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
-				scripts: 'wikiamobile_facebook',
+				styles: '/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
+				scripts: 'userlogin_facebook_js_wikiamobile',
+				params: {
+					useskin: window.skin
+				},
 				callback: function(res){
 					loader.remove(wkPrf);
 

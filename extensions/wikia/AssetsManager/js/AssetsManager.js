@@ -9,11 +9,12 @@ window.Wikia = window.Wikia || {};
 /**
  *	request - json of key value pairs
  *  keys:
- *		templates - an array of objects with the following fields: controllerName, methodName and an optional params
+ *		templates - an array of objects with the following fields: controllerName, methodName and an optional params (parameters for the controller method)
  *		styles - comma-separated list of SASS files
  *		scripts - comma-separated list of AssetsManager groups
  *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
  *		ttl - cache period for both varnish and browser (in seconds)
+ *		params - an object with all the additional parameters for the request (e.g. useskin, forceprofile, etc.)
  *		callback - function to be called with fetched JSON object
  *
  *  Returns object with all requested resources
@@ -23,12 +24,15 @@ window.Wikia = window.Wikia || {};
  *		scripts: 'oasis_jquery,yui',
  *		styles: 'path/to/style/file'
  *		templates: [{
- *			controllerName: 'UserLoginSpecialController',
- *			methodName: 'index',
+ *			controllerName: 'MyController',
+ *			methodName: 'getPage',
  *			param: {
- *				useskin: 'wikiamobile'
+ *				page: 1
  *			}
- *		}]
+ *		}],
+ *		params: {
+ *			useskin: 'skinname'
+ *		}
  *	});
  */
 window.Wikia.getMultiTypePackage = function(options) {
@@ -38,6 +42,7 @@ window.Wikia.getMultiTypePackage = function(options) {
 		messages = options.messages,
 		templates = options.templates,
 		callback = options.callback,
+		params = options.params,
 		ttl = options.ttl,
 		send = false;
 
@@ -60,6 +65,10 @@ window.Wikia.getMultiTypePackage = function(options) {
 		// JSON encode templates entry
 		request.templates = (typeof templates === 'object') ? JSON.stringify(templates) : templates;
 		send = true;
+	}
+
+	if(typeof params === 'object'){
+		request = $.extend(request, params);
 	}
 
 	if(typeof ttl === 'string'){
