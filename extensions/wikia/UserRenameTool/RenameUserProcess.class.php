@@ -369,14 +369,15 @@ class RenameUserProcess {
 			
 			$olduser->invalidateCache();
 			$olduser = User::newFromName($oldTitle->getText(), false);
-			$realName = $olduser->getRealName();
+
+			$renameData = $olduser->getOption( 'renameData', '' );
 
 			$this->addInternalLog("post-invalidate: titletext={$oldTitle->getText()} old={$olduser->getName()}:{$olduser->getId()}");
 			
-			$this->addLog("Scanning real name for process data: {$realName}");
+			$this->addLog("Scanning user option renameData for process data: {$renameData}");
 			
-			if(stripos($realName, self::RENAME_TAG) !== false){
-				$tokens = explode(';', $realName, 3);
+			if(stripos($renameData, self::RENAME_TAG) !== false){
+				$tokens = explode(';', $renameData, 3);
 
 					if(!empty($tokens[0])){
 						$nameTokens = explode('=', $tokens[0], 2);
@@ -582,14 +583,12 @@ class RenameUserProcess {
 
 		if(empty($this->mFakeUserId)){
 			//IMPORTANT: thi extension is meant to be enabled only on community central
-			$fakeUser = User::createNew($this->mOldUsername, array(
-				'real_name' => self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1'
-			));
-
+			$fakeUser = User::createNew($this->mOldUsername);
+			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
 			$fakeUser->saveToCache();
 
 			$this->mFakeUserId = $fakeUser->getId();
-			$this->addLog("Created fake user account with ID {$this->mFakeUserId} and realname '{$fakeUser->getRealName()}'");
+			$this->addLog("Created fake user account with ID {$this->mFakeUserId} and renameData '{$fakeUser->getOption( 'renameData', '')}'");
 		} else {
 			$fakeUser = User::newFromId($this->mFakeUserId);
 			$this->addLog("Fake user account already exists: {$this->mFakeUserId}");
@@ -620,7 +619,7 @@ class RenameUserProcess {
 				wfProfileOut(__METHOD__);
 				return false;
 			} else {
-				$fakeUser->setRealName($fakeUser->getRealName() . ';' . self::PHALANX_BLOCK_TAG . '=' . $this->mPhalanxBlockId);
+				$fakeUser->setOption( 'renameData', $fakeUser->getOption( 'renameData', '') . ';' . self::PHALANX_BLOCK_TAG . '=' . $this->mPhalanxBlockId);
 				$fakeUser->saveSettings();
 				$this->addLog("Block created with ID {$this->mPhalanxBlockId}.");
 			}
@@ -902,10 +901,10 @@ class RenameUserProcess {
 		}
 
 		if($this->mFakeUserId){
-			$this->addLog("Cleaning up process data in user real name for ID {$this->mFakeUserId}");
+			$this->addLog("Cleaning up process data in user option renameData for ID {$this->mFakeUserId}");
 
 			$fakeUser = User::newFromId($this->mFakeUserId);
-			$fakeUser->setRealName(self::RENAME_TAG . '=' . $this->mNewUsername);
+			$fakeUser->setOption( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername);
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}
