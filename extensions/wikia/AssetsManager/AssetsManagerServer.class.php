@@ -6,7 +6,7 @@
 
 class AssetsManagerServer {
 
-	public static function serve($request) {
+	public static function serve(WebRequest $request) {
 
 		try {
 			switch($request->getText('type')) {

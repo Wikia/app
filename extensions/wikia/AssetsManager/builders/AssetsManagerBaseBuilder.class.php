@@ -10,6 +10,7 @@ class AssetsManagerBaseBuilder {
 	protected $mType;
 	protected $mParams;
 	protected $mCb;
+	protected $mNoExternals;
 
 	protected $mContent;
 	protected $mContentType;
@@ -20,6 +21,10 @@ class AssetsManagerBaseBuilder {
 		$this->mOid = $request->getText('oid');
 		parse_str(urldecode($request->getText('params')), $this->mParams);
 		$this->mCb = $request->getInt('cb');
+
+		if (!empty($this->mParams['noexternals'])) {
+			$this->mNoExternals = true;
+		}
 	}
 
 	public function getContent() {

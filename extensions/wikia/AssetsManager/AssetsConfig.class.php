@@ -112,7 +112,7 @@ class AssetsConfig {
 	public static function getJQueryUrl( $combine, $minify, $params ) {
 		global $wgUseJQueryFromCDN;
 
-		if (!empty($wgUseJQueryFromCDN)) {
+		if (!empty($wgUseJQueryFromCDN) && empty($params['noexternals'])) {
 			$url = $minify
 				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'
 				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js';
