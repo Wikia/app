@@ -336,6 +336,9 @@ class AbuseFilter {
 		}
 
 		$u = User::newFromName( $username );
+		if ( !($u instanceof User) ) {
+			return wfMsgExt( 'abusefilter-reautoconfirm-none', array( 'parsemag' ), $username );
+		}
 
 		global $wgMemc;
 		$k = AbuseFilter::autoPromoteBlockKey( $u );
