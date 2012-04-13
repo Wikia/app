@@ -30,5 +30,5 @@
 		<?php endfor; ?>
 	</section>
 <?php else: ?>
-	<?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $resultSet->next(), 'pos' => $pos, 'rankExpr' => $rankExpr, 'debug' => $debug, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'))); ?>
+	<?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $resultSet->next(), 'pos' => $pos, 'rankExpr' => $rankExpr, 'debug' => $debug, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=>true)); ?>
 <?php endif; ?>
