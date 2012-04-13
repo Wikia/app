@@ -1,7 +1,7 @@
 var WikiaMobile = (function() {
 
 	//as fast as possible to avoid screen flickering
-	document.documentElement.className += ' js';
+	//document.documentElement.className += ' js';
 
 	/** @private **/
 
@@ -249,13 +249,10 @@ var WikiaMobile = (function() {
 				//or taller than the allowed vertical size, then wrap it and/or add it to
 				//the list of handled tables for speeding up successive calls
 				//NOTE: tables with 100% width have the same width of the screen, check the size of the first row instead
-				var firstRowWidth = rows.first().width(),
-					tableHeight = table.height();
+				var firstRowWidth = rows.first().width();
 
 				table.computedWidth = firstRowWidth;
-				table.computedHeight = tableHeight;
-
-				if(firstRowWidth > realWidth || table.height() > realWidth){
+				if(firstRowWidth > realWidth){
 					//remove scripts to avoid re-parsing
 					table.find('script').remove();
 					table.wrap(tableWrapperHTML);
@@ -280,7 +277,7 @@ var WikiaMobile = (function() {
 				row = table.find('tr').first();
 				isWrapped = table.isWrapped;
 				wasWrapped = table.wasWrapped;
-				isBig = (table.computedWidth > maxWidth || table.computedHeight > deviceWidth);
+				isBig = (table.computedWidth > maxWidth);
 
 				if(!isWrapped && isBig){
 					if(!wasWrapped){
@@ -592,12 +589,13 @@ var WikiaMobile = (function() {
 
 			processSections();//NEEDS to run before table wrapping!!!
 			processTables();
+
 			media.processImages();
 
 			//add class for styling to be applied only if JS is enabled
 			//(e.g. collapse sections)
 			//must be done AFTER detecting size of elements on the page
-			//d.body.className += ' js';
+			d.body.className += ' js';
 
 			//handle ads
 			if(adSlot){
@@ -664,15 +662,39 @@ var WikiaMobile = (function() {
 				var num = (this.attributes['data-num'] || this.parentElement.attributes['data-num']).value;
 
 				if(num) media.openModal(num);
-			})
-			.delegate('.bigTable', clickEvent, function(event){
-					event.preventDefault();
-
-					modal.open({
-						classes: 'wideTable',
-						content: this.innerHTML
-					});
 			});
+
+			if(!Modernizr.overflow && handledTables.length){
+				require(['cache'], function(cache){
+					var key = 'wideTable' + wgStyleVersion,
+						script,// = cache.get(key);
+						process = function(s){
+							Wikia.processScript(s);
+							body.delegate('.bigTable', clickEvent, function(event){
+								event.preventDefault();
+								if(!this.wkScroll) {
+									this.wkScroll = new iScroll(this);
+								}
+							});
+						};
+
+					if(script){
+						process(script);
+					}else{
+						Wikia.getMultiTypePackage({
+							scripts: 'wikiamobile_scroll_js',
+							ttl: 0,
+							callback: function(res){
+								script = res.scripts[0];
+								cache.set(key, script, 604800/*7 days*/);
+								process(script);
+							}
+						});
+					}
+
+
+				});
+			}
 
 			searchForm.bind('submit', function(){
 				track('search/submit');

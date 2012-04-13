@@ -1,3 +1,4 @@
+/*global define:true, media:true, WikiaMobile:true */
 /**
  * Media handling in Wikia Mobile
  *
@@ -30,11 +31,11 @@
 
 		function processImages(){
 			var	number = 0, href = '', name = '', nameMatch = /[^\/]*\.\w*$/,
-				i, j = 0, elm,
+				i, j, elm,
 				elements = $('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure'),
 				l = elements.length;
 
-			for(; j < l; j++){
+			for(j = 0; j < l; j++){
 				var element = elements[j],
 					className = element.className;
 

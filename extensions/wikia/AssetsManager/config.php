@@ -213,8 +213,9 @@ $config['wikiamobile_js_body'] = array(
 	'assets' => array(
 		//feature detection and polifills go first
 		'//skins/common/modernizr/modernizr.wikiamobile.min.js',
-		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
 		'//skins/common/wikia/outerhtml.js',
+		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
+		'//skins/common/modernizr/feature-detects/overflow.wikiamobile.js',
 
 		//platform components
 		'//skins/common/wikia/module.js',
@@ -241,7 +242,15 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 
 		//extensions with assets to load on every page
-		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js'
+		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
+	)
+);
+
+$config['wikiamobile_scroll_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/scroll.wikiamobile.js'
 	)
 );
 
