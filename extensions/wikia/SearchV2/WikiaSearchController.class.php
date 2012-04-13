@@ -1,3 +1,4 @@
+
 <?php
 
 class WikiaSearchController extends WikiaSpecialPageController {
@@ -14,21 +15,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
-		//$this->app->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SearchV2/css/Search.scss'));
-		/*
-		if( !in_array( 'staff', $this->wg->User->getEffectiveGroups() ) ) {
-			$this->displayRestrictionError($this->user);
-			$this->skipRendering();
-			return false;
-		}
-		*/
+	        global $wgEnableWikiaHomePageExt, $wgRequest, $wgUser;
+		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );		
 				
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
 		$rankExpr = $this->getVal('rankExpr');
 		$debug = $this->request->getBool('debug');
 		$crossWikia = $this->request->getBool('crossWikia');
+
+		$namespaces = array();
+		foreach (SearchEngine::searchableNamespaces() as $i=>$name)
+		{
+		    if ($ns = $this->getVal('ns'.$i)) {
+		        $namespaces[] = $i;
+		    }
+		}
 
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
 		$isInterWiki = $crossWikia ? true : !empty($this->wg->EnableWikiaHomePageExt);
@@ -37,6 +39,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$resultsFound = 0;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
+		        $this->wikiaSearch->setNamespaces($namespaces);
 			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $rankExpr, $isInterWiki );
 			$resultsFound = $results->getRealResultsFound();
 
@@ -44,6 +47,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'rankExpr' => $rankExpr, 'groupResults' => $isInterWiki ) );
 			}
 		}
+
+		if (!$isInterWiki) {
+		    $specialSearch = new SpecialSearchV2($wgRequest, $wgUser);
+		    $powerSearch = $specialSearch->getPowerSearchBox($query);
+		    $formHeader = $specialSearch->getFormHeader($query, $page-1*20, 20);
+		    $this->setVal( 'powerSearch', $powerSearch);
+		    $this->setVal( 'formHeader', $formHeader);
+		}
+
 
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );

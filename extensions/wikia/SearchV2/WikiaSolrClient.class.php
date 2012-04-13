@@ -2,7 +2,9 @@
 
 class WikiaSolrClient extends WikiaSearchClient {
 
-        protected $solrClient, $solrPort, $solrHost;
+        protected $solrClient, $solrPort, $solrHost, $query;
+	protected $namespaces = array();
+	protected $isInterwiki = false;
 
 	public function __construct( $solrHost, $solrPort ) {
 	        $this->solrHost = $solrHost;
@@ -11,6 +13,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 	}
 
 	public function search( $query, $start, $size, $cityId = 0, $rankExpr = '', $skipBoostFunctions=false ) {
+	        $this->query = $query;
+		$this->isInterwiki = false;
+
 		$params = array(
 			'fl' => '*,score',
 			'qf' => 'title^5 html',
@@ -39,6 +44,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		if( empty($onWikiId) ) {
 			// Inter-wiki searching mode
 			$widQuery = '';
+			$this->isInterWiki == true;
 
 			foreach ($this->getInterWikiSearchExcludedWikis($onWikiId) as $excludedWikiId) {
 				if($onWikiId == $excludedWikiId) {
@@ -58,7 +64,21 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$queryClauses[] = "iscontent:true";
 		}
 		else {
-			$queryClauses[] = "iscontent: true";
+
+		  if (  empty($this->namespaces) ) {
+
+			$queryClauses[] = "(ns:0 OR ns:14)";
+			$this->namespaces = array(0, 14);
+
+		  } else { 
+
+			$nsQuery = '';
+			foreach($this->namespaces as $namespace) {
+				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
+			}
+
+			$queryClauses[] = "({$nsQuery})";
+		  }
 
 			array_unshift($queryClauses, "wid: {$onWikiId}");
 		}
@@ -120,8 +140,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 					  $sanitizedQuery);
 
 		$sanitizedQuery = implode(' AND ', $queryClauses);
-		#var_dump($sanitizedQuery);
-		#var_dump($params); die;
 
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
@@ -153,12 +171,38 @@ class WikiaSolrClient extends WikiaSearchClient {
 	private function getWikiaResults(Array $solrDocs, Array $solrHighlighting) {
 		$results = array();
 		$position = 1;
+
+		$articleMatchId = '';
+
+		if ((!$this->isInterwiki) && ($article = self::createArticleMatch($this->query))) {
+		        global $wgCityId, $wgUser;
+			$title = $article->getTitle();
+			if (in_array($title->getNamespace(), $this->namespaces)) {
+			  $articleMatchId = 'c'.$wgCityId.'p'.$article->getID();
+			  $result = F::build( 'WikiaSearchResult', array( 'id' => $articleMatchId) );
+			  $articleService = new ArticleService($article->getID());
+			  $result->setCityId($wgCityId);
+			  $result->setTitle($article->mTitle);
+			  $result->setText($articleService->getTextSnippet(250));
+			  $result->setUrl(urldecode($title->getFullUrl()));
+			  $result->score = '100%';
+			  $result->setVar('position', $position);
+			  $result->setVar('isArticleMatch', true);
+			  $results[] = $result;
+			  $position++;
+			}
+		}
+
 		foreach($solrDocs as $doc) {
-			$result = F::build( 'WikiaSearchResult', array( 'id' => 'c'.$doc->wid.'p'.$doc->pageid ) );
+		        $id = 'c'.$doc->wid.'p'.$doc->pageid;
+			if ($articleMatchId == $id) {
+			  continue;
+			}
+			$result = F::build( 'WikiaSearchResult', array( 'id' => $id ) );
 			$result->setCityId($doc->wid);
 			$result->setTitle($doc->title);
 			$result->setText($solrHighlighting[$doc->url]->html[0]);
-			$result->setUrl($doc->url);
+			$result->setUrl(urldecode($doc->url));
 			$result->setScore(($doc->score) ?: 0);
 
 			if(!empty($doc->canonical)) {
@@ -212,13 +256,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 		return array_values($deDupedResults);
 	}
 
-	private function trySpellCheck(Apache_Solr_Response $response, $start, $size, $cityId, $rankExpr ) 
-	{
-
-
-	}
-
-
 
 	/**
 	 * any query string transformation before sending to backend should be placed here
@@ -233,7 +270,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		return $query;
 	}
 
-/**
+	/**
 	 * get list of wikis excluded from inter-wiki searching
 	 * @return array
 	 */
@@ -295,6 +332,41 @@ class WikiaSolrClient extends WikiaSearchClient {
 	      return $response->response->docs;
 
 	}
+
+	public function setNamespaces(array $namespaces)
+	{
+	       $this->namespaces = $namespaces;
+	}
+
+	public function getNamespaces()
+	{
+	       return $this->namespaces;
+	} 
+
+	public static function createArticleMatch( $term ) {
+		// Try to go to page as entered.
+		$title = Title::newFromText( $term );
+		# If the string cannot be used to create a title
+		if( is_null( $title ) ) {
+			return null;
+		}
+
+		$searchWithNamespace = $title->getNamespace() != 0 ? true : false;
+		// If there's an exact or very near match, jump right there.
+		$title = SearchEngine::getNearMatch( $term );
+		if( !is_null( $title ) && ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) ) {
+			$article = new Article( $title );
+			if($article->isRedirect()) {
+				return new Article($article->getRedirectTarget());
+			}
+			else {
+				return $article;
+			}
+		}
+
+		return null;
+	}
+
 
 
 }

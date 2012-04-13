@@ -23,7 +23,7 @@
 	<nav>
 		<ul>
 			<li><a href="<?= $result->getUrl(); ?>"><?=$result->getUrl();?></a></li>
-			<?php if($result->getVar('cityHost', false) !== false): ?>
+			<?php if($isInterWiki): ?>
 				<li><a href="<?= $result->getVar('cityHost') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search'; ?>"><?= wfMsg( 'wikiasearch2-search-on-wiki') ?></a></li>
 			<?php endif; ?>
 		</ul>

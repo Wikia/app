@@ -20,8 +20,7 @@
 		    <?php endif; ?>
 		</fieldset>
 	    <?php endif; ?>
-	</form>	
-	
+	</form>
 	<?php if(!empty($results)): ?>
 		<?php if( $resultsFound > 0 ): ?>
 			<p class="result-count subtle">
@@ -42,7 +41,8 @@
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 						  'rankExpr' => $rankExpr,
 						  'debug' => $debug,
-						  'query' => $query
+						  'query' => $query,
+						  'isInterWiki' => $isInterWiki
 						));
 					}
 					else {
@@ -51,7 +51,8 @@
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 						  'rankExpr' => $rankExpr,
 						  'debug' => $debug,
-						  'query' => $query
+						  'query' => $query,
+						  'isInterWiki' => $isInterWiki
 						));
 					}
 				?>
@@ -62,4 +63,11 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
+	<?php if (isset($formHeader) || isset($powerSearch)) : ?>
+	    <form class="WikiaSearch" id="search-v2-form-footer" action="<?=$pageUrl;?>">
+	    <?php echo $formHeader; ?>
+	    <?php echo $powerSearch; ?>
+	    </form>
+	<?php endif; ?>
+	
 </section> 

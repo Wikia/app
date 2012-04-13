@@ -24,7 +24,7 @@
 			<?php $result = $resultSet->next(); ?>
 			<?php if($result instanceof WikiaSearchResult): ?>
 				<div class="grouped-result <?php if($i%2): ?>new-row<?php endif; ?>">
-					<?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $result, 'pos' => $i, 'rankExpr' => $rankExpr, 'debug' => $debug, 'query' => $query, 'inGroup' => true )); ?>
+				   <?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $result, 'pos' => $i, 'rankExpr' => $rankExpr, 'debug' => $debug, 'query' => $query, 'inGroup' => true, 'isInterWiki' => $isInterWiki )); ?>
 				</div>				
 			<?php else: break; endif; ?>
 		<?php endfor; ?>

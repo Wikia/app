@@ -15,6 +15,7 @@ class WikiaSearch extends WikiaObject {
 	 */
 	protected $client = null;
 	protected $parserHookActive = false;
+	protected $namespaces = array();
 
 	public function __construct( WikiaSearchClient $client ) {
 		$this->client = $client;
@@ -43,7 +44,7 @@ class WikiaSearch extends WikiaObject {
 				$results = $this->client->search( $query, 0, self::GROUP_RESULTS_SEARCH_LIMIT, $cityId, $rankExpr );
 				$results = $this->groupResultsPerWiki( $results );
 
-				$this->setGroupResultsToCahce( $query, $rankExpr, $results );
+				$this->setGroupResultsToCache( $query, $rankExpr, $results );
 			}
 			$results->setCurrentPage($page);
 			$results->setResultsPerPage($length);
@@ -55,6 +56,11 @@ class WikiaSearch extends WikiaObject {
 		}
 		else {
 			// no grouping, e.g. intra-wiki searching
+
+		        if ($this->namespaces) {
+		            $this->client->setNamespaces($this->namespaces);
+		        }
+
 			$results = $this->client->search( $query, ( ($page - 1) * $length ), $length, $cityId, $rankExpr );
 		}
 
@@ -70,7 +76,7 @@ class WikiaSearch extends WikiaObject {
 		return $this->wg->Memc->get( $this->getGroupResultsCacheKey($query, $rankExpr) );
 	}
 
-	private function setGroupResultsToCahce($query, $rankExpr, WikiaSearchResultSet $resultSet) {
+	private function setGroupResultsToCache($query, $rankExpr, WikiaSearchResultSet $resultSet) {
 		$this->wg->Memc->set( $this->getGroupResultsCacheKey($query, $rankExpr), $resultSet, self::GROUP_RESULTS_CACHE_TTL );
 	}
 
@@ -373,6 +379,17 @@ class WikiaSearch extends WikiaObject {
 		$api->execute();
 
 		return  $api->getResultData();
+	}
+
+
+	public function setNamespaces(array $namespaces)
+	{
+	       $this->namespaces = $namespaces;
+	}
+
+	public function getNamespaces()
+	{
+	       return $this->namespaces;
 	}
 
 }
