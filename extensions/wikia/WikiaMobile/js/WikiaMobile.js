@@ -562,7 +562,7 @@ var WikiaMobile = (function() {
 
 	//init
 	$(function(){
-		require(['modal', 'media'], function(modal, media){
+		require(['modal', 'media', 'cache'], function(modal, media, cache){
 			body = $(d.body);
 			page = d.getElementById('wkPage');
 			article = d.getElementById('wkMainCnt');
@@ -669,35 +669,32 @@ var WikiaMobile = (function() {
 			});
 
 			if(!Modernizr.overflow && handledTables.length){
-				require(['cache'], function(cache){
-					var key = 'wideTable' + wgStyleVersion,
-						script,// = cache.get(key);
-						process = function(s){
-							Wikia.processScript(s);
-							body.delegate('.bigTable', clickEvent, function(event){
-								event.preventDefault();
-								if(!this.wkScroll) {
-									this.wkScroll = new iScroll(this);
-								}
-							});
-						};
-
-					if(script){
-						process(script);
-					}else{
-						Wikia.getMultiTypePackage({
-							scripts: 'wikiamobile_scroll_js',
-							ttl: 0,
-							callback: function(res){
-								script = res.scripts[0];
-								cache.set(key, script, 604800/*7 days*/);
-								process(script);
+				var key = 'wideTable' + wgStyleVersion,
+					script = cache.get(key),
+					ttl = 604800,
+					process = function(s){
+						Wikia.processScript(s);
+						body.delegate('.bigTable', touchEvent, function(event){
+							if(!this.wkScroll) {
+								this.wkScroll = new iScroll(this);
+								this.className += ' active';
 							}
 						});
-					}
+					};
 
-
-				});
+				if(script){
+					process(script);
+				}else{
+					Wikia.getMultiTypePackage({
+						scripts: 'wikiamobile_scroll_js',
+						ttl: ttl, //7days
+						callback: function(res){
+							script = res.scripts[0];
+							cache.set(key, script, ttl);
+							process(script);
+						}
+					});
+				}
 			}
 
 			searchForm.bind('submit', function(){
