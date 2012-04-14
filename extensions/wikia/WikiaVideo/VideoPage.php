@@ -1820,7 +1820,11 @@ EOD;
 		$jwplayerData['jwplayerjs'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_JS, '/'), false );
 		$jwplayerData['player'] = AssetsManager::getInstance()->getOneCommonURL( trim(self::$JWPLAYER_DIR . self::$JWPLAYER_SWF, '/'), false );
 		$jwplayerData['playerId'] = 'player-'.$this->mId.'-'.mt_rand();
-		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID), 'timeslidertooltipplugin-2'=>array(), (self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js')=>array('title'=>htmlspecialchars($this->mTitle->getText())));
+		$jwplayerData['plugins'] = array('gapro-1' => array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID), 
+                            'timeslidertooltipplugin-2' => array(), 
+                            // wlee 2012/4/14: disabling because of conflict with preroll ads (https://wikia.fogbugz.com/default.asp?20871)
+                            //(self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js') => array( 'title'=>htmlspecialchars( $this->mTitle->getText() ) )
+                            );
 		if ($width < 330) {
 			$wikiaSkinZip = 'wikia-small.zip';
 		}
