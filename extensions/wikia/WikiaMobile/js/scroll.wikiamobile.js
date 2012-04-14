@@ -252,7 +252,7 @@
 		},
 
 		_momentum: function (dist, time, maxDistUpper, maxDistLower, size) {
-			var decele = 0.00006,
+			var decele = 0.0006,
 				s = m.abs(dist) / time,
 				newDist = (s * s) / (2 * decele),
 				outsideDist = size / (6 / (newDist / s * decele)),

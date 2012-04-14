@@ -37,4 +37,19 @@
 .no-overflow .bigTable {
     overflow: hidden;
 	border-right: 2px solid $border-color;
+
+	&::after{
+		content: "";
+        background-color: rgba(0, 0, 0, .3);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+	}
+	&.active{
+		&::after{
+			display: none;
+		}
+	}
 }
