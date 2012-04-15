@@ -398,6 +398,16 @@ $messages['tl'] = array(
 	'landingpage-buttons-learn-more' => 'Umalam ng marami pa &gt;',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'landingpage-language-links' => '* English|en
+* Español|es
+* Deutsch|de
+* Français|fr',
+);
+
 /** Ukrainian (Українська) */
 $messages['uk'] = array(
 	'landingpage' => 'Ласкаво просимо у Wikia',

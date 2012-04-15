@@ -737,7 +737,7 @@ $messages['es'] = array(
 	'swm-label-recipient-wikis' => 'Wikis',
 	'swm-label-recipient-users' => 'Usuarios',
 	'swm-label-expiration' => 'Tiempo de expiración',
-	'swm-label-expiration-hint' => '<i>Elija una fecha de caducidad de la lista desplegable de abajo o introdúzcala a mano sobrescribiendo en dicha lista desplegable. La fecha escrita manualmente debe estar en formato 2012-04-01 00:00:00</i>',
+	'swm-label-expiration-hint' => '<i>Elige una fecha de caducidad de la lista desplegable de abajo o introdúcela en dicha lista. La fecha escrita manualmente debe estar en formato 2012-12-01 00:00:00</i>',
 	'swm-label-mode-wikis-all' => 'Todos los wikis',
 	'swm-label-mode-wikis-hub' => 'Categoría (Hub) seleccionado',
 	'swm-label-mode-wikis-cluster' => 'Grupo seleccionado',
@@ -749,7 +749,7 @@ $messages['es'] = array(
 	'swm-label-mode-users-user' => 'Usuario seleccionado',
 	'swm-label-mode-users-user-hint' => '<i>esta opción ignora selección en "Wikis" de grupo.</i>',
 	'swm-label-mode-users-user-multi' => 'Lista de usuarios',
-	'swm-label-mode-users-user-multi-hint' => '<i>Ingrese un nombre de usuario por línea. Esta opción no tiene en cuenta la selección en el grupo "Wikis".</i>',
+	'swm-label-mode-users-user-multi-hint' => '<i>Ingrese un nombre de usuario por línea. Esta opción ignora la selección en el grupo "Wikis".</i>',
 	'swm-label-content' => 'Contenido',
 	'swm-label-comment' => 'Comentario',
 	'swm-label-dismissed' => 'Descartado',
@@ -783,7 +783,7 @@ $messages['es'] = array(
 	'swm-no' => 'No',
 	'swm-error-no-such-wiki' => 'No existe tal wiki!',
 	'swm-error-no-such-user' => '¡El usuario especificado no existe!',
-	'swm-error-no-user-list' => 'Debe especificar al menos un usuario',
+	'swm-error-no-user-list' => 'Debes especificar al menos un usuario',
 	'swm-error-empty-message' => 'Introduce el contenido del mensaje.',
 	'swm-error-long-message' => 'Los mensajes están limitados a 500 caracteres.',
 	'swm-error-empty-group' => 'Introduce el nombre del grupo.',
@@ -887,6 +887,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Crochet.david
+ * @author Gomoko
  * @author IAlex
  * @author Verdy p
  * @author Wyz
@@ -908,6 +909,7 @@ $messages['fr'] = array(
 	'swm-label-recipient-wikis' => 'Wikis',
 	'swm-label-recipient-users' => 'Utilisateurs',
 	'swm-label-expiration' => 'Durée d’expiration',
+	'swm-label-expiration-hint' => "<i>Choisissez une durée d'expiration pour la liste déroulante ou inscrivez une durée à la main pour remplacer la liste déroulante sélection. Une durée écrite manuellement doit l'être sous la forme 2012-04-01 00:00:00</i>",
 	'swm-label-mode-wikis-all' => 'Tous les wikis',
 	'swm-label-mode-wikis-hub' => 'Hub sélectionné',
 	'swm-label-mode-wikis-cluster' => 'Cluster sélectionné',
@@ -918,6 +920,8 @@ $messages['fr'] = array(
 	'swm-label-mode-users-group-hint' => '<i>Sélectionnez un groupe depuis la liste déroulante ou écrivez le nom manuelle pour outrepasser la liste déroulante.</i>',
 	'swm-label-mode-users-user' => 'Utilisateur sélectionné',
 	'swm-label-mode-users-user-hint' => '<i>Cette option ignore la sélection dans le groupe « Wikis ».</i>',
+	'swm-label-mode-users-user-multi' => 'Liste des utilisateurs',
+	'swm-label-mode-users-user-multi-hint' => '<i>Entrez un nom d\'utilisateur par ligne. Cette option ignore la sélection dans le groupe "Wikis".</i>',
 	'swm-label-content' => 'Contenu',
 	'swm-label-comment' => 'Commentaire',
 	'swm-label-dismissed' => 'Rejeté',
@@ -951,9 +955,11 @@ $messages['fr'] = array(
 	'swm-no' => 'Non',
 	'swm-error-no-such-wiki' => "Ce wiki n'existe pas !",
 	'swm-error-no-such-user' => "L'utilisateur spécifié n'existe pas.",
+	'swm-error-no-user-list' => 'Un utilisateur au moins doit être indiqué',
 	'swm-error-empty-message' => 'Entrez le contenu du message.',
 	'swm-error-long-message' => 'Les messages sont limités à 500 caractères.',
 	'swm-error-empty-group' => 'Entrez le nom du groupe.',
+	'swm-error-invalid-time' => 'Durée fournie non valide.',
 	'swm-lang-other' => 'toutes les langues restantes',
 );
 
@@ -1598,6 +1604,7 @@ $messages['nb'] = array(
 	'swm-label-recipient-wikis' => 'Wikier',
 	'swm-label-recipient-users' => 'Brukere',
 	'swm-label-expiration' => 'Utløpstid',
+	'swm-label-expiration-hint' => '<i>Velg en utløpsdato fra rullegardinmenyen eller skriv inn et tidspunkt selv for å overskrive valget i rullegardinmenyen. Det manuelt nedskrevne tidspunktet må være i formatet 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all' => 'Alle wikier',
 	'swm-label-mode-wikis-hub' => 'Valgt hub',
 	'swm-label-mode-wikis-cluster' => 'Valgt klynge',
@@ -1609,6 +1616,7 @@ $messages['nb'] = array(
 	'swm-label-mode-users-user' => 'Valgt bruker',
 	'swm-label-mode-users-user-hint' => '<i>Dette alternativet ignorerer valg fra gruppen «Wikier».</i>',
 	'swm-label-mode-users-user-multi' => 'Brukerliste',
+	'swm-label-mode-users-user-multi-hint' => '<i>Skriv inn ett brukernavn per linje. Dette alternativet ignorerer valg i gruppen «Wikier».</i>',
 	'swm-label-content' => 'Innhold',
 	'swm-label-comment' => 'Kommentar',
 	'swm-label-dismissed' => 'Avvist',
@@ -1642,9 +1650,11 @@ $messages['nb'] = array(
 	'swm-no' => 'Nei',
 	'swm-error-no-such-wiki' => 'Det finnes ingen slik wiki.',
 	'swm-error-no-such-user' => 'Angitt bruker finnes ikke.',
+	'swm-error-no-user-list' => 'Minst én bruker må oppgis',
 	'swm-error-empty-message' => 'Skriv inn innholdet i meldingen.',
 	'swm-error-long-message' => 'Meldinger er begrenset til 500 tegn.',
 	'swm-error-empty-group' => 'Skriv inn navnet på gruppen.',
+	'swm-error-invalid-time' => 'Ugyldig tidspunkt oppgitt.',
 	'swm-lang-other' => 'alle gjenværende språk',
 );
 
@@ -1659,6 +1669,7 @@ $messages['ne'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author AvatarTeam
  * @author McDutchie
  * @author Siebrand
  */
@@ -1679,6 +1690,7 @@ $messages['nl'] = array(
 	'swm-label-recipient-wikis' => "Wiki's",
 	'swm-label-recipient-users' => 'Gebruikers',
 	'swm-label-expiration' => 'Vervaldatum',
+	'swm-label-expiration-hint' => '<i>Kies een verstijk tijd uit de lijst of schrijft er een handmatig om de lijst te overschrijven. Handmatig geschreven tijden moeten in de vorm van 2012-04-01 00:00:00 worden geschreven.</i>',
 	'swm-label-mode-wikis-all' => "Alle wiki's",
 	'swm-label-mode-wikis-hub' => 'Geselecteerde hub',
 	'swm-label-mode-wikis-cluster' => 'Geselecteerde cluster',
@@ -1690,6 +1702,7 @@ $messages['nl'] = array(
 	'swm-label-mode-users-user' => 'Geselecteerde gebruiker',
 	'swm-label-mode-users-user-hint' => '<i>Door gebruik van deze optie wordt de selectie in de groep "Wiki\'s" genegeerd.</i>',
 	'swm-label-mode-users-user-multi' => 'Gebruikerslijst',
+	'swm-label-mode-users-user-multi-hint' => '<i>Voer per regel één gebruikersnaam in. Deze optie negeert de selectie in de groep "Wikis".</i>',
 	'swm-label-content' => 'Inhoud',
 	'swm-label-comment' => 'Opmerking',
 	'swm-label-dismissed' => 'Verlaten',

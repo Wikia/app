@@ -3244,6 +3244,13 @@ $messages['tl'] = array(
 	'plb-copy-submit-link' => 'Sagipin',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'plb-helpbox-help-link-title' => 'Layout_builder',
+);
+
 /** Ukrainian (Українська)
  * @author A1
  * @author Тест

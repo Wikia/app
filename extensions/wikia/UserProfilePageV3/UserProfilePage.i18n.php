@@ -464,7 +464,7 @@ $messages['es'] = array(
 	'user-identity-box-avatar-cancel' => 'Cancelar',
 	'user-identity-box-avatar-anon-user-error' => 'Tienes que iniciar sesión antes de modificar algo',
 	'user-identity-box-hide-edits-wikis' => 'Ocultar todo',
-	'user-identity-box-banned-from-chat' => 'Prohibido del chat',
+	'user-identity-box-banned-from-chat' => 'Baneado del chat',
 	'user-identity-box-aka-label' => '<span>conocido como</span> $1',
 	'user-identity-box-my-twitter' => 'Mi Twitter',
 	'user-identity-box-my-website' => 'Mi web',
@@ -541,7 +541,7 @@ $messages['es'] = array(
 	'blog-avatar-changed-log' => '(Avatar añadido o cambiado)',
 	'blog-avatar-removed-log' => 'Quitados avatares de $1',
 	'blog-avatar-alt' => 'Registros de adiciones o borrados de avatar de usuario',
-	'user-identity-remove-confirmation' => '¿Está seguro que desea eliminar el avatar?',
+	'user-identity-remove-confirmation' => '¿Estás seguro que quieres borrar el avatar?',
 	'user-identity-remove-fail' => '¡Hubo un problema al eliminar el avatar!',
 );
 
@@ -692,6 +692,7 @@ $messages['fr'] = array(
 	'user-identity-box-avatar-cancel' => 'Annuler',
 	'user-identity-box-avatar-anon-user-error' => 'Vous devez vous connecter avant de modifier quoi que ce soit',
 	'user-identity-box-hide-edits-wikis' => 'Masquer tout',
+	'user-identity-box-banned-from-chat' => 'Banni de la discussion',
 	'user-identity-box-aka-label' => '<span>alias</span> $1',
 	'user-identity-box-my-twitter' => 'Mon Twitter',
 	'user-identity-box-my-website' => 'Mon site Web',
@@ -768,6 +769,8 @@ $messages['fr'] = array(
 	'blog-avatar-changed-log' => 'a ajouté ou modifié son avatar',
 	'blog-avatar-removed-log' => 'A retiré l’avatar de $1',
 	'blog-avatar-alt' => 'Journaux des ajouts et retraits d’avatars des utilisateurs',
+	'user-identity-remove-confirmation' => "Êtes-vous sûr de vouloir supprimer l'avatar?",
+	'user-identity-remove-fail' => "Il y a eu un problème lors de la suppression de l'avatar!",
 );
 
 /** Galician (Galego)
@@ -1362,6 +1365,7 @@ $messages['nb'] = array(
 	'user-identity-box-avatar-cancel' => 'Avbryt',
 	'user-identity-box-avatar-anon-user-error' => 'Du må logge inn før du endrer noe',
 	'user-identity-box-hide-edits-wikis' => 'Skjul alle',
+	'user-identity-box-banned-from-chat' => 'Utestengt fra chatten',
 	'user-identity-box-aka-label' => '<span>også kjent som</span> $1',
 	'user-identity-box-my-twitter' => 'Min Twitter',
 	'user-identity-box-my-website' => 'Min hjemmeside',
@@ -1438,6 +1442,8 @@ $messages['nb'] = array(
 	'blog-avatar-changed-log' => 'La til eller endret avatar',
 	'blog-avatar-removed-log' => 'Fjernet $1s avatarer',
 	'blog-avatar-alt' => 'Logger over brukeravatar-tillegg eller -fjerninger',
+	'user-identity-remove-confirmation' => 'Er du sikker på at du vil fjerne avataren?',
+	'user-identity-remove-fail' => 'Det oppstod et problem under fjerning av avataren!',
 );
 
 /** Dutch (Nederlands)

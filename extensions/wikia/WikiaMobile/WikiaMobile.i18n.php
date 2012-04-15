@@ -280,6 +280,7 @@ $messages['fr'] = array(
 	'wikiamobile-feedback' => 'Avis',
 	'wikiamobile-back' => 'Retour',
 	'wikiamobile-hide-section' => 'masquer',
+	'wikiamobile-footer-link-license' => 'Mettre sous licence',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Divertissement]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Jeu]]',
@@ -500,6 +501,7 @@ $messages['nb'] = array(
 	'wikiamobile-feedback' => 'Tilbakemelding',
 	'wikiamobile-back' => 'Tilbake',
 	'wikiamobile-hide-section' => 'skjul',
+	'wikiamobile-footer-link-license' => 'Lisensiering',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Livsstil]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Underholdning]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Spill]]',
@@ -519,6 +521,7 @@ $1',
 );
 
 /** Dutch (Nederlands)
+ * @author AvatarTeam
  * @author Bereisgreat
  * @author SPQRobin
  * @author Siebrand
@@ -550,7 +553,6 @@ $messages['nl'] = array(
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 in $2 - $3',
 	'wikiamobile-sharing-email-text' => 'Hallo,
-
 dit moet u echt zien:
 
 $1',

@@ -1395,6 +1395,7 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'admindashboard-title' => '{{SITENAME}} идарәчесе бүлмәсе',
 	'admindashboard-header' => 'Идарәче бүлмәсе',
 	'admindashboard-toolbar-link' => 'Идарәче',
 	'admindashboard-tab-advanced' => 'Киңәйтелгән',
@@ -1421,6 +1422,7 @@ $messages['tt-cyrl'] = array(
 	'admindashboard-control-invite-tooltip' => 'Башка кешеләрне бу викидә эшләргә чакырырга',
 	'admindashboard-control-help-label' => 'Ярдәм',
 	'admindashboard-control-help-tooltip' => 'Ярдәм табарга',
+	'admindashboard-control-help-url' => 'http://community.wikia.com/wiki/Help:Contents',
 	'admindashboard-control-community-corner-label' => 'Җәмгыять үзәге',
 	'admindashboard-control-community-corner-tooltip' => 'Кулланучыларны искәртер өчен, Кызыл почмакта текстны үзгәртергә',
 	'admindashboard-controls-content-header' => 'Вики эчтәлеге',
@@ -1430,6 +1432,10 @@ $messages['tt-cyrl'] = array(
 	'admindashboard-control-add-page-tooltip' => 'Викигә яңа сәхифә өстәү',
 	'admindashboard-control-add-photo-label' => 'Фото өстәү',
 	'admindashboard-control-add-photo-tooltip' => 'Викигә яңа рәсемнәр өстәү',
+	'admindashboard-control-add-blog-label' => 'Блогта хәбәр калдырырга',
+	'admindashboard-control-add-blog-tooltip' => 'Бу вики блогында яңа хәбәр калдырырга.',
+	'admindashboard-control-multiple-upload-label' => 'Берничә сурәт өстәргә',
+	'admindashboard-control-multiple-upload-tooltip' => 'Махсус корал ярдәмендә бер юлы берничә сурәт  өстәргә.',
 );
 
 /** Ukrainian (Українська)

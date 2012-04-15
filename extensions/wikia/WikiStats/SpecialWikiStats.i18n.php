@@ -1786,6 +1786,7 @@ $messages['el'] = array(
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
  * @author Fitoschido
@@ -1916,7 +1917,7 @@ $messages['es'] = array(
 	'wikistats_wikiurl' => 'URL:',
 	'wikistats_wikicreated' => 'Creado:',
 	'wikistats_wikilang' => 'Idioma:',
-	'wikistats_note_mainstats' => 'Nota: Las cifras para los primeros meses son demasiado bajos. El historial de revisiones no se ha conservado siempre en los primeros días.',
+	'wikistats_note_mainstats' => 'Nota: Las cifras para los primeros meses son demasiado bajas. El historial de revisiones no se ha conservado siempre en los primeros días.',
 	'wikistats_history_mainstats_value1' => 'x &lt; 0%',
 	'wikistats_history_mainstats_value2' => '0% &lt; x &lt; 25%',
 	'wikistats_history_mainstats_value3' => '25% &lt; x &lt; 75%',
@@ -7936,12 +7937,18 @@ $messages['tr'] = array(
 );
 
 /** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
 	'wikistats_panel_close_btn' => 'Ябу',
 	'wikistats_daterange_from' => 'Кемнән:',
 	'wikistats_daterange_to' => 'Кемгә:',
+	'wikistats_distrib_article_counting' => '1 : 3 : 10 : 32 : 100 : 316 : 1000 ... = 1 : √10 : 10 : 10√10 : 100 : 100√10 : 1000 ...',
+	'wikistats_prev_rank' => 'Δ',
+	'wikistats_prev_rank_xls' => '+/-',
+	'wikistats_help_stats' => 'http://help.wikia.com/wiki/Help:WikiaStats',
+	'wikistats_language_toplist' => 'de, en, es, he, fr, it, ja, no, pl, pt, pt-br, zh',
 );
 
 /** Tuvinian (Тыва дыл)

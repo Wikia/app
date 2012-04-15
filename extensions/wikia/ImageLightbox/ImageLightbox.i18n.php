@@ -146,7 +146,7 @@ $1
 Detalles: $2',
 	'lightbox-share-email-error-login' => 'Para enviar correos electrónicos debes iniciar sesión.',
 	'lightbox-share-email-error-noaddress' => 'No has especificado ninguna dirección.',
-	'lightbox-visit-the-wiki' => 'Visite el wiki:',
+	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
 
 /** Finnish (Suomi)
@@ -186,6 +186,7 @@ Tiedot: $2',
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -216,6 +217,7 @@ $1
 Détails : $2',
 	'lightbox-share-email-error-login' => 'Vous devez vous connecter pour envoyer des courriels',
 	'lightbox-share-email-error-noaddress' => 'Vous n’avez spécifié aucune adresse.',
+	'lightbox-visit-the-wiki' => 'Visitez le wiki:',
 );
 
 /** Galician (Galego)
@@ -420,6 +422,7 @@ $1
 Detaljer: $2',
 	'lightbox-share-email-error-login' => 'For å sende e-poster må du logge inn',
 	'lightbox-share-email-error-noaddress' => 'Ingen adresse har blitt spesifisert.',
+	'lightbox-visit-the-wiki' => 'Besøk wikien:',
 );
 
 /** Dutch (Nederlands)
@@ -568,6 +571,7 @@ $1
 Detaljer: $2',
 	'lightbox-share-email-error-login' => 'För att skicka e-postmeddelanden måste du logga in',
 	'lightbox-share-email-error-noaddress' => 'Inga adresser har angivits.',
+	'lightbox-visit-the-wiki' => 'Besök wikin:',
 );
 
 /** Turkish (Türkçe)

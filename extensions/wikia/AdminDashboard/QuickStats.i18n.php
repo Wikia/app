@@ -152,6 +152,7 @@ $messages['eo'] = array(
 /** Spanish (Español)
  * @author Armando-Martin
  * @author Bola
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'quickstats-header-label' => 'Estadísticas rápidas',
@@ -165,7 +166,7 @@ $messages['es'] = array(
 	'quickstats-number-shortening' => '$1m',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
-	'quickstats-ga-broken-message' => 'La columna de las páginas vistas está actualmente fuera de servicio.  ¡Estamos trabajando para su pronto restablecimiento! [ $1  Más información]',
+	'quickstats-ga-broken-message' => 'La columna de las páginas vistas está actualmente fuera de servicio. ¡Estamos trabajando para su pronto restablecimiento! [$1  Más información]',
 );
 
 /** Persian (فارسی)
@@ -212,6 +213,7 @@ $messages['fr'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1 milliard',
+	'quickstats-ga-broken-message' => "La vue en colonnes est actuellement indisponible. Nous travaillons dessus pour la mettre à disposition bientôt! [$1 Plus d'info]",
 );
 
 /** Galician (Galego)
@@ -416,6 +418,7 @@ $messages['nb'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1 M',
 	'quickstats-number-shortening-billions' => '$1 B',
+	'quickstats-ga-broken-message' => 'Visningskolonnen er for øyeblikket ute av funksjon. Vi arbeider med å få den tilbake snarest! [$1 Mer info]',
 );
 
 /** Dutch (Nederlands)
@@ -435,6 +438,7 @@ $messages['nl'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1*10ˆ6',
 	'quickstats-number-shortening-billions' => '$1*10ˆ9',
+	'quickstats-ga-broken-message' => 'De weergavekolom is momenteel buiten gebruik. We zijn bezig om hem snel terug te brengen! [$1 Meer informatie].',
 );
 
 /** Polish (Polski)
@@ -622,10 +626,18 @@ $messages['tly'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'quickstats-header-label' => 'Вики статистикасы',
+	'quickstats-header-date' => 'Вакыт',
 	'quickstats-header-views' => 'караулар',
 	'quickstats-header-edits' => 'төзәтмә',
 	'quickstats-header-photos' => 'Рәсем',
 	'quickstats-header-likes' => 'Ошый',
+	'quickstats-date-format' => 'M d',
+	'quickstats-totals-label' => 'Барысы',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Тагын статистика...]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1милл.',
+	'quickstats-number-shortening-billions' => '$1миллиард',
 );
 
 /** Ukrainian (Українська)

@@ -3773,6 +3773,13 @@ $messages['tl'] = array(
 	'sponsorship-dashboard-download' => 'dagdag na mga galaw',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'sponsorship-dashboard-empty-description' => '$1',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace

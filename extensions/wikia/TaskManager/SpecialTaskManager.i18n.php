@@ -89,7 +89,7 @@ $messages['es'] = array(
 	'taskmanager_tasklist' => 'Volver al listado de tareas',
 	'right-taskmanager' => 'Puede mostrar tareas en segundo plano',
 	'right-taskmanager-action' => 'Puede administrar tareas en segundo plano',
-	'taskmanager-invert' => 'Invertir selección',
+	'taskmanager-invert' => 'Invertir',
 );
 
 /** Finnish (Suomi)
@@ -102,6 +102,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Peter17
  * @author Wyz
  */
@@ -111,6 +112,7 @@ $messages['fr'] = array(
 	'taskmanager_tasklist' => 'Retourner à la liste des tâches',
 	'right-taskmanager' => 'Peut afficher les tâches en arrière-plan',
 	'right-taskmanager-action' => 'Peut gérer les tâches en arrière-plan',
+	'taskmanager-invert' => 'Inverser la sélection',
 );
 
 /** Galician (Galego)
@@ -226,6 +228,7 @@ $messages['ms'] = array(
 	'taskmanager_tasklist' => 'Kembali ke Senarai Tugas',
 	'right-taskmanager' => 'Boleh memaparkan tugasan latar belakang',
 	'right-taskmanager-action' => 'Boleh menguruskan tugasan latar belakang',
+	'taskmanager-invert' => 'Songsangkan pilihan',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -238,6 +241,7 @@ $messages['nb'] = array(
 	'taskmanager_tasklist' => 'Gå tilbake til oppgaveliste',
 	'right-taskmanager' => 'Kan vise bakgrunnsprosesser',
 	'right-taskmanager-action' => 'Kan ta hånd om bakgrunnsprosesser',
+	'taskmanager-invert' => 'Inverter valg',
 );
 
 /** Dutch (Nederlands)

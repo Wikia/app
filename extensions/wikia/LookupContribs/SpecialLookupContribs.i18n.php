@@ -1445,6 +1445,16 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribsall' => 'lahat',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'lookupcontribsshowpages' => '«$1» исемнәр мәйданындагы барлык битләр',
+	'lookupcontribscontent' => 'эчтәлек',
+	'lookupcontribscontribtitleforuser' => 'Катнашучы кертеме:',
+	'lookupcontribsnormal' => 'соңгы',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

@@ -1815,8 +1815,11 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'founderprogressbar-page-add10-action' => 'Мәкалә өстәү',
 	'founderprogressbar-total-edit75-action' => 'Мәкалә өстәү',
 	'founderprogressbar-page-add20-label' => '$1 мәкалә өстәү',
+	'founderprogressbar-gallery-add-url' => 'http://community.wikia.com/wiki/Help:Gallery',
+	'founderprogressbar-user-add5-url' => 'http://help.wikia.com/wiki/Advice:Building_a_Community',
 );
 
 /** Ukrainian (Українська)

@@ -393,9 +393,11 @@ $messages['tl'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'Беренче мәкаләләрегезне языгыз!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Исем',
 	'contentfeeds-firstfewarticles-tag-next' => 'Киләсе',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Хата: мәкалә  исеме кирәк',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Хата: мәкалә тексты кирәк',
 );
 
 /** Veps (Vepsän kel’)

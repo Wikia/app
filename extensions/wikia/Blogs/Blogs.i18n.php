@@ -4049,7 +4049,15 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'createblogpage' => 'Блог ясау',
+	'createbloglistingpage' => 'Блоглар исемлеге төзү',
+	'create-blog-spam' => 'Спамга охшаган',
+	'create-blog-cant-edit' => 'Үзгәртүне башкарып булмады',
+	'create-blog-post-category' => 'Блогтагы язмалар',
+	'create-blog-listing-matches-calculate' => 'Санарга',
+	'create-blog-listing-matches-recalculate' => 'Санап чыгарга',
 	'create-blog-listing-sortby-author' => 'авторга',
+	'blog-defaulttitle' => 'Блоглар',
 	'blog-added' => 'өстәлгән',
 	'blog-edited' => 'төзәтелгән',
 	'blog-page' => 'Блог',
@@ -4058,6 +4066,20 @@ $messages['tt-cyrl'] = array(
 	'blog-comments' => 'Фикерләр',
 	'blog-rc-comments' => 'Блогка карата фикерләр',
 	'blog-comments-new' => 'Блогта яңа фикер',
+	'blog-comments-label' => 'Шәрехләү',
+	'blog-voting-label' => 'Тавыш бирү',
+	'blog-comments-info' => 'Бу кыр вики-текстны аңлый',
+	'blog-comments-login' => '<a href="$1" rel="nofollow">Шәреләү өчен</a> системага керегез',
+	'blog-comments-dsc' => 'Яңалары өстә',
+	'blog-comments-asc' => 'Яңалары ахырда',
+	'blog-comments-anonymous' => 'Аноним кулланучы',
+	'blog-comment-delete' => 'бетерү',
+	'blog-comment-hide' => 'яшерү',
+	'blog-comment-unhide' => 'күрсәтергә',
+	'blog-comment-history' => 'тарих',
+	'blog-comment-edit' => 'үзгәртү',
+	'blog-comment-error' => 'Фикер сакланмады',
+	'blug-cut-sign' => '…',
 );
 
 /** Ukrainian (Українська)

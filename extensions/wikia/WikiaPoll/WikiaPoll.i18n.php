@@ -684,6 +684,13 @@ $messages['tl'] = array(
 	'wikiapoll-error-invalid-title' => 'Hindi katanggap-tanggap ang teksto ng katanungan.',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'wikiapoll-question-mark-after' => '?',
+);
+
 /** Ukrainian (Українська)
  * @author A1
  */
