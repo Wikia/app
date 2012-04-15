@@ -2903,6 +2903,23 @@ $messages['tr'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki sayfaları ( $1 )',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'wikiafollowedpages-special-heading-category' => 'Төркемнәр ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Мәкаләләр ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Блоглар һәм хәбәрләр ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Форум темалары ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Проект сәхифәләре ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Кулланучы сәхифәләре ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Калыплар ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki сәхифәләре ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Сурәтләр һәм видео ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 сәхифә)',
+	'wikiafollowedpages-special-heading-wall' => 'Фикерләү диварлары $1 )',
+);
+
 /** Ukrainian (Українська)
  * @author Ast
  * @author Тест

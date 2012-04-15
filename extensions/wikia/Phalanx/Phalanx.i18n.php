@@ -1877,6 +1877,7 @@ Anmärkning: fungerar endast på Svar-typ wikier.',
 	'phalanx-stats-table-wiki-name' => 'Wiki-namn',
 	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Senast redigerad',
+	'phalanx-email-filter-hidden' => 'E-postfilter dolt. Du har inte behörighet att visa texten.',
 	'right-phalanx' => 'Kan hantera globala blockeringar och spamfilter',
 );
 

@@ -4227,6 +4227,21 @@ $messages['tl'] = array(
 	'oasis-modal-error-headline' => 'Pakitama ang sumusunod na mga kamalian',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'oasis-button-random-page' => 'Очраклы бит',
+	'oasis-button-random-wiki' => 'Очраклы  Wiki',
+	'oasis-button-wiki-activity' => 'Вики-эшчәнлек',
+	'oasis-button-wiki-activity-feed' => 'Бөтен активлык >',
+	'oasis-latest-photos-single' => '+',
+	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
+	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Video_Games',
+	'oasis-corporatefooter-hub-Video_Games-link' => 'http://www.wikia.com/Video_Games',
+	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
+);
+
 /** Ukrainian (Українська)
  * @author A1
  * @author NickK

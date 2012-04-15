@@ -505,7 +505,7 @@ $messages['es'] = array(
 	'wikiamobile-article-comments-post' => 'Publicar',
 	'wikiamobile-article-comments-placeholder' => 'Dejar un comentario',
 	'wikiamobile-article-comments-show' => 'Mostrar',
-	'wikiamobile-article-comments-login-post' => 'Inicie sesión para enviar un comentario.',
+	'wikiamobile-article-comments-login-post' => 'Inicia sesión para publicar un comentario.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha comentado en "$PAGETITLE" en {{SITENAME}}',
 	'enotif_body_article_comment' => 'Estimado $WATCHINGUSERNAME,
 
@@ -650,8 +650,13 @@ $messages['fr'] = array(
 	'wikiamobile-article-comments-more' => 'Lire la suite',
 	'wikiamobile-article-comments-prev' => 'Charger le précédent',
 	'wikiamobile-article-comments-none' => 'Aucun commentaire',
+	'wikiamobile-article-comments-view' => 'Afficher les réponses',
+	'wikiamobile-article-comments-replies' => 'réponses',
+	'wikiamobile-article-comments-post-reply' => 'Envoyer une réponse',
 	'wikiamobile-article-comments-post' => 'Envoyer',
 	'wikiamobile-article-comments-placeholder' => 'Envoyer un commentaire',
+	'wikiamobile-article-comments-show' => 'Afficher',
+	'wikiamobile-article-comments-login-post' => 'Veuillez vous connecter pour poster un commentaire.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR a commenté « $PAGETITLE » sur {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME,
 
@@ -1352,8 +1357,13 @@ $messages['nb'] = array(
 	'wikiamobile-article-comments-more' => 'Last inn mer',
 	'wikiamobile-article-comments-prev' => 'Last forrige',
 	'wikiamobile-article-comments-none' => 'Ingen kommentarer',
+	'wikiamobile-article-comments-view' => 'Vis svar',
+	'wikiamobile-article-comments-replies' => 'svar',
+	'wikiamobile-article-comments-post-reply' => 'Post et svar',
 	'wikiamobile-article-comments-post' => 'Post',
 	'wikiamobile-article-comments-placeholder' => 'Post en kommentar',
+	'wikiamobile-article-comments-show' => 'Vis',
+	'wikiamobile-article-comments-login-post' => 'Vennligst logg inn for å poste en kommentar.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR har kommentert «$PAGETITLE» på {{SITENAME}}',
 	'enotif_body_article_comment' => 'Kjære $WATCHINGUSERNAME,
 
@@ -2030,9 +2040,14 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'article-comments-anonymous' => 'Аноним кулланучы',
+	'article-comments-post' => 'Фикер калдырырга',
+	'article-comments-cancel' => 'Баш тарту',
 	'article-comments-delete' => 'бетерү',
 	'article-comments-edit' => 'үзгәртү',
 	'article-comments-history' => 'тарих',
+	'article-comments-toc-item' => 'Фикерләр',
+	'article-comments-reply' => 'Җавап бирергә',
 	'article-comments-prev-page' => 'Алдагы',
 	'article-comments-next-page' => 'Киләсе',
 	'wikiamobile-article-comments-none' => 'Шәрехләр юк',

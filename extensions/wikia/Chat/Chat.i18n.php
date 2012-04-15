@@ -1677,6 +1677,7 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'chat-live' => 'Live!',
 	'chat-great-youre-logged-in' => 'Шәп! Сез системага кердегез.',
 	'chat-user-manu-profile' => 'Кулланучы сәхифәсе',
 	'chat-user-manu-contribs' => 'Кертем',

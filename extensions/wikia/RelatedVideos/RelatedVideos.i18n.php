@@ -156,8 +156,8 @@ $messages['es'] = array(
 	'related-videos-video-is-new' => 'Nuevo',
 	'related-videos-pagination' => '$1 de $2',
 	'related-videos-empty' => 'Sé el primero en añadir un vídeo',
-	'related-videos-requestbutton' => 'Solicitud de nuevos vídeos',
-	'related-videos-requesttext' => '¿Qué más le gustaría ver?',
+	'related-videos-requestbutton' => 'Solicita vídeos nuevos',
+	'related-videos-requesttext' => '¿Qué más te gustaría ver?',
 );
 
 /** French (Français)
@@ -206,6 +206,8 @@ $messages['fr'] = array(
 	'related-videos-video-is-new' => 'Nouveau',
 	'related-videos-pagination' => '$1 de $2',
 	'related-videos-empty' => 'Soyez le premier à ajouter une vidéo',
+	'related-videos-requestbutton' => 'Demande de nouvelles vidéos',
+	'related-videos-requesttext' => "Que voulez-vous voir d'autre?",
 );
 
 /** Galician (Galego)
@@ -449,6 +451,8 @@ $messages['nb'] = array(
 	'related-videos-video-is-new' => 'Ny',
 	'related-videos-pagination' => '$1 av $2',
 	'related-videos-empty' => 'Vær den første til å legge til en video',
+	'related-videos-requestbutton' => 'Forespør nye videoer',
+	'related-videos-requesttext' => 'Hva annet vil du se?',
 );
 
 /** Dutch (Nederlands)

@@ -1758,6 +1758,22 @@ $messages['tr'] = array(
 $messages['tt-cyrl'] = array(
 	'createpage-sp-title' => 'Яңа мәкалә язу',
 	'createpage_title' => 'Яңа мәкалә язу',
+	'createpage_title_caption' => 'Исем',
+	'createpage_enter_text' => 'Текст',
+	'createpage_invalid_title_error' => 'Мөмкин булмаган исем',
+	'createpage_cant_edit' => 'Үзгәртүне башкарып булмады',
+	'createpage-dialog-title' => 'Яңа мәкалә язу',
+	'createpage-dialog-message1' => 'Афәрин, сез яңа мәкалә язасыз!',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Монда мәкаләгезнең беренче параграфын языгыз.
+
+==Бүлек исеме==
+
+Монда мәкаләнең беренче бүлеген языгыз.
+
+==Бүлек исеме==
+
+Монда мәкаләнең киләсе бүлеген языгыз.',
 );
 
 /** Ukrainian (Українська)

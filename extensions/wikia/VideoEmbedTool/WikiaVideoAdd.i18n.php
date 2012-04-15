@@ -187,6 +187,7 @@ $messages['eo'] = array(
 /** Spanish (Español)
  * @author Danke7
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'wva-success' => 'La página del vídeo $1 fue añadida satisfactoriamente.',
@@ -199,6 +200,7 @@ $messages['es'] = array(
 	'wva-notlogged' => 'Necesitas acceder o registrarte para insertar videos.',
 	'wva-notallowed' => 'No puedes insertar videos en este wiki.',
 	'wva-protected' => 'Este video está protegido',
+	'wva-thumbnail-upload-failed' => 'Error al añadir el vídeo, no se pudo obtener una miniatura adecuada',
 );
 
 /** Basque (Euskara)
@@ -246,6 +248,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Iluvalar
  */
 $messages['fr'] = array(
@@ -259,6 +262,7 @@ $messages['fr'] = array(
 	'wva-notlogged' => 'Vous devez vous inscrire ou bien vous enregistrer pour ajouter des vidéos',
 	'wva-notallowed' => 'Vous ne pouvez pas ajouter de vidéos sur ce wiki',
 	'wva-protected' => 'Cette vidéo est protégée',
+	'wva-thumbnail-upload-failed' => 'La vidéo incluse a échouée, impossible de trouver la bonne miniature',
 );
 
 /** Galician (Galego)
@@ -318,6 +322,7 @@ $messages['ia'] = array(
 	'wva-notlogged' => 'Tu debe aperir un session o registrar te pro inserer videos.',
 	'wva-notallowed' => 'Non es possibile inserer videos in iste wiki.',
 	'wva-protected' => 'Iste video es protegite.',
+	'wva-thumbnail-upload-failed' => 'Le insertion del video ha fallite. Non esseva possibile obtener un bon miniatura.',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -438,6 +443,7 @@ $messages['mk'] = array(
 	'wva-notlogged' => 'Треба да сте најавени или да се регистрирате за да можете да вметнувате видеоснимки.',
 	'wva-notallowed' => 'Не можете да вметнувате видеоснимки на ова вики.',
 	'wva-protected' => 'Оваа видеоснимка е заштитена.',
+	'wva-thumbnail-upload-failed' => 'Вметнувањето на видеото не успеа. Не можев да добијам правилна минијатура',
 );
 
 /** Mongolian (Монгол)
@@ -461,6 +467,7 @@ $messages['ms'] = array(
 	'wva-notlogged' => 'Anda perlu log masuk atau berdaftar untuk menyisipkan video.',
 	'wva-notallowed' => 'Anda tidak boleh menyisipkan video ke dalam wiki ini.',
 	'wva-protected' => 'Video ini dilindungi.',
+	'wva-thumbnail-upload-failed' => 'Pembenaman video gagal, gambar kenit yang sebetulnya tidak dapat diperoleh',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -485,6 +492,7 @@ $messages['nb'] = array(
 	'wva-notlogged' => 'Du må logge inn eller registrere deg for å legge til videoer.',
 	'wva-notallowed' => 'Du kan ikke legge til videoer på denne wikien.',
 	'wva-protected' => 'Denne videoen er beskyttet',
+	'wva-thumbnail-upload-failed' => 'Videoinnebyggingen mislyktes, kunne ikke hente miniatyrbilde',
 );
 
 /** Dutch (Nederlands)
@@ -537,6 +545,7 @@ $messages['pap'] = array(
 
 /** Polish (Polski)
  * @author Marcin Łukasz Kiejzik
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -550,6 +559,7 @@ $messages['pl'] = array(
 	'wva-notlogged' => 'Dodawanie filmów jest możliwe po zarejestrowaniu i zalogowaniu się.',
 	'wva-notallowed' => 'Nie możesz dodawać filmów do tej wiki.',
 	'wva-protected' => 'Ten film jest zabezpieczony.',
+	'wva-thumbnail-upload-failed' => 'Wgrywanie filmu nie powiodło się, wystąpił błąd w trakcie generowania miniatury.',
 );
 
 /** Piedmontese (Piemontèis)

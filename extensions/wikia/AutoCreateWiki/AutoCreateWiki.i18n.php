@@ -4488,7 +4488,11 @@ $messages['tt-cyrl'] = array(
 	'autocreatewiki-step4' => 'Куелган сурәтләрне һәм логотипны күчереп алу . . .',
 	'autocreatewiki-congratulation' => 'Котлыйбыз!',
 	'autocreatewiki-welcometalk-log' => 'Сәламләү хаты',
+	'autocreatewiki-step7-error' => 'Тел өчен башлангыч мәгълүматлар базасын күчермәләү мөмкин түгел!',
+	'autocreatewiki-protect-reason' => 'Рәсми интерфейсның бер өлеше',
+	'autocreatewiki-welcomesubject' => '$1 уңышлы ясалды!',
 	'newwikis' => 'Яңа викилар',
+	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
 	'autocreatewiki-subname-answers' => 'Җаваплар',
 );
 

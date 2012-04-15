@@ -2294,8 +2294,47 @@ $messages['tt-cyrl'] = array(
 	'cnw-name-wiki-creative' => 'Викия - сез яраткан нәрсәләр турында веб-сайт төзү өчен иң кулай урын.',
 	'cnw-name-wiki-label' => 'Викиның исеме',
 	'cnw-name-wiki-wiki' => 'Вики',
+	'cnw-name-wiki-domain-label' => 'Вики адресыгызны языгыз',
+	'cnw-name-wiki-submit-error' => 'Дәвам итәр өчен, сезгә өстәге ике кырны тутырырга кирәк.',
 	'cnw-login' => 'Керү',
+	'cnw-signup' => 'Хисап язмасы төзү',
+	'cnw-signup-prompt' => 'Аккаунт кирәкме?',
+	'cnw-call-to-signup' => 'Теркәлү монда',
+	'cnw-login-prompt' => 'Сез инде теркәлдегезме?',
+	'cnw-call-to-login' => 'Системага керү',
+	'cnw-auth-headline' => 'Керү',
+	'cnw-auth-headline2' => 'Теркәлү',
+	'cnw-auth-creative' => 'Вики төзүне дәвам итү өчен,  хисап язмасына керү',
+	'cnw-auth-signup-creative' => 'Вики ясауны дәвам итү өчен, сезгә аккаунт кирәк. <br /> Теркәлү нибары бер минутлык кына!',
+	'cnw-auth-facebook-signup' => 'Facebook аша теркәлү',
+	'cnw-auth-facebook-login' => 'Facebook аша керү',
+	'cnw-userauth-headline' => 'Аккаунт бармы?',
+	'cnw-userauth-creative' => 'Керү',
+	'cnw-userauth-marketing-heading' => 'Аккаунт юкмы?',
+	'cnw-userauth-marketing-body' => 'Вики төзү өчен сезгә теркәлергә кирәк. [[Special:UserSignup|Теркәлү]] бер генә минут!',
+	'cnw-userauth-signup-button' => 'Теркәлү',
+	'cnw-desc-headline' => 'Сезнең вики нәрсә турында булачак?',
+	'cnw-desc-creative' => 'Темагызны тасвирлагыз',
+	'cnw-desc-placeholder' => 'Бу сезнең викиның баш битендә булачак.',
+	'cnw-desc-tip1' => 'Ярдәм',
+	'cnw-desc-tip1-creative' => 'Бу урынны кешеләргә сезнең вики турында бер-ике җөмлә белән сөйләр өчен кулланыгыз.',
+	'cnw-desc-tip2' => 'Псс',
+	'cnw-desc-tip2-creative' => 'Вики кунакларына сезнең теманың кайбер үзенчәлекләрен сөйләп китегез.',
+	'cnw-desc-tip3' => 'Киңәш',
+	'cnw-desc-change-lang' => 'үзгәртү',
 	'cnw-desc-lang' => 'Тел',
+	'cnw-desc-wiki-submit-error' => 'Зинһар өчен, төркем сайлагыз',
+	'cnw-theme-headline' => 'Тема сайлау',
+	'cnw-upgrade-headline' => 'Сез яңартырга телисезме?',
+	'cnw-upgrade-marketing' => 'Wikia Plus түбәндәгеләр өчен иң уңай нәрсә:<ul>
+<li>Профессиональ викилар </li>
+<li>Табышсыз оешмалар</li>
+<li>Гаиләләр</li>
+<li>Мәктәпләр</li>
+<li>Шәхси проектлар</li>
+</ul>
+Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
+	'cnw-upgrade-now' => 'Хәзер яңартырга',
 );
 
 /** Ukrainian (Українська)

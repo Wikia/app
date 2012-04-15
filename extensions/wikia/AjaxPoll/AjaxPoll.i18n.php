@@ -633,6 +633,13 @@ $messages['tr'] = array(
 	'ajaxpoll-submitting' => 'Lütfen bekleyin, oyunuz kaydediliyor...',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'ajaxpoll-thankyou' => 'Тавышыгыз өчен рәхмәт!',
+);
+
 /** Ukrainian (Українська)
  * @author Alex Khimich
  */

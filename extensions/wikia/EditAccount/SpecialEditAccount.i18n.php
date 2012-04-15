@@ -1758,6 +1758,13 @@ $messages['tr'] = array(
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Bu hesap devre dışı bırakıldı.</div>',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'editaccount' => 'Хисап язмасын төзәтү',
+);
+
 /** Ukrainian (Українська)
  * @author A1
  * @author Prima klasy4na

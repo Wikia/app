@@ -1541,6 +1541,24 @@ dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahin
 	'staffsig-text' => ' $1<staff /> <small>([[w:forums|poro ng tulong]] | [[w:sblog|blog]])</small>',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'welcome-user-page' => "==Минем турыда==
+
+''Бу сезнең кулланучы сәхифәсе. Зинһар, аны төзәтегез һәм үзегез турында сөйләгезf!''
+
+==Mинем кертем==
+
+* [[Special:Contributions/$1|Кулланучы кертеме]]
+== Минем сайланган  мәкаләләрем==
+
+* Яраткан вики-мәкаләләрегезгә сылтаманы монда өстәгез
+* Сайланган мәкалә #2
+* Сайланган мәкалә #3",
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  * @author Ast
