@@ -7,7 +7,8 @@ class JSSnippets extends WikiaObject{
 	/**
 	 * @brief Returns inline JS snippet
 	 *
-	 * @param array $dependencies list of JS/CSS/SASS files or AssetsManager packages names to be loaded (using $.getResources)
+	 * @param mixes $dependencies a string containing an asset path or an AssetsManager package name
+	 * or list of of them as an array, to be loaded (using $.getResources)
 	 * @param array $loaders list of required JS loader functions ($.loadYUI, $.loadJQueryUI, ...)
 	 * @param string $callback name of the JS function to be called when dependencies will be loaded
 	 * @param array $options set of options to be passed to JS callback
@@ -39,6 +40,11 @@ class JSSnippets extends WikiaObject{
 			'loaders' => '',
 			'callback' => '',
 		);
+
+		//allow same format of first parameter as in WikiaResponse::addAsset and AssetsManager::getURL
+		if ( !is_array( $dependencies ) ) {
+			$dependencies = array( $dependencies );
+		}
 
 		// add static files
 		foreach ( $dependencies as $dependency ) {
