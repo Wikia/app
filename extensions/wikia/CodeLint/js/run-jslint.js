@@ -104,10 +104,11 @@ var regExpRules = [
 		regexp: /.live\(\s?['"]/,
 		reason: 'jQuery.live() is deprecated'
 	},
-	// detect $.css (BugId:28035)
+	// detect $.css (BugId:28035), but ignore css('height', ...) and css('width', ...)
 	{
 		name: 'Found $.css',
 		regexp: /.css\(\s?['"]/,
+		dontMatch: /.css\(\s?['"](height|width)['"]/,
 		reason: 'jQuery.css() should not be used (use CSS classes instead)'
 	},
 	// detect $.browser (BugId:28056)
