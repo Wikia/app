@@ -75,6 +75,8 @@ $('#foo').
 
 // $.css
 $('ul li').css('color', 'red');
+$('ul li').css('height', 300); // allow
+$('ul li').css('width', 400); // allow
 
 // browser sniffing
 if ($.browser.msie &&
