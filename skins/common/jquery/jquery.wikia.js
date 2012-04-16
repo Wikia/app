@@ -19,8 +19,8 @@ jQuery.getSassLocalURL = function(scssFilePath, params) {
 		replace('%1$s', 'sass').
 		replace('%2$s', scssFilePath).
 		replace('%3$s', encodeURIComponent($.param(params || window.sassParams))).
-		replace('%4$d', wgStyleVersion);	
-}
+		replace('%4$d', wgStyleVersion);
+};
 
 //see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
