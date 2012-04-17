@@ -1487,7 +1487,7 @@ EOD;
 
 		if( $dbw->affectedRows() == 0 ) {
 			// we are updating
-			$desc = wfMsgForContent( 'wikiavideo-updated', self::getNameFromTitle( $this->mTitle ) );
+			$desc = wfMsgForContent( 'wikiavideo-updated', $this->mTitle->getPrefixedText() );
 			$dbw->insertSelect( 'oldimage', 'image',
 				array(
 					'oi_name' => 'img_name',
