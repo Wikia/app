@@ -35,7 +35,6 @@ class WikiaHomePageController extends WikiaController {
 	protected $verticalsPercentage = array();
 	protected $verticalsWikis = array();
 	protected $currentPercentage = 0;
-	protected $blankImgUrl = '';
 	
 	private $imageSmallServing = null;
 	private $imageMediumServing = null;
@@ -49,7 +48,6 @@ class WikiaHomePageController extends WikiaController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->blankImgUrl = F::app()->wg->BlankImgUrl;
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
 	}
 	
@@ -355,9 +353,9 @@ class WikiaHomePageController extends WikiaController {
 			
 			$wikiImg = trim($data[2]);
 			$wikiImg = wfFindFile($wikiImg);
-			$wikiImgSmall = ($wikiImg !== false) ? $this->imageSmallServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->blankImgUrl;
-			$wikiImgMedium = ($wikiImg !== false) ? $this->imageMediumServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->blankImgUrl;
-			$wikiImgBig = ($wikiImg !== false) ? $wikiImg->transform(array('width' => self::$remixImgBigWidth, 'height' => self::$remixImgBigHeight))->getUrl() : $this->blankImgUrl;
+			$wikiImgSmall = ($wikiImg !== false) ? $this->imageSmallServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->wg->blankImgUrl;
+			$wikiImgMedium = ($wikiImg !== false) ? $this->imageMediumServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->wg->blankImgUrl;
+			$wikiImgBig = ($wikiImg !== false) ? $wikiImg->transform(array('width' => self::$remixImgBigWidth, 'height' => self::$remixImgBigHeight))->getUrl() : $this->wg->blankImgUrl;
 			
 			return array(
 				'wikiname' => $wikiName,
@@ -444,7 +442,6 @@ class WikiaHomePageController extends WikiaController {
 	 * draw visualization
 	 */
 	public function visualization() {
-		$this->wgBlankImgUrl = $this->blankImgUrl;
 		$this->response->setVal(
 				'seoSample',
 				$this->getSeoList()
