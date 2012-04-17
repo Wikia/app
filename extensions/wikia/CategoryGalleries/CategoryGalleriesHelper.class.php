@@ -114,8 +114,11 @@
 		 * Builds and sends the gallery to the browser
 		 */
 		static public function onCategoryPageGetCategoryTop( $viewer, &$content ) {
+			wfProfileIn(__METHOD__.'::outer');
 			if (self::$categoryPage && !self::$categoryProcessed) {
 				self::$categoryProcessed = true;
+				
+				wfProfileIn(__METHOD__);
 
 				// Nice trick to check if the current page is first page
 				if (is_null($viewer->from) && (is_null($viewer->until) || is_null($viewer->nextPage))) {
@@ -128,7 +131,11 @@
 						$wgOut->addHTML($output);
 					}
 				}
+				
+				wfProfileOut(__METHOD__);
 			}
+			
+			wfProfileOut(__METHOD__.'::outer');
 			return true;
 		}
 

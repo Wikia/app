@@ -66,8 +66,11 @@
 		 */
 		static protected function getPageViews( $pageIds ) {
 			global $wgStatsDB, $wgCityId, $wgDevelEnvironment, $wgStatsDBEnabled;
+			
+			wfProfileIn(__METHOD__);
 
 			if ( empty($pageIds)  ) {
+				wfProfileOut(__METHOD__);
 				return is_array($pageIds) ? array() : 0;
 			}
 
@@ -132,6 +135,7 @@
 				$data = !empty($data) ? reset($data) : 0;
 			}
 
+			wfProfileOut(__METHOD__);
 			return $data;
 		}
 
@@ -146,6 +150,8 @@
 		protected function fetchTopArticlesInfo( $count, $namespace = NS_MAIN ) {
 			global $wgDevelEnvironment;
 
+			wfProfileIn(__METHOD__);
+			
 			$articles = array();
 			if (empty($wgDevelEnvironment)) {
 				// production version
@@ -230,6 +236,7 @@
 				}
 			}
 
+			wfProfileOut(__METHOD__);
 			return $articles;
 		}
 
@@ -244,6 +251,8 @@
 		public function getTopArticles( $count, $namespace = NS_MAIN ) {
 			global $wgMemc;
 
+			wfProfileIn(__METHOD__);
+			
 			$key = self::getTopArticlesKey($this->dbkey,$namespace);
 			$data = $wgMemc->get($key);
 			if (!is_array($data) || $data['count'] < $count) {
@@ -264,6 +273,7 @@
 				$result[$article['page_id']] = Title::makeTitle($article['page_namespace'], $article['page_title']);
 			}
 
+			wfProfileOut(__METHOD__);
 			return $result;
 		}
 
@@ -281,6 +291,8 @@
 			}
 
 			global $wgMemc;
+			
+			wfProfileIn(__METHOD__);
 
 			$id = $article->getID();
 			$title = $article->getTitle();
@@ -318,6 +330,7 @@
 				}
 			}
 
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -327,6 +340,8 @@
 		 */
 		static public function onTitleMoveComplete( &$title, &$newtitle, &$user, $pageid, $redirid ) {
 			global $wgMemc;
+			
+			wfProfileIn(__METHOD__);
 
 			$article = Article::newFromID($pageid);
 
@@ -358,6 +373,7 @@
 				}
 			}
 
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -369,10 +385,14 @@
 		static public function invalidateTopArticles( $catTitle, $ns ) {
 			global $wgMemc;
 
+			wfProfileIn(__METHOD__);
+			
 			$catDBkey = $catTitle->getDBKey();
 			$key = self::getTopArticlesKey($catDBkey, $ns);
 			$wgMemc->delete($key);
 			wfRunHooks('CategoryService::invalidateTopArticles',array($catTitle,$ns));
+			
+			wfProfileOut(__METHOD__);
 		}
 
 	}

@@ -143,8 +143,11 @@
 		 * @return array
 		 */
 		protected function getArticles() {
+			wfProfileIn(__METHOD__);
 			$service = new CategoryService($this->categoryPage->mTitle);
-			return $service->getTopArticles($this->confMaxArticles);
+			$result = $service->getTopArticles($this->confMaxArticles);
+			wfProfileOut(__METHOD__);
+			return $result;
 		}
 
 		/**
@@ -154,11 +157,12 @@
 		 * @return array
 		 */
 		protected function findImages( $articles ) {
+			wfProfileIn(__METHOD__);
 			$articleIds = array_keys($articles);
-
 			$imageServing = new ImageServing( $articleIds, $this->confThumbWidth, $this->confThumbProportion );
-
-			return $imageServing->getImages(1);
+			$result = $imageServing->getImages(1);
+			wfProfileOut(__METHOD__);
+			return $result;
 		}
 
 		/**
@@ -168,8 +172,11 @@
 		 * @return string
 		 */
 		protected function getArticleSnippet( $articleId, $length = 150 ) {
+			wfProfileIn(__METHOD__);
 			$articleService = new ArticleService( $articleId );
-			return $articleService->getTextSnippet( $length );
+			$result = $articleService->getTextSnippet( $length );
+			wfProfileOut(__METHOD__);
+			return $result;
 		}
 
 		/**
@@ -182,6 +189,9 @@
 		 */
 		protected function merge( $articles, $images ) {
 			global $wgDevelEnvironment;
+			
+			wfProfileIn(__METHOD__);
+			
 			$data = array();
 			$n = 0;
 			foreach ($articles as $id => $title) {
@@ -201,6 +211,8 @@
 				}
 				$data[$id] = $entry;
 			}
+			
+			wfProfileOut(__METHOD__);
 			return $data;
 		}
 
@@ -211,6 +223,8 @@
 		 */
 		protected function getData() {
 			global $wgMemc;
+			
+			wfProfileIn(__METHOD__);
 
 			$cacheKey = $this->getMemcKey();
 			$this->articles = $wgMemc->get($cacheKey);
@@ -220,6 +234,8 @@
 			}
 			$images = $this->findImages($articles);
 			$this->articles = $this->merge($articles,$images);
+			
+			wfProfileOut(__METHOD__);
 			
 			return $this->articles;
 		}
