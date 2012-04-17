@@ -353,9 +353,9 @@ class WikiaHomePageController extends WikiaController {
 			
 			$wikiImg = trim($data[2]);
 			$wikiImg = wfFindFile($wikiImg);
-			$wikiImgSmall = ($wikiImg !== false) ? $this->imageSmallServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->wg->blankImgUrl;
-			$wikiImgMedium = ($wikiImg !== false) ? $this->imageMediumServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->wg->blankImgUrl;
-			$wikiImgBig = ($wikiImg !== false) ? $wikiImg->transform(array('width' => self::$remixImgBigWidth, 'height' => self::$remixImgBigHeight))->getUrl() : $this->wg->blankImgUrl;
+			$wikiImgSmall = ($wikiImg !== false) ? $this->imageSmallServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->wg->BlankImgUrl;
+			$wikiImgMedium = ($wikiImg !== false) ? $this->imageMediumServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->wg->BlankImgUrl;
+			$wikiImgBig = ($wikiImg !== false) ? $wikiImg->transform(array('width' => self::$remixImgBigWidth, 'height' => self::$remixImgBigHeight))->getUrl() : $this->wg->BlankImgUrl;
 			
 			return array(
 				'wikiname' => $wikiName,
