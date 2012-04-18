@@ -81,8 +81,10 @@ EOT;
 		if (strpos($slotname, 'EXIT_STITIAL') === FALSE && strpos($slotname, 'MODAL') === FALSE) {
 			$out .= '</div>';
 		}
-
-		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
+willdebug(__METHOD__."\n");
+		// LiftiumOptions init has been moved to AdEngine::wfAdEngineSetupJSVars
+		// https://wikia.fogbugz.com/default.asp?28647
+//		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
 
 		return $out;
 	}
