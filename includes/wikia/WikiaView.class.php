@@ -100,6 +100,8 @@ class WikiaView {
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
 			$app = F::app();
 			$autoloadClasses = $app->wg->AutoloadClasses;
+			
+			$extension = $this->response->getTemplateEngine();
 
 			if (
 				(
@@ -135,7 +137,7 @@ class WikiaView {
 				$requestedSkinName = $this->response->getSkinName();
 		
 				if ( !empty( $requestedSkinName ) ) {
-					$skinSpecificPath = "{$basePath}_{$requestedSkinName}.php";
+					$skinSpecificPath = "{$basePath}_{$requestedSkinName}.$extension";
 	
 					if ( file_exists( $skinSpecificPath ) ) {
 						$templatePath = $skinSpecificPath;
@@ -144,14 +146,14 @@ class WikiaView {
 			}
 			
 			if ( empty( $templatePath ) ) {
-				$templatePath = "{$basePath}.php";
+				$templatePath = "{$basePath}.$extension";
 			}
 			
 			$templateExists = file_exists( $templatePath );
 
 			if( !$templateExists && !$app->isService( $controllerName ) ) {
 				$controllerName = $app->getControllerLegacyName($controllerName);
-				$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.php";
+				$templatePath = "{$dirName}/templates/{$controllerName}_{$methodName}.$extension";
 				$templateExists = file_exists( $templatePath );
 			}
 
@@ -203,21 +205,31 @@ class WikiaView {
 		$this->buildTemplatePath( $this->response->getControllerName(), $this->response->getMethodName() );
 
 		$data = $this->response->getData();
-		// Export the app wg and wf helper objects into the template
-		// Note: never do this for Raw or Json formats due to major security issues there
-		$data['app'] = F::app();
-		$data['wg'] = F::app()->wg;
-		$data['wf'] = F::app()->wf;
+		
+		switch($this->response->getTemplateEngine()) {
+			case WikiaResponse::TEMPLATE_ENGINE_MUSTACHE:
+				$m = new Mustache;
+				return $m->render(file_get_contents( $this->getTemplatePath() ), $data);
+			break;
+			case WikiaResponse::TEMPLATE_ENGINE_PHP:
+			default:
+				// Export the app wg and wf helper objects into the template
+				// Note: never do this for Raw or Json formats due to major security issues there
+				$data['app'] = F::app();
+				$data['wg'] = F::app()->wg;
+				$data['wf'] = F::app()->wf;
 
-		if( !empty( $data ) ) {
-			extract( $data );
-		}
+				if( !empty( $data ) ) {
+					extract( $data );
+				}		
+				
+				ob_start();
+				require $this->getTemplatePath();
+				$out = ob_get_clean();
+				return $out;			
+			break;	
+		} 
 
-		ob_start();
-		require $this->getTemplatePath();
-		$out = ob_get_clean();
-
-		return $out;
 	}
 
 	protected function renderJson() {

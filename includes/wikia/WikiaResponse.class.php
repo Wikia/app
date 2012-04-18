@@ -33,6 +33,13 @@ class WikiaResponse {
 	const FORMAT_INVALID = 'invalid';
 
 	/**
+	 * template engine 
+	 */
+	
+	const TEMPLATE_ENGINE_PHP = 'php';
+	const TEMPLATE_ENGINE_MUSTACHE = 'mustache';
+	
+	/**
 	 * Cache targets
 	 */
 	const CACHE_TARGET_BROWSER = 0;
@@ -42,12 +49,14 @@ class WikiaResponse {
 	 * View object
 	 * @var WikiaView
 	 */
+	
 	private $view = null;
 	private $body = null;
 	private $code = null;
 	private $contentType = null;
 	private $headers = array();
 	private $format = null;
+	private $templateEngine = self::TEMPLATE_ENGINE_PHP;
 	private $skinName = null;
 	private $controllerName = null;
 	private $methodName = null;
@@ -353,6 +362,16 @@ class WikiaResponse {
 			$this->body = $this->view->render();
 		}
 		return $this->body;
+	}
+	
+	public function setTemplateEngine($engine) {
+		if(in_array( $engine, array(self::TEMPLATE_ENGINE_PHP, self::TEMPLATE_ENGINE_MUSTACHE))) {
+			$this->templateEngine = $engine;
+		}
+	}
+	
+	public function getTemplateEngine() {
+		return $this->templateEngine;
 	}
 
 	public function sendHeaders() {
