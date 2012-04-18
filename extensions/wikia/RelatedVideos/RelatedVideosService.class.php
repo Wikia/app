@@ -17,42 +17,28 @@ class RelatedVideosService {
 	 */
 	public function getRelatedVideoData( $params, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true, $autoplay=true, $inAjaxResponse=false ){
 
-		$title = isset( $params['title'] ) ? $params['title'] : '';
+		$titleText = isset( $params['title'] ) ? $params['title'] : '';
 		$articleId = isset( $params['articleId'] ) ? $params['articleId'] : 0;
 		$source = isset( $params['source'] ) ? $params['source'] : '';
 
 		wfProfileIn( __METHOD__ );
-		$title = urldecode( $title );
-		$result = $this->getFromCache( $title, $source, $videoWidth, $cityShort );
+		$titleText = urldecode( $titleText );
+		$result = $this->getFromCache( $titleText, $source, $videoWidth, $cityShort );
 		if ( empty( $result ) ){
 			Wikia::log( __METHOD__, 'RelatedVideos', 'Not from cache' );
-			if ( !empty( $source ) ){
-				$url = F::app()->wg->wikiaVideoRepoPath;
-				if ( !empty( $url ) ){
-					$url.='wikia.php?controller=RelatedVideos&method=getVideoData&width='.self::$width.'&videoWidth='.$videoWidth.'&title='.urlencode($title).'&articleId='.$articleId.'&cityShort='.$cityShort.'&videoHeight='.$videoHeight.'&useJWPlayer='.$useJWPlayer.'&autoplay='.$autoplay.'&inAjaxResponse='.$inAjaxResponse.'&format=json';
-				}
-				$httpResponse = Http::post( $url );
-				$result = json_decode( $httpResponse, true );
-				$result['data']['external'] = 1;
-			} else {
-				$result = F::app()->sendRequest(
-					'RelatedVideos',
-					'getVideoData',
-					array(
-						'width'		=> self::$width,
-						'videoWidth'	=> $videoWidth,
-						'title'		=> $title,
-						'articleId'	=> $articleId,
-						'cityShort'	=> $cityShort,
-						'useMaster'	=> $useMaster,
-						'videoHeight'	=> $videoHeight,
-						'useJWPlayer'	=> $useJWPlayer,
-						'autoplay'	=> $autoplay,
-						'inAjaxReponse'	=> $inAjaxResponse
-					)
-				)->getData();
-				$result['data']['external'] = 0;
-			}
+			$result = array();
+			$result['data'] = RelatedVideosData::getVideoData(
+				$titleText,
+				self::$width,
+				$videoWidth,
+				$articleId,
+				$autoplay,
+				$useMaster,
+				$cityShort,
+				$videoHeight,
+				$useJWPlayer,
+				$inAjaxResponse
+			);
 
 			if ( isset( $result['data']['error']) ){
 				return array();
@@ -63,7 +49,7 @@ class RelatedVideosService {
 				$result['data']['arrayId'] = $result['data']['external'].'|'.$result['data']['id'];
 			}
 
-			$this->saveToCache( $title, $source, $videoWidth, $cityShort, $result );
+			$this->saveToCache( $titleText, $source, $videoWidth, $cityShort, $result );
 		} else {
 			Wikia::log( __METHOD__, 'RelatedVideos', 'From cache' );
 		}

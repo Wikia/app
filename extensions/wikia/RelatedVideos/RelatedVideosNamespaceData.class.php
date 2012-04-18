@@ -411,9 +411,6 @@ class RelatedVideosNamespaceData {
 		if ( startsWith( $title, F::app()->wg->Lang->getNsText( NS_VIDEO ) ) ) {
 			$title = substr( $title, strlen( F::app()->wg->Lang->getNsText( NS_VIDEO ).':' ) );
 		}
-		if ( startsWith( $title, F::app()->wg->Lang->getNsText( NS_LEGACY_VIDEO ) ) ) {
-			$title = substr( $title, strlen( F::app()->wg->Lang->getNsText( NS_LEGACY_VIDEO ).':' ) );
-		}
 		$entry['title'] = $title;
 		$entry['source'] = ( $isFromVideoWiki ? F::app()->wg->WikiaVideoRepoDBName : '' );
 		if ( !empty( $user ) ){
