@@ -22,7 +22,7 @@
     <property name="phpunitgroups" value="" />
     <property name="phpunitexcludegroups" value="deprecated" />
     <property name="threadCount" value="1" />
-    <property name="timeout" value="120000" />
+    <property name="timeout" value="20000" />
     <property name="seleniumSpeed" value="1000" />
 
     <property name="noCloseAfterFail" value="0" />
@@ -50,6 +50,15 @@
                        --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
                        --configuration ${basedir}/phpunit.xml
                        ${unittest}
+                       " />
+        </exec>
+    </target>
+    
+    <target name="js-single">
+        <exec executable="php" dir="${basedir}" failonerror="true">
+            <env key="SERVER_ID" value="165" />
+            <arg line="run-js-test.php
+                       -t${unittest}
                        " />
         </exec>
     </target>
