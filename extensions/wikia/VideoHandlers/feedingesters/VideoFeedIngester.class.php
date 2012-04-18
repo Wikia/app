@@ -64,7 +64,7 @@ abstract class VideoFeedIngester {
 		}
 
 		$categories = $this->generateCategories($data, $addlCategories);
-		$categories[] = VideoFileUploader::VIDEOS_CATEGORY;
+		$categories[] = wfMsgForContent( 'videohandler-category' );
 		$categoryStr = '';
 		foreach ($categories as $categoryName) {
 			$category = Category::newFromName($categoryName);
