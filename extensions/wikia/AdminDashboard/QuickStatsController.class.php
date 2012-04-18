@@ -10,7 +10,7 @@ class QuickStatsController extends WikiaController {
 		if (!is_array($stats)) {
 			$cityID = $this->wg->CityId;
 			$stats = array();
-			$this->getDailyPageViews( $stats, $cityID );
+			$this->getDailyPageViews( $stats );
 			$this->getDailyEdits( $stats, $cityID );
 			$this->getDailyPhotos( $stats );
 			$hasfbdata = $this->getDailyLikes($stats);
@@ -23,8 +23,6 @@ class QuickStatsController extends WikiaController {
 				if (!isset($stats[$date])) $stats[$date] = array();
 				if (!isset($stats[$date]['pageviews'])) {
 					$stats[$date]['pageviews'] = 0;
-				} else {
-					$stats[$date]['pageviews'] *= 10;
 				}
 				if (!isset($stats[$date]['edits'])) $stats[$date]['edits'] = 0;
 				if (!isset($stats[$date]['photos'])) $stats[$date]['photos'] = 0;
@@ -39,45 +37,19 @@ class QuickStatsController extends WikiaController {
 	}
 
 	// This should probably be Unique Users but we don't have that stat
-	protected function getDailyPageViews( Array &$stats, $cityID) {
+	protected function getDailyPageViews( Array &$stats ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$dailyPageViews = array();
-		if ( !empty( $this->wg->StatsDBEnabled ) ) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
+		$week = date( 'Y-m-d', strtotime('-7 day') );
 
-			$today = date( 'Ymd', strtotime('-1 day') );
-			$week = date( 'Ymd', strtotime('-7 day') );
-
-			// Just for testing
-			if ($this->wg->DevelEnvironment) {
-				$oRes = $db->select(
-					array( 'page_views' ),
-					array( "date_format(pv_use_date, '%Y-%m-%d') date", 'sum(pv_views) as cnt'  ),
-					array(  "pv_use_date between '$week' and '$today' ", 'pv_city_id' => $cityID ),
-					__METHOD__,
-					array('GROUP BY'=> 'date WITH ROLLUP')
-				);
-			} else {
-				$oRes = $db->select(
-					array( 'google_analytics.pageviews' ),
-					array( "date_format(date, '%Y-%m-%d') date", 'sum(pageviews) as cnt'  ),
-					array(  "date between '$week' and '$today' ", 'city_id' => $cityID ),
-					__METHOD__,
-					array('GROUP BY'=> 'date WITH ROLLUP')
-				);
-			}
-			while ( $oRow = $db->fetchObject ( $oRes ) ) {
-				if (!$oRow->date) { // rollup row
-					$stats['totals']['pageviews'] = $oRow->cnt;
-				} else {
-					$stats[ $oRow->date ]['pageviews'] = $oRow->cnt;
-				}
-			}
+		$pageviews = DataMartService::getPageviewsDaily( $week );
+		$stats['totals']['pageviews'] = 0;
+		foreach( $pageviews as $date => $value) {
+			$stats[$date]['pageviews'] = $value;
+			$stats['totals']['pageviews'] += $value;
 		}
 
-		wfProfileOut( __METHOD__ );
-		return $dailyPageViews;
+		$this->wf->ProfileOut( __METHOD__ );
 	}
 
 
