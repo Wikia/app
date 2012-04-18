@@ -9,9 +9,9 @@ var UserInterview = {
 		});
 		
 		
-		$('.user-interview-container .remove').live('click', function() {
+		$('.user-interview-container').on('click', '.remove', function() {
 			UserInterview.removeColumn(this);
-		});		
+		});
 		
 		$('#user-interview-form').submit(function() {
 			UserInterview.saveQuestionValues();

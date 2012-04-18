@@ -7,8 +7,8 @@ var WallReplyMessageForm = $.createClass(WallMessageForm, {
 		WallNewMessageForm.superclass.constructor.apply(this,arguments);
 
 		// Selector caching
-		var replyBoxesWrapper = $('#Wall .new-reply');
-		var replyButtonsWrapper = $('#Wall');
+		this.replyBoxesWrapper = $('#Wall .new-reply');
+		this.replyButtonsWrapper = $('#Wall');
 		this.replyBoxes = replyBoxesWrapper.find('.body');
 		this.replyButtons = replyButtonsWrapper.find('.replyButton');
 
