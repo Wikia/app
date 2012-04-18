@@ -10,7 +10,7 @@ jQuery.fn.getData = function() {
 
 	var data = $.secureEvalJSON(json) || {};
 	return data;
-}
+};
 
 // set meta data for given node
 jQuery.fn.setData = function(key, value) {
@@ -34,11 +34,11 @@ jQuery.fn.setData = function(key, value) {
 
 	// return modified data
 	return data;
-}
+};
 
 // set type of current placeholder
 jQuery.fn.setPlaceholderType = function(type) {
 	$(this).
 		attr('class', 'placeholder placeholder-' + type).
 		setData('type', type);
-}
+};
