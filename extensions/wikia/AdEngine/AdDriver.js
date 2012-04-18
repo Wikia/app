@@ -720,6 +720,12 @@ AdDriverDelayedLoader.reorderItems = function() {
 AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
 
+	// Temporary AdDriver tracking by Inez
+	if ( Math.floor( ( Math.random() * 20 ) + 1 )  === 20 ) { // 5%
+		AdDriverDelayedLoader.tracking = true;
+		$.internalTrack( 'AdDriver', { pos: 'start' } );
+	}
+
 	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverItems.length) {
 		var loadTime = (new Date()).getTime() - wgNow.getTime();
 		$().log('AdDriver started loading after ' + loadTime + ' ms');
@@ -742,6 +748,12 @@ AdDriverDelayedLoader.isRunning = function() {
 }
 
 AdDriverDelayedLoader.finalize = function() {
+
+	// Temporary AdDriver tracking by Inez
+	if ( AdDriverDelayedLoader.tracking === true ) {
+		$.internalTrack( 'AdDriver', { pos: 'stop' } );
+	}
+    
 	if (window.wgEnableKruxTargeting) {
 		AdDriver.log('loading krux');
 		Krux.load(window.wgKruxCategoryId);
