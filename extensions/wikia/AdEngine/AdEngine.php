@@ -63,6 +63,45 @@ function wfAdEngineSetupJSVars($vars) {
 		$vars['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
 	}
 
+	// Liftium options
+	// See Liftium.js for documentation on options
+	global $wgDBname, $wgLang, $wgTitle, $wgLiftiumDevHosts, $wgDevelEnvironment, $wgLanguageCode;
+	$options = array();
+	$options['pubid'] = 999;
+	$options['baseUrl'] = '/__varnish_liftium/';
+	$options['kv_wgDBname'] = $wgDBname;
+	if (is_object($wgTitle)){
+	       $options['kv_article_id'] = $wgTitle->getArticleID();
+	       $options['kv_wpage'] = $wgTitle->getPartialURL();
+	}
+	$cat = AdEngine::getCachedCategory();
+	$options['kv_Hub'] = $cat['name'];
+	$options['kv_skin'] = $wgUser->getSkin()->getSkinName();
+	$options['kv_user_lang'] = $wgLang->getCode();
+	$options['kv_cont_lang'] = $wgLanguageCode;
+	$options['kv_isMainPage'] = ArticleAdLogic::isMainPage();
+	$options['kv_page_type'] = ArticleAdLogic::getPageType();
+	$options['geoUrl'] = "http://geoiplookup.wikia.com/";
+	if (!empty($wgDartCustomKeyValues)) {
+		$options['kv_dart'] = $wgDartCustomKeyValues;
+	}
+	$options['kv_domain'] = $_SERVER['HTTP_HOST'];
+	if (!empty($params)) {
+		// options below are appropriate only when AdDriver controls Liftium calls
+		if (isset($params['isCalledAfterOnload'])) {
+			$options['isCalledAfterOnload'] = 1;
+		}
+
+		if (isset($params['hasMoreCalls'])) {
+			$options['hasMoreCalls'] = 1;
+		}
+
+		if (isset($params['maxLoadDelay'])) {
+			$options['maxLoadDelay'] = 6000;
+		}
+	}
+	$vars['LiftiumOptions'] = $options;
+	
 	wfProfileOut(__METHOD__);
 	return true;
 }
