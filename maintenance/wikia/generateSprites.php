@@ -19,7 +19,7 @@ class SpriteGeneratorMaintenance {
 	protected $name = null;
 
 	public function __construct( $options ) {
-		if ($options['sprite']) {
+		if (@$options['sprite']) {
 			$this->name = $options['sprite'];
 		}
 	}
