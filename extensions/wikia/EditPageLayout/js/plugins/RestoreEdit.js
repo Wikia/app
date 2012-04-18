@@ -64,9 +64,9 @@
 						editorEl.find('.difflink').bind('click', diffHandler);
 							
 					//attaching handlers for the long notices in the modal dialog (bind/delegate don't work in this case)
-					var modalWrapper = $('.modalWrapper ');
-					modalWrapper.find('.restoreeditlink').live('click', restoreHandler);
-					modalWrapper.find('.difflink').live('click', diffHandler);
+					$('.modalWrapper')
+						.on('click', '.restoreeditlink', restoreHandler)
+						.on('click', '.difflink', diffHandler);
 				}
 				
 				eds.start();
