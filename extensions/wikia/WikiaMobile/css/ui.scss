@@ -1,6 +1,6 @@
-@import 'variables.scss';
-@import 'mixins/linear-gradient.scss';
-@import 'mixins/box-sizing.scss';
+@import 'variables';
+@import 'mixins/linear-gradient';
+@import 'mixins/box-sizing';
 
 //I use it in a lot of places so it makes sense to have it here
 //The faster the better as it is not rendering but browser does calculation based on it

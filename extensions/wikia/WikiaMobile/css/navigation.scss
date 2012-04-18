@@ -1,11 +1,11 @@
 //dependencies
-@import "variables.scss";
+@import "variables";
 
 //mixins
-@import "mixins/linear-gradient.scss";
-@import "mixins/box-sizing.scss";
-@import "mixins/box-shadow.scss";
-@import "mixins/transition.scss";
+@import "mixins/linear-gradient";
+@import "mixins/box-sizing";
+@import "mixins/box-shadow";
+@import "mixins/transition";
 
 #wkWrdMrk {
 	line-height: 40px;

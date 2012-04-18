@@ -5,7 +5,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/buttons";
 @import "../../../../skins/oasis/css/core/typography";
-@import "UserStatsMenu.scss";
+@import "UserStatsMenu";
 
 $color-chat-gray: mix($color-text, $color-page);
 $color-chat-you: mix($color-text, $color-page, 5);

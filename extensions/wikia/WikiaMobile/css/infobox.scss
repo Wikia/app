@@ -1,7 +1,7 @@
-@import "variables.scss";
+@import "variables";
 //mixins
-@import "mixins/box-shadow.scss";
-@import "mixins/box-sizing.scss";
+@import "mixins/box-shadow";
+@import "mixins/box-sizing";
 
 #wkMainCnt{
 	table{
