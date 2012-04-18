@@ -18,7 +18,7 @@ class ContactForm extends SpecialPage {
 	function execute() {
 		global $wgLang, $wgAllowRealName, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		global $wgUser;
+		global $wgUser, $wgCaptchaClass;
 
 		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact/SpecialContact.scss'));
@@ -34,13 +34,13 @@ class ContactForm extends SpecialPage {
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
 
 		if( $this->mPosted && ('submit' == $this->mAction ) ) {
-			
-			if( !$wgUser->isLoggedIn() ){
-				$captchaObj = new FancyCaptcha();
+
+			if ( !$wgUser->isLoggedIn() && class_exists( $wgCaptchaClass ) ) {
+				$captchaObj = new $wgCaptchaClass();
 				$captchaObj->retrieveCaptcha();
 				$info = $captchaObj->retrieveCaptcha();
 			}
-			
+
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
 			$this->mName = $wgRequest->getText( 'wpName' );
 			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
@@ -59,12 +59,12 @@ class ContactForm extends SpecialPage {
 				$this->err[].= wfMsg('specialcontact-nomessage');
 				$this->errInputs['wpContactDesc'] = true;
 			}
-			
+
 			#captcha
-			if(!$wgUser->isLoggedIn()){ // logged in users don't need the captcha (RT#139647)
+			if ( !$wgUser->isLoggedIn() && class_exists( $wgCaptchaClass ) ) { // logged in users don't need the captcha (RT#139647)
 				if(!( !empty($info) &&  $captchaObj->keyMatch( $wgRequest->getVal('wpCaptchaWord'), $info )))  {
 					$this->err[].= wfMsg('specialcontact-captchafail');
-					$this->errInputs['wpCaptchaWord'] = true; 
+					$this->errInputs['wpCaptchaWord'] = true;
 				}
 			}
 
@@ -110,7 +110,7 @@ class ContactForm extends SpecialPage {
 
 		//always add the IP
 		$items[] = 'IP:' . wfGetIP();
-		
+
 		//if they are logged in, add the ID(and name) and their lang
 		$uid = $wgUser->getID();
 		if( !empty($uid) ) {
@@ -172,20 +172,20 @@ class ContactForm extends SpecialPage {
 	function mainContactForm( ) {
 		global $wgUser, $wgOut, $wgLang;
 		global $wgDBname, $wgAllowRealName;
-		global $wgServer, $wgSitename;
+		global $wgServer, $wgSitename, $wgCaptchaClass;
 
 		$wgOut->setPageTitle( wfMsg( 'specialcontact-pagetitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		if( !$wgUser->isLoggedIn() ){
-			$captchaObj = new FancyCaptcha();
+		if ( !$wgUser->isLoggedIn() && class_exists( $wgCaptchaClass ) ) {
+			$captchaObj = new $wgCaptchaClass();
 			$captcha = $captchaObj->pickImage();
 			$captchaIndex = $captchaObj->storeCaptcha( $captcha );
 			$titleObj = SpecialPage::getTitleFor( 'Captcha/image' );
 			$captchaUrl = $titleObj->getLocalUrl( 'wpCaptchaId=' . urlencode( $captchaIndex ) );
 		}
-		
+
 		if( $wgUser->isAnon() == false ) {
 			//user mode
 
@@ -246,15 +246,15 @@ class ContactForm extends SpecialPage {
 		//setup form and javascript
 		$wgOut->addHTML("<form name=\"contactform\" id=\"contactform\" method=\"post\" action=\"{$action}\">\n" );
 		$wgOut->addHTML( "<h1>". wfMsg( 'specialcontact-formtitle' ) ."</h1>");
-		
+
 		if ( !empty($this->err) ) {
 			$this->addError( $this->err );
 			//$wgOut->addHTML( Wikia::errorbox( $this->err ) );
 		}
 
 		global $wgSpecialContactUnlockURL;
-		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'specialcontact-wikiname' ) . '</p>' 
-					. ( ( !empty($wgSpecialContactUnlockURL) ) ? 
+		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'specialcontact-wikiname' ) . '</p>'
+					. ( ( !empty($wgSpecialContactUnlockURL) ) ?
 						("<input ".$this->getClass('wpContactWikiName')." tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactWikiName\" value=\"{$wgServer}\" size='40' />")
 						:("{$wgServer} <input type=\"hidden\" name=\"wpContactWikiName\" value=\"{$wgServer}\" />")
 					));
@@ -279,14 +279,14 @@ class ContactForm extends SpecialPage {
 						:("{$encEmail} <input  type=\"hidden\" name=\"wpEmail\" value=\"{$encEmail}\" />")
 					));
 
-		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'specialcontact-problem' ) . '</p>' 
+		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'specialcontact-problem' ) . '</p>'
 							."<input ".$this->getClass('wpContactSubject')." tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactSubject\" value=\"{$encProblem}\" size='80' />" );
 
 		$wgOut->addHTML( '<p class="contactformcaption">'  . wfMsg( 'specialcontact-problemdesc' ) . '</p>' .
 						"<textarea ".$this->getClass('wpContactDesc')." tabindex='" . ($tabindex++) . "' name=\"wpContactDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>" );
-		
-		if( !$wgUser->isLoggedIn() ){
-			$wgOut->addHTML('<p class="contactformcaption">'  . wfMsg( 'specialcontact-captchatitle' ) . '</p>' . 
+
+		if ( !$wgUser->isLoggedIn() && class_exists( $wgCaptchaClass ) ) {
+			$wgOut->addHTML('<p class="contactformcaption">'  . wfMsg( 'specialcontact-captchatitle' ) . '</p>' .
 							"<div class='contactCaptch' >
 								<input ".$this->getClass('wpCaptchaWord')." type='text' id='wpCaptchaWord' name='wpCaptchaWord' value='' />
 								<span class='captchDesc'>".wfMsg('specialcontact-captchainfo')."</span>
@@ -317,21 +317,21 @@ class ContactForm extends SpecialPage {
 
 		return;
 	}
-	
+
 	function addError($err) {
 		global $wgOut;
-		if(is_array($err)) { 
+		if(is_array($err)) {
 			$wgOut->addHTML('<div class="errorbox">');
 				foreach($err as $value) {
 					$wgOut->addHTML( $value . "<br>");
 				}
 			$wgOut->addHTML('</div><br style="clear: both;">');
 		} else {
-			$wgOut->addHTML( Wikia::errorbox( $err ) );	
+			$wgOut->addHTML( Wikia::errorbox( $err ) );
 		}
-		
+
 	}
-	
+
 	function getClass($id) {
 		if(empty($this->errInputs[$id])) {
 			return "";
