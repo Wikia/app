@@ -266,11 +266,18 @@ var ImageLightbox = {
 			'title': imageName,
 			'videoInline': 1
 		}, function(res) {
+//console.log('NEF: jwplayer via displayInlineVideo');
 			jQuery(parentTag).siblings('span.Wikia-video-title-bar').eq(0).remove();
 			if (res && ( res.html || res.jsonData ) ) {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
 						jQuery( '<div id="'+res.jsonData.id+'" style="width:'+imageWidth+'px; height:'+imageHeight+'px; display: inline-block;"></div>' ).replaceAll( parentTag );
+if (res.jsonData) {
+	//console.log(res.jsonData);
+	if (res.jsonData.plugins && res.jsonData.plugins.googima && res.jsonData.plugins.googima['ad.tag']) {
+		res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
+	}
+}
 						jwplayer( res.jsonData.id ).setup( res.jsonData );
 					});					
 				} else {
@@ -327,6 +334,7 @@ var ImageLightbox = {
             'showEmbedCodeInstantly' : this.showEmbedCodeInstantly,
             'wikiAddress' : this.wikiAddress
     }, function(res) {
+//console.log('NEF: jwplayer via fetchLightbox');
 			if (res && ( res.html || res.jsonData ) ) {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
@@ -340,6 +348,12 @@ var ImageLightbox = {
 									}
 								};
 							}
+if (res.jsonData) {
+	//console.log(res.jsonData);
+	if (res.jsonData.plugins && res.jsonData.plugins.googima && res.jsonData.plugins.googima['ad.tag']) {
+		res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
+	}
+}
 							jwplayer( res.jsonData.id ).setup( res.jsonData	);
 							self.setTopPosition();
 						});
