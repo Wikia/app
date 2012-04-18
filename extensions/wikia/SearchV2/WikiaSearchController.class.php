@@ -25,6 +25,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$debug = $this->request->getBool('debug');
 		$crossWikia = $this->request->getBool('crossWikia');
 		$activeAdvancedTab = $this->getActiveAdvancedTab();
+		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
 
 		$namespaces = array();
@@ -51,7 +52,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if (!$isInterWiki) {
-			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces ) );
+			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced ) );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
 
@@ -67,7 +68,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'debug', $debug );
 		$this->setVal( 'solrHost', $this->wg->SolrHost);
 		$this->setVal( 'debug', $this->getVal('debug', false) );
-		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->setVal( 'isInterWiki', $isInterWiki );
 	}
 
@@ -76,6 +76,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$namespaces = $this->getVal( 'namespaces' );
 		$activeTab = $this->getVal( 'activeTab' );
 		$searchableNamespaces = $this->getVal( 'searchableNamespaces' );
+		$advanced = $this->getVal( 'advanced' );
 
 		$bareterm = $term;
 		if( $this->termStartsWithImage( $term ) ) {
@@ -91,14 +92,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'searchableNamespaces', $searchableNamespaces );
 		$this->setVal( 'acceptListRedirects', true );
 		$this->setVal( 'searchRedirects', $this->searchRedirs );
-		$this->setVal( 'advanced', 1); // @todo fixit
-
-		/*
-		$this->setVal( 'resultsShown', 10 ); // @todo fixit
-		$this->setVal( 'totalNum', 20 ); // @todo fixit
-		$this->setVal( 'offset', 0 ); // @todo fixit
-		$this->setVal( 'limit', 10 ); // @todo fixit
-		*/
+		$this->setVal( 'advanced', $advanced);
 	}
 
 	// $term, $namespaces, $label, $tooltip, $params=array()
