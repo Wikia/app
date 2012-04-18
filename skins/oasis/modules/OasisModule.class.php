@@ -34,7 +34,7 @@ class OasisModule extends WikiaController {
 	
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
 
 		// TODO: move to WikiaHubs extension - this code should use a hook
 		if(!empty($wgEnableWikiaHubsExt)) {
@@ -42,19 +42,16 @@ class OasisModule extends WikiaController {
 			$wgOut->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiaHubs/js/WikiaHubs.js');
 		}
 
-		$this->showAllowRobotsMetaTag = !$this->wgDevelEnvironment;
+		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
 		if(!empty($wikiWelcome)) {
-			global $wgExtensionsPath;
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/WikiWelcome.scss'));
-			$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/WikiWelcome.js"></script>');
+			$wgOut->addScript('<script src="'.$this->wg->ExtensionsPath.'/wikia/CreateNewWiki/js/WikiWelcome.js"></script>');
 		}
-
-		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
 
 		// macbre: let extensions modify content of the page (e.g. EditPageLayout)
 		$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
