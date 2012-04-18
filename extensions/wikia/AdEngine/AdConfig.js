@@ -91,7 +91,8 @@ AdConfig.DART = {
 	   '0x0': '1x1',
 	   '300x100': '300x100',
 	   '120x240': '120x240',
-	   '242x90': '242x90'
+	   '242x90': '242x90',
+       '320x240': '320x240'
 	},
 
 	slotMap: {
@@ -123,6 +124,7 @@ AdConfig.DART = {
 	   'INVISIBLE_2': {'tile':11, 'loc': "invisible"},
 	   'INVISIBLE_MODAL': {'tile':14, 'loc': "invisible"},
 	   'INVISIBLE_TOP': {'tile':13, 'loc': "invisible"},
+	   'JWPLAYER': {'tile': 2, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_1': {'tile': 3, 'loc': "top"},
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},
 	   'LEFT_SKYSCRAPER_3': {'tile': 6, 'loc': "footer"},
@@ -291,6 +293,8 @@ AdConfig.DART.getSubdomain = function() {
 }
 
 AdConfig.DART.getAdType = function(useIframe) {
+	if (useIframe == 'jwplayer') return 'pfadx';
+
 	if (useIframe) {
 		return 'adi';
 	} else {
