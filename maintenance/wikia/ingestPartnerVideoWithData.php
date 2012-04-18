@@ -33,7 +33,7 @@ EOT;
 	exit( 1 );
 }
 
-$userName = isset( $options['u'] ) ? $options['u'] : 'Maintenance script';
+$userName = isset( $options['u'] ) ? $options['u'] : 'Wikia Video Library';
 // default date range - start: three days ago, end: tomorrow
 $now = date_create();
 $di = new DateInterval('P1D');

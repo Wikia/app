@@ -7,7 +7,6 @@ class VideoFileUploader {
 	
 	const SANITIZE_MODE_FILENAME = 1;
 	const SANITIZE_MODE_ARTICLETITLE = 2;
-	const VIDEOS_CATEGORY = 'Videos';
 
 	protected $sTargetTitle;
 	protected $sDescription;
@@ -183,10 +182,20 @@ class VideoFileUploader {
 
 	protected function getDescription(){
 		if ( empty( $this->sDescription ) ) {
-			$this->sDescription = '[[Category:'.self::VIDEOS_CATEGORY.']]'.$this->getApiWrapper()->getDescription();
+			$this->sDescription = $this->getCategoryVideosWikitext() . $this->getApiWrapper()->getDescription();
 		}
 		
 		return $this->sDescription;
+	}
+	
+	/**
+	 * gets wiki text for the "Videos" category. For example, on English
+	 * wikis: [[Category:Videos]]. i18n-compatible
+	 * @return string
+	 */
+	public function getCategoryVideosWikitext() {
+		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
+		return '[[' . $cat . ':' . wfMsgForContent( 'videohandler-category' ) . ']]';		
 	}
 	
 	public function getVideoId(){
