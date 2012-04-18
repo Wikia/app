@@ -11,7 +11,7 @@ class AdModule extends WikiaController {
 
 		self::$config = array();
 
-		if(!$wgOut->isArticle() && !$wgTitle->isSpecial('Search') && !$wgTitle->isSpecial('Leaderboard')){ // RT#74422 Run ads on search results page
+		if(!$wgOut->isArticle() && !ArticleAdLogic::isSearch() && !$wgTitle->isSpecial('Leaderboard')){ // RT#74422 Run ads on search results page
 			return;
 		}
 		if(ArticleAdLogic::isWikiaHub() && ArticleAdLogic::isAdsEnabledOnWikiaHub()) {
@@ -66,7 +66,7 @@ class AdModule extends WikiaController {
 				self::$config['TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 			} else if($namespace == NS_SPECIAL) {
-				if ($wgTitle->isSpecial('Search')) {
+				if (ArticleAdLogic::isSearch()) {
 					// search results page
 					self::$config['TOP_LEADERBOARD'] = true;
 					self::$config['TOP_RIGHT_BOXAD'] = true;

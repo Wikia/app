@@ -572,8 +572,11 @@ class ArticleAdLogic {
 
 	public static function isSearch() {
 		global $wgTitle;
+		
+		$searchPageNames = array('Search', 'WikiaSearch');
 
-		return !empty($wgTitle) && -1 == $wgTitle->getNamespace() && "Search" == SpecialPage::resolveAlias($wgTitle->getDBkey());
+		return !empty($wgTitle) && -1 == $wgTitle->getNamespace() 
+			&& in_array(SpecialPage::resolveAlias($wgTitle->getDBkey()), $searchPageNames);
 	}
 	
 	public static function isExtra() {
