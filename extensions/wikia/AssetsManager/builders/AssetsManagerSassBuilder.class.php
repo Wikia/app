@@ -68,7 +68,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	private function sassProcessing() {
-		global $IP, $wgSassExecutable;
+		global $IP, $wgSassExecutable, $wgDevelEnvironment;
 
 		$tempDir = sys_get_temp_dir();
 		//replace \ to / is needed because escapeshellcmd() replace \ into spaces (?!!)
@@ -87,7 +87,15 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			if ( file_exists( $tempOutFile ) ) {
 				unlink($tempOutFile);
 			}
-			throw new Exception('Problem with SASS processing. Check the PHP error log for more info.'); // TODO: Should these exceptions be wrapped as comments like in the old system?
+
+			if (!empty($wgDevelEnvironment)) {
+				$exceptionMsg = "Problem with SASS processing: {$sassResult}";
+			}
+			else {
+				$exceptionMsg = 'Problem with SASS processing. Check the PHP error log for more info.';
+			}
+
+			throw new Exception("/* {$exceptionMsg} */");
 		}
 
 		$this->mContent = file_get_contents($tempOutFile);
