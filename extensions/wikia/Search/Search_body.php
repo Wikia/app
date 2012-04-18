@@ -169,7 +169,7 @@ class SolrSearchSet extends SearchResultSet {
 		}
 	}
 
-	public static function createArticleMatch( $term ) {
+	public static function createArticleMatch( $term , $namespaces = array() ) {
 		// Try to go to page as entered.
 		$title = Title::newFromText( $term );
 		# If the string cannot be used to create a title
@@ -180,7 +180,9 @@ class SolrSearchSet extends SearchResultSet {
 		$searchWithNamespace = $title->getNamespace() != 0 ? true : false;
 		// If there's an exact or very near match, jump right there.
 		$title = SearchEngine::getNearMatch( $term );
-		if( !is_null( $title ) && ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) ) {
+		if( !is_null( $title ) && 
+		    ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) &&
+		    (empty($namespaces) || in_array($title->getNamespace(), $namespaces))) {
 			$article = new Article( $title );
 			if($article->isRedirect()) {
 				return new Article($article->getRedirectTarget());
@@ -337,7 +339,7 @@ class SolrSearchSet extends SearchResultSet {
 		$articleMatch = null;
 		if( !$crossWikiaSearch ) {
 			// check if exact match is available (similar to MW "go-result" feature)
-			$articleMatch = self::createArticleMatch($query);
+		        $articleMatch = self::createArticleMatch($query, $namespaces);
 		}
 
 		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits, $crossWikiaSearch, $articleMatch);
