@@ -215,11 +215,11 @@ var ThemeDesigner = {
 	toolBarInit: function() {
 		$("#Toolbar .history")
 			.click(function() {
-				$(this).find("ul").css("display", "block");
+				$(this).find("ul").show();
 				ThemeDesigner.track('previous/click');
 			})
 			.find("ul").mouseleave(function() {
-				$(this).css("display", "none");
+				$(this).hide();
 			})
 			.find("li").click(ThemeDesigner.revertToPreviousTheme);
 	},
