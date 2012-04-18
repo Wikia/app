@@ -15,21 +15,20 @@ var Wall = $.createClass(Object, {
 			.bind('afterWatching', this.proxy(this.onWallWatch))
 			.bind('afterUnwatching', this.proxy(this.onWallUnwatch));
 
-		$('#Wall .admin-delete-message').live('click', this.proxy(this.confirmAction));
-		$('#Wall .delete-message').live('click', this.proxy(this.confirmAction));
-		$('#Wall .remove-message').live('click', this.proxy(this.confirmAction));
-		$('#Wall .message-restore').live('click', this.proxy(this.confirmAction));
-		$('#Wall .message-undo-remove').live('click', this.proxy(this.undoRemoveOrAdminDelete));
+		$('#Wall')
+			.on('click', '.admin-delete-message', this.proxy(this.confirmAction))
+			.on('click', '.delete-message', this.proxy(this.confirmAction))
+			.on('click', '.remove-message', this.proxy(this.confirmAction))
+			.on('click', '.message-restore', this.proxy(this.confirmAction))
+			.on('click', '.message-undo-remove', this.proxy(this.undoRemoveOrAdminDelete))
+			.on('click', '.follow.wikia-button', this.proxy(this.switchWatch))
+			.on('mouseenter', '.follow.wikia-button', this.proxy(this.hoverFollow))
+			.on('mouseleave', '.follow.wikia-button', this.proxy(this.unhoverFollow));
 
-		$('.load-more a').live('click', this.proxy(this.loadMore));
+		$('.load-more').on('click', 'a', this.proxy(this.loadMore));
 		
 		// Make timestamps dynamic
 		$('.timeago').timeago();
-		
-		$('#Wall .follow.wikia-button')
-			.live('click', this.proxy(this.switchWatch))
-			.live('mouseenter', this.proxy(this.hoverFollow))
-			.live('mouseleave', this.proxy(this.unhoverFollow));
 		
 		// If any textarea has content make sure Reply / Post button is visible
 		$(document).ready(this.initTextareas);
@@ -42,20 +41,22 @@ var Wall = $.createClass(Object, {
 		}
 		
 		//click tracking
-		$('.user-talk-archive-anchor').click(this.proxy(this.trackClick));
-		$('.edited-by a').live('click', this.proxy(this.trackClick));
-		$('.timeago-fmt').live('click', this.proxy(this.trackClick));
-		$('.username').live('click', this.proxy(this.trackClick));
-		$('.avatar').live('click', this.proxy(this.trackClick));
-		$('.Pagination').live('click', this.proxy(this.trackClick));
-		$('.wall-owner').click(this.proxy(this.trackClick));
-		$('.load-more a').click(this.proxy(this.trackClick));
-		$('.msg-title').click(this.proxy(this.trackClick));
-		$('.sortingOption').click(this.proxy(this.trackClick));
+		$('#Wall')
+			.on('click', '.edited-by a', this.proxy(this.trackClick))
+			.on('click', '.timeago-fmt', this.proxy(this.trackClick))
+			.on('click', '.username', this.proxy(this.trackClick))
+			.on('click', '.avatar', this.proxy(this.trackClick))
+			.on('click', '.Pagination', this.proxy(this.trackClick))
+			.on('click', '.user-talk-archive-anchor', this.proxy(this.trackClick))
+			.on('click', '.wall-owner', this.proxy(this.trackClick))
+			.on('click', '.load-more a', this.proxy(this.trackClick))
+			.on('click', '.msg-title', this.proxy(this.trackClick))
+			.on('click', '.sortingOption', this.proxy(this.trackClick));
 
 		// fix firefox bug (when textarea is disabled and you refresh a page
 		// it's still disabled on new page loaded
-		$("#Wall textarea").removeAttr('disabled').live('keydown', this.proxy(this.focusButton));
+		$("#Wall textarea").removeAttr('disabled');
+		$("#Wall").on('keydown', 'textarea', this.proxy(this.focusButton));
 
 		this.model = new WallBackendBridge();
 		this.pagination = new WallPagination(this.username, this.model);
