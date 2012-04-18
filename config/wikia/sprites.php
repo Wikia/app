@@ -19,6 +19,13 @@ $config['EditPageLayout'] = array(
         'source' => "$IP/extensions/wikia/EditPageLayout/images/sprite-edit-page/",
         'sprite' => "$IP/extensions/wikia/EditPageLayout/images/sprite-edit-page.png",
         'scss'   => "$IP/extensions/wikia/EditPageLayout/css/mixins/_sprite-edit-page.scss",
+	/*
+	// POSTPROCESSING EXAMPLE
+	// Use [INPUT] and [OUTPUT] in the command
+	'postprocess' => array(
+		'pngout -c6 -d8 [INPUT] [OUTPUT]',
+	),
+	*/
 );
 
 

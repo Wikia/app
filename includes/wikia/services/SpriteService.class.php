@@ -6,6 +6,7 @@
 		protected $source = '';
 		protected $scss = '';
 		protected $sprite = '';
+		protected $postprocess = array();
 
 		protected $startingspace = 60;
 		protected $spacing = 12;
@@ -223,6 +224,50 @@
 
 			imagepng($out,$this->sprite,9);
 			imagedestroy($out);
+
+			$this->doPostProcessing( $this->sprite );
+		}
+
+		protected function doPostProcessing( $fileName ) {
+			if (empty($this->postprocess)) {
+				return;
+			}
+
+			$tmpDir = sys_get_temp_dir();
+			$tmpInput = tempnam($tmpDir,'sprite');
+			$tmpOutput = tempnam($tmpDir,'sprite');
+			unlink($tmpInput);
+			unlink($tmpOutput);
+			$tmpInput .= '.png';
+			$tmpOutput .= '.png';
+
+			foreach ($this->postprocess as $command) {
+				copy($fileName,$tmpInput);
+				$command = strtr($command,array(
+					'[INPUT]' => $tmpInput,
+					'[OUTPUT]' => $tmpOutput,
+				));
+				clearstatcache();
+				$tmpSize = filesize($tmpInput);
+
+				$retval = null;
+				$output = wfShellExec($command,$retval);
+				clearstatcache();
+				if ($retval == 0) {
+					if (file_exists($tmpOutput) && filesize($tmpOutput) > 0) {
+						unlink($fileName);
+						copy($tmpOutput,$fileName);
+					} else if (filesize($tmpInput) != $tmpSize) {
+						unlink($fileName);
+						copy($tmpInput,$fileName);
+					}
+				} else {
+					echo "warning: postprocessing failed ($command):\n$output\n";
+				}
+
+				@unlink($tmpInput);
+				@unlink($tmpOutput);
+			}
 		}
 
 		/** SASS GENERATION **/
