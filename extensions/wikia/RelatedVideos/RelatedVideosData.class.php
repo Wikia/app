@@ -8,82 +8,48 @@ class RelatedVideosData {
 		
 	}
 	
-	public function getVideoData( $title, $thumbnailWidth, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life', $videoHeight='', $useJWPlayer=true, $inAjaxResponse=false ) {
+	public function getVideoData( $titleText, $thumbnailWidth, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life', $videoHeight='', $useJWPlayer=true, $inAjaxResponse=false ) {
 
 		wfProfileIn( __METHOD__ );
 
 		$data = array();
-		if ( !( $title instanceof Title ) ){
+
+		$file = wfFindFile($titleText);
+
+		$title = Title::newFromText( $titleText );
+
+		if( !WikiaVideoService::isVideoFile( $file ) ) {
 			$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
 		} else {
 
-			if( WikiaVideoService::isVideoStoredAsFile() ) {
-				$file = wfFindFile($title);
+			$meta = unserialize($file->getMetadata());
+			$trans = $file->transform(array('width'=>$thumbnailWidth, 'height'=>-1));
 
-				if( !WikiaVideoService::isVideoFile( $file ) ) {
-					$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
-				} else {
+			$thumb = array(
+				'width' => $trans->width,
+				'height' => $trans->height,
+				'thumb' => $trans->url
+			);
 
-					$meta = unserialize($file->getMetadata());
-					$trans = $file->transform(array('width'=>$thumbnailWidth, 'height'=>-1));
+			$data['external']		= 0; // false means it is not set. Meaningful values: 0 and 1.
+			$data['id']				= $titleText;
+			$data['fullUrl']		= $title->getFullURL();
+			$data['prefixedUrl']	= $title->getPrefixedURL();
+			$data['description']	= $file->getDescription();
+			$data['duration']		= $meta['duration'];
+			$data['embedCode']		= null;
+			$data['embedJSON']		= null;
+			$data['provider']		= $file->minor_mime;
+			$data['thumbnailData']	= $thumb;
+			$data['title']			= $file->getTitle()->getText();
+			$data['timestamp']		= $file->getTimestamp();
 
-					$thumb = array(
-						'width' => $trans->width,
-						'height' => $trans->height,
-						'thumb' => $trans->url
-					);
-
-					$data['external']		= 0; // false means it is not set. Meaningful values: 0 and 1.
-					$data['id']				= $title->getArticleID();
-					$data['fullUrl']		= $title->getFullURL();
-					$data['prefixedUrl']	= $title->getPrefixedURL();
-					$data['description']	= $file->getDescription();
-					$data['duration']		= $meta['duration'];
-					$data['embedCode']		= null;
-					$data['embedJSON']		= null;
-					$data['provider']		= $file->minor_mime;
-					$data['thumbnailData']	= $thumb;
-					$data['title']			= $file->getTitle()->getText();
-					$data['timestamp']		= $file->getTimestamp();
-
-				}
-
-			} else {
-
-				$videoPage = F::build( 'VideoPage', array( $title ) );
-				$videoPage->load($useMaster);
-				$data['external']		= false; // false means it is not set. Meaningful values: 0 and 1.
-				$data['id']				= $title->getArticleID();
-				$data['fullUrl']		= $title->getFullURL();
-				$data['prefixedUrl']	= $title->getPrefixedURL();
-				$data['description']	= $videoPage->getDescription();
-				$data['duration']		= $videoPage->getDuration();
-				$data['embedCode']		= $videoPage->getEmbedCode( $videoWidth, $autoplay, $useJWPlayer, false, $cityShort, $videoHeight, $inAjaxResponse );
-				$data['embedJSON']		= $videoPage->getJWPlayerJSON( $videoWidth, $autoplay, $cityShort, $videoHeight );
-				$data['provider']		= $videoPage->getProvider();
-				$data['thumbnailData']	= $videoPage->getThumbnailParams( $thumbnailWidth );
-				$data['title']			= $videoPage->getTitle()->getText();
-				$data['timestamp']		= $videoPage->getTimestamp();	//@todo for premium video, eventually use date published given by provider
-
-			}
-
-			$owner = '';
-			$ownerUrl = '';
-			$oArticle = F::build( 'Article', array( $title ) );
-			
-			if( !empty( $oArticle ) ){
-				$owner = $oArticle->getUserText();
-				if (!empty($owner)) {
-					$oOwner = F::build( 'User', array( $owner ), 'newFromName' );
-					if (is_object($oOwner)) {
-						$ownerUrl = $oOwner->getUserPage()->getFullURL();
-					}
-				}
-			}
-			$data['owner'] = $owner;
-			$data['ownerUrl'] = $ownerUrl;
-			$data['arrayId'] = isset($data['error']) ? '' : $data['external'].'|'.$data['id'];
 		}
+
+
+		$ownerUrl = '';
+		$data['owner'] = $file->getUser();
+		$data['arrayId'] = isset($data['error']) ? '' : $data['external'].'|'.$data['id'];
 
 		wfProfileOut( __METHOD__ );
 		return $data;
