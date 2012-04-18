@@ -2,7 +2,7 @@ var page = require('webpage').create(),
 	system = require('system'),
 	test;
 
-if (system.args.length === 2) {
+if (system.args.length === 1) {
 	console.log('Usage: phantom.js <test file>');
 	phantom.exit();
 }
