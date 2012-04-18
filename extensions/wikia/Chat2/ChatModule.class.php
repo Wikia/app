@@ -118,6 +118,8 @@ class ChatModule extends Module {
 		$vars['pathToContribsPage'] = $this->pathToContribsPage;
 		$vars['wgAvatarUrl'] = $this->avatarUrl;
 		
+		$vars['wgChatKey'] = Chat::echoCookies();
+		
 		$months = array();
 		for($i = 1; $i < 13; $i++ ) {
 			$months[$i] =  $wgLang->getMonthAbbreviation($i);

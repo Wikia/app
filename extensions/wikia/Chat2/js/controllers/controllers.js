@@ -39,13 +39,17 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		this.authRequestWithMW(function(data){
 			this.socket = io.connect(url, {
 				'force new connection' : true,
-				'try multiple transports': true,
-				'connect timeout': false,
+				'try multiple transports': false,
+				'connect timeout': 5000,
 				'query':data,
 				'reconnect':false
 			});
 			
 			this.socket.on('connect', this.proxy( this.onConnect, this ) );
+			this.socket.on('connect_failed', this.proxy( function() {
+				alert("dssdds");
+			}, this ) );
+			
 			this.socket.on('message', this.proxy( this.onMsgReceived, this ) );
 			this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
 			this.socket.on('error', this.proxy( this.onError, this ) );
@@ -53,7 +57,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	},
 	
 	onError: function(){
-		
+		 this.onDisconnect();
 	},
 	
 	connect: function() {
@@ -83,38 +87,18 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     },
 	
 	authRequestWithMW: function(callback) {
-		// We can't access the second-level-domain cookies from Javascript, so we make a request to wikia's
-		// servers (which we trust) to echo back the session info which we then send to node via socket.io
-		// (which doesn't reliably get cookies directly from clients since they may be on flash, etc. and
-		// there isn't good support for getting cookies anyway).
-		$().log("Getting full session info from Apache.");
-		if(this.isAuthRequestWithMW){
-			return true;
-		}
-		
-		this.isAuthRequestWithMW = true;
-		
 		//hacky fix of fb#19714
 		//it seems socket.io decodes it -- that's why I double encoded it
 		//but maybe we should implement here authorization via user id instead of username?
 		var encodedWgUserName = encodeURIComponent(encodeURIComponent(wgUserName));
 		this.checkSession = function(data) {
 			$().log(encodedWgUserName);
-			this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + data.key + '&roomId=' + this.roomId);
+			
 		};
-		
-		if(this.sessionData == null) {
-			$().log(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + encodedWgUserName);
-			$.post(wgScript + '?action=ajax&rs=ChatAjax&method=echoCookies&time=' + (new Date().getTime()) + "&name=" + encodedWgUserName , {}, 
-				this.proxy(function(data) {
-					this.isAuthRequestWithMW = false;
-					this.checkSession(data); 
-			}, this));
-		} else {
-			this.checkSession(NodeChatSocketWrapper.sessionData);
-		}
-		
+
+		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId);
     },
+    
     
     forceReconnect: function() {
 		NodeChatSocketWrapper.sessionData = null;
@@ -155,7 +139,12 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
             if(this.reConnectCount == 35) {
             	this.fire( "reConnectFail", {} );
             } else {
-            	trying = setTimeout(this.proxy(this.tryconnect, this), 500);	
+            	var time = 1000;
+            	if(this.reConnectCount > 3) {
+            		time = this.reConnectCount * 300; 
+            	}
+            	
+            	trying = setTimeout(this.proxy(this.tryconnect, this), time);	
             }
         }
     }

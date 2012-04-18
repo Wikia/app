@@ -4,23 +4,6 @@ class ChatAjax {
 	const INTERNAL_POLLING_DELAY_MICROSECONDS = 500000;
 	const CHAT_AVATAR_DIMENSION = 28;
 	
-	/**
-	 * This function is meant to just echo the COOKIES which are available to the apache server.
-	 *
-	 * This helps to work around a limitation in the fact that javascript can't access the second-level-domain's
-	 * cookies even if they're authorized to be accessed by subdomains (eg: ".wikia.com" cookies are viewable by apache
-	 * on lyrics.wikia.com, but interestingly, isn't in document.cookie in the javascript on lyrics.wikia.com).
-	 */
-	static public function echoCookies(){
-		global $wgUser, $wgMemc;
-		if( !$wgUser->isLoggedIn() ) {
-			return array("key" => false ) ;
-		}
-		$key = md5( $wgUser->getId() . "_" . time() . '_' .  mt_rand(0, 65535) );
-		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*24);
-		return array("key" => $key ) ;
-	} // end echoCookies()
-	
 	
 	static protected function getUserIPMemcKey($userId, $address, $date) {
 		return $userId . '_' .  $address . '_' . $date . '_v1';
