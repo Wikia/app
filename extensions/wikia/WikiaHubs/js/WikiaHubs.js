@@ -10,7 +10,7 @@ var WikiaHubs = {
 			}
 		});
 
-		$('body >.modalWrapper').live('click', WikiaHubs.modalClickTrackingHandler);
+		$('body').on('click', '.modalWrapper', WikiaHubs.modalClickTrackingHandler);
 	},
 
 	trackClick: function(category, action, label, value, params) {
