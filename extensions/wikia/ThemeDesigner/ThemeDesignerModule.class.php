@@ -43,7 +43,7 @@ class ThemeDesignerModule extends WikiaController {
 		if(isset($_SERVER['HTTP_REFERER'])) {
 			$this->returnTo = $_SERVER['HTTP_REFERER'];
 		} else {
-			$this->returnTo = $this->wgScript;
+			$this->returnTo = $this->wg->Script;
 		}
 
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
