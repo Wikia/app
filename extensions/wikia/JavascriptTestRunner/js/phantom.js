@@ -28,6 +28,8 @@ var requires = /@test-require-file[\s]+([^\s]+)/g, requiredFiles = [], match;
 
 if (framework[1] == "QUnit") {
 	requiredFiles.push('extensions/wikia/JavascriptTestRunner/js/qunit.js');
+} else if (framework[1] == "jsUnity") {
+	requiredFiles.push('extensions/wikia/JavascriptTestRunner/js/jsunity-0.6.js');
 } else {
 	console.error("You're fucked without a test framework");
 	phantom.exit(-1);
@@ -59,8 +61,8 @@ var runAll = function(files, runTestsCallback) {
 	// run the tests here
 	console.log('callback called!!!');
 	page.includeJs( test, function(){
-		console.log('runs!');
-		phantom.exit();
+			console.log('will run some tests!');
+			phantom.exit();
 		} 
 	);	
 });
