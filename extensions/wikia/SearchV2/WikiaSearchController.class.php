@@ -106,7 +106,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function getPages() {
-	  
+	  $this->wg->AllowMemcacheWrites = false;
 	  $ids = $this->getVal('ids');
 	  $metaData = $this->getVal('meta', true);
 
