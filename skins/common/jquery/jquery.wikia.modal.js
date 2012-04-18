@@ -52,7 +52,7 @@ $.fn.extend({
 		else {
 			var zIndex = 2000000001 + ($('body').children('.blackout').length) * 2 ;
 		}
-		
+
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
 
@@ -114,7 +114,7 @@ $.fn.extend({
 
 		// hide ads
 		if($.hideAds) {
-			$.hideAds();			
+			$.hideAds();
 		}
 
 		// get rid of tooltip - remove title attr
@@ -235,7 +235,7 @@ $.fn.extend({
 
 	closeModal: function() {
 		$(window).unbind(".modal" + this.attr('id'));
-		
+
 		this.animate({
 			top: this.offset()["top"] + 100,
 			opacity: 0
@@ -265,7 +265,7 @@ $.fn.extend({
 			top: this.offset()["top"] + 100,
 			opacity: 0
 		}, "fast", function() {
-			$(this).css("display", "none");
+			$(this).hide();
 		});
 
 		//show ads again
@@ -322,11 +322,11 @@ $.fn.extend({
 			.css('marginLeft', -wrapper.outerWidth() >> 1)
 			.log('resizeModal: #' + this.attr('id') + ' resized to ' + width + 'px');
 	},
-	
+
 	isModalShown: function(){
 		return $(document.body).hasClass('modalShown');
 	},
-	
+
 	getModalWrapper: function(){
 		return $('.modalWrapper');
 	}
