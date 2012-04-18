@@ -3,6 +3,7 @@
 @test-require-file extensions/wikia/Chat2/js/emoticons.js
 @test-require-file extensions/wikia/Chat2/js/lib/underscore.js
 @test-require-file extensions/wikia/Chat2/js/lib/backbone.js
+@test-require-file extensions/Collection/js/jquery.js
 @test-require-file extensions/wikia/Chat2/js/views/views.js
 */
 module("ChatView Test");
