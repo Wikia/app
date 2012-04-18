@@ -163,7 +163,7 @@ var WikiHeader = {
 		if($('body').data('accessible')) {
 			WikiHeader.subnav.css("top", "-9999px");
 		} else {
-                    WikiHeader.subnav.css("display", "none");
+			WikiHeader.subnav.hide();
 		}
 		$.showAds();
 	},
@@ -354,14 +354,14 @@ var WikiHeaderV2 = {
 		if (WikiHeaderV2.activeL1 === self) {
 			return;
 		}
-				
+
 		WikiHeader.mouseoverTimer = setTimeout(function() {
 			//Hide all subnavs except for this one
 			WikiHeaderV2.navLI.removeClass('marked');
 			WikiHeaderV2.hideNavL3();
-		
+
 			$(self).addClass('marked');
-		
+
 			//Hide all subnavs except for this one
 			var otherSubnavs = WikiHeaderV2.subnav2.not(  );
 			if( $('body').data('accessible') ) {
@@ -398,14 +398,14 @@ var WikiHeaderV2 = {
 
 	mouseoverL2: function() {
 		var self = this;
-		
+
 		//Stop mouseoverTimer
 		clearTimeout(WikiHeader.mouseoutTimer);
 
 		WikiHeader.mouseoverTimer = setTimeout(function() {
 			//Hide all subnavs except for this one
 			var otherSubnavs = WikiHeaderV2.subnav3.not($(self).find('.subnav'));
-	
+
 			if($('body').data('accessible')) {
 				otherSubnavs.css('top', '-9999px');
 			} else {
@@ -462,7 +462,7 @@ var WikiHeaderV2 = {
 		if($('body').data('accessible')) {
 			WikiHeaderV2.subnav3.css('top', '-9999px');
 		} else {
-			WikiHeaderV2.subnav3.css('display', 'none');
+			WikiHeaderV2.subnav3.hide();
 		}
 		$.showAds();
 	},
@@ -494,7 +494,7 @@ var WikiHeaderV2 = {
 		menuNodes.each(function(menuItemKey, menuItem) {
 			widthLevelFirst += $(menuItem).width();
 		});
-		
+
 		if (widthLevelFirst > 550) {
 			returnVal = false;
 			WikiHeaderV2.log('menu level #1 not valid');
