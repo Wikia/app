@@ -72,11 +72,12 @@ $('#foo').live( "click", $.noop);
 $('#foo').
 	live( "click", $.noop);
 
-
 // $.css
 $('ul li').css('color', 'red');
 $('ul li').css('height', 300); // allow
 $('ul li').css('width', 400); // allow
+$('ul li').css('display', 'hide'); // use $.hide
+$('ul li').css('display'); // allow - it gets a value
 
 // browser sniffing
 if ($.browser.msie &&
