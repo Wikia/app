@@ -16,9 +16,9 @@ cat $TMPFILE | while read line; do
 	fi
 
 	echo "Processing $line"
-	sudo -u www-data SERVER_ID=$cityid php videoFix127001.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
+	#sudo -u www-data SERVER_ID=$cityid php videoFix127001.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php
 
-	#/usr/wikia/backend/bin/withcity --maintenance-script='../../../../../home/release/video_refactoring/trunk/maintenance/wikia/VideoHandlers/videoFix127001.php' --usedb=$dbname
+	/usr/wikia/backend/bin/withcity --maintenance-script='../../../../../home/release/video_refactoring/trunk/maintenance/wikia/VideoHandlers/videoFix127001.php' --usedb=$dbname
 
 	echo "---"
 done
