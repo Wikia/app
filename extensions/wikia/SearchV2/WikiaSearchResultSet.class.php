@@ -171,11 +171,26 @@ class WikiaSearchResultSet implements Iterator {
 	}
 
 	public function getQuery() {
-	        return $this->query;
+		return $this->query;
 	}
 
 	public function setQuery($query) {
-	        $this->query = $query;
+		$this->query = $query;
+	}
+
+	/**
+	 * merge with another result set
+	 * @param WikiaSearchResultSet $resultSet
+	 */
+	public function merge(WikiaSearchResultSet $resultSet) {
+		foreach($resultSet as $result) {
+			$this->addResult($result);
+		}
+		$this->setResultsFound($resultSet->getResultsFound());
+		$this->setResultsStart($resultSet->getResultsStart());
+		if($resultSet->isComplete()) {
+			$this->markAsComplete();
+		}
 	}
 
 	public function __sleep() {

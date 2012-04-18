@@ -20,8 +20,8 @@
 		    <?php endif; ?>
 		</fieldset>
 	    <?php endif; ?>
-	</form>
-	<?php if(!empty($results)): ?>
+
+		<?php if(!empty($results)): ?>
 		<?php if( $resultsFound > 0 ): ?>
 			<p class="result-count subtle">
 				<?= wfMsg('wikiasearch2-results-count', $resultsFound, '<span>'.$query.'</span>'); ?>
@@ -36,7 +36,7 @@
 				<?php
 					$pos++;
 					if($result instanceof WikiaSearchResultSet) {
-						echo F::app()->getView( 'WikiaSearch', 'resultSet', array(
+						echo $app->getView( 'WikiaSearch', 'resultSet', array(
 						  'resultSet' => $result,
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 						  'rankExpr' => $rankExpr,
@@ -46,7 +46,7 @@
 						));
 					}
 					else {
-						echo F::app()->getView( 'WikiaSearch', 'result', array(
+						echo $app->getView( 'WikiaSearch', 'result', array(
 						  'result' => $result,
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 						  'rankExpr' => $rankExpr,
@@ -63,11 +63,10 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if (isset($formHeader) || isset($powerSearch)) : ?>
-	    <form class="WikiaSearch" id="search-v2-form-footer" action="<?=$pageUrl;?>">
-	    <?php echo $formHeader; ?>
-	    <?php echo $powerSearch; ?>
-	    </form>
+	<?php if(!empty($advancedSearchBox)) : ?>
+		<?php echo $advancedSearchBox; ?>
 	<?php endif; ?>
-	
+
+	</form>
+
 </section> 

@@ -20,7 +20,6 @@ $app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class
 $app->registerClass('WikiaSearchResult', $dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', $dir . 'WikiaSearchResultSet.class.php');
 $app->registerClass('WikiaSolrClient', $dir . 'WikiaSolrClient.class.php');
-$app->registerClass('SpecialSearchV2', $dir . "SpecialSearchV2.class.php");
 
 /**
  * special pages
