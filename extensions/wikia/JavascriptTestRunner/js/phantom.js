@@ -43,19 +43,19 @@ do {
 
 console.log(requiredFiles);
 
-var loadFiles = function(runTestsCallback) {
+var runAll = function(files, runTestsCallback) {
   var no = -1;
   function consumer() {
 	  no++;
-	  if (no >= requiredFiles.length) {
+	  if (no >= files.length) {
 		  runTestsCallback();
 		  return;
 	  }
-	  console.log('Will include ' + requiredFiles[no]);
-	  page.includeJs('../' + requiredFiles[no], consumer);
+	  console.log('Will include ' + files[no]);
+	  page.includeJs('../' + files[no], consumer);
   };
   return consumer;
-}(function() {
+}(requiredFiles, function() {
 	// run the tests here
 	console.log('callback called!!!');
 	page.includeJs( test, function(){
@@ -65,4 +65,4 @@ var loadFiles = function(runTestsCallback) {
 	);	
 });
 
-page.open('test.html', loadFiles);
+page.open('test.html', runAll);
