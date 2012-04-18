@@ -1,22 +1,24 @@
 var EditGamingCalendarEntries = {
 
 	init: function() {
-		$("#EditGamingCalendarEntries")
-			.find("ul").sortable({
-				axis: "y",
-				handle: ".drag",
-				opacity: 0.8,
-				stop: EditGamingCalendarEntries.renumber
-			}).end()
-			.find(".drag").live("mousedown", function(event) {
-				event.preventDefault();
-			}).end()
-			.find(".trash").live("click", EditGamingCalendarEntries.remove).end()
-			.find(".add-new a").click(EditGamingCalendarEntries.addNew).end()
-			.find(".create").click(EditGamingCalendarEntries.onSave);
-		if ($("#EditGamingCalendarEntries").closest(".modalWrapper")) {
+		var node = $("#EditGamingCalendarEntries");
+        node
+            .on("mousedown", ".drag", function(event) {
+                event.preventDefault();
+            })
+            .on("click", ".trash", EditGamingCalendarEntries.remove)
+            .on('click', ".add-new a", EditGamingCalendarEntries.addNew)
+            .on('click', ".create", EditGamingCalendarEntries.onSave)
+            .find("ul").sortable({
+                axis: "y",
+                handle: ".drag",
+                opacity: 0.8,
+                stop: EditGamingCalendarEntries.renumber
+            });
+
+		if( node.closest(".modalWrapper") ) {
 			// Presented in modal. Do specific modal stuff
-			$("#EditGamingCalendarEntries").find(".cancel").click(function(event) {
+            node.find(".cancel").click(function(event) {
 				event.preventDefault();
 				$(this).closest(".modalWrapper").closeModal();
 			});
