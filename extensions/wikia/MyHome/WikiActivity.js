@@ -21,9 +21,6 @@ var WikiActivity = {
 		// track clicks within activity feed
 		WikiActivity.wrapper.click(WikiActivity.trackClick);
 
-		// catch clicks on video thumbnails and load player
-		$('.activityfeed-video-thumbnail').live('click', WikiActivity.loadVideoPlayer);
-
 		// track clicks on link to Special:RecentChanges (Oasis specific)
 		$('#WikiaPageHeader').find('a').last().trackClick('wikiactivity/recentchanges');
 	},
