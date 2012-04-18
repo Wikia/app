@@ -1,3 +1,8 @@
+@import "color";
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+
 ul.tabs,
 ol.tabs {
 	margin: 0;

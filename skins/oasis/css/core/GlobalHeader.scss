@@ -1,3 +1,9 @@
+@import "color";
+@import "layout";
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+
 .WikiaHeader {
 	@include linear-gradient($color-header, left, $color-header-alt, 0, $color-header, 50%, $color-header-alt, 100%);
 	border-top: 3px solid #000;

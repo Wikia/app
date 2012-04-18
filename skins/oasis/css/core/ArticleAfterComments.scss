@@ -1,3 +1,6 @@
+@import "color";
+@import "../mixins/bodytext";
+
 .WikiaArticleAfterComments {
 	@include bodytext;
 	padding: 0 10px;

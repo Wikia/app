@@ -1,3 +1,12 @@
+@import "color";
+@import "layout";
+@import "../mixins/bodytext";
+@import "../mixins/border-opacity";
+@import "../mixins/border-radius";
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+
 $modal-border-opacity: 80;
 @if $is-dark-wiki {
 	$modal-border-opacity: 60;

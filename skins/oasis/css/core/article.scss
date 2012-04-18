@@ -1,3 +1,9 @@
+@import "color";
+@import "../mixins/bodytext";
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+
 .WikiaArticle {
 	@include bodytext;
 	padding: 0 10px;

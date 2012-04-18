@@ -1,3 +1,10 @@
+@import "color";
+@import "layout";
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+@import "../mixins/menus";
+
 .WikiaFooter {
 	clear: both;
 	padding-top: 23px;
