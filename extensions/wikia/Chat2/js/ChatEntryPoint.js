@@ -73,6 +73,6 @@ var ChatEntryPoint = {
 $(function() {
 	if ( typeof wgWikiaChatModuleContent!=="undefined" ) {
 		ChatEntryPoint.init();
-		$('.WikiaChatLink').live("click", function(event) {event.preventDefault();event.stopPropagation();ChatEntryPoint.onClickChatButton(wgUserName !== null, this.href);});
+		$('body').on('click', '.WikiaChatLink', function(event) {event.preventDefault();event.stopPropagation();ChatEntryPoint.onClickChatButton(wgUserName !== null, this.href);});
 	}
 });
