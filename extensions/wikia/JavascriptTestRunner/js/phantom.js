@@ -7,11 +7,19 @@ if (system.args.length === 1) {
 	phantom.exit();
 }
 
-test = system.args[2];
+test = system.args[1];
 
-page.includeJS( test, function(){
-	console.log('runs!');
-	phantom.exit();
-} );
+page.onConsoleMessage = function(msg){
+	console.log(msg);
+};
 
-console.log('fuck!');
+page.onError  = function(msg){
+	console.error(msg);
+};
+
+page.open('test.html', function(){
+	page.includeJs( test, function(){
+		console.log('runs!');
+		phantom.exit();
+	} );
+});
