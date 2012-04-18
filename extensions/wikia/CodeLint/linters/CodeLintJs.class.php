@@ -217,6 +217,7 @@ class CodeLintJs extends CodeLint {
 			case "The Function constructor is eval.":
 			case "Implied eval is evil. Pass a function instead of a string.":
 			case 'jQuery.live() is deprecated':
+			case 'Use $.show or $.hide':
 				$ret = true;
 				break;
 

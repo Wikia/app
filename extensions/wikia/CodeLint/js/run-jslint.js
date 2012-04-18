@@ -107,9 +107,22 @@ var regExpRules = [
 	// detect $.css (BugId:28035), but ignore css('height', ...) and css('width', ...)
 	{
 		name: 'Found $.css',
-		regexp: /.css\(\s?['"]/,
-		dontMatch: /.css\(\s?['"](height|width)['"]/,
-		reason: 'jQuery.css() should not be used (use CSS classes instead)'
+		regexp: /.css\(\s?['"](\S+)['"]\s?,/,
+		reason: function(matches) {
+			switch(matches[1]) {
+				// use $.show or $.hide
+				case 'display':
+					return 'Use $.show or $.hide';
+
+				// ignore
+				case 'width':
+				case 'height':
+					return false;
+
+				default:
+					return 'jQuery.css() should not be used (use CSS classes instead)';
+			}
+		}
 	},
 	// detect $.browser (BugId:28056)
 	{
@@ -132,13 +145,17 @@ var lines = fileSrc.split("\n"),
 	matches;
 
 for(var n=0, len = lines.length; n < len; n++) {
-
 	regExpRules.forEach(function(rule) {
 		matches = lines[n].match(rule.regexp);
 
 		if (matches) {
 			// omit lines that match 'dontMatch' rule field
 			if (rule.dontMatch && rule.dontMatch.test(lines[n])) {
+				return;
+			}
+
+			var reason = (typeof rule.reason === 'function') ? rule.reason.call(this, matches) : rule.reason;
+			if (reason === false) {
 				return;
 			}
 
@@ -149,7 +166,7 @@ for(var n=0, len = lines.length; n < len; n++) {
 				evidence: lines[n],
 				line: n + 1,
 				character: lines[n].indexOf(matches[1]) + 1,
-				reason: (typeof rule.reason === 'function') ? rule.reason.call(this, matches) : rule.reason
+				reason: reason
 			});
 		}
 	});

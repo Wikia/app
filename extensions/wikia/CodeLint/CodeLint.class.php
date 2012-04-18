@@ -105,7 +105,7 @@ abstract class CodeLint {
 
 		$cmd = "node {$scriptName}{$extraParams}";
 		exec($cmd, $output, $retVal);
-		$output = implode("\n", $output);
+		$output = implode("\n", $output); //var_dump($output);
 
 		wfDebug(__METHOD__ . ": {$cmd} returned #{$retVal} code\n");
 
