@@ -40,6 +40,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( "Page Title" );
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'helloworld-specialpage-title' ) );
 		// adding custom css and js for this extension
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/css/HelloWorld_Oasis.scss' );
 		$this->response->addAsset( 'extensions/wikia/templates/HelloWorld/js/HelloWorld.js' );
 
