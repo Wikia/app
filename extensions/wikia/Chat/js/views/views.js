@@ -388,7 +388,7 @@ var NodeChatUsers = Backbone.View.extend({
     		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')}; 
 		});
 		
-		$("#Rail .wordmark").live("click", function(event) {
+		$("#Rail").on("click", '.wordmark', function(event) {
 			event.preventDefault();
 			window.mainRoom.showRoom('main');
 		});
