@@ -1,6 +1,9 @@
 /* alternate table styling */
 /* NOTE: main table styling is in _article.scss */
 
+@import "color";
+@import "../mixins/gradient";
+
 .WikiaDataTable {
 	@include linear-gradient($color-module-highlight, top, $color-module-highlight, 40%, $color-module-shadow, 100%);
 	border: 1px solid $color-page-border;

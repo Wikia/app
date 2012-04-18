@@ -1,3 +1,9 @@
+@import "layout";
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
+@import "../mixins/forms";
+@import "../mixins/menus";
+
 .WikiaSearch {
 	@include clearfix;
 	margin-bottom: 10px;

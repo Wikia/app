@@ -1,3 +1,6 @@
+@import "../mixins/border-radius";
+@import "../mixins/forms";
+
 .WikiaForm {
 	> fieldset {
 		border: 0;

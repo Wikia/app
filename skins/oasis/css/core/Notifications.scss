@@ -1,3 +1,8 @@
+@import "color";
+@import "../mixins/border-radius";
+@import "../mixins/box-shadow";
+@import "../mixins/gradient";
+
 .WikiaConfirmation {
 	background: $color-confirmation-background;
 	color: $color-confirmation-text;

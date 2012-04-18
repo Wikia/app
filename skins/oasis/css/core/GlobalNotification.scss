@@ -1,3 +1,6 @@
+@import "layout";
+@import "../mixins/border-radius";
+
 .global-notification {
 	.msg{
 		background: #FEF4BC;
