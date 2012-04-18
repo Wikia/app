@@ -153,6 +153,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		if (empty($response->response->docs) &&
 		   !empty($response->spellcheck->suggestions) && 
+		    !empty($response->spellcheck->suggestions->collation) &&
 		    $response instanceOf Apache_Solr_Response) {
 
 		    $newQuery = $response->spellcheck->suggestions->collation;
