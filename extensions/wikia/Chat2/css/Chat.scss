@@ -140,9 +140,11 @@ a {
 		}
 	}
 	&.chat-mod .username:after {
+		// TODO: don't use full, use combination of sprite-chat-base and sprite-chat;
 		@include sprite-Chat-full('icon-chat_mod');
 	}
 	&.staff .username:after {
+		// TODO: don't use full, use combination of sprite-chat-base and sprite-chat;
 		@include sprite-Chat-full('icon-staff' + $sprite-normal);
 	}
 	.details {
