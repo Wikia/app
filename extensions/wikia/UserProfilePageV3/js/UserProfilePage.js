@@ -240,7 +240,7 @@ var UserProfilePage = {
 			UserProfilePage.refillBDayDaySelectbox({month:monthSelectBox, day:daySelectBox});
 		});
 
-		$('.favorite-wikis .delete').live('click', function() {
+		$('.favorite-wikis').on('click', '.delete', function() {
 			UserProfilePage.hideFavWiki($(this).closest('li').data('wiki-id'));
 			UserProfilePage.track('edit/lightbox/top_wiki_hide');		
 		});
