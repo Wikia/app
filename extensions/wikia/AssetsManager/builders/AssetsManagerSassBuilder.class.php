@@ -69,6 +69,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 	private function sassProcessing() {
 		global $IP, $wgSassExecutable, $wgDevelEnvironment;
+		wfProfileIn(__METHOD__);
 
 		$tempDir = sys_get_temp_dir();
 		//replace \ to / is needed because escapeshellcmd() replace \ into spaces (?!!)
@@ -101,10 +102,13 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$this->mContent = file_get_contents($tempOutFile);
 
 		unlink($tempOutFile);
+
+		wfProfileOut(__METHOD__);
 	}
 
 	private function importsProcessing() {
 		global $IP;
+		wfProfileIn(__METHOD__);
 
 		$matches = array();
 		$importRegexOne = "/@import ['\\\"]([^\\n]*\\.css)['\\\"]([^\\n]*)(\\n|$)/is"; // since this stored is in a string, remember to escape quotes, slashes, etc.
@@ -117,14 +121,19 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				$this->mContent = str_replace($lineMatched, $fileContents, $this->mContent);
 			}
 		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	private function stylePathProcessing() {
 		global $IP;
+		wfProfileIn(__METHOD__);
 
 		// TODO: make it a method of AssetsManager builder (BugId:10548)
 		require "$IP/extensions/wikia/StaticChute/wfReplaceCdnStylePathInCss.php";
 		$this->mContent = wfReplaceCdnStylePathInCss($this->mContent);
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -188,6 +197,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 	private function janusProcessing() {
 		global $IP;
+		wfProfileIn(__METHOD__);
 
 		if (isset($this->mParams['rtl']) && $this->mParams['rtl'] == true) {
 			$descriptorspec = array(
@@ -209,6 +219,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				proc_close($process);
 			}
 		}
-	}
 
+		wfProfileOut(__METHOD__);
+	}
 }
