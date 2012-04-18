@@ -17,9 +17,52 @@ page.onError  = function(msg){
 	console.error(msg);
 };
 
-page.open('test.html', function(){
+var fs = require('fs');
+var testSource = fs.read(test);
+
+var framework = /@test-framework[\s]+([^\s]+)/g;
+framework = framework.exec(testSource);
+console.log(framework[1]);
+
+var requires = /@test-require-file[\s]+([^\s]+)/g, requiredFiles = [], match;
+
+if (framework[1] == "QUnit") {
+	requiredFiles.push('extensions/wikia/JavascriptTestRunner/js/qunit.js');
+} else {
+	console.error("You're fucked without a test framework");
+	phantom.exit(-1);
+}
+
+do {
+    match = requires.exec(testSource);
+    if (match) {
+    	requiredFiles.push(match[1]);
+        //console.log(match[1]);
+    }
+} while (match != null);
+
+console.log(requiredFiles);
+
+var loadFiles = function(runTestsCallback) {
+  var no = -1;
+  function consumer() {
+	  no++;
+	  if (no >= requiredFiles.length) {
+		  runTestsCallback();
+		  return;
+	  }
+	  console.log('Will include ' + requiredFiles[no]);
+	  page.includeJs('../' + requiredFiles[no], consumer);
+  };
+  return consumer;
+}(function() {
+	// run the tests here
+	console.log('callback called!!!');
 	page.includeJs( test, function(){
 		console.log('runs!');
 		phantom.exit();
-	} );
+		} 
+	);	
 });
+
+page.open('test.html', loadFiles);
