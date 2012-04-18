@@ -183,30 +183,7 @@ class UserLoginHelper extends WikiaModel {
 		$memKey = $this->wf->SharedMemcKey( 'userlogin', 'popular_wikis' );
 		$popularWikis = $this->wg->Memc->get( $memKey );
 		if ( empty($popularWikis) ) {
-			$popularWikis = array();
-			$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->StatsDB );
-			if ( $this->wg->DevelEnvironment ) {	// for testing
-				$result = $db->select(
-					array( 'page_views' ),
-					array( 'distinct pv_city_id as city_id' ),
-					array( "pv_use_date > curdate() - interval 3 day" ),
-					__METHOD__,
-					array( 'ORDER BY' => 'pv_views desc', 'LIMIT' => $limit )
-				);
-			} else {
-				$result = $db->select(
-					array( 'google_analytics.pageviews' ),
-					array( 'distinct city_id' ),
-					array( "date > curdate() - interval 3 day" ),
-					__METHOD__,
-					array( 'ORDER BY' => 'pageviews desc', 'LIMIT' => $limit )
-				);
-			}
-
-			while( $row = $db->fetchObject($result) ) {
-				$popularWikis[] = $row->city_id;
-			}
-			$db->freeResult( $result );
+			$popularWikis = array_keys( DataMartService::getTopWikisByPageviews($limit) );
 
 			if ( empty($popularWikis) ) {
 				$popularWikis[] = self::WIKIA_CITYID_COMMUNITY;
