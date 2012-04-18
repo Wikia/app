@@ -1,3 +1,13 @@
+var tempPath = '/tmp/phantom_js_test.html';
+var fs = require('fs');
+
+function exitTest() {
+	try {
+		fs.remove(tempPath);		
+	} catch(e) {}
+	phantom.exit();
+}
+
 var page = require('webpage').create(),
 	system = require('system'),
 	test;
@@ -12,7 +22,7 @@ test = system.args[1];
 page.onConsoleMessage = function(msg){
 	console.log(msg);
 	if (msg == '!!PHANTOM_EXIT!!') {
-		phantom.exit();
+		exitTest();
 	}
 };
 
@@ -20,7 +30,6 @@ page.onError  = function(msg){
 	console.error(msg);
 };
 
-var fs = require('fs');
 var testSource = fs.read(test);
 
 var framework = /@test-framework[\s]+([^\s]+)/g;
@@ -55,11 +64,9 @@ var htmlTemplate = fs.read('test.html');
 
 var header = '';
 for(var i = 0 ; i < requiredFiles.length ; i++) {
-	header += '<script type="text/javascript" src="' + requiredFiles[i] + '"></script>\n';
+	header += '<script type="text/javascript" src="' + fs.absolute(requiredFiles[i]) + '"></script>\n';
 }
 htmlTemplate = htmlTemplate.replace( '<!--PHANTOM_SCRIPT_PLACEHOLDER-->', header);
-
-var tempPath = 'phantom_js_test.html';
 
 fs.write(tempPath, htmlTemplate, 'w');
 
