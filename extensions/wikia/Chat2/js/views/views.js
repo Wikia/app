@@ -254,7 +254,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		this.chatDiv = $("#Chat_" + this.roomId );
 		this.chatUL = $("#Chat_" + this.roomId + " ul");
 
-		$("#Chat_" + this.roomId + " a").live('click', $.proxy(function(e) { 
+		$("#Chat_" + this.roomId).on('click', 'a', $.proxy(function(e) { 
 			this.trigger('clickAnchor', e); 
 			e.preventDefault(); 
         },this)); 
@@ -397,7 +397,7 @@ var NodeChatUsers = Backbone.View.extend({
     		return { 'name': name, 'event': e, 'target': $(e.target).closest('li')}; 
 		});
 		
-		$("#Rail .wordmark").live("click", function(event) {
+		$("#Rail").on("click", '.wordmark', function(event) {
 			event.preventDefault();
 			window.mainRoom.showRoom('main');
 		});
