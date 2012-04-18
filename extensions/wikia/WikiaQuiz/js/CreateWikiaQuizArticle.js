@@ -1,22 +1,24 @@
 var CreateWikiaQuizArticle = {
 
 	init: function() {
-		$("#CreateWikiaQuizArticle")
-			.find("ul").sortable({
+        var node = $("#CreateWikiaQuizArticle");
+        node
+            .on('mousedown', '.drag', function(event) {
+                event.preventDefault();
+            })
+            .on('click', '.trash', CreateWikiaQuizArticle.remove)
+            .on('click', '.add-new a', CreateWikiaQuizArticle.addNew)
+            .on('click', '.create', CreateWikiaQuizArticle.onSave)
+            .find("ul").sortable({
 				axis: "y",
 				handle: ".drag",
 				opacity: 0.8,
 				stop: CreateWikiaQuizArticle.renumber
-			}).end()
-			.find(".drag").live("mousedown", function(event) {
-				event.preventDefault();
-			}).end()
-			.find(".trash").live("click", CreateWikiaQuizArticle.remove).end()
-			.find(".add-new a").click(CreateWikiaQuizArticle.addNew).end()
-			.find(".create").click(CreateWikiaQuizArticle.onSave);
-		if ($("#CreateWikiaQuizArticle").closest(".modalWrapper")) {
+			});
+
+		if( node.closest(".modalWrapper") ) {
 			// Presented in modal. Do specific modal stuff
-			$("#CreateWikiaQuizArticle").find(".cancel").click(function(event) {
+			node.find(".cancel").click(function(event) {
 				event.preventDefault();
 				$(this).closest(".modalWrapper").closeModal();
 			});
