@@ -14,9 +14,9 @@ var FounderProgressList = {
 		FounderProgressList.tailColorMain = FounderProgressList.d.find('>header').css('backgroundColor');
 		FounderProgressList.tailColorActivity = FounderProgressList.allActivities.find('.actions').css('backgroundColor');
 		FounderProgressList.tailColorShadow = FounderProgressList.d.find('.shadowColorContainer').css('backgroundColor');
-		
+
 		FounderProgressList.allActivities.hover(FounderProgressList.showActivity, FounderProgressList.hideActivity);
-		
+
 		$('#FounderProgressListToggle, #FounderProgressListClickArea').click(function(e) {
 			e.preventDefault();
 			if(FounderProgressList.isHidden) {
@@ -25,9 +25,9 @@ var FounderProgressList = {
 				FounderProgressList.hideListModal();
 			}
 		});
-		
+
 		FounderProgressList.d.find('nav .back-to-dash').click(FounderProgressList.hideListModal);
-		
+
 		FounderProgressList.d.find(".task .task-label").click(function() {
 			var el = $(this).closest(".task");
 			var group = el.find('.task-group');
@@ -37,7 +37,7 @@ var FounderProgressList = {
 				FounderProgressList.expandTask(el);
 			}
 		});
-		
+
 		FounderProgressList.trackedActivities.find('.actions .wikia-button').click(FounderProgressList.trackActivity);
 		FounderProgressList.allActivities.find('.actions .skip').click(FounderProgressList.skipActivity);
 	},
@@ -176,11 +176,11 @@ var FounderProgressWidget = {
 		// pre-cache dom
 		FounderProgressWidget.widget = $('#FounderProgressWidget');
 		FounderProgressWidget.preview = FounderProgressWidget.widget.find('.preview');
-		
+
 		// events
-		FounderProgressWidget.preview.find('.label').live('click', FounderProgressWidget.handleActivityPreview);
-		FounderProgressWidget.preview.find('.clickevent .actions .wikia-button').live('click', FounderProgressList.trackActivity);
-		FounderProgressWidget.preview.find('.actions .skip').live('click', FounderProgressWidget.skipActivity);
+		FounderProgressWidget.preview.on('click', '.label', FounderProgressWidget.handleActivityPreview);
+		FounderProgressWidget.preview.on('click', '.clickevent .actions .wikia-button', FounderProgressList.trackActivity);
+		FounderProgressWidget.preview.on('click', '.actions .skip', FounderProgressWidget.skipActivity);
 		FounderProgressWidget.preview.find('.completion-message .close').click(function() {
 			$.post(wgScriptPath + '/wikia.php', {
 				controller: 'FounderProgressBar',
@@ -203,6 +203,7 @@ var FounderProgressWidget = {
 	},
 	skipActivity: function(e) {
 		e.preventDefault();
+
 		var el = $(this);
 		var activity = el.closest('.activity');
 		var taskId = activity.data('task-id');
@@ -223,7 +224,7 @@ var FounderProgressWidget = {
 				}
 			});
 		});
-		
+
 	},
 	hideActivity: function(activity, callback) {
 		activity.slideUp(400, callback);
@@ -248,7 +249,7 @@ var FounderProgressWidget = {
 			if(html) {
 				html.slideDown();
 			}
-			
+
 		});
 	}
 };
@@ -258,7 +259,7 @@ var FounderProgressBar = {
 	innerRadius: 30,
 	outerRadius: 45,
 	separation: 5,
-	score: 0, 
+	score: 0,
 	init: function() {
 		FounderProgressBar.score = parseInt($('#FounderProgressWidget .numeric-progress .score').text());
 		if(Modernizr.canvas) {
@@ -357,7 +358,7 @@ var FounderProgressBar = {
 
 var FounderProgressBarTracking = {
 	init: function() {
-		$('#FounderProgressWidget, #FounderProgressList').live('click', function(e) {
+		$('#WikiaMainContent').on('click', '#FounderProgressWidget, #FounderProgressList', function(e) {
 			var node = false;
 			var target = $(e.target);
 			if(target.is('a') || target.is('button') || target.hasClass('founder-progress-bar-click-area')) {
@@ -365,7 +366,7 @@ var FounderProgressBarTracking = {
 			} else {
 				node = target.closest('a');
 			}
-			
+
 			if(node) {
 				var tracking = node.data('tracking');
 				if(tracking) {
