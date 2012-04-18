@@ -29,7 +29,7 @@ var ArticleAjaxLoading = {
 										ArticleAjaxLoading.cache.wgUserGroups = wgUserGroups;
 
 										// handle clicks on links in article content
-										$('#WikiaArticle a').live('click', ArticleAjaxLoading.linkClickHandler);
+										$('#WikiaArticle').on('click', 'a', ArticleAjaxLoading.linkClickHandler);
 
 									} else if(window.aal == 'G2') {
 
@@ -88,7 +88,7 @@ var ArticleAjaxLoading = {
 			options = $.isPlainObject(container) ? container : {container:container};
 		}
 
-		return this.live('click', function(event){
+		return this.on('click', function(event){
 			if ( event.which > 1 || event.metaKey ) {
 				return true;
 			}

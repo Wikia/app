@@ -4,7 +4,7 @@ var SpecialCustomizePlatinum = {
 		// enable awarding to multiple users - a new field is created when one is typed into,
 		// need to use live to work with replaced forms after update
 		// TODO: use delegate instead of live
-		$(".customize-platinum-badge .award-to input").live("keypress", function() {
+		$(".customize-platinum-badge .award-to").on("keypress", 'input', function() {
 			var elm = $(this);
 
 			//check if already binded to avoid bulk cloning
