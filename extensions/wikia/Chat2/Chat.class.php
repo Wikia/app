@@ -13,7 +13,25 @@ class Chat {
 	public function __construct($chatId){
 		$this->chatId = $chatId;
 	}
-
+		
+	/**
+	 * This function is meant to just echo the COOKIES which are available to the apache server.
+	 *
+	 * This helps to work around a limitation in the fact that javascript can't access the second-level-domain's
+	 * cookies even if they're authorized to be accessed by subdomains (eg: ".wikia.com" cookies are viewable by apache
+	 * on lyrics.wikia.com, but interestingly, isn't in document.cookie in the javascript on lyrics.wikia.com).
+	 */
+	static public function echoCookies(){
+		global $wgUser, $wgMemc;
+		if( !$wgUser->isLoggedIn() ) {
+			return array("key" => false ) ;
+		}
+		$key = md5( $wgUser->getId() . "_" . time() . '_' .  mt_rand(0, 65535) );
+		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*48);
+		return $key;
+	} // end echoCookies()
+	
+	
 	/**
 	 * Given a username, if the current user has permission to do so, ban the user
 	 * from chat on the current wiki. This can be reversed by removing them from
