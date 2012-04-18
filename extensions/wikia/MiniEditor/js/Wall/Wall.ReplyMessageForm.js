@@ -3,8 +3,8 @@
 	// Reply Message
 	var MiniEditorReplyMessageForm = $.createClass(WallReplyMessageForm, {
 		init: function() {
-			this.replyBoxes.live('click.MiniEditor', this.proxy(this.click));
-			this.replyButtons.live('click.MiniEditor', this.proxy(this.replyToMessage));
+			this.replyBoxes.on('click.MiniEditor', this.proxy(this.click));
+			this.replyButtons.on('click.MiniEditor', this.proxy(this.replyToMessage));
 			
 			$.each(this.replyBoxes,
 				function(index, value) { 

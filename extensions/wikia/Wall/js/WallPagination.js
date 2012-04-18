@@ -9,7 +9,7 @@ var WallPagination = $.createClass(Observable, {
 		this.wall = $('#Wall');
 		this.page = this.wall.find('.comments');
 		this.pagination = this.wall.find('.Pagination');
-		this.pagination.find('a').live('click', this.proxy(this.switchPage));
+		this.pagination.on('click', 'a', this.proxy(this.switchPage));
 		this.model.bind('pageLoaded', this.proxy(this.onPageLoaded));
 	},
 

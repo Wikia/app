@@ -55,13 +55,11 @@ var WallNotifications = $.createClass(Object, {
 			
 			this.monobook = false;
 		}
-		
-		$('#wall-notifications-markasread-sub')
-			.live('click', this.proxy( this.markAllAsReadPrompt ) );
-		$('#wall-notifications-markasread-this-wiki')
-			.live('click', this.proxy( this.markAllAsRead ) );
-		$('#wall-notifications-markasread-all-wikis')
-			.live('click', this.proxy( this.markAllAsReadAllWikis ) );
+
+		$('.notifications-header')
+			.on('click', '#wall-notifications-markasread-sub', this.proxy( this.markAllAsReadPrompt ))
+			.on('click', '#wall-notifications-markasread-this-wiki', this.proxy( this.markAllAsRead ))
+			.on('click', '#wall-notifications-markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
 	},
 
 	checkIfFromMessageBubble: function() {

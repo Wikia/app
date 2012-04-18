@@ -10,10 +10,10 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 				
 		this.username = username;
 
-		$('#Wall .source-message').live('click', this.proxy(this.viewSource));
-		$('#Wall .edit-message').live('click', this.proxy(this.editMessage));
-		$('#Wall .cancel-edit').live('click', this.proxy(this.cancelEdit));
-		$('#Wall .save-edit').live('click', this.proxy(this.saveEdit));
+		$('#Wall').on('click', '.source-message', this.proxy(this.viewSource));
+		$('#Wall').on('click', '.edit-message', this.proxy(this.editMessage));
+		$('#Wall').on('click', '.cancel-edit', this.proxy(this.cancelEdit));
+		$('#Wall').on('click', '.save-edit', this.proxy(this.saveEdit));
 	},
 	
 	initEditForm: function(msg, data, mode) {
