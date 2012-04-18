@@ -22,7 +22,7 @@
     <property name="phpunitgroups" value="" />
     <property name="phpunitexcludegroups" value="deprecated" />
     <property name="threadCount" value="1" />
-    <property name="timeout" value="20000" />
+    <property name="timeout" value="120000" />
     <property name="seleniumSpeed" value="1000" />
 
     <property name="noCloseAfterFail" value="0" />
