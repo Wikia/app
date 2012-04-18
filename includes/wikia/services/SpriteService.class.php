@@ -32,9 +32,19 @@
 			if (empty($this->name) || empty($this->source) || empty($this->scss) || empty($this->sprite))
 				throw new Exception("Required arguments not supplied: name, source, scss, sprite");
 
-			$this->source = realpath($this->source) . '/';
-			$this->scss = realpath($this->scss);
-			$this->sprite = realpath($this->sprite);
+			$this->source = $this->realPath($this->source) . '/';
+			$this->scss = $this->realPath($this->scss);
+			$this->sprite = $this->realPath($this->sprite);
+		}
+
+		/**
+		 * Works like a standard realpath() function except the fact it accepts
+		 * non-existent files and returns the path as if the file existed
+		 */
+		protected function realPath( $path ) {
+			$path = rtrim($path,'\\/');
+			$dir = dirname($path);
+			return realpath($dir) . substr($path,strlen($dir));
 		}
 
 		/**

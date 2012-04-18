@@ -48,7 +48,9 @@ class SpriteGeneratorMaintenance {
 		$conservative = isset($settings['conservative']) && $settings['conservative'];
 
 		try {
+//			var_dump($settings);
 			$spriteService = new SpriteService($settings);
+//var_dump($spriteService);
 			$spriteService->process($conservative);
 			echo "  ...done.\n";
 		} catch (Exception $e) {
@@ -60,7 +62,7 @@ class SpriteGeneratorMaintenance {
 	
 	public function execute() {
 		if ($this->name) {
-			$this->generate($name);
+			$this->generate($this->name);
 		} else {
 			$configAll = $this->getConfig();
 			foreach ($configAll as $name => $config)
