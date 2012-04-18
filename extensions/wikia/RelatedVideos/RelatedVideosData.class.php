@@ -47,9 +47,9 @@ class RelatedVideosData {
 		}
 
 
-		$ownerUrl = '';
-		$data['owner'] = $file->getUser();
-		$data['arrayId'] = isset($data['error']) ? '' : $data['external'].'|'.$data['id'];
+		$data['owner'] = '';
+		$data['ownerUrl'] = '';
+		$data['arrayId'] = isset($data['error']) ? '' : $data['timestamp'];
 
 		wfProfileOut( __METHOD__ );
 		return $data;
