@@ -26,7 +26,7 @@ if ( empty( $options['t'] ) ) {
 
 $dir = dirname(__FILE__);
 $test = escapeshellcmd( $options['t'] );
-$cmd = "phantomjs {$dir}../extensions/wikia/JSTestRunner/js/phantom.js {$test}";
+$cmd = "phantomjs {$dir}/../extensions/wikia/JSTestRunner/js/phantom.js {$test}";
 
 exec($cmd, $output, $retVal);
 
