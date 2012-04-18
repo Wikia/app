@@ -88,7 +88,7 @@ if ( $wg->EnableMiniEditorExtForArticleComments ) {
 <ul id="article-comments-ul" class="comments">
 <?= $app->getView('ArticleComments', 'CommentList', array('commentListRaw' => $commentListRaw, 'page' => $page, 'useMaster' => false));?>
 </ul>
->?php
+<?php
 	if ($countComments) {
 		echo '<div class="article-comments-pagination"><div>' . $pagination . '</div></div>';
 	}
