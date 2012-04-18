@@ -56,7 +56,7 @@ class CreateNewWikiModule extends WikiaController {
 		$this->params['wikiName'] = $wgRequest->getVal('wikiName', '');
 		$this->params['wikiDomain'] = $wgRequest->getVal('wikiDomain', '');
 		$this->signupUrl = '';
-		if(!empty($this->wgEnableUserLoginExt)) {
+		if(!empty($this->wg->EnableUserLoginExt)) {
 			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
 			$this->signupUrl = $signupTitle->getFullURL();
 		}

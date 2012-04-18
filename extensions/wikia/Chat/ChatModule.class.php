@@ -97,7 +97,7 @@ class ChatModule extends WikiaController {
 		$vars['wgChatMod'] = $this->isChatMod;
 		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;
 		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
-		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wgExtensionsPath.'/wikia/Chat/swf/WebSocketMainInsecure.swf';
+		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wg->ExtensionsPath.'/wikia/Chat/swf/WebSocketMainInsecure.swf';
 		$vars['EMOTICONS'] = wfMsgForContent('emoticons');
 
 		$vars['pathToProfilePage'] = $this->pathToProfilePage;
