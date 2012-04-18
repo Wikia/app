@@ -1,7 +1,11 @@
 $(function() {
-	if($('#WikiaRail').exists() && $('#WikiaFooter').exists() && $('#WikiaSpotlightsModule').exists()) {
-		if($('#WikiaFooter').offset().top - ($('#WikiaRail').offset().top + $('#WikiaRail').height()) > 1200) {
-			$('#WikiaSpotlightsModule').css('display', 'block');
+	var WikiaRailNode = $('#WikiaRail'),
+		WikiaFoooterNode = $('#WikiaFooter'),
+		WikiaSpotlightsModuleNode = $('#WikiaSpotlightsModule');
+
+	if(WikiaRailNode.exists() && WikiaFoooterNode.exists() && WikiaSpotlightsModuleNode.exists()) {
+		if(WikiaFoooterNode.offset().top - (WikiaRailNode.offset().top + WikiaRailNode.height()) > 1200) {
+			WikiaSpotlightsModuleNode.show();
 		}
 	}
 });
