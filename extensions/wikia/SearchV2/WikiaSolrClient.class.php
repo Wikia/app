@@ -6,81 +6,95 @@ class WikiaSolrClient extends WikiaSearchClient {
 	protected $namespaces = array();
 	protected $isInterWiki = false;
 
+	const DEFAULT_RESULTSET_START = 0;
+	const DEFAULT_RESULTSET_SIZE = 20;
+	const DEFAULT_CITYID = 0;
+
 	public function __construct( $solrHost, $solrPort ) {
 	        $this->solrHost = $solrHost;
 	        $this->solrPort = $solrPort;
 		$this->solrClient = F::build( 'Apache_Solr_Service', array( 'host' => $solrHost, 'port' => $solrPort, 'path' => '/solr' ) );
 	}
 
-	public function search( $query, $start, $size, $cityId = 0, $rankExpr = '', $skipBoostFunctions=false ) {
+	/**
+	 *  $methodOptions supports the following possible values:
+	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true
+	 **/
+	public function search( $query,  array $methodOptions = array() ) {
+
+	        extract($methodOptions);
+
+		$start              = isset($start)              ? $start              : self::DEFAULT_RESULTSET_START;
+		$size               = isset($size)               ? $size               : self::DEFAULT_RESULTSET_SIZE;
+		$cityId             = isset($cityId)             ? $cityId             : self::DEFAULT_CITYID;
+		$skipBoostFunctions = isset($skipBoostFunctions) ? $skipBoostFunctions : false;
+		$includeRedirects   = isset($includeRedirects)   ? $includeRedirects   : true;
+
+		if (isset($namespaces)) {
+		  $this->setNamespaces($namespaces);
+		}
+		
 	        $this->query = $query;
-		$this->isInterWiki = false;
+		$this->isInterWiki = isset($isInterWiki) ? $isInterWiki : false;
 
 		$params = array(
-			'fl' => '*,score',
-			'qf' => 'title^5 html',
-			'hl' => 'true',
-			'hl.fl' => 'html,title', // highlight field
-			'hl.snippets' => '1', // number of snippets per field
-			'hl.fragsize' => '150', // snippet size in characters
-			'hl.simple.pre' => '<span class="searchmatch">',
-			'hl.simple.post' => '</span>',
-			'f.html.hl.alternateField' => 'html',
-			'f.html.hl.maxAlternateFieldLength' => 300,
-			'indent' => 1,
-			'timeAllowed' => 5000
-		);
+				'fl' => '*,score',
+				'qf' => 'title^5 html',
+				'hl' => 'true',
+				'hl.fl' => 'html,title', // highlight field
+				'hl.snippets' => '1', // number of snippets per field
+				'hl.fragsize' => '150', // snippet size in characters
+				'hl.simple.pre' => '<span class="searchmatch">',
+				'hl.simple.post' => '</span>',
+				'f.html.hl.alternateField' => 'html',
+				'f.html.hl.maxAlternateFieldLength' => 300,
+				'indent' => 1,
+				'timeAllowed' => 5000,
+				'spellcheck' => 'true',
+				'spellcheck.onlyMorePopular' => 'true',
+				'spellcheck.collate' => 'true'
+				);
 
 		$queryClauses = array();
 		$sanitizedQuery = $this->sanitizeQuery($query);
 
-		$params['spellcheck'] = 'true';
 		$params['spellcheck.q'] = $sanitizedQuery;
-		$params['spellcheck.onlyMorePopular'] = 'true';
-		$params['spellcheck.collate'] = 'true';
 
 		$onWikiId = ( !empty( $this->wg->SolrDebugWikiId ) ) ? $this->wg->SolrDebugWikiId : $cityId;
+		$this->isInterWiki = $this->isInterWiki || empty($onWikiId);
 
-		if( empty($onWikiId) ) {
-			// Inter-wiki searching mode
+		if( $this->isInterWiki ) {
+
 			$widQuery = '';
-			$this->isInterWiki == true;
 
-			foreach ($this->getInterWikiSearchExcludedWikis($onWikiId) as $excludedWikiId) {
-				if($onWikiId == $excludedWikiId) {
-					continue;
-				}
-
+			foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
 				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
 			}
 
 			$queryClauses[] = $widQuery;
 
-			// disabled because of indexing problem
-			
-			if ($this->solrHost != 'search-s1') {
-			    $queryClauses[] = "lang:en";
-			}
+			$queryClauses[] = "lang:en";
+
 			$queryClauses[] = "iscontent:true";
 		}
 		else {
 
-		  if (  empty($this->namespaces) ) {
-
-			$queryClauses[] = "(ns:0 OR ns:14)";
-			$this->namespaces = array(0, 14);
-
-		  } else { 
-
-			$nsQuery = '';
-			foreach($this->namespaces as $namespace) {
-				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
-			}
-
-			$queryClauses[] = "({$nsQuery})";
+		  if ( empty($this->namespaces) ) {
+		    $this->setNamespaces(SearchEngine::DefaultNamespaces());
 		  }
 
-			array_unshift($queryClauses, "wid: {$onWikiId}");
+		  $nsQuery = '';
+		  foreach($this->namespaces as $namespace) {
+		    $nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
+		  }
+		  
+		  $queryClauses[] = "({$nsQuery})";
+
+		  if (!$includeRedirects) {
+		    $queryClauses[] = "canonical:['' TO *]";
+		  }
+
+		  array_unshift($queryClauses, "wid: {$onWikiId}");
 		}
 
 		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', $query));
@@ -90,7 +104,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$boostFunctions = array();
 
-		if (empty($onWikiId)) {
+		if ($this->isInterWiki) {
 		  // this is still pretty important!
 		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^15';
 
@@ -111,7 +125,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		    $revcountBoost = isset($_GET['revcount_boost']) ? $_GET['revcount_boost'] : 1;
 		    $boostFunctions[] = 'log(revcount)^'.$revcountBoost;
-
 
 		    $viewBoost = isset($_GET['views_boost']) ? $_GET['views_boost'] : 8;
 		    $boostFunctions[] = 'log(views)^'.$viewBoost;
@@ -146,27 +159,34 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 		catch (Exception $exception) {
 		  if (!$skipBoostFunctions) {
-		    return $this->search($query, $start, $size, $cityId, $rankExpr, true);
+		    $methodOptions['skipBoostFunctions'] = true;
+		    return $this->search($query, $methodOptions);
 		  }
 		}
 
 
-		if (empty($response->response->docs) &&
-		   !empty($response->spellcheck->suggestions) && 
+		if ( empty($response->response->docs) &&
+		    !empty($response->spellcheck->suggestions) && 
 		    !empty($response->spellcheck->suggestions->collation) &&
-		    $response instanceOf Apache_Solr_Response) {
+		    $response instanceOf Apache_Solr_Response ) {
 
 		    $newQuery = $response->spellcheck->suggestions->collation;
 
-		    return $this->search($newQuery, $start, $size, $cityId, $rankExpr);
-
+		    return $this->search($newQuery, $methodOptions);
 		} 
 
 		$docs = ($response->response->docs) ?: array();
 
 		$results = $this->getWikiaResults($docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
 
-		return F::build( 'WikiaSearchResultSet', array( 'results' => $results, 'resultsFound' => $response->response->numFound, 'resultsStart' => $response->response->start, 'isComplete' => false, 'query' => $query ) );
+		return F::build( 'WikiaSearchResultSet', 
+				 array( 'results'      => $results, 
+					'resultsFound' => $response->response->numFound, 
+					'resultsStart' => $response->response->start, 
+					'isComplete'   => false, 
+					'query'        => $query 
+					) 
+				 );
 	}
 
 	private function getWikiaResults(Array $solrDocs, Array $solrHighlighting) {

@@ -41,14 +41,16 @@ class WikiaSearch extends WikiaObject {
 			$results = $this->getGroupResultsFromCache($query, $rankExpr);
 
 			if(empty($results) || isset($_GET['skipCache'])) {
-				$results = $this->client->search( $query, 0, self::GROUP_RESULTS_SEARCH_LIMIT, $cityId, $rankExpr );
+			        $methodOptions = array('size'   =>  self::GROUP_RESULTS_SEARCH_LIMIT,
+						       'cityId' =>  $cityId );
+				$results = $this->client->search( $query, $methodOptions );
 				$results = $this->groupResultsPerWiki( $results );
 
 				$this->setGroupResultsToCache( $query, $rankExpr, $results );
 			}
 			$results->setCurrentPage($page);
 			$results->setResultsPerPage($length);
-			//var_dump($results->valid());
+
 			if(!$results->valid() && $results->hasResults()) {
 				// no more results in set, fetch more from backend
 				// @todo implement
@@ -61,7 +63,11 @@ class WikiaSearch extends WikiaObject {
 		            $this->client->setNamespaces($this->namespaces);
 		        }
 
-			$results = $this->client->search( $query, ( ($page - 1) * $length ), $length, $cityId, $rankExpr );
+			$methodOptions = array('start'  => (($page - 1) * $length),
+					       'length' => $length,
+					       'cityId' => $cityId);
+
+			$results = $this->client->search( $query, $methodOptions);
 		}
 
 		return $results;
