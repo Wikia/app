@@ -257,10 +257,15 @@ class SpecialSearchV2 extends SpecialSearch
       
       $namespaces = array_keys(SearchEngine::searchableNamespaces());
       $nsVals = array();
+
       foreach ($namespaces as $ns) {
 	if ($val = $request->getVal('ns'.$ns)) {
 	  $nsVals[] = $ns;
 	} 
+      }
+
+      if (empty($nsVals)) {
+	return 'default';
       }
 
       if ($nsVals == $namespaces) {
