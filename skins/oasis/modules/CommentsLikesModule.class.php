@@ -144,11 +144,8 @@ class CommentsLikesModule extends WikiaController {
 			$this->commentsBubble = !empty($data['bubble']);
 		}
 
-		if (
-			$this->wg->OasisNavV2 &&
-			($response = $this->getResponse()) instanceof CommentsLikesModule
-		) {
-			$response->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/CommentsLikes_IndexV2.php' );
+		if ( $this->wg->OasisNavV2 ) {
+			$this->response->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/CommentsLikes_IndexV2.php' );
 		}
 		wfProfileOut(__METHOD__);
 	}
