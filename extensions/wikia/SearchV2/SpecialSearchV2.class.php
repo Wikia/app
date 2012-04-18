@@ -143,7 +143,6 @@ class SpecialSearchV2 extends SpecialSearch
 			$bareterm = substr( $term, strpos( $term, ':' ) + 1 );
 		}
 
-
 		$profiles = $this->getSearchProfiles();
 
 		// Outputs XML for Search Types
@@ -200,6 +199,7 @@ class SpecialSearchV2 extends SpecialSearch
 
 		return $out;
 	}
+
 	protected function makeSearchLink( $term, $namespaces, $label, $tooltip, $params=array() ) {
 		$opt = $params;
 		foreach( $namespaces as $n ) {
