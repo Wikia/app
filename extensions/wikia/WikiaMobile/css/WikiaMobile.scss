@@ -1,26 +1,26 @@
 //dependencies
-@import "variables.scss";
-@import "main_page.scss";
-@import "infobox.scss";
-@import "sections.scss";
-@import "images.scss";
-@import "videos.scss";
-@import "categories.scss";
-@import "footer.scss";
-@import "navigation.scss";
-@import "search_page.scss";
-@import "tables.scss";
-@import "related_pages.scss";
-@import "image_stack.scss";
-@import "ad.scss";
-@import "category_page.scss";
-@import 'ui.scss';
-@import 'modal.scss';
-@import 'media_modal.scss';
+@import "variables";
+@import "main_page";
+@import "infobox";
+@import "sections";
+@import "images";
+@import "videos";
+@import "categories";
+@import "footer";
+@import "navigation";
+@import "search_page";
+@import "tables";
+@import "related_pages";
+@import "image_stack";
+@import "ad";
+@import "category_page";
+@import 'ui';
+@import 'modal';
+@import 'media_modal';
 
 //mixins
-@import "mixins/transition.scss";
-@import "mixins/box-shadow.scss";
+@import "mixins/transition";
+@import "mixins/box-shadow";
 
 html {
 	border: none;

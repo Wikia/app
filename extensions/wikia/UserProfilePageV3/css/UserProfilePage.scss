@@ -26,7 +26,7 @@ $color-masthead: $color-page;
 $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 40%);
 
 /* Temporary - waiting for UI Styleguide team */
-@import "modalFix.scss";
+@import "modalFix";
 
 
 .WikiaUserPagesHeader {

@@ -4,7 +4,7 @@
 // @import "/skins/common/sprite.css";
 
 @import "core/layout";
-@import "wikiagrid.scss";	// Grid layout
+@import "wikiagrid";	// Grid layout
 
 // Mixins (http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#mixins) These files are in oasis/css/mixins/_(name).scss //
 @import "mixins/bodytext";
@@ -58,13 +58,13 @@
 
 // Ubiquitous modules that should be combined here to save space. Each file should contain a comment w/its name so we can see what was packaged. //
 @import "modules/LatestPhotos";
-@import "../../../extensions/wikia/Blogs/css/oasis.scss"; // SASS imports are relative to the current file
-@import "../../../extensions/wikia/RelatedPages/RelatedPages.scss";
+@import "../../../extensions/wikia/Blogs/css/oasis"; // SASS imports are relative to the current file
+@import "../../../extensions/wikia/RelatedPages/RelatedPages";
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
 @import "/extensions/FBConnect/css/fbModal.css";
 @import "/extensions/wikia/AjaxLogin/AjaxLogin.css";
-@import "../../../extensions/wikia/UserLogin/css/UserLoginGlobal.scss";
+@import "../../../extensions/wikia/UserLogin/css/UserLoginGlobal";
 
 // WikiaPhotoGallery - slideshows slidding (BugId:1296)
 // TODO: load on demand using JSView
-@import "../../../extensions/wikia/WikiaPhotoGallery/css/slideshow.scss";
+@import "../../../extensions/wikia/WikiaPhotoGallery/css/slideshow";
