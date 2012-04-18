@@ -1,5 +1,3 @@
-<input type="text" name="query" value="<?=$term;?>" />
-<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'wikiasearch2-search-btn' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 
 <div class="mw-search-formheader">
 	<div class="search-types">
