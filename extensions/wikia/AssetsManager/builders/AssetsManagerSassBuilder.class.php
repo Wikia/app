@@ -142,13 +142,12 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				return "url({$encoded});";
 			}
 			else {
-				return $matches[0] . '/* encoding failed! */';
+				throw new Exception("/* Base64 encoding failed: {$fileName} not found! */");
 			}
 		}, $this->mContent);
 
 		wfProfileOut(__METHOD__);
 	}
-
 
 	/**
 	 * Base64 encodes given file
