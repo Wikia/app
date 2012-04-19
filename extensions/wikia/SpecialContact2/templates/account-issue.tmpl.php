@@ -60,4 +60,3 @@ if( !$isLoggedIn && (isset($captchaForm)) ) {
 <input type="hidden" id="wpBrowser" name="wpBrowser" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>" />
 </form>
 
-<p><?= wfMsgExt( 'specialcontact-noform-footer', array( 'parse' ) ) ?></p>
