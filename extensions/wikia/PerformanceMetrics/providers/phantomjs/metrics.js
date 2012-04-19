@@ -118,14 +118,14 @@ page.onResourceReceived = function(res) {
 			entry.lastByte = res.time - entry.sendTime;
 			entry.receive = entry.lastByte - entry.timeToFirstByte;
 
-			console.log('> ' + entry.url);
+			console.log('recv: ' + entry.url);
 			//console.log('> resource [#' + res.id +'] ' + JSON.stringify(entry));
 			break;
 	}
 };
 
 page.onConsoleMessage = function (msg) {
-	console.log('#' + msg);
+	console.log('log: ' + msg);
 };
 
 // load the emit and print out the metrics
@@ -142,6 +142,7 @@ page.open(address, function(status) {
 			metrics = {
 				requests: page.requests.length,
 				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte),
+				timeToLastByte: (page.requests[1] && page.requests[1].lastByte),
 				loadTime: now  - page.startTime
 			};
 
