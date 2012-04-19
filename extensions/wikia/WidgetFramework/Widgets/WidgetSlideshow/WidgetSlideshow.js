@@ -1,6 +1,6 @@
 // widget init (on add / on load)
 function WidgetSlideshow_init(id, widget) {
-	$.getScript(stylepath + '/common/jquery/jquery-slideshow-0.4.js?' + wgStyleVersion, function() {
+	$.getScript(stylepath + '/common/jquery/jquery-slideshow-0.4.js', function() {
 		// preload images
 		$('#widget_' + id + '-images').find('li').each( function() {
 			$(this).css('backgroundImage', 'url(' + $(this).attr('title') + ')');
