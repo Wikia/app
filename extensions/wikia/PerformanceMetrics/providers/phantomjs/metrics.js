@@ -184,5 +184,8 @@ page.open(address, function(status) {
 	}
 
 	// otherwise phantomjs will never terminate
-	phantom.exit();
+	// hack below: phantomjs sometimes terminates to early
+	setTimeout(function() {
+		phantom.exit();
+	}, 2000);
 });
