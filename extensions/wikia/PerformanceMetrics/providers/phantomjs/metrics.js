@@ -128,10 +128,7 @@ page.onConsoleMessage = function (msg) {
 	console.log('log: ' + msg);
 };
 
-// load the emit and print out the metrics
-address = system.args[1];
-
-page.open(address, function(status) {
+page.onLoadFinished = function(status) {
 	var now = Date.now();
 
 	switch(status) {
@@ -184,8 +181,9 @@ page.open(address, function(status) {
 	}
 
 	// otherwise phantomjs will never terminate
-	// hack below: phantomjs sometimes terminates to early
-	setTimeout(function() {
-		phantom.exit();
-	}, 2000);
-});
+	phantom.exit();
+};
+
+// load the emit and print out the metrics
+address = system.args[1];
+page.open(address);
