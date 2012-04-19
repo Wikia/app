@@ -9,43 +9,25 @@ if ( !empty($err) ) {
 <?php print $intro; ?>
 </div>
 <hr/>
-<form name="contactform" id="contactform" method="post" action="<?php echo $form_action; ?>"  enctype="multipart/form-data">
-<p class="contactformcaption"><?php echo wfMsg( 'specialcontact-wikiname' ); ?></p>
-<?php
-	if( $unlockURL ) :
-		print "<input ". $eclass['wpContactWikiName'] ." tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactWikiName\" value=\"{$wgServer}\" size='40' />";
-	else :
-		print "{$wgServer} <input type=\"hidden\" name=\"wpContactWikiName\" value=\"{$wgServer}\" />";
-	endif;
-?>
+<form id="contactform" method="post" action="" enctype="multipart/form-data">
+<input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
+<input name="wpUserName" type="hidden" value="<?= $encName ?>" />
 
-<p class="contactformcaption"><?php echo wfMsg( 'specialcontact-username' ); ?></p>
-<?php
-	if( empty($user_readonly) ) :
-		print "<input ". $eclass['wpUserName'] ."  tabindex='" . ($tabindex++) . "' type='text' name=\"wpUserName\" value=\"{$encName}\" size='40' />";
-	else :
-		print "{$encName} <input type=\"hidden\" name=\"wpUserName\" value=\"{$encName}\" />".
-				" &nbsp;<span style=\"\" id='contact-not-me'><i><a href=\"{$logoutURL}\">(". wfMsg( 'specialcontact-notyou', $encName ) .")</a></i></span>";
-	endif;
+<?php if ( $isLoggedIn ) {
+	echo wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName );
+	echo wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail );
+} else {
 ?>
+<p>
+<label for="wpUserName"><?= wfMsg( 'specialcontact-username' ) ?></label>
+<input name="wpUserName" value="<?= $encName ?>" />
+</p>
 
-<p class="contactformcaption"><?php echo wfMsg( 'specialcontact-realname' ); ?></p>
-<?php
-	if( empty($name_readonly) ) :
-		print "<input ". $eclass['wpContactRealName'] ." tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactRealName\" value=\"{$encRealName}\" size='40' />";
-	else :
-		print "{$encRealName} <input  type=\"hidden\" name=\"wpContactRealName\" value=\"{$encRealName}\" />";
-	endif;
-?>
-
-<p class="contactformcaption"><?php echo wfMsg( 'specialcontact-yourmail' ); ?></p>
-<?php
-	if( empty($mail_readonly) ) :
-		print "<input ". $eclass['wpEmail'] ." tabindex='" . ($tabindex++) . "' type='text' name=\"wpEmail\" value=\"{$encEmail}\" size='40' />";
-	else :
-		print "{$encEmail} <input  type=\"hidden\" name=\"wpEmail\" value=\"{$encEmail}\" />";
-	endif;
-?>
+<p>
+<label for="wpEmail"><?= wfMsg( 'specialcontact-yourmail' ) ?></label>
+<input name="wpEmail" value="<?= $encEmail ?>" />
+</p>
+<?php } ?>
 
 <p class="contactformcaption"><?php echo wfMsg( 'specialcontact-problem' ); ?></p>
 <?php
