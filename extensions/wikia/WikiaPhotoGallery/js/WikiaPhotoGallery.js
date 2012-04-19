@@ -2532,8 +2532,8 @@ var WikiaPhotoGallery = {
 		// load CSS for editor popup, wikia-tabs and jQuery UI library (if not loaded yet) via loader function
 		$.getResources([
 			$.loadJQueryUI,
-			wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.editor.css?' + wgStyleVersion,
-			stylepath + '/common/wikia_ui/tabs.css?' + wgStyleVersion
+			wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.editor.css',
+			stylepath + '/common/wikia_ui/tabs.css'
 		], function() {
 			self.ajax('getEditorDialog', {title: wgPageName}, function(data) {
 				// store messages
