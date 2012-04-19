@@ -84,3 +84,6 @@ if ($.browser.msie &&
 	jQuery.browser.version == "9.0") {
 	alert('msie');
 }
+
+// use of wgStyleVersion (it's a part of stylepath / wgExtensionsPath right now)
+$.getScript(stylepath + '/oasis/js/touchScreen.js?' + wgStyleVersion);

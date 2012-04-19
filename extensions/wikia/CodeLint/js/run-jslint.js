@@ -137,6 +137,12 @@ var regExpRules = [
 		reason: function(matches) {
 			return 'Don\'t pass a string to set' + matches[1] + ' (implied eval)';
 		}
+	},
+	// detect use of wgStyleVersion as URL suffix
+	{
+		name: 'wgStyleVersion used',
+		regexp: /.(css|js)\?['"]\s?\+\s?wgStyleVersion/,
+		reason: 'No need to use wgStyleVersion as the URL suffix'
 	}
 ];
 
