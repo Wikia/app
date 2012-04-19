@@ -104,6 +104,7 @@ page.onResourceRequested = function(res) {
 page.onResourceReceived = function(res) {
 	var entry = page.requests[res.id];
 
+	//console.log(JSON.stringify(res));
 	//console.log('recv [' + res.stage + ' #' + res.id + ']: ' + res.url + ' (' +  JSON.stringify({time:res.time}) + ')');
 
 	switch (res.stage) {
@@ -117,13 +118,14 @@ page.onResourceReceived = function(res) {
 			entry.lastByte = res.time - entry.sendTime;
 			entry.receive = entry.lastByte - entry.timeToFirstByte;
 
-			//console.log('resource [#' + res.id +'] ' + JSON.stringify(entry));
+			console.log('> ' + entry.url);
+			//console.log('> resource [#' + res.id +'] ' + JSON.stringify(entry));
 			break;
 	}
 };
 
 page.onConsoleMessage = function (msg) {
-	console.log(msg);
+	console.log('#' + msg);
 };
 
 // load the emit and print out the metrics
