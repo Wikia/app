@@ -227,7 +227,7 @@ class UserPagesHeaderModule extends WikiaController {
 		if ($namespace == NS_USER) {
 			// edit button
 			if (isset($this->content_actions['edit'])) {
-				$this->actionMenu['action'] = array(
+				$actionMenu['action'] = array(
 						'href' => $this->content_actions['edit']['href'],
 						'text' => wfMsg('oasis-page-header-edit-profile'),
 						);

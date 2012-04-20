@@ -173,7 +173,7 @@ class WikiaDispatcher {
 
 		if ( $request->isInternal() && $response->hasException() ) {
 			Wikia::logBacktrace(__METHOD__ . '::exception');
-			throw new WikiaDispatchedException( 'Internal Throw', $response->getException() );
+			throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
 		}
 
 		return $response;
