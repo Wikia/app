@@ -436,7 +436,8 @@ class WikiaSearch extends WikiaObject {
 
 	}
 
-	public function getTagCloud(array $params = array('maxpages'=>25, 'termcount'=>'20', 'maxfontsize'=>'56', 'minfontsize'=>6)) {
+	public function getTagCloud(array $params = array('maxpages'=>25, 'termcount'=>'20', 'maxfontsize'=>'56', 
+                                                          'minfontsize'=>6, 'sizetype'=>'px')) {
 	        
 	        $wid = $this->wg->cityId;
 
@@ -473,7 +474,7 @@ class WikiaSearch extends WikiaObject {
 						      #tagcloud calc
 						      round(abs($params['maxfontsize'] * ($count - $min) /  ($max - $min))) 
 						      )
-						).'px';
+						).$params['sizetype'];
 		}
 
 		return $termsToFontSize;
