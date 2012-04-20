@@ -55,6 +55,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
 
+		if ((empty($resultsFound)) && empty($query)) {
+		        $this->setVal( 'tagCloud', $this->wikiaSearch->getTagCloud($this->getTagCloudParams()));
+		}
+
 
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
@@ -316,15 +320,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	public function getTagCloud() {
 
-	  $params = array();
-	  $params['maxpages']    = $this->getVal('maxpages', 25);
-	  $params['termcount']   = $this->getVal('termcount', 20);
-	  $params['maxfontsize'] = $this->getVal('maxfontsize', 56);
-	  $params['minfontsize'] = $this->getVal('minfontsize', 6);
+	  $params = $this->getTagCloudParams();
 
 	  $this->response->setData($this->wikiaSearch->getTagCloud($params));
 	  $this->response->setFormat('json');
 
+	}
+
+	private function getTagCloudParams()
+	{
+	  $params = array();
+	  $params['maxpages']    = $this->getVal('maxpages', 25);
+	  $params['termcount']   = $this->getVal('termcount', 50);
+	  $params['maxfontsize'] = $this->getVal('maxfontsize', 56);
+	  $params['minfontsize'] = $this->getVal('minfontsize', 10);
+	  $params['sizetype']    = $this->getVal('sizetype', 'pt');
+	  return $params;
 	}
 
 }

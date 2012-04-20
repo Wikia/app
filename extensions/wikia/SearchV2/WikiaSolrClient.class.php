@@ -131,7 +131,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
-			var_dump($response); die;
 		}
 		catch (Exception $exception) { echo $exception; die;
 		  if (!$skipBoostFunctions) {
