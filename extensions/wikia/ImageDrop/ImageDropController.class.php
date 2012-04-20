@@ -5,9 +5,14 @@ class ImageDropController extends WikiaController {
 	const UPLOAD_WARNING = -2;
 	const UPLOAD_PERMISSION_ERROR = -1;
 
+	const LEFT = 'left';
+	const RIGHT = 'right';
+
 	function upload (){
 
 		$details = null;
+		$this->content = 'error';
+
 		$up = new UploadFromFile();
 		$up->initializeFromRequest($this->wg->request);
 		$permErrors = $up->verifyPermissions( $this->wg->user );
@@ -27,33 +32,52 @@ class ImageDropController extends WikiaController {
 			if ($this->status > 0) {
 				$this->statusMessage = $this->uploadMessage($this->status, $details);
 			} else {
-				$warnings = array();
-				if( !$this->ignorewarning ) {
-					$warnings = $up->checkWarnings();
+				$titleText = 'Transport_publiczny';
+				$sectionNumber = 5;
+				$this->status = $up->performUpload( '', '', '',  $this->wg->user );
+				$mainArticle = new Article( Title::newFromText( $titleText ) );
 
-					// BugId:3325 - add handling for "Overwrite File" checkbox
-//					if ($this->overwritefile && !empty($warnings['exists'])) {
-//						unset($warnings['exists']);
-//					}
+				$firstSectionText = $mainArticle->getSection($mainArticle->getRawText(), $sectionNumber);
+				$matches = array();
+				if ( preg_match( '/={2,3}[^=]+={2,3}/', $firstSectionText, $matches ) ) {
 
-					if(!empty($warnings)) {
-						$this->status = self::UPLOAD_WARNING;
-						$this->statusMessage .= $this->uploadWarning($warnings);
-					}
+					$firstSectionText = trim( str_replace( $matches[0], '', $firstSectionText ) );
+					$newSectionText =
+						$mainArticle->replaceSection(
+							$sectionNumber,
+							$matches[0]
+								."\n"
+								.$this->getWikiText( $up->getTitle()->getText(), self::LEFT )
+								.$firstSectionText
+						);
 				}
-				if( empty( $warnings ) ) {
-					$pageText = SpecialUpload::getInitialPageText( $this->defaultcaption, $this->license,
-					$this->copyrightstatus, $this->copyrightsource );
-					$status = $up->performUpload( $this->defaultcaption, $pageText, $this->watchthis,  $this->wg->user );
-				}
+				$mainArticle->updateArticle($newSectionText, '', false, false);
+
+
+				$this->content = $this->renderImage( $up->getTitle()->getText(), self::LEFT );
 			}
 		}
-
-		var_dump( $this->statusMessage );
-		$this->skipRendering();
 	}
 
-	private function uploadMessage($statusCode, $details) {
+	protected function getWikiText( $filename, $orientation = self::RIGHT ){
+		return "[[File:{$filename}|thumb|{$orientation}]]";
+	}
+
+	protected function renderImage ( $filename, $orientation = self::RIGHT ){
+		$parser = WF::build( 'Parser' );
+		$parser->setOutputType( OT_HTML );
+		$parserOptions = WF::build( 'ParserOptions' );
+		$fakeTitle = WF::build( 'FakeTitle', array( ''));
+
+		return $parser->parse(
+				$this->getWikiText( $filename, $orientation ),
+				$fakeTitle,
+				$parserOptions,
+				false
+			)->getText();
+	}
+
+	protected function uploadMessage($statusCode, $details) {
 		$msg = '';
 		switch($statusCode) {
 			case UploadBase::SUCCESS:
