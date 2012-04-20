@@ -366,7 +366,9 @@ class WikiaSearch extends WikiaObject {
 		 $params['start'] = $start;
 		 $params['size'] = $size;
 
-	         $similarPages = $this->client->getSimilarPages($this->wg->cityId, $pageId, $params);
+		 $query = sprintf('wid:%d AND pageid:%d', $this->wg->cityId, $pageId);
+
+	         $similarPages = $this->client->getSimilarPages($query, $params);
 
 		 $response = array();
 		 foreach ($similarPages as $similarPage)
