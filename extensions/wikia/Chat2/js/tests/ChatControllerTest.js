@@ -1,9 +1,10 @@
 /*
 @test-framework QUnit
+@test-require-file skins/common/jquery/jquery-1.7.2.js
+@test-require-file skins/common/jquery/jquery.wikia.js
 @test-require-file extensions/wikia/Chat2/js/emoticons.js
 @test-require-file extensions/wikia/Chat2/js/lib/underscore.js
 @test-require-file extensions/wikia/Chat2/js/lib/backbone.js
-@test-require-file extensions/Collection/js/jquery.js
 @test-require-file extensions/wikia/Chat2/js/views/views.js
 */
 module("ChatView Test");
