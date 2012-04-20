@@ -10,7 +10,7 @@
  */
 
 var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
-	EXIT_SIGNAL = '!!PHANTOM_EXIT!!',
+	EXIT_SIGNAL = 'PHANTOM_EXIT',
 	DEPENDENCIES_PLACEHOLDER = '<!--DEPENDENCIES-->',
 	DEFAULT_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.163 Safari/535.19',
 	DEFAULT_VIEWPORT_WIDTH = 1024,
@@ -28,10 +28,15 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	jsFileRegex = new RegExp('^(.*)\\.js$'),
 	cssFileRegex = new RegExp('^(.*)\\.(css|sass|scss)$'),
 	tests = [],
+	testResults = [],
+	testResult,
 	options = {params: []},
 	optionsCounter = 0,
 	timer,
 	page;
+
+phantom.injectJs('lib/js/JTR.js');
+phantom.injectJs('lib/js/TestResult.js');
 
 function exit(retVal) {
 	retVal = (retVal == 1) ? 1 : 0;
@@ -73,8 +78,9 @@ function onPageLoaded(status) {
 }
 
 function processTest(test) {
-	console.log('Processing file:', test);
-
+	// zaczac test result here...
+	//console.log('Processing file:', test);
+	
 	var testSource = fs.read(test),
 		framework = frameworkRegex.exec(testSource),
 		requiredFiles = [],
@@ -126,6 +132,8 @@ function processTest(test) {
 
 	fs.write(RUNNER_TEMP_PATH, htmlTemplate, 'w');
 
+	testResult = new TestResult(test);
+
 	page.open(RUNNER_TEMP_PATH, onPageLoaded);
 }
 
@@ -161,15 +169,41 @@ if(!options.params.length){
 	});
 }
 
+function outputTestsResult() {
+	console.log('TODO output some results...');
+}
+
 page = require('webpage').create({
 	onConsoleMessage : function(msg) {
-		if(msg == EXIT_SIGNAL){
-			if(tests.length){
-				processTest(tests.pop());
-			}else
-				exit(0);
-		}else
-			console.log(msg);
+		try {
+			msg = JSON.parse(msg);
+			switch(msg.command) {
+			case 'startTest':
+				testResults.startTest(msg.name, msg.extra);
+				break;
+			case 'stopTest':
+				testResults.stopTest(JTR.status[msg.status], msg.assertions, msg.messages);
+				break;
+			case 'startSuite':
+				testResults.startSuite(msg.name, msg.extra);
+				break;
+			case 'stopSuite':
+				testResults.stopSuite();
+				break;
+			case EXIT_SIGNAL:
+				testResults.push(testResult);
+				testResult = null;
+				if(tests.length){
+					processTest(tests.pop());
+				}else {
+					outputTestsResult();
+					exit(0);				
+				}
+				break;
+			}
+			return;
+		}catch(e){};
+		//console.log(msg);
 	},
 
 	onError : function(msg, trace) {
@@ -194,3 +228,5 @@ page = require('webpage').create({
 });
 
 processTest(tests.pop());
+
+
