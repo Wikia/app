@@ -17,6 +17,7 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	DEFAULT_VIEWPORT_HEIGHT = 768,
 	SCRIPT_TIMEOUT = 30000,
 	SCRIPT_TEMPLATE = '<script type="text/javascript" src="$1"></script>\n',
+	CSS_TEMPLATE = '<link type="text/css" rel="$1" />\n',
 	fs = require('fs'),
 	sys = require('system'),
 	cliOptionRegex = new RegExp('-{1,2}', 'gi'),
@@ -24,6 +25,8 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	dependencyRegex = new RegExp('@test-require-file\\s+(\\S+)', 'g'),
 	includeTestFileRegex = new RegExp('^.*\\/tests\\/[^\\/]+\\.js$'),
 	excludeTestFileRegex = new RegExp('^\\.\\.\\/tests\\/.*\\.js$'),
+	jsFileRegex = new RegExp('^(.*)\\.js$'),
+	cssFileRegex = new RegExp('^(.*)\\.(css|sass|scss)$'),
 	tests = [],
 	options = {params: []},
 	optionsCounter = 0,
@@ -46,29 +49,30 @@ function exit(retVal) {
 		phantom.exit(retVal);
 }
 
-function scanDirectory(path) {
-	if(fs.isDirectory(path)) {
-		fs.list(path).forEach(function(e) {
-			if(e !== "." && e !== "..") {
-				scanDirectory(path + '/' + e);
+function scanDirectory(path,output,callback) {
+	if (fs.isDirectory(path)) {
+		fs.list(path).forEach(function (e) {
+			if (e !== "." && e !== "..") {
+				scanDirectory(path + '/' + e,output,callback)
 			}
 		});
-	} else if(fs.exists(path) && fs.isFile(path)) {
-		if(!excludeTestFileRegex.test(path) && includeTestFileRegex.test(path))
-			tests.push(path);
+	} else if (fs.exists(path) && fs.isFile(path)) {
+		if(callback(path)) {
+			output.push(path);
+		}
 	}
 }
 
 function onPageLoaded(status) {
 	(typeof timer != 'undefined') && clearTimeout(timer);
 
-	timer = setTimeout(function() {
+	timer = setTimeout(function () {
 		console.error('Maximum execution time exceeded, aborting.');
 		exit(1);
 	}, SCRIPT_TIMEOUT);
 }
 
-function processTest(test){
+function processTest(test) {
 	console.log('Processing file:', test);
 
 	var testSource = fs.read(test),
@@ -79,8 +83,8 @@ function processTest(test){
 		match,
 		htmlTemplate;
 
-	if( framework instanceof Array && framework.length > 1) {
-		switch(framework[1].toString().toLowerCase()) {
+	if (framework instanceof Array && framework.length > 1) {
+		switch (framework[1].toString().toLowerCase()) {
 			case 'qunit':
 				requiredFiles.push('lib/qunit/qunit.js');
 				requiredFiles.push('lib/qunit/console_reporter.js');
@@ -99,24 +103,29 @@ function processTest(test){
 		console.error('Missing framework declaration.');
 		exit(1);
 	}
-	
-	while(match != null) {
+
+	while (match !== null) {
 		match = dependencyRegex.exec(testSource);
-	
-		if(match instanceof array && match.length > 1)
-			requiredFiles.push('../' + match[1]);
+
+		if (match instanceof Array && match.length > 1) {
+			scanDirectory('../' + match[1],requiredFiles,function(arg) {return true;});
+		}
 	}
-	
+
 	requiredFiles.push(test);
-	
-	requiredFiles.forEach(function(item) {
-		deps += SCRIPT_TEMPLATE.replace('$1', fs.absolute(item));
+
+	requiredFiles.forEach(function (item) {
+		if (item.match(jsFileRegex)) {
+			deps += SCRIPT_TEMPLATE.replace('$1', fs.absolute(item));
+		} else if (item.match(cssFileRegex)) {
+			deps += CSS_TEMPLATE.replace('$1', fs.absolute(item));
+		}
 	});
-	
+
 	htmlTemplate = fs.read(runner).replace(DEPENDENCIES_PLACEHOLDER, deps);
-	
+
 	fs.write(RUNNER_TEMP_PATH, htmlTemplate, 'w');
-	
+
 	page.open(RUNNER_TEMP_PATH, onPageLoaded);
 }
 
@@ -138,8 +147,14 @@ sys.args.forEach(function(item){
 });
 
 if(!options.params.length){
-	scanDirectory('..');
+	scanDirectory('..',tests,function(arg) {
+		return (!excludeTestFileRegex.test(arg) && includeTestFileRegex.test(arg));
+	});
 	tests.reverse();
+	console.log('tests:');
+	console.log(tests);
+	console.log('tests end:');
+
 }else{
 	options.params.forEach(function(item){
 		tests.push(item);
