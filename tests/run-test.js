@@ -236,6 +236,7 @@ function stylize(str, style) {
 	  'green'     : [32, 39],
 	  'magenta'   : [35, 39],
 	  'red'       : [31, 39],
+	  'lightred'       : ['1;31', '0;39'],
 	  'yellow'    : [33, 39]
 	  };
 	  return '\033[' + styles[style][0] + 'm' + str +
@@ -247,6 +248,24 @@ phantom.injectJs('lib/js/Xml.js');
 phantom.injectJs('lib/js/JUnitReport.js');
 
 function outputTestsResult() {
+	/*
+		var suiteData = {
+				name: suiteName,
+				'package': 'com.wikia.javascript.tests',
+				errors: suite.stats[JTR.status.ERROR],
+				failures: suite.stats[JTR.status.FAILURE],
+				skipped: suite.stats[JTR.status.SKIPPED],
+				tests: suite.stats.total,
+				id: suiteId,
+				time: suite.stats.time / 1000
+		};
+		var accumKeys = ['errors','failures','skipped','tests','time'];
+		for (var i=0;i<accumKeys.length;i++) {
+			wrapperData[accumKeys[i]] += suiteData[accumKeys[i]];
+		}
+	 */
+	var errors = 0, failures = 0, skipped = 0, tests = 0, time = 0.0;
+	
 	for(var i = 0 ; i < testResults.length ; i++) {
 		if (options.output) {
 			var xml = JUnitReport.getXml(testResults[i]);
@@ -257,18 +276,45 @@ function outputTestsResult() {
 		console.log('Running ' + stylize(testResult.name, 'bold'));
 		
 		for (var suiteName in testResult.suites) {
-			console.log('\t' + stylize(suiteName, 'bold'));
+			console.log(stylize(suiteName, 'bold'));
 			var suite = testResult.suites[suiteName];
+			errors += suite.stats[JTR.status.ERROR];
+			failures += suite.stats[JTR.status.FAILURE];
+			skipped += suite.stats[JTR.status.SKIPPED];
+			tests += suite.stats.total;
+			time += suite.stats.time / 1000;
 			for (var testName in suite.tests) {
 				var test = suite.tests[testName];
-				if (test.status != JTR.status.SUCCESS) {
-					console.log('\t\t'+testName+'\t'+stylize('[OK]', 'green'));	
+				if (test.status == JTR.status.SUCCESS) {
+					var assertions = '1 assertion';
+					if (test.assertions > 1) {
+						assertions = test.assertions + ' assertions';
+					} else {
+						assertions = stylize('no assertions', 'yellow');
+					}
+					console.log('\t'+testName+'\t'+stylize('[OK]', 'green') + ' (' + assertions + ')');	
 				} else {
-					console.log('\t\t'+testName+'\t'+stylize('[FAIL]', 'red'));
+					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred') + ' ('+test.messages+')');
 				}
 			}
 		}
 	}
+	
+	var passed = tests - errors - failures - skipped;
+	if (passed > 0) passed = stylize(passed + ' passed', 'green');
+	else passed = '0 passed';
+	
+	if (errors == 1) errors = stylize('1 error', 'lightred');
+	else if (errors > 1) errors = stylize(errors + ' errors', 'lightred');
+	else errors = '0 errors';
+	
+	if (failures == 1) failures = stylize('1 failure', 'lightred');
+	else if (failures > 1) failures = stylize(failures + ' failures', 'lightred');
+	else failures = '0 failures';
+
+	if (skipped > 0) skipped = ' ('+stylize(skipped + ' skipped', 'yellow')+')';
+	else skipped = '';
+	console.log('Ran ' + tests + ' tests with '+passed + ' and ' +failures+' and '+errors+skipped+' in ' + time + ' seconds');
 }
 
 page = require('webpage').create({
