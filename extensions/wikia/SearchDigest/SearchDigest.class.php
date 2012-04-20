@@ -10,7 +10,7 @@ class SpecialSearchDigest extends SpecialPage {
 	function execute( $mode ) {
 		global $wgOut;
 
-		$wgOut->setPageTitle( wfMsg( 'searchdigest-title' ) );	
+		$wgOut->setPageTitle( wfMsg( 'searchdigest' ) );	
 
 		switch ( $mode ) {
 			case self::MODE_CSV:
