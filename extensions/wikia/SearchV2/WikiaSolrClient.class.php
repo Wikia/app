@@ -319,11 +319,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 	  return substr_count($query, "answers") > 0;
 	}
 
-	public function getSimilarPages($wid, $pageId, array $params = array())
+	public function getSimilarPages($query, array $params = array())
 	{
-
-	      $query = sprintf('wid:%d AND pageid:%d', $wid, $pageId);
-
 	      if (isset($params['start'])) {
 		  $start = $params['start'];
 		  unset($params['start']);
