@@ -336,9 +336,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 	      }
 
 	      $params = array('mlt.match.include' => 'false',
-			      'mlt.fl' => 'html',
+			      'mlt.fl' => 'title,html',
 			     ) + $params;
-	      
 
 	      try {
 		$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);

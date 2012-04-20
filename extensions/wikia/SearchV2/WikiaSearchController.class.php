@@ -275,10 +275,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function getRelatedVideos() {
 
 	       $pageId = $this->getVal('id');
+	       $params = array();
 	       if ( !empty( $pageId ) ) {
-		 $responseData = $this->wikiaSearch->getRelatedVideos( $pageId );
-		 $this->response->setData($responseData);
+		 $params['pageId'] = $pageId;
 	       }
+	       $responseData = $this->wikiaSearch->getRelatedVideos( $params );
+	       $this->response->setData($responseData);
 	       $this->response->setFormat('json');
 
 	}
