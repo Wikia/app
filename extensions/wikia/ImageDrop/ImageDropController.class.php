@@ -32,28 +32,32 @@ class ImageDropController extends WikiaController {
 			if ($this->status > 0) {
 				$this->statusMessage = $this->uploadMessage($this->status, $details);
 			} else {
-				$titleText = 'Transport_publiczny';
-				$sectionNumber = 5;
+				$titleText = $this->request->getVal('title');
+				$sectionNumber = $this->request->getVal('section', 0);
+
 				$this->status = $up->performUpload( '', '', '',  $this->wg->user );
 				$mainArticle = new Article( Title::newFromText( $titleText ) );
 
-				$firstSectionText = $mainArticle->getSection($mainArticle->getRawText(), $sectionNumber);
-				$matches = array();
-				if ( preg_match( '/={2,3}[^=]+={2,3}/', $firstSectionText, $matches ) ) {
+				if ( $sectionNumber == 0 ) {
+					$mainArticle->updateArticle(
+						$this->getWikiText( $up->getTitle()->getText(), self::LEFT ). $mainArticle->getRawText(), '', false, false);
+				} else {
+					$firstSectionText = $mainArticle->getSection($mainArticle->getRawText(), $sectionNumber);
+					$matches = array();
+					if ( preg_match( '/={2,3}[^=]+={2,3}/', $firstSectionText, $matches ) ) {
 
-					$firstSectionText = trim( str_replace( $matches[0], '', $firstSectionText ) );
-					$newSectionText =
-						$mainArticle->replaceSection(
-							$sectionNumber,
-							$matches[0]
-								."\n"
-								.$this->getWikiText( $up->getTitle()->getText(), self::LEFT )
-								.$firstSectionText
-						);
+						$firstSectionText = trim( str_replace( $matches[0], '', $firstSectionText ) );
+						$newSectionText =
+							$mainArticle->replaceSection(
+								$sectionNumber,
+								$matches[0]
+									."\n"
+									.$this->getWikiText( $up->getTitle()->getText(), self::LEFT )
+									.$firstSectionText
+							);
+						$mainArticle->updateArticle($newSectionText, '', false, false);
+					}
 				}
-				$mainArticle->updateArticle($newSectionText, '', false, false);
-
-
 				$this->content = $this->renderImage( $up->getTitle()->getText(), self::LEFT );
 			}
 		}

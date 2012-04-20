@@ -59,6 +59,7 @@ ImageDrop = {
             	node.removeClass('imagedrop-highlight');
             	var headline = ImageDrop.findNearestHeadline(node);
             	this.data.section = ImageDrop.index;
+                this.data.title = wgTitle;
             	$().log(ImageDrop.index);
             	ImageDrop.mask.css("height", 0);
             },
