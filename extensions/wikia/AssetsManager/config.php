@@ -530,6 +530,8 @@ $config['relatedvideos_js'] = array(
 	)
 );
 
+/** RelatedVideos **/
+
 $config['relatedvideos_js_tooltips'] = array(
 	'skin' => 'oasis',
 	'type' => AssetsManager::TYPE_JS,
@@ -655,4 +657,23 @@ $config['wikiaphotogallery_slider_scss_wikiamobile'] = array(
 		'assets' => array(
 				'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss'
 		)
+);
+
+// ImageDrop
+
+$config['imagedrop_js'] = array(
+	'skin' => array( 'monobook', 'oasis' ),
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/ImageDrop/js/ImageDrop.js',
+		'//skins/common/jquery/jquery.filedrop.js'
+	)
+);
+
+$config['imagedrop_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'monobook', 'oasis' ),
+	'assets' => array(
+		'//extensions/wikia/ImageDrop/css/ImageDrop.scss'
+	)
 );
