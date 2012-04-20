@@ -46,7 +46,7 @@ JUnitReport.getXml = function( testResult ) {
 		xml += Xml.element('testsuite',suiteXml,suiteData);
 		suiteId++;
 	}
-	xml = Xml.element('testsuite',xml,wrapperData);
+	xml = Xml.element('testsuites',xml,wrapperData);
 	//xml = Xml.intro() + Xml.element('testsuites',xml);
 	xml = Xml.intro() + xml;
 	return xml;
