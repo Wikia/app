@@ -1,0 +1,8 @@
+@import "../../../../skins/oasis/css/mixins/opacity";
+
+#ImageDropMask {
+	@include opacity(50);
+	background: red;
+	position: absolute;
+	width: 100%;
+}
