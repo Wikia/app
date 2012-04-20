@@ -19,11 +19,14 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	SCRIPT_TEMPLATE = '<script type="text/javascript" src="$1"></script>\n',
 	fs = require('fs'),
 	sys = require('system'),
+	cliOptionRegex = new RegExp('-{1,2}', 'gi'),
 	frameworkRegex = new RegExp('@test-framework\\s+(\\S+)'),
 	dependencyRegex = new RegExp('@test-require-file\\s+(\\S+)', 'g'),
 	includeTestFileRegex = new RegExp('^.*\\/tests\\/[^\\/]+\\.js$'),
 	excludeTestFileRegex = new RegExp('^\\.\\.\\/tests\\/.*\\.js$'),
 	tests = [],
+	options = {params: []},
+	optionsCounter = 0,
 	timer,
 	page;
 
@@ -117,11 +120,30 @@ function processTest(test){
 	page.open(RUNNER_TEMP_PATH, onPageLoaded);
 }
 
-if(sys.args.length == 1){
+//commandline options processing
+sys.args.forEach(function(item){
+	if(++optionsCounter === 1)
+		return;
+
+	if(item.indexOf('-') === 0){
+		//option
+		var val = item.replace(/^-{1,2}/g, ''),
+		tokens = val.split('=', 2);
+
+		options[tokens[0]] = tokens[1] | true;
+	}else{
+		//param
+		options.params.push(item);
+	}
+});
+
+if(!options.params.length){
 	scanDirectory('..');
 	tests.reverse();
 }else{
-	tests.push(sys.args[1])
+	options.params.forEach(function(item){
+		tests.push(item);
+	});
 }
 
 page = require('webpage').create({
