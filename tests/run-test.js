@@ -294,7 +294,13 @@ function outputTestsResult() {
 					}
 					console.log('\t'+testName+'\t'+stylize('[OK]', 'green') + ' (' + assertions + ')');	
 				} else {
-					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred') + ' ('+test.messages+')');
+					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
+					if (test.messages) {
+						var messages = test.messages.split('\n');
+						for(var j = 0 ; j < messages.length ; j++) {
+							console.log('\t\t' + messages[j]);
+						}
+					}
 				}
 			}
 		}
@@ -314,7 +320,9 @@ function outputTestsResult() {
 
 	if (skipped > 0) skipped = ' ('+stylize(skipped + ' skipped', 'yellow')+')';
 	else skipped = '';
-	console.log('Ran ' + tests + ' tests with '+passed + ' and ' +failures+' and '+errors+skipped+' in ' + time + ' seconds');
+	console.log('Ran ' + tests + ' tests with '+passed + ' and ' +failures+' and '+errors+skipped+' in ' + Math.round(time*100)/100 + ' seconds');
+	
+	return ((errors + failures) === 0);
 }
 
 page = require('webpage').create({
