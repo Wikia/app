@@ -101,8 +101,12 @@ class WikiaView {
 			$app = F::app();
 			$autoloadClasses = $app->wg->AutoloadClasses;
 			
-			$extension = $this->response->getTemplateEngine();
-
+			if ( !empty( $this->response ) ) {
+				$extension = $this->response->getTemplateEngine();
+			} else {
+				$extension = WikiaResponse::TEMPLATE_ENGINE_PHP;
+			}
+			
 			if (
 				(
 					$app->isService( $controllerName ) ||
@@ -205,7 +209,7 @@ class WikiaView {
 		$this->buildTemplatePath( $this->response->getControllerName(), $this->response->getMethodName() );
 
 		$data = $this->response->getData();
-		
+
 		switch($this->response->getTemplateEngine()) {
 			case WikiaResponse::TEMPLATE_ENGINE_MUSTACHE:
 				$m = new Mustache;
