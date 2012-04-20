@@ -355,32 +355,32 @@ class WikiaSearch extends WikiaObject {
 	}
 
 
-	public function getRelatedVideos($pageId, $start=0, $size=20) {
+	public function getRelatedVideos(array $params = array('start'=>0, 'size'=>20)) {
 
-	         # going to need an "is_video" field
-	         $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^10) '
-		               . 'AND ns:6 AND -title:(jpg gif png jpeg)';
-		 $params['mlt.boost'] = 'true';
-		 $params['mpt.maxnpt'] = '200';
-		 $params['mlt.fl'] = 'title,html';
-		 $params['start'] = $start;
-		 $params['size'] = $size;
+	        # going to need an "is_video" field
+	        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) '
+		              . 'AND ns:6 AND -title:(jpg gif png jpeg svg ico)';
+		$params['mlt.boost'] = 'true';
+		$params['mlt.maxnpt'] = 500;
+		$params['mlt.fl'] = 'title,html';
 
-		 $query = sprintf('wid:%d AND pageid:%d', $this->wg->cityId, $pageId);
+		$query = sprintf('wid:%d', $this->wg->cityId);
+		if (isset($params['pageId'])) {
+		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
+		} else {
+		  $query .= ' AND is_main_page:1';
+		}
 
-	         $similarPages = $this->client->getSimilarPages($query, $params);
+	        $similarPages = $this->client->getSimilarPages($query, $params);
 
-		 $response = array();
-		 foreach ($similarPages as $similarPage)
-		 {
-		     $response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
-		 }
+		$response = array();
+		foreach ($similarPages as $similarPage)
+		{
+		    $response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
+		}
 
-		 return $response;
+		return $response;
 	}
-
-
-
 
 	private function callMediaWikiAPI( Array $params ) {
 		$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
