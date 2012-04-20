@@ -13,6 +13,8 @@ ImageDrop = {
             url: wgServer + '/wikia.php?controller=ImageDrop&method=upload',
 
             uploadFinished:function(i,file,response){
+            	ImageDrop.mask.stopThrobbing();
+            	ImageDrop.mask.css("height", 0);
             	$().log(response);
                 //$.data(file).addClass('done');
                 // response is the JSON object that post_file.php returns
@@ -68,7 +70,8 @@ ImageDrop = {
             	this.data.section = ImageDrop.index;
                 this.data.title = wgTitle;
             	$().log(ImageDrop.index);
-            	ImageDrop.mask.css("height", 0);
+            	//ImageDrop.mask.css("height", 0);
+            	ImageDrop.mask.startThrobbing();
             },
             
             dragEnter: function(evt) {
@@ -82,11 +85,11 @@ ImageDrop = {
 	            		var maskTop = 0;
 		            	if(headline.length > 0) {
 		            		ImageDrop.index = ImageDrop.headlines.index(headline) + 1;
-		            		var nextHeadline = headline.nextAll("h2, h3").first();
+		            		var nextHeadline = headline.nextAll("h2, h3, h4").first();
 		            		height = nextHeadline.position().top - headline.position().top;
 		            		maskTop = headline.position().top;
 		            	} else {
-		            		var nextHeadline = ImageDrop.dropbox.find("h2, h3").first();
+		            		var nextHeadline = ImageDrop.dropbox.find("h2, h3, h4").first();
 		            		height = nextHeadline.position().top;
 		            	}
 		            	
@@ -109,7 +112,7 @@ ImageDrop = {
         }
 
         function showMessage(msg){
-            message.html(msg);
+            //message.html(msg);
         }
     },
     findNearestNode: function(node) {
@@ -121,8 +124,8 @@ ImageDrop = {
     	return node;
     },
     findNearestHeadline: function(headline) {
-    	if(!headline.is("h2, h3")) {
-    		headline = $($(headline).prevAll("h2, h3")[0]);
+    	if(!headline.is("h2, h3, h4")) {
+    		headline = $($(headline).prevAll("h2, h3, h4")[0]);
     	}
     	return headline;
     }
