@@ -1,6 +1,7 @@
 ImageDrop = {
     init: function(e){
         var dropbox = $('#WikiaMainContent');
+        ImageDrop.headlines = $($("#WikiaArticle .mw-headline").parent());
         dropbox.filedrop({
             // The name of the $_FILES entry:
             paramname:'wpUploadFile',
@@ -46,9 +47,27 @@ ImageDrop = {
             },
 
             progressUpdated: function(i, file, progress) {
-                $.data(file).find('.progress').width(progress);
+                //$.data(file).find('.progress').width(progress);
+            },
+            
+            drop: function(evt) {
+            	console.log("drop override");
+            	console.log(evt);
+            	var node = $(evt.target);
+            	var parents = node.parentsUntil('#WikiaArticle');
+            	if(parents.length) {
+            		node = $(parents.pop());
+            	} 
+            	var headline = $(node).prevAll("h2, h3")[0];
+            	var index = 0;
+            	if(headline) {
+            		index = ImageDrop.headlines.index(headline) + 1;
+            	}
+            	this.data = {
+            		section: index
+            	};
+            	console.log(index);
             }
-
         });
 
         var template = '...';
