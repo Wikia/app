@@ -9,7 +9,7 @@
  * @example phantomjs run-test.js ../path/to/test.js (runs single test)
  */
 
-var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
+var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',	
 	EXIT_SIGNAL = 'PHANTOM_EXIT',
 	DEPENDENCIES_PLACEHOLDER = '<!--DEPENDENCIES-->',
 	DEFAULT_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.163 Safari/535.19',
@@ -35,7 +35,8 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 			width: DEFAULT_VIEWPORT_WIDTH,
 			height: DEFAULT_VIEWPORT_HEIGHT
 		},
-		params: []
+		params: [],
+		output: '/tmp'
 	},
 	optionsCounter = 0,
 	timer,
@@ -58,10 +59,6 @@ function exit(retVal) {
 		processTest(tests.pop());
 	}else
 		phantom.exit(retVal);
-}
-
-function outputTestsResult() {
-	console.log('TODO output some results...');
 }
 
 function scanDirectory(path, output, callback) {
@@ -88,7 +85,6 @@ function onPageLoaded(status) {
 }
 
 function processTest(test) {
-	// zaczac test result here...
 	//console.log('Processing file:', test);
 	
 	var testSource = fs.read(test),
@@ -223,8 +219,56 @@ if(!options.params.length){
 	});
 }
 
+function stylize(str, style) {
+	  var styles = {
+	  //styles
+	  'bold'      : [1,  22],
+	  'italic'    : [3,  23],
+	  'underline' : [4,  24],
+	  'inverse'   : [7,  27],
+	  //grayscale
+	  'white'     : [37, 39],
+	  'grey'      : [90, 39],
+	  'black'     : [90, 39],
+	  //colors
+	  'blue'      : [34, 39],
+	  'cyan'      : [36, 39],
+	  'green'     : [32, 39],
+	  'magenta'   : [35, 39],
+	  'red'       : [31, 39],
+	  'yellow'    : [33, 39]
+	  };
+	  return '\033[' + styles[style][0] + 'm' + str +
+	         '\033[' + styles[style][1] + 'm';
+	};
+
+
+phantom.injectJs('lib/js/Xml.js');
+phantom.injectJs('lib/js/JUnitReport.js');
+
 function outputTestsResult() {
-	console.log('TODO output some results...');
+	for(var i = 0 ; i < testResults.length ; i++) {
+		if (options.output) {
+			var xml = JUnitReport.getXml(testResults[i]);
+			var fileName = options.output + '/cc_js_' + new Date().getTime() + '_' + i + '.xml';
+			fs.write(fileName, xml, 'w');
+		}
+		var testResult = testResults[i];
+		console.log('Running ' + stylize(testResult.name, 'bold'));
+		
+		for (var suiteName in testResult.suites) {
+			console.log('\t' + stylize(suiteName, 'bold'));
+			var suite = testResult.suites[suiteName];
+			for (var testName in suite.tests) {
+				var test = suite.tests[testName];
+				if (test.status != JTR.status.SUCCESS) {
+					console.log('\t\t'+testName+'\t'+stylize('[OK]', 'green'));	
+				} else {
+					console.log('\t\t'+testName+'\t'+stylize('[FAIL]', 'red'));
+				}
+			}
+		}
+	}
 }
 
 page = require('webpage').create({
@@ -233,16 +277,16 @@ page = require('webpage').create({
 			msg = JSON.parse(msg);
 			switch(msg.command) {
 			case 'startTest':
-				testResults.startTest(msg.name, msg.extra);
+				testResult.startTest(msg.name, msg.extra);
 				break;
 			case 'stopTest':
-				testResults.stopTest(JTR.status[msg.status], msg.assertions, msg.messages);
+				testResult.stopTest(JTR.status[msg.status], msg.assertions, msg.messages);
 				break;
 			case 'startSuite':
-				testResults.startSuite(msg.name, msg.extra);
+				testResult.startSuite(msg.name, msg.extra);
 				break;
 			case 'stopSuite':
-				testResults.stopSuite();
+				testResult.stopSuite();
 				break;
 			case EXIT_SIGNAL:
 				testResults.push(testResult);
