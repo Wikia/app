@@ -61,6 +61,11 @@ class ApiOpenSearch extends ApiBase {
 			$srchres = PrefixSearch::titleSearch( $search, $limit,
 				$namespaces );
 		}
+
+		// Wikia change - begin
+		wfRunHooks('ApiOpenSearchExecute', array($this, $params, &$srchres));
+		// Wikia change - end
+
 		// Set top level elements
 		$result = $this->getResult();
 		$result->addValue( null, 0, $search );
