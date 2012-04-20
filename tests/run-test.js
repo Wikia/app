@@ -54,7 +54,7 @@ function exit(retVal) {
 
 	if(tests.length){
 		if(retVal == 1)
-			console.error('Error: aborting test, running next one.');
+			console.error(stylize('[ERROR]', 'lightred'), 'aborting test, running next one.');
 
 		processTest(tests.pop());
 	}else
@@ -85,8 +85,6 @@ function onPageLoaded(status) {
 }
 
 function processTest(test) {
-	//console.log('Processing file:', test);
-	
 	var testSource = fs.read(test),
 		requiredFiles = [],
 		deps = '',
@@ -106,8 +104,9 @@ function processTest(test) {
 				t = tokens[0];
 
 			if(t == 'exclude'){
-				console.log('Test excluded, skipping...');
+				console.log(stylize('[WARN]', 'yellow'), 'Test excluded, skipping...');
 				exit(0);
+				return;
 			}else if(t == 'require-file' && tokens[1]){
 				testOptions[t].push(tokens[1]);
 			}else if(t == 'screen-resolution' && tokens[1]){
@@ -135,13 +134,13 @@ function processTest(test) {
 				requiredFiles.push('lib/jasmine/console_reporter.js');
 				runner = 'lib/jasmine/test-runner.html';
 				break;
-			default:
-				console.error('Unrecognized framework declaration.');
-				exit(1);
 		}
-	} else {
-		console.error('Missing framework declaration.');
+	}
+
+	if(!runner) {
+		console.error(stylize('[ERROR]', 'lightred'), 'Missing or unrecognized framework declaration.');
 		exit(1);
+		return;
 	}
 
 	if(testOptions['require-file'] instanceof Array){
@@ -209,9 +208,6 @@ if(!options.params.length){
 	});
 
 	tests.reverse();
-	console.log('tests:');
-	console.log(tests);
-	console.log('tests end:');
 
 }else{
 	options.params.forEach(function(item){
@@ -350,12 +346,12 @@ page = require('webpage').create({
 				}else {
 					outputTestsResult();
 					exit(0);
+					return;
 				}
 				break;
 			}
 			return;
 		}catch(e){};
-		//console.log(msg);
 	},
 
 	onError : function(msg, trace) {
@@ -376,4 +372,9 @@ page = require('webpage').create({
 	viewportSize : options['screen-resolution']
 });
 
-processTest(tests.pop());
+if(tests.length){
+	processTest(tests.pop());
+}else{
+	console.error(stylize('[ERROR]', 'lightred'), 'No tests found');
+	exit(1);
+}
