@@ -68,22 +68,20 @@ if( !$isLoggedIn && (isset($captchaForm)) ) {
 }
 ?>
 
-<?php
+<p><input type="submit" value="<?= wfMsg( 'specialcontact-mail' ) ?>" /></p>
 
+<?php
 if( $isLoggedIn && $hasEmail ) {
 	//is user, has email, but is verified?
-	if( $hasEmailConf ) {
+	if ( $hasEmailConf ) {
 		//yes!
-		print "<input tabindex='" . ($tabindex++) . "' type='checkbox' name=\"wgCC\" value=\"1\" />" . wfMsg('specialcontact-ccme');
-	}
-	else
-	{
+		print "<input type=\"checkbox\" name=\"wgCC\" value=\"1\" />" . wfMsg('specialcontact-ccme');
+	} else {
 		//not
 		print "<s><i>" . wfMsg('specialcontact-ccme') . "</i></s><br/> ". wfMsgExt('specialcontact-ccdisabled', array('parse') ) ."";
 	}
 }
 ?>
-<input type="submit" value="<?= wfMsg( 'specialcontact-mail' ) ?>" />
 
 <input type="hidden" id="wpBrowser" name="wpBrowser" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>" />
 </form>
