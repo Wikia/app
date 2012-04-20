@@ -85,7 +85,7 @@ function onPageLoaded(status) {
 }
 
 function processTest(test) {
-	var testSource = fs.read(test),
+	var testSource,
 		requiredFiles = [],
 		deps = '',
 		testOptions = {
@@ -96,7 +96,13 @@ function processTest(test) {
 		runner,
 		matches,
 		htmlTemplate;
-
+	try {
+		testSource = fs.read(test);
+	} catch(e) {
+		console.log(stylize('[ERROR]', 'red'), 'Error while opening the test file:'+test);
+		exit(0);
+		return;
+	}
 	//process test decorator options
 	if((matches = testSource.match(decoratorOptionRegex)) !== null){
 		for(var x = 0, y = matches.length; x < y; x++){
