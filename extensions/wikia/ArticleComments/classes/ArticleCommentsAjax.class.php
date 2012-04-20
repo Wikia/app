@@ -246,8 +246,9 @@ class ArticleCommentsAjax {
 		$error = 0;
 		$text = $pagination = '';
 		$method = 'CommentList';
+		$isMobile = Wikia::isWikiaMobile();
 
-		if(Wikia::isWikiaMobile()){
+		if($isMobile){
 			$method = 'WikiaMobile' . $method;
 		}
 
@@ -258,8 +259,8 @@ class ArticleCommentsAjax {
 			wfLoadExtensionMessages('ArticleComments');
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
-			$text = F::app()->getView('ArticleComments', $method, array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false));
-			$pagination = $listing->doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title);
+			$text = F::app()->getView('ArticleComments', $method, array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false))->render();
+			$pagination = (!$isMobile) ? $listing->doPagination($listing->getCountAll(), count($comments), $page === false ? 1 : $page, $title) : '';
 		}
 
 		$result = array('error' => $error, 'text' => $text, 'pagination' => $pagination);
