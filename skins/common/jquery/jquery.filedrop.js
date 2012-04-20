@@ -66,7 +66,6 @@
 	function drop(e) {
 		opts.drop(e);
 		files = e.dataTransfer.files;
-		/*
 		if (files === null || files === undefined) {
 			opts.error(errors[0]);
 			return false;
@@ -74,7 +73,6 @@
 		
 		files_count = files.length;
 		upload();
-		*/
 		e.preventDefault();
 		return false;
 	}
