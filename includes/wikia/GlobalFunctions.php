@@ -1544,10 +1544,24 @@ function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
 	if ( !file_exists( $file ) ) {
 		$parts = explode('/', $file);
 		$filename = array_pop($parts);
-		$alter = implode('/',$parts) . '/_' . $filename . '.scss';
-		if ( file_exists( $alter ) ) {
-			$file = $alter;
-		} else {
+		$alter = array();
+		$dir = implode('/',$parts) . '/';
+		$alter[] = $dir . $filename;
+		$alter[] = $dir . $filename . '.scss';
+		$alter[] = $dir . $filename . '.sass';
+		$alter[] = $dir . '/_' . $filename;
+		$alter[] = $dir . '/_' . $filename . '.scss';
+		$alter[] = $dir . '/_' . $filename . '.sass';
+		$found = false;
+		foreach( $alter as $x => $a ) {
+			if ( file_exists( $a ) ) {
+				$file = $a;
+				$found = true;
+				break;
+			}
+		}
+		if(!$found) {
+			error_log("SpeedBox: file not found: " . $file);
 			return;
 		}
 	}
