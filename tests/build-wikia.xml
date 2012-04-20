@@ -53,13 +53,20 @@
                        " />
         </exec>
     </target>
-    
+
     <target name="js-single">
-        <exec executable="php" dir="${basedir}" failonerror="true">
+        <exec executable="phantomjs" dir="${basedir}" failonerror="true">
             <env key="SERVER_ID" value="165" />
-            <arg line="run-js-test.php
-                       -t${unittest}
+            <arg line="run-test.js
+                       ${unittest}
                        " />
+        </exec>
+    </target>
+
+    <target name="js">
+        <exec executable="phantomjs" dir="${basedir}" failonerror="true">
+            <env key="SERVER_ID" value="165" />
+            <arg line="run-test.js" />
         </exec>
     </target>
 
