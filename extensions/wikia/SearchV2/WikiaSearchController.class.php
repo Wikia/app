@@ -313,4 +313,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 
 	}
+
+	public function getTagCloud() {
+
+	  $params = array();
+	  $params['maxpages']    = $this->getVal('maxpages', 25);
+	  $params['termcount']   = $this->getVal('termcount', 20);
+	  $params['maxfontsize'] = $this->getVal('maxfontsize', 56);
+	  $params['minfontsize'] = $this->getVal('minfontsize', 6);
+
+	  $this->response->setData($this->wikiaSearch->getTagCloud($params));
+	  $this->response->setFormat('json');
+
+	}
+
 }
