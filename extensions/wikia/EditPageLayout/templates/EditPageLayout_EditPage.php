@@ -2,7 +2,7 @@
 <section id="WikiaPage" class="WikiaPage">
 	<article id="WikiaMainContent" class="WikiaMainContent" style="float:none">
 		<header id="EditPageHeader">
-			<span class="wordmark <?= $wordmark['wordmarkSize'] ?> <?= $wordmark['wordmarkType'] ?> font-<?= $wordmark['wordmarkFont'] ?>" ?>>
+			<span class="wordmark <?= $wordmark['wordmarkSize'] ?> <?= $wordmark['wordmarkType'] ?> font-<?= $wordmark['wordmarkFont'] ?>">
 				<a accesskey="z" href="<?= htmlspecialchars($wordmark['mainPageURL']) ?>" title="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
 				<? if (!empty($wordmark['wordmarkUrl'])) { ?>
 					<img src="<?= $wordmark['wordmarkUrl'] ?>" alt="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
@@ -183,7 +183,7 @@
 			</section>
 		</form>
 	</article>
-	
+
 	<? if ($wg->User->isLoggedIn()) { ?>
 	<footer id="WikiaFooter" class="WikiaFooter">
 		<div class="toolbar">
@@ -195,5 +195,5 @@
 		</div>
 	</footer>
 	<? } ?>
-	
+
 </section>
