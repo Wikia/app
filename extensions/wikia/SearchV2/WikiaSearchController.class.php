@@ -1,4 +1,3 @@
-
 <?php
 
 class WikiaSearchController extends WikiaSpecialPageController {
@@ -282,6 +281,36 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	       $responseData = $this->wikiaSearch->getRelatedVideos( $params );
 	       $this->response->setData($responseData);
 	       $this->response->setFormat('json');
+
+	}
+
+	public function getSimilarPagesExternal() {
+
+	       $url = $this->getVal('url');
+	       if ( !empty($url) ) {
+		 $params = array('stream.url'=>$url);
+	       } else if ($contents = $this->getVal('contents')) {
+		 $params = array('stream.body'=>$contents);
+	       } else {
+		 throw new Exception('Please provide a url or stream contents');
+	       }
+	       $responseData = $this->wikiaSearch->getSimilarPages(false, $params);
+	       $this->response->setData($responseData);
+	       $this->response->setFormat('json');
+
+	}
+
+	public function getKeywords() {
+
+       	       $pageId = $this->getVal('id');
+	       $params = array();
+	       if ( !empty( $pageId ) ) {
+		 $params['pageId'] = $pageId;
+	       }
+	       $responseData = $this->wikiaSearch->getKeywords( $params );
+	       $this->response->setData($responseData);
+	       $this->response->setFormat('json');
+
 
 	}
 }

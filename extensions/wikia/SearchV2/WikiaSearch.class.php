@@ -360,9 +360,6 @@ class WikiaSearch extends WikiaObject {
 	        # going to need an "is_video" field
 	        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) '
 		              . 'AND ns:6 AND -title:(jpg gif png jpeg svg ico)';
-		$params['mlt.boost'] = 'true';
-		$params['mlt.maxnpt'] = 500;
-		$params['mlt.fl'] = 'title,html';
 
 		$query = sprintf('wid:%d', $this->wg->cityId);
 		if (isset($params['pageId'])) {
@@ -371,7 +368,21 @@ class WikiaSearch extends WikiaObject {
 		  $query .= ' AND is_main_page:1';
 		}
 
-	        $similarPages = $this->client->getSimilarPages($query, $params);
+	        return $this->getSimilarPages($query, $params);
+	}
+
+	public function getSimilarPages($query = false, array $params = array()) {
+
+	        if ((!$query) && (isset($params['content.url']) || isset($params['stream.body']))) {
+		  $params['fq'] = implode(' AND ', array_merge($this->client->getInterWikiQueryClauses()));
+	        }
+
+		$params['mlt.boost'] = 'true';
+		#note, mlt.maxnpt might be necessary for performance
+		$params['mlt.fl'] = 'title,html';
+
+		$clientResponse = $this->client->getSimilarPages($query, $params);
+		$similarPages = $clientResponse->response->docs;
 
 		$response = array();
 		foreach ($similarPages as $similarPage)
@@ -380,6 +391,39 @@ class WikiaSearch extends WikiaObject {
 		}
 
 		return $response;
+	}
+
+	public function getInterestingTerms($query = false, array $params = array()) {
+
+	        $foo;
+		$params['mlt.fl'] = 'title,headings,first500,redirect_text,html';
+		$params['mlt.boost'] = 'true';
+		#note, mlt.maxnpt might be necessary for performance
+		$params['mlt.interestingTerms'] = 'list';
+
+		$params['size'] = 0;
+
+		$clientResponse = $this->client->getSimilarPages($query, $params);
+
+		$response = array();
+
+		#@todo reverse dictionary-based stemming, but need all unique words, then to stem, then to use the most frequent. yuck.
+
+		return $clientResponse->interestingTerms;
+
+	}
+
+	public function getKeywords($params) {
+
+	        $query = sprintf('wid:%d', $this->wg->cityId);
+		if (isset($params['pageId'])) {
+		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
+		} else {
+		  $query .= ' AND is_main_page:1';
+		}
+		
+		return $this->getInterestingTerms($query, $params);
+
 	}
 
 	private function callMediaWikiAPI( Array $params ) {

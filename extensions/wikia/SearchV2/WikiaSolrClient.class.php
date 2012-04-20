@@ -64,18 +64,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$this->isInterWiki = $this->isInterWiki || empty($onWikiId);
 
 		if( $this->isInterWiki ) {
-
-			$widQuery = '';
-
-			foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
-				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
-			}
-
-			$queryClauses[] = $widQuery;
-
-			$queryClauses[] = "lang:en";
-
-			$queryClauses[] = "iscontent:true";
+		  array_merge($queryClauses, $this->getInterWikiQueryClauses());
 		}
 		else {
 
@@ -115,21 +104,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		  }
 
 		  if (!$skipBoostFunctions) {
-		    global $wikipagesBoost, $activeusersBoost, $revcountBoost, $viewBoost;
-
-		    $wikipagesBoost = isset($_GET['page_boost']) ? $_GET['page_boost'] : 4 ;
-		    $boostFunctions[] = 'log(wikipages)^'.$wikipagesBoost;
-
-		    $activeusersBoost = isset($_GET['activeusers_boost']) ? $_GET['activeusers_boost'] : 4;
-		    $boostFunctions[] = 'log(activeusers)^'.$activeusersBoost;
-
-		    $revcountBoost = isset($_GET['revcount_boost']) ? $_GET['revcount_boost'] : 1;
-		    $boostFunctions[] = 'log(revcount)^'.$revcountBoost;
-
-		    $viewBoost = isset($_GET['views_boost']) ? $_GET['views_boost'] : 8;
-		    $boostFunctions[] = 'log(views)^'.$viewBoost;
-
-		    $boostFunctions[] = 'log(words)^0.5';
+		    $boostFunctions = array_merge($boostFunctions, $this->getInterWikiBoostFunctions());
 		  }
 
 		}
@@ -310,6 +285,49 @@ class WikiaSolrClient extends WikiaSearchClient {
 		return count( $privateWikis ) ? array_merge( $privateWikis, $wg->CrossWikiaSearchExcludedWikis ) : $wg->CrossWikiaSearchExcludedWikis;
 	}
 
+	public function getInterWikiQueryClauses()
+	{
+	  $queryClauses = array();
+
+	  $widQuery = '';
+
+	  foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
+	    $widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
+	  }
+	  
+	  $queryClauses[] = $widQuery;
+	  
+	  $queryClauses[] = "lang:en";
+	  
+	  $queryClauses[] = "iscontent:true";
+
+	  return $queryClauses;
+
+	}
+
+
+	public function getInterWikiBoostFunctions()
+	{
+	  global $wikipagesBoost, $activeusersBoost, $revcountBoost, $viewBoost;
+	  $boostFunctions = array();
+
+	  $wikipagesBoost = isset($_GET['page_boost']) ? $_GET['page_boost'] : 4 ;
+	  $boostFunctions[] = 'log(wikipages)^'.$wikipagesBoost;
+	  
+	  $activeusersBoost = isset($_GET['activeusers_boost']) ? $_GET['activeusers_boost'] : 4;
+	  $boostFunctions[] = 'log(activeusers)^'.$activeusersBoost;
+	  
+	  $revcountBoost = isset($_GET['revcount_boost']) ? $_GET['revcount_boost'] : 1;
+	  $boostFunctions[] = 'log(revcount)^'.$revcountBoost;
+	  
+	  $viewBoost = isset($_GET['views_boost']) ? $_GET['views_boost'] : 8;
+	  $boostFunctions[] = 'log(views)^'.$viewBoost;
+	  
+	  $boostFunctions[] = 'log(words)^0.5';
+
+	  return $boostFunctions;
+	}
+
 	/**
 	 * Designed as a method so we can make it more complex if we want to -- ex: syntactic parsing to determine question
 	 *
@@ -319,8 +337,12 @@ class WikiaSolrClient extends WikiaSearchClient {
 	  return substr_count($query, "answers") > 0;
 	}
 
-	public function getSimilarPages($query, array $params = array())
+	public function getSimilarPages($query = false, array $params = array())
 	{
+	      if (!$query && !isset($params['stream.body']) && !isset($params['stream.url'])) {
+		return json_code(array('success'=>1, 'message'=>'No query or stream provided'));
+	      }
+
 	      if (isset($params['start'])) {
 		  $start = $params['start'];
 		  unset($params['start']);
@@ -343,10 +365,10 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);
 	      } catch (Exception $e) {
 		echo $e; die;
+		return json_encode(array('success'=>0,'message'=>'Exception: '.$e));
 	      }
 
-
-	      return $response->response->docs;
+	      return $response;
 
 	}
 
