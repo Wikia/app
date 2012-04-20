@@ -131,8 +131,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
+			var_dump($response); die;
 		}
-		catch (Exception $exception) {
+		catch (Exception $exception) { echo $exception; die;
 		  if (!$skipBoostFunctions) {
 		    $methodOptions['skipBoostFunctions'] = true;
 		    return $this->search($query, $methodOptions);
@@ -406,6 +407,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 		return null;
 	}
 
-
+	// this lets us directly query the index without any of the preprocessing we have in the search method
+	// useful for services, not so much for our search interface
+	public function searchByLuceneQuery($query, $start, $size, $params)
+	{
+	  return $this->solrClient->search($query, $start, $size, $params);
+	}
 
 }

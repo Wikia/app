@@ -395,21 +395,31 @@ class WikiaSearch extends WikiaObject {
 
 	public function getInterestingTerms($query = false, array $params = array()) {
 
-	        $foo;
 		$params['mlt.fl'] = 'title,headings,first500,redirect_text,html';
+		$params['mlt.fl'] = 'title, html';
 		$params['mlt.boost'] = 'true';
 		#note, mlt.maxnpt might be necessary for performance
 		$params['mlt.interestingTerms'] = 'list';
 
 		$params['size'] = 0;
 
+		$memkey = $this->wf->SharedMemcKey( 'WikiaInterestingTerms', md5($query.serialize($params)) );
+		
+		if ($interestingTerms = $this->wg->Memc->get($memkey)) {
+		  return $interestingTerms;
+		}
+
 		$clientResponse = $this->client->getSimilarPages($query, $params);
 
 		$response = array();
 
+		$interestingTerms = $clientResponse->interestingTerms;
+
 		#@todo reverse dictionary-based stemming, but need all unique words, then to stem, then to use the most frequent. yuck.
 
-		return $clientResponse->interestingTerms;
+		$this->wg->Memc->set($memkey, $interestingTerms, self::GROUP_RESULTS_CACHE_TTL);
+
+		return $interestingTerms;
 
 	}
 
@@ -423,6 +433,50 @@ class WikiaSearch extends WikiaObject {
 		}
 		
 		return $this->getInterestingTerms($query, $params);
+
+	}
+
+	public function getTagCloud(array $params = array('maxpages'=>25, 'termcount'=>'20', 'maxfontsize'=>'56', 'minfontsize'=>6)) {
+	        
+	        $wid = $this->wg->cityId;
+
+		$query = 'wid:'.$wid.' AND iscontent:true';
+
+		$methodOptions = array('sort'=>'views desc');
+
+		$response =$this->client->searchByLuceneQuery($query, 0, $params['maxpages'], $methodOptions);
+		$docs = $response->response->docs;
+
+		$interestingTerms = array();
+
+		foreach ($docs as $doc) {
+
+		  $termResults = $this->getInterestingTerms('wid:'.$wid.' AND pageid:'.$doc->pageid);
+
+		  foreach ($termResults as $term) {
+		    $interestingTerms[$term] = isset($interestingTerms[$term]) ? $interestingTerms[$term]+1 : 1;;
+		  }
+
+		}
+
+		arsort($interestingTerms);
+
+		$interestingTerms = array_slice($interestingTerms, 0, $params['termcount']);
+
+		$termsToFontSize = array();
+
+		$min = min(array_values($interestingTerms));
+		$max = max(array_values($interestingTerms));
+
+		foreach ($interestingTerms as $term=>$count) {
+		  $termsToFontSize[$term] = max(array($params['minfontsize'], 
+						      #tagcloud calc
+						      round(abs($params['maxfontsize'] * ($count - $min) /  ($max - $min))) 
+						      )
+						).'px';
+		}
+
+		return $termsToFontSize;
 
 	}
 
