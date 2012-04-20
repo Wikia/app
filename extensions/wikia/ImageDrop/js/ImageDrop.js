@@ -1,6 +1,6 @@
 ImageDrop = {
     init: function(e){
-        var dropbox = $('#WikiaMainContent');
+        var dropbox = $('#WikiaArticle');
         ImageDrop.headlines = $($("#WikiaArticle .mw-headline").parent());
         dropbox.filedrop({
             // The name of the $_FILES entry:
