@@ -38,8 +38,8 @@
 				$endDate = date( 'Y-m-d', strtotime('-1 day') );
 			}
 
-			$memKey = $app->wf->MemcKey("datamart_pageviews",$periodId,$startDate,$endDate);
-			$pageviews = $app->wg->Memc->get($memKey);
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'pageviews', $wikiId, $periodId, $startDate, $endDate );
+			$pageviews = $app->wg->Memc->get( $memKey );
 			if ( !is_array($pageviews) ) {
 				$pageviews = array();
 				if ( !empty($app->wg->StatsDBEnabled) ) {
@@ -76,14 +76,14 @@
 
 		// get weekly pageviews
 		public static function getPageviewsWeekly( $startDate, $endDate=null, $wikiId=null ) {
-			$pageviews = $this::getPageviews( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId  );
+			$pageviews = self::getPageviews( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId  );
 
 			return $pageviews;
 		}
 
 		// get monthly pageviews
 		public static function getPageviewsMonthly( $startDate, $endDate=null, $wikiId=null ) {
-			$pageviews = $this::getPageviews( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId  );
+			$pageviews = self::getPageviews( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId  );
 
 			return $pageviews;
 		}
@@ -101,7 +101,7 @@
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 
-			$memKey = $app->wf->MemcKey( "datamart_topwikis", $limitUsed );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed );
 			$topWikis = $app->wg->Memc->get( $memKey );
 			if ( !is_array($topWikis) ) {
 				$topWikis = array();
@@ -133,4 +133,92 @@
 
 			return $topWikis;
 		}
+
+		/**
+		 * get events by wiki Id
+		 * @param integer $periodId
+		 * @param string $startDate [YYYY-MM-DD]
+		 * @param string $endDate [YYYY-MM-DD]
+		 * @param integer $wikiId
+		 * @param string $eventType [creates/edits/deletes/undeletes]
+		 * @return array $events [ array( 'YYYY-MM-DD' => pageviews ) ]
+		 * Note: number of edits includes number of creates
+		 */
+		protected static function getEventsByWikiId( $periodId, $startDate, $endDate=null, $wikiId=null, $eventType=null ) {
+			$app = F::app(); 
+
+			$app->wf->ProfileIn( __METHOD__ );
+
+			if ( empty($wikiId) ) {
+				$wikiId = $app->wg->CityId;
+			}
+
+			if ( empty($endDate) ) {
+				$endDate = date( 'Y-m-d', strtotime('-1 day') );
+			}
+
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'events', $wikiId, $periodId, $startDate, $endDate );
+			$events = $app->wg->Memc->get( $memKey );
+			if ( !is_array($events) ) {
+				$events = array();
+				if ( !empty($app->wg->StatsDBEnabled) ) {
+					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+
+					$result = $db->select(
+							array('rollup_wiki_namespace_user_events'),
+							array("date_format(time_id,'%Y-%m-%d') as date, sum(creates) creates, sum(edits) edits, sum(deletes) deletes, sum(undeletes) undeletes"),
+							array('period_id' => $periodId,
+								  'wiki_id'   => $wikiId,
+								  "time_id between '$startDate' and '$endDate'"),
+							__METHOD__,
+							array('GROUP BY' => 'date, wiki_id')
+					);
+
+					while ( $row = $db->fetchObject($result) ) {
+						$events[$row->date] = array(
+							'creates' => $row->creates,
+							'edits' => $row->creates + $row->edits,
+							'deletes' => $row->deletes,
+							'undeletes' => $row->undeletes,
+						);
+					}
+
+					$app->wg->Memc->set( $memKey, $events, 60*60*12 );
+				}
+			}
+
+			// get data depending on eventType
+			if ( !empty($eventType) ) {
+				foreach( $events as $date => $value ) {
+					$temp[$date] = $value[$eventType];
+				}
+				$events = $temp;
+			}
+
+			$app->wf->ProfileOut( __METHOD__ );
+
+			return $events;
+		}
+
+		// get daily edits
+		public static function getEditsDaily( $startDate, $endDate=null, $wikiId=null ) {
+			$edits = self::getEventsByWikiId( self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId, 'edits'  );
+
+			return $edits;
+		}
+
+		// get weekly edits
+		public static function getEditsWeekly( $startDate, $endDate=null, $wikiId=null ) {
+			$edits = self::getEventsByWikiId( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId, 'edits'  );
+
+			return $edits;
+		}
+
+		// get monthly edits
+		public static function getEditsMonthly( $startDate, $endDate=null, $wikiId=null ) {
+			$edits = self::getEventsByWikiId( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId, 'edits'  );
+
+			return $edits;
+		}
+
 	}
