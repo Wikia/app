@@ -13,8 +13,15 @@ ImageDrop = {
             url: wgServer + '/wikia.php?controller=ImageDrop&method=upload',
 
             uploadFinished:function(i,file,response){
-                $.data(file).addClass('done');
+            	$().log(response);
+                //$.data(file).addClass('done');
                 // response is the JSON object that post_file.php returns
+                var headline = $(ImageDrop.previousHeadline);
+                if(headline.length > 0) {
+                	headline.after($(response));
+                } else {
+                	ImageDrop.dropbox.prepend($(response));
+                }
             },
 
             error: function(err, file) {
