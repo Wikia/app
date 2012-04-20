@@ -5,7 +5,7 @@
 
 .SpecialOffer {
 
-	// copied from .WikiaRail > section rule (/skins/oasis/css/core/_page.scss)
+	// copied from .WikiaRail > section rule (/skins/oasis/css/core/page.scss)
 	@include clearfix;
 	@include linear-gradient(false, top, $color-menu-highlight, 60%, $color-module-shadow, 100%);
 	background-color: $color-menu-highlight;

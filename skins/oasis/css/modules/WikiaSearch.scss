@@ -34,7 +34,7 @@ $color-search-form-background: darken($color-page, 5%);
 		
 		button {
 			@include border-radius(3px);
-			// needed to override gray search button override (from skins/oasis/css/core/_Search.scss)
+			// needed to override gray search button override (from skins/oasis/css/core/Search.scss)
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 			float: right;		
 			height: 31px;
