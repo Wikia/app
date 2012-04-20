@@ -302,6 +302,8 @@ function outputTestsResult() {
 		}
 	}
 	
+	var status = (errors + failures) == 0;
+	
 	var passed = tests - errors - failures - skipped;
 	if (passed > 0) passed = stylize(passed + ' passed', 'green');
 	else passed = '0 passed';
@@ -318,7 +320,7 @@ function outputTestsResult() {
 	else skipped = '';
 	console.log('Ran ' + tests + ' tests with '+passed + ' and ' +failures+' and '+errors+skipped+' in ' + Math.round(time*100)/100 + ' seconds');
 	
-	return ((errors + failures) === 0);
+	return status;
 }
 
 page = require('webpage').create({
@@ -344,8 +346,8 @@ page = require('webpage').create({
 				if(tests.length){
 					processTest(tests.pop());
 				}else {
-					outputTestsResult();
-					exit(0);
+					var result = outputTestsResult();
+					exit( (result) ? 0 : 1 );
 					return;
 				}
 				break;
