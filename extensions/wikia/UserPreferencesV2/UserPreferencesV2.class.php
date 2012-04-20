@@ -87,7 +87,7 @@ class UserPreferencesV2 {
 			$defaultPreferences['emailaddress']['label-message'] = 'preferences-v2-my-email-address';
 		}
 		if (isset($defaultPreferences['emailauthentication'])) $defaultPreferences['emailauthentication']['section'] = 'emailv2/addressv2';
-		
+
 		if (isset($defaultPreferences['watchdefault'])) {
 			$defaultPreferences['watchdefault']['section'] = 'emailv2/followed-pages-iv2';
 			$defaultPreferences['watchdefault']['label-message'] = 'preferences-v2-watchdefault';
@@ -177,7 +177,6 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['toggle']);
 		unset($defaultPreferences['showtoc']);
 		unset($defaultPreferences['nocache']);
-		unset($defaultPreferences['showhiddencats']);
 		unset($defaultPreferences['showjumplinks']);
 		unset($defaultPreferences['numberheadings']);
 		if (isset($defaultPreferences['enablerichtext'])) $defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
@@ -275,6 +274,7 @@ class UserPreferencesV2 {
 			$defaultPreferences['showhiddencats']['section'] = 'under-the-hood/advanced-displayv2';
 			$defaultPreferences['showhiddencats']['type'] = 'toggle';
 			$defaultPreferences['showhiddencats']['label-message'] = 'tog-showhiddencats';
+			$defaultPreferences = $this->moveToEndOfArray( $defaultPreferences, 'showhiddencats' );
 		}
 		if (isset($defaultPreferences['showjumplinks'])) {
 			$defaultPreferences['showjumplinks']['section'] = 'under-the-hood/advanced-displayv2';
