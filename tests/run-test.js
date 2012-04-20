@@ -21,8 +21,7 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	fs = require('fs'),
 	sys = require('system'),
 	cliOptionRegex = new RegExp('-{1,2}', 'gi'),
-	frameworkRegex = new RegExp('@test-framework\\s+(\\S+)'),
-	dependencyRegex = new RegExp('@test-require-file\\s+(\\S+)', 'g'),
+	decoratorOptionRegex = new RegExp('@test-([^\n]+)', 'gi'),
 	includeTestFileRegex = new RegExp('^.*\\/tests\\/[^\\/]+\\.js$'),
 	excludeTestFileRegex = new RegExp('^\\.\\.\\/tests\\/.*\\.js$'),
 	jsFileRegex = new RegExp('^(.*)\\.js$'),
@@ -30,7 +29,14 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	tests = [],
 	testResults = [],
 	testResult,
-	options = {params: []},
+	options = {
+		'user-agent': DEFAULT_USER_AGENT,
+		'screen-resolution': {
+			width: DEFAULT_VIEWPORT_WIDTH,
+			height: DEFAULT_VIEWPORT_HEIGHT
+		},
+		params: []
+	},
 	optionsCounter = 0,
 	timer,
 	page;
@@ -54,7 +60,11 @@ function exit(retVal) {
 		phantom.exit(retVal);
 }
 
-function scanDirectory(path,output,callback) {
+function outputTestsResult() {
+	console.log('TODO output some results...');
+}
+
+function scanDirectory(path, output, callback) {
 	if (fs.isDirectory(path)) {
 		fs.list(path).forEach(function (e) {
 			if (e !== "." && e !== "..") {
@@ -82,15 +92,43 @@ function processTest(test) {
 	//console.log('Processing file:', test);
 	
 	var testSource = fs.read(test),
-		framework = frameworkRegex.exec(testSource),
 		requiredFiles = [],
 		deps = '',
+		testOptions = {
+			'require-file': [],
+			'screen-resolution': options['screen-resolution'],
+			'user-agent': options['user-agent']
+		},
 		runner,
-		match,
+		matches,
 		htmlTemplate;
 
-	if (framework instanceof Array && framework.length > 1) {
-		switch (framework[1].toString().toLowerCase()) {
+	//process test decorator options
+	if((matches = testSource.match(decoratorOptionRegex)) !== null){
+		for(var x = 0, y = matches.length; x < y; x++){
+			var tokens = matches[x].replace(/^@test-/i, '').split(' ', 2),
+				t = tokens[0];
+
+			if(t == 'exclude'){
+				console.log('Test excluded, skipping...');
+				exit(0);
+			}else if(t == 'require-file' && tokens[1]){
+				testOptions[t].push(tokens[1]);
+			}else if(t == 'screen-resolution' && tokens[1]){
+				var res = tokens[1].split('x', 2);
+	
+				testOptions[t] = {
+					width: res[0],
+					height: res[1]
+				};
+			}else{
+				testOptions[tokens[0]] = tokens[1] || true;
+			}
+		}
+	}
+
+	if(testOptions.framework) {
+		switch(testOptions.framework.toLowerCase()) {
 			case 'qunit':
 				requiredFiles.push('lib/qunit/qunit.js');
 				requiredFiles.push('lib/qunit/console_reporter.js');
@@ -110,12 +148,22 @@ function processTest(test) {
 		exit(1);
 	}
 
-	while (match !== null) {
-		match = dependencyRegex.exec(testSource);
+	if(testOptions['require-file'] instanceof Array){
+		testOptions['require-file'].forEach(function(item){
+			scanDirectory('../' + item, requiredFiles, function(arg) {return true;});
+		});
+	}
 
-		if (match instanceof Array && match.length > 1) {
-			scanDirectory('../' + match[1],requiredFiles,function(arg) {return true;});
-		}
+	if(testOptions['screen-resolution']){
+		page.viewportSize = testOptions['screen-resolution'];
+	}else{
+		page.viewportSize = options['screen-resolution'];
+	}
+
+	if(testOptions['user-agent']){
+		page.settings.userAgent = testOptions['user-agent'];
+	}else{
+		page.settings.userAgent = options['user-agent'];
 	}
 
 	requiredFiles.push(test);
@@ -129,11 +177,8 @@ function processTest(test) {
 	});
 
 	htmlTemplate = fs.read(runner).replace(DEPENDENCIES_PLACEHOLDER, deps);
-
 	fs.write(RUNNER_TEMP_PATH, htmlTemplate, 'w');
-
 	testResult = new TestResult(test);
-
 	page.open(RUNNER_TEMP_PATH, onPageLoaded);
 }
 
@@ -144,10 +189,18 @@ sys.args.forEach(function(item){
 
 	if(item.indexOf('-') === 0){
 		//option
-		var val = item.replace(/^-{1,2}/g, ''),
-		tokens = val.split('=', 2);
+		var tokens = item.replace(/^-{1,2}/g, '').split('=', 2),
+			t = tokens[0];
 
-		options[tokens[0]] = tokens[1] | true;
+		if(t == 'screen-resolution' && tokens[1]){
+			var res = tokens[1].split('x', 2);
+
+			options[t] = {
+				width: res[0],
+				height: res[1]
+			};
+		}else
+			options[tokens[0]] = tokens[1] || true;
 	}else{
 		//param
 		options.params.push(item);
@@ -158,6 +211,7 @@ if(!options.params.length){
 	scanDirectory('..',tests,function(arg) {
 		return (!excludeTestFileRegex.test(arg) && includeTestFileRegex.test(arg));
 	});
+
 	tests.reverse();
 	console.log('tests:');
 	console.log(tests);
@@ -197,7 +251,7 @@ page = require('webpage').create({
 					processTest(tests.pop());
 				}else {
 					outputTestsResult();
-					exit(0);				
+					exit(0);
 				}
 				break;
 			}
@@ -218,15 +272,10 @@ page = require('webpage').create({
 		loadPlugins : true,
 		localToRemoteUrlAccessEnabled : true,
 		XSSAuditingEnabled : true,
-		userAgent : DEFAULT_USER_AGENT
+		userAgent : options['user-agent']
 	},
 
-	viewportSize : {
-		width : DEFAULT_VIEWPORT_WIDTH,
-		height : DEFAULT_VIEWPORT_HEIGHT
-	}
+	viewportSize : options['screen-resolution']
 });
 
 processTest(tests.pop());
-
-
