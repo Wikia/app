@@ -53,20 +53,25 @@ $messages['br'] = array(
  * @author BroOk
  */
 $messages['ca'] = array(
+	'timeagomessaging-desc' => 'Proporciona i18n per jquery.timeago.js plugin',
+	'timeago-day' => 'fa {{PLURAL:$1|un dia|$1 dies}}',
 	'timeago-hour' => 'fa {{PLURAL:$1|una hora|$1 hores}}',
 	'timeago-minute' => 'fa {{PLURAL:$1|un minut|$1 minuts}}',
+	'timeago-month' => 'fa {{PLURAL:$1|un mes|$1 mesos}}',
 	'timeago-second' => 'fa un minut',
 );
 
 /** Czech (Česky)
  * @author Dontlietome7
  * @author Mormegil
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'timeagomessaging-desc' => 'Poskytuje i18n pro zásuvný modul jquery.timeago.js',
 	'timeago-day' => 'před {{PLURAL:$1|dnem|$1 dny}}',
 	'timeago-hour' => 'před {{PLURAL:$1|hodinou|$1 hodinami}}',
 	'timeago-minute' => 'před {{PLURAL:$1|1 minutou|$1 minutami}}',
+	'timeago-month' => 'před $1 {{PLURAL:$1|měsícem|měsíci|měsíci}}',
 	'timeago-second' => 'před minutou',
 );
 

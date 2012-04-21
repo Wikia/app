@@ -106,6 +106,7 @@ $messages['az'] = array(
 
 /** Bulgarian (Български)
  * @author DCLXVI
+ * @author Ivanko
  */
 $messages['bg'] = array(
 	'wikiamobile-search' => 'Търсене',
@@ -116,7 +117,7 @@ $messages['bg'] = array(
 	'wikiamobile-login-submit' => 'Влизане',
 	'wikiamobile-menu' => 'Меню',
 	'wikiamobile-article-categories' => 'Категории',
-	'wikiamobile-back' => 'Връщане',
+	'wikiamobile-back' => 'Назад',
 	'wikiamobile-hide-section' => 'скриване',
 );
 
@@ -791,6 +792,13 @@ $messages['th'] = array(
 	'wikiamobile-login-submit' => 'ลงชื่อเข้าใช้',
 	'wikiamobile-menu' => 'เมนู',
 	'wikiamobile-explore' => 'สำรวจ',
+);
+
+/** Turkish (Türkçe)
+ * @author Bilalokms
+ */
+$messages['tr'] = array(
+	'wikiamobile-search-wiki' => 'Viki',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

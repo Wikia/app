@@ -1594,6 +1594,7 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Lokal Profil
  * @author Tobulos1
+ * @author VickyC
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1641,6 +1642,7 @@ $messages['sv'] = array(
 	'editaccount-status-realuser' => 'Riktig användare',
 	'editaccount-status-tempuser' => 'Tillfällig användare',
 	'editaccount-error-tempuser-email' => 'Tillfälliga användare kan inte ha ett tomt fält för e-postadressen, var god ange en e-postadress.',
+	'editaccount-email-change-requested' => 'Användaren har begärt ändra e-postadress via Inställningar för  $1 . För att bekräfta begärd förändring av e-postadress för användaren, ange den begärda e-postadressen i fältet nedan och klicka på "Spara och bekräfta".',
 	'editaccount-log' => 'Användarkontots log',
 	'editaccount-log-header' => 'Denna sida listar förändringar av användarnas inställningar av Wikias personal.',
 	'editaccount-log-entry-email' => 'ändrade e-post för användare $2',

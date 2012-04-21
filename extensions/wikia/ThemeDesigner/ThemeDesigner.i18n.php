@@ -326,9 +326,11 @@ $messages['ca'] = array(
 
 /** Czech (Česky)
  * @author Dontlietome7
+ * @author Reaperman
  * @author Utar
  */
 $messages['cs'] = array(
+	'themedesigner-or' => 'nebo',
 	'themedesigner-desc' => 'Umožňuje administrátorům wiki změnit motiv wiki',
 	'themedesigner-title' => 'Návrhář motivů Wikia',
 	'themedesigner-background' => 'Pozadí',
@@ -344,6 +346,7 @@ $messages['cs'] = array(
 	'themedesigner-medium' => 'Střední',
 	'themedesigner-large' => 'Velké',
 	'themedesigner-tile-background' => 'opakovat pozadí',
+	'themedesigner-transparency' => 'průhlednost',
 	'themedesigner-tab-theme' => 'Motiv',
 	'themedesigner-tab-customize' => 'Upravit',
 	'themedesigner-tab-wordmark' => 'Logo',
@@ -367,7 +370,7 @@ $messages['cs'] = array(
 	'themedesigner-button-save' => 'Uložit',
 	'themedesigner-upload-a-graphic' => 'nahrát grafiku',
 	'themedesigner-rules-wordmark' => 'až do 250x65 pixelů (pouze soubory .png)',
-	'themedesigner-dont-use-a-graphic' => 'Nepoužívat grafiku',
+	'themedesigner-dont-use-a-graphic' => 'vyjmout',
 	'themedesigner-history-item' => '$1 - $2',
 	'themedesigner-button-change-text' => 'Změnit text',
 	'themedesigner-reason' => 'Návrhář motivů - uložil $1',
@@ -375,6 +378,8 @@ $messages['cs'] = array(
 	'themedesigner-dimensions-error' => 'Obrázek je příliš veliký',
 	'themedesigner-type-error' => 'Špatný typ souboru',
 	'themedesugber-uknown-error' => 'Nastala neidentifikovaná chyba, prosím opakujte akci.',
+	'themedesigner-favicon-heading' => 'Favicon',
+	'themedesigner-wodmark-preview' => 'Náhled',
 );
 
 /** German (Deutsch)
@@ -1256,7 +1261,7 @@ $messages['pl'] = array(
 	'themedesigner-background' => 'Tło',
 	'themedesigner-page' => 'Strona',
 	'themedesigner-color' => 'kolor',
-	'themedesigner-graphic' => 'grafika',
+	'themedesigner-graphic' => 'obraz',
 	'themedesigner-buttons' => 'przyciski',
 	'themedesigner-links' => 'linki',
 	'themedesigner-header' => 'nagłówek',
@@ -1265,7 +1270,7 @@ $messages['pl'] = array(
 	'themedesigner-small' => 'Mała',
 	'themedesigner-medium' => 'Średnia',
 	'themedesigner-large' => 'Duża',
-	'themedesigner-tile-background' => 'tło',
+	'themedesigner-tile-background' => 'sąsiadująco',
 	'themedesigner-fix-background' => 'nieruchomy',
 	'themedesigner-transparency' => 'przezroczystość',
 	'themedesigner-tab-theme' => 'Motyw',
@@ -1279,7 +1284,7 @@ $messages['pl'] = array(
 	'themedesigner-enter-your-own' => 'Wybierz własny',
 	'themedesigner-color-name-or-hex-code' => 'Nazwa koloru lub kod szesnastkowy',
 	'themedesigner-button-ok' => 'Ok',
-	'themedesigner-pick-an-image' => 'Wybierz grafikę',
+	'themedesigner-pick-an-image' => 'Wybierz obraz',
 	'themedesigner-dont-use-a-background' => 'Nie używaj tła',
 	'themedesigner-upload-your-own' => 'Prześlij własne',
 	'themedesigner-button-upload' => 'Prześlij',
@@ -1289,7 +1294,7 @@ $messages['pl'] = array(
 	'themedesigner-font' => 'czcionka',
 	'themedesigner-size' => 'rozmiar',
 	'themedesigner-button-save' => 'Zapisz',
-	'themedesigner-upload-a-graphic' => 'prześlij grafikę',
+	'themedesigner-upload-a-graphic' => 'prześlij obraz',
 	'themedesigner-rules-wordmark' => 'Załaduj plik .png o wymiarach nie większych niż 250 na 65 pikseli',
 	'themedesigner-rules-favicon' => 'Załaduj plik .ico o rozmiarze 16x16 pikseli. Favicon to niewielka ikonka pojawiająca się na karcie przeglądarki.',
 	'themedesigner-rules-favicon-learn-more-link' => 'Więcej informacji.',

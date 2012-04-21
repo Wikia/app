@@ -169,6 +169,7 @@ $messages['ca'] = array(
 
 /** Czech (Česky)
  * @author Dontlietome7
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'wikiapoll-desc' => 'Nabízí snadný způsob, jak vytvářet a spravovat ankety',
@@ -177,6 +178,14 @@ $messages['cs'] = array(
 	'wikiapoll-thanks-for-vote' => 'Děkujeme!',
 	'wikiapoll-vote' => 'Hlasovat!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 hlas|$1 hlasů}}',
+	'wikiapoll-createpoll-headline' => 'Vytvořit anketu',
+	'wikiapoll-editpoll-headline' => 'Upravit anketu',
+	'wikiapoll-question-label' => 'Otázka',
+	'wikiapoll-addnewitem-label' => 'Přidat novou položku',
+	'wikiapoll-cancel-label' => 'Storno',
+	'wikiapoll-publish-label' => 'Publikovat',
+	'wikiapoll-error-duplicate' => 'Anketa s tímto názvem již existuje.',
+	'wikiapoll-error-invalid-title' => 'Text otázky je neplatný.',
 );
 
 /** German (Deutsch)

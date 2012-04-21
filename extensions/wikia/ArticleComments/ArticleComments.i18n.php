@@ -2176,6 +2176,7 @@ $messages['zh-hans'] = array(
 	'article-comments-history' => '历史',
 	'article-comments-error' => '无法保存注释',
 	'article-comments-rc-comments' => '文章评论([[$1]])',
+	'article-comments-fbconnect' => '请<a href="$1">将该账户联结到Facebook</a>进行评论！',
 	'article-comments-toc-item' => '评论',
 	'article-comments-comment-cannot-add' => '不能将注释添加到文章中。',
 	'article-comments-reply' => '答复',
@@ -2187,6 +2188,8 @@ $messages['zh-hans'] = array(
 	'wikiamobile-article-comments-header' => '<span class=cnt id=wkArtCnt>$1</span>条评论',
 	'wikiamobile-article-comments-prev' => '加载前项',
 	'wikiamobile-article-comments-none' => '暂无评论',
+	'wikiamobile-article-comments-replies' => '回复',
+	'wikiamobile-article-comments-post' => '发布',
 	'enotif_body_article_comment' => '亲爱的$WATCHINGUSERNAME，
 
 $PAGEEDITOR对"$PAGETITLE"做出了评论。

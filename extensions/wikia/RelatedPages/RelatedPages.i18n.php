@@ -301,6 +301,14 @@ $messages['tl'] = array(
 	'wikiarelatedpages-heading' => 'Magbasa pa ng iba',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'wikiarelatedpages-desc' => 'Мәкаләләргә бәйләнгән сәхифәләр исемеген өсти',
+	'wikiarelatedpages-heading' => 'Күбрәк уку',
+);
+
 /** Ukrainian (Українська) */
 $messages['uk'] = array(
 	'wikiarelatedpages-heading' => 'Читати далі',

@@ -531,6 +531,7 @@ $messages['ce'] = array(
 
 /** Czech (Česky)
  * @author Darth Daron
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'rte-ck-bucket-textAppearance' => 'Vzhled textu',
@@ -564,7 +565,7 @@ $messages['cs'] = array(
 	'rte-ck-link-external-linkText' => 'Text odkazu',
 	'rte-ck-link-external-numberedLink' => 'Vytvořit číslovaný odkaz (například "[1]")',
 	'rte-ck-link-external-tab' => 'Externí odkaz',
-	'rte-ck-link-external-url' => 'URL adresa',
+	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-linkText' => 'Text odkazu',
 	'rte-ck-link-internal-pageName' => 'Název stránky',
 	'rte-ck-link-internal-tab' => 'Vnitřní odkaz',

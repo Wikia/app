@@ -479,6 +479,14 @@ $messages['tr'] = array(
 	'ircgate-channel' => 'Kanal:',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'ircgate-username' => 'Кулланучы исеме:',
+	'ircgate-channel' => 'Канал:',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

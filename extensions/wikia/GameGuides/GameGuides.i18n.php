@@ -201,3 +201,10 @@ $messages['tl'] = array(
 	'wikiagameguides-desc' => 'Mga modyul ng aplikasyong naililipat-lipat ng Mga Gabay sa Laro ng Wikia',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'wikiagameguides-desc' => 'Wikia Game Guides мобиль кушымтасы өчен модульләр',
+);
+

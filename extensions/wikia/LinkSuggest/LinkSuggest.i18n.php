@@ -220,10 +220,11 @@ $messages['oc'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków w trybie źródła',
+	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków w trybie źródłowym.',
 );
 
 /** Piedmontese (Piemontèis)

@@ -524,6 +524,7 @@ $messages['ckb'] = array(
 /** Czech (Česky)
  * @author Jezevec
  * @author Jkjk
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'autocreatewiki' => 'Vytvořit novou wiki',
@@ -565,6 +566,12 @@ $messages['cs'] = array(
 	'autocreatewiki-invalid-username' => 'Toto uživatelské jméno je neplatné.',
 	'autocreatewiki-busy-username' => 'Toto uživatelské jméno je již obsazené.',
 	'autocreatewiki-blocked-username' => 'Nemůžete vytvořit účet.',
+	'autocreatewiki-category-label' => 'Kategorie:',
+	'autocreatewiki-category-other' => 'Jiné',
+	'autocreatewiki-set-username' => 'Nejprve zvolte uživatelské jméno.',
+	'autocreatewiki-invalid-birthday' => 'Neplatné datum narození',
+	'autocreatewiki-congratulation' => 'Blahopřejeme!',
+	'autocreatewiki-welcometalk-log' => 'Uvítací zpráva',
 	'autocreatewiki-step2-error' => 'Databáze existuje!',
 	'autocreatewiki-subname-answers' => 'Odpovědi',
 );
@@ -4709,6 +4716,7 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-info-email-address' => '您的电子邮件地址不会显示给Wikia上的任何人。',
 	'autocreatewiki-info-realname' => '如果提供这将用于为您提供了归因你的工作。',
 	'autocreatewiki-title-template' => '$1 维基',
+	'autocreatewiki-violate-policy' => '此维基名中含有违反命名策略的词语',
 	'autocreatewiki-name-too-short' => '此地址过短，请选择一个至少包含3个字符的地址。',
 	'autocreatewiki-name-too-long' => '此地址过长，请选择一个最多包含50个字符的地址。',
 	'autocreatewiki-invalid-username' => '此用户名无效。',

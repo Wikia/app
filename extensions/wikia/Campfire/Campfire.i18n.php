@@ -161,6 +161,14 @@ $messages['sv'] = array(
 	'campfire-licensed-under' => 'Gjord tillgänglig under licensen $1',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'campfire-page-header' => '$2 дән $1',
+	'campfire-licensed-under' => '$1 лицензиясы астында',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

@@ -1756,14 +1756,34 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'createpage-desc' => 'Викиянең визуаль редакторы ярдәмендә яңа мәкаләләр төзергә мөмкинлек бирә',
 	'createpage-sp-title' => 'Яңа мәкалә язу',
 	'createpage_title' => 'Яңа мәкалә язу',
 	'createpage_title_caption' => 'Исем',
 	'createpage_enter_text' => 'Текст',
+	'createpage_empty_title_error' => 'Исем мәҗбүри',
+	'createpage_empty_article_body_error' => 'Мәкалә тексты мәҗбүри',
 	'createpage_invalid_title_error' => 'Мөмкин булмаган исем',
+	'createpage_article_already_exists' => 'Мондый исемле мәкалә бар инде.
+Зинһар өчен, башка исем сайлагыз.',
+	'createpage_spam' => 'Кызганычка, сезнең үзгәртүне саклап булмый',
 	'createpage_cant_edit' => 'Үзгәртүне башкарып булмады',
 	'createpage-dialog-title' => 'Яңа мәкалә язу',
 	'createpage-dialog-message1' => 'Афәрин, сез яңа мәкалә язасыз!',
+	'createpage-dialog-message2' => 'Аны ничек атарга телисез?',
+	'createpage-dialog-choose' => 'Битнең макетын сайлагыз:',
+	'createpage-dialog-format' => 'Стандарт кыса',
+	'createpage-dialog-blank' => 'Буш бит',
+	'createpage-error-empty-title' => 'Зинһар өчен, мәкаләгезнең исемен языгыз',
+	'createpage-error-invalid-title' => 'Кызганычка, мәкалә өчен мондый исем тыелган.
+Зинһар өчен, башка исем кулланыгыз.',
+	'createpage-error-article-exists' => 'Мондый исемле мәкалә бар инде. 
+Сез <a href="$1">$2</a> сәхифәсенә күчә аласыз, яки мәкаләнең исемен үзгәртергә мөмкин.',
+	'createpage-error-article-spam' => 'Кызганычка, мәкалә исеме безнең спам-фильтр тарафыннан тыелды.
+Зинһар өчен, башка исем кулланыгыз.',
+	'createpage-error-article-blocked' => 'Кызганычка, сез бу мәкаләне хәзер ясый алмыйсыз.',
+	'tog-createpagedefaultblank' => 'Яңа мәкалә ясаганда буш бит кулланырга.',
+	'tog-createpagepopupdisabled' => '"Яңа мәкалә язу" йөззүче тәрәзәсен сүндерергә (тәкъдим ителми)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Монда мәкаләгезнең беренче параграфын языгыз.
 

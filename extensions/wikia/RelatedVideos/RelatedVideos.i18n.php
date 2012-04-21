@@ -660,6 +660,8 @@ $messages['sv'] = array(
 	'related-videos-video-is-new' => 'Ny',
 	'related-videos-pagination' => '$1 av $2',
 	'related-videos-empty' => 'Bli först att lägga till ett videoklipp',
+	'related-videos-requestbutton' => 'Begära nya videoklipp',
+	'related-videos-requesttext' => 'Vad annat vill du se?',
 );
 
 /** Tamil (தமிழ்)

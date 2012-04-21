@@ -148,6 +148,14 @@ $messages['sv'] = array(
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'centralhelpsearch-desc' => 'Вики Җәмгыяте Белешмәлеге буенча эзләү формасын кушуны рөхсәт итү',
+	'centralhelpsearch-placeholder' => 'Белешмәлек буенча эзләү ...',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Dimension
  */

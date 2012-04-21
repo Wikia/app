@@ -990,5 +990,10 @@ $messages['zh-hans'] = array(
 <li>保存除您登入记录外的用户名、历史记录、编辑等信息</li>
 <li>和Facebook上的朋友分享您的活动，并且完全控制发布的内容</li>
 </ul>',
+	'comboajaxlogin-readonlytext' => '<h2>抱歉！</h2>
+<p>您现在不能创建账户——我们将尽快上线并重新运行。在这里查看问题原因：<br /><em>$1</em></p>
+<p>请查看<a href="http://twitter.com/wikia">Twitter</a> 或 <a href="http://facebook.com/wikia">Facebook</a> 了解更多信息。
+<br />
+（如果您已拥有一个账户，则可以正常<a href="#">登陆</a>，但不能做出任何编辑。）</p>',
 );
 
