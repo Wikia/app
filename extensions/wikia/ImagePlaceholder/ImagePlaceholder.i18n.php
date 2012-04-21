@@ -230,7 +230,9 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'imgplc-create' => 'Bild derbäisetzen',
+	'imgplc-placeholder' => 'Reservéiert Plaz',
 	'imgplc-image' => 'Bild',
+	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
 );
 
 /** Macedonian (Македонски)
@@ -397,6 +399,16 @@ $messages['tl'] = array(
 	'imgplc-placeholder' => 'Tagahawak ng lugar',
 	'imgplc-image' => 'Larawan',
 	'imgplc-notinhistory' => 'Hindi ka makapagdaragdag ng larawan habang nasa modalidad na pangkasaysayan.',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'imgplc-create' => 'Сурәт өстәү',
+	'imgplc-placeholder' => 'Өстәүче',
+	'imgplc-image' => 'Сурәт',
+	'imgplc-notinhistory' => 'Сез тарих режимыда сурәтләр өсти алмыйсыз.',
 );
 
 /** Ukrainian (Українська)

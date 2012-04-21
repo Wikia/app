@@ -66,10 +66,11 @@ $messages['bs'] = array(
 
 /** Czech (Česky)
  * @author Dontlietome7
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'batchuserrights' => 'Dávkové přidělení uživatelských práv',
-	'batchuserrights-desc' => 'Umožňuje přidání jednoho nebo více uživatelů najednou do skupiny',
+	'batchuserrights-desc' => 'Umožňuje přidat do skupiny jednoho nebo více uživatelů najednou',
 	'batchuserrights-names' => 'Uživatelská jména k přidání do této skupiny (1 na řádek):',
 	'batchuserrights-intro' => 'Tato stránka vám umožní přidat skupinu pro více uživatelů najednou.
 Z bezpečnostních důvodů seznam přidatelných skupin je nastaven v konfiguraci rozšíření a nelze jej měnit v rámci wiki.
@@ -408,6 +409,14 @@ Hindi ito makagagawa ng anumang bagay.
 Ang natitirang bahagi ng pahina ay papahintulutang tumakbo upang maginhawa mong makita kung ang alin man sa mga pangalan ng tagagamit ay hindi maikakarga.',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'batchuserrights' => 'Кулланучы хокуклары белән пакетлы идарә',
+	'batchuserrights-desc' => 'Берничә катнашучыны төркемгә бер гамәл белән өстәргә мөмкинлек бирә',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */
@@ -417,10 +426,12 @@ $messages['uk'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'batchuserrights' => '批处理的用户权限',
 	'batchuserrights-desc' => '允许在一次操作中将一个或多个用户添加到一个组',
+	'batchuserrights-userload-error' => "无法加载用户\"'''\$1'''\"。",
 );
 

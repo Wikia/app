@@ -6529,6 +6529,7 @@ Precisa de estar autenticado para ver as Estatísticas da Wikia.
  * @author Caio1478
  * @author Jesielt
  * @author Luckas Blade
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'wikistats' => 'Wikia Estatísticas',
@@ -6597,7 +6598,7 @@ $messages['pt-br'] = array(
 	'wikistats_image' => 'imagem',
 	'wikistats_external' => 'externo',
 	'wikistats_rollups' => 'Pacotes acumulativos de atualizações',
-	'wikistats_namespaces' => 'namespaces',
+	'wikistats_namespaces' => 'espaços nominais',
 	'wikistats_redirects' => 'redirecionamento',
 	'wikistats_edited_in_namespace' => 'editado no namespace',
 	'wikistats_main_namespace' => 'Principal',

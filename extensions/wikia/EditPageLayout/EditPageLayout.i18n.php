@@ -1609,10 +1609,11 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Caio1478
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'editpagelayout-notificationsLink-none' => 'Notificações',
-	'restore-edits-notice' => "Bem-vindo de volta! Nós restauramos algumas alterações que você não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
+	'restore-edits-notice' => "Bem-vindo(a) de volta! Nós restauramos algumas alterações que você ainda não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
 );
 
 /** Russian (Русский)

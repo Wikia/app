@@ -419,6 +419,13 @@ $messages['tl'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Mga mungkahing pagbabaybay para sa "$1": $2',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'spellchecker-info-spellcheck-languages' => 'Тел',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  * @author XiaoQiaoGrace

@@ -129,7 +129,9 @@ $messages['br'] = array(
 	'lyrics-artist-byline' => 'gant %s',
 );
 
-/** Czech (Česky) */
+/** Czech (Česky)
+ * @author Reaperman
+ */
 $messages['cs'] = array(
 	'app-loading' => 'Načítání...',
 	'app-tab-search' => 'Hledat',
@@ -145,6 +147,11 @@ $messages['cs'] = array(
 	'search-hint-text' => "např.: 'John Lennon:Imagine'",
 	'search-no-match-found' => 'Na dotaz nebyl nalezen žádný výsledek.',
 	'search-no-match-found-query' => 'Hledaný řetězec: %s',
+	'search-results-title' => 'Výsledky vyhledávání pro: %s',
+	'login-label' => 'Přihlášení do LyricWiki',
+	'login-username-hint' => 'Uživatelské jméno',
+	'login-password-hint' => 'Heslo',
+	'login-submit-button' => 'Přihlásit se',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'napsal %s',
 	'about-heading-tips' => 'Vyhledávání',
@@ -155,7 +162,8 @@ $messages['cs'] = array(
 	'about-heading-feedback' => 'Kontakt',
 	'about-feedback-0' => 'Chcete nám o aplikaci něco sdělit? Pište na: %s',
 	'about-heading-rate' => 'Prosíme o ohodnocení aplikace',
-	'about-rate-0-android' => 'Pokud se vám aplikace líbí, ohodnoťte jí prosím pěti hvězdičkami na Android Market :)',
+	'about-rate-0-android' => 'Pokud se vám tato aplikace líbí, ohodnoťte jí prosím pěti hvězdičkami na Android Market!',
+	'about-rate-0-ios' => 'Jestli se Vám tato aplikace líbí, ohodnoťte ji prosím pěti hvězdičkami v App Store!',
 	'gracenote-takedown' => 'Hopla! Bohužel v tuto chívli nejsme licencováni k zobrazení tohoto textu (což se stává méně než 1 % našich písniček). Zkuste to prosím příští týden.',
 	'lyrics-artist-byline' => 'Interpret: %s',
 	'ringtone-matcher-by-song' => 'Nechte si zaslat vyzvánění %s na váš mobil',

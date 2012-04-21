@@ -273,3 +273,14 @@ $messages['tl'] = array(
 Activity on rating pages is ''not'' taken into account here.",
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'graceexpired' => 'Күчерелгән вакытның ахыры',
+	'graceexpired-row' => '$1 (i$2 өчен, соңгы үзгәртү $3)',
+	'graceexpired-header' => 'Бу сәхифәдә  [[:Category:Abandoned|ташланган]], [[:Category:Trash_builds|чүп белән тулган]], [[:Category:Build stubs|артык кыска]] яки [[:Category:Trial Builds|тикшерү өчен генш эшләнгән]], һәм ике атнадан артык үзгәртелмәгән барлык төзелмәләр санап үтелгән.
+
+Тавыш бирү сәхифәләрендә  гамәлләр исәпкә алынмый.',
+);
+

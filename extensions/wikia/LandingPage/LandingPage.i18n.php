@@ -402,10 +402,17 @@ $messages['tl'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'landingpage' => 'Викияга рәхим итегез',
+	'landingpage-start-exploring' => 'Өйрәнүне башларга әзерме?',
+	'landingpage-start-exploring-text' => 'Үзегез яраткан темаларны эзләгез яки катнашучылар арасында популяр булганнарын карагыз.',
+	'landingpage-readfaq' => 'Сораулар бармы? Безнең FAQ &gt; карагыз',
+	'landingpage-text' => 'Викияда сез <strong>кызыксыну һәм шөгыльләрегез</strong> уртак булган <strong>кешеләр белән аралаша алырсыз.</strong>.  Үзегезнең төркемегезне табыгыз, фикерләр һәм төзәтүләр калдырыгыз яки  <strong>үз веб-сайтыгызны ясагыз</strong> һәм җәмгыять туплагыз.',
+	'landingpage-buttons-learn-more' => 'Тулырак &gt;',
 	'landingpage-language-links' => '* English|en
 * Español|es
 * Deutsch|de
 * Français|fr',
+	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia',
 );
 
 /** Ukrainian (Українська) */

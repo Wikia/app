@@ -1519,7 +1519,7 @@ Prosimy [[Special:Contact|skontaktuj się z Wikia]] w sprawie problemu.<br />Blo
 	'phalanx-stats-table-wiki-url' => 'Adres URL Wiki',
 	'phalanx-stats-table-wiki-last-edited' => 'Ostatnia zmiana',
 	'phalanx-email-filter-hidden' => 'Filtr e-mailowy ukryty. Nie masz uprawnień aby wyświetlić tekst.',
-	'right-phalanx' => 'Można zarządzać globalnymi blokadami i filtrami spamu',
+	'right-phalanx' => 'Zarządzenie globalnymi blokadami i filtrami spamu',
 	'right-phalanxexempt' => 'Wyłączone z reguł Phalanx',
 	'right-phalanxemailblock' => 'Umożliwia włączanie, przeglądanie i zarządzanie blokadami opartymi o e-mail',
 );

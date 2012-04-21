@@ -1383,10 +1383,11 @@ $messages['pt'] = array(
  * @author Aristóbulo
  * @author Caio1478
  * @author Pedroca cerebral
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'chat' => 'Chat',
-	'chat-desc' => '[[Special:Chat|Chat ao vivo]]',
+	'chat-desc' => '[[Special:Chat|Chat]]',
 	'chat-no-login' => 'Você precisa estar logado no chat.',
 	'chat-no-login-text' => 'Por favor, faça login para entrar no chat.',
 	'chat-default-topic' => 'Bem-vindo ao chat do $1',
@@ -1401,20 +1402,20 @@ $messages['pt-br'] = array(
 	'chat-err-connected-from-another-browser' => 'Ligou-se a partir de outro browser. Esta ligação será fechada.',
 	'chat-err-communicating-with-mediawiki' => 'Erro de comunicação com o servidor do MediaWiki.',
 	'chat-ban-cant-ban-moderator' => 'Você não pode expulsar/banir outro Moderador do Chat.',
-	'chat-ban-already-banned' => '$1 já está banido do chat nesta wiki.',
+	'chat-ban-already-banned' => '$1 já está banido do chat deste wiki.',
 	'chat-ban-you-need-permission' => 'Você não tem a permissão $1 que é necessária para expulsar/banir um usuário.',
 	'chat-missing-required-parameter' => "' $1 'é necessário, mas não foi encontrado no pedido.",
 	'chat-err-already-chatmod' => 'Erro: "$1" já está no grupo "$2".',
 	'chat-err-no-permission-to-add-chatmod' => 'Erro: Vpcê não tem permissões para colocar este usuário no grupo "$1".',
-	'chat-userrightslog-a-made-b-chatmod' => '$1 promoveu $2 para ser um moderador do chat nesta wiki.',
+	'chat-userrightslog-a-made-b-chatmod' => '$1 promoveu $2 para ser um moderador de chat neste wiki.',
 	'chat-err-invalid-username-chatmod' => 'Erro: Não foi possível encontrar o usuário "$1"',
 	'chat-you-are-banned' => 'Erro de permissões.',
 	'chat-you-are-banned-text' => 'Desculpe, mas você não tem permissões para usar o chat nesta wiki. Se acredita que a falta de permissões resulta de um erro ou pretende que o assunto seja reconsiderado, contate um administrador, por favor.',
 	'chat-room-is-not-on-this-wiki' => 'O chat onde você está tentando entrar não parece existir nesta wiki.',
-	'chat-kick-log-reason' => 'Expulsado/banido do chat desta wiki por $1. Por favor, contate-os para mais informações.',
+	'chat-kick-log-reason' => 'Expulso ou banido do chat deste wiki por $1. Entre em contato para mais informações.',
 	'chat-headline' => 'Chat da $1',
 	'chat-live' => 'Ao vivo!',
-	'chat-start-a-chat' => 'Iniciar uma Conversa',
+	'chat-start-a-chat' => 'Iniciar um chat',
 	'chat-whos-here' => 'Quem está aqui ($1)',
 	'chat-join-the-chat' => 'Entrar no Chat',
 	'chat-edit-count' => '{{PLURAL:$1|$1 edição|$1 edições}}',
@@ -1427,7 +1428,7 @@ $messages['pt-br'] = array(
 	'chat-user-manu-kickban' => 'Banir',
 	'chat-user-manu-private-block' => 'Bloquear Mensagens Privadas',
 	'chat-user-manu-private-allow' => 'Permitir Mensagens Privadas',
-	'chat-user-manu-private-close' => 'Fechar Quarto Privado',
+	'chat-user-manu-private-close' => 'Fechar sala reservada',
 	'chat-private-headline' => 'Chat privado com $1',
 	'right-chatmoderator' => 'Pode expulsar/banir usuários do [[Help:Chat|Chat]]',
 	'group-chatmoderator' => 'Moderadores do chat',

@@ -78,6 +78,28 @@ $messages['br'] = array(
 	'alert-download-updated-wikis-button-ok' => 'Mat eo',
 );
 
+/** Czech (Česky)
+ * @author Reaperman
+ */
+$messages['cs'] = array(
+	'activityindicator-message' => 'Nahrávám…',
+	'window-wikis-title' => 'Wikia Herní návody',
+	'window-wikis-wikilist-search-hint' => 'Vyhledat naše top hry...',
+	'window-category-load-batch' => 'Více',
+	'window-article-button-close' => 'Zavřít',
+	'window-article-button-back' => 'Zpět',
+	'window-article-menu-search-label' => 'Hledat',
+	'window-article-menu-dashboard-label' => 'Obsah návodu',
+	'window-article-menu-cancel-label' => 'Storno',
+	'searchview-no-results' => 'Žádné výsledky pro „%s“',
+	'searchview-button-back-list' => 'Zpět na seznam',
+	'searchview-button-back-article' => 'Zpět na článek',
+	'searchbar-hint' => 'Hledání  %s...',
+	'alert-download-updated-wikis-message' => 'Seznam dostupných návodů bude aktualizován.',
+	'alert-download-updated-wikis-button-ok' => 'OK',
+	'error-update-required' => 'Aktualizace pro tuto aplikaci je dostupná a vyžadovaná.',
+);
+
 /** German (Deutsch)
  * @author Inkowik
  * @author LWChris

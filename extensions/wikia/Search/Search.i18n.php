@@ -77,6 +77,7 @@ $messages['br'] = array(
 
 /** Czech (Česky)
  * @author Dontlietome7
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'search-desc' => 'Vyhledávací engine Wikia používající Solr',
@@ -85,6 +86,7 @@ $messages['cs'] = array(
 	'wikiasearch-search-this-wiki' => 'Prohledávat pouze Wikia Central',
 	'wikiasearch-search-wikia' => 'Prohledat Wkii',
 	'wikiasearch-image-results' => 'Výsledky obrázků pro "$1"',
+	'wikiasearch-search-all-wikia' => 'Hledat v celé Wikii',
 );
 
 /** German (Deutsch)
@@ -592,14 +594,17 @@ $messages['tl'] = array(
 );
 
 /** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
+	'search-desc' => 'Solr серверы ярдәмендә Кросс-Викия эзләве',
 	'wikiasearch-titles-only' => 'Битнең баш исемнәреннән генә эзләргә',
 	'wikiasearch-system-error-msg' => 'система хатасы аркасында эзләшү мөмкин түгел',
 	'wikiasearch-search-this-wiki' => 'Wikia Central да гына эзләү',
 	'wikiasearch-search-wikia' => 'Wikia дә табарга',
 	'wikiasearch-image-results' => '«$1» өчен рәсемнәр табу',
+	'wikiasearch-search-all-wikia' => 'Бөтен Викия буенча эзләү',
 );
 
 /** Ukrainian (Українська)

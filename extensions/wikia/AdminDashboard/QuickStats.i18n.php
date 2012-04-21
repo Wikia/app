@@ -452,7 +452,7 @@ $messages['pl'] = array(
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Odwiedziny',
 	'quickstats-header-edits' => 'Edycje',
-	'quickstats-header-photos' => 'Grafiki',
+	'quickstats-header-photos' => 'Obrazy',
 	'quickstats-header-likes' => 'Polubienia',
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Łącznie',
@@ -638,6 +638,7 @@ $messages['tt-cyrl'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1милл.',
 	'quickstats-number-shortening-billions' => '$1миллиард',
+	'quickstats-ga-broken-message' => 'Вики битләрен карау статистикасына керү мөмкинлеге әлегә юк. Без моны төзәтү өстендә эшлибез! [$1 тулырак]',
 );
 
 /** Ukrainian (Українська)
@@ -681,6 +682,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
+ * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'quickstats-header-date' => '日期',
@@ -691,6 +693,7 @@ $messages['zh-hans'] = array(
 	'quickstats-totals-label' => '总计',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多统计]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1（百万）',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

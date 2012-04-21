@@ -249,6 +249,13 @@ $messages['tl'] = array(
 	'sitemap-desc' => 'Gumawa ng mga Sityo ng mapa para sa wiki sa ibabaw ng salimbayan',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'sitemap-desc' => 'Sitemap файлларын викида җитез генә ясау',
+);
+
 /** Ukrainian (Українська)
  * @author Alex Khimich
  */

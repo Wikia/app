@@ -637,7 +637,13 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; бөтен тавыштан',
 	'ajaxpoll-thankyou' => 'Тавышыгыз өчен рәхмәт!',
+	'ajaxpoll-error' => 'Сезнең тавышны эшкәртүдә авырлык килеп чыкты, тагын эшләп карагыз.',
+	'ajaxpoll-summary' => 'Тавыш бирү төзелде - $1 $2, хәзергесе мизгелдә  $3  кеше тавыш бирде.',
+	'ajaxpoll-submit' => 'Тавыш бирергә!',
+	'ajaxpoll-closed' => 'Тавыш бирү ябык. Нәтиҗәләр белән рәхәтләнегез.',
+	'ajaxpoll-submitting' => 'Зинһар өчен, сезнең тавыш турында мәгълүмат тапшырылганын көтегез...',
 );
 
 /** Ukrainian (Українська)

@@ -256,6 +256,13 @@ $messages['tl'] = array(
 	'healthcheck-desc' => 'Isang [[Special:HealthCheck|natatanging pahina]] para sa pagsusuri ng katayuan ng panghain',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'healthcheck-desc' => 'Серверның халәтен тикшерү өчен A [[Special:HealthCheck|махсус бит]].',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

@@ -18,6 +18,14 @@ $messages['qqq'] = array(
 * $3 is a link to the e-mail address change form',
 );
 
+/** Czech (Česky)
+ * @author Jezevec
+ */
+$messages['cs'] = array(
+	'confirmemailprompt-desc' => 'Zobrazit varování pokud nemá uživatel potvrzený email',
+	'confirmemailprompt-error' => 'Je toto vaše emailová adresa: <strong>$1</strong>? [[$2|Potvrďte ji]] nebo [[$3|ji změňte]].',
+);
+
 /** German (Deutsch)
  * @author Tiin
  */
@@ -153,6 +161,13 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'confirmemailprompt-desc' => 'Visar ett varningsmeddelande om en användare har en obekräftad e-postadress',
 	'confirmemailprompt-error' => 'Är detta din e-postadress: <strong>$1</strong>? [[$2|Bekräfta den]] eller [[$3|ändra den]].',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'confirmemailprompt-desc' => 'Әгәр катнашучының электрон почта адресы күрсәтелмәгән икән, кисәтүче хәбәр чыгара.',
 );
 
 /** Vietnamese (Tiếng Việt)

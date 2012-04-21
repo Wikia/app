@@ -181,6 +181,13 @@ $messages['tl'] = array(
 	'imageserving-desc' => 'Pumipili ng mga larawan mula sa isang tinukoy na hilera ng mga pahina batay sa mga pangangailangang pangmata',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'imageserving-desc' => 'Күрсәтелгән мәкаләләр массивыннан визуаль таләпләр нигезендә сурәтләр сайлый.',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Hydra
  */

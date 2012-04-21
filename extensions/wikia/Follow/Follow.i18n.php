@@ -319,6 +319,27 @@ Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur
 	'enotif_subject_blogpost' => 'Ar bajenn $PAGETITLE eus al lec\'hienn {{SITENAME}} a zo bet postet war $BLOGLISTINGNAME gant $PAGEEDITOR',
 );
 
+/** Catalan (Català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'prefs-basic' => 'Opcions bàsiques',
+	'wikiafollowedpages-special-heading-category' => 'Categories ($1)',
+	'wikiafollowedpages-special-heading-article' => 'Articles ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogs i posts ($1)',
+	'wikiafollowedpages-special-heading-forum' => 'Fòrums ($1)',
+	'wikiafollowedpages-special-heading-project' => 'Pàgines de Projecte ($1)',
+	'wikiafollowedpages-special-heading-user' => "Pàgines d'usuari ($1)",
+	'wikiafollowedpages-special-heading-templates' => 'Pàgines de Plantilles ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'Pàgines MediaWiki ($1)',
+	'wikiafollowedpages-special-heading-media' => 'Imatges i vídeos ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 pàgina)',
+	'wikiafollowedpages-special-heading-wall' => 'Message Walls ($1)',
+	'wikiafollowedpages-special-empty' => 'La teva llista de pàgines que segueixes està buida.
+Afegeix pàgines a aquesta llista fent clic a "{{int:watch}}" a la part superior d\'una pàgina.',
+	'wikiafollowedpages-userpage-heading' => 'Pàgines que segueixo',
+);
+
 /** Chechen (Нохчийн)
  * @author Sasan700
  */
@@ -2036,7 +2057,7 @@ Dodaj strony do listy klikając „{{int:watch}}“ na górze strony.',
 	'tog-enotiffollowedminoredits' => 'Wyślij do mnie e‐mail, w przypadku drobnych zmian na stronach z mojej listy obserwowanych',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Opcje zaawansowane',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Tylko lista obserwowanych',
-	'tog-hidefollowedpages' => 'Ukryj moją listę śledzonych stron przed wszystkimi',
+	'tog-hidefollowedpages' => 'Ukryj moją listę obserwowanych stron',
 	'follow-categoryadd-summary' => 'Strona dodana do kategorii',
 	'follow-bloglisting-summary' => 'Blog zamieszczony na stronie blogu',
 	'wikiafollowedpages-userpage-heading' => 'Strony, które obserwuję',
@@ -2918,6 +2939,9 @@ $messages['tt-cyrl'] = array(
 	'wikiafollowedpages-special-heading-media' => 'Сурәтләр һәм видео ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 сәхифә)',
 	'wikiafollowedpages-special-heading-wall' => 'Фикерләү диварлары $1 )',
+	'wikiafollowedpages-special-title' => 'Күзәтелүче сәхифәләр',
+	'wikiafollowedpages-userpage-more' => 'Тагын',
+	'wikiafollowedpages-userpage-hide' => 'яшерү',
 );
 
 /** Ukrainian (Українська)

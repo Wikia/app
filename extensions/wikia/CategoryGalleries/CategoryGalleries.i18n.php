@@ -241,6 +241,13 @@ $messages['tl'] = array(
 	'categorygalleries-desc' => 'Nagpapakita ng isang tanghalan ng mga pahina sa mga pahina ng kategorya',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'categorygalleries-desc' => 'Мәкаәләр галереясын төркем сәхифәсендә күрсәтә',
+);
+
 /** Ukrainian (Українська)
  * @author Тест
  */

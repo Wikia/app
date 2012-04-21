@@ -1227,6 +1227,14 @@ $messages['sv'] = array(
 	'wikifeatures-log-name' => 'Logg över Wiki-funktioner',
 );
 
+/** Turkish (Türkçe)
+ * @author Bilalokms
+ */
+$messages['tr'] = array(
+	'wikifeatures-deactivate-cancel-button' => 'İptal',
+	'wikifeatures-promotion-new' => 'Yeni',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */

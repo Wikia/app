@@ -74,6 +74,13 @@ $messages['it'] = array(
 	'huluvideopanel-title' => '{{SITENAME}} Video Hulu',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'huluvideopanel-title' => '{{SITENAME}} Hulu-Videoen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -121,5 +128,12 @@ $messages['pms'] = array(
  */
 $messages['sv'] = array(
 	'huluvideopanel-title' => 'Hulu-videoklipp på {{SITENAME}}',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'huluvideopanel-title' => '{{SITENAME}} Hulu Videos',
 );
 

@@ -1583,14 +1583,14 @@ $messages['pl'] = array(
 	'userprofilepage-interview-section-title' => 'Wywiad użytkownika',
 	'userprofilepage-invalid-user' => 'Błąd użytkownika! Jesteś niezalogowany lub nie masz uprawnień, by przejść dalej',
 	'userprofilepage-avatar-error-type' => 'Nieprawidłowy typ MIME. Dozwolone: $1',
-	'userprofilepage-avatar-error-resolution' => 'Maksymalna rozdzielczość portretu to 2000x2000',
+	'userprofilepage-avatar-error-resolution' => 'Maksymalna rozdzielczość avataru to 2000x2000',
 	'user-identity-box-edit' => 'Edytuj',
 	'user-identity-box-wikia-contributor' => 'Użytkownik Wikii',
-	'user-identity-box-edit-avatar' => 'Edytuj portret',
-	'user-identity-box-delete-avatar' => 'Usuń portret',
-	'user-identity-box-avatar-upload-avatar' => 'Wgraj portret',
-	'user-identity-box-avatar-fb-import-avatar' => 'Importuj mój portret z Facebooka',
-	'user-identity-box-avatar-choose-avatar' => 'Wybierz portret',
+	'user-identity-box-edit-avatar' => 'Edytuj avatar',
+	'user-identity-box-delete-avatar' => 'Usuń avatar',
+	'user-identity-box-avatar-upload-avatar' => 'Prześlij avatar',
+	'user-identity-box-avatar-fb-import-avatar' => 'Importuj mój avatar z Facebooka',
+	'user-identity-box-avatar-choose-avatar' => 'Wybierz avatar',
 	'user-identity-box-avatar-save' => 'Zapisz i zakończ',
 	'user-identity-box-avatar-cancel' => 'Anuluj',
 	'user-identity-box-avatar-anon-user-error' => 'Musisz się zalogować zanim cokolwiek zmienisz',
@@ -1613,10 +1613,10 @@ $messages['pl'] = array(
 	'user-identity-box-group-sysop' => 'Administrator',
 	'user-identity-box-group-bureaucrat' => 'Biurokrata',
 	'user-identity-box-group-founder' => 'Założyciel',
-	'user-identity-box-group-staff' => 'Personel',
-	'user-identity-box-group-helper' => 'Pomocnik',
-	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
-	'user-identity-box-group-authenticated' => 'Uwierzytelniony',
+	'user-identity-box-group-staff' => 'Staff',
+	'user-identity-box-group-helper' => 'Helper',
+	'user-identity-box-group-vstf' => 'VSTF',
+	'user-identity-box-group-authenticated' => 'Autoryzowany',
 	'user-identity-box-group-council' => 'Council',
 	'user-identity-box-zero-state-location' => 'Lokalizacja',
 	'user-identity-box-zero-state-birthday' => 'Data urodzenia',
@@ -1643,10 +1643,10 @@ $messages['pl'] = array(
 	'user-identity-box-fb-page' => 'Jaka jest Twoja strona na Facebooku?',
 	'user-identity-box-invalid-fb-id-error' => 'Błędny identyfikator Facebooka',
 	'user-identity-box-fb-prefs' => 'Preferencje kanału',
-	'user-identity-box-avatar-error-nofile' => 'Błąd: Nie znaleziono pliku portretu do załadowania',
+	'user-identity-box-avatar-error-nofile' => 'Błąd: Nie znaleziono pliku do przesłania',
 	'user-identity-box-avatar-error-cantwrite' => 'Błąd: Nie można zapisać do tymczasowego katalogu',
-	'user-identity-box-avatar-error-size' => 'Błąd: Plik awatara jest zbyt duży (maks. {{PLURAL:$1|$1|$1}}KB)',
-	'user-identity-box-avatar-error' => 'Błąd: Wystąpił błąd wewnętrzny podczas zapisywania portretu',
+	'user-identity-box-avatar-error-size' => 'Błąd: Plik jest zbyt duży (maks. {{PLURAL:$1|$1|$1}}KB)',
+	'user-identity-box-avatar-error' => 'Błąd: Wystąpił błąd wewnętrzny podczas zapisywania avataru',
 	'userprofilepage-lightbox-about-me-cancel' => 'Anuluj',
 	'userprofilepage-lightbox-about-me-save' => 'Zapisz i zakończ',
 	'user-identity-box-saving-error' => 'Zapisywanie danych użytkownika nie powiodło się - podane informacje powinny być zwykłym tekstem',
@@ -1962,6 +1962,15 @@ $messages['sv'] = array(
 	'blog-avatar-changed-log' => 'Lade till eller ändrade avatar',
 	'blog-avatar-removed-log' => 'Tog bort $1s avatarer',
 	'blog-avatar-alt' => 'Logbok över användares tillagda eller borttagna avatarer.',
+);
+
+/** Turkish (Türkçe)
+ * @author Bilalokms
+ */
+$messages['tr'] = array(
+	'userprofilepage-edit-modal-header' => 'Profil Düzenle',
+	'user-identity-box-avatar-cancel' => 'İptal',
+	'userprofilepage-closing-popup-cancel' => 'İptal',
 );
 
 /** Ukrainian (Українська)

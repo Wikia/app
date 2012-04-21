@@ -313,6 +313,19 @@ $messages['tl'] = array(
 	'exitstitial-button' => 'Laktawan ang Patalastas na Ito',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'interstitial-default-campaign-code' => 'Викия сезне ярата!',
+	'interstitial-skip-ad' => 'Бу рекламаны калдырырга',
+	'interstitial-already-logged-in-no-link' => 'Сез инде системага кердегез һәм башка хисап язмаларын сайлый алмыйсыз.',
+	'interstitial-disabled-no-link' => 'There is no destination set and interstitials are not enabled on this wiki.',
+	'interstitial-link-away' => 'Монда берни дә күреп булмый!<br /><br />Сез [[{{MediaWiki:Mainpage}}|Баш биткә ]] яки  [[Special:Random|очраклы сәхифәгә]] күчәргә телисезме?',
+	'exitstitial-register' => '<a href="#" class="register">Теркәлү</a> яки <a href="#" class="login">Керү</a> (реклама булмасын өчен).',
+	'exitstitial-button' => 'Бу рекламаны калдырырга',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Dimension
  */

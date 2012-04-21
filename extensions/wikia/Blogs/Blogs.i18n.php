@@ -4080,6 +4080,20 @@ $messages['tt-cyrl'] = array(
 	'blog-comment-edit' => 'үзгәртү',
 	'blog-comment-error' => 'Фикер сакланмады',
 	'blug-cut-sign' => '…',
+	'blog-avatar-preferences-title' => 'Аватара',
+	'blog-page-rate' => 'Бу мәкаләне бәяләгез',
+	'blog-create-post-label' => 'Блогта язма калдырырга',
+	'blog-create-label' => 'Блогта мәкалә язу',
+	'blog-create-next-label' => 'Блогта яңа мәкалә язу',
+	'blog-create-listing-label' => 'Блоглар исемлеге төзү',
+	'blog-refresh-label' => 'Яңарту',
+	'blog-widgets-label' => 'Виджетлар панеле',
+	'blog-listing-zero-other' => 'Бу катнашучы блогта бер язма да калдырмады әле!',
+	'blog-listing-created' => 'Блолар исемлеге төзелде',
+	'blog-userblog' => '$1 блогы',
+	'blog-fromsitename' => '$1 дән',
+	'blogs-reportproblem' => 'Проблема турында хәбәр итәргә',
+	'blogs-comment-hidden' => 'Фикер яшерелгән',
 );
 
 /** Ukrainian (Українська)

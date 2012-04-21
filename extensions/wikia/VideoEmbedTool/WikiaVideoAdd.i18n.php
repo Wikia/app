@@ -279,6 +279,7 @@ $messages['gl'] = array(
 	'wva-notlogged' => 'Debe acceder ao sistema ou rexistrarse para inserir vídeos.',
 	'wva-notallowed' => 'Non pode inserir vídeos neste wiki.',
 	'wva-protected' => 'Este vídeo está protexido.',
+	'wva-thumbnail-upload-failed' => 'Erro ao engadir o vídeo; non se puido obter a miniatura axeitada',
 );
 
 /** Hebrew (עברית)
