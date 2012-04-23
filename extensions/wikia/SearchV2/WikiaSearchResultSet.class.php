@@ -186,6 +186,7 @@ class WikiaSearchResultSet implements Iterator {
 		foreach($resultSet as $result) {
 			$this->addResult($result);
 		}
+
 		$this->setResultsFound($resultSet->getResultsFound());
 		$this->setResultsStart($resultSet->getResultsStart());
 		if($resultSet->isComplete()) {

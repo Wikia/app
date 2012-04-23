@@ -2,7 +2,7 @@
 
 class WikiaSolrClient extends WikiaSearchClient {
 
-        protected $solrClient, $solrPort, $solrHost, $query;
+	protected $solrClient, $solrPort, $solrHost, $query;
 	protected $namespaces = array();
 	protected $isInterWiki = false;
 
@@ -11,8 +11,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 	const DEFAULT_CITYID = 0;
 
 	public function __construct( $solrHost, $solrPort ) {
-	        $this->solrHost = $solrHost;
-	        $this->solrPort = $solrPort;
+		$this->solrHost = $solrHost;
+		$this->solrPort = $solrPort;
 		$this->solrClient = F::build( 'Apache_Solr_Service', array( 'host' => $solrHost, 'port' => $solrPort, 'path' => '/solr' ) );
 	}
 
@@ -22,7 +22,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 	 **/
 	public function search( $query,  array $methodOptions = array() ) {
 
-	        extract($methodOptions);
+		extract($methodOptions);
 
 		$start              = isset($start)              ? $start              : self::DEFAULT_RESULTSET_START;
 		$size               = isset($size)               ? $size               : self::DEFAULT_RESULTSET_SIZE;

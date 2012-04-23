@@ -1,10 +1,9 @@
-
 <?php
 
 class WikiaSearchController extends WikiaSpecialPageController {
 
 	const RESULTS_PER_PAGE = 25;
-	const PAGES_PER_WINDOW = 10;
+	const PAGES_PER_WINDOW = 5;
 
 	protected $wikiaSearch = null;
 	// @todo refactor it, shouldn't probably be here
@@ -21,9 +20,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
-		$rankExpr = $this->getVal('rankExpr');
 		$debug = $this->request->getBool('debug');
 		$crossWikia = $this->request->getBool('crossWikia');
+		$skipCache = $this->request->getBool('skipCache');
 		$activeAdvancedTab = $this->getActiveAdvancedTab();
 		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
@@ -37,25 +36,25 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
 		$isInterWiki = $crossWikia ? true : !empty($this->wg->EnableWikiaHomePageExt);
-				
+
 		$results = false;
 		$resultsFound = 0;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
-			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $rankExpr, $isInterWiki );
+			$this->wikiaSearch->setSkipCache( $skipCache );
+			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $isInterWiki );
 			$resultsFound = $results->getRealResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'rankExpr' => $rankExpr, 'groupResults' => $isInterWiki ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug ) );
 			}
 		}
 
-		if (!$isInterWiki) {
+		if(!$isInterWiki) {
 			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced ) );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
-
 
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
@@ -64,7 +63,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
-		$this->setVal( 'rankExpr', $rankExpr );
 		$this->setVal( 'debug', $debug );
 		$this->setVal( 'solrHost', $this->wg->SolrHost);
 		$this->setVal( 'debug', $this->getVal('debug', false) );
@@ -218,22 +216,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 
 	public function pagination() {
-		$isInterWiki = !empty($this->wg->EnableWikiaHomePageExt); // For now, just checking if we're on wikia.com wiki
 		$query = $this->getVal('query');
 		$page = $this->getVal( 'page', 1 );
-		$rankExpr = $this->getVal('rankExpr');
 		$resultsCount = $this->getVal( 'count', 0);
 		$pagesNum = ceil( $resultsCount / self::RESULTS_PER_PAGE );
+		$crossWikia = $this->getVal('crossWikia');
+		$debug = $this->getVal('debug');
+		$skipCache = $this->getVal('skipCache');
 
 		$this->setVal( 'query', $query );
 		$this->setVal( 'pagesNum', $pagesNum );
-		$this->setVal( 'rankExpr', $rankExpr );
 		$this->setVal( 'currentPage', $page );
 		$this->setVal( 'windowFirstPage', ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 ) );
 		$this->setVal( 'windowLastPage', ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) );
 		$this->setVal( 'pageTitle', $this->wg->Title );
-		$this->setVal( 'isInterWiki', $isInterWiki);
+		$this->setVal( 'crossWikia', $crossWikia);
 		$this->setVal( 'resultsCount', $resultsCount);
+		$this->setVal( 'skipCache', $skipCache);
+		$this->setVal( 'debug', $debug);
 	}
 
 	public function getPage() {
