@@ -1,2 +1,1 @@
 <button id=ssoFbBtn disabled=true><div id=fbLogo></div><img src="<?= $wf->BlankImgUrl() ;?>"><?= $wf->Msg( 'fbconnect-connect-simple' ) ;?></button>
-<?= F::build( 'JSMessages' )->printPackages( array( 'fblogin' ) ) ;?>

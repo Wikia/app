@@ -9,11 +9,12 @@ var WikiaMobile = (function() {
 		page,
 		article,
 		handledTables,
-		realWidth = window.innerWidth || window.clientWidth,
-		realHeight = window.innerHeight || window.clientHeight,
-		clickEvent = ('ontap' in window) ? 'tap' : 'click',
-		touchEvent = ('ontouchstart' in window) ? 'touchstart' : 'mousedown',
-		sizeEvent = ('onorientationchange' in window) ? 'orientationchange' : 'resize',
+		w = window,
+		realWidth = w.innerWidth || w.clientWidth,
+		realHeight = w.innerHeight || w.clientHeight,
+		clickEvent = ('ontap' in w) ? 'tap' : 'click',
+		touchEvent = ('ontouchstart' in w) ? 'touchstart' : 'mousedown',
+		sizeEvent = ('onorientationchange' in w) ? 'orientationchange' : 'resize',
 		tableWrapperHTML = '<div class=bigTable>',
 		adSlot,
 		shrData,
@@ -26,20 +27,25 @@ var WikiaMobile = (function() {
 
 		querystring = function(url){
 			var srh = '',
-				location = window.location,
+				location = w.location,
 				cache = {},
 				link = '',
 				tmp,
-				hash = location.hash;
+				path = '',
+				hash;
 
 			if(url) {
-				tmp = url.split('?');
+				tmp = url.split('#');
+				hash = tmp[1] || '';
+				tmp = tmp[0].split('?');
 
 				link = tmp[0];
 				srh = tmp[1];
 			}else{
-				link = location.href;
+				link = location.origin;
+				path = location.pathname;
 				srh = location.search.substr(1);
+				hash = location.hash.substr(1)
 			}
 
 			if(srh){
@@ -53,12 +59,12 @@ var WikiaMobile = (function() {
 
 			return {
 				toString: function(){
-					var ret = link + '?',
+					var ret = link + path + '?',
 						attr;
 					for(attr in cache){
 						ret += attr + '=' + cache[attr] + '&';
 					}
-					return ret.slice(0, -1) + hash;
+					return ret.slice(0, -1) + (hash ? '#' + hash : '');
 				},
 
 				getVal: function(name, defVal){
@@ -66,7 +72,11 @@ var WikiaMobile = (function() {
 				},
 
 				setVal: function(name, val){
-					cache[name] = val;
+					if(val != ''){
+						cache[name] = val;
+					}else{
+						delete cache[name];
+					}
 				},
 
 				getHash: function(){
@@ -77,8 +87,20 @@ var WikiaMobile = (function() {
 					hash = h;
 				},
 
+				getPath: function(){
+					return path;
+				},
+
+				setPath: function(p){
+					path = p;
+				},
+
 				goTo: function(){
-					window.location.href = this.toString();
+					//We don't want these to be in url on load
+					if(hash == 'pop' || hash == 'Modal'){
+						hash = '';
+					}
+					w.location.href = this.toString();
 				}
 			};
 		},
@@ -154,9 +176,9 @@ var WikiaMobile = (function() {
 	//slide up the addressbar on webkit mobile browsers for maximum reading area
 	//setTimeout is necessary to make it work on ios...
 	function hideURLBar(){
-		if(window.pageYOffset < 20) {
+		if(w.pageYOffset < 20) {
 			setTimeout(function(){
-					window.scrollTo(0, 1);
+					w.scrollTo(0, 1);
 					if(!fixed) moveSlot();
 			}, 0);
 		}
@@ -267,10 +289,10 @@ var WikiaMobile = (function() {
 			});
 
 			if(handledTables.length > 0)
-				window.addEventListener(sizeEvent, processTables, false);
+				w.addEventListener(sizeEvent, processTables, false);
 		}else if(handledTables.length > 0){
 			var table, row, isWrapped, isBig, wasWrapped,
-				maxWidth = window.innerWidth || window.clientWidth;
+				maxWidth = w.innerWidth || w.clientWidth;
 
 			for(var x = 0, y = handledTables.length; x < y; x++){
 				table = handledTables[x];
@@ -309,7 +331,7 @@ var WikiaMobile = (function() {
 	}
 
 	function moveSlot(plus){
-		adSlot.style.top = Math.min((window.pageYOffset + window.innerHeight - 50 + (isFinite(plus)?plus:0)), ftr.offsetTop + 150) + 'px';
+		adSlot.style.top = Math.min((w.pageYOffset + w.innerHeight - 50 + ~~plus), ftr.offsetTop + 150) + 'px';
 	}
 
 	function loadShare(cnt){
@@ -374,10 +396,11 @@ var WikiaMobile = (function() {
 					controllerName: 'UserLoginSpecialController',
 					methodName: 'index'
 				}],
+				messages: 'fblogin',
 				styles: '/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
 				scripts: 'userlogin_facebook_js_wikiamobile',
 				params: {
-					useskin: window.skin
+					useskin: w.skin
 				},
 				callback: function(res){
 					loader.remove(wkPrf);
@@ -394,7 +417,7 @@ var WikiaMobile = (function() {
 					var form = wkLgn.getElementsByTagName('form')[0],
 						query = querystring( form.getAttribute('action') );
 
-					query.setVal('returnto', ((window.wgPageName == 'Special:UserLogout' || window.wgPageName == 'Special:UserLogin') ? window.wgMainPageTitle : window.wgPageName));
+					query.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName));
 					form.setAttribute('action', query.toString());
 				}
 			});
