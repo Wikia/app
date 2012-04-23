@@ -52,6 +52,9 @@ $messages['en'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Add a blog post to your wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Add Multiple Photos',
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
+
+// Chrome
+	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
 );
 
 /** Message documentation (Message documentation) */
