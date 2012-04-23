@@ -14,10 +14,10 @@
 		font-size: 28px;
 		padding: 5px 0 15px 50px;
 		&.heading-features {
-			background: url(/extensions/wikia/WikiFeatures/images/icon_features_big.png) no-repeat 5px 0;
+			background: url(/extensions/wikia/WikiFeatures/images/icon_features_big.png) no-repeat 5px 0; /* wgCdnStylePath */
 		}
 		&.heading-labs {
-			background: url(/extensions/wikia/WikiFeatures/images/icon_labs_big.png) no-repeat 5px 0;
+			background: url(/extensions/wikia/WikiFeatures/images/icon_labs_big.png) no-repeat 5px 0; /* wgCdnStylePath */
 		}
 	}
 	>.creative {
@@ -68,7 +68,7 @@
 						
 					}
 					&:after {
-						background: url(/extensions/wikia/WikiFeatures/images/new_ribbon.png);
+						background: url(/extensions/wikia/WikiFeatures/images/new_ribbon.png); /* wgCdnStylePath */
 						content: "";
 						height: 93px;
 						left: -6px;
@@ -238,12 +238,12 @@
 .star-rating {
 	@include clearfix;
 	>img {
-		background-image: url('/extensions/wikia/WikiFeatures/images/star-inactive.png');
+		background-image: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* wgCdnStylePath */
 		height: 16px;
 		float: left;
 		width: 16px;
 		&.active {
-			background-image: url('/extensions/wikia/WikiFeatures/images/star-active.png');
+			background-image: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* wgCdnStylePath */
 		}
 	}
 }
