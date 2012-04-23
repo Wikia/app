@@ -53,7 +53,7 @@ $messages['en'] = array(
 	'themedesigner-size-error' => 'Incorrect file size',
 	'themedesigner-dimensions-error' => 'The image exceed the dimensions\' limits',
 	'themedesigner-type-error' => 'Incorrect file type',
-	'themedesugber-uknown-error' => 'An error has occurred, unfortunately we were not able to identify it, please try again',
+	'themedesigner-unknown-error' => 'An error has occurred, unfortunately we were not able to identify it, please try again',
 	'themedesigner-manual-upload-error' => 'Use Theme Designer to upload wordmark or wiki background',
         'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Preview',
@@ -320,7 +320,7 @@ $messages['ca'] = array(
 	'themedesigner-size-error' => 'Mida del fitxer incorrecta',
 	'themedesigner-dimensions-error' => 'La imatge supera els límits de les dimensions',
 	'themedesigner-type-error' => 'Tipus de fitxer incorrecte',
-	'themedesugber-uknown-error' => "S'ha produït un error, per desgràcia no hem estat capaços d'identificar-lo, si us plau provi una altra vegada",
+	'themedesigner-unknown-error' => "S'ha produït un error, per desgràcia no hem estat capaços d'identificar-lo, si us plau provi una altra vegada",
 	'themedesigner-manual-upload-error' => 'Utilitza el Dissenyador de Temes per a pujar un logo o uns fons per al teu wiki',
 );
 
@@ -377,7 +377,7 @@ $messages['cs'] = array(
 	'themedesigner-size-error' => 'Špatná velikost souboru',
 	'themedesigner-dimensions-error' => 'Obrázek je příliš veliký',
 	'themedesigner-type-error' => 'Špatný typ souboru',
-	'themedesugber-uknown-error' => 'Nastala neidentifikovaná chyba, prosím opakujte akci.',
+	'themedesigner-unknown-error' => 'Nastala neidentifikovaná chyba, prosím opakujte akci.',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Náhled',
 );
@@ -442,7 +442,7 @@ $messages['de'] = array(
 	'themedesigner-size-error' => 'Falsche Dateigröße',
 	'themedesigner-dimensions-error' => 'Das Bild überschreitet die Maximalausmaße',
 	'themedesigner-type-error' => 'Falscher Dateityp',
-	'themedesugber-uknown-error' => 'Ein Fehler ist aufgetreten, leider konnten wir ihn nicht identifizieren, bitte versuche es erneut',
+	'themedesigner-unknown-error' => 'Ein Fehler ist aufgetreten, leider konnten wir ihn nicht identifizieren, bitte versuche es erneut',
 	'themedesigner-manual-upload-error' => 'Verwenden den Theme Designer um ein Wortmarke oder Wiki-Hintergrund hochzuladen',
 	'themedesigner-favicon-heading' => 'Favicon',
 );
@@ -515,7 +515,7 @@ $messages['es'] = array(
 	'themedesigner-size-error' => 'Tamaño de archivo incorrecto',
 	'themedesigner-dimensions-error' => 'La imagen excede los límites de tamaño',
 	'themedesigner-type-error' => 'Tipo de archivo incorrecto',
-	'themedesugber-uknown-error' => 'Ha ocurrido un error, desafortunadamente no fuimos capaces de identificarlo, por favor, inténtalo de nuevo',
+	'themedesigner-unknown-error' => 'Ha ocurrido un error, desafortunadamente no fuimos capaces de identificarlo, por favor, inténtalo de nuevo',
 	'themedesigner-manual-upload-error' => 'Usa el Diseñador de Temas para subir el wordmark o el fondo del wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Previsualización',
@@ -665,7 +665,7 @@ $messages['fr'] = array(
 	'themedesigner-size-error' => 'Taille de fichier incorrecte',
 	'themedesigner-dimensions-error' => 'La taille de l’image dépasse les limites',
 	'themedesigner-type-error' => 'Type de fichier incorrect',
-	'themedesugber-uknown-error' => 'Une erreur s’est produite, nous n’avons malheureusement pas été capable de l’identifier, veuillez réessayer',
+	'themedesigner-unknown-error' => 'Une erreur s’est produite, nous n’avons malheureusement pas été capable de l’identifier, veuillez réessayer',
 	'themedesigner-manual-upload-error' => 'Utilisez le Concepteur de thème pour importer un logo ou un arrière-plan pour le wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Aperçu',
@@ -725,7 +725,7 @@ $messages['gl'] = array(
 	'themedesigner-size-error' => 'Tamaño de ficheiro incorrecto',
 	'themedesigner-dimensions-error' => 'O tamaño da imaxe supera os límites',
 	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
-	'themedesugber-uknown-error' => 'Houbo un erro. Por desgraza, non fomos capaces de identificalo. Inténteo de novo',
+	'themedesigner-unknown-error' => 'Houbo un erro. Por desgraza, non fomos capaces de identificalo. Inténteo de novo',
 	'themedesigner-manual-upload-error' => 'Use o Deseñador de temas visuais para cargar un logo ou o fondo do wiki',
 	'themedesigner-favicon-heading' => 'Logo',
 	'themedesigner-wodmark-preview' => 'Vista previa',
@@ -825,7 +825,7 @@ $messages['ia'] = array(
 	'themedesigner-size-error' => 'Dimension de file incorrecte',
 	'themedesigner-dimensions-error' => 'Le imagine excede le limites del dimensiones',
 	'themedesigner-type-error' => 'Typo de file incorrecte',
-	'themedesugber-uknown-error' => 'Un error occurreva. Regrettabilemente nos non succedeva a identificar lo. Per favor reproba.',
+	'themedesigner-unknown-error' => 'Un error occurreva. Regrettabilemente nos non succedeva a identificar lo. Per favor reproba.',
 	'themedesigner-manual-upload-error' => 'Usa le designator de apparentias pro incargar un marca de parola o un fundo pro le wiki.',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Previsualisar',
@@ -892,7 +892,7 @@ $messages['ja'] = array(
 	'themedesigner-size-error' => '不適切なファイルサイズです',
 	'themedesigner-dimensions-error' => '画像サイズの制限を超えています',
 	'themedesigner-type-error' => '不適切なファイル形式です',
-	'themedesugber-uknown-error' => '不明なエラーが発生しました。もう一度やり直してください。',
+	'themedesigner-unknown-error' => '不明なエラーが発生しました。もう一度やり直してください。',
 	'themedesigner-manual-upload-error' => '画像ロゴや背景画像のアップロードにはテーマデザイナを使用してください',
 );
 
@@ -933,7 +933,7 @@ $messages['km'] = array(
 	'themedesigner-size-error' => 'ទំហំឯកសារមិនត្រឹមត្រូវ',
 	'themedesigner-dimensions-error' => 'រូបភាពធំជាងវិមាត្រកំហិត',
 	'themedesigner-type-error' => 'ប្រភេទឯកសារមិនត្រឹមត្រូវ',
-	'themedesugber-uknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
+	'themedesigner-unknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -1015,7 +1015,7 @@ $messages['mk'] = array(
 	'themedesigner-size-error' => 'Неправилна големина на податотеката',
 	'themedesigner-dimensions-error' => 'Сликата ги надминува дозволените димензии',
 	'themedesigner-type-error' => 'Неправилен тип на податотека',
-	'themedesugber-uknown-error' => 'Се појави грешка. Нажалост, не бевме во можност да ја утврдиме. Обидете се повторно.',
+	'themedesigner-unknown-error' => 'Се појави грешка. Нажалост, не бевме во можност да ја утврдиме. Обидете се повторно.',
 	'themedesigner-manual-upload-error' => 'Користете го Ликовниот уредник за да подигнете жиг или вики-позадина',
 	'themedesigner-favicon-heading' => 'Адресна икона',
 	'themedesigner-wodmark-preview' => 'Преглед',
@@ -1082,7 +1082,7 @@ $messages['ms'] = array(
 	'themedesigner-size-error' => 'Saiz fail tidak betul',
 	'themedesigner-dimensions-error' => 'Gambar ini melebihi had dimensi',
 	'themedesigner-type-error' => 'Jenis fail tidak betul',
-	'themedesugber-uknown-error' => 'Ada ralat, tetapi kami tidak dapat mengenal pastinya; sila cuba lagi',
+	'themedesigner-unknown-error' => 'Ada ralat, tetapi kami tidak dapat mengenal pastinya; sila cuba lagi',
 	'themedesigner-manual-upload-error' => 'Gunakan Pereka Tema untuk memuat naik tanda kata atau latar belakang wiki',
 	'themedesigner-favicon-heading' => 'Favikon',
 	'themedesigner-wodmark-preview' => 'Pralihat',
@@ -1173,7 +1173,7 @@ $messages['nb'] = array(
 	'themedesigner-size-error' => 'Feil filstørrelse',
 	'themedesigner-dimensions-error' => 'Bildet overstiger størrelsesbegrensningene',
 	'themedesigner-type-error' => 'Feil filtype',
-	'themedesugber-uknown-error' => 'En feil har oppstått, og vi var desverre ikke i stand til å identifisere den. Vennligst prøv igjen',
+	'themedesigner-unknown-error' => 'En feil har oppstått, og vi var desverre ikke i stand til å identifisere den. Vennligst prøv igjen',
 	'themedesigner-manual-upload-error' => 'Bruk Temautformeren for å laste opp en logo eller bakgrunn for wikien',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Forhåndsvisning',
@@ -1236,7 +1236,7 @@ $messages['nl'] = array(
 	'themedesigner-size-error' => 'Onjuiste bestandsgrootte',
 	'themedesigner-dimensions-error' => 'De afbeelding overschrijdt de limieten voor afmetingen',
 	'themedesigner-type-error' => 'Onjuist bestandstype',
-	'themedesugber-uknown-error' => 'Er is helaas een onbekende fout opgetreden. Probeer het opnieuw.',
+	'themedesigner-unknown-error' => 'Er is helaas een onbekende fout opgetreden. Probeer het opnieuw.',
 	'themedesigner-manual-upload-error' => 'Gebruik de Themaontwerper om een woordmerk of wiki achtergrond te uploaden.',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Voorvertoning',
@@ -1305,7 +1305,7 @@ $messages['pl'] = array(
 	'themedesigner-size-error' => 'Niewłaściwy rozmiar pliku',
 	'themedesigner-dimensions-error' => 'Wymiary obrazu przekraczają limit',
 	'themedesigner-type-error' => 'Nieprawidłowy typ pliku',
-	'themedesugber-uknown-error' => 'Wystąpił błąd, niestety nie byliśmy w stanie go zidentyfikować, spróbuj ponownie',
+	'themedesigner-unknown-error' => 'Wystąpił błąd, niestety nie byliśmy w stanie go zidentyfikować, spróbuj ponownie',
 	'themedesigner-manual-upload-error' => 'Użyj Edytora Motywów aby zamieścić logo lub tło',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Podgląd',
@@ -1360,7 +1360,7 @@ $messages['pms'] = array(
 	'themedesigner-size-error' => "Dimension d'archivi pa giusta",
 	'themedesigner-dimensions-error' => 'La figura a passa ij lìmit ëd dimension',
 	'themedesigner-type-error' => "Sòrt d'archivi pa giusta",
-	'themedesugber-uknown-error' => "A l'é capitaje n'eror, për maleur i podoma pa identifichelo, për piasì preuva torna",
+	'themedesigner-unknown-error' => "A l'é capitaje n'eror, për maleur i podoma pa identifichelo, për piasì preuva torna",
 );
 
 /** Pashto (پښتو)
@@ -1435,7 +1435,7 @@ $messages['pt'] = array(
 	'themedesigner-size-error' => 'Tamanho de ficheiro incorrecto',
 	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
 	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
-	'themedesugber-uknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
+	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
 	'themedesigner-manual-upload-error' => 'Use o Compositor de Variantes do Tema para colocar o símbolo da wiki e definir o fundo',
 );
 
@@ -1488,7 +1488,7 @@ $messages['pt-br'] = array(
 	'themedesigner-size-error' => 'Tamanho de ficheiro incorrecto',
 	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
 	'themedesigner-type-error' => 'Tipo de ficheiro incorrecto',
-	'themedesugber-uknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
+	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
 );
 
 /** Romanian (Română)
@@ -1558,7 +1558,7 @@ $messages['ru'] = array(
 	'themedesigner-size-error' => 'Неверный размер файла',
 	'themedesigner-dimensions-error' => 'Изображение превышает предельные размеры',
 	'themedesigner-type-error' => 'Неверный тип файла',
-	'themedesugber-uknown-error' => 'Произошла ошибка, к сожалению мы не смогли идентифицировать его, пожалуйста, попробуйте снова',
+	'themedesigner-unknown-error' => 'Произошла ошибка, к сожалению мы не смогли идентифицировать его, пожалуйста, попробуйте снова',
 	'themedesigner-manual-upload-error' => 'Использовать Конструктор тем для загрузки логотипа и фонового изображения на вики',
 	'themedesigner-favicon-heading' => 'Фавикон',
 	'themedesigner-wodmark-preview' => 'Предпросмотр',
@@ -1662,7 +1662,7 @@ $messages['sv'] = array(
 	'themedesigner-size-error' => 'Fel filstorlek',
 	'themedesigner-dimensions-error' => 'Bilden överskrider måttets gränser',
 	'themedesigner-type-error' => 'Fel filtyp',
-	'themedesugber-uknown-error' => 'Ett fel har uppstått, tyvärr kunde vi inte identifiera det, försök igen',
+	'themedesigner-unknown-error' => 'Ett fel har uppstått, tyvärr kunde vi inte identifiera det, försök igen',
 	'themedesigner-manual-upload-error' => 'Använd temadesignern för att ladda upp logotyp eller wiki-bakgrund',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Förhandsgranska',
@@ -1741,7 +1741,7 @@ $messages['tl'] = array(
 	'themedesigner-size-error' => 'Hindi tamang sukat ng talaksan',
 	'themedesigner-dimensions-error' => 'Lampas ang larawan sa mga hangganan ng mga sukat',
 	'themedesigner-type-error' => 'Hindi tamang uri ng talaksan',
-	'themedesugber-uknown-error' => 'Naganap ang isang kamalian, sa kasamaang-palad hindi namin nagawang kilalanin ito, mangyaring subukan muli',
+	'themedesigner-unknown-error' => 'Naganap ang isang kamalian, sa kasamaang-palad hindi namin nagawang kilalanin ito, mangyaring subukan muli',
 );
 
 /** Ukrainian (Українська)
@@ -1821,7 +1821,7 @@ $messages['vi'] = array(
 	'themedesigner-size-error' => 'Dung lượng không chính xác',
 	'themedesigner-dimensions-error' => 'Hình ảnh vượt quá dung lượng giới hạn',
 	'themedesigner-type-error' => 'Loại tệp không chính xác',
-	'themedesugber-uknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi không thể xác định nó, xin vui lòng thử lại',
+	'themedesigner-unknown-error' => 'Lỗi đã xảy ra, tiếc là chúng tôi không thể xác định nó, xin vui lòng thử lại',
 	'themedesigner-manual-upload-error' => 'Sử dụng Thiết kế chủ đề để tải lên nhãn hiệu hoặc nền cho wiki',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Xem thử',
@@ -1882,6 +1882,6 @@ $messages['zh-hant'] = array(
 	'themedesigner-size-error' => '不正確的檔案大小',
 	'themedesigner-dimensions-error' => '圖像超過尺寸的限制',
 	'themedesigner-type-error' => '不正確的檔案大小',
-	'themedesugber-uknown-error' => '發生了錯誤，不幸的是我們無法識別它，請再試一次',
+	'themedesigner-unknown-error' => '發生了錯誤，不幸的是我們無法識別它，請再試一次',
 );
 
