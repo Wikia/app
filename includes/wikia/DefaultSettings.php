@@ -115,6 +115,7 @@ $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ 'AnalyticsEngine'                 ] = "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'Mustache'                        ] = "$IP/lib/mustache.php/Mustache.php";
+$wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/Minify_CSS_Compressor.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'PayflowAPI'                      ] = "$IP/includes/wikia/PayflowAPI.php";
 $wgAutoloadClasses[ 'Curl'                            ] = "$IP/includes/wikia/Curl.php";
