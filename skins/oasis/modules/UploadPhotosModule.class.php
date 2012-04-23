@@ -96,13 +96,13 @@ class UploadPhotosModule extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgRequest;
 
-		$this->existsWarning = SpecialUpload::ajaxGetExistsWarning($wgRequest->getVal('wpDestFile'));
-		if(!empty($this->existsWarning) && $this->existsWarning != '&nbsp;') {
-			$this->existsWarning = '<h3>'.wfMsg('uploadwarning').'</h3>'.$this->existsWarning;
+		$existsWarning = SpecialUpload::ajaxGetExistsWarning($wgRequest->getVal('wpDestFile'));
+		if(!empty($existsWarning) && $existsWarning != '&nbsp;') {
+			$existsWarning = '<h3>'.wfMsg('uploadwarning').'</h3>'.$existsWarning;
 		} else {
-			$this->existsWarning = '';
+			$existsWarning = '';
 		}
-
+		$this->existsWarning = $existsWarning;
 		wfProfileOut(__METHOD__);
 	}
 

@@ -127,8 +127,6 @@ class MenuButtonModule extends WikiaController {
 					$item['accesskey'] = $accesskey;
 				}
 			}
-			$this->dropdown = $data['dropdown'];
-			#print_pre($this->dropdown);
 
 			$this->class = 'wikia-menu-button';
 		}
@@ -138,7 +136,7 @@ class MenuButtonModule extends WikiaController {
 			isset($data['action']['href']) /* BugId:12613 */ &&
 			!$wgTitle->userCan( 'edit' ) ) {
 				$signUpTitle = SpecialPage::getTitleFor('SignUp');
-				$loginUrl = $this->createLoginURL(!empty($this->dropdown) ? 'action=edit' : '');
+				$loginUrl = $this->createLoginURL(!empty($data['dropdown']) ? 'action=edit' : '');
 				$data['action']['href'] = $signUpTitle->getLocalUrl($loginUrl);
 				$this->action = $data['action'];
 				$this->class .= ' loginToEditProtectedPage';
@@ -150,6 +148,7 @@ class MenuButtonModule extends WikiaController {
 
 		$this->id = !empty($data['id']) ? $data['id'] : '';
 		$this->tooltip = !empty($data['tooltip']) ? (' data-tooltip="' . htmlspecialchars($data['tooltip']) . '"') : '';
+		$this->dropdown = $data['dropdown'];
 
 		wfProfileOut(__METHOD__);
 	}
