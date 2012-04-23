@@ -177,7 +177,7 @@ if(!empty($wgVideoHandlersVideosMigrated)) {
 	/**
 	 * SpecialPages
 	 */
-	$app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
-	$app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
+	//$app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
+	//$app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
  
 }
