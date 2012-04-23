@@ -27,7 +27,7 @@ var WikiaFooterApp = {
 			//Scroll Detection
 			windowObj.resolvePosition = function() {
 				// Disable floating for RTE
-				if (window.wgIsEditPage) {
+				if (typeof wgIsEditPage != 'undefined') {
 					return;
 				}
 
