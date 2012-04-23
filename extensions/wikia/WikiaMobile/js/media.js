@@ -1,4 +1,4 @@
-/*global define:true, media:true, WikiaMobile:true */
+/*global define, modal, WikiaMobile */
 /**
  * Media handling in Wikia Mobile
  *
@@ -10,9 +10,8 @@
 		//AMD
 		define('media', ['modal'], media);//late binding
 	}else{
-		window.Media = media();//late binding
+		window.Media = media(modal);//late binding
 	}
-
 
 	function media(modal){
 		/** @private **/
@@ -33,11 +32,13 @@
 			var	number = 0, href = '', name = '', nameMatch = /[^\/]*\.\w*$/,
 				i, j, elm,
 				elements = $('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure'),
-				l = elements.length;
+				l = elements.length,
+				img, cap;
 
 			for(j = 0; j < l; j++){
 				var element = elements[j],
-					className = element.className;
+					className = element.className,
+					leng;
 
 				if(className.indexOf('image') > -1){
 					href = element.href;
@@ -47,9 +48,9 @@
 					element.setAttribute('data-num', number++);
 				}else if(className.indexOf('wkImgStk') > -1){
 					if(className.indexOf('grp') > -1) {
-						var figures = element.getElementsByTagName('figure'),
-							leng = figures.length,
-							cap, img;
+						var figures = element.getElementsByTagName('figure');
+
+						leng = figures.length;
 
 						element.setAttribute('data-num', number);
 
@@ -58,19 +59,21 @@
 						for(i=0; i < leng; i++){
 							elm = figures[i];
 							img = elm.getElementsByClassName('image')[0];
-							href = img.href;
-							name = img.id;
-							images.push([
-								href, name,
-								(cap = elm.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
-								i, leng
-							]);
+							if(img){
+								href = img.href;
+								name = img.id;
+								images.push([
+									href, name,
+									(cap = elm.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
+									i, leng
+								]);
 
-							if(name === shrImg) shrImg = number + i;
-						};
+								if(name === shrImg) shrImg = number + i;
+							}
+						}
 					} else {
-						var leng = parseInt(element.attributes['data-img-count'].value, 10),
-							lis = element.getElementsByTagName('li');
+						leng = parseInt(element.attributes['data-img-count'].value, 10);
+						var	lis = element.getElementsByTagName('li');
 
 						element.setAttribute('data-num', number);
 
@@ -87,7 +90,7 @@
 							]);
 
 							if(name === shrImg) shrImg = number + i;
-						};
+						}
 					}
 					number += leng;
 				} else {
@@ -111,7 +114,7 @@
 
 
 			//if url contains image=imageName - open modal with this image
-			if(shrImg) setTimeout(function(){openModal(shrImg)}, 1000);
+			if(shrImg) setTimeout(function(){openModal(shrImg);}, 1000);
 		}
 
 		function loadImage(){
@@ -167,10 +170,10 @@
 			}
 
 			return cap;
-		};
+		}
 
 		function openModal(num){
-			current = ~~num;
+			current = Math.round(num);
 
 			modal.open({
 				content: content,

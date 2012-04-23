@@ -1,6 +1,6 @@
 <?php
 /**
- * WikiaMobile is an experimental playground for new features, not a real skin
+ * WikiaMobile is a real skin, not an experimental playground for new features
  * 
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>

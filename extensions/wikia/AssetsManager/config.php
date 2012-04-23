@@ -590,7 +590,7 @@ $config['userlogin_facebook_js_wikiamobile'] = array(
 		'type' => AssetsManager::TYPE_JS,
 		'skin' => 'wikiamobile',
 		'assets' => array(
-				'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'
+			'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'
 		)
 );
 
