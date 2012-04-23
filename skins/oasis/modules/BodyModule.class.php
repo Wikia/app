@@ -346,12 +346,12 @@ class BodyModule extends WikiaController {
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
 		&& in_array($wgTitle->getArticleId(), $wgMaximizeArticleAreaArticleIds)) {
-			$this->wgSuppressRail = true;
-			$this->wgSuppressPageHeader = true;
+			$this->wg->SuppressRail = true;
+			$this->wg->SuppressPageHeader = true;
 		}
 
 		// InfoBox - Testing
-		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
+		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 
 		// Replaces ContentDisplayModule->index()
@@ -400,12 +400,12 @@ class BodyModule extends WikiaController {
 
 			// FIXME: move to separate module
 			if ( $wgEnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
-				$this->wgSuppressFooter = true;
-				$this->wgSuppressArticleCategories = true;
+				$this->wg->SuppressFooter = true;
+				$this->wg->SuppressArticleCategories = true;
 				$this->displayComments = false;
-				$this->wgSuppressPageHeader = true;
-				$this->wgSuppressWikiHeader = true;
-				$this->wgSuppressSlider = true;
+				$this->wg->SuppressPageHeader = true;
+				$this->wg->SuppressWikiHeader = true;
+				$this->wg->SuppressSlider = true;
 				$this->bodytext = F::App()->sendRequest( 'WikiaHomePageController', 'index' );
 			} else if ($wgEnableCorporatePageExt) {
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
