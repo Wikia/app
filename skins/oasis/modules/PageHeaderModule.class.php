@@ -187,12 +187,16 @@ class PageHeaderModule extends WikiaController {
 		$this->dropdown = $this->getDropdownActions();
 
 		/** start of wikia changes @author nAndy */
-		wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array($this->getResponse(), $ns, $skin) );
-		/** end of wikia changes */
-
-		/** start of wikia changes @author Jakub */
-		$this->extraButtons = array();
-		wfRunHooks( 'PageHeaderIndexExtraButtons', array( $this->getResponse() ) );
+        $response = $this->getResponse();
+        if( $response instanceof WikiaResponse ) {
+            wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array($response, $ns, $skin) );
+            /** @author Jakub */
+            $this->extraButtons = array();
+            wfRunHooks( 'PageHeaderIndexExtraButtons', array( $response ) );
+        } else {
+        //it happened on TimQ's devbox that $response was probably null fb#28747
+            Wikia::logBacktrace(__METHOD__);
+        }
 		/** end of wikia changes */
 
 		// for not existing pages page header is a bit different
@@ -438,7 +442,9 @@ class PageHeaderModule extends WikiaController {
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty($this->wg->DisableAnonymousEditing) ? ' require-login' : '';
 
-		if ($this->wg->OasisNavV2) $this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/PageHeader_IndexV2.php' );
+		if ( $this->wg->OasisNavV2 && $response instanceof WikiaResponse ) {
+            $response->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/PageHeader_IndexV2.php' );
+        }
 		wfProfileOut(__METHOD__);
 	}
 
