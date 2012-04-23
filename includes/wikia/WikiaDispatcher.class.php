@@ -39,7 +39,7 @@ class WikiaDispatcher {
 		if (empty($autoloadClasses)) {
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
 		}
-		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );		
+		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
 		$response = F::build( 'WikiaResponse', array( 'format' => $format, 'request' => $request ) );
 		if ( $app->wg->EnableSkinTemplateOverride && $app->isSkinInitialized() ) {
 			$response->setSkinName( $app->wg->User->getSkin()->getSkinName() );
@@ -83,11 +83,13 @@ class WikiaDispatcher {
 					if ( !empty( $autoloadClasses[$controllerClassName] ) ) {
 						$moduleTemplatePath = dirname( $autoloadClasses[$controllerClassName] ) . "/templates/{$controllerLegacyName}_{$method}.php";
 						$response->getView()->setTemplatePath( $moduleTemplatePath );
-					}					
+					}
 					$params = $request->getParams();
 				}
 
-				$app->wf->profileIn ( __METHOD__ . " ({$controllerName}_{$method})" );
+				$fname = __METHOD__ . " ({$controllerName}_{$method})";
+
+				$app->wf->profileIn($fname);
 				$response->setControllerName( $controllerName );
 				$response->setMethodName( $method );
 
@@ -100,8 +102,8 @@ class WikiaDispatcher {
 				// Temporary remap of executeX methods for modules
 				if ($app->isModule( $controllerClassName ) && !method_exists($controller, $method)) {
 					$method = "execute{$method}";
-				} 
-				
+				}
+
 				if (
 					( !$request->isInternal() && !$controller->allowsExternalRequests() ) ||
 					in_array( $method, array(
@@ -148,9 +150,9 @@ class WikiaDispatcher {
 				if ( $controllerName != $controllerLegacyName ) {
 					$app->runHook( ( "{$controllerLegacyName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
 				}
-				$app->wf->profileOut ( __METHOD__ . " ({$controllerName}_{$method})" );
+				$app->wf->profileOut($fname);
 			} catch ( Exception $e ) {
-				$app->wf->profileOut ( __METHOD__ . " ({$controllerName}_{$method})" );
+				$app->wf->profileOut($fname);
 
 				// Work around for errors thrown inside modules -- remove when modules go away
 				if ( $response instanceof Module ) {
