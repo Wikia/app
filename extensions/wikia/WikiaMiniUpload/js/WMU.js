@@ -645,8 +645,8 @@ function WMU_loadLicense( license ) {
 	var title = 'File:Sample.jpg';
     var url = wgScriptPath + '/api' + wgScriptExtension
     + '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-    + '&title=' + encodeURIComponent( title )
-    + '&prop=text&pst&format=json';
+	+ '&title=' + encodeURIComponent( title.replace(/\./g, "%2E") )
+	+ '&prop=text&pst&format=json';
 
 	var callback = {
 		success: function(o) {
