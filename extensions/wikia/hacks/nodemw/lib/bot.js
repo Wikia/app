@@ -12,7 +12,7 @@
 			proxy: options.proxy,
 			debug: options.debug === true
 		});
-	}
+	};
 
 	// get the object being the first key/value entry of a given object
 	var getFirstItem = function(object) {
