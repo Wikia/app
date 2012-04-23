@@ -1,5 +1,7 @@
-var TEMPLATE = 'Szablon:Potrzebna_mapa',
-	SUMMARY = 'Brakująca mapka';
+var TEMPLATE = 'Brak ważnej treści',
+	SUMMARY = 'Brak ważnej treści',
+	//regexp = /\|kody\=\s+\|/;
+	regexp = /^\s*{{Ulica infobox[^{]+}}\s*$/;
 
 var bot = require('../lib/bot').bot;
 
@@ -22,25 +24,26 @@ client.logIn('xxx', 'xxx', function(data) {
 			}
 
 			client.getArticle(page.title, function(content) {
-				if (content.indexOf('<place ') > -1 || content.indexOf(TEMPLATE) > -1) {
-					return;
-				}
+				if (content.indexOf(TEMPLATE) > -1) return;
+				if (!regexp.test(content)) return;
 
 				// add a template
-				content = '{{' + TEMPLATE + '}}\n\n' + content;
+				content = content + '{{' + TEMPLATE + '}}';
 
 				console.log('\n\n================================\n' + page.title + '\n================================');
 				console.log(content);
 
 				// and save it
+				/**/
 				client.edit(page.title, content, SUMMARY, function(data) {
 					console.log('\n\n> ' + page.title + ' edited!');
 				});
+				/**/
 			});
 		});
 	});
 
-/**	
+/**
 	client.edit('Foo', 'Test', 'Test --~~~~', function(data) {
 		console.log(data);
 	});
