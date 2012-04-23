@@ -116,7 +116,16 @@ var regExpRules = [
 
 				// ignore
 				case 'width':
+				case 'min-width':
+				case 'max-width':
 				case 'height':
+				case 'min-height':
+				case 'max-height':
+
+				case 'left':
+				case 'right':
+				case 'top':
+				case 'bottom':
 					return false;
 
 				default:
