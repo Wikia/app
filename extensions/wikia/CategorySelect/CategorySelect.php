@@ -496,7 +496,7 @@ wgAfterContentAndJS.push(function() {
 
 		$.getResources([
 			$.loadYUI,
-			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js',
+			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js'
 		],
 		function() {
 			showCSpanel();
