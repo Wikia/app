@@ -469,10 +469,6 @@ include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" )
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/AutoCreateWiki/CreateWikiLocalJob.php" );
 
-
-// StaticChute used to generate merged JS/CSS files on-the-fly (DEPRECATED)
-$wgAutoloadClasses['StaticChute'] = "$IP/extensions/wikia/StaticChute/StaticChute.php";
-
 /*
  * @name wgWikiaStaffLanguages
  * array of language codes supported by ComTeam
@@ -590,8 +586,6 @@ $wgNoExternals = false;
  * 1) if the combiner fails to prepend the wgCdnStylePath, the link will still work,
  * 2) the combiner WON'T prepend the wgCdnStylePath on development machines so that
  * the local resource is used (makes testing easier).
- *
- * WARNING: Currently we need to dupliate this value into StaticChute::cdnStylePath.
  */
 $wgCdnStylePath = '';
 
