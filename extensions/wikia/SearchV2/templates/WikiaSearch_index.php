@@ -39,7 +39,6 @@
 						echo $app->getView( 'WikiaSearch', 'resultSet', array(
 						  'resultSet' => $result,
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-						  'rankExpr' => $rankExpr,
 						  'debug' => $debug,
 						  'query' => $query,
 						  'isInterWiki' => $isInterWiki
@@ -49,7 +48,6 @@
 						echo $app->getView( 'WikiaSearch', 'result', array(
 						  'result' => $result,
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-						  'rankExpr' => $rankExpr,
 						  'debug' => $debug,
 						  'query' => $query,
 						  'isInterWiki' => $isInterWiki

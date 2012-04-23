@@ -33,25 +33,7 @@
 
 
 <?php if($debug): ?>
-	<?php
-		switch($rankExpr) {
-			case '-indextank':
-				$rankValue = $result->getVar('rank_indextank');
-				break;
-			case '-bl':
-				$rankValue = $result->getVar('rank_bl');
-				break;
-			case '-bl2':
-				$rankValue = $result->getVar('rank_bl2');
-				break;
-			case '-bl3':
-				$rankValue = $result->getVar('rank_bl3');
-				break;
-			default:
-				$rankValue = '?';
-		}
-	?>
-	<i>[id: <?=$result->getId();?>, text_relevance: <?=$result->getVar('text_relevance', '?');?>, backlinks: <?=$result->getVar('backlinks', '?');?>, rank: <?= $rankValue; ?>]</i><br />
+	<i>[id: <?=$result->getId();?>, text_relevance: <?=$result->getVar('text_relevance', '?');?>, backlinks: <?=$result->getVar('backlinks', '?');?>]</i><br />
 <?php endif; //debug ?>
 
 </article>
