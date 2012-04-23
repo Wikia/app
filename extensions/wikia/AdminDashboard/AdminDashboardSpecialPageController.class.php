@@ -9,7 +9,6 @@
 class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		wfLoadExtensionMessages('AdminDashboard');
 		parent::__construct('AdminDashboard', '', false);
 	}
 
