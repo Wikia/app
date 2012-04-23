@@ -13,7 +13,7 @@ var client = new bot({
 });
 
 // log in
-client.logIn('xxx', 'xxx', function(data) {
+client.logIn('QATestsBot', 'FaQayastU4aw', function(data) {
 	console.log('Logged in as ' + data.lgusername + ' (session ID: ' + data.sessionid + ')');
 
 	client.getPagesInCategory('Ulice', function(pages) {
