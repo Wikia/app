@@ -2,9 +2,8 @@
 
 abstract class VideoFeedIngester {
 	const PROVIDER_SCREENPLAY = 'screenplay';
-	const PROVIDER_MOVIECLIPS = 'movieclips';
 	const PROVIDER_REALGRAVITY = 'realgravity';
-	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_MOVIECLIPS, self::PROVIDER_REALGRAVITY);
+	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_REALGRAVITY);
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
@@ -16,7 +15,7 @@ abstract class VideoFeedIngester {
 	const THROTTLE_INTERVAL = 1;	// seconds
 
 	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
-	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases', 'movieclipsIds');
+	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases');
 
 	abstract public function import($file, $params);
 	/**
