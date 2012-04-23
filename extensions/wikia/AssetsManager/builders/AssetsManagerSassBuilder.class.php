@@ -45,14 +45,12 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
 
-
 		if( $wgDevelEnvironment ) {
 			$timeEnd = microtime( true );
 			$time = intval( ($timeEnd - $timeStart) * 1000 );
 			$contentLen = strlen( $this->mContent);
 			error_log( "{$this->mOid}\t{$time}ms {$contentLen}b" );
 		}
-
 	}
 
 	private function processContent() {
@@ -114,7 +112,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$importRegexOne = "/@import ['\\\"]([^\\n]*\\.css)['\\\"]([^\\n]*)(\\n|$)/is"; // since this stored is in a string, remember to escape quotes, slashes, etc.
 		$importRegexTwo = "/@import url[\\( ]['\\\"]?([^\\n]*\\.css)['\\\"]?[ \\)]([^\\n]*)(\\n|$)/is";
 		if ((0 < preg_match_all($importRegexOne, $this->mContent, $matches, PREG_SET_ORDER)) || (0 < preg_match_all($importRegexTwo, $this->mContent, $matches, PREG_SET_ORDER))) {
-			foreach($matches as $match){
+			foreach($matches as $match) {
 				$lineMatched = $match[0];
 				$fileName = trim($match[1]);
 				$fileContents = file_get_contents($IP . $fileName);
@@ -126,12 +124,27 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	private function stylePathProcessing() {
-		global $IP;
+		global $wgCdnStylePath;
 		wfProfileIn(__METHOD__);
 
-		// TODO: make it a method of AssetsManager builder (BugId:10548)
-		require "$IP/extensions/wikia/StaticChute/wfReplaceCdnStylePathInCss.php";
-		$this->mContent = wfReplaceCdnStylePathInCss($this->mContent);
+		if(strpos($this->mContent, "wgCdnStylePath") !== false){ // faster to skip the regex in most cases
+			// Because of fonts in CSS, we have to allow for lines with multiple url()s in them.
+			// This will rewrite all but the last URL on the line (the last regex will fix the final URL and remove the special comment).
+			$wasChanged = true;
+
+			// TODO: refactor?
+			while($wasChanged) {
+				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n]*?)([, ]url[^\n]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->mContent);
+				if($changedCss != $this->mContent) {
+					$wasChanged = true;
+					$this->mContent = $changedCss;
+				} else {
+					$wasChanged = false;
+				}
+			}
+
+			$this->mContent = preg_replace("/([\(][\"']?)(\/[^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $this->mContent);
+		}
 
 		wfProfileOut(__METHOD__);
 	}
