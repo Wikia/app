@@ -19,7 +19,7 @@ function printHelp() {
 		echo <<<HELP
 Returns performance metrics for a given page
 
-USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals]
+USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed]
 
 	--url
 		Page to be checked
@@ -32,6 +32,9 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 
 	--noexternals
 		Test pages without external resources fetched (i.e. noexternals=1 added to the URL)
+
+	--providers
+		Comma separated list of providers to get data from
 
 HELP;
 }
@@ -54,9 +57,12 @@ if (isset($options['mobile'])) {
 	$url .= (strpos($url, '?') !== false ? '&' : '?') . 'useskin=wikiamobile';
 }
 
+// support --providers option
+$providers = isset($options['providers']) ? explode(',', $options['providers']) : array();
+
 // use GooglePage speed API
 $metrics = F::build('PerformanceMetrics');
-$report = $metrics->getReport($url);
+$report = $metrics->getReport($url, $providers);
 
 if (empty($report)) {
 	echo "Get metrics request failed!\n";
@@ -76,7 +82,7 @@ $reportUrl = $report['url'];
 
 echo <<<REPORT
 -------------------------------------------------------------------------------
-PageSpeed report for <$reportUrl>:
+Perfomance metrics for <$reportUrl>:
 -------------------------------------------------------------------------------
 
 REPORT;
