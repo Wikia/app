@@ -101,8 +101,28 @@ page.onResourceRequested = function(res) {
 	};
 };
 
+page.contentLength = 0;
+page.resourceTypes = {
+	html: 0,
+	css: 0,
+	js: 0,
+	images: 0,
+	other: 0,
+	base64: 0
+};
+
+page.resourceSize = {
+	html: 0,
+	css: 0,
+	js: 0,
+	images: 0,
+	other: 0,
+	base64: 0
+};
+
 page.onResourceReceived = function(res) {
-	var entry = page.requests[res.id];
+	var entry = page.requests[res.id],
+		type = 'other';
 
 	//console.log(JSON.stringify(res));
 	//console.log('recv [' + res.stage + ' #' + res.id + ']: ' + res.url + ' (' +  JSON.stringify({time:res.time}) + ')');
@@ -111,6 +131,7 @@ page.onResourceReceived = function(res) {
 		case 'start':
 			entry.recvStartTime = res.time;
 			entry.timeToFirstByte = res.time - entry.sendTime;
+			entry.contentLength = res.bodySize || 0;
 			break;
 
 		case 'end':
@@ -118,8 +139,55 @@ page.onResourceReceived = function(res) {
 			entry.lastByte = res.time - entry.sendTime;
 			entry.receive = entry.lastByte - entry.timeToFirstByte;
 
-			console.log('recv: ' + entry.url);
-			//console.log('> resource [#' + res.id +'] ' + JSON.stringify(entry));
+			res.headers.forEach(function(header) {
+				switch (header.name) {
+					// TODO: why it's not gzipped?
+					case 'Content-Length':
+						entry.contentLength = parseInt(header.value, 10);
+						page.contentLength += entry.contentLength;
+						break;
+
+					// detect content type
+					case 'Content-Type':
+						// parse header value
+						var value = header.value.split(';').shift();
+
+						switch(value) {
+							case 'text/html':
+								type = 'html';
+								break;
+
+							case 'text/css':
+								type = 'css';
+								break;
+
+							case 'application/x-javascript':
+							case 'text/javascript':
+								type = 'js';
+								break;
+
+							case 'image/png':
+							case 'image/jpeg':
+							case 'image/gif':
+								type = 'images';
+								break;
+						}
+
+						// detect base64 encoded images
+						if (entry.url.indexOf('data:') === 0) {
+							type = 'base64';
+						}
+				}
+			});
+
+			entry.type = type;
+
+			page.resourceTypes[type]++;
+			page.resourceSize[type] += entry.contentLength;
+
+			//console.log('recv: ' + entry.url);
+			console.log('> resource [#' + res.id +'] ' + JSON.stringify(entry));
+			//console.log('> resource [#' + res.id +'] ' + JSON.stringify(res));
 			break;
 	}
 };
@@ -138,9 +206,20 @@ page.onLoadFinished = function(status) {
 			}),
 			metrics = {
 				requests: page.requests.length,
+				contentLength: page.contentLength,
 				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte),
 				timeToLastByte: (page.requests[1] && page.requests[1].lastByte),
 				loadTime: now  - page.startTime
+			};
+
+			// count per each resource type
+			for (var type in page.resourceTypes) {
+				metrics[type + 'Count'] = page.resourceTypes[type];
+			};
+
+			// size per each resource type
+			for (var type in page.resourceSize) {
+				metrics[type + 'Size'] = page.resourceSize[type];
 			};
 
 			// onDOMready
