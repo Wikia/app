@@ -96,13 +96,16 @@ class AssetsManagerController extends WikiaController {
 			// handle cache time
 			if ( $ttl > 0 ) {
 				$this->wg->Memc->set( $key, $this->response->getData(), $ttl );
-				$this->response->setCacheValidity( $ttl, $ttl, array( WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH ) );
 			}
 
 			
 		}
 		else {
 			$this->response->setData( $data );
+		}
+
+		if ( $ttl > 0 ) {
+			$this->response->setCacheValidity( $ttl, $ttl, array( WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH ) );
 		}
 
 		$this->response->setFormat( 'json' );
