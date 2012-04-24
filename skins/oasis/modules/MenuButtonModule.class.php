@@ -30,7 +30,7 @@ class MenuButtonModule extends WikiaController {
 	var $loginToEditURL;
 	var $loginTitle;
 	*/
-	
+
 	public function init() {
 		$this->action = null;
 		$this->icon = null;
@@ -148,7 +148,7 @@ class MenuButtonModule extends WikiaController {
 
 		$this->id = !empty($data['id']) ? $data['id'] : '';
 		$this->tooltip = !empty($data['tooltip']) ? (' data-tooltip="' . htmlspecialchars($data['tooltip']) . '"') : '';
-		$this->dropdown = $data['dropdown'];
+		$this->dropdown = isset($data['dropdown']) ? $data['dropdown'] : false;
 
 		wfProfileOut(__METHOD__);
 	}
