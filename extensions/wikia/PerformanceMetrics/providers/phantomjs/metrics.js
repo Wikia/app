@@ -120,6 +120,8 @@ page.resourceSize = {
 	base64: 0
 };
 
+page.redirects = 0;
+
 page.onResourceReceived = function(res) {
 	var entry = page.requests[res.id],
 		type = 'other';
@@ -138,6 +140,14 @@ page.onResourceReceived = function(res) {
 			entry.recvEndTime = res.time;
 			entry.lastByte = res.time - entry.sendTime;
 			entry.receive = entry.lastByte - entry.timeToFirstByte;
+			entry.status = res.status || 200 /* for base64 data */;
+
+			switch (entry.status) {
+				case 301:
+				case 302:
+					page.redirects++;
+					break;
+			}
 
 			res.headers.forEach(function(header) {
 				switch (header.name) {
@@ -207,6 +217,7 @@ page.onLoadFinished = function(status) {
 			metrics = {
 				requests: page.requests.length,
 				contentLength: page.contentLength,
+				redirects: page.redirects,
 				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte),
 				timeToLastByte: (page.requests[1] && page.requests[1].lastByte),
 				loadTime: now  - page.startTime
