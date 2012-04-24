@@ -55,7 +55,7 @@
 		</component>
 		<component name="display">
 			<settings>
-				<setting name="backgroundcolor" value="0xFFFFFF" />
+				<setting name="backgroundcolor" value="0x000000" />
 				<setting name="bufferinterval" value="5" />
 				<setting name="bufferrotation" value="3" />
 			</settings>
