@@ -49,7 +49,7 @@ var CreateWikiaPoll = {
 		$.getResources([
 			$.loadJQueryUI,
 			$.getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
-			wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js?' + wgStyleVersion
+			wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js'
 		], function() {
 			$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaPoll&actionName=SpecialPage&outputType=html', function(data) {
 				$(data).makeModal({width: 600});
