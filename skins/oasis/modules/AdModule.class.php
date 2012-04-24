@@ -25,6 +25,11 @@ class AdModule extends WikiaController {
 				self::$config['CORP_TOP_RIGHT_BOXAD'] = true;
 				self::$config['TOP_BUTTON'] = true;
 			}
+			elseif (ArticleAdLogic::isSearch()) {
+				self::$config['TOP_LEADERBOARD'] = true;
+				self::$config['TOP_RIGHT_BOXAD'] = true;
+				self::$config['TOP_BUTTON'] = true;				
+			}
 			return;
 		}
 

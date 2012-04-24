@@ -23,7 +23,12 @@
 			echo wfRenderModule('Ad', 'Index', array('slotname' => 'HUB_TOP_LEADERBOARD'));
 		}
 		elseif ($wg->EnableCorporatePageExt) {
-			echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
+			if (ArticleAdLogic::isSearch()) {
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));								
+			}
+			else {
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));				
+			}
 		} else {
 			if (in_array('leaderboard', $wg->ABTests)) {
 				// no leaderboard ads

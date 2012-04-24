@@ -140,18 +140,27 @@ class BodyModule extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		if($namespace == NS_SPECIAL) {
-			if ($wgTitle->isSpecial('Search') || ($wgTitle->isSpecial('WikiaSearch') && empty($this->wg->EnableWikiaHomePageExt))) {
-				$railModuleList = array(
-					$latestActivityKey => array('LatestActivity', 'Index', null),
-				);
+			if (ArticleAdLogic::isSearch()) {
+				if (empty($this->wg->EnableWikiaHomePageExt)) {
+					$railModuleList = array(
+						$latestActivityKey => array('LatestActivity', 'Index', null),
+					);
 
-				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
-				if( empty( $wgEnableWikiAnswers ) ) {
-					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-					if ($wgEnableHuluVideoPanel) {
-						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
-					}
+					if( empty( $wgEnableWikiAnswers ) ) {
+						$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
+						if ($wgEnableHuluVideoPanel) {
+							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
+						}
+					}					
+				}
+				elseif ($wgEnableCorporatePageExt) {
+					$railModuleList = array(
+						1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'))
+					);
+					wfProfileOut(__METHOD__);
+					return $railModuleList;
 				}
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
@@ -268,7 +277,6 @@ class BodyModule extends WikiaController {
 			} else { // content pages
 				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
 			}
-			if ($wgTitle->isSpecial('Search')) $railModuleList = array();
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
