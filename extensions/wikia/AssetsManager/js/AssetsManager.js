@@ -71,9 +71,8 @@ window.Wikia.getMultiTypePackage = function(options) {
 		request = $.extend(request, params);
 	}
 
-	if(typeof ttl === 'string'){
-		request.ttl = ttl;
-	}
+	if(ttl)
+		request.ttl = ~~ttl;
 
 	if(send){
 		// add a cache buster
