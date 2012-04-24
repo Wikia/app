@@ -7,12 +7,12 @@ class PerformanceMetrics extends WikiaObject {
 	}
 
 	/**
-	 * Returns instances of all available metrics providers
+	 * Returns instances of given metrics providers
 	 *
+	 * @param array $providers list of providers to get instance of
 	 * @return mixed array of PerformanceMetricsProvider instances
 	 */
-	public function getAllProviders() {
-		$providers =$this->wg->PerformanceMetricsProviders;
+	public function getProviders(Array $providers) {
 		$instances = array();
 
 		foreach($providers as $providerName) {
@@ -26,13 +26,14 @@ class PerformanceMetrics extends WikiaObject {
 	 * Returns aggregated metrics from all available metrics providers
 	 *
 	 * @param string $url page URL
+	 * @param array $providers list of providers to get data from (defaults to all providers)
 	 * @return mixed report
 	 */
-	public function getReport($url) {
-		$providers = $this->getAllProviders();
+	public function getReport($url, Array $providers = array()) {
+		$instances = $this->getProviders( !empty($providers) ? $providers : $this->wg->PerformanceMetricsProviders );
 		$metrics = array();
 
-		foreach($providers as $provider) {
+		foreach($instances as $provider) {
 			$report = $provider->getReport($url);
 
 			if (!empty($report)) {
@@ -40,7 +41,9 @@ class PerformanceMetrics extends WikiaObject {
 			}
 		}
 
-		$metrics['url'] = reset($metrics['url']);
+		if (is_array($metrics['url'])) {
+			$metrics['url'] = reset($metrics['url']);
+		}
 		return $metrics;
 	}
 }
