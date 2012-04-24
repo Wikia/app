@@ -115,44 +115,43 @@ class CategoryDataService extends Service {
 			if ( ( $dbr->numRows( $res ) == 0 ) ) {
 
 				Wikia::log(__METHOD__, ' No data. Try to gather some by myself');
-
-				$where = array(
-					'pv_city_id' => $wgCityId,
-					'pv_page_id > ' . $catKeyMin,
-					'pv_page_id < ' . $catKeyMax
-				);
-
-				if( !empty( $mNamespace )  ) {
-					$where[] = 'pv_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')';
-				}
-
-				$res = $dbr->select(
-					array( 'page_views_articles' ),
-					array( 'pv_page_id as page_id' ),
-					$where,
-					__METHOD__,
-					array(
-						'GROUP BY' => 'pv_page_id',
-						'ORDER BY' => 'sum(pv_views) DESC'
-					)
-				);
+				// query here looked pretty bad from efficiency point of view,
+				// similar to that described in RCA from changeset r49897
+				// no sign of this scope being executed in logs, removing
+				// (2012-04-24)
+				Wikia::log(__METHOD__, ' Data gathering disabled');
 			}
 
 			if ( $dbr->numRows( $res ) > 0 ) {
 
-				Wikia::log(__METHOD__, 'Found some data. Lets find a commmon part with categories');
+				Wikia::log(__METHOD__, ' Found some data. Lets find a commmon part with categories ');
+				Wikia::log(__METHOD__, ' Processing ' . $dbr->numRows( $res ) . ' rows against ' . count($catKeys) . ' categories ');
 
 				$aResult = array();
+				$aResultCount = 0;
+				$keys = array();
+				$reversedCatKeys = array_flip($catKeys);
+
+				$time = microtime(true);
+
 				while ($row = $res->fetchObject($res)) {
-					$key = $row->page_id;
-					if ( in_array( $key, $catKeys ) ){
+					$key = intval($row->page_id);
+					$keys [$key]= $key;
+				}
+
+				foreach($keys as $key) {
+					if ( isset( $reversedCatKeys[$key] ) ){
+						$aResultCount++;
 						unset( $aCategoryArticles[$key] );
-						$aResult[ intval( $key ) ] = array( 'page_id' => $key );
-						if ( !empty( $limit ) && count( $aResult ) >= $limit ){
+						$aResult[ $key ] = array( 'page_id' => $key );
+						if ( !empty( $limit ) && $aResultCount >= $limit ){
+							self::logProcessingTime($time);
 							return $aResult;
 						}
 					}
 				}
+
+				self::logProcessingTime($time);
 
 				$ret = ( !empty( $aResult ) )  ? $aResult + $aCategoryArticles : $aCategoryArticles;
 
@@ -169,5 +168,9 @@ class CategoryDataService extends Service {
 			Wikia::log(__METHOD__, ' No articles in category found - quitting');
 			return array();
 		}
+	}
+
+	protected static function logProcessingTime($time) {
+		Wikia::log(__METHOD__, ' Processing Time: ' . (microtime(true) - $time));
 	}
 }
