@@ -40,13 +40,15 @@ function adjustThumbnailToVideoRatio( $upload, $ratio ){
 }
 
 
+$wgVideoHandlersVideosMigrated = false; // be sure we are working on old files
 
 // $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
+
 // echo( "$IP\n" );
 
 global $wgCityId, $wgExternalDatawareDB;
 
-echo( "Video Migration script running for $wgCityId\n" );
+echo( "\nVideo Migration script running for $wgCityId\n" );
 videoLog( 'migration', 'START', '');
 
 if( isset( $options['help'] ) && $options['help'] ) {
@@ -55,6 +57,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 }
 
 $defaultThumbnailUrl = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/BrokenVideo_Icon_Large.png'; // TODO: CHANGEME
+$botUser = User::newFromName( 'WikiaBot' );
 
 
 //@include( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
@@ -68,7 +71,8 @@ echo( "Loading list of videos to process\n" );
 
 $rows = $dbw_dataware->select( 'video_premigrate',
 		array( 'img_name', 'provider', 'new_metadata', 'thumbnail_url', 'video_id' ),
-		array( "(status = 1 OR backlinks > 0) AND is_name_taken = 0 AND wiki_id = $wgCityId"),
+		//array( "(status = 1 OR backlinks > 0) AND is_name_taken = 0 AND wiki_id = $wgCityId"),
+		array( "(status = 1 OR backlinks > 0) AND wiki_id = $wgCityId"),
 		__METHOD__
 	);
 
@@ -93,7 +97,7 @@ if( $rowCount ) {
 	// before processing videos prepare 'status cache'
 	// which contains information about previously processed
 	// videos on this wiki
-	echo "Fetching data about previously processed videos\n";
+	echo "Fetching data about previously processed videos (image table)\n";
 	
 	$existingRows = $dbw->query( 'select img_name FROM image WHERE img_major_mime = "video" AND  img_name NOT LIKE ":%"' );
 
@@ -112,7 +116,7 @@ if( $rowCount ) {
 	while( $video_name = $dbw->fetchObject($rows) ) {
 		// check if video was processed previously (regardless of failure type)
 		if( in_array( $video_name->img_name, $alreadyExisting ) ) {
-			//echo "Aleardy migrated\n";
+			echo "Aleardy migrated $video_name\n";
 			continue;
 		}
 
@@ -152,6 +156,8 @@ if( $rowCount ) {
 			$failures[] = 'Empty Video ID for :' . $video->img_name;
 			continue;
 		}
+
+		echo "Uploading\n";
 
 		$data = array(
 			'wpUpload' => 1,
@@ -200,13 +206,16 @@ if( $rowCount ) {
 		$file->setVideoId( $metadata['videoId'] );
 		$file->forceMime( 'video/'.strtolower( $provider ) );
 		$file->forceMetadata( serialize($metadata) );
-		
+
 		/* real upload */
 		$result = $file->upload(
 				$upload->getTempPath(),
 				'',
 				'',
-				File::DELETE_SOURCE
+				File::DELETE_SOURCE,
+				false,
+				false,
+				$botUser
 			);
 
 		if ( $result->ok ){
@@ -233,7 +242,6 @@ videoLog( 'migration', 'MIGRATED', "migrated:$i,total:$rowCount,errors:$er");
 
 echo "Migrating RelatedVideos from cross-wiki links to regular links\n";
 
-$botUser = User::newFromName( 'WikiaBot' );
 
 $i=0;
 $rows = $dbw->query( 'select page_id FROM page WHERE page_namespace = 1100' );

@@ -28,6 +28,7 @@ WikiFactory::setVarByName('wgVideoHandlersVideosMigrated', $wgCityId, false);
 global $wgExternalDatawareDB;
 $dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
+$dbw_dataware->query("DELETE FROM video_premigrate WHERE wiki_id='$wgCityId'");
 $dbw_dataware->query("DELETE FROM video_migration_sanitization WHERE city_id='$wgCityId'");
 $dbw_dataware->query("DELETE FROM video_sanitization_failededit WHERE city_id='$wgCityId'");
 
