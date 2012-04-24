@@ -333,8 +333,11 @@ class WikiaResponse {
 		if( isset( $this->data[$key] ) ) {
 			return $this->data[$key];
 		}
-
 		return $default;
+	}
+	
+	public function unsetVal( $key ) {
+		unset ( $this->data[$key] );
 	}
 
 	public function hasException() {
