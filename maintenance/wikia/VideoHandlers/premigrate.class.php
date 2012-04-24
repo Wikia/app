@@ -36,7 +36,7 @@ class Premigrate {
 		// before processing videos prepare 'status cache'
 		// which contains information about previously processed
 		// videos on this wiki
-		echo "Fetching data about previously processed videos\n";
+		echo "Fetching data about previously processed videos (premigration)\n";
 		$res = $dbw_dataware->select('video_premigrate','*',
 			array( 'wiki_id'  => $wgCityId )
 		);
