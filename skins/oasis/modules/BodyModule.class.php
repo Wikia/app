@@ -380,7 +380,7 @@ class BodyModule extends WikiaController {
 		} else {
 			$this->displayComments = false;
 		}
-
+		
 		// show user pages header on this page?
 		if (self::showUserPagesHeader()) {
 			$this->headerModuleName = 'UserPagesHeader';
@@ -402,11 +402,9 @@ class BodyModule extends WikiaController {
 			if ( $wgEnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
-				$this->displayComments = false;
 				$this->wg->SuppressPageHeader = true;
 				$this->wg->SuppressWikiHeader = true;
 				$this->wg->SuppressSlider = true;
-				$this->bodytext = F::App()->sendRequest( 'WikiaHomePageController', 'index' );
 			} else if ($wgEnableCorporatePageExt) {
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
 				wfLoadExtensionMessages( 'AutoHubsPages' );
@@ -418,9 +416,8 @@ class BodyModule extends WikiaController {
 
 				// $this->wgSuppressFooter = true;
 				$this->wgSuppressArticleCategories = true;
-				$this->displayComments = false;
 				if (ArticleAdLogic::isMainPage()) {
-					$this->wgSuppressPageHeader = true;
+					$this->wg->SuppressPageHeader = true;
 				} else {
 					$this->headerModuleAction = 'Corporate';
 				}

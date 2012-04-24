@@ -356,4 +356,9 @@ class CorporatePageHelper{
  		wfProfileOut(__METHOD__);
 		return $data;
  	}
+ 	
+ 	public static function onArticleCommentCheck($title) {
+ 		return false;
+ 	}
+ 	
 }
