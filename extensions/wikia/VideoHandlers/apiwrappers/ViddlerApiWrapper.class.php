@@ -3,24 +3,61 @@
 class ViddlerApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_PHP;
 	protected static $API_URL = 'http://api.viddler.com/api/v2/viddler.videos.getDetails.php?key=$1&add_embed_code=1&url=';
-	protected static $WATCH_URL = 'http://www.viddler.com/v/$1';
+	public static $WATCH_URL = 'http://www.viddler.com/v/$1';
+	public static $MAIN_URL = 'http://www.viddler.com/';
 	protected static $CACHE_KEY = 'viddlerapi';
 	protected static $aspectRatio = 1.56160458;
+
+	public function __construct($videoId, $overrideMetadata = array()) {
+
+		if ( strpos($videoId, '/') ) {
+
+			$trueId = self::getIdFromUrl(self::$MAIN_URL . $videoId);
+			return parent::__construct($trueId, $overrideMetadata);
+		} else {
+
+			return parent::__construct($videoId, $overrideMetadata);
+		}
+	}
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith($hostname, "viddler.com") ? true : false;
 	}
 
-	public static function newFromUrl( $url ) {
-		$parsed = explode( "/explore/", strtolower($url));
-		if( is_array( $parsed ) ) {
-			$mdata = array_pop( $parsed );
-			if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-				$videoId = $mdata;
-			} else {
-				$videoId = array_pop( $parsed );
+	public static function getIdFromUrl( $url ) {
+
+		$url = self::getFinalUrl($url);
+
+		if ( strpos($url, '/v/') !== false ) {
+
+			$parsed = explode( "/", strtolower($url));
+			$videoId = array_pop( $parsed );
+			return  $videoId;
+
+		} else {
+
+			$parsed = explode( "/explore/", strtolower($url));
+			if( is_array( $parsed ) ) {
+
+				$mdata = array_pop( $parsed );
+				if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+					$videoId = $mdata;
+				} else {
+					$videoId = array_pop( $parsed );
+				}
+				$videoId = trim($videoId, '/');
+				return $videoId;
 			}
-			$videoId = trim($videoId, '/');
+		}
+
+		return null;
+	}
+
+	public static function newFromUrl( $url ) {
+
+		$videoId = self::getIdFromUrl( $url );
+
+		if ( !empty($videoId) ) {
 			return new static( $videoId );
 		}
 
@@ -101,4 +138,12 @@ class ViddlerApiWrapper extends ApiWrapper {
 			
 		return parent::getAspectRatio();
 	}
+
+	function getFinalUrl($url){
+
+		$req = HttpRequest::factory( $url, array('timeout'=>'default', 'headersOnly'=>true) );
+		$status = $req->execute();
+		return $req->getFinalUrl();
+	}
+
 }
