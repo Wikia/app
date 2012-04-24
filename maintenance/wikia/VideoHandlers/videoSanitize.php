@@ -106,7 +106,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
-#$IP = '/home/release/video_refactoring/trunk'; // HACK TO RUN ON SANDBOX
+$IP = '/home/release/video_refactoring/trunk'; // HACK TO RUN ON SANDBOX
 #$IP = '/usr/wikia/mac'; // DEVbOX
 require_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
