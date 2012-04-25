@@ -84,7 +84,7 @@ class UploadPhotosModule extends WikiaController {
 			}
 		}
 
-		echo json_encode($this->getData());
+		echo json_encode($this->getResponse()->getData());
 		header('content-type: text/plain; charset=utf-8');
 
 		wfProfileOut(__METHOD__);
