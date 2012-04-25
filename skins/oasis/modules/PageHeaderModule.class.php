@@ -596,6 +596,8 @@ class PageHeaderModule extends WikiaController {
 		$this->canAct = $wgUser->isAllowed('edit');
 		if ( $this->canAct ) {
 			$this->prepareActionButton();
+			// dropdown actions
+			$this->dropdown = $this->getDropdownActions();			
 		}
 
 		// page namespace
