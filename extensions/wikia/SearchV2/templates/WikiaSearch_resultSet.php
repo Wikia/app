@@ -12,7 +12,7 @@
 				<?php endif; ?>
 				<li><a href="<?= $resultSet->getHeader('cityUrl') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"><?= wfMsg( 'wikiasearch2-search-on-wiki')?></a></li>
 				<?php if ($debug): ?>
-					<li><?=$resultSet->getResultsFound();?> <?= wfMsg( 'wikiasearch2-results' ); ?></li>
+					<li><?= wfMsg( 'wikiasearch2-results', $resultSet->getResultsFound() ); ?></li>
 					<?php if($resultSet->getHeader('cityRank')): ?>
 						<li>(1st pos: <?=$resultSet->getHeader('1stResultPos');?>) <font color="red">WikiRank: <?=$resultSet->getHeader('cityRank');?></font></li>
 					<?php endif; ?>
