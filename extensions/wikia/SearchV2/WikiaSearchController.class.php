@@ -66,7 +66,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			if(!empty($resultsFound)) {
 				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
-				$resultsFound = WikiaSearchHelper::formatNumber($resultsFound);
+				$resultsFound = $this->wg->Lang->formatNum($resultsFound);
 			}
 
 			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $wikiName) )  );

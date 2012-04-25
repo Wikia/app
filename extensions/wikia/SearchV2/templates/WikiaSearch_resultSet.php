@@ -8,7 +8,7 @@
 			<ul>
 				<li><a href="<?=$resultSet->getHeader('cityUrl');?>"><?=$resultSet->getHeader('cityUrl');?></a></li>
 				<?php if($resultSet->getHeader('cityArticlesNum')): ?>
-					<li><?= wfMsg( 'wikiasearch2-pages', $resultSet->getHeader('cityArticlesNum') ); ?></li>
+					<li><?= wfMsg( 'wikiasearch2-pages', $wg->Lang->formatNum($resultSet->getHeader('cityArticlesNum')) ); ?></li>
 				<?php endif; ?>
 				<li><a href="<?= $resultSet->getHeader('cityUrl') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search';?>"><?= wfMsg( 'wikiasearch2-search-on-wiki')?></a></li>
 				<?php if ($debug): ?>
