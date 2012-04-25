@@ -18,7 +18,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
-
+		
+		$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title', array('test1', 'test2') )  );
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
 		$debug = $this->request->getBool('debug');
@@ -42,9 +43,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 
+		$isCorporateWiki = !empty($this->wg->EnableWikiaHomePageExt);
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
-		$isInterWiki = $crossWikia ? true : !empty($this->wg->EnableWikiaHomePageExt);
+		$isInterWiki = $crossWikia ? true : $isCorporateWiki;
 
+		if($isCorporateWiki) {
+			OasisModule::addBodyClass('inter-wiki-search');
+		}
+		
 		$results = false;
 		$resultsFound = 0;
 		$paginationLinks = '';
