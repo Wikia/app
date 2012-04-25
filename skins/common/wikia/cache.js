@@ -1,3 +1,4 @@
+/*global define */
 /**
  * Memcache-like API based on localStorage using JS global namespace as a fallback
  *
@@ -35,18 +36,18 @@
 			return (new Date()).getTime();
 		}
 	
-		if(Modernizr.localstorage)
+		if(Modernizr.localstorage){
 			ls = localStorage;
-		else{
+		}else{
 			var c = window.__wkCache__ = {};
-	
+
 			ls = {
 				getItem: function(key){
 					return c[key];
 				},
 	
 				setItem: function(key, value){
-					c[key] = '' + value;
+					c[key] = value;
 				},
 	
 				removeItem: function(key){
@@ -98,8 +99,7 @@
 				for(var x = 0, y = ls.length, k; x < y; x++){
 					k = ls.key(x);
 	
-					if(
-						k !== null &&
+					if( k !== null &&
 						k.indexOf(CACHE_PREFIX) == 0 &&
 						k.indexOf(CACHE_EXP_SUFFIX) > 0 &&
 						JSON.parse(ls.getItem(k)) <= getTimestamp()
