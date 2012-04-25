@@ -156,12 +156,12 @@ var regExpRules = [
 	// nested callbacks (BugId:29194)
 	{
 		name: 'Nested callback',
-		regexp: /^([^:=]*)function\([^\)]*\)\s*{$/,
+		regexp: /\(\S+[^\(\)]*function\([^\)]*\)\s*{$/,
 		reason: function(matches, nextLine) {
-			var nextLineRegexp = /^\s*[^{}]*function\(/;
+			var nextLineRegexp = /^\s*[^\{\}]*function\(/;
 
-			if (nextLine && nextLineRegexp.test(nextLine) && matches[1].length > 2) {
-				return 'Nested callbacks detected (use promise pattern instead)';
+			if (nextLine && nextLineRegexp.test(nextLine)) {
+				return 'Nested callbacks detected (consider promise pattern instead)';
 			}
 			else {
 				return false;
