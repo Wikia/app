@@ -19,7 +19,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
 		
-		$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title', array('test1', 'test2') )  );
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
 		$debug = $this->request->getBool('debug');
@@ -28,6 +27,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$activeAdvancedTab = $this->getActiveAdvancedTab();
 		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
+		$wikiName = $this->wg->Sitename;
+		
 		if(!empty($advanced)) {
 			$redirs = $this->request->getBool('redirs');
 		}
@@ -65,6 +66,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			if(!empty($resultsFound)) {
 				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
+				$resultsFound = WikiaSearchHelper::formatNumber($resultsFound);
+			}
+
+			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $wikiName) )  );
+		} else {
+			if($isInterWiki) {
+				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );		
+			} else {
+				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', array($wikiName) )  );						
 			}
 		}
 
@@ -72,7 +82,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
-
+		
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
 		$this->setVal( 'currentPage',  $page );
