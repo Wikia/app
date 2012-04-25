@@ -17,9 +17,10 @@ class PerformanceMetricsGooglePageSpeed extends PerformanceMetricsProvider {
 	 * @see http://code.google.com/intl/pl/apis/pagespeedonline/v1/getting_started.html#examples
 	 *
 	 * @param string $url page URL
+	 * @param array $options additional options
 	 * @return mixed report
 	 */
-	public function getReport($url) {
+	public function getReport($url, Array $options = array()) {
 		$apiUrl = self::PAGESPPED_API_URL . '?' . http_build_query(array(
 			'url' => $url,
 			'key' => $this->apiKey,
