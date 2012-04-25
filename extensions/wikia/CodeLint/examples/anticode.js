@@ -99,5 +99,17 @@ var obj = {
 	}
 };
 
+(function() {
+	foo(function() {
+		// ...
+	});
+})();
+
+obj.bar = function() {
+	foo(function() {
+		// ...
+	});
+}
+
 var a = function(data) {return true},
-	b = function(foo) {return foo}; 
+	b = function(foo) {return foo};
