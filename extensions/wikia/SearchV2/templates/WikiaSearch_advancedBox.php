@@ -10,6 +10,7 @@
 						'namespaces' => $profile['namespaces'],
 						'label' => wfMsg( $profile['message'] ),
 						'tooltip' => wfMsg( $profile['tooltip'], $tooltipParam ),
+						'redirs' => $redirs,
 						'params' => isset( $profile['parameters'] ) ? $profile['parameters'] : array() ) );
 					?>
 				</li>
@@ -53,10 +54,7 @@
 		}
 
 		// Show redirects check only if backend supports it
-		$redirects = '';
-		if( $acceptListRedirects ) {
-			$redirects = '<input name="redirs" type="checkbox" value="1" '.($searchRedirects?'checked="checked"':'').' id="redirs" /><label for="redirs">'.wfMsg( 'powersearch-redir' ).'</label>';
-		}
+		$redirects = '<input name="redirs" type="checkbox" value="1" '.(!empty($redirs)?'checked="checked"':'').' id="redirs" /><label for="redirs">'.wfMsg( 'powersearch-redir' ).'</label>';
 		$hidden = '<input type="hidden" name="advanced" value="'.$advanced.'" />';
 	?>
 

@@ -5,9 +5,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const RESULTS_PER_PAGE = 25;
 	const PAGES_PER_WINDOW = 5;
 
+	/**
+	 * @var WikiaSearch
+	 */
 	protected $wikiaSearch = null;
-	// @todo refactor it, shouldn't probably be here
-	protected $searchRedirs = 1;
 
 	public function __construct() {
 		$this->wikiaSearch = F::build('WikiaSearch');
@@ -26,6 +27,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$activeAdvancedTab = $this->getActiveAdvancedTab();
 		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
+		if(!empty($advanced)) {
+			$redirs = $this->request->getBool('redirs');
+		}
+		else {
+			// include redirects by default
+			$redirs = true;
+		}
 
 		$namespaces = array();
 		foreach($searchableNamespaces as $i => $name) {
@@ -43,16 +51,19 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if( !empty( $query ) ) {
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
 			$this->wikiaSearch->setSkipCache( $skipCache );
+			// @todo turn it back on, when backend will be fixed
+			//$this->wikiaSearch->setIncludeRedirects( $redirs );
+
 			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $isInterWiki );
 			$resultsFound = $results->getRealResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
 			}
 		}
 
 		if(!$isInterWiki) {
-			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced ) );
+			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
 
@@ -75,6 +86,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$activeTab = $this->getVal( 'activeTab' );
 		$searchableNamespaces = $this->getVal( 'searchableNamespaces' );
 		$advanced = $this->getVal( 'advanced' );
+		$redirs = $this->getVal( 'redirs' );
 
 		$bareterm = $term;
 		if( $this->termStartsWithImage( $term ) ) {
@@ -88,25 +100,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'namespaces', $namespaces );
 		$this->setVal( 'activeTab', $activeTab );
 		$this->setVal( 'searchableNamespaces', $searchableNamespaces );
-		$this->setVal( 'acceptListRedirects', true );
-		$this->setVal( 'searchRedirects', $this->searchRedirs );
+		$this->setVal( 'redirs', $redirs );
 		$this->setVal( 'advanced', $advanced);
 	}
 
-	// $term, $namespaces, $label, $tooltip, $params=array()
 	public function advancedTabLink() {
 		$term = $this->getVal('term');
 		$namespaces = $this->getVal('namespaces');
 		$label = $this->getVal('label');
 		$tooltip = $this->getVal('tooltip');
 		$params = $this->getVal('params');
+		$redirs = $this->getVal('redirs');
 
 		$opt = $params;
 		foreach( $namespaces as $n ) {
 			$opt['ns' . $n] = 1;
 		}
 
-		$opt['redirs'] = $this->searchRedirects ? 1 : 0;
+		$opt['redirs'] = !empty($redirs) ? 1 : 0;
 		$stParams = array_merge( array( 'query' => $term ), $opt );
 
 		$title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
@@ -225,6 +236,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$skipCache = $this->getVal('skipCache');
 		$namespaces = $this->getVal('namespaces', array());
 		$advanced = $this->getVal( 'advanced' );
+		$redirs = $this->getVal( 'redirs' );
 
 		$this->setVal( 'query', $query );
 		$this->setVal( 'pagesNum', $pagesNum );
@@ -238,6 +250,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'debug', $debug );
 		$this->setVal( 'namespaces', $namespaces );
 		$this->setVal( 'advanced', $advanced );
+		$this->setVal( 'redirs', $redirs );
 	}
 
 	public function getPage() {
