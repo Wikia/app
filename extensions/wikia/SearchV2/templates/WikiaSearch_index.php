@@ -21,6 +21,12 @@
 		</fieldset>
 	    <?php endif; ?>
 
+	<?php if(!empty($advancedSearchBox)) : ?>
+		<?php echo $advancedSearchBox; ?>
+	<?php endif; ?>
+
+	</form>
+
 		<?php if(!empty($results)): ?>
 		<?php if( $resultsFound > 0 ): ?>
 			<p class="result-count subtle">
@@ -61,10 +67,5 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if(!empty($advancedSearchBox)) : ?>
-		<?php echo $advancedSearchBox; ?>
-	<?php endif; ?>
-
-	</form>
 
 </section> 
