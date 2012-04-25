@@ -47,7 +47,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$resultsFound = $results->getRealResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced ) );
 			}
 		}
 
@@ -223,6 +223,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$crossWikia = $this->getVal('crossWikia');
 		$debug = $this->getVal('debug');
 		$skipCache = $this->getVal('skipCache');
+		$namespaces = $this->getVal('namespaces', array());
+		$advanced = $this->getVal( 'advanced' );
 
 		$this->setVal( 'query', $query );
 		$this->setVal( 'pagesNum', $pagesNum );
@@ -230,10 +232,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'windowFirstPage', ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 ) );
 		$this->setVal( 'windowLastPage', ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) );
 		$this->setVal( 'pageTitle', $this->wg->Title );
-		$this->setVal( 'crossWikia', $crossWikia);
-		$this->setVal( 'resultsCount', $resultsCount);
-		$this->setVal( 'skipCache', $skipCache);
-		$this->setVal( 'debug', $debug);
+		$this->setVal( 'crossWikia', $crossWikia );
+		$this->setVal( 'resultsCount', $resultsCount );
+		$this->setVal( 'skipCache', $skipCache );
+		$this->setVal( 'debug', $debug );
+		$this->setVal( 'namespaces', $namespaces );
+		$this->setVal( 'advanced', $advanced );
 	}
 
 	public function getPage() {
