@@ -150,7 +150,9 @@ $color-search-form-background: darken($color-page, 5%);
 		width: 680px;
 	}
 }
-
+.inter-wiki-search .WikiaTopAds {
+	margin-bottom: 15px;
+}
 .mw-search-formheader { // Quick style fix for now. Will fix tomorrow
 	@include clearfix;
 }

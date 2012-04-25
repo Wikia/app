@@ -4,6 +4,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiasearch2-page-title' => 'Search results for \'$1\' - $2',
 	'wikiasearch2-search-btn' => 'Search',
 	'wikiasearch2-search-all-wikia' => 'Search all of Wikia',
 	'wikiasearch2-debug-mode' => 'Debug mode',
