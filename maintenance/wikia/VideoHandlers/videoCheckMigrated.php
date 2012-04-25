@@ -26,7 +26,7 @@ echo(": {$rowCount} old videos found\n");
 
 $v = WikiFactory::getVarByName('wgVideoHandlersVideosMigrated', $wgCityId);
 
-if($rowCount && empty($v)) {
+if($rowCount > 0 && empty($v)) {
 //if(true) {
 	$dbw_dataware->insert(
 		'video_notmigrated',
