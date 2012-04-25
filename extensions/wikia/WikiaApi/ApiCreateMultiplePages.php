@@ -1,11 +1,11 @@
 <?php
-/* 
+/*
  * API module that allows for multiple pages to be created at once
  *
  */
 
 class ApiCreateMultiplePages extends ApiBase {
-	protected $maxpages = 100;
+	protected $maxpages = 20;
 
 	public function __construct($main, $action) {
 		parent :: __construct($main, $action);
@@ -15,7 +15,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		$this->getMain()->requestWriteMode();
 
 		$params = $this->extractRequestParams();
-		if (empty($params['pagelist'])) {
+		if (empty($params['pagelist'])){
 			$this->dieUsageMsg(array('missingparam', 'pagelist'));
 		}
 
@@ -24,7 +24,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		$pages = explode('|', $params['pagelist']);
 		if (count($pages) > $this->maxpages){
 			// Let's not go nuts.
-			$this->dieUsageMsg(array("invalidparam", "pagelist")); 
+			$this->dieUsageMsg(array("invalidparam", "pagelist"));
 		}
 
 		$createType = 'createPage';
@@ -57,9 +57,9 @@ class ApiCreateMultiplePages extends ApiBase {
 
 		// Remove trailing question marks
 		$title = preg_replace('/\?+$/', '', $title);
-	
+
 		$titleObj = Title::newFromText($title);
-		if (!$titleObj) {
+		if(!$titleObj) {
 			// Invalid title
 			return false;
 		}
@@ -70,7 +70,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		}
 
 		// Does the page already exist?
-		if ($titleObj->exists()) {
+		if ($titleObj->exists()){
 			return false;
 		}
 
@@ -85,6 +85,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		}
 
 		$summary = '';
+
 		$result   = null;
 		$article  = new Article( $titleObj );
 		$editPage = new EditPage( $article );
@@ -94,12 +95,13 @@ class ApiCreateMultiplePages extends ApiBase {
 		//this function calls Article::onArticleCreate which clears cache for article and it's talk page
 		$status = $editPage->internalAttemptSave( $result, $bot );
 		if ( $status == EditPage::AS_SUCCESS_UPDATE || $status == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			return $editPage->getContent();
+			$newArticle = new Article( $titleObj );
+			$newRevId = $newArticle->getRevIdFetched();
+			return $newArticle->getContent();
 		} else {
 			return false;
 		}
-/*
-		$articleObj = new Article($titleObj);
+/*		$articleObj = new Article($titleObj);
 		$status = $articleObj->doEdit($text, $summary, EDIT_NEW);
 		if ($status->ok == 1){
 			return $status->value['revision']->getTitle()->getText();
@@ -109,8 +111,11 @@ class ApiCreateMultiplePages extends ApiBase {
 	}
 
 	private function createPageAnswers( $page, $category = null, $text = null ) {
-		global $IP;
-		require_once("$IP/extensions/wikia/NewWikiBuilder/PrefilledDefaultQuestion.php");
+		global $wgEnableAnswers;
+		if (empty($wgEnableAnswers)) {
+			return false;
+		}
+
 		$q = new PrefilledDefaultQuestion( $page );
 		if ( !is_object( $q ) ) {
 			return false;
@@ -122,13 +127,13 @@ class ApiCreateMultiplePages extends ApiBase {
 		return $res;
 	}
 
-	public function mustBePosted() { 
-		return true;
-	}
+	public function mustBePosted() { return true; }
+
+	public function isWriteMode() { return true; }
 
 	public function getAllowedParams() {
 		return array (
-			'pagelist' => null, 
+			'pagelist' => null,
 			'category' => null,
 			'pagetext' => null,
 			'type' => null,
@@ -158,5 +163,4 @@ class ApiCreateMultiplePages extends ApiBase {
 	}
 
 	public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
-
 }
