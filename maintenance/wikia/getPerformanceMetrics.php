@@ -36,6 +36,9 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 	--providers
 		Comma separated list of providers to get data from
 
+	--logged-in
+		Get metrics for logged-in version of the site
+
 HELP;
 }
 
@@ -46,6 +49,7 @@ if (!isset($options['url'])) {
 }
 
 $url = $options['url'];
+$params = array();
 
 // support --noexternals option
 if (isset($options['noexternals'])) {
@@ -58,11 +62,14 @@ if (isset($options['mobile'])) {
 }
 
 // support --providers option
-$providers = isset($options['providers']) ? explode(',', $options['providers']) : array();
+$params['providers'] = isset($options['providers']) ? explode(',', $options['providers']) : array();
+
+// support --logged-in option
+$params['loggedIn'] = isset($options['logged-in']);
 
 // use GooglePage speed API
 $metrics = F::build('PerformanceMetrics');
-$report = $metrics->getReport($url, $providers);
+$report = $metrics->getReport($url, $params);
 
 if (empty($report)) {
 	echo "Get metrics request failed!\n";
@@ -96,7 +103,7 @@ if (isset($report['metrics']['pageSpeed'])) {
 echo "\nDetails:\n--------\n";
 
 foreach($report['metrics'] as $key => $value) {
-	echo '* ' . sprintf('%-30s: %s', $key, number_format($value)) . "\n";
+	echo '* ' . sprintf('%-30s: %s', $key, is_numeric($value) ? number_format($value) : $value)  . "\n";
 }
 
 die(0);

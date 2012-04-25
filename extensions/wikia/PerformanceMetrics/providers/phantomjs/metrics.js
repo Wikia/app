@@ -5,7 +5,7 @@
  *
  * phantomjs required - http://code.google.com/p/phantomjs/wiki/BuildInstructions
  */
-var page = require('webpage').create(),
+var request = require('webpage').create,
 	system = require('system'),
 	address;
 
@@ -13,6 +13,8 @@ if (system.args.length === 1) {
 	console.log('Usage: metrics.js <URL>');
 	phantom.exit();
 }
+
+var page = request();
 
 // calculate DOM complexity
 function getDomComplexity(page) {
@@ -75,6 +77,8 @@ function getDomComplexity(page) {
 
 // track onDOMready event
 page.onInitialized = function () {
+	console.log('open URL: ' + address);
+
 	page.startTime = Date.now();
 
 	// emulate window.performance
@@ -249,13 +253,20 @@ page.onLoadFinished = function(status) {
 			}
 
 			// other metrics
-			metrics.cookiesRaw = page.evaluate(function () {
+			metrics.cookiesRaw = page.evaluate(function() {
 				return document.cookie.length;
 			});
 
-			metrics.localStorage = page.evaluate(function () {
+			metrics.localStorage = page.evaluate(function() {
 				return window.localStorage.length;
 			});
+
+			// debug stuff
+			/**
+			metrics.userName = page.evaluate(function() {
+				return window.wgUserName;
+			});
+			**/
 
 			// emit the results
 			var report = {
@@ -276,4 +287,64 @@ page.onLoadFinished = function(status) {
 
 // load the emit and print out the metrics
 address = system.args[1];
-page.open(address);
+username = system.args[2] || false;
+password = system.args[3] || false;
+
+// log me in
+if (username !== false && password !== false) {
+	var apiUrl = address.substring(0, address.indexOf('.com/') + 4) + '/api.php';
+
+	console.log(apiUrl);
+
+	// obtain log in token
+	var postData = 'action=login&format=json&lgname=' + username + '&lgpassword=' + password,
+		apiReq = request(),
+		apiReq2 = request(),
+		cookieJar = '';
+
+	apiReq.onResourceReceived = apiReq2.onResourceReceived = function(res) {
+		if (res.stage == 'end') {
+			console.log('#' + JSON.stringify(res.headers));
+
+			res.headers.forEach(function(val) {
+				switch(val.name) {
+					case 'Set-Cookie':
+						var cookie = val.value.split("\n");
+						cookie.forEach(function(val) {
+							val = val.split(';').shift();
+							cookieJar += val + '; ';
+						});
+						break;
+				}
+			});
+
+			console.log('# Cookie jar: ' + cookieJar);
+		}
+	};
+
+	apiReq.open(apiUrl, 'post', postData, function() {
+		console.log(apiReq.plainText);
+
+		var data = JSON.parse(apiReq.plainText),
+			token = data.login.token;
+
+		console.log('token obtainted: ' + token);
+
+		// log in
+		// cookie jar
+		apiReq2.customHeaders = page.customHeaders = {
+			Cookie: cookieJar
+		};
+
+		apiReq2.open(apiUrl, 'post', postData + '&lgtoken=' + token, function() {
+			console.log('logged in');
+			console.log(apiReq2.plainText);
+
+			page.open(address);
+		});
+	});
+}
+// anon request
+else {
+	page.open(address);
+}
