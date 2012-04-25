@@ -22,7 +22,7 @@ $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
 $wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
 $wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
-$wgHooks['EmailConfirmed']           [] = "Wikia::isEmailConfirmedHook";
+$wgHooks['ComposeMail']            [] = "Wikia::isUnsubscribed";
 //$wgHooks['IsTrustedProxy']         [] = "Wikia::trustInternalIps";
 //$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
@@ -1319,19 +1319,16 @@ class Wikia {
 		return $headers;
 	}
 
-	static public function isEmailConfirmedHook( &$user, &$confirmed ) {
+	static public function isUnsubscribed( $to, $body, $subject, $mail ) {
 		# Hook moved from SpecialUnsubscribe extension
 		#if this opt is set, fake their conf status to OFF, and stop here.
-		$result = true;
-		/*
-		 * this depends on EVERYONE checking isConfirmed status before sending mail.
-		 * this depends on EVERYONE using the user->isEmailConfirmed() function to do so, as it calls this hook.
-		 */
-		if( $user->getBoolOption('unsubscribed') ) {
-			$confirmed = false;
-			$result = false;
+		$user = User::newFromName( $to->name );
+
+		if( $user instanceof User && $user->getBoolOption('unsubscribed') ) {
+			return false;
 		}
-		return $result;
+
+		return true;
 	}
 
 	static public function allowNotifyOnPageChange ( /* User */ $editor, /* Title */ $title ) {
