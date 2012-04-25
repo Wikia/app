@@ -10,6 +10,14 @@
 	if(!empty($debug)) {
 		$extraParams['debug'] = 1;
 	}
+	if(!empty($advanced)) {
+		$extraParams['advanced'] = 1;
+	}
+	if(count($namespaces)) {
+		foreach($namespaces as $ns) {
+			$extraParams['ns'.$ns] = 1;
+		}
+	}
 ?>
 	<div class="pagination">
 		<?php if( $windowFirstPage > 1 ): ?>
