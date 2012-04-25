@@ -36,6 +36,8 @@ class WikiaSearch extends WikiaObject {
 	 * @return WikiaSearchResultSet
 	 */
 	public function doSearch( $query, $page = 1, $length = null, $cityId = 0, $groupResults = false ) {
+		wfProfileIn(__METHOD__);
+
 		$length = !empty($length) ? $length : self::RESULTS_PER_PAGE;
 		$groupResults = ( empty($cityId) && $groupResults );
 
@@ -89,6 +91,7 @@ class WikiaSearch extends WikiaObject {
 			$results = $this->client->search( $query, $methodOptions);
 		}
 
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
@@ -109,6 +112,8 @@ class WikiaSearch extends WikiaObject {
 	}
 
 	private function groupResultsPerWiki(WikiaSearchResultSet $results) {
+		wfProfileIn(__METHOD__);
+
 		$wikiResults = array();
 		$wikisByScore = array();
 		foreach($results as $result) {
@@ -147,6 +152,7 @@ class WikiaSearch extends WikiaObject {
 			     $sortedWikiResults[] = $wikiResults[str_replace('id:', '', $key)];
 			   });
 
+		wfProfileOut(__METHOD__);
 		return F::build( 'WikiaSearchResultSet', array( 'results' => $sortedWikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete(), 'query' => $results->getQuery() ) );
 	}
 
@@ -155,7 +161,8 @@ class WikiaSearch extends WikiaObject {
 	}
 
 	public function getPages( $pageIds, $withMetaData = true ) {
-	  $result = array('pages'=>array(), 'missingPages'=>array());
+		wfProfileIn(__METHOD__);
+		$result = array('pages'=>array(), 'missingPages'=>array());
 
 	  foreach (explode('|', $pageIds) as $pageId) {
 	    try {
@@ -170,6 +177,7 @@ class WikiaSearch extends WikiaObject {
 	    }
 	  }
 
+		wfProfileOut(__METHOD__);
 	  return $result;
 	}
 
@@ -186,6 +194,7 @@ class WikiaSearch extends WikiaObject {
 	}
 
 	public function getPage( $pageId, $withMetaData = true ) {
+		wfProfileIn(__METHOD__);
 		$result = array();
 
 		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
@@ -248,10 +257,12 @@ class WikiaSearch extends WikiaObject {
 		$this->wg->Title = $wgTitle;
 		$this->wg->Request = $wgRequest;
 
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
 	public function getPageMetaData( $page ) {
+		wfProfileIn(__METHOD__);
 		$result = array();
 
 		$data = $this->callMediaWikiAPI( array(
@@ -305,87 +316,89 @@ class WikiaSearch extends WikiaObject {
 		$result['wikiviews_weekly'] = (int) $wikiViews->weekly;
 		$result['wikiviews_monthly'] = (int) $wikiViews->monthly;
 
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
 	
 	private function getRedirectTitles( Article $page ) {
+		wfProfileIn(__METHOD__);
 
-	        $result = $page->getDB()->selectRow(array('redirect', 'page'), 
-						    array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'), 
-						    array(),
-						    __METHOD__,
-						    array('GROUP'=>'rd_title'),
-						    array('page' => array('INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from')))
-						    );
+		$result = $page->getDB()->selectRow(array('redirect', 'page'),
+				array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'),
+				array(),
+				__METHOD__,
+				array('GROUP'=>'rd_title'),
+				array('page' => array('INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from')))
+			);
 
+		wfProfileOut(__METHOD__);
 		return (!empty($result)) ? str_replace('_', ' ', $result->redirect_titles) : '';
-
 	}
 
 
 	private function getWikiViews( Article $page ) {
-
-	        $key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
+		wfProfileIn(__METHOD__);
+		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
 		// should probably re-poll for wikis without much love
-	        if ( ($result = $this->wg->Memc->get( $key )) && ($result->weekly > 0 || $result->monthly > 0) ) {
-
-		    return $result;
-
+		if ( ($result = $this->wg->Memc->get( $key )) && ($result->weekly > 0 || $result->monthly > 0) ) {
+			return $result;
 		}
 
-	        $db = wfGetDB( DB_SLAVE, array(), $this->wg->statsDB );
-		
-	        $row = $db->selectRow(array('page_views'),
-				      array('SUM(pv_views) as "monthly"',
-					    'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"'),
-				      array('pv_city_id' => (int) $this->wg->CityId,
-					    'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)'),
-				      __METHOD__
-						 );
+		$db = wfGetDB( DB_SLAVE, array(), $this->wg->statsDB );
+
+		$row = $db->selectRow(array('page_views'),
+			array('SUM(pv_views) as "monthly"',
+			'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"'),
+			array('pv_city_id' => (int) $this->wg->CityId,
+			'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)'),
+			__METHOD__
+		);
 
 		// a pinch of defensive programming
 		if (!$row) {
-
-		   $row = new stdClass();
-		   $row->weekly = 0;
-		   $row->monthly = 0;
-
+			$row = new stdClass();
+			$row->weekly = 0;
+			$row->monthly = 0;
 		}
 
 		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
 
+		wfProfileOut(__METHOD__);
 		return $row;
 	}
 
 
 	public function getRelatedVideos($pageId, $start=0, $size=20) {
+			wfProfileIn(__METHOD__);
 
-	         # going to need an "is_video" field
-	         $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^10) '
-		               . 'AND ns:6 AND -title:(jpg gif png jpeg)';
-		 $params['mlt.boost'] = 'true';
-		 $params['mpt.maxnpt'] = '200';
-		 $params['mlt.fl'] = 'title,html';
-		 $params['start'] = $start;
-		 $params['size'] = $size;
+		// going to need an "is_video" field
+		$params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^10) ' . 'AND ns:6 AND -title:(jpg gif png jpeg)';
+		$params['mlt.boost'] = 'true';
+		$params['mpt.maxnpt'] = '200';
+		$params['mlt.fl'] = 'title,html';
+		$params['start'] = $start;
+		$params['size'] = $size;
 
-	         $similarPages = $this->client->getSimilarPages($this->wg->cityId, $pageId, $params);
+		$similarPages = $this->client->getSimilarPages($this->wg->cityId, $pageId, $params);
 
-		 $response = array();
-		 foreach ($similarPages as $similarPage)
-		 {
-		     $response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
-		 }
+		$response = array();
+		foreach ($similarPages as $similarPage) {
+			$response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
+		}
 
-		 return $response;
+		wfProfileOut(__METHOD__);
+		return $response;
 	}
 
 	private function callMediaWikiAPI( Array $params ) {
+		wfProfileIn(__METHOD__);
+
 		$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
 		$api->execute();
 
+		wfProfileOut(__METHOD__);
 		return  $api->getResultData();
 	}
 

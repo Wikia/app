@@ -2,7 +2,10 @@
 
 class WikiaSolrClient extends WikiaSearchClient {
 
-	protected $solrClient, $solrPort, $solrHost, $query;
+	protected $solrClient;
+	protected $solrPort;
+	protected $solrHost;
+	protected $query;
 	protected $namespaces = array();
 	protected $isInterWiki = false;
 
@@ -21,6 +24,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true
 	 **/
 	public function search( $query,  array $methodOptions = array() ) {
+		wfProfileIn(__METHOD__);
 
 		extract($methodOptions);
 
@@ -33,8 +37,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 		if (isset($namespaces)) {
 		  $this->setNamespaces($namespaces);
 		}
-		
-	        $this->query = $query;
+
+		$this->query = $query;
 		$this->isInterWiki = isset($isInterWiki) ? $isInterWiki : false;
 
 		$params = array(
@@ -160,7 +164,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 		catch (Exception $exception) {
 		  if (!$skipBoostFunctions) {
 		    $methodOptions['skipBoostFunctions'] = true;
-		    return $this->search($query, $methodOptions);
+
+				wfProfileOut(__METHOD__);
+				return $this->search($query, $methodOptions);
 		  }
 		}
 
@@ -179,6 +185,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$results = $this->getWikiaResults($docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
 
+		wfProfileOut(__METHOD__);
 		return F::build( 'WikiaSearchResultSet', 
 				 array( 'results'      => $results, 
 					'resultsFound' => $response->response->numFound, 
@@ -190,13 +197,15 @@ class WikiaSolrClient extends WikiaSearchClient {
 	}
 
 	private function getWikiaResults(Array $solrDocs, Array $solrHighlighting) {
+		wfProfileIn(__METHOD__);
+
 		$results = array();
 		$position = 1;
 
 		$articleMatchId = '';
 
 		if ((!$this->isInterWiki) && ($article = self::createArticleMatch($this->query))) {
-		        global $wgCityId, $wgUser;
+			global $wgCityId;
 			$title = $article->getTitle();
 			if (in_array($title->getNamespace(), $this->namespaces)) {
 			  $articleMatchId = 'c'.$wgCityId.'p'.$article->getID();
@@ -215,10 +224,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 		foreach($solrDocs as $doc) {
-		        $id = 'c'.$doc->wid.'p'.$doc->pageid;
+			$id = 'c'.$doc->wid.'p'.$doc->pageid;
 			if ($articleMatchId == $id) {
 			  continue;
 			}
+
 			$result = F::build( 'WikiaSearchResult', array( 'id' => $id ) );
 			$result->setCityId($doc->wid);
 			$result->setTitle($doc->title);
@@ -239,10 +249,13 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$position++;
 		}
 
+		wfProfileOut(__METHOD__);
 		return $this->deDupeResults($results);
 	}
 
 	private function deDupeResults(Array $results) {
+		wfProfileIn(__METHOD__);
+
 		$canonicals = array();
 		$deDupedResults = array();
 
@@ -274,6 +287,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return array_values($deDupedResults);
 	}
 
@@ -296,6 +310,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 	 * @return array
 	 */
 	private function getInterWikiSearchExcludedWikis($currentWikiId = 0) {
+		wfProfileIn(__METHOD__);
+
 		$wg = F::app()->wg;
 		$cacheKey = F::app()->wf->SharedMemcKey( 'crossWikiaSearchExcludedWikis' );
 		$privateWikis = $wg->Memc->get( $cacheKey );
@@ -307,6 +323,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$wg->Memc->set( $cacheKey, $privateWikis, 3600 ); // cache for 1 hour
 		}
 
+		wfProfileOut(__METHOD__);
 		return count( $privateWikis ) ? array_merge( $privateWikis, $wg->CrossWikiaSearchExcludedWikis ) : $wg->CrossWikiaSearchExcludedWikis;
 	}
 
@@ -314,61 +331,58 @@ class WikiaSolrClient extends WikiaSearchClient {
 	 * Designed as a method so we can make it more complex if we want to -- ex: syntactic parsing to determine question
 	 *
 	 */
-	protected function includeAnswers($query)
-	{
+	protected function includeAnswers($query) {
 	  return substr_count($query, "answers") > 0;
 	}
 
-	public function getSimilarPages($wid, $pageId, array $params = array())
-	{
+	public function getSimilarPages($wid, $pageId, array $params = array()) {
+		wfProfileIn(__METHOD__);
+		$query = sprintf('wid:%d AND pageid:%d', $wid, $pageId);
 
-	      $query = sprintf('wid:%d AND pageid:%d', $wid, $pageId);
+		if (isset($params['start'])) {
+		 	$start = $params['start'];
+		 	unset($params['start']);
+	 	}
+		else {
+			$start = 0;
+		}
 
-	      if (isset($params['start'])) {
-		  $start = $params['start'];
-		  unset($params['start']);
-	      } else {
-		  $start = 0;
-	      }
+		if (isset($params['size'])) {
+		 	$size = $params['size'];
+		 	unset($params['size']);
+	 	}
+		else {
+			$size = 10;
+		}
 
-	      if (isset($params['size'])) {
-		  $size = $params['size'];
-		  unset($params['size']);
-	      } else {
-		  $size = 10;
-	      }
+		$params = array('mlt.match.include' => 'false', 'mlt.fl' => 'html' ) + $params;
+		try {
+			$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);
+		}
+		catch (Exception $e) {
+			echo $e;
+		}
 
-	      $params = array('mlt.match.include' => 'false',
-			      'mlt.fl' => 'html',
-			     ) + $params;
-	      
-
-	      try {
-		$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);
-	      } catch (Exception $e) {
-		echo $e; die;
-	      }
-
-
-	      return $response->response->docs;
-
+		wfProfileOut(__METHOD__);
+		return $response->response->docs;
 	}
 
-	public function setNamespaces(array $namespaces)
-	{
-	       $this->namespaces = $namespaces;
+	public function setNamespaces(array $namespaces) {
+		$this->namespaces = $namespaces;
 	}
 
-	public function getNamespaces()
-	{
-	       return $this->namespaces;
+	public function getNamespaces() {
+		return $this->namespaces;
 	} 
 
 	public static function createArticleMatch( $term ) {
+		wfProfileIn(__METHOD__);
+
 		// Try to go to page as entered.
 		$title = Title::newFromText( $term );
 		# If the string cannot be used to create a title
 		if( is_null( $title ) ) {
+			wfProfileOut(__METHOD__);
 			return null;
 		}
 
@@ -378,16 +392,17 @@ class WikiaSolrClient extends WikiaSearchClient {
 		if( !is_null( $title ) && ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) ) {
 			$article = new Article( $title );
 			if($article->isRedirect()) {
+				wfProfileOut(__METHOD__);
 				return new Article($article->getRedirectTarget());
 			}
 			else {
+				wfProfileOut(__METHOD__);
 				return $article;
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return null;
 	}
-
-
 
 }
