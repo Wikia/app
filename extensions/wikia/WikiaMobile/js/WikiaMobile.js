@@ -371,7 +371,7 @@ var WikiaMobile = (function() {
 					styles: '/extensions/wikia/WikiaMobile/css/sharing.scss',
 					ttl: 86400,
 					callback: function(res){
-						var html = res.templates[0],
+						var html = res.templates['WikiaMobileSharingService_index'],
 							style = res.styles;
 
 						Wikia.processStyle(style);
@@ -406,7 +406,7 @@ var WikiaMobile = (function() {
 					loader.remove(wkPrf);
 
 					Wikia.processStyle(res.styles);
-					wkPrf.insertAdjacentHTML('beforeend', res.templates[0]);
+					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecialController_index']);
 					Wikia.processScript(res.scripts);
 
 					wkLgn = document.getElementById('wkLgn');

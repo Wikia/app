@@ -29,11 +29,11 @@
 					page: 1
 				}
 			}],
-			ttl: 86400,
+			varnishTTL: 86400,
 			callback: function(res){
 				WikiaMobile.loader.remove(wkArtCom);
 				Wikia.processStyle(res.styles);
-				wkComm.insertAdjacentHTML('beforeend', res.templates[0]);
+				wkComm.insertAdjacentHTML('beforeend', res.templates['ArticleCommentsModule_WikiaMobileCommentsPage']);
 				Wikia.processScript(res.scripts[0]);
 				if(open){
 					var elm = document.getElementById(open);
