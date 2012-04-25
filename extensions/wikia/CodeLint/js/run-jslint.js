@@ -152,6 +152,21 @@ var regExpRules = [
 		name: 'wgStyleVersion used',
 		regexp: /.(css|js)\?['"]\s?\+\s?wgStyleVersion/,
 		reason: 'No need to use wgStyleVersion as the URL suffix'
+	},
+	// nested callbacks (BugId:29194)
+	{
+		name: 'Nested callback',
+		regexp: /function\([^\)]*\)\s*{/,
+		reason: function(matches, nextLine) {
+			var nextLineRegexp = /^\s*[^{}]*function\(/;
+
+			if (nextLine && nextLineRegexp.test(nextLine)) {
+				return 'Nested callbacks detected (use promise pattern instead)';
+			}
+			else {
+				return false;
+			}
+		}
 	}
 ];
 
@@ -169,7 +184,7 @@ for(var n=0, len = lines.length; n < len; n++) {
 				return;
 			}
 
-			var reason = (typeof rule.reason === 'function') ? rule.reason.call(this, matches) : rule.reason;
+			var reason = (typeof rule.reason === 'function') ? rule.reason.call(this, matches, lines[n+1]) : rule.reason;
 			if (reason === false) {
 				return;
 			}
