@@ -283,24 +283,26 @@ class WikiaResponse {
 			$expiryTime = (int) $expiryTime;
 
 			if ( $targetBrowser ) {
-				$this->setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true);
+				//X-Pass are sent to the browser
+				$this->setHeader( 'X-Pass-Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true );
 			}
 
 			if ( $targetVarnish) {
-				$this->setHeader( 'X-Pass-Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true );
+				$this->setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT', true);
 			}
 		}
 
 		if( !is_null( $maxAge ) ) {
 			$maxAge = (int) $maxAge;
+
 			$cacheControl = ( $maxAge > 0 ) ? "public, max-age={$maxAge}" : 'no-cache, no-store, max-age=0, must-revalidate';
-			
+
 			if ( $targetBrowser ) {
-				$this->setHeader( 'Cache-Control', $cacheControl, true );
+				$this->setHeader( 'X-Pass-Cache-Control', $cacheControl, true );
 			}
 
 			if ( $targetVarnish) {
-				$this->setHeader( 'X-Pass-Cache-Control', $cacheControl, true );
+				$this->setHeader( 'Cache-Control', $cacheControl, true );
 			}
 		}
 	}

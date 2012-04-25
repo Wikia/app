@@ -12,14 +12,21 @@
  */
 
 class AssetsManagerController extends WikiaController {
+	const MEMCKEY_PREFIX = 'multitypepackage';
+	const MEMC_TTL = 604800;
+
 	/**
 	 * Return different type of assets in a single request
 	 *
-	 * @requestParam string templates - JSON encoded array of controllerName / methodName and optional params used to render a templaye
+	 * @requestParam string templates - JSON encoded array of controllerName / methodName and optional params used to render a template
 	 * @requestParam string styles - comma-separated list of SASS files
 	 * @requestParam string scripts - comma-separated list of AssetsManager groups
 	 * @requestParam string messages - comma-separated list of JSMessages packages
-	 * @requestParam integer ttl - cache period for memcache, varnish and browser (in seconds), no caching will be used if not specified or 0
+	 * @requestParam integer ttl - cache period for varnish and browser (in seconds),
+	 * no caching will be used if not specified or 0, this value is overridden by varnishTTL
+	 * and browserTTL respectively for the Varnish part and the Browser part
+	 * @requestParam integer varnishTTL - cache period for varnish (in seconds)
+	 * @requestParam integer browserTTL - cache period for varnish (in seconds)
 	 * 
 	 * @responseParam array templates - rendered templates (either HTML or JSON encoded string)
 	 * @responseParam array styles - minified styles
@@ -27,92 +34,117 @@ class AssetsManagerController extends WikiaController {
 	 * @responseParam array messages - JS messages
 	 */
 	public function getMultiTypePackage() {
+		$this->wf->profileIn( __METHOD__ );
+
 		$key = null;
 		$data = null;
+		$templates = $this->request->getVal( 'templates', null );
+		$styles = $this->request->getVal( 'styles', null );
+		$scripts = $this->request->getVal( 'scripts', null );
+		$messages = $this->request->getVal( 'messages', null );
 		$ttl = $this->request->getInt( 'ttl', 0 );
+		$varnishTTL = $this->request->getInt( 'varnishTTL', $ttl );
+		$browserTTL = $this->request->getInt( 'browserTTL', $ttl );
 
-		if ( $ttl > 0 ) {
-			$key = $this->getMultiTypePackageMemcacheKey( $this->request->getParams() );
+		// handle templates via sendRequest
+		if ( !is_null( $templates ) ) {
+			$profileId = __METHOD__ . "::templates::{$templates}";
+			$this->wf->profileIn( $profileId );
+			$templates = json_decode( $templates, true /* $assoc */ );
+			$templatesOutput = array();
+
+			foreach( $templates as $template ) {
+				$params = !empty( $template['params'] ) ? $template['params'] : array();
+				$res = $this->sendRequest( $template['controllerName'], $template['methodName'], $params );
+				$templatesOutput["{$template['controllerName']}_{$template['methodName']}"] = $res->__toString();
+			}
+
+			$this->response->setVal( 'templates', $templatesOutput );
+			$this->wf->profileOut( $profileId );
+		}
+
+		// handle SASS files
+		
+		if ( !is_null( $styles ) ) {
+			$profileId = __METHOD__ . "::styles::{$styles}";
+			$this->wf->profileIn( $profileId );
+
+			$key = $this->getComponentMemcacheKey( $styles );
 			$data = $this->wg->Memc->get( $key );
-		}
 
-		if ( empty( $data ) ) {
-			// handle templates via sendRequest
-			$templates = $this->request->getVal('templates');
-			if (!is_null($templates)) {
-				if (!is_array($templates)) {
-					$templates = json_decode($templates, true /* $assoc */);
-				}
-				$templatesOutput = array();
-
-				foreach($templates as $template) {
-					$params = !empty($template['params']) ? $template['params'] : array();
-					$res = $this->sendRequest($template['controllerName'], $template['methodName'], $params);
-					$templatesOutput[] = $res->__toString();
-				}
-
-				$this->response->setVal('templates', $templatesOutput);
-			}
-
-			// handle SASS files
-			$styles = $this->request->getVal('styles');
-			if (!is_null($styles)) {
-				$styleFiles = explode(',', $styles);
-				$stylesOutput = '';
-
-				foreach($styleFiles as $styleFile) {
-					$builder = $this->getBuilder('sass', $styleFile);
-					if (!is_null($builder)) {
-						 $stylesOutput .= $builder->getContent();
+			if ( empty( $data ) ) {
+				$styleFiles = explode( ',', $styles );
+				$data = '';
+	
+				foreach( $styleFiles as $styleFile ) {
+					$builder = $this->getBuilder( 'sass', $styleFile );
+	
+					if ( !is_null( $builder ) ) {
+						 $data .= $builder->getContent();
 					}
 				}
 
-				$this->response->setVal('styles', $stylesOutput);
+				$this->wg->Memc->set( $key, $data, self::MEMC_TTL );
 			}
 
-			// handle assets manager packages
-			$scripts = $this->request->getVal('scripts');
-			if (!is_null($scripts)) {
-				$scriptPackages = explode(',', $scripts);
-				$scriptsOutput = array();
+			$this->response->setVal('styles', $data);
+			$this->wf->profileOut( $profileId );
+		}
 
-				foreach($scriptPackages as $package) {
-					$builder = $this->getBuilder('group', $package);
-					if (!is_null($builder)) {
-						 $scriptsOutput[] = $builder->getContent();
+		// handle assets manager JS packages
+
+		if ( !is_null( $scripts ) ) {
+			$profileId = __METHOD__ . "::scripts::{$scripts}";
+			$this->wf->profileIn( $profileId );
+
+			$key = $this->getComponentMemcacheKey( $scripts );
+			$data = $this->wg->Memc->get( $key );
+
+			if ( empty( $data ) ) {
+				$scriptPackages = explode( ',', $scripts );
+				$data = array();
+	
+				foreach( $scriptPackages as $package ) {
+					$builder = $this->getBuilder( 'group', $package );
+	
+					if ( !is_null( $builder ) ) {
+						 $data[] = $builder->getContent();
 					}
 				}
 
-				$this->response->setVal('scripts', $scriptsOutput);
+				$this->wg->Memc->set( $key, $data, self::MEMC_TTL );
 			}
 
-			// handle JSmessages
-			$messages = $this->request->getVal('messages');
-			if (!is_null($messages)) {
-				$messagePackages = explode(',', $messages);
-				$this->response->setVal('messages', F::getInstance('JSMessages')->getPackages($messagePackages));
-			}
-
-			// handle cache time
-			if ( $ttl > 0 ) {
-				$this->wg->Memc->set( $key, $this->response->getData(), $ttl );
-			}
-
-			
-		}
-		else {
-			$this->response->setData( $data );
+			$this->response->setVal( 'scripts', $data );
+			$this->wf->profileOut( $profileId );
 		}
 
-		if ( $ttl > 0 ) {
-			$this->response->setCacheValidity( $ttl, $ttl, array( WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH ) );
+		// handle JSMessages
+		if ( !is_null( $messages ) ) {
+			$profileId = __METHOD__ . "::messages::{$messages}";
+			$this->wf->profileIn( $profileId );
+
+			$messagePackages = explode( ',', $messages );
+
+			$this->response->setVal( 'messages', F::getInstance( 'JSMessages' )->getPackages( $messagePackages ) );
+			$this->wf->profileOut( $profileId );
+		}
+
+		// handle cache time
+		if ( $varnishTTL > 0 ) {
+			$this->response->setCacheValidity( $varnishTTL, $varnishTTL, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
+		}
+
+		if ( $browserTTL > 0 ) {
+			$this->response->setCacheValidity( $browserTTL, $browserTTL, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
 		}
 
 		$this->response->setFormat( 'json' );
+		$this->wf->profileOut( __METHOD__ );
 	}
 
-	private function getMultiTypePackageMemcacheKey( Array $params ) {
-		return 'multitypepackage::' . md5( F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( $params, true ) );
+	private function getComponentMemcacheKey( $par ) {
+		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion;
 	}
 
 	/**
@@ -122,7 +154,6 @@ class AssetsManagerController extends WikiaController {
 	 */
 	public function purgeMultiTypePackageCache( Array $options ) {
 		SquidUpdate::purge( array ( F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( $options ) ) );
-		$this->wg->Memc->delete( $this->getMultiTypePackageMemcacheKey( $options ) );
 	}
 
 	/**

@@ -756,6 +756,8 @@ class ArticleComment {
 	}
 
 	static public function doPurge($title, $commentTitle) {
+		wfProfileIn( __METHOD__ );
+
 		//purge of the article
 		$listing = ArticleCommentList::newFromTitle($title);
 		// old code
@@ -775,7 +777,7 @@ class ArticleComment {
 			$parentTitle->purgeSquid();
 
 			//FB#27827 - purge the multi-type request cache in Varnish for WikiaMobile
-			//@see ArticleComments.wikiamobile.js
+			//@see ArticleComments.wikiamobile.js, this must mirror the same exact parameters in the same order
 			F::build( 'AssetsManagerController' )->purgeMultiTypePackageCache( array(
 				'styles' => '/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
 				'messages' => 'WikiaMobileComments',
@@ -790,9 +792,12 @@ class ArticleComment {
 							'page' => 1
 						)
 					)
-				)
+				),
+				'varnishTTL' => 86400
 			) );
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {
