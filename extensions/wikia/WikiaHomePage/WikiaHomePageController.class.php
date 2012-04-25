@@ -481,6 +481,7 @@ class WikiaHomePageController extends WikiaController {
 	
 	public static function onOutputPageBeforeHTML(&$out, &$text) {
 		if ( ArticleAdLogic::isMainPage() && (!Wikia::isWikiaMobile()) ) {
+			$text = '';
 			$out->clearHTML();
 			$out->addHTML( F::app()->sendRequest( 'WikiaHomePageController', 'index' )->toString() );
 		}
