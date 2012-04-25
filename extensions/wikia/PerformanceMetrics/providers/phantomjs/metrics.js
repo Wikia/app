@@ -125,6 +125,7 @@ page.resourceSize = {
 };
 
 page.redirects = 0;
+page.notFound = 0;
 
 page.onResourceReceived = function(res) {
 	var entry = page.requests[res.id],
@@ -150,6 +151,10 @@ page.onResourceReceived = function(res) {
 				case 301:
 				case 302:
 					page.redirects++;
+					break;
+
+				case 404:
+					page.notFound++;
 					break;
 			}
 
@@ -222,6 +227,7 @@ page.onLoadFinished = function(status) {
 				requests: page.requests.length,
 				contentLength: page.contentLength,
 				redirects: page.redirects,
+				notFound: page.notFound,
 				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte),
 				timeToLastByte: (page.requests[1] && page.requests[1].lastByte),
 				loadTime: now  - page.startTime
