@@ -158,7 +158,7 @@ var regExpRules = [
 		name: 'Nested callback',
 		regexp: /\(\S+[^\(\)]*function\([^\)]*\)\s*{$/,
 		reason: function(matches, nextLine) {
-			var nextLineRegexp = /^\s*[^\{\}]*function\(/;
+			var nextLineRegexp = /^\s*[^\{\}]*function\([^\(]?\)\s?\{\s?$/;
 
 			if (nextLine && nextLineRegexp.test(nextLine)) {
 				return 'Nested callbacks detected (consider promise pattern instead)';
