@@ -1,7 +1,7 @@
 <header id="WikiHeader" class="WikiHeader">
 	<?= wfRenderModule('WikiHeader', 'Wordmark') ?> 
 	<nav>
-		<h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ); ?></h1>
+		<h1><?= wfMsg( 'oasis-wiki-navigation', (!empty($wordmarkText)?$wordmarkText:null) ); ?></h1>
 		<ul>
 
 <?php
