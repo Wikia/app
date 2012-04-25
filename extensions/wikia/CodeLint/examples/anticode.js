@@ -89,8 +89,15 @@ if ($.browser.msie &&
 $.getScript(stylepath + '/oasis/js/touchScreen.js?' + wgStyleVersion);
 
 // use promise pattern here - avoid "nested" callbacks
-$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories', function(data){
-	$.loadYUI(function() {
-		// ...
-	});
-});
+var obj = {
+	foo: function() {
+		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories', function(data){
+			$.loadYUI(function() {
+				// ...
+			});
+		});
+	}
+};
+
+var a = function(data) {return true},
+	b = function(foo) {return foo}; 

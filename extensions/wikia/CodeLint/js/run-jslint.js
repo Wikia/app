@@ -156,7 +156,7 @@ var regExpRules = [
 	// nested callbacks (BugId:29194)
 	{
 		name: 'Nested callback',
-		regexp: /function\([^\)]*\)\s*{/,
+		regexp: /^[^:]*function\([^\)]*\)\s*{$/,
 		reason: function(matches, nextLine) {
 			var nextLineRegexp = /^\s*[^{}]*function\(/;
 
