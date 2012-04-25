@@ -18,6 +18,7 @@ class WikiaSearch extends WikiaObject {
 	protected $parserHookActive = false;
 	protected $namespaces = array();
 	protected $skipCache = false;
+	protected $includeRedirects = true;
 
 	public function __construct( WikiaSearchClient $client ) {
 		$this->client = $client;
@@ -60,7 +61,7 @@ class WikiaSearch extends WikiaObject {
 					// we reached the point, when there's too many pages than grouped results, so we need to find very last one page and show it
 					do {
 						$results->setCurrentPage($results->getCurrentPage()-1);
-					} while( !$results->valid() );
+					} while( !$results->valid() && ( $results->getCurrentPage() > 1 ) );
 				} else {
 					$moreResults = $this->groupResultsPerWiki( $moreResults );
 					$results->merge( $moreResults );
@@ -80,11 +81,11 @@ class WikiaSearch extends WikiaObject {
 		}
 		else {
 			// no grouping, e.g. intra-wiki searching
-			if ($this->namespaces) {
+			if($this->namespaces) {
 					$this->client->setNamespaces($this->namespaces);
 			}
 
-			$methodOptions = array('start'  => (($page - 1) * $length), 'size' => $length, 'cityId' => $cityId);
+			$methodOptions = array('start'  => (($page - 1) * $length), 'size' => $length, 'cityId' => $cityId, 'includeRedirects' => $this->includeRedirects);
 			$results = $this->client->search( $query, $methodOptions);
 		}
 
@@ -404,4 +405,11 @@ class WikiaSearch extends WikiaObject {
 		return $this->skipCache;
 	}
 
+	public function setIncludeRedirects($value) {
+		$this->includeRedirects = $value;
+	}
+
+	public function getIncludeRedirects() {
+		return $this->includeRedirects;
+	}
 }

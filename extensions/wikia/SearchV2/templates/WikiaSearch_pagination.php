@@ -12,6 +12,7 @@
 	}
 	if(!empty($advanced)) {
 		$extraParams['advanced'] = 1;
+		$extraParams['redirs'] = ($redirs ? 1 : 0);
 	}
 	if(count($namespaces)) {
 		foreach($namespaces as $ns) {
