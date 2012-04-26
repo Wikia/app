@@ -249,8 +249,10 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$position++;
 		}
 
+		$deDupedResults = $this->deDupeResults($results);
+
 		wfProfileOut(__METHOD__);
-		return $this->deDupeResults($results);
+		return $deDupedResults;
 	}
 
 	private function deDupeResults(Array $results) {
