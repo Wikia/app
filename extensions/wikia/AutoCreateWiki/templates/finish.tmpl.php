@@ -20,24 +20,6 @@ $isAnswers = !empty($type) && $type == 'answers';
 <br />
 <div style="font-style: normal;" id="nwb_link">
         <div style="text-align: center;">
-<?php
-	if ($isAnswers) {
-?>
-			<a href="<?php echo "{$domain}wiki/Special:NewWikiBuilder{$nwbType}" ?>" class="wikia-button" onclick="WET.byStr('nwb/getstarted')"><?=wfMsg('autocreatewiki-success-get-started')?></a> 
-<?php
-	}
-?>
         </div>
 </div>
-
-<?php
-	if (!$isAnswers) {
-?>
-<script>
-var domain = "<?= $domain ?>";
-window.location.href = domain + 'wiki/Special:WikiBuilder'
-</script>
-<?php
-	}
-?>
 <!-- e:<?= __FILE__ ?> -->
