@@ -19,6 +19,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
 		
+		if ( $this->wg->User->getSkin() instanceof SkinMonoBook ) {
+			$this->response->addAsset('extensions/wikia/SearchV2/css/monobook.scss');
+		}
+
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
 		$debug = $this->request->getBool('debug');

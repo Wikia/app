@@ -23,7 +23,7 @@
 	<div class="wikia-paginator">
 		<ul>
 			<?php if( $currentPage > 1 ): ?>
-				<li><a class="paginator-prev button secondary" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage-1) ), $extraParams ) ); ?>"></a></li>
+				<li><a class="paginator-prev button secondary" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage-1) ), $extraParams ) ); ?>"><span>Previous</span></a></li>
 			<?php endif; ?>
 			<?php for( $i = $windowFirstPage; $i <= $windowLastPage; $i++ ): ?>
 			
@@ -35,7 +35,7 @@
 			<?php endfor; ?>
 			
 			<?php if( $currentPage < $pagesNum ): ?>
-				<li><a class="paginator-next button secondary" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage+1) ), $extraParams ) ); ?>"></a></li>
+				<li><a class="paginator-next button secondary" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage+1) ), $extraParams ) ); ?>"><span>Next</span></a></li>
 			<?php endif; ?>
 		</ul>
 	</div>
