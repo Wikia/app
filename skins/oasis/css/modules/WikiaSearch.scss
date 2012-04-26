@@ -174,8 +174,13 @@ $form-negative-side-padding: $form-side-padding*-1;
 		width: 680px;
 	}
 }
-.inter-wiki-search .WikiaTopAds {
-	margin-bottom: 15px;
+.inter-wiki-search {
+	.WikiaTopAds {
+		margin-bottom: 15px;
+	}
+	.WikiaSearch {
+		padding-bottom: 12px;
+	}
 }
 .mw-search-formheader { // Quick style fix for now. Will fix tomorrow
 	@include clearfix;
