@@ -92,8 +92,13 @@ if (isset($options['ganglia'])) {
 	include "{$IP}/lib/gmetric.php";
 	$res =  gmetric_open($host, 8651, 'udp');
 
+	if ($res === false) {
+		echo " failed!\n";
+		die(1);
+	}
+
 	foreach($report['metrics'] as $key => $value) {
-		gmetric_send($res, $key, $value, is_numeric($value) ? 'uint32' : 'string', '');
+		gmetric_send($res, $key, $value, is_numeric($value) ? 'uint32' : 'string', '', null, 0, 0);
 	}
 
 	gmetric_close($res);
