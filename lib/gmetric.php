@@ -108,7 +108,7 @@ function gmetric_send($gm, $name, $value, $typename, $units, $slope, $tmax, $dma
 	$str  = xdr_uint32(128);
 	$str .= xdr_string('graph-s1');
 	$str .= xdr_string($name);
-	$str .= xdr_uint32(0);
+	$str .= xdr_uint32(1); // spoof enabled
 	$str .= xdr_string($typename);
 	$str .= xdr_string($name);
 	$str .= xdr_string($units);
@@ -126,7 +126,7 @@ function gmetric_send($gm, $name, $value, $typename, $units, $slope, $tmax, $dma
 	$str  = xdr_uint32(133);
 	$str .= xdr_string('graph-s1');
 	$str .= xdr_string($name);
-	$str .= xdr_uint32(0);
+	$str .= xdr_uint32(1); // spoof enabled
 	$str .= xdr_string('%s');
 	$str .= xdr_string($value);
 
