@@ -388,7 +388,7 @@ class ArticleAdLogic {
 	}
 
 	// Do reporting to compare the javascript based collision detection logic with this one
-	// TODO: remove? uses YUI and is not called
+	// TODO: remove? uses YUI and is not called (BugId:3116)
 	static public function getCollisionCollision($html) {
 		$out = "<script type='text/javascript'>\n";
 		if (self::isBoxAdArticle($html)){
@@ -573,16 +573,16 @@ class ArticleAdLogic {
 
 	public static function isSearch() {
 		global $wgTitle;
-		
+
 		$searchPageNames = array('Search', 'WikiaSearch');
 
-		return !empty($wgTitle) && -1 == $wgTitle->getNamespace() 
+		return !empty($wgTitle) && -1 == $wgTitle->getNamespace()
 			&& in_array(SpecialPage::resolveAlias($wgTitle->getDBkey()), $searchPageNames);
 	}
-	
+
 	public static function isExtra() {
 		global $wgExtraNamespaces, $wgTitle;
-		
+
 		return array_key_exists($wgTitle->getNamespace(), $wgExtraNamespaces);
 	}
 
@@ -599,22 +599,22 @@ class ArticleAdLogic {
 
 		return $type;
 	}
-	
+
 	public static function isWikiaHub() {
 		global $wgEnableWikiaHubsExt, $wgWikiaHubsPages, $wgTitle;
 
 		return !empty($wgEnableWikiaHubsExt) && in_array($wgTitle->getDBkey(), $wgWikiaHubsPages);
 	}
-	
+
 	public static function isAdsEnabledOnWikiaHub() {
 		global $wgHubsAdsEnabled, $wgEnableWikiaHubsExt, $wgTitle;
-		
+
 		if (!empty($wgEnableWikiaHubsExt) && !empty($wgHubsAdsEnabled)) {
 			if (in_array($wgTitle->getDBkey(), $wgHubsAdsEnabled)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }
