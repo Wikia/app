@@ -22,9 +22,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 //@include( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 //$dbw = WikiFactory::db( DB_MASTER );
-$dbr = wfGetDB( DB_SLAVE );
 $dbw = wfGetDB( DB_MASTER );
-$dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 echo( "Loading list of videos to process\n" );
 
@@ -86,12 +84,12 @@ if( $rowCount ) {
 			echo $e->getMessage() ."\n";
 		}
 
-		echo("\n ========================================== \n");
+		echo("========================================== \n");
 	}
 
 	echo "Done\n";
 }
-$dbw_dataware->freeResult($rows);
+$dbw->freeResult($rows);
 
 echo(": {$rowCount} videos processed.\n");
 
