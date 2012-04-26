@@ -7,15 +7,8 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.youtube.com/watch?v=$1';
 	protected static $providerHomeUrl = 'http://www.youtube.com/';
 	
-	public function getPlayerAssetUrl() {
-		return '';
-//		return JWPlayer::getJavascriptPlayerUrl();
-	}
-	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		return $this->getEmbedNative($width, $autoplay);
-//		$height =  $this->getHeight( $width );
-//		return JWPlayer::getEmbedCode($articleId, $this->getVideoId(), self::$urlTemplate.$this->getVideoId(), $this->getTitle(), $width, $height, false, $this->getDuration(), $this->isHd(), null, null, null, $autoplay, $isAjax, $postOnload);
 	}
 		
 	private function getEmbedNative($width, $autoplay=false) {

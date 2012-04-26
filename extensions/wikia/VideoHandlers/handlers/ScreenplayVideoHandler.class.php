@@ -17,18 +17,29 @@ class ScreenplayVideoHandler extends VideoHandler {
 		$file = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, $this->getStandardBitrateCode());
 		$hdfile = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, ScreenplayApiWrapper::HIGHDEF_BITRATE_ID);
 		
-		$thumbUrl = '';
-		if (empty($autoplay)) {
-			$thumbUrl = $this->thumbnailImage->url;
-		}
-		
-		// cityshort
-		$cat = AdEngine::getCachedCategory();
-		
 		$playerOptions = array();
 		$playerOptions['provider'] = 'video';
 		
-		return JWPlayer::getEmbedCode($articleId, $this->getVideoId(), $file, $this->getTitle(), $width, $height, true, $this->getDuration(), $this->isHd(), $hdfile, $thumbUrl, $cat['short'], $autoplay, $isAjax, $postOnload, $playerOptions);
+		$jwplayer = new JWPlayer();
+		$jwplayer->setArticleId($articleId);
+		$jwplayer->setVideoId($this->getVideoId());
+		$jwplayer->setUrl($file);
+		$jwplayer->setTitle($this->getTitle());
+		$jwplayer->setWidth($width);
+		$jwplayer->setHeight($height);
+		$jwplayer->setDuration($this->getDuration());
+		$jwplayer->setHd($this->isHd());
+		$jwplayer->setHdFile($hdfile);
+		$jwplayer->setThumbUrl($this->thumbnailImage->url);
+		$jwplayer->setAgeGate($this->isAgeGate());
+		$jwplayer->setAutoplay($autoplay);
+		//@todo resolve conflict between agegate and autoplay
+		$jwplayer->setShowAd(true);
+		$jwplayer->setAjax($isAjax);
+		$jwplayer->setPostOnload($postOnload);
+		$jwplayer->setPlayerOptions($playerOptions);
+
+		return $jwplayer->getEmbedCode();
 	}
 	
 	protected function getFileUrl($type, $bitrateid) {
