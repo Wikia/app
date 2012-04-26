@@ -106,7 +106,7 @@ function gmetric_send($gm, $name, $value, $typename, $units, $slope, $tmax, $dma
 
 	// @see https://github.com/ganglia/ganglia_contrib/blob/master/gmetric-python/gmetric.py
 	$str  = xdr_uint32(128);
-	$str .= xdr_string('graph-s1');
+	$str .= xdr_string('10.8.32.34:graph-s1'); // the address to spoof (ip:host)
 	$str .= xdr_string($name);
 	$str .= xdr_uint32(1); // spoof enabled
 	$str .= xdr_string($typename);
@@ -124,7 +124,7 @@ function gmetric_send($gm, $name, $value, $typename, $units, $slope, $tmax, $dma
 	fwrite($gm['socket'], $str);
 
 	$str  = xdr_uint32(133);
-	$str .= xdr_string('graph-s1');
+	$str .= xdr_string('10.8.32.34:graph-s1'); // the address to spoof (ip:host)
 	$str .= xdr_string($name);
 	$str .= xdr_uint32(1); // spoof enabled
 	$str .= xdr_string('%s');
