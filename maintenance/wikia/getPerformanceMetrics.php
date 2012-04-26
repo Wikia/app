@@ -49,23 +49,19 @@ if (!isset($options['url'])) {
 }
 
 $url = $options['url'];
-$params = array();
+$params = array(
+	// support --noexternals option
+	'noexternals' => isset($options['noexternals']),
 
-// support --noexternals option
-if (isset($options['noexternals'])) {
-	$url .= (strpos($url, '?') !== false ? '&' : '?') . 'noexternals=1';
-}
+	// support --mobile option
+	'mobile' => isset($options['mobile']),
 
-// support --mobile option
-if (isset($options['mobile'])) {
-	$url .= (strpos($url, '?') !== false ? '&' : '?') . 'useskin=wikiamobile';
-}
+	// support --providers option
+	'providers' => isset($options['providers']) ? explode(',', $options['providers']) : array(),
 
-// support --providers option
-$params['providers'] = isset($options['providers']) ? explode(',', $options['providers']) : array();
-
-// support --logged-in option
-$params['loggedIn'] = isset($options['logged-in']);
+	// support --logged-in option
+	'loggedIn' => isset($options['logged-in'])
+);
 
 // use GooglePage speed API
 $metrics = F::build('PerformanceMetrics');

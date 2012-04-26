@@ -27,7 +27,9 @@ class PerformanceMetrics extends WikiaObject {
 	 *
 	 * @param string $url page URL
 	 * @param array $options additional parameters, can contains:
-	 * 							$providers arrau list of providers to get data from (defaults to all providers)
+	 * 							$noexternals boolean only load Wikia code
+	 * 							$mobile boolean check wikiamobile skin
+	 * 							$providers array list of providers to get data from (defaults to all providers)
 	 * 							$loggedIn boolean should the metrics be aggregated for loggged-in version of the site
 	 * @return mixed report
 	 */
@@ -35,6 +37,15 @@ class PerformanceMetrics extends WikiaObject {
 		$instances = $this->getProviders( !empty($options['providers']) ? $options['providers'] : $this->wg->PerformanceMetricsProviders );
 		$metrics = array();
 
+		// apply options
+		if ($options['noexternals']) {
+			$url .= (strpos($url, '?') !== false ? '&' : '?') . 'noexternals=1';
+		}
+		if ($options['mobile']) {
+			$url .= (strpos($url, '?') !== false ? '&' : '?') . 'useskin=wikiamobile';
+		}
+
+		// run each provider
 		foreach($instances as $provider) {
 			$report = $provider->getReport($url, $options);
 
@@ -43,6 +54,7 @@ class PerformanceMetrics extends WikiaObject {
 			}
 		}
 
+		// each provider emits "url" entry, use only one of them
 		if (is_array($metrics['url'])) {
 			$metrics['url'] = reset($metrics['url']);
 		}
