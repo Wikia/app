@@ -73,6 +73,11 @@ function gmetric_open($host, $port, $proto)
 {
 	if ($proto == "udp") {
 		$fp = fsockopen("udp://$host", $port, $errno, $errstr);
+
+		if (!$fp) {
+			return false;
+		}
+
 		return array('protocol' => $proto,
 				'socket' => $fp);
 	} else if ($proto == "multicast") {
@@ -83,11 +88,13 @@ function gmetric_open($host, $port, $proto)
 		$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 		if ($sock === false) {
 			echo "socket_create() failed: reason: " . socket_strerror(socket_last_error()) . "\n";
+			return false;
 		}
 		$address = gethostbyname($host);
 		$result = socket_connect($sock, $address, $port);
 		if ($result === false) {
 			echo "socket_connect() failed.\nReason: ($result) " . socket_strerror(socket_last_error($socket)) . "\n";
+			return false;
 		}
 
 		/**
@@ -95,11 +102,11 @@ function gmetric_open($host, $port, $proto)
 		 ** http://devzone.zend.com/node/view/id/1432
 		 ** http://diary.rozsnyo.com/2006/06/16/php-multicast/
 		 **/
-
 		return array('protocol' => $proto,
 				'socket' => $sock);
 	} else {
 		// unknown!
+		return false;
 	}
 }
 
