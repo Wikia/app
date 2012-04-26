@@ -61,7 +61,7 @@
 		
 		.paginator-next, .paginator-prev{
 			span {
-				
+				display: none; // This is so we can display some text for MonoBook and Web Accessibility  
 			}
 		}
 		.paginator-next {
