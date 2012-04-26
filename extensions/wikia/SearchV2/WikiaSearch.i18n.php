@@ -18,6 +18,7 @@ $messages['en'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Search this wiki',
 	'wikiasearch2-thousands-separator' => ',',
 	'wikiasearch2-decimal-point' => '.',
+	'wikiasearch2-advanced-search' => 'Advanced Search Options',
 );
 
 $message['qqq'] = array(
@@ -35,4 +36,5 @@ $message['qqq'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Label for search form input (intra-wiki search).',
 	'wikiasearch2-thousands-separator' => 'This is the character that separates thousands inside a large number.  Example: 1,000',
 	'wikiasearch2-decimal-point' => 'This is the character that separates decimals.  Example: 3.14',	
+	'wikiasearch2-advanced-search' => 'This is the header for the section where you can choose to search by different criteria, i.e. for advanced searches.',
 );
