@@ -230,7 +230,7 @@ page.onLoadFinished = function(status) {
 				notFound: page.notFound,
 				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte),
 				timeToLastByte: (page.requests[1] && page.requests[1].lastByte),
-				loadTime: now  - page.startTime
+				totalLoadTime: now  - page.startTime
 			};
 
 			// count per each resource type
@@ -244,11 +244,11 @@ page.onLoadFinished = function(status) {
 			};
 
 			// onDOMready
-			metrics.onDOMready = page.evaluate(function() {
+			metrics.onDOMreadyTime = page.evaluate(function() {
 				return window.timingDOMContentLoaded - (window.wgNow || window.timingLoadStarted);
 			});
 
-			metrics.onLoad = page.evaluate(function() {
+			metrics.windowOnLoadTime = page.evaluate(function() {
 				return (window.timingOnLoad || Date.now()) - (window.wgNow || window.timingLoadStarted);
 			});
 

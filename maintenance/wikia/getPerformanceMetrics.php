@@ -19,16 +19,13 @@ function printHelp() {
 		echo <<<HELP
 Returns performance metrics for a given page
 
-USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed]
+USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia=graph-s1]
 
 	--url
 		Page to be checked
 
 	--mobile
 		Force wikiamobile skin
-
-	--csv
-		Return in CSV format
 
 	--noexternals
 		Test pages without external resources fetched (i.e. noexternals=1 added to the URL)
@@ -38,6 +35,12 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 
 	--logged-in
 		Get metrics for logged-in version of the site
+
+	--csv
+		Return in CSV format
+
+	--ganglia
+		Send data to given Ganglia server using UDP protocol
 
 HELP;
 }
@@ -77,6 +80,25 @@ if (isset($options['csv'])) {
 	$output = implode(',', $report['metrics']);
 
 	echo $output . "\n";
+	die(0);
+}
+
+// send data to Ganglia using gmetric library (BugId:29371)
+if (isset($options['ganglia'])) {
+	$host = $options['ganglia'];
+	echo "\nSending data to {$host}...";
+
+	// TODO: use OOP library
+	include "{$IP}/lib/gmetric.php";
+	$res =  gmetric_open($host, 8651, 'udp');
+
+	foreach($report['metrics'] as $key => $value) {
+		gmetric_send($res, $key, $value, is_numeric($value) ? 'uint32' : 'string', '');
+	}
+
+	gmetric_close($res);
+
+	echo " done!\n";
 	die(0);
 }
 
