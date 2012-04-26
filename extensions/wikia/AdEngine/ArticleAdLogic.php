@@ -388,6 +388,7 @@ class ArticleAdLogic {
 	}
 
 	// Do reporting to compare the javascript based collision detection logic with this one
+	// TODO: remove? uses YUI and is not called
 	static public function getCollisionCollision($html) {
 		$out = "<script type='text/javascript'>\n";
 		if (self::isBoxAdArticle($html)){
