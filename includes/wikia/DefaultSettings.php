@@ -264,6 +264,8 @@ $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
 $wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
 $wgAutoloadClasses[ "ApiCreateMultiplePages"        ] = "$IP/extensions/wikia/WikiaApi/ApiCreateMultiplePages.php";
+$wgAutoloadClasses[ "ApiUploadLogo"                 ] = "$IP/extensions/wikia/WikiaApi/ApiUploadLogo.php";
+$wgAutoloadClasses[ "ApiFounderSettings"            ] = "$IP/extensions/wikia/WikiaApi/ApiFounderSettings.php";
 
 if( $wgUseFakeExternalStoreDB !== true ) {
 	$wgAutoloadClasses[ "WikiaApiQueryBlob"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryBlob.php";
@@ -335,6 +337,8 @@ $wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
 $wgAPIModules["createmultiplepages"] = "ApiCreateMultiplePages";
+$wgAPIModules[ "uploadlogo"        ] = "ApiUploadLogo";
+$wgAPIModules[ "foundersettings"   ] = "ApiFounderSettings";
 
 
 if( $wgUseFakeExternalStoreDB !== true ) {
