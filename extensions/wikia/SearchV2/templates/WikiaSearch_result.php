@@ -4,6 +4,7 @@
 <?php endif; ?>
 <article>
 <header>
+<?php lizbug($result); ?>
 <h1>
 	<?php if($result->hasCanonical()): ?>
 		<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>"><?= $result->getTitle(); ?></a> (Redirect: <?= $result->getCanonical(); ?>)
