@@ -27,22 +27,14 @@ class ChatAjax {
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
 	static public function getUserInfo(){
-		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
+		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang, $wgEnableCheckUserExt;
 		wfProfileIn( __METHOD__ );
 		
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 		if( empty($data) ) {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
-		foreach($data as $k=>$v) {
-			if (is_array($v)) {
-				foreach($v as $k2=>$v2) {
-					error_log('MECH key data ' . $k . '.'.$k2 . ' => ' . $v2);
-				}
-			} else {
-				error_log('MECH key data ' . $k . ' => ' . $v);
-			}
-		}
+		
 		$user = User::newFromId( $data['user_id'] );
 		
 		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
@@ -116,14 +108,39 @@ class ChatAjax {
 		if ($retVal['isLoggedIn'] && $retVal['canChat']) {
 			// record the IP of the connecting user.
 			// use memcache so we order only one (user, ip) pair each day
-			$memcKey = self::getUserIPMemcKey($data['user_id'], $wgRequest->getVal('address'), date("Y-m-d"));
+			$ip = $wgRequest->getVal('address');
+			$memcKey = self::getUserIPMemcKey($data['user_id'], $ip, date("Y-m-d"));
 			$entry = $wgMemc->get( $memcKey, false );
-			
 			if ( empty($entry) ) {
 				$wgMemc->set($memcKey, true, 86400 /*24h*/);
 				$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
-				$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', 
-						array($wgRequest->getVal('address')), $user);
+				$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', array($ip), $user);
+				
+				if ( !empty( $wgEnableCheckUserExt ) ) {
+					$dbw = wfGetDB( DB_MASTER );
+					$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
+					$rcRow = array(
+							'cuc_id'         => $cuc_id,
+							'cuc_namespace'  => NS_SPECIAL,
+							'cuc_title'      => SpecialPage::getTitleFor("Chat"),
+							'cuc_minor'      => 0,
+							'cuc_user'       => $user->getID(),
+							'cuc_user_text'  => $user->getName(),
+							'cuc_actiontext' => 'Connected to Chat',
+							'cuc_comment'    => '',
+							'cuc_this_oldid' => 0,
+							'cuc_last_oldid' => 0,
+							'cuc_type'       => CUC_TYPE_CHAT,
+							'cuc_timestamp'  => $dbw->timestamp(),
+							'cuc_ip'         => IP::sanitizeIP( $ip ),
+							'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
+							'cuc_xff'        => '',
+							'cuc_xff_hex'    => null,
+							'cuc_agent'      => null
+					);
+					$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
+					$dbw->commit();
+				}				
 			}			
 		}
 		

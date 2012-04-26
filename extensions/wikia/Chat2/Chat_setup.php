@@ -133,6 +133,7 @@ F::build('JSMessages')->registerPackage('ChatBanModal', array(
 
 
 define( 'CHAT_TAG', 'chat' );
+define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
 
 // ajax
 $wgAjaxExportList[] = 'ChatAjax';
