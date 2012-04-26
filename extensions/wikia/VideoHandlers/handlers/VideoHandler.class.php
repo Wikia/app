@@ -160,6 +160,15 @@ abstract class VideoHandler extends BitmapHandler {
 	
 	/**
 	 *
+	 * @return boolean
+	 */
+	protected function isAgeGate() {
+		$metadata = $this->getMetadata(true);
+		return (!empty($metdata['ageGate']));
+	}
+	
+	/**
+	 *
 	 * @return int duration in seconds, or null
 	 */
 	protected function getDuration() {
