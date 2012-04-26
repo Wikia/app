@@ -90,7 +90,7 @@ if (isset($options['ganglia'])) {
 
 	// TODO: use OOP library
 	include "{$IP}/lib/gmetric.php";
-	$res =  gmetric_open($host, 8651, 'udp');
+	$res =  gmetric_open($host, 18604, 'udp');
 
 	if ($res === false) {
 		echo " failed!\n";
@@ -98,7 +98,7 @@ if (isset($options['ganglia'])) {
 	}
 
 	foreach($report['metrics'] as $key => $value) {
-		gmetric_send($res, $key, $value, is_numeric($value) ? 'uint32' : 'string', '', null, 0, 0);
+		gmetric_send($res, $key, $value, is_numeric($value) ? 'uint32' : 'string', '', null, 3600, 0);
 	}
 
 	gmetric_close($res);

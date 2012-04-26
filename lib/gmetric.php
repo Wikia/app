@@ -36,7 +36,6 @@ function xdr_uint32($val)
 {
 	return pack("N", intval($val));
 }
-
 function xdr_string($str)
 {
 	$len = strlen(strval($str));
@@ -57,15 +56,6 @@ function makexdr($name, $value, $typename, $units, $slope, $tmax, $dmax)
 	} else {
 		$slopenum = 4;
 	}
-
-	$str  = xdr_uint32(0);
-	$str .= xdr_string($typename);
-	$str .= xdr_string($name);
-	$str .= xdr_string($value);
-	$str .= xdr_string($units);
-	$str .= xdr_uint32($slopenum);
-	$str .= xdr_uint32($tmax);
-	$str .= xdr_uint32($dmax);
 	return $str;
 }
 
@@ -112,14 +102,36 @@ function gmetric_open($host, $port, $proto)
 
 function gmetric_send($gm, $name, $value, $typename, $units, $slope, $tmax, $dmax)
 {
-	$msg  = makexdr($name, $value, $typename, $units, $slope, $tmax, $dmax);
-	if ($gm['protocol'] == 'udp') {
-		return fwrite($gm['socket'], $msg);
-	} else if ($gm['protocol'] == 'mutlicast') {
-		return socket_write($gm['socket'], $msg, strlen($msg));
-	} else {
-		return false;
-	}
+	$name = 'perf-test-' . $name;
+
+	// @see https://github.com/ganglia/ganglia_contrib/blob/master/gmetric-python/gmetric.py
+	$str  = xdr_uint32(128);
+	$str .= xdr_string('graph-s1');
+	$str .= xdr_string($name);
+	$str .= xdr_uint32(0);
+	$str .= xdr_string($typename);
+	$str .= xdr_string($name);
+	$str .= xdr_string($units);
+	$str .= xdr_uint32(4 /* GANGLIA_SLOPE_UNSPECIFIED */);
+	$str .= xdr_uint32($tmax);
+	$str .= xdr_uint32($dmax);
+
+	$str .= xdr_uint32(1);
+	$str .= xdr_string('GROUP');
+	$str .= xdr_string('Performance test');
+
+	Wikia::hex($str);
+	fwrite($gm['socket'], $str);
+
+	$str  = xdr_uint32(133);
+	$str .= xdr_string('graph-s1');
+	$str .= xdr_string($name);
+	$str .= xdr_uint32(0);
+	$str .= xdr_string('%s');
+	$str .= xdr_string($value);
+
+	Wikia::hex($str);
+	fwrite($gm['socket'], $str);
 }
 
 function gmetric_close($gm)
