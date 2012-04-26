@@ -30,12 +30,13 @@ class CreateNewWikiModule extends WikiaController {
         $this->aCategories = $hubs->getCategories();
 
         $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$this->aLanguages = asort(wfGetFixedLanguageNames());
+		$languages = wfGetFixedLanguageNames();
+		asort( $languages );
 
 		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
 
 		// falling back to english (BugId:3538)
-		if ( !array_key_exists($useLang, $this->aLanguages) ) {
+		if ( !array_key_exists($useLang, $languages) ) {
 			$useLang = 'en';
 		}
 		$params['wikiLanguage'] = empty($useLang) ? $this->wg->LanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
