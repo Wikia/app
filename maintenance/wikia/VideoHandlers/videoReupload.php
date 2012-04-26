@@ -63,7 +63,7 @@ echo( "Loading list of videos to process\n" );
 
 $rows = $dbw->select( 'image',
 		array( 'img_name', 'img_metadata', 'img_major_mime', 'img_minor_mime' ),
-		array( " img_major_mime='video' AND img_name NOT LIKE ':%' AND img_minor_mime='sevenload' "),
+		array( " img_major_mime='video' AND img_name NOT LIKE ':%' AND img_minor_mime='viddler' AND img_name='Danny_Jacobs_Interview' "),
 		__METHOD__
 );
 
@@ -90,12 +90,24 @@ if( $rowCount ) {
 
 		$provider = $videoRow->img_minor_mime;
 		$apiWrapperName = ucfirst( $videoRow->img_minor_mime ) . 'ApiWrapper';
-		$videoId = is_subclass_of($apiWrapperName, 'PseudoApiWrapper') ? $videoRow->img_name : $metadata['videoId'];
+		//$videoId = is_subclass_of($apiWrapperName, 'PseudoApiWrapper') ? $videoRow->img_name : $metadata['videoId'];
+		$videoId = $metadata['videoId'];
 		$result = null;
 		$status = "fail";
 
 		try {
-			$result = VideoFileUploader::uploadVideo($provider, $videoId, $title, null, true);
+			echo "reuploading: [from:".$provider." videoId:$videoId] - ".$videoRow->img_name."\n";
+			echo "title: " . $title . "\n";
+			//$result = VideoFileUploader::uploadVideo($provider, $videoId, $title, null, true);
+			$oUploader = new VideoFileUploader();
+			$oUploader->setProvider( $provider );
+			$oUploader->setVideoId( $videoId );
+			$oUploader->setDescription( null );
+			$oUploader->setTargetTitle( $title );
+			$oUploader->hideAction();
+			$oUploader->upload( $title );
+
+			//var_dump($result);
 
 		} catch( Exception $e ) {
 			echo ("ERROR FETCHING DATA: [{$videoRow->img_minor_mime}]". $videoRow->img_name . "\n");
