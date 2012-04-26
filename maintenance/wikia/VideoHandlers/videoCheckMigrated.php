@@ -22,11 +22,11 @@ $rowCount = $rows->numRows();
 
 $dbr->freeResult($rows);
 
-echo(": {$rowCount} old videos found\n");
-
 $v = WikiFactory::getVarByName('wgVideoHandlersVideosMigrated', $wgCityId);
+$ve = $v->cv_value;
+echo(": {$rowCount} old videos found ($ve)\n");
 
-if($rowCount > 0 && empty($v)) {
+if($rowCount > 0 && $ve != True) {
 //if(true) {
 	$dbw_dataware->insert(
 		'video_notmigrated',
