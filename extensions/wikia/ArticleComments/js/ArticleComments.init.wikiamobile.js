@@ -110,12 +110,9 @@
 
 						if(parentId){
 							updateUI(json.text, parent);
-
 							track('comment/reply/submit');
 						}else{
-							console.log(json);
 							commsUl.insertAdjacentHTML('afterbegin', json.text);
-
 							track('comment/new/submit');
 						}
 						document.getElementById('wkArtCnt').innerText = json.counter;
