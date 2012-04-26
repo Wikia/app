@@ -111,6 +111,7 @@ class ChatAjax {
 			$ip = $wgRequest->getVal('address');
 			$memcKey = self::getUserIPMemcKey($data['user_id'], $ip, date("Y-m-d"));
 			$entry = $wgMemc->get( $memcKey, false );
+			
 			if ( empty($entry) ) {
 				$wgMemc->set($memcKey, true, 86400 /*24h*/);
 				$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
@@ -122,11 +123,11 @@ class ChatAjax {
 					$rcRow = array(
 							'cuc_id'         => $cuc_id,
 							'cuc_namespace'  => NS_SPECIAL,
-							'cuc_title'      => SpecialPage::getTitleFor("Chat"),
+							'cuc_title'      => 'Chat',
 							'cuc_minor'      => 0,
 							'cuc_user'       => $user->getID(),
 							'cuc_user_text'  => $user->getName(),
-							'cuc_actiontext' => 'Connected to Chat',
+							'cuc_actiontext' => 'Joined Chat',
 							'cuc_comment'    => '',
 							'cuc_this_oldid' => 0,
 							'cuc_last_oldid' => 0,
