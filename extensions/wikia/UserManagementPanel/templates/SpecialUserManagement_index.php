@@ -40,13 +40,12 @@ section {
 
 	<dt>Subscription status</dt>
 	<dd>
-		<?php echo ( $emailSubscriptionStatus ) ? Wikia::successmsg( 'subscribed' ) : Wikia::errormsg( 'not subscribed' ); ?>
-		<a href="<?= $emailChangeSubscriptionUrl ?>" class="wikia-button secondary"><?= ( $emailSubscriptionStatus ? 'unsubscribe' : 're-subscribe' ) ?></a>
+		<?= ( $emailSubscriptionStatus ) ? Wikia::successmsg( 'subscribed' ) : Wikia::errormsg( 'not subscribed' ); ?>
+		<?php if ( !$emailSubscriptionStatus ) { ?><a href="<?= $emailChangeSubscriptionUrl ?>" class="wikia-button secondary">re-subscribe</a><?php } ?>
 	</dd>
 
 	<dt>Last email delivery</dt>
-	<dd><?= $emailLastDelivery ?></dd>
-
+	<dd><?= $emailLastDelivery ?>, status: <?= $emailLastDeliveryStatus ?></dd>
 </dl>
 
 </section>
