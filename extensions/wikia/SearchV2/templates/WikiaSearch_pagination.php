@@ -34,7 +34,7 @@
 				<?php endif;?>
 			<?php endfor; ?>
 			
-			<?php if( $windowLastPage < $pagesNum ): ?>
+			<?php if( $currentPage < $pagesNum ): ?>
 				<li><a class="paginator-next button secondary" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage+1) ), $extraParams ) ); ?>"></a></li>
 			<?php endif; ?>
 		</ul>
