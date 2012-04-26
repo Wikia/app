@@ -229,7 +229,8 @@ var WikiaMobile = (function() {
 				}
 			}
 
-			page.replaceChild(wrapper, article);
+			page.removeChild(article);
+			page.insertAdjacentHTML('beforeend', wrapper.outerHTML);
 		}
 	}
 
@@ -586,26 +587,16 @@ var WikiaMobile = (function() {
 	function onstop(el, x, max){
 		var dir = 'bigTable active',
 			middle = true;
+		el.style.border = 'none';
 
 		if(x < max - 5) {
-			dir += ' left';
+			el.style.borderRight = '5px solid rgb(215,232,242)';
 			middle = !middle;
 		}
 
 		if(x > 5) {
-			dir += ' right';
+			el.style.borderLeft = '5px solid rgb(215,232,242)';
 			middle = !middle;
-		}
-
-		//update class only on real change
-		if(middle) {
-			if(!el.middle){
-				el.className = dir;
-			}
-			el.middle = true;
-		}else{
-			el.middle = false;
-			el.className = dir;
 		}
 
 
@@ -633,6 +624,7 @@ var WikiaMobile = (function() {
 			wkPrfTgl = d.getElementById('wkPrfTgl'),
 			lvl1 = d.getElementById('lvl1'),
 			wkShrPag = d.getElementById('wkShrPag'),
+			toc,
 			//to cache link in wiki nav
 			lvl2Link;
 
@@ -749,18 +741,22 @@ var WikiaMobile = (function() {
 					}
 				}else{
 					body.delegate('.bigTable', touchEvent, function(){
-						var wrapper = this,
-							outerWidth = wrapper.clientWidth,
-							width = wrapper.children[0].offsetWidth;
+						var wrapper = this;
+						if(!wrapper.bigTable){
+							var outerWidth = wrapper.clientWidth,
+								width = wrapper.children[0].offsetWidth;
 
-						wrapper.addEventListener(sizeEvent, function(){
-							outerWidth = this.clientWidth;
-							width = this.children[0].offsetWidth;
-						});
+							wrapper.addEventListener(sizeEvent, function(){
+								outerWidth = this.clientWidth;
+								width = this.children[0].offsetWidth;
+							});
 
-						wrapper.addEventListener('scroll', function(ev){
-							onstop(wrapper, ev.target.scrollLeft, (width - outerWidth));
-						});
+							wrapper.addEventListener('scroll', function(ev){
+								onstop(wrapper, ev.target.scrollLeft, (width - outerWidth));
+							});
+
+							wrapper.bigTable = true;
+						}
 					});
 				}
 			}
@@ -1003,6 +999,50 @@ var WikiaMobile = (function() {
 					},
 					style: 'right:0;'
 				});
+			}
+
+			function scrollToElement(elm){
+				var startY = w.scrollY,
+					top = elm.offsetTop,
+					by = ~~((startY / top) / 100),
+					counter = 10,
+					i = setInterval(function(){
+						if(w.scrollY < top){
+							scrollBy(0, by);
+//							if(startY > (top - 300) && by >= 2){
+//								if(!counter) {
+//									by--;
+//									counter = 5;
+//								}
+//								counter--;
+//							}
+						}else{
+							elm.className += ' open';
+							elm.nextElementSibling.className += ' open';
+							clearInterval(i);
+						}
+
+					},5);
+			}
+
+			if(toc = d.getElementById('toc')){
+				d.getElementById('toctitle').className += ' chev';
+				toc.addEventListener(clickEvent, function(ev){
+					var node = ev.target.parentNode;
+
+					if(this.className.indexOf('open') > -1){
+						this.className = this.className.replace(' open', '');
+					}else{
+						this.className += ' open';
+					}
+
+					if(node.nodeName == 'A'){
+						ev.preventDefault();
+						var id = node.getAttribute('href').substr(1),
+							elm = d.getElementById(id);
+						scrollToElement(elm);
+					}
+				})
 			}
 		});
 	});
