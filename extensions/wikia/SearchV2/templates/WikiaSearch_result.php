@@ -5,7 +5,7 @@
 <article>
 <header>
 <h1>
-	<?php $title = empty($inGroup) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle(); ?>
+	<?php $title = ( empty($inGroup) && $isInterWiki ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle(); ?>
 	<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>"><?= $title ?></a>
 </h1>
 </header>
