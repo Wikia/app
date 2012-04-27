@@ -1,3 +1,4 @@
+/*global WikiaPhotoGallery */
 var WikiaPhotoGalleryView = {
 	log: function(msg) {
 		$().log(msg, 'WikiaPhotoGallery:view');
@@ -87,11 +88,9 @@ var WikiaPhotoGalleryView = {
 							return;
 						}
 
-						var gallery = $(this).closest('.wikia-gallery');
-						var hash = gallery.attr('hash');
-						var id = gallery.attr('id');
-
-						var gallery = $().find('.wikia-gallery');
+						var gallery = $(this).closest('.wikia-gallery'),
+							hash = gallery.attr('hash'),
+							id = gallery.attr('id');
 
 						self.loadEditorJS(function() {
 							// tracking
@@ -186,8 +185,7 @@ var WikiaPhotoGalleryView = {
 			imageWidth = parseInt(imageWidth);
 
 			// CSS magic for correct placement of images
-			image.
-				css({
+			image.css({
 					height: imageHeight,
 					width: imageWidth
 				}).
@@ -202,11 +200,12 @@ var WikiaPhotoGalleryView = {
 		};
 
 		// use local cache to speed up things
-		var key = image.attr('data-src');
+		var key = image.attr('data-src'),
+			img;
 
 		if (typeof self.lazyLoadCache[key] != 'undefined') {
 			// get dimensions from cache
-			var img = {
+			img = {
 				'width': self.lazyLoadCache[key].width,
 				'height': self.lazyLoadCache[key].height
 			};
@@ -215,7 +214,7 @@ var WikiaPhotoGalleryView = {
 		}
 		else {
 			// lazy load an image
-			var img = new Image();
+			img = new Image();
 			img.onload = function() {
 				self.lazyLoadCache[key] = {
 					'width': img.width,
@@ -259,15 +258,15 @@ var WikiaPhotoGalleryView = {
 					}
 
 					// position image wrapper
-					var wrapperOffsetLeft = (thumbWidth - wrapperWidth) >> 1;
-					var wrapperOffsetTop = (thumbHeight - wrapperHeight) >> 1;
+					var wrapperOffsetLeft = ((thumbWidth - wrapperWidth) >> 1);
+					var wrapperOffsetTop = ((thumbHeight - wrapperHeight) >> 1);
 
 					thumb.css({
 						height: wrapperHeight,
 						left: wrapperOffsetLeft,
 						margin: 0,
 						position: 'relative',
-						'top': wrapperOffsetTop,
+						top: wrapperOffsetTop,
 						width: wrapperWidth,
 						visibility: 'visible'
 					});

@@ -125,7 +125,7 @@ WikiaTracker.debug = function (msg, level, obj) {
 
 WikiaTracker.track = function(page, profile, events) {
 	return true;
-
+/*
 	if (typeof page != 'undefined' && page instanceof Array) {
 		page = page.join('/');
 	}
@@ -133,6 +133,7 @@ WikiaTracker.track = function(page, profile, events) {
 	this.debug(page + ' in ' + profile, 3, events);
 
 	return this._track(page, profile, 100, events);
+*/
 };
 
 WikiaTracker._track = function(page, profile, sample, events) {

@@ -106,8 +106,8 @@ WikiaMosaicSlider.prototype.showSlide = function(index) {
 	}, this) );
 
 	this.sliderDescription.addClass('')
-	if ( ($.browser.msie) || ( $.browser.mozilla && $.browser.version.slice(0,3) == "1.9" ) ) { //jquery animate version for IE and FF 3.6
-		this.sliderPanorama.animate({left: -1*this._imageWidth*index}, 400);
+	if ( !Modernizr.csstransitions ) { //jquery animate version for browsers that do not support css transitions
+		this.sliderPanorama.animate({left: -(this._imageWidth*index)}, 400);
 	}
 	else { //css animation for modern browsers
 		this.sliderPanorama.css('left', -(this._imageWidth * index));
