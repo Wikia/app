@@ -75,6 +75,71 @@ function getDomComplexity(page) {
 	return metrics;
 };
 
+// count JS globals (BugId:29463)
+function countGlobals(page) {
+	// @see https://github.com/madrobby/dom-monster/blob/master/src/dommonster.js#L645
+	return page.evaluate(function() {
+		function $tagname(tagname) {
+			var nodes = document.getElementsByTagName(tagname),
+			retValue = [];
+
+			for (var i = nodes.length - 1; i >= 0; i = i - 1) {
+				retValue[i] = nodes[i];
+			}
+
+			return retValue;
+		}
+
+		function ignore(name){
+			var allowed = ['Components','XPCNativeWrapper','XPCSafeJSObjectWrapper','getInterface','netscape','GetWeakReference'],
+			i = allowed.length;
+			while(i--){
+				if(allowed[i] === name) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function nametag(attr){
+				var ele = nametag.cache = nametag.cache || $tagname('*'), i = ele.length;
+				while(i--){
+					if(ele[i].name && ele[i].name == attr) {
+						return true;
+					}
+				}
+				return false;
+			}
+
+			var global = (function(){ return this })(), properties = {}, prop, found = [], clean, iframe = document.createElement('iframe');
+			iframe.style.display = 'none';
+			iframe.src = 'about:blank';
+			document.body.appendChild(iframe);
+
+			clean = iframe.contentWindow;
+
+			for(prop in global){
+				if(!ignore(prop) && !/^[0-9]/.test(prop) && !(document.getElementById(prop) || {}).nodeName && !nametag(prop)){
+					properties[prop] = true;
+				}
+			}
+
+			for(prop in clean){
+				if(properties[prop]){
+					delete properties[prop];
+				}
+			}
+
+			for(prop in properties){
+				found.push(prop.split('(')[0]);
+			}
+
+			//console.log(JSON.stringify(found));
+
+			return found.length;
+	});
+};
+
 // track onDOMready event
 page.onInitialized = function () {
 	console.log('open URL: ' + address);
@@ -131,7 +196,7 @@ page.onResourceReceived = function(res) {
 	var entry = page.requests[res.id],
 		type = 'other';
 
-	console.log(JSON.stringify(res));
+	//console.log(JSON.stringify(res));
 	//console.log('recv [' + res.stage + ' #' + res.id + ']: ' + res.url + ' (' +  JSON.stringify({time:res.time}) + ')');
 
 	switch (res.stage) {
@@ -276,6 +341,9 @@ page.onLoadFinished = function(status) {
 			for (var key in domMetrics) {
 				metrics[key] = domMetrics[key];
 			}
+
+			// global JS variables
+			metrics.globalVariables = countGlobals(page);
 
 			// other metrics
 			metrics.cookiesRaw = page.evaluate(function() {
