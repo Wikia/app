@@ -45,11 +45,12 @@
 		}
 	}
 	.Result {
+		width: 38em;
 		h1 {
 			border-bottom: 0;
-			font-size: inherit;
+			font-size: 15px;
 			font-weight: bold;
-			margin-top: 15px;
+			margin: 15px 0 0 0;
 		}
 		nav {
 			ul, li {
@@ -59,4 +60,8 @@
 			}
 		}
 	}
+}
+#bodyContent .Search .Result h1 { // gotta override Monobook's specificity
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
