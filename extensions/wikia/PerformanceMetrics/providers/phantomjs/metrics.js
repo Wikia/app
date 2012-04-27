@@ -131,13 +131,16 @@ page.onResourceReceived = function(res) {
 	var entry = page.requests[res.id],
 		type = 'other';
 
-	//console.log(JSON.stringify(res));
+	console.log(JSON.stringify(res));
 	//console.log('recv [' + res.stage + ' #' + res.id + ']: ' + res.url + ' (' +  JSON.stringify({time:res.time}) + ')');
 
 	switch (res.stage) {
 		case 'start':
 			entry.recvStartTime = res.time;
 			entry.timeToFirstByte = res.time - entry.sendTime;
+
+			// FIXME: buggy
+			// @see http://code.google.com/p/phantomjs/issues/detail?id=169
 			entry.contentLength = res.bodySize || 0;
 			break;
 
@@ -161,6 +164,7 @@ page.onResourceReceived = function(res) {
 			res.headers.forEach(function(header) {
 				switch (header.name) {
 					// TODO: why it's not gzipped?
+					// because: http://code.google.com/p/phantomjs/issues/detail?id=156
 					case 'Content-Length':
 						entry.contentLength = parseInt(header.value, 10);
 						page.contentLength += entry.contentLength;
@@ -196,6 +200,21 @@ page.onResourceReceived = function(res) {
 						if (entry.url.indexOf('data:') === 0) {
 							type = 'base64';
 						}
+						break;
+
+					// detect content encoding
+					case 'Content-Encoding':
+						 if (header.value === 'gzip') {
+						 	entry.gzip = true;
+						 }
+						break;
+
+					// detect varnish hit
+					case 'X-Cache':
+						 if (header.value.indexOf('HIT') === 0) {
+						 	entry.hit = true;
+						 }
+						break;
 				}
 			});
 
