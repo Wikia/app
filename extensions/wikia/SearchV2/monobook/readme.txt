@@ -1,1 +1,0 @@
-Search styles for Oasis are in /skins/oasis/css/modules/WikiaSearch.scss.  Monobook styles are in this extension's css directory. 
