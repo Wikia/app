@@ -12,6 +12,9 @@ var WikiaTracker = {
 		// Generic click, mostly javascript clicks
 		CLICK: 'click',
 
+		// Click on navigational button
+		CLICK_LINK_BUTTON: 'click-link-button',
+
 		// Click on image link
 		CLICK_LINK_IMAGE: 'click-link-image',
 
