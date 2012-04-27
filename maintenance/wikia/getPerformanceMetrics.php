@@ -19,7 +19,7 @@ function printHelp() {
 		echo <<<HELP
 Returns performance metrics for a given page
 
-USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia=graph-s1]
+USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia]
 
 	--url
 		Page to be checked
@@ -40,7 +40,7 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 		Return in CSV format
 
 	--ganglia
-		Send data to given Ganglia server using UDP protocol
+		Send data to Ganglia server using UDP protocol
 
 HELP;
 }
@@ -85,23 +85,21 @@ if (isset($options['csv'])) {
 
 // send data to Ganglia using gmetric library (BugId:29371)
 if (isset($options['ganglia'])) {
-	$host = $options['ganglia'];
-	echo "\nSending data to {$host}...";
+	$host = $wgGangliaHost;
+	$port = $wgGangliaPort;
+	echo "\nSending data to {$host}:{$port}...";
 
-	// TODO: use OOP library
-	include "{$IP}/lib/gmetric.php";
-	$res =  gmetric_open($host, 18604, 'udp');
+	$gmetric = F::build('GMetricClient');
 
-	if ($res === false) {
-		echo " failed!\n";
-		die(1);
+	$gmetric->setHostnameSpoof('10.8.32.34', 'spoofed-performance-metrics');
+	$gmetric->setGroup('Performance test');
+	$gmetric->setPrefix('perf-test');
+
+	foreach($report['metrics'] as $name => $value) {
+		$gmetric->addMetric($name, is_numeric($value) ? GMetricClient::GANGLIA_VALUE_UNSIGNED_INT : GMetricClient::GANGLIA_VALUE_STRING, $value);
 	}
 
-	foreach($report['metrics'] as $key => $value) {
-		gmetric_send($res, $key, $value, is_numeric($value) ? 'uint32' : 'string', '', null, 3600, 0);
-	}
-
-	gmetric_close($res);
+	$gmetric->send($host, $port);
 
 	echo " done!\n";
 	die(0);
