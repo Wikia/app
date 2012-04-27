@@ -230,6 +230,7 @@ var WikiaMobile = (function() {
 			}
 
 			page.removeChild(article);
+			//insertAdjacentHTML does not parse scripts that may be inside sections
 			page.insertAdjacentHTML('beforeend', wrapper.outerHTML);
 		}
 	}
@@ -624,7 +625,6 @@ var WikiaMobile = (function() {
 			wkPrfTgl = d.getElementById('wkPrfTgl'),
 			lvl1 = d.getElementById('lvl1'),
 			wkShrPag = d.getElementById('wkShrPag'),
-			toc,
 			//to cache link in wiki nav
 			lvl2Link;
 
@@ -999,50 +999,6 @@ var WikiaMobile = (function() {
 					},
 					style: 'right:0;'
 				});
-			}
-
-			function scrollToElement(elm){
-				var startY = w.scrollY,
-					top = elm.offsetTop,
-					by = ~~((startY / top) / 100),
-					counter = 10,
-					i = setInterval(function(){
-						if(w.scrollY < top){
-							scrollBy(0, by);
-//							if(startY > (top - 300) && by >= 2){
-//								if(!counter) {
-//									by--;
-//									counter = 5;
-//								}
-//								counter--;
-//							}
-						}else{
-							elm.className += ' open';
-							elm.nextElementSibling.className += ' open';
-							clearInterval(i);
-						}
-
-					},5);
-			}
-
-			if(toc = d.getElementById('toc')){
-				d.getElementById('toctitle').className += ' chev';
-				toc.addEventListener(clickEvent, function(ev){
-					var node = ev.target.parentNode;
-
-					if(this.className.indexOf('open') > -1){
-						this.className = this.className.replace(' open', '');
-					}else{
-						this.className += ' open';
-					}
-
-					if(node.nodeName == 'A'){
-						ev.preventDefault();
-						var id = node.getAttribute('href').substr(1),
-							elm = d.getElementById(id);
-						scrollToElement(elm);
-					}
-				})
 			}
 		});
 	});

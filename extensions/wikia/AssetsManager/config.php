@@ -241,6 +241,9 @@ $config['wikiamobile_js_body'] = array(
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 
+		//toc
+		'//extensions/wikia/WikiaMobile/js/toc.js',
+
 		//extensions with assets to load on every page
 		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
 	)

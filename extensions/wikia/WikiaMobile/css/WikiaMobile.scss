@@ -17,6 +17,7 @@
 @import 'ui';
 @import 'modal';
 @import 'media_modal';
+@import 'toc';
 
 //mixins
 @import "mixins/transition";
@@ -83,14 +84,8 @@ section, article, header, footer, aside, figure, figcaption {
 	.tvetnone {
 		width: 100% !important;
 		text-align: center;
-	}
-
+    }
 	//end of fluiding thead content
-
-	table#toc {
-		display: none;
-		//TODO: get rid of TOC
-	}
 
 	div.wikia-slideshow-wrapper{
 		width: auto;

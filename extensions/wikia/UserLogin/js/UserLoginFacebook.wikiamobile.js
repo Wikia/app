@@ -37,13 +37,9 @@ var UserLoginFacebook = (function(){
 							if(resp.loggedIn){
 								WikiaMobile.track('facebook/connect/success');
 								var reload = WikiaMobile.querystring(),
-									returnto = reload.getVal('returnto');
+									returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
 
-								if(!returnto) {
-									if(wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))){
-										reload.setPath( wgArticlePath.replace('$1', wgMainPageTitle));
-									}
-								}else{
+								if(returnto) {
 									reload.setPath(wgArticlePath.replace('$1', returnto));
 								}
 
