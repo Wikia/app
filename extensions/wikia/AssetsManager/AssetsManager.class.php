@@ -583,7 +583,7 @@ class AssetsManager {
 				$options['templates'];
 		}
 
-		if ( !empty( $options['array'] ) && is_array( $options['params'] ) ) {
+		if ( !empty( $options['params'] ) && is_array( $options['params'] ) ) {
 			foreach ( $options['params'] as $name => $val ) {
 				$request[$name] = $val;
 			}
