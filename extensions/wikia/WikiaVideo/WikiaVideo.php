@@ -71,7 +71,7 @@ function WikiaVideoSpecialUndeleteSwitchArchive( $archive, $title ) {
 }
 
 function WikiaVideoWhatlinkshereBeforeQuery( $hideimages, $pageconds, $targetconds, $imageconds ) {
-	if( NS_VIDEO == $pageconds['pl_namespace'] ) {
+	if( NS_LEGACY_VIDEO == $pageconds['pl_namespace'] ) {
 		$hideimages = false;
 		$imageconds['il_to'] = ':' . $imageconds['il_to'];
 	}
