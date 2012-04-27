@@ -20,7 +20,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
 		
 		if ( $this->wg->User->getSkin() instanceof SkinMonoBook ) {
-			$this->response->addAsset('extensions/wikia/SearchV2/css/monobook.scss');
+			$this->response->addAsset('extensions/wikia/SearchV2/monobook/monobook.scss');
 		}
 
 		$query = $this->getVal('query');
