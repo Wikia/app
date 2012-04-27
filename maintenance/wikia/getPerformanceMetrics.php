@@ -3,7 +3,7 @@
  * Displays various performance metrics from different sources:
  *
  *  - Google PageSpeed
- *  - DOM complexity report
+ *  - phantomjs
  *
  * @addto maintenance
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
@@ -19,7 +19,7 @@ function printHelp() {
 		echo <<<HELP
 Returns performance metrics for a given page
 
-USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia]
+USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia --ganglia-group=Mobile performance]
 
 	--url
 		Page to be checked
@@ -30,11 +30,11 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 	--noexternals
 		Test pages without external resources fetched (i.e. noexternals=1 added to the URL)
 
-	--providers
-		Comma separated list of providers to get data from
-
 	--logged-in
 		Get metrics for logged-in version of the site
+
+	--providers
+		Comma separated list of providers to get data from
 
 	--csv
 		Return in CSV format
@@ -42,6 +42,8 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 	--ganglia
 		Send data to Ganglia server using UDP protocol
 
+	--ganglia-group
+		Name of Ganglia graph group to report metrics to
 HELP;
 }
 
@@ -84,16 +86,18 @@ if (isset($options['csv'])) {
 }
 
 // send data to Ganglia using gmetric library (BugId:29371)
-if (isset($options['ganglia'])) {
+if (isset($options['ganglia']) && isset($options['ganglia-group'])) {
 	$host = $wgGangliaHost;
 	$port = $wgGangliaPort;
-	echo "\nSending data to {$host}:{$port}...";
+	$group = $options['ganglia-group'];
+
+	echo "Sending data to {$host}:{$port} ('{$group}' group)...";
 
 	$gmetric = F::build('GMetricClient');
 
 	$gmetric->setHostnameSpoof('10.8.32.34', 'spoofed-performance-metrics');
-	$gmetric->setGroup('Performance test');
-	$gmetric->setPrefix('perf-test');
+	$gmetric->setPrefix(strtolower(str_replace(' ', '-', $group)));
+	$gmetric->setGroup($group);
 
 	foreach($report['metrics'] as $name => $value) {
 		$gmetric->addMetric($name, is_numeric($value) ? GMetricClient::GANGLIA_VALUE_UNSIGNED_INT : GMetricClient::GANGLIA_VALUE_STRING, $value);
