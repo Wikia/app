@@ -19,12 +19,12 @@
 			$extraParams['ns'.$ns] = 1;
 		}
 	}
+	$prevClass = $currentPage > 1 ? "button secondary" : "disabled"; 
+	$nextClass = $currentPage < $pagesNum ? "button secondary" : "disabled";
 ?>
 	<div class="wikia-paginator">
 		<ul>
-			<?php if( $currentPage > 1 ): ?>
-				<li><a class="paginator-prev button secondary" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage-1) ), $extraParams ) ); ?>"><span><?=wfMsg('paginator-back')?></span></a></li>
-			<?php endif; ?>
+			<li><a class="paginator-prev <?= $prevClass ?>" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage-1) ), $extraParams ) ); ?>"><span><?=wfMsg('paginator-back')?></span></a></li>
 			<?php for( $i = $windowFirstPage; $i <= $windowLastPage; $i++ ): ?>
 			
 				<?php if($i == $currentPage): ?>
@@ -34,9 +34,7 @@
 				<?php endif;?>
 			<?php endfor; ?>
 			
-			<?php if( $currentPage < $pagesNum ): ?>
-				<li><a class="paginator-next button secondary" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage+1) ), $extraParams ) ); ?>"><span><?=wfMsg('paginator-next')?></span></a></li>
-			<?php endif; ?>
+			<li><a class="paginator-next  <?= $nextClass ?>" href="<?= $pageTitle->getFullUrl( array_merge( array( 'query' => $query, 'page' => ($currentPage+1) ), $extraParams ) ); ?>"><span><?=wfMsg('paginator-next')?></span></a></li>
 		</ul>
 	</div>
 <?php endif; ?>	
