@@ -1319,7 +1319,7 @@ class Wikia {
 		return $headers;
 	}
 
-	static public function isUnsubscribed( $to, $body, $subject, $mail ) {
+	static public function isUnsubscribed( $to, $body, $subject ) {
 		# Hook moved from SpecialUnsubscribe extension
 		#if this opt is set, fake their conf status to OFF, and stop here.
 		$user = User::newFromName( $to->name );
@@ -1671,14 +1671,14 @@ class Wikia {
 	static public function get_content_pages( ) {
 		return self::get_const_values( 'content_ns' );
 	}
-	
+
 	/* add some extra request parameters to control memcache behavior @author: owen
 	 * mcache=none disables memcache for the duration of the request (not really that useful)
 	 * mcache=writeonly disables memcache reads for the duration of the request
-	 * mcache=readonly disables memcache writes for the duration of the request 
+	 * mcache=readonly disables memcache writes for the duration of the request
 	 * TODO: allow disabling specific keys?
 	 */
- 		
+
 	static public function memcachePurge($output, $article, $title, $user, $request, $wiki ) {
 		global $wgRequest, $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
 
