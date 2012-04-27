@@ -78,7 +78,7 @@ class ChatModule extends Module {
 		
 		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatModule', 'onMakeGlobalVariablesScript', array(), false, $this);
 		
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(Module::getSkinTemplateObj()->data);
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
 	
 		//Theme Designer stuff
 		$themeSettings = new ThemeSettings();
