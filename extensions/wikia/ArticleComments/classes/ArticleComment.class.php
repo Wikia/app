@@ -769,9 +769,11 @@ class ArticleComment {
 		$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), 'v1' ), null);
 		// make sure our comment list is refreshed from the master RT#141861
 		$listing->getCommentList(true);
-		// BugID: 2483 purge the parent article when new comment is posted
-		$parts = explode( '/', $commentTitle->getText() );
-		$parentTitle = Title::newFromText($parts[0]);
+		
+		//BugID: 2483 purge the parent article when new comment is posted
+		//BugID: 29462, purge the ACTUAL parent, not the root page... $#%^!
+		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
+
 		if ($parentTitle) {
 			$parentTitle->invalidateCache();
 			$parentTitle->purgeSquid();
