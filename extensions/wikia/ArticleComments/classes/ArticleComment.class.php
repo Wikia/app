@@ -788,11 +788,11 @@ class ArticleComment {
 						'methodName' => 'WikiaMobileCommentsPage',
 						'params' => array(
 							'articleID' => $parentTitle->getArticleID(),
-							'useskin' => 'wikiamobile',
 							'page' => 1
 						)
 					)
 				),
+				'params' => array( 'useskin' => 'wikiamobile' ),
 				'varnishTTL' => 86400
 			) );
 		}

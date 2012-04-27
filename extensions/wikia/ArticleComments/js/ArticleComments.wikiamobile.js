@@ -25,10 +25,10 @@
 				methodName: 'WikiaMobileCommentsPage',
 				params: {
 					articleID: wgArticleId,
-					useskin: 'wikiamobile',
 					page: 1
 				}
 			}],
+			params: {useskin: 'wikiamobile'},
 			varnishTTL: 86400,
 			callback: function(res){
 				WikiaMobile.loader.remove(wkArtCom);
