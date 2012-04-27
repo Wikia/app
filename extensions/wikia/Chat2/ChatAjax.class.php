@@ -127,7 +127,7 @@ class ChatAjax {
 							'cuc_minor'      => 0,
 							'cuc_user'       => $user->getID(),
 							'cuc_user_text'  => $user->getName(),
-							'cuc_actiontext' => 'Joined Chat',
+							'cuc_actiontext' => wfMsgForContent( 'chat-checkuser-join-action' ),
 							'cuc_comment'    => '',
 							'cuc_this_oldid' => 0,
 							'cuc_last_oldid' => 0,
