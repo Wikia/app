@@ -14,7 +14,7 @@ if( !empty( $_GET['forceprofile'] ) ) {
 		require_once( dirname(__FILE__).'/includes/ProfilerSimple.php');
 	}
 	require_once( dirname(__FILE__).'/extensions/wikia/WyvProfiler/WyvProfiler.class.php' );
-	$wgProfiler = new WyvProfiler;
+	$wgProfiler = new WyvProfilerH;
 } elseif (rand(1, 100) <= $wgProfilerSamplePercent  ) {
 	require_once( dirname(__FILE__).'/includes/ProfilerSimpleUDP.php' );
  	$wgProfiler = new ProfilerSimpleUDP;
