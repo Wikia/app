@@ -3,11 +3,14 @@
 ?>
 <section id=wkTopNav<?= ($searchOpen) ? ' class=srhOpn' : ''?>>
    <div id=wkTopBar>
+	<a href=<?= Title::newMainPage()->getFullURL() ?>>
    <? if( $wordmarkType == "graphic" ) :?>
 	  <img id=wkImgMrk src="<?= $wordmarkUrl ;?>">
    <? else :?>
 	   <div id=wkWrdMrk><?= $wikiName ;?></div>
    <? endif ;?>
+	</a>
+
    <a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
    <a href=#wkNavMenu id=wkNavTgl class=tgl></a>
    <? if($wg->EnableUserLoginExt) : ?>
