@@ -18,15 +18,16 @@ var WikiaPhotoGallerySlider = {
 		$().log(this.sliderId);
 		//move spotlights
 		$('.wikiaPhotoGallery-slider-body').each(function() {
-			$(this).css('left', parseInt($(this).css('left')) - (620 * WikiaPhotoGallerySlider.initialImageId));
+			var node = $(this);
+			node.css('left', parseInt(node.css('left')) - (620 * WikiaPhotoGallerySlider.initialImageId), 10);
 		});
 
 		//select nav
 		$('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId).find('.nav').addClass('selected');
 
 		//show description
-		$('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId).find('.description').css('display','block');
-		$('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId).find('.description-background').css('display','block');
+		$('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId).find('.description').show();
+		$('#wikiaPhotoGallery-slider-' + sliderId + '-' + WikiaPhotoGallerySlider.initialImageId).find('.description-background').show();
 
 		//bind events
 		$('#wikiaPhotoGallery-slider-body-' + sliderId + ' .nav').click(function() {
@@ -39,7 +40,7 @@ var WikiaPhotoGallerySlider = {
 			WikiaPhotoGallerySlider.sliderEnable = false;
 		});
 
-		$('#wikiaPhotoGallery-slider-body-' + sliderId).css('display', 'block');
+		$('#wikiaPhotoGallery-slider-body-' + sliderId).show();
 
 		
 		//only slideshows with more than one item should animate
@@ -50,10 +51,10 @@ var WikiaPhotoGallerySlider = {
 
 	scroll: function(nav) {
 		//setup variables
-		var thumb_index = nav.parent().prevAll().length;
-		var scroll_by = parseInt(nav.parent().find('.wikiaPhotoGallery-slider').css('left'));
-		var slider_body = nav.closest('.wikiaPhotoGallery-slider-body');
-		var parent_id = slider_body.attr('id');
+		var thumb_index = nav.parent().prevAll().length,
+			scroll_by = parseInt(nav.parent().find('.wikiaPhotoGallery-slider').css('left')),
+			slider_body = nav.closest('.wikiaPhotoGallery-slider-body'),
+			parent_id = slider_body.attr('id');
 
 		if ($('#' + parent_id + ' .wikiaPhotoGallery-slider').queue().length == 0) {
 

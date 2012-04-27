@@ -7,7 +7,7 @@ function WidgetShoutBoxSend(widgetId) {
 	}
 
 	// get message
-	message = encodeURIComponent( messageBox.attr('value') );
+	var message = encodeURIComponent( messageBox.attr('value') );
 
 	$('#widget_' + widgetId + '_content').html('').addClass('widget_loading').log('msg: ' + message, 'WidgetShoutBox');
 

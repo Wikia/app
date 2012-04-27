@@ -1,3 +1,5 @@
+/*global WikiaMobile: true */
+
 var WikiaPhotoGallerySlider = {
 	sliderId: null,
 	loader: WikiaMobile.loader,
