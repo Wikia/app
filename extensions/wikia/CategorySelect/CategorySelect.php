@@ -183,7 +183,7 @@ function CategorySelectGetCategories() {
 	wfProfileIn(__METHOD__);
 
 	$key = wfMemcKey('CategorySelectGetCategories', 1);
-	#$out = $wgMemc->get($key);
+	$out = $wgMemc->get($key);
 
 	if (empty($out)) {
 		$dbr = wfGetDB(DB_SLAVE);
