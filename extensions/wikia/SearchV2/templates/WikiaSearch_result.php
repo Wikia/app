@@ -4,13 +4,9 @@
 <?php endif; ?>
 <article>
 <header>
-<?php lizbug($result); ?>
 <h1>
-	<?php if($result->hasCanonical()): ?>
-		<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>"><?= $result->getTitle(); ?></a> (Redirect: <?= $result->getCanonical(); ?>)
-	<?php else: ?>
-		<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>"><?= $result->getTitle(); ?></a>
-	<?php endif; ?>
+	<?php $title = empty($inGroup) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle(); ?>
+	<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>"><?= $title ?></a>
 </h1>
 </header>
 
@@ -30,8 +26,6 @@
 		</ul>
 	</nav>
 <?php endif; ?>
-
-
 
 <?php if($debug): ?>
 	<i>[id: <?=$result->getId();?>, text_relevance: <?=$result->getVar('text_relevance', '?');?>, backlinks: <?=$result->getVar('backlinks', '?');?>]</i><br />

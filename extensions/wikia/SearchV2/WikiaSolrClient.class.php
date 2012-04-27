@@ -244,6 +244,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$result->setVar('cityArticlesNum', $doc->wikiarticles);
 			$result->setVar('position', $position);
 			$result->setVar('cityHost', 'http://'.$doc->host);
+			$result->setVar('wikititle', $doc->wikititle);
 
 			$results[] = $result;
 			$position++;
