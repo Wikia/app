@@ -387,22 +387,6 @@ class ArticleAdLogic {
 		return ($wgRequest->getVal('action') == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted());
 	}
 
-	// Do reporting to compare the javascript based collision detection logic with this one
-	// TODO: remove? uses YUI and is not called (BugId:3116)
-	static public function getCollisionCollision($html) {
-		$out = "<script type='text/javascript'>\n";
-		if (self::isBoxAdArticle($html)){
-			$out .= "var isPhpCollision=false;\n";
-		} else {
-			$out .= "var isPhpCollision=true;\n";
-		}
-
-		$out .= file_get_contents(dirname(__FILE__) . '/collisionCollision.js');
-		$out .= "</script>";
-		return $out;
-	}
-
-
 	public function isMandatoryAd($slotname){
 		/* Ads that always display, even if user is logged in, etc.
   	 	* See http://staff.wikia-inc.com/wiki/DART_Implementation#When_to_show_ads */
