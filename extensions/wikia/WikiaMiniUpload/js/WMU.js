@@ -961,12 +961,11 @@ function WMU_insertImage(e, type) {
 
 	var callback = {
 		success: function(o) {
-
 			var screenType = o.getResponseHeader['X-screen-type'];
 			if(typeof screenType == "undefined") {
 				screenType = o.getResponseHeader['X-Screen-Type'];
 			}
-
+			
 			switch(YAHOO.lang.trim(screenType)) {
 				case 'error':
 					o.responseText = o.responseText.replace(/<script.*script>/, "" );
@@ -987,11 +986,62 @@ function WMU_insertImage(e, type) {
 					    return false;
 					}
 
-					if( -2 == WMU_gallery) {
-						WMU_insertPlaceholder( WMU_box );
+					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
+						if( -2 == WMU_gallery) {
+							WMU_insertPlaceholder( WMU_box );
+						} else {
+							// insert image in source mode
+							insertTags($G('ImageUploadTag').value, '', '', WMU_getRTETxtarea());
+						}
 					} else {
-						// insert image in source mode
-						insertTags($G('ImageUploadTag').value, '', '', WMU_getRTETxtarea());
+						// CK support
+						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').value;
+						var options = {};
+
+						if($G('ImageUploadThumbOption').checked) {
+							options.thumb = 1;
+						} else {
+							options.thumb = null;
+						}
+						if($G('ImageUploadWidthCheckbox').checked) {
+							options.width = WMU_slider.getRealValue();
+						} else {
+							options.width = null;
+						}
+						if($G('ImageUploadLayoutLeft').checked) {
+							options.align = 'left';
+						} else {
+							options.align = null;
+						}
+						options.caption = $G('ImageUploadCaption').value;
+
+						// handle links (BugId:6506)
+						if (!options.thumb) {
+							options.link = $G('ImageUploadLink').value;
+						}
+						if (typeof window.WMU_RTEImage != 'undefined') {
+							var image = window.WMU_RTEImage;
+
+							// modify options format
+							options.thumbnail = options.thumb;
+							delete options.thumb;
+
+							if (image) {
+								// update existing image / replace image placeholder
+								RTE.mediaEditor.update(image, wikitag, options);
+							}
+							else {
+								// add new image
+								RTE.mediaEditor.addImage(wikitag, options);
+							}
+							// Handle MiniEditor focus
+							// (BugId:18713)
+							var wikiaEditor = WikiaEditor.getInstance();
+							if(wikiaEditor.config.isMiniEditor) {
+								wikiaEditor.plugins.MiniEditor.hasFocus = false;
+							}
+
+						}
 					}
 					break;
 				case 'existing':
