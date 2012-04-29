@@ -442,7 +442,10 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'activityindicator-message' => 'د برسېرېدو په حال کې',
+	'window-category-load-batch' => 'نور',
 	'window-article-button-close' => 'تړل',
+	'window-article-button-back' => 'پر شا',
 	'window-article-menu-search-label' => 'پلټنه',
 	'window-article-menu-cancel-label' => 'ناګارل',
 	'alert-download-updated-wikis-button-ok' => 'ښه',

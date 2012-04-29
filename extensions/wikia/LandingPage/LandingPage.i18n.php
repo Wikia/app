@@ -197,6 +197,14 @@ $messages['id'] = array(
 	'landingpage-buttons-learn-more' => 'Selengkapnya &gt;',
 );
 
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
+ * @author MrKarahanly
+ */
+$messages['kk-cyrl'] = array(
+	'landingpage' => 'Викиаға қош келдіңіз',
+	'landingpage-start-exploring' => 'Үйренуді бастауға дайынбысыз?',
+);
+
 /** Korean (한국어) */
 $messages['ko'] = array(
 	'landingpage' => '위키아에 오신 것을 환영합니다',
@@ -325,6 +333,15 @@ $messages['pms'] = array(
 	'landingpage-readfaq' => "Dle chestion? Ch'a lesa nòstre FAQ &gt;",
 	'landingpage-text' => "An Wikia a peul <strong>comuniché con dla gent</strong> ch'a partagia soe <strong>passion e anteresse</strong>. Ch'a treuva soa companìa, ch'a fasa dij coment e dle modìfiche, a peul fin-a <strong>anandié sò sit an sl'aragnà</strong> e soa comunità.",
 	'landingpage-buttons-learn-more' => 'Amprende ëd pi &gt;',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'landingpage' => 'ويکييا ته ښه راغلۍ',
+	'landingpage-readfaq' => 'پوښتنې لرۍ؟ زموږ ډ-ځ-پ ولولۍ &gt;',
+	'landingpage-buttons-learn-more' => 'نور مالومات &gt;',
 );
 
 /** Portuguese (Português)

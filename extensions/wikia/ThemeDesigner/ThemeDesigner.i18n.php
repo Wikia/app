@@ -842,6 +842,7 @@ $messages['inh'] = array(
 
 /** Japanese (日本語)
  * @author Schu
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -878,8 +879,8 @@ $messages['ja'] = array(
 	'themedesigner-upload-your-own' => 'オリジナルの画像をアップロード',
 	'themedesigner-button-upload' => 'アップロード',
 	'themedesigner-button-upload-wordmark' => 'アップロード',
-	'themedesigner-rules-background' => 'jpg、gif、png のいずれか。100 キロバイトまで。',
-	'themedesigner-default' => 'デフォルト',
+	'themedesigner-rules-background' => 'jpg、gif、png のいずれか。{{PLURAL:$1|$1 キロバイト}}まで。',
+	'themedesigner-default' => '既定',
 	'themedesigner-font' => 'フォント',
 	'themedesigner-size' => 'サイズ',
 	'themedesigner-button-save' => '保存',

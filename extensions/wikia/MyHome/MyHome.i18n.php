@@ -1832,7 +1832,7 @@ $messages['mk'] = array(
 	'myhome-feed-new-blog-comment-details' => 'Коментар',
 	'myhome-feed-new-article-comment-details' => 'Коментар',
 	'myhome-feed-move-details' => 'Преименувано',
-	'myhome-feed-redirect-details' => 'Преместување',
+	'myhome-feed-redirect-details' => 'Пренасочување',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додадена фотографија|Додадени фотографии}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додадена видеоснимка|Додадени видеоснимки}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додадена категорија|Додадени категории}}',
@@ -2489,22 +2489,40 @@ Se chiel a l'é ël fondador o n'aministrator ëd la wiki, a peul cangé sto më
  */
 $messages['ps'] = array(
 	'myhome' => 'زما کورپاڼه',
+	'wikiactivity' => 'ويکي فعاليتونه',
 	'myhome-watchlist-feed' => 'کتنلړ',
 	'myhome-user-contributions-feed' => 'ونډې',
 	'myhome-hot-spots-newest' => 'په ويکي کې نوي مخونه',
+	'prefs-myhome' => 'زما کورپاڼه',
 	'myhome-feed-newpage' => 'نوی مخ',
 	'myhome-feed-edit' => 'سمول',
+	'myhome-feed-move' => 'مخ ولېږدېده',
 	'myhome-feed-talkpage' => 'د خبرو اترو مخ',
+	'myhome-feed-blogcomment' => 'د بلاګ تبصره',
 	'myhome-feed-delete' => 'ړنګ شو',
 	'myhome-feed-image' => 'انځور ورګډ شو',
+	'myhome-feed-video' => 'ويډيو ورګډه شوه',
 	'myhome-feed-categorization' => 'ډلبندي',
+	'myhome-feed-created-by' => 'د $1 لخوا جوړ شو',
+	'myhome-feed-added-by' => 'د $1 لخوا ورګډ شو',
+	'myhome-feed-edited-by' => 'د $1 لخوا سم شو',
+	'myhome-feed-posted-by' => 'د $1 لخوا پوست شو',
+	'myhome-feed-comment-by' => 'تبصره د $1 لخوا',
+	'myhome-feed-deleted-by' => 'د $1 لخوا ړنګ شو',
+	'myhome-feed-moved-by' => 'د $1 لخوا ولېږدېده',
 	'myhome-feed-by' => 'د $1 لخوا',
 	'myhome-feed-new-page-details' => 'نوی مخ',
 	'myhome-feed-summary-details' => 'لنډيز',
+	'myhome-feed-section-edit-details' => 'برخه يې سمه کړه',
 	'myhome-feed-new-blog-post-details' => 'نوی بلاګ',
 	'myhome-feed-new-blog-comment-details' => 'تبصره',
 	'myhome-feed-new-article-comment-details' => 'تبصره',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|انځور ورګډ شو|انځورونه ورګډ شوه}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|ويډيو ورګډه شوه|ويډيوګانې ورګډې شوې}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|وېشنيزه ورګډه شوه|وېشنيزې ورګډې شوې}}',
+	'myhome-hot-spots-number-of-editors' => 'سمونګران',
 	'myhome-namespace-blog' => 'بلاګ',
+	'myhome-community-corner-header' => 'د ټولنې پيغام',
 	'myhome-community-corner-edit' => 'پيغام سمول',
 	'community-corner' => "'''زما کور ته ښه راغلاست!'''
 
@@ -2523,6 +2541,7 @@ $messages['ps'] = array(
 
 * او يا هم يوازې د تشويق او د نورو د لېواله کولو لپاره خوږې خبرې وليکۍ!",
 	'tooltip-pt-myhome' => 'زما کورپاڼې ته ورتلل',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|يو پيغام|$1 پيغامونه}}',
 );
 
 /** Portuguese (Português)

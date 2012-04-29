@@ -3209,7 +3209,9 @@ $messages['kn'] = array(
  */
 $messages['lb'] = array(
 	'founderemails-desc' => "Hëlleft d'Grënner vun den Ännerungen op hirer Wiki z'informéieren",
+	'founderemails-email-user-registered-greeting' => 'Salut $USERNAME,',
 	'founderemails-email-user-registered-signature' => "D'Wikia-Team",
+	'founderemails-email-0-days-passed-subject' => 'Wëllkomm op Wikia!',
 	'founderemails-email-general-edit-signature' => "D'Wikia-Team",
 	'founderemails-email-general-edit-button' => 'Probéiert et aus!',
 	'founderemails-email-page-edited-anon-subject' => 'E mysteriéise Frënd huet $WIKINAME geännert',
@@ -5211,7 +5213,7 @@ A-i é un mucc ëd ròba capità su soa wiki ancheuj! Ch\'a vada ansima a $MYHOM
  */
 $messages['ps'] = array(
 	'founderemails-email-user-registered-subject' => 'يو نوی غړی د $WIKINAME سره يوځای شو',
-	'founderemails-email-0-days-passed-subject' => 'ويکييا ته ښه راغلاست!',
+	'founderemails-email-0-days-passed-subject' => 'ويکييا ته ښه راغلۍ!',
 	'founderemails-email-first-edit-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-first-edit-button' => 'وې آزمويۍ!',
 	'founderemails-email-general-edit-greeting' => 'سلامونه $USERNAME،',

@@ -1098,9 +1098,11 @@ $messages['lb'] = array(
 	'wikia-editor-media-image' => 'Foto',
 	'wikia-editor-media-video' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Foto derbäisetzen',
+	'wikia-editor-source-italic-tooltip' => 'Kursiv',
 	'wikia-editor-modules-templates-title' => 'Schablounen',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lëscht vun de benotzte Schablounen',
 	'wikia-editor-modules-categories-title' => 'Kategorien',
+	'wikia-editor-edittools-caption' => 'méi',
 	'tog-minordefault' => "All Ännerungen automatesch als 'Kleng Ännerungen' markéieren",
 	'tog-forceeditsummary' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
 );
@@ -1608,8 +1610,8 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
- * @author Caio1478
  * @author 555
+ * @author Caio1478
  */
 $messages['pt-br'] = array(
 	'editpagelayout-notificationsLink-none' => 'Notificações',

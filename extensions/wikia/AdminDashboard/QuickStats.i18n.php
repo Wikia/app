@@ -211,8 +211,8 @@ $messages['fr'] = array(
 	'quickstats-totals-label' => 'Totaux',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Voir plus de stats]]',
 	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1 milliard',
+	'quickstats-number-shortening-millions' => '$1 M',
+	'quickstats-number-shortening-billions' => '$1 Mrd',
 	'quickstats-ga-broken-message' => "La vue en colonnes est actuellement indisponible. Nous travaillons dessus pour la mettre à disposition bientôt! [$1 Plus d'info]",
 );
 
@@ -349,6 +349,7 @@ $messages['lb'] = array(
 	'quickstats-header-edits' => 'Ännerungen',
 	'quickstats-header-photos' => 'Fotoen',
 	'quickstats-header-likes' => 'Hunn ech gär',
+	'quickstats-totals-label' => 'Total',
 );
 
 /** Lithuanian (Lietuvių)
@@ -487,6 +488,13 @@ $messages['ps'] = array(
 	'quickstats-header-edits' => 'سمونونه',
 	'quickstats-header-photos' => 'انځورونه',
 	'quickstats-totals-label' => 'ټولټال',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'quickstats-totals-label' => 'Totais',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

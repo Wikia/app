@@ -337,6 +337,7 @@ Molimo kontaktirajte ga za više podataka.',
  * @author BroOk
  */
 $messages['ca'] = array(
+	'chat' => 'Xat',
 	'chat-desc' => '[[Special:Chat|Xat en línia]]',
 	'chat-no-login' => "Has d'estar connectat al xat.",
 	'chat-no-login-text' => "Si us plau connecta't per parlar.",
@@ -358,6 +359,7 @@ $messages['ca'] = array(
 	'chat-err-already-chatmod' => 'Error: "$1" ja està en el "$2" grup.',
 	'chat-err-no-permission-to-add-chatmod' => 'Error: No té permís per afegir el " $1 " grup a aquest usuari.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1promogut $2 per ser moderador del xat en aquest wiki.',
+	'chat-err-invalid-username-chatmod' => 'Error: No s\'ha pogut trobar l\'usuari "$1"',
 	'chat-you-are-banned' => 'Error de permisos.',
 	'chat-you-are-banned-text' => "Ho sentim, no teniu permís per xatejar en aquest wiki. Si penses que és un error o vols ser reconsiderat, si us plau posa't contacte amb un administrador.",
 	'chat-room-is-not-on-this-wiki' => "La sala de xat que estàs intentant d'entrar no sembla existir en aquest wiki.",
@@ -367,7 +369,7 @@ $messages['ca'] = array(
 	'chat-start-a-chat' => 'Entra al Xat',
 	'chat-whos-here' => 'Qui és aquí ($1)',
 	'chat-join-the-chat' => 'Uneix-te al xat',
-	'chat-edit-count' => '$1 Edicions',
+	'chat-edit-count' => '{{PLURAL:$1|$1 edició|$1 edicions}}',
 	'chat-member-since' => 'Membre des de $1',
 	'chat-great-youre-logged-in' => "Genial! T'has connectat.",
 	'chat-user-manu-profile' => "Perfil d'usuari",
@@ -972,14 +974,17 @@ $messages['ko'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'chat' => 'Chat',
 	'chat-default-topic' => 'Wëllkomm am $1-Chat',
 	'chat-user-blocked' => '$1 huet $2 gespaart.',
+	'chat-err-already-chatmod' => 'Feeler: "$1" ass schonn am Grupp "$2".',
 	'chat-you-are-banned' => 'Berechtigungs-Feeler',
 	'chat-headline' => 'Chat: $1',
 	'chat-live' => 'Live!',
 	'chat-whos-here' => 'Wien ass hei ($1)',
 	'chat-edit-count' => '{{PLURAL:$1|Eng Ännerung|$1 Ännerungen}}',
 	'chat-member-since' => 'Member zënter $1',
+	'chat-user-manu-profile' => 'Benotzerprofil',
 	'chat-user-manu-private' => 'Private Message',
 );
 
@@ -1329,7 +1334,9 @@ $messages['ps'] = array(
 	'chat-headline' => '$1 بانډار',
 	'chat-live' => 'ژوندی!',
 	'chat-start-a-chat' => 'بانډار پيلول',
-	'chat-edit-count' => '$1 سمونونه',
+	'chat-whos-here' => 'دلته څوک دي ($1)',
+	'chat-join-the-chat' => 'بانډار کې ورګډېدل',
+	'chat-edit-count' => '{{PLURAL:$1|$1 سمون|$1 سمونونه}}',
 	'chat-user-manu-contribs' => 'ونډې',
 );
 
@@ -1380,10 +1387,10 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author 555
  * @author Aristóbulo
  * @author Caio1478
  * @author Pedroca cerebral
- * @author 555
  */
 $messages['pt-br'] = array(
 	'chat' => 'Chat',

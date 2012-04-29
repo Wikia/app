@@ -1292,6 +1292,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1326,7 +1327,7 @@ $messages['ja'] = array(
 	'multiwikiedit_summary_text' => '編集内容の要約',
 	'multiwikiedit_this_wiki' => 'このウィキ',
 	'multiwikiedit_inbox_caption' => 'コンマで区切ってウィキを指定',
-	'multiwikiedit_all_wikis' => '全ウィキ',
+	'multiwikiedit_all_wikis' => 'すべてのウィキ',
 	'multiwikiedit_selected_wikis' => '指定したウィキ',
 	'multiwikiedit_success_subtitle' => 'for $1',
 	'multiwikiedit_link_back' => '一括編集フォームに戻るには$1。',
@@ -1367,7 +1368,7 @@ $messages['ja'] = array(
 	'multidelete_processing' => 'ページの削除:',
 	'multidelete_this_wiki' => 'このウィキ',
 	'multidelete_inbox_caption' => 'コンマで区切ってウィキを指定',
-	'multidelete_all_wikis' => '全ウィキ',
+	'multidelete_all_wikis' => 'すべてのウィキ',
 	'multidelete_selected_wikis' => '指定したウィキ',
 	'multidelete_success_subtitle' => 'for $1',
 	'multidelete_link_back' => '一括削除フォームに戻るには$1。',
@@ -2299,6 +2300,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'multitasks-link-back-label' => 'دلته',
 	'multiwikiedit_button' => 'سمول',
+	'multiwikiedit_confirm' => 'تاييد',
 	'multiwikiedit_caption' => 'د مخ لړليک',
 	'multiwikiedit_reason' => 'د سمون سبب',
 	'multiwikiedit_list_caption' => 'ويکي لړليک',

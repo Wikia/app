@@ -237,6 +237,16 @@ $messages['pms'] = array(
 	'exitstitial-button' => "Sauté S'areclam",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'interstitial-default-campaign-code' => 'ويکييا له تاسې سره مينه لري!',
+	'interstitial-skip-ad' => 'له دې خبرتيا تېرېدل',
+	'exitstitial-register' => 'د خبرتيا نه تېرېدلو لپاره <a href="#" class="register">نومليکنه</a> or <a href="#" class="login">ننوتنه</a> ترسره کړۍ.',
+	'exitstitial-button' => 'له دې خبرتيا تېرېدل',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Waldir

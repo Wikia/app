@@ -424,6 +424,9 @@ $messages['ps'] = array(
 	'mostvisitedpages' => 'تر ټولو ډېر کتل شوي مخونه',
 	'mostvisitedpagessearchtext' => 'د ليکنې نوم:',
 	'mostvisitedpagessearchbtn' => 'پلټل',
+	'mostvisitedpageslatest' => 'په وروستيو $1 دقيقو کې',
+	'mostvisitedpageslatestlink' => 'تازه ليدل شوي مخونه کتل',
+	'mostvisitedpagesalllink' => 'ډېر ليدلي مخونه کتل',
 );
 
 /** Portuguese (Português)

@@ -228,6 +228,7 @@ $messages['sl'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
+	'wikia-watchsubpages-desc' => 'Аутоматско надгледање подстраница',
 	'tog-watchlistsubpages' => 'Надгледај подстранице',
 );
 

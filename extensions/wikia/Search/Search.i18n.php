@@ -471,6 +471,7 @@ $messages['ps'] = array(
 	'wikiasearch-search-this-wiki' => 'يوازې مرکزي ويکي يا پلټل',
 	'wikiasearch-search-wikia' => 'ويکيا پلټل',
 	'wikiasearch-image-results' => 'د "$1" لپاره د انځور پايلې',
+	'wikiasearch-search-all-wikia' => 'ټول ويکييا پلټل',
 );
 
 /** Portuguese (Português)

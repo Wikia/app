@@ -423,10 +423,15 @@ $messages['id'] = array(
 
 /** Japanese (日本語)
  * @author Naohiro19
+ * @author Shirayuki
  */
 $messages['ja'] = array(
 	'textregex' => 'テキストの正規表現',
-	'textregex-currently-blocked' => '’’’現在投稿ブロックされているフレーズ:’’’',
+	'textregex-currently-blocked' => "'''現在投稿ブロックされているフレーズ:'''",
+	'textregex-regex-block' => 'ブロックするフレーズ:',
+	'textregex-submit-regex' => 'フレーズを追加',
+	'textregex-already-added' => '"$1" は追加済みです',
+	'textregex-select-default' => '-- 選択 --',
 );
 
 /** Colognian (Ripoarisch)

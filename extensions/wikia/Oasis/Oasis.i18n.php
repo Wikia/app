@@ -2195,6 +2195,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Aphaia
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -2205,18 +2206,18 @@ $messages['ja'] = array(
 	'oasis-share' => 'この記事を共有',
 	'oasis-signup' => 'アカウントを作成',
 	'oasis-edit-protected-article' => 'ログインして編集',
-	'oasis-button-random-page' => '無作為ページ',
+	'oasis-button-random-page' => 'おまかせページ',
 	'oasis-button-random-wiki' => 'おまかせウィキ',
 	'oasis-button-wiki-activity' => 'ウィキアクティビティ',
-	'oasis-button-wiki-activity-feed' => '全てのアクティビティを見る &gt;',
+	'oasis-button-wiki-activity-feed' => 'すべてのアクティビティを見る >',
 	'oasis-button-wiki-activity-watchlist' => 'フォローしているページだけを表示する',
 	'oasis-activity-watchlist-login' => 'フォローしているページのみを表示するにはログインする必要があります。',
 	'oasis-activity-header' => 'ウィキアクティビティ',
 	'oasis-related-video-header' => '関連動画',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em> <span>件の記事が<br />このウィキにあります</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em> <span class="$2">件の画像がこのウィキにあります</span>',
-	'oasis-latest-photos-more' => '全て見る &gt;',
-	'oasis-latest-photos-inner-message' => '全ての画像を見る',
+	'oasis-latest-photos-more' => 'すべて見る >',
+	'oasis-latest-photos-inner-message' => 'すべての画像を見る',
 	'oasis-latest-photos-empty' => 'どなたでも、このウィキをより良いものにできます。<br /><span>画像を追加するにはこちらをクリックしてください。</span>',
 	'oasis-latest-photos-by' => 'by',
 	'oasis-latest-photos-posted-in' => 'この画像を使用しているページ:',
@@ -2246,13 +2247,13 @@ $messages['ja'] = array(
 	'oasis-anon-header' => '未登録利用者 <small>$1</small>',
 	'oasis-preview-confirmation' => 'プレビュー中 : 編集内容はまだ保存されていません！ スクロールし編集を続けてください。',
 	'oasis-badge-notification' => '$3 "$2" バッジが贈られました',
-	'oasis-badge-notification-see-more' => 'さらに入手可能なバッジを見る',
+	'oasis-badge-notification-see-more' => '入手できる他のバッジを見る',
 	'oasis-page-header-subtitle-mediawiki' => 'MediaWiki ページ',
 	'oasis-page-header-subtitle-special' => '特別ページ',
 	'oasis-page-header-subtitle-template' => 'テンプレートページ',
 	'oasis-page-header-subtitle-category' => 'カテゴリページ',
 	'oasis-page-header-subtitle-forum' => 'フォーラムページ',
-	'oasis-page-header-subtitle-special-wikiactivity' => '全てのアクティビティを見る &gt;',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'すべてのアクティビティを見る >',
 	'oasis-search-results-from' => '次のサイトからの結果を表示しています: $1',
 	'oasis-search-results-from-all-wikis' => 'ウィキアの全ウィキからの結果を表示しています',
 	'oasis-user-page-change-avatar' => 'アバターを変更',
@@ -2264,7 +2265,13 @@ $messages['ja'] = array(
 	'oasis-notification-youhavenewmessages' => 'あなた宛に$1が届いています。',
 	'oasis-member-since' => '初回編集: $1',
 	'oasis-edits-counter' => '$1 <sup>回の編集</sup>',
+	'oasis-edit-saved' => '編集を保存しました！',
 	'oasis-button-contribute-tooltip' => '投稿',
+	'oasis-button-add-video' => '動画を追加',
+	'oasis-button-create-page' => 'ページを追加',
+	'oasis-button-add-photo' => '画像を追加',
+	'oasis-button-edit-wikia-local-menu' => 'ローカル ウィキア メニューを編集',
+	'oasis-button-edit-wikia-global-menu' => 'グローバル ウィキア メニューを編集',
 	'oasis-toolbar-edit-title' => 'ツールバーを設定',
 	'oasis-toolbar-edit-toolbar-list' => 'ツールの一覧',
 	'oasis-toolbar-edit-reset-defaults' => '既定に戻す',
@@ -2283,7 +2290,7 @@ $messages['ja'] = array(
 	'oasis-comments-header' => 'コメント（$1 件）',
 	'oasis-comments-showing-most-recent' => '最新の $1 件を表示しています',
 	'oasis-comments-anonymous-prompt' => '未登録利用者<br /><a href="#">ログイン</a>',
-	'oasis-comments-show-all' => '全て表示',
+	'oasis-comments-show-all' => 'すべて表示',
 	'oasis-comments-added-by' => '$1 by $2',
 	'oasis-random-wiki' => 'おまかせウィキ',
 	'oasis-add-photo' => '画像を追加',
@@ -2296,10 +2303,12 @@ $messages['ja'] = array(
 	'oasis-spotlights-rail-title' => 'ウィキアスポットライト',
 	'oasis-spotlights-footer-title' => 'ウィキアネットワーク',
 	'themedesigner' => 'テーマデザイナ',
+	'oasis-pages-on-wiki-header' => 'ページ - $1',
 	'oasis-latest-activity-new-details' => '$1 による作成: $2',
 	'oasis-latest-activity-edit-details' => '$1 による編集: $2',
 	'oasis-latest-activity-delete-details' => '$1 による削除: $2',
-	'oasis-interlang-show-all' => '全て表示 >',
+	'oasis-edit-this-menu' => 'このメニューを編集',
+	'oasis-interlang-show-all' => '... すべて表示 >',
 	'oasis-interlang-languages' => '他の言語:',
 	'imageseo-featured-on' => '使用しているページ:',
 	'imageseo-featured-more' => 'さらに見る…',
@@ -3587,11 +3596,11 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author 555
  * @author Aristóbulo
  * @author Caio1478
  * @author Giro720
  * @author TOR
- * @author 555
  */
 $messages['pt-br'] = array(
 	'oasis-home' => 'Página principal',

@@ -4396,6 +4396,8 @@ $messages['ps'] = array(
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'يو انځور ورګډول',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'همدا مخ',
 	'wikiaPhotoGallery-upload-selectbutton' => 'ټاکل',
+	'wikiaPhotoGallery-photooptions-description' => 'انځور تفصيل',
+	'wikiaPhotoGallery-search-tooltip' => 'په دې ويکي انځورونه پلټل',
 	'galery-slider-read-more' => ' نور لوستل >',
 );
 

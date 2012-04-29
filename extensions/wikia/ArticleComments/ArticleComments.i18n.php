@@ -1073,6 +1073,8 @@ $messages['lb'] = array(
 	'article-comments-prev-page' => 'Vireg',
 	'article-comments-next-page' => 'Nächst',
 	'wikiamobile-article-comments-none' => 'Keng Bemierkungen',
+	'wikiamobile-article-comments-replies' => 'Äntwerten',
+	'wikiamobile-article-comments-show' => 'Weisen',
 );
 
 /** Lezghian (Лезги)
