@@ -40,7 +40,9 @@
 						lgpassword: password,
 						lgtoken: token,
 					}, function(data) {
-						callback(data);
+						if (typeof data.lgusername !== 'undefined') {
+							callback(data);
+						}
 					}, 'POST');
 				}
 			}, 'POST');
@@ -87,6 +89,7 @@
 			var self = this;
 
 			// get edit token
+			// @see http://www.mediawiki.org/wiki/API:Edit
 			this.api.call({
 				action: 'query',
 				prop: 'info',
@@ -100,10 +103,16 @@
 					action: 'edit',
 					title: title,
 					text: content,
+					bot: '',
 					summary: summary,
 					token: token
 				}, function(data) {
-					callback(data);
+					if (data.result && data.result === "Success") {
+						callback(data);
+					}
+					else {
+						throw 'Edit failed';
+					}
 				}, 'POST');
 			});
 		}
