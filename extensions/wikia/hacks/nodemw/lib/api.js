@@ -39,6 +39,18 @@
 				headers['Cookie'] = this.cookieJar;
 			}
 
+			// handle POST methods
+			if (method === 'POST') {
+				var postParams = this.formatUrl({query: params}).substring(1);
+
+				headers['Content-Type'] = 'application/x-www-form-urlencoded';
+				headers['Content-Length'] = postParams.length;
+
+				params = {
+					action: params.action	
+				};
+			}
+
 			// @see http://nodejs.org/api/url.html
 			var url = this.formatUrl({
 				protocol: 'http',
@@ -47,7 +59,7 @@
 				query: params
 			});
 
-			this.log('URL: ' + url);
+			this.log('URL [' + method + ']: ' + url);
 
 			// form the request
 			var req = this.http.request({
@@ -80,7 +92,9 @@
 						var data = JSON.parse(res.body);
 						callback((data && data[params.action]) || false);
 					}
-					catch(e) {}
+					catch(e) {
+						throw 'Error parsing JSON response: ' + res.body;
+					}
 				});
 			});
 
@@ -89,6 +103,11 @@
 			});
 
 			// finish sending a request
+			if (method === 'POST') {
+				this.log(postParams);
+				req.write(postParams);
+			}
+
 			req.end();
 		}
 	};
