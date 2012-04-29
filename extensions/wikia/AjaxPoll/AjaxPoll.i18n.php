@@ -465,6 +465,19 @@ $messages['oc'] = array(
 	'ajaxpoll-submitting' => 'Pacientatz pendent lo mandadís de vòstre vòte...',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; vun alle Schdimme',
+	'ajaxpoll-thankyou' => 'Dongschä fas doi Schdimm!',
+	'ajaxpoll-error' => 'Doi Schdimm hod ned agewe were kenne, vasuchs nomol.',
+	'ajaxpoll-summary' => 'Die Umfroch isch oam $2 um $1 easchdelld worre un $3 Nudza {{plural:$3|hod|hawen}} abgschdimmd.',
+	'ajaxpoll-submit' => 'Wähl!',
+	'ajaxpoll-closed' => 'Die Umfrooch isch ferdisch. Viel Schbaß mide Eagewisse.',
+	'ajaxpoll-submitting' => 'Mugschd korz waade, doi Schdimm werd abgewe.',
+);
+
 /** Polish (Polski)
  * @author Sovq
  * @author Sp5uhe

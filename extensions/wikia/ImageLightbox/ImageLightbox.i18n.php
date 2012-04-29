@@ -217,7 +217,7 @@ $1
 Détails : $2',
 	'lightbox-share-email-error-login' => 'Vous devez vous connecter pour envoyer des courriels',
 	'lightbox-share-email-error-noaddress' => 'Vous n’avez spécifié aucune adresse.',
-	'lightbox-visit-the-wiki' => 'Visitez le wiki:',
+	'lightbox-visit-the-wiki' => 'Visiter le wiki :',
 );
 
 /** Galician (Galego)

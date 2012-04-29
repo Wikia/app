@@ -540,6 +540,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -559,7 +560,7 @@ $messages['ja'] = array(
 	'categoryselect-empty-name' => 'カテゴリ名を入力（"|"より前の部分）',
 	'categoryselect-button-save' => '保存',
 	'categoryselect-button-cancel' => '取り消し',
-	'categoryselect-error-not-exist' => '記事 [id=$1] が存在しません。',
+	'categoryselect-error-not-exist' => '記事 [id=$1] は存在しません。',
 	'categoryselect-error-user-rights' => '利用者権限のエラーです。',
 	'categoryselect-error-db-locked' => 'データベースがロックされています',
 	'categoryselect-edit-abort' => '拡張機能のフックによって、修正が中断されました',

@@ -323,6 +323,7 @@ Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur
  * @author BroOk
  */
 $messages['ca'] = array(
+	'follow-desc' => 'Millores per a la funcionalitat de llista de seguiment',
 	'prefs-basic' => 'Opcions bàsiques',
 	'wikiafollowedpages-special-heading-category' => 'Categories ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Articles ($1)',
@@ -337,7 +338,30 @@ $messages['ca'] = array(
 	'wikiafollowedpages-special-heading-wall' => 'Message Walls ($1)',
 	'wikiafollowedpages-special-empty' => 'La teva llista de pàgines que segueixes està buida.
 Afegeix pàgines a aquesta llista fent clic a "{{int:watch}}" a la part superior d\'una pàgina.',
+	'wikiafollowedpages-special-anon' => "Si us plau, [[Special:Signup|connecta't]] per crear o veure la llista de pàgines que segueixo.",
+	'oasis-wikiafollowedpages-special-seeall' => 'Veure-ho tot >',
+	'wikiafollowedpages-special-seeall' => 'Veure-ho tot >',
+	'wikiafollowedpages-special-showall' => 'Mostra-ho tot >',
+	'wikiafollowedpages-special-showmore' => 'Mostra més',
+	'wikiafollowedpages-special-title' => 'Pàgines que segueixo',
+	'wikiafollowedpages-special-delete-tooltip' => 'Suprimeix aquesta pàgina',
+	'wikiafollowedpages-special-hidden' => 'Aquest usuari ha optat per amagar la seva llista de pàgines que segueix de la vista pública',
+	'wikiafollowedpages-special-hidden-unhide' => 'Amaga aquesta llista.',
+	'wikiafollowedpages-special-blog-by' => 'per $1',
+	'wikiafollowedpages-masthead' => 'Pàgines que segueixo',
+	'wikiafollowedpages-following' => 'Seguiment',
+	'wikiafollowedpages-special-title-userbar' => 'Pàgines que segueixo',
+	'tog-enotiffollowedpages' => "Envia'm un email quan una pàgina que segueixo és canviada.",
+	'tog-enotiffollowedminoredits' => "Envia'm un email per les edicions menors a les pàgina que segueixo.",
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Opcions avançades',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Només llista de seguiment',
+	'tog-hidefollowedpages' => 'Amaga la meva llista de pàgines que segueixo a tothom',
+	'follow-categoryadd-summary' => 'Pàgina afegida a la categoria',
+	'follow-bloglisting-summary' => 'Bloc publicat a la pàgina del bloc',
 	'wikiafollowedpages-userpage-heading' => 'Pàgines que segueixo',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Amaga la meva llista de pàgines que segueixo de la vista pública',
+	'wikiafollowedpages-userpage-more' => 'Més',
+	'wikiafollowedpages-userpage-hide' => 'amaga',
 );
 
 /** Chechen (Нохчийн)
@@ -1332,6 +1356,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  * @author 青子守歌
  */
@@ -1371,7 +1396,7 @@ $messages['ja'] = array(
 	'follow-bloglisting-summary' => 'ブログリストへのブログ記事の追加',
 	'wikiafollowedpages-userpage-heading' => 'フォローしているページ',
 	'wikiafollowedpages-userpage-hide-tooltip' => 'あなたがフォローしているページのリストを非公開にします',
-	'wikiafollowedpages-userpage-more' => 'もっと詳しく',
+	'wikiafollowedpages-userpage-more' => '続き',
 	'wikiafollowedpages-userpage-hide' => '非公開にする',
 	'wikiafollowedpages-userpage-empty' => 'このユーザーのフォローページリストは空です。リストにページを追加するには、ページのトップにある"{{int:watch}}"リンクをクリックしてください。',
 	'enotif_subject_categoryadd' => '{{SITENAME}} のカテゴリ「$CATEGORYNAME」にページ「$PAGETITLE」が $PAGEEDITOR によって追加されました',

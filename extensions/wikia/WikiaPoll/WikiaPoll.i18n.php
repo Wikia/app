@@ -499,12 +499,20 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'wikiapoll-desc' => 'د ټولپوښتنو د جوړولو او اداره کولو لپاره يوه آسانه لار برابروي',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 وګړي|$1 وګړو}} رايه ورکړې',
+	'wikiapoll-question' => '$1؟',
 	'wikiapoll-thanks-for-vote' => 'مننه!',
 	'wikiapoll-vote' => 'رايه ورکول!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 رايه|$1 رايې}}',
+	'wikiapoll-createpoll-headline' => 'ټولپوښتنه جوړول',
+	'wikiapoll-editpoll-headline' => 'ټولپوښتنه سمول',
 	'wikiapoll-question-label' => 'پوښتنه',
+	'wikiapoll-addnewitem-label' => 'نوی توکی ورګډول',
 	'wikiapoll-cancel-label' => 'ناګارل',
 	'wikiapoll-publish-label' => 'خپرول',
+	'wikiapoll-error-duplicate' => 'په دې نوم يوه ټولپوښتنه له پخوا نه شته.',
+	'wikiapoll-error-invalid-title' => 'د پوښتنې متن سم نه دی.',
 );
 
 /** Portuguese (Português)

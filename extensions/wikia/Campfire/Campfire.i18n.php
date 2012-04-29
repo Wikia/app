@@ -79,6 +79,13 @@ $messages['it'] = array(
 	'campfire-licensed-under' => 'Sotto licenza $1',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'campfire-page-header' => '$1 vum $2',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */

@@ -235,7 +235,7 @@ $messages['ca'] = array(
 	'user-identity-box-was-born-in' => '<span>Vaig néixer a</span> $1',
 	'user-identity-box-occupation' => '<span>La meva ocupació és</span> $1',
 	'user-identity-i-am' => '<span>Sóc</span> $1',
-	'user-identity-box-edits-since-joining' => 'Edicions des de que es va unir en aquest wiki<br />$1',
+	'user-identity-box-edits-since-joining' => 'Edicions des de que va començar a editar<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDICIONS</span>',
 	'user-identity-box-group-blocked' => 'Bloquejat',
 	'user-identity-box-group-chatmoderator' => 'Moderador del Xat',
@@ -252,6 +252,8 @@ $messages['ca'] = array(
 	'user-identity-box-zero-state-twitter' => 'El meu Twitter',
 	'user-identity-box-zero-state-website' => 'El meu web',
 	'user-identity-box-zero-state-fb-page' => 'El meu Facebook',
+	'user-identity-box-about-me' => 'Sobre mi',
+	'user-identity-box-avatar' => 'Avatar',
 	'user-identity-box-about-name' => 'Com et dius?',
 	'user-identity-box-about-location' => 'On vius?',
 	'user-identity-box-about-birthday' => 'Quan és el teu aniversari?',
@@ -769,8 +771,8 @@ $messages['fr'] = array(
 	'blog-avatar-changed-log' => 'a ajouté ou modifié son avatar',
 	'blog-avatar-removed-log' => 'A retiré l’avatar de $1',
 	'blog-avatar-alt' => 'Journaux des ajouts et retraits d’avatars des utilisateurs',
-	'user-identity-remove-confirmation' => "Êtes-vous sûr de vouloir supprimer l'avatar?",
-	'user-identity-remove-fail' => "Il y a eu un problème lors de la suppression de l'avatar!",
+	'user-identity-remove-confirmation' => 'Êtes-vous sûr(e) de vouloir retirer l’avatar ?',
+	'user-identity-remove-fail' => 'Il y a eu un problème lors de la suppression de l’avatar !',
 );
 
 /** Galician (Galego)

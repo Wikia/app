@@ -1480,7 +1480,7 @@ $5",
 	'achievements-userprofile-title-no' => 'Medalles Guanyades per $1',
 	'achievements-userprofile-title' => '{{PLURAL:$2|Medalla|Medalles}} {{PLURAL:$2|Guanyada|Guanyades}} per $1 ($2)',
 	'achievements-userprofile-no-badges-visitor' => 'Aquest usuari encara no ha guanyat cap medalla.',
-	'achievements-userprofile-profile-score' => '<em>$1</em> Punts<br />de Medalles',
+	'achievements-userprofile-profile-score' => '<em>$1</em> Punts<br />aconseguits',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Número #$1]]<br />en aquest wiki',
 );
 
@@ -1756,6 +1756,7 @@ $messages['da'] = array(
  * @author Dardio
  * @author Diebuche
  * @author Geitost
+ * @author Kghbln
  * @author Kjell
  * @author LWChris
  * @author MF-Warburg
@@ -1796,7 +1797,7 @@ Bitte versuche es mit einem anderen!',
 	'achievements-notification-title' => 'Weiter so, $1!',
 	'achievements-notification-subtitle' => 'Du hast gerade das „$1“-Abzeichen erhalten $2',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Mehr von dir verdienbare Abzeichen ansehen]]!</big></strong>',
-	'achievements-points' => '$1 {{PLURAL:$1|Punkt|Punkte}}',
+	'achievements-points' => '{{PLURAL:$1|Ein Punkt|$1 Punkte}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|Punkt|Punkte}}',
 	'achievements-earned' => 'Dieses Abzeichen wurde von {{PLURAL:$1|einem Benutzer|$1 Benutzern}} verdient.',
 	'achievements-profile-title' => '$1 hat $2 {{PLURAL:$2|Auszeichnung|Auszeichnungen}} erhalten',
@@ -7740,6 +7741,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -7995,14 +7997,14 @@ a {{PLURAL:$1|uma página|páginas}}!',
 	'achievements-badge-hover-desc-blogcomment' => 'por escrever um comentário<br />
 {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
 	'achievements-badge-hover-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
-	'achievements-badge-hover-desc-welcome' => 'por colaborar na wiki!',
+	'achievements-badge-hover-desc-welcome' => 'Atribuído por se inscrever na wiki!',
 	'achievements-badge-hover-desc-introduction' => 'por acrescentar informação<br />
 à sua página de utilizador!',
 	'achievements-badge-hover-desc-sayhi' => 'por deixar uma mensagem na<br />
 página de discussão de outro utilizador!',
-	'achievements-badge-hover-desc-creator' => 'por criar a wiki!',
+	'achievements-badge-hover-desc-creator' => 'Atribuído por criar a wiki!',
 	'achievements-badge-hover-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
-	'achievements-badge-hover-desc-caffeinated' => 'por fazer 100 edições num único dia!',
+	'achievements-badge-hover-desc-caffeinated' => 'Atribuído por fazer 100 edições em artigos num único dia!',
 	'achievements-badge-hover-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'Esta é uma medalha especial de Platina, só disponível por um período limitado!',
 	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|por partilhar um link|por conseguir que {{PLURAL:$1|uma pessoa clicasse|$1 pessoas clicassem}} links partilhados}}',
@@ -8013,7 +8015,7 @@ página de discussão de outro utilizador!',
 	'achievements-badge-your-desc-blogpost' => 'por escrever {{PLURAL:$1|a sua primeira entrada de blogue|$1 entradas de blogue}}!',
 	'achievements-badge-your-desc-blogcomment' => 'por escrever um comentário {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
 	'achievements-badge-your-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
-	'achievements-badge-your-desc-welcome' => 'por colaborar na wiki!',
+	'achievements-badge-your-desc-welcome' => 'Atribuído por se inscrever na wiki!',
 	'achievements-badge-your-desc-introduction' => 'por acrescentar informação à sua página de utilizador!',
 	'achievements-badge-your-desc-sayhi' => 'por deixar uma mensagem na página de discussão de outro utilizador!',
 	'achievements-badge-your-desc-creator' => 'por criar a wiki!',
@@ -8031,7 +8033,7 @@ página de discussão de outro utilizador!',
 	'achievements-badge-desc-welcome' => 'por colaborar na wiki!',
 	'achievements-badge-desc-introduction' => 'por acrescentar informação à sua página de utilizador!',
 	'achievements-badge-desc-sayhi' => 'por deixar uma mensagem na página de discussão de outro utilizador!',
-	'achievements-badge-desc-creator' => 'por criar a wiki!',
+	'achievements-badge-desc-creator' => 'Atribuído por criar a wiki!',
 	'achievements-badge-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
 	'achievements-badge-desc-caffeinated' => 'por fazer 100 edições num único dia!',
 	'achievements-badge-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',

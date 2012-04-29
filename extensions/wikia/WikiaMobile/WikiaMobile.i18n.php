@@ -281,7 +281,7 @@ $messages['fr'] = array(
 	'wikiamobile-feedback' => 'Avis',
 	'wikiamobile-back' => 'Retour',
 	'wikiamobile-hide-section' => 'masquer',
-	'wikiamobile-footer-link-license' => 'Mettre sous licence',
+	'wikiamobile-footer-link-license' => 'Sous licence',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Divertissement]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Jeu]]',
@@ -608,6 +608,14 @@ $messages['ps'] = array(
 	'wikiamobile-login-submit' => 'ننوتل',
 	'wikiamobile-menu' => 'غورنۍ',
 	'wikiamobile-article-categories' => 'وېشنيزې',
+	'wikiamobile-back' => 'پر شا',
+	'wikiamobile-hide-section' => 'پټول',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|ويډيويي لوبې]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|ليکنه|ليکنې}}',
+	'wikiamobile-categories-expand' => 'ټول ښکاره کول',
+	'wikiamobile-categories-collapse' => 'ټول پټول',
+	'wikiamobile-sharing-media-image' => 'انځور',
+	'wikiamobile-ad-close' => 'تړل',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

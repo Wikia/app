@@ -207,7 +207,7 @@ $messages['fr'] = array(
 	'related-videos-pagination' => '$1 de $2',
 	'related-videos-empty' => 'Soyez le premier à ajouter une vidéo',
 	'related-videos-requestbutton' => 'Demande de nouvelles vidéos',
-	'related-videos-requesttext' => "Que voulez-vous voir d'autre?",
+	'related-videos-requesttext' => "Que voulez-vous voir d'autre ?",
 );
 
 /** Galician (Galego)

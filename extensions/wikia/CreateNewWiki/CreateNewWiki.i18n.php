@@ -1254,6 +1254,7 @@ $messages['lb'] = array(
 	'cnw-desc-tip1' => 'Tipp',
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-choose' => 'Eng Kategorie wielen',
+	'cnw-desc-select-one' => 'Een/Eng eraussichen',
 	'cnw-desc-change-lang' => 'änneren',
 	'cnw-desc-lang' => 'Sprooch',
 	'cnw-upgrade-headline' => 'Wëllt Dir en Upgrade maachen?',
@@ -1734,6 +1735,7 @@ Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na
  */
 $messages['ps'] = array(
 	'cnw-next' => 'راتلونکی',
+	'cnw-back' => 'پر شا کېدل',
 	'cnw-or' => 'يا',
 	'cnw-title' => 'يو نوی ويکي جوړول',
 	'cnw-name-wiki-headline' => 'يو ويکي پيلول',
@@ -1752,6 +1754,7 @@ $messages['ps'] = array(
 	'cnw-auth-facebook-login' => 'د فېسبوک له لارې ننوتل',
 	'cnw-userauth-headline' => 'آيا يو ګڼون لرې؟',
 	'cnw-userauth-creative' => 'ننوتل',
+	'cnw-userauth-marketing-heading' => 'ګڼون نه لرې؟',
 	'cnw-userauth-signup-button' => 'نومليکل',
 	'cnw-desc-headline' => 'ستاسې ويکي د څه په اړه دی؟',
 	'cnw-desc-placeholder' => 'دا به ستاسې د ويکي په لومړي مخ ښکاره شي.',

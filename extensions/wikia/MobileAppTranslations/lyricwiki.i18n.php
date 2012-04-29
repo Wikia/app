@@ -791,6 +791,7 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'app-loading' => 'د برسېرېدو په حال کې',
 	'app-tab-search' => 'پلټل',
 	'app-tab-about' => 'په اړه',
 	'app-nonetwork-dialog-close-button' => 'ښه',
@@ -798,6 +799,9 @@ $messages['ps'] = array(
 	'login-username-hint' => 'کارن-نوم',
 	'login-password-hint' => 'پټنوم',
 	'login-submit-button' => 'ننوتل',
+	'about-credits' => 'د %s لخوا',
+	'about-heading-tips' => 'د پلټنې په حال کې...',
+	'lyrics-artist-byline' => 'د %s لخوا',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

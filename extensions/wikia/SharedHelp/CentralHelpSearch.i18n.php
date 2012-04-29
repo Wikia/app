@@ -77,6 +77,13 @@ $messages['it'] = array(
 	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
+);
+
 /** Lithuanian (Lietuvių)
  * @author Eitvys200
  */

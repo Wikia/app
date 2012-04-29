@@ -392,6 +392,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'ircgate-username' => 'کارن-نوم:',
+	'ircgate-channel' => 'کانال:',
 );
 
 /** Portuguese (Português)

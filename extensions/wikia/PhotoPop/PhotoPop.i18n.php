@@ -758,6 +758,31 @@ $messages['pl'] = array(
 	'photopop-game-download-error-text' => 'Wystąpił błąd w trakcie ładowania gry, spróbuj ponownie.',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'photopop-setup-category-label' => 'وېشنيزه',
+	'photopop-setup-submit-label' => 'اوسمهالول',
+	'photopop-image-preview' => 'د انځورونو مخليدنه:',
+	'photopop-game-total' => 'ټولټال',
+	'photopop-game-wiki' => 'ويکي',
+	'photopop-game-date' => 'نېټه',
+	'photopop-game-progress' => 'انځورونه',
+	'photopop-game-month-0' => 'جنوري',
+	'photopop-game-month-1' => 'فبروري',
+	'photopop-game-month-2' => 'مارچ',
+	'photopop-game-month-3' => 'اپرېل',
+	'photopop-game-month-4' => 'می',
+	'photopop-game-month-5' => 'جون',
+	'photopop-game-month-6' => 'جولای',
+	'photopop-game-month-7' => 'اګسټ',
+	'photopop-game-month-8' => 'سېپتمبر',
+	'photopop-game-month-9' => 'اکتوبر',
+	'photopop-game-month-10' => 'نومبر',
+	'photopop-game-month-11' => 'ډيسمبر',
+);
+
 /** Russian (Русский)
  * @author Kuzura
  */

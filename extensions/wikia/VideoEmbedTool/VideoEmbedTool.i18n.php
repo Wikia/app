@@ -1957,6 +1957,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'vet-upload' => 'بشپړ يو آر اېل',
 	'vet-find' => 'يوه ويډيو موندل',
 	'vet-thiswiki' => 'همدا ويکي',
 	'vet-flickr' => 'فلېکر',
@@ -1970,6 +1971,9 @@ $messages['ps'] = array(
 	'vet-close' => 'تړل',
 	'vet-show-message' => 'پيغام ښکاره کول',
 	'vet-hide-message' => 'پيغام پټول',
+	'vet-hide-license-msg' => 'د منښتليک متن پټول',
+	'vet-show-license-msg' => 'د منښتليک متن ښکاره کول',
+	'vet-title' => 'خپلې ليکنې کې يوه ويډيو ورګډول',
 	'vet-add-button' => 'ويډيو ورګډول',
 	'vet-see-all' => 'ټول',
 	'vet-left' => 'کيڼ',

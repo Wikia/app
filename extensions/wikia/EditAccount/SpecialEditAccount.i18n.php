@@ -903,6 +903,8 @@ $messages['lb'] = array(
 	'editaccount-submit-close' => 'Kont zoumaachen',
 	'editaccount-invalid-email' => '"$1" ass keng valabel E-Mailadress!',
 	'editaccount-nouser' => 'De Kont "$1" gëtt et net!',
+	'editaccount-status-realuser' => 'Richtege Benotzer',
+	'editaccount-status-tempuser' => 'Temporäre Benotzer',
 	'editaccount-log' => 'Logbuch vun de Benotzerkonten',
 	'editaccount-log-entry-realname' => 'huet de richtegen Numm vum Benotzer $2 geännert',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dëse Benotzerkont gouf global desaktivéiert.</div>',

@@ -230,6 +230,14 @@ $messages['it'] = array(
 	'unsubscribe-preferences-notice' => 'Le email sono state disattivate per il tuo account. Accedi alla scheda "Profilo" per riattivarle.',
 );
 
+/** Japanese (日本語)
+ * @author Shirayuki
+ */
+$messages['ja'] = array(
+	'unsubscribe-confirm-legend' => '確認',
+	'unsubscribe-working-done' => '完了しました。',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

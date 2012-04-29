@@ -1944,6 +1944,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 
 /** Japanese (日本語)
  * @author McDutchie
+ * @author Shirayuki
  * @author Tommy6
  * @author 青子守歌
  */
@@ -1960,7 +1961,7 @@ $messages['ja'] = array(
 	'create-blog-post-recent-listing-log' => '最近の投稿のために記事を作成',
 	'create-blog-post-title' => 'ブログの記事の新規作成・編集',
 	'create-blog-post-title-edit' => 'ブログの記事の編集',
-	'create-blog-form-title' => 'ブログ機能って何？',
+	'create-blog-form-title' => 'ブログ機能とは?',
 	'create-blog-form-post-text' => '記事の本文',
 	'create-blog-form-info' => 'ブログ形式での投稿は、あなたがコミュニティによって編集されたくないと考えるコンテンツを書くのに適しています。投稿された記事は、「ブログの記事」というタグに基づいてブログのリストページに集約されます。それぞれの記事に対して評価機能とコメント機能を有効にするかどうかを選択できます。',
 	'create-blog-form-post-title' => '記事のタイトル',
@@ -1980,7 +1981,7 @@ $messages['ja'] = array(
 	'create-blog-permission-denied' => 'ブログの記事を保存中にエラーが発生しました: パーミッションが拒否されました',
 	'create-blog-article-already-exists' => 'このタイトルの記事は既に存在します。別のタイトルを指定してください。',
 	'create-blog-listing-title' => 'ブログのリストページの新規作成・編集',
-	'create-blog-listing-form-title' => 'ブログのリストって何？',
+	'create-blog-listing-form-title' => 'ブログのリストとは?',
 	'create-blog-listing-form-info' => 'ブログのリストは、異なる作者のブログの記事を一つのページに集約して表示するために使用されます。それぞれのページの趣旨に合わせ、適切なカテゴリを指定すると、そのカテゴリにあるブログの記事がリストとして表示されます。',
 	'create-blog-listing-page-title' => 'リストページのタイトル',
 	'create-blog-listing-preview' => 'プレビュー',
@@ -1991,7 +1992,7 @@ $messages['ja'] = array(
 	'create-blog-listing-matches-calculate' => '検索',
 	'create-blog-listing-matches-recalculate' => '再検索',
 	'create-blog-listing-matches-info' => '件の該当する{{PLURAL:$1|記事}}が見つかりました',
-	'create-blog-listing-sortby' => 'ソート',
+	'create-blog-listing-sortby' => '並び順：',
 	'create-blog-listing-sortby-date' => '最近のものから',
 	'create-blog-listing-sortby-author' => '作者名',
 	'create-blog-listing-sortby-comments' => 'コメント数',
@@ -2011,7 +2012,7 @@ $messages['ja'] = array(
 	'blog-nbrcomments' => 'コメント ($1)',
 	'blog-nopostfound' => '一つも投稿が見つかりませんでした。',
 	'blog-writeone' => '記事を投稿する',
-	'blog-empty-user-blog' => 'この利用者はまだ一つも記事を投稿していません',
+	'blog-empty-user-blog' => 'この利用者はまだ1つも記事を投稿していません!',
 	'blog-last-edited' => '<strong>最終編集:</strong> $1',
 	'blog-added' => '追加',
 	'blog-edited' => '編集',
@@ -2049,16 +2050,16 @@ $messages['ja'] = array(
 	'blog-userblog' => '$1のブログ',
 	'blog-fromsitename' => '$1 より',
 	'blogs-reportproblem' => '問題の報告',
-	'blogs-comment-hidden' => 'このコメントは非表示になっています',
+	'blogs-comment-hidden' => 'このコメントは非表示です。',
 	'right-blog-comments-toggle' => 'ブログの記事につけられたコメントの表示非表示を切り替え',
-	'right-blog-comments-delete' => 'ブログの記事につけられたコメントの削除',
+	'right-blog-comments-delete' => 'ブログの記事へのコメントを削除',
 	'right-blog-articles-edit' => 'ブログの記事の編集',
 	'right-blog-articles-move' => 'ブログの記事の移動',
 	'blogs-undeleted-comment' => 'ブログの記事 $1 へのコメントを復帰',
 	'blogs-recent-url-text' => '最近のブログの投稿',
 	'blog-desc' => 'ブログスタイルの記事',
 	'blog-movepage-badtitle' => '無効なタイトルです',
-	'blog-comment-sending' => '送信中・・・',
+	'blog-comment-sending' => '送信中...',
 	'blog-by' => '$1 by $2',
 );
 

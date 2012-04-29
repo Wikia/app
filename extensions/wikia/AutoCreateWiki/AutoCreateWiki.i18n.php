@@ -833,13 +833,14 @@ $messages['diq'] = array(
 	'autocreatewiki-required' => '$1 = icab keno',
 	'autocreatewiki-web-address' => 'Adrese webi',
 	'autocreatewiki-category-select' => 'yeweri bıweçin',
-	'autocreatewiki-language-all' => 'Zuwani heme',
+	'autocreatewiki-language-all' => 'Zıwani pêro',
 	'autocreatewiki-done' => 'Vırazi ya',
 	'autocreatewiki-success-has-been-created' => 'vıraşt',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-invalid-username' => 'No namey qarqeri çıno',
 	'autocreatewiki-category-label' => 'Kategoriya',
 	'autocreatewiki-category-other' => 'Zewmi',
+	'autocreatewiki-redirect' => 'Wikiya newi açarnê: $1 ...',
 	'autocreatewiki-welcometalk-log' => 'Mesacê Xeyr Amyayışi',
 	'newwikis' => 'Wikiyo newe',
 	'autocreatewiki-subname-answers' => 'cewab',
@@ -2115,6 +2116,7 @@ Buona fortuna!
 
 /** Japanese (日本語)
  * @author Naohiro19
+ * @author Shirayuki
  * @author Tommy6
  * @author 青子守歌
  */
@@ -2129,7 +2131,7 @@ $messages['ja'] = array(
 	'autocreatewiki-web-address' => 'サイトのアドレス:',
 	'autocreatewiki-category-select' => 'どれか一つを選ぶ',
 	'autocreatewiki-language-top' => '上位$1言語',
-	'autocreatewiki-language-all' => '全ての言語',
+	'autocreatewiki-language-all' => 'すべての言語',
 	'autocreatewiki-birthdate' => '生年月日:',
 	'autocreatewiki-blurry-word' => '画像認証:',
 	'autocreatewiki-remember' => 'パスワードを記憶する。',
@@ -3196,7 +3198,7 @@ $messages['pl'] = array(
 	'autocreatewiki-required' => '$1 = wymagane',
 	'autocreatewiki-web-address' => 'Adres strony internetowej:',
 	'autocreatewiki-category-select' => 'Wybierz',
-	'autocreatewiki-language-top' => '$1 {{PLURAL:$1|najpopularniejszy język|najpopularniejsze języki|najpopularniejszych języków}}',
+	'autocreatewiki-language-top' => '$1 najpopularniejszych języków',
 	'autocreatewiki-language-all' => 'Wszystkie języki',
 	'autocreatewiki-birthdate' => 'Data urodzenia:',
 	'autocreatewiki-blurry-word' => 'Zamazane słowo:',
