@@ -3,7 +3,7 @@
 	// Add Wall styles for inside the iframe
 	GlobalTriggers.on('MiniEditorReady', function() {
 		if (MiniEditor.ckeditorEnabled) {
-			RTE.contentsCss.push($.getSassLocalURL('/extensions/wikia/MiniEditor/css/Wall/Wall.content.scss'));
+			RTE.config.contentsCss.push($.getSassLocalURL('/extensions/wikia/MiniEditor/css/Wall/Wall.content.scss'));
 		}
 	});
 

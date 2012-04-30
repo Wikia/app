@@ -57,7 +57,7 @@
 				this.config.toolbars.toolbar = ['ModeSwitch', 'FormatMiniEditor'].concat(this.config.toolbars.toolbar);
 
 				// Add CSS for ckeditor iframe
-				RTE.contentsCss.push($.getSassLocalURL('extensions/wikia/MiniEditor/css/core/content.scss'));
+				RTE.config.contentsCss.push($.getSassLocalURL('extensions/wikia/MiniEditor/css/core/content.scss'));
 
 				// Make sure we are using the correct instance for RTE overlays
 				RTE.overlayNode.bind('click.MiniEditor', function() {
