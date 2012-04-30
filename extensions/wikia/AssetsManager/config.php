@@ -123,7 +123,6 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/Meebo/meebo.js',
 		'//skins/common/wikia/cookiecutter.js',
-		'//extensions/wikia/VisualDNA/vdnaaat.js',
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/AdEngine/AdEngine.js',
