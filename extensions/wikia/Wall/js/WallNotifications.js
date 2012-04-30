@@ -56,7 +56,7 @@ var WallNotifications = $.createClass(Object, {
 			this.monobook = false;
 		}
 
-		$('.notifications-header')
+		$('#WallNotifications')
 			.on('click', '#wall-notifications-markasread-sub', this.proxy( this.markAllAsReadPrompt ))
 			.on('click', '#wall-notifications-markasread-this-wiki', this.proxy( this.markAllAsRead ))
 			.on('click', '#wall-notifications-markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
