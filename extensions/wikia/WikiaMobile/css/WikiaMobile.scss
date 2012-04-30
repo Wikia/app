@@ -70,6 +70,8 @@ a {
 }
 
 #wkPage {
+	//I want page to be at least 270px long to be able to show share
+	min-height: 270px;
 	background-color: white;
 	overflow-x: hidden;
 }
