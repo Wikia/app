@@ -367,7 +367,7 @@ class ArticleCommentInit {
 	//while keeping the response size (assets minification) and the number of external requests low (aggregation)
 	static public function onWikiaMobileAssetsPackages( Array &$jsPackages, Array &$scssPackages ){
 		if ( self::ArticleCommentCheck() ) {
-			$jsPackages[] = 'articlecomments_js_wikiamobile';
+			$jsPackages[] = 'articlecomments_init_js_wikiamobile';
 		}
 
 		return true;
