@@ -2,16 +2,20 @@ var UserLoginFacebook = {
 	modal: false,
 	form: false,
 	callbacks: {},
+	initialized: false,
 
 	log: function(msg) {
 		$().log(msg, 'UserLoginFacebook');
 	},
 
 	init: function() {
-		this.loginSetup();
-		this.setupTooltips();
-
-		this.log('init');
+		if(!this.initialized) {
+			this.initialized = true;
+			this.loginSetup();
+			this.setupTooltips();
+	
+			this.log('init');
+		}
 	},
 
 	setupTooltips: function() {
@@ -127,7 +131,3 @@ var UserLoginFacebook = {
 		}
 	}
 };
-
-$(function() { 
-	UserLoginFacebook.init(); 
-});
