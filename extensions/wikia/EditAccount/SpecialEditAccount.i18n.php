@@ -41,6 +41,7 @@ $messages['en'] = array(
 	'editaccount-success-realname' => 'Successfully changed real name for account $1.',
 	'editaccount-success-unsub' => 'Successfully removed unsubscribe bit for account $1.',
 	'editaccount-success-disable' => 'Successfully removed disabled bit for account $1.',
+	'editaccount-success-toggleadopt' => 'Successfully toggled adoption eligibility status for account $1.',
 	'editaccount-success-close' => 'Successfully disabled account $1.',
 	'editaccount-error-email' => 'Email was not changed. Try again or contact the Tech Team.',
 	'editaccount-error-pass' => 'Password was not changed. Try again or contact the Tech Team.',

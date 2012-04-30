@@ -30,7 +30,6 @@ class EditAccount extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'EditAccount'/*class*/, 'editaccount'/*restriction*/ );
-		wfLoadExtensionMessages( 'EditAccount' ); // Load internationalization messages
 	}
 
 	/**
@@ -133,6 +132,10 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->clearDisable();
 				$template = 'displayuser';
 				break;
+			case 'toggleadopter':
+				$this->mStatus = $this->toggleAdopterStatus();
+				$template = 'displayuser';
+				break;
 			case 'displayuser':
 				$template = 'displayuser';
 				break;
@@ -156,6 +159,7 @@ class EditAccount extends SpecialPage {
 				'userReg' => null,
 				'isUnsub' => null,
 				'isDisabled' => null,
+				'isAdopter' => null,
 				'returnURL' => $this->getTitle()->getFullURL(),
 				'userStatus' => null,
 				'emailStatus' => null,
@@ -186,6 +190,7 @@ class EditAccount extends SpecialPage {
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
 					'isUnsub' => $this->mUser->getOption('unsubscribed'),
 					'isDisabled' => $this->mUser->getOption('disabled'),
+					'isAdopter' => $this->mUser->getOption('AllowAdoption', 1 ),
 					'userStatus' => $userStatus,
 					'emailStatus' => $emailStatus,
 					'changeEmailRequested' => $changeEmailRequested,
@@ -388,6 +393,15 @@ class EditAccount extends SpecialPage {
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-disable', $this->mUser->mName );
+
+		return true;
+	}
+
+	function toggleAdopterStatus() {
+		$this->mUser->setOption( 'AllowAdoption', (int) !$this->mUser->getOption( 'AllowAdoption', 1 ) );
+		$this->mUser->saveSettings();
+
+		$this->mStatusMsg = wfMsg( 'editaccount-success-toggleadopt', $this->mUser->mName );
 
 		return true;
 	}
