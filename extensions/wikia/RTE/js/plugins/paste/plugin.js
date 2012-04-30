@@ -62,6 +62,13 @@ CKEDITOR.plugins.add('rte-paste',
 		// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
 		// This bit actually get's run on init, not when pasting. 
 		if (CKEDITOR.env.webkit) {
+			var badStyles = [
+				'border-top-width:0px;',
+				'border-right-width:0px;',
+				'border-style:initial;',
+				'border-color:initial;',
+				'font-style:normal;'
+			]
 			editor.dataProcessor.htmlFilter.addRules({
 				elements: {
 					// remove meta tag with characters encoding info
@@ -72,9 +79,14 @@ CKEDITOR.plugins.add('rte-paste',
 				attributes: {
 					// remove style attributes added by WebKit browsers (BugId:18789)
 					style: function(value, element) {
-						if (value.indexOf('border-top-width: 0px; border-right-width: 0px;') === 0) {
-							return false;
+						value = value.split(' ').join('');
+						if(value.length) {
+							for(i = 0; i < badStyles.length; i++) {
+								value = value.replace(badStyles[i], "");
+							}
+							return value.length ? value : false;  
 						}
+						return false;
 					}
 				}
 			});
