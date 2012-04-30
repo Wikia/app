@@ -27,7 +27,7 @@ class ChatAjax {
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
 	static public function getUserInfo(){
-		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang, $wgEnableCheckUserExt;
+		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
 		wfProfileIn( __METHOD__ );
 		
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
@@ -117,31 +117,29 @@ class ChatAjax {
 				$log = WF::build( 'LogPage', array( 'chatconnect', false, false ) );
 				$log->addEntry( 'chatconnect', SpecialPage::getTitleFor('Chat'), '', array($ip), $user);
 				
-				if ( !empty( $wgEnableCheckUserExt ) ) {
-					$dbw = wfGetDB( DB_MASTER );
-					$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-					$rcRow = array(
-							'cuc_id'         => $cuc_id,
-							'cuc_namespace'  => NS_SPECIAL,
-							'cuc_title'      => 'Chat',
-							'cuc_minor'      => 0,
-							'cuc_user'       => $user->getID(),
-							'cuc_user_text'  => $user->getName(),
-							'cuc_actiontext' => wfMsgForContent( 'chat-checkuser-join-action' ),
-							'cuc_comment'    => '',
-							'cuc_this_oldid' => 0,
-							'cuc_last_oldid' => 0,
-							'cuc_type'       => CUC_TYPE_CHAT,
-							'cuc_timestamp'  => $dbw->timestamp(),
-							'cuc_ip'         => IP::sanitizeIP( $ip ),
-							'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-							'cuc_xff'        => '',
-							'cuc_xff_hex'    => null,
-							'cuc_agent'      => null
-					);
-					$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
-					$dbw->commit();
-				}				
+				$dbw = wfGetDB( DB_MASTER );
+				$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
+				$rcRow = array(
+						'cuc_id'         => $cuc_id,
+						'cuc_namespace'  => NS_SPECIAL,
+						'cuc_title'      => 'Chat',
+						'cuc_minor'      => 0,
+						'cuc_user'       => $user->getID(),
+						'cuc_user_text'  => $user->getName(),
+						'cuc_actiontext' => wfMsgForContent( 'chat-checkuser-join-action' ),
+						'cuc_comment'    => '',
+						'cuc_this_oldid' => 0,
+						'cuc_last_oldid' => 0,
+						'cuc_type'       => CUC_TYPE_CHAT,
+						'cuc_timestamp'  => $dbw->timestamp(),
+						'cuc_ip'         => IP::sanitizeIP( $ip ),
+						'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
+						'cuc_xff'        => '',
+						'cuc_xff_hex'    => null,
+						'cuc_agent'      => null
+				);
+				$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
+				$dbw->commit();
 			}			
 		}
 		
