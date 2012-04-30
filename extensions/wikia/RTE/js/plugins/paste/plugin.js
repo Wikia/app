@@ -80,13 +80,13 @@ CKEDITOR.plugins.add('rte-paste',
 					// remove style attributes added by WebKit browsers (BugId:18789)
 					style: function(value, element) {
 						value = value.split(' ').join('');
-						if(value.length) {
-							for(i = 0; i < badStyles.length; i++) {
-								value = value.replace(badStyles[i], "");
+						for(i = 0; i < badStyles.length; i++) {
+							if(!value.length) {
+								break;
 							}
-							return value.length ? value : false;  
+							value = value.replace(badStyles[i], "");
 						}
-						return false;
+						return value.length ? value : false;  
 					}
 				}
 			});
