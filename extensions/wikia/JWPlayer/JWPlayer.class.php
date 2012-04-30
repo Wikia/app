@@ -36,7 +36,7 @@ class JWPlayer {
 		// before the JWPlayer is rendered
 		self::$JWPLAYER_GOOGIMA_DATA = 
 			array('ad.position'=>'pre', 'ad.bandwidth'=>'high',
-				'admessagedynamic'=>F::app()->wf->Msg('jwplayer-admessage'), 'admessagedynamickey'=>'XX',
+				'admessagedynamic'=>F::app()->wf->Msg('jwplayer-ad-message'), 'admessagedynamickey'=>'XX',
 				//'allowadskip'=>'true', 'allowadskippastseconds'=>5,	// wlee 11/1/11: do not skip ads yet
 				'scaled_ads'=>'false'
 			    );
@@ -96,8 +96,8 @@ class JWPlayer {
 		
 		// HD
 		if ($this->hd) {
-			if ($this->hdfile) {
-				$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array('file'=>$this->hdfile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
+			if ($this->hdFile) {
+				$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array('file'=>$this->hdFile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
 			}
 			else {
 				$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array();
@@ -115,10 +115,9 @@ class JWPlayer {
 		// NOTE: this code must be before the thumb section
 		if ($this->ageGate) {
 			$agegateOptions = array(
-			    'cookielife'=>60*24,
+			    'cookielife'=>60*24*365,	// cookielife in minutes
 			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message')
-			    );	// cookielife in minutes
-			//@todo make cookie 24 hours
+			    );
 			$jwplayerData['plugins']['agegate-2'] = $agegateOptions;
 			// autoplay is not compatible with age gate. force thumb to appear
 			$jwplayerData['image'] = $this->thumbUrl;			
