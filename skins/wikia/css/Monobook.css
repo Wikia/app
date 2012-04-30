@@ -294,3 +294,27 @@ body.ajax * {
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 .ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
+
+
+/* Paginator */
+
+
+.wikia-paginator {
+	margin-top: 10px;
+}
+.wikia-paginator ul, .wikia-paginator li {
+	list-style: none;
+	margin: 0; 
+	padding: 0;
+}
+.wikia-paginator li {
+	display: inline-block;
+	padding: 0 3px 0 0;
+}
+.wikia-paginator .button {
+	background: transparent;
+	color: #002bb8;
+	border: none;
+	padding: 0;
+}
+

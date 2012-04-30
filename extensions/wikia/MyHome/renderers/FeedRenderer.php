@@ -558,7 +558,6 @@ class FeedRenderer {
 		wfProfileIn(__METHOD__);
 
 		$html = '';
-
 		//
 		// let's show everything we have :)
 		//
@@ -654,12 +653,10 @@ class FeedRenderer {
 			return '';
 		}
 
-		
-		
 		wfProfileIn(__METHOD__);
 
 		$thumbs = array();
-		$namespace = $type == 'videos' ? NS_LEGACY_VIDEO : NS_FILE;
+		$namespace = NS_FILE;
 
 		foreach($row[$key] as $item) {
 			// Empty span for styling IE. Ugly, but offers an image size independant
@@ -684,11 +681,6 @@ class FeedRenderer {
 			$title = Title::newFromText($item['name'], $namespace);
 			if (!empty($title)) {
 				$attribs['href'] = $title->getLocalUrl();
-			}
-
-			// add "play" overlay for videos
-			if ($type == 'videos') {
-				$thumb .= Xml::element('span', array('class' => 'myhome-video-play'), ' ');
 			}
 
 			$html = Xml::openElement('li') . Xml::openElement('a', $attribs) . $thumb . Xml::closeElement('a') . Xml::closeElement('li');

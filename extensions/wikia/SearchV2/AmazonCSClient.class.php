@@ -12,31 +12,23 @@ class AmazonCSClient extends WikiaSearchClient {
 		$this->httpProxy = $httpProxy;
 	}
 
-	public function search( $query, $start, $size, $cityId = 0, $rankExpr = '' ) {
+	public function search( $query, Array $methodOptions = array() ) {
 		$params = array(
 			'q' => $query,
-			'rank' => ( !empty($rankExpr) ? $rankExpr : $this->rankName ),
-			'start' => $start,
-			'size' => $size,
+			'rank' => $this->rankName,
+			'start' => $methodOptions['start'],
+			'size' => $methodOptions['size'],
 			'return-fields' => 'title,url,text,canonical,text_relevance,cityid,indextank,bl,bl2,bl3,backlinks'
 		);
 		if( !empty( $cityId ) ) {
 			// inter-wiki search
-			$params['bq'] = "cityid:$cityId";
+			$params['bq'] = "cityid:" . $methodOptions['cityId'];
 		}
 
 		list($responseCode, $response) = $this->apiCall( $this->searchEndpoint, $params );
 
-//echo "<pre>";
-//var_dump($response);
 		if($responseCode == 200) {
 			$response = json_decode( $response );
-			//foreach( $response->hits->hit as $hit ) {
-			//	$hit->data->text_excerpt = $this->getTextExcerpt( $hit->data->text, explode(' ', $query ) );
-			//}
-
-//var_dump($response->hits);
-//exit;
 			$results = array();
 			foreach($response->hits->hit as $hit) {
 				$results[] = $this->getWikiaResult($hit);

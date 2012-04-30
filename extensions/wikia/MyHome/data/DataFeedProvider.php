@@ -10,7 +10,7 @@ class DataFeedProvider {
 	const UPLOAD_THUMB_WIDTH = 150;
 	const VIDEO_THUMB_WIDTH = 150;
 
-	public static function getImageThumb($imageName) {
+	public static function getImageThumb($imageName, &$imageObj="") {
 		wfProfileIn(__METHOD__);
 		$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
 		if ($imageObj) {
@@ -185,9 +185,15 @@ class DataFeedProvider {
 								wfProfileOut(__METHOD__ . "-imagelinks-count");
 							}
 							if (self::$images[$imageName] < 20) {
-								$image = self::getImageThumb($imageName);
+								$imgageObj = false;
+								$image = self::getImageThumb($imageName, $imgageObj);
+
 								if ($image) {
-									$item['new_images'][] = $image;
+									if ( WikiaVideoService::isFileTypeVideo($imgageObj) ) {
+										$item['new_videos'][] = $image;
+									} else {
+										$item['new_images'][] = $image;
+									}
 								} else {
 									// this trick will avoid checking more then one time if image exists when it does not exists
 									self::$images[$imageName] = 20;

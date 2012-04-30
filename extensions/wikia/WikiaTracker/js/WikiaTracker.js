@@ -12,6 +12,9 @@ var WikiaTracker = {
 		// Generic click, mostly javascript clicks
 		CLICK: 'click',
 
+		// Click on navigational button
+		CLICK_LINK_BUTTON: 'click-link-button',
+
 		// Click on image link
 		CLICK_LINK_IMAGE: 'click-link-image',
 
@@ -121,8 +124,6 @@ WikiaTracker.debug = function (msg, level, obj) {
 };
 
 WikiaTracker.track = function(page, profile, events) {
-	return true;
-
 	if (typeof page != 'undefined' && page instanceof Array) {
 		page = page.join('/');
 	}
@@ -135,6 +136,7 @@ WikiaTracker.track = function(page, profile, events) {
 WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
+/*
 	if (typeof events != 'undefined' && events instanceof Array) {
 		this.debug('...with events: ' + events.join('/'), 7);
 
@@ -149,6 +151,8 @@ WikiaTracker._track = function(page, profile, sample, events) {
 
 		_gaq.push(['_trackEvent', 'fakeurl', page]);
 	}
+*/
+	_gaq.push(['_trackEvent', 'fakeurl', '/test/20120429']);
 
 	return true;
 };

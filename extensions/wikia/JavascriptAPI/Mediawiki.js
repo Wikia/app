@@ -257,12 +257,6 @@ Mediawiki.debug = function (msg, level){
 		if (Mediawiki.d.arguments.length > 2){
 			console.dir(Mediawiki.d.arguments[2]);
 		}
-	// Yahoo logging console
-	} else if (typeof YAHOO != "undefined" && typeof YAHOO.log != "undefined"){
-		YAHOO.log(msg, "info", "Mediawiki");
-		if (Mediawiki.d.arguments.length > 2){
-			YAHOO.log(Mediawiki.print_r(Mediawiki.d.arguments[2]), "info", "Mediawiki");
-		}
 	} else if (typeof console != "undefined" && typeof console.log != "undefined"){
 		console.log("Mediawiki: " + msg);
 		if (Mediawiki.d.arguments.length > 2){
@@ -707,7 +701,7 @@ Mediawiki.logout = function (callbackSuccess){
 
 /*
  * Get info about the module or querymodule passed in.
- * 
+ *
  * @param paramName - the parameter to send to the query.  Valid choices are eg: 'modules', 'querymodules', 'formatmodules'.
  * @param paramValue - the string to send as the value for the 'paramName'. For example if the paramName is 'modules' and the paramValue is 'bob' then the API will get 'modules=bob'.
  *

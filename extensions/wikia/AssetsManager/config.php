@@ -241,6 +241,9 @@ $config['wikiamobile_js_body'] = array(
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 
+		//toc
+		'//extensions/wikia/WikiaMobile/js/toc.js',
+
 		//extensions with assets to load on every page
 		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
 	)
@@ -328,11 +331,11 @@ $config['articlecomments_js_wikiamobile'] = array(
 	)
 );
 
-$config['articlecomments_js_wikiamobile_init'] = array(
+$config['articlecomments_init_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/ArticleComments/js/ArticleComments.init.wikiamobile.js'
+		'//extensions/wikia/ArticleComments/js/ArticleComments_init.wikiamobile.js'
 	)
 );
 
@@ -530,6 +533,8 @@ $config['relatedvideos_js'] = array(
 	)
 );
 
+/** RelatedVideos **/
+
 $config['relatedvideos_js_tooltips'] = array(
 	'skin' => 'oasis',
 	'type' => AssetsManager::TYPE_JS,
@@ -588,7 +593,7 @@ $config['userlogin_facebook_js_wikiamobile'] = array(
 		'type' => AssetsManager::TYPE_JS,
 		'skin' => 'wikiamobile',
 		'assets' => array(
-				'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'
+			'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js'
 		)
 );
 
@@ -655,4 +660,23 @@ $config['wikiaphotogallery_slider_scss_wikiamobile'] = array(
 		'assets' => array(
 				'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss'
 		)
+);
+
+// ImageDrop
+
+$config['imagedrop_js'] = array(
+	'skin' => array( 'monobook', 'oasis' ),
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/ImageDrop/js/ImageDrop.js',
+		'//skins/common/jquery/jquery.filedrop.js'
+	)
+);
+
+$config['imagedrop_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'monobook', 'oasis' ),
+	'assets' => array(
+		'//extensions/wikia/ImageDrop/css/ImageDrop.scss'
+	)
 );

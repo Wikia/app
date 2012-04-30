@@ -2771,6 +2771,7 @@ Descrivi questa foto.",
 
 /** Japanese (日本語)
  * @author Schu
+ * @author Shirayuki
  * @author Tommy6
  * @author 青子守歌
  */
@@ -2863,7 +2864,7 @@ $messages['ja'] = array(
 	'wikiaPhotoGallery-preview-captionsize-large' => '大',
 	'wikiaPhotoGallery-preview-captioncolor' => 'キャプションの色',
 	'wikiaPhotoGallery-preview-bordersize' => '境界線の幅',
-	'wikiaPhotoGallery-preview-bordersize-none' => '無し',
+	'wikiaPhotoGallery-preview-bordersize-none' => 'なし',
 	'wikiaPhotoGallery-preview-bordersize-small' => '細',
 	'wikiaPhotoGallery-preview-bordersize-medium' => '標準',
 	'wikiaPhotoGallery-preview-bordersize-large' => '太',
@@ -4395,6 +4396,8 @@ $messages['ps'] = array(
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'يو انځور ورګډول',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'همدا مخ',
 	'wikiaPhotoGallery-upload-selectbutton' => 'ټاکل',
+	'wikiaPhotoGallery-photooptions-description' => 'انځور تفصيل',
+	'wikiaPhotoGallery-search-tooltip' => 'په دې ويکي انځورونه پلټل',
 	'galery-slider-read-more' => ' نور لوستل >',
 );
 

@@ -1,6 +1,5 @@
 var oAutoComp,
 	categories = [],
-	fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i'),
 	csAjaxUrl = wgServer + wgScript + '?action=ajax',
 	csType = 'edit',
 	csMaxTextLength = 28,
@@ -17,14 +16,6 @@ function csTrack(fakeUrl) {
 	else {
 		$.tracker.byStr('articleAction/' + fakeUrl);
 	}
-}
-
-// TODO: PORT AWAY FROM YUI
-function initCatSelect() {
-	if ( (typeof(initCatSelect.isint) != "undefined") && (initCatSelect.isint) ) {
-		return true;
-	}
-	initCatSelect.isint = true;
 }
 
 function positionSuggestBox() {
@@ -331,6 +322,8 @@ function generateWikitextForCategories() {
 }
 
 function initializeCategories(cats) {
+	window.fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
+
 	//move categories metadata from hidden field [JSON encoded] into array
 	if (typeof cats == 'undefined') {
 		cats = $('#wpCategorySelectWikitext').length == 0 ? '' : $('#wpCategorySelectWikitext').attr('value');
@@ -613,14 +606,20 @@ function showCSpanel() {
 	csTrack('addCategory');
 
 	$.when(
-		$.get(csAjaxUrl, {rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}, $.noop, 'html'),
+		$.getJSON(wgScript, {action: 'ajax', rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}),
 		$.loadJQueryUI(),
 		$.getResources([
 			$.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss')
 		])
 	).
-	then(function(ajaxResults) {
-		initCatSelect();
+	then(function(ajaxData) {
+		var data = ajaxData[0];
+
+		// emit lazy-loaded global variables (BugId:24570)
+		for (var key in data.vars) {
+			window[key] = data.vars[key];
+		}
+
 		csType = 'view';
 
 		//prevent multiple instances when user click very fast
@@ -628,11 +627,9 @@ function showCSpanel() {
 			return;
 		}
 
-		$('#catlinks').removeClass('csLoading');
-
-		var el = document.createElement('div');
-		el.innerHTML = ajaxResults[0];
-		$('#catlinks').get(0).appendChild(el);
+		$('#catlinks').
+			removeClass('csLoading').
+			append('<div>' + data.html + '</div>');
 
 		initHandlers();
 		initAutoComplete();

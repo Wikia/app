@@ -257,16 +257,20 @@ $messages['ru'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author VickyC
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'userdata' => 'Hämta användardata',
 	'userdata-userid-label' => 'Ange användar-ID:',
 	'userdata-submit' => 'Hämta data',
+	'specialuserdata-desc' => 'Tillhandahåller ett gränssnitt för att förändra wgUserData per wiki.',
 	'userdata-header' => 'Öka wgUserData',
+	'userdata-value' => 'Nuvarande värde för wgUserData är " $1 ". Klicka på knappen för att ställa in det till nuvarande tidsstämpel.',
 	'userdata-updated' => 'wgUserData uppdateras till "$1".',
 	'userdata-not-updated' => 'Det gick inte att uppdatera wgUserData.',
 	'userdata-wf-reason' => 'Värdet uppdaterat via [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory är inte aktiverad på denna wiki. Det är inte möjligt att ändra wgUserData.',
 );
 
 /** Tagalog (Tagalog)

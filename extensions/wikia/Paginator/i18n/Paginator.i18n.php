@@ -257,6 +257,14 @@ $messages['tl'] = array(
 	'paginator-back' => 'Bumalik',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'paginator-next' => 'Киләсе',
+	'paginator-back' => 'Артка',
+);
+
 /** Ukrainian (Українська)
  * @author A1
  */

@@ -1,8 +1,0 @@
-This extension is OBSOLETE!
-
-It has been replaced by AssentsManager and is NOT used
-anywhere except Monobook.
-
-Please note that some of the code is still used (ie: the JS Minifier) so please don't delete this just yet even if Monobook stops needing it.
-
-Grab Inez if you have any questions.

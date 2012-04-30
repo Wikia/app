@@ -711,13 +711,23 @@ Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita i [[wik
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'welcome-user-page' => "== 自己紹介 ==
-'''ここは、「\$1」さんの利用者ページです。'''
+	'welcome-user-page' => "==自己紹介==
 
-上の\"編集\"ボタンをクリックしてこのページを編集してみましょう。",
+'''ここはあなたの利用者ページです。このページを編集してあなた自身のことをみんなに伝えましょう!'''
+
+==投稿記録==
+
+* [[Special:Contributions/$1|利用者の投稿記録]]
+
+==お気に入りページ==
+
+* ウィキのお気に入りのページへのリンクをここに追加してください!
+* お気に入りページ2
+* お気に入りページ3",
 	'welcome-message-user' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
 
 もし、何か困ったことがありましたら、お気軽に[[$2|私の会話ページ]]までメッセージをお寄せください。$3',
@@ -1082,46 +1092,48 @@ $messages['pl'] = array(
 * Dodaj tu linki do swoich ulubionych stron!
 * Drugi link.
 * I trzeci.",
-	'welcome-message-user' => 'Witaj w {{GRAMMAR:MS.lp|{{SITENAME}}}}! Dziękujemy za poprawienie artykułu [[:$1]].
+	'welcome-message-user' => "==Witaj==
+Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
-Zostaw wiadomość na [[$2|mojej stronie dyskusji]] jeśli potrzebujesz jakiejkolwiek pomocy! $3',
-	'welcome-message-anon' => "Witaj w {{GRAMMAR:MS.lp|{{SITENAME}}}}. Dziękujemy za poprawienie strony [[:$1]].
+Zostaw wiadomość na [[$2|mojej stronie dyskusji]], gdyby potrzebna była Ci jakakolwiek pomoc. $3",
+	'welcome-message-anon' => "==Witaj==
+Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
-'''[[Special:Userlogin|Możesz się zarejestrować i założyć konto]]'''. Ułatwi Ci to kontrolę własnego wkładu i pomoże w komunikacji z resztą społeczności.
+Proszę, [[Special:Userlogin|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
 
-Zostaw wiadomość na [[$2|mojej stronie dyskusji]] jeśli potrzebujesz jakiejkolwiek pomocy! $3",
+Zostaw wiadomość na [[$2|mojej stronie dyskusji]], gdyby potrzebna była Ci jakakolwiek pomoc. $3",
 	'welcome-message-log' => 'powitanie',
-	'welcome-message-user-staff' => '==Witamy==
+	'welcome-message-user-staff' => "==Witaj==
+Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
-Serdecznie witamy w {{GRAMMAR:MS.lp|{{SITENAME}}}}! Dziękujemy za to, że poprawiłeś stronę [[:$1]].
+Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne lokalnej społeczności Wikia]]. $3",
+	'welcome-message-anon-staff' => "==Witaj==
+Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
-Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne centralnej wiki społeczności]] $3',
-	'welcome-message-anon-staff' => "==Witamy==
+Proszę, [[Special:UserLogin|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
 
-Serdecznie witamy w {{GRAMMAR:MS.lp|{{SITENAME}}}}. Dziękujemy za to, że poprawileś stronę [[:$1]].
-
-'''[[Special:Userlogin|Możesz się teraz zarejestrować i utworzyć konto]]'''.  Ułatwi Ci to śledzenie własnego wkładu oraz pomoże w komunikacji z resztą społeczności.
-
-Jeśli potrzebujesz pomocy, a nie ma tutaj lokalnych administratorów, możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne centralnej wiki społeczności]] $3",
+Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne lokalnej społeczności Wikia]]. $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forum pomocy]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
-	'welcome-message-wall-user' => 'Witaj, zapraszamy do {{SITENAME}}! Dziękujemy za Twoją edycję strony [[:$1]].
-Napisz do mnie wiadomość, jeśli mogę Ci w czymkolwiek pomóc!',
-	'welcome-message-wall-user-staff' => 'Witaj,  Zapraszamy do {{SITENAME}}! Dziękujemy za Twoją edycję strony  $1.
+	'welcome-message-wall-user' => "Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
-Jeśli potrzebujesz pomocy, a nie ma tu nie lokalnych administratorów, warto odwiedzić [[wikia:Forum:Community Central Forum|fora na Centrum Społeczności Wiki]]. Możesz również sprawdzić nasze [[w:c:community:Blog:Wikia_Staff_Blog|blogi pracowników]] by być na bieżąco z najnowszymi wiadomościami i wydarzeniami wokół Wikia.
+Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.",
+	'welcome-message-wall-user-staff' => "Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''$1'''.
 
-Miłej edycji!',
-	'welcome-message-wall-anon' => "Witaj w {{GRAMMAR:MS.lp|{{SITENAME}}}}. Dziękuję za poprawienie strony $1.
+Jeśli potrzebujesz pomocy, a brak jest tutaj lokalnych administratorów możesz odwiedzić [[wikia:Forum:Community Central Forum|forum dyskusyjne lokalnej społeczności Wikia]].
+Odwiedź [[w:c:community:Blog:Wikia_Staff_Blog|nasz blog]] aby być na bieżąco z nowościami.
 
-'''[[Special:Userlogin|Możesz się zarejestrować i założyć konto]]'''. Ułatwi Ci to kontrolę własnego wkładu i pomoże w komunikacji z resztą społeczności.
+Przyjemnego edytowania!",
+	'welcome-message-wall-anon' => "Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''$1'''.
 
-Zostaw mi wiadomość jeśli potrzebujesz jakiejkolwiek pomocy!",
-	'welcome-message-wall-anon-staff' => "Witaj w {{GRAMMAR:MS.lp|{{SITENAME}}}}. Dziękujemy za poprawienie strony [[:$1]].
+Proszę, [[Special:Userlogin|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
 
-'''[[Special:Userlogin|Możesz się zarejestrować i założyć konto]]'''. Ułatwi Ci to kontrolę własnego wkładu i pomoże w komunikacji z resztą społeczności.
+Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.",
+	'welcome-message-wall-anon-staff' => "Witaj na {{SITENAME}}. Dzięki za edycję w artykule '''[[:$1]]'''.
 
-Zostaw mi wiadomość jeśli potrzebujesz jakiejkolwiek pomocy!",
+Proszę, [[Special:Userlogin|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
+
+Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.",
 );
 
 /** Piedmontese (Piemontèis)

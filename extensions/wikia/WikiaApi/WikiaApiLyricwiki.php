@@ -1048,7 +1048,19 @@ function albumResult($artist, $album, $year){
 
 		// TODO: Do we even need this? It might actually work already.
 		//$result = self::replaceApostrophes($result);
-		print json_encode($result);
+		$json = json_encode($result);
+		
+		// Support for jsonp callbacks (using the 'callback' parameter just like core MediaWiki API).
+		global $wgRequest;
+		$callback = $wgRequest->getVal('callback');
+		if($callback == "?"){
+			// there is a widespread convention of wrapping in an anonymous function when "?" is passed as the callback name.
+			print "($json)";
+		} else if(!empty($callback)){
+			print $callback."($json)";
+		} else {
+			print $json;
+		}
 	} // end writeRealJSON()
 	
 	////

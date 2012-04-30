@@ -3,6 +3,17 @@
  * CheckUser extension - grants users with the appropriate permission the
  * ability to check user's IP addresses and other information.
  *
+ * Some basic table data documentation:
+ * - cu_log contains info about the CheckUser extensions usage (so when someone
+ *   queries the CheckUser, we log this action)
+ * - cu_changes contains info about users activities on the current wiki; the
+ *   cuc_type column is the operation type; right now I know about 4 values:
+ *   Edit/new/log
+ *   - 0   (RC_EDIT) - page editing
+ *   - 1   (RC_NEW)  - creating new page
+ *   - 3   (RC_LOG)  - log items
+ *   - 128 (CUC_TYPE_CHAT) - used when user connects to Chat
+ *
  * @file
  * @ingroup Extensions
  * @version 2.3

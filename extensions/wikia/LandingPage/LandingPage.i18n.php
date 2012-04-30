@@ -197,6 +197,14 @@ $messages['id'] = array(
 	'landingpage-buttons-learn-more' => 'Selengkapnya &gt;',
 );
 
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
+ * @author MrKarahanly
+ */
+$messages['kk-cyrl'] = array(
+	'landingpage' => 'Викиаға қош келдіңіз',
+	'landingpage-start-exploring' => 'Үйренуді бастауға дайынбысыз?',
+);
+
 /** Korean (한국어) */
 $messages['ko'] = array(
 	'landingpage' => '위키아에 오신 것을 환영합니다',
@@ -327,6 +335,15 @@ $messages['pms'] = array(
 	'landingpage-buttons-learn-more' => 'Amprende ëd pi &gt;',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'landingpage' => 'ويکييا ته ښه راغلۍ',
+	'landingpage-readfaq' => 'پوښتنې لرۍ؟ زموږ ډ-ځ-پ ولولۍ &gt;',
+	'landingpage-buttons-learn-more' => 'نور مالومات &gt;',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -402,10 +419,17 @@ $messages['tl'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'landingpage' => 'Викияга рәхим итегез',
+	'landingpage-start-exploring' => 'Өйрәнүне башларга әзерме?',
+	'landingpage-start-exploring-text' => 'Үзегез яраткан темаларны эзләгез яки катнашучылар арасында популяр булганнарын карагыз.',
+	'landingpage-readfaq' => 'Сораулар бармы? Безнең FAQ &gt; карагыз',
+	'landingpage-text' => 'Викияда сез <strong>кызыксыну һәм шөгыльләрегез</strong> уртак булган <strong>кешеләр белән аралаша алырсыз.</strong>.  Үзегезнең төркемегезне табыгыз, фикерләр һәм төзәтүләр калдырыгыз яки  <strong>үз веб-сайтыгызны ясагыз</strong> һәм җәмгыять туплагыз.',
+	'landingpage-buttons-learn-more' => 'Тулырак &gt;',
 	'landingpage-language-links' => '* English|en
 * Español|es
 * Deutsch|de
 * Français|fr',
+	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia',
 );
 
 /** Ukrainian (Українська) */

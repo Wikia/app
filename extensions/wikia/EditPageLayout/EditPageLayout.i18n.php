@@ -1098,9 +1098,11 @@ $messages['lb'] = array(
 	'wikia-editor-media-image' => 'Foto',
 	'wikia-editor-media-video' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Foto derbäisetzen',
+	'wikia-editor-source-italic-tooltip' => 'Kursiv',
 	'wikia-editor-modules-templates-title' => 'Schablounen',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lëscht vun de benotzte Schablounen',
 	'wikia-editor-modules-categories-title' => 'Kategorien',
+	'wikia-editor-edittools-caption' => 'méi',
 	'tog-minordefault' => "All Ännerungen automatesch als 'Kleng Ännerungen' markéieren",
 	'tog-forceeditsummary' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
 );
@@ -1608,11 +1610,12 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author 555
  * @author Caio1478
  */
 $messages['pt-br'] = array(
 	'editpagelayout-notificationsLink-none' => 'Notificações',
-	'restore-edits-notice' => "Bem-vindo de volta! Nós restauramos algumas alterações que você não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
+	'restore-edits-notice' => "Bem-vindo(a) de volta! Nós restauramos algumas alterações que você ainda não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
 );
 
 /** Russian (Русский)

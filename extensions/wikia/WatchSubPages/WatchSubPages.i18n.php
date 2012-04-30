@@ -228,6 +228,7 @@ $messages['sl'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
+	'wikia-watchsubpages-desc' => 'Аутоматско надгледање подстраница',
 	'tog-watchlistsubpages' => 'Надгледај подстранице',
 );
 
@@ -245,6 +246,14 @@ $messages['sv'] = array(
 $messages['tl'] = array(
 	'wikia-watchsubpages-desc' => 'Kusang pagsunod para sa kabahaging mga pahina',
 	'tog-watchlistsubpages' => 'Sundan ang kabahaging mga pahina',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'wikia-watchsubpages-desc' => 'Астмәкаләләргә үзеннән-үзе күчү',
+	'tog-watchlistsubpages' => 'Астмәкаләләргә күчү',
 );
 
 /** Vietnamese (Tiếng Việt)

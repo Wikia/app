@@ -227,7 +227,7 @@ class UserPagesHeaderModule extends WikiaController {
 		if ($namespace == NS_USER) {
 			// edit button
 			if (isset($this->content_actions['edit'])) {
-				$this->actionMenu['action'] = array(
+				$actionMenu['action'] = array(
 						'href' => $this->content_actions['edit']['href'],
 						'text' => wfMsg('oasis-page-header-edit-profile'),
 						);
@@ -471,7 +471,7 @@ class UserPagesHeaderModule extends WikiaController {
 		$this->actionMenu = $actionMenu;
 
 		// load CSS for .WikiaUserPagesHeader (BugId:9212, 10246)
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/UserPagesHeader.scss"));
 
 		wfProfileOut(__METHOD__);
 	}
@@ -495,7 +495,7 @@ class UserPagesHeaderModule extends WikiaController {
 		$this->subtitle = wfMsg('create-blog-post-category');
 
 		// load CSS for .WikiaBlogListingHeader (BugId:9212, 10246)
-		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/_UserPagesHeader.scss"));
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/core/UserPagesHeader.scss"));
 
 		wfProfileOut(__METHOD__);
 	}

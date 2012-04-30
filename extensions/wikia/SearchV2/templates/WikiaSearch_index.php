@@ -21,10 +21,20 @@
 		</fieldset>
 	    <?php endif; ?>
 
+	<?php if(!empty($advancedSearchBox)) : ?>
+		<?php echo $advancedSearchBox; ?>
+	<?php endif; ?>
+
+	</form>
+
 		<?php if(!empty($results)): ?>
 		<?php if( $resultsFound > 0 ): ?>
 			<p class="result-count subtle">
-				<?= wfMsg('wikiasearch2-results-count', $resultsFound, '<span>'.$query.'</span>'); ?>
+				<?php if( empty( $isOneResultsPageOnly ) ): ?>
+					<?= wfMsg('wikiasearch2-results-count', $resultsFoundTruncated, '<span>'.$query.'</span>'); ?>
+				<?php else: ?>
+					<?= wfMsg('wikiasearch2-results-for', '<span>'.$query.'</span>'); ?>
+				<?php endif; ?>
 			</p>
 	
 			<? if ($results->getQuery() && $query != $results->getQuery()) : ?>
@@ -39,7 +49,6 @@
 						echo $app->getView( 'WikiaSearch', 'resultSet', array(
 						  'resultSet' => $result,
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-						  'rankExpr' => $rankExpr,
 						  'debug' => $debug,
 						  'query' => $query,
 						  'isInterWiki' => $isInterWiki
@@ -49,7 +58,6 @@
 						echo $app->getView( 'WikiaSearch', 'result', array(
 						  'result' => $result,
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-						  'rankExpr' => $rankExpr,
 						  'debug' => $debug,
 						  'query' => $query,
 						  'isInterWiki' => $isInterWiki
@@ -63,11 +71,6 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php if(!empty($advancedSearchBox)) : ?>
-		<?php echo $advancedSearchBox; ?>
-	<?php endif; ?>
-
-	</form>
 
 	
 	<?php if (isset($tagCloud)): ?>

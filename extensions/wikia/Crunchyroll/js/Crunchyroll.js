@@ -3,7 +3,7 @@ var Crunchyroll = {
 	lockTable: [],
 
 	init: function() {
-		$('#WikiaArticle').delegate('.wikia-paginator a.paginator-page', 'click', Crunchyroll.paginatorClick);
+		$('#WikiaArticle').delegate('.wikia-paginator a', 'click', Crunchyroll.paginatorClick);
 	},
 
 	log: function(msg) {

@@ -97,8 +97,6 @@ $devboxuser = exec('hostname');
 $sanitizeHelper = new videoSanitizerMigrationHelper($wgCityId, $wgDBname, $wgExternalDatawareDB);
 $previouslyProcessed = $sanitizeHelper->getRenamedVideos("old", " operation_status='OK'");
 
-// $IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
-// echo( "$IP\n" );
 echo( "Video name sanitizer script running for $wgCityId\n" );
 videoLog( 'sanitize', 'START', '');
 
@@ -109,6 +107,7 @@ if( isset( $options['help'] ) && $options['help'] ) {
 }
 
 $IP = '/home/release/video_refactoring/trunk'; // HACK TO RUN ON SANDBOX
+#$IP = '/usr/wikia/mac'; // DEVbOX
 require_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 
 $dbw = wfGetDB( DB_MASTER );

@@ -1832,7 +1832,7 @@ $messages['mk'] = array(
 	'myhome-feed-new-blog-comment-details' => 'Коментар',
 	'myhome-feed-new-article-comment-details' => 'Коментар',
 	'myhome-feed-move-details' => 'Преименувано',
-	'myhome-feed-redirect-details' => 'Преместување',
+	'myhome-feed-redirect-details' => 'Пренасочување',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Додадена фотографија|Додадени фотографии}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Додадена видеоснимка|Додадени видеоснимки}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Додадена категорија|Додадени категории}}',
@@ -2331,7 +2331,7 @@ Kliknij na '''[[Special:CreatePage|Utwórz stronę]]'' ' aby zacząć pisać!",
 Listy Obserwowanych można użyć, aby śledzić najnowsze zmiany do stron, na których Ci zależy.',
 	'myhome-user-contributions-feed' => 'Wkład użytkownika',
 	'myhome-hot-spots-feed' => 'Najczęściej edytowane',
-	'myhome-hot-spots-feed-empty' => "Zaangażuj się w twórczość na tej wiki.
+	'myhome-hot-spots-feed-empty' => "Zaangażuj się w edytowanie na tej wiki.
 Kliknij na '''[[Special:CreatePage|Utwórz stronę]]'' ' aby zacząć pisać!",
 	'myhome-hot-spots-newest' => 'Nowe strony na wiki',
 	'tog-myhomedisableredirect' => 'Wyłącz przekierowanie do strony aktywności na wiki',
@@ -2489,22 +2489,40 @@ Se chiel a l'é ël fondador o n'aministrator ëd la wiki, a peul cangé sto më
  */
 $messages['ps'] = array(
 	'myhome' => 'زما کورپاڼه',
+	'wikiactivity' => 'ويکي فعاليتونه',
 	'myhome-watchlist-feed' => 'کتنلړ',
 	'myhome-user-contributions-feed' => 'ونډې',
 	'myhome-hot-spots-newest' => 'په ويکي کې نوي مخونه',
+	'prefs-myhome' => 'زما کورپاڼه',
 	'myhome-feed-newpage' => 'نوی مخ',
 	'myhome-feed-edit' => 'سمول',
+	'myhome-feed-move' => 'مخ ولېږدېده',
 	'myhome-feed-talkpage' => 'د خبرو اترو مخ',
+	'myhome-feed-blogcomment' => 'د بلاګ تبصره',
 	'myhome-feed-delete' => 'ړنګ شو',
 	'myhome-feed-image' => 'انځور ورګډ شو',
+	'myhome-feed-video' => 'ويډيو ورګډه شوه',
 	'myhome-feed-categorization' => 'ډلبندي',
+	'myhome-feed-created-by' => 'د $1 لخوا جوړ شو',
+	'myhome-feed-added-by' => 'د $1 لخوا ورګډ شو',
+	'myhome-feed-edited-by' => 'د $1 لخوا سم شو',
+	'myhome-feed-posted-by' => 'د $1 لخوا پوست شو',
+	'myhome-feed-comment-by' => 'تبصره د $1 لخوا',
+	'myhome-feed-deleted-by' => 'د $1 لخوا ړنګ شو',
+	'myhome-feed-moved-by' => 'د $1 لخوا ولېږدېده',
 	'myhome-feed-by' => 'د $1 لخوا',
 	'myhome-feed-new-page-details' => 'نوی مخ',
 	'myhome-feed-summary-details' => 'لنډيز',
+	'myhome-feed-section-edit-details' => 'برخه يې سمه کړه',
 	'myhome-feed-new-blog-post-details' => 'نوی بلاګ',
 	'myhome-feed-new-blog-comment-details' => 'تبصره',
 	'myhome-feed-new-article-comment-details' => 'تبصره',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|انځور ورګډ شو|انځورونه ورګډ شوه}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|ويډيو ورګډه شوه|ويډيوګانې ورګډې شوې}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|وېشنيزه ورګډه شوه|وېشنيزې ورګډې شوې}}',
+	'myhome-hot-spots-number-of-editors' => 'سمونګران',
 	'myhome-namespace-blog' => 'بلاګ',
+	'myhome-community-corner-header' => 'د ټولنې پيغام',
 	'myhome-community-corner-edit' => 'پيغام سمول',
 	'community-corner' => "'''زما کور ته ښه راغلاست!'''
 
@@ -2523,6 +2541,7 @@ $messages['ps'] = array(
 
 * او يا هم يوازې د تشويق او د نورو د لېواله کولو لپاره خوږې خبرې وليکۍ!",
 	'tooltip-pt-myhome' => 'زما کورپاڼې ته ورتلل',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|يو پيغام|$1 پيغامونه}}',
 );
 
 /** Portuguese (Português)
@@ -3238,13 +3257,79 @@ $messages['tr'] = array(
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
+	'myhome-desc' => 'Теркәлгән кулланучылар өчен шәхси баш бит',
 	'myhome' => 'Минем сәхифә',
 	'wikiactivity' => 'Вики-эшчәнлек',
+	'myhome-activity-more' => 'үзгәртүләр исемлеген яңарту',
+	'myhome-activity-feed' => 'Соңгы үзгәртүләр',
+	'myhome-activity-feed-empty' => "Бу вики сездән катнашуны көтә! '''[[Special:CreatePage|Яңа мәкалә]]''' сылтамасына басыгыз һәм язарга тотыныгыз!",
 	'myhome-watchlist-feed' => 'Күзәтү исемлеге',
+	'myhome-watchlist-feed-empty' => 'Сез мәкаләләрне үзегезнең күзәтү исемлегенә өсти аласыз. Моның өчен битнең өстендә урнашкан «{{int:watch}}» сылтамасына басырга кирәк. Шулай ук сез үзегезнең күзәтү исемлеген сез идарә иткән битләрдәге үзгәртүләрне күзәтеп барыр өчен куллана аласыз.',
 	'myhome-user-contributions-feed' => 'Кертем',
+	'myhome-hot-spots-feed' => '"Кайнар нокталар"',
+	'myhome-hot-spots-feed-empty' => "Бу вики сездән катнашуны көтә! '''[[Special:CreatePage|Яңа мәкалә]]''' сылтамасына басыгыз һәм язарга тотыныгыз!",
+	'myhome-hot-spots-newest' => 'Викидагы яңа битләр',
+	'tog-myhomedisableredirect' => 'Вики-эшчәнлек сәхифәсенә күчерүне сүндерү',
+	'prefs-myhome' => 'Шәхси кабинет',
 	'myhome-feed-newpage' => 'яңа бит',
 	'myhome-feed-edit' => 'үзгәртү',
+	'myhome-feed-move' => 'мәкаләне күчерү',
+	'myhome-feed-talkpage' => 'бәхәс бите',
+	'myhome-feed-blogcomment' => 'блогта фикерләр',
 	'myhome-feed-delete' => 'бетерелде',
+	'myhome-feed-image' => 'сурәт өстәлгән',
+	'myhome-feed-video' => 'видео өстәлгән',
+	'myhome-feed-categorization' => 'төркемләштерү',
+	'myhome-feed-created-by' => '$1 тарафыннан ясалган',
+	'myhome-feed-added-by' => '$1 тарафыннан өстәлгән',
+	'myhome-feed-edited-by' => '$1 тарафыннан үзгәртелгән',
+	'myhome-feed-posted-by' => '$1 тарафыннан нәшер ителгән',
+	'myhome-feed-comment-by' => '$1 тарафыннан шәрехләнгән',
+	'myhome-feed-deleted-by' => '$1 тарафыннан бетерелгән',
+	'myhome-feed-moved-by' => '$1 тарафыннан күчерелгән',
+	'myhome-feed-article-comment-created-by' => '$1 кулланучысынан яңа фикер',
+	'myhome-feed-article-comment-edited-by' => '$1 фикерне төзәтте',
+	'myhome-feed-by' => '$1 тарафыннан',
+	'myhome-feed-diff-alt' => 'миңа бу биттәге үзгәртүне күрсәтү',
+	'myhome-feed-new-page-details' => 'Яңа бит',
+	'myhome-feed-summary-details' => 'Үзгәртүләр тасвирламасы:',
+	'myhome-feed-section-edit-details' => 'Бүлекне үзгәртү',
+	'myhome-feed-new-blog-post-details' => 'Яңа блог',
+	'myhome-feed-new-blog-comment-details' => 'Фикер',
+	'myhome-feed-new-article-comment-details' => 'Фикер',
+	'myhome-feed-move-details' => 'Исеме үзгәртелде',
+	'myhome-feed-redirect-details' => 'Күчерү',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Сурәт өстәлде|Сурәтләр өстәлде}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Видео өстәлде}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Төркем өстәлгән|Төркемнәр өстәлгән}}',
+	'myhome-user-contributions-empty' => 'Сез теләсә кайсы биттәге «{{int:editthispage}}»  сылтамасына басып, бу викины төзәтүдә катнаша аласыз. Һәркем үзгәртү ясарга, мәгълүмат өстәргә һәм хаталар төзәтергә хокуклы. Вики катнашучылар җәмгыяте тарафыннан ясалган, һәм сез, әгәр үзгәртү сылтамасына бассагыз, бу җәмгыятьнең бер әгъзасы булачаксыз. Эшләп карагыз әле!',
+	'myhome-hot-spots-number-of-editors' => 'үзгәртүләр',
+	'myhome-log-in' => "<center>Шәхси кабинет функционалы сез системага кергәч кенә мөмкин булачак. <br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Бу битне ачыр өчен, системага керергә кирәк!]'''</big></center>",
+	'myhome-switch-to-monaco' => "Вики-эшчәнлек сәхифәсе Викия тышлыгын кулланганда гына мөмкин булачак. 
+Әгәр шәхси кабинетыгызны күресегез килсә, '''[[Special:Preferences|шәхси көйләнмәләр]]''' битенә керегез һәм тышлыкны төзәтегез.",
+	'myhome-namespace-blog' => 'Блог',
+	'myhome-community-corner-header' => 'Җәмгыять хәбәрләре',
+	'oasis-myhome-community-corner-edit' => 'хәбәрне &gt; төзәтү',
+	'myhome-community-corner-edit' => 'хәбәрне төзәтү',
+	'community-corner' => "'''Шәхси кабинетка рәхим итегез!'''
+
+
+Бу сәхифә сезгә викида барган иң соңгы вакыйгалар белән танышырга ярдәм итәр.
+
+Әгәр сез викига нигез салучы яки аның идарәчесе икән, сез бу хәбәрне башка төрлегә үзгәртә аласыз. Анда катнашучылар җәмәгатьчелегенә сайтның иң мөһим вакыйгалары турында хәбәр итәргә мөмкин.
+Сезнең мөмкинлекләр:
+* Викиның аерым өлкәләрен проект рәвешендә үстерү. 
+* Һәркем күрергә тиеш булган кайбер мәкаләләрне күрсәтү.
+
+* Катнашучыларның игътибарын агымдагы вакыйгага юнәлтү.
+* Викига үз өлешен керткән катнашучыга игътибарны арттыру.
+* Яки катнашучыларга җылы сүзләр әйтү!",
+	'myhome-hot-spots-definition' => 'Үткән {{PLURAL:$1|көн}} өчен иң күп үзгәртүле мәкаләләр.',
+	'myhome-default-view-checkbox' => '$1 алдан куелганча карау',
+	'myhome-default-view-success' => 'Хәзер мәгълүматларны бу рәвешле күрсәтү куелды',
+	'tooltip-pt-myhome' => 'Шәхси кабинетка күчү',
+	'activityfeed' => 'Гамәлләр тасмасы',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|бер хәбәр|$1 хәбәр}}',
 );
 
 /** Ukrainian (Українська)

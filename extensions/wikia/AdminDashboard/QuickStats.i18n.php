@@ -211,8 +211,8 @@ $messages['fr'] = array(
 	'quickstats-totals-label' => 'Totaux',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Voir plus de stats]]',
 	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1 milliard',
+	'quickstats-number-shortening-millions' => '$1 M',
+	'quickstats-number-shortening-billions' => '$1 Mrd',
 	'quickstats-ga-broken-message' => "La vue en colonnes est actuellement indisponible. Nous travaillons dessus pour la mettre à disposition bientôt! [$1 Plus d'info]",
 );
 
@@ -349,6 +349,7 @@ $messages['lb'] = array(
 	'quickstats-header-edits' => 'Ännerungen',
 	'quickstats-header-photos' => 'Fotoen',
 	'quickstats-header-likes' => 'Hunn ech gär',
+	'quickstats-totals-label' => 'Total',
 );
 
 /** Lithuanian (Lietuvių)
@@ -452,7 +453,7 @@ $messages['pl'] = array(
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Odwiedziny',
 	'quickstats-header-edits' => 'Edycje',
-	'quickstats-header-photos' => 'Grafiki',
+	'quickstats-header-photos' => 'Obrazy',
 	'quickstats-header-likes' => 'Polubienia',
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Łącznie',
@@ -487,6 +488,13 @@ $messages['ps'] = array(
 	'quickstats-header-edits' => 'سمونونه',
 	'quickstats-header-photos' => 'انځورونه',
 	'quickstats-totals-label' => 'ټولټال',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'quickstats-totals-label' => 'Totais',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -638,6 +646,7 @@ $messages['tt-cyrl'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1милл.',
 	'quickstats-number-shortening-billions' => '$1миллиард',
+	'quickstats-ga-broken-message' => 'Вики битләрен карау статистикасына керү мөмкинлеге әлегә юк. Без моны төзәтү өстендә эшлибез! [$1 тулырак]',
 );
 
 /** Ukrainian (Українська)
@@ -681,6 +690,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
+ * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'quickstats-header-date' => '日期',
@@ -691,6 +701,7 @@ $messages['zh-hans'] = array(
 	'quickstats-totals-label' => '总计',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多统计]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1（百万）',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

@@ -48,6 +48,7 @@ function incAnswerStats($article, $revision, $baseRevId) {
 
 
 $wgAutoloadClasses['DefaultQuestion'] = dirname( __FILE__ ) . "/DefaultQuestion.php";
+$wgAutoloadClasses['PrefilledDefaultQuestion'] = dirname( __FILE__ ) . "/PrefilledDefaultQuestion.php";
 $wgAutoloadClasses['CreateQuestionPage'] = dirname( __FILE__ ) . "/SpecialCreateDefaultQuestionPage.php";
 $wgSpecialPages['CreateQuestionPage'] = 'CreateQuestionPage';
 

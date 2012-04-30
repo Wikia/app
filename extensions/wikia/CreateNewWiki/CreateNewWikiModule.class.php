@@ -30,7 +30,8 @@ class CreateNewWikiModule extends WikiaController {
         $this->aCategories = $hubs->getCategories();
 
         $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$this->aLanguages = asort(wfGetFixedLanguageNames());
+		$this->aLanguages = wfGetFixedLanguageNames();
+		asort( $this->aLanguages );
 
 		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
 

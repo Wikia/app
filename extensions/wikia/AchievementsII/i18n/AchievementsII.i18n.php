@@ -1433,15 +1433,28 @@ $messages['ca'] = array(
 	'achievements-track-name-love' => "Seguiment de l'Amor al Wiki",
 	'achievements-track-name-sharing' => 'Seguiment de Compartir',
 	'achievements-notification-title' => 'Camí per recórrer, $1!',
+	'achievements-notification-subtitle' => 'Acabes de guanyar la medalla "$1" $2',
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Veure més medalles que pots guanyar]]!</big></strong>',
+	'achievements-points' => '$1 {{PLURAL:$1|punt|punts}}',
+	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|punt|punts}}',
+	'achievements-earned' => 'Aquesta medalla ha estat guanyada per {{PLURAL:$1|1 usuari|$1 usuaris}}.',
+	'achievements-profile-title' => '$1 ha guanyat $2 {{PLURAL:$2|medalla|medalles}}',
 	'achievements-profile-title-challenges' => 'Més medalles que pots guanyar!',
 	'achievements-profile-customize' => 'Personalitzar medalles',
 	'achievements-ranked' => 'Número $1 en aquest wiki',
 	'achievements-viewall' => 'Veure-ho tot',
 	'achievements-viewless' => 'Tancar',
+	'achievements-profile-title-oasis' => 'punts <br /> de medalles',
 	'achievements-ranked-oasis' => '$1 és el [[Special:Leaderboard|Número #$2]] en aquest wiki',
 	'achievements-viewall-oasis' => 'Veure-ho tot',
+	'achievements-toggle-hide' => 'Amaga les medalles del meu perfil per a tothom',
 	'leaderboard-intro-hide' => 'amaga',
 	'leaderboard-intro-open' => 'obre',
+	'achievements-leaderboard-rank-label' => 'Lloc',
+	'achievements-leaderboard-member-label' => 'Membre',
+	'achievements-leaderboard-points-label' => 'Punts',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|punt|punts}}',
+	'achievements-leaderboard-most-recently-earned-label' => 'Guanyat més recentment',
 	'achievements-about-content' => 'Els administradors d\'aquest wiki poden personalitzar els noms i fotos de les medalles.
 
 Pots pujar qualsevol imatge .jpg. o .png i la imatge automàticament s\'ajustarà dins del marc.
@@ -1464,6 +1477,10 @@ Això afegeix 250 punts a la teva puntuació!
 Fes un cop d'ull a la teva nova insígnia de luxe a la teva pàgina de perfil d'usuari:
 
 $5",
+	'achievements-userprofile-title-no' => 'Medalles Guanyades per $1',
+	'achievements-userprofile-title' => '{{PLURAL:$2|Medalla|Medalles}} {{PLURAL:$2|Guanyada|Guanyades}} per $1 ($2)',
+	'achievements-userprofile-no-badges-visitor' => 'Aquest usuari encara no ha guanyat cap medalla.',
+	'achievements-userprofile-profile-score' => '<em>$1</em> Punts<br />aconseguits',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Número #$1]]<br />en aquest wiki',
 );
 
@@ -1739,6 +1756,7 @@ $messages['da'] = array(
  * @author Dardio
  * @author Diebuche
  * @author Geitost
+ * @author Kghbln
  * @author Kjell
  * @author LWChris
  * @author MF-Warburg
@@ -1779,7 +1797,7 @@ Bitte versuche es mit einem anderen!',
 	'achievements-notification-title' => 'Weiter so, $1!',
 	'achievements-notification-subtitle' => 'Du hast gerade das „$1“-Abzeichen erhalten $2',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Mehr von dir verdienbare Abzeichen ansehen]]!</big></strong>',
-	'achievements-points' => '$1 {{PLURAL:$1|Punkt|Punkte}}',
+	'achievements-points' => '{{PLURAL:$1|Ein Punkt|$1 Punkte}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|Punkt|Punkte}}',
 	'achievements-earned' => 'Dieses Abzeichen wurde von {{PLURAL:$1|einem Benutzer|$1 Benutzern}} verdient.',
 	'achievements-profile-title' => '$1 hat $2 {{PLURAL:$2|Auszeichnung|Auszeichnungen}} erhalten',
@@ -2882,6 +2900,7 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Crt
  * @author Ilkea
+ * @author Kulmalukko
  * @author Nike
  * @author Tm T
  * @author Tofu II
@@ -2955,6 +2974,7 @@ Kokeile toista kuvaa.',
 	'achievements-badge-name-love-1' => 'Kaksi viikkoa wikissä',
 	'achievements-badge-name-love-4' => 'Addiktoitunut',
 	'achievements-badge-name-sharing-4' => 'Evankelista',
+	'achievements-badge-name-introduction' => 'Johdanto',
 	'achievements-badge-to-get-edit' => 'tehdä $1 {{PLURAL:$1|muokkaus|muokkausta}} {{PLURAL:$1|sivuun}}',
 	'achievements-badge-to-get-edit-plus-category' => 'tehdä {{PLURAL:$1|yksi muokkaus|$1 muokkausta}} $2 sivuun',
 	'achievements-badge-to-get-picture' => 'lisätä $1 {{PLURAL:$1|kuva|kuvaa}} {{PLURAL:$1|sivulle}}',
@@ -7721,6 +7741,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -7976,14 +7997,14 @@ a {{PLURAL:$1|uma página|páginas}}!',
 	'achievements-badge-hover-desc-blogcomment' => 'por escrever um comentário<br />
 {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
 	'achievements-badge-hover-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
-	'achievements-badge-hover-desc-welcome' => 'por colaborar na wiki!',
+	'achievements-badge-hover-desc-welcome' => 'Atribuído por se inscrever na wiki!',
 	'achievements-badge-hover-desc-introduction' => 'por acrescentar informação<br />
 à sua página de utilizador!',
 	'achievements-badge-hover-desc-sayhi' => 'por deixar uma mensagem na<br />
 página de discussão de outro utilizador!',
-	'achievements-badge-hover-desc-creator' => 'por criar a wiki!',
+	'achievements-badge-hover-desc-creator' => 'Atribuído por criar a wiki!',
 	'achievements-badge-hover-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
-	'achievements-badge-hover-desc-caffeinated' => 'por fazer 100 edições num único dia!',
+	'achievements-badge-hover-desc-caffeinated' => 'Atribuído por fazer 100 edições em artigos num único dia!',
 	'achievements-badge-hover-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'Esta é uma medalha especial de Platina, só disponível por um período limitado!',
 	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|por partilhar um link|por conseguir que {{PLURAL:$1|uma pessoa clicasse|$1 pessoas clicassem}} links partilhados}}',
@@ -7994,7 +8015,7 @@ página de discussão de outro utilizador!',
 	'achievements-badge-your-desc-blogpost' => 'por escrever {{PLURAL:$1|a sua primeira entrada de blogue|$1 entradas de blogue}}!',
 	'achievements-badge-your-desc-blogcomment' => 'por escrever um comentário {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
 	'achievements-badge-your-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
-	'achievements-badge-your-desc-welcome' => 'por colaborar na wiki!',
+	'achievements-badge-your-desc-welcome' => 'Atribuído por se inscrever na wiki!',
 	'achievements-badge-your-desc-introduction' => 'por acrescentar informação à sua página de utilizador!',
 	'achievements-badge-your-desc-sayhi' => 'por deixar uma mensagem na página de discussão de outro utilizador!',
 	'achievements-badge-your-desc-creator' => 'por criar a wiki!',
@@ -8012,7 +8033,7 @@ página de discussão de outro utilizador!',
 	'achievements-badge-desc-welcome' => 'por colaborar na wiki!',
 	'achievements-badge-desc-introduction' => 'por acrescentar informação à sua página de utilizador!',
 	'achievements-badge-desc-sayhi' => 'por deixar uma mensagem na página de discussão de outro utilizador!',
-	'achievements-badge-desc-creator' => 'por criar a wiki!',
+	'achievements-badge-desc-creator' => 'Atribuído por criar a wiki!',
 	'achievements-badge-desc-pounce' => 'por fazer edições em 100 páginas menos de uma hora após serem criadas!',
 	'achievements-badge-desc-caffeinated' => 'por fazer 100 edições num único dia!',
 	'achievements-badge-desc-luckyedit' => 'por fazer a Edição Afortunada Nº$1 na wiki!',
@@ -9019,6 +9040,25 @@ $messages['si'] = array(
 	'achievements-community-platinum-edit' => 'සංස්කරණය කරන්න',
 	'achievements-community-platinum-save' => 'සුරකින්න',
 	'achievements-community-platinum-cancel' => 'අත් හරින්න',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Irena Plahuta
+ */
+$messages['sl'] = array(
+	'achievements-platinum' => 'Platina',
+	'achievements-gold' => 'Zlata',
+	'achievements-silver' => 'Srebrna',
+	'achievements-bronze' => 'Bronasta',
+	'leaderboard-button' => 'Lestvica dosežkov',
+	'achievements-profile-title-no' => 'Značke uporabnika $1.',
+	'achievements-no-badges' => 'Preverite na spodnjem seznamu, katere značke lahko pridobite na tem projektu!',
+	'leaderboard-intro-hide' => 'Skrij',
+	'leaderboard-intro-open' => 'Odpri',
+	'leaderboard-intro-headline' => 'Kaj so Dosežki?',
+	'achievements-title' => 'Dosežki',
+	'leaderboard-title' => 'Lestvica',
+	'achievements-recent-earned-badges' => 'Nedavno pridobljene značke',
 );
 
 /** Albanian (Shqip)
@@ -10149,6 +10189,8 @@ $5',
 	'achievements-badge-name-luckyedit' => 'Куанычлы төзәтмә',
 	'achievements-badge-to-get-edit' => '{{PLURAL:$1|мәкаләдә}}   $1{{PLURAL:$1|төзәтмә}} ясаган!',
 	'achievements-badge-to-get-edit-plus-category' => '{{PLURAL:$1|$2 мәкаләдә}}  {{PLURAL:$1|бер төзәтмә|$1 төзәтмә}}  ясаган!',
+	'achievements-badge-to-get-picture' => '{{PLURAL:$1|мәкаләгә}}  {{PLURAL:$1|сурәт өстәгән өчен}}',
+	'achievements-badge-to-get-category' => '{{PLURAL:$1|төркемгә}} $1 {{PLURAL:$1|мәкалә}} өстәгән өчен бүләк!',
 	'achievements-badge-to-get-creator' => 'бу викине барлыкка китерүче булып тора',
 	'achievements-badge-to-get-pounce' => 'тиз булу',
 	'achievements-badge-to-get-edit-details' => 'Ни дә булса җитмиме?
@@ -10595,6 +10637,7 @@ $5",
 	'achievements-userprofile-title-no' => '$1获得的徽章',
 	'achievements-userprofile-no-badges-visitor' => '这个用户没有得到任何徽章。',
 	'achievements-userprofile-profile-score' => '<em>$1</em>成就<br/>点数',
+	'achievements-userprofile-ranked' => '在本维基上<br />[[Special:Leaderboard|排名第 #$1]]',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

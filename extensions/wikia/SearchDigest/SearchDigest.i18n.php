@@ -3,6 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'searchdigest-title' => 'Search Digest',
+	'searchdigest' => 'Search Digest',
 	'searchdigest-download-csv' => 'Download as CSV',
 );

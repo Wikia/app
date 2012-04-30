@@ -4,13 +4,15 @@ if(!window.blogInitialized) {
 	var BlogPaginator = {
 		isFree: true,
 		init: function() {
-			$().log('hi there');
 			BlogPaginator.n = $('.wk_blogs_pager .wikia-paginator');
 			BlogPaginator.n.live('click', function(evt) {
 				evt.preventDefault();
 				if(BlogPaginator.isFree) {
 					BlogPaginator.isFree = false;
 					var el = $(evt.target);
+					if(el.is('span')) {
+						el = el.parent();
+					}
 					if(el.is('a') && !el.hasClass('active')) {
 						BlogPaginator.changePage(parseInt(el.data('page')) - 1);
 					}

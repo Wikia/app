@@ -32,6 +32,7 @@ class AutomaticWikiAdoptionHelper {
 	const REASON_USER_BLOCKED = 5;
 	const REASON_ADOPTED_RECENTLY = 6;
 	const REASON_NOT_ENOUGH_EDITS = 7;
+	const REASON_USER_NOT_ELIGIBLE = 8;
 	//used as type in user_flags table
 	const USER_FLAGS_AUTOMATIC_WIKI_ADOPTION = 1;
 	
@@ -94,6 +95,11 @@ class AutomaticWikiAdoptionHelper {
 		if (!isset($allowed) && $user->isBlocked()) {
 			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: user blocked');
 			$allowed = self::REASON_USER_BLOCKED;
+		}
+
+		if ( $user->getOption( 'AllowAdoption', 1 ) ) {
+			Wikia::log(__METHOD__, __LINE__, 'not allowed to adopt: per user override set by staff');
+			$allowed = self::REASON_USER_NOT_ELIGIBLE;
 		}
 
 		//user has adopted other wiki in the last 60 days

@@ -37,65 +37,6 @@ class FounderEmails {
 	}
 
 	/**
-	 * get list of wiki founder/admin/bureaucrat id
-	 * Note: also called from maintenance script.
-	 * @return array of user_id
-	 */
-	public function getWikiAdminIds($wikiId = 0, $use_master = false) {
-		global $wgCityId, $wgFounderEmailsDebugUserId, $wgEnableAnswers, $wgMemc;
-		wfProfileIn( __METHOD__ );
-
-		$user_ids = array();
-		if (empty($wgFounderEmailsDebugUserId)) {
-			// get founder
-			$wikiId = !empty( $wikiId ) ? $wikiId : $wgCityId;
-			$wiki = WikiFactory::getWikiById($wikiId);
-			if (!empty($wiki) && $wiki->city_public == 1) {
-				$user_ids[] = $wiki->city_founding_user;
-			
-				// get admin and bureaucrat
-				if (empty($wgEnableAnswers)) {
-					$memKey = self::getMemKeyAdminIds($wikiId);
-					$admin_ids = $wgMemc->get($memKey);
-					if (is_null($admin_ids)) {
-						$dbname = $wiki->city_dbname;
-						$db_type = ($use_master) ? DB_MASTER : DB_SLAVE;
-						$dbr = wfGetDB($db_type, array(), $dbname);
-						$result = $dbr->select(
-							'user_groups',
-							'distinct ug_user',
-							array ("ug_group in ('sysop','bureaucrat')"),
-							__METHOD__
-						);
-					
-						$admin_ids = array();
-						while ($row = $dbr->fetchObject($result)) {
-							$admin_ids[] = $row->ug_user;
-						}
-						$dbr->freeResult($result);
-						$wgMemc->set($memKey, $admin_ids, 60*60*24);
-					}
-					$user_ids = array_unique(array_merge($user_ids, $admin_ids));
-				}
-			}
-		} else {
-			$user_ids[] = $wgFounderEmailsDebugUserId;
-		}
-		
-		wfProfileOut( __METHOD__ );
-		return $user_ids;
-	}
-	
-	/**
-	 * Get memcache key for list of admin_ids
-	 * @param integer $wikiId
-	 * @return string memcache key
-	 */
-	protected static function getMemKeyAdminIds($wikiId) {
-		return wfSharedMemcKey('founderemail_admin_ids',$wikiId);
-	}
-	
-	/**
 	 * Get list of wikis with a particular local preference setting
 	 * Since the expected default is 0, we need to look for users with up_property value set to 1
 	 * 
@@ -205,7 +146,8 @@ class FounderEmails {
 		global $wgUser, $wgCityId, $wgSitename, $wgEnableUserPreferencesV2Ext;
 		wfProfileIn( __METHOD__ );
 
-		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), FounderEmails::getInstance()->getWikiAdminIds()) ) {
+		$wikiService = F::build( 'WikiService' );
+		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), $wikiService->getWikiAdminIds()) ) {
 			
 			if ( empty($wgEnableUserPreferencesV2Ext) ) {
 				$section = 'personal/wikiemail';
@@ -275,9 +217,10 @@ class FounderEmails {
 		if (!empty($wgCityId)) {
 			if (($addgroup && (in_array('sysop', $addgroup) || in_array('bureaucrat', $addgroup))) 
 				|| ($removegroup && (in_array('sysop', $removegroup) || in_array('bureaucrat', $removegroup)))) {
-				$memKey  = self::getMemKeyAdminIds($wgCityId);
+				$wikiService = F::build( 'WikiService' );
+				$memKey  = $wikiService->getMemKeyAdminIds( $wgCityId );
 				$wgMemc->delete($memKey);
-				FounderEmails::getInstance()->getWikiAdminIds($wgCityId, true);
+				$wikiService->getWikiAdminIds( $wgCityId, true );
 			}
 		}
 		

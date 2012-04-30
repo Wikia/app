@@ -251,9 +251,11 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author VickyC
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'interwikidispatcher' => 'Interwiki-distributör',
 	'interwikidispatcher-desc' => 'Löser interwiki-länkar för att reducera Apache-omdirigeringar',
 );
 
@@ -263,5 +265,13 @@ $messages['sv'] = array(
 $messages['tl'] = array(
 	'interwikidispatcher' => 'Tagadispatsa ng interwiki',
 	'interwikidispatcher-desc' => 'Naglulutas ng mga kawing na pang-interwiki upang mabawasan ang mga panlipat na Apache',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'interwikidispatcher' => 'Интервики-диспетчер',
+	'interwikidispatcher-desc' => 'Apache күчерүләрен кыскарту өчен интервики сылтамаларын рөхсәт итә',
 );
 

@@ -148,7 +148,6 @@ $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
  * Feed ingesters
  */
 $app->registerClass('VideoFeedIngester', $dir . '/feedingesters/VideoFeedIngester.class.php');
-$app->registerClass('MovieclipsFeedIngester', $dir . '/feedingesters/MovieclipsFeedIngester.class.php');
 $app->registerClass('RealgravityFeedIngester', $dir . '/feedingesters/RealgravityFeedIngester.class.php');
 $app->registerClass('ScreenplayFeedIngester', $dir . '/feedingesters/ScreenplayFeedIngester.class.php');
 
@@ -177,7 +176,7 @@ if(!empty($wgVideoHandlersVideosMigrated)) {
 	/**
 	 * SpecialPages
 	 */
-	$app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
-	$app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
+	//$app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
+	//$app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
  
 }

@@ -283,6 +283,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'loggergo' => 'ښکاره کول',
+	'loggernoresult' => 'پايلې و  نه موندل شوې',
 );
 
 /** Portuguese (Português)

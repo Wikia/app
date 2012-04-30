@@ -22,15 +22,15 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 	cursor: pointer;
 
 	h1 {
-		background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-sprite.png);
+		background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-sprite.png); /* $wgCdnStylePath */
 		background-position: 0 -121px;
 		height: 20px;
 		margin: 0 0 7px 0;
 		overflow: hidden;
-		
+
 		span {
 		    padding: 0 0 0 69px;
-		    background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-sprite.png);
+		    background: transparent url(/extensions/wikia/GamingCalendar/images/gaming-calendar-sprite.png); /* $wgCdnStylePath */
 		    background-position: 8px -85px;
 		    text-shadow: $color-page-border 1px 1px 1px;
 		    @if lightness($color-page) < 50 {
@@ -61,14 +61,14 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 			content: " >";
 		}
 	}
-	
+
 	/* Specific styles and interactions for the modal version of GamingCalendarItems. */
 	.GamingCalendarItem {
 		.game-details {
 			display: none;
 		}
 	}
-	
+
 }
 
 .GamingCalendarItem {
@@ -76,7 +76,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 	@include clearfix;
 	line-height: normal;
 	padding: 8px;
-	
+
     .calendar {
         border: 1px solid $color-page-border;
         float: left;
@@ -98,7 +98,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
         }
 
         .day {
-            background: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-sprite.png);
+            background: url(/extensions/wikia/GamingCalendar/images/gaming-calendar-sprite.png); /* $wgCdnStylePath */
 			@if lightness($color-page) < 50 {
 				background-position: 0 -42px;
 			}
@@ -129,13 +129,13 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 		font-size: 12px;
 		font-weight: normal;
 	}
-	
+
 	.game-systems, .game-rating {
 		color: $gaming-calendar-gray-text;
 		display: block;
 		font-size: 11px;
 	}
-	
+
 	.game-details {
 		clear: left;
 		text-align: right;
@@ -147,7 +147,7 @@ $gaming-calendar-gray-text: mix($color-text, $color-page, 75%);
 			line-height: 17px;
 		}
 		a {
-			font-size: 10px;	
+			font-size: 10px;
 		}
-	}	
+	}
 }

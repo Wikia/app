@@ -495,11 +495,14 @@ $messages['uk'] = array(
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'category-exhibition-alphabetical' => '按首字母顺序排列',
 	'category-exhibition-mostvisited' => '最多访问',
 	'category-exhibition-recentedits' => '最近编辑',
 	'category-exhibition-page-header' => '分类"$1"中的页面',
 	'category-exhibition-subcategories-header' => '子类别',
+	'category-exhibition-media-header' => '分类"$1"中的媒体文件',
 	'category-exhibition-blogs-header' => '博客帖子',
 	'category-exhibition-display-old' => '分类（列表视图）',
+	'category-exhibition-display-new' => '分类展示视图',
 );
 

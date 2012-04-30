@@ -422,9 +422,8 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
  */
 abstract class NullApiWrapper extends PseudoApiWrapper {
 	//@todo change this url
-	static $THUMBNAIL_URL = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/BrokenVideo_Icon_Large.png';
-	
-	
+	static $THUMBNAIL_URL = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/NoThumbnailBg.png';
+
 	public function __construct($videoId, array $overrideMetadata=array()) {
 		$this->videoId = $this->sanitizeVideoId( $videoId );
 		if (!empty($overrideMetadata['ingestedFromFeed'])

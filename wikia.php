@@ -25,6 +25,14 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 	// commit any open transactions just in case the controller forgot to
 	$app->commit();
 
+	//if cache policy wasn't explicitly set (e.g. WikiaResponse::setCacheValidity)
+	//then force no cache to reflect api.php default behavior
+	$cacheControl = $response->getHeader( 'Cache-Control' );
+
+	if ( empty( $cacheControl ) ) {
+		$response->setHeader( 'Cache-Control', 'private', true );
+	}
+
 	$response->sendHeaders();
 	$response->render();
 } else {

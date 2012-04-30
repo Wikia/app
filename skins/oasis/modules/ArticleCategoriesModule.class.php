@@ -9,7 +9,7 @@ class ArticleCategoriesModule extends WikiaController {
 
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
-		$this->catlinks = $this->app->getSkinTemplateObj()->data['catlinks'];
+		$this->catlinks = $this->wg->User->getSkin()->getCategories();
 		$catlinks = $this->request->getVal('catlinks');
 		if(!empty($catlinks)) {
 			$this->catlinks = $catlinks;

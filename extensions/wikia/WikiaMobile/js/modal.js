@@ -1,3 +1,4 @@
+/*global define, WikiaMobile */
 /**
  * Full screen modal in Wikia Mobile
  *
@@ -62,7 +63,7 @@
 
 			//hide adress bar on orientation change
 			window.addEventListener('orientationchange', function() {
-				if(window.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 )},1);
+				if(window.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 );},1);
 			});
 
 			window.addEventListener('hashchange', function() {
@@ -169,7 +170,6 @@
 			}else{
 				caption.style.display = 'none';
 			}
-
 		}
 
 		return {

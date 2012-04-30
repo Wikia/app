@@ -72,12 +72,11 @@ if ($useVideoFeed) {
 if ($usePartnerVideo) {
 	switch ($provider) {
 		case VideoPage::V_SCREENPLAY:
-		case VideoPage::V_MOVIECLIPS:
 		case VideoPage::V_REALGRAVITY:
 			$providersPartnerVideo = array( $provider );
 			break;
 		case '':
-			$providersPartnerVideo = array( VideoPage::V_SCREENPLAY, VideoPage::V_MOVIECLIPS, VideoPage::V_REALGRAVITY );
+			$providersPartnerVideo = array( VideoPage::V_SCREENPLAY, VideoPage::V_REALGRAVITY );
 			break;
 		default:
 			die("unknown provider $provider. aborting.\n");		
@@ -108,9 +107,6 @@ if ($useVideoFeed) {
 				$endDate = date('m/d/y', $endDateTS);
 				$file = $feedIngester->downloadFeed($startDate, $endDate);
 				break;
-			case VideoFeedIngester::PROVIDER_MOVIECLIPS:
-				// no file needed
-				break;
 			case VideoFeedIngester::PROVIDER_REALGRAVITY:				
 				// no file needed
 				$startDate = date('m/d/Y', $startDateTS);
@@ -122,10 +118,6 @@ if ($useVideoFeed) {
 		$params = array('debug'=>$debug, 'startDate'=>$startDate, 'endDate'=>$endDate);
 		if (!empty($ingestionData['keyphrases'])) {
 			$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
-		}
-		if (!empty($ingestionData['movieclipsIds'])) {
-			$params['movieclipsidsCategories'] = $ingestionData['movieclipsIds'];
-
 		}
 
 		$numCreated = $feedIngester->import($file, $params);		
@@ -154,9 +146,6 @@ if ($usePartnerVideo) {
 				$endDate = date('m/d/y', $endDateTS);
 				$file = PartnerVideoHelper::getInstance()->downloadScreenplayFeed($startDate, $endDate);
 				break;
-			case VideoPage::V_MOVIECLIPS:
-				// no file needed
-				break;
 			case VideoPage::V_REALGRAVITY:
 				$startDate = date('m/d/Y', $startDateTS);
 				$endDate = date('m/d/Y', $endDateTS);
@@ -168,10 +157,6 @@ if ($usePartnerVideo) {
 		$params = array();
 		if (!empty($ingestionData['keyphrases'])) {
 			$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
-		}
-		if (!empty($ingestionData['movieclipsIds'])) {
-			$params['movieclipsidsCategories'] = $ingestionData['movieclipsIds'];
-
 		}
 
 		PartnerVideoHelper::getInstance()->importFromPartner($provider, $file, $params);

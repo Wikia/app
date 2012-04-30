@@ -79,7 +79,7 @@ class AssetsManagerBaseBuilder {
 			$out = file_get_contents($tempOutFile);
 			unlink($tempOutFile);
 		} else {
-			$jsmin = dirname(__FILE__) . '/../../StaticChute/jsmin';
+			$jsmin = "{$IP}/lib/jsmin";
 			$out = shell_exec("cat $tempInFile | $jsmin");
 		}
 
@@ -91,10 +91,7 @@ class AssetsManagerBaseBuilder {
 
 	private function minifyCSS($content) {
 		wfProfileIn(__METHOD__);
-
-		require_once dirname(__FILE__) . '/../../StaticChute/Minify_CSS_Compressor.php';
 		$out = Minify_CSS_Compressor::process($content);
-
 		wfProfileOut(__METHOD__);
 		return $out;
 	}

@@ -77,6 +77,13 @@ $messages['it'] = array(
 	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
+);
+
 /** Lithuanian (Lietuvių)
  * @author Eitvys200
  */
@@ -146,6 +153,14 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'centralhelpsearch-desc' => 'Låter införandet av ett formulär för att söka i Community Central Help',
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'centralhelpsearch-desc' => 'Вики Җәмгыяте Белешмәлеге буенча эзләү формасын кушуны рөхсәт итү',
+	'centralhelpsearch-placeholder' => 'Белешмәлек буенча эзләү ...',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

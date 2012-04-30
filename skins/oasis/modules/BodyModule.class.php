@@ -140,18 +140,27 @@ class BodyModule extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		if($namespace == NS_SPECIAL) {
-			if ($wgTitle->isSpecial('Search') || ($wgTitle->isSpecial('WikiaSearch') && empty($this->wg->EnableWikiaHomePageExt))) {
-				$railModuleList = array(
-					$latestActivityKey => array('LatestActivity', 'Index', null),
-				);
+			if (ArticleAdLogic::isSearch()) {
+				if (empty($this->wg->EnableWikiaHomePageExt)) {
+					$railModuleList = array(
+						$latestActivityKey => array('LatestActivity', 'Index', null),
+					);
 
-				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
-				if( empty( $wgEnableWikiAnswers ) ) {
-					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-					if ($wgEnableHuluVideoPanel) {
-						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
-					}
+					if( empty( $wgEnableWikiAnswers ) ) {
+						$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
+						if ($wgEnableHuluVideoPanel) {
+							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
+						}
+					}					
+				}
+				elseif ($wgEnableCorporatePageExt) {
+					$railModuleList = array(
+						1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'))
+					);
+					wfProfileOut(__METHOD__);
+					return $railModuleList;
 				}
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
@@ -268,7 +277,6 @@ class BodyModule extends WikiaController {
 			} else { // content pages
 				$railModuleList[1470] = array('CorporateSite', 'PopularStaffPosts', null);
 			}
-			if ($wgTitle->isSpecial('Search')) $railModuleList = array();
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
@@ -346,12 +354,12 @@ class BodyModule extends WikiaController {
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
 		&& in_array($wgTitle->getArticleId(), $wgMaximizeArticleAreaArticleIds)) {
-			$this->wgSuppressRail = true;
-			$this->wgSuppressPageHeader = true;
+			$this->wg->SuppressRail = true;
+			$this->wg->SuppressPageHeader = true;
 		}
 
 		// InfoBox - Testing
-		$this->wgEnableInfoBoxTest = $wgEnableInfoBoxTest;
+		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
 		$this->isMainPage = ArticleAdLogic::isMainPage();
 
 		// Replaces ContentDisplayModule->index()
@@ -380,7 +388,7 @@ class BodyModule extends WikiaController {
 		} else {
 			$this->displayComments = false;
 		}
-
+		
 		// show user pages header on this page?
 		if (self::showUserPagesHeader()) {
 			$this->headerModuleName = 'UserPagesHeader';
@@ -400,13 +408,11 @@ class BodyModule extends WikiaController {
 
 			// FIXME: move to separate module
 			if ( $wgEnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
-				$this->wgSuppressFooter = true;
-				$this->wgSuppressArticleCategories = true;
-				$this->displayComments = false;
-				$this->wgSuppressPageHeader = true;
-				$this->wgSuppressWikiHeader = true;
-				$this->wgSuppressSlider = true;
-				$this->bodytext = F::App()->sendRequest( 'WikiaHomePageController', 'index' );
+				$this->wg->SuppressFooter = true;
+				$this->wg->SuppressArticleCategories = true;
+				$this->wg->SuppressPageHeader = true;
+				$this->wg->SuppressWikiHeader = true;
+				$this->wg->SuppressSlider = true;
 			} else if ($wgEnableCorporatePageExt) {
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
 				wfLoadExtensionMessages( 'AutoHubsPages' );
@@ -418,9 +424,8 @@ class BodyModule extends WikiaController {
 
 				// $this->wgSuppressFooter = true;
 				$this->wgSuppressArticleCategories = true;
-				$this->displayComments = false;
 				if (ArticleAdLogic::isMainPage()) {
-					$this->wgSuppressPageHeader = true;
+					$this->wg->SuppressPageHeader = true;
 				} else {
 					$this->headerModuleAction = 'Corporate';
 				}

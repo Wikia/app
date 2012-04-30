@@ -115,6 +115,8 @@ $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ 'AnalyticsEngine'                 ] = "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'Mustache'                        ] = "$IP/lib/mustache.php/Mustache.php";
+$wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/Minify_CSS_Compressor.php";
+$wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'PayflowAPI'                      ] = "$IP/includes/wikia/PayflowAPI.php";
 $wgAutoloadClasses[ 'Curl'                            ] = "$IP/includes/wikia/Curl.php";
@@ -163,6 +165,7 @@ $wgAutoloadClasses['StumbleuponSharing'] = $IP . '/includes/wikia/services/Stumb
 $wgAutoloadClasses['RedditSharing'] = $IP . '/includes/wikia/services/RedditSharing.class.php';
 $wgAutoloadClasses['EmailSharing'] = $IP . '/includes/wikia/services/EmailSharing.class.php';
 $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.class.php';
+$wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.class.php';
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
 
 // controllers
@@ -261,6 +264,9 @@ $wgAutoloadClasses[ "WikiaApiQueryEventsData"       ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
 $wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
+$wgAutoloadClasses[ "ApiCreateMultiplePages"        ] = "$IP/extensions/wikia/WikiaApi/ApiCreateMultiplePages.php";
+$wgAutoloadClasses[ "ApiUploadLogo"                 ] = "$IP/extensions/wikia/WikiaApi/ApiUploadLogo.php";
+$wgAutoloadClasses[ "ApiFounderSettings"            ] = "$IP/extensions/wikia/WikiaApi/ApiFounderSettings.php";
 
 if( $wgUseFakeExternalStoreDB !== true ) {
 	$wgAutoloadClasses[ "WikiaApiQueryBlob"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryBlob.php";
@@ -331,6 +337,9 @@ $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
 $wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
+$wgAPIModules["createmultiplepages"] = "ApiCreateMultiplePages";
+$wgAPIModules[ "uploadlogo"        ] = "ApiUploadLogo";
+$wgAPIModules[ "foundersettings"   ] = "ApiFounderSettings";
 
 
 if( $wgUseFakeExternalStoreDB !== true ) {
@@ -467,10 +476,6 @@ include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" )
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/AutoCreateWiki/CreateWikiLocalJob.php" );
 
-
-// StaticChute used to generate merged JS/CSS files on-the-fly (DEPRECATED)
-$wgAutoloadClasses['StaticChute'] = "$IP/extensions/wikia/StaticChute/StaticChute.php";
-
 /*
  * @name wgWikiaStaffLanguages
  * array of language codes supported by ComTeam
@@ -588,8 +593,6 @@ $wgNoExternals = false;
  * 1) if the combiner fails to prepend the wgCdnStylePath, the link will still work,
  * 2) the combiner WON'T prepend the wgCdnStylePath on development machines so that
  * the local resource is used (makes testing easier).
- *
- * WARNING: Currently we need to dupliate this value into StaticChute::cdnStylePath.
  */
 $wgCdnStylePath = '';
 

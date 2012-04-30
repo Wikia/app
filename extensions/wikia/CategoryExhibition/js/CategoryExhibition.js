@@ -7,10 +7,10 @@ var CategoryExhibition = {
 		$('#WikiaArticle').delegate('.category-gallery-item', 'click', CategoryExhibition.trackClick);
 
 		$('#mw-images').delegate('a.video-thumbnail', 'click', CategoryExhibition.mediaThumbnailClick);
-		$('#mw-pages').delegate('.wikia-paginator a.paginator-page', 'click', CategoryExhibition.articlesPaginatorClick);
-		$('#mw-subcategories').delegate('.wikia-paginator a.paginator-page', 'click', CategoryExhibition.subcategoriesPaginatorClick);
-		$('#mw-images').delegate('.wikia-paginator a.paginator-page', 'click', CategoryExhibition.mediaPaginatorClick);
-		$('#mw-blogs').delegate('.wikia-paginator a.paginator-page', 'click', CategoryExhibition.blogsPaginatorClick);
+		$('#mw-pages').delegate('.wikia-paginator a', 'click', CategoryExhibition.articlesPaginatorClick);
+		$('#mw-subcategories').delegate('.wikia-paginator a', 'click', CategoryExhibition.subcategoriesPaginatorClick);
+		$('#mw-images').delegate('.wikia-paginator a', 'click', CategoryExhibition.mediaPaginatorClick);
+		$('#mw-blogs').delegate('.wikia-paginator a', 'click', CategoryExhibition.blogsPaginatorClick);
 
 		// tracking
 

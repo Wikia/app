@@ -166,7 +166,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		$rvd = F::build('RelatedVideosData'); /* @var $rvd RelatedVideosData */
-		$videoData = $rvd->getVideoData( $videoTitle, $width, $videoWidth, $autoplay, $useMaster, $cityShort, $videoHeight, $useJWPlayer, $inAjaxReponse );
+		$videoData = $rvd->getVideoData( $videoName, $width, $videoWidth, $autoplay, $useMaster, $cityShort, $videoHeight, $useJWPlayer, $inAjaxReponse );
 		$this->setVal( 'data', $videoData );
 	}
 

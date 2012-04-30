@@ -79,6 +79,13 @@ $messages['it'] = array(
 	'campfire-licensed-under' => 'Sotto licenza $1',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'campfire-page-header' => '$1 vum $2',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -159,6 +166,14 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'campfire-page-header' => '$1 från $2',
 	'campfire-licensed-under' => 'Gjord tillgänglig under licensen $1',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'campfire-page-header' => '$2 дән $1',
+	'campfire-licensed-under' => '$1 лицензиясы астында',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -1,4 +1,6 @@
-/*!
+/*global getComputedStyle, WebKitCSSMatrix */
+
+/* !
  * iScroll Lite base on iScroll v4.1.6 ~ Copyright (c) 2011 Matteo Spinelli, http://cubiq.org
  * Released under MIT license, http://cubiq.org/license
  *
@@ -13,16 +15,12 @@
 				'opera' in window ? 'O' : '',
 
 		// Browser capabilities
-		isIDevice = (/iphone|ipad/gi).test(navigator.appVersion),
-		isPlaybook = (/playbook/gi).test(navigator.appVersion),
-		isTouchPad = (/hp-tablet/gi).test(navigator.appVersion),
-
 		has3d = 'WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix(),
 		hasTransform = vendor + 'Transform' in document.documentElement.style,
-		hasTransitionEnd = isIDevice || isPlaybook,
+		hasTransitionEnd = (/iphone|ipad/gi).test(navigator.appVersion) || (/playbook/gi).test(navigator.appVersion),
 
 		// Events
-		RESIZE_EV = 'orientationchange',
+		RESIZE_EV = 'resize',
 		START_EV = 'touchstart',
 		MOVE_EV = 'touchmove',
 		END_EV = 'touchend',
@@ -33,12 +31,14 @@
 		trnClose = has3d ? ',0)' : ')',
 
 		// Constructor
-		iScroll = function (el) {
+		iScroll = function (el, onstop) {
 			this.wrapper = el;
 
 			var scroll = el.children[0];
 
 			this.scroller = scroll;
+
+			this.onstop = onstop;
 
 			// Set starting position
 			this.x = 0;
@@ -62,17 +62,18 @@
 			scroll.addEventListener(CANCEL_EV, this);
 		};
 
-// Prototype
+	// Prototype
 	iScroll.prototype = {
 		x: 0,
 		steps: [],
 
 		handleEvent: function (e) {
-			var that = this;
+			var that = this,
+				point,
+				x;
 			switch(e.type) {
 				case START_EV:
-					var point = e.touches[0],
-						x;
+					point = e.touches[0];
 
 					if (hasTransitionEnd) this._transitionTime(0);
 
@@ -82,14 +83,17 @@
 
 					if(hasTransform) {
 						// Very lame general purpose alternative to CSSMatrix
-						x = ~~getComputedStyle(this.scroller, null)[vendor + 'Transform'].replace(/[^0-9-.,]/g, '').split(',')[4];
+						x = ~~getComputedStyle(this.scroller, null)[vendor + 'Transform'].replace(/[^0-9\-.,]/g, '').split(',')[4];
 					} else {
-						x = ~~getComputedStyle(this.scroller, null).left.replace(/[^0-9-]/g, '');
+						x = ~~getComputedStyle(this.scroller, null).left.replace(/[^0-9\-]/g, '');
 					}
 
 					if(x != this.x) {
-						if (hasTransitionEnd) this.scroller.removeEventListener('webkitTransitionEnd', this);
-						else clearTimeout(this.aniTime);
+						if (hasTransitionEnd) {
+							this.scroller.removeEventListener('webkitTransitionEnd', this);
+						} else {
+							clearTimeout(this.aniTime);
+						}
 						this.steps = [];
 						this._pos(x);
 					}
@@ -100,8 +104,8 @@
 					this.startTime = e.timeStamp || Date.now();
 					break;
 				case MOVE_EV:
-					var point = e.touches[0],
-						deltaX = point.pageX - that.pointX,
+					point = e.touches[0];
+					var deltaX = point.pageX - that.pointX,
 						newX = that.x + deltaX,
 						timestamp = e.timeStamp || Date.now();
 
@@ -109,7 +113,7 @@
 
 					// Slow down if outside of the boundaries
 					if (newX > 0 || newX < that.maxScrollX) {
-						newX = that.x + (deltaX / 2)
+						newX = that.x + (deltaX / 2);
 					}
 
 					that.distX += deltaX;
@@ -141,9 +145,9 @@
 					}
 
 					if (duration < 300) {
-						momentumX = newPosX ? that._momentum(newPosX - that.startX, duration, -that.x, that.scrollerW - that.wrapperW + that.x, that.wrapperW) : { dist:0, time:0 };
+						momentumX = newPosX ? that._momentum(newPosX - that.startX, duration) : { dist:0, time:0 };
 
-						newPosX = that.x + momentumX.dist;
+						newPosX = newPosX + momentumX.dist;
 
 						if ((that.x > 0 && newPosX > 0) || (that.x < that.maxScrollX && newPosX < that.maxScrollX)) momentumX = { dist:0, time:0 };
 					}
@@ -182,7 +186,8 @@
 				resetX = x >= 0 ? 0 : x <  max ? max : x;
 
 			if (resetX == x) {
-				if (this.moved) {
+				if(this.moved){
+					if(typeof this.onstop == 'function') this.onstop(this.wrapper, -x, -max - 10);
 					this.moved = false;
 				}
 				return;
@@ -221,8 +226,11 @@
 				that._transitionTime(step.time);
 				that._pos(step.x);
 				that.animating = false;
-				if (step.time) this.scroller.addEventListener('webkitTransitionEnd', this);
-				else that._resetPos(0);
+				if (step.time) {
+					this.scroller.addEventListener('webkitTransitionEnd', this)
+				} else {
+					that._resetPos(0);
+				}
 				return;
 			}
 
@@ -251,12 +259,14 @@
 			this.scroller.style[vendor + 'TransitionDuration'] = time + 'ms';
 		},
 
-		_momentum: function (dist, time, maxDistUpper, maxDistLower, size) {
+		_momentum: function (dist, time) {
 			var decele = 0.0006,
+				maxDistUpper = -this.x,
+				maxDistLower = this.scrollerW - this.wrapperW + this.x,
 				s = m.abs(dist) / time,
 				newDist = (s * s) / (2 * decele),
-				outsideDist = size / (6 / (newDist / s * decele)),
-				maxDist;
+				outsideDist = this.wrapperW / (6 / (newDist / s * decele)),
+				maxDist = newDist;
 
 			// Proportinally reduce speed if we are outside of the boundaries
 			if (dist > 0 && newDist > maxDistUpper) {
@@ -264,7 +274,8 @@
 			} else if (dist < 0 && newDist > maxDistLower) {
 				maxDist = maxDistLower + outsideDist;
 			}
-			return { dist: (maxDist * (dist < 0 ? -1 : 1)), time: (((s * maxDist / newDist) / decele) >> 0) };
+
+			return { dist: (maxDist * (dist < 0 ? -1 : 1)), time: (~~((s * maxDist / newDist) / decele)) };
 		},
 
 		/**
@@ -286,7 +297,7 @@
 
 		refresh: function() {
 			this.wrapperW = this.wrapper.clientWidth;
-			this.maxScrollX = this.wrapperW - this.scrollerW - 15;
+			this.maxScrollX = this.wrapperW - this.scrollerW - 10;
 			this.scroller.style[vendor + 'TransitionDuration'] = '0';
 			this._resetPos(200);
 		},

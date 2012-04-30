@@ -52,6 +52,9 @@ $messages['en'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Add a blog post to your wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Add Multiple Photos',
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
+
+// Chrome
+	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
 );
 
 /** Message documentation (Message documentation) */
@@ -219,6 +222,7 @@ $messages['br'] = array(
 	'admindashboard-control-add-photo-tooltip' => "Ouzhpennañ pajennoù nevez d'ho wiki.",
 	'admindashboard-control-multiple-upload-label' => 'Ouzhpennañ meur a skeudenn',
 	'admindashboard-control-multiple-upload-tooltip' => 'Enporzhiañ meur a skeudenn war un dro gant an ostilh enporzhier skeudennoù a vras.',
+	'admindashboard-back-to-dashboard' => "Distreiñ d'an daolenn-stur",
 );
 
 /** Catalan (Català)
@@ -311,6 +315,7 @@ $messages['de'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Füge einen neuen Blog-Beitrag zu deinem Wiki hinzu.',
 	'admindashboard-control-multiple-upload-label' => 'Mehrere Fotos hinzufügen',
 	'admindashboard-control-multiple-upload-tooltip' => 'Lade mehr als ein Foto gleichzeitig hoch mit dem Mehrere Fotos hochladen Tool.',
+	'admindashboard-back-to-dashboard' => 'Zurück zur Übersicht',
 );
 
 /** Zazaki (Zazaki)
@@ -384,6 +389,7 @@ $messages['es'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Añadir una entrada de blog a tu wiki',
 	'admindashboard-control-multiple-upload-label' => 'Añadir varias imágenes',
 	'admindashboard-control-multiple-upload-tooltip' => 'Sube varias fotos simultáneamente con la herramienta de subida múltiple',
+	'admindashboard-back-to-dashboard' => 'Regresar al Panel',
 );
 
 /** Persian (فارسی)
@@ -448,6 +454,7 @@ $messages['fi'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Lisää blogikirjoitus wikiisi.',
 	'admindashboard-control-multiple-upload-label' => 'Lisää useita kuvia',
 	'admindashboard-control-multiple-upload-tooltip' => 'Lisää yhtä useampia kuvia samalla kertaa usean kuvan lataustyökalulla.',
+	'admindashboard-back-to-dashboard' => 'Takaisin kojelautaan',
 );
 
 /** Faroese (Føroyskt)
@@ -508,6 +515,7 @@ $messages['fr'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Ajouter un billet de blog à votre wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Ajouter plusieurs images',
 	'admindashboard-control-multiple-upload-tooltip' => "Importer plus d’une image à la fois avec l’outil d'importation d’importation d’images multiples.",
+	'admindashboard-back-to-dashboard' => 'Retour au tableau de bord',
 );
 
 /** Galician (Galego)
@@ -554,6 +562,7 @@ $messages['gl'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Engadir unha entrada de blogue ao seu wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Engadir varias fotografías',
 	'admindashboard-control-multiple-upload-tooltip' => 'Cargar máis dunha foto á vez coa ferramenta de subida múltiple de fotos.',
+	'admindashboard-back-to-dashboard' => 'Volver ao taboleiro',
 );
 
 /** Hebrew (עברית)
@@ -662,6 +671,7 @@ $messages['ia'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Adder un articulo de blog a tu wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Adder multiple photos',
 	'admindashboard-control-multiple-upload-tooltip' => 'Incargar plure photos simultaneemente con le instrumento pro incargamento de multiple photos.',
+	'admindashboard-back-to-dashboard' => 'Retornar al pannello de instrumentos',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -709,6 +719,7 @@ $messages['id'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Menambahkan posting blog ke wiki anda.',
 	'admindashboard-control-multiple-upload-label' => 'Menambahkan beberapa foto',
 	'admindashboard-control-multiple-upload-tooltip' => 'Mengunggah lebih dari satu foto secara bersamaan dengan alat unggah foto secara bersamaan.',
+	'admindashboard-back-to-dashboard' => 'Kembali ke Dashboard',
 );
 
 /** Italian (Italiano)
@@ -727,6 +738,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -766,6 +778,7 @@ $messages['ja'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'ブログ記事を投稿します。',
 	'admindashboard-control-multiple-upload-label' => '複数の画像をアップロード',
 	'admindashboard-control-multiple-upload-tooltip' => '複数の画像を一度にアップロードできるツールです。',
+	'admindashboard-back-to-dashboard' => 'ダッシュボードに戻る',
 );
 
 /** Korean (한국어)
@@ -812,6 +825,7 @@ $messages['ko'] = array(
 	'admindashboard-control-add-blog-tooltip' => '블로그를 추가합니다.',
 	'admindashboard-control-multiple-upload-label' => '여러 장의 사진 추가',
 	'admindashboard-control-multiple-upload-tooltip' => '여러 개의 사진 업로드 도구를 사용하여 한 번에 하나 이상의 사진을 업로드합니다.',
+	'admindashboard-back-to-dashboard' => '대시보드로 돌아가기',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -832,6 +846,7 @@ $messages['lb'] = array(
 	'admindashboard-control-recent-changes-label' => 'Rezent Ännerungen',
 	'admindashboard-controls-community-header' => 'Communautéit',
 	'admindashboard-control-user-list-label' => 'Benotzerlëscht',
+	'admindashboard-control-user-rights-label' => 'Benotzerrechter',
 	'admindashboard-control-invite-label' => 'Invitéieren',
 	'admindashboard-control-help-label' => 'Hëllef',
 	'admindashboard-control-help-tooltip' => 'Hëllef fannen.',
@@ -918,6 +933,7 @@ $messages['mk'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Додајте блоговски запис на викито.',
 	'admindashboard-control-multiple-upload-label' => 'Додај повеќе слики наеднаш',
 	'admindashboard-control-multiple-upload-tooltip' => 'Додајте повеќе слики наеднаш со алатката за повеќекратно подигање на слики.',
+	'admindashboard-back-to-dashboard' => 'Назад на Таблата',
 );
 
 /** Malay (Bahasa Melayu)
@@ -964,6 +980,7 @@ $messages['ms'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Tambahkan catatan blog pada wiki anda.',
 	'admindashboard-control-multiple-upload-label' => 'Tambah Berbilang Gambar',
 	'admindashboard-control-multiple-upload-tooltip' => 'Muat naik lebih daripada satu gambar sekali dengan alat muat naik berbilang gambar.',
+	'admindashboard-back-to-dashboard' => 'Kembali ke Papan Pemuka',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -1011,6 +1028,7 @@ $messages['nb'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Legg et blogginnlegg til wikien din.',
 	'admindashboard-control-multiple-upload-label' => 'Legg til flere bilder',
 	'admindashboard-control-multiple-upload-tooltip' => 'Last opp mer enn ett bilde av gangen med verktøyet for opplasting av flere bilder.',
+	'admindashboard-back-to-dashboard' => 'Tilbake til dashbordet',
 );
 
 /** Dutch (Nederlands)
@@ -1058,6 +1076,7 @@ $messages['nl'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Een nieuw blogbericht aan uw wiki toevoegen.',
 	'admindashboard-control-multiple-upload-label' => "Meerdere foto's toevoegen",
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload meerdere afbeeldingen tegelijkertijd met dit uploadprogramma.',
+	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
 );
 
 /** Polish (Polski)
@@ -1107,6 +1126,7 @@ $messages['pl'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Dodaj wpis na blogu na Twojej wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Dodaj wiele obrazów',
 	'admindashboard-control-multiple-upload-tooltip' => 'Przesyła więcej niż jeden obraz za pomocą narzędzia do jednoczesnego przesyłania wielu obrazów.',
+	'admindashboard-back-to-dashboard' => 'Powrót do panelu',
 );
 
 /** Pashto (پښتو)
@@ -1136,6 +1156,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Andresilvazito
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'admindashboard-toolbar-link' => 'Administrador',
@@ -1145,6 +1166,7 @@ $messages['pt'] = array(
 	'admindashboard-control-user-list-tooltip' => 'Exibir uma lista completa dos usuários que participaram no seu wiki.',
 	'admindashboard-control-user-rights-label' => 'Direitos de Usuário',
 	'admindashboard-control-user-rights-tooltip' => 'Adicionar e remover os direitos de grupos e permissões para usuários no seu wiki.',
+	'admindashboard-control-help-label' => 'Ajuda',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1246,6 +1268,7 @@ $messages['ru'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Добавить новое сообщение в блоге на вики.',
 	'admindashboard-control-multiple-upload-label' => 'Добавить несколько фотографий',
 	'admindashboard-control-multiple-upload-tooltip' => 'Загрузить несколько изображений одновременно с помощью специального инструмента.',
+	'admindashboard-back-to-dashboard' => 'Вернуться в Кабинет',
 );
 
 /** Sinhala (සිංහල)
@@ -1291,6 +1314,7 @@ $messages['sr-ec'] = array(
 	'admindashboard-control-add-blog-label' => 'Додај поруку на блогу',
 	'admindashboard-control-add-blog-tooltip' => 'Додајте блоговску поруку на вики.',
 	'admindashboard-control-multiple-upload-label' => 'Додај више слика одједном',
+	'admindashboard-back-to-dashboard' => 'Назад на Таблу',
 );
 
 /** Swedish (Svenska)
@@ -1337,6 +1361,7 @@ $messages['sv'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Lägg till ett blogginlägg till din wiki.',
 	'admindashboard-control-multiple-upload-label' => 'Lägg till flera foton',
 	'admindashboard-control-multiple-upload-tooltip' => 'Ladda upp fler än ett foto på en gång med verktyget för överföring av flera foton.',
+	'admindashboard-back-to-dashboard' => 'Tillbaka till instrumentpanel',
 );
 
 /** Tamil (தமிழ்)
@@ -1483,6 +1508,7 @@ $messages['uk'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Додати повідомлення в блозі на свою вікі',
 	'admindashboard-control-multiple-upload-label' => 'Додати кілька фотографій',
 	'admindashboard-control-multiple-upload-tooltip' => 'Завантажити кілька зображень одночасно за допомогою спеціального інструменту.',
+	'admindashboard-back-to-dashboard' => 'Повернутися до Панелі керування',
 );
 
 /** Veps (Vepsän kel’)
@@ -1542,6 +1568,7 @@ $messages['vi'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Tạo một bài viết blog cho wiki của bạn.',
 	'admindashboard-control-multiple-upload-label' => 'Thêm nhiều ảnh',
 	'admindashboard-control-multiple-upload-tooltip' => 'Tải lên nhiều hình ảnh cùng một lúc với công cụ tải nhiều ảnh.',
+	'admindashboard-back-to-dashboard' => 'Trở về Bảng điều khiển',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
@@ -1584,6 +1611,7 @@ $messages['zh-hans'] = array(
 	'admindashboard-control-add-blog-label' => '添加博客文章',
 	'admindashboard-control-add-blog-tooltip' => '添加博客文章至您的维基。',
 	'admindashboard-control-multiple-upload-label' => '添加多个图片',
+	'admindashboard-back-to-dashboard' => '返回面板',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

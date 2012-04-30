@@ -3,7 +3,7 @@
  * Displays various performance metrics from different sources:
  *
  *  - Google PageSpeed
- *  - DOM complexity report
+ *  - phantomjs
  *
  * @addto maintenance
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
@@ -19,7 +19,7 @@ function printHelp() {
 		echo <<<HELP
 Returns performance metrics for a given page
 
-USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals]
+USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia --ganglia-group=Mobile performance]
 
 	--url
 		Page to be checked
@@ -27,12 +27,23 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 	--mobile
 		Force wikiamobile skin
 
-	--csv
-		Return in CSV format
-
 	--noexternals
 		Test pages without external resources fetched (i.e. noexternals=1 added to the URL)
 
+	--logged-in
+		Get metrics for logged-in version of the site
+
+	--providers
+		Comma separated list of providers to get data from
+
+	--csv
+		Return in CSV format
+
+	--ganglia
+		Send data to Ganglia server using UDP protocol
+
+	--ganglia-group
+		Name of Ganglia graph group to report metrics to
 HELP;
 }
 
@@ -43,20 +54,23 @@ if (!isset($options['url'])) {
 }
 
 $url = $options['url'];
+$params = array(
+	// support --noexternals option
+	'noexternals' => isset($options['noexternals']),
 
-// support --noexternals option
-if (isset($options['noexternals'])) {
-	$url .= (strpos($url, '?') !== false ? '&' : '?') . 'noexternals=1';
-}
+	// support --mobile option
+	'mobile' => isset($options['mobile']),
 
-// support --mobile option
-if (isset($options['mobile'])) {
-	$url .= (strpos($url, '?') !== false ? '&' : '?') . 'useskin=wikiamobile';
-}
+	// support --providers option
+	'providers' => isset($options['providers']) ? explode(',', $options['providers']) : array(),
+
+	// support --logged-in option
+	'loggedIn' => isset($options['logged-in'])
+);
 
 // use GooglePage speed API
 $metrics = F::build('PerformanceMetrics');
-$report = $metrics->getReport($url);
+$report = $metrics->getReport($url, $params);
 
 if (empty($report)) {
 	echo "Get metrics request failed!\n";
@@ -71,12 +85,36 @@ if (isset($options['csv'])) {
 	die(0);
 }
 
+// send data to Ganglia using gmetric library (BugId:29371)
+if (isset($options['ganglia']) && isset($options['ganglia-group'])) {
+	$host = $wgGangliaHost;
+	$port = $wgGangliaPort;
+	$group = $options['ganglia-group'];
+
+	echo "Sending data to {$host}:{$port} ('{$group}' group)...";
+
+	$gmetric = F::build('GMetricClient');
+
+	$gmetric->setHostnameSpoof('10.8.32.34', 'spoofed-performance-metrics');
+	$gmetric->setPrefix(strtolower(str_replace(' ', '-', $group)));
+	$gmetric->setGroup($group);
+
+	foreach($report['metrics'] as $name => $value) {
+		$gmetric->addMetric($name, is_numeric($value) ? GMetricClient::GANGLIA_VALUE_UNSIGNED_INT : GMetricClient::GANGLIA_VALUE_STRING, $value);
+	}
+
+	$gmetric->send($host, $port);
+
+	echo " done!\n";
+	die(0);
+}
+
 // print the report on the screen
 $reportUrl = $report['url'];
 
 echo <<<REPORT
 -------------------------------------------------------------------------------
-PageSpeed report for <$reportUrl>:
+Perfomance metrics for <$reportUrl>:
 -------------------------------------------------------------------------------
 
 REPORT;
@@ -90,7 +128,7 @@ if (isset($report['metrics']['pageSpeed'])) {
 echo "\nDetails:\n--------\n";
 
 foreach($report['metrics'] as $key => $value) {
-	echo '* ' . sprintf('%-30s: %s', $key, number_format($value)) . "\n";
+	echo '* ' . sprintf('%-30s: %s', $key, is_numeric($value) ? number_format($value) : $value)  . "\n";
 }
 
 die(0);

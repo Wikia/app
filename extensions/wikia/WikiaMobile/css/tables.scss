@@ -19,28 +19,31 @@
 }
 
 //handling wide Tables
-
-//if native scroll is available:
-
-.overflow .bigTable {
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
-}
-
 .bigTable{
 	max-width: 100%;
 	position: relative;
 	padding: 5px;
 	margin-top: $page-padding;
+	box-shadow: inset 0 0 15px $shadow-color;
+    border: 1px solid $border-color;
+    -webkit-transition: border .2s;
+  	-moz-transition: border .2s;
+  	-o-transtion: border .2s;
 }
 
+//if native scroll is available:
+.overflow .bigTable {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+//if not
 .no-overflow .bigTable {
     overflow: hidden;
-	border-right: 2px solid $border-color;
 
 	&::after{
-		content: "";
-        background-color: rgba(0, 0, 0, .3);
+		content: '';
+        background-color: rgba(0, 0, 0, .2);
         position: absolute;
         left: 0;
         top: 0;
@@ -52,4 +55,14 @@
 			display: none;
 		}
 	}
+}
+
+$wide-table-border: 5px solid rgb(215,232,242);
+
+.left{
+	border-right: $wide-table-border;
+}
+
+.right{
+	border-left: $wide-table-border;
 }

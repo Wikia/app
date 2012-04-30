@@ -139,13 +139,14 @@ a {
 			width: 15px;
 		}
 	}
+	&.chat-mod .username:after, &.staff .username:after {
+		@include sprite-Chat-base;
+	}
 	&.chat-mod .username:after {
-		// TODO: don't use full, use combination of sprite-chat-base and sprite-chat;
-		@include sprite-Chat-full('icon-chat_mod');
+		@include sprite-Chat('icon-chat_mod');
 	}
 	&.staff .username:after {
-		// TODO: don't use full, use combination of sprite-chat-base and sprite-chat;
-		@include sprite-Chat-full('icon-staff' + $sprite-normal);
+		@include sprite-Chat('icon-staff' + $sprite-normal, 14px, 14px);
 	}
 	.details {
 		font-size: 11px;
@@ -156,7 +157,7 @@ a {
 	.UserStatsMenu {
 		display: none;	
 	}
-}	
+}
 
 .WikiaPage {
 	@include border-radius-se(5px);

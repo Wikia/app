@@ -200,3 +200,11 @@ $messages['tl'] = array(
 	'slidertag-featured-wikis' => 'Tampok na mga wiki',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'slidertag-desc' => 'Катнашучыларга сайланма слайдерлар өстәргә мөмкинлек бирә',
+	'slidertag-featured-wikis' => 'Сайланган викилар',
+);
+

@@ -540,6 +540,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -559,7 +560,7 @@ $messages['ja'] = array(
 	'categoryselect-empty-name' => 'カテゴリ名を入力（"|"より前の部分）',
 	'categoryselect-button-save' => '保存',
 	'categoryselect-button-cancel' => '取り消し',
-	'categoryselect-error-not-exist' => '記事 [id=$1] が存在しません。',
+	'categoryselect-error-not-exist' => '記事 [id=$1] は存在しません。',
 	'categoryselect-error-user-rights' => '利用者権限のエラーです。',
 	'categoryselect-error-db-locked' => 'データベースがロックされています',
 	'categoryselect-edit-abort' => '拡張機能のフックによって、修正が中断されました',
@@ -791,8 +792,8 @@ $messages['pl'] = array(
 	'categoryselect-error-user-rights' => 'Błąd uprawnień użytkownika.',
 	'categoryselect-error-db-locked' => 'Baza danych jest zablokowana',
 	'categoryselect-edit-abort' => 'Zmiany, które próbowano wprowadzić zostały anulowane przez inne rozszerzenie',
-	'tog-disablecategoryselect' => 'Wyłącz pasek kategorii (tylko gdy edytowanie w trybie wizualnym zostało wyłączone)',
-	'tog-disablecategoryselect-v2' => 'Wyłącz pasek kategorii w trybie (stosuje się tylko jeśli zablokowany jest edytor wizualny)',
+	'tog-disablecategoryselect' => 'Wyłącz dodawanie kategorii',
+	'tog-disablecategoryselect-v2' => 'Wyłącz dodawanie kategorii w trybie źródłowym',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1143,6 +1144,7 @@ $messages['zh-hans'] = array(
 	'categoryselect-edit-summary' => '添加分类',
 	'categoryselect-button-save' => '保存',
 	'categoryselect-button-cancel' => '取消',
+	'categoryselect-error-not-exist' => '条目：[id=$1]不存在。',
 	'categoryselect-error-user-rights' => '用户权限错误。',
 	'categoryselect-error-db-locked' => '数据库已锁定。',
 );
