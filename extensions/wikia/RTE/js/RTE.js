@@ -17,7 +17,7 @@
 			baseFloatZIndex: 20000001, // $zTop from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: "",
+			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',
@@ -96,9 +96,6 @@
 		// CK loading time
 		loadTime: false,
 
-		// The key in local storage where RTE related things are kept (BugId:25289)
-		localStorageKey: 'WikiaRichTextEditor',
-
 		// use firebug / opera console to log events / dump objects
 		log: function(msg) {
 			$().log(msg, 'RTE');
@@ -118,59 +115,6 @@
 			}, 'json');
 		},
 
-		track: function(action, label, value) {
-		},
-
-		// load MW:Common.css / MW:Wikia.css (RT #77759)
-		contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss ],
-
-		// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
-		getContentsCss: function(editor) {
-
-			// Bartek - for RT #43217
-			if (window.WikiaEnableAutoPageCreate) {
-				// Must use wgServer to get wiki's subdomain in URL. (BugId:24403)
-				RTE.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css');
-			}
-
-			var contentsCss = '',
-				index = 0,
-				length = RTE.contentsCss.length;
-
-			(function load() {
-				$.get(RTE.contentsCss[index], function(css) {
-					contentsCss += css;
-					index++;
-
-					if (index < length) {
-						load();
-
-					// Done loading
-					} else {
-						RTE.config.contentsCss = contentsCss;
-
-						// Cache the generated content to speed up load times (BugId:25289 BugId:)
-						try {
-							$.storage.set(RTE.localStorageKey, {
-								styleVersion: wgStyleVersion,
-								contentsCss: contentsCss
-							});
-						} catch (e) {
-							$.storage.flush();
-							RTE.log('Local Storage Exception:' + e.message);
-						}
-
-						// disable object resizing in IE. IMPORTANT! use local path
-						if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
-							RTE.config.contentsCss += 'img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}';
-						}
-
-						RTE.initCk(editor);
-					}
-				});
-			})();
-		},
-
 		// start editor in mode provided
 		init: function(editor) {
 			var instanceId = editor.instanceId;
@@ -180,33 +124,22 @@
 				return;
 			}
 
-			if (RTE.config.contentsCss) {
-				RTE.initCk(editor);
-
-			} else {
-				var cached = $.storage.get(RTE.localStorageKey) || {};
-
-				// Use cached version if style version hasn't changed (BugId:25289)
-				if (cached.contentsCss && cached.styleVersion === wgStyleVersion) {
-					RTE.config.contentsCss = cached.contentsCss;
-					RTE.log('Using cached contentCss (' + cached.styleVersion + '): "' + RTE.localStorageKey + '"');
-					RTE.initCk(editor);
-
-				// Otherwise, re-generate our content styles
-				} else {
-					RTE.getContentsCss(editor);
-				}
+			// Bartek - for RT #43217. Must use wgServer to get wiki's subdomain in URL. (BugId:24403)
+			if (window.WikiaEnableAutoPageCreate) {
+				RTE.config.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css');
 			}
-		},
 
-		initCk: function(editor) {
+			// disable object resizing in IE. IMPORTANT! use local path
+			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
+				RTE.config.contentsCss += 'img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}';
+			}
 
 			// Editor specific config overrides
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}
 
-			if(typeof editor.config.tabIndex != "undefined") {
+			if (typeof editor.config.tabIndex != "undefined") {
 				RTE.config.tabIndex = editor.config.tabIndex;
 			}
 
@@ -413,10 +346,6 @@ CKEDITOR.dtd.ul = $.extend({}, CKEDITOR.dtd.ul, {img:1});
 
 // RT #69635: disable media drag&drop in Firefox 3.6.9+ (fixed in Firefox 3.6.11)
 RTE.config.disableDragDrop = (CKEDITOR.env.gecko && (CKEDITOR.env.geckoRelease == "1.9.2.9" || CKEDITOR.env.geckoRelease == "1.9.2.10"));
-
-if (RTE.config.disableDragDrop) {
-	RTE.log('media drag&drop disabled');
-}
 
 //
 // extend CK config
