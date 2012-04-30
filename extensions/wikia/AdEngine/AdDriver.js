@@ -775,8 +775,24 @@ if (window.wgEnableKruxTargeting) {
 			function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
 			var segs = store('segs'), key = 'ksgmnt='; Krux.dartKeyValues = segs ? key+segs.split(',').join(key) + ';u='+store('user')+';' : '';
 		})(); 
-	}
+}
 
-$(window).bind('load', function() {
-	AdDriverDelayedLoader.load();
-});
+if (window.adslots) {
+	for (var i=0; i < window.adslots.length; i++) {
+		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
+	}
+}
+	
+if (0) {
+	var adDriverInterval = setInterval(function() {
+		if ( Liftium.config && 'sizes' in Liftium.config ) {
+			clearInterval(adDriverInterval);
+			AdDriverDelayedLoader.load();
+		}
+	}, 10);
+}
+else {
+	$(window).load(function() {
+		AdDriverDelayedLoader.load();
+	});
+}

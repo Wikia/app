@@ -67,11 +67,10 @@ EOT;
 		}
 		else {
 			$out .= <<<EOT
-	wgAfterContentAndJS.push(function() {
-		if (typeof(AdDriverDelayedLoader) != 'undefined') {
-			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}", "DART"));
-		}
-	});
+	if(!window.adslots) {
+	       window.adslots = [];
+	}
+	window.adslots.push(["$slotname", "{$slot['size']}", "DART"]);
 EOT;
 		}
 
