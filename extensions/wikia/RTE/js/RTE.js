@@ -115,26 +115,51 @@
 			}, 'json');
 		},
 
-		// start editor in mode provided
-		init: function(editor) {
-			var instanceId = editor.instanceId;
+		// Cache contents css so we don't have to load it every time mode switches (BugId:5654)
+		getContentsCss: function(editor) {
 
-			// Don't re-initialize the same instance
-			if (CKEDITOR.instances[instanceId]) {
-				return;
-			}
-
-			// Bartek - for RT #43217. Must use wgServer to get wiki's subdomain in URL. (BugId:24403)
-			if (window.WikiaEnableAutoPageCreate) {
+			// Bartek - for RT #43217
+			if (typeof WikiaEnableAutoPageCreate != 'undefined') {
 				RTE.config.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css');
 			}
 
-			// disable object resizing in IE. IMPORTANT! use local path
-			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
-				RTE.config.contentsCss += 'img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}';
+			var contentsCss = '',
+				index = 0,
+				length = RTE.config.contentsCss.length;
+
+			(function load() {
+				$.get(RTE.config.contentsCss[index], function(css) {
+					contentsCss += css, index++;
+
+					if (index < length) {
+						load();
+
+					// Done loading
+					} else {
+						RTE.config.contentsCss = contentsCss;
+						RTE.initCk(editor);
+					}
+				});
+			}());		
+		},
+
+		init: function(editor) {
+
+			// Don't re-initialize the same instance
+			if (CKEDITOR.instances[editor.instanceId]) {
+				return;
 			}
 
-			// Editor specific config overrides
+			// Load and cache contents CSS on the first initialization
+			if ($.isArray(RTE.config.contentsCss)) {
+				RTE.getContentsCss(editor);
+
+			} else {
+				RTE.initCk(editor);
+			}
+		},
+
+		initCk: function(editor) {
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}
@@ -172,6 +197,10 @@
 				}
 			}
 
+			// disable object resizing in IE. IMPORTANT! use local path
+			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
+				editor.addCss('img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}');
+			}
 		},
 
 		// final setup of editor's instance
