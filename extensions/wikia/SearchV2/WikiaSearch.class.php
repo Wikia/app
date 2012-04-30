@@ -373,7 +373,7 @@ class WikiaSearch extends WikiaObject {
 
 
 	public function getRelatedVideos(array $params = array('start'=>0, 'size'=>20)) {
-
+	        wfProfileIn(__METHOD__);
 	        # going to need an "is_video" field
 	        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) '
 		              . 'AND ns:6 AND -title:(jpg gif png jpeg svg ico)';
@@ -384,12 +384,13 @@ class WikiaSearch extends WikiaObject {
 		} else {
 		  $query .= ' AND is_main_page:1';
 		}
-
+		wfProfileOut(__METHOD__);
 	        return $this->getSimilarPages($query, $params);
 	}
 
 	public function getSimilarPages($query = false, array $params = array()) {
 
+	        wfProfileIn(__METHOD__);
 	        if ((!$query) && (isset($params['content.url']) || isset($params['stream.body']))) {
 		  $params['fq'] = implode(' AND ', array_merge($this->client->getInterWikiQueryClauses()));
 	        }
@@ -406,12 +407,13 @@ class WikiaSearch extends WikiaObject {
 		{
 		    $response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
 		}
-
+		wfProfileOut(__METHOD__);
 		return $response;
 	}
 
 	public function getInterestingTerms($query = false, array $params = array()) {
 
+	        wfProfileIn(__METHOD__);
 		$params['mlt.fl'] = 'title,headings,first500,redirect_text,html';
 		$params['mlt.fl'] = 'title, html';
 		$params['mlt.boost'] = 'true';
@@ -435,7 +437,7 @@ class WikiaSearch extends WikiaObject {
 		#@todo reverse dictionary-based stemming, but need all unique words, then to stem, then to use the most frequent. yuck.
 
 		$this->wg->Memc->set($memkey, $interestingTerms, self::GROUP_RESULTS_CACHE_TTL);
-
+		wfProfileOut(__METHOD__);
 		return $interestingTerms;
 
 	}
@@ -455,7 +457,7 @@ class WikiaSearch extends WikiaObject {
 
 	public function getTagCloud(array $params = array('maxpages'=>25, 'termcount'=>'20', 'maxfontsize'=>'56', 
                                                           'minfontsize'=>6, 'sizetype'=>'px')) {
-	        
+	        wfProfileIn(__METHOD__);
 	        $wid = $this->wg->cityId;
 
 		$query = 'wid:'.$wid.' AND iscontent:true';
@@ -493,7 +495,7 @@ class WikiaSearch extends WikiaObject {
 						      )
 						).$params['sizetype'];
 		}
-
+		wfProfileOut(__METHOD__);
 		return $termsToFontSize;
 
 	}
