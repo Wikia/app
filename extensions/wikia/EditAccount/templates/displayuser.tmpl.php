@@ -55,6 +55,16 @@
 		</td>
 		</form>
 	</tr>
+	<tr>
+		<form method="post" action="">
+		<td>
+			Modify adopter status (for AutomaticWikiAdopt)
+		</td>
+		<td>
+			<input type="submit" value="<?= ( $isAdopter ) ? 'prevent auto adoption' : 'allow auto adoption' ?>" />
+			<input type="hidden" name="wpAction" value="toggleadopter" />
+		</td>
+	</tr>
 <?php if( $isUnsub ) { ?>
 	<tr>
 		<form method="post" action="">
