@@ -11,6 +11,11 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		global $wgUser, $wgOut, $wgExtensionsPath, $wgEnableUserLoginExt;
 		wfProfileIn( __METHOD__ );
 		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+		
 		if (!$wgUser->isAllowed('createnewwiki')) {
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );

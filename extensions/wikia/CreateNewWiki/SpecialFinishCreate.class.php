@@ -7,8 +7,13 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 	}
 	
 	public function execute() {
-		global $wgUser;
+		global $wgUser, $wgOut;
 		wfProfileIn( __METHOD__ );
+		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
 		
 		if (!$wgUser->isAllowed('finishcreate')) {
 			$this->displayRestrictionError();
