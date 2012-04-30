@@ -68,18 +68,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$this->isInterWiki = $this->isInterWiki || empty($onWikiId);
 
 		if( $this->isInterWiki ) {
-
-			$widQuery = '';
-
-			foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
-				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
-			}
-
-			$queryClauses[] = $widQuery;
-
-			$queryClauses[] = "lang:en";
-
-			$queryClauses[] = "iscontent:true";
+		  array_merge($queryClauses, $this->getInterWikiQueryClauses());
 		}
 		else {
 
@@ -119,21 +108,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		  }
 
 		  if (!$skipBoostFunctions) {
-		    global $wikipagesBoost, $activeusersBoost, $revcountBoost, $viewBoost;
-
-		    $wikipagesBoost = isset($_GET['page_boost']) ? $_GET['page_boost'] : 4 ;
-		    $boostFunctions[] = 'log(wikipages)^'.$wikipagesBoost;
-
-		    $activeusersBoost = isset($_GET['activeusers_boost']) ? $_GET['activeusers_boost'] : 4;
-		    $boostFunctions[] = 'log(activeusers)^'.$activeusersBoost;
-
-		    $revcountBoost = isset($_GET['revcount_boost']) ? $_GET['revcount_boost'] : 1;
-		    $boostFunctions[] = 'log(revcount)^'.$revcountBoost;
-
-		    $viewBoost = isset($_GET['views_boost']) ? $_GET['views_boost'] : 8;
-		    $boostFunctions[] = 'log(views)^'.$viewBoost;
-
-		    $boostFunctions[] = 'log(words)^0.5';
+		    $boostFunctions = array_merge($boostFunctions, $this->getInterWikiBoostFunctions());
 		  }
 
 		}
@@ -161,7 +136,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
 		}
-		catch (Exception $exception) {
+		catch (Exception $exception) { echo $exception; die;
 		  if (!$skipBoostFunctions) {
 		    $methodOptions['skipBoostFunctions'] = true;
 
@@ -330,6 +305,49 @@ class WikiaSolrClient extends WikiaSearchClient {
 		return count( $privateWikis ) ? array_merge( $privateWikis, $wg->CrossWikiaSearchExcludedWikis ) : $wg->CrossWikiaSearchExcludedWikis;
 	}
 
+	public function getInterWikiQueryClauses()
+	{
+	  $queryClauses = array();
+
+	  $widQuery = '';
+
+	  foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
+	    $widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
+	  }
+	  
+	  $queryClauses[] = $widQuery;
+	  
+	  $queryClauses[] = "lang:en";
+	  
+	  $queryClauses[] = "iscontent:true";
+
+	  return $queryClauses;
+
+	}
+
+
+	public function getInterWikiBoostFunctions()
+	{
+	  global $wikipagesBoost, $activeusersBoost, $revcountBoost, $viewBoost;
+	  $boostFunctions = array();
+
+	  $wikipagesBoost = isset($_GET['page_boost']) ? $_GET['page_boost'] : 4 ;
+	  $boostFunctions[] = 'log(wikipages)^'.$wikipagesBoost;
+	  
+	  $activeusersBoost = isset($_GET['activeusers_boost']) ? $_GET['activeusers_boost'] : 4;
+	  $boostFunctions[] = 'log(activeusers)^'.$activeusersBoost;
+	  
+	  $revcountBoost = isset($_GET['revcount_boost']) ? $_GET['revcount_boost'] : 1;
+	  $boostFunctions[] = 'log(revcount)^'.$revcountBoost;
+	  
+	  $viewBoost = isset($_GET['views_boost']) ? $_GET['views_boost'] : 8;
+	  $boostFunctions[] = 'log(views)^'.$viewBoost;
+	  
+	  $boostFunctions[] = 'log(words)^0.5';
+
+	  return $boostFunctions;
+	}
+
 	/**
 	 * Designed as a method so we can make it more complex if we want to -- ex: syntactic parsing to determine question
 	 *
@@ -338,33 +356,38 @@ class WikiaSolrClient extends WikiaSearchClient {
 	  return substr_count($query, "answers") > 0;
 	}
 
-	public function getSimilarPages($wid, $pageId, array $params = array()) {
-		wfProfileIn(__METHOD__);
-		$query = sprintf('wid:%d AND pageid:%d', $wid, $pageId);
+	public function getSimilarPages($query = false, array $params = array())
+	{
+	      if (!$query && !isset($params['stream.body']) && !isset($params['stream.url'])) {
+		return json_code(array('success'=>1, 'message'=>'No query or stream provided'));
+	      }
 
-		if (isset($params['start'])) {
-		 	$start = $params['start'];
-		 	unset($params['start']);
-	 	}
-		else {
-			$start = 0;
-		}
+	      if (isset($params['start'])) {
+		  $start = $params['start'];
+		  unset($params['start']);
+	      } else {
+		  $start = 0;
+	      }
 
-		if (isset($params['size'])) {
-		 	$size = $params['size'];
-		 	unset($params['size']);
-	 	}
-		else {
-			$size = 10;
-		}
+	      if (isset($params['size'])) {
+		  $size = $params['size'];
+		  unset($params['size']);
+	      } else {
+		  $size = 10;
+	      }
 
-		$params = array('mlt.match.include' => 'false', 'mlt.fl' => 'html' ) + $params;
-		try {
-			$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);
-		}
-		catch (Exception $e) {
-			echo $e;
-		}
+	      $params = array('mlt.match.include' => 'false',
+			      'mlt.fl' => 'title,html',
+			     ) + $params;
+
+	      try {
+		$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);
+	      } catch (Exception $e) {
+		echo $e; die;
+		return json_encode(array('success'=>0,'message'=>'Exception: '.$e));
+	      }
+
+	      return $response;
 
 		wfProfileOut(__METHOD__);
 		return $response->response->docs;
@@ -406,6 +429,13 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		wfProfileOut(__METHOD__);
 		return null;
+	}
+
+	// this lets us directly query the index without any of the preprocessing we have in the search method
+	// useful for services, not so much for our search interface
+	public function searchByLuceneQuery($query, $start, $size, $params)
+	{
+	  return $this->solrClient->search($query, $start, $size, $params);
 	}
 
 }

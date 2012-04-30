@@ -86,7 +86,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
-		
+
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );
@@ -321,7 +321,67 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 	}
 	
-	public function boostSettings() {
+	public function getRelatedVideos() {
+
+	       $pageId = $this->getVal('id');
+	       $params = array();
+	       if ( !empty( $pageId ) ) {
+		 $params['pageId'] = $pageId;
+	       }
+	       $responseData = $this->wikiaSearch->getRelatedVideos( $params );
+	       $this->response->setData($responseData);
+	       $this->response->setFormat('json');
+
+	}
+
+	public function getSimilarPagesExternal() {
+
+	       $url = $this->getVal('url');
+	       if ( !empty($url) ) {
+		 $params = array('stream.url'=>$url);
+	       } else if ($contents = $this->getVal('contents')) {
+		 $params = array('stream.body'=>$contents);
+	       } else {
+		 throw new Exception('Please provide a url or stream contents');
+	       }
+	       $responseData = $this->wikiaSearch->getSimilarPages(false, $params);
+	       $this->response->setData($responseData);
+	       $this->response->setFormat('json');
+
+	}
+
+	public function getKeywords() {
+
+       	       $pageId = $this->getVal('id');
+	       $params = array();
+	       if ( !empty( $pageId ) ) {
+		 $params['pageId'] = $pageId;
+	       }
+	       $responseData = $this->wikiaSearch->getKeywords( $params );
+	       $this->response->setData($responseData);
+	       $this->response->setFormat('json');
+
+
+	}
+
+	public function getTagCloud() {
+
+	  $params = $this->getTagCloudParams();
+
+	  $this->response->setData($this->wikiaSearch->getTagCloud($params));
+	  $this->response->setFormat('json');
+
+	}
+
+	private function getTagCloudParams()
+	{
+	  $params = array();
+	  $params['maxpages']    = $this->getVal('maxpages', 25);
+	  $params['termcount']   = $this->getVal('termcount', 50);
+	  $params['maxfontsize'] = $this->getVal('maxfontsize', 56);
+	  $params['minfontsize'] = $this->getVal('minfontsize', 10);
+	  $params['sizetype']    = $this->getVal('sizetype', 'pt');
+	  return $params;
 	}
 
 }

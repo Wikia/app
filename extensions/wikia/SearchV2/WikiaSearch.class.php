@@ -372,26 +372,132 @@ class WikiaSearch extends WikiaObject {
 	}
 
 
-	public function getRelatedVideos($pageId, $start=0, $size=20) {
-			wfProfileIn(__METHOD__);
+	public function getRelatedVideos(array $params = array('start'=>0, 'size'=>20)) {
+	        wfProfileIn(__METHOD__);
+	        # going to need an "is_video" field
+	        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) '
+		              . 'AND ns:6 AND -title:(jpg gif png jpeg svg ico)';
 
-		// going to need an "is_video" field
-		$params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^10) ' . 'AND ns:6 AND -title:(jpg gif png jpeg)';
+		$query = sprintf('wid:%d', $this->wg->cityId);
+		if (isset($params['pageId'])) {
+		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
+		} else {
+		  $query .= ' AND is_main_page:1';
+		}
+		wfProfileOut(__METHOD__);
+	        return $this->getSimilarPages($query, $params);
+	}
+
+	public function getSimilarPages($query = false, array $params = array()) {
+
+	        wfProfileIn(__METHOD__);
+	        if ((!$query) && (isset($params['content.url']) || isset($params['stream.body']))) {
+		  $params['fq'] = implode(' AND ', array_merge($this->client->getInterWikiQueryClauses()));
+	        }
+
 		$params['mlt.boost'] = 'true';
-		$params['mpt.maxnpt'] = '200';
+		#note, mlt.maxnpt might be necessary for performance
 		$params['mlt.fl'] = 'title,html';
-		$params['start'] = $start;
-		$params['size'] = $size;
 
-		$similarPages = $this->client->getSimilarPages($this->wg->cityId, $pageId, $params);
+		$clientResponse = $this->client->getSimilarPages($query, $params);
+		$similarPages = $clientResponse->response->docs;
 
 		$response = array();
-		foreach ($similarPages as $similarPage) {
-			$response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
+		foreach ($similarPages as $similarPage)
+		{
+		    $response[$similarPage->url] = array('wid'=>$similarPage->wid, 'pageid'=>$similarPage->pageid);
 		}
-
 		wfProfileOut(__METHOD__);
 		return $response;
+	}
+
+	public function getInterestingTerms($query = false, array $params = array()) {
+
+	        wfProfileIn(__METHOD__);
+		$params['mlt.fl'] = 'title,headings,first500,redirect_text,html';
+		$params['mlt.fl'] = 'title, html';
+		$params['mlt.boost'] = 'true';
+		#note, mlt.maxnpt might be necessary for performance
+		$params['mlt.interestingTerms'] = 'list';
+
+		$params['size'] = 0;
+
+		$memkey = $this->wf->SharedMemcKey( 'WikiaInterestingTerms', md5($query.serialize($params)) );
+		
+		if ($interestingTerms = $this->wg->Memc->get($memkey)) {
+		  return $interestingTerms;
+		}
+
+		$clientResponse = $this->client->getSimilarPages($query, $params);
+
+		$response = array();
+
+		$interestingTerms = $clientResponse->interestingTerms;
+
+		#@todo reverse dictionary-based stemming, but need all unique words, then to stem, then to use the most frequent. yuck.
+
+		$this->wg->Memc->set($memkey, $interestingTerms, self::GROUP_RESULTS_CACHE_TTL);
+		wfProfileOut(__METHOD__);
+		return $interestingTerms;
+
+	}
+
+	public function getKeywords($params) {
+
+	        $query = sprintf('wid:%d', $this->wg->cityId);
+		if (isset($params['pageId'])) {
+		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
+		} else {
+		  $query .= ' AND is_main_page:1';
+		}
+		
+		return $this->getInterestingTerms($query, $params);
+
+	}
+
+	public function getTagCloud(array $params = array('maxpages'=>25, 'termcount'=>'20', 'maxfontsize'=>'56', 
+                                                          'minfontsize'=>6, 'sizetype'=>'px')) {
+	        wfProfileIn(__METHOD__);
+	        $wid = $this->wg->cityId;
+
+		$query = 'wid:'.$wid.' AND iscontent:true';
+
+		$methodOptions = array('sort'=>'views desc');
+
+		$response =$this->client->searchByLuceneQuery($query, 0, $params['maxpages'], $methodOptions);
+		$docs = $response->response->docs;
+
+		$interestingTerms = array();
+
+		foreach ($docs as $doc) {
+
+		  $termResults = $this->getInterestingTerms('wid:'.$wid.' AND pageid:'.$doc->pageid);
+
+		  foreach ($termResults as $term) {
+		    $interestingTerms[$term] = isset($interestingTerms[$term]) ? $interestingTerms[$term]+1 : 1;;
+		  }
+
+		}
+
+		arsort($interestingTerms);
+
+		$interestingTerms = array_slice($interestingTerms, 0, $params['termcount']);
+
+		$termsToFontSize = array();
+
+		$min = min(array_values($interestingTerms));
+		$max = max(array_values($interestingTerms));
+
+		foreach ($interestingTerms as $term=>$count) {
+		  $termsToFontSize[$term] = max(array($params['minfontsize'], 
+						      #tagcloud calc
+						      round(abs($params['maxfontsize'] * ($count - $min) /  ($max - $min))) 
+						      )
+						).$params['sizetype'];
+		}
+		wfProfileOut(__METHOD__);
+		return $termsToFontSize;
+
 	}
 
 	private function callMediaWikiAPI( Array $params ) {
