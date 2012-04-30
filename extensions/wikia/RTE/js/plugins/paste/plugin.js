@@ -60,6 +60,7 @@ CKEDITOR.plugins.add('rte-paste',
 
 		// remove CSS added by WebKit when pasting the content (BugId:9841)
 		// @see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Data_Processor#HTML_Parser_Filters
+		// This bit actually get's run on init, not when pasting. 
 		if (CKEDITOR.env.webkit) {
 			editor.dataProcessor.htmlFilter.addRules({
 				elements: {
@@ -71,7 +72,9 @@ CKEDITOR.plugins.add('rte-paste',
 				attributes: {
 					// remove style attributes added by WebKit browsers (BugId:18789)
 					style: function(value, element) {
-						return false;
+						if (value.indexOf('border-top-width: 0px; border-right-width: 0px;') === 0) {
+							return false;
+						}
 					}
 				}
 			});
