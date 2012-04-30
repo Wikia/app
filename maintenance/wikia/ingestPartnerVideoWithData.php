@@ -109,8 +109,8 @@ if ($useVideoFeed) {
 				break;
 			case VideoFeedIngester::PROVIDER_REALGRAVITY:				
 				// no file needed
-				$startDate = date('m/d/Y', $startDateTS);
-				$endDate = date('m/d/Y', $endDateTS);
+				$startDate = date('Y-m-d', $startDateTS);
+				$endDate = date('Y-m-d', $endDateTS);
 				break;
 			default:
 		}
