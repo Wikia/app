@@ -11,19 +11,25 @@ $(function(){
 			d.getElementById('toctitle').insertAdjacentHTML('afterbegin', '<span class=chev></span>');
 			d.body.className += ' hasToc';
 
+			conStyle = document.getElementById('wkMainCnt').style;
+
 			table.addEventListener(WikiaMobile.getClickEvent(), function(ev){
-				var node = ev.target.parentNode;
+				var node = ev.target.parentNode,
+					a = (node.nodeName == 'A');
 
 				if(this.className.indexOf('open') > -1){
 					this.className = this.className.replace(' open', '');
-					WikiaMobile.track('/toc/close');
+					if(!a) WikiaMobile.track('/toc/close');
+					conStyle.minHeight = '0';
 				}else{
 					this.className += ' open';
 					WikiaMobile.track('/toc/open');
+					conStyle.minHeight = (this.offsetHeight - 40) + 'px';
 				}
 
-				if(node.nodeName == 'A'){
+				if(a){
 					ev.preventDefault();
+					WikiaMobile.track('/toc/go');
 
 					var elm = d.getElementById(node.getAttribute('href').substr(1)),
 						h2 = elm;
