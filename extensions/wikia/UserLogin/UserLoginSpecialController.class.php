@@ -21,6 +21,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	private function initializeTemplate() {
 		//Oasis/Monobook, will be filtered in AssetsManager :)
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
+		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 
 		//Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset(
