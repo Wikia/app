@@ -30,8 +30,9 @@ class CreateNewWikiModule extends WikiaController {
         $this->aCategories = $hubs->getCategories();
 
         $this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$this->aLanguages = wfGetFixedLanguageNames();
-		asort( $this->aLanguages );
+        $languages = wfGetFixedLanguageNames();
+		asort( $languages );
+		$this->aLanguages = $languages;
 
 		$useLang = $wgRequest->getVal('uselang', $wgUser->getOption( 'language' ));
 
@@ -40,7 +41,6 @@ class CreateNewWikiModule extends WikiaController {
 			$useLang = 'en';
 		}
 		$params['wikiLanguage'] = empty($useLang) ? $this->wg->LanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
-		$this->params = $params;
 		// facebook callback overwrite on login.  CreateNewWiki re-uses current login stuff.
 		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback();';
 
@@ -54,8 +54,9 @@ class CreateNewWikiModule extends WikiaController {
 		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
 		
 		// prefill
-		$this->params['wikiName'] = $wgRequest->getVal('wikiName', '');
-		$this->params['wikiDomain'] = $wgRequest->getVal('wikiDomain', '');
+		$params['wikiName'] = $wgRequest->getVal('wikiName', '');
+		$params['wikiDomain'] = $wgRequest->getVal('wikiDomain', '');
+		$this->params = $params;
 		$this->signupUrl = '';
 		if(!empty($this->wg->EnableUserLoginExt)) {
 			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
