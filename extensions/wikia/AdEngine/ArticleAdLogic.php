@@ -586,8 +586,9 @@ class ArticleAdLogic {
 
 	public static function isWikiaHub() {
 		global $wgEnableWikiaHubsExt, $wgWikiaHubsPages, $wgTitle;
-
-		return !empty($wgEnableWikiaHubsExt) && in_array($wgTitle->getDBkey(), $wgWikiaHubsPages);
+		
+		$titleParts = explode('/', $wgTitle->getDBkey());
+		return !empty($wgEnableWikiaHubsExt) && in_array($titleParts[0], $wgWikiaHubsPages);
 	}
 
 	public static function isAdsEnabledOnWikiaHub() {

@@ -33,7 +33,6 @@ class ScreenplayVideoHandler extends VideoHandler {
 		$jwplayer->setThumbUrl($this->thumbnailImage->url);
 		$jwplayer->setAgeGate($this->isAgeGate());
 		$jwplayer->setAutoplay($autoplay);
-		//@todo resolve conflict between agegate and autoplay
 		$jwplayer->setShowAd(true);
 		$jwplayer->setAjax($isAjax);
 		$jwplayer->setPostOnload($postOnload);
