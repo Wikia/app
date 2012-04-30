@@ -58,7 +58,7 @@ function wfAdEngineSetupJSVars($vars) {
 	if (!empty($wgEnableWikiAnswers)) $vars['wgEnableWikiAnswers'] = $wgEnableWikiAnswers;
 
 	// Krux
-	if (!empty($wgEnableKruxTargeting)) {
+	if (!empty($wgEnableKruxTargeting) && empty($wgNoExternals)) {
 		$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 		$vars['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
 	}
