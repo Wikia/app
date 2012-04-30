@@ -783,7 +783,7 @@ class ArticleComment {
 			F::build( 'AssetsManagerController' )->purgeMultiTypePackageCache( array(
 				'styles' => '/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
 				'messages' => 'WikiaMobileComments',
-				'scripts' => 'articlecomments_js_wikiamobile_init',
+				'scripts' => 'articlecomments_js_wikiamobile',
 				'templates' => array(
 					array(
 						'controllerName' => 'ArticleCommentsModule',

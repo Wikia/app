@@ -331,11 +331,11 @@ $config['articlecomments_js_wikiamobile'] = array(
 	)
 );
 
-$config['articlecomments_js_wikiamobile_init'] = array(
+$config['articlecomments_init_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/ArticleComments/js/ArticleComments.init.wikiamobile.js'
+		'//extensions/wikia/ArticleComments/js/ArticleComments_init.wikiamobile.js'
 	)
 );
 
