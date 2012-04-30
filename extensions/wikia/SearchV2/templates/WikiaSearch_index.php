@@ -30,7 +30,11 @@
 		<?php if(!empty($results)): ?>
 		<?php if( $resultsFound > 0 ): ?>
 			<p class="result-count subtle">
-				<?= wfMsg('wikiasearch2-results-count', $resultsFound, '<span>'.$query.'</span>'); ?>
+				<?php if( empty( $isOneResultsPageOnly ) ): ?>
+					<?= wfMsg('wikiasearch2-results-count', $resultsFoundTruncated, '<span>'.$query.'</span>'); ?>
+				<?php else: ?>
+					<?= wfMsg('wikiasearch2-results-for', '<span>'.$query.'</span>'); ?>
+				<?php endif; ?>
 			</p>
 	
 			<? if ($results->getQuery() && $query != $results->getQuery()) : ?>

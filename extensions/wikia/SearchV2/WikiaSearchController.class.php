@@ -71,15 +71,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			if(!empty($resultsFound)) {
 				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
-				$resultsFound = $this->wg->Lang->formatNum($resultsFound);
 			}
 
 			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $wikiName) )  );
 		} else {
 			if($isInterWiki) {
-				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );		
+				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
-				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', array($wikiName) )  );						
+				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', array($wikiName) )  );
 			}
 		}
 
@@ -90,6 +89,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
+		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );
+		$this->setVal( 'isOneResultsPageOnly', ( $resultsFound <= self::RESULTS_PER_PAGE ) );
 		$this->setVal( 'currentPage',  $page );
 		$this->setVal( 'paginationLinks', $paginationLinks );
 		$this->setVal( 'query', $query );
@@ -147,6 +148,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'title', $tooltip );
 		$this->setVal( 'label', $label );
 		$this->setVal( 'tooltip', $tooltip );
+	}
+
+	private function getTruncatedResultsNum($resultsNum) {
+		$result = $resultsNum;
+
+		if( strlen( $resultsNum ) > 1 ) {
+			$result = round( $resultsNum, ( 0 - ( strlen( $resultsNum ) - 1 ) ) );
+		}
+
+		return $result;
 	}
 
 	/*
