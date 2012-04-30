@@ -958,7 +958,7 @@ class Apache_Solr_Service
 		return $this->_sendRawGet($this->_searchUrl . $this->_queryDelimiter . $queryString);
 	}
 
-	public function moreLikeThis($query, $offset = 0, $limit = 10, $params = array()) 
+	public function moreLikeThis($query=false, $offset = 0, $limit = 10, $params = array()) 
 	{
 		if (!is_array($params))
 		{
@@ -973,8 +973,11 @@ class Apache_Solr_Service
 		$params['wt'] = self::SOLR_WRITER;
 		$params['json.nl'] = $this->_namedListTreatment;
 
-		$params['q'] = $query;
+		if ($query !== false) {
+		  $params['q'] = $query;
+		}
 		$params['start'] = $offset;
+		$params['mlt.count'] = isset($params['mlt.count']) ? $params['mlt.count'] : $limit;
 		$params['rows'] = $limit;
 
 		// use http_build_query to encode our arguments because its faster
