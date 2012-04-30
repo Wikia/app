@@ -71,17 +71,4 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-
-	
-	<?php if (isset($tagCloud)): ?>
-	    <div id="search-tagcloud" style="width: 600px;">
-	       <b>Try searching:</b></br>
-	       <? foreach ($tagCloud as $tag=>$fontsize) : ?>
-	       <a class="search-tagcloud-tag" style="font-size: <?=$fontsize?>;" href="/wiki/Special:WikiaSearch?query=<?=$tag?>">
-	       <?=$tag?>
-	       </a>
-	       <? endforeach; ?>
-	    </div>
-	<? endif; ?>
-
 </section> 
