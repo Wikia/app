@@ -193,6 +193,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			  $result->score = '100%';
 			  $result->setVar('position', $position);
 			  $result->setVar('isArticleMatch', true);
+			  $result->setVar('ns', $title->getNamespace());
 			  $results[] = $result;
 			  $position++;
 			}
@@ -210,6 +211,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$result->setText($solrHighlighting[$doc->url]->html[0]);
 			$result->setUrl(urldecode($doc->url));
 			$result->setScore(($doc->score) ?: 0);
+			$result->setVar('ns', $doc->ns);
 
 			if(!empty($doc->canonical)) {
 				$result->setCanonical($doc->canonical);

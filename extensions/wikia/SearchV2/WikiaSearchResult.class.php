@@ -4,6 +4,8 @@ class WikiaSearchResult {
 	protected $id = 0;
 	protected $cityId;
 	protected $title;
+	protected $titleObject;
+	protected $thumbnail;
 	protected $text;
 	protected $url;
 	protected $canonical = null	;
@@ -96,6 +98,29 @@ class WikiaSearchResult {
 	private function fixSnippeting($val) {
 	        return preg_replace("/^\W+ /", '',
 			      preg_replace("/(<\/span>)('s)/i", '$2$1', $val));
+	}
+
+	protected function getTitleObject() {
+	  if (!isset($this->titleObject)) {
+	    $this->titleObject = Title::makeTitle( $this->getVar('namespace'), $this->title );
+	  }
+
+	  return $this->titleObject;
+	}
+
+	public function getThumbnail() {
+
+	  if ((!isset($this->thumbnail)) && ($this->getVar('ns') == NS_FILE)) {
+	    if ($img = wfFindFile($this->getTitleObject())) {
+	      if ($thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) )) {
+		$this->thumbnail = $thumb;
+	      }
+	    }
+
+	  }
+
+	  return $this->thumbnail;
+
 	}
 
 }
