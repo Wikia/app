@@ -140,7 +140,8 @@ $messages['en'] = array(
 		'chat-chatbanchange-log-entry' =>  'changed ban settings for $1 with an expiry time of $2, ends $3',
 		'chat-contributions-ban-notice' => 'This user is currently banned from chat. The latest chat ban log entry is provided below for reference:',
 
-		'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.'
+		'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
+		'chat-checkuser-join-action' => 'Joined Chat'
 );
 
 /** Message documentation (Message documentation)
@@ -184,6 +185,7 @@ $messages['qqq'] = array(
 		'chat-browser-is-notsupported' => 'shown when user broser is not supported',
 		'chat-chatconnect-log' => 'Name for Chat connection log entry',
 		'chat-chatconnect-log-entry' => 'Chat connection log entry description; $1 is the Chat page url, $2 is the user address',
+		'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events'
 		);
 
 		/** Afrikaans (Afrikaans)

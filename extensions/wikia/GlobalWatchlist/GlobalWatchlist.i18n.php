@@ -588,8 +588,8 @@ Groet, Wikia
  */
 $messages['pl'] = array(
 	'globalwatchlist-desc' => 'Wysyła e-maile z tygodniowym streszczeniem listy obserwowanych stron ze wszystkich wiki',
-	'tog-watchlistdigest' => 'Proszę przesyłać mi co tydzień e-mail ze streszczeniem',
-	'tog-watchlistdigestclear' => 'Oznacz wszystkie strony z mojego tygodniowego streszczenia obserwowanych jako odwiedzone',
+	'tog-watchlistdigest' => 'Chcę otrzymywać tygodniowe zestawienie obserwowanych stron',
+	'tog-watchlistdigestclear' => 'Oznacz wszystkie strony z mojego tygodniowego zestawienia obserwowanych stron jako przeczytane.',
 	'globalwatchlist-see-more' => 'Sprawdź, czy zmieniło się coś jeszcze na twojej lokalnej liście obserwowanych stron',
 	'globalwatchlist-digest-email-subject' => 'Tygodniowe zestawienie',
 	'globalwatchlist-digest-email-body' => 'Witaj $1,

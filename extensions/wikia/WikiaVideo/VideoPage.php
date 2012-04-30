@@ -842,22 +842,16 @@ EOD;
 
 		$text = strpos( $fixed_url, "VIDDLER.COM" );
 		if( false !== $text ) { // Blip TV
+
 			$provider = self::V_VIDDLER;
-			$parsed = explode( "/explore/", strtolower($url));
-			if( is_array( $parsed ) ) {
-				$mdata = array_pop( $parsed );
-				if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-					$this->mId = $mdata;
-				} else {
-					$this->mId = array_pop( $parsed );
-				}
-				if ( substr( $this->mId, -1, 1) != "/" )
-				{
-					$this->mId .= "/";
-				}
+			$viddlerId = ViddlerApiWrapper::getIdFromUrl($url);
+			if ( $viddlerId ) {
+				$this->mId = $viddlerId;
 				$this->mProvider = $provider;
 				$this->mData = array();
 				return true;
+			} else {
+				return false;
 			}
 		}
 
@@ -1696,25 +1690,49 @@ EOD;
 	private function getViddlerTrueID()
 	{
 		global $wgMemc,$wgTranscludeCacheExpiry;
-		$cacheKey = wfMemcKey( "wvi", "viddlerid",$this->mId );
-		$obj  = $wgMemc->get( $cacheKey );
 
-		if (isset($obj))
-		{
-			return 	$obj;
+		if ( WikiaVideoService::isVideoStoredAsFile() ) {
+
+			$cacheKey = wfMemcKey( "wvi", "newviddlerid",$this->mId );
+			$obj  = $wgMemc->get( $cacheKey );
+
+			if (isset($obj)) {
+				return 	$obj;
+			}
+			if (strpos($this->mId, '/') !==false) {
+				$newId = ViddlerApiWrapper::getIdFromUrl(ViddlerApiWrapper::$MAIN_URL.$this->mId);
+			} else {
+				return $this->mId;
+			}
+
+			if (empty($newId)) {
+				return false;
+			}
+			$wgMemc->set( $cacheKey, $newId,60*60*24 );
+			return $newId;
+
+		} else {
+
+			$cacheKey = wfMemcKey( "wvi", "viddlerid",$this->mId );
+			$obj  = $wgMemc->get( $cacheKey );
+
+			if (isset($obj))
+			{
+				return 	$obj;
+			}
+			$url =  "http://api.viddler.com/rest/v1/?method=viddler.videos.getDetailsByUrl&api_key=".
+						self::K_VIDDLER . "&url=http://www.viddler.com/explore/" . $this->mId;
+			$file = @Http::get($url );
+			$doc = new DOMDocument( '1.0', 'UTF-8' );
+			@$doc->loadXML( $file );
+			$mTrueID = trim( $doc->getElementsByTagName('id')->item(0)->textContent );
+			if (empty($mTrueID))
+			{
+				return false;
+			}
+			$wgMemc->set( $cacheKey, $mTrueID,60*60*24 );
+			return $mTrueID;
 		}
-		$url =  "http://api.viddler.com/rest/v1/?method=viddler.videos.getDetailsByUrl&api_key=".
-					self::K_VIDDLER . "&url=http://www.viddler.com/explore/" . $this->mId;
-		$file = @Http::get($url );
-		$doc = new DOMDocument( '1.0', 'UTF-8' );
-		@$doc->loadXML( $file );
-		$mTrueID = trim( $doc->getElementsByTagName('id')->item(0)->textContent );
-		if (empty($mTrueID))
-		{
-			return false;
-		}
-		$wgMemc->set( $cacheKey, $mTrueID,60*60*24 );
-		return $mTrueID;
 	}
 	 /* for get BlipTV data (true id and avatar url) by api and hold in cache */
 	private function getBlipTVData()
@@ -1870,7 +1888,7 @@ EOD;
 						$hd = true;
 					}
 				}
-				
+
 				$url = 'http://www.youtube.com/v/' . $this->mId . '&enablejsapi=1&fs=1' . ($autoplay ? '&autoplay=1' : '') . ( !empty($hd) ? '&hd=1' : '');
 				if ($useJWPlayer) {
 					$code = 'custom';

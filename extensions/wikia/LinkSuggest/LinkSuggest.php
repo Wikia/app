@@ -29,16 +29,6 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
 
 $wgHooks['GetPreferences'][] = 'wfLinkSuggestGetPreferences' ;
-$wgHooks['MakeGlobalVariablesScript'][] = 'wfLinkSuggestSetupVars';
-
-
-function wfLinkSuggestSetupVars( $vars ) {
-	global $wgContLang;
-	$vars['ls_template_ns'] = $wgContLang->getFormattedNsText( NS_TEMPLATE );
-	$vars['ls_file_ns'] = $wgContLang->getFormattedNsText( NS_FILE );
-	return true;
-}
-
 function wfLinkSuggestGetPreferences($user, &$preferences) {
 	$preferences['disablelinksuggest'] = array(
 		'type' => 'toggle',
@@ -50,11 +40,11 @@ function wfLinkSuggestGetPreferences($user, &$preferences) {
 
 $wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
 function AddLinkSuggest($a, $b, $c, $d) {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;
+	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;
+	wfProfileIn(__METHOD__);
 
 	if($wgUser->getOption('disablelinksuggest') != true) {
-
-		$js = "{$wgExtensionsPath}/wikia/LinkSuggest/LinkSuggest.js?{$wgStyleVersion}";
+		$js = "{$wgExtensionsPath}/wikia/LinkSuggest/LinkSuggest.js";
 
 		// load YUI for Oasis - TODO: Refactor LinkSuggest.js to not use YUI.  Look in /trunk/skins/oasis/js/Search.js for an example of using LinkSuggest with jQuery.
 		if (Wikia::isOasis()) {
@@ -63,16 +53,29 @@ function AddLinkSuggest($a, $b, $c, $d) {
 		else {
 			$wgOut->addScript('<script type="text/javascript" src="'.$js.'"></script>');
 		}
+
+		// add global JS variables only when LinkSuggest is really loaded (BugId:20958)
+		$wgHooks['MakeGlobalVariablesScript'][] = 'wfLinkSuggestSetupVars';
 	}
+
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
-global $wgAjaxExportList;
+function wfLinkSuggestSetupVars( $vars ) {
+	global $wgContLang;
+	$vars['ls_template_ns'] = $wgContLang->getFormattedNsText( NS_TEMPLATE );
+	$vars['ls_file_ns'] = $wgContLang->getFormattedNsText( NS_FILE );
+	return true;
+}
+
 $wgAjaxExportList[] = 'getLinkSuggest';
 $wgAjaxExportList[] = 'getLinkSuggestImage';
 
 function getLinkSuggestImage() {
 	global $wgRequest;
+	wfProfileIn(__METHOD__);
+
 	$imageName = $wgRequest->getText('imageName');
 
 	$out = 'N/A';
@@ -87,6 +90,8 @@ function getLinkSuggestImage() {
 
 	$ar = new AjaxResponse($out);
 	$ar->setCacheDuration(60 * 60);
+
+	wfProfileOut(__METHOD__);
 	return $ar;
 }
 
@@ -103,6 +108,7 @@ function wfLinkSuggestGetTextUpperBound( $text ) {
 
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces;
+	wfProfileIn(__METHOD__);
 
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
@@ -220,6 +226,7 @@ function getLinkSuggest() {
 		$ar->setContentType('text/plain; charset=utf-8');
 	}
 
+	wfProfileOut(__METHOD__);
 	return $ar;
 }
 

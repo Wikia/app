@@ -17,6 +17,8 @@ class HelloWorldController extends WikiaController {
 	public function index() {
 		// This is how a variable is set that can be used in the template.
 		// It will be accessible as $html5logo in the template.
+		//uncomment this line to use MUSTACHE as template engine 
+		//$this->response->setTemplateEngine(self::TEMPLATE_ENGINE_MUSTACHE);
 		$this->html5logo = $this->wg->ExtensionsPath . '/wikia/templates/HelloWorld/images/html5logo.png';
 	}
 

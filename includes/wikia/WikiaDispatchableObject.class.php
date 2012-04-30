@@ -162,4 +162,22 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			return $this->response->getVal( $propertyName );
 		}
 	}
+	
+	public function __isset($propertyName) {
+		if (property_exists($this, $propertyName)) {
+			return isset($this->$propertyName);
+		} else {
+			// have to use temp var here because isset is a write context and you can't use the function call directly
+			$value = $this->response->getVal( $propertyName );
+			return isset( $value );
+		}
+	}
+	
+	public function __unset($propertyName) {
+		if (property_exists($this, $propertyName)) {
+			unset ($this->$propertyName);
+		} else {
+			$this->response->unsetVal($propertyName);
+		}		
+	}
 }

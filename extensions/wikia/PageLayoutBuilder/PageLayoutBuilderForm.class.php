@@ -199,7 +199,7 @@ class PageLayoutBuilderForm extends SpecialCustomEditPage {
 		$this->out->addScript($yuiUrl);
 
 		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/PageLayoutBuilder/css/form.scss'));
-		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/_EditPage.scss'));
+		$this->out->addStyle( AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/EditPage.scss'));
 
 		if (class_exists('RTE')) RTE::disableEditor();
 

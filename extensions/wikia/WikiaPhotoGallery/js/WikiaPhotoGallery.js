@@ -236,7 +236,7 @@ var WikiaPhotoGallery = {
 
 			// Slider preview page
 			case this.SLIDER_PREVIEW_PAGE:
-				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+				$('#WikiaPhotoGalleryImageUploadSize').show();
 				title = msg['wikiaPhotoGallery-sliderpreview-title'];
 
 				saveButton.show().text(msg['wikiaPhotoGallery-finish']);
@@ -266,14 +266,17 @@ var WikiaPhotoGallery = {
 	// save button handler
 	onSave: function() {
 		// variable shortcuts
-		var params = this.editor.currentPageParams;
-		var hideModal = true;
+		var params = this.editor.currentPageParams,
+			hideModal = true,
+			data,
+			newPage = null,
+			newParams = {},
+			position;
 
 		this.log('onSave');
 		this.log(params);
 
-		var newPage = null;
-		var newParams = {};
+
 
 		// tracking
 		var trackerSuffix = this.getPageTrackerSuffix();
@@ -288,9 +291,10 @@ var WikiaPhotoGallery = {
 				break;
 
 			case this.CAPTION_LINK_PAGE:
-				var caption = $('#WikiaPhotoGalleryEditorCaption').val();
-				var link = '';
-				var linktext = '';
+				var caption = $('#WikiaPhotoGalleryEditorCaption').val(),
+					link = '',
+					linktext = '';
+
 				if (this.isSlideshow()) {
 					newPage = this.SLIDESHOW_PREVIEW_PAGE;
 
@@ -311,7 +315,7 @@ var WikiaPhotoGallery = {
 				// remove wrapping brackets
 				link.replace(/^(\[)+/, '').replace(/(\])+$/, '');
 
-				var data = {
+				data = {
 					caption: caption,
 					link: link,
 					linktext: linktext,
@@ -390,7 +394,7 @@ var WikiaPhotoGallery = {
 						this.track('/dialog/slideshow/preview/rssFeed');
 					}
 
-					var position = gallery.params.position || 'right';
+					position = gallery.params.position || 'right';
 					this.track('/dialog/slideshow/preview/position/' + position);
 				} else if ( !this.isSlider() ) {
 					this.trackParam('widths', '/layoutTab/size');
@@ -419,7 +423,7 @@ var WikiaPhotoGallery = {
 				// update / save gallery
 				switch (this.editor.from) {
 					case 'wysiwyg':
-						var data = {
+						data = {
 							images: gallery.images,
 							params: gallery.params,
 							wikitext: gallery.wikitext
@@ -433,18 +437,14 @@ var WikiaPhotoGallery = {
 							this.log('updating existing gallery/slideshow');
 
 							// clear metadata
-							gallery.node.setData({
-								images: false,
-								externalImages: false,
-								params: false
-							});
+							gallery.node.setData('externalImages', false);
 
 							// update metadata
 							gallery.node.setData(data);
 
-							var position = gallery.params.position || 'right';
-							gallery.node.removeClass('alignLeft alignRight alignCenter');
-							gallery.node.addClass('align' + position.substr(0,1).toUpperCase() + position.substr(1));
+							position = gallery.params.position || 'right';
+							gallery.node.removeClass('alignLeft alignRight alignCenter')
+							.addClass('align' + position.substr(0,1).toUpperCase() + position.substr(1));
 						} else {
 							// add new gallery
 							this.log('adding new gallery/slideshow');
@@ -459,7 +459,7 @@ var WikiaPhotoGallery = {
 							var dimensions = {};
 
 							if(this.isSlideshow()) {
-								var position = gallery.params.position || 'right';
+								position = gallery.params.position || 'right';
 
 								node.addClass('image-slideshow');
 								node.addClass('align' + position.substr(0,1).toUpperCase() + position.substr(1));
@@ -753,7 +753,7 @@ var WikiaPhotoGallery = {
 				var trackerSuffix = self.getPageTrackerSuffix();
 				self.track('/dialog/' + trackerSuffix + '/upload/button');
 				if ( self.isSlider() ) {
-				 	$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+				 	$('#WikiaPhotoGalleryImageUploadSize').show();
 				}
 			});
 
@@ -1179,7 +1179,7 @@ var WikiaPhotoGallery = {
 		if (query != '') {
 			this.track('/dialog/upload/find/find/' + query.replace(/[^A-Za-z0-9]/g, '_'));
 			if ( self.isSlider() ) {
-				$('#WikiaPhotoGalleryImageUploadSize').css('display', 'block');
+				$('#WikiaPhotoGalleryImageUploadSize').show();
 			}
 		}
 	},
@@ -2028,7 +2028,7 @@ var WikiaPhotoGallery = {
 			widget.find('li').each(function(index){
 				var elm = $(this);
 				var elmWidth = parseInt(widget.attr('rel'), 10);
-				elm.css('background-position', '-' + (elmWidth * ((2 * index) + 1)) + 'px 0px');
+				elm.css('background-position', (-elmWidth * ((2 * index) + 1)) + 'px 0');
 			});
 		}
 
@@ -2045,7 +2045,7 @@ var WikiaPhotoGallery = {
 			var curBkgPosition = parseInt(curBkgPosition.split(' ')[0], 10);
 			var optionWidth = parseInt(widget.attr('rel'), 10);
 
-			elm.css('background-position', (curBkgPosition + optionWidth) + 'px 0px');
+			elm.css('background-position', (curBkgPosition + optionWidth) + 'px 0');
 			$('#' + widget.attr('id') + '_option_label').html(elm.attr('title'));
 		}
 
@@ -2179,7 +2179,7 @@ var WikiaPhotoGallery = {
 			var tmpElem = $('<div id="' + tmpId + '">').addClass(cleanName).appendTo(document.body).hide();
 			var bkgColors = {};
 
-			var colors = new Array();
+			var colors = [];
 
 			colors.push(tmpElem.css('border-top-color'));
 			colors.push(tmpElem.css('border-right-color'));
@@ -2310,16 +2310,17 @@ var WikiaPhotoGallery = {
 
 		// update picker and color parameter value when clicked
 		colorBoxes.unbind('.colorpicker').bind('click.colorpicker', {caller: this}, function(event) {
-			var value = null;
-			var param = null
-			var title = $(this).attr('title');
+			var value = null,
+				param = null,
+				node = $(this),
+				title = node.attr('title');
+
 			if(typeof title != 'undefined' && title.indexOf('.') == 0) {
 				colorPickerTrigger.removeClass('transparent-color');
-				value = rgb2hex($(this).css('background-color'));
+				value = rgb2hex(node.css('background-color'));
 				param = title.substr(1);
-			}
-			else {
-				param = value = rgb2hex($(this).attr('value'));
+			} else {
+				param = value = rgb2hex(node.attr('value'));
 
 				if(param == 'transparent') {
 					colorPickerTrigger.addClass('transparent-color');

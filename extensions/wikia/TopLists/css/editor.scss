@@ -26,8 +26,6 @@ $image-thumb-small-height: ($image-thumb-small-width * 2) / 3;
 $item-height: 40px;
 $item-number-width: 50px;
 $item-number-margin-right: 10px;
-$icon-remove-background: url(/skins/oasis/images/sprite.png) no-repeat -1128px -14px;
-$icon-drag-background: url(/skins/oasis/images/sprite.png) no-repeat -1147px -30px;
 
 #toplists-loading-screen {
 	@include blockInput;

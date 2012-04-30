@@ -756,6 +756,8 @@ class ArticleComment {
 	}
 
 	static public function doPurge($title, $commentTitle) {
+		wfProfileIn( __METHOD__ );
+
 		//purge of the article
 		$listing = ArticleCommentList::newFromTitle($title);
 		// old code
@@ -767,32 +769,37 @@ class ArticleComment {
 		$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $title->getDBkey(), 'v1' ), null);
 		// make sure our comment list is refreshed from the master RT#141861
 		$listing->getCommentList(true);
-		// BugID: 2483 purge the parent article when new comment is posted
-		$parts = explode( '/', $commentTitle->getText() );
-		$parentTitle = Title::newFromText($parts[0]);
+		
+		//BugID: 2483 purge the parent article when new comment is posted
+		//BugID: 29462, purge the ACTUAL parent, not the root page... $#%^!
+		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
+
 		if ($parentTitle) {
 			$parentTitle->invalidateCache();
 			$parentTitle->purgeSquid();
 
 			//FB#27827 - purge the multi-type request cache in Varnish for WikiaMobile
-			//@see ArticleComments.wikiamobile.js
+			//@see ArticleComments.wikiamobile.js, this must mirror the same exact parameters in the same order
 			F::build( 'AssetsManagerController' )->purgeMultiTypePackageCache( array(
 				'styles' => '/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
 				'messages' => 'WikiaMobileComments',
-				'scripts' => 'articlecomments_js_wikiamobile_init',
+				'scripts' => 'articlecomments_js_wikiamobile',
 				'templates' => array(
 					array(
 						'controllerName' => 'ArticleCommentsModule',
 						'methodName' => 'WikiaMobileCommentsPage',
 						'params' => array(
 							'articleID' => $parentTitle->getArticleID(),
-							'useskin' => 'wikiamobile',
 							'page' => 1
 						)
 					)
-				)
+				),
+				'params' => array( 'useskin' => 'wikiamobile' ),
+				'varnishTTL' => 86400
 			) );
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {

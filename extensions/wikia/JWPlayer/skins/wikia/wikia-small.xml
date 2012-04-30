@@ -50,6 +50,7 @@
 		</component>
 		<component name="display">
 			<settings>
+				<setting name="backgroundcolor" value="0x000000" />
 			</settings>
 			<elements>
 				<!-- Enable for 5.0 compatibility --> 

@@ -41,6 +41,7 @@ $messages['en'] = array(
 	'editaccount-success-realname' => 'Successfully changed real name for account $1.',
 	'editaccount-success-unsub' => 'Successfully removed unsubscribe bit for account $1.',
 	'editaccount-success-disable' => 'Successfully removed disabled bit for account $1.',
+	'editaccount-success-toggleadopt' => 'Successfully toggled adoption eligibility status for account $1.',
 	'editaccount-success-close' => 'Successfully disabled account $1.',
 	'editaccount-error-email' => 'Email was not changed. Try again or contact the Tech Team.',
 	'editaccount-error-pass' => 'Password was not changed. Try again or contact the Tech Team.',
@@ -903,6 +904,8 @@ $messages['lb'] = array(
 	'editaccount-submit-close' => 'Kont zoumaachen',
 	'editaccount-invalid-email' => '"$1" ass keng valabel E-Mailadress!',
 	'editaccount-nouser' => 'De Kont "$1" gëtt et net!',
+	'editaccount-status-realuser' => 'Richtege Benotzer',
+	'editaccount-status-tempuser' => 'Temporäre Benotzer',
 	'editaccount-log' => 'Logbuch vun de Benotzerkonten',
 	'editaccount-log-entry-realname' => 'huet de richtegen Numm vum Benotzer $2 geännert',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dëse Benotzerkont gouf global desaktivéiert.</div>',
@@ -1594,6 +1597,7 @@ $messages['sr-ec'] = array(
 /** Swedish (Svenska)
  * @author Lokal Profil
  * @author Tobulos1
+ * @author VickyC
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1641,6 +1645,7 @@ $messages['sv'] = array(
 	'editaccount-status-realuser' => 'Riktig användare',
 	'editaccount-status-tempuser' => 'Tillfällig användare',
 	'editaccount-error-tempuser-email' => 'Tillfälliga användare kan inte ha ett tomt fält för e-postadressen, var god ange en e-postadress.',
+	'editaccount-email-change-requested' => 'Användaren har begärt ändra e-postadress via Inställningar för  $1 . För att bekräfta begärd förändring av e-postadress för användaren, ange den begärda e-postadressen i fältet nedan och klicka på "Spara och bekräfta".',
 	'editaccount-log' => 'Användarkontots log',
 	'editaccount-log-header' => 'Denna sida listar förändringar av användarnas inställningar av Wikias personal.',
 	'editaccount-log-entry-email' => 'ändrade e-post för användare $2',

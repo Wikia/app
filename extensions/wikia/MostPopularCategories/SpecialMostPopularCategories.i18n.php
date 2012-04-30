@@ -394,6 +394,13 @@ $messages['tr'] = array(
 	'mostpopularcategories' => 'En popüler kategoriler',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'mostpopularcategories' => 'Иң популяр төркемнәр',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */

@@ -435,6 +435,7 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
 
 /** Czech (Česky)
  * @author Jezevec
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'cnw-next' => 'Další',
@@ -444,12 +445,14 @@ $messages['cs'] = array(
 	'cnw-name-wiki-label' => 'Název vaší wiki',
 	'cnw-userauth-headline' => 'Máte účet?',
 	'cnw-desc-tip1' => 'Tip',
+	'cnw-desc-choose' => 'Zvolte kategorii',
 	'cnw-desc-select-one' => 'Jeden vyberte',
 	'cnw-desc-lang' => 'Jazyk',
 );
 
 /** German (Deutsch)
  * @author Claudia Hattitten
+ * @author Dennis07
  * @author Geitost
  * @author George Animal
  * @author LWChris
@@ -480,7 +483,11 @@ $messages['de'] = array(
 	'cnw-auth-signup-creative' => 'Du benötigst ein Konto, um mit der Erstellung deines Wikis fortzufahren.<br />Es dauert nur eine Minute sich zu registrieren!',
 	'cnw-auth-facebook-signup' => 'Über Facebook registrieren',
 	'cnw-auth-facebook-login' => 'Über Facebook anmelden',
+	'cnw-userauth-headline' => 'Bereits ein Mitglied?',
 	'cnw-userauth-creative' => 'Anmelden',
+	'cnw-userauth-marketing-heading' => 'Noch kein Mitglied?',
+	'cnw-userauth-marketing-body' => 'Du benötigst ein Benutzerkonto auf Wikia. Nach einer Minute bist du bereits [[Special:UserSignup|Mitglied]]!',
+	'cnw-userauth-signup-button' => 'Registrieren',
 	'cnw-desc-headline' => 'Worum geht es in deinem Wiki?',
 	'cnw-desc-creative' => 'Beschreibe dein Thema',
 	'cnw-desc-placeholder' => 'Dies wird auf der Hauptseite deines Wikis erscheinen.',
@@ -1247,6 +1254,7 @@ $messages['lb'] = array(
 	'cnw-desc-tip1' => 'Tipp',
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-choose' => 'Eng Kategorie wielen',
+	'cnw-desc-select-one' => 'Een/Eng eraussichen',
 	'cnw-desc-change-lang' => 'änneren',
 	'cnw-desc-lang' => 'Sprooch',
 	'cnw-upgrade-headline' => 'Wëllt Dir en Upgrade maachen?',
@@ -1727,6 +1735,7 @@ Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na
  */
 $messages['ps'] = array(
 	'cnw-next' => 'راتلونکی',
+	'cnw-back' => 'پر شا کېدل',
 	'cnw-or' => 'يا',
 	'cnw-title' => 'يو نوی ويکي جوړول',
 	'cnw-name-wiki-headline' => 'يو ويکي پيلول',
@@ -1745,6 +1754,7 @@ $messages['ps'] = array(
 	'cnw-auth-facebook-login' => 'د فېسبوک له لارې ننوتل',
 	'cnw-userauth-headline' => 'آيا يو ګڼون لرې؟',
 	'cnw-userauth-creative' => 'ننوتل',
+	'cnw-userauth-marketing-heading' => 'ګڼون نه لرې؟',
 	'cnw-userauth-signup-button' => 'نومليکل',
 	'cnw-desc-headline' => 'ستاسې ويکي د څه په اړه دی؟',
 	'cnw-desc-placeholder' => 'دا به ستاسې د ويکي په لومړي مخ ښکاره شي.',
@@ -2590,6 +2600,7 @@ $messages['zh-hans'] = array(
 	'cnw-desc-lang' => '语言',
 	'cnw-desc-wiki-submit-error' => '请选一个分类',
 	'cnw-theme-headline' => '选择一个主题',
+	'cnw-upgrade-headline' => '您是否希望升级？',
 	'cnw-upgrade-now' => '立即升级',
 	'cnw-upgrade-decline' => '不了谢谢，请继续到我的维基',
 	'cnw-welcome-headline' => '恭喜！$1 已创建',

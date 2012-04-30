@@ -252,7 +252,9 @@ var ImageLightbox = {
 		if (!parentTag.is('a')) {
 			return;
 		}		
-		
+		parentTag.wrap('<span class="wikiaVideoPlaceholder" />');
+        var wrapperTag = parentTag.parent('span.wikiaVideoPlaceholder');
+
 		var imageWidth = targetImage.width();
 		var imageHeight = targetImage.height();
 
@@ -266,28 +268,38 @@ var ImageLightbox = {
 			'title': imageName,
 			'videoInline': 1
 		}, function(res) {
-//console.log('NEF: jwplayer via displayInlineVideo');
 			jQuery(parentTag).siblings('span.Wikia-video-title-bar').eq(0).remove();
 			if (res && ( res.html || res.jsonData ) ) {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
-						jQuery( '<div id="'+res.jsonData.id+'" style="width:'+imageWidth+'px; height:'+imageHeight+'px; display: inline-block;"></div>' ).replaceAll( parentTag );
-if (res.jsonData) {
-	//console.log(res.jsonData);
-	if (res.jsonData.plugins && res.jsonData.plugins.googima && res.jsonData.plugins.googima['ad.tag']) {
-		res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
-	}
-}
+
+                        wrapperTag.find('a').hide();
+                        wrapperTag.append( '<div id="'+res.jsonData.id+'" style="width:'+imageWidth+'px; height:'+imageHeight+'px; display: inline-block;" class="Wikia-video-enabledEmbedCode"></div>');
+
+                        if (res.jsonData && res.jsonData.plugins && res.jsonData.plugins.googima) {
+                            if (!window.wgUserName || window.wgUserShowAds) {
+                                res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
+                            }
+                            else {
+                                delete res.jsonData.plugins.googima;
+                            }
+                        }
 						jwplayer( res.jsonData.id ).setup( res.jsonData );
 					});					
 				} else {
-					jQuery( '<div>'+res.html+'</div>' ).replaceAll( parentTag );
-				}	
+                    wrapperTag.find('a').hide();
+                    wrapperTag.append('<div  class="Wikia-video-enabledEmbedCode">'+res.html+'</div>');
+				}
 			} 
 		});
 		
 		
 	},
+
+    restoreInlineThumbnails: function() {
+        jQuery(".Wikia-video-enabledEmbedCode").remove();
+        jQuery('span.wikiaVideoPlaceholder a').show();
+    },
 
 	setTopPosition: function() {
 		var lightbox = $('#lightbox');							
@@ -334,7 +346,6 @@ if (res.jsonData) {
             'showEmbedCodeInstantly' : this.showEmbedCodeInstantly,
             'wikiAddress' : this.wikiAddress
     }, function(res) {
-//console.log('NEF: jwplayer via fetchLightbox');
 			if (res && ( res.html || res.jsonData ) ) {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
@@ -348,10 +359,12 @@ if (res.jsonData) {
 									}
 								};
 							}
-if (res.jsonData) {
-	//console.log(res.jsonData);
-	if (res.jsonData.plugins && res.jsonData.plugins.googima && res.jsonData.plugins.googima['ad.tag']) {
+if (res.jsonData && res.jsonData.plugins && res.jsonData.plugins.googima) {
+	if (!window.wgUserName || window.wgUserShowAds) {
 		res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
+	}
+	else {
+		delete res.jsonData.plugins.googima;
 	}
 }
 							jwplayer( res.jsonData.id ).setup( res.jsonData	);
@@ -471,6 +484,9 @@ if (res.jsonData) {
 
 				// RT #69824
 				self.setTopPosition();
+
+                //BugId:26628
+                self.restoreInlineThumbnails();
 
 				// fire custom event (RT #74852)
 				if (self.target) {

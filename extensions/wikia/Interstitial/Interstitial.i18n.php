@@ -237,6 +237,16 @@ $messages['pms'] = array(
 	'exitstitial-button' => "Sauté S'areclam",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'interstitial-default-campaign-code' => 'ويکييا له تاسې سره مينه لري!',
+	'interstitial-skip-ad' => 'له دې خبرتيا تېرېدل',
+	'exitstitial-register' => 'د خبرتيا نه تېرېدلو لپاره <a href="#" class="register">نومليکنه</a> or <a href="#" class="login">ننوتنه</a> ترسره کړۍ.',
+	'exitstitial-button' => 'له دې خبرتيا تېرېدل',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Waldir
@@ -311,6 +321,19 @@ $messages['tl'] = array(
 	'interstitial-link-away' => 'Walang makikita rito!<br /><br />Nais mo bang pumunta sa [[{{MediaWiki:Mainpage}}|Pangunahing Pahina]] o marahil sa [[Special:Random|alin mang pahina]]?',
 	'exitstitial-register' => '<a href="#" class="register">Magpatala</a> o <a href="#" class="login">Lumagda</a> upang laktawan ang mga patalastas.',
 	'exitstitial-button' => 'Laktawan ang Patalastas na Ito',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'interstitial-default-campaign-code' => 'Викия сезне ярата!',
+	'interstitial-skip-ad' => 'Бу рекламаны калдырырга',
+	'interstitial-already-logged-in-no-link' => 'Сез инде системага кердегез һәм башка хисап язмаларын сайлый алмыйсыз.',
+	'interstitial-disabled-no-link' => 'There is no destination set and interstitials are not enabled on this wiki.',
+	'interstitial-link-away' => 'Монда берни дә күреп булмый!<br /><br />Сез [[{{MediaWiki:Mainpage}}|Баш биткә ]] яки  [[Special:Random|очраклы сәхифәгә]] күчәргә телисезме?',
+	'exitstitial-register' => '<a href="#" class="register">Теркәлү</a> яки <a href="#" class="login">Керү</a> (реклама булмасын өчен).',
+	'exitstitial-button' => 'Бу рекламаны калдырырга',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

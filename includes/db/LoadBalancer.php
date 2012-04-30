@@ -446,6 +446,7 @@ class LoadBalancer {
 			if ( $i === false ) {
 				$this->mLastError = 'No working slave server: ' . $this->mLastError;
 				$this->reportConnectionError( $this->mErrorConnection );
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 		}

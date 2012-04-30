@@ -479,6 +479,20 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 	
+	public static function onOutputPageBeforeHTML(&$out, &$text) {
+		if ( ArticleAdLogic::isMainPage() && (!Wikia::isWikiaMobile()) ) {
+			$text = '';
+			$out->clearHTML();
+			$out->addHTML( F::app()->sendRequest( 'WikiaHomePageController', 'index' )->toString() );
+		}
+		return $out;
+	}
+	
+	public static function onArticleCommentCheck($title) {
+		if ( ArticleAdLogic::isMainPage() ) return false;
+		return true;	
+	}
+	
 	public static function onWikiaMobileAssetsPackages( Array &$jsPackages, Array &$scssPackages ) {
 		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
 		if ( F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {

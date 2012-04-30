@@ -12,9 +12,10 @@ class PerformanceMetricsPhantom extends PerformanceMetricsProvider {
 	 * @see http://code.google.com/p/phantomjs/wiki/BuildInstructions
 	 *
 	 * @param string $url page URL
+	 * @param array $options additional options
 	 * @return mixed report
 	 */
-	public function getReport($url) {
+	public function getReport($url, Array $options = array()) {
 		$report = array(
 			'metrics' => array(),
 		);
@@ -23,6 +24,12 @@ class PerformanceMetricsPhantom extends PerformanceMetricsProvider {
 		$dir = dirname(__FILE__);
 		$urlEscaped = escapeshellcmd($url);
 		$cmd = "phantomjs {$dir}/phantomjs/metrics.js {$urlEscaped}";
+
+		// support for logged-in metrics
+		if (!empty($options['loggedIn'])) {
+			$account = $this->getCredentials();
+			$cmd .= ' ' . escapeshellcmd("{$account['username']} {$account['password']}");
+		}
 
 		exec($cmd, $output, $retVal);
 

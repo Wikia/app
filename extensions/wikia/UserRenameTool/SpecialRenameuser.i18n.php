@@ -1906,26 +1906,32 @@ $messages['it'] = array(
  * @author Fryed-peach
  * @author Hosiryuhosi
  * @author Marine-Blue
+ * @author Shirayuki
  * @author Suisui
  */
 $messages['ja'] = array(
-	'renameuser' => '利用者名の変更',
+	'userrenametool' => '利用者名を変更',
+	'renameuser' => '利用者名を変更',
 	'userrenametool-desc' => '利用者名変更のための[[Special:Renameuser|特別ページ]]を追加する（renameuser権限が必要）',
 	'userrenametool-old' => '現在の利用者名:',
 	'userrenametool-new' => '新しい利用者名:',
 	'userrenametool-reason' => '変更理由:',
 	'userrenametool-move' => '利用者ページと会話ページ（およびそれらのサブページ）を新しい名前に移動する',
 	'userrenametool-reserve' => '旧利用者名の今後の使用をブロックする',
+	'userrenametool-notify-renamed' => '利用者名の変更後にメールを送信',
 	'userrenametool-warnings' => '警告:',
 	'userrenametool-confirm' => 'はい、利用者名を変更します',
 	'userrenametool-submit' => '変更',
 	'userrenametool-errordoesnotexist' => '利用者 “<nowiki>$1</nowiki>” は存在しません。',
 	'userrenametool-errorexists' => '利用者 “<nowiki>$1</nowiki>” は既に存在しています。',
-	'userrenametool-errorinvalid' => '利用者名 “<nowiki>$1</nowiki>” は無効な値です。',
+	'userrenametool-errorinvalid' => '利用者名 “<nowiki>$1</nowiki>” は無効です。',
+	'userrenametool-errorinvalidnew' => '新しい利用者名“<nowiki>$1</nowiki>”は無効です。',
 	'userrenametool-errortoomany' => '利用者 "<nowiki>$1</nowiki>" には $2 件の投稿記録があります。$3 件以上の投稿記録がある利用者の名前を変更すると、サイトのパフォーマンスに悪影響を及ぼす可能性があります。',
+	'userrenametool-errorbot' => '利用者 <nowiki>$1</nowiki> はボットです。',
 	'userrenametool-error-request' => '要求を正常に受け付けることができませんでした。戻ってから再度お試しください。',
-	'userrenametool-error-same-user' => '現在と同じ利用者名に変更することは出来ません。',
+	'userrenametool-error-same-user' => '現在と同じ利用者名には変更できません。',
 	'userrenametool-success' => '利用者 "<nowiki>$1</nowiki>" を "<nowiki>$2</nowiki>" に変更しました。',
+	'userrenametool-confirm-yes' => 'はい',
 	'userrenametool-confirm-no' => 'いいえ',
 	'userrenametool-page-exists' => '$1 が既に存在しているため、自動で上書きできませんでした。',
 	'userrenametool-page-moved' => '$1 を $2 に移動しました。',
@@ -1934,7 +1940,7 @@ $messages['ja'] = array(
 	'userrenametool-logpagetext' => 'これは、利用者名の変更を記録したものです。',
 	'userrenametool-logentry' => '$1を "$2" へ利用者名変更しました。',
 	'userrenametool-log' => '投稿数$1回。理由: $2',
-	'userrenametool-move-log' => '名前の変更と共に "[[User:$1|$1]]" を "[[User:$2|$2]]" へ移動しました。',
+	'userrenametool-move-log' => '名前の変更と共に "[[User:$1|$1]]" を "[[User:$2|$2]]" へ自動的に移動しました。',
 	'right-renameuser' => '利用者名変更',
 );
 

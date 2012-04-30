@@ -1,3 +1,4 @@
+/*global WikiaPhotoGalleryView, WikiaPhotoGallery */
 var WikiaPhotoGallerySlideshow = {
 	log: function(msg) {
 		$().log(msg, 'WikiaPhotoGallery:Slideshow');
@@ -5,11 +6,12 @@ var WikiaPhotoGallerySlideshow = {
 
 	init: function(params) {
 		var slideshow = $('#' + params.id),
-		hash = slideshow.attr('data-hash'),
-		item = slideshow.find('li').first();
+			hash = slideshow.attr('data-hash'),
+			item = slideshow.find('li').first(),
+			title = item.attr('title');
 
-		if (item.attr('title') != '') {
-			item.css('backgroundImage', 'url(' + item.attr('title') + ')');
+		if (title != '') {
+			item.css('backgroundImage', 'url(' + title + ')');
 		}
 
 		item.removeAttr('title');
@@ -21,22 +23,23 @@ var WikiaPhotoGallerySlideshow = {
 			slideWidth: params.width,
 			slidesClass: 'wikia-slideshow-images',
 			slideCallback: function(index) {
-				var item = slideshow.find('li').eq(index);
-				if (item.attr('title')) {
-					item.css('backgroundImage', 'url(' + item.attr('title') + ')');
+				var item = slideshow.find('li').eq(index),
+					title = item.attr('title');
+				if (title) {
+					item.css('backgroundImage', 'url(' + title + ')');
 					item.removeAttr('title');
 				}
 			}
 		});
 
 		// handle clicks on "Pop Out" button
-		slideshow.find('.wikia-slideshow-popout').click(this.onPopOutClickFn);
+		slideshow.find('.wikia-slideshow-popout').click(this.onPopOutClickFn)
 
 		// handle clicks on slideshow images
-		slideshow.find('.wikia-slideshow-images a').click(this.onPopOutClickFn);
+		.find('.wikia-slideshow-images a').click(this.onPopOutClickFn)
 
 		// handle clicks on "Add Image"
-		slideshow.find('.wikia-slideshow-addimage').click(function(e) {
+		.find('.wikia-slideshow-addimage').click(function(e) {
 			WikiaPhotoGalleryView.loadEditorJS(function() {
 				// tracking
 				WikiaPhotoGalleryView.track('/slideshow/basic/addImage');
@@ -63,40 +66,40 @@ var WikiaPhotoGallerySlideshow = {
 					}
 				});
 			});
-		});
+		})
 
 		// update counter
-		slideshow.bind('slide', function(ev, data) {
+		.bind('slide', function(ev, data) {
 			var counter = slideshow.find('.wikia-slideshow-toolbar-counter');
 			counter.text( counter.data('counter').replace(/\$1/, 1 + data.currentSlideId) );
-		});
+		})
 
 		// track clicks on prev / next
-		slideshow.bind('onPrev', function() {
+		.bind('onPrev', function() {
 			WikiaPhotoGalleryView.track('/slideshow/basic/previous');
-		});
+		})
 
-		slideshow.bind('onNext', function() {
+		.bind('onNext', function() {
 			WikiaPhotoGalleryView.track('/slideshow/basic/next');
-		});
+		})
 
 		// on-hover effects
-		slideshow.find('.wikia-slideshow-images').bind({
+		.find('.wikia-slideshow-images').bind({
 			'mouseover': function(ev) {
 				$(this).addClass('hover');
 			},
 			'mouseout': function(ev) {
 				$(this).removeClass('hover');
 			}
-		});
+		})
+
+		// show slideshow toolbar
+		.find('.wikia-slideshow-toolbar').show();
 
 		// hide "Add photo" button when not in view mode
 		if (!WikiaPhotoGalleryView.isViewPage()) {
 			slideshow.find('.wikia-slideshow-addimage').hide();
 		}
-
-		// show slideshow toolbar
-		slideshow.find('.wikia-slideshow-toolbar').show();
 
 		this.log('#' + params.id + ' initialized');
 	},

@@ -392,6 +392,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'ircgate-username' => 'کارن-نوم:',
+	'ircgate-channel' => 'کانال:',
 );
 
 /** Portuguese (Português)
@@ -477,6 +478,14 @@ $messages['tl'] = array(
 $messages['tr'] = array(
 	'ircgate-username' => 'Kullanıcı adı:',
 	'ircgate-channel' => 'Kanal:',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'ircgate-username' => 'Кулланучы исеме:',
+	'ircgate-channel' => 'Канал:',
 );
 
 /** Ukrainian (Українська)

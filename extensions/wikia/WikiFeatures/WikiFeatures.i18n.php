@@ -604,7 +604,7 @@ $messages['ia'] = array(
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Exhibition de categorias',
 	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Le octo paginas le plus popular in tu categorias es jam presentate como imagines, ma iste function lista tote le paginas como ligamines de imagine ordinabile per nomine, novitate o popularitate!',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
-	'wikifeatures-feature-description-wgEnableChat' => 'Communica instantaneemente con altere personas qui ama tu wiki e le topico de tu wiki tanto como te! Omnes con un conto de Wikia pote entrar in le chat usante le button "Entrar in chat" in le area navigational dextre de tu sito.',
+	'wikifeatures-feature-description-wgEnableChat' => 'Communica instantaneemente con altere personas qui ama tu wiki e le topico de tu wiki tanto como tu! Omnes con un conto de Wikia pote entrar in le chat usante le button "Entrar in chat" in le area navigational dextre de tu sito.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Redesigno del editor de Wikia',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Le modification es in le corde de un wiki e haber un bon editor es clave pro haber un experientia facile e divertente durante le addition de contento. Pro meliorar tu experientia, nos ha redesignate nostre paginas de modification.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Sondages',
@@ -1225,6 +1225,14 @@ $messages['sv'] = array(
 	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
 	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
 	'wikifeatures-log-name' => 'Logg över Wiki-funktioner',
+);
+
+/** Turkish (Türkçe)
+ * @author Bilalokms
+ */
+$messages['tr'] = array(
+	'wikifeatures-deactivate-cancel-button' => 'İptal',
+	'wikifeatures-promotion-new' => 'Yeni',
 );
 
 /** Vietnamese (Tiếng Việt)

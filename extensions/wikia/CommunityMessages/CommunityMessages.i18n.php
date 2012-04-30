@@ -70,10 +70,11 @@ $messages['ca'] = array(
 
 /** Czech (Česky)
  * @author Dontlietome7
+ * @author Jezevec
  */
 $messages['cs'] = array(
 	'communitymessages-desc' => 'Rozšíření Nápověda pro Zprávy komunitě',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Zprávy komunitě byly aktualizovány]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Zprávy komunitě byly aktualizovány]].',
 );
 
 /** German (Deutsch)
@@ -305,6 +306,14 @@ $messages['sv'] = array(
 $messages['tl'] = array(
 	'communitymessages-desc' => 'Dugtong na pantulong para sa mga Mensahe ng Pamayanan',
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Naisapanahon na ang mga Mensahe ng Pamayanan]].',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'communitymessages-desc' => 'Җәмгыять яңалыклары өчен ярдәмче-өстәлмә',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Җәмгыять хәбәрләре яңартылды]].',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -3777,6 +3777,7 @@ $messages['tl'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'sponsorship-dashboard-serie-content-article' => 'бит',
 	'sponsorship-dashboard-empty-description' => '$1',
 );
 

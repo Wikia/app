@@ -272,8 +272,13 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'main-tab-personal' => 'زما ويکييا',
 	'main-tab-search' => 'پلټل',
+	'main-tab-offline' => 'پرې ليکه',
+	'tab-discover-loading-message' => 'د برسېرېدو په حال کې',
 	'tab-discover-no-network-dialog-close-button' => 'ښه',
+	'tab-search-loading-message' => 'د پلټنې په حال کې...',
+	'browser-loading-message' => 'د برسېرېدو په حال کې',
 );
 
 /** Portuguese (Português)

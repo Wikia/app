@@ -54,7 +54,7 @@ var CreateWikiaQuiz = {
 		$.getResources([
 			$.loadJQueryUI,
 			$.getSassCommonURL('/extensions/wikia/WikiaQuiz/css/WikiaQuizBuilder.scss'),
-			wgExtensionsPath + '/wikia/WikiaQuiz/js/CreateWikiaQuiz.js?' + wgStyleVersion
+			wgExtensionsPath + '/wikia/WikiaQuiz/js/CreateWikiaQuiz.js'
 		], function() {
 			$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaQuiz&actionName=SpecialPage&outputType=html', function(data) {
 				$(data).makeModal({width: 600});

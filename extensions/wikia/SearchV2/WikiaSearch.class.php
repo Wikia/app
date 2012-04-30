@@ -8,6 +8,7 @@ class WikiaSearch extends WikiaObject {
 	const GROUP_RESULTS_CACHE_TTL = 900; // 15 mins
 	const WIKIPAGES_CACHE_TTL = 604800; // 7 days
 	const VIDEO_WIKI_ID = 298117;
+	const GROUP_RESULT_MAX_FETCHES = 30;
 
 	/**
 	 * Search client
@@ -16,6 +17,8 @@ class WikiaSearch extends WikiaObject {
 	protected $client = null;
 	protected $parserHookActive = false;
 	protected $namespaces = array();
+	protected $skipCache = false;
+	protected $includeRedirects = true;
 
 	public function __construct( WikiaSearchClient $client ) {
 		$this->client = $client;
@@ -29,71 +32,90 @@ class WikiaSearch extends WikiaObject {
 	 * @param int $page
 	 * @param int $length
 	 * @param int $cityId
-	 * @param string $rankExpr
 	 * @param bool $groupResults
 	 * @return WikiaSearchResultSet
 	 */
-	public function doSearch( $query, $page = 1, $length = null, $cityId = 0, $rankExpr = '', $groupResults = false ) {
+	public function doSearch( $query, $page = 1, $length = null, $cityId = 0, $groupResults = false ) {
+		wfProfileIn(__METHOD__);
+
 		$length = !empty($length) ? $length : self::RESULTS_PER_PAGE;
 		$groupResults = ( empty($cityId) && $groupResults );
 
 		if($groupResults) {
-			$results = $this->getGroupResultsFromCache($query, $rankExpr);
+			$results = $this->getGroupResultsFromCache($query);
 
-			if(empty($results) || isset($_GET['skipCache'])) {
-			        $methodOptions = array('size'   =>  self::GROUP_RESULTS_SEARCH_LIMIT,
-						       'cityId' =>  $cityId );
+			if(empty($results) || $this->skipCache) {
+				$methodOptions = array('size' => self::GROUP_RESULTS_SEARCH_LIMIT, 'cityId' =>  $cityId );
 				$results = $this->client->search( $query, $methodOptions );
 				$results = $this->groupResultsPerWiki( $results );
-
-				$this->setGroupResultsToCache( $query, $rankExpr, $results );
+				$this->setGroupResultsToCache( $query, $results );
 			}
+
 			$results->setCurrentPage($page);
 			$results->setResultsPerPage($length);
+			$searchCount = 1;
+			while( !$results->valid() && $results->hasResults() ) {
+				$methodOptions = array('start'  => ($results->getResultsStart() + self::GROUP_RESULTS_SEARCH_LIMIT), 'size' => self::GROUP_RESULTS_SEARCH_LIMIT, 'cityId' => $cityId);
+				$moreResults = $this->client->search( $query, $methodOptions );
 
-			if(!$results->valid() && $results->hasResults()) {
-				// no more results in set, fetch more from backend
-				// @todo implement
+				if(!$moreResults->hasResults()) {
+					$results->markAsComplete();
+					// we reached the point, when there's too many pages than grouped results, so we need to find very last one page and show it
+					do {
+						$results->setCurrentPage($results->getCurrentPage()-1);
+					} while( !$results->valid() && ( $results->getCurrentPage() > 1 ) );
+				} else {
+					$moreResults = $this->groupResultsPerWiki( $moreResults );
+					$results->merge( $moreResults );
+				}
+
+				$this->setGroupResultsToCache( $query, $results );
+				if($results->isComplete()) {
+					break;
+				}
+
+				if($searchCount < self::GROUP_RESULT_MAX_FETCHES) {
+					// throw an exception in case something went wrong
+					throw new WikiaException( 'ERROR: Too many group search fetches' );
+				}
+				$searchCount++;
 			}
 		}
 		else {
 			// no grouping, e.g. intra-wiki searching
+			if($this->namespaces) {
+					$this->client->setNamespaces($this->namespaces);
+			}
 
-		        if ($this->namespaces) {
-		            $this->client->setNamespaces($this->namespaces);
-		        }
-
-			$methodOptions = array('start'  => (($page - 1) * $length),
-					       'length' => $length,
-					       'cityId' => $cityId);
-
+			$methodOptions = array('start'  => (($page - 1) * $length), 'size' => $length, 'cityId' => $cityId, 'includeRedirects' => $this->includeRedirects);
 			$results = $this->client->search( $query, $methodOptions);
 		}
 
+		wfProfileOut(__METHOD__);
 		return $results;
 	}
 
 	/**
 	 * @param string $query
-	 * @param string $rankExpr
 	 * @return WikiaSearchResultSet
 	 */
-	private function getGroupResultsFromCache($query, $rankExpr) {
-		return $this->wg->Memc->get( $this->getGroupResultsCacheKey($query, $rankExpr) );
+	private function getGroupResultsFromCache($query) {
+		return $this->wg->Memc->get( $this->getGroupResultsCacheKey($query) );
 	}
 
-	private function setGroupResultsToCache($query, $rankExpr, WikiaSearchResultSet $resultSet) {
-		$this->wg->Memc->set( $this->getGroupResultsCacheKey($query, $rankExpr), $resultSet, self::GROUP_RESULTS_CACHE_TTL );
+	private function setGroupResultsToCache($query, WikiaSearchResultSet $resultSet) {
+		$this->wg->Memc->set( $this->getGroupResultsCacheKey($query), $resultSet, self::GROUP_RESULTS_CACHE_TTL );
 	}
 
-	private function getGroupResultsCacheKey($query, $rankExpr) {
-		return $this->wf->SharedMemcKey( 'WikiaSearchResultSet', md5($query.$rankExpr) );
+	private function getGroupResultsCacheKey($query) {
+		return $this->wf->SharedMemcKey( 'WikiaSearchResultSet', md5($query) );
 	}
 
 	private function groupResultsPerWiki(WikiaSearchResultSet $results) {
+		wfProfileIn(__METHOD__);
+
 		$wikiResults = array();
 		$wikisByScore = array();
-
 		foreach($results as $result) {
 			if($result instanceof WikiaSearchResult) {
 				$cityId = $result->getCityId();
@@ -120,7 +142,6 @@ class WikiaSearch extends WikiaObject {
 			}
 		}
 
-
 		arsort($wikisByScore);
 
 		$sortedWikiResults = array();
@@ -131,7 +152,10 @@ class WikiaSearch extends WikiaObject {
 			     $sortedWikiResults[] = $wikiResults[str_replace('id:', '', $key)];
 			   });
 
-		return F::build( 'WikiaSearchResultSet', array( 'results' => $sortedWikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete(), 'query' => $results->getQuery() ) );
+		$resultSet = F::build( 'WikiaSearchResultSet', array( 'results' => $sortedWikiResults, 'resultsFound' => $results->getResultsFound(), 'resultsStart' => $results->getResultsStart(), 'isComplete' => $results->isComplete(), 'query' => $results->getQuery() ) );
+
+		wfProfileOut(__METHOD__);
+		return $resultSet;
 	}
 
 	public function setClient( WikiaSearchClient $client ) {
@@ -139,8 +163,8 @@ class WikiaSearch extends WikiaObject {
 	}
 
 	public function getPages( $pageIds, $withMetaData = true ) {
-
-	  $result = array('pages'=>array(), 'missingPages'=>array());
+		wfProfileIn(__METHOD__);
+		$result = array('pages'=>array(), 'missingPages'=>array());
 
 	  foreach (explode('|', $pageIds) as $pageId) {
 	    try {
@@ -151,14 +175,12 @@ class WikiaSearch extends WikiaObject {
 	       * API code is broken in the getPage() method, it will tell the indexer to queue the page up 
 	       * for removal from the index.
 	       **/
-
 	      $result['missingPages'][] = $pageId;
 	    }
-
 	  }
 
+		wfProfileOut(__METHOD__);
 	  return $result;
-
 	}
 
 	/**
@@ -174,6 +196,7 @@ class WikiaSearch extends WikiaObject {
 	}
 
 	public function getPage( $pageId, $withMetaData = true ) {
+		wfProfileIn(__METHOD__);
 		$result = array();
 
 		$page = F::build( 'Article', array( $pageId ), 'newFromID' );
@@ -225,28 +248,23 @@ class WikiaSearch extends WikiaObject {
 		$result['ns'] = $page->getTitle()->getNamespace();
 		$result['host'] = substr($this->wg->Server, 7);
 		$result['lang'] = $this->wg->Lang->mCode;
-
 		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces );
-
 		$result['is_main_page'] = ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0);
 
-
 		if( $withMetaData ) {
-		  
-		  $result = array_merge($result, $this->getPageMetaData($page));
-
+			$result = array_merge($result, $this->getPageMetaData($page));
 		}
-
-		
 
 		// restore global state
 		$this->wg->Title = $wgTitle;
 		$this->wg->Request = $wgRequest;
 
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
 	public function getPageMetaData( $page ) {
+		wfProfileIn(__METHOD__);
 		$result = array();
 
 		$data = $this->callMediaWikiAPI( array(
@@ -300,57 +318,56 @@ class WikiaSearch extends WikiaObject {
 		$result['wikiviews_weekly'] = (int) $wikiViews->weekly;
 		$result['wikiviews_monthly'] = (int) $wikiViews->monthly;
 
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
 	
 	private function getRedirectTitles( Article $page ) {
+		wfProfileIn(__METHOD__);
 
-	        $result = $page->getDB()->selectRow(array('redirect', 'page'), 
-						    array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'), 
-						    array(),
-						    __METHOD__,
-						    array('GROUP'=>'rd_title'),
-						    array('page' => array('INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from')))
-						    );
+		$result = $page->getDB()->selectRow(array('redirect', 'page'),
+				array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'),
+				array(),
+				__METHOD__,
+				array('GROUP'=>'rd_title'),
+				array('page' => array('INNER JOIN', array('rd_title'=>$page->mTitle->getDbKey(), 'page_id = rd_from')))
+			);
 
+		wfProfileOut(__METHOD__);
 		return (!empty($result)) ? str_replace('_', ' ', $result->redirect_titles) : '';
-
 	}
 
 
 	private function getWikiViews( Article $page ) {
-
-	        $key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
+		wfProfileIn(__METHOD__);
+		$key = $this->wf->SharedMemcKey( 'WikiaSearchPageViews', $this->wg->CityId );
 
 		// should probably re-poll for wikis without much love
-	        if ( ($result = $this->wg->Memc->get( $key )) && ($result->weekly > 0 || $result->monthly > 0) ) {
-
-		    return $result;
-
+		if ( ($result = $this->wg->Memc->get( $key )) && ($result->weekly > 0 || $result->monthly > 0) ) {
+			return $result;
 		}
 
-	        $db = wfGetDB( DB_SLAVE, array(), $this->wg->statsDB );
-		
-	        $row = $db->selectRow(array('page_views'),
-				      array('SUM(pv_views) as "monthly"',
-					    'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"'),
-				      array('pv_city_id' => (int) $this->wg->CityId,
-					    'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)'),
-				      __METHOD__
-						 );
+		$db = wfGetDB( DB_SLAVE, array(), $this->wg->statsDB );
+
+		$row = $db->selectRow(array('page_views'),
+			array('SUM(pv_views) as "monthly"',
+			'SUM(CASE WHEN pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) THEN pv_views ELSE 0 END) as "weekly"'),
+			array('pv_city_id' => (int) $this->wg->CityId,
+			'pv_ts >= DATE_SUB(DATE(NOW()), INTERVAL 30 DAY)'),
+			__METHOD__
+		);
 
 		// a pinch of defensive programming
 		if (!$row) {
-
-		   $row = new stdClass();
-		   $row->weekly = 0;
-		   $row->monthly = 0;
-
+			$row = new stdClass();
+			$row->weekly = 0;
+			$row->monthly = 0;
 		}
 
 		$this->wg->Memc->set( $key, $row, self::WIKIPAGES_CACHE_TTL );
 
+		wfProfileOut(__METHOD__);
 		return $row;
 	}
 
@@ -482,21 +499,36 @@ class WikiaSearch extends WikiaObject {
 	}
 
 	private function callMediaWikiAPI( Array $params ) {
+		wfProfileIn(__METHOD__);
+
 		$api = F::build( 'ApiMain', array( 'request' => new FauxRequest($params) ) );
 		$api->execute();
 
+		wfProfileOut(__METHOD__);
 		return  $api->getResultData();
 	}
 
-
-	public function setNamespaces(array $namespaces)
-	{
-	       $this->namespaces = $namespaces;
+	public function setNamespaces( Array $namespaces ) {
+		$this->namespaces = $namespaces;
 	}
 
-	public function getNamespaces()
-	{
-	       return $this->namespaces;
+	public function getNamespaces() {
+		return $this->namespaces;
 	}
 
+	public function setSkipCache($value) {
+		$this->skipCache = (bool) $value;
+	}
+
+	public function getSkipCache() {
+		return $this->skipCache;
+	}
+
+	public function setIncludeRedirects($value) {
+		$this->includeRedirects = $value;
+	}
+
+	public function getIncludeRedirects() {
+		return $this->includeRedirects;
+	}
 }

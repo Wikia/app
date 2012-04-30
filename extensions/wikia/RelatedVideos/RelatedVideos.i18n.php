@@ -207,7 +207,7 @@ $messages['fr'] = array(
 	'related-videos-pagination' => '$1 de $2',
 	'related-videos-empty' => 'Soyez le premier à ajouter une vidéo',
 	'related-videos-requestbutton' => 'Demande de nouvelles vidéos',
-	'related-videos-requesttext' => "Que voulez-vous voir d'autre?",
+	'related-videos-requesttext' => "Que voulez-vous voir d'autre ?",
 );
 
 /** Galician (Galego)
@@ -660,6 +660,8 @@ $messages['sv'] = array(
 	'related-videos-video-is-new' => 'Ny',
 	'related-videos-pagination' => '$1 av $2',
 	'related-videos-empty' => 'Bli först att lägga till ett videoklipp',
+	'related-videos-requestbutton' => 'Begära nya videoklipp',
+	'related-videos-requesttext' => 'Vad annat vill du se?',
 );
 
 /** Tamil (தமிழ்)

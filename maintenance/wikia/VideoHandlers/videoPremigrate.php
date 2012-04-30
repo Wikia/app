@@ -12,7 +12,8 @@ require_once( 'videolog.class.php' );
 
 global $IP, $wgCityId, $wgExternalDatawareDB;
 #$IP = '/home/pbablok/video/VideoRefactor/'; // HACK TO RUN ON SANDBOX
-echo( "$IP\n" );
+
+
 echo( "Premigration script running for $wgCityId\n" );
 
 videoLog( 'premigration', 'START', '');

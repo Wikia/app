@@ -518,7 +518,7 @@ class UserrightsPage extends SpecialPage {
 
 			/* Wikia change begin */
 			/* BugId:10355 - Let Mix know once it occurs again. :-) */
-			if ( $this->isself && $set && $disabled ) {
+			if ( $this->isself && $set && $disabled && ( 'bureaucrat' == $group || 'sysop' == $group ) ) {
 				global $wgUser, $wgCityId, $wgMemc;
 				$notification = array();
 				$notification['key'] = wfMemcKey( 'user', 'id', $wgUser->getId() );

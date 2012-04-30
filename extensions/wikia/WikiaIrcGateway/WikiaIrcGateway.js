@@ -20,11 +20,11 @@ function setjs() {
 }
 function nickvalid() {
 	var nick = document.loginform.Nickname.value;
-	if(nick.match(/^[A-Za-z0-9\[\]\{\}^\\\|\_\-`]{1,32}$/)) {
+	if(nick.match(/^[A-Za-z0-9\[\]\{\}\^\\\|\_\-`]{1,32}$/)) {
 		return true;
 	}
 	alert('Please enter a valid nickname');
-	document.loginform.Nickname.value = nick.replace(/[^A-Za-z0-9\[\]\{\}^\\\|\_\-`]/g, '');
+	document.loginform.Nickname.value = nick.replace(/[^A-Za-z0-9\[\]\{\}\^\\\|\_\-`]/g, '');
 	return false;
 }
 function setcharset() {
@@ -36,15 +36,11 @@ function setcharset() {
 // credit: http://www.netlobo.com/url_query_string_javascript.html
 function gup( name )
 {
-	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-	var regexS = "[\\?&]"+name+"=([^&#]*)";
-	var regex = new RegExp( regexS );
-	var results = regex.exec( window.location.href );
-	if( results == null ) {
-		return "";
-	} else {
-		return results[1];
-	}
+	name = name.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");
+	var regexS = "[\\?&]"+name+"=([^&#]*)",
+		regex = new RegExp( regexS ),
+		results = regex.exec( window.location.href );
+	return results ? results[1] : '';
 }
 
 function set_chan()

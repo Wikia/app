@@ -31,9 +31,12 @@ class WikiaSearchResultSet implements Iterator {
 	 * @param array $results list of WikiaResult or WikiaResultSet (for result grouping) objects
 	 */
 	public function setResults(Array $results) {
+		wfProfileIn(__METHOD__);
+
 		foreach($results as $result) {
 			$this->addResult($result);
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	public function setResultsFound($value) {
@@ -183,14 +186,19 @@ class WikiaSearchResultSet implements Iterator {
 	 * @param WikiaSearchResultSet $resultSet
 	 */
 	public function merge(WikiaSearchResultSet $resultSet) {
+		wfProfileIn(__METHOD__);
+
 		foreach($resultSet as $result) {
 			$this->addResult($result);
 		}
+
 		$this->setResultsFound($resultSet->getResultsFound());
 		$this->setResultsStart($resultSet->getResultsStart());
 		if($resultSet->isComplete()) {
 			$this->markAsComplete();
 		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	public function __sleep() {

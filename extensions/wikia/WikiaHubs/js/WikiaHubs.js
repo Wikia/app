@@ -1,3 +1,4 @@
+/*global showComboAjaxForPlaceHolder, UserLoginModal, WikiaForm*/
 var WikiaHubs = {
 	init: function() {
 		WikiaHubs.el = $('#WikiaHubs');
@@ -30,16 +31,17 @@ var WikiaHubs = {
 	},
 
 	clickTrackingHandler: function(e) {
-		var node = $(e.target);
-		var startTime = new Date();
+		var node = $(e.target),
+			startTime = new Date(),
+			url;
 		
 		if (node.closest('.wikiahubs-sponsored-video').length > 0) {	// featured video
 			if (node.hasClass('thumbinner') || node.hasParent('.thumbinner')) {
-				var url = node.closest('.thumbinner').find('a').attr('href');
+				url = node.closest('.thumbinner').find('a').attr('href');
 				var videoTitle = url.substr(url.indexOf(':')+1);
 				WikiaHubs.trackClick('FeaturedVideo', WikiaTracker.ACTIONS.PLAY_VIDEO, 'play', null, {video_title:videoTitle});
 			} else if (node.is('a')) {
-				var url = node.closest('a').attr('href');
+				url = node.closest('a').attr('href');
 				WikiaHubs.trackClick('FeaturedVideo', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'link', null, {href:url});
 			}
 		} else if (node.closest('.wikiahubs-popular-videos').length > 0) {	// suggest video
@@ -48,10 +50,10 @@ var WikiaHubs = {
 			}
 		} else if (node.closest('.wikiahubs-from-the-community').length > 0) {	// suggest article
 			if (node.is('img') && node.hasParent('a')) {
-				var url = node.closest('a').attr('href');
+				url = node.closest('a').attr('href');
 				WikiaHubs.trackClick('SuggestArticle', WikiaTracker.ACTIONS.CLICK_LINK_IMAGE, 'hero', null, {href:url});
 			} else if (node.is('a')) {
-				var url = node.closest('a').attr('href');
+				url = node.closest('a').attr('href');
 				if (node.closest('.wikiahubs-ftc-title').length > 0) {
 					WikiaHubs.trackClick('SuggestArticle', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'title', null, {href:url});
 				} else if (node.closest('.wikiahubs-ftc-subtitle').length > 0) {
@@ -75,28 +77,29 @@ var WikiaHubs = {
 				WikiaHubs.trackClick('Pulse', WikiaTracker.ACTIONS.CLICK, 'search');
 			} else if (node.closest('.mw-headline').length > 0) {
 				if (node.is('a')) {
-					var url = node.closest('a').attr('href');
+					url = node.closest('a').attr('href');
 					WikiaHubs.trackClick('Pulse', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', null, {href:url});
 				}
 			}
 		} else if (node.closest('.wikiahubs-explore').length > 0) {	// Explore
 			if (node.is('a')) {
-				var url = node.closest('a').attr('href');
+				url = node.closest('a').attr('href');
 				if (node.hasParent('.mw-headline')) {
 					WikiaHubs.trackClick( 'Explore', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'title', null, {href:url} );
 				} else {
-					var aNode = node.closest('a');
-					var allANode = node.closest('.explore-content').find('a');
-					var itemIndex = allANode.index(aNode) + 1;
+					var aNode = node.closest('a'),
+						allANode = node.closest('.explore-content').find('a'),
+						itemIndex = allANode.index(aNode) + 1;
 					WikiaHubs.trackClick('Explore', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'item', itemIndex, {href:url});
 				}
 			}
 		} else if (node.closest('.wikiahubs-top-wikis').length > 0) {	// TopWikis
 			if (node.is('a')) {
-				var liNode = node.closest('li');
-				var allLiNode = node.closest('.top-wikis-content').find('li');
-				var nameIndex = allLiNode.index(liNode) + 1;
-				var url = node.closest('a').attr('href');
+				var liNode = node.closest('li'),
+					allLiNode = node.closest('.top-wikis-content').find('li'),
+					nameIndex = allLiNode.index(liNode) + 1;
+
+				url = node.closest('a').attr('href');
 				WikiaHubs.trackClick('TopWikis', WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'wikiname', nameIndex, {href:url});
 			}
 		}
@@ -180,8 +183,8 @@ var SuggestModal = {
 				method: 'modalArticle',
 				format: 'html'
 		}, function(html) {
-				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
-				var wikiaForm = new WikiaForm(modal.find('form'));
+				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal}),
+					wikiaForm = new WikiaForm(modal.find('form'));
 
 				modal.find('input[name=articleurl]').focus(function(){
 					if ( $(this).parent().is('.default-value') ) {
@@ -195,8 +198,8 @@ var SuggestModal = {
 
 				modal.find('button.submit').click(function(e) {
 					e.preventDefault();
-					var articleurl = modal.find('input[name=articleurl]').val();
-					var reason = modal.find('textarea[name=reason]').val();
+					var articleurl = modal.find('input[name=articleurl]').val(),
+						reason = modal.find('textarea[name=reason]').val();
 					$.nirvana.sendRequest({
 						controller: 'WikiaHubsSuggestController',
 						method: 'modalArticle',

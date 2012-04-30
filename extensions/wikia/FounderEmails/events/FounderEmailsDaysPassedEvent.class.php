@@ -17,13 +17,14 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$wgTitle = Title::newMainPage();		
 		$founderEmailObj = FounderEmails::getInstance();
+		$wikiService = F::build( 'WikiService' );
 		foreach ( $events as $event ) {
 			$wikiId = $event['wikiId'];
 			if ($wikiId == 0) continue;  // should "never" happen BugId:12717
 			$activateTime = $event['data']['activateTime'];
 			$activateDays = $event['data']['activateDays'];
 
-			$user_ids = $founderEmailObj->getWikiAdminIds($wikiId);
+			$user_ids = $wikiService->getWikiAdminIds( $wikiId );
 			if ( time() >= $activateTime ) {
 
 				$emailParams = array(

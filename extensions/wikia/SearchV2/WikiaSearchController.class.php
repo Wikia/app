@@ -3,11 +3,12 @@
 class WikiaSearchController extends WikiaSpecialPageController {
 
 	const RESULTS_PER_PAGE = 25;
-	const PAGES_PER_WINDOW = 10;
+	const PAGES_PER_WINDOW = 5;
 
+	/**
+	 * @var WikiaSearch
+	 */
 	protected $wikiaSearch = null;
-	// @todo refactor it, shouldn't probably be here
-	protected $searchRedirs = 1;
 
 	public function __construct() {
 		$this->wikiaSearch = F::build('WikiaSearch');
@@ -17,15 +18,29 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js" ), array(), 'WikiaSearchV2.init' ) );
+		
+		if ( $this->wg->User->getSkin() instanceof SkinMonoBook ) {
+			$this->response->addAsset('extensions/wikia/Paginator/monobook/monobook.scss');
+			$this->response->addAsset('extensions/wikia/SearchV2/monobook/monobook.scss');
+		}
 
 		$query = $this->getVal('query');
 		$page = $this->getVal('page', 1);
-		$rankExpr = $this->getVal('rankExpr');
 		$debug = $this->request->getBool('debug');
 		$crossWikia = $this->request->getBool('crossWikia');
+		$skipCache = $this->request->getBool('skipCache');
 		$activeAdvancedTab = $this->getActiveAdvancedTab();
 		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
+		$wikiName = $this->wg->Sitename;
+		
+		if(!empty($advanced)) {
+			$redirs = $this->request->getBool('redirs');
+		}
+		else {
+			// include redirects by default
+			$redirs = true;
+		}
 
 		$namespaces = array();
 		foreach($searchableNamespaces as $i => $name) {
@@ -34,40 +49,53 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 
+		$isCorporateWiki = !empty($this->wg->EnableWikiaHomePageExt);
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
-		$isInterWiki = $crossWikia ? true : !empty($this->wg->EnableWikiaHomePageExt);
-				
+		$isInterWiki = $crossWikia ? true : $isCorporateWiki;
+
+		if($isCorporateWiki) {
+			OasisModule::addBodyClass('inter-wiki-search');
+		}
+		
 		$results = false;
 		$resultsFound = 0;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
-			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $rankExpr, $isInterWiki );
+			$this->wikiaSearch->setSkipCache( $skipCache );
+			// @todo turn it back on, when backend will be fixed
+			//$this->wikiaSearch->setIncludeRedirects( $redirs );
+
+			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $isInterWiki );
 			$resultsFound = $results->getRealResultsFound();
 
 			if(!empty($resultsFound)) {
-				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'rankExpr' => $rankExpr, 'groupResults' => $isInterWiki ) );
+				$paginationLinks = $this->sendSelfRequest( 'pagination', array( 'query' => $query, 'page' => $page, 'count' => $resultsFound, 'crossWikia' => $isInterWiki, 'skipCache' => $skipCache, 'debug' => $debug, 'namespaces' => $namespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
+			}
+
+			$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-with-query', array(ucwords($query), $wikiName) )  );
+		} else {
+			if($isInterWiki) {
+				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-interwiki' ) );
+			} else {
+				$this->app->wg->Out->setPageTitle( $this->wf->msg( 'wikiasearch2-page-title-no-query-intrawiki', array($wikiName) )  );
 			}
 		}
 
-		if (!$isInterWiki) {
-			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced ) );
+		if(!$isInterWiki) {
+			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
 
-		if ((empty($resultsFound)) && empty($query)) {
-		        $this->setVal( 'tagCloud', $this->wikiaSearch->getTagCloud($this->getTagCloudParams()));
-		}
-
-
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
+		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );
+		$this->setVal( 'isOneResultsPageOnly', ( $resultsFound <= self::RESULTS_PER_PAGE ) );
 		$this->setVal( 'currentPage',  $page );
 		$this->setVal( 'paginationLinks', $paginationLinks );
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
 		$this->setVal( 'pageUrl', $this->wg->Title->getFullUrl() );
-		$this->setVal( 'rankExpr', $rankExpr );
 		$this->setVal( 'debug', $debug );
 		$this->setVal( 'solrHost', $this->wg->SolrHost);
 		$this->setVal( 'debug', $this->getVal('debug', false) );
@@ -80,6 +108,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$activeTab = $this->getVal( 'activeTab' );
 		$searchableNamespaces = $this->getVal( 'searchableNamespaces' );
 		$advanced = $this->getVal( 'advanced' );
+		$redirs = $this->getVal( 'redirs' );
 
 		$bareterm = $term;
 		if( $this->termStartsWithImage( $term ) ) {
@@ -93,25 +122,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'namespaces', $namespaces );
 		$this->setVal( 'activeTab', $activeTab );
 		$this->setVal( 'searchableNamespaces', $searchableNamespaces );
-		$this->setVal( 'acceptListRedirects', true );
-		$this->setVal( 'searchRedirects', $this->searchRedirs );
+		$this->setVal( 'redirs', $redirs );
 		$this->setVal( 'advanced', $advanced);
 	}
 
-	// $term, $namespaces, $label, $tooltip, $params=array()
 	public function advancedTabLink() {
 		$term = $this->getVal('term');
 		$namespaces = $this->getVal('namespaces');
 		$label = $this->getVal('label');
 		$tooltip = $this->getVal('tooltip');
 		$params = $this->getVal('params');
+		$redirs = $this->getVal('redirs');
 
 		$opt = $params;
 		foreach( $namespaces as $n ) {
 			$opt['ns' . $n] = 1;
 		}
 
-		$opt['redirs'] = $this->searchRedirects ? 1 : 0;
+		$opt['redirs'] = !empty($redirs) ? 1 : 0;
 		$stParams = array_merge( array( 'query' => $term ), $opt );
 
 		$title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
@@ -120,6 +148,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'title', $tooltip );
 		$this->setVal( 'label', $label );
 		$this->setVal( 'tooltip', $tooltip );
+	}
+
+	private function getTruncatedResultsNum($resultsNum) {
+		$result = $resultsNum;
+
+		if( strlen( $resultsNum ) > 1 ) {
+			$result = round( $resultsNum, ( 0 - ( strlen( $resultsNum ) - 1 ) ) );
+		}
+
+		return $result;
 	}
 
 	/*
@@ -221,22 +259,30 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 
 	public function pagination() {
-		$isInterWiki = !empty($this->wg->EnableWikiaHomePageExt); // For now, just checking if we're on wikia.com wiki
 		$query = $this->getVal('query');
 		$page = $this->getVal( 'page', 1 );
-		$rankExpr = $this->getVal('rankExpr');
 		$resultsCount = $this->getVal( 'count', 0);
 		$pagesNum = ceil( $resultsCount / self::RESULTS_PER_PAGE );
+		$crossWikia = $this->getVal('crossWikia');
+		$debug = $this->getVal('debug');
+		$skipCache = $this->getVal('skipCache');
+		$namespaces = $this->getVal('namespaces', array());
+		$advanced = $this->getVal( 'advanced' );
+		$redirs = $this->getVal( 'redirs' );
 
 		$this->setVal( 'query', $query );
 		$this->setVal( 'pagesNum', $pagesNum );
-		$this->setVal( 'rankExpr', $rankExpr );
 		$this->setVal( 'currentPage', $page );
 		$this->setVal( 'windowFirstPage', ( ( ( $page - self::PAGES_PER_WINDOW ) > 0 ) ? ( $page - self::PAGES_PER_WINDOW ) : 1 ) );
 		$this->setVal( 'windowLastPage', ( ( ( $page + self::PAGES_PER_WINDOW ) < $pagesNum ) ? ( $page + self::PAGES_PER_WINDOW ) : $pagesNum ) );
 		$this->setVal( 'pageTitle', $this->wg->Title );
-		$this->setVal( 'isInterWiki', $isInterWiki);
-		$this->setVal( 'resultsCount', $resultsCount);
+		$this->setVal( 'crossWikia', $crossWikia );
+		$this->setVal( 'resultsCount', $resultsCount );
+		$this->setVal( 'skipCache', $skipCache );
+		$this->setVal( 'debug', $debug );
+		$this->setVal( 'namespaces', $namespaces );
+		$this->setVal( 'advanced', $advanced );
+		$this->setVal( 'redirs', $redirs );
 	}
 
 	public function getPage() {

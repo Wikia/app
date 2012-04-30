@@ -78,17 +78,17 @@
 		public function getStatsDataProvider() {
 			$raw = array (
 				7 => array (
-					'pageviews' => 110,
+					'pageviews' => 11,
 					'edits' => 13,
 					'photos' => 0,
 				),
 				6 => array (
-					'pageviews' => 900,
+					'pageviews' => 90,
 					'edits' => 0,
 					'photos' => 0,
 				),
 				5 => array (
-					'pageviews' => 1150,
+					'pageviews' => 115,
 					'edits' => 16,
 					'photos' => 0,
 				),
@@ -102,7 +102,7 @@
 			}
 			$total = array (
 				'totals' => array (
-					'pageviews' => 2160,
+					'pageviews' => 216,
 					'edits' => 29,
 					'photos' => 0,
 				),
@@ -126,21 +126,23 @@
 				foreach ($daily3 as $key => $value) {
 					$fetch_obj3[] = self::getFetchObjResult($l, $value[$l], $key);
 				}
-				$fetch_obj3[] = self::getFetchObjResult($l, $total3[$l]);
+				if ($l != 'pageviews') {
+					$fetch_obj3[] = self::getFetchObjResult($l, $total3[$l]);
+				}
 				$fetch_obj3[] = null;
 			}
+			self::patchNull($fetch_obj3);
 			self::patchZeroStats($daily3);
 
 			// case #4
 			$date4 = date('Y-m-d', strtotime("-4 day"));
-			$daily4[$date4] = array('pageviews' => 550);
+			$daily4[$date4] = array('pageviews' => 55);
 			$total4 = array(
-				'pageviews' => 550,
+				'pageviews' => 55,
 				'edits' => 0,
 				'photos' => 0,
 			);
 			$fetch_obj4[] = self::getFetchObjResult('pageviews', $daily4[$date4]['pageviews'], $date4);
-			$fetch_obj4[] = self::getFetchObjResult('pageviews', $total4['pageviews']);
 			self::patchNull($fetch_obj4);
 			self::patchZeroStats($daily4);
 
@@ -174,16 +176,15 @@
 			self::patchZeroStats($daily6);
 
 			// case #7
-			$daily7[$date4] = array('pageviews' => 550);
+			$daily7[$date4] = array('pageviews' => 55);
 			$daily7[$date5] = array('edits' => 12);
 			$daily7[$date6] = array('photos' => 3);
 			$total7 = array(
-				'pageviews' => 550,
+				'pageviews' => 55,
 				'edits' => 12,
 				'photos' => 3,
 			);
 			$fetch_obj7[] = self::getFetchObjResult('pageviews', $daily7[$date4]['pageviews'], $date4);
-			$fetch_obj7[] = self::getFetchObjResult('pageviews', $total7['pageviews']);
 			$fetch_obj7[] = null;	// pageviews
 			$fetch_obj7[] = self::getFetchObjResult('edits', $daily7[$date5]['edits'], $date5);
 			$fetch_obj7[] = self::getFetchObjResult('edits', $total7['edits']);
@@ -245,10 +246,7 @@
 		protected static function getFetchObjResult($key, $cnt, $date=null) {
 			$obj = new stdClass();
 			$obj->date = $date;
-			if ($key=='pageviews')
-				$obj->cnt = $cnt/10;
-			else
-				$obj->cnt = $cnt;
+			$obj->cnt = $cnt;
 
 			return $obj;
 		}

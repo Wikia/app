@@ -191,6 +191,7 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
 	'contentfeeds-firstfewarticles-tag-next' => 'Weider',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
 );
 
 /** Macedonian (Македонски) */

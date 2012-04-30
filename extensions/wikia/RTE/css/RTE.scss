@@ -23,7 +23,7 @@
 
 /* loading indicator */
 .RTEloading #cke_contents_wpTextbox1 {
-	background: #ddd url(http://images.wikia.com/common/skins/common/images/ajax.gif) no-repeat 50% 50% !important;
+	background: #ddd url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
 	overflow: hidden;
 	position: relative;
 }

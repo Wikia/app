@@ -149,6 +149,14 @@ $messages['sv'] = array(
 	'globalnotification-general-ajax-failure' => 'Webbläsaren kunde inte ansluta till Wikia. Försök igen senare.',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'globalnotification-desc' => 'AJAX хаталары кебек вакыйгалар өчен система хәбәрләрен күрсәтә',
+	'globalnotification-general-ajax-failure' => 'Браузер Викия белән тоташа алмады. Соңрак кереп карагыз.',
+);
+
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Ffaarr
  */

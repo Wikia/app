@@ -18,11 +18,14 @@ $color-search-form-background: darken($color-page, 5%);
 	$color-search-form-background: darken(lighten($color-page, 20%), 15%);
 }
 
+$form-side-padding: 12px;
+$form-negative-side-padding: $form-side-padding*-1;
+
 .Search {
 	// Search form
 	.WikiaSearch {
 		background: $color-search-form-background;
-		padding: 11px 12px;
+		padding: 11px $form-side-padding 0px;
 		
 		input[type="search"], input[type="text"] {
 			height: 24px;
@@ -34,7 +37,7 @@ $color-search-form-background: darken($color-page, 5%);
 		
 		button {
 			@include border-radius(3px);
-			// needed to override gray search button override (from skins/oasis/css/core/_Search.scss)
+			// needed to override gray search button override (from skins/oasis/css/core/Search.scss)
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 			float: right;		
 			height: 31px;
@@ -63,6 +66,28 @@ $color-search-form-background: darken($color-page, 5%);
 			border: 0;
 			padding: 5px 0;
 			margin: 0;
+		}
+		
+		.tabs {
+			margin: 24px $form-negative-side-padding 0;
+		}
+		
+		.AdvancedSearch {
+			background: $color-page;
+			border-bottom: 1px solid $color-page-border;
+			margin: 0px $form-negative-side-padding 0;
+			padding-bottom: 18px;
+
+			label {
+				display: inline-block;
+				width: 25%;
+				line-height: 23px;
+			}
+			h3 {
+				font-size: inherit;
+				margin: 0;
+				padding: 14px 0;
+			}
 		}
 	}
 	.result-count {
@@ -138,8 +163,7 @@ $color-search-form-background: darken($color-page, 5%);
 			}
 		}
 	}
-	.pagination {
-		border-top: 1px solid $color-page-border;
+	.wikia-paginator {
 		padding-top: 5px;
 	}
 }
@@ -149,4 +173,15 @@ $color-search-form-background: darken($color-page, 5%);
 	.WikiaMainContent {
 		width: 680px;
 	}
+}
+.inter-wiki-search {
+	.WikiaTopAds {
+		margin-bottom: 15px;
+	}
+	.WikiaSearch {
+		padding-bottom: 12px;
+	}
+}
+.mw-search-formheader { // Quick style fix for now. Will fix tomorrow
+	@include clearfix;
 }

@@ -15,9 +15,10 @@ $messages['af'] = array(
 
 /** Azerbaijani (Azərbaycanca)
  * @author PPerviz
+ * @author Wertuose
  */
 $messages['az'] = array(
-	'tog-disablelinksuggest' => 'Keçid təklifini göstərmə',
+	'tog-disablelinksuggest' => 'İlkin kod rejimində keçid təklifini göstərmə',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -220,10 +221,11 @@ $messages['oc'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków w trybie źródła',
+	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków w trybie źródłowym.',
 );
 
 /** Piedmontese (Piemontèis)

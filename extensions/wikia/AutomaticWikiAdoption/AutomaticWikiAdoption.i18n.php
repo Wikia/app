@@ -404,6 +404,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Balzac 40
  * @author Notafish
+ * @author Urhixidur
  * @author Verdy p
  * @author Wyz
  * @author Zcqsc06
@@ -422,7 +423,7 @@ En adoptant le wiki, vous serez promu administrateur et bureaucrate afin de vous
 <br /><br />
 Êtes-vous prêt à passer aux autres étapes pour aider {{SITENAME}} ?',
 	'wikiadoption-know-more-header' => 'Vous voulez en savoir plus ?',
-	'wikiadoption-know-more-description' => "Veuillez consultez ces liens pour plus d'informations. Et, bien entendu, n’hésitez pas à nous contacter si vous avez des questions !",
+	'wikiadoption-know-more-description' => 'Veuillez consultez ces liens pour plus d’informations. Et, bien entendu, n’hésitez pas à nous contacter si vous avez des questions !',
 	'wikiadoption-adoption-successed' => 'Félicitations ! Vous êtes maintenant administrateur sur ce wiki !',
 	'wikiadoption-adoption-failed' => 'Nous sommes désolés. Nous avons essayé de vous nommer administrateur, mais cela n’a pas fonctionné. Veuillez [http://community.wikia.com/Special:Contact nous contacter], et nous allons essayer de vous aider.',
 	'wikiadoption-not-allowed' => 'Nous sommes désolés. Vous ne pouvez pas adopter ce wiki maintenant.',
@@ -1816,6 +1817,7 @@ $messages['zh-hans'] = array(
 	'wikiadoption-adoption-successed' => '恭喜！您现在是这个维基的管理员！',
 	'wikiadoption-not-allowed' => '我们很抱歉。您现在不能认领此维基。',
 	'wikiadoption-not-enough-edits' => '糟糕！您需要编辑10次以上方能领养此维基。',
+	'wikiadoption-adopted-recently' => '糟糕！您最近已认领了一个维基。您需要等待一段时间之后再认领一个新的维基。',
 	'wikiadoption-log-reason' => '制动维基领养',
 	'wikiadoption-notification' => '{{SITENAME}}正等待认领。您是否对领导此维基感兴趣？那就从认领它开始吧！$2',
 	'wikiadoption-mail-first-subject' => '我们没有看到你在一段时间',
@@ -1829,6 +1831,7 @@ $messages['zh-hans'] = array(
 Wikia小组
 
 您可以退订本列表的改动，点击这里：$3',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME已被认领',
 	'wikiadoption-welcome-header' => '恭喜！你已认领了{{SITENAME}}！',
 );
 

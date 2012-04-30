@@ -279,6 +279,7 @@ $messages['gl'] = array(
 	'wva-notlogged' => 'Debe acceder ao sistema ou rexistrarse para inserir vídeos.',
 	'wva-notallowed' => 'Non pode inserir vídeos neste wiki.',
 	'wva-protected' => 'Este vídeo está protexido.',
+	'wva-thumbnail-upload-failed' => 'Erro ao engadir o vídeo; non se puido obter a miniatura axeitada',
 );
 
 /** Hebrew (עברית)
@@ -584,11 +585,15 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'wva-success' => 'د $1 ويډيو مخ په برياليتوب سره ورګډ شو.',
+	'wva-success-replaced' => 'د $1 ويډيو مخ په برياليتوب سره ځايناستی شو.',
+	'wva-failure' => 'لطفاً سم پاراميټرونه ورکړۍ.',
 	'wva-name' => 'نوم يې وليکۍ:',
 	'wva-url' => 'URL يې وليکۍ:',
 	'wva-add' => 'ورګډول',
+	'wva-title' => 'په چټکۍ له يو آر اېل (URL) نه ويډيو ورګډول',
 	'wva-notlogged' => 'د ويډيو د ورننوېستلو لپاره پکار ته چې تاسې غونډال ته ننوځۍ او يا هم ځان ثبت کړی.',
 	'wva-notallowed' => 'تاسې په دې ويکي کې ويډيو نه شی ورننوېستلی.',
+	'wva-protected' => 'دا ويډيو ژغورل شوې',
 );
 
 /** Portuguese (Português)
@@ -687,6 +692,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (Svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wva-success' => 'Video-sidan $1 har lagts till.',
@@ -699,6 +705,7 @@ $messages['sv'] = array(
 	'wva-notlogged' => 'Du måste logga in eller registrera dig för att infoga videoklipp.',
 	'wva-notallowed' => 'Du kan inte infoga videoklipp på denna wiki.',
 	'wva-protected' => 'Denna video är skyddad.',
+	'wva-thumbnail-upload-failed' => 'Inbäddningen av videoklippet misslyckades; det gick inte att hämta en miniatyr',
 );
 
 /** Telugu (తెలుగు)

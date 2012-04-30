@@ -531,6 +531,7 @@ $messages['ce'] = array(
 
 /** Czech (Česky)
  * @author Darth Daron
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'rte-ck-bucket-textAppearance' => 'Vzhled textu',
@@ -564,7 +565,7 @@ $messages['cs'] = array(
 	'rte-ck-link-external-linkText' => 'Text odkazu',
 	'rte-ck-link-external-numberedLink' => 'Vytvořit číslovaný odkaz (například "[1]")',
 	'rte-ck-link-external-tab' => 'Externí odkaz',
-	'rte-ck-link-external-url' => 'URL adresa',
+	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-linkText' => 'Text odkazu',
 	'rte-ck-link-internal-pageName' => 'Název stránky',
 	'rte-ck-link-internal-tab' => 'Vnitřní odkaz',
@@ -1374,6 +1375,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1417,17 +1419,22 @@ $messages['ja'] = array(
 	'rte-ck-modeSwitch-toWysiwyg' => 'ビジュアル',
 	'rte-ck-modeSwitch-toSourceTooltip' => 'ソースモードに切り替え',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'ビジュアルモードに切り替え',
+	'rte-ck-photoGallery-addSlideshow' => 'スライドショーを追加',
+	'rte-ck-photoGallery-addSlider' => 'スライダを追加',
 	'rte-ck-photoGallery-confirmDelete' => '本当にページからギャラリーを削除しますか？',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'ギャラリーを削除しますか？',
-	'rte-ck-photoGallery-tooltip' => 'これはギャラリーです',
-	'rte-ck-photoGallery-tooltipSlideshow' => 'これはスライドショーです',
+	'rte-ck-photoGallery-tooltip' => 'これはギャラリーです。',
+	'rte-ck-photoGallery-tooltipSlideshow' => 'これはスライドショーです。',
+	'rte-ck-poll-poll' => '投票',
 	'rte-ck-signature-add' => '署名の追加',
 	'rte-ck-signature-label' => '署名',
 	'rte-ck-table-invalidCols' => '列は0より大きな数値で入力してください。',
 	'rte-ck-table-invalidRows' => '行は0より大きな数値で入力してください。',
-	'rte-ck-templateDropDown-chooseAnotherTpl' => '他のテンプレート / マジックワード',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => '他のテンプレート/マジックワード',
+	'rte-ck-templateDropDown-showUsedList' => '使用しているテンプレートの一覧を表示',
+	'rte-ck-templateDropDown-makeLayout' => 'このページからレイアウトを作成',
 	'rte-ck-templateDropDown-label' => 'テンプレート',
-	'rte-ck-templateDropDown-title' => 'テンプレートの選択',
+	'rte-ck-templateDropDown-title' => 'テンプレートを選択',
 	'rte-ck-templateEditor-dialog-browse' => 'テンプレートを閲覧',
 	'rte-ck-templateEditor-dialog-insert' => '挿入',
 	'rte-ck-templateEditor-dialog-magicWords' => 'マジックワード',
@@ -1441,7 +1448,7 @@ $messages['ja'] = array(
 	'rte-ck-templateEditor-editor-viewTemplate' => '（テンプレートページを見る - 新しいウィンドウが開きます）',
 	'rte-ck-templateEditor-title' => 'テンプレートエディタ',
 	'rte-ck-unlink' => 'リンクを解除',
-	'rte-ck-video-add' => '動画の追加',
+	'rte-ck-video-add' => '動画を追加',
 	'rte-ck-video-confirmDelete' => '本当にページから動画を削除しますか？',
 	'rte-ck-video-confirmDeleteTitle' => '動画を削除しますか？',
 	'rte-ck-videoPlaceholder-confirmDelete' => '本当にページから動画のプレースホルダを削除しますか？',

@@ -106,6 +106,7 @@ $messages['az'] = array(
 
 /** Bulgarian (Български)
  * @author DCLXVI
+ * @author Ivanko
  */
 $messages['bg'] = array(
 	'wikiamobile-search' => 'Търсене',
@@ -116,7 +117,7 @@ $messages['bg'] = array(
 	'wikiamobile-login-submit' => 'Влизане',
 	'wikiamobile-menu' => 'Меню',
 	'wikiamobile-article-categories' => 'Категории',
-	'wikiamobile-back' => 'Връщане',
+	'wikiamobile-back' => 'Назад',
 	'wikiamobile-hide-section' => 'скриване',
 );
 
@@ -280,7 +281,7 @@ $messages['fr'] = array(
 	'wikiamobile-feedback' => 'Avis',
 	'wikiamobile-back' => 'Retour',
 	'wikiamobile-hide-section' => 'masquer',
-	'wikiamobile-footer-link-license' => 'Mettre sous licence',
+	'wikiamobile-footer-link-license' => 'Sous licence',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Divertissement]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Jeu]]',
@@ -607,6 +608,14 @@ $messages['ps'] = array(
 	'wikiamobile-login-submit' => 'ننوتل',
 	'wikiamobile-menu' => 'غورنۍ',
 	'wikiamobile-article-categories' => 'وېشنيزې',
+	'wikiamobile-back' => 'پر شا',
+	'wikiamobile-hide-section' => 'پټول',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|ويډيويي لوبې]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|ليکنه|ليکنې}}',
+	'wikiamobile-categories-expand' => 'ټول ښکاره کول',
+	'wikiamobile-categories-collapse' => 'ټول پټول',
+	'wikiamobile-sharing-media-image' => 'انځور',
+	'wikiamobile-ad-close' => 'تړل',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -791,6 +800,13 @@ $messages['th'] = array(
 	'wikiamobile-login-submit' => 'ลงชื่อเข้าใช้',
 	'wikiamobile-menu' => 'เมนู',
 	'wikiamobile-explore' => 'สำรวจ',
+);
+
+/** Turkish (Türkçe)
+ * @author Bilalokms
+ */
+$messages['tr'] = array(
+	'wikiamobile-search-wiki' => 'Viki',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

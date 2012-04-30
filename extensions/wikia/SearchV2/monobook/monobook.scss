@@ -1,0 +1,67 @@
+.Search {
+	.AdvancedSearch {
+		border: 1px solid #666;
+		padding: 5px;
+		label {
+			display: inline-block;
+			width: 25%;
+			line-height: 23px;
+		}
+		h3 {
+			font-size: inherit;
+			margin: 0;
+			padding: 0;
+		}
+	}
+	.tabs {
+		border: 1px solid #666;
+		list-style: none;
+		margin: 10px 0;
+		padding: 5px;
+		li {
+			list-style: none;	
+			display: inline-block;
+			margin-left: 0;
+			padding-left: 0;
+			padding-right: 20px;
+		}
+	}
+	.result-count {
+		font-weight: bold;
+	}
+	.WikiaSearch {
+		button {
+			img {
+				background: url(/skins/oasis/images/sprite.png) -1076px -80px no-repeat; /* $wgCdnStylePath */
+				height: 15px;
+				width: 19px;
+			}
+		}
+		input[type=text] {
+			height: 16px;
+			float: left; 
+			margin: 2px 5px 5px 0px;
+			width: 400px;
+		}
+	}
+	.Result {
+		width: 38em;
+		h1 {
+			border-bottom: 0;
+			font-size: 15px;
+			font-weight: bold;
+			margin: 15px 0 0 0;
+		}
+		nav {
+			ul, li {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+		}
+	}
+}
+#bodyContent .Search .Result h1 { // gotta override Monobook's specificity
+	margin-bottom: 0;
+	padding-bottom: 0;
+}

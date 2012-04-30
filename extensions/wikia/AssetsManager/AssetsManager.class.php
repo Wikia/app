@@ -564,6 +564,7 @@ class AssetsManager {
 		global $wgServer, $wgStyleVersion;
 		$request = array();
 
+		//WARNING: the following code  MUST mirror the order of properties as in AssetsManager.js!!!
 		if ( !empty( $options['styles'] ) ) {
 			$request['styles'] = $options['styles'];
 		}
@@ -582,11 +583,25 @@ class AssetsManager {
 				$options['templates'];
 		}
 
-		$request['cb'] = $wgStyleVersion;
+		if ( !empty( $options['params'] ) && is_array( $options['params'] ) ) {
+			foreach ( $options['params'] as $name => $val ) {
+				$request[$name] = $val;
+			}
+		}
 
 		if ( !empty( $options['ttl'] ) ) {
 			$request['ttl'] = $options['ttl'];
 		}
+
+		if ( !empty( $options['varnishTTL'] ) ) {
+			$request['varnishTTL'] = $options['varnishTTL'];
+		}
+
+		if ( !empty( $options['browserTTL'] ) ) {
+			$request['browserTTL'] = $options['browserTTL'];
+		}
+
+		$request['cb'] = $wgStyleVersion;
 
 		if ( !empty( $request ) ) {
 			$url = ( empty( $local ) ) ? $wgServer : '';

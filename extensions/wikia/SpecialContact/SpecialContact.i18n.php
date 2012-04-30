@@ -406,6 +406,7 @@ $messages['inh'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -420,7 +421,7 @@ $messages['ja'] = array(
 	'specialcontact-username' => '利用者名',
 	'specialcontact-wikiname' => 'ウィキ',
 	'specialcontact-realname' => 'あなたの氏名',
-	'specialcontact-yourmail' => '電子メールアドレス',
+	'specialcontact-yourmail' => 'メールアドレス',
 	'specialcontact-problem' => '件名',
 	'specialcontact-problemdesc' => '本文',
 	'specialcontact-mail' => '送信',

@@ -43,13 +43,16 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit($forceInit = false) {
-	global $wgRequest, $wgUser;
+	global $wgRequest, $wgUser, $wgHooks;
+	wfProfileIn(__METHOD__);
 
 	if ($wgRequest->getVal('usecatsel','') == "no") {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	if ( (!$forceInit) && (!$wgUser->isAllowed('edit')) ){
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -60,12 +63,14 @@ function CategorySelectInit($forceInit = false) {
 	$oldid = $wgRequest->getVal('oldid');
 	$action = $wgRequest->getVal('action', 'view');
 	if (($undo > 0 && $undoafter > 0) || $diff || ($oldid && $action != 'edit' && $action != 'submit')) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
-	global $wgHooks;
 	$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectInitializeHooks';
 	$wgHooks['GetPreferences'][] = 'CategorySelectOnGetPreferences';
+
+	wfProfileOut(__METHOD__);
 }
 
 /**
@@ -75,14 +80,18 @@ function CategorySelectInit($forceInit = false) {
  */
 function CategorySelectInitializeHooks($output, $article, $title, $user, $request, $mediawiki, $force = false ) {
 	global $wgHooks, $wgRequest, $wgUser, $wgContentNamespaces;
+	wfProfileIn(__METHOD__);
+
 	// Check user preferences option
 	if ($wgUser->getOption('disablecategoryselect') == true) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	// Initialize only for allowed skins
 	$allowedSkins = array( 'SkinMonaco', 'SkinAwesome', 'SkinAnswers', 'SkinOasis' );
 	if ( !in_array( get_class($wgUser->getSkin()), $allowedSkins ) ) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -91,36 +100,40 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 	// Initialize only for namespace:
 	// (a) content (on view)
 	// (b) content, file, user, etc. (on edit)
-
 	if (!$force) {
 		if ( ( !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_CATEGORY, NS_VIDEO ) ) ) && ( $action == 'view' || $action == 'purge' ) )
 			|| !in_array($title->mNamespace, array_merge( $wgContentNamespaces, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) ) )
 			|| ( $title->mNamespace == NS_TEMPLATE ) ) {
+				wfProfileOut(__METHOD__);
 			return true;
 		}
 	}
 
 	// Don't initialize on CSS and JS user subpages
 	if ( $title->isCssJsSubpage() ) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	// Don't initialize when user will see the source instead of the editor, see RT#25246
 	if ( !$title->quickUserCan('edit') && ( NS_SPECIAL != $title->mNamespace ) ) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	if ($action == 'view' || $action == 'purge') {
 		if ($title->mArticleID == 0) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		//view mode
 		$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
 		$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
-		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
+		// $wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars'; // lazy load these ones (BugId:24570)
 	} else if ($action == 'edit' || $action == 'submit' || $force) {
 		//edit mode
 		$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
@@ -130,20 +143,9 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		$wgHooks['EditPageGetDiffText'][] = 'CategorySelectDiffArticle';
 		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
-
-		/**
-		// used by PLB (when creating layout from an article), but not really needed here
-		if($wgRequest->wasPosted()) {
-			$csWikitext = $wgRequest->getVal('csWikitext', '');
-
-			if ($csWikitext != '') {
-				CategorySelect::SelectCategoryAPIgetData($csWikitext, true);
-			}
- 		}
-		**/
 	}
-	wfLoadExtensionMessages('CategorySelect');
 
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
@@ -177,14 +179,13 @@ function CategorySelectSetupVars($vars) {
  * @author Inez Korczyński
  */
 function CategorySelectGetCategories() {
-	global $wgMemc, $wgCityId;
-
+	global $wgMemc, $wgCityId, $wgRequest;
 	wfProfileIn(__METHOD__);
 
-	$key = wfMemcKey('CategorySelectGetCategories');
+	$key = wfMemcKey('CategorySelectGetCategories', 1);
 	$out = $wgMemc->get($key);
 
-	if (!$out) {
+	if (empty($out)) {
 		$dbr = wfGetDB(DB_SLAVE);
 		$res = $dbr->select(
 			'category',
@@ -196,24 +197,34 @@ function CategorySelectGetCategories() {
 
 		$categories = array();
 		while($row = $dbr->fetchObject($res)) {
-			$categories[] = str_replace('_', ' ', addslashes($row->cat_title));
+			$categories[] = str_replace('_', ' ', $row->cat_title);
 		}
 
-		$out = 'var categoryArray = ["'.join('","', $categories).'"];';
-		// TODO: refactor CategorySelect.js to receive object
-		// via ajax rather than variable via $.getScript
-		//$out = join(',', $categories); // categoryArray
+		$out = json_encode($categories);
 
 		// Cache for a day
+		// TODO: clear the cache when new category is added
 		$wgMemc->set($key, $out, 86400);
 	}
 
-	$out = new AjaxResponse($out);
-	$out->setCacheDuration(60 * 60);
+	// support JSON encoding
+	$isJson = ($wgRequest->getVal('format') == 'json');
+	if (!$isJson) {
+		$out = 'var categoryArray = ' . $out;
+	}
+
+	$resp = new AjaxResponse($out);
+	$resp->setCacheDuration(60 * 60);
+
+	if ($isJson) {
+		$resp->setContentType('application/json; charset=utf-8');
+	}
+	else {
+		$resp->setContentType('application/javascript');
+	}
 
 	wfProfileOut(__METHOD__);
-
-	return $out;
+	return $resp;
 }
 
 /**
@@ -246,6 +257,8 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 		$result['error'] = wfMsg('categoryselect-error-db-locked');
 		return Wikia::json_encode($result);
 	}
+
+	wfProfileIn(__METHOD__);
 
 	Wikia::setVar('EditFromViewMode', 'CategorySelect');
 
@@ -300,7 +313,9 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 			}
 		}
 	}
-	return Wikia::json_encode($result);
+
+	wfProfileOut(__METHOD__);
+	return json_encode($result);
 }
 
 /**
@@ -496,7 +511,7 @@ wgAfterContentAndJS.push(function() {
 
 		$.getResources([
 			$.loadYUI,
-			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js',
+			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js'
 		],
 		function() {
 			showCSpanel();
@@ -560,21 +575,17 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 	$text = "";
 	wfRunHooks ('CategorySelect:beforeDisplayingEdit', array ( &$text ) ) ;
 
-
 	return CategorySelectGenerateHTMLforEditRaw($categories, $text);
 }
 
 /**
- * Add required JS & CSS and return HTML [for 'view article' mode]
+ * Add required HTML and JS variables [for 'view article' mode]
  *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>>
+ * @author macbre
  */
 function CategorySelectGenerateHTMLforView() {
-	global $wgExtensionsPath, $wgStyleVersion;
-	wfLoadExtensionMessages('CategorySelect');
-
-	$result = '
-	<div id="csMainContainer" class="csViewMode">
+	$html = '<div id="csMainContainer" class="csViewMode">
 		<div id="csSuggestContainer">
 			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 		</div>
@@ -585,11 +596,20 @@ function CategorySelectGenerateHTMLforView() {
 			<input type="button" id="csSave" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
 			<input type="button" id="csCancel" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" ' . (Wikia::isOasis() ? 'class="secondary" ' : '') . '/>
 		</div>
-	</div>
-	';
+	</div>';
 
-	$ar = new AjaxResponse($result);
+	// lazy load global JS variables
+	$vars = array();
+	CategorySelectSetupVars(&$vars);
+
+	$data = json_encode(array(
+		'html' => $html,
+		'vars' => $vars,
+	));
+
+	$ar = new AjaxResponse($data);
 	$ar->setCacheDuration(60 * 60);
+	$ar->setContentType('application/json; charset=utf-8');
 
 	return $ar;
 }

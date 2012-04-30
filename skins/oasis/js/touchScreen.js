@@ -5,3 +5,12 @@ $(document.body).delegate('#GlobalNavigation > li > a, #AccountNavigation > li >
 		event.stopPropagation();
 	}
 });
+
+$(function(){
+	var captcha = document.getElementById('wpCaptchaWord');
+	if(captcha) {
+		captcha.setAttribute('autocorrect', 'off');
+		captcha.setAttribute('autocapitalize', 'off');
+	}
+});
+

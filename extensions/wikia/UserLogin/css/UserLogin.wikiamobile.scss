@@ -78,7 +78,7 @@ $spacing: 5px;
 	padding: $spacing $spacing*2;
 	font-weight: 100;
 	margin-top: 20px;
-	
+
 	&[disabled]{
 		background-color: grey;
 		background-image: none;
@@ -86,6 +86,7 @@ $spacing: 5px;
 }
 
 #fbLogo {
+	// TODO: use base64
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAgCAYAAADnnNMGAAAB1klEQVR42r2Vu0oDQRSGNQmokCLaiOAFiZWNaSz0FaxFsBFtfALBylJB8BEsLBQLMWohWAgpfQHFIIl4wQsiGLSwyvhtmAOTQ6Kbya4/fMzM7p7zc87MJB1axphOZ74Ap/AJgaoBiKE22ev4RfnzKxPQ8CXBPXAMJsAx0PI3IbggBlAVEwH5mRCYtONiLaOVmCm1bXIBxsGtos6Q+UHL7SIuTWBZkqiWiSosP+z77ZZNCOoltgy6EtEqZHmWg0nmIz6VZAguSYuUyRv060Q+lWRIVHJ77xg9QzYSE2hm8gJjbZuQJEHCG+mVYyaVDHqZ2E1cgnlYJtGrPsLW7J1hlnECpizTPMv9acJHm6BPkr6I7ou6ER2GqWTDOGKtTfQ90SZrYSpZ1/GCfiaoymdCmxCgk1d1CwUkRt8M42FMtkBLDAS9JzIvM/SFMZnj4yPYhX3WFUnmgr4gDzv22xPmK17/JwReSjeU2S3LtO89SUAKkpAmUVESq/bcw6j9ZUhJjM+N7ybwWkzU5t/BkE7UrokYxGNiEIrPBNx2iaIzIbG0q9FdiaESpE5Z9Hsit9ytBCI/XUK8ewLmX+8JRFpJqckP5BMMR1FJF5yR9BGKzIUHKMCAj8kPNcxBpRzc084AAAAASUVORK5CYII=);
 	background-repeat: no-repeat;
 	background-size: 15px;

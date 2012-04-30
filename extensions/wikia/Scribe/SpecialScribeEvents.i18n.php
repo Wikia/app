@@ -219,3 +219,12 @@ $messages['tl'] = array(
 	'scribeeventsrecords' => 'Mga rekord',
 );
 
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ajdar
+ */
+$messages['tt-cyrl'] = array(
+	'scribe-desc' => 'Викида исемнәре буенча билгеле бер мәкаләләрне эзләү өчен  [[Special:Scribeevents|корал]]',
+	'scribeevents' => 'Күптән түгел булган вакыйгалар',
+	'scribeeventsrecords' => 'Язмалар',
+);
+

@@ -449,7 +449,7 @@ class UserIdentityBox {
 		// check if the user is blocked locally, if not, also check if they're blocked globally (via Phalanx)
 		$isBlocked = $this->user->isBlocked() || $this->user->isBlockedGlobally();
 
-		if ( $isBlocked ) {
+		if ( $isBlocked && !in_array( 'staff', $this->user->getEffectiveGroups() ) ) {
 			$data['blocked'] = true;
 			$data['group'] = $this->app->wf->Msg('user-identity-box-group-blocked');
 		} else {

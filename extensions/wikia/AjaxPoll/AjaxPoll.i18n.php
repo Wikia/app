@@ -465,6 +465,19 @@ $messages['oc'] = array(
 	'ajaxpoll-submitting' => 'Pacientatz pendent lo mandadís de vòstre vòte...',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; vun alle Schdimme',
+	'ajaxpoll-thankyou' => 'Dongschä fas doi Schdimm!',
+	'ajaxpoll-error' => 'Doi Schdimm hod ned agewe were kenne, vasuchs nomol.',
+	'ajaxpoll-summary' => 'Die Umfroch isch oam $2 um $1 easchdelld worre un $3 Nudza {{plural:$3|hod|hawen}} abgschdimmd.',
+	'ajaxpoll-submit' => 'Wähl!',
+	'ajaxpoll-closed' => 'Die Umfrooch isch ferdisch. Viel Schbaß mide Eagewisse.',
+	'ajaxpoll-submitting' => 'Mugschd korz waade, doi Schdimm werd abgewe.',
+);
+
 /** Polish (Polski)
  * @author Sovq
  * @author Sp5uhe
@@ -637,7 +650,13 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp; бөтен тавыштан',
 	'ajaxpoll-thankyou' => 'Тавышыгыз өчен рәхмәт!',
+	'ajaxpoll-error' => 'Сезнең тавышны эшкәртүдә авырлык килеп чыкты, тагын эшләп карагыз.',
+	'ajaxpoll-summary' => 'Тавыш бирү төзелде - $1 $2, хәзергесе мизгелдә  $3  кеше тавыш бирде.',
+	'ajaxpoll-submit' => 'Тавыш бирергә!',
+	'ajaxpoll-closed' => 'Тавыш бирү ябык. Нәтиҗәләр белән рәхәтләнегез.',
+	'ajaxpoll-submitting' => 'Зинһар өчен, сезнең тавыш турында мәгълүмат тапшырылганын көтегез...',
 );
 
 /** Ukrainian (Українська)

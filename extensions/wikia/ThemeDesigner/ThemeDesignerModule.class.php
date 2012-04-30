@@ -194,8 +194,8 @@ class ThemeDesignerModule extends WikiaController {
 			$this->wordmarkImageName = $file->getName();
 			
 			// if wordmark url is not set then it means there was some problem
-			if ( empty( $this->wordmarkImageUrl ) || empty( $this->wordmarkImageName ) ) {
-				$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+			if ( $this->wordmarkImageUrl == null || $this->wordmarkImageName == null ) {
+				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
 			}
 			
 			wfRunHooks( 'UploadWordmarkComplete', array( &$upload ) );
@@ -218,8 +218,8 @@ class ThemeDesignerModule extends WikiaController {
 			$this->faviconImageName = $file->getName();
 			
 			// if wordmark url is not set then it means there was some problem
-			if ( empty( $this->faviconImageUrl ) ) {
-				$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+			if ( $this->faviconImageUrl == null ) {
+				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
 			}
 		} else if ($status['status'] === 'error') {
 			$this->errors = $status['errors'];
@@ -242,8 +242,8 @@ class ThemeDesignerModule extends WikiaController {
 			$this->backgroundImageThumb = wfReplaceImageServer( $file->getThumbUrl( $is->getCut( $file->width, $file->height, "origin" ) . "-" . $file->name ) );
 			
 			// if background image url is not set then it means there was some problem
-			if ( empty( $this->backgroundImageUrl ) ) {
-				$this->errors = array( wfMsg( 'themedesigner-uknown-error' ) );
+			if ( $this->backgroundImageUrl == null ) {
+				$this->errors = array( wfMsg( 'themedesigner-unknown-error' ) );
 			}
 
 		} else if ($status['status'] === 'error') {

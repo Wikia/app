@@ -21,8 +21,6 @@ if( empty( $type ) ) $type = "default";
         <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-has-been-created')?></div>
 
         <div style="position: absolute; left: 50%; margin-top: 20px;">
-                <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="wikia-button" style="margin-le
-ft: -50%;"><?=wfMsg('autocreatewiki-success-get-started')?></a>
         </div>
 </div>
 

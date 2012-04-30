@@ -1,6 +1,6 @@
 <?php
 /**
- * Wikia Search (v2) Extension (Powered by IndexTank)
+ * Wikia Search (v2) Extension
  *
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
  *
@@ -52,7 +52,7 @@ $app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' 
 
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'Wikia Search V2',
-	'version'     => '2.0.1',
+	'version'     => '2.0.5',
 	'author'      => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]',
 	'descriptionmsg' => 'wikia-search-desc',
 );

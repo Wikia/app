@@ -261,7 +261,7 @@
 				$.loadJQueryAutocomplete(),
 				$.loadJQueryUI(),
 				$.getResources([
-					$.getSassCommonURL("skins/oasis/css/core/_ToolbarCustomize.scss")
+					$.getSassCommonURL("skins/oasis/css/core/ToolbarCustomize.scss")
 				]),
 				$.ajax({
 					type: "POST",

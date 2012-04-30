@@ -408,7 +408,10 @@ class UserMailer {
 		}
 		foreach ( $emails as $to ) {
 			if ( $to instanceof MailAddress ) {
-				wfRunHooks('ComposeMail', array( $to, &$body, &$subject ));
+				if ( !wfRunHooks('ComposeMail', array( $to, &$body, &$subject )) ) {
+					continue;
+				}
+
 				if ( $mail == 'mail' ) {
 					$res = mail( $to->toString(), wfQuotedPrintable( $subject ), $body, $headers );
 				} elseif ( is_object( $mail ) ) {

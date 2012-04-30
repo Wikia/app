@@ -21,7 +21,7 @@
 			foreach ($lvl2 as $commId => $reply) {
 				if ($reply instanceof ArticleComment) {
 					$comment = $reply->getData($useMaster);
-					echo wfRenderPartial('ArticleComments', 'WikiaMobileComment', array('comment' => $comment, 'commentId' => $commId, 'level' => 2));
+					echo $app->getView( 'ArticleComments', 'WikiaMobileComment', array( 'comment' => $comment, 'commentId' => $commId, 'level' => 2 ) )->render();
 				}
 			}
 			echo "</ul>";
