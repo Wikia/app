@@ -82,9 +82,7 @@ EOT;
 			$out .= '</div>';
 		}
 
-		// LiftiumOptions init has been moved to AdEngine::wfAdEngineSetupJSVars
-		// https://wikia.fogbugz.com/default.asp?28647
-//		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
+		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
 
 		return $out;
 	}
