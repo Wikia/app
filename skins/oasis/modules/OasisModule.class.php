@@ -20,7 +20,6 @@ class OasisModule extends WikiaController {
 		$this->displaytitle = $skinVars['displaytitle'];
 		$this->mimetype = $skinVars['mimetype'];
 		$this->charset = $skinVars['charset'];
-		$this->body_ondblclick = $skinVars['body_ondblclick'];
 		$this->dir = $skinVars['dir'];
 		$this->lang = $skinVars['lang'];
 		$this->pageclass = $skinVars['pageclass'];

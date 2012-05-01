@@ -357,6 +357,10 @@ class BodyModule extends WikiaController {
 			$this->wg->SuppressRail = true;
 			$this->wg->SuppressPageHeader = true;
 		}
+		
+		// Double-click to edit
+		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->body_ondblclick = $skinVars['body_ondblclick'];
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;

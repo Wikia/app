@@ -69,7 +69,7 @@
 
 	<?= $headitems ?>
 </head>
-<body class="<?= implode(' ', $bodyClasses) ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars($body_ondblclick) . '"' : '' ?>>
+<body class="<?= implode(' ', $bodyClasses) ?>">
 <!-- comScore -->
 <?= $comScore ?>
 
