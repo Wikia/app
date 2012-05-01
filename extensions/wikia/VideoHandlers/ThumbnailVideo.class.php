@@ -163,7 +163,9 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		$extraBorder = $this->file->addExtraBorder( $this->width );
+		if ($this->file instanceof WikiaLocalFile) {
+			$extraBorder = $this->file->addExtraBorder( $this->width );
+		}
 		if ( !empty( $extraBorder ) ) {
 			if ( !isset( $attribs['style'] ) ) $attribs['style'] = '';
 			$attribs['style'] .= 'border-top: 15px solid black; border-bottom: '.$extraBorder.'px solid black;';
