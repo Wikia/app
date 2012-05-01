@@ -145,20 +145,30 @@ class WikiaSolrClient extends WikiaSearchClient {
 		  }
 		}
 
+		if (!isset($response)) {
+		  // we have a lot of code dependent on this class, so we'll just mock it up to prevent errors
+		  $response = (object) array( 'response'     => (object) array( 'docs'     => array(),
+										 'numFound' => 0,
+										 'start'    => 0
+										 ),
+					      'spellcheck'   => (object) array( 'suggestions' => (object) array( 'collation' => array() ) ),
+					      'highlighting' => (object) array(),
+					      );
+		} 
 
-		if ( empty($response->response->docs) &&
+
+		if ( $response instanceOf Apache_Solr_Response &&
+		     empty($response->response->docs) &&
 		    !empty($response->spellcheck->suggestions) && 
-		    !empty($response->spellcheck->suggestions->collation) &&
-		    $response instanceOf Apache_Solr_Response ) {
+		    !empty($response->spellcheck->suggestions->collation)
+		    ) {
 
 		    $newQuery = $response->spellcheck->suggestions->collation;
 
 		    return $this->search($newQuery, $methodOptions);
 		} 
 
-		$docs = ($response->response->docs) ?: array();
-
-		$results = $this->getWikiaResults($docs, ( is_object($response->highlighting) ? get_object_vars($response->highlighting) : array() ) );
+		$results = $this->getWikiaResults( $response->response->docs, get_object_vars($response->highlighting) );
 
 		wfProfileOut(__METHOD__);
 		return F::build( 'WikiaSearchResultSet', 
@@ -385,7 +395,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 	      try {
 		$response = $this->solrClient->moreLikeThis($query, $start, $size, $params);
 	      } catch (Exception $e) {
-		echo $e; die;
 		return json_encode(array('success'=>0,'message'=>'Exception: '.$e));
 	      }
 
