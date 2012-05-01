@@ -39,7 +39,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		this.authRequestWithMW(function(data){
 			this.socket = io.connect(url, {
 				'force new connection' : true,
-				'try multiple transports': false,
+				'try multiple transports': true,
 				'connect timeout': 5000,
 				'query':data,
 				'reconnect':false
@@ -75,9 +75,10 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	},
 	
 	onDisconnect: function(){
+		if( !this.connected ) return true;
 		$().log("Node-server connection needs to be refreshed...");
-        this.connected = false;
-        this.socket = false;
+	        this.connected = false;
+	        this.socket = false;
 		this.announceConnection = true;
 		
 		// Sometimes the view is in a state where it shouldn't reconnected (eg: user has entered the same room from another computer and wants to kick this instance off w/o it reconnecting).
