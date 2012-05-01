@@ -453,7 +453,7 @@
 	border: 1px $color-page-border solid;
 	float: right;
 	line-height: 12px;
-	padding: 15px;
+	padding: 15px 8px 8px 8px;
 
 	margin: {
 		top: 0px;
@@ -468,12 +468,7 @@
 
 	td {
 		overflow: hidden;
-		padding: {
-			bottom: 7px;
-			left: 3px;
-			right: 3px;
-			top: 7px;
-		}
+		padding: 2px 3px 7px;
 		vertical-align: top;
 	}
 
@@ -488,12 +483,7 @@
 			font-size: 17px;
 			font-weight: bold;
 			margin-top: 20px;
-			padding: {
-				bottom: 8px;
-				top: 5px;
-				left: 3px;
-				right: 3px;
-			}
+			padding: 5px 3px 8px;
 			text-align: left;
 		}
 		// sections separator
@@ -505,15 +495,15 @@
 	}
 
 	.wikia-infobox-image {
-		text-align: center;
 		overflow: hidden;
 		padding: 0;
+		text-align: center;
 		width: $cell-width;
 	}
 
 	.wikia-infobox-caption {
-		text-align: center;
 		font-size: 12px;
+		text-align: center;
 	}
 
 	.wikia-infobox-caption { padding-bottom /*\**/: 10px\9 } // /** dirty IE hack, affects all versions till 8**/
