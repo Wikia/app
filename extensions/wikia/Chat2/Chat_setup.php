@@ -109,6 +109,7 @@ $wgLogTypes[] = 'chatconnect';
 $wgLogHeaders['chatconnect'] = 'chat-chatconnect-log';
 $wgLogNames['chatconnect'] = 'chat-chatconnect-log';
 $wgLogActions['chatconnect/chatconnect'] = 'chat-chatconnect-log-entry';
+$wgLogRestrictions["chatconnect"] = 'checkuser';
 
 $wgHooks[ 'LogLine' ][] = 'ChatHelper::onLogLine';
 
