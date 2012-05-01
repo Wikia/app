@@ -59,6 +59,10 @@ Chat
 optional = grouppage-bannedfromchat, grouppage-bannedfromchat, grouppage-chatmoderator
 ignored = emoticons
 
+Chat2
+file = Chat2/Chat.i18n.php
+optional = grouppage-bannedfromchat, grouppage-bannedfromchat, grouppage-chatmoderator
+
 Cloak Check
 
 Community Messages
