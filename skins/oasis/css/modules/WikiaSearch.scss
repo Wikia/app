@@ -147,6 +147,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			}
 		}
 		article {
+			@include clearfix;
 			line-height: 19px;
 		}
 		.grouped-result {
@@ -161,6 +162,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 			&.new-row {
 				clear: left;
 			}
+		}
+		figure {
+			float: left;
+			margin: 0 10px 5px 0;
 		}
 	}
 	.wikia-paginator {
