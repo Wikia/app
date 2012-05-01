@@ -6,9 +6,7 @@
 <article>
 
 	<?php if($result->getThumbnail() != null): ?>
-		<figure>
-			<?= $result->getThumbnail()->toHtml(); ?>
-		</figure>
+		<?= $result->getThumbnail()->toHtml(array('desc-link'=>true)); ?>
 	<?php endif; ?>
 	
 	<header>
