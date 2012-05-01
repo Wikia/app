@@ -163,7 +163,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		if ($this->file instanceof WikiaLocalFile) {
+		if ($this->file instanceof WikiaLocalFile || $this->file instanceof WikiaForeignDBFile) {
 			$extraBorder = $this->file->addExtraBorder( $this->width );
 		}
 		if ( !empty( $extraBorder ) ) {
