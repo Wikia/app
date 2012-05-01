@@ -114,6 +114,15 @@
 		// set the state and submit the edit form
 		editorInstance.setState(editorInstance.states.RELOADING);
 
+		try {
+			// Save editor data before redirecting to prevent data loss (BugId:29754)
+			$.storage.set('WikiaEditorData', editorInstance.getContent());
+
+		} catch(e) {
+			$().log('Local Storage Exception:' + e.message);
+			$.storage.flush();
+		}
+
 		window.location.reload(true);
 	};
 

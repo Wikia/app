@@ -8,8 +8,16 @@
 		element: false,
 
 		constructor: function() {
+			var data;
+
 			this.element = $('#EditPage');
 			this.body = $('#wpTextbox1');
+
+			// Use cached data. Generally stored before login redirect.
+			if ((data = $.storage.get('WikiaEditorData')) != null) {
+				this.body.val(data);
+				$.storage.del('WikiaEditorData');
+			}
 		},
 
 		getToolbarsConfig: function() {
