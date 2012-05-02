@@ -53,6 +53,9 @@
 	}
 
 	&.open {
+		border-radius: 5px;
+		z-index:12;
+
 		ul{
 			height: auto;
 		}

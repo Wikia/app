@@ -3,6 +3,8 @@ $(function(){
 		msg = msgBox && msgBox.innerText;
 
 	if(msg){
-		WikiaMobile.toast.show(msg);
+		require('toast', function(t){
+			t.show(msg);
+		})
 	}
 });

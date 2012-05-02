@@ -49,7 +49,6 @@
 	font-size: 25px;
 	line-height: 28px;
 	border-radius: 20px;
-	-webkit-border-radius: 20px;
 	color: $link-color;
 	width: 75%;
 }
@@ -60,17 +59,37 @@
 	@include linear-gradient($navBarColorFirst, $navBarColorSecond);
 }
 
+#wkPrf{
+	display: none;
+	background-color: white;
+
+	#wkLgn{
+		background-color: white;
+	}
+}
+
+#wkLogOut{
+	width: 100%;
+	line-height: 50px;
+	background-color: #F2F2F2;
+	border: none;
+	font-size: large;
+	color: $link-color;
+	display: block;
+	padding-left: 10px;
+}
+
 #wkTopNav {
-	position: relative;
+	position: absolute;
+	z-index: $highest-z-index+1;
+	width: 100%;
 	height: 40px;
 	background-color: white;
-	overflow: hidden;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 	@include box-shadow(0 0 5px black);
 
 	&.fllNav {
-		min-height: 100%;
 		background-color: white;
 
 		#wkNavTgl {
@@ -90,6 +109,20 @@
 		}
 	}
 
+	&.prf {
+		#wkPrfTgl {
+			background-color: $searchOpenBackground;
+		}
+
+		#wkPrf{
+			display: block;
+		}
+	}
+
+	&.open{
+		@include box-shadow(0 0 1px 9999999px rgba(0,0,0,.6));
+	}
+
 	.tgl {
 		float: right;
 		width: 45px;
@@ -97,27 +130,6 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 50%;
-	}
-
-	#wkPrf{
-		display: none;
-		height: 100%;
-		background-color: white;
-		
-		#wkLgn{
-			opacity: 0;
-		}
-	}
-	
-	#wkLogOut{
-		width: 100%;
-		line-height: 50px;
-		background-color: #F2F2F2;
-		border: none;
-		font-size: large;
-		color: #006CB0;
-		display: block;
-		padding-left: 10px;
 	}
 	
 	.wkPrfHead{
@@ -136,18 +148,6 @@
 			vertical-align: middle;
 		}
 	}
-	
-	&.prf {
-	    min-height: 100%;
-
-		#wkPrfTgl {
-			background-color: $searchOpenBackground;
-		}
-	
-		#wkPrf{
-			display: block;
-		}
-	}
 }
 
 .js {
@@ -155,6 +155,7 @@
 	    border-top: none;
 
 		ul {
+			display: block;
 			position: absolute;
 			top: 30px;
 			width: 100%;
@@ -164,9 +165,9 @@
 			color:  $link-color;
 			background-color: white;
 			@include transition(left .6s);
-			-webkit-transform: translate3d(0px,0px,0px);
-			-moz-transform: translate3d(0px,0px,0px);
-			transform: translate3d(0px,0px,0px);
+			-webkit-transform: translateZ(0);
+			-moz-transform: translateZ(0);
+			transform: translateZ(0);
 			-webkit-backface-visibility: hidden;
 
 			li {
@@ -275,8 +276,7 @@
 	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-	z-index: 40;
-	min-height: 100%;
+	overflow-x: hidden;
 
 	.fllNav & {
 		display: block;

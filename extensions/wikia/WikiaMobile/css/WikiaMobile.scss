@@ -28,7 +28,6 @@ html {
 	padding: 0;
 	margin: 0;
 	cursor: pointer;
-	height: 100%;
 }
 
 body {
@@ -39,11 +38,23 @@ body {
 	line-height: 25px;
 	margin: 0;
 	padding: 0;
-	height: 100%;
 	word-wrap: break-word;
+	position: relative;
 
 	//avoid webkit's automatic text adjustment
 	-webkit-text-size-adjust: none;
+
+	&.hidden::after{
+		z-index: 10;
+		content: '';
+		background-color: hsla(0, 0%, 0%, .7);
+		height: 100%;
+		width: 100%;
+		left: 0;
+		top: 0;
+		position: absolute;
+	}
+
 }
 
 #wkMainCntHdr {
@@ -74,6 +85,7 @@ a {
 	min-height: 270px;
 	background-color: white;
 	overflow-x: hidden;
+	padding-top: 40px;
 }
 //for browsers that don't know that these should be block
 section, article, header, footer, aside, figure, figcaption {
@@ -163,7 +175,7 @@ blockquote {
 }
 
 .wkShr {
-    z-index: $top-layer-z-index;
+    z-index: $highest-z-index;
 	display: none;
 	position: relative;
 	width: 50px;

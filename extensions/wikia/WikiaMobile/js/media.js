@@ -8,22 +8,21 @@
 (function(){
 	if(define){
 		//AMD
-		define('media', ['modal'], media);//late binding
+		define('media', ['modal', 'loader','querystring', 'popover'], media);//late binding
 	}else{
-		window.Media = media(modal);//late binding
+		window.Media = media(Modal, Loader, Querystring, Popover);//late binding
 	}
 
-	function media(modal){
+	function media(modal, loader, qs, popover){
 		/** @private **/
 
 		var	images = [],
 			fllScrImg,
 			imagesLength,
 			current = 0,
-			shrImg = WikiaMobile.querystring().getVal('image'),
+			shrImg = qs().getVal('image'),
 			clickEvent = WikiaMobile.getClickEvent(),
 			touchEvent = WikiaMobile.getTouchEvent(),
-			loader = WikiaMobile.loader,
 			track = WikiaMobile.track,
 			sharePopOver,
 			content = '<div id=fllScrImg></div>';
@@ -112,9 +111,8 @@
 
 			if(imagesLength > 1) content = '<div class=chnImg id=prvImg><div></div></div>' + content + '<div class=chnImg id=nxtImg><div></div></div>';
 
-
 			//if url contains image=imageName - open modal with this image
-			if(shrImg) setTimeout(function(){openModal(shrImg);}, 1000);
+			if(shrImg > -1) setTimeout(function(){openModal(shrImg)}, 2000);
 		}
 
 		function loadImage(){
@@ -193,7 +191,7 @@
 					.bind('swipeRight', loadPrevImage);
 			}
 
-			sharePopOver = WikiaMobile.popOver({
+			sharePopOver = popover({
 				on: document.getElementById('wkShrImg'),
 				style: 'left:3px;',
 				create: function(cnt){

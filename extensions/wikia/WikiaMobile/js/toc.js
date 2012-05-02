@@ -19,10 +19,12 @@ $(function(){
 
 				if(this.className.indexOf('open') > -1){
 					this.className = this.className.replace(' open', '');
+					d.body.className =  d.body.className.replace(' hidden', '');
 					if(!a) WikiaMobile.track('/toc/close');
 					conStyle.minHeight = '0';
 				}else{
 					this.className += ' open';
+					d.body.className += ' hidden';
 					WikiaMobile.track('/toc/open');
 					conStyle.minHeight = (this.offsetHeight - 40) + 'px';
 				}

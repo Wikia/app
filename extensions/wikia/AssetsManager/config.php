@@ -234,8 +234,13 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 
 		//modules
+		'//extensions/wikia/WikiaMobile/js/loader.js',
+		'//extensions/wikia/WikiaMobile/js/toast.js',
+		'//extensions/wikia/WikiaMobile/js/querystring.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',
 		'//extensions/wikia/WikiaMobile/js/media.js',
+		'//extensions/wikia/WikiaMobile/js/topbar.js',
+		'//extensions/wikia/WikiaMobile/js/popover.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
@@ -326,7 +331,7 @@ $config['articlecomments_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-			'//extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js'
+		'//extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js'
 	)
 );
 
@@ -342,7 +347,7 @@ $config['articlecomments_scss_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-			'//extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss'
+		'//extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss'
 	)
 );
 
