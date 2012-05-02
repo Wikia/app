@@ -376,7 +376,7 @@ class SolrSearchSet extends SearchResultSet {
 					'data-event' => 'search_click_match'
 				));
 
-			$wgOut->addHTML( "<div><strong>{$link}</strong>\n" );
+			$wgOut->addHTML( "<div class='mw-search-result-shoutout'>{$link}\n" );
 			if (isset($redirect)) {
 			        $redirTitle = $redirect->getTitle();
 			        $wgOut->addHTML(sprintf("<div class='mw-search-result-redirect'>&mdash; redirected from %s</div>\n",
@@ -402,7 +402,7 @@ class SolrSearchSet extends SearchResultSet {
 
 				$wgOut->addHTML( "<div class='searchresult'>" . $articleService->getTextSnippet( 250 ) . "</div>\n" );
 			}
-			$wgOut->addHTML( "</div><br />" );
+			$wgOut->addHTML( "</div>" );
 		}
 		return true;
 	}
