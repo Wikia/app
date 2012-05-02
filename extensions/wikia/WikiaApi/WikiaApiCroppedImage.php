@@ -23,7 +23,7 @@ class WikiaApiCroppedImage extends ApiBase {
 		foreach ( $imageServing->getImages( 1 ) as $key => $value ){
 			$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 			$image = wfFindFile( $tmpTitle );
-			if ( !($image instanceof File && $image->exists()) ) {
+			if ( !($image instanceof File && $image->exists() && file_exists( $image->getPath() ) ) ) {
 				$this->dieUsage( 'File not found', 'filenotfound' );
 			}
 			$imageInfo = getimagesize( $image->getPath() );
@@ -32,7 +32,7 @@ class WikiaApiCroppedImage extends ApiBase {
 		$result = $this->getResult();
 		$result->addValue( 'image', $this->getModuleName(), $imageUrl );
 		$result->addValue( 'imagepage', $this->getModuleName(), $tmpTitle->getFullUrl() );
-		
+
 		wfProfileOut(__METHOD__);
 	}
 
