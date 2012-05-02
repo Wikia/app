@@ -189,8 +189,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$articleMatchId = '';
 
-		if ((!$this->isInterWiki) && ($article = self::createArticleMatch($this->query))) {
+		if ((!$this->isInterWiki) && ($articleMatch = self::createArticleMatch($this->query))) {
 			global $wgCityId;
+			extract($articleMatch);
 			$title = $article->getTitle();
 			if (in_array($title->getNamespace(), $this->namespaces)) {
 			  $articleMatchId = 'c'.$wgCityId.'p'.$article->getID();
@@ -204,9 +205,13 @@ class WikiaSolrClient extends WikiaSearchClient {
 			  $result->setVar('position', $position);
 			  $result->setVar('isArticleMatch', true);
 			  $result->setVar('ns', $title->getNamespace());
-				$result->setVar('pageId', $article->getID());
+			  $result->setVar('pageId', $article->getID());
 
-				$results[] = $result;
+			  if (isset($redirect)) {
+			    $result->setVar('redirectTitle', $redirect->getTitle());
+			  }
+
+			  $results[] = $result;
 			  $position++;
 			}
 		}
@@ -433,11 +438,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$article = new Article( $title );
 			if($article->isRedirect()) {
 				wfProfileOut(__METHOD__);
-				return new Article($article->getRedirectTarget());
+				return array('article'=>new Article($article->getRedirectTarget()), 'redirect'=>$article);
 			}
 			else {
 				wfProfileOut(__METHOD__);
-				return $article;
+				return array('article'=>$article);
 			}
 		}
 

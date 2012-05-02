@@ -19,6 +19,11 @@
 
 		<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>
 	</h1>
+        <? if($redirectTitle = $result->getVar('redirectTitle')) : ?>
+        <h2>
+	   &mdash; redirected from <a href="<?=$redirectTitle->getFullUrl()?>" <?=$trackingData?> > <?= $redirectTitle->getText() ?> </a>
+        </h2>
+	<? endif; ?>
 	</header>
 	
 	<?php if($debug): ?>
