@@ -5,7 +5,7 @@
 	<button class="secondary"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 </form>
 <?php
-if ($wg->Title->isSpecial('Search')) {
+if ((!$wg->WikiaSearchIsDefault) && $wg->Title->isSpecial('Search')) {
 	if( $isCrossWikiaSearch ) {
 		echo Xml::element('h1', array(), wfMsg('oasis-search-results-from-all-wikis'));
 	}

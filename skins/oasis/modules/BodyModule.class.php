@@ -441,16 +441,16 @@ class BodyModule extends WikiaController {
 			OasisModule::addBodyClass('oasis-one-column');
 			$this->headerModuleParams = array ('showSearchBox' => true);
 		}
-
+		
 		// if we are on a special search page, pull in the css file and don't render a header
-		if($wgTitle && $wgTitle->isSpecial( 'Search' )) {
+		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
 			$this->headerModuleName = null;
 			$this->bodytext = wfRenderModule('Search') . $this->bodytext;
 		}
 
 		// Inter-wiki search
-		if($wgTitle && $wgTitle->isSpecial( 'WikiaSearch' )) {
+		if($wgTitle && ($wgTitle->isSpecial( 'WikiaSearch' ) || ($wgTitle->isSpecial( 'Search' ) && $this->wg->WikiaSearchIsDefault ))) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/WikiaSearch.scss"));
 			$this->headerModuleName = null;
 		}
