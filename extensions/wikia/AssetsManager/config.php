@@ -234,6 +234,7 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 
 		//modules
+		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/loader.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
 		'//extensions/wikia/WikiaMobile/js/querystring.js',
@@ -244,9 +245,6 @@ $config['wikiamobile_js_body'] = array(
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-
-		//toc
-		'//extensions/wikia/WikiaMobile/js/toc.js',
 
 		//extensions with assets to load on every page
 		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',

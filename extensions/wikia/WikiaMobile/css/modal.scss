@@ -4,6 +4,18 @@
 //mixins
 @import "mixins/transition";
 
+html.modal{
+	height: 100%;
+
+	body{
+		height: 100%;
+	}
+
+	#wkAdPlc, #wkTopNav, #wkPage, #wkFtr{
+		display: none;
+	}
+}
+
 #wkMdlWrp {
 	position:absolute;
 	top:0;

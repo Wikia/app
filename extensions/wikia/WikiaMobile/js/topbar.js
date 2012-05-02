@@ -8,12 +8,12 @@
 (function(){
 	if(define){
 		//AMD
-		define('topbar', ['querystring', 'loader', 'modal'], topbar);//late binding
+		define('topbar', ['querystring', 'loader', 'modal', 'toc'], topbar);//late binding
 	}else{
-		window.Topbar = topbar(Querystring, Loader, Modal);//late binding
+		window.Topbar = topbar(Querystring, Loader, Modal, Toc);//late binding
 	}
 
-	function topbar(qs, loader, m){
+	function topbar(qs, loader, m, toc){
 		var w = window,
 			d = document,
 			wkPrfTgl = d.getElementById('wkPrfTgl'),
@@ -35,6 +35,7 @@
 
 		function openSearch(){
 			m.close();
+			toc.close();
 			closeNav();
 			track('search/toggle/open');
 			navBar.className = 'srhOpn';
@@ -93,6 +94,7 @@
 		//navigation setup
 		function openNav(){
 			m.close();
+			toc.close();
 			track('nav/open');
 			navBar.className = 'fllNav';
 			hidePage();
@@ -209,6 +211,7 @@
 
 		function openProfile(){
 			m.close();
+			toc.close();
 			closeNav();
 			navBar.className = 'prf';
 			hidePage();

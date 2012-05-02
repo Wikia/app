@@ -14,10 +14,11 @@
 	}
 
 	function modal(loader){
-		var opened = false, created = false,
+		var d = document,
+			w = window,
+			opened, created,
 			toolbar, content, caption, wrapper,
 			topBar,
-			page, pageLength,
 			position,
 			clickEvent,
 			track, onClose,
@@ -27,22 +28,20 @@
 		function setup(){
 			track = WikiaMobile.track;
 			clickEvent = WikiaMobile.getClickEvent();
-			wrapper = document.getElementById('wkMdlWrp');
-			content = document.getElementById('wkMdlCnt');
-			topBar = document.getElementById('wkMdlTB');
-			toolbar = document.getElementById('wkMdlTlBar');
-			caption = document.getElementById('wkMdlFtr');
-			page = document.querySelectorAll('#wkAdPlc, #wkTopNav, #wkPage, #wkFtr');
-			pageLength = page.length;
+			wrapper = d.getElementById('wkMdlWrp');
+			content = d.getElementById('wkMdlCnt');
+			topBar = d.getElementById('wkMdlTB');
+			toolbar = d.getElementById('wkMdlTlBar');
+			caption = d.getElementById('wkMdlFtr');
 
 			//TODO: create better resolution 'finder'
 			var deviceWidth = ($.os.ios) ? 268 : 300,
 				deviceHeight = ($.os.ios) ? 416 : 513;
 
 			//close modal on back button
-			document.getElementById('wkMdlClo').addEventListener(clickEvent, function(){
-				if(window.location.hash == '#Modal'){
-					window.history.back();
+			d.getElementById('wkMdlClo').addEventListener(clickEvent, function(){
+				if(w.location.hash == '#Modal'){
+					w.history.back();
 				}
 				close();
 			});
@@ -61,17 +60,17 @@
 			});
 
 			//hide adress bar on orientation change
-			window.addEventListener('orientationchange', function() {
-				if(window.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 );},1);
+			w.addEventListener('orientationchange', function() {
+				if(w.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 );},1);
 			});
 
-			window.addEventListener('hashchange', function() {
-				if(window.location.hash == '' && isOpen()){
+			w.addEventListener('hashchange', function() {
+				if(w.location.hash == '' && isOpen()){
 					close();
 				}
 			});
 
-			document.head.insertAdjacentHTML('beforeend', '<style>#wkMdlWrp{min-height: ' + deviceHeight + '}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + deviceWidth + 'px;}}</style>');
+			d.head.insertAdjacentHTML('beforeend', '<style>#wkMdlWrp{min-height: ' + deviceHeight + 'px}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + deviceWidth + 'px;}}</style>');
 		}
 
 		/* public */
@@ -91,15 +90,11 @@
 
 			if(!opened){
 				position = window.pageYOffset;
-
+				d.documentElement.className += ' modal';
 				wrapper.className = 'open';
 
-				for(var i = 0; i < pageLength; i++){
-					page[i].style.display = 'none';
-				}
-
 				//needed for closing modal on back button
-				window.location.hash = "Modal";
+				w.location.hash = "Modal";
 			}
 
 			loader.show(content, {center: true});
@@ -123,9 +118,7 @@
 
 		function close(){
 			if(opened){
-				for(var i = 0; i < pageLength; i++){
-					page[i].style.display = 'block';
-				}
+				d.documentElement.className = d.documentElement.className.replace(' modal','');
 
 				content.innerHTML = '';
 				caption.innerHTML = '';
@@ -136,7 +129,7 @@
 					onClose();
 				}
 
-				window.scrollTo(0, position);
+				w.scrollTo(0, position);
 				track('modal/close');
 				opened = false;
 			}
