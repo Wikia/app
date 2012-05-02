@@ -35,7 +35,10 @@
 					page: 1
 				}
 			}],
-			params: {useskin: 'wikiamobile'},
+			params: {
+				useskin: 'wikiamobile',
+				uselang: window.wgUserLanguage
+			},
 			varnishTTL: 86400,
 			callback: function(res){
 				WikiaMobile.loader.remove(wkArtCom);
