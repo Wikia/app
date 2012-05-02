@@ -10,6 +10,7 @@ var Wall = $.createClass(Object, {
 		this.hoverTimer = {};
 		this.deletedMessages = {};
 		this.isMonobook = window.skin && window.skin == "monobook";
+		this.hasMiniEditor = typeof wgEnableMiniEditorExt != "undefined" && !this.isMonobook;
 
 		$("#WikiaArticle")
 			.bind('afterWatching', this.proxy(this.onWallWatch))
@@ -63,7 +64,7 @@ var Wall = $.createClass(Object, {
 		this.pagination.on('afterPageLoaded', this.proxy(this.afterPagination));
 
 		// Refactor this, it's ugly.
-		if (typeof wgEnableMiniEditorExt != "undefined" && !this.isMonobook) {
+		if (this.hasMiniEditor) {
 			this.newMessageForm = new MiniEditorNewMessageForm(this.username, this.model);
 			this.editMessageForm = new MiniEditorEditMessageForm(this.username, this.model);
 			this.replyMessageForm = new MiniEditorReplyMessageForm(this.username, this.model);
@@ -72,11 +73,9 @@ var Wall = $.createClass(Object, {
 			this.newMessageForm = new WallNewMessageForm(this.username, this.model);
 			this.editMessageForm = new WallEditMessageForm(this.username, this.model);
 			this.replyMessageForm = new WallReplyMessageForm(this.username, this.model);
-
-			// This breaks stuff for MiniEditor instances.  See comment below, needs to be refactored. 
-			this.newMessageForm.on('afterNewMessagePost', this.proxy(this.afterNewMessagePost));
 		}
 
+		this.newMessageForm.on('afterNewMessagePost', this.proxy(this.afterNewMessagePost));
 
 		$().log(this.username, "Wall username");
 		
@@ -117,7 +116,10 @@ var Wall = $.createClass(Object, {
 
 		wall.find('.timeago').timeago();
 		wall.find('textarea, input').placeholder();
-		wall.find('.new-reply textarea').autoResize(this.replyMessageForm.settings.reply);
+
+		if (!this.hasMiniEditor) {
+			wall.find('.new-reply textarea').autoResize(this.replyMessageForm.settings.reply);
+		}
 
 		if (!this.isMonobook) {
 			WikiaButtons.init(wall);
@@ -126,7 +128,12 @@ var Wall = $.createClass(Object, {
 
 	// TODO: refactor Wall so subclasses have access to settings, then this can go away
 	afterNewMessagePost: function(newmsg) {
-		newmsg.find('.new-reply textarea').autoResize(this.replyMessageForm.settings.reply);
+		newmsg.find('.timeago').timeago();
+		newmsg.find('textarea, input').placeholder();
+
+		if (!this.hasMiniEditor) {
+			newmsg.find('.new-reply textarea').autoResize(this.replyMessageForm.settings.reply);
+		}
 	},
 
 	initTextareas: function() {

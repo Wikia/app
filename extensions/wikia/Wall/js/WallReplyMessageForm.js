@@ -6,11 +6,7 @@ var WallReplyMessageForm = $.createClass(WallMessageForm, {
 	constructor: function(username) {
 		WallNewMessageForm.superclass.constructor.apply(this,arguments);
 
-		// Selector caching
-		this.replyBoxesWrapper = $('#Wall .new-reply');
-		this.replyButtonsWrapper = $('#Wall');
-		this.replyBoxes = this.replyBoxesWrapper.find('.body');
-		this.replyButtons = this.replyButtonsWrapper.find('.replyButton');
+		this.wall = $('#Wall');
 
 		this.settings = {
 			reply: {
@@ -30,13 +26,12 @@ var WallReplyMessageForm = $.createClass(WallMessageForm, {
 	},
 
 	init: function() {
-		this.replyBoxesWrapper
-			.on('keydown keyup change', '.body', this.proxy(this.change))
-			.on('focus', '.body', this.proxy(this.focus))
-			.on('blur', '.body', this.proxy(this.blur))
-			.find('.body').autoResize(this.settings.reply);
-
-		this.replyButtonsWrapper.on('click', '.replyButton', this.proxy(this.replyToMessage));
+		this.wall
+			.on('click', '.replyButton', this.proxy(this.replyToMessage))
+			.on('keydown keyup change', '.new-reply .body', this.proxy(this.change))
+			.on('focus', '.new-reply .body', this.proxy(this.focus))
+			.on('blur', '.new-reply .body', this.proxy(this.blur))
+			.find('.new-reply .body').autoResize(this.settings.reply);
 	},
 
 	focus: function(e) {

@@ -33,14 +33,13 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 	},
 	
 	initEvents: function() {
-		// New wall post change
-		var out = this.WallMessageTitle.add(this.WallMessageBody)
+		this.WallMessageTitle
+			.add(this.WallMessageBody)
 			.keydown(this.proxy(this.postNewMessage_ChangeText_pre))
 			.keyup(this.proxy(this.postNewMessage_ChangeText_pre))
 			.change(this.proxy(this.postNewMessage_ChangeText_pre))
 			.focus(this.proxy(this.postNewMessage_focus))
 			.blur(this.proxy(this.postNewMessage_blur));
-	
 
 		this.WallMessageBody
 			.keydown(function(e) {
@@ -49,8 +48,14 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 					self.WallMessageTitle.focus();
 					return false;
 				}
-		 })
-		.autoResize({minFocus:100, minContent: 100, limit: 9999, limitEmpty: 70, extraSpace: 30});
+		 	})
+			.autoResize({
+				minFocus:100,
+				minContent: 100,
+				limit: 9999,
+				limitEmpty: 70,
+				extraSpace: 30
+			});
 	},
 	
 	postNewMessage: function() {
@@ -81,16 +86,10 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 		this.model.postNew(this.username, title ? this.WallMessageTitle.val() : '', this.getMessageBody(), this.getFormat());
 		this.clearNewMessageTitle();
 		this.disableNewMessage();
+		this.track(title ? 'wall/new_message/post' : 'wall/new_message/post_without_title');
 
-		//click tracking
-		if( !title ) {
-			this.track('wall/new_message/post_without_title');
-		} else {
-			this.track('wall/new_message/post');
-		}
-		
-		if(reload) {
-			this.reloadAfterLogin;
+		if (reload) {
+			this.reloadAfterLogin();
 		}
 	},
 	
@@ -106,6 +105,8 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 		newmsg.hide();
 
 		this.clearNewMessageBody();
+		this.enableNewMessage();
+
 		this.WallComments.prepend(newmsg);
 
 		// IE is too slow for animations
@@ -116,14 +117,9 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 			newmsg.css('opacity', 0).slideDown('slow').animate({ opacity: 1 }, 'slow');
 		}
 
-		newmsg.find('.timeago').timeago();
-		newmsg.find('textarea, input').placeholder();
-
 		if (window.skin && window.skin != 'monobook') {
 			WikiaButtons.init(newmsg);
 		}
-
-		this.enableNewMessage();
 
 		this.fire('afterNewMessagePost', newmsg);
 	},
@@ -164,24 +160,18 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 	postNewMessage_focus: function(e) {
 		this.WallMessageSubmit.show();
 		this.track('wall/new_message/body');
-		//if($(e.target).hasClass('title'))
-		//	$(e.target).css('line-height','170%');
 		if($(e.target).hasClass('body')) {
 			$('.new-message textarea.body').css('font-size','13px');
 		}
 	},
 
 	postNewMessage_blur: function() {
-		//topic = !$('.new-message textarea.title').hasClass('placeholder') && $('.new-message textarea.title').val().length > 0;
 		var content = !this.WallMessageBody.hasClass('placeholder');
 		content = content && this.WallMessageBody.val().length > 0;
 		if(!content) {
 			this.WallMessageSubmit.attr('disabled', 'disabled').hide();
 			$('.new-message textarea.body').css('font-size','14px');
 		}
-		/*if(!title) {
-			$('.new-message textarea.title:focus').css('line-height','normal');
-		}*/
 	},
 
 	disableNewMessage: function() {
