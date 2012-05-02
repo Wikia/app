@@ -11,7 +11,9 @@ if($.getUrlVar('nosockets', false) == 1 || 'ontouchstart' in document.createElem
 var NodeChatSocketWrapper = $.createClass(Observable,{
 	proxy: $.proxy,
 	connected: false,
+	firstConnected: false,
 	announceConnection: true,
+	trying: null,
 	autoReconnect: true,
 	isInitialized: false,
 	inAuthRequestWithMW: false,
@@ -44,15 +46,10 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 				'query':data,
 				'reconnect':false
 			});
-			
+	                this.socket.on('error', this.proxy( this.onError, this ) );
+        	        this.socket.on('message', this.proxy( this.onMsgReceived, this ) );	
 			this.socket.on('connect', this.proxy( this.onConnect, this ) );
-			this.socket.on('connect_failed', this.proxy( function() {
-				alert("dssdds");
-			}, this ) );
-			
-			this.socket.on('message', this.proxy( this.onMsgReceived, this ) );
 			this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
-			this.socket.on('error', this.proxy( this.onError, this ) );
 		});
 	},
 	
@@ -61,7 +58,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	},
 	
 	connect: function() {
-		if(!this.socket) {
+		if(!this.socket){
 			this.baseconnect();
 		}
 	},
@@ -71,11 +68,15 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			$().log("Reconnected.");
 			this.announceConnection = false;
 		}
-		this.connected = true;
+		this.firstConnected = true;
+		this.connected = true;	  
 	},
 	
 	onDisconnect: function(){
-		if( !this.connected ) return true;
+		//problem with first connection (for example fire wall)
+		if(!this.isInitialized) {
+			globalTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling' ]
+		}
 		$().log("Node-server connection needs to be refreshed...");
 	        this.connected = false;
 	        this.socket = false;
@@ -83,9 +84,9 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		
 		// Sometimes the view is in a state where it shouldn't reconnected (eg: user has entered the same room from another computer and wants to kick this instance off w/o it reconnecting).
 		if(this.autoReconnect){
-			trying = setTimeout(this.proxy(this.tryconnect, this),500);
+			this.trying = setTimeout(this.proxy(this.tryconnect, this),500);
 		}
-    },
+	},
 	
 	authRequestWithMW: function(callback) {
 		//hacky fix of fb#19714
@@ -130,24 +131,27 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     },
     
 	tryconnect: function (){
-    	$().log('tryconnect');
-        if(!this.connected) {
-			$().log("Trying to re-connect to node-server:" + this.reConnectCount);
-            this.connect();
-            clearTimeout(trying);
-            this.reConnectCount++;
+   	$().log('tryconnect');
+        if(this.connected) {
+		return false;
+	}
+//debugger;
+	$().log("Trying to re-connect to node-server:" + this.reConnectCount);
+	this.connect();
+        clearTimeout(this.trying);
+        this.reConnectCount++;
             
-            if(this.reConnectCount == 35) {
+        if(this.reConnectCount == 8) {
             	this.fire( "reConnectFail", {} );
-            } else {
-            	var time = 1000;
-            	if(this.reConnectCount > 3) {
-            		time = this.reConnectCount * 300; 
-            	}
-            	
-            	trying = setTimeout(this.proxy(this.tryconnect, this), time);	
+        } else {
+            var time = 5000;
+            if(this.reConnectCount > 3) {
+           	time = 5000 + this.reConnectCount * 300; 
             }
+            	
+            this.trying = setTimeout(this.proxy(this.tryconnect, this), time);	
         }
+        
     }
 });	
 
