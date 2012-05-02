@@ -115,6 +115,7 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
+		'//extensions/wikia/LightBox/js/LightBox.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
@@ -234,7 +235,6 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 
 		//modules
-		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/loader.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
 		'//extensions/wikia/WikiaMobile/js/querystring.js',
@@ -245,6 +245,9 @@ $config['wikiamobile_js_body'] = array(
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
+
+		//toc
+		'//extensions/wikia/WikiaMobile/js/toc.js',
 
 		//extensions with assets to load on every page
 		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
