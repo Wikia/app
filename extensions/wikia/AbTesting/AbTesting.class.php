@@ -17,17 +17,30 @@ class AbTesting {
 	public static function onSkinGetHeadScripts($scripts) {
 		wfProfileIn( __METHOD__ );
 
-		// TODO: EMBED THE EXPERIMENT CONFIG IN HERE (use memcached for the generated json string).
-		$scripts .= "\n\n<!-- A/B TESTING! -->\n";
-//		$scripts .= Html::inlineScript("var wgNow = new Date();");
+		// Config for experiments and treatment groups.
+		$scripts .= "\n\n<!-- A/B Testing code -->\n";
 
 		// NOTE: This is embedded instead of being an extra request because it needs to be done this early on the page (and external blocking-requests are time-consuming).
-		$scripts .= "\n\n<!-- A/B Testing getTestGroup() -->\n";
-		$scripts .= Html::inlineScript( AbTesting::getJsFunction() )."\n";
+		$js = AbTesting::getJsExperimentConfig() . "\n" . AbTesting::getJsFunction();
+
+		$scripts .= Html::inlineScript( $js )."\n";
 
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
+	/**
+	 * Returns a string containing javascript for the configuration of experiments and test
+	 * groups.
+	 */
+	public static function getJsExperimentConfig(){
+		$js = "";
+
+		// TODO: Generate config JS from the experiments and treatment_groups tables in the datamart.
+		// TODO: Generate config JS from the experiments and treatment_groups tables in the datamart.
+
+		return $js;
+	} // end getJsExperimentConfig()
 	
 	/**
 	 * Returns the javascript for the getTestGroup() function as a string.
