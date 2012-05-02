@@ -6,8 +6,6 @@
 	width: 100%;
 	border: 1px solid $border-color;
 	border-radius: 0 0 5px 5px;
-	box-shadow: 0 0 15px $shadow-color;
-	z-index:1;
 
 	.chev{
 		width: 100%;
@@ -54,7 +52,11 @@
 
 	&.open {
 		border-radius: 5px;
-		z-index:12;
+		z-index:101;
+
+		td > ul {
+			margin-bottom: 10px;
+		}
 
 		ul{
 			height: auto;

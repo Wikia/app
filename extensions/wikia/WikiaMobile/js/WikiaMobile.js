@@ -266,7 +266,7 @@ var WikiaMobile = (function() {
 
 	//init
 	$(function(){
-		require(['modal', 'media', 'cache', 'querystring', 'popover', 'topbar'], function(modal, media, cache, qs, popover, topbar){
+		require(['modal', 'media', 'cache', 'querystring', 'popover', 'topbar', 'toc'], function(modal, media, cache, qs, popover, topbar, toc){
 			body = $(d.body);
 			page = d.getElementById('wkPage');
 			article = d.getElementById('wkMainCnt');
@@ -292,6 +292,8 @@ var WikiaMobile = (function() {
 			//(e.g. collapse sections)
 			//must be done AFTER detecting size of elements on the page
 			d.body.className += ' js';
+
+			toc.init();
 
 			//handle ads
 			if(adSlot){
