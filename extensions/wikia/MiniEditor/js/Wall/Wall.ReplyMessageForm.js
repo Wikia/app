@@ -3,26 +3,22 @@
 	// Reply Message
 	var MiniEditorReplyMessageForm = $.createClass(WallReplyMessageForm, {
 		init: function() {
-			this.replyBoxes.on('click.MiniEditor', this.proxy(this.click));
-			this.replyButtons.on('click.MiniEditor', this.proxy(this.replyToMessage));
-			
-			$.each(this.replyBoxes,
-				function(index, value) { 
-					var element = $(value);
-					if(element.is(":focus")){
-						this.initEditor(element);	
-					}
-				}
-			);
-			
+			var self = this;
+
+			this.wall
+				.on('click.MiniEditor', '.replyButton', this.proxy(this.replyToMessage))
+				.on('click.MiniEditor', '.new-reply .body', this.proxy(this.click)).each(function() {
+					$(this).is(':focus') && self.initEditor(this);
+				});
 		},
 
 		click: function(e) {
-			var $target = $(e.target);
-			this.initEditor($target);
+			this.initEditor(e.target);
 		},
 		
 		initEditor: function(target) {
+			target = $(target);
+
 			// check if editor exists before unbinding placeholder (BugId:23781)
 			if (!target.data('wikiaEditor')) {
 				// Unbind placeholder and clear textarea before initing mini editor (BugId:23221)
@@ -48,7 +44,9 @@
 
 			this.model.postReply(this.username, wikiaEditor.getContent(), format, main.attr('data-id'), this.proxy(function(msg) {
 				var newmsg = $(msg).hide().insertBefore(newreply).fadeIn('slow');
+
 				newmsg.find('.timeago').timeago();
+				newreply.find('textarea.body').placeholder();
 
 				wikiaEditor.fire('editorReset');
 
@@ -57,12 +55,9 @@
 				}
 
 				main.find('ul li.load-more .count').html(main.find('ul li.message').length);
-				
 				main.find('.follow').text($.msg('wikiafollowedpages-following')).removeClass('secondary');
 
 				this.track('wall/message/reply_post');
-				
-				newreply.find('textarea.body').placeholder();
 				this.enable(newreply);
 
 				if (reload) {

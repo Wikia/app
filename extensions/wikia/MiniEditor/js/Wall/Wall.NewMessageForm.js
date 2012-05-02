@@ -5,18 +5,20 @@
 		initEvents: function() {
 			var self = this;
 
-			if(this.WallMessageBody.is(":focus")) {
+			if (this.WallMessageBody.is(':focus')) {
 				self.initEditor(this.WallMessageBody);	
 			}
-			
+
 			this.WallMessageBody.focus(function() {
-				var element = $(this);
-				self.initEditor(element);
+				self.initEditor(this);
 			});
 		},
 		
 		initEditor: function(element) {
 			var self = this;
+
+			element = $(element);
+
 			if (!element.data('wikiaEditor')) {
 				element.unbind('.placeholder');
 			}
