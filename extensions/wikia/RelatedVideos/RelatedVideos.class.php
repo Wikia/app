@@ -37,7 +37,7 @@ class RelatedVideos extends RelatedPages {
 			$data['articleId'] = 0;
 			$videoData = $oRelatedVideosService->getRelatedVideoData( $data );
 			if ( isset( $videoData[ 'timestamp' ] ) && isset( $videoData['id'] ) ){
-				$this->pages[ $videoData['arrayId'] ] = $videoData;
+				$this->pages[ $videoData['id'] ] = $videoData;
 				if ( count( $this->pages ) >= $limit) {
 					break;
 				}

@@ -1,6 +1,6 @@
 <?php 
 class RelatedHubsVideosController extends RelatedVideosController {
-	const MEMC_KEY_VER = '1.0';
+	const MEMC_KEY_VER = '1.1';
 	
 	public function __construct() {
 		$app = F::app();
