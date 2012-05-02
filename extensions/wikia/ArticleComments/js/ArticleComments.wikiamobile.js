@@ -11,9 +11,14 @@
 	var wkArtCom = document.getElementById('wkArtCom'),
 		loadMore = document.getElementById('commMore'),
 		loadPrev = document.getElementById('commPrev'),
-		totalPages = ~~wkArtCom.getAttribute('data-pages'), //double-tilde is a faster alternative to Math.floor()
+		//double-tilde is a faster alternative to Math.floor()
+		totalPages = ~~wkArtCom.getAttribute('data-pages'),
 		currentPage = 1,
-		ajaxUrl = wgServer + "/index.php?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&useskin=" + skin + "&article=" + wgArticleId,
+		ajaxUrl = wgServer +
+			"/index.php?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&useskin=" +
+			skin +
+			"&article=" +
+			wgArticleId,
 		clickEvent = WikiaMobile.getClickEvent(),
 		firstPage,
 		commsUl = document.getElementById('wkComUl'),

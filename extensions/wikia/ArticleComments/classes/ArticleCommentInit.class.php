@@ -203,7 +203,12 @@ class ArticleCommentInit {
 		if (self::ArticleCommentCheck()) {
 			wfLoadExtensionMessages('ArticleComments');
 			$tocnumber = ++$sublevelCount[1];
-			$toc .= $sk->tocLine('article-comments', wfMsg('article-comments-toc-item'), $tocnumber, 1);
+
+			//WikiaMobile has the comments header in the content language, this should match that
+			$messageId = 'article-comments-toc-item';
+			$label = ( Wikia::isWikiaMobile( $sk ) ) ? wfMsgForContent( $messageId ) : wfMsg( $messageId );
+
+			$toc .= $sk->tocLine('article-comments', $label, $tocnumber, 1);
 		}
 		return true;
 	}
