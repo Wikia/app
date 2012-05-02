@@ -9,6 +9,7 @@ class WikiaSearch extends WikiaObject {
 	const WIKIPAGES_CACHE_TTL = 604800; // 7 days
 	const VIDEO_WIKI_ID = 298117;
 	const GROUP_RESULT_MAX_FETCHES = 30;
+	const RELEVANCY_FUNCTION_ID = 6;
 
 	/**
 	 * Search client
@@ -91,6 +92,11 @@ class WikiaSearch extends WikiaObject {
 			$results = $this->client->search( $query, $methodOptions);
 		}
 
+		if( $page == 1 ) {
+			$resultCount = $results->getRealResultsFound();
+			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), array( 'sterm' => $query, 'rver' => self::RELEVANCY_FUNCTION_ID, 'stype' => ( empty($cityId) ? 'inter' : 'intra' ) ) );
+		}
+
 		wfProfileOut(__METHOD__);
 		return $results;
 	}
@@ -121,6 +127,7 @@ class WikiaSearch extends WikiaObject {
 				$cityId = $result->getCityId();
 				if(!isset($wikiResults[$cityId])) {
 					$wikiResultSet = F::build( 'WikiaSearchResultSet' );
+					$wikiResultSet->setHeader('cityId', $cityId );
 					$wikiResultSet->setHeader('cityTitle', WikiFactory::getVarValueByName( 'wgSitename', $cityId ));
 					$wikiResultSet->setHeader('cityUrl', WikiFactory::getVarValueByName( 'wgServer', $cityId ));
 					$wikiResultSet->setHeader('cityArticlesNum', $result->getVar('cityArticlesNum', false));

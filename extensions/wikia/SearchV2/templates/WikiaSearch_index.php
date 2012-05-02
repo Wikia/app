@@ -51,16 +51,19 @@
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 						  'debug' => $debug,
 						  'query' => $query,
-						  'isInterWiki' => $isInterWiki
+						  'isInterWiki' => $isInterWiki,
+						  'relevancyFunctionId' => $relevancyFunctionId
 						));
 					}
 					else {
 						echo $app->getView( 'WikiaSearch', 'result', array(
 						  'result' => $result,
+						  'gpos' => 0,
 						  'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 						  'debug' => $debug,
 						  'query' => $query,
-						  'isInterWiki' => $isInterWiki
+						  'isInterWiki' => $isInterWiki,
+						  'relevancyFunctionId' => $relevancyFunctionId
 						));
 					}
 				?>

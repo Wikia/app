@@ -1,12 +1,17 @@
 <?php if($resultSet->getResultsFound() > 1): ?>
 	<!-- grouped search result-->
 	<section class="Result">
+
+		<?php
+			$trackingData = 'class="ResultLink" data-wid="'.$resultSet->getHeader('cityId').'" data-gpos="'.$pos.'" data-pos="0" data-sterm="'.addslashes($query).'" data-stype="'.( $isInterWiki ? 'inter' : 'intra' ).'" data-rver="'.$relevancyFunctionId.'" data-event="search_click_wiki"';
+		?>
+
 		<header>
-			<h1><?=$debug?$pos.'. ':'';?><a href="<?=$resultSet->getHeader('cityUrl');?>"><?=$resultSet->getHeader('cityTitle');?></a></h1>
+			<h1><?=$debug?$pos.'. ':'';?><a href="<?=$resultSet->getHeader('cityUrl');?>" <?=$trackingData;?> ><?=$resultSet->getHeader('cityTitle');?></a></h1>
 		</header>
 		<nav>
 			<ul>
-				<li><a href="<?=$resultSet->getHeader('cityUrl');?>"><?=$resultSet->getHeader('cityUrl');?></a></li>
+				<li><a href="<?=$resultSet->getHeader('cityUrl');?>" <?=$trackingData;?> ><?=$resultSet->getHeader('cityUrl');?></a></li>
 				<?php if($resultSet->getHeader('cityArticlesNum')): ?>
 					<li><?= wfMsg( 'wikiasearch2-pages', $wg->Lang->formatNum($resultSet->getHeader('cityArticlesNum')) ); ?></li>
 				<?php endif; ?>
@@ -24,11 +29,11 @@
 			<?php $result = $resultSet->next(); ?>
 			<?php if($result instanceof WikiaSearchResult): ?>
 				<div class="grouped-result <?php if($i%2): ?>new-row<?php endif; ?>">
-				   <?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $result, 'pos' => $i, 'debug' => $debug, 'query' => $query, 'inGroup' => true, 'isInterWiki' => $isInterWiki )); ?>
-				</div>				
+					<?= $app->getView( 'WikiaSearch', 'result', array( 'result' => $result, 'gpos' => $pos, 'pos' => $i, 'debug' => $debug, 'query' => $query, 'inGroup' => true, 'isInterWiki' => $isInterWiki, 'relevancyFunctionId' => $relevancyFunctionId )); ?>
+				</div>
 			<?php else: break; endif; ?>
 		<?php endfor; ?>
 	</section>
 <?php else: ?>
-	<?= F::app()->getView( 'WikiaSearch', 'result', array( 'result' => $resultSet->next(), 'pos' => $pos, 'debug' => $debug, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=>true)); ?>
+	<?= $app->getView( 'WikiaSearch', 'result', array( 'result' => $resultSet->next(), 'gpos' => 0, 'pos' => $pos, 'debug' => $debug, 'query' => $query, 'rank' =>  $resultSet->getHeader('cityRank'), 'isInterWiki'=> true, 'relevancyFunctionId' => $relevancyFunctionId )); ?>
 <?php endif; ?>

@@ -100,6 +100,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'solrHost', $this->wg->SolrHost);
 		$this->setVal( 'debug', $this->getVal('debug', false) );
 		$this->setVal( 'isInterWiki', $isInterWiki );
+		$this->setVal( 'relevancyFunctionId', WikiaSearch::RELEVANCY_FUNCTION_ID );
 	}
 
 	public function advancedBox() {
@@ -153,8 +154,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	private function getTruncatedResultsNum($resultsNum) {
 		$result = $resultsNum;
 
-		if( strlen( $resultsNum ) > 1 ) {
-			$result = round( $resultsNum, ( 0 - ( strlen( $resultsNum ) - 1 ) ) );
+		$digits = strlen( $resultsNum );
+		if( $digits > 1 ) {
+			$zeros = ( $digits > 3 ) ? ( $digits - 1 ) : $digits;
+			$result = round( $resultsNum, ( 0 - ( $zeros - 1 ) ) );
 		}
 
 		return $result;
