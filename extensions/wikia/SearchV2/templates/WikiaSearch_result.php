@@ -12,7 +12,12 @@
 	<header>
 	<h1>
 		<?php $title = ( empty($inGroup) && $isInterWiki ) ? str_replace('$1', $result->getTitle(), $result->getVar('wikititle')) : $result->getTitle(); ?>
-		<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>"><?= $title ?></a>
+
+		<?php
+			$trackingData = 'class="ResultLink" data-wid="'.$result->getCityId().'" data-pageid="'.$result->getVar('pageId').'" data-pagens="'.$result->getVar('ns').'" data-title="'.$result->getTitle().'" data-gpos="'.( !empty($gpos) ? $gpos : 0 ).'" data-pos="'.$pos.'" data-sterm="'.addslashes($query).'" data-stype="'.( $isInterWiki ? 'inter' : 'intra' ).'" data-rver="'.$relevancyFunctionId.'"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );
+		?>
+
+		<?= $debug ? $pos.'. ' : ''; ?><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?= $title ?></a>
 	</h1>
 	</header>
 	
@@ -25,7 +30,7 @@
 	<?php if(empty($inGroup)): ?>
 		<nav>
 			<ul>
-				<li><a href="<?= $result->getUrl(); ?>"><?=$result->getUrl();?></a></li>
+				<li><a href="<?= $result->getUrl(); ?>" <?=$trackingData;?> ><?=$result->getUrl();?></a></li>
 				<?php if($isInterWiki): ?>
 					<li><a href="<?= $result->getVar('cityHost') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search'; ?>"><?= wfMsg( 'wikiasearch2-search-on-wiki') ?></a></li>
 				<?php endif; ?>
