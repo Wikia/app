@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-(function(){
+require(['loader', 'toast', 'modal'], function(loader, toast, modal){
 	/** @private **/
 
 	var wkArtCom = document.getElementById('wkArtCom'),
@@ -46,7 +46,7 @@
 
 		if(condition){
 			elm.className += ' active';
-			WikiaMobile.loader.show(elm, {size: '30px'});
+			loader.show(elm, {size: '30px'});
 
 			$.getJSON(ajaxUrl + '&page=' + ~~pageIndex, function(result){
 				var finished;
@@ -57,7 +57,7 @@
 				commsUl.innerHTML = result.text;
 
 				elm.className = elm.className.replace(' active', '');
-				WikiaMobile.loader.hide(elm);
+				loader.hide(elm);
 
 				//there's a good reason to use display instead of show/hide in the following lines
 				if(finished) {
@@ -85,7 +85,7 @@
 
 			if(text !== '') {
 				submit.disabled =  true;
-				WikiaMobile.loader.show(form, {size: '35px', center: true});
+				loader.show(form, {size: '35px', center: true});
 
 				var data = {
 					action:'ajax',
@@ -124,7 +124,7 @@
 					}
 
 					submit.disabled = false;
-					WikiaMobile.loader.hide(form);
+					loader.hide(form);
 				});
 			}
 		}
@@ -157,15 +157,13 @@
 		}
 
 		//update counters
-		require('modal', function(modal){
-			modal.setToolbar(replies + ' ('+cnt+')');
-		});
+		modal.setToolbar(replies + ' ('+cnt+')');
 	}
 
 	function loginRequired(ev){
 		if(window.wgDisableAnonymousEditing && UserLogin.isForceLogIn()){
 			ev.stopPropagation();
-			WikiaMobile.toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
+			toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
 
 			var elm = (ev.currentTarget.nodeName == 'FORM') ? ev.currentTarget : ev.currentTarget.parentElement,
 				prev = elm.previousElementSibling;
@@ -182,22 +180,20 @@
 	}
 
 	function openModal(elm, focus){
-		require('modal', function(modal){
-			var parent = elm.parentElement,
-				num = parent.getAttribute('data-replies'),
-				toolbar = (~~num) ? replies + ' (' + num + ')' : postReply;
+		var parent = elm.parentElement,
+			num = parent.getAttribute('data-replies'),
+			toolbar = (~~num) ? replies + ' (' + num + ')' : postReply;
 
-			modal.open({
-				classes: 'cmnMdl',
-				content: parent.parentElement.outerHTML + postComm.outerHTML,
-				toolbar: toolbar,
-				stopHiding: true
-			});
-
-			var area = document.getElementById('wkMdlCnt').getElementsByClassName('commTxt')[0];
-
-			if(focus) area.focus();
+		modal.open({
+			classes: 'cmnMdl',
+			content: parent.parentElement.outerHTML + postComm.outerHTML,
+			toolbar: toolbar,
+			stopHiding: true
 		});
+
+		var area = document.getElementById('wkMdlCnt').getElementsByClassName('commTxt')[0];
+
+		if(focus) area.focus();
 	}
 
 	if(totalPages > 1 && wgArticleId){
@@ -224,4 +220,4 @@
 	.on(clickEvent, '.commFrm textarea', function(ev){
 		loginRequired(ev);
 	});
-})();
+});

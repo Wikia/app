@@ -32,25 +32,28 @@ var UserLoginFacebook = (function(){
 			FB.login(
 				function(response){
 					if(typeof response === 'object' && response.status == 'connected'){
-						// now check FB account (is it connected with Wikia account?)
-						$.nirvana.postJson('FacebookSignupController', 'index', null, function(resp){
-							if(resp.loggedIn){
-								WikiaMobile.track('facebook/connect/success');
-								var reload = WikiaMobile.querystring(),
-									returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
+						require(['querystring', 'toast'], function(qs, toast){
+							// now check FB account (is it connected with Wikia account?)
+							$.nirvana.postJson('FacebookSignupController', 'index', null, function(resp){
+								if(resp.loggedIn){
+									WikiaMobile.track('facebook/connect/success');
 
-								if(returnto) {
-									reload.setPath(wgArticlePath.replace('$1', returnto));
+										var reload = qs(),
+											returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
+
+										if(returnto) {
+											reload.setPath(wgArticlePath.replace('$1', returnto));
+										}
+
+										reload.setVal('returnto', '');
+										reload.setVal('cb', wgStyleVersion);
+										reload.goTo();
+
+								}else{
+									WikiaMobile.track('facebook/connect/fail');
+									toast.show($.msg('wikiamobile-facebook-connect-fail'), {error: true});
 								}
-
-								reload.setVal('returnto', '');
-								reload.setVal('cb', wgStyleVersion);
-								reload.goTo();
-
-							}else{
-								WikiaMobile.track('facebook/connect/fail');
-								WikiaMobile.toast.show($.msg('wikiamobile-facebook-connect-fail'), {error: true});
-							}
+							});
 						});
 					}
 				},

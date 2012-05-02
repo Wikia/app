@@ -7,13 +7,12 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-(function(){
-	var url = WikiaMobile.querystring(),
+require(['loader', 'querystring'], function(loader, qs){
+	var hash = qs().getHash(),
 		wkArtCom,
 		collSec,
-		open = false,
+		open,
 		wkComm,
-		hash = url.getHash(),
 		clickEvent = WikiaMobile.getClickEvent();
 
 	if(hash.indexOf('comm-') > -1){
@@ -21,7 +20,7 @@
 	}
 
 	function init(){
-		WikiaMobile.loader.show(wkArtCom, {center: true, size:'40px'});
+		loader.show(wkArtCom, {center: true, size:'40px'});
 
 		Wikia.getMultiTypePackage({
 			styles: '/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
@@ -41,7 +40,7 @@
 			},
 			varnishTTL: 86400,
 			callback: function(res){
-				WikiaMobile.loader.remove(wkArtCom);
+				loader.remove(wkArtCom);
 				Wikia.processStyle(res.styles);
 				wkComm.insertAdjacentHTML('beforeend', res.templates['ArticleCommentsModule_WikiaMobileCommentsPage']);
 				Wikia.processScript(res.scripts[0]);
@@ -54,7 +53,7 @@
 						if(elm.nodeName == 'LI'){
 							setTimeout(function(){
 								var evObj = document.createEvent('MouseEvents');
-								evObj.initMouseEvent('click', true, true, window, 1, 12, 345, 7, 220, false, false, true, false, 0, null);
+								evObj.initMouseEvent('click', true, true, window);
 								elm.getElementsByClassName('cmnRpl')[0].dispatchEvent(evObj);
 							}, 1500);
 						}
@@ -78,4 +77,4 @@
 			collSec.addEventListener(clickEvent, init, true);
 		}
 	});
-})();
+});

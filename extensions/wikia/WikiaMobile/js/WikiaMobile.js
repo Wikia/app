@@ -5,11 +5,12 @@ var WikiaMobile = (function() {
 
 	/** @private **/
 
-	var body,
+	var w = window,
+		d = document,
+		body,
 		page,
 		article,
 		handledTables,
-		w = window,
 		realWidth = w.innerWidth || w.clientWidth,
 		realHeight = w.innerHeight || w.clientHeight,
 		clickEvent = ('ontap' in w) ? 'tap' : 'click',
@@ -22,158 +23,7 @@ var WikiaMobile = (function() {
 		shrImgTxt, shrPageTxt, shrMailPageTxt, shrMailImgTxt,
 		$1 =/__1__/g, $2 =/__2__/g, $3 =/__3__/g, $4 = /__4__/g,
 		fixed = Modernizr.positionfixed,
-		d = document,
-		ftr, navBar, wkPrf, wkLgn,
-
-		querystring = function(url){
-			var srh = '',
-				l = w.location,
-				cache = {},
-				link = '',
-				tmp,
-				protocol,
-				path = '',
-				hash;
-
-			if(url) {
-				tmp = url.split('#');
-				hash = tmp[1] || '';
-				tmp = tmp[0].split('?');
-
-				link = tmp[0];
-				srh = tmp[1];
-			}else{
-				protocol = l.protocol;
-				link = l.host;
-				path = l.pathname;
-				srh = l.search.substr(1);
-				hash = l.hash.substr(1)
-			}
-
-			if(srh){
-				var tmpQuery = srh.split('&');
-
-				for(var i = 0; i < tmpQuery.length; i++){
-					tmp = tmpQuery[i].split('=');
-					cache[tmp[0]] = tmp[1];
-				}
-			}
-
-			return {
-				toString: function(){
-					var ret = (protocol ? protocol + '//' : '') + link + path + '?',
-						attr;
-					for(attr in cache){
-						ret += attr + '=' + cache[attr] + '&';
-					}
-					return ret.slice(0, -1) + (hash ? '#' + hash : '');
-				},
-
-				getVal: function(name, defVal){
-					return cache[name] || defVal;
-				},
-
-				setVal: function(name, val){
-					if(val != ''){
-						cache[name] = val;
-					}else{
-						delete cache[name];
-					}
-				},
-
-				getHash: function(){
-					return hash;
-				},
-
-				setHash: function(h){
-					hash = h;
-				},
-
-				getPath: function(){
-					return path;
-				},
-
-				setPath: function(p){
-					path = p;
-				},
-
-				goTo: function(){
-					//We don't want these to be in url on load
-					if(hash == 'pop' || hash == 'Modal'){
-						hash = '';
-					}
-					l.href = this.toString();
-				}
-			};
-		},
-
-		loader = {
-			show: function(elm, options) {
-				options = options || {};
-				var ldr = elm.getElementsByClassName('wkMblLdr')[0];
-				if(ldr) {
-					ldr.style.display = 'block';
-				} else {
-					elm.insertAdjacentHTML('beforeend', '<div class="wkMblLdr' + (options.center?' center':'') +'"><span ' +
-								   (options.size?'style="width:' + options.size + ';height:'+options.size+'"':'') + '></span></div>');
-				}
-			},
-
-			hide: function(elm) {
-				elm = elm.getElementsByClassName('wkMblLdr')[0];
-				if(elm){
-					elm.style.display = 'none';
-				}
-			},
-
-			remove: function(elm) {
-				var ldr = elm.getElementsByClassName('wkMblLdr')[0];
-				if(ldr){
-					elm.removeChild(ldr);
-				}
-			}
-		},
-
-		toast = {
-			wkTst: null,
-
-			show: function(msg, opt){
-				if(msg){
-					opt = opt || {};
-
-					var oTime = opt.timeout,
-					time = (typeof oTime == 'undefined') ? 5000 : (typeof oTime == 'number' ? oTime : false);
-
-					if(d.body.className.indexOf('hasToast') > -1){
-						toast.wkTst.innerHTML = msg;
-					}else{
-						d.body.insertAdjacentHTML('beforeend', '<div id=wkTst class="hide clsIco">' + msg + '</div>' );
-						toast.wkTst = d.getElementById('wkTst');
-						toast.wkTst.addEventListener(clickEvent, function(){
-							toast.hide();
-						});
-						d.body.className += ' hasToast';
-					}
-					toast.wkTst.className = 'show clsIco';
-
-					if(opt.error){
-						toast.wkTst.className += ' err';
-					}
-
-					if(time){
-						setTimeout(function(){
-							toast.hide();
-						}, time);
-					}
-				}else{
-					throw 'Empty message';
-				}
-			},
-
-			hide: function(){
-				toast.wkTst.className = 'hide clsIco';
-			}
-		};
+		ftr, navBar, wkPrf, wkLgn;
 
 	//slide up the addressbar on webkit mobile browsers for maximum reading area
 	//setTimeout is necessary to make it work on ios...
@@ -182,7 +32,7 @@ var WikiaMobile = (function() {
 			setTimeout(function(){
 					w.scrollTo(0, 1);
 					if(!fixed) moveSlot();
-			}, 0);
+			}, 1);
 		}
 	}
 
@@ -389,246 +239,41 @@ var WikiaMobile = (function() {
 		});
 	}
 
-	function openLogin(){
-		if(wkPrf.className.indexOf('loaded') > -1){
-			navBar.style.minHeight = (wkLgn.offsetHeight + 70) + 'px';
-		}else{
-			loader.show(wkPrf, {center: true});
-
-			Wikia.getMultiTypePackage({
-				templates: [{
-					controllerName: 'UserLoginSpecialController',
-					methodName: 'index'
-				}],
-				messages: 'fblogin',
-				styles: '/extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
-				scripts: 'userlogin_facebook_js_wikiamobile',
-				params: {
-					useskin: w.skin
-				},
-				callback: function(res){
-					loader.remove(wkPrf);
-
-					Wikia.processStyle(res.styles);
-					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecialController_index']);
-					Wikia.processScript(res.scripts);
-
-					wkLgn = document.getElementById('wkLgn');
-					navBar.style.minHeight = (wkLgn.offsetHeight + 70) + 'px';
-					wkLgn.style.opacity = 1;
-					wkPrf.className += 'loaded';
-
-					var form = wkLgn.getElementsByTagName('form')[0],
-						query = querystring( form.getAttribute('action') );
-
-					query.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName));
-					form.setAttribute('action', query.toString());
-				}
-			});
-		}
-		track('login/open');
-	}
-
-	function openProfile(){
-		require('modal', function(modal){
-			modal.close();
-		});
-		closeNav();
-		hidePage();
-		navBar.className = 'prf';
-		window.location.hash = 'pop';
-		navBar.style.height = '100%';
-
-		if(wgUserName){
-			track('profile/open');
-		}else{
-			openLogin();
-		}
-	}
-
-	function hidePage() {
-		page.style.height = 0;
-		page.style.minHeight = 0;
-		if(adSlot){
-			adSlot.style.display = 'none';
-		}
-		ftr.style.display = 'none';
-	}
-
-	function closePullDown() {
-		page.style.height = 'auto';
-		page.style.minHeight = '270px';
-		if(adSlot){
-			adSlot.style.display = 'block';
-		}
-		ftr.style.display = 'block';
-		if(!fixed) moveSlot();
-		navBar.style.height = '40px';
-		navBar.style.minHeight = 0;
-		closeNav();
-		closeProfile();
-		if(window.location.hash == "#pop") window.history.back();
-	}
-
-	function closeNav(){
-		if(navBar.className.indexOf('fllNav') > -1){
-			track('nav/close');
-			wkNavMenu.className = 'cur1';
-			navBar.className = '';
-		}
-	}
-
-	function closeProfile(){
-		if(navBar.className.indexOf('prf') > -1){
-			if(wgUserName){
-				track('profile/close');
-			}else{
-				track('login/close');
-			}
-			navBar.className = '';
-		}
-	}
-
-	/*
-	 * POPOVER
-	 * create or/and open callback has to be provided to create pop over
-	 *
-	 * options.on - (required) element that opens popover - throws an exception if not provided
-	 * options.style - allows you to pass cssText for a content wrapper
-	 * options.create - content of popover, either string or function that gets content wrapper as an attribute
-	 * options.open - callback on open
-	 * options.close - callback on close
-	*/
-	function popOver(options){
-		options = options || {};
-
-		var elm = options.on,
-		initialized = false,
-		isOpen = false,
-		cnt;
-
-		if(elm){
-			elm.addEventListener(clickEvent, function(event){
-				if(this.className.indexOf('on') > -1){
-					close(event);
-				}else{
-					if(!initialized){
-						var position = options.position || 'bottom',
-							horizontal = (position == 'bottom' || position == 'top'),
-							offset = (horizontal)?this.offsetHeight:this.offsetWidth,
-							onCreate = options.create,
-							style = options.style || '';
-
-						this.insertAdjacentHTML('afterbegin', '<div class=ppOvr></div>');
-						cnt = this.getElementsByClassName('ppOvr')[0];
-
-						if(typeof onCreate == 'function'){
-							changeContent(onCreate);
-						}else if(typeof onCreate == 'string'){
-							cnt.insertAdjacentHTML('afterbegin', onCreate);
-						}else if(!open){
-							throw 'No content or on open callback provided';
-						}
-
-						this.className += ' ' + position;
-						var pos = (horizontal)?(position == 'top'?'bottom':'top'):(position == 'left'?'right':'left');
-						cnt.style[pos] = (offset + 15) + 'px';
-
-						cnt.style.cssText += style;
-
-						initialized = true;
-					}
-
-					open(event);
-				}
-			}, true);
-		}else{
-			throw 'Non existing element';
-		}
-
-		function changeContent(onCreate){
-			cnt.innerHTML = '';
-			loader.show(cnt, {center: true, size: '20px'});
-			onCreate(cnt);
-		}
-
-		function close(ev){
-			if(isOpen){
-				elm.className = elm.className.replace(" on", "");
-				if(typeof options.close == 'function') {
-					 options.close(ev, elm);
-				}
-				isOpen = false;
-			}
-		}
-
-		function open(ev){
-			if(!isOpen){
-				elm.className += " on";
-				if(typeof options.open == 'function') {
-					options.open(ev, elm);
-				}
-				isOpen = true;
-			}
-		}
-
-		return {
-			changeContent: changeContent,
-			close: close
-		}
-	}
-
 	function reloadPage(){
-		var location = window.location.href,
+		var location = w.location.href,
 			delim = '?';
 
 		if(location.indexOf(delim) > 0){
 			delim = '&';
 		}
 
-		window.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
+		w.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
 	}
 
 	function onstop(el, x, max){
-		var dir = 'bigTable active',
-			middle = true;
+		var dir = 'bigTable active';
+
 		el.style.border = 'none';
 
 		if(x < max - 5) {
 			el.style.borderRight = '5px solid rgb(215,232,242)';
-			middle = !middle;
 		}
 
 		if(x > 5) {
 			el.style.borderLeft = '5px solid rgb(215,232,242)';
-			middle = !middle;
 		}
-
-
 	}
 
 	//init
 	$(function(){
-		require(['modal', 'media', 'cache'], function(modal, media, cache){
+		require(['modal', 'media', 'cache', 'querystring', 'popover', 'topbar'], function(modal, media, cache, qs, popover, topbar){
 			body = $(d.body);
 			page = d.getElementById('wkPage');
 			article = d.getElementById('wkMainCnt');
 			ftr = d.getElementById('wkFtr');
 			adSlot = d.getElementById('wkAdPlc');
-			navBar = d.getElementById('wkTopNav');
-			wkPrf = d.getElementById('wkPrf');
 
-			var navigationSearch = $(d.getElementById('wkNavSrh')),
-			searchToggle = $(d.getElementById('wkSrhTgl')),
-			searchInput = $(d.getElementById('wkSrhInp')),
-			searchForm = $(d.getElementById('wkSrhFrm')),
-			wkNav = d.getElementById('wkNav'),
-			wkNavMenu = d.getElementById('wkNavMenu'),
-			wikiNavHeader = wkNavMenu.getElementsByTagName('h1')[0],
-			wikiNavLink = d.getElementById('wkNavLink'),
-			wkPrfTgl = d.getElementById('wkPrfTgl'),
-			lvl1 = d.getElementById('lvl1'),
-			wkShrPag = d.getElementById('wkShrPag'),
+			var wkShrPag = d.getElementById('wkShrPag'),
 			//to cache link in wiki nav
 			lvl2Link;
 
@@ -660,12 +305,12 @@ var WikiaMobile = (function() {
 							track('ad/close');
 							adSlot.className += ' anim';
 							setTimeout(function(){d.body.removeChild(adSlot);},800);
-							window.removeEventListener('scroll', moveSlot);
+							w.removeEventListener('scroll', moveSlot);
 						}, false);
 						if(fixed){
 							adSlot.style.position = 'fixed';
 						}else{
-							window.addEventListener('scroll', moveSlot, false);
+							w.addEventListener('scroll', moveSlot, false);
 						}
 						return true;
 					}
@@ -687,7 +332,6 @@ var WikiaMobile = (function() {
 			hideURLBar();
 
 			//get search input
-			navigationSearch.remove().appendTo('#wkTopBar');
 
 			//TODO: optimize selectors caching for this file
 			body.delegate('.collSec', clickEvent, function(){
@@ -707,6 +351,7 @@ var WikiaMobile = (function() {
 			.delegate('#wkMainCnt a', clickEvent, function(){
 				track('link/content');
 			})
+			//TODO: move to media.js
 			.delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
 				event.preventDefault();
 				event.stopPropagation();
@@ -765,139 +410,6 @@ var WikiaMobile = (function() {
 				}
 			}
 
-			searchForm.bind('submit', function(){
-				track('search/submit');
-			});
-
-			searchToggle.bind(clickEvent, function(event){
-				event.preventDefault();
-				if(navBar.className.indexOf('srhOpn') > -1){
-					track('search/toggle/close');
-					if(searchInput.val()){
-						searchForm.submit();
-					}else{
-						navBar.className = '';
-						searchInput.val('');
-					}
-				}else{
-					track('search/toggle/open');
-					closePullDown();
-					navBar.className = 'srhOpn';
-					navBar.style.height = '40px';
-					searchInput.focus();
-				}
-			});
-
-			//preparing the navigation
-			wikiNavHeader.className = '';
-			$(wkNavMenu).delegate('#lvl1 a', clickEvent, function(){
-				track('link/nav/list');
-			})
-			.delegate('header > a', clickEvent, function(){
-				track('link/nav/header');
-			})
-			.find('ul ul').parent().addClass('cld');
-
-			d.getElementById('wkNavTgl').addEventListener(clickEvent, function(event){
-				event.preventDefault();
-				event.stopPropagation();
-				if(navBar.className.indexOf('fllNav') > -1){
-					closePullDown();
-				}else{
-					closeProfile();
-					hidePage();
-					track('nav/open');
-					navBar.className = 'fllNav';
-					navBar.style.minHeight = '100%';
-					//80px is for lvl1 without header
-					navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
-					window.location.hash = 'pop';
-				}
-			});
-
-			//close WikiNav on back button
-			if('onhashchange' in window) {
-				window.addEventListener("hashchange", function() {
-					if(window.location.hash == "" && navBar.className.length > 0){
-						closePullDown();
-					}
-				}, false);
-			}
-
-			if(wkPrfTgl){
-				wkPrfTgl.addEventListener(clickEvent, function(event){
-					event.preventDefault();
-					if(navBar.className.indexOf('prf') > -1){
-						closePullDown();
-					}else{
-						openProfile();
-					}
-				});
-			}
-
-			$(lvl1).delegate('.cld', clickEvent, function(event) {
-				if(event.target.parentNode.className.indexOf('cld') > -1) {
-					event.stopPropagation();
-					event.preventDefault();
-
-					var self = $(this),
-					element = self.children().first(),
-					href = element.attr('href'),
-					ul = self.find('ul').first().addClass('cur');
-
-					wikiNavHeader.innerText = element.text();
-
-					if(href) {
-						wikiNavLink.href = href;
-						wikiNavLink.style.display = 'block';
-					}else{
-						wikiNavLink.style.display = 'none';
-					}
-
-					//130px is for lvl2/3 with a header
-					navBar.style.height = (ul.height() + 130) + 'px';
-
-					if(wkNavMenu.className == 'cur1'){
-						lvl2Link = href;
-						track('nav/level-2');
-						wkNavMenu.className = 'cur2';
-					}else{
-						track('nav/level-3');
-						wkNavMenu.className = 'cur3';
-					}
-				}
-			});
-
-			d.getElementById('wkNavBack').addEventListener(clickEvent, function() {
-				var current;
-
-				if(wkNavMenu.className == 'cur2') {
-					setTimeout(function(){wkNavMenu.querySelector('.lvl2.cur').className = 'lvl2'}, 800);
-					navBar.style.height = (lvl1.offsetHeight + 80) + 'px';
-					track('nav/level-1');
-					wkNavMenu.className = 'cur1';
-				} else {
-					setTimeout(function(){wkNavMenu.querySelector('.lvl3.cur').className = 'lvl3'}, 800);
-					current = wkNavMenu.querySelector('.lvl2.cur');
-					wikiNavHeader.innerText = current.previousSibling.text;
-					navBar.style.height = (current.offsetHeight + 130) + 'px';
-					if(lvl2Link) {
-						wikiNavLink.href = lvl2Link;
-						wikiNavLink.style.display = 'block';
-					} else {
-						wikiNavLink.style.display = 'none';
-					}
-					track('nav/level-2');
-					wkNavMenu.className = 'cur2';
-				}
-			});
-			//end of preparing the nav
-
-			page.addEventListener(clickEvent, function(event){
-				navBar.className = '';
-				searchInput.val('');
-			});
-
 			$(d.getElementById('wkRelPag')).delegate('a', clickEvent, function(){
 				track('link/related-page');
 			});
@@ -910,13 +422,14 @@ var WikiaMobile = (function() {
 				event.preventDefault();
 				track('link/fullsite');
 				Wikia.CookieCutter.set('mobilefullsite', 'true');
-				var url = querystring();
+				var url = qs();
 				url.setVal('cb', wgStyleVersion);
 				url.setVal('useskin', 'oasis');
 				url.goTo();
 			});
 
 			//category pages
+			//TODO: move to be loaded only on Category Pages
 			if(wgCanonicalNamespace == 'Category'){
 				$('.pagMore, .pagLess').bind(clickEvent, function(event) {
 					event.preventDefault();
@@ -962,7 +475,6 @@ var WikiaMobile = (function() {
 							loader.hide(self);
 
 							prev.className = 'pagLess' + (batch > 1 ? ' visible' : '');
-
 							next.className = 'pagMore' + (batch < ~~(parent.getAttribute('data-batches')) ? ' visible' : '');
 						}
 					});
@@ -993,7 +505,7 @@ var WikiaMobile = (function() {
 			//end category pages
 
 			if(wkShrPag){
-				popOver({
+				popover({
 					on: wkShrPag,
 					create: loadShare,
 					open: function(){
@@ -1009,16 +521,11 @@ var WikiaMobile = (function() {
 	});
 
 	return {
-		openProfile: openProfile,
 		getClickEvent: getClickEvent,
 		getTouchEvent: getTouchEvent,
 		track: track,
 		moveSlot: moveSlot,
-		popOver: popOver,
 		loadShare: loadShare,
-		reloadPage: reloadPage,
-		querystring: querystring,
-		loader: loader,
-		toast: toast
+		reloadPage: reloadPage
 	};
 })();

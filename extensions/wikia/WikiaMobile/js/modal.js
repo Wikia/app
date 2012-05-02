@@ -8,15 +8,15 @@
 (function(){
 	if(define){
 		//AMD
-		define('modal', modal);//late binding
+		define('modal', ['loader'], modal);//late binding
 	}else{
-		window.Modal = modal();//late binding
+		window.Modal = modal(Loader);//late binding
 	}
 
-	function modal(){
+	function modal(loader){
 		var opened = false, created = false,
 			toolbar, content, caption, wrapper,
-			loader, topBar,
+			topBar,
 			page, pageLength,
 			position,
 			clickEvent,
@@ -25,7 +25,6 @@
 
 		/* private */
 		function setup(){
-			loader = WikiaMobile.loader;
 			track = WikiaMobile.track;
 			clickEvent = WikiaMobile.getClickEvent();
 			wrapper = document.getElementById('wkMdlWrp');
