@@ -249,16 +249,14 @@ var ArticleComments = {
 			var comment = $('#comm-' + json.id),
 				blockquote = $('#comm-text-' + json.id).parent(),
 				editbox = blockquote.find('.article-comm-edit-box'),
-				buttons = blockquote.find('.buttons');
+				buttons = blockquote.find('.buttons').hide();
 
 			blockquote.find('.info').remove();
 
 			if (editbox.length) {
 				editbox.show();
-				buttons.hide();
 
 			} else if (!json.error) {
-				buttons.hide();
 				blockquote.append(json.html);
 
 				$('#article-comm-reply-submit-' + json.id).bind('click', {
@@ -279,18 +277,13 @@ var ArticleComments = {
 			if (ArticleComments.miniEditorEnabled) {
 				ArticleComments.editorInit(textfield, {
 					editorActivated: function(event, wikiaEditor) {
-						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message'),
-							editbox = speechBubble.find('.article-comm-edit-box');
-
-						editbox.show();
-						speechBubble.find('.buttons').hide();
+						blockquote.find('.article-comm-edit-box').show();
 					},
 					editorDeactivated: function(event, wikiaEditor) {
-						var speechBubble = wikiaEditor.element.closest('.speech-bubble-message'),
-							editbox = speechBubble.find('.article-comm-edit-box');
-
-						editbox.hide();
-						speechBubble.find('.buttons').show();
+						if (!wikiaEditor.getContent()) {
+							blockquote.find('.article-comm-edit-box').hide();
+							buttons.show();
+						}
 					}
 				});
 
