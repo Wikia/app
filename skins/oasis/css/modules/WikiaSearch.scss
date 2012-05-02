@@ -163,6 +163,13 @@ $form-negative-side-padding: $form-side-padding*-1;
 				clear: left;
 			}
 		}
+		.redirect-title {
+			color: $color-alternate-text;
+
+			.ResultLink {
+				color: $color-alternate-text;
+			}
+		}
 		a.image {
 			float: left;
 			margin: 0 10px 5px 0;
