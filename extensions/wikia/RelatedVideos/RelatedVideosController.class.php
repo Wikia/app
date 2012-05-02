@@ -35,11 +35,10 @@ class RelatedVideosController extends WikiaController {
 		if ( !is_array( $videos ) ){ 
 			$videos = array();
 		}
-
 		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
 		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( F::app()->wg->title );
 		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
-
+		
 		$oRelatedVideosService = F::build('RelatedVideosService');
 		$blacklist = array();
 
@@ -49,13 +48,14 @@ class RelatedVideosController extends WikiaController {
 				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
 					foreach( $data['lists']['WHITELIST'] as $page ){
 						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
-						if ( isset( $videoData['arrayId'] ) )
-							$videos[$videoData['arrayId']] = $videoData;
+						if ( isset( $videoData['id'] ) ) {
+							$videos[$videoData['id']] = $videoData;
+						}
 					}
 					foreach( $data['lists']['BLACKLIST'] as $page ){
 						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
-						if ( isset( $videoData['arrayId'] ) )
-							$blacklist[$videoData['arrayId']] = $videoData;
+						if ( isset( $videoData['id'] ) )
+							$blacklist[$videoData['id']] = $videoData;
 					}
 				}
 			}
@@ -67,7 +67,7 @@ class RelatedVideosController extends WikiaController {
 
 		uasort( $videos, array( $this, 'sortByDate') );
 		$videos = array_reverse( $videos, true );
-
+		
 		$this->setVal( 'videos', $videos );
 	}
 

@@ -49,7 +49,6 @@ class RelatedVideosData {
 
 		$data['owner'] = '';
 		$data['ownerUrl'] = '';
-		$data['arrayId'] = isset($data['error']) ? '' : $data['timestamp'];
 
 		wfProfileOut( __METHOD__ );
 		return $data;
