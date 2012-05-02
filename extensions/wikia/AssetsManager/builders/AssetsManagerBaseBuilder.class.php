@@ -32,11 +32,11 @@ class AssetsManagerBaseBuilder {
 			$start = microtime(true);
 
 			if($this->mOid == 'oasis_shared_js' || $this->mOid == 'rte') {
-				$newContent = $this->minifyJS($this->mContent, true);
+				$newContent = self::minifyJS($this->mContent, true);
 			} else if($this->mContentType == AssetsManager::TYPE_CSS) {
 				$newContent = $this->minifyCSS($this->mContent);
 			} else if($this->mContentType == AssetsManager::TYPE_JS) {
-				$newContent = $this->minifyJS($this->mContent);
+				$newContent = self::minifyJS($this->mContent);
 			}
 
 			$stop = microtime(true);
@@ -66,7 +66,7 @@ class AssetsManagerBaseBuilder {
 		return $this->mContentType;
 	}
 
-	private function minifyJS($content, $useYUI = false) {
+	public static function minifyJS($content, $useYUI = false) {
 		global $IP;
 		wfProfileIn(__METHOD__);
 
