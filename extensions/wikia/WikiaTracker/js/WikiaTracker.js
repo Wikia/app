@@ -152,6 +152,9 @@ WikiaTracker._track = function(page, profile, sample, events) {
 		_gaq.push(['_trackEvent', 'fakeurl', page]);
 	}
 */
+	if (profile.indexOf('liftium') != -1) {
+		return false;
+	}
 	_gaq.push(['_trackEvent', 'fakeurl', '/test/20120429']);
 
 	return true;
