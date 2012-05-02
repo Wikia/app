@@ -11,9 +11,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected $wikiaSearch = null;
 
 	public function __construct() {
-		$this->wikiaSearch = F::build('WikiaSearch');
+	        // note: this is required since we haven't constructed $this->wg yet
+		global $wgWikiaSearchIsDefault;
 
-		parent::__construct( 'WikiaSearch', 'WikiaSearch', false );
+		$this->wikiaSearch = F::build('WikiaSearch');
+		$specialPageName = $wgWikiaSearchIsDefault ? 'Search' : 'WikiaSearch';
+		parent::__construct( $specialPageName, $specialPageName, false );
 	}
 
 	public function index() {
@@ -24,7 +27,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->response->addAsset('extensions/wikia/SearchV2/monobook/monobook.scss');
 		}
 
-		$query = $this->getVal('query');
+		$query = $this->getVal('query', $this->getVal('search'));
 		$page = $this->getVal('page', 1);
 		$debug = $this->request->getBool('debug');
 		$crossWikia = $this->request->getBool('crossWikia');

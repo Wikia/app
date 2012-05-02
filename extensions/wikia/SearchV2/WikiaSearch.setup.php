@@ -24,6 +24,9 @@ $app->registerClass('WikiaSolrClient', $dir . 'WikiaSolrClient.class.php');
 /**
  * special pages
  */
+if ($wgWikiaSearchIsDefault) {
+     $app->registerSpecialPage('Search', 'WikiaSearchController');
+}
 $app->registerSpecialPage('WikiaSearch', 'WikiaSearchController');
 
 $wgSolrHost = isset($_GET['solrhost']) ? $_GET['solrhost'] : $wgSolrHost;
