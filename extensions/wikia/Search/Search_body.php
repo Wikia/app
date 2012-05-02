@@ -185,10 +185,10 @@ class SolrSearchSet extends SearchResultSet {
 		    (empty($namespaces) || in_array($title->getNamespace(), $namespaces))) {
 			$article = new Article( $title );
 			if($article->isRedirect()) {
-				return new Article($article->getRedirectTarget());
+			  return array('article'=>new Article($article->getRedirectTarget()), 'redirect'=>$article);
 			}
 			else {
-				return $article;
+			        return array('article'=>$article);
 			}
 		}
 
@@ -358,9 +358,10 @@ class SolrSearchSet extends SearchResultSet {
 		$matches = is_object($textMatches) ? $textMatches : ( is_object($titleMatches) ? $titleMatches : null );
 		if( ( $matches instanceof SolrSearchSet )  && $matches->hasArticleMatch() ) {
 			$skin = $wgUser->getSkin();
-			$article = $matches->getArticleMatch();
-			$title = $article->getTitle();
+			$articleMatch = $matches->getArticleMatch();
+			extract($articleMatch);
 
+			$title = $article->getTitle();
 			$link = $skin->linkKnown( $title, null,
 				array(
 					'class' => 'mw-search-result-title',
@@ -376,6 +377,26 @@ class SolrSearchSet extends SearchResultSet {
 				));
 
 			$wgOut->addHTML( "<div><strong>{$link}</strong>\n" );
+			if (isset($redirect)) {
+			        $redirTitle = $redirect->getTitle();
+			        $wgOut->addHTML(sprintf("<div class='mw-search-result-redirect'>&mdash; redirected from %s</div>\n",
+							$skin->linkKnown( $redirTitle, null,
+									  array(
+										'class' => 'mw-search-result-title',
+										'data-wid' => $wgCityId,
+										'data-pageid' => $article->getID(),
+										'data-pagens' => $redirTitle->getNamespace(),
+										'data-title' => $redirTitle->getText(),
+										'data-pos' => 0,
+										'data-sterm' => urlencode($term),
+										'data-stype' => 'intra',
+										'data-rver' => 0,
+										'data-event' => 'search_click_match'
+										)
+									  )
+							)
+						);
+			}
 			if( $title->userCanRead() ) {
 				$articleService = new ArticleService($article->getID());
 
@@ -444,12 +465,13 @@ class SolrSearchSet extends SearchResultSet {
 	 */
 	private function deDupe(Array $results) {
 		$deDupedResults = array();
+		$article = $this->hasArticleMatch() ? $this->getArticleMatch() : false;
 		foreach($results as $result) {
-			if($this->hasArticleMatch() && ($result->pageid == $this->getArticleMatch()->getID() ) ) {
+		        if($article && ($result->pageid == $article['article']->getID() ) ) {
 				// remove exact match from set
 				continue;
 			}
-			if($this->hasArticleMatch() && ($result->canonical == $this->getArticleMatch()->getTitle()->getText() ) ) {
+			if($article && ($result->canonical == $article['article']->getTitle()->getText() ) ) {
 				// remove redirect to exact match from set
 				continue;
 			}
@@ -515,7 +537,7 @@ class SolrSearchSet extends SearchResultSet {
 		return $this->mArticleMatch;
 	}
 
-	function setArticleMatch(Article $article) {
+	function setArticleMatch($article) {
 		$this->mArticleMatch = $article;
 	}
 
@@ -763,7 +785,6 @@ class SolrResult extends SearchResult {
 
 		// snippeting ugliness
 		$link = preg_replace("/(<\/span>)('s)/", "$2$1", $link);
-
 		return true;
 	}
 
