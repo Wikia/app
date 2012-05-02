@@ -57,6 +57,19 @@
 	}
 }
 
+.mw-search-result-shoutout > .mw-search-result-title {
+	font-size: 108%;
+	font-weight: bold;	
+}
+
+.mw-search-result-redirect {
+	color: $color-alternate-text;
+
+	.mw-search-result-title {
+		color: $color-alternate-text;
+	}
+}
+
 // WikiaNav - begin
 .wikinav2 {
 	.WikiaRail > .WikiaSearch,
