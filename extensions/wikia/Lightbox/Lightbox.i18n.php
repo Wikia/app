@@ -1,6 +1,6 @@
 <?php
 /**
-* Internationalisation file for the LightBox extension.
+* Internationalisation file for the Lightbox extension.
 *
 * @addtogroup Languages
 */
