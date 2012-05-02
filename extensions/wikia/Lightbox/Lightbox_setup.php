@@ -1,9 +1,9 @@
 <?php
  
 /**
-* LightBox
+* Lightbox
 *
-* LightBoxes display media in articles and various modules throught the site. 
+* Lightboxes display media in articles and various modules throught the site. 
 *
 * @author Liz Lee <liz@wikia-inc.com>
 * @date 2012-05-02
@@ -15,9 +15,9 @@
 
 // Extension credits
 $wgExtensionCredits['other'][] = array(
-	'name' => 'LightBox',
+	'name' => 'Lightbox',
 	'version' => '1.0',
-	'url' => 'http://www.wikia.com/wiki/c:help:Help:LightBox',
+	'url' => 'http://www.wikia.com/wiki/c:help:Help:Lightbox',
 	'author' => array( 'Liz Lee', 'Hyun Lim' ),
 	'descriptionmsg' => 'lightbox-desc',
 );
@@ -25,13 +25,13 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__);
 
 // Interface code
-include("$dir/LightBox.php");
+include("$dir/Lightbox.php");
 
 // autoloaded classes
-$wgAutoloadClasses['LightBox'] = "$dir/LightBox.class.php";
+$wgAutoloadClasses['Lightbox'] = "$dir/Lightbox.class.php";
 
 // i18n
-$wgExtensionMessagesFiles['LightBox'] = $dir.'/LightBox.i18n.php';
+$wgExtensionMessagesFiles['Lightbox'] = $dir.'/Lightbox.i18n.php';
 
 // hooks
-$wgHooks['MakeGlobalVariablesScript'][] = 'LightBox::addJSVariable';
+$wgHooks['MakeGlobalVariablesScript'][] = 'Lightbox::addJSVariable';
