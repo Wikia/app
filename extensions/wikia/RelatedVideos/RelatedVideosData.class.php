@@ -14,9 +14,9 @@ class RelatedVideosData {
 
 		$data = array();
 
-		$file = wfFindFile($titleText);
-
 		$title = Title::newFromText( $titleText );
+
+		$file = wfFindFile( $title );
 
 		if( !WikiaVideoService::isVideoFile( $file ) ) {
 			$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
