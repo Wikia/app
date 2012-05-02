@@ -1361,6 +1361,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ($orientation == 'mosaic') {
 				$sliderResources = array(
+					'/skins/common/modernizr/modernizr-2.0.6.js',
 					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
 					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js'
 				);
