@@ -170,7 +170,6 @@ class SolrSearchSet extends SearchResultSet {
 	}
 
 	public static function createArticleMatch( $term , $namespaces = array() ) {
-	  global $wgRequest, $wgOut;
 		// Try to go to page as entered.
 		$title = Title::newFromText( $term );
 		# If the string cannot be used to create a title
@@ -185,13 +184,6 @@ class SolrSearchSet extends SearchResultSet {
 		    ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) &&
 		    (empty($namespaces) || in_array($title->getNamespace(), $namespaces))) {
 			$article = new Article( $title );
-			
-			if ($wgRequest->getVal('go') == 'Go') {
-				wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $term ) );
-				$wgOut->redirect( $title->getFullURL() );
-				return null;
-			}
-
 
 			if($article->isRedirect()) {
 			  return array('article'=>new Article($article->getRedirectTarget()), 'redirect'=>$article);
@@ -215,9 +207,25 @@ class SolrSearchSet extends SearchResultSet {
 	 * @access public
 	 */
 	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0, $crossWikiaSearch = false ) {
-		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgSolrDebugWikiId, $wgWikiaSearchABTestModes, $wgWikiaSearchABTestEnabled;
+	  global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgSolrDebugWikiId, $wgWikiaSearchABTestModes, $wgWikiaSearchABTestEnabled, $wgRequest, $wgOut;
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
+
+		$articleMatch = null;
+		if( !$crossWikiaSearch ) {
+			// check if exact match is available (similar to MW "go-result" feature)
+		        $articleMatch = self::createArticleMatch($query, $namespaces);
+			extract($articleMatch);
+			$title = isset($redirect) ? $redirect->getTitle() : $article->getTitle();
+			if ($wgRequest->getVal('go') == 'Go') {
+				wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
+				wfProfileOut( $fname );
+				$wgOut->redirect( $title->getFullURL() );
+				return null;
+			}
+
+		}
+
 
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
 
@@ -344,12 +352,6 @@ class SolrSearchSet extends SearchResultSet {
 		$resultSuggestions = is_object($response->spellcheck) ? $response->spellcheck->suggestions : null;
 		$resultCount = count($resultDocs);
 		$totalHits = $response->response->numFound;
-
-		$articleMatch = null;
-		if( !$crossWikiaSearch ) {
-			// check if exact match is available (similar to MW "go-result" feature)
-		        $articleMatch = self::createArticleMatch($query, $namespaces);
-		}
 
 		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultSuggestions, $resultCount, $offset, $relevancyFunctionId, $totalHits, $crossWikiaSearch, $articleMatch);
 
