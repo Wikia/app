@@ -474,7 +474,6 @@ class WallHelper {
 		return User::newFromId( $user_id );
 	}
 
-
 	public function isDbkeyFromWall($dbkey) {
 		$lookFor = explode( '/@' ,$dbkey);
 		if (count($lookFor) > 1){
@@ -482,21 +481,21 @@ class WallHelper {
 		}
 		return false;
 	}
-		
+
 	public function strip_wikitext($text) {
 		$app = F::app();
-		
+
 		//local parser to fix the issue fb#17907
 		$parser = F::build('Parser', array());
-		
+
 		$text = str_replace('*', '&asterix;', $text);
 		$text = $parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
-		$text = str_replace('&amp;asterix;', '*', $text);
-		$text = str_replace('&amp;', '&', $text);
-		$text = trim( strip_tags($text) );
+		$text = trim(strip_tags(htmlspecialchars_decode($text)));
+		$text = str_replace('&asterix;', '*', $text);
+
 		return $text;
 	}
-	
+
 	/**
 	 * @brief Gets old article's text
 	 * 
