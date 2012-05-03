@@ -38,6 +38,27 @@ var Lightbox = {
 	},
 	onClick: function(ev) {
 		ev.preventDefault();
+		
+		/* figure out target */
+		
+		/* handle click ignore cases */
+		
+		/* extract caption - (might not need to do this since we'll be getting caption from datasource) */
+		
+		/* handle shared help images (ask someone who knows about this, probably TOR) */
+		/* sample: http://lizlux.wikia.com/wiki/Help:Start_a_new_Wikia_wiki */
+		/* (BugId:981) */
+		/* note - let's not implement this for now, let normal lightbox handle it normally, and get back to it after new lightbox is complete - hyun */
+		
+		/* handle external images (find an example for this, ask TOR) */
+		
+		/* figure out media type (image|video) */
+			/* if video and less than width threshhold, play inline video, and don't show lightbox (return) */
+		
+		/* figure out title */
+		
+		/* load modal */
+		
 		if(!window.Mustache) {
 			$.loadMustache();
 		}
@@ -57,15 +78,25 @@ var Lightbox = {
 				};
 				Lightbox.modal = $(html).makeModal(modalOptions);
 				var modal = Lightbox.modal;
-				var photoTemplate = modal.find("#LightboxPhotoTemplate").html();
 				var contentArea = modal.find(".WikiaLightbox");
+				
+				/* extract mustache templates */
+				var photoTemplate = modal.find("#LightboxPhotoTemplate").html();
+				// var videoTemplate = blah balh blah 
+				
+				/* render media */
 				var json = {
 					greeting: 'Hello World' 
 				}, renderedResult = Mustache.render(photoTemplate, json); 
 				contentArea.append(renderedResult);
+				
+				
 				Lightbox.log("Lightbox modal loaded");
 			}
 		});
+	},
+	showLightBox: function() {
+		
 	}
 };
 
