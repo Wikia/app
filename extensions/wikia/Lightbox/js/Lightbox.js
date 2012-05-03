@@ -96,12 +96,20 @@ var Lightbox = {
 		/* figure out title */
 		
 		/* load modal */
-		this.showLightBox();
+		this.loadLightbox();
 	},
-	showLightBox: function() {
-		if(!window.Mustache) {
-			$.loadMustache();
-		}
+	loadLightbox: function() {
+		$.loadLibrary(
+			'Lightbox', 
+			[
+				stylepath + '/common/jquery/jquery.mustache.js',
+				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')
+			],
+			typeof Mustache,
+			this.showLightbox
+		);
+	},
+	showLightbox: function() {
 		$.nirvana.sendRequest({
 			controller: 'Lightbox',
 			method: 'lightboxModalContent',
