@@ -12,7 +12,7 @@ var Lightbox = {
 		}
 
 		if (window.skin == 'oasis') {
-			article = $('#WikiaArticle, .LatestPhotosModule, #article-comments');
+			article = $('#WikiaArticle, .LatestPhotosModule, #article-comments, #RelatedVideosRL');
 		}
 		else {
 			article = $('#bodyContent');
@@ -22,35 +22,73 @@ var Lightbox = {
 
 		article.
 			unbind('.lightbox').
-			bind('click.lightbox', function(ev) {
-				self.onClick.call(self, ev);
-			});
+			bind('click.lightbox', $.proxy(this.handleClick, this));
 
-        // also bind to right rail RelatedVideos module
-        // TODO (hyun) - combine this with above, or separate it
-        /*
-        $('#RelatedVideosRL').
-            unbind('.lightbox').
-            bind('click.lightbox', function(ev) {
-                self.onClick.call(self, ev);
-            });
-        */
 	},
-	onClick: function(ev) {
+	handleClick: function(ev) {
+		/* figure out target */
+
+		var target = $(ev.target);
+
+		// move to parent of an image -> anchor
+		if ( target.is('span') || target.is('img') ) {
+			if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
+				target = target.parent();
+				target.addClass('image');
+			} else {
+				target = target.parent();
+			}	
+		}
+        // move to parent of an playButton (relatedVideos)
+        if (target.is('div') && target.hasClass('playButton')) {
+            target = target.parent();
+        }
+
+		// store clicked element
+		this.target = target;
+
+		/* handle click ignore cases */
+
+		// handle clicks on links only
+		if (!target.is('a')) {
+			return;
+		}
+		
+		// handle clicks on "a.lightbox, a.image" only
+		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
+			return;
+		}
+
+
+		// don't show thumbs for gallery images linking to a page
+		if (target.hasClass('link-internal')) {
+			return;
+		}
+
+		// don't show lightbox for linked slideshow with local images (RT #73121)
+		if (target.hasClass('wikia-slideshow-image') && !target.parent().hasClass('wikia-slideshow-from-feed')) {
+			return;
+		}
+
+		// don't open lightbox when user do Ctrl + click (RT #48476)
+		if (ev.ctrlKey) {
+			return;
+		}
+		
+		// TODO: Find out how we want to handle external images 
+		/* handle shared help images and external images (ask someone who knows about this, probably Macbre) */
+		/* sample: http://lizlux.wikia.com/wiki/Help:Start_a_new_Wikia_wiki */
+		/* (BugId:981) */
+		/* note - let's not implement this for now, let normal lightbox handle it normally, and get back to it after new lightbox is complete - hyun */		
+		if (target.attr('data-shared-help') || target.hasClass('link-external')) {
+			return false;
+		}
+
 		ev.preventDefault();
 		
-		/* figure out target */
-		
-		/* handle click ignore cases */
 		
 		/* extract caption - (might not need to do this since we'll be getting caption from datasource) */
 		
-		/* handle shared help images (ask someone who knows about this, probably TOR) */
-		/* sample: http://lizlux.wikia.com/wiki/Help:Start_a_new_Wikia_wiki */
-		/* (BugId:981) */
-		/* note - let's not implement this for now, let normal lightbox handle it normally, and get back to it after new lightbox is complete - hyun */
-		
-		/* handle external images (find an example for this, ask TOR) */
 		
 		/* figure out media type (image|video) */
 			/* if video and less than width threshhold, play inline video, and don't show lightbox (return) */
@@ -58,7 +96,9 @@ var Lightbox = {
 		/* figure out title */
 		
 		/* load modal */
-		
+		this.showLightBox();
+	},
+	showLightBox: function() {
 		if(!window.Mustache) {
 			$.loadMustache();
 		}
@@ -94,8 +134,6 @@ var Lightbox = {
 				Lightbox.log("Lightbox modal loaded");
 			}
 		});
-	},
-	showLightBox: function() {
 		
 	}
 };
