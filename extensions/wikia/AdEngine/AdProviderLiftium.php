@@ -26,7 +26,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
                 $called = true;
 
 		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgLiftiumDevHosts, $wgDevelEnvironment;
-		global $wgDartCustomKeyValues;
+		global $wgDartCustomKeyValues, $wgLoadAdDriverOnLiftiumInit;
 
 		// See Liftium.js for documentation on options
 		$options = array();
@@ -49,6 +49,7 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 			$options['kv_dart'] = $wgDartCustomKeyValues;
 		}
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
+		if ($wgLoadAdDriverOnLiftiumInit) $options['autoInit'] = true;
 		if (!empty($params)) {
 			if (isset($params['isCalledAfterOnload'])) {
 				$options['isCalledAfterOnload'] = $params['isCalledAfterOnload'];

@@ -783,13 +783,8 @@ if (window.adslots) {
 	}
 }
 	
-if (0) {
-	var adDriverInterval = setInterval(function() {
-		if ( Liftium.config && 'sizes' in Liftium.config ) {
-			clearInterval(adDriverInterval);
-			AdDriverDelayedLoader.load();
-		}
-	}, 10);
+if (window.wgLoadAdDriverOnLiftiumInit) {
+	Liftium.init(AdDriverDelayedLoader.load);
 }
 else {
 	$(window).load(function() {

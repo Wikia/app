@@ -17,7 +17,7 @@ function wfAdEngineSetupJSVars($vars) {
 		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues,
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 		$wgCityId, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
-		$wgEnableKruxTargeting;
+		$wgEnableKruxTargeting, $wgLoadAdDriverOnLiftiumInit;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -44,7 +44,8 @@ function wfAdEngineSetupJSVars($vars) {
 	$vars['wgHighValueCountries'] = $highValueCountries;
 
 	if (!empty($wgAdDriverUseExpiryStorage)) $vars["wgAdDriverUseExpiryStorage"] = $wgAdDriverUseExpiryStorage;
-	if (!empty($wgAdDriverUseCookie))        $vars["wgAdDriverUseCookie"] = $wgAdDriverUseCookie;
+	if (!empty($wgAdDriverUseCookie))        $vars["wgAdDriverUseCookie"] = $wgAdDriverUseCookie;	
+	if (!empty($wgLoadAdDriverOnLiftiumInit)) $vars['wgLoadAdDriverOnLiftiumInit'] = $wgLoadAdDriverOnLiftiumInit;
 
 	// ArticleAdLogic
 	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
@@ -62,7 +63,7 @@ function wfAdEngineSetupJSVars($vars) {
 		$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 		$vars['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
 	}
-
+	
 	wfProfileOut(__METHOD__);
 	return true;
 }
