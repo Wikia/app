@@ -238,7 +238,12 @@ class OasisModule extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		// decide where JS should be placed (only add JS at the top for special and edit pages)
-		if ($wgTitle->getNamespace() == NS_SPECIAL || BodyModule::isEditPage()) {
+		if (ArticleAdLogic::isSearch()) {
+			$this->jsAtBottom = true;	// Liftium.js (part of AssetsManager) 
+							// must be loaded after LiftiumOptions
+							// variable is set in page source			
+		}
+		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyModule::isEditPage()) {
 			$this->jsAtBottom = false;
 		}
 		else {
