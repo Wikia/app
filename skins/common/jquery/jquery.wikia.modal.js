@@ -13,6 +13,7 @@ $.fn.extend({
 		var settings = {
 			showCloseButton: true,
 			width: 400,
+			height: "auto",
 			topOffset: 0
 		};
 		if (options) {
@@ -89,6 +90,7 @@ $.fn.extend({
 				left: "50%",
 				top: $(window).scrollTop() + 50 + settings.topOffset,
 				width: modalWidth,
+				height: options.height,
 				zIndex: zIndex + 1
 			}).css("margin-left", -wrapper.outerWidth()/2);
 
