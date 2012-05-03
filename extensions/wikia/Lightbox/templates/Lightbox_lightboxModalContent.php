@@ -1,13 +1,10 @@
 <div class="WikiaLightbox">
-	<h1>This is a heading for lightbox</h1>
-	Nirvana content goes here.
-	<br>
-	<br>
 	<script id="LightboxPhotoTemplate" type="text/template">
-		Template: {{greeting}}
+		<div class="Media">
+			<img src="{{imageSrc}}" height="{{imageHeight}}" />
+		</div>
 	</script>
-	<script id="LightboxTopBarTemplate" type="">
-	</script>
+
 	<script>
 		var initialImageData = {
 		};

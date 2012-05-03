@@ -112,26 +112,56 @@ var Lightbox = {
 			},
 			callback: function(html) {
 				/* calculate modal dimensions here */
-				var modalOptions = {
-					height: 600,
-					width: 1000
-				};
-				Lightbox.modal = $(html).makeModal(modalOptions);
-				var modal = Lightbox.modal;
-				var contentArea = modal.find(".WikiaLightbox");
 				
-				/* extract mustache templates */
-				var photoTemplate = modal.find("#LightboxPhotoTemplate").html();
-				// var videoTemplate = blah balh blah 
+				var windowHeight = $(window).height(),
+					modalHeight = windowHeight - 40,
+					// Never call and image with a width greater than 1000px.  
+					// TODO: The image source will come from back end
+					//imageSrc = 'http://placekitten.com/300/1200', // tall and skinny image
+					//imageSrc = 'http://placekitten.com/1000/300', // short and fat image
+					imageSrc = 'http://placekitten.com/300/300', // short and skinny image
+					//imageSrc = 'http://placekitten.com/1200/1200', // tall and fat image (only happens if image is external)
+					image = $("<img id='lightbox-preload' src='"+imageSrc+"' />").appendTo('body');
 				
-				/* render media */
-				var json = {
-					greeting: 'Hello World' 
-				}, renderedResult = Mustache.render(photoTemplate, json); 
-				contentArea.append(renderedResult);
+				image.load(function() {
 				
-				
-				Lightbox.log("Lightbox modal loaded");
+					// We'll never call images that are wider than 1000px unless they are external and out of our control
+					if($(this).width() > 1000) {
+						$(this).width(1000);
+					}
+					var imageHeight = $(this).height();
+								
+					if(imageHeight < modalHeight) {
+						modalHeight = imageHeight;
+					} else {
+						imageHeight = modalHeight;					
+					}
+					
+					var modalOptions = {
+						height: modalHeight,
+						width: 1000
+					};
+					console.log("modalHeight "+modalHeight);
+					console.log("imageHeight "+imageHeight);
+					Lightbox.modal = $(html).makeModal(modalOptions);
+					var modal = Lightbox.modal;
+					var contentArea = modal.find(".WikiaLightbox");
+					
+					/* extract mustache templates */
+					var photoTemplate = modal.find("#LightboxPhotoTemplate").html();
+					// var videoTemplate = blah balh blah 
+					
+					/* render media */
+					var json = {
+						imageHeight: imageHeight,
+						imageSrc: imageSrc
+					}, renderedResult = Mustache.render(photoTemplate, json);
+					console.log(renderedResult);
+					contentArea.append(renderedResult);
+					
+					
+					Lightbox.log("Lightbox modal loaded");
+				});
 			}
 		});
 		
