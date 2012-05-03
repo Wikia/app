@@ -207,6 +207,22 @@ function getLinkSuggest() {
 	$dbs->freeResult( $res );
 
 	$results = array_unique($results);
+
+	// bugid 29988: include special pages 
+	// (registered in SpecialPage::$mList, not in the DB like a normal page)
+	if ($namespaces == array('-1')) {
+		$specialPagesByAlpha = SpecialPage::$mList;
+		ksort($specialPagesByAlpha, SORT_STRING);
+		array_walk( $specialPagesByAlpha, 
+					function($val,$key) use (&$results, $query) {
+						if (strtolower(substr($key, 0, strlen($query))) === strtolower($query)) {
+							$results[] = wfLinkSuggestFormatTitle('-1', $key);
+						}
+					} 
+				  );
+	}
+
+
 	$format = $wgRequest->getText('format');
 
 	if($format == 'json') {
