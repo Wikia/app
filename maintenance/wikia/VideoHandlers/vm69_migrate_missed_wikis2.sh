@@ -6,7 +6,7 @@ scriptpath="../../../../../home/release/video_refactoring/trunk/maintenance/wiki
 TMPFILE=`mktemp /tmp/$0.XXXXXX` || exit 1
 echo "Getting list of wikis..."
 echo "select
-wiki_id, wiki_name, wiki_dbname
+wiki_id, wiki_id, wiki_dbname, wiki_name
 from video_notmigrated;" | /usr/wikia/backend/bin/slave dataware > $TMPFILE
 cat $TMPFILE
 cat $TMPFILE | while read line; do
@@ -14,7 +14,7 @@ cat $TMPFILE | while read line; do
 	dbname=`echo "$line" | cut -f 3`
 	echo "Processing $line ($cityid, $dbname)"
 
-	if [ -f go_slow ]
+	if [ -f '/tmp/go_slow' ]
 	then
 		echo "Waiting for key press..."
 		read -n 1 -s
