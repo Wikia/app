@@ -210,7 +210,7 @@ function getLinkSuggest() {
 
 	// bugid 29988: include special pages 
 	// (registered in SpecialPage::$mList, not in the DB like a normal page)
-	if ($namespaces == array('-1')) {
+	if (($namespaces == array('-1')) && (strlen($query) > 0)) {
 		$specialPagesByAlpha = SpecialPage::$mList;
 		ksort($specialPagesByAlpha, SORT_STRING);
 		array_walk( $specialPagesByAlpha, 
