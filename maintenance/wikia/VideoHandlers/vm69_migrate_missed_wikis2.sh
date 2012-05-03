@@ -14,8 +14,9 @@ cat $TMPFILE | while read line; do
 	dbname=`echo "$line" | cut -f 3`
 	echo "Processing $line ($cityid, $dbname)"
 
-	if [ -f go_slow ] then
-		echo "Waiting for key press"
+	if [ -f go_slow ]
+	then
+		echo "Waiting for key press..."
 		read -n 1 -s
 	fi
 
