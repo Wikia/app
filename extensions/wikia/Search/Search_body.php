@@ -170,6 +170,7 @@ class SolrSearchSet extends SearchResultSet {
 	}
 
 	public static function createArticleMatch( $term , $namespaces = array() ) {
+	  global $wgRequest, $wgOut;
 		// Try to go to page as entered.
 		$title = Title::newFromText( $term );
 		# If the string cannot be used to create a title
@@ -184,6 +185,14 @@ class SolrSearchSet extends SearchResultSet {
 		    ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) &&
 		    (empty($namespaces) || in_array($title->getNamespace(), $namespaces))) {
 			$article = new Article( $title );
+			
+			if ($wgRequest->getVal('go') == 'Go') {
+				wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $term ) );
+				$wgOut->redirect( $title->getFullURL() );
+				return null;
+			}
+
+
 			if($article->isRedirect()) {
 			  return array('article'=>new Article($article->getRedirectTarget()), 'redirect'=>$article);
 			}
