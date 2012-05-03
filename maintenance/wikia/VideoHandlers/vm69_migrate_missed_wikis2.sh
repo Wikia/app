@@ -14,6 +14,11 @@ cat $TMPFILE | while read line; do
 	dbname=`echo "$line" | cut -f 3`
 	echo "Processing $line ($cityid, $dbname)"
 
+	if [ -f go_slow ] then
+		echo "Waiting for key press"
+		read -n 1 -s
+	fi
+
 	#/usr/wikia/backend/bin/withcity --maintenance-script="$scriptpath/videoReset.php" --usedb=$dbname
 	/usr/wikia/backend/bin/withcity --maintenance-script="$scriptpath/videoSanitize.php" --usedb=$dbname | tee -a logs/${cityid}.sanitize.log || die
 	/usr/wikia/backend/bin/withcity --maintenance-script="$scriptpath/videoPremigrate.php" --usedb=$dbname | tee -a logs/${cityid}.premigrate.log || die
