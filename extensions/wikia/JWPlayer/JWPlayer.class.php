@@ -2,7 +2,7 @@
 
 class JWPlayer {
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
-	const JWPLAYER_VERSION = '5.9.1';
+	const JWPLAYER_VERSION = '5.9.4';
 	const INFOBOX_VERSION = '1';
 	const SKIN_VERSION = '3';
 
@@ -10,6 +10,7 @@ class JWPlayer {
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
 	private static $JWPLAYER_SWF = 'player.swf';
 	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
+	private static $JWPLAYER_PLUGIN_AGEGATE2_JS = 'agegate2.js';	
 	private static $JWPLAYER_PLUGIN_HD_JS = 'hd-2.1.min.js';
 	private static $JWPLAYER_PLUGIN_HD_SWF = 'hd-2.1.swf';	
 	private static $JWPLAYER_GOOGIMA_DATA;
@@ -80,12 +81,6 @@ class JWPlayer {
 			$wikiaSkinZip = 'wikia-medium.zip';			
 		}
 		$jwplayerData['skin'] = self::getAssetUrl( F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . 'skins/wikia/'.$wikiaSkinZip, self::SKIN_VERSION );
-		
-		
-		// thumb
-		if (!empty($this->thumbUrl) && empty($this->autoplay)) {
-			$jwplayerData['image'] = $this->thumbUrl;
-		}
 
 		// duration
 		if ($this->duration) {
@@ -116,14 +111,19 @@ class JWPlayer {
 		if ($this->ageGate) {
 			$agegateOptions = array(
 			    'cookielife'=>60*24*365,	// cookielife in minutes
-			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message')
+			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message'),
+			    'minage'=>17
 			    );
-			$jwplayerData['plugins']['agegate-2'] = $agegateOptions;
+			$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_AGEGATE2_JS, self::JWPLAYER_VERSION)] = $agegateOptions;
 			// autoplay is not compatible with age gate. force thumb to appear
-			$jwplayerData['image'] = $this->thumbUrl;			
-//			$this->autoplay = true;	// force autoplay
+			$this->autoplay = false;	// plugin autoplays automatically if this option set to false
 		}
 		
+		// thumb
+		if (!empty($this->thumbUrl) && empty($this->autoplay)) {
+			$jwplayerData['image'] = $this->thumbUrl;
+		}
+
 		// addl params
 		$jwplayerData = array_merge($jwplayerData, $this->playerOptions);
 

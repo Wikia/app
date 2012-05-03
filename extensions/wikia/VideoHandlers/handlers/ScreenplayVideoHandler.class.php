@@ -31,7 +31,8 @@ class ScreenplayVideoHandler extends VideoHandler {
 		$jwplayer->setHd($this->isHd());
 		$jwplayer->setHdFile($hdfile);
 		$jwplayer->setThumbUrl($this->thumbnailImage->url);
-		$jwplayer->setAgeGate($this->isAgeGate());
+//		$jwplayer->setAgeGate($this->isAgeGate());
+		$jwplayer->setAgeGate(true);
 		$jwplayer->setAutoplay($autoplay);
 		$jwplayer->setShowAd(true);
 		$jwplayer->setAjax($isAjax);
