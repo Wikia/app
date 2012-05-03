@@ -56,7 +56,7 @@ class WikiaSearch extends WikiaObject {
 			$results->setResultsPerPage($length);
 			$searchCount = 1;
 			while( !$results->valid() && $results->hasResults() ) {
-				$methodOptions = array('start'  => ($results->getResultsStart() + self::GROUP_RESULTS_SEARCH_LIMIT), 'size' => self::GROUP_RESULTS_SEARCH_LIMIT, 'cityId' => $cityId);
+			  $methodOptions = array('start'  => ($results->getResultsStart() + self::GROUP_RESULTS_SEARCH_LIMIT), 'size' => self::GROUP_RESULTS_SEARCH_LIMIT, 'cityId' => $cityId, 'go' => $go);
 				$moreResults = $this->client->search( $query, $methodOptions );
 
 				if(!$moreResults->hasResults()) {
@@ -516,6 +516,43 @@ class WikiaSearch extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return  $api->getResultData();
 	}
+
+
+	public function getArticleMatch( $term ) {
+		wfProfileIn(__METHOD__);
+
+		if ($match = $this->client->getArticleMatch()) {
+			return $match;
+		}
+
+		// Try to go to page as entered.
+		$title = Title::newFromText( $term );
+		# If the string cannot be used to create a title
+		if( is_null( $title ) ) {
+			wfProfileOut(__METHOD__);
+			return null;
+		}
+
+		$searchWithNamespace = $title->getNamespace() != 0 ? true : false;
+		// If there's an exact or very near match, jump right there.
+		$title = SearchEngine::getNearMatch( $term );
+		if( !is_null( $title ) && ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) ) {
+			$article = new Article( $title );
+
+			if($article->isRedirect()) {
+				$this->client->setArticleMatch(array('article'=>new Article($article->getRedirectTarget()), 'redirect'=>$article));
+			}
+			else {
+				$this->client->setArticleMatch(array('article'=>$article));
+			}
+			wfProfileOut(__METHOD__);
+			return $this->client->getArticleMatch();
+		}
+
+		wfProfileOut(__METHOD__);
+		return null;
+	}
+
 
 	public function setNamespaces( Array $namespaces ) {
 		$this->namespaces = $namespaces;

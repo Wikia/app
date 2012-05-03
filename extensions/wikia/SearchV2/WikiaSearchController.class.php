@@ -36,6 +36,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
 		$wikiName = $this->wg->Sitename;
+		$goSearch = $this->getVal('go');
 		
 		if(!empty($advanced)) {
 			$redirs = $this->request->getBool('redirs');
@@ -64,12 +65,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$resultsFound = 0;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
+
+		        if (($articleMatch = $this->wikiaSearch->getArticleMatch($query)) && ($this->getVal('go') == 'Go')) {
+
+				extract($articleMatch);
+
+				$title = isset($redirect) ? $redirect->getTitle() : $article->getTitle();
+				
+				wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
+				  
+				$this->response->redirect( $title->getFullURL() );
+			}
+			
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
 			$this->wikiaSearch->setSkipCache( $skipCache );
 			// @todo turn it back on, when backend will be fixed
 			//$this->wikiaSearch->setIncludeRedirects( $redirs );
 
-			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $isInterWiki );
+			$results = $this->wikiaSearch->doSearch( $query, $page, self::RESULTS_PER_PAGE, ( $isInterWiki ? 0 : $this->wg->CityId ), $isInterWiki, $goSearch );
 			$resultsFound = $results->getRealResultsFound();
 
 			if(!empty($resultsFound)) {

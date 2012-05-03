@@ -8,6 +8,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 	protected $query;
 	protected $namespaces = array();
 	protected $isInterWiki = false;
+	protected $articleMatch;
 
 	const DEFAULT_RESULTSET_START = 0;
 	const DEFAULT_RESULTSET_SIZE = 20;
@@ -21,7 +22,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	/**
 	 *  $methodOptions supports the following possible values:
-	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true
+	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true, $solrDebugWikiId = false
 	 **/
 	public function search( $query,  array $methodOptions = array() ) {
 		wfProfileIn(__METHOD__);
@@ -33,6 +34,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$cityId             = isset($cityId)             ? $cityId             : self::DEFAULT_CITYID;
 		$skipBoostFunctions = isset($skipBoostFunctions) ? $skipBoostFunctions : false;
 		$includeRedirects   = isset($includeRedirects)   ? $includeRedirects   : true;
+		$solrDebugWikiId    = isset($solrDebugWikiId)    ? $solrDebugWikiId    : false;
 
 		if (isset($namespaces)) {
 		  $this->setNamespaces($namespaces);
@@ -64,7 +66,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$params['spellcheck.q'] = $sanitizedQuery;
 
-		$onWikiId = ( !empty( $this->wg->SolrDebugWikiId ) ) ? $this->wg->SolrDebugWikiId : $cityId;
+		$onWikiId = ( !empty( $solrDebugWikiId ) ) ? $solrDebugWikiId : $cityId;
 		$this->isInterWiki = $this->isInterWiki || empty($onWikiId);
 
 		if( $this->isInterWiki ) {
@@ -189,7 +191,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$articleMatchId = '';
 
-		if ((!$this->isInterWiki) && ($articleMatch = self::createArticleMatch($this->query))) {
+		if ((!$this->isInterWiki) && ($articleMatch = $this->getArticleMatch())) {
 			global $wgCityId;
 			extract($articleMatch);
 			$title = $article->getTitle();
@@ -420,34 +422,14 @@ class WikiaSolrClient extends WikiaSearchClient {
 		return $this->namespaces;
 	} 
 
-	public static function createArticleMatch( $term ) {
-		wfProfileIn(__METHOD__);
+	public function setArticleMatch($article)
+	{
+	  $this->articleMatch = $article;
+	}
 
-		// Try to go to page as entered.
-		$title = Title::newFromText( $term );
-		# If the string cannot be used to create a title
-		if( is_null( $title ) ) {
-			wfProfileOut(__METHOD__);
-			return null;
-		}
-
-		$searchWithNamespace = $title->getNamespace() != 0 ? true : false;
-		// If there's an exact or very near match, jump right there.
-		$title = SearchEngine::getNearMatch( $term );
-		if( !is_null( $title ) && ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) ) {
-			$article = new Article( $title );
-			if($article->isRedirect()) {
-				wfProfileOut(__METHOD__);
-				return array('article'=>new Article($article->getRedirectTarget()), 'redirect'=>$article);
-			}
-			else {
-				wfProfileOut(__METHOD__);
-				return array('article'=>$article);
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return null;
+	public function getArticleMatch()
+	{
+	  return $this->articleMatch;
 	}
 
 	// this lets us directly query the index without any of the preprocessing we have in the search method
