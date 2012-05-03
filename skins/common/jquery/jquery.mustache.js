@@ -11,7 +11,7 @@ See http://github.com/defunkt/mustache for more info.
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
  */
-var Mustache = (typeof module !== "undefined" && module.exports) || {};
+window.Mustache = (typeof module !== "undefined" && module.exports) || {};
 
 (function (exports) {
 
@@ -541,7 +541,6 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
   function render(template, view, partials) {
     return compile(template)(view, partials);
   }
-
 })(Mustache);
 
   $.mustache = function (template, view, partials) {

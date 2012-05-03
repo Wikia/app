@@ -384,6 +384,22 @@ if (res.jsonData && res.jsonData.plugins && res.jsonData.plugins.googima) {
 
 	// create modal popup
 	showLightbox: function(title, content, caption, width, secondCallBack) {
+		$.loadMustache(function() {
+			console.log(Mustache);
+			$.get(wgExtensionsPath + '/wikia/Lightbox/templates/Lightbox_content.html', function(html) {
+				var json = {
+						greeting: 'Hello World'
+					},
+					tmpl = Mustache.render(html, json);
+				$.showModal('Testing', tmpl, {
+					'id' : 'lightbox',
+					'width' : 1000
+				});
+			});		
+		});
+		return;
+		
+		
 		var self = this;
 
 		// fix caption when not provided
