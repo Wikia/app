@@ -490,7 +490,7 @@ class WallHelper {
 
 		$text = str_replace('*', '&asterix;', $text);
 		$text = $parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
-		$text = trim(strip_tags(htmlspecialchars_decode($text)));
+		$text = trim(strip_tags(html_entity_decode($text)));
 		$text = str_replace('&asterix;', '*', $text);
 
 		return $text;

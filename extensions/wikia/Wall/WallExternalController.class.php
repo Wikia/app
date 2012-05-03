@@ -80,8 +80,8 @@ class WallExternalController extends WikiaController {
 		$this->app->wf->ProfileIn(__METHOD__);
 		
 		$this->response->setVal('status', true);
-		
-		$titleMeta = $this->helper->strip_wikitext($this->request->getVal('messagetitle', null));
+
+		$titleMeta = $this->request->getVal('messagetitle', null);
 		$titleMeta = substr($titleMeta, 0, 200);
 
 		$body = $this->getConvertedContent($this->request->getVal('body'));
