@@ -1,0 +1,18 @@
+<?php
+/**
+ * Lightbox setup
+ *
+ * @author Hyun Lim, Liz Lee
+ *
+ */ 
+$dir = dirname(__FILE__) . '/';
+$app = F::app();
+//classes
+$app->registerClass('LightboxHelper', $dir . 'LightboxHelper.class.php');
+$app->registerClass('LightboxController', $dir . 'LightboxController.class.php');
+
+// hooks
+$app->registerHook('MakeGlobalVariablesScript', 'LightboxHelper', 'onMakeGlobalVariablesScript');
+
+// i18n mapping
+$wgExtensionMessagesFiles['Lightbox'] = $dir . 'Lightbox.i18n.php';
