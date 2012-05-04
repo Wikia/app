@@ -1,6 +1,6 @@
 <div class="WikiaLightbox">
 	<script id="LightboxPhotoTemplate" type="text/template">
-		<div class="Media">
+		<div class="media">
 			<img src="{{imageSrc}}" height="{{imageHeight}}" />
 		</div>
 	</script>

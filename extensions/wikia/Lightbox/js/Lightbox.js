@@ -122,17 +122,19 @@ var Lightbox = {
 				/* calculate modal dimensions here */
 				
 				var windowHeight = $(window).height(),
-					modalHeight = windowHeight - 40,
+					modalHeight = windowHeight - 50, // defualt modal height: Height of window - (20px space + 5px border)*2 for top and bottom. 
+					modalMinHeight = 648,
 					// Never call and image with a width greater than 1000px.  
 					// TODO: The image source will come from back end
 					//imageSrc = 'http://placekitten.com/300/1200', // tall and skinny image
-					//imageSrc = 'http://placekitten.com/1000/300', // short and fat image
-					imageSrc = 'http://placekitten.com/300/300', // short and skinny image
+					imageSrc = 'http://placekitten.com/1000/300', // short and fat image
+					//imageSrc = 'http://placekitten.com/300/300', // short and skinny image
 					//imageSrc = 'http://placekitten.com/1200/1200', // tall and fat image (only happens if image is external)
 					image = $("<img id='lightbox-preload' src='"+imageSrc+"' />").appendTo('body');
 				
 				image.load(function() {
-				
+					var topOffset;
+									
 					// We'll never call images that are wider than 1000px unless they are external and out of our control
 					if($(this).width() > 1000) {
 						$(this).width(1000);
@@ -140,33 +142,53 @@ var Lightbox = {
 					var imageHeight = $(this).height();
 								
 					if(imageHeight < modalHeight) {
+						// Image is shorter than screen, adjust modal height
 						modalHeight = imageHeight;
+						
+						// Modal has to be at least 648px
+						if(modalHeight < modalMinHeight) {
+							modalHeight = modalMinHeight;
+						}
+
+						// Calculate modal's top offset
+						var extraHeight = windowHeight - modalHeight - 10, // 5px modal border
+							topOffset = extraHeight / 2,
+							topOffset = topOffset - 50; // offset default of 50px
+							
+						
 					} else {
+						// Image is taller than screen, shorten image
 						imageHeight = modalHeight;					
-					}
+						topOffset = -30; // default is 50px but we want 20px
+					}	
 					
 					var modalOptions = {
+						id: 'LightboxModal',
+						className: 'LightboxModal',
 						height: modalHeight,
-						width: 1000
+						width: 970, // modal adds 30px of padding to width
+						noHeadline: true,
+						topOffset: topOffset
 					};
-					console.log("modalHeight "+modalHeight);
-					console.log("imageHeight "+imageHeight);
+
 					Lightbox.modal = $(html).makeModal(modalOptions);
 					var modal = Lightbox.modal;
 					var contentArea = modal.find(".WikiaLightbox");
 					
 					/* extract mustache templates */
 					var photoTemplate = modal.find("#LightboxPhotoTemplate").html();
-					// var videoTemplate = blah balh blah 
+					// var videoTemplate = blah blah blah 
 					
 					/* render media */
 					var json = {
 						imageHeight: imageHeight,
 						imageSrc: imageSrc
 					}, renderedResult = Mustache.render(photoTemplate, json);
-					console.log(renderedResult);
-					contentArea.append(renderedResult);
+
+					// Hack to vertically align the image in the lightbox
+					renderedResult = $(renderedResult).css('line-height',modalHeight+'px');
 					
+					contentArea.append(renderedResult);					
 					
 					Lightbox.log("Lightbox modal loaded");
 				});

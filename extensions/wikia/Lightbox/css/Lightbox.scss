@@ -1,0 +1,20 @@
+.LightboxModal {
+	.WikiaLightbox {
+		height: 100%;
+	}
+	.close {
+		display: none;
+	}
+	.modalContent {
+		margin: 0;
+		height: 100%;
+	}
+	.media {
+		text-align: center;
+		height: 100%;
+		line-height: 100%;
+		img {
+			vertical-align: middle;
+		}
+	}
+}
