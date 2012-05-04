@@ -34,6 +34,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$cityId             = isset($cityId)             ? $cityId             : self::DEFAULT_CITYID;
 		$skipBoostFunctions = isset($skipBoostFunctions) ? $skipBoostFunctions : false;
 		$includeRedirects   = isset($includeRedirects)   ? $includeRedirects   : true;
+		$rank               = isset($rank)               ? $rank               : 'default';
 		$solrDebugWikiId    = isset($solrDebugWikiId)    ? $solrDebugWikiId    : false;
 
 		if (isset($namespaces)) {
@@ -60,6 +61,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 				'spellcheck.onlyMorePopular' => 'true',
 				'spellcheck.collate' => 'true'
 				);
+
+		$params['sort'] = $this->getRankSort($rank);
 
 		$queryClauses = array();
 		$sanitizedQuery = $this->sanitizeQuery($query);
@@ -431,6 +434,24 @@ class WikiaSolrClient extends WikiaSearchClient {
 	{
 	  return $this->articleMatch;
 	}
+
+
+	private $rankOptions = array(	'default'			=>	'score desc',
+									'newest'			=>	'created desc',
+									'oldest'			=>	'created asc',
+									'recently-modified'	=>	'touched desc',
+									'stable'			=>	'touched asc',
+									'most-viewed'		=>	'views desc',
+									'freshest'			=>	'indexed desc',
+									'stalest'			=>	'indexed asc'
+								);
+
+	public function getRankSort($rank = 'default')
+	{
+		return isset($this->rankOptions[$rank]) ? $this->rankOptions[$rank] : $this->rankOptions['default'];
+	}
+
+
 
 	// this lets us directly query the index without any of the preprocessing we have in the search method
 	// useful for services, not so much for our search interface

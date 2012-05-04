@@ -21,7 +21,7 @@ class WikiaSearchResultSet implements Iterator {
 		$this->setResultsStart($resultsStart);
 		$this->setQuery($query);
 
-		if($isComplete || ($this->getResultsNum() == $resultsFound)) {
+		if($isComplete || ($this->getResultsNum() == $resultsFound) || $this->isOnlyArticleMatchFound()) {
 			$this->markAsComplete();
 		}
 	}
@@ -209,6 +209,12 @@ class WikiaSearchResultSet implements Iterator {
 		$this->position = 0;
 		$this->resultsPerPage = 25;
 		$this->currentPage = false;
+	}
+
+	public function isOnlyArticleMatchFound() {
+
+		return $this->getResultsNum() == 1 && $this->getResultsFound() == 0 && $this->results[0]->getVar('isArticleMatch') == true;
+
 	}
 
 }

@@ -30,14 +30,20 @@ class WikiaSearch extends WikiaObject {
 	 * perform search
 	 *
 	 * @param string $query
-	 * @param int $page
-	 * @param int $length
-	 * @param int $cityId
-	 * @param bool $groupResults
+	 * @param array $methodParams
 	 * @return WikiaSearchResultSet
 	 */
-	public function doSearch( $query, $page = 1, $length = null, $cityId = 0, $groupResults = false ) {
+	public function doSearch( $query, array $methodParams = array() ) {
 		wfProfileIn(__METHOD__);
+
+		$methodParams['page'] = isset($methodParams['page']) ? $methodParams['page'] : 1;
+		$methodParams['length'] = isset($methodParams['length']) ? $methodParams['length'] : null;
+		$methodParams['cityId'] = isset($methodParams['cityId']) ? $methodParams['cityId'] : 0;
+		$methodParams['groupResults'] = isset($methodParams['groupResults']) ? $methodParams['groupResults'] : false;
+		$methodParams['rank'] = isset($methodParams['rank']) ? $methodParams['rank'] : 'default';
+		
+		extract($methodParams);
+
 
 		$length = !empty($length) ? $length : self::RESULTS_PER_PAGE;
 		$groupResults = ( empty($cityId) && $groupResults );
@@ -46,7 +52,9 @@ class WikiaSearch extends WikiaObject {
 			$results = $this->getGroupResultsFromCache($query);
 
 			if(empty($results) || $this->skipCache) {
-				$methodOptions = array('size' => self::GROUP_RESULTS_SEARCH_LIMIT, 'cityId' =>  $cityId );
+				$methodOptions = array('size' => self::GROUP_RESULTS_SEARCH_LIMIT, 
+						       'cityId' =>  $cityId,
+						       'rank' => $rank );
 				$results = $this->client->search( $query, $methodOptions );
 				$results = $this->groupResultsPerWiki( $results );
 				$this->setGroupResultsToCache( $query, $results );
@@ -88,13 +96,23 @@ class WikiaSearch extends WikiaObject {
 					$this->client->setNamespaces($this->namespaces);
 			}
 
-			$methodOptions = array('start'  => (($page - 1) * $length), 'size' => $length, 'cityId' => $cityId, 'includeRedirects' => $this->includeRedirects);
+			$methodOptions = array('start'  => (($page - 1) * $length), 
+					       'size' => $length, 
+					       'cityId' => $cityId, 
+					       'includeRedirects' => $this->includeRedirects,
+					       'rank' => $rank
+					       );
 			$results = $this->client->search( $query, $methodOptions);
 		}
 
 		if( $page == 1 ) {
 			$resultCount = $results->getRealResultsFound();
-			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), array( 'sterm' => $query, 'rver' => self::RELEVANCY_FUNCTION_ID, 'stype' => ( empty($cityId) ? 'inter' : 'intra' ) ) );
+			Track::event( ( !empty( $resultCount ) ? 'search_start' : 'search_start_nomatch' ), 
+							array(	'sterm' => $query, 
+									'rver' => self::RELEVANCY_FUNCTION_ID,
+									'stype' => ( empty($cityId) ? 'inter' : 'intra' ) 
+								 ) 
+						);
 		}
 
 		wfProfileOut(__METHOD__);
