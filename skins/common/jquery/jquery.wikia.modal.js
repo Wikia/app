@@ -14,7 +14,7 @@ $.fn.extend({
 			showCloseButton: true,
 			width: 400,
 			height: "auto",
-			topOffset: 0
+			topOffset: 0,
 		};
 		if (options) {
 			$.extend(settings, options);
@@ -58,18 +58,20 @@ $.fn.extend({
 		wrapper.data('settings', settings);
 
 		if (skin == "oasis") {
-			//set up headline
-			var headline = wrapper.find("h1:first");
-
-			if (headline.exists()) {
-				headline.remove();
-			} else {
-				// no <h1> found - use title attribute (backward compatibility with Monaco)
-				headline = $('<h1>').html($(this).attr('title') || '');
+			if(!settings.noHeadline) {
+				//set up headline
+				var headline = wrapper.find("h1:first");
+	
+				if (headline.exists()) {
+					headline.remove();
+				} else {
+					// no <h1> found - use title attribute (backward compatibility with Monaco)
+					headline = $('<h1>').html($(this).attr('title') || '');
+				}
+	
+				// add headline
+				headline.prependTo(wrapper);
 			}
-
-			// add headline
-			headline.prependTo(wrapper);
 
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');
