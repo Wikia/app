@@ -1,4 +1,6 @@
 var Lightbox = {
+	lightboxLoading: false,
+	
 	log: function(content) {
 		$().log(content, "Lightbox");
 	},
@@ -27,7 +29,12 @@ var Lightbox = {
 	},
 	handleClick: function(ev) {
 		/* figure out target */
-
+		if(this.lightboxLoading) {
+			ev.preventDefault();
+			Lightbox.log('Already Loading');
+			return;
+		}
+		
 		var target = $(ev.target);
 
 		// move to parent of an image -> anchor
@@ -84,7 +91,50 @@ var Lightbox = {
 			return false;
 		}
 
-		ev.preventDefault();
+		ev.preventDefault();		
+		
+		// get name of an image
+		var imageName = false;
+
+		// data-image-name="Foo.jpg"
+		if (target.attr('data-image-name')) {
+			imageName = 'File:' + target.attr('data-image-name');
+		}
+		// ref="File:Foo.jpg"
+		else if (target.attr('ref')) {
+			imageName = target.attr('ref');
+		}
+		// href="/wiki/File:Foo.jpg"
+		else {
+			var re = wgArticlePath.replace(/\$1/, '(.*)');
+			var matches = target.attr('href').match(re);
+
+			if (matches) {
+				imageName = matches.pop();
+			}
+
+		}
+		
+		// for Video Thubnails:
+		var targetChildImg = target.find('img').eq(0);
+		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
+			
+			if ( target.attr('data-video-name') ) {
+				
+				imageName = 'File:' + target.attr('data-video-name');
+			
+			} else if ( targetChildImg.length > 0 && targetChildImg.attr('data-video') ) {
+				
+				imageName = 'File:' + targetChildImg.attr('data-video');
+			}
+			
+			if (imageName && targetChildImg.width() >= this.videoThumbWidthThreshold) {
+
+				this.displayInlineVideo(targetChildImg, imageName);
+				ev.preventDefault();
+				return false;
+			}
+		}
 		
 		
 		/* extract caption - (might not need to do this since we'll be getting caption from datasource) */
@@ -96,9 +146,14 @@ var Lightbox = {
 		/* figure out title */
 		
 		/* load modal */
-		this.loadLightbox();
+		if(imageName != false) {
+			this.imageName = imageName;
+			this.loadLightbox();
+		}
 	},
 	loadLightbox: function() {
+		this.lightboxLoading = true;
+
 		$.loadLibrary(
 			'Lightbox', 
 			[
@@ -116,52 +171,58 @@ var Lightbox = {
 			type: 'POST',	/* TODO (hyun) - might change to get */
 			format: 'html',
 			data: {
-				title: "Image name here"
+				title: Lightbox.imageName
 			},
 			callback: function(html) {
+				console.log(html);
 				/* calculate modal dimensions here */
 				
-				var windowHeight = $(window).height(),
-					modalHeight = windowHeight - 50, // defualt modal height: Height of window - (20px space + 5px border)*2 for top and bottom. 
-					modalMinHeight = 648,
-					// Never call and image with a width greater than 1000px.  
-					// TODO: The image source will come from back end
-					//imageSrc = 'http://placekitten.com/300/1200', // tall and skinny image
-					imageSrc = 'http://placekitten.com/1000/300', // short and fat image
+				// Never call and image with a width greater than 1000px.  
+				// TODO: The image source will come from back end
+				var //imageSrc = 'http://placekitten.com/300/1200', // tall and skinny image
+					//imageSrc = 'http://placekitten.com/1000/300', // short and fat image
 					//imageSrc = 'http://placekitten.com/300/300', // short and skinny image
 					//imageSrc = 'http://placekitten.com/1200/1200', // tall and fat image (only happens if image is external)
+					imageSrc = 'http://placekitten.com/1100/770', // fits in lightbox exactly
 					image = $("<img id='lightbox-preload' src='"+imageSrc+"' />").appendTo('body');
 				
 				image.load(function() {
-					var topOffset;
+					var windowHeight = $(window).height(),
+						modalHeight = windowHeight - 50, // defualt modal height: Height of window - (20px space + 5px border)*2 for top and bottom. 
+						modalMinHeight = 648,
+						topOffset,
+						image = $(this),
+						modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
 									
 					// We'll never call images that are wider than 1000px unless they are external and out of our control
-					if($(this).width() > 1000) {
-						$(this).width(1000);
+					if(image.width() > 1000) {
+						image.width(1000);
 					}
-					var imageHeight = $(this).height();
+					var imageHeight = image.height();
 								
 					if(imageHeight < modalHeight) {
 						// Image is shorter than screen, adjust modal height
 						modalHeight = imageHeight;
 						
-						// Modal has to be at least 648px
+						// Modal has a min height
 						if(modalHeight < modalMinHeight) {
 							modalHeight = modalMinHeight;
 						}
 
 						// Calculate modal's top offset
-						var extraHeight = windowHeight - modalHeight - 10, // 5px modal border
-							topOffset = extraHeight / 2,
-							topOffset = topOffset - 50; // offset default of 50px
-							
+						var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
+						
+						topOffset = (extraHeight / 2) - 50; // offset default of 50px
+						if(topOffset < -30){
+							topOffset = -30; // default is 50px but we want 20px
+						}
 						
 					} else {
 						// Image is taller than screen, shorten image
 						imageHeight = modalHeight;					
 						topOffset = -30; // default is 50px but we want 20px
 					}	
-					
+										
 					var modalOptions = {
 						id: 'LightboxModal',
 						className: 'LightboxModal',
@@ -186,15 +247,20 @@ var Lightbox = {
 					}, renderedResult = Mustache.render(photoTemplate, json);
 
 					// Hack to vertically align the image in the lightbox
-					renderedResult = $(renderedResult).css('line-height',modalHeight+'px');
+					renderedResult = $(renderedResult).css('line-height', modalHeight+'px');
 					
 					contentArea.append(renderedResult);					
 					
+					Lightbox.lightboxLoading = false;
 					Lightbox.log("Lightbox modal loaded");
 				});
 			}
 		});
 		
+	},
+	displayInlineVideo: function() {
+		// TODO: Set this up to match old version
+		alert('play video inline');
 	}
 };
 
