@@ -386,7 +386,7 @@
 			var item = $(evt.currentTarget).closest('li');
 			var d = new TC.InputModalBox(this.data.renameItemHtml,{
 				width: 360,
-				topOffset: 100,
+				topOffset: 150,
 				value: item.attr('data-caption')
 			});
 			d.bind('save',$.proxy(function(dialog,value){

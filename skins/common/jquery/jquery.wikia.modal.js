@@ -14,7 +14,7 @@ $.fn.extend({
 			showCloseButton: true,
 			width: 400,
 			height: "auto",
-			topOffset: 0,
+			topOffset: 50,
 		};
 		if (options) {
 			$.extend(settings, options);
@@ -90,7 +90,7 @@ $.fn.extend({
 			//position modal. width must be set before calculating negative left margin
 			wrapper.css({
 				left: "50%",
-				top: $(window).scrollTop() + 50 + settings.topOffset,
+				top: $(window).scrollTop() + settings.topOffset,
 				width: modalWidth,
 				height: options.height,
 				zIndex: zIndex + 1
