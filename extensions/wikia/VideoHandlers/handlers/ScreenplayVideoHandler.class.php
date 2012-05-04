@@ -17,12 +17,8 @@ class ScreenplayVideoHandler extends VideoHandler {
 		$file = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, $this->getStandardBitrateCode());
 		$hdfile = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, ScreenplayApiWrapper::HIGHDEF_BITRATE_ID);
 		
-		$playerOptions = array();
-		$playerOptions['provider'] = 'video';
-		
-		$jwplayer = new JWPlayer();
+		$jwplayer = new JWPlayer($this->getVideoId());
 		$jwplayer->setArticleId($articleId);
-		$jwplayer->setVideoId($this->getVideoId());
 		$jwplayer->setUrl($file);
 		$jwplayer->setTitle($this->getTitle());
 		$jwplayer->setWidth($width);
@@ -36,7 +32,6 @@ class ScreenplayVideoHandler extends VideoHandler {
 		$jwplayer->setShowAd(true);
 		$jwplayer->setAjax($isAjax);
 		$jwplayer->setPostOnload($postOnload);
-		$jwplayer->setPlayerOptions($playerOptions);
 
 		return $jwplayer->getEmbedCode();
 	}
