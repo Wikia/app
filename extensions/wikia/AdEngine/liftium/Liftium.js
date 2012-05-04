@@ -1704,7 +1704,12 @@ Liftium.pullConfig = function (callback){
 
 	var u = Liftium.baseUrl  + 'config?' + Liftium.buildQueryString(p);
 	Liftium.d("Loading config from " + u, 2);
-	Liftium.loadScript(u, true, callback);
+	if (callback) {
+		Liftium.loadScript(u, true, callback);
+	}
+	else {
+		Liftium.loadScript(u);
+	}
 };
 
 /* Pull the geo data from our servers */
