@@ -15,6 +15,7 @@ class JWPlayer {
 	private static $JWPLAYER_PLUGIN_HD_SWF = 'hd-2.1.swf';	
 	private static $JWPLAYER_GOOGIMA_DATA;
 	
+	protected $playerId;
 	protected $articleId;
 	protected $videoId;		// unique id of clip
 	protected $url;			// url of clip
@@ -30,9 +31,8 @@ class JWPlayer {
 	protected $ageGate = false;	// is video age-gated?
 	protected $ajax = true;		// is player loaded by ajax?
 	protected $postOnload = false;	// is player loaded after the page onload event?
-	protected $playerOptions;	// misc options
 	
-	public function __construct() {
+	public function __construct($videoId) {
 		// note: self::$JWPLAYER_GOOGIMA_DATA['ad.tag'] must be initialized elsewhere,
 		// before the JWPlayer is rendered
 		self::$JWPLAYER_GOOGIMA_DATA = 
@@ -41,6 +41,9 @@ class JWPlayer {
 				//'allowadskip'=>'true', 'allowadskippastseconds'=>5,	// wlee 11/1/11: do not skip ads yet
 				'scaled_ads'=>'false'
 			    );
+		
+		$this->videoId = $videoId;
+		$this->playerId = 'player-' . $this->videoId . '-' . mt_rand();
 	}
 	
 	/**
@@ -58,117 +61,22 @@ class JWPlayer {
 	 * @return string
 	 */
 	public function getEmbedCode() {
-		$jwplayerData = array();
-		$jwplayerData['jwplayerjs'] = self::getJavascriptPlayerUrl();
-		$jwplayerData['player'] = self::getAssetUrl( F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_SWF, self::JWPLAYER_VERSION );
-		$jwplayerData['playerId'] = 'player-'.$this->videoId.'-'.mt_rand();
-		$jwplayerData['plugins'] = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID),
-						'timeslidertooltipplugin-2'=>array(), 
-                        // wlee 2012/04/14: turning off infobox.js due to a conflict with pre-roll ads (https://wikia.fogbugz.com/default.asp?20871)
-						//self::getAssetUrl(F::app()->wg->ExtensionsPath.self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js', self::INFOBOX_VERSION)=>array('title'=>htmlspecialchars($this->title))
-						);
+		$jwplayerjs = self::getJavascriptPlayerUrl();
 		
-		$jwplayerData['file'] = $this->url;
-
-		// skin
-		if ($this->width < 330) {
-			$wikiaSkinZip = 'wikia-small.zip';
-		}
-		elseif ($this->width >= 660) {
-			$wikiaSkinZip = 'wikia.zip';			
+		if ($this->showAd && $this->ageGate) {
+			$script = $this->getScript('normal');			
 		}
 		else {
-			$wikiaSkinZip = 'wikia-medium.zip';			
-		}
-		$jwplayerData['skin'] = self::getAssetUrl( F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . 'skins/wikia/'.$wikiaSkinZip, self::SKIN_VERSION );
-
-		// duration
-		if ($this->duration) {
-			$jwplayerData['duration'] = $this->duration;
-		}
-		
-		// PLUGINS
-		
-		// HD
-		if ($this->hd) {
-			if ($this->hdFile) {
-				$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array('file'=>$this->hdFile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
-			}
-			else {
-				$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array();
-			}
-		}
-
-		// ad
-		if ($this->showAd) {
-			// note: self::$JWPLAYER_GOOGIMA_DATA['ad.tag'] must be initialized elsewhere,
-			// before the JWPlayer is rendered
-			$jwplayerData['plugins']['googima'] = self::$JWPLAYER_GOOGIMA_DATA;
-		}
-		
-		// age gate
-		// NOTE: this code must be before the thumb section
-		if ($this->ageGate) {
-			$agegateOptions = array(
-			    'cookielife'=>60*24*365,	// cookielife in minutes
-			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message'),
-			    'minage'=>17
-			    );
-			$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_AGEGATE_JS, self::JWPLAYER_VERSION)] = $agegateOptions;
-			// autoplay is not compatible with age gate. force thumb to appear
-			$this->autoplay = false;	// plugin autoplays automatically if this option set to false
-		}
-		
-		// thumb
-		if (!empty($this->thumbUrl) && empty($this->autoplay)) {
-			$jwplayerData['image'] = $this->thumbUrl;
-		}
-
-		// addl params
-		$jwplayerData = array_merge($jwplayerData, $this->playerOptions);
-
-		// jwplayer config
-		// NOTE: if the JW Player is embedded in an article (not loaded
-		// by AJAX), all URLs within the config need to be escaped
-		// to prevent the parser from linkifying them. One way to do
-		// this is decodeURIComponent($url)
-		$jwplayerConfig = array(
-		    'id'	=> $jwplayerData['playerId'],
-		    'width'	=> $this->width,
-		    'height'	=> $this->height,
-		    'file'	=> $jwplayerData['file'],
-		    'modes'	=> array(
-			array('type'=>'flash','src'=>$jwplayerData['player']),
-			array('type'=>'html5', 'config'=>array( 'file'=>$jwplayerData['file'], 'provider'=>'video') ),
-			array('type'=>'download', 'config'=>array( 'file'=>$jwplayerData['file'], 'provider'=>'video') )
-			),
-		    'autostart'	=> $this->autoplay ? 'true' : 'false',
-		    'stretching'=> 'uniform',
-		    'controlbar.position' => 'over',
-		    'dock'	=> 'false',
-		    'skin'	=> $jwplayerData['skin']		    
-		);
-		if (!empty($jwplayerData['image'])) {
-			$jwplayerConfig['image'] = $jwplayerData['image'];
-		}
-		if (!empty($jwplayerData['provider'])) {
-			$jwplayerConfig['provider'] = $jwplayerData['provider'];
-		}
-		if (!empty($jwplayerData['duration'])) {
-			$jwplayerConfig['duration'] = $jwplayerData['duration'];
-		}
-		if (!empty($jwplayerData['plugins'])) {
-			$jwplayerConfig['plugins'] = $jwplayerData['plugins'];
+			$script = $this->getScript('normal');
 		}
 				
 		$code = '';
 		if ($this->ajax) {
-			$code = $jwplayerConfig;
+			$code = $this->getPlayerConfig($this->url, 'normal');
 		}
 		else {
-			$jwplayerConfigJSON = json_encode($jwplayerConfig);
 			$code = <<<EOT
-<div id="{$jwplayerData['playerId']}"></div>
+<div id="{$this->playerId}"></div>
 <script type="text/javascript">
 EOT;
 			if (!$this->postOnload) {
@@ -178,7 +86,7 @@ EOT;
 			}
 			
 			$code .= <<<EOT
-		$.getScript("{$jwplayerData['jwplayerjs']}", function() { jwplayer("{$jwplayerData['playerId']}").setup($jwplayerConfigJSON); });
+		$.getScript("$jwplayerjs", function() { $script });
 EOT;
 		
 			if (!$this->postOnload) {
@@ -195,20 +103,142 @@ EOT;
 		return $code;
 	}
 	
+	protected function getScript($mode='normal') {
+		switch ($mode) {
+			case 'normal':
+				$jwplayerConfigJSON = json_encode( $this->getPlayerConfig($this->url) );
+				$script = "jwplayer(\"{$this->playerId}\").setup($jwplayerConfigJSON);";
+				break;
+			default:
+		}
+		
+		return $script;
+	}
+	
+	protected function getPlayerConfig($file, $mode='normal') {
+		switch ($mode) {
+			case 'normal':
+			case 'preroll':
+				$autostart = $this->autoplay;
+				$image = (!empty($this->thumbUrl) && empty($this->autoplay)) ? $this->thumbUrl : '';
+				break;
+			case 'agegate':
+				$autostart = false;	// agegate plugin autostarts automatically only if "autostart" set to false
+				$image = '';
+				break;
+			default:
+				$autostart = $this->autoplay;
+				$image = '';
+		}
+		
+		
+		// NOTE: if the JW Player is embedded in an article (not loaded
+		// by AJAX), all URLs within the config need to be escaped
+		// to prevent the parser from linkifying them. One way to do
+		// this is decodeURIComponent($url)
+		$jwplayerConfig = array(
+		    'id'	=> $this->playerId,
+		    'width'	=> $this->width,
+		    'height'	=> $this->height,
+		    'file'	=> $file,
+		    'modes'	=> array(
+			array('type'=>'flash','src'=>self::getAssetUrl( F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_SWF, self::JWPLAYER_VERSION )),
+			array('type'=>'html5', 'config'=>array( 'file'=>$file, 'provider'=>'video') ),
+			array('type'=>'download', 'config'=>array( 'file'=>$file, 'provider'=>'video') )
+			),
+		    'autostart'	=> $autostart,
+		    'stretching'=> 'uniform',
+		    'controlbar.position' => 'over',
+		    'dock'	=> 'false',
+		    'skin'	=> $this->getSkinUrl(),
+		    'provider'	=> 'video'
+		);
+		if (!empty($image)) {
+			$jwplayerConfig['image'] = $image;
+		}
+		if ($this->duration) {
+			$jwplayerConfig['duration'] = $this->duration;
+		}
+		$jwplayerConfig['plugins'] = $this->getPlugins($mode);
+		
+		return $jwplayerConfig;
+	}
+	
+	protected function getSkinUrl() {
+		if ($this->width < 330) {
+			$wikiaSkinZip = 'wikia-small.zip';
+		}
+		elseif ($this->width >= 660) {
+			$wikiaSkinZip = 'wikia.zip';			
+		}
+		else {
+			$wikiaSkinZip = 'wikia-medium.zip';			
+		}
+		
+		return self::getAssetUrl( F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . 'skins/wikia/'.$wikiaSkinZip, self::SKIN_VERSION );		
+	}
+	
+	protected function getPlugins($mode='normal') {
+		switch ($mode) {
+			case 'normal':
+				$canDisplayAgegate = true;
+				$googima = true;
+				break;
+			case 'preroll':
+				$googima = true;
+				break;
+			case 'agegate':
+				$canDisplayAgegate = true;
+				$googima = false;
+				break;
+			default:
+				$canDisplayAgegate = false;
+				$googima = true;
+		}
+		
+		$plugins = array('gapro-1'=>array('accountid'=>self::VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID),
+						'timeslidertooltipplugin-2'=>array(), 
+                        // wlee 2012/04/14: turning off infobox.js due to a conflict with pre-roll ads (https://wikia.fogbugz.com/default.asp?20871)
+						//self::getAssetUrl(F::app()->wg->ExtensionsPath.self::$JWPLAYER_DIR.self::$JWPLAYER_JS_PLUGINS_DIR .'infobox.js', self::INFOBOX_VERSION)=>array('title'=>htmlspecialchars($this->title))
+						);
+		
+		if ($this->hd) {
+			if ($this->hdFile) {
+				$plugins[self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array('file'=>$this->hdFile, 'state'=>'false');  // when player embedded in action=render page, the file URL is automatically linkified. prevent this behavior			
+			}
+			else {
+				$plugins[self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_HD_SWF, self::JWPLAYER_VERSION)] = array();
+			}
+		}
+
+		// ad
+		if ($googima) {
+			// note: self::$JWPLAYER_GOOGIMA_DATA['ad.tag'] must be initialized elsewhere,
+			// before the JWPlayer is rendered
+			$plugins['googima'] = self::$JWPLAYER_GOOGIMA_DATA;
+		}
+		
+		// age gate
+		// NOTE: this code must be before the thumb section
+		if ($this->ageGate && $canDisplayAgegate) {
+			$agegateOptions = array(
+			    'cookielife'=>60*24*365,	// cookielife in minutes
+			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message'),
+			    'minage'=>17
+			    );
+//			$plugins[self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_AGEGATE_JS, self::JWPLAYER_VERSION)] = $agegateOptions;
+			$plugins['agegate-2'] = $agegateOptions;
+		}
+		
+		return $plugins;
+	}
+	
 	/**
 	 * Set the article id
 	 * @param int $id 
 	 */
 	public function setArticleId($id) {
 		$this->articleId = $id;
-	}
-	
-	/**
-	 * Set the video's id (assigned by video provider)
-	 * @param string $id 
-	 */
-	public function setVideoId($id) {
-		$this->videoId = $id;
 	}
 	
 	/**
@@ -313,14 +343,6 @@ EOT;
 	 */
 	public function setPostOnload($postOnload) {
 		$this->postOnload = $postOnload;
-	}
-	
-	/**
-	 * Set miscelleneous JW Player options
-	 * @param array $options
-	 */
-	public function setPlayerOptions($options) {
-		$this->playerOptions = $options;
 	}
 	
 	/**
