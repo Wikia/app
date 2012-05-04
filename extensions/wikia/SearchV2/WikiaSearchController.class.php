@@ -60,14 +60,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if($isCorporateWiki) {
 			OasisModule::addBodyClass('inter-wiki-search');
 		}
-		
+
 		$results = false;
 		$resultsFound = 0;
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
-
-		        if (($articleMatch = $this->wikiaSearch->getArticleMatch($query)) && ($this->getVal('go') == 'Go')) {
-
+			if (($articleMatch = $this->wikiaSearch->getArticleMatch($query)) && ($this->getVal('go') == 'Go')) {
 				extract($articleMatch);
 
 				$title = isset($redirect) ? $redirect->getTitle() : $article->getTitle();
@@ -76,7 +74,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				  
 				$this->response->redirect( $title->getFullURL() );
 			}
-			
+
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
 			$this->wikiaSearch->setSkipCache( $skipCache );
 			// @todo turn it back on, when backend will be fixed
@@ -117,6 +115,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'debug', $this->getVal('debug', false) );
 		$this->setVal( 'isInterWiki', $isInterWiki );
 		$this->setVal( 'relevancyFunctionId', WikiaSearch::RELEVANCY_FUNCTION_ID );
+		$this->setVal( 'namespaces', $namespaces );
 	}
 
 	public function advancedBox() {
