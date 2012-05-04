@@ -37,6 +37,8 @@ var ChatBanModal = function(title, okCallback, options) {
 				}
 			],
 			callback: function() {
+				var dialog, reasonInput, expiresInput;
+
 				self.dialog = dialog = $('#ChatBanModal');
 				self.reasonInput = reasonInput = dialog.find("input[name=reason]");
 				self.expiresInput = expiresInput = dialog.find("select[name=expires]");
