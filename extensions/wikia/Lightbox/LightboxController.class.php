@@ -13,13 +13,10 @@ class LightboxController extends WikiaController {
 	
 	public function lightboxModalContent() {
 		$title = $this->request->getVal('title');
-		$type = $this->request->getVal('type', '');
 		$initialFileDetail = array();
-		if(!empty($title) && !empty($type)) {
+		if(!empty($title)) {
 			// send request to getImageDetail()
-			if($type === 'image') {
-				$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $title))->getData();
-			}
+			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $title))->getData();
 		}
 		
 		$this->initialFileDetail = $initialFileDetail;
