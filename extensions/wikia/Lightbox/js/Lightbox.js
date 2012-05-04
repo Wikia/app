@@ -98,11 +98,11 @@ var Lightbox = {
 
 		// data-image-name="Foo.jpg"
 		if (target.attr('data-image-name')) {
-			imageName = 'File:' + target.attr('data-image-name');
+			imageName = target.attr('data-image-name');
 		}
 		// ref="File:Foo.jpg"
 		else if (target.attr('ref')) {
-			imageName = target.attr('ref');
+			imageName = target.attr('ref').replace('File:', '');
 		}
 		// href="/wiki/File:Foo.jpg"
 		else {
@@ -110,7 +110,7 @@ var Lightbox = {
 			var matches = target.attr('href').match(re);
 
 			if (matches) {
-				imageName = matches.pop();
+				imageName = matches.pop().replace('File:', '');
 			}
 
 		}
@@ -118,14 +118,15 @@ var Lightbox = {
 		// for Video Thubnails:
 		var targetChildImg = target.find('img').eq(0);
 		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
+			Lightbox.type = 'video';
 			
 			if ( target.attr('data-video-name') ) {
 				
-				imageName = 'File:' + target.attr('data-video-name');
+				imageName = target.attr('data-video-name');
 			
 			} else if ( targetChildImg.length > 0 && targetChildImg.attr('data-video') ) {
 				
-				imageName = 'File:' + targetChildImg.attr('data-video');
+				imageName = targetChildImg.attr('data-video');
 			}
 			
 			if (imageName && targetChildImg.width() >= this.videoThumbWidthThreshold) {
@@ -134,6 +135,8 @@ var Lightbox = {
 				ev.preventDefault();
 				return false;
 			}
+		} else {
+			Lightbox.type = 'image';
 		}
 		
 		
@@ -152,7 +155,7 @@ var Lightbox = {
 		}
 	},
 	loadLightbox: function() {
-		this.lightboxLoading = true;
+		Lightbox.lightboxLoading = true;
 
 		$.loadLibrary(
 			'Lightbox', 
@@ -171,7 +174,8 @@ var Lightbox = {
 			type: 'POST',	/* TODO (hyun) - might change to get */
 			format: 'html',
 			data: {
-				title: Lightbox.imageName
+				title: Lightbox.imageName,
+				type: Lightbox.type
 			},
 			callback: function(html) {
 				console.log(html);
