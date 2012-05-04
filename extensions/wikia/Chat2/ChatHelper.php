@@ -73,11 +73,12 @@ class ChatHelper {
 	 * @param string $name
 	 */
 	static function getChatConfig($name) {
-		global $wgWikiaLocalSettingsPath, $wgDevelEnvironment;
+		global $wgWikiaLocalSettingsPath, $wgDevelEnvironment, $wgWikiaConfigDirectory;
 		wfProfileIn(__METHOD__);
 		
 		if(empty(self::$configFile)) {
-			$string = file_get_contents(dirname($wgWikiaLocalSettingsPath) . '/../ChatConfig.json' );
+			$configFilePath = $wgWikiaConfigDirectory . '/ChatConfig.json';
+			$string = file_get_contents( $configFilePath );
 			self::$configFile = json_decode($string, true);
 		}
 		
