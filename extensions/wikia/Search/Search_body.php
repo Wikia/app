@@ -186,10 +186,10 @@ class SolrSearchSet extends SearchResultSet {
 			$article = new Article( $title );
 
 			if($article->isRedirect()) {
-			  return array('article'=>new Article($article->getRedirectTarget()), 'redirect'=>$article);
+				return array('article' => new Article($article->getRedirectTarget()), 'redirect' => $article);
 			}
 			else {
-			        return array('article'=>$article);
+				return array('article' => $article);
 			}
 		}
 
@@ -214,18 +214,18 @@ class SolrSearchSet extends SearchResultSet {
 		$articleMatch = null;
 		if( !$crossWikiaSearch ) {
 			// check if exact match is available (similar to MW "go-result" feature)
-		        $articleMatch = self::createArticleMatch($query, $namespaces);
-			extract($articleMatch);
-			$title = isset($redirect) ? $redirect->getTitle() : $article->getTitle();
-			if ($wgRequest->getVal('go') == 'Go') {
-				wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
-				wfProfileOut( $fname );
-				$wgOut->redirect( $title->getFullURL() );
-				return null;
+			$articleMatch = self::createArticleMatch($query, $namespaces);
+			if(is_array($articleMatch)) {
+				extract($articleMatch);
+				$title = isset($redirect) ? $redirect->getTitle() : $article->getTitle();
+				if ($wgRequest->getVal('go') == 'Go') {
+					wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
+					wfProfileOut( $fname );
+					$wgOut->redirect( $title->getFullURL() );
+					return null;
+				}
 			}
-
 		}
-
 
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
 
