@@ -22,7 +22,9 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			} else if(Http::isValidURI($asset)) {
 				$params = array();
 				$url = parse_url($asset);
-				if (isset($url['query'])) parse_str($url['query'], &$params);
+				if (isset($url['query'])) {
+					parse_str($url['query'], &$params);
+				}
 				// Start checking the url to see if it is something we care about (BugId:30188) 
 				if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'js') {
 					$this->mContent .= $wgUser->getSkin()->generateUserJs();
