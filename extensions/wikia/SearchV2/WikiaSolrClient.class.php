@@ -22,7 +22,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	/**
 	 *  $methodOptions supports the following possible values:
-	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true, $solrDebugWikiId = false
+	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true, $solrDebugWikiId = false, $spellCheck
 	 **/
 	public function search( $query,  array $methodOptions = array() ) {
 		wfProfileIn(__METHOD__);
@@ -36,6 +36,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$includeRedirects   = isset($includeRedirects)   ? $includeRedirects   : true;
 		$rank               = isset($rank)               ? $rank               : 'default';
 		$solrDebugWikiId    = isset($solrDebugWikiId)    ? $solrDebugWikiId    : false;
+		$spellCheck         = isset($spellCheck)         ? $spellCheck         : false;
 
 		if (isset($namespaces)) {
 		  $this->setNamespaces($namespaces);
@@ -57,9 +58,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 				'f.html.hl.maxAlternateFieldLength' => 300,
 				'indent' => 1,
 				'timeAllowed' => 5000,
-				'spellcheck' => 'true',
-				'spellcheck.onlyMorePopular' => 'true',
-				'spellcheck.collate' => 'true'
 				);
 
 		$params['sort'] = $this->getRankSort($rank);
@@ -67,7 +65,13 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$queryClauses = array();
 		$sanitizedQuery = $this->sanitizeQuery($query);
 
-		$params['spellcheck.q'] = $sanitizedQuery;
+		if ($spellCheck) {
+			$params += array('spellcheck' => 'true',
+							 'spellcheck.onlyMorePopular' => 'true',
+							 'spellcheck.collate' => 'true',
+							 'spellcheck.q' => $sanitizedQuery
+							);
+		}
 
 		$onWikiId = ( !empty( $solrDebugWikiId ) ) ? $solrDebugWikiId : $cityId;
 		$this->isInterWiki = $this->isInterWiki || empty($onWikiId);
@@ -163,14 +167,23 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 
 		if ( $response instanceOf Apache_Solr_Response &&
-		     empty($response->response->docs) &&
-		    !empty($response->spellcheck->suggestions) && 
-		    !empty($response->spellcheck->suggestions->collation)
-		    ) {
+		     empty($response->response->docs)) {
 
-		    $newQuery = $response->spellcheck->suggestions->collation;
+			if ($spellCheck && 
+				!empty($response->spellcheck->suggestions) && 
+				!empty($response->spellcheck->suggestions->collation)
+				) {
 
-		    return $this->search($newQuery, $methodOptions);
+				$newQuery = $response->spellcheck->suggestions->collation;
+
+				return $this->search($newQuery, $methodOptions);
+
+			} else if (!$spellCheck) {
+				#research with spellcheck @todo spellcheck request handler
+				$methodOptions['spellCheck'] = true;
+				return $this->search($query, $methodOptions);
+			}
+			
 		} 
 
 		$results = $this->getWikiaResults( $response->response->docs, get_object_vars($response->highlighting) );
