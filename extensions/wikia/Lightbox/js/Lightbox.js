@@ -217,7 +217,8 @@ var Lightbox = {
 						
 					} else {
 						// Image is taller than screen, shorten image
-						imageHeight = modalHeight;					
+						imageHeight = modalHeight;
+						topOffset = topOffset - 5; // 5px modal border
 					}	
 										
 					var modalOptions = {
