@@ -20,14 +20,18 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			if (substr($asset, 0, 10) == '#external_') {
 				// do nothing
 			} else if(Http::isValidURI($asset)) {
-				if(strpos($asset, 'index.php?title=-&action=raw&smaxage=0&gen=js') !== false) {
+				$params = array();
+				$url = parse_url($asset);
+				if (isset($url['query'])) parse_str($url['query'], &$params);
+				// Start checking the url to see if it is something we care about (BugId:30188) 
+				if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'js') {
 					$this->mContent .= $wgUser->getSkin()->generateUserJs();
 				} else if(strpos($asset, 'Wikia.css') !== false) {
 					$message = wfMsgForContent('Wikia.css');
 					if(!wfEmptyMsg('Wikia.css', $message)) {
 						$this->mContent .= $message;
 					}
-				} else if(strpos($asset, 'index.php?title=-&action=raw&maxage=86400&gen=css') !== false) {
+				} else if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'css') {
 					$this->mContent .= $wgUser->getSkin()->generateUserStylesheet();
 				} else {
 					//Debug added on May 4, 2012 to inquire external requests spikes
