@@ -200,7 +200,7 @@ function wfSoapFailures(){
 		if(!$statsHtml){
 			// Display some hit-rate stats.
 			ob_start();
-			include "soap_stats.php"; // for tracking success/failure
+			include_once __DIR__ . "/soap_stats.php"; // for tracking success/failure
 			print "<br/><br/><br/>";
 			print "<em>".wfMsg('soapfailures-stats-header')."</em><br/>\n";
 			print "<table border='1px' cellpadding='5px'>\n";
