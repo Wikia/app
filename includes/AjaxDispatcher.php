@@ -86,6 +86,10 @@ class AjaxDispatcher {
 
 		wfProfileIn( __METHOD__ );
 
+		/* Wikia change start - author Federico "Lox" Lucignano */
+		$start = microtime(true);
+		/* Wikia change end */
+
 		if ( ! in_array( $this->func_name, $wgAjaxExportList ) ) {
 			wfDebug( __METHOD__ . ' Bad Request for unknown function ' . $this->func_name . "\n" );
 
@@ -138,6 +142,14 @@ class AjaxDispatcher {
 				}
 			}
 		}
+
+		/* Wikia change start - author Federico "Lox" Lucignano */
+		$totalTime = microtime(true) - $start;
+
+		if ( $totalTime >= 1 ) {
+			Wikia::log(__METHOD__, false, "function: {$this->func_name}, args: " . str_replace( array( "\n", "\t" ), '', var_export( $this->args, true ) ) . ", totalTime: {$totalTime}, referrer: {$_SERVER['HTTP_REFERER']}, entrypoint: {$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}", true);
+		}
+		/* Wikia change end */
 
 		wfProfileOut( __METHOD__ );
 		$wgOut = null;

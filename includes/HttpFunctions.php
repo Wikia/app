@@ -52,7 +52,18 @@ class Http {
 	 */
 	public static function get( $url, $timeout = 'default', $options = array() ) {
 		$options['timeout'] = $timeout;
-		return Http::request( 'GET', $url, $options );
+
+		/* Wikia change begin - author Federico "Lox" Lucignano */
+		$start = microtime(true);
+		$res = Http::request( 'GET', $url, $options );
+		$totalTime = microtime(true) - $start;
+
+		if ( $totalTime >= 1 ) {
+			Wikia::log(__METHOD__, false, "url: {$url}, totalTime: {$totalTime}, options: " . implode(';', $options) . ", referrer: {$_SERVER['HTTP_REFERER']}, entrypoint: {$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}", true);
+		}
+		/* Wikia change end */
+
+		return $res;
 	}
 
 	/**
