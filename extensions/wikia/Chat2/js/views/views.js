@@ -183,11 +183,11 @@ var UserView = Backbone.View.extend({
 		//$().log("ABOUT TO RENDER THIS USER: " + JSON.stringify(this.model));
 		
 		var model = this.model.toJSON();
-		$().log(model);
-		if(model['editCount'] > 0) {
+		$().log(model, model.name);
+		if(model['since']) {
 			model['since'] = wgLangtMonthAbbreviation[model['since']['mon']] + ' ' + model['since']['year'];	
 		}
-		
+
 		$(this.el).html( this.template(model) );
 		
 		// Set the id by username so that we can remove it when the user parts.
