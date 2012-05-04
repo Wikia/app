@@ -1028,7 +1028,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					// Can re-enable this later if we actually start paying attention to this again.
 
 					// SWC 20101017 - Rewriting this to use memcached.  Should be fast enough now.
-					include "soap_stats.php"; // for tracking success/failure
+					include_once __DIR__ . "/soap_stats.php"; // for tracking success/failure
 					$resultFound = ($retVal['lyrics'] != $defaultLyrics);
 					$reqType = (($wgRequest->getVal("fullApiAuth", "") == "")? LW_API_TYPE_WEB : LW_API_TYPE_MOBILE);
 					lw_soapStats_logHit($resultFound, $reqType);
