@@ -2,7 +2,7 @@
 
 class JWPlayer {
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
-	const JWPLAYER_VERSION = '5.9.4';
+	const JWPLAYER_VERSION = '5.9.5';
 	const INFOBOX_VERSION = '1';
 	const SKIN_VERSION = '3';
 
@@ -10,7 +10,7 @@ class JWPlayer {
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
 	private static $JWPLAYER_SWF = 'player.swf';
 	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
-	private static $JWPLAYER_PLUGIN_AGEGATE2_JS = 'agegate2.js';	
+	private static $JWPLAYER_PLUGIN_AGEGATE_JS = 'agegate3.js';	
 	private static $JWPLAYER_PLUGIN_HD_JS = 'hd-2.1.min.js';
 	private static $JWPLAYER_PLUGIN_HD_SWF = 'hd-2.1.swf';	
 	private static $JWPLAYER_GOOGIMA_DATA;
@@ -114,7 +114,7 @@ class JWPlayer {
 			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message'),
 			    'minage'=>17
 			    );
-			$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_AGEGATE2_JS, self::JWPLAYER_VERSION)] = $agegateOptions;
+			$jwplayerData['plugins'][self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_AGEGATE_JS, self::JWPLAYER_VERSION)] = $agegateOptions;
 			// autoplay is not compatible with age gate. force thumb to appear
 			$this->autoplay = false;	// plugin autoplays automatically if this option set to false
 		}
