@@ -273,20 +273,23 @@ class ChatAjax {
 		$userId = $wgRequest->getVal('userId', 0);
 		
 		$isChangeBan = false;
-		$expTime = "";
+		$isoTime = "";
+		$fmtTime = "";
 		
 		if(!empty($userId) && $user = User::newFromID($userId)) {
 			 $ban = Chat::getBanInformation($wgCityId, $user);
 			 if($ban !== false)  {
 			 	$isChangeBan = true;
-				$expTime = $wgLang->timeanddate( wfTimestamp( TS_MW, $ban->end_date ), true );
+			 	$isoTime = wfTimestamp( TS_ISO_8601, $ban->end_date );
+				$fmtTime = $wgLang->timeanddate( wfTimestamp( TS_MW, $ban->end_date ), true );
 			 }
 		}
 			
 		$tmpl->set_vars(array(
 				'options' => Chat::GetBanOptions(),
 				'isChangeBan' => $isChangeBan,
-				'expTime' => $expTime
+				'isoTime' => $isoTime,
+				'fmtTime' => $fmtTime
 			)
 		);
 		$retVal = array();
