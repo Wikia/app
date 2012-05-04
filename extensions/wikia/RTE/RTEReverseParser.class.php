@@ -1798,7 +1798,7 @@ class RTEReverseParser {
 
 		$marginLeft = self::getCssProperty($node, 'margin-left');
 		if (!empty($marginLeft)) {
-			$indentLevel = intval($marginLeft / 40);
+			$indentLevel = intval($marginLeft / 24);
 		}
 
 		wfProfileOut(__METHOD__);

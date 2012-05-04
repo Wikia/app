@@ -28,6 +28,7 @@
 			entities: false,
 			format_tags: 'p;h2;h3;h4;h5;pre',
 			height: 400, // default height when "auto resizing" is not applied
+			indentOffset: 24, // match WikiaArticle styles (BugId:25379)
 			language: window.wgUserLanguage,
 			plugins:
 				'basicstyles,' +
