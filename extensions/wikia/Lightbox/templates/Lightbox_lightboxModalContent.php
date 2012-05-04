@@ -6,7 +6,8 @@
 	</script>
 
 	<script>
-		var initialImageData = {
+		var LightboxVar = {
+			file: <?= json_encode($initialFileDetail) ?>
 		};
 	</script>
 </div>
