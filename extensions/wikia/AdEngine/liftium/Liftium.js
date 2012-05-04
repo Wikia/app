@@ -1300,7 +1300,7 @@ Liftium.init = function (callback) {
 	}
 
 	Liftium.pullGeo();
-	Liftium.pullConfig();
+	Liftium.pullConfig(callback);
 	
 	Liftium.addEventListener(window, "load", Liftium.onLoadHandler);
 
@@ -1332,8 +1332,6 @@ Liftium.init = function (callback) {
 	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init"]), 'liftium.init');
 
 	Liftium.trackQcseg();
-	
-	if (callback) callback();
 
 	return true;
 };
@@ -1535,18 +1533,24 @@ Liftium.isValidPacing = function(tag){
 
 
 /* Load the supplied url inside a script tag  */
-Liftium.loadScript = function(url, noblock) {
+Liftium.loadScript = function(url, noblock, callback) {
 	if (typeof noblock == "undefined"){
 		// This method blocks
 		document.write('<scr' + 'ipt type="text/javascript" src="' + url + '"><\/sc' + 'ript>');
 		return true;
 	} else {
 		// This method does not block
-		var h = document.getElementsByTagName("head").item(0);
-		var s = document.createElement("script");
-		s.src = url;
-		h.appendChild(s);
-		return s;
+		if (typeof jQuery == "undefined" || !callback) {
+			var h = document.getElementsByTagName("head").item(0);
+			var s = document.createElement("script");
+			s.src = url;
+			h.appendChild(s);
+			return s;
+		}
+		else {
+			$.getScript(url, callback);
+			return true;
+		}
 	}
 };
 
@@ -1675,7 +1679,7 @@ Liftium.parseQueryString = function (qs){
 
 
 /* Pull the configuration data from our servers */
-Liftium.pullConfig = function (){
+Liftium.pullConfig = function (callback){
 
 	if (Liftium.config) {
 		return; 
@@ -1700,7 +1704,7 @@ Liftium.pullConfig = function (){
 
 	var u = Liftium.baseUrl  + 'config?' + Liftium.buildQueryString(p);
 	Liftium.d("Loading config from " + u, 2);
-	Liftium.loadScript(u);
+	Liftium.loadScript(u, true, callback);
 };
 
 /* Pull the geo data from our servers */
