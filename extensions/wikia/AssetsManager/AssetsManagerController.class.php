@@ -36,6 +36,9 @@ class AssetsManagerController extends WikiaController {
 	public function getMultiTypePackage() {
 		$this->wf->profileIn( __METHOD__ );
 
+		//Debug added on May 4, 2012 to inquire external requests spikes
+		$start = microtime(true);
+
 		$key = null;
 		$data = null;
 		$templates = $this->request->getVal( 'templates', null );
@@ -141,6 +144,13 @@ class AssetsManagerController extends WikiaController {
 
 		$this->response->setFormat( 'json' );
 		$this->wf->profileOut( __METHOD__ );
+
+		//Debug added on May 4, 2012 to inquire external requests spikes
+		$totalTime = microtime(true) - $start;
+
+		if ( $totalTime >= 1 ) {
+			Wikia::log(__METHOD__, false, "totalTime: {$totalTime}, entrypoint: {$_SERVER['HTTP_HOST']}" . urldecode( $_SERVER['REQUEST_URI'] ), true);
+		}
 	}
 
 	private function getComponentMemcacheKey( $par ) {
