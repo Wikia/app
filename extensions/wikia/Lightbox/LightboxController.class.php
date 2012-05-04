@@ -18,7 +18,7 @@ class LightboxController extends WikiaController {
 		if(!empty($title) && !empty($type)) {
 			// send request to getImageDetail()
 			if($type === 'image') {
-				$initialFileDetail = $this->app->sendRequest('Lightbox', 'getImageDetail', array('title' => $title))->getData();
+				$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $title))->getData();
 			}
 		}
 		
@@ -88,23 +88,29 @@ class LightboxController extends WikiaController {
 	
 	
 	/**
-	 * @brief - Returns complete details about a single image.  JSON only, no associated template to this method.
+	 * @brief - Returns complete details about a single media (file).  JSON only, no associated template to this method.
 	 * @requestParam string title
-	 * @responseParam string imageUrl - thumb image url that is scaled to max width of 1000 px (no max height)
+	 * @responseParam string mediaType - media type.  either image or video
+	 * @responseParam string videoEmbedCode - embed html code if video
+	 * @responseParam string imageUrl - thumb image url that is hard scaled
 	 * @responseParam string fileUrl - url to file page
-	 * @responseParam string rawImageUrl - url to raw image
-	 * @responseParam string caption - image caption
-	 * @responseParam string description - image description (apparantly, this is just file page content, look in spec or ask Yoko)
+	 * @responseParam string caption - video caption
+	 * @responseParam string description - video description (apparantly, this is just file page content, look in spec or ask Yoko)
 	 * @responseParam string userThumbUrl - user avatar thumbUrl scaled to 30x30
 	 * @responseParam string userName - user name
 	 * @responseParam string userPageUrl - url to user profile page
-	 * @responseParam string articles - name and url of the articles this image is posted to
+	 * @responseParam string articleTitle - name of the Article this image is posted to
+	 * @responseParam string articleUrl - url to the article
 	 */
-	public function getImageDetail() {
-		$imageTitle = $this->request->getVal('title');
-		$title = F::build('Title', array($imageTitle, NS_FILE), 'newFromText');
+	public function getMediaDetail() {
+		$fileTitle = $this->request->getVal('title');
+		$fileType = $this->request->getVal('type', '');
+		$title = F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
 		
 		/* initial values */
+		$mediaType = 'image';
+		$videoEmbedCode = '';
+		$playerAsset = '';
 		$imageUrl = '';
 		$fileUrl = '';
 		$rawImageUrl = '';
@@ -116,28 +122,41 @@ class LightboxController extends WikiaController {
 		$articles = array();
 		
 		/* do data query here */
-		$image = wfFindFile($imageTitle);
+		$file = wfFindFile($fileTitle);
 		
-		if(!empty($image)) {
-			/* normalize size of image to max 1000 width.  height does not matter */
-			$width = $image->getWidth();
-			$height = $image->getHeight();
-			$width = $width > 1000 ? 1000 : $width;
+		if(!empty($file)) {
+			/* figure out resource type */
+			$isVideo = F::build('WikiaVideoService')->isFileTypeVideo($file);
+		
+			if(!$isVideo) {
+				/* normalize size of image to max 1000 width.  height does not matter */
+				$width = $file->getWidth();
+				$height = $file->getHeight();
+				$width = $width > 1000 ? 1000 : $width;
+			} else {
+				/* videos have fixed size */
+				$height = 660;
+				$width = 360;
+				
+				$mediaType = 'video';
+				$videoEmbedCode = $file->getEmbedCode( $width, true, true);
+				$playerAsset = $file->getPlayerAssetUrl();
+			}
 			
 			/* get thumb */
-			$thumb = $image->getThumbnail($width, $height);
+			$thumb = $file->getThumbnail($width, $height);
 			
 			/* get article content of this file */
 			$articleId = $title->getArticleID();
 			$article = Article::newFromID($articleId);
 			
 			/* get user who uploaded this */
-			$userId = $image->getUser('id');
+			$userId = $file->getUser('id');
 			$user = F::build('User', array($userId), 'newFromId' );
 			
 			$imageUrl = $thumb->getUrl();
 			$fileUrl = $title->getLocalUrl();
-			$rawImageUrl = $image->getUrl();
+			$rawImageUrl = $file->getUrl();
 			$caption = '';	/* caption doesn't look like it's been structured, and it's just wikitext? (hyun) */
 			$description = $article->getContent();
 			$userName = $user->getName();
@@ -146,8 +165,12 @@ class LightboxController extends WikiaController {
 			$articles = array(
 				array('articleUrl' => '', 'articleTitle' => 'Some Article')
 			);	/* sample */
+			/* article that image is embedded to needs to be implemented.  currently, there's an implementation on LatestPhotosModule->getLinkedFiles */
 		}
 		
+		$this->mediaType = $mediaType;
+		$this->videoEmbedCode = $videoEmbedCode;
+		$this->playerAsset = $playerAsset;
 		$this->imageUrl = $imageUrl;
 		$this->fileUrl = $fileUrl;
 		$this->rawImageUrl = $rawImageUrl;
@@ -158,50 +181,4 @@ class LightboxController extends WikiaController {
 		$this->userPageUrl = $userPageUrl;
 		$this->articles = $articles;
 	}
-	
-	
-	/**
-	 * @brief - Returns complete details about a single video.  JSON only, no associated template to this method.
-	 * @requestParam string title
-	 * @responseParam string videoEmbedCode - embed html code
-	 * @responseParam string imageUrl - thumb image url that is hard scaled to 660x360
-	 * @responseParam string fileUrl - url to file page
-	 * @responseParam string caption - video caption
-	 * @responseParam string description - video description (apparantly, this is just file page content, look in spec or ask Yoko)
-	 * @responseParam string userThumbUrl - user avatar thumbUrl scaled to 30x30
-	 * @responseParam string userName - user name
-	 * @responseParam string userPageUrl - url to user profile page
-	 * @responseParam string articleTitle - name of the Article this image is posted to
-	 * @responseParam string articleUrl - url to the article
-	 */
-	public function getVideoDetail() {
-		$videoTitle = $this->request->getVal('title');
-		
-		/* initial values */
-		$videoEmbedCode = '';
-		$imageUrl = '';
-		$fileUrl = '';
-		$caption = '';
-		$description = '';
-		$userThumbUrl = '';
-		$userName = '';
-		$userPageUrl = '';
-		$articleTitle = '';
-		$articleUrl = '';
-		
-		/* do data query here */
-		$video = wfFindFile($videoTitle);
-		
-		$this->videoEmbedCode = $videoEmbedCode;
-		$this->imageUrl = $imageUrl;
-		$this->fileUrl = $fileUrl;
-		$this->caption = $caption;
-		$this->description = $description;
-		$this->userThumbUrl = $thumbUrl;
-		$this->userName = $userName;
-		$this->userPageUrl = $userPageUrl;
-		$this->articleTitle = $articleTitle;
-		$this->articleUrl = $articleUrl;
-	}
-	
 }
