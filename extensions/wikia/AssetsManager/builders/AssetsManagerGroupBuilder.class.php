@@ -30,7 +30,14 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				} else if(strpos($asset, 'index.php?title=-&action=raw&maxage=86400&gen=css') !== false) {
 					$this->mContent .= $wgUser->getSkin()->generateUserStylesheet();
 				} else {
+					//Debug added on May 4, 2012 to inquire external requests spikes
+					$start = microtime(true);
 					$this->mContent .= HTTP::get($asset);
+					$totalTime = microtime(true) - $start;
+
+					if ( $totalTime >= 1 ) {
+						Wikia::log(__METHOD__, false, "oid: {$this->mOid}, totalTime: {$totalTime}, asset: {$asset}, referrer: {$_SERVER['HTTP_REFERER']}, entrypoint: {$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}", true);
+					}
 				}
 			} else {
 				$this->mContent .= file_get_contents($IP . '/' . $asset);
