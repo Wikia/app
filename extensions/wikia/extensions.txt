@@ -297,6 +297,10 @@ Unsubscribe
 file = SpecialUnsubscribe/Unsubscribe.i18n.php
 
 User Login
+file = UserLogin/UserSignup.i18n.php
+
+Wikia Confirm Email
+file = UserLogin/WikiaConfirmEmail.i18n.php 
 
 User Profile Page
 optional = recipes-template-skip-toggle-types
