@@ -46,6 +46,7 @@ $(document).ready(function() {
 			{ "sName": "dbname" },
 			{ "sName": "title" },			
 			{ "sName": "url" },
+			{ "sName": "lastedit" },
 			{ "sName": "options" }
 		],
 		"aoColumnDefs": [ 
@@ -138,22 +139,24 @@ $(document).ready(function() {
 		<tr>
 			<th width="2%">#</th>
 			<th width="3%"><?=wfMsg('multilookupwikidbname')?></th>			
-			<th width="45%"><?=wfMsg('multilookupwikititle')?></th>			
+			<th width="40%"><?=wfMsg('multilookupwikititle')?></th>			
 			<th width="30%"><?=wfMsg('multilookupwikiurl')?></th>
+			<th width="5%"><?=wfMsg( 'multilookuplastedithdr' )?></th>
 			<th width="20%"><?=wfMsg('multilookupdetails')?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="5" class="dataTables_empty"><?=wfMsg('livepreview-loading')?></td>
+			<td colspan="6" class="dataTables_empty"><?=wfMsg('livepreview-loading')?></td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
 			<th width="3%"><?=wfMsg('multilookupwikidbname')?></th>			
-			<th width="45%"><?=wfMsg('multilookupwikititle')?></th>			
+			<th width="40%"><?=wfMsg('multilookupwikititle')?></th>			
 			<th width="30%"><?=wfMsg('multilookupwikiurl')?></th>
+			<th width="5%"><?=wfMsg( 'multilookuplastedithdr' )?></th>
 			<th width="20%"><?=wfMsg('multilookupdetails')?></th>
 		</tr>
 	</tfoot>
