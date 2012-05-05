@@ -30,21 +30,21 @@ class MultipleLookupCore {
 			$this->mUserId = $this->oUser->getId();
 		}
 		$this->setDBname( $dbname );
-		$this->setNumRecords();		
+		$this->setNumRecords();
 	}
 
-	public function setDBname ( $dbname = '' ) { 
+	public function setDBname ( $dbname = '' ) {
 		if ( $dbname ) {
 			$this->mDBname = $this->__getDBname( $dbname );
 			$this->mWikiID = WikiFactory::DBtoID($this->mDBname);
-			$this->mWikia = WikiFactory::getWikiByID($this->mWikiID);	
+			$this->mWikia = WikiFactory::getWikiByID($this->mWikiID);
 		}
 	}
 	public function getDBname () { global $wgDBname; return (LC_TEST) ? $wgDBname : $this->mDBname; }
 	public function setLimit ( $limit = LC_LIMIT ) { $this->mLimit = $limit; }
 	public function setOffset ( $offset = 0 ) { $this->mOffset = $offset; }
 	public function setNumRecords( $num = 0 ) { $this->mNumRecords = $num; }
-	public function getNumRecords() { return $this->mNumRecords; }	
+	public function getNumRecords() { return $this->mNumRecords; }
 
 	/* return if such user exists */
 	public function checkIp() {
@@ -93,23 +93,31 @@ class MultipleLookupCore {
 		return $countActivity;
 	}
 
-	function checkUserActivity() {
+	function checkUserActivity( $order = null ) {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled, $wgLang;
 
 		$userActivity = array();
 
 		$ip = ip2long( $this->mUsername );
-		$memkey = __METHOD__ . ":all:ip:" . $ip . ":limit:" . intval($this->mLimit) . ":offset:" . intval($this->mOffset);
+		$memkey = __METHOD__ . ":all:ip:" . $ip . ":limit:" . intval($this->mLimit) . ":offset:" . intval($this->mOffset) . ":order:" . $order;
 		$cached = $wgMemc->get( $memkey );
 		if ( ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+
+			$qOptions = array( 'ORDER BY' => 'ml_count DESC, ml_ts DESC', 'LIMIT' => $this->mLimit, 'OFFSET' => $this->mOffset );
+
+			if ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
+				if ( isset( $aMatches[1] ) ) {
+					$qOptions['ORDER BY'] = ( $aMatches[1] == 'desc' ? 'ml_ts DESC' : 'ml_ts' );
+				}
+			}
 
 			$oRes = $dbs->select(
 				array( '`specials`.`multilookup`' ),
 				array( 'ml_city_id', 'ml_ts' ),
 				array( 'ml_ip' => $ip ),
 				__METHOD__,
-				array( 'ORDER BY' => 'ml_count DESC, ml_ts DESC', 'LIMIT' => $this->mLimit, 'OFFSET' => $this->mOffset )
+				$qOptions
 			);
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
 				$oWikia = WikiFactory::getWikiByID( $oRow->ml_city_id );
@@ -142,9 +150,9 @@ class MultipleLookupCore {
 		wfProfileIn( __METHOD__ );
 
 		$fetched_data = array ();
-		if ( empty( $this->mWikia ) ) {	
+		if ( empty( $this->mWikia ) ) {
 			wfProfileOut( __METHOD__ );
-			return $fetched_data;	
+			return $fetched_data;
 		}
 
 		$where = array(
@@ -152,7 +160,7 @@ class MultipleLookupCore {
 		);
 		# count of records
 		$key = "{$this->mDBname}:MultiLookup:count:" . $this->mUsername;
-		$cached = $wgMemc->get( $key );	
+		$cached = $wgMemc->get( $key );
 		$dbr = wfGetDB( DB_SLAVE, 'stats', $this->mDBname );
 		if ( !empty($cached) || MULTILOOKUP_NO_CACHE ) {
 			/* number of records */
@@ -170,7 +178,7 @@ class MultipleLookupCore {
 			}
 		}
 
-		$this->setNumRecords($cached);	
+		$this->setNumRecords($cached);
 
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
 		$key = "{$this->mDBname}:MultiLookup:" . $this->mUsername . ":" . $this->mLimit . ":" . $this->mOffset;

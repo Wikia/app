@@ -13,14 +13,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 # ############################# Ajax ##################################
 ############################## Ajax ##################################
-class MultiLookupAjax {	
+class MultiLookupAjax {
 	function __construct() { /* not used */ }
 
 	function axData() {
 		global $wgRequest, $wgUser,	$wgCityId, $wgDBname, $wgLang, $wgDevelEnvironment;
-		
+
 		wfProfileIn( __METHOD__ );
-	
+
 		$username 	= $wgRequest->getVal('username');
 		$dbname		= $wgRequest->getVal('wiki');
 		$limit		= $wgRequest->getVal('limit');
@@ -30,21 +30,21 @@ class MultiLookupAjax {
 		$numOrder	= $wgRequest->getVal('numOrder');
 
 		$result = array(
-			'sEcho' => intval($loop), 
-			'iTotalRecords' => 0, 
-			'iTotalDisplayRecords' => 0, 
+			'sEcho' => intval($loop),
+			'iTotalRecords' => 0,
+			'iTotalDisplayRecords' => 0,
 			'sColumns' => '',
 			'aaData' => array()
 		);
-				
+
 		//$dbname, $username, $mode, $limit = 25, $offset = 0, $nspace = -1
-		
+
 		if ( empty($wgUser) ) { return ""; }
 		if ( $wgUser->isBlocked() ) { return ""; }
 		if ( !$wgUser->isLoggedIn() ) { return ""; }
 		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
-			wfProfileOut( __METHOD__ );			
-			return Wikia::json_encode($result); 
+			wfProfileOut( __METHOD__ );
+			return Wikia::json_encode($result);
 		}
 
 		$oML = new MultipleLookupCore($username);
@@ -52,16 +52,16 @@ class MultiLookupAjax {
 			$oML->setLimit($limit);
 			$oML->setOffset($offset);
 			$count = $oML->countUserActivity();
-			$data = $oML->checkUserActivity();
+			$data = $oML->checkUserActivity( $order );
 			if ( !empty($data) ) {
 				$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 				$result['iTotalDisplayRecords'] = $count;
 				$result['sColumns'] = 'id,dbname,title,url,lastedit,options';
-				$rows = array();			
+				$rows = array();
 				$loop = 1;
 				foreach ( $data as $row ) {
 					$usernames = "";
-					if (empty($wgDevelEnvironment)) { 
+					if (empty($wgDevelEnvironment)) {
 						// do not run this section on the dev environment because the db's dont exist
 						$oML->setDBname($row[0]);
 						$user_data = $oML->fetchContribs();
@@ -79,11 +79,11 @@ class MultiLookupAjax {
 						$loop + $offset, // wiki Id
 						$row[0], // wiki dbname
 						$row[1], //wiki title
-						$row[2], // wiki url 
+						$row[2], // wiki url
 						$row[3], // last edit date
 						$usernames // $username field
-					);			
-					$loop++;				
+					);
+					$loop++;
 				}
 				$result['aaData'] = $rows;
 			}
@@ -106,18 +106,18 @@ class MultiLookupAjax {
 						$rows[] = array(
 							$loop + $offset, // id
 							$dbname,
-							$link, // title 
+							$link, // title
 							$last_edit
 						);
 						$loop++;
 					}
 				}
-				$result['aaData'] = $rows;					
+				$result['aaData'] = $rows;
 			}
 		}
-		
-		wfProfileOut( __METHOD__ );			
-		return Wikia::json_encode($result); 
+
+		wfProfileOut( __METHOD__ );
+		return Wikia::json_encode($result);
 	}
 }
 
