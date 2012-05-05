@@ -17,6 +17,52 @@ $messages['en'] = array(
 	'wikiasearch2-advanced-search' => 'Advanced Search Options',
 );
 
+$messages["de"] = array(
+	'wikiasearch2-page-title-with-query' => 'Suchergebnisse für "$1" - $2',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Durchsuche Wikia',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Suche nach $1',
+	'wikiasearch2-search-all-wikia' => 'Durchsuche alle Wikia-Wikis',
+	'wikiasearch2-results' => '$1 Ergebnisse',
+	'wikiasearch2-pages' => '$1 Seiten',
+	'wikiasearch2-search-on-wiki' => 'Durchsuche dieses Wiki',
+	'wikiasearch2-results-count' => 'Über $1 Ergebnisse für $2',
+	'wikiasearch2-results-for' => 'Ergebnisse für $1',
+	'wikiasearch2-global-search-headline' => 'Weitere Wikis auf Wikia',
+	'wikiasearch2-wiki-search-headline' => 'Suchergebnisse',
+	'wikiasearch2-advanced-search' => 'Erweiterte Such-Optionen',
+);
+
+$messages["pl"] = array(
+	'wikiasearch2-page-title-with-query' => 'Wyników dla frazy "$1" - $2',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Przeszukaj Wikię',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Wyszukaj $1',
+	'wikiasearch2-search-all-wikia' => 'Szukaj na wszystkich wiki',
+	'wikiasearch2-results' => '$1 Wyników',
+	'wikiasearch2-pages' => '$1 Stron',
+	'wikiasearch2-search-on-wiki' => 'Szukaj na tej wiki',
+	'wikiasearch2-results-count' => 'Około $1 wyników dla "$2"',
+	'wikiasearch2-results-for' => 'Wyniki dla $1',
+	'wikiasearch2-global-search-headline' => 'Wyszukaj wiki na Wikii',
+	'wikiasearch2-wiki-search-headline' => 'Przeszukaj wiki',
+	'wikiasearch2-advanced-search' => 'Zaawansowane Opcje Wyszukiwania',
+);
+
+$messages["fr"] = array(
+        'wikiasearch2-page-title-with-query' => 'Résultats de recherche pour « $1 » - $2',
+        'wikiasearch2-page-title-no-query-interwiki' => 'Rechercher sur Wikia',
+        'wikiasearch2-page-title-no-query-intrawiki' => 'Rechercher $1',
+        'wikiasearch2-search-all-wikia' => 'Rechercher sur tout Wikia',
+        'wikiasearch2-results' => '$1 résultats',
+	'wikiasearch2-pages' => '$1 pages',
+	'wikiasearch2-search-on-wiki' => 'Rechercher sur ce wiki',
+	'wikiasearch2-results-count' => 'Environ $1 résultats pour « $2 »',
+	'wikiasearch2-results-for' => 'Résultats pour $1',
+	'wikiasearch2-global-search-headline' => 'Trouver des wikis sur Wikia',
+	'wikiasearch2-wiki-search-headline' => 'Rechercher sur ce wiki',
+	'wikiasearch2-advanced-search' => 'Options de recherche avancée',
+);
+
+
 $message['qqq'] = array(
 	'wikiasearch2-page-title-with-query' => 'Page title for search pages when a search term is entered. $1 = search term.  $2 = wiki name.',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Default page title for inter-wiki search pages before a search string is entered.',
