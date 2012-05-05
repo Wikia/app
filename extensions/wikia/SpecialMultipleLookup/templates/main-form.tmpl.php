@@ -4,22 +4,22 @@
 function mlShowDetails(dbname) {
 	var username = '<?=$username?>';
 	var action = '<?=$action?>';
-					
+
 	if ( !username ) {
 		return false;
-	}	
-	
+	}
+
 	document.location.href = action + '?target=' + username + '&wiki=' + dbname;
 }
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=MultiLookupAjax::axData";
 	var username = '<?=$username?>';
-				
+
 	if ( !username ) {
 		return;
 	}
-	
+
 	var oTable = $('#ml-table').dataTable( {
 		"oLanguage": {
 			"sLengthMenu": "<?=wfMsg('table_pager_limit', '_MENU_');?>",
@@ -44,12 +44,12 @@ $(document).ready(function() {
 		"aoColumns": [
 			{ "sName": "id" },
 			{ "sName": "dbname" },
-			{ "sName": "title" },			
+			{ "sName": "title" },
 			{ "sName": "url" },
 			{ "sName": "lastedit" },
 			{ "sName": "options" }
 		],
-		"aoColumnDefs": [ 
+		"aoColumnDefs": [
 			{ "bVisible": true,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "fnRender": function ( oObj ) {
 				var row = '<a href="'+ window.location.pathname + "?target="+ username +'&wiki=' + oObj.aData[1] + '">' + oObj.aData[1] + '</a>';
@@ -68,8 +68,9 @@ $(document).ready(function() {
 				"aTargets": [ 3 ],
 				"bSortable" : false,
 			},
-			{ "bVisible": true,  "aTargets": [ 4 ], "bSortable" : false, "sClass": "ml-datetime" },
-		],		
+			{ "sClass": "ml-datetime", "aTargets": [ 4 ], "bSortable" : true },
+			{ "bVisible": true,  "aTargets": [ 5 ], "bSortable" : false, "sClass": "ml-datetime" },
+		],
 		"bProcessing": true,
 		"bServerSide": true,
 		"bFilter" : false,
@@ -79,15 +80,17 @@ $(document).ready(function() {
 			// make CSS buttons
 		},*/
 		"fnServerData": function ( sSource, aoData, fnCallback ) {
-			var limit		= 25;
-			var offset 		= 0;		
-			var groups	 	= 0;
-			var loop		= 1;
-			var order 		= '';
-			
-			var sortingCols = 0;
-			var iColumns	= 0;
-			
+			var	limit		= 25,
+				offset 		= 0,
+				groups	 	= 0,
+				loop		= 1,
+				order 		= '',
+				sortingCols = 0,
+				iColumns	= 0,
+				_tmp		= [],
+				sortColumns	= [],
+				sortOrder	= [];
+
 			for ( i in aoData ) {
 				switch ( aoData[i].name ) {
 					case 'iDisplayLength'	: limit = aoData[i].value; break;
@@ -97,12 +100,28 @@ $(document).ready(function() {
 					case 'iColumns'			: iColumns = aoData[i].value; break;
 					case 'iSortingCols'		: sortingCols = aoData[i].value; break;
 				}
+
+				if ( aoData[i].name.indexOf( 'iSortCol_', 0) !== -1 ) {
+					sortColumns.push(aoData[i].value);
+				}
+
+				if ( aoData[i].name.indexOf( 'sSortDir_', 0) !== -1 ) {
+					sortOrder.push(aoData[i].value);
+				}
 			}
-				
+
+			if ( sortingCols > 0 ) {
+				for ( i = 0; i < sortingCols; i++ ) {
+					var info = columns[sortColumns[i]] + ":" + sortOrder[i];
+					_tmp.push(info);
+				}
+				order = _tmp.join('|');
+			}
+
 			$.ajax( {
-				"dataType": 'json', 
-				"type": "POST", 
-				"url": sSource, 
+				"dataType": 'json',
+				"type": "POST",
+				"url": sSource,
 				"data": [
 					{ 'name' : 'username',	'value' : ( $('#ml_search').exists() ) ? $('#ml_search').val() : '' },
 					{ 'name' : 'limit', 	'value' : limit },
@@ -110,15 +129,15 @@ $(document).ready(function() {
 					{ 'name' : 'loop', 		'value' : loop },
 					{ 'name' : 'numOrder',	'value' : sortingCols },
 					{ 'name' : 'order',		'value' : order }
-				], 
+				],
 				"success": fnCallback
 			} );
-		}		
+		}
 	} );
-	
+
 	//oTable.fnSetColumnVis( 0, false );
 	//oTable.fnSetColumnVis( 1, false );
-	
+
 } );
 
 </script>
@@ -138,8 +157,8 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="3%"><?=wfMsg('multilookupwikidbname')?></th>			
-			<th width="40%"><?=wfMsg('multilookupwikititle')?></th>			
+			<th width="3%"><?=wfMsg('multilookupwikidbname')?></th>
+			<th width="40%"><?=wfMsg('multilookupwikititle')?></th>
 			<th width="30%"><?=wfMsg('multilookupwikiurl')?></th>
 			<th width="5%"><?=wfMsg( 'multilookuplastedithdr' )?></th>
 			<th width="20%"><?=wfMsg('multilookupdetails')?></th>
@@ -153,8 +172,8 @@ $(document).ready(function() {
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th width="3%"><?=wfMsg('multilookupwikidbname')?></th>			
-			<th width="40%"><?=wfMsg('multilookupwikititle')?></th>			
+			<th width="3%"><?=wfMsg('multilookupwikidbname')?></th>
+			<th width="40%"><?=wfMsg('multilookupwikititle')?></th>
 			<th width="30%"><?=wfMsg('multilookupwikiurl')?></th>
 			<th width="5%"><?=wfMsg( 'multilookuplastedithdr' )?></th>
 			<th width="20%"><?=wfMsg('multilookupdetails')?></th>
