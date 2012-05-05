@@ -7,6 +7,7 @@
  * Provides an interface for sending messages seen on all wikis
  *
  * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
+ * @author Daniel Grunwell (grunny)
  * @date 2008-01-09
  * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -231,18 +232,22 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 	global $wgOut, $wgUser;
 	wfProfileIn(__METHOD__);
 
-	if (Wikia::isOasis()) {
+	if ( Wikia::isOasis() ) {
 		// Add site wide notifications that haven't been dismissed
-		$msgs = SiteWideMessages::getAllUserMessages($wgUser, false, false);
+		if ( $wgUser->isLoggedIn() ) {
+			$msgs = SiteWideMessages::getAllUserMessages( $wgUser, false, false );
+		} else {
+			$msgs = SiteWideMessages::getAllAnonMessages( $wgUser, false, false );
+		}
 
-		if (!empty($msgs)) {
-			wfProfileIn(__METHOD__ . '::parse');
-			foreach ($msgs as $msgId => &$data) {
-				$data['text'] = $wgOut->parse($data['text']);
+		if ( !empty( $msgs ) ) {
+			wfProfileIn( __METHOD__ . '::parse' );
+			foreach ( $msgs as $msgId => &$data ) {
+				$data['text'] = $wgOut->parse( $data['text'] );
 			}
-			wfProfileOut(__METHOD__ . '::parse');
+			wfProfileOut( __METHOD__ . '::parse' );
 
-			wfRunHooks('SiteWideMessagesNotification', array($msgs));
+			wfRunHooks( 'SiteWideMessagesNotification', array( $msgs ) );
 		}
 	}
 

@@ -39,6 +39,7 @@ define('MSG_REMOVED_NO', '0');
 define('MSG_REMOVED_YES', '1');
 define('MSG_LANG_ALL', 'all');
 define('MSG_LANG_OTHER', 'other');
+define('MSG_RECIPIENT_ANON', 'Anonymous users');
 
 class SiteWideMessages extends SpecialPage {
 
@@ -323,6 +324,12 @@ class SiteWideMessages extends SpecialPage {
 				$mRecipientName = count( $mUserNamesArr ) . ' users';
 				$mGroupName = '';
 				$mLang = array( MSG_LANG_ALL );
+				break;
+			case 'ANONS':
+				$mRecipientName = MSG_RECIPIENT_ANON;
+				$mGroupName = '';
+				$mUserNames = '';
+				break;
 		}
 
 		$sendToAll = $mSendModeWikis == 'ALL' && $mSendModeUsers == 'ALL';
@@ -410,6 +417,20 @@ class SiteWideMessages extends SpecialPage {
 							. $DB->AddQuotes($result['msgId']) . ', '
 							. MSG_STATUS_UNSEEN
 							. ');'
+							, __METHOD__
+						);
+						$dbInsertResult &= $dbResult;
+					}
+				} elseif ( $mSendModeUsers == 'ANONS' ) {
+					if ( !is_null( $result['msgId'] ) ) {
+						$dbResult = (boolean)$DB->query(
+							'INSERT INTO ' . MSG_STATUS_DB .
+							' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)' .
+							' VALUES (' .
+							$DB->addQuotes( $mWikiId ). ', 0, ' .
+							$DB->addQuotes( $result['msgId'] ) . ', ' .
+							MSG_STATUS_UNSEEN .
+							');'
 							, __METHOD__
 						);
 						$dbInsertResult &= $dbResult;
@@ -979,6 +1000,72 @@ class SiteWideMessages extends SpecialPage {
 		return $result;
 	}
 
+	static function getAllAnonMessages( $user, $dismissLink = true, $formatted = true ) {
+		global $wgCookiePrefix, $wgCityId, $wgLanguageCode;
+		global $wgExternalSharedDB;
+
+		wfProfileIn(__METHOD__);
+
+		$localCityId = isset( $wgCityId ) ? $wgCityId : 0;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+
+		$tmpMsg = array();
+
+		$dbResult = $dbr->query(
+			'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status' .
+			' FROM ' . MSG_TEXT_DB . ' USE INDEX(removed_mode_expire_date)' .
+			' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)' .
+			' WHERE msg_mode = ' . MSG_MODE_SELECTED .
+			' AND msg_recipient_id = 0' .
+			' AND msg_recipient_name = ' . $dbr->addQuotes( MSG_RECIPIENT_ANON ) .
+			' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')' .
+			' AND (msg_expire IS NULL OR msg_expire > ' . $dbr->addQuotes( date( 'Y-m-d H:i:s' ) ) . ')' .
+			' AND msg_removed = ' . MSG_REMOVED_NO .
+			" AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId )" .
+			';'
+			, __METHOD__
+		);
+
+		while ( $oMsg = $dbr->fetchObject( $dbResult ) ) {
+			if ( !isset( $_COOKIE[$wgCookiePrefix . 'swm-' . $oMsg->id] ) && self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
+				$tmpMsg[$oMsg->id] = array( 'wiki_id' => $oMsg->msg_wiki_id, 'text' => $oMsg->text, 'expire' => $oMsg->expire, 'status' => $oMsg->status );
+			}
+		}
+		if ( $dbResult !== false ) {
+			$dbr->freeResult($dbResult);
+		}
+		//sort from newer to older
+		krsort( $tmpMsg );
+
+		$messages = array();
+		$language = Language::factory($wgLanguageCode);
+		foreach ( $tmpMsg as $tmpMsgId => $tmpMsgData ) {
+			$messages[] = $dismissLink ?
+				"<div class=\"SWM_message\" id=\"msg_$tmpMsgId\">\n".
+				"{$tmpMsgData['text']}\n" .
+				"<span class=\"SWM_dismiss\"><nowiki>[</nowiki><span class=\"plainlinks\">[{{fullurl:Special:SiteWideMessages|action=dismiss&mID=$tmpMsgId}} " . wfMsg('swm-link-dismiss') . "]</span><nowiki>]</nowiki></span>" .
+				(is_null($tmpMsgData['expire']) ? '' : "<span class=\"SWM_expire\">" . wfMsg('swm-expire-info', array($language->timeanddate(strtotime($tmpMsgData['expire']), true, $user->getDatePreference()))) . "</span>") .
+				"<div>&nbsp;</div></div>"
+				:
+				"<div class=\"SWM_message\">{$tmpMsgData['text']}</div>";
+		}
+
+		//prevent double execution of all those queries
+		if ( count( $messages ) ) {
+			self::$hasMessages = true;
+		}
+
+		if ($formatted) {
+			$result = implode("\n", $messages);
+		} else {
+			$result = $tmpMsg;
+		}
+
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
+
 	/*
 	 * @author Lucas Garczewski <tor@wikia-inc.com>
 	 *
@@ -1004,10 +1091,12 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	static function dismissMessage($messageID) {
-		global $wgUser, $wgMemc, $wgExternalSharedDB, $wgTitle;
+		global $wgUser, $wgMemc, $wgExternalSharedDB, $wgTitle, $wgRequest;
 		$userID = $wgUser->GetID();
 		if (wfReadOnly()) {
 			return wfMsg('readonly');
+		} elseif ( !$wgUser->isLoggedIn() ) {
+			$wgRequest->response()->setcookie( 'swm-' . $messageID, 1, time() + 86400 /*24h*/ );
 		} elseif ($userID) {
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
@@ -1129,7 +1218,9 @@ class SiteWideMessagesPager extends TablePager {
 				break;
 
 			case 'msg_recipient_name':
-				$sRetval = $value ? htmlspecialchars($value) : ('<i>' . wfMsg('swm-label-mode-users-all') . '</i>');
+				$sRetval = $value ?
+					( $value === MSG_RECIPIENT_ANON ? ('<i>' . wfMsg( 'swm-label-mode-users-anon' ) . '</i>') : htmlspecialchars( $value ) ) :
+					( '<i>' . wfMsg('swm-label-mode-users-all') . '</i>' );
 				break;
 
 			case 'msg_text':
