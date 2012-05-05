@@ -89,6 +89,9 @@
 			#do they want it to be in the default search?
 			if($ezns_ans_search == 'on') {
 				#they do
+				if( !is_array( $nssd ) ) { //fix for nonset default
+					$nssd = array( 0 => true, 500 => true, 502 => true );
+				}
 				$nssd[$ezns_ans_id] = true;
 				$write['nssd'] = true;
 			}
@@ -142,8 +145,8 @@
 			#do they want it to be in the default search?
 			if($ezns_tns_search == 'on') {
 				#they do
-				if( !is_array($nssd) ) { //fix for nonset default, var is not local additive.
-					$nssd = array( 0=> true);
+				if( !is_array( $nssd ) ) { //fix for nonset default, var is not local additive.
+					$nssd = array( 0 => true, 500 => true, 502 => true );
 				}
 				$nssd[$ezns_tns_id] = true;
 				$write['nssd'] = true;
