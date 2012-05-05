@@ -412,6 +412,16 @@ $messages['nl'] = array(
 	'error-json-parse' => 'Er was een probleem met de gegevens die door onze servers zijn verzonden.\\nProbeer het opnieuw.',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'window-category-load-batch' => 'Waidari',
+	'window-article-button-close' => 'Schließe',
+	'window-article-button-back' => 'Zrigg',
+	'window-article-menu-search-label' => 'Suche',
+);
+
 /** Polish (Polski)
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @author Sp5uhe

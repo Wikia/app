@@ -691,6 +691,14 @@ $messages['nl'] = array(
 	'photopop-game-download-error-text' => 'Er is een fout opgetreden tijdens het downloaden van de spelgegevens. Probeer het alstublieft opnieuw.',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'photopop-game-progress' => 'Fodos',
+	'photopop-game-finished' => 'Ferdisch!',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -781,6 +789,13 @@ $messages['ps'] = array(
 	'photopop-game-month-9' => 'اکتوبر',
 	'photopop-game-month-10' => 'نومبر',
 	'photopop-game-month-11' => 'ډيسمبر',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'photopop-setup-category-label' => 'Categoria',
 );
 
 /** Russian (Русский)

@@ -188,6 +188,13 @@ $messages['de'] = array(
 	'protectsite-nologs' => 'nicht in den Logbüchern anzeigen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'protectsite-maxtimeout' => 'Maximum:',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Peter17

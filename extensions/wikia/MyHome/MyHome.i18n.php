@@ -2308,9 +2308,17 @@ $messages['pdc'] = array(
 	'myhome-hot-spots-definition' => 'Bledder mit de meescht Schreiwer vun de letscht $1 Daag.',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
 $messages['pfl'] = array(
 	'myhome-feed-edit' => 'bearwaide',
+	'myhome-feed-move' => 'Said vaschowe',
+	'myhome-feed-talkpage' => 'Dischbediersaid',
+	'myhome-feed-delete' => 'geleschd',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Bild dzugfieschd|Bilda dzugfieschd}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Wideo dzugfieschd|Wideos dzugfieschd}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kadegorie dzugfieschd|Kadegorije dzugfieschd}}',
 );
 
 /** Polish (Polski)
@@ -2324,7 +2332,7 @@ $messages['pl'] = array(
 	'wikiactivity' => 'Aktywność na Wiki',
 	'myhome-activity-more' => 'więcej',
 	'myhome-activity-feed' => 'Aktywność',
-	'myhome-activity-feed-empty' => "Zaangażuj się w twórczość na tej wiki.
+	'myhome-activity-feed-empty' => "Zaangażuj się w tworzenie tej wiki.
 Kliknij na '''[[Special:CreatePage|Utwórz stronę]]'' ' aby zacząć pisać!",
 	'myhome-watchlist-feed' => 'Obserwowane',
 	'myhome-watchlist-feed-empty' => 'Strony można dodać do Twojej Listy Obserwowanych klikając łącze „{{int:watch}}" na pasku u góry strony.
@@ -2343,7 +2351,7 @@ Kliknij na '''[[Special:CreatePage|Utwórz stronę]]'' ' aby zacząć pisać!",
 	'myhome-feed-blogcomment' => 'Komentarz',
 	'myhome-feed-delete' => 'usunięto',
 	'myhome-feed-image' => 'obraz dodany',
-	'myhome-feed-video' => 'wideo dodane',
+	'myhome-feed-video' => 'film dodany',
 	'myhome-feed-categorization' => 'kategoryzacja',
 	'myhome-feed-created-by' => 'utworzony przez $1',
 	'myhome-feed-added-by' => 'dodany przez $1',
@@ -2394,7 +2402,7 @@ Jeśli jesteś założycielem lub administratorem tej Wiki, możesz zmienić tą
 * wyróżnić użytkowników , którzy dodali coś specjalnego do wiki
 
 * lub tylko dodać kilka słów zachęty",
-	'myhome-hot-spots-definition' => 'Strony z najczęściej edytowane w przeciągu {{PLURAL:$1| ostatniego dnia| ostatnich $1 dni}}.',
+	'myhome-hot-spots-definition' => 'Strony z największą liczbą edycji w ciągu {{PLURAL:$1|ostatniego dnia|ostatnich $1 dni}}.',
 	'myhome-default-view-checkbox' => 'Niech zakładka $1 będzie moją domyślną',
 	'myhome-default-view-success' => 'Zmiana została zapisana',
 	'tooltip-pt-myhome' => 'Przejdź do Strony domowej',
@@ -2546,6 +2554,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'myhome-desc' => 'Uma página privada para utilizadores autenticados',
@@ -2629,6 +2638,7 @@ Pode, por exemplo:
 	'myhome-default-view-success' => 'Foi configurada',
 	'tooltip-pt-myhome' => 'Ir para A Minha Casa',
 	'activityfeed' => 'Actividade recente',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -2961,10 +2961,13 @@ $messages['pdc'] = array(
 );
 
 /** Pälzisch (Pälzisch)
+ * @author Manuae
  * @author SPS
  */
 $messages['pfl'] = array(
 	'userrenametool-submit' => 'Benutzer umbenenne',
+	'userrenametool-confirm-yes' => 'Ja',
+	'userrenametool-confirm-no' => 'Nä',
 );
 
 /** Polish (Polski)

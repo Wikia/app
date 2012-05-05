@@ -2234,6 +2234,7 @@ $messages['ps'] = array(
 /** Portuguese (Português)
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'wmu-upload-image' => 'Enviar Imagem',
@@ -2274,7 +2275,7 @@ $messages['pt'] = array(
 	'wmu-success' => '<h1>Sucesso</h1>A sua imagem foi inserida.',
 	'wmu-success-placeholder' => '<h1>Sucesso</h1>',
 	'wmu-return' => 'Voltar à edição',
-	'wmu-back' => 'voltar',
+	'wmu-back' => 'Selecionar outra foto',
 	'wmu-close' => 'fechar',
 	'wmu-warn1' => 'Antes tem de especificar a consulta!',
 	'wmu-warn2' => 'Antes tem de seleccionar o ficheiro!',
@@ -2307,6 +2308,7 @@ $messages['pt'] = array(
 	'wmu-replace-default-caption' => 'substituir legenda padrão',
 	'wmu-appearance-in-article' => 'Aspecto no Artigo',
 	'wmu-alignment' => 'Alinhamento',
+	'wmu-file-protected' => 'Esta imagem está protegida',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -2802,6 +2804,7 @@ $messages['uk'] = array(
  */
 $messages['yi'] = array(
 	'wmu-license' => 'ליצענץ',
+	'wmu-caption' => 'באשרייבונג',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

@@ -338,6 +338,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'stafflog-desc' => 'Registo centralizado para a equipa',
@@ -346,6 +347,7 @@ $messages['pt'] = array(
 	'stafflog-piggybackloginmsg' => 'Personificação $1 - utilizador $2 autenticou-se como $3',
 	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - utilizador $2 saiu da conta $3',
 	'right-stafflog' => 'Pode ver o Registo da Equipa',
+	'stafflog-filter-user' => 'Utilizador:',
 );
 
 /** Brazilian Portuguese (Português do Brasil) */

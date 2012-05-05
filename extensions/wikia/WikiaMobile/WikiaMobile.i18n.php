@@ -618,6 +618,15 @@ $messages['ps'] = array(
 	'wikiamobile-ad-close' => 'تړل',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'wikiamobile-menu' => 'Menu',
+	'wikiamobile-article-categories' => 'Categorias',
+	'wikiamobile-ad-close' => 'fechar',
+);
+
 /** Brazilian Portuguese (Português do Brasil)
  * @author Caio1478
  * @author Pedroca cerebral

@@ -549,6 +549,7 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wikiyo newe vırazdar]]',
 	'cnw-error-database' => 'Datay $1 qedya',
 );
 
@@ -1648,6 +1649,13 @@ $messages['nl-informal'] = array(
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 {{PLURAL:$1|wiki|wiki's}} per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'cnw-badword-header' => 'Imma longsoam',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -1772,6 +1780,7 @@ $messages['ps'] = array(
 /** Portuguese (Português)
  * @author Geitost
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
@@ -1833,6 +1842,7 @@ Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por 
 	'cnw-welcome-help' => 'Encontrará respostas, conselhos e mais na <a href="http://pt.wikia.com">Comunidade Central</a>.',
 	'cnw-error-general' => 'Ocorreu um erro não identificado ao criar a sua wiki. Tente novamente mais tarde, por favor.',
 	'cnw-error-general-heading' => 'Erro ao Criar Wiki Nova',
+	'cnw-error-database' => 'Erro da Base de Dados: $1',
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Não use estas palavras impróprias ou proibidas na Descrição da Wiki, por favor: $1',
 	'cnw-error-wiki-limit-header' => 'O limite de wikis foi atingido',
@@ -2283,9 +2293,11 @@ Magpataas ng antas sa pamamagitan ng PayPal upang makakuha ng wiking walang anun
 );
 
 /** Turkish (Türkçe)
+ * @author Erdemaslancan
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'cnw-or' => 'ya da',
 	'cnw-signup' => 'Hesap Oluştur',
 	'cnw-desc-change-lang' => 'değiştir',
 	'cnw-desc-lang' => 'Dil',

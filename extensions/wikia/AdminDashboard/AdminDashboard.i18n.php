@@ -723,12 +723,14 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Karika
  * @author Lexaeus 94
  */
 $messages['it'] = array(
 	'admindashboard-tab-advanced' => 'Avanzato',
 	'admindashboard-tab-general' => 'Generale',
 	'admindashboard-control-recent-changes-label' => 'Cambiamenti Recenti',
+	'admindashboard-control-top-navigation-label' => 'Navigazione superiore',
 	'admindashboard-control-wiki-features-label' => 'Wiki Funzioni',
 	'admindashboard-control-invite-label' => 'Invita',
 	'admindashboard-control-invite-tooltip' => 'Invita altre persone a usare questa wiki.',
@@ -1070,13 +1072,21 @@ $messages['nl'] = array(
 	'admindashboard-control-categories-list-tooltip' => 'Alle categorieën die op uw wiki gebruikt worden bekijken.',
 	'admindashboard-control-add-page-label' => 'Pagina toevoegen',
 	'admindashboard-control-add-page-tooltip' => 'Een nieuwe pagina aan uw wiki toevoegen.',
-	'admindashboard-control-add-photo-label' => 'Foto toevoegen',
-	'admindashboard-control-add-photo-tooltip' => "Nieuwe foto's aan uw wiki toevoegen.",
+	'admindashboard-control-add-photo-label' => 'Afbeelding toevoegen',
+	'admindashboard-control-add-photo-tooltip' => 'Nieuwe afbeeldingen aan uw wiki toevoegen.',
 	'admindashboard-control-add-blog-label' => 'Blogbericht toevoegen',
 	'admindashboard-control-add-blog-tooltip' => 'Een nieuw blogbericht aan uw wiki toevoegen.',
-	'admindashboard-control-multiple-upload-label' => "Meerdere foto's toevoegen",
+	'admindashboard-control-multiple-upload-label' => 'Meerdere afbeeldingen toevoegen',
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload meerdere afbeeldingen tegelijkertijd met dit uploadprogramma.',
 	'admindashboard-back-to-dashboard' => 'Terug naar het Dashboard',
+);
+
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'admindashboard-toolbar-link' => 'Admin',
+	'admindashboard-controls-wiki-header' => 'Wiki',
 );
 
 /** Polish (Polski)
@@ -1161,6 +1171,8 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'admindashboard-toolbar-link' => 'Administrador',
 	'admindashboard-tab-advanced' => '↓Avançado',
+	'admindashboard-tab-general' => 'Geral',
+	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-recent-changes-label' => 'Alterações Recentes',
 	'admindashboard-control-user-list-label' => 'Lista de Utilizadores',
 	'admindashboard-control-user-list-tooltip' => 'Exibir uma lista completa dos usuários que participaram no seu wiki.',

@@ -4728,6 +4728,13 @@ Er gebeurt veel op je wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er alle
 	'founderemails-email-10-day-wikiahelps-text' => 'Je kunt ook andere Wikianen om hulp bij je wiki vragen door berichten te plaatsen in de forums op <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'founderemails-email-anon-edit-greeting' => 'Hey $USERNAME,',
+);
+
 /** Polish (Polski)
  * @author Bartek50003
  * @author BeginaFelicysym
@@ -5233,6 +5240,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -5286,7 +5294,7 @@ Parece que o utilizador registado $EDITORNAME editou a sua wiki! Que tal ir à p
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Olá $USERNAME,<br /><br />
 Parece que o utilizador registado $EDITORNAME editou a sua wiki! Que tal ir à <a href="$EDITORTALKPAGEURL">página de discussão</a> e dizer-lhe olá?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
-	'founderemails-email-page-edited-anon-subject' => 'Alguém alterou a sua wiki!',
+	'founderemails-email-page-edited-anon-subject' => 'Um amigo misterioso editou $WIKINAME',
 	'founderemails-email-page-edited-anon-body' => 'Olá $USERNAME,
 
 Parece que alguém editou a sua wiki! Que tal visitá-la $MYHOMEURL e ver o que foi alterado?
@@ -5356,14 +5364,19 @@ Parece que alguém editou a sua wiki! Que tal visitá-la $MYHOMEURL e ver o que 
 Parece que alguém editou a sua wiki! Que tal <a href="$MYHOMEURL">visitá-la</a> e ver o que foi alterado?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
 	'founderemails-lot-happening-subject' => 'Passa-se muita coisa no seu site hoje!',
-	'founderemails-lot-happening-body' => 'Olá, $ FOUNDERNAME, 
+	'founderemails-lot-happening-body' => 'Olá, $USERNAME, 
 
-Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o que se tem passado.
+Parabéns, há  muitas coisas a acontecerem em $WIKINAME, $WIKIURL.
 
--- A Equipa Wikia',
+Se ainda não o fez, pode ir à Atividade do Wiki e ver todo o grande trabalho que foi executado.
+
+Uma vez que há muito a acontecer, poderá também querer alterar as suas preferências de email para modo relatório. Com este modo ativo, receberá um email que lista toda a atividade no seu wiki diariamente.
+
+A Equipa Wikia',
 	'founderemails-lot-happening-body-HTML' => 'Olá, $ FOUNDERNAME,<br /><br />
 Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o que se tem passado.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa Wikia</div>',
+	'founderemails-email-lot-happening-button' => 'Ver Atividades',
 	'founderemails-email-footer-line1' => 'Para conhecer as últimas novidades na Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'founderemails-email-footer-line2' => 'Quer decidir quais as mensagens de correio electrónico que recebe? Faça-o em <a href="$WIKIURL/wiki/Special:Preferences" style="color:#2a87d5;text-decoration:none;">$WIKIURL/wiki/Especial:Preferências</a>',
 	'founderemails-email-0-day-heading' => 'É um prazer conhecê-lo(a) $USERNAME,',
@@ -5398,13 +5411,14 @@ Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o 
 	'founderemails-email-10-day-congratulations' => 'Como o tempo voa! Já passaram 10 dias desde que iniciou a $WIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Envolva outras pessoas no seu projecto e exponha o bom trabalho que tem estado a fazer! Algumas formas de espalhar a palavra são estas:',
 	'founderemails-email-10-day-share-heading' => 'A sua mãe não lhe ensinou que devia Partilhar?',
-	'founderemails-email-10-day-share-content' => 'Use o botão Partilhar na barra de ferramentas, nas páginas de artigos e nas fotos para mostrá-las aos seus amigos e seguidores no Facebook, no Twitter e noutros sites populares.',
+	'founderemails-email-10-day-share-content' => 'Use o botão Partilhar na página principal do seu wiki, nas páginas de artigos e nas fotos para exibi-las aos seus amigos e seguidores no Facebook.',
 	'founderemails-email-10-day-email-heading' => 'Aproveite o poder do correio electrónico.',
 	'founderemails-email-10-day-email-content' => 'Envie mensagens de correio electrónico àqueles que conhece e sabe que podem ter interesse no tópico da sua wiki ou estar interessados em ajudá-lo, como um amigo da escola ou um colega de trabalho. Também pode enviar fotos específicas da sua wiki, usando o botão de envio por correio electrónico.',
 	'founderemails-email-10-day-join-heading' => 'Junte-se a sites semelhantes.',
 	'founderemails-email-10-day-join-content' => 'Peça ajuda às pessoas de outros fóruns ou sites sobre temas semelhantes ao da sua wiki, colocando tópicos ou comentários nos fóruns. Se possível, contacte os administradores e inquira se têm interesse em trocar links; eles colocam um link para a sua wiki no site deles e você coloca um link para o site deles na sua wiki.',
 	'founderemails-email-10-day-wikiahelps-text' => 'Também pode pedir ajuda a outros utilizadores da Wikia nos fóruns da <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
 	'founderemails-email-10-day-wikiahelps-signature' => 'Continue o bom trabalho!<br />A Equipa da Wikia',
+	'founderemails-email-complete-digest-greeting' => 'Olá, $USERNAME,',
 );
 
 /** Romanian (Română)

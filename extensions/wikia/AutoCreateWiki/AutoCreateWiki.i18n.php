@@ -3013,7 +3013,7 @@ $messages['nl'] = array(
 	'autocreatewiki-title-template' => '$1 wiki',
 	'autocreatewiki-limit-day' => "Wikia heeft het maximum aantal nieuwe wiki's voor vandaag ($1) overschreden.",
 	'autocreatewiki-limit-creation' => "U hebt het maximum aantal nieuwe wiki's in 24 uur ($1) overschreden.",
-	'autocreatewiki-empty-field' => 'Vul dit veld alstublieft in.',
+	'autocreatewiki-empty-field' => 'Vul dit veld in.',
 	'autocreatewiki-bad-name' => 'De naam kan geen speciale tekens bevatten (zoals $ of @) en moet bestaan uit één woord, zonder hoofdletters en zonder spaties.',
 	'autocreatewiki-invalid-wikiname' => 'De naam kan geen speciale tekens (zoals $ of @) bevatten en kan niet leeg zijn.',
 	'autocreatewiki-violate-policy' => 'Deze wiki bevat een naam dat ons beleid voor namen overschrijdt.',
@@ -3029,45 +3029,45 @@ We raden u aan aan een van wiki's te gaan werken.",
 	'autocreatewiki-busy-username' => 'Deze gebruikersnaam is al in gebruik.',
 	'autocreatewiki-blocked-username' => 'U kunt geen gebruiker aanmaken.',
 	'autocreatewiki-user-notloggedin' => 'Uw gebruiker is gemaakt maar u bent niet aangemeld!',
-	'autocreatewiki-empty-language' => 'Selecteer alstublieft de taal voor de wiki.',
-	'autocreatewiki-empty-category' => 'Selecteer alstublieft een van de categorieën.',
+	'autocreatewiki-empty-language' => 'Selecteer de taal voor de wiki.',
+	'autocreatewiki-empty-category' => 'Selecteer een categorie.',
 	'autocreatewiki-empty-wikiname' => 'De naam van de wiki kan niet leeg zijn.',
-	'autocreatewiki-empty-username' => 'Gebruikersnaam kan niet leeg zijn.',
-	'autocreatewiki-empty-password' => 'Wachtwoord kan niet leeg zijn.',
-	'autocreatewiki-empty-retype-password' => 'Herhaling wachtwoord kan niet leeg zijn.',
+	'autocreatewiki-empty-username' => 'De gebruikersnaam kan niet leeg zijn.',
+	'autocreatewiki-empty-password' => 'Het wachtwoord kan niet leeg zijn.',
+	'autocreatewiki-empty-retype-password' => 'Het herhaalde wachtwoord kan niet leeg zijn.',
 	'autocreatewiki-category-label' => 'Categorie:',
 	'autocreatewiki-category-other' => 'Overige',
 	'autocreatewiki-set-username' => 'Plaats eerst gebruikersnaam.',
-	'autocreatewiki-invalid-category' => 'Ongeldige keuze van categorie.
-Kies er alstublieft een uit de dropdownlijst.',
+	'autocreatewiki-invalid-category' => 'Ongeldige categoriekeuze.
+Kies een categorie uit de lijst.',
 	'autocreatewiki-invalid-language' => 'Ongeldige taalkeuze.
-Kies er alstublieft een uit de dropdownlijst.',
-	'autocreatewiki-invalid-retype-passwd' => 'Herhaal alstublieft hetzelfde wachtwoord.',
+Kies een taal uit de lijst.',
+	'autocreatewiki-invalid-retype-passwd' => 'Herhaal hetzelfde wachtwoord',
 	'autocreatewiki-invalid-birthday' => 'Ongeldige geboortedatum',
 	'autocreatewiki-limit-birthday' => 'Kan geen registratie creëren.',
 	'autocreatewiki-log-title' => 'Uw wiki wordt aangemaakt',
 	'autocreatewiki-step0' => 'Proces aan het initialiseren ...',
 	'autocreatewiki-stepdefault' => 'Proces is aan het werk. Een moment geduld alstublieft...',
-	'autocreatewiki-errordefault' => 'Proces was niet afgemaakt ...',
-	'autocreatewiki-step1' => 'Afbeeldingenmap aan het aanmaken…',
-	'autocreatewiki-step2' => 'Database aan het creëren ...',
-	'autocreatewiki-step3' => 'Standaard informatie in de database aan het plaatsen ...',
+	'autocreatewiki-errordefault' => 'Het proces was niet afgerond...',
+	'autocreatewiki-step1' => 'Afbeeldingenmap aanmaken…',
+	'autocreatewiki-step2' => 'Database aan het aanmaken...',
+	'autocreatewiki-step3' => 'Standaardgegevens in de database aan het laden...',
 	'autocreatewiki-step4' => 'Standaard afbeeldingen en logo aan het kopiëren ...',
-	'autocreatewiki-step5' => 'Standaard variabelen in de database aan het plaatsen ...',
-	'autocreatewiki-step6' => 'Standaard tabellen in de database aan het plaatsen ...',
-	'autocreatewiki-step7' => 'Taal aan het plaatsen...',
-	'autocreatewiki-step8' => 'Gebruikersgroepen en categorieën aan het plaatsen ...',
+	'autocreatewiki-step5' => 'Standaard variabelen in de database aan het laden...',
+	'autocreatewiki-step6' => 'Standaard tabellen in de database aan het laden...',
+	'autocreatewiki-step7' => 'Taal aan het instellen...',
+	'autocreatewiki-step8' => 'Gebruikersgroepen en categorieën aan het instellen ...',
 	'autocreatewiki-step9' => 'Variabelen voor de nieuwe wiki aan het instellen...',
 	'autocreatewiki-step10' => "Pagina's op centrale wiki aan het instellen...",
 	'autocreatewiki-step11' => 'E-mail aan het verzenden naar gebruiker...',
-	'autocreatewiki-redirect' => 'Bezig met het doorverwijzen naar de nieuwe Wiki: $1 ...',
+	'autocreatewiki-redirect' => 'Bezig met het doorverwijzen naar de nieuwe wiki: $1 ...',
 	'autocreatewiki-congratulation' => 'Gefeliciteerd!',
 	'autocreatewiki-welcometalk-log' => 'Welkomstbericht',
 	'autocreatewiki-regex-error-comment' => 'gebruikt in wiki $1 (volledige tekst: $2)',
-	'autocreatewiki-step2-error' => 'Database bestaat al!',
-	'autocreatewiki-step3-error' => 'Kan standaard informatie niet in de database plaatsen!',
-	'autocreatewiki-step6-error' => 'Kan de standaard tabellen niet in de database plaatsen!',
-	'autocreatewiki-step7-error' => 'Kan de starter database voor talen niet kopiëren!',
+	'autocreatewiki-step2-error' => 'De database bestaat al!',
+	'autocreatewiki-step3-error' => 'Het was niet mogelijk de standaard gegevens in de database te laden!',
+	'autocreatewiki-step6-error' => 'Het was niet mogelijk de standaard tabellen in de database te laden!',
+	'autocreatewiki-step7-error' => 'Het was niet mogelijk de database voor de taal te kopiëren!',
 	'autocreatewiki-protect-reason' => 'Onderdeel van de officiële interface',
 	'autocreatewiki-welcomesubject' => '$1 is aangemaakt!',
 	'autocreatewiki-welcomebody' => "Hallo $2!
@@ -3181,6 +3181,44 @@ Dit is een volledig nieuw project, dus laat het ons weten als je met vragen zit.
 <p>Dit is een volledig nieuw project, dus laat het ons weten als je met vragen zit.</p>
 
 <p>-- Wikia gemeenschapsteam</p>',
+);
+
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'autocreatewiki' => 'Ä naijes Wiki grinde',
+	'autocreatewiki-page-title-default' => 'Ä naijes Wiki grinde',
+	'autocreatewiki-page-title-answers' => 'Ä naiji Oandwoad-Said mache',
+	'createwiki' => 'Ä naijes Wiki grinde',
+	'autocreatewiki-birthdate' => 'Gbuadsdaach:',
+	'autocreatewiki-done' => 'Ferdisch',
+	'autocreatewiki-error' => 'Fehla',
+	'autocreatewiki-success-get-started' => 'Alla, fong oa!',
+	'autocreatewiki-title-template' => '$1 Wiki',
+	'autocreatewiki-invalid-username' => 'De Benudzanoame isch ugildisch.',
+	'autocreatewiki-busy-username' => "De Benudzanoame hods b'raids.",
+	'autocreatewiki-blocked-username' => 'Du deafschd kä Kondo oalesche.',
+	'autocreatewiki-user-notloggedin' => 'Doi Kondo isch erzaischd worre, awa bischd ned oagmeld!',
+	'autocreatewiki-empty-language' => 'Wehlda ä Schbrooch fa doi Wiki.',
+	'autocreatewiki-invalid-birthday' => 'Ugilidische Gbuadsdaach',
+	'autocreatewiki-congratulation' => 'Gliggwinsch',
+	'autocreatewiki-welcomebody' => 'Hey $2!
+
+Doi Wiki isch eazaischd worre! Guug do: <$1>
+
+Ferdisch fas loschlesche? S\'sin ä paa Ling\'gs uff doi Dischbediersaid (<5 $>) domid laischda de Oischdiesch in die viele B\'raisch vun Wikia finne dudsch. Wonn Frooche hoschd, doan oandword uff die Mail oda guggda die Hilfsaid <http://help.wikia.com> oa.
+
+Du konschd a noch die Said <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> un <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> oagugge, wus a Hilf un Naijischkaide gibd.
+
+Alla hob!
+
+$3
+Wikia Community Support
+<http://community.wikia.com/wiki/User:$4>
+
+___________________________________________
+* Wilschd wenischa Nochrischde krische? Konschd disch ausschraiwe oda doi doi E-Mail Oischdellunge änare: http://community.wikia.com/Special:Preferences',
 );
 
 /** Polish (Polski)

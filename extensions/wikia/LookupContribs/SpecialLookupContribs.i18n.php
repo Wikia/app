@@ -959,6 +959,14 @@ $messages['pdc'] = array(
 	'lookupcontribsgo' => 'Zeige',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'lookupcontribsrestore' => 'Widdaheaschdelle',
+	'lookupcontribsall' => 'alle',
+);
+
 /** Polish (Polski)
  * @author Sovq
  */

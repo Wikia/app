@@ -3141,6 +3141,30 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'walldelete-toggle' => 'Volledig verwijderen inschakelen voor berichten op prikborden',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'wall-no-title' => 'Kän Tidl',
+	'wall-message-undoremove' => "Rigg'gängisch",
+	'wall-toolbar-history' => 'Gschischd',
+	'wall-message-remove' => 'Wegnemme',
+	'wall-thread-removed' => "Weg'gnumme",
+	'wall-thread-deleted' => 'Geleschd',
+	'wall-button-to-submit-reply' => 'Oandwoad',
+	'wall-button-cancel-changes' => 'Uffhere',
+	'wall-button-done-source' => 'Ferdisch',
+	'wall-message-more' => 'Waidari',
+	'wall-message-delete' => 'Lesche',
+	'wall-action-all-confirm-cancel' => 'Uffhere',
+	'wall-delete-error-title' => 'Fehla',
+	'wall-action-admin-confirm-ok' => 'Lesche',
+	'wall-action-restore-confirm-ok' => 'Widdaheaschdelle',
+	'wall-action-rev-confirm-ok' => 'Ja, lesche',
+	'wall-notifications-markasread-all-wikis' => 'Alli Wikis',
+	'wall-notifications-markasread-this-wiki' => 'Des Wiki',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -3448,6 +3472,13 @@ $messages['ps'] = array(
 	'wall-history-rail-block' => 'بنديز لګول',
 	'wall-history-action-view' => 'کتل',
 	'prefs-email-wall-v2' => 'پيغام دېوال',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'wall-delete-error-title' => 'Erro',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

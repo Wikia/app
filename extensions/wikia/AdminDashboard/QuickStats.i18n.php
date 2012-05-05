@@ -431,7 +431,7 @@ $messages['nl'] = array(
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Weergaven',
 	'quickstats-header-edits' => 'Bewerkingen',
-	'quickstats-header-photos' => "Foto's",
+	'quickstats-header-photos' => 'Afbeeldingen',
 	'quickstats-header-likes' => 'Vind ik leuks',
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totalen',
@@ -440,6 +440,17 @@ $messages['nl'] = array(
 	'quickstats-number-shortening-millions' => '$1*10ˆ6',
 	'quickstats-number-shortening-billions' => '$1*10ˆ9',
 	'quickstats-ga-broken-message' => 'De weergavekolom is momenteel buiten gebruik. We zijn bezig om hem snel terug te brengen! [$1 Meer informatie].',
+);
+
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'quickstats-header-date' => 'Dadum',
+	'quickstats-header-views' => 'Uffruf',
+	'quickstats-header-edits' => 'Bearwaidunge',
+	'quickstats-header-photos' => 'Fodos',
+	'quickstats-totals-label' => 'Gsoamd',
 );
 
 /** Polish (Polski)
@@ -494,6 +505,7 @@ $messages['ps'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'quickstats-header-date' => 'Data',
 	'quickstats-totals-label' => 'Totais',
 );
 

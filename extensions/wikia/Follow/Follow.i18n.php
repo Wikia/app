@@ -2044,6 +2044,13 @@ $messages['pdc'] = array(
 	'wikiafollowedpages-userpage-more' => 'Mehner',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'wikiafollowedpages-userpage-hide' => 'vaschdegle',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq

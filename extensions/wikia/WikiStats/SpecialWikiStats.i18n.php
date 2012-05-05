@@ -5801,6 +5801,7 @@ $messages['pfl'] = array(
 	'wikistats_show' => 'Zaische',
 	'wikistats_hide' => 'Vaschdegle',
 	'wikistats_edits' => 'Bearwaidunge',
+	'wikistats_title' => 'Tidl',
 );
 
 /** Polish (Polski)

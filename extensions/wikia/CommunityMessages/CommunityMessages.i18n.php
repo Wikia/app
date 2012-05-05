@@ -260,18 +260,20 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'communitymessages-desc' => 'Extensão de ajuda para as Mensagens da Comunidade',
-	'communitymessages-notice-msg' => 'As [[Special:ActivityFeed|Mensagens da Comunidade foram actualizadas]].',
+	'communitymessages-notice-msg' => 'As [[Special:WikiActivity|Mensagens da Comunidade foram acualizadas]].',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Giro720
+ * @author 555
  */
 $messages['pt-br'] = array(
-	'communitymessages-desc' => 'Extensão de ajuda para as Mensagens da Comunidade',
-	'communitymessages-notice-msg' => 'As [[Special:ActivityFeed|Mensagens da Comunidade foram atualizadas]].',
+	'communitymessages-desc' => 'Extensão para auxiliar em Mensagens Comunitárias',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|As Mensagens Comunitárias foram atualizadas]].',
 );
 
 /** Tarandíne (Tarandíne)

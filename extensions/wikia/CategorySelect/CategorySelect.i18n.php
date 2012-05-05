@@ -767,6 +767,14 @@ $messages['pdc'] = array(
 	'categoryselect-button-save' => 'Beilege',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'categoryselect-button-save' => 'Schbaischare',
+	'categoryselect-button-cancel' => 'Uffhere',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -836,6 +844,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'categoryselect-desc' => 'Fornece uma interface de gestão das categorias de um artigo sem editar o artigo completo.',
@@ -857,18 +866,20 @@ $messages['pt'] = array(
 	'categoryselect-error-user-rights' => 'Erro de permissões.',
 	'categoryselect-error-db-locked' => 'A base de dados está trancada.',
 	'categoryselect-edit-abort' => 'A alteração que tentou fazer foi abortada pelo hook de uma extensão',
-	'tog-disablecategoryselect' => 'Desligar a Categorização',
+	'tog-disablecategoryselect' => 'Desligar o módulo de Categorias (aplica-se apenas se a edição em modo visual tiver sido desativada)',
+	'tog-disablecategoryselect-v2' => 'Desligar o módulo de Categorias (aplica-se apenas se a edição em modo visual estiver desativada)',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
+ * @author 555
  */
 $messages['pt-br'] = array(
-	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias em um artigo sem necessitar editar o artigo todo.',
+	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias de uma página sem que seja necessário editá-lo por inteiro',
 	'categoryselect-code-view' => 'Ver em modo de código',
-	'categoryselect-visual-view' => 'Ver botões',
+	'categoryselect-visual-view' => 'Exibição visual',
 	'categoryselect-infobox-caption' => 'Opções de categoria',
 	'categoryselect-infobox-category' => 'Dê o nome da categoria:',
 	'categoryselect-infobox-sortkey' => 'Classifique este artigo na categoria "$1" com o nome de:',

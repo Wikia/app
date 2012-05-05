@@ -172,6 +172,15 @@ $messages['de-formal'] = array(
 	'sponsor-form-email' => 'Ihre E-Mail-Adresse:',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'sponsor-form-email' => 'E-postay şıma:',
+	'sponsorpage-edit' => 'Bıvurne',
+	'sponsorpage-save' => 'Qeyd ke',
+);
+
 /** Spanish (Español)
  * @author Benfutbol10
  * @author Crazymadlover
