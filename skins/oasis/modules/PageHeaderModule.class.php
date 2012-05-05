@@ -61,8 +61,9 @@ class PageHeaderModule extends WikiaController {
 		}
 		// "Add topic"
 		else if (isset($this->content_actions['addsection'])) {
-			$this->action = $this->content_actions['addsection'];
-			$this->action['text'] = wfMsg('oasis-page-header-add-topic');
+			$action = $this->content_actions['addsection'];
+			$action['text'] = wfMsg('oasis-page-header-add-topic');
+			$this->action = $action;
 
 			$this->actionImage = MenuButtonModule::ADD_ICON;
 			$this->actionName = 'addtopic';
