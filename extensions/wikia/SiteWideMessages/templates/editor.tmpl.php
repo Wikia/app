@@ -158,6 +158,17 @@
 								<?= wfMsg( 'swm-label-mode-users-user-multi-hint' ) ?>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<input name="mSendModeUsers" id="mSendModeUsersIP" type="radio" value="ANONS"<?= $formData['sendModeUsers'] == 'ANONS' ? ' checked="checked"' : ''?>/>
+							</td>
+							<td>
+								<label for="mSendModeUsersIP"><?= wfMsg( 'swm-label-mode-users-anon' ) ?></label>
+							</td>
+							<td colspan="2">
+								<?= wfMsg( 'swm-label-mode-users-anon-hint' ) ?>
+							</td>
+						</tr>
 					</table>
 				</fieldset>
 			</fieldset>
@@ -264,6 +275,13 @@ function grayOut( e ) {
 			$( '#mSendModeWikisW' ).prop( 'disabled', true );
 			$( 'input.swm-lang-checkbox' ).prop( 'disabled', true );
 			break;
+		case 'mSendModeUsersIP':
+			$( '#mSendModeWikisA' ).prop( 'disabled', false );
+			$( '#mSendModeWikisC' ).prop( 'disabled', true );
+			$( '#mSendModeWikisH' ).prop( 'disabled', true );
+			$( '#mSendModeWikisW' ).prop( 'disabled', false );
+			$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
+			break;
 		default:
 			if ( $( '#mSendModeWikisA' ).prop( 'checked' ) ) {
 				$( '#mSendModeUsersA' ).prop( 'disabled', false );
@@ -274,6 +292,6 @@ function grayOut( e ) {
 			$( 'input.swm-lang-checkbox' ).prop( 'disabled', false );
 	}
 }
-$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' ).add( '#mSendModeWikisW' ).add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' ).bind( 'click', grayOut );
+$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' ).add( '#mSendModeWikisW' ).add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' ).add( '#mSendModeUsersIP' ).bind( 'click', grayOut );
 </script>
 <!-- e:<?= __FILE__ ?> -->
