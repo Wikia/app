@@ -106,7 +106,7 @@ class MultipleLookupCore {
 
 			$oRes = $dbs->select(
 				array( '`specials`.`multilookup`' ),
-				array( 'ml_city_id' ),
+				array( 'ml_city_id', 'ml_ts' ),
 				array( 'ml_ip' => $ip ),
 				__METHOD__,
 				array( 'ORDER BY' => 'ml_count DESC, ml_ts DESC', 'LIMIT' => $this->mLimit, 'OFFSET' => $this->mOffset )
@@ -114,7 +114,7 @@ class MultipleLookupCore {
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
 				$oWikia = WikiFactory::getWikiByID( $oRow->ml_city_id );
 				if ( $oWikia ) {
-					$userActivity[] = array( $oWikia->city_dbname, $oWikia->city_title, $oWikia->city_url );
+					$userActivity[] = array( $oWikia->city_dbname, $oWikia->city_title, $oWikia->city_url, $oRow->ml_ts );
 				}
 			}
 			$dbs->freeResult( $oRes );

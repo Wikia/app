@@ -56,7 +56,7 @@ class MultiLookupAjax {
 			if ( !empty($data) ) {
 				$result['iTotalRecords'] = intval($limit); #( isset( $records['cnt'] ) ) ?  intval( $records['cnt'] ) : 0;
 				$result['iTotalDisplayRecords'] = $count;
-				$result['sColumns'] = 'id,dbname,title,url,options';
+				$result['sColumns'] = 'id,dbname,title,url,lastedit,options';
 				$rows = array();			
 				$loop = 1;
 				foreach ( $data as $row ) {
@@ -80,6 +80,7 @@ class MultiLookupAjax {
 						$row[0], // wiki dbname
 						$row[1], //wiki title
 						$row[2], // wiki url 
+						$row[3], // last edit date
 						$usernames // $username field
 					);			
 					$loop++;				
