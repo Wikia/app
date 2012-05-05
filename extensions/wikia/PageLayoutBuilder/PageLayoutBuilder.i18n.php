@@ -2218,6 +2218,21 @@ $messages['nl-informal'] = array(
 	'plb-copy-confirm' => 'Door te klikken op "Opslaan" wordt deze paginavormgeving gebruiker voor iedere nieuwe pagina in de wiki in de categorieën die je hebt aangegeven. Gebruik dit hulpmiddel zorgvuldig. Weet je zeker dat je wilt opslaan?',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'plb-list-action-edit' => 'Bearwaide',
+	'plb-list-action-delete' => 'Lesche',
+	'plb-list-action-publish' => 'Vaeffndlische',
+	'plb-parser-preview-image-username' => 'Benudzanoame:',
+	'plb-editor-preview' => 'Voaschau',
+	'plb-widget-name-plb_gallery' => 'Galarie',
+	'plb-property-editor-save' => 'Schbaischere',
+	'plb-copy-delete-link' => 'Lesche',
+	'plb-copy-submit-link' => 'Schbaischare',
+);
+
 /** Polish (Polski)
  * @author Anoon6
  * @author BeginaFelicysym
@@ -2433,6 +2448,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author SandroHc
  */
 $messages['pt'] = array(

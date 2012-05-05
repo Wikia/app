@@ -1281,6 +1281,13 @@ $messages['pa'] = array(
 ਤੁਸੀਂ <a href="$1">$2</a> ਵਰਤ ਸਕਦੇ ਹੋ ਜਾਂ ਆਪਣੇ ਸਫ਼ੇ ਦਾ ਨਾਂ ਬਦਲ ਸਕਦੇ ਹੋ',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'createpage_title_caption' => 'Tidl',
+);
+
 /** Polish (Polski)
  * @author Cloudissimo
  * @author Sovq
@@ -1399,12 +1406,13 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG da Wikia',
 	'createpage-sp-title' => 'Criar uma página nova',
 	'createpage_title' => 'Criar uma página nova',
-	'createpage_title_caption' => 'Título:',
+	'createpage_title_caption' => 'Título',
 	'createpage_enter_text' => 'Texto:',
 	'createpage_empty_title_error' => 'Título é obrigatório',
 	'createpage_empty_article_body_error' => 'Texto é obrigatório',

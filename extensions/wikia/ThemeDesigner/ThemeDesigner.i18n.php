@@ -1388,6 +1388,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -1429,7 +1430,7 @@ $messages['pt'] = array(
 	'themedesigner-button-save' => 'Gravar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
 	'themedesigner-rules-wordmark' => 'até 250x65 pixels (só ficheiros .png)',
-	'themedesigner-dont-use-a-graphic' => 'Não usar um padrão gráfico',
+	'themedesigner-dont-use-a-graphic' => 'remover',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
 	'themedesigner-reason' => 'Compositor de Variantes do Tema - gravado por $1',

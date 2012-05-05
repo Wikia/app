@@ -719,6 +719,7 @@ $messages['ps'] = array(
 /** Portuguese (Português)
  * @author Crazymadlover
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'wikiavideo-reverted' => 'O vídeo $1 foi revertido com sucesso. Voltar a $2.',
@@ -735,7 +736,7 @@ $messages['pt'] = array(
 	'wikiavideo-not-supported' => 'Este tema não permite inserir vídeos nas galerias a partir o modo de visionamento.',
 	'wikiavideo-deleted-old' => "A versão do vídeo '''[$1 $2]''' de $4, às $3 foi eliminada.",
 	'wikiavideo-intro-old' => "Está a eliminar a versão do vídeo '''[$1 $5]''' de [$4 $3, às $2].",
-	'wikiavideo-details' => '$1 ($2 pixels, fornecedor: <a href="$3" class="external" target="_blank">$4</a>)',
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pixel|pixels}}, fornecedor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
 /** Brazilian Portuguese (Português do Brasil)

@@ -213,7 +213,7 @@ $messages['pt-br'] = array(
 $messages['ru'] = array(
 	'skinchooser-desc' => 'Позволяет участникам выбирать оболочки в личных настройках',
 	'skinchooser-customcss' => 'Для настройки тем выберите настраиваемый параметр в меню выше и укажите пользовательский CSS со страницы [[MediaWiki:Monaco.css]].',
-	'new-look' => 'Новое оформление Викии',
+	'new-look' => 'New Wikia Look',
 	'site-layout' => 'Оформления сайта',
 );
 

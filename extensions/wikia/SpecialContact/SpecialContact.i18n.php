@@ -174,7 +174,14 @@ Wenn du gewöhnliche E-Mails bevorzugst oder Anhänge hast, kannst du uns unter 
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'contact' => 'Wikia İrtibat',
+	'specialcontact-wikia' => 'Wikia İrtibat',
+	'specialcontact-pagetitle' => 'Wikia İrtibat',
 	'specialcontact-username' => 'Namey Qarberi',
+	'specialcontact-realname' => 'Namey şıma',
+	'specialcontact-yourmail' => 'Adresê e-posta',
+	'specialcontact-problem' => 'Mesela',
+	'specialcontact-problemdesc' => 'Mesac',
 );
 
 /** Spanish (Español)

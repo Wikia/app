@@ -283,6 +283,13 @@ $messages['nl'] = array(
 	'places-category-switch-off' => 'Geocodering inschakelen',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'places-geolocation-modal-error-title' => 'Fehla',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -310,6 +317,13 @@ $messages['pl'] = array(
 	'places-updated-geolocation' => 'Geooznaczyć tę stronę',
 	'places-category-switch' => 'Wyłącz geotagowanie',
 	'places-category-switch-off' => 'Włącz geotagowanie',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'places-geolocation-modal-error-title' => 'Erro',
 );
 
 /** Russian (Русский)

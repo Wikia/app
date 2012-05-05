@@ -1563,6 +1563,18 @@ $messages['nl'] = array(
 	'user-identity-remove-fail' => 'Er is een probleem opgetreden tijdens het verwijderen van de avatar.',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'userprofilepage-lightbox-about-me-cancel' => 'Uffhere',
+	'userprofilepage-lightbox-about-me-save' => 'Schbaischare, isch bin feadisch',
+	'userprofilepage-closing-popup-save-and-quit' => 'schbaischare un uffhere',
+	'userprofilepage-closing-popup-cancel' => 'Uffhere',
+	'user-action-menu-edit' => 'Bearwaide',
+	'user-action-menu-delete' => 'Lesche',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Cloudissimo

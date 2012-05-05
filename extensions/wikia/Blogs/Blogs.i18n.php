@@ -229,6 +229,7 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author DRIHEM
  * @author Imksa
  * @author OsamaK
  */
@@ -244,6 +245,7 @@ $messages['ar'] = array(
 	'create-blog-post-recent-listing-title' => 'المشاركات الأخيرة',
 	'create-blog-post-recent-listing-log' => 'أنشأ مقالة فيها أحدث المشاركات في المدونة',
 	'create-blog-post-title' => 'أنشأ مشاركة جديدة في المدونة',
+	'create-blog-post-title-edit' => 'تعديل مقالة مدونة',
 	'create-blog-form-title' => 'كيف تشارك في المدونة؟',
 	'create-blog-form-post-text' => 'نص المدونة',
 	'create-blog-form-info' => 'المشاركة في المدونة هي طريقة جيدة لتبادل الآراء و الأخبار و الأشياء المبدعة مع مجتمع الويكي.',
@@ -2693,11 +2695,11 @@ $messages['nl'] = array(
 	'create-blog-post-category' => 'Blogberichten',
 	'create-blog-post-category-body' => 'Dit is een automatisch aangemaakte lijst van blogberichten',
 	'create-blog-post-category-log' => 'De categoriepagina voor blogberichten is aangemaakt',
-	'create-blog-post-recent-listing' => 'Recente berichten',
+	'create-blog-post-recent-listing' => 'Recente blogberichten',
 	'create-blog-post-recent-listing-title' => 'Recente berichten',
 	'create-blog-post-recent-listing-log' => 'De pagina voor recente blogberichten is aangemaakt',
 	'create-blog-post-title' => 'Nieuw blogbericht aanmaken',
-	'create-blog-post-title-edit' => 'Een blogpost wijzigen',
+	'create-blog-post-title-edit' => 'Een blogbericht wijzigen',
 	'create-blog-form-title' => 'Wat is een blogbericht?',
 	'create-blog-form-post-text' => 'Blogtekst',
 	'create-blog-form-info' => 'Blogberichten zijn een perfecte manier om nieuws, meningen en creatieve roerselen met de gemeenschap te delen.',
@@ -2846,9 +2848,14 @@ $messages['pdc'] = array(
 	'blog-comment-delete' => 'verwische',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
 $messages['pfl'] = array(
+	'create-blog-save' => 'Said schbaischare',
 	'blog-comment-delete' => 'lesche',
+	'blog-comment-hide' => 'vaschdegle',
+	'blog-comment-sending' => 'Sende...',
 );
 
 /** Polish (Polski)

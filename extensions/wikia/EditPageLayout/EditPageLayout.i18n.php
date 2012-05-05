@@ -1543,6 +1543,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'editpagelayout-more' => 'mais',
@@ -1587,7 +1588,7 @@ $messages['pt'] = array(
 	'wikia-editor-loadingStates-toSource' => 'A mudar para o modo de código...',
 	'wikia-editor-loadingStates-toVisual' => 'A mudar para o modo visual...',
 	'wikia-editor-loadingStates-saving' => 'A publicar a sua edição!',
-	'wikia-editor-edittools-caption' => 'Mais atalhos',
+	'wikia-editor-edittools-caption' => 'mais',
 	'wikia-editor-edittools-dialog-title' => 'Atalhos para a notação wiki',
 	'wikia-editor-notices-dialog-title' => 'Detalhes de avisos',
 	'nonunicodebrowser-notice' => "'''Aviso: O seu browser não é compatível com o Unicode.'''",

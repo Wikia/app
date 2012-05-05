@@ -2080,9 +2080,14 @@ $messages['pdc'] = array(
 	'rte-ck-hoverPreview-delete' => 'verwische',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
 $messages['pfl'] = array(
+	'rte-ck-hoverPreview-delete' => 'lesche',
 	'rte-ck-hoverPreview-edit' => 'bearwaide',
+	'rte-ck-hoverPreview-media-notExisting' => "S'Bild oda die Dadai hods ned!",
+	'rte-ck-link-error-badPageTitle' => 'Geb bidde än Saidetidl oi.',
 );
 
 /** Polish (Polski)
@@ -2326,6 +2331,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -2373,8 +2379,8 @@ $messages['pt'] = array(
 	'rte-ck-link-status-external' => 'Link externo',
 	'rte-ck-media-delete' => 'remover',
 	'rte-ck-media-edit' => 'modificar',
-	'rte-ck-modeSwitch-toSource' => 'Mudar para o modo fonte',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Mudar para o modo WYSIWYG',
+	'rte-ck-modeSwitch-toSource' => 'Fonte',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
 	'rte-ck-modeSwitch-error' => 'Ocorreu um erro durante a mudança de modo. Tente novamente, por favor.',
 	'rte-ck-photoGallery-confirmDelete' => 'Tem a certeza que deseja remover a galeria desta página?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Remover esta galeria?',

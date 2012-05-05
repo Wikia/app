@@ -249,6 +249,13 @@ $messages['nl'] = array(
 	'loggernoresult' => 'Geen resultaten gevonden',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'loggergo' => 'Zaische',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  */

@@ -221,6 +221,18 @@ $messages['de-formal'] = array(
 	'multilookupinvaliduser' => '<p class="error">IP-Adresse „<b>$1</b>“ existiert nicht. Überprüfen Sie die angegebene IP-Adresse auf mögliche Tippfehler.</p>',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'multilookupgo' => 'Şo',
+	'multilookupnext' => 'bahdoyên',
+	'multilookupprevious' => 'peyên',
+	'multilookupwiki' => 'Wiki',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Sernuşte',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Translationista
@@ -590,10 +602,13 @@ $messages['pdc'] = array(
 	'multilookupnext' => 'Neegschte',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
 $messages['pfl'] = array(
 	'multilookupnext' => 'Negschte',
 	'multilookupprevious' => 'Voriche',
+	'multilookupwikititle' => 'Tidl',
 );
 
 /** Polish (Polski)

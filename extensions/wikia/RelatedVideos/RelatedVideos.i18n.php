@@ -506,6 +506,13 @@ $messages['nl'] = array(
 	'related-videos-requesttext' => 'Wat wilt u graag zien?',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'related-videos-video-is-new' => 'Nai',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -554,6 +561,13 @@ $messages['pl'] = array(
 	'related-videos-empty' => 'Bądź pierwszym dodającym film',
 	'related-videos-requestbutton' => 'Nowe Filmy',
 	'related-videos-requesttext' => 'Chcesz obejrzeć coś innego?',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'related-videos-pagination' => '$1 de $2',
 );
 
 /** Russian (Русский)

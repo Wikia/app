@@ -3250,6 +3250,27 @@ $messages['nl-informal'] = array(
 <p>Kijk op <a href="http://twitter.com/wikia">Twitter</a> of <a href="http://facebook.com/wikia">Facebook</a> voor meer informatie.</p>',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'oasis-follow' => 'Folsche',
+	'oasis-share' => 'Deele',
+	'oasis-like' => 'Gfalldma',
+	'oasis-latest-photos-more-dotdotdot' => 'Waidari...',
+	'oasis-page-header-subtitle-mediawiki' => 'MediaWiki-Said',
+	'oasis-page-header-subtitle-special' => 'Schbezialsaid',
+	'oasis-page-header-subtitle-template' => 'Voalachesaid',
+	'oasis-page-header-subtitle-category' => 'Kadegorije-Said',
+	'oasis-page-header-subtitle-forum' => 'Forum-Said',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'Guggda alli Agdiwidede oa >',
+	'oasis-search-results-from' => 'Zaischs Eagewnis vun: $1',
+	'oasis-toolbar-edit-save' => 'Schbaischare',
+	'oasis-toolbar-edit-cancel' => 'Uffhere',
+	'oasis-comments-show-all' => 'Alles zaische',
+	'imageseo-featured-more' => 'waidari...',
+);
+
 /** Polish (Polski)
  * @author Anoon6
  * @author BeginaFelicysym
@@ -3400,7 +3421,7 @@ $messages['pl'] = array(
 	'oasis-related-categories' => 'Kategorie pokrewne',
 	'oasis-navigation-v2-create-page' => 'Dodaj stronę',
 	'oasis-navigation-v2-edit-page' => 'Edytuj tę stronę',
-	'oasis-navigation-v2-add-photo' => 'Dodaj zdjęcie',
+	'oasis-navigation-v2-add-photo' => 'Dodaj obraz',
 	'oasis-navigation-v2-edit-wikia-local-menu' => 'Edytuj lokalne menu Wikii',
 	'oasis-navigation-v2-edit-wikia-global-menu' => 'Edytuj globalne menu Wikii',
 	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',

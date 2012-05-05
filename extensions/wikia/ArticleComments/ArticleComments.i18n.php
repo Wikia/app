@@ -236,6 +236,11 @@ $messages['br'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Diverket eo bet ar bajenn kar / an evezhiadenn kar.',
 	'article-comments-empty-comment' => "N'hallit ket degas un evezhiadenn c'houllo. <a href='$1'>Diverkañ anezhi ?</a>",
+	'wikiamobile-article-comments-replies' => 'respontoù',
+	'wikiamobile-article-comments-post-reply' => 'Kas ur respont',
+	'wikiamobile-article-comments-post' => 'Kas',
+	'wikiamobile-article-comments-placeholder' => 'Ouzhpennañ un evezhiadenn',
+	'wikiamobile-article-comments-show' => 'Diskouez',
 	'enotif_subject_article_comment' => 'Un evezhiadenn zo bet graet gant $PAGEEDITOR diwar-benn "$PAGETITLE" war {{SITENAME}}',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME ker,
 
@@ -1458,7 +1463,7 @@ Kom alstublieft vaak langs en bewerk veelvuldig...
 Wikia
 <br /><hr />
 <ul>
-<li>Wilt u bepalen welke e-mails u ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan uw Voorkeuren<a> aan.</li>
+<li>Wilt u bepalen welke e-mails u ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan uw Voorkeuren aan<a>.</li>
 </ul>
 </p>',
 );
@@ -1483,6 +1488,19 @@ Wikia
 <li>Wilt je bepalen welke e-mails je ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan je Voorkeuren<a> aan.</li>
 </ul>
 </p>',
+);
+
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'article-comments-anonymous' => 'Uoagmeldede Benudza',
+	'article-comments-cancel' => 'Uffhere',
+	'article-comments-delete' => 'lesche',
+	'article-comments-edit' => 'bearwaide',
+	'article-comments-history' => 'Gschischd',
+	'article-comments-reply' => 'Oandwoade',
+	'wikiamobile-article-comments-show' => 'Zaische',
 );
 
 /** Polish (Polski)

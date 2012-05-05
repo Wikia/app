@@ -137,6 +137,9 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'interwikiedit' => 'Vurnkarê interwiki',
+	'iwedit-title' => 'Vurnkarê interwiki',
+	'iwedit-all-interwikis' => 'interwikiy pêro',
 	'iwedit-update' => 'Newekerdış',
 );
 

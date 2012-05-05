@@ -582,6 +582,13 @@ Groet, Wikia
 * Zie het tabblad "Volglijst" in je voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'globalwatchlist-digest-email-subject' => 'Weschndlischi Iwasischd',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq

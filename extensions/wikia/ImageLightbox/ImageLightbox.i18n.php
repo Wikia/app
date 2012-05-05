@@ -460,6 +460,16 @@ Details: $2',
 	'lightbox-visit-the-wiki' => 'Bezoek de wiki:',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'lightbox-send' => 'Abschigge',
+	'lightbox-share-button-email' => 'E-Mail',
+	'lightbox-share-button-www' => 'Deele',
+	'lightbox-share-email-error-caption' => 'Fehla',
+);
+
 /** Polish (Polski)
  * @author Sovq
  */

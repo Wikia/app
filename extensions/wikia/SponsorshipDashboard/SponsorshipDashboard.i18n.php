@@ -2779,6 +2779,14 @@ $messages['nl-informal'] = array(
 	'sponsorship-dashobard-not-allowed' => 'Je hebt geen rechten om deze pagina te bekijken',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'sponsorship-dashboard-report-title' => 'Tidl',
+	'sponsorship-dashboard-source-gapi-name' => 'Qwelletitl',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -3035,6 +3043,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author SandroHc
  */
 $messages['pt'] = array(
@@ -3094,6 +3103,13 @@ $messages['pt'] = array(
 	'sponsorship-dashboard-overwiev-label' => 'seleccionar a área a expandir',
 	'sponsorship-dashboard-empty-chart' => 'Desculpe. Não existem dados para este gráfico.',
 	'sponsorship-dashboard-cityname-and-familiarity' => '$1 - <i>$2 % de coincidência de utilizadores</i>',
+	'sponsorship-dashboard-tab-ViewGroups' => 'Grupos',
+	'sponsorship-dashboard-tab-ViewUsers' => 'Utilizadores',
+	'sponsorship-dashboard-users-name' => 'Nome',
+	'sponsorship-dashboard-report-date-monthly' => 'Mensal',
+	'sponsorship-dashboard-report-date-daily' => 'Diário',
+	'sponsorship-dashboard-report-new-source-gapi' => 'GA',
+	'sponsorship-dashboard-report-new-source-gapi-custom' => 'GA personalizado',
 );
 
 /** Romanian (Română)

@@ -1786,10 +1786,21 @@ $messages['pdc'] = array(
 	'vet-close' => 'zumache',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
 $messages['pfl'] = array(
+	'vet-upload-btn' => 'Negschde',
+	'vet-find-btn' => 'Suche',
+	'vet-name' => 'Noame',
+	'vet-size' => 'Greeß',
 	'vet-prev' => 'Voriche 8',
 	'vet-next' => 'Negschte 8',
+	'vet-back' => 'zrigg',
+	'vet-see-all' => 'alle',
+	'vet-left' => 'Lings',
+	'vet-right' => 'Reschds',
+	'vet-gallery' => 'Galarie',
 );
 
 /** Polish (Polski)
@@ -2547,6 +2558,7 @@ $messages['uk'] = array(
  */
 $messages['yi'] = array(
 	'vet-license' => 'ליצענץ',
+	'vet-caption' => 'באשרייבונג',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

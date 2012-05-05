@@ -1342,6 +1342,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  */
 $messages['pt'] = array(
 	'chat-desc' => '[[Special:Chat|Conversação ao vivo]]',
@@ -1372,7 +1373,7 @@ $messages['pt'] = array(
 	'chat-start-a-chat' => 'Iniciar uma conversa',
 	'chat-whos-here' => 'Participantes ($1)',
 	'chat-join-the-chat' => 'Entrar na sala',
-	'chat-edit-count' => '$1 Edições',
+	'chat-edit-count' => '{{PLURAL:$1|$1 edição|$1 edições}}',
 	'chat-member-since' => 'Membro desde $1',
 	'chat-great-youre-logged-in' => 'Óptimo! Está ligado.',
 	'chat-user-manu-profile' => 'Perfil do Utilizador',

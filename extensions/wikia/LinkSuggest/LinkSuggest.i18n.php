@@ -251,9 +251,10 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Daemorris
+ * @author 555
  */
 $messages['pt-br'] = array(
-	'tog-disablelinksuggest' => 'Não mostrar sugestões de ligação',
+	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo de exibição de código',
 );
 
 /** Tarandíne (Tarandíne)

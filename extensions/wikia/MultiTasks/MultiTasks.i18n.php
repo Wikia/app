@@ -2069,6 +2069,33 @@ $messages['pdc'] = array(
 	'multidelete_button' => 'VERWISCHE',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'multitasks-link-back-label' => 'do',
+	'multiwikiedit_select_yourself' => 'Du',
+	'multidelete_button' => 'LESCHE',
+	'multidelete_or' => '<b>ODA</b>',
+	'multidelete_this_wiki' => 'des Wiki',
+	'multidelete_brazilian_portuguese_wikis' => 'alli brasiloanisch-pordugiesischi Wikis',
+	'multidelete_hebrew_wikis' => 'alli hebräischi Wikis',
+	'multidelete_chinese_wikis' => 'alli schinesischi Wikis',
+	'multidelete_polish_wikis' => 'alli polnischi Wikis',
+	'multidelete_czech_wikis' => 'alli dscheschischi Wikis',
+	'multidelete_portuguese_wikis' => 'alli bordugiesischi Wikis',
+	'multidelete_dutch_wikis' => 'alli holländischi Wikis',
+	'multidelete_italian_wikis' => 'alli idalienischi Wikis',
+	'multidelete_russian_wikis' => 'alli russischi Wikis',
+	'multidelete_english_wikis' => 'alli englischi Wikis',
+	'multidelete_japanese_wikis' => 'alli japoanischi Wikis',
+	'multidelete_finnish_wikis' => 'alli finnischi Wikis',
+	'multidelete_spanish_wikis' => 'alli spoanischi Wikis',
+	'multidelete_french_wikis' => 'alli froanzesischi Wikis',
+	'multidelete_swedish_wikis' => 'alli schwedischi Wikis',
+	'multidelete_german_wikis' => 'alli daidschi Wikis',
+);
+
 /** Polish (Polski)
  * @author Anoon6
  * @author BeginaFelicysym

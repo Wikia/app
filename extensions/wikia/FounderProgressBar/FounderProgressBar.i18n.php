@@ -1546,6 +1546,13 @@ $messages['ps'] = array(
 	'founderprogressbar-browse-page-name' => 'سپړل',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'founderprogressbar-category-add3-action' => 'Adicionar uma categoria',
+);
+
 /** Russian (Русский)
  * @author Ignatus
  * @author Kuzura

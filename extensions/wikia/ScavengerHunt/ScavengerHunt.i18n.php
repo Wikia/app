@@ -1845,6 +1845,7 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Hamilton Abreu
+ * @author Malafaya
  * @author SandroHc
  */
 $messages['pt'] = array(
@@ -1856,7 +1857,7 @@ $messages['pt'] = array(
 	'scavengerhunt-list-enabled' => 'Activado',
 	'scavengerhunt-list-disabled' => 'Desactivado',
 	'scavengerhunt-list-edit' => 'editar',
-	'scavengerhunt-label-dialog-check' => '(mostrar diálogo)',
+	'scavengerhunt-label-dialog-check' => '(mostrar editor visual - pré-alfa, ainda não funciona)',
 	'scavengerhunt-label-image-check' => '(mostrar imagem)',
 	'scavengerhunt-label-general' => 'Geral',
 	'scavengerhunt-label-name' => 'Nome:',

@@ -84,7 +84,7 @@ $messages['es'] = array(
  */
 $messages['fr'] = array(
 	'paginator-next' => 'Suivant',
-	'paginator-back' => 'Retour',
+	'paginator-back' => 'Précédent',
 );
 
 /** Galician (Galego)
@@ -185,6 +185,13 @@ $messages['ne'] = array(
 $messages['nl'] = array(
 	'paginator-next' => 'Volgende',
 	'paginator-back' => 'Vorige',
+);
+
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'paginator-back' => 'Zrigg',
 );
 
 /** Polish (Polski)

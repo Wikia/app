@@ -259,6 +259,13 @@ $messages['nl-informal'] = array(
 	'contentfeeds-firstfewarticles-tag-header' => "Maak je eerste pagina's aan!",
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Tidl',
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  */

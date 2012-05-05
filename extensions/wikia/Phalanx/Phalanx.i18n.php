@@ -1408,6 +1408,25 @@ Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met 
 	'phalanx-title-move-summary' => 'De samenvatting die je hebt opgegeven bevat niet toegelaten tekst.',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'phalanx-type-user' => 'Benudza',
+	'phalanx-label-filter' => 'Filda:',
+	'phalanx-test-submit' => 'Teschd',
+	'phalanx-test-results-legend' => 'Teschdgewniss',
+	'phalanx-link-modify' => 'änere',
+	'phalanx-stats-table-expire' => 'Gildisch bis',
+	'phalanx-stats-table-exact' => 'Rischdisch',
+	'phalanx-stats-table-text' => 'Tegschd',
+	'phalanx-stats-table-reason' => 'Grund:',
+	'phalanx-stats-table-wiki-id' => 'Wiki-ID',
+	'phalanx-stats-table-wiki-name' => 'Wikinoame',
+	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
+	'phalanx-stats-table-wiki-last-edited' => "Z'ledsch g'änad",
+);
+
 /** Polish (Polski)
  * @author BeginaFelicysym
  * @author Odder

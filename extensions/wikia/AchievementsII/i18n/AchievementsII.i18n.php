@@ -402,7 +402,7 @@ on someone else\'s talk page!',
  * @author TK-999
  */
 $messages['qqq'] = array(
-	'achievementsii-desc' => 'Вики кулланучылары өчен бүләкләү тамгалары системасы',
+	'achievementsii-desc' => '{{desc}}',
 	'achievements-upload-error' => 'Гафу итегез!
 Бу рәсем дөрес укылмый.
 Ул .jpg яки .png форматында булырга тиеш.
@@ -3231,7 +3231,7 @@ Venez jeter un œil à votre super nouveau badge sur votre <a href="$5">page uti
 	'achievements-community-platinum-enabled' => 'activé',
 	'achievements-community-platinum-show-recents' => 'afficher dans les badges récents',
 	'achievements-community-platinum-edit' => 'modifier',
-	'achievements-community-platinum-save' => 'sauvegarder',
+	'achievements-community-platinum-save' => 'enregistrer',
 	'achievements-community-platinum-cancel' => 'annuler',
 	'achievements-community-platinum-sponsored-label' => 'Récompense sponsorisée',
 	'achievements-community-platinum-sponsored-hover-content-label' => 'Photo d’aperçu au survol <small>(taille minimale d’aperçu : 270&nbsp;×&nbsp;100 pixels) :</small>',
@@ -5497,7 +5497,7 @@ $messages['lb'] = array(
 	'achievements-community-platinum-enabled' => 'aktivéiert',
 	'achievements-community-platinum-edit' => 'änneren',
 	'achievements-community-platinum-save' => 'späicheren',
-	'achievements-community-platinum-cancel' => 'ffbriechen',
+	'achievements-community-platinum-cancel' => 'ofbriechen',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klickt fir méi Informatiounen',
 	'achievements-badge-name-edit-0' => 'Maacht den Ënnerscheed',
 	'achievements-badge-name-edit-1' => 'Just den Ufank',
@@ -6676,14 +6676,14 @@ på noen andres diskusjonsside!',
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'achievementsii-desc' => 'Een speldjessysteem voor op de wiki door gebruikers geleverde prestaties',
+	'achievementsii-desc' => 'Een speldjessysteem voor door wikigebruikers geleverde prestaties',
 	'achievements-upload-error' => 'Dat plaatje werkt niet.
 Zorg dat het een .jpg- of .png-bestand is.
 Als het dan nog steeds niet werkt, dan is het plaatje mogelijk te groot.
 Kies dan een ander plaatje.',
 	'achievements-upload-not-allowed' => 'Beheerders kunnen de namen en afbeeldingen van prestatiespeldjes wijzigen via de pagina [[Special:AchievementsCustomize|Prestaties aanpassen]].',
 	'achievements-non-existing-category' => 'De opgegeven categorie bestaat niet.',
-	'achievements-edit-plus-category-track-exists' => 'De aangegeven categorie heeft al een <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Naar het traject">bijbehorend traject</a>.',
+	'achievements-edit-plus-category-track-exists' => 'De opgegeven categorie heeft al een <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Naar het traject">bijbehorend traject</a>.',
 	'achievements-no-stub-category' => 'Maak alstublieft geen trajecten voor beginnetjes aan.',
 	'right-platinum' => 'Platinaspeldjes aanmaken en bewerken',
 	'right-sponsored-achievements' => 'Gesponsorde prestaties beheren',
@@ -6695,7 +6695,7 @@ Kies dan een ander plaatje.',
 	'achievements-silver-points' => '50<br />punten',
 	'achievements-bronze-points' => '10<br />punten',
 	'achievements-you-must' => 'U moet $1 om dit speldje te verdienen.',
-	'leaderboard-button' => 'Scorebord prestaties',
+	'leaderboard-button' => 'Ranglijst voor prestaties',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|punt|punten}}</small>',
 	'achievements-profile-title-no' => 'Speldjes van $1',
 	'achievements-no-badges' => 'Hieronder staan de speldjes die u op deze wiki kunt verdienen!',
@@ -6704,7 +6704,7 @@ Kies dan een ander plaatje.',
 	'achievements-track-name-category' => 'Voor categorieën',
 	'achievements-track-name-blogpost' => 'Voor blogberichten',
 	'achievements-track-name-blogcomment' => 'Voor reacties op blogberichten',
-	'achievements-track-name-love' => 'Voor wikilove',
+	'achievements-track-name-love' => 'Voor Wikilove',
 	'achievements-track-name-sharing' => 'Delen-carrière',
 	'achievements-notification-title' => 'Dat gaat goed, $1!',
 	'achievements-notification-subtitle' => 'U hebt zojuist het speldje "$1" verdiend $2',
@@ -6712,13 +6712,13 @@ Kies dan een ander plaatje.',
 	'achievements-points' => '$1 {{PLURAL:$1|punt|punten}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|punt|punten}}',
 	'achievements-earned' => 'Dit speldje is verdiend door {{PLURAL:$1|één gebruiker|$1 gebruikers}}.',
-	'achievements-profile-title' => '$2 heeft $1 {{PLURAL:$2|speldje|speldjes}} verdiend',
+	'achievements-profile-title' => '$1 heeft {{PLURAL:$2|één speldje|$2 speldjes}} verdiend',
 	'achievements-profile-title-challenges' => 'Meer te verdienen speldjes!',
 	'achievements-profile-customize' => 'Speldjes aanpassen',
 	'achievements-ranked' => 'Op plaats $1 in de ranglijst van deze wiki',
 	'achievements-viewall' => 'Allemaal bekijken',
 	'achievements-viewless' => 'Sluiten',
-	'achievements-profile-title-oasis' => 'punten',
+	'achievements-profile-title-oasis' => 'prestatie-<br />punten',
 	'achievements-ranked-oasis' => '$1 staat op [[Special:Leaderboard|plaats $2]] voor deze wiki',
 	'achievements-viewall-oasis' => 'Allemaal bekijken',
 	'achievements-toggle-hide' => 'Speldjes niet weergeven op mijn profielpagina',
@@ -6728,13 +6728,13 @@ Kies dan een ander plaatje.',
 	'leaderboard-intro' => "U kunt speldjes verdienen door pagina's te bewerken, foto's te uploaden en reacties achter te laten. Voor ieder speldje krijgt u punten. Hoe meer punten u verdient, hoe hoger u komt te staan op het scorebord! Speldjes die u hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
 
 '''Wat zijn speldjes waard?'''",
-	'leaderboard' => 'Scorebord prestaties',
+	'leaderboard' => 'Ranglijst voor prestaties',
 	'achievements-title' => 'Prestaties',
-	'leaderboard-title' => 'Scorebord',
+	'leaderboard-title' => 'Ranglijst',
 	'achievements-recent-earned-badges' => 'Recent verdiende speldjes',
-	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />Uitgereikt aan <a href="$1">$2</a><br />$5',
+	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />toegekend aan <a href="$1">$2</a><br />$5',
 	'achievements-activityfeed-info' => 'heeft het speldje <strong><a href="$3" class="badgeName">$1</a></strong> verdiend<br />$2',
-	'achievements-leaderboard-disclaimer' => 'Wijzigingen op het scorebord sinds gisteren',
+	'achievements-leaderboard-disclaimer' => 'Wijzigingen op in de ranglijst sinds gisteren',
 	'achievements-leaderboard-rank-label' => 'Positie',
 	'achievements-leaderboard-member-label' => 'Lid',
 	'achievements-leaderboard-points-label' => 'Punten',
@@ -6811,7 +6811,7 @@ Bekijk uw glimmende nieuwe speldje op uw <a href="$5">gebruikersprofielpagina</a
 	'achievements-community-platinum-save' => 'opslaan',
 	'achievements-community-platinum-cancel' => 'annuleren',
 	'achievements-community-platinum-sponsored-label' => 'Gesponsorde prestatie',
-	'achievements-community-platinum-sponsored-hover-content-label' => 'Foto bij muisover <small>(minimale afmeting bij muisover: 270px x 100px):</small>',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Afbeelding bij muisover <small>(minimale afmeting bij muisover: 270px x 100px):</small>',
 	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Track-URL voor speldjesweergave:',
 	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Track-URL voor muisoverweergave:',
 	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Verwijzing naar speldje <small>(klikcommando-URL voor DART)</small>:',
@@ -6831,7 +6831,7 @@ Bekijk uw glimmende nieuwe speldje op uw <a href="$5">gebruikersprofielpagina</a
 	'achievements-badge-name-picture-4' => 'Kunstliefhebber',
 	'achievements-badge-name-picture-5' => 'Decorateur',
 	'achievements-badge-name-picture-6' => 'Ontwerper',
-	'achievements-badge-name-picture-7' => 'Curator',
+	'achievements-badge-name-picture-7' => 'Conservator',
 	'achievements-badge-name-category-0' => 'Maak een verbinding',
 	'achievements-badge-name-category-1' => 'Verkenner',
 	'achievements-badge-name-category-2' => 'Onderzoeker',
@@ -6867,7 +6867,7 @@ Bekijk uw glimmende nieuwe speldje op uw <a href="$5">gebruikersprofielpagina</a
 	'achievements-badge-name-luckyedit' => 'Gelukkige bewerking',
 	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|verwijzing delen|zorg dat {{PLURAL:$1|één gebruiker|$1 gebruikers}} klikt op de verwijzing die u hebt gedeeld}}',
 	'achievements-badge-to-get-edit' => "maak {{PLURAL:$1|één bewerking|$1 bewerkingen}} aan {{PLURAL:$1een pagina|pagina's}}",
-	'achievements-badge-to-get-edit-plus-category' => "maak $1 {{PLURAL:$1|bewerking|bewerkingen}} aan $2 {{PLURAL:$2|pagina|pagina's}}",
+	'achievements-badge-to-get-edit-plus-category' => "maak {{PLURAL:$1|één bewerking|$1 bewerkingen}} aan $2 {{PLURAL:$2|pagina|pagina's}}",
 	'achievements-badge-to-get-picture' => "voeg {{PLURAL:$1|een afbeelding|$1 afbeeldingen}} toe aan {{PLURAL:$1|een pagina|pagina's}}",
 	'achievements-badge-to-get-category' => "voeg {{PLURAL:$1|één pagina|$1 pagina's}} toe aan {{PLURAL:$1|een categorie|categorieën}}",
 	'achievements-badge-to-get-blogpost' => 'schrijf {{PLURAL:$1|een blogbericht|$1 blogberichten}}',
@@ -6883,7 +6883,8 @@ Bekijk uw glimmende nieuwe speldje op uw <a href="$5">gebruikersprofielpagina</a
 	'achievements-badge-to-get-sharing-details' => 'Deel verwijzingen en zorg dat anderen erop klikken!',
 	'achievements-badge-to-get-edit-details' => 'Mist er iets?
 Is er een fout gemaakt?
-Wees niet verlegen. Klik op de knop "{{int:edit}}" en u kunt iedere pagina bewerken!',
+Wees niet verlegen.
+Klik op de knop "{{int:edit}}" en u kunt iedere pagina bewerken!',
 	'achievements-badge-to-get-edit-plus-category-details' => 'De pagina\'s van de categorie <strong>$1</strong> hebben uw hulp nodig.
 Klik op de knop "{{int:edit}}" op een pagina uit die categorie om te helpen.
 Steun de pagina\'s uit de categorie $1!',
@@ -6905,9 +6906,12 @@ Klik op "{{int:edit}}" om wat informatie over uzelf toe te voegen!',
 Vraag om hulp, bedank ze voor hun bijdragen of groet ze gewoon!',
 	'achievements-badge-to-get-creator-details' => 'Dit speldje wordt gegeven aan de oprichter van de wiki.
 Klik op de knop "{{int:createwiki}}" bovenaan om een site te beginnen over waar u van houdt!',
-	'achievements-badge-to-get-pounce-details' => 'U moet snel zijn om dit speldje te verdienen. Klik op de knop "{{int:activityfeed}}" om te zien welke nieuwe pagina\'s gebruikers aan het aanmaken zijn!',
-	'achievements-badge-to-get-caffeinated-details' => 'U moet een drukke dag hebben om dit speldje te verdienen. Blijf bewerkingen maken!',
-	'achievements-badge-to-get-luckyedit-details' => 'U moet geluk hebben om dit speldje te verdienen. Blijf bewerkingen maken!',
+	'achievements-badge-to-get-pounce-details' => 'U moet snel zijn om dit speldje te verdienen.
+Klik op de knop "{{int:activityfeed}}" om te zien welke nieuwe pagina\'s gebruikers aan het aanmaken zijn!',
+	'achievements-badge-to-get-caffeinated-details' => 'U moet een drukke dag hebben om dit speldje te verdienen.
+Blijf bewerkingen maken!',
+	'achievements-badge-to-get-luckyedit-details' => 'U moet geluk hebben om dit speldje te verdienen.
+Blijf bewerkingen maken!',
 	'achievements-badge-to-get-community-platinum-details' => 'Dit is een speciaal platina speldje dat slechts voor beperkte tijd beschikbaar is!',
 	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|voor het delen van één verwijzing|voor het overreden van {{PLURAL:$1|één gebruiker|$1 gebruikers}} op gedeelde verwijzingen te klikken}}',
 	'achievements-badge-hover-desc-edit' => "Toegekend voor het maken van {{PLURAL:$1|één bewerking|$1 bewerkingen}}<br />
@@ -6966,7 +6970,7 @@ de overlegpagina van een andere gebruiker!',
 	'achievements-userprofile-title' => 'Door $1 {{PLURAL:$2|verdiend speldje|verdiende speldjes}} ($2)',
 	'achievements-userprofile-no-badges-owner' => 'Hieronder staat de lijst met speldjes die u in deze wiki kunt verdienen!',
 	'achievements-userprofile-no-badges-visitor' => 'Deze gebruiker heeft nog geen speldje verdiend.',
-	'achievements-userprofile-profile-score' => '<em>$1</em> prestatie<br />punten',
+	'achievements-userprofile-profile-score' => '<em>$1</em> prestatie-<br />punten',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Op plaats #$1]]<br />op deze wiki',
 );
 
@@ -7086,9 +7090,55 @@ $messages['pdc'] = array(
 	'achievements-community-platinum-save' => 'beilege',
 );
 
-/** Pälzisch (Pälzisch) */
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
 $messages['pfl'] = array(
+	'achievementsii-desc' => 'Abzaische fa Laischdunge fa Wiki-Benudza',
+	'achievements-upload-error' => "Dschuldischung!
+Awa des Bild fungzioniad ned.
+S'gejen bloss .jpg- oda .png-Datei.
+Wonn's imma noch ned fungzioniere dud, donn isch's Bild vielaischd zu grooß.
+Vasuchs mol midm oanare!",
+	'achievements-upload-not-allowed' => 'Adminischdradore kennen die Noame un Bilda vun Abzaische uffde Said [[Special:AchievementsCustomize|Abzaische änare]] änare.',
+	'achievements-non-existing-category' => 'Die oangewene Kadegorie hods ned.',
+	'achievements-edit-plus-category-track-exists' => 'Die oangewene Kadegorie hod schun ä dzugherische <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">Weesch</a>.',
+	'achievements-no-stub-category' => 'Leesch kän Weesch fa Schdubs oa.',
+	'right-platinum' => 'Blaadin-Abzaische mache un änare',
+	'right-sponsored-achievements' => 'Brodeschierde Laischdunge vawalde',
+	'achievements-platinum' => 'Blaadin',
+	'achievements-gold' => 'Gold',
+	'achievements-silver' => 'Silwa',
+	'achievements-bronze' => 'Broase',
+	'achievements-gold-points' => '100<br />Pingd',
+	'achievements-silver-points' => '50<br />Pingd',
+	'achievements-bronze-points' => '10<br />Pingd',
+	'achievements-you-must' => 'Fas Abzaische zu grische mugschd $1.',
+	'leaderboard-button' => 'Ronglischd',
+	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|Pungd|Pingd}}</small>',
+	'achievements-profile-title-no' => 'Abzaische vun $1',
+	'achievements-no-badges' => 'Fa die Abzaische, wuda do vadiend konschd, guggda die Lisch unne oa!',
+	'achievements-track-name-edit' => 'Weesch vunde Beawaidunge',
+	'achievements-viewall' => 'Alles zaische',
+	'achievements-viewless' => 'Schließe',
+	'achievements-viewall-oasis' => 'Alle oagugge',
+	'leaderboard-intro-hide' => 'vaschdegle',
+	'leaderboard-intro-open' => 'Effne',
+	'achievements-leaderboard-member-label' => 'Midglied',
+	'achievements-leaderboard-points-label' => 'Pingd',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|Pungd|Pingd}}',
+	'achievements-send' => 'Bild schbaischare',
+	'achievements-save' => 'Ännerunge schbaischare',
+	'achievements-enable-track' => 'Oagschdeld',
+	'achievements-revert' => 'Uffde Schdondad zrigg',
+	'achievements-about-title' => 'Iwa die Said...',
+	'achievements-community-platinum-enabled' => 'Oagschdeld',
 	'achievements-community-platinum-edit' => 'bearwaide',
+	'achievements-community-platinum-save' => 'schbaischere',
+	'achievements-community-platinum-cancel' => 'Abbresche',
+	'achievements-badge-name-sharing-1' => 'Brings zrigg',
+	'achievements-badge-to-get-welcome' => "m'Wiki baidreede",
+	'achievements-badge-to-get-luckyedit' => 'Gligg hawe',
 );
 
 /** Polish (Polski)

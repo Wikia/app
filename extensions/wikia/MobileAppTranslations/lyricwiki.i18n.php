@@ -210,6 +210,24 @@ $messages['de'] = array(
 	'ringtone-matcher-by-song' => 'Hol dir %s als Klingelton auf dein Handy',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'app-loading' => 'Bar beno...',
+	'app-tab-search' => 'Cı geyre',
+	'app-tab-about' => 'Heq te cı',
+	'app-tab-browse' => 'A ra Z',
+	'app-async-error-title' => 'Hoooop',
+	'app-nonetwork-dialog-close-button' => 'TEMAM',
+	'search-go' => 'Şo!',
+	'login-username-hint' => 'Namey karberi',
+	'login-password-hint' => 'Parola',
+	'login-submit-button' => 'Deqewtış',
+	'about-heading' => 'LirikWiki',
+	'about-heading-tips' => 'Geyreno cı',
+);
+
 /** Spanish (Español)
  * @author Fitoschido
  * @author VegaDark
@@ -747,6 +765,13 @@ $messages['nl-informal'] = array(
 	'ringtone-matcher-by-song' => 'De ringtone %s naar je telefoon sturen',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Manuae
+ */
+$messages['pfl'] = array(
+	'app-nonetwork-dialog-close-button' => 'Ok',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
@@ -802,6 +827,17 @@ $messages['ps'] = array(
 	'about-credits' => 'د %s لخوا',
 	'about-heading-tips' => 'د پلټنې په حال کې...',
 	'lyrics-artist-byline' => 'د %s لخوا',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'app-loading' => 'A carregar...',
+	'app-nonetwork-dialog-close-button' => 'OK',
+	'search-hint-text' => "p.ex. 'John Lennon:Imagine'",
+	'about-credits' => 'por %s',
+	'lyrics-artist-byline' => 'por %s',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
