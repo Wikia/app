@@ -94,7 +94,7 @@ class MultipleLookupCore {
 	}
 
 	function checkUserActivity() {
-		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
+		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled, $wgLang;
 
 		$userActivity = array();
 
@@ -114,7 +114,8 @@ class MultipleLookupCore {
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
 				$oWikia = WikiFactory::getWikiByID( $oRow->ml_city_id );
 				if ( $oWikia ) {
-					$userActivity[] = array( $oWikia->city_dbname, $oWikia->city_title, $oWikia->city_url, $oRow->ml_ts );
+					$lastEditDate = $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ml_ts ) );
+					$userActivity[] = array( $oWikia->city_dbname, $oWikia->city_title, $oWikia->city_url, $lastEditDate );
 				}
 			}
 			$dbs->freeResult( $oRes );
