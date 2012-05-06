@@ -2,6 +2,7 @@
 
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
+	const ACTION_REJECTED = 'rejected';
 
 	var $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
 
@@ -19,6 +20,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->response->setJsVar('wgImageReviewAction', $action);
 
 		$accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
+		$accessRejected = $this->wg->User->isAllowed( 'rejectedimagereview' );
 
 		// check permissions
 		if (!$this->specialPage->userCanExecute($this->wg->User)) {
@@ -26,6 +28,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		} elseif ( $action == self::ACTION_QUESTIONABLE && !$accessQuestionable ) {
 			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
+			return false;
+		} elseif ( $action == self::ACTION_REJECTED && !$accessRejected ) {
+			$this->specialPage->displayRestrictionError( 'rejectedimagereview' );
 			return false;
 		} elseif ( $action == 'stats' ) {
 			$this->forward( get_class( $this ), 'stats' );
@@ -117,6 +122,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		if ( count($this->imageList) == 0 ) {
 			if ( $action == self::ACTION_QUESTIONABLE ) {
 				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE, $order );
+			} elseif ( $action == self::ACTION_REJECTED ) {
+				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_REJECTED, $order );
 			} else { 
 				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_UNREVIEWED, $order );
 			}
@@ -203,7 +210,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$summary = array(
 			'all' => 0,
 			ImageReviewHelper::STATE_APPROVED => 0,
-			ImageReviewHelper::STATE_DELETED => 0,
+			ImageReviewHelper::STATE_REJECTED => 0,
 			ImageReviewHelper::STATE_QUESTIONABLE => 0,
 			'avg' => 0,
 		);
@@ -236,7 +243,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 						'name' => $user->getName(),
 						'total' => 0,
 						ImageReviewHelper::STATE_APPROVED => 0,
-						ImageReviewHelper::STATE_DELETED => 0,
+						ImageReviewHelper::STATE_REJECTED => 0,
 						ImageReviewHelper::STATE_QUESTIONABLE => 0,
 					);
 				}

@@ -15,8 +15,8 @@ class ImageReviewHelper extends WikiaModel {
 	const STATE_UNREVIEWED = 0;
 	const STATE_IN_REVIEW = 1;
 	const STATE_APPROVED = 2;
-	const STATE_REJECTED = 3;
-	const STATE_DELETED = 4;
+	const STATE_REJECTED = 4;
+	const STATE_DELETED = 3;
 	const STATE_QUESTIONABLE = 5;
 	const STATE_QUESTIONABLE_IN_REVIEW = 6;
 
@@ -50,13 +50,15 @@ class ImageReviewHelper extends WikiaModel {
 
 		$sqlWhere = array(
 			self::STATE_APPROVED => array(),
-			self::STATE_DELETED => array(),
+			self::STATE_REJECTED => array(),
 			self::STATE_QUESTIONABLE => array(),
 		);
 
 		foreach ( $images as $image ) {
 			if ( $image['state'] == self::STATE_APPROVED ) {
 				$sqlWhere[self::STATE_APPROVED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
+			} else if ( $image['state'] == self::STATE_REJECTED ) {
+				$sqlWhere[self::STATE_REJECTED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			} else if ( $image['state'] == self::STATE_DELETED ) {
 				$sqlWhere[self::STATE_DELETED][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$deletionList[$image['wikiId']] = $image['pageId'];
@@ -108,9 +110,13 @@ class ImageReviewHelper extends WikiaModel {
 					$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
 					break;
 				case ImageReviewSpecialController::ACTION_QUESTIONABLE:
-					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_DELETED] );
+					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_REJECTED] );
 				//	$stats['reviewer'] += $changedState;
 					$stats['questionable'] -= $changedState;
+					break;
+				case ImageReviewSpecialController::ACTION_REJECTED:
+					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_DELETED] );
+					$stats['rejected'] -= $chagedState;
 					break;
 			}
 			$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );

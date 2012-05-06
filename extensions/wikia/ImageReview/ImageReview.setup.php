@@ -44,6 +44,9 @@ $wgGroupPermissions['reviewer']['edit'] = false;
 $wgAvailableRights[] = 'questionableimagereview';
 $wgGroupPermissions['util']['questionableimagereview'] = true;
 
+$wgAvailableRights[] = 'rejectedimagereview';
+$wgGroupPermissions['util']['rejectedimagereview'] = true;
+
 $wgAvailableRights[] = 'imagereviewstats';
 $wgGroupPermissions['util']['imagereviewstats'] = true;
 
