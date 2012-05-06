@@ -71,7 +71,7 @@ if ( is_array($imageList) && count($imageList) > 0) {
                                 <?php } ?>
 
 				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_APPROVED ?>"<?= ($stateId == ImageReviewHelper::STATE_APPROVED || $stateId == ImageReviewHelper::STATE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_QUESTIONABLE_IN_REVIEW || ( $stateId == ImageReviewHelper::STATE_QUESTIONABLE && $action == 'questionable' ) || $stateId == ImageReviewHelper::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
-				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_DELETED ?>"<?= ($stateId == ImageReviewHelper::STATE_DELETED ? ' checked' :'') ?>>Del</label>
+				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewHelper::STATE_DELETED : ImageReviewHelper::STATE_REJECTED ?>"<?= ($stateId == ImageReviewHelper::STATE_REJECTED ? ' checked' :'') ?>>Del</label>
 				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewHelper::STATE_QUESTIONABLE && $action != 'questionable' ? ' checked' :'') ?>>Q</label>
 			</li>
 <?php
