@@ -37,11 +37,6 @@ class FounderProgressBarHooks {
 			if ($app->wg->EnableTopListsExt && $title->getNamespace() == NS_TOPLIST) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_TOPTENLIST_ADD));				
 			}				
-			// Bonus task: add page layout builder
-			if (defined( 'NS_PLB_LAYOUT' ) && $title->getNamespace() == NS_PLB_LAYOUT && self::bonusTaskEnabled(FT_BONUS_PAGELAYOUT_ADD) ) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_BONUS_PAGELAYOUT_ADD));
-			} 	
-
 		}
 		
 		// Tasks related to updating existing pages
@@ -155,13 +150,13 @@ class FounderProgressBarHooks {
 		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FT_USER_ADD_5));
 		return true;
 	}
-	
+
 	// Initialize schema for a new wiki
 	function onWikiCreation ( $params ) {
 
 		// Always initialize for new wikis
 		if (isset($params['city_id'])) {
-			FounderProgressBarHooks::initRecords($params['city_id']);
+			self::initRecords($params['city_id']);
 		}
 
 		return true;
