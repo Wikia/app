@@ -86,6 +86,15 @@ $messages['mk'] = array(
 	'wikiasearch2-advanced-search' => 'Напредни можности за пребарување',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'wikiasearch2-page-title-with-query' => 'Søkeresultater for «$1» – $2',
+	'wikiasearch2-results' => '$1 {{PLURAL:$1|resultat|resultater}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$1|side|sider}}',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -117,5 +126,21 @@ $messages['pl'] = array(
 	'wikiasearch2-global-search-headline' => 'Wyszukaj wiki na Wikii',
 	'wikiasearch2-wiki-search-headline' => 'Przeszukaj wiki',
 	'wikiasearch2-advanced-search' => 'Zaawansowane Opcje Wyszukiwania',
+);
+
+/** Russian (Русский)
+ * @author Kuzura
+ */
+$messages['ru'] = array(
+	'wikiasearch2-page-title-with-query' => "Результаты поиска для '$1' - $2",
+	'wikiasearch2-page-title-no-query-interwiki' => 'Найти на Викия',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Поиск $1',
+	'wikiasearch2-search-all-wikia' => 'Поиск по всей Викия',
+	'wikiasearch2-results' => '$1 {{PLURAL:$1|результат|результата|результатов}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$1|страница|страницы|страниц}}',
+	'wikiasearch2-results-for' => 'Результаты для $1',
+	'wikiasearch2-global-search-headline' => 'Найти викии на Викия',
+	'wikiasearch2-wiki-search-headline' => 'Поиск по вики',
+	'wikiasearch2-advanced-search' => 'Расширенные параметры поиска',
 );
 

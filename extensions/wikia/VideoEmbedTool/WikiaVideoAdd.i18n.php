@@ -648,6 +648,7 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Eleferen
+ * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -662,6 +663,7 @@ $messages['ru'] = array(
 	'wva-notlogged' => 'Чтобы добавить видео вам необходимо представиться системе или зарегистрироваться.',
 	'wva-notallowed' => 'Вы не можете вставлять видео в этой вики.',
 	'wva-protected' => 'Это видео защищено.',
+	'wva-thumbnail-upload-failed' => 'Видео добавлено с ошибкой, невозможно получить корректной миниатюры',
 );
 
 /** Sinhala (සිංහල) */

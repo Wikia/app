@@ -315,6 +315,7 @@ $messages['pt-br'] = array(
 
 /** Russian (Русский)
  * @author DCamer
+ * @author Kuzura
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -323,6 +324,7 @@ $messages['ru'] = array(
 	'taskmanager_tasklist' => 'Вернуться к списку заданий',
 	'right-taskmanager' => 'Может просматривать фоновые задачи',
 	'right-taskmanager-action' => 'Может управлять фоновыми задачами',
+	'taskmanager-invert' => 'Обратить выбранное',
 );
 
 /** Sinhala (සිංහල)

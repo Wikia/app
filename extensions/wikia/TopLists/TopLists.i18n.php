@@ -1794,6 +1794,7 @@ $messages['ro'] = array(
 /** Russian (Русский)
  * @author DCamer
  * @author Eleferen
+ * @author Kuzura
  */
 $messages['ru'] = array(
 	'toplists-desc' => 'Список Топ 10',
@@ -1823,6 +1824,8 @@ $messages['ru'] = array(
 	'toplists-editor-title-placeholder' => 'Введите имя списка',
 	'toplists-editor-related-article-label' => 'Связанные страницы <small>(необязательно, но выбирает изображение)</small>',
 	'toplists-editor-related-article-placeholder' => 'Введите название существующей страницы',
+	'toplists-editor-description-label' => 'Краткое описание вашего списка Топ 10',
+	'toplists-editor-description-placeholder' => 'Введите описание',
 	'toplists-editor-image-browser-tooltip' => 'Добавить изображение',
 	'toplists-editor-remove-item-tooltip' => 'Удалить пункт',
 	'toplists-editor-drag-item-tooltip' => 'Перетащите, чтобы изменить порядок',

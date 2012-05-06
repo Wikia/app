@@ -317,10 +317,15 @@ Verifique a ortografia.',
  */
 $messages['ru'] = array(
 	'piggybac-desc' => 'Позволяет войти в качестве другого пользователя',
+	'piggyback-otherusername' => 'Имя другого участника:',
 	'piggyback-nosuchuser' => 'Не существует участника с именем «$1».
 Имя участника чувствительно к регистру символов.
 Проверьте написание.',
 	'piggyback-wronguser' => '$1 — не ваше имя пользователя.',
+	'piggyback-loginprompt' => 'Введите своё имя пользователя и пароль.',
+	'piggyback-firstlogout' => 'Сначала войдите в свою учётную запись.',
+	'piggyback-itisyou' => 'Вы не можете использоватьpiggyback на себе.',
+	'piggyback-issysopto' => 'Вы не можете использовать piggyback на участниках с доступом к piggyback.',
 );
 
 /** Swedish (Svenska)
