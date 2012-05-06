@@ -3891,6 +3891,7 @@ regist.',
  * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'wikifactorypagetitle' => 'Configurador da Fábrica de Wikis',
@@ -3995,7 +3996,7 @@ $messages['pt-br'] = array(
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Essa wiki foi fechada',
 	'disabled-wiki-info' => 'Essa wiki foi desabilitada',
-	'closed-wiki-dump-exists' => 'Por favor, clique [$1 aqui] se quiser recuperar seu conteúdo',
+	'closed-wiki-dump-exists' => 'Você pode [$1 fazer download do seu conteúdo], se desejar.<br />(Caso o seu wiki tenha sido fechado recentemente, os arquivos poderão demorar um pouco para serem gerados)',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. O esvaziamento do conteúdo estará disponível em 24 horas. Cheque novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Crie uma nova Wiki',
 	'closed-wiki-policy' => 'Veja a Política de Fechamento do Wikia',

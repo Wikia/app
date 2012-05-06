@@ -250,8 +250,8 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
- * @author Daemorris
  * @author 555
+ * @author Daemorris
  */
 $messages['pt-br'] = array(
 	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo de exibição de código',

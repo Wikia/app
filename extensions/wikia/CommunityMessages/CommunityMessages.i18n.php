@@ -268,8 +268,8 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
- * @author Giro720
  * @author 555
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'communitymessages-desc' => 'Extensão para auxiliar em Mensagens Comunitárias',

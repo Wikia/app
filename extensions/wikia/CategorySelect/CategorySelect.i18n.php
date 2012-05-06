@@ -871,10 +871,10 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author 555
  * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
- * @author 555
  */
 $messages['pt-br'] = array(
 	'categoryselect-desc' => 'Disponibiliza uma interface para a administração de categorias de uma página sem que seja necessário editá-lo por inteiro',
