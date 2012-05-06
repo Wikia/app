@@ -31,7 +31,6 @@ class FounderProgressBarController extends WikiaController {
 				FT_WIKIALABS_VISIT => "wikialabs-visit",
 				FT_FB_CONNECT => "fb-connect",
 				FT_CATEGORY_ADD_5 => "category-add%",
-				FT_PAGELAYOUT_VISIT => "pagelayout-visit",
 				FT_GALLERY_ADD => "gallery-add",
 				FT_TOPNAV_EDIT => "topnav-edit",
 				FT_MAINPAGE_ADDSLIDER => "mainpage-addslider",
@@ -48,7 +47,6 @@ class FounderProgressBarController extends WikiaController {
 				FT_TOTAL_EDIT_300 => "total-edit%",
 				FT_BONUS_PHOTO_ADD_10 => "bonus-photo-add%",
 				FT_BONUS_PAGE_ADD_5 => "bonus-page-add%",
-				FT_BONUS_PAGELAYOUT_ADD => "bonus-pagelayout-add",
 				FT_BONUS_EDIT_50 => "bonus-edit%",			
 				FT_COMPLETION => "completion"
 			);
@@ -70,7 +68,6 @@ class FounderProgressBarController extends WikiaController {
 				FT_WIKIALABS_VISIT => 1,
 				FT_FB_CONNECT => 1,
 				FT_CATEGORY_ADD_5 => 5,
-				FT_PAGELAYOUT_VISIT => 1,
 				FT_GALLERY_ADD => 1,
 				FT_TOPNAV_EDIT => 1,
 				FT_MAINPAGE_ADDSLIDER => 1,
@@ -87,7 +84,6 @@ class FounderProgressBarController extends WikiaController {
 				FT_TOTAL_EDIT_300 => 300,
 				FT_BONUS_PHOTO_ADD_10 => 10,
 				FT_BONUS_PAGE_ADD_5 => 5,
-				FT_BONUS_PAGELAYOUT_ADD => 1,
 				FT_BONUS_EDIT_50 => 50,			
 				FT_COMPLETION => 1
 		);

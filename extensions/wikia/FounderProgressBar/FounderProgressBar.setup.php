@@ -22,7 +22,6 @@ $wgHooks[ 'UploadComplete' ][] = 'FounderProgressBarHooks::onUploadComplete';
 $wgHooks[ 'UploadWordmarkComplete' ][] = 'FounderProgressBarHooks::onUploadWordmarkComplete';
 $wgHooks[ 'AddNewAccount' ][] = 'FounderProgressBarHooks::onAddNewAccount';
 
-
 // On wiki creation or WikiFactory enable add db columns
 $wgHooks['CreateWikiLocalJob-complete'][] = "FounderProgressBarHooks::onWikiCreation";
 
@@ -43,7 +42,6 @@ define('FT_CATEGORY_EDIT', 120);
 define('FT_WIKIALABS_VISIT', 130);
 define('FT_FB_CONNECT', 140);
 define('FT_CATEGORY_ADD_5', 150);
-define('FT_PAGELAYOUT_VISIT', 160);
 define('FT_GALLERY_ADD', 170);
 define('FT_TOPNAV_EDIT', 180);
 define('FT_MAINPAGE_ADDSLIDER', 190);
@@ -61,6 +59,5 @@ define('FT_TOTAL_EDIT_300', 300);
 // Bonus tasks start at ID 500 just to keep them separate if we add more "base" tasks
 define('FT_BONUS_PHOTO_ADD_10', 510);
 define('FT_BONUS_PAGE_ADD_5', 520);
-define('FT_BONUS_PAGELAYOUT_ADD', 530);
 define('FT_BONUS_EDIT_50', 540);
 define('FT_COMPLETION', 1000);    // special internal flag for "all tasks complete"
