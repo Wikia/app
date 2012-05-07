@@ -231,8 +231,7 @@ class AbTesting {
 		$jsString = ob_get_clean();
 
 		// We're embedding this in every page, so minify it.
-// TODO: RESTORE THE MINIFICATION BEFORE COMMITTING.
-//		$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
+		$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
 		
 		wfProfileOut( __METHOD__ );
 		return $jsString;
