@@ -242,8 +242,15 @@ class FBConnectPushEvent {
 				$short = str_replace($key, $value, $short);
 			}
 
-			$status = $fb->publishStream( $href, $description, $short, $link, $image);
-			self::addEventStat($status, $class);
+			try {
+				$status = $fb->publishStream( $href, $description, $short, $link, $image);
+				self::addEventStat($status, $class);
+			}
+			catch (Exception $ex) {
+				// Wikia: don't fatal due to uncaught exception (BugId:26681)
+				Wikia::log(__METHOD__, 'Exception', $ex->getMessage());
+			}
+
 			return $status;
 		}
 
