@@ -1,6 +1,9 @@
 var Lightbox = {
 	lightboxLoading: false,
-	
+	modalConfig: {
+		topOffset: 25,
+		modalMinHeight: 648,
+	},
 	log: function(content) {
 		$().log(content, "Lightbox");
 	},
@@ -175,93 +178,138 @@ var Lightbox = {
 			format: 'html',
 			data: {
 				title: Lightbox.imageName,
-				type: Lightbox.type
 			},
 			callback: function(html) {
-				/* calculate modal dimensions here */
-				
-				image = $(html).find('#lightbox-preload').appendTo('body');
-				
-				image.load(function() {
-					// set default dimensions if image height takes up whole window
-					var image = $(this),
-						topOffset = 25,
-						windowHeight = $(window).height(),
-						modalHeight = windowHeight - topOffset*2,  
-						modalMinHeight = 648,
-						modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
-									
-					// Just in case image is wider than 1000px
-					if(image.width() > 1000) {
-						image.width(1000);
-					}
-					var imageHeight = image.height();
-								
-					if(imageHeight < modalHeight) {
-						// Image is shorter than screen, adjust modal height
-						modalHeight = imageHeight;
-						
-						// Modal has a min height
-						if(modalHeight < modalMinHeight) {
-							modalHeight = modalMinHeight;
-						}
-
-						// Calculate modal's top offset
-						var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
-						
-						newOffset = (extraHeight / 2);
-						if(newOffset < topOffset){
-							newOffset = topOffset; 
-						}
-						topOffset = newOffset;
-						
-					} else {
-						// Image is taller than screen, shorten image
-						imageHeight = modalHeight;
-						topOffset = topOffset - 5; // 5px modal border
-					}	
-										
-					var modalOptions = {
-						id: 'LightboxModal',
-						className: 'LightboxModal',
-						height: modalHeight,
-						width: 970, // modal adds 30px of padding to width
-						noHeadline: true,
-						topOffset: topOffset,
-						topOffsetPadding: 0
-					};
-
-					Lightbox.modal = $(html).makeModal(modalOptions);
-					var modal = Lightbox.modal;
-					var contentArea = modal.find(".WikiaLightbox");
-					
-					/* extract mustache templates */
-					var photoTemplate = modal.find("#LightboxPhotoTemplate").html();
-					// var videoTemplate = blah blah blah 
-					
-					/* render media */
-					var json = {
-						imageHeight: imageHeight,
-						imageSrc: image.attr('src')
-					}; 
-					
-					var renderedResult = Mustache.render(photoTemplate, json);
-
-					// Hack to vertically align the image in the lightbox
-					renderedResult = $(renderedResult).css('line-height', modalHeight+'px');
-					
-					contentArea.append(renderedResult);					
-					
-					Lightbox.lightboxLoading = false;
-					Lightbox.log("Lightbox modal loaded");
-				});
+			
+				if(Lightbox.type == 'image') {
+					Lightbox.makeImageModal(html);
+				} else {
+					Lightbox.makeVideoModal(html);
+				}
 			}
 		});
+	},
+	makeImageModal: function(html) {
+		html = $(html);
 		
+		// pre-load image to calculate modal dimensions
+		var image = html.find("#LightboxPreload").remove().find('img').appendTo('body');
+		
+		image.load(function() {
+			// set default dimensions if image height takes up whole window
+			var image = $(this),
+				topOffset = Lightbox.modalConfig.topOffset,
+				modalMinHeight = Lightbox.modalConfig.modalMinHeight,
+				windowHeight = $(window).height(),
+				modalHeight = windowHeight - topOffset*2,  
+				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
+				imageSrc = image.attr('src');
+							
+			// Just in case image is wider than 1000px
+			if(image.width() > 1000) {
+				image.width(1000);
+			}
+			var imageHeight = image.height();
+						
+			if(imageHeight < modalHeight) {
+				// Image is shorter than screen, adjust modal height
+				modalHeight = imageHeight;
+				
+				// Modal has a min height
+				if(modalHeight < modalMinHeight) {
+					modalHeight = modalMinHeight;
+				}
+
+				// Calculate modal's top offset
+				var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
+				
+				newOffset = (extraHeight / 2);
+				if(newOffset < topOffset){
+					newOffset = topOffset; 
+				}
+				topOffset = newOffset;
+				
+			} else {
+				// Image is taller than screen, shorten image
+				imageHeight = modalHeight;
+				topOffset = topOffset - 5; // 5px modal border
+			}	
+			
+			var modalOptions = Lightbox.getModalOptions(modalHeight, topOffset);
+			
+			var modal = html.makeModal(modalOptions);
+			var contentArea = modal.find(".media");
+			
+			// remove fake image
+			image.remove();
+			
+			/* extract mustache templates */
+			var photoTemplate = modal.find("#LightboxPhotoTemplate").html();
+			
+			/* render media */
+			var json = {
+				imageHeight: imageHeight,
+				imageSrc: imageSrc
+			};
+			
+			var renderedResult = Mustache.render(photoTemplate, json);
+
+			// Hack to vertically align the image in the lightbox
+			renderedResult = $(renderedResult).css('line-height', modalHeight+'px');
+			
+			contentArea.append(renderedResult);					
+			
+			Lightbox.lightboxLoading = false;
+			Lightbox.log("Lightbox modal loaded");
+		});
+	},
+	makeVideoModal: function(html) {
+		console.log(html);
+
+		html = $(html);
+
+		var topOffset = Lightbox.modalConfig.topOffset,
+			modalMinHeight = Lightbox.modalConfig.modalMinHeight,
+			windowHeight = $(window).height(),
+			modalHeight = windowHeight - topOffset*2,
+			modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
+		
+		var modalOptions = Lightbox.getModalOptions(modalHeight, topOffset);
+		
+		
+		
+		var modal = $(html).makeModal(modalOptions);
+		var contentArea = modal.find(".media");
+
+		/* extract mustache templates */
+		var videoTemplate = modal.find("#LightboxVideoTemplate").html();
+
+		/* render media */
+		var json = {
+			embed: LightboxVar.videoEmbedCode // LightboxVar defined in modal template
+		}
+		
+		var renderedResult = Mustache.render(videoTemplate, json);
+
+		contentArea.append(renderedResult);					
+		
+		Lightbox.log("Lightbox modal loaded");
+		Lightbox.lightboxLoading = false;
 	},
 	displayInlineVideo: function() {
 		// TODO: Set this up to match old version
 		alert('play video inline');
+	},
+	getModalOptions: function(modalHeight, topOffset) {
+		var modalOptions = {
+			id: 'LightboxModal',
+			className: 'LightboxModal',
+			height: modalHeight,
+			width: 970, // modal adds 30px of padding to width
+			noHeadline: true,
+			topOffset: topOffset
+		};
+		return modalOptions;
 	}
 };
 
