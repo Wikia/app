@@ -40,35 +40,85 @@ if (typeof WMU_box_filled == 'undefined') {
 
 if( 'view' == wgAction ) {
 	var wmu_back = '',
-	wmu_imagebutton = '',
-	wmu_close = '',
-	wmu_warn1 = '',
-	wmu_warn2 = '',
-	wmu_warn3 = '',
-	wmu_bad_extension = '',
-	wmu_show_message = '',
-	wmu_hide_message = '',
-	wmu_title = '',
-	wmu_max_thumb = '',
-	wmu_no_protect = '',
-	wmu_no_rights = '',
-	badfilename = '',
-	file_extensions = '',
-	file_blacklist = '',
-	check_file_extensions = '',
-	strict_file_extensions = '',
-	user_blocked = false,
-	user_disallowed = false,
-	user_protected = false;
+		wmu_imagebutton = '',
+		wmu_close = '',
+		wmu_warn1 = '',
+		wmu_warn2 = '',
+		wmu_warn3 = '',
+		wmu_bad_extension = '',
+		wmu_show_message = '',
+		wmu_hide_message = '',
+		wmu_title = '',
+		wmu_max_thumb = '',
+		wmu_no_protect = '',
+		wmu_no_rights = '',
+		badfilename = '',
+		file_extensions = '',
+		file_blacklist = '',
+		check_file_extensions = '',
+		strict_file_extensions = '',
+		user_blocked = false,
+		user_disallowed = false,
+		user_protected = false;
 }
 
 function WMU_setSkip(){
-  WMU_skipDetails = true;
+	WMU_skipDetails = true;
 }
 
 function WMU_getRTETxtarea(){
 	// return dom element, not jquery object
 	return WikiaEditor.getInstance().getEditbox()[0];
+}
+
+
+function WMU_loadDetails() {
+
+	YAHOO.util.Dom.setStyle('ImageUploadMain', 'display', 'none');
+	WMU_indicator(1, true);
+
+	var callback = {
+		success: function(o) {
+			WMU_displayDetails(o.responseText);
+
+			$G('ImageUploadBack').style.display = 'none';
+
+			setTimeout(function() {
+				if(!FCK.wysiwygData[WMU_refid].thumb) {
+					$G('ImageUploadFullOption').click();
+				}
+				if(FCK.wysiwygData[WMU_refid].align && FCK.wysiwygData[WMU_refid].align == 'left') {
+					$G('ImageUploadLayoutLeft').click();
+				}
+				if(FCK.wysiwygData[WMU_refid].width) {
+					WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
+					WMU_width = FCK.wysiwygData[WMU_refid].width;
+					MWU_imageWidthChanged( WMU_width );
+					$G( 'ImageUploadSlider' ).style.visibility = 'visible';
+					$G( 'ImageUploadInputWidth' ).style.visibility = 'visible';
+					$G( 'ImageUploadWidthCheckbox' ).checked = true;
+					$G( 'ImageUploadManualWidth' ).value = WMU_width;
+					WMU_manualWidthInput( $G( 'ImageUploadManualWidth' ) );
+				}
+			}, 200);
+
+			if(FCK.wysiwygData[WMU_refid].caption) {
+				$G('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
+			}
+
+			if(FCK.wysiwygData[WMU_refid].link) {
+				$G('ImageUploadLink').value = FCK.wysiwygData[WMU_refid].link;
+			}
+		}
+	}
+
+	YAHOO.util.Connect.abort(WMU_asyncTransaction);
+
+	var params = new Array();
+	params.push('sourceId=0');
+	params.push('itemId=' + encodeURIComponent(FCK.wysiwygData[WMU_refid].href.split(":")[1]));
+
+	WMU_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=chooseImage&' + params.join('&'), callback);
 }
 
 // macbre: move back button inside dialog content and add before provided selector (Oasis changes)
@@ -94,7 +144,7 @@ function WMU_moveBackButton(selector) {
 		backDetails = $(".ImageUploadNoBorder a.backbutton");
 
 		if(backDetails.length > 0) {
-		    backButton.empty().append( backDetails.text() );
+			backButton.empty().append( backDetails.text() );
 		}
 
 		window.WMUbackButton = backButton;
@@ -209,9 +259,54 @@ function WMU_readjustSlider( value ) {
 	}
 }
 
+function WMU_getCaret() {
+	if (typeof FCK == 'undefined') {
+		var control = document.getElementById(WikiaEditor.instanceId);
+	} else {
+		var control = FCK.EditingArea.Textarea;
+	}
+
+	var caretPos = 0;
+	if(YAHOO.env.ua.ie != 0) { // IE Support
+		control.focus();
+		var sel = document.selection.createRange();
+		var sel2 = sel.duplicate();
+		sel2.moveToElementText(control);
+		var caretPos = -1;
+		while(sel2.inRange(sel)) {
+			sel2.moveStart('character');
+			caretPos++;
+		}
+	} else if (control.selectionStart || control.selectionStart == '0') { // Firefox
+		caretPos = control.selectionStart;
+	}
+	return (caretPos);
+}
+
+function WMU_inGallery() {
+	var originalCaretPosition = WMU_getCaret();
+	if (typeof FCK == 'undefined') {
+		var originalText = document.getElementById(WikiaEditor.instanceId).value;
+	} else {
+		var originalText = FCK.EditingArea.Textarea.value;
+	}
+	var lastIndexOfimagegallery = originalText.substring(0, originalCaretPosition).lastIndexOf('<imagegallery>');
+
+	if(lastIndexOfimagegallery > 0) {
+		var indexOfimagegallery = originalText.substring(originalCaretPosition).indexOf('</imagegallery>');
+		if(indexOfimagegallery > 0) {
+			var textInTag = originalText.substring(lastIndexOfimagegallery + 15, indexOfimagegallery + originalCaretPosition);
+			if(textInTag.indexOf('<') == -1 && textInTag.indexOf('>') == -1) {
+				return textInTag.lastIndexOf("\n") + lastIndexOfimagegallery + 15;
+			}
+		}
+	}
+	return false;
+}
+
 function WMU_getFirstFree( gallery, box ) {
 	for (var i=box; i >= 0; i--) {
-		if ( !$G( 'WikiaImageGalleryPlaceholder' + gallery + 'x' + i ) ) {
+		if ( ! $G( 'WikiaImageGalleryPlaceholder' + gallery + 'x' + i ) ) {
 			return i + 1;
 		}
 	}
@@ -223,92 +318,93 @@ function WMU_loadMainFromView() {
 		return;
 	}
 	var callback = function(data) {
-			// first, check if this is a special case for anonymous disabled...
-			if( data.wmu_init_login ) {
-				var fe = $.Event( 'FakeEvent' );
-				openLogin( fe );
+		// first, check if this is a special case for anonymous disabled...
+		if( data.wmu_init_login ) {
+			var fe = $.Event( 'FakeEvent' );
+			openLogin( fe );
+			return;
+		}
+		var element = document.createElement('div');
+		element.id = 'WMU_div';
+		element.style.width = '812px';
+		element.style.height = '587px';
+		element.innerHTML = unescape( data.html );
+
+		wmu_back = unescape( data.wmu_back );
+		wmu_imagebutton = unescape( data.wmu_imagebutton );
+		wmu_close = unescape( data.wmu_close );
+		wmu_warn1 = unescape( data.wmu_warn1 );
+		wmu_warn2 = unescape( data.wmu_warn2 );
+		wmu_warn3 = unescape( data.wmu_warn3 );
+		wmu_bad_extension = unescape( data.wmu_bad_extension );
+		wmu_show_message = unescape( data.wmu_show_message );
+		wmu_hide_message = unescape( data.wmu_hide_message );
+		wmu_title = unescape( data.wmu_title );
+		wmu_max_thumb = unescape( data.wmu_max_thumb );
+		wmu_no_protect = unescape( data.wmu_no_protect );
+		wmu_no_rights = unescape( data.wmu_no_rights );
+		badfilename = unescape( data.badfilename );
+		file_extensions = data.file_extensions;
+		file_blacklist = data.file_blacklist;
+		check_file_extensions = data.check_file_extensions;
+		strict_file_extensions = data.strict_file_extensions;
+		user_blocked = data.user_blocked;
+		user_disallowed = data.user_disallowed;
+		user_protected = data.user_protected;
+		if( user_blocked ) {
+			document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
+		} else {
+			// is user is disallowed from editing, do nothing and show them a message
+			if( user_protected ) {
+				alert( wmu_no_protect );
 				return;
 			}
-			var element = document.createElement('div');
-			element.id = 'WMU_div';
-			element.style.width = '812px';
-			element.style.height = '587px';
-			element.innerHTML = unescape( data.html );
+			if( user_disallowed ) {
+				alert( wmu_no_rights );
+				return;
+			}
 
-			wmu_back = unescape( data.wmu_back );
-			wmu_imagebutton = unescape( data.wmu_imagebutton );
-			wmu_close = unescape( data.wmu_close );
-			wmu_warn1 = unescape( data.wmu_warn1 );
-			wmu_warn2 = unescape( data.wmu_warn2 );
-			wmu_warn3 = unescape( data.wmu_warn3 );
-			wmu_bad_extension = unescape( data.wmu_bad_extension );
-			wmu_show_message = unescape( data.wmu_show_message );
-			wmu_hide_message = unescape( data.wmu_hide_message );
-			wmu_title = unescape( data.wmu_title );
-			wmu_max_thumb = unescape( data.wmu_max_thumb );
-			wmu_no_protect = unescape( data.wmu_no_protect );
-			wmu_no_rights = unescape( data.wmu_no_rights );
-			badfilename = unescape( data.badfilename );
-			file_extensions = data.file_extensions;
-			file_blacklist = data.file_blacklist;
-			check_file_extensions = data.check_file_extensions;
-			strict_file_extensions = data.strict_file_extensions;
-			user_blocked = data.user_blocked;
-			user_disallowed = data.user_disallowed;
-			user_protected = data.user_protected;
-			if( user_blocked ) {
-				document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
-			} else {
-				// is user is disallowed from editing, do nothing and show them a message
-				if( user_protected ) {
-					alert( wmu_no_protect );
-					return;
-				}
-				if( user_disallowed ) {
-					alert( wmu_no_rights );
-					return;
-				}
+			if( !$G( 'WMU_div' ) ) {
+				document.body.appendChild(element);
+			}
 
-				if( !$G( 'WMU_div' ) ) {
-					document.body.appendChild(element);
-				}
+			WMU_panel = new YAHOO.widget.Panel('WMU_div', {
+				modal: true,
+				constraintoviewport: true,
+				draggable: false,
+				close: false,
+				fixedcenter: true,
+				underlay: "none",
+				visible: false,
+				zIndex: 900
+			});
+			WMU_panel.render(document.body);
+			WMU_panel.show();
 
-				WMU_panel = new YAHOO.widget.Panel('WMU_div', {
-					modal: true,
-					constraintoviewport: true,
-					draggable: false,
-					close: false,
-					fixedcenter: true,
-					underlay: "none",
-					visible: false,
-					zIndex: 900
-				});
-				WMU_panel.render(document.body);
-				WMU_panel.show();
+			WMU_indicator(1, false);
 
-				WMU_indicator(1, false);
+			WMU_indicator(1, false);
+			if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') {
+				$G('ImageQuery').focus();
+			}
+			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
+			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
+				$G('ImageUploadTextCont').style.display = 'none';
+				$G('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
+			}
 
-				WMU_indicator(1, false);
-				if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') {
-					$G('ImageQuery').focus();
-				}
-				var cookieMsg = document.cookie.indexOf("wmumainmesg=");
-				if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
-					$G('ImageUploadTextCont').style.display = 'none';
-					$G('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
-				}
-
-				// macbre: RT #19150
-				if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
-					$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
-				}
+			// macbre: RT #19150
+			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
+				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
+			}
 		}
 	}
 
 	$.getJSON( wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMainFromView&article=' + encodeURIComponent( wgTitle ) + '&ns=' + wgNamespaceNumber, callback);
 
-    WMU_curSourceId = 0;
+	WMU_curSourceId = 0;
 }
+
 
 function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	// Handle MiniEditor focus
@@ -321,7 +417,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	}
 
 	if(gallery === -2){
-	//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
+		//	if (showComboAjaxForPlaceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
 	}
 
 	if(typeof gallery == "undefined") {
@@ -332,38 +428,39 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 	WMU_refid = null;
 	WMU_wysiwygStart = 1;
-        WMU_gallery = -1;
+	WMU_gallery = -1;
 
-        if(typeof gallery != "undefined") {
-                // if in preview mode, go away
-                if ($G ( 'editform' ) && !YAHOO.lang.isNumber(e) ) {
-                        alert( wmu_no_preview );
-                        return false;
-                }
-                WMU_gallery = gallery;
-                WMU_box = box;
-                // they only are given when the gallery is given...
-                if(typeof align != "undefined") {
-                        WMU_align = align;
-                }
+	if(typeof gallery != "undefined") {
+		// if in preview mode, go away
+		if ($G ( 'editform' ) && !YAHOO.lang.isNumber(e) ) {
+			alert( wmu_no_preview );
+			return false;
+		}
+		WMU_gallery = gallery;
+		WMU_box = box;
+		// they only are given when the gallery is given...
+		if(typeof align != "undefined") {
+			WMU_align = align;
+		}
 
-                if(typeof thumb != "undefined") {
-                        WMU_thumb = thumb;
-                }
+		if(typeof thumb != "undefined") {
+			WMU_thumb = thumb;
+		}
 
-                if(typeof size != "undefined") {
-                        WMU_size = size;
-                }
+		if(typeof size != "undefined") {
+			WMU_size = size;
+		}
 
-                if(typeof caption != "undefined") {
-                        WMU_caption = caption;
-                }
+		if(typeof caption != "undefined") {
+			WMU_caption = caption;
+		}
 
-                if(typeof link != "undefined") {
-                        WMU_link = link;
-                }
-        }
+		if(typeof link != "undefined") {
+			WMU_link = link;
+		}
+	}
 
+	// TODO: FCK support - to be removed after full switch to RTE
 	if(YAHOO.lang.isNumber(e)) {
 		WMU_refid = e;
 		if(WMU_refid == -1) {
@@ -371,7 +468,14 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			// go to main page
 		} else {
 			WMU_track('open/fromWysiwyg/existing');
+			if( (typeof(FCK) != 'undefined') && FCK.wysiwygData[WMU_refid].exists) {
+				// go to details page
+				WMU_wysiwygStart = 2;
+			} else {
+				// go to main page
+			}
 		}
+
 	} else if( YAHOO.lang.isObject(e) ) { // for Opera and Chrome
 		// macbre: CK support
 		if (typeof e.type != 'undefined' && e.type == 'rte') {
@@ -426,13 +530,18 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 				WMU_track('open');
 			}
 		}
+	}
 
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
 	if(WMU_panel != null) {
 		WMU_panel.show();
 		// Recenter each time for different instances of RTE. (BugId:15589)
 		WMU_panel.center();
-		if($G('ImageQuery')) $G('ImageQuery').focus();
+		if(WMU_refid != null && WMU_wysiwygStart == 2) {
+			WMU_loadDetails();
+		} else {
+			if($G('ImageQuery')) $G('ImageQuery').focus();
+		}
 		return;
 	}
 
@@ -444,8 +553,8 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		html += '<div class="reset" id="ImageUpload">';
 		html += '	<div id="ImageUploadBorder"></div>';
 		html += '	<div id="ImageUploadProgress1" class="ImageUploadProgress"></div>';
-        html += '       <div id="ImageUploadBack"><img src="'+wgBlankImgUrl+'" id="fe_wmuback_img" class="sprite back" alt="' + wmu_back + '" /><a href="#">' + wmu_back + '</a></div>';
-        html += '       <div id="ImageUploadClose"><img src="'+wgBlankImgUrl+'" id="fe_wmuclose_img" class="sprite close" alt="' + wmu_close + '" /><a href="#">' + wmu_close + '</a></div>';
+		html += '       <div id="ImageUploadBack"><img src="'+wgBlankImgUrl+'" id="fe_wmuback_img" class="sprite back" alt="' + wmu_back + '" /><a href="#">' + wmu_back + '</a></div>';
+		html += '       <div id="ImageUploadClose"><img src="'+wgBlankImgUrl+'" id="fe_wmuclose_img" class="sprite close" alt="' + wmu_close + '" /><a href="#">' + wmu_close + '</a></div>';
 		html += '	<div id="ImageUploadBody">';
 		html += '		<div id="ImageUploadError"></div>';
 		html += '		<div id="ImageUploadMain"></div>';
@@ -486,13 +595,16 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		WMU_panel.render();
 		WMU_panel.show();
 		WMU_panel.center();
-		WMU_loadMain();
+		if(WMU_refid != null && WMU_wysiwygStart == 2) {
+			WMU_loadDetails();
+		} else {
+			WMU_loadMain();
+		}
 	}
 	YAHOO.util.Event.addListener('ImageUploadBack', 'click', WMU_back);
 	YAHOO.util.Event.addListener('ImageUploadClose', 'click', WMU_close);
 }
 
-}
 
 $(function(){
 	if ( window.wgComboAjaxLogin ) {
@@ -514,12 +626,12 @@ function WMU_loadMain() {
 			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 				$G('ImageUploadTextCont').style.display = 'none';
 				$G('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
-		 	}
+			}
 
-		 	// macbre: RT #19150
-		 	if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
+			// macbre: RT #19150
+			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
 				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
-		 	}
+			}
 		}
 	}
 	WMU_indicator(1, true);
@@ -528,20 +640,20 @@ function WMU_loadMain() {
 }
 
 function WMU_loadLicense( license ) {
-	var title = 'File:Sample.jpg',
-    	url = wgScriptPath + '/api' + wgScriptExtension
+	var title = 'File:Sample.jpg';
+	var url = wgScriptPath + '/api' + wgScriptExtension
 		+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
 		+ '&title=' + encodeURIComponent( title.replace(/\./g, "%2E") )
-		+ '&prop=text&pst&format=json',
+		+ '&prop=text&pst&format=json';
 
-		callback = {
-			success: function(o) {
-				var o = eval( '(' + o.responseText + ')' );
-				$G('ImageUploadLicenseText').innerHTML = o['parse']['text']['*'];
-				//$G('ImageUploadLicenseText').innerHTML = o.responseText;
-				WMU_indicator(1, false);
-			}
+	var callback = {
+		success: function(o) {
+			var o = eval( '(' + o.responseText + ')' );
+			$G('ImageUploadLicenseText').innerHTML = o['parse']['text']['*'];
+			//$G('ImageUploadLicenseText').innerHTML = o.responseText;
+			WMU_indicator(1, false);
 		}
+	}
 	WMU_indicator(1, false);
 	YAHOO.util.Connect.asyncRequest('GET', url, callback);
 	WMU_curSourceId = 0;
@@ -722,9 +834,9 @@ function WMU_initialCheck( checkedName ) {
 		alert (filetype_missing) ;
 		return false;
 	} else if (WMU_checkFileExtensionList( ext, file_blacklist ) || ( check_file_extensions
-			&& strict_file_extensions && !WMU_checkFileExtension( finalExt, file_extensions ) )  ) {
-			alert (wmu_bad_extension);
-			return false;
+		&& strict_file_extensions && !WMU_checkFileExtension( finalExt, file_extensions ) )  ) {
+		alert (wmu_bad_extension);
+		return false;
 	}
 
 	return true;
@@ -809,13 +921,17 @@ function WMU_displayDetails(responseText) {
 		alert( $G( 'WMU_error_box' ).innerHTML );
 	}
 
-        if( 0 < WMU_align ) {
+	if( 0 < WMU_align ) {
 		if( 1 == WMU_align ) {
 			$G( 'ImageUploadLayoutLeft' ).checked = 'checked';
 		} else {
 			$G( 'ImageUploadLayoutRight' ).checked = 'checked';
 		}
-        }
+	}
+
+	if( 0 < WMU_thumb ) {
+//                $G( 'ImageSizeRow' ).style.display = 'none';
+	}
 
 	if( 0 < WMU_size ) {
 		$G( 'ImageUploadWidthCheckbox' ).click();
@@ -827,13 +943,13 @@ function WMU_displayDetails(responseText) {
 			//$G( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
 		}
 	}
-        if( '' != WMU_caption ) {
+	if( '' != WMU_caption ) {
 		$G( 'ImageUploadCaption' ).value = WMU_caption;
-        }
+	}
 
-        if( '' != WMU_link ) {
+	if( '' != WMU_link ) {
 		$G( 'ImageUploadLink' ).value = WMU_link;
-        }
+	}
 
 	if ( $G( 'ImageUploadLicenseText' ) ) {
 		var cookieMsg = document.cookie.indexOf("wmulicensemesg=");
@@ -844,9 +960,9 @@ function WMU_displayDetails(responseText) {
 	}
 	//$G( 'ImageColumnRow' ).style.display = 'none';
 //	if( -1 != WMU_gallery ) {
-		// todo gallery stuff here
+	// todo gallery stuff here
 //		if( -2 == WMU_gallery ) { // placeholder stuff, don't need that
-			//$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
+	//$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
 //		}
 //	}
 
@@ -881,10 +997,10 @@ function WMU_insertImage(e, type) {
 	if(type == 'overwrite') {
 		params.push('name='+ encodeURIComponent( $G('ImageUploadExistingName').value ) );
 	} else if(type == 'rename') {
-			if( '' == $G( 'ImageUploadRenameName' ).value ) {
-				alert( wmu_warn3 );
-				return;
-			}
+		if( '' == $G( 'ImageUploadRenameName' ).value ) {
+			alert( wmu_warn3 );
+			return;
+		}
 		params.push('name='+ encodeURIComponent( $G('ImageUploadRenameName').value ) + '.' + $G( 'ImageUploadRenameExtension' ).value );
 	} else {
 		if($G('ImageUploadName')) {
@@ -895,10 +1011,10 @@ function WMU_insertImage(e, type) {
 			// for RT #24050 - Bartek
 
 			if( $G( 'ImageUploadName' ).value.indexOf( '/' ) > 0 )  {
-					var parts = $G( 'ImageUploadName' ).value.split( '/' );
-				        var lastname = parts.pop();
-					$G( 'ImageUploadName' ).value = lastname;
-					alert( badfilename.replace( '$1', lastname ) );
+				var parts = $G( 'ImageUploadName' ).value.split( '/' );
+				var lastname = parts.pop();
+				$G( 'ImageUploadName' ).value = lastname;
+				alert( badfilename.replace( '$1', lastname ) );
 				return;
 			}
 
@@ -961,11 +1077,12 @@ function WMU_insertImage(e, type) {
 
 	var callback = {
 		success: function(o) {
+
 			var screenType = o.getResponseHeader['X-screen-type'];
 			if(typeof screenType == "undefined") {
 				screenType = o.getResponseHeader['X-Screen-Type'];
 			}
-			
+
 			switch(YAHOO.lang.trim(screenType)) {
 				case 'error':
 					o.responseText = o.responseText.replace(/<script.*script>/, "" );
@@ -983,7 +1100,7 @@ function WMU_insertImage(e, type) {
 					var event = jQuery.Event("imageUploadSummary");
 					$("body").trigger(event, [$G('ImageUpload' + WMU_curScreen)]);
 					if ( event.isDefaultPrevented() ) {
-					    return false;
+						return false;
 					}
 
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
@@ -993,8 +1110,7 @@ function WMU_insertImage(e, type) {
 							// insert image in source mode
 							insertTags($G('ImageUploadTag').value, '', '', WMU_getRTETxtarea());
 						}
-					} else {
-						// CK support
+					} else { // FCK
 						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').value;
 						var options = {};
 
@@ -1019,6 +1135,8 @@ function WMU_insertImage(e, type) {
 						if (!options.thumb) {
 							options.link = $G('ImageUploadLink').value;
 						}
+
+						// macbre: CK support
 						if (typeof window.WMU_RTEImage != 'undefined') {
 							var image = window.WMU_RTEImage;
 
@@ -1042,6 +1160,15 @@ function WMU_insertImage(e, type) {
 							}
 
 						}
+						else  if(WMU_refid != -1) {
+							if( -2 == WMU_gallery) { // updating image placeholder
+								FCK.ProtectImageAdd(wikitag, options, WMU_refid);
+							} else { // updating edited image
+								FCK.ProtectImageUpdate(WMU_refid, wikitag, options);
+							}
+						} else {
+							FCK.ProtectImageAdd(wikitag, options);
+						}
 					}
 					break;
 				case 'existing':
@@ -1060,8 +1187,8 @@ function WMU_insertImage(e, type) {
 function WMU_box_in_article() {
 	var box = WMU_box;
 	for (var i=0;i<WMU_box_filled.length;i++) {
-	    if (WMU_box>WMU_box_filled[i])
-		box--;
+		if (WMU_box>WMU_box_filled[i])
+			box--;
 	}
 	return box;
 }
@@ -1069,8 +1196,8 @@ function WMU_box_in_article() {
 /**
  * @brief Adjusts UI for specifically-sized images
  * @details With a recent UI change, the ImageUploadWidthCheckbox is always checked (and hidden)
-            This function is run if modifying an existing image in the article
-            with a precise width set.
+ This function is run if modifying an existing image in the article
+ with a precise width set.
  */
 function MWU_imageWidthChanged(changes) {
 
@@ -1217,11 +1344,11 @@ var WMU_uploadCallback = {
 }
 
 /**
-*
-*  AJAX IFRAME METHOD (AIM)
-*  http://www.webtoolkit.info/
-*
-**/
+ *
+ *  AJAX IFRAME METHOD (AIM)
+ *  http://www.webtoolkit.info/
+ *
+ **/
 AIM = {
 	frame : function(c) {
 		var n = 'f' + Math.floor(Math.random() * 99999);
