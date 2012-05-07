@@ -12,9 +12,6 @@ class WikiaMobileService extends WikiaService {
 
 	static protected $initialized = false;
 
-	//holds an instance to WikiaMobileTemplate
-	protected $templateObject;
-
 	function __construct(){
 		parent::__construct();
 
@@ -30,24 +27,6 @@ class WikiaMobileService extends WikiaService {
 		F::build('JSMessages')->enqueuePackage('WkMbl', JSMessages::INLINE);
 	}
 
-	/**
-	 * @brief Sets the template object (WikiaMobileTemplate)
-	 *
-	 * @requestParam WikiaQuickTemplate $templateObject
-	 */
-	public function setTemplateObject( WikiaMobileTemplate $template ){
-		$this->templateObject = $template;
-	}
-
-	/**
-	 * @brief Gets the template object (WikiaMobileTemplate)
-	 *
-	 * @return WikiaQuickTeamplate the Template instance
-	 */
-	public function getTemplateObject(){
-		return $this->templateObject;
-	}
-
 	public function index() {
 		$skin = $this->wg->user->getSkin();
 		$jsBodyPackages = array( 'wikiamobile_js_body' );
@@ -58,6 +37,7 @@ class WikiaMobileService extends WikiaService {
 		$styles = $skin->getStyles();
 		$scripts = $skin->getScripts();
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		$templateObject = $this->app->getSkinTemplateObj();
 		
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
@@ -114,26 +94,26 @@ class WikiaMobileService extends WikiaService {
 
 		//AppCache will be disabled for the first several releases
 		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
-		$this->mimeType = $this->templateObject->get( 'mimetype' );
-		$this->charSet = $this->templateObject->get( 'charset' );
+		$this->mimeType = $templateObject->get( 'mimetype' );
+		$this->charSet = $templateObject->get( 'charset' );
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $this->templateObject->get( 'skinname' ) );
-		$this->bodyClasses = array( 'wkMobile', $this->templateObject->get( 'pageclass' ) );
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $templateObject->get( 'skinname' ) );
+		$this->bodyClasses = array( 'wkMobile', $templateObject->get( 'pageclass' ) );
 		$this->pageTitle = $this->wg->Out->getHTMLTitle();
 		$this->cssLinks = $cssLinks;
 		$this->headLinks = $this->wg->Out->getHeadLinks();
 		$this->headItems = $skin->getHeadItems();
 		$this->jsHeadFiles = $jsHeadFiles;
-		$this->languageCode = $this->templateObject->get( 'lang' );
-		$this->languageDirection = $this->templateObject->get( 'dir' );
+		$this->languageCode = $templateObject->get( 'lang' );
+		$this->languageDirection = $templateObject->get( 'dir' );
 		$this->wikiaNavigation = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
 		$this->advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
 		$this->pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
-			'bodyText' => $this->templateObject->get( 'bodytext' ),
-			'categoryLinks' => $this->templateObject->get( 'catlinks')
+			'bodyText' => $templateObject->get( 'bodytext' ),
+			'categoryLinks' => $templateObject->get( 'catlinks')
 		) );
 		$this->wikiaFooter = $this->app->renderView( 'WikiaMobileFooterService', 'index', array(
-			'copyrightLink' => str_replace( 'CC-BY-SA', $this->wf->msg( 'wikiamobile-footer-link-license' ), $this->templateObject->get( 'copyright' ) )
+			'copyrightLink' => str_replace( 'CC-BY-SA', $this->wf->msg( 'wikiamobile-footer-link-license' ), $templateObject->get( 'copyright' ) )
 		) );
 		$this->jsBodyFiles = $jsBodyFiles;
 
