@@ -952,7 +952,14 @@ function os_eventMouseup( srcId, e ) {
 	if( num >= 0 && os_mouse_num == num ) {
 		os_updateSearchQuery( r, r.results[num] );
 		os_hideResults( r );
-		document.getElementById( r.searchform ).submit();
+		
+		/** wikia change (robert) -- trigger go-search button on monobook (bugid: 30753) **/
+		var goButton;
+		if ( goButton = document.getElementById( 'searchGoButton' ) ) {
+			goButton.click();
+		} else {
+			document.getElementById( r.searchform ).submit();
+		}
 	}
 	os_mouse_pressed = false;
 	// keep the focus on the search field
