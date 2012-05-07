@@ -161,15 +161,11 @@ var Lightbox = {
 	loadLightbox: function() {
 		Lightbox.lightboxLoading = true;
 
-		$.loadLibrary(
-			'Lightbox', 
-			[
-				stylepath + '/common/jquery/jquery.mustache.js',
-				$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')
-			],
-			typeof Mustache,
-			this.showLightbox
-		);
+		$.when(
+			$.loadMustache(),
+			$.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')])
+		).done(this.showLightbox);
+
 	},
 	showLightbox: function() {
 		$.nirvana.sendRequest({
@@ -265,8 +261,6 @@ var Lightbox = {
 		});
 	},
 	makeVideoModal: function(html) {
-		console.log(html);
-
 		html = $(html);
 
 		var topOffset = Lightbox.modalConfig.topOffset,
