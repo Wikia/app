@@ -32,7 +32,7 @@
 	<?php if(empty($inGroup)): ?>
 		<nav>
 			<ul>
-				<li><a href="<?= $result->getLinkUrl(); ?>" <?=$trackingData;?> ><?=$result->getUrl();?></a></li>
+				<li><a href="<?= $result->getLinkUrl(); ?>" <?=$trackingData;?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getUrl(), 90);?></a></li>
 				<?php if($isInterWiki): ?>
 					<li><a href="<?= $result->getVar('cityHost') .'/wiki/Special:Search?search='.urlencode($query).'&fulltext=Search'; ?>"><?= wfMsg( 'wikiasearch2-search-on-wiki') ?></a></li>
 				<?php endif; ?>
