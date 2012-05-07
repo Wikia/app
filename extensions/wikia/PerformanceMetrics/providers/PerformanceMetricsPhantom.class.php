@@ -22,13 +22,16 @@ class PerformanceMetricsPhantom extends PerformanceMetricsProvider {
 
 		// form command to be executed
 		$dir = dirname(__FILE__);
+		$cookiesFile = escapeshellcmd(tempnam(wfTempDir(), 'phantom'));
 		$urlEscaped = escapeshellcmd($url);
-		$cmd = "phantomjs {$dir}/phantomjs/metrics.js {$urlEscaped}";
+
+		$cmd = "phantomjs --cookies-file={$cookiesFile} {$dir}/phantomjs/metrics.js {$urlEscaped}";
 
 		// support for logged-in metrics
 		if (!empty($options['loggedIn'])) {
 			$account = $this->getCredentials();
-			$cmd .= ' ' . escapeshellcmd("{$account['username']} {$account['password']}");
+			$cmd .= ' --username=' . escapeshellcmd($account['username']);
+			$cmd .= ' --password=' . escapeshellcmd($account['password']);
 		}
 
 		exec($cmd, $output, $retVal);
