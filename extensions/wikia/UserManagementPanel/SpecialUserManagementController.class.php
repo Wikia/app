@@ -34,6 +34,7 @@ class SpecialUserManagementController extends WikiaSpecialPageController {
 			$this->emailLastDelivery = 'none';
 		} else {
 			$this->emailLastDelivery = $this->wg->Lang->date( wfTimestamp( TS_MW, $lastEmailData['transmitted'] ) );
+/*
 			if ( $lastEmailData['is_bounce'] ) {
 				$this->emailError[] = "bounced";
 			}
@@ -45,12 +46,14 @@ class SpecialUserManagementController extends WikiaSpecialPageController {
 			if ( $lastEmailData['is_spam'] ) {
 				$this->emailErrors[] = "marked as spam";
 			}
+*/
 
 			if ( empty( $emailErrors ) ) {
-				$this->emailLastDeliveryStatus = Wikia::successmsg( 'OK' );
+				$this->emailLastDeliveryStatus = ''; // Wikia::successmsg( 'OK' );
 			} else {
 				$this->emailLastDeliveryStatus = Wikia::errormsg( implode( ', ', $emailErrors ) );
 			}
+
 		}
 
 		$this->emailChangeUrl = GlobalTitle::newFromText( 'EditAccount', NS_SPECIAL, 177 )->getFullUrl() . '/' . $par;
