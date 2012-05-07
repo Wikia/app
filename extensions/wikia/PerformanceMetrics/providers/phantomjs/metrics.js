@@ -10,11 +10,28 @@ var request = require('webpage').create,
 	address;
 
 if (system.args.length === 1) {
-	console.log('Usage: metrics.js <URL>');
+	console.log('Usage: metrics.js <URL> --username=foo --password=bar');
 	phantom.exit();
 }
 
 var page = request();
+
+function parseArgs(args) {
+	var res = {};
+
+	args.forEach(function(val) {
+		if (val.indexOf('--') === 0) {
+			val = val.substring(2);
+			var idx = val.indexOf('='),
+				key = val.substring(0, idx),
+				value = val.substring(idx+1);
+
+			res[key] = value;
+		}
+	});
+
+	return res;
+};
 
 // calculate DOM complexity
 function getDomComplexity(page) {
@@ -355,11 +372,9 @@ page.onLoadFinished = function(status) {
 			});
 
 			// debug stuff
-			/**
-			metrics.userName = page.evaluate(function() {
+			console.log('# User name: ' + page.evaluate(function() {
 				return window.wgUserName;
-			});
-			**/
+			}));
 
 			// emit the results
 			var report = {
@@ -378,40 +393,27 @@ page.onLoadFinished = function(status) {
 	phantom.exit();
 };
 
-// load the emit and print out the metrics
-address = system.args[1];
-username = system.args[2] || false;
-password = system.args[3] || false;
+// parse script arguments
+var args = parseArgs(system.args);
+
+var address = system.args[1],
+	username = args.username || false,
+	password = args.password || false;
 
 // log me in
 if (username !== false && password !== false) {
 	var apiUrl = address.substring(0, address.indexOf('.com/') + 4) + '/api.php';
 
-	console.log(apiUrl);
+	console.log('API url: ' + apiUrl);
 
 	// obtain log in token
 	var postData = 'action=login&format=json&lgname=' + username + '&lgpassword=' + password,
 		apiReq = request(),
-		apiReq2 = request(),
-		cookieJar = '';
+		apiReq2 = request();
 
 	apiReq.onResourceReceived = apiReq2.onResourceReceived = function(res) {
 		if (res.stage == 'end') {
-			console.log('#' + JSON.stringify(res.headers));
-
-			res.headers.forEach(function(val) {
-				switch(val.name) {
-					case 'Set-Cookie':
-						var cookie = val.value.split("\n");
-						cookie.forEach(function(val) {
-							val = val.split(';').shift();
-							cookieJar += val + '; ';
-						});
-						break;
-				}
-			});
-
-			console.log('# Cookie jar: ' + cookieJar);
+			console.log('# Headers: ' + JSON.stringify(res.headers));
 		}
 	};
 
@@ -421,17 +423,10 @@ if (username !== false && password !== false) {
 		var data = JSON.parse(apiReq.plainText),
 			token = data.login.token;
 
-		console.log('token obtainted: ' + token);
-
-		// log in
-		// cookie jar
-		apiReq2.customHeaders = page.customHeaders = {
-			Cookie: cookieJar
-		};
+		console.log('# Token obtainted: ' + token);
 
 		apiReq2.open(apiUrl, 'post', postData + '&lgtoken=' + token, function() {
-			console.log('logged in');
-			console.log(apiReq2.plainText);
+			console.log('# Logged in');
 
 			page.open(address);
 		});
