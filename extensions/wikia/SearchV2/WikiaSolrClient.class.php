@@ -76,8 +76,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$onWikiId = ( !empty( $solrDebugWikiId ) ) ? $solrDebugWikiId : $cityId;
 
-		$this->isInterWiki = $this->isInterWiki || empty($isInterWiki);
-
 		if( $this->isInterWiki ) {
 			$queryClauses += $this->getInterWikiQueryClauses($hub);
 		}
