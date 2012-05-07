@@ -54,7 +54,6 @@ body {
 		top: 0;
 		position: absolute;
 	}
-
 }
 
 #wkMainCntHdr {
@@ -81,8 +80,8 @@ a {
 }
 
 #wkPage {
-	//I want page to be at least 270px long to be able to show share
-	min-height: 270px;
+	//I want page to be at least 305px long to be able to show share
+	min-height: 305px;
 	background-color: white;
 	overflow-x: hidden;
 	padding-top: 40px;
@@ -278,7 +277,7 @@ blockquote {
 	border: 1px solid grey;
 	background-position: 98% 20%;
 	background-size: 8px;
-	
+	z-index: $top-layer-z-index;
 	
 	&.show {
 		border-color: $link-color;

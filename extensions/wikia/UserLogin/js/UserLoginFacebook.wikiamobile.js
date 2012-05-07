@@ -1,4 +1,6 @@
-var UserLoginFacebook = (function(){
+var UserLoginFacebook;
+
+require(['track', 'events', 'querystring', 'toast'], function(track, events, qs, toast){
 	/** @private **/
 
 	//init
@@ -16,8 +18,8 @@ var UserLoginFacebook = (function(){
 					xfbml  : window.fbUseMarkup // Whether XFBML should be automatically parsed
 				});
 
-				btn.addEventListener(WikiaMobile.getClickEvent(), function(){
-					WikiaMobile.track('facebook/connect/login');
+				btn.addEventListener(events.click, function(){
+					track('facebook/connect/login');
 					UserLoginFacebook.login();
 				});
 				btn.disabled = false;
@@ -26,34 +28,32 @@ var UserLoginFacebook = (function(){
 	});
 	/** @public **/
 
-	return {
+	UserLoginFacebook = {
 		login: function(){
 			// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
 			FB.login(
 				function(response){
 					if(typeof response === 'object' && response.status == 'connected'){
-						require(['querystring', 'toast'], function(qs, toast){
-							// now check FB account (is it connected with Wikia account?)
-							$.nirvana.postJson('FacebookSignupController', 'index', null, function(resp){
-								if(resp.loggedIn){
-									WikiaMobile.track('facebook/connect/success');
+						// now check FB account (is it connected with Wikia account?)
+						$.nirvana.postJson('FacebookSignupController', 'index', null, function(resp){
+							if(resp.loggedIn){
+								track('facebook/connect/success');
 
-										var reload = qs(),
-											returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
+								var reload = qs(),
+									returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
 
-										if(returnto) {
-											reload.setPath(wgArticlePath.replace('$1', returnto));
-										}
-
-										reload.setVal('returnto', '');
-										reload.setVal('cb', wgStyleVersion);
-										reload.goTo();
-
-								}else{
-									WikiaMobile.track('facebook/connect/fail');
-									toast.show($.msg('wikiamobile-facebook-connect-fail'), {error: true});
+								if(returnto) {
+									reload.setPath(wgArticlePath.replace('$1', returnto));
 								}
-							});
+
+								reload.setVal('returnto', '');
+								reload.setVal('cb', wgStyleVersion);
+								reload.goTo();
+
+							}else{
+								track('facebook/connect/fail');
+								toast.show($.msg('wikiamobile-facebook-connect-fail'), {error: true});
+							}
 						});
 					}
 				},
@@ -61,4 +61,4 @@ var UserLoginFacebook = (function(){
 			);
 		}
 	}
-})();
+});

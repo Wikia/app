@@ -4,223 +4,211 @@
  *
  * @author Jakub "Student" Olek
  */
+define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'], function(modal, loader, qs, popover, track, events){
+	/** @private **/
 
-(function(){
-	if(define){
-		//AMD
-		define('media', ['modal', 'loader','querystring', 'popover'], media);//late binding
-	}else{
-		window.Media = media(Modal, Loader, Querystring, Popover);//late binding
-	}
+	var	images = [],
+		fllScrImg,
+		imagesLength,
+		current = 0,
+		shrImg = qs().getVal('image'),
+		clickEvent = events.click,
+		sharePopOver,
+		content = '<div id=fllScrImg></div>';
 
-	function media(modal, loader, qs, popover){
-		/** @private **/
+	function processImages(){
+		var	number = 0, href = '', name = '', nameMatch = /[^\/]*\.\w*$/,
+			i, j, elm,
+			elements = $('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure'),
+			l = elements.length,
+			img, cap;
 
-		var	images = [],
-			fllScrImg,
-			imagesLength,
-			current = 0,
-			shrImg = qs().getVal('image'),
-			clickEvent = WikiaMobile.getClickEvent(),
-			touchEvent = WikiaMobile.getTouchEvent(),
-			track = WikiaMobile.track,
-			sharePopOver,
-			content = '<div id=fllScrImg></div>';
+		for(j = 0; j < l; j++){
+			var element = elements[j],
+				className = element.className,
+				leng;
 
-		function processImages(){
-			var	number = 0, href = '', name = '', nameMatch = /[^\/]*\.\w*$/,
-				i, j, elm,
-				elements = $('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure'),
-				l = elements.length,
-				img, cap;
+			if(className.indexOf('image') > -1){
+				href = element.href;
+				name = element.attributes['data-image-name'].value.replace('.','-');
+				if(name === shrImg) shrImg = number;
+				images.push([href, name]);
+				element.setAttribute('data-num', number++);
+			}else if(className.indexOf('wkImgStk') > -1){
+				if(className.indexOf('grp') > -1) {
+					var figures = element.getElementsByTagName('figure');
 
-			for(j = 0; j < l; j++){
-				var element = elements[j],
-					className = element.className,
-					leng;
+					leng = figures.length;
 
-				if(className.indexOf('image') > -1){
-					href = element.href;
-					name = element.attributes['data-image-name'].value.replace('.','-');
-					if(name === shrImg) shrImg = number;
-					images.push([href, name]);
-					element.setAttribute('data-num', number++);
-				}else if(className.indexOf('wkImgStk') > -1){
-					if(className.indexOf('grp') > -1) {
-						var figures = element.getElementsByTagName('figure');
+					element.setAttribute('data-num', number);
 
-						leng = figures.length;
+					element.getElementsByTagName('footer')[0].insertAdjacentHTML('beforeend', leng);
 
-						element.setAttribute('data-num', number);
-
-						element.getElementsByTagName('footer')[0].insertAdjacentHTML('beforeend', leng);
-
-						for(i=0; i < leng; i++){
-							elm = figures[i];
-							img = elm.getElementsByClassName('image')[0];
-							if(img){
-								href = img.href;
-								name = img.id;
-								images.push([
-									href, name,
-									(cap = elm.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
-									i, leng
-								]);
-
-								if(name === shrImg) shrImg = number + i;
-							}
-						}
-					} else {
-						leng = parseInt(element.attributes['data-img-count'].value, 10);
-						var	lis = element.getElementsByTagName('li');
-
-						element.setAttribute('data-num', number);
-
-						for(i=0; i < leng; i++){
-							elm = lis[i];
-							href = elm.attributes['data-img'].value;
-							name = href.match(nameMatch)[0].replace('.','-');
+					for(i=0; i < leng; i++){
+						elm = figures[i];
+						img = elm.getElementsByClassName('image')[0];
+						if(img){
+							href = img.href;
+							name = img.id;
 							images.push([
-								href,
-								name,
-								elm.innerHTML,
-								//I need these number to show counter in a modal
+								href, name,
+								(cap = elm.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
 								i, leng
 							]);
 
 							if(name === shrImg) shrImg = number + i;
 						}
 					}
-					number += leng;
 				} else {
-					img = element.getElementsByClassName('image')[0];
-					if(img){
-						href = img.href;
-						name = img.id;
-						if(name === shrImg) shrImg = number;
+					leng = parseInt(element.attributes['data-img-count'].value, 10);
+					var	lis = element.getElementsByTagName('li');
+
+					element.setAttribute('data-num', number);
+
+					for(i=0; i < leng; i++){
+						elm = lis[i];
+						href = elm.attributes['data-img'].value;
+						name = href.match(nameMatch)[0].replace('.','-');
 						images.push([
-							href, name,
-							(cap = element.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:''
+							href,
+							name,
+							elm.innerHTML,
+							//I need these number to show counter in a modal
+							i, leng
 						]);
-						element.setAttribute('data-num', number++);
+
+						if(name === shrImg) shrImg = number + i;
 					}
 				}
-			}
-
-			imagesLength = images.length;
-
-			if(imagesLength > 1) content = '<div class=chnImg id=prvImg><div></div></div>' + content + '<div class=chnImg id=nxtImg><div></div></div>';
-
-			//if url contains image=imageName - open modal with this image
-			if(shrImg > -1) setTimeout(function(){openModal(shrImg)}, 2000);
-		}
-
-		function loadImage(){
-			var image = images[current],
-				img = new Image();
-
-			loader.show(fllScrImg, {center: true});
-
-			img.src = image[0];
-			fllScrImg.style.backgroundImage = 'none';
-			img.onload =  function() {
-				fllScrImg.style.backgroundImage = 'url("' + img.src + '")';
-				loader.hide(fllScrImg);
-			};
-
-			modal.setCaption(getCaption(current));
-		}
-
-		function loadPrevImage(ev){
-			ev.stopPropagation();
-
-			current -= 1;
-
-			if(current < 0) {
-				current = imagesLength-1;
-			}
-
-			track('modal/image/prev');
-			loadImage();
-		}
-
-		function loadNextImage(ev){
-			ev.stopPropagation();
-
-			current += 1;
-
-			if(imagesLength <= current) {
-				current = 0;
-			}
-
-			track('modal/image/next');
-			loadImage();
-		}
-
-		function getCaption(num){
-			var img = images[num],
-				cap = img[2] || '',
-				number = img[3],
-				length = img[4];
-
-			if(number >= 0 && length >= 0) {
-				cap += '<div class=wkStkFtr> ' + (number+1) + ' / ' + length + ' </div>';
-			}
-
-			return cap;
-		}
-
-		function openModal(num){
-			current = Math.round(num);
-
-			modal.open({
-				content: content,
-				toolbar: '<div class=wkShr id=wkShrImg>',
-				classes: 'imgMdl'
-			});
-
-			fllScrImg = document.getElementById('fllScrImg');
-
-			loadImage();
-
-			//handling next/previous image
-			if(imagesLength > 1){
-				$(document.getElementById('nxtImg')).bind('swipeLeft ' + clickEvent, loadNextImage);
-				$(document.getElementById('prvImg')).bind('swipeRight ' + clickEvent, loadPrevImage);
-				$(fllScrImg).bind('swipeLeft', loadNextImage)
-					.bind('swipeRight', loadPrevImage);
-			}
-
-			sharePopOver = popover({
-				on: document.getElementById('wkShrImg'),
-				style: 'left:3px;',
-				create: function(cnt){
-					$(cnt).delegate('li', 'click', function(){
-						track('modal/share/' + this.className.replace('Shr',''));
-					});
-				},
-				open: function(ev){
-					ev.stopPropagation();
-					sharePopOver.changeContent(WikiaMobile.loadShare);
-					track('modal/share/open');
-				},
-				close: function(){
-					track('modal/share/close');
+				number += leng;
+			} else {
+				img = element.getElementsByClassName('image')[0];
+				if(img){
+					href = img.href;
+					name = img.id;
+					if(name === shrImg) shrImg = number;
+					images.push([
+						href, name,
+						(cap = element.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:''
+					]);
+					element.setAttribute('data-num', number++);
 				}
-			});
+			}
 		}
 
-		/** @public **/
+		imagesLength = images.length;
 
-		return {
-			openModal: openModal,
-			getImages: function(){
-				return images;
-			},
-			getCurrentImg: function(){
-				return images[current];
-			},
-			processImages: processImages
-		}
+		if(imagesLength > 1) content = '<div class=chnImg id=prvImg><div></div></div>' + content + '<div class=chnImg id=nxtImg><div></div></div>';
+
+		//if url contains image=imageName - open modal with this image
+		if(shrImg > -1) setTimeout(function(){openModal(shrImg)}, 2000);
 	}
-})();
+
+	function loadImage(){
+		var image = images[current],
+			img = new Image();
+
+		loader.show(fllScrImg, {center: true});
+
+		img.src = image[0];
+		fllScrImg.style.backgroundImage = 'none';
+		img.onload =  function() {
+			fllScrImg.style.backgroundImage = 'url("' + img.src + '")';
+			loader.hide(fllScrImg);
+		};
+
+		modal.setCaption(getCaption(current));
+	}
+
+	function loadPrevImage(ev){
+		ev.stopPropagation();
+
+		current -= 1;
+
+		if(current < 0) {
+			current = imagesLength-1;
+		}
+
+		track('modal/image/prev');
+		loadImage();
+	}
+
+	function loadNextImage(ev){
+		ev.stopPropagation();
+
+		current += 1;
+
+		if(imagesLength <= current) {
+			current = 0;
+		}
+
+		track('modal/image/next');
+		loadImage();
+	}
+
+	function getCaption(num){
+		var img = images[num],
+			cap = img[2] || '',
+			number = img[3],
+			length = img[4];
+
+		if(number >= 0 && length >= 0) {
+			cap += '<div class=wkStkFtr> ' + (number+1) + ' / ' + length + ' </div>';
+		}
+
+		return cap;
+	}
+
+	function openModal(num){
+		current = Math.round(num);
+
+		modal.open({
+			content: content,
+			toolbar: '<div class=wkShr id=wkShrImg>',
+			classes: 'imgMdl'
+		});
+
+		fllScrImg = document.getElementById('fllScrImg');
+
+		loadImage();
+
+		//handling next/previous image
+		if(imagesLength > 1){
+			$(document.getElementById('nxtImg')).bind('swipeLeft ' + clickEvent, loadNextImage);
+			$(document.getElementById('prvImg')).bind('swipeRight ' + clickEvent, loadPrevImage);
+			$(fllScrImg).bind('swipeLeft', loadNextImage)
+				.bind('swipeRight', loadPrevImage);
+		}
+
+		sharePopOver = popover({
+			on: document.getElementById('wkShrImg'),
+			style: 'left:3px;',
+			create: function(cnt){
+				$(cnt).delegate('li', clickEvent, function(){
+					track('modal/share/' + this.className.replace('Shr',''));
+				});
+			},
+			open: function(ev){
+				ev.stopPropagation();
+				sharePopOver.changeContent(WikiaMobile.loadShare);
+				track('modal/share/open');
+			},
+			close: function(){
+				track('modal/share/close');
+			}
+		});
+	}
+
+	/** @public **/
+
+	return {
+		openModal: openModal,
+		getImages: function(){
+			return images;
+		},
+		getCurrentImg: function(){
+			return images[current];
+		},
+		processImages: processImages
+	}
+});

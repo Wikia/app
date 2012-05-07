@@ -1,7 +1,9 @@
 var UserLogin = UserLogin || {
 	isForceLogIn: function(){
 		if(wgUserName == null){
-			WikiaMobile.openProfile();
+			require('topbar', function(t){
+				t.openProfile();
+			});
 			return true;
 		}
 		return false;

@@ -7,13 +7,13 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-require(['loader', 'querystring'], function(loader, qs){
+require(['loader', 'querystring', 'events'], function(loader, qs, events){
 	var hash = qs().getHash(),
 		wkArtCom,
 		collSec,
 		open,
 		wkComm,
-		clickEvent = WikiaMobile.getClickEvent();
+		clickEvent = events.click;
 
 	if(hash.indexOf('comm-') > -1){
 		open = hash.slice(6);
@@ -53,7 +53,7 @@ require(['loader', 'querystring'], function(loader, qs){
 						if(elm.nodeName == 'LI'){
 							setTimeout(function(){
 								var evObj = document.createEvent('MouseEvents');
-								evObj.initMouseEvent('click', true, true, window);
+								evObj.initMouseEvent(clickEvent, true, true, window);
 								elm.getElementsByClassName('cmnRpl')[0].dispatchEvent(evObj);
 							}, 1500);
 						}
