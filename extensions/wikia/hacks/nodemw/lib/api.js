@@ -1,3 +1,6 @@
+/**
+ * Helper "class" for accessing MediaWiki API and handling cookie-based session
+ */
 (function(exports) {
 
 	var api = function(options) {
@@ -47,7 +50,7 @@
 				headers['Content-Length'] = postParams.length;
 
 				params = {
-					action: params.action	
+					action: params.action
 				};
 			}
 
@@ -89,8 +92,15 @@
 
 					// parse response
 					try {
-						var data = JSON.parse(res.body);
-						callback((data && data[params.action]) || false);
+						var data = JSON.parse(res.body),
+							info = data && data[params.action];
+
+						if (info) {
+							callback(info);
+						}
+						else if (data.error) {
+							self.log('> Error: ' + data.error.info);
+						}
 					}
 					catch(e) {
 						throw 'Error parsing JSON response: ' + res.body;

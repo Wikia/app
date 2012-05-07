@@ -1,3 +1,6 @@
+/**
+ * Defines bot API
+ */
 (function(exports) {
 
 	var api = require('./api').api;
@@ -24,6 +27,8 @@
 		logIn: function(username, password, callback) {
 			var self = this;
 
+			this.api.log('> Obtaining login token...');
+
 			// request a token
 			this.api.call({
 				action: 'login',
@@ -33,6 +38,8 @@
 				if (data.result == 'NeedToken') {
 					var token = data.token;
 
+					self.api.log('> Got token ' + token);
+
 					// log in using a token
 					self.api.call({
 						action: 'login',
@@ -41,6 +48,7 @@
 						lgtoken: token,
 					}, function(data) {
 						if (typeof data.lgusername !== 'undefined') {
+							self.api.log('> Logged in as ' + data.lgusername);
 							callback(data);
 						}
 					}, 'POST');
@@ -98,6 +106,10 @@
 			}, function(data) {
 				var page = getFirstItem(data.pages),
 					token = page.edittoken;
+
+				if (!token) {
+					throw 'Can\'t get edit token!';
+				}
 
 				self.api.call({
 					action: 'edit',
