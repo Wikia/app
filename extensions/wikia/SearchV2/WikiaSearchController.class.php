@@ -37,6 +37,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$advanced = $this->getVal( 'advanced' );
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
 		$wikiName = $this->wg->Sitename;
+		$hub = ($this->getVal('nohub') != '1') ? $this->getVal('hub') : false;
 		
 		if(!empty($advanced)) {
 			$redirs = $this->request->getBool('redirs');
@@ -84,7 +85,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					'length'=>self::RESULTS_PER_PAGE, 
 					'cityId'=>( $isInterWiki ? 0 : $this->wg->CityId ), 
 					'groupResults'=>$isInterWiki,
-					'rank'=>$rank);
+					'rank'=>$rank,
+					'hub'=>$hub);
 
 			$results = $this->wikiaSearch->doSearch( $query, $params );
 
@@ -123,6 +125,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isInterWiki', $isInterWiki );
 		$this->setVal( 'relevancyFunctionId', WikiaSearch::RELEVANCY_FUNCTION_ID );
 		$this->setVal( 'namespaces', $namespaces );
+		$this->setVal( 'hub', $hub );
 	}
 
 	public function advancedBox() {
