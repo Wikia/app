@@ -228,10 +228,6 @@ class CreateWiki {
 			return self::ERROR_DOMAIN_NAME_TAKEN;
 		}
 
-		if( strpos( $wgWikiaLocalSettingsPath, "central") !== false ) {
-			$wgWikiaLocalSettingsPath = str_replace( "central", "wiki.factory", $wgWikiaLocalSettingsPath );
-		}
-
 		// start counting time
 		$this->mCurrTime = wfTime();
 		$startTime = $this->mCurrTime;
