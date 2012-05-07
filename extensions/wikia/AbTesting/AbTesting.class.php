@@ -38,11 +38,13 @@ class AbTesting {
 	public static function getJsExperimentConfig(){
 		wfProfileIn( __METHOD__ );
 
+		$app = F::app();
+
 		// Cache the generated string inside of memcached.
 		$memKey = $app->wf->SharedMemcKey( 'datamart', 'abconfig' );
-		$jsString = $app->wg->Memc->get( $memKey );
+// TODO: RESTORE!
+//		$jsString = $app->wg->Memc->get( $memKey );
 		if(empty($jsString)){
-			$app = F::app();
 			$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 			
 			// Generate config JS from the experiments and treatment_groups tables in the datamart.
@@ -62,7 +64,7 @@ class AbTesting {
 				// If this is the first entry for this experiment, create the experiment in the array.
 				if(!isset($expData[ $row->expId ])){
 					$expData[ $row->expId ] = array(
-						'name' => $row->expId,
+						'name' => $row->expName,
 						'begin_time' => $row->expBeginTime,
 						'end_time' => $row->expEndTime,
 						'groups' => array()
@@ -70,28 +72,27 @@ class AbTesting {
 				}
 				
 				// Add this treatment group's info to the experiment.
-				$expData[ $row->expId ][ $row->tgId ] = array(
+				$expData[ $row->expId ]['groups'][ $row->tgId ] = array(
 					'name' => $row->tgName,
 					'is_control' => $row->tgIsControl,
 					'percentage' => $row->tgPercentage
 				);
 			}
 
-// TODO: CALCUTE min/max PERCENTAGES FOR THE EXPERIMENTS.
 			// Pre-calculate the min-max percentages for each experiment.
-print "DATA FROM DB:<br/>\n";
-print_r($expData);
 			foreach($expData as $expId => $exp){
 				$min = 0;
+				
+				// The ranges must be computed with the groups sorted by id (so that ranges could be reproduced deterministically server-side).
+				ksort($exp['groups']);
+
 				foreach($exp['groups'] as $groupId => $groupData){
-					$groupData['min'] = $min;
-					$groupData['max'] = $min + $groupData['percentage'] - 1; // -1 is because this range is inclusive, so all min-max ranges should be disjoint.
-					unset($groupData['percentage']);
-					$min = $groupData['max'] + 1;
+					$expData[$expId]['groups'][$groupId]['min'] = $min;
+					$expData[$expId]['groups'][$groupId]['max'] = $min + $groupData['percentage'] - 1; // -1 is because this range is inclusive, so all min-max ranges should be disjoint.
+					unset($expData[$expId]['groups'][$groupId]['percentage']);
+					$min = $expData[$expId]['groups'][$groupId]['max'] + 1;
 				}
 			}
-print "DATA AFTER TRYING TO CALCULATE RANGES:<br/>\n";
-print_r($expData);
 
 			ob_start();
 
@@ -101,39 +102,19 @@ print_r($expData);
 				$varString .= ($varString == "" ? "" : ",");
 
 				// Turn the experiment name into a variable
-				$expName = $exp['name'];
-				$expName = strtoupper( preg_replace("/[^a-b0-9_]/i", "", $expName) );
+				$expName = self::makeStringIntoJsConst( $exp['name'] );
 
-				$varString .= "$expName = $expId";
-			}
-			$varString = "var $varString;\n";
+				$varString .= "EXP_$expName = $expId";
 
-			print $varString;
-			
-			
-print "JSON ENCODED expData (might work):<br/>\n".json_encode($expData);
-			?>
-			var AB_CONFIG = {
-	// TODO: DO WE NEED NAMES OF EXPERIMENTS AND GROUPS? EASIER FOR DEBUG, BUG BIGGER PAYLOAD.
+				// Make 'consts' for each treatmenet-group too.
+				foreach($exp['groups'] as $tgId => $tgData){
+					$varString .= ($varString == "" ? "" : ",");
 
-	//  TODO: USE EXPERIMENT IDS AS FIRST-LEVEL KEYS
-				123: {
-					name: // TODO:
-					begin_time: // TODO:
-					end_time: // TODO:
-					groups: {
-	// TODO: USE GROUP IDS AS KEYS
-						222: {
-							name: 
-							is_control: 
-							min: 
-							max: 
-						},
-						333:
-					}
+					$tgName = self::makeStringIntoJsConst( $tgData['name'] );
+					$varString .= "TG_$tgName = $tgId";
 				}
-			};
-			<?php
+			}
+			print "var $varString,AB_CONFIG = ".json_encode($expData)."\n";
 			$jsString = ob_get_clean();
 
 			// We're embedding this in every page, so minify it.
@@ -147,6 +128,15 @@ print "JSON ENCODED expData (might work):<br/>\n".json_encode($expData);
 		wfProfileOut( __METHOD__ );
 		return $jsString;
 	} // end getJsExperimentConfig()
+	
+	/**
+	 * Given a raw string, formats it such that it is a JS var (all caps to indicate that it's a constant).
+	 */
+	public static function makeStringIntoJsConst( $rawString ){
+		$rawString = str_replace(" ", "_", $rawString);
+		$rawString = strtoupper( preg_replace("/[^a-z0-9_]/i", "", $rawString) );
+		return $rawString;
+	}
 	
 	/**
 	 * Returns the javascript for the getTreatmentGroup() function as a string.
@@ -184,17 +174,25 @@ print "JSON ENCODED expData (might work):<br/>\n".json_encode($expData);
 				} else {
 					// Figure out the correct treatment group based on the beacon_id.
 					var normalizedHash = abHash( experimentId ); // beacon_id is used in here
+					var controlId;
 					for( var tgId in AB_CONFIG[experimentId] ){
 						var tgConfig = AB_CONFIG[experimentId][tgId];
 						if((normalizedHash >= tgConfig.min) || (normalizedHash <= tgConfig.max)){
 							treatmentGroup = tgId;
 						}
+						if(tgConfig.is_control){
+							controlId = tgConfig;
+						}
 					}
-				}
 
+					// If treatment group wasn't explicitly set, show the user the control, but don't log a treatment event.
+					if(treatmentGroup == ""){
+						treatmentGroup = controlId;
+					} else {
 // TODO: Record the treatment event and cache the treatment group (so that we know not to send the event again).
 // NOTE: pass varnishTime to the backend
-
+					}
+				}
 			} else if (hasLogging) {
 				console.log("TRIED TO getTreatmentGroup() FOR AN EXPERIMENT THAT IS NOT CONFIGURED! Exp: " + experimentId);
 			}
