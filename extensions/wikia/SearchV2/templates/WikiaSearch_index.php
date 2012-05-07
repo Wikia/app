@@ -39,6 +39,11 @@
 				<?php else: ?>
 					<?= wfMsg('wikiasearch2-results-for', '<span>'.$query.'</span>'); ?>
 				<?php endif; ?>
+				<?php if ( isset($hub) && $hub ) : ?>
+					<?= wfMsg('wikiasearch2-onhub', $hub)?>
+					( <a href="<?=preg_replace('/&hub=[^&]+/', '', $_SERVER['REQUEST_URI'])?>"><?= wfMsg('wikiasearch2-search-all-wikia') ?></a> )
+				<?php endif ?>
+
 			</p>
 	
 			<? if ($results->getQuery() && $query != $results->getQuery()) : ?>

@@ -22,7 +22,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	/**
 	 *  $methodOptions supports the following possible values:
-	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true, $solrDebugWikiId = false, $spellCheck
+	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true, $solrDebugWikiId = false, $spellCheck, $hub
 	 **/
 	public function search( $query,  array $methodOptions = array() ) {
 		wfProfileIn(__METHOD__);
@@ -37,6 +37,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$rank               = isset($rank)               ? $rank               : 'default';
 		$solrDebugWikiId    = isset($solrDebugWikiId)    ? $solrDebugWikiId    : false;
 		$spellCheck         = isset($spellCheck)         ? $spellCheck         : false;
+		$hub				= isset($hub)				 ? $hub				   : false;
 
 		if (isset($namespaces)) {
 		  $this->setNamespaces($namespaces);
@@ -74,10 +75,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 		$onWikiId = ( !empty( $solrDebugWikiId ) ) ? $solrDebugWikiId : $cityId;
-		$this->isInterWiki = $this->isInterWiki || empty($onWikiId);
+
+		$this->isInterWiki = $this->isInterWiki || empty($isInterWiki);
 
 		if( $this->isInterWiki ) {
-		  array_merge($queryClauses, $this->getInterWikiQueryClauses());
+			$queryClauses += $this->getInterWikiQueryClauses($hub);
 		}
 		else {
 
@@ -343,7 +345,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		return count( $privateWikis ) ? array_merge( $privateWikis, $wg->CrossWikiaSearchExcludedWikis ) : $wg->CrossWikiaSearchExcludedWikis;
 	}
 
-	public function getInterWikiQueryClauses()
+	public function getInterWikiQueryClauses($hub = false)
 	{
 	  $queryClauses = array();
 
@@ -354,10 +356,14 @@ class WikiaSolrClient extends WikiaSearchClient {
 	  }
 	  
 	  $queryClauses[] = $widQuery;
-	  
+
 	  $queryClauses[] = "lang:en";
-	  
+
 	  $queryClauses[] = "iscontent:true";
+
+	  if ($hub) {
+		$queryClauses[] = "hub:".$this->sanitizeQuery($hub);
+	  }
 
 	  return $queryClauses;
 

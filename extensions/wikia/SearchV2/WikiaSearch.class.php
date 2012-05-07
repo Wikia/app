@@ -41,6 +41,7 @@ class WikiaSearch extends WikiaObject {
 		$methodParams['cityId'] = isset($methodParams['cityId']) ? $methodParams['cityId'] : 0;
 		$methodParams['groupResults'] = isset($methodParams['groupResults']) ? $methodParams['groupResults'] : false;
 		$methodParams['rank'] = isset($methodParams['rank']) ? $methodParams['rank'] : 'default';
+		$methodParams['hub'] = isset($methodParams['hub']) ? $methodParams['hub'] : false;
 		
 		extract($methodParams);
 
@@ -49,12 +50,15 @@ class WikiaSearch extends WikiaObject {
 		$groupResults = ( empty($cityId) && $groupResults );
 
 		if($groupResults) {
-			$results = $this->getGroupResultsFromCache($query);
+			$methodOptions = array('rank'=>$rank, 'hub'=>$hub);
+			$cacheSignature = $query . serialize($methodOptions);
+			$results = $this->getGroupResultsFromCache($cacheSignature);
 
 			if(empty($results) || $this->skipCache) {
-				$methodOptions = array('size' => self::GROUP_RESULTS_SEARCH_LIMIT, 
-						       'cityId' =>  $cityId,
-						       'rank' => $rank );
+				$methodOptions += array( 'size' => self::GROUP_RESULTS_SEARCH_LIMIT, 
+										 'cityId' =>  $cityId,
+										 'isInterWiki' => true 
+									   );
 				$results = $this->client->search( $query, $methodOptions );
 				$results = $this->groupResultsPerWiki( $results );
 				$this->setGroupResultsToCache( $query, $results );
@@ -78,7 +82,7 @@ class WikiaSearch extends WikiaObject {
 					$results->merge( $moreResults );
 				}
 
-				$this->setGroupResultsToCache( $query, $results );
+				$this->setGroupResultsToCache( $cacheSignature, $results );
 				if($results->isComplete()) {
 					break;
 				}
@@ -120,19 +124,19 @@ class WikiaSearch extends WikiaObject {
 	}
 
 	/**
-	 * @param string $query
+	 * @param string $cacheSignature (query + serialized options)
 	 * @return WikiaSearchResultSet
 	 */
-	private function getGroupResultsFromCache($query) {
-		return $this->wg->Memc->get( $this->getGroupResultsCacheKey($query) );
+	private function getGroupResultsFromCache($cacheSignature) {
+		return $this->wg->Memc->get( $this->getGroupResultsCacheKey($cacheSignature) );
 	}
 
-	private function setGroupResultsToCache($query, WikiaSearchResultSet $resultSet) {
-		$this->wg->Memc->set( $this->getGroupResultsCacheKey($query), $resultSet, self::GROUP_RESULTS_CACHE_TTL );
+	private function setGroupResultsToCache($cacheSignature, WikiaSearchResultSet $resultSet) {
+		$this->wg->Memc->set( $this->getGroupResultsCacheKey($cacheSignature), $resultSet, self::GROUP_RESULTS_CACHE_TTL );
 	}
 
-	private function getGroupResultsCacheKey($query) {
-		return $this->wf->SharedMemcKey( 'WikiaSearchResultSet', md5($query) );
+	private function getGroupResultsCacheKey($cacheSignature) {
+		return $this->wf->SharedMemcKey( 'WikiaSearchResultSet', md5($cacheSignature) );
 	}
 
 	private function groupResultsPerWiki(WikiaSearchResultSet $results) {
