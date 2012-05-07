@@ -5,15 +5,17 @@
 		</div>
 	<?php endif; ?>
 
-	<div class="media">
-		<script id="LightboxPhotoTemplate" type="text/template">
+	<script id="LightboxPhotoTemplate" type="text/template">
+		<div class="media">
 			<img src="{{imageSrc}}" height="{{imageHeight}}" />
-		</script>
+		</div>
+	</script>
 	
-		<script id="LightboxVideoTemplate" type="text/template">
+	<script id="LightboxVideoTemplate" type="text/template">
+		<div class="media video-media">
 			{{{embed}}}
-		</script>
-	</div>
+		</div>
+	</script>
 
 	<script>
 		var LightboxVar = <?= json_encode($initialFileDetail) ?>;

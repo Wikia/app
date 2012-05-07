@@ -3,6 +3,7 @@ var Lightbox = {
 	modalConfig: {
 		topOffset: 25,
 		modalMinHeight: 648,
+		videoHeight: 360
 	},
 	log: function(content) {
 		$().log(content, "Lightbox");
@@ -238,7 +239,7 @@ var Lightbox = {
 			var modalOptions = Lightbox.getModalOptions(modalHeight, topOffset);
 			
 			var modal = html.makeModal(modalOptions);
-			var contentArea = modal.find(".media");
+			var contentArea = modal.find(".WikiaLightbox");
 			
 			// remove fake image
 			image.remove();
@@ -271,15 +272,16 @@ var Lightbox = {
 		var topOffset = Lightbox.modalConfig.topOffset,
 			modalMinHeight = Lightbox.modalConfig.modalMinHeight,
 			windowHeight = $(window).height(),
-			modalHeight = windowHeight - topOffset*2,
-			modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
+			modalHeight = windowHeight - topOffset*2 - 10, // 5px modal border
+			modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
+			mediaTopMargin = (modalHeight - Lightbox.modalConfig.videoHeight) / 2;
 		
 		var modalOptions = Lightbox.getModalOptions(modalHeight, topOffset);
 		
 		
 		
 		var modal = $(html).makeModal(modalOptions);
-		var contentArea = modal.find(".media");
+		var contentArea = modal.find(".WikiaLightbox");
 
 		/* extract mustache templates */
 		var videoTemplate = modal.find("#LightboxVideoTemplate").html();
@@ -290,6 +292,8 @@ var Lightbox = {
 		}
 		
 		var renderedResult = Mustache.render(videoTemplate, json);
+
+		renderedResult = $(renderedResult).css('margin-top', mediaTopMargin);
 
 		contentArea.append(renderedResult);					
 		

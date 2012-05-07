@@ -17,6 +17,13 @@
 			vertical-align: middle;
 		}
 	}
+	.video-media {
+		height: auto;
+		embed, object {
+			display: block;
+			margin: 0 auto;
+		}
+	}
 	#image-preload {
 		position: absolute;
 		top: -99999999px;
