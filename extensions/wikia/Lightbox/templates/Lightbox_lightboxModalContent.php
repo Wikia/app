@@ -1,14 +1,21 @@
 <div class="WikiaLightbox">
-	<img id='lightbox-preload' src='<?=$initialFileDetail['imageUrl'] ?>' />
-	<script id="LightboxPhotoTemplate" type="text/template">
-		<div class="media">
-			<img src="{{imageSrc}}" height="{{imageHeight}}" />
+	<?php if($initialFileDetail['mediaType'] == 'image'): // needed for image preload ?>
+		<div id="LightboxPreload">
+			<img src="<?=$initialFileDetail['imageUrl'] ?>" />
 		</div>
-	</script>
+	<?php endif; ?>
+
+	<div class="media">
+		<script id="LightboxPhotoTemplate" type="text/template">
+			<img src="{{imageSrc}}" height="{{imageHeight}}" />
+		</script>
+	
+		<script id="LightboxVideoTemplate" type="text/template">
+			{{{embed}}}
+		</script>
+	</div>
 
 	<script>
-		var LightboxVar = {
-			file: <?= json_encode($initialFileDetail) ?>
-		};
+		var LightboxVar = <?= json_encode($initialFileDetail) ?>;
 	</script>
 </div>
