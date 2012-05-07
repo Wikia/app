@@ -5,7 +5,7 @@
  * @author Jakub 'Student' Olek
  **/
 
-require(['loader', 'toast', 'modal'], function(loader, toast, modal){
+require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast, modal, events, track){
 	/** @private **/
 
 	var wkArtCom = document.getElementById('wkArtCom'),
@@ -19,10 +19,9 @@ require(['loader', 'toast', 'modal'], function(loader, toast, modal){
 			skin +
 			"&article=" +
 			wgArticleId,
-		clickEvent = WikiaMobile.getClickEvent(),
+		clickEvent = events.click,
 		firstPage,
 		commsUl = document.getElementById('wkComUl'),
-		track = WikiaMobile.track,
 		postReply = $.msg('wikiamobile-article-comments-post-reply'),
 		view = $.msg('wikiamobile-article-comments-view'),
 		replies = $.msg('wikiamobile-article-comments-replies'),

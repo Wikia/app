@@ -62,6 +62,7 @@
 #wkPrf{
 	display: none;
 	background-color: white;
+	border-bottom: 5px solid $searchOpenBackground;
 
 	#wkLgn{
 		background-color: white;
@@ -277,6 +278,7 @@
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 	overflow-x: hidden;
+	border-bottom: 5px solid $searchOpenBackground;
 
 	.fllNav & {
 		display: block;

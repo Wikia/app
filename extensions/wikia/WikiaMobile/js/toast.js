@@ -13,11 +13,14 @@
 	}
 
 	function toast(){
-		var wkTst;
+		var wkTst,
+			d = document;
+
 		return{
 			show: function(msg, opt){
 				if(msg){
-					opt = opt || {};
+					opt = opt || {},
+						t = this;
 
 					var oTime = opt.timeout,
 						time = (typeof oTime == 'undefined') ? 5000 : (typeof oTime == 'number' ? oTime : false);
@@ -27,8 +30,8 @@
 					}else{
 						d.body.insertAdjacentHTML('beforeend', '<div id=wkTst class="hide clsIco">' + msg + '</div>' );
 						wkTst = d.getElementById('wkTst');
-						wkTst.addEventListener(clickEvent, function(){
-							toast.hide();
+						wkTst.addEventListener('click', function(){
+							t.hide();
 						});
 						d.body.className += ' hasToast';
 					}
@@ -40,7 +43,7 @@
 
 					if(time){
 						setTimeout(function(){
-							toast.hide();
+							t.hide();
 						}, time);
 					}
 				}else{
@@ -51,6 +54,6 @@
 			hide: function(){
 					wkTst.className = 'hide clsIco';
 				}
-			};
+			}
 	}
 })();

@@ -17,6 +17,7 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	@include transition(all .5s ease-in);
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 
 	.hdn & {
 		opacity: .2;
