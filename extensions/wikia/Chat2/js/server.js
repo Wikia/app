@@ -4,7 +4,7 @@ var config = require("./server_config.js");
 
 var app = require('express').createServer()
     , jade = require('jade')
-    , sio = require('./lib/socket.io.9.5/socket.io.js')
+    , sio = require('./lib/socket.io.8.7/socket.io.js')
     , _ = require('underscore')._
     , Backbone = require('backbone')
     , storage = require('./storage').redisFactory()
@@ -85,13 +85,9 @@ storage.getRuntimeStats(function(data) {
 var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
 
 io.configure(function () {
-	io.set('polling duration', 10 );
 	io.set('flash policy port', config.FLASH_POLICY_PORT );
 	io.set('transports', [  'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'  ]);	
 	io.set('log level', loggerModule.getSocketIOLogLevel());
-	io.set('heartbeat timeout', 5); // long heartbeat
-	io.set('heartbeat interval', 7); // long heartbeat
-	io.set('close timeout', 15); // long heartbeat
 	io.set('authorization', authConnection );  
 });
 
@@ -101,6 +97,7 @@ function startServer() {
 	storage.resetUserCount();
 	
 	io.sockets.on('connection', function(client){
+
 		//TODO: use client.handshake.clientData and remove rewrite
 		if(!client.handshake || !client.handshake.clientData) {
 			return false;
@@ -161,8 +158,8 @@ function messageDispatcher(client, socket, data){
 		try{
 			dataObj = JSON.parse(data);
 		} catch(e){
-			dataObj = {};
 			logger.error("Error: while parsing raw incoming json (to msg dispatcher). Error was: ", e, "JSON-string that didn't parse was:\n" + data);
+			return true;
 		}
 		if(typeof dataObj.attrs == 'undefined'){
 			dataObj.attrs = {};
@@ -258,7 +255,7 @@ function authConnection(handshakeData, authcallback){
 	
 	var callback = function(data) {
 		if(!config.validateConnection(data.wgCityId)) {
-			logger.warning("User failed authentication. Wrong node js server for : " + data.wgCityId);
+			logger.warning("User failed authentication. Wrong node js server for : ", data);
 			authcallback(null, false); // error first callback style
 			return false;
 		}
@@ -397,6 +394,7 @@ function finishConnectingUser(client, socket ){
 		var oldClient = existingId != "undefined" ? socket.socket(existingId):false;
 
 		if(oldClient && oldClient.userKey != client.userKey ){
+			oldClient.donotSendPart = true;
 			// Send the old client a notice that they're about to be disconnected and why.
 			sendInlineAlertToClient(oldClient, '', 'chat-err-connected-from-another-browser', [], function(){
 				// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
@@ -411,6 +409,11 @@ function finishConnectingUser(client, socket ){
 				});
 			});
 		} else {
+			//we have double connection for the same window
+			if(oldClient){
+				oldClient.donotSendPart = true;
+				oldClient.disconnect();
+			}
 			// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
 			formallyAddClient(client, socket, connectedUser);
 		}
@@ -455,7 +458,9 @@ function clientDisconnect(client, socket) {
 	// Remove the in-memory mapping of this user in this room to their sessionId
 	if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
 		if(sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] == client.sessionId ) {
-			var sessionId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+			delete sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
+		} else {
+			return true;
 		}
 	}
 
@@ -477,16 +482,17 @@ function clientDisconnect(client, socket) {
 function broadcastDisconnectionInfo(client, socket){
 	// Delay before sending part messages because there are occasional disconnects/reconnects or just ppl refreshing their browser
 	// and that's really not useful information to anyone that under-the-hood they were disconnected for a moment (BugzId 5753).
-	// Broadcast the 'part' to all clients.
+	
 	if(client.donotSendPart) {
 		return true;
 	}
 	
-	broadcastToRoom(client, socket, { 
-		event: 'part',
-		data: client.myUser.xport()
-	});
 	broadcastUserListToMediaWiki(client);
+
+	broadcastToRoom(client, socket, {
+        	event: 'part',
+        	data: client.myUser.xport()
+	});
 } // end broadcastDisconnectionInfo()
 
 /**
@@ -528,6 +534,7 @@ function logout(client, socket, msg) {
 		null,
 		function() {
 			client.donotSendPart = true;
+			broadcastUserListToMediaWiki(client);
 		}
 	);
 }
@@ -812,7 +819,7 @@ function broadcastToRoom(client, socket, data, users, callback){
 	// Get the set of members from redis.
 	logger.debug("Broadcasting to room " + roomId);
 	storage.getUsersInRoom(roomId, function(usernameToUser) {
-		//logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ) + ": ", "usernameToData:", users, usernameToData);
+		logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ) + ": ", "usernameToData:", users);
 
 		var usernameToUserFiltered = {};
 		

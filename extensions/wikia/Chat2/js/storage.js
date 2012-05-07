@@ -144,17 +144,26 @@ RedisStorage.prototype = {
 				errback);
 	},
 	
-	purgeAllMembers: function(callback, errback) {
-		var self = this;
-		self._keys(self.config.getKeyPrefix_usersInRoom()+":*", function(data) {
-			_.each(data, function(usersInRoomKey) {
-				logger.debug("\tCleaning users out of room with key: " + usersInRoomKey);
-				self._del(usersInRoomKey, self._redis.print, null, self._redis.print);
-			});
-		},
-		'Error: while trying to get all room membership lists: %error%',
-		errback);
-	},
+        purgeAllMembers: function(callback, errback) {
+                var self = this;
+                self._keys(self.config.getKeyPrefix_usersInRoom()+":*", function(data) {
+                        _.each(data, function(usersInRoomKey) {
+                                var parts = usersInRoomKey.split(':');
+                                var roomId = parts[1];
+                                self.getRoomData(roomId, 'wgCityId', function(wgCityId) {
+                                        if(self.config.validateConnection(wgCityId)) {
+                                                logger.debug("\tCleaning users out of room with key: " + usersInRoomKey);
+                                                self._del(usersInRoomKey, self._redis.print, null, self._redis.print);
+                                                logger.debug("\tCleaning users out of room with key: " + usersInRoomKey);
+                                        } else {
+                                                logger.debug("\tNot cleaning users out of room with key: " + usersInRoomKey);
+                                        }
+                                });
+                        });
+                },
+                'Error: while trying to get all room membership lists: %error%',
+                errback);
+        },
 	
 	getUsersAllowedInPrivateRoom: function(roomId, callback, errback) {
 		this._hkeys(this.config.getKey_usersAllowedInPrivRoom(roomId), callback,
@@ -279,11 +288,12 @@ RedisStorage.prototype = {
 	 * sure we're not storing too many messages.
 	 */
 	_pruneExtraMessagesFromRoom: function(roomId) {
+		var self = this;
 		var chatEntriesInRoomKey = this.config.getKey_chatEntriesInRoom(roomId), self = this;
 		self._llen(chatEntriesInRoomKey, function(len) {
 			if( len > self.config.MAX_MESSAGES_IN_BACKLOG + 1 ){
 				logger.debug("Found a bunch of extra messages in '" + roomId + "'.  Getting rid of the oldest " + (len - self.config.MAX_MESSAGES_IN_BACKLOG) + " of them.");
-				self._rc.ltrim(chatEntriesInRoomKey, (-1 * config.MAX_MESSAGES_IN_BACKLOG), -1, self._redis.print);
+				self._rc.ltrim(chatEntriesInRoomKey, (-1 * self.config.MAX_MESSAGES_IN_BACKLOG), -1, self._redis.print);
 			} else if( len == (self.config.MAX_MESSAGES_IN_BACKLOG + 1)){
 				// This seems like it'd be faster than ltrim even though ltrim says it's O(N) where N is number to remove and this is O(1).
 				logger.debug("Trimming extra entry from list of messages in '" + roomId + "'");

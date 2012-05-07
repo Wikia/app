@@ -35,14 +35,19 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	},
 	
 	baseconnect: function() {
+		if(this.connected) {
+			$().log("already connected");
+			return true;
+		}
 		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
 		$().log(url, 'Chat server');
 		io.transports = globalTransports ;
+		if(! this.socket ) {
 		this.authRequestWithMW(function(data){
 			this.socket = io.connect(url, {
 				'force new connection' : true,
 				'try multiple transports': true,
-				'connect timeout': 5000,
+				'connect timeout': false,
 				'query':data,
 				'reconnect':false
 			});
@@ -51,40 +56,55 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			this.socket.on('connect', this.proxy( this.onConnect, this ) );
 			this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
 		});
+		} else {
+			$("reconecte");
+			this.socket.socket.connect();
+		}
 	},
 	
 	onError: function(){
-		 this.onDisconnect();
+		 //this.onDisconnect();
 	},
 	
 	connect: function() {
-		if(!this.socket){
-			this.baseconnect();
+		this.baseconnect();
+		if(!this.firstConnected) {
+			this.connectTimeoutTimer = setTimeout($.proxy(function() {
+			$().log("timeout try without socket connection");
+			
+			globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling' ];
+				if(this.connected == false) {
+					this.socket = false;
+					this.baseconnect();
+				}
+			}, this), 6000 );
 		}
 	},
 	
 	onConnect: function() {
+		clearTimeout(this.connectTimeoutTimer);
+		clearTimeout(this.tryconnect);
 		if(this.announceConnection){
 			$().log("Reconnected.");
 			this.announceConnection = false;
 		}
-		this.firstConnected = true;
 		this.connected = true;	  
 	},
 	
 	onDisconnect: function(){
 		//problem with first connection (for example fire wall)
-		if(!this.isInitialized) {
+		if(!this.firstConnected) {
 			globalTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling' ]
+			this.socket = false;
 		}
 		$().log("Node-server connection needs to be refreshed...");
 	        this.connected = false;
-	        this.socket = false;
 		this.announceConnection = true;
-		
+
 		// Sometimes the view is in a state where it shouldn't reconnected (eg: user has entered the same room from another computer and wants to kick this instance off w/o it reconnecting).
 		if(this.autoReconnect){
-			this.trying = setTimeout(this.proxy(this.tryconnect, this),500);
+			clearTimeout(this.tryconnect);
+			this.trying = setTimeout(this.proxy(this.tryconnect, this),2500);
 		}
 	},
 	
@@ -99,7 +119,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		};
 
 		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId);
-    },
+	},
     
     
     forceReconnect: function() {
@@ -110,6 +130,8 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     },
     
     onMsgReceived: function(message) {
+	this.firstConnected = true; //we are 100% sure about conenction
+
     	$().log(message.event);
     	switch(message.event) {
 			case 'disableReconnect':
@@ -130,14 +152,13 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     	return ['updateUser', 'initial', 'chat:add', 'join', 'part', 'kick', 'logout'];
     },
     
-	tryconnect: function (){
+    tryconnect: function (){
    	$().log('tryconnect');
-        if(this.connected) {
+//        debugger;
+	if(this.connected) {
 		return false;
 	}
-//debugger;
 	$().log("Trying to re-connect to node-server:" + this.reConnectCount);
-	this.connect();
         clearTimeout(this.trying);
         this.reConnectCount++;
             
@@ -148,8 +169,10 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
             if(this.reConnectCount > 3) {
            	time = 5000 + this.reConnectCount * 300; 
             }
-            	
-            this.trying = setTimeout(this.proxy(this.tryconnect, this), time);	
+            if(this.reConnectCount < 9) {
+		if(this.reConnectCount != 0) this.connect();
+            	this.trying = setTimeout(this.proxy(this.tryconnect, this), time);	
+	    }
         }
         
     }
@@ -349,6 +372,7 @@ var NodeRoomController = $.createClass(Observable,{
 
 		if(this.partTimeOuts[joinedUser.get('name')]) {
 			clearTimeout(this.partTimeOuts[joinedUser.get('name')]);
+			this.partTimeOuts[joinedUser.get('name')] = null;
 			$().log('user rejoined clear partTimeOut');
 		}
 
@@ -382,10 +406,12 @@ var NodeRoomController = $.createClass(Observable,{
 	onPart: function(message) {
 		var partedUser = new models.User();
 		partedUser.mport(message.data);
-		
+		if(this.partTimeOuts[partedUser.get('name')]) {
+			return true;
+		}
 		this.partTimeOuts[partedUser.get('name')] = setTimeout(this.proxy(function(){
 			this.onPartBase(partedUser);
-		}), 15000);
+		}), 25000);
 	},
 	
 	onLogout: function(message) {
