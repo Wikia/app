@@ -57,9 +57,6 @@ class FacebookApiException extends Exception
       $msg = 'Unknown Error. Check getResult()';
     }
 
-    // fb#26681
-    Wikia::logBacktrace(__CLASS__ . " ({$msg})");
-
     parent::__construct($msg, $code);
   }
 
