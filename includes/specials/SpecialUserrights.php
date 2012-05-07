@@ -77,7 +77,7 @@ class UserrightsPage extends SpecialPage {
 				$this->mTarget = $wgUser->getName();
 		}
 
-		if ( $this->mTarget == $wgUser->getName() )
+		if ( User::getCanonicalName( $this->mTarget ) == $wgUser->getName() )
 			$this->isself = true;
 
 		if( !$this->userCanChangeRights( $wgUser, true ) ) {
@@ -515,25 +515,6 @@ class UserrightsPage extends SpecialPage {
 				'disabled' => $disabled,
 				'irreversible' => $irreversible
 			);
-
-			/* Wikia change begin */
-			/* BugId:10355 - Let Mix know once it occurs again. :-) */
-			if ( $this->isself && $set && $disabled && ( 'bureaucrat' == $group || 'sysop' == $group ) ) {
-				global $wgUser, $wgCityId, $wgMemc;
-				$notification = array();
-				$notification['key'] = wfMemcKey( 'user', 'id', $wgUser->getId() );
-				$notification['cache'] =  serialize( $wgMemc->get( $notification['key'] ) );
-				unset( $notification['key'] );
-				$notification['user'] = serialize( $wgUser->getGroups() );
-				// My dear future self ...
-				$notification['to']		= $notification['from'] = $notification['replyTo'] = new MailAddress( 'michal@wikia-inc.com' );
-				$notification['subject']	= 'BugId:10355 Occurrence Report';
-				$notification['bodyText']	= sprintf( "wgCityId\n\n%s\n\nwgUser->getGroups()\n\n%s\n\nUserObjectCache\n\n%s\n\nallgroups\n\n%s\n\nusergroups\n\n%s\n\n", $wgCityId, $notification['user'], $notification['cache'], serialize( $allgroups ), serialize( $usergroups ) );
-				$notification['bodyHtml']	= "<pre>\n{$notification['bodyText']}</pre>";
-				$notification['sent'] = UserMailer::sendHTML( $notification['to'], $notification['from'], $notification['subject'], $notification['bodyText'], $notification['bodyHtml'], 'unknown', 0 );
-				unset( $notification );
-			}
-			/* Wikia change end */
 
 			if( $disabled ) {
 				$columns['unchangeable'][$group] = $checkbox;
