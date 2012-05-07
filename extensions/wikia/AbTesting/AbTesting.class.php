@@ -42,8 +42,7 @@ class AbTesting {
 
 		// Cache the generated string inside of memcached.
 		$memKey = $app->wf->SharedMemcKey( 'datamart', 'abconfig' );
-// TODO: RESTORE!
-//		$jsString = $app->wg->Memc->get( $memKey );
+		$jsString = $app->wg->Memc->get( $memKey );
 		if(empty($jsString)){
 			$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 			
@@ -74,7 +73,7 @@ class AbTesting {
 				// Add this treatment group's info to the experiment.
 				$expData[ $row->expId ]['groups'][ $row->tgId ] = array(
 					'name' => $row->tgName,
-					'is_control' => $row->tgIsControl,
+					'is_control' => ($row->tgIsControl == "1"),
 					'percentage' => $row->tgPercentage
 				);
 			}
@@ -146,55 +145,68 @@ class AbTesting {
 
 		ob_start();
 
-// TODO: WRITE THE BODY OF THE FUNCTION!
 		// Will return the id of the treatment group that this user should see. If the beacon_id doesn't exist, the control group
 		// will be returned.  If there is an error loadign the config (so no control group or other group IDs can be found, this will
 		// return an empty string. For any invalid group IDs, the calling code MUST default to using a reasonable fallback
 		// (usually this should be the control-group, if that's easy to know at coding-time).
-		?>function getTreatmentGroup( experimentId ){
+		?>
+		// Caches already-assigned treatments to make sure any re-treatments are consistent and to avoid sending the treatment event multiple times for the same treatment on a page-load.
+		var abTreatments = {};
+
+		function getTreatmentGroup( expId ){
 			var hasLogging = (typeof console != 'undefined');
 			var treatmentGroup = "";
-			if(AB_CONFIG.hasOwnProperty( experimentId )){
 			
-				if(typeof beacon_id == "undefined"){
-					if (hasLogging) {
-						console.log("DO NOT CALL getTreatmentGroup() BEFORE THE BEACON/PAGE-VIEW CALL! Experiment is broken (will fall back to control group).");
-					}
-					
-					// There is no beacon, so treat the user with the Control Group (this treatment will get recorded).
-					for( var tgId in AB_CONFIG[experimentId] ){
-						var tgConfig = AB_CONFIG[experimentId][tgId];
-						if(tgConfig.is_control){
-							treatmentGroup = tgId;
-						}
-					}
-					if((treatmentGroup === "") && hasLogging){
-						console.log("NO CONTROL GROUP DEFINED FOR EXPERIMENT: " + experiment);
-					}
-				} else {
-					// Figure out the correct treatment group based on the beacon_id.
-					var normalizedHash = abHash( experimentId ); // beacon_id is used in here
-					var controlId;
-					for( var tgId in AB_CONFIG[experimentId] ){
-						var tgConfig = AB_CONFIG[experimentId][tgId];
-						if((normalizedHash >= tgConfig.min) || (normalizedHash <= tgConfig.max)){
-							treatmentGroup = tgId;
-						}
-						if(tgConfig.is_control){
-							controlId = tgConfig;
-						}
-					}
+			if(typeof abTreatments[expId] !== 'undefined'){
+				// If we've already determined the treatment on this page-load, then return it right away (and don't send an extra treatment event).
+				treatmentGroup = abTreatments[expId];
+			} else {
 
-					// If treatment group wasn't explicitly set, show the user the control, but don't log a treatment event.
-					if(treatmentGroup == ""){
-						treatmentGroup = controlId;
+				if(AB_CONFIG.hasOwnProperty( expId )){
+				
+					if(typeof beacon_id == "undefined"){
+						if (hasLogging) {
+							console.log("DON'T CALL getTreatmentGroup() BEFORE BEACON/PAGE-VIEW CALL! Experiment is broken (will fall back to control group).");
+						}
+
+						// There is no beacon, so treat the user with the Control Group (this treatment will get recorded).
+						for( var tgId in AB_CONFIG[expId]['groups'] ){
+							var tgConfig = AB_CONFIG[expId]['groups'][tgId];
+							if(tgConfig.is_control){
+								treatmentGroup = tgId;
+							}
+						}
+						if((treatmentGroup === "") && hasLogging){
+							console.log("NO CONTROL GROUP DEFINED FOR EXPERIMENT: " + expId);
+						}
 					} else {
-// TODO: Record the treatment event and cache the treatment group (so that we know not to send the event again).
-// NOTE: pass varnishTime to the backend
+						// Figure out the correct treatment group based on the beacon_id.
+						var normalizedHash = abHash( expId ); // beacon_id is used in here
+						var controlId;
+						for( var tgId in AB_CONFIG[expId]['groups'] ){
+							var tgConfig = AB_CONFIG[expId]['groups'][tgId];
+							if((normalizedHash >= tgConfig.min) || (normalizedHash <= tgConfig.max)){
+								treatmentGroup = tgId;
+							}
+							if(tgConfig.is_control){
+								controlId = tgConfig;
+							}
+						}
+
+						// If treatment group wasn't explicitly set, show the user the control, but don't log a treatment event.
+						if(treatmentGroup === ""){
+							treatmentGroup = controlId;
+						} else {
+							// Record the treatment event.
+							$.internalTrack('TREATMENT_EVENT', { 'varnishTime': varnishTime , 'treatmentGroup': treatmentGroup });
+							
+							// Cache the treatment grouup so that we know not to send the treatment event again on this page.
+							abTreatments[ expId ] = treatmentGroup;
+						}
 					}
+				} else if (hasLogging) {
+					console.log("CALLED getTreatmentGroup FOR AN EXPERIMENT THAT IS NOT CONFIGURED! Exp: " + expId);
 				}
-			} else if (hasLogging) {
-				console.log("TRIED TO getTreatmentGroup() FOR AN EXPERIMENT THAT IS NOT CONFIGURED! Exp: " + experimentId);
 			}
 
 			return treatmentGroup;
@@ -203,11 +215,11 @@ class AbTesting {
 			// abHash will hash the beacon_id and return an integer from 0 to 99 inclusive.
 			// That number can be used to slot into a treatment-group based on its percentages.
 			// If there is no beacon_id yet, then this will always return 0.
-		?>function abHash( experimentId ){
+		?>function abHash( expId ){
 			if(typeof beacon_id == "undefined"){
 				return 0;
 			} else {
-				var s = beacon_id + '' + experimentId;
+				var s = beacon_id + '' + expId;
 				var i, hash = 0;
 				for (i = 0; i < s.length; i++){
 					hash += (s.charCodeAt(i) * (i+1));
@@ -219,7 +231,8 @@ class AbTesting {
 		$jsString = ob_get_clean();
 
 		// We're embedding this in every page, so minify it.
-		$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
+// TODO: RESTORE THE MINIFICATION BEFORE COMMITTING.
+//		$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
 		
 		wfProfileOut( __METHOD__ );
 		return $jsString;
