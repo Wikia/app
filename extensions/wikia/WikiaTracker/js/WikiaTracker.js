@@ -101,7 +101,7 @@ var WikiaTracker = {
 		if(trackingMethod == 'ga' || trackingMethod == 'both') {
 			$().log('ga tracked');
 			// uncomment the next line later when GA is re-implemented
-			// WikiaTracker.track(null, 'main.sampled', gaqArgs);
+			WikiaTracker.track(null, 'main.sampled', gaqArgs);
 		}
 
 		$().log(Array.prototype.join.call(gaqArgs, '/'), 'tracker [event]');
@@ -136,7 +136,10 @@ WikiaTracker.track = function(page, profile, events) {
 WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
-/*
+	if (profile.indexOf('liftium') != -1) {
+		return false;
+	}
+
 	if (typeof events != 'undefined' && events instanceof Array) {
 		this.debug('...with events: ' + events.join('/'), 7);
 
@@ -151,11 +154,6 @@ WikiaTracker._track = function(page, profile, sample, events) {
 
 		_gaq.push(['_trackEvent', 'fakeurl', page]);
 	}
-*/
-	if (profile.indexOf('liftium') != -1) {
-		return false;
-	}
-	_gaq.push(['_trackEvent', 'fakeurl', '/test/20120503']);
 
 	return true;
 };
