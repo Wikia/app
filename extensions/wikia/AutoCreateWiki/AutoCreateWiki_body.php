@@ -389,10 +389,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			unset($_SESSION['mAllowToCreate']);
 		}
 
-		if( strpos( $wgWikiaLocalSettingsPath, "central") !== false ) {
-			$wgWikiaLocalSettingsPath = str_replace( "central", "wiki.factory", $wgWikiaLocalSettingsPath );
-		}
-
 		/**
 		 * this will clean test database and fill mWikiData with test data
 		 */
