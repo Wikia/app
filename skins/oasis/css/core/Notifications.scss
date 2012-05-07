@@ -115,5 +115,7 @@
 
 // anons notifications
 #WikiaFooter > #WikiaNotifications {
-	top: -35px;
+	bottom: 20px;
+	top: auto;
+	position: fixed;
 }
