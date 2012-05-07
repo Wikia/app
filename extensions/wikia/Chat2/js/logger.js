@@ -20,6 +20,7 @@ var logLevels = {
 function Logger(level, stream) {
 	level = level ? level.toUpperCase():null;
 	this.logLevel = (level in logLevels) ? logLevels[level] : logLevels.INFO;
+  this.logLevel = 1;
 	this.stream = stream || process.stdout;
 }
 
