@@ -1,3 +1,9 @@
+@import "../../../../skins/oasis/css/mixins/arrow";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/core/color";
+
 .LightboxModal {
 	.WikiaLightbox {
 		height: 100%;
@@ -28,5 +34,48 @@
 		position: absolute;
 		top: -99999999px;
 		left: -99999999px;
+	}
+	.lightbox-arrows {
+		span {
+			@include border-radius(4px);
+			@include box-shadow( 0px, 0px, 10px, darken($color-page,50%), false, 2px);
+			@include opacity(80);
+			background: $color-buttons;
+			cursor: pointer;
+			display: block;
+			height: 50px;
+			margin-top: -25px;
+			position: absolute;
+			top: 50%;
+			width: 50px;
+			&:hover {
+				@include opacity(90);
+			}
+			&.disabled {
+				@include opacity(40);
+				cursor: default;
+				&:hover {
+					@include opacity(40);			
+				}
+			}
+		}
+		.next {
+			right: 20px;
+			&:before {
+				@include arrow(15px, $color-button-text, 'right');
+				content: "";
+				display: block;
+				margin: 10px auto;
+			}
+		}
+		.previous {
+			left: 20px;
+			&:before {
+				@include arrow(15px, $color-button-text, 'left');
+				content: "";
+				display: block;
+				margin: 10px auto;
+			}
+		}
 	}
 }
