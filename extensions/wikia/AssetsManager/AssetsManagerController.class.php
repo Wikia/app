@@ -100,7 +100,7 @@ class AssetsManagerController extends WikiaController {
 			$key = $this->getComponentMemcacheKey( $scripts );
 			$data = $this->wg->Memc->get( $key );
 
-			if ( !empty( $data ) ) {
+			if ( empty( $data ) ) {
 				$scriptPackages = explode( ',', $scripts );
 				$data = array();
 	
