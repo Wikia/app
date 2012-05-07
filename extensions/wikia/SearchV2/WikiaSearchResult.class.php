@@ -8,6 +8,7 @@ class WikiaSearchResult {
 	protected $thumbnail;
 	protected $text;
 	protected $url;
+	protected $linkUrl;
 	protected $canonical = null	;
 	protected $vars = array();
 	public $score = 0;
@@ -46,6 +47,24 @@ class WikiaSearchResult {
 
 	public function getUrl() {
 		return $this->url;
+	}
+
+	public function getLinkUrl() {
+
+		if (!$this->linkUrl && $this->url) {
+			$exploded = explode('/', $this->url);
+			$parsed = parse_url($this->url); // can't just use this because it interprets plaintext ? as query string
+			foreach ($exploded as $key=>$val)
+			{
+				if ($val == $parsed['scheme'].':' || $val == $parsed['host']) {
+					continue;
+				}
+				$exploded[$key] = urlencode($val);
+			}
+			$this->linkUrl = implode('/', $exploded);
+		}
+
+		return $this->linkUrl;
 	}
 
 	public function setUrl($value) {
