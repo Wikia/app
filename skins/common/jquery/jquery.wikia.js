@@ -367,6 +367,8 @@ $.loadTwitterAPI = function(callback) {
 
 /**
  * Loads library file if it's not already loaded and fires callback
+ *
+ * For "internal" use only. Please use $.loadFooBar() functions in extension code.
  */
 $.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
 	var dfd = new jQuery.Deferred();
