@@ -1,6 +1,6 @@
 <section class="LandingPage">
 	<div class="LandingPageSearch">
-		<?= $app->getView("SearchModule", "Index", array ("placeholder" => "Search Wikia", "fulltext" => "0", "wgBlankImgUrl" => $wgBlankImgUrl, "wgTitle" => $wgTitle)); ?>
+		<?= F::app()->getView("SearchModule", "Index", array ("placeholder" => "Search Wikia", "fulltext" => "0", "wgBlankImgUrl" => $wgBlankImgUrl, "wgTitle" => $wgTitle)); ?>
 	</div>
 
 	<ul class="LandingPageLanguageLinks">
