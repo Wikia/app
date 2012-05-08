@@ -1,7 +1,7 @@
 <div class="WikiaLightbox">
 	<div class="lightbox-arrows">
 		<span id="LightboxNext" class="next"></span>
-		<span id="LightboxPrevious" class="previous disabled"></span>
+		<span id="LightboxPrevious" class="previous"></span>
 	</div>
 	<?php if($initialFileDetail['mediaType'] == 'image'): // needed for image preload ?>
 		<div id="LightboxPreload">
