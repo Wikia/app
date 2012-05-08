@@ -110,7 +110,9 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 
 			if(defaultOptions.suppressNative){
 				requestor.removeAttr('title');
-				if(defaultOptions.suppressNativeRecursive) requestor.find('[title]').removeAttr('title');
+				if(defaultOptions.suppressNativeRecursive) {
+					requestor.find('[title]').removeAttr('title');
+				}
 			}
 
 			requestor
@@ -131,14 +133,14 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
                                     this.handle = setTimeout(this.hideTip,300);
                                 },
                                 clearTime:function(){
-                                    clearTimeout(this.handle)
+                                    clearTimeout(this.handle);
                                 }
                             }
 
                             requestor.data('timers',timers);
                         }
 		}
-	}
+	};
 
 	/*
 	 * shared callback for mouseenter event
@@ -159,7 +161,9 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 				case 'function':
 					tooltip = tooltip(elm);
 
-					if(typeof tooltip === 'object') break;
+					if(typeof tooltip === 'object') {
+						break;
+					}
 				default:
 					//could use HTML5 details tag, but support for Monobook is preferred
 					tooltip = $('<div>' + tooltip.toString() + '</div>');
@@ -171,7 +175,9 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 					break;
 			}
 
-			if(!tooltip.hasClass(options.className)) tooltip.addClass(options.className);
+			if(!tooltip.hasClass(options.className)) {
+				tooltip.addClass(options.className);
+			}
 
 			elm
 				.data('tooltip-cached', tooltip)
@@ -208,8 +214,8 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 							position.left = globalPosition.left + elm.outerWidth(options.includeMargin);
 							position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
 							break;
-						default:
 						case 'top':
+						default:
 							position.top = globalPosition.top - tooltip.outerHeight(options.includeMargin);
 							position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
 							break;
@@ -226,17 +232,19 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 			elm.data('tooltip-cached-position', globalPosition);
 			tooltip.css(position);
 		}
-                if(options.maxWidth){
-                    tooltip.css('width',options.maxWidth)
-                }
+
+		if(options.maxWidth){
+			tooltip.css('width',options.maxWidth);
+		}
 
 		tooltip.show();
 
-                // If hoverStay is set, clear timout for hiding message
-                // because we just hovered over the trigger element
-                if(options.hoverStay)
-                    timers.clearTime();
-	}
+		// If hoverStay is set, clear timout for hiding message
+		// because we just hovered over the trigger element
+		if(options.hoverStay) {
+			timers.clearTime();
+		}
+	};
 
 	/*
 	 * shared callback for mouseleave event
@@ -251,25 +259,25 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
             if(options.hoverStay){
                 timers.setTime();
                 tooltip.mouseenter(function(){
-                    timers.clearTime()
+                    timers.clearTime();
                 }).mouseleave(function(){
-                    timers.setTime()
-                })
+                    timers.setTime();
+                });
             } else {
-                    tooltip.hide();
+                 tooltip.hide();
             }
-	}
+	};
 
 	/*
 	 * Utility method to calculate tooltip element aligned position
 	 */
 	jQuery.__wikiaTooltipGetAlignedPosition = function(options, globalPosition, elm, tooltip){
-		var pos = undefined;
+		var pos;
 
 		if(options.side === 'top' || options.side === 'bottom'){
 			switch(options.align){
-				default:
 				case 'left':
+				default:
 					pos = globalPosition.left;
 					break;
 				case 'center':
@@ -295,5 +303,5 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 		}
 
 		return pos;
-	}
+	};
 }

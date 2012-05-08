@@ -44,7 +44,7 @@ jQuery.fn.placeholder = function() {
 			}
 		});
 	});
-}
+};
 
 $(function() {
 	$('input[placeholder], textarea[placeholder]').placeholder();
