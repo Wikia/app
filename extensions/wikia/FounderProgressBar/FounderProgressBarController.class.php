@@ -105,7 +105,6 @@ class FounderProgressBarController extends WikiaController {
 				FT_WIKIALABS_VISIT => array("newFromText", "WikiaLabs", NS_SPECIAL),
 				FT_FB_CONNECT => array("newFromText", "Connect", NS_SPECIAL),
 				FT_CATEGORY_ADD_5 => array("newFromText", wfMsg('founderprogressbar-browse-page-name'), NS_CATEGORY),
-				FT_PAGELAYOUT_VISIT => array("newFromText", "LayoutBuilder", NS_SPECIAL),
 				FT_GALLERY_ADD => wfMsg('founderprogressbar-gallery-add-url'),
 				FT_TOPNAV_EDIT => array("newFromText", "Wiki-navigation", NS_MEDIAWIKI),
 				FT_MAINPAGE_ADDSLIDER => array("newMainPage"),
@@ -120,7 +119,6 @@ class FounderProgressBarController extends WikiaController {
 				FT_UNCATEGORIZED_VISIT => array("newFromText", "UncategorizedPages", NS_SPECIAL),
 				FT_BONUS_PHOTO_ADD_10 => array("newFromText", "Upload", NS_SPECIAL),
 				FT_BONUS_PAGE_ADD_5 => array("newFromText", "CreatePage", NS_SPECIAL),
-				FT_BONUS_PAGELAYOUT_ADD => array("newFromText", "LayoutBuilder", NS_SPECIAL),
 				FT_BONUS_EDIT_50 => array("newFromText", "WikiActivity", NS_SPECIAL),		
 				FT_TOTAL_EDIT_300 => array("newFromText", "CreatePage", NS_SPECIAL),
 		);
@@ -136,7 +134,6 @@ class FounderProgressBarController extends WikiaController {
 		$this->bonus_tasks = array (
 				FT_BONUS_PHOTO_ADD_10,
 				FT_BONUS_PAGE_ADD_5,
-				FT_BONUS_PAGELAYOUT_ADD,
 				FT_BONUS_EDIT_50			
 		);
 		
@@ -146,7 +143,6 @@ class FounderProgressBarController extends WikiaController {
 				FT_COMMCENTRAL_VISIT => true,
 				FT_WIKIACTIVITY_VISIT => true,
 				FT_WIKIALABS_VISIT => true,
-				FT_PAGELAYOUT_VISIT => true,
 				FT_RECENTCHANGES_VISIT => true,
 				FT_MOSTVISITED_VISIT => true,
 				FT_UNCATEGORIZED_VISIT => true,
