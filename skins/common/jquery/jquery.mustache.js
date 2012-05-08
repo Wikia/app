@@ -11,7 +11,7 @@ See http://github.com/defunkt/mustache for more info.
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
  */
-window.Mustache = (typeof module !== "undefined" && module.exports) || {};
+ Mustache = (typeof module !== "undefined" && module.exports) || {};
 
 (function (exports) {
 
