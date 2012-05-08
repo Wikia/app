@@ -93,19 +93,10 @@ class RelatedVideosService {
 	}
 
 	public function getMemcKey( $title, $source, $videoWidth, $cityShort ) {
-		$isVideoFile = WikiaVideoService::isVideoStoredAsFile() ? 'VR' : 'OV'; //VR - video refactored / OV - old video
 		$isStagingServer = Wikia::isStagingServer();
 		$StagingServerSuffix = empty($isStagingServer)?'PRODUCTION':'STAGING';
 
-		if( empty( $source ) ){
-			$video = Title::newFromText( $title, NS_VIDEO );
-			if ($video instanceof Title && $video->exists() ) {
-				return F::app()->wf->memcKey( $video->getArticleID(), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix, self::memcVersion, self::$width, $isVideoFile, $StagingServerSuffix );
-			}
-			return '';
-		} else {
-			return F::app()->wf->sharedMemcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, $cityShort, self::memcKeyPrefix, self::memcVersion, self::$width, $isVideoFile, $StagingServerSuffix );
-		}
+		return F::app()->wf->memcKey( md5( $title ), F::app()->wg->wikiaVideoRepoDBName, $videoWidth, self::memcKeyPrefix, self::memcVersion, self::$width, $StagingServerSuffix );
 	}
 
 	public function saveToCache( $title, $source, $videoWidth, $cityShort, $data ) {
