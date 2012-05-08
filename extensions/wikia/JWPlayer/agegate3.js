@@ -106,6 +106,9 @@
 		} else {
 		var theBody = document.getElementById(player.id+"_wrapper");
 		}
+		if(player.config.autostart == "true"){
+		player.pause();
+		}
 		var playerWidthPX2 = theBody.style.width;
 		var playerWidthPX = parseFloat(playerWidthPX2);
 		var playerHeightPX2 = theBody.style.height;
@@ -218,8 +221,14 @@
 		form.appendChild(message);
 		if (result == "-1"){
 		theBg.style.visibility = "visible";
+		if(player.config.autostart == "true"){
+		player.stop();
+		}
 		} else {
 		theBg.style.visibility = "hidden";
+		if(player.config.autostart == "true"){
+		player.play();
+		}
 		}
 		if (result2 != "-1"){
 		message.style.visibility = "visible";
@@ -229,7 +238,8 @@
 		}
     };
     player.onReady(setup);
-    this.resize = function(width, height){};
+    this.resize = function(width, height){
+	};
   };
   jwplayer().registerPlugin('agegate3', template);
 })(jwplayer);

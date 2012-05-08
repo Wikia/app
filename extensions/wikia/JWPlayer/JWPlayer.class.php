@@ -2,9 +2,11 @@
 
 class JWPlayer {
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
-	const JWPLAYER_VERSION = '5.9.5';
+	const JWPLAYER_VERSION = '5.9.6';
 	const INFOBOX_VERSION = '1';
 	const SKIN_VERSION = '3';
+	const GOOGIMA_DATA_VARIABLE = 'googimaData';
+	const GOOGIMA_DATA_TOKEN = '%GOOGIMADATA%';
 
 	private static $JWPLAYER_DIR = '/wikia/JWPlayer/';
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
@@ -13,7 +15,7 @@ class JWPlayer {
 	private static $JWPLAYER_PLUGIN_AGEGATE_JS = 'agegate3.js';	
 	private static $JWPLAYER_PLUGIN_HD_JS = 'hd-2.1.min.js';
 	private static $JWPLAYER_PLUGIN_HD_SWF = 'hd-2.1.swf';	
-	private static $JWPLAYER_GOOGIMA_DATA;
+	private static $BLANK_MP4 = 'blank.mp4';		
 	
 	protected $playerId;
 	protected $articleId;
@@ -33,15 +35,6 @@ class JWPlayer {
 	protected $postOnload = false;	// is player loaded after the page onload event?
 	
 	public function __construct($videoId) {
-		// note: self::$JWPLAYER_GOOGIMA_DATA['ad.tag'] must be initialized elsewhere,
-		// before the JWPlayer is rendered
-		self::$JWPLAYER_GOOGIMA_DATA = 
-			array('ad.position'=>'pre', 'ad.bandwidth'=>'high',
-				'admessagedynamic'=>F::app()->wf->Msg('jwplayer-ad-message'), 'admessagedynamickey'=>'XX',
-				//'allowadskip'=>'true', 'allowadskippastseconds'=>5,	// wlee 11/1/11: do not skip ads yet
-				'scaled_ads'=>'false'
-			    );
-		
 		$this->videoId = $videoId;
 		$this->playerId = 'player-' . $this->videoId . '-' . mt_rand();
 	}
@@ -62,19 +55,14 @@ class JWPlayer {
 	 */
 	public function getEmbedCode() {
 		$jwplayerjs = self::getJavascriptPlayerUrl();
-		
-		if ($this->showAd && $this->ageGate) {
-			$script = $this->getScript('normal');			
-		}
-		else {
-			$script = $this->getScript('normal');
-		}
 				
 		$code = '';
 		if ($this->ajax) {
-			$code = $this->getPlayerConfig($this->url, 'normal');
+			$code = array('id'=>$this->playerId, 'script'=>$this->getCombinedScript());
 		}
-		else {
+		else {	
+			$script = $this->getCombinedScript();
+			
 			$code = <<<EOT
 <div id="{$this->playerId}"></div>
 <script type="text/javascript">
@@ -86,7 +74,8 @@ EOT;
 			}
 			
 			$code .= <<<EOT
-		$.getScript("$jwplayerjs", function() { $script });
+		$script
+		$.getScript("$jwplayerjs", loadJWPlayer());
 EOT;
 		
 			if (!$this->postOnload) {
@@ -103,11 +92,58 @@ EOT;
 		return $code;
 	}
 	
+	public function getCombinedScript() {
+		$script = '';
+		//@todo init preroll ad on video detail page
+		if ($this->showAd) {
+			$script .= $this->getScript('ad');
+		}
+		if ($this->showAd && $this->ageGate) {
+			$script .= $this->getScript('agegate');
+			$script .= $this->getScript('preroll');	
+		}
+		else {
+			$script .= $this->getScript('normal');
+		}
+		$script = str_replace('"' . self::GOOGIMA_DATA_TOKEN . '"', self::GOOGIMA_DATA_VARIABLE, $script);
+		
+		return $script;
+	}
+	
 	protected function getScript($mode='normal') {
 		switch ($mode) {
 			case 'normal':
-				$jwplayerConfigJSON = json_encode( $this->getPlayerConfig($this->url) );
-				$script = "jwplayer(\"{$this->playerId}\").setup($jwplayerConfigJSON);";
+				$jwplayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($this->url, $mode) );
+				$script = "loadJWPlayer = function() { jwplayer(\"{$this->playerId}\").setup($jwplayerConfigJSON); };\n";
+				break;
+			case 'preroll':
+				$file = self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$BLANK_MP4, self::JWPLAYER_VERSION);
+				$prerollPlayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($file, $mode) );
+				$script = "loadJWPlayer = function() { jwplayer(\"{$this->playerId}\").setup($prerollPlayerConfigJSON); };\n";
+				break;
+			case 'agegate':
+				$agegatePlayerConfigJSON = json_encode_jsfunc( $this->getPlayerConfig($this->url, $mode) );
+				$script = "loadAgegatePlayer = function() { jwplayer(\"{$this->playerId}\").setup($agegatePlayerConfigJSON); };\n";
+				break;
+			case 'ad':
+				$googimaDataVariable = self::GOOGIMA_DATA_VARIABLE;
+                $jwplayerAdMessage = F::app()->wf->Msg('jwplayer-ad-message');
+				$script = <<<EOT
+if (!window.wgUserName || window.wgUserShowAds) {
+	$googimaDataVariable = {
+        'ad.position': 'pre',
+        'ad.bandwidth': 'high',
+        'admessagedynamic': '$jwplayerAdMessage',
+        'admessagedynamickey': 'XX',
+        'scaled_ads': 'false',
+        'ad.tag': window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART')
+    };
+}
+else {
+    $googimaDataVariable = null;
+}
+
+EOT;
 				break;
 			default:
 		}
@@ -118,9 +154,13 @@ EOT;
 	protected function getPlayerConfig($file, $mode='normal') {
 		switch ($mode) {
 			case 'normal':
+				$autostart = $this->autoplay;
+				$image = (!empty($this->thumbUrl) && empty($this->autoplay)) ? $this->thumbUrl : '';
+				break;	
 			case 'preroll':
 				$autostart = $this->autoplay;
 				$image = (!empty($this->thumbUrl) && empty($this->autoplay)) ? $this->thumbUrl : '';
+				$events = array('onPlay'=>'function(){ loadAgegatePlayer(); }');
 				break;
 			case 'agegate':
 				$autostart = false;	// agegate plugin autostarts automatically only if "autostart" set to false
@@ -156,8 +196,11 @@ EOT;
 		if (!empty($image)) {
 			$jwplayerConfig['image'] = $image;
 		}
-		if ($this->duration) {
+		if ($this->duration && $mode != 'preroll') {
 			$jwplayerConfig['duration'] = $this->duration;
+		}
+		if (!empty($events)) {
+			$jwplayerConfig['events'] = $events;
 		}
 		$jwplayerConfig['plugins'] = $this->getPlugins($mode);
 		
@@ -185,6 +228,7 @@ EOT;
 				$googima = true;
 				break;
 			case 'preroll':
+				$canDisplayAgegate = false;
 				$googima = true;
 				break;
 			case 'agegate':
@@ -212,10 +256,17 @@ EOT;
 		}
 
 		// ad
-		if ($googima) {
-			// note: self::$JWPLAYER_GOOGIMA_DATA['ad.tag'] must be initialized elsewhere,
-			// before the JWPlayer is rendered
-			$plugins['googima'] = self::$JWPLAYER_GOOGIMA_DATA;
+        // show ads to logged-out users or users with the pref set
+		if ($googima 
+        && (!F::app()->wg->User || F::app()->wg->User->getOption('showAds'))) {
+            // NOTE: ad config is initialized in self::getScript() because
+            // ad.tag's cannot be quoted. If ad.tag is set on server side, it
+            // will be quoted by json_encode()
+            // NOTE: when enabling the googima plugin, all settings must be
+            // non-null, especially ad.tag. If you do not want to serve an ad
+            // at all, it is not enough to set ad.tag to null. You must unset
+            // the entire googima object!
+			$plugins['googima'] = self::GOOGIMA_DATA_TOKEN;
 		}
 		
 		// age gate
@@ -226,8 +277,7 @@ EOT;
 			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message'),
 			    'minage'=>17
 			    );
-//			$plugins[self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_AGEGATE_JS, self::JWPLAYER_VERSION)] = $agegateOptions;
-			$plugins['agegate-2'] = $agegateOptions;
+			$plugins[self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_AGEGATE_JS, self::JWPLAYER_VERSION)] = $agegateOptions;
 		}
 		
 		return $plugins;
