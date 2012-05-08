@@ -124,7 +124,8 @@ class LightboxController extends WikiaController {
 		if(!empty($file)) {
 			/* figure out resource type */
 			$isVideo = F::build('WikiaVideoService')->isFileTypeVideo($file);
-		
+
+			/* do media specific business logic */
 			if(!$isVideo) {
 				/* normalize size of image to max 1000 width.  height does not matter */
 				$width = $file->getWidth();
@@ -140,6 +141,7 @@ class LightboxController extends WikiaController {
 				$playerAsset = $file->getPlayerAssetUrl();
 			}
 			
+			/* everything after this point should be shared business logic */
 			/* get thumb */
 			$thumb = $file->getThumbnail($width, $height);
 			
