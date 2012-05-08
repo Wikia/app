@@ -6,7 +6,8 @@ define('toc', ['track', 'events'], function toc(track, events){
 	//private
 	var d = document,
 		table,
-		conStyle;
+		conStyle,
+		click = events.click;
 
 	function open(a){
 		if(table){
@@ -35,14 +36,15 @@ define('toc', ['track', 'events'], function toc(track, events){
 			d.body.className += ' hasToc';
 			conStyle = d.getElementById('wkMainCnt').style;
 
-			table.addEventListener(events.click, function(ev){
+			table.addEventListener(click, function(ev){
+				ev.preventDefault();
+
 				var node = ev.target.parentNode,
 					a = (node.nodeName == 'A');
 
 				(table.className.indexOf('open') > -1) ? close(a) : open(a);
 
 				if(a){
-					ev.preventDefault();
 					track('/toc/go');
 
 					var elm = d.getElementById(node.getAttribute('href').substr(1)),
@@ -67,6 +69,12 @@ define('toc', ['track', 'events'], function toc(track, events){
 					setTimeout(function(){
 						elm.scrollIntoView();
 					}, 50);
+				}
+			});
+
+			d.body.addEventListener(click, function(ev){
+				if(ev.target.className.indexOf('hidden') > -1){
+					close();
 				}
 			});
 		}
