@@ -1,7 +1,5 @@
 <section id="QuickStatsWidget" class="QuickStatsWidget">
 	<h1><?= wfMsg('quickstats-header-label') ?></h1>
-    <div id="GATooltip">
-    </div>
 	<table class="WikiaDataTable">
 		<thead class="AdminDashboardGeneralHeader">
 			<tr>
