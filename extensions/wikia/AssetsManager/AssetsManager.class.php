@@ -536,6 +536,7 @@ class AssetsManager {
 	 * styles - comma-separated list of SASS files
 	 * scripts - comma-separated list of AssetsManager groups
 	 * messages - comma-separated list of JSMessages packages (messages are registered automagically)
+	 * mustache - comma-separated paths to Mustache templates
 	 * ttl - cache period for both varnish and browser (in seconds)
 	 *
 	 * @param bool $local wheter to fetch the URL with or without domain
@@ -546,7 +547,8 @@ class AssetsManager {
 	 * 	F::build( 'AssetsManager', array(), 'getInstance' )->getMultiTypePackageURL( array (
 	 *		'messages' => 'EditPageLayout',
 	 *		'scripts' => 'oasis_jquery,yui',
-	 *		'styles' => 'path/to/style/file'
+	 *		'styles' => 'path/to/style/file',
+	 * 		'mustache' => 'path/to/MyController_index.mustache',
 	 *		'templates' => array(
 	 *			array(
 	 *				'controllerName' => 'UserLoginSpecialController',
@@ -575,6 +577,10 @@ class AssetsManager {
 
 		if ( !empty( $options['messages'] ) ) {
 			$request['messages'] = $options['messages'];
+		}
+
+		if ( !empty( $options['mustache'] ) ) {
+			$request['mustache'] = $options['mustache'];
 		}
 
 		if ( !empty( $options['templates'] ) ) {
