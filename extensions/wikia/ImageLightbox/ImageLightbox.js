@@ -273,18 +273,23 @@ var ImageLightbox = {
 				if (res.asset) {
 					$.getScript(res.asset, function() {
 
-                        wrapperTag.find('a').hide();
-                        wrapperTag.append( '<div id="'+res.jsonData.id+'" style="width:'+imageWidth+'px; height:'+imageHeight+'px; display: inline-block;" class="Wikia-video-enabledEmbedCode"></div>');
+						wrapperTag.find('a').hide();
+						wrapperTag.append( '<div id="'+res.jsonData.id+'" style="width:'+imageWidth+'px; height:'+imageHeight+'px; display: inline-block;" class="Wikia-video-enabledEmbedCode"></div>');
 
-                        if (res.jsonData && res.jsonData.plugins && res.jsonData.plugins.googima) {
-                            if (!window.wgUserName || window.wgUserShowAds) {
-                                res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
-                            }
-                            else {
-                                delete res.jsonData.plugins.googima;
-                            }
+						if (res.jsonData.script) {
+							$('body').append('<script>' + res.jsonData.script + ' loadJWPlayer(); </script>');
+						}
+						else {
+						    if (res.jsonData && res.jsonData.plugins && res.jsonData.plugins.googima) {
+						        if (!window.wgUserName || window.wgUserShowAds) {
+							        res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
+						        }
+						        else {
+							        delete res.jsonData.plugins.googima;
+						        }
+						    }
+						    jwplayer( res.jsonData.id ).setup( res.jsonData );
                         }
-						jwplayer( res.jsonData.id ).setup( res.jsonData );
 					});					
 				} else {
                     wrapperTag.find('a').hide();
@@ -359,15 +364,20 @@ var ImageLightbox = {
 									}
 								};
 							}
-if (res.jsonData && res.jsonData.plugins && res.jsonData.plugins.googima) {
-	if (!window.wgUserName || window.wgUserShowAds) {
-		res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
-	}
-	else {
-		delete res.jsonData.plugins.googima;
-	}
-}
-							jwplayer( res.jsonData.id ).setup( res.jsonData	);
+							if (res.jsonData.script) {
+								$('body').append('<script>' + res.jsonData.script + ' loadJWPlayer(); </script>');
+							}
+							else {
+								if (res.jsonData.plugins && res.jsonData.plugins.googima) {
+									if (!window.wgUserName || window.wgUserShowAds) {
+										res.jsonData.plugins.googima['ad.tag'] = window.AdConfig.DART.getUrl('JWPLAYER', '320x240', 'jwplayer', 'DART');
+									}
+									else {
+										delete res.jsonData.plugins.googima;
+									}
+								}								
+								jwplayer( res.jsonData.id ).setup( res.jsonData	);
+							}
 							self.setTopPosition();
 						});
 					});					
