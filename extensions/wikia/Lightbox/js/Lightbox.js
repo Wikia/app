@@ -1,5 +1,13 @@
 var Lightbox = {
+	// Array of image/video titles on the page. This will come from backend.
+	mediaTitles: [
+		'500x1700.jpeg',
+		'IMG 1535.jpg',
+		'The Dark Knight (2008) - Hit Me!',
+		'Return to Fallout New Vegas Walkthrough with Commentary Part 1 - The High-Five Returns'
+	],
 	lightboxLoading: false,
+	mediaTitle: false,
 	modalConfig: {
 		topOffset: 25,
 		modalMinHeight: 648,
@@ -29,6 +37,22 @@ var Lightbox = {
 		article.
 			unbind('.lightbox').
 			bind('click.lightbox', $.proxy(this.handleClick, this));
+				
+		// Clicking left/right arrows inside Lightbox
+		$('body').on('click', '#LightboxNext, #LightboxPrevious', function(e) {
+			var idx = self.mediaTitles.indexOf(self.mediaTitle),
+				target = $(e.target);
+			if(target.is("#LightboxNext")) {
+				idx++;
+			} else {
+				idx--;
+			}
+			if(idx > -1 && idx < self.mediaTitles.length) {
+				self.mediaTitle = self.mediaTitles[idx];
+				self.updateArrows();
+				$.proxy(self.updateLightbox(), self);
+			}
+		});
 
 	},
 	handleClick: function(ev) {
@@ -98,15 +122,15 @@ var Lightbox = {
 		ev.preventDefault();		
 		
 		// get name of an image
-		var imageName = false;
+		var mediaTitle = false;
 
 		// data-image-name="Foo.jpg"
 		if (target.attr('data-image-name')) {
-			imageName = target.attr('data-image-name');
+			mediaTitle = target.attr('data-image-name');
 		}
 		// ref="File:Foo.jpg"
 		else if (target.attr('ref')) {
-			imageName = target.attr('ref').replace('File:', '');
+			mediaTitle = target.attr('ref').replace('File:', '');
 		}
 		// href="/wiki/File:Foo.jpg"
 		else {
@@ -114,7 +138,7 @@ var Lightbox = {
 			var matches = target.attr('href').match(re);
 
 			if (matches) {
-				imageName = matches.pop().replace('File:', '');
+				mediaTitle = matches.pop().replace('File:', '');
 			}
 
 		}
@@ -126,16 +150,16 @@ var Lightbox = {
 			
 			if ( target.attr('data-video-name') ) {
 				
-				imageName = target.attr('data-video-name');
+				mediaTitle = target.attr('data-video-name');
 			
 			} else if ( targetChildImg.length > 0 && targetChildImg.attr('data-video') ) {
 				
-				imageName = targetChildImg.attr('data-video');
+				mediaTitle = targetChildImg.attr('data-video');
 			}
 			
-			if (imageName && targetChildImg.width() >= this.videoThumbWidthThreshold) {
+			if (mediaTitle && targetChildImg.width() >= this.videoThumbWidthThreshold) {
 
-				this.displayInlineVideo(targetChildImg, imageName);
+				this.displayInlineVideo(targetChildImg, mediaTitle);
 				ev.preventDefault();
 				return false;
 			}
@@ -153,8 +177,8 @@ var Lightbox = {
 		/* figure out title */
 		
 		/* load modal */
-		if(imageName != false) {
-			this.imageName = imageName;
+		if(mediaTitle != false) {
+			this.mediaTitle = mediaTitle;
 			this.loadLightbox();
 		}
 	},
@@ -174,10 +198,9 @@ var Lightbox = {
 			type: 'POST',	/* TODO (hyun) - might change to get */
 			format: 'html',
 			data: {
-				title: Lightbox.imageName,
+				title: Lightbox.mediaTitle,
 			},
 			callback: function(html) {
-			
 				if(Lightbox.type == 'image') {
 					Lightbox.makeImageModal(html);
 				} else {
@@ -256,6 +279,7 @@ var Lightbox = {
 			
 			contentArea.append(renderedResult);					
 			
+			Lightbox.updateArrows();
 			Lightbox.lightboxLoading = false;
 			Lightbox.log("Lightbox modal loaded");
 		});
@@ -291,6 +315,7 @@ var Lightbox = {
 
 		contentArea.append(renderedResult);					
 		
+		Lightbox.updateArrows();
 		Lightbox.log("Lightbox modal loaded");
 		Lightbox.lightboxLoading = false;
 	},
@@ -308,7 +333,27 @@ var Lightbox = {
 			topOffset: topOffset
 		};
 		return modalOptions;
+	},
+	updateLightbox: function() {
+		Lightbox.log(this.mediaTitle);
+	},
+	updateArrows: function() {
+		var idx = this.mediaTitles.indexOf(this.mediaTitle),
+			next = $('#LightboxNext'),
+			previous = $('#LightboxPrevious');
+			
+		if(idx == this.mediaTitles.length - 1) {
+			next.addClass('disabled');
+			previous.removeClass('disabled');
+		} else if(idx == 0) {
+			previous.addClass('disabled');
+			next.removeClass('disabled');
+		} else {
+			previous.removeClass('disabled');
+			next.removeClass('disabled');
+		}
 	}
+
 };
 
 $(function() {

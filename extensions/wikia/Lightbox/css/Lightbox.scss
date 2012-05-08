@@ -49,7 +49,7 @@
 			top: 50%;
 			width: 50px;
 			&:hover {
-				@include opacity(90);
+				@include opacity(100);
 			}
 			&.disabled {
 				@include opacity(40);
