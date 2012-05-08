@@ -13,6 +13,7 @@ window.Wikia = window.Wikia || {};
  *		styles - comma-separated list of SASS files
  *		scripts - comma-separated list of AssetsManager groups
  *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
+ * 		mustache - comma-separated list of paths to Mustache-powered templates
  *		ttl - cache period for both Varnish and Browser (in seconds), is overridden by varnishTTL and BrowserTTL
  *		varnishTTL - cache period for varnish and browser (in seconds)
  *		browserTTL - cache period for browser (in seconds)
@@ -25,6 +26,7 @@ window.Wikia = window.Wikia || {};
  *		messages: 'EditPageLayout',
  *		scripts: 'oasis_jquery,yui',
  *		styles: 'path/to/style/file'
+ *		mustache: 'extensions/wikia/MyExy/templates/index.mustache',
  *		templates: [{
  *			controllerName: 'MyController',
  *			methodName: 'getPage',
@@ -43,6 +45,7 @@ window.Wikia.getMultiTypePackage = function(options) {
 		scripts = options.scripts,
 		messages = options.messages,
 		templates = options.templates,
+		mustache = options.mustache,
 		callback = options.callback,
 		params = options.params,
 		ttl = options.ttl,
@@ -62,6 +65,11 @@ window.Wikia.getMultiTypePackage = function(options) {
 
 	if(typeof messages === 'string'){
 		request.messages = messages;
+		send = true;
+	}
+
+	if(typeof mustache === 'string'){
+		request.mustache = mustache;
 		send = true;
 	}
 
