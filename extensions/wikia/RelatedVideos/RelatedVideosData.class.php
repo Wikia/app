@@ -43,6 +43,7 @@ class RelatedVideosData {
 			$data['thumbnailData']	= $thumb;
 			$data['title']			= $file->getTitle()->getText();
 			$data['timestamp']		= $file->getTimestamp();
+			$data['uniqueId']		= $file->getVideoUniqueId();
 
 		}
 
