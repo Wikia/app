@@ -21,6 +21,48 @@ public class ToolbarTest extends BaseTest {
 		logout();
 	}
 	
+	protected boolean isActionAdded(String actionId) throws Exception {
+		return session().isElementPresent("css=section#MyToolsConfigurationWrapper li[data-tool-id=\"" + actionId + "\"]");
+	}
+	
+	protected void addActionToToolbar(String actionId) throws Exception {
+		if (!session().isVisible("css=section#MyToolsConfigurationWrapper ul.popular-list")) {
+			session().click("css=section#MyToolsConfigurationWrapper div.popular-toggle.toggle-1");
+			waitForElementVisible("css=section#MyToolsConfigurationWrapper ul.popular-list");
+		}
+		session().click("css=section#MyToolsConfigurationWrapper a[data-tool-id=\"" + actionId + "\"]");
+		assertTrue(isActionAdded(actionId));
+	}
+	
+	protected void removeActionFromToolbar(String actionId) throws Exception {
+		session().click("css=section#MyToolsConfigurationWrapper li[data-tool-id=\"" + actionId + "\"] img.trash");
+	}
+	
+	/*
+	protected void moveAction(String actionId, String targetActionId) throws Exception {
+		session().mouseMoveAt("css=li[data-tool-id=\"" + actionId + "\"] img.drag", "");
+		session().mouseDownAt("css=li[data-tool-id=\"" + actionId + "\"] img.drag", "");
+		session().mouseMoveAt("css=li[data-tool-id=\"" + targetActionId + "\"]", "");
+		session().mouseUpAt("css=li[data-tool-id=\"" + targetActionId + "\"]", "");
+	}
+	
+	protected void moveAction2(String actionId, String movement) throws Exception {
+		session().dragAndDrop("css=li[data-tool-id=\"" + actionId + "\"] img.drag", movement);
+	}
+	
+	@Test(groups={"envProduction","verified","manual"})
+	public void testMoveToToolbar() throws Exception {
+		openAndWait("/");
+		login();
+		session().click("css=#WikiaFooter a.tools-customize");
+		waitForElement("css=section#MyToolsConfigurationWrapper span.reset-defaults");
+		addActionToToolbar("PageAction:Move");
+		removeActionFromToolbar("PageAction:Move");
+		Thread.sleep(10000);
+		logout();		
+	}
+	*/
+	
 	@Test(groups={"envProduction","verified"})
 	public void testEnsuresThatToolbarIsNotPresentForAnonymousUsers() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
