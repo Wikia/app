@@ -12,8 +12,8 @@ echo( "Check migration for $wgCityId\n" );
 $dbr = wfGetDB( DB_SLAVE );
 $dbw_dataware = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
-$rows = $dbw_dataware->select('video_notmigrated',
-	array( '*' )
+$rows = $dbw_dataware->select('video_migration_log',
+	array( 'distinct wiki_id' )
 );
 
 $rowCount = $rows->numRows();
@@ -22,7 +22,7 @@ while($wiki = $dbw_dataware->fetchObject( $rows ) ) {
 	$v = WikiFactory::getWikiByID($wiki->wiki_id);
 
 	$dbw_dataware->update(
-		'video_notmigrated',
+		'video_migration_log',
 		array(
 			'wiki_dbname' => $v->city_dbname,
 		),
