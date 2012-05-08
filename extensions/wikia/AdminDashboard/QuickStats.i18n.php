@@ -20,7 +20,6 @@ $messages['en'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
-    'quickstats-ga-broken-message' => "The views column is currently out of order.  We're working on bringing it back soon! [$1 More info]",
 );
 
 /** Message documentation (Message documentation) */
