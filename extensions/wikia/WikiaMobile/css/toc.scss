@@ -6,6 +6,7 @@
 	width: 100%;
 	border: 1px solid $border-color;
 	border-radius: 0 0 5px 5px;
+	@include box-shadow(0 0 3px 1px $shadow-color);
 
 	.chev{
 		width: 100%;
@@ -27,13 +28,13 @@
 		padding-left: 17px;
 		margin: 0;
 		list-style: none;
+	}
 
-		a{
-			min-height: 35px;
-			line-height: 2em;
-			width: 100%;
-			display: inline-block;
-		}
+	a{
+		min-height: 35px;
+		line-height: 2em;
+		width: 100%;
+		display: inline-block;
 	}
 }
 
@@ -52,6 +53,7 @@
 
 	&.open {
 		border-radius: 5px;
+		@include box-shadow(none);
 		z-index:101;
 
 		td > ul {
