@@ -49,7 +49,6 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 			$options['kv_dart'] = $wgDartCustomKeyValues;
 		}
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
-		if ($wgLoadAdDriverOnLiftiumInit) $options['autoInit'] = true;
 		if (!empty($params)) {
 			if (isset($params['isCalledAfterOnload'])) {
 				$options['isCalledAfterOnload'] = $params['isCalledAfterOnload'];
@@ -66,7 +65,10 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 
 		// LiftiumOptions as json
 		$out = '<script type="text/javascript">' . "\n";
-		$out .= "LiftiumOptions = " . json_encode($options) . ';</script>';
+		$out .= "LiftiumOptions = " . json_encode($options) . ";\n";
+		$out .= 'var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);' . "\n";
+		$out .= 'LiftiumOptions["autoInit"] = tgId == TG_ONLOAD;' . "\n";
+		$out .= '</script>';
 
 		// Call the script
 		global $wgDevelEnvironment;
