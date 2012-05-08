@@ -29,7 +29,7 @@ echo(": {$rowCount} old videos found ($ve)\n");
 if($rowCount > 0 && $ve != True) {
 //if(true) {
 	$dbw_dataware->insert(
-		'video_notmigrated',
+		'video_notmigrated2',
 		array(
 			'wiki_id' => $wgCityId,
 			'wiki_name' => WikiFactory::getWikiByID($wgCityId)->city_url,
