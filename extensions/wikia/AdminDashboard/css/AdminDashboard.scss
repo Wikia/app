@@ -418,35 +418,6 @@ $color-highlight-column: rgba($color-page, 0);
 			}
 		}
 	}
-    #GATooltip {
-        font-size: 13px;
-        line-height: 23px;
-        border: 1px solid $color-admin-rail-border;
-        padding: 9px;
-        margin: 0 0 5px 0;
-        position: relative;
-        @include box-shadow(1px, 1px, 3px, $color-admin-header-box-shadow);
-        &:before {
-            content: ' ';
-            position: absolute;
-            width: 0;
-            height: 0;
-            left: 108px;
-            top: 100%;
-            border: 10px solid transparent;
-            border-color: $color-admin-rail-border transparent transparent;
-        }
-        &:after {
-        	content: ' ';
-            position: absolute;
-            width: 0;
-            height: 0;
-            left: 109px;
-            top: 100%;
-            border: 9px solid transparent;
-            border-color: $color-page transparent transparent transparent;
-        }
-    }
     .highlight-top {
         background: -moz-linear-gradient(top, $color-admin-header-shadow 0%, $color-highlight-column 25%); /* FF3.6+ */
         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color-admin-header-shadow), color-stop(25%, $color-highlight-column)); /* Chrome,Safari4+ */
