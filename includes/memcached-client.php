@@ -418,7 +418,7 @@ class MWMemcached {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
         // Memoize duplicate memcache requests for the same key in the same request
 		if (isset($this->_dupe_cache[$key])) {
 			wfProfileIn ( __METHOD__ . "::$key !DUPE");
@@ -606,13 +606,13 @@ class MWMemcached {
 	 * @return  boolean  TRUE on success
 	 */
 	public function set( $key, $value, $exp = 0 ) {
-		
+
 		// Wikia::memcachePurge hook on MediawikiPerformAction @author owen
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheWrites;
 		if ($wgAllowMemcacheDisable && ($wgAllowMemcacheWrites == false)) {
 			return false;
 		}
-		
+
 		return $this->_set( 'set', $key, $value, $exp );
 	}
 
@@ -914,6 +914,7 @@ class MWMemcached {
 
 			} else {
 				$this->_debugprint( "Error parsing memcached response\n", 1 );
+				Wikia::logBacktrace(__METHOD__); // Wikia change (BugId:27916)
 				return 0;
 			}
 		}
