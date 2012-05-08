@@ -783,11 +783,12 @@ if (window.adslots) {
 	}
 }
 	
-if (window.wgLoadAdDriverOnLiftiumInit) {
-	Liftium.init(AdDriverDelayedLoader.load);
-}
-else {
+var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
+if (tgId == TG_ONLOAD) {
 	$(window).load(function() {
 		AdDriverDelayedLoader.load();
 	});
+}
+else {
+	Liftium.init(AdDriverDelayedLoader.load);
 }
