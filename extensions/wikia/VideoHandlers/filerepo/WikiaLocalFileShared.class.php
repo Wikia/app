@@ -57,6 +57,10 @@ class WikiaLocalFileShared  {
 		}
 	}
 
+	public function getVideoUniqueId() {
+		return $this->getProviderName() . $this->getVideoId();
+	}
+
 	public function getProviderName() {
 		return $this->oFile->minor_mime;
 	}

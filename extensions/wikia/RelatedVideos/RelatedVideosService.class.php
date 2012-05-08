@@ -3,7 +3,7 @@
 class RelatedVideosService {
 
 	const memcKeyPrefix = 'RelatedVideosService';
-	const memcVersion = 17;
+	const memcVersion = 18;
 	static public $width = 160;
 	const howLongVideoIsNew = 3;
 
@@ -45,7 +45,7 @@ class RelatedVideosService {
 			}
 				
 			// just to be sure and to be able to work cross devbox.
-			if ( !isset( $result['data']['id'] ) ) return array();
+			if ( !isset( $result['data']['uniqueId'] ) ) return array();
 
 			$this->saveToCache( $titleText, $source, $videoWidth, $cityShort, $result );
 		} else {

@@ -41,21 +41,20 @@ class RelatedVideosController extends WikiaController {
 		
 		$oRelatedVideosService = F::build('RelatedVideosService');
 		$blacklist = array();
-
 		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
 			if ( !empty( $oLists ) && $oLists->exists() ){
 				$data = $oLists->getData();
 				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
 					foreach( $data['lists']['WHITELIST'] as $page ){
 						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
-						if ( isset( $videoData['id'] ) ) {
-							$videos[$videoData['id']] = $videoData;
+						if ( isset( $videoData['uniqueId'] ) ) {
+							$videos[$videoData['uniqueId']] = $videoData;
 						}
 					}
 					foreach( $data['lists']['BLACKLIST'] as $page ){
 						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
-						if ( isset( $videoData['id'] ) )
-							$blacklist[$videoData['id']] = $videoData;
+						if ( isset( $videoData['uniqueId'] ) )
+							$blacklist[$videoData['uniqueId']] = $videoData;
 					}
 				}
 			}
