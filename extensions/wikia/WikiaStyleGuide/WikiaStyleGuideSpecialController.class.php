@@ -22,5 +22,8 @@ class WikiaStyleGuideSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
 	}
+	
+	public function ajaxModalSample() {
+	}
 
 }

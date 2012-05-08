@@ -1,3 +1,6 @@
+<script>
+var UISGNamespace = {};	/* generic UISG namespace for demos */
+</script>
 <style>
 .WikiaArticle h2 {
 	font-weight: bold;
@@ -55,11 +58,18 @@ $('#LoadingWheelDiv').toggle(function() {
 <button>Your label here</button>
 <h3>Secondary Button</h3>
 <button class="secondary">Secondary Button</button>
+<h3>Big Button</h3>
+<button class="big">Big Button</button>
+<h3>Button with Chevron</h3>
+<button>
+Chevron to the right
+<img src="<?= F::app()->wf->BlankImgUrl() ?>" class="chevron">
+</button>
 
 <h3>Sample Codes:</h3>
 Any of these will produce the buttons, please use them as appropriate:
 <pre>
-&lt;button&gt;Your label here&lt;/button&gt;<br/>&lt;input type=&quot;button&quot; value=&quot;Your label here&quot;&gt;<br/>&lt;input type=&quot;submit&quot; value=&quot;Your label here&quot;&gt;<br/>&lt;input type=&quot;reset&quot; value=&quot;Your label here&quot;&gt;<br/>&lt;a class=&quot;wikia-button&quot;&gt;Your label here&lt;/a&gt;<br/>&lt;div class=&quot;button&quot;&gt;Your label here&lt;/div&gt;<br/>&lt;button class=&quot;secondary&quot;&gt;Secondary Button&lt;/button&gt;	/* add class "secondary" */
+&lt;button&gt;Your label here&lt;/button&gt;<br/>&lt;input type=&quot;button&quot; value=&quot;Your label here&quot;&gt;<br/>&lt;input type=&quot;submit&quot; value=&quot;Your label here&quot;&gt;<br/>&lt;input type=&quot;reset&quot; value=&quot;Your label here&quot;&gt;<br/>&lt;a class=&quot;wikia-button&quot;&gt;Your label here&lt;/a&gt;<br/>&lt;div class=&quot;button&quot;&gt;Your label here&lt;/div&gt;<br/>&lt;button class=&quot;secondary&quot;&gt;Secondary Button&lt;/button&gt;	/* add class "secondary" */<br/>&lt;button class=&quot;big&quot;&gt;Big Button&lt;/button&gt;	/* add class "big" */<br/>&lt;button&gt;<br/>Chevron to the right<br/>&lt;img src=&quot;&lt;?= F::app()-&gt;wf-&gt;BlankImgUrl() ?&gt;&quot; class=&quot;chevron&quot;&gt;<br/>&lt;/button&gt;	/* chevron image added */
 </pre>
 
 <h2>Menu Button</h2>
@@ -98,4 +108,91 @@ echo wfRenderModule('MenuButton',
 		'dropdown' => $dropdown
 	)
 )
+</pre>
+
+
+<h2>Modal Dialog</h2>
+<h3>Normal Modal Sample</h3>
+<button id="UISGNormalModalButton">Click to make a normal modal dialog</button>
+<script>
+$(function() {
+	$("#UISGNormalModalButton").click(function() {
+		$("<div><h1>This is a Normal Dialog</h1>Body content goes here.</div>").makeModal({width: 400});
+	});
+});
+</script>
+<h3>Normal Modal Sample Code</h3>
+<pre>
+$("#UISGNormalModalButton").click(function() {
+	$("&lt;div&gt;&lt;h1&gt;This is a Normal Dialog&lt;/h1&gt;Body content goes here.&lt;/div&gt;").makeModal({width: 400});
+});
+</pre>
+
+<h3>Persistent Modal Sample</h3>
+<button id="UISGPersistentModalButton">Persistent Modal</button>
+<script>
+$(function() {
+	$("#UISGPersistentModalButton").click(function() {
+		if(UISGNamespace.UISGPersistentModal) {
+			// Recall a persisted modal.  This way, recalling modals will be faster as it limits repeated DOM construction and event attachments
+			// Use this carefully, and do keep in mind that state of the modal is whatever it was, so reset state as needed.
+			UISGNamespace.UISGPersistentModal.showModal();
+		} else {
+			// this ensures modal is only created once on the first click
+			UISGNamespace.UISGPersistentModal = $("<div><h1>This is a Persistent Dialog</h1>Body content goes here.</div>").makeModal({width:400, persistent: true});
+		}
+	});
+});
+</script>
+<h3>Persistent Modal Code:</h3>
+<pre>
+$("#UISGPersistentModalButton").click(function() {
+	if(UISGNamespace.UISGPersistentModal) {
+		// Recall a persisted modal.  This way, recalling modals will be faster as it limits repeated DOM construction and event attachments
+		// Use this carefully, and do keep in mind that state of the modal is whatever it was, so reset state as needed.
+		UISGNamespace.UISGPersistentModal.showModal();
+	} else {
+		// this ensures modal is only created once on the first click
+		UISGNamespace.UISGPersistentModal = $("&lt;div&gt;&lt;h1&gt;This is a Persistent Dialog&lt;/h1&gt;Body content goes here.&lt;/div&gt;").makeModal({width:400, persistent: true});
+	}
+});
+</pre>
+
+<h2>Modal Dialog Shortcut functions</h2>
+<h3>ajax Modal Shortcut</h3>
+<button id="UISGAjaxModalShortcutButton">Ajax Modal</button>
+<script>
+$(function() {
+	$("#UISGAjaxModalShortcutButton").click(function() {
+		$().getModal(
+			'/wikia.php?controller=WikiaStyleGuideSpecial&method=ajaxModalSample&format=html', 
+			'#UISGAjaxModalSample',
+			{width:400});
+	});
+});
+</script>
+<h3>ajax Modal Shortcut code sample</h3>
+<pre>
+$("#UISGAjaxModalShortcutButton").click(function() {
+	$().getModal(
+		'/wikia.php?controller=WikiaStyleGuideSpecial&method=ajaxModalSample&format=html', 
+		'#UISGAjaxModalSample',
+		{width:400});
+});
+</pre>
+
+<h3>Content Modal Shortcut</h3>
+<button id="UISGContentModalShortcutButton">Content Modal</button>
+<script>
+$(function() {
+	$("#UISGContentModalShortcutButton").click(function() {
+		$.showModal("This is being created in javascript", "Content goes here", {width: 400});
+	});
+});
+</script>
+<h3>Content Modal Shortcut code sample</h3>
+<pre>
+$("#UISGContentModalShortcutButton").click(function() {
+	$.showModal("This is being created in javascript", "Content goes here", {width: 400});
+});
 </pre>
