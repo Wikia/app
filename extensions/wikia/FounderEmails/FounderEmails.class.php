@@ -234,30 +234,10 @@ class FounderEmails {
 		global $wgStatsDB, $wgStatsDBEnabled, $wgDevelEnvironment;
 		wfProfileIn( __METHOD__ );
 		
-		$today = date( 'Ymd', strtotime('-1 day') );
+		$today = date( 'Y-m-d', strtotime('-1 day') );
 
-		$views = 0;
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-
-			if ( $wgDevelEnvironment ) {	// for testing
-				$oRow = $db->selectRow( 
-					array( 'page_views' ),
-					array( 'pv_views as cnt' ),
-					array( 'pv_city_id' => $cityID, 'pv_use_date' => $today),
-					__METHOD__
-				);
-			} else {
-				$oRow = $db->selectRow( 
-					array( 'google_analytics.pageviews' ),
-					array( 'pageviews as cnt' ),
-					array( 'city_id' => $cityID, 'date' => $today),
-					__METHOD__
-				);
-			}
-			// Only returns one row, this is just for convenience
-			$views = ( isset( $oRow->cnt ) ) ? $oRow->cnt*10 : 0;
-		}
+		$pageviews = DataMartService::getPageviewsDaily( $today, null, $cityID );
+		$views = ( isset($pageviews[$today]) ) ? $pageviews[$today] : 0 ;
 		
 		wfProfileOut( __METHOD__ );		
 		return $views;
