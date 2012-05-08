@@ -34,7 +34,7 @@ class WikiaSearchResult {
 	}
 
 	public function setText($value) {
-	        $this->text = $this->fixSnippeting($value);
+	        $this->text = $this->fixSnippeting($value, true);
 	}
 
 	public function getTitle() {
@@ -114,9 +114,16 @@ class WikiaSearchResult {
 		return $this->vars;
 	}
 
-	private function fixSnippeting($val) {
-	        return preg_replace("/^\W+ /", '',
-			      preg_replace("/(<\/span>)('s)/i", '$2$1', $val));
+	private function fixSnippeting($text, $addEllipses=false) {
+
+		$text = preg_replace("/^\W+ /", '',
+							preg_replace("/(<\/span>)('s)/i", '$2$1',
+							preg_replace('/ +$/', '',
+							preg_replace('/ ?\.{1,3}$/', '', 
+							preg_replace('/ ?&hellip;$/', '',
+							str_replace('�', '', $text))))));
+		return strlen($text) > 0 && $addEllipses ? $text.'&hellip;' : $text;
+
 	}
 
 	protected function getTitleObject() {
