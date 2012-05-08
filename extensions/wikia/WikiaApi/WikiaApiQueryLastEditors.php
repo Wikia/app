@@ -205,7 +205,6 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 	public function getParamDescription() {
 		return array (
 			'limit' 	=> 'Limit records',
-			'all'		=> 'Check all Wikis (if all = 1 ) or only local Wiki (if all = 0)',
 			'offset' 	=> 'Limit offset',
 			'bot'		=> 'Return also bots ( if bot = 1 )',
 			'content'	=> 'Check only editors of content namespaces',
