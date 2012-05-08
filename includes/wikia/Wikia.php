@@ -1150,7 +1150,7 @@ class Wikia {
 	 * hooked up to AddNewAccount
 	 */
 	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDBEnabled, $wgExternalDatawareDB;
 
 		if ( empty( $wgStatsDBEnabled ) ) {
 			return true;
@@ -1158,7 +1158,7 @@ class Wikia {
 
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
 			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
-				$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 				$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );
 			}
