@@ -175,7 +175,7 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'task_skipped' => '0',
 			);
 			$fetch_obj6 = array(	// bonus task + uncompleted
-				'task_id' => '530',
+				'task_id' => '520',
 				'task_count' => '1',
 				'task_completed' => '0',
 				'task_skipped' => '0',
@@ -193,8 +193,8 @@ class FounderProgressBarTest extends WikiaBaseTest {
 				'task_skipped' => '0',
 			);
 			$fetch_obj9 = array(	// bonus task + uncompleted (2nd round)
-				'task_id' => '530',
-				'task_count' => '1',
+				'task_id' => '520',
+				'task_count' => '5',
 				'task_completed' => '1',
 				'task_skipped' => '0',
 			);
@@ -503,8 +503,8 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		public function skipTaskDataProvider() {
 			$extra_task1 = array();
 			$extra_task2 = array(
-								530 => array (
-									'task_id' => '530',
+								520 => array (
+									'task_id' => '520',
 									'task_count' => '1',
 									'task_completed' => '0',
 									'task_skipped' => '0',
