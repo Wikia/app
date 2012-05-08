@@ -1,13 +1,26 @@
 var Lightbox = {
 	// Array of image/video titles on the page. This will come from backend.
-	mediaTitles: [
+	articleTitles: [
 		'500x1700.jpeg',
 		'IMG 1535.jpg',
 		'The Dark Knight (2008) - Hit Me!',
 		'Return to Fallout New Vegas Walkthrough with Commentary Part 1 - The High-Five Returns'
 	],
+	// Related Video
+	rvTitles: [
+	
+	],
+	// Lates Photos
+	lpTitles: [
+	
+	],
+	// Current media array
+	mediaTitles: [],
+	mediaDetails: {
+	
+	},
 	lightboxLoading: false,
-	mediaTitle: false,
+	mediaTitle: "",
 	modalConfig: {
 		topOffset: 25,
 		modalMinHeight: 648,
@@ -36,7 +49,9 @@ var Lightbox = {
 
 		article.
 			unbind('.lightbox').
-			bind('click.lightbox', $.proxy(this.handleClick, this));
+			bind('click.lightbox', function(e) {
+                self.handleClick.call(self, e, $(this));
+			});
 				
 		// Clicking left/right arrows inside Lightbox
 		$('body').on('click', '#LightboxNext, #LightboxPrevious', function(e) {
@@ -55,7 +70,25 @@ var Lightbox = {
 		});
 
 	},
-	handleClick: function(ev) {
+	handleClick: function(ev, parent) {
+		var self = this,
+			id = parent.attr('id');
+
+		// Set carousel type based on parent of image
+		switch(id) {
+			case "WikiaArticle": 
+				self.mediaTitles = self.articleTitles;
+				break;
+			case "article-comments":
+				self.mediaTitles = self.articleTitles;
+				break;
+			case "RelatedVideosRL":
+				self.mediaTitles = self.rvTitles;
+				break;
+			default: // .LatestPhotosModule
+				self.mediaTitles = self.lpTitles;
+		}
+		
 		/* figure out target */
 		if(this.lightboxLoading) {
 			ev.preventDefault();
@@ -209,6 +242,32 @@ var Lightbox = {
 			}
 		});
 	},
+	image: {
+		makeModal: function() {
+			
+		},
+		updateModal: function() {
+		
+		},
+		getDimensions: function() {
+		
+		}
+	},
+	video: {
+		makeModal: function() {
+			/* Display modal with default dimensions */
+		},
+		updateModal: function() {
+			/* call getDimensions */
+			/* resize modal */
+			/* render mustache template */
+		},
+		getDimensions: function() {
+			/* Get image url from json - preload image */
+			/* do calculations */
+		
+		}	
+	},
 	makeImageModal: function(html) {
 		html = $(html);
 		
@@ -264,7 +323,7 @@ var Lightbox = {
 			image.remove();
 			
 			/* extract mustache templates */
-			var photoTemplate = modal.find("#LightboxPhotoTemplate").html();
+			var photoTemplate = modal.find("#LightboxPhotoTemplate");
 			
 			/* render media */
 			var json = {
@@ -272,12 +331,14 @@ var Lightbox = {
 				imageSrc: imageSrc
 			};
 			
-			var renderedResult = Mustache.render(photoTemplate, json);
+			//console.log(photoTemplate.mustache(json));
+			
+			var renderedResult = photoTemplate.mustache(json);
 
 			// Hack to vertically align the image in the lightbox
 			renderedResult = $(renderedResult).css('line-height', modalHeight+'px');
 			
-			contentArea.append(renderedResult);					
+			contentArea.append(renderedResult);			
 			
 			Lightbox.updateArrows();
 			Lightbox.lightboxLoading = false;
@@ -302,14 +363,14 @@ var Lightbox = {
 		var contentArea = modal.find(".WikiaLightbox");
 
 		/* extract mustache templates */
-		var videoTemplate = modal.find("#LightboxVideoTemplate").html();
+		var videoTemplate = modal.find("#LightboxVideoTemplate");
 
 		/* render media */
 		var json = {
 			embed: LightboxVar.videoEmbedCode // LightboxVar defined in modal template
 		}
 		
-		var renderedResult = Mustache.render(videoTemplate, json);
+		var renderedResult = videoTemplate.mustache(json);
 
 		renderedResult = $(renderedResult).css('margin-top', mediaTopMargin);
 
