@@ -7,18 +7,12 @@ TMPFILE=`mktemp /tmp/$0.XXXXXX` || exit 1
 echo "Getting list of wikis..."
 echo "select
 wiki_id, wiki_id, wiki_dbname, wiki_name
-from video_notmigrated;" | /usr/wikia/backend/bin/slave dataware > $TMPFILE
+from video_notmigrated2;" | /usr/wikia/backend/bin/slave dataware > $TMPFILE
 cat $TMPFILE
 cat $TMPFILE | while read line; do
 	cityid=`echo "$line" | cut -f 1`
 	dbname=`echo "$line" | cut -f 3`
 	echo "Processing $line ($cityid, $dbname)"
-
-	if [ -f '/tmp/go_slow' ]
-	then
-		echo "Waiting for key press..."
-		read -n 1 -s
-	fi
 
 	#/usr/wikia/backend/bin/withcity --maintenance-script="$scriptpath/videoReset.php" --usedb=$dbname
 	/usr/wikia/backend/bin/withcity --maintenance-script="$scriptpath/videoSanitize.php" --usedb=$dbname | tee -a logs/${cityid}.sanitize.log || die
