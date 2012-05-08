@@ -403,7 +403,14 @@ public class BaseTest {
 			} catch( SeleniumException e ) {}
 			Thread.sleep(1000);
 		}
-		session().waitForCondition("typeof window != 'undefined' && typeof window.wgWikiaDOMReady != 'undefined'", this.getTimeout());		
+		// we experienced several problem with this condition, which kind of stops us from working on selenium tests
+		// a page is apparently loaded, but wgWikiaDOMReady is not set
+		// so here we finish when wgWikiaDOMReady, but after the timeout we continue the test as nothing happened
+		while((new Date()).getTime() - startTimestamp <= timeOut) {
+			if ("true".equals(session().getEval("typeof window != 'undefined' && typeof window.wgWikiaDOMReady != 'undefined'"))) {
+				break;
+			}
+		}
 	}
 	
 	protected void clickAndWait(String location) throws Exception {
