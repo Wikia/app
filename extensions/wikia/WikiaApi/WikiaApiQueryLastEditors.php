@@ -27,12 +27,7 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 
 		$where = array();
 
-		# all Wikis
-		if ( $this->params['all'] != 1 ) { 
-			$where['wiki_id'] = intval($this->mCityId);
-		} else {
-			$where[] = 'wiki_id > 0';
-		}
+		$where['wiki_id'] = intval($this->mCityId);
 		
 		# bot
 		if ( empty( $this->params['bot'] ) ) {
@@ -164,10 +159,10 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 	protected function getExamples() {
 		return array_merge(
 			array (
-				"Get last logged-in editors of content pages for all Wikis",
-				"  api.php?action=query&prop=wklasteditors&limit=25&bot=0&content=1&anon=0&all=1",
-				"Get last editors for all Wikis ",
-				"  api.php?action=query&prop=wklasteditors&limit=25&all=1",				
+				"Get last logged-in editors of content pages Wiki",
+				"  api.php?action=query&prop=wklasteditors&limit=25&bot=0&content=1&anon=0",
+				"Get last editors ",
+				"  api.php?action=query&prop=wklasteditors&limit=25",				
 			)
 		);
 	}
@@ -181,12 +176,6 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 				ApiBase :: PARAM_MIN => 25,
 			),
 			'offset' => array (
-				ApiBase :: PARAM_ISMULTI => 0,
-				ApiBase :: PARAM_TYPE => 'integer',
-				ApiBase :: PARAM_DFLT => 0,
-				ApiBase :: PARAM_MIN => 0,
-			),
-			'all' => array (
 				ApiBase :: PARAM_ISMULTI => 0,
 				ApiBase :: PARAM_TYPE => 'integer',
 				ApiBase :: PARAM_DFLT => 0,
