@@ -186,13 +186,25 @@ class WikiaSolrClient extends WikiaSearchClient {
 			
 		} 
 
-		$results = $this->getWikiaResults( $response->response->docs, get_object_vars($response->highlighting) );
+		$docs = empty( $response->response->docs ) ? array() : $response->response->docs;
+		
+		if (is_object($response->highlighting)) {
+			$highlighting = get_object_vars($response->highlighting);
+		} else if (is_array($response->highlighting)) {
+			$highlighting = $response->highlighting;
+		}
+		$highlighting = empty($highlighting) ? array() : $highlighting;
+
+		$numFound = $response->response->numFound ?: 0;
+		$resultsStart = $response->response->start ?: 0;
+
+		$results = $this->getWikiaResults( $docs, $highlighting );
 
 		wfProfileOut(__METHOD__);
 		return F::build( 'WikiaSearchResultSet', 
 				 array( 'results'      => $results, 
-					'resultsFound' => $response->response->numFound, 
-					'resultsStart' => $response->response->start, 
+					'resultsFound' => $numFound,
+					'resultsStart' => $start,
 					'isComplete'   => false, 
 					'query'        => $query 
 					) 
