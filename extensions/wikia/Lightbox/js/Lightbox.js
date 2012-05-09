@@ -354,13 +354,40 @@ var Lightbox = {
 	},
 	video: {
 		updateLightbox: function(data) {
-			/* call getDimensions */
-			
-			console.log(data);
-			
+			/* call getDimensions */			
 			var dimensions = this.getDimensions();
 			
-			console.log(dimensions);
+			Lightbox.openModal.animate({
+				top: dimensions.topOffset,
+				height: dimensions.modalHeight
+			}, 
+			500, 
+			function() {
+				var contentArea = $(this).find(".WikiaLightbox");
+		
+				/* extract mustache templates */
+				var videoTemplate = $(this).find("#LightboxVideoTemplate");
+		
+				/* render media */
+				var json = {
+					embed: data.videoEmbedCode // initialFileDetail defined in modal template
+				}
+				
+				var renderedResult = videoTemplate.mustache(json);
+				
+				console.log(data.videoTopMargin);
+				
+				renderedResult = $(renderedResult).css('margin-top', dimensions.videoTopMargin);
+				
+				console.log(renderedResult)
+		
+				contentArea.append(renderedResult);					
+				
+				Lightbox.updateArrows();
+				Lightbox.log("Lightbox modal loaded");
+				Lightbox.lightboxLoading = false;
+				
+			});
 			
 			/* resize modal */
 			/* render mustache template */		
@@ -372,12 +399,14 @@ var Lightbox = {
 				windowHeight = $(window).height(),
 				modalHeight = windowHeight - topOffset*2 - 10, // 5px modal border
 				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
-				mediaTopMargin = (modalHeight - Lightbox.modalConfig.videoHeight) / 2;
+				videoTopMargin = (modalHeight - Lightbox.modal.defaults.videoHeight) / 2;
 			
+				topOffset = topOffset + $(window).scrollTop();
+
 				var dimensions = {
 					modalHeight: modalHeight,
 					topOffset: topOffset,
-					mediaTopMargin: mediaTopMargin
+					videoTopMargin: videoTopMargin
 				}
 				
 				return dimensions;
