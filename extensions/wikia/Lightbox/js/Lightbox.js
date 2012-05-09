@@ -249,7 +249,6 @@ var Lightbox = {
 				data = $.parseJSON(initialFileDetail); // defined in modal template
 				
 				if(Lightbox.media.type == 'image') {
-					//Lightbox.makeImageModal(html);
 					Lightbox.image.updateLightbox(data);
 				} else {
 					Lightbox.makeVideoModal(html);
@@ -366,81 +365,6 @@ var Lightbox = {
 		getDimensions: function() {
 			/* if window is larger than min modal height, update modal height */
 		}	
-	},
-	makeImageModal: function(html) {
-		html = $(html);
-		
-		// pre-load image to calculate modal dimensions
-		var image = html.find("#LightboxPreload").remove().find('img').appendTo('body');
-		
-		image.load(function() {
-			// set default dimensions if image height takes up whole window
-			var image = $(this),
-				topOffset = Lightbox.modal.defaults.topOffset,
-				modalMinHeight = Lightbox.modal.defaults.modalMinHeight,
-				windowHeight = $(window).height(),
-				modalHeight = windowHeight - topOffset*2,  
-				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
-				imageSrc = image.attr('src');
-							
-			// Just in case image is wider than 1000px
-			if(image.width() > 1000) {
-				image.width(1000);
-			}
-			var imageHeight = image.height();
-						
-			if(imageHeight < modalHeight) {
-				// Image is shorter than screen, adjust modal height
-				modalHeight = imageHeight;
-				
-				// Modal has a min height
-				if(modalHeight < modalMinHeight) {
-					modalHeight = modalMinHeight;
-				}
-
-				// Calculate modal's top offset
-				var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
-				
-				newOffset = (extraHeight / 2);
-				if(newOffset < topOffset){
-					newOffset = topOffset; 
-				}
-				topOffset = newOffset;
-				
-			} else {
-				// Image is taller than screen, shorten image
-				imageHeight = modalHeight;
-				topOffset = topOffset - 5; // 5px modal border
-			}	
-			
-			var modalOptions = Lightbox.getModalOptions(modalHeight, topOffset);
-			
-			var modal = html.makeModal(modalOptions);
-			var contentArea = modal.find(".WikiaLightbox");
-			
-			// remove fake image
-			image.remove();
-			
-			/* extract mustache templates */
-			var photoTemplate = modal.find("#LightboxPhotoTemplate");
-			
-			/* render media */
-			var json = {
-				imageHeight: imageHeight,
-				imageSrc: imageSrc
-			};
-			
-			var renderedResult = photoTemplate.mustache(json);
-
-			// Hack to vertically align the image in the lightbox
-			renderedResult = $(renderedResult).css('line-height', modalHeight+'px');
-			
-			contentArea.append(renderedResult);			
-			
-			Lightbox.updateArrows();
-			Lightbox.lightboxLoading = false;
-			Lightbox.log("Lightbox modal loaded");
-		});
 	},
 	makeVideoModal: function(html) {
 		html = $(html);
