@@ -150,9 +150,9 @@ class SassUtil {
 		$rgb = str_split(substr($rgbhex, 1), 2);
 		$rgb = array_map('hexdec', $rgb);
 
-		$clrR = ($rgb[0] / 255);
-		$clrG = ($rgb[1] / 255);
-		$clrB = ($rgb[2] / 255);
+		$clrR = (!empty($rgb[0])? ($rgb[0]/255) : 0 );
+		$clrG = (!empty($rgb[1])? ($rgb[1]/255) : 0 );
+		$clrB = (!empty($rgb[2])? ($rgb[2]/255) : 0 );
 
 		$clrMin = min($clrR, $clrG, $clrB);
 		$clrMax = max($clrR, $clrG, $clrB);
