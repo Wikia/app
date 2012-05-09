@@ -1,4 +1,3 @@
-/* depends on geo.js */
 var MeeboBar = {
 	network: '',
 	
