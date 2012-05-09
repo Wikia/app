@@ -93,7 +93,7 @@ function gracenote_obfuscateText($text){
 // page.
 ////
 function gracenote_getAnalyticsHtml($google_action){
-	return "";
+	return ""; // TODO: FIXME - This whole function should probably go away now that we use the data warehouse.
 
 	$trackEventCode = "";
 	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
