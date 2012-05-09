@@ -280,7 +280,7 @@ class CloseWikiMaintenance {
 						$wgSolrIndexer, $row->city_id
 					);
 					wfShellExec( $cmd, $retval );
-					$this->log( __CLASS__, "info", "search index removed from {$wgSolrIndexer}" );
+					$this->log( "search index removed from {$wgSolrIndexer}" );
 
 					/**
 					 * there is nothing to set because row in city_list doesn't
