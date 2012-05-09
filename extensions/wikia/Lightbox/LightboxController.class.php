@@ -65,14 +65,19 @@ class LightboxController extends WikiaController {
 		// sample data
 		$thumbs = array(
 			array(
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',
+				'type' => 'image',
+				'title' => '500x1700.jpeg'
+			),
+			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',	// 90x55 images
 				'type' => 'image',
 				'title' => 'IMG 1535.jpg'
 			),
 			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',	// 90x55 images
 				'type' => 'image',
-				'title' => '500x1700.jpeg'
+				'title' => 'Avatar.jpg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',

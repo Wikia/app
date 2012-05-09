@@ -6,7 +6,7 @@ var Lightbox = {
 	log: function(content) {
 		$().log(content, "Lightbox");
 	},
-	// Array of image/video titles on the page. This will come from backend.
+	// cached thumbnail arrays and detailed info 
 	cache:{
 		articleMedia: [], // Article Media
 		relatedVideos: [], // Related Video
@@ -14,11 +14,31 @@ var Lightbox = {
 		details: {} // all media details
 	},
 	current: {
-		// current
 		type: '', // image or video
 		title: '', // currently displayed file name
-		carouselType: '', // article, relatedVideos, or latestPhotos
-		index: 1, //-1, // ex: Lightbox.cache[Lightbox.current.carouselType][index]		
+		carouselType: '', // articleMedia, relatedVideos, or latestPhotos
+		index: -1, // ex: Lightbox.cache[Lightbox.current.carouselType][index]		
+	},
+	getMediaDetail: function(title, type, callback) {
+		console.log("getMediaDetail");
+		var self = this;
+		if(self.cache.details[title]) {
+			callback.call(self, self.cache.details[title]);
+		} else {
+			$.nirvana.sendRequest({
+				controller: 'Lightbox',
+				method: 'getMediaDetail', // TODO: this will change based on carousel type
+				type: 'POST',	/* TODO (hyun) - might change to get */
+				format: 'json',
+				data: {
+					title: title,
+					type: type
+				},
+				callback: function(data) {
+					callback.call(self, data);		
+				}
+			});			
+		}
 	},
 	modal: {
 		defaults: {
@@ -229,7 +249,7 @@ var Lightbox = {
 				/* Add template to modal */
 				Lightbox.openModal.find(".modalContent").html(html); // adds initialFileDetail js to DOM
 				
-				Lightbox.current.carouselType = "article"; // TODO: get this from back end
+				Lightbox.current.carouselType = "articleMedia"; // TODO: get this from back end
 				Lightbox.cache.articleMedia = mediaThumbs.thumbs;
 				
 				for(var i = 0; i < mediaThumbs.thumbs.length; i++) {
@@ -240,9 +260,9 @@ var Lightbox = {
 				}
 				
 				if(Lightbox.current.type == 'image') {
-					Lightbox.image.updateLightbox(initialFileDetail);
+					Lightbox.image.updateLightbox.call(Lightbox, initialFileDetail);
 				} else {
-					Lightbox.video.updateLightbox(initialFileDetail);
+					Lightbox.video.updateLightbox.call(Lightbox, initialFileDetail);
 				}
 			}
 		});
@@ -250,8 +270,9 @@ var Lightbox = {
 	image: {
 		updateLightbox: function(data) {
 			console.log("UPDATE IMAGE LIGHTBOX");
+			console.log(data);
 
-			this.getDimensions(data.imageUrl, function(dimensions) {
+			this.image.getDimensions(data.imageUrl, function(dimensions) {
 				
 				Lightbox.openModal.css({
 					top: dimensions.topOffset,
@@ -353,39 +374,46 @@ var Lightbox = {
 	video: {
 		updateLightbox: function(data) {
 			console.log("UPDATE VIDEO LIGHTBOX");
+			console.log(data);
+
 			/* call getDimensions */			
-			var dimensions = this.getDimensions();
+			var dimensions = this.video.getDimensions();
 			
-			Lightbox.openModal.animate({
-				top: dimensions.topOffset,
-				height: dimensions.modalHeight
-			}, 
-			Lightbox.modal.defaults.duration, 
-			function() {
-				var contentArea = $(this).find(".WikiaLightbox");
-		
-				/* extract mustache templates */
-				var videoTemplate = $(this).find("#LightboxVideoTemplate");
-		
-				/* render media */
-				var json = {
-					embed: data.videoEmbedCode // initialFileDetail defined in modal template
-				}
-				
-				var renderedResult = videoTemplate.mustache(json);
-				
-				renderedResult = $(renderedResult).css('margin-top', dimensions.videoTopMargin);
-		
-				contentArea.append(renderedResult);					
-				
-				Lightbox.updateArrows();
-				Lightbox.log("Lightbox modal loaded");
-				Lightbox.lightboxLoading = false;
-				
-			});
+			debugger;
 			
 			/* resize modal */
+			Lightbox.openModal.css({
+				top: dimensions.topOffset,
+				height: dimensions.modalHeight
+			});
+			
+			var contentArea = $(this).find(".WikiaLightbox");
+	
+			/* extract mustache templates */
+			var videoTemplate = $(this).find("#LightboxVideoTemplate");
+	
+			/* render media */
+			var json = {
+				embed: data.videoEmbedCode // initialFileDetail defined in modal template
+			}
+			
 			/* render mustache template */		
+			var renderedResult = videoTemplate.mustache(json);
+			
+			// Hack to vertically align video
+			renderedResult = $(renderedResult).css('margin-top', dimensions.videoTopMargin);
+	
+			var mediaDiv = contentArea.find('.media');
+			if(mediaDiv.length) {
+				mediaDiv.replaceWith(renderedResult);
+			} else {
+				contentArea.append(renderedResult);			
+			}
+			
+			Lightbox.updateArrows();
+			Lightbox.log("Lightbox modal loaded");
+			Lightbox.lightboxLoading = false;
+			
 		},
 		getDimensions: function() {
 			/* if window is larger than min modal height, update modal height */
@@ -444,15 +472,14 @@ var Lightbox = {
 		};
 		return modalOptions;
 	},
-	updateLightbox: function() {
-		Lightbox.log(this.current.title);
-	},
 	handleArrows: function(e) {
 		var self = this,
 			carouselType = self.current.carouselType,
-			mediaArr = self.current[carouselType],
+			mediaArr = self.cache[carouselType],
 			idx = self.current.index,
 			target = $(e.target);
+		
+		self.openModal.find('.media').html("").startThrobbing();
 	
 		if(target.is("#LightboxNext")) {
 			idx++;
@@ -461,38 +488,26 @@ var Lightbox = {
 		}
 		
 		if(idx > -1 && idx < mediaArr.length) {
-			self.current.title = mediaArr[idx].title;
-			var type = Lightbox.current.type = mediaArr[idx].type;
-			self.updateArrows();
+			self.current.index = idx;
 			
-			$.nirvana.sendRequest({
-				controller: 'Lightbox',
-				method: 'getMediaDetail', // TODO: self will change based on carousel type
-				type: 'POST',	/* TODO (hyun) - might change to get */
-				format: 'json',
-				data: {
-					title: Lightbox.current.title,
-					type: type
-				},
-				callback: function(data) {
-					self[type].updateLightbox(data);		
-				}
-			});
+			var title = self.current.title = mediaArr[idx].title;
+			var type = self.current.type = mediaArr[idx].type;
 			
-			
+			self.getMediaDetail.call(self, title, type, self[type].updateLightbox);			
 		}
 	},
-	updateArrows: function() {
-		var self = this; // for consistency
-		
-		var carouselType = self.current.carouselType,
-			mediaArr = self.current[carouselType],
-			idx = self.current.index;
+	updateArrows: function() {		
+		var carouselType = Lightbox.current.carouselType,
+			mediaArr = Lightbox.cache[carouselType],
+			idx = Lightbox.current.index;
 			
 		var next = $('#LightboxNext'),
 			previous = $('#LightboxPrevious');
 			
-		if(idx == mediaArr - 1) {
+		console.log(mediaArr.length);
+		console.log(idx);
+			
+		if(idx == (mediaArr.length - 1)) {
 			next.addClass('disabled');
 			previous.removeClass('disabled');
 		} else if(idx == 0) {
