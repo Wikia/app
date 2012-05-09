@@ -102,7 +102,7 @@ class CloseWikiMaintenance {
 			if( $check->count > 1 ) {
 				wfDie( "{$dbname} is not unique. Check city_list and rerun script" );
 			}
-			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}");
+			$this->log( "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}" );
 
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
@@ -111,7 +111,7 @@ class CloseWikiMaintenance {
 				$hide = true;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
-				Wikia::log( __CLASS__, "info", "Dumping database on remote host" );
+				$this->log( "Dumping database on remote host" );
 				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
 				$cmd  = array(
 					"SERVER_ID=177",
@@ -129,7 +129,7 @@ class CloseWikiMaintenance {
 					$remote,
 					implode( " ", $cmd )
 				);
-				Wikia::log( __CLASS__, "info", $dump );
+				$this->log( $dump );
 				$output = wfShellExec( $dump, $retval );
 				$xdumpok = empty( $retval ) ? true : false;
 				/**
@@ -162,7 +162,7 @@ class CloseWikiMaintenance {
 						);
 						$output = wfShellExec( $cmd, $retval );
 						if( $retval > 0 ) {
-							Wikia::log( __CLASS__, "error", "{$cmd} command failed." );
+							$this->log( "{$cmd} command failed." );
 							/**
 							 * creating directory attempt
 							 */
@@ -174,10 +174,10 @@ class CloseWikiMaintenance {
 							);
 							$output = wfShellExec( $mkdir, $retval );
 							if( $retval == 0 ) {
-								Wikia::log( __CLASS__, "info",  dirname( $path ) . " created on {$remote}" );
+								$this->log( dirname( $path ) . " created on {$remote}" );
 								$output = wfShellExec( $cmd, $retval );
 								if( $retval == 0 ) {
-									Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
+									$this->log(  "{$source} copied to {$target}" );
 									unlink( $source );
 									/**
 									 * reset flag
@@ -194,7 +194,7 @@ class CloseWikiMaintenance {
 							}
 						}
 						else {
-							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
+							$this->log( "{$source} copied to {$target}" );
 							unlink( $source );
 							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | FLAG_HIDE_DB_IMAGES;
 						}
@@ -211,7 +211,7 @@ class CloseWikiMaintenance {
 			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 
-				Wikia::log( __CLASS__, "info", "removing folder {$folder}" );
+				$this->log( __CLASS__, "info", "removing folder {$folder}" );
 				if( is_dir( $wgUploadDirectory ) ) {
 			        /**
 					 * what should we use here?
@@ -238,7 +238,7 @@ class CloseWikiMaintenance {
 						),
 						__METHOD__
 					);
-					Wikia::log( __CLASS__, "info", "{$row->city_id} removed from WikiFactory tables" );
+					$this->log( "{$row->city_id} removed from WikiFactory tables" );
 
 					/**
 					 * remove records from dataware
@@ -253,7 +253,7 @@ class CloseWikiMaintenance {
 						__METHOD__
 					);
 					$datawareDB->commit();
-					Wikia::log( __CLASS__, "info", "{$row->city_id} removed from dataware tables" );
+					$this->log( "{$row->city_id} removed from dataware tables" );
 
 					/**
 					 * drop database, get db handler for proper cluster
@@ -270,7 +270,7 @@ class CloseWikiMaintenance {
 					$dbw->begin();
 					$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit();
-					Wikia::log( __CLASS__, "info", "{$row->city_dbname} dropped from cluster {$cluster}" );
+					$this->log(  "{$row->city_dbname} dropped from cluster {$cluster}" );
 
 					/**
 					 * update search index
@@ -280,7 +280,7 @@ class CloseWikiMaintenance {
 						$wgSolrIndexer, $row->city_id
 					);
 					wfShellExec( $cmd, $retval );
-					Wikia::log( __CLASS__, "info", "search index removed from {$wgSolrIndexer}" );
+					$this->log( __CLASS__, "info", "search index removed from {$wgSolrIndexer}" );
 
 					/**
 					 * there is nothing to set because row in city_list doesn't
@@ -330,18 +330,18 @@ class CloseWikiMaintenance {
 		$tar = new Archive_Tar( $tarfile );
 
 		if( ! $tar ) {
-			Wikia::log( __CLASS__, "tar", "Cannot open {$tarfile}" );
+			$this->log( "Cannot open {$tarfile}" );
 			wfDie( "Cannot open {$tarfile}" );
 		}
 		$files = $this->getDirTree( $directory );
 
 		if( is_array( $files ) && count( $files ) ) {
-			Wikia::log( __CLASS__, "info", sprintf( "Packing %d files from {$directory} to {$tarfile}", count( $files ) ) );
+			$this->log( sprintf( "Packing %d files from {$directory} to {$tarfile}", count( $files ) ) );
 			$tar->create( $files );
 			$result = $tarfile;
 		}
 		else {
-			Wikia::log( __CLASS__, "info", "List of files in {$directory} is empty" );
+			$this->log( "List of files in {$directory} is empty" );
 			$result = false;
 		}
 		return $result;
@@ -379,6 +379,13 @@ class CloseWikiMaintenance {
 		wfProfileOut( __METHOD__ );
 
 		return $files;
+	}
+
+	/**
+	 * just helper for logging
+	 */
+	private function log( $message ) {
+		Wikia::log( "CloseWiki", false, $message, true, true );
 	}
 
 }
