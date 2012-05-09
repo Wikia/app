@@ -245,13 +245,11 @@ var Lightbox = {
 
 				/* Display modal with default dimensions */
 				Lightbox.openModal = $(html).makeModal(Lightbox.modal.initial);
-	
-				data = $.parseJSON(initialFileDetail); // defined in modal template
 				
 				if(Lightbox.media.type == 'image') {
-					Lightbox.image.updateLightbox(data);
+					Lightbox.image.updateLightbox(initialFileDetail);
 				} else {
-					Lightbox.makeVideoModal(html);
+					Lightbox.video.updateLightbox(initialFileDetail);
 				}
 			}
 		});
@@ -355,15 +353,34 @@ var Lightbox = {
 		}
 	},
 	video: {
-		updateLightbox: function() {
-			var title = self.media.title;
-			console.log(title);
+		updateLightbox: function(data) {
 			/* call getDimensions */
+			
+			console.log(data);
+			
+			var dimensions = this.getDimensions();
+			
+			console.log(dimensions);
+			
 			/* resize modal */
 			/* render mustache template */		
 		},
 		getDimensions: function() {
 			/* if window is larger than min modal height, update modal height */
+			var topOffset = Lightbox.modal.defaults.topOffset,
+				modalMinHeight = Lightbox.modal.defaults.height,
+				windowHeight = $(window).height(),
+				modalHeight = windowHeight - topOffset*2 - 10, // 5px modal border
+				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
+				mediaTopMargin = (modalHeight - Lightbox.modalConfig.videoHeight) / 2;
+			
+				var dimensions = {
+					modalHeight: modalHeight,
+					topOffset: topOffset,
+					mediaTopMargin: mediaTopMargin
+				}
+				
+				return dimensions;
 		}	
 	},
 	makeVideoModal: function(html) {
