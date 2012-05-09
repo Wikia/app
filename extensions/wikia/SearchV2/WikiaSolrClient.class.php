@@ -298,7 +298,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 			if($result->hasCanonical()) {
 				if(!in_array($result->getCanonical(), $canonicals[$result->getCityId()])) {
 					$canonicals[$result->getCityId()][] = $result->getCanonical();
-					$deDupedResults[md5($result->getCityId().$result->getCanonical())] = $result->deCanonize();
+					$deDupedResults[md5($result->getCityId().$result->getVar('ns').$result->getCanonical())] = $result->deCanonize();
 				}
 				else {
 					// already have redirected document, do nothing
@@ -307,11 +307,11 @@ class WikiaSolrClient extends WikiaSearchClient {
 			}
 			else if(!in_array($result->getTitle(), $canonicals[$result->getCityId()])) {
 				$canonicals[$result->getCityId()][] = $result->getTitle();
-				$deDupedResults[md5($result->getCityId().$result->getTitle())] = $result;
+				$deDupedResults[md5($result->getCityId().$result->getVar('ns').$result->getTitle())] = $result;
 			}
 			else {
 				// redirect was first for this document, replace it
-				$deDupedResults[md5($result->getCityId().$result->getTitle())] = $result;
+				$deDupedResults[md5($result->getCityId().$result->getVar('ns').$result->getTitle())] = $result;
 			}
 		}
 
