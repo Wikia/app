@@ -321,7 +321,7 @@ var Lightbox = {
 			image.load(function() {
 				var image = $(this),
 					topOffset = Lightbox.modal.defaults.topOffset,
-					modalMinHeight = Lightbox.modal.defaults.modalMinHeight,
+					modalMinHeight = Lightbox.modal.defaults.height,
 					windowHeight = $(window).height(),
 					modalHeight = windowHeight - topOffset*2,  
 					modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
