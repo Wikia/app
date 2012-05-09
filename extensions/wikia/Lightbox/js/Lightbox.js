@@ -103,7 +103,7 @@ var Lightbox = {
 				Lightbox.current.carouselType = "latestPhotos";
 		}
 		
-		/* figure out target */
+		// figure out target
 		if(Lightbox.lightboxLoading) {
 			ev.preventDefault();
 			Lightbox.log('Already Loading');
@@ -210,7 +210,7 @@ var Lightbox = {
 		}
 		
 
-		/* load modal */
+		// load modal
 		if(mediaTitle != false) {
 			Lightbox.current.title = mediaTitle;
 			Lightbox.loadLightbox();
@@ -219,7 +219,7 @@ var Lightbox = {
 	loadLightbox: function() {
 		Lightbox.lightboxLoading = true;
 
-		/* Display modal with default dimensions */
+		// Display modal with default dimensions
 		Lightbox.openModal = $("<div>").makeModal(Lightbox.modal.initial);
 		Lightbox.openModal.find(".modalContent").startThrobbing();
 
@@ -243,7 +243,7 @@ var Lightbox = {
 				// restore inline videos to default state, because flash players overlaps with modal
 				Lightbox.removeInlineVideos();
 
-				/* Add template to modal */
+				// Add template to modal
 				Lightbox.openModal.find(".modalContent").html(html); // adds initialFileDetail js to DOM
 				
 				Lightbox.current.carouselType = "articleMedia"; // TODO: get this from back end
@@ -308,10 +308,10 @@ var Lightbox = {
 			/* render mustache template */		
 		},
 		getDimensions: function(imageUrl, callback) {
-			/* Get image url from json - preload image */
+			// Get image url from json - preload image
 			var image = $('<img id="LightboxPreload" src="'+imageUrl+'" />').appendTo('body');
 			
-			/* do calculations */
+			// Do calculations
 			image.load(function() {
 				var image = $(this),
 					topOffset = Lightbox.modal.defaults.topOffset,
@@ -367,10 +367,10 @@ var Lightbox = {
 	},
 	video: {
 		updateLightbox: function(data) {
-			/* call getDimensions */			
+			// Get lightbox dimensions
 			var dimensions = Lightbox.video.getDimensions();
 			
-			/* resize modal */
+			// Resize modal
 			Lightbox.openModal.css({
 				top: dimensions.topOffset,
 				height: dimensions.modalHeight
@@ -378,15 +378,15 @@ var Lightbox = {
 			
 			var contentArea = Lightbox.openModal.find(".WikiaLightbox");
 	
-			/* extract mustache templates */
+			// extract mustache templates
 			var videoTemplate = Lightbox.openModal.find("#LightboxVideoTemplate");
 	
-			/* render media */
+			// render media
 			var json = {
 				embed: data.videoEmbedCode // initialFileDetail defined in modal template
 			}
 			
-			/* render mustache template */		
+			// render mustache template		
 			var renderedResult = videoTemplate.mustache(json);
 			
 			// Hack to vertically align video
@@ -405,7 +405,7 @@ var Lightbox = {
 			
 		},
 		getDimensions: function() {
-			/* if window is larger than min modal height, update modal height */
+			// if window is larger than min modal height, update modal height
 			var topOffset = Lightbox.modal.defaults.topOffset,
 				modalMinHeight = Lightbox.modal.defaults.height,
 				windowHeight = $(window).height(),
