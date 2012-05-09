@@ -128,7 +128,7 @@ class WikiaQuizModule extends WikiaController {
 	}
 
 	public function executeEditQuiz($params) {
-		$title = Title::newFromText ($params['title'], NS_WIKIA_QUIZ) ;
+		$title = Title::newFromText ($params['title'], NS_WIKIA_QUIZ);
 
 		if (is_object($title) && $title->exists()) {
 			$this->quiz = WikiaQuiz::NewFromTitle($title);
