@@ -30,7 +30,7 @@
 	}
 
 	// render page type line
-	if ($pageSubtitle != '') {
+	if ( !empty($pageSubtitle) ) {
 ?>
 	<h2><?= $pageSubtitle ?></h2>
 <?php
