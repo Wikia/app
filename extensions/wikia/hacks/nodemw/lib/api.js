@@ -91,19 +91,22 @@
 					}
 
 					// parse response
-					try {
-						var data = JSON.parse(res.body),
-							info = data && data[params.action];
+					var data,
+						info;
 
-						if (info) {
-							callback(info);
-						}
-						else if (data.error) {
-							self.log('> Error: ' + data.error.info);
-						}
+					try {
+						data = JSON.parse(res.body);
+						info = data && data[params.action];
 					}
 					catch(e) {
 						throw 'Error parsing JSON response: ' + res.body;
+					}
+
+					if (info) {
+						callback(info);
+					}
+					else if (data.error) {
+						throw 'Error while editing: ' + data.error.info;
 					}
 				});
 			});
