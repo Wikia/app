@@ -548,7 +548,8 @@ See http://github.com/defunkt/mustache for more info.
   };
 
   $.fn.mustache = function (view, partials) {
-    var template = $(this).first().html().trim();
+    var html = $(this).first().html(),
+    	template = $.trim(html);
     return $.mustache(template, view, partials);
   };
 
