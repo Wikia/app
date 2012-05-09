@@ -255,16 +255,16 @@ EOT;
 		}
 
 		// ad
-        // show ads to logged-out users or users with the pref set
+		// show ads to logged-out users or users with the pref set
 		if ($googima 
-        && (!F::app()->wg->User || F::app()->wg->User->getOption('showAds'))) {
-            // NOTE: ad config is initialized in self::getScript() because
-            // ad.tag's cannot be quoted. If ad.tag is set on server side, it
-            // will be quoted by json_encode()
-            // NOTE: when enabling the googima plugin, all settings must be
-            // non-null, especially ad.tag. If you do not want to serve an ad
-            // at all, it is not enough to set ad.tag to null. You must unset
-            // the entire googima object!
+		&& (F::app()->wg->User->isAnon() || F::app()->wg->User->getOption('showAds'))) {
+			// NOTE: ad config is initialized in self::getScript() because
+			// ad.tag's cannot be quoted. If ad.tag is set on server side, it
+			// will be quoted by json_encode()
+			// NOTE: when enabling the googima plugin, all settings must be
+			// non-null, especially ad.tag. If you do not want to serve an ad
+			// at all, it is not enough to set ad.tag to null. You must unset
+			// the entire googima object!
 			$plugins['googima'] = self::GOOGIMA_DATA_TOKEN;
 		}
 		
