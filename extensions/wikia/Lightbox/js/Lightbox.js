@@ -450,10 +450,15 @@ var Lightbox = {
 		return modalOptions;
 	},
 	handleArrows: function(e) {
+		var target = $(e.target);
+		
+		if(target.is('.disabled')) {
+			return false;
+		}
+		
 		var carouselType = Lightbox.current.carouselType,
 			mediaArr = Lightbox.cache[carouselType],
-			idx = Lightbox.current.index,
-			target = $(e.target);
+			idx = Lightbox.current.index;
 		
 		Lightbox.openModal.find('.media').html("").startThrobbing();
 	
