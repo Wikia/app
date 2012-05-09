@@ -22,7 +22,7 @@ class PageHeaderModule extends WikiaController {
 		$this->content_actions = $skinVars['content_actions'];
 		$this->displaytitle = $skinVars['displaytitle']; // if true - don't encode HTML
 		$this->title = $skinVars['title'];
-		$this->subtitle = $skinVars['subtitle'];
+		$this->subtitle = $skinVars['subtitle'];		
 	}
 	
 	/**

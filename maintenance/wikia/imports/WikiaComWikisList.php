@@ -113,4 +113,3 @@ function parseWikisList($verticalIndex, $verticalsNames, $verticalsProportions, 
 	}
 	return $return;
 }
-
