@@ -17,7 +17,7 @@
 	</script>
 
 	<script type="text/javascript">
-		var initialFileDetail = '<?= json_encode($initialFileDetail) ?>';
-		var mediaThumbs = '<?= json_encode($mediaThumbs) ?>';
+		var initialFileDetail = <?= json_encode($initialFileDetail) ?>;
+		var mediaThumbs = <?= json_encode($mediaThumbs) ?>;
 	</script>
 </div>
