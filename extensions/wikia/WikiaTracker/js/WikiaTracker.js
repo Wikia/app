@@ -192,9 +192,17 @@ WikiaTracker.AB = function(page) {
 	return true;
 };
 
+// Now that the code is loaded, if there were any tracking events in the spool from before this file loaded, replay them.
+if (typeof wikiaTrackingSpool !== 'undefined') {
+	wikiaTrackingSpool.forEach(function( eventNameAndData ){
+		$.log('Sending previously-spooled tracking event: ', eventNameAndData);
+		$.internalTrack( eventNameAndData[0], eventNameAndData[1] );
+	});
+}
 
 
 /*
+TODO: REMOVE - Old A/B Testing framework.
 if (typeof jQuery == 'function') {
 	if ($.getUrlVar('wikiatracker_is_tracked') || $.cookies.get('wikiatracker_is_tracked')) {
 		WikiaTracker._in_group_cache['N'] = true;
