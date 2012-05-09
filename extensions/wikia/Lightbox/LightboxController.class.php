@@ -168,7 +168,7 @@ class LightboxController extends WikiaController {
 			$fileUrl = $title->getLocalUrl();
 			$rawImageUrl = $file->getUrl();
 			$caption = '';	/* caption doesn't look like it's been structured, and it's just wikitext? (hyun) */
-			$description = $article->getContent();
+			//$description = $article->getContent();	TODO: broken, needs to be fixed
 			$userName = $user->getName();
 			$userThumbUrl = F::build( 'AvatarService', array($user->getId() , 30 ), 'getAvatarUrl' );
 			$userPageUrl = $user->getUserPage()->getFullURL();

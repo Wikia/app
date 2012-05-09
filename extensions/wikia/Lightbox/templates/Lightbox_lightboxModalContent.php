@@ -1,4 +1,7 @@
 <div class="WikiaLightbox">
+	<header>
+		
+	</header>
 	<div class="lightbox-arrows">
 		<span id="LightboxNext" class="next"></span>
 		<span id="LightboxPrevious" class="previous"></span>
@@ -14,6 +17,10 @@
 		<div class="media video-media">
 			{{{embed}}}
 		</div>
+	</script>
+	
+	<script id="LightboxHeaderTemplate" type="text/template">
+		
 	</script>
 
 	<script type="text/javascript">
