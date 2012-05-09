@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class represents RelatedVideos data for an article that is stored in the namspace NS_RELATED_VIDEOS.
+ * This class represents RelatedVideos data for an article that is stored in the namespace NS_RELATED_VIDEOS.
  */
 
 class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
@@ -13,7 +13,7 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 	const WHITELIST_MARKER = 'WHITELIST';
 	const VIDEO_MARKER = '* ';
 	const GLOBAL_RV_LIST = 'RelatedVideosGlobalList';
-	
+
 	protected function __construct( $id, Title $title = null ) {
 		$this->mId = $id;
 		$this->mTitle = ( $title ? $title : null );
@@ -44,14 +44,12 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 	 * Load RelatedVideos NS article data (try to use cache layer)
 	 */
 	protected function load( $master = false ) {
-		global $wgMemc;
-		
 		wfProfileIn(__METHOD__);
 
 		if ( !$master ) {
-			$this->mData = $wgMemc->get( $this->mData );
+			$this->mData = F::app()->wg->memc->get( $this->mMemcacheKey );
 		}
-		
+
 		if ( empty( $this->mData ) ) {
 			$article = Article::newFromID( $this->mId );
 
@@ -91,7 +89,7 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 			);
 
 			wfDebug(__METHOD__ . ": loaded from scratch\n");
-			
+
 			// store it in memcache
 			F::app()->wg->memc->set($this->mMemcacheKey, $this->mData, self::CACHE_TTL);
 		}
@@ -110,9 +108,9 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 	 * @param string $list BLACKLIST_MARKER or WHITELIST_MARKER
 	 * @param array $entries
 	 * @param int $mainNsArticleId ID of associated article in NS_MAIN
-	 * @return type 
+	 * @return type
 	 */
-	
+
 	public function addToList( $list, Array $entries, $mainNsArticleId ) {
 
 		// do nothing
