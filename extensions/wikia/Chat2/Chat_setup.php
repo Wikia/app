@@ -27,7 +27,7 @@ $wgGroupPermissions['sysop']['chatmoderator'] = true;
 $wgGroupPermissions['staff']['chatmoderator'] = true;
 $wgGroupPermissions['staff']['chatstaff'] = true;
 $wgGroupPermissions['helper']['chatmoderator'] = true;
-$wgGroupPermissions['chatmoderator']['chatmoderator'] = true; 
+$wgGroupPermissions['chatmoderator']['chatmoderator'] = true;
 $wgAvailableRights[] = 'chat';
 $wgGroupPermissions['*']['chat'] = false;
 $wgGroupPermissions['user']['chat'] = true;
@@ -59,7 +59,7 @@ $wgAddGroups['staff'][] = 'bannedfromchat';
 $wgAddGroups['staff'][] = 'chatmoderator';
 $wgRemoveGroups['staff'][] = 'bannedfromchat';
 $wgRemoveGroups['staff'][] = 'chatmoderator';
- 
+
 $wgAddGroups['helper'][] = 'bannedfromchat';
 $wgAddGroups['helper'][] = 'chatmoderator';
 $wgRemoveGroups['helper'][] = 'bannedfromchat';
@@ -102,7 +102,7 @@ $wgHooks[ 'ContributionsToolLinks' ][] = 'ChatHelper::onContributionsToolLinks';
 $wgHooks[ 'LogLineExt' ][] = 'ChatHelper::onLogLineExt';
 
 $wgLogTypes[] = 'chatban';
-$wgLogHeaders['chatban'] = 'chat-chatban-log';  
+$wgLogHeaders['chatban'] = 'chat-chatban-log';
 $wgLogNames['chatban'] = 'chat-chatban-log';
 
 $wgLogTypes[] = 'chatconnect';
@@ -119,10 +119,9 @@ $wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHelper::formatLogEntry";
 
 
 // register messages package for JS
-F::build('JSMessages')->registerPackage('Chat', array_merge(
-		array(
-				'chat-*',
-		)));
+F::build('JSMessages')->registerPackage('Chat', array(
+	'chat-*',
+));
 
 F::build('JSMessages')->registerPackage('ChatBanModal', array(
 	'chat-log-reason-banadd',
@@ -139,10 +138,9 @@ define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
 // ajax
 $wgAjaxExportList[] = 'ChatAjax';
 function ChatAjax() {
-	
+
 	error_log(var_export($_REQUEST, true));
-	
-	
+
 	global $wgRequest, $wgUser, $wgMemc;
 	$method = $wgRequest->getVal('method', false);
 
@@ -152,12 +150,16 @@ function ChatAjax() {
 		// Don't let Varnish cache this.
 		header("X-Pass-Cache-Control: max-age=0");
 
-		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
-		if( !empty($data) ) {
-			$wgUser = User::newFromId( $data['user_id'] );
+		$key = $wgRequest->getVal('key');
+
+		// macbre: check to protect against BugId:27916
+		if (!is_null($key)) {
+			$data = $wgMemc->get( $key, false );
+			if( !empty($data) ) {
+				$wgUser = User::newFromId( $data['user_id'] );
+			}
 		}
-		
-		wfLoadExtensionMessages('Chat');
+
 		$data = ChatAjax::$method();
 
 		// send array as JSON
