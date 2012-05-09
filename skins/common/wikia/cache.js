@@ -6,7 +6,7 @@
  */
 
 (function(){
-	if(define){
+	if(window.define){
 		//AMD
 		define('cache', cache);//late binding
 	}else{

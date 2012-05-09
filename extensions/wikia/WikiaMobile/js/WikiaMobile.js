@@ -399,9 +399,10 @@ var WikiaMobile = (function() {
 				event.preventDefault();
 				track('link/fullsite');
 				Wikia.CookieCutter.set('mobilefullsite', 'true');
-				var url = qs();
-				url.setVal('cb', wgStyleVersion);
+
+				var url = new qs();
 				url.setVal('useskin', 'oasis');
+				url.setVal('cb', Math.ceil(Math.random() * 10001));
 				url.goTo();
 			});
 

@@ -84,8 +84,11 @@ $config['oasis_shared_js'] = array(
 		'//skins/common/ajax.js',
 		'//skins/oasis/js/tracker.js',
 		'//skins/common/wikia/my.class.js',
+		'//skins/common/wikia/querystring.js',
+		'//skins/common/wikia/cookiecutter.js',
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		// tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
@@ -97,6 +100,7 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
+		'//skins/oasis/js/CorporateFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
 		'//skins/oasis/js/LatestPhotos.js',
@@ -127,7 +131,6 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/Geo/geo.js',
 		'//extensions/wikia/Meebo/meebo.js',
-		'//skins/common/wikia/cookiecutter.js',
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/AdEngine/AdEngine.js',
@@ -141,7 +144,6 @@ $config['oasis_extensions_js'] = array(
 		'//extensions/wikia/AdEngine/AdDriver.js',
 		'//extensions/wikia/AdSS/adss.js',
 		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
-		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//skins/oasis/js/GlobalModal.js',	// This needs to load last after all common extensions, please keep this last.
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
@@ -224,6 +226,7 @@ $config['wikiamobile_js_body'] = array(
 		//platform components
 		'//skins/common/wikia/module.js',
 		'//skins/common/wikia/cache.js',
+		'//skins/common/wikia/querystring.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
@@ -244,7 +247,6 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/loader.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
-		'//extensions/wikia/WikiaMobile/js/querystring.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
