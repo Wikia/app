@@ -1,37 +1,40 @@
 var Lightbox = {
-	// Array of image/video titles on the page. This will come from backend.
-	articleTitles: [
-		'500x1700.jpeg',
-		'IMG 1535.jpg',
-		'The Dark Knight (2008) - Hit Me!',
-		'Return to Fallout New Vegas Walkthrough with Commentary Part 1 - The High-Five Returns'
-	],
-	// Related Video
-	rvTitles: [
-	
-	],
-	// Lates Photos
-	lpTitles: [
-	
-	],
-	// Current media array
-	mediaTitles: [],
-	mediaDetails: {
-	
-	},
 	lightboxLoading: false,
-	mediaTitle: "",
 	videoThumbWidthThreshold: 320,
-	modalConfig: {
-		topOffset: 25,
-		modalMinHeight: 648,
-		videoHeight: 360
-	},
+	inlineVideos: $(),	// jquery array of inline videos
+	inlineVideoLinks: $(),	// jquery array of inline video links
 	log: function(content) {
 		$().log(content, "Lightbox");
 	},
-	inlineVideos: false,	// jquery array of inline videos
-	inlineVideoLinks: false,	// jquery array of inline video links
+	// Array of image/video titles on the page. This will come from backend.
+	media: {
+		type: '', // image or video
+		title: '', // currently displayed file name
+		carouselType: '', // article, relatedVideos, or latestPhotos
+		currIndex: 1, //-1, // ex: Lightbox.media[Lightbox.media.carouselType][currIndex]
+		// Article Media
+		article: [],
+		// Related Video
+		relatedVideos: [],
+		// Lates Photos
+		latestPhotos: [],	
+	},
+	modal: {
+		defaults: {
+			videoHeight: 360,
+			topOffset: 25,
+			height: 648
+		},
+		// start with default modal options
+		initial: {
+			id: 'LightboxModal',
+			className: 'LightboxModal',
+			width: 970, // modal adds 30px of padding to width
+			noHeadline: true,
+			topOffset: 25,
+			height: 648
+		}
+	},
 	init: function() {
 		var self = this,
 			article;
@@ -58,17 +61,21 @@ var Lightbox = {
 				
 		// Clicking left/right arrows inside Lightbox
 		$('body').on('click', '#LightboxNext, #LightboxPrevious', function(e) {
-			var idx = self.mediaTitles.indexOf(self.mediaTitle),
+			var carouselType = self.media.carouselType,
+				mediaArr = self.media[carouselType],
+				idx = self.media.currIndex,
 				target = $(e.target);
+		
 			if(target.is("#LightboxNext")) {
 				idx++;
 			} else {
 				idx--;
 			}
-			if(idx > -1 && idx < self.mediaTitles.length) {
-				self.mediaTitle = self.mediaTitles[idx];
+			if(idx > -1 && idx < mediaArr) {
+				self.media.title = mediaArr[idx].title;
+				var type = mediaArr[idx].type;
 				self.updateArrows();
-				$.proxy(self.updateLightbox(), self);
+				$.proxy(self[type].updateLightbox(), self);
 			}
 		});
 
@@ -80,16 +87,16 @@ var Lightbox = {
 		// Set carousel type based on parent of image
 		switch(id) {
 			case "WikiaArticle": 
-				self.mediaTitles = self.articleTitles;
+				self.media.carouselType = "article";
 				break;
 			case "article-comments":
-				self.mediaTitles = self.articleTitles;
+				self.media.carouselType = "article";
 				break;
 			case "RelatedVideosRL":
-				self.mediaTitles = self.rvTitles;
+				self.media.carouselType = "relatedVideo";
 				break;
 			default: // .LatestPhotosModule
-				self.mediaTitles = self.lpTitles;
+				self.media.carouselType = "latestPhotos";
 		}
 		
 		/* figure out target */
@@ -180,7 +187,7 @@ var Lightbox = {
 		// for Video Thumbnails:
 		var targetChildImg = target.find('img').eq(0);
 		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
-			Lightbox.type = 'video';
+			Lightbox.media.type = 'video';
 			
 			if ( target.data('video-name') ) {
 				mediaTitle = target.data('video-name');
@@ -195,7 +202,7 @@ var Lightbox = {
 				return false;	// stop modal dialog execution
 			}
 		} else {
-			Lightbox.type = 'image';
+			Lightbox.media.type = 'image';
 		}
 		
 		
@@ -209,34 +216,41 @@ var Lightbox = {
 		
 		/* load modal */
 		if(mediaTitle != false) {
-			this.mediaTitle = mediaTitle;
+			this.media.title = mediaTitle;
 			this.loadLightbox();
 		}
 	},
 	loadLightbox: function() {
 		Lightbox.lightboxLoading = true;
 
+		// Load resources
 		$.when(
 			$.loadMustache(),
 			$.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')])
-		).done(this.showLightbox);
+		).done(this.makeLightbox);
 
 	},
-	showLightbox: function() {
+	makeLightbox: function() {
 		$.nirvana.sendRequest({
 			controller: 'Lightbox',
 			method: 'lightboxModalContent',
 			type: 'POST',	/* TODO (hyun) - might change to get */
 			format: 'html',
 			data: {
-				title: Lightbox.mediaTitle,
+				title: Lightbox.media.title,
 			},
 			callback: function(html) {
 				// restore inline videos to default state, because flash players overlaps with modal
 				Lightbox.removeInlineVideos();
-			
-				if(Lightbox.type == 'image') {
-					Lightbox.makeImageModal(html);
+
+				/* Display modal with default dimensions */
+				Lightbox.openModal = $(html).makeModal(Lightbox.modal.initial);
+	
+				data = $.parseJSON(initialFileDetail); // defined in modal template
+				
+				if(Lightbox.media.type == 'image') {
+					//Lightbox.makeImageModal(html);
+					Lightbox.image.updateLightbox(data);
 				} else {
 					Lightbox.makeVideoModal(html);
 				}
@@ -244,29 +258,113 @@ var Lightbox = {
 		});
 	},
 	image: {
-		makeModal: function() {
+		updateLightbox: function(data) {
+
+			this.getDimensions(data.imageUrl, function(dimensions) {
+				Lightbox.openModal.animate({
+					top: dimensions.topOffset,
+					height: dimensions.modalHeight
+				}, 
+				500, 
+				function() {
+					var contentArea = $(this).find(".WikiaLightbox");
+					
+					// extract mustache templates
+					var photoTemplate = $(this).find("#LightboxPhotoTemplate");
+					
+					// render media
+					var json = {
+						imageHeight: dimensions.imageHeight,
+						imageUrl: data.imageUrl
+					};
+					
+					var renderedResult = photoTemplate.mustache(json);
+		
+					// Hack to vertically align the image in the lightbox
+					renderedResult = $(renderedResult).css('line-height', dimensions.modalHeight+'px');
+					
+					contentArea.append(renderedResult);			
+					
+					Lightbox.updateArrows();
+					Lightbox.lightboxLoading = false;
+					Lightbox.log("Lightbox modal loaded");
+					
+				});
+			});
+
+			/* get media details based on title - nirvana request or from template */
+			/* call getDimensions */
+			/* resize modal */
+			/* render mustache template */		
+		},
+		getDimensions: function(imageUrl, callback) {
+			/* Get image url from json - preload image */
+			var image = $('<img id="LightboxPreload" src="'+imageUrl+'" />').appendTo('body');
 			
-		},
-		updateModal: function() {
-		
-		},
-		getDimensions: function() {
-		
+			/* do calculations */
+			image.load(function() {
+				var image = $(this),
+					topOffset = Lightbox.modal.defaults.topOffset,
+					modalMinHeight = Lightbox.modal.defaults.modalMinHeight,
+					windowHeight = $(window).height(),
+					modalHeight = windowHeight - topOffset*2,  
+					modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
+
+				// Just in case image is wider than 1000px
+				if(image.width() > 1000) {
+					image.width(1000);
+				}
+				var imageHeight = image.height();
+							
+				if(imageHeight < modalHeight) {
+					// Image is shorter than screen, adjust modal height
+					modalHeight = imageHeight;
+					
+					// Modal has a min height
+					if(modalHeight < modalMinHeight) {
+						modalHeight = modalMinHeight;
+					}
+	
+					// Calculate modal's top offset
+					var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
+					
+					newOffset = (extraHeight / 2);
+					if(newOffset < topOffset){
+						newOffset = topOffset; 
+					}
+					topOffset = newOffset;
+					
+				} else {
+					// Image is taller than screen, shorten image
+					imageHeight = modalHeight;
+					topOffset = topOffset - 5; // 5px modal border
+				}
+				
+				topOffset = topOffset + $(window).scrollTop();
+				
+				var dimensions = {
+					modalHeight: modalHeight,
+					topOffset: topOffset,
+					imageHeight: imageHeight
+				}
+				
+				// remove preloader image
+				$(this).remove();
+				
+				callback(dimensions);
+			});
 		}
 	},
 	video: {
-		makeModal: function() {
-			/* Display modal with default dimensions */
-		},
-		updateModal: function() {
+		updateLightbox: function() {
+			var title = self.media.title;
+			console.log(title);
 			/* call getDimensions */
 			/* resize modal */
-			/* render mustache template */
+			/* render mustache template */		
 		},
 		getDimensions: function() {
-			/* Get image url from json - preload image */
-			/* do calculations */
-		
+			/* if window is larger than min modal height, update modal height */
 		}	
 	},
 	makeImageModal: function(html) {
@@ -278,8 +376,8 @@ var Lightbox = {
 		image.load(function() {
 			// set default dimensions if image height takes up whole window
 			var image = $(this),
-				topOffset = Lightbox.modalConfig.topOffset,
-				modalMinHeight = Lightbox.modalConfig.modalMinHeight,
+				topOffset = Lightbox.modal.defaults.topOffset,
+				modalMinHeight = Lightbox.modal.defaults.modalMinHeight,
 				windowHeight = $(window).height(),
 				modalHeight = windowHeight - topOffset*2,  
 				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
@@ -332,8 +430,6 @@ var Lightbox = {
 				imageSrc: imageSrc
 			};
 			
-			//console.log(photoTemplate.mustache(json));
-			
 			var renderedResult = photoTemplate.mustache(json);
 
 			// Hack to vertically align the image in the lightbox
@@ -368,7 +464,7 @@ var Lightbox = {
 
 		/* render media */
 		var json = {
-			embed: LightboxVar.videoEmbedCode // LightboxVar defined in modal template
+			embed: initialFileDetail.videoEmbedCode // initialFileDetail defined in modal template
 		}
 		
 		var renderedResult = videoTemplate.mustache(json);
@@ -419,14 +515,19 @@ var Lightbox = {
 		return modalOptions;
 	},
 	updateLightbox: function() {
-		Lightbox.log(this.mediaTitle);
+		Lightbox.log(this.media.title);
 	},
 	updateArrows: function() {
-		var idx = this.mediaTitles.indexOf(this.mediaTitle),
-			next = $('#LightboxNext'),
+		var self = this; // for consistency
+		
+		var carouselType = self.media.carouselType,
+			mediaArr = self.media[carouselType],
+			idx = self.media.currIndex;
+			
+		var next = $('#LightboxNext'),
 			previous = $('#LightboxPrevious');
 			
-		if(idx == this.mediaTitles.length - 1) {
+		if(idx == mediaArr - 1) {
 			next.addClass('disabled');
 			previous.removeClass('disabled');
 		} else if(idx == 0) {

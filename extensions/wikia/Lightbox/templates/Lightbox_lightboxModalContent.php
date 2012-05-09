@@ -3,15 +3,10 @@
 		<span id="LightboxNext" class="next"></span>
 		<span id="LightboxPrevious" class="previous"></span>
 	</div>
-	<?php if($initialFileDetail['mediaType'] == 'image'): // needed for image preload ?>
-		<div id="LightboxPreload">
-			<img src="<?=$initialFileDetail['imageUrl'] ?>" />
-		</div>
-	<?php endif; ?>
 
 	<script id="LightboxPhotoTemplate" type="text/template">
 		<div class="media">
-			<img src="{{imageSrc}}" height="{{imageHeight}}" />
+			<img src="{{imageUrl}}" height="{{imageHeight}}" />
 		</div>
 	</script>
 	
@@ -21,7 +16,8 @@
 		</div>
 	</script>
 
-	<script>
-		var LightboxVar = <?= json_encode($initialFileDetail) ?>;
+	<script type="text/javascript">
+		var initialFileDetail = '<?= json_encode($initialFileDetail) ?>';
+		var mediaThumbs = '<?= json_encode($mediaThumbs) ?>';
 	</script>
 </div>
