@@ -250,7 +250,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 					wkPrf.className += 'loaded';
 
 					var form = wkLgn.getElementsByTagName('form')[0],
-						query = qs( form.getAttribute('action') );
+						query = new qs(form.getAttribute('action'));
 
 					query.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName));
 					form.setAttribute('action', query.toString());

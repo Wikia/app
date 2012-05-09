@@ -3,18 +3,8 @@ var WikiaFooterApp = {
 
 	init: function() {
 		//Variables
-		var footer = $("#WikiaFooter");
-		var toolbar = footer.children(".toolbar");
-		var mobileSwitchLink = $('#mobileSwitch');
-
-		if(mobileSwitchLink.exists()){
-			footer.on('click', '#mobileSwitch', function(e){
-				e.preventDefault();
-				document.cookie = 'mobilefullsite=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-				jQuery.tracker.byStr('link/mobilesite');
-				location.reload();
-			});
-		}
+		var footer = $("#WikiaFooter"),
+			toolbar = footer.children(".toolbar");
 
 		// avoid stack overflow in IE (RT #98938)
 		if (toolbar.exists()) {

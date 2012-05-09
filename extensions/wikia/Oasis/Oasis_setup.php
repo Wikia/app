@@ -63,9 +63,15 @@ function wfOasisSetup() {
 	// messages
 	wfLoadExtensionMessages('Oasis');
 
+	$jsMessages = F::build('JSMessages');
+
 	//Oasis-navigation-v2 messages
-	F::build('JSMessages')->registerPackage('Oasis-navigation-v2', array(
+	$jsMessages->registerPackage('Oasis-navigation-v2', array(
 		'oasis-navigation-v2-*'
+	));
+
+	$jsMessages->registerPackage('Oasis-mobile-switch', array(
+		'oasis-mobile-site'
 	));
 }
 

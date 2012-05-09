@@ -39,7 +39,7 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 							if(resp.loggedIn){
 								track('facebook/connect/success');
 
-								var reload = qs(),
+								var reload = new qs(),
 									returnto = reload.getVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : '');
 
 								if(returnto) {

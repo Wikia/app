@@ -8,7 +8,7 @@
  **/
 
 require(['loader', 'querystring', 'events'], function(loader, qs, events){
-	var hash = qs().getHash(),
+	var hash = (new qs()).getHash(),
 		wkArtCom,
 		collSec,
 		open,

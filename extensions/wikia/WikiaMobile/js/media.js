@@ -11,7 +11,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'],
 		fllScrImg,
 		imagesLength,
 		current = 0,
-		shrImg = qs().getVal('image'),
+		shrImg = (new qs()).getVal('image'),
 		clickEvent = events.click,
 		sharePopOver,
 		content = '<div id=fllScrImg></div>';
