@@ -20,10 +20,8 @@ var Lightbox = {
 		index: -1, // ex: Lightbox.cache[Lightbox.current.carouselType][index]		
 	},
 	getMediaDetail: function(title, type, callback) {
-		console.log("getMediaDetail");
-		var self = this;
-		if(self.cache.details[title]) {
-			callback.call(self, self.cache.details[title]);
+		if(Lightbox.cache.details[title]) {
+			callback(Lightbox.cache.details[title]);
 		} else {
 			$.nirvana.sendRequest({
 				controller: 'Lightbox',
@@ -35,7 +33,8 @@ var Lightbox = {
 					type: type
 				},
 				callback: function(data) {
-					callback.call(self, data);		
+					$.extend(Lightbox.cache.details, data);
+					callback(data);		
 				}
 			});			
 		}
@@ -58,11 +57,10 @@ var Lightbox = {
 		}
 	},
 	init: function() {
-		var self = this,
-			article;
+		var article;
 
 		if (!window.wgEnableLightboxExt) {
-			self.log('Lightbox disabled');
+			Lightbox.log('Lightbox disabled');
 			return;
 		}
 
@@ -73,41 +71,40 @@ var Lightbox = {
 			article = $('#bodyContent');
 		}
 
-		self.log('Lightbox init');
+		Lightbox.log('Lightbox init');
 
 		article.
 			unbind('.lightbox').
 			bind('click.lightbox', function(e) {
-                self.handleClick.call(self, e, $(this));
+                Lightbox.handleClick(e, $(this));
 			});
 		
 		// Clicking left/right arrows inside Lightbox
 		$('body').on('click', '#LightboxNext, #LightboxPrevious', function(e) {
-			self.handleArrows.call(self, e);
+			Lightbox.handleArrows(e);
 		});
 
 	},
 	handleClick: function(ev, parent) {
-		var self = this,
-			id = parent.attr('id');
+		var id = parent.attr('id');
 
 		// Set carousel type based on parent of image
 		switch(id) {
 			case "WikiaArticle": 
-				self.current.carouselType = "articleMedia";
+				Lightbox.current.carouselType = "articleMedia";
 				break;
 			case "article-comments":
-				self.current.carouselType = "articleMedia";
+				Lightbox.current.carouselType = "articleMedia";
 				break;
 			case "RelatedVideosRL":
-				self.current.carouselType = "relatedVideo";
+				Lightbox.current.carouselType = "relatedVideo";
 				break;
 			default: // .LatestPhotosModule
-				self.current.carouselType = "latestPhotos";
+				Lightbox.current.carouselType = "latestPhotos";
 		}
 		
 		/* figure out target */
-		if(this.lightboxLoading) {
+		if(Lightbox.lightboxLoading) {
 			ev.preventDefault();
 			Lightbox.log('Already Loading');
 			return;
@@ -128,7 +125,7 @@ var Lightbox = {
         }
 
 		// store clicked element
-		this.target = target;
+		Lightbox.target = target;
 
 		/* handle click ignore cases */
 
@@ -203,8 +200,8 @@ var Lightbox = {
 			}
 			
 			// check if we need to play video inline, and stop lightbox execution
-			if (mediaTitle && targetChildImg.width() >= this.videoThumbWidthThreshold) {
-				this.displayInlineVideo(target, targetChildImg, mediaTitle);
+			if (mediaTitle && targetChildImg.width() >= Lightbox.videoThumbWidthThreshold) {
+				Lightbox.displayInlineVideo(target, targetChildImg, mediaTitle);
 				ev.preventDefault();
 				return false;	// stop modal dialog execution
 			}
@@ -215,8 +212,8 @@ var Lightbox = {
 
 		/* load modal */
 		if(mediaTitle != false) {
-			this.current.title = mediaTitle;
-			this.loadLightbox();
+			Lightbox.current.title = mediaTitle;
+			Lightbox.loadLightbox();
 		}
 	},
 	loadLightbox: function() {
@@ -230,7 +227,7 @@ var Lightbox = {
 		$.when(
 			$.loadMustache(),
 			$.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')])
-		).done(this.makeLightbox);
+		).done(Lightbox.makeLightbox);
 
 	},
 	makeLightbox: function() {
@@ -260,19 +257,16 @@ var Lightbox = {
 				}
 				
 				if(Lightbox.current.type == 'image') {
-					Lightbox.image.updateLightbox.call(Lightbox, initialFileDetail);
+					Lightbox.image.updateLightbox(initialFileDetail);
 				} else {
-					Lightbox.video.updateLightbox.call(Lightbox, initialFileDetail);
+					Lightbox.video.updateLightbox(initialFileDetail);
 				}
 			}
 		});
 	},
 	image: {
 		updateLightbox: function(data) {
-			console.log("UPDATE IMAGE LIGHTBOX");
-			console.log(data);
-
-			this.image.getDimensions(data.imageUrl, function(dimensions) {
+			Lightbox.image.getDimensions(data.imageUrl, function(dimensions) {
 				
 				Lightbox.openModal.css({
 					top: dimensions.topOffset,
@@ -373,11 +367,8 @@ var Lightbox = {
 	},
 	video: {
 		updateLightbox: function(data) {
-			console.log("UPDATE VIDEO LIGHTBOX");
-			console.log(data);
-
 			/* call getDimensions */			
-			var dimensions = this.video.getDimensions();
+			var dimensions = Lightbox.video.getDimensions();
 			
 			/* resize modal */
 			Lightbox.openModal.css({
@@ -471,13 +462,12 @@ var Lightbox = {
 		return modalOptions;
 	},
 	handleArrows: function(e) {
-		var self = this,
-			carouselType = self.current.carouselType,
-			mediaArr = self.cache[carouselType],
-			idx = self.current.index,
+		var carouselType = Lightbox.current.carouselType,
+			mediaArr = Lightbox.cache[carouselType],
+			idx = Lightbox.current.index,
 			target = $(e.target);
 		
-		self.openModal.find('.media').html("").startThrobbing();
+		Lightbox.openModal.find('.media').html("").startThrobbing();
 	
 		if(target.is("#LightboxNext")) {
 			idx++;
@@ -486,12 +476,12 @@ var Lightbox = {
 		}
 		
 		if(idx > -1 && idx < mediaArr.length) {
-			self.current.index = idx;
+			Lightbox.current.index = idx;
 			
-			var title = self.current.title = mediaArr[idx].title;
-			var type = self.current.type = mediaArr[idx].type;
+			var title = Lightbox.current.title = mediaArr[idx].title;
+			var type = Lightbox.current.type = mediaArr[idx].type;
 			
-			self.getMediaDetail.call(self, title, type, self[type].updateLightbox);			
+			Lightbox.getMediaDetail(title, type, Lightbox[type].updateLightbox);			
 		}
 	},
 	updateArrows: function() {		
@@ -501,9 +491,6 @@ var Lightbox = {
 			
 		var next = $('#LightboxNext'),
 			previous = $('#LightboxPrevious');
-			
-		console.log(mediaArr.length);
-		console.log(idx);
 			
 		if(idx == (mediaArr.length - 1)) {
 			next.addClass('disabled');
