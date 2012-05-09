@@ -21,6 +21,7 @@ var Lightbox = {
 	},
 	lightboxLoading: false,
 	mediaTitle: "",
+	videoThumbWidthThreshold: 320,
 	modalConfig: {
 		topOffset: 25,
 		modalMinHeight: 648,
@@ -29,6 +30,8 @@ var Lightbox = {
 	log: function(content) {
 		$().log(content, "Lightbox");
 	},
+	inlineVideos: false,	// jquery array of inline videos
+	inlineVideoLinks: false,	// jquery array of inline video links
 	init: function() {
 		var self = this,
 			article;
@@ -100,12 +103,10 @@ var Lightbox = {
 
 		// move to parent of an image -> anchor
 		if ( target.is('span') || target.is('img') ) {
+			target = target.parent();
 			if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
-				target = target.parent();
 				target.addClass('image');
-			} else {
-				target = target.parent();
-			}	
+			}
 		}
         // move to parent of an playButton (relatedVideos)
         if (target.is('div') && target.hasClass('playButton')) {
@@ -176,25 +177,22 @@ var Lightbox = {
 
 		}
 		
-		// for Video Thubnails:
+		// for Video Thumbnails:
 		var targetChildImg = target.find('img').eq(0);
 		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
 			Lightbox.type = 'video';
 			
-			if ( target.attr('data-video-name') ) {
-				
-				mediaTitle = target.attr('data-video-name');
-			
-			} else if ( targetChildImg.length > 0 && targetChildImg.attr('data-video') ) {
-				
-				mediaTitle = targetChildImg.attr('data-video');
+			if ( target.data('video-name') ) {
+				mediaTitle = target.data('video-name');
+			} else if ( targetChildImg.data('video') ) {
+				mediaTitle = targetChildImg.data('video');
 			}
 			
+			// check if we need to play video inline, and stop lightbox execution
 			if (mediaTitle && targetChildImg.width() >= this.videoThumbWidthThreshold) {
-
-				this.displayInlineVideo(targetChildImg, mediaTitle);
+				this.displayInlineVideo(target, targetChildImg, mediaTitle);
 				ev.preventDefault();
-				return false;
+				return false;	// stop modal dialog execution
 			}
 		} else {
 			Lightbox.type = 'image';
@@ -234,6 +232,9 @@ var Lightbox = {
 				title: Lightbox.mediaTitle,
 			},
 			callback: function(html) {
+				// restore inline videos to default state, because flash players overlaps with modal
+				Lightbox.removeInlineVideos();
+			
 				if(Lightbox.type == 'image') {
 					Lightbox.makeImageModal(html);
 				} else {
@@ -380,9 +381,31 @@ var Lightbox = {
 		Lightbox.log("Lightbox modal loaded");
 		Lightbox.lightboxLoading = false;
 	},
-	displayInlineVideo: function() {
-		// TODO: Set this up to match old version
-		alert('play video inline');
+	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
+		$.nirvana.sendRequest({
+			controller: 'Lightbox',
+			method: 'getMediaDetail',
+			type: 'POST',	/* TODO (hyun) - might change to get */
+			format: 'json',
+			data: {
+				title: mediaTitle,
+				height: targetChildImg.height(),
+				width: targetChildImg.width()
+			},
+			callback: function(json) {
+				var embedCode = $(json['videoEmbedCode']);
+				target.hide().after(embedCode);
+				var videoReference = target.next();	//retrieve DOM reference
+				
+				// save references for inline video removal later
+				Lightbox.inlineVideoLinks = target.add(Lightbox.inlineVideoLinks);
+				Lightbox.inlineVideos = videoReference.add(Lightbox.inlineVideos);
+			}
+		});
+	},
+	removeInlineVideos: function() {
+		Lightbox.inlineVideos.remove();
+		Lightbox.inlineVideoLinks.show();
 	},
 	getModalOptions: function(modalHeight, topOffset) {
 		var modalOptions = {
