@@ -6,7 +6,7 @@
 	width: 100%;
 	border: 1px solid $border-color;
 	border-radius: 0 0 5px 5px;
-	@include box-shadow(0 0 3px 1px $shadow-color);
+	@include box-shadow(0 0 15px $shadow-color);
 
 	.chev{
 		width: 100%;
