@@ -19,26 +19,6 @@ var Lightbox = {
 		carouselType: '', // articleMedia, relatedVideos, or latestPhotos
 		index: -1, // ex: Lightbox.cache[Lightbox.current.carouselType][index]		
 	},
-	getMediaDetail: function(title, type, callback) {
-		if(Lightbox.cache.details[title]) {
-			callback(Lightbox.cache.details[title]);
-		} else {
-			$.nirvana.sendRequest({
-				controller: 'Lightbox',
-				method: 'getMediaDetail', // TODO: this will change based on carousel type
-				type: 'POST',	/* TODO (hyun) - might change to get */
-				format: 'json',
-				data: {
-					title: title,
-					type: type
-				},
-				callback: function(data) {
-					$.extend(Lightbox.cache.details, data);
-					callback(data);		
-				}
-			});			
-		}
-	},
 	modal: {
 		defaults: {
 			videoHeight: 360,
@@ -425,24 +405,32 @@ var Lightbox = {
 		}	
 	},
 	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
-		$.nirvana.sendRequest({
-			controller: 'Lightbox',
-			method: 'getMediaDetail',
-			type: 'POST',	/* TODO (hyun) - might change to get */
-			format: 'json',
-			data: {
-				title: mediaTitle,
-				height: targetChildImg.height(),
-				width: targetChildImg.width()
-			},
-			callback: function(json) {
-				var embedCode = $(json['videoEmbedCode']);
+		Lightbox.getMediaDetail({
+			title: mediaTitle,
+			height: targetChildImg.height(),
+			width: targetChildImg.width()
+		}, function(json) {
+			var embedCode = json['videoEmbedCode'];
+			
+			var callback = function() {
 				target.hide().after(embedCode);
 				var videoReference = target.next();	//retrieve DOM reference
 				
 				// save references for inline video removal later
 				Lightbox.inlineVideoLinks = target.add(Lightbox.inlineVideoLinks);
 				Lightbox.inlineVideos = videoReference.add(Lightbox.inlineVideos);
+			};
+			
+			/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */
+			if(typeof embedCode === 'object') {
+				var playerJson = embedCode;	// renaming to keep my sanity
+				$.getScript(json['playerAsset'], function() {
+					embedCode = $("<div>").attr("id", playerJson['id']);
+					callback();
+					$('body').append('<script>' + playerJson['script'] + ' loadJWPlayer(); </script>');
+				});	
+			} else {
+				callback();
 			}
 		});
 	},
@@ -481,7 +469,12 @@ var Lightbox = {
 			var title = Lightbox.current.title = mediaArr[idx].title;
 			var type = Lightbox.current.type = mediaArr[idx].type;
 			
-			Lightbox.getMediaDetail(title, type, Lightbox[type].updateLightbox);			
+			Lightbox.getMediaDetails({
+				title: Lightbox.current.title,
+				type: type
+			}, function(data) {
+				self[type].updateLightbox(data);		
+			});			
 		}
 	},
 	updateArrows: function() {		
@@ -501,6 +494,24 @@ var Lightbox = {
 		} else {
 			previous.removeClass('disabled');
 			next.removeClass('disabled');
+		}
+	},
+	getMediaDetail: function(mediaParams, callback) {
+		var title = mediaParams['title'];
+		if(Lightbox.cache.details[title]) {
+			callback(Lightbox.cache.details[title]);
+		} else {
+			$.nirvana.sendRequest({
+				controller: 'Lightbox',
+				method: 'getMediaDetail',
+				type: 'POST',	/* TODO (hyun) - might change to get */
+				format: 'json',
+				data: mediaParams,
+				callback: function(json) {
+					Lightbox.cache.details[title] = json;
+					callback(json);
+				}
+			});
 		}
 	}
 
