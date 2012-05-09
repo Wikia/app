@@ -412,41 +412,6 @@ var Lightbox = {
 				return dimensions;
 		}	
 	},
-	makeVideoModal: function(html) {
-		html = $(html);
-
-		var topOffset = Lightbox.modalConfig.topOffset,
-			modalMinHeight = Lightbox.modalConfig.modalMinHeight,
-			windowHeight = $(window).height(),
-			modalHeight = windowHeight - topOffset*2 - 10, // 5px modal border
-			modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
-			mediaTopMargin = (modalHeight - Lightbox.modalConfig.videoHeight) / 2;
-		
-		var modalOptions = Lightbox.getModalOptions(modalHeight, topOffset);
-		
-		
-		
-		var modal = $(html).makeModal(modalOptions);
-		var contentArea = modal.find(".WikiaLightbox");
-
-		/* extract mustache templates */
-		var videoTemplate = modal.find("#LightboxVideoTemplate");
-
-		/* render media */
-		var json = {
-			embed: initialFileDetail.videoEmbedCode // initialFileDetail defined in modal template
-		}
-		
-		var renderedResult = videoTemplate.mustache(json);
-
-		renderedResult = $(renderedResult).css('margin-top', mediaTopMargin);
-
-		contentArea.append(renderedResult);					
-		
-		Lightbox.updateArrows();
-		Lightbox.log("Lightbox modal loaded");
-		Lightbox.lightboxLoading = false;
-	},
 	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
 		$.nirvana.sendRequest({
 			controller: 'Lightbox',
