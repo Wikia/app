@@ -12,8 +12,6 @@ class GlobalWatchlistHook {
 	}
 	
 	public static function getPreferences( /*User*/ $user, /*Array*/ &$defaultPreferences ) {
-		global $wgUser, $wgExternalDatawareDB;
-		
 		wfProfileIn( __METHOD__ );		
 
 		$defaultPreferences['watchlistdigest'] = array(
@@ -22,17 +20,11 @@ class GlobalWatchlistHook {
 			'section' => 'watchlist/advancedwatchlist',
 		);
 
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
-		$oRow = $dbr->selectRow( 'global_watchlist', array( 'count(*) as count' ), array( 'gwa_user_id' => $wgUser->getID() ), __METHOD__ );
-
-		if ( $oRow->count ) {
-			/* show this toggle only when there was actaully any global watchlist sent for this user */
-			$defaultPreferences['watchlistdigestclear'] = array(
-				'type' => 'toggle',
-				'label-message' => 'tog-watchlistdigestclear',
-				'section' => 'watchlist/advancedwatchlist',
-			);
-		}
+		$defaultPreferences['watchlistdigestclear'] = array(
+			'type' => 'toggle',
+			'label-message' => 'tog-watchlistdigestclear',
+			'section' => 'watchlist/advancedwatchlist',
+		);
 		
 		wfProfileOut( __METHOD__ );		
 
