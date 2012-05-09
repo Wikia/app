@@ -139,9 +139,8 @@ class LightboxController extends WikiaController {
 				$height = $file->getHeight();
 				$width = $width > 1000 ? 1000 : $width;
 			} else {
-				/* videos have fixed size */
-				$height = 360;
-				$width = 660;
+				$height = $this->request->getVal('height', 360); 
+				$width = $this->request->getVal('width', 660); 
 				
 				$mediaType = 'video';
 				$videoEmbedCode = $file->getEmbedCode( $width, true, true);
