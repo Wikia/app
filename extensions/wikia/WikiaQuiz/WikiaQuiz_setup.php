@@ -55,7 +55,6 @@ $wgSpecialPages['CreateQuizArticle'] = 'SpecialCreateWikiaQuizArticle';
 $wgHooks['ArticleFromTitle'][] = 'WikiaQuizHooks::onArticleFromTitle';
 $wgHooks['ArticleSaveComplete'][] = 'WikiaQuizHooks::onArticleSaveComplete';
 $wgHooks['AlternateEdit'][] = 'WikiaQuizHooks::onAlternateEdit';
-$wgHooks['TitleMoveComplete'][] = 'WikiaQuizHooks::onTitleMoveComplete';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiaQuizAjax';

@@ -7,7 +7,7 @@ class WikiaQuizHooks {
 		switch ($title->getNamespace()) {
 			case NS_WIKIA_QUIZ:
 				$article = new WikiaQuizIndexArticle($title);
-				break;
+				break;				
 			case NS_WIKIA_QUIZARTICLE:
 				$article = new WikiaQuizArticle($title);
 				break;
@@ -75,23 +75,4 @@ class WikiaQuizHooks {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-
-	public static function onTitleMoveComplete(&$title, &$newTitle, &$user, $oldid, $newid) {
-		if( $title instanceof Title && $newTitle instanceof Title && $title->getNamespace() === NS_WIKIA_QUIZ ) {
-			$wikiaQuizNew = WikiaQuiz::newFromTitle($newTitle);
-
-			//if we tried to create an instance of WikiaQuiz from old title here
-			//the returned value from WikiaQuiz::newFromTitle wasn't an instance
-			//but the instance of WikiaQuiz created with the new title gives
-			//an instance with wrong values in its fields f.e. mMemcacheKey and mQuizId
-			//contains ids of the old articles instead of the new one
-			//TODO:we need to add here an action that copies elements of the old quiz to the new one
-			if( $wikiaQuizNew instanceof WikiaQuiz ) {
-				$wikiaQuizNew->purge();
-			}
-		}
-
-		return true;
-	}
-
 }
