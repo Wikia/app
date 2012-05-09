@@ -379,18 +379,16 @@ var Lightbox = {
 			/* call getDimensions */			
 			var dimensions = this.video.getDimensions();
 			
-			debugger;
-			
 			/* resize modal */
 			Lightbox.openModal.css({
 				top: dimensions.topOffset,
 				height: dimensions.modalHeight
 			});
 			
-			var contentArea = $(this).find(".WikiaLightbox");
+			var contentArea = Lightbox.openModal.find(".WikiaLightbox");
 	
 			/* extract mustache templates */
-			var videoTemplate = $(this).find("#LightboxVideoTemplate");
+			var videoTemplate = Lightbox.openModal.find("#LightboxVideoTemplate");
 	
 			/* render media */
 			var json = {
