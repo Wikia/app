@@ -126,7 +126,7 @@ EOT;
 				break;
 			case 'ad':
 				$googimaDataVariable = self::GOOGIMA_DATA_VARIABLE;
-                $jwplayerAdMessage = F::app()->wf->Msg('jwplayer-ad-message');
+				$jwplayerAdMessage = F::app()->wf->Msg('jwplayer-ad-message');
 				$script = <<<EOT
 if (!window.wgUserName || window.wgUserShowAds) {
 	$googimaDataVariable = {
@@ -162,7 +162,7 @@ EOT;
 				$events = array('onPlay'=>'function(){ loadAgegatePlayer(); }');
 				break;
 			case 'agegate':
-				$autostart = false;	// agegate plugin autostarts automatically only if "autostart" set to false
+				$autostart = true;
 				$image = '';
 				break;
 			default:
