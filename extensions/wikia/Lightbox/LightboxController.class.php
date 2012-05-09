@@ -87,6 +87,8 @@ class LightboxController extends WikiaController {
 	/**
 	 * @brief - Returns complete details about a single media (file).  JSON only, no associated template to this method.
 	 * @requestParam string title
+	 * @requestParam int height - height of media (optional, only for video, default to 360)
+	 * @requestParam int width - width of media (optional, only for video, default to 660)
 	 * @responseParam string mediaType - media type.  either image or video
 	 * @responseParam string videoEmbedCode - embed html code if video
 	 * @responseParam string imageUrl - thumb image url that is hard scaled
@@ -132,9 +134,8 @@ class LightboxController extends WikiaController {
 				$height = $file->getHeight();
 				$width = $width > 1000 ? 1000 : $width;
 			} else {
-				/* videos have fixed size */
-				$height = 360;
-				$width = 660;
+				$height = $this->request->getVal('height', 360);
+				$width = $this->request->getVal('width', 660);
 				
 				$mediaType = 'video';
 				$videoEmbedCode = $file->getEmbedCode( $width, true, true);
