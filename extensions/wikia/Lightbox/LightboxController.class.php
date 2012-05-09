@@ -17,9 +17,11 @@ class LightboxController extends WikiaController {
 		if(!empty($title)) {
 			// send request to getImageDetail()
 			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $title))->getData();
+			$mediaThumbs = $this->app->sendRequest('Lightbox', 'getArticleMediaThumbs')->getData();
 		}
 		
 		$this->initialFileDetail = $initialFileDetail;
+		$this->mediaThumbs = $mediaThumbs;
 	}
 
 
@@ -63,19 +65,24 @@ class LightboxController extends WikiaController {
 		// sample data
 		$thumbs = array(
 			array(
-				'thumbUrl' => '',	// 90x55 images
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',	// 90x55 images
+				'type' => 'image',
+				'title' => 'IMG 1535.jpg'
+			),
+			array(
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',
+				'type' => 'image',
+				'title' => '500x1700.jpeg'
+			),
+			array(
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',
 				'type' => 'video',
-				'title' => 'video name'
+				'title' => 'The Dark Knight (2008) - Hit Me!'
 			),
 			array(
-				'thumbUrl' => '',
-				'type' => 'image',
-				'title' => 'an image name'
-			),
-			array(
-				'thumbUrl' => '',
-				'type' => 'image',
-				'title' => 'an image name'
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',
+				'type' => 'video',
+				'title' => 'Return to Fallout New Vegas Walkthrough with Commentary Part 1 - The High-Five Returns'
 			),
 		);
 	
@@ -87,8 +94,6 @@ class LightboxController extends WikiaController {
 	/**
 	 * @brief - Returns complete details about a single media (file).  JSON only, no associated template to this method.
 	 * @requestParam string title
-	 * @requestParam int height - height of media (optional, only for video, default to 360)
-	 * @requestParam int width - width of media (optional, only for video, default to 660)
 	 * @responseParam string mediaType - media type.  either image or video
 	 * @responseParam string videoEmbedCode - embed html code if video
 	 * @responseParam string imageUrl - thumb image url that is hard scaled
@@ -126,23 +131,24 @@ class LightboxController extends WikiaController {
 		if(!empty($file)) {
 			/* figure out resource type */
 			$isVideo = F::build('WikiaVideoService')->isFileTypeVideo($file);
-
-			/* do media specific business logic */
-			if(!$isVideo) {
+		
+			 /* do media specific business logic */ 
+			 if(!$isVideo) {
 				/* normalize size of image to max 1000 width.  height does not matter */
 				$width = $file->getWidth();
 				$height = $file->getHeight();
 				$width = $width > 1000 ? 1000 : $width;
 			} else {
-				$height = $this->request->getVal('height', 360);
-				$width = $this->request->getVal('width', 660);
+				/* videos have fixed size */
+				$height = 360;
+				$width = 660;
 				
 				$mediaType = 'video';
 				$videoEmbedCode = $file->getEmbedCode( $width, true, true);
 				$playerAsset = $file->getPlayerAssetUrl();
 			}
 			
-			/* everything after this point should be shared business logic */
+			 /* everything after this point should be shared business logic */ 
 			/* get thumb */
 			$thumb = $file->getThumbnail($width, $height);
 			
