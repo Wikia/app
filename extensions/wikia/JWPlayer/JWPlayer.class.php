@@ -2,7 +2,7 @@
 
 class JWPlayer {
 	const VIDEO_GOOGLE_ANALYTICS_ACCOUNT_ID = 'UA-24709745-1';
-	const JWPLAYER_VERSION = '5.9.6';
+	const JWPLAYER_VERSION = '5.9.8';
 	const INFOBOX_VERSION = '1';
 	const SKIN_VERSION = '3';
 	const GOOGIMA_DATA_VARIABLE = 'googimaData';
@@ -12,7 +12,6 @@ class JWPlayer {
 	private static $JWPLAYER_JS = 'jwplayer.min.js';
 	private static $JWPLAYER_SWF = 'player.swf';
 	private static $JWPLAYER_JS_PLUGINS_DIR = 'plugins/js/';
-	private static $JWPLAYER_PLUGIN_AGEGATE_JS = 'agegate3.js';	
 	private static $JWPLAYER_PLUGIN_HD_JS = 'hd-2.1.min.js';
 	private static $JWPLAYER_PLUGIN_HD_SWF = 'hd-2.1.swf';	
 	private static $BLANK_MP4 = 'blank.mp4';		
@@ -277,7 +276,7 @@ EOT;
 			    'message'=>F::app()->wf->Msg('jwplayer-agegate-message'),
 			    'minage'=>17
 			    );
-			$plugins[self::getAssetUrl(F::app()->wg->ExtensionsPath . self::$JWPLAYER_DIR . self::$JWPLAYER_PLUGIN_AGEGATE_JS, self::JWPLAYER_VERSION)] = $agegateOptions;
+			$plugins['agegate-3'] = $agegateOptions;
 		}
 		
 		return $plugins;
