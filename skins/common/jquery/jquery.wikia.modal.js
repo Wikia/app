@@ -1,11 +1,14 @@
+/*global AdDriverDelayedLoader: true */
+
 //Modal
 $.fn.extend({
 
 	getModalTopOffset: function() {
 		var top = Math.max((($(window).height() - this.outerHeight()) / 2), 20);
 		var opts = this.data('settings');
-		if (opts && typeof opts.topMaximum == "number")
+		if (opts && typeof opts.topMaximum == "number") {
 			top = Math.min(top,opts.topMaximum);
+		}
 		return $(window).scrollTop() + top;
 	},
 
@@ -14,14 +17,15 @@ $.fn.extend({
 			showCloseButton: true,
 			width: 400,
 			height: "auto",
-			topOffset: 50,
+			topOffset: 50
 		};
 		if (options) {
 			$.extend(settings, options);
 		}
 		// modal wrapper ID
-		var ts = Math.round((new Date()).getTime() / 1000);
-		var id = settings.id || ($(this).attr('id') || ts) + 'Wrapper';
+		var ts = Math.round((new Date()).getTime() / 1000),
+			id = settings.id || ($(this).attr('id') || ts) + 'Wrapper',
+			wrapper;
 
 		//wrap with modal chrome
 		if (skin == "oasis") {
@@ -30,7 +34,7 @@ $.fn.extend({
 			 * <section class="modalWrapper" id="'+id+'"><section class="modalContent">[modal content]</section></section>');
 			 * @see http://stackoverflow.com/questions/1191164/jquery-html5-append-appendto-and-ie
 			 */
-			var wrapper = $('<section>', {'class': 'modalWrapper', 'id': id}).
+			wrapper = $('<section>', {'class': 'modalWrapper', 'id': id}).
 				append(
 					$('<section>', {'class': 'modalContent'}).append(this)
 				).
@@ -38,7 +42,7 @@ $.fn.extend({
 		}
 		else {
 			this.wrap('<div class="modalWrapper" id="'+id+'"></div>');
-			var wrapper = this.closest(".modalWrapper");
+			wrapper = this.closest(".modalWrapper");
 		}
 
 		// macbre: addcustom CSS class to popup wrapper
@@ -47,12 +51,7 @@ $.fn.extend({
 		}
 
 		// let's have it dynamically generated, so every newly created modal will be on top
-		if (settings.zIndex) {
-			var zIndex = parseInt(settings.zIndex);
-		}
-		else {
-			var zIndex = 2000000001 + ($('body').children('.blackout').length) * 2 ;
-		}
+		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (2000000001 + ($('body').children('.blackout').length) * 2);
 
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
@@ -61,14 +60,14 @@ $.fn.extend({
 			if(!settings.noHeadline) {
 				//set up headline
 				var headline = wrapper.find("h1:first");
-	
+
 				if (headline.exists()) {
 					headline.remove();
 				} else {
 					// no <h1> found - use title attribute (backward compatibility with Monaco)
 					headline = $('<h1>').html($(this).attr('title') || '');
 				}
-	
+
 				// add headline
 				headline.prependTo(wrapper);
 			}
@@ -111,7 +110,7 @@ $.fn.extend({
 					top: wrapper.getModalTopOffset(),
 					zIndex: zIndex + 1
 				})
-				.fadeIn("fast")
+				.fadeIn("fast");
 		}
 
 		wrapper.log('makeModal: #' + id);
