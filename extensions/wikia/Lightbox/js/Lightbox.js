@@ -238,13 +238,15 @@ var Lightbox = {
 				// pre-cache known doms
 				Lightbox.openModal.header = Lightbox.openModal.find('header');
 				
+				var updateCallback = function(json) {
+					Lightbox.cache.details[Lightbox.current.title] = json;
+					Lightbox[Lightbox.current.type].updateLightbox(json);
+				};
 				if(Lightbox.current.type == 'image') {
-					Lightbox.image.updateLightbox(initialFileDetail);
+					updateCallback(initialFileDetail);
 				} else {
 					// normalize for jwplayer
-					Lightbox.normalizeMediaDetail(initialFileDetail, function(json) {
-						Lightbox.video.updateLightbox(json);
-					});
+					Lightbox.normalizeMediaDetail(initialFileDetail, updateCallback);
 				}
 			}
 		});
