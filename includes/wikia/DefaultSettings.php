@@ -181,6 +181,7 @@ $wgAutoloadClasses['MobileStatsMissingParametersException']  =  $IP.'/includes/w
 // modules
 $wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';
 $wgAutoloadClasses['BodyModule'] = $IP.'/skins/oasis/modules/BodyModule.class.php';
+$wgAutoloadClasses['BodyContentOnlyModule'] = $IP.'/skins/oasis/modules/BodyContentOnlyModule.class.php';
 $wgAutoloadClasses['ContentDisplayModule'] = $IP.'/skins/oasis/modules/ContentDisplayModule.class.php';
 $wgAutoloadClasses['GlobalHeaderModule'] = $IP.'/skins/oasis/modules/GlobalHeaderModule.class.php';
 $wgAutoloadClasses['CorporateFooterModule'] = $IP.'/skins/oasis/modules/CorporateFooterModule.class.php';
