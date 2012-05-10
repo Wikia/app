@@ -89,6 +89,7 @@ SQL;
 
 		$result = $db->query($sql);
 
+		$data = array();
 		while($row = $db->fetchRow($result)) {
 			$data['new_wikis'][$row['type']][$row['day']] = $row['cnt'];
 		}
@@ -98,6 +99,70 @@ SQL;
 		return $data;
 	}
 	
+	protected function get_new_users() {
+		$this->wf->ProfileIn( __METHOD__ );
+		
+		$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+
+		// get total users and confirmed users
+		$result = $db->select(
+			array( 'user' ),
+			array( "date_format(user_registration, '%Y-%m-%d') day", 'count(*) total_users', 
+				"count(if(user_email_authenticated is not null and user_email_authenticated != '',1,null)) confirmed_users" ),
+			array( "date(user_registration) > curdate()-interval $this->days day" ),
+			__METHOD__,
+			array('GROUP BY' => 'day')
+		);
+
+		$data = array();
+		while ( $row = $db->fetchRow($result) ) {
+			$data['total_users']['total_users'][$row['day']] = $row['total_users'];
+			$data['confirmed_users']['confirmed_users'][$row['day']] = $row['confirmed_users'];
+		}
+
+		$db->freeResult( $result );
+
+		// get temp users
+		$result = $db->select(
+			array( 'user_temp' ),
+			array( "date_format(user_registration, '%Y-%m-%d') day", 'count(*) temp_users'  ),
+			array( "date(user_registration) > curdate()-interval $this->days day" ),
+			__METHOD__,
+			array('GROUP BY' => 'day')
+		);
+
+		while ( $row = $db->fetchRow($result) ) {
+			$data['temp_users']['temp_users'][$row['day']] = $row['temp_users'];
+		}
+
+		$db->freeResult( $result );
+
+		// get facebook users
+		$result = $db->select(
+			array( 'user', 'user_fbconnect' ),
+			array( "date_format(user_registration, '%Y-%m-%d') day", 'count(*) facebook_users'  ),
+			array( "user_fbconnect.user_fbid is not null and date(user_registration) > curdate() - interval $this->days day and date(user_registration) = date(time)" ),
+			__METHOD__,
+			array( 'GROUP BY' => 'day' ),
+			array(
+				'user_fbconnect' => array(
+					'LEFT JOIN',
+					array( 'user.user_id = user_fbconnect.user_id ' )
+				)
+			)
+		);
+
+		while ( $row = $db->fetchRow($result) ) {
+			$data['facebook_users']['facebook_users'][$row['day']] = $row['facebook_users'];
+		}
+
+		$db->freeResult( $result );
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $data;
+	}
+
 	protected function get_founderemails() {
 		$this->wf->ProfileIn( __METHOD__ );
 		
@@ -113,6 +178,7 @@ SQL;
 
 		$result = $db->query($sql);
 
+		$data = array();
 		while($row = $db->fetchRow($result)) {
 			$data['founderemails_sent'][$row['type']][$row['day']] = $row['sent'];
 			$data['founderemails_opens'][$row['type']][$row['day']] = $row['opens'];
