@@ -218,6 +218,7 @@ class CodeLintJs extends CodeLint {
 			case "Implied eval is evil. Pass a function instead of a string.":
 			case 'jQuery.live() is deprecated':
 			case 'Use $.show or $.hide':
+			case 'Deprecated skin check found':
 				$ret = true;
 				break;
 
