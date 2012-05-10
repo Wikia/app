@@ -81,6 +81,14 @@
 
 <?= $body ?>
 
+<?php
+	if (empty($wg->SuppressAds)) {
+		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+		if (!$wg->EnableCorporatePageExt) {
+			echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+		}
+	}
+?>
 <?if( $jsAtBottom ):?>
 		<!--[if lt IE 8]>
 			<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
@@ -94,14 +102,6 @@
 		<?= $jsFiles ;?>
 <?endif;?>
 
-<?php
-	if (empty($wg->SuppressAds)) {
-		echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
-		if (!$wg->EnableCorporatePageExt) {
-			echo wfRenderModule('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
-		}
-	}
-?>
 <?= AdEngine::getInstance()->getDelayedIframeLoadingCode() ?>
 
 <?php
