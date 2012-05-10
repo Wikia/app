@@ -37,6 +37,7 @@ var Lightbox = {
 			height: 648
 		}
 	},
+	templates: {},
 	init: function() {
 		var article;
 
@@ -226,17 +227,35 @@ var Lightbox = {
 
 				// Add template to modal
 				Lightbox.openModal.find(".modalContent").html(html); // adds initialFileDetail js to DOM
+				Lightbox.openModal.WikiaLightbox = Lightbox.openModal.find('.WikiaLightbox');
+				
 				
 				Lightbox.current.carouselType = "articleMedia"; // TODO: get this from back end
 				Lightbox.cache.articleMedia = mediaThumbs.thumbs;
 				
+				
+				// Set up carousel
+				var thumbs = [],
+					carouselTemplate = $('#LightboxCarouselTemplate');
+				
 				for(var i = 0; i < mediaThumbs.thumbs.length; i++) {
-					if(mediaThumbs.thumbs[i].title == Lightbox.current.title) {
+					var title = mediaThumbs.thumbs[i].title,
+						thumbUrl = mediaThumbs.thumbs[i].thumbUrl,
+						type = mediaThumbs.thumbs[i].type;
+					
+					thumbs.push(thumbUrl);
+						
+					if(title == Lightbox.current.title) {
 						Lightbox.current.index = i;
-						break;
 					}
 				}
 				
+				var carousel = $(carouselTemplate).mustache({
+					thumbs: thumbs,
+					progress: "1-6 of 24" // TODO: calculate progress
+				});
+				
+				Lightbox.openModal.WikiaLightbox.append(carousel);				
 				// pre-cache known doms
 				Lightbox.openModal.header = Lightbox.openModal.find('header');
 				
@@ -244,6 +263,8 @@ var Lightbox = {
 					Lightbox.cache.details[Lightbox.current.title] = json;
 					Lightbox[Lightbox.current.type].updateLightbox(json);
 				};
+
+				// Update modal with main image/video content								
 				if(Lightbox.current.type == 'image') {
 					updateCallback(initialFileDetail);
 				} else {
@@ -255,6 +276,7 @@ var Lightbox = {
 	},
 	image: {
 		updateLightbox: function(data) {
+			
 			Lightbox.image.getDimensions(data.imageUrl, function(dimensions) {
 				
 				Lightbox.openModal.css({
@@ -262,7 +284,7 @@ var Lightbox = {
 					height: dimensions.modalHeight
 				});
 
-				var contentArea = Lightbox.openModal.find(".WikiaLightbox");
+				var contentArea = Lightbox.openModal.WikiaLightbox;
 				
 				// extract mustache templates
 				var photoTemplate = Lightbox.openModal.find("#LightboxPhotoTemplate");
@@ -274,7 +296,7 @@ var Lightbox = {
 				};
 								
 				var renderedResult = photoTemplate.mustache(json);
-	
+				
 				// Hack to vertically align the image in the lightbox
 				renderedResult = $(renderedResult).css('line-height', dimensions.modalHeight+'px');
 				
@@ -282,7 +304,7 @@ var Lightbox = {
 				if(mediaDiv.length) {
 					mediaDiv.replaceWith(renderedResult);
 				} else {
-					renderedResult.insertBefore("#LightboxCaoursel");			
+					renderedResult.insertBefore("#LightboxCarousel");			
 				}
 				
 				Lightbox.updateArrows();
@@ -368,7 +390,7 @@ var Lightbox = {
 				height: dimensions.modalHeight
 			});
 			
-			var contentArea = Lightbox.openModal.find(".WikiaLightbox");
+			var contentArea = Lightbox.openModal.WikiaLightbox;
 	
 			// extract mustache templates
 			var videoTemplate = Lightbox.openModal.find("#LightboxVideoTemplate");
@@ -388,7 +410,7 @@ var Lightbox = {
 			if(mediaDiv.length) {
 				mediaDiv.replaceWith(renderedResult);
 			} else {
-				renderedResult.insertBefore("#LightboxCaoursel");			
+				renderedResult.insertBefore("#LightboxCarousel");			
 			}
 			
 			Lightbox.updateArrows();
