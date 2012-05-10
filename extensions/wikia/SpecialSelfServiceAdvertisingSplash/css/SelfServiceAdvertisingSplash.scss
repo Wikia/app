@@ -1,0 +1,115 @@
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.SelfServiceAdvertising {
+	h1, h2 {
+		color: #002e54;
+	}
+	h1, h2, h3, h4 {
+		text-align: center;
+	}
+	h1 {
+		font-size: 34px;
+		font-weight: bold;
+	}
+	h2 {
+		border-bottom: none;
+		font-size: 19px;
+		line-height: 22px;
+		margin-bottom: 26px;
+	}
+	h3 {
+		font-size: 22px;
+		line-height: 26px;
+		margin-top: 30px;
+	}
+	.input-group {
+		position: relative;
+	}
+
+	.headline-gap {
+		width: 980px;
+		height: 20px;
+		background: url("/extensions/wikia/SpecialSelfServiceAdvertisingSplash/images/sprite.png") no-repeat 0px -216px; /* $wgCdnStylePath */
+	}
+	.SsaBoxWrapper {
+		margin: 50px auto;
+		width: 895px;
+		@include clearfix;
+		>div {
+			border: 1px solid #d6d6d6;
+			height: 494px;
+			position: relative;
+			width: 442px;
+			$wrapper-color-bottom: rgba(#aaa, .5);
+			@include linear-gradient(transparent, top, white, 0%, $wrapper-color-bottom, 100%);
+		}
+		fieldset {
+			border: none;
+			margin: 0 auto;
+			width: 265px;
+			>div {
+				margin-top: 10px;
+				postion: relative;
+			}
+		}
+		input[type=text] {
+			background-color: white;
+			width: 240px;
+		}
+		.submits {
+			text-align: center;
+		}
+	}
+	.get-started-wrapper, .submits {
+		bottom: 27px;
+		position: absolute;
+		width: 442px;
+	}
+	.description {
+		float: left;
+		h4 {
+			background: url("/extensions/wikia/SpecialSelfServiceAdvertisingSplash/images/sprite.png") no-repeat 0 0; /* $wgCdnStylePath */
+			height: 38px;
+			margin: 17px 0 0 13px;
+			text-indent: -9999px;
+			width: 413px;
+		}
+		.available {
+			background-position: 0px -76px;
+		}
+		.targeting {
+			background-position: 0px -38px;
+		}
+		.get-started-wrapper {
+			margin: 0;
+			text-align: center;
+		}
+		a {
+			line-height: 37px;
+			padding: 0px 10px;
+		}
+	}
+	.coupon {
+		float: right;
+		h4 {
+			font-size: 21px;
+			line-height: 26px;
+			margin-top: 69px;
+		}
+		img {
+			background: url("/extensions/wikia/SpecialSelfServiceAdvertisingSplash/images/sprite.png") no-repeat 0px -114px; /* $wgCdnStylePath */
+			height: 102px;
+			position: absolute;
+			right: -4px;
+			top: -4px;
+			width: 101px;
+		}
+		.error-code {
+			color: #ff0000;
+			left: 15px;
+			position: absolute;
+			top: 50px;
+		}
+	}
+}
