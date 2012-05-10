@@ -130,14 +130,16 @@ class WikiaSearchResult {
 
 	protected function getTitleObject() {
 	  if (!isset($this->titleObject)) {
-	    $this->titleObject = Title::makeTitle( $this->getVar('namespace'), $this->title );
+	    $this->titleObject = Title::makeTitle( $this->getVar('ns'), 
+												preg_replace('/^'.MWNamespace::getCanonicalName($this->getVar('ns')).':/', 
+															'', $this->title)
+											 );
 	  }
 
 	  return $this->titleObject;
 	}
 
 	public function getThumbnail() {
-
 	  if ((!isset($this->thumbnail)) && ($this->getVar('ns') == NS_FILE)) {
 	    if ($img = wfFindFile($this->getTitleObject())) {
 	      if ($thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) )) {

@@ -555,10 +555,9 @@ class WikiaSearch extends WikiaObject {
 			return null;
 		}
 
-		$searchWithNamespace = $title->getNamespace() != 0 ? true : false;
 		// If there's an exact or very near match, jump right there.
 		$title = SearchEngine::getNearMatch( $term );
-		if( !is_null( $title ) && ( $searchWithNamespace || $title->getNamespace() == NS_MAIN || $title->getNamespace() == NS_CATEGORY) ) {
+		if( !is_null( $title )) {
 			$article = new Article( $title );
 
 			if($article->isRedirect()) {
