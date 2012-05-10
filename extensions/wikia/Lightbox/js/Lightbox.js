@@ -13,6 +13,8 @@ var Lightbox = {
 		latestPhotos: [], // Lates Photos
 		details: {} // all media details
 	},
+	eventTimers: {
+	},
 	current: {
 		type: '', // image or video
 		title: '', // currently displayed file name
@@ -421,11 +423,12 @@ var Lightbox = {
 		}	
 	},
 	renderHeader: function() {
+		clearTimeout(Lightbox.eventTimers.header);
 		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderTemplate");	//TODO: replace with cache
 		Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 			var renderedResult = headerTemplate.mustache(json)
 			Lightbox.openModal.header.html(renderedResult).removeClass('hidden');
-			Lightbox.eventHooks.header = setTimeout(
+			Lightbox.eventTimers.header = setTimeout(
 				function() {
 					Lightbox.openModal.header.addClass('hidden');
 				}, 3000
