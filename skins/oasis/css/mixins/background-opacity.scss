@@ -5,9 +5,9 @@
 	$opacity: $opacity / 100;
 
 	// Unsupporting browsers get this
-	background: $color;
+	background-color: $color;
 
 	// Browsers that support RGBA will get this instead
-	background: rgba($color, $opacity);
+	background-color: rgba($color, $opacity);
 
 }
