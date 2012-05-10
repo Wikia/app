@@ -541,7 +541,7 @@ $(function() {
 
 		// modify size of preview modal
 		$(window).bind('EditPageRenderPreview', function(ev, options) {
-			options.height = 300;
+			options.height = 470;
 			options.width = ($('#WikiaPage').width() - 271) /* menu width */ + 32 /* padding */;
 		});
 
