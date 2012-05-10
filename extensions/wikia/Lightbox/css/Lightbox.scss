@@ -19,9 +19,7 @@
 		text-align: center;
 		height: 100%;
 		line-height: 100%;
-		img {
-			vertical-align: middle;
-		}
+		overflow: hidden;
 	}
 	.video-media {
 		height: auto;
@@ -77,5 +75,14 @@
 				margin: 10px auto;
 			}
 		}
+	}
+	.LightboxCaoursel {
+		@include box-shadow( 0px, 0px, 20px, darken($color-page,50%), false, 2px);
+		@include opacity(90);
+		background: $color-page;
+		bottom: 0;
+		height: 110px;
+		position: absolute;
+		width: 100%;
 	}
 }
