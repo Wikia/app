@@ -3,6 +3,71 @@ $config = array();
 
 /******** Shared libraries and assets *******/
 
+$config['oasis_jquery_ads_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'assets' => array(
+        '#group_oasis_jquery',
+        '#group_oasis_ads_js'
+    )
+);
+
+$config['oasis_extensions_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'assets' => array(
+        '#group_oasis_ads_js',
+        '#group_oasis_noads_extensions_js'
+    )
+);
+
+$config['oasis_ads_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'assets' => array(
+        '//skins/common/wikia/cookiecutter.js',
+        // tracker
+        '//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+        '//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
+        '//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+        '//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
+        '//skins/common/jquery/jquery.wikia.tracker.js',
+        // ads
+        '//extensions/wikia/Geo/geo.js',
+        '//extensions/wikia/AdEngine/AdMeldAPIClient.js',
+        '//extensions/wikia/AdEngine/AdConfig.js',
+        '//extensions/wikia/AdEngine/AdEngine.js',
+        '//extensions/wikia/AdEngine/AdProviderOpenX.js',
+        '//extensions/wikia/AdEngine/LazyLoadAds.js',
+        '//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
+        '//extensions/wikia/AdEngine/liftium/Liftium.js',
+        '//extensions/wikia/AdEngine/liftium/Wikia.js',
+        '//extensions/wikia/AdEngine/liftium/AdsInContent.js',
+        '//extensions/wikia/AdEngine/AdDriver.js',
+    )
+);
+
+$config['oasis_noads_extensions_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'assets' => array(
+        '//extensions/wikia/RelatedPages/js/RelatedPages.js',
+        '//extensions/wikia/CreatePage/js/CreatePage.js',
+        '//extensions/wikia/ImageLightbox/ImageLightbox.js',
+        '//extensions/wikia/Lightbox/js/Lightbox.js',
+        '//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
+        '//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
+        '//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
+        '//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
+        '//extensions/FBConnect/fbconnect.js',
+        '//extensions/wikia/Meebo/meebo.js',
+        '//extensions/wikia/ApertureAudience/Aperture.js',
+        '//extensions/wikia/AdSS/adss.js',
+        '//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
+        '//extensions/wikia/GlobalNotification/GlobalNotification.js',
+        '//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
+        '//extensions/wikia/UserLogin/js/UserLogin.js',
+    )
+);
+
+
+
 /** Site specific CSS **/
 
 $config['site_anon_css'] = array(
@@ -79,9 +144,17 @@ $config['yui'] = array(
 
 //core shared JS
 $config['oasis_shared_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'assets' => array(
+        // shared libraries
+        '#group_oasis_jquery',
+        '#group_oasis_nojquery_shared_js',
+    )
+);
+
+$config['oasis_nojquery_shared_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_oasis_jquery',
 		// shared libraries
 		'//skins/common/wikibits.js',
 		'//skins/common/mwsuggest.js',
@@ -89,16 +162,9 @@ $config['oasis_shared_js'] = array(
 		'//skins/oasis/js/tracker.js',
 		'//skins/common/wikia/my.class.js',
 		'//skins/common/wikia/querystring.js',
-		'//skins/common/wikia/cookiecutter.js',
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
-		// tracker
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
-		'//skins/common/jquery/jquery.wikia.tracker.js',
 		// oasis specific files
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
@@ -120,39 +186,6 @@ $config['oasis_shared_js'] = array(
 	)
 );
 
-//extensions shared JS
-$config['oasis_extensions_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
-		'//extensions/wikia/CreatePage/js/CreatePage.js',
-		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
-		'//extensions/wikia/Lightbox/js/Lightbox.js',
-		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
-		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
-		'//extensions/FBConnect/fbconnect.js',
-		'//extensions/wikia/Geo/geo.js',
-		'//extensions/wikia/Meebo/meebo.js',
-		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
-		'//extensions/wikia/AdEngine/AdConfig.js',
-		'//extensions/wikia/AdEngine/AdEngine.js',
-		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
-		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
-		'//extensions/wikia/ApertureAudience/Aperture.js',
-		'//extensions/wikia/AdEngine/liftium/Liftium.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.js',
-		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
-		'//extensions/wikia/AdEngine/AdDriver.js',
-		'//extensions/wikia/AdSS/adss.js',
-		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
-		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
-		'//skins/oasis/js/GlobalModal.js',	// This needs to load last after all common extensions, please keep this last.
-		'//extensions/wikia/UserLogin/js/UserLogin.js',
-	)
-);
 
 //anon JS
 // Note: Owen moved getSiteJS call from both anon_js and user_js to OasisModule::loadJS
