@@ -30,6 +30,9 @@ class WikiaHomePageController extends WikiaController {
 	static $remixImgBigHeight = 320;
 	const hubsImgWidth = 320;
 	const hubsImgHeight = 160;
+
+	//failsafe
+        const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 	
 	protected $source = null;
 	protected $verticalsPercentage = array();
@@ -371,73 +374,122 @@ class WikiaHomePageController extends WikiaController {
 			throw new Exception( wfMsg('wikia-home-parse-wiki-too-few-parameters') );
 		}
 	}
-	
+
 	/**
-	 * get list of images for Hub
-	 * @responseParam array hubImages
-	 */
-	public function getHubImages() {
-		$memKey = $this->wf->SharedMemcKey( 'wikiahomepage', 'hubimages' );
-		$hubImages = $this->wg->Memc->get( $memKey );
-		if ( empty($hubImages) ) {
-			$hubImages = array();
-			$imageServing = F::build('ImageServing', array(null, self::hubsImgWidth, array(
-				'w' => self::hubsImgWidth,
-				'h' => self::hubsImgHeight,
-			)));
-			foreach( self::$wikiaHubs as $hubname ) {
-				$hubImages[$hubname] = '';
+         * get list of images for Hub
+         * @responseParam array hubImages
+         */
+        public function getHubImages() {
+                $memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages');
+                $hubImages = $this->wg->Memc->get($memKey);
 
-				$title = F::build( 'Title', array($hubname), 'newFromText' );
-				$article = F::build( 'Article', array($title) );
-				$content = $article->getRawText();
+                if (empty($hubImages)) {
+                        $hubImages = $this->getHubImageUrls();
+                        $this->wg->Memc->set($memKey, $hubImages, 60 * 60 * 24);
+                }
 
-				$lines = array();
-				if (preg_match('/\<gallery.+mosaic.+\>([\s\S]+)\<\/gallery\>/', $content,$matches)) {
-					$lines = StringUtils::explode("\n", $matches[1]);
-				} else {
-					// no gallery tag found directly in hub, so there is possibility of transclusion
-					$today = date('j_F_Y');
-					$transcludedArticleName = $hubname . "/" . $today;
-					$transcludedTitle = F::build( 'Title', array($transcludedArticleName), 'newFromText' );
-					$transcludedArticle = F::build( 'Article', array($transcludedTitle) );
-					$transcludedContent = $transcludedArticle->getRawText();
-					if (preg_match('/\<gallery.+mosaic.+\>([\s\S]+)\<\/gallery\>/', $transcludedContent, $matches)) {
-						$lines = StringUtils::explode("\n", $matches[1]);
-					}					
-				}
-				
-				// either we have the gallery content in $lines or that an empty array
-				foreach ( $lines as $line ) {
-					$line = trim( $line );
-					if ( $line == '' ) {
-						continue;
-					}
+                $this->hubImages = $hubImages;
+        }
 
-					$parts = (array) StringUtils::explode( '|', $line );
-					$imageName = array_shift($parts);
-					if ( strpos($line, '%') !== false ) {
-						$imageName = urldecode($imageName);
-					}
+        protected function getHubImageUrls() {
+                $hubImages = array();
+                $this->imageServing = F::build('ImageServing', array(null, self::hubsImgWidth, array(
+                        'w' => self::hubsImgWidth,
+                        'h' => self::hubsImgHeight,
+                )));
 
-					if ( !empty($imageName) ) {
-						$title =  F::build( 'Title', array($imageName, NS_IMAGE), 'newFromText' );
-						$file = $this->wf->FindFile( $title );
-						if ( $file instanceof File && $file->exists() ) {
-							$imageUrl = $imageServing->getUrl($file, max(self::hubsImgWidth, $file->getWidth()), max(self::hubsImgHeight, $file->getHeight()));
-							$hubImages[$hubname] = $imageUrl;
-						}
-						break;
-					}
-				}
-				
-			}
-			$this->wg->Memc->set( $memKey, $hubImages, 60*60*24 );
-		}
-		
-		$this->hubImages = $hubImages;
-	}
-	
+                foreach (self::$wikiaHubs as $hubName) {
+                        $hubImages[$hubName] = $this->getImageUrlForHub($hubName);
+                }
+                return $hubImages;
+        }
+
+        protected function getImageUrlForHub($hubName) {
+                $hubImage = '';
+
+                $lines = $this->getLinesFromHubGallerySlider($hubName);
+
+                // either we have the gallery content in $lines or that an empty array
+                foreach ($lines as $line) {
+                        $hubImage = $this->getHubImageFromGalleryTagLine($line);
+                        if (!empty($hubImage)) {
+                                break;
+                        }
+                }
+                return $hubImage;
+        }
+
+        protected function getLinesFromHubGallerySlider($hubName) {
+                $content = $this->getRawArticleContent($hubName);
+                $lines = $this->extractMosaicGalleryImages($content);
+                if (empty($lines)) {
+                        // no gallery tag found directly in hub, so there is possibility of transclusion
+                        $transcludedContent = $this->getTranscludedArticleForTodaysHub($hubName);
+                        $lines = $this->extractMosaicGalleryImages($transcludedContent);
+                }
+                if (empty($lines)) {
+                        // no gallery tag found in hub nor transcluded article, trying failsafe page
+                        $transcludedContent = $this->getFailsafeArticleForTodaysHub($hubName);
+                        $lines = $this->extractMosaicGalleryImages($transcludedContent);
+                }
+                return $lines;
+        }
+
+        protected function getHubImageFromGalleryTagLine($line) {
+                $hubImage = '';
+                $imageName = $this->getImageNameFromGalleryTagLine($line);
+
+                if (!empty($imageName)) {
+                        $hubImage = $this->getImageUrlFromString($imageName);
+                }
+                return $hubImage;
+        }
+
+        protected function getImageUrlFromString($imageName) {
+                $imageUrl = false;
+                $title = F::build('Title', array($imageName, NS_IMAGE), 'newFromText');
+
+                $file = $this->wf->FindFile($title);
+                if ($file instanceof File && $file->exists()) {
+			$imageUrl = $this->imageServing->getUrl($file, max(self::hubsImgWidth, $file->getWidth()), max(self::hubsImgHeight, $file->getHeight()));
+                }
+                return $imageUrl;
+        }
+
+        protected function getImageNameFromGalleryTagLine($line) {
+                $line = trim($line);
+                if ($line == '') {
+                        return false;
+                }
+
+                $parts = (array)StringUtils::explode('|', $line);
+                $imageName = array_shift($parts);
+                if (strpos($line, '%') !== false) {
+                        $imageName = urldecode($imageName);
+                        return $imageName;
+                }
+                return $imageName;
+        }
+
+        protected function getRawArticleContent($hubname) {
+                $title = F::build('Title', array($hubname), 'newFromText');
+                $article = F::build('Article', array($title));
+                $content = $article->getRawText();
+                return $content;
+        }
+
+        protected function getTranscludedArticleForTodaysHub($hubname) {
+                $today = date('j_F_Y');
+                $transcludedArticleName = $hubname . "/" . $today;
+                return $this->getRawArticleContent($transcludedArticleName);
+        }
+
+        protected function getFailsafeArticleForTodaysHub($hubname) {
+                $failsafe = self::FAILSAFE_ARTICLE_TITLE;
+                $failsafeArticleName = $hubname . "/" . $failsafe;
+                return $this->getRawArticleContent($failsafeArticleName);
+        }
+
 	/**
 	 * draw visualization
 	 */
@@ -500,5 +552,19 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Returns lines of text contained inside mosaic slider gallery tag
+	 * @param $articleText
+	 * @return array
+	 */
+	protected function extractMosaicGalleryImages($articleText) {
+		$lines = array();
+
+		if (preg_match('/\<gallery.+mosaic.+\>([\s\S]+)\<\/gallery\>/', $articleText, $matches)) {
+			$lines = StringUtils::explode("\n", $matches[1]);
+		}
+		return $lines;
 	}
 }
