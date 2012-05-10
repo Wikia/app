@@ -488,9 +488,12 @@ function CategorySelectGetCategoryLinksBegin(&$categoryLinks) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
+	wfProfileIn(__METHOD__);
 	global $wgRequest, $wgExtensionsPath, $wgOut, $wgStylePath;
+	static $jsEmitted = false;
 
 	if (!wfRunHooks ('CategorySelect:beforeDisplayingView', array () )) {
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
@@ -502,7 +505,8 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 
 		// TODO: REMOVE THE loadYUI wrapper around the .getScript call after YUI is removed.
 		// TODO: move to external JS (BugId:24567)
-		$wgOut->addInlineScript(<<<JS
+		if (!$jsEmitted) {
+			$wgOut->addInlineScript(<<<JS
 /* CategorySelect */
 wgAfterContentAndJS.push(function() {
 	$(".catlinks-allhidden").css("display", "block");
@@ -512,8 +516,7 @@ wgAfterContentAndJS.push(function() {
 		$.getResources([
 			$.loadYUI,
 			wgExtensionsPath + '/wikia/CategorySelect/CategorySelect.js'
-		],
-		function() {
+		]).then(function() {
 			showCSpanel();
 		});
 
@@ -522,7 +525,11 @@ wgAfterContentAndJS.push(function() {
 });
 JS
 );
+		}
+		$jsEmitted = true;
 	}
+
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
