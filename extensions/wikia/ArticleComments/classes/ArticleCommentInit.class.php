@@ -204,10 +204,7 @@ class ArticleCommentInit {
 			wfLoadExtensionMessages('ArticleComments');
 			$tocnumber = ++$sublevelCount[1];
 
-			$messageId = 'article-comments-toc-item';
-			$label = wfMsg( $messageId );
-
-			$toc .= $sk->tocLine('article-comments', $label, $tocnumber, 1);
+			$toc .= $sk->tocLine('article-comments', wfMsg( 'article-comments-toc-item' ), $tocnumber, 1);
 		}
 		return true;
 	}
