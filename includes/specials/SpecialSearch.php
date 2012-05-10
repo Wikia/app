@@ -36,7 +36,7 @@ function wfSpecialSearch( $par = '' ) {
 	$titleParam = str_replace( '_', ' ', $par );
 	// Fetch the search term
 	$search = str_replace( "\n", " ", $wgRequest->getText( 'search', $titleParam ) );
-	$class = $wgUseWikiaSearchUI ? 'SpecialWikiaSearch' : 'SpecialSearch';
+	$class = $wgUseWikiaSearchUI ? 'WikiaSearchController' : 'SpecialSearch';
 	$searchPage = new $class( $wgRequest, $wgUser );
 	if( $wgRequest->getVal( 'fulltext' )
 		|| !is_null( $wgRequest->getVal( 'offset' ))

@@ -17,8 +17,8 @@ if ( !isset( $wgCorporatePageRedirectWiki ) ) {
 }
 
 $wgAutoloadClasses['CorporatePageHelper']  = $dir . 'CorporatePageHelper.class.php';
-$wgAutoloadClasses['CorporateSiteModule'] = $dir . 'modules/CorporateSiteModule.class.php';
-$wgAutoloadClasses['BlogsInHubsModule'] = $dir . 'modules/BlogsInHubsModule.class.php';
+$wgAutoloadClasses['CorporateSiteController'] = $dir . 'modules/CorporateSiteController.class.php';
+$wgAutoloadClasses['BlogsInHubsController'] = $dir . 'modules/BlogsInHubsController.class.php';
 $wgAutoloadClasses['BlogsInHubsService'] = $dir . 'services/BlogsInHubsService.class.php';
 
 $wgExtensionMessagesFiles['CorporatePage'] = $dir . 'CorporatePage.i18n.php';

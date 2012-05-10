@@ -4,7 +4,7 @@ class MiniEditorController extends WikiaController {
 
 	// Should be called once for any extension that wants to use MiniEditor
 	public function Setup() {
-		OasisModule::addBodyClass('MiniEditor');
+		OasisController::addBodyClass('MiniEditor');
 	}
 
 	/**

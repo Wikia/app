@@ -65,7 +65,7 @@ class SpecialUserInterview extends SpecialPage {
 		}
 		
 		SpecialUserInterview::saveAdminQuestion($data);
-		NotificationsModule::addConfirmation('Your user interview has been saved!');
+		NotificationsController::addConfirmation('Your user interview has been saved!');
 	}
 	
 	
@@ -156,7 +156,7 @@ class SpecialUserInterview extends SpecialPage {
 		if (class_exists('Masthead')) {
 			global $wgUser, $wgTitle;
 			
-			$userName = UserPagesHeaderModule::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
+			$userName = UserPagesHeaderController::getUserName($wgTitle, BodyController::getUserPagesNamespaces());
 			$userId = (User::isIP($userName)) ? 0 : User::newFromName($userName)->getID();
 
 			$user = User::newFromId($userId);
@@ -263,7 +263,7 @@ class SpecialUserInterview extends SpecialPage {
 	static  private function getUserAnswers() {
 		global $wgUser, $wgTitle, $wgCityId;
 		
-		$userName = UserPagesHeaderModule::getUserName($wgTitle, BodyModule::getUserPagesNamespaces());
+		$userName = UserPagesHeaderController::getUserName($wgTitle, BodyController::getUserPagesNamespaces());
 		$userId = (User::isIP($userName)) ? 0 : User::newFromName($userName)->getID();
 		
 		if ($userId != 0) {

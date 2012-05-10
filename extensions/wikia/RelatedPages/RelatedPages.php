@@ -21,11 +21,11 @@ $dir = dirname(__FILE__) . '/';
 // hooks
 $wgHooks['OutputPageMakeCategoryLinks'][] = 'RelatedPages::onOutputPageMakeCategoryLinks';
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedPages::onOutputPageBeforeHTML' );
-$wgHooks['ArticleSaveComplete'][] = 'RelatedPagesModule::onArticleSaveComplete';
+$wgHooks['ArticleSaveComplete'][] = 'RelatedPagesController::onArticleSaveComplete';
 
 // classes
 $wgAutoloadClasses['RelatedPages'] = $dir . 'RelatedPages.class.php';
-$wgAutoloadClasses['RelatedPagesModule'] = $dir . 'RelatedPagesModule.class.php';
+$wgAutoloadClasses['RelatedPagesController'] = $dir . 'RelatedPagesController.class.php';
 
 // messages
 $wgExtensionMessagesFiles['RelatedPages'] = $dir . 'RelatedPages.i18n.php';

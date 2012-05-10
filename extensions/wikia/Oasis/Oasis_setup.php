@@ -14,46 +14,46 @@ function wfOasisSetup() {
 
 	// modules and services
 	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityModule::onArticleSaveComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderModule::onArticleSaveComplete';
+	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityController::onArticleSaveComplete';
+	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderController::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'UserStatsService::onArticleSaveComplete';
-	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingModule::getResults';
-	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingModule::renderBlogListing';
-	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayModule::onDoEditSectionLink';
-	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyModule::onEditPageRender';
-	$wgHooks['EditPageLayoutModifyPreview'][] = 'WikiNavigationModule::onEditPageLayoutModifyPreview';
-	$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'WikiNavigationModule::onEditPageMakeGlobalVariablesScript';
-	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosModule::onImageDelete';
-	$wgHooks['MakeHeadline'][] = 'ContentDisplayModule::onMakeHeadline';
-	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayModule::renderPictureAttribution';
-	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosModule::onMessageCacheReplace';
-	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationModule::onMessageCacheReplace';
-	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayModule::onShowEditLink';
-	$wgHooks['UploadComplete'][] = 'LatestPhotosModule::onImageUploadComplete';
-	$wgHooks['FileUpload'][] = 'LatestPhotosModule::onImageUpload';
-	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosModule::onImageRenameCompleated';
-	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationModule::onWikiFactoryChanged';
+	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingController::getResults';
+	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingController::renderBlogListing';
+	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayController::onDoEditSectionLink';
+	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyController::onEditPageRender';
+	$wgHooks['EditPageLayoutModifyPreview'][] = 'WikiNavigationController::onEditPageLayoutModifyPreview';
+	$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'WikiNavigationController::onEditPageMakeGlobalVariablesScript';
+	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosController::onImageDelete';
+	$wgHooks['MakeHeadline'][] = 'ContentDisplayController::onMakeHeadline';
+	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayController::renderPictureAttribution';
+	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosController::onMessageCacheReplace';
+	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationController::onMessageCacheReplace';
+	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
+	$wgHooks['UploadComplete'][] = 'LatestPhotosController::onImageUploadComplete';
+	$wgHooks['FileUpload'][] = 'LatestPhotosController::onImageUpload';
+	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosController::onImageRenameCompleated';
+	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationController::onWikiFactoryChanged';
 
 	// confirmations
-	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsModule::addPageDeletedConfirmation';
-	$wgHooks['ArticleUndelete'][] = 'NotificationsModule::addPageUndeletedConfirmation';
-	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsModule::addSaveConfirmation'; // BugId:10129
-	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsModule::addFacebookConnectConfirmation';
-	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsModule::addPageMovedConfirmation';
-	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsModule::addPreferencesConfirmation';
-	$wgHooks['UserLogoutComplete'][] = 'NotificationsModule::addLogOutConfirmation';
+	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
+	$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
+	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
+	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsController::addFacebookConnectConfirmation';
+	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
+	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
+	$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
 
 	// notifications
-	$wgHooks['AchievementsNotification'][] = 'NotificationsModule::addBadgeNotification';
-	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsModule::addCommunityMessagesNotification';
-	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsModule::addEditSimilarNotification';
-	$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsModule::addSiteWideMessageNotification';
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsModule::addMessageNotification';
+	$wgHooks['AchievementsNotification'][] = 'NotificationsController::addBadgeNotification';
+	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsController::addCommunityMessagesNotification';
+	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsController::addEditSimilarNotification';
+	$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsController::addSiteWideMessageNotification';
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMessageNotification';
 
 	// misc
 	$wgHooks['UploadVerification'][] = 'Oasis_UploadVerification';
-	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderModule::saveFacebookConnectProfile';
+	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
 	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
 
 	// support "noexternals" URL param

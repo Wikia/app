@@ -72,8 +72,8 @@ $wgRevokePermissions['bannedfromchat']['chat'] = true;
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
 $wgAutoloadClasses['ChatAjax'] = "$dir/ChatAjax.class.php";
 $wgAutoloadClasses['ChatHelper'] = "$dir/ChatHelper.php";
-$wgAutoloadClasses['ChatModule'] = "$dir/ChatModule.class.php";
-$wgAutoloadClasses['ChatRailModule'] = "$dir/ChatRailModule.class.php";
+$wgAutoloadClasses['ChatController'] = "$dir/ChatController.class.php";
+$wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['NodeApiClient'] = "$dir/NodeApiClient.class.php";
 

@@ -21,9 +21,9 @@ wfLoadExtensionNamespaces('AnswersNamespace', array( NS_QUESTION, NS_QUESTION_TA
 
 $wgAjaxExportList[] = 'getQuestionSuggest';
 
-$wgAutoloadClasses['AskYourQuestionModule'] = $dir . 'AskYourQuestionModule.php';
+$wgAutoloadClasses['AskYourQuestionController'] = $dir . 'AskYourQuestionController.php';
 $wgAutoloadClasses['Question'] = $dir . 'Question.php';
-$wgAutoloadClasses['QuestionPageModule'] = $dir . 'QuestionPageModule.php';
+$wgAutoloadClasses['QuestionPageController'] = $dir . 'QuestionPageController.php';
 $wgAutoloadClasses['SpecialCreateQuestion'] = $dir . 'SpecialCreateQuestion.php';
 
 $wgAvailableRights[] = 'ask-questions';

@@ -98,7 +98,9 @@ $wgAutoloadClasses['WikiaQuickTemplate'] = $IP . '/includes/wikia/WikiaQuickTemp
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/WikiaFunctionWrapper.class.php';
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
 
+// Since we use this everywhere, we will just set up a global app reference now.
 F::setInstance( 'App', new WikiaApp() );
+$app = F::build( 'App' );
 
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
@@ -168,7 +170,7 @@ $wgAutoloadClasses['HubService'] = $IP . '/includes/wikia/services/HubService.cl
 $wgAutoloadClasses['WikiService'] = $IP . '/includes/wikia/services/WikiService.class.php';
 $wgAutoloadClasses['DataMartService'] = $IP . '/includes/wikia/services/DataMartService.class.php';
 
-// controllers
+// modules
 $wgAutoloadClasses['SimpleSearchService']  =  $IP.'/includes/wikia/services/SimpleSearchService.class.php';
 $wgAutoloadClasses['SimpleSearchTooManyResultsException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
 $wgAutoloadClasses['SimpleSearchDisabledException']  =  $IP.'/includes/wikia/services/SimpleSearchController.class.php';
@@ -179,49 +181,49 @@ $wgAutoloadClasses['MobileStatsExternalRequestException']  =  $IP.'/includes/wik
 $wgAutoloadClasses['MobileStatsMissingParametersException']  =  $IP.'/includes/wikia/services/MobileStatsController.class.php';
 
 // modules
-$wgAutoloadClasses['OasisModule'] = $IP.'/skins/oasis/modules/OasisModule.class.php';
-$wgAutoloadClasses['BodyModule'] = $IP.'/skins/oasis/modules/BodyModule.class.php';
-$wgAutoloadClasses['BodyContentOnlyModule'] = $IP.'/skins/oasis/modules/BodyContentOnlyModule.class.php';
-$wgAutoloadClasses['ContentDisplayModule'] = $IP.'/skins/oasis/modules/ContentDisplayModule.class.php';
-$wgAutoloadClasses['GlobalHeaderModule'] = $IP.'/skins/oasis/modules/GlobalHeaderModule.class.php';
-$wgAutoloadClasses['CorporateFooterModule'] = $IP.'/skins/oasis/modules/CorporateFooterModule.class.php';
-$wgAutoloadClasses['WikiHeaderModule'] = $IP.'/skins/oasis/modules/WikiHeaderModule.class.php';
-$wgAutoloadClasses['WikiHeaderV2Module'] = $IP.'/skins/oasis/modules/WikiHeaderV2Module.class.php';
-$wgAutoloadClasses['SearchModule'] = $IP.'/skins/oasis/modules/SearchModule.class.php';
-$wgAutoloadClasses['PageHeaderModule'] = $IP.'/skins/oasis/modules/PageHeaderModule.class.php';
-$wgAutoloadClasses['LatestActivityModule'] = $IP.'/skins/oasis/modules/LatestActivityModule.class.php';
-$wgAutoloadClasses['LatestPhotosModule'] = $IP.'/skins/oasis/modules/LatestPhotosModule.class.php';
-$wgAutoloadClasses['FooterModule'] = $IP.'/skins/oasis/modules/FooterModule.class.php';
-$wgAutoloadClasses['ArticleCategoriesModule'] = $IP.'/skins/oasis/modules/ArticleCategoriesModule.class.php';
-$wgAutoloadClasses['AchievementsModule'] = $IP.'/skins/oasis/modules/AchievementsModule.class.php';
-$wgAutoloadClasses['AccountNavigationModule'] = $IP.'/skins/oasis/modules/AccountNavigationModule.class.php';
-$wgAutoloadClasses['RailModule'] = $IP.'/skins/oasis/modules/RailModule.class.php';
-$wgAutoloadClasses['AdModule'] = $IP.'/skins/oasis/modules/AdModule.class.php';
-$wgAutoloadClasses['FollowedPagesModule'] = $IP.'/skins/oasis/modules/FollowedPagesModule.class.php';
-$wgAutoloadClasses['MyToolsModule'] = $IP.'/skins/oasis/modules/MyToolsModule.class.php';
-$wgAutoloadClasses['UserPagesHeaderModule'] = $IP.'/skins/oasis/modules/UserPagesHeaderModule.class.php';
-$wgAutoloadClasses['SpotlightsModule'] = $IP.'/skins/oasis/modules/SpotlightsModule.class.php';
-$wgAutoloadClasses['MenuButtonModule'] = $IP.'/skins/oasis/modules/MenuButtonModule.class.php';
-$wgAutoloadClasses['CommentsLikesModule'] = $IP.'/skins/oasis/modules/CommentsLikesModule.class.php';
-$wgAutoloadClasses['BlogListingModule'] = $IP.'/skins/oasis/modules/BlogListingModule.class.php';
-$wgAutoloadClasses['NotificationsModule'] = $IP.'/skins/oasis/modules/NotificationsModule.class.php';
-$wgAutoloadClasses['LatestEarnedBadgesModule'] = $IP.'/extensions/wikia/AchievementsII/modules/LatestEarnedBadgesModule.class.php';
-$wgAutoloadClasses['HotSpotsModule'] = $IP.'/skins/oasis/modules/HotSpotsModule.class.php';
-$wgAutoloadClasses['CommunityCornerModule'] = $IP.'/skins/oasis/modules/CommunityCornerModule.class.php';
-$wgAutoloadClasses['PopularBlogPostsModule'] = $IP.'/skins/oasis/modules/PopularBlogPostsModule.class.php';
-$wgAutoloadClasses['RandomWikiModule'] = $IP.'/skins/oasis/modules/RandomWikiModule.class.php';
-$wgAutoloadClasses['ArticleInterlangModule'] = $IP.'/skins/oasis/modules/ArticleInterlangModule.class.php';
-$wgAutoloadClasses['PagesOnWikiModule'] = $IP.'/skins/oasis/modules/PagesOnWikiModule.class.php';
-$wgAutoloadClasses['HuluVideoPanelModule'] = $IP.'/skins/oasis/modules/HuluVideoPanelModule.class.php';
-$wgAutoloadClasses['ContributeMenuModule'] = $IP.'/skins/oasis/modules/ContributeMenuModule.class.php';
-$wgAutoloadClasses['WikiNavigationModule'] = $IP.'/skins/oasis/modules/WikiNavigationModule.class.php';
-$wgAutoloadClasses['SharingToolbarModule'] = $IP.'/skins/oasis/modules/SharingToolbarModule.class.php';
-$wgAutoloadClasses['WikiaFormModule'] = $IP.'/skins/oasis/modules/WikiaFormModule.class.php';
-$wgAutoloadClasses['UploadPhotosModule'] = $IP.'/skins/oasis/modules/UploadPhotosModule.class.php';
+$wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
+$wgAutoloadClasses['BodyController'] = $IP.'/skins/oasis/modules/BodyController.class.php';
+$wgAutoloadClasses['BodyContentOnlyController'] = $IP.'/skins/oasis/modules/BodyContentOnlyController.class.php';
+$wgAutoloadClasses['ContentDisplayController'] = $IP.'/skins/oasis/modules/ContentDisplayController.class.php';
+$wgAutoloadClasses['GlobalHeaderController'] = $IP.'/skins/oasis/modules/GlobalHeaderController.class.php';
+$wgAutoloadClasses['CorporateFooterController'] = $IP.'/skins/oasis/modules/CorporateFooterController.class.php';
+$wgAutoloadClasses['WikiHeaderController'] = $IP.'/skins/oasis/modules/WikiHeaderController.class.php';
+$wgAutoloadClasses['WikiHeaderV2Controller'] = $IP.'/skins/oasis/modules/WikiHeaderV2Controller.class.php';
+$wgAutoloadClasses['SearchController'] = $IP.'/skins/oasis/modules/SearchController.class.php';
+$wgAutoloadClasses['PageHeaderController'] = $IP.'/skins/oasis/modules/PageHeaderController.class.php';
+$wgAutoloadClasses['LatestActivityController'] = $IP.'/skins/oasis/modules/LatestActivityController.class.php';
+$wgAutoloadClasses['LatestPhotosController'] = $IP.'/skins/oasis/modules/LatestPhotosController.class.php';
+$wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterController.class.php';
+$wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
+$wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/AchievementsController.class.php';
+$wgAutoloadClasses['AccountNavigationController'] = $IP.'/skins/oasis/modules/AccountNavigationController.class.php';
+$wgAutoloadClasses['RailController'] = $IP.'/skins/oasis/modules/RailController.class.php';
+$wgAutoloadClasses['AdController'] = $IP.'/skins/oasis/modules/AdController.class.php';
+$wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/FollowedPagesController.class.php';
+$wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
+$wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
+$wgAutoloadClasses['SpotlightsController'] = $IP.'/skins/oasis/modules/SpotlightsController.class.php';
+$wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
+$wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
+$wgAutoloadClasses['BlogListingController'] = $IP.'/skins/oasis/modules/BlogListingController.class.php';
+$wgAutoloadClasses['NotificationsController'] = $IP.'/skins/oasis/modules/NotificationsController.class.php';
+$wgAutoloadClasses['LatestEarnedBadgesController'] = $IP.'/extensions/wikia/AchievementsII/modules/LatestEarnedBadgesController.class.php';
+$wgAutoloadClasses['HotSpotsController'] = $IP.'/skins/oasis/modules/HotSpotsController.class.php';
+$wgAutoloadClasses['CommunityCornerController'] = $IP.'/skins/oasis/modules/CommunityCornerController.class.php';
+$wgAutoloadClasses['PopularBlogPostsController'] = $IP.'/skins/oasis/modules/PopularBlogPostsController.class.php';
+$wgAutoloadClasses['RandomWikiController'] = $IP.'/skins/oasis/modules/RandomWikiController.class.php';
+$wgAutoloadClasses['ArticleInterlangController'] = $IP.'/skins/oasis/modules/ArticleInterlangController.class.php';
+$wgAutoloadClasses['PagesOnWikiController'] = $IP.'/skins/oasis/modules/PagesOnWikiController.class.php';
+$wgAutoloadClasses['HuluVideoPanelController'] = $IP.'/skins/oasis/modules/HuluVideoPanelController.class.php';
+$wgAutoloadClasses['ContributeMenuController'] = $IP.'/skins/oasis/modules/ContributeMenuController.class.php';
+$wgAutoloadClasses['WikiNavigationController'] = $IP.'/skins/oasis/modules/WikiNavigationController.class.php';
+$wgAutoloadClasses['SharingToolbarController'] = $IP.'/skins/oasis/modules/SharingToolbarController.class.php';
+$wgAutoloadClasses['WikiaFormController'] = $IP.'/skins/oasis/modules/WikiaFormController.class.php';
+$wgAutoloadClasses['UploadPhotosController'] = $IP.'/skins/oasis/modules/UploadPhotosController.class.php';
 $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
 $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner/ThemeDesignerHelper.class.php";//FB#22659 - dependency for ThemeSettings
-$wgAutoloadClasses['ErrorModule'] = $IP.'/skins/oasis/modules/ErrorModule.class.php';
+$wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
 
 // TODO:move this inclusion to CommonExtensions?
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );

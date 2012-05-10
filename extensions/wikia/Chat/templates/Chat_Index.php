@@ -23,7 +23,7 @@
 		<h1 class="public wordmark">
 			<a href="<?= $mainPageURL ?>">
 			<? if ($themeSettings['wordmark-type'] == 'graphic') { ?>
-			<img width="<?= ChatModule::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatModule::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
+			<img width="<?= ChatController::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
 			<? } else { ?>
 			<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
 			<? } ?>
@@ -39,7 +39,7 @@
 			<h1 class="public wordmark selected">
 				<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
 				<? if ($themeSettings['wordmark-type'] == 'graphic') { ?>
-				<img width="<?= ChatModule::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatModule::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>" class="wordmark">
+				<img width="<?= ChatController::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>" class="wordmark">
 				<? } else { ?>
 				<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
 				<? } ?>
@@ -51,7 +51,7 @@
 		</div>
 
 		<form id="Write" class="Write" onsubmit="return false">
-			<img width="<?= ChatModule::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatModule::CHAT_AVATAR_DIMENSION ?>" src="<?= $avatarUrl ?>">
+			<img width="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" src="<?= $avatarUrl ?>">
 			<textarea name="message"></textarea>
 			<input type="submit">
 		</form>

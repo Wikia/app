@@ -23,11 +23,11 @@ class SkinCampfire extends WikiaSkin {
 
 		$wgExtensionMessagesFiles['Campfire'] = $IP . '/extensions/wikia/Campfire/Campfire.i18n.php';
 
-		$wgAutoloadClasses['CampfireModule'] = $dir . '/campfire/modules/CampfireModule.class.php';
-		$wgAutoloadClasses['CampfireBodyModule'] = $dir . '/campfire/modules/CampfireBodyModule.class.php';
-		$wgAutoloadClasses['CampfireHeaderModule'] = $dir . '/campfire/modules/CampfireHeaderModule.class.php';
-		$wgAutoloadClasses['CampfireCategoriesModule'] = $dir . '/campfire/modules/CampfireCategoriesModule.class.php';
-		$wgAutoloadClasses['CampfireFooterModule'] = $dir . '/campfire/modules/CampfireFooterModule.class.php';
+		$wgAutoloadClasses['CampfireController'] = $dir . '/campfire/modules/CampfireController.class.php';
+		$wgAutoloadClasses['CampfireBodyController'] = $dir . '/campfire/modules/CampfireBodyController.class.php';
+		$wgAutoloadClasses['CampfireHeaderController'] = $dir . '/campfire/modules/CampfireHeaderController.class.php';
+		$wgAutoloadClasses['CampfireCategoriesController'] = $dir . '/campfire/modules/CampfireCategoriesController.class.php';
+		$wgAutoloadClasses['CampfireFooterController'] = $dir . '/campfire/modules/CampfireFooterController.class.php';
 	}
 
 	function setupSkinUserCss( OutputPage $out ) {}
@@ -36,7 +36,7 @@ class SkinCampfire extends WikiaSkin {
 class CampfireTemplate extends WikiaQuickTemplate {
 	function execute() {
 		F::app()->setSkinTemplateObj($this);
-		$response = $this->app->sendRequest( Wikia::getVar( 'CampfireEntryModuleName', 'Campfire' ), 'index', null, false );
+		$response = $this->app->sendRequest( Wikia::getVar( 'CampfireEntryControllerName', 'Campfire' ), 'index', null, false );
 		$response->sendHeaders();
 		$response->render();
 	}

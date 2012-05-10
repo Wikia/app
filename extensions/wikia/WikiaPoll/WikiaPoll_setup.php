@@ -42,7 +42,7 @@ $wgAutoloadClasses['WikiaPollArticle'] = "{$dir}/WikiaPollArticle.class.php";
 $wgAutoloadClasses['WikiaPollHooks'] = "{$dir}/WikiaPollHooks.class.php";
 $wgAutoloadClasses['SpecialCreateWikiaPoll'] = "{$dir}/SpecialCreateWikiaPoll.class.php";
 // modules
-$wgAutoloadClasses['WikiaPollModule'] = "{$dir}/WikiaPollModule.class.php";
+$wgAutoloadClasses['WikiaPollController'] = "{$dir}/WikiaPollController.class.php";
 
 // Special Page
 $wgSpecialPages['CreatePoll'] = 'SpecialCreateWikiaPoll';

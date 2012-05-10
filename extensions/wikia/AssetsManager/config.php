@@ -188,7 +188,7 @@ $config['oasis_nojquery_shared_js'] = array(
 
 
 //anon JS
-// Note: Owen moved getSiteJS call from both anon_js and user_js to OasisModule::loadJS
+// Note: Owen moved getSiteJS call from both anon_js and user_js to OasisController::loadJS
 // so that common.js is loaded last so it has less chance of breaking other things
 $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,

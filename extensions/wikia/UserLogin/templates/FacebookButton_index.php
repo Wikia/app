@@ -7,6 +7,6 @@
 			'accesskey' => false,
 		),
 		'class' => trim("wikia-button-facebook {$class}"),
-		'image' => MenuButtonModule::FACEBOOK_ICON,
+		'image' => MenuButtonController::FACEBOOK_ICON,
 		'tooltip' => $tooltip,
 	));

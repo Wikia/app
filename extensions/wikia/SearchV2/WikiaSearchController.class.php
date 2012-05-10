@@ -59,7 +59,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$isInterWiki = $crossWikia ? true : $isCorporateWiki;
 
 		if($isCorporateWiki) {
-			OasisModule::addBodyClass('inter-wiki-search');
+			OasisController::addBodyClass('inter-wiki-search');
 		}
 
 		$results = false;

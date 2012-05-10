@@ -3,7 +3,7 @@
 $wgExtensionMessagesFiles['LatestQuestions'] = dirname(__FILE__) . '/LatestQuestions.i18n.php';
 $wgExtensionFunctions[] = 'efLatestQuestionsInit';
 
-$wgAutoloadClasses['LatestQuestionsModule'] = dirname( __FILE__ ) . '/LatestQuestionsModule.php';
+$wgAutoloadClasses['LatestQuestionsController'] = dirname( __FILE__ ) . '/LatestQuestionsController.php';
 
 if( empty( $wgAnswersServer ) ) {
 	$wgAnswersServer = 'http://frag.wikia.com';

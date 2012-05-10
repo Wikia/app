@@ -12,7 +12,7 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'User Wall',
-	'author' => array( 'Tomek Odrobny', 'Christian Williams', 'Andrzej Łukaszewski', 'Piotr Bablok' ),
+	'author' => array( 'Tomek Odrobny', 'Christian Williams', 'Andrzej ≈Åukaszewski', 'Piotr Bablok' ),
 	'url' => 'http://www.wikia.com',
 	'descriptionmsg' => 'wall-desc',
 );
@@ -31,7 +31,7 @@ $app->registerClass('WallExternalController', $dir . '/WallExternalController.cl
 $app->registerClass('WallHistoryController', $dir . '/WallHistoryController.class.php');
 $app->registerClass('WallHooksHelper', $dir . '/WallHooksHelper.class.php');
 $app->registerClass('WallRailHelper', $dir . '/WallRailHelper.class.php');
-$app->registerClass('WallRailModule', $dir . '/WallRailModule.class.php');
+$app->registerClass('WallRailController', $dir . '/WallRailController.class.php');
 $app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
 $app->registerClass('WallHistory', $dir . '/WallHistory.class.php');
 

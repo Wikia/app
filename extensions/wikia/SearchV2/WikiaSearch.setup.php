@@ -28,6 +28,7 @@ if ($wgWikiaSearchIsDefault) {
      $app->registerSpecialPage('Search', 'WikiaSearchController');
 }
 $app->registerSpecialPage('WikiaSearch', 'WikiaSearchController');
+$app->registerSpecialPage('Search', 'WikiaSearchController');
 
 $wgSolrHost = isset($_GET['solrhost']) ? $_GET['solrhost'] : $wgSolrHost;
 

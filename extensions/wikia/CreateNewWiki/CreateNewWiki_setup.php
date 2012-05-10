@@ -12,7 +12,7 @@ $dir = dirname(__FILE__).'/';
 $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';
 $wgAutoloadClasses['CreateWikiLocalJob'] = $dir."../AutoCreateWiki/CreateWikiLocalJob.php";
 $wgAutoloadClasses['CreateWiki'] = $dir."../AutoCreateWiki/CreateWiki.php";
-$wgAutoloadClasses['CreateNewWikiModule'] = $dir . 'CreateNewWikiModule.class.php';
+$wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
 
 // special page mapping
@@ -26,4 +26,4 @@ $wgAvailableRights[] = 'createnewwiki';
 $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 
-$wgExtensionFunctions[] = 'CreateNewWikiModule::setupCreateNewWiki';
+$wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';

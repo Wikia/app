@@ -10,7 +10,7 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 //classes
 $app->registerClass('AdminDashboardSpecialPageController', $dir . 'AdminDashboardSpecialPageController.class.php');
-$app->registerClass('AdminDashboardModule', $dir . 'AdminDashboardModule.class.php');
+$app->registerClass('AdminDashboardController', $dir . 'AdminDashboardController.class.php');
 $app->registerClass('AdminDashboardLogic', $dir . 'AdminDashboardLogic.class.php');
 $app->registerClass('QuickStatsController', $dir . 'QuickStatsController.class.php');
 

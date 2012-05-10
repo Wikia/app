@@ -6,6 +6,6 @@ echo wfRenderModule('MenuButton', 'Index', array(
 		'text' => wfMsg('oasis-button-contribute-tooltip'),
 	),
 	'class' => 'contribute secondary',
-	'image' => MenuButtonModule::CONTRIBUTE_ICON,
+	'image' => MenuButtonController::CONTRIBUTE_ICON,
 	'dropdown' => $dropdownItems,
 ));

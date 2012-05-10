@@ -75,18 +75,6 @@ class WikiaDispatcher {
 					throw new WikiaException( "Invalid controller name: {$controllerName}" );
 				}
 
-				// Work around for module dispatching until modules are renamed
-				if ( empty( $autoloadClasses[$controllerClassName] ) || $app->isModule( $controllerName ) ) {
-					$controllerClassName = "{$controllerLegacyName}Module";
-					$method = ucfirst( $method );
-
-					if ( !empty( $autoloadClasses[$controllerClassName] ) ) {
-						$moduleTemplatePath = dirname( $autoloadClasses[$controllerClassName] ) . "/templates/{$controllerLegacyName}_{$method}.php";
-						$response->getView()->setTemplatePath( $moduleTemplatePath );
-					}
-					$params = $request->getParams();
-				}
-
 				$fname = __METHOD__ . " ({$controllerName}_{$method})";
 
 				$app->wf->profileIn($fname);
@@ -100,9 +88,14 @@ class WikiaDispatcher {
 				$controller = F::build( $controllerClassName );
 
 				// Temporary remap of executeX methods for modules
-				if ($app->isModule( $controllerClassName ) && !method_exists($controller, $method)) {
+				if (!method_exists($controller, $method)) {
+					$method = ucfirst( $method );
+					$moduleTemplatePath = dirname( $autoloadClasses[$controllerClassName] ) . "/templates/{$controllerName}_{$method}.php";
+					$response->getView()->setTemplatePath( $moduleTemplatePath );
+					
 					$method = "execute{$method}";
-				}
+					$params = $request->getParams();				
+				}				
 
 				if (
 					( !$request->isInternal() && !$controller->allowsExternalRequests() ) ||

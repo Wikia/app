@@ -9,7 +9,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__).'/';
 
 // class autoloads mappings
-$wgAutoloadClasses['FinishCreateWikiModule'] = $dir . 'FinishCreateWikiModule.class.php';
+$wgAutoloadClasses['FinishCreateWikiController'] = $dir . 'FinishCreateWikiController.class.php';
 $wgAutoloadClasses['SpecialFinishCreate'] = $dir . 'SpecialFinishCreate.class.php';
 
 // special page mapping

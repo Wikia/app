@@ -11,7 +11,7 @@
 	require_once( "commandLine.inc" );
 
 	$dir = dirname(__FILE__).'/';
-	$wgAutoloadClasses['FounderEmailsModule'] = $dir . 'FounderEmailsModule.class.php';
+	$wgAutoloadClasses['FounderEmailsController'] = $dir . 'FounderEmailsController.class.php';
 	
 	 // get options
 	$long_opts = array("email:","lang:");
