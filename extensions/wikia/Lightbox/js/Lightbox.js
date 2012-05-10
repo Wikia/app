@@ -23,8 +23,7 @@ var Lightbox = {
 		defaults: {
 			videoHeight: 360,
 			topOffset: 25,
-			height: 648,
-			duration: 200 // animation timer
+			height: 648
 		},
 		// start with default modal options
 		initial: {
@@ -266,7 +265,7 @@ var Lightbox = {
 					imageHeight: dimensions.imageHeight,
 					imageUrl: data.imageUrl
 				};
-				
+								
 				var renderedResult = photoTemplate.mustache(json);
 	
 				// Hack to vertically align the image in the lightbox
@@ -292,6 +291,7 @@ var Lightbox = {
 		},
 		getDimensions: function(imageUrl, callback) {
 			// Get image url from json - preload image
+			// TODO: cache image dimensions so we don't have to preload the image again
 			var image = $('<img id="LightboxPreload" src="'+imageUrl+'" />').appendTo('body');
 			
 			// Do calculations
