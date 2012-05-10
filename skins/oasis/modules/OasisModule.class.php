@@ -52,8 +52,19 @@ class OasisModule extends WikiaController {
 			$wgOut->addScript('<script src="'.$this->wg->ExtensionsPath.'/wikia/CreateNewWiki/js/WikiWelcome.js"></script>');
 		}
 
-		// macbre: let extensions modify content of the page (e.g. EditPageLayout)
-		$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
+		$renderContentModuleOnly = false;
+		if (!empty($this->wg->EnableRenderContentModuleOnlyExt)) {
+			if(renderContentModuleOnly::isRenderContentModuleOnlyEnabled()) {
+				$renderContentModuleOnly = true;
+			}
+		}
+
+		if($renderContentModuleOnly) {
+			$this->body = wfRenderModule('BodyContentOnly');
+		} else {
+			// macbre: let extensions modify content of the page (e.g. EditPageLayout)
+			$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
+		}
 
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);

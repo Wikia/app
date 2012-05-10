@@ -1,5 +1,68 @@
-@mixin hubs-vertical-coloring($color-wikiahome-hubcolor) {
+@import "../../../../skins/oasis/css/mixins/border-radius.scss";
+
+@mixin hubs-vertical-coloring($color-wikiahome-hubcolor, $color-wikiahome-hubcolor-dark){
 	$whitecolor: #fff;
+	$color-wikiahome-hubiframe-background: #C7D1D9;
+
+	&.WikiaFrameContainer {
+		width: 777px;
+		overflow: auto;
+		margin: 0;
+		padding: 0;
+		background: $color-wikiahome-hubiframe-background;
+		.header_image {
+			background: $whitecolor;
+		}
+	}
+	.WikiaFrame {
+		overflow: hidden;
+		width: 484px;
+		padding: 25px 42px 24px 42px;
+		margin: 30px auto;
+		background: $whitecolor;
+		border: 3px solid $color-wikiahome-hubcolor;
+		@include border-radius(10px);
+		.button {
+			display: block;
+			font-weight: regular;
+			font-size: 15px;
+			padding: 11px 20px 2px;
+			margin: 10px auto 10px auto;
+			height: 30px;
+			width: 128px;
+			text-align: center;
+			@include linear-gradient($color-wikiahome-hubcolor-dark, top, $color-wikiahome-hubcolor, 35%, $color-wikiahome-hubcolor-dark, 65%);
+			border: 1px solid $color-wikiahome-hubcolor;
+			/*
+			&:hover {
+				@include linear-gradient($color-wikiahome-hubcolor, top, $color-wikiahome-hubcolor-dark, 35%, $color-wikiahome-hubcolor, 65%);
+			}
+			*/
+		}
+		.WikiaMosaicSlider {
+			overflow: hidden;
+			margin-bottom: 20px;
+		}
+		.wiki-images {
+			margin: 10px 3px;
+			overflow: hidden;
+		}
+		.links {
+			height: 36px;
+			margin-bottom: 25px;
+			overflow:hidden;
+			a {
+				line-height: 18px;
+				font-size: 13px;
+				font-weight: 900;
+				color: $color-wikiahome-hubcolor;
+				float: right;
+				clear: right;
+			}
+
+
+		}
+	}
 	.WikiaHubs {
 		.wikiahubs-explore {
 			h2 {
@@ -30,11 +93,11 @@
 				color: $color-wikiahome-hubcolor;
 			}
 			.RelatedVideos .RVBody .button .chevron {
-   				border-color: transparent $color-wikiahome-hubcolor transparent transparent;
-   			}
+				border-color: transparent $color-wikiahome-hubcolor transparent transparent;
+			}
 			.RelatedVideos .RVBody .button.left .chevron {
-   				border-color: transparent transparent transparent $color-wikiahome-hubcolor ;
-   			}
+				border-color: transparent transparent transparent $color-wikiahome-hubcolor;
+			}
 		}
 		.wikiahubs-sponsored-video {
 			a {
@@ -62,9 +125,9 @@
 				border-bottom: 4px solid $color-wikiahome-hubcolor;
 			}
 			.tabberlive {
-			    li a {
+				li a {
 					color: $color-wikiahome-hubcolor;
-			    }
+				}
 				li a:hover {
 					background-color: $color-wikiahome-hubcolor;
 					color: $whitecolor;
@@ -124,15 +187,18 @@
 
 .page-Video_Games {
 	$color-wikiahome-hubcolor: $color-wikiahome-videogames;
-	@include hubs-vertical-coloring($color-wikiahome-hubcolor);
+	$color-wikiahome-hubcolor-dark: $color-wikiahome-videogames-dark;
+	@include hubs-vertical-coloring($color-wikiahome-hubcolor,$color-wikiahome-hubcolor-dark);
 }
 
 .page-Entertainment {
 	$color-wikiahome-hubcolor: $color-wikiahome-entertainment;
-	@include hubs-vertical-coloring($color-wikiahome-hubcolor);
+	$color-wikiahome-hubcolor-dark: $color-wikiahome-entertainment-dark;
+	@include hubs-vertical-coloring($color-wikiahome-hubcolor,$color-wikiahome-hubcolor-dark);
 }
 
 .page-Lifestyle {
 	$color-wikiahome-hubcolor: $color-wikiahome-lifestyle;
-	@include hubs-vertical-coloring($color-wikiahome-hubcolor);
+	$color-wikiahome-hubcolor-dark: $color-wikiahome-lifestyle-dark;
+	@include hubs-vertical-coloring($color-wikiahome-hubcolor,$color-wikiahome-hubcolor-dark);
 }
