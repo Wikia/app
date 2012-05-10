@@ -200,13 +200,12 @@ class ArticleCommentInit {
 	 * @return true -- because it's a hook
 	 */
 	static function InjectTOCitem($parser, $sk, &$toc, &$sublevelCount) {
-		if (self::ArticleCommentCheck()) {
+		if (self::ArticleCommentCheck() && !Wikia::isWikiaMobile( $sk )) {
 			wfLoadExtensionMessages('ArticleComments');
 			$tocnumber = ++$sublevelCount[1];
 
-			//WikiaMobile has the comments header in the content language, this should match that
 			$messageId = 'article-comments-toc-item';
-			$label = ( Wikia::isWikiaMobile( $sk ) ) ? wfMsgForContent( $messageId ) : wfMsg( $messageId );
+			$label = wfMsg( $messageId );
 
 			$toc .= $sk->tocLine('article-comments', $label, $tocnumber, 1);
 		}
