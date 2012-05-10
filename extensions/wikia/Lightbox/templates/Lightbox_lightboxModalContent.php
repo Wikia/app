@@ -7,19 +7,19 @@
 		<span id="LightboxPrevious" class="previous"></span>
 	</div>
 
-	<script id="LightboxPhotoTemplate" type="text/template">
+	<script id="LightboxPhotoTemplate" class="template" type="text/template">
 		<div class="media">
 			<img src="{{imageUrl}}" height="{{imageHeight}}" />
 		</div>
 	</script>
 	
-	<script id="LightboxVideoTemplate" type="text/template">
+	<script id="LightboxVideoTemplate" class="template" type="text/template">
 		<div class="media video-media">
 			{{{embed}}}
 		</div>
 	</script>
 	
-	<script id="LightboxHeaderTemplate" type="text/template">
+	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
 		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
@@ -38,6 +38,20 @@
 		var mediaThumbs = <?= json_encode($mediaThumbs) ?>;
 	</script>
 	
-	<div id="LightboxCaoursel" class="LightboxCaoursel">
-	</div>
+	<script id="LightboxCarouselTemplate" class="template" type="text/template">
+		<div id="LightboxCarousel" class="LightboxCarousel">
+			<div class="ad"></div>
+			<div class="content">
+				<ul class="toolbar">
+					<li><!-- pin icon --></li>
+					<li><!-- full screen icon --></li>
+				</ul>
+				<p class="progress">{{progress}}</p>
+				<span class="carousel-arrow next"></span>
+				<span class="carousel-arrow previous"></span>
+				<div class="thumbs"><ul>{{#thumbs}}<li><img src="{{.}}" /></li>{{/thumbs}}</ul></div>
+			</div>
+		</div>
+	</script>
+
 </div>

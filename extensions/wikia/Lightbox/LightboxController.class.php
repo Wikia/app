@@ -65,17 +65,42 @@ class LightboxController extends WikiaController {
 		// sample data
 		$thumbs = array(
 			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
 				'type' => 'image',
 				'title' => '500x1700.jpeg'
 			),
 			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',	// 90x55 images
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
 				'type' => 'image',
 				'title' => 'IMG 1535.jpg'
 			),
 			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',	// 90x55 images
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',	
+				'type' => 'image',
+				'title' => 'Avatar.jpg'
+			),
+			array(
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
+				'type' => 'video',
+				'title' => 'The Dark Knight (2008) - Hit Me!'
+			),
+			array(
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',
+				'type' => 'video',
+				'title' => 'Return to Fallout New Vegas Walkthrough with Commentary Part 1 - The High-Five Returns'
+			),
+			array(
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
+				'type' => 'image',
+				'title' => '500x1700.jpeg'
+			),
+			array(
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',	
+				'type' => 'image',
+				'title' => 'IMG 1535.jpg'
+			),
+			array(
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
 				'type' => 'image',
 				'title' => 'Avatar.jpg'
 			),
@@ -85,7 +110,7 @@ class LightboxController extends WikiaController {
 				'title' => 'The Dark Knight (2008) - Hit Me!'
 			),
 			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg',
+				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
 				'type' => 'video',
 				'title' => 'Return to Fallout New Vegas Walkthrough with Commentary Part 1 - The High-Five Returns'
 			),

@@ -2,6 +2,7 @@
 @import "../../../../skins/oasis/css/mixins/background-opacity";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/color";
@@ -68,6 +69,9 @@
 		height: 100%;
 		line-height: 100%;
 		overflow: hidden;
+		img {
+			vertical-align: middle;
+		}
 	}
 	.video-media {
 		height: auto;
@@ -124,12 +128,40 @@
 			}
 		}
 	}
-	.LightboxCaoursel {
+	.LightboxCarousel {
 		@include box-shadow( 0px, 0px, 20px, darken($color-page,50%), false, 2px);
 		@include background-opacity($color-page, 90);
+		@include clearfix;
 		bottom: 0;
 		height: 110px;
 		position: absolute;
 		width: 100%;
+		
+		.content {
+			border-right: 1px solid $color-page-border;
+			padding: 15px 20px;
+			width: 645px;
+		}
+		.thumbs {
+			height: 50px;
+			overflow: hidden;
+			position: relative;
+			width: 580px;
+			ul {
+				@include clearfix;
+				position: absolute;
+			}
+			li {
+				float: left;
+				margin-right: 8px;
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+			img {
+				width: 90px; // TODO: get these dimensions from thumbnailer
+				height: 55px; // TODO: get these dimensions from thumbnailer
+			}
+		}
 	}
 }
