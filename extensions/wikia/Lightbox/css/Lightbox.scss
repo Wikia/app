@@ -3,14 +3,61 @@
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/color";
 
 .LightboxModal {
+	overflow: hidden;
 	.WikiaLightbox {
 		height: 100%;
+		header {
+			@include transition-shorthand(top 600ms ease-out);
+			/* permanent code */
+			z-index: 1;	/* this should be lower than close button */
+			/* /permanent */
+			/* temp code, combine with carousel box */
+			@include box-shadow( 0px, 0px, 20px, darken($color-page, 50%), false, 2px);
+			background-color: rgba(#ffffff, 0.8);
+			padding: 20px;
+			position: absolute;
+			top: 0;
+			width: 960px;
+			/* /temp code */
+			&.hidden {
+				top: -150px;
+			}
+			h1 {
+				float: left;
+				font-size: 18px;
+				max-width: 650px;	/* compensation for i18n on .see-full-size-link */
+			}
+			.avatar {
+				height: 16px;
+				margin-right: 2px;
+				position: relative;
+				top: 2px;
+				width: 16px;
+			}
+			.caption {
+				clear: left;
+				margin-top: 2px;
+			}
+			.more-info-button {
+				float: right;
+				margin-right: 50px;
+			}
+			.see-full-size-link {
+				border-left: 1px solid $color-page-border;
+				margin-left: 10px;
+				padding-left: 10px;
+				position: relative;
+				top: 2px;
+			}
+		}
 	}
 	.close {
-		display: none;
+		/*display: none;*/
+		z-index: 2;
 	}
 	.modalContent {
 		margin: 0;

@@ -170,7 +170,7 @@ class LightboxController extends WikiaController {
 			$caption = '';	/* caption doesn't look like it's been structured, and it's just wikitext? (hyun) */
 			//$description = $article->getContent();	TODO: broken, needs to be fixed
 			$userName = $user->getName();
-			$userThumbUrl = F::build( 'AvatarService', array($user->getId() , 30 ), 'getAvatarUrl' );
+			$userThumbUrl = F::build( 'AvatarService', array($user->getId() , 16 ), 'getAvatarUrl' );
 			$userPageUrl = $user->getUserPage()->getFullURL();
 			$articles = array(
 				array('articleUrl' => '', 'articleTitle' => 'Some Article')
@@ -178,6 +178,7 @@ class LightboxController extends WikiaController {
 			/* article that image is embedded to needs to be implemented.  currently, there's an implementation on LatestPhotosModule->getLinkedFiles */
 		}
 		
+		$this->fileTitle = $fileTitle;
 		$this->mediaType = $mediaType;
 		$this->videoEmbedCode = $videoEmbedCode;
 		$this->playerAsset = $playerAsset;

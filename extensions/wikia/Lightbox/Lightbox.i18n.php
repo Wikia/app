@@ -3,6 +3,13 @@
 $messages = array();
 
 $messages['en'] = array(
+	/* new stuff for new lightbox */
+	'lightbox-header-more-info-button' => 'More Info',
+	'lightbox-header-see-full-size-image' => 'See full size image',
+	'lightbox-header-added-by' => 'Added by $1',
+	'lightbox-header-posted-in' => 'Posted in $1',
+	/* /new stuff */
+
 	'lightbox_details_tooltip' => 'View photo details',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard link',
