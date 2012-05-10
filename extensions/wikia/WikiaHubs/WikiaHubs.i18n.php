@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	// general
-	'wikiahubs-button-cancel' => 'Cancel',
+	'wikiahubs-button-cancel' => 'cancel',
 	'wikiahubs-button-close' => 'Finished',
 	
 	// suggest related video
