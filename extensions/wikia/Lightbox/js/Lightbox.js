@@ -239,7 +239,10 @@ var Lightbox = {
 				if(Lightbox.current.type == 'image') {
 					Lightbox.image.updateLightbox(initialFileDetail);
 				} else {
-					Lightbox.video.updateLightbox(initialFileDetail);
+					// normalize for jwplayer
+					Lightbox.normalizeMediaDetail(initialFileDetail, function(json) {
+						Lightbox.video.updateLightbox(json);
+					});
 				}
 			}
 		});
@@ -380,6 +383,12 @@ var Lightbox = {
 			}
 			
 			Lightbox.updateArrows();
+			
+			// if player script exists, run it
+			if(data.playerScript) {
+				$('body').append('<script>' + data.playerScript + '</script>');
+			}
+			
 			Lightbox.log("Lightbox modal loaded");
 			Lightbox.lightboxLoading = false;
 			
@@ -411,27 +420,17 @@ var Lightbox = {
 			width: targetChildImg.width()
 		}, function(json) {
 			var embedCode = json['videoEmbedCode'];
+			target.hide().after(embedCode);
+			var videoReference = target.next();	//retrieve DOM reference
 			
-			var callback = function() {
-				target.hide().after(embedCode);
-				var videoReference = target.next();	//retrieve DOM reference
-				
-				// save references for inline video removal later
-				Lightbox.inlineVideoLinks = target.add(Lightbox.inlineVideoLinks);
-				Lightbox.inlineVideos = videoReference.add(Lightbox.inlineVideos);
-			};
-			
-			/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */
-			if(typeof embedCode === 'object') {
-				var playerJson = embedCode;	// renaming to keep my sanity
-				$.getScript(json['playerAsset'], function() {
-					embedCode = $("<div>").attr("id", playerJson['id']);
-					callback();
-					$('body').append('<script>' + playerJson['script'] + ' loadJWPlayer(); </script>');
-				});	
-			} else {
-				callback();
+			// if player script, run it
+			if(json.playerScript) {
+				$('body').append('<script>' + json.playerScript + '</script>');
 			}
+			
+			// save references for inline video removal later
+			Lightbox.inlineVideoLinks = target.add(Lightbox.inlineVideoLinks);
+			Lightbox.inlineVideos = videoReference.add(Lightbox.inlineVideos);
 		});
 	},
 	removeInlineVideos: function() {
@@ -474,11 +473,11 @@ var Lightbox = {
 			var title = Lightbox.current.title = mediaArr[idx].title;
 			var type = Lightbox.current.type = mediaArr[idx].type;
 			
-			Lightbox.getMediaDetails({
+			Lightbox.getMediaDetail({
 				title: Lightbox.current.title,
 				type: type
 			}, function(data) {
-				self[type].updateLightbox(data);		
+				Lightbox[type].updateLightbox(data);		
 			});			
 		}
 	},
@@ -513,10 +512,28 @@ var Lightbox = {
 				format: 'json',
 				data: mediaParams,
 				callback: function(json) {
-					Lightbox.cache.details[title] = json;
-					callback(json);
+					Lightbox.normalizeMediaDetail(json, function(json) {
+						Lightbox.cache.details[title] = json;
+						callback(json);
+					});
 				}
 			});
+		}
+	},
+	normalizeMediaDetail: function(json, callback) {
+		/* normalize JWPlayer instances */
+		var embedCode = json['videoEmbedCode'];
+		
+		/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */
+		if(typeof embedCode === 'object') {
+			var playerJson = embedCode;	// renaming to keep my sanity
+			$.getScript(json['playerAsset'], function() {
+				json['videoEmbedCode'] = '<div id="' + playerJson['id'] + '"></div>';	//$("<div>").attr("id", playerJson['id']);
+				json['playerScript'] = playerJson['script'] + ' loadJWPlayer();';
+				callback(json);
+			});	
+		} else {
+			callback(json);
 		}
 	}
 
