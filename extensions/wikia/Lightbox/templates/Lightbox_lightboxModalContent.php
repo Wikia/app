@@ -28,4 +28,8 @@
 		var initialFileDetail = <?= json_encode($initialFileDetail) ?>;
 		var mediaThumbs = <?= json_encode($mediaThumbs) ?>;
 	</script>
+	
+	<div id="LightboxCaoursel" class="LightboxCaoursel">
+		
+	</div>
 </div>

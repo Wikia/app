@@ -275,7 +275,7 @@ var Lightbox = {
 				if(mediaDiv.length) {
 					mediaDiv.replaceWith(renderedResult);
 				} else {
-					contentArea.append(renderedResult);			
+					renderedResult.insertBefore("#LightboxCaoursel");			
 				}
 				
 				Lightbox.updateArrows();
@@ -379,7 +379,7 @@ var Lightbox = {
 			if(mediaDiv.length) {
 				mediaDiv.replaceWith(renderedResult);
 			} else {
-				contentArea.append(renderedResult);			
+				renderedResult.insertBefore("#LightboxCaoursel");			
 			}
 			
 			Lightbox.updateArrows();
