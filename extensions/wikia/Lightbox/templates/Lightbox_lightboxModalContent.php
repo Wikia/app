@@ -30,6 +30,5 @@
 	</script>
 	
 	<div id="LightboxCaoursel" class="LightboxCaoursel">
-		
 	</div>
 </div>
