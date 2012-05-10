@@ -235,6 +235,9 @@ var Lightbox = {
 					}
 				}
 				
+				// pre-cache known doms
+				Lightbox.openModal.header = Lightbox.openModal.find('header');
+				
 				if(Lightbox.current.type == 'image') {
 					Lightbox.image.updateLightbox(initialFileDetail);
 				} else {
@@ -279,6 +282,8 @@ var Lightbox = {
 				}
 				
 				Lightbox.updateArrows();
+				Lightbox.renderHeader();
+				
 				Lightbox.lightboxLoading = false;
 				Lightbox.log("Lightbox modal loaded");
 					
@@ -412,6 +417,18 @@ var Lightbox = {
 				
 				return dimensions;
 		}	
+	},
+	renderHeader: function() {
+		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderTemplate");	//TODO: replace with cache
+		Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
+			var renderedResult = headerTemplate.mustache(json)
+			Lightbox.openModal.header.html(renderedResult).removeClass('hidden');
+			Lightbox.eventHooks.header = setTimeout(
+				function() {
+					Lightbox.openModal.header.addClass('hidden');
+				}, 3000
+			);
+		});
 	},
 	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
 		Lightbox.getMediaDetail({
