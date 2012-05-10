@@ -3,6 +3,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'report-no-data' => 'No data.',
+
 	'report-xaxis' => 'Date',
 
 	'report-name-new_wikis' => 'New wikis by day',
@@ -31,4 +33,14 @@ $messages['en'] = array(
 	'report-yaxis-allemails_clicks_per_sent' => 'Clicks/sent (%25)',
 	'report-name-allemails_opens_per_sent' => 'All e-mails: Open rate by day',
 	'report-yaxis-allemails_opens_per_sent' => 'Opens/sent (%25)',
+
+	'report-name-new_users' => 'New Users',
+	'report-name-total_users' => 'Total Users by day',
+	'report-yaxis-total_users' => 'Total Users',
+	'report-name-confirmed_users' => 'Confirmed Users by day',
+	'report-yaxis-confirmed_users' => 'Confirmed Users',
+	'report-name-temp_users' => 'Temp Users by day',
+	'report-yaxis-temp_users' => 'Temp Users',
+	'report-name-facebook_users' => 'Facebook Users by day',
+	'report-yaxis-facebook_users' => 'Facebook Users',
 );

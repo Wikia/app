@@ -11,6 +11,12 @@ class CustomReportsSpecialController extends WikiaSpecialPageController {
 			'new_wikis' => array(
 				'new_wikis',
 			),
+			'new_users' => array(
+				'total_users',
+				'confirmed_users',
+				'temp_users',
+				'facebook_users',
+			),
 			'founderemails' => array(
 				'founderemails_sent',
 				'founderemails_opens',
@@ -52,6 +58,10 @@ class CustomReportsSpecialController extends WikiaSpecialPageController {
 			$data = $report->get_data();
 			foreach($data as $key => $data_xml) {
 				$this->charts .= (string) $this->app->sendRequest('CustomReportsSpecialController', 'getChart', array('data_xml'=>$data_xml, 'num_chart' => $key));
+			}
+
+			if (empty($this->charts)) {
+				$this->charts = $this->wf->Msg( 'report-no-data' );
 			}
 		}
 	}
