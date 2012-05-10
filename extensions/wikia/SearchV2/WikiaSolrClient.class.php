@@ -39,11 +39,21 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$spellCheck         = isset($spellCheck)         ? $spellCheck         : false;
 		$hub				= isset($hub)				 ? $hub				   : false;
 
-		if (isset($namespaces)) {
-		  $this->setNamespaces($namespaces);
-		}
+		if (!isset($namespaces)) {
+			$namespaces = $this->namespaces ?: SearchEngine::DefaultNamespaces();
+		} 
 
 		$this->query = $query;
+
+		if ($queryNamespace = MWNamespace::getCanonicalIndex(array_shift(explode(':', strtolower($query))))) {
+			if (!in_array($queryNamespace, $namespaces)) {
+				$namespaces[] = $queryNamespace;
+			}
+			$query = implode(':', array_slice(explode(':', $query), 1));
+		}
+
+		$this->setNamespaces($namespaces);
+
 		$this->isInterWiki = isset($isInterWiki) ? $isInterWiki : false;
 
 		$params = array(
@@ -80,10 +90,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$queryClauses += $this->getInterWikiQueryClauses($hub);
 		}
 		else {
-
-		  if ( empty($this->namespaces) ) {
-		    $this->setNamespaces(SearchEngine::DefaultNamespaces());
-		  }
 
 		  $nsQuery = '';
 		  foreach($this->namespaces as $namespace) {
@@ -206,7 +212,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 					'resultsFound' => $numFound,
 					'resultsStart' => $start,
 					'isComplete'   => false, 
-					'query'        => $query 
+					'query'        => $this->query 
 					) 
 				 );
 	}
