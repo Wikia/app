@@ -167,7 +167,7 @@ class UserProfilePageController extends WikiaController {
 					'href' => $this->title->getLocalUrl( $editQuery ),
 					'text' => $this->wf->Msg('user-action-menu-edit-profile'),
 				),
-				'image' => MenuButtonModule::EDIT_ICON,
+				'image' => MenuButtonController::EDIT_ICON,
 				'name' => 'editprofile',
 			);
 		} else if ( $namespace == NS_USER_TALK && empty($this->app->wg->EnableWallExt) ) {
@@ -183,7 +183,7 @@ class UserProfilePageController extends WikiaController {
 							'href' => $this->title->getLocalUrl( $editQuery ),
 							'text' => $this->wf->Msg('user-action-menu-edit'),
 						),
-						'image' => MenuButtonModule::EDIT_ICON,
+						'image' => MenuButtonController::EDIT_ICON,
 						'name' => 'editprofile',
 					);
 				} else {
@@ -192,7 +192,7 @@ class UserProfilePageController extends WikiaController {
 							'href' => $title->getLocalUrl( array_merge( $editQuery, array( 'section' => 'new' ) ) ),
 							'text' => $this->wf->Msg('user-action-menu-leave-message'),
 						),
-						'image' => MenuButtonModule::MESSAGE_ICON,
+						'image' => MenuButtonController::MESSAGE_ICON,
 						'name' => 'leavemessage',
 						'dropdown' => array(
 							'edit' => array(
@@ -213,7 +213,7 @@ class UserProfilePageController extends WikiaController {
 					'href' => F::build('SpecialPage', array('CreateBlogPage'), 'getTitleFor')->getLocalUrl( !empty($wgCreateBlogPagePreload) ? "preload=$wgCreateBlogPagePreload" : "" ),
 					'text' => wfMsg('blog-create-post-label'),
 				),
-				'image' => MenuButtonModule::BLOG_ICON,
+				'image' => MenuButtonController::BLOG_ICON,
 				'name' => 'createblogpost',
 			);
 		}

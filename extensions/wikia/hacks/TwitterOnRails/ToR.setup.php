@@ -12,12 +12,12 @@ $app = F::build('App');
 /**
  * classes
  */
-$app->registerClass('ToRModule', $dir . 'ToRModule.class.php');
+$app->registerClass('ToRController', $dir . 'ToRController.class.php');
 
 /**
  * Factory config
  */
-F::addClassConstructor( 'ToRModule', array( 'app' => $app ) );
+F::addClassConstructor( 'ToRController', array( 'app' => $app ) );
 
 /**
  * message files

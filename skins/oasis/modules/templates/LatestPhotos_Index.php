@@ -31,8 +31,8 @@ else {
 	$load = 3;
 	foreach ($thumbUrls as $i => $url) {?>
 		<li class="thumbs"><a class="image" data-ref="<?= $url["image_filename"] ?> " href="<?= $url["file_url"] ?>">
-			<? if ( isset( $url['isVideoThumb'] ) && $url['isVideoThumb'] ) echo WikiaVideoService::videoPlayButtonOverlay( LatestPhotosModule::THUMB_SIZE, LatestPhotosModule::THUMB_SIZE ); ?>
-			<img class="thumbimage" height="<?= LatestPhotosModule::THUMB_SIZE; ?>" width="<?= LatestPhotosModule::THUMB_SIZE; ?>" <?= $i < $load ? 'src' : "src='$wg->BlankImgUrl' data-src" ?>="<?= $url["thumb_url"] ?>" />
+			<? if ( isset( $url['isVideoThumb'] ) && $url['isVideoThumb'] ) echo WikiaVideoService::videoPlayButtonOverlay( LatestPhotosController::THUMB_SIZE, LatestPhotosController::THUMB_SIZE ); ?>
+			<img class="thumbimage" height="<?= LatestPhotosController::THUMB_SIZE; ?>" width="<?= LatestPhotosController::THUMB_SIZE; ?>" <?= $i < $load ? 'src' : "src='$wg->BlankImgUrl' data-src" ?>="<?= $url["thumb_url"] ?>" />
 		</a>
 
 		<span class="thumbcaption">

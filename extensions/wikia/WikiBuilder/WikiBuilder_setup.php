@@ -9,7 +9,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__).'/';
 
 // autoloads
-$wgAutoloadClasses['WikiBuilderModule'] = $dir . 'WikiBuilderModule.class.php';
+$wgAutoloadClasses['WikiBuilderController'] = $dir . 'WikiBuilderController.class.php';
 $wgAutoloadClasses['SpecialWikiBuilder'] = $dir . 'SpecialWikiBuilder.class.php';
 
 // special pages

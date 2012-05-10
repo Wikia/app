@@ -11,7 +11,7 @@ EOT;
 
 $dir = dirname(__FILE__) . '/';
 
-$wgAutoloadClasses['WikiReviewsModule'] = $dir . 'WikiReviewsModule.php';
+$wgAutoloadClasses['WikiReviewsController'] = $dir . 'WikiReviewsController.php';
 
 $wgExtensionMessagesFiles['WikiReviews'] = $dir . 'WikiReviews.i18n.php';
 

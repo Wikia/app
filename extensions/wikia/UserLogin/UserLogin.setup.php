@@ -18,7 +18,7 @@ $app->registerClass('FacebookSignupController', $dir . 'FacebookSignupController
 $app->registerClass('UserLoginSpecialController', $dir . 'UserLoginSpecialController.class.php');
 $app->registerClass('UserSignupSpecialController', $dir . 'UserSignupSpecialController.class.php');
 $app->registerClass('WikiaConfirmEmailSpecialController', $dir . 'WikiaConfirmEmailSpecialController.class.php');
-$app->registerClass('UserLoginModule', $dir . 'UserLoginModule.class.php');
+$app->registerClass('UserLoginController', $dir . 'UserLoginController.class.php');
 $app->registerClass('UserLoginHelper', $dir . 'UserLoginHelper.class.php');
 $app->registerClass('TempUser', $dir . 'TempUser.class.php');
 $app->registerClass('UserLoginForm', $dir . 'UserLoginForm.class.php');

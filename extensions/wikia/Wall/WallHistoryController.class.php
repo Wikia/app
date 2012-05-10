@@ -227,8 +227,8 @@ class WallHistoryController extends WallController {
 			}
 			
 			$userid = $user->getId();
-			if( $user->isAnon() ) WallRailModule::addAnon($userid, $user);
-			else WallRailModule::addUser($userid, $user);
+			if( $user->isAnon() ) WallRailController::addAnon($userid, $user);
+			else WallRailController::addUser($userid, $user);
 		}
 		
 		return $history;

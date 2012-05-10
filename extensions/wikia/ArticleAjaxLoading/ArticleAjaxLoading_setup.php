@@ -13,7 +13,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczyński'
 );
 
-$wgAutoloadClasses['AALModule'] = dirname(__FILE__).'/AALModule.class.php';
+$wgAutoloadClasses['AALController'] = dirname(__FILE__).'/AALController.class.php';
 $wgHooks['UserLoadFromSession'][] = 'ArticleAjaxLoadinig_UserLoadFromSession';
 $wgHooks['MakeGlobalVariablesScript'][] = 'ArticleAjaxLoadinig_addJSVariable';
 

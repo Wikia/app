@@ -18,7 +18,7 @@ $app->registerClass('RelatedVideosData', $dir . '/RelatedVideosData.class.php');
 $app->registerClass('RelatedVideosService', $dir. '/RelatedVideosService.class.php');
 $app->registerClass('RelatedVideosNamespaceData', $dir . '/RelatedVideosNamespaceData.class.php');
 $app->registerClass('RelatedVideosEmbededData', $dir . '/RelatedVideosEmbededData.class.php');
-$app->registerClass('RelatedVideosRailModule', $dir . '/RelatedVideosRailModule.class.php');
+$app->registerClass('RelatedVideosRailController', $dir . '/RelatedVideosRailController.class.php');
 
 /**
  * controllers

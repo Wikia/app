@@ -4,7 +4,7 @@
  * A Wall consists of "Bricks" which are each a single topic/thread/conversation.
  * In typical use, a Wall will only load a subset of Bricks because there will be a TON of bricks as time goes on.
  */
-class WallController extends ArticleCommentsModule {
+class WallController extends ArticleCommentsController {
 	private $helper;
 	protected $allowedNamespaces = array();
 	protected $sortingType = 'index';
@@ -168,7 +168,7 @@ class WallController extends ArticleCommentsModule {
 	 * 
 	 * @desc Renders old User_talk:[username] page in new place, using Wall_renderOldUserTalkPage.php template
 	 * 
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
 	 */
 	public function renderOldUserTalkPage() {
 		$wallUrl = $this->request->getVal('wallUrl');
@@ -187,7 +187,7 @@ class WallController extends ArticleCommentsModule {
 	 * 
 	 * @desc Renders old User_talk:[username]/[subpage] page in new place, using Wall_renderOldUserTalkSubpage.php template
 	 * 
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
 	 */
 	public function renderOldUserTalkSubpage() {
 		$subpageName = $this->request->getVal('subpage', null);
@@ -209,7 +209,7 @@ class WallController extends ArticleCommentsModule {
 	 * 
 	 * @desc Renders an anchor to "User talk archive" page
 	 * 
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
 	 */
 	public function renderUserTalkArchiveAnchor() {
 		$renderUserTalkArchiveAnchor = $this->request->getVal('renderUserTalkArchiveAnchor', false);
@@ -658,7 +658,7 @@ class WallController extends ArticleCommentsModule {
 	 * 
 	 * @return Title
 	 * 
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' √Ö¬Åukaszewski
 	 */
 	private function getUserTalkContent($subpageName = '') {
 		if( !empty($subpageName) ) {

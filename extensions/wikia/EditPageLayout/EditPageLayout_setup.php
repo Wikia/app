@@ -30,7 +30,7 @@ $app = WF::build('App');
 $app->registerClass('EditPageLayout', $dir . '/EditPageLayout.class.php');
 $app->registerClass('EditPageLayoutAjax', $dir . '/EditPageLayoutAjax.class.php');
 $app->registerClass('EditPageLayoutHelper', $dir . '/EditPageLayoutHelper.class.php');
-$app->registerClass('EditPageLayoutModule', $dir . '/EditPageLayoutModule.class.php');
+$app->registerClass('EditPageLayoutController', $dir . '/EditPageLayoutController.class.php');
 
 // mocks classes
 $app->registerClass('ObjectMocker', $dir . '/mocks/ObjectMocker.class.php');

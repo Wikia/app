@@ -45,7 +45,7 @@ $wgAutoloadClasses['WikiaQuizPlayArticle'] = "{$dir}/WikiaQuizPlayArticle.class.
 $wgAutoloadClasses['SpecialCreateWikiaQuiz'] = "{$dir}/SpecialCreateWikiaQuiz.class.php";
 $wgAutoloadClasses['SpecialCreateWikiaQuizArticle'] = "{$dir}/SpecialCreateWikiaQuizArticle.class.php";
 // modules
-$wgAutoloadClasses['WikiaQuizModule'] = "{$dir}/WikiaQuizModule.class.php";
+$wgAutoloadClasses['WikiaQuizController'] = "{$dir}/WikiaQuizController.class.php";
 
 // Special Page
 $wgSpecialPages['CreateQuiz'] = 'SpecialCreateWikiaQuiz';

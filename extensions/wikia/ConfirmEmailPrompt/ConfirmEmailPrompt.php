@@ -54,7 +54,7 @@ function efConfirmEmailPrompt( &$msg ) {
 			)
 	);
 
-	NotificationsModule::addConfirmation( $message, NotificationsModule::CONFIRMATION_ERROR );
+	NotificationsController::addConfirmation( $message, NotificationsController::CONFIRMATION_ERROR );
 
 	return true;	
 }

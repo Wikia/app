@@ -98,7 +98,7 @@ function wfFounderEmailsInit() {
 }
 
 $dir = dirname(__FILE__).'/';
-$wgAutoloadClasses['FounderEmailsModule'] = $dir . 'FounderEmailsModule.class.php';
+$wgAutoloadClasses['FounderEmailsController'] = $dir . 'FounderEmailsController.class.php';
 $wgAutoloadClasses['SpecialFounderEmails'] = $dir . 'SpecialFounderEmails.class.php';
 
 $wgSpecialPages['FounderEmails'] = 'SpecialFounderEmails';

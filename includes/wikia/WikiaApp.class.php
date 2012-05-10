@@ -291,6 +291,23 @@ class WikiaApp {
 			$this->wg->set( 'wgAutoloadClasses', $filePath, $className );
 		}
 	}
+	
+	/**
+	 * register controller class 
+	 */
+	
+	public function registerController($className, $filePath, $options = null) {
+		// register the class with the autoloader
+		$this->registerClass($className, $filePath);
+		
+		if ( is_array ($className)) {
+			foreach ( $className as $cls ) {
+				$this->wg->set('wgWikiaControllers', $className, $options);
+			}
+		} else {
+			$this->wg->set('wgWikiaControllers', $options);
+		}
+	}
 
 	/**
 	 * register extension init function

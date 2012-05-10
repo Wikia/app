@@ -16,7 +16,7 @@ class SkinOasis extends WikiaSkin {
 class OasisTemplate extends WikiaQuickTemplate {
 	function execute() {
 		$this->app->setSkinTemplateObj($this);
-		$response = $this->app->sendRequest( Wikia::getVar( 'OasisEntryModuleName', 'Oasis' ), 'index', null, false );
+		$response = $this->app->sendRequest( Wikia::getVar( 'OasisEntryControllerName', 'Oasis' ), 'index', null, false );
 		$response->sendHeaders();
 		$response->render();
 	}

@@ -59,7 +59,8 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 	}
 
 	// if there are no other ads on this page, do not show exitstitial
-	$adSlots = Module::get('Ad', 'config')->getData('conf'); 
+	$response = F::app()->sendRequest('Ad', 'config');
+	$adSlots = $response->getVal('conf');
 	if (empty($adSlots) || !sizeof($adSlots)) {
 		return true;
 	}

@@ -5,7 +5,7 @@
 			echo wfRenderModule('MenuButton', 'Index', array(
 				'action' => $actionMenu['action'],
 				'dropdown' => $actionMenu['dropdown'],
-				'image' => MenuButtonModule::EDIT_ICON,
+				'image' => MenuButtonController::EDIT_ICON,
 			));
 		}
 	?>
