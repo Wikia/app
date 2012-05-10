@@ -44,6 +44,10 @@ $config['oasis_jquery'] = array(
 		'//skins/common/jquery/jquery.wikia.js',
 		'//skins/common/jquery/jquery.wikia.placeholder.js',
 		'//skins/common/jquery/jquery.expirystorage.js',
+		// library loaders
+		'//skins/common/jquery/jquery.wikia.getResources.js',
+		'//skins/common/jquery/jquery.wikia.loadLibrary.js',
+		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
 		'//skins/oasis/js/common.js'
 	)
