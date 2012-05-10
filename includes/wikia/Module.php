@@ -86,12 +86,18 @@ abstract class Module extends WikiaController {
 		}
 	}	
 
+	/**
+	 * @deprecated
+	 */
 	public static function setSkinTemplateObj(&$skinTemplate) {
-		self::$skinTemplateObj = $skinTemplate;
+		F::app()->setSkinTemplateObj( $skinTemplate );
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static function getSkinTemplateObj() {
-		return self::$skinTemplateObj;
+		return F::app()->getSkinTemplateObj();
 	}
 
 	// TODO: This function goes away when all usages are replaced by Controller::sendRequest

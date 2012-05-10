@@ -68,7 +68,7 @@ class CampfireModule extends WikiaController {
 		$this->mimetype = htmlspecialchars( $this->mimetype );
 		$this->charset = htmlspecialchars( $this->charset );
 
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
 
 		// printable CSS (to be added at the bottom of the page)
 		// If this is an anon article view, use the combined version of the print files.

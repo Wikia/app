@@ -980,6 +980,9 @@ class Wikia {
 	/**
 	 * Returns true if the currently set skin is Oasis.  Do not call this before the skin
 	 * has been set on wgUser.
+	 * 
+	 * @deprecated
+	 * @see WikiaApp::checkSkin
 	 */
 	public static function isOasis(){
 		wfProfileIn( __METHOD__ );
@@ -994,6 +997,9 @@ class Wikia {
 	/**
 	 * Returns true if the currently set skin is WikiaMobile.  Do not call this before the skin
 	 * has been set on wgUser.
+	 * 
+	 * @deprecated
+	 * @see WikiaApp::checkSkin
 	 */
 	public static function isWikiaMobile( Linker $skin = null ){
 		wfProfileIn( __METHOD__ );
