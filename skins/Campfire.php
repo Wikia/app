@@ -35,7 +35,7 @@ class SkinCampfire extends WikiaSkin {
 
 class CampfireTemplate extends WikiaQuickTemplate {
 	function execute() {
-		Module::setSkinTemplateObj($this);
+		F::app()->setSkinTemplateObj($this);
 		$response = $this->app->sendRequest( Wikia::getVar( 'CampfireEntryModuleName', 'Campfire' ), 'index', null, false );
 		$response->sendHeaders();
 		$response->render();

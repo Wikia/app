@@ -65,7 +65,7 @@ class ChatModule extends WikiaController {
 
 		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatModule', 'onMakeGlobalVariablesScript', array(), false, $this);
 
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
 
 		//Theme Designer stuff
 		$themeSettings = new ThemeSettings();

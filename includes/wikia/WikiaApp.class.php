@@ -44,7 +44,7 @@ class WikiaApp {
 	 * This reference is necessary for some Controllers that need access to Skin $data
 	 * @var SkinTemplate
 	 */
-	protected static $skinTemplateObj = null;
+	protected $skinTemplateObj = null;
 
 	/**
 	 * global MW variables helper accessor
@@ -237,14 +237,14 @@ class WikiaApp {
 	 *
 	 * @param SkinTemplate $skinTemplate 
 	 */
-	public static function setSkinTemplateObj(&$skinTemplate) {
-		self::$skinTemplateObj = $skinTemplate;
+	public function setSkinTemplateObj(&$skinTemplate) {
+		$this->skinTemplateObj = $skinTemplate;
 	}
 
-	public static function getSkinTemplateObj() {
-		return self::$skinTemplateObj;
+	public function getSkinTemplateObj() {
+		return $this->skinTemplateObj;
 	}
-	
+
 	/**
 	 * get dispatcher object
 	 * @return WikiaDispatcher

@@ -46,7 +46,7 @@ class ThemeDesignerModule extends WikiaController {
 			$this->returnTo = $this->wg->Script;
 		}
 
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
 
 		// load Google Analytics code
 		$this->analytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);

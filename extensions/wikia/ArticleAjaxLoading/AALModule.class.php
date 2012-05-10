@@ -8,9 +8,10 @@ class AALModule extends WikiaController {
 		$body = wfRenderModule('Body');
 		$start = strpos($body, '<article ');
 		$stop = strpos($body, '</article>');
+		$templateObj = $this->app->getSkinTemplateObj();
 		$data['body'] = substr($body, $start, $stop-$start+10);
-		$data['title'] = WikiaApp::getSkinTemplateObj()->data['pagetitle'];
-		$data['globalVariablesScript'] = Skin::makeGlobalVariablesScript(WikiaApp::getSkinTemplateObj()->data);
+		$data['title'] = $templateObj->data['pagetitle'];
+		$data['globalVariablesScript'] = Skin::makeGlobalVariablesScript($templateObj->data);
 
 		global $wgOut;
 		$scripts = $wgOut->getScript();

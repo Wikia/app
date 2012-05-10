@@ -54,12 +54,13 @@ class ModuleTest extends WikiaBaseTest {
 
 	function testSetGetSkinTemplate() {
 		$template = new OasisTemplate();
+		$app = F::app();
 
-		WikiaApp::setSkinTemplateObj($template);
+		$app->setSkinTemplateObj($template);
 
 		$this->assertEquals(
 			$template,
-			WikiaApp::getSkinTemplateObj()
+			$app->getSkinTemplateObj()
 		);
 	}
 
