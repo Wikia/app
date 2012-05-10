@@ -208,7 +208,7 @@ class AbTesting {
 								treatmentGroup = tgId;
 							}
 							if(tgConfig.is_control){
-								controlId = tgConfig;
+								controlId = tgId;
 							}
 						}
 
