@@ -17,7 +17,7 @@ var Lightbox = {
 		type: '', // image or video
 		title: '', // currently displayed file name
 		carouselType: '', // articleMedia, relatedVideos, or latestPhotos
-		index: -1, // ex: Lightbox.cache[Lightbox.current.carouselType][index]		
+		index: -1 // ex: Lightbox.cache[Lightbox.current.carouselType][index]		
 	},
 	modal: {
 		defaults: {
@@ -216,7 +216,7 @@ var Lightbox = {
 			type: 'POST',	/* TODO (hyun) - might change to get */
 			format: 'html',
 			data: {
-				title: Lightbox.current.title,
+				title: Lightbox.current.title
 			},
 			callback: function(html) {
 				// restore inline videos to default state, because flash players overlaps with modal
