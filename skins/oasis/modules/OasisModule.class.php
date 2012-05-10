@@ -306,13 +306,23 @@ class OasisModule extends WikiaController {
         $assets['oasis_extensions_js']= AssetsManager::getInstance()->getGroupCommonURL('oasis_extensions_js');
         $assets['oasis_user_anon'] = AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'oasis_user_js' : 'oasis_anon_js');
         $assets['references'] = $jsReferences;
-        
+
         if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-            $assets['oasis_shared_js'] = $this->rewriteJSlinks( $assets['oasis_shared_js'] );
-            $assets['oasis_nojquery_shared_js'] = $this->rewriteJSlinks( $assets['oasis_nojquery_shared_js'] );
-            $assets['oasis_noads_extensions_js'] = $this->rewriteJSlinks( $assets['oasis_noads_extensions_js'] );
-            $assets['oasis_extensions_js'] = $this->rewriteJSlinks( $assets['oasis_extensions_js'] );
-            $assets['oasis_user_anon'] = $this->rewriteJSlinks( $assets['oasis_user_anon'] );
+            for($j = 0; $j < count($assets['oasis_shared_js']); $j++) {
+                $assets['oasis_shared_js'][$j]= $this->rewriteJSlinks( $assets['oasis_shared_js'][$j] );
+            }
+            for($j = 0; $j < count($assets['oasis_nojquery_shared_js']); $j++) {
+                $assets['oasis_nojquery_shared_js'][$j]= $this->rewriteJSlinks( $assets['oasis_nojquery_shared_js'][$j] );
+            }
+            for($j = 0; $j < count($assets['oasis_noads_extensions_js']); $j++) {
+                $assets['oasis_noads_extensions_js'][$j]= $this->rewriteJSlinks( $assets['oasis_noads_extensions_js'][$j] );
+            }
+            for($j = 0; $j < count($assets['oasis_extensions_js']); $j++) {
+                $assets['oasis_extensions_js'][$j]= $this->rewriteJSlinks( $assets['oasis_extensions_js'][$j] );
+            }
+            for($j = 0; $j < count($assets['oasis_user_anon']); $j++) {
+                $assets['oasis_user_anon'][$j]= $this->rewriteJSlinks( $assets['oasis_user_anon'][$j] );
+            }
         }
 
 		// generate code to load JS files
@@ -330,7 +340,9 @@ class OasisModule extends WikiaController {
         //$jquery_ads = AssetsManager::getInstance()->getGroupCommonURL('oasis_jquery_ads_js');
         $jquery_ads = array();
         if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-             $jquery_ads = $this->rewriteJSlinks( $jquery_ads );
+            for($j = 0; $j < count($jquery_ads); $j++) {
+                $jquery_ads[$j]= $this->rewriteJSlinks( $jquery_ads[$j] );
+            }
         }
         $jquery_ads = Wikia::json_encode($jquery_ads);
         $this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ /* C */ wsl.loadScript({$jquery_ads}); })(); /*]]>*/</script>";
