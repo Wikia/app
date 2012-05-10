@@ -22,7 +22,7 @@
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',
 			dialog_backgroundCoverColor: '#000',
-			dialog_backgroundCoverOpacity: (window.skin == 'oasis' ? 0.8 : 0.5),
+			dialog_backgroundCoverOpacity: 0.8,
 			disableDragDrop: false,
 			disableObjectResizing: true,
 			entities: false,
@@ -121,7 +121,7 @@
 
 			// Bartek - for RT #43217
 			if (typeof WikiaEnableAutoPageCreate != 'undefined') {
-				RTE.config.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css');
+				RTE.config.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css'); // local path needs to be used here
 			}
 
 			var contentsCss = '',
@@ -141,7 +141,7 @@
 						RTE.initCk(editor);
 					}
 				});
-			}());		
+			}());
 		},
 
 		init: function(editor) {
