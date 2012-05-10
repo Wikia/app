@@ -109,19 +109,24 @@ var regExpRules = [
 		name: 'Found $.css',
 		regexp: /.css\(\s?['"](\S+)['"]\s?,/,
 		reason: function(matches) {
-			switch(matches[1]) {
+			var cssPropertyName = matches[1];
+
+			// ignore setting margin and padding
+			if (/^(margin|padding)/.test(cssPropertyName)) {
+				return false;
+			}
+
+			// ignore setting width and height
+			if (/(height|width)$/.test(cssPropertyName)) {
+				return false;
+			}
+
+			switch(cssPropertyName) {
 				// use $.show or $.hide
 				case 'display':
 					return 'Use $.show or $.hide';
 
 				// ignore
-				case 'width':
-				case 'min-width':
-				case 'max-width':
-				case 'height':
-				case 'min-height':
-				case 'max-height':
-
 				case 'left':
 				case 'right':
 				case 'top':
@@ -167,6 +172,12 @@ var regExpRules = [
 				return false;
 			}
 		}
+	},
+	// skin checks
+	{
+		name: 'Skin check',
+		regexp: /skin\s?==\s?['"]oasis['"]/,
+		reason: 'Deprecated skin check found'
 	}
 ];
 

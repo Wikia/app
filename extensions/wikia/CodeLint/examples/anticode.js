@@ -73,11 +73,17 @@ $('#foo').
 	live( "click", $.noop);
 
 // $.css
-$('ul li').css('color', 'red');
+$('ul li').css('color', 'red'); // disallow
 $('ul li').css('height', 300); // allow
 $('ul li').css('width', 400); // allow
 $('ul li').css('display', 'hide'); // use $.hide
 $('ul li').css('display'); // allow - it gets a value
+$('ul li').css('marginLeft', '50px'); // allow
+
+// skin checks
+if (skin == "oasis") {
+	var foo = 'oasis';
+}
 
 // browser sniffing
 if ($.browser.msie &&
