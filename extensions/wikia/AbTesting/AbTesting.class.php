@@ -182,9 +182,7 @@ class AbTesting {
 				// If we've already determined the treatment on this page-load, then return it right away (and don't send an extra treatment event).
 				treatmentGroup = abTreatments[expId];
 			} else {
-
 				if(AB_CONFIG.hasOwnProperty( expId )){
-				
 					if(typeof beacon_id == "undefined"){
 						if (hasLogging) {
 							console.log("DON'T CALL getTreatmentGroup() BEFORE BEACON/PAGE-VIEW CALL! Experiment is broken (will fall back to control group).");
@@ -206,7 +204,7 @@ class AbTesting {
 						var controlId;
 						for( var tgId in AB_CONFIG[expId]['groups'] ){
 							var tgConfig = AB_CONFIG[expId]['groups'][tgId];
-							if((normalizedHash >= tgConfig.min) || (normalizedHash <= tgConfig.max)){
+							if((normalizedHash >= tgConfig.min) && (normalizedHash <= tgConfig.max)){
 								treatmentGroup = tgId;
 							}
 							if(tgConfig.is_control){
