@@ -170,6 +170,7 @@ class LightboxController extends WikiaController {
 	/**
 	 * @brief - Returns complete details about a single media (file).  JSON only, no associated template to this method.
 	 * @requestParam string title
+	 * @requestParam string sourceArticleId (optional) - article id that the file belongs to
 	 * @responseParam string mediaType - media type.  either image or video
 	 * @responseParam string videoEmbedCode - embed html code if video
 	 * @responseParam string imageUrl - thumb image url that is hard scaled
@@ -179,8 +180,7 @@ class LightboxController extends WikiaController {
 	 * @responseParam string userThumbUrl - user avatar thumbUrl scaled to 30x30
 	 * @responseParam string userName - user name
 	 * @responseParam string userPageUrl - url to user profile page
-	 * @responseParam string articleTitle - name of the Article this image is posted to
-	 * @responseParam string articleUrl - url to the article
+	 * @responseParam array articles - array of articles that has title and url
 	 */
 	public function getMediaDetail() {
 		$fileTitle = $this->request->getVal('title');
