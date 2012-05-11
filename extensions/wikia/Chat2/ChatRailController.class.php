@@ -37,7 +37,7 @@ class ChatRailController extends WikiaController {
 			$this->profileType = !empty($wgEnableWallExt) ? 'message-wall' : 'talk-page';
 			$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
 			$this->isLoggedIn = $wgUser->isLoggedIn();
-			$this->profileAvatar = $this->isLoggedIn ? AvatarService::renderAvatar($wgUser->getName(), ChatController::AVATAR_SIZE) : '';
+			$this->profileAvatar = $this->isLoggedIn ? AvatarService::renderAvatar($wgUser->getName(), ChatRailController::AVATAR_SIZE) : '';
 
 			// List of other people in chat
 			$this->totalInRoom = 0;
@@ -49,7 +49,7 @@ class ChatRailController extends WikiaController {
 			foreach($chattersIn as $i => $val) {
 				$chatters[$i] = array();
 				$chatters[$i]['username'] = $val;
-				$chatters[$i]['avatarUrl'] = AvatarService::getAvatarUrl($chatters[$i]['username'], ChatController::AVATAR_SIZE);
+				$chatters[$i]['avatarUrl'] = AvatarService::getAvatarUrl($chatters[$i]['username'], ChatRailController::AVATAR_SIZE);
 
 				// get stats for edit count and member since
 				$user = User::newFromName($val);
