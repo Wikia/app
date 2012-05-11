@@ -27,7 +27,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 			messages: 'WikiaMobileComments',
 			scripts: 'articlecomments_js_wikiamobile',
 			templates: [{
-				controllerName: 'ArticleCommentsModule',
+				controllerName: 'ArticleCommentsController',
 				methodName: 'WikiaMobileCommentsPage',
 				params: {
 					articleID: wgArticleId,
@@ -42,7 +42,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 			callback: function(res){
 				loader.remove(wkArtCom);
 				Wikia.processStyle(res.styles);
-				wkComm.insertAdjacentHTML('beforeend', res.templates['ArticleCommentsModule_WikiaMobileCommentsPage']);
+				wkComm.insertAdjacentHTML('beforeend', res.templates['ArticleCommentsController_WikiaMobileCommentsPage']);
 				Wikia.processScript(res.scripts[0]);
 				if(open){
 					var elm = document.getElementById(open);

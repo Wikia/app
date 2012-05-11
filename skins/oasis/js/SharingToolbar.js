@@ -66,7 +66,7 @@ var SharingToolbar = {
 				buttons: [
 					{id:'ok', defaultButton:true, message:lightboxSend, handler:function(){
 						$.nirvana.sendRequest({
-							controller: 'SharingToolbarModule',
+							controller: 'SharingToolbarController',
 							method: 'sendMail',
 							format: 'json',
 							data: {
