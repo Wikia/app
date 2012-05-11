@@ -256,8 +256,10 @@ var Lightbox = {
 				});
 				
 				// pre-cache known doms
-				Lightbox.openModal.carousel = $(carousel).appendTo(Lightbox.openModal.WikiaLightbox);
+				Lightbox.openModal.carousel = $('#LightboxCarousel');
 				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
+				
+				Lightbox.openModal.carousel.append(carousel).data('rendered', true);
 				
 				var updateCallback = function(json) {
 					Lightbox.cache.details[Lightbox.current.title] = json;
@@ -273,9 +275,10 @@ var Lightbox = {
 				}
 				
 				// autohide carousel
-				Lightbox.openModal.carousel.data('rendered', true);
+				/*
 				Lightbox.showOverlay('carousel');
 				Lightbox.hideOverlay('carousel');
+				*/
 				
 				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 					var time = new Date().getTime();
@@ -292,7 +295,8 @@ var Lightbox = {
 						}
 					}
 				}).on('mouseout.Lightbox', function(evt) {
-					Lightbox.hideHeader();
+					Lightbox.hideOverlay('header');
+					Lightbox.hideOverlay('carousel');
 				});
 			}
 		});
@@ -333,6 +337,8 @@ var Lightbox = {
 				
 				Lightbox.updateArrows();
 				Lightbox.renderHeader();
+				Lightbox.showOverlay('carousel');
+				Lightbox.hideOverlay('carousel');
 				
 				Lightbox.lightboxLoading = false;
 				Lightbox.log("Lightbox modal loaded");
@@ -439,6 +445,8 @@ var Lightbox = {
 			
 			Lightbox.updateArrows();
 			Lightbox.renderHeader();
+			Lightbox.showOverlay('carousel');
+			Lightbox.hideOverlay('carousel');
 			
 			// if player script exists, run it
 			if(data.playerScript) {

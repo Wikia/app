@@ -6,6 +6,9 @@
 		<span id="LightboxNext" class="next"></span>
 		<span id="LightboxPrevious" class="previous"></span>
 	</div>
+	
+	<div id="LightboxCarousel" class="LightboxCarousel hidden">
+	</div>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
 		<div class="media">
@@ -41,18 +44,16 @@
 	</script>
 	
 	<script id="LightboxCarouselTemplate" class="template" type="text/template">
-		<div id="LightboxCarousel" class="LightboxCarousel">
-			<div class="ad"></div>
-			<div class="content">
-				<ul class="toolbar">
-					<li><!-- pin icon --></li>
-					<li><!-- full screen icon --></li>
-				</ul>
-				<p class="progress">{{progress}}</p>
-				<span class="carousel-arrow next"></span>
-				<span class="carousel-arrow previous"></span>
-				<div class="thumbs"><ul>{{#thumbs}}<li><img src="{{.}}" /></li>{{/thumbs}}</ul></div>
-			</div>
+		<div class="ad"></div>
+		<div class="content">
+			<ul class="toolbar">
+				<li><!-- pin icon --></li>
+				<li><!-- full screen icon --></li>
+			</ul>
+			<p class="progress">{{progress}}</p>
+			<span class="carousel-arrow next"></span>
+			<span class="carousel-arrow previous"></span>
+			<div class="thumbs"><ul>{{#thumbs}}<li><img src="{{.}}" /></li>{{/thumbs}}</ul></div>
 		</div>
 	</script>
 
