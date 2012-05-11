@@ -107,6 +107,7 @@ $config['oasis_jquery'] = array(
 		'//skins/common/jquery/jquery.timeago.js',
 		'//skins/common/jquery/jquery.store.js',
 		'//skins/common/jquery/jquery.wikia.js',
+		'//skins/common/jquery/jquery.wikia.carousel.js',
 		'//skins/common/jquery/jquery.wikia.placeholder.js',
 		'//skins/common/jquery/jquery.expirystorage.js',
 		// library loaders
