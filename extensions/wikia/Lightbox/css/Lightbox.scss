@@ -7,6 +7,9 @@
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/color";
 
+$carousel-height: 110px;
+$carousel-vertical-padding: 20px;
+
 .LightboxModal {
 	overflow: hidden;
 	.WikiaLightbox {
@@ -133,15 +136,17 @@
 		@include background-opacity($color-page, 90);
 		@include clearfix;
 		bottom: 0;
-		height: 110px;
+		height: $carousel-height;
 		position: absolute;
 		width: 100%;
 		
 		.content {
 			border-right: 1px solid $color-page-border;
-			padding: 15px 20px;
+			height: $carousel-height - $carousel-vertical-padding * 2;
+			padding: $carousel-vertical-padding 20px;
 			width: 645px;
 		}
+		
 		.thumbs {
 			height: 50px;
 			overflow: hidden;

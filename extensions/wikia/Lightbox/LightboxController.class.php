@@ -13,11 +13,25 @@ class LightboxController extends WikiaController {
 	
 	public function lightboxModalContent() {
 		$title = $this->request->getVal('title');
+		$carouselType = $this->request->getVal('carouselType');
+		
+		switch($carouselType) {
+			case "articleMedia":
+				$method = "getArticleMediaThumbs";
+				break;
+			case "relatedVideos":
+				$method = "getRelatedVideosThumbs";
+				break;
+			case "latestPhotos":
+				$method = "getLatestPhotosThumbs";
+				break;
+		} 
+		
 		$initialFileDetail = array();
 		if(!empty($title)) {
 			// send request to getImageDetail()
 			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $title))->getData();
-			$mediaThumbs = $this->app->sendRequest('Lightbox', 'getArticleMediaThumbs')->getData();
+			$mediaThumbs = $this->app->sendRequest('Lightbox', $method)->getData();
 		}
 		
 		$this->initialFileDetail = $initialFileDetail;
@@ -26,11 +40,11 @@ class LightboxController extends WikiaController {
 
 
 	/**
-	 * @brief - Returns a list of all media for the wiki
+	 * @brief - Returns a list of relatedVideos for the wiki
 	 * @requestParam string wikiName - DB name of the wiki.  (optional, default to current wiki if null)
 	 * @responseParam array thumbs - thumbnail data
 	 */	
-	public function getWikiMediaThumbs() {
+	public function getRelatedVideosThumbs() {
 	
 		// sample data
 		$thumbs = array(
@@ -53,6 +67,37 @@ class LightboxController extends WikiaController {
 	
 		$this->thumbs = $thumbs;
 	}
+
+
+	/**
+	 * @brief - Returns a list of latest photos for the wiki
+	 * @requestParam string wikiName - DB name of the wiki.  (optional, default to current wiki if null)
+	 * @responseParam array thumbs - thumbnail data
+	 */	
+	public function getLatestPhotosThumbs() {
+	
+		// sample data
+		$thumbs = array(
+			array(
+				'thumbUrl' => '',	// 90x55 images
+				'type' => 'video',
+				'title' => 'video name'
+			),
+			array(
+				'thumbUrl' => '',
+				'type' => 'image',
+				'title' => 'an image name'
+			),
+			array(
+				'thumbUrl' => '',
+				'type' => 'image',
+				'title' => 'an image name'
+			),
+		);
+	
+		$this->thumbs = $thumbs;
+	}
+
 	
 	
 	/**
