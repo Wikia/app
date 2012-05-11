@@ -259,7 +259,7 @@ var Lightbox = {
 				Lightbox.openModal.carousel = $('#LightboxCarousel');
 				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
 				
-				Lightbox.openModal.carousel.append(carousel).data('rendered', true);
+				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
 				
 				var updateCallback = function(json) {
 					Lightbox.cache.details[Lightbox.current.title] = json;
@@ -476,7 +476,7 @@ var Lightbox = {
 		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderTemplate");	//TODO: replace with cache
 		Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 			var renderedResult = headerTemplate.mustache(json)
-			Lightbox.openModal.header.html(renderedResult).data('rendered', true);
+			Lightbox.openModal.header.html(renderedResult).data('overlayactive', true);
 			Lightbox.showOverlay('header');
 			Lightbox.hideOverlay('header', 2000);
 		});
@@ -485,14 +485,14 @@ var Lightbox = {
 		clearTimeout(Lightbox.eventTimers[overlayName]);
 		Lightbox.eventTimers[overlayName] = 0;
 		var overlay = Lightbox.openModal[overlayName];
-		if(overlay.hasClass('hidden') && overlay.data('rendered')) {
+		if(overlay.hasClass('hidden') && overlay.data('overlayactive')) {
 			overlay.removeClass('hidden');
 		}
 	},
 	hideOverlay: function(overlayName, delay) {
 		var overlay = Lightbox.openModal[overlayName];
 		// if Lightbox is not being hidden and hiding has not already started yet
-		if(!overlay.hasClass('hidden') && !Lightbox.eventTimers[overlayName]) {
+		if(!overlay.hasClass('hidden') && !Lightbox.eventTimers[overlayName] && overlay.data('overlayactive')) {
 			Lightbox.eventTimers[overlayName] = setTimeout(
 				function() {
 					overlay.addClass('hidden');
