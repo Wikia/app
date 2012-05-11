@@ -240,21 +240,7 @@ class UserPreferencesV2 {
 		if (isset($defaultPreferences['watchlisthideanons'])) $defaultPreferences['watchlisthideanons']['section'] = 'under-the-hood/followed-pagesv2';
 		if (isset($defaultPreferences['watchlisthideliu'])) $defaultPreferences['watchlisthideliu']['section'] = 'under-the-hood/followed-pagesv2';
 		if (isset($defaultPreferences['watchlisttoken'])) $defaultPreferences['watchlisttoken']['section'] = 'under-the-hood/followed-pagesv2';
-		if (isset($defaultPreferences['searchlimit'])) {
-			$defaultPreferences['searchlimit']['section'] = 'under-the-hood/searchv2';
-			$defaultPreferences['searchlimit']['label-message'] = 'resultsperpage-v2';
-		}
-		if (isset($defaultPreferences['contextlines'])) {
-			$defaultPreferences['contextlines']['section'] = 'under-the-hood/searchv2';
-			$defaultPreferences['contextlines']['label-message'] = 'contextlines-v2';
-		}
-		if (isset($defaultPreferences['contextchars'])) {
-			$defaultPreferences['contextchars']['section'] = 'under-the-hood/searchv2';
-			$defaultPreferences['contextchars']['label-message'] = 'contextchars-v2';
-		}
-		if (isset($defaultPreferences['disablesuggest'])) $defaultPreferences['disablesuggest']['section'] = 'under-the-hood/searchv2';
-		if (isset($defaultPreferences['searcheverything'])) $defaultPreferences['searcheverything']['section'] = 'under-the-hood/searchv2';
-		if (isset($defaultPreferences['searchnamespaces'])) $defaultPreferences['searchnamespaces']['section'] = 'under-the-hood/searchv2';
+
 		if (isset($defaultPreferences['highlightbroken'])) {
 			$defaultPreferences['highlightbroken']['section'] = 'under-the-hood/advanced-displayv2';
 			$defaultPreferences['highlightbroken']['type'] = 'toggle';
