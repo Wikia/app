@@ -23,7 +23,9 @@
 		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
 		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
-		<div class="caption">Caption goes here</div>
+		{{#caption}}
+			<div class="caption">{{caption}}</div>
+		{{/caption}}
 		<div class="user-details">
 			<img class="avatar" src="{{userThumbUrl}}">
 			<?= wfMsg('lightbox-header-added-by', '{{userName}}') ?>
