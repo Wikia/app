@@ -21,7 +21,7 @@ function ArticleAjaxLoadinig_UserLoadFromSession($user, $result) {
 	global $wgRequest, $wgShowAds, $wgDotDisplay;
 
 	if($wgRequest->getVal('mode') == 'AAL') {
-		Wikia::setVar( 'OasisEntryModuleName', 'AAL' );
+		Wikia::setVar( 'OasisEntryControllerName', 'AAL' );
 		$user->loadDefaults();
 		$result = false;
 		$wgShowAds = false;

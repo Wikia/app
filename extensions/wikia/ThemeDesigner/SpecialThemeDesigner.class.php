@@ -18,7 +18,7 @@ class SpecialThemeDesigner extends UnlistedSpecialPage {
 			return;
 		}
 
-		Wikia::setVar( 'OasisEntryModuleName', 'ThemeDesigner' );
+		Wikia::setVar( 'OasisEntryControllerName', 'ThemeDesigner' );
 
 		wfProfileOut( __METHOD__ );
 	}
