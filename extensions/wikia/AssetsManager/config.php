@@ -162,6 +162,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/tracker.js',
 		'//skins/common/wikia/my.class.js',
 		'//skins/common/wikia/querystring.js',
+		'//skins/common/wikia/cookiecutter.js',
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
