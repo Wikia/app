@@ -14,7 +14,9 @@ $carousel-vertical-padding: 20px;
 	overflow: hidden;
 	&:hover {
 		.lightbox-arrows {
-			@include opacity(100);
+			span {
+				@include opacity(80);
+			}
 		}
 	}
 	.WikiaLightbox {
@@ -50,12 +52,11 @@ $carousel-vertical-padding: 20px;
 		left: -99999999px;
 	}
 	.lightbox-arrows {
-		@include transition-shorthand(opacity 100ms linear);
-		@include opacity(0);
 		span {
 			@include border-radius(4px);
 			@include box-shadow( 0px, 0px, 10px, darken($color-page,50%), false, 2px);
-			@include opacity(80);
+			@include opacity(0);
+			@include transition-shorthand(opacity 100ms linear);
 			background: $color-buttons;
 			cursor: pointer;
 			display: block;
