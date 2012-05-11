@@ -5,6 +5,7 @@ class OasisController extends WikiaController {
 	private static $extraBodyClasses = array();
 
 	private $printStyles;
+	private $assetsManager;
 
 	/**
 	 * Add extra CSS classes to <body> tag
@@ -16,6 +17,7 @@ class OasisController extends WikiaController {
 	
 	public function init() {
 		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$this->assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$this->pagetitle = $skinVars['pagetitle'];
 		$this->displaytitle = $skinVars['displaytitle'];
 		$this->mimetype = $skinVars['mimetype'];
@@ -37,7 +39,7 @@ class OasisController extends WikiaController {
 
 		// TODO: move to WikiaHubs extension - this code should use a hook
 		if(!empty($wgEnableWikiaHubsExt)) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHubs/css/WikiaHubs.scss'));
+			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/WikiaHubs/css/WikiaHubs.scss' ) );
 			$wgOut->addScriptFile($this->wg->ExtensionsPath . '/wikia/WikiaHubs/js/WikiaHubs.js');
 		}
 
@@ -48,8 +50,8 @@ class OasisController extends WikiaController {
 		// TODO: move to CreateNewWiki extension - this code should use a hook
 		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
 		if(!empty($wikiWelcome)) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/WikiWelcome.scss'));
-			$wgOut->addScript('<script src="'.$this->wg->ExtensionsPath.'/wikia/CreateNewWiki/js/WikiWelcome.js"></script>');
+			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
+			$wgOut->addScript( '<script src="' . $this->wg->ExtensionsPath . '/wikia/CreateNewWiki/js/WikiWelcome.js"></script>' );
 		}
 
 		$renderContentModuleOnly = false;
@@ -171,7 +173,7 @@ class OasisController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		// add SASS for printable version of Oasis
-		$this->printStyles[] = AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/print.scss');
+		$this->printStyles[] = $this->assetsManager->getSassCommonURL( 'skins/oasis/css/print.scss' );
 
 		// render the output
 		$ret = '';
@@ -229,6 +231,8 @@ class OasisController extends WikiaController {
 		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment;
 		wfProfileIn(__METHOD__);
 
+		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+
 		// decide where JS should be placed (only add JS at the top for special and edit pages)
 		if (ArticleAdLogic::isSearch()) {
 			$this->jsAtBottom = true;	// Liftium.js (part of AssetsManager) 
@@ -244,7 +248,7 @@ class OasisController extends WikiaController {
 
 		// load WikiaScriptLoader
 		$this->wikiaScriptLoader = '';
-		$wslFiles = AssetsManager::getInstance()->getGroupCommonURL( 'wsl' );
+		$wslFiles = $this->assetsManager->getURL( 'wsl' );
 
 		foreach($wslFiles as $wslFile) {
 			if( $wgSpeedBox && $wgDevelEnvironment ) {
@@ -299,31 +303,22 @@ class OasisController extends WikiaController {
 			wfProfileOut(__METHOD__ . '::checkForEmptyUserJS');
 		}
 
-        $assets = array();
-        $assets['oasis_shared_js'] = AssetsManager::getInstance()->getGroupCommonURL('oasis_shared_js');
-        $assets['oasis_nojquery_shared_js'] = AssetsManager::getInstance()->getGroupCommonURL('oasis_nojquery_shared_js');
-        $assets['oasis_noads_extensions_js'] = AssetsManager::getInstance()->getGroupCommonURL('oasis_noads_extensions_js');
-        $assets['oasis_extensions_js']= AssetsManager::getInstance()->getGroupCommonURL('oasis_extensions_js');
-        $assets['oasis_user_anon'] = AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'oasis_user_js' : 'oasis_anon_js');
-        $assets['references'] = $jsReferences;
+		$assets = array();
+		$assets['oasis_shared_js'] = $this->assetsManager->getURL( 'oasis_shared_js' );
+		$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL( 'oasis_nojquery_shared_js' );
+		$assets['oasis_noads_extensions_js'] = $this->assetsManager->getURL( 'oasis_noads_extensions_js' );
+		$assets['oasis_extensions_js']= $this->assetsManager->getURL( 'oasis_extensions_js' );
+		$assets['oasis_user_anon'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_user_js' : 'oasis_anon_js', $tmp, true /* local */ );
 
-        if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-            for($j = 0; $j < count($assets['oasis_shared_js']); $j++) {
-                $assets['oasis_shared_js'][$j]= $this->rewriteJSlinks( $assets['oasis_shared_js'][$j] );
-            }
-            for($j = 0; $j < count($assets['oasis_nojquery_shared_js']); $j++) {
-                $assets['oasis_nojquery_shared_js'][$j]= $this->rewriteJSlinks( $assets['oasis_nojquery_shared_js'][$j] );
-            }
-            for($j = 0; $j < count($assets['oasis_noads_extensions_js']); $j++) {
-                $assets['oasis_noads_extensions_js'][$j]= $this->rewriteJSlinks( $assets['oasis_noads_extensions_js'][$j] );
-            }
-            for($j = 0; $j < count($assets['oasis_extensions_js']); $j++) {
-                $assets['oasis_extensions_js'][$j]= $this->rewriteJSlinks( $assets['oasis_extensions_js'][$j] );
-            }
-            for($j = 0; $j < count($assets['oasis_user_anon']); $j++) {
-                $assets['oasis_user_anon'][$j]= $this->rewriteJSlinks( $assets['oasis_user_anon'][$j] );
-            }
-        }
+		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
+			foreach ( $assets as $group => $urls ) {
+				foreach ( $urls as $index => $u ) {
+					$assets[$group][$index] = $this->rewriteJSlinks( $assets[$group][$index] );
+				}
+			}
+		}
+
+		$assets['references'] = $jsReferences;
 
 		// generate code to load JS files
 		$assets = Wikia::json_encode($assets);
@@ -337,15 +332,17 @@ class OasisController extends WikiaController {
 		// use loader script instead of separate JS files
 		$this->jsFiles = $jsLoader . $this->jsFiles;
 
-        //$jquery_ads = AssetsManager::getInstance()->getGroupCommonURL('oasis_jquery_ads_js');
-        $jquery_ads = array();
-        if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-            for($j = 0; $j < count($jquery_ads); $j++) {
-                $jquery_ads[$j]= $this->rewriteJSlinks( $jquery_ads[$j] );
-            }
-        }
-        $jquery_ads = Wikia::json_encode($jquery_ads);
-        $this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ /* C */ wsl.loadScript({$jquery_ads}); })(); /*]]>*/</script>";
+		//$jquery_ads = $this->assetsManager->getURL( 'oasis_jquery_ads_js' );
+		$jquery_ads = array();
+
+		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
+			for( $j = 0; $j < count( $jquery_ads ); $j++ ) {
+				$jquery_ads[$j] = $this->rewriteJSlinks( $jquery_ads[$j] );
+			}
+		}
+
+		$jquery_ads = Wikia::json_encode($jquery_ads);
+		$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ /* C */ wsl.loadScript({$jquery_ads}); })(); /*]]>*/</script>";
 
 		wfProfileOut(__METHOD__);
 	}
