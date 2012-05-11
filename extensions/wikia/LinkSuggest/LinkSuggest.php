@@ -152,6 +152,7 @@ function getLinkSuggest() {
 	}
 
 	$results = array();
+	$redirResults = array();
 
 	$query = mb_strtolower($query);
 	$queryUpper = wfLinkSuggestGetTextUpperBound($query);
@@ -160,53 +161,49 @@ function getLinkSuggest() {
 
 	$db = wfGetDB(DB_SLAVE, 'search');
 
-	$res = $db->select(
-		array( "querycache", "page" ),
-		array( "qc_namespace", "qc_title" ),
-		array(
-			" qc_title = page_title ",
-			" qc_namespace = page_namespace ",
-			" page_is_redirect = 0 ",
-			" qc_type = 'Mostlinked' ",
-			// faster replacement for: " LOWER(qc_title) LIKE LOWER('{$query}%') ",
-			" LOWER(qc_title) >= '{$query}' ",
-			" LOWER(qc_title) < '{$queryUpper}' ",
-			" qc_namespace IN (" . implode(',', $namespaces) . ")"
-		),
-		__METHOD__,
-		array("ORDER BY" => "qc_value DESC", "LIMIT" => 10)
-	);
+	if (count($namespaces) > 0) {
+		$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
+	}
+
+	$qcNamespaceClause = isset($commaJoinedNamespaces) ? 'AND qc_namespace IN (' . $commaJoinedNamespaces  . ')' : '';
+	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'AND page_namespace IN (' . $commaJoinedNamespaces . ')' : '';
+
+	$sql = "SELECT IFNULL(rd_title, page_title) AS link_title, page_title, page_namespace, SUM(qc_value) AS totalVal, page_is_redirect
+			FROM 
+				(
+					SELECT page_title, rd_title, page_namespace, qc_value, page_is_redirect
+					FROM   (SELECT page_id, page_title, page_is_redirect, page_namespace
+							FROM page 
+							WHERE 
+								-- optimization instead of LIKE
+								LOWER(page_title) >= '{$query}%' 
+								AND LOWER(page_title) < '{$queryUpper}'
+								{$pageNamespaceClause}
+						   ) matches
+
+					LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
+
+					LEFT JOIN 
+						   (SELECT qc_title, qc_value  FROM querycache WHERE qc_type = 'Mostlinked' {$qcNamespaceClause}) mostlinked
+						   ON qc_title = page_title OR rd_title = qc_title
+
+				) `ordered_results`
+			GROUP BY link_title HAVING min(page_is_redirect+1) -- i had to add one because min ignores 0 results. grr!
+			ORDER BY totalVal DESC, page_is_redirect ASC
+			LIMIT 10
+			";
+
+	$res = $db->query($sql);
+
 	while($row = $db->fetchObject($res)) {
-		$results[] = wfLinkSuggestFormatTitle($row->qc_namespace, $row->qc_title);
+		$title = wfLinkSuggestFormatTitle($row->page_namespace, $row->link_title);
+		$results[] = $title;
+		if ($row->page_title != $row->link_title) {
+			$redirTitle = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
+			$redirResults[$title] = $redirTitle;;
+		}
 	}
 	$db->freeResult( $res );
-
-	$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-	$res = $dbs->select(
-		array( "pages" ),
-		array( "page_namespace", "page_title" ),
-		array(
-			" page_wikia_id " => $wgCityId,
-			// faster replacement for: " page_title_lower LIKE '{$query}%' ",
-			" page_title_lower >= '{$query}' ",
-			" page_title_lower < '{$queryUpper}' ",
-			" page_namespace IN (" . implode(',', $namespaces) . ")",
-			" page_status = 0 ",
-			" page_is_redirect = 0 "
-		),
-		__METHOD__,
-		array(
-			"ORDER BY" => "page_title_lower ASC",
-			"LIMIT" => (15 - count($results)),
-			"USE INDEX" => "page_wikia_title_lower"
-		)
-	);
-	while($row = $dbs->fetchObject($res)) {
-		$results[] = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
-	}
-	$dbs->freeResult( $res );
-
-	$results = array_unique($results);
 
 	// bugid 29988: include special pages 
 	// (registered in SpecialPage::$mList, not in the DB like a normal page)
@@ -226,7 +223,7 @@ function getLinkSuggest() {
 	$format = $wgRequest->getText('format');
 
 	if($format == 'json') {
-		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => array_values($results)));
+		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => array_values($results), 'redirects'=>$redirResults));
 	} else {
 		$out = implode("\n", $results);
 	}
