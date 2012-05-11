@@ -257,7 +257,7 @@ var Lightbox = {
 				
 				// pre-cache known doms
 				Lightbox.openModal.carousel = $(carousel).appendTo(Lightbox.openModal.WikiaLightbox);
-				Lightbox.openModal.header = Lightbox.openModal.find('header');
+				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
 				
 				var updateCallback = function(json) {
 					Lightbox.cache.details[Lightbox.current.title] = json;
@@ -272,15 +272,23 @@ var Lightbox = {
 					Lightbox.normalizeMediaDetail(initialFileDetail, updateCallback);
 				}
 				
+				// autohide carousel
+				Lightbox.openModal.carousel.data('rendered', true);
+				Lightbox.showOverlay('carousel');
+				Lightbox.hideOverlay('carousel');
+				
 				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 					var time = new Date().getTime();
 					if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 200 ) {
 						Lightbox.eventTimers.lastMouseUpdated = time;
 						var relativeMouseY = evt.pageY - Lightbox.openModal.offset().top;
 						if(relativeMouseY < 150) {
-							Lightbox.showHeader();
+							Lightbox.showOverlay('header');
+						} else if((Lightbox.openModal.height() - relativeMouseY) < 150) {
+							Lightbox.showOverlay('carousel');
 						} else {
-							Lightbox.hideHeader();
+							Lightbox.hideOverlay('header');
+							Lightbox.hideOverlay('carousel');
 						}
 					}
 				}).on('mouseout.Lightbox', function(evt) {
@@ -467,26 +475,25 @@ var Lightbox = {
 		Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 			var renderedResult = headerTemplate.mustache(json)
 			Lightbox.openModal.header.html(renderedResult).data('rendered', true);
-			Lightbox.showHeader();
-			Lightbox.hideHeader();
+			Lightbox.showOverlay('header');
+			Lightbox.hideOverlay('header');
 		});
 	},
-	showHeader: function() {
-		clearTimeout(Lightbox.eventTimers.header);
-		Lightbox.eventTimers.header = 0;
-		var header = Lightbox.openModal.header;
-		if(header.hasClass('hidden') && header.data('rendered')) {
-			header.removeClass('hidden');
+	showOverlay: function(overlayName) {
+		clearTimeout(Lightbox.eventTimers[overlayName]);
+		Lightbox.eventTimers[overlayName] = 0;
+		var overlay = Lightbox.openModal[overlayName];
+		if(overlay.hasClass('hidden') && overlay.data('rendered')) {
+			overlay.removeClass('hidden');
 		}
 	},
-	hideHeader: function() {
-		var header = Lightbox.openModal.header;
-		
+	hideOverlay: function(overlayName) {
+		var overlay = Lightbox.openModal[overlayName];
 		// if Lightbox is not being hidden and hiding has not already started yet
-		if(!header.hasClass('hidden') && !Lightbox.eventTimers.header) {
-			Lightbox.eventTimers.header = setTimeout(
+		if(!overlay.hasClass('hidden') && !Lightbox.eventTimers[overlayName]) {
+			Lightbox.eventTimers[overlayName] = setTimeout(
 				function() {
-					header.addClass('hidden');
+					overlay.addClass('hidden');
 				}, 2000
 			);
 		}

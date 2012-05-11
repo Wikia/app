@@ -1,5 +1,5 @@
 <div class="WikiaLightbox">
-	<header class="hidden">
+	<header class="LightboxHeader hidden">
 	</header>
 
 	<div class="lightbox-arrows">

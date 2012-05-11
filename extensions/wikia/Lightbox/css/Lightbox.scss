@@ -14,53 +14,6 @@ $carousel-vertical-padding: 20px;
 	overflow: hidden;
 	.WikiaLightbox {
 		height: 100%;
-		header {
-			@include transition-shorthand(top 600ms ease-out);
-			/* permanent code */
-			z-index: 1;	/* this should be lower than close button */
-			/* /permanent */
-			/* temp code, combine with carousel box */
-			@include box-shadow( 0px, 0px, 20px, darken($color-page, 50%), false, 2px);
-			background-color: rgba(#ffffff, 0.8);
-			padding: 20px;
-			position: absolute;
-			top: 0;
-			width: 960px;
-			/* /temp code */
-			&.hidden {
-				top: -150px;
-			}
-			h1 {
-				float: left;
-				font-size: 18px;
-				max-width: 650px;	/* compensation for i18n on .see-full-size-link */
-			}
-			.avatar {
-				height: 16px;
-				margin-right: 2px;
-				position: relative;
-				top: 2px;
-				width: 16px;
-			}
-			.caption {
-				clear: left;
-				margin-top: 2px;
-			}
-			.more-info-button {
-				float: right;
-				margin-right: 50px;
-			}
-			.see-full-size-link {
-				border-left: 1px solid $color-page-border;
-				margin-left: 10px;
-				padding-left: 10px;
-				position: relative;
-				top: 2px;
-			}
-			.user-details {
-				clear: left;
-			}
-		}
 	}
 	.close {
 		display: none;
@@ -134,22 +87,28 @@ $carousel-vertical-padding: 20px;
 			}
 		}
 	}
+	.LightboxHeader,
 	.LightboxCarousel {
-		@include box-shadow( 0px, 0px, 20px, darken($color-page,50%), false, 2px);
-		@include background-opacity($color-page, 90);
+		@include background-opacity($color-page, 80);
+		@include box-shadow( 0px, 0px, 20px, darken($color-page, 50%), false, 2px);
+		position: absolute;
+	}
+	.LightboxCarousel {
+		@include transition-shorthand(bottom 600ms ease-out);
 		@include clearfix;
 		bottom: 0;
 		height: $carousel-height;
-		position: absolute;
 		width: 100%;
 		
+		&.hidden {
+			bottom: -150px;
+		}
 		.content {
 			border-right: 1px solid $color-page-border;
 			height: $carousel-height - $carousel-vertical-padding * 2;
 			padding: $carousel-vertical-padding 20px;
 			width: 645px;
 		}
-		
 		.thumbs {
 			height: 50px;
 			overflow: hidden;
@@ -170,6 +129,46 @@ $carousel-vertical-padding: 20px;
 				width: 90px; // TODO: get these dimensions from thumbnailer
 				height: 55px; // TODO: get these dimensions from thumbnailer
 			}
+		}
+	}
+	.LightboxHeader {
+		@include transition-shorthand(top 600ms ease-out);
+		padding: 20px;
+		top: 0;
+		width: 960px;
+		z-index: 1;	/* this should be lower than close button */
+		&.hidden {
+			top: -150px;
+		}
+		h1 {
+			float: left;
+			font-size: 18px;
+			max-width: 650px;	/* compensation for i18n on .see-full-size-link */
+		}
+		.avatar {
+			height: 16px;
+			margin-right: 2px;
+			position: relative;
+			top: 2px;
+			width: 16px;
+		}
+		.caption {
+			clear: left;
+			margin-top: 2px;
+		}
+		.more-info-button {
+			float: right;
+			margin-right: 50px;
+		}
+		.see-full-size-link {
+			border-left: 1px solid $color-page-border;
+			margin-left: 10px;
+			padding-left: 10px;
+			position: relative;
+			top: 2px;
+		}
+		.user-details {
+			clear: left;
 		}
 	}
 }
