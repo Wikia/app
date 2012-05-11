@@ -27,16 +27,20 @@ class ChatAjax {
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
 	static public function getUserInfo(){
-		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
+		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang, $wgIP;
 		wfProfileIn( __METHOD__ );
-		
+
+		// The server is incorrectly determining whether a user can connect based on the
+		// Chat server IP address. This is causing problems when Chat server IPs are blocked.
+		// To bypass this, we can set a fake IP address here before Chat::canChat is called.
+		$wgIP = '999.999.999.999';
+
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 		if( empty($data) ) {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 		}
 		
 		$user = User::newFromId( $data['user_id'] );
-		
 		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
 			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
 			wfProfileOut( __METHOD__ );
