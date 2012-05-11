@@ -33,8 +33,7 @@ $.fn.carousel = function(options) {
 		} 
 		
 		
-		// TODO: test this to make sure it works as expected
-		// also probably extract this back into LatestPhotos.js
+		// if there's an awkward number of thumbnails, add empty <li>'s to fill the space
 		attachBlindImages();
 		
 		// Set up click events
