@@ -422,6 +422,4 @@ if (typeof wikiaTrackingSpool !== 'undefined') {
 	});
 }
 
-
-
 $(document).ready($.tracker);
