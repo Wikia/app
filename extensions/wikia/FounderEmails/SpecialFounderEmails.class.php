@@ -12,7 +12,7 @@ class SpecialFounderEmails extends UnlistedSpecialPage {
 		wfProfileIn(__METHOD__);
 		wfLoadExtensionMessages('FounderEmails');
 		
-		Wikia::setVar( 'OasisEntryModuleName', 'FounderEmails' );
+		Wikia::setVar( 'OasisEntryControllerName', 'FounderEmails' );
 		
 		wfProfileOut(__METHOD__);
 	}
