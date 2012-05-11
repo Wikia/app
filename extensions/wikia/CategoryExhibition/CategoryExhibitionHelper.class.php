@@ -12,7 +12,7 @@
 		 */
 		
 		static public function onArticleFromTitle( &$title, &$article ){
-			if( !Wikia::isWikiaMobile() ) {
+			if ( !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
 				if ( $title->getNamespace() == NS_CATEGORY ) {
 					
 					$categoryExhibition = new CategoryExhibitionSection( $title );

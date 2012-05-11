@@ -353,7 +353,7 @@ class SkinTemplate extends Skin {
 
 			if( !$usertalktitle->equals( $this->mTitle ) ) {
 				/* Wikia change begin - @author: Macbre */
-				$ntl = wfMsg( Wikia::isOasis() ? 'oasis-notification-youhavenewmessages' : 'youhavenewmessages',
+				$ntl = wfMsg( ( F::app()->checkSkin( 'oasis' ) ) ? 'oasis-notification-youhavenewmessages' : 'youhavenewmessages',
 				/* Wikia change end */
 					$this->makeKnownLinkObj(
 						$usertalktitle,
@@ -495,7 +495,7 @@ class SkinTemplate extends Skin {
 			$tpl->set( 'debug', '' );
 		}
 
-		if ( !Wikia::isOasis() ){
+		if ( !( F::app()->checkSkin( 'oasis' ) ) ){
 			$tpl->set( 'reporttime', wfReportTime() );  // Wikia change -- moved this further down in page rendering for Oasis.
 		}
 		$tpl->set( 'sitenotice', wfGetSiteNotice() );

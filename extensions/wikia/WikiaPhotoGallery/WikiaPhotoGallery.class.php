@@ -593,7 +593,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$heights = array();
 		$widths = array();
 
-		if( Wikia::isWikiaMobile() ) {
+		if( F::app()->checkSkin( 'wikiamobile' ) ) {
 			$pics = array();
 
 			foreach($this->mImages as $val) {
@@ -1009,7 +1009,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$this->mAttribs );
 
 		//renderSlideshow for WikiaMobile
-		if( Wikia::isWikiaMobile() ) {
+		if( F::app()->checkSkin( 'wikiamobile' ) ) {
 			$pics = array();
 
 			foreach($this->mImages as $key => $val) {
@@ -1351,7 +1351,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'imagesDimensions' => $imagesDimensions,
 			));
 
-			if( Wikia::isWikiaMobile() ) {
+			if( F::app()->checkSkin( 'wikiamobile' ) ) {
 				$html = $template->render('renderWikiaMobileSlider');
 			} else if($orientation == 'mosaic') {
 				$html = $template->render('renderMosaicSlider');

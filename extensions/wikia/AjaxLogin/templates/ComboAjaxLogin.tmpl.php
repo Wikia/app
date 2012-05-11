@@ -1,12 +1,13 @@
 <?php
 global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
+$isOasis = F::app()->checkSkin( 'oasis' );
 ?>
 <div id="AjaxLoginBox" title="<?php print wfMsg('comboajaxlogin-createlog') ?>">
 	<?php
 		global $wgEnableFacebookConnectExt;
 		if(!empty($wgEnableFacebookConnectExt)){
 			?><h1><?php
-				if(Wikia::isOasis()){
+				if( $isOasis ){
 					// Don't mention Facebook in the h1 on Oasis (doesn't look right).
 					print wfMsg("fbconnect-wikia-login-or-create");
 				} else {
@@ -23,8 +24,8 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 		}
 	?>
 
-	<div class="<?= Wikia::isOasis() ? 'modal-tabs' : 'wikia-tabs' ?>" id="AjaxLoginButtons">
-		<ul<?= Wikia::isOasis() ? ' class="tabs"' : '' ?>>
+	<div class="<?= ( $isOasis ) ? 'modal-tabs' : 'wikia-tabs' ?>" id="AjaxLoginButtons">
+		<ul<?= ( $isOasis ) ? ' class="tabs"' : '' ?>>
 			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href="<? echo htmlspecialchars($loginaction); ?>" ><?php print wfMsg("login") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li>
 			<?php
 				if($wgUser->isAllowed('createaccount')){

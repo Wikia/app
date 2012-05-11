@@ -525,14 +525,16 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {
-		if (Wikia::isWikiaMobile() && F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
-			$html .= F::app()->sendRequest('WikiaHomePage', 'wikiaMobileIndex')->toString();
+		$app = F::app();
+
+		if ( $app->checkSkin( 'wikiamobile' ) && $app->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage() ) {
+			$html .= $app->sendRequest('WikiaHomePage', 'wikiaMobileIndex')->toString();
 		}
 		return true;
 	}
 
 	public static function onOutputPageBeforeHTML(&$out, &$text) {
-		if (ArticleAdLogic::isMainPage() && (!Wikia::isWikiaMobile())) {
+		if ( ArticleAdLogic::isMainPage() && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
 			$text = '';
 			$out->clearHTML();
 			$out->addHTML(F::app()->sendRequest('WikiaHomePageController', 'index')->toString());

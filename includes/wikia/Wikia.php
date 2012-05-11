@@ -978,39 +978,6 @@ class Wikia {
 	}
 
 	/**
-	 * Returns true if the currently set skin is Oasis.  Do not call this before the skin
-	 * has been set on wgUser.
-	 * 
-	 * @deprecated
-	 * @see WikiaApp::checkSkin
-	 */
-	public static function isOasis(){
-		wfProfileIn( __METHOD__ );
-		global $wgUser;
-
-		$isOasis = (get_class($wgUser->getSkin()) == 'SkinOasis');
-
-		wfProfileOut( __METHOD__ );
-		return $isOasis;
-	}
-
-	/**
-	 * Returns true if the currently set skin is WikiaMobile.  Do not call this before the skin
-	 * has been set on wgUser.
-	 * 
-	 * @deprecated
-	 * @see WikiaApp::checkSkin
-	 */
-	public static function isWikiaMobile( Linker $skin = null ){
-		wfProfileIn( __METHOD__ );
-
-		$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );
-
-		wfProfileOut( __METHOD__ );
-		return $isWikiaMobile;
-	}
-
-	/**
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
 	 */
 	static public function ComposeMail( /*MailAddress*/ $to, /*String*/&$body, /*String*/&$subject ) {

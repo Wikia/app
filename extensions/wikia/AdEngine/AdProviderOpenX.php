@@ -286,7 +286,7 @@ EOT;
 		}
 
 		global $wgEnableOpenXSPC;
-		if (Wikia::isOasis() && $wgEnableOpenXSPC && substr($slotname, 0, 10) == 'SPOTLIGHT_') {	// only for Oasis spotlights (e.g. slotname = "SPOTLIGHT_ ...")
+		if ( F::app()->checkSkin( 'oasis' ) && $wgEnableOpenXSPC && substr($slotname, 0, 10) == 'SPOTLIGHT_') {	// only for Oasis spotlights (e.g. slotname = "SPOTLIGHT_ ...")
 			// don't need a url. will show ad using local Javascript
 			return;
 		}

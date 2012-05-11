@@ -28,7 +28,7 @@ class WikiaMobileBodyService extends WikiaService {
 			'relatedPages',
 			( !empty( $this->wg->EnableRelatedPagesExt ) &&
 				empty( $this->wg->MakeWikiWebsite ) &&
-				empty( $this->wg->EnableAnswers ) ) ? $this->app->renderView( 'RelatedPagesModule', 'index' ) : null);
+				empty( $this->wg->EnableAnswers ) ) ? $this->app->renderView( 'RelatedPagesController', 'index' ) : null);
 		$this->response->setVal(
 			'categoryLinks',
 			$this->app->renderView(

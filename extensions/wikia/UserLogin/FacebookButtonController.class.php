@@ -12,7 +12,7 @@ class FacebookButtonController extends WikiaController {
 		$this->text = $this->request->getVal('text', '');
 		$this->tooltip = $this->request->getVal('tooltip');
 
-		if ( Wikia::isWikiaMobile() ) {
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			F::build( 'JSMessages' )->registerPackage( 'fblogin' , array( 'wikiamobile-facebook-connect-fail' ) );
 			$this->response->setVal( 'context', $this->request->getVal( 'context' ) );
 			$this->overrideTemplate( 'WikiaMobileIndex' );

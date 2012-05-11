@@ -135,7 +135,7 @@ function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 	global $wgUser;
 	//don't add messages when editing, previewing changes etc. AND don't even try for unlogged or bots
-	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot') && !Wikia::isOasis()) {
+	if ( wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot') && !( F::app()->checkSkin( 'oasis' ) ) ) {
 		$out->addHTML( SiteWideMessagesGetUserMessagesContent() ); // #2321
 	}
 	return true;
@@ -148,7 +148,7 @@ function SiteWideMessagesGetUserMessages(&$out, $parseroutput) {
 function SiteWideMessagesUserNewTalks(&$user, &$talks) {
 	global $wgExternalSharedDB, $wgMemc, $wgUser;
 
-	if (Wikia::isOasis() || $user->isAnon() || $wgUser->isAllowed('bot')) {	//don't show information for anons and bots
+	if ( F::app()->checkSkin( 'oasis' ) || $user->isAnon() || $wgUser->isAllowed('bot') ) {	//don't show information for anons and bots
 		return true;
 	}
 
@@ -232,7 +232,7 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 	global $wgOut, $wgUser;
 	wfProfileIn(__METHOD__);
 
-	if ( Wikia::isOasis() ) {
+	if ( F::app()->checkSkin( 'oasis' ) ) {
 		// Add site wide notifications that haven't been dismissed
 		if ( $wgUser->isLoggedIn() ) {
 			$msgs = SiteWideMessages::getAllUserMessages( $wgUser, false, false );

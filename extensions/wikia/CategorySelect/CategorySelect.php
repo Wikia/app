@@ -568,7 +568,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js?$wgStyleVersion\"></script>");
 
 	// use SCSS file for Oasis
-	if (Wikia::isOasis()) {
+	if ( F::app()->checkSkin( 'oasis' ) ) {
 		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
 	}
 	else {
@@ -601,7 +601,7 @@ function CategorySelectGenerateHTMLforView() {
 		</div>
 		<div id="csButtonsContainer" class="color1">
 			<input type="button" id="csSave" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
-			<input type="button" id="csCancel" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" ' . (Wikia::isOasis() ? 'class="secondary" ' : '') . '/>
+			<input type="button" id="csCancel" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" ' . ( ( F::app()->checkSkin( 'oasis' ) ) ? 'class="secondary" ' : '' ) . '/>
 		</div>
 	</div>';
 

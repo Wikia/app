@@ -23,10 +23,10 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
-		
-		$skinName = $this->wg->User->getSkin()->getSkinName();
-		$this->isOasis = ($skinName === 'oasis');
-		if($skinName !== 'oasis') {
+
+		$this->isOasis = F::app()->checkSkin( 'oasis' );
+
+		if ( !( $this->isOasis ) ) {
 			$this->forward('WikiFeaturesSpecial', 'notOasis');
 			return;
 		}

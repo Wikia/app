@@ -11,7 +11,7 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 
 		//cleanup page output from unwanted stuff
-		if ( Wikia::isWikiaMobile( $parser->getOptions()->getSkin() ) ) {
+		if ( $this->app->checkSkin( 'wikiamobile', $parser->getOptions()->getSkin() ) ) {
 			//remove inline styling to avoid weird results and optimize the output size
 			$text = preg_replace( '/\s+(style|color|bgcolor|border|align|cellspacing|cellpadding|hspace|vspace)=(\'|")[^"\']*(\'|")/im', '', $text );
 
@@ -27,7 +27,7 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 
 		//strip out some unneeded content to lower the size of the output
-		if ( Wikia::isWikiaMobile() ) {
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$limitReport = null;
 		}
 
@@ -38,7 +38,7 @@ class WikiaMobileHooks extends WikiaObject{
 	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ){
 		$this->wf->profileIn( __METHOD__ );
 
-		if ( Wikia::isWikiaMobile( $skin ) ) {
+		if ( $this->app->checkSkin( 'wikiamobile', $skin ) ) {
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 
@@ -59,7 +59,7 @@ class WikiaMobileHooks extends WikiaObject{
 	}
 
 	public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
-		if ( Wikia::isWikiaMobile( $skin ) && in_array( 'broken', $options ) ) {
+		if ( $this->app->checkSkin( 'wikiamobile', $skin ) && in_array( 'broken', $options ) ) {
 			$ret = $text;
 			return false;
 		}
@@ -70,7 +70,7 @@ class WikiaMobileHooks extends WikiaObject{
 	public function onCategoryPageView( CategoryPage &$categoryPage ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		if ( Wikia::isWikiaMobile() ) {
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view
 			F::build( 'Article', array( $categoryPage->getTitle() ) )->view();
 

@@ -792,7 +792,7 @@ class ArticleComment {
 					'scripts' => 'articlecomments_js_wikiamobile',
 					'templates' => array(
 						array(
-							'controllerName' => 'ArticleCommentsModule',
+							'controllerName' => 'ArticleCommentsController',
 							'methodName' => 'WikiaMobileCommentsPage',
 							'params' => array(
 								'articleID' => $parentTitle->getArticleID(),
@@ -825,7 +825,8 @@ class ArticleComment {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
-				$text = F::app()->getView( 'ArticleComments', ( Wikia::isWikiaMobile() ) ? 'WikiaMobileComment' : 'Comment', array('comment' => $comment->getData(true), 'commentId' => $commentId, 'rowClass' => '', 'level' => ( $parentId ) ? 2 : 1 ) )->render();
+				$app = F::app();
+				$text = $app->getView( 'ArticleComments', ( $app->checkSkin( 'wikiamobile' ) ) ? 'WikiaMobileComment' : 'Comment', array('comment' => $comment->getData(true), 'commentId' => $commentId, 'rowClass' => '', 'level' => ( $parentId ) ? 2 : 1 ) )->render();
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}

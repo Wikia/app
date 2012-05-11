@@ -118,7 +118,7 @@ class EditPageLayoutHelper {
 		// on edit page so it will make proper list of modules
 		$action = $this->request->setVal('action',null);
 		$diff = $this->request->setVal('diff',null);
-		$railModuleList = WF::build('BodyModule')->getRailModuleList();
+		$railModuleList = WF::build('BodyController')->getRailModuleList();
 		$this->request->setVal('action',$action);
 		$this->request->setVal('diff',$diff);
 
@@ -150,15 +150,13 @@ class EditPageLayoutHelper {
 
 	function onAlternateEditPageClass(&$editPage) {
 		// apply only for Oasis
-		if (!Wikia::isOasis()) {
-			return true;
-		}
+		if ( $this->app->checkSkin( 'oasis' ) ) {
+			$instance = $this->setupEditPage($this->app->getGlobal('wgArticle'));
 
-		$instance = $this->setupEditPage($this->app->getGlobal('wgArticle'));
-
-		// $instance will be false in read-only mode (BugId:9460)
-		if (!empty($instance)) {
-			$editPage = $instance;
+			// $instance will be false in read-only mode (BugId:9460)
+			if (!empty($instance)) {
+				$editPage = $instance;
+			}
 		}
 
 		return true;
@@ -300,10 +298,10 @@ class EditPageLayoutHelper {
 	 * @return boolean return true
 	 */
 	function onBeforeDisplayingTextbox(&$editPage, &$hidden) {
-		if ( !Wikia::isOasis() ) {
-			return true;
+		if ( $this->app->checkSkin( 'oasis' ) ) {
+			$this->out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
 		}
-		$this->out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
+
 		return true;
 	}
 
@@ -315,14 +313,14 @@ class EditPageLayoutHelper {
 	 * @return boolean return true
 	 */
 	function onAfterDisplayingTextbox(&$editPage, &$hidden) {
-		if ( !Wikia::isOasis() ) {
-			return true;
+		if ( $this->app->checkSkin( 'oasis') ) {
+			$html = $this->app->getView('EditPageLayout', 'Loader', array(
+						'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
+					))->render();
+			$html .= '</div>';
+			$this->out->addHtml($html);
 		}
-		$html = $this->app->getView('EditPageLayout', 'Loader', array(
-					'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
-				))->render();
-		$html .= '</div>';
-		$this->out->addHtml($html);
+
 		return true;
 	}
 

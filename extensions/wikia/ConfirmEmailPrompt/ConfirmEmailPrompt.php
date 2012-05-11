@@ -32,7 +32,7 @@ $wgExtensionMessagesFiles['ConfirmEmailPrompt'] = $dir . '/ConfirmEmailPrompt.i1
 function efConfirmEmailPrompt( &$msg ) {
 	global $wgUser;
 
-	if ( !Wikia::isOasis() ) {
+	if ( !( F::app()->checkSkin( 'oasis' ) ) ) {
 		return true;
 	}
 

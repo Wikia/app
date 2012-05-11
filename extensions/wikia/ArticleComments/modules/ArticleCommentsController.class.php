@@ -5,7 +5,7 @@ class ArticleCommentsController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
-			$isMobile = Wikia::isWikiaMobile();
+			$isMobile = F::app()->checkSkin( 'wikiamobile' );
 
 			// Load MiniEditor assets, if enabled (don't enable for Mobile)
 			if ($this->wg->EnableMiniEditorExtForArticleComments && !$isMobile) {

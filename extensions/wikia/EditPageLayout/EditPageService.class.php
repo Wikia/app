@@ -88,7 +88,7 @@ class EditPageService extends Service {
 		$catbox = null;
 		if(!empty($categories ) && ($skin instanceof SkinOasis)) {
 			$catlinks = $skin->getCategoryLinks();
-			$catbox = F::app()->sendRequest('ArticleCategoriesModule','Index',array('catlinks' => $catlinks))->toString();
+			$catbox = F::app()->sendRequest('ArticleCategoriesController','Index',array('catlinks' => $catlinks))->toString();
 		}
 
 		wfProfileOut(__METHOD__);
@@ -125,7 +125,7 @@ class EditPageService extends Service {
 
 		$langbox = null;
 		if(!empty($language_urls) && ($skin instanceof SkinOasis)) {
-			$langbox = F::app()->sendRequest('ArticleInterlangModule','Index',array('request_language_urls' => $language_urls))->toString();
+			$langbox = F::app()->sendRequest('ArticleInterlangController','Index',array('request_language_urls' => $language_urls))->toString();
 		}
 
 		wfProfileOut(__METHOD__);

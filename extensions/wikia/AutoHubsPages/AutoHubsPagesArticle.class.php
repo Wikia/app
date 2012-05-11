@@ -79,8 +79,10 @@ class AutoHubsPagesArticle extends Article {
 		$oTmpl->set_vars(array(
 			"data" => $data
 		));
+
 		$wgOut->setHTMLTitle( wfMsg('hub-header', $data['title']) ); // does not add a h1, this is done later
-		if (Wikia::isOasis()) {
+
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$hubName = $wgTitle->getText();
 
 			$wgOut->addHTML(wfRenderModule('BlogsInHubs', 'HotNews', array('hubName' => $hubName)));
