@@ -2,19 +2,33 @@
  * Wikia Carousel jQuery plugin
  * Author Liz Lee, Hyun Lim
  * 
- * TODO: Add DOM examples here
-*/
+ * Sample HTML:
+ * 
+ * <span class="next"></span>
+ * <span class="previous"></span>
+ * <div id="myCarousel">
+ * 	  <div>
+ * 		  <ul class="carousel"> 
+ * 			<li><img></li>
+ * 			<li><img></li>
+ * 			<li><img></li>
+ * 		  </ul>
+ * 	  </div>
+ * </div>
+ * 
+ * $('#myCarousel').carousel();
+ * 
+ */
 
-$.fn.carousel = function(options) {
-	// use just the first element from current collection
-	return this.each(function() {
+;(function($, window) {
+	$.fn.carousel = function(options) {
 		var defaults = {
 			transition_speed: 500,
 			itemCount: 3,
 			nextClass: "next",
 			prevClass: "previous"
 		}
-		
+
 		options = $.extend(defaults, options);
 		
 		var dom = {
@@ -30,21 +44,8 @@ $.fn.carousel = function(options) {
 			enable_next: true,
 			enable_previous: false,
 			carousel: false
-		} 
-		
-		
-		// if there's an awkward number of thumbnails, add empty <li>'s to fill the space
-		attachBlindImages();
-		
-		// Set up click events
-		dom.next.click(nextImage);
-		dom.previous.click(previousImage);
+		}		
 
-		// on mouseover load the rest of images
-		dom.wrapper.one('mouseover', function() {
-			lazyLoadImages('rest');
-		});
-		
 		function nextImage() {
 			var width = setCarouselWidth();
 	
@@ -60,9 +61,9 @@ $.fn.carousel = function(options) {
 				});
 			}
 			return false;
-
+	
 		}
-
+	
 		function previousImage() {
 			var width = setCarouselWidth();
 	
@@ -84,7 +85,7 @@ $.fn.carousel = function(options) {
 			}
 			return false;
 		}
-
+	
 		function enableBrowsing() {
 			var current = dom.carousel.find('li').slice(0, 3).each(function (i) {
 				if ($(this).is('.last-image')) {
@@ -121,13 +122,13 @@ $.fn.carousel = function(options) {
 					removeAttr('data-src');
 			});
 		}
-
+	
 		function setCarouselWidth() {
 			var width = dom.carousel.find('li').outerWidth() * options.itemCount + 6;
 			dom.carousel.css('width', width * dom.carousel.find('li').length + 'px'); // all li's in one line
 			return width;
 		}
-
+	
 		function removeFirstPhotos() {
 			var old = dom.carousel.find('li').slice(0,3);
 			dom.container.css('left', '0px');
@@ -135,7 +136,7 @@ $.fn.carousel = function(options) {
 			dom.carousel.append(old);
 	
 		}
-
+	
 		function attachBlindImages() {
 			if (dom.carousel.find('li').length == 5) {
 				dom.carousel.append("<li class='blind'></li>");
@@ -149,5 +150,20 @@ $.fn.carousel = function(options) {
 			dom.carousel.find('li').last().addClass("last-image");
 		}
 		
-	});
-}
+		return this.each(function() {
+			
+			// if there's an awkward number of thumbnails, add empty <li>'s to fill the space
+			attachBlindImages();
+			
+			// Set up click events
+			dom.next.click(nextImage);
+			dom.previous.click(previousImage);
+	
+			// on mouseover load the rest of images
+			dom.wrapper.one('mouseover', function() {
+				lazyLoadImages('rest');
+			});
+			
+		});
+	}
+})(jQuery, this);
