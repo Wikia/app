@@ -14,6 +14,7 @@ var Lightbox = {
 		details: {} // all media details
 	},
 	eventTimers: {
+		lastMouseUpdated: 0
 	},
 	current: {
 		type: '', // image or video
@@ -270,6 +271,21 @@ var Lightbox = {
 					// normalize for jwplayer
 					Lightbox.normalizeMediaDetail(initialFileDetail, updateCallback);
 				}
+				
+				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
+					var time = new Date().getTime();
+					if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 200 ) {
+						Lightbox.eventTimers.lastMouseUpdated = time;
+						var relativeMouseY = evt.pageY - Lightbox.openModal.offset().top;
+						if(relativeMouseY < 150) {
+							Lightbox.showHeader();
+						} else {
+							Lightbox.hideHeader();
+						}
+					}
+				}).on('mouseout.Lightbox', function(evt) {
+					Lightbox.hideHeader();
+				});
 			}
 		});
 	},
@@ -414,6 +430,7 @@ var Lightbox = {
 			}
 			
 			Lightbox.updateArrows();
+			Lightbox.renderHeader();
 			
 			// if player script exists, run it
 			if(data.playerScript) {
@@ -446,17 +463,33 @@ var Lightbox = {
 		}	
 	},
 	renderHeader: function() {
-		clearTimeout(Lightbox.eventTimers.header);
 		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderTemplate");	//TODO: replace with cache
 		Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 			var renderedResult = headerTemplate.mustache(json)
-			Lightbox.openModal.header.html(renderedResult).removeClass('hidden');
+			Lightbox.openModal.header.html(renderedResult).data('rendered', true);
+			Lightbox.showHeader();
+			Lightbox.hideHeader();
+		});
+	},
+	showHeader: function() {
+		clearTimeout(Lightbox.eventTimers.header);
+		Lightbox.eventTimers.header = 0;
+		var header = Lightbox.openModal.header;
+		if(header.hasClass('hidden') && header.data('rendered')) {
+			header.removeClass('hidden');
+		}
+	},
+	hideHeader: function() {
+		var header = Lightbox.openModal.header;
+		
+		// if Lightbox is not being hidden and hiding has not already started yet
+		if(!header.hasClass('hidden') && !Lightbox.eventTimers.header) {
 			Lightbox.eventTimers.header = setTimeout(
 				function() {
-					Lightbox.openModal.header.addClass('hidden');
-				}, 3000
+					header.addClass('hidden');
+				}, 2000
 			);
-		});
+		}
 	},
 	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
 		Lightbox.getMediaDetail({
