@@ -51,7 +51,7 @@ class ChatController extends WikiaController {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
 		
-		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatModule', 'onMakeGlobalVariablesScript', array(), false, $this);
+		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatController', 'onMakeGlobalVariablesScript', array(), false, $this);
 		
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
 	
