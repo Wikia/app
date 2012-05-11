@@ -42,7 +42,7 @@ class EditPageLayoutHelper {
 		$this->fullScreen = $fullScreen;
 		if ($fullScreen) {
 			// set Oasis entry-point
-			Wikia::setVar('OasisEntryModuleName', 'EditPageLayout');
+			Wikia::setVar('OasisEntryControllerName', 'EditPageLayout');
 		}
 
 		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
