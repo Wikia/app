@@ -26,7 +26,7 @@
 
 					var url = new window.Querystring();
 					url.setVal('useskin', 'wikiamobile');
-					url.setVal('cb', Math.ceil(Math.random() * 10001));
+					url.addCb();
 					url.goTo();
 				});
 

@@ -5,20 +5,16 @@
  */
 
 if(typeof document.body.outerHTML == 'undefined' && document.body.__defineGetter__ && HTMLElement){
-	var element = HTMLElement.prototype;
+	HTMLElement.prototype.__defineGetter__("outerHTML",
+		function(){
+			var el = document.createElement('div'),
+			shtml;
 
-	if(element.__defineGetter__){
-		element.__defineGetter__("outerHTML",
-			function(){
-				var el = document.createElement('div'),
-				shtml = '';
+			el.appendChild(this.cloneNode(true));
+			shtml = el.innerHTML;
+			el = null;
 
-				el.appendChild(this.cloneNode(true));
-				shtml = el.innerHTML;
-				el = null;
-
-				return shtml;
-			}
-		);
-	}
+			return shtml;
+		}
+	);
 }

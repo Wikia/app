@@ -47,7 +47,7 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 								}
 
 								reload.setVal('returnto', '');
-								reload.setVal('cb', wgStyleVersion);
+								reload.addCb();
 								reload.goTo();
 
 							}else{

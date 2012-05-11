@@ -4,19 +4,35 @@
  *
  * @author Jakub "Student" Olek
  */
-define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'], function(modal, loader, qs, popover, track, events){
+define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 'share'], function(modal, loader, qs, popover, track, events, share){
 	/** @private **/
 
 	var	images = [],
 		fllScrImg,
+		fllStyle,
 		imagesLength,
 		current = 0,
 		shrImg = (new qs()).getVal('image'),
 		clickEvent = events.click,
+		touch = events.touch,
+		move = events.move,
+		end = events.end,
+		cancel = events.cancel,
 		sharePopOver,
-		content = '<div id=fllScrImg></div>';
+		content = '<div id=fllScrImg></div>',
+		//zoom variables
+		wrapper,
+		startX, startY,
+		touched,
+		zoomed,
+		zooming,
+		currentSize,
+		computedStyle,
+		sx, sy,
+		widthFll, heightFll,
+		startD;
 
-	function processImages(){
+	function init(){
 		var	number = 0, href = '', name = '', nameMatch = /[^\/]*\.\w*$/,
 			i, j, elm,
 			elements = $('.infobox .image, .wkImgStk, figure').not('.wkImgStk > figure'),
@@ -102,6 +118,14 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'],
 
 		//if url contains image=imageName - open modal with this image
 		if(shrImg > -1) setTimeout(function(){openModal(shrImg)}, 2000);
+
+		$(document.body).delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
+			event.preventDefault();
+			event.stopPropagation();
+			var num = (this.attributes['data-num'] || this.parentElement.attributes['data-num']).value;
+
+			if(num) openModal(num);
+		});
 	}
 
 	function loadImage(){
@@ -111,9 +135,10 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'],
 		loader.show(fllScrImg, {center: true});
 
 		img.src = image[0];
-		fllScrImg.style.backgroundImage = 'none';
+		fllStyle.backgroundImage = 'none';
+		resetZoom();
 		img.onload =  function() {
-			fllScrImg.style.backgroundImage = 'url("' + img.src + '")';
+			fllStyle.backgroundImage = 'url("' + img.src + '")';
 			loader.hide(fllScrImg);
 		};
 
@@ -123,6 +148,9 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'],
 	function loadPrevImage(ev){
 		ev.stopPropagation();
 
+		if(zoomed && ev.type != 'click') return;
+
+		zoomed = false;
 		current -= 1;
 
 		if(current < 0) {
@@ -136,6 +164,8 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'],
 	function loadNextImage(ev){
 		ev.stopPropagation();
 
+		if(zoomed && ev.type != 'click') return;
+		zoomed = false;
 		current += 1;
 
 		if(imagesLength <= current) {
@@ -159,16 +189,160 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'],
 		return cap;
 	}
 
+	function ondblTap(ev){
+		ev.preventDefault();
+
+		var trackObj = {
+			ga_category: 'wikiamobile-modal',
+			tracking_method: 'both',
+			ga_action: WikiaTracker.ACTIONS.DOUBLETAP,
+			ga_label: ''
+		}
+
+		if(zoomed){
+			resetZoom();
+			trackObj.ga_label = 'zoom-out';
+		}else{
+			fllStyle.backgroundSize = 'cover';
+			trackObj.ga_label = 'zoom-in';
+		}
+
+		//WikiaTracker.trackEvent(trackObj);
+
+		onZoom();
+	}
+
+	function onZoom(state){
+		zoomed = (state != undefined) ? state : !zoomed;
+		modal.hideUI();
+	}
+
+	//for the ones that does not have ev.scale...
+	function distance(a,b){
+		var x = b.clientX - a.clientX,
+			y = b.clientY - a.clientY;
+
+		return Math.sqrt((x * x) + (y * y));
+	}
+
+	function onStart(ev){
+		var touches = ev.touches,
+			l = touches.length,
+			computedStyle = getComputedStyle(fllScrImg);
+
+		window.scrollTo(0,1);
+
+		//I need to split it as ios4 adds auto at the end of this property if you set only one % value
+		currentSize = ~~computedStyle.backgroundSize.split('%')[0] || 100;
+
+		if(l == 1){
+			sx = ~~computedStyle.backgroundPositionX.slice(0,-1);
+			sy = ~~computedStyle.backgroundPositionY.slice(0,-1);
+			startX = touches[0].clientX;
+			startY = touches[0].clientY;
+
+			if(touched) {
+				ondblTap(ev);
+			}else{
+				touched = true;
+				setTimeout(function(){
+					touched = false;
+				}, 300);
+			}
+		}
+
+		if(l == 2 && !ev.scale){
+			startD = distance(touches[0], touches[1])
+		}
+	}
+
+	function onMove(ev){
+		var touches = ev.touches,
+			l = touches.length,
+			zoom,
+			scale;
+
+		ev.preventDefault();
+
+		if(l == 1 && zoomed) {
+			var touch = touches[0],
+				x = (((startX - touch.clientX) / widthFll) * 100) + sx,
+				y = (((startY - touch.clientY) / heightFll) * 100) + sy;
+
+			fllStyle.backgroundPosition =  Math.min(Math.max(x, 0), 100) + '% ' + Math.min(Math.max(y, 0), 100) + '%';
+
+			modal.hideUI();
+		}
+
+		if(l == 2){
+			scale = ev.scale || distance(touches[0], touches[1]) / startD;
+			//max 3x min 1x
+			zoom = Math.min(Math.max(~~(currentSize * scale), 100), 300);
+
+			zooming = (scale > 1) ? 'zoom-in' : 'zoom-out';
+
+			if(zoom > 100){
+				fllStyle.backgroundSize = zoom + '%';
+				onZoom(true)
+			}else{
+				resetZoom();
+				onZoom(false);
+			}
+		}
+	}
+
+	function onEnd(){
+		if(zooming){
+			/*WikiaTracker.trackEvent({
+				ga_category: 'wikiamobile-modal',
+				tracking_method: 'both',
+				ga_action: WikiaTracker.ACTIONS.PINCH,
+				ga_label: zooming
+			});*/
+			zooming = '';
+		}
+	}
+
+	function resetZoom(){
+		fllStyle.backgroundPosition = '50% 50%';
+		fllStyle.backgroundSize = 'contain';
+	}
+
+	function addZoom(){
+		wrapper.addEventListener(touch, onStart);
+		wrapper.addEventListener(move, onMove);
+		wrapper.addEventListener(end, onEnd);
+		wrapper.addEventListener(cancel, onEnd);
+	}
+
+	function removeZoom(){
+		wrapper.removeEventListener(touch, onStart);
+		wrapper.removeEventListener(move, onMove);
+		wrapper.removeEventListener(end, onEnd);
+		wrapper.removeEventListener(cancel, onEnd);
+	}
+
 	function openModal(num){
 		current = Math.round(num);
 
 		modal.open({
 			content: content,
 			toolbar: '<div class=wkShr id=wkShrImg>',
-			classes: 'imgMdl'
+			classes: 'imgMdl',
+			onClose: removeZoom
 		});
 
+		//setup of zoom
+		wrapper = modal.getWrapper();
+
 		fllScrImg = document.getElementById('fllScrImg');
+		fllStyle = fllScrImg.style;
+
+		widthFll = fllScrImg.offsetWidth;
+		heightFll = fllScrImg.offsetHeight;
+
+		addZoom();
+		//end of zoom setup
 
 		loadImage();
 
@@ -190,11 +364,11 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'],
 			},
 			open: function(ev){
 				ev.stopPropagation();
-				sharePopOver.changeContent(WikiaMobile.loadShare);
-				track('modal/share/open');
+				sharePopOver.changeContent(share(images[current][1]));
+				//track('modal/share/open');
 			},
 			close: function(){
-				track('modal/share/close');
+				//track('modal/share/close');
 			}
 		});
 	}
@@ -209,6 +383,6 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events'],
 		getCurrentImg: function(){
 			return images[current];
 		},
-		processImages: processImages
+		init: init
 	}
 });
