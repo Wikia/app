@@ -23,9 +23,10 @@ class ChatController extends WikiaController {
 		$this->avatarUrl = AvatarService::getAvatarUrl($this->username, ChatController::CHAT_AVATAR_DIMENSION);
 
 		// Find the chat for this wiki (or create it, if it isn't there yet).
-		$this->roomName = $this->roomTopic = "";
-		$this->roomId = NodeApiClient::getDefaultRoomId($this->roomName, $this->roomTopic);
-		$this->roomId = (int) $this->roomId;
+		$roomName = $roomTopic = "";
+		$this->roomId = (int) NodeApiClient::getDefaultRoomId($roomName, $roomTopic);
+		$this->roomName = $roomName;
+		$this->roomTopic = $roomTopic;
 		
 		// Set the hostname of the node server that the page will connect to.
 
