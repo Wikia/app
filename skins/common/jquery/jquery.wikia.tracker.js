@@ -50,12 +50,12 @@ jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
 };
 
 // Now that the code is loaded, if there were any tracking events in the spool from before this file loaded, replay them.
-if (typeof wikiaTrackingSpool !== 'undefined') {
+/*if (typeof wikiaTrackingSpool !== 'undefined') {
 	wikiaTrackingSpool.forEach(function( eventNameAndData ){
 		$().log('Sending previously-spooled tracking event', eventNameAndData);
 		$.internalTrack( eventNameAndData[0], eventNameAndData[1] );
 	});
-}
+}*/
 
 // Port of getTarget and resolveTextNode function (altogether) from YUI Event lib
 // @author: Inez
