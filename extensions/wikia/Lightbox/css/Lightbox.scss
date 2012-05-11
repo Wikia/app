@@ -113,7 +113,7 @@ $carousel-vertical-padding: 20px;
 			height: 50px;
 			overflow: hidden;
 			position: relative;
-			width: 580px;
+			width: 588px;
 			ul {
 				@include clearfix;
 				position: absolute;
@@ -128,6 +128,20 @@ $carousel-vertical-padding: 20px;
 			img {
 				width: 90px; // TODO: get these dimensions from thumbnailer
 				height: 55px; // TODO: get these dimensions from thumbnailer
+			}
+		}
+		.carousel-arrow {
+			cursor: pointer;
+			
+			&.next {
+				@include arrow(10px, $color-buttons, 'right');
+				float: right;
+				display: block;
+			}
+			&.previous {
+				@include arrow(10px, $color-buttons, 'left');
+				float: left;
+				display: block;
 			}
 		}
 	}
