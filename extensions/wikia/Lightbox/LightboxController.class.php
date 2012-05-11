@@ -12,6 +12,7 @@ class LightboxController extends WikiaController {
 	
 	
 	public function lightboxModalContent() {
+		// TODO: get article name from request
 		$title = $this->request->getVal('title');
 		$carouselType = $this->request->getVal('carouselType');
 		
