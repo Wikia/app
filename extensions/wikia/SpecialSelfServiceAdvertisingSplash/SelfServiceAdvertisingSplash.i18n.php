@@ -11,7 +11,7 @@ $messages = array();
 $messages['en'] = array(
 	'ssa-splash-please-enter-your-name' => 'Please enter your name',
 	'ssa-splash-please-enter-your-email-address' => 'Please enter your valid email address',
-	'ssa-splash-message-sent' => 'Thanks for contacting us. Someone will get back to you soon with your coupon code!',
+	'ssa-splash-message-sent' => 'Thanks for contacting us. We will get back to you soon with your coupon code!',
 	'ssa-splash-message-not-sent-please-try-again' => 'Your message could not be delivered. Please try again!',
 	'ssa-splash-h1' => 'Wikia\'s Self-Service Advertising Platform',
 	'ssa-splash-h2' => 'Reach 40 million global people where they create and collaborate on topics<br />ranging from Video Games to Entertainment and Lifestyle',
@@ -31,6 +31,6 @@ $messages['en'] = array(
 	'ssa-splash-rightbox-phone' => 'Phone no. (xxx) xxx-xxxx',
 	'ssa-splash-rightbox-getcoupon' => 'Get Coupon Now!',
 	'ssa-splash-modal-title' => 'Thank You',
-	'ssa-splash-modal-content' => 'Thanks for contacting us. Someone will get back to you soon with your coupon code!',
+	'ssa-splash-modal-content' => 'Thanks for contacting us. We will get back to you soon with your coupon code!',
 	'ssa-splash-modal-ok' => 'Ok'
 );
