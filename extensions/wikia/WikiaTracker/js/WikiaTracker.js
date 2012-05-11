@@ -136,7 +136,7 @@ WikiaTracker.track = function(page, profile, events) {
 WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
-	if (profile.indexOf('liftium') != -1) {
+	if (profile.indexOf('liftium') != -1 && profile.indexOf('liftium.init') == -1 && profile.indexOf('liftium.beacon') == -1) {
 		return false;
 	}
 

@@ -36,12 +36,18 @@ SCRIPT2;
 */
 		$script .= <<<SCRIPT2
 <script type="text/javascript">
+  function getCustomVarPage() {
+    if (window.wgIsMainpage) return 'mainpage';
+
+    return 'other';
+  }
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-30014103-1']);
   _gaq.push(['_setSampleRate', '10']);
 
-  _gaq.push(['_setCustomVar', 1, 'wiki', 'db=' + (window.wgDBname || 'unknown') + ';hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
+  _gaq.push(['_setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
+  _gaq.push(['_setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 3, 'AB',   'unknown', 3]);
   _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['_setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
