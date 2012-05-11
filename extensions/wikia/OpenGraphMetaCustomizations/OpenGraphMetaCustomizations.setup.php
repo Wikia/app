@@ -60,7 +60,7 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 		}
 		
 		// If ImageServing was not able to deliver a good match, fall back to the wiki's wordmark.
-		if( empty($titleImage) && !is_object($titleImage) && Wikia::isOasis()){
+		if ( empty($titleImage) && !is_object( $titleImage ) && F::app()->checkSkin( 'oasis' ) ){
 			$themeSettings = new ThemeSettings();
 			$settings = $themeSettings->getSettings();
 			if ($settings["wordmark-type"] == "graphic") {

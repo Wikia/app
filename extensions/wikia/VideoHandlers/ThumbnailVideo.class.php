@@ -124,7 +124,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			);
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
-			if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
+			if ( F::app()->checkSkin( array( 'oasis', 'wikiamobile' ) ) ) {
 				$linkAttribs['data-video-name'] = $this->file->getTitle()->getText();
 				$linkAttribs['href'] = $this->file->getTitle()->getLocalURL();
 				if ( !empty( $options['id'] ) ){

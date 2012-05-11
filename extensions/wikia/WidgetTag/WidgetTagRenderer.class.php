@@ -23,8 +23,8 @@ class WidgetTagRenderer extends WidgetFramework {
 			return '';
 		}
 
-		// we support only quartz & monaco skin in this feature
-		if (!Wikia::isOasis()) {
+		// we support only the Oasis skin for this feature
+		if ( !( F::app()->checkSkin( 'oasis' ) ) ) {
 			wfProfileOut(__METHOD__);
 			return '';
 		}

@@ -2,7 +2,7 @@
 <style type="text/css">
 /*<![CDATA[*/
 <?php
-	if (Wikia::isOasis()) {
+	if ( F::app()->checkSkin( 'oasis' ) ) {
 		$css = AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiFactory/css/oasis.scss');
 		echo "@import url('{$css}');\n\n";
 	}

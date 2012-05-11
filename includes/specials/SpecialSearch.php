@@ -262,7 +262,7 @@ class SpecialSearch {
 
 		// show number of results and current offset
 		/* Wikia change begin - @author: Macbre */
-		if (!Wikia::isOasis()) {
+		if ( !( F::app()->checkSkin( 'oasis' ) ) ) {
 			$wgOut->addHTML( $this->formHeader($term, $num, $totalRes));
 			if( $this->searchAdvanced ) {
 				$wgOut->addHTML( $this->powerSearchBox( $term ) );
@@ -331,7 +331,7 @@ class SpecialSearch {
 
 		// show number of results and current offset
 		/* Wikia change begin - @author: Macbre */
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$wgOut->addHTML( $this->formHeader($term, $num, $totalRes));
 			if( $this->searchAdvanced ) {
 				$wgOut->addHTML( $this->powerSearchBox( $term ) );
@@ -349,7 +349,7 @@ class SpecialSearch {
 
 		/* Wikia change begin - @author: Macbre */
 		/* Don't show "create an article" link in Oasis */
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			return '';
 		}
 		/* Wikia change end */

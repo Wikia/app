@@ -327,7 +327,7 @@ class EditPage {
 		}
 
 		/* Wikia change begin - @author: Marcin, #BugId: 7845 */
-		if ( !Wikia::isOasis() ) {
+		if ( !( F::app()->checkSkin( 'oasis' ) ) ) {
 			$wgOut->addScriptFile( 'edit.js' );
 		}
 		/* Wikia change end */
@@ -395,7 +395,7 @@ class EditPage {
 		# Optional notices on a per-namespace and per-page basis		
 		/* Wikia change begin - @author: Christian, #BugId: 7092 */
 		$editnotice_ns   = 'editnotice-'.$this->mTitle->getNamespace();
-		if ( !Wikia::isOasis() ) {
+		if ( !( F::app()->checkSkin( 'oasis' ) ) ) {
 			if ( !wfEmptyMsg( $editnotice_ns, wfMsgForContent( $editnotice_ns ) ) ) {
 				$wgOut->addWikiText( wfMsgForContent( $editnotice_ns )  );
 			}

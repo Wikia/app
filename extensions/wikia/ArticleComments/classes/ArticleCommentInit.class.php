@@ -200,7 +200,7 @@ class ArticleCommentInit {
 	 * @return true -- because it's a hook
 	 */
 	static function InjectTOCitem($parser, $sk, &$toc, &$sublevelCount) {
-		if (self::ArticleCommentCheck() && !Wikia::isWikiaMobile( $sk )) {
+		if ( self::ArticleCommentCheck() && !( F::app()->checkSkin( 'wikiamobile', $sk ) ) ) {
 			wfLoadExtensionMessages('ArticleComments');
 			$tocnumber = ++$sublevelCount[1];
 

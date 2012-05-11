@@ -534,7 +534,7 @@ class Linker {
 				'img-class' => isset( $fp['border'] ) ? 'thumbborder' : false );
 			/* Wikia change begin - @author: Marooned */
 			/* Images SEO project */
-			if (Wikia::isOasis()) {
+			if ( F::app()->checkSkin( 'oasis' ) ) {
 				$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
 				$params['id'] = $wrapperId;
 			}
@@ -648,7 +648,7 @@ class Linker {
 
 		/* Wikia change begin - @author: Marooned */
 		/* Images SEO project */
-		if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
+		if ( F::app()->checkSkin( array( 'oasis', 'wikiamobile' ) ) ) {
 			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($title->getText()));
 			$s = "<figure class=\"thumb t{$fp['align']} thumbinner\" style=\"width:{$outerWidth}px;\">";
 		} else {
@@ -685,14 +685,17 @@ class Linker {
 		}
 		/* Wikia change begin - @author: Marooned, Federico "Lox" Lucignano */
 		/* Images SEO project */
-		if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
-			$showCaption = !empty( $fp['caption'] );
+		$app = F::app();
 
-			if ( Wikia::isOasis() ) {
+		if ( $app->checkSkin( array( 'oasis', 'wikiamobile' ) ) ) {
+			$showCaption = !empty( $fp['caption'] );
+			$isOasis = $app->checkSkin( 'oasis' );
+
+			if ( $isOasis ) {
 				$s .= $zoomicon;
 			}
 
-			if ( Wikia::isOasis() || $showCaption ) {
+			if ( $isOasis || $showCaption ) {
 				$s .= '<figcaption class="thumbcaption">'; 
 			}
 
@@ -701,11 +704,11 @@ class Linker {
 			}
 
 			//picture attribution placeholder is processed only by Oasis
-			if ( Wikia::isOasis() ) {
+			if ( $isOasis ) {
 				$s .= '<!-- picture-attribution -->';
 			}
 
-			if ( Wikia::isOasis() || $showCaption ) {
+			if ( $isOasis || $showCaption ) {
 				$s .= '</figcaption>';
 			}
 

@@ -1242,7 +1242,7 @@ class BlogTemplateClass {
 								$iCount = self::getResultsCount();
 								$sPager = self::__getPager($iCount, intval(self::$aOptions['offset']));
 							}
-							if (Wikia::isOasis() ) {
+							if ( F::app()->checkSkin( 'oasis' ) ) {
 								wfRunHooks('BlogsRenderBlogArticlePage', array(&$result, $aResult, self::$aOptions, $sPager));
 							} else {
 								/* run template */

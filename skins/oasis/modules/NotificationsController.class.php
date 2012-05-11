@@ -155,7 +155,7 @@ class NotificationsController extends WikiaController {
 		global $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			if ($wgRequest->getCheck('success')) {
 				self::addConfirmation(wfMsg('savedprefs'));
 			}
@@ -179,7 +179,7 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgOut;
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$oldUrl = $ot->getFullUrl('redirect=no');
 			$newUrl = $nt->getFullUrl();
 			$oldText = $ot->getPrefixedText();
@@ -206,7 +206,7 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgOut;
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$title = $article->getTitle();
 			// special handling of ArticleComments
 			if (class_exists('ArticleComment') && MWNamespace::isTalk($title->getNamespace()) && ArticleComment::isTitleComment($title) && $title->getNamespace() != NS_USER_WALL ) {
@@ -235,7 +235,7 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgOut;
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			self::addConfirmation(wfMsg('oasis-confirmation-page-undeleted'));
 
 			// redirect to undeleted page
@@ -253,7 +253,7 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgRequest;
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			self::addConfirmation(wfMsg('oasis-confirmation-user-logout'));
 
 			// redirect the page user has been on when he clicked "log out" link
@@ -288,7 +288,7 @@ class NotificationsController extends WikiaController {
 
 
 		// FBConnect messages
-		if (Wikia::isOasis() && class_exists('FBConnectHooks')) {
+		if ( F::app()->checkSkin( 'oasis' ) && class_exists('FBConnectHooks')) {
 			wfLoadExtensionMessages('FBConnect');
 
 			$preferencesUrl = SpecialPage::getTitleFor('Preferences')->getFullUrl();
@@ -333,7 +333,7 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		// as for now only add it for logged-in (BugId:1317)
-		if (Wikia::isOasis() && $wgUser->isLoggedIn()) {
+		if ( F::app()->checkSkin( 'oasis' ) && $wgUser->isLoggedIn()) {
 			self::addConfirmation(wfMsg('oasis-edit-saved'));
 		}
 
@@ -347,7 +347,7 @@ class NotificationsController extends WikiaController {
 	public static function addMessageNotification(&$skin, &$tpl) {
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			// Add talk page notificaations
 			$msg = $tpl->data['usernewmessages'];
 			if ($msg != '') {
@@ -365,7 +365,7 @@ class NotificationsController extends WikiaController {
 	public static function addSiteWideMessageNotification($msgs) {
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			self::addNotification($msgs, null, self::NOTIFICATION_SITEWIDE);
 		}
 
@@ -379,7 +379,7 @@ class NotificationsController extends WikiaController {
 	public static function addBadgeNotification($user, $badge, &$html) {
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			// clear old-style notification
 			$html = '';
 
@@ -408,7 +408,7 @@ class NotificationsController extends WikiaController {
 	public static function addEditSimilarNotification(&$html) {
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			self::addNotification($html, array(), self::NOTIFICATION_EDIT_SIMILAR);
 
 			// stop hook processing - don't show default message from extensions
@@ -428,7 +428,7 @@ class NotificationsController extends WikiaController {
 	public static function addCommunityMessagesNotification(&$msg) {
 		wfProfileIn(__METHOD__);
 
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			self::addNotification($msg, array(), self::NOTIFICATION_COMMUNITY_MESSAGE);
 		}
 

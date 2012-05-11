@@ -161,7 +161,7 @@ class TopListHelper {
 	static public function onCreatePageFetchOptions(&$standardOptions, &$options ) {
 		global $wgCdnStylePath, $wgScript, $wgShowTopListsInCreatePage;
 
-		if( !empty( $wgShowTopListsInCreatePage ) && Wikia::isOasis() ) {
+		if( !empty( $wgShowTopListsInCreatePage ) && F::app()->checkSkin( 'oasis' ) ) {
 			wfLoadExtensionMessages( 'TopLists' );
 
 			$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );

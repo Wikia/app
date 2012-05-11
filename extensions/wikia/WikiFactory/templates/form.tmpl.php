@@ -2,8 +2,8 @@
 <style type="text/css">
 /*<![CDATA[*/
 <?php
-	// use "build-in" styling for tabs on Oasis
-	if (!Wikia::isOasis()) {
+	// use "built-in" styling for tabs on Oasis
+	if ( !( F::app()->checkSkin( 'oasis' ) ) ) {
 	//start non-oasis tab styling
 ?>
 #wiki-factory ul.tabs {

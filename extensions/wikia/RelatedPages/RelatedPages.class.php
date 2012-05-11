@@ -359,7 +359,7 @@ class RelatedPages {
 
 	public static function onOutputPageBeforeHTML( &$out, &$text ) {
 		global $wgRequest;
-		if( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null && !Wikia::isWikiaMobile() ) {
+		if ( $out->isArticle() && $wgRequest->getVal( 'diff' ) === null && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
 			$text .= wfRenderModule( 'RelatedPages' );
 		}
 		return true;

@@ -47,7 +47,7 @@ function AddLinkSuggest($a, $b, $c, $d) {
 		$js = "{$wgExtensionsPath}/wikia/LinkSuggest/LinkSuggest.js";
 
 		// load YUI for Oasis - TODO: Refactor LinkSuggest.js to not use YUI.  Look in /trunk/skins/oasis/js/Search.js for an example of using LinkSuggest with jQuery.
-		if (Wikia::isOasis()) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$wgOut->addHTML('<script type="text/javascript">$(function() {$.loadYUI(function() {$.getScript('.Xml::encodeJsVar($js).')})})</script>');
 		}
 		else {

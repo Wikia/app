@@ -38,7 +38,7 @@ class SpecialEditTopList extends SpecialPage {
 			return;
 		}
 		
-		if( !$this->userCanExecute( $wgUser )  || !Wikia::isOasis() ) {
+		if( !$this->userCanExecute( $wgUser )  || !( F::app()->checkSkin( 'oasis' ) ) ) {
 			$this->displayRestrictionError();
 			return;
 		}

@@ -59,7 +59,7 @@ class RelatedPagesController extends WikiaController {
 			}
 		}
 		
-		if ( Wikia::isWikiaMobile() ) {
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 	}

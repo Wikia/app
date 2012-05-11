@@ -137,7 +137,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		if ( Wikia::isWikiaMobile() ) {
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$recoverParam = 'recover=1';
 			$recover = ( $this->wg->request->getInt( 'recover' ) === 1 );
 
@@ -192,7 +192,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->skipRendering();
 		}
 
-		if ( Wikia::isWikiaMobile() ) {
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$this->overrideTemplate( 'WikiaMobileProviders' );
 		}
 	}

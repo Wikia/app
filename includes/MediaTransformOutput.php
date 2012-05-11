@@ -175,7 +175,7 @@ class ThumbnailImage extends MediaTransformOutput {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
 			/* Wikia change begin - @author: Marooned, Federico "Lox" Lucignano */
 			/* Images SEO project */
-			if (Wikia::isOasis() || Wikia::isWikiaMobile()) {
+			if ( F::app()->checkSkin( array( 'oasis', 'wikiamobile' ) ) ) {
 				$linkAttribs['data-image-name'] = $this->file->getTitle()->getText();
 				$linkAttribs['href'] = $this->file->getFullUrl();
 				if (!empty($options['id'])) $linkAttribs['id'] = $options['id'];

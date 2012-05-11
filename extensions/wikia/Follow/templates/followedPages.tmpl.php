@@ -24,7 +24,7 @@
 				<?php
 				global $wgBlankImgUrl;
 				?>
-				<img alt="<?php echo wfMsg( 'wikiafollowedpages-special-delete-tooltip' ); ?>" class="<?= Wikia::isOasis() ? 'sprite-small close' : 'sprite delete' ?>" id="" src="<?php print $wgBlankImgUrl; ?>"/>
+				<img alt="<?php echo wfMsg( 'wikiafollowedpages-special-delete-tooltip' ); ?>" class="<?= ( F::app()->checkSkin( 'oasis' ) ) ? 'sprite-small close' : 'sprite delete' ?>" id="" src="<?php print $wgBlankImgUrl; ?>"/>
 			</a>
 			<?php endif; ?>
 			<span>

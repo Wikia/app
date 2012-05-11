@@ -246,7 +246,7 @@ class ArticleCommentsAjax {
 		$error = 0;
 		$text = $pagination = '';
 		$method = 'CommentList';
-		$isMobile = Wikia::isWikiaMobile();
+		$isMobile = F::app()->checkSkin( 'wikiamobile' );
 
 		if($isMobile){
 			$method = 'WikiaMobile' . $method;
