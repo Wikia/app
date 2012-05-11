@@ -1,4 +1,5 @@
 @import "../../../../skins/oasis/css/mixins/border-radius.scss";
+@import "../../../../skins/oasis/css/mixins/gradient";
 
 @mixin hubs-vertical-coloring($color-wikiahome-hubcolor, $color-wikiahome-hubcolor-dark){
 	$whitecolor: #fff;
