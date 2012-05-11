@@ -274,15 +274,9 @@ var Lightbox = {
 					Lightbox.normalizeMediaDetail(initialFileDetail, updateCallback);
 				}
 				
-				// autohide carousel
-				/*
-				Lightbox.showOverlay('carousel');
-				Lightbox.hideOverlay('carousel');
-				*/
-				
 				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 					var time = new Date().getTime();
-					if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 200 ) {
+					if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) {
 						Lightbox.eventTimers.lastMouseUpdated = time;
 						var relativeMouseY = evt.pageY - Lightbox.openModal.offset().top;
 						if(relativeMouseY < 150) {
@@ -338,7 +332,7 @@ var Lightbox = {
 				Lightbox.updateArrows();
 				Lightbox.renderHeader();
 				Lightbox.showOverlay('carousel');
-				Lightbox.hideOverlay('carousel');
+				Lightbox.hideOverlay('carousel', 2000);
 				
 				Lightbox.lightboxLoading = false;
 				Lightbox.log("Lightbox modal loaded");
@@ -446,7 +440,7 @@ var Lightbox = {
 			Lightbox.updateArrows();
 			Lightbox.renderHeader();
 			Lightbox.showOverlay('carousel');
-			Lightbox.hideOverlay('carousel');
+			Lightbox.hideOverlay('carousel', 2000);
 			
 			// if player script exists, run it
 			if(data.playerScript) {
@@ -484,7 +478,7 @@ var Lightbox = {
 			var renderedResult = headerTemplate.mustache(json)
 			Lightbox.openModal.header.html(renderedResult).data('rendered', true);
 			Lightbox.showOverlay('header');
-			Lightbox.hideOverlay('header');
+			Lightbox.hideOverlay('header', 2000);
 		});
 	},
 	showOverlay: function(overlayName) {
@@ -495,14 +489,14 @@ var Lightbox = {
 			overlay.removeClass('hidden');
 		}
 	},
-	hideOverlay: function(overlayName) {
+	hideOverlay: function(overlayName, delay) {
 		var overlay = Lightbox.openModal[overlayName];
 		// if Lightbox is not being hidden and hiding has not already started yet
 		if(!overlay.hasClass('hidden') && !Lightbox.eventTimers[overlayName]) {
 			Lightbox.eventTimers[overlayName] = setTimeout(
 				function() {
 					overlay.addClass('hidden');
-				}, 2000
+				}, (delay || 600)
 			);
 		}
 	},
