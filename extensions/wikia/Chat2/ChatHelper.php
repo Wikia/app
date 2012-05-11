@@ -124,7 +124,7 @@ class ChatHelper {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 		
-		$vars['wgWikiaChatModuleContent'] = ( $wgUser->isAnon() ) ? '' : F::app()->sendRequest('ChatRailModule', 'Contents' )->toString();
+		$vars['wgWikiaChatModuleContent'] = ( $wgUser->isAnon() ) ? '' : F::app()->sendRequest('ChatRailController', 'Contents' )->toString();
 		$vars['wgWikiaChatWindowFeatures'] = ChatRailController::CHAT_WINDOW_FEATURES;
 		wfProfileOut( __METHOD__ );
 		return true;
