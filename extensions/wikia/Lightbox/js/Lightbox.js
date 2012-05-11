@@ -219,7 +219,8 @@ var Lightbox = {
 			type: 'POST',	/* TODO (hyun) - might change to get */
 			format: 'html',
 			data: {
-				title: Lightbox.current.title
+				title: Lightbox.current.title,
+				carouselType: Lightbox.current.carouselType
 			},
 			callback: function(html) {
 				// restore inline videos to default state, because flash players overlaps with modal
@@ -229,9 +230,7 @@ var Lightbox = {
 				Lightbox.openModal.find(".modalContent").html(html); // adds initialFileDetail js to DOM
 				Lightbox.openModal.WikiaLightbox = Lightbox.openModal.find('.WikiaLightbox');
 				
-				
-				Lightbox.current.carouselType = "articleMedia"; // TODO: get this from back end
-				Lightbox.cache.articleMedia = mediaThumbs.thumbs;
+				Lightbox.cache[Lightbox.current.carouselType] = mediaThumbs.thumbs;
 				
 				
 				// Set up carousel
@@ -252,11 +251,11 @@ var Lightbox = {
 				
 				var carousel = $(carouselTemplate).mustache({
 					thumbs: thumbs,
-					progress: "1-6 of 24" // TODO: calculate progress
+					progress: "1-6 of 24" // TODO: calculate progress and i18n "of"
 				});
 				
-				Lightbox.openModal.WikiaLightbox.append(carousel);				
 				// pre-cache known doms
+				Lightbox.openModal.carousel = $(carousel).appendTo(Lightbox.openModal.WikiaLightbox);
 				Lightbox.openModal.header = Lightbox.openModal.find('header');
 				
 				var updateCallback = function(json) {
@@ -277,6 +276,7 @@ var Lightbox = {
 	image: {
 		updateLightbox: function(data) {
 			
+			// TODO: if the lightbox is already as big as the window, don't shrink it. 
 			Lightbox.image.getDimensions(data.imageUrl, function(dimensions) {
 				
 				Lightbox.openModal.css({
@@ -425,6 +425,7 @@ var Lightbox = {
 			
 		},
 		getDimensions: function() {
+			// TODO: if the lightbox is already as big as the window, don't shrink it. 
 			// if window is larger than min modal height, update modal height
 			var topOffset = Lightbox.modal.defaults.topOffset,
 				modalMinHeight = Lightbox.modal.defaults.height,
