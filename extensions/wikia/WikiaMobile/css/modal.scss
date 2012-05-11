@@ -27,6 +27,7 @@ html.modal{
 	overflow: hidden;
 	color: $modal-text-color;
 	z-index: $highest-z-index + 1000;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	@include transition(opacity 1s);
 
 	&.open {
@@ -45,7 +46,7 @@ html.modal{
 	left: 0;
 	z-index: $highest-z-index + 1001;
 	background-color: rgba(0,0,0,.8);
-	@include transition(top .5s ease-in);
+	@include transition(top .3s ease-in);
 
 	.hdn & {
 		top: -100%;
@@ -75,7 +76,7 @@ html.modal{
 	line-height: 20px;
 	z-index: $highest-z-index + 1005;
 	font-weight: 100;
-	@include transition(bottom .5s ease-in);
+	@include transition(bottom .3s ease-in);
 	display: none;
 
 	.hdn & {

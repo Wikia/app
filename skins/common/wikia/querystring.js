@@ -105,9 +105,13 @@
 			this.path = p;
 		};
 
+		p.addCb = function(){
+			this.cache.cb = Math.ceil(Math.random() * 10001);
+		};
+
 		p.goTo = function(){
 			//TODO: We don't want these to be in url on load, this should be refactored as is valid only for WikiaMobile
-			if(this.hash == 'pop' || this.hash == 'Modal'){
+			if(this.hash == 'topbar' || this.hash == 'Modal'){
 				this.hash = '';
 			}
 

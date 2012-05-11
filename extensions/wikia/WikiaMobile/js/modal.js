@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('modal', ['loader', 'track', 'events'], function modal(loader, track, events){
+define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, track, events, ads){
 	var d = document,
 		w = window,
 		opened, created,
@@ -36,22 +36,11 @@ define('modal', ['loader', 'track', 'events'], function modal(loader, track, eve
 			close();
 		});
 
-		content.addEventListener(clickEvent, function(){
-			if(!stopHiding){
-				var par = this.parentElement,
-					className = par.className;
-
-				if(className.indexOf('hdn') > -1){
-					par.className = className.replace(' hdn', '');
-				}else{
-					par.className += ' hdn';
-				}
-			}
-		});
+		content.addEventListener(clickEvent, toggleUI);
 
 		//hide adress bar on orientation change
 		w.addEventListener('orientationchange', function() {
-			if(w.pageYOffset == 0) setTimeout(function() {window.scrollTo( 0, 1 );},1);
+			if(w.pageYOffset == 0) setTimeout(function() {w.scrollTo( 0, 1 );},10);
 		});
 
 		w.addEventListener('hashchange', function() {
@@ -61,6 +50,26 @@ define('modal', ['loader', 'track', 'events'], function modal(loader, track, eve
 		});
 
 		d.head.insertAdjacentHTML('beforeend', '<style>#wkMdlWrp{min-height: ' + deviceHeight + 'px}@media only screen and (orientation:landscape) and (min-width: 321px){#wkMdlWrp{min-height:' + deviceWidth + 'px;}}</style>');
+	}
+
+	function hideUI(){
+		if(wrapper.className.indexOf('hdn') == -1){
+			wrapper.className += ' hdn';
+		}
+	}
+
+	function showUI(){
+		wrapper.className = wrapper.className.replace(' hdn', '');
+	}
+
+	function toggleUI(){
+		if(!stopHiding){
+			if(wrapper.className.indexOf('hdn') > -1){
+				showUI();
+			}else{
+				hideUI();
+			}
+		}
 	}
 
 	/* public */
@@ -113,7 +122,7 @@ define('modal', ['loader', 'track', 'events'], function modal(loader, track, eve
 			content.innerHTML = '';
 			caption.innerHTML = '';
 			wrapper.className = caption.className = topBar.className = '';
-			if(!Modernizr.positionfixed) WikiaMobile.moveSlot();
+			if(!Modernizr.positionfixed) ads.moveSlot();
 
 			if(typeof onClose === 'function'){
 				onClose();
@@ -160,6 +169,10 @@ define('modal', ['loader', 'track', 'events'], function modal(loader, track, eve
 		setContent: setContent,
 		open: open,
 		close: close,
-		isOpen: isOpen
+		isOpen: isOpen,
+		getWrapper: function(){
+			return wrapper;
+		},
+		hideUI: hideUI
 	}
 });

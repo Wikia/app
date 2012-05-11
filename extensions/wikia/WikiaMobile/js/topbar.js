@@ -20,25 +20,26 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 		lvl2Link,
 		minimumSet;
 
+	//replace menu from bottom to topBar - the faster the better
+	d.getElementById('wkNav').replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
+
 	//search setup
 	//move search to topbar
 	$(d.getElementById('wkNavSrh')).remove().appendTo('#wkTopBar');
 
-	d.body.addEventListener(clickEvent, function(ev){
-		if(ev.target.className.indexOf('hidden') > -1){
-			closeDropDown();
-		}
-	});
-
-	function openSearch(){
+	function reset(){
 		window.scrollTo(0,1);
 		m.close();
 		toc.close();
+		w.location.hash = 'topbar';
+		hidePage();
+	}
+
+	function openSearch(){
 		closeNav();
+		reset();
 		track('search/toggle/open');
 		navBar.className = 'srhOpn';
-		hidePage();
-		w.location.hash = 'topbar';
 		searchInput.focus();
 	}
 
@@ -92,13 +93,9 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 
 	//navigation setup
 	function openNav(){
-		window.scrollTo(0,1);
-		m.close();
-		toc.close();
+		reset();
 		track('nav/open');
 		navBar.className = 'fllNav';
-		hidePage();
-		w.location.hash = 'topbar';
 
 		if(!minimumSet){
 			var uls = wkNavMenu.getElementsByTagName('ul'),
@@ -210,13 +207,9 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	});
 
 	function openProfile(){
-		window.scrollTo(0,1);
-		m.close();
-		toc.close();
+		reset();
 		closeNav();
 		navBar.className = 'prf';
-		hidePage();
-		w.location.hash = 'topbar';
 
 		if(wgUserName){
 			track('profile/open');

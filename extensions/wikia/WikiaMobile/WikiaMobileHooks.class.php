@@ -71,8 +71,11 @@ class WikiaMobileHooks extends WikiaObject{
 		$this->wf->profileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			//TODO: move JS for Category to be loaded only here
 			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view
 			F::build( 'Article', array( $categoryPage->getTitle() ) )->view();
+
+			$scripts = F::build( 'AssetsManager' ,array(), 'getInstance')->getURL( array( 'categorypage_js_wikiamobile' ) );
 
 			$this->wg->Out->setPageTitle( $categoryPage->getTitle()->getText() . ' <span id=catTtl>Category Page</span>');
 
@@ -80,6 +83,11 @@ class WikiaMobileHooks extends WikiaObject{
 			
 			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', array( 'categoryPage' => $categoryPage ) ) );
 			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', array( 'categoryPage' => $categoryPage ) ) );
+
+			//this is going to be additional call but at least it won't be loaded on every page
+			foreach ( $scripts as $s ) {
+				$this->wg->Out->addScript( '<script src=' . $s . '>' );
+			}
 
 			$this->wf->profileOut( __METHOD__ );
 			return false;

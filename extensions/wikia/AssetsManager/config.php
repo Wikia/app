@@ -274,10 +274,10 @@ $config['wikiamobile_js_body'] = array(
 		'//skins/common/zepto/zepto.wikiamobile.js',
 
 		//tracker
-		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
+		//'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
+		//'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		//'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		//'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/track.js',
@@ -289,6 +289,11 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
 		'//extensions/wikia/WikiaMobile/js/popover.js',
+		'//extensions/wikia/WikiaMobile/js/ads.js',
+		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
+		'//extensions/wikia/WikiaMobile/js/sections.js',
+		'//extensions/wikia/WikiaMobile/js/share.js',
+		'//extensions/wikia/WikiaMobile/js/tables.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
@@ -303,6 +308,14 @@ $config['wikiamobile_scroll_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/js/scroll.wikiamobile.js'
+	)
+);
+
+$config['categorypage_js_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/category_page.js',
 	)
 );
 
