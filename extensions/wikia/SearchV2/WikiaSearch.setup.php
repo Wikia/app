@@ -53,6 +53,11 @@ F::addClassConstructor( 'WikiaSearch', array( 'client' => F::build('WikiaSolrCli
  */
 $app->registerExtensionMessageFile('WikiaSearch', $dir . 'WikiaSearch.i18n.php' );
 
+/**
+ * preference settings
+ */
+$app->registerHook('GetPreferences', 'WikiaSearch', 'onGetPreferences');
+
 
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'Wikia Search V2',

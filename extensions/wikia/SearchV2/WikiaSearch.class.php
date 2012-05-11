@@ -68,7 +68,7 @@ class WikiaSearch extends WikiaObject {
 			$results->setResultsPerPage($length);
 			$searchCount = 1;
 			while( !$results->valid() && $results->hasResults() ) {
-			  $methodOptions = array('start'  => ($results->getResultsStart() + self::GROUP_RESULTS_SEARCH_LIMIT), 'size' => self::GROUP_RESULTS_SEARCH_LIMIT, 'cityId' => $cityId, 'go' => $go);
+			  $methodOptions = array('start'  => ($results->getResultsStart() + self::GROUP_RESULTS_SEARCH_LIMIT), 'size' => self::GROUP_RESULTS_SEARCH_LIMIT, 'cityId' => $cityId);
 				$moreResults = $this->client->search( $query, $methodOptions );
 
 				if(!$moreResults->hasResults()) {
@@ -598,4 +598,18 @@ class WikiaSearch extends WikiaObject {
 	public function getIncludeRedirects() {
 		return $this->includeRedirects;
 	}
+
+	public static function onGetPreferences($user, &$defaultPreferences) {
+		wfProfileIn( __METHOD__ );
+
+		$defaultPreferences["enableGoSearch"] = array(
+			'type' => 'toggle',
+			'label-message' => array('wikiasearch2-enable-go-search'),
+			'section' => 'under-the-hood/advanced-displayv2',
+		);
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
 }

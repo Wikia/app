@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Search this wiki',
 	'wikiasearch2-advanced-search' => 'Advanced Search Options',
 	'wikiasearch2-onhub' => ' in the $1 Hub',
+	'wikiasearch2-enable-go-search' => 'Enable Go-Search',
 );
 
 /** German (Deutsch) */
