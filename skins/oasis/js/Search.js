@@ -53,23 +53,25 @@ var WikiaSearchApp = {
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	initSuggest: function() {
-		$.loadJQueryAutocomplete(function() {
-			WikiaSearchApp.searchField.autocomplete({
-				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
-				onSelect: function(v, d) {
-					WikiaSearchApp.track('suggest');
-					WikiaSearchApp.trackInternal('search_start_suggest', {
-						'sterm': encodeURIComponent(v.replace(/ /g, '_')),
-						'rver': 0
-					});
-					window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
-				},
-				appendTo: '#WikiaSearch',
-				deferRequestBy: 50,
-				maxHeight: 1000,
-				selectedClass: 'selected',
-				width: '270px',
-				skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
+		$.getMessages('LinkSuggest', function() {
+			$.loadJQueryAutocomplete(function() {
+				WikiaSearchApp.searchField.autocomplete({
+					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+					onSelect: function(v, d) {
+						WikiaSearchApp.track('suggest');
+						WikiaSearchApp.trackInternal('search_start_suggest', {
+							'sterm': encodeURIComponent(v.replace(/ /g, '_')),
+							'rver': 0
+						});
+						window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
+					},
+					appendTo: '#WikiaSearch',
+					deferRequestBy: 50,
+					maxHeight: 1000,
+					selectedClass: 'selected',
+					width: '270px',
+					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
+				});
 			});
 		});
 	}

@@ -27,6 +27,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
+F::build('JSMessages')->registerPackage('LinkSuggest', array('tog-*'));
 
 $wgHooks['GetPreferences'][] = 'wfLinkSuggestGetPreferences' ;
 function wfLinkSuggestGetPreferences($user, &$preferences) {
