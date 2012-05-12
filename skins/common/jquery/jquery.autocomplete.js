@@ -267,13 +267,13 @@
       v = this.getQuery(this.currentValue);
       this.container.hide().empty();
       for (var i = 0; i < len; i++) {
-        div = $((me.selectedIndex === i ? '<div class="'+this.options.selectedClass+'"' : '<div') + ' title="' + this.suggestions[i] + '">' + f(this.suggestions[i], this.data[i], v)
-        	// wikia change - start
-        	+ (this.redirects[this.suggestions[i]]
-        		? '<span class="redirect subtle">' + $.msg('tog-redirected-from', this.redirects[this.suggestions[i]]) + '</span>'
-        		: '')
-        	// wikia change - end
+      	// wikia change - start
+      	redirect = this.redirects[this.suggestions[i]];
+        div = $((me.selectedIndex === i ? '<div class="'+this.options.selectedClass+'"' : '<div')
+        	+ ' title="' + this.suggestions[i] + '">' + f(this.suggestions[i], this.data[i], v)
+        	+ (redirect ? '<span class="redirect subtle">' + $.msg('tog-redirected-from', redirect) + '</span>' : '')
         	+ '</div>');
+        // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         div.click((function(xi) { return function() { me.select(xi); }; })(i));
         //console.log(div);
