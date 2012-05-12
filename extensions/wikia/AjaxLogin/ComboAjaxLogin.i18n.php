@@ -208,6 +208,14 @@ Bitte versuche es erneut oder [[Special:Contact|melde es]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia reagiert nicht. Bitte überprüfe deine Netzwerkverbindung.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Gıre dê Facebook ra deqew de</h1>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Peyd bê',
+);
+
 /** Spanish (Español)
  * @author Absay
  * @author Crazymadlover

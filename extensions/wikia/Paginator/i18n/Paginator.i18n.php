@@ -191,6 +191,7 @@ $messages['nl'] = array(
  * @author Manuae
  */
 $messages['pfl'] = array(
+	'paginator-next' => 'Negschd',
 	'paginator-back' => 'Zrigg',
 );
 

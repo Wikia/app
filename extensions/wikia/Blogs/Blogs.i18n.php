@@ -780,8 +780,21 @@ $messages['diq'] = array(
 	'create-blog-listing-matches-calculate' => 'Hesab cihazi',
 	'create-blog-listing-sortby-author' => 'Nusqar',
 	'blog-defaulttitle' => 'Blogi',
+	'blog-added' => 'Debiya',
+	'blog-edited' => 'vurneya',
+	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Vatış nê vacya yo',
+	'blog-voting-label' => 'Deya',
 	'blog-comments-anonymous' => 'Qarbero anonim',
+	'blog-comment-delete' => 'Bestere',
+	'blog-comment-hide' => 'bınımne',
+	'blog-comment-unhide' => 'menımne',
+	'blog-comment-history' => 'werenayış',
+	'blog-comment-edit' => 'bıvurne',
+	'blog-avatar-preferences-title' => 'Avatar',
+	'blog-refresh-label' => 'Newe ke',
+	'blog-userblog' => "Blogê $1'i",
+	'blog-fromsitename' => '$1 ra',
 	'blogs-comment-hidden' => 'Vatışi bınımne',
 	'blog-comment-sending' => 'Oyo Rısêno',
 );
@@ -1502,6 +1515,7 @@ $messages['he'] = array(
 /** Hungarian (Magyar)
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'createblogpage' => 'Blog létrehozása',
@@ -1509,6 +1523,8 @@ $messages['hu'] = array(
 	'create-blog-spam' => 'Spamnak tűnik',
 	'create-blog-cant-edit' => 'Nem lehetett elvégezni a szerkesztést',
 	'create-blog-post-category' => 'Blogbejegyzések',
+	'create-blog-post-category-body' => 'Ez egy autmatikusan generált bloglista.',
+	'create-blog-post-category-log' => 'Blogkategória létrehozása',
 	'create-blog-post-recent-listing' => 'Friss blogbejegyzések',
 	'create-blog-post-recent-listing-title' => 'Friss blogbejegyzések',
 	'create-blog-post-title' => 'Új blogbejegyzés létrehozása',

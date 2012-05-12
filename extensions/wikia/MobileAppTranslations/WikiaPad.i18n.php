@@ -86,6 +86,17 @@ $messages['de'] = array(
 	'browser-loading-message' => 'Lade…',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'main-tab-personal' => 'Wikia Me',
+	'main-tab-offline' => 'Çerxteber',
+	'tab-discover-no-network-dialog-close-button' => 'TEMAM',
+	'tab-search-loading-message' => 'Geyrino',
+	'browser-loading-message' => 'Bar beno...',
+);
+
 /** Spanish (Español)
  * @author Fitoschido
  * @author VegaDark

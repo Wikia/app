@@ -838,7 +838,7 @@ $messages['diq'] = array(
 	'autocreatewiki-success-has-been-created' => 'vıraşt',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-invalid-username' => 'No namey qarqeri çıno',
-	'autocreatewiki-category-label' => 'Kategoriya',
+	'autocreatewiki-category-label' => 'Kategori:',
 	'autocreatewiki-category-other' => 'Zewmi',
 	'autocreatewiki-redirect' => 'Wikiya newi açarnê: $1 ...',
 	'autocreatewiki-welcometalk-log' => 'Mesacê Xeyr Amyayışi',
@@ -1618,17 +1618,27 @@ $messages['hu'] = array(
 	'autocreatewiki-success-subtitle' => 'Elkezdhetsz dolgozni a wikin a következő címre való látogatás után:',
 	'autocreatewiki-success-has-been-created' => 'elkészült!',
 	'autocreatewiki-success-get-started' => 'Első lépések',
+	'autocreatewiki-info-domain' => 'A legcélszerűbb a wikidhez kapcsolódó potenciális keresési kulcsszó beállítása.',
 	'autocreatewiki-info-topic' => 'Adj meg egy rövid leírást, például „Star Wars” vagy „TV-műsorok”.',
+	'autocreatewiki-info-category-default' => 'Ez segít a látogatóknak a wikid megtalálásában.',
 	'autocreatewiki-info-language' => 'Ez lesz a wikid alapértelmezett nyelve a látogatóid számára.',
 	'autocreatewiki-info-email-address' => 'Az e-mail címedet sosem mutatjuk meg senkinek a Wikián.',
 	'autocreatewiki-info-realname' => 'Ha megadod, ezen a néven leszel jelölve szerzőként a munkáidnál.',
 	'autocreatewiki-info-birthdate' => 'A Wikia megköveteli valós születési dátumuk megadását minden felhasználótól elővigyázatosságból, a webhely egységességének megőrzése végett, valamint a szövetségi előírásoknak való megfelelés céljából.',
 	'autocreatewiki-info-blurry-word' => 'Az automatizált fióklétrehozás elleni védelem részeként kérjük, hogy írja be a fenti elmosódott szót ebbe a mezőbe.',
 	'autocreatewiki-info-terms-agree' => 'A wiki és a felhasználói fiók létrehozásával Ön elfogadja a Wikia <a href="http://www.wikia.com/wiki/Terms_of_Use">felhasználói feltételeit</a>.',
+	'autocreatewiki-info-staff-username' => '<b>Csak személyzet:</b> A megadott felhasználó lesz feltüntetve alapítóként.',
 	'autocreatewiki-title-template' => '$1-wiki',
-	'autocreatewiki-limit-day' => 'A Wikia elérte az egy nap létrehozható wiki számának felső határát.',
+	'autocreatewiki-limit-day' => 'A Wikia elérte a ma létrehozható wikik számának maximumát ($1).',
+	'autocreatewiki-limit-creation' => 'Túllépted a 24 óra alatt létrehozható wikik maximumát ($1).',
 	'autocreatewiki-empty-field' => 'Kérjük, töltse ki ezt a mezőt.',
 	'autocreatewiki-bad-name' => 'A felhasználónév nem tartalmazhat különleges karaktereket (pl. $ vagy @) és egy kisbetűs, szóköz nélküli szóból kell állnia.',
+	'autocreatewiki-invalid-wikiname' => 'A név nem tartalmazhat speciális karaktereket (például @ vagy $), és nem lehet üres.',
+	'autocreatewiki-violate-policy' => 'Ez a wiki-név az elnevezési feltételeinket sértő szót tartalmaz.',
+	'autocreatewiki-name-taken' => 'Már található egy wiki ezen a címen. Kezdj el szerkeszteni a <a href="http://$1.wikia.com">http://$1.wikia.com</a> oldalon, vagy válassz egy másik címet.',
+	'autocreatewiki-name-too-short' => 'Ez a cím túl rövid, legalább 3 betűset kell választanod.',
+	'autocreatewiki-name-too-long' => 'Ez a cím túl hosszú; kérünk, legfeljebb 50 karakteres címet válassz.',
+	'autocreatewiki-similar-wikis' => 'Alább láthatók a témába vágó, már létező wikik. Javasoljuk, hogy ezek valamelyiké(i)t szerkeszd.',
 	'autocreatewiki-invalid-username' => 'Ez a felhasználónév érvénytelen.',
 	'autocreatewiki-busy-username' => 'Ez a felhasználónév már foglalt.',
 	'autocreatewiki-blocked-username' => 'Nem hozhatsz létre fiókot.',
@@ -1642,6 +1652,11 @@ $messages['hu'] = array(
 	'autocreatewiki-category-label' => 'Kategória:',
 	'autocreatewiki-category-other' => 'Egyéb',
 	'autocreatewiki-set-username' => 'Először add meg a felhasználónevet!',
+	'autocreatewiki-invalid-category' => 'A kategória értéke érvénytelen.
+Kérünk, válassz egy megfelelőt a legördülő listából.',
+	'autocreatewiki-invalid-language' => 'Érvénytelen nyelvbeállítás.
+Kérünk, válassz egy megfelelőt a legördülő listából.',
+	'autocreatewiki-invalid-retype-passwd' => 'Írd be újra a fenti jelszót.',
 	'autocreatewiki-invalid-birthday' => 'Érvénytelen születési dátum',
 	'autocreatewiki-limit-birthday' => 'Nem sikerült végrehajtani a regisztrációt.',
 	'autocreatewiki-log-title' => 'A wiki létrehozása folyamatban van',
@@ -1662,9 +1677,11 @@ $messages['hu'] = array(
 	'autocreatewiki-redirect' => 'Átirányítás az új wikihez: $1',
 	'autocreatewiki-congratulation' => 'Gratulálunk!',
 	'autocreatewiki-welcometalk-log' => 'Üdvözlő üzenet',
+	'autocreatewiki-regex-error-comment' => 'már használt az $1 wikin (teljes szöveg: $2)',
 	'autocreatewiki-step2-error' => 'Az adatbázis létezik!',
 	'autocreatewiki-step3-error' => 'Nem sikerült beállítani az alapértelmezett információkat az adatbázisban!',
 	'autocreatewiki-step6-error' => 'Nem sikerült létrehozni az alapértelmezett táblákat az adatbázisban!',
+	'autocreatewiki-step7-error' => 'Nem tudunk kezdő adatbázist másolni a kiválasztott nyelven.',
 	'autocreatewiki-protect-reason' => 'A hivatalos felölet része',
 	'autocreatewiki-welcomesubject' => '$1 elkészült!',
 	'newwikis' => 'Új wikik',
@@ -1983,6 +2000,7 @@ $messages['inh'] = array(
 /** Italian (Italiano)
  * @author Gifh
  * @author Minerva Titani
+ * @author Ximo17
  */
 $messages['it'] = array(
 	'autocreatewiki' => 'Crea una nuova wiki',
@@ -2075,17 +2093,23 @@ Per favore scegliene uno dal menu a comparsa.',
 	'autocreatewiki-step7-error' => 'Impossibile copiare il database dello starter per la lingua!',
 	'autocreatewiki-protect-reason' => "Parte dell'interfaccia ufficiale",
 	'autocreatewiki-welcomesubject' => '$1 è stata creata!',
-	'autocreatewiki-welcomebody' => "Ciao $2,
+	'autocreatewiki-welcomebody' => "Ciao $2!
 
-La wiki che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br /> Abbiamo aggiunto alcune informazioni e suggerimenti alla tua pagina di discussione (<$5>) per aiutarti a iniziare. Per qualunque domanda o problema, puoi chiedere aiuto alla community alla pagina <http://it.community.wikia.com/wiki/Forum:Index> o contattare lo staff per email all'indirizzo community@wikia.com. 
+Il tuo wiki è stato creato ed è ora disponibile su <$1>.<br />
 
-Buona fortuna per il tuo progetto,
+Pronto ad iniziare? Abbiamo aggiunto alcuni link alla tua pagina di discussione (<$5>) per aiutarti e per farti esplorare tutte le aree di Wikia. Per qualunque domanda o problema, puoi chiedere aiuto alla community alla pagina <http://it.community.wikia.com/wiki/Forum:Index> o contattare lo staff per email all'indirizzo community@wikia.com. 
+
+Puoi inoltre visitare il blog Founder & Admin <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> e il blog dello staff di Wikia <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> dove puoi trovare suggerimenti e trucchi, oltre alle info sulle novità di Wikia.
+
+Buon progetto!
 
 $3 
 
-Wikia Community Team 
+Wikia Community Team
+<http://www.wikia.com/wiki/User:$4>
 
-<http://www.wikia.com/wiki/User:$4>",
+___________________________________________
+* Non vuoi più ricevere i nostri messaggi? Puoi modificare le preferenze sulla ricezione delle email qui: http://community.wikia.com/Special:Preferences",
 	'autocreatewiki-welcometalk' => "== Benvenuto! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Ciao \$1! Siamo molto contenti di avere '''\$4''' nella nostra community Wikia !   Grazie per la tua collaborazione! Ti vogliamo dare alcuni suggerimenti per aiutarti a mettere in moto la tua wiki.
 
@@ -2112,6 +2136,7 @@ Buona fortuna!
 [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => 'Nuove wiki',
 	'newwikisstart' => 'Mostra le wiki a partire da:',
+	'autocreatewiki-subname-answers' => 'Risposte',
 );
 
 /** Japanese (日本語)

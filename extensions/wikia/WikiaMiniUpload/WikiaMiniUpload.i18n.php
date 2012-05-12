@@ -860,6 +860,27 @@ $messages['de-formal'] = array(
 	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuchen Sie es erneut.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wmu-upload-image' => 'Resim Barke',
+	'wmu-title' => 'Resim Barke',
+	'wmu-upload' => 'Barke',
+	'wmu-find' => 'Bıvin',
+	'wmu-thiswiki' => 'E na wiki',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Barke',
+	'wmu-find-btn' => 'Bıvin',
+	'wmu-name' => 'Name',
+	'wmu-license' => 'Lisans',
+	'wmu-licensing' => 'Lisansey',
+	'wmu-prev' => "8'ê verêni",
+	'wmu-next' => "8'ê peyêni",
+	'wmu-close' => 'racnê',
+	'wmu-gallery' => 'Galeri',
+);
+
 /** Esperanto (Esperanto)
  * @author Tradukisto
  */
@@ -1700,7 +1721,7 @@ $messages['mk'] = array(
 	'wmu-filetype-incorrect' => 'Оваа подигната податотека има неправилна наставка',
 	'wmu-hide-license-msg' => 'скриј текст на лиценцата',
 	'wmu-show-license-msg' => 'прикажи текст на лиценцата',
-	'wmu-max-thumb' => 'надмината е максималната дозволена големина на минијатурата; ја враќам првичната големина',
+	'wmu-max-thumb' => 'пречекорена е максималната дозволена големина на минијатурата; ја враќам првичната големина',
 	'wmu-notallowed' => 'Не можете да подигате слики на ова вики',
 	'wmu-readonly' => 'Не можете да подигате слики бидејќи викито е во режим недостапен за записи',
 	'wmu-placeholder' => 'Пополнувач',

@@ -378,9 +378,9 @@ $messages['ms'] = array(
 	'wikiasearch-titles-only' => 'Cari tajuk laman sahaja',
 	'wikiasearch-system-error-msg' => 'Carian anda tidak dapat disiapkan kerana ralat sistem',
 	'wikiasearch-search-this-wiki' => 'Cari di Wikia Central sahaja',
-	'wikiasearch-search-wikia' => 'Cari Wikia',
+	'wikiasearch-search-wikia' => 'Cari dalam Wikia',
 	'wikiasearch-image-results' => 'Hasil Carian Gambar (Imej) untuk "$1"',
-	'wikiasearch-search-all-wikia' => 'Cari Seluruh Wikia',
+	'wikiasearch-search-all-wikia' => 'Cari di seluruh Wikia',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)

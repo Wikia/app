@@ -328,6 +328,15 @@ $messages['de-formal'] = array(
 Ein Klick auf „{{int:phalanx-edit-block}}“ speichert Ihre Änderungen!',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'phalanx-stats-table-create' => 'Vıraziya',
+	'phalanx-stats-table-language' => 'Zıwan',
+	'phalanx-stats-table-text' => 'nuşte',
+);
+
 /** Spanish (Español)
  * @author Mor
  * @author VegaDark

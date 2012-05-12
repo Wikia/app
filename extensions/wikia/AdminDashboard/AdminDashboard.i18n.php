@@ -725,18 +725,41 @@ $messages['id'] = array(
 /** Italian (Italiano)
  * @author Karika
  * @author Lexaeus 94
+ * @author Ximo17
  */
 $messages['it'] = array(
+	'admindashboard-toolbar-link' => 'Amministratore',
 	'admindashboard-tab-advanced' => 'Avanzato',
 	'admindashboard-tab-general' => 'Generale',
+	'admindashboard-controls-wiki-header' => 'Wiki',
 	'admindashboard-control-recent-changes-label' => 'Cambiamenti Recenti',
 	'admindashboard-control-top-navigation-label' => 'Navigazione superiore',
 	'admindashboard-control-wiki-features-label' => 'Wiki Funzioni',
+	'admindashboard-controls-community-header' => 'Comunità',
+	'admindashboard-control-user-list-label' => 'Elenco utenti',
+	'admindashboard-control-user-list-tooltip' => 'Visualizza la lista di tutti gli utenti che hanno partecipato al tuo wiki',
+	'admindashboard-control-user-rights-label' => "Diritti dell'Utente",
+	'admindashboard-control-user-rights-tooltip' => 'Aggiungere e rimuovere i diritti di gruppo e i permessi per gli utenti sul tuo wiki.',
+	'admindashboard-control-group-rights-label' => 'Diritti di Gruppo',
+	'admindashboard-control-group-rights-tooltip' => 'Visione dei diritti per i differenti gruppi di utenti.',
 	'admindashboard-control-invite-label' => 'Invita',
 	'admindashboard-control-invite-tooltip' => 'Invita altre persone a usare questa wiki.',
 	'admindashboard-control-help-label' => 'Aiuto',
 	'admindashboard-control-help-tooltip' => 'Trova Aiuto.',
+	'admindashboard-control-community-corner-label' => 'Portale della comunità',
+	'admindashboard-control-community-corner-tooltip' => 'Edita la sezione del Portale della Comunità sul tuo wiki e notifica agli utenti.',
+	'admindashboard-controls-content-header' => 'Contenuto',
 	'admindashboard-control-categories-list-label' => 'Tutte le categorie',
+	'admindashboard-control-categories-list-tooltip' => 'Visualizza tutte le categorie presenti sul tuo wiki.',
+	'admindashboard-control-add-page-label' => 'Aggiungi una pagina',
+	'admindashboard-control-add-page-tooltip' => 'Aggiungi una nuova pagina al tuo wiki.',
+	'admindashboard-control-add-photo-label' => 'Aggiungi una foto',
+	'admindashboard-control-add-photo-tooltip' => 'Aggiungi nuove foto al tuo wiki.',
+	'admindashboard-control-add-blog-label' => 'Crea nuovo post.',
+	'admindashboard-control-add-blog-tooltip' => 'Aggiungi un post al blog del tuo wiki.',
+	'admindashboard-control-multiple-upload-label' => 'Aggiungi più foto',
+	'admindashboard-control-multiple-upload-tooltip' => 'Carica più di una foto alla volta con lo strumento: Carica più foto.',
+	'admindashboard-back-to-dashboard' => 'Torna al Cruscotto',
 );
 
 /** Japanese (日本語)
@@ -1253,7 +1276,7 @@ $messages['ru'] = array(
 	'admindashboard-control-top-navigation-label' => 'Меню навигации',
 	'admindashboard-control-top-navigation-tooltip' => 'Это позволяет настроить меню навигации, которое расположено в верхней части вики',
 	'admindashboard-control-wiki-features-label' => 'Wiki Features',
-	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features позволяет вам подключать дополнительные расширения на ввашей вики.',
+	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features позволяет вам подключать дополнительные расширения на вашей вики.',
 	'admindashboard-control-page-layout-builder-label' => 'Страница создания макетов',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Мастер создания макетов позволяет вам создавать макеты страниц. Участники смогут использовать их при создании новых страниц вики.',
 	'admindashboard-controls-community-header' => 'Сообщество',

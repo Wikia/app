@@ -115,6 +115,14 @@ Helpful Tools:
 [[Special:UserRights|Manage Rights]]",
 );
 
+/** Message documentation (Message documentation)
+ * @author TK-999
+ */
+$messages['qqq'] = array(
+	'tog-adoptionmails' => '$1 is the wiki name potentially up for adoption.',
+	'wikiadoption-pref-label' => 'This message is located within the Email tab of Special:Preferences; $1 is the wiki name the user opened it in.',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -611,14 +619,30 @@ Ferramentas de axuda:
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'wikiadoption' => 'Automatikus wiki örökbefogadás',
+	'wikiadoption-desc' => 'AutomaticWikiAdoption (automatikus wiki&ndash;örökbefogadás) kiterjesztés a MediaWikihez',
 	'wikiadoption-header' => 'Wiki örökbefogadása',
-	'wikiadoption-button-adopt' => 'Örökbefogadás',
+	'wikiadoption-button-adopt' => 'Igen, szeretném örökbefogadni a {{SITENAME}}-t!',
+	'wikiadoption-adopt-inquiry' => 'Tudj meg többet!',
 	'wikiadoption-know-more-header' => 'Szeretnél többet tudni?',
+	'wikiadoption-know-more-description' => 'Kövesd ezeket a hivatkozásokat további információért. Természetesen lépj kapcsolatba velünk, ha bármilyen kérdésed van!',
+	'wikiadoption-adoption-successed' => 'Gratulálunk! Immár a wiki adminisztrátora vagy!',
+	'wikiadoption-adoption-failed' => 'Megpróbáltunk adminisztrátorrá tenni, de nem sikerült. Kérjük, [[http://community.wikia.com/Special:Contact lépj kapcsolatba velünk], hogy kisegíthessünk.',
 	'wikiadoption-not-allowed' => 'Sajnáljuk, jelenleg nem adoptálhatod ezt a wikit.',
+	'wikiadoption-not-enough-edits' => 'Hoppá! Több mint 10 szerkesztés szükséges a wiki örökbefogadásához.',
+	'wikiadoption-adopted-recently' => 'Hoppá! Nemrégiben már örökbefogadtál egy másik wikit, így késleltetned kell más wikik örökbefogadását.',
+	'wikiadoption-log-reason' => 'Automatikus wiki–örökbefogadás',
+	'wikiadoption-notification' => 'A(z) {{SITENAME}} örökbefogadható. Szeretnél rajta vezető lenni? Fogadd örökbe a wikit kezdésként! $2',
 	'wikiadoption-mail-first-subject' => 'Már nem láttunk téged erre egy ideje',
+	'wikiadoption-mail-second-subject' => 'A(z) #WIKINAME hamarosan örökbefogadható lesz.',
+	'wikiadoption-mail-adoption-subject' => 'A(z) #WIKINAME-t örökbefogadták.',
+	'tog-adoptionmails' => 'E-mail küldése, amennyiben $1 hozzáférhető válik örökbefogadásra más felhasználók által.',
+	'tog-adoptionmails-v2' => '...ha a wikit más felhasználók is örökbefogadhatják.',
+	'wikiadoption-pref-label' => 'Ezen beállítások módosítása csak az $1-ről érkező e-maileket befolyásolja.',
+	'wikiadoption-welcome-header' => 'Gratulálunk! Örökbefogadtad a {{SITENAME}}-t!',
 );
 
 /** Interlingua (Interlingua)
@@ -726,9 +750,18 @@ Instrumentos utile:
 
 /** Italian (Italiano)
  * @author Minerva Titani
+ * @author Ximo17
  */
 $messages['it'] = array(
 	'wikiadoption-header' => 'Adotta questa wiki',
+	'wikiadoption-know-more-header' => 'Vuoi saperne di più?',
+	'wikiadoption-know-more-description' => 'Per maggiori informazioni clicca sui seguenti links. Ovviamente, per qualsiasi problema non esitare a contattarci!',
+	'wikiadoption-adoption-successed' => 'Congratulazioni! Ora sei amministratore di questo wiki!',
+	'wikiadoption-adoption-failed' => 'Ci spiace. Abbiamo provato a renderti amministratore, ma pare esserci qualche problema. Per favore [http://community.wikia.com/Special:Contact contattaci], e proveremo di nuovo ad aiutarti.',
+	'wikiadoption-not-allowed' => 'Ci spiace. Attualmente non puoi adottare questo wiki.',
+	'wikiadoption-not-enough-edits' => 'Oops! Devi avere più di 10 edits per adottare questo wiki.',
+	'wikiadoption-adopted-recently' => "Oop! Hai già adottato un altro wiki recentemente. Devi aspettare un po' di tempo prima di adottarne un altro.",
+	'wikiadoption-log-reason' => 'Adozione Automatica di Wiki',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME è stata adottata',
 	'tog-adoptionmails' => "Mandami una mail se la wiki diventa disponibile per l'adozione da parte di altri utenti",
 	'tog-adoptionmails-v2' => "...se la wiki diventa disponibile per l'adozione da parte di altri utenti",

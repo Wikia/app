@@ -269,6 +269,15 @@ $messages['de-formal'] = array(
 	'categoryselect-edit-abort' => 'Ihre versuchte Änderung wurde durch ein Aufhängen einer Erweiterung abgebrochen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'categoryselect-code-view' => 'Kodi bıvin',
+	'categoryselect-button-save' => 'Qeyd ke',
+	'categoryselect-button-cancel' => 'Bıterkne',
+);
+
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  */

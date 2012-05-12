@@ -717,6 +717,41 @@ $messages['de'] = array(
 	'wall-history-action-restore' => 'wiederherstellen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wall-message-wall-shorten' => 'dês',
+	'wall-message-mywall' => 'Dêsê me',
+	'wall-toolbar-history' => 'Tarix',
+	'wall-message-elseswall' => "Dêsê $1'i",
+	'wall-thread-removed' => 'Hewadeya',
+	'wall-thread-deleted' => 'Besterneya',
+	'wall-button-to-submit-comment' => 'Nusne',
+	'wall-button-to-submit-reply' => 'Cewab bıde',
+	'wall-button-cancel-changes' => 'Bıterkne',
+	'wall-button-done-source' => 'Qeyd kerd',
+	'wall-message-edit' => 'Timar ke',
+	'wall-message-more' => 'Dehana vêşi',
+	'wall-message-delete' => 'Besterne',
+	'wall-action-remove-confirm-ok' => 'Hewad',
+	'wall-action-admin-confirm-ok' => 'Besterne',
+	'wall-action-restore-confirm-ok' => 'Timar bike',
+	'wall-notifications-markasread-all-wikis' => 'Wikiy pêro',
+	'wall-notifications-markasread-this-wiki' => 'E na wiki',
+	'wall-recentchanges-namespace-selector-message-wall' => 'Mesacê Dêsi',
+	'wall-recentchanges-wall-history-link' => 'tarixê dêsi',
+	'wall-wiki-activity-on' => '$1 ra',
+	'wall-wiki-activity-wall-owner' => "Dêsê $1'i",
+	'wall-history' => 'Tarix',
+	'wall-history-title' => 'tarixê dêsi',
+	'wall-history-summary-label' => 'Xulasa',
+	'wall-history-rail-wall' => 'dês',
+	'mail-notification-html-greeting' => 'Merheba $1,',
+	'prefs-email-wall-v2' => 'Mesacê Dêsi',
+	'tog-enotifwallthread-v2' => 'E-postay me...',
+);
+
 /** Spanish (Español)
  * @author Benfutbol10
  * @author VegaDark

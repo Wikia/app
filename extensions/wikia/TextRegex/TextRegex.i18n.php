@@ -236,6 +236,13 @@ Versuchen Sie es noch einmal.',
 	'textregex-select-subpage' => 'Wählen Sie eine Liste von Phrasen:',
 );
 
+/** Zazaki (Zazaki)
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 istatistiki]',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Locos epraix

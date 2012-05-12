@@ -917,8 +917,12 @@ Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
  */
 $messages['diq'] = array(
 	'renameuser' => 'nameyê karberi bıvurn',
+	'userrenametool-old' => 'Namey karberi yo nıkayên:',
+	'userrenametool-new' => 'Nameyê karberi yo newe:',
 	'userrenametool-warnings' => 'pıpawin',
 	'userrenametool-errorbot' => '<nowiki>$1</nowiki>yew boto.',
+	'userrenametool-confirm-yes' => 'E',
+	'userrenametool-confirm-no' => 'Nê',
 	'userrenametool-logentry' => ' $1 nameycı yo newe "$2"o',
 	'right-renameuser' => 'nameyê karberan bıvurn',
 );
@@ -3603,6 +3607,7 @@ $messages['sq'] = array(
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author FriedrickMILBarbarossa
  * @author Millosh
  * @author Rancher
  * @author Sasa Stefanovic
@@ -3637,7 +3642,7 @@ $messages['sr-ec'] = array(
 	'userrenametool-page-moved' => 'Страница $1 је премештена у $2.',
 	'userrenametool-page-unmoved' => 'Страница $1 не може да се премести на $2.',
 	'userrenametool-logpagetext' => 'Ово је историјат измена корисничких имена.',
-	'userrenametool-logentry' => '{{GENDER:|је преименовао|је преименовала|преименова}} $1 у „$2“',
+	'userrenametool-logentry' => '{{GENDER:|је преименовао|је преименовала|је преименовао}} $1 у „$2“',
 	'userrenametool-log' => '{{PLURAL:$1|1 измена|$1 измене|$1 измена}}.
 Разлог: $2',
 	'userrenametool-move-log' => 'Премештене странице приликом преименовања корисника: „[[User:$1|$1]]“ у „[[User:$2|$2]]“.',

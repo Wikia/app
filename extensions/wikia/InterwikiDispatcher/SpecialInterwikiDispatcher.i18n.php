@@ -163,7 +163,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'interwikidispatcher' => 'Испраќач на интервикија',
-	'interwikidispatcher-desc' => 'Решава интервики-врски за да ги намали пренасочувањата на Apache',
+	'interwikidispatcher-desc' => 'Решава меѓувики-врски за да ги намали пренасочувањата на Apache',
 );
 
 /** Malay (Bahasa Melayu)
