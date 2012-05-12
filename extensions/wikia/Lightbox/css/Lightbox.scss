@@ -9,6 +9,7 @@
 
 $carousel-height: 110px;
 $carousel-vertical-padding: 20px;
+$carousel-overlay-duration: 600ms;
 
 .LightboxModal {
 	overflow: hidden;
@@ -103,8 +104,9 @@ $carousel-vertical-padding: 20px;
 		-webkit-backface-visibility: hidden;	/* flicker fix for webkit transition */
 	}
 	.LightboxCarousel {
-		@include transition-shorthand(bottom 600ms ease-out);
+		@include transition-shorthand(bottom $carousel-overlay-duration ease-out);
 		@include clearfix;
+		border-top: 1px solid $color-page-border;
 		bottom: 0;
 		height: $carousel-height;
 		width: 100%;
@@ -155,7 +157,8 @@ $carousel-vertical-padding: 20px;
 		}
 	}
 	.LightboxHeader {
-		@include transition-shorthand(top 600ms ease-out);
+		@include transition-shorthand(top $carousel-overlay-duration ease-out);
+		border-bottom: 1px solid $color-page-border;
 		padding: 20px;
 		top: 0;
 		width: 960px;
