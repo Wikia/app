@@ -569,7 +569,13 @@ $messages['de-formal'] = array(
 $messages['diq'] = array(
 	'plb-create-button-previewform' => 'Formo verên',
 	'plb-special-form-preview-button' => 'Pela verêne',
+	'plb-list-action-edit' => 'Bıvurne',
+	'plb-list-action-delete' => 'Bestere',
 	'plb-parser-preview-image-add' => 'Resim weçine',
+	'plb-editor-edit' => 'Bıvurne',
+	'plb-editor-toolbar-formatting' => 'Formatêno',
+	'plb-editor-preview-info' => 'Zanışe',
+	'plb-editor-overlay-edit' => 'bıvurne',
 	'plb-copy-cat-add' => 'Deqı',
 );
 

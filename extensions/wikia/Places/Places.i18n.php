@@ -53,6 +53,7 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'places-editor-search' => 'Cı geyre',
 	'places-geolocation-modal-error-title' => 'Xelato',
 );
 

@@ -82,6 +82,14 @@ $messages['de'] = array(
 	'loggernoresult' => 'Keine Ergebnisse gefunden',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'loggerrecords' => "Qeyde $1'i",
+	'loggergo' => 'Bımocne',
+);
+
 /** Spanish (Español)
  * @author Bola
  */

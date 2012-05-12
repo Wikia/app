@@ -78,6 +78,13 @@ $messages['de'] = array(
 	'randomwiki' => 'Zufälliges Wiki',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'randomwiki' => 'Azat Wiki',
+);
+
 /** Spanish (Español)
  * @author Bola
  */

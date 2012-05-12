@@ -515,6 +515,7 @@ $messages['sr-ec'] = array(
 $messages['sv'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wikins topplista för utmärkelser',
 	'partner-feed-earned-badges' => 'Nyligen tjänade emblem för en viss Wiki',
+	'partner-feed-recent-blog-posts' => 'Senaste blogginläggen med anknytning till en befordran',
 	'partner-feed-latest-images' => 'Galleri med de senaste bilderna som har laddats upp',
 	'partner-feed-recent-blog-comments' => 'Senaste kommentarer som anknyter till specifika blogginlägg.',
 	'partner-feed-recent-changes' => 'Senaste ändringar',

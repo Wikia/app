@@ -230,7 +230,7 @@ $messages['diq'] = array(
 	'multilookupprevious' => 'peyên',
 	'multilookupwiki' => 'Wiki',
 	'multilookupwikiurl' => 'URL',
-	'multilookupwikititle' => 'Sernuşte',
+	'multilookupwikititle' => 'Sername',
 );
 
 /** Spanish (Español)

@@ -1456,6 +1456,40 @@ Alternativ können Sie auf „$2“ klicken um die Seite in der aktualisierten F
 Beschreiben Sie dieses Foto.",
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikiaPhotoGallery-back' => 'Peyd bê',
+	'wikiaPhotoGallery-finish' => 'Qedyin',
+	'wikiaPhotoGallery-lightbox-caption' => "$1'i sera",
+	'wikiaPhotoGallery-error-caption' => 'Xırab',
+	'wikiaPhotoGallery-upload-findtitle' => 'Bıvin',
+	'wikiaPhotoGallery-upload-findbutton' => 'Bıvin',
+	'wikiaPhotoGallery-upload-page-next' => "8'ê peyêni",
+	'wikiaPhotoGallery-upload-page-prev' => "8'ê verêni",
+	'wikiaPhotoGallery-upload-select-images' => 'Weçine',
+	'wikiaPhotoGallery-photooptions-done' => 'Qeyd kerd',
+	'wikiaPhotoGallery-preview-hover-modify' => 'bıvurne',
+	'wikiaPhotoGallery-preview-hover-delete' => 'besterne',
+	'wikiaPhotoGallery-preview-position-left' => 'Çep',
+	'wikiaPhotoGallery-preview-position-center' => 'Merkez',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Werdı',
+	'wikiaPhotoGallery-preview-spacing-medium' => 'Medyum',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Larc',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'werdı',
+	'wikiaPhotoGallery-preview-captionsize-medium' => 'Medyum',
+	'wikiaPhotoGallery-preview-captionsize-large' => 'Larc',
+	'wikiaPhotoGallery-preview-bordersize-none' => 'Çino',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'Werdı',
+	'wikiaPhotoGallery-preview-bordersize-medium' => 'Medyum',
+	'wikiaPhotoGallery-preview-bordersize-large' => 'Larc',
+	'wikiaPhotoGallery-preview-captions-left' => 'Çep',
+	'wikiaPhotoGallery-preview-captions-center' => 'Merkez',
+	'wikiaPhotoGallery-preview-captions-right' => 'Raşt',
+	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Şo $1',
+);
+
 /** Ewe (Eʋegbe) */
 $messages['ee'] = array(
 	'wikiaPhotoGallery-error-caption' => 'Vodada',
@@ -5514,6 +5548,13 @@ Ilarawan ang litratong ito.",
 	'wikiaPhotoGallery-upload-image-size' => 'Ang mga larawan ay dapat na 673 px na katabi ng 410 px.',
 	'wikiaPhotoGallery-not-displayed' => 'Hindi ipinapakita',
 	'galery-slider-read-more' => 'Magbasa pa >',
+);
+
+/** Turkish (Türkçe)
+ * @author Erdemaslancan
+ */
+$messages['tr'] = array(
+	'wikiaPhotoGallery-feed-caption' => '$1, sera <a href="$2">$3</a>',
 );
 
 /** Ukrainian (Українська)

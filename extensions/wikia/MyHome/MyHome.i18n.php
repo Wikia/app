@@ -727,8 +727,24 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
  * @author Mirzali
  */
 $messages['diq'] = array(
+	'myhome' => 'Keyey me',
+	'myhome-watchlist-feed' => 'Lista seyr-kerdışi',
+	'prefs-myhome' => 'Keyey me',
 	'myhome-feed-edit' => 'bıvurne',
+	'myhome-feed-created-by' => "$1'i vıraşt",
+	'myhome-feed-added-by' => "$1'i Dekerd de",
+	'myhome-feed-edited-by' => "$1'i vurna",
+	'myhome-feed-posted-by' => "$1'i rışt",
+	'myhome-feed-comment-by' => '$1 ra xulasa',
+	'myhome-feed-deleted-by' => "$1'i besterna",
+	'myhome-feed-moved-by' => "$1'i berd",
 	'myhome-feed-article-comment-created-by' => '$1 ra yew vatışo newe ame',
+	'myhome-feed-article-comment-edited-by' => "$1' xulasa vurne",
+	'myhome-feed-by' => '$1 ke',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Resime ke debyay|Resime ke debyay}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Videoye ke debyay|Videoye ke debyay}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategoriye ke debyay|Kategoriye ke debyay}}',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|jew mesac|$1 mesaci}}',
 );
 
 /** Greek (Ελληνικά)

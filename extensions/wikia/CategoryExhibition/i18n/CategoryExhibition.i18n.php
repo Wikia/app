@@ -114,6 +114,15 @@ $messages['de'] = array(
 	'category-exhibition-display-new' => 'Kategorie Ausstellungsansicht',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'category-exhibition-alphabetical' => 'Alfabetik',
+	'category-exhibition-page-header' => 'Pelê ke kategoriya "$1" derê',
+	'category-exhibition-subcategories-header' => 'Kategoriyê bınêni',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'category-exhibition-sorttype' => 'Clasificando tipo:',

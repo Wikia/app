@@ -579,6 +579,31 @@ $messages['de-formal'] = array(
 	'vet-no-preview' => 'Sie können aus dem Vorschaumodus kein Video hinzufügen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'vet-upload' => 'GIRE Pêro',
+	'vet-thiswiki' => 'E na wiki',
+	'vet-flickr' => 'Flickr',
+	'vet-upload-btn' => 'Bahdoyên',
+	'vet-find-btn' => 'Cı geyre',
+	'vet-name' => 'Name',
+	'vet-license' => 'Lisans',
+	'vet-width' => 'Herayey',
+	'vet-prev' => "8'ê verêni",
+	'vet-next' => "8'ê peyêni",
+	'vet-back' => 'Peyd bê',
+	'vet-close' => 'Racnê',
+	'vet-show-message' => 'mesaci bımocne',
+	'vet-hide-message' => 'mesaci bınımne',
+	'vet-add-button' => 'Video deke',
+	'vet-see-all' => 'pêro',
+	'vet-left' => 'Çep',
+	'vet-right' => 'Raşt',
+	'vet-gallery' => 'Galeri',
+);
+
 /** Ewe (Eʋegbe) */
 $messages['ee'] = array(
 	'vet-upload-btn' => 'Yi',
@@ -1429,7 +1454,7 @@ $messages['mk'] = array(
 	'vet-hide-message' => 'скриј порака',
 	'vet-hide-license-msg' => 'скриј текст на лиценцата',
 	'vet-show-license-msg' => 'прикажи текст на лиценцата',
-	'vet-max-thumb' => 'надмината е максиналната дозволена големина на минијатурата; ја враќам првичната големина',
+	'vet-max-thumb' => 'пречекорена е максиналната дозволена големина на минијатурата; ја враќам првичната големина',
 	'vet-notallowed' => 'Не можете да вметнувате видеоснимки на ова вики',
 	'vet-title' => 'Додајте видеоснимка во вашата статија',
 	'vet-supported' => 'Поддржани мрежни места за видео:',

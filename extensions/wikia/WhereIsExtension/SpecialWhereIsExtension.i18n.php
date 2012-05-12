@@ -183,6 +183,17 @@ $messages['de'] = array(
 	'whereisextension-search-type-full' => 'Wie',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'whereisextension-submit' => 'Cı geyre',
+	'whereisextension-filter' => 'Filtre',
+	'whereisextension-search-like-value' => 'Rındeni:',
+	'whereisextension-search-type' => 'Babet:',
+	'whereisextension-search-type-full' => 'Rındeni',
+);
+
 /** Ewe (Eʋegbe) */
 $messages['ee'] = array(
 	'whereisextension-submit' => 'Dii',

@@ -550,6 +550,15 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wikiyo newe vırazdar]]',
+	'cnw-next' => 'Ver şo',
+	'cnw-back' => 'Peyd şo',
+	'cnw-or' => 'ya na',
+	'cnw-title' => 'Wikiyo newe vıraze',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-login' => 'Qeyd be',
+	'cnw-signup' => 'Hesab Vıraze',
+	'cnw-auth-headline' => 'Qeyd vıraze',
+	'cnw-auth-headline2' => 'Deqew de',
 	'cnw-error-database' => 'Datay $1 qedya',
 );
 

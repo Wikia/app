@@ -236,6 +236,7 @@ $messages['pt-br'] = array(
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'showperformancestats-desc' => 'Вернуть читаемую статистику производительности',
 	'performancestat-total' => 'Итого: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'ЦП: $1s',

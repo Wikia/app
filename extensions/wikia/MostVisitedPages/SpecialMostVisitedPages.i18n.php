@@ -122,6 +122,13 @@ $messages['de'] = array(
 	'mostvisitedpagesalllink' => 'Meistbesuchte Seiten anschauen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'mostvisitedpagessearchbtn' => 'cı geyre',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */

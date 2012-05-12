@@ -1392,6 +1392,37 @@ $messages['de-formal'] = array(
 	'closed-redirect-alert' => 'Bitte geben Sie die neue URL der Weiterleitung ein!',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'closewiki' => 'Wiki racnê',
+	'wf_city_url' => 'Adres',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Sername',
+	'wf_city_created' => 'Vıraziya',
+	'wf_city_public' => 'Weziyet',
+	'wf_city_lang' => 'Zıwan',
+	'wf_cc_name' => 'Kategori',
+	'wikifactory-label-info' => 'Zanışe',
+	'wikifactory-label-variables2' => 'Seran',
+	'wikifactory-label-domains' => 'Domaini',
+	'wikifactory-label-google' => 'Google Tools',
+	'wikifactory-label-close' => 'Racnê',
+	'wikifactory-label-tags' => 'Etiketi',
+	'wikifactory-label-tags2' => 'Etiketi',
+	'awc-metrics-nbr-result' => 'Neticey:',
+	'awc-metrics-articles' => 'Wesiqey',
+	'awc-metrics-edits' => 'Vurnayışi',
+	'awc-metrics-close' => 'Racnê',
+	'awc-metrics-close-action' => 'racnê',
+	'awc-metrics-active' => 'aktiv',
+	'awc-metrics-closed' => 'racnê',
+	'closed-wiki' => 'Wiki racnê',
+	'newwikisgraph-param-all' => 'Pêro',
+	'newwikisgraph-param-other' => 'Zewmi',
+);
+
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Omnipaedista
@@ -3885,13 +3916,13 @@ regist.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author 555
  * @author Aristóbulo
  * @author Caio1478
  * @author Daemorris
  * @author Giro720
  * @author Jesielt
  * @author Luckas Blade
- * @author 555
  */
 $messages['pt-br'] = array(
 	'wikifactorypagetitle' => 'Configurador da Fábrica de Wikis',

@@ -790,6 +790,38 @@ $messages['hu'] = array(
 	'wikiamobile-article-comments-more' => 'Több betöltése',
 	'wikiamobile-article-comments-prev' => 'Előző betöltése',
 	'wikiamobile-article-comments-none' => 'Nincsenek hozzászólások',
+	'wikiamobile-article-comments-view' => 'Válaszok megtekintése',
+	'wikiamobile-article-comments-replies' => 'válasz',
+	'wikiamobile-article-comments-post-reply' => 'Válasz beküldése',
+	'wikiamobile-article-comments-post' => 'Küldés',
+	'wikiamobile-article-comments-placeholder' => 'Hozzászólás elküldése',
+	'wikiamobile-article-comments-show' => 'Megjelenítés',
+	'wikiamobile-article-comments-login-post' => 'Kérünk, jelentkezz be a hozzászóláshoz.',
+	'enotif_subject_article_comment' => '$PAGEEDITOR hozzászólt a(z) "$PAGETITLE oldalhoz a(z) {{SITENAME}}-n.',
+	'enotif_body_article_comment' => 'Kedves $WATCHINGUSERNAME,
+
+$PAGEEDITOR hozzászólt a(z) "$PAGETITLE" oldalhoz.
+
+A hozzászólások megtekintéséhez kövesd az alábbi hivatkozást:
+$PAGETITLE_URL
+
+Kérünk, látogass és szerkessz gyakran...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>Kedves $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR hozzászólt a(z) "$PAGETITLE" laphoz.
+<br /><br />
+A hozzászólások megteknitéséhez kövesd ezt a hivatkozást: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Kérünk, látogass és szerkessz gyakran!
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Szeretnéd szabályozni az érkező e&ndash;maileket?  <a href="{{fullurl:Special:Preferences}}">Konfiguráld beállításaidban<a>.</li>
+</ul>
+</p>',
 );
 
 /** Interlingua (Interlingua)
@@ -896,6 +928,7 @@ $messages['inh'] = array(
  * @author Geitost
  * @author Leviathan 89
  * @author Minerva Titani
+ * @author Ximo17
  */
 $messages['it'] = array(
 	'article-comments-anonymous' => 'Utente anonimo',
@@ -928,6 +961,13 @@ $messages['it'] = array(
 	'wikiamobile-article-comments-more' => 'Caricane altri',
 	'wikiamobile-article-comments-prev' => 'Carica precedenti',
 	'wikiamobile-article-comments-none' => 'Nessun commento',
+	'wikiamobile-article-comments-view' => 'Visualizza risposte',
+	'wikiamobile-article-comments-replies' => 'Risposte',
+	'wikiamobile-article-comments-post-reply' => 'Rispondi',
+	'wikiamobile-article-comments-post' => 'Posta',
+	'wikiamobile-article-comments-placeholder' => 'Commenta',
+	'wikiamobile-article-comments-show' => 'Mostra',
+	'wikiamobile-article-comments-login-post' => 'Effettua il login per lasciare un commento.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentato su "$PAGETITLE" su {{SITENAME}}',
 	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
 
@@ -2210,6 +2250,7 @@ $messages['zh-hans'] = array(
 	'wikiamobile-article-comments-none' => '暂无评论',
 	'wikiamobile-article-comments-replies' => '回复',
 	'wikiamobile-article-comments-post' => '发布',
+	'wikiamobile-article-comments-show' => '展开',
 	'enotif_body_article_comment' => '亲爱的$WATCHINGUSERNAME，
 
 $PAGEEDITOR对"$PAGETITLE"做出了评论。

@@ -200,6 +200,13 @@ $messages['de'] = array(
 	'dump-database-info-more' => 'Bitte siehe <a href="http://community.wikia.com/wiki/Help:Database_download">hier</a> für weitere Infos.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'dump-database-info-more' => 'Kerem ke, şırê melumati <a href="http://community.wikia.com/wiki/Help:Database_download">bıvinê</a>',
+);
+
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Omnipaedista

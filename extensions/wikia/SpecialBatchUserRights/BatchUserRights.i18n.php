@@ -161,6 +161,24 @@ Deste modo, non ocorrerá nada.
 Que apareza o resto da páxina só serve para que poida ollar facilmente se non se puido cargar algún dos nomes de usuario.',
 );
 
+/** Hungarian (Magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'batchuserrights' => 'Kötegelt felhasználói jogok',
+	'batchuserrights-desc' => 'Lehetővé teszi több felhasználó hozzáadaását egy csoporthoz egy lépésben.',
+	'batchuserrights-names' => 'A csoportba felveendő felhasználók nevei (soronként egy):',
+	'batchuserrights-intro' => 'Ezen az oldalon egyszerre több felhasználót vehetsz fel egy csoportba.
+Biztonsági okokból a kiadható csoportok listája a kiterjesztés konfigurációjában van beállítva és a wikiről nem lehet megváltoztatni.
+Amennyiben más csoportokat szerentél tömegesen hozzárendelni, fordulj egy rendszergazdához.',
+	'batchuserrights-single-progress-update' => 'A {{PLURAL:$1|csoport|csoportok}} hozzá lettek rendelve <strong>$2</strong>-hez.',
+	'batchuserrights-add-groups' => '{{PLURAL:$1|Egy|$1}} felhasználó hozzáadása az alábbi csoport{{PLURAL:$2||ok}}hoz: <strong>$3</strong>',
+	'batchuserrights-userload-error' => "Nem sikerült a(z) \"'''\$1'''\" felhasználó betöltése.",
+	'batchuserrights-no-groups' => 'Nem választottál semmilyen csoportot.
+Ez nem fog megváltoztatni semmit.
+A lap többi részének engedélyezve lesz a futás, hogy ellenőrizhesd az esetlegesen betölthetetlen felhasználóneveket.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

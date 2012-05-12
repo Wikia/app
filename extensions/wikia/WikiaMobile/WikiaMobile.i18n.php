@@ -192,6 +192,37 @@ Sie sollten sich das unbedingt anschauen:
 $1',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikiamobile-search' => 'Cı geyre',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => 'Deqewtış',
+	'wikiamobile-password' => 'Parola',
+	'wikiamobile-login-submit' => 'Deqewtış',
+	'wikiamobile-menu' => 'Menu',
+	'wikiamobile-explore' => 'Keşıf',
+	'wikiamobile-article-categories' => 'Kategoriy',
+	'wikiamobile-feedback' => 'Peydrıstış',
+	'wikiamobile-back' => 'Peyd bê',
+	'wikiamobile-hide-section' => 'bınımne',
+	'wikiamobile-footer-link-license' => 'Lisans',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Stilê cıwıyayışi]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Keyfiye]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Kayê Videoy]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|wesiqe|wesiqey}}',
+	'wikiamobile-category-items-more' => 'Vêşi barke',
+	'wikiamobile-category-items-prev' => 'Verqayti barke',
+	'wikiamobile-categories-expand' => 'Pêron Bımocne',
+	'wikiamobile-categories-collapse' => 'Pêron bınımne',
+	'wikiamobile-sharing-media-image' => 'Resim',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 ke $2 - $3',
+	'wikiamobile-ad-close' => 'racnê',
+);
+
 /** Spanish (Español)
  * @author Armando-Martin
  * @author Benfutbol10
@@ -333,6 +364,40 @@ deberías botar un ollo a isto:
 
  $1',
 	'wikiamobile-ad-close' => 'pechar',
+);
+
+/** Hebrew (עברית)
+ * @author Yova
+ */
+$messages['he'] = array(
+	'wikiamobile-search' => 'חיפוש',
+	'wikiamobile-search-wiki' => 'ויקי',
+	'wikiamobile-search-wikia' => 'ויקיה',
+	'wikiamobile-login' => 'כניסה',
+	'wikiamobile-password' => 'סיסמה',
+	'wikiamobile-login-submit' => 'התחבר/י',
+	'wikiamobile-menu' => 'תפריט',
+	'wikiamobile-explore' => 'חקור/י עוד',
+	'wikiamobile-article-categories' => 'קטגוריות',
+	'wikiamobile-feedback' => 'משוב',
+	'wikiamobile-back' => 'חזרה',
+	'wikiamobile-hide-section' => 'הסתר',
+	'wikiamobile-footer-link-license' => 'רישיון',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|איכות חיים]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|בידור]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|משחקי וידאו]]',
+	'wikiamobile-categories-items-total' => '{{PLURAL:$1|ערך אחד|$1 ערכים}}',
+	'wikiamobile-category-items-more' => 'טען עוד',
+	'wikiamobile-category-items-prev' => 'טען פחות',
+	'wikiamobile-categories-expand' => 'הצג הכל',
+	'wikiamobile-categories-collapse' => 'הסתר הכל',
+	'wikiamobile-sharing-media-image' => 'תמונה',
+	'wikiamobile-sharing-modal-text' => '$1 ב$2 - $3',
+	'wikiamobile-sharing-email-text' => 'שלום,
+אתה בהחלט צריך לבדוק זאת:
+
+ $1',
+	'wikiamobile-ad-close' => 'סגור',
 );
 
 /** Interlingua (Interlingua)

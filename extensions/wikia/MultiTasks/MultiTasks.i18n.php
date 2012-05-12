@@ -672,6 +672,10 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'multitasks-link-back-label' => 'tiya',
+	'multiwikiedit_button' => 'BIVURNE',
+	'multiwikiedit_confirm' => 'FINA',
+	'multiwikiedit_or' => '<b>YA NA</b>',
 	'multiwikiedit_select_yourself' => 'Tı',
 	'multidelete_button' => 'BESTERE',
 );

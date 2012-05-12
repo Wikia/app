@@ -1976,6 +1976,7 @@ $messages['sv'] = array(
 	'blog-avatar-changed-log' => 'Lade till eller ändrade avatar',
 	'blog-avatar-removed-log' => 'Tog bort $1s avatarer',
 	'blog-avatar-alt' => 'Logbok över användares tillagda eller borttagna avatarer.',
+	'user-identity-remove-confirmation' => 'Är du säker på att du vill ta bort avataren?',
 );
 
 /** Turkish (Türkçe)

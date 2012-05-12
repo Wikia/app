@@ -1278,6 +1278,11 @@ Das Wikia-Team',
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'founderemails-email-user-registered-greeting' => 'Merheba Bırayo $USERNAME,',
+	'founderemails-email-first-edit-greeting' => 'Merheba Bırayo $USERNAME,',
+	'founderemails-email-general-edit-greeting' => 'Merheba Bırayo $USERNAME,',
+	'founderemails-email-anon-edit-greeting' => 'Merheba Bırayo $USERNAME,',
+	'founderemails-email-lot-happening-greeting' => 'Merheba Bırayo $USERNAME,',
 	'founderemails-email-views-digest-greeting' => 'selam bırayo delal $USERNAME,',
 );
 

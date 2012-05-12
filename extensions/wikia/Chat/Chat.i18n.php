@@ -404,12 +404,13 @@ $messages['cs'] = array(
  * @author Geitost
  * @author Jan Luca
  * @author LWChris
+ * @author MtaÄ
  * @author SVG
  * @author Tiin
  */
 $messages['de'] = array(
 	'chat' => 'Chat',
-	'chat-desc' => '[[Special:Chat|Live-Chat]]',
+	'chat-desc' => '[[Special:Chat|Chat]]',
 	'chat-no-login' => 'Du musst angemeldet sein, um chatten zu können.',
 	'chat-no-login-text' => 'Bitte anmelden, um zu chatten.',
 	'chat-default-topic' => 'Willkommen im $1 Chat',
@@ -607,7 +608,7 @@ $messages['fr'] = array(
 	'chat-no-login-text' => 'Veuillez vous connecter pour tchater.',
 	'chat-default-topic' => 'Bienvenue sur le tchat de $1',
 	'chat-user-joined' => '$1 a rejoint le tchat.',
-	'chat-read-only' => 'La discussion est temporairement indisponible car le wiki est en mode lecture seule.',
+	'chat-read-only' => 'Le tchat est temporairement indisponible car le wiki est en mode lecture seule.',
 	'chat-user-parted' => '$1 a quitté le tchat.',
 	'chat-user-blocked' => '$1 a bloqué $2.',
 	'chat-user-allow' => '$1 a autorisé $2.',
@@ -623,7 +624,7 @@ $messages['fr'] = array(
 	'chat-err-already-chatmod' => 'Erreur : « $1 » est déjà dans le groupe « $2 ».',
 	'chat-err-no-permission-to-add-chatmod' => "Erreur : Vous n'avez pas la permission d'ajouter cet utilisateur au groupe « $1 ».",
 	'chat-userrightslog-a-made-b-chatmod' => '$1 a promu $2 au rang de modérateur du tchat sur ce wiki.',
-	'chat-err-invalid-username-chatmod' => 'Erreur: Impossible de trouver l\'utilisateur "$1"',
+	'chat-err-invalid-username-chatmod' => 'Erreur : Impossible de trouver l’utilisateur « $1 »',
 	'chat-you-are-banned' => 'Erreur de permissions.',
 	'chat-you-are-banned-text' => "Désolé, vous n'avez pas la permission de tchater sur ce wiki. Si vous pensez que c'est une erreur ou souhaitez en discuter, veuillez contacter un administrateur.",
 	'chat-room-is-not-on-this-wiki' => 'Le salon de tchat auquel vous essayez de vous connecter ne semble pas exister sur ce wiki.',
@@ -632,7 +633,7 @@ $messages['fr'] = array(
 	'chat-live' => 'En direct !',
 	'chat-start-a-chat' => 'Démarrer une discussion',
 	'chat-whos-here' => 'Qui est présent ($1)',
-	'chat-join-the-chat' => 'Rejoindre la discussion',
+	'chat-join-the-chat' => 'Rejoindre tchat',
 	'chat-edit-count' => '{{PLURAL:$1|$1 modification|$1 modifications}}',
 	'chat-member-since' => 'Membre depuis $1',
 	'chat-great-youre-logged-in' => 'Super ! Vous êtes connecté.',
@@ -1508,7 +1509,7 @@ $messages['ru'] = array(
 	'chat-live' => 'Live!',
 	'chat-start-a-chat' => 'Начать чат',
 	'chat-whos-here' => 'Кто находится здесь ($1)',
-	'chat-join-the-chat' => 'Присоединиться к чату',
+	'chat-join-the-chat' => 'Присоединиться',
 	'chat-edit-count' => '{{PLURAL:$1|$1 правка|$1 правки|$1 правок}}',
 	'chat-member-since' => 'Участник с $1',
 	'chat-great-youre-logged-in' => 'Отлично! Вы вошли в систему.',

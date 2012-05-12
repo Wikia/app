@@ -402,6 +402,23 @@ Schreibe den ersten Abschnitt deiner Seite hier. Denk daran, Links zu anderen Se
 Schreibe den zweiten Abschnitt deiner Seite hier. Vergiss nicht eine Kategorie hinzuzufügen damit andere die Seite finden können.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'owb-headline' => 'Merheba, $1',
+	'owb-button-skip' => 'Peygoske',
+	'owb-button-save-intro' => 'İntroy qeydke',
+	'owb-button-save-theme' => 'Temay qeydke',
+	'owb-button-save-pages' => 'Pela qeydke',
+	'owb-step1' => 'Etaba 1',
+	'owb-step2' => 'Etaba 2',
+	'owb-step3' => 'Etaba 3',
+	'owb-step4' => 'Etaba 4',
+	'owb-step4-error-caption' => 'Xırab',
+	'owb-status-saving' => 'Qeydbi',
+);
+
 /** Spanish (Español)
  * @author Fitoschido
  * @author VegaDark

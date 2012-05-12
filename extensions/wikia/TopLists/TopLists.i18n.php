@@ -473,6 +473,13 @@ Du kannst die Änderungsbenachrichtigungen zu dieser Liste <a href="$4">abbestel
 	'toplists-create-button-msg' => 'Liste erstellen',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'toplists-list-created-by' => '[[User:$1|$1]]',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author Peter17
@@ -1965,6 +1972,8 @@ $messages['sv'] = array(
 	'toplists-editor-title-placeholder' => 'Ange ett namn för listan',
 	'toplists-editor-related-article-label' => 'Relaterad sida <small>(valfritt, men väljer en bild)</small>',
 	'toplists-editor-related-article-placeholder' => 'Ange ett befintligt namn för en sida',
+	'toplists-editor-description-label' => 'En kort beskrivning av din Topp 10-lista',
+	'toplists-editor-description-placeholder' => 'Ange en beskrivning',
 	'toplists-editor-image-browser-tooltip' => 'Lägg till en bild',
 	'toplists-editor-remove-item-tooltip' => 'Ta bort objekt',
 	'toplists-editor-drag-item-tooltip' => 'Dra för att ändra ordning',

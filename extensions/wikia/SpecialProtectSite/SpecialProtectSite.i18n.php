@@ -192,6 +192,8 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'protectsite-allowall' => 'Karberi pêro',
+	'protectsite-allowsysop' => 'Yew ke sysopi',
 	'protectsite-maxtimeout' => 'Maximum:',
 );
 

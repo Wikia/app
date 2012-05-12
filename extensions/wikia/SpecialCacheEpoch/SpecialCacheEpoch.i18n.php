@@ -259,12 +259,15 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'cacheepoch-desc' => 'Tillhandahåller ett gränssnitt för att ändra wgCacheEpoch per wiki',
+	'cacheepoch' => 'Gränssnitt för Cache Epoch',
 	'cacheepoch-header' => 'Öka wgCacheEpoch',
 	'cacheepoch-value' => 'Aktuella värdet för wgCacheEpoch är "$1". Tryck på knappen för att ange den till nuvarande datum.',
 	'cacheepoch-submit' => 'Uppdatera värdet',
 	'cacheepoch-updated' => 'wgCacheEpoch uppdaterades till «$1».',
 	'cacheepoch-not-updated' => 'Misslyckades att uppdatera wgCacheEpoch.',
 	'cacheepoch-wf-reason' => 'Värde uppdaterat via Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory är inte aktiverat på denna wiki. Det gick inte att ändra wgCacheEpoch.',
 );
 
 /** Tagalog (Tagalog)

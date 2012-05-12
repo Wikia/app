@@ -363,6 +363,17 @@ $messages['de-formal'] = array(
 	'wikifeatures-error-permission' => 'Sie haben nicht die erforderliche Berechtigung, um diese Seite aufrufen zu können.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikifeatures-deactivate-cancel-button' => 'Bıterkne',
+	'wikifeatures-promotion-new' => 'Newe',
+	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'listey Tewr 10a',
+	'wikifeatures-feature-heading-wgEnableChat' => 'Mıhebet',
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Anket',
+);
+
 /** Spanish (Español)
  * @author Benfutbol10
  * @author Bola
