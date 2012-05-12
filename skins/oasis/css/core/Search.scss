@@ -1,5 +1,6 @@
 @import "layout";
 @import "../mixins/border-radius";
+@import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/forms";
 @import "../mixins/menus";
@@ -16,6 +17,7 @@
 		width: 248px;
 		padding-right: 47px;
 	}
+
 	input[type="text"]:focus {
 		background: lighten($color-page, 10%);
 	}
@@ -43,13 +45,23 @@
 
 	.autocomplete {
 		@include menu-regular;
+		@include box-shadow(3px, 3px, 6px, darken($color-page, 9%));
+		border-width: 1px;
+		border-top: 0;
+		cursor: pointer;
 		margin-top: 2px;
 		position: relative;
-		width: 296px;
+		width: 256px;
 		z-index: $zTop;
 		div {
 			font-size: 14px;
-			padding: 4px 4px 2px;
+			//padding: 4px 4px 2px;
+			padding: 5px 9px;
+		}
+		.redirect {
+			color: $color-alternate-text;
+			display: block;
+			font-size: 80%;
 		}
 		.selected {
 			background: $color-menu-highlight;

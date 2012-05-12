@@ -260,14 +260,20 @@
         return;
       }
 
-      var me, len, div, f;
+      var me, len, div, f, redirect;
       me = this;
       len = this.suggestions.length;
       f = this.options.fnFormatResult;
       v = this.getQuery(this.currentValue);
       this.container.hide().empty();
       for (var i = 0; i < len; i++) {
-        div = $((me.selectedIndex === i ? '<div class="'+this.options.selectedClass+'"' : '<div') + ' title="' + this.suggestions[i] + '">' + f(this.suggestions[i], this.data[i], v) + '</div>');
+        div = $((me.selectedIndex === i ? '<div class="'+this.options.selectedClass+'"' : '<div') + ' title="' + this.suggestions[i] + '">' + f(this.suggestions[i], this.data[i], v)
+        	// wikia change - start
+        	+ (this.redirects[this.suggestions[i]]
+        		? '<span class="redirect subtle">' + $.msg('tog-redirected-from', this.redirects[this.suggestions[i]]) + '</span>'
+        		: '')
+        	// wikia change - end
+        	+ '</div>');
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         div.click((function(xi) { return function() { me.select(xi); }; })(i));
         //console.log(div);
@@ -293,6 +299,10 @@
 
       if (!$.isArray(response.data)) { response.data = []; }
       this.suggestions = response.suggestions;
+      // wikia change - start
+      this.redirects = response.redirects;
+      this.redirectMessage = response.redirectMessage;
+      // wikia change - end
       this.data = response.data;
       this.cachedResponse[response.query] = response;
       if (response.suggestions.length === 0 && !this.options.skipBadQueries /* Wikia change */) { this.badQueries.push(response.query); }

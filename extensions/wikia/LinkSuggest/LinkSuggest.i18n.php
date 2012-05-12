@@ -3,7 +3,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'tog-disablelinksuggest' => 'Do not show link suggest in Source mode'
+	'tog-disablelinksuggest' => 'Do not show link suggest in Source mode',
+	'tog-redirected-from' => '&ndash; Redirected from $1'
 );
 
 /** Afrikaans (Afrikaans)
@@ -21,7 +22,7 @@ $messages['az'] = array(
 	'tog-disablelinksuggest' => 'İlkin kod rejimində keçid təklifini göstərmə',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -191,7 +192,7 @@ $messages['ms'] = array(
 	'tog-disablelinksuggest' => 'Jangan paparkan cadangan pautan dalam mod Sumber',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (Norsk (bokmål))
  * @author Audun
  */
 $messages['nb'] = array(
@@ -206,7 +207,7 @@ $messages['nl'] = array(
 	'tog-disablelinksuggest' => 'Geen verwijzingssuggesties weergeven in bronmodus',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (Norsk (nynorsk))
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -271,7 +272,7 @@ $messages['ru'] = array(
 	'tog-disablelinksuggest' => 'Не показывать предложения ссылок в режиме Исходного кода',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (Српски (ћирилица))
  * @author Rancher
  * @author Verlor
  */
@@ -327,7 +328,7 @@ $messages['uk'] = array(
 	'tog-disablelinksuggest' => 'Не показувати пропозиції посилань',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文(简体))
  * @author Anakmalaysia
  * @author Hydra
  */
@@ -335,7 +336,7 @@ $messages['zh-hans'] = array(
 	'tog-disablelinksuggest' => '源代码模式中勿显示链接建议',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文(繁體))
  * @author Frankou
  * @author Lauhenry
  */
