@@ -71,12 +71,6 @@ define('toc', ['track', 'events'], function toc(track, events){
 					}, 50);
 				}
 			});
-
-			d.body.addEventListener(click, function(ev){
-				if(ev.target.className.indexOf('hidden') > -1){
-					close();
-				}
-			});
 		}
 	}
 

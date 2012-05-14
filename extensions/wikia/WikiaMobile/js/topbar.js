@@ -45,14 +45,9 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 
 	function closeSearch(){
 		if(navBar.className.indexOf('srhOpn') > -1){
-			if(searchInput.value){
-				searchForm.submit();
-			}else{
-				navBar.className = '';
-				searchInput.value = '';
-				track('search/toggle/close');
-				showPage();
-			}
+			searchInput.value = '';
+			track('search/toggle/close');
+			showPage();
 		}
 	}
 
@@ -63,7 +58,11 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	d.getElementById('wkSrhTgl').addEventListener(clickEvent, function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('srhOpn') > -1){
-			closeDropDown();
+			if(searchInput.value){
+				searchForm.submit();
+			}else{
+				closeDropDown();
+			}
 		}else{
 			openSearch();
 		}
@@ -117,7 +116,6 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 		if(navBar.className.indexOf('fllNav') > -1){
 			track('nav/close');
 			wkNavMenu.className = 'cur1';
-			navBar.className = '';
 			showPage();
 		}
 	}
@@ -200,12 +198,6 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	}
 	//end profile/login setup
 
-	//close topbar 'modules' on click on page
-	d.getElementById('wkPage').addEventListener(clickEvent, function(){
-		navBar.className = '';
-		searchInput.value = '';
-	});
-
 	function openProfile(){
 		reset();
 		closeNav();
@@ -271,9 +263,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 			}else{
 				track('login/close');
 			}
-			navBar.className = '';
 			showPage();
-
 		}
 	}
 
@@ -284,6 +274,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	}
 
 	function showPage(){
+		navBar.className = '';
 		d.body.className = d.body.className.replace(' hidden', '');
 	}
 

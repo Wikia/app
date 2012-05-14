@@ -28,6 +28,13 @@ $(function(){
 			//must be done AFTER detecting size of elements on the page
 			d.body.className += ' js';
 
+			d.body.addEventListener(clickEvent, function(ev){
+				if(ev.target.className.indexOf('hidden') > -1){
+					toc.close();
+					topbar.closeDropDown();
+				}
+			});
+
 			//TODO: optimize selectors caching for this file
 			/*body.delegate('#wkMainCnt a', clickEvent, function(){
 			 track('link/content');
