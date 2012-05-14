@@ -174,7 +174,7 @@ var UploadPhotos = {
 LatestPhotos = {
 	init: function() {
 		this.carousel = $('.LatestPhotosModule').find('.carousel-container');
-		this.carousel.carousel();
+		this.carousel.carousel({attachBlindImages: true});
 		LatestPhotos.addLightboxTracking();
 		$('.timeago').timeago();
 	},
