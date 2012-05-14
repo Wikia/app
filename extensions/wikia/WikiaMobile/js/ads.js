@@ -30,7 +30,7 @@ define('ads', ['events'], function(ev){
 					close.className = 'show';
 					adSlotStyle.height = '50px';
 					close.addEventListener(click, function() {
-						track('ad/close');
+						//track('ad/close');
 						adSlot.className += ' anim';
 						setTimeout(function(){d.body.removeChild(adSlot);},800);
 						w.removeEventListener('scroll', moveSlot);
