@@ -41,7 +41,6 @@ $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 $wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
 $wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
 
-$wgExtensionFunctions[] = 'wfSetupDevBoxPanel';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'DevBoxPanel',
 	'author' => '[http://lyrics.wikia.com/User:Sean_Colombo Sean Colombo]',
@@ -52,18 +51,52 @@ $wgExtensionCredits['specialpage'][] = array(
 // Definitions
 define('DEVBOX_DEFAULT_WIKI_DOMAIN', 'devbox.wikia.com');
 
-function wfSetupDevBoxPanel() {
-	global $IP, $wgMessageCache, $wgCommandLineMode;
+require_once($IP . '/includes/SpecialPage.php');
+$wgSpecialPages['DevBoxPanel'] = 'DevBoxPanel';
 
-	// macbre: don't run code below when running in command line mode (memcache starts to act strange)
-	if (!empty($wgCommandLineMode)) {
-		return true;
+class DevBoxPanel extends SpecialPage {
+	public function DevBoxPanel(){
+		// macbre: don't run code below when running in command line mode (memcache starts to act strange) - NOTE: This macbre code was in a different spot... this may be fixed implicitly now.
+		if (!empty($wgCommandLineMode)) {
+			return true;
+		}
+		
+		SpecialPage::SpecialPage('DevBoxPanel');
 	}
 
-	require_once($IP . '/includes/SpecialPage.php');
-	SpecialPage::addPage(new SpecialPage('DevBoxPanel', 'devboxpanel', true, 'wfDevBoxPanel', false));
-	$wgMessageCache->addMessage('devboxpanel', 'Dev-Box Panel');
-}
+	/**
+	 * The main function of the SpecialPage.  Adds the content for the page
+	 * to the wgOut global.
+	 */
+	function execute() {
+		global $wgOut,$wgHooks,$wgDevelEnvironment;
+		$wgHooks['BeforePageDisplay'][] = 'devBoxPanelAdditionalScripts';
+
+		wfLoadExtensionMessages('DevBoxPanel');
+		$wgOut->setPageTitle(wfMsg("devbox-title"));
+		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setArticleRelated( false );
+
+		if($wgDevelEnvironment){
+			if (isset($_REQUEST['switch'])) svnHandleSwitch();
+			if (isset($_REQUEST['update'])) svnHandleUpdate();
+
+			$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$tmpl->set_vars(array(
+								"svnToolHtml"      => getHtmlForSvnTool(),
+								"dbComparisonHtml" => getHtmlForDatabaseComparisonTool(),
+								"infoHtml"         => getHtmlForInfo(),
+								"footer"           => wfMsg("devbox-footer", __FILE__),
+								));
+			$wgOut->addHTML($tmpl->execute('special-devboxpanel'));
+		} else {
+			$wgOut->addHTML(wfMsg('devbox-panel-not-enabled'));
+		}
+
+	} // end execute()
+
+} // end class DevBoxPanel
+
 
 function devBoxPanelAdditionalScripts( &$out, &$sk ){
 	global $wgExtensionsPath,$wgStyleVersion;
@@ -226,37 +259,6 @@ function getDevBoxOverrideDatabases($db){
  *	function pullProdDatabaseToLocal($domainOfWikiToPull){
  *  }
  */
-
-/**
- * The main function of the SpecialPage.  Adds the content for the page
- * to the wgOut global.
- */
-function wfDevBoxPanel() {
-	global $wgOut,$wgHooks,$wgDevelEnvironment;
-	$wgHooks['BeforePageDisplay'][] = 'devBoxPanelAdditionalScripts';
-
-	wfLoadExtensionMessages('DevBoxPanel');
-	$wgOut->setPageTitle(wfMsg("devbox-title"));
-	$wgOut->setRobotpolicy( 'noindex,nofollow' );
-	$wgOut->setArticleRelated( false );
-
-	if($wgDevelEnvironment){
-		if (isset($_REQUEST['switch'])) svnHandleSwitch();
-		if (isset($_REQUEST['update'])) svnHandleUpdate();
-
-		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$tmpl->set_vars(array(
-							"svnToolHtml"      => getHtmlForSvnTool(),
-							"dbComparisonHtml" => getHtmlForDatabaseComparisonTool(),
-							"infoHtml"         => getHtmlForInfo(),
-							"footer"           => wfMsg("devbox-footer", __FILE__),
-							));
-		$wgOut->addHTML($tmpl->execute('special-devboxpanel'));
-	} else {
-		$wgOut->addHTML(wfMsg('devbox-panel-not-enabled'));
-	}
-
-} // end wfDevBoxPanel()
 
 function svnHandleUpdate() {
 	$base_path = dirname(dirname(dirname(dirname(dirname( __FILE__ )))));
