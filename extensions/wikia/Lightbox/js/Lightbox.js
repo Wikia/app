@@ -235,23 +235,17 @@ var Lightbox = {
 				
 				
 				// Set up carousel
-				var thumbs = [],
-					carouselTemplate = $('#LightboxCarouselTemplate');
+				var carouselTemplate = $('#LightboxCarouselTemplate');
 				
 				for(var i = 0; i < mediaThumbs.thumbs.length; i++) {
-					var title = mediaThumbs.thumbs[i].title,
-						thumbUrl = mediaThumbs.thumbs[i].thumbUrl,
-						type = mediaThumbs.thumbs[i].type;
-					
-					thumbs.push(thumbUrl);
-						
-					if(title == Lightbox.current.title) {
+					if(mediaThumbs.thumbs[i].title == Lightbox.current.title) {
 						Lightbox.current.index = i;
+						break;
 					}
 				}
 				
 				var carousel = $(carouselTemplate).mustache({
-					thumbs: thumbs,
+					thumbs: mediaThumbs.thumbs,
 					progress: "1-6 of 24" // TODO: calculate progress and i18n "of"
 				});
 				
@@ -260,6 +254,12 @@ var Lightbox = {
 				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
 				
 				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
+				
+				$('#LightboxCarouselContainer').carousel({
+					itemsShown: 6,
+					itemSpacing: 8,
+					transitionSpeed: 1000
+				});
 				
 				var updateCallback = function(json) {
 					Lightbox.cache.details[Lightbox.current.title] = json;

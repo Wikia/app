@@ -1,6 +1,7 @@
 @import "../mixins/border-radius";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
+@import "../mixins/opacity";
 @import "../core/color";
 
 /* FILE: LatestPhotos.scss */
@@ -165,6 +166,11 @@
 			height: 82px;
 			float: right;
 		}
+		&.disabled {
+			@include opacity(40);
+			cursor: default;
+		}
+		
 	}
 	.latest-images-left {
 		@include arrow-style;
@@ -209,6 +215,7 @@
 		display: block;
 		left: 4px;
 		list-style: none;
+		position: absolute;
 		width: 500px;
 		li {
 			border: 1px solid $color-page-border;
@@ -231,11 +238,11 @@
 				}
 			}
 			img {
+				@include opacity(90);
 				height: 82px;
-				opacity: 0.9;
 				width: 82px;
 				&:hover {
-					 opacity: 1;
+					@include opacity(100);
 				}
 			}
 			.thumbcaption {
@@ -257,7 +264,7 @@
 			}
 			img {
 				left: 0;
-				opacity: 1;
+				@include opacity(100);
 				position: absolute;
 				top: 0;
 			}
