@@ -34,31 +34,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 			width: 536px;
 			background-color: $color-page;
 		}
-		
+
 		button {
-			@include border-radius(3px);
-			// needed to override gray search button override (from skins/oasis/css/core/Search.scss)
-			@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
-			float: right;		
 			height: 31px;
-			position: static;
 			width: 62px;
-
-			&:hover {
-				@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
-				text-decoration: none;
-			}
-
-			img {
-				background: url(/skins/oasis/images/sprite.png) -1055px -80px no-repeat; /* $wgCdnStylePath */
-				height: 15px;
-				width: 19px;
-				@if $use-dark-icons {
-					background-position:  -1076px -80px;
-				}
-			}
 		}
-		
+
 		p {
 			margin-top: 0;
 		}
