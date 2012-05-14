@@ -5,6 +5,10 @@ if (!defined('MEDIAWIKI'))
  * A Special Page sample that can be included on a wikipage like
  * {{Special:Inc}} as well as being accessed on [[Special:Inc]]
  *
+ * Simple clone of RecentRatings, displays only contributions of the reader.
+ * ToDo: Change to a mechanism similar to user contributions to allow checking other user's ratings
+ *     -- Hhhippo 13 Jan 2008
+ *
  * @addtogroup Extensions
  *
  * @author Ævar Arnfjörð Bjarmason <avarab@gmail.com>
@@ -12,34 +16,23 @@ if (!defined('MEDIAWIKI'))
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-$wgExtensionFunctions[] = 'wfUserRatings';
 $wgExtensionCredits['specialpage'][] = array('name' => 'User Ratings',
 					     'url' => 'http://www.gcardinal.com/',
 					     'description' => 'List user ratings.',
 					     'author' => 'gcardinal/Hhhippo');
+						 
+require_once "$IP/includes/SpecialPage.php";
+$wgSpecialPages['UserRatings'] = 'UserRatings';
 
-# Simple clone of RecentRatings, displays only contributions of the reader.
-# ToDo: Change to a mechanism similar to user contributions to allow checking other user's ratings
-#     -- Hhhippo 13 Jan 2008
+class UserRatings extends SpecialPage {
 
-#====================================#
-function wfUserRatings() {
-#====================================#
+	function UserRatings() {
+		global $wgMessageCache;
+		$wgMessageCache->addMessage('userratings', 'User ratings');
 
-    global $IP, $wgMessageCache;
-
-    $wgMessageCache->addMessage('userratings', 'User ratings');
-
-    require_once "$IP/includes/SpecialPage.php";
-    class SpecialUserRatings extends SpecialPage {
-
-        #-- Constructor ----------------------------#
-	function SpecialUserRatings() {
-        #-------------------------------------------#
-
-            SpecialPage::SpecialPage('UserRatings');
-            $this->includable(true);
-        }
+		SpecialPage::SpecialPage('UserRatings');
+		$this->includable(true);
+	}
 
         #-- main() ---------------------------------#
 	function execute($par = null) {
@@ -174,8 +167,4 @@ function wfUserRatings() {
 	}
         #----------------------------------------#
 
-    }
-    SpecialPage::addPage(new SpecialUserRatings);
-}
-
-?>
+} // end class UserRatings
