@@ -271,12 +271,11 @@
       	redirect = this.redirects[this.suggestions[i]];
         div = $((me.selectedIndex === i ? '<div class="'+this.options.selectedClass+'"' : '<div')
         	+ ' title="' + this.suggestions[i] + '">' + f(this.suggestions[i], this.data[i], v)
-        	+ (redirect ? '<span class="redirect subtle">' + $.msg('tog-redirected-from', redirect) + '</span>' : '')
+        	+ (i === 0 && redirect ? '<span class="redirect subtle">' + $.msg('tog-redirected-from', redirect) + '</span>' : '')
         	+ '</div>');
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         div.click((function(xi) { return function() { me.select(xi); }; })(i));
-        //console.log(div);
         this.container.append(div);
       }
       this.enabled = true;
