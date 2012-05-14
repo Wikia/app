@@ -1,4 +1,5 @@
 <?php
+$_SERVER['QUERY_STRING'] = 'VideoCleanup';
 
 function fixLinksFromArticle( $id ) {
 	global $wgTitle, $wgParser;
@@ -111,13 +112,14 @@ while( $file = $dbw->fetchObject( $rows ) ) {
 }
 $dbw->freeResult( $rows );
 
-$dbw->query( "DELETE FROM image WHERE img_name like ':%' OR img_name like 'Video:%'" );
-$dbw->query( "DELETE FROM oldimage WHERE oi_name like ':%' OR oi_name like 'Video:%'" );
-$dbw->query( "DELETE FROM filearchive WHERE fa_name like ':%' OR fa_name like 'Video:%'" );
+$dbw->query( "DELETE FROM image WHERE img_name like ':%' OR img_name like 'Video:%'", 'videoCleanup' );
+$dbw->query( "DELETE FROM oldimage WHERE oi_name like ':%' OR oi_name like 'Video:%'", 'videoCleanup' );
+$dbw->query( "DELETE FROM filearchive WHERE fa_name like ':%' OR fa_name like 'Video:%'", 'videoCleanup' );
 
 $rows = $dbw->query( "SELECT page_id, page_namespace, page_title
 					  FROM page
-					  WHERE page_namespace = 400" );
+					  WHERE page_namespace = 400",
+					'videoCleanup' );
 $rowCount = $rows->numRows();
 
 echo( ": Found {$rowCount} articles to remove (namespace 400)\n" );
@@ -154,13 +156,36 @@ $dbw->freeResult( $rows );
 
 $rows = $dbw->query( "SELECT distinct pl_from
 					  FROM pagelinks
-					  WHERE pl_namespace = " . NS_LEGACY_VIDEO );
+					  WHERE pl_namespace = " . NS_LEGACY_VIDEO,
+		'videoCleanup' );
 $rowCount = $rows->numRows();
 
 echo( ": Found {$rowCount} pagelinks to 400 namespace\n" );
 while( $page = $dbw->fetchObject( $rows ) ) {
 	echo "Fixing links in article " . $page->pl_from . "\n";
-	fixLinksFromArticle( $page->pl_from );
+
+	$pid = pcntl_fork();
+	if ($pid == -1) {
+		echo "I think I'm gonna die\n";
+		die('Could not fork');
+	} else if ($pid) {
+		// we are the parent
+		$status = null;
+		pcntl_wait($status); //Protect against Zombie children
+		$st = pcntl_wexitstatus($status);
+		if ($st != 0) {
+			// need to log those fatal errors here
+		}
+		//echo "parent end of fork\n";
+	} else {
+		//echo "child\n";
+		fixLinksFromArticle( $page->pl_from );
+		//echo "child end of fork\n";
+		exit();
+	}
+	//echo "outside of fork\n";
+
+
 }
 $dbw->freeResult( $rows );
 
