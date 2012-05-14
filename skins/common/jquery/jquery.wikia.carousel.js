@@ -43,7 +43,7 @@
 		}
 
 		var constants = {
-			viewPortWidth: $(this).width(),
+			viewPortWidth: $(this).outerWidth(),
 			itemWidth: dom.items.first().outerWidth(true), // item width including margin
 			carouselWidth: 0, // updated on init
 			minLeft: 0 // updated on init
