@@ -113,62 +113,62 @@ class LightboxController extends WikiaController {
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
 				'type' => 'image',
-				'title' => '500x1700.jpeg'
+				'title' => 'IMG_1535.jpg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
 				'type' => 'image',
-				'title' => 'IMG 1535.jpg'
+				'title' => 'Avatar.jpg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120504221422/devbox/images/thumb/a/a4/500x1700.jpeg/90px-500x1700.jpeg',	
 				'type' => 'image',
-				'title' => 'Avatar.jpg'
+				'title' => '500x1700.jpeg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
 				'type' => 'image',
-				'title' => '500x1700.jpeg'
+				'title' => 'IMG_1535.jpg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
 				'type' => 'image',
-				'title' => 'IMG 1535.jpg'
+				'title' => 'Avatar.jpg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120504221422/devbox/images/thumb/a/a4/500x1700.jpeg/90px-500x1700.jpeg',	
 				'type' => 'image',
-				'title' => 'Avatar.jpg'
+				'title' => '500x1700.jpeg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
 				'type' => 'image',
-				'title' => '500x1700.jpeg'
+				'title' => 'IMG_1535.jpg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
 				'type' => 'image',
-				'title' => 'IMG 1535.jpg'
+				'title' => 'Avatar.jpg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120504221422/devbox/images/thumb/a/a4/500x1700.jpeg/90px-500x1700.jpeg',	
 				'type' => 'image',
-				'title' => 'Avatar.jpg'
+				'title' => '500x1700.jpeg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
 				'type' => 'image',
-				'title' => '500x1700.jpeg'
+				'title' => 'IMG_1535.jpg'
 			),
 			/*array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
 				'type' => 'image',
-				'title' => 'IMG 1535.jpg'
+				'title' => 'Avatar.jpg'
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120504221422/devbox/images/thumb/a/a4/500x1700.jpeg/90px-500x1700.jpeg',	
 				'type' => 'image',
-				'title' => 'Avatar.jpg'
+				'title' => '500x1700.jpeg'
 			),*/
 		);
 	

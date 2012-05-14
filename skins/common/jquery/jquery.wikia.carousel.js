@@ -29,7 +29,8 @@
 			activeIndex: 0,
 			nextClass: "next",
 			prevClass: "previous",
-			attachBlindImages: false
+			attachBlindImages: false, 
+			itemClick: false // TODO: run this when an item is clicked
 		}
 
 		options = $.extend(defaults, options);
@@ -269,6 +270,13 @@
 			// Set up click events
 			dom.next.click(nextImage);
 			dom.previous.click(previousImage);
+			
+			if(options.itemClick) {
+				dom.carousel.on('click', 'li', function(e) {
+					setAsActive($(this).index());
+					options.itemClick.call(this, e)
+				});
+			}
 	
 			// on mouseover load the rest of images
 			dom.wrapper.parent().one('mouseover', function() {
