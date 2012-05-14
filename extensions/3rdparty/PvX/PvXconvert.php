@@ -12,81 +12,76 @@ if (!defined('MEDIAWIKI'))
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-$wgExtensionFunctions[] = 'wfPvXConvert';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'PvX Converter',
 	'url' => 'http://www.gcardinal.com/',
     'description' => 'Convert from old style GuildWiki Attributes and Skills template to PvXcode. by-nc-nd/3.0.', 
 	'author' => 'gcardinal');
 
-function wfPvXConvert()
-{
-    global $IP, $wgMessageCache;
+require_once "$IP/includes/SpecialPage.php";
+$wgSpecialPages['PvXConvert'] = 'SpecialPvXConvert';
+	
+class SpecialPvXConvert extends SpecialPage{
 
-    $wgMessageCache->addMessage('pvxconvert', 'PvXConvert');
+	/**
+	 * Constructor
+	 */
+	function SpecialPvXConvert()
+	{
+		global $wgMessageCache;
+		$wgMessageCache->addMessage('pvxconvert', 'PvXConvert');
 
-    require_once "$IP/includes/SpecialPage.php";
-    class SpecialPvXConvert extends SpecialPage
-    {
-        /**
-         * Constructor
-         */
-        function SpecialPvXConvert()
-        {
-            SpecialPage::SpecialPage('PvXConvert');
-            $this->includable(true);
-        }
+		SpecialPage::SpecialPage('PvXConvert');
+		$this->includable(true);
+	}
 
-        /**
-         * main()
-         */
-        function execute($par = null)
-        {
-            global $wgOut;
-            global $wgRequest;
-            global $wgScript;
-            $name = $wgRequest->getText('wpName');
-            $build = $wgRequest->getText('wpBuild');
-            if ($this->including())
+	/**
+	 * main()
+	 */
+	function execute($par = null)
+	{
+		global $wgOut;
+		global $wgRequest;
+		global $wgScript;
+		$name = $wgRequest->getText('wpName');
+		$build = $wgRequest->getText('wpBuild');
+		if ($this->including())
+		{
+			$out = "I'm being included... :(";
+		} else {
+			if ($build)
 			{
-                $out = "I'm being included... :(";
-			} else {
-                if ($build)
-                {
-					$rout = formatBuild($build, $name);
-					$wgOut->addWikiText("== Preview ==");
-					$wgOut->addWikiText($rout);
-					$wgOut->addHtml("<br>");
-					$wgOut->addWikiText("== PvXcode ==");
-					$out = "<p><textarea cols='80' rows='10' wrap='virtual'>" . $rout . "</textarea></p>";
-                }
-                else
-                {
-                    $out = '<p>
-							This converter can process single template (attribute & skill) as well as a whole wiki page. It will replace old style template with new pvxcode. <br>
-							However manual control is required. Sample input:<br><code>
-							{{attributes&nbsp;|&nbsp;Ranger&nbsp;|&nbsp;Mesmer<br>
-							&nbsp;&nbsp;|&nbsp;Wilderness&nbsp;Survival&nbsp;|&nbsp;12&nbsp;+&nbsp;1&nbsp;+&nbsp;3<br>
-							&nbsp;&nbsp;|&nbsp;Expertise&nbsp;|&nbsp;12&nbsp;+&nbsp;1<br>
-							}}<br>
-							{{skill bar|Echo|Dust Trap|Barbed Trap|Flame Trap|Trappers Speed|Troll Unguent|Whirling Defense|Resurrection Signet}}</code>
-							<p>Enter old style GuildWiki &quot;Attributes and Skills&quot; template:</p>
-							<form action="' . $_SERVER["PHP_SELF"] . '" method="get">
-							<input name="title" type="hidden" value="Special:PvXconvert" />
-							<p><textarea name="wpBuild" cols="80" rows="10" wrap="virtual"></textarea></p>
-							<p>Give new build template a name (optional):</p>
-							<p><input name="wpName" type="text" size="80" maxlength="60" /></p>
-							<p><input name="Go" type="submit" /></p>
-							</form>';
-                }
-                $this->setHeaders();
-            }
-            $wgOut->addHtml($out);
-        }
-    }
-
-    SpecialPage::addPage(new SpecialPvXConvert);
-}
+				$rout = formatBuild($build, $name);
+				$wgOut->addWikiText("== Preview ==");
+				$wgOut->addWikiText($rout);
+				$wgOut->addHtml("<br>");
+				$wgOut->addWikiText("== PvXcode ==");
+				$out = "<p><textarea cols='80' rows='10' wrap='virtual'>" . $rout . "</textarea></p>";
+			}
+			else
+			{
+				$out = '<p>
+						This converter can process single template (attribute & skill) as well as a whole wiki page. It will replace old style template with new pvxcode. <br>
+						However manual control is required. Sample input:<br><code>
+						{{attributes&nbsp;|&nbsp;Ranger&nbsp;|&nbsp;Mesmer<br>
+						&nbsp;&nbsp;|&nbsp;Wilderness&nbsp;Survival&nbsp;|&nbsp;12&nbsp;+&nbsp;1&nbsp;+&nbsp;3<br>
+						&nbsp;&nbsp;|&nbsp;Expertise&nbsp;|&nbsp;12&nbsp;+&nbsp;1<br>
+						}}<br>
+						{{skill bar|Echo|Dust Trap|Barbed Trap|Flame Trap|Trappers Speed|Troll Unguent|Whirling Defense|Resurrection Signet}}</code>
+						<p>Enter old style GuildWiki &quot;Attributes and Skills&quot; template:</p>
+						<form action="' . $_SERVER["PHP_SELF"] . '" method="get">
+						<input name="title" type="hidden" value="Special:PvXconvert" />
+						<p><textarea name="wpBuild" cols="80" rows="10" wrap="virtual"></textarea></p>
+						<p>Give new build template a name (optional):</p>
+						<p><input name="wpName" type="text" size="80" maxlength="60" /></p>
+						<p><input name="Go" type="submit" /></p>
+						</form>';
+			}
+			$this->setHeaders();
+		}
+		$wgOut->addHtml($out);
+	} // end execute()
+} // end class SpecialPvXConvert
 
 function formatBuild($build, $name)
 {
