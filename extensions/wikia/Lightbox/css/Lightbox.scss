@@ -152,26 +152,27 @@ $carousel-overlay-duration: 600ms;
 			border-right: 1px solid $color-page-border;
 			height: $carousel-height - $carousel-vertical-padding * 2;
 			padding: $carousel-vertical-padding 20px;
-			width: 645px;
+			width: 625px;
 		}
 		
 		.LightboxCarouselContainer {
+			margin-left: 20px;
+			height: 55px;
+			overflow: hidden;
+			padding: 3px 0px;
+			position: relative;
+			width: 588px;
 			& > div {
 				position: relative;
 			}
-			height: 54px;
-			overflow: hidden;
-			padding: 3px 0;
-			position: relative;
-			width: 588px;
 			ul {
 				@include clearfix;
 				position: absolute;
 			}
 			li {
 				float: left;
-				margin-right: 8px;
-				&.active {
+				margin: 0 5px 0 3px;
+				&.active img{
 					outline: 3px solid $color-buttons;
 				}
 			}
@@ -179,10 +180,12 @@ $carousel-overlay-duration: 600ms;
 				width: 90px; // TODO: get these dimensions from thumbnailer
 				height: 55px; // TODO: get these dimensions from thumbnailer
 				display: block;
+				cursor: pointer;
 			}
 		}
 		.carousel-arrow {
 			cursor: pointer;
+			margin-top: 20px;
 			
 			&.next {
 				@include arrow(10px, $color-buttons, 'right');

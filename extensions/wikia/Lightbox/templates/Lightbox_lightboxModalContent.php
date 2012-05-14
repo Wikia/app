@@ -7,7 +7,7 @@
 		<span id="LightboxPrevious" class="previous"></span>
 	</div>
 	
-	<div id="LightboxCarousel" class="LightboxCarousel">
+	<div id="LightboxCarousel" class="LightboxCarousel hidden">
 	</div>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
