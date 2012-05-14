@@ -64,7 +64,19 @@ var Lightbox = {
 		
 		// Clicking left/right arrows inside Lightbox
 		$('body').on('click', '#LightboxNext, #LightboxPrevious', function(e) {
-			Lightbox.handleArrows(e);
+			var target = $(e.target);
+
+			if(target.is('.disabled')) {
+				return false;
+			}
+
+			if(target.is("#LightboxNext")) {
+				Lightbox.current.index++;
+			} else {
+				Lightbox.current.index--;
+			}
+			
+			Lightbox.updateMedia();
 		});
 
 	},
@@ -255,11 +267,7 @@ var Lightbox = {
 				
 				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
 				
-				$('#LightboxCarouselContainer').carousel({
-					itemsShown: 6,
-					itemSpacing: 8,
-					transitionSpeed: 1000
-				});
+				Lightbox.setUpCarousel();
 				
 				var updateCallback = function(json) {
 					Lightbox.cache.details[Lightbox.current.title] = json;
@@ -535,25 +543,14 @@ var Lightbox = {
 		};
 		return modalOptions;
 	},
-	handleArrows: function(e) {
-		var target = $(e.target);
-		
-		if(target.is('.disabled')) {
-			return false;
-		}
-		
+	updateMedia: function() {
+		// update image/video based on whatever the current index is now
 		var carouselType = Lightbox.current.carouselType,
 			mediaArr = Lightbox.cache[carouselType],
 			idx = Lightbox.current.index;
 		
 		Lightbox.openModal.find('.media').html("").startThrobbing();
 	
-		if(target.is("#LightboxNext")) {
-			idx++;
-		} else {
-			idx--;
-		}
-		
 		if(idx > -1 && idx < mediaArr.length) {
 			Lightbox.current.index = idx;
 			
@@ -561,7 +558,7 @@ var Lightbox = {
 			var type = Lightbox.current.type = mediaArr[idx].type;
 			
 			Lightbox.getMediaDetail({
-				title: Lightbox.current.title,
+				title: title,
 				type: type
 			}, function(data) {
 				Lightbox[type].updateLightbox(data);		
@@ -622,6 +619,24 @@ var Lightbox = {
 		} else {
 			callback(json);
 		}
+	},
+	setUpCarousel: function() {
+		var itemClick = function(e) {
+			var idx = $(this).index();
+			console.log(idx);
+			
+			Lightbox.current.index = idx;
+			
+			Lightbox.updateMedia();			
+			
+		} 
+		$('#LightboxCarouselContainer').carousel({
+			itemsShown: 6,
+			itemSpacing: 8,
+			transitionSpeed: 1000,
+			itemClick: itemClick,
+			activeIndex: Lightbox.current.index
+		});
 	}
 
 };
