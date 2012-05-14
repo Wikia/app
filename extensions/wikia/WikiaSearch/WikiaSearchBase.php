@@ -15,11 +15,7 @@ require_once("$IP/extensions/wikia/WikiaSearch/WikiaSearchEngine.php");
 include_once("$IP/includes/SpecialPage.php");
 
 $wgExtensionMessagesFiles['WikiaSearch'] = dirname(__FILE__).'/WikiaSearch.i18n.php';
-$wgExtensionFunctions[] = 'wfWikiaSearch';
-
-function wfWikiaSearch() {
-	SpecialPage::addPage(new WikiaSearch);
-}
+$wgSpecialPages['WikiaSearch'] = 'WikiaSearch';
 
 class WikiaSearch extends SpecialPage {
 
