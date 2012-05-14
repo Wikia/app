@@ -3,7 +3,7 @@
 	<input type="text" name="search" placeholder="<?= $placeholder ?>" autocomplete="off" accesskey="f" value="<?= htmlspecialchars( $searchterm ) ?>">
 	<input type="hidden" name="fulltext" value="<?= $fulltext ?>">
 	<input type="submit">
-	<button class="secondary"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
+	<button class="wikia-button"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 </form>
 <?php
 if ((!$wg->WikiaSearchIsDefault) && $wg->Title->isSpecial('Search')) {

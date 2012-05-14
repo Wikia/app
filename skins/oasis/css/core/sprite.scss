@@ -42,7 +42,12 @@
 
 	//Search button
 	&.search {
-		background-position: -1036px -48px;
+		@if lightness($color-buttons) > 50 {
+			background-position: -1036px -48px;
+		} @else {
+			background-position: -1055px -80px;
+		}
+
 		height: 16px;
 		width: 21px;
 	}
