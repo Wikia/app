@@ -23,8 +23,10 @@
 ;(function($, window) {
 	$.fn.carousel = function(options) {
 		var defaults = {
-			transition_speed: 500,
-			itemCount: 3,
+			transitionSpeed: 500,
+			itemsShown: 3,
+			itemSpacing: 2,
+			activeIndex: 0,
 			nextClass: "next",
 			prevClass: "previous"
 		}
@@ -34,30 +36,54 @@
 		var dom = {
 			wrapper: $(this),
 			carousel: $(this).find('.carousel'),
+			items: $(this).find('.carousel li'),
 			container: $(this).children('div:first'),
 			next: $(this).siblings('.' + options.nextClass),
 			previous: $(this).siblings('.' + options.prevClass)
 		}
 
+		var constants = {
+			viewPortWidth: $(this).width(),
+			itemWidth: dom.items.first().outerWidth(true), // item width including margin
+			carouselWidth: 0, // updated on init
+			minLeft: 0 // updated on init
+		}
+		
 		var states = {
 			browsing: false,
-			enable_next: true,
+			enable_next: false,
 			enable_previous: false,
-			carousel: false
-		}		
-
+			currIndex: 0, // index of first li shown in viewport
+			left: 0,
+		}
+		
 		function nextImage() {
-			var width = setCarouselWidth();
-	
-			enableBrowsing();
-	
 			if (states.browsing == false && states.enable_next == true) {
 				states.browsing = true;
-				dom.container.animate({
-					left: '-' + width
-				}, options.transition_speed, function() {
-					removeFirstPhotos();
+				
+				var left = states.left - constants.viewPortWidth;
+				
+				// don't go farther left than last image
+				if(left < constants.minLeft) {
+					var remainder = constants.minLeft - left,
+						itemDiff = options.itemsShown - (remainder / constants.itemWidth);
+					
+					states.currIndex = states.currIndex + itemDiff;
+					
+					left = constants.minLeft;
+					
+				} else {
+					// update current index
+					states.currIndex = states.currIndex + options.itemsShown;
+				}
+				
+				states.left = left;
+				
+				dom.carousel.animate({
+					left: left
+				}, options.transitionSpeed, function() {
 					states.browsing = false;
+					updateArrows();
 				});
 			}
 			return false;
@@ -65,47 +91,97 @@
 		}
 	
 		function previousImage() {
-			var width = setCarouselWidth();
-	
-			enableBrowsing();
-	
 			if (states.browsing == false && states.enable_previous == true) {
 				states.browsing = true;
-				var images = $('.carousel li').length;
-				for (var i=0; i < 3; i++) {
-					dom.carousel.prepend( dom.carousel.find('li').eq(images -1) ) ;
+
+				var left = states.left + constants.viewPortWidth;
+				
+				// Don't go farther right than the first image
+				if(left > 0) {
+					left = 0;
+					states.currIndex = 0;
+				} else {
+					states.currIndex = states.currIndex - options.itemsShown;
 				}
-				dom.container.css('left', - width + 'px');
-	
-				dom.container.animate({
-					left:  '0px'
-				}, options.transition_speed, function() {
+				
+				states.left = left;
+				
+				dom.carousel.animate({
+					left:  left
+				}, options.transitionSpeed, function() {
 					states.browsing = false;
+					updateArrows();
 				});
 			}
 			return false;
 		}
-	
-		function enableBrowsing() {
-			var current = dom.carousel.find('li').slice(0, 3).each(function (i) {
-				if ($(this).is('.last-image')) {
-					states.enable_next = false;
-					return false;
+		
+		function startFromIndex(idx) {
+			// Add active class to item at idx
+			setAsActive(idx);
+			
+			/* check if index is visible */
+			if(!isVisible(idx)) {
+				// if idx is too close to the end, set idx the last possible index. 
+				if(idx > (dom.items.length - options.itemsShown)) {
+					idx = dom.items.length - options.itemsShown;
 				}
-				else {
-					states.enable_next = true;
-				}
-	
-				if ($(this).is('.first-image')) {
-					states.enable_previous = false;
-					return false;
-				}
-				else {
-					states.enable_previous = true;
-				}
-			});
+				
+				states.currIndex = idx;
+								
+				var left = constants.itemWidth * idx * -1;
+
+				// Move carouself to currIndex
+				dom.carousel.css('left', left);
+			}
+			updateArrows();
 		}
 		
+		function isVisible(idx) {
+			// returns boolean 
+			return idx >= states.currIndex && idx <= (states.currIndex + options.itemsShown);
+		}
+		
+		function getVisible() {
+			// returns jQuery object of visible items
+			return dom.items.slice(states.currIndex, states.currIndex + options.itemsShown)
+		}
+		
+		function setAsActive(idx) {
+			dom.items.removeClass('active');
+			dom.items.eq(idx).addClass('active');		
+		}
+		
+		function updateArrows() {
+			// If we don't have enough items to fill the viewport, disable both arrows
+			if(dom.items.length <= options.itemsShown) {
+				disableNext();
+				disablePrevious();
+				return;
+			}
+			
+			// get css 'left' property without 'px'
+			var left = parseInt(dom.carousel.css('left'));
+			
+			if(isNaN(left)) {
+				left = 0;
+			}
+			
+			if(left == constants.minLeft) {
+				/* disable right arrow */
+				disableNext();
+				enablePrevious();
+			} else if(left == 0) {
+				/* disable left arrow */
+				disablePrevious();
+				enableNext();
+			} else {
+				/* enable both arrows */
+				enablePrevious();
+				enableNext();
+			}
+		}
+	
 		function lazyLoadImages(limit) {
 			var images = dom.carousel.find('img').filter('[data-src]');
 			$().log('lazy loading rest of images', 'LatestPhotos');
@@ -124,15 +200,23 @@
 		}
 	
 		function setCarouselWidth() {
-			var width = dom.carousel.find('li').outerWidth() * options.itemCount + 6;
-			dom.carousel.css('width', width * dom.carousel.find('li').length + 'px'); // all li's in one line
-			return width;
+			var width = constants.itemWidth * dom.items.length;
+
+			// expand carousel width so all li's are in one line
+			dom.carousel.css('width', width);
+
+			// get minimum possible css left value of carousel
+			var minLeft = (width - constants.viewPortWidth) * -1;
+			
+			// Set constants
+			constants.carouselWidth = width;
+			constants.minLeft = minLeft;
 		}
 	
 		function removeFirstPhotos() {
-			var old = dom.carousel.find('li').slice(0,3);
+			var old = dom.carousel.find('li').slice(0,options.itemsShown);
 			dom.container.css('left', '0px');
-			dom.carousel.find('li').slice(0,3).remove();
+			dom.carousel.find('li').slice(0,options.itemsShown).remove();
 			dom.carousel.append(old);
 	
 		}
@@ -150,10 +234,32 @@
 			dom.carousel.find('li').last().addClass("last-image");
 		}
 		
+		function disableNext() {
+			states.enable_next = false;
+			dom.next.addClass('disabled');
+		}
+
+		function enableNext() {
+			states.enable_next = true;
+			dom.next.removeClass('disabled');
+		}
+		
+		function disablePrevious() {
+			states.enable_previous = false;
+			dom.previous.addClass('disabled');
+		}
+		function enablePrevious() {
+			states.enable_previous = true;
+			dom.previous.removeClass('disabled');
+		}
+
 		return this.each(function() {
 			
 			// if there's an awkward number of thumbnails, add empty <li>'s to fill the space
 			attachBlindImages();
+			setCarouselWidth();
+			
+			startFromIndex(options.activeIndex);
 			
 			// Set up click events
 			dom.next.click(nextImage);

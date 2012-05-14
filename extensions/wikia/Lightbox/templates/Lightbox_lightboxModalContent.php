@@ -7,7 +7,7 @@
 		<span id="LightboxPrevious" class="previous"></span>
 	</div>
 	
-	<div id="LightboxCarousel" class="LightboxCarousel hidden">
+	<div id="LightboxCarousel" class="LightboxCarousel">
 	</div>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
@@ -53,7 +53,11 @@
 			<p class="progress">{{progress}}</p>
 			<span class="carousel-arrow next"></span>
 			<span class="carousel-arrow previous"></span>
-			<div class="thumbs"><ul>{{#thumbs}}<li><img src="{{.}}" /></li>{{/thumbs}}</ul></div>
+ 			<div id="LightboxCarouselContainer" class="LightboxCarouselContainer">
+ 				<div>
+ 					<ul class="carousel">{{#thumbs}}<li><img src="{{thumbUrl}}" /></li>{{/thumbs}}</ul>
+ 				</div>
+ 			</div>
 		</div>
 	</script>
 
