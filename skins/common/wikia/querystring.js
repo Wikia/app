@@ -25,7 +25,7 @@
 				hash,
 				pos;
 
-			this.cache = {};
+			this.cache = false;
 
 			if(url) {
 				tmp = url.split('//', 2);
@@ -52,11 +52,16 @@
 			}
 
 			if(srh){
-				var tmpQuery = srh.split('&');
+				var tmpQuery = srh.split('&').filter(
+					function(elm){
+						if(elm) return true;
+					});
+
+				this.cache = {};
 
 				for(var i = 0; i < tmpQuery.length; i++){
 					tmp = tmpQuery[i].split('=');
-					this.cache[tmp[0]] = tmp[1];
+					this.cache[tmp[0]] = tmp[1] || '';
 				}
 			}
 
@@ -68,13 +73,15 @@
 		}
 
 		p.toString = function(){
-			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + '?',
-				attr;
+			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + (this.cache ? '?' : ''),
+				attr, val,
+				tmpArr = [];
 
 			for(attr in this.cache){
-				ret += attr + '=' + this.cache[attr] + '&';
+				val = this.cache[attr];
+				tmpArr.push(attr + (val ? '=' + val : ''));
 			}
-			return ret.slice(0, -1) + (this.hash ? '#' + this.hash : '');
+			return ret + tmpArr.join('&') + (this.hash ? '#' + this.hash : '');
 		};
 
 		p.getVal = function(name, defVal){
