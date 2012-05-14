@@ -602,6 +602,19 @@ class WikiaSearch extends WikiaObject {
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		wfProfileIn( __METHOD__ );
 
+		// removes core mw search prefs
+		$defunctPreferences = array('searchlimit',
+									'contextlines',
+									'contextchars',
+									'disablesuggest',
+									'searcheverything',
+									'searchnamespaces',
+									);
+
+		foreach ($defunctPreferences as $goAway) {
+			unset($defaultPreferences[$goAway]);
+		}
+
 		$defaultPreferences["enableGoSearch"] = array(
 			'type' => 'toggle',
 			'label-message' => array('wikiasearch2-enable-go-search'),
