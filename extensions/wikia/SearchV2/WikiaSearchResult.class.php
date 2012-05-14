@@ -117,8 +117,7 @@ class WikiaSearchResult {
 	}
 
 	private function fixSnippeting($text, $addEllipses=false) {
-
-		$text = preg_replace("/^\W+ /", '',
+		$text = preg_replace("/^[[:punct:]]+ ?/", '',
 							preg_replace("/(<\/span>)('s)/i", '$2$1',
 							preg_replace('/ +$/', '',
 							preg_replace('/ ?\.{1,3}$/', '', 
