@@ -12,7 +12,7 @@ cat $TMPFILE | while read line; do
 	dbname=`echo "$line" | cut -f 3`
 	echo "Processing $line ($cityid, $dbname)"
 
-	/usr/wikia/backend/bin/withcity --maintenance-script="$scriptpath/videoCleanup.php" --usedb=$dbname | tee -a logs/${cityid}.postmigrate.log || die
+	/usr/wikia/backend/bin/withcity --maintenance-script="$scriptpath/videoCleanup.php" --usedb=$dbname | tee -a logs/${cityid}.cleanup.log || die
 
 	echo "---"
 done
