@@ -19,52 +19,50 @@ if (!defined('MEDIAWIKI')){
     echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
 }
 
-$wgExtensionFunctions [] = 'wfInitializeSpecialInterwikiEdit';
 $wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
 $wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
-function wfInitializeSpecialInterwikiEdit(){
-	global $wgExternalSharedDB;
+$wgAvailableRights [] = 'InterwikiEdit';
+$wgGroupPermissions ['staff']['InterwikiEdit'] = true;
 
-	if( empty( $wgExternalSharedDB ) ) {
-	        return true;
+require_once($IP . '/includes/SpecialPage.php');
+$wgSpecialPages['InterwikiEdit'] = 'InterwikiEdit';
+
+class InterwikiEdit extends SpecialPage {
+
+	public function InterwikiEdit(){
+		SpecialPage::SpecialPage('InterwikiEdit');
 	}
-	global $wgAvailableRights, $wgGroupPermissions, $wgMessageCache, $IP;
+	
+	function execute(){
+		global $wgOut, $wgRequest;
+		$action = $wgRequest->getVal('action', 'choose');
+		//$lang_only = $wgRequest->getVal('lang_only', 1);
 
-	require_once ($IP. '/includes/SpecialPage.php');
+		wfLoadExtensionMessages('SpecialInterwikiEdit');
 
-    # Allow group STAFF to use this extension.
-    $wgAvailableRights [] = 'InterwikiEdit';
-    $wgGroupPermissions ['staff']['InterwikiEdit'] = True;
-    SpecialPage::AddPage (new SpecialPage ('InterwikiEdit', 'InterwikiEdit', True, 'wfSpecialInterwikiEdit', False));
-}
+		if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href=''>Back to menu</a></p>";
+		else $ret = "";
 
-function wfSpecialInterwikiEdit (){
-	global $wgOut, $wgRequest;
-	$action = $wgRequest->getVal('action', 'choose');
-	//$lang_only = $wgRequest->getVal('lang_only', 1);
+		switch ($action){
+			case 'Change umbrella' :
+			case 'change_umbrella_commit' : $ret .= wfSIWEChangeUmbrella(); break;
+			case 'commit_link' : $ret .= wfSIWELinkWikisCommit (); break;
+			case 'Link': $ret .= wfSIWELinkWikis(); break;
+			case 'edit_interwiki' :
+			case 'delete_interwiki' :
+			case 'Edit interwiki': $ret .= wfSIWEEditInterwiki(); break;
+			case 'clear_cache': $ret .= wfSIWEClearCache(); break;
+			case 'choose':
+			default : $ret .= wfSIWEChooseAction();
+		}
 
-	wfLoadExtensionMessages('SpecialInterwikiEdit');
+		$wgOut->setPageTitle(wfMsg('iwedit-title'));
+		$wgOut->AddHTML ($ret);
+	} // end execute()
 
-	if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href=''>Back to menu</a></p>";
-	else $ret = "";
+} // end class InterwikiEdit
 
-	switch ($action){
-		case 'Change umbrella' :
-		case 'change_umbrella_commit' : $ret .= wfSIWEChangeUmbrella(); break;
-		case 'commit_link' : $ret .= wfSIWELinkWikisCommit (); break;
-		case 'Link': $ret .= wfSIWELinkWikis(); break;
-		case 'edit_interwiki' :
-		case 'delete_interwiki' :
-		case 'Edit interwiki': $ret .= wfSIWEEditInterwiki(); break;
-		case 'clear_cache': $ret .= wfSIWEClearCache(); break;
-	    case 'choose':
-	    default : $ret .= wfSIWEChooseAction();
-	}
-
-	$wgOut->setPageTitle(wfMsg('iwedit-title'));
-	$wgOut->AddHTML ($ret);
-}
 
 function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 	global $wgOut, $wgLanguageNames, $wgExternalSharedDB;
