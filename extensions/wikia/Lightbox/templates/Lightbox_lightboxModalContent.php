@@ -9,6 +9,9 @@
 	
 	<div id="LightboxCarousel" class="LightboxCarousel hidden">
 	</div>
+	
+	<div class="infobox">
+	</div>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
 		<div class="media">
@@ -31,9 +34,9 @@
 		{{/caption}}
 		<div class="user-details">
 			<img class="avatar" src="{{userThumbUrl}}">
-			<?= wfMsg('lightbox-header-added-by', '{{userName}}') ?>
+			<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}">{{userName}}</a>') ?>
 			<span class="posted-in">
-				<?= wfMsg('lightbox-header-posted-in', '<a href="{{articles.articleUrl}}">Miss Piggy</a>') ?>
+				<?= wfMsg('lightbox-header-posted-in', '{{#articles}}<span class="posted-in-article"><a href="{{articleUrl}}">{{articleTitle}}</a></span>{{/articles}}') ?>
 			</span>
 		</div>
 	</script>
@@ -58,6 +61,38 @@
  					<ul class="carousel">{{#thumbs}}<li><img src="{{thumbUrl}}" /></li>{{/thumbs}}</ul>
  				</div>
  			</div>
+		</div>
+	</script>
+	
+	<script id="LightboxInfoboxTemplate" type="text/template">
+		<button class="more-info-close"><?= wfMsg('lightbox-infobox-back-button') ?></button>
+		<div class="infobox-spacer"></div>
+		<div class="infobox-details">
+			<h1><a href="">{{fileTitle}}</a></h1>
+			<div class="user-details">
+				<img class="avatar" src="{{userThumbUrl}}">
+				<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}">{{userName}}</a>') ?>
+				<span class="posted-in">
+					<?= wfMsg('lightbox-header-posted-in', '<a href="{{articles.articleUrl}}">Miss Piggy</a>') ?>
+				</span>
+			</div>
+			{{#caption}}
+				<h2><?= wfMsg('lightbox-infobox-caption-heading') ?></h2>
+				<p>{{caption}}</p>
+			{{/caption}}
+			{{#description}}
+				<h2><?= wfMsg('lightbox-infobox-description-heading') ?></h2>
+				<p class="infobox-description">{{description}}</p>
+			{{/description}}
+			<h2><?= wfMsg('lightbox-infobox-filelinks-heading') ?></h2>
+			<ul>
+			{{#articles}}
+				<li><a href="{{articleUrl}}">{{articleTitle}}</a></li>
+			{{/articles}}
+			</ul>
+		</div>
+		<div class="infobox-hero">
+			<img src="{{imageUrl}}">
 		</div>
 	</script>
 

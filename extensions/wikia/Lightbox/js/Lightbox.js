@@ -247,7 +247,8 @@ var Lightbox = {
 				
 				
 				// Set up carousel
-				var carouselTemplate = $('#LightboxCarouselTemplate');
+				var carouselTemplate = $('#LightboxCarouselTemplate');	// TODO: template cache
+				var infoboxTemplate = $('#LightboxInfoboxTemplate');	// TODO: template cache
 				
 				for(var i = 0; i < mediaThumbs.thumbs.length; i++) {
 					if(mediaThumbs.thumbs[i].title == Lightbox.current.title) {
@@ -264,6 +265,8 @@ var Lightbox = {
 				// pre-cache known doms
 				Lightbox.openModal.carousel = $('#LightboxCarousel');
 				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
+				Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
+				Lightbox.openModal.infobox = Lightbox.openModal.find('.infobox');
 				
 				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
 				
@@ -282,6 +285,7 @@ var Lightbox = {
 					Lightbox.normalizeMediaDetail(initialFileDetail, updateCallback);
 				}
 				
+				// attach event handlers
 				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 					var time = new Date().getTime();
 					if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) {
@@ -299,6 +303,14 @@ var Lightbox = {
 				}).on('mouseout.Lightbox', function(evt) {
 					Lightbox.hideOverlay('header');
 					Lightbox.hideOverlay('carousel');
+				}).on('click.Lightbox', '.LightboxHeader .more-info-button', function(evt) {
+					Lightbox.openModal.lightbox.addClass('infobox-mode');
+					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
+						Lightbox.openModal.infobox.append(infoboxTemplate.mustache(json));
+					});
+				}).on('click.Lightbox', '.infobox .more-info-close', function(evt) {
+					Lightbox.openModal.lightbox.removeClass('infobox-mode');
+					Lightbox.openModal.infobox.html('');
 				});
 			}
 		});
