@@ -777,36 +777,6 @@ class ArticleComment {
 		if ($parentTitle) {
 			$parentTitle->invalidateCache();
 			$parentTitle->purgeSquid();
-
-			//FB#27827 - purge the multi-type request cache in Varnish for WikiaMobile
-			//@see ArticleComments.wikiamobile.js, this must mirror the same exact parameters in the same order
-
-			$languages = Language::getLanguageNames(false /*avoid checking files, read from in-memory cache*/);
-			$assetsManagerController = F::build( 'AssetsManagerController' );
-
-			//comments cache for the WikiaMobile skin is per user-language
-			foreach ($languages as $code => $name) {
-				$assetsManagerController->purgeMultiTypePackageCache( array(
-					'styles' => '/extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
-					'messages' => 'WikiaMobileComments',
-					'scripts' => 'articlecomments_js_wikiamobile',
-					'templates' => array(
-						array(
-							'controllerName' => 'ArticleCommentsController',
-							'methodName' => 'WikiaMobileCommentsPage',
-							'params' => array(
-								'articleID' => $parentTitle->getArticleID(),
-								'page' => 1
-							)
-						)
-					),
-					'params' => array(
-						'useskin' => 'wikiamobile',
-						'uselang' => $code
-					),
-					'varnishTTL' => 86400
-				) );
-			}
 		}
 
 		wfProfileOut( __METHOD__ );
