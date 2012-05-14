@@ -201,7 +201,7 @@ function getLinkSuggest() {
 		$results[] = $title;
 		if ($row->page_title != $row->link_title) {
 			$redirTitle = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
-			$redirResults[$title] = $redirTitle;;
+			$redirResults[$title] = $redirTitle;
 		}
 	}
 	$db->freeResult( $res );
@@ -223,9 +223,18 @@ function getLinkSuggest() {
 
 	$format = $wgRequest->getText('format');
 
-	if($format == 'json') {
-		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => array_values($results), 'redirects'=>$redirResults));
+	if ($format == 'json') {
+		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => array_values($results), 'redirects' => $redirResults));
+
+	// legacy: LinkSuggest.js uses this
 	} else {
+		// Overwrite canonical title with redirect title
+		for($i = 0; $i < count($results); $i++) {
+			if (isset($redirResults[$results[$i]])) {
+				$results[$i] = $redirResults[$results[$i]];
+			}
+		}
+
 		$out = implode("\n", $results);
 	}
 
