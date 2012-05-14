@@ -9,71 +9,52 @@ if(!defined('MEDIAWIKI'))
 $wgAvailableRights[] = 'deletebatch';
 $wgGroupPermissions['staff']['deletebatch'] = true;
 
-$wgExtensionFunctions[] = 'wfDeleteBatchSetup';
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['deletebatch'] = $dir.'SpecialDeleteBatch.i18n.php';
+
 $wgExtensionCredits['specialpage'][] = array(
    'name' => 'Delete Batch',
    'author' => 'Bartek',
    'description' => 'deletes a batch of pages'
 );
 
-/* special page init */
-function wfDeleteBatchSetup() {
-	global $IP, $wgMessageCache;
-	require_once($IP. '/includes/SpecialPage.php');
-        /* add messages to all the translator people out there to play with */
-        $wgMessageCache->addMessages(
-        array(
-                        'deletebatch_button' => 'DELETE' , /* make it an irritably big button, on purpose, of course... */
-			'deletebatch_help' => 'Delete a batch of pages. You can either perform a single delete, or delete pages listed in a file.  Choose a user that will be shown in deletion logs. Uploaded file should contain page name and optional reason separated by | character in each line.' ,
-			'deletebatch_caption' => 'Page list' ,
-			'deletebatch_title' => 'Delete Batch' ,
-			'deletebatch_link_back' => 'Go back to the special page ' ,
-			'deletebatch_as' => 'Run the script as' ,
-			'deletebatch_both_modes' => 'Please choose either one specified page or a given list of pages.' ,
-			'deletebatch_or' => '<b>OR</b>' ,
-			'deletebatch_page' => "Pages to be deleted" ,
-			'deletebatch_reason' => 'Reason for deletion' ,
-			'deletebatch_processing' => 'deleting pages ' ,
-			'deletebatch_from_file' => 'from file list' ,
-			'deletebatch_from_form' => 'from form' ,
-			'deletebatch_success_subtitle' => 'for $1' ,
-			'deletebatch_link_back' => 'You can go back to the extension ' ,
-			'deletebatch_omitting_nonexistant' => 'Omitting non-existing page $1.' ,
-			'deletebatch_omitting_invalid' => 'Omitting invalid page $1.' ,
-			'deletebatch_file_bad_format' => 'The file should be plain text' ,
-			'deletebatch_file_missing' => 'Unable to read given file' ,
-			'deletebatch_select_script' => 'delete page script' ,
-			'deletebatch_select_yourself' => 'you' ,
-			'deletebatch_no_page' => 'Please specify at least one page to delete OR choose a file containing page list.'
-                )
-        );
-	SpecialPage::addPage(new SpecialPage('Deletebatch', 'deletebatch', true, 'wfDeleteBatchSpecial', false));
-	$wgMessageCache->addMessages(array('deletebatch' => 'Delete batch of pages'));
-}
+require_once($IP . '/includes/SpecialPage.php');
+$wgSpecialPages['Deletebatch'] = 'Deletebatch';
 
-/* the core */
-function wfDeleteBatchSpecial( $par ) {
-	global $wgOut, $wgUser, $wgRequest ;
-   	$wgOut->setPageTitle (wfMsg('deletebatch_title'));
-	$cSF = new DeleteBatchForm ($par) ;
+class Deletebatch extends SpecialPage{
 
-	$action = $wgRequest->getVal ('action') ;
-	if ('success' == $action) {
-		/* do something */
-	} else if ( $wgRequest->wasPosted() && 'submit' == $action &&
-	        $wgUser->matchEditToken( $wgRequest->getVal ('wpEditToken') ) ) {
-	        $cSF->doSubmit () ;
-	} else {
-		$cSF->showForm ('') ;
+	public function Deletebatch(){
+		SpecialPage::SpecialPage('Deletebatch');
 	}
-}
+	
+	function execute(){
+		global $wgOut, $wgUser, $wgRequest ;
+		
+		wfLoadExtensionMessages('deletebatch');
+		
+		$wgOut->setPageTitle (wfMsg('deletebatch_title'));
+		$cSF = new DeleteBatchForm () ;
+
+		$action = $wgRequest->getVal ('action') ;
+		if ('success' == $action) {
+			/* do something */
+		} else if ( $wgRequest->wasPosted() && 'submit' == $action &&
+				$wgUser->matchEditToken( $wgRequest->getVal ('wpEditToken') ) ) {
+				$cSF->doSubmit () ;
+		} else {
+			$cSF->showForm ('') ;
+		}
+	} // end execute()
+
+} // end class Deletebatch
+
 
 /* the form for blocking names and addresses */
 class DeleteBatchForm {
 	var $mUser, $mPage, $mFile, $mFileTemp;
 
 	/* constructor */
-	function deletebatchForm ( $par ) {
+	function deletebatchForm () {
 		global $wgRequest ;
 		$this->mMode = $wgRequest->getVal( 'wpMode' ) ;
 		$this->mPage = $wgRequest->getVal( 'wpPage' ) ;
