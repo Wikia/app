@@ -260,7 +260,7 @@
         return;
       }
 
-      var me, len, div, f, redirect;
+      var me, len, div, f, redirect, suggestion;
       me = this;
       len = this.suggestions.length;
       f = this.options.fnFormatResult;
@@ -268,9 +268,12 @@
       this.container.hide().empty();
       for (var i = 0; i < len; i++) {
       	// wikia change - start
-      	redirect = this.redirects[this.suggestions[i]];
-        div = $((me.selectedIndex === i ? '<div class="'+this.options.selectedClass+'"' : '<div')
-        	+ ' title="' + this.suggestions[i] + '">' + f(this.suggestions[i], this.data[i], v)
+      	suggestion = this.suggestions[i];
+      	redirect = this.redirects[suggestion];
+      	if (i > 0 && redirect) suggestion = redirect;
+        div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
+        	+ ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
+        	// only the top result gets "redirected from", the rest of the redirects are displayed in place of the suggestion
         	+ (i === 0 && redirect ? '<span class="redirect subtle">' + $.msg('tog-redirected-from', redirect) + '</span>' : '')
         	+ '</div>');
         // wikia change - end
@@ -300,7 +303,6 @@
       this.suggestions = response.suggestions;
       // wikia change - start
       this.redirects = response.redirects;
-      this.redirectMessage = response.redirectMessage;
       // wikia change - end
       this.data = response.data;
       this.cachedResponse[response.query] = response;
@@ -330,6 +332,10 @@
 
     select: function(i) {
       var selectedValue = this.suggestions[i];
+      // wikia change - start
+      var redirectedValue = this.redirects[selectedValue];
+      if (i > 0 && redirectedValue) selectedValue = redirectedValue;
+      // wikia change - end
       if (selectedValue) {
         this.el.val(selectedValue);
         if (this.options.autoSubmit) {
@@ -369,7 +375,6 @@
       } else if (offsetTop > lowerBound) {
         this.container.scrollTop(offsetTop - this.options.maxHeight + 25);
       }
-      //this.el.val(this.suggestions[i]);
     },
 
     onSelect: function(i) {
@@ -387,6 +392,10 @@
       };
       s = me.suggestions[i];
       d = me.data[i];
+      // wikia change - start
+      var r = me.redirects[s];
+      if (i > 0 && r) s = r;
+      // wikia change - end
       me.el.val(getValue(s));
       if ($.isFunction(onSelect)) { onSelect(s, d); }
     }
