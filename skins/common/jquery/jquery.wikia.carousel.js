@@ -28,11 +28,13 @@
 			itemSpacing: 2,
 			activeIndex: 0,
 			nextClass: "next",
-			prevClass: "previous"
+			prevClass: "previous",
+			attachBlindImages: false
 		}
 
 		options = $.extend(defaults, options);
 		
+		// Any dom elements that will be reused
 		var dom = {
 			wrapper: $(this),
 			carousel: $(this).find('.carousel'),
@@ -61,6 +63,7 @@
 			if (states.browsing == false && states.enable_next == true) {
 				states.browsing = true;
 				
+				// calculate a full cycle of new items
 				var left = states.left - constants.viewPortWidth;
 				
 				// don't go farther left than last image
@@ -120,7 +123,7 @@
 			// Add active class to item at idx
 			setAsActive(idx);
 			
-			/* check if index is visible */
+			// check if index is visible
 			if(!isVisible(idx)) {
 				// if idx is too close to the end, set idx the last possible index. 
 				if(idx > (dom.items.length - options.itemsShown)) {
@@ -134,25 +137,28 @@
 				// Move carouself to currIndex
 				dom.carousel.css('left', left);
 			}
+			// Activate/deactivate left/right arrows
 			updateArrows();
 		}
 		
 		function isVisible(idx) {
-			// returns boolean 
+			// returns true if item at given index is inside viewport
 			return idx >= states.currIndex && idx <= (states.currIndex + options.itemsShown);
 		}
 		
 		function getVisible() {
-			// returns jQuery object of visible items
+			// returns jQuery object of visible items inside viewport
 			return dom.items.slice(states.currIndex, states.currIndex + options.itemsShown)
 		}
 		
 		function setAsActive(idx) {
+			// add an active class to the item that is selected (i.e. to show a larger view of it)
 			dom.items.removeClass('active');
 			dom.items.eq(idx).addClass('active');		
 		}
 		
 		function updateArrows() {
+			
 			// If we don't have enough items to fill the viewport, disable both arrows
 			if(dom.items.length <= options.itemsShown) {
 				disableNext();
@@ -163,25 +169,27 @@
 			// get css 'left' property without 'px'
 			var left = parseInt(dom.carousel.css('left'));
 			
+			// if css 'left' is undefined, set it to 0
 			if(isNaN(left)) {
 				left = 0;
 			}
 			
 			if(left == constants.minLeft) {
-				/* disable right arrow */
+				// disable right arrow
 				disableNext();
 				enablePrevious();
 			} else if(left == 0) {
-				/* disable left arrow */
+				// disable left arrow
 				disablePrevious();
 				enableNext();
 			} else {
-				/* enable both arrows */
+				// enable both arrows
 				enablePrevious();
 				enableNext();
 			}
 		}
 	
+		// on hover, load any images that are invisible and that haven't bee loaded yet
 		function lazyLoadImages(limit) {
 			var images = dom.carousel.find('img').filter('[data-src]');
 			$().log('lazy loading rest of images', 'LatestPhotos');
@@ -199,6 +207,7 @@
 			});
 		}
 	
+		// run this once on init
 		function setCarouselWidth() {
 			var width = constants.itemWidth * dom.items.length;
 
@@ -213,14 +222,7 @@
 			constants.minLeft = minLeft;
 		}
 	
-		function removeFirstPhotos() {
-			var old = dom.carousel.find('li').slice(0,options.itemsShown);
-			dom.container.css('left', '0px');
-			dom.carousel.find('li').slice(0,options.itemsShown).remove();
-			dom.carousel.append(old);
-	
-		}
-	
+		// This is mainly used on LatestPhotos
 		function attachBlindImages() {
 			if (dom.carousel.find('li').length == 5) {
 				dom.carousel.append("<li class='blind'></li>");
@@ -256,7 +258,10 @@
 		return this.each(function() {
 			
 			// if there's an awkward number of thumbnails, add empty <li>'s to fill the space
-			attachBlindImages();
+			if(options.attachBlindImages) {
+				attachBlindImages();
+			}
+			
 			setCarouselWidth();
 			
 			startFromIndex(options.activeIndex);
@@ -266,7 +271,7 @@
 			dom.previous.click(previousImage);
 	
 			// on mouseover load the rest of images
-			dom.wrapper.one('mouseover', function() {
+			dom.wrapper.parent().one('mouseover', function() {
 				lazyLoadImages('rest');
 			});
 			
