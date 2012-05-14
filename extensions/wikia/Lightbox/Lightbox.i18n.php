@@ -8,6 +8,10 @@ $messages['en'] = array(
 	'lightbox-header-see-full-size-image' => 'See full size image',
 	'lightbox-header-added-by' => 'Added by $1',
 	'lightbox-header-posted-in' => 'Posted in $1',
+	'lightbox-infobox-back-button' => 'Back',
+	'lightbox-infobox-caption-heading' => 'Caption:',
+	'lightbox-infobox-description-heading' => 'Description:',
+	'lightbox-infobox-filelinks-heading' => 'File Links:',
 	/* /new stuff */
 
 	'lightbox_details_tooltip' => 'View photo details',

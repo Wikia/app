@@ -15,54 +15,52 @@ $carousel-overlay-duration: 600ms;
 	overflow: hidden;
 	.WikiaLightbox {
 		height: 100%;
-		header {
-			@include transition-shorthand(top 600ms ease-out);
-			/* permanent code */
-			z-index: 1;	/* this should be lower than close button */
-			/* /permanent */
-			/* temp code, combine with carousel box */
-			@include box-shadow( 0px, 0px, 20px, darken($color-page, 50%), false, 2px);
-			background-color: rgba(#ffffff, 0.8);
-			padding: 20px;
-			position: absolute;
-			top: 0;
-			width: 960px;
-			/* /temp code */
-			&.hidden {
-				top: -150px;
+		&.infobox-mode {
+			.infobox {
+				display: block;
 			}
-			h1 {
-				float: left;
-				font-size: 18px;
-				max-width: 650px;	/* compensation for i18n on .see-full-size-link */
-			}
-			.avatar {
-				height: 16px;
-				margin-right: 2px;
-				position: relative;
-				top: 2px;
-				width: 16px;
-			}
-			.caption {
-				clear: left;
-				margin-top: 2px;
-			}
-			.more-info-button {
-				float: right;
-				margin-right: 50px;
-			}
-			.see-full-size-link {
-				border-left: 1px solid $color-page-border;
-				margin-left: 10px;
-				padding-left: 10px;
-				position: relative;
-				top: 2px;
+			.lightbox-arrows,
+			.LightboxHeader,
+			.LightboxCarousel,
+			.media {
+				display: none;
 			}
 		}
 	}
 	.close {
-		display: none;
 		z-index: 2;
+	}
+	.infobox {
+		display: none;
+		padding: 15px 30px;
+		h1 {
+			font-size: 18px;
+		}
+		h2 {
+			font-size: 16px;
+			margin-top: 50px;
+		}
+		.infobox-details {
+			float: right;
+			width: 650px;
+			.infobox-description {
+				max-height: 190px;
+				overflow: auto;
+				overflow-x: hidden;
+			}
+		}
+		.infobox-hero {
+			text-align: center;
+			width: 250px;
+			img {
+				max-height: 150px;
+				max-width: 250px;
+			}
+		}
+		.infobox-spacer {
+			@include clearfix;
+			margin-top: 25px;
+		}
 	}
 	.modalContent {
 		margin: 0;
@@ -75,6 +73,15 @@ $carousel-overlay-duration: 600ms;
 		overflow: hidden;
 		img {
 			vertical-align: middle;
+		}
+	}
+	.user-details {
+		.avatar {
+			height: 16px;
+			margin-right: 2px;
+			position: relative;
+			top: 4px;
+			width: 16px;
 		}
 	}
 	.video-media {
@@ -218,13 +225,6 @@ $carousel-overlay-duration: 600ms;
 			font-size: 18px;
 			max-width: 650px;	/* compensation for i18n on .see-full-size-link */
 		}
-		.avatar {
-			height: 16px;
-			margin-right: 2px;
-			position: relative;
-			top: 2px;
-			width: 16px;
-		}
 		.caption {
 			clear: left;
 			margin-top: 2px;
@@ -232,6 +232,14 @@ $carousel-overlay-duration: 600ms;
 		.more-info-button {
 			float: right;
 			margin-right: 50px;
+		}
+		.posted-in-article {
+			&:before {
+				content: ', ';
+			}
+			&:first-child:before {
+				content: '';
+			}
 		}
 		.see-full-size-link {
 			border-left: 1px solid $color-page-border;
