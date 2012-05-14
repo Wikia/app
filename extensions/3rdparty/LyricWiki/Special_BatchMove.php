@@ -45,7 +45,6 @@ require_once "extras.php";
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['BatchMove'] = $dir.'Special_BatchMove.i18n.php';
 
-$wgExtensionFunctions[] = 'wfSetupBatchMove';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Batch Move',
 	'author' => '[http://lyrics.wikia.com/User:Teknomunk teknomunk]',
@@ -53,12 +52,81 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '0.2.2',
 );
 
-function wfSetupBatchMove() {
-	global $IP;
+require_once($IP . '/includes/SpecialPage.php');
+$wgSpecialPages['Batchmove'] = 'Batchmove';
 
-	require_once($IP . '/includes/SpecialPage.php');
-	SpecialPage::addPage(new SpecialPage('Batchmove', 'batchmove', true, 'wfBatchMove', false));
-}
+class Batchmove extends SpecialPage{
+
+	public function Batchmove(){
+		SpecialPage::SpecialPage('Batchmove');
+	}
+	
+	function execute() {
+		global $wgOut;
+		global $wgRequest, $wgUser;
+
+		wfLoadExtensionMessages('BatchMove');
+
+		// get the parameters
+		$from = trim($wgRequest->getText( 'from' ));
+		$to = trim($wgRequest->getText( 'to' ));
+		$reason = $wgRequest->getText( 'reason' );
+
+		if( $from != "" and $to != "" )
+		{
+			if( $wgRequest->getVal("wpPreview") )
+			{
+				// Preview batch move
+				$wgOut->addHTML(wfMsg("batchmove-preview-header")."<br/>");
+				$wgOut->addHTML(doBatchMove( $from, $to, $reason, true ) );
+				$wgOut->addHTML("<form>");
+					$wgOut->addHTML("<input id='to' name='to' type='hidden' value='".htmlentities($to, ENT_QUOTES, "UTF-8")."' />");
+					$wgOut->addHTML("<input id='from' name='from' type='hidden' value='".htmlentities($from, ENT_QUOTES, "UTF-8")."' />");
+					$wgOut->addHTML("<input id='reason' name='reason' type='hidden' value='".htmlentities($reason, ENT_QUOTES, "UTF-8")."' />");
+					$wgOut->addHTML("<input id='wpConfirm' name='wpConfirm' type='submit' value='".wfMsg("batchmove-confirm")."'/>");
+					$wgOut->addHTML("<input id='wpPreview' name='wpPreview' type='submit' value='".wfMsg("batchmove-preview")."'/>");
+				$wgOut->addHTML("</form>");
+			}
+			else if( $wgRequest->getVal("wpConfirm") )
+			{
+				// Do batch move
+				$wgOut->addHTML(doBatchMove( $from, $to, $reason ));
+				$wgOut->addHTML("<i>".wfMsg("batchmove-complete")."</i>");
+			}
+			else
+			{
+				$wgOut->setPageTitle(wfMsg("batchmove-title"));
+				$wgOut->addHTML(sandboxParse(wfMsg("batchmove-confirm-msg",$from,$to)));
+				$wgOut->addHTML("<form>");
+					$wgOut->addHTML("<input id='to' name='to' type='hidden' value='".htmlentities($to, ENT_QUOTES, "UTF-8")."' />");
+					$wgOut->addHTML("<input id='from' name='from' type='hidden' value='".htmlentities($from, ENT_QUOTES, "UTF-8")."' />");
+					$wgOut->addHTML("<input id='reason' name='reason' type='hidden' value='".htmlentities($reason, ENT_QUOTES, "UTF-8")."' />");
+					$wgOut->addHTML("<input id='wpConfirm' name='wpConfirm' type='submit' value='".wfMsg("batchmove-confirm")."'/>");
+					$wgOut->addHTML("<input id='wpPreview' name='wpPreview' type='submit' value='".wfMsg("batchmove-preview")."'/>");
+				$wgOut->addHTML("</form>");
+			}
+		}
+		else
+		{
+			$wgOut->setPageTitle(wfMsg("batchmove-title"));
+			$wgOut->addHTML(""
+				.wfMsg("batchmove-description")
+				."<br/><br/>"
+				."<form>"
+				.wfMsg("batchmove-from").": <input type='edit' name='from' size=28/>"
+				."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+				.wfMsg("batchmove-to").": <input type='edit' name='to' size=28/>"
+				."<br/><br/>"
+				.wfMsg("batchmove-reason").": <input type='edit' name='reason' size=60/>"
+				."<br/><br/>"
+				."<input type='submit'/>"
+				."<input id='wpPreview' name='wpPreview' type='submit' value='".wfMsg("batchmove-preview")."'/>"
+				."</form><br/>"
+				);
+		}
+	} // end execute()
+
+} // end class Batchmove
 
 function doBatchMove( $from, $to, $reason, $fake=false )
 {
@@ -213,70 +281,4 @@ function doBatchMove( $from, $to, $reason, $fake=false )
 	}
 	
 	return sandboxParse($results);
-}
-
-function wfBatchMove()
-{
-	global $wgOut;
-	global $wgRequest, $wgUser;
-
-	wfLoadExtensionMessages('BatchMove');
-
-	// get the parameters
-	$from = trim($wgRequest->getText( 'from' ));
-	$to = trim($wgRequest->getText( 'to' ));
-	$reason = $wgRequest->getText( 'reason' );
-
-	if( $from != "" and $to != "" )
-	{
-		if( $wgRequest->getVal("wpPreview") )
-		{
-			// Preview batch move
-			$wgOut->addHTML(wfMsg("batchmove-preview-header")."<br/>");
-			$wgOut->addHTML(doBatchMove( $from, $to, $reason, true ) );
-			$wgOut->addHTML("<form>");
-				$wgOut->addHTML("<input id='to' name='to' type='hidden' value='".htmlentities($to, ENT_QUOTES, "UTF-8")."' />");
-				$wgOut->addHTML("<input id='from' name='from' type='hidden' value='".htmlentities($from, ENT_QUOTES, "UTF-8")."' />");
-				$wgOut->addHTML("<input id='reason' name='reason' type='hidden' value='".htmlentities($reason, ENT_QUOTES, "UTF-8")."' />");
-				$wgOut->addHTML("<input id='wpConfirm' name='wpConfirm' type='submit' value='".wfMsg("batchmove-confirm")."'/>");
-				$wgOut->addHTML("<input id='wpPreview' name='wpPreview' type='submit' value='".wfMsg("batchmove-preview")."'/>");
-			$wgOut->addHTML("</form>");
-		}
-		else if( $wgRequest->getVal("wpConfirm") )
-		{
-			// Do batch move
-			$wgOut->addHTML(doBatchMove( $from, $to, $reason ));
-			$wgOut->addHTML("<i>".wfMsg("batchmove-complete")."</i>");
-		}
-		else
-		{
-			$wgOut->setPageTitle(wfMsg("batchmove-title"));
-			$wgOut->addHTML(sandboxParse(wfMsg("batchmove-confirm-msg",$from,$to)));
-			$wgOut->addHTML("<form>");
-				$wgOut->addHTML("<input id='to' name='to' type='hidden' value='".htmlentities($to, ENT_QUOTES, "UTF-8")."' />");
-				$wgOut->addHTML("<input id='from' name='from' type='hidden' value='".htmlentities($from, ENT_QUOTES, "UTF-8")."' />");
-				$wgOut->addHTML("<input id='reason' name='reason' type='hidden' value='".htmlentities($reason, ENT_QUOTES, "UTF-8")."' />");
-				$wgOut->addHTML("<input id='wpConfirm' name='wpConfirm' type='submit' value='".wfMsg("batchmove-confirm")."'/>");
-				$wgOut->addHTML("<input id='wpPreview' name='wpPreview' type='submit' value='".wfMsg("batchmove-preview")."'/>");
-			$wgOut->addHTML("</form>");
-		}
-	}
-	else
-	{
-		$wgOut->setPageTitle(wfMsg("batchmove-title"));
-		$wgOut->addHTML(""
-			.wfMsg("batchmove-description")
-			."<br/><br/>"
-			."<form>"
-			.wfMsg("batchmove-from").": <input type='edit' name='from' size=28/>"
-			."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-			.wfMsg("batchmove-to").": <input type='edit' name='to' size=28/>"
-			."<br/><br/>"
-			.wfMsg("batchmove-reason").": <input type='edit' name='reason' size=60/>"
-			."<br/><br/>"
-			."<input type='submit'/>"
-			."<input id='wpPreview' name='wpPreview' type='submit' value='".wfMsg("batchmove-preview")."'/>"
-			."</form><br/>"
-			);
-	}
 }
