@@ -192,19 +192,19 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 	function ondblTap(ev){
 		ev.preventDefault();
 
-		var trackObj = {
+	/*	var trackObj = {
 			ga_category: 'wikiamobile-modal',
 			tracking_method: 'both',
 			ga_action: WikiaTracker.ACTIONS.DOUBLETAP,
 			ga_label: ''
 		}
-
+	*/
 		if(zoomed){
 			resetZoom();
-			trackObj.ga_label = 'zoom-out';
+			//trackObj.ga_label = 'zoom-out';
 		}else{
 			fllStyle.backgroundSize = 'cover';
-			trackObj.ga_label = 'zoom-in';
+			//trackObj.ga_label = 'zoom-in';
 		}
 
 		//WikiaTracker.trackEvent(trackObj);
