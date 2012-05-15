@@ -390,27 +390,10 @@ class ImageReviewHelper extends WikiaModel {
 		);
 
 		$response = ApiService::foreignCall( $dbname, $param );
-
 		$imageSrc = ( empty($response['image']['imagecrop']) ) ? '' : $response['image']['imagecrop'] ;
-		$imagePage = ( empty($response['imagepage']['imagecrop']) ) ? '' : $response['imagepage']['imagecrop'] ;
-
-		$ctx = stream_context_create(array(
-			'http' => array(
-				'timeout' => 3
-				)
-			)
-		);
-		$image = file_get_contents($imageSrc, 0, $ctx);
-		if ( $image == false ) {
-			// FIXME: figure out a better way to report this error
-			$this->wg->Out->prependHTML("Bad Image URL: <a href=\"$imageSrc\"> $imageSrc </a> <BR>\n");
-			$this->wg->Out->prependHTML("Bad Image Page: <a href=\"$imagePage\"> $imagePage </a> <BR>\n");
-			$this->wf->ProfileOut( __METHOD__ );
-			return array('page' => $imagePage);
-		}		
+		$imagePage = ( empty($response['imagepage']['imagecrop']) ) ? '' : $response['imagepage']['imagecrop'] ;	
 		
 		$this->wf->ProfileOut( __METHOD__ );
-
 		return array('src' => $imageSrc, 'page' => $imagePage );
 	}
 
