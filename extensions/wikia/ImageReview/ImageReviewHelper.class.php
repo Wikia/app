@@ -387,6 +387,7 @@ class ImageReviewHelper extends WikiaModel {
 			'action' => 'imagecrop',
 			'imgId' => $pageId,
 			'imgSize' => 250,
+			'imgFailOnFileNotFound' => 'true',
 		);
 
 		$response = ApiService::foreignCall( $dbname, $param );
