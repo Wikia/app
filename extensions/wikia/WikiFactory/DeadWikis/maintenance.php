@@ -36,7 +36,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			'created' => array(
 				'type' => 'datetime',
 				'key' => 'created',
-				'max' => '-350 days',
+				'max' => '-252 days',
 			),
 			array(
 				'type' => 'datetime',
@@ -55,15 +55,15 @@ class AutomatedDeadWikisDeletionMaintenance {
 			),
 			array(
 				'type' => 'int',
-				'key' => 'pvlastmonth',
-				'max' => '1',
+				'key' => 'pvlast3month',
+				'max' => '29',
 			),
 		),
 		self::DELETE_SOON => array(
 			'created' => array(
 				'type' => 'datetime',
 				'key' => 'created',
-				'max' => '-342 days',
+				'max' => '-245 days',
 			),
 			array(
 				'type' => 'datetime',
@@ -82,12 +82,12 @@ class AutomatedDeadWikisDeletionMaintenance {
 			),
 			array(
 				'type' => 'int',
-				'key' => 'pvlastmonthm5',
-				'max' => '1',
+				'key' => 'pvlast3monthm5',
+				'max' => '29',
 			),
 		)
 	);
-	static protected $FETCH_TIME_LIMIT = '-340 days';
+	static protected $FETCH_TIME_LIMIT = '-243 days';
 	
 	protected $options = array();
 	protected $flags = array(
@@ -110,7 +110,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	protected $mailing = true;
 
 	public function __construct( $options ) {
-		self::adjustSettings();
+//		self::adjustSettings();
 		// read command line arguments
 		$this->options = $options;
 		foreach ($this->options as $k => $v) {
@@ -497,6 +497,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 	}
 	
 	static protected function adjustSettings() {
+		/*
 		$secondsPerDay = 24 * 60 * 60;
 		$maxWeek = 52;
 		$minWeek = 36;
@@ -515,6 +516,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 		self::$conditions[self::DELETE_NOW]['created']['max'] = "-$days days";
 		self::$conditions[self::DELETE_SOON]['created']['max'] = "-$ndays days";
 		self::$FETCH_TIME_LIMIT = "-$kdays days";
+		*/
 	}
 
 }
