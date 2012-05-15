@@ -19,7 +19,7 @@ class WikiaRssHelper {
 		$html = '';
 		$options = $rss->getRssAttributes();
 		if ( array_key_exists('nojs', $options) && $options['nojs'] ) {
-			$response =  $app->sendRequest( 'WikiaRssExternalController', 'getRssFeeds', array( 'options' => $options ) );
+			$response =  $app->sendRequest( 'WikiaRssExternal', 'getRssFeeds', array( 'options' => $options ) );
 			$html .= $response->getVal( 'html', '' );
 		} else {
 			$html .= self::getJSSnippet( $options );

@@ -88,7 +88,7 @@ class JSMessages {
 		$this->app->wf->ProfileIn(__METHOD__);
 
 		$pkgs = implode(',', $packages);
-		$ret = '<script>' . $this->app->sendRequest( 'JSMessagesController', 'getMessages', array( 'packages' => $pkgs ), true )->toString() . '</script>';
+		$ret = '<script>' . $this->app->sendRequest( 'JSMessages', 'getMessages', array( 'packages' => $pkgs ), true )->toString() . '</script>';
 
 		$this->app->wf->ProfileOut(__METHOD__);
 

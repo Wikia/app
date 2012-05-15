@@ -64,7 +64,7 @@
 		public function testGetStats($cache_value, $expected_daily, $expected_total, $fetch_obj=null) {
 			$this->setupGetStatsMock($cache_value, $fetch_obj);
 
-			$response = $this->app->sendRequest('QuickStatsController', 'getStats');
+			$response = $this->app->sendRequest('QuickStats', 'getStats');
 
 			$response_data = $response->getVal('stats');
 			$this->assertEquals($expected_daily, $response_data);
