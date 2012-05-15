@@ -61,30 +61,30 @@ define('sections', ['events', 'track'], function(ev, track){
 			page.removeChild(article);
 			//insertAdjacentHTML does not parse scripts that may be inside sections
 			page.insertAdjacentHTML('beforeend', wrapper.outerHTML);
-
-			$(document.body).delegate('.collSec', click, function(){
-				var isOpen = (this.className.indexOf('open') > -1),
-					next = this.nextElementSibling;
-
-				track(['section', isOpen ? 'close' : 'open']);
-
-				if(isOpen){
-					this.className = this.className.replace(' open', '');
-					next.className = next.className.replace(' open', '');
-				}else{
-					this.className += ' open';
-					next.className += ' open';
-				}
-			})
-			.delegate('.goBck', click, function(){
-				var parent = this.parentElement,
-					prev = parent.previousElementSibling;
-
-				parent.className = parent.className.replace(' open', '');
-				prev.className = prev.className.replace(' open' , '');
-				prev.scrollIntoView();
-			});
 		}
+		//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
+		$(d.body).on(click, '.collSec', function(){
+			var isOpen = (this.className.indexOf('open') > -1),
+				next = this.nextElementSibling;
+
+			track(['section', isOpen ? 'close' : 'open']);
+
+			if(isOpen){
+				this.className = this.className.replace(' open', '');
+				next.className = next.className.replace(' open', '');
+			}else{
+				this.className += ' open';
+				next.className += ' open';
+			}
+		})
+		.on(click, '.goBck', function(){
+			var parent = this.parentElement,
+				prev = parent.previousElementSibling;
+
+			parent.className = parent.className.replace(' open', '');
+			prev.className = prev.className.replace(' open' , '');
+			prev.scrollIntoView();
+		});
 	}
 
 	return {
