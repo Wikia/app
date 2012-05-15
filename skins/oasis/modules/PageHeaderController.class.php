@@ -17,6 +17,7 @@ class PageHeaderController extends WikiaController {
 		$this->action = null;
 		$this->actionImage = null;
 		$this->actionName = null;
+		$this->dropdown = null;
 		
 		$skinVars = $this->app->getSkinTemplateObj()->data;
 		$this->content_actions = $skinVars['content_actions'];
