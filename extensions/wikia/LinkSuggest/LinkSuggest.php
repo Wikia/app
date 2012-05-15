@@ -182,24 +182,10 @@ function getLinkSuggest() {
 								{$pageNamespaceClause}
 						   ) matches
 
-					LEFT JOIN 
-						   (SELECT * 
-							FROM redirect 
-							WHERE 
-								-- optimization instead of LIKE
-								LOWER(rd_title) >= '{$query}' 
-								AND LOWER(rd_title) < '{$queryUpper}'
-						   ) rd
-						ON page_is_redirect = 1 AND page_id = rd_from
+					LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
 
 					LEFT JOIN 
-						   (SELECT qc_title, qc_value
-							FROM querycache 
-							WHERE 
-								qc_type = 'Mostlinked' {$qcNamespaceClause}
-								AND LOWER(qc_title) >= '{$query}' 
-								AND LOWER(qc_title) < '{$queryUpper}'
-						   ) mostlinked
+						   (SELECT qc_title, qc_value  FROM querycache WHERE qc_type = 'Mostlinked' {$qcNamespaceClause}) mostlinked
 						   ON qc_title = page_title OR rd_title = qc_title
 
 				) `ordered_results`
