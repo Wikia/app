@@ -24,7 +24,12 @@ class WikiaApiCroppedImage extends ApiBase {
 			$tmpTitle = Title::newFromText( $value[0]['name'], NS_FILE );
 			$image = wfFindFile( $tmpTitle );
 			$path =  $image->getPath();
-			if ( !($image instanceof File && $image->exists() ) || empty( $path ) ) {
+			
+			if ($FailOnFileNotFound) {
+				$image->loadFromFile();  // side effect forces isMissing() check to fail if file really does not exist
+			}
+			if ( !($image instanceof File && $image->exists() ) || empty( $path ) 
+				|| $image->isMissing() || $image->mime == 'unknown/unknown' ) {
 				$this->dieUsage( 'File not found', 'filenotfound' );
 			}
 			$imageInfo = getimagesize($path);
@@ -50,6 +55,11 @@ class WikiaApiCroppedImage extends ApiBase {
 			'Height' => array(
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 0,
+			),
+			'FailOnFileNotFound' => array(
+				ApiBase :: PARAM_TYPE => 'boolean',
+				ApiBase :: PARAM_ISMULTI => false,
+				ApiBase :: PARAM_DFLT => false,
 			)
 		);
 	}
@@ -64,7 +74,8 @@ class WikiaApiCroppedImage extends ApiBase {
 		(
 			'Id'	=> 'article Id (integer)',
 			'Size'	=> 'size of cropped image (integer)',
-			'Height' => 'image Height used for right cropped image proportions (integer)'
+			'Height' => 'image Height used for right cropped image proportions (integer)',
+			'FailOnFileNotFound' => 'force API call to fail if image does not exist (boolean)'
 		);
 	}
 
