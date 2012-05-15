@@ -106,7 +106,7 @@ class PlacesHooks extends WikiaObject{
 		$storage->store();
 
 		// purge autoplaceholdr position
-		F::app()->sendRequest( 'PlacesController', 'purgeGeoLocationButton' );
+		F::app()->sendRequest( 'Places', 'purgeGeoLocationButton' );
 
 		$this->wf->profileOut( __METHOD__ );
 		return true;
@@ -145,7 +145,7 @@ class PlacesHooks extends WikiaObject{
 	public function onOutputPageBeforeHTML( &$out, &$text ){
 
 		if ( $this->app->wg->request->getVal('action', 'view') == true ) {
-			$text = $this->app->sendRequest( 'PlacesController', 'getGeolocationButton' )->toString() . $text;
+			$text = $this->app->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
 		}
 		return $out;
 	}

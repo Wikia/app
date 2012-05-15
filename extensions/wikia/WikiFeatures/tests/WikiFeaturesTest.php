@@ -84,7 +84,7 @@
 			$this->setUpToggleFeature($is_allow);
 			$this->setUpMock();
 
-			$response = $this->app->sendRequest('WikiFeaturesSpecialController', 'toggleFeature', array('feature' => $feature, 'enabled' => $enabled));
+			$response = $this->app->sendRequest('WikiFeaturesSpecial', 'toggleFeature', array('feature' => $feature, 'enabled' => $enabled));
 			
 			$response_data = $response->getVal('result');
 			$this->assertEquals($exp_result, $response_data);

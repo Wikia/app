@@ -28,7 +28,7 @@ class FacebookSignupController extends WikiaController {
 			$this->userName = $user->getName();
 		}
 		else {
-			$modal = $this->sendRequest('FacebookSignupController', 'modal')->__toString();
+			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
 
 			// no account connected - show FB sign up modal
 			$this->title = wfMsg('usersignup-facebook-heading');
@@ -42,7 +42,7 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function modal() {
 		// get an email from Facebook API
-		$resp = $this->sendRequest('FacebookSignupController', 'getFacebookData', array(
+		$resp = $this->sendRequest('FacebookSignup', 'getFacebookData', array(
 			'fbUserId' => $this->getFacebookUserId(),
 		));
 
@@ -76,7 +76,7 @@ class FacebookSignupController extends WikiaController {
 		$this->wg->Request->setVal('fbuserid', $this->getFacebookUserId());
 
 		// handle signup request
-		$signupResponse = $this->app->sendRequest('FacebookSignupController', 'createAccount')->getData();
+		$signupResponse = $this->app->sendRequest('FacebookSignup', 'createAccount')->getData();
 
 		switch ($signupResponse['result']) {
 			case 'ok':

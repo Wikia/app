@@ -57,7 +57,7 @@ class CustomReportsSpecialController extends WikiaSpecialPageController {
 			$report = new Report($code, $days);
 			$data = $report->get_data();
 			foreach($data as $key => $data_xml) {
-				$this->charts .= (string) $this->app->sendRequest('CustomReportsSpecialController', 'getChart', array('data_xml'=>$data_xml, 'num_chart' => $key));
+				$this->charts .= (string) $this->app->sendRequest('CustomReportsSpecial', 'getChart', array('data_xml'=>$data_xml, 'num_chart' => $key));
 			}
 
 			if (empty($this->charts)) {

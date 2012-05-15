@@ -22,7 +22,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 		$this->fbFeedOptions = explode(',', $request->getVal('fbfeedoptions', ''));
 
 		// get an email from Facebook API
-		$resp = F::app()->sendRequest('FacebookSignupController', 'getFacebookData', array(
+		$resp = F::app()->sendRequest('FacebookSignup', 'getFacebookData', array(
 			'fbUserId' => $this->fbUserId,
 		));
 

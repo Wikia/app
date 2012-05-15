@@ -104,7 +104,7 @@ class PhotoPopModel extends WikiaModel{
 					}
 				}
 
-				$resp = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array_keys( $articles ), 'height' => $imageHeight, 'width' => $imageWidth, 'count' => 1 ) );
+				$resp = $this->app->sendRequest( 'ImageServing', 'index', array( 'ids' => array_keys( $articles ), 'height' => $imageHeight, 'width' => $imageWidth, 'count' => 1 ) );
 				$val = $resp->getVal( 'result' );
 				
 				if( $resp->getVal( 'status' ) == 'error' ) {

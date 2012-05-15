@@ -41,7 +41,7 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	function testPlaceFromAttributes() {
-		$resp = $this->app->sendRequest('PlacesController', 'placeFromAttributes', array('attributes' => $this->attribs));
+		$resp = $this->app->sendRequest('Places', 'placeFromAttributes', array('attributes' => $this->attribs));
 		$html = $resp->toString();
 
 		$this->assertContains('<img class="thumbimage" src="http://maps.googleapis.com/maps/api/staticmap', $html);
@@ -50,7 +50,7 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	function testPlaceFromModel() {
-		$resp = $this->app->sendRequest('PlacesController', 'placeFromModel', array('model' => $this->model));
+		$resp = $this->app->sendRequest('Places', 'placeFromModel', array('model' => $this->model));
 		$html = $resp->toString();
 
 		$this->assertContains('<img class="thumbimage" src="http://maps.googleapis.com/maps/api/staticmap', $html);
@@ -59,7 +59,7 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	function testRenderMarkers() {
-		$resp = $this->app->sendRequest('PlacesController', 'renderMarkers', array('markers' => array($this->model)));
+		$resp = $this->app->sendRequest('Places', 'renderMarkers', array('markers' => array($this->model)));
 		$html = $resp->toString();
 
 		$this->assertContains('class="places-map"', $html);
@@ -68,7 +68,7 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	function testGetPlaceWikiTextFromModel() {
-		$resp = $this->app->sendRequest('PlacesController', 'getPlaceWikiTextFromModel', array('model' => $this->model));
+		$resp = $this->app->sendRequest('Places', 'getPlaceWikiTextFromModel', array('model' => $this->model));
 		$html = $resp->toString();
 
 		$this->assertEquals("<place width='300' lat='52.406878' lon='16.922124' />", $html);

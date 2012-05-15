@@ -203,7 +203,7 @@ TXT;
 
 		$this->setUpMock();
 
-		$response = $this->app->sendRequest('WikiaHomePageController', 'getList', array());
+		$response = $this->app->sendRequest('WikiaHomePage', 'getList', array());
 
 		$responseData = $response->getVal('data');
 		$this->assertEquals($expectedResult, $responseData);

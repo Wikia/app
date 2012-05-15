@@ -16,7 +16,7 @@ class SelfServiceAdvertisingSplashControllerTest extends WikiaBaseTest {
 		$this->mockClass('SelfServiceAdvertisingSplashModel', $modelMock);
 
 		/* @var $response WikiaResponse */
-		$response = $this->app->sendRequest('SelfServiceAdvertisingSplashController', 'sendEmails', $request);
+		$response = $this->app->sendRequest('SelfServiceAdvertisingSplash', 'sendEmails', $request);
 
 		$this->assertEquals($expResponse,$response->getData());
 	}

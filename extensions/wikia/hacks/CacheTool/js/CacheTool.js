@@ -23,10 +23,10 @@ var CacheTool = {
 		});		
 	},
 	sendRequest: function(method) {
-		$.nirvana.sendRequest({controller: 'CacheToolController', method: method});
+		$.nirvana.sendRequest({controller: 'CacheTool', method: method});
 	},
 	deleteKey: function(keyName) {
-		$.nirvana.sendRequest({controller: 'CacheToolController', method: 'deleteKey', data: {'key': keyName}})
+		$.nirvana.sendRequest({controller: 'CacheTool', method: 'deleteKey', data: {'key': keyName}})
 		var x = '<pre>key ' + keyName + ' deleted</pre>';
 		$(x).makeModal({width: 300});
 	},
@@ -34,7 +34,7 @@ var CacheTool = {
 		$(data.key).makeModal({width: 600});
 	},
 	showContents: function(keyName) {
-		$.nirvana.sendRequest({controller: 'CacheToolController', method: 'showContents', data: {'key': keyName}, callback: CacheTool.showModal})
+		$.nirvana.sendRequest({controller: 'CacheTool', method: 'showContents', data: {'key': keyName}, callback: CacheTool.showModal})
 	}
 	
 };

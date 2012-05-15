@@ -10,7 +10,7 @@ class RelatedVideosHookHandler {
 		wfProfileIn(__METHOD__);
 		
 		if( $out->isArticle() && F::app()->wg->request->getVal( 'diff' ) === null && ( F::app()->wg->title->getNamespace() == NS_MAIN ) ) {
-			$text .= F::app()->sendRequest('RelatedVideosController', 'getCarusel')->toString();
+			$text .= F::app()->sendRequest('RelatedVideos', 'getCarusel')->toString();
 		}
 
 		wfProfileOut(__METHOD__);

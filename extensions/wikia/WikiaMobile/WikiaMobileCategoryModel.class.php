@@ -40,7 +40,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 				for ( $i = 0; $i < $length; $i++ ) {
 					$pageId = $ids[$i];
 	
-					$imgRespnse = $this->app->sendRequest( 'ImageServingController', 'index', array( 'ids' => array ( $pageId ), 'height' => 150, 'width' => 150, 'count' => 1 ) );
+					$imgRespnse = $this->app->sendRequest( 'ImageServing', 'index', array( 'ids' => array ( $pageId ), 'height' => 150, 'width' => 150, 'count' => 1 ) );
 					$img = $imgRespnse->getVal( 'result' );
 	
 					if ( !empty( $img[$pageId] ) ) {
