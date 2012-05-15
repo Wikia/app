@@ -721,8 +721,7 @@ AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
 
 	// Temporary AdDriver tracking by Inez
-	if ( Math.floor( ( Math.random() * 20 ) + 1 )  === 20 ) { // 5%
-		AdDriverDelayedLoader.tracking = true;
+	if((typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
 		$.internalTrack( 'AdDriver', { pos: 'start' } );
 	}
 
@@ -750,7 +749,7 @@ AdDriverDelayedLoader.isRunning = function() {
 AdDriverDelayedLoader.finalize = function() {
 
 	// Temporary AdDriver tracking by Inez
-	if ( AdDriverDelayedLoader.tracking === true ) {
+	if((typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
 		$.internalTrack( 'AdDriver', { pos: 'stop' } );
 	}
     

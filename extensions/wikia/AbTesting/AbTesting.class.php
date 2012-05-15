@@ -170,9 +170,17 @@ class AbTesting {
 		// will be returned.  If there is an error loadign the config (so no control group or other group IDs can be found, this will
 		// return an empty string. For any invalid group IDs, the calling code MUST default to using a reasonable fallback
 		// (usually this should be the control-group, if that's easy to know at coding-time).
+		//
+		// TODO: REFACTOR... This doesn't really need to be in PHP. External JS file plus file_get_contents? Cache the minified version in memcached (based on cb value)?
 		?>
 		// Caches already-assigned treatments to make sure any re-treatments are consistent and to avoid sending the treatment event multiple times for the same treatment on a page-load.
 		var abTreatments = {};
+		
+		// Key is experiment id, value is true if this user is recieving a treatment that
+		// will be tracked for the experiment. This is a way to differentiate users being
+		// tracked in the control group vs. those also experiencing the control, but not
+		// being part of the test results.
+		var abBeingTracked = {};
 
 		function getTreatmentGroup( expId ){
 			var hasLogging = (typeof console != 'undefined');
@@ -198,6 +206,7 @@ class AbTesting {
 						if((treatmentGroup === "") && hasLogging){
 							console.log("NO CONTROL GROUP DEFINED FOR EXPERIMENT: " + expId);
 						}
+						abBeingTracked[expId] = false;
 					} else {
 						// Figure out the correct treatment group based on the beacon_id.
 						var normalizedHash = abHash( expId ); // beacon_id is used in here
@@ -215,12 +224,14 @@ class AbTesting {
 						// If treatment group wasn't explicitly set, show the user the control, but don't log a treatment event.
 						if(treatmentGroup === ""){
 							treatmentGroup = controlId;
+							abBeingTracked[expId] = false;
 						} else {
 							// Record the treatment event.
 							$.internalTrack('ab_treatment', { 'varnishTime': varnishTime , 'treatmentGroup': treatmentGroup });
 							
 							// Cache the treatment grouup so that we know not to send the treatment event again on this page.
 							abTreatments[ expId ] = treatmentGroup;
+							abBeingTracked[expId] = true;
 						}
 					}
 				} else if (hasLogging) {
