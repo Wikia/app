@@ -27,11 +27,7 @@ function replaceCase( $connection, $case ) {
 
 echo "Script start...\n";
 
-if( file_exists( '/../../../../maintenance/commandLine.inc' ) ) {
-	require_once ( '/../../../../maintenance/commandLine.inc' );
-} else {
-	require_once ( '/usr/wikia/source/wiki/maintenance/commandLine.inc' );
-}
+require_once ( '../../../../maintenance/commandLine.inc' );
 
 global $wgRequest, $wgHTTPProxy, $wgFogbugzAPIConfig, $wgMemc;
 
