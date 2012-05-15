@@ -162,6 +162,13 @@ $carousel-overlay-duration: 600ms;
 			width: 625px;
 		}
 		
+		.progress {
+			margin-left: 22px;
+			b {
+				font-weight: bold;
+			}
+		}
+		
 		.LightboxCarouselContainer {
 			margin-left: 20px;
 			height: 55px;

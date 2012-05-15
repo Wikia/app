@@ -64,7 +64,7 @@
 	</script>
 	
 	<script id="LightboxCarouselProgressTemplate" type="text/template">
-		<?= wfMsg('oasis-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{total}}")); ?>
+		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{total}}")); ?>
 	</script>
 	
 	<script id="LightboxInfoboxTemplate" type="text/template">
