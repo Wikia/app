@@ -71,24 +71,20 @@ class SpecialPreferences extends SpecialPage {
 
 	/* Wikia change begin - @author: Marcin, #BugId: 19056 */
 	static function submitResetWikia() {
-		global $wgUser, $wgOut, $wgCityId, $wgEnableUserProfilePagesV3;
-		if ($wgEnableUserProfilePagesV3) {
-			$userIndentityObject = new UserIdentityBox(F::app(), $wgUser, 0);
-			$mastheadOptions = $userIndentityObject->optionsArray;
-			unset($mastheadOptions['gender'], $mastheadOptions['birthday']);
-			$mastheadOptions[] = UserIdentityBox::USER_PROPERTIES_PREFIX.'gender';
-			$mastheadOptions[] = UserIdentityBox::USER_PROPERTIES_PREFIX.'birthday';
-			$mastheadOptions[] = UserIdentityBox::USER_EVER_EDITED_MASTHEAD;
-			$mastheadOptions[] = UserIdentityBox::USER_EDITED_MASTHEAD_PROPERTY.$wgCityId;
-			foreach ($mastheadOptions as $optionName) {
-				$tempOptions[$optionName] = $wgUser->getOption($optionName);
-			}
+		global $wgUser, $wgOut, $wgCityId;
+		$userIndentityObject = new UserIdentityBox(F::app(), $wgUser, 0);
+		$mastheadOptions = $userIndentityObject->optionsArray;
+		unset($mastheadOptions['gender'], $mastheadOptions['birthday']);
+		$mastheadOptions[] = UserIdentityBox::USER_PROPERTIES_PREFIX.'gender';
+		$mastheadOptions[] = UserIdentityBox::USER_PROPERTIES_PREFIX.'birthday';
+		$mastheadOptions[] = UserIdentityBox::USER_EVER_EDITED_MASTHEAD;
+		$mastheadOptions[] = UserIdentityBox::USER_EDITED_MASTHEAD_PROPERTY.$wgCityId;
+		foreach ($mastheadOptions as $optionName) {
+			$tempOptions[$optionName] = $wgUser->getOption($optionName);
 		}
 		$wgUser->resetOptions();
-		if ($wgEnableUserProfilePagesV3) {
-			foreach ($tempOptions as $optionName => $optionValue) {
-				$wgUser->setOption($optionName, $optionValue);
-			}
+		foreach ($tempOptions as $optionName => $optionValue) {
+			$wgUser->setOption($optionName, $optionValue);
 		}
 		$wgUser->saveSettings();
 		$url = SpecialPage::getTitleFor( 'Preferences' )->getFullURL( 'success' );
