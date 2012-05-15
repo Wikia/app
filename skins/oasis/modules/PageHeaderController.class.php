@@ -167,7 +167,7 @@ class PageHeaderController extends WikiaController {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex($params) {
-		global $wgTitle, $wgEnableUserProfilePagesV3, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgEnableWallExt;
+		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgEnableWallExt;
 		wfProfileIn(__METHOD__);
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -375,7 +375,7 @@ class PageHeaderController extends WikiaController {
 		// render subpage info
 		$this->pageSubject = $skin->subPageSubtitle();
 
-		if($wgEnableUserProfilePagesV3 && in_array($wgTitle->getNamespace(), BodyController::getUserPagesNamespaces() )) {
+		if ( in_array($wgTitle->getNamespace(), BodyController::getUserPagesNamespaces() ) ) {
 			$title = explode(':', $this->title);
 			if(count($title) >= 2 && $wgTitle->getNsText() == str_replace(' ', '_', $title[0]) ) // in case of error page (showErrorPage) $title is just a string (cannot explode it)
 				$this->title = $title[1];
