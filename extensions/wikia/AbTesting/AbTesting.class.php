@@ -182,6 +182,14 @@ class AbTesting {
 		// being part of the test results.
 		var abBeingTracked = {};
 
+		// Allow forcing yourself into a certain treatment group for the duration of a pageview, for any number of experiments simultaneously.
+		// The URL params are of the format ab[EXPERIMENT_ID]=TREATMENT_GROUP_ID, eg: "?ab[1]=123&ab[2]=345"
+		var reg = /[?&]+ab\[([^&]+)\]=([^&]*)/gi;
+		var matches;
+		while((matches = reg.exec(window.location.href)) != null){
+			abTreatments[ matches[1] ] = matches[2];
+		}
+
 		function getTreatmentGroup( expId ){
 			var hasLogging = (typeof console != 'undefined');
 			var treatmentGroup = "";
