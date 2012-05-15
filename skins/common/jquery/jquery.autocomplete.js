@@ -69,6 +69,9 @@
 
     killerFn: null,
 
+	// wikia change - Only search suggest uses this property (BugId:31186)
+	redirects: {},
+
     initialize: function() {
 
       var me, zindex;
