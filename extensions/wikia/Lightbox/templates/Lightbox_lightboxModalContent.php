@@ -45,14 +45,14 @@
 		var mediaThumbs = <?= json_encode($mediaThumbs) ?>;
 	</script>
 	
-	<script id="LightboxCarouselTemplate" class="template" type="text/template">
+	<script id="LightboxCarouselTemplate" type="text/template">
 		<div class="ad"></div>
 		<div class="content">
 			<ul class="toolbar">
 				<li><!-- pin icon --></li>
 				<li><!-- full screen icon --></li>
 			</ul>
-			<p class="progress">{{progress}}</p>
+			<p id="LightboxCarouselProgress" class="progress"></p>
 			<span class="carousel-arrow next"></span>
 			<span class="carousel-arrow previous"></span>
  			<div id="LightboxCarouselContainer" class="LightboxCarouselContainer">
@@ -61,6 +61,10 @@
  				</div>
  			</div>
 		</div>
+	</script>
+	
+	<script id="LightboxCarouselProgressTemplate" type="text/template">
+		<?= wfMsg('oasis-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{total}}")); ?>
 	</script>
 	
 	<script id="LightboxInfoboxTemplate" type="text/template">

@@ -20,7 +20,7 @@ var Lightbox = {
 		type: '', // image or video
 		title: '', // currently displayed file name
 		carouselType: '', // articleMedia, relatedVideos, or latestPhotos
-		index: -1 // ex: Lightbox.cache[Lightbox.current.carouselType][index]		
+		index: -1 // ex: Lightbox.cache[Lightbox.current.carouselType][Lightbox.current.index]		
 	},
 	modal: {
 		defaults: {
@@ -38,6 +38,7 @@ var Lightbox = {
 			height: 648
 		}
 	},
+	openModal: false, // gets replaced with dom object of open modal
 	templates: {},
 	init: function() {
 		var article;
@@ -635,15 +636,28 @@ var Lightbox = {
 
 			Lightbox.current.index = idx;
 			
-			Lightbox.updateMedia();			
+			Lightbox.updateMedia();	
+		}
+		
+		var trackProgressCallback = function(idx1, idx2, total) {
+			var template = $('#LightboxCarouselProgressTemplate');
 			
-		} 
+			var html = template.mustache({
+				idx1: idx1,
+				idx2: idx2,
+				total: total
+			});
+			
+			$('#LightboxCarouselProgress').html(html);
+		}
+		
 		$('#LightboxCarouselContainer').carousel({
 			itemsShown: 6,
 			itemSpacing: 8,
 			transitionSpeed: 1000,
 			itemClick: itemClick,
-			activeIndex: Lightbox.current.index
+			activeIndex: Lightbox.current.index,
+			trackProgress: trackProgressCallback
 		});
 	}
 

@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'lightbox-infobox-caption-heading' => 'Caption:',
 	'lightbox-infobox-description-heading' => 'Description:',
 	'lightbox-infobox-filelinks-heading' => 'File Links:',
+	'lightbox-carousel-progress' => '$1-$2 of $3',
 	/* /new stuff */
 
 	'lightbox_details_tooltip' => 'View photo details',
@@ -47,6 +48,11 @@ $1
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	/* new stuff for new lightbox */
+	'lightbox-carousel-progress' => 'Displays above thumbnail carousel to show which thumbnails are displaying.  Ex: 1-6 of 20',
+	/* /new stuff */
+
+
 	'lightbox-share-description' => 'Parameters:
 * $1 is the current page,
 * $2 is the site name.',

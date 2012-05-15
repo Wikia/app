@@ -30,7 +30,8 @@
 			nextClass: "next",
 			prevClass: "previous",
 			attachBlindImages: false, 
-			itemClick: false // TODO: run this when an item is clicked
+			itemClick: false,
+			trackProgress: false // pass in function for inserting progress data into dom. 
 		}
 
 		options = $.extend(defaults, options);
@@ -87,7 +88,7 @@
 					left: left
 				}, options.transitionSpeed, function() {
 					states.browsing = false;
-					updateArrows();
+					afterMove();
 				});
 			}
 			return false;
@@ -114,7 +115,7 @@
 					left:  left
 				}, options.transitionSpeed, function() {
 					states.browsing = false;
-					updateArrows();
+					afterMove();
 				});
 			}
 			return false;
@@ -136,7 +137,7 @@
 				dom.carousel.animate({'left': left});
 			}
 			// Activate/deactivate left/right arrows
-			updateArrows();
+			afterMove();
 		}
 		
 		function isVisible(idx) {
@@ -155,6 +156,23 @@
 			dom.items.eq(idx).addClass('active');
 
 			moveToIndex(idx);
+		}
+		
+		function afterMove() {
+			updateArrows();
+			if(typeof options.trackProgress == 'function') {
+				trackProgress(options.trackProgress);
+			}			
+		}
+		
+		function trackProgress(callback) {
+			// get values needed
+			var total = dom.items.length,
+				idx1 = states.currIndex + 1, // make index base 1
+				idx2 = states.currIndex + options.itemsShown;
+			
+			// callback will handle inserting values into the dom
+			callback(idx1, idx2, total);
 		}
 		
 		function updateArrows() {
@@ -258,7 +276,7 @@
 		return this.each(function() {
 			
 			// if there's an awkward number of thumbnails, add empty <li>'s to fill the space
-			if(options.attachBlindImages) {
+			if(typeof options.attachBlindImages == 'function') {
 				attachBlindImages();
 			}
 			
