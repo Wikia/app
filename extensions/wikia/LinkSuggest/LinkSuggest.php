@@ -178,7 +178,7 @@ function getLinkSuggest() {
 							WHERE 
 								-- optimization instead of LIKE
 								LOWER(page_title) >= '{$query}' 
-								AND LOWER(page_title) <= '{$queryUpper}'
+								AND LOWER(page_title) < '{$queryUpper}'
 								{$pageNamespaceClause}
 						   ) matches
 
@@ -188,7 +188,7 @@ function getLinkSuggest() {
 							WHERE 
 								-- optimization instead of LIKE
 								LOWER(rd_title) >= '{$query}' 
-								AND LOWER(rd_title) <= '{$queryUpper}'
+								AND LOWER(rd_title) < '{$queryUpper}'
 						   ) rd
 						ON page_is_redirect = 1 AND page_id = rd_from
 
@@ -198,7 +198,7 @@ function getLinkSuggest() {
 							WHERE 
 								qc_type = 'Mostlinked' {$qcNamespaceClause}
 								AND LOWER(qc_title) >= '{$query}' 
-								AND LOWER(qc_title) <= '{$queryUpper}'
+								AND LOWER(qc_title) < '{$queryUpper}'
 						   ) mostlinked
 						   ON qc_title = page_title OR rd_title = qc_title
 
