@@ -235,7 +235,7 @@ class AbTesting {
 							abBeingTracked[expId] = false;
 						} else {
 							// Record the treatment event.
-							$.internalTrack('ab_treatment', { 'varnishTime': varnishTime , 'treatmentGroup': treatmentGroup });
+							$.internalTrack('ab_treatment', { 'varnishTime': varnishTime , 'experimentId': expId, 'treatmentGroup': treatmentGroup });
 							
 							// Cache the treatment grouup so that we know not to send the treatment event again on this page.
 							abTreatments[ expId ] = treatmentGroup;
