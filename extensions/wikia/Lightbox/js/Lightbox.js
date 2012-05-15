@@ -69,14 +69,14 @@ var Lightbox = {
 			if(target.is('.disabled')) {
 				return false;
 			}
-
+			
 			if(target.is("#LightboxNext")) {
 				Lightbox.current.index++;
 			} else {
 				Lightbox.current.index--;
 			}
 			
-			Lightbox.updateMedia();
+			Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
 		});
 
 	},
@@ -562,7 +562,6 @@ var Lightbox = {
 		Lightbox.openModal.find('.media').html("").startThrobbing();
 	
 		if(idx > -1 && idx < mediaArr.length) {
-			Lightbox.current.index = idx;
 			
 			var title = Lightbox.current.title = mediaArr[idx].title;
 			var type = Lightbox.current.type = mediaArr[idx].type;
@@ -572,7 +571,7 @@ var Lightbox = {
 				type: type
 			}, function(data) {
 				Lightbox[type].updateLightbox(data);		
-			});			
+			});
 		}
 	},
 	updateArrows: function() {		
@@ -633,8 +632,7 @@ var Lightbox = {
 	setUpCarousel: function() {
 		var itemClick = function(e) {
 			var idx = $(this).index();
-			console.log(idx);
-			
+
 			Lightbox.current.index = idx;
 			
 			Lightbox.updateMedia();			

@@ -120,12 +120,10 @@
 			return false;
 		}
 		
-		function startFromIndex(idx) {
-			// Add active class to item at idx
-			setAsActive(idx);
-			
+		function moveToIndex(idx) {
 			// check if index is visible
 			if(!isVisible(idx)) {
+				console.log("NOT VISIBLE")
 				// if idx is too close to the end, set idx the last possible index. 
 				if(idx > (dom.items.length - options.itemsShown)) {
 					idx = dom.items.length - options.itemsShown;
@@ -136,7 +134,9 @@
 				var left = constants.itemWidth * idx * -1;
 
 				// Move carouself to currIndex
-				dom.carousel.css('left', left);
+				dom.carousel.animate({'left': left});
+			} else {
+				console.log("VISIBLE")
 			}
 			// Activate/deactivate left/right arrows
 			updateArrows();
@@ -144,7 +144,7 @@
 		
 		function isVisible(idx) {
 			// returns true if item at given index is inside viewport
-			return idx >= states.currIndex && idx <= (states.currIndex + options.itemsShown);
+			return idx >= states.currIndex && idx < (states.currIndex + options.itemsShown);
 		}
 		
 		function getVisible() {
@@ -155,7 +155,9 @@
 		function setAsActive(idx) {
 			// add an active class to the item that is selected (i.e. to show a larger view of it)
 			dom.items.removeClass('active');
-			dom.items.eq(idx).addClass('active');		
+			dom.items.eq(idx).addClass('active');
+
+			moveToIndex(idx);
 		}
 		
 		function updateArrows() {
@@ -265,7 +267,7 @@
 			
 			setCarouselWidth();
 			
-			startFromIndex(options.activeIndex);
+			setAsActive(options.activeIndex);
 			
 			// Set up click events
 			dom.next.click(nextImage);
