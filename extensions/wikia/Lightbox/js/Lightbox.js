@@ -267,6 +267,7 @@ var Lightbox = {
 				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
 				Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
 				Lightbox.openModal.infobox = Lightbox.openModal.find('.infobox');
+				Lightbox.openModal.media = Lightbox.openModal.find('.media');
 				
 				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
 				
@@ -332,22 +333,17 @@ var Lightbox = {
 				var photoTemplate = Lightbox.openModal.find("#LightboxPhotoTemplate");
 				
 				// render media
-				var json = {
-					imageHeight: dimensions.imageHeight,
-					imageUrl: data.imageUrl
-				};
+				data.imageHeight = dimensions.imageHeight;
 								
-				var renderedResult = photoTemplate.mustache(json);
+				var renderedResult = photoTemplate.mustache(data);
 				
 				// Hack to vertically align the image in the lightbox
-				renderedResult = $(renderedResult).css('line-height', dimensions.modalHeight+'px');
-				
-				var mediaDiv = contentArea.find('.media');
-				if(mediaDiv.length) {
-					mediaDiv.replaceWith(renderedResult);
-				} else {
-					renderedResult.insertBefore("#LightboxCarousel");			
-				}
+				Lightbox.openModal.media
+					.removeClass('video-media')
+					.css({
+						'margin-top': '',
+						'line-height': dimensions.modalHeight+'px'
+					}).html(renderedResult);
 				
 				Lightbox.updateArrows();
 				Lightbox.renderHeader();
@@ -439,23 +435,16 @@ var Lightbox = {
 			// extract mustache templates
 			var videoTemplate = Lightbox.openModal.find("#LightboxVideoTemplate");
 	
-			// render media
-			var json = {
-				embed: data.videoEmbedCode // initialFileDetail defined in modal template
-			}
-			
 			// render mustache template		
-			var renderedResult = videoTemplate.mustache(json);
+			var renderedResult = videoTemplate.mustache(data);
 			
 			// Hack to vertically align video
-			renderedResult = $(renderedResult).css('margin-top', dimensions.videoTopMargin);
-	
-			var mediaDiv = contentArea.find('.media');
-			if(mediaDiv.length) {
-				mediaDiv.replaceWith(renderedResult);
-			} else {
-				renderedResult.insertBefore("#LightboxCarousel");			
-			}
+			Lightbox.openModal.media
+				.addClass('video-media')
+				.css({
+					'margin-top': dimensions.videoTopMargin,
+					'line-height': 'auto'
+				}).html(renderedResult);
 			
 			Lightbox.updateArrows();
 			Lightbox.renderHeader();

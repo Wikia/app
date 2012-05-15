@@ -7,6 +7,9 @@
 		<span id="LightboxPrevious" class="previous"></span>
 	</div>
 	
+	<div class="media">
+	</div>
+	
 	<div id="LightboxCarousel" class="LightboxCarousel hidden">
 	</div>
 	
@@ -14,15 +17,11 @@
 	</div>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
-		<div class="media">
-			<img src="{{imageUrl}}" height="{{imageHeight}}" />
-		</div>
+		<img src="{{imageUrl}}" height="{{imageHeight}}" >
 	</script>
 	
 	<script id="LightboxVideoTemplate" class="template" type="text/template">
-		<div class="media video-media">
-			{{{embed}}}
-		</div>
+		{{{videoEmbedCode}}}
 	</script>
 	
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
