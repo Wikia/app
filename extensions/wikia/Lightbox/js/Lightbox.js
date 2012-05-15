@@ -305,11 +305,17 @@ var Lightbox = {
 					Lightbox.hideOverlay('header');
 					Lightbox.hideOverlay('carousel');
 				}).on('click.Lightbox', '.LightboxHeader .more-info-button', function(evt) {
+					if(Lightbox.current.type === 'video') {
+						Lightbox.video.destroyVideo();
+					}
 					Lightbox.openModal.lightbox.addClass('infobox-mode');
 					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 						Lightbox.openModal.infobox.append(infoboxTemplate.mustache(json));
 					});
 				}).on('click.Lightbox', '.infobox .more-info-close', function(evt) {
+					if(Lightbox.current.type === 'video') {
+						Lightbox.getMediaDetail({'title': Lightbox.current.title}, Lightbox.video.renderVideo);
+					}
 					Lightbox.openModal.lightbox.removeClass('infobox-mode');
 					Lightbox.openModal.infobox.html('');
 				});
@@ -326,8 +332,6 @@ var Lightbox = {
 					top: dimensions.topOffset,
 					height: dimensions.modalHeight
 				});
-
-				var contentArea = Lightbox.openModal.WikiaLightbox;
 				
 				// extract mustache templates
 				var photoTemplate = Lightbox.openModal.find("#LightboxPhotoTemplate");
@@ -420,6 +424,20 @@ var Lightbox = {
 		}
 	},
 	video: {
+		renderVideo: function(data) {
+			// extract mustache templates
+			var videoTemplate = Lightbox.openModal.find("#LightboxVideoTemplate");	//TODO: cache template
+	
+			// render mustache template		
+			var renderedResult = videoTemplate.mustache(data);
+			
+			Lightbox.openModal.media
+				.addClass('video-media')
+				.html(renderedResult);
+		},
+		destroyVideo: function() {
+			Lightbox.openModal.media.html('');
+		},
 		updateLightbox: function(data) {
 			// Get lightbox dimensions
 			var dimensions = Lightbox.video.getDimensions();
@@ -429,22 +447,13 @@ var Lightbox = {
 				top: dimensions.topOffset,
 				height: dimensions.modalHeight
 			});
-			
-			var contentArea = Lightbox.openModal.WikiaLightbox;
 	
-			// extract mustache templates
-			var videoTemplate = Lightbox.openModal.find("#LightboxVideoTemplate");
-	
-			// render mustache template		
-			var renderedResult = videoTemplate.mustache(data);
-			
+			Lightbox.video.renderVideo(data);
 			// Hack to vertically align video
-			Lightbox.openModal.media
-				.addClass('video-media')
-				.css({
-					'margin-top': dimensions.videoTopMargin,
-					'line-height': 'auto'
-				}).html(renderedResult);
+			Lightbox.openModal.media.css({
+				'margin-top': dimensions.videoTopMargin,
+				'line-height': 'auto'
+			});
 			
 			Lightbox.updateArrows();
 			Lightbox.renderHeader();
