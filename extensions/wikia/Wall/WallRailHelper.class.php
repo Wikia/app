@@ -30,7 +30,7 @@ class WallRailHelper {
 		if( $action === 'history' && ($namespace === NS_USER_WALL || $namespace === NS_USER_WALL_MESSAGE) ) {
 			$modules = array();
 			$modules[1441] = array('Search', 'Index', null);
-			$modules[1440] = array('WallRailModule', 'index', null);
+			$modules[1440] = array('WallRail', 'index', null);
 		}
 		
 		$app->wf->ProfileOut(__METHOD__);
