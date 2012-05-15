@@ -113,7 +113,7 @@ class RelatedVideosHookHandler {
 		
 		if( $title->exists() && $app->wg->request->getVal( 'diff' ) === null && ( $namespace == NS_MAIN ) ) {
 			$pos = $app->wg->User->isAnon() ? 1301 : 1281;
-			$modules[$pos] = array('RelatedVideosRailModule', 'index', null);
+			$modules[$pos] = array('RelatedVideosRail', 'index', null);
 		}
 		
 		$app->wf->ProfileOut(__METHOD__);
