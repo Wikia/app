@@ -29,7 +29,7 @@ AdMeldAPIClient.track = function(data, profile) {
 	}
 	this.log('event: [' + event.join(', ') + ']', 6);
 
-	WikiaTracker.track(data.join('/'), 'liftium.' + profile, event);	
+	//WikiaTracker.track(data.join('/'), 'liftium.' + profile, event);	
 };
 
 AdMeldAPIClient.getAd = function(slotname) {
