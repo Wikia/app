@@ -43,8 +43,8 @@ PageLayoutBuilder.uploadImage = function (size, name) {
 		return;
 	}
 	$.loadYUI( function() {
-		importStylesheetURI( wgExtensionsPath+ '/wikia/WikiaMiniUpload/css/WMU.css?'+wgStyleVersion );
-		$.getScript(wgExtensionsPath+ '/wikia/WikiaMiniUpload/js/WMU.js?'+wgStyleVersion, function() {
+		importStylesheetURI( wgExtensionsPath+ '/wikia/WikiaMiniUpload/css/WMU.css' );
+		$.getScript(wgExtensionsPath+ '/wikia/WikiaMiniUpload/js/WMU.js', function() {
 			WMU_show();
 
 			WMU_Event_OnLoadDetails = function() {
