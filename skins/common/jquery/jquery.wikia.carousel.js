@@ -123,7 +123,6 @@
 		function moveToIndex(idx) {
 			// check if index is visible
 			if(!isVisible(idx)) {
-				console.log("NOT VISIBLE")
 				// if idx is too close to the end, set idx the last possible index. 
 				if(idx > (dom.items.length - options.itemsShown)) {
 					idx = dom.items.length - options.itemsShown;
@@ -135,8 +134,6 @@
 
 				// Move carouself to currIndex
 				dom.carousel.animate({'left': left});
-			} else {
-				console.log("VISIBLE")
 			}
 			// Activate/deactivate left/right arrows
 			updateArrows();
