@@ -34,6 +34,8 @@ jQuery.getResources = function(resources, callback, failureFn) {
 	// download files:
 	// 1. call functions, i.e. library loaders
 	// 2. prepare list of CSS and JS files to be fetched using async loader
+	remaining = resources.length;
+
 	for (var n=0, len=resources.length; n<len; n++) {
 		var resource = resources[n],
 			type = '';
@@ -46,35 +48,17 @@ jQuery.getResources = function(resources, callback, failureFn) {
 
 		// "loader" function: $.loadYUI, $.loadJQueryUI
 		if (typeof resource == 'function') {
-			remaining++;
 			resource.call(jQuery, onComplete);
 		}
 		// CSS /SASS files
 		else if (type == 'css' || isCss.test(resource) || isSass.test(resource)) {
-			remaining++;
 			$.getCSS(resource, onComplete);
 		}
 		// JS files and Asset Manager groups are scripts
 		else if (type == 'js' || isJs.test(resource) || isGroup.test(resource)) {
-			//jsFiles.push(resource);
-			remaining++;
 			$.getScript(resource, onComplete);
 		}
 	}
-
-	// use yepnope to fetch JS files
-	/**
-	if (jsFiles.length > 1) {
-		remaining++;
-		yepnope([{
-			load: jsFiles,
-			callback: function(url, result) {
-				$().log(url, 'yepnope [loaded]');
-			},
-			complete: onComplete
-		}]);
-	}
-	**/
 
 	return dfd.promise();
 };
