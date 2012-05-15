@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'lightbox-infobox-caption-heading' => 'Caption:',
 	'lightbox-infobox-description-heading' => 'Description:',
 	'lightbox-infobox-filelinks-heading' => 'File Links:',
-	'lightbox-carousel-progress' => '$1-$2 of $3',
+	'lightbox-carousel-progress' => '<b>$1-$2</b> of <b>$3</b>',
 	/* /new stuff */
 
 	'lightbox_details_tooltip' => 'View photo details',
