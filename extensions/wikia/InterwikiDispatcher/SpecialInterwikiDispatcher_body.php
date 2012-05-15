@@ -31,7 +31,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	}
 
 	function execute($subpage) {
-		global $wgOut, $wgRequest, $wgNotAValidWikia;
+		global $wgOut, $wgRequest, $wgNotAValidWikia, $IP;
 
 		wfLoadExtensionMessages('SpecialInterwikiDispatcher');
 
@@ -45,7 +45,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 				$redirect = self::getCityUrl($iCityId);
 				if (empty($art)) {	//no article set - redir to the main page
 					$output = null;
-					exec ("'echo Title::newMainPage();' | SERVER_ID={$row->city_id} /opt/wikia/php/bin/php /usr/wikia/source/wiki/maintenance/eval.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php", $output);
+					exec ("'echo Title::newMainPage();' | SERVER_ID={$row->city_id} php $IP/maintenance/eval.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php", $output);
 					if (count($output)) {
 						$redirect .= '/index.php?title=' . $output[0];
 					}

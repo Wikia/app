@@ -49,7 +49,7 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
-		global $wgUploadDirectory, $wgDBname, $wgSolrIndexer;
+		global $wgUploadDirectory, $wgDBname, $wgSolrIndexer, $IP;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 1;
@@ -116,7 +116,7 @@ class CloseWikiMaintenance {
 				$cmd  = array(
 					"SERVER_ID=177",
 					"php",
-					"/usr/wikia/source/wiki/extensions/wikia/WikiFactory/Dumps/runBackups.php",
+					"$IP/extensions/wikia/WikiFactory/Dumps/runBackups.php",
 					"--conf /usr/wikia/conf/current/iowa.wiki.factory/LocalSettings.php",
 					"--both",
 					"--id={$row->city_id}"

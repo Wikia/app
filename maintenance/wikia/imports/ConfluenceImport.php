@@ -1,6 +1,6 @@
 <?php
 
-include( "/usr/wikia/source/wiki/maintenance/commandLine.inc" );
+include( "../../commandLine.inc" );
 include( "WikiaImport.php" );
 
 unset( $wgHTTPProxy );

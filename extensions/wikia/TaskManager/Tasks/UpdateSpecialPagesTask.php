@@ -30,6 +30,7 @@ class UpdateSpecialPagesTask extends BatchTask {
 	 * @access public
 	 */
 	public function execute( $params = null ) {
+		global $IP, $wgWikiaLocalSettingsPath;
 		$this->mData = $params;
 		$this->log( 'UpdateSpecialPagesTask started.' );
 		
@@ -42,8 +43,8 @@ class UpdateSpecialPagesTask extends BatchTask {
 		}
 		
 		$cmd = "SERVER_ID={$this->mParams['wikiId']} php " 
-			. '/usr/wikia/source/wiki/maintenance/updateSpecialPages.php '
-			. '--conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php';
+			. "$IP/maintenance/updateSpecialPages.php "
+			. "--conf $wgWikiaLocalSettingsPath";
 		
 		$this->log( "Running: {$cmd}" );
 		$out = wfShellExec( $cmd );

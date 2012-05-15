@@ -28,8 +28,7 @@ global $IP;
 if ( isset( $options['help'] ) ) {
 	echo(
 		"Usage: SERVER_ID=177 php PathFinder_initData.php " .
-		"--conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php " .
-		"--aconf /usr/wikia/conf/current/AdminSettings.php " .
+		"--conf $wgWikiaLocalSettingsPath " .
 		"--date=20110623 " .
 		"--s3conf=PATH_TO_S3_CONFIG\n\n"
 	);
