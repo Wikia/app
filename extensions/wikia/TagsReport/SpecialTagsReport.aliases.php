@@ -10,5 +10,5 @@ $aliases['en'] = array(
  * Polish
  */
 $aliases['pl'] = array(
-    'TagsReport' => array( 'RejestrZnaczników', 'TagsReport' ),
+    'TagsReport' => array( 'Rejestr_Znaczników', 'TagsReport' ),
 );
