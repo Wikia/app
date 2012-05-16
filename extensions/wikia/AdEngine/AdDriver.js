@@ -834,13 +834,13 @@ if (window.wgEnableKruxTargeting) {
 		})(); 
 }
 
+if (!window.adslots) window.adslots = [];
+
 var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
 
 if (!window.wgLoadAdDriverOnLiftiumInit && tgId != TG_AS_WRAPPERS_ARE_RENDERED) {
-	if (window.adslots) {
-		for (var i=0; i < window.adslots.length; i++) {
-			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
-		}
+	for (var i=0; i < window.adslots.length; i++) {
+		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
 	}
 }
 	
