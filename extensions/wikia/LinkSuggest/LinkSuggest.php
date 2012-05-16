@@ -110,11 +110,28 @@ function wfLinkSuggestGetTextUpperBound( $text ) {
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces;
 	wfProfileIn(__METHOD__);
-
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
 	$query = urldecode( trim( $wgRequest->getText('query') ) );
 	$query = str_replace(' ', '_', $query);
+
+	if (strlen($query) < 3) {
+		// enforce minimum character limit on server side		
+		if ($wgRequest->getText('format') == 'json') {
+			$out = Wikia::json_encode(array('suggestions'=>array(),'redirects'=>array()));
+			$ar = new AjaxResponse($out);
+			$ar->setCacheDuration(60 * 60); // cache results for one hour
+			$ar->setContentType('application/json; charset=utf-8');
+	   	}
+		else {
+			$out = '';
+			$ar = new AjaxResponse($out);
+			$ar->setCacheDuration(60 * 60);
+			$ar->setContentType('text/plain; charset=utf-8');
+		}
+
+		return $ar;
+	}
 
 	// Allow the calling-code to specify a namespace to search in (which at the moment, could be overridden by having prefixed text in the input field).
 	// NOTE: This extension does parse titles to try to find things in other namespaces, but that actually doesn't work in practice because jQuery
@@ -156,9 +173,7 @@ function getLinkSuggest() {
 	$redirResults = array();
 
 	$query = mb_strtolower($query);
-	$queryUpper = wfLinkSuggestGetTextUpperBound($query);
 	$query = addslashes($query);
-	$queryUpper = addslashes($queryUpper);
 
 	$db = wfGetDB(DB_SLAVE, 'search');
 
@@ -166,32 +181,46 @@ function getLinkSuggest() {
 		$commaJoinedNamespaces = count($namespaces) > 1 ?  array_shift($namespaces) . ', ' . implode(', ', $namespaces) : $namespaces[0];
 	}
 
-	$qcNamespaceClause = isset($commaJoinedNamespaces) ? 'AND qc_namespace IN (' . $commaJoinedNamespaces  . ')' : '';
 	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'AND page_namespace IN (' . $commaJoinedNamespaces . ')' : '';
 
-	$sql = "SELECT IFNULL(rd_title, page_title) AS link_title, page_title, page_namespace, SUM(qc_value) AS totalVal, page_is_redirect
-			FROM (SELECT * 
-				  FROM page 
-				  WHERE LOWER(page_title) >= '{$query}' 
-						AND LOWER(page_title) < '{$queryUpper}'
-				{$pageNamespaceClause}) matches   
+	$sql = "SELECT  IFNULL(rd_title, page_title) AS link_title,
+					rd_title,
+					page_title,
+					COALESCE(MAX(CASE WHEN LOWER(page_title) = '$query' THEN page_title ELSE null END)) AS exact_match,
+					page_title, page_namespace, page_is_redirect
+
+			FROM page IGNORE INDEX (`name_title`)
 
 			LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
 
-			LEFT JOIN querycache ON qc_type = 'Mostlinked' {$qcNamespaceClause} AND (qc_title = page_title OR rd_title = qc_title)
+			WHERE LOWER(page_title) LIKE '{$query}%' {$pageNamespaceClause}
 
-			GROUP BY link_title HAVING min(page_is_redirect+1) -- i had to add one because min ignores 0 results. grr!
-			ORDER BY totalVal DESC, page_is_redirect ASC
+			GROUP BY link_title
+
 			LIMIT 10
 			";
 
 	$res = $db->query($sql);
 
 	while($row = $db->fetchObject($res)) {
+
+		$pageTitle = $row->exact_match === null ? $row->page_title : $row->exact_match;
+
 		$title = wfLinkSuggestFormatTitle($row->page_namespace, $row->link_title);
-		$results[] = $title;
-		if ($row->page_title != $row->link_title) {
-			$redirTitle = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
+
+		if ($row->exact_match === null) {
+			$pageTitle = $row->page_title;
+			$results[] = $title;
+			
+		} else {
+			//exact matches get pushed to the top
+			$pageTitle = $row->exact_match;
+			array_unshift($results, $title);
+		}
+		
+
+		if ($pageTitle != $row->link_title) {
+			$redirTitle = wfLinkSuggestFormatTitle($row->page_namespace, $pageTitle);
 			$redirResults[$title] = $redirTitle;
 		}
 	}
@@ -215,7 +244,9 @@ function getLinkSuggest() {
 	$format = $wgRequest->getText('format');
 
 	if ($format == 'json') {
-		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => array_values($results), 'redirects' => $redirResults));
+		$result_values = array_values($results);
+
+		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirResults));
 
 	// legacy: LinkSuggest.js uses this
 	} else {
