@@ -742,7 +742,7 @@ class SiteWideMessages extends SpecialPage {
 	//Static functions (used in hooks)
 	static function getAllUserMessagesId($user, $filter_seen = true) {
 		global $wgCityId, $wgLanguageCode;
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB ;
 		$localCityId = isset($wgCityId) ? $wgCityId : 0;
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
@@ -807,7 +807,6 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_status IN (' . join(',', $status) . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
-			. " AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId)"
 			. ';'
 			, __METHOD__
 		);
