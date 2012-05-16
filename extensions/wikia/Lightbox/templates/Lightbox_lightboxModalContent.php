@@ -26,16 +26,16 @@
 	
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
 		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
-		<h1><a href="{{fileUrl}}">{{fileTitle}}</a></h1>
-		<a href="{{rawImageUrl}}" class="see-full-size-link"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
+		<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
+		<a href="{{rawImageUrl}}" class="see-full-size-link" target="_blank"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
 		{{#caption}}
 			<div class="caption">{{caption}}</div>
 		{{/caption}}
 		<div class="user-details">
 			<img class="avatar" src="{{userThumbUrl}}">
-			<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}">{{userName}}</a>') ?>
+			<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>
 			<span class="posted-in">
-				<?= wfMsg('lightbox-header-posted-in', '{{#articles}}<span class="posted-in-article"><a href="{{articleUrl}}">{{articleTitle}}</a></span>{{/articles}}') ?>
+				<?= wfMsg('lightbox-header-posted-in', '{{#articles}}<span class="posted-in-article"><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></span>{{/articles}}') ?>
 			</span>
 		</div>
 	</script>
@@ -71,12 +71,12 @@
 		<button class="more-info-close"><?= wfMsg('lightbox-infobox-back-button') ?></button>
 		<div class="infobox-spacer"></div>
 		<div class="infobox-details">
-			<h1><a href="">{{fileTitle}}</a></h1>
+			<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
 			<div class="user-details">
 				<img class="avatar" src="{{userThumbUrl}}">
-				<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}">{{userName}}</a>') ?>
+				<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>
 				<span class="posted-in">
-					<?= wfMsg('lightbox-header-posted-in', '<a href="{{articles.articleUrl}}">Miss Piggy</a>') ?>
+					<?= wfMsg('lightbox-header-posted-in', '{{#articles}}<span class="posted-in-article"><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></span>{{/articles}}') ?>
 				</span>
 			</div>
 			{{#caption}}
@@ -90,7 +90,7 @@
 			<h2><?= wfMsg('lightbox-infobox-filelinks-heading') ?></h2>
 			<ul>
 			{{#articles}}
-				<li><a href="{{articleUrl}}">{{articleTitle}}</a></li>
+				<li><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></li>
 			{{/articles}}
 			</ul>
 		</div>

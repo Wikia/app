@@ -13,28 +13,23 @@ $carousel-overlay-duration: 600ms;
 
 .LightboxModal {
 	overflow: hidden;
-	&:hover { 
-		.lightbox-arrows { 
-			span { 
-				@include opacity(80); 
-			} 
-		} 
-	} 
-	.WikiaLightbox {
-		height: 100%;
-		&.infobox-mode {
-			.infobox {
-				display: block;
-			}
-			.lightbox-arrows,
-			.LightboxHeader,
-			.LightboxCarousel,
-			.media {
-				display: none;
-			}
+	&.infobox-mode {
+		>.close, 
+		.infobox {
+			display: block;
+		}
+		.lightbox-arrows,
+		.LightboxHeader,
+		.LightboxCarousel,
+		.media {
+			display: none;
 		}
 	}
-	.close {
+	.WikiaLightbox {
+		height: 100%;
+	}
+	>.close {
+		display: none;
 		z-index: 2;
 	}
 	.infobox {
@@ -90,6 +85,14 @@ $carousel-overlay-duration: 600ms;
 			top: 4px;
 			width: 16px;
 		}
+		.posted-in-article {
+			&:before {
+				content: ', ';
+			}
+			&:first-child:before {
+				content: '';
+			}
+		}
 	}
 	.video-media {
 		height: auto;
@@ -104,10 +107,15 @@ $carousel-overlay-duration: 600ms;
 		left: -99999999px;
 	}
 	.lightbox-arrows {
+		&.hidden {
+			span {
+				@include opacity(0);
+			}
+		}
 		span {
 			@include border-radius(4px);
 			@include box-shadow( 0px, 0px, 10px, darken($color-page,50%), false, 2px);
-			@include opacity(0); 
+			@include opacity(80); 
 			@include transition-shorthand(opacity 100ms linear); 
 			background: $color-buttons;
 			cursor: pointer;
@@ -247,17 +255,12 @@ $carousel-overlay-duration: 600ms;
 			clear: left;
 			margin-top: 2px;
 		}
+		.close {
+			margin: 0;
+		}
 		.more-info-button {
 			float: right;
-			margin-right: 50px;
-		}
-		.posted-in-article {
-			&:before {
-				content: ', ';
-			}
-			&:first-child:before {
-				content: '';
-			}
+			margin-right: 20px;
 		}
 		.see-full-size-link {
 			border-left: 1px solid $color-page-border;
