@@ -63,7 +63,8 @@ var WikiaSearchApp = {
 							'sterm': encodeURIComponent(v.replace(/ /g, '_')),
 							'rver': 0
 						});
-						window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_')));
+						// slashes can't be urlencoded because they break routing
+						window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_'))).replace(encodeURIComponent('/'), '/');
 					},
 					appendTo: '#WikiaSearch',
 					deferRequestBy: 50,
