@@ -3,13 +3,13 @@
 .WikiaArticle {
 	.wikiahubs-pulse {
 		height: 160px;
-		position:relative;
-		padding-bottom:9px;
+		position: relative;
+		padding-bottom: 9px;
 		border-bottom: 1px solid #D8E3E7;
 		.social {
-			position:absolute;
-			right:0;
-			top:-5px;
+			position: absolute;
+			right: 0;
+			top: -5px;
 			a {
 				display: inline-block;
 				width: 24px;
@@ -34,48 +34,48 @@
 		}
 		.pulse-content {
 			.search {
-				overflow:hidden;
-				clear:both;
+				overflow: hidden;
+				clear: both;
 				.WikiaSearch {
-					right:0;
-					bottom:5px;
+					right: 0;
+					bottom: 5px;
 					label { 
 						text-align: left;
 						font-size: 15px;
 						line-height: 27px;
-						color:#7E7E7E;
-						width: 139px;
+						color: #7E7E7E;
+						width: 160px;
 						display: inline-block;
 					}
-					#HubSearch {
-						width: 290px;
+					button.wikia-button {
+						float: none;
 					}
 				}
 			}
 			.boxes {
-				margin-top:10px;
-				overflow:hidden;
-				clear:both;
+				margin-top: 10px;
+				overflow: hidden;
+				clear: both;
 			}
 			.box{
-				width:144px;
-				float:left;
-				margin-left:10px;
+				width: 144px;
+				float: left;
+				margin-left: 10px;
 				border-left: 1px dotted #808080;
-				padding-left:10px;			
+				padding-left: 10px;			
 				h5 {
 					font-size: 15px;
-					line-height:1.5em;
-					color:#7E7E7E;
+					line-height: 1.5em;
+					color: #7E7E7E;
 				}
 				big {
 					font-size: 23px;
-					color:#3A3A3A;
-					font-weight:bold;
+					color: #3A3A3A;
+					font-weight: bold;
 				}
 				&:first-child {
 					width:155px;
-					margin-left:0;
+					margin-left: 0;
 					border-left: 0;
 					padding-left: 0;
 				}

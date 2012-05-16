@@ -139,13 +139,10 @@ img.WikiaPhotoGalleryProgress {
 }
 
 #WikiaPhotoGallerySearch input[type="text"] {
-	margin-right: 8px;
 	width: 193px;
 }
 
 #WikiaPhotoGallerySearch button {
-	height: 28px;
-	vertical-align: top;
 	*width: 35px; /* IE7 */
 }
 
