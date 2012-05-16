@@ -12,6 +12,8 @@ $wgExtensionMessagesFiles['StaffPowers'] = dirname(__FILE__) . '/StaffPowers.i18
 $wgHooks['BlockIp'][] = 'efPowersMakeUnblockable';
 $wgAvailableRights[] = 'unblockable';
 $wgGroupPermissions['staff']['unblockable'] = true;
+$wgGroupPermissions['helper']['unblockable'] = true;
+$wgGroupPermissions['vstf']['unblockable'] = true;
 
 function efPowersMakeUnblockable( $block, $user ) {
 	$blockedUser = User::newFromName( $block->getRedactedName() );
