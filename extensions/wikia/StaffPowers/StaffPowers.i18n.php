@@ -19,7 +19,7 @@ $messages['en'] = array(
  * @author Lloffiwr
  */
 $messages['qqq'] = array(
-	'staffpowers-ipblock-aborted' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
+	'powers-ipblock-aborted' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
 );
 
 /** Afrikaans (Afrikaans)
