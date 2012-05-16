@@ -22,7 +22,7 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 		}
 		
 		//Module::get('FinishCreateWiki', 'FinishCreate')->getData();
-		$this->app->sendRequest('FinishCreateWiki', 'FinishCreate');
+		F::app()->sendRequest('FinishCreateWiki', 'FinishCreate');
 		
 		wfProfileOut( __METHOD__ );
 	}
