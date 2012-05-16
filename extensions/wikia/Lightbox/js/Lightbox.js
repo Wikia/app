@@ -523,6 +523,9 @@ var Lightbox = {
 		}
 	},
 	hideOverlay: function(overlayName, delay) {
+		if(overlayName == 'carousel') {
+			return;
+		}
 		var overlay = Lightbox.openModal[overlayName];
 		// if Lightbox is not being hidden and hiding has not already started yet
 		if(!overlay.hasClass('hidden') && !Lightbox.eventTimers[overlayName] && overlay.data('overlayactive')) {

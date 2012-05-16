@@ -1,0 +1,158 @@
+
+// @autosprite-start
+@mixin sprite-Lightbox-base() {
+	background-color: transparent;
+	background-image: url('/extensions/wikia/Lightbox/images/sprite-Lightbox.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+@mixin sprite-Lightbox($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: filmstrip_close_black.png@72,0,62b8bf82657cb2f2bec1358cc7a5b31e
+	@if $imageName == 'filmstrip_close_black' {
+		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: filmstrip_close_white.png@106,0,9d462311eb073b01d6899476a26d284d
+	@if $imageName == 'filmstrip_close_white' {
+		$image-x: 106px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: filmstrip_open_black.png@140,0,87900ed49b9ba1c02be04e3a79c0e120
+	@if $imageName == 'filmstrip_open_black' {
+		$image-x: 140px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: filmstrip_open_white.png@174,0,1377b57ca447d8bcc11d95d528b9d348
+	@if $imageName == 'filmstrip_open_white' {
+		$image-x: 174px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: large_lightbox_black.png@208,0,4b0394ac7c96a720d1d8fea04eeea7e1
+	@if $imageName == 'large_lightbox_black' {
+		$image-x: 208px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: large_lightbox_white.png@238,0,5cbd6258aca219d3bd751dd9788edb85
+	@if $imageName == 'large_lightbox_white' {
+		$image-x: 238px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: more_info_black.png@268,0,512f9f0664edf80b7f00a2e388994d3e
+	@if $imageName == 'more_info_black' {
+		$image-x: 268px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: more_info_white.png@294,0,af8c6afd39d4d7e9c3afd7ed152ff271
+	@if $imageName == 'more_info_white' {
+		$image-x: 294px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: share_black.png@320,0,aaef6fe108c9cc950d903bfd1b3c6ed8
+	@if $imageName == 'share_black' {
+		$image-x: 320px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: share_white.png@344,0,0257bbd1ac176729e6ccacafaf004280
+	@if $imageName == 'share_white' {
+		$image-x: 344px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: small_lightbox_black.png@368,0,0c9ed12fd36a2fd71f67bd4ec008d7d2
+	@if $imageName == 'small_lightbox_black' {
+		$image-x: 368px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: small_lightbox_white.png@398,0,1f7ab6560944d9c0a7a338fb99736838
+	@if $imageName == 'small_lightbox_white' {
+		$image-x: 398px;
+		$image-y: 0px;
+		$image-width: 18px;
+		$image-height: 15px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0px - $image-x;
+		$position-y: 0px - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-Lightbox-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-Lightbox-base;
+	@include sprite-Lightbox($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-Lightbox-deep($width: 0,$height: 0) {
+	@include sprite-Lightbox-base;
+	&.filmstrip-close-black {
+		@include sprite-Lightbox('filmstrip_close_black',$width,$height);
+	}
+	&.filmstrip-close-white {
+		@include sprite-Lightbox('filmstrip_close_white',$width,$height);
+	}
+	&.filmstrip-open-black {
+		@include sprite-Lightbox('filmstrip_open_black',$width,$height);
+	}
+	&.filmstrip-open-white {
+		@include sprite-Lightbox('filmstrip_open_white',$width,$height);
+	}
+	&.large-lightbox-black {
+		@include sprite-Lightbox('large_lightbox_black',$width,$height);
+	}
+	&.large-lightbox-white {
+		@include sprite-Lightbox('large_lightbox_white',$width,$height);
+	}
+	&.more-info-black {
+		@include sprite-Lightbox('more_info_black',$width,$height);
+	}
+	&.more-info-white {
+		@include sprite-Lightbox('more_info_white',$width,$height);
+	}
+	&.share-black {
+		@include sprite-Lightbox('share_black',$width,$height);
+	}
+	&.share-white {
+		@include sprite-Lightbox('share_white',$width,$height);
+	}
+	&.small-lightbox-black {
+		@include sprite-Lightbox('small_lightbox_black',$width,$height);
+	}
+	&.small-lightbox-white {
+		@include sprite-Lightbox('small_lightbox_white',$width,$height);
+	}
+}
+// @autosprite-end
