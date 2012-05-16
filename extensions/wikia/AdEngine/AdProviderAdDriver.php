@@ -95,7 +95,9 @@ EOT;
 			$out .= '</div>';
 		}
 
-//		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
+		// 2012/05/16 wlee: for purposes of ads A/B/C test, Liftium 
+		// setup code is emitted in Oasis_Index.php
+		//$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
 
 		return $out;
 	}

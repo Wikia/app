@@ -44,8 +44,6 @@
 
 	<?= $globalVariablesScript ?>
 	
-	<?=  AdEngine::getLiftiumOptionsScript() //this script has a dependency on script from the AbTesting extension, which is in $globalVariablesScript above ?>
-
 	<?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 	<!-- Make IE recognize HTML5 tags. -->
@@ -53,8 +51,6 @@
 		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
 	<![endif]-->
 	
-	<?= $adsABtesting; ?>
-
 	<?php if( !$jsAtBottom ):?>
 		<!--[if lt IE 8]>
 			<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
@@ -82,6 +78,10 @@
 
 <!-- googleAnalytics -->
 <?= $googleAnalytics ?>
+
+<?=  AdEngine::getLiftiumOptionsScript() //this script has a dependency on script from the AbTesting extension, which is in $globalVariablesScript above ?>
+
+<?= $adsABtesting; ?>
 
 <?= $body ?>
 
