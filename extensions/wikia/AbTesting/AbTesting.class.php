@@ -9,27 +9,6 @@
 class AbTesting {
 
 	/**
-	 * Add global JS variables to give fake beacon_id and varnishTime variables on dev environments.
-	 *
-	 * NOTE: CURRENTLY THIS IS ONLY CALLED IN DEV ENVIRONMENTS, SO DON'T PUT OTHER VARS IN HERE UNLESS YOU
-	 * CHANGE THAT IN AbTesting.setup.php
-	 *
-	 * @param array $vars global variables list
-	 * @return boolean return true
-	 */
-	public static function onMakeGlobalVariablesScript($vars) {
-		global $wgDevelEnvironment;
-
-		// To be able to test on dev-boxes, we want some fake beacon and varnishTime values.
-		if(!empty($wgDevelEnvironment)){ // redundant safe-guard (this hook should only be called in dev anyway).
-			$vars['beacon_id'] = 'ThisIsFake'; // base 36, obviously-fake data so that devs don't get confused
-			$vars['varnishTime'] = date('r'); // Looks like "Wed, 09 May 2012 21:45:20 GMT" and is the RFC 2822 timestamp that varnish normally returns in the beacon/page-view call.
-		}
-
-		return true;
-	}
-
-	/**
 	 * Add inline JS in <head> section
 	 *
 	 * NOTE: This is embedded instead of being an extra request because it needs to be done this early

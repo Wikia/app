@@ -23,8 +23,3 @@ $wgExtensionCredits['other'][] = array(
 
 // Embed the experiment/treatment config in the head scripts.
 $wgHooks['SkinGetHeadScripts'][] = 'AbTesting::onSkinGetHeadScripts';
-
-// On development environments, give testable beacon_id / varnishTime values.
-if(!empty($wgDevelEnvironment)){
-	$wgHooks['MakeGlobalVariablesScript'][] = 'AbTesting::onMakeGlobalVariablesScript';
-}
