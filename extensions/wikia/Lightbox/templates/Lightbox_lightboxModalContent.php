@@ -3,8 +3,8 @@
 	</header>
 
 	<div class="lightbox-arrows">
-		<span id="LightboxNext" class="next"></span>
-		<span id="LightboxPrevious" class="previous"></span>
+		<span id="LightboxNext" class="arrow next"></span>
+		<span id="LightboxPrevious" class="arrow previous"></span>
 	</div>
 	
 	<div class="media">

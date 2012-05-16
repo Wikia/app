@@ -303,7 +303,7 @@ var Lightbox = {
 				// attach event handlers
 				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
 					Lightbox.showOverlay('arrows');
-					if(!($(evt.target).is('span'))) {
+					if(!($(evt.target).is('.arrow'))) {
 						Lightbox.hideOverlay('arrows');
 					}
 					var time = new Date().getTime();
