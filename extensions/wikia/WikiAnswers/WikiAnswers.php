@@ -6,7 +6,7 @@ $wgForceSkin = 'oasis';
 $wgUseNewAnswersSkin = false;
 
 // ask a question box
-$wgAutoloadClasses['WikiAnswersController'] = dirname( __FILE__ ) . '/WikiAnswersController.php';
+$wgAutoloadClasses['WikiAnswersController'] = dirname( __FILE__ ) . '/WikiAnswersController.class.php';
 
 // i18n
 $wgExtensionMessagesFiles['WikiAnswers'] = dirname( __FILE__ ) . '/WikiAnswers.i18n.php';
