@@ -84,46 +84,45 @@ $form-negative-side-padding: $form-side-padding*-1;
 	.subtle {
 		color: $color-alternate-text;
 	}
-	.Result {
+	.Results {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.result {
 		@include clearfix;
-		margin-bottom: 19px;
+		list-style: none;
+		margin: 0 0 19px 0;
+		padding: 0;
 
-		h1 {
+		h1, h3 {
 			font-size: 16px;
 			margin: 0;
 		}
-		h2 {
-			border: none;
-			font-size: inherit;
-			margin: 0;
-			padding: 0;
-		}
-		nav {
+		ul {
 			@include clearfix;
+			list-style: none;
+			margin: 0;
+		}
 
-			ul {
-				margin: 0;
+		li {
+			color: $color-alternate-text;
+			float: left;
+			list-style: none;
+			margin: 0;
+			
+			&:before {
+				content: "\00a0|\00a0";
 			}
 
-			li {
+			&:first-child:before {
+				content: "";
+			}
+			
+			a {
 				color: $color-alternate-text;
-				float: left;
-				list-style: none;
-				margin: 0;
-				
-				&:before {
-					content: "\00a0|\00a0";
-				}
-
-				&:first-child:before {
-					content: "";
-				}
-				
-				a {
-					color: $color-alternate-text;
-					&:hover {
-						color: $color-links;
-					}
+				&:hover {
+					color: $color-links;
 				}
 			}
 		}
@@ -145,6 +144,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 			}
 		}
 		.redirect-title {
+			margin: 0;
+			padding: 0;
 			color: $color-alternate-text;
 
 			.ResultLink {

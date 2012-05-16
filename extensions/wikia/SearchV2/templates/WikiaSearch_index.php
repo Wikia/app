@@ -51,6 +51,7 @@
 				<p>No results were found for <em><?=$query?></em>. <strong>Showing results for <em><?=$results->getQuery()?></em>.</strong></p>
 				<? endif; ?>
 	
+			<ul class="Results">
 			<?php $pos = 0; ?>
 			<?php foreach( $results as $result ): ?>
 				<?php
@@ -78,6 +79,8 @@
 					}
 				?>
 			<?php endforeach; ?>
+			</ul>
+			
 			<?= $paginationLinks; ?>
 		<?php else: ?>
 			<p><i>No results found.</i></p>
