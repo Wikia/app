@@ -136,14 +136,16 @@ img.WikiaPhotoGalleryProgress {
 #WikiaPhotoGallerySearch {
 	float: right;
 	margin-top: 1em;
-	width: 245px;
 }
 
 #WikiaPhotoGallerySearch input[type="text"] {
+	margin-right: 8px;
 	width: 193px;
 }
 
 #WikiaPhotoGallerySearch button {
+	height: 28px;
+	vertical-align: top;
 	*width: 35px; /* IE7 */
 }
 
