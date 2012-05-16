@@ -269,14 +269,27 @@ var Lightbox = {
 				Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
 				Lightbox.openModal.infobox = Lightbox.openModal.find('.infobox');
 				Lightbox.openModal.media = Lightbox.openModal.find('.media');
+				Lightbox.openModal.arrows = Lightbox.openModal.find('.lightbox-arrows');
+				Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
 				
 				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
+				Lightbox.openModal.arrows.data('overlayactive', true);
+				Lightbox.openModal.header.data('overlayactive', true)
 				
 				Lightbox.setUpCarousel();
 				
 				var updateCallback = function(json) {
 					Lightbox.cache.details[Lightbox.current.title] = json;
 					Lightbox[Lightbox.current.type].updateLightbox(json);
+					Lightbox.showOverlay('carousel');
+					Lightbox.showOverlay('header');
+					Lightbox.hideOverlay('carousel', 2000);
+					Lightbox.hideOverlay('arrows', 2000);
+					Lightbox.hideOverlay('header', 2000);
+					
+					Lightbox.lightboxLoading = false;
+					Lightbox.log("Lightbox modal loaded");
+					/* lightbox loading ends here */
 				};
 
 				// Update modal with main image/video content								
@@ -289,6 +302,10 @@ var Lightbox = {
 				
 				// attach event handlers
 				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
+					Lightbox.showOverlay('arrows');
+					if(!($(evt.target).is('span'))) {
+						Lightbox.hideOverlay('arrows');
+					}
 					var time = new Date().getTime();
 					if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) {
 						Lightbox.eventTimers.lastMouseUpdated = time;
@@ -309,7 +326,8 @@ var Lightbox = {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.video.destroyVideo();
 					}
-					Lightbox.openModal.lightbox.addClass('infobox-mode');
+					//Lightbox.openModal.lightbox.addClass('infobox-mode');
+					Lightbox.openModal.addClass('infobox-mode')
 					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 						Lightbox.openModal.infobox.append(infoboxTemplate.mustache(json));
 					});
@@ -317,7 +335,8 @@ var Lightbox = {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.getMediaDetail({'title': Lightbox.current.title}, Lightbox.video.renderVideo);
 					}
-					Lightbox.openModal.lightbox.removeClass('infobox-mode');
+					//Lightbox.openModal.lightbox.removeClass('infobox-mode');
+					Lightbox.openModal.removeClass('infobox-mode');
 					Lightbox.openModal.infobox.html('');
 				});
 			}
@@ -325,10 +344,8 @@ var Lightbox = {
 	},
 	image: {
 		updateLightbox: function(data) {
-			
-			// TODO: if the lightbox is already as big as the window, don't shrink it. 
 			Lightbox.image.getDimensions(data.imageUrl, function(dimensions) {
-				
+
 				Lightbox.openModal.css({
 					top: dimensions.topOffset,
 					height: dimensions.modalHeight
@@ -351,13 +368,8 @@ var Lightbox = {
 					}).html(renderedResult);
 				
 				Lightbox.updateArrows();
-				Lightbox.renderHeader();
-				Lightbox.showOverlay('carousel');
-				Lightbox.hideOverlay('carousel', 2000);
 				
-				Lightbox.lightboxLoading = false;
-				Lightbox.log("Lightbox modal loaded");
-					
+				Lightbox.renderHeader();
 			});
 
 			/* get media details based on title - nirvana request or from template */
@@ -377,7 +389,8 @@ var Lightbox = {
 					modalMinHeight = Lightbox.modal.defaults.height,
 					windowHeight = $(window).height(),
 					modalHeight = windowHeight - topOffset*2,  
-					modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight;
+					modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
+					currentModalHeight = Lightbox.openModal.height();
 
 				// Just in case image is wider than 1000px
 				if(image.width() > 1000) {
@@ -393,7 +406,10 @@ var Lightbox = {
 					if(modalHeight < modalMinHeight) {
 						modalHeight = modalMinHeight;
 					}
-	
+					
+					// If currentModalHeight is greater than calculated modalHeight, keep modalHeight the same as currentModalHeight
+					modalHeight = currentModalHeight > modalHeight ? currentModalHeight : modalHeight;
+
 					// Calculate modal's top offset
 					var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
 					
@@ -406,7 +422,8 @@ var Lightbox = {
 				} else {
 					// Image is taller than screen, shorten image
 					imageHeight = modalHeight;
-					topOffset = topOffset - 5; // 5px modal border
+					// If currentModalHeight is greater than calculated modalHeight, adjust the top offset
+					topOffset = currentModalHeight > modalHeight ? topOffset - 5 : topOffset;
 				}
 				
 				topOffset = topOffset + $(window).scrollTop();
@@ -457,18 +474,13 @@ var Lightbox = {
 			});
 			
 			Lightbox.updateArrows();
-			Lightbox.renderHeader();
-			Lightbox.showOverlay('carousel');
-			Lightbox.hideOverlay('carousel', 2000);
 			
 			// if player script exists, run it
 			if(data.playerScript) {
 				$('body').append('<script>' + data.playerScript + '</script>');
 			}
 			
-			Lightbox.log("Lightbox modal loaded");
-			Lightbox.lightboxLoading = false;
-			
+			Lightbox.renderHeader();
 		},
 		getDimensions: function() {
 			// TODO: if the lightbox is already as big as the window, don't shrink it. 
@@ -476,8 +488,10 @@ var Lightbox = {
 			var topOffset = Lightbox.modal.defaults.topOffset,
 				modalMinHeight = Lightbox.modal.defaults.height,
 				windowHeight = $(window).height(),
+				currentModalHeight = Lightbox.openModal.height(),
 				modalHeight = windowHeight - topOffset*2 - 10, // 5px modal border
 				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
+				modalHeight = currentModalHeight > modalHeight ? currentModalHeight : modalHeight,
 				videoTopMargin = (modalHeight - Lightbox.modal.defaults.videoHeight) / 2;
 			
 				topOffset = topOffset + $(window).scrollTop();
@@ -495,9 +509,9 @@ var Lightbox = {
 		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderTemplate");	//TODO: replace with cache
 		Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 			var renderedResult = headerTemplate.mustache(json)
-			Lightbox.openModal.header.html(renderedResult).data('overlayactive', true);
-			Lightbox.showOverlay('header');
-			Lightbox.hideOverlay('header', 2000);
+			Lightbox.openModal.header
+				.html(renderedResult)
+				.prepend($(Lightbox.openModal.closeButton).clone(true, true));	// clone close button into header
 		});
 	},
 	showOverlay: function(overlayName) {
