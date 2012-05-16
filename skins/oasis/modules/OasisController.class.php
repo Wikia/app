@@ -324,16 +324,16 @@ class OasisController extends WikiaController {
 		$assets = Wikia::json_encode($assets);
 		$jsLoader = "<script type=\"text/javascript\">/*<![CDATA[*/
 		var wsl_assets = {$assets};
-		/* A+B */ var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
-		/* C */ // var toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
+		var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
+		if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { var toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); }
+		else { var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); }
 		(function(){ wsl.loadScript(toload); })();
 		/*]]>*/</script>";
 
 		// use loader script instead of separate JS files
 		$this->jsFiles = $jsLoader . $this->jsFiles;
 
-		//$jquery_ads = $this->assetsManager->getURL( 'oasis_jquery_ads_js' );
-		$jquery_ads = array();
+		$jquery_ads = $this->assetsManager->getURL( 'oasis_jquery_ads_js' );
 
 		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
 			for( $j = 0; $j < count( $jquery_ads ); $j++ ) {
@@ -342,7 +342,7 @@ class OasisController extends WikiaController {
 		}
 
 		$jquery_ads = Wikia::json_encode($jquery_ads);
-		$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ /* C */ wsl.loadScript({$jquery_ads}); })(); /*]]>*/</script>";
+		$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { wsl.loadScript({$jquery_ads}); } })(); /*]]>*/</script>";
 
 		wfProfileOut(__METHOD__);
 	}

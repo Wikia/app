@@ -2,6 +2,8 @@
 
 class AdProviderAdDriver implements iAdProvider {
 	
+	const HIGH_LOADPRIORITY_FLOOR = 11;
+	
 	public $enable_lazyload = true;
 
 	protected static $instance = false;
@@ -70,8 +72,20 @@ EOT;
 	if(!window.adslots) {
 	       window.adslots = [];
 	}
-	window.adslots.push(["$slotname", "{$slot['size']}", "DART"]);
+	window.adslots.push(["$slotname", "{$slot['size']}", "DART", {$slot['load_priority']}]);
 EOT;
+			if ($slot['load_priority'] >= self::HIGH_LOADPRIORITY_FLOOR) {
+				$out .= <<<EOT
+	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
+	if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) {
+		if (window.adDriverCanInit) {
+			AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
+		}
+	}
+	
+EOT;
+				
+			}
 		}
 
 		$out .= <<<EOT
@@ -81,7 +95,7 @@ EOT;
 			$out .= '</div>';
 		}
 
-		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
+//		$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
 
 		return $out;
 	}

@@ -2553,7 +2553,7 @@ if (LiftiumOptions.error_beacon !== false ){
 
 
 // Gentlemen, Start your optimization!
-if (Liftium.empty(LiftiumOptions.offline) && LiftiumOptions.autoInit !== false){
+if (Liftium.empty(LiftiumOptions.offline) && LiftiumOptions.autoInit != false){
 	Liftium.init();
 }
 

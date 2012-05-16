@@ -517,11 +517,15 @@ var AdDriverDelayedLoader = {
 	adNum: 0,
 	currentAd: null,
 	currentSlot: null,
+	highLoadPriorityFloor: 11,
+	runFinalize: false,
 	started: false,
-	init: function() {
-		AdDriverDelayedLoader.adDriverItems = new Array();
+	init: function(adDriverItems) {
+		AdDriverDelayedLoader.adDriverItems = adDriverItems ? adDriverItems : new Array();
 		AdDriverDelayedLoader.adNum = 0;
 		AdDriverDelayedLoader.currentAd = null;
+		AdDriverDelayedLoader.currentSlot = null;
+		AdDriverDelayedLoader.runFinalize = false;
 		AdDriverDelayedLoader.started = false;
 	}
 }
@@ -680,7 +684,15 @@ AdDriverDelayedLoader.loadNext = function() {
 		}
 	}
 	else {
-		AdDriverDelayedLoader.finalize();
+		var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
+		if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) {
+			if (AdDriverDelayedLoader.runFinalize) {
+				AdDriverDelayedLoader.finalize();
+			}						
+		}
+		else {
+			AdDriverDelayedLoader.finalize();
+		}
 	}
 
 	if (!AdDriverDelayedLoader.adDriverItems.length && typeof Liftium != 'undefined' && Liftium) {
@@ -715,6 +727,49 @@ AdDriverDelayedLoader.reorderItems = function() {
 	}
 
 	AdDriverDelayedLoader.adDriverItems = tmpItems;
+}
+
+// Move slots from the window.adslots buffer to AdDriverDelayedLoader's internal
+// queue. Slots that are moved are based on load priority. After all eligible
+// slots are moved. process internal queue.
+// @param int loadPriorityFloor process slots with a minimum load priority
+AdDriverDelayedLoader.prepareSlots = function(loadPriorityFloor) {
+	if (!AdDriverDelayedLoader.isRunning()) {
+		AdDriverDelayedLoader.reset();
+	}
+
+	var slots;
+	while (slots = AdDriverDelayedLoader.getNextSlotFromBuffer(loadPriorityFloor)) {
+		var slot = slots[0];
+		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(slot[0], slot[1], slot[2]));
+	}	
+	
+	if (!AdDriverDelayedLoader.started) {
+		AdDriverDelayedLoader.load();
+	}
+}
+
+// Get highest priority slot from buffer and remove. Destructively changes 
+// window.adslots
+// @param int loadPriorityFloor 
+// 
+AdDriverDelayedLoader.getNextSlotFromBuffer = function(loadPriorityFloor) {
+	var highestPriority = -1;
+	var highestPriorityIndex = -1;
+	for (var i=0; i<window.adslots.length; i++) {
+		if (window.adslots[i][3] >= loadPriorityFloor) {
+			if (window.adslots[i][3] > highestPriority) {
+				highestPriority = window.adslots[i][3];
+				highestPriorityIndex = i;
+			}			
+		}
+	}	
+	
+	if (highestPriorityIndex >= 0) {
+		return window.adslots.splice(highestPriorityIndex, 1);
+	}
+	
+	return null;
 }
 
 AdDriverDelayedLoader.load = function() {
@@ -757,6 +812,9 @@ AdDriverDelayedLoader.finalize = function() {
 		AdDriver.log('loading krux');
 		Krux.load(window.wgKruxCategoryId);
 	}
+
+	var loadTime = (new Date()).getTime() - wgNow.getTime();
+	$().log('AdDriver finished at ' + loadTime + ' ms');
 }
 //// END AdDriverDelayedLoader
 
@@ -776,18 +834,60 @@ if (window.wgEnableKruxTargeting) {
 		})(); 
 }
 
-if (window.adslots) {
-	for (var i=0; i < window.adslots.length; i++) {
-		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
+var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
+
+if (!window.wgLoadAdDriverOnLiftiumInit && tgId != TG_AS_WRAPPERS_ARE_RENDERED) {
+	if (window.adslots) {
+		for (var i=0; i < window.adslots.length; i++) {
+			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
+		}
 	}
 }
 	
-var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
-if (tgId == TG_ONLOAD) {
+if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
 	$(window).load(function() {
 		AdDriverDelayedLoader.load();
 	});
 }
 else {
-	Liftium.init(AdDriverDelayedLoader.load);
+	
+	var adDriverFuncsToExecute = [];
+	
+	if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) {
+		adDriverFuncsToExecute.push( function () {
+			window.adDriverCanInit = true;
+			AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
+		})
+		
+		var prepareLowPrioritySlots = function() {
+			AdDriverDelayedLoader.prepareSlots(0);
+			if (!AdDriverDelayedLoader.isRunning()) {
+				AdDriverDelayedLoader.finalize();
+			}
+			else {
+				AdDriverDelayedLoader.runFinalize = true;
+			}
+		}
+		
+		$(document).ready(function() {
+			if (window.adDriverCanInit === false) {
+				adDriverFuncsToExecute.push(prepareLowPrioritySlots);	
+			}
+			else {
+				prepareLowPrioritySlots();
+			}
+		})
+	}
+	else {
+		adDriverFuncsToExecute.push(function() {
+			AdDriverDelayedLoader.load();
+		})
+	}
+
+	Liftium.init(function() {
+		for(var i=0; i<adDriverFuncsToExecute.length; i++) {
+			adDriverFuncsToExecute[i]()
+		}
+			
+	});
 }
