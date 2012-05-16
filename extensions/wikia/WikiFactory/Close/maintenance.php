@@ -211,7 +211,7 @@ class CloseWikiMaintenance {
 			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 
-				$this->log( __CLASS__, "info", "removing folder {$folder}" );
+				$this->log( "removing folder {$folder}" );
 				if( is_dir( $wgUploadDirectory ) ) {
 			        /**
 					 * what should we use here?
