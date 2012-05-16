@@ -233,18 +233,7 @@ class OasisController extends WikiaController {
 
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 
-		// decide where JS should be placed (only add JS at the top for special and edit pages)
-		if (ArticleAdLogic::isSearch()) {
-			$this->jsAtBottom = true;	// Liftium.js (part of AssetsManager) 
-							// must be loaded after LiftiumOptions
-							// variable is set in page source			
-		}
-		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
-			$this->jsAtBottom = false;
-		}
-		else {
-			$this->jsAtBottom = true;
-		}
+		$this->jsAtBottom = true;
 
 		// load WikiaScriptLoader
 		$this->wikiaScriptLoader = '';
