@@ -4,33 +4,6 @@ class HubService extends Service {
 	private static $comscore_prefix = 'comscore_';
 
 	/**
-	 * get proper PageId for analytics provider Aperture
-	 * @global boolean $wgApertureIncludeCityId
-	 * @param int $cityId
-	 * @return int 
-	 */
-	public static function getAperturePageId($cityId) {
-		global $wgApertureIncludeCityId;
-				
-		$catInfo = WikiFactory::getCategory($cityId);
-		// if no hub, use Lifestyle
-		if (empty($catInfo)) {
-			$lifestyleHub = WikiFactoryHub::getInstance()->getCategory(WikiFactoryHub::CATEGORY_ID_LIFESTYLE);
-			$catInfo = self::initCategoryInfo(WikiFactoryHub::CATEGORY_ID_LIFESTYLE, $lifestyleHub['name']);
-		}		
-		
-		// normalize category id
-		$catId = sprintf("%03d", $catInfo->cat_id);
-		
-		$pageId = $catId;		
-		if (!empty($wgApertureIncludeCityId)) {
-			$pageId .= $cityId;
-		}
-		
-		return $pageId;		
-	}
-	
-	/**
 	 * get proper category to report to Comscore for cityId
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
