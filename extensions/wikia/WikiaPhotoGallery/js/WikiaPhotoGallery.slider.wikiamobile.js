@@ -1,72 +1,47 @@
 /*global WikiaMobile: true */
 
-require('loader', function(loader){
-	window.WikiaPhotoGallerySlider = {
-		sliderId: null,
+$(function(){
+	var sliders = document.getElementsByClassName('wkSlider'),
+		i = sliders.length,
+		width = window.innerWidth,
+		height = window.innerHeight,
+		width = (height > width) ? width : height,
+		slider,
+		size = 'big',
+		sizePx;
 
-		init: function(sliderId) {
-			this.sliderId = sliderId;
+	function onLoad(plc){
+		return function(){
+			var url = this.src;
+			plc.className += ' fade';
+			setTimeout(function(){
+				plc.style.backgroundImage = 'url(' + url + ')';
+				plc.className += 'In';
+			}, 100 + ~~(Math.random() * 400));
+		}
+	}
 
-			var slider = $('#wikiaPhotoGallery-slider-body-' + sliderId ),
-			initialImageId = 0, //for now always first
-			initialSlider = $('#wikiaPhotoGallery-slider-' + sliderId + '-' + initialImageId),
-			image = initialSlider.find('a img');
+	while(--i >= 0){
+		slider = sliders[i];
 
-			image.one('load',function(){
-				loader.hide(slider[0]);
-			});
-			loader.show(slider[0],{center:true});
+		var imgs = slider.getElementsByClassName('img'),
+			l = imgs.length,
+			j = 0;
 
-			//ensure that there are no more than 4 images in the slider
-			//the 'mosaic' style slider for www hubs has 5 images
-			slider.find('li').each(function(index, element) {
-				if (index > 3) {
-					$(element).remove();
-				}
-			});
+		if(l == 5 || width <= 480){
+			size = 'small';
+		}else if(width <= 680){
+			size = 'med';
+		}
 
-			//select nav
-			initialSlider.find('.nav').addClass('selected');
+		slider.className += size + ' on';
 
-			//show description
-			initialSlider.find('.description').addClass('visible');
+		for(; j < l; j++){
+			var img = new Image(),
+				src = imgs[j].getAttribute('data-src-' + size);
 
-			//load image
-			image.show().attr('src', image.data('src'));
-
-			//bind events
-			slider.delegate('.nav', 'click', function() {
-				WikiaPhotoGallerySlider.scroll($(this));
-			});
-
-			slider.show();
-		},
-
-		scroll: function(nav) {
-			//setup variables
-			var parentNav = nav.parent(),
-			image = parentNav.find('a img'),
-			imageData = image.data('src'),
-			slider = parentNav.parents('.wikiaPhotoGallery-slider-body');
-
-			//set 'selected' class
-			slider.find('.nav').removeClass('selected');
-			nav.addClass('selected');
-
-			//show relevant description
-			slider.find('.description').removeClass('visible');
-			parentNav.find('.description').addClass('visible');
-
-			//show relevant img
-			slider.find('a img').hide();
-			if( imageData && imageData != image.attr('src')) {
-				image.one('load',function() {
-					loader.hide(slider[0]);
-				});
-				image.attr('src', imageData);
-				loader.show(slider[0],{center:true});
-			}
-			image.show();
+			img.onload = onLoad(imgs[j]);
+			img.src = src;
 		}
 	}
 });

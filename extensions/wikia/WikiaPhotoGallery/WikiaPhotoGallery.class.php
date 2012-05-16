@@ -1260,8 +1260,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
-
-		$skin = $this->getSkin();
 		
 		$orientation = $this->getParam('orientation');
 
@@ -1278,7 +1276,14 @@ class WikiaPhotoGallery extends ImageGallery {
 			);
 		}
 
-		$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], $imagesDimensions);
+		if( F::app()->checkSkin( 'wikiamobile' ) ){
+			$smallImage = new ImageServing(null, 300, array('w' => 300, 'h' => 145));
+			$mediumImage = new ImageServing(null, 460, array('w' => 460, 'h' => 220));
+			$bigImage = new ImageServing(null, 660, array('w' => 660, 'h' => 330));
+		}else {
+			$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], $imagesDimensions);
+		}
+
 
 		// setup image serving for navigation thumbnails
 		if ( $orientation == 'mosaic' ) {
@@ -1313,13 +1318,22 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$img = wfFindFile( $nt, $time );
 			if ( !WikiaVideoService::isFileTypeVideo($img) && is_object($img) && ($nt->getNamespace() == NS_FILE)) {
-				$pageId = $nt->getArticleID();
 
-				// generate cropped version of big image (fit within 660x360 box)
-				// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
-				// so this also scales image UP if it is too small (stretched is better than blank)
-				// max() added due to BugId:20644
-				$imageUrl = $imageServingForImages->getUrl($img, max($imagesDimensions['w'], $img->getWidth()), max($imagesDimensions['h'], $img->getHeight()));
+				if( F::app()->checkSkin( 'wikiamobile' ) ){
+					$imageUrl = array(
+						$smallImage->getUrl($img),
+						$mediumImage->getUrl($img),
+						$bigImage->getUrl($img, max(660, $img->getWidth()), max(330, $img->getHeight()))
+					);
+				}else{
+					// generate cropped version of big image (fit within 660x360 box)
+					// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
+					// so this also scales image UP if it is too small (stretched is better than blank)
+					// max() added due to BugId:20644
+					$imageUrl = $imageServingForImages->getUrl($img, max($imagesDimensions['w'], $img->getWidth()), max($imagesDimensions['h'], $img->getHeight()));
+				}
+
+
 				// generate navigation thumbnails
 				$thumbUrl = $imageServingForThumbs->getUrl($img, $img->getWidth(), $img->getHeight());
 
@@ -1381,14 +1395,9 @@ class WikiaPhotoGallery extends ImageGallery {
 				array($this->mData['id'])
 			);
 
-			$am = F::build( 'AssetsManager', array(), 'getInstance' );
-
-			//load WikiaMobile resources if needed usign JSSnippets filtering mechanism, see last parameter
+			//load WikiaMobile resources if needed using JSSnippets filtering mechanism
 			$html .= F::build('JSSnippets')->addToStack(
-				array( 'wikiaphotogallery_slider_js_wikiamobile', 'wikiaphotogallery_slider_scss_wikiamobile' ),
-				array(),
-				'WikiaPhotoGallerySlider.init',
-				array( $this->mData['id'] )
+				array( 'wikiaphotogallery_slider_js_wikiamobile', 'wikiaphotogallery_slider_scss_wikiamobile' )
 			);
 		}
 

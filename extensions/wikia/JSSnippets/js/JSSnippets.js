@@ -24,13 +24,15 @@ var JSSnippets = (function(){
 		var newArr = [],
 			origLen = origArr.length,
 			found,
-			x, y, l;
+			x, y, l,
+			elm;
 
 		for(x = 0; x < origLen; x++){
 			found = undefined;
+			elm = (origArr[x].url ? origArr[x].url : origArr[x]);
 
 			for(y = 0, l = newArr.length; y < l; y++){
-				if(origArr[x] === newArr[y]){
+				if(elm === (newArr[y].url ? newArr[y].url : newArr[y])){
 					found = true;
 					break;
 				}

@@ -14,7 +14,7 @@ define('ads', ['events'], function(ev){
 		adSlot = d.getElementById('wkAdPlc');
 
 	function moveSlot(plus){
-		adSlotStyle.top = Math.min((w.pageYOffset + w.innerHeight - 50 + ~~plus), ftrTop) + 'px';
+		adSlotStyle.top = Math.min((w.pageYOffset + w.innerHeight - 50 + ~~plus), ftr.offsetTop + 150) + 'px';
 	}
 
 	if(adSlot){
@@ -22,7 +22,7 @@ define('ads', ['events'], function(ev){
 			close = d.getElementById('wkAdCls'),
 			adSlotStyle = adSlot.style,
 			//+150 to have space for the ad
-			ftrTop = d.getElementById('wkFtr').offsetTop + 150,
+			ftr = d.getElementById('wkFtr'),
 			i = 0,
 			click = ev.click,
 			adExist = function(){

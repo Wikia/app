@@ -1,188 +1,254 @@
-@import "../../WikiaMobile/css/mixins/box-shadow";
-@import "../../WikiaMobile/css/variables";
+.wkSlider{
+	margin: 10px auto;
+	width: 570px;
+	height: 280px;
 
-.WikiaPhotoGalleryPreview {
-	height: 233px;
-	width: 300px;
-	overflow: hidden;
-	margin: 5px auto;
-}
-.wikiaPhotoGallery-slider-body{
-	clear:both;
-	overflow: hidden;
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background-color: $border-color;
-	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
-	-webkit-focus-ring-color: rgba( 0,0,0,0 );
+	.img{
+		position: relative;
+		display: inline-block;
+		background-image: url('/extensions/wikia/WikiaPhotoGallery/images/wikiamobile_img_placeholder.png'); /* base64 */
+		background-color: #EEE;
+		background-size: 25%;
+		background-repeat: no-repeat;
+		background-position: center;
+		-webkit-transition: opacity .3s;
+		width: 280px;
+		height: 280px;
+		margin-bottom: 10px;
 
-	ul {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		margin: 0;
-		padding: 0;
-	}
-
-	.nav {
-		display: block;
-		margin: 0;
-		position: absolute;
-		bottom: 5px;
-		height: 60px;
-		width: 24%;
-		text-align:center;
-		z-index:1;
-
-		img {
-			cursor: pointer;
+		& > a {
 			display: inline-block;
-			height: 60px;
+			height: 100%;
 			width: 100%;
-			max-width: 120px;
-		}
-
-		&.selected img {
-			@include box-shadow(0 0 10px $border-color);
 		}
 	}
 
-	.wikiaPhotoGallery-slider {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		display: none;
-	}
-
-	.description {
-		bottom: 70px;
-		left: 0;
-		color: $descriptionTextColor;
+	.fade {
 		opacity: 0;
-		position: absolute;
-		width: 100%;
-		line-height: 1.2em;
-		background-color: $descriptionBackgroundColor;
-		pointer-events: none;
-		z-index:1;
-		-webkit-transition: opacity .6s;
-		-moz-transition: opacity .6s;
-		-o-transition: opacity .6s;
-		transition: opacity .6s;
+	}
 
-		h2, p {
-			margin: 0 0 0 5px;
-			overflow: hidden;
-			font-size: small;
-		}
+	.fadeIn{
+		opacity: 1;
+		background-size: auto;
+		background-position: 30%;
 
-		&.visible {
-			opacity: .7;
+		.cap {
+			opacity: 1;
 		}
+	}
+
+	&.on{
+		display: block;
 	}
 }
 
-.wikiaPhotoGallery-slider-0 .nav {
-	right: 75%;
+.small{
+	width: 300px;
+	height: 145px;
+
+	.img{
+		width: 145px;
+		height: 145px;
+	}
 }
 
-.wikiaPhotoGallery-slider-1 .nav {
-	right: 50%;
+.med{
+	width: 460px;
+	height: 225px;
+
+	.img{
+		width: 225px;
+		height: 225px;
+	}
 }
 
-.wikiaPhotoGallery-slider-2 .nav {
-	right: 25%;
-}
-
-.wikiaPhotoGallery-slider-3 .nav {
+.cap {
+	position: absolute;
+	bottom: 0;
+	left: 0;
 	right: 0;
+	padding: 5px;
+	background-color: rgba(0,0,0,.6);
+	color: white;
+	font-size: small;
+	line-height: 15px;
+	opacity: 0;
+
+	span {
+		height: 30px;
+		display: table-cell;
+		vertical-align: bottom
+	}
 }
 
-@media screen and (min-width: 321px) and ( orientation: landscape ) {
-
-	.WikiaPhotoGalleryPreview {
-		width: 460px;
-		height: 260px;
+.imagesEven {
+	.img0, .img2 {
+		float: left;
 	}
-	.wikiaPhotoGallery-slider {
-		height: 100%;
+	.img1, .img3 {
+		float: right;
 	}
-	.wikiaPhotoGallery-slider-body {
-		height: 260px;
+}
 
-		.description {
-			bottom: 0;
+.imagesOdd {
+	.img1, .img3{
+		float: left;
+	}
+
+	.img2, .img4 {
+		float: right;
+	}
+
+	.img0{
+		width: 570px;
+	}
+
+	&.small {
+		.img0{
+			width: 300px;
+		}
+	}
+	&.med {
+		.img0{
+			width: 460px;
+		}
+	}
+}
+
+.imgs3, .imgs4 {
+	height: 570px;
+
+	&.small {
+		height: 300px;
+	}
+	&.med{
+		height: 455px;
+	}
+}
+
+.imgs5.small {
+	height: 455px;
+}
+
+@media screen and (orientation:landscape) and (min-width:321px){
+	.wkSlider {
+		width: 950px;
+		height: 228px;
+
+		.img{
+			float: none;
+			width: 227px;
+			height: 227px;
 		}
 
-		.nav {
-			right: 0;
-			padding: 5px;
-			width: 80px;
-			height: 55px;
+		&.small {
+			width: 460px;
+			height: 107px;
 
-			img {
-				width: 80px;
-				height: 55px;
+			.img {
+				width: 107px;
+				height: 107px;
+			}
+		}
+
+		&.med{
+			width: 660px;
+			height: 156px;
+
+			.img {
+				width: 156px;
+				height: 156px;
 			}
 		}
 	}
 
-	.wikiaPhotoGallery-slider-0 .nav {
-		top: 0;
-	}
-
-	.wikiaPhotoGallery-slider-1 .nav {
-		top: 23%;
-	}
-
-	.wikiaPhotoGallery-slider-2 .nav {
-		top: 46%;
-	}
-
-	.wikiaPhotoGallery-slider-3 .nav {
-		top: 70%;
-	}
-}
-
-@media screen and (min-width: 481px) {
-	.WikiaPhotoGalleryPreview {
-		width: 480px;
-		height: 330px;
-		.wikiaPhotoGallery-slider {
-			height: 262px;
+	.imagesOdd {
+		.img0 {
+			width: 465px;
 		}
 
-	}
-}
+		&.small{
+			.img0{
+				width: 224px;
+			}
+		}
 
-@media screen and (min-width: 481px) and ( orientation: landscape ) {
-	.WikiaPhotoGalleryPreview {
-		height: 262px;
-		.wikiaPhotoGallery-slider-body {
-			height: 262px;
+		&.med{
+			.img0 {
+				width: 325px;
+			}
 		}
 	}
-}
 
+	.imgs3{
+		.img0 {
+			margin-right: 10px;
+		}
 
-@media screen and ( min-width: 769px ) {
-	.WikiaPhotoGalleryPreview {
-		width: 660px;
-		height: 430px;
-		.wikiaPhotoGallery-slider {
-				height: 360px;
-
+		.img2 {
+			margin-left: 10px;
 		}
 	}
-}
 
-@media screen and (min-width: 769px) and ( orientation: landscape ) {
-	.WikiaPhotoGalleryPreview {
-		height: 360px;
-		.wikiaPhotoGallery-slider-body {
-			height: 360px;
+	.imgs4{
+		.img {
+			margin-right: 10px;
+		}
+		.img3 {
+			margin: 0;
+		}
+	}
+
+	.imgs1 {
+		width: 465px;
+
+		&.small{
+			width: 224px;
+		}
+		&.med {
+			width: 325px;
+		}
+	}
+
+	.imgs2 {
+		.img {
+			width: 465px;
+			margin-right: 10px;
+		}
+
+		.img1 {
+			margin-right: 0;
+		}
+
+		&.small {
+			.img {
+				width: 224px;
+			}
+		}
+
+		&.med{
+			.img{
+				width: 325px;
+			}
+		}
+	}
+
+	.imgs5.small {
+		height: 300px;
+		width: 455px;
+
+		.img {
+			margin-right: 10px;
+			width:145px;
+			height: 145px;
+		}
+
+		.img4, .img1 {
+			margin-right: 0;
+		}
+
+		.img0 {
+			width: 300px;
 		}
 	}
 }
