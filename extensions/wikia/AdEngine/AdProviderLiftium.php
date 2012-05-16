@@ -66,8 +66,6 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 		// LiftiumOptions as json
 		$out = '<script type="text/javascript">' . "\n";
 		$out .= "LiftiumOptions = " . json_encode($options) . ";\n";
-		$out .= 'var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);' . "\n";
-		$out .= 'LiftiumOptions["autoInit"] = (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD);' . "\n";
 		$out .= '</script>';
 
 		// Call the script

@@ -342,7 +342,7 @@ class OasisController extends WikiaController {
 		}
 
 		$jquery_ads = Wikia::json_encode($jquery_ads);
-		$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { wsl.loadScript({$jquery_ads}); } })(); /*]]>*/</script>";
+		$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING); if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { wsl.loadScript({$jquery_ads}); } })(); /*]]>*/</script>";
 
 		wfProfileOut(__METHOD__);
 	}
