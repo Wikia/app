@@ -135,7 +135,7 @@ img.WikiaPhotoGalleryProgress {
 /* Search field */
 #WikiaPhotoGallerySearch {
 	float: right;
-	margin-top: 1em;
+	margin-top: 10px;
 }
 
 #WikiaPhotoGallerySearch input[type="text"] {
