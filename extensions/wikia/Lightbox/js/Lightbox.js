@@ -26,7 +26,7 @@ var Lightbox = {
 		defaults: {
 			videoHeight: 360,
 			topOffset: 25,
-			height: 648
+			height: 628
 		},
 		// start with default modal options
 		initial: {
@@ -35,7 +35,7 @@ var Lightbox = {
 			width: 970, // modal adds 30px of padding to width
 			noHeadline: true,
 			topOffset: 25,
-			height: 648
+			height: 628
 		}
 	},
 	openModal: false, // gets replaced with dom object of open modal
