@@ -801,12 +801,13 @@ class SiteWideMessages extends SpecialPage {
 		$dbResult = $DB->Query (
 			  'SELECT msg_wiki_id, msg_id AS id, msg_lang as lang'
 			. ' FROM ' . MSG_TEXT_DB
-			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USE INDEX(PRIMARY) USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
 			. ' AND msg_status IN (' . join(',', $status) . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
-			. ' AND msg_removed = ' . MSG_REMOVED_NO
+			. ' AND msg_removed = ' . MSG_REMOVED_NO 
+			. " AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId)"
 			. ';'
 			, __METHOD__
 		);
