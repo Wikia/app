@@ -48,7 +48,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 				href = element.href;
 				name = element.attributes['data-image-name'].value.replace('.','-');
 				if(name === shrImg) shrImg = number;
-				images.push([href, name]);
+				images.push([href, name, false]);
 				element.setAttribute('data-num', number++);
 			}else if(className.indexOf('wkImgStk') > -1){
 				if(className.indexOf('grp') > -1) {
@@ -67,7 +67,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 							href = img.href;
 							name = img.id;
 							images.push([
-								href, name,
+								href, name, false,
 								(cap = elm.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
 								i, leng
 							]);
@@ -88,6 +88,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 						images.push([
 							href,
 							name,
+							false,
 							elm.innerHTML,
 							//I need these number to show counter in a modal
 							i, leng
@@ -102,9 +103,12 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 				if(img){
 					href = img.href;
 					name = img.id;
+					var videoattr = $('a', element).attr('data-video-name');
+					var isvideo = videoattr ? true : false;
+					if(isvideo) name = videoattr;
 					if(name === shrImg) shrImg = number;
 					images.push([
-						href, name,
+						href, name, isvideo,
 						(cap = element.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:''
 					]);
 					element.setAttribute('data-num', number++);
@@ -134,13 +138,37 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 
 		loader.show(fllScrImg, {center: true});
 
-		img.src = image[0];
+		if(image[2] == true) {// video
+			fllScrImg.style.backgroundImage = 'none';
+			$.ajax({
+				url: wgScript,
+				data: {
+					'action': 'ajax',
+					'method': 'ajax',
+					'rs': 'ImageLightboxAjax',
+					'maxheight': $(window).height(),
+					'maxwidth': $(window).width() - 100,
+					'pageName': wgPageName,
+					'share': 0,
+					'title': image[1],
+					'showEmbedCodeInstantly': true
+				},
+				dataType: 'json',
+				success: function(res) {
+					loader.hide(fllScrImg);
+					$('#fllScrImg').html('<table id="wkVi"><tr><td>'+res.html+'</td></tr></table>');
+				}
+			});
+		} else {
+			$('#fllScrImg').html('');
+			img.src = image[0];
 		fllStyle.backgroundImage = 'none';
 		resetZoom();
-		img.onload =  function() {
+			img.onload =  function() {
 			fllStyle.backgroundImage = 'url("' + img.src + '")';
-			loader.hide(fllScrImg);
-		};
+				loader.hide(fllScrImg);
+			};
+		}
 
 		modal.setCaption(getCaption(current));
 	}
@@ -178,9 +206,9 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 
 	function getCaption(num){
 		var img = images[num],
-			cap = img[2] || '',
-			number = img[3],
-			length = img[4];
+			cap = img[3] || '',
+			number = img[4],
+			length = img[5];
 
 		if(number >= 0 && length >= 0) {
 			cap += '<div class=wkStkFtr> ' + (number+1) + ' / ' + length + ' </div>';
@@ -227,7 +255,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 
 	function onStart(ev){
 		var touches = ev.touches,
-			l = touches.length,
+			l = touches ? touches.length : 0,
 			computedStyle = getComputedStyle(fllScrImg);
 
 		window.scrollTo(0,1);
@@ -258,7 +286,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 
 	function onMove(ev){
 		var touches = ev.touches,
-			l = touches.length,
+			l = touches ? touches.length : 0,
 			zoom,
 			scale;
 
