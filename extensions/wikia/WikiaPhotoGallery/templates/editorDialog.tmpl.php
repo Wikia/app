@@ -82,7 +82,7 @@
 		<form id="WikiaPhotoGallerySearch" class="WikiaSearch" action="" method="get">
 			<input type="text" name="search" placeholder="<?= wfMsg('wikiaPhotoGallery-search-tooltip') ?>" autocomplete="off">
 			<input type="submit">
-			<button class="secondary"><img src="<?= $wgBlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
+			<button class="wikia-button"><img src="<?= $wgBlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 		</form>
 
 		<p id="WikiaPhotoGallerySearchResultsChooser">
