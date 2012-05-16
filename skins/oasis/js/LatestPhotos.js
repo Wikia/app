@@ -169,9 +169,9 @@ var UploadPhotos = {
 			UploadPhotos.status.removeClass("error").hide(400);
 		}
 	}
-}
+};
 
-LatestPhotos = {
+var LatestPhotos = {
 	init: function() {
 		this.carousel = $('.LatestPhotosModule').find('.carousel-container');
 		this.carousel.carousel({attachBlindImages: true});
@@ -196,7 +196,7 @@ LatestPhotos = {
 			lightboxCaptionLinks.filter('.wikia-gallery-item-more').trackClick(fakeUrl + 'lightboxmore');
 		});
 	}
-}
+};
 
 $(function() {
     LatestPhotos.init();
