@@ -16,3 +16,10 @@ $namespaces['de'] = array(
 	NS_USER_WALL_MESSAGE		=> 'Diskussionsfaden',
 	NS_USER_WALL_MESSAGE_GREETING	=> 'Nachrichtenseite_Begrüßung'
 );
+
+$namespaces['pl'] = array(
+        NS_USER_WALL                    => 'Tablica_wiadomości',
+        NS_USER_WALL_MESSAGE            => 'Wątek',
+        NS_USER_WALL_MESSAGE_GREETING   => 'Nagłówek_tablicy'
+);
+
