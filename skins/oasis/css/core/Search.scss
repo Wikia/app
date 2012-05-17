@@ -88,7 +88,8 @@ $use-dark-icons: false;
 	}
 }
 
-.WikiaRail .WikiaSearch input[type="text"] {
+.WikiaRail .WikiaSearch input[type="text"],
+.WikiaSearchHeader .WikiaSearch input[type="text"] {
 	width: 229px;
 }
 
