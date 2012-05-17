@@ -9,14 +9,17 @@
 		//AMD
 		define('querystring', querystring);//late binding
 	}else{
-		window.Querystring = querystring();//late binding
+		//namespace
+		if(!window.Wikia) window.Wikia = {};
+
+		window.Wikia.Querystring = querystring();//late binding
 	}
 
 	function querystring(){
 		var l = window.location,
-			p = QueryString.prototype;//late binding
+			p = Querystring.prototype;//late binding
 
-		function QueryString(url){
+		function Querystring(url){
 			var srh,
 				link,
 				tmp,
@@ -125,6 +128,6 @@
 			l.href = this.toString();
 		};
 
-		return QueryString;
+		return Querystring;
 	}
 })();

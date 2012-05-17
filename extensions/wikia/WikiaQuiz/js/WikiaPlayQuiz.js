@@ -289,19 +289,22 @@ var WikiaQuiz = {
 	},
 	trackEvent: function(action, label, value, href) {
 		var params = {
-			tracking_method: 'both',
 			ga_category: 'wikia-quiz',
 			ga_action: action,
 			ga_label: WikiaQuiz.trackerLabelPrefix + label
 		};
-		if(value > -1) {
-			params['ga_value'] = value;
-		}
-		if(href) {
-			params['internal_params'] = {href:href};
-		}
 
-		WikiaTracker.trackEvent(params);
+		if(value > -1)
+			params['ga_value'] = value;
+
+		if(href)
+			params['href'] = href;
+
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			params,
+			'both'
+		);
 	}
 };
 

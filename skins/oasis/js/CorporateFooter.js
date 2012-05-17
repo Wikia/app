@@ -5,7 +5,7 @@
 
 	var corporateFooter = $('footer.CorporateFooter');
 
-	if(Wikia.CookieCutter.get('mobilefullsite')){
+	if(Wikia.Cookies.get('mobilefullsite')){
 	 	var linksWrapper = corporateFooter.find('nav ul').first();
 
 	 	if(linksWrapper.exists()){
@@ -16,15 +16,18 @@
 					ev.preventDefault();
 					ev.stopPropagation();
 
-					Wikia.CookieCutter.set('mobilefullsite', null);//invalidate cookie
-					WikiaTracker.trackEvent({
-						ga_category: 'corporate-footer',
-						ga_action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
-						ga_label: 'mobile-switch',
-						tracking_method: 'both'
-					});
+					Wikia.Cookies.set('mobilefullsite', null);//invalidate cookie
+					WikiaTracker.trackEvent(
+						'trackingevent',
+						{
+							ga_category: 'corporate-footer',
+							ga_action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
+							ga_label: 'mobile-switch',
+						},
+						'both'
+					);
 
-					var url = new window.Querystring();
+					var url = new Wikia.Querystring();
 					url.setVal('useskin', 'wikiamobile');
 					url.addCb();
 					url.goTo();

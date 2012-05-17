@@ -2,16 +2,19 @@
 //document.documentElement.className += ' js';
 
 //analytics
-/*WikiaTracker.trackEvent({
- ga_category: 'wikiamobile-view',
- ga_action: WikiaTracker.ACTIONS.VIEW,
- tracking_method: 'both',
- });*/
+WikiaTracker.trackEvent(
+	'trackingevent',
+	{
+ 		ga_category: 'wikiamobile-view',
+ 		ga_action: WikiaTracker.ACTIONS.VIEW,
+ 	},
+ 	'both'
+ );
 
 //init
 $(function(){
-	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover'],
-		function(media, qs, topbar, toc, events, hideURLBar, tables, sections, share, popover){
+	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover', 'cookies'],
+		function(media, qs, topbar, toc, events, hideURLBar, tables, sections, share, popover, cookies){
 			var d = document,
 				body = $(d.body),
 				clickEvent = events.click;
@@ -51,7 +54,7 @@ $(function(){
 			d.getElementById('wkFllSite').addEventListener(clickEvent, function(event){
 				event.preventDefault();
 				//track('link/fullsite');
-				Wikia.CookieCutter.set('mobilefullsite', 'true');
+				cookies.set('mobilefullsite', 'true');
 
 				var url = new qs();
 				url.setVal('useskin', 'oasis');

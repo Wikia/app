@@ -12,7 +12,7 @@ var RadiumOne = {};
 			(window.cscoreCat in RadiumOne.enabledComscoreCats)
 		){
 			// if no cookie, get pixel (which sets cookie)
-			if(Wikia.CookieCutter.get(RadiumOne.cookieName) === null){
+			if(Wikia.Cookies.get(RadiumOne.cookieName) === null){
 				new Image().src = RadiumOne.pixelUrl+Math.round(Math.random()*10000000);
 			}
 		}
@@ -26,7 +26,7 @@ var RadiumOne = {};
 			window.wgIntegrateRadiumOne ||
 			(window.cscoreCat in RadiumOne.enabledComscoreCats)
 		){
-			value = Wikia.CookieCutter.get(RadiumOne.cookieName) || 0;
+			value = Wikia.Cookies.get(RadiumOne.cookieName) || 0;
 			kv = 'ro='+value+';';
 		}
 

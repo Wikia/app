@@ -777,7 +777,11 @@ AdDriverDelayedLoader.load = function() {
 
 	// Temporary AdDriver tracking by Inez
 	if((typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
-		$.internalTrack( 'AdDriver', { pos: 'start' } );
+		WikiaTracker.trackEvent(
+			'AdDriver',
+			{ pos: 'start' },
+			'internal'
+		);
 	}
 
 	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverItems.length) {
@@ -805,7 +809,11 @@ AdDriverDelayedLoader.finalize = function() {
 
 	// Temporary AdDriver tracking by Inez
 	if((typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
-		$.internalTrack( 'AdDriver', { pos: 'stop' } );
+		WikiaTracker.trackEvent(
+			'AdDriver',
+			{ pos: 'stop' },
+			'internal'
+		);
 	}
     
 	if (window.wgEnableKruxTargeting) {

@@ -22,25 +22,24 @@ $config['oasis_extensions_js'] = array(
 $config['oasis_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
-        '//skins/common/wikia/cookiecutter.js',
-        // tracker
-        '//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-        '//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
-        '//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-        '//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
-        '//skins/common/jquery/jquery.wikia.tracker.js',
-        // ads
-        '//extensions/wikia/Geo/geo.js',
-        '//extensions/wikia/AdEngine/AdMeldAPIClient.js',
-        '//extensions/wikia/AdEngine/AdConfig.js',
-        '//extensions/wikia/AdEngine/AdEngine.js',
-        '//extensions/wikia/AdEngine/AdProviderOpenX.js',
-        '//extensions/wikia/AdEngine/LazyLoadAds.js',
-        '//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
-        '//extensions/wikia/AdEngine/liftium/Liftium.js',
-        '//extensions/wikia/AdEngine/liftium/Wikia.js',
-        '//extensions/wikia/AdEngine/liftium/AdsInContent.js',
-        '//extensions/wikia/AdEngine/AdDriver.js',
+		// tracker
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
+		'//skins/common/jquery/jquery.wikia.tracker.js',
+
+		// ads
+		'//extensions/wikia/Geo/geo.js',
+		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
+		'//extensions/wikia/AdEngine/AdConfig.js',
+		'//extensions/wikia/AdEngine/AdEngine.js',
+		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
+		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'//extensions/wikia/AdEngine/ghost/gw-11.6.7/lib/gw.min.js',
+		'//extensions/wikia/AdEngine/liftium/Liftium.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.js',
+		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
+		'//extensions/wikia/AdEngine/AdDriver.js',
     )
 );
 
@@ -167,10 +166,12 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/tracker.js',
 		'//skins/common/wikia/my.class.js',
 		'//skins/common/wikia/querystring.js',
-		'//skins/common/wikia/cookiecutter.js',
+		'//skins/common/wikia/cookies.js',
+		'//skins/common/wikia/log.js',
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js', // TODO: maybe move to jquery.wikia.js
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
+
 		// oasis specific files
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
@@ -223,10 +224,14 @@ $config['oasis_user_js'] = array(
 $config['wikiaphone_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		//core functionality required early in the process before jQuery
+		'//skins/common/wikia/cookies.js',
+		'//skins/common/wikia/querystring.js',
+		'//skins/common/wikia/log.js',
+
 		'#group_oasis_jquery',
-		'//skins/common/wikia/cookiecutter.js',
+
 		'//extensions/wikia/AdEngine/AdConfig.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
@@ -250,7 +255,8 @@ $config['wikiamobile_js_head'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//skins/common/zepto/zepto-0.8.js',
-		'//skins/common/wikia/cookiecutter.js',
+		'//skins/common/wikia/module.js',
+		'//skins/common/wikia/cookies.js',
 		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
@@ -260,16 +266,18 @@ $config['wikiamobile_js_body'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		//feature detection and polifills go first
+		//platform core components go first
+		'//skins/common/wikia/cache.js',
+		'//skins/common/wikia/querystring.js',
+		'//skins/common/wikia/log.js',
+
+		//feature detection and polifills go second
 		'//skins/common/modernizr/modernizr.wikiamobile.min.js',
 		'//skins/common/wikia/outerhtml.js',
 		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
 		'//skins/common/modernizr/feature-detects/overflow.wikiamobile.js',
 
 		//platform components
-		'//skins/common/wikia/module.js',
-		'//skins/common/wikia/cache.js',
-		'//skins/common/wikia/querystring.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
@@ -279,10 +287,9 @@ $config['wikiamobile_js_body'] = array(
 		'//skins/common/zepto/zepto.wikiamobile.js',
 
 		//tracker
-		//'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
-		//'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		//'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		//'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/track.js',
@@ -347,6 +354,11 @@ $config['wikiaapp_js'] = array(
 $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		//core functionality required early in the process before jQuery
+		'//skins/common/wikia/cookies.js',
+        '//skins/common/wikia/querystring.js',
+        '//skins/common/wikia/log.js',
+
 		'#group_oasis_jquery',
 
 		'//skins/common/yui_2.5.2/utilities/utilities.js',
@@ -375,7 +387,6 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/AdEngine/ghost/gw-2010.10.4/lib/gw.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 
@@ -530,9 +541,14 @@ $config['chat_ban_js'] = array(
 $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		//core functionality required early in the process before jQuery
+		'//skins/common/wikia/cookies.js',
+		'//skins/common/wikia/querystring.js',
+		'//skins/common/wikia/log.js',
+
 		'#group_oasis_jquery',
+
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
@@ -548,6 +564,9 @@ $config['theme_designer_js'] = array(
 $config['photopop'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//skins/common/wikia/cookies.js',
+        '//skins/common/wikia/querystring.js',
+        '//skins/common/wikia/log.js',
 		'//extensions/wikia/PhotoPop/shared/lib/mustache.js',
 		'//extensions/wikia/PhotoPop/shared/lib/my.class.js',
 		'//extensions/wikia/PhotoPop/shared/lib/store.js',
@@ -556,7 +575,6 @@ $config['photopop'] = array(
 		'//extensions/wikia/PhotoPop/shared/lib/classlist.js',
 		'//extensions/wikia/PhotoPop/shared/lib/wikia.js',
 		'//extensions/wikia/PhotoPop/shared/lib/require.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaLogger.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js'

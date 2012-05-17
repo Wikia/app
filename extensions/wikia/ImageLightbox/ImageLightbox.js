@@ -235,12 +235,17 @@ var ImageLightbox = {
 				var clickedIndex = (localGroupIndex * RelatedVideos.videosPerPage) + localItemIndex;
 				eventValue = clickedIndex+1;	// tracked values must be one-indexed
 
-				WikiaTracker.trackEvent( { 'tracking_method':'both', 
-					'ga_category':RelatedVideos.gaCat, 
-					'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO, 
-					'ga_label':(target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'), 
-					'ga_value':eventValue,
-					'internal_params':{'video_title':imageName} } );
+				WikiaTracker.trackEvent(
+					'trackingevent',
+					{
+						'ga_category':RelatedVideos.gaCat, 
+						'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO, 
+						'ga_label':(target.hasClass('video-thumbnail') ? 'thumbnail' : 'title'), 
+						'ga_value':eventValue,
+						'video_title':imageName
+					},
+					'both'
+				);
 			}
 
 		}

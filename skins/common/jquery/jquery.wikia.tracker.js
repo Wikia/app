@@ -1,54 +1,5 @@
 /*global WikiaTracker:true*/
 
-/**
- * @brief Internal Wikia tracking set up by Garth Webb
- *
- * @param string event Name of event
- * @param object data Extra parameters to track
- * @param object callbackSuccess callback function on success (optional)
- * @param object callbackError callback function on failure (optional)
- *
- * @author Christian
- */
-jQuery.internalTrack = function(event, data, callbackSuccess, callbackError) {
-	// Require an event argument
-	if (!event) {
-		return;
-	}
-
-	$().log(event, 'InternalTrack');
-	if(data) {
-		$().log(data);
-	}
-
-	// Set up params object - this should stay in sync with /extensions/wikia/Track/Track.php
-	var params = {
-		'c': wgCityId,
-		'x': wgDBname,
-		'a': wgArticleId,
-		'lc': wgContentLanguage,
-		'n': wgNamespaceNumber,
-		'u': window.trackID || window.wgTrackID || 0,
-		's': skin,
-		'beacon': window.beacon_id || ''
-	};
-
-	// Add data object to params object
-	$.extend(params, data);
-
-	// Make request
-	//$.get('http://a.wikia-beacon.com/__track/special/' + event, params, callback);
-	$.ajax({
-		cache: false,
-		timeout: 3000,
-		dataType: "script",
-		url: 'http://a.wikia-beacon.com/__track/special/' + event,
-		data: params,
-		error: callbackError,
-		success: callbackSuccess
-	});
-};
-
 // Port of getTarget and resolveTextNode function (altogether) from YUI Event lib
 // @author: Inez
 // TODO: Move it to some more general place because it is not realted only to tracking
@@ -384,10 +335,9 @@ jQuery.tracker.track = function(fakeurl, unsampled) {
 };
 
 
-/**
- * DEPRACATED, use WikiaTracker.trackEvent instead
- */
 jQuery.tracker.trackEvent = function(category, action, opt_label, opt_value) {
+	$().log('DEPRECATED FUNCTION: use WikiaTracker.trackEvent');
+
 	var gaqArgs = [], logStr = Array.prototype.join.call(arguments, '/');
 
 	for (var i=0; i < arguments.length; i++) {
@@ -413,13 +363,5 @@ jQuery.fn.trackClick = function(fakeUrl) {
 		jQuery.tracker.byStr(fakeUrl);
 	});
 };
-
-// Now that the code is loaded, if there were any tracking events in the spool from before this file loaded, replay them.
-if (typeof wikiaTrackingSpool !== 'undefined') {
-	$.each(wikiaTrackingSpool, function(i, eventNameAndData) {
-		$().log('Sending previously-spooled tracking event', eventNameAndData);
-		$.internalTrack(eventNameAndData[0], eventNameAndData[1]);
-	});
-}
 
 $(document).ready($.tracker);
