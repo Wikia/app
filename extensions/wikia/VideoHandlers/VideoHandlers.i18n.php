@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'videohandler-unknown-title' => 'Unknown title',
 	'videohandler-video-details' => '$1 (provider: $2)',
 	'videohandler-category' => 'Videos',
+        'videohandler-description' => 'Description'
 );
 
 $messages['qqq'] = array(
