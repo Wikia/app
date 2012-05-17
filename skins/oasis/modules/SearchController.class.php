@@ -12,7 +12,7 @@ class SearchController extends WikiaController {
 		$this->searchterm = $this->wg->request->getVal('search');
 		$this->noautocomplete = $this->wg->request->getVal('noautocomplete');
 
-		$this->fulltext = !empty($this->wg->SearchDefaultFulltext) ? 1 : 0;
+		$this->fulltext = $this->wg->User->getOption('enableGoSearch') ? 0 : 'Search';
 		$this->placeholder = wfMsg('Tooltip-search', $this->wg->Sitename);
 		$this->isCrossWikiaSearch = $this->wg->request->getCheck('crossWikiaSearch');
 	}

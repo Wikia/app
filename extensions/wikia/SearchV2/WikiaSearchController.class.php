@@ -67,9 +67,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
 			$articleMatch = $this->wikiaSearch->getArticleMatch($query);
-			$goPreference = $this->wg->User->getOption('enableGoSearch');
-			$go = ($this->getVal('go', false) !== false || $goPreference);
-			if (!empty($articleMatch) && !empty($go)) {
+
+			if (!empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
 				extract($articleMatch);
 
 				$title = isset($redirect) ? $redirect->getTitle() : $article->getTitle();
