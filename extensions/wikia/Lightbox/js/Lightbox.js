@@ -220,13 +220,18 @@ var Lightbox = {
 		Lightbox.openModal.find(".modalContent").startThrobbing();
 
 		// Load resources
-		$.when(
-			$.loadMustache(),
-			$.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')])
-		).done(Lightbox.makeLightbox);
+		if(Lightbox.assetsLoaded) {
+			Lightbox.makeLightbox();
+		} else {
+			$.when(
+				$.loadMustache(),
+				$.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')])
+			).done(Lightbox.makeLightbox);
+		}
 
 	},
 	makeLightbox: function() {
+		Lightbox.assetsLoaded = true;
 		$.nirvana.sendRequest({
 			controller: 'Lightbox',
 			method: 'lightboxModalContent',
@@ -319,14 +324,13 @@ var Lightbox = {
 							Lightbox.hideOverlay('carousel');
 						}
 					}
-				}).on('mouseout.Lightbox', function(evt) {
+				}).on('mouseleave.Lightbox', function(evt) {
 					Lightbox.hideOverlay('header');
 					Lightbox.hideOverlay('carousel');
 				}).on('click.Lightbox', '.LightboxHeader .more-info-button', function(evt) {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.video.destroyVideo();
 					}
-					//Lightbox.openModal.lightbox.addClass('infobox-mode');
 					Lightbox.openModal.addClass('infobox-mode')
 					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 						Lightbox.openModal.infobox.append(infoboxTemplate.mustache(json));
@@ -335,9 +339,17 @@ var Lightbox = {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.getMediaDetail({'title': Lightbox.current.title}, Lightbox.video.renderVideo);
 					}
-					//Lightbox.openModal.lightbox.removeClass('infobox-mode');
 					Lightbox.openModal.removeClass('infobox-mode');
 					Lightbox.openModal.infobox.html('');
+				}).on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function(evt) {
+					var target = $(evt.target);
+					var overlayActive = Lightbox.openModal.carousel.data('overlayactive');
+					if(overlayActive) {
+						target.addClass('active');	// add active state to button when carousel overlay is active
+					} else {
+						target.removeClass('active');
+					}
+					Lightbox.openModal.carousel.data('overlayactive', !overlayActive);	// flip overlayactive state
 				});
 			}
 		});
@@ -523,9 +535,6 @@ var Lightbox = {
 		}
 	},
 	hideOverlay: function(overlayName, delay) {
-		if(overlayName == 'carousel') {
-			return;
-		}
 		var overlay = Lightbox.openModal[overlayName];
 		// if Lightbox is not being hidden and hiding has not already started yet
 		if(!overlay.hasClass('hidden') && !Lightbox.eventTimers[overlayName] && overlay.data('overlayactive')) {
