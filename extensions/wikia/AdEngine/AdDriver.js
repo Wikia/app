@@ -836,10 +836,18 @@ if (window.wgEnableKruxTargeting) {
 	};
 
 	window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
-		(function(){
-			function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
-			var segs = store('segs'), key = 'ksgmnt='; Krux.dartKeyValues = segs ? key+segs.split(',').join(key) + ';u='+store('user')+';' : '';
-		})(); 
+	(function(){
+		function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
+		
+		// expose user and segments to javascript
+		Krux.user     = store('user');
+		Krux.segments = store('segs') && store('segs').split(',') || [];
+		
+		// dartKeyValues
+		var key = ';ksgmnt='; Krux.dartKeyValues = 
+			(Krux.segments.length ? key+Krux.segments.join(key) : '') +
+			(Krux.user ? ';u='+Krux.user+';' : '');
+	})();
 }
 
 if (!window.adslots) window.adslots = [];
