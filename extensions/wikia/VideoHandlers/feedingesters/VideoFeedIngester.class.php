@@ -89,7 +89,8 @@ abstract class VideoFeedIngester {
 			$metadata['ingestedFromFeed'] = true;
 			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata);
 			$uploadedTitle = null;
-			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr.$apiWrapper->getDescription(), false);
+			$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
+			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription(), false);
 			if ($result->ok) {
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
 				print "sleeping " . self::THROTTLE_INTERVAL . " second(s)...\n";
