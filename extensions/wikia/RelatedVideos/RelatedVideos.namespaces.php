@@ -9,3 +9,8 @@ $namespaces['en'] = array(
 $namespaces['de'] = array(
 	NS_RELATED_VIDEOS => 'VerwandteVideos',
 );
+
+$namespaces['pl'] = array(
+        NS_RELATED_VIDEOS => 'Powiązane_filmy',
+);
+
