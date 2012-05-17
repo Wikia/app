@@ -6,10 +6,18 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/core/color";
+@import "mixins/sprite-Lightbox";
 
-$carousel-height: 110px;
-$carousel-vertical-padding: 15px;
 $carousel-overlay-duration: 600ms;
+
+// Default and hover icons depend on button darkness
+$sprite-normal: '_black';
+$sprite-hover: '_white';
+
+@if (lightness($color-secondary-button) < 50) {
+	$sprite-normal: '_white';
+	$sprite-hover: '_black';
+}
 
 .LightboxModal {
 	overflow: hidden;
@@ -106,6 +114,29 @@ $carousel-overlay-duration: 600ms;
 		top: -99999999px;
 		left: -99999999px;
 	}
+	.icon {
+		width: 28px;
+		height: 20px;
+		padding: 0;
+		&:after {
+			@include sprite-Lightbox-base;
+			content: '';
+			display: block;
+			text-align: center;
+			margin: 4px auto;
+		}
+		&.expand:after {
+			@include sprite-Lightbox('large_lightbox'+$sprite-normal);
+			height: 15px;
+			width: 18px;
+			margin-left: 6px;
+		}
+		&.pin:after {
+			@include sprite-Lightbox('filmstrip_open'+$sprite-normal);
+			height: 15px;
+			width: 22px;
+		}
+	}
 	.lightbox-arrows {
 		&.hidden {
 			span {
@@ -167,7 +198,7 @@ $carousel-overlay-duration: 600ms;
 		@include clearfix;
 		border-top: 1px solid $color-page-border;
 		bottom: 0;
-		height: $carousel-height;
+		height: 110px;
 		position: absolute;
 		width: 100%;
 		
@@ -176,8 +207,7 @@ $carousel-overlay-duration: 600ms;
 		} 
 		.content {
 			border-right: 1px solid $color-page-border;
-			height: $carousel-height - $carousel-vertical-padding * 2;
-			padding: $carousel-vertical-padding 20px;
+			padding: 10px 20px;
 			width: 625px;
 		}
 		
@@ -187,7 +217,12 @@ $carousel-overlay-duration: 600ms;
 				font-weight: bold;
 			}
 		}
-		
+		.toolbar {
+			li {
+				float: right;
+				margin-left: 4px;
+			}
+		}		
 		.LightboxCarouselContainer {
 			margin-left: 20px;
 			height: 55px;
@@ -222,8 +257,9 @@ $carousel-overlay-duration: 600ms;
 			
 			&.next {
 				@include arrow(10px, $color-buttons, 'right');
-				float: right;
+				clear: right;
 				display: block;
+				float: right;
 			}
 			&.previous {
 				@include arrow(10px, $color-buttons, 'left');
