@@ -51,6 +51,18 @@
 		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
 	<![endif]-->
 	
+	<?php if( !$jsAtBottom ):?>
+		<!--[if lt IE 8]>
+			<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
+		<![endif]-->
+
+		<!--[if lt IE 9]>
+			<script src="<?= $wg->StylePath ?>/common/wikia/html5.min.js"></script>
+		<![endif]-->
+
+		<!-- Combined JS files and head scripts -->
+		<?= $jsFiles ;?>
+	<?endif;?>
 	<? if($displayAdminDashboard) { ?>
 		<!--[if IE]><script src="<?= $wg->StylePath ?>/common/excanvas.js"></script><![endif]-->
 	<? } ?>

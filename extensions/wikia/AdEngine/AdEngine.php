@@ -722,7 +722,8 @@ class AdEngine {
 		$options['kv_domain'] = $_SERVER['HTTP_HOST'];
 
 		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
-		$js .= <<<EOT
+		if (ArticleAdLogic::isSearch() || (!$wgTitle->getNamespace() == NS_SPECIAL && !BodyController::isEditPage())) {
+			$js .= <<<EOT
 	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
 	if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
 		LiftiumOptions['hasMoreCalls'] = true;
@@ -733,6 +734,15 @@ class AdEngine {
 		LiftiumOptions['autoInit'] = false;
 	}
 EOT;
+		}
+		else {
+			$js .= <<<EOT
+	LiftiumOptions['hasMoreCalls'] = true;
+	LiftiumOptions['isCalledAfterOnload'] = true;
+	LiftiumOptions['maxLoadDelay'] = 6000;
+EOT;
+			
+		}
 		
 		$js = AssetsManagerBaseBuilder::minifyJs( $js );
 		$out = "\n<!-- Liftium options -->\n";
