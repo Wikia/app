@@ -49,8 +49,8 @@
 		<div class="ad"></div>
 		<div class="content">
 			<ul class="toolbar">
-				<li><!-- pin icon --></li>
-				<li><!-- full screen icon --></li>
+				<li><span class="icon expand button secondary"></span></li>
+				<li><span class="icon pin button secondary"></span></li>
 			</ul>
 			<p id="LightboxCarouselProgress" class="progress"></p>
 			<span class="carousel-arrow next"></span>

@@ -34,7 +34,6 @@ $config['PageLayoutEditor'] = array(
         'source' => "$IP/extensions/wikia/PageLayoutBuilder/images/sprite-page-layout-builder/",
         'sprite' => "$IP/extensions/wikia/PageLayoutBuilder/images/sprite-page-layout-builder.png",
         'scss'   => "$IP/extensions/wikia/PageLayoutBuilder/css/_sprite-page-layout-builder.scss",
-
 );
 
 $config['MiniEditor'] = array(
@@ -42,7 +41,6 @@ $config['MiniEditor'] = array(
         'source' => "$IP/extensions/wikia/MiniEditor/images/sprite-MiniEditor/",
         'sprite' => "$IP/extensions/wikia/MiniEditor/images/sprite-MiniEditor.png",
         'scss'   => "$IP/extensions/wikia/MiniEditor/css/mixins/_sprite-MiniEditor.scss"
-
 );
 
 $config['Chat2'] = array(
@@ -50,6 +48,11 @@ $config['Chat2'] = array(
         'source' => "$IP/extensions/wikia/Chat2/images/sprite-Chat/",
         'sprite' => "$IP/extensions/wikia/Chat2/images/sprite-Chat.png",
         'scss'   => "$IP/extensions/wikia/Chat2/css/mixins/_sprite-Chat.scss"
-
 );
 
+$config['Lightbox'] = array(
+        'name'   => 'Lightbox',
+        'source' => "$IP/extensions/wikia/Lightbox/images/sprite-Lightbox/",
+        'sprite' => "$IP/extensions/wikia/Lightbox/images/sprite-Lightbox.png",
+        'scss'   => "$IP/extensions/wikia/Lightbox/css/mixins/_sprite-Lightbox.scss"
+);
