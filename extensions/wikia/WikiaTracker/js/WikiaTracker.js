@@ -136,15 +136,14 @@ WikiaTracker.track = function(page, profile, events) {
 WikiaTracker._track = function(page, profile, sample, events) {
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
-	if (profile.indexOf('liftium') != -1 && profile.indexOf('liftium.init') == -1 && profile.indexOf('liftium.beacon') == -1) {
-		return false;
-	}
-
 	if (typeof events != 'undefined' && events instanceof Array) {
 		this.debug('...with events: ' + events.join('/'), 7);
 
 		events.unshift('_trackEvent');
 		_gaq.push(events);
+
+		// don't track real events *and* fakeurl events for the same call
+		return true;
 	}
 
 	if (page != null) {
