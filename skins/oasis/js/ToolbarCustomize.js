@@ -283,8 +283,7 @@
 
 		checkLoad: function() {
 			// Code copy from $.getModal() :-(
-			var insertionPoint = (window.skin == "oasis") ? "body" : "#positioned_elements";
-			$(insertionPoint).append(this.data.configurationHtml);
+			$('body').append(this.data.configurationHtml);
 			this.w = $("#MyToolsConfiguration").makeModal({
 				width: 710,
 				closeOnBlackoutClick: false
