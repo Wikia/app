@@ -857,7 +857,7 @@ else {
 		adDriverFuncsToExecute.push( function () {
 			window.adDriverCanInit = true;
 			AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
-		})
+		});
 		
 		var prepareLowPrioritySlots = function() {
 			AdDriverDelayedLoader.prepareSlots(0);
@@ -870,23 +870,23 @@ else {
 		}
 		
 		$(document).ready(function() {
-			if (window.adDriverCanInit === false) {
+			if (window.adDriverCanInit == false) {
 				adDriverFuncsToExecute.push(prepareLowPrioritySlots);	
 			}
 			else {
 				prepareLowPrioritySlots();
 			}
-		})
+		});
 	}
 	else {
 		adDriverFuncsToExecute.push(function() {
 			AdDriverDelayedLoader.load();
-		})
+		});
 	}
 
 	Liftium.init(function() {
 		for(var i=0; i<adDriverFuncsToExecute.length; i++) {
-			adDriverFuncsToExecute[i]()
+			adDriverFuncsToExecute[i]();
 		}
 			
 	});
