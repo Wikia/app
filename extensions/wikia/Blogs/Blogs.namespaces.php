@@ -51,4 +51,12 @@ $namespaces['nn'] = array(
 	NS_BLOG_LISTING => 'Blogg',
 	NS_BLOG_LISTING_TALK => 'Bloggdiskusjon'
 );
+
+
+$namespaces['pl'] = array(
+        NS_BLOG_ARTICLE => 'Blog_użytkownika',
+        NS_BLOG_ARTICLE_TALK => 'Komentarz_na_blogu',
+        NS_BLOG_LISTING => 'Blog',
+        NS_BLOG_LISTING_TALK => 'Dyskusja_blogu'
+);
 ?>
