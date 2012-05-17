@@ -235,16 +235,16 @@ class OasisController extends WikiaController {
 
 		$this->jsAtBottom = true;
 
-		// load WikiaScriptLoader
+		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
 		$this->wikiaScriptLoader = '';
-		$wslFiles = $this->assetsManager->getURL( 'wsl' );
+		$blockingScripts = $this->assetsManager->getURL( 'blocking' );
 
-		foreach($wslFiles as $wslFile) {
+		foreach($blockingScripts as $blockingFile) {
 			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				$wslFile = $this->rewriteJSlinks( $wslFile );
+				$blockingFile = $this->rewriteJSlinks( $blockingFile );
 			}
 
-			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$wslFile\"></script>";
+			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
 		// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.js and Common.js.

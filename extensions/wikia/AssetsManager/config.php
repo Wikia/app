@@ -85,12 +85,17 @@ $config['site_user_css'] = array(
 	)
 );
 
-/** WikiaScriptLoader **/
+/**
+ * Scripts that are needed very early in execution and thus are worth blocking for.
+ *
+ * Keep this grouup small!
+ **/
 
-$config['wsl'] = array(
+$config['blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/wikia/js/WikiaScriptLoader.js',
+		'//extensions/wikia/AbTesting/js/AbTesting.js',
 	)
 );
 
