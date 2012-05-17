@@ -446,31 +446,40 @@ tabberObj.prototype.clickTrackingHandler = function(e) {
 		var liNode = node.closest('li');
 		var allLiNode = node.closest('.tabbernav').find('li');
 		var tabIndex = allLiNode.index(liNode) + 1;
-		WikiaTracker.trackEvent({
-			ga_category: 'Tabber',
-			ga_action: WikiaTracker.ACTIONS.CLICK,
-			ga_label: 'tab',
-			ga_value: tabIndex,
-			tracking_method: 'internal'
-		});
+		WikiaTracker.trackEvent(
+      'trackingevent',
+      {
+  			ga_category: 'Tabber',
+  			ga_action: WikiaTracker.ACTIONS.CLICK,
+  			ga_label: 'tab',
+  			ga_value: tabIndex
+  		},
+      'internal'
+    );
 	} else if (node.is('img') && node.hasParent('a')) {
 		var url = node.closest('a').attr('href');
-		WikiaTracker.trackEvent({
-			ga_category: 'Tabber',
-			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_IMAGE,
-			ga_label: 'image',
-			tracking_method: 'internal',
-			internal_params: {href:url}
-		});
+		WikiaTracker.trackEvent(
+      'trackingevent',
+      {
+  			ga_category: 'Tabber',
+  			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_IMAGE,
+  			ga_label: 'image',
+        href:url
+      },
+      'internal'
+		);
 	} else if (node.is('a') || node.hasParent('a')) {
 		var url = node.closest('a').attr('href');
-		WikiaTracker.trackEvent({
-			ga_category: 'Tabber',
-			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
-			ga_label: 'content',
-			tracking_method: 'internal',
-			internal_params: {href:url}
-		});
+		WikiaTracker.trackEvent(
+      'trackingevent',
+      {
+  			ga_category: 'Tabber',
+  			ga_action: WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
+  			ga_label: 'content',
+  			href:url
+      },
+      'internal'
+		);
 	}
 	$().log('tracking took ' + (new Date() - startTime) + ' ms');
 };

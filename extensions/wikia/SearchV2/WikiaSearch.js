@@ -13,16 +13,20 @@ jQuery(document).ready(function() {
 			$.tracker.byStr('search/result/click/pos/'+element.attr('data-pos'));
 
 			var eventName = (typeof element.attr('data-event') == 'undefined') ? 'search_click' : element.attr('data-event');
-			$.internalTrack(eventName, {
-				'pos': element.attr('data-pos'),
-				'gpos': element.attr('data-gpos'),
-				'sterm': element.attr('data-sterm'),
-				'stype': element.attr('data-stype'),
-				'rver': element.attr('data-rver'),
-				'pageid': element.attr('data-pageid'),
-				'pagens': element.attr('data-pagens'),
-				'title': element.attr('data-title')
-			});
+			WikiaTracker.trackEvent(
+				eventName,
+				{
+					'pos': element.attr('data-pos'),
+					'gpos': element.attr('data-gpos'),
+					'sterm': element.attr('data-sterm'),
+					'stype': element.attr('data-stype'),
+					'rver': element.attr('data-rver'),
+					'pageid': element.attr('data-pageid'),
+					'pagens': element.attr('data-pagens'),
+					'title': element.attr('data-title')
+				},
+				'internal'
+			);
 		}
 	});
 });

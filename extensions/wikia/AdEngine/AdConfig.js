@@ -41,9 +41,9 @@ var AdConfig = {
 	cookie: function(name, value, options){
 		// name and value given, set cookie
 	    if(arguments.length > 1){
-			return Wikia.CookieCutter.set(name, value, options);
+			return Wikia.Cookies.set(name, value, options);
 		} else {
-			return Wikia.CookieCutter.get(name);
+			return Wikia.Cookies.get(name);
 		}
 	},
 

@@ -50,30 +50,27 @@ JS
 
 	/**
 	 * Returns a string that contains minified javascript of a small function stub which will
-	 * spool any calls to $.internalTrack until the code is actually loaded for doing the tracking (at
+	 * spool any calls to WikiaTracker.trackEvent until the code is actually loaded for doing the tracking (at
 	 * which point the calls will be replayed).
-	 *
-	 * TODO: $.internalTrack will be refactored-away soon, so we'll need to change the function names and
-	 * signatures in here to work for the new function signature (because we'll still need this spooling
-	 * functionality).
 	 */
 	public static function getTrackerSpoolingJs()
 	{
 		wfProfileIn( __METHOD__ );
 
 		// This code will spool all of the calls (in the order they were called) and different code will replay them later.
+		// The wikiatracker implememtation will be replaced directly as soon as the correct file will load.
 		ob_start();
 		?>
-		if(typeof $ == 'undefined'){
-			var $ = {};
-		}
-		$.internalTrack = function(eventName, dataHash){
-			wikiaTrackingSpool.push( [ eventName, dataHash ] );
+		window.WikiaTracker = window.WikiaTracker || {
+			trackEvent: function(eventName, params, method){
+				wikiaTrackingSpool.push([eventName, params, method]);
+			}
 		};
 		<?php
 		$jsString = ob_get_clean();
 
 		// We're embedding this in every page, so minify it.
+		//@Sean: wrapping this in memcache using the cachebuster as part of the key could save some time?
 		$jsString = AssetsManagerBaseBuilder::minifyJs( $jsString );
 
 		wfProfileOut( __METHOD__ );

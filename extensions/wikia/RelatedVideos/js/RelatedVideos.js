@@ -69,24 +69,58 @@ var RelatedVideos = {
 				$('.remove',this.rvModule).wikiaTooltip( $('.removeVideoTooltip',this.rvModule).html() );
 			}
 		}
-		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.VIEW } );
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			{
+				'ga_category':RelatedVideos.gaCat,
+				'ga_action':WikiaTracker.ACTIONS.VIEW
+			},
+			'both'
+		);
 	},
 	
 	handleAddedByClick : function(e) {
 		var owner = $(this).attr('data-owner');
-		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.CLICK_LINK_TEXT, 'ga_label':'added-by', 'internal_params':{ 'username':owner } } );		
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			{
+				'ga_category':RelatedVideos.gaCat,
+				'ga_action':WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
+				'ga_label':'added-by',
+				'username':owner
+			},
+			'both'
+		);		
 	},
 
 	// Scrolling modal items
 
 	scrollright: function(){
 		RelatedVideos.showImages();
-		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.PAGINATE, 'ga_label':'paginate-next', 'ga_value':RelatedVideos.currentRoom+1 } );
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			{
+				'ga_category':RelatedVideos.gaCat,
+				'ga_action':WikiaTracker.ACTIONS.PAGINATE,
+				'ga_label':'paginate-next',
+				'ga_value':RelatedVideos.currentRoom + 1
+			},
+			'both'
+		);
 		RelatedVideos.scroll( 1, false );
 	},
 
 	scrollleft: function(){
-		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.PAGINATE, 'ga_label':'paginate-prev', 'ga_value':RelatedVideos.currentRoom-1 } );
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			{
+				'ga_category':RelatedVideos.gaCat,
+				'ga_action':WikiaTracker.ACTIONS.PAGINATE,
+				'ga_label':'paginate-prev',
+				'ga_value':RelatedVideos.currentRoom - 1
+			},
+			'both'
+		);
 		RelatedVideos.scroll( -1, false );
 	},
 
@@ -139,13 +173,17 @@ var RelatedVideos = {
 		});
 		
 		if (titles.length) {
-			WikiaTracker.trackEvent( { 
-				'tracking_method':'internal',
-				'ga_category':RelatedVideos.gaCat,
-				'ga_action':WikiaTracker.ACTIONS.IMPRESSION,
-				'ga_label':'video', 
-				'internal_params': {'video_titles': "'" + titles.join("','") + "'", 'orders': orders.join(',') }
-			});
+			WikiaTracker.trackEvent(
+				'trackingevent',
+				{ 
+					'ga_category':RelatedVideos.gaCat,
+					'ga_action':WikiaTracker.ACTIONS.IMPRESSION,
+					'ga_label':'video', 
+					'video_titles': "'" + titles.join("','") + "'",
+					'orders': orders.join(',')
+				},
+				'internal'
+			);
 		}
 	},
 
@@ -282,12 +320,17 @@ var RelatedVideos = {
 			eventValue = clickedIndex+1;	// tracked values must be one-indexed
 		}
 
-		WikiaTracker.trackEvent( { 'tracking_method':'both', 
-			'ga_category':RelatedVideos.gaCat, 
-			'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO, 
-			'ga_label':($(this).hasClass('video-thumbnail') ? 'thumbnail' : 'title'), 
-			'ga_value':eventValue,
-			'internal_params':{'video_title':url} } );
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			{
+				'ga_category':RelatedVideos.gaCat, 
+				'ga_action':WikiaTracker.ACTIONS.PLAY_VIDEO, 
+				'ga_label':($(this).hasClass('video-thumbnail') ? 'thumbnail' : 'title'), 
+				'ga_value':eventValue,
+				'video_title':url
+			},
+			'both'
+		);
 
 		$.nirvana.getJson(
 			controlerName,
@@ -363,7 +406,15 @@ var RelatedVideos = {
 
 	},
 	addVideoModal: function( target ){
-		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.ADD, 'ga_label':'add-video' } );
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			{
+				'ga_category':RelatedVideos.gaCat,
+				'ga_action':WikiaTracker.ACTIONS.ADD,
+				'ga_label':'add-video'
+			},
+			'both'
+		);
 		$(this.rvModule).undelegate( '.addVideo', 'click' );
 		$.nirvana.postJson(
 			'RelatedVideosController',
@@ -403,7 +454,15 @@ var RelatedVideos = {
 				url: $('#relatedvideos-add-video input').val()
 			},
 			function( formRes ) {
-				WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.ADD, 'ga_label':'add-video-success' } );
+				WikiaTracker.trackEvent(
+					'trackingevent',
+					{
+						'ga_category':RelatedVideos.gaCat,
+						'ga_action':WikiaTracker.ACTIONS.ADD,
+						'ga_label':'add-video-success'
+					},
+					'both'
+				);
 				GlobalNotification.hide();
 				if ( formRes.error ) {
 					$('#relatedvideos-add-video').addClass( 'error-mode' );
@@ -450,7 +509,15 @@ var RelatedVideos = {
 
 	removeVideoLoginWrapper: function( e ){
 		e.preventDefault();
-		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.REMOVE, 'ga_label':'remove-video' } );
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			{
+				'ga_category':RelatedVideos.gaCat,
+				'ga_action':WikiaTracker.ACTIONS.REMOVE,
+				'ga_label':'remove-video'
+			},
+			'both'
+		);
 		RelatedVideos.loginWrapper( RelatedVideos.removeVideoClick, this );
 	},
 
@@ -462,7 +529,16 @@ var RelatedVideos = {
 			content: $( '.deleteConfirm',RelatedVideos.rvModule ).html(),
 			onOk: function(){
 				RelatedVideos.removeVideoItem( parentItem );
-				WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.REMOVE, 'ga_label':'remove-video-success', 'internal_params':{ 'video_title':title } } );
+				WikiaTracker.trackEvent(
+					'trackingevent',
+					{
+						'ga_category':RelatedVideos.gaCat,
+						'ga_action':WikiaTracker.ACTIONS.REMOVE,
+						'ga_label':'remove-video-success',
+						'video_title':title
+					},
+					'both'
+				);
 			}
 		});
 	},
@@ -501,7 +577,15 @@ var RelatedVideos = {
 	},
 	
 	handleRequestButtonClick : function(e) {
-		WikiaTracker.trackEvent( { 'tracking_method':'both', 'ga_category':RelatedVideos.gaCat, 'ga_action':WikiaTracker.ACTIONS.TAKE_SURVEY, 'ga_label':'request-new-videos' } );		
+		WikiaTracker.trackEvent(
+			'trackingevent',
+			{
+				'ga_category':RelatedVideos.gaCat,
+				'ga_action':WikiaTracker.ACTIONS.TAKE_SURVEY,
+				'ga_label':'request-new-videos'
+			},
+			'both'
+		);		
 	}
 
 };

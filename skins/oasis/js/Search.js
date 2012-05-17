@@ -9,7 +9,11 @@ var WikiaSearchApp = {
 	},
 
 	trackInternal: function(event, params) {
-		$.internalTrack(event, params);
+		WikiaTracker.trackEvent(
+			event,
+			params,
+			'internal'
+		);
 	},
 
 	init : function() {

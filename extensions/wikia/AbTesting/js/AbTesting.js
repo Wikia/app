@@ -74,7 +74,15 @@ function getTreatmentGroup( expId ){
 					abBeingTracked[expId] = false;
 				} else {
 					// Record the treatment event.
-					$.internalTrack('ab_treatment', { 'varnishTime': varnishTime , 'experimentId': expId, 'treatmentGroup': treatmentGroup });
+					WikiaTracker.trackEvent(
+						'ab_treatment',
+						{
+							'varnishTime': varnishTime ,
+							'experimentId': expId,
+							'treatmentGroup': treatmentGroup
+						},
+						'internal'
+					);
 					
 					// Cache the treatment grouup so that we know not to send the treatment event again on this page.
 					abTreatments[ expId ] = treatmentGroup;

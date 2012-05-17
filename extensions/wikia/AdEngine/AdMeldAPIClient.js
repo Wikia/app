@@ -12,14 +12,14 @@ var AdMeldAPIClient = {
 };
 
 AdMeldAPIClient.log = function(msg, level) {
-	if (typeof top.WikiaLogger != 'undefined') {
-		top.WikiaLogger.log(msg, level, 'AdMeldAPIClient');
+	if (typeof top.Wikia != 'undefined' && typeof top.Wikia.log == 'function') {
+		top.Wikia.log(msg, level, 'AdMeldAPIClient');
 	}
 };
 
 AdMeldAPIClient.track = function(data, profile) {
 	profile = profile || 'admeldapiclient';
-	this.log('track ' + data.join('/') + ' in ' + profile, 6);
+	this.log('track ' + data.join('/') + ' in ' + profile, 'trace_l3');
 	
 	data[0] = 'admeldapiclient/' + data[0];
 
@@ -27,56 +27,56 @@ AdMeldAPIClient.track = function(data, profile) {
 	if (event.length > 3) {
 		event = [event[0], event[1], event.slice(2).join('/')];		
 	}
-	this.log('event: [' + event.join(', ') + ']', 6);
+	this.log('event: [' + event.join(', ') + ']', 'trace_l3');
 
 	//WikiaTracker.track(data.join('/'), 'liftium.' + profile, event);	
 };
 
 AdMeldAPIClient.getAd = function(slotname) {
-	this.log('getAd ' + slotname, 5);
+	this.log('getAd ' + slotname, 'trace_l2');
 
 	try {
 		slotname = slotname.replace('HOME_', '');
-		this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 9);
+		this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 'trace_l3');
 	} catch(e) {
 	}
 	
 	try {
 		return this.slots[slotname].ad.creative + this.slots[slotname].pixels.join("\n");
 	} catch(e) {
-		this.log('Error in getAd ' + slotname + ', returning null', 3);
+		this.log('Error in getAd ' + slotname + ', returning null', 'error');
 		this.track(['error', 'get_ad', slotname], 'error');
 		return null;
 	}
 };
 
 AdMeldAPIClient.getBid = function(slotname) {
-	this.log('getBid ' + slotname, 5);
+	this.log('getBid ' + slotname, 'trace_l2');
 	
 	try {
 		slotname = slotname.replace('HOME_', '');
-		this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 9);
+		this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 'trace');
 	} catch(e) {
 	}
 
 	try {
 		return this.slots[slotname].ad.bid;
 	} catch(e) {
-		this.log('Error in getBid ' + slotname + ', returning -1', 3);
+		this.log('Error in getBid ' + slotname + ', returning -1', 'error');
 		this.track(['error', 'get_bid', slotname], 'error');
 		return -1;
 	}
 };
 
 AdMeldAPIClient.init = function() {
-	this.log('init', 1);
+	this.log('init', 'info');
 	
 	var page = top.wgServer + top.wgArticlePath.replace('$1', top.wgPageName);
 
 	for (var slot in this.slots) {
-		this.log('ask for ' + slot + ' bid', 5);
+		this.log('ask for ' + slot + ' bid', 'trace_l3');
 		var s = this.slots[slot];
-		this.log(s, 9);
+		this.log(s, 'trace_l3');
 		var url = 'http://tag.admeld.com/ad/json?publisher_id=' + 525 +
 					'&site_id=' + 'wikia' +
 					'&placement=' + s.placement +
@@ -84,7 +84,7 @@ AdMeldAPIClient.init = function() {
 					'&url=' + page +
 					'&callback=' + 'AdMeldAPIClient.callback' + 
 					'&container=' + slot;
-		this.log('calling ' + url, 7);
+		this.log('calling ' + url, 'trace');
 		this.track(['call', slot]);
 		$.ajax({url:url, dataType:'jsonp'});
 		this.slots[slot].url = url;
@@ -97,28 +97,28 @@ AdMeldAPIClient.init = function() {
 };
 
 AdMeldAPIClient.callback = function(data) {
-	this.log(data, 7);
+	this.log(data, 'trace_l3');
 
 	try {
 		var slot = data.ad.container;
 		this.slots[slot].ad = data.ad;
 		this.slots[slot].pixels = data.pixels;
 	} catch(e) {
-		this.log('Error in callback, broken ad', 3);
+		this.log('Error in callback, broken ad', 'error');
 		this.track(['error', 'callback', 'ad'], 'error');
 		return false;
 	}
 
 	try {
 		var time = (new Date).getTime() - this.slots[slot].timer;
-		this.log('callback ' + slot + ' after ' + time + ' ms', 5);
+		this.log('callback ' + slot + ' after ' + time + ' ms', 'trace_l2');
 		this.slots[slot].timer = time;
 
 		if (time > 5000) time = 5000;
 		time = (time/1000).toFixed(1); // store as x.x sec
 		this.track(['callback', slot, time]);
 	} catch(e) {
-		this.log('Error in callback, broken timer', 3);
+		this.log('Error in callback, broken timer', 'error');
 		this.track(['error', 'callback', 'timer'], 'error');
 	}
 
@@ -128,7 +128,7 @@ AdMeldAPIClient.callback = function(data) {
 
 		this.slots[slot].ad.bid = (bid * 0.875).toFixed(2); // adjust magic for Kyle
 	} catch(e) {
-		this.log('Error in callback, broken bid', 3);
+		this.log('Error in callback, broken bid', 'error');
 		this.track(['error', 'callback', 'bid'], 'error');
 		return false;
 	}
@@ -138,29 +138,29 @@ AdMeldAPIClient.callback = function(data) {
 
 // based on Liftium.setAdjustedValues
 AdMeldAPIClient.adjustLiftiumChain = function(tags) {
-	this.log(tags, 7);
+	this.log(tags, 'trace_l3');
 	
 	try {
 		if (this.sizes.indexOf(tags[0].size) == -1) {
-			this.log('adjustLiftiumChain ' + tags[0].size + ' skipped, no tags for this size', 5);
+			this.log('adjustLiftiumChain ' + tags[0].size + ' skipped, no tags for this size', 'trace_l2');
 			return tags;
 		}
-		this.log('adjustLiftiumChain ' + tags[0].size, 5);
+		this.log('adjustLiftiumChain ' + tags[0].size, 'trace_l3');
 	} catch (e) {
-		this.log('Error in adjustLiftiumChain', 3)
+		this.log('Error in adjustLiftiumChain', 'error')
 		this.track(['error', 'adjust_liftium_chain'], 'error');
 	}
 	
 	for (var i = 0; i < tags.length; i++) {
 		var t = tags[i];
-		this.log(t, 9);
+		this.log(t, 'trace_l3');
 		if (t.network_id == 172) {
-			this.log(t, 7);
+			this.log(t, 'trace_l3');
 			
 			var slotname = t.criteria.placement[0];
 			try {
 				slotname = slotname.replace('HOME_', '');
-				this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 9);
+				this.log('slotname HOME_' + slotname + ' replaced with ' + slotname, 'trace_l2');
 			} catch(e) {
 			}
 
@@ -168,7 +168,7 @@ AdMeldAPIClient.adjustLiftiumChain = function(tags) {
 			var tier = this.getLiftiumTier(bid);
 			tags[i].tier=tier; // not t, change the original in place
 			tags[i].value=bid; // not t, change the original in place
-			this.log('AdMeld tag #' + t.tag_id + ' adjusted to tier ' + tier + ', value $' + bid, 5);
+			this.log('AdMeld tag #' + t.tag_id + ' adjusted to tier ' + tier + ', value $' + bid, 'trace_l2');
 			this.track(['liftium', t.tag_id, tier, bid]);
 		}
 	}
@@ -177,7 +177,7 @@ AdMeldAPIClient.adjustLiftiumChain = function(tags) {
 };
 
 AdMeldAPIClient.getLiftiumTier = function(bid) {
-	this.log('getLiftiumTier ' + bid, 5);
+	this.log('getLiftiumTier ' + bid, 'trace_l2');
 
 	if (bid >= 2.00) return 3;
 	if (bid >= 1.00) return 4;
@@ -191,7 +191,7 @@ AdMeldAPIClient.getLiftiumTier = function(bid) {
 };
 
 AdMeldAPIClient.getParamForDART = function(slotname) {
-	this.log('getParamForDART ' + slotname, 5);
+	this.log('getParamForDART ' + slotname, 'trace_l2');
 
 	var bid = this.roundBidForDART(this.getBid(slotname));
 	this.track(['dart', slotname, bid]);
@@ -200,7 +200,7 @@ AdMeldAPIClient.getParamForDART = function(slotname) {
 };
 
 AdMeldAPIClient.roundBidForDART = function(bid) {
-	this.log('roundBidForDART ' + bid, 5);
+	this.log('roundBidForDART ' + bid, 'trace_l2');
 	
 	if (bid > 5) bid = 5;
 	
