@@ -14,7 +14,6 @@ $use-dark-icons: false;
 
 .WikiaSearch {
 	@include clearfix;
-	font-size: 0; // removes space between inline-block elements
 	margin-bottom: 10px;
 	position: relative;
 
@@ -23,10 +22,11 @@ $use-dark-icons: false;
 		background: lighten($color-page, 5%);
 		color: $color-text;
 		height: 18px;
+		float: left;
 		font-size: 15px;
 		margin-right: 8px;
 		padding: 4px 9px;
-		width: 250px;
+		width: 229px;
 	}
 
 	input[type="text"]:focus {
@@ -35,6 +35,7 @@ $use-dark-icons: false;
 
 	.wikia-button {
 		@include border-radius(3px);
+		float: left;
 		height: 28px;
 		margin-top: 0;
 		position: static;
@@ -86,11 +87,6 @@ $use-dark-icons: false;
 			background: $color-menu-highlight;
 		}
 	}
-}
-
-.WikiaRail .WikiaSearch input[type="text"],
-.WikiaSearchHeader .WikiaSearch input[type="text"] {
-	width: 229px;
 }
 
 .mw-search-result-shoutout > .mw-search-result-title {
