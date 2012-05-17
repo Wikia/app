@@ -123,7 +123,7 @@ function WikiaVideo_init() {
 				break;
 			case 'pl':
 				$wgExtraNamespaces[NS_VIDEO] = 'Video';
-				$wgExtraNamespaces[NS_VIDEO + 1] = 'Dyskusja_Video';
+				$wgExtraNamespaces[NS_VIDEO + 1] = 'Dyskusja_video';
 				$wgNamespaceAliases['Video_talk'] = NS_VIDEO + 1;
 				break;
 			case 'ko':
