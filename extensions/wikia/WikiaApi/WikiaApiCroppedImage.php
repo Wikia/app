@@ -25,7 +25,10 @@ class WikiaApiCroppedImage extends ApiBase {
 			$image = wfFindFile( $tmpTitle );
 			$path =  $image->getPath();
 			
-			if ($FailOnFileNotFound) {
+			// BugId:31460 ForeignAPIFile does not support loading metadata from the file itself.
+			// Note, that ForeignAPIFile::getPath() is a dommy method and always returns false, so
+			// the 'File not found' dieUsage() call in the next if block is inevitable for ForeignAPIFile objects.
+			if ($FailOnFileNotFound && false == ( $image instanceof ForeignAPIFile ) ) {
 				$image->loadFromFile();  // side effect forces isMissing() check to fail if file really does not exist
 			}
 			if ( !($image instanceof File && $image->exists() ) || empty( $path ) 
