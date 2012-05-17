@@ -12,14 +12,14 @@ $messages = array();
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
  */
 $messages['en'] = array(
-	'grouppowers-ipblock-aborted' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use [[Special:Contact]] to report any issues or problems with our staff.'
+	'staffpowers-ipblock-abort' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use [[Special:Contact]] to report any issues or problems with our staff.'
 );
 
 /** Message documentation (Message documentation)
  * @author Lloffiwr
  */
 $messages['qqq'] = array(
-	'powers-ipblock-aborted' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
+	'staffpowers-ipblock-abort' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
 );
 
 /** Afrikaans (Afrikaans)
