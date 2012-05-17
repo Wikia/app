@@ -86,7 +86,7 @@ class WikiaSearchResult {
 	public function deCanonize() {
 		$this->setTitle($this->getCanonical());
 		$title = Title::newFromText($this->getCanonical());
-		$this->setUrl($title->getFullUrl());
+		$this->setUrl(urldecode($title->getFullUrl())); // required to normalize processing
 		$this->setCanonical(null);
 		return $this;
 	}
