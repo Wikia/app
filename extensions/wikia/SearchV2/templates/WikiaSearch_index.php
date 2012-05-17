@@ -10,8 +10,8 @@
 		<?php else: ?>
 			<p><?= wfMsg('wikiasearch2-wiki-search-headline') ?></p>
 		<?php endif; ?>
-		<input type="text" name="query" value="<?=$query;?>" />
-
+		<input type="text" name="search" value="<?=$query;?>" />
+		<input type="hidden" name="fulltext" value="Search" />
 		<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 
 		<?php if($debug): ?>
