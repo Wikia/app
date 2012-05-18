@@ -9,6 +9,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 	protected $namespaces = array();
 	protected $isInterWiki = false;
 	protected $articleMatch;
+	protected $paginatedSearch = false;
 
 	const DEFAULT_RESULTSET_START = 0;
 	const DEFAULT_RESULTSET_SIZE = 20;
@@ -44,6 +45,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 		} 
 
 		$this->query = $query;
+
+		$this->paginatedSearch = $start != self::DEFAULT_RESULTSET_START;
 
 		if ($queryNamespace = MWNamespace::getCanonicalIndex(array_shift(explode(':', strtolower($query))))) {
 			if (!in_array($queryNamespace, $namespaces)) {
@@ -225,7 +228,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$articleMatchId = '';
 
-		if ((!$this->isInterWiki) && ($articleMatch = $this->getArticleMatch())) {
+		if ((!$this->paginatedSearch) && (!$this->isInterWiki) && ($articleMatch = $this->getArticleMatch())) {
 			global $wgCityId;
 			extract($articleMatch);
 			$title = $article->getTitle();
