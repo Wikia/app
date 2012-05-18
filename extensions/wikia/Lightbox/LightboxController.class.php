@@ -55,17 +55,20 @@ class LightboxController extends WikiaController {
 			array(
 				'thumbUrl' => '',	// 90x55 images
 				'type' => 'video',
-				'title' => 'video name'
+				'title' => 'video name',
+				'playButtonSpan' => WikiaFileHelper::videoPlayButtonOverlay(90, 55),
 			),
 			array(
 				'thumbUrl' => '',
 				'type' => 'image',
-				'title' => 'an image name'
+				'title' => 'an image name',
+				'playButtonSpan' => WikiaFileHelper::videoPlayButtonOverlay(90, 55),
 			),
 			array(
 				'thumbUrl' => '',
 				'type' => 'image',
-				'title' => 'an image name'
+				'title' => 'an image name',
+				'playButtonSpan' => WikiaFileHelper::videoPlayButtonOverlay(90, 55),
 			),
 		);
 	
@@ -86,17 +89,20 @@ class LightboxController extends WikiaController {
 			array(
 				'thumbUrl' => '',	// 90x55 images
 				'type' => 'video',
-				'title' => 'video name'
+				'title' => 'video name',
+				'playButtonSpan' => '',
 			),
 			array(
 				'thumbUrl' => '',
 				'type' => 'image',
-				'title' => 'an image name'
+				'title' => 'an image name',
+				'playButtonSpan' => '',
 			),
 			array(
 				'thumbUrl' => '',
 				'type' => 'image',
-				'title' => 'an image name'
+				'title' => 'an image name',
+				'playButtonSpan' => '',
 			),
 		);
 	
