@@ -102,7 +102,13 @@ abstract class File {
 		$newExt = self::normalizeExtension(
 			$n ? substr( $new, $n + 1 ) : '' );
 		$mimeMagic = MimeMagic::singleton();
-		return $mimeMagic->isMatchingExtension( $newExt, $oldMime );
+
+		/** Wikia change start, author Jacek Jursza, bug id: 31194 - not able to rename video files **/
+		$result = $mimeMagic->isMatchingExtension( $newExt, $oldMime );
+		wfRunHooks( 'File::checkExtensionCompatibilityResult', array( &$result, &$old, &$oldMime, &$newExt ) );
+
+		return $result;
+		/** Wikia change end **/
 	}
 
 	/**
