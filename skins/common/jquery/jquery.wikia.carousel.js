@@ -22,16 +22,18 @@
 
 (function($, window) {
 	$.fn.carousel = function(options) {
+		// All available options for this plugin
 		var defaults = {
 			transitionSpeed: 500,
 			itemsShown: 3,
-			itemSpacing: 2,
-			activeIndex: 0,
+			activeIndex: 0, // set this item to active on load
 			nextClass: "next",
 			prevClass: "previous",
 			attachBlindImages: false,
 			itemClick: false,
-			trackProgress: false // pass in function for inserting progress data into dom. 
+			trackProgress: false, // pass in function for inserting progress data into dom. 
+			preScroll: false, // execute before moving the caoursel
+			postScroll: false // execute after moving the carousel
 		};
 
 		options = $.extend(defaults, options);
@@ -84,6 +86,10 @@
 
 				states.left = left;
 
+				if(typeof options.preScroll == 'function') {
+					options.preScroll();
+				}
+				
 				dom.carousel.animate({
 					left: left
 				}, options.transitionSpeed, function() {
@@ -111,6 +117,10 @@
 
 				states.left = left;
 
+				if(typeof options.preScroll == 'function') {
+					options.preScroll();
+				}
+				
 				dom.carousel.animate({
 					left:  left
 				}, options.transitionSpeed, function() {
@@ -162,7 +172,11 @@
 			updateArrows();
 			if(typeof options.trackProgress == 'function') {
 				trackProgress(options.trackProgress);
-			}			
+			}
+			if(typeof options.postScroll == 'function') {
+				options.postScroll();
+			}
+			
 		}
 		
 		function trackProgress(callback) {
