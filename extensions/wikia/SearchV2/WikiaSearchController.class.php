@@ -67,15 +67,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$paginationLinks = '';
 		if( !empty( $query ) ) {
 			$articleMatch = $this->wikiaSearch->getArticleMatch($query);
-
 			if (!empty($articleMatch) && $this->getVal('fulltext', '0') === '0') {
 				extract($articleMatch);
 
 				$title = isset($redirect) ? $redirect->getTitle() : $article->getTitle();
-				
+
 				wfRunHooks( 'SpecialSearchIsgomatch', array( &$title, $query ) );
-				  
+
+				Track::event( 'search_start_gomatch', array( 'sterm' => $query, 'rver' => 0 ) );
 				$this->response->redirect( $title->getFullURL() );
+			}
+			elseif(!empty($articleMatch)) {
+				Track::event( 'search_start_match', array( 'sterm' => $query, 'rver' => 0 ) );
 			}
 
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
