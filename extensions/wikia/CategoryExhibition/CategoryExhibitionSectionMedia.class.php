@@ -86,7 +86,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 						'data-ref'		=> $itemTitle->getPrefixedURL(),
 						'targetUrl'		=> $linkFullUrl,
 						'targetText'		=> $linkText,
-						'useVideoOverlay'	=> ( WikiaVideoService::isVideoStoredAsFile() && WikiaVideoService::isTitleVideo( $itemTitle ) )
+						'useVideoOverlay'	=> ( WikiaFileHelper::isVideoStoredAsFile() && WikiaFileHelper::isTitleVideo( $itemTitle ) )
 					);
 				};
 

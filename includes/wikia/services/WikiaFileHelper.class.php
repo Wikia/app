@@ -2,7 +2,7 @@
 /*
  * Helper service to maintain new video logic / old video logic
  */
-class WikiaVideoService extends Service {
+class WikiaFileHelper extends Service {
 
 	const maxWideoWidth = 1200;
 
@@ -66,35 +66,6 @@ class WikiaVideoService extends Service {
 		return false;
 	}
 
-	/*
-	 * Checks if given Title is video
-	 * @return boolean
-	 */
-	public static function getEmbedCodefromTitle( $title, $width, $allowOld = true ) {
-
-		$title = self::getTitle( $title );
-		if ( self::isVideoStoredAsFile() ) {
-
-			// video-as-file logic
-			if ( self::isFileTypeVideo( $title ) ) {
-				$oVideoTitle = Title::newFromText( $videoName, NS_VIDEO );
-				if ( !empty( $oVideoTitle ) ) {
-					$oVideoPage = new VideoPage( $oVideoTitle );
-					$oVideoPage->load();
-					if ( $videoPage->checkIfVideoExists() ){
-						$videoEmbedCode = $oVideoPage->getEmbedCode( $width, false, true );
-					}
-				}
-			}
-			return false;
-
-		} elseif ( ( $title->getNamespace() == NS_VIDEO ) && $allowOld ) {
-
-			return true;
-		}
-
-		return false;
-	}
 
 	public static function getTitle( $mTitle ){
 
@@ -177,4 +148,105 @@ class WikiaVideoService extends Service {
 	public static function isUrlMatchWikiaVideoRepo($url) {
 		return stripos( $url, F::app()->wg->wikiaVideoRepoPath ) !== false;
 	}
+
+	public static function getMediaDetailConfig( $config = array() ) {
+
+		$configDefaults = array(
+			'contextWidth'          => false,
+			'contextHeight'         => false,
+			'imageMaxWidth'         => 1000,
+			'userAvatarWidth'       => 16
+		);
+
+		foreach ( $configDefaults as $key => $val ) {
+
+			if ( empty( $config[$key] ) ) {
+				$config[$key] = $val;
+			}
+		}
+
+		return $config;
+	}
+
+	/**
+	 * @static
+	 * @param Title $fileTitle
+	 * @param array $config ( contextWidth, contextHeight, imageMaxWidth, userAvatarWidth )
+	 */
+	public static function getMediaDetail( $fileTitle, $config = array() ) {
+
+
+		if ( $fileTitle->getNamespace() != NS_FILE ) {
+			$fileTitle = F::build('Title', array($fileTitle->getDBKey(), NS_FILE), 'newFromText');
+		}
+
+		$config = self::getMediaDetailConfig( $config );
+
+		$data = array(
+			'mediaType' => '',
+			'videoEmbedCode' => '',
+			'playerAsset' => '',
+			'imageUrl' => '',
+			'fileUrl' => '',
+			'rawImageUrl' => '',
+			'description' => '',
+			'userThumbUrl' => '',
+			'userId' => '',
+			'userName' => '',
+			'userPageUrl' => '',
+			'articles' => array()
+		);
+
+		$file = wfFindFile($fileTitle);
+
+		if ( !empty( $file ) ) {
+
+			$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
+
+			$width = $file->getWidth();
+			$height = $file->getHeight();
+
+			if ( $data['mediaType'] == 'video' ) {
+
+				$width  = $config['contextWidth']  ? $config['contextWidth']  : $width;
+				$height = $config['contextHeight'] ? $config['contextHeight'] : $height;
+
+				$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
+				$data['playerAsset'] = $file->getPlayerAssetUrl();
+
+				$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
+
+			} else {
+
+				$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
+				$mediaPage = F::build( 'ImagePage', array($fileTitle) );
+			}
+
+			$thumb = $file->transform( array('width'=>$width, 'height'=>$height), 0 );
+			$user = F::build('User', array( $file->getUser('id') ), 'newFromId' );
+
+			$data['imageUrl'] = $thumb->getUrl();
+			$data['fileUrl'] = $fileTitle->getLocalUrl();
+			$data['rawImageUrl'] = $file->getUrl();
+			$data['userId'] = $user->getId();
+			$data['userName'] = $user->getName();
+			$data['userThumbUrl'] = F::build( 'AvatarService', array($user->getId() , $config['userAvatarWidth'] ), 'getAvatarUrl' );
+			$data['userPageUrl'] = $user->getUserPage()->getFullURL();
+			$data['description']  = $mediaPage->getContent();
+
+			$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $fileTitle ) );
+			$articlesData = $mediaQuery->getArticleList();
+
+			if ( is_array($articlesData) ) {
+				foreach ( $articlesData as $art ) {
+					$data['articles'][] = array( 'articleUrl' => $art['url'], 'articleTitle' => $art['title'], 'articleNS' => $art['ns'] );
+				}
+			}
+
+		}
+
+		return $data;
+
+	}
+
 }

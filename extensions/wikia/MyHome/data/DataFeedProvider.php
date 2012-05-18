@@ -189,7 +189,7 @@ class DataFeedProvider {
 								$image = self::getImageThumb($imageName, $imgageObj);
 
 								if ($image) {
-									if ( WikiaVideoService::isFileTypeVideo($imgageObj) ) {
+									if ( WikiaFileHelper::isFileTypeVideo($imgageObj) ) {
 										$item['new_videos'][] = $image;
 									} else {
 										$item['new_images'][] = $image;

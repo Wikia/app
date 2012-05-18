@@ -98,7 +98,7 @@ extAddSpecialPage( dirname(__FILE__) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd
 $wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'VETSetup';
 
-if ( empty( $wgVideoHandlersVideosMigrated ) ) { /* can't use WikiaVideoService here - not declared yet */
+if ( empty( $wgVideoHandlersVideosMigrated ) ) { /* can't use WikiaFileHelper here - not declared yet */
 	$wgHooks['WikiaVideo::View:RedLink'][] = 'VETWIkiaVideoRedLink';
 	$wgHooks['WikiaVideo::View:BlueLink'][] = 'VETWIkiaVideoBlueLink';
 }

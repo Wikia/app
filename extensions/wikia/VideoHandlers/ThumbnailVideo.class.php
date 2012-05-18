@@ -172,7 +172,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		$html = ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::openElement( 'a', $linkAttribs ) : '';
-			$html .= WikiaVideoService::videoPlayButtonOverlay( $this->width, $this->height );
+			$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $this->height );
 			$html .= Xml::element( 'img', $attribs, '', true );
 		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';
 

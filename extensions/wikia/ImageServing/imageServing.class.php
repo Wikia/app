@@ -231,7 +231,7 @@ class ImageServing {
 		}
 
 		$sPrefix = '';
-		if ( WikiaVideoService::isVideoFile( $img ) ) {
+		if ( WikiaFileHelper::isVideoFile( $img ) ) {
 			// videos has different thumbnail markup
 			$sPrefix = 'v,000000,';
 			// they need to be literally centered

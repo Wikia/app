@@ -506,7 +506,7 @@ class WikiaQuizAjax {
 	 */
 	private static function isValidVideo($name) {
 
-		$bResult = WikiaVideoService::isTitleVideo( $name );
+		$bResult = WikiaFileHelper::isTitleVideo( $name );
 		// double check if old video page exists
 		if ( !$bResult && !self::isVideoStoredAsFile() ) {
 			$videoTitle = Title::newFromText( $name, NS_LEGACY_VIDEO );

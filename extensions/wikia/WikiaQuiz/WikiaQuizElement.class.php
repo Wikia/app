@@ -159,9 +159,9 @@ class WikiaQuizElement {
 			$this->mQuizTitleObject = F::build('Title', array($quizName, NS_WIKIA_QUIZ), 'newFromText');
 
 			if ( !empty( $videoName ) ) {
-				if ( WikiaVideoService::isVideoStoredAsFile() ) {
+				if ( WikiaFileHelper::isVideoStoredAsFile() ) {
 					$file = wfFindFile($videoName);
-					if (WikiaVideoService::isVideoFile($file)) {
+					if (WikiaFileHelper::isVideoFile($file)) {
 						$file->trackingArticleId = $this->mQuizElementId;
 						$videoEmbedCode = $file->getEmbedCode( self::VIDEO_WIDTH );
 					}

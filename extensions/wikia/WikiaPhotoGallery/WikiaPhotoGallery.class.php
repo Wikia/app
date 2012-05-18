@@ -476,7 +476,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	private function addRecentlyUploaded($limit) {
 		wfProfileIn(__METHOD__);
 
-		$uploadedImages = ImagesService::getRecentlyUploaded($limit);
+		$uploadedImages = MediaQueryService::getRecentlyUploaded($limit);
 
 		// remove images already added to slideshow
 		$this->mImages = array();
@@ -879,8 +879,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				);
 				if (!empty($image['thumbnail'])) {
 					
-					if ( WikiaVideoService::isFileTypeVideo( $fileObject ) ) {
-						$html .= WikiaVideoService::videoPlayButtonOverlay( $image['width'], $image['height'] );
+					if ( WikiaFileHelper::isFileTypeVideo( $fileObject ) ) {
+						$html .= WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
 					}
 					
 					$html .= Xml::openElement(
@@ -1070,7 +1070,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$img = wfFindFile( $nt, $time );
 			
-			if ( WikiaVideoService::isFileTypeVideo($img) ) {
+			if ( WikiaFileHelper::isFileTypeVideo($img) ) {
 				continue;
 			}
 			
@@ -1317,7 +1317,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$img = wfFindFile( $nt, $time );
-			if ( !WikiaVideoService::isFileTypeVideo($img) && is_object($img) && ($nt->getNamespace() == NS_FILE)) {
+			if ( !WikiaFileHelper::isFileTypeVideo($img) && is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 
 				if( F::app()->checkSkin( 'wikiamobile' ) ){
 					$imageUrl = array(

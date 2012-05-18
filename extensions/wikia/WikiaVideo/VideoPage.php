@@ -1691,7 +1691,7 @@ EOD;
 	{
 		global $wgMemc,$wgTranscludeCacheExpiry;
 
-		if ( WikiaVideoService::isVideoStoredAsFile() ) {
+		if ( WikiaFileHelper::isVideoStoredAsFile() ) {
 
 			$cacheKey = wfMemcKey( "wvi", "newviddlerid",$this->mId );
 			$obj  = $wgMemc->get( $cacheKey );

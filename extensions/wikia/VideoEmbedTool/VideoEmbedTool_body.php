@@ -169,7 +169,7 @@ class VideoEmbedTool {
 		global $wgRequest, $wgTitle, $wgVideoMigrationProviderMap;
 		$itemTitle = $wgRequest->getVal('itemTitle');
 
-		if (WikiaVideoService::isVideoStoredAsFile()) {
+		if (WikiaFileHelper::isVideoStoredAsFile()) {
 			
 			$title = Title::newFromText($itemTitle, NS_FILE);
 			$file = wfFindFile( $title );	
@@ -216,8 +216,8 @@ class VideoEmbedTool {
 
 		$url = $wgRequest->getVal( 'url' );
 
-		if ( !WikiaVideoService::isVideoStoredAsFile()
-		|| ( !WikiaVideoService::isUrlMatchThisWiki($url) && !WikiaVideoService::isUrlMatchWikiaVideoRepo($url) ) ) {
+		if ( !WikiaFileHelper::isVideoStoredAsFile()
+		|| ( !WikiaFileHelper::isUrlMatchThisWiki($url) && !WikiaFileHelper::isUrlMatchWikiaVideoRepo($url) ) ) {
 			$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
 			$title = Title::makeTitle( NS_LEGACY_VIDEO, $tempname );
 			$video = new VideoPage( $title );
@@ -249,7 +249,7 @@ class VideoEmbedTool {
 		}
 		else {
 			$file = null;
-			if ( WikiaVideoService::isUrlMatchThisWiki($url) ) {
+			if ( WikiaFileHelper::isUrlMatchThisWiki($url) ) {
 				//@todo should we move constant VideoPage::V_LOCALVIDEO to VideoHandlers ext?
 				$props['provider'] = VideoPage::V_LOCALVIDEO;
 
@@ -330,7 +330,7 @@ class VideoEmbedTool {
 		$name = VideoFileUploader::sanitizeTitle($name);
 
 		// sanitize name and init title objects
-		if (WikiaVideoService::useVideoHandlersExtForEmbed()) {
+		if (WikiaFileHelper::useVideoHandlersExtForEmbed()) {
 			$nameFile = VideoFileUploader::sanitizeTitle($name);
 			$titleFile = Title::newFromText($nameFile, NS_FILE);
 			if (empty($titleFile)) {
@@ -338,8 +338,8 @@ class VideoEmbedTool {
 				return wfMsg ( 'vet-name-incorrect' );
 			}
 		}	
-		if (WikiaVideoService::isVideoStoredAsFile()) {
-			// by definition, WikiaVideoService::useVideoHandlersExtForEmbed() == true
+		if (WikiaFileHelper::isVideoStoredAsFile()) {
+			// by definition, WikiaFileHelper::useVideoHandlersExtForEmbed() == true
 			$nameSanitized = $nameFile;
 			$title = $titleFile;
 		}
@@ -575,7 +575,7 @@ class VideoEmbedTool {
 
 			if( 'gallery' != $layout ) {
 				if( '' == $mwInGallery ) { // not adding gallery, not in gallery
-					if ($provider == VideoPage::V_WIKIAVIDEO && !WikiaVideoService::isVideoStoredAsFile()) {
+					if ($provider == VideoPage::V_WIKIAVIDEO && !WikiaFileHelper::isVideoStoredAsFile()) {
 						$tag = '{{:' . $wgWikiaVideoInterwikiPrefix . ':' . $nameSanitized;
 						$params = array();
 						if($size != 'full') {

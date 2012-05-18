@@ -141,7 +141,8 @@ $wgAutoloadClasses['Service']  =  $IP.'/includes/wikia/services/Service.php';
 $wgAutoloadClasses['ApiService']  =  $IP.'/includes/wikia/services/ApiService.class.php';
 $wgAutoloadClasses['ArticleService'] = $IP.'/includes/wikia/services/ArticleService.class.php';
 $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarService.class.php';
-$wgAutoloadClasses['ImagesService'] = $IP.'/includes/wikia/services/ImagesService.class.php';
+$wgAutoloadClasses['MediaQueryService'] = $IP.'/includes/wikia/services/MediaQueryService.class.php';
+$wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
 $wgAutoloadClasses['NavigationService']  =  $IP.'/includes/wikia/services/NavigationService.class.php';
 $wgAutoloadClasses['WikiNavigationService']  =  $IP.'/includes/wikia/services/WikiNavigationService.class.php';
 $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisService.php';
@@ -888,6 +889,9 @@ $wgRedis = new Predis_Client( array(
 ));
 
 /**
- * Video
+ * Media
  */
-$wgAutoloadClasses['WikiaVideoService'] = $IP.'/includes/wikia/services/WikiaVideoService.class.php';
+$wgAutoloadClasses['WikiaFileHelper'] = $IP.'/includes/wikia/services/WikiaFileHelper.class.php';
+$wgAutoloadClasses['ArticlesUsingMediaQuery'] = $IP.'/includes/wikia/services/ArticlesUsingMediaQuery.class.php';
+$wgHooks['LinksUpdateConstructed'][] = 'ArticlesUsingMediaQuery::onUpdateLinks';
+$wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';

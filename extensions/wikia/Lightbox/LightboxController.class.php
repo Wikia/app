@@ -6,7 +6,10 @@
  * @author Liz
  */
 class LightboxController extends WikiaController {
-
+	
+	const THUMBNAIL_WIDTH = 90;
+	const THUMBNAIL_HEIGHT = 55;
+	
 	public function __construct() {
 	}
 	
@@ -42,11 +45,10 @@ class LightboxController extends WikiaController {
 
 	/**
 	 * @brief - Returns a list of relatedVideos for the wiki
-	 * @requestParam string wikiName - DB name of the wiki.  (optional, default to current wiki if null)
 	 * @responseParam array thumbs - thumbnail data
 	 */	
 	public function getRelatedVideosThumbs() {
-	
+		wfProfileIn(__METHOD__);
 		// sample data
 		$thumbs = array(
 			array(
@@ -66,7 +68,8 @@ class LightboxController extends WikiaController {
 			),
 		);
 	
-		$this->thumbs = $thumbs;
+		$this->response->setVal( 'thumbs', $thumbs );
+		wfProfileOut(__METHOD__);
 	}
 
 
@@ -98,8 +101,16 @@ class LightboxController extends WikiaController {
 	
 		$this->thumbs = $thumbs;
 	}
-
 	
+	protected static function getArticleMediaThumbsMemcKey($title) {
+		return F::app()->wf->MemcKey( 'ArticleMediaThumbs', '1.0', $title->getDBkey() );
+	}
+	
+	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
+		// article links are updated, so we invalidate the cache
+		F::app()->wg->memc->delete( self::getArticleMediaThumbsMemcKey( $article->getTitle() ) );
+		return true;
+	}
 	
 	/**
 	 * @brief - Returns a list of all media for the article.
@@ -107,70 +118,43 @@ class LightboxController extends WikiaController {
 	 * @responseParam array thumbs - thumbnail data
 	 */
 	public function getArticleMediaThumbs() {
-	
-		// sample data
-		$thumbs = array(
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
-				'type' => 'image',
-				'title' => 'IMG_1535.jpg'
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
-				'type' => 'image',
-				'title' => 'Avatar.jpg'
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120504221422/devbox/images/thumb/a/a4/500x1700.jpeg/90px-500x1700.jpeg',	
-				'type' => 'image',
-				'title' => '500x1700.jpeg'
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120208012846/devbox/images/thumb/c/cf/The_Dark_Knight_%282008%29_-_Hit_Me%21/100px-The_Dark_Knight_%282008%29_-_Hit_Me%21.jpg', // 90x55 images
-				'type' => 'video',
-				'title' => 'The Dark Knight (2008) - Hit Me!',
-				'playButtonSpan' => WikiaVideoService::videoPlayButtonOverlay(90, 55)
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
-				'type' => 'image',
-				'title' => 'IMG_1535.jpg'
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
-				'type' => 'image',
-				'title' => 'Avatar.jpg'
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120504221422/devbox/images/thumb/a/a4/500x1700.jpeg/90px-500x1700.jpeg',	
-				'type' => 'image',
-				'title' => '500x1700.jpeg'
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120208012846/devbox/images/thumb/c/cf/The_Dark_Knight_%282008%29_-_Hit_Me%21/100px-The_Dark_Knight_%282008%29_-_Hit_Me%21.jpg', // 90x55 images
-				'type' => 'video',
-				'title' => 'The Dark Knight (2008) - Hit Me!',
-				'playButtonSpan' => WikiaVideoService::videoPlayButtonOverlay(90, 55)
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
-				'type' => 'image',
-				'title' => 'IMG_1535.jpg'
-			),
-			/*array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120423092715/devbox/images/thumb/1/19/Avatar.jpg/90px-Avatar.jpg',	
-				'type' => 'image',
-				'title' => 'Avatar.jpg'
-			),
-			array(
-				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120504221422/devbox/images/thumb/a/a4/500x1700.jpeg/90px-500x1700.jpeg',	
-				'type' => 'image',
-				'title' => '500x1700.jpeg'
-			),*/
-		);
-	
-		$this->thumbs = $thumbs;
-	
+		/*
+		 * getArticleMediaThumbs() should return a list of thumbnail data in context of the current article.
+		* The response format should be the same.  There is no maximum, and it should return ALL items pertaining
+		* to that article.  The title of the article will be part of the request parameter to that method.
+		*/
+		wfProfileIn(__METHOD__);
+		
+		$thumbs = null;
+		
+		$title = F::build('Title', array( $this->request->getVal('title') ), 'newFromText');
+		if ( $title ) {
+			$memcKey = self::getArticleMediaThumbsMemcKey( $title );
+			$thumbs = $this->wg->memc->get( $memcKey );
+			if ( empty( $thumbs ) ) {
+				$mediaQuery =  F::build( 'MediaQueryService' );
+				$mediaTable = $mediaQuery->getMediaFromArticle($title);
+				$thumbs = array();
+				foreach ($mediaTable as $entry) {
+					$media = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
+					$file = wfFindFile($media);
+					if ( !empty( $file ) ) {
+						$trans = $file->transform( array( 'width' => self::THUMBNAIL_HEIGHT, 'height'=> self::THUMBNAIL_WIDTH ) );
+						$thumbs[] = array(
+								'thumbUrl' => $trans->url,
+								'type' => $entry['type'],
+								'title' => $media->getText()
+						);
+					}
+				}
+				$this->wg->memc->set($memcKey, $thumbs);
+			}
+		}
+		
+		$this->response->setVal( 'thumbs', empty($thumbs) ? array() : $thumbs );
+		
+		wfProfileOut(__METHOD__);
+		
 	}
 	
 	
@@ -190,72 +174,17 @@ class LightboxController extends WikiaController {
 	 * @responseParam array articles - array of articles that has title and url
 	 */
 	public function getMediaDetail() {
+
 		$fileTitle = $this->request->getVal('title');
-		$fileType = $this->request->getVal('type', '');
+
 		$title = F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
 		
-		/* initial values */
-		$mediaType = 'image';
-		$videoEmbedCode = '';
-		$playerAsset = '';
-		$imageUrl = '';
-		$fileUrl = '';
-		$rawImageUrl = '';
-		$caption = '';
-		$description = '';
-		$userThumbUrl = '';
-		$userName = '';
-		$userPageUrl = '';
-		$articles = array();
-		
-		/* do data query here */
-		$file = wfFindFile($fileTitle);
-		
-		if(!empty($file)) {
-			/* figure out resource type */
-			$isVideo = F::build('WikiaVideoService')->isFileTypeVideo($file);
-		
-			 /* do media specific business logic */ 
-			 if(!$isVideo) {
-				/* normalize size of image to max 1000 width.  height does not matter */
-				$width = $file->getWidth();
-				$height = $file->getHeight();
-				$width = $width > 1000 ? 1000 : $width;
-			} else {
-				$height = $this->request->getVal('height', 360); 
-				$width = $this->request->getVal('width', 660); 
-				
-				$mediaType = 'video';
-				$videoEmbedCode = $file->getEmbedCode( $width, true, true);
-				$playerAsset = $file->getPlayerAssetUrl();
-			}
-			
-			 /* everything after this point should be shared business logic */ 
-			/* get thumb */
-			$thumb = $file->getThumbnail($width, $height);
-			
-			/* get article content of this file */
-			$articleId = $title->getArticleID();
-			$article = Article::newFromID($articleId);
-			
-			/* get user who uploaded this */
-			$userId = $file->getUser('id');
-			$user = F::build('User', array($userId), 'newFromId' );
-			
-			$imageUrl = $thumb->getUrl();
-			$fileUrl = $title->getLocalUrl();
-			$rawImageUrl = $file->getUrl();
-			$caption = '';	/* caption doesn't look like it's been structured, and it's just wikitext? (hyun) */
-			//$description = $article->getContent();	TODO: broken, needs to be fixed
-			$userName = $user->getName();
-			$userThumbUrl = F::build( 'AvatarService', array($user->getId() , 16 ), 'getAvatarUrl' );
-			$userPageUrl = $user->getUserPage()->getFullURL();
-			$articles = array(
-				array('articleUrl' => '', 'articleTitle' => 'Some Article')
-			);	/* sample */
-			/* article that image is embedded to needs to be implemented.  currently, there's an implementation on LatestPhotosModule->getLinkedFiles */
-		}
-		
+		$data = WikiaFileHelper::getMediaDetail($title, array('imageMaxWidth'  => 1000,
+									'contextWidth'   => $this->request->getVal('width', 660),
+									'contextHeight'  => $this->request->getVal('height', 360),
+									'userAvatarWidth'=> 16
+							));
+
 		/* temporary placeholders */
 		$caption = 'CAPTION HERE?';
 		$description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.';
@@ -266,17 +195,17 @@ class LightboxController extends WikiaController {
 		/* /placeholders */
 		
 		$this->fileTitle = $fileTitle;
-		$this->mediaType = $mediaType;
-		$this->videoEmbedCode = $videoEmbedCode;
-		$this->playerAsset = $playerAsset;
-		$this->imageUrl = $imageUrl;
-		$this->fileUrl = $fileUrl;
-		$this->rawImageUrl = $rawImageUrl;
-		$this->caption = $caption;
-		$this->description = $description;
-		$this->userThumbUrl = $userThumbUrl;
-		$this->userName = $userName;
-		$this->userPageUrl = $userPageUrl;
-		$this->articles = $articles;
+		$this->mediaType = $data['mediaType'];
+		$this->videoEmbedCode = $data['videoEmbedCode'];
+		$this->playerAsset = $data['playerAsset'];
+		$this->imageUrl = $data['imageUrl'];
+		$this->fileUrl = $data['fileUrl'];
+		$this->rawImageUrl = $data['rawImageUrl'];
+		$this->caption = '';
+		$this->description = $data['description'];
+		$this->userThumbUrl = $data['userThumbUrl'];
+		$this->userName = $data['userName'];
+		$this->userPageUrl = $data['userPageUrl'];
+		$this->articles = $data['articles'];
 	}
 }

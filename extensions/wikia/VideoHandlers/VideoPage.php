@@ -51,7 +51,7 @@ class WikiaVideoPage extends ImagePage {
 			$dupes = parent::getDuplicates();
 			$finalDupes = array();
 			foreach( $dupes as $dupe ) {
-		                if ( WikiaVideoService::isFileTypeVideo( $dupe ) && $dupe instanceof WikiaLocalFile ) {
+		                if ( WikiaFileHelper::isFileTypeVideo( $dupe ) && $dupe instanceof WikiaLocalFile ) {
 		                    if ( $dupe->getProviderName() != $this->img->getProviderName() ) continue;
 		                    if ( $dupe->getVideoId() != $this->img->getVideoId() ) continue;
 		                    $finalDupes[] = $dupe;

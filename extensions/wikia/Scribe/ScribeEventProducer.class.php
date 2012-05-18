@@ -407,7 +407,7 @@ class ScribeEventProducer {
 			$images = $oArticle->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
 				foreach ($images as $iname => $dummy) {
-					if (WikiaVideoService::isVideoStoredAsFile()) {
+					if (WikiaFileHelper::isVideoStoredAsFile()) {
 						$file = wfFindFile($iname);
 						if ($file instanceof LocalFile) {
 							$mediaType = $file->getMediaType();

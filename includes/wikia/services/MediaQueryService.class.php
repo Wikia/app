@@ -1,8 +1,8 @@
 <?php
 /**
- * This service provides images related data
+ * This service provides methods for querying for media
  */
-class ImagesService extends Service {
+class MediaQueryService extends Service {
 
 	/**
 	 * Get list of images which:
@@ -41,7 +41,7 @@ class ImagesService extends Service {
 
 			if($res->numRows() > 0) {
 				while( $row = $res->fetchObject() ) {
-					if ( ! WikiaVideoService::isTitleVideo( $row->il_to, false ) ) {
+					if ( ! WikiaFileHelper::isTitleVideo( $row->il_to, false ) ) {
 						$images[] = $row->il_to;
 						if (count($images) == $limit) {
 							break;
@@ -55,40 +55,76 @@ class ImagesService extends Service {
 		wfProfileOut(__METHOD__);
 		return $images;
 	}
-
-	/**
-	 * Get lists of images used on given article
-	 */
-	public static function getFromArticle(Title $title, $limit = 50) {
+	
+	public function __construct() {
+		$this->app = F::app();
+	}
+	
+	protected function getArticleMediaMemcKey($title) {
+		return $this->app->wf->MemcKey( 'MQSArticleMedia', '1.0', $title->getDBkey() );
+	}
+		
+	public function unsetCache( $title ) {
+		$this->app->wg->memc->delete( $this->getArticleMediaMemcKey( $title ) );
+	}
+	
+	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
+		// article links are updated, so we invalidate the cache
+		$title = $article->getTitle();
+		$mqs = new self( );
+		$mqs->unsetCache( $title );		
+		return true;
+	}
+	
+	const MEDIA_TYPE_VIDE0 = 'video';
+	const MEDIA_TYPE_IMAGE = 'image';
+	
+	public function getMediaFromArticle(Title $title, $type = null, $limit = null) {
 		wfProfileIn(__METHOD__);
 
-		$images = array();
-
-		// get list of images linked with given article
-		$res = ApiService::call(array(
-			'action' => 'query',
-			'prop' => 'images',
-			'titles' => $title->getPrefixedText(),
-			'imlimit' => $limit,
-		));
-
-		if (!empty($res['query']['pages'])) {
-			$data = array_pop($res['query']['pages']);
-
-			if (!empty($data['images'])) {
-				foreach($data['images'] as $entry) {
-					// ignore Video:foo entries from VET
-					if ( $entry['ns'] == NS_IMAGE && !WikiaVideoService::isTitleVideo($entry['title']) ) {
-						$images[] = $entry['title'];
+		$memcKey = $this->getArticleMediaMemcKey( $title );
+		$titles = $this->app->wg->memc->get( $memcKey );
+		if ( empty( $titles ) ) {
+			$articleId = $title->getArticleId();
+			if ( $articleId ) {
+					$db = $this->app->wf->GetDB( DB_SLAVE );
+					$result = $db->select(
+							array('imagelinks'),
+							array('il_to'),
+							array("il_from = " . $articleId),
+							__METHOD__,
+							array( "ORDER BY" => "il_to" )
+					);
+					
+					$titles = array();
+					
+					while ($row = $db->fetchObject( $result ) ) {
+						$media = F::build('Title', array($row->il_to, NS_FILE), 'newFromText');
+						$file = wfFindFile( $media );
+						if ( !empty( $file ) ) {
+							if ( $file->canRender() ) {
+								$titles[] = array('title' => $row->il_to,
+										'type' => WikiaFileHelper::isTitleVideo( $media ) ? self::MEDIA_TYPE_VIDE0 : self::MEDIA_TYPE_IMAGE);
+							}
+						}
 					}
-				}
+					$this->app->wg->memc->set($memcKey, $titles);
 			}
 		}
-
+		if ( ! is_array($titles) ) $titles = array();
+		
+		if ( ( count($titles) > 0 ) && $type ) {
+			$titles = array_filter($titles, function ($item) use ($type) {
+				return $type == $item['type'];
+			});
+		}
+		if ( $limit && ( $limit > 0 ) ) {
+			$titles = array_slice( $titles, 0, $limit);
+		}
 		wfProfileOut(__METHOD__);
-		return $images;
+		return $titles;
 	}
-
+			
 	/**
 	 * Get list of recently uploaded files (RT #79288)
 	 */
@@ -111,7 +147,7 @@ class ImagesService extends Service {
 		if (!empty($res['query']['logevents'])) {
 			foreach($res['query']['logevents'] as $entry) {
 				// ignore Video:foo entries from VideoEmbedTool
-				if( $entry['ns'] == NS_IMAGE && !WikiaVideoService::isTitleVideo($entry['title']) ) {
+				if( $entry['ns'] == NS_IMAGE && !WikiaFileHelper::isTitleVideo($entry['title']) ) {
 					$image = Title::newFromText($entry['title']);
 					if (!empty($image)) {
 						// skip badges upload (RT #90607)
