@@ -17,7 +17,8 @@ $.fn.extend({
 			showCloseButton: true,
 			width: 400,
 			height: "auto",
-			topOffset: 50
+			topOffset: 50,
+			escapeToClose: true
 		};
 		if (options) {
 			$.extend(settings, options);
@@ -149,8 +150,8 @@ $.fn.extend({
 			}
 		});
 
-		$(window)
-			.bind("keypress.modal" + id, function(event) {
+		if(settings.escapeToClose) {
+			$(window).bind("keydown.modal" + id, function(event) {
 				if (event.keyCode == 27) {
 					if (typeof settings.onClose == 'function') {
 						// let extension decide what to do
@@ -167,15 +168,16 @@ $.fn.extend({
 					}
 					return false;
 				}
-			})
-			.bind("resize.modal", function() {
-				if (window.skin == 'oasis') {
-					return;
-				}
-
-				wrapper.css("top", wrapper.getModalTopOffset());
-				$(".blackout:last").height($(document).height());
 			});
+		}
+		$(window).bind("resize.modal", function() {
+			if (window.skin == 'oasis') {
+				return;
+			}
+
+			wrapper.css("top", wrapper.getModalTopOffset());
+			$(".blackout:last").height($(document).height());
+		});
 
 		// macbre: associate blackout with current modal
 		// jakub: adding control of blackoutOpacity;
