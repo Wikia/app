@@ -1,6 +1,6 @@
 <?php if($windowLastPage > 1): ?>
 <?php
-	$extraParams = array();
+	$extraParams = array('fulltext' => 'Search');
 	if(!empty($crossWikia)) {
 		$extraParams['crossWikia'] = 1;
 	}
