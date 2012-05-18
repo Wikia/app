@@ -16,7 +16,8 @@ class LightboxController extends WikiaController {
 	
 	public function lightboxModalContent() {
 		// TODO: get article name from request
-		$title = $this->request->getVal('title');
+		$mediaTitle = $this->request->getVal('mediaTitle');
+		$articleTitle = $this->request->getVal('articleTitle');
 		$carouselType = $this->request->getVal('carouselType');
 		
 		switch($carouselType) {
@@ -32,10 +33,10 @@ class LightboxController extends WikiaController {
 		} 
 		
 		$initialFileDetail = array();
-		if(!empty($title)) {
+		if(!empty($mediaTitle)) {
 			// send request to getImageDetail()
-			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $title))->getData();
-			$mediaThumbs = $this->app->sendRequest('Lightbox', $method)->getData();
+			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $mediaTitle))->getData();
+			$mediaThumbs = $this->app->sendRequest('Lightbox', $method, array('title' => $articleTitle))->getData();
 		}
 		
 		$this->initialFileDetail = $initialFileDetail;
@@ -143,7 +144,8 @@ class LightboxController extends WikiaController {
 						$thumbs[] = array(
 								'thumbUrl' => $trans->url,
 								'type' => $entry['type'],
-								'title' => $media->getText()
+								'title' => $media->getText(),
+								'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(90, 55) : '',
 						);
 					}
 				}

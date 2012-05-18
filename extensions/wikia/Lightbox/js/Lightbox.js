@@ -238,8 +238,9 @@ var Lightbox = {
 			type: 'POST',	/* TODO (hyun) - might change to get */
 			format: 'html',
 			data: {
-				title: Lightbox.current.title,
-				carouselType: Lightbox.current.carouselType
+				mediaTitle: Lightbox.current.title,
+				carouselType: Lightbox.current.carouselType,
+				articleTitle: wgTitle
 			},
 			callback: function(html) {
 				// restore inline videos to default state, because flash players overlaps with modal
