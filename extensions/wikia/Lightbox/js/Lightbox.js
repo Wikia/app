@@ -677,13 +677,23 @@ var Lightbox = {
 			$('#LightboxCarouselProgress').html(html);
 		}
 		
+		var preScroll = function() {
+			Lightbox.openModal.carousel.find('.Wikia-video-play-button').hide();
+		}
+		
+		var postScroll = function() {
+			Lightbox.openModal.carousel.find('.Wikia-video-play-button').show();
+		}
+
 		$('#LightboxCarouselContainer').carousel({
 			itemsShown: 6,
 			itemSpacing: 8,
 			transitionSpeed: 1000,
 			itemClick: itemClick,
 			activeIndex: Lightbox.current.index,
-			trackProgress: trackProgressCallback
+			trackProgress: trackProgressCallback,
+			preScroll: preScroll,
+			postScroll: postScroll
 		});
 	}
 
