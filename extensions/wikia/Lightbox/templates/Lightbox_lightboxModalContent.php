@@ -54,7 +54,14 @@
 			<span class="carousel-arrow previous"></span>
  			<div id="LightboxCarouselContainer" class="LightboxCarouselContainer">
  				<div>
- 					<ul class="carousel">{{#thumbs}}<li><img src="{{thumbUrl}}" /></li>{{/thumbs}}</ul>
+ 					<ul class="carousel">
+ 						{{#thumbs}}
+ 							<li>
+ 								{{{playButtonSpan}}}
+ 								<img src="{{thumbUrl}}" />
+ 							</li>
+ 						{{/thumbs}}
+ 					</ul>
  				</div>
  			</div>
 		</div>
