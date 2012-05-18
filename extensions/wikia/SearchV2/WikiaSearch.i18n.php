@@ -8,6 +8,7 @@ $messages = array();
 $messages['qqq'] = array(
 	'wikiasearch2-results-for' => 'Parameter: $1 - a keyword or a search term searched for.',
 	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for.',
+	'wikiasearch2-page-title-with-query' => 'The message is used as the title of the page (appears in the title bar of a browser window). Parameters: $1 - a keyword or a search term searched for; $2 - the name of the wiki.',
 );
 
 $messages['en'] = array(
