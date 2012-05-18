@@ -7,6 +7,7 @@ $messages = array();
  */
 $messages['qqq'] = array(
 	'wikiasearch2-results-for' => 'Parameter: $1 - a keyword or a search term searched for.',
+	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for.',
 );
 
 $messages['en'] = array(
