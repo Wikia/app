@@ -46,7 +46,6 @@
 		<div class="ad"></div>
 		<div class="content">
 			<ul class="toolbar">
-				<li><span class="icon expand button secondary"></span></li>
 				<li><span class="icon pin button secondary"></span></li>
 			</ul>
 			<p id="LightboxCarouselProgress" class="progress"></p>
