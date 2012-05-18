@@ -143,5 +143,14 @@ class VideoHandlerHooks extends WikiaObject{
 		return true;
 
 	}
+
+	public function checkExtensionCompatibilityResult( &$result, &$file, &$oldMime, &$newExt ) {
+
+		if ( WikiaFileHelper::isFileTypeVideo( $file ) && $newExt == "" ) {
+			$result = true;
+		}
+
+		return true;
+	}
 	
 }
