@@ -22,7 +22,7 @@
 						{
 							ga_category: 'corporate-footer',
 							ga_action: WikiaTracker.ACTIONS.CLICK_LINK_BUTTON,
-							ga_label: 'mobile-switch',
+							ga_label: 'mobile-switch'
 						},
 						'both'
 					);

@@ -6,7 +6,7 @@ WikiaTracker.trackEvent(
 	'trackingevent',
 	{
  		ga_category: 'wikiamobile-view',
- 		ga_action: WikiaTracker.ACTIONS.VIEW,
+ 		ga_action: WikiaTracker.ACTIONS.VIEW
  	},
  	'both'
  );
