@@ -78,6 +78,7 @@ $messages['en'] = array(
  * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
+ * @author Michał Roszka (Mix) <michal@wikia-inc.com>
  */
 $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
@@ -88,6 +89,7 @@ $messages['qqq'] = array(
 Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
 	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount}}',
+	'editaccount-success-toggleadopt' => 'Says, that a user has been successfully verified as an adopter of a wiki. Parameters: $1 is a plain text username.',
 );
 
 /** Afrikaans (Afrikaans)
