@@ -18,7 +18,7 @@ class RelatedVideosData {
 
 		$file = wfFindFile( $title );
 
-		if( !WikiaVideoService::isVideoFile( $file ) ) {
+		if( !WikiaFileHelper::isVideoFile( $file ) ) {
 			$data['error'] = wfMsg( 'related-videos-error-no-video-title' );
 		} else {
 
@@ -82,13 +82,13 @@ class RelatedVideosData {
 		}
 
 		try {
-			if ( WikiaVideoService::isVideoStoredAsFile() ) {
+			if ( WikiaFileHelper::isVideoStoredAsFile() ) {
 				// is it a WikiLink?
 				$title = Title::newFromText($url);
-				if ( !$title || !WikiaVideoService::isTitleVideo($title) ) {
+				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
 					$title = Title::newFromText(str_replace(array('[[',']]'),array('',''),$url));
 				}
-				if ( !$title || !WikiaVideoService::isTitleVideo($title) ) {
+				if ( !$title || !WikiaFileHelper::isTitleVideo($title) ) {
 					if ( ($pos = strpos($url,'Video:')) !== false ) {
 						$title = Title::newFromText( substr($url,$pos) );
 					}
@@ -96,7 +96,7 @@ class RelatedVideosData {
 						$title = Title::newFromText( substr($url,$pos) );
 					}
 				}
-				if( $title && WikiaVideoService::isTitleVideo($title) ) {
+				if( $title && WikiaFileHelper::isTitleVideo($title) ) {
 					$videoTitle = $title;
 					$videoPageId = $title->getArticleId();
 					$videoProvider = '';

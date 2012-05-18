@@ -32,11 +32,11 @@ abstract class VideoHandler extends BitmapHandler {
 		$params['physicalHeight'] = $params['height'];
 
 		
-		// Video files can be bigger than usuall images. We are alowing them to stretch up to WikiaVideoService::maxWideoWidth px.
-		if ( $params['physicalWidth'] > WikiaVideoService::maxWideoWidth ) {
+		// Video files can be bigger than usuall images. We are alowing them to stretch up to WikiaFileHelper::maxWideoWidth px.
+		if ( $params['physicalWidth'] > WikiaFileHelper::maxWideoWidth ) {
 			$srcWidth = $image->getWidth( $params['page'] );
 			$srcHeight = $image->getHeight( $params['page'] );
-			$params['physicalWidth'] = WikiaVideoService::maxWideoWidth;
+			$params['physicalWidth'] = WikiaFileHelper::maxWideoWidth;
 			$params['physicalHeight'] = round( ($params['physicalWidth'] * $srcHeight ) / $srcWidth );
 		}
 

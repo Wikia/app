@@ -13,7 +13,7 @@ class VideoHandlerHooks extends WikiaObject{
 
 		if ( ( $oTitle instanceof Title ) && ( $oTitle->getNamespace() == NS_FILE ) ){
 			$oFile = wfFindFile( $oTitle );
-			if ( WikiaVideoService::isVideoFile( $oFile ) ){
+			if ( WikiaFileHelper::isVideoFile( $oFile ) ){
 				$oArticle = new WikiaVideoPage( $oTitle );
 			}
 		}
@@ -66,8 +66,8 @@ class VideoHandlerHooks extends WikiaObject{
 	}
 
 	public function onLinkerMakeThumbLink2FileOriginalSize ( $file, $width ){
-		if ( WikiaVideoService::isVideoFile( $file ) ){
-			$width = WikiaVideoService::maxWideoWidth;
+		if ( WikiaFileHelper::isVideoFile( $file ) ){
+			$width = WikiaFileHelper::maxWideoWidth;
 		};
 		return true;
 	}

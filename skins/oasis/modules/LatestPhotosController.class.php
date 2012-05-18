@@ -100,7 +100,7 @@ class LatestPhotosController extends WikiaController {
 			"image_filename" => $file->getTitle()->getFullText(),
 			"user_href" => Wikia::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $this->getLinkedFiles($file->name),
-			"isVideoThumb"  => WikiaVideoService::isFileTypeVideo( $file ),
+			"isVideoThumb"  => WikiaFileHelper::isFileTypeVideo( $file ),
 			"date" => wfTimestamp(TS_ISO_8601, $file->timestamp));
 		return $retval;
 	}
@@ -118,7 +118,7 @@ class LatestPhotosController extends WikiaController {
 		$file = $element['file'];
 		$ret = true;
 
-		if (isset($file->title) && !WikiaVideoService::isVideoFile($file)) {
+		if (isset($file->title) && !WikiaFileHelper::isVideoFile($file)) {
 			// filter by filetype and filesize (RT #42075)
 			$minor_type = $file->minor_mime;
 			$renderable = $file->canRender();

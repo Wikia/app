@@ -33,7 +33,7 @@ class ImageLightbox {
 			return array();
 		}
 		
-		if ( F::build( 'WikiaVideoService' )->isFileTypeVideo( $image ) ) {
+		if ( F::build( 'WikiaFileHelper' )->isFileTypeVideo( $image ) ) {
 			if ( !empty($wgTitle) ) {
 				return self::videoLightbox($image);
 			}

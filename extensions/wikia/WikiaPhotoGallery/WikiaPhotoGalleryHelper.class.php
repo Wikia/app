@@ -534,7 +534,7 @@ class WikiaPhotoGalleryHelper {
 
 		if (!empty($slideshow['params']['showrecentuploads'])) {
 			// add recently uploaded images only
-			$uploadedImages = ImagesService::getRecentlyUploaded(WikiaPhotoGallery::RECENT_UPLOADS_IMAGES);
+			$uploadedImages = MediaQueryService::getRecentlyUploaded(WikiaPhotoGallery::RECENT_UPLOADS_IMAGES);
 
 			$slideshow['images'] = array();
 
@@ -565,7 +565,7 @@ class WikiaPhotoGalleryHelper {
 				$imageTitle = Title::newFromText($image['name'], NS_FILE);
 				$img = wfFindFile($imageTitle);
 				
-				$image['isFileTypeVideo'] = WikiaVideoService::isFileTypeVideo($img);
+				$image['isFileTypeVideo'] = WikiaFileHelper::isFileTypeVideo($img);
 
 				if (empty($imageTitle) || empty($img)) {
 					continue;
@@ -640,7 +640,7 @@ class WikiaPhotoGalleryHelper {
 				$image[ 'pageTitle' ] = $imageTitle->getText();
 			}
 			
-			$image['isFileTypeVideo'] = WikiaVideoService::isFileTypeVideo($img);
+			$image['isFileTypeVideo'] = WikiaFileHelper::isFileTypeVideo($img);
 
 			//need to use parse() - see RT#44270
 			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
@@ -817,7 +817,7 @@ class WikiaPhotoGalleryHelper {
 
 			$imageFile = wfFindFile($imageTitle);
 
-			if (WikiaVideoService::isFileTypeVideo( $imageFile )) {
+			if (WikiaFileHelper::isFileTypeVideo( $imageFile )) {
 				unset( $slideshow['images'][$nr] ); 
 				continue;
 			}
@@ -836,7 +836,7 @@ class WikiaPhotoGalleryHelper {
 			}
 
 			
-			//if ( WikiaVideoService::isFileTypeVideo( $imageFile ) ) { unset($image); continue; }			
+			//if ( WikiaFileHelper::isFileTypeVideo( $imageFile ) ) { unset($image); continue; }
 
 			$imageWidth = $imageFile->getWidth();
 			$imageHeight = $imageFile->getHeight();
@@ -1009,7 +1009,7 @@ class WikiaPhotoGalleryHelper {
 		$ret = array();
 
 		// get list of recently uploaded images
-		$uploadedImages = ImagesService::getRecentlyUploaded($limit);
+		$uploadedImages = MediaQueryService::getRecentlyUploaded($limit);
 		if(is_array($uploadedImages)) {
 			foreach($uploadedImages as $image) {
 
@@ -1037,11 +1037,11 @@ class WikiaPhotoGalleryHelper {
 		$ret = array();
 
 		// get list of images linked with given article
-		$images = ImagesService::getFromArticle($title, $limit);
+		$mediaQuery =  F::build( 'MediaQueryService' );
+		$images = $mediaQuery->getMediaFromArticle($title, MediaQueryService::MEDIA_TYPE_IMAGE, $limit);
 
 		foreach($images as $entry) {
-
-			$image = Title::newFromText($entry);
+			$image = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
 			$thumb = self::getResultsThumbnailUrl($image);
 			if ($thumb) {
 				$ret[] = array(
@@ -1064,7 +1064,7 @@ class WikiaPhotoGalleryHelper {
 		$images = array();
 
 		if(!empty($query)) {
-			$results = ImagesService::search($query, $limit);
+			$results = MediaQueryService::search($query, $limit);
 
 			foreach($results as $title) {
 				$oImageTitle = Title::newFromText($title, NS_FILE);
