@@ -7,7 +7,7 @@ class SpecialUserManagementController extends WikiaSpecialPageController {
         }
 
 	function index() {
-                  $this->skipRendering = false;
+                 
 		if ( !$this->wg->User->isAllowed( 'usermanagement' ) ) {
 			$this->wg->Out->permissionRequired( 'usermanagement' );
 			$this->skipRendering();
