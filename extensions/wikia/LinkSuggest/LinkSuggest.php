@@ -229,6 +229,7 @@ function getLinkSuggest() {
 
 		if ($row->page_is_redirect == 0) { 
 
+			// remove any instances of original array's value
 			$resultsFlipped = array_flip($results);
 			unset($resultsFlipped[$row->page_title]);
 			$results = array_flip($resultsFlipped);
@@ -242,6 +243,7 @@ function getLinkSuggest() {
 
 		} else {
 
+			// remove any instances of original array's value
 			$resultsFlipped = array_flip($results);
 			unset($resultsFlipped[$row->rd_title]);
 			$results = array_flip($resultsFlipped);
