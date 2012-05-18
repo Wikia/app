@@ -128,7 +128,8 @@ class LightboxController extends WikiaController {
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120208012846/devbox/images/thumb/c/cf/The_Dark_Knight_%282008%29_-_Hit_Me%21/100px-The_Dark_Knight_%282008%29_-_Hit_Me%21.jpg', // 90x55 images
 				'type' => 'video',
-				'title' => 'The Dark Knight (2008) - Hit Me!'
+				'title' => 'The Dark Knight (2008) - Hit Me!',
+				'playButtonSpan' => WikiaVideoService::videoPlayButtonOverlay(90, 55)
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images
@@ -148,7 +149,8 @@ class LightboxController extends WikiaController {
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120208012846/devbox/images/thumb/c/cf/The_Dark_Knight_%282008%29_-_Hit_Me%21/100px-The_Dark_Knight_%282008%29_-_Hit_Me%21.jpg', // 90x55 images
 				'type' => 'video',
-				'title' => 'The Dark Knight (2008) - Hit Me!'
+				'title' => 'The Dark Knight (2008) - Hit Me!',
+				'playButtonSpan' => WikiaVideoService::videoPlayButtonOverlay(90, 55)
 			),
 			array(
 				'thumbUrl' => 'http://images.liz.wikia-dev.com/__cb20120427205649/devbox/images/thumb/2/27/IMG_1535.jpg/90px-IMG_1535.jpg', // 90x55 images

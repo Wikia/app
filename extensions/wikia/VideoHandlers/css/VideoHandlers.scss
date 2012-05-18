@@ -9,9 +9,10 @@
    position:absolute;
    z-index:100;
    @include opacity(30);
+   cursor: pointer;
 }
 
-a:hover .Wikia-video-play-button {
+a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
     @include opacity(70);
 }
 
