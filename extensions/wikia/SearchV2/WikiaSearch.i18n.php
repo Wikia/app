@@ -2,6 +2,13 @@
 
 $messages = array();
 
+/** Documentation
+ * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+ */
+$messages['qqq'] = array(
+	'wikiasearch2-results-for' => 'Parameter: $1 - a keyword or a search term searched for.',
+);
+
 $messages['en'] = array(
 	'wikiasearch2-page-title-with-query' => "Search results for '$1' - $2",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Search Wikia',
