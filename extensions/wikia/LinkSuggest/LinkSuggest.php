@@ -169,9 +169,6 @@ function getLinkSuggest() {
 		$namespaces = array($namespace);
 	}
 
-	$results = array();
-	$redirResults = array();
-
 	$query = mb_strtolower($query);
 	$query = addslashes($query);
 
@@ -183,11 +180,7 @@ function getLinkSuggest() {
 
 	$pageNamespaceClause = isset($commaJoinedNamespaces) ?  'AND page_namespace IN (' . $commaJoinedNamespaces . ')' : '';
 
-	$sql = "SELECT  IFNULL(rd_title, page_title) AS link_title,
-					rd_title,
-					page_title,
-					COALESCE(MAX(CASE WHEN LOWER(page_title) = '$query' THEN page_title ELSE null END)) AS exact_match,
-					page_title, page_namespace, page_is_redirect
+	$sql = "SELECT  page_title, rd_title, page_namespace, page_is_redirect
 
 			FROM page IGNORE INDEX (`name_title`)
 
@@ -195,35 +188,69 @@ function getLinkSuggest() {
 
 			WHERE LOWER(page_title) LIKE '{$query}%' {$pageNamespaceClause}
 
-			GROUP BY link_title
-
-			LIMIT 10
+			LIMIT 20
 			";
 
 	$res = $db->query($sql);
 
-	while($row = $db->fetchObject($res)) {
+	$redirects = array();
+	$results = array();
+	$exactMatchRow = null;
+	while(($row = $db->fetchObject($res)) && count($results < 10)) {
 
-		$pageTitle = $row->exact_match === null ? $row->page_title : $row->exact_match;
-
-		$title = wfLinkSuggestFormatTitle($row->page_namespace, $row->link_title);
-
-		if ($row->exact_match === null) {
-			$pageTitle = $row->page_title;
-			$results[] = $title;
-			
-		} else {
-			//exact matches get pushed to the top
-			$pageTitle = $row->exact_match;
-			array_unshift($results, $title);
+		if (strtolower($row->page_title) == $query) {
+			$exactMatchRow = $row;
+			continue;
 		}
-		
 
-		if ($pageTitle != $row->link_title) {
-			$redirTitle = wfLinkSuggestFormatTitle($row->page_namespace, $pageTitle);
-			$redirResults[$title] = $redirTitle;
+		if ($row->page_is_redirect == 0) { 
+
+			if (!in_array($row->page_title, $results)) {
+				$results[] = $row->page_title;
+			}
+
+			$flippedRedirs = array_flip($redirects);
+			if (isset($flippedRedirs[$row->page_title])) {
+				unset($redirects[$flippedRedirs[$row->page_title]]);
+			}
+
+		} else if (!in_array($row->rd_title, $results)) { 
+
+			$results[] = $row->rd_title;
+			$redirects[$row->rd_title] = $row->page_title;
+
+		}
+
+	}
+
+	if ($exactMatchRow !== null) {
+
+		$row = $exactMatchRow;
+
+		if ($row->page_is_redirect == 0) { 
+
+			$resultsFlipped = array_flip($results);
+			unset($resultsFlipped[$row->page_title]);
+			$results = array_flip($resultsFlipped);
+
+			array_unshift($results, $row->page_title);
+
+			$flippedRedirs = array_flip($redirects);
+			if (isset($flippedRedirs[$row->page_title])) {
+				unset($redirects[$flippedRedirs[$row->page_title]]);
+			}
+
+		} else {
+
+			$resultsFlipped = array_flip($results);
+			unset($resultsFlipped[$row->rd_title]);
+			$results = array_flip($resultsFlipped);
+
+			array_unshift($results, $row->rd_title);
+			$redirects[$row->rd_title] = $row->page_title;
 		}
 	}
+
 	$db->freeResult( $res );
 
 	// bugid 29988: include special pages 
@@ -243,17 +270,32 @@ function getLinkSuggest() {
 
 	$format = $wgRequest->getText('format');
 
+	// format post-processing to ditch underscores
+	array_walk(&$results, function($val, $key)
+							use (&$results) { 
+								$results[$key] = str_replace('_', ' ', $val); 
+							} 
+			  );
+	$newRedirects = array();
+	array_walk(&$redirects, function($val,$key)
+							use (&$newRedirects) { 
+								$newRedirects[str_replace('_', ' ', $key)] = str_replace('_', ' ', $val); 
+							} 
+			  );
+	$redirects = $newRedirects;
+
+
 	if ($format == 'json') {
 		$result_values = array_values($results);
 
-		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirResults));
+		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
 
 	// legacy: LinkSuggest.js uses this
 	} else {
 		// Overwrite canonical title with redirect title
 		for($i = 0; $i < count($results); $i++) {
-			if (isset($redirResults[$results[$i]])) {
-				$results[$i] = $redirResults[$results[$i]];
+			if (isset($redirects[$results[$i]])) {
+				$results[$i] = $redirects[$results[$i]];
 			}
 		}
 
