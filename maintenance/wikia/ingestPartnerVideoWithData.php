@@ -55,8 +55,7 @@ if ( $wgUser->isAnon() ) {
 }
 
 $useVideoFeed = WikiaFileHelper::useVideoHandlersExtForIngestion();
-$usePartnerVideo = WikiaFileHelper::useWikiaVideoExtForIngestion();
-$providersVideoFeed = $providersPartnerVideo = array();
+$providersVideoFeed = array();
 $provider = !empty($args[0]) ? strtolower($args[0]) : '';
 if ($useVideoFeed) {
 	if (empty($provider)) {
@@ -67,19 +66,6 @@ if ($useVideoFeed) {
 	}
 	else {
 		die("unknown provider $provider. aborting.\n");			
-	}
-}
-if ($usePartnerVideo) {
-	switch ($provider) {
-		case VideoPage::V_SCREENPLAY:
-		case VideoPage::V_REALGRAVITY:
-			$providersPartnerVideo = array( $provider );
-			break;
-		case '':
-			$providersPartnerVideo = array( VideoPage::V_SCREENPLAY, VideoPage::V_REALGRAVITY );
-			break;
-		default:
-			die("unknown provider $provider. aborting.\n");		
 	}
 }
 
@@ -123,43 +109,6 @@ if ($useVideoFeed) {
 		$numCreated = $feedIngester->import($file, $params);		
 		
 		print "Created $numCreated articles!\n\n";
-	}
-}
-
-if ($usePartnerVideo) {
-	foreach ($providersPartnerVideo as $provider) {
-		print("Starting import for provider $provider ({$wgWikiaVideoProviders[$provider]})...\n");
-
-		// get WikiFactory data
-		$ingestionData = PartnerVideoHelper::getInstance()->getPartnerVideoIngestionData();
-		if (empty($ingestionData)) {
-			die("No ingestion data found in wikicities. Aborting.");
-		}
-
-		// open file
-		$file = '';
-		switch ($provider) {
-			case VideoPage::V_SCREENPLAY:
-				$remoteUser = $wgScreenplayApiConfig['username'];
-				$remotePassword = $wgScreenplayApiConfig['password'];
-				$startDate = date('m/d/y', $startDateTS);
-				$endDate = date('m/d/y', $endDateTS);
-				$file = PartnerVideoHelper::getInstance()->downloadScreenplayFeed($startDate, $endDate);
-				break;
-			case VideoPage::V_REALGRAVITY:
-				$startDate = date('m/d/Y', $startDateTS);
-				$endDate = date('m/d/Y', $endDateTS);
-				// no file needed
-				break;
-			default:
-		}
-
-		$params = array();
-		if (!empty($ingestionData['keyphrases'])) {
-			$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
-		}
-
-		PartnerVideoHelper::getInstance()->importFromPartner($provider, $file, $params);
 	}
 }
 
