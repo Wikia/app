@@ -3,7 +3,7 @@
 abstract class VideoFeedIngester {
 	const PROVIDER_SCREENPLAY = 'screenplay';
 	const PROVIDER_REALGRAVITY = 'realgravity';
-	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_REALGRAVITY);
+	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY);	// 2012/5/18: disabling realgravity for now
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
