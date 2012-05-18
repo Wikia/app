@@ -347,10 +347,17 @@ var Lightbox = {
 					var overlayActive = Lightbox.openModal.carousel.data('overlayactive');
 					if(overlayActive) {
 						target.addClass('active');	// add active state to button when carousel overlay is active
+						Lightbox.openModal.addClass('pinned-carousel-mode');
 					} else {
 						target.removeClass('active');
+						Lightbox.openModal.removeClass('pinned-carousel-mode');
 					}
 					Lightbox.openModal.carousel.data('overlayactive', !overlayActive);	// flip overlayactive state
+					
+					// update image if image
+					if(Lightbox.current.type == 'image') {
+						Lightbox.updateMedia();
+					}
 				});
 			}
 		});
@@ -377,7 +384,7 @@ var Lightbox = {
 					.removeClass('video-media')
 					.css({
 						'margin-top': '',
-						'line-height': dimensions.modalHeight+'px'
+						'line-height': dimensions.imageContainerHeight+'px'
 					}).html(renderedResult);
 				
 				Lightbox.updateArrows();
@@ -441,10 +448,19 @@ var Lightbox = {
 				
 				topOffset = topOffset + $(window).scrollTop();
 				
+				var imageContainerHeight = modalHeight;
+				if(Lightbox.openModal.hasClass('pinned-carousel-mode')) {
+					imageContainerHeight -= 110;
+					if(imageHeight > (modalHeight - 110) ) {
+						imageHeight -= 110;
+					}
+				}
+				
 				var dimensions = {
 					modalHeight: modalHeight,
 					topOffset: topOffset,
-					imageHeight: imageHeight
+					imageHeight: imageHeight,
+					imageContainerHeight: imageContainerHeight
 				}
 				
 				// remove preloader image

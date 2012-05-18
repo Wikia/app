@@ -33,6 +33,11 @@ $sprite-hover: '_white';
 			display: none;
 		}
 	}
+	&.pinned-carousel-mode {
+		.media {
+			margin-bottom: 110px;
+		}
+	}
 	.WikiaLightbox {
 		height: 100%;
 	}
@@ -141,6 +146,9 @@ $sprite-hover: '_white';
 		&.hidden {
 			span {
 				@include opacity(0);
+				&.disabled {
+					@include opacity(0);
+				}
 			}
 		}
 		span {
