@@ -43,7 +43,7 @@ window.WikiaTracker = (function(){
 		// View
 		VIEW: 'view'
 	},
-	mainEventName = "trackingevent";
+	mainEventName = "trackingevent",
 	actionsReverse = {};
 
 
@@ -210,7 +210,7 @@ window.WikiaTracker = (function(){
 				if(!abort && typeof successCallback == 'function')
 					setTimeout(successCallback, callbackDelay);
 				else if(abort && typeof errorCallback == 'function')
-					setTimeout(errorCallback, callbackDelay);		
+					setTimeout(errorCallback, callbackDelay);
 			}
 		};
 
