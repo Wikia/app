@@ -174,8 +174,9 @@ class WikiaView {
 			return $this->render();
 		} catch( Exception $e ) {
 			// php doesn't allow exceptions to be thrown inside __toString() so we need an extra try/catch block here
-			if ($this->response == null) return "WikiaView: response object is null";
-			return F::app()->getView( 'WikiaError', 'error', array( 'response' => $this->response, 'devel' => $app->wg->DevelEnvironment ) )->render();
+			if ($this->response == null) return "WikiaView: response object was null rendering {$this->templatePath}";
+			if ($this->response->getException() == null) $this->response->setException($e);
+			return F::app()->getView( 'WikiaError', 'error', array( 'response' => $this->response, 'devel' => F::app()->wg->DevelEnvironment ) )->render();
 		}
 	}
 
@@ -185,7 +186,7 @@ class WikiaView {
 	 */
 	public function render() {
 		if( empty( $this->response ) ) {
-			throw new WikiaException( "WikiaView: response object is null" );
+			throw new WikiaException( "WikiaView: response object is null rendering {$this->templatePath}" );
 		}
 
 		$method = 'render' . ucfirst( $this->response->getFormat() );
@@ -194,7 +195,7 @@ class WikiaView {
 			return $this->$method();
 		}
 		else {
-			throw new WikiaException( "WikiaView: render() failed for format: " . $this->response->getFormat() );
+			throw new WikiaException( "WikiaView: render() failed for method: $method format: {$this->response->getFormat()}" );
 		}
 	}
 
