@@ -892,6 +892,6 @@ $wgRedis = new Predis_Client( array(
  * Media
  */
 $wgAutoloadClasses['WikiaFileHelper'] = $IP.'/includes/wikia/services/WikiaFileHelper.class.php';
-$wgAutoloadClasses['ArticlesUsingMediaQuery'] = $IP.'/includes/wikia/services/ArticlesUsingMediaQuery.class.php';
+$wgAutoloadClasses['ArticlesUsingMediaQuery'] = $IP.'/includes/wikia/ArticlesUsingMediaQuery.class.php';
 $wgHooks['LinksUpdateConstructed'][] = 'ArticlesUsingMediaQuery::onUpdateLinks';
 $wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';
