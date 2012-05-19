@@ -1,5 +1,5 @@
 <?	$elementHeight = 90;
-	$maxDescriptionLength = 45;
+	$maxDescriptionLength = 80;
 ?>
 <div class="item">
 	<a class="video-thumbnail <?= $videoPlay; ?>" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=$video['title'];?>" >
@@ -23,24 +23,6 @@
 			: $video['title'];
 		?>
 		</a>
-	</div>
-	<div class="info">
-		<?
-			$owner = $video['owner'];
-			if ( !empty( $owner ) ){
-				echo wfMsg('related-videos-added-by') . " ";
-				if ( empty( $video['external'] ) || isset( $video['externalByUser'] ) ){
-					$ownerUrl = $video['ownerUrl'];
-					if ( !empty( $ownerUrl ) ) {
-						?><a class="added-by" data-owner="<?=$video['owner'];?>" href="<?=$video['ownerUrl'];?>"><?=$video['owner'];?></a><?
-					} else {
-						echo $video['owner'];
-					}
-				} else {
-					?><a href="<?=F::app()->wg->wikiaVideoCategoryPath;?>" /><?=wfMsg('related-videos-repo-name');?></a><?
-				}
-			}
-		?>
 	</div>
 	<div class="options">
 		<a class="remove" href="#"><img src="<?=wfBlankImgUrl();?>" /></a>

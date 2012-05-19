@@ -478,6 +478,7 @@ $color-related-videos-background: darken($color-page, 20%);
 					}
 					.description {
 						display: inline-block;
+						max-height: 60px;
 						width: auto;
 					}
 					.info {
