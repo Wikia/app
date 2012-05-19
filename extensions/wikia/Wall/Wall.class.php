@@ -111,143 +111,6 @@ class Wall {
  		$this->mSorting = $val;
 	}
 	
-	//deprecated
-	public function loadThreadsFromRC($master = true) {
-		// get list of threads (article IDs) on Message Wall
-		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
-		
-		$table = array( 'recentchanges' );
-		$vars = array( 'rc_id', 'rc_log_action', 'rc_title', 'rc_user' );
-		$conds = array();
-		$conds[] = "rc_title LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%'";
-		$conds[] = "rc_title NOT LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%/" . ARTICLECOMMENT_PREFIX ."%'";
-		$conds['rc_namespace'] = NS_USER_WALL_MESSAGE;
-		$options = array( 'ORDER BY' => 'rc_id DESC' );
-		 
-		
-		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
-		$this->mThreadRCMapping = array();
-		while( $row = $dbr->fetchObject($res) ) {
-			$this->mThreadRCMapping[] = array(
-				'rc_id' => $row->rc_id,
-				'rc_log_action' => $row->rc_log_action,
-				'rc_title' => $row->rc_title,
-				'rc_user' => $row->rc_user,
-			);
-		}
-		
-		return $this->mThreadRCMapping;
-	}
-	//deprecated
-	public function loadWallThreadsHistory() {
-		$app = F::app();
-		
-		if( is_null($this->mThreadRCMapping) ) {
-			$this->loadThreadsFromRC();
-		}
-		
-		$this->mThreadsHistory = array();
-		foreach($this->mThreadRCMapping as $entry) {
-			$rcTitleTxt = $entry['rc_title'];
-			$rcUserTxt = $entry['rc_user'];
-			$rcTitle = F::build('Title', array($rcTitleTxt, NS_USER_WALL_MESSAGE), 'newFromText');
-			
-			if( !($rcTitle instanceof Title) ) {
-			//in theory it shouldn't happen but... just in-case we want to know it happened
-				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($entry, true));
-				continue;
-			}
-			
-			$wm = F::build('WallMessage', array($rcTitle));
-			$wm->load();
-			
-			$articleData = array('text_id' => '');
-			$articleId = $wm->getArticleId($articleData);
-			
-			if( !empty($articleData['text_id']) ) {
-			//if article was deleted and never restored
-				$helper = F::build('WallHelper', array());
-				$author = F::build('User', array($rcUserTxt), 'newFromID');
-				$threadMessageTitle = $helper->getTitleTxtFromMetadata($helper->getDeletedArticleTitleTxt($articleData['text_id']));
-			} else {
-				$author = $wm->getUser();
-				$threadMessageTitle = $wm->getMetaTitle();
-			}
-			$threadMessageUrl = $wm->getMessagePageUrl();
-			
-			if( !($author instanceof User) ) {
-			//in theory it shouldn't happen but... just in-case we want to know it happened
-				Wikia::log(__METHOD__, false, "WALL_NO_USER_INSTANCE " . print_r(array(
-					'$rcTitleTxt' => $rcTitleTxt,
-					'$rcUserTxt' => $rcUserTxt,
-				), true));
-				
-				continue;
-			}
-			
-			$logAction = $entry['rc_log_action'];
-			$userLinks = '';
-			$messageLink = '';
-			
-			$username = $author->getName();
-			$realname = $author->getRealName();
-			$userUrl = $author->getUserPage();
-			
-			if( empty($realname) ) {
-				$userLinks = Xml::element('a', array('href' => $userUrl, 'class' => 'username'), $username);
-			} else {
-				$userLinks = Xml::element('a', array('href' => $userUrl, 'class' => 'realname'), $realname);
-				$userLinks .= ' '.Xml::element('a', array('href' => $userUrl, 'class' => 'username'), $username);
-			}
-			
-			$messageLink = Xml::element('a', array('href' => $threadMessageUrl), $threadMessageTitle);
-			
-			$wfMsgOpts = array(
-				$articleId,
-				$userLinks,
-				$messageLink,
-			);
-			
-			if( $logAction == '' ) {
-			//created thread
-				$logAction = 'create';
-				$actionText = $app->wf->Msg('wall-history-created-thread', $wfMsgOpts);
-				$this->mThreadsHistory[$articleId]['creation'] = array('type' => $logAction, 'text' => $actionText);
-			}
-			
-			if( $logAction == 'delete' || $logAction == 'restore' ) {
-				if( !isset($this->mThreadsHistory[$articleId]['more']) ) {
-					$this->mThreadsHistory[$articleId]['more'] = array();
-				}
-				
-				if( $logAction == 'delete' ) {
-					$actionText = $app->wf->Msg('wall-history-deleted-thread', $wfMsgOpts);
-				}
-				
-				if( $logAction == 'restore' ) {
-					$actionText = $app->wf->Msg('wall-history-restored-thread', $wfMsgOpts);
-				}
-				
-				$this->mThreadsHistory[$articleId]['more'][] = array('type' => $logAction, 'text' => $actionText);
-				
-				if( !isset($this->mThreadsHistory[$articleId]['creation']) ) {
-					$this->mThreadsHistory[$articleId]['creation'] = array();
-					$logAction = 'create';
-					$actionText = $app->wf->Msg('wall-history-created-thread', $wfMsgOpts);
-					$this->mThreadsHistory[$articleId]['creation'] = array('type' => $logAction, 'text' => $actionText);
-				}
-			}
-		}
-	}
-	//deprecated
-	public function getWallThreadsHistory($page) {
-		if(is_null($this->mThreadsHistory)) {
-			$this->loadWallThreadsHistory();
-		}
-		
-		return array_slice($this->mThreadsHistory, $this->mMaxPerPage * ($page - 1), $this->mMaxPerPage, true);
-	}
-	
 	private function preloadThreadTimestamp() {
 		// preload timestamps of replies (and cache in thread object)
 		// to prevent changing object when sorting
@@ -298,6 +161,7 @@ class Wall {
 		if( empty($val) ) {
 			// if forcing reload use master server
 			$this->LoadThreadListFromDB( $forceReload );
+
 			$val = array();
 			$val['threadMapping'] = $this->mThreadMapping;
 			$val['threadMappingRev'] = $this->mThreadMappingRev;
@@ -324,10 +188,10 @@ class Wall {
 		where page_wikia_props.page_id is null
 		and page.page_title LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%'
 		and page.page_title NOT LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%/" . ARTICLECOMMENT_PREFIX ."%'
-		and page.page_namespace = ".NS_USER_WALL_MESSAGE."
+		and page.page_namespace = ".MWNamespace::getTalk($this->mTitle->getNamespace())."
 		and page.page_latest > 0
 		order by page.page_id desc";
-		
+
 		$res = $dbr->query( $query );
 		
 		$this->mThreadMapping = array();
@@ -441,7 +305,7 @@ class Wall {
 	}
 
 	private function getWallThreadListKey() {
-		return  __CLASS__ . '-'.$this->mCityId.'-wall-threadlist-key-v02-' . $this->mTitle->getDBkey();
+		return  __CLASS__ . '-'.$this->mCityId.'-wall-threadlist-key-v003-' . $this->mTitle->getDBkey().'-'.$this->mTitle->getNamespace();
 	}
 	
 	private function getCache() {

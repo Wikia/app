@@ -97,6 +97,7 @@ class WallHistory extends WikiaModel {
 	public function get($user, $sort, $parent_page_id = 0) {
 		$sort = ($sort === 'nf') ? 'desc' : 'asc';
 		$where = $this->getWhere($user, $parent_page_id);
+
 		if($where === false) {
 			return array();
 		}
@@ -121,7 +122,17 @@ class WallHistory extends WikiaModel {
 	}
 	
 	protected function getWhere($user, $parent_page_id = 0) {
-		if( $user->getId() > 0 ) {
+		if( $parent_page_id === 0 ) {
+			$query[] = 'parent_page_id is null';
+		} else {
+			$query[] = '(page_id = '.$parent_page_id.' OR parent_page_id = '.$parent_page_id.')';
+		}
+
+		if(empty($user)) {
+			return $query;
+		}
+		
+		if($user->getId() > 0 ) {
 			$query = array(
 				'wiki_id' => $this->wikiId,
 				'wall_user_id' => $user->getID()
@@ -133,12 +144,6 @@ class WallHistory extends WikiaModel {
 			);
 		} else {
 			return false;
-		}
-		
-		if( $parent_page_id === 0 ) {
-			$query[] = 'parent_page_id is null';
-		} else {
-			$query[] = '(page_id = '.$parent_page_id.' OR parent_page_id = '.$parent_page_id.')';
 		}
 		
 		return $query;

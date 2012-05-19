@@ -142,6 +142,8 @@ class WallHelper {
 				
 				$item['url'] = $wmessage->getMessagePageUrl();
 				$res['title'] = 'message-wall-thread-#'.$title->getArticleID();
+					
+				$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>'); 
 			} else {
 			//child
 				$parent->load();
@@ -160,6 +162,8 @@ class WallHelper {
 		//message was removed or deleted
 			$item = array();
 		}
+
+		wfRunHooks('AfterWallWikiActivityFilter', array(&$item, $wmessage));
 		
 		$app->wf->ProfileOut(__METHOD__);
 		return $item;
@@ -560,7 +564,7 @@ class WallHelper {
 			
 		$wh = F::build('WallHistory', array($app->wg->CityId));
 		$wh->add($rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User);
-			
+
 		if( $rcType == RC_NEW ) {
 			$wn = F::build('WallNotifications', array());
 			$wn->addNotification($notif);

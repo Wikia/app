@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS `comments_index` (
+  `parent_page_id` int(10) unsigned NOT NULL,
+  `comment_id` int(10) unsigned NOT NULL,
+  `parent_comment_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_child_comment_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `archived` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `removed` tinyint(1) NOT NULL DEFAULT '0',
+  `locked` tinyint(1) NOT NULL DEFAULT '0',
+  `protected` tinyint(1) NOT NULL DEFAULT '0',
+  `sticky` tinyint(1) NOT NULL DEFAULT '0',
+  `first_rev_id` int(10) unsigned NOT NULL,
+  `created_at` char(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+  `last_rev_id` int(10) unsigned NOT NULL,
+  `last_touched` char(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`parent_page_id`,`comment_id`),
+  KEY `parent_page_id` (`parent_page_id`,`archived`,`deleted`,`removed`),
+  KEY `comment_id` (`comment_id`,`archived`,`deleted`,`removed`),
+  KEY `parent_comment_id` (`parent_comment_id`,`archived`,`deleted`,`removed`),
+  KEY `sticky` (`sticky`, `created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

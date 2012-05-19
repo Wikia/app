@@ -84,6 +84,20 @@ class WallNotificationEntity {
 		$this->data->wiki = $wiki;
 		$this->data->wikiname = $app->wg->sitename;
 		$this->data->rev_id = $rev->getId();
+	
+		$wallTitle = $ac->getWallTitle();
+		if(!empty($wallTitle) && $wallTitle->exists()) {
+			$this->data->article_title_ns = $wallTitle->getNamespace();
+			$this->data->article_title_text = $wallTitle->getText();
+			$this->data->article_title_dbkey = $wallTitle->getDBkey();
+			$this->data->article_title_id = $wallTitle->getArticleId();	
+		} else {
+			$this->data->article_title_ns = null;
+			$this->data->article_title_text = null;
+			$this->data->article_title_dbkey = null;
+			$this->data->article_title_id = null;			
+		}
+		
 		$this->data->timestamp = $rev->getTimestamp();
 		
 		$this->data->parent_id = null;
@@ -104,9 +118,9 @@ class WallNotificationEntity {
 		}
 		
 		$this->data->wall_username = $walluser->getName();
-		$wall_realname = $walluser->getRealName();
-		$this->data->wall_userid = $walluser->getId();
 		
+		$this->data->wall_userid = $walluser->getId();
+		$wall_realname = $walluser->getRealName();
 		$this->data->wall_displayname = empty($wall_realname) ? $this->data->wall_username:$wall_realname;
 		
 		$this->data->title_id = $ac->getTitle()->getArticleId();

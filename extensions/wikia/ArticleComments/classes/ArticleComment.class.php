@@ -650,6 +650,13 @@ class ArticleComment {
 
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
+		if( $retval == EditPage::AS_SUCCESS_UPDATE ) {
+			$commentsIndex = F::build( 'CommentsIndex', array( $article->getID() ), 'newFromId' );
+			if ( $commentsIndex instanceof CommentsIndex ) {
+				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(GAID_FOR_UPDATE) );
+			}
+		}
+
 		$wgUser = $userTmp;
 
 		return $retval;
@@ -743,6 +750,25 @@ class ArticleComment {
 
 		$article  = new Article( $commentTitle, 0 );
 		$retval = self::doSaveAsArticle($text, $article, $user, $metadata);
+
+		// add comment to database
+		if ( $retval == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+			$revId = $article->getRevIdFetched();
+			$data = array(
+				'parentPageId' => $title->getArticleID(),
+				'commentId' => $article->getID(),
+				'parentCommentId' => intval($parentId),
+				'firstRevId' => $revId,
+				'lastRevId' => $revId,
+			);
+			$commentsIndex = F::build( 'CommentsIndex', array($data) );
+			$commentsIndex->addToDatabase();
+
+			// set last child comment id
+			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
+
+			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
+		}
 
 		$key = $title->getPrefixedDBkey(); // FIXME: does this line cause some side-effects that are needed? Otherwise, this line doesn't appear to serve any purpose.
 

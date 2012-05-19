@@ -1,16 +1,16 @@
 <?
-if ( $wg->EnableMiniEditorExtForWall ) {
+if ($wg->EnableMiniEditorExtForWall) {
 	echo $app->renderView('MiniEditorController', 'Setup');
 }
 
-if (!empty(F::app()->wg->WallBrickHeader)){
-	echo F::app()->renderView( 'WallController', 'brickHeader', array( "id" => F::app()->wg->WallBrickHeader) );
+if (!empty($app->wg->WallBrickHeader)) {
+	echo $app->renderView('WallController', 'brickHeader', array('id' => $app->wg->WallBrickHeader));
 }
 ?>
 <div class="WallGreeting" >
 	<?= $greeting ?>
 </div>
-<div class="Wall" id="Wall">
+<div class="Wall <?= $type ?>" id="Wall">
 	<?php if($showNewMessage): ?>
 		<?= $app->renderView( 'WallController', 'newMessage' ); ?>
 	<?php endif; ?>

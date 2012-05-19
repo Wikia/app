@@ -165,4 +165,3 @@ define( 'WH_NEW', 1);
 define( 'WH_DELETE', 2);
 define( 'WH_REMOVE', 4);
 define( 'WH_RESTORE', 5);
-

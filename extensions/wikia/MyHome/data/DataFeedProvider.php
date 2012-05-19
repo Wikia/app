@@ -113,8 +113,8 @@ class DataFeedProvider {
 			if (is_array($res['rc_params']) && !empty($res['rc_params']['categoryInserts'])) {
 				$key .= Wikia::json_encode($res['rc_params']['categoryInserts']);
 			}
-
-			if( !empty($res['ns']) && defined('NS_USER_WALL') && ($res['ns'] - 1) === NS_USER_WALL ) {
+			global $wgWallNS;
+			if( !empty($res['ns']) && !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) ) {
 				$key = $res['title'];
 			}
 		} elseif ($this->removeDuplicatesType == 1) {	//used in `shortlist`, activity tag
@@ -378,7 +378,7 @@ class DataFeedProvider {
 
 	private function filterNew($res, $title) {
 		wfProfileIn(__METHOD__);
-		global $wgContentNamespaces, $wgEnableWallExt;
+		global $wgContentNamespaces, $wgEnableWallExt, $wgWallNS;
 		
 		$item = array('type' => 'new');
 		
@@ -437,7 +437,7 @@ class DataFeedProvider {
 				$res['comment'] = ''; // suppressing needless details
 				$res['rc_params'] = '';
 			}
-		} else if( !empty($wgEnableWallExt)  && ($res['ns']-1) == NS_USER_WALL && $this->proxyType == self::AF ) {
+		} else if( !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) && $this->proxyType == self::AF ) {
 			$wh = F::build( 'WallHelper' );
 			$item = $wh->wikiActivityFilterMessageWall($title, $res);
 		} else if ( defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ){

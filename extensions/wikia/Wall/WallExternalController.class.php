@@ -14,12 +14,6 @@ class WallExternalController extends WikiaController {
 	public function init() {
 		$this->helper = F::build('WallHelper', array());
 	}
-	
-	public function getCommentsPage() {
-		//workaround to prevent index data expose
-		$title = F::build('Title', array($this->request->getVal('username'), NS_USER_WALL ), 'newFromText');
-		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', array('title' => $title, 'page' => $this->request->getVal('page', 1) ) ));
-	}
 	/*
 	 * 
 	 * Use for external testing of mail template
@@ -46,36 +40,6 @@ class WallExternalController extends WikiaController {
 		}
 	}
 
-	public function previewMessage() {
-		$this->app->wf->ProfileIn(__METHOD__);
-		
-		$this->response->setVal('status', true);
-		
-		$title = $this->helper->strip_wikitext($this->request->getVal('messagetitle', null));
-		$body = $this->request->getVal('body', null);
-		
-		$helper = F::build('WallHelper', array());
-
-		if( empty($title) ) {
-			$title = $helper->getDefaultTitle();
-		}
-		
-		$oTitle = F::build('Title', array($this->request->getVal('username'), NS_USER_WALL), 'newFromText');
-		
-		//$title = $helper->shortenText($title);
-		$body = $helper->getParsedText($body, $oTitle);
-		
-		list( $displayname, $displayname2 ) = $this->getDisplayName();
-
-		$this->response->setVal('displayname',$displayname);
-		$this->response->setVal('displayname2',$displayname2);
-		
-		$this->response->setVal('title',$title);
-		$this->response->setVal('body',$body);
-		
-		$this->app->wf->ProfileOut(__METHOD__);
-	}
-
 	public function postNewMessage() {
 		$this->app->wf->ProfileIn(__METHOD__);
 		
@@ -98,7 +62,8 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 		
-		$wallMessage = F::build('WallMessage', array($body, $this->request->getVal('username'), $this->wg->User, $titleMeta), 'buildNewMessageAndPost');
+		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');  
+		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta), 'buildNewMessageAndPost');
 		
 		if( $wallMessage === false ) {
 			error_log('WALL_NOAC_ON_POST (acStatus)'.print_r($acStatus,1));
@@ -372,4 +337,11 @@ class WallExternalController extends WikiaController {
 
 		return $content;
 	}
+
+
+	public function getCommentsPage() {
+		//workaround to prevent index data expose
+		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace') ), 'newFromText');
+		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', array('title' => $title, 'page' => $this->request->getVal('page', 1) ) )); 
+	} 
 }

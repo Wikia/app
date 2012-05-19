@@ -1,8 +1,8 @@
 var WallMessageForm = $.createClass(Observable, {
-	constructor: function(username, model) {
+	constructor: function(page, model) {
 		WallMessageForm.superclass.constructor.apply(this,arguments);
 		this.model = model;
-		this.username = username;
+		this.page = page;
 	},
 
 	loginBeforeAction: function(action) {

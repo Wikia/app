@@ -1,21 +1,13 @@
 <div class="WallHistory">
-<?php if( empty($wallmessageNotFound) ): ?>
-	<?php if( $isThreadLevelHistory ): ?>
-		<nav>
-			<a href="<?= $wallUrl; ?>"><?= wfMsg('wall-message-elseswall', array($wallOwnerName)); ?></a>
-			&#149;
-			<a href="<?= $wallMsgUrl; ?>"><?= $wallMsgMetatitle ?></a>
-			&#149;
-			<span class="Title"><?= wfMsg('wall-thread-history-title'); ?></span>
-		</nav>
-	<?php else: ?>
-		<nav>
-			<a href="<?= $wallUrl; ?>"><?= wfMsg('wall-message-elseswall', array($wallOwnerName)); ?></a>
-			&#149;
-			<span class="Title"><?= wfMsg('wall-history-title'); ?></span>
-		</nav>
-	<?php endif; ?>
+<? if( empty($wallmessageNotFound) ): ?>
+	<?
 	
+		echo F::App()->getView('Wall', 'brickHeader', array(
+			//'messageTitle' => wfMsg('wall-history-title'),
+			'path' => $path 
+		))->render();
+	?>
+
 	<div class="SortingBar">
 		<div id="pageTitle"><?php if( $isThreadLevelHistory ): ?> <?php echo wfMsg('wall-thread-history-title'); ?> <?php else: ?> <?php echo wfMsg('wall-history-title'); ?> <?php endif; ?> </div>
 		<div class="SortingMenu">
@@ -31,7 +23,7 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<?php if( !empty($wallHistory) ): ?>
 		<?php if( $isThreadLevelHistory ): ?>
 			<table id="WallThreadHistory">

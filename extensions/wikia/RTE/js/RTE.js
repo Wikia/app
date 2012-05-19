@@ -97,6 +97,9 @@
 		// CK loading time
 		loadTime: false,
 
+		// Used for image tools (modify/remove)
+        overlayNode: $('<div id="RTEOverlay">'),
+
 		// use firebug / opera console to log events / dump objects
 		log: function(msg) {
 			$().log(msg, 'RTE');
@@ -321,7 +324,7 @@
 	// Create overlayNode when the DOM is ready
 	$(function() {
 		$('body').addClass('javascript');
-		RTE.overlayNode = $('<div>', {id: 'RTEOverlay'}).appendTo('body');
+		RTE.overlayNode.appendTo('body');
 	});
 
 	// Exports

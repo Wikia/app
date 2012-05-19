@@ -36,10 +36,12 @@ var Wall = $.createClass(Object, {
 		
 		if(wgTitle.indexOf('/') > 0) {
 			var titlePart = wgTitle.split('/');
-			this.username = titlePart[0]; 
+			this.title = titlePart[0]; 
 		} else {
-			this.username = wgTitle;
+			this.title = wgTitle;
 		}
+		
+		this.page = {'title': this.title, 'namespace': window.wgNamespaceNumber }
 		
 		//click tracking
 		$('#Wall')
@@ -60,27 +62,28 @@ var Wall = $.createClass(Object, {
 		$("#Wall").on('keydown', 'textarea', this.proxy(this.focusButton));
 
 		this.model = new WallBackendBridge();
-		this.pagination = new WallPagination(this.username, this.model);
+		this.pagination = new WallPagination(this.page, this.model);
 		this.pagination.on('afterPageLoaded', this.proxy(this.afterPagination));
 
 		// Refactor this, it's ugly.
 		if (this.hasMiniEditor) {
-			this.newMessageForm = new MiniEditorNewMessageForm(this.username, this.model);
-			this.editMessageForm = new MiniEditorEditMessageForm(this.username, this.model);
-			this.replyMessageForm = new MiniEditorReplyMessageForm(this.username, this.model);
+			this.newMessageForm = new MiniEditorNewMessageForm(this.page, this.model);
+			this.editMessageForm = new MiniEditorEditMessageForm(this.page, this.model);
+			this.replyMessageForm = new MiniEditorReplyMessageForm(this.page, this.model);
 
 		} else {
-			this.newMessageForm = new WallNewMessageForm(this.username, this.model);
-			this.editMessageForm = new WallEditMessageForm(this.username, this.model);
-			this.replyMessageForm = new WallReplyMessageForm(this.username, this.model);
+			this.newMessageForm = new WallNewMessageForm(this.page, this.model);
+			this.editMessageForm = new WallEditMessageForm(this.page, this.model);
+			this.replyMessageForm = new WallReplyMessageForm(this.page, this.model);
 		}
 
 		this.newMessageForm.on('afterNewMessagePost', this.proxy(this.afterNewMessagePost));
 
-		$().log(this.username, "Wall username");
-		
 		$(window).bind('hashchange', this.proxy(this.onHashChange));
 		this.onHashChange();
+
+		// Expose to public
+		$('#Wall').data('Wall', this).triggerHandler('WallInit', [this]);
 	},
 	
 	onHashChange: function() {

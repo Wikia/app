@@ -12,7 +12,7 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 		this.WallMessageSubmit = $('#WallMessageSubmit');
 	},
 	
-	constructor: function(username) {
+	constructor: function() {
 		WallNewMessageForm.superclass.constructor.apply(this,arguments);
 		this.initDom();
 		var self = this;
@@ -83,7 +83,7 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 	},
 	
 	doPostNewMessage: function(title, reload) {
-		this.model.postNew(this.username, title ? this.WallMessageTitle.val() : '', this.getMessageBody(), this.getFormat());
+		this.model.postNew(this.page, title ? this.WallMessageTitle.val() : '', this.getMessageBody(), this.getFormat());
 		this.clearNewMessageTitle();
 		this.disableNewMessage();
 		this.track(title ? 'wall/new_message/post' : 'wall/new_message/post_without_title');
@@ -116,6 +116,8 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 		} else {
 			newmsg.css('opacity', 0).slideDown('slow').animate({ opacity: 1 }, 'slow');
 		}
+		
+		newmsg.find('.msg-body').show();
 
 		if (window.skin && window.skin != 'monobook') {
 			WikiaButtons.init(newmsg);

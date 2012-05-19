@@ -11,6 +11,8 @@ class WallHistoryController extends WallController {
 		$title = $this->request->getVal('title', $this->app->wg->Title);
 		$this->isThreadLevel = $this->request->getVal('threadLevelHistory', false);
 		
+		$path = array();
+		
 		if( $this->isThreadLevel ) {
 			$threadId = intval($title->getDBkey());
 			$title = F::build('Title', array($threadId), 'newFromId');
@@ -26,9 +28,10 @@ class WallHistoryController extends WallController {
 		$this->response->setVal('currentPage', $page);
 		$this->response->setVal('isThreadLevelHistory', $this->isThreadLevel);
 		
+		
 		if( !($title instanceof Title) || 
 			($this->isThreadLevel && 
-			$title->getNamespace() !== NS_USER_WALL_MESSAGE) 
+			!in_array(MWNamespace::getSubject($title->getNamespace() ), $this->app->wg->WallNS)) 
 		) {
 		//paranoia -- where the message is not in DB
 			$this->response->setVal('wallmessageNotFound', true);
@@ -43,14 +46,18 @@ class WallHistoryController extends WallController {
 			$perPage = 50;
 			$wallHistory = F::build('WallHistory', array($this->app->wg->CityId));
 			$wallHistory->setPage($page, $perPage);
-			$count = $wallHistory->getCount($wallOwnerUser, $threadId);
+			$count = $wallHistory->getCount(null, $threadId);
 			$sort = $this->getSortingSelected();
-			$history = $wallHistory->get($wallOwnerUser, $sort, $threadId);
+			$history = $wallHistory->get(null, $sort, $threadId);
 			$this->response->setVal('wallHistory', $this->getFormatedHistoryData($history, $threadId));
 			
-			$this->response->setVal('wallUrl', $wallMessage->getWallPageUrl());
-			$this->response->setVal('wallMsgUrl', $wallMessage->getMessagePageUrl());
-			$this->response->setVal('wallMsgMetatitle', $wallMessage->getMetatitle());
+			$path[] = array(
+				'title' =>  $wallMessage->getMetatitle(),
+				'url' => $wallMessage->getMessagePageUrl() 
+			); 			
+			
+			$wallUrl =  $wallMessage->getWall()->getUrl();
+			
 			$this->response->setVal('wallHistoryUrl', $wallMessage->getMessagePageUrl(true).'?action=history&sort='.$sort);
 		} else {
 			$wall = F::build('Wall', array($title), 'newFromTitle');
@@ -62,17 +69,26 @@ class WallHistoryController extends WallController {
 			$count = $wallHistory->getCount($wallOwnerUser);
 			$sort = $this->getSortingSelected();
 			$history = $wallHistory->get($wallOwnerUser, $sort);
-			$this->response->setVal('wallHistory', $this->getFormatedHistoryData($history));
 			
-			$this->response->setVal('wallUrl', $wall->getUrl());
+			$wallUrl = $wall->getUrl();
+			$this->response->setVal('wallHistory', $this->getFormatedHistoryData($history));
 			$this->response->setVal('wallHistoryUrl', $title->getFullURL(array('action' => 'history', 'sort' => $sort)));
 		}
-		
+			
 		$wallOwnerUsername = $wallOwnerUser->getName();
 		$wallOwnerName = $wallOwnerUser->getRealName();
 		$wallOwnerName = ( empty($wallOwnerName) ) ? $wallOwnerUsername : $wallOwnerName;
-		$this->response->setVal('wallOwnerName', $wallOwnerName);
+
+		$path = array_merge(array(array(
+			'title' => wfMsg('wall-message-elseswall', array($wallOwnerName)),
+			'url' => $wallUrl 
+		)), $path); 
 		
+		if( $this->isThreadLevel ) {
+			wfRunHooks('WallHistoryThredHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
+		}
+		
+		$this->response->setVal('path', $path);
 		$this->response->setVal('totalItems', $count);
 		$this->response->setVal('itemsPerPage', $perPage);
 		$this->response->setVal('showPager', ($count > $perPage));

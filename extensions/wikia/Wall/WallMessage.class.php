@@ -10,9 +10,11 @@ class WallMessage {
 	protected $propsCache = array();
 	protected $cityId = 0;
 	protected static $permissionsCache; //permissions cache
+	protected $commentIndex;
 	function __construct(Title $title, $articleComment = null) {
 		$this->title = $title;
 		$this->articleComment = $articleComment;
+		$this->commentsIndex = F::build( 'CommentsIndex' );
 		$app = F::App();
 		//TODO: inject this
 		$this->cityId = $app->wg->CityId;
@@ -36,11 +38,26 @@ class WallMessage {
 		return null;
 	}
 
-	static public function buildNewMessageAndPost( $body, $userWall, $user, $metaTitle = '', $parent = false, $notify = true ) {
-		if($userWall instanceof Title ) {
-			$userPageTitle = $userWall;
+	static public function addMessageWall( $userPageTitle ) {
+			$botUser = User::newFromName( 'WikiaBot' );
+			$article = F::build( 'Article', array($userPageTitle) );
+			$status = $article->doEdit( '', '', EDIT_NEW | EDIT_MINOR | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+			$title = ( $status->isOK() ) ? $article->getTitle() : false ;
+
+			return $title;
+	}
+
+	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $notify = true ) {
+		
+		if($page instanceof Title ) {
+			$userPageTitle = $page;
 		} else {
-			$userPageTitle = F::build('Title', array($userWall , NS_USER_WALL), 'newFromText');
+			$userPageTitle = F::build('Title', array($page, NS_USER_WALL), 'newFromText');
+		}
+		
+		// create wall page by bot if not exist
+		if ( !$userPageTitle->exists() ) {
+			$userPageTitle = self::addMessageWall( $userPageTitle );
 		}
 
 		if( empty($userPageTitle) ) {
@@ -206,10 +223,16 @@ class WallMessage {
 		return $this->getWallTitle()->getFullUrl();
 	}
 
+	
+	//TODO: remove get wall title
 	public function getWallTitle(){
-		return $this->getArticleComment()->getArticleTitle();
+		return $this->getArticleTitle();
 	}
 
+	public function getArticleTitle(){
+		return $this->getArticleComment()->getArticleTitle();
+	}
+	
 	public function getWall() {
 		$wall = F::build('Wall', array( $this->getWallTitle() ), 'newFromTitle');
 		return $wall;
@@ -221,10 +244,6 @@ class WallMessage {
 			$wm = $this->getTopParentObj();
 		}
 		return F::build('WallThread', array( $wm->getId() ), 'newFromId');
-	}
-
-	public function getArticleTitle(){
-		return $this->getArticleComment()->getArticleTitle();
 	}
 
 	public function getPageUrlPostFix() {
@@ -763,8 +782,34 @@ class WallMessage {
 		return false;
 	}
 
+	protected function setInCommentsIndex( $prop, $value, $useMaster = false ) {
+		$commentId = $this->getId();
+		if ( !empty($commentId) ) {
+			$this->commentsIndex = F::build( 'CommentsIndex', array( $commentId ), 'newFromId' );
+			if ( $this->commentsIndex instanceof CommentsIndex ) {
+				switch( $prop ) {
+					case WPP_WALL_ARCHIVE : $this->commentsIndex->updateArchived( $value );
+											break;
+					case WPP_WALL_ADMINDELETE : $this->commentsIndex->updateDeleted( $value );
+												$lastChildCommentId = $this->commentsIndex->getParentLastCommentId( $useMaster );
+												$this->commentsIndex->updateParentLastCommentId( $lastChildCommentId );
+
+												wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $this->commentsIndex) );
+												break;
+					case WPP_WALL_REMOVE : $this->commentsIndex->updateRemoved( $value );
+											$lastChildCommentId = $this->commentsIndex->getParentLastCommentId( $useMaster );
+											$this->commentsIndex->updateParentLastCommentId( $lastChildCommentId );
+
+											wfRunHooks( 'EditCommentsIndex', array($this->getTitle(), $this->commentsIndex) );
+											break;
+				}
+			}
+		}
+	}
+
 	protected function markInProps($prop) {
 		$this->setInProps($prop, 1);
+		$this->setInCommentsIndex($prop, 1);
 		return true;
 	}
 
@@ -787,6 +832,8 @@ class WallMessage {
 		$cache->set( $id, false );
 
 		wfDeleteWikiaPageProp( $prop, $this->getId() );
+
+		$this->setInCommentsIndex($prop, 0, true);
 	}
 
 	protected function getPropVal($prop) {

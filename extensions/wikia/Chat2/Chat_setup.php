@@ -35,12 +35,7 @@ $wgGroupPermissions['user']['chat'] = true;
 $wgGroupPermissions['util']['chatfailover'] = true;
 
 // Allow admins to control banning/unbanning and chatmod-status
-$wgAddGroups['sysop'][] = 'chatmoderator';
-$wgAddGroups['sysop'][] = 'bannedfromchat';
-$wgAddGroups['chatmoderator'][] = 'bannedfromchat';
-$wgRemoveGroups['sysop'][] = 'chatmoderator';
-$wgRemoveGroups['sysop'][] = 'bannedfromchat';
-$wgRemoveGroups['chatmoderator'][] = 'bannedfromchat';
+
 
 // Let staff & helpers change chatmod & banning status.
 if( !is_array($wgAddGroups['staff']) ){
@@ -55,20 +50,32 @@ if( !is_array($wgRemoveGroups['staff']) ){
 if( !is_array($wgRemoveGroups['helper']) ){
 	$wgRemoveGroups['helper'] = array();
 }
-$wgAddGroups['staff'][] = 'bannedfromchat';
-$wgAddGroups['staff'][] = 'chatmoderator';
-$wgRemoveGroups['staff'][] = 'bannedfromchat';
-$wgRemoveGroups['staff'][] = 'chatmoderator';
 
+/*
+$wgRemoveGroups['sysop'][] = 'bannedfromchat';
+$wgAddGroups['sysop'][] = 'bannedfromchat';
+$wgAddGroups['chatmoderator'][] = 'bannedfromchat';
+$wgRemoveGroups['chatmoderator'][] = 'bannedfromchat';
+$wgAddGroups['staff'][] = 'bannedfromchat';
+$wgRemoveGroups['staff'][] = 'bannedfromchat';
 $wgAddGroups['helper'][] = 'bannedfromchat';
-$wgAddGroups['helper'][] = 'chatmoderator';
 $wgRemoveGroups['helper'][] = 'bannedfromchat';
-$wgRemoveGroups['helper'][] = 'chatmoderator';
 
 // Attempt to do the permissions the other way (adding restriction instead of subtracting permission).
 // When in 'bannedfromchat' group, the 'chat' permission will be revoked
 // See http://www.mediawiki.org/wiki/Manual:$wgRevokePermissions
 $wgRevokePermissions['bannedfromchat']['chat'] = true;
+
+*/
+
+
+$wgAddGroups['staff'][] = 'chatmoderator';
+$wgRemoveGroups['staff'][] = 'chatmoderator';
+$wgAddGroups['helper'][] = 'chatmoderator';
+$wgRemoveGroups['helper'][] = 'chatmoderator';
+$wgAddGroups['sysop'][] = 'chatmoderator';
+$wgRemoveGroups['sysop'][] = 'chatmoderator';
+
 
 // autoloaded classes
 $wgAutoloadClasses['Chat'] = "$dir/Chat.class.php";
