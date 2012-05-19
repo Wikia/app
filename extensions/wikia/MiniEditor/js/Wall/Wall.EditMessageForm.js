@@ -50,7 +50,7 @@
 				msg.find('.msg-title').first().html('<textarea class="title">' + msg.find('.msg-title a').html() + '</textarea>');
 
 				// Load the editor data in the proper mode
-				self.model.loadEditData(self.username, id, 'edit', format, function(data) {
+				self.model.loadEditData(self.page, id, 'edit', format, function(data) {
 					var hasEdgeCases = typeof data.edgeCases != 'undefined';
 
 					if (wikiaEditor) {

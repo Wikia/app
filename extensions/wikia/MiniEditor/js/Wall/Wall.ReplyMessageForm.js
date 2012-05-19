@@ -37,12 +37,12 @@
 				}
 			});			
 		},
-
+//TODO: this can't be a part of this class
 		doReplyToMessage: function(main, newreply, reload) {
 			var wikiaEditor = $('.wikiaEditor', newreply).data('wikiaEditor'),
 				format = wikiaEditor.mode == 'wysiwyg' ? 'wikitext' : '';
 
-			this.model.postReply(this.username, wikiaEditor.getContent(), format, main.attr('data-id'), this.proxy(function(msg) {
+			this.model.postReply(this.page, wikiaEditor.getContent(), format, main.attr('data-id'), this.proxy(function(msg) {
 				var newmsg = $(msg).hide().insertBefore(newreply).fadeIn('slow');
 
 				newmsg.find('.timeago').timeago();

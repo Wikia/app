@@ -5,10 +5,10 @@
 
 var WallEditMessageForm = $.createClass(WallMessageForm, {
 	oldHTML: {},
-	constructor: function(username) {
+	constructor: function(page) {
 		WallNewMessageForm.superclass.constructor.apply(this,arguments);
 				
-		this.username = username;
+		this.page = page;
 
 		$('#Wall').on('click', '.source-message', this.proxy(this.viewSource));
 		$('#Wall').on('click', '.edit-message', this.proxy(this.editMessage));
@@ -54,7 +54,7 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 		$('.buttons', msg).first().hide();
 		msg.find('.wikia-menu-button').removeClass("active");
 
-		this.model.loadEditData(this.username, id, mode, format, this.proxy(function(data) {
+		this.model.loadEditData(this.page, id, mode, format, this.proxy(function(data) {
 			this.setOldHTML(id, bubble);
 			this.initEditForm(msg, data, mode);
 
@@ -124,8 +124,7 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 		var format = this.getSaveFormat(msg);
 
 		buttons.attr('disabled', true);
-
-		this.model.saveEdit( this.username, id, newtitle, newbody, isreply, format, this.proxy(function(data) {
+		this.model.saveEdit( this.page, id, newtitle, newbody, isreply, format, this.proxy(function(data) {
 			var bubble = $('.speech-bubble-message', msg).first();
 
 			this.resetHTMLAfterEdit(id, bubble);

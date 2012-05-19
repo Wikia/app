@@ -48,8 +48,11 @@ class Chat {
 		wfProfileIn( __METHOD__ );
 		$errorMsg = "";
 		$PERMISSION_TO_KICKBAN = "chatmoderator";
+		echo $userNameToKickBan;
 		$userToKickBan = User::newFromName($userNameToKickBan);
+		
 		if( ($userToKickBan instanceof User) && $kickingUser->isAllowed( $PERMISSION_TO_KICKBAN ) ){
+		
 			if( $userToKickBan->isAllowed( $PERMISSION_TO_KICKBAN ) ){
 				$errorMsg .= wfMsg('chat-ban-cant-ban-moderator')."\n";
 			} else {
@@ -62,7 +65,6 @@ class Chat {
 		wfProfileOut( __METHOD__ );
 		return ( $errorMsg=="" ? true : $errorMsg);
 	} // end banUser()
-
 
 	public static function blockPrivate($username, $dir = 'add', $kickingUser) {
 		global $wgExternalDatawareDB;

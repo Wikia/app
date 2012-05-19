@@ -55,6 +55,7 @@ class WallController extends ArticleCommentsController {
 		
 		if( !empty($filterid) ) {
 			$this->response->setVal('showNewMessage', false);
+			$this->response->setVal('type', 'Thread');
 			$this->response->setVal('condenseMessage', false);
 			$this->response->setVal('showDeleteOrRemoveInfo', true);
 			
@@ -77,10 +78,12 @@ class WallController extends ArticleCommentsController {
 			}
 			
 		} else {
+			$this->response->setVal('type', 'Board');
 			$this->response->setVal('showDeleteOrRemoveInfo', false);
 			$this->response->setVal('showNewMessage', true);
 			$this->response->setVal('condenseMessage', true);
-			$this->response->setVal('renderUserTalkArchiveAnchor', true);
+			
+			$this->response->setVal('renderUserTalkArchiveAnchor', $this->request->getVal('dontRenderUserTalkArchiveAnchor', false) != true);
 			
 			$greeting = F::build('Title', array($title->getText(), NS_USER_WALL_MESSAGE_GREETING), 'newFromText' );
 			
@@ -236,7 +239,14 @@ class WallController extends ArticleCommentsController {
 		$username = $this->wg->User->getName();
 		$this->response->setVal('username', $username);
 		$this->response->setVal('wall_username', $wall_username);
-		
+
+		wfRunHooks( 'WallNewMessage', array($this->wg->Title, &$this->response) );
+		$wall_message = $this->response->getVal('wall_message');
+		if ( empty($wall_message) ) {
+			$wall_message = User::isIP($wall_username) ? $this->wf->Msg('wall-placeholder-message-anon') : $this->wf->Msg('wall-placeholder-message', $wall_username);
+			$this->response->setVal('wall_message', $wall_message);
+		}
+
 		$this->checkAndSetAnonsEditing();
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}
@@ -411,8 +421,8 @@ class WallController extends ArticleCommentsController {
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		
 		$this->response->setVal( 'id', $wallMessage->getId() );
-		
-		if($this->wg->User->getId() > 0 && !$wallMessage->isWallOwner($this->wg->User) && !$wallMessage->isWallWatched($this->wg->User) ) {
+
+		if($this->wg->User->getId() > 0 && !$wallMessage->isWallOwner($this->wg->User) ) {
 			$this->response->setVal( 'showFollowButton', true );
 		} else {
 			$this->response->setVal( 'showFollowButton', false );
@@ -478,21 +488,21 @@ class WallController extends ArticleCommentsController {
 	}
 	
 	public function brickHeader() {
-		global $wgSuppressPageTitle;
-		$wgSuppressPageTitle = true;
 		
-		$this->response->setVal( 'wallUrl', '#');
-		$this->response->setVal( 'wallName', '');
-		$this->response->setVal( 'messageTitle', '');
+		$this->wg->SuppressPageTitle = true;
+		
 		$this->response->setVal( 'isRemoved', false );
 		$this->response->setVal( 'isAdminDeleted', false );
-
+		
+		$path = array();
+		$this->response->setVal( 'path', $path);
+		
 		$title = F::build('Title', array($this->request->getVal('id')), 'newFromId' );
 		if(empty($title)) {
 			$title = F::build('Title', array($this->request->getVal('id'), GAID_FOR_UPDATE), 'newFromId' );
 		}
 		
-		if(!empty($title)) {
+		if(!empty($title) && $title->isTalkPage() ) {
 			$wallMessage = F::build('WallMessage', array($title), 'newFromTitle' );
 			
 			$wallMessageParent = $wallMessage->getTopParentObj();
@@ -503,18 +513,19 @@ class WallController extends ArticleCommentsController {
 			$wallMessage->load();
 			
 			if( $wallMessage->getWallOwner()->getId() == $this->wg->User->getId() ) {
-				$this->response->setVal( 'wallName', wfMsg('wall-message-mywall') );
+				$wallName = wfMsg('wall-message-mywall');
 			} else {
 				$wallOwner = $wallMessage->getWallOwner()->getRealName();
 				if(empty($wallOwner)){ 
 					$wallOwner = $wallMessage->getWallOwner()->getName();
 				}
 				
-				$this->response->setVal( 'wallName', wfMsgExt('wall-message-elseswall', array('parsemag'), $wallOwner)); 
+				$wallName = wfMsgExt('wall-message-elseswall', array('parsemag'), $wallOwner); 
 			}
 
-			$this->response->setVal( 'wallUrl', $wallMessage->getWallUrl() );
-			$this->response->setVal( 'messageTitle', htmlspecialchars($wallMessage->getMetaTitle()) );
+			$wallUrl = $wallMessage->getWallUrl();
+			 
+			$messageTitle = htmlspecialchars($wallMessage->getMetaTitle());
 			$isRemoved = $wallMessage->isRemove();
 			$isDeleted = $wallMessage->isAdminDelete();
 			$this->response->setVal( 'isRemoved', $isRemoved );
@@ -535,7 +546,20 @@ class WallController extends ArticleCommentsController {
 			$wno = new WallNotificationsOwner;
 			$wno->removeForThread( $this->app->wg->CityId, $user->getId(), $wallMessage->getId() );
 			
+			$path[] = array( 
+				'title' => $wallName,
+				'url' => $wallUrl
+			);
+			
+			$path[] = array( 
+				'title' => $messageTitle
+			);
+			
+			wfRunHooks('WallThreadHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
+		} else {
+			wfRunHooks('WallHeader', array($this->wg->Title, &$path, &$this->response, &$this->request));
 		}
+		$this->response->setVal( 'path', $path);
 	}
 	
 	/**

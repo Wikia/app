@@ -271,9 +271,13 @@ class WallNotifications {
 		} else {
 			$title = $notification->data_noncached->parent_title_dbkey;
 		}
-		
-		$users = $this->getWatchlist($notification->data->wall_username, $title);
-	
+
+		if(!empty($notification->data->article_title_ns)) {
+			$users = $this->getWatchlist($notification->data->wall_username, $title, $notification->data->article_title_ns);			
+		} else {
+			$users = $this->getWatchlist($notification->data->wall_username, $title);
+		}
+
 		//FB:#11089
 		$users[$notification->data->wall_userid] = $notification->data->wall_userid;
 		
@@ -341,31 +345,39 @@ class WallNotifications {
 				if(empty($watcherName)) {
 					$watcherName = $watcher->getName();	
 				}
-				
+
 				if( $notification->data->msg_author_username == $notification->data->msg_author_displayname) {
 					$author_signature = $notification->data->msg_author_username;
 				} else {
 					$author_signature = $notification->data->msg_author_displayname . ' (' . $notification->data->msg_author_username . ')';
 				}
-				
-				$data = array(
-					'$WATCHER' => $watcherName,
-					'$WIKI' => $notification->data->wikiname,
-					'$PARENT_AUTHOR_NAME' => (empty($notification->data->parent_displayname) ? '':$notification->data->parent_displayname),
-					'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
-					'$AUTHOR' => $notification->data->msg_author_username,
-					'$AUTHOR_SIGNATURE' => $author_signature,
-					'$MAIL_SUBJECT' => wfMsg('mail-notification-subject', array(
-						'$1' => $notification->data->thread_title,
-						'$2' => $notification->data->wikiname
-					)),
-					'$METATITLE' => $notification->data->thread_title,
-					'$MESSAGE_LINK' =>  $notification->data->url,
-					'$MESSAGE_NO_HTML' =>  $textNoHtml,
-					'$MESSAGE_HTML' =>  $text,
-				);
+
+				$data = array();
+				wfRunHooks('NotificationGetMailNotificationMessage', array(&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text) );
+				if ( empty($data) ) {
+					$data = array(
+						'$WATCHER' => $watcherName,
+						'$WIKI' => $notification->data->wikiname,
+						'$PARENT_AUTHOR_NAME' => (empty($notification->data->parent_displayname) ? '':$notification->data->parent_displayname),
+						'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
+						'$AUTHOR' => $notification->data->msg_author_username,
+						'$AUTHOR_SIGNATURE' => $author_signature,
+						'$MAIL_SUBJECT' => wfMsg('mail-notification-subject', array(
+							'$1' => $notification->data->thread_title,
+							'$2' => $notification->data->wikiname
+						)),
+						'$METATITLE' => $notification->data->thread_title,
+						'$MESSAGE_LINK' =>  $notification->data->url,
+						'$MESSAGE_NO_HTML' =>  $textNoHtml,
+						'$MESSAGE_HTML' =>  $text,
+						'$MSG_KEY_SUBJECT' => $key,
+						'$MSG_KEY_BODY' => 'mail-notification-body',
+						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
+					);
+				}
+		
 				if(!($watcher->getBoolOption('unsubscribed') === true)) {
-					$this->sendEmail($watcher, $key, $data);	
+					$this->sendEmail($watcher, $data);
 				}
 			}
 		}
@@ -373,16 +385,16 @@ class WallNotifications {
 		return true;
 	}
 	
-	protected function sendEmail($watcher, $key, $data ) {
+	protected function sendEmail($watcher, $data ) {
 		$from = new MailAddress( $this->app->wg->PasswordSender, 'Wikia' );
 		$replyTo = new MailAddress ( $this->app->wg->NoReplyAddress );
 		
 		$keys = array_keys($data);
 		$values =  array_values($data);
 		
-		$subject = wfMsgForContent($key);
+		$subject = wfMsgForContent($data['$MSG_KEY_SUBJECT']);
 		
-		$text = wfMsgForContent('mail-notification-body');
+		$text = wfMsgForContent($data['$MSG_KEY_BODY']);
 		
 		$subject = str_replace($keys, $values, $subject);
 		
@@ -395,18 +407,18 @@ class WallNotifications {
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
 	}
 
-	protected function getWatchlist($name, $titleDbkey) {
+	protected function getWatchlist($name, $titleDbkey, $ns = NS_USER_WALL) {
 		//TODO: add some caching
-		$userTitle = Title::newFromText( $name, NS_USER_WALL );
-		
+		$userTitle = Title::newFromText( $name, MWNamespace::getSubject($ns) );
+
 		$dbw = $this->getLocalDB(true);
 		$res = $dbw->select( array( 'watchlist' ),
 			array( 'wl_user' ),
 			array(
 				'wl_title' => array($titleDbkey, $userTitle->getDBkey() ),
-				'wl_namespace' => array(NS_USER_WALL, NS_USER_WALL_MESSAGE),
+				'wl_namespace' => array(MWNamespace::getSubject($ns), MWNamespace::getTalk($ns)),
                                 //THIS hack will be removed after runing script with will clear all notification copy
-                                "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = ".NS_USER_WALL.") or ( wl_namespace = " .NS_USER_WALL_MESSAGE. " ))"
+                                "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = ".MWNamespace::getSubject($ns).") or ( wl_namespace = " .MWNamespace::getTalk($ns). " ))"
 			), __METHOD__
 		);
 		
@@ -415,6 +427,7 @@ class WallNotifications {
 			$userId = intval( $row->wl_user );
 			$users[$userId] = $userId;
 		}
+
 		return $users;
 	}	
 		

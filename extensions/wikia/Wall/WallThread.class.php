@@ -156,7 +156,7 @@ class WallThread {
 		$vars = array( 'page_id' );
 		$conds[]  = "page_title LIKE '" . $dbr->escapeLike( $title->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX ."%'";
 		$conds[] = "page_latest > 0";	// BugId:22821
-		$conds['page_namespace'] = NS_USER_WALL_MESSAGE;
+		$conds['page_namespace'] = MWNamespace::getTalk($title->getNamespace());
 		$options = array( 'ORDER BY' => 'page_id ASC' );
 		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
 

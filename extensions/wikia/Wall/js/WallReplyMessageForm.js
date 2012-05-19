@@ -3,7 +3,7 @@
  */
 
 var WallReplyMessageForm = $.createClass(WallMessageForm, {
-	constructor: function(username) {
+	constructor: function(page, model) {
 		WallNewMessageForm.superclass.constructor.apply(this,arguments);
 
 		this.wall = $('#Wall');
@@ -108,7 +108,7 @@ var WallReplyMessageForm = $.createClass(WallMessageForm, {
 	},
 
 	doReplyToMessage: function(main, newreply, reload) {
-		this.model.postReply(this.username, newreply.find('textarea').val(), this.getFormat(), main.attr('data-id'), this.proxy(function(msg) {
+		this.model.postReply(this.page, newreply.find('textarea').val(), this.getFormat(), main.attr('data-id'), this.proxy(function(msg) {
 			this.enable(newreply);
 
 			main.find('textarea').val('').trigger('blur');

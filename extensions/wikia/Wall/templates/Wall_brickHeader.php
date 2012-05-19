@@ -1,21 +1,17 @@
-<h1 id="WallBrickHeader">
-	<span class="WallName">
-		<a href="<?php echo $wallUrl; ?>" class="wall-owner"><?php echo  $wallName;?></a>
-	</span>
-	&#149;
-	<span class="Title">
-		<?php echo $messageTitle;?>
-	</span>
-	<?php if($isRemoved || $isAdminDeleted): ?>
-	<span class="TitleRemoved">
-		<? if( !$isAdminDeleted ) {
-			echo '('.wfMsg('wall-thread-removed').')';
-		} else {
-			echo '('.wfMsg('wall-thread-deleted').')';
-		} ?>
-	</span>
+<div class="BreadCrumbs">
+	<? foreach($path as $key => $val ): ?>
+		<? if(!empty($val['url'])):?>
+			<span class="crumb">
+				<a href="<?= $val['url'] ?>" title="<?= $val['title'] ?>"><?= $val['title'] ?></a>
+			</span>
+		<? else: ?>
+			<span class="crumb"><?= $val['title'] ?></span>
+		<? endif; ?>
+		<? if ($key < (count($path) - 1)): ?>
+			<span class="crumb separator">&gt;</span>
+		<? endif; ?>
+	<? endforeach; ?>
+	<? if (!empty($isRemoved) || !empty($isAdminDeleted)): ?>
+		<span class="crumb removed"><?= '('.wfMsg('wall-thread-'.($isAdminDeleted ? 'deleted' : 'removed')).')' ?></span>
 	<? endif; ?>
-	<? if(!empty($history)): ?>
-		<div class="History" style="margin-left: 20px;"><?= $history ?></div>
-	<? endif; ?>
-</h1>
+</div>

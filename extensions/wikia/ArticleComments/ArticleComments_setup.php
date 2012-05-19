@@ -38,6 +38,7 @@ $wgAutoloadClasses['ArticleComment'] = "$dir/classes/ArticleComment.class.php";
 $wgAutoloadClasses['ArticleCommentList'] = "$dir/classes/ArticleCommentList.class.php";
 $wgAutoloadClasses['ArticleCommentsAjax'] = "$dir/classes/ArticleCommentsAjax.class.php";
 $wgAutoloadClasses['ArticleCommentsController'] = "$dir/modules/ArticleCommentsController.class.php";
+$wgAutoloadClasses['CommentsIndex'] = "$dir/classes/CommentsIndex.class.php";
 
 $wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
 

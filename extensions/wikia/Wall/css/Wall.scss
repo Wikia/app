@@ -529,20 +529,24 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	cursor: pointer;
 }
 
-#WallBrickHeader {
+.BreadCrumbs {
+	@include clearfix;
 	font-size: 14px;
 	border-bottom: 1px solid $color-wall-border;
 	padding-bottom: 5px;
-	.WallName {
-		padding-right: 5px;
+	.crumb {
+		float: left;
 	}
-	.Title { 
-		padding-left: 5px;
+	.separator {
+		padding: 0 7px;
 	}
-	.TitleRemoved {
+	.removed {
 		color: $color-alternate-text;
+		padding-left: 7px;
 	}
-	& + #WikiaArticle .comments > .SpeechBubble { padding-top: 30px; }
+	& + #WikiaArticle .comments > .SpeechBubble {
+		padding-top: 30px;
+	}
 }
 
 .skin-monobook {

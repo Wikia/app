@@ -29,3 +29,9 @@ $radius: 10px;
 	-moz-border-radius-bottomleft: $radius;
 	-webkit-border-bottom-left-radius: $radius;
 }
+
+@mixin clear-border-radius() {
+	border-bottom-left-radius: 0;
+	-moz-border-radius-bottomleft: 0;
+	-webkit-border-bottom-left-radius: 0;
+}

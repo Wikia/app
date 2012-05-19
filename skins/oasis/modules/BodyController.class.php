@@ -154,8 +154,7 @@ class BodyController extends WikiaController {
 							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 						}
 					}					
-				}
-				elseif ($wgEnableCorporatePageExt) {
+				} elseif ($wgEnableCorporatePageExt) {
 					$railModuleList = array(
 						1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'))
 					);
@@ -192,12 +191,18 @@ class BodyController extends WikiaController {
 					}
 				}
 			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
-					$railModuleList = array (
-						1501 => array('Search', 'Index', null),
-						1500 => array('PageLayoutBuilderForm', 'Index', null)
-					);
-			}
-			else {
+				$railModuleList = array (
+					1501 => array('Search', 'Index', null),
+					1500 => array('PageLayoutBuilderForm', 'Index', null)
+				);
+			} else if ( $wgTitle->isSpecial('Forum')) {
+				$railModuleList = array (
+					1500 => array('Search', 'Index', null),
+					$latestActivityKey => array('LatestActivity', 'Index', null),
+				);
+
+				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
+			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = array();
 				wfRunHooks( 'GetRailModuleSpecialPageList', array( &$railModuleList ) );

@@ -3,14 +3,15 @@ var WallBackendBridge = $.createClass(Observable, {
 		WallNewMessageForm.superclass.constructor.apply(this, arguments);
 	},
 
-	loadPage: function(username, page, callback) {
+	loadPage: function(page, pagenumber, callback) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'getCommentsPage',
 			format: 'json',
 			data: {
-				page: page,
-				username: username
+				page: pagenumber,
+				pagetitle: page['title'],
+				pagenamespace: page['namespace'],
 			},
 			callback: this.proxy(function(data) {
 				var html = innerShiv(data.html, false),
@@ -26,14 +27,15 @@ var WallBackendBridge = $.createClass(Observable, {
 		});
 	},
 
-	postNew: function(username, title, body, convertToFormat, callback) {
+	postNew: function(page, title, body, convertToFormat, callback) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'postNewMessage',
 			data: {
 				body: body,
 				messagetitle: title,
-				username: username,
+				pagetitle: page['title'],
+				pagenamespace: page['namespace'],
 				convertToFormat: convertToFormat
 			},
 			callback: this.proxy(function(data) {
@@ -48,14 +50,15 @@ var WallBackendBridge = $.createClass(Observable, {
 		});
 	},
 
-	postReply: function(username, body, convertToFormat, parent, callback) {
+	postReply: function(page, body, convertToFormat, parent, callback) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'replyToMessage',
 			data: {
 				body: body,
 				parent: parent,
-				username: username,
+				pagetitle: page['title'],
+				pagenamespace: page['namespace'],
 				convertToFormat: convertToFormat
 			},
 			callback: this.proxy(function(data) {
@@ -78,7 +81,7 @@ var WallBackendBridge = $.createClass(Observable, {
 		this.fire('editCanceled', newmsg);
 	},
 
-	loadEditData: function(username, id, mode, convertToFormat, callback) {
+	loadEditData: function(page, id, mode, convertToFormat, callback) {
 		this.fire('beforeEditDataLoad', id);
 
 		$.nirvana.sendRequest({
@@ -87,7 +90,8 @@ var WallBackendBridge = $.createClass(Observable, {
 			format: 'json',
 			data: {
 				msgid: id,
-				username: this.username,
+				pagetitle: page['title'],
+				pagenamespace: page['namespace'],
 				convertToFormat: convertToFormat
 			},
 			callback: this.proxy(function(data) {
@@ -115,7 +119,7 @@ var WallBackendBridge = $.createClass(Observable, {
 		});
 	},
 
-	saveEdit: function(username, id, title, body, isreply, convertToFormat, callback) {
+	saveEdit: function(page, id, title, body, isreply, convertToFormat, callback) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'editMessageSave',
@@ -125,7 +129,8 @@ var WallBackendBridge = $.createClass(Observable, {
 				newtitle: title,
 				newbody: body,
 				isreply: isreply,
-				username: username,
+				pagetitle: page['title'],
+				pagenamespace: page['namespace'],
 				convertToFormat: convertToFormat
 			},
 			callback: this.proxy(function(data) {

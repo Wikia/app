@@ -10,9 +10,7 @@
 			<strong><a class="title" href="<?php print htmlspecialchars($row['url']) ?>"><?php print htmlspecialchars($row['title'])  ?></a></strong>
 			<?php if( !empty($row['wall-url']) ): ?>
 				<span class="wall-owner">
-					<?= wfMsg(
-						'wall-wiki-activity-on',
-						'<a href="'.$row['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $row['wall-owner']).'</a>') ?>
+					<?php echo $row['wall-msg']; ?>	
 				</span>
 			<?php endif;?>
 			<br />

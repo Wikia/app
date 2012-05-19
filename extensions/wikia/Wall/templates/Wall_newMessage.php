@@ -20,9 +20,7 @@
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
 			endif; ?>
-			<textarea id="WallMessageBody" class="body" placeholder="<?=
-				User::isIP($wall_username) ? wfMsg('wall-placeholder-message-anon') : wfMsg('wall-placeholder-message', $wall_username)
-			?>" data-space-type="editarea"></textarea>
+			<textarea id="WallMessageBody" class="body" placeholder="<?= $wall_message ?>" data-space-type="editarea"></textarea>
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
 			endif; ?>
