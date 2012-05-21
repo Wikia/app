@@ -1000,7 +1000,18 @@ class WikiFactory {
 			$server = str_replace( '.wikia.com', '', $server );
 		}
 
-		// put the addres back into shape and return
+		// put the address back into shape and return
+		if(empty($_SERVER['SERVER_NAME'])) {
+			// maintenance script
+			global $wgDevelEnvironment, $wgDBname;
+			if(empty($wgDevelEnvironment)) {
+				return 'http://' . $wgDBname . '.wikia.com/'.$address;
+			} else {
+				$hostname = str_replace('dev-','',gethostname());
+				return 'http://' . $wgDBname . '.' . $hostname . '.wikia-dev.com/'.$address;
+			}
+		}
+
 		$servername = $_SERVER['SERVER_NAME'];
 		if( strpos( $servername, 'preview.' ) !== false ) {
 			return 'http://preview. ' . $server . '.wikia.com/'.$address;

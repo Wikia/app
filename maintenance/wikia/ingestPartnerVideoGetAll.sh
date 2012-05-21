@@ -31,7 +31,7 @@ do
 	from=`date -d "2001-01-01 $counter sec" '+%s'`
 	to=`date -d "2001-01-01 $endtime sec" '+%s'`
 
-	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -e $to -s $from -d | tee -a /tmp/ingestion.log || exit
+	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -e $to -s $from  | tee -a /tmp/ingestion.log || exit
 
 	counter=$(( $counter + 60 * 60 * 24 * 7 ))
 	from=`date -d "2001-01-01 $counter sec" '+%s'`

@@ -60,7 +60,7 @@ class VideoFileUploader {
 		return $upload;
 	}
 
-	public function upload( &$oTitle ){
+	public function upload( &$oTitle){
 
 		wfProfileIn(__METHOD__);
 		if( !$this->getApiWrapper() ) {
@@ -104,7 +104,7 @@ class VideoFileUploader {
 				$oTitle,
 				RepoGroup::singleton()->getLocalRepo()
 			)
-		);
+		); /* @var $file WikiaLocalFile */
 
 		/* override thumbnail metadata with video metadata */
 		$file->forceMime( $this->getApiWrapper()->getMimeType() );

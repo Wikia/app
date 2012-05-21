@@ -80,6 +80,33 @@ class WikiaFileHelper extends Service {
 		return $mTitle;
 	}
 
+	/*
+	 * Looks up videos with same provider and videoId
+	 * as specified inside currently uploaded videos on wiki
+	 * (searches Image table)
+	 */
+	public static function findVideoDuplicates( $provider, $videoId ) {
+		$dbr = wfGetDB(DB_SLAVE);
+
+		$videoStr = (string)$videoId;
+		$rows = $dbr->select(
+			'image',
+			'*',
+			"img_media_type='VIDEO' AND img_minor_mime='$provider' " .
+			"AND img_metadata LIKE '%s:7:\"videoId\";s:".strlen($videoStr).':"'.$videoStr."\";%'"
+		);
+
+		$result = array();
+
+		while($row = $dbr->fetchRow($rows)) {
+			$result[] = $row;
+		}
+
+		$dbr->freeResult($rows);
+
+		return $result;
+	}
+
 	public static function videoPlayButtonOverlay( $width, $height ) {
 		$playButton = array(
 			"class"		=> "Wikia-video-play-button",
