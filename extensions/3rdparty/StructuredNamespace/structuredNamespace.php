@@ -23,7 +23,7 @@ function registerStructuredNamespaceExtension(){
   }
 #  $wgHooks['AlternateEdit'][] = "structuredEdit";
 
-  $wgHooks['EditFilter'][] = 'structuredSave'; 
+  $wgHooks['EditFilter'][] = 'structuredSave';
 }
 
 function structuredSave($editpage,$textbox1,$section){
@@ -102,7 +102,7 @@ class StructuredEditPage extends EditPage{
 			if ( $this->missingComment ) {
 				$wgOut->addWikiText( wfMsg( 'missingcommenttext' ) );
 			}
-			
+
 			if( $this->missingSummary ) {
 				$wgOut->addWikiText( wfMsg( 'missingsummary' ) );
 			}
@@ -132,7 +132,7 @@ class StructuredEditPage extends EditPage{
 				}
 			}
 		}
-			
+
 		if( $this->mTitle->isProtected( 'edit' ) ) {
 			if( $this->mTitle->isSemiProtected() ) {
 				$notice = wfMsg( 'semiprotectedpagewarning' );
@@ -203,7 +203,7 @@ class StructuredEditPage extends EditPage{
 				# Already watched
 				$this->watchthis = true;
 			}
-			
+
 			if( $wgUser->getOption( 'minordefault' ) ) $this->minoredit = true;
 		}
 
@@ -295,7 +295,7 @@ class StructuredEditPage extends EditPage{
 			'accesskey' => wfMsg('accesskey-save'),
 			'title'     => wfMsg('tooltip-save'),
 		);
-		$buttons['save'] = wfElement('input', $temp, '');
+		$buttons['save'] = Xml::element('input', $temp, '');
 		$temp = array(
 			'id'        => 'wpDiff',
 			'name'      => 'wpDiff',
@@ -305,7 +305,7 @@ class StructuredEditPage extends EditPage{
 			'accesskey' => wfMsg('accesskey-diff'),
 			'title'     => wfMsg('tooltip-diff'),
 		);
-		$buttons['diff'] = wfElement('input', $temp, '');
+		$buttons['diff'] = Xml::element('input', $temp, '');
 
 		global $wgLivePreview;
 		if ( $wgLivePreview && $wgUser->getOption( 'uselivepreview' ) ) {
@@ -319,7 +319,7 @@ class StructuredEditPage extends EditPage{
 				'title'     => wfMsg('tooltip-preview'),
 				'style'     => 'display: none;',
 			);
-			$buttons['preview'] = wfElement('input', $temp, '');
+			$buttons['preview'] = Xml::element('input', $temp, '');
 			$temp = array(
 				'id'        => 'wpLivePreview',
 				'name'      => 'wpLivePreview',
@@ -330,7 +330,7 @@ class StructuredEditPage extends EditPage{
 				'title'     => '',
 				'onclick'   => $this->doLivePreviewScript(),
 			);
-			$buttons['live'] = wfElement('input', $temp, '');
+			$buttons['live'] = Xml::element('input', $temp, '');
 		} else {
 			$temp = array(
 				'id'        => 'wpPreview',
@@ -341,7 +341,7 @@ class StructuredEditPage extends EditPage{
 				'accesskey' => wfMsg('accesskey-preview'),
 				'title'     => wfMsg('tooltip-preview'),
 			);
-			$buttons['preview'] = wfElement('input', $temp, '');
+			$buttons['preview'] = Xml::element('input', $temp, '');
 			$buttons['live'] = '';
 		}
 
@@ -426,7 +426,7 @@ END
 		if( $this->missingSummary ) {
 			$wgOut->addHTML( "<input type=\"hidden\" name=\"wpIgnoreBlankSummary\" value=\"1\" />\n" );
 		}
-		
+
 		# For a bit more sophisticated detection of blank summaries, hash the
 		# automatic one and pass that in a hidden field.
 		$autosumm = $this->autoSumm ? $this->autoSumm : md5( $this->summary );
@@ -452,7 +452,7 @@ END
 			} else {
 				$wgOut->addHTML( '<div id="wikiPreview"></div>' );
 			}
-		
+
 			if ( $this->formtype == 'diff') {
 				$wgOut->addHTML( $this->getDiff() );
 			}
@@ -466,7 +466,7 @@ END
 function addStructureFields(){
   global $wgOut;
   global $wgStructuredParts;
-  
+
   $ns = $this->mArticle->mTitle->getNamespace();
   if(isset( $wgStructuredParts[$ns] )){
     foreach($wgStructuredParts[$ns] as $item){
@@ -477,7 +477,7 @@ function addStructureFields(){
     }
   }
 }
- 
+
 
 
 	/**

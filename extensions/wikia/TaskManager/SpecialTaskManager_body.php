@@ -518,7 +518,7 @@ class TaskManagerPager extends TablePager {
 			case "task_type":
 				$Task = BatchTask::newFromID( $this->mCurrentRow->task_id );
 				if( is_null( $Task ) ) {
-					$description = wfElement("span", null, "Unknown type" );
+					$description = Xml::element( "span", null, "Unknown type" );
 				}
 				else {
 					$description = "<span>". $Task->getDescription( ) . "</span>";
