@@ -54,62 +54,57 @@ if ( $wgUser->isAnon() ) {
 //	$wgUser->addToDatabase();
 }
 
-$useVideoFeed = WikiaFileHelper::useVideoHandlersExtForIngestion();
 $providersVideoFeed = array();
 $provider = !empty($args[0]) ? strtolower($args[0]) : '';
-if ($useVideoFeed) {
-	if (empty($provider)) {
-		$providersVideoFeed = VideoFeedIngester::$PROVIDERS;
-	}
-	elseif (array_search($provider, VideoFeedIngester::$PROVIDERS) !== false) {
-		$providersVideoFeed = array( $provider );
-	}
-	else {
-		die("unknown provider $provider. aborting.\n");			
-	}
+if (empty($provider)) {
+	$providersVideoFeed = VideoFeedIngester::$PROVIDERS;
+}
+elseif (array_search($provider, VideoFeedIngester::$PROVIDERS) !== false) {
+	$providersVideoFeed = array( $provider );
+}
+else {
+	die("unknown provider $provider. aborting.\n");
 }
 
 // BEGIN MAIN
 
-if ($useVideoFeed) {
-	foreach ($providersVideoFeed as $provider) {
-		print("Starting import for provider $provider...\n");
+foreach ($providersVideoFeed as $provider) {
+	print("Starting import for provider $provider...\n");
 
-		$feedIngester = VideoFeedIngester::getInstance($provider);
+	$feedIngester = VideoFeedIngester::getInstance($provider);
 
-		// get WikiFactory data
-		$ingestionData = $feedIngester->getWikiIngestionData();
-		if (empty($ingestionData)) {
-			die("No ingestion data found in wikicities. Aborting.");
-		}
-		
-
-		// open file
-		$file = '';
-		$startDate = $endDate = '';
-		switch ($provider) {
-			case VideoFeedIngester::PROVIDER_SCREENPLAY:
-				$startDate = date('m/d/y', $startDateTS);
-				$endDate = date('m/d/y', $endDateTS);
-				$file = $feedIngester->downloadFeed($startDate, $endDate);
-				break;
-			case VideoFeedIngester::PROVIDER_REALGRAVITY:				
-				// no file needed
-				$startDate = date('Y-m-d', $startDateTS);
-				$endDate = date('Y-m-d', $endDateTS);
-				break;
-			default:
-		}
-
-		$params = array('debug'=>$debug, 'startDate'=>$startDate, 'endDate'=>$endDate);
-		if (!empty($ingestionData['keyphrases'])) {
-			$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
-		}
-
-		$numCreated = $feedIngester->import($file, $params);		
-		
-		print "Created $numCreated articles!\n\n";
+	// get WikiFactory data
+	$ingestionData = $feedIngester->getWikiIngestionData();
+	if (empty($ingestionData)) {
+		die("No ingestion data found in wikicities. Aborting.");
 	}
+
+
+	// open file
+	$file = '';
+	$startDate = $endDate = '';
+	switch ($provider) {
+		case VideoFeedIngester::PROVIDER_SCREENPLAY:
+			$startDate = date('m/d/y', $startDateTS);
+			$endDate = date('m/d/y', $endDateTS);
+			$file = $feedIngester->downloadFeed($startDate, $endDate);
+			break;
+		case VideoFeedIngester::PROVIDER_REALGRAVITY:
+			// no file needed
+			$startDate = date('Y-m-d', $startDateTS);
+			$endDate = date('Y-m-d', $endDateTS);
+			break;
+		default:
+	}
+
+	$params = array('debug'=>$debug, 'startDate'=>$startDate, 'endDate'=>$endDate);
+	if (!empty($ingestionData['keyphrases'])) {
+		$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
+	}
+
+	$numCreated = $feedIngester->import($file, $params);
+
+	print "Created $numCreated articles!\n\n";
 }
 
 // END OF MAIN
