@@ -326,7 +326,7 @@ class Wikia {
         $sImagesCommonPath = wfGetImagesCommon();
         switch ( $type ) {
             default:
-                return wfElement( 'img', array(
+                return Xml::element( 'img', array(
                     "src"    => "{$sImagesCommonPath}/skins/quartz/images/progress_bar.gif",
                     "width"  => 100,
                     "height" => 9,

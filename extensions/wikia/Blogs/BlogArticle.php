@@ -201,7 +201,7 @@ class BlogArticle extends Article {
 	 * @access private
 	 */
 	private function __makefeedLink( $type, $mime ) {
-		return wfElement( 'link', array(
+		return Xml::element( 'link', array(
 			'rel' => 'alternate',
 			'type' => $mime,
 			'href' => $this->mTitle->getLocalUrl( "feed={$type}" ) )

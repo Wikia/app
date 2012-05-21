@@ -247,7 +247,7 @@ if(defined('MEDIAWIKI'))
             "<br />\n" .
             $this->textbox('ucomment') .
             '<br />' .
-            wfElement('input', array(
+            Xml::element('input', array(
               'type'  => 'submit',
               'name'  => 'unprotect',
               'value' => wfMsg($this->mName . '-unprotect'))
@@ -291,7 +291,7 @@ if(defined('MEDIAWIKI'))
             "\n<br />" .
             (isset($request['comment']) ? $this->textbox('comment', $request['comment']) : '') .
             "\n<br />" .
-            wfElement('input', array(
+            Xml::element('input', array(
               'type'  => 'submit',
               'name'  => 'protect',
               'value' => wfMsg($this->mName . '-protect'))
