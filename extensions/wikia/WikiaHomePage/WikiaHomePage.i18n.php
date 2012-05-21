@@ -93,7 +93,7 @@ $messages['en'] = array(
 *[http://mediakit.wikia.com/Solutions/Audience Audience]
 *[http://mediakit.wikia.com/Solutions Solutions]
 *[http://mediakit.wikia.com/Advertising-Products Ad products]
-*[http://www.wikia.com/Advertising/Self_Service Self Service]',
+*[http://www.wikia.com/Special:SelfServiceAdvertisingSplash Self Service]',
 );
 
 $messages['qqq'] = array(
