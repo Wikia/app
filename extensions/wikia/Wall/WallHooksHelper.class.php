@@ -1045,12 +1045,14 @@ class WallHooksHelper {
 	 */
 	public function onOldChangesListRecentChangesLine(&$changelist, &$s, $rc) {
 		if( $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
+			wfProfileIn( __METHOD__ );
 			$app = F::app();
 			$rcTitle = $rc->getTitle();
 
 			if( !($rcTitle instanceof Title) ) {
 				//it can be media wiki deletion of an article -- we ignore them
 				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($rc, true));
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
@@ -1061,6 +1063,7 @@ class WallHooksHelper {
 
 				if( is_null($wm) ) {
 					Wikia::log(__METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r($rc, true));
+					wfProfileOut( __METHOD__ );
 					return true;
 				} else {
 					$wm->load();
@@ -1068,6 +1071,7 @@ class WallHooksHelper {
 			}
 
 			if( $wm->isAdminDelete() && $rc->getAttribute('rc_log_action') != 'wall_admindelete' ) {
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 		}
