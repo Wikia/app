@@ -81,6 +81,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 			elseif(!empty($articleMatch)) {
 				Track::event( 'search_start_match', array( 'sterm' => $query, 'rver' => 0 ) );
+			} else {
+				$title = Title::newFromText( $query );
+				if ( !is_null( $title ) ) {
+					wfRunHooks( 'SpecialSearchNogomatch', array( &$title ) );
+				}
 			}
 
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
