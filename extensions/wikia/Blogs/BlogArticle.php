@@ -456,13 +456,13 @@ class BlogArticle extends Article {
 		$output = array();
 		if( $EditPage->mTitle->mArticleID ) {
 			$props = self::getProps( $EditPage->mTitle->mArticleID );
-			$output["voting"] = wfCheckLabel(
+			$output["voting"] = Xml::checkLabel(
 				wfMsg("blog-voting-label"),
 				"wpVoting",
 				"wpVoting",
 				isset( $props["voting"] ) && $props[ "voting" ] == 1
 			);
-			$output["commenting"] = wfCheckLabel(
+			$output["commenting"] = Xml::checkLabel(
 				wfMsg("blog-comments-label"),
 				"wpCommenting",
 				"wpCommenting",
