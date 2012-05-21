@@ -17,7 +17,7 @@ abstract class VideoFeedIngester {
 	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases');
 
-	abstract public function import($file, $params);
+	abstract public function import($content='', $params=array());
 	/**
 	 * Generate name for video.
 	 * Note: The name is not sanitized for use as filename or article title.

@@ -32,14 +32,14 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		return $url;
 	}
 
-	public function import($xmlContent, $params=array()) {
+	public function import($content='', $params=array()) {
 		$debug = !empty($params['debug']);
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 
 		$articlesCreated = 0;
 
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
-		@$doc->loadXML( $xmlContent );
+		@$doc->loadXML( $content );
 		$titles = $doc->getElementsByTagName('Title');
 		$numTitles = $titles->length;
 		print("Found $numTitles titles...\n");
