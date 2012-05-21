@@ -8,9 +8,10 @@
 require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast, modal, events, track){
 	/** @private **/
 
-	var wkArtCom = document.getElementById('wkArtCom'),
-		loadMore = document.getElementById('commMore'),
-		loadPrev = document.getElementById('commPrev'),
+	var d = document,
+		wkArtCom = d.getElementById('wkArtCom'),
+		loadMore = d.getElementById('commMore'),
+		loadPrev = d.getElementById('commPrev'),
 		//double-tilde is a faster alternative to Math.floor()
 		totalPages = ~~wkArtCom.getAttribute('data-pages'),
 		currentPage = 1,
@@ -21,13 +22,19 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 			wgArticleId,
 		clickEvent = events.click,
 		firstPage,
-		commsUl = document.getElementById('wkComUl'),
+		commsUl = d.getElementById('wkComUl'),
 		postReply = $.msg('wikiamobile-article-comments-post-reply'),
 		view = $.msg('wikiamobile-article-comments-view'),
 		replies = $.msg('wikiamobile-article-comments-replies'),
-		postComm = document.getElementsByClassName('commFrm')[0].cloneNode(true);
+		commForm = d.getElementsByClassName('commFrm')[0],
+		mainInp = commForm.getElementsByClassName('wkInp')[0];
 
-	postComm.getElementsByClassName('wkInp')[0].setAttribute('placeholder', postReply);
+	mainInp.style.right = d.getElementsByClassName('commSbt')[0].offsetWidth + 15 + 'px';
+
+	var postComm = commForm.cloneNode(true),
+		text = postComm.getElementsByClassName('wkInp')[0];
+
+	text.setAttribute('placeholder', postReply);
 
 	function clickHandler(event){
 		event.preventDefault();
@@ -119,7 +126,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 							commsUl.insertAdjacentHTML('afterbegin', json.text);
 							track('comment/new/submit');
 						}
-						document.getElementById('wkArtCnt').innerText = json.counter;
+						d.getElementById('wkArtCnt').innerText = json.counter;
 					}
 
 					submit.disabled = false;
@@ -130,7 +137,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 	}
 
 	function updateUI(comment, parent){
-		var realparent = document.getElementById(parent.id),
+		var realparent = d.getElementById(parent.id),
 			rply = realparent.lastElementChild,
 			cnt = ~~rply.getAttribute('data-replies')+1,
 			subs = realparent.getElementsByClassName('sub-comments')[0],
@@ -190,7 +197,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 			stopHiding: true
 		});
 
-		var area = document.getElementById('wkMdlCnt').getElementsByClassName('commTxt')[0];
+		var area = d.getElementById('wkMdlCnt').getElementsByClassName('commTxt')[0];
 
 		if(focus) area.focus();
 	}
@@ -215,8 +222,17 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 		track(['comment',(this.className.indexOf('open')>-1?'close':'open')]);
 	});
 
-	$(document.body).on('submit', '.commFrm', post)
+	$(d.body).on('submit', '.commFrm', post)
 	.on(clickEvent, '.commFrm textarea', function(ev){
 		loginRequired(ev);
+	});
+
+	mainInp.addEventListener('focus', function(){
+		commForm.className += ' open';
+		commForm.scrollIntoView();
+	});
+
+	mainInp.addEventListener('blur', function(){
+		commForm.className = 'commFrm';
 	});
 });
