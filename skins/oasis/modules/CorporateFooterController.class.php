@@ -9,6 +9,9 @@ class CorporateFooterController extends WikiaController {
 		$this->footer_links = $wgMemc->get( $mKey );
 		$this->copyright = $wgUser->getSkin()->getCopyright();
 
+		// BugId:23498, - Mix
+		// The French cache is populated with English content from time to time.
+		// Apparently for some reason the getWikiaFooterLinks returns the English content.
 		if ( empty( $this->footer_links ) ) {
 			$this->footer_links = $this->getWikiaFooterLinks();
 			$wgMemc->set( $mKey, $this->footer_links, 86400 );
@@ -40,27 +43,23 @@ class CorporateFooterController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		global $wgCityId;
-		$catId = WikiFactoryHub::getInstance()->getCategoryId($wgCityId);
-
+		$catId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
 		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
 
-		if(!isset($catId) || null == ($lines = getMessageAsArray($message_key.'-'.$catId))) {
-			wfDebugLog('oasis', $message_key.'-'.$catId . ' - seems to be empty');
-			if(null == ($lines = getMessageAsArray($message_key))) {
-				wfDebugLog('oasis', $message_key . ' - seems to be empty');
+		if ( !isset( $catId ) || null == ( $lines = getMessageAsArray( $message_key . '-' . $catId ) ) ) {
+			if ( null == ( $lines = getMessageAsArray( $message_key ) ) ) {
 				wfProfileOut( __METHOD__ );
 				return $nodes;
 			}
 		}
 
-		foreach($lines as $line) {
-			$depth = strrpos($line, '*');
-			if($depth === 0) {
-				$nodes[] = parseItem($line);
+		foreach( $lines as $line ) {
+			$depth = strrpos( $line, '*' );
+			if( $depth === 0 ) {
+				$nodes[] = parseItem( $line );
 			}
 		}
-
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
