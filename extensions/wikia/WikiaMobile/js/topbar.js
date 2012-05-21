@@ -28,7 +28,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	$(d.getElementById('wkNavSrh')).remove().appendTo('#wkTopBar');
 
 	function reset(){
-		window.scrollTo(0,1);
+		window.scrollTo(0,0);
 		m.close();
 		toc.close();
 		w.location.hash = 'topbar';

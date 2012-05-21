@@ -1,21 +1,22 @@
-.ppOvr .wkLst {
-	margin: 0;
-	padding: 0;
-	text-align: center;
+.ppOvr {
+	.wkLst {
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 30px;
+		padding: 0;
+	}
+
+	.facebookShr{
+		background-image: url('/extensions/wikia/WikiaMobile/images/facebook_logo.png'); /* base64 */
+		background-size: 15px;
+	}
 }
-.ppOvr li {
-	padding: 0;
-	line-height: 0;
-	width: 50px;
-	height: 50px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 30px;
-}
-.ppOvr .facebookShr{
-	background-image: url('/extensions/wikia/WikiaMobile/images/facebook_logo.png'); /* base64 */
-	background-size: 15px;
-}
+
 .twitterShr{
 	background-image: url('/extensions/wikia/WikiaMobile/images/twitter_logo.png'); /* base64 */
 }
