@@ -38,4 +38,12 @@ $messages = array_merge( $messages, array(
 'preferences' => 'Préférences',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Commencer une nouvelle section',
+'shared-Oasis-footer-wikia-links' => "*http://www.wikia.com/About|À propos
+*http://www.wikia.com/Advertising|Publicité
+*http://communaute.wikia.com|Wiki central des communautés
+*Special:Contact|Nous contacter
+*http://www.wikia.com/Terms_of_Use|Conditions d’utilisation
+*http://www.wikia.com/Privacy_Policy|Politique de confidentialité
+*_LICENSE_
+*http://www.wikia.com/Special:CreateWiki?uselang=fr|Créer un wiki",
 ) );

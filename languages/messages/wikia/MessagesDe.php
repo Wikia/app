@@ -63,4 +63,14 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 'preferences' => 'Einstellungen',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
+
+# Oasis
+'shared-Oasis-footer-wikia-links' => "*http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
+*Special:Contact|Kontakt
+*http://www.wikia.com/Terms_of_Use|Nutzungsbedingungen
+*http://www.wikia.com/Special:CreateWiki?uselang=de|Erstelle ein Wiki
+*http://de.community.wikia.com/wiki/Projekt:Community-Richtlinien|Community-Richtlinien
+*_LICENSE_
+*http://de.wikia.com/wiki/Projekt:Datenschutz|Datenschutz
+*http://www.wikia.com/Advertising|Auf Wikia werben",
 ) );

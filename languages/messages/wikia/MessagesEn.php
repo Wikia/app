@@ -964,6 +964,14 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
 
 # former shared-* messages
+'shared-Oasis-footer-wikia-links' => "*http://es.wikia.com/wiki/Sobre_nosotros|<span>Sobre Wikia</span>
+*http://www.wikia.com/Hiring|Contrataciones
+*http://es.wikia.com/wiki/Publicidad|Publicidad
+*Special:Contact|Contacto
+*http://es.wikia.com/wiki/Wikia:T%C3%A9rminos_de_Uso|Términos de Uso
+*http://es.wikia.com/wiki/Wikia:Pol%C3%ADtica_de_Privacidad|Política de Privacidad
+*http://es.wikia.com/wiki/Wikia:Licencia|CC-BY-SA
+*http://www.wikia.com/Special:CreateWiki?uselang=es|Crear un wiki",
 'shared-Globalnavigation' => "*w:c:www:Entertainment|Entertainment
 
 **w:c:www:TV|What's on TV
@@ -1053,14 +1061,15 @@ Text should be placed on this page if you wish to explain usage, style and polic
 ***w:c:logos:Logopedia|Logos
 ***w:c:icehockey:The_Face_Off|Ice Hockey
 ***w:c:www:Lifestyle|More...",
-'shared-Oasis-footer-wikia-links' => "*http://www.wikia.com/About_Us|<span>About Us</span>
-*http://www.wikia.com/Hiring|Careers
+'shared-Oasis-footer-wikia-links' => "*http://www.wikia.com/About|<span>About</span>
+*http://www.community.wikia.com|<span>Community Central</span>
+*http://www.wikia.com/Careers|Careers
 *http://www.wikia.com/Advertising|Advertise
+*http://api.wikia.com/|<span>API</span>
 *Special:Contact|Contact
 *http://www.wikia.com/Terms_of_Use|Terms of Use
 *http://www.wikia.com/Privacy_Policy|Privacy Policy
-*_LICENSE_
-*http://www.wikia.com/Special:CreateWiki|Create a wiki",
+*_LICENSE_",
 # "editing" preferences sections
 'prefs-general' => 'General',
 'prefs-starting-an-edit' => 'Starting an edit',
