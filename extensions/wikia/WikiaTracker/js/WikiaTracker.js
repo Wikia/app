@@ -292,6 +292,18 @@ WikiaTracker._track = function(page, profile, sample, events) {
 			page = '/' + page;
 		}
 
+		// sample @ 1%
+		if (page.indexOf('/999/init') != -1 || page.indexOf('/999/beacon') != -1 || page.indexOf('/999/hop') != -1) { 
+			if (Math.floor(Math.random()*10) != 7) {
+				return false;
+			}
+		}
+
+		// disable for now
+		if (page.indexOf('/999/slot') != -1) {
+			return false;
+		}
+
 		_gaq.push(['_trackEvent', 'fakeurl', page]);
 	}
 
