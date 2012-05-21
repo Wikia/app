@@ -57,6 +57,9 @@ abstract class VideoFeedIngester {
 		if (!empty($msg)) {
 			return 0;
 		}
+
+		//@todo look up duplicate video by provider id (in metadata). if duplicate exists, update the existing video with new
+		// title and/or metadata and/or new thumbnail
 		
 		if (!$this->validateTitle($id, $name, $msg, $debug)) {
 			return 0;
@@ -93,8 +96,9 @@ abstract class VideoFeedIngester {
 			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription(), false);
 			if ($result->ok) {
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
-				print "sleeping " . self::THROTTLE_INTERVAL . " second(s)...\n";
-				sleep(self::THROTTLE_INTERVAL);
+				//print "sleeping " . self::THROTTLE_INTERVAL . " second(s)...\n";
+				//sleep(self::THROTTLE_INTERVAL);
+				wfWaitForSlaves(self::THROTTLE_INTERVAL);
 				return 1;
 			}
 		}
@@ -109,6 +113,8 @@ abstract class VideoFeedIngester {
 			$msg = "article title was null: clip id $videoId. name: $name";
 			return 0;
 		}
+
+		//@todo because we have the provider id check before here, we probably can remove this check
 		if(!$isDebug && $title->exists()) {
 			// don't output duplicate error message
 			return 0;
