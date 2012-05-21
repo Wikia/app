@@ -49,7 +49,6 @@ class AdminDashboardLogic {
 				"Confirmemail",
 				"Connect",
 				"Contact",
-				"ContentWarning",
 				"Contributions",
 				"CreateBlogPage",
 				"CreatePage",
