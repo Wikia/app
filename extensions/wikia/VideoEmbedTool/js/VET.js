@@ -578,7 +578,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 	YAHOO.util.Event.addListener('VideoEmbedBack', 'click', VET_back);
 	YAHOO.util.Event.addListener('VideoEmbedClose', 'click', VET_close);
-
+	
 	if ( 400 == wgNamespaceNumber ) {
 		if( $G( 'VideoEmbedPageWindow' ) ) {
 			$G( 'VideoEmbedPageWindow' ).style.visibility = 'hidden';
@@ -708,8 +708,17 @@ function VET_chooseImage(sourceId, itemId, itemLink, itemTitle) {
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=chooseImage&' + 'sourceId=' + sourceId + '&itemId=' + itemId + '&itemLink=' + itemLink + '&itemTitle=' + itemTitle, callback);
 }
 
-function VET_preQuery(e) {
+function VET_onVideoEmbedUrlKeypress(e) {
+	var event = YAHOO.util.Event.getEvent();
+	if (YAHOO.util.Event.getCharCode(event) == 13){
+		YAHOO.util.Event.preventDefault( event );
+		VET_preQuery(null);
+		return false;
+	}
+	
+}
 
+function VET_preQuery(e) {
 	if($G('VideoEmbedUrl').value == '') {
 		VET_track('query/undefined'); // tracking
 		alert(vet_warn2);
@@ -1104,7 +1113,6 @@ function VET_sendQueryEmbed(query) {
 			} else {
 				VET_displayDetails(o.responseText);
 			}
-
 			VET_indicator(1, false);
 		}
 	}
