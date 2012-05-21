@@ -58,7 +58,6 @@
 	list-style: none;
 
 	li {
-		width: 100%;
 		border-bottom: 1px solid $border-color;
 		padding: 0 10px;
 
@@ -93,7 +92,7 @@
 	background-color: white;
 	width: 50px;
 	height: auto;
-	min-height: 20px;
+	min-height: 30px;
 
 	.on & {
 		display: block;
@@ -107,7 +106,7 @@
 	color: #999;
 	background: #F2F2F2;
 	font-weight:100;
-	margin: 0 20px;
+	margin: 0 10px;
 	position: relative;
 	bottom: 1px;
 }
