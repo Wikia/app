@@ -29,13 +29,13 @@ if ( !empty( $result ) ) {
 	<form method=post action="<?= $formPostAction ?>">
 		<input type=hidden name=loginToken value='<?= $loginToken ?>'>
 		<input type=hidden name=keeploggedin value=true>
-		<input type=text name=username
+		<input type=text name=username class=wkInp
 		       placeholder='<?= $wf->Msg( 'yourname' )?>'<?= ( $username ) ? ' value="' . $username . '"' : ''?><?= ( $userErr ) ? ' class=inpErr' : ''?>>
 		<? if ( $userErr ) : ?>
 		<div class=wkErr><?= $msg ?></div>
 		<? endif; ?>
 		<? if ( !$recoverPassword ) : ?>
-		<input type=password name=password
+		<input type=password name=password class=wkInp
 		       placeholder='<?= $wf->Msg( 'yourpassword' ) ?>'<?= ( $password ) ? ' value="' . $password . '"' : ''?><?= ( $pwdErr ) ? ' class=inpErr' : ''?>>
 		<? if ( $pwdErr ) : ?>
 			<div class=wkErr><?= $msg ?></div>
