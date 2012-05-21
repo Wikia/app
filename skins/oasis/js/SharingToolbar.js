@@ -41,9 +41,22 @@ var SharingToolbar = {
 			SharingToolbar.showEmailModal(lightboxShareEmailLabel, lightboxSend, lightboxShareEmailLabelAddress, lightboxCancel);
 		};
 		
-		if ( UserLoginModal.show({
-				callback: showEmailModal
-			}) ) {
+		if ( window.wgUserName == null ) {
+			if (window.wgComboAjaxLogin) {
+				showComboAjaxForPlaceHolder(false, false, function () {
+					AjaxLogin.doSuccess = function () {
+						$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
+						showEmailModal();
+					};
+					AjaxLogin.close = function () {
+						$('#AjaxLoginBoxWrapper').closeModal();
+					};
+				}, false, true);
+			} else {
+				UserLoginModal.show({
+					callback: showEmailModal
+				});
+			}
 			return false;
 		}
 		else {
