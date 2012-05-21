@@ -7,7 +7,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	private static $API_PROVIDER_IDS = array('MACHINIMA'=>240);
 	const API_PAGE_SIZE = 100;
 	
-	public function import($file='', $params=array()) {
+	public function import($content='', $params=array()) {
 		$numCreated = 0;
 		
 		if (!empty($params['keyphrasesCategories'])) {
