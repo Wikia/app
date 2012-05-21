@@ -39,6 +39,10 @@
 	}
 }
 
+.toclevel-1 > a {
+	font-weight: 800;
+}
+
 //move it to the top and hide UL if js is enabled
 .js #toc {
 	position: absolute;
