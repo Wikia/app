@@ -26,7 +26,7 @@
 				<?php
 		}
 		?>
-			<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" size="32" />
+			<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" size="32" onkeypress="VET_onVideoEmbedUrlKeypress(event);" />
 
 			<?php
 	}
