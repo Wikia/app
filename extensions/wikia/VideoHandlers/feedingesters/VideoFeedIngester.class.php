@@ -58,9 +58,14 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
-		//@todo look up duplicate video by provider id (in metadata). if duplicate exists, update the existing video with new
-		// title and/or metadata and/or new thumbnail
-		
+		$duplicates = WikiaFileHelper::findVideoDuplicates(static::$PROVIDER,$id);
+		if ( count($duplicates) > 0 ) {
+			// if there are duplicates use name of one of them as reference
+			// instead of generating new one
+			$name = $duplicates[0]['img_name'];
+			echo "Video already exists, using it's old name: $name";
+		}
+
 		if (!$this->validateTitle($id, $name, $msg, $debug)) {
 			return 0;
 		}
@@ -86,8 +91,8 @@ abstract class VideoFeedIngester {
 				$videoId = $name;
 			}
 			else {
-				$videoId = $id;				
-			}			
+				$videoId = $id;
+			}
 
 			$metadata['ingestedFromFeed'] = true;
 			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata);
@@ -95,7 +100,8 @@ abstract class VideoFeedIngester {
 			$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
 			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription(), false);
 			if ($result->ok) {
-				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$uploadedTitle->getFullURL()}\n\n";
+				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
+				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";
 				//print "sleeping " . self::THROTTLE_INTERVAL . " second(s)...\n";
 				//sleep(self::THROTTLE_INTERVAL);
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
@@ -114,12 +120,6 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
-		//@todo because we have the provider id check before here, we probably can remove this check
-		if(!$isDebug && $title->exists()) {
-			// don't output duplicate error message
-			return 0;
-		}	
-		
 		return 1;
 	}
 
