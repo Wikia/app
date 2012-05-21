@@ -27,7 +27,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 		replies = $.msg('wikiamobile-article-comments-replies'),
 		postComm = document.getElementsByClassName('commFrm')[0].cloneNode(true);
 
-	postComm.getElementsByClassName('commTxt')[0].setAttribute('placeholder', postReply);
+	postComm.getElementsByClassName('wkInp')[0].setAttribute('placeholder', postReply);
 
 	function clickHandler(event){
 		event.preventDefault();

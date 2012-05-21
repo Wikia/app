@@ -79,7 +79,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 			params: {
 				uselang: wgUserLanguage//ensure per-language Varnish cache
 			},
-			ttl: 86400,
+			//ttl: 86400,
 			callback: function(res){
 				styles = res.styles;
 				scripts = res.scripts.join('');

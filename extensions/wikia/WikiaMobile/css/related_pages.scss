@@ -27,14 +27,13 @@ $itemPadding: 6px;
 		a {
 			color: inherit;
 			padding: $itemPadding $itemPadding/2 $itemPadding 112px;
-			min-height: $itemHeight + $itemPadding*2;
+			height: 62px;
 
 			&.noImg {
 				background-position: $itemPadding;
 				background-repeat: no-repeat;
 				background-size: 100px 50px;
 				background-image:  url('/extensions/wikia/WikiaMobile/images/read_placeholder.png'); /* base64 */
-				min-height: $itemHeight + $itemPadding*2;
 			}
 
 			img {
