@@ -28,7 +28,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$query = $this->getVal('query', $this->getVal('search'));
-		$query = htmlentities( Sanitizer::StripAllTags ( $query ) );
+		$query = htmlentities( Sanitizer::StripAllTags ( $query ), ENT_COMPAT, 'UTF-8' );
 
 		$page = $this->getVal('page', 1);
 		$rank = $this->getVal('rank', 'default');
