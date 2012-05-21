@@ -56,7 +56,7 @@ class OasisController extends WikiaController {
 
 		$renderContentOnly = false;
 		if (!empty($this->wg->EnableRenderContentOnlyExt)) {
-			if(renderContentModuleOnly::isRenderContentOnlyEnabled()) {
+			if(renderContentOnly::isRenderContentOnlyEnabled()) {
 				$renderContentOnly = true;
 			}
 		}
