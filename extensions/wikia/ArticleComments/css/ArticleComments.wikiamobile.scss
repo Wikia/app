@@ -32,6 +32,11 @@ $commentBg: rgb(246,246,246);
 
 .commFrm{
     margin: 5px 0;
+	height: 45px;
+
+	&.open{
+		height: 100px;
+	}
 
 	&::before, &::after{
 	    content: '';
@@ -40,8 +45,9 @@ $commentBg: rgb(246,246,246);
 	}
 
 	.wkInp {
-        float: left;
-        width: 70%;
+		position: absolute;
+		left: 10px;
+		padding: 9px;
 
 		&:focus{
 			height: 96px;

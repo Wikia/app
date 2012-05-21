@@ -37,7 +37,8 @@
 }
 
 .wkInp {
-	-webkit-appereance: none;
+	-webkit-appearance: none;
+	border-radius: 0;
 	padding: 0 10px;
 	border: 1px solid $border-color;
 	background-color: $input-bg-color;
