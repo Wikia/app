@@ -191,7 +191,7 @@ blockquote {
 		&::before {
 			border-style: solid;
 			border-width: 11px;
-			content: " ";
+			content: '';
 			height: 0;
 			position: absolute;
 			width: 0;
@@ -200,7 +200,7 @@ blockquote {
 		&::after {
 			border-style: solid;
 			border-width: 10px;
-			content: " ";
+			content: '';
 			height: 0;
 			position: absolute;
 			width: 0;
