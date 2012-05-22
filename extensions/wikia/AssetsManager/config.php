@@ -171,7 +171,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
-
+		'//extensions/wikia/ContentWarning/js/ContentWarning.js',
 		// oasis specific files
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',

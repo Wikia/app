@@ -7,8 +7,8 @@
 class ContentWarningController extends WikiaController {
 
 	public function init() {
-		$this->response->addAsset( 'extensions/wikia/ContentWarning/js/ContentWarning.js' );
-		$this->response->addAsset( 'extensions/wikia/ContentWarning/css/ContentWarning.scss' );
+//		$this->response->addAsset( 'extensions/wikia/ContentWarning/js/ContentWarning.js' );
+//		$this->response->addAsset( 'extensions/wikia/ContentWarning/css/ContentWarning.scss' );
 	}
 
 	/**

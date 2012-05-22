@@ -20,7 +20,6 @@ class ChatRailController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
 	/**
 	 * Chat entry point - rendered via Ajax or pre-rendered in JS variable
 	 */
@@ -48,6 +47,12 @@ class ChatRailController extends WikiaController {
 			$chatters = array();
 			foreach($chattersIn as $i => $val) {
 				$chatters[$i] = array();
+				$cacheChatter = $this->getCachedUser($val);
+				if(!empty($cacheChatter)) {
+					$chatters[$i] = $cacheChatter;
+					continue;
+				}
+			
 				$chatters[$i]['username'] = $val;
 				$chatters[$i]['avatarUrl'] = AvatarService::getAvatarUrl($chatters[$i]['username'], ChatRailController::AVATAR_SIZE);
 
@@ -76,11 +81,25 @@ class ChatRailController extends WikiaController {
 					// contribs page
 					$chatters[$i]['contribsUrl'] = SpecialPage::getTitleFor( 'Contributions', $chatters[$i]['username'] )->getFullURL();
 				}
+				
+				$this->cacheUser($val, $chatters[$i] );
 			}
 
 			$this->chatters = $chatters;
 		}
-
 		wfProfileOut( __METHOD__ );
-	}	
+	}
+		
+	public function cacheUser($user, $data) {
+		global $wgMemc;
+		$key = wfMemcKey( 'chatavatars', $user );
+		$wgMemc->set($key, $data , 60*60);
+		return $key;
+	}
+	
+	public function getCachedUser($user) {
+		global $wgMemc;
+		$key = wfMemcKey( 'chatavatars', $user );
+		return $wgMemc->get($key, 60*60);
+	}
 }
