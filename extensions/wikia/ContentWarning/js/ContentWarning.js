@@ -24,19 +24,30 @@
 			if(typeof wgContentWarningApproved == "undefined") {
 				return false;
 			}
-		
-			if(ContentWarning.isLogedin() && wgContentWarningApproved) {
+
+			if(ContentWarning.isLogedin() && !wgContentWarningApproved) {
 				return true;
 			}
 			
 			if(!ContentWarning.isLogedin() && $.cookies.get('ContentWarningApproved') != "1" ) {
 				return true;
 			}
+			
+			return false;
 		},
 		
 		approveWarning: function(callback) {
 			if(this.isLogedin()) {
-				callback();
+				$.nirvana.sendRequest({
+					controller: 'ContentWarningController',
+					method: 'approveContentWarning',
+					data: {},
+					type: "POST",
+					format: 'json',
+					callback: function(data) {
+						callback();
+					}
+				});
 			} else {
 				var option = {
 					hoursToLive: 24,		

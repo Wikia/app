@@ -73,6 +73,6 @@ class ContentWarningController extends WikiaController {
 	 * @return type 
 	 */
 	protected function getMemKeyContentWarning( $userId ) {
-		return $this->wf->MemcKey( 'content_warning_'.$userId );
+		return $this->wf->MemcKey( 'content_warning_'.$userId, "v1" );
 	}
 }
