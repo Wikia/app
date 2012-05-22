@@ -852,58 +852,60 @@ if (window.wgEnableKruxTargeting) {
 
 if (!window.adslots) window.adslots = [];
 
-var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
+if (typeof getTreatmentGroup != 'undefined') {	// any page without getTreatmentGroup() defined doesn't have ads'
+	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
 
-if (!window.wgLoadAdDriverOnLiftiumInit && tgId != TG_AS_WRAPPERS_ARE_RENDERED) {
-	for (var i=0; i < window.adslots.length; i++) {
-		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
-	}
-}
-	
-if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
-	$(window).load(function() {
-		AdDriverDelayedLoader.load();
-	});
-}
-else {
-	
-	var adDriverFuncsToExecute = [];
-	
-	if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) {
-		adDriverFuncsToExecute.push( function () {
-			window.adDriverCanInit = true;
-			AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
-		});
-		
-		var prepareLowPrioritySlots = function() {
-			AdDriverDelayedLoader.prepareSlots(0);
-			if (!AdDriverDelayedLoader.isRunning()) {
-				AdDriverDelayedLoader.finalize();
-			}
-			else {
-				AdDriverDelayedLoader.runFinalize = true;
-			}
+	if (!window.wgLoadAdDriverOnLiftiumInit && tgId != TG_AS_WRAPPERS_ARE_RENDERED) {
+		for (var i=0; i < window.adslots.length; i++) {
+			AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(window.adslots[i][0], window.adslots[i][1], window.adslots[i][2]));
 		}
-		
-		$(document).ready(function() {
-			if (window.adDriverCanInit == false) {
-				adDriverFuncsToExecute.push(prepareLowPrioritySlots);	
-			}
-			else {
-				prepareLowPrioritySlots();
-			}
-		});
 	}
-	else {
-		adDriverFuncsToExecute.push(function() {
+
+	if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
+		$(window).load(function() {
 			AdDriverDelayedLoader.load();
 		});
 	}
+	else {
 
-	Liftium.init(function() {
-		for(var i=0; i<adDriverFuncsToExecute.length; i++) {
-			adDriverFuncsToExecute[i]();
+		var adDriverFuncsToExecute = [];
+
+		if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) {
+			adDriverFuncsToExecute.push( function () {
+				window.adDriverCanInit = true;
+				AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
+			});
+
+			var prepareLowPrioritySlots = function() {
+				AdDriverDelayedLoader.prepareSlots(0);
+				if (!AdDriverDelayedLoader.isRunning()) {
+					AdDriverDelayedLoader.finalize();
+				}
+				else {
+					AdDriverDelayedLoader.runFinalize = true;
+				}
+			}
+
+			$(document).ready(function() {
+				if (window.adDriverCanInit == false) {
+					adDriverFuncsToExecute.push(prepareLowPrioritySlots);	
+				}
+				else {
+					prepareLowPrioritySlots();
+				}
+			});
 		}
-			
-	});
+		else {
+			adDriverFuncsToExecute.push(function() {
+				AdDriverDelayedLoader.load();
+			});
+		}
+
+		Liftium.init(function() {
+			for(var i=0; i<adDriverFuncsToExecute.length; i++) {
+				adDriverFuncsToExecute[i]();
+			}
+
+		});
+	}
 }
