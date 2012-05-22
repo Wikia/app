@@ -48,6 +48,7 @@ $config['oasis_noads_extensions_js'] = array(
         '//extensions/wikia/RelatedPages/js/RelatedPages.js',
         '//extensions/wikia/CreatePage/js/CreatePage.js',
         '//extensions/wikia/ImageLightbox/ImageLightbox.js',
+        '//skins/common/jquery/jquery.md5.js',
         '//extensions/wikia/Lightbox/js/Lightbox.js',
         '//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
         '//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
