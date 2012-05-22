@@ -85,7 +85,9 @@ class WikiaSearchResult {
 
 	public function deCanonize() {
 		$this->setTitle($this->getCanonical());
-		$title = GlobalTitle::newFromText($this->getCanonical(), $this->getVar('ns'), $this->cityId);
+		$title = F::app()->wg->EnableCorporatePageExt 
+				? GlobalTitle::newFromText($this->getCanonical(), $this->getVar('ns'), $this->cityId) 
+				: Title::newFromText($this->getCanonical());
 		$this->setUrl(urldecode($title->getFullUrl())); // required to normalize processing
 		$this->setCanonical(null);
 		return $this;
