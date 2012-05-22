@@ -119,10 +119,15 @@ $sprite-hover: '_white';
 		top: -99999999px;
 		left: -99999999px;
 	}
+	.toolbar {
+		margin-bottom: 7px;
+	}
 	.icon {
-		width: 28px;
+		display: block;
 		height: 20px;
+		margin-right: 18px;
 		padding: 0;
+		width: 28px;
 		&:after {
 			@include sprite-Lightbox-base;
 			content: '';
