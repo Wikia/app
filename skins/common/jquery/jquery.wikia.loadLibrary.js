@@ -87,7 +87,9 @@ $.loadYUI = (function() {
 
 // jquery.wikia.modal.js in now a part of AssetsManager package
 $.loadModalJS = function(callback) {
-	callback && callback();
+	if (typeof callback === 'function') {
+		callback();
+	}
 };
 
 // load various jQuery libraries (if not yet loaded)
@@ -97,7 +99,7 @@ $.loadJQueryUI = function(callback) {
 		typeof jQuery.ui,
 		callback
 	);
-}
+};
 
 $.loadJQueryAutocomplete = function(callback) {
 	return $.loadLibrary('jQuery Autocomplete',
