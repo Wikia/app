@@ -25,7 +25,6 @@ $config['oasis_ads_js'] = array(
 		// tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
 
 		// ads
@@ -234,7 +233,6 @@ $config['wikiaphone_js'] = array(
 		'//extensions/wikia/AdEngine/AdConfig.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/wikiaphone/main.js'
 	)
 );
@@ -289,7 +287,6 @@ $config['wikiamobile_js_body'] = array(
 		//tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/track.js',
@@ -388,7 +385,6 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 
 		// UserLogin
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
@@ -550,7 +546,6 @@ $config['theme_designer_js'] = array(
 
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
 		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
 		'//skins/common/jquery/jquery.wikia.tooltip.js',
@@ -577,7 +572,6 @@ $config['photopop'] = array(
 		'//extensions/wikia/PhotoPop/shared/lib/require.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTrackerQueue.js'
 	)
 );
 
