@@ -233,14 +233,15 @@ var Lightbox = {
 	makeLightbox: function() {
 		Lightbox.assetsLoaded = true;
 		$.nirvana.sendRequest({
-			controller: 'Lightbox',
-			method: 'lightboxModalContent',
-			type: 'POST',	/* TODO (hyun) - might change to get */
+			controller:	'Lightbox',
+			method:		'lightboxModalContent',
+			type:		'GET',
 			format: 'html',
 			data: {
 				mediaTitle: Lightbox.current.title,
 				carouselType: Lightbox.current.carouselType,
-				articleTitle: wgTitle
+				articleTitle: wgTitle,
+				cb: Lightbox.getCacheId() /* not really required, just for caching */
 			},
 			callback: function(html) {
 				// restore inline videos to default state, because flash players overlaps with modal
@@ -712,6 +713,30 @@ var Lightbox = {
 			beforeMove: beforeMove,
 			afterMove: afterMove
 		});
+	},
+
+	getCacheId: function() {
+		switch(Lightbox.current.carouselType) {
+			case "articleMedia":
+				return wgCurRevisionId;
+				break;
+			case "relatedVideo":
+				var cacheId = 0;
+				$('.RelatedVideos a.video-thumbnail').each( function() {
+					cacheId = $.md5(cacheId + $(this).attr('data-video-name'));
+				});
+				return cacheId;
+				break;
+			case "latestPhotos":
+				var cacheId = 0;
+				$('.LatestPhotosModule a.image').each( function() {
+					cacheId = $.md5(cacheId + $(this).attr('data-ref'));
+				});
+				return cacheId;
+				break;
+			default: // fallback, should not happen
+				return wgCurRevisionId;
+		}
 	}
 
 };
@@ -719,3 +744,4 @@ var Lightbox = {
 $(function() {
 	Lightbox.init();
 });
+
