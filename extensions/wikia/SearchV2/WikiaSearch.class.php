@@ -264,6 +264,17 @@ class WikiaSearch extends WikiaObject {
 
 		$html = $this->wg->Out->getHTML();
 
+		if (($file = $this->wf->findFile( $this->wg->Title->getText() ))
+			&& WikiaFileHelper::isVideoFile( $file )) {
+			$metadata = $file->getMetadata();
+			$metadata = unserialize( $metadata );
+
+			foreach (array('description', 'movieTitleAndYear', 'videoTitle', 'keywords') as $datum) {
+				$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
+			}
+
+		}
+
 		// clear output buffer in case we want get more pages
 		$this->wg->Out->clearHTML();
 
