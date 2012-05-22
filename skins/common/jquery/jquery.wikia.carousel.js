@@ -60,7 +60,8 @@
 			enable_next: false,
 			enable_previous: false,
 			currIndex: 0, // index of first li shown in viewport
-			left: 0
+			left: 0,
+			lazyLoadedAll: false
 		};
 
 		function nextImage() {
@@ -111,19 +112,6 @@
 			return false;
 		}
 		
-		function doMove(left) {
-			states.left = left;
-
-			beforeMove();
-
-			dom.carousel.animate({
-				left: left
-			}, options.transitionSpeed, function() {
-				states.browsing = false;
-				afterMove();
-			});		
-		}
-
 		function moveToIndex(idx) {
 			// check if index is visible
 			if(!isVisible(idx)) {
@@ -142,14 +130,35 @@
 			
 		}
 
+		function doMove(left) {
+			states.left = left;
+
+			if(typeof options.beforeMove == 'function') {
+				options.beforeMove();
+			}
+
+			dom.carousel.animate({
+				left: left
+			}, options.transitionSpeed, function() {
+				states.browsing = false;
+				afterMove();
+			});		
+		}
+
+		function afterMove() {
+			updateArrows();
+			lazyLoadImages(['visible', 'next', 'previous']);
+			if(typeof options.trackProgress == 'function') {
+				trackProgress(options.trackProgress);
+			}
+			if(typeof options.afterMove == 'function') {
+				options.afterMove();
+			}
+		}
+		
 		function isVisible(idx) {
 			// returns true if item at given index is inside viewport
 			return idx >= states.currIndex && idx < (states.currIndex + options.itemsShown);
-		}
-
-		function getVisible() {
-			// returns jQuery object of visible items inside viewport
-			return dom.items.slice(states.currIndex, states.currIndex + options.itemsShown);
 		}
 
 		function setAsActive(idx) {
@@ -160,23 +169,6 @@
 			moveToIndex(idx);
 		}
 
-		function beforeMove() {
-			if(typeof options.beforeMove == 'function') {
-				options.beforeMove();
-			}
-		}
-		
-		function afterMove() {
-			updateArrows();
-			if(typeof options.trackProgress == 'function') {
-				trackProgress(options.trackProgress);
-			}
-			if(typeof options.afterMove == 'function') {
-				options.afterMove();
-			}
-			
-		}
-		
 		function trackProgress(callback) {
 			// get values needed
 			var total = dom.items.length,
@@ -220,22 +212,56 @@
 			}
 		}
 
-		// on hover, load any images that are invisible and that haven't bee loaded yet
-		function lazyLoadImages(limit) {
-			var images = dom.carousel.find('img').filter('[data-src]');
-			$().log('lazy loading rest of images', 'LatestPhotos');
-
-			var count = 0;
-			images.each(function() {
-				count ++;
-				if (count > limit) { // exit the loop for init image loading.
-					return false;
+		// get jQuery object of specified image thumbnail items
+		var getImages = {
+			visible: function() {
+				var idx1 = states.currIndex,
+					idx2 = idx1 + options.itemsShown;
+	
+				return dom.items.slice(idx1, idx2);			
+			},
+			next: function() {
+				var idx1 = states.currIndex + options.itemsShown,
+					idx2 = idx1 + options.itemsShown;
+					
+				return dom.items.slice(idx1, idx2);			
+			},
+			previous: function() {
+				var idx1 = states.currIndex - options.itemsShown,
+					idx2 = idx1 + options.itemsShown;
+				
+				if(idx1 < 0) {
+					idx1 = 0;
 				}
+					
+				return dom.items.slice(idx1, idx2);			
+			}
+		}
+
+		// ranges is an array of ranges, ex: [visible, next, previous]
+		function lazyLoadImages(positions) {
+			if(states.lazyLoadedAll) {
+				return;
+			}
+			var images = $();
+			
+			// get jQuery object of images to lazy load based on specified types
+			for(i = 0; i < positions.length; i++) {
+				var addImages = getImages[positions[i]]();
+				images = images.add(addImages);
+			}
+			
+			images = images.find('img[data-src]');
+			images.each(function() {
 				var image = $(this);
 				image.
-					attr('src', image.attr('data-src')).
+					attr('src', image.data('src')).
 					removeAttr('data-src');
 			});
+			
+			if(!dom.items.find('img[data-src]').length) {
+				states.lazyLoadedAll = true;
+			}
 		}
 
 		// run this once on init
@@ -308,10 +334,7 @@
 				});
 			}
 
-			// on mouseover load the rest of images
-			dom.wrapper.parent().one('mouseover', function() {
-				lazyLoadImages('rest');
-			});
+			lazyLoadImages(['visible', 'next', 'previous']);
 
 		});
 	}
