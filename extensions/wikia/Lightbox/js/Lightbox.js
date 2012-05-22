@@ -694,11 +694,11 @@ var Lightbox = {
 			$('#LightboxCarouselProgress').html(html);
 		}
 		
-		var preScroll = function() {
+		var beforeMove = function() {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').hide();
 		}
 		
-		var postScroll = function() {
+		var afterMove = function() {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').show();
 		}
 
@@ -709,8 +709,8 @@ var Lightbox = {
 			itemClick: itemClick,
 			activeIndex: Lightbox.current.index,
 			trackProgress: trackProgressCallback,
-			preScroll: preScroll,
-			postScroll: postScroll
+			beforeMove: beforeMove,
+			afterMove: afterMove
 		});
 	}
 

@@ -32,8 +32,8 @@
 			attachBlindImages: false,
 			itemClick: false,
 			trackProgress: false, // pass in function for inserting progress data into dom. 
-			preScroll: false, // execute before moving the caoursel
-			postScroll: false // execute after moving the carousel
+			beforeMove: false, // execute before moving the caoursel
+			afterMove: false // execute after moving the carousel
 		};
 
 		options = $.extend(defaults, options);
@@ -83,19 +83,9 @@
 					// update current index
 					states.currIndex = states.currIndex + options.itemsShown;
 				}
-
-				states.left = left;
-
-				if(typeof options.preScroll == 'function') {
-					options.preScroll();
-				}
 				
-				dom.carousel.animate({
-					left: left
-				}, options.transitionSpeed, function() {
-					states.browsing = false;
-					afterMove();
-				});
+				doMove(left);
+
 			}
 			return false;
 
@@ -114,21 +104,24 @@
 				} else {
 					states.currIndex = states.currIndex - options.itemsShown;
 				}
-
-				states.left = left;
-
-				if(typeof options.preScroll == 'function') {
-					options.preScroll();
-				}
 				
-				dom.carousel.animate({
-					left:  left
-				}, options.transitionSpeed, function() {
-					states.browsing = false;
-					afterMove();
-				});
+				doMove(left);
+
 			}
 			return false;
+		}
+		
+		function doMove(left) {
+			states.left = left;
+
+			beforeMove();
+
+			dom.carousel.animate({
+				left: left
+			}, options.transitionSpeed, function() {
+				states.browsing = false;
+				afterMove();
+			});		
 		}
 
 		function moveToIndex(idx) {
@@ -139,15 +132,14 @@
 					idx = dom.items.length - options.itemsShown;
 				}
 
-				states.currIndex = idx;
-
 				var left = constants.itemWidth * idx * -1;
-
-				// Move carouself to currIndex
-				dom.carousel.animate({'left': left});
+				doMove(left);
+				
+			} else {
+				afterMove();
 			}
-			// Activate/deactivate left/right arrows
-			afterMove();
+			states.currIndex = idx;
+			
 		}
 
 		function isVisible(idx) {
@@ -168,13 +160,19 @@
 			moveToIndex(idx);
 		}
 
+		function beforeMove() {
+			if(typeof options.beforeMove == 'function') {
+				options.beforeMove();
+			}
+		}
+		
 		function afterMove() {
 			updateArrows();
 			if(typeof options.trackProgress == 'function') {
 				trackProgress(options.trackProgress);
 			}
-			if(typeof options.postScroll == 'function') {
-				options.postScroll();
+			if(typeof options.afterMove == 'function') {
+				options.afterMove();
 			}
 			
 		}
@@ -184,7 +182,7 @@
 			var total = dom.items.length,
 				idx1 = states.currIndex + 1, // make index base 1
 				idx2 = states.currIndex + options.itemsShown;
-			
+				
 			// callback will handle inserting values into the dom
 			callback(idx1, idx2, total);
 		}
@@ -200,12 +198,13 @@
 
 			// get css 'left' property without 'px'
 			var left = parseInt(dom.carousel.css('left'));
+			
 
 			// if css 'left' is undefined, set it to 0
 			if(isNaN(left)) {
 				left = 0;
 			}
-
+			
 			if(left == constants.minLeft) {
 				// disable right arrow
 				disableNext();
