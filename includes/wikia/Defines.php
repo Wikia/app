@@ -44,3 +44,5 @@ define("WPP_WALL_ARCHIVE", 11);
 define("WPP_WALL_ACTIONREASON", 12);
 define("WPP_WALL_REMOVE", 13);
 define("WPP_WALL_POSTEDBYBOT", 14);
+
+define("WPP_CONTENT_WARNING", 15);
