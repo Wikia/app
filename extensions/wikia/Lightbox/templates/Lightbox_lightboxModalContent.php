@@ -57,7 +57,7 @@
  						{{#thumbs}}
  							<li>
  								{{{playButtonSpan}}}
- 								<img src="{{thumbUrl}}" />
+ 								<img src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}">
  							</li>
  						{{/thumbs}}
  					</ul>
