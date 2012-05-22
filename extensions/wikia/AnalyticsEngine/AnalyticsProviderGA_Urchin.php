@@ -56,6 +56,15 @@ SCRIPT2;
 
   _gaq.push(['_trackPageview']);
 
+  _gaq.push(['Ads._setAccount', 'UA-17475676-7']);
+  _gaq.push(['Ads._setSampleRate', '1']);
+
+  _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
+  _gaq.push(['Ads._setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
+  _gaq.push(['Ads._setCustomVar', 3, 'AB',   'unknown', 3]);
+  _gaq.push(['Ads._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
+  _gaq.push(['Ads._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
+
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
