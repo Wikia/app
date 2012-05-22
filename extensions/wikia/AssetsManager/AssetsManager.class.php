@@ -334,9 +334,11 @@ class AssetsManager {
 				unset($params['minify']);
 			}
 
-			// check for an #external_ URL being the first item in the package (BugId:9522)
-			if (isset($assets[0]) && substr($assets[0], 0, 10) == '#external_') {
-				$URLs[] = substr($assets[0], 10);
+			// check for an #external_ URL being in the package (BugId:9522)
+			foreach($assets as $asset) {
+				if (substr($asset, 0, 10) == '#external_') {
+					$URLs[] = substr($asset, 10);
+				}
 			}
 
 			// add info about noexternals mode to AssetsManager URL (BugId:28143)
