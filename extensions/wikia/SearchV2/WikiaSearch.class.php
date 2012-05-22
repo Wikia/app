@@ -416,13 +416,13 @@ class WikiaSearch extends WikiaObject {
 	        wfProfileIn(__METHOD__);
 	        # going to need an "is_video" field
 	        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) '
-		              . 'AND ns:6 AND -title:(jpg gif png jpeg svg ico)';
+		              . 'AND ns:6 AND -title:(jpg gif png jpeg svg ico ogg)';
 
 		$query = sprintf('wid:%d', $this->wg->cityId);
 		if (isset($params['pageId'])) {
 		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
 		} else {
-		  $query .= ' AND is_main_page:1';
+		  $query .= ' AND iscontent:true';
 		}
 		wfProfileOut(__METHOD__);
 	        return $this->getSimilarPages($query, $params);
