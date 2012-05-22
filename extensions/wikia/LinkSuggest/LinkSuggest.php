@@ -108,23 +108,31 @@ function wfLinkSuggestGetTextUpperBound( $text ) {
 }
 
 function getLinkSuggest() {
-	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces;
+	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces, $wgMemc;
 	wfProfileIn(__METHOD__);
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
 	$query = urldecode( trim( $wgRequest->getText('query') ) );
 	$query = str_replace(' ', '_', $query);
 
+	$key = wfSharedMemcKey(__METHOD__, $query.$wgRequest->getText('format'));
+
 	if (strlen($query) < 3) {
+		$out = $wgRequest->getText('format') == 'json' 
+			 ? Wikia::json_encode(array('suggestions'=>array(),'redirects'=>array()))
+			 : '';
+	} else if ($cached = $wgMemc->get($key)) {
+		$out = $cached;
+	}
+
+	if (isset($out)) {
 		// enforce minimum character limit on server side		
 		if ($wgRequest->getText('format') == 'json') {
-			$out = Wikia::json_encode(array('suggestions'=>array(),'redirects'=>array()));
 			$ar = new AjaxResponse($out);
 			$ar->setCacheDuration(60 * 60); // cache results for one hour
 			$ar->setContentType('application/json; charset=utf-8');
 	   	}
 		else {
-			$out = '';
 			$ar = new AjaxResponse($out);
 			$ar->setCacheDuration(60 * 60);
 			$ar->setContentType('text/plain; charset=utf-8');
@@ -303,6 +311,9 @@ function getLinkSuggest() {
 
 		$out = implode("\n", $results);
 	}
+
+	// 15 minutes times four (one hour, but easier to slice and dice)
+	$wgMemc->set($key, $out, 4 * 900); 
 
 	$ar = new AjaxResponse($out);
 	$ar->setCacheDuration(60 * 60); // cache results for one hour
