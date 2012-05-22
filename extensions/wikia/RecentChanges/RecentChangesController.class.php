@@ -1,14 +1,10 @@
 <?php
 
 /**
- * Recent Changes Special Page
+ * Recent Changes Controller
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
-class RecentChangesSpecialController extends WikiaSpecialPageController {
-
-	public function __construct() {
-		parent::__construct('RecentChanges', '', false);
-	}
+class RecentChangesController extends WikiaController {
 
 	public function init() {
 		$this->response->addAsset('extensions/wikia/RecentChanges/js/RecentChanges.js');

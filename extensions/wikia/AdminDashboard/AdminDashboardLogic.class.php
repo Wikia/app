@@ -82,7 +82,6 @@ class AdminDashboardLogic {
 				"PhotoPopSetup",
 				"Places",
 				"Preferences",
-				"RecentChanges",
 				"ScavengerHunt",
 				"Search",
 				"WikiaSearch",
