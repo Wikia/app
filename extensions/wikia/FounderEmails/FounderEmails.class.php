@@ -171,7 +171,7 @@ class FounderEmails {
 			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
 				'type' => 'info',
 				'label' => '',
-				'help' => wfMsg('wikiadoption-pref-label'.$prefVersion, $wgSitename),
+				'help' => wfMsg('wikiadoption-pref-label', $wgSitename),
 				'section' => $section,
 			);
 			$defaultPreferences["founderemails-joins-$wgCityId"] = array(
