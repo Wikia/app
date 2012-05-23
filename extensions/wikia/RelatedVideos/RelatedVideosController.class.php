@@ -26,15 +26,9 @@ class RelatedVideosController extends WikiaController {
 		if( Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
-		$relatedVideos = RelatedVideos::getInstance();
-		$videos = $relatedVideos->get(
-			$this->app->wg->title->getArticleId(),
-			RelatedVideos::MAX_RELATEDVIDEOS
-		);
-
-		if ( !is_array( $videos ) ){ 
-			$videos = array();
-		}
+		 
+		$videos = array();
+		
 		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
 		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( F::app()->wg->title );
 		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();

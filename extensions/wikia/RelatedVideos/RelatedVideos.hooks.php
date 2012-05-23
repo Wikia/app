@@ -40,11 +40,6 @@ class RelatedVideosHookHandler {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-
-	public static function onOutputPageMakeCategoryLinks( $outputPage, $categories, $categoryLinks ) {
-		RelatedVideos::getInstance()->setCategories( $categories );
-		return true;
-	}
 	
 	 /**
 	 * Purge RelatedVideos namespace article after an edit

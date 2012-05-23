@@ -275,36 +275,6 @@ class RelatedVideosNamespaceData {
 			$otherList = self::WHITELIST_MARKER;
 		}
 
-		if ($list == self::WHITELIST_MARKER) {
-			// check Related Pages results for duplicate
-			// initialize categories of RelatedPages object
-			$mainNsTitle = Title::newFromID($mainNsArticleId);
-			$categoryMap = $mainNsTitle->getParentCategories();
-			$startIdx = strlen('Category:');
-			$categories = array();
-			foreach ($categoryMap as $categoryTitle=>$articleTitle) {
-				$shortCategoryTitle = substr($categoryTitle, $startIdx);
-				$categories[$shortCategoryTitle] = $articleTitle;
-			}
-			RelatedVideos::getInstance()->setCategories($categories);
-
-			// get related videos
-			$relatedVideos = RelatedVideos::getInstance()->get(
-				$mainNsArticleId,
-				RelatedVideos::MAX_RELATEDVIDEOS
-				);
-
-			// check for duplicate
-			foreach ($relatedVideos as $dateId=>$rvData) {
-				foreach ($entries as $newEntry) {
-					if ($newEntry['title'] == $rvData['title']) {
-						wfProfileOut( __METHOD__ );
-						return wfMsg('related-videos-add-video-error-duplicate');						
-					}
-				}
-			}
-		}
-
 		// check if video is already on any list ( to get NEW Video data and user name )
 		foreach( array( self::WHITELIST_MARKER, self::BLACKLIST_MARKER ) as $sList ) {
 			if (!empty($this->mData['lists'][$sList])) {

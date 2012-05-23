@@ -2,6 +2,7 @@
 /**
  * @var WikiaApp
  */
+
 $app = F::app();
 $dir = dirname( __FILE__ );
 if ( empty( $wgWikiaVideoRepoCategoryPath ) ){
@@ -11,7 +12,6 @@ if ( empty( $wgWikiaVideoRepoCategoryPath ) ){
 /**
  * classes
  */
-$app->registerClass('RelatedVideos', $dir . '/RelatedVideos.class.php');
 $app->registerClass('RelatedVideosHookHandler', $dir . '/RelatedVideos.hooks.php');
 $app->registerClass('RelatedVideosElement', $dir . '/models/RelatedVideos.model.php');
 $app->registerClass('RelatedVideosData', $dir . '/RelatedVideosData.class.php');
@@ -30,9 +30,6 @@ $app->registerClass('RelatedHubsVideosController', $dir . '/RelatedHubsVideosCon
  * hooks
  */
 if ( empty( $wgRelatedVideosPartialRelease ) ){
-	//$wgHooks['OutputPageBeforeHTML'][] = 'RelatedVideosHookHandler::onOutputPageBeforeHTML';
-	// $app->registerHook('OutputPageMakeCategoryLinks', 'RelatedVideosController', 'onOutputPageMakeCategoryLinks');
-	$app->registerHook('OutputPageMakeCategoryLinks', 'RelatedVideosHookHandler', 'onOutputPageMakeCategoryLinks');
 	$app->registerHook('BeforePageDisplay', 'RelatedVideosHookHandler', 'onBeforePageDisplay' );
 
 	define('RELATEDVIDEOS_POSITION', 'RELATEDVIDEOS_POSITION');
