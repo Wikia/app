@@ -11,6 +11,8 @@ class AdProviderLiftDNA implements iAdProvider {
 	}
 
 	public function getSetupHtml() {
+		wfProfileIn(__METHOD__);
+
 		static $called = false;
 		if ($called) {
 			return false;
@@ -31,6 +33,8 @@ class AdProviderLiftDNA implements iAdProvider {
 
 		$out .= 'LD_GetBids();
 				</script>';
+
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}

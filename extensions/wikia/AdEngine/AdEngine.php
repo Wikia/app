@@ -79,6 +79,8 @@ interface iAdProvider {
 
 abstract class AdProviderIframeFiller {
         public function getIframeFillHtml($slotname, $slot) {
+		wfProfileIn(__METHOD__);
+		
                 global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
                 $function_name = AdEngine::fillIframeFunctionPrefix . $slotname;
@@ -87,6 +89,8 @@ abstract class AdProviderIframeFiller {
                 	$out .= "\n".'<script type="text/javascript">' . "$function_name();" . '</script>' . "\n";
                 }
 
+		wfProfileOut(__METHOD__);
+		
                 return $out;
         }
 
@@ -138,6 +142,8 @@ class AdEngine {
 	private $adProviders = array();
 
 	protected function __construct($slots = null) {
+		wfProfileIn(__METHOD__);
+		
 		if (!empty($slots)){
 			$this->slots=$slots;
 		} else {
@@ -156,22 +162,32 @@ class AdEngine {
 		if(!empty($wgNoExternals)){
 			$wgShowAds = false;
 		}
+		
+		wfProfileOut(__METHOD__);
 	}
 
 	public static function getInstance($slots = null) {
+		wfProfileIn(__METHOD__);
+		
 		if(self::$instance == false) {
 			self::$instance = new AdEngine($slots);
 		}
+		
+		wfProfileOut(__METHOD__);
+		
 		return self::$instance;
 	}
 
 	// Load up all the providers. For each one, set up
 
 	public function getSetupHtml(){
+		wfProfileIn(__METHOD__);
+		
 		global $wgExtensionsPath;
 
 		static $called = false;
 		if ($called) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 		$called = true;
@@ -194,10 +210,14 @@ class AdEngine {
 
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
+		wfProfileOut(__METHOD__);
+		
 		return $out;
 	}
 
 	public function loadConfig() {
+		wfProfileIn(__METHOD__);
+		
 		global $wgAdSlots, $wgUser;
 
 		$skin_name = null;
@@ -254,16 +274,23 @@ class AdEngine {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
+		
 		return true;
 	}
 
 
 	function getProviderid($provider){
+		wfProfileIn(__METHOD__);
+		
 		foreach($this->providers as $id => $p) {
 			if (strtolower($provider) == strtolower($p) ){
 				return $id;
 			}
 		}
+		
+		wfProfileOut(__METHOD__);
+		
 		// default provider: Null
 		return '-1';
 	}
@@ -271,6 +298,8 @@ class AdEngine {
 
 	/* Allow Wiki Factory variables to override what is in the slots */
 	function applyWikiOverrides(){
+		wfProfileIn(__METHOD__);
+		
 		foreach($this->slots as $slotname => $slot) {
 			$name = 'wgAdslot_' . $slotname;
 			if (!empty($GLOBALS[$name])){
@@ -281,6 +310,8 @@ class AdEngine {
 				$this->slots[$slotname]['enabled'] = "Yes";
 			}
 		}
+		
+		wfProfileOut(__METHOD__);
 	}
 
 
@@ -292,13 +323,17 @@ class AdEngine {
 
 	/* Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer. */
 	public function getCachedCategory(){
+		wfProfileIn(__METHOD__);
+		
 		static $cat;
 		if (! empty($cat)){
+			wfProfileOut(__METHOD__);
 			// This function already called
 			return $cat;
 		}
 
 		if (!empty($_GET['forceCategory'])){
+			wfProfileOut(__METHOD__);
 			// Passed in through the url, or hard coded on a test_page. ;-)
 			return $_GET['forceCategory'];
 		}
@@ -308,6 +343,7 @@ class AdEngine {
 
 		$cat = $wgMemc->get($cacheKey);
 		if (!empty($cat) && $wgRequest->getVal('action') != 'purge'){
+			wfProfileOut(__METHOD__);
 			return $cat;
 		}
 
@@ -319,6 +355,9 @@ class AdEngine {
 		);
 
 		$wgMemc->set($cacheKey, $cat, self::cacheTimeout);
+		
+		wfProfileOut(__METHOD__);
+		
 		return $cat;
 	}
 
@@ -347,6 +386,8 @@ class AdEngine {
 
 	// Logic for hiding/displaying ads should be here, not in the skin.
 	public function getAdProvider($slotname) {
+		wfProfileIn(__METHOD__);
+		
 		global $wgShowAds, $wgUser, $wgNoExternals;
 
 
@@ -358,6 +399,7 @@ class AdEngine {
 		 */
 
 		if (!empty($this->adProviders[$slotname])) {
+			wfProfileOut(__METHOD__);
 			return $this->adProviders[$slotname];
 		}
 
@@ -402,6 +444,8 @@ class AdEngine {
 			$this->adProviders[$slotname] = new AdProviderNull('Logic error in ' . __METHOD__, true);
 		}
 
+		wfProfileOut(__METHOD__);
+		
 		return $this->adProviders[$slotname];
 	}
 
@@ -434,30 +478,42 @@ class AdEngine {
  	 * Do the best you can to return a height/width
  	 */
         public static function getHeightWidthFromSize($size){
+		wfProfileIn(__METHOD__);
+		
                 if (preg_match('/^([0-9]{2,4})x([0-9]{2,4})/', $size, $matches)){
+			wfProfileOut(__METHOD__);
                         return array('width'=>$matches[1], 'height'=>$matches[2]);
                 } else if (preg_match('/^([0-9]{2,4})x\*/', $size, $matches)){
+			wfProfileOut(__METHOD__);
                         return array('width'=>$matches[1], 'height'=>'*');
                 } else {
+			wfProfileOut(__METHOD__);
                         return false;
                 }
         }
 
 	public function getPlaceHolderIframe($slotname, $reserveSpace=true){
+		wfProfileIn(__METHOD__);
+		
                 global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
 		$html = null;
 		wfRunHooks("fillInAdPlaceholder", array("iframe", $slotname, &$this, &$html));
-		if (!empty($html)) return $html;
+		if (!empty($html)) {
+			wfProfileOut(__METHOD__);
+			return $html;
+		}
 
 		$AdProvider = $this->getAdProvider($slotname);
 		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
 		if ($AdProvider instanceof AdProviderNull){
+			wfProfileOut(__METHOD__);
 			return "<!-- Null Ad from " . __METHOD__ . "-->" . $AdProvider->getAd($slotname, array());
 		}
 
 		// FIXME make it more general...
 		if ($AdProvider instanceof AdProviderGAM){
+			wfProfileOut(__METHOD__);
 			return "<!-- Fall back to getAd from " . __METHOD__ . "-->" . $this->getAd($slotname);
 		}
 
@@ -508,6 +564,8 @@ class AdEngine {
 			$style = ' style="display:none;"';
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return '<div id="' . htmlspecialchars($slotname) . '" class="wikia-ad noprint"'.$style.'>' .
 			'<div id="' . htmlspecialchars($slotdiv) . '">' .
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' .
@@ -520,13 +578,19 @@ class AdEngine {
 	   to be loaded at the bottom of the page with an absolute position.
 	   Keep track fo the placeholders for future refence */
 	public function getPlaceHolderDiv($slotname, $reserveSpace=true){
+		wfProfileIn(__METHOD__);
+
 		$html = null;
 		wfRunHooks("fillInAdPlaceholder", array("div", $slotname, &$this, &$html));
-		if (!empty($html)) return $html;
+		if (!empty($html)) {
+			wfProfileOut(__METHOD__);
+			return $html;
+		}
 
 		$AdProvider = $this->getAdProvider($slotname);
 		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
 		if ($AdProvider instanceof AdProviderNull){
+			wfProfileOut(__METHOD__);
 			return "<div id=\"$slotname\" style=\"display:none\">" . $AdProvider->getAd($slotname, array()) . "</div>";
 		}
 
@@ -549,11 +613,16 @@ class AdEngine {
 		// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
 		$AdProvider->addSlotToCall($slotname);
 
+		wfProfileOut(__METHOD__);
+
 		return "<div id=\"$slotname\"$style></div>";
 	}
 
 	public function getDelayedLoadingCode(){
+		wfProfileIn(__METHOD__);
+
 		if (empty($this->placeholders)){
+			wfProfileOut(__METHOD__);
 			// No delayed ads on this page
 			return '<!-- No placeholders called for ' . __METHOD__ . " -->\n";
 		}
@@ -593,12 +662,16 @@ class AdEngine {
 				'</script>' . "\n";
 		}
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
 
 	public function getDelayedIframeLoadingCode(){
+		wfProfileIn(__METHOD__);
+		
 		if (empty($this->placeholders)){
+			wfProfileOut(__METHOD__);
 			// No delayed ads on this page
 			return '<!-- No iframe placeholders called for ' . __METHOD__ . " -->\n";
 		}
@@ -627,6 +700,7 @@ class AdEngine {
 		}
 
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
@@ -666,6 +740,8 @@ class AdEngine {
 
 	/* Either 'delayed' or 'inline' */
 	public function setLoadType($loadType){
+		wfProfileIn(__METHOD__);
+
 		$this->loadType = $loadType;
 		if ($loadType == 'inline'){
 			// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
@@ -674,15 +750,20 @@ class AdEngine {
 				$AdProvider->addSlotToCall($slotname);
 			}
 		}
+
+		wfProfileOut(__METHOD__);		
 	}
 
 	public function getSlotNamesForProvider($provider_id){
+		wfProfileIn(__METHOD__);
+		
 		$out = array();
 		foreach($this->slots as $slotname => $data ){
 			if ($data['enabled'] == 'Yes' && $data['provider_id'] == $provider_id){
 				$out [] = $slotname;
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 

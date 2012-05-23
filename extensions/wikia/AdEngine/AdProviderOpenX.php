@@ -105,16 +105,20 @@ class AdProviderOpenX extends AdProviderIframeFiller implements iAdProvider {
         public function getBatchCallHtml(){ return false; }
 
 	public function getAd($slotname, $slot, $params = null) {
+		wfProfileIn(__METHOD__);
+
 		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad, $wgEnableOpenXSPC;
 
 		$zoneId = $this->getZoneId($slotname);
 
 		if(empty($zoneId)){
 			$nullAd = new AdProviderNull("Invalid slotname, no zoneid for $slotname in " . __CLASS__);
+			wfProfileOut(__METHOD__);
 			return $nullAd->getAd($slotname, $slot);
 		}
 
 		if (!empty(self::$adSlotInLazyLoadGroup[$slotname])) {
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -150,6 +154,8 @@ EOT;
 </script>
 EOT;
 
+		wfProfileOut(__METHOD__);
+
 		return $adtag;
 
 	}
@@ -158,14 +164,18 @@ EOT;
 	 * call to this method must precede calls to getAd()
 	 */
 	public function getLazyLoadableAdGroup($adGroupName, Array $slotnames, $params=null) {
+		wfProfileIn(__METHOD__);
+
 		global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
 		if (empty($wgEnableAdsLazyLoad) || empty($this->enable_lazyload)) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
 		$n_slotnames = sizeof($slotnames);
 		if (!$n_slotnames) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
@@ -173,9 +183,11 @@ EOT;
 		foreach ($slotnames as $slotname) {
 			$zoneId = $this->getZoneId($slotname);
 			if(empty($zoneId)){
+				wfProfileOut(__METHOD__);
 				return '';
 			}
 			elseif (empty($wgAdslotsLazyLoad[$slotname])) {
+				wfProfileOut(__METHOD__);
 				return '';
 			}
 			else {
@@ -204,10 +216,14 @@ EOT;
 			self::$adSlotInLazyLoadGroup[$slotname] = true;
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $adtag;
 	}
 
 	private function getAdUrlScripts($slotnames, $zoneIds, $params) {
+		wfProfileIn(__METHOD__);
+	
 		$n_slotnames = sizeof($slotnames);
 		$adtag = "";
 		for ($i=0; $i<$n_slotnames; $i++) {
@@ -217,10 +233,14 @@ EOT;
 			$adtag .= $adUrlScript;
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $adtag;
 	}
 
 	private function getFillElemFunctionDefinition($functionName, Array $slotnames) {
+		wfProfileIn(__METHOD__);
+
 		// This function addresses two cases: OpenX SPC is fully loaded before LazyLoadAds.js
 		// displays this Spotlight, and OpenXSPC is not fully loaded yet.
 
@@ -267,6 +287,8 @@ EOT;
 		window.spcCallbacks.push('{$functionName}_callback');
 	}
 EOT;
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -279,14 +301,18 @@ EOT;
 	}
 
 	protected function getAdUrlScript($slotname, $params=null, $is_iframe=false) {
+		wfProfileIn(__METHOD__);
+		
 		$zoneId = $this->getZoneId($slotname);
 
 		if(empty($zoneId)){
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
 		global $wgEnableOpenXSPC;
 		if ( F::app()->checkSkin( 'oasis' ) && $wgEnableOpenXSPC && substr($slotname, 0, 10) == 'SPOTLIGHT_') {	// only for Oasis spotlights (e.g. slotname = "SPOTLIGHT_ ...")
+			wfProfileOut(__METHOD__);
 			// don't need a url. will show ad using local Javascript
 			return;
 		}
@@ -306,10 +332,14 @@ EOT;
 	var base_url_{$slotname} = base_url;
 EOT;
 
+		wfProfileOut(__METHOD__);
+
 		return $adUrlScript;
 	}
 
 	public static function getOpenXSPCUrlScript($affiliate_id=self::WIKIA_AFFILIATE_ID) {
+		wfProfileIn(__METHOD__);
+
 		$base_url = '/__spotlights/spcjs.php';
 
 		$url_script = self::getUrlScript($base_url, '', '', $affiliate_id);
@@ -318,10 +348,14 @@ EOT;
 	var openxspc_base_url = base_url;
 EOT;
 
+		wfProfileOut(__METHOD__);
+
 		return $openxspc_url_script;
 	}
 
 	protected static function getUrlScript($base_url, $slotname='', $zone_id='', $affiliate_id='', $params=null) {
+		wfProfileIn(__METHOD__);
+
 		$cat=AdEngine::getCachedCategory();
 
 		$additional_params = "";
@@ -335,10 +369,14 @@ EOT;
 	base_url = AdProviderOpenX.getUrl("$base_url", "$slotname", "$zone_id", "$affiliate_id", "{$cat['short']}", "$additional_params");
 EOT;
 
+		wfProfileOut(__METHOD__);
+
 		return $adUrlScript;
 	}
 
 	protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
+		wfProfileIn(__METHOD__);
+		
 		$this->useIframe = true;
 
 		$adUrlScript = $this->getAdUrlScript($slotname, null, true);
@@ -355,6 +393,8 @@ EOT;
 			"; parent_node.removeChild(ad_iframeOld); parent_node.appendChild(ad_iframe); " .
 			"if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
 			//'var ad_iframe = document.getElementById("' . addslashes($slotname) ."_iframe\"); ad_iframe.src=base_url_".addslashes($slotname)."; if (ad_iframe.style.removeAttribute) {ad_iframe.style.removeAttribute(\"display\");} else {ad_iframe.style.removeProperty(\"display\");} }</script>";
+
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}
