@@ -1,6 +1,11 @@
 @import "../../../../skins/oasis/css/core/color";
 
-.ContentWarning {
+body.ContentWarning .ContentWarning{
+	display: block;
+}
+
+article.ContentWarning {
+	display: none;
 	margin: 20px 15px;
 	min-height: 300px;
 
