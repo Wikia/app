@@ -22,3 +22,4 @@ $app->registerExtensionMessageFile('ContentWarning', $dir.'ContentWarning.i18n.p
 
 // Hooks
 $app->registerHook('GetHTMLAfterBody', 'ContentWarningHooks', 'onGetHTMLAfterBody');
+$app->registerHook('BeforePageDisplay', 'ContentWarningHooks', 'onBeforePageDisplay');

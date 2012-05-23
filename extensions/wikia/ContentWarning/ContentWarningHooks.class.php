@@ -12,4 +12,9 @@ class ContentWarningHooks {
 		}
 		return true;
 	}
+	
+	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+		$out->addScriptFile(F::app()->wg->ExtensionsPath . '/wikia/ContentWarning/js/ContentWarning.js');
+		return true;
+	}
 }

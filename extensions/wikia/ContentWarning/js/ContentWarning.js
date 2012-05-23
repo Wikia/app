@@ -51,15 +51,18 @@ $(function(){
 				format: 'html',
 				callback: function(data) {
 					var body = $(data);
-					$(data).insertBefore($('#WikiaMainContent'));
+					if(skin == 'monobook') {
+						$(data).insertBefore($('#bodyContent'));	
+					} else {
+						$(data).insertBefore($('#WikiaMainContent'));	
+					}
 					$('#ContentWarningApprove').click(ok);
 					$('#ContentWarningCancel').click(goback);
 				}
 			});
 		}, 
-		
 		hideWarning: function() {
-			
+			$('body').removeClass('ContentWarning');
 		}
 	};
 
