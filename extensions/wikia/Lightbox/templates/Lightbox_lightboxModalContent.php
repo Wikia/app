@@ -115,11 +115,9 @@
 					$form = array (
 					    'inputs' => array (
 					        array(
-					            // Main input attributes
 					            'label' => wfMsg('lightbox-standard-link'),
 					            'type' => 'text',
 					            'name' => 'lightbox-standard-link',
-					            // extra attributes
 					            'attributes' => array(
 					                'value' => "{{standardLink}}",
 					            )
@@ -138,24 +136,16 @@
 						$form = array (
 						    'inputs' => array (
 						        array(
-						            // Main input attributes
 						            'label' => wfMsg('lightbox-embed-url'),
 						            'type' => 'text',
 						            'name' => 'lightbox-embed-url',
-						            // extra attributes
-						            'attributes' => array(
-						                'value' => "{{embedUrl}}",
-						            )
+					                'value' => "{{embedUrl}}",
 						        ),
 						        array(
-						            // Main input attributes
 						            'label' => wfMsg('lightbox-file-page-url'),
 						            'type' => 'text',
 						            'name' => 'lightbox-file-page-url',
-						            // extra attributes
-						            'attributes' => array(
-						                'value' => "{{filePageUrl}}",
-						            )
+					                'value' => "{{absoluteFileUrl}}",
 						        )
 						    )
 						);
