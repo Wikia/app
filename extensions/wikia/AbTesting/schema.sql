@@ -17,7 +17,7 @@
 ####
 CREATE TABLE `experiments` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`version` int(11),
+	`version` int(11) DEFAULT 1,
 	
 	`name` varchar(255) DEFAULT NULL,
 	
