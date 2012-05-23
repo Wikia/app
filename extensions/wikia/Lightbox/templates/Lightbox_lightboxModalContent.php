@@ -28,8 +28,8 @@
 	</script>
 	
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
-		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
 		<button class="share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></button>
+		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
 		<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link" target="_blank"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
 		<div class="user-details">

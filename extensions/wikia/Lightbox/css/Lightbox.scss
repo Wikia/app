@@ -70,7 +70,6 @@ $color-shadow: #3a3a3a;
 		}
 		.more-info-close:before, .share-close:before {
 			@include arrow(5px, $color-text, 'left');
-			@include opacity(70);
 			content: "";
 			display: block;
 			float: left;
@@ -360,9 +359,27 @@ $color-shadow: #3a3a3a;
 		.more-info-button, .share-button {
 			float: right;
 			margin-left: 5px;
+			&:before {
+				@include sprite-Lightbox-base;
+				content: '';
+				display: block;
+				float: left;
+				width: 14px;
+				height: 14px;
+				margin: 4px 4px 0 -3px;
+			}
 		}
 		.more-info-button{ 
+			&:before {
+				@include sprite-Lightbox('more_info'+$sprite-normal);
+				margin-top: 3px;	
+			}
+		}
+		.share-button {
 			margin-right: 20px;
+			&:before {
+				@include sprite-Lightbox('share'+$sprite-normal);	
+			}		
 		}
 		.see-full-size-link {
 			border-left: 1px solid $color-page-border;
