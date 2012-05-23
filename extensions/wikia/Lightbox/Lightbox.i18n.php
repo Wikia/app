@@ -5,6 +5,7 @@ $messages = array();
 $messages['en'] = array(
 	/* new stuff for new lightbox */
 	'lightbox-header-more-info-button' => 'More Info',
+	'lightbox-header-share-button' => 'Share',
 	'lightbox-header-see-full-size-image' => 'See full size image',
 	'lightbox-header-added-by' => 'Added by $1',
 	'lightbox-header-posted-in' => 'Posted in $1',
@@ -13,6 +14,12 @@ $messages['en'] = array(
 	'lightbox-more-info-description-heading' => 'Description:',
 	'lightbox-more-info-filelinks-heading' => 'File Links:',
 	'lightbox-carousel-progress' => '<b>$1-$2</b> of <b>$3</b>',
+	'lightbox-embed-url' => 'Embed URL',
+	'lightbox-file-page-url' => 'File Page URL',
+	'lightbox-email-label' => 'Email this to a friend',
+	'lightbox-email-placeholder' => 'Your friend\'s email',
+	'lightbox-email-submit' => 'Send',
+	
 	/* /new stuff */
 
 	'lightbox_details_tooltip' => 'View photo details',

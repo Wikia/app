@@ -29,9 +29,8 @@ $color-shadow: #3a3a3a;
 
 .LightboxModal {
 	overflow: hidden;
-	&.more-info-mode {
-		>.close, 
-		.more-info {
+	&.more-info-mode, &.share-mode {
+		>.close {
 			display: block;
 		}
 		.lightbox-arrows,
@@ -40,6 +39,12 @@ $color-shadow: #3a3a3a;
 		.media {
 			display: none;
 		}
+	}
+	&.more-info-mode .more-info {
+		display: block;
+	}
+	&.share-mode .share {
+		display: block;
 	}
 	&.pinned-carousel-mode {
 		.media {
@@ -53,15 +58,23 @@ $color-shadow: #3a3a3a;
 		display: none;
 		z-index: 2;
 	}
-	.more-info {
+	.more-info, .share {
 		display: none;
-		padding: 15px 30px;
+		padding: 20px 30px;
 		h1 {
 			font-size: 18px;
 		}
 		h2 {
 			font-size: 16px;
 			margin-top: 50px;
+		}
+		.more-info-close:before, .share-close:before {
+			@include arrow(5px, $color-text, 'left');
+			@include opacity(70);
+			content: "";
+			display: block;
+			float: left;
+			margin: 5px 7px 0 -3px;
 		}
 		.more-info-details {
 			float: right;
@@ -70,17 +83,44 @@ $color-shadow: #3a3a3a;
 			overflow-x: hidden;
 			width: 650px;
 		}
-		.more-info-hero {
+		.hero {
 			text-align: center;
 			width: 250px;
+			float: left;
 			img {
 				max-height: 150px;
 				max-width: 250px;
 			}
 		}
-		.more-info-spacer {
+		.content {
 			@include clearfix;
+			clear: both;
 			margin-top: 25px;
+			
+			input[type="text"] {
+				width: 350px;
+			}
+			
+			.share-form {
+				float: right;
+				width: 650px;		
+				.WikiaForm {
+					margin: 20px 0 0 -7px; // left align with title while keeping room for error bg
+				}
+			}
+			.bottom-forms {
+				@include clearfix;
+				clear: both;
+				padding-top: 25px;
+				> div {
+					float: left;
+					width: 450px;
+					&:first-child {
+						border-right: 1px solid $color-page-border;
+						margin-right: 25px;
+					}
+				}
+			}
 		}
 	}
 	.modalContent {
@@ -317,8 +357,11 @@ $color-shadow: #3a3a3a;
 		.close {
 			margin: 0;
 		}
-		.more-info-button {
+		.more-info-button, .share-button {
 			float: right;
+			margin-left: 5px;
+		}
+		.more-info-button{ 
 			margin-right: 20px;
 		}
 		.see-full-size-link {

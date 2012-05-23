@@ -299,18 +299,19 @@
 			// Don't enable scrolling if there's not enough thumbnails
 			if(dom.items.length > options.itemsShown) {
 
-				setCarouselWidth();
-	
-				setAsActive(options.activeIndex);
-	
 				// Set up click events
 				dom.next.click(nextImage);
 				dom.previous.click(previousImage);
 	
 			} else {
 				states.noScrolling = true;
-				updateArrows();
 			}
+
+			setCarouselWidth();
+
+			setAsActive(options.activeIndex);
+
+
 
 			if(options.itemClick) {
 				dom.carousel.on('click', 'li', function(e) {
