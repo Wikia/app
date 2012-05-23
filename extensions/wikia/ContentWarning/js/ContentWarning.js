@@ -14,6 +14,7 @@
 			controller: 'ContentWarningController',
 			method: 'index',
 			format: 'html',
+			type: 'GET',
 			callback: function(html) {
 				$(window.skin == 'monobook' ? '#bodyContent' : '#WikiaMainContent').before($(html));
 
@@ -26,7 +27,7 @@
 							controller: 'ContentWarningController',
 							method: 'approveContentWarning',
 							data: {},
-							type: "POST",
+							type: 'POST',
 							format: 'json',
 							callback: afterApproved
 						});
