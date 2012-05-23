@@ -117,7 +117,7 @@ function getLinkSuggest() {
 	$query = urldecode( trim( $wgRequest->getText('query') ) );
 	$query = str_replace(' ', '_', $query);
 
-	$key = wfSharedMemcKey(__METHOD__, $wgCityId.'_'.$query.'_'.$wgRequest->getText('format'));
+	$key = wfMemcKey(__METHOD__, md5($query.'_'.$wgRequest->getText('format')));
 
 	if (strlen($query) < 3) {
 		$out = $wgRequest->getText('format') == 'json' 
