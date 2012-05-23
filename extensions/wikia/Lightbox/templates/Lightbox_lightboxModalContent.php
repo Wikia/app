@@ -13,7 +13,7 @@
 	<div id="LightboxCarousel" class="LightboxCarousel hidden">
 	</div>
 	
-	<div class="infobox">
+	<div class="more-info">
 	</div>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
@@ -70,10 +70,10 @@
 		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{total}}")); ?>
 	</script>
 	
-	<script id="LightboxInfoboxTemplate" type="text/template">
-		<button class="more-info-close"><?= wfMsg('lightbox-infobox-back-button') ?></button>
-		<div class="infobox-spacer"></div>
-		<div class="infobox-details">
+	<script id="LightboxMoreInfoTemplate" type="text/template">
+		<button class="more-info-close"><?= wfMsg('lightbox-more-info-back-button') ?></button>
+		<div class="more-info-spacer"></div>
+		<div class="more-info-details">
 			<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
 			<div class="user-details">
 				<img class="avatar" src="{{userThumbUrl}}">
@@ -83,17 +83,17 @@
 				</span>
 			</div>
 			{{#description}}
-				<h2><?= wfMsg('lightbox-infobox-description-heading') ?></h2>
-				<p class="infobox-description">{{description}}</p>
+				<h2><?= wfMsg('lightbox-more-info-description-heading') ?></h2>
+				<p class="more-info-description">{{description}}</p>
 			{{/description}}
-			<h2><?= wfMsg('lightbox-infobox-filelinks-heading') ?></h2>
+			<h2><?= wfMsg('lightbox-more-info-filelinks-heading') ?></h2>
 			<ul>
 			{{#articles}}
 				<li><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></li>
 			{{/articles}}
 			</ul>
 		</div>
-		<div class="infobox-hero">
+		<div class="more-info-hero">
 			<img src="{{imageUrl}}">
 		</div>
 	</script>

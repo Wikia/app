@@ -257,7 +257,7 @@ var Lightbox = {
 				
 				// Set up carousel
 				var carouselTemplate = $('#LightboxCarouselTemplate');	// TODO: template cache
-				var infoboxTemplate = $('#LightboxInfoboxTemplate');	// TODO: template cache
+				var moreInfoTemplate = $('#LightboxMoreInfoTemplate');	// TODO: template cache
 				
 				for(var i = 0; i < mediaThumbs.thumbs.length; i++) {
 					if(mediaThumbs.thumbs[i].title == Lightbox.current.title) {
@@ -275,7 +275,7 @@ var Lightbox = {
 				Lightbox.openModal.carousel = $('#LightboxCarousel');
 				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
 				Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
-				Lightbox.openModal.infobox = Lightbox.openModal.find('.infobox');
+				Lightbox.openModal.moreInfo = Lightbox.openModal.find('.more-info');
 				Lightbox.openModal.media = Lightbox.openModal.find('.media');
 				Lightbox.openModal.arrows = Lightbox.openModal.find('.lightbox-arrows');
 				Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
@@ -334,16 +334,16 @@ var Lightbox = {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.video.destroyVideo();
 					}
-					Lightbox.openModal.addClass('infobox-mode')
+					Lightbox.openModal.addClass('more-info-mode')
 					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
-						Lightbox.openModal.infobox.append(infoboxTemplate.mustache(json));
+						Lightbox.openModal.moreInfo.append(moreInfoTemplate.mustache(json));
 					});
-				}).on('click.Lightbox', '.infobox .more-info-close', function(evt) {
+				}).on('click.Lightbox', '.more-info .more-info-close', function(evt) {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.getMediaDetail({'title': Lightbox.current.title}, Lightbox.video.renderVideo);
 					}
-					Lightbox.openModal.removeClass('infobox-mode');
-					Lightbox.openModal.infobox.html('');
+					Lightbox.openModal.removeClass('more-info-mode');
+					Lightbox.openModal.moreInfo.html('');
 				}).on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function(evt) {
 					var target = $(evt.target);
 					var overlayActive = Lightbox.openModal.carousel.data('overlayactive');
