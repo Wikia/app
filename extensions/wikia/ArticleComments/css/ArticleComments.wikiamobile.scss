@@ -31,6 +31,7 @@ $commentBg: rgb(246,246,246);
 }
 
 .commFrm{
+	position: relative;
     margin: 5px 0;
 	display: -webkit-box;
 	display: -moz-box;
@@ -55,7 +56,9 @@ $commentBg: rgb(246,246,246);
 	}
 
 	.wkMblLdr{
-		position: relative;
+		position: absolute;
+		left: 0;
+		top: 0;
 
 		span{
 			position: absolute;
