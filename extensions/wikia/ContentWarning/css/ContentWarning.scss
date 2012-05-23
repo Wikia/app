@@ -26,8 +26,19 @@
 }
 
 .ShowContentWarning {
+	&.skin-monobook {
+		#bodyContent {
+			visibility: hidden;
+		}
+
+		.firstHeading,
+		#siteNotice {
+			display: none;
+		}
+	}
+
 	.WikiaMainContent,
-	&.skin-monobook #bodyContent {
+	.WikiaRail {
 		visibility: hidden;
 	}
 
