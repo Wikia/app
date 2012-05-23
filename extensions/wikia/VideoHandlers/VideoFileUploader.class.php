@@ -54,7 +54,7 @@ class VideoFileUploader {
 			'wpUploadFileURL' => $urlFrom
 		);
 
-		$upload = F::build( 'UploadFromUrl' );
+		$upload = F::build( 'UploadFromUrl' ); /* @var $upload UploadFromUrl */
 		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
 
 		return $upload;
@@ -97,6 +97,12 @@ class VideoFileUploader {
 		/* create a reference to article that will contain uploaded file */
 		$titleText = self::sanitizeTitle( $this->getDestinationTitle() );
 		$oTitle = Title::newFromText( $titleText, NS_FILE );
+
+		if ( $oTitle->exists() ) {
+			// @TODO
+			// if video already exists make sure that we are in fact changing something
+			// before generating upload
+		}
 
 		$file = F::build(
 			!empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile',
