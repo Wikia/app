@@ -19,7 +19,12 @@ class RelatedVideosEmbededData extends RelatedVideosNamespaceData {
 		$this->mTitle = ( $title ? $title : null );
 		$this->mData = null;
 		$this->mExists = ( $id > 0);
-		$this->mMemcacheKey = wfMemcKey( 'relatedVideosEmbededData', 'data', F::app()->wg->wikiaVideoRepoDBName, $id, self::CACHE_VER );
+		$revision = 0;
+		if ( $this->mExists ) {
+			$title = Title::newFromID( $id );
+			$revision = $title->getLatestRevID();
+		}
+		$this->mMemcacheKey = wfMemcKey( 'relatedVideosEmbededData', 'data', F::app()->wg->wikiaVideoRepoDBName, $id, $revision, self::CACHE_VER );
 
 		wfDebug(__METHOD__ . ": relatedVideosNS article ID #{$id}\n");
 	}
