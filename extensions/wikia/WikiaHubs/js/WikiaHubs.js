@@ -16,20 +16,20 @@ var WikiaHubs = {
 		if (WikiaFrame.length > 0) {
 			WikiaFrame.on('click', 'a', WikiaHubs.iframeLinkChanger);
 			onFBloaded = function () {
-				$().log('set canvas size');
 				FB.init();
 				FB.XFBML.parse();
-				FB.Canvas.setSize({ width: 810, height: WikiaFrame.height() });
+				FB.Canvas.setAutoGrow();
 			};
 		}
 
 		$('body').on('click', '.modalWrapper', WikiaHubs.modalClickTrackingHandler);
 	},
 
-	iframeLinkChanger:function (e) {
-		$().log('event fired');
+	iframeLinkChanger: function (e) {
+		e.preventDefault();
 		var node = $(e.target).closest('a');
-		node.attr('target', '_parent');
+		window.top.location = node.attr('href');
+		return false;
 	},
 
 	trackClick:function (category, action, label, value, params) {
