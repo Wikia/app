@@ -4,6 +4,9 @@
  */
 class MediaQueryService extends Service {
 
+	const MEDIA_TYPE_VIDE0 = 'video';
+	const MEDIA_TYPE_IMAGE = 'image';
+
 	/**
 	 * Get list of images which:
 	 *  - are used on pages (in content namespaces) matching given query
@@ -75,9 +78,6 @@ class MediaQueryService extends Service {
 		$mqs->unsetCache( $title );		
 		return true;
 	}
-	
-	const MEDIA_TYPE_VIDE0 = 'video';
-	const MEDIA_TYPE_IMAGE = 'image';
 	
 	public function getMediaFromArticle(Title $title, $type = null, $limit = null) {
 		wfProfileIn(__METHOD__);

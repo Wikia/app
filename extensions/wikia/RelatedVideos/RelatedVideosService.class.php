@@ -174,4 +174,59 @@ class RelatedVideosService {
 		$html .= Xml::closeElement('tr');
 		return $html;
 	}
+
+	public function sortByDate( $a, $b ){
+
+		return strnatcmp( $a['date'], $b['date'] );
+	}
+
+	public function getRVforArticleId ( $articleId  ) {
+		$title = Title::newFromID( $articleId );
+
+		$videos = array();
+		/*
+		 * COMMENTING OUT UNTIL DECISION IS MADE
+		$relatedVideos = RelatedVideos::getInstance();
+		$videos = $relatedVideos->get(
+			$articleId,
+			RelatedVideos::MAX_RELATEDVIDEOS
+		);
+
+		if ( !is_array( $videos ) ){
+			$videos = array();
+		}
+		*/
+
+		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( $title );
+		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( $title );
+		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
+
+		$blacklist = array();
+		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
+			if ( !empty( $oLists ) && $oLists->exists() ){
+				$data = $oLists->getData();
+				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
+					foreach( $data['lists']['WHITELIST'] as $page ){
+						$videoData = $this->getRelatedVideoData( $page );
+						if ( isset( $videoData['uniqueId'] ) ) {
+							$videos[$videoData['uniqueId']] = $videoData;
+						}
+					}
+					foreach( $data['lists']['BLACKLIST'] as $page ){
+						$videoData = $this->getRelatedVideoData( $page );
+						if ( isset( $videoData['uniqueId'] ) )
+							$blacklist[$videoData['uniqueId']] = $videoData;
+					}
+				}
+			}
+		}
+
+		foreach( $blacklist as $key => $blElement ){
+			unset( $videos[ $key ] );
+		}
+
+		uasort( $videos, array( $this, 'sortByDate') );
+		return array_reverse( $videos, true );
+	}
+
 }
