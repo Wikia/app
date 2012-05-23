@@ -7,7 +7,7 @@
 class ContactForm extends SpecialPage {
 	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
-	var $mLoginattempt, $mRemember, $mEmail, $mBrowser;
+	var $mLoginattempt, $mRemember, $mEmail, $mBrowser, $mAbTestInfo;
 	var $err, $errInputs;
 
 	function  __construct() {
@@ -31,6 +31,7 @@ class ContactForm extends SpecialPage {
 		$this->mAction = $wgRequest->getVal( 'action' );
 		$this->mEmail = $wgRequest->getText( 'wpEmail' );
 		$this->mBrowser = $wgRequest->getText( 'wpBrowser' );
+		$this->mAbTestInfo = $wgRequest->getText( 'wpAbTesting' );
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
 
 		if( $this->mPosted && ('submit' == $this->mAction ) ) {
@@ -120,6 +121,7 @@ class ContactForm extends SpecialPage {
 
 		//smush it all together
 		$info = $this->mBrowser . "\n";
+		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n"; // giving it its own line so that it stands out more
 		$info .= implode("; ", $items) . "\n";
 		//end wikia debug data
 
@@ -309,11 +311,21 @@ class ContactForm extends SpecialPage {
 				$wgOut->addHtml("<p><s><i>" . wfMsg('specialcontact-ccme') . "</i></s><br/> ". wfMsg('specialcontact-ccdisabled') ."</p>");
 			}
 		}
+		
+		# add a spot into the form where the a/b testing info can be injected. many tests will probably be relevant to user reports & their testing group isn't very visible to them.
+		$wgOut->addHtml("
+			<input type=\"hidden\" id=\"wpAbTesting\" name=\"wpAbTesting\" value=\"[unknown]\" />
+		");
 
 		#we prefil the browser info in from PHP var
 		$wgOut->addHtml("
 			<input type=\"hidden\" id=\"wpBrowser\" name=\"wpBrowser\" value=\"{$_SERVER['HTTP_USER_AGENT']}\" />
 		</form>\n");
+
+		# add the javascript which enhances the form if possible (should degrade gracefully if user has no js).
+		# NOTE: This code is already in the new version's JS so it doesn't need to be merged over.
+		$src = AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/SpecialContact/SpecialContact.js' );
+		$this->wg->Out->addScript( "<script type=\"{$this->app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
 
 		return;
 	}

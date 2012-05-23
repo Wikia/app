@@ -58,5 +58,6 @@ if( !$isLoggedIn && (isset($captchaForm)) ) {
 <input type="submit" value="<?= wfMsg( 'specialcontact-mail' ) ?>" />
 
 <input type="hidden" id="wpBrowser" name="wpBrowser" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>" />
+<input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
 </form>
 
