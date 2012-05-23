@@ -14,11 +14,6 @@ class RecentChangesController extends WikiaController {
 	public function index() {
 		
 	}
-
-	public function dropdown() {
-		$this->options = $this->getVal( 'options', array() );
-		$this->selected = $this->getVal( 'selected', array() );;
-	}
 	
 	public function saveFilters() {
 		if($this->wg->User->getId() < 1) {
