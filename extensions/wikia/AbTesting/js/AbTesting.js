@@ -40,7 +40,11 @@ function getTreatmentGroup( expId ){
 		if(AB_CONFIG.hasOwnProperty( expId )){
 			if(typeof beacon_id == "undefined"){
 				if (hasLogging) {
-					console.log("DON'T CALL getTreatmentGroup() BEFORE BEACON/PAGE-VIEW CALL! Experiment is broken (will fall back to control group).");
+					if((typeof wgJsAtBottom !='undefined') && (!wgJsAtBottom)){
+						console.log("This type of page makes a beacon call in body but loads JS for tests in the head: A/B tests can't work this way. Will fall back to control group.");
+					} else {
+						console.log("DON'T CALL getTreatmentGroup() BEFORE BEACON/PAGE-VIEW CALL! Experiment is broken (will fall back to control group).");
+					}
 				}
 
 				// There is no beacon, so treat the user with the Control Group (this treatment will get recorded).
