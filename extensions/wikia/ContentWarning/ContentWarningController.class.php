@@ -6,18 +6,13 @@
  */
 class ContentWarningController extends WikiaController {
 
-	public function init() {
-//		$this->response->addAsset( 'extensions/wikia/ContentWarning/js/ContentWarning.js' );
-//		$this->response->addAsset( 'extensions/wikia/ContentWarning/css/ContentWarning.scss' );
-	}
-
 	/**
 	 * render index template
 	 */
 	public function index() {
+		$domain = str_replace('http://', '', $this->wg->Server );
 		$this->title = $this->wf->Msg('content-warning-title');
-		$domain = str_replace( 'http://', '', $this->wg->Server );
-		$this->body = $this->wf->MsgExt( 'content-warning-body', array('parse'), $domain );
+		$this->body = $this->wf->MsgExt( 'content-warning-body', array('parse'), $this->wg->Server, $domain );
 		$this->btnContinue = $this->wf->Msg( 'content-warning-button-continue' );
 		$this->btnCancel = $this->wf->Msg( 'content-warning-button-cancel' );
 	}

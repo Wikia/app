@@ -1,5 +1,5 @@
-<article id="ContentWarning" class="ContentWarning">
-	<h1><?= $title ?></h1>
+<article id="ContentWarning" class="ContentWarning WikiaArticle">
+	<h2><?= $title ?></h2>
 
 	<section class="warning"><?= $body ?></section>
 
