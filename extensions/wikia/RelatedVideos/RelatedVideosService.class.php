@@ -184,18 +184,6 @@ class RelatedVideosService {
 		$title = Title::newFromID( $articleId );
 
 		$videos = array();
-		/*
-		 * COMMENTING OUT UNTIL DECISION IS MADE
-		$relatedVideos = RelatedVideos::getInstance();
-		$videos = $relatedVideos->get(
-			$articleId,
-			RelatedVideos::MAX_RELATEDVIDEOS
-		);
-
-		if ( !is_array( $videos ) ){
-			$videos = array();
-		}
-		*/
 
 		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( $title );
 		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( $title );
