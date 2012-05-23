@@ -5,9 +5,11 @@
  */
 
 class ContentWarningHooks {
-	public static function onMakeGlobalVariablesScript( &$vars ) {
-		$out = F::app()->sendRequest('ContentWarningController', 'getContentWarningApproved', array());		
-		$vars['wgContentWarningApproved'] = $out->getVal('contentWarningApproved');
+	public static function onGetHTMLAfterBody( $skin, &$output ) {
+		$out = F::app()->sendRequest('ContentWarningController', 'getContentWarningApproved', array());
+		if(!$out->getVal('contentWarningApproved')) {
+			$output .= "<script>".file_get_contents($dir = dirname(__FILE__) . '/js/' . 'ContentWarningBase.js')."</script>";
+		}
 		return true;
 	}
 }
