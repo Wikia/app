@@ -22,6 +22,12 @@ $config['oasis_extensions_js'] = array(
 $config['oasis_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
+        // Wikia utils
+		'//skins/common/wikia/my.class.js',
+		'//skins/common/wikia/querystring.js',
+		'//skins/common/wikia/cookies.js',
+		'//skins/common/wikia/log.js',
+
 		// tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
@@ -164,10 +170,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/common/mwsuggest.js',
 		'//skins/common/ajax.js',
 		'//skins/oasis/js/tracker.js',
-		'//skins/common/wikia/my.class.js',
-		'//skins/common/wikia/querystring.js',
-		'//skins/common/wikia/cookies.js',
-		'//skins/common/wikia/log.js',
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
