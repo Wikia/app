@@ -16,6 +16,7 @@ class AdProviderAdDriver implements iAdProvider {
 	}
 
 	public function getAd($slotname, $slot, $params = null) {
+		wfProfileIn(__METHOD__);
 
 		$out = '';
 		$extraClasses = '';
@@ -98,6 +99,8 @@ EOT;
 		// 2012/05/16 wlee: for purposes of ads A/B/C test, Liftium 
 		// setup code is emitted in Oasis_Index.php
 		//$out .= AdProviderLiftium::getInstance()->getSetupHtml(array('isCalledAfterOnload'=>1, 'hasMoreCalls'=>1, 'maxLoadDelay'=>6000));
+
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}

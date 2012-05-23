@@ -24,37 +24,47 @@ class ArticleAdLogic {
 	const columnThreshold = 3; // what # of columns is a "wide" table that will cause a collision
 
 	public static function isStubArticle($html){
+		wfProfileIn(__METHOD__);
 		$length = strlen(strip_tags($html));
 		$out = $length < self::stubArticleThreshold;
 		self::adDebug("Article is $length characters. Check for stub article is " . var_export($out, true));
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
 	public static function isShortArticle($html){
+		wfProfileIn(__METHOD__);
 		$height = self::getArticleHeight($html);
 		$out = $height < self::shortArticleThreshold;
 		self::adDebug("Article is at least $height pixels high. Check for short article is " . var_export($out, true));
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
 	public static function isLongArticle($html){
+		wfProfileIn(__METHOD__);
 		$height = self::getArticleHeight($html);
 		$out = $height > self::longArticleThreshold;
 		self::adDebug("Article is at least $height pixels high. Check for long article is " . var_export($out, true));
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
 	public static function isSuperLongArticle($html){
+		wfProfileIn(__METHOD__);
 		$height = self::getArticleHeight($html);
 		$out = $height > self::superLongArticleThreshold;
 		self::adDebug("Article is at least $height pixels high. Check for super-long article is " . var_export($out, true));
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
 	/* Note, this comment in the html is filled in by the hook AdEngineMagicWords */
 	public static function hasWikiaMagicWord ($html, $word){
+		wfProfileIn(__METHOD__);
 		$out = strpos($html, "<!--{$word}-->") !== false;
 		self::adDebug( "Check for $word is ". var_export($out, true));
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
@@ -68,6 +78,8 @@ class ArticleAdLogic {
  	 * based on the likelihood of that item causing a collision, ala Mr. Bayes.
  	 */
 	public static function getCollisionRank($html){
+		wfProfileIn(__METHOD__);
+
 		$score = 0;
 
 		$firstHtml = substr($html, 0, self::firstHtmlThreshold);
@@ -106,6 +118,9 @@ class ArticleAdLogic {
 		if ($score > 1) $score = 1;
 		$score = round($score, 3);
 		self::adDebug("Overall Collision Rank: $score");
+
+		wfProfileOut(__METHOD__);
+		
 		return $score;
 
 	}
@@ -113,6 +128,8 @@ class ArticleAdLogic {
 
 	/* Find out how naughty a particular tag is.*/
 	private function getTagCollisionScore($tag, $attr){
+		wfProfileIn(__METHOD__);
+
 		switch (strtolower($tag)){
 		  // The tag itself gets a store
 		  case 'table':
@@ -120,19 +137,23 @@ class ArticleAdLogic {
 		  	if (isset($attr['id']) && $attr['id'] == 'toc') {
 				//This table is the Table of Contents and shouldn't cause a collision
 				self::adDebug("Table is TOC");
+				wfProfileOut(__METHOD__);
 				return 0.02;
 			}
 			if (isset($attr['width'])){
 				self::adDebug("Table has width attribute");
 				if ( self::getPixels($attr['width']) >= self::pixelThreshold){
 					self::adDebug("Table has width over pixel threshold of " . self::pixelThreshold);
+					wfProfileOut(__METHOD__);
 					return .75;
 				} else if ( self::getPercentage($attr['width']) >= self::percentThreshold){
 					self::adDebug("Table has width over percent threshold of " . self::percentThreshold);
+					wfProfileOut(__METHOD__);
 					return .75;
 				} else {
 					// Seems safe, % is low and pixels are low
 					self::adDebug("Table has width, but seems ok");
+					wfProfileOut(__METHOD__);
 					return .05;
 				}
 			} else if (isset($attr['style'])){
@@ -145,30 +166,37 @@ class ArticleAdLogic {
 
 					if ($pixels >= self::pixelThreshold){
 						self::adDebug("Table has style width over pixel threshold of " . self::pixelThreshold);
+						wfProfileOut(__METHOD__);
 						return .75;
 					} else if ($percentage >= self::percentThreshold){
 						self::adDebug("Table has style width over percent threshold of " . self::percentThreshold);
+						wfProfileOut(__METHOD__);
 						return .75;
 					} else if ($pixels === false && $percentage === false ) {
 						self::adDebug("Table has style width of an unrecognized unit");
+						wfProfileOut(__METHOD__);
 						return .05;
 					}
 				} else {
 					// Seems safe, width is not defined via a style
 					self::adDebug("Table has style, but seems ok");
+					wfProfileOut(__METHOD__);
 					return .03;
 				}
 			} else if (isset($attr['class'])){
 				self::adDebug("Table has class attribute");
 				// This table has a class, which may have width defined
+				wfProfileOut(__METHOD__);
 				return .1;
 			} else if (isset($attr['id'])){
 				self::adDebug("Table has id attribute");
 				// This table has an id, which may have css styling and width defined
+				wfProfileOut(__METHOD__);
 				return .075;
 			} else {
 				// There is a table, but it seems harmless
 				self::adDebug("Table seems ok");
+				wfProfileOut(__METHOD__);
 				return .05;
 			}
 
@@ -183,45 +211,56 @@ class ArticleAdLogic {
 
 					if ($pixels >= self::pixelThreshold){
 						self::adDebug("Div has style width over pixel threshold of " . self::pixelThreshold);
+						wfProfileOut(__METHOD__);
 						return .75;
 					} else if ($percentage >= self::percentThreshold){
 						self::adDebug("Div has style width over percent threshold of " . self::percentThreshold);
+						wfProfileOut(__METHOD__);
 						return .75;
 					} else if ($pixels === false && $percentage === false ) {
 						self::adDebug("Div has style width of an unrecognized unit");
+						wfProfileOut(__METHOD__);
 						return .10;
 					}
 				} else {
 					// Has a style with a width, but seems narrow enough
 					// Seems safe, % is low and pixels are low
 					self::adDebug("Div has style, but no width defined");
+					wfProfileOut(__METHOD__);
 					return .015;
 				}
 			} else if (isset($attr['class'])){
 				self::adDebug("Div has class attribute");
 				// This div has a class, which may have width defined
+				wfProfileOut(__METHOD__);
 				return .015;
 			}
 			self::adDebug("Div seems harmless");
+			wfProfileOut(__METHOD__);
 			return 0;
 
 		  case 'img':
 			self::adDebug("Image found: " . print_r($attr, true));
 			if (isset($attr['width']) && $attr['width'] >= self::pixelThreshold){
 				self::adDebug("Image has width over pixel threshold of " . self::pixelThreshold . ", .75");
+				wfProfileOut(__METHOD__);
 				return .75;
 			} else if (isset($attr['width'])){
 				// Return a value proportional to the size of the image, where a $pixelThreshold wide
 				$eachpixel = self::collisionRankThreshold/self::pixelThreshold;
 				$out = round(($eachpixel * $attr['width'])/4, 3) ;
 				self::adDebug("Image is {$attr['width']} pixels, $out");
+				wfProfileOut(__METHOD__);
 				return $out;
 			} else {
 				self::adDebug("No width set on image");
+				wfProfileOut(__METHOD__);
 				return .05;
 			}
 
-		  default : return 0;
+		  default :
+			  wfProfileOut(__METHOD__);
+			  return 0;
 		}
 	}
 
@@ -244,23 +283,31 @@ class ArticleAdLogic {
  	 * For any of the values
  	 */
 	public function getPixels($in){
+		wfProfileIn(__METHOD__);
+		
 		$in=trim($in);
 		if (preg_match('/^[0-9]{1,4}$/', $in)){
 			// Nothing bug numbers.
+			wfProfileOut(__METHOD__);
 			return $in;
 		} else if (preg_match('/^([0-9]{1,4})px/i', $in, $match)){
 			// NNNpx
+			wfProfileOut(__METHOD__);
 			return $match[1];
 		} else if (preg_match('/^([0-9]{1,4})em/i', $in, $match)){
+			wfProfileOut(__METHOD__);
 			return $match[1] * 10;
 		} else {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
 		$out=preg_replace('/px$/i', '', $in);
 		if (intval($out) == $out){
+			wfProfileOut(__METHOD__);
 			return $out;
 		} else {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -277,32 +324,42 @@ class ArticleAdLogic {
 	 * Otherwise, return true.
 	 */
 	public static function isBoxAdArticle($html){
+		wfProfileIn(__METHOD__);
+		
 		static $lastMd5, $lastResult;
 
 		$currentMd5 = md5($html);
 		if ($currentMd5 == $lastMd5 ){
 			// function was called again with the same html as last time.
+			wfProfileOut(__METHOD__);
 			return $lastResult;
 		}
 
 		if (self::hasWikiaMagicWord($html, "__WIKIA_BANNER__")){
+			wfProfileOut(__METHOD__);
 			$result = false;
 		} else if (self::hasWikiaMagicWord($html, "__WIKIA_BOXAD__")){
+			wfProfileOut(__METHOD__);
 			$result = true;
 		} else if (self::getCollisionRank($html) >= self::collisionRankThreshold){
+			wfProfileOut(__METHOD__);
 			$result = false;
 		} else {
+			wfProfileOut(__METHOD__);
 			$result = true;
 		}
 
 
 		$lastMd5 = $currentMd5;
 		$lastResult = $result;
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
 
 	public function isMainPage(){
+		wfProfileIn(__METHOD__);
+		
 		global $wgTitle;
 		if ( is_object($wgTitle) &&
 			$wgTitle->getArticleId() == Title::newMainPage()->getArticleId() &&
@@ -311,38 +368,47 @@ class ArticleAdLogic {
 			!self::isAnonPurgePrompt() &&
 			!self::isActionPage()) {
 
+			wfProfileOut(__METHOD__);
 			return true;
 		} else {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 	}
 
 	public function isArticlePage(){
+		wfProfileIn(__METHOD__);
 		global $wgOut;
 		if (is_object($wgOut) &&
 		    $wgOut->isArticle() &&
 		    self::isContentPage()){
 
+			wfProfileOut(__METHOD__);
 			return true;
 		} else {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 	}
 
 
 	public function isContentPage(){
+		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgContentNamespaces;
 
 		// not a content page if one of the weird edge cases occurs
 		if ( self::isDiffPage() || self::isAnonPurgePrompt() || self::isActionPage() ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
 		// actual content namespace check along with hardcoded override (main, image & category)
 		// note this is NOT used in isMainPage() since that is to ignore content namespaces
 		if (is_object($wgTitle)){
+			wfProfileOut(__METHOD__);
 			return in_array($wgTitle->getNamespace(), array_merge( $wgContentNamespaces, array(NS_MAIN, NS_IMAGE, NS_CATEGORY) ));
 		} else {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 	}
@@ -407,6 +473,7 @@ class ArticleAdLogic {
 
 
 	public function getCssAttributes($style){
+		wfProfileIn(__METHOD__);
 		$pattern = '/([a-zA-Z\-0-9]+)\:([^;]+);/';
 		$attr = array();
 		$style = trim($style, '; ') . ';';
@@ -415,6 +482,7 @@ class ArticleAdLogic {
 				$attr[$attmatch[1][$j]] = $attmatch[2][$j];
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return $attr;
 	}
 
@@ -422,6 +490,7 @@ class ArticleAdLogic {
 	// Get attributes from html tag.
 	// Note, this requires well-formed html with quoted attributes. Second regexp for poor html?
 	public function getHtmlAttributes($tag){
+		wfProfileIn(__METHOD__);
 		$pattern = '/\s([a-zA-Z]+)\=[\x22\x27]([^\x22\x27]+)[\x22\x27]/';
 		$attr = array();
 		if (preg_match_all($pattern, $tag, $attmatch)){
@@ -429,6 +498,7 @@ class ArticleAdLogic {
 				$attr[$attmatch[1][$j]] = $attmatch[2][$j];
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return $attr;
 	}
 
@@ -446,11 +516,14 @@ class ArticleAdLogic {
 
 	/* Function to guess the height, in pixels of the supplied html */
 	public function getArticleHeight($html){
+		wfProfileIn(__METHOD__);
+		
 		static $lastMd5, $lastResult;
 
 		$currentMd5 = md5($html);
 		if ($currentMd5 == $lastMd5 ){
 			// function was called again with the same html as last time.
+			wfProfileOut(__METHOD__);
 			return $lastResult;
 		}
 
@@ -473,6 +546,7 @@ class ArticleAdLogic {
 
 		$lastMd5 = $currentMd5;
 		$lastResult = $result;
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 
@@ -518,6 +592,8 @@ class ArticleAdLogic {
 
 
 	public static function getHtmlHeight($html){
+		wfProfileIn(__METHOD__);
+		
 		$height = 0;
 
 		// Assume a minimum of number pixels for certian tags. In all likelihood it will be higher
@@ -525,12 +601,16 @@ class ArticleAdLogic {
 			$height += 25 * count($matches[0]);
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return round($height);
 	}
 
 
 
 	public static function getImageHeight($html){
+		wfProfileIn(__METHOD__);
+		
 		$imageArea = 0;
 
 		if (preg_match_all('/<img[^>]+>/is', $html, $matches)){
@@ -550,23 +630,31 @@ class ArticleAdLogic {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
+		
 		// This assumes that all the images are perfectly arranged
 		// unlikely best case scenario, but good minimum floor
 		return round($imageArea / self::getArticleAreaWidth());
 	}
 
 	public static function isSearch() {
+		wfProfileIn(__METHOD__);
+
 		global $wgTitle;
 
 		$searchPageNames = array('Search', 'WikiaSearch');
+
+		wfProfileOut(__METHOD__);
 
 		return !empty($wgTitle) && -1 == $wgTitle->getNamespace()
 			&& in_array(SpecialPage::resolveAlias($wgTitle->getDBkey()), $searchPageNames);
 	}
 
 	public static function isExtra() {
+		wfProfileIn(__METHOD__);
 		global $wgExtraNamespaces, $wgTitle;
 
+		wfProfileOut(__METHOD__);
 		return array_key_exists($wgTitle->getNamespace(), $wgExtraNamespaces);
 	}
 
@@ -585,21 +673,27 @@ class ArticleAdLogic {
 	}
 
 	public static function isWikiaHub() {
+		wfProfileIn(__METHOD__);
 		global $wgEnableWikiaHubsExt, $wgWikiaHubsPages, $wgTitle;
 		
 		$titleParts = explode('/', $wgTitle->getDBkey());
+		wfProfileOut(__METHOD__);
 		return !empty($wgEnableWikiaHubsExt) && in_array($titleParts[0], $wgWikiaHubsPages);
 	}
 
 	public static function isAdsEnabledOnWikiaHub() {
+		wfProfileIn(__METHOD__);
+
 		global $wgHubsAdsEnabled, $wgEnableWikiaHubsExt, $wgTitle;
 
 		if (!empty($wgEnableWikiaHubsExt) && !empty($wgHubsAdsEnabled)) {
 			if (in_array($wgTitle->getDBkey(), $wgHubsAdsEnabled)) {
+				wfProfileOut(__METHOD__);
 				return true;
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 }

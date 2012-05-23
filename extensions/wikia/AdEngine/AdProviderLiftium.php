@@ -19,8 +19,11 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 	}
 
 	public function getSetupHtml($params=null){
+		wfProfileIn(__METHOD__);
+
                 static $called = false;
                 if ($called){
+			wfProfileOut(__METHOD__);
                         return false;
                 }
                 $called = true;
@@ -87,6 +90,8 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 			$out .=  '<script type="text/javascript" src="'. $base .'js/Wikia.js' . $version . '"></script>' . "\n";
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
@@ -98,6 +103,8 @@ class AdProviderLiftium extends AdProviderIframeFiller implements iAdProvider {
 	}
 
         public function getAd($slotname, $slot, $params = null){
+		wfProfileIn(__METHOD__);
+
 		$out = $this->getSetupHtml();
 		$out .= '<script type="text/javascript">' . "\n" .
 			'LiftiumOptions.placement = "' . $slotname . '";' . "\n" . 
@@ -123,10 +130,14 @@ EOT;
 		
 		$out .= '</script>' . "\n";
 			
+		wfProfileOut(__METHOD__);
+
 		return $out;
         }
 
 	protected function getIframeFillFunctionDefinition($function_name, $slotname, $slot) {
+		wfProfileIn(__METHOD__);
+
 		global $wgEnableTandemAds, $wgEnableTandemAds_slave, $wgEnableTandemAds_delay;
 
                 $out = '';
@@ -155,10 +166,14 @@ EOT;
                             '", document.getElementById("' . addslashes($slotname) .'_iframe")); }</script>';
                 }
 
+		wfProfileOut(__METHOD__);
+
                 return $out;
 	}
 
         function getProviderValues($slot) {
+		wfProfileIn(__METHOD__);
+
                 global $wgLanguageCode;
 		$out = "lang=" . preg_replace("/-.*/", "", $wgLanguageCode);
 
@@ -166,6 +181,8 @@ EOT;
 		if (!empty($wgDartCustomKeyValues)) {
 			$out .= ";" . $wgDartCustomKeyValues;
 		}
+
+		wfProfileOut(__METHOD__);
 
                 return $out;
         }

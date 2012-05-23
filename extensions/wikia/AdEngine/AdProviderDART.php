@@ -28,6 +28,8 @@ class AdProviderDART extends AdProviderIframeFiller implements iAdProvider {
   public function getBatchCallHtml(){ return false; }
 
 	public function getAd($slotname, $slot, $params = null) {
+		wfProfileIn(__METHOD__);
+
 		$url = $this->getUrl($slotname, $slot);
 		
 		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
@@ -55,6 +57,9 @@ EOT;
 EOT;
 		}
 		$out .= "/*]]>*/</script>\n";
+		
+		wfProfileOut(__METHOD__);
+		
 		return $out;
 	}
 	
@@ -72,6 +77,7 @@ EOT;
 	 * the helper functions involved in creating the DART url.
 	 */
 	public function getUrl($slotname, $slot){
+		wfProfileIn(__METHOD__);
 
 		// Manipulate DART sizes for values it expects
 		switch ($slot['size']){
@@ -145,6 +151,9 @@ EOT;
 		// special "end" delimiter, this is for when we redirect ads to other places. Per Michael
 		$url .= 'endtag=$;';
 		$url .= "ord=" . $ord . "?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
+		
+		wfProfileOut(__METHOD__);
+		
 		return $url;
 	}
 
@@ -209,7 +218,10 @@ EOT;
 
 	/* See the DART webmaster guide for a full explanation of DART key values. */
 	function getProviderValues($slot){
+		wfProfileIn(__METHOD__);
+
                 if(empty($slot['provider_values']) || !is_array($slot['provider_values'])){
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
@@ -217,12 +229,17 @@ EOT;
 		foreach ($slot['provider_values'] as $kvpair){
 			$out .= $this->sanitizeKeyName($kvpair['keyname']) . '=' . $this->sanitizeKeyValue($kvpair['keyvalue']) . ';';
 		}
+
+		wfProfileOut(__METHOD__);
+
 		return $out;
 	}
 
 
 	/* See full explanation on limitations in the DART webmaster guide */
 	function sanitizeKeyName($keyname){
+		wfProfileIn(__METHOD__);
+
 		$out = preg_replace('/[^a-z0-9A-Z]/', '', $keyname); // alnum only
 		$out = preg_replace('/^[0-9]/', '', $out); // not start with a number
 		$out = substr($out, 0, 5); // limited to 5 chars
@@ -230,6 +247,8 @@ EOT;
 		if ($keyname != $out){
 		//	trigger_error("DART key-name was invalid, changed from '$keyname' to '$out' for {$_SERVER['REQUEST_URI']}", E_USER_NOTICE);
 		}
+		
+		wfProfileOut(__METHOD__);
 
 		return $out;
 	}
@@ -237,6 +256,8 @@ EOT;
 
 	/* See full explanation on limitations in the DART webmaster guide */
 	function sanitizeKeyValue($keyvalue){
+		wfProfileIn(__METHOD__);
+
 		$invalids = array('/', '#', ',', '*', '.', '(', ')', '=', '+', '<', '>', '[', ']');
 		$out = str_replace($invalids, '', $keyvalue);
 		$out = substr($out, 0, 55); // limited to 55 chars
@@ -257,6 +278,8 @@ EOT;
 		if ($keyvalue != $out){
 		//	trigger_error("DART key-value was invalid, changed from '$keyvalue' to '$out' for {$_SERVER['REQUEST_URI']}", E_USER_NOTICE);
 		}
+		
+		wfProfileOut(__METHOD__);
 
 		return urlencode($out);
 	}
@@ -368,8 +391,11 @@ EOT;
 	 *  http://en.wikipedia.org/wiki/List_of_Internet_top-level_domains
 	 */
 	public function getDomainKV($host){
+		wfProfileIn(__METHOD__);
+
 		$lhost=strtolower($host);
 		if (!preg_match('/([a-z\-0-9]+)\.([a-z]{2,6})$/', $lhost, $match1)){
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -377,12 +403,15 @@ EOT;
 		if ($match1[1] == 'co'){
 			// .co.uk or .co.jp
 			if (!preg_match('/([a-z\-0-9]+)\.co\.([a-z]{2})$/', $lhost, $match2)){
+				wfProfileOut(__METHOD__);
 				return false;
 			} else {
+				wfProfileOut(__METHOD__);				
 				return 'dmn=' . $this->sanitizeKeyValue($match2[0]) . ';';
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return 'dmn=' . $this->sanitizeKeyValue($match1[0]) . ';';
 	}
 
