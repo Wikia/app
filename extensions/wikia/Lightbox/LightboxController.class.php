@@ -13,7 +13,6 @@ class LightboxController extends WikiaController {
 	public function __construct() {
 	}
 	
-	
 	public function lightboxModalContent() {
 		// TODO: get article name from request
 		$mediaTitle = $this->request->getVal('mediaTitle');
@@ -153,7 +152,9 @@ class LightboxController extends WikiaController {
 									'contextHeight'  => $this->request->getVal('height', 360),
 									'userAvatarWidth'=> 16
 							));
-							
+
+		// create a truncated list, and mark it if necessary (this is mostly for display, because mustache is a logicless templating system)
+		// TODO: hyun - maybe move this to JS?
 		$articles = $data['articles'];
 		$smallerArticleList = array();
 		$articleListIsSmaller = 0;
@@ -164,16 +165,8 @@ class LightboxController extends WikiaController {
 			}
 			$articleListIsSmaller = $numOfArticles > 2 ? 1 : 0;
 		}
-
-		/* temporary placeholders */
-		$caption = 'CAPTION HERE?';
-		$description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.';
-		$articles = array(
-			array('articleUrl' => '/wiki/CArticle_626', 'articleTitle' => 'Some Article'),
-			array('articleUrl' => '/wiki/CArticle_627', 'articleTitle' => 'Some Article2')
-		);
-		/* /placeholders */
 		
+		// file details
 		$this->fileTitle = $fileTitle;
 		$this->mediaType = $data['mediaType'];
 		$this->videoEmbedCode = $data['videoEmbedCode'];
@@ -191,35 +184,64 @@ class LightboxController extends WikiaController {
 	}
 	
 	/**
-	 * @brief - Returns complete details about a single media (file).  JSON only, no associated template to this method.
+	 * @brief - Returns pre-formatted social sharing urls and codes
 	 * @requestParam string fileTitle
-	 * @requestParam string articleTitle
-	 * @responseParam string networks - contains id(facebook, twitter, etc) and url
+	 * @requestParam string articleTitle	(optional)
+	 * @responseParam string url - raw url that is automically determined.  This is determined to be either article url or file page url.
+	 * @responseParam string articleUrl - url to article page
+	 * @responseParam string fileUrl - url to file page
+	 * @responseParam string embedMarkup - embedable markup
+	 * @responseParam string networks - contains id(facebook, twitter, etc) and urls of external social networks
 	 */
-	public function getShareNetworks() {
-		$fileTitle = $this->request->getVal('fileTitle');
-		$articleTitle = $this->request->getVal('articleTitle');
-		$title = F::build('Title', array($articleTitle), 'newFromText');
+	public function getShareCodes() {
+		$fileTitle = $this->request->getVal('fileTitle', '');
+		$file = wfFindFile($fileTitle);
 		
-		$networks = array();	// return value
+		$shareUrl = '';
+		$articleUrl = '';
+		$embedMarkup = '';
+		$fileUrl = '';
+		$networks = array();
 		
-		$fileParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($fileTitle));
-		$link = $title->getFullURL("file=$fileParam");
-		$linkDescription = wfMsg('lightbox-share-description', $title->getText(), $this->wg->Sitename);
-		
-		$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
-			'facebook',
-			'twitter',
-			'stumbleupon',
-			'reddit'
-		) );
-		foreach($shareNetworks as $network) {
-			$networks[] = array(
-				'id' => $network->getId(),
-				'url' => $network->getUrl($link, $linkDescription)
+		if(!empty($file)) {
+			$fileTitleObj =  F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
+			$articleTitle = $this->request->getVal('articleTitle');
+			$articleTitleObj = F::build('Title', array($articleTitle), 'newFromText');
+			
+			$fileParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($fileTitle));
+			$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
+			$fileUrl = $fileTitleObj->getFullURL();
+			
+			// determine share url
+			$sharingNamespaces = array(
+				NS_MAIN,
+				NS_CATEGORY,
 			);
+			$shareUrl = in_array($articleTitleObj->getNamespace(), $sharingNamespaces) ? $articleUrl : $fileUrl;
+			
+			$thumb = $file->getThumbnail(300, 250);
+			$thumbUrl = $thumb->getUrl();
+			$embedMarkup = "<a href=\"$shareUrl\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
+			$linkDescription = wfMsg('lightbox-share-description', $articleTitleObj->getText(), $this->wg->Sitename);
+			
+			$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
+				'facebook',
+				'twitter',
+				'stumbleupon',
+				'reddit'
+			) );
+			foreach($shareNetworks as $network) {
+				$networks[] = array(
+					'id' => $network->getId(),
+					'url' => $network->getUrl($articleUrl, $linkDescription)
+				);
+			}
 		}
 		
+		$this->shareUrl = $shareUrl;
+		$this->embedMarkup = $embedMarkup;
+		$this->articleUrl = $articleUrl;
+		$this->fileUrl = $fileUrl;
 		$this->networks = $networks;
 	}
 
