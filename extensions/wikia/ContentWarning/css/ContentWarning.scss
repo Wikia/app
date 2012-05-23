@@ -1,10 +1,6 @@
 @import "../../../../skins/oasis/css/core/color";
 
-body.ContentWarning .ContentWarning{
-	display: block;
-}
-
-article.ContentWarning {
+.ContentWarning {
 	display: none;
 	margin: 20px 15px;
 	min-height: 300px;
@@ -13,20 +9,29 @@ article.ContentWarning {
 		margin-right: 10px;
 	}
 
-	h1 {
+	h2 {
+		border: 0;
 		color: $color-buttons;
 		font-size: 200%;
+		line-height: 120%;
 	}
 
 	p {
-		padding: 10px 0;
+		padding: 0;
 	}
 
 	.warning {
 		margin: 10px 0;
 	}
-	
-	#WikiaMainContent, #WikiaRail {
-		display: none; 
+}
+
+.ShowContentWarning {
+	.WikiaMainContent,
+	&.skin-monobook #bodyContent {
+		visibility: hidden;
+	}
+
+	.ContentWarning {
+		display: block;
 	}
 }
