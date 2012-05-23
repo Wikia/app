@@ -3,7 +3,7 @@
 	<? if( !empty( $links ) ) :?>
 		<ul>
 			<? foreach( $links as $link ) :?>
-				<li><?= $link ;?></li>
+			<li><?= $link ;?></li>
 			<? endforeach ;?>
 		</ul>
 	<? endif ;?>

@@ -26,15 +26,9 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 		postReply = $.msg('wikiamobile-article-comments-post-reply'),
 		view = $.msg('wikiamobile-article-comments-view'),
 		replies = $.msg('wikiamobile-article-comments-replies'),
-		commForm = d.getElementsByClassName('commFrm')[0],
-		mainInp = commForm.getElementsByClassName('wkInp')[0];
+		postComm = d.getElementsByClassName('commFrm')[0].cloneNode(true);
 
-	mainInp.style.right = d.getElementsByClassName('commSbt')[0].offsetWidth + 15 + 'px';
-
-	var postComm = commForm.cloneNode(true),
-		text = postComm.getElementsByClassName('wkInp')[0];
-
-	text.setAttribute('placeholder', postReply);
+	postComm.getElementsByClassName('wkInp')[0].setAttribute('placeholder', postReply);
 
 	function clickHandler(event){
 		event.preventDefault();
@@ -197,9 +191,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 			stopHiding: true
 		});
 
-		var area = d.getElementById('wkMdlCnt').getElementsByClassName('commTxt')[0];
-
-		if(focus) area.focus();
+		if(focus) d.getElementById('wkMdlCnt').getElementsByClassName('wkInp')[0].focus();
 	}
 
 	if(totalPages > 1 && wgArticleId){
@@ -225,14 +217,5 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 	$(d.body).on('submit', '.commFrm', post)
 	.on(clickEvent, '.commFrm textarea', function(ev){
 		loginRequired(ev);
-	});
-
-	mainInp.addEventListener('focus', function(){
-		commForm.className += ' open';
-		commForm.scrollIntoView();
-	});
-
-	mainInp.addEventListener('blur', function(){
-		commForm.className = 'commFrm';
 	});
 });

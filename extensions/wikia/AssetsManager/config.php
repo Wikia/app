@@ -313,6 +313,14 @@ $config['wikiamobile_js_body'] = array(
 	)
 );
 
+$config['wikiamobile_autocomplete_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/autocomplete.js',
+	)
+);
+
 $config['wikiamobile_scroll_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',

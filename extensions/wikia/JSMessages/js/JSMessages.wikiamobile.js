@@ -52,8 +52,6 @@
 		// by default use user language
 		language = language || window.wgUserLanguage;
 
-		$().log('loading ' + packages + ' package(s) for "' + language + '"', 'JSMessages');
-
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'JSMessages',
 			method: 'getMessages',
@@ -63,9 +61,7 @@
 			cb: window.wgJSMessagesCB
 		}, function(result) {
 
-			$().log(packages + ' package(s) loaded', 'JSMessages');
-
-			$(document.head).append('<script>'+result+'</script>');
+			Wikia.processScript(result);
 
 			if (typeof callback == 'function') {
 				callback();

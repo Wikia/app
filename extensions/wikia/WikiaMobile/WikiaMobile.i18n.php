@@ -10,6 +10,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'wikiamobile-search' => 'Search',
+	'wikiamobile-search-this-wiki' => 'Search this wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Login',

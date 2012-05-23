@@ -14,10 +14,6 @@
 			<?= $comments ;?>
 			</aside>
 			<? endif ;?>
-			<div id=wkNavSrh><form id=wkSrhFrm action=index.php method=post>
-				<input id=wkSrhInp type=search name=search placeholder="<?= $wf->MsgExt( 'wikiamobile-search', array( 'parseinline' ) ); ?>..." required=required>
-				<input id=wkSrhSub class=wkBtn type=submit>
-			</form></div>
 			<?= $navMenu ;?>
 		</footer>
 	</article>
