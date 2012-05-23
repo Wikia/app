@@ -17,6 +17,8 @@ abstract class VideoFeedIngester {
 	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases');
 
+	public $reupload = false;
+
 	abstract public function import($content='', $params=array());
 	/**
 	 * Generate name for video.
@@ -60,6 +62,11 @@ abstract class VideoFeedIngester {
 
 		$duplicates = WikiaFileHelper::findVideoDuplicates(static::$PROVIDER,$id);
 		if ( count($duplicates) > 0 ) {
+			if ( $this->reupload === false ) {
+				// if reupload is disabled finish now
+				return 0;
+			}
+
 			// if there are duplicates use name of one of them as reference
 			// instead of generating new one
 			$name = $duplicates[0]['img_name'];

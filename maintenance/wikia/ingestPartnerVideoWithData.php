@@ -43,6 +43,7 @@ $di = new DateInterval('P2D');
 date_sub($now, $di); // for some reason, this subtracts twice the date interval!
 $startDateTS = isset( $options['s'] ) ? $options['s'] : date_timestamp_get($now);
 $debug = isset($options['d']);
+$reupload = isset($options['r']);
 
 // INPUT VALIDATION
 
@@ -72,6 +73,7 @@ foreach ($providersVideoFeed as $provider) {
 	print("Starting import for provider $provider...\n");
 
 	$feedIngester = VideoFeedIngester::getInstance($provider);
+	$feedIngester->reupload = $reupload;
 
 	// get WikiFactory data
 	$ingestionData = $feedIngester->getWikiIngestionData();
