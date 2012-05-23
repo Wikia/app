@@ -21,6 +21,10 @@
 
 // Button
 .wkBtn {
+	display: inline-block;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
 	font-size: medium;
 	padding: 5px 10px;
 	border: 1px solid $border-color;
@@ -37,6 +41,10 @@
 }
 
 .wkInp {
+	display: block;
+	-webkit-box-flex: 50;
+	-moz-box-flex: 50;
+	box-flex: 50;
 	-webkit-appearance: none;
 	border-radius: 0;
 	padding: 0 10px;

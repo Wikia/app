@@ -29,6 +29,8 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
 F::build('JSMessages')->registerPackage('LinkSuggest', array('tog-*'));
 
+F::build('JSMessages')->registerPackage('LinkSuggestWikiaMobile', array('tog-redirected-from'));
+
 $wgHooks['GetPreferences'][] = 'wfLinkSuggestGetPreferences' ;
 function wfLinkSuggestGetPreferences($user, &$preferences) {
 	$preferences['disablelinksuggest'] = array(
@@ -298,7 +300,12 @@ function getLinkSuggest() {
 	if ($format == 'json') {
 		$result_values = array_values($results);
 
-		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
+		if( F::app()->checkSkin( 'wikiamobile' ) ) {
+			$out = Wikia::json_encode( array( array_splice( $result_values, 0, 10), array_splice($redirects, -1, 1) ) );
+		}else{
+			$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
+		}
+
 
 	// legacy: LinkSuggest.js uses this
 	} else {

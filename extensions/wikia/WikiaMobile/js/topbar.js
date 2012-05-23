@@ -12,20 +12,18 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 		navBar = d.getElementById('wkTopNav'),
 		wkPrf = d.getElementById('wkPrf'),
 		searchInput = d.getElementById('wkSrhInp'),
+		searchSug = d.getElementById('wkSrhSug'),
 		searchForm = d.getElementById('wkSrhFrm'),
 		wkNavMenu = d.getElementById('wkNavMenu'),
 		wikiNavHeader = wkNavMenu.getElementsByTagName('h1')[0],
 		wikiNavLink = d.getElementById('wkNavLink'),
 		clickEvent = events.click,
 		lvl2Link,
-		minimumSet;
+		minimumSet,
+		searchInit = false;
 
 	//replace menu from bottom to topBar - the faster the better
 	d.getElementById('wkNav').replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
-
-	//search setup
-	//move search to topbar
-	$(d.getElementById('wkNavSrh')).remove().appendTo('#wkTopBar');
 
 	function reset(){
 		window.scrollTo(0,0);
@@ -38,6 +36,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	function openSearch(){
 		closeNav();
 		reset();
+		window.scrollTo(0,40);
 		track('search/toggle/open');
 		navBar.className = 'srhOpn';
 		searchInput.focus();
@@ -48,6 +47,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 			searchInput.value = '';
 			track('search/toggle/close');
 			showPage();
+			searchSug.innerHTML = '';
 		}
 	}
 
@@ -58,12 +58,28 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	d.getElementById('wkSrhTgl').addEventListener(clickEvent, function(event){
 		event.preventDefault();
 		if(navBar.className.indexOf('srhOpn') > -1){
-			if(searchInput.value){
-				searchForm.submit();
-			}else{
-				closeDropDown();
-			}
+			closeDropDown();
 		}else{
+			if(!searchInit){
+				Wikia.getMultiTypePackage({
+					scripts: 'wikiamobile_autocomplete_js',
+					messages: 'LinkSuggestWikiaMobile',
+					ttl: 604800,
+					callback: function(res){
+						Wikia.processScript(res.scripts[0]);
+						require('suggest', function(sug){
+							sug({
+								url: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+								input: searchInput,
+								list: searchSug,
+								clear: d.getElementById('wkClear')
+							});
+						})
+					}
+				});
+				searchInit = true;
+			}
+
 			openSearch();
 		}
 	});
@@ -84,7 +100,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	//close WikiNav on back button
 	if('onhashchange' in w) {
 		w.addEventListener('hashchange', function(ev) {
-			if(w.location.hash == "" && navBar.className){
+			if(w.location.hash == '' && navBar.className){
 				closeDropDown();
 			}
 		}, false);
