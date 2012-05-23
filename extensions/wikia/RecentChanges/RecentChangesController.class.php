@@ -15,4 +15,9 @@ class RecentChangesController extends WikiaController {
 		
 	}
 
+	public function dropdown() {
+		$this->options = $this->getVal( 'options', array() );
+		$this->selected = $this->getVal( 'selected', array() );;
+	}
+
 }

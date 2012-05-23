@@ -558,7 +558,14 @@ class SpecialRecentChanges extends SpecialPage {
 	 * @return string
 	 */
 	protected function namespaceFilterForm( FormOptions $opts ) {
-		$nsSelect = Xml::namespaceSelector( $opts['namespace'], '' );
+		/* Wikia change begin */
+		$nsSelect = '';
+		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
+		if ( empty($nsSelect) ) {
+			$nsSelect = Xml::namespaceSelector( $opts['namespace'], '' );
+		}
+		/* Wikia change end */
+
 		$nsLabel = Xml::label( wfMsg('namespace'), 'namespace' );
 		$invert = Xml::checkLabel( wfMsg('invert'), 'invert', 'nsinvert', $opts['invert'] );
 		return array( $nsLabel, "$nsSelect $invert" );
