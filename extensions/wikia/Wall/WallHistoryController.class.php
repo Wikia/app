@@ -85,7 +85,7 @@ class WallHistoryController extends WallController {
 		)), $path); 
 		
 		if( $this->isThreadLevel ) {
-			wfRunHooks('WallHistoryThredHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
+			wfRunHooks('WallHistoryThreadHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
 		}
 		
 		$this->response->setVal('path', $path);

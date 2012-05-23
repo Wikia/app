@@ -37,7 +37,7 @@ $app->registerHook('getUserPermissionsErrors', 'ForumHooksHelper', 'getUserPermi
 $app->registerHook('WallRecentchangesMessagePrefix', 'ForumHooksHelper', 'onWallRecentchangesMessagePrefix');
 $app->registerHook('NotificationGetMailNotificationMessage', 'ForumNotificationPlugin', 'onGetMailNotificationMessage');
 $app->registerHook('WallThreadHeader', 'ForumHooksHelper', 'onWallThreadHeader');
-$app->registerHook('WallHistoryThredHeader', 'ForumHooksHelper', 'onWallHistoryThreadHeader');
+$app->registerHook('WallHistoryThreadHeader', 'ForumHooksHelper', 'onWallHistoryThreadHeader');
 $app->registerHook('WallHeader', 'ForumHooksHelper', 'onWallHeader');
 $app->registerHook('WallNewMessage', 'ForumHooksHelper', 'onWallNewMessage');
 $app->registerHook('EditCommentsIndex', 'ForumHooksHelper', 'onEditCommentsIndex');
