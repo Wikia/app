@@ -80,7 +80,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 				parent = form.previousElementSibling,
 				parentId = (parent) ? parent.id : false,
 				submit = form.getElementsByTagName('input')[0],
-				textArea = form.getElementsByClassName('commTxt')[0],
+				textArea = form.getElementsByClassName('wkInp')[0],
 				text = textArea.value;
 
 			if(text !== '') {
