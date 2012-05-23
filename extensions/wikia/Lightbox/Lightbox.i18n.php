@@ -8,10 +8,10 @@ $messages['en'] = array(
 	'lightbox-header-see-full-size-image' => 'See full size image',
 	'lightbox-header-added-by' => 'Added by $1',
 	'lightbox-header-posted-in' => 'Posted in $1',
-	'lightbox-infobox-back-button' => 'Back',
-	'lightbox-infobox-caption-heading' => 'Caption:',
-	'lightbox-infobox-description-heading' => 'Description:',
-	'lightbox-infobox-filelinks-heading' => 'File Links:',
+	'lightbox-more-info-back-button' => 'Back',
+	'lightbox-more-info-caption-heading' => 'Caption:',
+	'lightbox-more-info-description-heading' => 'Description:',
+	'lightbox-more-info-filelinks-heading' => 'File Links:',
 	'lightbox-carousel-progress' => '<b>$1-$2</b> of <b>$3</b>',
 	/* /new stuff */
 
