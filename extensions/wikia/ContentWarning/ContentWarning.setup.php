@@ -21,4 +21,4 @@ $app->registerClass('ContentWarningHooks', $dir . 'ContentWarningHooks.class.php
 $app->registerExtensionMessageFile('ContentWarning', $dir.'ContentWarning.i18n.php');
 
 // Hooks
-$app->registerHook('MakeGlobalVariablesScript', 'ContentWarningHooks', 'onMakeGlobalVariablesScript');
+$app->registerHook('GetHTMLAfterBody', 'ContentWarningHooks', 'onGetHTMLAfterBody');

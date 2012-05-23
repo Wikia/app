@@ -1,7 +1,7 @@
-(function(){
+$(function(){
 	ContentWarning = {
 		init: function() {
-			if(ContentWarning.needWarning()) {
+			if(window.wgNeedContentWarning) {
 				ContentWarning.showWarning( 
 				function() {
 					ContentWarning.approveWarning(function() {
@@ -18,21 +18,6 @@
 			if(window.wgUserName) {
 				return true;
 			}
-			return false;
-		},
-		needWarning: function() {
-			if(typeof wgContentWarningApproved == "undefined") {
-				return false;
-			}
-
-			if(ContentWarning.isLogedin() && !wgContentWarningApproved) {
-				return true;
-			}
-			
-			if(!ContentWarning.isLogedin() && $.cookies.get('ContentWarningApproved') != "1" ) {
-				return true;
-			}
-			
 			return false;
 		},
 		
@@ -65,8 +50,6 @@
 				data: {},
 				format: 'html',
 				callback: function(data) {
-					$('#WikiaMainContent').hide();
-					$('#WikiaRail').hide();
 					var body = $(data);
 					$(data).insertBefore($('#WikiaMainContent'));
 					$('#ContentWarningApprove').click(ok);
@@ -76,11 +59,9 @@
 		}, 
 		
 		hideWarning: function() {
-			$('#ContentWarning').hide();
-			$('#WikiaMainContent').show();
-			$('#WikiaRail').show();
+			
 		}
 	};
 
 	ContentWarning.init();
-})();
+});
