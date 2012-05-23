@@ -771,6 +771,20 @@ if (typeof [].indexOf == 'undefined') {
 	}
 };
 
+// add Array.filter function in IE8
+if (!Array.prototype.filter){
+	Array.prototype.filter = function(fun, t){
+		var len = this.length,
+			res = [];
+
+		for (var i = 0; i < len; i++){
+			if (fun.call(t, this[i], i, this)) res[res.length] = this[i];
+		}
+
+		return res;
+	};
+}
+
 $(function() {
 	//beacon_id cookie
 	if ( window.beacon_id ) {
