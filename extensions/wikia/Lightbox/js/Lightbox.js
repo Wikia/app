@@ -259,6 +259,7 @@ var Lightbox = {
 				// Set up carousel
 				var carouselTemplate = $('#LightboxCarouselTemplate');	// TODO: template cache
 				var moreInfoTemplate = $('#LightboxMoreInfoTemplate');	// TODO: template cache
+				var shareTemplate = $('#LightboxShareTemplate');	// TODO: template cache
 				
 				for(var i = 0; i < mediaThumbs.thumbs.length; i++) {
 					if(mediaThumbs.thumbs[i].title == Lightbox.current.title) {
@@ -277,6 +278,7 @@ var Lightbox = {
 				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
 				Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
 				Lightbox.openModal.moreInfo = Lightbox.openModal.find('.more-info');
+				Lightbox.openModal.share = Lightbox.openModal.find('.share');
 				Lightbox.openModal.media = Lightbox.openModal.find('.media');
 				Lightbox.openModal.arrows = Lightbox.openModal.find('.lightbox-arrows');
 				Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
@@ -328,9 +330,11 @@ var Lightbox = {
 							Lightbox.hideOverlay('carousel');
 						}
 					}
+				// Hide Lightbox header and footer on mouse leave. 
 				}).on('mouseleave.Lightbox', function(evt) {
 					Lightbox.hideOverlay('header');
 					Lightbox.hideOverlay('carousel');
+				// Show more info screen on button click
 				}).on('click.Lightbox', '.LightboxHeader .more-info-button', function(evt) {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.video.destroyVideo();
@@ -339,12 +343,24 @@ var Lightbox = {
 					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 						Lightbox.openModal.moreInfo.append(moreInfoTemplate.mustache(json));
 					});
-				}).on('click.Lightbox', '.more-info .more-info-close', function(evt) {
+				// Show share screen on button click
+				}).on('click.Lightbox', '.LightboxHeader .share-button', function(evt) {
+					if(Lightbox.current.type === 'video') {
+						Lightbox.video.destroyVideo();
+					}
+					Lightbox.openModal.addClass('share-mode')
+					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
+						Lightbox.openModal.share.append(shareTemplate.mustache(json));
+					});
+				// Close more info and share screens on button click
+				}).on('click.Lightbox', '.more-info-close', function(evt) {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.getMediaDetail({'title': Lightbox.current.title}, Lightbox.video.renderVideo);
 					}
-					Lightbox.openModal.removeClass('more-info-mode');
+					Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
+					Lightbox.openModal.share.html('');
 					Lightbox.openModal.moreInfo.html('');
+				// Pin the toolbar on icon click
 				}).on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function(evt) {
 					var target = $(evt.target);
 					var overlayActive = Lightbox.openModal.carousel.data('overlayactive');
