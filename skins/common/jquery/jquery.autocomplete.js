@@ -57,7 +57,12 @@
 	 fnPreprocessResults: null,
      skipBadQueries: false
     };
-    if (options) { $.extend(this.options, options); }
+    if (options) { 
+		// since we're using an old version of this plugin with minChars instead of minLength,
+		// this will help us be forwards-compatible
+		this.options.minChars = options.minLength || options.minChars || 1;
+		$.extend(this.options, options); 
+	}
     if(this.options.lookup){
       this.isLocal = true;
       if($.isArray(this.options.lookup)){ this.options.lookup = { suggestions:this.options.lookup, data:[] }; }
