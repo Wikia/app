@@ -249,6 +249,7 @@ var Lightbox = {
 
 				// Add template to modal
 				Lightbox.openModal.find(".modalContent").html(html); // adds initialFileDetail js to DOM
+				
 				Lightbox.openModal.WikiaLightbox = Lightbox.openModal.find('.WikiaLightbox');
 				
 				Lightbox.cache[Lightbox.current.carouselType] = mediaThumbs.thumbs;
