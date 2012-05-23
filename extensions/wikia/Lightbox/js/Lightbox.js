@@ -241,6 +241,7 @@ var Lightbox = {
 				mediaTitle: Lightbox.current.title,
 				carouselType: Lightbox.current.carouselType,
 				articleTitle: wgTitle,
+				articleId: wgArticleId,
 				cb: Lightbox.getCacheId() /* not really required, just for caching */
 			},
 			callback: function(html) {

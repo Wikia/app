@@ -18,27 +18,30 @@ class LightboxController extends WikiaController {
 		// TODO: get article name from request
 		$mediaTitle = $this->request->getVal('mediaTitle');
 		$articleTitle = $this->request->getVal('articleTitle');
+		$articleId = $this->request->getVal('articleId');
 		$carouselType = $this->request->getVal('carouselType');
 		
 		switch($carouselType) {
 			case "articleMedia":
 				$method = "getArticleMediaThumbs";
 				break;
-			case "relatedVideos":
+			case "relatedVideo":
 				$method = "getRelatedVideosThumbs";
 				break;
 			case "latestPhotos":
+			default:
 				$method = "getLatestPhotosThumbs";
 				break;
 		} 
 		
 		$initialFileDetail = array();
+		$mediaThumbs = array();
 		if(!empty($mediaTitle)) {
 			// send request to getImageDetail()
 			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $mediaTitle))->getData();
-			$mediaThumbs = $this->app->sendRequest('Lightbox', $method, array('title' => $articleTitle))->getData();
+			$mediaThumbs = $this->app->sendRequest('Lightbox', $method, array('title' => $articleTitle, 'articleId' => $articleId))->getData();
 		}
-		
+
 		$this->initialFileDetail = $initialFileDetail;
 		$this->mediaThumbs = $mediaThumbs;
 	}
@@ -50,27 +53,19 @@ class LightboxController extends WikiaController {
 	 */	
 	public function getRelatedVideosThumbs() {
 		wfProfileIn(__METHOD__);
-		// sample data
-		$thumbs = array(
-			array(
-				'thumbUrl' => '',	// 90x55 images
-				'type' => 'video',
-				'title' => 'video name',
-				'playButtonSpan' => WikiaFileHelper::videoPlayButtonOverlay(90, 55),
-			),
-			array(
-				'thumbUrl' => '',
-				'type' => 'image',
-				'title' => 'an image name',
-				'playButtonSpan' => WikiaFileHelper::videoPlayButtonOverlay(90, 55),
-			),
-			array(
-				'thumbUrl' => '',
-				'type' => 'image',
-				'title' => 'an image name',
-				'playButtonSpan' => WikiaFileHelper::videoPlayButtonOverlay(90, 55),
-			),
-		);
+
+		$articleId = $this->request->getVal('articleId');
+
+		$rvs = new RelatedVideosService();
+		$data = $rvs->getRVforArticleId( $articleId );
+		$mediaTable = array();
+		foreach( $data as $video) {
+			$mediaTable[] = array(
+				'title' => $video['id'],
+				'type' => 'video'
+			);
+		}
+		$thumbs = $this->mediaTableToThumbs( $mediaTable );
 	
 		$this->response->setVal( 'thumbs', $thumbs );
 		wfProfileOut(__METHOD__);
@@ -83,36 +78,17 @@ class LightboxController extends WikiaController {
 	 * @responseParam array thumbs - thumbnail data
 	 */	
 	public function getLatestPhotosThumbs() {
-	
-		// sample data
-		$thumbs = array(
-			array(
-				'thumbUrl' => '',	// 90x55 images
-				'type' => 'video',
-				'title' => 'video name',
-				'playButtonSpan' => '',
-			),
-			array(
-				'thumbUrl' => '',
-				'type' => 'image',
-				'title' => 'an image name',
-				'playButtonSpan' => '',
-			),
-			array(
-				'thumbUrl' => '',
-				'type' => 'image',
-				'title' => 'an image name',
-				'playButtonSpan' => '',
-			),
-		);
-	
+		$mediaQuery =  F::build( 'MediaQueryService' ); /* @var $mediaQuery MediaQueryService */
+		$mediaTable = $mediaQuery->getRecentlyUploadedAsMediaTable(29);
+		$thumbs = $this->mediaTableToThumbs( $mediaTable );
+
 		$this->thumbs = $thumbs;
 	}
 	
 	protected static function getArticleMediaThumbsMemcKey($title) {
 		return F::app()->wf->MemcKey( 'ArticleMediaThumbs', '1.0', $title->getDBkey() );
 	}
-	
+
 	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
 		// article links are updated, so we invalidate the cache
 		F::app()->wg->memc->delete( self::getArticleMediaThumbsMemcKey( $article->getTitle() ) );
@@ -139,22 +115,9 @@ class LightboxController extends WikiaController {
 			$memcKey = self::getArticleMediaThumbsMemcKey( $title );
 			$thumbs = $this->wg->memc->get( $memcKey );
 			if ( empty( $thumbs ) ) {
-				$mediaQuery =  F::build( 'MediaQueryService' );
+				$mediaQuery =  F::build( 'MediaQueryService' ); /* @var $mediaQuery MediaQueryService */
 				$mediaTable = $mediaQuery->getMediaFromArticle($title);
-				$thumbs = array();
-				foreach ($mediaTable as $entry) {
-					$media = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
-					$file = wfFindFile($media);
-					if ( !empty( $file ) ) {
-						$trans = $file->transform( array( 'width' => self::THUMBNAIL_HEIGHT, 'height'=> self::THUMBNAIL_WIDTH ) );
-						$thumbs[] = array(
-								'thumbUrl' => $trans->url,
-								'type' => $entry['type'],
-								'title' => $media->getText(),
-								'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(90, 55) : '',
-						);
-					}
-				}
+				$thumbs = $this->mediaTableToThumbs( $mediaTable );
 				$this->wg->memc->set($memcKey, $thumbs);
 			}
 		}
@@ -259,4 +222,27 @@ class LightboxController extends WikiaController {
 		
 		$this->networks = $networks;
 	}
+
+	protected function mediaTableToThumbs( $mediaTable ) {
+		$thumbs = array();
+		foreach ($mediaTable as $entry) {
+			if (is_string($entry['title'])) {
+				$media = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
+			} else {
+				$media = $entry['title'];
+			}
+			$file = wfFindFile($media);
+			if ( !empty( $file ) ) {
+				$trans = $file->transform( array( 'width' => self::THUMBNAIL_HEIGHT, 'height'=> self::THUMBNAIL_WIDTH ) );
+				$thumbs[] = array(
+					'thumbUrl' => $trans->url,
+					'type' => $entry['type'],
+					'title' => $media->getText(),
+					'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(90, 55) : '',
+				);
+			}
+		}
+		return $thumbs;
+	}
+
 }
