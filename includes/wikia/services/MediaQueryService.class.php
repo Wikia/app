@@ -174,4 +174,22 @@ class MediaQueryService extends Service {
 		return $images;
 	}
 
+	/*
+	 * adaptor for getRecentlyUploaded to format as mediaTable
+	 */
+	public static function getRecentlyUploadedAsMediaTable($limit) {
+		$output = array();
+		$list = static::getRecentlyUploaded($limit);
+		if(empty($list)) {
+			return $output;
+		}
+		foreach( $list as $title ) {
+			$output[] = array(
+				'title' => $title,
+				'type'  => WikiaFileHelper::isTitleVideo( $title ) ? self::MEDIA_TYPE_VIDE0 : self::MEDIA_TYPE_IMAGE
+			);
+		}
+		return $output;
+
+	}
 }
