@@ -226,4 +226,37 @@ class LightboxController extends WikiaController {
 		$this->smallerArticleList = $smallerArticleList;
 		$this->articleListIsSmaller = $articleListIsSmaller;
 	}
+	
+	/**
+	 * @brief - Returns complete details about a single media (file).  JSON only, no associated template to this method.
+	 * @requestParam string fileTitle
+	 * @requestParam string articleTitle
+	 * @responseParam string networks - contains id(facebook, twitter, etc) and url
+	 */
+	public function getShareNetworks() {
+		$fileTitle = $this->request->getVal('fileTitle');
+		$articleTitle = $this->request->getVal('articleTitle');
+		$title = F::build('Title', array($articleTitle), 'newFromText');
+		
+		$networks = array();	// return value
+		
+		$fileParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($fileTitle));
+		$link = $title->getFullURL("file=$fileParam");
+		$linkDescription = wfMsg('lightbox-share-description', $title->getText(), $this->wg->Sitename);
+		
+		$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
+			'facebook',
+			'twitter',
+			'stumbleupon',
+			'reddit'
+		) );
+		foreach($shareNetworks as $network) {
+			$networks[] = array(
+				'id' => $network->getId(),
+				'url' => $network->getUrl($link, $linkDescription)
+			);
+		}
+		
+		$this->networks = $networks;
+	}
 }
