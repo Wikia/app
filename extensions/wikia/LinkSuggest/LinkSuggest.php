@@ -12,7 +12,8 @@
  * @author Lucas Garczewski (TOR) <tor@wikia-inc.com>
  * @author Sean Colombo <sean@wikia.com>
  * @author Maciej Brencz <macbre@wikia-inc.com>
- * @copyright Copyright (c) 2008-2009, Wikia Inc.
+ * @author Robert Elwell <robert@wikia-inc.com>
+ * @copyright Copyright (c) 2008-2012, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -22,7 +23,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
     'name' => 'LinkSuggest',
-    'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder, Lucas Garczewski, Sean Colombo, Maciej Brencz',
+    'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder, Lucas Garczewski, Sean Colombo, Maciej Brencz, Robert Elwell',
     'version' => '1.53',
 );
 
@@ -98,16 +99,23 @@ function getLinkSuggestImage() {
 	return $ar;
 }
 
-function wfLinkSuggestGetTextUpperBound( $text ) {
-	$len = mb_strlen($text);
-	if ($len == 0)
-		return false;
-	$lastChar = Wikia::ord(mb_substr($text,-1));
-	if ($lastChar >= 0x7FFFFFFF)
-		return wfLinkSuggestGetTextUpperBound( mb_substr($text,0,$len-1) );
-	// this should check for invalid utf8 code points, but don't care about it (super-rare case)
-	return mb_substr($text,0,$len-1) . Wikia::chr($lastChar + 1);
+function linkSuggestAjaxResponse($out) {
+	global $wgRequest;
+	if ($wgRequest->getText('format') == 'json') {
+		$ar = new AjaxResponse($out);
+		$ar->setCacheDuration(60 * 60); // cache results for one hour
+		$ar->setContentType('application/json; charset=utf-8');
+   	}
+	else {
+		$ar = new AjaxResponse($out);
+		$ar->setCacheDuration(60 * 60);
+		$ar->setContentType('text/plain; charset=utf-8');
+	}
+
+	return $ar;
+
 }
+
 
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces, $wgMemc;
@@ -120,6 +128,7 @@ function getLinkSuggest() {
 	$key = wfMemcKey(__METHOD__, md5($query.'_'.$wgRequest->getText('format')));
 
 	if (strlen($query) < 3) {
+		// enforce minimum character limit on server side
 		$out = $wgRequest->getText('format') == 'json' 
 			 ? Wikia::json_encode(array('suggestions'=>array(),'redirects'=>array()))
 			 : '';
@@ -128,19 +137,7 @@ function getLinkSuggest() {
 	}
 
 	if (isset($out)) {
-		// enforce minimum character limit on server side		
-		if ($wgRequest->getText('format') == 'json') {
-			$ar = new AjaxResponse($out);
-			$ar->setCacheDuration(60 * 60); // cache results for one hour
-			$ar->setContentType('application/json; charset=utf-8');
-	   	}
-		else {
-			$ar = new AjaxResponse($out);
-			$ar->setCacheDuration(60 * 60);
-			$ar->setContentType('text/plain; charset=utf-8');
-		}
-
-		return $ar;
+		return linkSuggestAjaxResponse($out);
 	}
 
 	// Allow the calling-code to specify a namespace to search in (which at the moment, could be overridden by having prefixed text in the input field).
@@ -167,6 +164,15 @@ function getLinkSuggest() {
 				$query = $namespaceName . ':' . $query;
 			}
 		}
+
+		if ($namespace !== null && $query === '') {
+			$out = $wgRequest->getText('format') == 'json' 
+				 ? Wikia::json_encode(array('suggestions'=>array(),'redirects'=>array()))
+				 : '';
+
+			return linkSuggestAjaxResponse($out);
+		}
+
 	}
 
 	// which namespaces to search in?
@@ -213,21 +219,29 @@ function getLinkSuggest() {
 			continue;
 		}
 
+		$titleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
+
 		if ($row->page_is_redirect == 0) { 
 
-			if (!in_array($row->page_title, $results)) {
-				$results[] = $row->page_title;
+			if (!in_array($titleFormatted, $results)) {
+				$results[] = $titleFormatted;
 			}
 
 			$flippedRedirs = array_flip($redirects);
-			if (isset($flippedRedirs[$row->page_title])) {
-				unset($redirects[$flippedRedirs[$row->page_title]]);
+			if (isset($flippedRedirs[$titleFormatted])) {
+				unset($redirects[$flippedRedirs[$titleFormatted]]);
 			}
 
-		} else if (!in_array($row->rd_title, $results)) { 
+		} else { 
 
-			$results[] = $row->rd_title;
-			$redirects[$row->rd_title] = $row->page_title;
+			$redirTitleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->rd_title);
+
+			if (!in_array($redirTitleFormatted, $results)) { 
+
+				$results[] = $redirTitleFormatted;
+				$redirects[$redirTitleFormatted] = $titleFormatted;
+
+			}
 
 		}
 
@@ -237,29 +251,33 @@ function getLinkSuggest() {
 
 		$row = $exactMatchRow;
 
+		$titleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
+
 		if ($row->page_is_redirect == 0) { 
 
 			// remove any instances of original array's value
 			$resultsFlipped = array_flip($results);
-			unset($resultsFlipped[$row->page_title]);
+			unset($resultsFlipped[$titleFormatted]);
 			$results = array_flip($resultsFlipped);
 
-			array_unshift($results, $row->page_title);
+			array_unshift($results, $titleFormatted);
 
 			$flippedRedirs = array_flip($redirects);
-			if (isset($flippedRedirs[$row->page_title])) {
-				unset($redirects[$flippedRedirs[$row->page_title]]);
+			if (isset($flippedRedirs[$titleFormatted])) {
+				unset($redirects[$flippedRedirs[$titleFormatted]]);
 			}
 
 		} else {
 
+			$redirTitleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->rd_title);
+
 			// remove any instances of original array's value
 			$resultsFlipped = array_flip($results);
-			unset($resultsFlipped[$row->rd_title]);
+			unset($resultsFlipped[$redirTitleFormatted]);
 			$results = array_flip($resultsFlipped);
 
-			array_unshift($results, $row->rd_title);
-			$redirects[$row->rd_title] = $row->page_title;
+			array_unshift($results, $redirTitleFormatted);
+			$redirects[$redirTitleFormatted] = $titleFormatted;
 		}
 	}
 
@@ -281,21 +299,6 @@ function getLinkSuggest() {
 
 
 	$format = $wgRequest->getText('format');
-
-	// format post-processing to ditch underscores
-	array_walk(&$results, function($val, $key)
-							use (&$results) { 
-								$results[$key] = str_replace('_', ' ', $val); 
-							} 
-			  );
-	$newRedirects = array();
-	array_walk(&$redirects, function($val,$key)
-							use (&$newRedirects) { 
-								$newRedirects[str_replace('_', ' ', $key)] = str_replace('_', ' ', $val); 
-							} 
-			  );
-	$redirects = $newRedirects;
-
 
 	if ($format == 'json') {
 		$result_values = array_values($results);
@@ -322,19 +325,8 @@ function getLinkSuggest() {
 	// 15 minutes times four (one hour, but easier to slice and dice)
 	$wgMemc->set($key, $out, 4 * 900); 
 
-	$ar = new AjaxResponse($out);
-	$ar->setCacheDuration(60 * 60); // cache results for one hour
-
-	// set proper content type to ease development
-	if ($format == 'json') {
-		$ar->setContentType('application/json; charset=utf-8');
-	}
-	else {
-		$ar->setContentType('text/plain; charset=utf-8');
-	}
-
 	wfProfileOut(__METHOD__);
-	return $ar;
+	return linkSuggestAjaxResponse($out);
 }
 
 /**
