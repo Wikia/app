@@ -303,11 +303,6 @@ class PageHeaderController extends WikiaController {
 					$msgKey = 'oasis-page-header-back-to-article';
 			}
 
-			// special case for NS_VIDEO_TALK
-			if (defined('NS_VIDEO') && ($ns == MWNamespace::getTalk(NS_VIDEO))) {
-				$msgKey = 'oasis-page-header-back-to-video';
-			}
-
 			$this->pageTalkSubject = Wikia::link($wgTitle->getSubjectPage(), wfMsg($msgKey), array('accesskey' => 'c'));
 		}
 
