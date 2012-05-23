@@ -61,7 +61,8 @@
 			enable_previous: false,
 			currIndex: 0, // index of first li shown in viewport
 			left: 0,
-			lazyLoadedAll: false
+			lazyLoadedAll: false,
+			noScrolling: false
 		};
 
 		function nextImage() {
@@ -131,6 +132,10 @@
 		}
 
 		function doMove(left) {
+			if(states.noScrolling) {
+				return;
+			}
+			
 			states.left = left;
 
 			if(typeof options.beforeMove == 'function') {
@@ -290,14 +295,22 @@
 			if(typeof options.attachBlindImages == 'function') {
 				attachBlindImages();
 			}
+			
+			// Don't enable scrolling if there's not enough thumbnails
+			if(dom.items.length > options.itemsShown) {
 
-			setCarouselWidth();
-
-			setAsActive(options.activeIndex);
-
-			// Set up click events
-			dom.next.click(nextImage);
-			dom.previous.click(previousImage);
+				setCarouselWidth();
+	
+				setAsActive(options.activeIndex);
+	
+				// Set up click events
+				dom.next.click(nextImage);
+				dom.previous.click(previousImage);
+	
+			} else {
+				states.noScrolling = true;
+				updateArrows();
+			}
 
 			if(options.itemClick) {
 				dom.carousel.on('click', 'li', function(e) {
