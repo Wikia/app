@@ -16,6 +16,7 @@ $app = F::app();
 //classes
 $app->registerClass('RecentChangesController', $dir . 'RecentChangesController.class.php');
 $app->registerClass('RecentChangesHooks', $dir . 'RecentChangesHooks.class.php');
+$app->registerClass('RecentChangesFiltersStorage', $dir . 'RecentChangesFiltersStorage.class.php');
 
 // i18n mapping
 $app->registerExtensionMessageFile('RecentChanges', $dir.'RecentChanges.i18n.php');

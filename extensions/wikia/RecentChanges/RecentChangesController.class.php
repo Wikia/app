@@ -19,5 +19,20 @@ class RecentChangesController extends WikiaController {
 		$this->options = $this->getVal( 'options', array() );
 		$this->selected = $this->getVal( 'selected', array() );;
 	}
+	
+	public function saveFilters() {
+		if($this->wg->User->getId() < 1) {
+			$this->response->setVal('status', "error");
+			return true;
+		}
+
+	/*	foreach() {
+			
+		} */
+		
+		$rcf = new RecentChangesFiltersStorage($this->wg->User);
+		$rcf->set($this->response->getVal('filters'));
+		$this->response->setVal('status', "ok"); 
+	}
 
 }
