@@ -2,7 +2,7 @@
 	$maxDescriptionLength = 80;
 ?>
 <div class="item">
-	<a class="video-thumbnail <?= $videoPlay; ?>" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=$video['title'];?>" >
+	<a class="video-thumbnail <?= $videoPlay; ?>" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" >
 		<?
 		if ( !empty( $video['duration'] ) ) {
 			$mins = floor ($video['duration'] / 60);
@@ -17,7 +17,7 @@
 		<img class="Wikia-video-thumb" data-src="<?=$video['thumbnailData']['thumb'];?>" src="<?=( $preloaded ) ? $video['thumbnailData']['thumb'] : wfBlankImgUrl();?>" style="margin-top:<?= floor( ( $elementHeight - $video['thumbnailData']['height'] ) / 2 ); ?>px; height:<?=$video['thumbnailData']['height'];?>px; width:<?=$video['thumbnailData']['width'];?>px;" />
 	</a>
 	<div class="description">
-		<a class="<?= $videoPlay; ?>" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=$video['title'];?>" >
+		<a class="<?= $videoPlay; ?>" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" >
 		<?=( strlen( $video['title'] ) > $maxDescriptionLength )
 			? substr( $video['title'], 0, $maxDescriptionLength).'&#8230;'
 			: $video['title'];
