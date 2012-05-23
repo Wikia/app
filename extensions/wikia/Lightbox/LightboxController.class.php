@@ -182,9 +182,7 @@ class LightboxController extends WikiaController {
 	 * @responseParam array articles - array of articles that has title and url
 	 */
 	public function getMediaDetail() {
-
-		$fileTitle = $this->request->getVal('title');
-
+		$fileTitle = $this->request->getVal('title', '');
 		$title = F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
 		
 		$data = WikiaFileHelper::getMediaDetail($title, array('imageMaxWidth'  => 1000,
@@ -192,6 +190,17 @@ class LightboxController extends WikiaController {
 									'contextHeight'  => $this->request->getVal('height', 360),
 									'userAvatarWidth'=> 16
 							));
+							
+		$articles = $data['articles'];
+		$smallerArticleList = array();
+		$articleListIsSmaller = 0;
+		if(!empty($articles)) {
+			$numOfArticles = count($articles);
+			for($i = 0; $i < $numOfArticles && $i < 2; $i++) {
+				$smallerArticleList[] = $articles[$i];
+			}
+			$articleListIsSmaller = $numOfArticles > 2 ? 1 : 0;
+		}
 
 		/* temporary placeholders */
 		$caption = 'CAPTION HERE?';
@@ -209,11 +218,12 @@ class LightboxController extends WikiaController {
 		$this->imageUrl = $data['imageUrl'];
 		$this->fileUrl = $data['fileUrl'];
 		$this->rawImageUrl = $data['rawImageUrl'];
-		$this->caption = '';
 		$this->description = $data['description'];
 		$this->userThumbUrl = $data['userThumbUrl'];
 		$this->userName = $data['userName'];
 		$this->userPageUrl = $data['userPageUrl'];
 		$this->articles = $data['articles'];
+		$this->smallerArticleList = $smallerArticleList;
+		$this->articleListIsSmaller = $articleListIsSmaller;
 	}
 }

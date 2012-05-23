@@ -8,7 +8,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "mixins/sprite-Lightbox";
 
-$carousel-overlay-duration: 600ms;
+$carousel-overlay-duration: 200ms;
 
 // Default and hover icons depend on button darkness
 $sprite-normal: '_black';
@@ -296,6 +296,7 @@ $color-shadow: #3a3a3a;
 	.LightboxHeader {
 		@include transition-shorthand(top $carousel-overlay-duration ease-out);
 		border-bottom: 1px solid $color-page-border;
+		height: 70px;
 		padding: 20px;
 		top: 0;
 		width: 960px;
@@ -307,6 +308,9 @@ $color-shadow: #3a3a3a;
 			float: left;
 			font-size: 18px;
 			max-width: 650px;	/* compensation for i18n on .see-full-size-link */
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 		.caption {
 			clear: left;
