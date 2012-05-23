@@ -54,6 +54,7 @@ class ContactForm extends SpecialPage {
 		global $wgLang, $wgAllowRealName, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		global $wgUser, $wgCaptchaClass, $wgServer;
+		global $wgAbTesting;
 
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
 		$extPath = F::app()->wg->extensionsPath;
@@ -66,6 +67,7 @@ class ContactForm extends SpecialPage {
 		$this->mAction = $wgRequest->getVal( 'action' );
 		$this->mEmail = $wgRequest->getText( 'wpEmail' );
 		$this->mBrowser = $wgRequest->getText( 'wpBrowser' );
+		$this->mAbTestInfo = $wgRequest->getText( 'wpAbTesting' );
 		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
 
 		if( $wgRequest->wasPosted() ) {
@@ -196,6 +198,7 @@ class ContactForm extends SpecialPage {
 
 		//smush it all together
 		$info = $this->mBrowser . "\n";
+		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n"; // giving it its own line so that it stands out more
 		$info .= implode("; ", $items) . "\n";
 		//end wikia debug data
 
