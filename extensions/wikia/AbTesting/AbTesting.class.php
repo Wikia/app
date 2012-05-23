@@ -41,10 +41,10 @@ class AbTesting {
 		$app = F::app();
 
 		// Cache the generated string inside of memcached.
-		$memKey = $app->wf->SharedMemcKey( 'datamart', 'abconfig' );
+		$memKey = $app->wf->SharedMemcKey( 'wikicities', 'abconfig' );
 		$jsString = $app->wg->Memc->get( $memKey );
 		if(empty($jsString)){
-			$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+			$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->ExternalSharedDB);
 			
 			// Generate config JS from the experiments and treatment_groups tables in the datamart.
 			$result = $db->select(
