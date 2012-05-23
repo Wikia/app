@@ -26,47 +26,10 @@ class RelatedVideosController extends WikiaController {
 		if( Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
 			return false;
 		}
-		 
-		$videos = array();
-		
-		$oLocalLists = RelatedVideosNamespaceData::newFromTargetTitle( F::app()->wg->title );
-		$oEmbededVideosLists = RelatedVideosEmbededData::newFromTitle( F::app()->wg->title );
-		$oGlobalLists = RelatedVideosNamespaceData::newFromGeneralMessage();
-		
-		$oRelatedVideosService = F::build('RelatedVideosService');
-		$blacklist = array();
-		foreach( array( $oGlobalLists, $oEmbededVideosLists, $oLocalLists ) as $oLists ){
-			if ( !empty( $oLists ) && $oLists->exists() ){
-				$data = $oLists->getData();
-				if ( isset(  $data['lists'] ) && isset( $data['lists']['WHITELIST'] ) ) {
-					foreach( $data['lists']['WHITELIST'] as $page ){
-						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
-						if ( isset( $videoData['uniqueId'] ) ) {
-							$videos[$videoData['uniqueId']] = $videoData;
-						}
-					}
-					foreach( $data['lists']['BLACKLIST'] as $page ){
-						$videoData = $oRelatedVideosService->getRelatedVideoData( $page );
-						if ( isset( $videoData['uniqueId'] ) )
-							$blacklist[$videoData['uniqueId']] = $videoData;
-					}
-				}
-			}
-		}
-		
-		foreach( $blacklist as $key => $blElement ){
-			unset( $videos[ $key ] );
-		}
-
-		uasort( $videos, array( $this, 'sortByDate') );
-		$videos = array_reverse( $videos, true );
+		$rvs = new RelatedVideosService();
+		$videos = $rvs->getRVforArticleId( $this->app->wg->title->getArticleId() );
 		
 		$this->setVal( 'videos', $videos );
-	}
-
-	public function sortByDate( $a, $b ){
-
-		return strnatcmp( $a['date'], $b['date'] );
 	}
 
 	public function getVideo(){
