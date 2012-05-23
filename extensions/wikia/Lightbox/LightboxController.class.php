@@ -208,8 +208,10 @@ class LightboxController extends WikiaController {
 			$articleTitle = $this->request->getVal('articleTitle');
 			$articleTitleObj = F::build('Title', array($articleTitle), 'newFromText');
 			
-			$fileParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($fileTitle));
-			$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
+			if(!empty($articleTitleObj) && $articleTitleObj->exists()) {
+				$fileParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($fileTitle));
+				$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
+			}
 			$fileUrl = $fileTitleObj->getFullURL();
 			
 			// determine share url
@@ -217,12 +219,12 @@ class LightboxController extends WikiaController {
 				NS_MAIN,
 				NS_CATEGORY,
 			);
-			$shareUrl = in_array($articleTitleObj->getNamespace(), $sharingNamespaces) ? $articleUrl : $fileUrl;
+			$shareUrl = !empty($articleUrl) && in_array($articleTitleObj->getNamespace(), $sharingNamespaces) ? $articleUrl : $fileUrl;
 			
 			$thumb = $file->getThumbnail(300, 250);
 			$thumbUrl = $thumb->getUrl();
 			$embedMarkup = "<a href=\"$shareUrl\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
-			$linkDescription = wfMsg('lightbox-share-description', $articleTitleObj->getText(), $this->wg->Sitename);
+			$linkDescription = wfMsg('lightbox-share-description', empty($articleUrl) ? $fileTitleObj->getText() : $articleTitleObj->getText(), $this->wg->Sitename);
 			
 			$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
 				'facebook',
@@ -233,7 +235,7 @@ class LightboxController extends WikiaController {
 			foreach($shareNetworks as $network) {
 				$networks[] = array(
 					'id' => $network->getId(),
-					'url' => $network->getUrl($articleUrl, $linkDescription)
+					'url' => $network->getUrl($shareUrl, $linkDescription)
 				);
 			}
 		}
