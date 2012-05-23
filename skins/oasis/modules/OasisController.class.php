@@ -31,8 +31,40 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
+		
+		$this->app->registerHook('MakeGlobalVariablesScript', 'OasisController', 'onMakeGlobalVariablesScript');
+	}
+
+	/**
+	 * Add global JS variables with wgJsAtBottom
+	 *
+	 * @param array $vars global variables list
+	 * @return boolean return true
+	 */
+	public function onMakeGlobalVariablesScript($vars) {
+		$vars['wgJsAtBottom'] = self::JsAtBottom();
+		return true;
 	}
 	
+	/**
+	 * Business-logic for determining if the javascript should be at the bottom of the page (it usually should be
+	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
+	 */
+	public static function JsAtBottom(){
+		global $wgTitle;
+
+		// decide where JS should be placed (only add JS at the top for non-search Special and edit pages)
+		if (ArticleAdLogic::isSearch()) {
+			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
+		}
+		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
+			$jsAtBottom = false;
+		}
+		else {
+			$jsAtBottom = true;
+		}
+		return $jsAtBottom;
+	}
 
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
@@ -232,17 +264,8 @@ class OasisController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-
-		// decide where JS should be placed (only add JS at the top for non-search Special and edit pages)
-		if (ArticleAdLogic::isSearch()) {
-			$this->jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
-		}
-		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
-			$this->jsAtBottom = false;
-		}
-		else {
-			$this->jsAtBottom = true;
-		}
+		
+		$this->jsAtBottom = self::JsAtBottom();
 
 		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
 		$this->wikiaScriptLoader = '';
