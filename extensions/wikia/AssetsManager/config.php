@@ -7,6 +7,7 @@ $config['oasis_jquery_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
         '#group_oasis_jquery',
+	'#group_oasis_wikia_js',
         '#group_oasis_ads_js'
     )
 );
@@ -122,6 +123,18 @@ $config['oasis_jquery'] = array(
 	)
 );
 
+/** Wikia **/
+
+$config['oasis_wikia_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//skins/common/wikia/my.class.js',
+		'//skins/common/wikia/querystring.js',
+		'//skins/common/wikia/cookies.js',
+		'//skins/common/wikia/log.js',
+	)
+);
+
 /** YUI **/
 //(deprecated - see BugId:3116)
 
@@ -152,6 +165,7 @@ $config['oasis_shared_js'] = array(
     'assets' => array(
         // shared libraries
         '#group_oasis_jquery',
+        '#group_oasis_wikia_js',
         '#group_oasis_nojquery_shared_js',
     )
 );
