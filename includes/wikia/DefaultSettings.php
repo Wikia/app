@@ -899,4 +899,4 @@ $wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';
 /**
  * Wikia UI Style Guide objects
  */
-$wgAutoloadClasses['DropdownController'] = $IP . '/extensions/wikia/WikiaStyleGuide/DropdownController.class.php';
+$wgAutoloadClasses['WikiaStyleGuideDropdownController'] = $IP . '/extensions/wikia/WikiaStyleGuide/WikiaStyleGuideDropdownController.class.php';
