@@ -1,0 +1,53 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+
+@import "DropdownColors";
+
+.WikiaDropdown {
+	> ul {
+		@include border-radius(3px);
+		@include box-shadow(3px, 3px, 6px, $Dropdown-color-shadow);
+
+		background-color: $Dropdown-color-background;
+		border: 1px solid $Dropdown-color-border;
+		cursor: pointer;
+		display: none;
+		padding: 5px 0;
+		position: relative;
+		z-index: $zTop;
+
+		> li {
+			display: block;
+			font-size: 12px;
+			line-height: 25px;
+			padding: 5px 9px;
+	
+			&:hover {
+				background: $Dropdown-color-hover;
+			}
+	
+			.selected {
+				background: $Dropdown-color-selected;
+			}
+		}
+	}
+
+	&.MultiSelect {
+		.selected-items {
+			@include border-radius(3px);
+	
+			background-color: $Dropdown-color-background;
+			border: 1px solid $Dropdown-color-border;
+			cursor: pointer;
+			font-size: 12px;
+			line-height: 25px;
+			padding: 5px 9px;
+	
+			&:hover {
+				background: $Dropdown-color-hover;
+			}
+		}
+	}
+}
