@@ -91,6 +91,7 @@ class TwitterSharing extends SocialSharing{
 	}
 }
 
+// Google Plus
 class PlusoneSharing extends SocialSharing{
 	function __construct(){
 		$this->urlTemplate = 'https://plusone.google.com/_/+1/confirm?hl=' . F::app()->wg->Lang->getCode() . '&url=$1';
