@@ -199,7 +199,16 @@ $.store.drivers = {
 		},
 		set: function( key, value )
 		{
-			window.localStorage.setItem( key, value );
+			try
+			{
+				window.localStorage.setItem( key, value );
+			}
+			catch(e)
+			{
+				// something went wrong
+				$().log("Can't set localStorage item");
+				return false;
+			}
 		},
 		del: function( key )
 		{
