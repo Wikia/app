@@ -103,11 +103,10 @@ class WallNotificationEntity {
 		$this->data->parent_id = null;
 		
 		if( $authoruser instanceof User ) {
-			$msg_author_realname = $authoruser->getRealName();
 			$this->data->msg_author_id = $authoruser->getId();
 			$this->data->msg_author_username = $authoruser->getName();
 			if($authoruser->getId() > 0) {
-				$this->data->msg_author_displayname = empty($msg_author_realname) ?  $this->data->msg_author_username:$msg_author_realname;	
+				$this->data->msg_author_displayname = $this->data->msg_author_username;	
 			} else {
 				$this->data->msg_author_displayname = $app->wf->Msg('oasis-anon-user');	
 			}
@@ -120,8 +119,7 @@ class WallNotificationEntity {
 		$this->data->wall_username = $walluser->getName();
 		
 		$this->data->wall_userid = $walluser->getId();
-		$wall_realname = $walluser->getRealName();
-		$this->data->wall_displayname = empty($wall_realname) ? $this->data->wall_username:$wall_realname;
+		$this->data->wall_displayname = $this->data->wall_username;
 		
 		$this->data->title_id = $ac->getTitle()->getArticleId();
 		
@@ -140,9 +138,8 @@ class WallNotificationEntity {
 			
 			if( $parentUser instanceof User ) {
 				$this->data->parent_username = $parentUser->getName();
-				$parent_realname = $parentUser->getRealName();
 				if($parentUser->getId() > 0) {
-					$this->data->parent_displayname = empty($parent_realname) ? $this->data->parent_username : $parent_realname;
+					$this->data->parent_displayname = $this->data->parent_username;
 				} else {
 					$this->data->parent_displayname = $app->wf->Msg('oasis-anon-user');
 				}
@@ -204,7 +201,7 @@ class WallNotificationEntity {
 	 * Helper functions
 	 */
 	public function getMemcKey() {
-		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v30", $this->id, 'notification' );
+		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v31", $this->id, 'notification' );
 	}
 
 	public function getCache() {

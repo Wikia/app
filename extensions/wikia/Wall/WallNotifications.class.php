@@ -340,11 +340,7 @@ class WallNotifications {
 			)) {
 				
 				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-				
-				$watcherName = $watcher->getRealName();
-				if(empty($watcherName)) {
-					$watcherName = $watcher->getName();	
-				}
+				$watcherName = $watcher->getName();	
 
 				if( $notification->data->msg_author_username == $notification->data->msg_author_displayname) {
 					$author_signature = $notification->data->msg_author_username;

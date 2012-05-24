@@ -128,19 +128,6 @@ class WallController extends ArticleCommentsController {
 	 */
 	
 	public function messageDeleted() {
-		/*
-		 * Title no longer includes Username
-		 * 
-		$parts = explode('/', $this->app->wg->Title->getText());
-		$parent_title = F::build('Title', array($parts[0], NS_USER_WALL), 'newFromText' );
-		$user = F::build('User',array($parts[0]),'newFromName');
-		if(!empty( $user )) {
-			$user_displayname = $user->getRealName();
-			if(empty($user_displayname)) $user_displayname = $user->getName();
-		} else {
-			$user_displayname = $parts[0];
-		}
-		 */
 		$id = $this->app->wg->Title->getText();
 		
 		$wm	= F::build('WallMessage', array($id), 'newFromId');
@@ -151,9 +138,7 @@ class WallController extends ArticleCommentsController {
 		} else {
 			
 			$user = $wm->getWallOwner();
-			$user_displayname = $user->getRealName();
-			
-			if(empty($user_displayname)) $user_displayname = $user->getName();
+			$user_displayname = $user->getName();
 		
 			$wallTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
 			
@@ -226,8 +211,7 @@ class WallController extends ArticleCommentsController {
 	}
 	
 	public function newMessage() {
-		$wall_username = $this->helper->getUser()->getRealName();
-		if( empty( $wall_username) ) $wall_username = $this->helper->getUser()->getName();
+		$wall_username = $this->helper->getUser()->getName();
 		
 		// only use realname if user made edits (use logic from masthead)
 		$userStatsService = F::build('UserStatsService', array($this->helper->getUser()->getID()));
@@ -372,7 +356,7 @@ class WallController extends ArticleCommentsController {
 		// cache invalidation in this case would require too many queries
 		$authorUser = User::newFromName($wallMessage->getUser()->getName());
 		if($authorUser) {
-			$realname = $authorUser->getRealName();
+			$realname = "";
 			$name = $authorUser->getName();
 			$isStaff = $authorUser->isAllowed('wallshowwikiaemblem');
 		} else {
@@ -515,10 +499,8 @@ class WallController extends ArticleCommentsController {
 			if( $wallMessage->getWallOwner()->getId() == $this->wg->User->getId() ) {
 				$wallName = wfMsg('wall-message-mywall');
 			} else {
-				$wallOwner = $wallMessage->getWallOwner()->getRealName();
-				if(empty($wallOwner)){ 
-					$wallOwner = $wallMessage->getWallOwner()->getName();
-				}
+				
+				$wallOwner = $wallMessage->getWallOwner()->getName();
 				
 				$wallName = wfMsgExt('wall-message-elseswall', array('parsemag'), $wallOwner); 
 			}
