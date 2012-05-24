@@ -231,7 +231,8 @@ class LightboxController extends WikiaController {
 				'facebook',
 				'twitter',
 				'stumbleupon',
-				'reddit'
+				'reddit',
+				'plusone',
 			) );
 			foreach($shareNetworks as $network) {
 				$networks[] = array(
