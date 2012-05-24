@@ -119,6 +119,9 @@
 					            'type' => 'text',
 					            'name' => 'lightbox-standard-link',
 				                'value' => "{{shareUrl}}",
+				                'attributes' => array(
+				                	'class' => 'share-input',
+				                ),
 					        )
 					    )
 					);
