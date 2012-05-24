@@ -11,7 +11,7 @@ class RecentChangesFiltersStorage {
 	
 	public function set($values){
 		$old = $this->get(false);
-		$new = $this->buildUserOption($old, $values);
+		$new = $this->buildUserOption($old, empty($values) ? array():$values );
 		$this->user->setOption('RCFilters', serialize($new) );
 		$this->setCache($new);
 		$this->user->saveSettings();
@@ -20,16 +20,16 @@ class RecentChangesFiltersStorage {
 	
 	public function get($onlyFromThisWiki = true) {
 		$values = $this->getCache();
-		if(empty($values)) {
+		if(is_null($values)) {
 			$values = unserialize( $this->user->getOption('RCFilters') );
-		}
-		
-		if(!$onlyFromThisWiki) {
-			return $values;
 		}
 		
 		if(empty($values)) {
 			return array('all');
+		}
+		
+		if(!$onlyFromThisWiki) {
+			return $values;
 		}
 		
 		$out = array();
@@ -55,12 +55,10 @@ class RecentChangesFiltersStorage {
 		if(empty($old)) {
 			return $new;
 		}
-		
-		$old = array_flip($old); 
-		
+	
 		foreach($old as $key => $value) {
 			//check if this namespace is from other wiki
-			if(isset($this->namespaces[$key])) {
+			if(!isset($this->namespaces[$value])) {
 				$new[$value] = 1;
 			}
 		}
