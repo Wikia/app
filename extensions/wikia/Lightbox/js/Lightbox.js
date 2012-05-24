@@ -350,7 +350,7 @@ var Lightbox = {
 						Lightbox.video.destroyVideo();
 					}
 					Lightbox.openModal.addClass('share-mode');
-					Lightbox.getMediaShare({fileTitle: Lightbox.current.title, articleTitle:wgTitle}, function(json) {
+					Lightbox.getShareCodes({fileTitle: Lightbox.current.title, articleTitle:wgTitle}, function(json) {
 						Lightbox.openModal.share.append(shareTemplate.mustache(json));
 					});
 				// Close more info and share screens on button click
@@ -677,7 +677,7 @@ var Lightbox = {
 			});
 		}
 	},
-	getMediaShare: function(mediaParams, callback) {
+	getShareCodes: function(mediaParams, callback) {
 		var title = mediaParams['title'];
 		if(Lightbox.cache.share[title]) {
 			callback(Lightbox.cache.share[title]);
