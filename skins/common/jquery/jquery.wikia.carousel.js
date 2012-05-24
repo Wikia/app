@@ -224,22 +224,29 @@
 			}
 			
 			var idx1 = states.currIndex - options.itemsShown,
-				idx2 = states.currIndex + options.itemsShown*2;
+				idx2 = states.currIndex;
+				idx3 = states.currIndex + options.itemsShown*2;
 			
 			idx1 = idx1 < 0 ? 0 : idx1;
 			
-			var images = dom.items.slice(idx1, idx2).find('img[data-src]');
+			var firstImages = dom.items.slice(idx2, idx3).find('img[data-src]'), // visible + next panel
+				lastImages = dom.items.slice(idx1, idx2).find('img[data-src]'); // previous panel
 			
+			doImageLoad(firstImages);
+			doImageLoad(lastImages);			
+			
+			if(!dom.items.find('img[data-src]').length) {
+				states.lazyLoadedAll = true;
+			}
+		}
+		
+		function doImageLoad(images) {
 			images.each(function() {
 				var image = $(this);
 				image.
 					attr('src', image.data('src')).
 					removeAttr('data-src');
-			});
-			
-			if(!dom.items.find('img[data-src]').length) {
-				states.lazyLoadedAll = true;
-			}
+			});		
 		}
 
 		// run this once on init
