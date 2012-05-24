@@ -98,7 +98,7 @@ class WikiaSearch extends WikiaObject {
 			// no grouping, e.g. intra-wiki searching
 			if($this->namespaces) {
 					$this->client->setNamespaces($this->namespaces);
-			}
+			} 
 
 			$methodOptions = array('start'  => (($page - 1) * $length), 
 					       'size' => $length, 
@@ -107,6 +107,10 @@ class WikiaSearch extends WikiaObject {
 					       'rank' => $rank
 					       );
 			$results = $this->client->search( $query, $methodOptions);
+
+			if (!$this->namespaces) {
+				$this->namespaces = $this->client->getNamespaces();
+			}
 		}
 
 		if( $page == 1 ) {
