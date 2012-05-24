@@ -3,7 +3,9 @@
 $messages = array();
 
 $messages['en'] = array(
-	/* new stuff for media tool */
+	'mediatool-error-missing-video-url' => 'Missing video url',
+	'mediatool-error-unknown-video-provider' => 'Unknown video provider',
+	'mediatool-error-invalid-video' => 'Invalid video'
 );
 
 /** Message documentation (Message documentation)
