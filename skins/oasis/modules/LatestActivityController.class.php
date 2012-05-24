@@ -15,12 +15,7 @@ class LatestActivityController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		$maxElements = 4;
-		
-		/*
-		$response = $this->sendRequest('Lightbox', 'getArticleMediaThumbs', array('title' => 'Mainpage'));
-		$this->test = $response->getVal('thumbs');
-		*/
-		
+
 		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgOut, $wgTitle, $wgUserProfilePagesNamespaces;
 		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestActivity.js"></script>');
 		$this->moduleHeader = wfMsg('oasis-activity-header');
