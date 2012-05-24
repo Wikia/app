@@ -86,12 +86,14 @@ class WeeklyDigest extends Maintenance {
 				}
 			} else {
 				$this->output( "Run weekly digest ...\n" );
-				$oWatchlistBot->run();
+				$oWatchlistBot->updateLog( );
+				$emailsSent = $oWatchlistBot->run();
 				//
 				$oUser = User::newFromId(115748); //Moli.wikia
 				$oUser->load();
 				$oUser->sendMail( 'Global watchlist has finished', 'Global watchlist has finished', 'Wikia <community@wikia.com>', null, 'GlobalWatchlist' );
 
+				$oWatchlistBot->updateLog( );
 				$this->output( "Done!\n" );
 			}
 		}
