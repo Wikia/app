@@ -312,7 +312,6 @@ class SpecialRecentChanges extends SpecialPage {
 		$uid = $wgUser->getId();
 		$dbr = wfGetDB( DB_SLAVE );
 		$limit = $opts['limit'];
-		$namespace = $opts['namespace'];
 		$invert = $opts['invert'];
 
 		// JOIN on watchlist for users
@@ -332,8 +331,12 @@ class SpecialRecentChanges extends SpecialPage {
 			$tables, $fields, $conds, $join_conds, $query_options, $opts['tagfilter']
 		);
 
+		/* wikia change begin */
 		if ( !wfRunHooks( 'SpecialRecentChangesQuery', array( &$conds, &$tables, &$join_conds, $opts, &$query_options ) ) )
 			return false;
+
+		$namespace = $opts['namespace'];
+		/* wikia change end */
 
 		// Don't use the new_namespace_time timestamp index if:
 		// (a) "All namespaces" selected
@@ -559,15 +562,17 @@ class SpecialRecentChanges extends SpecialPage {
 	 */
 	protected function namespaceFilterForm( FormOptions $opts ) {
 		/* Wikia change begin */
+		$invert = '';
+		$showAll = '';
 		$nsSelect = '';
-		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
+		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], $showAll) );
 		if ( empty($nsSelect) ) {
-			$nsSelect = Xml::namespaceSelector( $opts['namespace'], '' );
+			$nsSelect = Xml::namespaceSelector( $opts['namespace'], $showAll );
+			$invert = Xml::checkLabel( wfMsg('invert'), 'invert', 'nsinvert', $opts['invert'] );
 		}
 		/* Wikia change end */
 
 		$nsLabel = Xml::label( wfMsg('namespace'), 'namespace' );
-		$invert = Xml::checkLabel( wfMsg('invert'), 'invert', 'nsinvert', $opts['invert'] );
 		return array( $nsLabel, "$nsSelect $invert" );
 	}
 
