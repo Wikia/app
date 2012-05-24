@@ -494,7 +494,11 @@ class WallHelper {
 
 		$text = str_replace('*', '&asterix;', $text);
 		$text = $parser->parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
-		$text = trim(strip_tags(html_entity_decode($text)));
+		// BugId:31034 - I had to give ENT_COMPAT and UTF-8 explicitly.
+		// Prior PHP 5.4 the defaults are ENT_COMPAT and ISO-8859-1 (not UTF-8)
+		// and cause HTML entities in an actual UTF-8 string to be decoded incorrectly
+		// and displayed in... an ugly way.
+		$text = trim( strip_tags( html_entity_decode( $text, ENT_COMPAT, 'UTF-8' ) ) );
 		$text = str_replace('&asterix;', '*', $text);
 
 		return $text;
