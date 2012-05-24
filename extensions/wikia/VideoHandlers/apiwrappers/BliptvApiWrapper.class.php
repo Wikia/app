@@ -10,6 +10,8 @@ class BliptvApiWrapper extends ApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
+
+		wfProfileIn( __METHOD__ );
 		$parsed = explode( "/", $url );
 		if( is_array( $parsed ) ) {
 			$mdata = array_pop( $parsed );
@@ -20,15 +22,17 @@ class BliptvApiWrapper extends ApiWrapper {
 			}
 			$last = explode( "?", $blip);
 			$videoId = $last[0];
+			wfProfileOut( __METHOD__ );
 			return new static( $videoId );
 		}
-
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
 
 	protected function processResponse($response, $type) {
-			
+
+		wfProfileIn( __METHOD__ );
 		$replaced_count = 0;
 		$response = str_replace( "blip_ws_results([[{", "[{", $response, $replaced_count );
 		if($replaced_count > 0) {
@@ -39,7 +43,7 @@ class BliptvApiWrapper extends ApiWrapper {
 			$response = str_replace( "blip_ws_results([{", "[{", $response, $replaced_count );
 			$response = str_replace( "]);", "]", $response );
 		}		 
-		
+		wfProfileOut( __METHOD__ );
 		return parent::processResponse($response, $type);
 	}
 
@@ -68,9 +72,10 @@ class BliptvApiWrapper extends ApiWrapper {
 	}	  
 	
 	public function getDescription() {
-		
+		wfProfileIn( __METHOD__ );
 		$text = $this->interfaceObj['description'];
 		if ( $this->getVideoKeywords() ) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
+		wfProfileOut( __METHOD__ );
 		return $text;
 	}
 

@@ -2,6 +2,9 @@
 
 class FakeApiWrapper extends ApiWrapper {
 	public function __construct( $videoName ) {
+
+		wfProfileIn( __METHOD__ );
+
 		$app = F::app();
 		
 		$dbr = $app->wf->GetDB( DB_SLAVE );
@@ -20,6 +23,8 @@ class FakeApiWrapper extends ApiWrapper {
 
 		$this->videoId		= $videoId;
 		$this->videoName	= $videoName;
+
+		wfProfileOut( __METHOD__ );
 	}
 	
 	protected function getVideoTitle() {

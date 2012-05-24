@@ -9,11 +9,14 @@ class GametrailersApiWrapper extends NullApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
+		wfProfileIn( __METHOD__ );
 		$parsed = explode( "/", $url );
 		if( is_array( $parsed ) ) {
 			$id = explode("?",array_pop( $parsed ));
+			wfProfileOut( __METHOD__ );
 			return new static( $id );
 		}
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 

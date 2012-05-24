@@ -37,14 +37,21 @@ class WikiaLocalFile extends LocalFile {
 	 * Do not call this except from inside a repo class.
 	 */
 	static function newFromKey( $sha1, $repo, $timestamp = false ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$dbr = $repo->getSlaveDB();
+
 		# Polymorphic function name to distinguish foreign and local fetches
-		$fname = get_class( $this ) . '::' . __FUNCTION__;
 
 		$conds = array( 'img_sha1' => $sha1 );
 		if( $timestamp ) {
 			$conds['img_timestamp'] = $timestamp;
 		}
-		$row = $dbr->selectRow( 'image', $this->getCacheFields( 'img_' ), $conds, $fname );
+		$row = $dbr->selectRow( 'image', self::getCacheFields( 'img_' ), $conds, __METHOD__ );
+
+		wfProfileOut( __METHOD__ );
+
 		if( $row ) {
 			return static::newFromRow( $row, $repo );
 		} else {
@@ -97,19 +104,25 @@ class WikiaLocalFile extends LocalFile {
 	// These methods work as a layer of communication between this class and SharedLogic
 
 	function getHandler(){
+		wfProfileIn( __METHOD__ );
 		parent::getHandler();
 		$this->getLocalFileLogic()->afterGetHandler();
+		wfProfileOut( __METHOD__ );
 		return $this->handler;
 	}
 
 	function setProps( $info ) {
+		wfProfileIn( __METHOD__ );
 		parent::setProps( $info );
 		$this->getLocalFileLogic()->afterSetProps();
+		wfProfileOut( __METHOD__ );
 	}
 
 	function loadFromFile() {
+		wfProfileIn( __METHOD__ );
 		$this->getLocalFileLogic()->beforeLoadFromFile();
 		parent::loadFromFile();
 		$this->getLocalFileLogic()->afterLoadFromFile();
+		wfProfileOut( __METHOD__ );
 	}
 }

@@ -50,6 +50,8 @@ abstract class VideoFeedIngester {
 	}
 
 	public function createVideo(array $data, &$msg, $params=array()) {
+
+		wfProfileIn( __METHOD__ );
 		$debug = !empty($params['debug']);
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 		
@@ -57,6 +59,7 @@ abstract class VideoFeedIngester {
 		$name = $this->generateName($data);
 		$metadata = $this->generateMetadata($data, $msg);
 		if (!empty($msg)) {
+			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
@@ -74,6 +77,7 @@ abstract class VideoFeedIngester {
 		}
 
 		if (!$this->validateTitle($id, $name, $msg, $debug)) {
+			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
@@ -91,6 +95,7 @@ abstract class VideoFeedIngester {
 			print "parsed partner clip id $id. name: $name. categories: " . implode(',', $categories) . ". ";
 			print "metadata: \n";
 			print_r($metadata);
+			wfProfileOut( __METHOD__ );
 			return 1;
 		}
 		else {
@@ -112,21 +117,25 @@ abstract class VideoFeedIngester {
 				//print "sleeping " . self::THROTTLE_INTERVAL . " second(s)...\n";
 				//sleep(self::THROTTLE_INTERVAL);
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
+				wfProfileOut( __METHOD__ );
 				return 1;
 			}
 		}
-
+		wfProfileOut( __METHOD__ );
 		return 0;
 	}
 	
 	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
+
+		wfProfileIn( __METHOD__ );
 		$sanitizedName = VideoFileUploader::sanitizeTitle($name);
 		$title = $this->titleFromText($sanitizedName);
 		if(is_null($title)) {
 			$msg = "article title was null: clip id $videoId. name: $name";
+			wfProfileOut( __METHOD__ );
 			return 0;
 		}
-
+		wfProfileOut( __METHOD__ );
 		return 1;
 	}
 
@@ -135,6 +144,9 @@ abstract class VideoFeedIngester {
 	}		
 	
 	public function getWikiIngestionData() {
+
+		wfProfileIn( __METHOD__ );
+
 		$data = array();
 		
 		// merge data from datasource into a data structure keyed by 
@@ -157,14 +169,17 @@ abstract class VideoFeedIngester {
 				}
 			}
 		}
-		
+
+		wfProfileOut( __METHOD__ );
+
 		return $data;
 	}
 
 	protected function getWikiIngestionDataFromSource() {
 		global $wgExternalSharedDB, $wgMemc;
 		
-		
+		wfProfileIn( __METHOD__ );
+
 		$memcKey = wfMemcKey( self::CACHE_KEY );
 		$aWikis = $wgMemc->get( $memcKey );
 		if ( !empty( $aWikis ) ) {
@@ -206,6 +221,7 @@ abstract class VideoFeedIngester {
 		$dbr->freeResult( $oRes );
 		
 		$wgMemc->set( $memcKey, $aWikis, self::CACHE_EXPIRY );
+		wfProfileOut( __METHOD__ );
 
 		return $aWikis;
 	}

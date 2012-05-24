@@ -97,7 +97,9 @@ class ThumbnailVideo extends ThumbnailImage {
 		if ( !empty( F::app()->wg->RTEParserEnabled ) ) {
 			return $this->renderAsThumbnailImage($options);		
 		}
-	
+
+		wfProfileIn( __METHOD__ );
+
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
 		$useThmbnailInfoBar = false;
@@ -217,7 +219,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			}
 
 		}
- 
+                wfProfileOut( __METHOD__ );
 		return $html;
 	}
 }

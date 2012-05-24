@@ -13,6 +13,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	public static function newFromUrl( $url ) {
 
+		wfProfileIn( __METHOD__ );
+
 		$aData = array();
 
 		$id = '';
@@ -37,20 +39,31 @@ class YoutubeApiWrapper extends ApiWrapper {
 		}
 
 		if ($id) {
+			wfProfileOut( __METHOD__ );
 			return new static( $id );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
 	public function getDescription() {
+
+		wfProfileIn( __METHOD__ );
+
 		$text = '';
 		if ( $this->getVideoCategory() ) $text .= 'Category: ' . $this->getVideoCategory();
 		if ( $this->getVideoKeywords() ) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
+
+		wfProfileOut( __METHOD__ );
+
 		return $text;
 	}
 	
 	public function getThumbnailUrl() {
+
+		wfProfileIn( __METHOD__ );
+
 		$lowresUrl = '';
 		$hiresUrl = '';
 		
@@ -65,7 +78,9 @@ class YoutubeApiWrapper extends ApiWrapper {
 					break;
 			}
 		}
-		
+
+		wfProfileOut( __METHOD__ );
+
 		return !empty($hiresUrl) ? $hiresUrl : $lowresUrl;
 	}
 
@@ -200,9 +215,13 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 */
 	protected function checkForResponseErrors( $status, $content, $apiUrl ){
 
+		wfProfileIn( __METHOD__ );
+
 		// check if still exists
 		$code = $status->errors[0]['params'][0];
 		if( $code == 404 ) {
+
+			wfProfileOut( __METHOD__ );
 			throw new VideoNotFoundException($status, $content, $apiUrl);
 		}
 
@@ -216,6 +235,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 		if( isset( $sp->data['child'][$googleShemas] ) ) {
 			$err = $sp->data['child'][$googleShemas]['errors'][0]['child'][$googleShemas]['error'][0]['child'][$googleShemas]['internalReason'][0]['data'];
 			if( $err == 'Private video' ) {
+				wfProfileOut( __METHOD__ );
 				throw new VideoIsPrivateException( $status, $content, $apiUrl );
 			}
 		}
@@ -224,9 +244,12 @@ class YoutubeApiWrapper extends ApiWrapper {
 		if ( isset( $sp->data['child'][''] ) ) {
 			$err = $sp->data['child']['']['errors'][0]['child']['']['error'][0]['child']['']['code'][0]['data'];
 			if( $err == 'too_many_recent_calls' ) {
+				wfProfileOut( __METHOD__ );
 				throw new VideoQuotaExceededException( $status, $content, $apiUrl );
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		// return default
 		parent::checkForResponseErrors($status, $content, $apiUrl);

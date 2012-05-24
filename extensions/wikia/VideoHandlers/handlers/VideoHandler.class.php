@@ -23,8 +23,9 @@ abstract class VideoHandler extends BitmapHandler {
 
 	function normaliseParams( $image, &$params ) {
 		global $wgMaxImageArea, $wgMaxThumbnailArea;
-		
+		wfProfileIn( __METHOD__ );
 		if ( !ImageHandler::normaliseParams( $image, $params ) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -44,9 +45,10 @@ abstract class VideoHandler extends BitmapHandler {
 		# - no free pass for jpeg
 		# - thumbs should be smaller
 		if ( $params['physicalWidth'] * $params['physicalHeight'] > $wgMaxThumbnailArea ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
-
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -86,10 +88,13 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	function getAspectRatio(){
+		wfProfileIn( __METHOD__ );
 		$metadata = $this->getMetadata(true);
 		if (!empty($metadata['aspectRatio'])) {
+			wfProfileOut( __METHOD__ );
 			return $metadata['aspectRatio'];
 		}
+		wfProfileOut( __METHOD__ );
 		return static::$aspectRatio;
 	}
 
@@ -105,12 +110,13 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return mixed array of data, or serialized version
 	 */
 	function getMetadata( $unserialize = false ) {
+		wfProfileIn( __METHOD__ );
 		if ( empty($this->metadata)) {
 			$this->metadata = $this->getApi() instanceof ApiWrapper
 				? serialize( $this->getApi()->getMetadata() )
 				: null;
 		}
-
+		wfProfileOut( __METHOD__ );
 		return empty($unserialize) ? $this->metadata : unserialize($this->metadata);
 	}
 	
@@ -135,9 +141,11 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return ApiWrapper object
 	 */
 	function getApi() {
+		wfProfileIn( __METHOD__ );
 		if ( !empty( $this->videoId ) && empty( $this->api ) ){
 			$this->api = F::build ( $this->apiName, array( $this->videoId ) );
 		}
+		wfProfileOut( __METHOD__ );
 		return $this->api;
 	}
 

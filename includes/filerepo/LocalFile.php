@@ -80,13 +80,13 @@ class LocalFile extends File {
 	 */
 	static function newFromKey( $sha1, $repo, $timestamp = false ) {
 		# Polymorphic function name to distinguish foreign and local fetches
-		$fname = get_class( $this ) . '::' . __FUNCTION__;
+		$dbr = $repo->getSlaveDB();
 
 		$conds = array( 'img_sha1' => $sha1 );
 		if( $timestamp ) {
 			$conds['img_timestamp'] = $timestamp;
 		}
-		$row = $dbr->selectRow( 'image', $this->getCacheFields( 'img_' ), $conds, $fname );
+		$row = $dbr->selectRow( 'image', self::getCacheFields( 'img_' ), $conds, __METHOD__ );
 		if( $row ) {
 			return self::newFromRow( $row, $repo );
 		} else {

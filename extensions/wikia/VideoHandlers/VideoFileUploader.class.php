@@ -28,10 +28,13 @@ class VideoFileUploader {
 	public function setVideoId( $sVideoId ){			$this->sVideoId = $sVideoId; }
 
 	public function setProviderFromId( $iProviderId ){
+		wfProfileIn( __METHOD__ );
 		$sProvider = ApiWrapperFactory::getInstance()->getProviderNameFromId( $iProviderId );
 		if ( empty( $sProvider ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new Exception( 'No provider name mapped to ' . $iProviderId );
 		}
+		wfProfileOut( __METHOD__ );
 		$this->sProvider = $sProvider;
 	}
 
@@ -47,7 +50,7 @@ class VideoFileUploader {
 	}
 
 	protected function tmpUpload ( $urlFrom ){
-
+		wfProfileIn( __METHOD__ );
 		$data = array(
 			'wpUpload' => 1,
 			'wpSourceType' => 'web',
@@ -56,7 +59,7 @@ class VideoFileUploader {
 
 		$upload = F::build( 'UploadFromUrl' ); /* @var $upload UploadFromUrl */
 		$upload->initializeFromRequest( F::build( 'FauxRequest', array( $data, true ) ) );
-
+		wfProfileOut( __METHOD__ );
 		return $upload;
 	}
 
@@ -130,6 +133,7 @@ class VideoFileUploader {
 
 	protected function adjustThumbnailToVideoRatio( $upload ){
 
+		wfProfileIn( __METHOD__ );
 		$data = file_get_contents( $upload->getTempPath() );
 		$src = imagecreatefromstring( $data );
 
@@ -150,11 +154,13 @@ class VideoFileUploader {
 
 		imagedestroy( $src );
 		imagedestroy( $dest );
+		wfProfileOut( __METHOD__ );
 		
 	}
 
 	protected function getApiWrapper(){
 
+		wfProfileIn( __METHOD__ );
 		if( !empty( $this->oApiWrapper ) ) return $this->oApiWrapper;
 
 		if( !empty( $this->sExternalUrl ) ){
@@ -173,7 +179,7 @@ class VideoFileUploader {
 				)
 			);
 		}
-
+		wfProfileOut( __METHOD__ );
 		return $this->oApiWrapper;
 	}
 
@@ -187,10 +193,12 @@ class VideoFileUploader {
 	}
 
 	protected function getDescription(){
+
+		wfProfileIn( __METHOD__ );
 		if ( empty( $this->sDescription ) ) {
 			$this->sDescription = $this->getCategoryVideosWikitext() . $this->getApiWrapper()->getDescription();
 		}
-		
+		wfProfileOut( __METHOD__ );
 		return $this->sDescription;
 	}
 	
@@ -205,10 +213,11 @@ class VideoFileUploader {
 	}
 	
 	public function getVideoId(){
+		wfProfileIn( __METHOD__ );
 		if ( empty( $this->sVideoId ) ) {
 			$this->sVideoId = $this->getApiWrapper()->getVideoId();
 		}
-
+		wfProfileOut( __METHOD__ );
 		return $this->sVideoId;
 	}
 
@@ -226,6 +235,7 @@ class VideoFileUploader {
 	 */
 	public static function uploadVideo( $provider, $videoId, &$title, $description=null, $undercover=false, $overrideMetadata=array()) {
 
+		wfProfileIn( __METHOD__ );
 		$oUploader = new self();
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
@@ -233,7 +243,9 @@ class VideoFileUploader {
 		if( !empty( $undercover ) ) $oUploader->hideAction();
 		$oUploader->overrideMetadata( $overrideMetadata );
 
-		return $oUploader->upload( $title );
+		$r = $oUploader->upload( $title );
+		wfProfileOut( __METHOD__ );
+		return $r;
 
 	}
 
@@ -245,13 +257,16 @@ class VideoFileUploader {
 	 */
 	public static function URLtoTitle( $url, $sTitle = '' ) {
 
+		wfProfileIn( __METHOD__ );
 		$oTitle = null;
 		$oUploader = new self();
 		$oUploader->setExternalUrl( $url );
 		$oUploader->setTargetTitle( $sTitle );
 		if ( $oUploader->upload( $oTitle ) ) {
+			wfProfileOut( __METHOD__ );
 			return $oTitle;
 		}
+		wfProfileIn( __METHOD__ );
 		return null;
 	}
 
@@ -263,13 +278,7 @@ class VideoFileUploader {
 	 */
 	public static function sanitizeTitle( $titleText, $replaceChar=' ' ) {
 
-		/*
-		 * OK, guys. I talked to Eloy, and he said that all characters that
-		 * are correct for Title should be also correct for Files (!) 
-		 * this means that if we fail to create thumbnail for some invalid
-		 * titles, we should delegate this problem to ops. 
-		 * 
-		 */
+		wfProfileIn( __METHOD__ );
 		
 		foreach (self::$ILLEGAL_TITLE_CHARS as $illegalChar) {
 			$titleText = str_replace( $illegalChar, $replaceChar, $titleText );
@@ -282,7 +291,9 @@ class VideoFileUploader {
 		$sTitle = implode( $replaceChar, array_filter( $aTitle ) );    // array_filter() removes null elements
 
 		$sTitle = substr($sTitle, 0, self::$IMAGE_NAME_MAX_LENGTH);     // DB column Image.img_name has size 255
-		
+
+		wfProfileOut( __METHOD__ );
+
 		return trim($sTitle);
 		
 		/*

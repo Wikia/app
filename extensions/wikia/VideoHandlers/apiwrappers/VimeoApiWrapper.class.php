@@ -27,8 +27,10 @@ class VimeoApiWrapper extends ApiWrapper {
 	}
 	
 	public function getDescription() {
+		wfProfileIn( __METHOD__ );
 		$text = $this->getOriginalDescription();
 		if ( $this->getVideoKeywords() ) $text .= "\n\nTags: {$this->getVideoKeywords()}";
+		wfProfileOut( __METHOD__ );
 		return $text;
 	}
 	
@@ -124,10 +126,13 @@ class VimeoApiWrapper extends ApiWrapper {
 	 */
 	protected function checkForResponseErrors( $status, $content, $apiUrl ){
 
+		wfProfileIn( __METHOD__ );
 		if ( $content == ( $this->videoId.' not found.' ) ) {
+			wfProfileOut( __METHOD__ );
 			throw new VideoNotFoundException( $status, $content, $apiUrl );
 		}
 
+		wfProfileOut( __METHOD__ );
 		// return default
 		parent::checkForResponseErrors( $status, $content, $apiUrl );
 	}

@@ -14,7 +14,7 @@ class WikiaVideoPage extends ImagePage {
 
 	function openShowImage(){
 		global $wgOut, $wgTitle, $wgRequest;
-		
+		wfProfileIn( __METHOD__ );
 		$timestamp = $wgRequest->getInt('t', 0);
 		
 		if ( $timestamp > 0 ) {
@@ -27,6 +27,7 @@ class WikiaVideoPage extends ImagePage {
 		}
 
 		$wgOut->addHTML( '<div class="fullImageLink" id="file">'.$img->getEmbedCode( self::$videoWidth ).$this->getVideoInfoLine().'</div>' );
+		wfProfileOut( __METHOD__ );
 	}
 	
 	protected function getVideoInfoLine() {
@@ -44,8 +45,11 @@ class WikiaVideoPage extends ImagePage {
 
 	public function getDuplicates() {
 
+		wfProfileIn( __METHOD__ );
+
 		$handler = $this->img->getHandler();
 		if ( $handler instanceof VideoHandler && $handler->isBroken() ) {
+			wfProfileOut( __METHOD__ );
 			return $this->dupes = array();
 		} else {
 			$dupes = parent::getDuplicates();
@@ -57,13 +61,16 @@ class WikiaVideoPage extends ImagePage {
 		                    $finalDupes[] = $dupe;
 		                }
 			}
+			wfProfileOut( __METHOD__ );
 			return $finalDupes;
 		}
 	}
 
 	public function getUploadUrl() {
+		wfProfileIn( __METHOD__ );
 		$this->loadFile();
 		$uploadTitle = SpecialPage::getTitleFor( 'WikiaVideoAdd' );
+		wfProfileOut( __METHOD__ );
 		return $uploadTitle->getFullUrl( array(
 			'name' => $this->img->getName()
 		 ) );

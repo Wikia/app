@@ -23,6 +23,9 @@ class MovieclipsApiWrapper extends ApiWrapper {
 	}
 
 	public function getTitle() {
+
+		wfProfileIn( __METHOD__ );
+
 		if (!empty($this->metadata['title'])) {
 			return $this->metadata['title'];
 		}
@@ -30,6 +33,9 @@ class MovieclipsApiWrapper extends ApiWrapper {
 		$title = '';
 		$title .= $this->getMovieTitleAndYear() . ' - ';
 		$title .= $this->getVideoTitle();
+
+		wfProfileOut( __METHOD__ );
+
 		return $title;
 	}
 
@@ -91,7 +97,10 @@ class MovieclipsApiWrapper extends ApiWrapper {
 	}
 		
 	protected function getOriginalDescription($stripTitleAndYear=true) {
+
+		wfProfileIn( __METHOD__ );
 		if (!empty($this->metadata['description'])) {
+			wfProfileOut( __METHOD__ );
 			return $this->metadata['description'];
 		}
 		elseif (!empty($this->interfaceObj)) {
@@ -99,9 +108,10 @@ class MovieclipsApiWrapper extends ApiWrapper {
 			if ($stripTitleAndYear) {
 				$description = str_replace("{$this->getMovieTitleAndYear()} - {$this->getVideoTitle()} - ", '', $description);
 			}
+			wfProfileOut( __METHOD__ );
 			return $description;
 		}
-		
+		wfProfileOut( __METHOD__ );
 		return '';		
 	}
 	

@@ -20,7 +20,10 @@ class WikiaLocalFileShared  {
 	 * Checkes if file is a video
 	 */
 	public function isVideo(){
-		return ($this->oFile->getHandler() instanceof VideoHandler);
+		wfProfileIn( __METHOD__ );
+		$ret = ($this->oFile->getHandler() instanceof VideoHandler);
+		wfProfileOut( __METHOD__ );
+		return $ret;
 	}
 
 	public function addExtraBorder( $width ){
@@ -34,6 +37,7 @@ class WikiaLocalFileShared  {
 	 * Returns embed HTML
 	 */
 	public function getEmbedCode( $width, $autoplay = false, $isAjax = false, $postOnload = false ){
+		wfProfileIn( __METHOD__ );
 		if ( ( $this->trackingArticleId !== false ) && ( F::app()->wg->title instanceof Title ) ){
 			$this->trackingArticleId = F::app()->wg->title->getArticleID();
 		}
@@ -41,18 +45,26 @@ class WikiaLocalFileShared  {
 		if ( $this->isVideo() && !empty($handler) ){
 			$handler->setThumbnailImage( $this->oFile->getThumbnail( $width ) );
 			$this->trackingArticleId = false;
-			return $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
+			$embed = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
+			wfProfileOut( __METHOD__ );
+			return $embed;
 		} else {
 			$this->trackingArticleId = false;
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 	}
 
 	public function getPlayerAssetUrl() {
+
+		wfProfileIn( __METHOD__ );
 		if ( $this->isVideo() ) {
-			return $this->oFile->getHandler()->getPlayerAssetUrl();
+			$asset = $this->oFile->getHandler()->getPlayerAssetUrl();
+			wfProfileOut( __METHOD__ );
+			return $asset;
 		}
 		else {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 	}
@@ -66,11 +78,14 @@ class WikiaLocalFileShared  {
 	}
 
 	public function getProviderDetailUrl() {
+		wfProfileIn( __METHOD__ );
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty( $handler ) ){
-			return $handler->getProviderDetailUrl();
+			$detail = $handler->getProviderDetailUrl();
+			wfProfileOut( __METHOD__ );
+			return $detail;
 		}
-		
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
@@ -110,7 +125,9 @@ class WikiaLocalFileShared  {
 	}
 
 	function getVideoId(){
+		wfProfileIn( __METHOD__ );
 		if ( !empty( $this->videoId ) ) {
+			wfProfileOut( __METHOD__ );
 			return $this->videoId;
 		}
 
@@ -121,12 +138,14 @@ class WikiaLocalFileShared  {
 				$this->videoId = $metadata['videoId'];
 			}
 		}
+		wfProfileOut( __METHOD__ );
 		return $this->videoId;
 	}
 
 	/* alter LocalFile getHandler logic */
 
 	function afterGetHandler(){
+		wfProfileIn( __METHOD__ );
 		if (!empty($this->oFile->handler) && $this->oFile->handler instanceof VideoHandler) {
 			// make sure that the new handler ( if video ) will have videoId
 			if ($this->oFile->media_type == MEDIATYPE_VIDEO) {
@@ -138,6 +157,7 @@ class WikiaLocalFileShared  {
 				$this->oFile->handler->setMetadata($this->oFile->metadata);
 			}
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/* alter LocalFile setProps logic */

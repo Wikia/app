@@ -8,6 +8,9 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	const API_PAGE_SIZE = 100;
 	
 	public function import($content='', $params=array()) {
+
+		wfProfileIn( __METHOD__ );
+
 		$numCreated = 0;
 		
 		if (!empty($params['keyphrasesCategories'])) {
@@ -21,11 +24,15 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 				$numCreated += $this->importVideosForKeyphrase($keyphrase, $movieParams);
 			}
 		}
-		
+		wfProfileOut( __METHOD__ );
+
 		return $numCreated;
 	}
 
 	protected function importVideosForKeyphrase($keyword, $params=array()) {
+
+		wfProfileIn( __METHOD__ );
+
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 		$debug = !empty($params['debug']);
 		$startDate = !empty($params['startDate']) ? $params['startDate'] : '';
@@ -47,6 +54,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			}
 			else {
 				print("ERROR: problem downloading content!\n");
+				wfProfileOut( __METHOD__ );
 				return 0;				
 			}
 
@@ -76,7 +84,9 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			}
 		}
 		while ($numVideos == self::API_PAGE_SIZE);
-		
+
+		wfProfileOut( __METHOD__ );
+
 		return $articlesCreated;
 	}
 
