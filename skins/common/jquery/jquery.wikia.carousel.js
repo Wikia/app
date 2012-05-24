@@ -224,11 +224,12 @@
 			}
 			
 			var idx1 = states.currIndex - options.itemsShown,
-				idx2 = states.currIndex + options.itemsShown*2,
-				images = dom.items.slice(idx1, idx2);
+				idx2 = states.currIndex + options.itemsShown*2;
 			
-			images = images.find('img[data-src]');
-
+			idx1 = idx1 < 0 ? 0 : idx1;
+			
+			var images = dom.items.slice(idx1, idx2).find('img[data-src]');
+			
 			images.each(function() {
 				var image = $(this);
 				image.
@@ -310,8 +311,6 @@
 			setCarouselWidth();
 
 			setAsActive(options.activeIndex);
-
-
 
 			if(options.itemClick) {
 				dom.carousel.on('click', 'li', function(e) {
