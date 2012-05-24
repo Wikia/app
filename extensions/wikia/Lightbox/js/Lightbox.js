@@ -63,23 +63,6 @@ var Lightbox = {
 			bind('click.lightbox', function(e) {
                 Lightbox.handleClick(e, $(this));
 			});
-		
-		// Clicking left/right arrows inside Lightbox
-		$('body').on('click', '#LightboxNext, #LightboxPrevious', function(e) {
-			var target = $(e.target);
-
-			if(target.is('.disabled')) {
-				return false;
-			}
-			
-			if(target.is("#LightboxNext")) {
-				Lightbox.current.index++;
-			} else {
-				Lightbox.current.index--;
-			}
-			
-			Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
-		});
 
 	},
 	handleClick: function(ev, parent) {
@@ -383,6 +366,20 @@ var Lightbox = {
 					if(Lightbox.current.type == 'image') {
 						Lightbox.updateMedia();
 					}
+				}).on('click', '#LightboxNext, #LightboxPrevious', function(e) {
+					var target = $(e.target);
+		
+					if(target.is('.disabled')) {
+						return false;
+					}
+					
+					if(target.is("#LightboxNext")) {
+						Lightbox.current.index++;
+					} else {
+						Lightbox.current.index--;
+					}
+					
+					Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
 				});
 			}
 		});
@@ -786,10 +783,14 @@ var Lightbox = {
 
 $(function() {
 	Lightbox.init();
-	var file = $('#' + $.getUrlVar('file'));
-	if (file.exists()) {
-		$(window).scrollTop(file.offset().top + file.height()/2 - $(file).height()/2);
-		file.find('img').click();
+	var fileTitle = $.getUrlVar('file');
+	if(fileTitle) {
+		var file = $('#' + fileTitle);
+		if (file.exists()) {
+			var localWindow = $(window);
+			localWindow.scrollTop(file.offset().top + file.height()/2 - localWindow.height()/2);
+			file.find('img').click();
+		}
 	}
 
 });
