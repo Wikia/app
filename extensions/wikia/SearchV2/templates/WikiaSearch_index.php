@@ -48,8 +48,11 @@
 			</p>
 	
 			<? if ($results->getQuery() && $query != $results->getQuery()) : ?>
-				<p>No results were found for <em><?=$query?></em>. <strong>Showing results for <em><?=$results->getQuery()?></em>.</strong></p>
+				<p><?= wfMsg( 'wikiasearch2-spellcheck', $query, $results->getQuery() ) ?></p>
 				<? endif; ?>
+			<? if ( !$hasArticleMatch && $isMonobook ): ?>
+				<?=wfMsgExt(wfMsg('searchmenu-new', $query), array('parse'));?>
+			<? endif; ?>
 	
 			<ul class="Results">
 			<?php $pos = 0; ?>
@@ -82,8 +85,11 @@
 			</ul>
 			
 			<?= $paginationLinks; ?>
-		<?php else: ?>
-			<p><i>No results found.</i></p>
+		<?php else:  ?>
+			<? if ( !$hasArticleMatch && $isMonobook ): ?>
+				<?=wfMsgExt(wfMsg('searchmenu-new', $query), array('parse'));?>
+			<? endif; ?>
+				<p><i><?=wfMsg('wikiasearch2-noresults')?></i></p>
 		<?php endif; ?>
 	<?php endif; ?>
 

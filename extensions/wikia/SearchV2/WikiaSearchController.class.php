@@ -138,6 +138,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'relevancyFunctionId', WikiaSearch::RELEVANCY_FUNCTION_ID );
 		$this->setVal( 'namespaces', $namespaces );
 		$this->setVal( 'hub', $hub );
+		$this->setVal( 'hasArticleMatch', (isset($articleMatch) && !empty($articleMatch)) );
+		$this->setVal( 'isMonobook', ($this->wg->User->getSkin() instanceof SkinMonobook) );
 	}
 
 	public function advancedBox() {
