@@ -141,6 +141,9 @@ file = LookupContribs/SpecialLookupContribs.i18n.php
 
 Masthead
 
+Media Tool
+file = MediaTool/MediaTool.i18n.php
+
 Mini Editor
 
 Mobile - Game Guides
