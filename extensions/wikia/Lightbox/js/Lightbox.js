@@ -351,7 +351,12 @@ var Lightbox = {
 					}
 					Lightbox.openModal.addClass('share-mode');
 					Lightbox.getShareCodes({fileTitle: Lightbox.current.title, articleTitle:wgTitle}, function(json) {
-						Lightbox.openModal.share.append(shareTemplate.mustache(json));
+						Lightbox.openModal.share.append(shareTemplate.mustache(json))
+							.find('input[type=text]').click(function() {
+								$(this).select();
+							})
+							.filter('.share-input')
+							.click();
 					});
 				// Close more info and share screens on button click
 				}).on('click.Lightbox', '.more-info-close', function(evt) {
