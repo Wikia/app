@@ -119,7 +119,7 @@
 					            'type' => 'text',
 					            'name' => 'lightbox-standard-link',
 					            'attributes' => array(
-					                'value' => "{{standardLink}}",
+					                'value' => "{{articleUrl}}",
 					            )
 					        )
 					    )
@@ -127,7 +127,7 @@
 				?>
 				<?= wfRenderModule('WikiaForm', 'Index', array('form' => $form)); ?>
 				<div class="social-links">
-					Social network links go here…
+					{{networks}}
 				</div>
 			</div>
 			<div class="bottom-forms">
@@ -139,13 +139,13 @@
 						            'label' => wfMsg('lightbox-embed-url'),
 						            'type' => 'text',
 						            'name' => 'lightbox-embed-url',
-					                'value' => "{{embedUrl}}",
+					                'value' => "{{embedMarkup}}",
 						        ),
 						        array(
 						            'label' => wfMsg('lightbox-file-page-url'),
 						            'type' => 'text',
 						            'name' => 'lightbox-file-page-url',
-					                'value' => "{{absoluteFileUrl}}",
+					                'value' => "{{fileUrl}}",
 						        )
 						    )
 						);
