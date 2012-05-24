@@ -223,7 +223,8 @@ class DataFeedProvider {
 				}
 			}
 			
-			if( !empty($item['wall']) ) {
+			if( class_exists('Wall') && !empty($item['wall']) ) {
+
 				$wh = F::build('WallHelper', array());
 				if( !empty($item['parent-id']) ) {
 					$data = $wh->getWallComments($item['parent-id']);
