@@ -201,6 +201,7 @@ class LightboxController extends WikiaController {
 		$articleUrl = '';
 		$embedMarkup = '';
 		$fileUrl = '';
+		$thumbUrl = '';
 		$networks = array();
 		
 		if(!empty($file)) {
@@ -245,6 +246,8 @@ class LightboxController extends WikiaController {
 		$this->articleUrl = $articleUrl;
 		$this->fileUrl = $fileUrl;
 		$this->networks = $networks;
+		$this->fileTitle = $fileTitle;
+		$this->imageUrl = $thumbUrl;
 	}
 
 	protected function mediaTableToThumbs( $mediaTable ) {

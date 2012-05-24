@@ -11,7 +11,8 @@ var Lightbox = {
 		articleMedia: [], // Article Media
 		relatedVideos: [], // Related Video
 		latestPhotos: [], // Lates Photos
-		details: {} // all media details
+		details: {}, // all media details
+		share: {},
 	},
 	eventTimers: {
 		lastMouseUpdated: 0
@@ -339,7 +340,7 @@ var Lightbox = {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.video.destroyVideo();
 					}
-					Lightbox.openModal.addClass('more-info-mode')
+					Lightbox.openModal.addClass('more-info-mode');
 					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
 						Lightbox.openModal.moreInfo.append(moreInfoTemplate.mustache(json));
 					});
@@ -348,8 +349,8 @@ var Lightbox = {
 					if(Lightbox.current.type === 'video') {
 						Lightbox.video.destroyVideo();
 					}
-					Lightbox.openModal.addClass('share-mode')
-					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
+					Lightbox.openModal.addClass('share-mode');
+					Lightbox.getMediaShare({fileTitle: Lightbox.current.title, articleTitle:wgTitle}, function(json) {
 						Lightbox.openModal.share.append(shareTemplate.mustache(json));
 					});
 				// Close more info and share screens on button click
@@ -676,6 +677,25 @@ var Lightbox = {
 			});
 		}
 	},
+	getMediaShare: function(mediaParams, callback) {
+		var title = mediaParams['title'];
+		if(Lightbox.cache.share[title]) {
+			callback(Lightbox.cache.share[title]);
+		} else {
+			$.nirvana.sendRequest({
+				controller: 'Lightbox',
+				method: 'getShareCodes',
+				type: 'POST',	/* TODO (hyun) - might change to get */
+				format: 'json',
+				data: mediaParams,
+				callback: function(json) {
+					Lightbox.cache.share[title] = json;
+					callback(json);
+				}
+			});
+		}
+	},
+
 	normalizeMediaDetail: function(json, callback) {
 		/* normalize JWPlayer instances */
 		var embedCode = json['videoEmbedCode'];
