@@ -44,6 +44,9 @@ abstract class ApiWrapper {
 	 * In this case, metadata is passed through constructor, so $orverrideMetadata should be set.
 	 */
 	public function __construct( $videoId, $overrideMetadata = array() ) {
+
+		wfProfileIn( __METHOD__ );
+
 		$this->videoId = $this->sanitizeVideoId( $videoId );
 		if ( !empty( $overrideMetadata[ 'ingestedFromFeed' ] )
 			|| $this->isIngestedFromFeed()) {
@@ -55,6 +58,8 @@ abstract class ApiWrapper {
 			$overrideMetadata = array();
 		}
 		$this->loadMetadata( $overrideMetadata );
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -93,9 +98,13 @@ abstract class ApiWrapper {
 	}
 	
 	protected function isIngestedFromFeed() {
+
+		wfProfileIn( __METHOD__ );
 		// need to check cached metadata
 		$memcKey = F::app()->wf->memcKey( $this->getMetadataCacheKey() );
 		$metadata = F::app()->wg->memc->get( $memcKey );
+		wfProfileOut( __METHOD__ );
+
 		return !empty( $metadata['ingestedFromFeed'] );
 	}
 
@@ -112,6 +121,8 @@ abstract class ApiWrapper {
 	}
 
 	protected function getInterfaceObjectFromType( $type ) {
+
+		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
 		$memcKey = F::app()->wf->memcKey( static::$CACHE_KEY, $apiUrl, static::$CACHE_KEY_VERSION );
@@ -138,6 +149,9 @@ abstract class ApiWrapper {
 		}
 		$processedResponse = $this->processResponse( $response, $type );
 		if ( $cacheMe ) F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
+
+		wfProfileOut( __METHOD__ );
+
 		return $processedResponse;
 	}
 	
@@ -164,6 +178,9 @@ abstract class ApiWrapper {
 	}
 
 	protected function processResponse( $response, $type ){
+
+		wfProfileIn( __METHOD__ );
+
 		$return = '';
 		switch ( $type ){
 			case self::RESPONSE_FORMAT_JSON :
@@ -186,7 +203,9 @@ abstract class ApiWrapper {
 			break;
 			default: throw new UnsuportedTypeSpecifiedException();
 		}
-		
+
+		wfProfileOut( __METHOD__ );
+
 		return $this->postProcess( $return );
 	}
 
@@ -204,6 +223,9 @@ abstract class ApiWrapper {
 	}
 	
 	protected function loadMetadata(array $overrideFields=array()) {
+
+		wfProfileIn( __METHOD__ );
+
 		$memcKey = F::app()->wf->memcKey( $this->getMetadataCacheKey() );
 		$metadata = F::app()->wg->memc->get( $memcKey );
 		$cacheMe = false;
@@ -251,8 +273,10 @@ abstract class ApiWrapper {
 		if ( $cacheMe ) {
 			$result = F::app()->wg->memc->set( $memcKey, $metadata, static::$CACHE_EXPIRY );
 		}
-		
+
 		$this->metadata = $metadata;
+
+		wfProfileOut( __METHOD__ );
 	}
 	
 	protected function getMetadataCacheKey() {
@@ -375,6 +399,9 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 	protected $provider;
 	
 	public function __construct( $videoName, array $overrideMetadata=array() ) {
+
+		wfProfileIn( __METHOD__ );
+
 		$this->videoName = $videoName;
 		if (!empty($overrideMetadata['ingestedFromFeed'])
 		|| $this->isIngestedFromFeed()) {
@@ -388,9 +415,14 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 		}
 		$this->loadMetadata($overrideMetadata);
 		$this->getVideoId();	// lazy-load $this->videoId
+
+		wfProfileOut( __METHOD__ );
 	}
 	
 	protected function getInterfaceObjectFromType( $type ) {
+
+		wfProfileIn( __METHOD__ );
+
 		$title = Title::newFromText($this->videoName, NS_LEGACY_VIDEO);
 		$videoPage = new VideoPage($title);
 		$videoPage->load();
@@ -403,6 +435,9 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 		} else {
 
 		}
+
+		wfProfileOut( __METHOD__ );
+
 		return $response;
 	}
 	
@@ -425,6 +460,9 @@ abstract class NullApiWrapper extends PseudoApiWrapper {
 	static $THUMBNAIL_URL = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/NoThumbnailBg.png';
 
 	public function __construct($videoId, array $overrideMetadata=array()) {
+
+		wfProfileIn( __METHOD__ );
+
 		$this->videoId = $this->sanitizeVideoId( $videoId );
 		if (!empty($overrideMetadata['ingestedFromFeed'])
 		|| $this->isIngestedFromFeed()) {
@@ -434,6 +472,8 @@ abstract class NullApiWrapper extends PseudoApiWrapper {
 			$overrideMetadata = array();
 		}
 		$this->loadMetadata($overrideMetadata);
+
+		wfProfileOut( __METHOD__ );
 	}
 	
 	protected function getVideoTitle() {

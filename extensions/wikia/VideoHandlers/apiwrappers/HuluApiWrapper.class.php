@@ -12,6 +12,9 @@ class HuluApiWrapper extends ApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
+
+		wfProfileIn( __METHOD__ );
+
 		// Hulu goes like
 		// http://www.hulu.com/watch/252775/[seo terms]
 		$url = trim($url, "/");
@@ -26,9 +29,11 @@ class HuluApiWrapper extends ApiWrapper {
 			else {
 				$videoId = array_pop($parsed);
 			}
+			wfProfileOut( __METHOD__ );
 			return new static( $videoId );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
@@ -60,7 +65,7 @@ class HuluApiWrapper extends ApiWrapper {
 	
 	protected function getVideoPublished() {
 		if (is_string($this->interfaceObj['air_date'])) {
-			return strtotime();
+			return strtotime($this->interfaceObj['air_date']);
 		}
 		else {
 			return '';

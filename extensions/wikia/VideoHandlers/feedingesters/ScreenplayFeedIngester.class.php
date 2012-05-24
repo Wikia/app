@@ -7,6 +7,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	public function downloadFeed($startDate, $endDate) {
+
+		wfProfileIn( __METHOD__ );
 		$url = $this->initFeedUrl($startDate, $endDate);
 
 		print("Connecting to $url...\n");
@@ -15,9 +17,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		if (!$xmlContent) {
 			print("ERROR: problem downloading content!\n");
+			wfProfileOut( __METHOD__ );
 			return 0;
 		}
-
+		wfProfileOut( __METHOD__ );
 		return $xmlContent;	
 	}
 	
@@ -33,6 +36,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	}
 
 	public function import($content='', $params=array()) {
+
+		wfProfileIn( __METHOD__ );
+
 		$debug = !empty($params['debug']);
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 
@@ -139,11 +145,13 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				}
 			}
 		}
-
+		wfProfileOut( __METHOD__ );
 		return $articlesCreated;
 	}
 
 	protected function generateName(array $data) {
+
+		wfProfileIn( __METHOD__ );
 		$name = '';
 
 		$altDescription = '';
@@ -160,7 +168,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$name = sprintf("%s - %s", $this->generateTitleName($data), $description);	
 		
 		// per parent class's definition, do not sanitize
-
+		wfProfileOut( __METHOD__ );
 		return $name;
 	}
 
@@ -178,6 +186,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	}
 	
 	public function generateCategories(array $data, $addlCategories) {
+
+		wfProfileIn( __METHOD__ );
+
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'Screenplay, Inc.';
 
@@ -190,6 +201,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		else {
 			$categories[] = 'Entertainment';
 		}
+
+		wfProfileOut( __METHOD__ );
 
 		return $categories;
 	}

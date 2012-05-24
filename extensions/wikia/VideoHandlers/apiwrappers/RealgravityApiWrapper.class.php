@@ -6,6 +6,9 @@ class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 	protected static $aspectRatio = 1.7777778;
 	
 	public function getDescription() {
+
+		wfProfileIn( __METHOD__ );
+
 		$description = $this->getOriginalDescription();
 		if ($category = $this->getVideoCategory()) {
 			$description .= "\n\nCategory: $category";
@@ -13,7 +16,9 @@ class RealgravityApiWrapper extends WikiaVideoApiWrapper {
 		if ($keywords = $this->getVideoKeywords()) {
 			$description .= "\n\nKeywords: $keywords";
 		}
-		
+
+		wfProfileOut( __METHOD__ );
+
 		return $description;
 	}
 

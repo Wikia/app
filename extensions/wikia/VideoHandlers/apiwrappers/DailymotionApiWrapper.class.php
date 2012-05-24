@@ -12,6 +12,8 @@ class DailymotionApiWrapper extends ApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
+
+		wfProfileIn( __METHOD__ );
 		$parsed = explode( "/", $url );
 		if( is_array( $parsed ) ) {
 			$mdata = array_pop( $parsed );
@@ -20,13 +22,17 @@ class DailymotionApiWrapper extends ApiWrapper {
 			} else {
 				$videoId = array_pop( $parsed );
 			}
+			wfProfileOut( __METHOD__ );
 			return new static( $videoId );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
 	public function getDescription() {
+
+		wfProfileIn( __METHOD__ );
 		$text = '';
 		if ( $this->getOrignalDescription() )
 			$text .= $this->getOrignalDescription() . "\n\n";
@@ -34,6 +40,8 @@ class DailymotionApiWrapper extends ApiWrapper {
 			$text .= 'Category: ' . $this->getVideoCategory();
 		if ( $this->getVideoKeywords() )
 			$text .= "\n\nKeywords: {$this->getVideoKeywords()}";
+
+		wfProfileOut( __METHOD__ );
 		return $text;
 	}
 

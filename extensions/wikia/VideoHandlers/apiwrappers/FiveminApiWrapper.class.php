@@ -12,13 +12,16 @@ class FiveminApiWrapper extends ApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
+
+		wfProfileIn( __METHOD__ );
 		$parsed = explode( "/", $url );
 		if( is_array( $parsed ) ) {
 			$ids = array_pop( $parsed );
 			$parsed_twice = explode( "-", $ids );
+			wfProfileOut( __METHOD__ );
 			return new static( array_pop( $parsed_twice ) );
 		}
-
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 

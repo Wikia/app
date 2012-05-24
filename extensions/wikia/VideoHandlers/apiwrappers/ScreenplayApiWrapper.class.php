@@ -17,7 +17,7 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	protected static $THUMBNAIL_URL_TEMPLATE = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=$1&bitrateid=$2&vendorid=$3&type=$4';
 		
 	public function getDescription() {
-		return '';	// no description from provider
+		return '';	//  no description from provider
 	}
 	
 	public function getThumbnailUrl() {

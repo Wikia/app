@@ -9,6 +9,9 @@ class SouthparkstudiosApiWrapper extends NullApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
+
+		wfProfileIn( __METHOD__ );
+
 		$parsed = explode( "/", $url );
 		if( is_array( $parsed ) ) {
 			$mdata = array_pop( $parsed );
@@ -17,9 +20,12 @@ class SouthparkstudiosApiWrapper extends NullApiWrapper {
 			} else {
 				$videoId = array_pop( $parsed );
 			}
+
+			wfProfileOut( __METHOD__ );
 			return new static( $videoId );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 

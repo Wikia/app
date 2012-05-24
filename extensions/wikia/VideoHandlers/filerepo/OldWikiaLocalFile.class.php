@@ -31,14 +31,20 @@ class OldWikiaLocalFile extends OldLocalFile {
 	}
 
 	static function newFromKey( $sha1, $repo, $timestamp = false ) {
-		# Polymorphic function name to distinguish foreign and local fetches
-		$fname = get_class( $this ) . '::' . __FUNCTION__;
 
+		wfProfileIn( __METHOD__ );
+
+		# Polymorphic function name to distinguish foreign and local fetches
+
+		$dbr = $repo->getSlaveDB();
 		$conds = array( 'oi_sha1' => $sha1 );
 		if( $timestamp ) {
 			$conds['oi_timestamp'] = $timestamp;
 		}
-		$row = $dbr->selectRow( 'oldimage', $this->getCacheFields( 'oi_' ), $conds, $fname );
+		$row = $dbr->selectRow( 'oldimage', self::getCacheFields( 'oi_' ), $conds, __METHOD__ );
+
+		wfProfileOut( __METHOD__ );
+
 		if( $row ) {
 			return self::newFromRow( $row, $repo );
 		} else {
@@ -88,19 +94,25 @@ class OldWikiaLocalFile extends OldLocalFile {
 	 */
 
 	function getHandler(){
+		wfProfileIn( __METHOD__ );
 		parent::getHandler();
 		$this->getLocalFileLogic()->afterGetHandler();
+		wfProfileOut( __METHOD__ );
 		return $this->handler;
 	}
 
 	function setProps( $info ) {
+		wfProfileIn( __METHOD__ );
 		parent::setProps( $info );
 		$this->getLocalFileLogic()->afterSetProps();
+		wfProfileOut( __METHOD__ );
 	}
 
 	function loadFromFile() {
+		wfProfileIn( __METHOD__ );
 		$this->getLocalFileLogic()->beforeLoadFromFile();
 		parent::loadFromFile();
 		$this->getLocalFileLogic()->afterLoadFromFile();
+		wfProfileOut( __METHOD__ );
 	}
 }

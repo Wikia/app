@@ -89,6 +89,7 @@ class VideoHandlerHooks extends WikiaObject{
 	 */
 	function convertOldInterwikiToNewInterwikiCB( $matches ) {
 
+		wfProfileIn( __METHOD__ );
 		if ( !empty ( $matches[1] ) ) {
 
 			$addtionalParams = array();
@@ -116,16 +117,16 @@ class VideoHandlerHooks extends WikiaObject{
 				if ( count( $addtionalParams ) > 0 ) {
 					$paramsString .= '|' . implode( "|", $addtionalParams );
 				}
-
+				wfProfileOut( __METHOD__ );
 				return '[[File:' . $parts[0] . $paramsString . ']]';
 
 			} else {
-
+				wfProfileOut( __METHOD__ );
 				return '[[File:' . $matches[1] . ']]';
 			}
 
 		}
-
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 

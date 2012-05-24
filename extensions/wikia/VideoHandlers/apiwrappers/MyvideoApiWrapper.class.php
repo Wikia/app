@@ -29,8 +29,10 @@ class MyvideoApiWrapper extends ApiWrapper {
 	}
 
 	protected function initializeInterfaceObject(){
+		wfProfileIn( __METHOD__ );
 		$interfaceObj = $this->getInterfaceObjectFromType( static::$RESPONSE_FORMAT );
 		$this->interfaceObj = $interfaceObj['child']['']['response'][0]['child']['']['myvideo'][0]['child']['']['movie'][0]['child'][''];
+		wfProfileOut( __METHOD__ );
 	}
 
 	protected function getVideoTitle() {
@@ -42,9 +44,11 @@ class MyvideoApiWrapper extends ApiWrapper {
 	}
 
 	public function getDescription() {
+		wfProfileIn( __METHOD__ );
 		$desc = $this->getOriginalDescription();
 		if ($this->getVideoCategory()) $desc .= "\n\nCategory: " . $this->getVideoCategory();
 		if ($this->getVideoKeywords()) $desc .= "\n\nKeywords: " . $this->getVideoKeywords();
+		wfProfileOut( __METHOD__ );
 		return $desc;
 	}
 	

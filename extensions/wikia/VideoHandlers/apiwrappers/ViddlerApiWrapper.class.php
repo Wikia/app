@@ -26,12 +26,15 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 	public static function getIdFromUrl( $url ) {
 
+		wfProfileIn( __METHOD__ );
+
 		$url = self::getFinalUrl($url);
 
 		if ( strpos($url, '/v/') !== false ) {
 
 			$parsed = explode( "/", strtolower($url));
 			$videoId = array_pop( $parsed );
+			wfProfileOut( __METHOD__ );
 			return  $videoId;
 
 		} else {
@@ -46,21 +49,26 @@ class ViddlerApiWrapper extends ApiWrapper {
 					$videoId = array_pop( $parsed );
 				}
 				$videoId = trim($videoId, '/');
+				wfProfileOut( __METHOD__ );
 				return $videoId;
 			}
 		}
-
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
 	public static function newFromUrl( $url ) {
 
+		wfProfileIn( __METHOD__ );
+
 		$videoId = self::getIdFromUrl( $url );
 
 		if ( !empty($videoId) ) {
+			wfProfileOut( __METHOD__ );
 			return new static( $videoId );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
@@ -70,6 +78,9 @@ class ViddlerApiWrapper extends ApiWrapper {
 	}
 	
 	public function getDescription() {
+
+		wfProfileIn( __METHOD__ );
+
 		$description = $this->getOriginalDescription();
 		$keywords = $this->getVideoKeywords();
 		if (!empty($keywords)) {
@@ -79,7 +90,8 @@ class ViddlerApiWrapper extends ApiWrapper {
 			}
 			$description .= $keywords;
 		}
-		
+		wfProfileOut( __METHOD__ );
+
 		return $description;
 	}
 	
@@ -112,16 +124,25 @@ class ViddlerApiWrapper extends ApiWrapper {
 	}
 	
 	protected function getVideoKeywords() {
+
+		wfProfileIn( __METHOD__ );
+
 		$keywords = array();
 		if (!empty($this->interfaceObj['video']['tags']) && is_array($this->interfaceObj['video']['tags'])) {
 			foreach ($this->interfaceObj['video']['tags'] as $tagArr) {
 				$keywords[] = $tagArr['text'];
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
+
 		return implode(', ', $keywords);
 	}
 	
 	public function getAspectRatio() {
+
+		wfProfileIn( __METHOD__ );
+
 		$embed_code = $this->interfaceObj['video']['embed_code'];
 		$matches = array();
 		if (preg_match('/width="(\d+)"/', $embed_code, $matches)) {
@@ -133,17 +154,26 @@ class ViddlerApiWrapper extends ApiWrapper {
 		}
 		
 		if ($width && $height) {
+
+			wfProfileOut( __METHOD__ );
 			return $width / $height;
 		}
-			
+
+		wfProfileOut( __METHOD__ );
 		return parent::getAspectRatio();
 	}
 
 	function getFinalUrl($url){
 
+		wfProfileIn( __METHOD__ );
+
 		$req = HttpRequest::factory( $url, array('timeout'=>'default', 'headersOnly'=>true) );
 		$status = $req->execute();
-		return $req->getFinalUrl();
+		$finalUrl = $req->getFinalUrl();
+
+		wfProfileOut( __METHOD__ );
+
+		return $finalUrl;
 	}
 
 }

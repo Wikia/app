@@ -7,10 +7,15 @@ class ApiWrapperFactory {
 	protected static $instance = null;
 		
 	public static function getInstance() {
+
+		wfProfileIn( __METHOD__ );
+
 		if (self::$instance == null) {
 			self::$instance = new ApiWrapperFactory();
 		}
-		
+
+		wfProfileOut( __METHOD__ );
+
 		return self::$instance;
 	}
 	
@@ -20,20 +25,30 @@ class ApiWrapperFactory {
 	 * @return mixed provider name or null
 	 */
 	public function getProviderNameFromId($id) {
+
+		wfProfileIn( __METHOD__ );
+
 		$providerMap = F::app()->wg->videoMigrationProviderMap;
 		if (!empty($providerMap[$id])) {
+
+			wfProfileOut( __METHOD__ );
 			return strtolower($providerMap[$id]);
 		}
-		
+
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 	
 	public function getApiWrapper($url) {
+
+		wfProfileIn( __METHOD__ );
+
 		$map = F::app()->wg->videoMigrationProviderMap;
 		$url = trim($url);
 		$fixed_url = strtolower( $url );
 		$test = strpos( $fixed_url, "http://" );
 		if( !false === $test ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		
@@ -44,10 +59,11 @@ class ApiWrapperFactory {
 		foreach( $map as $id => $name ) {
 			$class_name = $name . 'ApiWrapper';
 			if ( $class_name::isMatchingHostname( $hostname ) ) {
+				wfProfileOut( __METHOD__ );
 				return $class_name::newFromUrl( $url );
 			}
 		}
-		
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 	

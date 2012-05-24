@@ -11,6 +11,8 @@ class MetacafeApiWrapper extends ApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
+
+		wfProfileIn( __METHOD__ );
 		$standard_url = strpos( strtoupper( $url ), "HTTP://WWW.METACAFE.COM/WATCH/" );
 		if( false !== $standard_url ) {
 			$id = substr( $url , $standard_url+ strlen("HTTP://WWW.METACAFE.COM/WATCH/") , strlen($url) );
@@ -26,10 +28,11 @@ class MetacafeApiWrapper extends ApiWrapper {
 
 			$data = explode( "/", $id );
 			if (is_array( $data ) ) {
+				wfProfileOut( __METHOD__ );
 				return new static( $data[0]);
 			}
 		}
-
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 	
@@ -38,8 +41,10 @@ class MetacafeApiWrapper extends ApiWrapper {
 	}
 	
 	public function getDescription() {
+		wfProfileIn( __METHOD__ );
 		$text = $this->getOriginalDescription();
 		if ($this->getVideoKeywords()) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
+		wfProfileOut( __METHOD__ );
 		return $text;
 	}
 

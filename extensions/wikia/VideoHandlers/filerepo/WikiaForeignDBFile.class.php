@@ -69,19 +69,25 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	// These methods work as a layer of communication between this class and SharedLogic
 
 	function getHandler(){
+		wfProfileIn( __METHOD__ );
 		parent::getHandler();
 		$this->getLocalFileLogic()->afterGetHandler();
+		wfProfileOut( __METHOD__ );
 		return $this->handler;
 	}
 
 	function setProps( $info ) {
+		wfProfileIn( __METHOD__ );
 		parent::setProps( $info );
 		$this->getLocalFileLogic()->afterSetProps();
+		wfProfileOut( __METHOD__ );
 	}
 
 	function loadFromFile() {
+		wfProfileIn( __METHOD__ );
 		$this->getLocalFileLogic()->beforeLoadFromFile();
 		parent::loadFromFile();
 		$this->getLocalFileLogic()->afterLoadFromFile();
+		wfProfileOut( __METHOD__ );
 	}	
 }

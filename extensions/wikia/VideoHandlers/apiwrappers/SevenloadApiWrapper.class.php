@@ -10,13 +10,18 @@ class SevenloadApiWrapper extends NullApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
+
+		wfProfileIn( __METHOD__ );
+
 		$parsed = explode( "/", $url );
 		$id = array_pop( $parsed );
 		$parsed_id = explode( "-", $id );
 		if( is_array( $parsed_id ) ) {
+			wfProfileOut( __METHOD__ );
 			return new static( $parsed_id[0] );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
