@@ -19,7 +19,7 @@ function printHelp() {
 		echo <<<HELP
 Returns performance metrics for a given page
 
-USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia --ganglia-group=Mobile performance]
+USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia --ganglia-group=Mobile performance] [--verbose]
 
 	--url
 		Page to be checked
@@ -44,6 +44,9 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 
 	--ganglia-group
 		Name of Ganglia graph group to report metrics to
+
+	--verbose
+		Be noisy :)
 HELP;
 }
 
@@ -68,6 +71,8 @@ $params = array(
 	'loggedIn' => isset($options['logged-in'])
 );
 
+$beVerbose = isset($options['verbose']);
+
 // use GooglePage speed API
 $metrics = F::build('PerformanceMetrics');
 $report = $metrics->getReport($url, $params);
@@ -91,7 +96,7 @@ if (isset($options['ganglia']) && isset($options['ganglia-group'])) {
 	$port = $wgGangliaPort;
 	$group = $options['ganglia-group'];
 
-	echo "Sending data to {$host}:{$port} ('{$group}' group)...";
+	if ($beVerbose) echo "Sending data to {$host}:{$port} ('{$group}' group)...";
 
 	$gmetric = F::build('GMetricClient');
 
@@ -105,7 +110,7 @@ if (isset($options['ganglia']) && isset($options['ganglia-group'])) {
 
 	$gmetric->send($host, $port);
 
-	echo " done!\n";
+	if ($beVerbose) echo " done!\n";
 	die(0);
 }
 
