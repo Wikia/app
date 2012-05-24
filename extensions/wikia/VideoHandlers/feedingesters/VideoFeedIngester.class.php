@@ -64,7 +64,9 @@ abstract class VideoFeedIngester {
 		}
 
 		$duplicates = WikiaFileHelper::findVideoDuplicates(static::$PROVIDER,$id);
-		if ( count($duplicates) > 0 ) {
+		$dup_count = count($duplicates);
+		echo "Duplicates found: $dup_count\n";
+		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
 				return 0;
