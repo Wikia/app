@@ -6,7 +6,7 @@ class RecentChangesFiltersStorage {
 		$app = F::App();
 		$this->user = $user;
 		$this->memc = $app->wg->Memc;
-		$this->namespaces = $app->wg->ContLang->getFormattedNamespaces();
+		$this->namespaces = $app->wf->GetNamespaces();
 	}
 	
 	public function set($values){

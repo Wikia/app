@@ -122,7 +122,7 @@ class Xml {
 		$namespaces = $wgContLang->getFormattedNamespaces();
 		
 		/** Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
-		wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array(&$namespaces, $selected, $all, $element_name, $label) );
+		wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array(&$namespaces) );
 		/** Wikia change end */
 		
 		$options = array();

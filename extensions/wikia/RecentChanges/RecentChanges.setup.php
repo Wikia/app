@@ -23,3 +23,4 @@ $app->registerExtensionMessageFile('RecentChanges', $dir.'RecentChanges.i18n.php
 
 // Hooks
 $app->registerHook('onGetNamespaceCheckbox', 'RecentChangesHooks', 'onGetNamespaceCheckbox');
+$app->registerHook('SpecialRecentChangesQuery', 'RecentChangesHooks', 'onGetRecentChangeQuery');
