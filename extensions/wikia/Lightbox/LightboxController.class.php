@@ -31,7 +31,7 @@ class LightboxController extends WikiaController {
 			default:
 				$method = "getLatestPhotosThumbs";
 				break;
-		} 
+		}
 		
 		$initialFileDetail = array();
 		$mediaThumbs = array();
@@ -279,6 +279,54 @@ class LightboxController extends WikiaController {
 			}
 		}
 		return $thumbs;
+	}
+	
+	/**
+ 	 * @brief AJAX function for sending share e-mails
+	 * @requestParam string addresses - comma-separated list of email addresses
+	 * @requestParam string shareUrl - share url being emailed
+	 */
+	public function shareFileMail() {
+		$user = $this->wg->User;
+		$errors = array();
+		$sent = array();
+		$notsent = array();
+
+		if (!$user->isLoggedIn()) {
+			$errors[] = 'notloggedin';
+		} else {
+			$addresses = $this->request->getVal('addresses', '');
+			$shareUrl = $this->request->getVal('shareUrl', '');
+			if (!empty($addresses) && !empty($shareUrl) && !$user->isBlockedFromEmailuser() ) {
+				$addresses = explode(',', $addresses);
+	
+				//send mails
+				$sender = new MailAddress($this->wg->NoReplyAddress, 'Wikia');	//TODO: use some standard variable for 'Wikia'?
+				foreach ($addresses as $address) {
+					$to = new MailAddress($address);
+					$result = UserMailer::send(
+						$to,
+						$sender,
+						wfMsg('lightbox-share-email-subject', array("$1" => $user->getName())),
+						wfMsg('lightbox-share-email-body', $shareUrl),
+						null,
+						null,
+						'ImageLightboxShare'
+					);
+					if (WikiError::isError($result)) {
+						$notsent[] = $address;
+					}else {
+						$sent[] = $address;
+					}
+				}
+			} else {
+				$errors[] = 'need to define addresses and shareUrl';
+			}
+		}
+		
+		$this->errors = $errors;
+		$this->sent = $sent;
+		$this->notsent = $notsent;
 	}
 
 }
