@@ -13,5 +13,9 @@ $app->registerClass('MediaToolController', $dir . 'MediaToolController.class.php
 
 // hooks
 
+// special pages
+$app->registerClass('MediaToolSpecialController', $dir . 'MediaToolSpecialController.class.php');
+$app->registerSpecialPage('MediaTool', 'MediaToolSpecialController');
+
 // i18n mapping
 $wgExtensionMessagesFiles['MediaTool'] = $dir . 'MediaTool.i18n.php';
