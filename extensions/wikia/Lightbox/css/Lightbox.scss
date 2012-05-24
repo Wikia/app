@@ -127,12 +127,12 @@ $color-shadow: #3a3a3a;
 				}
 				li {
 					float: left;
+					margin-right: 10px;
 					a {
 						@include sprite-Lightbox-deep;
 						display: block;
 						width: 32px;
 						height: 32px;
-						margin-right: 8px;
 					}
 				}
 			}
