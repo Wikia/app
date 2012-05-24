@@ -130,7 +130,7 @@
 				<div class="social-links">
 					<ul>
 						{{#networks}}
-							<li><a href="{{url}}">{{id}}</a></li>
+							<li><a href="{{url}}" class="{{id}}"></a></li>
 						{{/networks}}
 					</ul>
 				</div>
