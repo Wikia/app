@@ -11,10 +11,6 @@ class RecentChangesController extends WikiaController {
 		$this->response->addAsset('extensions/wikia/RecentChanges/css/RecentChanges.scss');
 	}
 
-	public function index() {
-		
-	}
-
 	public function saveFilters() {
 		if($this->wg->User->getId() < 1) {
 			$this->response->setVal('status', "error");

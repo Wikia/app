@@ -19,7 +19,7 @@ class RecentChangesHooks {
 		return true;
 	}
 
-	public function onGetRecentChangeQuery( &$conds, &$tables, &$join_conds, $opts, &$query_options ) {
+	public function onGetRecentChangeQuery( &$conds, &$tables, &$join_conds, $opts ) {
 		$app = F::app();
 
 		if ( $app->wg->User->isAnon() ) {
