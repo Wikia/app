@@ -94,8 +94,6 @@ class SpecialRecentChanges extends SpecialPage {
 			global $wgRequest;
 			$feedFormat = $wgRequest->getVal( 'feed' );
 			$this->rcOptions = $feedFormat ? $this->feedSetup() : $this->setup( $this->rcSubpage );
-//sk_print('....'.__METHOD__.'.......$feedFormat=',$feedFormat);
-//sk_print('....'.__METHOD__.'.......$this->rcOptions=',$this->rcOptions);
 		}
 		
 		return $this->rcOptions;
@@ -111,9 +109,6 @@ class SpecialRecentChanges extends SpecialPage {
 		global $wgRequest, $wgOut;
 		$this->rcSubpage = $subpage;
 		$feedFormat = $wgRequest->getVal( 'feed' );
-sk_print('....'.__METHOD__.'.......$wgRequest=',$wgRequest);
-sk_print('....'.__METHOD__.'.......$this->rcSubpage=',$this->rcSubpage);
-sk_print('....'.__METHOD__.'.......$feedFormat=',$feedFormat);
 
 		# 10 seconds server-side caching max
 		// modified by Emil, 10 secs is not enough for us
@@ -136,13 +131,10 @@ sk_print('....'.__METHOD__.'.......$feedFormat=',$feedFormat);
 		$opts = $this->getOptions();
 		$this->setHeaders();
 		$this->outputHeader();
-sk_print('....'.__METHOD__.'.......$opts=',$opts);
 
 		// Fetch results, prepare a batch link existence check query
 		$conds = $this->buildMainQueryConds( $opts );
-sk_print('....'.__METHOD__.'.......$conds=',$conds);
 		$rows = $this->doMainQuery( $conds, $opts );
-//sk_print('....'.__METHOD__.'.......$rows=',$rows);
 		if( $rows === false ){
 			if( !$this->including() ) {
 				$this->doHeader( $opts );
@@ -312,8 +304,6 @@ sk_print('....'.__METHOD__.'.......$conds=',$conds);
 	 */
 	public function doMainQuery( $conds, $opts ) {
 		global $wgUser;
-sk_print('....'.__METHOD__.'.......$conds=',$conds);
-sk_print('....'.__METHOD__.'.......$opts=',$opts);
 
 		$tables = array( 'recentchanges' );
 		$join_conds = array();
@@ -342,16 +332,8 @@ sk_print('....'.__METHOD__.'.......$opts=',$opts);
 			$tables, $fields, $conds, $join_conds, $query_options, $opts['tagfilter']
 		);
 
-//sk_print('....'.__METHOD__.'...11....$conds=',$conds);
-//sk_print('....'.__METHOD__.'...11....$tables=',$tables);
-//sk_print('....'.__METHOD__.'...11....$join_conds=',$join_conds);
-//sk_print('....'.__METHOD__.'...11....$query_options=',$query_options);
 		if ( !wfRunHooks( 'SpecialRecentChangesQuery', array( &$conds, &$tables, &$join_conds, $opts, &$query_options ) ) )
 			return false;
-sk_print('....'.__METHOD__.'...22....$conds=',$conds);
-sk_print('....'.__METHOD__.'...22....$tables=',$tables);
-sk_print('....'.__METHOD__.'...22....$join_conds=',$join_conds);
-sk_print('....'.__METHOD__.'...22....$query_options=',$query_options);
 
 		// Don't use the new_namespace_time timestamp index if:
 		// (a) "All namespaces" selected
@@ -386,7 +368,6 @@ sk_print('....'.__METHOD__.'...22....$query_options=',$query_options);
 			# Join the two fast queries, and sort the result set
 			$sql = $dbr->unionQueries(array($sqlNew, $sqlOld), false).' ORDER BY rc_timestamp DESC';
 			$sql = $dbr->limitResult($sql, $limit, false);
-sk_print('....'.__METHOD__.'.......$sql=',$sql);
 			$res = $dbr->query( $sql, __METHOD__ );
 		}
 
@@ -577,8 +558,6 @@ sk_print('....'.__METHOD__.'.......$sql=',$sql);
 	 * @return string
 	 */
 	protected function namespaceFilterForm( FormOptions $opts ) {
-//sk_print('....'.__METHOD__.'.......$opts=',$opts);
-//sk_print('....'.__METHOD__.'.......$opts[namespace]=',$opts['namespace']);
 		/* Wikia change begin */
 		$nsSelect = '';
 		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
@@ -588,10 +567,7 @@ sk_print('....'.__METHOD__.'.......$sql=',$sql);
 		/* Wikia change end */
 
 		$nsLabel = Xml::label( wfMsg('namespace'), 'namespace' );
-//sk_print('....'.__METHOD__.'.......$nsSelect=',$nsSelect);
-//sk_print('....'.__METHOD__.'.......$nsLabel=',$nsLabel);
 		$invert = Xml::checkLabel( wfMsg('invert'), 'invert', 'nsinvert', $opts['invert'] );
-//sk_print('....'.__METHOD__.'.......$invert=',$invert);
 		return array( $nsLabel, "$nsSelect $invert" );
 	}
 
