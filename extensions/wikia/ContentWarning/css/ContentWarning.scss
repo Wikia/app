@@ -27,10 +27,6 @@
 
 .ShowContentWarning {
 	&.skin-monobook {
-		#bodyContent {
-			visibility: hidden;
-		}
-
 		.firstHeading,
 		#siteNotice {
 			display: none;
@@ -38,8 +34,10 @@
 	}
 
 	.WikiaMainContent,
-	.WikiaRail {
-		visibility: hidden;
+	.WikiaRail,
+	&.skin-monobook #bodyContent {
+		overflow: hidden;
+		width: 0;
 	}
 
 	.ContentWarning {
