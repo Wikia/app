@@ -10,89 +10,124 @@
 	$image-y: -1;
 	$image-width: -1;
 	$image-height: -1;
-	// @autosprite-image-details: filmstrip_close_black.png@72,0,62b8bf82657cb2f2bec1358cc7a5b31e
-	@if $imageName == 'filmstrip_close_black' {
+	// @autosprite-image-details: facebook.png@72,0,318caf52f55ca1617cd0a89a8bf2785f
+	@if $imageName == 'facebook' {
 		$image-x: 72px;
 		$image-y: 0px;
+		$image-width: 32px;
+		$image-height: 32px;
+	}
+	// @autosprite-image-details: filmstrip_close_black.png@116,0,62b8bf82657cb2f2bec1358cc7a5b31e
+	@if $imageName == 'filmstrip_close_black' {
+		$image-x: 116px;
+		$image-y: 0px;
 		$image-width: 22px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: filmstrip_close_white.png@106,0,9d462311eb073b01d6899476a26d284d
+	// @autosprite-image-details: filmstrip_close_white.png@150,0,9d462311eb073b01d6899476a26d284d
 	@if $imageName == 'filmstrip_close_white' {
-		$image-x: 106px;
+		$image-x: 150px;
 		$image-y: 0px;
 		$image-width: 22px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: filmstrip_open_black.png@140,0,87900ed49b9ba1c02be04e3a79c0e120
+	// @autosprite-image-details: filmstrip_open_black.png@184,0,87900ed49b9ba1c02be04e3a79c0e120
 	@if $imageName == 'filmstrip_open_black' {
-		$image-x: 140px;
+		$image-x: 184px;
 		$image-y: 0px;
 		$image-width: 22px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: filmstrip_open_white.png@174,0,1377b57ca447d8bcc11d95d528b9d348
+	// @autosprite-image-details: filmstrip_open_white.png@218,0,1377b57ca447d8bcc11d95d528b9d348
 	@if $imageName == 'filmstrip_open_white' {
-		$image-x: 174px;
+		$image-x: 218px;
 		$image-y: 0px;
 		$image-width: 22px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: large_lightbox_black.png@208,0,4b0394ac7c96a720d1d8fea04eeea7e1
+	// @autosprite-image-details: googleplus.png@252,0,560170a308794f0da37180d422a06617
+	@if $imageName == 'googleplus' {
+		$image-x: 252px;
+		$image-y: 0px;
+		$image-width: 32px;
+		$image-height: 32px;
+	}
+	// @autosprite-image-details: large_lightbox_black.png@296,0,4b0394ac7c96a720d1d8fea04eeea7e1
 	@if $imageName == 'large_lightbox_black' {
-		$image-x: 208px;
+		$image-x: 296px;
 		$image-y: 0px;
 		$image-width: 18px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: large_lightbox_white.png@238,0,5cbd6258aca219d3bd751dd9788edb85
+	// @autosprite-image-details: large_lightbox_white.png@326,0,5cbd6258aca219d3bd751dd9788edb85
 	@if $imageName == 'large_lightbox_white' {
-		$image-x: 238px;
+		$image-x: 326px;
 		$image-y: 0px;
 		$image-width: 18px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: more_info_black.png@268,0,512f9f0664edf80b7f00a2e388994d3e
+	// @autosprite-image-details: more_info_black.png@356,0,512f9f0664edf80b7f00a2e388994d3e
 	@if $imageName == 'more_info_black' {
-		$image-x: 268px;
+		$image-x: 356px;
 		$image-y: 0px;
 		$image-width: 14px;
 		$image-height: 14px;
 	}
-	// @autosprite-image-details: more_info_white.png@294,0,af8c6afd39d4d7e9c3afd7ed152ff271
+	// @autosprite-image-details: more_info_white.png@382,0,af8c6afd39d4d7e9c3afd7ed152ff271
 	@if $imageName == 'more_info_white' {
-		$image-x: 294px;
+		$image-x: 382px;
 		$image-y: 0px;
 		$image-width: 14px;
 		$image-height: 14px;
 	}
-	// @autosprite-image-details: share_black.png@320,0,aaef6fe108c9cc950d903bfd1b3c6ed8
+	// @autosprite-image-details: reddit.png@408,0,669dd05709dc60ba3cbfa392855a79c4
+	@if $imageName == 'reddit' {
+		$image-x: 408px;
+		$image-y: 0px;
+		$image-width: 32px;
+		$image-height: 32px;
+	}
+	// @autosprite-image-details: share_black.png@452,0,aaef6fe108c9cc950d903bfd1b3c6ed8
 	@if $imageName == 'share_black' {
-		$image-x: 320px;
+		$image-x: 452px;
 		$image-y: 0px;
 		$image-width: 12px;
 		$image-height: 12px;
 	}
-	// @autosprite-image-details: share_white.png@344,0,0257bbd1ac176729e6ccacafaf004280
+	// @autosprite-image-details: share_white.png@476,0,0257bbd1ac176729e6ccacafaf004280
 	@if $imageName == 'share_white' {
-		$image-x: 344px;
+		$image-x: 476px;
 		$image-y: 0px;
 		$image-width: 12px;
 		$image-height: 12px;
 	}
-	// @autosprite-image-details: small_lightbox_black.png@368,0,0c9ed12fd36a2fd71f67bd4ec008d7d2
+	// @autosprite-image-details: small_lightbox_black.png@500,0,0c9ed12fd36a2fd71f67bd4ec008d7d2
 	@if $imageName == 'small_lightbox_black' {
-		$image-x: 368px;
+		$image-x: 500px;
 		$image-y: 0px;
 		$image-width: 18px;
 		$image-height: 15px;
 	}
-	// @autosprite-image-details: small_lightbox_white.png@398,0,1f7ab6560944d9c0a7a338fb99736838
+	// @autosprite-image-details: small_lightbox_white.png@530,0,1f7ab6560944d9c0a7a338fb99736838
 	@if $imageName == 'small_lightbox_white' {
-		$image-x: 398px;
+		$image-x: 530px;
 		$image-y: 0px;
 		$image-width: 18px;
 		$image-height: 15px;
+	}
+	// @autosprite-image-details: stumbleupon.png@560,0,99f4118143c669166c0db293e6f37e27
+	@if $imageName == 'stumbleupon' {
+		$image-x: 560px;
+		$image-y: 0px;
+		$image-width: 32px;
+		$image-height: 32px;
+	}
+	// @autosprite-image-details: twitter.png@604,0,c19a731dacef96fd8015f0beca90478b
+	@if $imageName == 'twitter' {
+		$image-x: 604px;
+		$image-y: 0px;
+		$image-width: 32px;
+		$image-height: 31px;
 	}
 	@if $image-x != -1 {
 		$position-x: 0px - $image-x;
@@ -118,6 +153,9 @@
 }
 @mixin sprite-Lightbox-deep($width: 0,$height: 0) {
 	@include sprite-Lightbox-base;
+	&.facebook {
+		@include sprite-Lightbox('facebook',$width,$height);
+	}
 	&.filmstrip-close-black {
 		@include sprite-Lightbox('filmstrip_close_black',$width,$height);
 	}
@@ -129,6 +167,9 @@
 	}
 	&.filmstrip-open-white {
 		@include sprite-Lightbox('filmstrip_open_white',$width,$height);
+	}
+	&.googleplus {
+		@include sprite-Lightbox('googleplus',$width,$height);
 	}
 	&.large-lightbox-black {
 		@include sprite-Lightbox('large_lightbox_black',$width,$height);
@@ -142,6 +183,9 @@
 	&.more-info-white {
 		@include sprite-Lightbox('more_info_white',$width,$height);
 	}
+	&.reddit {
+		@include sprite-Lightbox('reddit',$width,$height);
+	}
 	&.share-black {
 		@include sprite-Lightbox('share_black',$width,$height);
 	}
@@ -153,6 +197,12 @@
 	}
 	&.small-lightbox-white {
 		@include sprite-Lightbox('small_lightbox_white',$width,$height);
+	}
+	&.stumbleupon {
+		@include sprite-Lightbox('stumbleupon',$width,$height);
+	}
+	&.twitter {
+		@include sprite-Lightbox('twitter',$width,$height);
 	}
 }
 // @autosprite-end
