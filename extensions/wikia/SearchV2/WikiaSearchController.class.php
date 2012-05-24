@@ -117,6 +117,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 
+		$namespaces = $namespaces ?: $this->wikiaSearch->getNamespaces();
+
 		if(!$isInterWiki) {
 			$advancedSearchBox = $this->sendSelfRequest( 'advancedBox', array( 'term' => $query, 'namespaces' => $namespaces, 'activeTab' => $activeAdvancedTab, 'searchableNamespaces' => $searchableNamespaces, 'advanced' => $advanced, 'redirs' => $redirs ) );
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
@@ -144,7 +146,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	public function advancedBox() {
 		$term = $this->getVal( 'term' );
-		$namespaces = $this->getVal( 'namespaces' );
+		$namespaces = $this->getVal( 'namespaces', $this->wikiaSearch->getNamespaces() );
 		$activeTab = $this->getVal( 'activeTab' );
 		$searchableNamespaces = $this->getVal( 'searchableNamespaces' );
 		$advanced = $this->getVal( 'advanced' );
