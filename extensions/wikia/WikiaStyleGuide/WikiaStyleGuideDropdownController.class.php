@@ -6,8 +6,8 @@
  */
 class WikiaStyleGuideDropdownController extends WikiaController {
 	public function multiSelect() {
-		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Dropdown/MultiSelectDropdown.js');
-		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/css/Dropdown/MultiSelectDropdown.scss');
+		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Dropdown.MultiSelect.js');
+		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/css/Dropdown.MultiSelect.scss');
 
 		$this->options = $this->getVal('options', array());
 		$this->selected = $this->getVal('selected', array());
