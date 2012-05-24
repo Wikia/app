@@ -72,10 +72,8 @@ class WallNotificationsController extends WikiaController {
 		$walluser = User::newFromId($data->user_wallowner_id);
 		
 		if( $authoruser instanceof User ) {
-			$realname = $authoruser->getRealName();
-			$username = $authoruser->getName();
 			if($authoruser->getId() > 0) {
-				$displayname = empty($realname) ? $username : $realname;	
+				$displayname = $authoruser->getName();	
 			} else {
 				$displayname = $this->app->wf->Msg('oasis-anon-user');	
 			}
@@ -83,10 +81,8 @@ class WallNotificationsController extends WikiaController {
 			//annon
 			$displayname = $app->wf->Msg('oasis-anon-user');
 		}
-		
-		$wall_realname = $walluser->getRealName();
-		$wall_username = $walluser->getName();
-		$wall_displayname = empty($wall_realname) ? $wall_username:$wall_realname;
+
+		$wall_displayname = $walluser->getName();
 		
 		$authors = array();
 		$authors[] = array(

@@ -737,8 +737,7 @@ class WallMessage {
 
 		$info['user'] = $user;
 
-		$displayname = $user->getRealName();
-		if(empty($displayname)) $displayname = $user->getName();
+		$displayname = $user->getName();
 
 		$user_link = $user->getUserPage()->getFullURL();
 

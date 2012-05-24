@@ -124,10 +124,7 @@ class WallHelper {
 			$item['wall-url'] = $wmessage->getWallPageUrl();
 			
 			$owner = $wmessage->getWallOwner();
-			if($realname = $owner->getRealName())
-				$item['wall-owner'] = $realname;
-			else
-				$item['wall-owner'] = $owner->getName();
+			$item['wall-owner'] = $owner->getName();
 			
 			if( empty($parent) ) {
 			//parent
@@ -303,7 +300,7 @@ class WallHelper {
 			$user = User::newFromName($data['author']->getName());
 
 			if( $user ) {
-				$items[$i]['real-name'] = $user->getRealName();
+				$items[$i]['real-name'] = $user->getName();
 				$userWallTitle = F::build( 'Title', array( $user->getName(), NS_USER_WALL ), 'newFromText' );
 				$items[$i]['user-profile-url'] = $userWallTitle->getFullUrl();
 			} else {
@@ -364,8 +361,7 @@ class WallHelper {
 	
 	public function getDefaultTitle() {
 		$app = F::app();
-		$name = $app->wg->User->getRealName();
-		if (empty($name)) $name = $app->wg->User->getName();
+		$name = $app->wg->User->getName();
 		if (User::isIP($name)){
 			$name = wfMsg('oasis-anon-user');
 			$name{0} = strtolower($name{0});

@@ -309,13 +309,9 @@ class WallExternalController extends WikiaController {
 	}
 
 	private function getDisplayName() {
-		$displayname = $this->wg->User->getRealName();
-		if(empty($displayname))  {
-			$displayname  = $this->wg->User->getName();
-			$displayname2 = '';
-		} else {
-			$displayname2 = $this->wg->User->getName();
-		}
+		$displayname  = $this->wg->User->getName();
+		$displayname2 = '';
+	
 		return array( $displayname, $displayname2 );
 		
 	}

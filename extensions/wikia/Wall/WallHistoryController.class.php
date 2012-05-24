@@ -75,9 +75,7 @@ class WallHistoryController extends WallController {
 			$this->response->setVal('wallHistoryUrl', $title->getFullURL(array('action' => 'history', 'sort' => $sort)));
 		}
 			
-		$wallOwnerUsername = $wallOwnerUser->getName();
-		$wallOwnerName = $wallOwnerUser->getRealName();
-		$wallOwnerName = ( empty($wallOwnerName) ) ? $wallOwnerUsername : $wallOwnerName;
+		$wallOwnerName = $wallOwnerUsername = $wallOwnerUser->getName();
 
 		$path = array_merge(array(array(
 			'title' => wfMsg('wall-message-elseswall', array($wallOwnerName)),
@@ -157,19 +155,14 @@ class WallHistoryController extends WallController {
 			$title = $value['title'];
 			$wm = F::build('WallMessage', array($title));
 			$user = $value['user'];
-			$name = $user->getRealName();
 			$username = $user->getName();
 			$url = F::build( 'Title', array( $username, NS_USER_WALL ), 'newFromText' )->getFullUrl();
 			
-			if( !empty($name) ) {
-				$history[$key]['displayname'] = wfMsg( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url  ));
+			if( $user->isAnon() ) {
+				$name = wfMsg('oasis-anon-user');
+				$history[$key]['displayname'] = wfMsg( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url ));
 			} else {
-				if( $user->isAnon() ) {
-					$name = wfMsg('oasis-anon-user');
-					$history[$key]['displayname'] = wfMsg( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url ));
-				} else {
-					$history[$key]['displayname'] = wfMsg( 'wall-history-username-short', array('$1' => $username, '$2' => $url ));
-				}
+				$history[$key]['displayname'] = wfMsg( 'wall-history-username-short', array('$1' => $username, '$2' => $url ));
 			}
 			
 			$history[$key]['authorurl'] = $url;
@@ -197,13 +190,9 @@ class WallHistoryController extends WallController {
 				$history[$key]['msgurl'] = $messagePageUrl;
 				
 				$msgUser = $wm->getUser();
-				$msgUserName = $msgUser->getRealName();
 				$history[$key]['msguserurl'] = F::build( 'Title', array( $msgUser->getName(), NS_USER_WALL ), 'newFromText' )->getFullUrl();
-				if( !empty($msgUserName) ) {
-					$history[$key]['msgusername'] = $msgUserName;
-				} else {
-					$history[$key]['msgusername'] = $msgUser->getName();
-				}
+				$history[$key]['msgusername'] = $msgUser->getName();
+			
 				
 				if( $type == WH_EDIT ) {
 					$rev = Revision::newFromTitle($title);

@@ -1,4 +1,5 @@
 <?php 
+
 class WallRailController extends WikiaController {
 	static $usersData = array();
 	static $anonsData = array();
@@ -21,8 +22,6 @@ class WallRailController extends WikiaController {
 		foreach($usersObjects as $user) {
 			if( $user->isAnon() ) {
 				$name = wfMsg('oasis-anon-user');
-			} else {
-				$name = $user->getRealName();
 			}
 			
 			$username = $user->getName();
