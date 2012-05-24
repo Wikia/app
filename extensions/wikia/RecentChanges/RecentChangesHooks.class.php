@@ -2,7 +2,7 @@
 
 class RecentChangesHooks {
 
-	public static function onGetNamespaceCheckbox( &$html, $selected = '', $all = null, $element_name = 'namespace', $label = null ) {
+	public static function onGetNamespaceCheckbox( &$html, $selected = '', $all = null ) {
 		$app = F::app();
 
 		if ( $app->wg->User->isAnon() ) {
@@ -13,13 +13,13 @@ class RecentChangesHooks {
 			return true;
 		}
 
-		$response = $app->sendRequest( 'RecentChangesController', 'dropdownNamespaces', array( 'all' => $all, 'selected' => $selected ) );
+		$response = $app->sendRequest( 'RecentChangesController', 'dropdownNamespaces', array( 'all' => $all ) );
 		$html = $response->getVal( 'html', '' );
 
 		return true;
 	}
 
-	public function onGetRecentChangeQuery( &$conds, &$tables, &$join_conds, $opts ) {
+	public function onGetRecentChangeQuery( &$conds, &$tables, &$join_conds, $opts, &$query_options ) {
 		$app = F::app();
 
 		if ( $app->wg->User->isAnon() ) {
@@ -29,18 +29,28 @@ class RecentChangesHooks {
 		if ( $app->wg->Title->isSpecial('RecentChanges') ) {
 			return true;
 		}
-		
-		$rcfs = new RecentChangesFiltersStorage($app->wg->User);
-		$selected = $rcfs->get();
-		
-		if ( in_array('all', $selected) ) {
+
+		if ( $opts['invert'] !== false ) {
 			return true;
 		}
 
-		if(!empty($selected)) {
-			$cond = 'rc_namespace IN ('.implode( ',', $selected ).')';
+		$rcfs = new RecentChangesFiltersStorage($app->wg->User);
+		$selected = $rcfs->get();
+		if ( empty($selected) ) {
+			return true;
 		}
-		
+
+		$opts->setValue( 'namespace', $selected );
+
+		if ( in_array('all', $selected) ) {
+			$opts->setValue( 'namespace', null );
+			return true;
+		}
+
+		$db = $app->wf->GetDB( DB_SLAVE );
+		$namespaces = array_keys($selected);
+		$cond = 'rc_namespace IN ('.$db->makeList( $namespaces ).')';
+
 		$flag = true;
 		foreach( $conds as $key => &$value ) {
 			if ( strpos($value, 'rc_namespace') !== false ) {
@@ -49,7 +59,7 @@ class RecentChangesHooks {
 				break;
 			}
 		}
-		
+
 		if ( $flag ) {
 			$conds[] = $cond;
 		}
