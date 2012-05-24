@@ -30,20 +30,15 @@ class RecentChangesHooks {
 			return true;
 		}
 		
-		if ( $opts['namespace'] === '' ) {
-	//		return true;
-		}
-
 		$rcfs = new RecentChangesFiltersStorage($app->wg->User);
 		$selected = $rcfs->get();
-	
+		
+		if ( in_array('all', $selected) ) {
+			return true;
+		}
+
 		if(!empty($selected)) {
-			$namespaces = array_keys($selected);
-			if ( $opts['invert'] === false ) {
-				$cond = 'rc_namespace IN ('.implode( ',', $namespaces ).')';
-			} else {
-				$cond = 'rc_namespace NOT IN ('.implode( ',', $namespaces ).')';
-			}		
+			$cond = 'rc_namespace IN ('.implode( ',', $selected ).')';
 		}
 		
 		$flag = true;
