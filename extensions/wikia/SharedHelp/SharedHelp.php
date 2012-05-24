@@ -222,7 +222,7 @@ function SharedHelpHook(&$out, &$text) {
 		//process article if not redirected before
 		if (empty($wasRedirected)) {
 			# get rid of editsection links
-			$content = preg_replace("|<span class=\"editsection\">\[<a href=\".*?\" title=\".*?\">.*?<\/a>\]<\/span>|", "", $content);
+			$content = preg_replace("|<span class=\"editsection( .*)?\"><a href=\".*?\" title=\".*?\">.*?<\/a><\/span>|", "", $content);
 			$content = strtr($content,
 				array(
 					'showTocToggle();' => "showTocToggle('sharedtoctitle', 'sharedtoc', 'sharedtogglelink');",
