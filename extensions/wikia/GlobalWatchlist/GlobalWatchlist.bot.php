@@ -845,16 +845,16 @@ class GlobalWatchlistBot {
 		
 		$where = array( 'logname' => 'weekly_digest' );
 		
-		$row = $dbw->selectRow( '`noreptemp`.`script_log`', array( 'logname' ), $where );
+		$row = $dbw->selectRow( ' `noreptemp`.`script_log` ', array( 'logname' ), $where );
 
 		if ( !empty( $row ) && $row->logname ) {
-			$dbw->update( '`noreptemp`.`script_log`', array( 'ts' => wfTimestamp( TS_DB ) ), $where, __METHOD__ );
+			$dbw->update( ' `noreptemp`.`script_log` ', array( 'ts' => wfTimestamp( TS_DB ) ), $where, __METHOD__ );
 		} else {
 			$data = array(
 				'ts' => wfTimestamp( TS_DB ),
 				'logname' => 'weekly_digest'
 			);
-			$dbw->insert( '`noreptemp`.`script_log`', $data, __METHOD__, 'IGNORE' );
+			$dbw->insert( ' `noreptemp`.`script_log` ', $data, __METHOD__, 'IGNORE' );
 		}
 	}
 
