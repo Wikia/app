@@ -250,6 +250,14 @@ class LightboxController extends WikiaController {
 		$this->imageUrl = $thumbUrl;
 	}
 
+	/*
+	 * function mediaTableToThumbs()
+	 * @brief transform array into different array
+	 * converts array in format of
+	 *   title (as text or object)
+	 *   type (video or image)
+	 * into array that includes thumburl and playbutton and title is always text
+	 */
 	protected function mediaTableToThumbs( $mediaTable ) {
 		$thumbs = array();
 		foreach ($mediaTable as $entry) {
