@@ -118,16 +118,18 @@
 					            'label' => wfMsg('lightbox-standard-link'),
 					            'type' => 'text',
 					            'name' => 'lightbox-standard-link',
-					            'attributes' => array(
-					                'value' => "{{articleUrl}}",
-					            )
+				                'value' => "{{shareUrl}}",
 					        )
 					    )
 					);
 				?>
 				<?= wfRenderModule('WikiaForm', 'Index', array('form' => $form)); ?>
 				<div class="social-links">
-					{{networks}}
+					<ul>
+						{{#networks}}
+							<li><a href="{{url}}">{{id}}</a></li>
+						{{/networks}}
+					</ul>
 				</div>
 			</div>
 			<div class="bottom-forms">
