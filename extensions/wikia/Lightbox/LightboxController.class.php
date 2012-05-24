@@ -224,8 +224,12 @@ class LightboxController extends WikiaController {
 			
 			$thumb = $file->getThumbnail(300, 250);
 			$thumbUrl = $thumb->getUrl();
-			$embedMarkup = "<a href=\"$shareUrl\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
 			$linkDescription = wfMsg('lightbox-share-description', empty($articleUrl) ? $fileTitleObj->getText() : $articleTitleObj->getText(), $this->wg->Sitename);
+			if(WikiaFileHelper::isFileTypeVideo( $file )) {
+				$embedMarkup = $file->getEmbedCode(300, true, false);
+			} else {
+				$embedMarkup = "<a href=\"$shareUrl\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
+			}
 			
 			$shareNetworks = F::build( 'SocialSharingService' )->getNetworks( array(
 				'facebook',
