@@ -175,7 +175,7 @@ $.extend( $.store.prototype, {
  **********************************************************************************/
 
 $.store.drivers = {
-	// Firefox 3.5, Safari 4.0, Chrome 5, Opera 10.5, IE8
+	// Firefox 3.5+, Safari 4.0+, Chrome 5+, Opera 10.5+, IE8+
 	'localStorage': {
 		// see https://developer.mozilla.org/en/dom/storage#localStorage
 		ident: "$.store.drivers.localStorage",
@@ -199,6 +199,7 @@ $.store.drivers = {
 		},
 		set: function( key, value )
 		{
+			// Liz: added try/catch 
 			try
 			{
 				window.localStorage.setItem( key, value );
