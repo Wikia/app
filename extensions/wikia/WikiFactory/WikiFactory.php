@@ -1000,7 +1000,13 @@ class WikiFactory {
 			$server = str_replace( '.wikia.com', '', $server );
 		}
 
+		/*
+		 * commenting out code to reduce number of changes
+		 * that needs to be reviewed for error related to
+		 * preview.video db connections
+		 */
 		// put the address back into shape and return
+		/*
 		if(empty($_SERVER['SERVER_NAME'])) {
 			// maintenance script
 			global $wgDevelEnvironment, $wgDBname;
@@ -1010,7 +1016,7 @@ class WikiFactory {
 				$hostname = str_replace('dev-','',gethostname());
 				return 'http://' . $wgDBname . '.' . $hostname . '.wikia-dev.com/'.$address;
 			}
-		}
+		}*/
 
 		$servername = $_SERVER['SERVER_NAME'];
 		if( strpos( $servername, 'preview.' ) !== false ) {
