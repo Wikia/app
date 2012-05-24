@@ -48,8 +48,7 @@ class RecentChangesHooks {
 		}
 
 		$db = $app->wf->GetDB( DB_SLAVE );
-		$namespaces = array_keys($selected);
-		$cond = 'rc_namespace IN ('.$db->makeList( $namespaces ).')';
+		$cond = 'rc_namespace IN ('.$db->makeList( $selected ).')';
 
 		$flag = true;
 		foreach( $conds as $key => &$value ) {
