@@ -178,7 +178,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$opt['redirs'] = !empty($redirs) ? 1 : 0;
-		$stParams = array_merge( array( 'query' => $term ), $opt );
+		$stParams = array_merge( array( 'search' => $term ), $opt );
 
 		$title = F::build('SpecialPage', array( 'WikiaSearch' ), 'getTitleFor');
 
