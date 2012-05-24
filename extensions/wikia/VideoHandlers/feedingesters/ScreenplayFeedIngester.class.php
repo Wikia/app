@@ -157,7 +157,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$altDescription = '';
 		$altDescription .= !empty($data['trailerType']) ? $data['trailerType'] . ' ' : '';
 		$altDescription .= !empty($data['trailerVersion']) ? $data['trailerVersion'] . ' ' : '';
-		$altDescription .= "({$data['videoId']})";
+		//$altDescription .= "({$data['videoId']})";
 		$description = ($data['description']) ? $data['description'] : $altDescription;
 		if (startsWith($description, 'Trailer ')) {
 			// add trailer type to description
@@ -165,11 +165,21 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$description = $data['trailerType'] . ' ' . $description;
 			}
 		}
-		$name = sprintf("%s - %s", $this->generateTitleName($data), $description);	
-		
+		$name = sprintf("%s - %s", $this->generateTitleName($data), $description);
+
+		$name_final = $name;
+		$i = 2;
+		// is this name available?
+		$title = Title::newFromText($name_final, NS_FILE);
+		while ( $title->exists() ) {
+			$name_final = $name . ' ' . $i;
+			$i++;
+			$title = Title::newFromText($name_final, NS_FILE);
+		}
+
 		// per parent class's definition, do not sanitize
 		wfProfileOut( __METHOD__ );
-		return $name;
+		return $name_final;
 	}
 
 	public function generateTitleName(array $data) {
