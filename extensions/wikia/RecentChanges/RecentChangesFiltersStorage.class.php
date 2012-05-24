@@ -12,20 +12,24 @@ class RecentChangesFiltersStorage {
 	public function set($values){
 		$old = $this->get(false);
 		$new = $this->buildUserOption($old, $values);
-		$this->user->setOption('RCFilters', $new);
+		$this->user->setOption('RCFilters', serialize($new) );
 		$this->setCache($new);
-	//	$this->user->saveSettings();
+		$this->user->saveSettings();
 		return $new;
 	}
 	
 	public function get($onlyFromThisWiki = true) {
 		$values = $this->getCache();
 		if(empty($values)) {
-			$values = $this->user->getOption('RCFilters');
+			$values = unserialize( $this->user->getOption('RCFilters') );
 		}
 		
 		if(!$onlyFromThisWiki) {
 			return $values;
+		}
+		
+		if(empty($values)) {
+			return array();
 		}
 		
 		$out = array();
@@ -38,19 +42,33 @@ class RecentChangesFiltersStorage {
 		return $out;
 	}
 	
+	public function getWithLabel($onlyFromThisWiki = true){
+		$filters = array_flip($this->get($onlyFromThisWiki));
+		$out = $this->namespaces;
+		foreach($out as $key => $val) {
+			if(empty($filters[$key])) {
+				unset($out[$key]);
+			} 
+		}
+		return $out;
+	}
+	
 	protected function buildUserOption($old, $new) {
 		if(empty($old)) {
 			return $new;
 		}
 		
-		foreach($old as $value) {
+		$new = array_flip($new);
+		$old = array_flip($old); 
+		
+		foreach($old as $key => $value) {
 			//check if this namespace is from other wiki
-			if(empty($this->namespaces[$value])) {
-				$new[] = $value;
+			if(empty($this->namespaces[$key])) {
+				$new[$value] = 1;
 			}
 		}
 		
-		return $new;
+		return array_keys($new);
 	}
 	
 	protected function setCache($values){
