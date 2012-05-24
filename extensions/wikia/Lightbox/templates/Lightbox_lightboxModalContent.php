@@ -160,6 +160,7 @@
 				<div class="email">
 					<?php 
 						$form = array (
+							'id' => 'shareEmailForm',
 						    'inputs' => array (
 						        array(
 						            // Main input attributes
