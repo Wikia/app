@@ -1217,7 +1217,7 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function onXmlNamespaceSelectorAfterGetFormattedNamespaces(&$namespaces, $selected, $all, $element_name, $label) {
+	public function onXmlNamespaceSelectorAfterGetFormattedNamespaces( &$namespaces ) {
 		if( defined('NS_USER_WALL') && defined('NS_USER_WALL_MESSAGE') ) {
 			if( isset($namespaces[NS_USER_WALL]) && isset($namespaces[NS_USER_WALL_MESSAGE]) ) {
 				unset($namespaces[NS_USER_WALL], $namespaces[NS_USER_WALL_MESSAGE]);

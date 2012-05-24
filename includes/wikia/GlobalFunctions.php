@@ -1660,4 +1660,18 @@ function wfWikiaErrorHandler($errno, $errstr, $errfile, $errline) {
 	return false;
 }
 
+/**
+ * get namespaces
+ * @global type $wgContLang
+ * @return array $namespaces
+ */
+function wfGetNamespaces() {
+	global $wgContLang;
+
+	$namespaces = $wgContLang->getFormattedNamespaces();
+	wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array(&$namespaces) );
+
+	return $namespaces;
+}
+
 set_error_handler('wfWikiaErrorHandler');

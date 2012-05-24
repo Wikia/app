@@ -4,7 +4,7 @@
  * UISG Dropdown Controller
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
-class DropdownController extends WikiaController {
+class WikiaStyleGuideDropdownController extends WikiaController {
 	public function multiSelect() {
 		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Dropdown/MultiSelectDropdown.js');
 		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/css/Dropdown/MultiSelectDropdown.scss');
