@@ -786,5 +786,11 @@ var Lightbox = {
 
 $(function() {
 	Lightbox.init();
+	var file = $('#' + $.getUrlVar('file'));
+	if (file.exists()) {
+		$(window).scrollTop(file.offset().top + file.height()/2 - $(file).height()/2);
+		file.find('img').click();
+	}
+
 });
 
