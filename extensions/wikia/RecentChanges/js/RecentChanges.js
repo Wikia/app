@@ -14,7 +14,7 @@ $(function(){
 				type: "POST",
 				format: 'json',
 				callback: function(data) {
-					alert(data);
+					window.location.reload();
 				}
 			});
 		},

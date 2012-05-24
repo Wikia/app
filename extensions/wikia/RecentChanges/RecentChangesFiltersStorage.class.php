@@ -29,7 +29,7 @@ class RecentChangesFiltersStorage {
 		}
 		
 		if(empty($values)) {
-			return array();
+			return array('all');
 		}
 		
 		$out = array();
@@ -39,35 +39,31 @@ class RecentChangesFiltersStorage {
 			}
 		}
 		
-		return $out;
-	}
-	
-	public function getWithLabel($onlyFromThisWiki = true){
-		$filters = array_flip($this->get($onlyFromThisWiki));
-		$out = $this->namespaces;
-		foreach($out as $key => $val) {
-			if(empty($filters[$key])) {
-				unset($out[$key]);
-			} 
+		if(empty($out)) {
+			return array('all');
 		}
+		
 		return $out;
 	}
-	
+
 	protected function buildUserOption($old, $new) {
+		$new = array_flip($new);
+		if(isset($new['all'])) {
+			return array();
+		}
+		
 		if(empty($old)) {
 			return $new;
 		}
 		
-		$new = array_flip($new);
 		$old = array_flip($old); 
 		
 		foreach($old as $key => $value) {
 			//check if this namespace is from other wiki
-			if(empty($this->namespaces[$key])) {
+			if(isset($this->namespaces[$key])) {
 				$new[$value] = 1;
 			}
 		}
-		
 		return array_keys($new);
 	}
 	
