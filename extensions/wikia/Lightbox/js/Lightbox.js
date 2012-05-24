@@ -340,6 +340,8 @@ var Lightbox = {
 							})
 							.filter('.share-input')
 							.click();
+						Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
+						Lightbox.setupShareEmail();
 					});
 				// Close more info and share screens on button click
 				}).on('click.Lightbox', '.more-info-close', function(evt) {
@@ -777,6 +779,27 @@ var Lightbox = {
 			default: // fallback, should not happen
 				return wgCurRevisionId;
 		}
+	},
+	
+	setupShareEmail: function() {
+		$('#shareEmailForm').submit(function(e) {
+			e.preventDefault();
+			var adresses = $(this).find('input').first().val();
+			
+			$.nirvana.sendRequest({
+				controller: 'Lightbox',
+				method: 'shareFileMail',
+				type: 'POST',
+				data: {
+					addresses: adresses,
+					shareUrl: Lightbox.openModal.share.shareUrl
+				}, 
+				callback: function(data) {
+					console.log(data);
+				}
+			});
+		});
+		
 	}
 
 };
