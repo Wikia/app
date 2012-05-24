@@ -15,9 +15,15 @@
 		window.Wikia.Querystring = querystring();//late binding
 	}
 
+	function isEmpty(o) {
+		for(var k in o) return false;
+		return true;
+	}
+
 	function querystring(){
 		var l = window.location,
-			p = Querystring.prototype;//late binding
+			p = Querystring.prototype,
+			u;//late binding
 
 		function Querystring(url){
 			var srh,
@@ -26,9 +32,8 @@
 				protocol,
 				path = '',
 				hash,
-				pos;
-
-			this.cache = false;
+				pos,
+				cache = {};
 
 			if(url) {
 				tmp = url.split('//', 2);
@@ -60,29 +65,27 @@
 						if(elm) return true;
 					});
 
-				this.cache = {};
-
 				for(var i = 0; i < tmpQuery.length; i++){
 					tmp = tmpQuery[i].split('=');
-					this.cache[tmp[0]] = tmp[1] || '';
+					cache[tmp[0]] = tmp[1] || '';
 				}
 			}
 
+			this.cache = cache;
 			this.protocol = protocol;
 			this.link = link;
 			this.path = path;
-			this.srh = srh;
 			this.hash = hash;
 		}
 
 		p.toString = function(){
-			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + (this.cache ? '?' : ''),
+			var ret = (this.protocol ? this.protocol + '//' : '') + this.link + this.path + (!isEmpty(this.cache) ? '?' : ''),
 				attr, val,
 				tmpArr = [];
 
 			for(attr in this.cache){
 				val = this.cache[attr];
-				tmpArr.push(attr + (val ? '=' + val : ''));
+				tmpArr.push(attr + (val != u ? '=' + val : ''));
 			}
 			return ret + tmpArr.join('&') + (this.hash ? '#' + this.hash : '');
 		};
@@ -92,7 +95,7 @@
 		};
 
 		p.setVal = function(name, val){
-			if(val != ''){
+			if(val != u){
 				this.cache[name] = val;
 			}else{
 				delete this.cache[name];
@@ -116,7 +119,7 @@
 		};
 
 		p.addCb = function(){
-			this.cache.cb = Math.ceil(Math.random() * 10001);
+			this.setVal('cb', Math.ceil(Math.random() * 10001));
 		};
 
 		p.goTo = function(){
