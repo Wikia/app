@@ -14,7 +14,7 @@ class OasisController extends WikiaController {
 	public static function addBodyClass($className) {
 		self::$extraBodyClasses[] = $className;
 	}
-	
+
 	public function init() {
 		$skinVars = $this->app->getSkinTemplateObj()->data;
 		$this->assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
@@ -31,7 +31,7 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
-		
+
 		$this->app->registerHook('MakeGlobalVariablesScript', 'OasisController', 'onMakeGlobalVariablesScript');
 	}
 
@@ -45,7 +45,7 @@ class OasisController extends WikiaController {
 		$vars['wgJsAtBottom'] = self::JsAtBottom();
 		return true;
 	}
-	
+
 	/**
 	 * Business-logic for determining if the javascript should be at the bottom of the page (it usually should be
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
@@ -146,7 +146,7 @@ class OasisController extends WikiaController {
 		$globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
 		wfRunHooks('SkinGetHeadScripts', array(&$globalVariablesScript));
 		$this->globalVariablesScript = $globalVariablesScript;
-		
+
 		// printable CSS (to be added at the bottom of the page)
 		// FIXME: move to renderPrintCSS() method
 		$this->printableCss = $this->renderPrintCSS(); // The HTML for the CSS links (whether async or not).
@@ -264,7 +264,7 @@ class OasisController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-		
+
 		$this->jsAtBottom = self::JsAtBottom();
 
 		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
@@ -329,7 +329,7 @@ class OasisController extends WikiaController {
 		$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL( 'oasis_nojquery_shared_js' );
 		$assets['oasis_noads_extensions_js'] = $this->assetsManager->getURL( 'oasis_noads_extensions_js' );
 		$assets['oasis_extensions_js']= $this->assetsManager->getURL( 'oasis_extensions_js' );
-		$assets['oasis_user_anon'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_user_js' : 'oasis_anon_js', $tmp, true /* local */ );
+		$assets['oasis_user_anon'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_user_js' : 'oasis_anon_js');
 
 		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
 			foreach ( $assets as $group => $urls ) {
@@ -363,7 +363,7 @@ EOT;
 	(function(){ wsl.loadScript(toload); })();
 </script>
 EOT;
-		
+
 		// use loader script instead of separate JS files
 		$this->jsFiles = $jsLoader . $this->jsFiles;
 
@@ -379,7 +379,7 @@ EOT;
 			$jquery_ads = Wikia::json_encode($jquery_ads);
 			$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING); if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { wsl.loadScript({$jquery_ads}); } })(); /*]]>*/</script>";
 		}
-		
+
 		wfProfileOut(__METHOD__);
 	}
 
