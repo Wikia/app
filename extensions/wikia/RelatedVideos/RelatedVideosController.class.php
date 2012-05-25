@@ -46,7 +46,7 @@ class RelatedVideosController extends WikiaController {
 		$wikiLink = $this->getVal('wikiLink', '');
 
 		$oRelatedVideosService = F::build('RelatedVideosService');
-		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( array( 'title' => $title, 'source' => $external ), VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
+		$result = $oRelatedVideosService->getRelatedVideoDataFromTitle( array( 'title' => $title, 'source' => $external ), RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort, $videoHeight );
 		if ( isset( $result['error'] ) ){
 			$this->setVal( 'error', $result['error'] );
 		} else {
@@ -105,7 +105,7 @@ class RelatedVideosController extends WikiaController {
 		$videoName = urldecode($this->getVal( 'title', '' ));
 		$width = $this->getVal( 'width', 0 );
 		$useMaster = $this->getVal( 'useMaster', 0 );
-		$videoWidth = $this->getVal( 'videoWidth', VideoPage::DEFAULT_OASIS_VIDEO_WIDTH );
+		$videoWidth = $this->getVal( 'videoWidth', RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH );
 		$videoHeight = $this->getVal( 'videoHeight', '' );
 		$cityShort = $this->getVal( 'cityShort', 'life');
 		$useJWPlayer = $this->getVal( 'useJWPlayer', true );

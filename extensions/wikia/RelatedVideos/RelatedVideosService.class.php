@@ -15,7 +15,7 @@ class RelatedVideosService {
 	 * @param int $videoWidth Width of resulting video player, in pixels
 	 * @return Array 
 	 */
-	public function getRelatedVideoData( $params, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true, $autoplay=true, $inAjaxResponse=false ){
+	public function getRelatedVideoData( $params, $videoWidth = RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $useMaster=0, $videoHeight='', $useJWPlayer=true, $autoplay=true, $inAjaxResponse=false ){
 
 		$titleText = isset( $params['title'] ) ? $params['title'] : '';
 		$articleId = isset( $params['articleId'] ) ? $params['articleId'] : 0;
@@ -58,12 +58,12 @@ class RelatedVideosService {
 		return $result['data'];
 	}
 
-	public function getRelatedVideoDataFromMaster( $params, $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
+	public function getRelatedVideoDataFromMaster( $params, $videoWidth=RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
 
 		return $this->getRelatedVideoData( $params, $videoWidth, $cityShort, 1, $videoHeight );
 	}
 
-	public function getRelatedVideoDataFromTitle( $params, $videoWidth=VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
+	public function getRelatedVideoDataFromTitle( $params, $videoWidth=RelatedVideosData::DEFAULT_OASIS_VIDEO_WIDTH, $cityShort='life', $videoHeight='' ){
 
 		$params['articleId'] = 0;
 		return $this->getRelatedVideoData( $params, $videoWidth, $cityShort, 0, $videoHeight );
