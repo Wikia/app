@@ -24,23 +24,18 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		//remove slashes at the beginning of the string, we need a pure relative path to open the file
 		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
 
-		if( $wgDevelEnvironment && $wgSpeedBox ) {
-			$hash = wfAssetManagerGetSASShash( $this->mOid );
-			$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
+		$hash = wfAssetManagerGetSASShash( $this->mOid );
+		$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
 
-			$cacheId = "/Sass-$inputHash-$hash";
+		$cacheId = "/Sass-$inputHash-$hash";
 
-			//$cacheFile = $tempDir . $cacheId;
-			$memc = F::App()->wg->Memc;
+		$memc = F::App()->wg->Memc;
 
-			if ( $obj = $memc->get( $cacheId ) ) {
-				$this->mContent = $obj;
-			} else {
-				$this->processContent();
-				$memc->set( $cacheId, $this->mContent );
-			}
+		if ( $obj = $memc->get( $cacheId ) ) {
+			$this->mContent = $obj;
 		} else {
 			$this->processContent();
+			$memc->set( $cacheId, $this->mContent );
 		}
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
