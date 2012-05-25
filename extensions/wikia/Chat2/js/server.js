@@ -1,5 +1,4 @@
 /** REQUIRES, OTHER SETUP **/
-
 var config = require("./server_config.js");
 
 var app = require('express').createServer()
@@ -15,7 +14,7 @@ var app = require('express').createServer()
 var http = require("http");
 
 var monitoring = require('./monitoring.js');
-monitoring.startMonitoring(5000, storage);
+monitoring.startMonitoring(30000, storage);
 
 
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
@@ -320,7 +319,14 @@ function authConnection(handshakeData, authcallback){
 		}
 	};
 
-	mwBridge.authenticateUser(roomId, name, key, handshakeData.address.address, callback, function(){
+        var address = null;
+        if(!handshakeData.address || !handshakeData.address.address) {
+                address = "0.0.0.0";
+        } else {
+                address = handshakeData.address.address;
+        }
+
+	mwBridge.authenticateUser(roomId, name, key, address, callback, function(){
 		logger.error("User failed authentication: Wrong call to media wiki");
 		authcallback(null, false); // error first callback style
 	});
@@ -412,6 +418,7 @@ function finishConnectingUser(client, socket ){
 			//we have double connection for the same window
 			if(oldClient){
 				oldClient.donotSendPart = true;
+				client.donotBroadcastUserList = true;
 				oldClient.disconnect();
 			}
 			// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
@@ -499,6 +506,11 @@ function broadcastDisconnectionInfo(client, socket){
  * Given a roomId, returns a list of the usernames of all users in the room (as JSON).
  */
 function broadcastUserListToMediaWiki(client){
+       if(client.donotBroadcastUserList) {
+                return true;
+        }
+
+	monitoring.incrEventCounter('broadcastUserList');
 	storage.getUsersInRoom(client.roomId, function(users) {
 		if(!users){users = {};} // if the key doesn't exist, return an empty userlist
 		logger.debug("Sending status update to media wiki")
