@@ -39,6 +39,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$solrDebugWikiId    = isset($solrDebugWikiId)    ? $solrDebugWikiId    : false;
 		$spellCheck         = isset($spellCheck)         ? $spellCheck         : false;
 		$hub				= isset($hub)				 ? $hub				   : false;
+		$spellCheckHappened = isset($spellCheckHappened) ? $spellCheckHappened : false;
 
 		if (!isset($namespaces)) {
 			$namespaces = $this->namespaces ?: SearchEngine::DefaultNamespaces();
@@ -179,14 +180,17 @@ class WikiaSolrClient extends WikiaSearchClient {
 		     empty($response->response->docs)) {
 
 			if ($spellCheck && 
+				! $spellCheckHappened &&
 				!empty($response->spellcheck->suggestions) && 
 				!empty($response->spellcheck->suggestions->collation)
 				) {
 
 				$newQuery = $response->spellcheck->suggestions->collation;
 
-				return $this->search($newQuery, $methodOptions);
+				// stop infinite loop... i know this is stupid, but we're gutting this come 3.6
+				$methodOptions['spellCheckHappened'] = true;
 
+				return $this->search($newQuery, $methodOptions);
 			} else if (!$spellCheck) {
 				#research with spellcheck @todo spellcheck request handler
 				$methodOptions['spellCheck'] = true;
