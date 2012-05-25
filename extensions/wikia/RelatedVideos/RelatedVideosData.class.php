@@ -4,11 +4,15 @@ class RelatedVideosData {
 
 	protected static $theInstance = null;
 
+	const V_WIKIAVIDEO = 24;
+	const DEFAULT_OASIS_VIDEO_WIDTH = 660;
+	const MAX_TITLE_LENGTH = 240;
+
 	function __construct() {
 		
 	}
 	
-	public function getVideoData( $titleText, $thumbnailWidth, $videoWidth = VideoPage::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life', $videoHeight='', $useJWPlayer=true, $inAjaxResponse=false ) {
+	public function getVideoData( $titleText, $thumbnailWidth, $videoWidth = self::DEFAULT_OASIS_VIDEO_WIDTH, $autoplay = true, $useMaster = false, $cityShort='life', $videoHeight='', $useJWPlayer=true, $inAjaxResponse=false ) {
 
 		wfProfileIn( __METHOD__ );
 
@@ -104,7 +108,7 @@ class RelatedVideosData {
 					list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
 				}
 			} else {
-				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoPage( $url );
+				throw new Exception( 'Old type of videos no longer supported (VideoPage)');
 			}
 		}
 		catch( Exception $e ) {
@@ -114,7 +118,7 @@ class RelatedVideosData {
 
 		// add to article's whitelist
 		$rvn = F::build( 'RelatedVideosNamespaceData', array( $targetTitle ), 'newFromTargetTitle' );
-		$entry = $rvn->createEntry( $videoTitle->getText(), $videoProvider == VideoPage::V_WIKIAVIDEO );
+		$entry = $rvn->createEntry( $videoTitle->getText(), $videoProvider == self::V_WIKIAVIDEO );
 		$retval = $rvn->addToList( RelatedVideosNamespaceData::WHITELIST_MARKER, array( $entry ), $articleId );
 		if ( is_array( $rvn->entries ) ){
 			$entry = end( $rvn->entries );
@@ -124,7 +128,7 @@ class RelatedVideosData {
 				$data = $entry;
 				$data['articleId'] = $videoPageId;
 				$data['title'] = $videoTitle->getText();
-				$data['external'] = $videoProvider == VideoPage::V_WIKIAVIDEO;
+				$data['external'] = $videoProvider == self::V_WIKIAVIDEO;
 				wfProfileOut( __METHOD__ );
 				return $data;
 			}
@@ -144,60 +148,6 @@ class RelatedVideosData {
 
 	}
 
-	protected function addVideoVideoPage( $url ) {
-		// create temp VideoPage to parse URL
-		$tempname = 'Temp_video_' . F::app()->wg->user->getID() . '_'.rand(0, 1000); // FIXME: use normal empty title;
-		$temptitle = F::build( 'Title', array( NS_VIDEO, $tempname ), 'makeTitle' );
-		$video = F::build( 'VideoPage', array( $temptitle ) );
-
-		if( !$video->parseUrl( $url ) ) {
-			wfProfileOut( __METHOD__ );
-			throw new Exception( wfMsg( 'related-videos-add-video-error-bad-url' ) );
-		}
-
-		if( !$video->checkIfVideoExists() ) {
-			wfProfileOut( __METHOD__ );
-			throw new Exception( wfMsg( 'related-videos-add-video-error-nonexisting' ) );
-		}
-
-		$videoName = $video->getVideoName();
-		$videoProvider = $video->getProvider();
-		$videoId = $video->getVideoId();
-		$videoMetadata = $video->getData();
-
-		// check if video already exists on this wiki. If not, create 
-		// new VideoPage
-		$videoTitle = $this->sanitizeTitle( $videoName );
-
-		if( is_null( $videoTitle ) ) {
-			wfProfileOut( __METHOD__ );
-			throw new Exception( wfMsg ( 'related-videos-add-video-error-bad-name' ) );
-		}
-
-		if( $videoTitle->exists() ) {
-			$videoPageId = $videoTitle->getArticleID();
-			// no need to create video page
-		} else {
-			// is the target protected?
-			$permErrors = $videoTitle->getUserPermissionsErrors( 'edit', F::app()->wg->user );
-			$permErrorsUpload = $videoTitle->getUserPermissionsErrors( 'upload', F::app()->wg->user );
-			$permErrorsCreate = $videoTitle->getUserPermissionsErrors( 'create', F::app()->wg->user );
-
-			if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-				throw new Exception( wfMsg( 'related-videos-add-video-error-permission-video' ) );
-			}
-
-			$video = F::build( 'VideoPage', array( $videoTitle ) );
-			$video->loadFromPars( $videoProvider, $videoId, $videoMetadata );
-			$video->setName( $videoName );
-			$video->save();
-			$videoPageId = $video->getTitle()->getArticleID();
-		}
-
-		return array($videoTitle, $videoPageId, $videoProvider);
-
-	}
-
 	protected function sanitizeTitle($name) {
 
 		wfProfileIn( __METHOD__ );
@@ -208,7 +158,7 @@ class RelatedVideosData {
 		$name = str_replace('/', ' ', $name);
 		$name = str_replace('  ', ' ', $name);
 
-		$name = substr($name, 0, VideoPage::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255
+		$name = substr($name, 0, self::MAX_TITLE_LENGTH);	// DB column Image.img_name has size 255
 
 		wfProfileOut( __METHOD__ );
 		return Title::makeTitleSafe(NS_VIDEO, $name);		
