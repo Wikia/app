@@ -34,13 +34,13 @@
 
 					// Anonymous user
 					} else {
-						$.cookies.set('ContentWarningApproved', '1', {
-							hoursToLive: 24,		
-							domain: wgServer.split('/')[2]
-						});
-
 						afterApproved();
 					}
+
+					$.cookies.set('ContentWarningApproved', '1', {
+						hoursToLive: 24,
+						domain: wgServer.split('/')[2]
+					});
 				});
 
 				// User does not wish to proceed, send them back to the home page
