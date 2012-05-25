@@ -56,7 +56,8 @@ class EmailConfirmation extends UnlistedSpecialPage {
 					}
 				} else {
 					if( User::isValidEmailAddr( $wgUser->getEmail() ) ) {
-						UserLoginHelper::getInstance()->showRequestFormConfirmEmail( $this );
+						$userLoginHelper = F::build( 'UserLoginHelper' );
+						$userLoginHelper->showRequestFormConfirmEmail( $this );
 					} else {
 						$wgOut->addWikiMsg( 'usersignup-user-pref-confirmemail_noemail' );
 					}

@@ -1328,7 +1328,8 @@ class Preferences {
 					if ( empty($wgEnableUserLoginExt) ) {
 						$result = $wgUser->sendConfirmationMail();
 					} else {
-						$result = UserLoginHelper::getInstance()->sendReconfirmationEmail( $wgUser, $newadr );
+						$userLoginHelper = F::build( 'UserLoginHelper' );
+						$result = $userLoginHelper->sendReconfirmationEmail( $wgUser, $newadr );
 					}
 					/* Wikia change end */
 					if( WikiError::isError( $result ) ) {

@@ -3212,7 +3212,8 @@ class User {
 		if ( empty($wgEnableUserLoginExt) ) {
 			return $this->sendConfirmationMail( 'ReConfirmationMail', 'reconfirmemail' );
 		} else {
-			$emailTextTemplate = UserLoginHelper::getInstance()->getReconfirmationEmailTempalte( $this );
+			$userLoginHelper = F::build( 'UserLoginHelper' );
+			$emailTextTemplate = $userLoginHelper->getReconfirmationEmailTempalte( $this );
 			return $this->sendConfirmationMail("ReConfirmationMail", 'usersignup-reconfirmation-email', true, $emailTextTemplate);
 		}
 		/* Wikia change - end */

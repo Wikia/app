@@ -119,10 +119,6 @@
 			}
 		}
 
-		protected function tearDownHelper() {
-			UserLoginHelper::setInstance( null );
-		}
-
 		/**
 		 * @dataProvider signupDataProvider
 		 */
@@ -363,9 +359,6 @@
 
 			$this->setUpMock( $mockCacheParams );
 			
-			// set global variables
-			UserLoginHelper::getInstance()->setApp( $this->app );
-			
 			// test
 			$response = $this->app->sendRequest( 'UserSignupSpecial', 'changeTempUserEmail', $params );
 			
@@ -380,7 +373,6 @@
 
 			// tear down
 			$this->tearDownSession( $mockSessionParams );
-			$this->tearDownHelper();
 		}
 		
 		public function changeTempUserEmailDataProvider() {
@@ -532,9 +524,6 @@
 			$this->mockGlobalFunction( 'MsgExt', $mockMsgExt, $mockMsgExtCount );
 
 			$this->setUpMock( $mockCacheParams );
-			
-			// set global variables
-			UserLoginHelper::getInstance()->setApp( $this->app );
 
 			// test
 			$response = $this->app->sendRequest( 'UserSignupSpecial', 'sendConfirmationEmail', $params );
@@ -559,7 +548,6 @@
 
 			// tear down
 			$this->tearDownSession( $mockSessionParams );
-			$this->tearDownHelper();
 		}
 		
 		public function sendConfirmationEmailDataProvider() {

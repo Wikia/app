@@ -8,6 +8,8 @@
  */
 class UserLoginSpecialController extends WikiaSpecialPageController {
 
+	private $userLoginHelper = null;
+
 	public function __construct() {
 		parent::__construct( 'UserLogin', '', false );
 	}
@@ -16,6 +18,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$loginTitle = SpecialPage::getTitleFor( 'UserLogin' );
 		$this->formPostAction = $loginTitle->getLocalUrl();
 		$this->isMonobook = ($this->wg->User->getSkin() instanceof SkinMonobook);
+		$this->userLoginHelper = F::build( 'UserLoginHelper' );
 	}
 
 	private function initializeTemplate() {
@@ -123,7 +126,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 				if ( $this->result == 'ok' ) {
 					// redirect page
-					UserLoginHelper::getInstance()->doRedirect();
+					$this->userLoginHelper->doRedirect();
 				} else if ( $this->result == 'unconfirm' ) {
 					$response = $this->app->sendRequest('UserLoginSpecial', 'getUnconfirmedUserRedirectUrl', array('username' => $this->username, 'uselang' => $code));
 					$redirectUrl = $response->getVal('redirectUrl');
@@ -261,7 +264,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
 					TempUser::clearTempUserSession();
-					UserLoginHelper::getInstance()->clearPasswordThrottle( $loginForm->mName );
+					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mName );
 
 					$this->result = 'ok';
 				break;
@@ -284,7 +287,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			case LoginForm::NOT_EXISTS:
 				$tempUser = F::build( 'TempUser', array($loginForm->mName), 'getTempUserFromName' );
 				if ( $tempUser ) {
-					if ( UserLoginHelper::getInstance()->isPasswordThrottled($loginForm->mName) ) {
+					if ( $this->userLoginHelper->isPasswordThrottled($loginForm->mName) ) {
 						$this->result = 'error';
 						$this->msg = $this->wf->Msg( 'userlogin-error-login-throttled' );
 					} else {
@@ -292,7 +295,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 						if ( $user->checkPassword($loginForm->mPassword) ) {
 							LoginForm::clearLoginToken();
 							$tempUser->setTempUserSession();
-							UserLoginHelper::getInstance()->clearPasswordThrottle( $loginForm->mName );
+							$this->userLoginHelper->clearPasswordThrottle( $loginForm->mName );
 
 							// set lang for unconfirmed user
 							$langCode = $user->getOption('language');
@@ -455,7 +458,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 
 			if( $this->request->getVal( 'cancel', false ) ) {
-				UserLoginHelper::getInstance()->doRedirect();
+				$this->userLoginHelper->doRedirect();
 				return;
 			}
 
@@ -507,7 +510,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->wg->request->setVal( 'password', $this->newpassword );
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
-				UserLoginHelper::getInstance()->doRedirect();
+				$this->userLoginHelper->doRedirect();
 			}
 		}
 	}

@@ -312,7 +312,9 @@ class TempUser extends WikiaModel {
 			'$LEARNBASICURL' => 'http://community.wikia.com/wiki/Help:Wikia_Basics',
 			'$EXPLOREWIKISURL' => 'http://www.wikia.com',
 		);
-		UserLoginHelper::getInstance()->sendEmail( $user, 'WelcomeMail', 'usersignup-welcome-email-subject', 'usersignup-welcome-email-body', $emailParams, 'welcome-email', 'WelcomeMail' );
+
+		$userLoginHelper = F::build( 'UserLoginHelper' );
+		$userLoginHelper->sendEmail( $user, 'WelcomeMail', 'usersignup-welcome-email-subject', 'usersignup-welcome-email-body', $emailParams, 'welcome-email', 'WelcomeMail' );
 		
 		// remove temp user
 		$this->removeFromDatabase();
@@ -322,7 +324,7 @@ class TempUser extends WikiaModel {
 		$ssUpdate->doUpdate();
 		
 		$this->wf->RunHooks( 'AddNewAccount', array( $user, false ) );
-		UserLoginHelper::getInstance()->addNewUserLogEntry( $user );
+		$userLoginHelper->addNewUserLogEntry( $user );
 		
 		$this->wf->RunHooks( 'ConfirmEmailComplete', array( &$user ) );
 		
