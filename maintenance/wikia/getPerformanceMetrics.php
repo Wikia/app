@@ -136,4 +136,13 @@ foreach($report['metrics'] as $key => $value) {
 	echo '* ' . sprintf('%-30s: %s', $key, is_numeric($value) ? number_format($value) : $value)  . "\n";
 }
 
+// print out notices when in verbose mode
+if ($beVerbose && !empty($report['notices'])) {
+	echo "\nNotices:\n--------\n";
+
+	foreach($report['notices'] as $notice) {
+		echo "# {$notice}\n";
+	}
+}
+
 die(0);

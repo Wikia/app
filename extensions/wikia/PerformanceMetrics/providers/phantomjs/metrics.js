@@ -92,8 +92,8 @@ function getDomComplexity(page) {
 	return metrics;
 };
 
-// count JS globals (BugId:29463)
-function countGlobals(page) {
+// get all JS globals (BugId:29463)
+function getGlobals(page) {
 	// @see https://github.com/madrobby/dom-monster/blob/master/src/dommonster.js#L645
 	return page.evaluate(function() {
 		function $tagname(tagname) {
@@ -119,41 +119,39 @@ function countGlobals(page) {
 		}
 
 		function nametag(attr){
-				var ele = nametag.cache = nametag.cache || $tagname('*'), i = ele.length;
-				while(i--){
-					if(ele[i].name && ele[i].name == attr) {
-						return true;
-					}
-				}
-				return false;
-			}
-
-			var global = (function(){ return this })(), properties = {}, prop, found = [], clean, iframe = document.createElement('iframe');
-			iframe.style.display = 'none';
-			iframe.src = 'about:blank';
-			document.body.appendChild(iframe);
-
-			clean = iframe.contentWindow;
-
-			for(prop in global){
-				if(!ignore(prop) && !/^[0-9]/.test(prop) && !(document.getElementById(prop) || {}).nodeName && !nametag(prop)){
-					properties[prop] = true;
+			var ele = nametag.cache = nametag.cache || $tagname('*'), i = ele.length;
+			while(i--){
+				if(ele[i].name && ele[i].name == attr) {
+					return true;
 				}
 			}
+			return false;
+		}
 
-			for(prop in clean){
-				if(properties[prop]){
-					delete properties[prop];
-				}
+		var global = (function(){ return this })(), properties = {}, prop, found = [], clean, iframe = document.createElement('iframe');
+		iframe.style.display = 'none';
+		iframe.src = 'about:blank';
+		document.body.appendChild(iframe);
+
+		clean = iframe.contentWindow;
+
+		for(prop in global){
+			if(!ignore(prop) && !/^[0-9]/.test(prop) && !(document.getElementById(prop) || {}).nodeName && !nametag(prop)){
+				properties[prop] = true;
 			}
+		}
 
-			for(prop in properties){
-				found.push(prop.split('(')[0]);
+		for(prop in clean){
+			if(properties[prop]){
+				delete properties[prop];
 			}
+		}
 
-			//console.log(JSON.stringify(found));
+		for(prop in properties){
+			found.push(prop.split('(')[0]);
+		}
 
-			return found.length;
+		return found;
 	});
 };
 
@@ -206,8 +204,8 @@ page.resourceSize = {
 	base64: 0
 };
 
-page.redirects = 0;
-page.notFound = 0;
+page.redirects = [];
+page.notFound = [];
 
 page.onResourceReceived = function(res) {
 	var entry = page.requests[res.id],
@@ -235,11 +233,11 @@ page.onResourceReceived = function(res) {
 			switch (entry.status) {
 				case 301:
 				case 302:
-					page.redirects++;
+					page.redirects.push(res.url);
 					break;
 
 				case 404:
-					page.notFound++;
+					page.notFound.push(res.url);
 					break;
 			}
 
@@ -327,12 +325,14 @@ page.onLoadFinished = function(status) {
 			metrics = {
 				requests: page.requests.length,
 				contentLength: page.contentLength,
-				redirects: page.redirects,
-				notFound: page.notFound,
+				redirects: page.redirects.length,
+				notFound: page.notFound.length,
 				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte),
 				timeToLastByte: (page.requests[1] && page.requests[1].lastByte),
 				totalLoadTime: now  - page.startTime
-			};
+			},
+			// notices for --verbose mode
+			notices = [];
 
 			// count per each resource type
 			for (var type in page.resourceTypes) {
@@ -359,8 +359,19 @@ page.onLoadFinished = function(status) {
 				metrics[key] = domMetrics[key];
 			}
 
+			// redirects and 404s
+			if (page.redirects.length > 0) {
+				notices.push('Redirects: ' + page.redirects.join(', '));
+			}
+			if (page.notFound.length > 0) {
+				notices.push('Not found: ' + page.notFound.join(', '));
+			}
+
 			// global JS variables
-			metrics.globalVariables = countGlobals(page);
+			var globals = getGlobals(page);
+
+			metrics.globalVariables = globals.length;
+			notices.push('JS globals (' + globals.length + '): ' + globals.join(', '));
 
 			// other metrics
 			metrics.cookiesRaw = page.evaluate(function() {
@@ -371,15 +382,15 @@ page.onLoadFinished = function(status) {
 				return window.localStorage.length;
 			});
 
-			// debug stuff
-			console.log('# User name: ' + page.evaluate(function() {
-				return window.wgUserName;
+			notices.push('Logged in as ' + page.evaluate(function() {
+				return window.wgUserName !== null ? window.wgUserName : '<anon>';
 			}));
 
 			// emit the results
 			var report = {
 				url: url,
-				metrics: metrics
+				metrics: metrics,
+				notices: notices
 			};
 
 			console.log(JSON.stringify(report));
