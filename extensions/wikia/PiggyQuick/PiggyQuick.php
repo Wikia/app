@@ -6,13 +6,14 @@
  * @date Friday, 25 May 2012 (created)
  */
 
- if ( !defined( 'MEDIAWIKI' ) ) {
- 	echo "This is a MediaWiki extension and cannot be used standalone.\n";
- 	exit( 1 );
- }
+// Protect the code of the extension to be executed via a direct request.
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is a MediaWiki extension and cannot be used standalone.\n";
+	exit( 1 );
+}
 
 /**
- * @var array wgExtensionCredits
+ * @var array $wgExtensionCredits
  * @brief Basic human language information about the extension.
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionCredits
  */
@@ -25,3 +26,10 @@ $wgExtensionCredits['other'][] = array(
 	'author'		=> array( '[http://community.wikia.com/wiki/User:Mroszka Michał Roszka (Mix)]' ),
 	'url'			=> 'http://trac.wikia-code.com/browser/wikia/trunk/extensions/wikia/PiggyQuick/',
 );
+
+/**
+ * @var array $wgExtensionMessagesFiles
+ * @brief Mapping the extension name to the filename where i18n could be found.
+ * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionMessagesFiles
+ */
+$wgExtensionMessagesFiles['PiggyQuick'] = __DIR__ . '/PiggyQuick.i18n.php';
