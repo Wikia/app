@@ -42,8 +42,8 @@
 	</script>
 
 	<script type="text/javascript">
-		var initialFileDetail = <?= json_encode($initialFileDetail) ?>;
-		var mediaThumbs = <?= json_encode($mediaThumbs) ?>;
+		Lightbox.initialFileDetail = <?= json_encode($initialFileDetail) ?>;
+		Lightbox.mediaThumbs = <?= json_encode($mediaThumbs) ?>;
 	</script>
 	
 	<script id="LightboxCarouselTemplate" type="text/template">
