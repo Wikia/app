@@ -33,3 +33,35 @@ $wgExtensionCredits['other'][] = array(
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionMessagesFiles
  */
 $wgExtensionMessagesFiles['PiggyQuick'] = __DIR__ . '/PiggyQuick.i18n.php';
+
+/**
+ * @fn wfPiggyQuickExecute()
+ * @param object AccountNavigationController $oController
+ * @return boolean true
+ * @brief Hooks PiggyQuick feature into the Oasis toolbar.
+ */
+function wfPiggyQuickExecute( $oController ) {
+	global $wgEnablePiggybackExt, $wgUser;
+	// First, make sure the original Piggyback extension is enabled and available.
+	$bDependenciesMet = $wgEnablePiggybackExt // true, if the original Piggyback extension is enabled in the config
+		&& class_exists( 'Piggyback' ) // true, if the Piggyback's classes are available
+		&& class_exists( 'PBLoginForm' )
+		&& class_exists( 'PiggybackTemplate' );
+
+	// Find out, whether we are in the right context.
+	if (    $bDependenciesMet				// dependencies are met
+		&& $wgUser->isAllowed( 'piggyback' )		// user rights are sufficient
+		&& NS_USER == $wgTitle->getNamespace()		// we are on a user's profile page
+		&& $wgUser->getName() != $wgTitle->getDBkey()	// but not on our own one
+	) {
+		// OK, we're good to go.
+		// $oController->itemsBefore = array( '<li> ... the PiggyQuick thingy comes here .. </li>' );
+	}
+	return true;
+}
+
+/**
+ * @var array $wgHooks
+ * @brief Global list of hooks.
+ */
+$wgHooks['AccountNavigationIndexAfterExecute'][] = 'wfPiggyQuickExecute';
