@@ -83,7 +83,8 @@ var requestMW = function(method, roomId, postdata, query, callback, errorcallbac
 							logger.debug(data);
 							callback(data);
 						} catch(e) {
-							logger.error("Error: while parsing result from:" + url + '\nError was' + e.message + "\nResponse that didn't parse was:" + body);
+							logger.error("Error: while parsing result from:" + url + '\nError was' + e.message + "\nResponse that didn't parse was:" );
+							logger.error(body);
 							data = {
 								error: '',
 								errorWfMsg: 'chat-err-communicating-with-mediawiki',
