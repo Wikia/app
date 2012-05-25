@@ -122,13 +122,13 @@
 				}
 
 				var left = constants.itemWidth * idx * -1;
+				states.currIndex = idx;
+
 				doMove(left);
 				
 			} else {
 				afterMove();
-			}
-			states.currIndex = idx;
-			
+			}			
 		}
 
 		function doMove(left) {

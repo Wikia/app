@@ -219,7 +219,7 @@ $color-shadow: #3a3a3a;
 		}
 		span {
 			@include border-radius(4px);
-			@include box-shadow( 0px, 0px, 10px, $color-shadow, false, 0px);
+			@include box-shadow( 0px, 0px, 10px, $color-shadow, false, 2px);
 			@include opacity(80); 
 			@include transition-shorthand(opacity 100ms linear); 
 			background: $color-buttons;
@@ -263,7 +263,7 @@ $color-shadow: #3a3a3a;
 	.LightboxHeader,
 	.LightboxCarousel {
 		@include background-opacity($color-page, 80);
-		@include box-shadow( 0px, 0px, 20px, $color-shadow, false, 2px);
+		@include box-shadow( 0px, 0px, 10px, $color-shadow, false, 0px);
 		position: absolute;
 		-webkit-backface-visibility: hidden;	/* flicker fix for webkit transition */
 	}

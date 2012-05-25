@@ -12,7 +12,7 @@ var Lightbox = {
 		relatedVideos: [], // Related Video
 		latestPhotos: [], // Lates Photos
 		details: {}, // all media details
-		share: {},
+		share: {}
 	},
 	eventTimers: {
 		lastMouseUpdated: 0
@@ -49,12 +49,7 @@ var Lightbox = {
 			return;
 		}
 
-		if (window.skin == 'oasis') {
-			article = $('#WikiaArticle, .LatestPhotosModule, #article-comments, #RelatedVideosRL');
-		}
-		else {
-			article = $('#bodyContent');
-		}
+		article = $('#WikiaArticle, .LatestPhotosModule, #article-comments, #RelatedVideosRL');
 
 		Lightbox.log('Lightbox init');
 
@@ -233,7 +228,7 @@ var Lightbox = {
 				
 				Lightbox.openModal.WikiaLightbox = Lightbox.openModal.find('.WikiaLightbox');
 				
-				Lightbox.cache[Lightbox.current.carouselType] = mediaThumbs.thumbs;
+				Lightbox.cache[Lightbox.current.carouselType] = Lightbox.mediaThumbs.thumbs;
 				
 				
 				// Set up carousel
@@ -241,15 +236,15 @@ var Lightbox = {
 				var moreInfoTemplate = $('#LightboxMoreInfoTemplate');	// TODO: template cache
 				var shareTemplate = $('#LightboxShareTemplate');	// TODO: template cache
 				
-				for(var i = 0; i < mediaThumbs.thumbs.length; i++) {
-					if(mediaThumbs.thumbs[i].title == Lightbox.current.title) {
+				for(var i = 0; i < Lightbox.mediaThumbs.thumbs.length; i++) {
+					if(Lightbox.mediaThumbs.thumbs[i].title == Lightbox.current.title) {
 						Lightbox.current.index = i;
 						break;
 					}
 				}
 				
 				var carousel = $(carouselTemplate).mustache({
-					thumbs: mediaThumbs.thumbs,
+					thumbs: Lightbox.mediaThumbs.thumbs,
 					progress: "1-6 of 24" // TODO: calculate progress and i18n "of"
 				});
 				
@@ -262,7 +257,7 @@ var Lightbox = {
 				Lightbox.openModal.media = Lightbox.openModal.find('.media');
 				Lightbox.openModal.arrows = Lightbox.openModal.find('.lightbox-arrows');
 				Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
-				Lightbox.current.type = initialFileDetail.mediaType;
+				Lightbox.current.type = Lightbox.initialFileDetail.mediaType;
 				
 				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
 				Lightbox.openModal.arrows.data('overlayactive', true);
@@ -286,10 +281,10 @@ var Lightbox = {
 
 				// Update modal with main image/video content								
 				if(Lightbox.current.type == 'image') {
-					updateCallback(initialFileDetail);
+					updateCallback(Lightbox.initialFileDetail);
 				} else {
 					// normalize for jwplayer
-					Lightbox.normalizeMediaDetail(initialFileDetail, updateCallback);
+					Lightbox.normalizeMediaDetail(Lightbox.initialFileDetail, updateCallback);
 				}
 				
 				// attach event handlers
