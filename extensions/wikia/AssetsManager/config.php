@@ -4,12 +4,12 @@ $config = array();
 /******** Shared libraries and assets *******/
 
 $config['oasis_jquery_ads_js'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'assets' => array(
-        '#group_oasis_jquery',
-	'#group_oasis_wikia_js',
-        '#group_oasis_ads_js'
-    )
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_jquery',
+		'#group_oasis_wikia_js',
+		'#group_oasis_ads_js'
+	)
 );
 
 $config['oasis_extensions_js'] = array(
@@ -44,25 +44,25 @@ $config['oasis_ads_js'] = array(
 );
 
 $config['oasis_noads_extensions_js'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'assets' => array(
-        '//extensions/wikia/RelatedPages/js/RelatedPages.js',
-        '//extensions/wikia/CreatePage/js/CreatePage.js',
-        '//extensions/wikia/ImageLightbox/ImageLightbox.js',
-        '//skins/common/jquery/jquery.md5.js',
-        '//extensions/wikia/Lightbox/js/Lightbox.js',
-        '//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-        '//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
-        '//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
-        '//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
-        '//extensions/FBConnect/fbconnect.js',
-        '//extensions/wikia/Meebo/meebo.js',
-        '//extensions/wikia/AdSS/adss.js',
-        '//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
-        '//extensions/wikia/GlobalNotification/GlobalNotification.js',
-        '//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
-        '//extensions/wikia/UserLogin/js/UserLogin.js',
-    )
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
+		'//extensions/wikia/CreatePage/js/CreatePage.js',
+		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
+		'//skins/common/jquery/jquery.md5.js',
+		'//extensions/wikia/Lightbox/js/Lightbox.js',
+		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
+		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
+		'//extensions/FBConnect/fbconnect.js',
+		'//extensions/wikia/Meebo/meebo.js',
+		'//extensions/wikia/AdSS/adss.js',
+		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
+		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
+		'//extensions/wikia/UserLogin/js/UserLogin.js',
+	)
 );
 
 
@@ -88,7 +88,7 @@ $config['site_user_css'] = array(
 /**
  * Scripts that are needed very early in execution and thus are worth blocking for.
  *
- * Keep this grouup small!
+ * Keep this group small!
  **/
 
 $config['blocking'] = array(
