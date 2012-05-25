@@ -1,0 +1,20 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.mw-recentchanges-table {
+	@include clearfix;
+
+	td.mw-label,
+	td.mw-input {
+		vertical-align: middle;
+	}
+
+	.WikiaDropdown {
+		float: left;
+		margin-right: 10px;
+	}
+
+	input[type="submit"] {
+		float: left;
+		margin-top: 5px;
+	}
+}
