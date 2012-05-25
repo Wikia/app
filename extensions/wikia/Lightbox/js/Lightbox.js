@@ -171,8 +171,6 @@ var Lightbox = {
 		// for Video Thumbnails:
 		var targetChildImg = target.find('img').eq(0);
 		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
-			Lightbox.current.type = 'video';
-			
 			if ( target.data('video-name') ) {
 				mediaTitle = target.data('video-name');
 			} else if ( targetChildImg.data('video') ) {
@@ -185,8 +183,6 @@ var Lightbox = {
 				ev.preventDefault();
 				return false;	// stop modal dialog execution
 			}
-		} else {
-			Lightbox.current.type = 'image';
 		}
 		
 
@@ -266,6 +262,7 @@ var Lightbox = {
 				Lightbox.openModal.media = Lightbox.openModal.find('.media');
 				Lightbox.openModal.arrows = Lightbox.openModal.find('.lightbox-arrows');
 				Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
+				Lightbox.current.type = initialFileDetail.mediaType;
 				
 				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
 				Lightbox.openModal.arrows.data('overlayactive', true);
@@ -841,11 +838,14 @@ $(function() {
 	Lightbox.init();
 	var fileTitle = $.getUrlVar('file');
 	if(fileTitle) {
-		var file = $('#' + fileTitle);
+		var file = $('#WikiaArticle .image[data-image-name="' + fileTitle + '"]');
 		if (file.exists()) {
 			var localWindow = $(window);
 			localWindow.scrollTop(file.offset().top + file.height()/2 - localWindow.height()/2);
 			file.find('img').click();
+		} else {
+			Lightbox.current.title = fileTitle;
+			Lightbox.loadLightbox();
 		}
 	}
 
