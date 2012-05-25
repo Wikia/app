@@ -18,6 +18,11 @@
 	
 	<div class="share">
 	</div>
+	
+	<script type="text/javascript">
+		Lightbox.initialFileDetail = <?= json_encode($initialFileDetail) ?>;
+		Lightbox.mediaThumbs = <?= json_encode($mediaThumbs) ?>;
+	</script>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
 		<img src="{{imageUrl}}" height="{{imageHeight}}" >
@@ -39,11 +44,6 @@
 				<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
 			</span>
 		</div>
-	</script>
-
-	<script type="text/javascript">
-		Lightbox.initialFileDetail = <?= json_encode($initialFileDetail) ?>;
-		Lightbox.mediaThumbs = <?= json_encode($mediaThumbs) ?>;
 	</script>
 	
 	<script id="LightboxCarouselTemplate" type="text/template">

@@ -8,7 +8,8 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "mixins/sprite-Lightbox";
 
-$carousel-overlay-duration: 200ms;
+$lightbox-overlay-show-duration: 200ms;
+$lightbox-overlay-hide-duration: 600ms;
 
 // Default and hover icons depend on button darkness
 $sprite-normal: '_black';
@@ -29,6 +30,17 @@ $color-shadow: #3a3a3a;
 
 .LightboxModal {
 	overflow: hidden;
+	&.overlay-hidden {
+		.lightbox-arrows span,
+		.LightboxCarousel,
+		.LightboxHeader {
+			@include transition-shorthand(opacity $lightbox-overlay-hide-duration ease-out);
+			@include opacity(0);
+		}
+		.lightbox-arrows span.disabled {
+			@include opacity(0);
+		}
+	}
 	&.more-info-mode, &.share-mode {
 		>.close {
 			display: block;
@@ -46,9 +58,9 @@ $color-shadow: #3a3a3a;
 	&.share-mode .share {
 		display: block;
 	}
-	&.pinned-carousel-mode {
+	&.pinned-mode {
 		.media {
-			margin-bottom: 110px;
+			margin: 110px 0;
 		}
 	}
 	.WikiaLightbox {
@@ -209,19 +221,11 @@ $color-shadow: #3a3a3a;
 		}
 	}
 	.lightbox-arrows {
-		&.hidden {
-			span {
-				@include opacity(0);
-				&.disabled {
-					@include opacity(0);
-				}
-			}
-		}
 		span {
 			@include border-radius(4px);
 			@include box-shadow( 0px, 0px, 10px, $color-shadow, false, 2px);
 			@include opacity(80); 
-			@include transition-shorthand(opacity 100ms linear); 
+			@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
 			background: $color-buttons;
 			cursor: pointer;
 			display: block;
@@ -268,17 +272,14 @@ $color-shadow: #3a3a3a;
 		-webkit-backface-visibility: hidden;	/* flicker fix for webkit transition */
 	}
 	.LightboxCarousel {
-		@include transition-shorthand(bottom $carousel-overlay-duration ease-out);
+		@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
+		@include opacity(100);
 		@include clearfix;
 		border-top: 1px solid $color-page-border;
 		bottom: 0;
 		height: 110px;
 		position: absolute;
 		width: 100%;
-		
-		&.hidden { 
-			bottom: -150px; 
-		} 
 		.content {
 			border-right: 1px solid $color-page-border;
 			padding: 10px 20px;
@@ -347,16 +348,13 @@ $color-shadow: #3a3a3a;
 		}
 	}
 	.LightboxHeader {
-		@include transition-shorthand(top $carousel-overlay-duration ease-out);
+		@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
+		@include opacity(100);
 		border-bottom: 1px solid $color-page-border;
 		height: 70px;
 		padding: 20px;
 		top: 0;
 		width: 960px;
-		z-index: 1;	/* this should be lower than close button */
-		&.hidden {
-			top: -150px;
-		}
 		h1 {
 			float: left;
 			font-size: 18px;
