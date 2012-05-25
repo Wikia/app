@@ -48,4 +48,10 @@ class MediaToolController extends WikiaController {
 
 		$this->response->setData( $data );
 	}
+
+	public function getModalContent() {
+
+	}
+
+
 }

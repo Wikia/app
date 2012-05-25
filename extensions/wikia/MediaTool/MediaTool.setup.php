@@ -9,7 +9,7 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 //classes
 $app->registerClass('MediaToolHelper', $dir . 'MediaToolHelper.class.php');
-$app->registerClass('MediaToolController', $dir . 'MediaTool.class.php');
+$app->registerClass('MediaToolController', $dir . 'MediaToolController.class.php');
 
 // hooks
 

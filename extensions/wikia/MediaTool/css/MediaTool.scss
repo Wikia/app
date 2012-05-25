@@ -14,9 +14,12 @@
         border-right:1px solid $color-page-border;
 
         .minor-tabs {
-            margin-bottom:10px;
+            margin-bottom:20px;
         }
 
     }
 
+    .mediatool-content {
+        float: left;
+    }
 }
