@@ -210,7 +210,7 @@ class LightboxController extends WikiaController {
 			$articleTitleObj = F::build('Title', array($articleTitle), 'newFromText');
 			
 			if(!empty($articleTitleObj) && $articleTitleObj->exists()) {
-				$fileParam = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($fileTitle));
+				$fileParam = $fileTitleObj->getDBKey();
 				$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
 			}
 			$fileUrl = $fileTitleObj->getFullURL();
