@@ -17,4 +17,8 @@ In general, Wikia does not review nor do we endorse the content of this or any w
 );	
 
 $messages['qqq'] = array(
+	'content-warning-title' => 'The main title for content warning.',
+	'content-warning-body' => 'The body of content warning. $1 is domain name.',
+	'content-warning-button-continue' => 'Button to agree to the content.',
+	'content-warning-button-cancel' => 'Button to do not agree to the content.',
 );
