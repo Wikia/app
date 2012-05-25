@@ -782,26 +782,59 @@ var Lightbox = {
 	},
 	
 	setupShareEmail: function() {
-		$('#shareEmailForm').submit(function(e) {
-			e.preventDefault();
-			var adresses = $(this).find('input').first().val();
-			
+		var shareEmailForm = $('#shareEmailForm'),
+			wikiaForm = new WikiaForm(shareEmailForm);
+		
+		function doShareEmail(addresses) {
 			$.nirvana.sendRequest({
 				controller: 'Lightbox',
 				method: 'shareFileMail',
 				type: 'POST',
 				data: {
-					addresses: adresses,
+					addresses: addresses,
 					shareUrl: Lightbox.openModal.share.shareUrl
 				}, 
 				callback: function(data) {
-					console.log(data);
+					// TODO: i18n
+					var msg = "";
+
+					if(data.errors.length) {
+						$(data.errors).each(function() {
+							msg += this;
+						})
+					}
+					if(data.notsent.length) {
+						msg += "Email not sent to " + data.notsent.join() + ". ";
+					}
+					if(data.sent.length) {
+						msg += "Email sent to " + data.sent.join() + ". ";
+					}
+					
+					if(!msg.length) {
+						msg = "There was an unknown error.  Please try again later."
+					}
+					
+					wikiaForm.showGenericError(msg);					
 				}
 			});
-		});
-		
-	}
+		}
 
+		shareEmailForm.submit(function(e) {
+			e.preventDefault();
+			var addresses = $(this).find('input').first().val();
+
+			// make sure user is logged in
+			if(wgUserName) {
+				doShareEmail(addresses);
+			} else {
+				UserLoginModal.show({
+					callback: function() {
+						doShareEmail(addresses);
+					}
+				});
+			}
+		});
+	}
 };
 
 $(function() {
