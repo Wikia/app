@@ -219,7 +219,7 @@ $color-shadow: #3a3a3a;
 		}
 		span {
 			@include border-radius(4px);
-			@include box-shadow( 0px, 0px, 10px, $color-shadow, false, 2px);
+			@include box-shadow( 0px, 0px, 10px, $color-shadow, false, 0px);
 			@include opacity(80); 
 			@include transition-shorthand(opacity 100ms linear); 
 			background: $color-buttons;
