@@ -341,7 +341,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$query = preg_replace('/(\d+)([a-zA-Z]+)/i', '$1 $2', $query);
 
 		// escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
-		$query = Apache_Solr_Service::escape($query);
+		// added html entity decoding now that we're doing extra work to prevent xss o
+		$query = Apache_Solr_Service::escape(html_entity_decode($query,  ENT_COMPAT, 'UTF-8'));
 
 		return $query;
 	}
