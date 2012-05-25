@@ -16,6 +16,7 @@
 
 @mixin transition-shorthand($shorthand) {
 	transition: $shorthand;
-	-webkit-transition: $shorthand;
 	-moz-transition: $shorthand;
+	-ms-transition: $shorthand;
+	-webkit-transition: $shorthand;
 }

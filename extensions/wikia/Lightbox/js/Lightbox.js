@@ -285,10 +285,14 @@ var Lightbox = {
 				
 				// attach event handlers
 				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
-					var target = $(evt.target);
-					Lightbox.showOverlay();
-					if(!(target.closest('.arrow, .LightboxHeader, .LightboxCarousel')).exists()) {
-						Lightbox.hideOverlay();
+					var time = new Date().getTime();
+					if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) { 
+						Lightbox.eventTimers.lastMouseUpdated = time; 
+						var target = $(evt.target);
+						Lightbox.showOverlay();
+						if(!(target.closest('.arrow, .LightboxHeader, .LightboxCarousel')).exists()) {
+							Lightbox.hideOverlay();
+						}
 					}
 				// Hide Lightbox header and footer on mouse leave. 
 				}).on('mouseleave.Lightbox', function(evt) {
