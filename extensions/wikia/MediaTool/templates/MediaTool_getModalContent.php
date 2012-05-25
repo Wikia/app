@@ -48,7 +48,30 @@
 
 	</div>
 	<div data-tab-body="edit-media" class="tabBody border">
-		edit media tab
+
+		<div class="mediatool-left-bar">
+
+			<ul class="tabs minor-tabs">
+				<li data-tab="edit-media-options" class="selected">
+					<a>Photo options</a>
+				</li>
+			</ul>
+
+			<div data-tab-body="edit-media-options" class="tabBody selected">
+
+				<div id="VideoEmbedSlider" class="WikiaSlider"></div>
+				<span id="VideoEmbedInputWidth">
+					<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" onchange="" onkeyup="" /> px
+				<span>
+			</div>
+
+		</div>
+		<div class="mediatool-content">
+			<div class="mediatool-preview">
+
+			</div>
+		</div>
+
 	</div>
 </div>
 

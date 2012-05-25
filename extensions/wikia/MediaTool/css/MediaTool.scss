@@ -1,7 +1,7 @@
 @import "../../../../skins/oasis/css/core/color.scss";
 @import "../../../../skins/oasis/css/mixins/clearfix.scss";
 @import "../../../../skins/oasis/css/mixins/box-shadow.scss";
-
+@import "../../../../skins/oasis/css/mixins/opacity.scss";
 
 .MediaToolContainer {
 
@@ -40,7 +40,8 @@
     }
 
     .float-title {
-        @include box-shadow(2, 2, 2,  black, 2, 2);
+        @include box-shadow(2, 2, 2, #000);
+        @include opacity(80);
         position: absolute;
         height:24px;
         font-size:14pt;
