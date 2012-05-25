@@ -1,5 +1,6 @@
 @import "../../../../skins/oasis/css/core/color.scss";
 @import "../../../../skins/oasis/css/mixins/clearfix.scss";
+@import "../../../../skins/oasis/css/mixins/box-shadow.scss";
 
 
 .MediaToolContainer {
@@ -8,29 +9,52 @@
     margin:10px;
     padding:10px;
     padding-left:5px;
+    height:559px;
 
     .mediatool-left-bar {
+
         width:245px;
         padding-right:5px;
         border-right:1px solid $color-page-border;
         float:left;
         margin-right:10px;
+        height:533px;
 
         .minor-tabs {
             margin-bottom:20px;
         }
-
     }
 
     .mediatool-content {
+
         float: left;
         width:680px;
-
     }
+
+    .mediatool-thumbnail-browser {
+
+        width:100%;
+        height:360px;
+        border:1px solid $color-page-border;
+        overflow:auto;
+    }
+
+    .float-title {
+        @include box-shadow(2, 2, 2,  black, 2, 2);
+        position: absolute;
+        height:24px;
+        font-size:14pt;
+        font-color:#7e7e7e;
+        border:1px bold $color-page-border;
+        background: $color-page;
+    }
+
     @include clearfix;
 }
 
 .MediaTool-buttons {
+
     text-align: right;
     padding-right: 10px;
+    margin-bottom: 20px;
 }

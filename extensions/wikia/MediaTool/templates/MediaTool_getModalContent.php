@@ -39,6 +39,11 @@
 			<div class="mediatool-basket">
 			<?= $app->getView( 'MediaTool', 'basket', array()); ?>
 			</div>
+			<div class="mediatool-thumbnail-browser">
+				<div class="float-title">Recently added to the wiki</div>
+
+				thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />
+			</div>
 		</div>
 
 	</div>
