@@ -19,7 +19,7 @@ $messages = array();
  * @brief Messages documentation.
  */
 $messages['qqq'] = array(
-    'piggyquick-desc' => 'A brief plain text description of the extension used on the Special:Version page.',
+	'piggyquick-desc' => 'A brief plain text description of the extension used on the Special:Version page.',
 );
 
 /**
@@ -27,5 +27,5 @@ $messages['qqq'] = array(
  * @brief English messages.
  */
 $messages['en'] = array(
-    'piggyquick-desc' => 'Piggyback on steroids. Appears on user profile pages.',
+	'piggyquick-desc' => 'Piggyback on steroids. Appears on user profile pages.',
 );
