@@ -27,6 +27,9 @@ class Http {
 	 * @returns mixed (bool)false on failure or a string on success
 	 */
 	public static function request( $method, $url, $options = array() ) {
+		$fname = __METHOD__ . '::' . $method;
+		wfProfileIn($fname);
+
 		wfDebug( "HTTP: $method: $url\n" );
 		$options['method'] = strtoupper( $method );
 		if ( !isset( $options['timeout'] ) ) {
@@ -35,15 +38,18 @@ class Http {
 		$req = HttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isOK() ) {
-			return $req->getContent();
+			$ret = $req->getContent();
 		} else {
 			/* Wikia change - begin (Sean, macbre) */
 			$errMsg = "Requested URL was: " . $req->getFinalUrl();
 			$errMsg .= " (err: " . json_encode($req->status->errors) . ')';
 			Wikia::log(__METHOD__, 'error', $errMsg);
 			/* Wikia change - end (Sean, macbre) */
-			return false;
+			$ret = false;
 		}
+
+		wfProfileOut($fname);
+		return $ret;
 	}
 
 	/**

@@ -44,7 +44,7 @@ function wfAdEngineSetupJSVars($vars) {
 	$vars['wgHighValueCountries'] = $highValueCountries;
 
 	if (!empty($wgAdDriverUseExpiryStorage)) $vars["wgAdDriverUseExpiryStorage"] = $wgAdDriverUseExpiryStorage;
-	if (!empty($wgAdDriverUseCookie))        $vars["wgAdDriverUseCookie"] = $wgAdDriverUseCookie;	
+	if (!empty($wgAdDriverUseCookie))        $vars["wgAdDriverUseCookie"] = $wgAdDriverUseCookie;
 	if (!empty($wgLoadAdDriverOnLiftiumInit)) $vars['wgLoadAdDriverOnLiftiumInit'] = $wgLoadAdDriverOnLiftiumInit;
 
 	// ArticleAdLogic
@@ -63,7 +63,7 @@ function wfAdEngineSetupJSVars($vars) {
 		$vars['wgEnableKruxTargeting'] = $wgEnableKruxTargeting;
 		$vars['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
 	}
-	
+
 	wfProfileOut(__METHOD__);
 	return true;
 }
@@ -80,7 +80,7 @@ interface iAdProvider {
 abstract class AdProviderIframeFiller {
         public function getIframeFillHtml($slotname, $slot) {
 		wfProfileIn(__METHOD__);
-		
+
                 global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
                 $function_name = AdEngine::fillIframeFunctionPrefix . $slotname;
@@ -90,7 +90,7 @@ abstract class AdProviderIframeFiller {
                 }
 
 		wfProfileOut(__METHOD__);
-		
+
                 return $out;
         }
 
@@ -143,7 +143,7 @@ class AdEngine {
 
 	protected function __construct($slots = null) {
 		wfProfileIn(__METHOD__);
-		
+
 		if (!empty($slots)){
 			$this->slots=$slots;
 		} else {
@@ -162,19 +162,19 @@ class AdEngine {
 		if(!empty($wgNoExternals)){
 			$wgShowAds = false;
 		}
-		
+
 		wfProfileOut(__METHOD__);
 	}
 
 	public static function getInstance($slots = null) {
 		wfProfileIn(__METHOD__);
-		
+
 		if(self::$instance == false) {
 			self::$instance = new AdEngine($slots);
 		}
-		
+
 		wfProfileOut(__METHOD__);
-		
+
 		return self::$instance;
 	}
 
@@ -182,7 +182,7 @@ class AdEngine {
 
 	public function getSetupHtml(){
 		wfProfileIn(__METHOD__);
-		
+
 		global $wgExtensionsPath;
 
 		static $called = false;
@@ -211,13 +211,13 @@ class AdEngine {
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
 		wfProfileOut(__METHOD__);
-		
+
 		return $out;
 	}
 
 	public function loadConfig() {
 		wfProfileIn(__METHOD__);
-		
+
 		global $wgAdSlots, $wgUser;
 
 		$skin_name = null;
@@ -275,22 +275,23 @@ class AdEngine {
 		}
 
 		wfProfileOut(__METHOD__);
-		
+
 		return true;
 	}
 
 
 	function getProviderid($provider){
 		wfProfileIn(__METHOD__);
-		
+
 		foreach($this->providers as $id => $p) {
 			if (strtolower($provider) == strtolower($p) ){
+				wfProfileOut(__METHOD__);
 				return $id;
 			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
-		
+
 		// default provider: Null
 		return '-1';
 	}
@@ -299,7 +300,7 @@ class AdEngine {
 	/* Allow Wiki Factory variables to override what is in the slots */
 	function applyWikiOverrides(){
 		wfProfileIn(__METHOD__);
-		
+
 		foreach($this->slots as $slotname => $slot) {
 			$name = 'wgAdslot_' . $slotname;
 			if (!empty($GLOBALS[$name])){
@@ -310,7 +311,7 @@ class AdEngine {
 				$this->slots[$slotname]['enabled'] = "Yes";
 			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -324,7 +325,7 @@ class AdEngine {
 	/* Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer. */
 	public function getCachedCategory(){
 		wfProfileIn(__METHOD__);
-		
+
 		static $cat;
 		if (! empty($cat)){
 			wfProfileOut(__METHOD__);
@@ -355,9 +356,9 @@ class AdEngine {
 		);
 
 		$wgMemc->set($cacheKey, $cat, self::cacheTimeout);
-		
+
 		wfProfileOut(__METHOD__);
-		
+
 		return $cat;
 	}
 
@@ -387,7 +388,7 @@ class AdEngine {
 	// Logic for hiding/displaying ads should be here, not in the skin.
 	public function getAdProvider($slotname) {
 		wfProfileIn(__METHOD__);
-		
+
 		global $wgShowAds, $wgUser, $wgNoExternals;
 
 
@@ -445,7 +446,7 @@ class AdEngine {
 		}
 
 		wfProfileOut(__METHOD__);
-		
+
 		return $this->adProviders[$slotname];
 	}
 
@@ -479,7 +480,7 @@ class AdEngine {
  	 */
         public static function getHeightWidthFromSize($size){
 		wfProfileIn(__METHOD__);
-		
+
                 if (preg_match('/^([0-9]{2,4})x([0-9]{2,4})/', $size, $matches)){
 			wfProfileOut(__METHOD__);
                         return array('width'=>$matches[1], 'height'=>$matches[2]);
@@ -494,7 +495,7 @@ class AdEngine {
 
 	public function getPlaceHolderIframe($slotname, $reserveSpace=true){
 		wfProfileIn(__METHOD__);
-		
+
                 global $wgEnableAdsLazyLoad, $wgAdslotsLazyLoad;
 
 		$html = null;
@@ -669,7 +670,7 @@ class AdEngine {
 
 	public function getDelayedIframeLoadingCode(){
 		wfProfileIn(__METHOD__);
-		
+
 		if (empty($this->placeholders)){
 			wfProfileOut(__METHOD__);
 			// No delayed ads on this page
@@ -751,12 +752,12 @@ class AdEngine {
 			}
 		}
 
-		wfProfileOut(__METHOD__);		
+		wfProfileOut(__METHOD__);
 	}
 
 	public function getSlotNamesForProvider($provider_id){
 		wfProfileIn(__METHOD__);
-		
+
 		$out = array();
 		foreach($this->slots as $slotname => $data ){
 			if ($data['enabled'] == 'Yes' && $data['provider_id'] == $provider_id){
@@ -774,7 +775,7 @@ class AdEngine {
 			? $this->providers[$this->slots[$slotname]['provider_id']]
 			: '';
 	}
-	
+
 	public static function getLiftiumOptionsScript() {
 		wfProfileIn(__METHOD__);
 
@@ -822,9 +823,9 @@ EOT;
 	LiftiumOptions['isCalledAfterOnload'] = true;
 	LiftiumOptions['maxLoadDelay'] = 6000;
 EOT;
-			
+
 		}
-		
+
 		$js = AssetsManagerBaseBuilder::minifyJs( $js );
 		$out = "\n<!-- Liftium options -->\n";
 		$out .= Html::inlineScript( $js )."\n";
