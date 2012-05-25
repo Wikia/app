@@ -7,15 +7,14 @@ $oasisHD: get_command_line_param("hd", 0);
 $width-outside: 1000px;
 @if $oasisHD == 1 {
 	$width-outside: 1200px;
-}
-@if $oasisHD == 2 {
+
+} @else if $oasisHD == 2 {
 	$width-outside: auto;
 }
 
 $width-rail: 300px;
 
-/* We often use this amount of padding or margin to separate elements in our layout. 
- * For example, .WikiaRail has this much padding on the left and right to not touch the edge of the page or the article content. 
- * .WikiaArticle does the same. 
- */ 
+// We often use this amount of padding or margin to separate elements in our layout. 
+// For example, .WikiaRail has this much padding on the left and right to not touch the edge of the page or the article content. 
+// .WikiaArticle does the same. 
 $width-gutter: 10px; 
