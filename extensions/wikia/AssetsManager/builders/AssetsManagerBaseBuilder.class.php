@@ -66,6 +66,10 @@ class AssetsManagerBaseBuilder {
 		return $this->mContentType;
 	}
 
+	public function getVary() {
+		return 'Accept-Encoding';
+	}
+
 	public static function minifyJS($content, $useYUI = false) {
 		global $IP;
 		wfProfileIn(__METHOD__);

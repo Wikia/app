@@ -40,11 +40,13 @@ class AssetsManagerServer {
 		}
 
 		$headers = array();
-		$headers['Vary'] = 'Cookie,Accept-Encoding';
 
 		if($builder->getContentType()) {
 			$headers['Content-Type'] = $builder->getContentType();
 		}
+
+		// BugId:31327
+		$headers['Vary'] = $builder->getVary();
 
 		$cacheDuration = $builder->getCacheDuration();
 		if($cacheDuration > 0) {

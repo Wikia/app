@@ -11,6 +11,8 @@ class AssetsConfig {
 	private /* array */ $mConfig;
 
 	public static function getSiteCSS( $combine, $minify = null, $params = null, $skinname = 'oasis', $articleName = 'Wikia.css') {
+		wfProfileIn(__METHOD__);
+
 		$srcs = array();
 		global $wgSquidMaxage;
 		$siteargs = array(
@@ -33,6 +35,8 @@ class AssetsConfig {
 
 		$srcs[] = Title::newFromText( $articleName, NS_MEDIAWIKI)->getFullURL( $query );
 		$srcs[] = Title::newFromText( '-' )->getFullURL( wfArrayToCGI( $siteargs ) );
+
+		wfProfileOut(__METHOD__);
 		return $srcs;
 	}
 
