@@ -259,20 +259,16 @@ var Lightbox = {
 				Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
 				Lightbox.current.type = Lightbox.initialFileDetail.mediaType;
 				
-				Lightbox.openModal.carousel.append(carousel).data('overlayactive', true);
-				Lightbox.openModal.arrows.data('overlayactive', true);
-				Lightbox.openModal.header.data('overlayactive', true)
+				Lightbox.openModal.carousel.append(carousel);
+				Lightbox.openModal.data('overlayactive', true);
 				
 				Lightbox.setUpCarousel();
 				
 				var updateCallback = function(json) {
 					Lightbox.cache.details[Lightbox.current.title] = json;
 					Lightbox[Lightbox.current.type].updateLightbox(json);
-					Lightbox.showOverlay('carousel');
-					Lightbox.showOverlay('header');
-					Lightbox.hideOverlay('carousel', 2000);
-					Lightbox.hideOverlay('arrows', 2000);
-					Lightbox.hideOverlay('header', 2000);
+					Lightbox.showOverlay();
+					Lightbox.hideOverlay(3000);
 					
 					Lightbox.lightboxLoading = false;
 					Lightbox.log("Lightbox modal loaded");
@@ -289,27 +285,14 @@ var Lightbox = {
 				
 				// attach event handlers
 				Lightbox.openModal.on('mousemove.Lightbox', function(evt) {
-					Lightbox.showOverlay('arrows');
-					if(!($(evt.target).is('.arrow'))) {
-						Lightbox.hideOverlay('arrows');
-					}
-					var time = new Date().getTime();
-					if ( ( time - Lightbox.eventTimers.lastMouseUpdated ) > 100 ) {
-						Lightbox.eventTimers.lastMouseUpdated = time;
-						var relativeMouseY = evt.pageY - Lightbox.openModal.offset().top;
-						if(relativeMouseY < 150) {
-							Lightbox.showOverlay('header');
-						} else if((Lightbox.openModal.height() - relativeMouseY) < 150) {
-							Lightbox.showOverlay('carousel');
-						} else {
-							Lightbox.hideOverlay('header');
-							Lightbox.hideOverlay('carousel');
-						}
+					var target = $(evt.target);
+					Lightbox.showOverlay();
+					if(!(target.closest('.arrow, .LightboxHeader, .LightboxCarousel')).exists()) {
+						Lightbox.hideOverlay();
 					}
 				// Hide Lightbox header and footer on mouse leave. 
 				}).on('mouseleave.Lightbox', function(evt) {
-					Lightbox.hideOverlay('header');
-					Lightbox.hideOverlay('carousel');
+					Lightbox.hideOverlay();
 				// Show more info screen on button click
 				}).on('click.Lightbox', '.LightboxHeader .more-info-button', function(evt) {
 					if(Lightbox.current.type === 'video') {
@@ -346,15 +329,15 @@ var Lightbox = {
 				// Pin the toolbar on icon click
 				}).on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function(evt) {
 					var target = $(evt.target);
-					var overlayActive = Lightbox.openModal.carousel.data('overlayactive');
+					var overlayActive = Lightbox.openModal.data('overlayactive');
 					if(overlayActive) {
 						target.addClass('active');	// add active state to button when carousel overlay is active
-						Lightbox.openModal.addClass('pinned-carousel-mode');
+						Lightbox.openModal.addClass('pinned-mode');
 					} else {
 						target.removeClass('active');
-						Lightbox.openModal.removeClass('pinned-carousel-mode');
+						Lightbox.openModal.removeClass('pinned-mode');
 					}
-					Lightbox.openModal.carousel.data('overlayactive', !overlayActive);	// flip overlayactive state
+					Lightbox.openModal.data('overlayactive', !overlayActive);	// flip overlayactive state
 					
 					// update image if image
 					if(Lightbox.current.type == 'image') {
@@ -362,7 +345,7 @@ var Lightbox = {
 					}
 				}).on('click', '#LightboxNext, #LightboxPrevious', function(e) {
 					var target = $(e.target);
-		
+					
 					if(target.is('.disabled')) {
 						return false;
 					}
@@ -442,9 +425,6 @@ var Lightbox = {
 					if(modalHeight < modalMinHeight) {
 						modalHeight = modalMinHeight;
 					}
-					
-					// If currentModalHeight is greater than calculated modalHeight, keep modalHeight the same as currentModalHeight
-					modalHeight = currentModalHeight > modalHeight ? currentModalHeight : modalHeight;
 
 					// Calculate modal's top offset
 					var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
@@ -465,10 +445,10 @@ var Lightbox = {
 				topOffset = topOffset + $(window).scrollTop();
 				
 				var imageContainerHeight = modalHeight;
-				if(Lightbox.openModal.hasClass('pinned-carousel-mode')) {
-					imageContainerHeight -= 110;
-					if(imageHeight > (modalHeight - 110) ) {
-						imageHeight -= 110;
+				if(Lightbox.openModal.hasClass('pinned-mode')) {
+					imageContainerHeight -= 220;
+					if(imageHeight > (modalHeight - 220) ) {
+						imageHeight -= 220;
 					}
 				}
 				
@@ -536,7 +516,6 @@ var Lightbox = {
 				currentModalHeight = Lightbox.openModal.height(),
 				modalHeight = windowHeight - topOffset*2 - 10, // 5px modal border
 				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
-				modalHeight = currentModalHeight > modalHeight ? currentModalHeight : modalHeight,
 				videoTopMargin = (modalHeight - Lightbox.modal.defaults.videoHeight) / 2;
 			
 				topOffset = topOffset + $(window).scrollTop();
@@ -559,22 +538,21 @@ var Lightbox = {
 				.prepend($(Lightbox.openModal.closeButton).clone(true, true));	// clone close button into header
 		});
 	},
-	showOverlay: function(overlayName) {
-		clearTimeout(Lightbox.eventTimers[overlayName]);
-		Lightbox.eventTimers[overlayName] = 0;
-		var overlay = Lightbox.openModal[overlayName];
-		if(overlay.hasClass('hidden') && overlay.data('overlayactive')) {
-			overlay.removeClass('hidden');
+	showOverlay: function() {
+		clearTimeout(Lightbox.eventTimers.overlay);
+		Lightbox.eventTimers.overlay = 0;
+		var overlay = Lightbox.openModal;
+		if(overlay.hasClass('overlay-hidden') && overlay.data('overlayactive')) {
+			overlay.removeClass('overlay-hidden');
 		}
 	},
-	hideOverlay: function(overlayName, delay) {
-		var overlay = Lightbox.openModal[overlayName];
-		// if Lightbox is not being hidden and hiding has not already started yet
-		if(!overlay.hasClass('hidden') && !Lightbox.eventTimers[overlayName] && overlay.data('overlayactive')) {
-			Lightbox.eventTimers[overlayName] = setTimeout(
+	hideOverlay: function(delay) {
+		var overlay = Lightbox.openModal;
+		if(!overlay.hasClass('overlay-hidden') && !Lightbox.eventTimers.overlay && overlay.data('overlayactive')) {
+			Lightbox.eventTimers.overlay = setTimeout(
 				function() {
-					overlay.addClass('hidden');
-				}, (delay || 600)
+					overlay.addClass('overlay-hidden');
+				}, (delay || 1200)
 			);
 		}
 	},
@@ -631,6 +609,8 @@ var Lightbox = {
 				type: type
 			}, function(data) {
 				Lightbox[type].updateLightbox(data);		
+				Lightbox.showOverlay();
+				Lightbox.hideOverlay();
 			});
 		}
 	},
