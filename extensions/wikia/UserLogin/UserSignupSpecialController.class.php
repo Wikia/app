@@ -8,6 +8,8 @@
  */
 class UserSignupSpecialController extends WikiaSpecialPageController {
 
+	private $userLoginHelper = null;
+
 	public function __construct() {
 		parent::__construct('UserSignup', '', false);
 	}
@@ -15,6 +17,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->isMonobook = ($this->wg->User->getSkin() instanceof SkinMonobook);
 		$this->isEn = ($this->wg->Lang->getCode() == 'en') ? true : false;
+		$this->userLoginHelper = F::build( 'UserLoginHelper' );
 	}
 
 	/**
@@ -63,8 +66,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
 
-		$this->avatars = UserLoginHelper::getInstance()->getRandomAvatars();
-		$this->popularWikis = UserLoginHelper::getInstance()->getRandomWikis();
+		$this->avatars = $this->userLoginHelper->getRandomAvatars();
+		$this->popularWikis = $this->userLoginHelper->getRandomWikis();
 
 		// template params
 		$this->pageHeading = wfMsg('usersignup-heading');
@@ -166,7 +169,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getEmailConfirmationMarketingModal() {
 		// TODO: need spam protection here HWL 2011-12-22
-		$response = UserLoginHelper::getInstance()->sendConfirmationEmail( $this->request->getVal('username', '') );
+		$response = $this->userLoginHelper->sendConfirmationEmail( $this->request->getVal('username', '') );
 		$this->result = $response['result'];
 		$this->msg = $response['msg'];
 	}
@@ -224,7 +227,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		if ($this->wg->Request->wasPosted()) {
 			$action = $this->request->getVal('action','');
 			if ( $action=='resendconfirmation' ) {
-				$response = UserLoginHelper::getInstance()->sendConfirmationEmail( $this->username );
+				$response = $this->userLoginHelper->sendConfirmationEmail( $this->username );
 				$this->result = $response['result'];
 				$this->msg = $response['msg'];
 				$this->heading = $this->wf->Msg('usersignup-confirmation-heading-email-resent');
@@ -329,7 +332,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		// increase counter for email changes
-		UserLoginHelper::getInstance()->incrMemc( $memKey );
+		$this->userLoginHelper->incrMemc( $memKey );
 
 		$this->result = 'ok';
 		$this->msg = $this->wf->Msg( 'usersignup-reconfirmation-email-sent', htmlspecialchars($email) );
@@ -343,7 +346,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$tempUser->saveSettingsTempUserToUser( $user );
 
 			// set counter to 1 for confirmation emails sent
-			$memKey = UserLoginHelper::getInstance()->getMemKeyConfirmationEmailsSent( $tempUser->getId() );
+			$memKey = $this->userLoginHelper->getMemKeyConfirmationEmailsSent( $tempUser->getId() );
 			$this->wg->Memc->set( $memKey, 1, 24*60*60 );
 
 			if( WikiError::isError( $result ) ) {

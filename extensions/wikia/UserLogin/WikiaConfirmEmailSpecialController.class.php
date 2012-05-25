@@ -79,7 +79,8 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					return;
 				}
 
-				if ( UserLoginHelper::getInstance()->isPasswordThrottled($this->username) ) {
+				$userLoginHelper = F::build( 'UserLoginHelper' );
+				if ( $userLoginHelper->isPasswordThrottled($this->username) ) {
 					$this->result = 'error';
 					$this->msg = $this->wf->Msg( 'userlogin-error-login-throttled' );
 					$this->errParam = 'password';
@@ -92,7 +93,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
 					TempUser::clearTempUserSession();
-					UserLoginHelper::getInstance()->clearPasswordThrottle( $this->username );
+					$userLoginHelper->clearPasswordThrottle( $this->username );
 
 					// redirect user
 					if ( $tempUser->getSource() == '' ) {

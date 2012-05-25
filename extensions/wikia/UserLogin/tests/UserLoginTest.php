@@ -73,10 +73,6 @@
 			$this->mockGlobalVariable('wgRequest', $wgRequest);
 		}
 
-		protected function tearDownHelper() {
-			UserLoginHelper::setInstance( null );
-		}
-
 		/**
 		 * @dataProvider loginDataProvider
 		 */
@@ -106,9 +102,6 @@
 
 			$responseData = $response->getVal( 'errParam' );
 			$this->assertEquals( $expErrParam, $responseData );
-
-			// tear down
-			$this->tearDownHelper();
 		}
 
 		public function testWikiaMobileLoginTemplate() {
@@ -464,9 +457,6 @@
 
 			$responseData = $response->getVal( 'msg' );
 			$this->assertEquals( $expMsg, $responseData );
-
-			// tear down
-			$this->tearDownHelper();
 		}
 
 		public function changePasswordDataProvider() {

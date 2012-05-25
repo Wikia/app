@@ -17,19 +17,6 @@ class UserLoginHelper extends WikiaModel {
 
 	const WIKIA_CITYID_COMMUNITY = 177;
 
-	public static function getInstance() {
-		if (self::$instance === NULL) {
-			$class = __CLASS__;
-			self::$instance = F::build( $class );
-		}
-		return self::$instance;
-	}
-	
-	// set instance for testing
-	public static function setInstance( $ins ) {
-		self::$instance = $ins;
-	}
-
 	/**
 	 * get random avatars from the current wiki
 	 * @responseParam array avatars
@@ -471,7 +458,7 @@ class UserLoginHelper extends WikiaModel {
 			}
 
 			$email = ( $this->wg->User->isEmailConfirmed() && !empty($optionNewEmail) ) ? $optionNewEmail : $this->wg->user->getEmail() ;
-			$ok = UserLoginHelper::getInstance()->sendReconfirmationEmail( $this->wg->User, $email );
+			$ok = $this->sendReconfirmationEmail( $this->wg->User, $email );
 			if ( WikiError::isError( $ok ) ) {
 				$this->wg->Out->addWikiMsg( 'userlogin-error-mail-error', $ok->toString() );
 			} else {

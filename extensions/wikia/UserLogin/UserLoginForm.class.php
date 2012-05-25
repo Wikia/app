@@ -49,7 +49,8 @@ class UserLoginForm extends LoginForm {
 			return false;
 
 		// send confirmation email
-		$result = UserLoginHelper::getInstance()->sendConfirmationEmail( $this->mName, $u );
+		$userLoginHelper = F::build( 'UserLoginHelper' );
+		$result = $userLoginHelper->sendConfirmationEmail( $this->mName, $u );
 		$this->mainLoginForm( $result['msg'], $result['result'] );
 
 		return $u;
@@ -69,7 +70,8 @@ class UserLoginForm extends LoginForm {
 		$u = $tempUser->mapTempUserToUser( false, $u );
 
 		// add log
-		UserLoginHelper::getInstance()->addNewUserLogEntry( $u, true );
+		$userLoginHelper = F::build( 'UserLoginHelper' );
+		$userLoginHelper->addNewUserLogEntry( $u, true );
 
 		// mail temporary password
 		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array('language' => $u->getOption('language'), 'type' => 'account-creation-email') );
