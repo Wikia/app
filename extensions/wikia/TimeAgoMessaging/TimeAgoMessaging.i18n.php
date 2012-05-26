@@ -86,6 +86,17 @@ $messages['de'] = array(
 	'timeago-second' => 'vor einer Minute',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'timeago-day' => 'Verdê {{PLURAL:$1|$1 rocan|$1 rocan}}',
+	'timeago-hour' => 'Verdê {{PLURAL:$1|$1 seata|$1 seata}}',
+	'timeago-minute' => 'verdê {{PLURAL:$1|$1 daka|$1 dakan}}',
+	'timeago-month' => 'Verde {{PLURAL:$1|meng|$1 mengan}}',
+	'timeago-second' => 'verdê dekana',
+);
+
 /** Spanish (Español)
  * @author Armando-Martin
  * @author Bola
@@ -139,11 +150,14 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'timeagomessaging-desc' => 'Honosítást biztosít a jquery.timeago.js plugin számára.',
 	'timeago-day' => '{{PLURAL:$1|egy|$1}} nappal ezelőtt',
 	'timeago-hour' => '{{PLURAL:$1|egy|$1}} órával ezelőtt',
 	'timeago-minute' => '{{PLURAL:$1|egy|$1}} perccel ezelőtt',
+	'timeago-month' => '{{PLURAL:$1|egy|$1}} hónappal ezelőtt',
 	'timeago-second' => 'egy perccel ezelőtt',
 );
 

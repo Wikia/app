@@ -222,13 +222,16 @@ $messages['hsb'] = array(
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  * @author Misibacsi
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'search-desc' => 'Solr alapú Wikia-közi keresőmotor',
 	'wikiasearch-titles-only' => 'Keresés csak a lapcímekben',
 	'wikiasearch-system-error-msg' => 'A keresés nem teljesíthető rendszerhiba miatt',
 	'wikiasearch-search-this-wiki' => 'Keresés csak a Wikia Centralon',
 	'wikiasearch-search-wikia' => 'Keresés a Wikián',
 	'wikiasearch-image-results' => 'Képkeresés eredményei: "$1"',
+	'wikiasearch-search-all-wikia' => 'Keresés a Wikia egészében',
 );
 
 /** Armenian (Հայերեն)

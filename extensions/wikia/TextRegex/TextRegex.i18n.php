@@ -237,10 +237,14 @@ Versuchen Sie es noch einmal.',
 );
 
 /** Zazaki (Zazaki)
+ * @author Erdemaslancan
  * @author Mirzali
  */
 $messages['diq'] = array(
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 wedarnê]',
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 istatistiki]',
+	'textregex-nodata-found' => 'Melumat nêvineya',
+	'textregex-select-default' => '-- weçine --',
 );
 
 /** Spanish (Español)

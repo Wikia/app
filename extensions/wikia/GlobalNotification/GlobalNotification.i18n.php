@@ -59,6 +59,13 @@ $messages['gl'] = array(
 	'globalnotification-general-ajax-failure' => 'O navegador non puido conectar con Wikia. Inténteo máis tarde.',
 );
 
+/** Hungarian (Magyar)
+ * @author Misibacsi
+ */
+$messages['hu'] = array(
+	'globalnotification-general-ajax-failure' => 'A böngésző nem tud kapcsolódni ide: Wikia.  Próbálkozzon később.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */

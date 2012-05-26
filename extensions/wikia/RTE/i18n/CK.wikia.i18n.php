@@ -1335,6 +1335,7 @@ $messages['inh'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -1366,6 +1367,7 @@ $messages['it'] = array(
 	'rte-ck-modeSwitch-toSourceTooltip' => 'Passa alla modalità codice sorgente',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Passa alla modalità visuale',
 	'rte-ck-modeSwitch-error' => 'Si è verificato un errore durante il cambio di modalità. Per favore riprovare.',
+	'rte-ck-templateEditor-editor-parameters' => 'Parametri',
 	'rte-ck-format-tag_p' => 'Testo normale',
 	'rte-ck-format-tag_pre' => 'Codice (testo preformattato)',
 	'rte-ck-format-tag_h2' => 'Titolo 2',

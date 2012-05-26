@@ -254,6 +254,7 @@ $messages['az'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'prefs-basic' => 'Основни настройки',
 	'wikiafollowedpages-special-heading-category' => 'Категории ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Статии ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Блогове и публикации ($1)',

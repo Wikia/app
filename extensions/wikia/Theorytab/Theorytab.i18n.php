@@ -74,6 +74,14 @@ $messages['de'] = array(
 	'theorytab-parent-title' => 'Hauptartikel',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'theorytab-title' => 'Teori',
+	'theorytab-parent-title' => 'Wesiqeyo serên',
+);
+
 /** Spanish (Español) */
 $messages['es'] = array(
 	'theorytab-title' => 'Teorias',

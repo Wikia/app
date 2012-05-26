@@ -208,6 +208,22 @@ $messages['de'] = array(
 	'wikiapoll-error-invalid-title' => 'Der Fragetext ist ungültig.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 merduma|$1 merduman}} rey da',
+	'wikiapoll-question' => '$1?',
+	'wikiapoll-thanks-for-vote' => 'Teşekur kena!',
+	'wikiapoll-vote' => 'Rey Bıdê!',
+	'wikiapoll-votes' => '{{PLURAL:$1|1 rey|$1 reyi}}',
+	'wikiapoll-createpoll-headline' => 'Anket Vırazê',
+	'wikiapoll-editpoll-headline' => 'Anketi bıvurnê',
+	'wikiapoll-question-label' => 'Pers',
+	'wikiapoll-cancel-label' => 'Bıterkne',
+	'wikiapoll-publish-label' => 'Vıla ke',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

@@ -262,6 +262,20 @@ $messages['de-formal'] = array(
 	'wikiavideo-intro-old' => "Sie löschsen die Version von '''[$1 $5]''' vom [$4 $3, $2].",
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikiavideo-added' => "Vidyoy $1'i debya",
+	'wikiavideo-updated' => 'vidyoyê [[$1]] neweke',
+	'wikiavideo-back' => 'Peyd bê',
+	'wikiavideo-create' => 'Video deke',
+	'wikiavideo-replace' => 'Vidyoy cı sero bınusnê',
+	'wikiavideo-category' => 'Vidyoy',
+	'wikiavideo-links' => 'Gırey',
+	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|piksel|pikseli}}, Heruna cı: <a href="$3" class="external" target="_blank">$4</a>)',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author Ciencia Al Poder

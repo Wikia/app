@@ -45,6 +45,13 @@ $messages['qqq'] = array(
 	'right-multilookup' => '{{doc-right|multilookup}}',
 );
 
+/** Tati (Tati)
+ * @author Erdemaslancan
+ */
+$messages['ttt'] = array(
+	'multilookupgo' => 'Buşu',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */

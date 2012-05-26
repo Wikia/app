@@ -327,6 +327,8 @@ $messages['bg'] = array(
 	'cnw-auth-signup-creative' => 'Необходима е сметка, за да продължите да създавате вашето уики.<br />Регистрацията отнема по-малко от минута!',
 	'cnw-auth-facebook-signup' => 'Регистриране чрез Facebook',
 	'cnw-auth-facebook-login' => 'Влизане с Facebook',
+	'cnw-userauth-creative' => 'Влизане',
+	'cnw-userauth-signup-button' => 'Регистриране',
 	'cnw-desc-headline' => 'За какво е вашето уики?',
 	'cnw-desc-creative' => 'Опишете темата',
 	'cnw-desc-placeholder' => 'Съдържанието от тази кутия ще бъде публикувано на началната страница на вашето уики.',
@@ -812,7 +814,7 @@ $messages['fr'] = array(
 <li>Les écoles</li>
 <li>Les projets personnels</li>
 </ul>
-Mettez à niveau via Paypal pour obtenir un wiki sans publicité pour seulement 4,95 $ par mois !',
+Mettez à niveau via PayPal pour obtenir un wiki sans publicité pour seulement 4,95 $ par mois !',
 	'cnw-upgrade-now' => 'Mettre à niveau maintenant',
 	'cnw-upgrade-decline' => 'Non merci, continuer vers mon wiki',
 	'cnw-welcome-headline' => 'Félicitations ! $1 a été créé.',

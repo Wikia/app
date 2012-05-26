@@ -1462,21 +1462,29 @@ Beschreiben Sie dieses Foto.",
 $messages['diq'] = array(
 	'wikiaPhotoGallery-back' => 'Peyd bê',
 	'wikiaPhotoGallery-finish' => 'Qedyin',
+	'wikiaPhotoGallery-feed-caption' => '$1, sera <a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => "$1'i sera",
 	'wikiaPhotoGallery-error-caption' => 'Xırab',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Resim Barke',
 	'wikiaPhotoGallery-upload-findtitle' => 'Bıvin',
 	'wikiaPhotoGallery-upload-findbutton' => 'Bıvin',
 	'wikiaPhotoGallery-upload-page-next' => "8'ê peyêni",
 	'wikiaPhotoGallery-upload-page-prev' => "8'ê verêni",
+	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Têare ker',
 	'wikiaPhotoGallery-upload-select-images' => 'Weçine',
 	'wikiaPhotoGallery-photooptions-done' => 'Qeyd kerd',
 	'wikiaPhotoGallery-preview-hover-modify' => 'bıvurne',
 	'wikiaPhotoGallery-preview-hover-delete' => 'besterne',
+	'wikiaPhotoGallery-preview-tab-layout' => 'Ca gınayiş',
+	'wikiaPhotoGallery-preview-px' => 'px',
 	'wikiaPhotoGallery-preview-position-left' => 'Çep',
 	'wikiaPhotoGallery-preview-position-center' => 'Merkez',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Werdı',
 	'wikiaPhotoGallery-preview-spacing-medium' => 'Medyum',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Larc',
+	'wikiaPhotoGallery-preview-captionalignment-left' => 'Çep',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'Merkez',
+	'wikiaPhotoGallery-preview-captionalignment-right' => 'Raşt',
 	'wikiaPhotoGallery-preview-captionsize-small' => 'werdı',
 	'wikiaPhotoGallery-preview-captionsize-medium' => 'Medyum',
 	'wikiaPhotoGallery-preview-captionsize-large' => 'Larc',
@@ -1487,7 +1495,22 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-preview-captions-left' => 'Çep',
 	'wikiaPhotoGallery-preview-captions-center' => 'Merkez',
 	'wikiaPhotoGallery-preview-captions-right' => 'Raşt',
+	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Resim deke',
+	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Resimo peyên',
+	'wikiaPhotoGallery-slideshow-view-startslideshow' => 'Slaytşowi kayfiye',
+	'wikiaPhotoGallery-slideshow-view-stopslideshow' => 'Slaytşowi vındarnê',
+	'wikiaPhotoGallery-slideshow-view-details-tooltip' => 'teferruatê resimi bıvin',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Şo $1',
+	'wikiaPhotoGallery-choice-title' => 'Slaytşow yana Galeri vırazê',
+	'wikiaPhotoGallery-choice-slideshow' => 'Slaytşow deke',
+	'wikiaPhotoGallery-choice-gallery' => 'Galeri vırazê',
+	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Çep',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Merkezi',
+	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Raşt',
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ena pele',
+	'wikiaPhotoGallery-upload-selectbutton' => 'Weçine',
+	'wikiaPhotoGallery-photooptions-description' => 'Teferruatê Resimi',
+	'galery-slider-read-more' => 'Dehana vêşi >',
 );
 
 /** Ewe (Eʋegbe) */
@@ -2702,6 +2725,7 @@ $messages['inh'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Gifh
  * @author HalphaZ
  * @author Minerva Titani
@@ -2745,7 +2769,7 @@ $messages['it'] = array(
 	'wikiaPhotoGallery-photooptions-done' => 'Fatto',
 	'wikiaPhotoGallery-preview-title' => 'Modifica galleria',
 	'wikiaPhotoGallery-preview-hover-modify' => 'modifica',
-	'wikiaPhotoGallery-preview-hover-delete' => 'elimina',
+	'wikiaPhotoGallery-preview-hover-delete' => 'cancella',
 	'wikiaPhotoGallery-preview-add-photo' => 'Aggiungi una foto',
 	'wikiaPhotoGallery-preview-add-caption' => 'Aggiungi una didascalia',
 	'wikiaPhotoGallery-preview-link-tooltip' => 'La foto ha un collegamento a "$1"',

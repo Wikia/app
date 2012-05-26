@@ -393,9 +393,13 @@ $messages['bg'] = array(
 	'founderemails-email-0-days-passed-body' => 'Поздравления за създаването на $WIKINAME - вече сте част от общността на Wikia!
 
 -- Екипът на Wikia',
+	'founderemails-email-anon-edit-signature' => 'Екипът на Wikia',
+	'founderemails-email-lot-happening-signature' => 'Екипът на Wikia',
+	'founderemails-email-0-day-addpages-heading' => 'Добавяне на страници.',
 	'founderemails-email-0-day-addpages-button' => 'Добавяне на страница',
 	'founderemails-email-0-day-addphotos-heading' => 'Добавяне на снимки.',
 	'founderemails-email-0-day-addphotos-button' => 'Добавяне на снимка',
+	'founderemails-email-3-day-addphotos-button' => 'Добавяне на снимки',
 );
 
 /** Breton (Brezhoneg)
@@ -1015,7 +1019,7 @@ Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um 
 	'founderemails-email-lot-happening-signature' => 'Das Wikia Team',
 	'founderemails-email-lot-happening-button' => 'Aktivitäten ansehen',
 	'founderemails-email-footer-line1' => 'Um aktuelle Ereignisse in Wikia mitzubekommen, besuche <a style="color:#2a87d5;text-decoration:none;" href="http://de.community.wikia.com">de.community.wikia.com</a>',
-	'founderemails-email-footer-line2' => 'Willst du steuern, welche E-Mails du bekommst? Gehe zu deinen [{{fullurl:{{ns:special}}:Preferences}} Einstellungen]',
+	'founderemails-email-footer-line2' => 'Willst du steuern, welche E-Mails du bekommst? Gehe zu deinen <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Einstellungen</a>.',
 	'founderemails-email-0-day-heading' => 'Schön, dich zu treffen, $USERNAME,',
 	'founderemails-email-0-day-congratulations' => 'Herzlichen Glückwunsch zur Erstellung von $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Hier sind ein paar hilfreiche Tipps zum Einstieg:',
@@ -4831,7 +4835,7 @@ Ale ten czas leci! To już 10 dni od założenia $WIKINAME, $WIKIURL.
 
 Zachęć innych uczestniczących w projekcie i pokaż wszystkim wspaniałą pracę już przez ciebie wykonaną!  Oto kilka sposobów popularyzowania:
 
-Trzeba się dzielić! Użyj przycisku "Udostępnij" na pasku narzędzi na stronie artykułu lub zdjęcia, aby pokazać je znajomym i obserwującym na Facebooku, Twitterze lub innych popularnych witrynach.
+Trzeba się dzielić! Użyj przycisku "Podziel się" na pasku narzędzi na stronie artykułu lub zdjęcia, aby pokazać je znajomym i obserwującym na Facebooku, Twitterze lub innych popularnych witrynach.
 
 Zaprzęgnij moc e-maila. Wyślij wiadomości osobom, o których wiesz, że są zainteresowane danym tematem lub pomocą ci, jak przyjaciele ze szkoły lub współpracownicy. Można również przesłać poszczególne zdjęcia z twojej wiki za pomocą przycisku e-mail.
 
@@ -5015,7 +5019,7 @@ z naszych ulubionych: <a style="color:#2a87d5;text-decoration:none;" href="http:
 	'founderemails-email-10-day-congratulations' => 'Ale ten czas leci!  To już 10 dni od momentu rozpoczęcia $HDWIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Zachęć innych by uczestniczyli w projekcie i pokaż wszystkim wspaniałą pracę, jaka już została wykonana!  Oto kilka sposobów rozprzestrzeniania:',
 	'founderemails-email-10-day-share-heading' => 'Nie mówiła ci matka, że trzeba się dzielić?',
-	'founderemails-email-10-day-share-content' => 'Użyj przycisku "Udostępnij" na stronach swojej wiki, aby pochwalić się nimi na Facebooku.',
+	'founderemails-email-10-day-share-content' => 'Użyj przycisku "Podziel się" na stronach swojej wiki, aby pochwalić się nimi na Facebooku.',
 	'founderemails-email-10-day-email-heading' => 'Zaprzęgnij moc e-maili.',
 	'founderemails-email-10-day-email-content' => 'Daj znać znajomym, którzy mogą być zainteresowani tematem Twojej wiki, poprzez wysłanie do nich e-maila. Możesz także wysyłać konkretne obrazy z Twojej wiki przy użyciu narzędzia do wysyłania e-maili.',
 	'founderemails-email-10-day-join-heading' => 'Nawiąż współpracę z podobnymi stronami',

@@ -872,13 +872,27 @@ $messages['diq'] = array(
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Barke',
 	'wmu-find-btn' => 'Bıvin',
+	'wmu-insert' => 'Têare ker',
 	'wmu-name' => 'Name',
 	'wmu-license' => 'Lisans',
 	'wmu-licensing' => 'Lisansey',
+	'wmu-size' => 'Gırdiye',
+	'wmu-thumbnail' => 'Resmo qıckek',
+	'wmu-fullsize' => 'Full-gırdiye ($1x$2px)',
+	'wmu-width' => 'Herayey',
+	'wmu-layout' => 'Ca gınayiş',
+	'wmu-caption' => 'Bınnuşte',
+	'wmu-link' => 'Link',
 	'wmu-prev' => "8'ê verêni",
 	'wmu-next' => "8'ê peyêni",
 	'wmu-close' => 'racnê',
+	'wmu-imagebutton' => 'Resım deke',
+	'wmu-hide-license-msg' => 'nuşteya lisansi bınımne',
+	'wmu-show-license-msg' => 'nuşteyê lisansi bımocne',
+	'wmu-placeholder' => 'Cayê tepıstışi',
 	'wmu-gallery' => 'Galeri',
+	'wmu-columns' => '$1 {{PLURAL:$1|Estûn|Estûni}}',
+	'wmu-column' => 'Estûni',
 );
 
 /** Esperanto (Esperanto)
@@ -1488,6 +1502,7 @@ $messages['inh'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -1502,7 +1517,7 @@ $messages['it'] = array(
 	'wmu-width' => 'Larghezza',
 	'wmu-caption' => 'Didascalia',
 	'wmu-link' => 'Collegamento',
-	'wmu-optional' => ' (opzionale)',
+	'wmu-optional' => '(opzionale)',
 	'wmu-prev' => 'Precedenti 8',
 	'wmu-next' => 'Succ 8',
 	'wmu-back' => "Seleziona un'altra immagine",
@@ -2776,6 +2791,13 @@ $messages['tl'] = array(
 	'wmu-replace-default-caption' => 'palitan ang likas na nakatakdang paliwanag',
 	'wmu-appearance-in-article' => 'Hitsura sa loob ng Artikulo',
 	'wmu-alignment' => 'Talatag',
+);
+
+/** Turkish (Türkçe)
+ * @author Erdemaslancan
+ */
+$messages['tr'] = array(
+	'wmu-alignment' => 'Hiza fi',
 );
 
 /** Ukrainian (Українська)

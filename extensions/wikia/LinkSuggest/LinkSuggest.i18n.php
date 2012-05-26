@@ -22,7 +22,7 @@ $messages['az'] = array(
 	'tog-disablelinksuggest' => 'İlkin kod rejimində keçid təklifini göstərmə',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -63,6 +63,7 @@ $messages['de'] = array(
  */
 $messages['es'] = array(
 	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos en modo fuente.',
+	'tog-redirected-from' => '&ndash; redirigido desde $1',
 );
 
 /** Finnish (Suomi)
@@ -74,10 +75,12 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
 	'tog-disablelinksuggest' => 'Ne pas afficher la suggestion de lien en mode source',
+	'tog-redirected-from' => '&ndash; Redirigé depuis $1',
 );
 
 /** Galician (Galego)
@@ -85,6 +88,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'tog-disablelinksuggest' => 'Non mostrar as ligazón suxeridas no modo fonte',
+	'tog-redirected-from' => '&ndash; Redirixido desde "$1"',
 );
 
 /** Manx (Gaelg)
@@ -183,6 +187,7 @@ $messages['lv'] = array(
  */
 $messages['mk'] = array(
 	'tog-disablelinksuggest' => 'Не прикажувај предложени врски во Изворен режим',
+	'tog-redirected-from' => '&ndash; Пренасочено од $1',
 );
 
 /** Malay (Bahasa Melayu)
@@ -190,13 +195,15 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'tog-disablelinksuggest' => 'Jangan paparkan cadangan pautan dalam mod Sumber',
+	'tog-redirected-from' => '&ndash; Dilencongkan dari $1',
 );
 
-/** Norwegian Bokmål (Norsk (bokmål))
+/** Norwegian Bokmål (‪Norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
 	'tog-disablelinksuggest' => 'Ikke vis lenkeforslag i kildemodus',
+	'tog-redirected-from' => '&ndash; Omdirigert fra $1',
 );
 
 /** Dutch (Nederlands)
@@ -205,9 +212,10 @@ $messages['nb'] = array(
  */
 $messages['nl'] = array(
 	'tog-disablelinksuggest' => 'Geen verwijzingssuggesties weergeven in bronmodus',
+	'tog-redirected-from' => '&ndash; Doorverwezen vanaf $1',
 );
 
-/** Norwegian Nynorsk (Norsk (nynorsk))
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -227,6 +235,7 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków w trybie źródłowym.',
+	'tog-redirected-from' => '&ndash; Przekierowano z $1',
 );
 
 /** Piedmontese (Piemontèis)
@@ -272,7 +281,7 @@ $messages['ru'] = array(
 	'tog-disablelinksuggest' => 'Не показывать предложения ссылок в режиме Исходного кода',
 );
 
-/** Serbian (Cyrillic script) (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -328,7 +337,7 @@ $messages['uk'] = array(
 	'tog-disablelinksuggest' => 'Не показувати пропозиції посилань',
 );
 
-/** Simplified Chinese (中文(简体))
+/** Simplified Chinese (‪中文(简体)‬)
  * @author Anakmalaysia
  * @author Hydra
  */
@@ -336,7 +345,7 @@ $messages['zh-hans'] = array(
 	'tog-disablelinksuggest' => '源代码模式中勿显示链接建议',
 );
 
-/** Traditional Chinese (中文(繁體))
+/** Traditional Chinese (‪中文(繁體)‬)
  * @author Frankou
  * @author Lauhenry
  */

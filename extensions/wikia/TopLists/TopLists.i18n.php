@@ -477,7 +477,22 @@ Du kannst die Änderungsbenachrichtigungen zu dieser Liste <a href="$4">abbestel
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'toplists-desc' => 'listey Tewr 10a',
+	'createtoplist' => 'listey Tewr 10ano newe vırazê',
+	'edittoplist' => 'listey Tewr 10a bıvurnê',
+	'toplists-category' => 'listey Tewr 10a',
+	'toplists-editor-image-browser-tooltip' => 'Resim deke',
+	'toplists-create-button' => 'Liste vırazê',
+	'toplists-update-button' => 'Listi qeyd ke',
+	'toplists-cancel-button' => 'Bıterkne',
 	'toplists-list-created-by' => '[[User:$1|$1]]',
+	'toplists-list-item-voted' => 'Rey Bıdê',
+	'toplists-seconds' => '$1 {{PLURAL:$1|saniye|saniyeyan}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|deqa|deqey}}',
+	'toplists-hours' => '($1 {{PLURAL:$1|seate|seati}})',
+	'toplists-days' => '($1 {{PLURAL:$1|roce|roci}})',
+	'toplists-weeks' => '$1 {{PLURAL: $1|hefte|heftey}}',
+	'toplists-create-button-msg' => 'Liste vırazê',
 );
 
 /** Spanish (Español)

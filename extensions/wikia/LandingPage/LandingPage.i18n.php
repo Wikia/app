@@ -167,11 +167,14 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'landingpage' => 'Üdv a Wikián!',
 	'landingpage-start-exploring' => 'Készen állsz a felfedezésre?',
+	'landingpage-start-exploring-text' => 'Keress rá kedvenc témakörödre vagy tekints meg néhány közösségi kedvencet alul.',
 	'landingpage-readfaq' => 'Kérdéseid vannak? Olvasd el a GyIK-ot &gt;',
+	'landingpage-text' => 'A Wikia oldán <strong>kapcsolatot teremthetsz</strong> a <strong>szenvedélyeidet és érdeklődési körödet</strong> osztó emberekkel. Találd meg a csoportodat, szólj hozzá, szerkessz; akár <strong>saját weboldalt</strong> és közösséget is indíthatsz.',
 	'landingpage-buttons-learn-more' => 'Tudj meg többet &gt;',
 );
 

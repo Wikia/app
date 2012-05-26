@@ -139,6 +139,14 @@ $messages['de'] = array(
 	'ircgate-channel' => 'Chat-Kanal:',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'ircgate-username' => 'Nameyê karberi:',
+	'ircgate-channel' => 'Kenal:',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

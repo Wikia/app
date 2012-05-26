@@ -223,7 +223,7 @@ $messages['diq'] = array(
 	'search-go' => 'Şo!',
 	'login-username-hint' => 'Namey karberi',
 	'login-password-hint' => 'Parola',
-	'login-submit-button' => 'Deqewtış',
+	'login-submit-button' => 'Dekewtış',
 	'about-heading' => 'LirikWiki',
 	'about-heading-tips' => 'Geyreno cı',
 );

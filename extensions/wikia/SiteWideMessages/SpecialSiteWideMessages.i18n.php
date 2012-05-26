@@ -670,12 +670,34 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'swm-label-preview' => 'Verqayt',
+	'swm-label-edit' => 'Bıvurne',
+	'swm-label-remove' => 'Wedarne',
+	'swm-label-sent' => 'Bırş',
+	'swm-label-list' => 'Liste',
+	'swm-label-recipient-wikis' => 'Wikiy',
 	'swm-label-recipient-users' => 'Karberi',
+	'swm-label-mode-users-all' => 'Karberi pêro',
+	'swm-label-mode-users-active' => 'Karberê aktivi',
+	'swm-label-mode-users-user' => 'Karber weçinê',
+	'swm-label-mode-users-user-multi' => 'Listey karberan',
+	'swm-label-content' => 'Tede este',
+	'swm-label-comment' => 'Vatış',
 	'swm-label-language' => 'Zıwan',
+	'swm-button-preview' => '[ Verqayt ]',
 	'swm-button-send' => '[ Bırsê ]',
 	'swm-button-save' => '[ Star fiyê ]',
 	'swm-button-new' => '[ Newe ]',
+	'swm-list-no-messages' => 'Mesac Çıno',
+	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Rıster',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-group' => 'Grub',
+	'swm-list-table-removed' => 'wedariya',
+	'swm-list-table-content' => 'Tede este',
+	'swm-list-table-lang' => 'Zıwani',
+	'swm-yes' => 'E',
+	'swm-no' => 'Nê',
 );
 
 /** Ewe (Eʋegbe) */

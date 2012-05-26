@@ -90,10 +90,15 @@ $messages['de'] = array(
 );
 
 /** Zazaki (Zazaki)
+ * @author Erdemaslancan
  * @author Mirzali
  */
 $messages['diq'] = array(
+	'stafflog-filter-label' => 'Filtre',
 	'stafflog-filter-user' => 'Karber:',
+	'stafflog-filter-type' => 'Babet:',
+	'stafflog-filter-type-block' => 'Bloki',
+	'stafflog-filter-type-wikifactory' => 'Wiki weziyet',
 );
 
 /** Spanish (Español)

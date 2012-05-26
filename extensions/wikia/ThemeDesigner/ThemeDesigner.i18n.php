@@ -447,6 +447,27 @@ $messages['de'] = array(
 	'themedesigner-favicon-heading' => 'Favicon',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'themedesigner-or' => 'ya na',
+	'themedesigner-page' => 'Pele',
+	'themedesigner-color' => 'dawte',
+	'themedesigner-graphic' => 'grafik',
+	'themedesigner-buttons' => 'makiy',
+	'themedesigner-links' => 'Gırey',
+	'themedesigner-header' => 'Seror',
+	'themedesigner-small' => 'Werdı',
+	'themedesigner-medium' => 'Medyum',
+	'themedesigner-large' => 'Larc',
+	'themedesigner-tab-theme' => 'Tema',
+	'themedesigner-button-cancel' => 'Bıterkne',
+	'themedesigner-button-ok' => 'Temam',
+	'themedesigner-button-upload-wordmark' => 'Barke',
+	'themedesigner-wodmark-preview' => 'Verqayt',
+);
+
 /** British English (British English) */
 $messages['en-gb'] = array(
 	'themedesigner-color' => 'colour',

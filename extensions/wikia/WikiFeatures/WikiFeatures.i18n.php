@@ -142,6 +142,13 @@ A wengerl experimentiern - du kauhst dert jeederzeid d' Tools deaktiviern, dé d
 	'wikifeatures-promotion-new' => 'Neich',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'wikifeatures-deactivate-cancel-button' => 'Отказване',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -367,11 +374,22 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'wikifeatures' => 'Xasiyeyê Wiki',
+	'wikifeatures-title' => 'Xasiyeyê Wiki',
+	'wikifeatures-heading' => 'Xasiyey',
+	'wikifeatures-feedback' => 'Peydrıştış de',
+	'wikifeatures-toggle-active' => 'Mekefilne',
+	'wikifeatures-toggle-inactive' => 'Bikefilne',
+	'wikifeatures-active-on' => '$1 wikiy aktivo',
+	'wikifeatures-feedback-heading' => 'Peydrıstış',
+	'wikifeatures-deactivate-heading' => '$1 bıkefilne?',
+	'wikifeatures-deactivate-confirm-button' => 'E, bıkefilne',
 	'wikifeatures-deactivate-cancel-button' => 'Bıterkne',
 	'wikifeatures-promotion-new' => 'Newe',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'listey Tewr 10a',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Mıhebet',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Anket',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mesacê Dêsi',
 );
 
 /** Spanish (Español)
@@ -443,6 +461,7 @@ $messages['es'] = array(
 
 /** French (Français)
  * @author Gomoko
+ * @author Od1n
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -468,7 +487,7 @@ $messages['fr'] = array(
 	'wikifeatures-an-idea-for-project' => 'J’ai une idée pour cette fonctionnalité',
 	'wikifeatures-feedback-heading' => 'Avis',
 	'wikifeatures-feedback-description' => 'Nous apprécions d’avoir des avis sur les fonctionnalités présentes dans Labos ! Avez-vous des idées sur comment nous pourrions améliorer cette fonctionnalité, un problème à signaler ou vous souhaitez simplement donner votre avis sur ce que vous aimez ou non ? Faites-le nous savoir en utilisant la zone ci-dessous.',
-	'wikifeatures-feedback-type-label' => "De quoi s'agit-il?",
+	'wikifeatures-feedback-type-label' => 'De quoi s’agit-il ?',
 	'wikifeatures-feedback-comment-label' => 'Laissez-nous un commentaire',
 	'wikifeatures-feedback-success' => 'Merci pour votre avis !',
 	'wikifeatures-deactivate-heading' => 'Désactiver $1 ?',
@@ -940,7 +959,7 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'wikifeatures' => 'Wikifuncties',
 	'wikifeatures-title' => 'Wikifuncties',
-	'wikifeatures-heading' => 'Additionele functionaliteit',
+	'wikifeatures-heading' => 'Extra functionaliteit',
 	'wikifeatures-creative' => "In WikiFeatures kunt u selecteren welke van Wikia's optionele functies u wilt gebruiken op uw wiki. Neem een kijkje en vergeet niet om te spelen. U kunt of deze functies op elk gewenst moment uitschakelen.",
 	'wikifeatures-labs-heading' => 'Labs',
 	'wikifeatures-labs-creative' => 'In Labs kunt u functies en ideeën vinden waar we mee experimenteren. Aangezien we functies nog steeds in het lab aan het testen zijn, kunnen ze soms nog kuren hebben, maar willen u graag ook het plezier gunnen! Schakel ze in, en laat ons weten wat u van de functies vindt. We willen graag de goede en slechte dingen horen!',

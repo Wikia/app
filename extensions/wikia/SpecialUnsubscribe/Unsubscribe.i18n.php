@@ -111,6 +111,15 @@ $messages['de'] = array(
 	'unsubscribe-preferences-notice' => 'E-Mails wurden für Ihr Benutzerkonto deaktiviert. Gehen Sie zur Benutzerdaten-Seite, um sie wieder zu aktivieren.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'unsubscribe-confirm-legend' => 'Testiq ke',
+	'unsubscribe-confirm-button' => 'E, Me emel ke',
+	'unsubscribe-working-done' => 'Temamyayo',
+);
+
 /** Spanish (Español)
  * @author Bola
  * @author VegaDark

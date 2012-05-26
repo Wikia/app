@@ -332,6 +332,16 @@ Wikia
 </p>',
 );
 
+/** Danish (Dansk)
+ * @author Sarrus
+ */
+$messages['da'] = array(
+	'article-comments-anonymous' => 'Anonym bruger',
+	'article-comments-comments' => 'Kommentarer ($1)',
+	'article-comments-cancel' => 'Fortryd',
+	'article-comments-delete' => 'slet',
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author Claudia Hattitten
@@ -779,6 +789,7 @@ $messages['hu'] = array(
 	'article-comments-login' => 'Kérjük, <a href="$1">jelentkezzen be</a> hozzászólás küldéséhez.',
 	'article-comments-toc-item' => 'Hozzászólások',
 	'article-comments-comment-cannot-add' => 'Nem írhatsz hozzászólást a szócikkhez.',
+	'article-comments-vote' => 'Szavazás',
 	'article-comments-reply' => 'Válasz',
 	'article-comments-show-all' => 'Összes hozzászólás',
 	'article-comments-prev-page' => 'Előző',
@@ -925,6 +936,7 @@ $messages['inh'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Geitost
  * @author Leviathan 89
  * @author Minerva Titani
@@ -935,7 +947,7 @@ $messages['it'] = array(
 	'article-comments-comments' => 'Commenti ($1)',
 	'article-comments-post' => 'Lascia un commento',
 	'article-comments-cancel' => 'Annulla',
-	'article-comments-delete' => 'Cancella',
+	'article-comments-delete' => 'cancella',
 	'article-comments-edit' => 'modifica',
 	'article-comments-history' => 'cronologia',
 	'article-comments-error' => 'Il commento non è stato salvato',

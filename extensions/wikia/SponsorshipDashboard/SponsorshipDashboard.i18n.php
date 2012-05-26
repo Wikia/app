@@ -334,6 +334,7 @@ $messages['bg'] = array(
 	'sponsorship-dashboard-serie-content-article' => 'страници',
 	'sponsorship-dashboard-serie-namespace-Help' => 'Помощни страници',
 	'sponsorship-dashboard-report-activity' => 'Активност',
+	'sponsorship-dashboard-report-interests' => 'Интереси',
 	'sponsorship-dashboard-report-keywords' => 'Ключови думи',
 	'sponsorship-dashboard-report-visitors' => 'Посетители',
 	'sponsorship-dashboard-report-traffic' => 'Трафик',
@@ -349,6 +350,10 @@ $messages['bg'] = array(
 	'sponsorship-dashboard-to-label' => 'Крайна дата',
 	'sponsorship-dashboard-tab-ViewGroups' => 'Групи',
 	'sponsorship-dashboard-tab-ViewUsers' => 'Потребители',
+	'sponsorship-dashboard-group-new' => 'Добавяне на група',
+	'sponsorship-dashboard-group-name' => 'Име на групата',
+	'sponsorship-dashboard-user-new' => 'Добавяне на потребител',
+	'sponsorship-dashboard-user-name' => 'Потребителско име',
 	'sponsorship-dashboard-description' => 'Описание',
 	'sponsorship-dashboard-users-user-id' => 'Потребителски номер',
 	'sponsorship-dashboard-users-name' => 'Име',
@@ -704,11 +709,20 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'sponsorship-dashboard-serie-content-article' => 'Pekey',
+	'sponsorship-dashboard-serie-toplists' => 'Tewr Listey',
+	'sponsorship-dashboard-serie-clicks' => 'Kliki',
+	'sponsorship-dashboard-serie-exits' => 'Vıcyayşi',
 	'sponsorship-dashboard-serie-namespace-Talk' => 'Pelay qıse',
 	'sponsorship-dashboard-serie-namespace-User' => 'Pelay Qarberi',
 	'sponsorship-dashboard-serie-namespace-User_talk' => 'Pelay qısiya Qarberi',
 	'sponsorship-dashboard-serie-namespace-Template' => 'Pelay Tewre',
 	'sponsorship-dashboard-serie-namespace-Template_talk' => 'Pelay qısiya tewri',
+	'sponsorship-dashboard-report-activity' => 'Aktivitey',
+	'sponsorship-dashboard-report-source' => 'Çıme',
+	'sponsorship-dashboard-report-visitors' => 'Meymani',
+	'sponsorship-dashboard-report-traffic' => 'Trafik',
+	'sponsorship-dashboard-report-content' => 'Tede este',
 	'sponsorship-dashboard-day' => 'Roce',
 	'sponsorship-dashboard-month' => 'Aşme',
 	'sponsorship-dashboard-year' => 'Serre',
@@ -731,16 +745,24 @@ $messages['diq'] = array(
 	'sponsorship-dashboard-editor-Reports' => 'Rapori',
 	'sponsorship-dashboard-editor-Groups' => 'Grubi',
 	'sponsorship-dashboard-report-title' => 'Sername',
-	'sponsorship-dashboard-report-date-monthly' => 'Aşmek',
-	'sponsorship-dashboard-report-date-daily' => 'Rocek',
+	'sponsorship-dashboard-report-date-monthly' => 'Aşmeke',
+	'sponsorship-dashboard-report-date-daily' => 'Roceke',
 	'sponsorship-dashboard-cancel' => 'bıterkne',
-	'sponsorship-dashboard-save' => 'Qeyd ke',
+	'sponsorship-dashboard-save' => 'Star ke',
 	'sponsorship-dashboard-preview' => 'Verqayt',
 	'sponsorship-dashboard-Edit' => 'Timar ke',
 	'sponsorship-dashboard-Group' => 'Grub',
 	'sponsorship-dashboard-source-Mobile' => 'Mobil',
 	'sponsorship-dashboard-source-none' => '-- çıno --',
 	'sponsorship-dashboard-source-wikis' => 'Wikiy',
+	'sponsorship-dashboard-source-main-wiki' => 'Serê wiki',
+	'sponsorship-dashboard-source-list' => 'Liste',
+	'sponsorship-dashboard-source-hub-id' => 'Serni',
+	'sponsorship-dashboard-mobile-serie-android' => 'Android',
+	'sponsorship-dashboard-mobile-serie-iphone' => 'iPhone',
+	'sponsorship-dashboard-source-serie-name' => 'name',
+	'sponsorship-dashboard-source-query' => 'Weçinegi',
+	'sponsorship-dashboard-table-collumn-date' => 'Deme',
 );
 
 /** Spanish (Español)
@@ -1604,6 +1626,7 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Misibacsi
  */
 $messages['hu'] = array(
 	'sponsorship-dashboard-serie-content-article' => 'lapok',
@@ -1682,6 +1705,7 @@ $messages['hu'] = array(
 	'sponsorship-dashboard-source-main-wiki' => 'Elsődleges wiki',
 	'sponsorship-dashboard-source-list' => 'Lista',
 	'sponsorship-dashboard-source-wiki-id' => 'Wikiazonosító',
+	'sponsorship-dashboard-mobile-serie-undefined' => 'azonosítatlan',
 	'sponsorship-dashboard-source-query' => 'Beállítások',
 	'sponsorship-dashboard-source-gapi-name' => 'Forrás címe',
 	'sponsorship-dashboard-table-collumn-date' => 'Dátum',
@@ -1904,6 +1928,19 @@ $messages['ia'] = array(
  */
 $messages['inh'] = array(
 	'sponsorship-dashboard-day' => 'Ди',
+);
+
+/** Japanese (日本語)
+ * @author Shirayuki
+ */
+$messages['ja'] = array(
+	'sponsorship-dashboard-serie-organic' => '検索エンジン',
+	'sponsorship-dashboard-serie-clicks' => 'クリック数',
+	'sponsorship-dashboard-day' => '日',
+	'sponsorship-dashboard-month' => '月',
+	'sponsorship-dashboard-year' => '年',
+	'sponsorship-dashboard-from-label' => '開始日',
+	'sponsorship-dashboard-to-label' => '終了日',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
