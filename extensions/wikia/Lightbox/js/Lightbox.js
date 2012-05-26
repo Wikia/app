@@ -1,8 +1,4 @@
 var Lightbox = {
-	lightboxLoading: false,
-	videoThumbWidthThreshold: 320,
-	inlineVideos: $(),	// jquery array of inline videos
-	inlineVideoLinks: $(),	// jquery array of inline video links
 	log: function(content) {
 		$().log(content, "Lightbox");
 	},
@@ -29,184 +25,14 @@ var Lightbox = {
 			topOffset: 25,
 			height: 628
 		},
-		// start with default modal options
-		initial: {
-			id: 'LightboxModal',
-			className: 'LightboxModal',
-			width: 970, // modal adds 30px of padding to width
-			noHeadline: true,
-			topOffset: 25,
-			height: 628
-		}
 	},
 	openModal: false, // gets replaced with dom object of open modal
 	templates: {},
-	init: function() {
-		var article;
-
-		if (!window.wgEnableLightboxExt) {
-			Lightbox.log('Lightbox disabled');
-			return;
-		}
-
-		article = $('#WikiaArticle, .LatestPhotosModule, #article-comments, #RelatedVideosRL');
-
-		Lightbox.log('Lightbox init');
-
-		article.
-			unbind('.lightbox').
-			bind('click.lightbox', function(e) {
-                Lightbox.handleClick(e, $(this));
-			});
-
-	},
-	handleClick: function(ev, parent) {
-		var id = parent.attr('id');
-
-		// Set carousel type based on parent of image
-		switch(id) {
-			case "WikiaArticle": 
-				Lightbox.current.carouselType = "articleMedia";
-				break;
-			case "article-comments":
-				Lightbox.current.carouselType = "articleMedia";
-				break;
-			case "RelatedVideosRL":
-				Lightbox.current.carouselType = "relatedVideo";
-				break;
-			default: // .LatestPhotosModule
-				Lightbox.current.carouselType = "latestPhotos";
-		}
-		
-		// figure out target
-		if(Lightbox.lightboxLoading) {
-			ev.preventDefault();
-			Lightbox.log('Already Loading');
-			return;
-		}
-		
-		var target = $(ev.target);
-
-		// move to parent of an image -> anchor
-		if ( target.is('span') || target.is('img') ) {
-			target = target.parent();
-			if ( target.hasClass('Wikia-video-play-button') || target.hasClass('Wikia-video-thumb') ) {
-				target.addClass('image');
-			}
-		}
-        // move to parent of an playButton (relatedVideos)
-        if (target.is('div') && target.hasClass('playButton')) {
-            target = target.parent();
-        }
-
-		// store clicked element
-		Lightbox.target = target;
-
-		/* handle click ignore cases */
-
-		// handle clicks on links only
-		if (!target.is('a')) {
-			return;
-		}
-		
-		// handle clicks on "a.lightbox, a.image" only
-		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
-			return;
-		}
-
-
-		// don't show thumbs for gallery images linking to a page
-		if (target.hasClass('link-internal')) {
-			return;
-		}
-
-		// don't show lightbox for linked slideshow with local images (RT #73121)
-		if (target.hasClass('wikia-slideshow-image') && !target.parent().hasClass('wikia-slideshow-from-feed')) {
-			return;
-		}
-
-		// don't open lightbox when user do Ctrl + click (RT #48476)
-		if (ev.ctrlKey) {
-			return;
-		}
-		
-		// TODO: Find out how we want to handle external images 
-		/* handle shared help images and external images (ask someone who knows about this, probably Macbre) */
-		/* sample: http://lizlux.wikia.com/wiki/Help:Start_a_new_Wikia_wiki */
-		/* (BugId:981) */
-		/* note - let's not implement this for now, let normal lightbox handle it normally, and get back to it after new lightbox is complete - hyun */		
-		if (target.attr('data-shared-help') || target.hasClass('link-external')) {
-			return false;
-		}
-
-		ev.preventDefault();		
-				
-		// get file name
-		var mediaTitle = false;
-
-		// data-image-name="Foo.jpg"
-		if (target.attr('data-image-name')) {
-			mediaTitle = target.attr('data-image-name');
-		}
-		// ref="File:Foo.jpg"
-		else if (target.attr('ref')) {
-			mediaTitle = target.attr('ref').replace('File:', '');
-		}
-		// href="/wiki/File:Foo.jpg"
-		else {
-			var re = wgArticlePath.replace(/\$1/, '(.*)');
-			var matches = target.attr('href').match(re);
-
-			if (matches) {
-				mediaTitle = matches.pop().replace('File:', '');
-			}
-
-		}
-		
-		// for Video Thumbnails:
-		var targetChildImg = target.find('img').eq(0);
-		if ( targetChildImg.length > 0 && targetChildImg.hasClass('Wikia-video-thumb') ) {
-			if ( target.data('video-name') ) {
-				mediaTitle = target.data('video-name');
-			} else if ( targetChildImg.data('video') ) {
-				mediaTitle = targetChildImg.data('video');
-			}
-			
-			// check if we need to play video inline, and stop lightbox execution
-			if (mediaTitle && targetChildImg.width() >= Lightbox.videoThumbWidthThreshold) {
-				Lightbox.displayInlineVideo(target, targetChildImg, mediaTitle);
-				ev.preventDefault();
-				return false;	// stop modal dialog execution
-			}
-		}
-		
-
-		// load modal
-		if(mediaTitle != false) {
-			Lightbox.current.title = mediaTitle;
-			Lightbox.loadLightbox();
-		}
-	},
-	loadLightbox: function() {
-		Lightbox.lightboxLoading = true;
-
-		// Display modal with default dimensions
-		Lightbox.openModal = $("<div>").makeModal(Lightbox.modal.initial);
-		Lightbox.openModal.find(".modalContent").startThrobbing();
-
-		// Load resources
-		if(Lightbox.assetsLoaded) {
-			Lightbox.makeLightbox();
-		} else {
-			$.when(
-				$.loadMustache(),
-				$.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')])
-			).done(Lightbox.makeLightbox);
-		}
-
-	},
-	makeLightbox: function() {
-		Lightbox.assetsLoaded = true;
+	
+	makeLightbox: function(params) {
+		Lightbox.openModal = params.modal;
+		Lightbox.current.title = params.title;
+		Lightbox.current.carouselType = params.carouselType;
 		$.nirvana.sendRequest({
 			controller:	'Lightbox',
 			method:		'lightboxModalContent',
@@ -220,16 +46,12 @@ var Lightbox = {
 				cb: Lightbox.getCacheId() /* not really required, just for caching */
 			},
 			callback: function(html) {
-				// restore inline videos to default state, because flash players overlaps with modal
-				Lightbox.removeInlineVideos();
-
 				// Add template to modal
 				Lightbox.openModal.find(".modalContent").html(html); // adds initialFileDetail js to DOM
 				
 				Lightbox.openModal.WikiaLightbox = Lightbox.openModal.find('.WikiaLightbox');
 				
 				Lightbox.cache[Lightbox.current.carouselType] = Lightbox.mediaThumbs.thumbs;
-				
 				
 				// Set up carousel
 				var carouselTemplate = $('#LightboxCarouselTemplate');	// TODO: template cache
@@ -265,12 +87,12 @@ var Lightbox = {
 				Lightbox.setUpCarousel();
 				
 				var updateCallback = function(json) {
-					Lightbox.cache.details[Lightbox.current.title] = json;
+					LightboxLoader.cache.details[Lightbox.current.title] = json;
 					Lightbox[Lightbox.current.type].updateLightbox(json);
 					Lightbox.showOverlay();
 					Lightbox.hideOverlay(3000);
 					
-					Lightbox.lightboxLoading = false;
+					LightboxLoader.lightboxLoading = false;
 					Lightbox.log("Lightbox modal loaded");
 					/* lightbox loading ends here */
 				};
@@ -303,7 +125,7 @@ var Lightbox = {
 						Lightbox.video.destroyVideo();
 					}
 					Lightbox.openModal.addClass('more-info-mode');
-					Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
+					LightboxLoader.getMediaDetail({title: Lightbox.current.title}, function(json) {
 						Lightbox.openModal.moreInfo.append(moreInfoTemplate.mustache(json));
 					});
 				// Show share screen on button click
@@ -325,7 +147,7 @@ var Lightbox = {
 				// Close more info and share screens on button click
 				}).on('click.Lightbox', '.more-info-close', function(evt) {
 					if(Lightbox.current.type === 'video') {
-						Lightbox.getMediaDetail({'title': Lightbox.current.title}, Lightbox.video.renderVideo);
+						LightboxLoader.getMediaDetail({'title': Lightbox.current.title}, Lightbox.video.renderVideo);
 					}
 					Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 					Lightbox.openModal.share.html('');
@@ -535,7 +357,7 @@ var Lightbox = {
 	},
 	renderHeader: function() {
 		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderTemplate");	//TODO: replace with cache
-		Lightbox.getMediaDetail({title: Lightbox.current.title}, function(json) {
+		LightboxLoader.getMediaDetail({title: Lightbox.current.title}, function(json) {
 			var renderedResult = headerTemplate.mustache(json)
 			Lightbox.openModal.header
 				.html(renderedResult)
@@ -559,30 +381,6 @@ var Lightbox = {
 				}, (delay || 1200)
 			);
 		}
-	},
-	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
-		Lightbox.getMediaDetail({
-			title: mediaTitle,
-			height: targetChildImg.height(),
-			width: targetChildImg.width()
-		}, function(json) {
-			var embedCode = json['videoEmbedCode'];
-			target.hide().after(embedCode);
-			var videoReference = target.next();	//retrieve DOM reference
-			
-			// if player script, run it
-			if(json.playerScript) {
-				$('body').append('<script>' + json.playerScript + '</script>');
-			}
-			
-			// save references for inline video removal later
-			Lightbox.inlineVideoLinks = target.add(Lightbox.inlineVideoLinks);
-			Lightbox.inlineVideos = videoReference.add(Lightbox.inlineVideos);
-		});
-	},
-	removeInlineVideos: function() {
-		Lightbox.inlineVideos.remove();
-		Lightbox.inlineVideoLinks.show();
 	},
 	getModalOptions: function(modalHeight, topOffset) {
 		var modalOptions = {
@@ -608,7 +406,7 @@ var Lightbox = {
 			var title = Lightbox.current.title = mediaArr[idx].title;
 			var type = Lightbox.current.type = mediaArr[idx].type;
 			
-			Lightbox.getMediaDetail({
+			LightboxLoader.getMediaDetail({
 				title: title,
 				type: type
 			}, function(data) {
@@ -637,26 +435,6 @@ var Lightbox = {
 			next.removeClass('disabled');
 		}
 	},
-	getMediaDetail: function(mediaParams, callback) {
-		var title = mediaParams['title'];
-		if(Lightbox.cache.details[title]) {
-			callback(Lightbox.cache.details[title]);
-		} else {
-			$.nirvana.sendRequest({
-				controller: 'Lightbox',
-				method: 'getMediaDetail',
-				type: 'POST',	/* TODO (hyun) - might change to get */
-				format: 'json',
-				data: mediaParams,
-				callback: function(json) {
-					Lightbox.normalizeMediaDetail(json, function(json) {
-						Lightbox.cache.details[title] = json;
-						callback(json);
-					});
-				}
-			});
-		}
-	},
 	getShareCodes: function(mediaParams, callback) {
 		var title = mediaParams['title'];
 		if(Lightbox.cache.share[title]) {
@@ -673,23 +451,6 @@ var Lightbox = {
 					callback(json);
 				}
 			});
-		}
-	},
-
-	normalizeMediaDetail: function(json, callback) {
-		/* normalize JWPlayer instances */
-		var embedCode = json['videoEmbedCode'];
-		
-		/* embedCode can be a json object, not a html.  It is implied that only JWPlayer (Screenplay) items do this. */
-		if(typeof embedCode === 'object') {
-			var playerJson = embedCode;	// renaming to keep my sanity
-			$.getScript(json['playerAsset'], function() {
-				json['videoEmbedCode'] = '<div id="' + playerJson['id'] + '"></div>';	//$("<div>").attr("id", playerJson['id']);
-				json['playerScript'] = playerJson['script'] + ' loadJWPlayer();';
-				callback(json);
-			});	
-		} else {
-			callback(json);
 		}
 	},
 	setUpCarousel: function() {
@@ -812,21 +573,3 @@ var Lightbox = {
 		});
 	}
 };
-
-$(function() {
-	Lightbox.init();
-	var fileTitle = $.getUrlVar('file');
-	if(fileTitle) {
-		var file = $('#WikiaArticle .image[data-image-name="' + fileTitle + '"]');
-		if (file.exists()) {
-			var localWindow = $(window);
-			localWindow.scrollTop(file.offset().top + file.height()/2 - localWindow.height()/2);
-			file.find('img').click();
-		} else {
-			Lightbox.current.title = fileTitle;
-			Lightbox.loadLightbox();
-		}
-	}
-
-});
-
