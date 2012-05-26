@@ -278,11 +278,11 @@ class AssetsManager {
 	 */
 	public function getOneLocalURL(/* string */ $filePath, /* boolean */ $minify = null) {
 		global $wgScriptPath;
-		if ($minify !== null ? $minify : $this->mMinify) {
-			$url = $this->getAMLocalURL('one', $filePath);
-		} else {
+		//if ($minify !== null ? $minify : $this->mMinify) {
+		//	$url = $this->getAMLocalURL('one', $filePath);
+		//} else {
 			$url = $wgScriptPath . '/' . $filePath . '?cb=' . $this->mCacheBuster;
-		}
+		//}
 		return $url;
 	}
 
