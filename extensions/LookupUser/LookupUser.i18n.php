@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'lookupuser-desc' => '[[Special:LookupUser|Retrieve information]] about a user such as e-mail address and ID',
 	'lookupuser-intro' => 'Enter a username to view the preferences of that user.',
 	'lookupuser-nonexistent' => 'Error: User does not exist',
+	'lookupuser-nonexistent-id' => 'Error: User with ID #$1 does not exist',
 	'lookupuser-authenticated' => 'authenticated on $1',
 	'lookupuser-not-authenticated' => 'not authenticated',
 	'lookupuser-id' => 'User ID: <tt>#$1</tt>',
