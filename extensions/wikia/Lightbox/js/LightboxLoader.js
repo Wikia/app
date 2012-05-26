@@ -1,6 +1,10 @@
 var LightboxLoader = {
-	cache:{
-		details: {} // all media details
+	cache: {
+		articleMedia: [], // Article Media
+		relatedVideos: [], // Related Video
+		latestPhotos: [], // Lates Photos
+		details: {}, // all media details
+		share: {}
 	},
 	inlineVideos: $(),	// jquery array of inline videos
 	inlineVideoLinks: $(),	// jquery array of inline video links
