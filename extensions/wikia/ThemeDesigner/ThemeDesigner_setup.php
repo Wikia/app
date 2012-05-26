@@ -19,10 +19,9 @@ $wgAutoloadClasses['SpecialThemeDesignerPreview'] = "$dir/SpecialThemeDesignerPr
 // special pages
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgSpecialPages['ThemeDesignerPreview'] = 'SpecialThemeDesignerPreview';
-// @todo FIXME: add aliases file for localised special page names.
-
 // i18n
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
+$wgExtensionAliasesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.alias.php" ;
 
 // Ability to access ThemeDesigner.
 $wgAvailableRights[] = 'themedesigner';
