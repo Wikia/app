@@ -1,33 +1,56 @@
-$(function(){
+jQuery(function($) {
 	var RecentChanges = {
-		init: function(){
-			//TODO: other selector
-			$('.mw-recentchanges-table input[type=submit]').click(RecentChanges.saveFilters);
-
+		init: function() {
+			this.$table = $('.mw-recentchanges-table');
+			this.$dropdown = this.$table.find('.WikiaDropdown');
+			this.$submit = this.$table.find('input[type="submit"]');
+			this.$submit.on('click.RecentChangesDropdown', $.proxy(this.saveFilters, this));
+			this.dropdown = new Wikia.MultiSelectDropdown(this.$dropdown);
+			this.dropdown.on('change', $.proxy(this.onChange, this));
 		},
-		saveFilters: function(e) {
-			e.preventDefault();
+		onChange: function(event) {
+			var $checkbox = $(event.target);
+
+			// Clear the list if 'all' is selected
+			if ($checkbox.val() === 'all') {
+				this.dropdown.getSelectedItems().filter(function(i, element) {
+					var $element = $(element),
+						$checkbox = $element.find(':checkbox');
+
+					if ($checkbox.val() !== 'all') {
+						$checkbox.removeAttr('checked');
+						$element.removeClass('selected');
+					}
+				});
+
+			// Otherwise, clear 'all'
+			} else {
+				this.$dropdown
+					.find(':checkbox[value="all"]')
+					.removeAttr('checked')
+					.closest('li')
+					.removeClass('selected');
+			}
+		},
+		saveFilters: function(event) {
+			var self = this;
+
+			event.preventDefault();
+
 			$.nirvana.sendRequest({
 				controller: 'RecentChangesController',
 				method: 'saveFilters',
-				data: { 'filters': RecentChanges.getFilter()},
-				type: "POST",
+				data: {
+					filters: self.dropdown.getSelectedValues()
+				},
+				type: 'POST',
 				format: 'json',
 				callback: function(data) {
 					window.location.reload();
 				}
 			});
-		},
-
-		getFilter: function() {
-			//TODO:  other selector ?
-			var filters = [];
-			var inputs = $('.mw-recentchanges-table input[type=checkbox]:checked');
-			for( var i = 0; i < inputs.length; i++ ){
-				filters.push($(inputs[i]).val());
-			}
-			return filters;
 		}
 	};
+
 	RecentChanges.init();
 });
