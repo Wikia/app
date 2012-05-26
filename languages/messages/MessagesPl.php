@@ -175,7 +175,6 @@ $specialPageAliases = array(
 	'Tags'                      => array( 'Znaczniki' ),
 	'Activeusers'               => array( 'Aktywni użytkownicy' ),
         'Signup'		    => array( 'Zarejestruj' ),
-        'ThemeDesigner'		    => array( 'Kreator motywu' ),
         'Platinum'                  => array( 'Platyna' ),
         'Leaderboard'		    => array( 'Ranking' ),
         'AchievementsCustomize'     => array( 'Dostosuj odznaki' ),
