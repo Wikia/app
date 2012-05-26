@@ -23,7 +23,7 @@ class LookupUserPage extends SpecialPage {
 	 * @param $subpage Mixed: parameter passed to the page or null
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgOut;
 		wfLoadExtensionMessages( 'LookupUser' );
 
 		$this->setHeaders();
@@ -41,24 +41,26 @@ class LookupUserPage extends SpecialPage {
 		}
 
 		$id = '';
+		$byIdInvalidUser = false;
 		if( $wgRequest->getText( 'mode' ) == 'by_id' ) {
 			$id = $target; #back up the number
 			$u = User::newFromId($id); #create
 			if( $u->loadFromId() ) { #test
 				$target = $u->getName(); #overwrite text
+			} else { // User with that ID doesn't exist, notify user
+				$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent-id', $id ) . '</span>' );
+				$byIdInvalidUser = true; // Stops trying to display form with a user by that name which is confusing
 			}
 		}
 
 		$emailUser = $wgRequest->getText( 'email_user' );
 		if($emailUser) {
 			$this->showForm( $emailUser, $id, $target );
-		}
-		else
-		{
+		} else {
 			$this->showForm( $target, $id );
 		}
 
-		if ( $target ) {
+		if ( $target && !$byIdInvalidUser ) {
 			$this->showInfo( $target, $emailUser );
 		}
 	}
