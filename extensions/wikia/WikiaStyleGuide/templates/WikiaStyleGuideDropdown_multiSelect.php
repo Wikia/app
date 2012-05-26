@@ -5,9 +5,9 @@
 	</div>
 	<ul>
 		<? foreach($options as $index => $name): ?>
-			<? $selected = isset($selected[$index]); ?>
-			<li<?=  $selected ? ' class="selected"' : '' ?>>
-				<label><input type="checkbox" name="namespace[]" value="<?= $index ?>"<?= $selected ? ' checked' : '' ?>><?= $name ?></label>
+			<? $isSelected = isset($selected[$index]); ?>
+			<li<?= $isSelected ? ' class="selected"' : '' ?>>
+				<label><input type="checkbox" name="namespace[]" value="<?= $index ?>"<?= $isSelected ? ' checked' : '' ?>><?= $name ?></label>
 			</li>
 		<? endforeach; ?>
 	</ul>
