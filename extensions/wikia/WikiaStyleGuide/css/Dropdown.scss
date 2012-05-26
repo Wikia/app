@@ -20,10 +20,10 @@
 		margin: 0;
 		margin-bottom: 10px;
 		max-height: 390px;
+		min-width: 200px;
 		overflow-x: hidden;
 		overflow-y: auto;
 		padding: 0;
-		width: 200px;
 		z-index: $zTop;
 
 		> li {
@@ -42,6 +42,10 @@
 		}
 	}
 
+	&.open > ul {
+		display: block;
+	}
+
 	&.MultiSelect {
 		position: relative;
 
@@ -50,8 +54,14 @@
 			position: absolute;
 			top: 0;
 
-			> li input[type="checkbox"] {
-				margin-right: 10px;
+			> li {
+				input[type="checkbox"] {
+					margin-right: 10px;
+				}
+
+				label {
+					display: block;
+				}
 			}
 		}
 
@@ -62,8 +72,9 @@
 			border: 1px solid $Dropdown-color-border;
 			cursor: pointer;
 			line-height: 30px;
-			padding: 0 10px;
-			width: 180px;
+			min-width: 180px;
+			padding: 0 25px 0 10px;
+			position: relative;
 
 			&:hover {
 				background: $Dropdown-color-hover-background;
@@ -71,7 +82,9 @@
 
 			.arrow {
 				@include arrow(4px, $Dropdown-color-arrow);
-				margin-left: 5px;
+				position: absolute;
+				right: 10px;
+				top: 50%;
 			}
 		}
 	}
