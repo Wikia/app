@@ -122,7 +122,7 @@ EOT
 		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath, $wgEnableLookupContribsExt;
-		
+
 		/**
 		 * look for @ in username
 		 */
@@ -133,7 +133,7 @@ EOT
 			 */
 			$emailUser = htmlspecialchars( $emailUser );
 			$dbr = wfGetDB( DB_SLAVE );
-			
+
 			$oRes = $dbr->select( "user", "user_name", array( "user_email" => $target ), __METHOD__ );
 
 			$loop = 0;
@@ -169,7 +169,7 @@ EOT
 				$selectForm .= "\n" . implode( "\n", $options ) . "\n";
 				$selectForm .= Xml::closeElement( 'select' );
 				$selectForm .= "({$count})";
-			
+
 				$wgOut->addHTML( <<<EOT
 <fieldset>
 <form method="get" action="$action">
@@ -222,19 +222,19 @@ EOT
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
-			
+
 			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
 			if( !empty($wgEnableLookupContribsExt) ) {
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css?{$wgStyleVersion}");
 				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
-			
+
 				//checking and setting User::mBlockedGlobally if needed
 				//only for this instance of class User
 				if( class_exists('UserBlock') ) {
 					UserBlock::blockCheck($user);
 				}
-				
+
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 				$oTmpl->set_vars(array(
 					'username' => $name,
@@ -245,12 +245,12 @@ EOT
 				$wgOut->addWikiText( '*' . wfMsg('lookupuser-table-cannot-be-displayed') );
 			}
 			//End: Small Stuff Week
-			
+
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-useroptions' ) . '<br />' . $optionsString );
 		}
 	}
-	
+
 	/**
 	 * @brief: Returns memc key
 	 * 
@@ -264,7 +264,7 @@ EOT
 	public static function getUserLookupMemcKey($userName, $wikiId) {
 		return 'lookupUser'.'user'.$userName.'on'.$wikiId;
 	}
-	
+
 	/**
 	 * @brief: Returns data for jQuery.table plugin used by ajax call LookupContribsAjax::axData()
 	 * 
@@ -279,18 +279,18 @@ EOT
 	 */
 	public static function getUserData($userName, $wikiId, $wikiUrl, $checkingBlocks = false) {
 		wfProfileIn( __METHOD__ );
-		
+
 		global $wgMemc;
-		
+
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
 		if( !empty($cachedData) ) {
 			if( $checkingBlocks === false ) {
 				if( $cachedData['groups'] === false ) {
-					
+
 					wfProfileOut( __METHOD__ );
 					return '-';
 				} else {
-					
+
 					wfProfileOut( __METHOD__ );
 					return implode(', ', $cachedData['groups']);
 				}
@@ -311,12 +311,12 @@ EOT
 							'<img src="/skins/common/images/ajax.gif" />'.
 							'</span>';
 			}
-			
+
 			wfProfileOut( __METHOD__ );
 			return $result;
 		}
 	}
-	
+
 	/**
 	 * @brief: Ajax call loads data for two new columns: user rights and blocked
 	 * 
@@ -324,42 +324,42 @@ EOT
 	 */
 	public function requestApiAboutUser() {
 		wfProfileIn( __METHOD__ );
-		
+
 		global $wgRequest, $wgMemc;
-		
+
 		$userName = $wgRequest->getVal('username');
 		$wikiUrl = $wgRequest->getVal('url');
 		$wikiId = $wgRequest->getVal('id');
 		$apiUrl = $wikiUrl.'api.php?action=query&list=users&ususers=' . urlencode( $userName ) .'&usprop=blockinfo|groups|editcount&format=php';
-		
+
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
 		if( !empty($cachedData) ) {
 			$result = array('success' => true, 'data' => $cachedData);
 		} else {
 			$result = Http::get($apiUrl);
-			
+
 			if( $result !== false ) {
 				$result = @unserialize($result);
-				
+
 				if( isset($result['query']['users'][0]) ) {
 					$userData = $result['query']['users'][0];
-					
+
 					if( !isset($userData['groups']) ) {
 						$userData['groups'] = false;
 					} else {
 						$userData['groups'] = LookupUserPage::selectGroups($userData['groups']);
 					}
-					
+
 					if( true === LookupUserPage::isUserFounder($userName, $wikiId) ) {
 						$userData['groups'][] = wfMsg('lookupuser-founder');
 					}
-					
+
 					if( !isset($userData['blockedby']) ) {
 						$userData['blocked'] = false;
 					} else {
 						$userData['blocked'] = true;
 					}
-					
+
 					$result = array('success' => true, 'data' => $userData);
 					$wgMemc->set( LookupUserPage::getUserLookupMemcKey($userName, $wikiId), $userData, 3600 ); //1h
 				} else {
@@ -369,11 +369,11 @@ EOT
 				$result = array('success' => false);
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return json_encode($result);
 	}
-	
+
 	/**
 	 * @brief: Returns only selected user groups/rights
 	 * 
@@ -385,27 +385,27 @@ EOT
 	 */
 	public static function selectGroups($groups) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$userGroups = array();
-		
+
 		foreach($groups as $group) {
 			if( $group == 'sysop') {
 				$userGroups[] = wfMsg('lookupuser-admin');
 			}
-			
+
 			if( $group == 'bureaucrat') {
 				$userGroups[] = wfMsg('lookupuser-bureaucrat');
 			}
-			
+
 			if( $group == 'chatmoderator') {
 				$userGroups[] = wfMsg('lookupuser-chatmoderator');
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $userGroups;
 	}
-	
+
 	/**
 	 * @brief Returns true if a user is founder of a wiki
 	 * 
@@ -418,25 +418,25 @@ EOT
 	 */
 	public static function isUserFounder($userName, $wikiId) {
 		global $wgMemc;
-		
+
 		wfProfileIn( __METHOD__ );
-		
+
 		$memcKey = 'lookupUser'.'user'.'isUserFounder'.$userName.'on'.$wikiId;
 		$result = $cachedData = $wgMemc->get( $memcKey );
-		
+
 		if( $result !== true && $result !== false ) {
 			$result = false;
-			
+
 			$user = User::newFromName($userName);
 			$wiki = WikiFactory::getWikiById($wikiId);
-			
+
 			if( intval($wiki->city_founding_user) === intval($user->getId()) ) {
 				$result = true;
 			}
-			
+
 			$wgMemc->set( $memcKey, $result, 3600 ); //1h
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
