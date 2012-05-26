@@ -62,7 +62,7 @@ class AssetsManager {
 		return true;
 	}
 
-	private function __construct(/* string */ $commonHost, /* int */ $cacheBuster, /* boolean */ $combine = true, /* boolean */ $minify = true) {
+	private function __construct(/* string */ $commonHost, /* int */ $cacheBuster, /* boolean */ $combine = true, /* boolean */ $minify = false) {
 		$this->mCacheBuster = $cacheBuster;
 		$this->mCombine = $combine;
 		$this->mMinify = $minify;
