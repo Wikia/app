@@ -263,6 +263,7 @@ Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie 
  * @author Crazymadlover
  * @author Pertile
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'welcome-user-page' => "==Sobre mí==
@@ -304,11 +305,11 @@ Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar
 	'welcome-message-wall-user' => '¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]].
 
 Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.',
-	'welcome-message-wall-user-staff' => '¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en la página $1.
+	'welcome-message-wall-user-staff' => '¡Hola, bienvenido/a a {{SITENAME}}! Gracias por tu edición en la página $1.
 
-Si necesitas ayuda, y no hay ningún administrador local por aquí, podrías querer visitar los [[w:c:es:Foro:Índice|foros de la Central de Wikia en español]]. También podrías estar interesado en revisar nuestro [[w:c:es:Blog:Noticias_de_Wikia|blog del staff]] para estar al tanto de las últimas novedades y noticias sobre Wikia.
+Si necesitas ayuda y no hay ningún administrador local por aquí, podrías querer visitar los [[w:c:es:Foro:Índice|foros en la wiki central de la comunidad en español]]. También podrías estar interesado en revisar nuestro [[w:c:es:Blog:Noticias_de_Wikia|blog del personal]] para estar al tanto de las últimas novedades y noticias sobre Wikia.
 
-¡Diviértete!',
+Diviértete editando!',
 	'welcome-message-wall-anon' => "¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en $1.
 
 ¿Por qué no '''[[Special:Userlogin|te creas una cuenta y te identificas?]]'''. De esta forma será mucho más fácil saber qué páginas has editado y se te atribuirá tu trabajo en el wiki, además te será de ayuda a la hora de comunicarte con el resto de la comunidad.

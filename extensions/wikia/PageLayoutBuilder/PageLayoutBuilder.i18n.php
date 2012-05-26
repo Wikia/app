@@ -570,7 +570,7 @@ $messages['diq'] = array(
 	'plb-create-button-previewform' => 'Formo verên',
 	'plb-special-form-preview-button' => 'Pela verêne',
 	'plb-list-action-edit' => 'Bıvurne',
-	'plb-list-action-delete' => 'Bestere',
+	'plb-list-action-delete' => 'Besterne',
 	'plb-parser-preview-image-add' => 'Resim weçine',
 	'plb-editor-edit' => 'Bıvurne',
 	'plb-editor-toolbar-formatting' => 'Formatêno',
@@ -2850,6 +2850,13 @@ $messages['ru'] = array(
 	'wikia-editor-modules-plb-list-title' => 'Загрузка списка...',
 	'wikia-editor-modules-plb-list-title-count' => '{{PLURAL:$1|$1 элемент|$1 элемент|а$1 элементов}} в макете',
 	'wikia-editor-plb-show-static-buttons' => 'Вернуть остальные <i>стандартные</i> кнопки',
+);
+
+/** Sakha (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'plb-special-form-create-new' => 'Саҥа "$1" сирэйи айыы',
 );
 
 /** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)

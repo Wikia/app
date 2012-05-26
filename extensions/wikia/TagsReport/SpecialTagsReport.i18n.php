@@ -138,6 +138,20 @@ $messages['de-formal'] = array(
 	'tagsreportnotspecify' => 'Sie haben noch keinen besonderen Tag ausgewählt',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'tagsreport' => 'Rapora etiketan',
+	'tagsreporttitle' => 'Rapora etiketan',
+	'tagsreportselecttag' => 'Etiket weçinê:',
+	'tagsreportgo' => 'Bımocne',
+	'tagsreportnoresults' => 'Netice nê vineya',
+	'tagsreportmainnspace' => 'Ser',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pele|peley}})',
+	'tagsreportgenerated' => "$1'i $2 vıraşt",
+);
+
 /** Spanish (Español)
  * @author Translationista
  * @author VegaDark

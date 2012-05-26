@@ -274,7 +274,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'categoryselect-code-view' => 'Kodi bıvin',
-	'categoryselect-button-save' => 'Qeyd ke',
+	'categoryselect-button-save' => 'Star ke',
 	'categoryselect-button-cancel' => 'Bıterkne',
 );
 

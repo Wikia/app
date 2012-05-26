@@ -131,6 +131,7 @@ $messages['az'] = array(
 $messages['bg'] = array(
 	'wikiaquiz-title-label' => 'Заглавие',
 	'wikiaquiz-moreinfoarticle-label' => 'Статия',
+	'wikiaquiz-question-label' => 'Въпрос',
 	'wikiaquiz-image-label' => 'Изображение (незадължително)',
 	'wikiaquiz-questions-label' => 'Въпроси',
 	'wikiaquiz-answers-label' => 'Отговори',
@@ -298,6 +299,34 @@ $messages['de'] = array(
 	'wikiaquiz-game-email-error' => 'Beim Senden dieser e-Mail ist ein Fehler aufgetreten:$1',
 	'wikiaquiz-game-challenge' => 'Fordere deine Freunde zum Spielen heraus!',
 	'wikiaquiz-game-mute' => 'Ton aus',
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wikiaquiz-createquiz-headline' => 'Quiz vırazê',
+	'wikiaquiz-editquiz-headline' => 'Quizi bıvurnê',
+	'wikiaquiz-createquizarticle-headline' => 'Quiz rê Persi u Cıwabi dekerê de',
+	'wikiaquiz-title-label' => 'Sername',
+	'wikiaquiz-titlescreentext-label' => 'Sernameyê nuştede asenge',
+	'wikiaquiz-moreinfoarticle-label' => 'Wesiqe',
+	'wikiaquiz-question-label' => 'Pers',
+	'wikiaquiz-quiz-label' => 'Quiz',
+	'wikiaquiz-questions-label' => 'Persi',
+	'wikiaquiz-answers-label' => 'Cıwab',
+	'wikiaquiz-answer-label' => 'Cıwab',
+	'wikiaquiz-correct-label' => 'Timar bo?',
+	'wikiaquiz-cancel-label' => 'Bıterkne',
+	'wikiaquiz-publish-label' => 'Vıla ke',
+	'wikiaquiz-game-start-button' => 'Destpêkerdışê Kayer',
+	'wikiaquiz-game-cadence-3' => 'Bıwane',
+	'wikiaquiz-game-cadence-2' => 'Set',
+	'wikiaquiz-game-cadence-1' => 'Şo!',
+	'wikiaquiz-game-question-label' => 'PERS',
+	'wikiaquiz-game-next-button' => 'Perso Bahdoyên',
+	'wikiaquiz-game-finish-button' => 'Qedyin',
+	'wikiaquiz-game-continue-button' => 'Dewam ke',
 );
 
 /** Spanish (Español)

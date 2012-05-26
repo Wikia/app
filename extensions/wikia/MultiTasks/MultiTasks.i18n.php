@@ -2208,7 +2208,7 @@ Przesyłany plik powinien zawierać nazwę strony i powód opcjonalnie powód od
 	'multidelete_french_wikis' => 'wszystkie francuskie wiki',
 	'multidelete_swedish_wikis' => 'wszystkie szwedzkie wiki',
 	'multidelete_german_wikis' => 'wszystkie niemieckie wiki',
-	'multiwikifinder' => 'Wyszukiwarka tytułów Multiwiki',
+	'multiwikifinder' => 'Wyszukiwanie strony w wielu wiki',
 	'multiwikifindpagenames' => 'Znajdź nazwy stron',
 	'multiwikienterpagename' => 'Wprowadź nazwę strony:',
 	'multiwikirecords' => 'znaleziono $1 wiki',

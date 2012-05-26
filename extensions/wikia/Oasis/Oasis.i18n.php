@@ -351,6 +351,7 @@ $messages['bg'] = array(
 	'oasis-home' => 'Начало',
 	'oasis-mytools' => 'Моите инструменти',
 	'oasis-share' => 'Споделяне',
+	'oasis-signup' => 'Регистриране',
 	'oasis-button-random-page' => 'Случайна страница',
 	'oasis-button-random-wiki' => 'Случайно уики',
 	'oasis-button-wiki-activity' => 'Уики активност',
@@ -358,9 +359,18 @@ $messages['bg'] = array(
 	'oasis-global-nav-create-wiki' => 'Създаване на уики',
 	'oasis-page-header-talk' => 'Беседа',
 	'oasis-page-header-edit-profile' => 'Редактиране на профила',
+	'oasis-page-header-editing' => '<strong>Редактиране:</strong> $1',
+	'oasis-page-header-editing-section' => '<strong>Редактиране:</strong> $1 (раздел)',
+	'oasis-page-header-preview' => '<strong>Преглед:</strong> $1',
+	'oasis-page-header-changes' => '<strong>Промени:</strong> $1',
+	'oasis-page-header-diff' => '<strong>Промени:</strong> $1',
+	'oasis-page-header-history' => '<strong>История:</strong> $1',
 	'oasis-page-header-subtitle-special' => 'Специална страница',
 	'oasis-notification-youhavenewmessages' => 'Имате $1 .',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|направена редакция|направени редакции}}</sup>',
+	'oasis-button-add-video' => 'Добавяне на видео',
+	'oasis-button-create-page' => 'Добавяне на страница',
+	'oasis-button-add-photo' => 'Добавяне на изображение',
 	'oasis-toolbar-edit-toolbar-list' => 'Списък с инструменти',
 	'oasis-toolbar-edit-save' => 'Съхраняване',
 	'oasis-toolbar-edit-cancel' => 'Отказване',
@@ -373,6 +383,9 @@ $messages['bg'] = array(
 	'oasis-section-edit' => 'Редактиране',
 	'oasis-interlang-languages' => 'Езици:',
 	'imageseo-featured-more' => 'повече...',
+	'oasis-navigation-v2-create-page' => 'Добавяне на страница',
+	'oasis-navigation-v2-edit-page' => 'Редактиране на страницата',
+	'oasis-navigation-v2-add-photo' => 'Добавяне на снимка',
 );
 
 /** Breton (Brezhoneg)
@@ -519,6 +532,7 @@ $messages['ckb'] = array(
 /** Czech (Česky)
  * @author Darth Daron
  * @author Dontlietome7
+ * @author Mormegil
  * @author Reaperman
  * @author TOR
  */
@@ -664,7 +678,7 @@ $messages['cs'] = array(
 	'oasis-navigation-v2-level1-validation' => 'Ups! Vaše nabídka první úrovně je příliš široká. Zkraťte prosím položky tak, aby se vešly. Díky!',
 	'oasis-navigation-v2-level2-validation' => 'Ups! Vaše nabídka druhé úrovně je příliš široká. Zkraťte prosím položky tak, aby se vešly. Díky!',
 	'oasis-navigation-v2-level12-validation' => 'Ups! Vaše nabídky první a druhé úrovně jsou příliš široké. Zkraťte prosím položky tak, aby se vešly. Díky!',
-	'oasis-navigation-v2-magic-word-validation' => 'Kouzelná slova mohou být zobrazena pouze v nabídkách 3. úrovně . Prosím zahrnujte je pouze ve wikitextu úrovně 2.',
+	'oasis-navigation-v2-magic-word-validation' => 'Kouzelná slova mohou být zobrazena pouze v nabídkách 2. úrovně . Prosím zahrnujte je pouze ve wikitextu úrovně 2.',
 	'oasis-navigation-v2-validation-next' => 'Následující',
 	'oasis-navigation-v2-validation-caption' => 'Náhled zkontrolovat chyby v nabídce. Pokud je vše v pořádku, můžete ho publikovat . Pokud ne, tlačítko zpět vám umožní pokračovat v úpravách.',
 	'oasis-navigation-v2-new-photos' => 'Nové fotky',
@@ -1031,7 +1045,7 @@ $messages['es'] = array(
 	'oasis-navigation-v2-level1-validation' => '¡Oops! El nivel 1 del menú es muy extenso. Por favor ajústalo un poco más. ¡Gracias!',
 	'oasis-navigation-v2-level2-validation' => '¡Oops! El nivel 2 del menú es muy extenso. Por favor ajústalo un poco más. ¡Gracias!',
 	'oasis-navigation-v2-level12-validation' => '¡Oops! El nivel 1 y 2 del menú son muy extensos. Por favor ajústalos un poco más.',
-	'oasis-navigation-v2-magic-word-validation' => 'Las palabras mágicas únicamente pueden mostrarse en los menús de nivel 2. Incluya estas palabras mágicas solamente en su texto wiki de nivel 2.',
+	'oasis-navigation-v2-magic-word-validation' => 'Las palabras mágicas únicamente pueden mostrarse en los menús de nivel 2. Incluye estas palabras mágicas solamente en tu wikitexto de nivel 2.',
 	'oasis-navigation-v2-validation-next' => 'Siguiente',
 	'oasis-navigation-v2-validation-caption' => 'La vista previa buscará errores en el menú. Si está bien, podrás publicar los cambios, de lo contrario, ve Atrás para continuar editando.',
 	'oasis-navigation-v2-new-photos' => 'Imágenes nuevas',
@@ -1646,7 +1660,7 @@ $messages['gl'] = array(
 	'oasis-navigation-v2-level1-validation' => 'Vaites! O seu menú de nivel 1 é largo de máis. Acurte os elementos para que caiba. Grazas!',
 	'oasis-navigation-v2-level2-validation' => 'Vaites! O seu menú de nivel 2 é largo de máis. Acurte os elementos para que caiba. Grazas!',
 	'oasis-navigation-v2-level12-validation' => 'Vaites! Os seus menús de nivel 1 e 2 son largos de máis. Acurte os elementos para que caiban. Grazas!',
-	'oasis-navigation-v2-magic-word-validation' => 'As palabras máxicas poden mostrarse unicamente nos menús de nivel 3. Inclúa estas palabras máxicas soamente no texto wiki de nivel 2.',
+	'oasis-navigation-v2-magic-word-validation' => 'As palabras máxicas poden mostrarse unicamente nos menús de nivel 2. Inclúa estas palabras máxicas soamente no texto wiki de nivel 2.',
 	'oasis-navigation-v2-validation-next' => 'Seguinte',
 	'oasis-navigation-v2-validation-caption' => 'A vista previa comprobará os erros no menú. Se todo está ben, pode publicar desde a pantalla de vista previa. Por se quere cambiar algo, terá un botón de regreso que permite continuar coa edición.',
 	'oasis-navigation-v2-new-photos' => 'Novas fotos',
@@ -3062,7 +3076,7 @@ Vel bekomme!
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'oasis-home' => 'Hoofdmenu',
+	'oasis-home' => 'Startpagina',
 	'oasis-more' => 'Meer zien >',
 	'oasis-mytools' => 'Mijn hulpmiddelen',
 	'oasis-follow' => 'Volgen',
@@ -3271,7 +3285,7 @@ $messages['pl'] = array(
 	'oasis-more' => 'Zobacz więcej >',
 	'oasis-mytools' => 'Moje narzędzia',
 	'oasis-follow' => 'Obserwuj',
-	'oasis-share' => 'Udostępnij',
+	'oasis-share' => 'Podziel się',
 	'oasis-like' => 'Lubię to',
 	'oasis-signup' => 'Załóż konto',
 	'oasis-edit-protected-article' => 'Zaloguj się, by edytować',
@@ -4135,7 +4149,7 @@ $messages['sv'] = array(
 	'oasis-navigation-v2-level1-validation' => 'Hoppsan! Din Nivå 1-meny är för bred. Förkorta objekten för att få den att passa. Tack!',
 	'oasis-navigation-v2-level2-validation' => 'Hoppsan! Din Nivå 1-meny är för bred. Förkorta objekten för att få den att passa. Tack!',
 	'oasis-navigation-v2-level12-validation' => 'Hoppsan! Dina Nivå 1- och Nivå 2-menyer är för breda. Redigera dem för att få dem att passa. Tack!',
-	'oasis-navigation-v2-magic-word-validation' => 'Magiska ord visas bara i nivå 3-menyer. Var god inkludera dem endast i wikitexten för dina nivå 2-menyer.',
+	'oasis-navigation-v2-magic-word-validation' => 'Magiska ord visas bara i nivå 2-menyer. Var god inkludera dem endast i wikitexten för dina nivå 2-menyer.',
 	'oasis-navigation-v2-validation-next' => 'Nästa',
 	'oasis-navigation-v2-validation-caption' => 'Förhandsgranskning kommer att kolla efter menyfel. Om det är OK, kan du publicera den från förhandsgranskningsskärmen. Om inte, kommer en Tillbaka-knapp låta dig fortsätta redigera.',
 	'oasis-navigation-v2-new-photos' => 'Nya foton',

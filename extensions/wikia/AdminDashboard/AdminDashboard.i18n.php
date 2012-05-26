@@ -327,7 +327,7 @@ $messages['diq'] = array(
 	'admindashboard-toolbar-link' => 'Admin',
 	'admindashboard-control-theme-designer-label' => 'Tema vıraşter',
 	'admindashboard-controls-community-header' => 'Bol',
-	'admindashboard-control-user-list-label' => 'Listey Qarqera',
+	'admindashboard-control-user-list-label' => 'Lista karberan',
 	'admindashboard-control-invite-label' => 'Dewam kere',
 	'admindashboard-control-help-tooltip' => 'bewni re wesikey peştiyer',
 	'admindashboard-control-add-page-label' => 'Pele vıraze',
@@ -590,6 +590,8 @@ $messages['he'] = array(
  * @author TK-999
  */
 $messages['hu'] = array(
+	'admindashboard-title' => '{{SITENAME}} Műszerfal',
+	'admindashboard-toolbar-link' => 'Adminisztrátor',
 	'admindashboard-tab-advanced' => 'Részletes',
 	'admindashboard-tab-general' => 'Általános',
 	'admindashboard-controls-wiki-header' => 'Wiki',
@@ -625,6 +627,7 @@ $messages['hu'] = array(
 	'admindashboard-control-add-blog-tooltip' => 'Blogbejegyzés hozzáadása a wikidhez.',
 	'admindashboard-control-multiple-upload-label' => 'Több kép feltöltése',
 	'admindashboard-control-multiple-upload-tooltip' => 'Több kép egyidejű feltöltése.',
+	'admindashboard-back-to-dashboard' => 'Vissza a műszerfalhoz',
 );
 
 /** Interlingua (Interlingua)
@@ -723,18 +726,28 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Karika
  * @author Lexaeus 94
  * @author Ximo17
  */
 $messages['it'] = array(
+	'admindashboard-title' => 'Cruscotto di {{SITENAME}}',
+	'admindashboard-header' => "Cruscotto dell'amministratore",
 	'admindashboard-toolbar-link' => 'Amministratore',
 	'admindashboard-tab-advanced' => 'Avanzato',
 	'admindashboard-tab-general' => 'Generale',
 	'admindashboard-controls-wiki-header' => 'Wiki',
-	'admindashboard-control-recent-changes-label' => 'Cambiamenti Recenti',
+	'admindashboard-control-theme-designer-label' => 'Designer di Temi',
+	'admindashboard-control-theme-designer-tooltip' => 'Il Designer di Temi ti permette di personalizzare sul tuo wiki i colori, lo sfondo e tanto altro.',
+	'admindashboard-control-recent-changes-label' => 'Ultime modifiche',
+	'admindashboard-control-recent-changes-tooltip' => 'Modifiche Recenti mostra tutte le modifiche apportate sul tuo wiki un una cronologia singola.',
 	'admindashboard-control-top-navigation-label' => 'Navigazione superiore',
+	'admindashboard-control-top-navigation-tooltip' => 'Navigazione in Alto ti permette di personalizzare il menu di navigazione situato nella parte superiore del tuo wiki.',
 	'admindashboard-control-wiki-features-label' => 'Wiki Funzioni',
+	'admindashboard-control-wiki-features-tooltip' => 'Caratteristiche Wiki consente di abilitare ulteriori funzionalità sul tuo wiki.',
+	'admindashboard-control-page-layout-builder-label' => 'Generatore Layout di Pagina',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Generatore Layout di Pagina ti consente di creare i contorni della pagina per gli utenti da scegliere e utilizzare per creare nuove pagine.',
 	'admindashboard-controls-community-header' => 'Comunità',
 	'admindashboard-control-user-list-label' => 'Elenco utenti',
 	'admindashboard-control-user-list-tooltip' => 'Visualizza la lista di tutti gli utenti che hanno partecipato al tuo wiki',

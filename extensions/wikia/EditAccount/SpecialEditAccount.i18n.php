@@ -75,21 +75,22 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Lloffiwr
+ * @author Michał Roszka (Mix) <michal@wikia-inc.com>
  * @author Siebrand
  * @author The Evil IP address
  * @author Umherirrender
- * @author Michał Roszka (Mix) <michal@wikia-inc.com>
  */
 $messages['qqq'] = array(
 	'editaccount-desc' => '{{desc}}',
 	'editaccount-success-disable' => 'Parameters:
 * $1 is a username.',
+	'editaccount-success-toggleadopt' => 'Indicates that a user has been successfully verified as an adopter of a wiki. Parameters:
+* $1 is a plain text username.',
 	'editaccount-status-realuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.
 
 Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
 	'editaccount-status-tempuser' => 'This is the status of the account in the Wikia UserLogin system – a "real user" means an active account, while a "temp user" means it\'s an inactive account. Accounts are activated once the user clicks on a link in an e-mail we send them.',
 	'right-editaccount' => '{{doc-right|editaccount}}',
-	'editaccount-success-toggleadopt' => 'Says, that a user has been successfully verified as an adopter of a wiki. Parameters: $1 is a plain text username.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -387,6 +388,7 @@ $messages['el'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Crazymadlover
+ * @author Erdemaslancan
  * @author Pertile
  * @author Translationista
  * @author VegaDark
@@ -421,6 +423,7 @@ $messages['es'] = array(
 	'editaccount-success-realname' => 'Se ha cambiado correctamente el nombre real de la cuenta de $1.',
 	'editaccount-success-unsub' => 'Eliminada correctamente la suscripción de la cuenta $1.',
 	'editaccount-success-disable' => 'Se ha retirado la etiqueta "desactivada" para la cuenta $1 correctamente.',
+	'editaccount-success-toggleadopt' => 'Alternar correctamente la condición de elegibilidad aprobación cuenta  $1 .',
 	'editaccount-success-close' => 'Se ha inhabilitado correctamente la cuenta $1.',
 	'editaccount-error-email' => 'El correo electrónico no se ha cambiado. Inténtalo de nuevo o contacta con el Equipo Técnico.',
 	'editaccount-error-pass' => 'La clave ha sido cambiada. Inténtalo de nuevo o contacta con el Equipo Técnico.',
@@ -1145,6 +1148,7 @@ Weet u zeker dat u dit wilt doen?',
 	'editaccount-success-realname' => 'De echte naam voor gebruiker $1 is gewijzigd.',
 	'editaccount-success-unsub' => 'De gebruiker $1 is niet langer uitgeschreven.',
 	'editaccount-success-disable' => 'De gebruiker $1 is weer vrijgegeven.',
+	'editaccount-success-toggleadopt' => '$1 kan nu een wiki adopteren.',
 	'editaccount-success-close' => 'De gebruiker $1 is uitgeschakeld.',
 	'editaccount-error-email' => 'Het e-mailadres is niet gewijzigd.
 Probeer het opnieuw of neem contact op het met Tech Team.',

@@ -200,9 +200,9 @@ $messages['diq'] = array(
 	'wikiamobile-search' => 'Cı geyre',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
-	'wikiamobile-login' => 'Deqewtış',
+	'wikiamobile-login' => 'Dekewtış',
 	'wikiamobile-password' => 'Parola',
-	'wikiamobile-login-submit' => 'Deqewtış',
+	'wikiamobile-login-submit' => 'Dekewtış',
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-explore' => 'Keşıf',
 	'wikiamobile-article-categories' => 'Kategoriy',
@@ -221,6 +221,10 @@ $messages['diq'] = array(
 	'wikiamobile-sharing-media-image' => 'Resim',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 ke $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Hey,
+Heq ne heq eneri qontrol kerê:
+
+$1',
 	'wikiamobile-ad-close' => 'racnê',
 );
 
@@ -230,9 +234,11 @@ $messages['diq'] = array(
  * @author Ciencia Al Poder
  * @author Kflorence
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'wikiamobile-search' => 'Buscar',
+	'wikiamobile-search-this-wiki' => 'Buscar en este wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Ingresar',
@@ -302,6 +308,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'wikiamobile-search' => 'Rechercher',
+	'wikiamobile-search-this-wiki' => 'Rechercher sur ce wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Connexion',
@@ -337,6 +344,7 @@ $1',
  */
 $messages['gl'] = array(
 	'wikiamobile-search' => 'Procurar',
+	'wikiamobile-search-this-wiki' => 'Procurar neste wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Rexistro',
@@ -487,6 +495,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'wikiamobile-search' => 'Пребарај',
+	'wikiamobile-search-this-wiki' => 'Пребарување по ова вики',
 	'wikiamobile-search-wiki' => 'Вики',
 	'wikiamobile-search-wikia' => 'Викија',
 	'wikiamobile-login' => 'Најава',
@@ -596,6 +605,7 @@ $1',
  */
 $messages['nl'] = array(
 	'wikiamobile-search' => 'Zoeken',
+	'wikiamobile-search-this-wiki' => 'In wiki zoeken',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Aanmelden',
@@ -732,6 +742,7 @@ você deve definitivamente verificar isso:
  */
 $messages['ru'] = array(
 	'wikiamobile-search' => 'Поиск',
+	'wikiamobile-search-this-wiki' => 'Поиск по этой вики',
 	'wikiamobile-search-wiki' => 'Вики',
 	'wikiamobile-search-wikia' => 'Викия',
 	'wikiamobile-login' => 'Войти',

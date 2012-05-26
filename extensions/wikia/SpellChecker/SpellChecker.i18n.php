@@ -105,6 +105,14 @@ $messages['de'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Vorschläge für "$1": $2',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'spellchecker-info-provider' => 'Ardener',
+	'spellchecker-info-spellcheck-languages' => 'Zıwan',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */
@@ -166,12 +174,17 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Misibacsi
  */
 $messages['hu'] = array(
+	'spellchecker-info' => 'Helyesírás-ellenőrző információ',
 	'spellchecker-info-languages' => 'Elérhető nyelvek ($1)',
 	'spellchecker-info-dictionaries' => 'Rendelkezésre álló szótárak',
+	'spellchecker-info-spellcheck-text' => 'Ellenőrzendő szöveg',
 	'spellchecker-info-spellcheck-languages' => 'Nyelv',
 	'spellchecker-info-spellcheck-submit' => 'Helyesírás-ellenőrzés',
+	'spellchecker-info-spellcheck-is-correct' => 'Ez a szó: "$1" helyesen van írva.',
+	'spellchecker-info-spellcheck-suggestions' => 'Helyesírási javaslat "$1" számára: $2',
 );
 
 /** Interlingua (Interlingua)

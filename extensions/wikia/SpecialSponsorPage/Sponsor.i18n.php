@@ -178,7 +178,7 @@ $messages['de-formal'] = array(
 $messages['diq'] = array(
 	'sponsor-form-email' => 'E-postay şıma:',
 	'sponsorpage-edit' => 'Bıvurne',
-	'sponsorpage-save' => 'Qeyd ke',
+	'sponsorpage-save' => 'Star ke',
 );
 
 /** Spanish (Español)

@@ -406,6 +406,8 @@ Schreibe den zweiten Abschnitt deiner Seite hier. Vergiss nicht eine Kategorie h
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Wikiy vırazer]]',
+	'owb-title' => 'Wiki vırazteren',
 	'owb-headline' => 'Merheba, $1',
 	'owb-button-skip' => 'Peygoske',
 	'owb-button-save-intro' => 'İntroy qeydke',
@@ -413,10 +415,23 @@ $messages['diq'] = array(
 	'owb-button-save-pages' => 'Pela qeydke',
 	'owb-step1' => 'Etaba 1',
 	'owb-step2' => 'Etaba 2',
+	'owb-step2-gallery' => 'Galeriya Tema',
 	'owb-step3' => 'Etaba 3',
+	'owb-step3-your-pages' => 'Nameyê Pela da Şıma',
+	'owb-step3-examples1' => "<li>Qurbesê Frankenstein'i</li>
+<li>Vergmerdım</li>
+<li>Kuuzen</li>
+<li>Mumye</li>
+<li>Keyeyê arey</li>
+<li>Hımınê lınci</li>",
+	'owb-step3-examples2' => '<li>Monopoly</li>
+<li>Risk</li><li>Scrabble</li>
+<li>Trivial Pursuit</li>
+<li>Pictionary</li>
+<li>Taboo</li>',
 	'owb-step4' => 'Etaba 4',
 	'owb-step4-error-caption' => 'Xırab',
-	'owb-status-saving' => 'Qeydbi',
+	'owb-status-saving' => 'Starêno',
 );
 
 /** Spanish (Español)
@@ -510,6 +525,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Od1n
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -571,7 +587,7 @@ quelques pages',
 <li>Pas de limite de bande passante</li></ul>",
 	'owb-step4-error-caption' => 'Erreur',
 	'owb-step4-error-upgrade-content' => 'Ce wiki ne peut pas être mis à niveau en Plus.',
-	'owb-step4-error-token-content' => 'Impossible d’obtenir un jeton approprié de Paypal.',
+	'owb-step4-error-token-content' => 'Impossible d’obtenir un jeton approprié de PayPal.',
 	'owb-status-saving' => 'Enregistrement',
 	'owb-unable-to-edit-description' => 'La description ne peut pas être modifiée avec le Générateur de wiki',
 	'owb-readonly-try-again' => 'Le wiki est actuellement en mode lecture seule. Veuillez réessayer dans quelques instants.',

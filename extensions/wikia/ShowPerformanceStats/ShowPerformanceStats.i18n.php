@@ -101,8 +101,10 @@ $messages['gl'] = array(
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'showperformancestats-desc' => 'Olvasható teljesítménystatisztikák készítése',
 	'performancestat-total' => 'Összesen: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'CPU: $1s',

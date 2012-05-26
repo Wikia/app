@@ -204,6 +204,10 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'dump-database' => 'Çımeyê erzêmelumati',
+	'dump-database-curr-pages' => 'Pelê tedeestey',
+	'dump-database-request' => 'Wastışi neweke',
+	'dump-database-request-submit' => 'Wastış bırşê',
 	'dump-database-info-more' => 'Kerem ke, şırê melumati <a href="http://community.wikia.com/wiki/Help:Database_download">bıvinê</a>',
 );
 

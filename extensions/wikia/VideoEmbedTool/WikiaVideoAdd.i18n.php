@@ -177,6 +177,15 @@ $messages['de-formal'] = array(
 	'wva-notallowed' => 'Sie können in diesem Wiki keine Videos einfügen.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'wva-name' => 'Name deke:',
+	'wva-url' => 'GRE deke:',
+	'wva-add' => 'Deke',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */

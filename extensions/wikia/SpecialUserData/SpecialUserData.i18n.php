@@ -51,6 +51,14 @@ $messages['de'] = array(
 	'userdata-no-wf' => 'WikiFactory ist in diesem Wiki nicht aktiviert. Kann wgUserData nicht verändern.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'userdata-userid-label' => "Karber ID'ya ardeneri:",
+	'userdata-submit' => 'Şo melumat',
+);
+
 /** Spanish (Español)
  * @author VegaDark
  */

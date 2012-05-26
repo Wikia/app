@@ -418,6 +418,19 @@ $messages['id'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Persiapan &raquo;',
 );
 
+/** Italian (Italiano)
+ * @author Ximo17
+ */
+$messages['it'] = array(
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Unifica il tuo account Wikia con quello Facebook</h1>
+<ul>
+<li>Mantieni il tuo username, la storia, le modifiche... non cambia nulla, solo il modo in cui accedi!</li>
+<li>Condividi la tua attività su Wikia con gli amici di Facebook, con il controllo totale di ciò che sarà pubblicato</li>
+</ul>',
+	'comboajaxlogin-connectmarketing-back' => '&laquo; Indietro',
+	'comboajaxlogin-connectmarketing-forward' => 'Inizia &raquo;',
+);
+
 /** Japanese (日本語)
  * @author Tommy6
  */

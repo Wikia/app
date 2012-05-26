@@ -826,7 +826,7 @@ indem Sie <a href="$2">$2</a> besuchen.</p>
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
-	'autocreatewiki' => 'Wikiyo newe vıraze',
+	'autocreatewiki' => 'Wikiya newi vıraze',
 	'autocreatewiki-desc' => 'Wikifebrika vıraştışire Qarqer buwaze',
 	'autocreatewiki-page-title-answers' => 'yew siteya newiyaqande cewaba vıraze',
 	'autocreatewiki-chooseone' => 'zeweri bıweçine',
@@ -1220,6 +1220,7 @@ $3
  * @author Crt
  * @author Nike
  * @author Tofu II
+ * @author VezonThunder
  */
 $messages['fi'] = array(
 	'autocreatewiki' => 'Luo uusi wiki',
@@ -1227,17 +1228,29 @@ $messages['fi'] = array(
 	'createwiki' => 'Luo uusi wiki',
 	'autocreatewiki-chooseone' => 'Valitse yksi',
 	'autocreatewiki-required' => '$1 = vaadittu',
+	'autocreatewiki-web-address' => 'Verkko-osoite:',
 	'autocreatewiki-category-select' => 'Valitse yksi',
 	'autocreatewiki-language-top' => 'Top$1 kieltä',
 	'autocreatewiki-language-all' => 'Kaikki kielet',
 	'autocreatewiki-birthdate' => 'Syntymäaika:',
+	'autocreatewiki-blurry-word' => 'Sumea sana:',
 	'autocreatewiki-remember' => 'Muista minut',
 	'autocreatewiki-create-account' => 'Luo tunnus',
 	'autocreatewiki-done' => 'tehty',
 	'autocreatewiki-error' => 'virhe',
 	'autocreatewiki-haveaccount-question' => 'Onko sinulla jo Wikia-tili?',
+	'autocreatewiki-success-title-default' => 'Wikisi on luotu!',
+	'autocreatewiki-success-subtitle' => 'Nyt voit aloittaa työsi wikissäsi osoitteessa:',
+	'autocreatewiki-success-has-been-created' => 'on luotu!',
+	'autocreatewiki-info-domain' => 'On parasta käyttää sanaa, jolla aihettasi todennäköisesti haetaan.',
+	'autocreatewiki-info-topic' => 'Lisää lyhyt kuvaus, kuten "Tähtien sota" tai "TV-ohjelmat".',
 	'autocreatewiki-info-category-default' => 'Tämä auttaa kävijöitä löytämään wikisi.',
+	'autocreatewiki-info-language' => 'Tämä tulee olemaan wikisi kävijöiden oletuskieli.',
+	'autocreatewiki-info-email-address' => 'Sähköpostiosoitettasi ei koskaan näytetä kenellekään Wikiassa.',
+	'autocreatewiki-info-birthdate' => 'Wikia vaatii kaikkia käyttäjiä antamaan oikean syntymäaikansa sekä turvatoimena että tapana säilyttää sivuston eheys samalla, kun tulee noudattaa hallinnollisia säädöksiä.',
+	'autocreatewiki-info-blurry-word' => 'Automaattisen tunnusten luonnin estämiseksi kirjoita näkemäsi sumea sana tähän kenttään.',
 	'autocreatewiki-info-terms-agree' => 'Luomalla wikin ja käyttäjätunnuksen hyväksyt <a href="http://www.wikia.com/wiki/Terms_of_use">Wikian käyttösäännöt</a>.',
+	'autocreatewiki-info-staff-username' => '<b>Vain henkilökunnalle:</b> Valittu käyttäjä merkitään perustajaksi.',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-bad-name' => 'Nimi ei voi sisältää erikoismerkkejä (kuten $ tai @) ja sen on oltava pienin kirjaimin kirjoitettu sana ilman välilyöntejä.',
 	'autocreatewiki-invalid-wikiname' => 'Nimi ei voi sisältää erikoismerkkejä (kuten $ tai @) ja se ei voi olla tyhjä',
@@ -1685,6 +1698,7 @@ Kérünk, válassz egy megfelelőt a legördülő listából.',
 	'autocreatewiki-protect-reason' => 'A hivatalos felölet része',
 	'autocreatewiki-welcomesubject' => '$1 elkészült!',
 	'newwikis' => 'Új wikik',
+	'newwikisstart' => 'Wikik megjelenítése a következőtől:',
 	'autocreatewiki-subname-answers' => 'Válaszok',
 );
 

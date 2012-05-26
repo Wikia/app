@@ -188,9 +188,12 @@ $messages['de'] = array(
  */
 $messages['diq'] = array(
 	'whereisextension-submit' => 'Cı geyre',
+	'whereisextension-isset' => 'Saz kerdiya',
 	'whereisextension-filter' => 'Filtre',
+	'whereisextension-all-groups' => 'Grubi pêro',
 	'whereisextension-search-like-value' => 'Rındeni:',
 	'whereisextension-search-type' => 'Babet:',
+	'whereisextension-search-type-bool' => 'Boolean',
 	'whereisextension-search-type-full' => 'Rındeni',
 );
 

@@ -134,7 +134,7 @@ $messages['de'] = array(
  */
 $messages['diq'] = array(
 	'quickstats-header-label' => 'İstatıstike vistri',
-	'quickstats-header-date' => 'Tarix',
+	'quickstats-header-date' => 'Deme',
 	'quickstats-header-views' => 'Bıvin',
 	'quickstats-header-edits' => 'Bıvurne',
 	'quickstats-header-photos' => 'Fotrafi',
@@ -257,6 +257,7 @@ $messages['hu'] = array(
 	'quickstats-header-views' => 'Megtekintések',
 	'quickstats-header-edits' => 'Szerkesztések',
 	'quickstats-header-photos' => 'Képek',
+	'quickstats-header-likes' => 'kedvelés',
 	'quickstats-totals-label' => 'Összesítés',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Részletes statisztika]]',
 	'quickstats-number-shortening' => '$1,000',
@@ -466,7 +467,7 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
-	'quickstats-header-label' => 'Szybkie statystyki',
+	'quickstats-header-label' => 'Statystyki',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Odwiedziny',
 	'quickstats-header-edits' => 'Edycje',

@@ -1,18 +1,6 @@
 <?php
 
-$messages = array();
-
-/** Documentation
- * @author Michał Roszka (Mix) <michal@wikia-inc.com>
- */
-$messages['qqq'] = array(
-	'wikiasearch2-results-for' => 'Parameter: $1 - a keyword or a search term searched for.',
-	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for.',
-	'wikiasearch2-page-title-with-query' => 'The message is used as the title of the page (appears in the title bar of a browser window). Parameters: $1 - a keyword or a search term searched for; $2 - the name of the wiki.',
-	'wikiasearch2-page-title-no-query-intrawiki' => 'The message says "search this wiki" as opposed to "search all Wikia network". Parameters: $1 - the name of the wiki to be searched.',
-);
-
-$messages['en'] = array(
+$messages = array();$messages['en'] = array(
 	'wikiasearch2-page-title-with-query' => "Search results for '$1' - $2",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Search Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Search $1',
@@ -29,6 +17,20 @@ $messages['en'] = array(
 	'wikiasearch2-enable-go-search' => 'Enable Go-Search',
 	'wikiasearch2-noresults' => 'No results found.',
 	'wikiasearch2-spellcheck' => 'No results were found for <em>$1</em>. <strong>Showing results for <em>$2</em>.</strong>',
+);
+
+/** Message documentation (Message documentation)
+ * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+ * @author MtaÄ
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'wikiasearch2-page-title-with-query' => 'The message is used as the title of the page (appears in the title bar of a browser window). Parameters: $1 - a keyword or a search term searched for; $2 - the name of the wiki.',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'The message says "search this wiki" as opposed to "search all Wikia network". Parameters:
+* $1 is the name of the wiki to be searched.',
+	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for.',
+	'wikiasearch2-results-for' => 'Parameter: $1 - a keyword or a search term searched for.',
+	'wikiasearch2-enable-go-search' => 'Preferences setting next to a checkbox which asks you whether you want to enable Go-Search (going directly to a page title match in search) or not. Default = off',
 );
 
 /** German (Deutsch)
@@ -48,11 +50,13 @@ $messages['de'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Suchergebnisse',
 	'wikiasearch2-advanced-search' => 'Erweiterte Such-Optionen',
 	'wikiasearch2-onhub' => 'in der Kategorie $1',
+	'wikiasearch2-enable-go-search' => 'Gehe bei einer direkten Übereinstimmung einer Suchanfrage mit einem Seitentitel direkt zur Seite und nicht zuerst zu den Suchergebnissen',
 );
 
 /** Spanish (Español)
  * @author Armando-Martin
  * @author Invadinado
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'wikiasearch2-page-title-with-query' => "Resultados de la búsqueda de '$1' - $2",
@@ -67,7 +71,8 @@ $messages['es'] = array(
 	'wikiasearch2-global-search-headline' => 'Encontrar wikis en Wikia',
 	'wikiasearch2-wiki-search-headline' => 'Buscar en este wiki',
 	'wikiasearch2-advanced-search' => 'Opciones de búsqueda avanzada',
-	'wikiasearch2-onhub' => 'en el  $1 concentrador (hub)',
+	'wikiasearch2-onhub' => 'en el concentrador $1',
+	'wikiasearch2-enable-go-search' => 'Habilitar la búsqueda Go-Search',
 );
 
 /** French (Français)
@@ -88,6 +93,27 @@ $messages['fr'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Rechercher sur ce wiki',
 	'wikiasearch2-advanced-search' => 'Options de recherche avancée',
 	'wikiasearch2-onhub' => 'dans le thème « $1 »',
+	'wikiasearch2-enable-go-search' => 'Activer « aller » pour la recherche',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikiasearch2-page-title-with-query' => 'Resultados da procura de "$1" - $2',
+	'wikiasearch2-page-title-no-query-interwiki' => 'Procurar en Wikia',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'Procurar "$1"',
+	'wikiasearch2-search-all-wikia' => 'Procurar en toda Wikia',
+	'wikiasearch2-results' => '$1 {{PLURAL:$1|resultado|resultados}}',
+	'wikiasearch2-pages' => '$1 {{PLURAL:$1|páxina|páxinas}}',
+	'wikiasearch2-search-on-wiki' => 'Procurar neste wiki',
+	'wikiasearch2-results-count' => 'Aproximadamente $1 {{PLURAL:$1|resultado|resultados}} para "$2"',
+	'wikiasearch2-results-for' => 'Resultados para "$1"',
+	'wikiasearch2-global-search-headline' => 'Atopar wikis en Wikia',
+	'wikiasearch2-wiki-search-headline' => 'Procurar neste wiki',
+	'wikiasearch2-advanced-search' => 'Opcións de procura avanzadas',
+	'wikiasearch2-onhub' => ' no centro de actividade $1',
+	'wikiasearch2-enable-go-search' => 'Activar o "Go-Search"',
 );
 
 /** Italian (Italiano)
@@ -124,6 +150,7 @@ $messages['mk'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Пребарување по ова вики',
 	'wikiasearch2-advanced-search' => 'Напредни можности за пребарување',
 	'wikiasearch2-onhub' => 'во порталот $1',
+	'wikiasearch2-enable-go-search' => 'Овозможи пребарување со „Оди“',
 );
 
 /** Malay (Bahasa Melayu)
@@ -143,6 +170,7 @@ $messages['ms'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Cari dalam wiki ini',
 	'wikiasearch2-advanced-search' => 'Pilihan Pencarian Termaju',
 	'wikiasearch2-onhub' => ' di Pusat $1',
+	'wikiasearch2-enable-go-search' => 'Hidupkan Pergi-Cari',
 );
 
 /** Norwegian Bokmål (‪Norsk (bokmål)‬)
@@ -162,6 +190,7 @@ $messages['nb'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Søk i denne wikien',
 	'wikiasearch2-advanced-search' => 'Avanserte søkealternativer',
 	'wikiasearch2-onhub' => 'i $1-hubben',
+	'wikiasearch2-enable-go-search' => 'Aktiver Gå-søk',
 );
 
 /** Dutch (Nederlands)
@@ -170,6 +199,7 @@ $messages['nb'] = array(
 $messages['nl'] = array(
 	'wikiasearch2-page-title-with-query' => "Zoekresultaten voor '$1' - $2",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Wikia doorzoeken',
+	'wikiasearch2-page-title-no-query-intrawiki' => 'In $1 zoeken',
 	'wikiasearch2-search-all-wikia' => 'Heel Wikia dooezoeken',
 	'wikiasearch2-results' => '{{PLURAL:$1|één resultaat|$1 resultaten}}',
 	'wikiasearch2-pages' => "{{PLURAL:$1|één pagina|$1 pagina's}}",
@@ -180,6 +210,7 @@ $messages['nl'] = array(
 	'wikiasearch2-wiki-search-headline' => 'In wiki zoeken',
 	'wikiasearch2-advanced-search' => 'Geavanceerde zoekopties',
 	'wikiasearch2-onhub' => 'in de hub $1',
+	'wikiasearch2-enable-go-search' => 'Go-Search inschakelen',
 );
 
 /** Polish (Polski)
@@ -199,6 +230,7 @@ $messages['pl'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Przeszukaj wiki',
 	'wikiasearch2-advanced-search' => 'Zaawansowane Opcje Wyszukiwania',
 	'wikiasearch2-onhub' => 'W portalu $1',
+	'wikiasearch2-enable-go-search' => 'Bezpośrednio przekierowuj do wyszukiwanych artykułów',
 );
 
 /** Russian (Русский)
@@ -218,6 +250,7 @@ $messages['ru'] = array(
 	'wikiasearch2-wiki-search-headline' => 'Поиск по вики',
 	'wikiasearch2-advanced-search' => 'Расширенные параметры поиска',
 	'wikiasearch2-onhub' => 'в $1 Портале',
+	'wikiasearch2-enable-go-search' => 'Перенаправлять на статью при использовании поиска',
 );
 
 /** Swedish (Svenska)

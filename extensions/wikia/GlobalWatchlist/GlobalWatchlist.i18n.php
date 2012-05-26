@@ -368,7 +368,7 @@ Wikia
  * @author Beta16
  */
 $messages['it'] = array(
-	'globalwatchlist-digest-email-subject' => 'Digest settimanale',
+	'globalwatchlist-digest-email-subject' => 'Riepilogo settimanale',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|commento|commenti}})',
 	'globalwatchlist-no-page-found' => 'Nessuna pagina trovata.',
 );
