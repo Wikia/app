@@ -21,7 +21,7 @@ $res = $dbr->query("select count(*) as count from watchlist where wl_title = \"W
 	$row->count;
 	$output = $row->count;
 }
-	$to = new MailAddress('timq@wikia-inc.com');
+	$to = new MailAddress('comteam-l@wikia-inc.com');
 	$from = new MailAddress('timq@wikia-inc.com');
 	$subject = 'Monthly CC Stats!';
 	$body = "<H3>This is a monthly automated report for activity monitored by Community Support</H3><H4>STAFF BLOG</H4>Blog:Wikia Staff Blog followers: " . $output;
