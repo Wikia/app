@@ -4,10 +4,6 @@ var Lightbox = {
 	},
 	// cached thumbnail arrays and detailed info 
 	cache:{
-		articleMedia: [], // Article Media
-		relatedVideos: [], // Related Video
-		latestPhotos: [], // Lates Photos
-		details: {}, // all media details
 		share: {}
 	},
 	eventTimers: {
@@ -17,7 +13,7 @@ var Lightbox = {
 		type: '', // image or video
 		title: '', // currently displayed file name
 		carouselType: '', // articleMedia, relatedVideos, or latestPhotos
-		index: -1 // ex: Lightbox.cache[Lightbox.current.carouselType][Lightbox.current.index]		
+		index: -1 // ex: LightboxLoader.cache[Lightbox.current.carouselType][Lightbox.current.index]		
 	},
 	modal: {
 		defaults: {
@@ -51,7 +47,7 @@ var Lightbox = {
 				
 				Lightbox.openModal.WikiaLightbox = Lightbox.openModal.find('.WikiaLightbox');
 				
-				Lightbox.cache[Lightbox.current.carouselType] = Lightbox.mediaThumbs.thumbs;
+				LightboxLoader.cache[Lightbox.current.carouselType] = Lightbox.mediaThumbs.thumbs;
 				
 				// Set up carousel
 				var carouselTemplate = $('#LightboxCarouselTemplate');	// TODO: template cache
@@ -396,7 +392,7 @@ var Lightbox = {
 	updateMedia: function() {
 		// update image/video based on whatever the current index is now
 		var carouselType = Lightbox.current.carouselType,
-			mediaArr = Lightbox.cache[carouselType],
+			mediaArr = LightboxLoader.cache[carouselType],
 			idx = Lightbox.current.index;
 		
 		Lightbox.openModal.find('.media').html("").startThrobbing();
@@ -418,7 +414,7 @@ var Lightbox = {
 	},
 	updateArrows: function() {		
 		var carouselType = Lightbox.current.carouselType,
-			mediaArr = Lightbox.cache[carouselType],
+			mediaArr = LightboxLoader.cache[carouselType],
 			idx = Lightbox.current.index;
 			
 		var next = $('#LightboxNext'),
@@ -437,8 +433,8 @@ var Lightbox = {
 	},
 	getShareCodes: function(mediaParams, callback) {
 		var title = mediaParams['title'];
-		if(Lightbox.cache.share[title]) {
-			callback(Lightbox.cache.share[title]);
+		if(LightboxLoader.cache.share[title]) {
+			callback(LightboxLoader.cache.share[title]);
 		} else {
 			$.nirvana.sendRequest({
 				controller: 'Lightbox',
@@ -447,7 +443,7 @@ var Lightbox = {
 				format: 'json',
 				data: mediaParams,
 				callback: function(json) {
-					Lightbox.cache.share[title] = json;
+					LightboxLoader.cache.share[title] = json;
 					callback(json);
 				}
 			});
