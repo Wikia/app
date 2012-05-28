@@ -9,7 +9,6 @@ class MediaToolController extends WikiaController {
 	const RESPONSE_STATUS_ERROR  = 'error';
 
 	public function __construct() {
-		
 	}
 
 	public function getVideoMetadata() {
