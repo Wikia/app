@@ -41,7 +41,6 @@ class AdminDashboardLogic {
 
 			// NOTE: keep this list in alphabetical order
 			static $exclusionList = array(
-				"AdSS",
 				"ApiExplorer",
 				"ApiGate",
 				"Chat",

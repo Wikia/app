@@ -57,7 +57,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/Meebo/meebo.js',
-		'//extensions/wikia/AdSS/adss.js',
 		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.

@@ -35,12 +35,3 @@
 #article-comments-ul {
 	margin-left: 0px;
 }
-
-.SponsoredLinksModule.module {
-	background-color: $color-menu-highlight;
-	@include linear-gradient(false, top, $color-menu-highlight, 60%, $color-module-shadow, 100%);
-
-	h1 {
-		margin: 0px 0px 10px 0px;
-	}
-}
