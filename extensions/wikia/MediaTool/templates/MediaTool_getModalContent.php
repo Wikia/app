@@ -1,4 +1,4 @@
-
+<section id="mediaToolDialog">
 <ul class="tabs">
 	<li data-tab="find-media" class="selected">
 		<a>Find Media</a>
@@ -80,3 +80,4 @@
 	<button class="secondary" name="cancel">Cancel</button>
 	<button  name="continue">Continue</button>
 </div>
+</section>
