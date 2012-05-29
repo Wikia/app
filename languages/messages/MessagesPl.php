@@ -174,13 +174,6 @@ $specialPageAliases = array(
 	'DeletedContributions'      => array( 'Usunięty wkład' ),
 	'Tags'                      => array( 'Znaczniki' ),
 	'Activeusers'               => array( 'Aktywni użytkownicy' ),
-        'Signup'		    => array( 'Zarejestruj' ),
-        'Platinum'                  => array( 'Platyna' ),
-        'Leaderboard'		    => array( 'Ranking' ),
-        'AchievementsCustomize'     => array( 'Dostosuj odznaki' ),
-        'AdminDashboard' 	    => array( 'Panel administratora' ),
-        'RemoveUserAvatar'	    => array( 'Usuń avatar' ),
-        'UserManagement'            => array( 'Zarządzanie kontem' ),
 );
 
 $magicWords = array(
