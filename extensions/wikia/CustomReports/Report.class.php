@@ -56,7 +56,7 @@ class Report extends WikiaModel {
 		$curdate = date('Ymd');
 		$memKey = $this->wf->SharedMemcKey('customreport', $this->code, $curdate, $this->days);
 		$this->data = $this->wg->Memc->get($memKey);
-		if (is_null($this->data)) {
+		if ( !is_array($this->data) ) {
 			$this->data = $this->{'get_'.$this->code}();
 		
 			$this->patch_zero();
@@ -207,6 +207,7 @@ SQL;
 
 		$result = $db->query($sql);
 
+		$data = array();
 		while($row = $db->fetchRow($result)) {
 			$data['allemails_sent'][$row['type']][$row['day']] = $row['sent'];
 			$data['allemails_opens'][$row['type']][$row['day']] = $row['opens'];
