@@ -60,6 +60,7 @@ $app->registerHook('SkinTemplateContentActions', 'WallHooksHelper', 'onSkinTempl
 $app->registerHook('PageHeaderIndexAfterActionButtonPrepared', 'WallHooksHelper', 'onPageHeaderIndexAfterActionButtonPrepared');
 $app->registerHook('BlockIpCompleteWatch', 'WallHooksHelper', 'onBlockIpCompleteWatch');
 $app->registerHook('UserIsBlockedFrom', 'WallHooksHelper', 'onUserIsBlockedFrom');
+$app->registerHook('MakeGlobalVariablesScript', 'WallHooksHelper', 'onMakeGlobalVariablesScript');
 
 //wall history in toolbar
 $app->registerHook('BeforeToolbarMenu', 'WallHooksHelper', 'onBeforeToolbarMenu');

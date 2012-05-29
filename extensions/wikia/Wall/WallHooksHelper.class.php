@@ -1521,6 +1521,20 @@ class WallHooksHelper {
 
 		return true;
 	}
+	
+	/**
+	 * @brief pre render the notifications
+	 *
+	 **/
+	
+	public function onMakeGlobalVariablesScript( &$vars ){
+		$user =	F::app()->wg->User;
+		if( $user->isLoggedIn() ) {
+			$response = F::app()->sendRequest( 'WallNotificationsExternalController', 'getUpdateCounts', array() );
+			$vars['wgNotificationsCount'] = $response->getData();
+		}	
+		return true;
+	}
 
 	/**
 	 * @brief Adjusting Special:Contributions
