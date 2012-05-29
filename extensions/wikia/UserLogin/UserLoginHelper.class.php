@@ -26,8 +26,7 @@ class UserLoginHelper extends WikiaModel {
 
 		$memKey = $this->wf->MemcKey( 'userlogin', 'random_avatars' );
 		$avatars = $this->wg->Memc->get( $memKey );
-
-		if ( is_null($avatars) ) {
+		if ( !is_array($avatars) ) {
 			$avatars = $this->getRandomWikiAvatars( self::LIMIT_AVATARS );
 			if ( count($avatars) < self::LIMIT_AVATARS ) {
 				$additions = $this->getRandomWikiAvatars( self::LIMIT_AVATARS, self::WIKIA_CITYID_COMMUNITY );
@@ -82,7 +81,7 @@ class UserLoginHelper extends WikiaModel {
 
 		$memKey = $this->wf->SharedMemcKey( 'userlogin', 'users_with_avatar', $wikiId );
 		$wikiUsers = $this->wg->Memc->get( $memKey );
-		if ( is_null($wikiUsers) ) {
+		if ( !is_array($wikiUsers) ) {
 			$wikiUsers = array();
 
 			$db = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->StatsDB );
@@ -136,8 +135,7 @@ class UserLoginHelper extends WikiaModel {
 
 		$memKey = $this->wf->SharedMemcKey( 'userlogin', 'random_wikis' );
 		$wikis = $this->wg->Memc->get( $memKey );
-
-		if ( is_null($wikis) ) {
+		if ( !is_array($wikis) ) {
 			$popularWikis = $this->getPopularWikis();
 			shuffle( $popularWikis );
 			$wikis = array();
@@ -151,7 +149,7 @@ class UserLoginHelper extends WikiaModel {
 				if ( count($wikis) >= $require )
 					break;
 			}
-			
+
 			$this->wg->Memc->set( $memKey, $wikis, 60*60*24 );
 		}
 
