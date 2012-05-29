@@ -1,13 +1,13 @@
 (function(window) {
 
+	// Hide content warning, show content
+	function afterApproved() {
+		$('body').removeClass('ShowContentWarning');
+	}
+
 	// This variable is injected into the page via a hook script.
 	// @see ContentWarningHooks.class.php
 	if (!window.wgContentWarningApproved) {
-
-		// Hide content warning, show content
-		function afterApproved() {
-			$('body').removeClass('ShowContentWarning');
-		}
 
 		// Get the template for the content warning message
 		$.nirvana.sendRequest({
