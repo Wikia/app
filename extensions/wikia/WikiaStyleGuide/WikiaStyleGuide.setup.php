@@ -2,7 +2,7 @@
 /**
  * UserLogin
  *
- * @author Hyun Lim, Kyle Florence
+ * @author Hyun Lim
  *
  */
 
@@ -12,12 +12,8 @@ $wgExtensionCredits['specialpage'][] = array(
  
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
-
-// classes
+//classes
 $app->registerClass('WikiaStyleGuideSpecialController', $dir . 'WikiaStyleGuideSpecialController.class.php');
 
 // special pages
 $app->registerSpecialPage('WikiaStyleGuide', 'WikiaStyleGuideSpecialController');
-
-// i18n
-$app->registerExtensionMessageFile('WikiaStyleGuide', $dir.'WikiaStyleGuide.i18n.php');

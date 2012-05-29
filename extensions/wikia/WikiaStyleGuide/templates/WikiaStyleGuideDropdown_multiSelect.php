@@ -1,6 +1,6 @@
 <div class="WikiaDropdown MultiSelect">
 	<div class="selected-items">
-		<span class="list"><?= $wf->Msg('wikiastyleguide-dropdown-selecteditems-list') ?></span>
+		<span class="list">All</span>
 		<img class="arrow" src="<?= $wg->BlankImgUrl ?>" />
 	</div>
 	<ul>

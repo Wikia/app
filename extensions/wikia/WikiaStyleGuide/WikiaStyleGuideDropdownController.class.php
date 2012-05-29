@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Wikia UI Style Guide Dropdown Controller
- * @author Kyle Florence
+ * UISG Dropdown Controller
+ * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
 class WikiaStyleGuideDropdownController extends WikiaController {
 	public function multiSelect() {
-		F::build('JSMessages')->enqueuePackage('WikiaStyleGuideDropdown', array('wikiastyleguide-dropdown-*'));
-
 		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Dropdown.js');
 		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/css/Dropdown.scss');
 
