@@ -165,7 +165,7 @@ var Lightbox = {
 					if(Lightbox.current.type == 'image') {
 						Lightbox.updateMedia();
 					}
-				}).on('click', '#LightboxNext, #LightboxPrevious', function(e) {
+				}).on('click.Lightbox', '#LightboxNext, #LightboxPrevious', function(e) {
 					var target = $(e.target);
 					
 					if(target.is('.disabled')) {

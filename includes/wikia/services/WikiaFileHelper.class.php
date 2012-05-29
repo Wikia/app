@@ -221,12 +221,14 @@ class WikiaFileHelper extends Service {
 			'userId' => '',
 			'userName' => '',
 			'userPageUrl' => '',
-			'articles' => array()
+			'articles' => array(),
+			'exists' => false
 		);
 
 		$file = wfFindFile($fileTitle);
 
 		if ( !empty( $file ) ) {
+			$data['exists'] = true;
 
 			$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
 
