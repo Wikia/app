@@ -278,10 +278,14 @@ class AssetsManager {
 	 */
 	public function getOneLocalURL(/* string */ $filePath, /* boolean */ $minify = null) {
 		global $wgScriptPath;
+		// we should never ever use Asset Manager for ONE file
+		// as it build our whole PHP stack and reads file from filesystem
+		// which cannot be cached by web server as the content is assumed
+		// to be dynamic
+		$url = $wgScriptPath . '/' . $filePath . '?cb=' . $this->mCacheBuster;
+		// TODO: remove it completely
 		//if ($minify !== null ? $minify : $this->mMinify) {
 		//	$url = $this->getAMLocalURL('one', $filePath);
-		//} else {
-			$url = $wgScriptPath . '/' . $filePath . '?cb=' . $this->mCacheBuster;
 		//}
 		return $url;
 	}
