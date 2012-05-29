@@ -12,10 +12,10 @@
 $config = array();
 
 $config['oasis'] = array(
-	//'name'   => 'Oasis',
-	//'source' => "$IP/skins/oasis/images/sprite-Oasis/",
-	//'sprite' => "$IP/skins/oasis/images/sprite-Oasis.png",
-	//'scss'   => "$IP/skins/oasis/css/mixins/_sprite-Oasis.scss"
+	'name'   => 'oasis',
+	'source' => "$IP/skins/oasis/images/sprite-oasis/",
+	'sprite' => "$IP/skins/oasis/images/sprite-oasis.png",
+	'scss'   => "$IP/skins/oasis/css/mixins/sprite-oasis.scss"
 );
 
 $config['EditPageLayout'] = array(
