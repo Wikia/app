@@ -14,8 +14,8 @@ if(window.wgAdsInterstitialsEnabled) {
 	if((wgAdsInterstitialsPagesBeforeFirstAd == count - 1) || ((count > wgAdsInterstitialsPagesBeforeFirstAd) && (((count - wgAdsInterstitialsPagesBeforeFirstAd -1) % (wgAdsInterstitialsPagesBetweenAds + numToSkip)) == 0))){
 		// If it's about to be time for an interstitial, re-write all INTERNAL links to go through the Interstitial.
 		$('a[href]').each(function(index, elem){
-			// Don't do external links even when re-written to go through Special:Outbound first.
-			if((! $(elem).hasClass('external')) && ($(elem).attr('hostname') == location.hostname)){
+			// Don't rewrite external links (or any other Exitstitials)
+			if((!$(elem).hasClass('external')) && (!$(elem).hasClass('exitstitial'))){
 				var link = wgInterstitialPath + encodeURIComponent($(elem).attr('href'));
 				$(elem).attr('href', link);
 			}

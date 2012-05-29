@@ -12,9 +12,25 @@ $wgExtensionMessagesFiles[INTERSTITIALS_SP] = dirname(__FILE__) . '/Interstitial
 $wgSpecialPages[INTERSTITIALS_SP] = INTERSTITIALS_SP;
 $wgAutoloadClasses['Interstitial'] = dirname( __FILE__ ) . '/SpecialInterstitial_body.php';
 
+$wgHooks['BeforePageDisplay'][] = 'interstitialAddJs';
+
 define('INTERSTITIAL_DEFAULT_PAGES_BEFORE_FIRST_AD', 5);
 define('INTERSTITIAL_DEFAULT_PAGES_BETWEEN_ADS', 8);
 define('INTERSTITIAL_DEFAULT_DURATION_IN_SECONDS', 10);
+
+/**
+ * If interstitials are enabled, add the JS for them.
+ */
+function interstitialAddJs( &$out, &$sk ){
+	global $wgAdsInterstitialsEnabled;
+
+	if (!empty($wgAdsInterstitialsEnabled)) {
+		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Interstitial/Interstitial.js?{$wgStyleVersion}\" ></script>\n");		
+	}
+	
+	return true;
+} // end interstitialAddJs()
 
 /**
  * Adds the WikiFactory settings for interstitials into the global JS.
