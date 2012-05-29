@@ -12,7 +12,7 @@ $messages = array();
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
  */
 $messages['en'] = array(
-	'staffpowers-ipblock-abort' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use [[Special:Contact]] to report any issues or problems with our staff.'
+	'staffpowers-ipblock-abort' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.'
 );
 
 /** Message documentation (Message documentation)
