@@ -3,7 +3,7 @@
 
 .ContentWarning {
 	display: none;
-	margin: 20px 15px;
+	margin: 0 15px;
 	min-height: 300px;
 
 	&.WikiaArticle {
@@ -20,7 +20,7 @@
 
 	h2 {
 		border: 0;
-		color: $color-buttons;
+		color: $color-text;
 		font-size: 200%;
 		line-height: 120%;
 	}
