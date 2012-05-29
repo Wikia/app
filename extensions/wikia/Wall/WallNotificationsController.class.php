@@ -87,7 +87,7 @@ class WallNotificationsController extends WikiaController {
 		$authors = array();
 		$authors[] = array(
 			'displayname' => $displayname,
-			'username' => $username
+			'username' => $displayname
 		);
 		
 		if( $data->type == 'OWNER' ) {

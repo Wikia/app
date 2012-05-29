@@ -77,38 +77,45 @@ var WallNotifications = $.createClass(Object, {
 	},
 	
 	updateCounts: function() {
+		var callback = this.proxy(function(data) {
+			if(data.status != true || data.html == '') {
+				return;
+			}
+			this.updateCountsHtml(data);
+
+			// if we already have data for some Wikis, show it
+			this.restoreFromCache();
+			
+			// make sure at least 1 element is visible
+			this.showFirst();
+			
+			// on first updateCounts show notifications if user
+			// came from Notification bubble on non-wall Wiki
+			this.checkIfFromMessageBubble();
+			
+			// do not update for next 10s
+			setTimeout( this.proxy( function() {this.updateInProgress = false; } ), 10000 );
+		});
+		
 		if( this.updateInProgress == false ) {
 			this.updateInProgress = true;
-			$.nirvana.sendRequest({
-				controller: 'WallNotificationsExternalController',
-				method: 'getUpdateCounts',
-				format: 'json',
-				data: {
-					username: wgTitle
-				},
-				callback: this.proxy(function(data) {
-					if(data.status != true || data.html == '') {
-						return;
-					}
-					this.updateCountsHtml(data);
-
-					// if we already have data for some Wikis, show it
-					this.restoreFromCache();
-					
-					// make sure at least 1 element is visible
-					this.showFirst();
-					
-					// on first updateCounts show notifications if user
-					// came from Notification bubble on non-wall Wiki
-					this.checkIfFromMessageBubble();
-					
-					// do not update for next 10s
-					setTimeout( this.proxy( function() {this.updateInProgress = false; } ), 10000 );
-				})
-			});
+			if(window.wgNotificationsCount) {
+				callback(window.wgNotificationsCount);
+				window.wgNotificationsCount = false;
+			} else {
+				$.nirvana.sendRequest({
+					controller: 'WallNotificationsExternalController',
+					method: 'getUpdateCounts',
+					format: 'json',
+					data: {
+						username: wgTitle
+					},
+					callback: callback
+				});				
+			}
 		}
 	},
-	
+
 	fetchForCurrentWiki: function() {
 		if( this.fetchedCurrent == false ) {
 			if(this.monobook) {
