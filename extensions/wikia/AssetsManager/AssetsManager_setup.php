@@ -32,7 +32,8 @@ $wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
 
 function AssetsManagerClearCookie( $user, &$result ) {
 	global $wgRequest;
-	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint' ) {
+	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint'
+			&& !AssetsConfig::isUserDependent( $wgRequest->getVal('oid') ) ) {
 		$result = new User();
 	}
 	return true;

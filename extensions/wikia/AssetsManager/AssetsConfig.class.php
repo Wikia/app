@@ -231,4 +231,10 @@ class AssetsConfig {
 
 		return $assets;
 	}
+
+	public function isUserDependent( $oid ) {
+		return in_array( $oid, array(
+			'site_user_css',
+		));
+	}
 }
