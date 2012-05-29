@@ -1,0 +1,548 @@
+
+// @autosprite-start
+@mixin sprite-oasis-base() {
+	background-color: transparent;
+	background-image: url('/skins/oasis/images/sprite-oasis.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+@mixin sprite-oasis($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: circle_blue.png@72,0,56e2092d996a9fa23201c177697c8575
+	@if $imageName == 'circle_blue' {
+		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: contribute.png@98,0,e34c2011282e6f1f5c844cc63260ed2b
+	@if $imageName == 'contribute' {
+		$image-x: 98px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: delete_small.png@124,0,a3a10765d695b17bde24c255d2427d33
+	@if $imageName == 'delete_small' {
+		$image-x: 124px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: icon_add.png@147,0,963d8fec3aa1f17ec32d39eb5991010b
+	@if $imageName == 'icon_add' {
+		$image-x: 147px;
+		$image-y: 0px;
+		$image-width: 10px;
+		$image-height: 10px;
+	}
+	// @autosprite-image-details: icon_add_video.png@169,0,f482ff62ddac5081493b80cc72040a6c
+	@if $imageName == 'icon_add_video' {
+		$image-x: 169px;
+		$image-y: 0px;
+		$image-width: 21px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: icon_blog.png@202,0,21d30140328db2117b2c8334b29840b4
+	@if $imageName == 'icon_blog' {
+		$image-x: 202px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: icon_break_out.png@236,0,268f3e45c473ee28faef4d445b072f14
+	@if $imageName == 'icon_break_out' {
+		$image-x: 236px;
+		$image-y: 0px;
+		$image-width: 24px;
+		$image-height: 23px;
+	}
+	// @autosprite-image-details: icon_button_activity.png@272,0,a84b9db23744285fdebd59fbd64d2fed
+	@if $imageName == 'icon_button_activity' {
+		$image-x: 272px;
+		$image-y: 0px;
+		$image-width: 17px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: icon_button_random.png@301,0,a91a5bea7e1314226d385e640d709bca
+	@if $imageName == 'icon_button_random' {
+		$image-x: 301px;
+		$image-y: 0px;
+		$image-width: 13px;
+		$image-height: 10px;
+	}
+	// @autosprite-image-details: icon_categories.png@326,0,c3447e3209b611aef9a89f6019ecc51a
+	@if $imageName == 'icon_categories' {
+		$image-x: 326px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: icon_close.png@360,0,a381d7823d39c5de8c22d045a7f00a98
+	@if $imageName == 'icon_close' {
+		$image-x: 360px;
+		$image-y: 0px;
+		$image-width: 10px;
+		$image-height: 10px;
+	}
+	// @autosprite-image-details: icon_close_white.png@382,0,c3baa52d939be769a85b112b74829132
+	@if $imageName == 'icon_close_white' {
+		$image-x: 382px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: icon_close_white_small.png@405,0,89447774518e9cb7ae800aefb5042dfd
+	@if $imageName == 'icon_close_white_small' {
+		$image-x: 405px;
+		$image-y: 0px;
+		$image-width: 6px;
+		$image-height: 6px;
+	}
+	// @autosprite-image-details: icon_code.png@423,0,48fe35d12e021c2e113f67f74b1cfee5
+	@if $imageName == 'icon_code' {
+		$image-x: 423px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 9px;
+	}
+	// @autosprite-image-details: icon_comment.png@457,0,0002827e963d89e95605c1724387df63
+	@if $imageName == 'icon_comment' {
+		$image-x: 457px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 21px;
+	}
+	// @autosprite-image-details: icon_details.png@485,0,09c302052ec5efd0b43168d90496e903
+	@if $imageName == 'icon_details' {
+		$image-x: 485px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: icon_drag.png@513,0,f5863571ec76815145d2fc5a68f72b3e
+	@if $imageName == 'icon_drag' {
+		$image-x: 513px;
+		$image-y: 0px;
+		$image-width: 13px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: icon_edit.png@538,0,15304a65f14512ccb7fa1bea5c45502e
+	@if $imageName == 'icon_edit' {
+		$image-x: 538px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 20px;
+	}
+	// @autosprite-image-details: icon_external_link.png@569,0,4994010f16ebfe8c52b6f44f060f2360
+	@if $imageName == 'icon_external_link' {
+		$image-x: 569px;
+		$image-y: 0px;
+		$image-width: 10px;
+		$image-height: 10px;
+	}
+	// @autosprite-image-details: icon_facebook.png@591,0,2a0d081f8712a872e2de17b290b8e270
+	@if $imageName == 'icon_facebook' {
+		$image-x: 591px;
+		$image-y: 0px;
+		$image-width: 7px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: icon_footer_follow.png@610,0,d1dfd83dc7a517aa11c2011191427b7e
+	@if $imageName == 'icon_footer_follow' {
+		$image-x: 610px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: icon_footer_like.png@637,0,03b9d52346044319b3490fa498bce23c
+	@if $imageName == 'icon_footer_like' {
+		$image-x: 637px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: icon_footer_mytools.png@664,0,5e840c8dcc8ac07d2cda015e03034e7e
+	@if $imageName == 'icon_footer_mytools' {
+		$image-x: 664px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: icon_footer_share.png@691,0,2debe7b6bb83e967d2d970a04cc61baf
+	@if $imageName == 'icon_footer_share' {
+		$image-x: 691px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: icon_leave_message.png@718,0,a3d77b32c1a8add0aa00215471ed81b8
+	@if $imageName == 'icon_leave_message' {
+		$image-x: 718px;
+		$image-y: 0px;
+		$image-width: 23px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: icon_lock.png@753,0,350334991724c76c041ef2a42ada06bd
+	@if $imageName == 'icon_lock' {
+		$image-x: 753px;
+		$image-y: 0px;
+		$image-width: 9px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: icon_mail.png@774,0,9024013b4dcfa72b9fd88d78d20377a0
+	@if $imageName == 'icon_mail' {
+		$image-x: 774px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 10px;
+	}
+	// @autosprite-image-details: icon_move.png@800,0,56a62135205947c266a87cbeb5436381
+	@if $imageName == 'icon_move' {
+		$image-x: 800px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: icon_new_page.png@834,0,b5352b6bdcaaec33f87fa6423141d561
+	@if $imageName == 'icon_new_page' {
+		$image-x: 834px;
+		$image-y: 0px;
+		$image-width: 22px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: icon_okay.png@868,0,163145b9ec92e31054cc5e4690672305
+	@if $imageName == 'icon_okay' {
+		$image-x: 868px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: icon_pencil.png@894,0,f1cbaca175446fdb40ff5d39e8fa6c5b
+	@if $imageName == 'icon_pencil' {
+		$image-x: 894px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: icon_photo.png@921,0,cddf5fed5b37eb7cae04a836e672a9ef
+	@if $imageName == 'icon_photo' {
+		$image-x: 921px;
+		$image-y: 0px;
+		$image-width: 17px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: icon_red_x.png@950,0,33532c40b344698ed8c3a0b422552e94
+	@if $imageName == 'icon_red_x' {
+		$image-x: 950px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: icon_settings.png@976,0,9086df7b0f406b0124606c96e6132b64
+	@if $imageName == 'icon_settings' {
+		$image-x: 976px;
+		$image-y: 0px;
+		$image-width: 16px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: icon_share_grey.png@1004,0,090af2960cbd1be18af27cf524c8f582
+	@if $imageName == 'icon_share_grey' {
+		$image-x: 1004px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 13px;
+	}
+	// @autosprite-image-details: icon_sort.png@1030,0,e792e65e30722231858214e7bafff22d
+	@if $imageName == 'icon_sort' {
+		$image-x: 1030px;
+		$image-y: 0px;
+		$image-width: 9px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: icon_sorted.png@1051,0,a63b0bc9292ad14c7b227d533aafd928
+	@if $imageName == 'icon_sorted' {
+		$image-x: 1051px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: icon_trash.png@1074,0,565fb226912053999e88213135362c16
+	@if $imageName == 'icon_trash' {
+		$image-x: 1074px;
+		$image-y: 0px;
+		$image-width: 13px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: pencil_small.png@1099,0,9caca69bd0181ba0d4c4e51db5d07669
+	@if $imageName == 'pencil_small' {
+		$image-x: 1099px;
+		$image-y: 0px;
+		$image-width: 11px;
+		$image-height: 11px;
+	}
+	// @autosprite-image-details: plus_white.png@1122,0,157c319776b0f28af4c2f8afc407b15d
+	@if $imageName == 'plus_white' {
+		$image-x: 1122px;
+		$image-y: 0px;
+		$image-width: 7px;
+		$image-height: 7px;
+	}
+	// @autosprite-image-details: question_mark.png@1141,0,5a3912428026c4d156567bb2aa1cddf1
+	@if $imageName == 'question_mark' {
+		$image-x: 1141px;
+		$image-y: 0px;
+		$image-width: 12px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: search_black.png@1165,0,418723e4d90b63daf8557df5242167c4
+	@if $imageName == 'search_black' {
+		$image-x: 1165px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: search_grey.png@1196,0,3e31f1691716804ff6ab87f702b01c58
+	@if $imageName == 'search_grey' {
+		$image-x: 1196px;
+		$image-y: 0px;
+		$image-width: 21px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: search_white.png@1229,0,67fbc5789c8fd273fcc2e2169a697689
+	@if $imageName == 'search_white' {
+		$image-x: 1229px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: shadow_user_tabs.png@1260,0,18db9322768dc7eee657e42b0edfaefa
+	@if $imageName == 'shadow_user_tabs' {
+		$image-x: 1260px;
+		$image-y: 0px;
+		$image-width: 555px;
+		$image-height: 8px;
+	}
+	// @autosprite-image-details: shadow_wiki_nav.png@1827,0,433b4e9212740e568c327af39c305cb2
+	@if $imageName == 'shadow_wiki_nav' {
+		$image-x: 1827px;
+		$image-y: 0px;
+		$image-width: 1000px;
+		$image-height: 12px;
+	}
+	// @autosprite-image-details: wikia_logo_community.png@2839,0,0cc2def904d1a2142bf28139bcf11d0b
+	@if $imageName == 'wikia_logo_community' {
+		$image-x: 2839px;
+		$image-y: 0px;
+		$image-width: 54px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: wikia_logo_entertainment.png@2905,0,4a0a597581eb05aace288fd1905d2dc8
+	@if $imageName == 'wikia_logo_entertainment' {
+		$image-x: 2905px;
+		$image-y: 0px;
+		$image-width: 53px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: wikia_logo_lifestyle.png@2970,0,948e459f821b13399179b0ce97bf403c
+	@if $imageName == 'wikia_logo_lifestyle' {
+		$image-x: 2970px;
+		$image-y: 0px;
+		$image-width: 53px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: wikia_logo_videogames.png@3035,0,063b778d65a9822c97ba6aa254e351da
+	@if $imageName == 'wikia_logo_videogames' {
+		$image-x: 3035px;
+		$image-y: 0px;
+		$image-width: 53px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: wikia_logo_white.png@3100,0,e78f780868392e12b50be5f6ac204587
+	@if $imageName == 'wikia_logo_white' {
+		$image-x: 3100px;
+		$image-y: 0px;
+		$image-width: 88px;
+		$image-height: 24px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0px - $image-x;
+		$position-y: 0px - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-oasis-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-oasis-base;
+	@include sprite-oasis($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-oasis-deep($width: 0,$height: 0) {
+	@include sprite-oasis-base;
+	&.circle-blue {
+		@include sprite-oasis('circle_blue',$width,$height);
+	}
+	&.contribute {
+		@include sprite-oasis('contribute',$width,$height);
+	}
+	&.delete-small {
+		@include sprite-oasis('delete_small',$width,$height);
+	}
+	&.icon-add {
+		@include sprite-oasis('icon_add',$width,$height);
+	}
+	&.icon-add-video {
+		@include sprite-oasis('icon_add_video',$width,$height);
+	}
+	&.icon-blog {
+		@include sprite-oasis('icon_blog',$width,$height);
+	}
+	&.icon-break-out {
+		@include sprite-oasis('icon_break_out',$width,$height);
+	}
+	&.icon-button-activity {
+		@include sprite-oasis('icon_button_activity',$width,$height);
+	}
+	&.icon-button-random {
+		@include sprite-oasis('icon_button_random',$width,$height);
+	}
+	&.icon-categories {
+		@include sprite-oasis('icon_categories',$width,$height);
+	}
+	&.icon-close {
+		@include sprite-oasis('icon_close',$width,$height);
+	}
+	&.icon-close-white {
+		@include sprite-oasis('icon_close_white',$width,$height);
+	}
+	&.icon-close-white-small {
+		@include sprite-oasis('icon_close_white_small',$width,$height);
+	}
+	&.icon-code {
+		@include sprite-oasis('icon_code',$width,$height);
+	}
+	&.icon-comment {
+		@include sprite-oasis('icon_comment',$width,$height);
+	}
+	&.icon-details {
+		@include sprite-oasis('icon_details',$width,$height);
+	}
+	&.icon-drag {
+		@include sprite-oasis('icon_drag',$width,$height);
+	}
+	&.icon-edit {
+		@include sprite-oasis('icon_edit',$width,$height);
+	}
+	&.icon-external-link {
+		@include sprite-oasis('icon_external_link',$width,$height);
+	}
+	&.icon-facebook {
+		@include sprite-oasis('icon_facebook',$width,$height);
+	}
+	&.icon-footer-follow {
+		@include sprite-oasis('icon_footer_follow',$width,$height);
+	}
+	&.icon-footer-like {
+		@include sprite-oasis('icon_footer_like',$width,$height);
+	}
+	&.icon-footer-mytools {
+		@include sprite-oasis('icon_footer_mytools',$width,$height);
+	}
+	&.icon-footer-share {
+		@include sprite-oasis('icon_footer_share',$width,$height);
+	}
+	&.icon-leave-message {
+		@include sprite-oasis('icon_leave_message',$width,$height);
+	}
+	&.icon-lock {
+		@include sprite-oasis('icon_lock',$width,$height);
+	}
+	&.icon-mail {
+		@include sprite-oasis('icon_mail',$width,$height);
+	}
+	&.icon-move {
+		@include sprite-oasis('icon_move',$width,$height);
+	}
+	&.icon-new-page {
+		@include sprite-oasis('icon_new_page',$width,$height);
+	}
+	&.icon-okay {
+		@include sprite-oasis('icon_okay',$width,$height);
+	}
+	&.icon-pencil {
+		@include sprite-oasis('icon_pencil',$width,$height);
+	}
+	&.icon-photo {
+		@include sprite-oasis('icon_photo',$width,$height);
+	}
+	&.icon-red-x {
+		@include sprite-oasis('icon_red_x',$width,$height);
+	}
+	&.icon-settings {
+		@include sprite-oasis('icon_settings',$width,$height);
+	}
+	&.icon-share-grey {
+		@include sprite-oasis('icon_share_grey',$width,$height);
+	}
+	&.icon-sort {
+		@include sprite-oasis('icon_sort',$width,$height);
+	}
+	&.icon-sorted {
+		@include sprite-oasis('icon_sorted',$width,$height);
+	}
+	&.icon-trash {
+		@include sprite-oasis('icon_trash',$width,$height);
+	}
+	&.pencil-small {
+		@include sprite-oasis('pencil_small',$width,$height);
+	}
+	&.plus-white {
+		@include sprite-oasis('plus_white',$width,$height);
+	}
+	&.question-mark {
+		@include sprite-oasis('question_mark',$width,$height);
+	}
+	&.search-black {
+		@include sprite-oasis('search_black',$width,$height);
+	}
+	&.search-grey {
+		@include sprite-oasis('search_grey',$width,$height);
+	}
+	&.search-white {
+		@include sprite-oasis('search_white',$width,$height);
+	}
+	&.shadow-user-tabs {
+		@include sprite-oasis('shadow_user_tabs',$width,$height);
+	}
+	&.shadow-wiki-nav {
+		@include sprite-oasis('shadow_wiki_nav',$width,$height);
+	}
+	&.wikia-logo-community {
+		@include sprite-oasis('wikia_logo_community',$width,$height);
+	}
+	&.wikia-logo-entertainment {
+		@include sprite-oasis('wikia_logo_entertainment',$width,$height);
+	}
+	&.wikia-logo-lifestyle {
+		@include sprite-oasis('wikia_logo_lifestyle',$width,$height);
+	}
+	&.wikia-logo-videogames {
+		@include sprite-oasis('wikia_logo_videogames',$width,$height);
+	}
+	&.wikia-logo-white {
+		@include sprite-oasis('wikia_logo_white',$width,$height);
+	}
+}
+// @autosprite-end
