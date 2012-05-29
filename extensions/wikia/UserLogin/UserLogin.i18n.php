@@ -146,7 +146,7 @@ $messages['qqq'] = array(
 * $1 is numerical hour.',
 	'userlogin-error-mail-error' => 'Error message stating there was an error sending the email. Link to Contact us page in wikitext.',
 	'userlogin-password-email-sent' => 'Validation message stating that email has been to the user. Parameters:
-* $1 contains the email address, such as john@wikia-inc.com',
+* $1 contains the user name in plain text',
 	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
 	'userlogin-password-page-title' => 'Heading for change password page.',
 	'userlogin-oldpassword' => 'Label for old password field',
