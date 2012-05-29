@@ -181,7 +181,6 @@ $specialPageAliases = array(
         'AdminDashboard' 	    => array( 'Panel administratora' ),
         'RemoveUserAvatar'	    => array( 'Usuń avatar' ),
         'UserManagement'            => array( 'Zarządzanie kontem' ),
-        'Connect'		    => array( 'Połącz z Facebookiem' ),
 );
 
 $magicWords = array(
