@@ -85,7 +85,7 @@ class LightboxController extends WikiaController {
 	}
 	
 	protected static function getArticleMediaThumbsMemcKey($title) {
-		return F::app()->wf->MemcKey( 'ArticleMediaThumbs', '1.0', $title->getDBkey() );
+		return F::app()->wf->MemcKey( 'ArticleMediaThumbs', '1.0a', $title->getDBkey() );
 	}
 
 	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
@@ -106,7 +106,7 @@ class LightboxController extends WikiaController {
 		* to that article.  The title of the article will be part of the request parameter to that method.
 		*/
 		wfProfileIn(__METHOD__);
-		
+
 		$thumbs = null;
 		
 		$title = F::build('Title', array( $this->request->getVal('title') ), 'newFromText');
@@ -265,6 +265,7 @@ class LightboxController extends WikiaController {
 	 */
 	protected function mediaTableToThumbs( $mediaTable ) {
 		$thumbs = array();
+		$is = new ImageServing(null, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT);
 		foreach ($mediaTable as $entry) {
 			if (is_string($entry['title'])) {
 				$media = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
@@ -273,9 +274,9 @@ class LightboxController extends WikiaController {
 			}
 			$file = wfFindFile($media);
 			if ( !empty( $file ) ) {
-				$trans = $file->transform( array( 'width' => self::THUMBNAIL_HEIGHT, 'height'=> self::THUMBNAIL_WIDTH ) );
+				$url = $is->getUrl( $file, $file->getWidth(), $file->getHeight() );
 				$thumbs[] = array(
-					'thumbUrl' => $trans->url,
+					'thumbUrl' => $url,
 					'type' => $entry['type'],
 					'title' => $media->getText(),
 					'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(90, 55) : '',
