@@ -4,7 +4,7 @@
 
 #wkSrhFrm{
 	padding: 10px;
-	height: 60px;
+	height: 55px;
 	background: $searchOpenBackground;
 	box-shadow: 0 5px 15px $shadow-color;
 	display: -webkit-box;
@@ -15,6 +15,7 @@
 #wkSrhSub {
 	margin: 0 0 0 -27px;
 	height: 40px;
+	border: 0;
 }
 
 #wkSrhInp {
@@ -29,7 +30,6 @@
 	background: white;
 	width: 100%;
 	opacity: .94;
-	min-height: 55px;
 	border-bottom: 5px solid $searchOpenBackground;
 
 	li {
