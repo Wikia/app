@@ -117,7 +117,7 @@ class BodyController extends WikiaController {
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt,
 			$wgEnableWikiAnswers,
-			$wgSalesTitles, $wgEnableHuluVideoPanel,
+			$wgSalesTitles,
 			$wgEnableGamingCalendarExt, $wgEnableWallExt, $wgRequest;
 
 		$namespace = $wgTitle->getNamespace();
@@ -137,7 +137,6 @@ class BodyController extends WikiaController {
 
 		$latestPhotosKey = $wgUser->isAnon() ? 1300 : 1250;
 		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
-		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		if($namespace == NS_SPECIAL) {
 			if (ArticleAdLogic::isSearch()) {
@@ -150,9 +149,6 @@ class BodyController extends WikiaController {
 
 					if( empty( $wgEnableWikiAnswers ) ) {
 						$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-						if ($wgEnableHuluVideoPanel) {
-							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
-						}
 					}					
 				} elseif ($wgEnableCorporatePageExt) {
 					$railModuleList = array(
@@ -186,9 +182,6 @@ class BodyController extends WikiaController {
 
 				if( empty( $wgEnableWikiAnswers ) ) {
 					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-					if ($wgEnableHuluVideoPanel) {
-						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
-					}
 				}
 			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
 				$railModuleList = array (
@@ -229,9 +222,6 @@ class BodyController extends WikiaController {
 
 			if( empty( $wgEnableWikiAnswers ) ) {
 				$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-				if ($wgEnableHuluVideoPanel) {
-					$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
-				}
 			}
 		}
 
