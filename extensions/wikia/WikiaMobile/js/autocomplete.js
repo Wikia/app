@@ -2,7 +2,7 @@ define('suggest', function(){
 var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 	input,
 	list,
-	suggestions,
+	suggestions = [],
 	currentValue,
 	cachedResponse = [],
 	serviceUrl,
@@ -27,7 +27,8 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 					$.ajax({
 						url: serviceUrl,
 						data: {
-							query: curVal
+							query: curVal,
+							useskin: 'wikiamobile'
 						},
 						success: function(resp) {
 							suggestions = resp[0];
