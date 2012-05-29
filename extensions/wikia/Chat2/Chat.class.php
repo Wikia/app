@@ -48,7 +48,6 @@ class Chat {
 		wfProfileIn( __METHOD__ );
 		$errorMsg = "";
 		$PERMISSION_TO_KICKBAN = "chatmoderator";
-		echo $userNameToKickBan;
 		$userToKickBan = User::newFromName($userNameToKickBan);
 		
 		if( ($userToKickBan instanceof User) && $kickingUser->isAllowed( $PERMISSION_TO_KICKBAN ) ){
