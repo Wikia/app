@@ -636,6 +636,12 @@ class WikiaSearch extends WikiaObject {
 			'section' => 'under-the-hood/advanced-displayv2',
 		);
 
+		$defaultPreferences["searchAllNamespaces"] = array(
+			'type' => 'toggle',
+			'label-message' => array('wikiasearch2-search-all-namespaces'),
+			'section' => 'under-the-hood/advanced-displayv2',
+		);
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
