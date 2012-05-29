@@ -29,7 +29,7 @@ function wfMakeSignatureCommon($href, $title, $iurl=null) {
 	global $wgBlankImgUrl;
 
 	if( empty($iurl) ) {
-		$iurl = wfReplaceImageServer('http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png');
+		$iurl = wfReplaceImageServer('/extensions/wikia/StaffSig/images/WikiaStaff.png');
 	}
 
 	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url(\''. $iurl .'\')" alt="@Wikia" class="staffSig" width="41" height="12" /></a>';
