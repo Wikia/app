@@ -2,20 +2,6 @@
 
 Wikia = Wikia || {};
 
-// i18n messages for Dropdown
-var messagesLoaded;
-function getMessages(callback) {
-	if (!messagesLoaded) {
-		$.getMessages('WikiaStyleGuideDropdown', function() {
-			messagesLoaded = true;
-			callback();
-		});
-
-	} else {
-		callback();
-	}
-}
-
 Wikia.Dropdown = $.createClass(Observable, {
 	settings: {
 		closeOnEscape: true,
@@ -32,22 +18,7 @@ Wikia.Dropdown = $.createClass(Observable, {
 		this.$wrapper = $(element).addClass('closed');
 		this.$dropdown = this.$wrapper.children('ul').eq(0);
 
-		// Make sure we have messages before we bind events
-		getMessages(this.proxy(this.bindEvents));
-	},
-
-	/**
-	 * Methods
-	 */
-
-	bindEvents: function() {
-		this.$wrapper
-			.off('click.' + this.settings.eventNamespace)
-			.on('click.' + this.settings.eventNamespace, this.proxy(this.onClick));
-
-		this.$window
-			.off('click.' + this.settings.eventNamespace)
-			.off('keydown.' + this.settings.eventNamespace);
+		this.$wrapper.on('click.' + this.settings.eventNamespace, this.proxy(this.onClick));
 
 		if (this.settings.closeOnEscape || this.settings.onKeyDown) {
 			this.$window.on('keydown.' + this.settings.eventNamespace, this.proxy(this.onKeyDown));
@@ -57,17 +28,21 @@ Wikia.Dropdown = $.createClass(Observable, {
 			this.$window.on('click.' + this.settings.eventNamespace, this.proxy(this.onWindowClick));
 		}
 
-		this.fire('bindEvents');
+		this.fire('initialize');
+	},
+
+	/**
+	 * Methods
+	 */
+
+	open: function() {
+		this.$wrapper.toggleClass('open closed');
+		this.fire('open');
 	},
 
 	close: function() {
 		this.$wrapper.toggleClass('open closed');
 		this.fire('close');
-	},
-
-	open: function() {
-		this.$wrapper.toggleClass('open closed');
-		this.fire('open');
 	},
 
 	/**
