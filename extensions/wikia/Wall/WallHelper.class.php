@@ -312,6 +312,8 @@ class WallHelper {
 			if( User::isIP( $data['username']) ) {
 				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
 				$items[$i]['real-name'] = wfMsg('oasis-anon-user');
+			} else {
+				$items[$i]['author'] = "";
 			}
 			
 			//if message is older than 3 days we don't show its timestamp
