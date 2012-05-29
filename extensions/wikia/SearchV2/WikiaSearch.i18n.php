@@ -17,6 +17,7 @@ $messages = array();$messages['en'] = array(
 	'wikiasearch2-enable-go-search' => 'Enable Go-Search',
 	'wikiasearch2-noresults' => 'No results found.',
 	'wikiasearch2-spellcheck' => 'No results were found for <em>$1</em>. <strong>Showing results for <em>$2</em>.</strong>',
+	'wikiasearch2-search-all-namespaces' => 'Search all namespaces by default',
 );
 
 /** Message documentation (Message documentation)

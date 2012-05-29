@@ -55,6 +55,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 
+		if (empty($namespaces) && $this->wg->User->getOption('searchAllNamespaces')) {
+			$namespaces = array_keys($searchableNamespaces);
+		}
+
 		$isCorporateWiki = !empty($this->wg->EnableWikiaHomePageExt);
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
 		$isInterWiki = $crossWikia ? true : $isCorporateWiki;
@@ -278,7 +282,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if(empty($nsVals)) {
-			return 'default';
+			return $this->wg->User->getOption('searchAllNamespaces') ? 'all' :  'default';
 		}
 
 		if($nsVals == $namespaces) {
