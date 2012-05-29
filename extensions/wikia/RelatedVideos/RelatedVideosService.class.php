@@ -82,7 +82,9 @@ class RelatedVideosService {
 
 		if ( isset( $localParams['userName'] ) && !empty( $localParams['userName'] ) ){
 			$oUser = F::build( 'User', array( $localParams['userName'] ), 'newFromName' );
-			$oUser->load();
+			if ( is_object( $oUser ) ) {
+				$oUser->load();
+			}
 			if ( is_object( $oUser ) && ( $oUser->getID() > 0 ) ) {
 				$videoData['externalByUser'] = 1;
 				$videoData['owner'] = $oUser->getName();
