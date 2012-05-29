@@ -308,21 +308,17 @@ class WikiaSolrClient extends WikiaSearchClient {
 				$canonicals[$result->getCityId()] = array();
 			}
 
-			if($result->hasCanonical()) {
-				if(!in_array($result->getCanonical(), $canonicals[$result->getCityId()])) {
-					$canonicals[$result->getCityId()][] = $result->getCanonical();
-					$deDupedResults[md5($result->getCityId().$result->getVar('ns').$result->getCanonical())] = $result->deCanonize();
-				}
-				else {
-					// already have redirected document, do nothing
-					continue;
-				}
+			$hadCanonical = $result->hasCanonical();
+
+			if($hadCanonical) {
+				$result->deCanonize();
 			}
-			else if(!in_array($result->getTitle(), $canonicals[$result->getCityId()])) {
+
+			if(!in_array($result->getTitle(), $canonicals[$result->getCityId()])) {
 				$canonicals[$result->getCityId()][] = $result->getTitle();
 				$deDupedResults[md5($result->getCityId().$result->getVar('ns').$result->getTitle())] = $result;
 			}
-			else {
+			else if (!$hadCanonical) {
 				// redirect was first for this document, replace it
 				$deDupedResults[md5($result->getCityId().$result->getVar('ns').$result->getTitle())] = $result;
 			}
