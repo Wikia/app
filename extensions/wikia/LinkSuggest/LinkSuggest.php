@@ -120,12 +120,17 @@ function linkSuggestAjaxResponse($out) {
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang, $wgCityId, $wgExternalDatawareDB, $wgContentNamespaces, $wgMemc;
 	wfProfileIn(__METHOD__);
+	$isMobile = F::app()->checkSkin( 'wikiamobile' );
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
 	$query = urldecode( trim( $wgRequest->getText('query') ) );
 	$query = str_replace(' ', '_', $query);
 
-	$key = wfMemcKey(__METHOD__, md5($query.'_'.$wgRequest->getText('format')));
+	if ( $isMobile ) {
+		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format') ), 'WikiaMobile' );
+	} else {
+		$key = wfMemcKey( __METHOD__, md5( $query.'_'.$wgRequest->getText('format') ) );
+	}
 
 	if (strlen($query) < 3) {
 		// enforce minimum character limit on server side
@@ -303,9 +308,9 @@ function getLinkSuggest() {
 	if ($format == 'json') {
 		$result_values = array_values($results);
 
-		if( F::app()->checkSkin( 'wikiamobile' ) ) {
+		if ( $isMobile ) {
 			$out = Wikia::json_encode( array( array_splice( $result_values, 0, 10), array_splice($redirects, -1, 1) ) );
-		}else{
+		} else {
 			$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
 		}
 
