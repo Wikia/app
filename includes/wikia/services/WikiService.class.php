@@ -22,7 +22,7 @@ class WikiService extends WikiaModel {
 				if ( empty($this->wg->EnableAnswers) ) {
 					$memKey = $this->getMemKeyAdminIds( $wikiId );
 					$adminIds = $this->wg->Memc->get( $memKey );
-					if ( is_null($adminIds) ) {
+					if ( !is_array($adminIds) ) {
 						$dbname = $wiki->city_dbname;
 						$dbType = ( $useMaster ) ? DB_MASTER : DB_SLAVE;
 						$db = $this->wf->GetDB( $dbType, array(), $dbname );
@@ -106,7 +106,7 @@ class WikiService extends WikiaModel {
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->wf->SharedMemcKey( 'wiki_sitestats', $wikiId );
 		$sitestats = $this->wg->Memc->get( $memKey );
-		if ( is_null($sitestats) ) {
+		if ( !is_array($sitestats) ) {
 			$sitestats = array(
 				'views' => 0,
 				'edits' => 0,
@@ -160,7 +160,7 @@ class WikiService extends WikiaModel {
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->wf->SharedMemcKey( 'wiki_top_editors', $wikiId );
 		$topEditors = $this->wg->Memc->get( $memKey );
-		if ( is_null($topEditors) ) {
+		if ( !is_array($topEditors) ) {
 			$topEditors = array();
 
 			$db = $this->wf->GetDB( DB_SLAVE, array(), 'specials' );
