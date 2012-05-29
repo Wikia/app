@@ -122,11 +122,8 @@ class ChatHelper {
 	 */
 	public static function onMakeGlobalVariablesScript(&$vars) {
 		global $wgUser;
-		wfProfileIn( __METHOD__ );
-		
 		$vars['wgWikiaChatModuleContent'] = ( $wgUser->isAnon() ) ? '' : F::app()->sendRequest('ChatRail', 'Contents' )->toString();
 		$vars['wgWikiaChatWindowFeatures'] = ChatRailController::CHAT_WINDOW_FEATURES;
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 	
