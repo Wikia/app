@@ -1,9 +1,18 @@
 @import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
 
 .ContentWarning {
 	display: none;
 	margin: 20px 15px;
 	min-height: 300px;
+
+	&.WikiaArticle {
+		@include clear-box-shadow();
+		border: 0;
+		float: none;
+		padding: 0;
+		width: auto;
+	}
 
 	button {
 		margin-right: 10px;
@@ -45,6 +54,7 @@
 		display: block;
 	}
 
+	.adm-dash-search,
 	.WikiaWideTablesWrapper {
 		display: none;
 	}
