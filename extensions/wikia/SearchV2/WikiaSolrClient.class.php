@@ -61,7 +61,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$this->isInterWiki = isset($isInterWiki) ? $isInterWiki : false;
 
 		$params = array(
-				'fl' => '*,score',
+						# html makes the response too big
+				'fl' => 'wikiarticles,bytes,words,wikititle,wikipages,pageid,url,wid,canonical,hub,lang,host,ns,indexed,title,score,backlinks',
 				'qf' => 'title^5 html',
 				'hl' => 'true',
 				'hl.fl' => 'html,title', // highlight field
