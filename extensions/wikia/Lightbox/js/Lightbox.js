@@ -20,7 +20,7 @@ var Lightbox = {
 			videoHeight: 360,
 			topOffset: 25,
 			height: 628
-		},
+		}
 	},
 	openModal: false, // gets replaced with dom object of open modal
 	templates: {},
