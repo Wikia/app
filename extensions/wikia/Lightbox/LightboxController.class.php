@@ -39,6 +39,24 @@ class LightboxController extends WikiaController {
 			// send request to getImageDetail()
 			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $mediaTitle))->getData();
 			$mediaThumbs = $this->app->sendRequest('Lightbox', $method, array('title' => $articleTitle, 'articleId' => $articleId))->getData();
+			
+			if(empty($mediaThumbs['thumbs'])) {
+				if(empty($initialFileDetail['exists'])) {
+					// both file and carousel is empty, which means the image does not exist on this wiki
+					// set the view template to be error
+					$this->overrideTemplate( 'lightboxModalContentError' );
+				} else {
+					// generate fake thumbnail to always have a single item in the carousel
+					$fakeThumb = self::createCarouselThumb(array(
+						'title' => $initialFileDetail['fileTitle'],
+						'type' => $initialFileDetail['mediaType']
+					));
+					if(!empty($fakeThumb)) {
+						$mediaThumbs['thumbs'] = array($fakeThumb);
+					}
+					
+				}
+			}
 		}
 
 		$this->initialFileDetail = $initialFileDetail;
@@ -181,6 +199,7 @@ class LightboxController extends WikiaController {
 		$this->articles = $data['articles'];
 		$this->smallerArticleList = $smallerArticleList;
 		$this->articleListIsSmaller = $articleListIsSmaller;
+		$this->exists = $data['exists'];
 	}
 	
 	/**
@@ -265,25 +284,48 @@ class LightboxController extends WikiaController {
 	 */
 	protected function mediaTableToThumbs( $mediaTable ) {
 		$thumbs = array();
-		$is = new ImageServing(null, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT);
 		foreach ($mediaTable as $entry) {
-			if (is_string($entry['title'])) {
-				$media = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
-			} else {
-				$media = $entry['title'];
-			}
-			$file = wfFindFile($media);
-			if ( !empty( $file ) ) {
-				$url = $is->getUrl( $file, $file->getWidth(), $file->getHeight() );
-				$thumbs[] = array(
-					'thumbUrl' => $url,
-					'type' => $entry['type'],
-					'title' => $media->getText(),
-					'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(90, 55) : '',
-				);
+			$thumb = self::createCarouselThumb($entry);
+			if(!empty($thumb)) {
+				$thumbs[] = $thumb;
 			}
 		}
 		return $thumbs;
+	}
+	
+	/**
+	 * creates a single carousel thumb entry
+	 * @entry - must have 'title'(image title) and 'type'(image|video) defined
+	 */
+	private function createCarouselThumb($entry) {
+		$thumb = '';
+		$is = self::carouselImageServingInstance();
+		if (is_string($entry['title'])) {
+			$media = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
+		} else {
+			$media = $entry['title'];
+		}
+		$file = wfFindFile($media);
+		if ( !empty( $file ) ) {
+			$url = $is->getUrl( $file, $file->getWidth(), $file->getHeight() );
+			$thumb = array(
+				'thumbUrl' => $url,
+				'type' => $entry['type'],
+				'title' => $media->getText(),
+				'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT) : ''
+			);
+		}
+		return $thumb;
+	}
+	
+	/**
+	 * instance method to treat image serving for carousel thumb as a singleton bound to this controller instance
+	 */
+	private function carouselImageServingInstance() {
+		if(empty($this->imageserving)) {
+			$this->imageserving = new ImageServing(null, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT);
+		}
+		return $this->imageserving;
 	}
 	
 	/**

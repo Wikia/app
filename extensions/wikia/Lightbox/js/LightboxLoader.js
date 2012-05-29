@@ -265,6 +265,7 @@ $(function() {
 			localWindow.scrollTop(file.offset().top + file.height()/2 - localWindow.height()/2);
 			file.find('img').click();
 		} else {
+			LightboxLoader.carouselType = 'articleMedia';
 			LightboxLoader.loadLightbox(fileTitle);
 		}
 	}
