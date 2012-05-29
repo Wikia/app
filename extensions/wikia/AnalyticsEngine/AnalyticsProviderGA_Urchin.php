@@ -57,7 +57,7 @@ SCRIPT2;
   _gaq.push(['_trackPageview']);
 
   _gaq.push(['Ads._setAccount', 'UA-17475676-7']);
-  _gaq.push(['Ads._setSampleRate', '1']);
+  _gaq.push(['Ads._setSampleRate', '100']);
 
   _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
