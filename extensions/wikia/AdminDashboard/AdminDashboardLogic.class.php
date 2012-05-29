@@ -59,7 +59,6 @@ class AdminDashboardLogic {
 				"EditTopList",
 				"Following",
 				"Forum",
-				"HuluVideoPanel",
 				"ImageReview",
 				"Invalidateemail",
 				"LandingPageSmurfs",

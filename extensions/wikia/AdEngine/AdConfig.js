@@ -1,4 +1,3 @@
-/* depends on raon.js */
 var AdConfig = {
 	adSlotsRequiringJSInvocation: { HOME_INVISIBLE_TOP:1, INVISIBLE_TOP:1, INVISIBLE_1:1, INVISIBLE_2:1 },
 	geo: null,
