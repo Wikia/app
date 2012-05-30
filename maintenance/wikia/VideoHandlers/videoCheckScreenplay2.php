@@ -35,7 +35,9 @@ while($row = $dbw->fetchObject($rows)) {
 			echo "    Correct   URL: " . WikiFactory::getLocalEnvURL( $new_title->getFullURL()) ."\n";
 			// only remove if there is a copy under "correct" name
 			$file = wfFindFile( $name );
+			$article = Article::newFromID( $title->getArticleID() );
 			$file->delete('Duplicated file, Illegal characters in name');
+			$article->delete();
 			$count += 1;
 		}
 	}
