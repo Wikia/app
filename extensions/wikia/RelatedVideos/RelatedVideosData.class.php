@@ -18,7 +18,7 @@ class RelatedVideosData {
 
 		$data = array();
 
-		$title = Title::newFromText( $titleText );
+		$title = Title::newFromText( $titleText, NS_FILE );
 
 		$file = wfFindFile( $title );
 
