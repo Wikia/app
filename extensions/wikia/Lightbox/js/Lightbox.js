@@ -98,7 +98,7 @@ var Lightbox = {
 					updateCallback(Lightbox.initialFileDetail);
 				} else {
 					// normalize for jwplayer
-					Lightbox.normalizeMediaDetail(Lightbox.initialFileDetail, updateCallback);
+					LightboxLoader.normalizeMediaDetail(Lightbox.initialFileDetail, updateCallback);
 				}
 				
 				// attach event handlers
