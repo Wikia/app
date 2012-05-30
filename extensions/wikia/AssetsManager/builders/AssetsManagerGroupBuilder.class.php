@@ -25,7 +25,7 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				if (isset($url['query'])) {
 					parse_str($url['query'], &$params);
 				}
-				// Start checking the url to see if it is something we care about (BugId:30188) 
+				// Start checking the url to see if it is something we care about (BugId:30188)
 				if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'js') {
 					$this->mContent .= $wgUser->getSkin()->generateUserJs();
 				} else if(strpos($asset, 'Wikia.css') !== false) {
@@ -67,5 +67,11 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 		if($this->mOid == 'site_user_css') {
 			$this->mCacheMode = 'private';
 		}
+	}
+
+	// vary by Cookie as well when serving site_user_css group
+	public function getVary() {
+		$isCookieDependent = AssetsConfig::isUserDependent($this->mOid);
+		return $isCookieDependent ? 'Cookie,Accept-Encoding' : 'Accept-Encoding';
 	}
 }
