@@ -36,8 +36,8 @@ while($row = $dbw->fetchObject($rows)) {
 			// only remove if there is a copy under "correct" name
 			$file = wfFindFile( $name );
 			$article = Article::newFromID( $title->getArticleID() );
+			$article->doDelete('Duplicated file, Illegal characters in name', true);
 			$file->delete('Duplicated file, Illegal characters in name');
-			$article->delete();
 			$count += 1;
 		}
 	}
