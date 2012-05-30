@@ -3,7 +3,7 @@
 class RelatedVideosService {
 
 	const memcKeyPrefix = 'RelatedVideosService';
-	const memcVersion = 18;
+	const memcVersion = 19;
 	static public $width = 160;
 	const howLongVideoIsNew = 3;
 
