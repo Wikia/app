@@ -23,7 +23,7 @@ var MediaTool = MediaTool || (function(){
 			$.loadJQueryUI(initInternal);
 		},
 
-		showModal: showModal,
+		showModal: showModal
 	}
 
 })();
