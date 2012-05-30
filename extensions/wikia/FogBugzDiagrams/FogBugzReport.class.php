@@ -6,7 +6,7 @@
  */
 
 define( "table_name", "fogbugz_cases" );
-define( 'date_start', '2011-01-31' );
+define( 'date_start', '2012-01-07' );
 
 
 class FogBugzReport {
