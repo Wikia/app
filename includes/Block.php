@@ -546,6 +546,19 @@ class Block {
 			$wgMemc->set( $key, $lines, 3600 * 24 );
 		}
 
+		/** Wikia Change start **/ 
+		global $wgGlobalWhitelistedFromAutoblocks;
+		if(!empty($wgGlobalWhitelistedFromAutoblocks) && is_array($wgGlobalWhitelistedFromAutoblocks)) {
+			if(empty($lines)) {
+				$lines = array();
+			}
+			
+			foreach($wgGlobalWhitelistedFromAutoblocks as $val) {
+				$lines[] = '*'.$val;
+			}
+		}
+		/** Wikia Change end **/
+
 		wfDebug( "Checking the autoblock whitelist..\n" );
 
 		foreach ( $lines as $line ) {
