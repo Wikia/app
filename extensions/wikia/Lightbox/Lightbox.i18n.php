@@ -19,8 +19,8 @@ $messages['en'] = array(
 	'lightbox-email-label' => 'Email this to a friend',
 	'lightbox-email-placeholder' => 'Your friend\'s email',
 	'lightbox-email-submit' => 'Send',
-	'lightbox-no-media-error-header' => 'We\'re sorry,',
-	'lightbox-no-media-error' => 'The image or video requested was not found on this wiki.',
+	'lightbox-no-media-error-header' => 'Oops.',
+	'lightbox-no-media-error' => 'The item that was shared with you is no longer available. But now that you\'re here, check out this article page!',
 	'lightbox-no-media-error-close' => 'Ok',
 	
 	/* /new stuff */

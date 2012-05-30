@@ -45,6 +45,12 @@ var Lightbox = {
 				// Add template to modal
 				Lightbox.openModal.find(".modalContent").html(html); // adds initialFileDetail js to DOM
 				
+				if(typeof Lightbox.initialFileDetail == 'undefined') {
+					// We're showing an error template
+					Lightbox.handleErrorTemplate();
+					return;
+				}
+				
 				Lightbox.openModal.WikiaLightbox = Lightbox.openModal.find('.WikiaLightbox');
 				
 				LightboxLoader.cache[Lightbox.current.carouselType] = Lightbox.mediaThumbs.thumbs;
@@ -566,6 +572,20 @@ var Lightbox = {
 					}
 				});
 			}
+		});
+	},
+	handleErrorTemplate: function() {
+		LightboxLoader.lightboxLoading = false;
+
+		Lightbox.openModal.removeClass('LightboxModal');
+		
+		var modalContent = Lightbox.openModal.find('.modalContent');
+		
+		// Fix H1 styling
+		modalContent.find('h1:first').insertBefore(modalContent);
+		
+		$('#close-lightbox').click(function() {
+			$('#' + LightboxLoader.modal.initial.id).closeModal();
 		});
 	}
 };

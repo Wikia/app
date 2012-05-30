@@ -27,10 +27,6 @@ var LightboxLoader = {
 	init: function() {
 		var article;
 
-		if (!window.wgEnableLightboxExt) {
-			return;
-		}
-
 		article = $('#WikiaArticle, .LatestPhotosModule, #article-comments, #RelatedVideosRL');
 
 		article.
@@ -156,7 +152,6 @@ var LightboxLoader = {
 			}
 		}
 		
-
 		// load modal
 		if(mediaTitle != false) {
 			LightboxLoader.loadLightbox(mediaTitle);
@@ -256,6 +251,10 @@ var LightboxLoader = {
 };
 
 $(function() {
+	if (!window.wgEnableLightboxExt) {
+		return;
+	}
+
 	LightboxLoader.init();
 	var fileTitle = $.getUrlVar('file');
 	if(fileTitle) {
