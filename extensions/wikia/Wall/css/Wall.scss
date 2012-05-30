@@ -98,13 +98,13 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		.stafflogo {
 			background: none no-repeat scroll 0 0 transparent;
 			background: url("/extensions/wikia/StaffSig/images/WikiaStaff.png"); /* $wgCdnStylePath */
+			bottom: -1px;
 			display: inline-block;
 			height: 12px;
 			margin: 0;
 			padding: 0;
 			width: 41px;
 			position: relative;
-			top: 2px;
 		}
 	}
 	
