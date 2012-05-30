@@ -23,12 +23,17 @@ var Lightbox = {
 		}
 	},
 	openModal: false, // gets replaced with dom object of open modal
+	shortScreen: false, // flag if the screen is shorter than modal.defaults.height
 	templates: {},
 	
 	makeLightbox: function(params) {
 		Lightbox.openModal = params.modal;
 		Lightbox.current.title = params.title;
 		Lightbox.current.carouselType = params.carouselType;
+		
+		
+		Lightbox.shortScreen = $(window).height() < Lightbox.modal.defaults.height + Lightbox.modal.defaults.topOffset ? true : false;
+		
 		$.nirvana.sendRequest({
 			controller:	'Lightbox',
 			method:		'lightboxModalContent',
@@ -193,10 +198,14 @@ var Lightbox = {
 		updateLightbox: function(data) {
 			Lightbox.image.getDimensions(data.imageUrl, function(dimensions) {
 
-				Lightbox.openModal.css({
-					top: dimensions.topOffset,
-					height: dimensions.modalHeight
-				});
+				var css = {height: dimensions.modalHeight};
+				
+				// don't change top offset if the screen is shorter than the min modal height
+				if(!Lightbox.shortScreen) {
+					css['top'] = dimensions.topOffset;
+				}
+				
+				Lightbox.openModal.css(css);
 				
 				// extract mustache templates
 				var photoTemplate = Lightbox.openModal.find("#LightboxPhotoTemplate");
