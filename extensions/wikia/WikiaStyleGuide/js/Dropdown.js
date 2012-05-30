@@ -2,20 +2,6 @@
 
 Wikia = Wikia || {};
 
-// i18n messages for Dropdown
-var messagesLoaded;
-function getMessages(callback) {
-	if (!messagesLoaded) {
-		$.getMessages('WikiaStyleGuideDropdown', function() {
-			messagesLoaded = true;
-			callback();
-		});
-
-	} else {
-		callback();
-	}
-}
-
 Wikia.Dropdown = $.createClass(Observable, {
 	settings: {
 		closeOnEscape: true,
@@ -32,8 +18,7 @@ Wikia.Dropdown = $.createClass(Observable, {
 		this.$wrapper = $(element).addClass('closed');
 		this.$dropdown = this.$wrapper.children('ul').eq(0);
 
-		// Make sure we have messages before we bind events
-		getMessages(this.proxy(this.bindEvents));
+		this.bindEvents();
 	},
 
 	/**
@@ -137,7 +122,7 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 
 		this.$checkboxes.on('change.' + this.settings.eventNamespace, this.proxy(this.onChange));
 
-		this.on('bindEvents', this.proxy(this.update));
+		this.update();
 	},
 
 	/**
@@ -174,7 +159,7 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 
 		// Display "and X more" if there are more items leftover
 		if ((remaining = selected.length - maxDisplayed) > 0) {
-			this.$selectedItemsList.html($.msg('wikiastyleguide-dropdown-remaining-items-count', this.$selectedItemsList.html(), remaining));
+			this.$selectedItemsList.html($.msg('wikiastyleguide-dropdown-selected-items-list', this.$selectedItemsList.html(), remaining));
 		}
 
 		// Keep the size of the dropdown in sync with the selected items list
