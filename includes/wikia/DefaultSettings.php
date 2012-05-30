@@ -894,8 +894,3 @@ $wgAutoloadClasses['WikiaFileHelper'] = $IP.'/includes/wikia/services/WikiaFileH
 $wgAutoloadClasses['ArticlesUsingMediaQuery'] = $IP.'/includes/wikia/ArticlesUsingMediaQuery.class.php';
 $wgHooks['LinksUpdateConstructed'][] = 'ArticlesUsingMediaQuery::onUpdateLinks';
 $wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';
-
-/**
- * Wikia UI Style Guide objects
- */
-$wgAutoloadClasses['WikiaStyleGuideDropdownController'] = $IP . '/extensions/wikia/WikiaStyleGuide/WikiaStyleGuideDropdownController.class.php';

@@ -1,6 +1,6 @@
 <div class="WikiaDropdown MultiSelect">
 	<div class="selected-items">
-		<span class="list">All</span>
+		<span class="list"></span>
 		<img class="arrow" src="<?= $wg->BlankImgUrl ?>" />
 	</div>
 	<ul>
