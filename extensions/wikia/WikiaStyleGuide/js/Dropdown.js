@@ -2,6 +2,20 @@
 
 Wikia = Wikia || {};
 
+// i18n messages for Dropdown
+var messagesLoaded;
+function getMessages(callback) {
+	if (!messagesLoaded) {
+		$.getMessages('WikiaStyleGuideDropdown', function() {
+			messagesLoaded = true;
+			callback();
+		});
+
+	} else {
+		callback();
+	}
+}
+
 Wikia.Dropdown = $.createClass(Observable, {
 	settings: {
 		closeOnEscape: true,
@@ -18,7 +32,22 @@ Wikia.Dropdown = $.createClass(Observable, {
 		this.$wrapper = $(element).addClass('closed');
 		this.$dropdown = this.$wrapper.children('ul').eq(0);
 
-		this.$wrapper.on('click.' + this.settings.eventNamespace, this.proxy(this.onClick));
+		// Make sure we have messages before we bind events
+		getMessages(this.proxy(this.bindEvents));
+	},
+
+	/**
+	 * Methods
+	 */
+
+	bindEvents: function() {
+		this.$wrapper
+			.off('click.' + this.settings.eventNamespace)
+			.on('click.' + this.settings.eventNamespace, this.proxy(this.onClick));
+
+		this.$window
+			.off('click.' + this.settings.eventNamespace)
+			.off('keydown.' + this.settings.eventNamespace);
 
 		if (this.settings.closeOnEscape || this.settings.onKeyDown) {
 			this.$window.on('keydown.' + this.settings.eventNamespace, this.proxy(this.onKeyDown));
@@ -28,21 +57,17 @@ Wikia.Dropdown = $.createClass(Observable, {
 			this.$window.on('click.' + this.settings.eventNamespace, this.proxy(this.onWindowClick));
 		}
 
-		this.fire('initialize');
-	},
-
-	/**
-	 * Methods
-	 */
-
-	open: function() {
-		this.$wrapper.toggleClass('open closed');
-		this.fire('open');
+		this.fire('bindEvents');
 	},
 
 	close: function() {
 		this.$wrapper.toggleClass('open closed');
 		this.fire('close');
+	},
+
+	open: function() {
+		this.$wrapper.toggleClass('open closed');
+		this.fire('open');
 	},
 
 	/**
@@ -112,7 +137,7 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 
 		this.$checkboxes.on('change.' + this.settings.eventNamespace, this.proxy(this.onChange));
 
-		this.update();
+		this.on('bindEvents', this.proxy(this.update));
 	},
 
 	/**
@@ -126,8 +151,8 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 
 	update: function() {
 		var remaining,
-			selected = [],
-			maxDisplayed = 3;
+			maxDisplayed = 3,
+			selected = [];
 
 		this.$selectedItemsList.empty();
 
@@ -144,12 +169,12 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 			}
 		}));
 
-		// Display first 3 items in list
+		// Display up to first three items in list
 		this.$selectedItemsList.append($('<strong>').text(selected.slice(0, maxDisplayed).join(', ')));
 
 		// Display "and X more" if there are more items leftover
 		if ((remaining = selected.length - maxDisplayed) > 0) {
-			this.$selectedItemsList.append(' and ' + remaining + ' more');
+			this.$selectedItemsList.html($.msg('wikiastyleguide-dropdown-remaining-items-count', this.$selectedItemsList.html(), remaining));
 		}
 
 		// Keep the size of the dropdown in sync with the selected items list
