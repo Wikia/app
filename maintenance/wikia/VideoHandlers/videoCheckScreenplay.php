@@ -37,6 +37,7 @@ while($row = $dbw->fetchObject($rows)) {
 			// fake the upload
 			$metadata = unserialize($file->getMetadata());
 			$metadata['ingestedFromFeed'] = true;
+			$metadata['aspectRatio'] = 1.7777778;
 			$apiWrapper = new ScreenplayApiWrapper($name, $metadata);
 			$uploadedTitle = null;
 			//$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
