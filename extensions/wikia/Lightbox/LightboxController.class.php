@@ -138,7 +138,7 @@ class LightboxController extends WikiaController {
 				$this->wg->memc->set($memcKey, $thumbs);
 			}
 		}
-		
+
 		$this->response->setVal( 'thumbs', empty($thumbs) ? array() : $thumbs );
 		
 		wfProfileOut(__METHOD__);

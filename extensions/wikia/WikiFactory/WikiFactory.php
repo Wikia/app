@@ -1006,7 +1006,6 @@ class WikiFactory {
 		 * preview.video db connections
 		 */
 		// put the address back into shape and return
-		/*
 		if(empty($_SERVER['SERVER_NAME'])) {
 			// maintenance script
 			global $wgDevelEnvironment, $wgDBname;
@@ -1016,7 +1015,7 @@ class WikiFactory {
 				$hostname = str_replace('dev-','',gethostname());
 				return 'http://' . $wgDBname . '.' . $hostname . '.wikia-dev.com/'.$address;
 			}
-		}*/
+		}
 
 		$servername = $_SERVER['SERVER_NAME'];
 		if( strpos( $servername, 'preview.' ) !== false ) {
