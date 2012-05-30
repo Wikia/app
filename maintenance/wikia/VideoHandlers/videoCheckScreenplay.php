@@ -32,11 +32,17 @@ while($row = $dbw->fetchObject($rows)) {
 			$img = $file->getFullUrl();
 			$article = Article::newFromID($title->getArticleID());
 			$body = $article->getContent();
-			echo "$aspect\t$url\t$img\n";
+			echo "$w\t$h\t$aspect\t$url\t$img\n";
 
 			// fake the upload
 			$metadata = unserialize($file->getMetadata());
 			$metadata['ingestedFromFeed'] = true;
+			if( $metadata['aspectRatio'] > 1.7 ) {
+				echo $metadata['aspectRatio'] . "<- skipping\n";
+				continue;
+			} else {
+				echo $metadata['aspectRatio'] . "<- previous ratio\n";
+			}
 			$metadata['aspectRatio'] = 1.7777778;
 			$apiWrapper = new ScreenplayApiWrapper($name, $metadata);
 			$uploadedTitle = null;
