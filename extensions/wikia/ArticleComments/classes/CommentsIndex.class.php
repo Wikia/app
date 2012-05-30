@@ -221,7 +221,7 @@ class CommentsIndex extends WikiaModel {
 	/**
 	 * create comments_index table if not exists
 	 */
-	protected function createTableCommentsIndex() {
+	public function createTableCommentsIndex() {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		if ( !$this->wf->ReadOnly() ) {

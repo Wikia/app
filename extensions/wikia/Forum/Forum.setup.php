@@ -41,6 +41,7 @@ $app->registerHook('WallHistoryThreadHeader', 'ForumHooksHelper', 'onWallHistory
 $app->registerHook('WallHeader', 'ForumHooksHelper', 'onWallHeader');
 $app->registerHook('WallNewMessage', 'ForumHooksHelper', 'onWallNewMessage');
 $app->registerHook('EditCommentsIndex', 'ForumHooksHelper', 'onEditCommentsIndex');
+$app->registerHook('ArticleInsertComplete', 'ForumHooksHelper', 'onArticleInsertComplete');
 
 
 include($dir . '/Forum.namespace.setup.php');
