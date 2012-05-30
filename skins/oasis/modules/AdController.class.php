@@ -123,7 +123,7 @@ class AdController extends WikiaController {
 	 */
 
 	public function executeIndex(array $params) {
-		global $wgShinyAdsSelfServeUrl;
+		global $wgEnableShinyAdsSelfServeUrl, $wgShinyAdsSelfServeUrl;
 
 		if(self::$config === null) {
 			$this->configure();
@@ -131,7 +131,7 @@ class AdController extends WikiaController {
 
 		$this->slotname = $params['slotname'];
 		$this->selfServeUrl = null;
-		if ($wgShinyAdsSelfServeUrl) {
+		if ($wgEnableShinyAdsSelfServeUrl && $wgShinyAdsSelfServeUrl) {
 			if (array_search($this->slotname, self::$slotsDisplayShinyAdSelfServe) !== FALSE) {
 				if (!(AdEngine::getInstance()->getAdProvider($this->slotname) instanceof AdProviderNull)) {	// will we show an ad?
 					$this->selfServeUrl = $wgShinyAdsSelfServeUrl;
