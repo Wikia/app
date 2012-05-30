@@ -13,7 +13,7 @@ class MemcacheSync{
 	var $key;
 	var $lockKey;
 	var $instance; 
-	function __construct(MWMemcached $cache, $key) {
+	function __construct( $cache, $key ) {
 		$this->memc = $cache;
 		if(empty($key)) {
 			throw new Exception('Key is empty');
