@@ -51,7 +51,7 @@
 				<p><?= wfMsg( 'wikiasearch2-spellcheck', $query, $results->getQuery() ) ?></p>
 				<? endif; ?>
 			<? if ( !$hasArticleMatch && $isMonobook ): ?>
-				<?=wfMsgExt(wfMsg('searchmenu-new', $query), array('parse'));?>
+				<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
 			<? endif; ?>
 	
 			<ul class="Results">
@@ -87,7 +87,7 @@
 			<?= $paginationLinks; ?>
 		<?php else:  ?>
 			<? if ( !$hasArticleMatch && $isMonobook ): ?>
-				<?=wfMsgExt(wfMsg('searchmenu-new', $query), array('parse'));?>
+				<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
 			<? endif; ?>
 				<p><i><?=wfMsg('wikiasearch2-noresults')?></i></p>
 		<?php endif; ?>
