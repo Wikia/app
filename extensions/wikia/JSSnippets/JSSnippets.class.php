@@ -31,7 +31,7 @@ class JSSnippets extends WikiaObject{
 	public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
 		$this->wf->profileIn( __METHOD__ );
 		$js = "";
-		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' ); /* @var $assetsManager AssetsManager */
 		$skin = $this->wg->user->getSkin();
 		$isWikiaSkin = ( $skin instanceof WikiaSkin );
 
