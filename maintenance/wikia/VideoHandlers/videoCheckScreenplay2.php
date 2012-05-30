@@ -19,6 +19,8 @@ $rows = $dbw->select('image',
 	array('img_media_type'=>'VIDEO','img_minor_mime'=>'screenplay')
 );
 
+$count = 0;
+
 while($row = $dbw->fetchObject($rows)) {
 	$name = $row->img_name;
 	$title = Title::newFromText($name, NS_FILE);
@@ -34,8 +36,8 @@ while($row = $dbw->fetchObject($rows)) {
 			// only remove if there is a copy under "correct" name
 			$file = wfFindFile( $name );
 			$file->delete('Duplicated file, Illegal characters in name');
+			$count += 1;
 		}
 	}
-
-
 }
+echo "Removed $count\n";
