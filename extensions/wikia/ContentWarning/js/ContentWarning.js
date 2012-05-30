@@ -16,7 +16,7 @@
 			format: 'html',
 			type: 'GET',
 			callback: function(html) {
-				$(window.skin == 'monobook' ? '#bodyContent' : '#WikiaMainContent').before($(html));
+				$(window.skin == 'oasis' ? '#WikiaMainContent' : '#bodyContent').before($(html));
 
 				// User acknowledges the content warning message and wishes to proceed
 				$('#ContentWarningApprove').click(function() {
