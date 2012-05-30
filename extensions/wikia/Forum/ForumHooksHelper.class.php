@@ -182,4 +182,17 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * add comments_index table after adding board
+	 */
+	public function onArticleInsertComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision ) {
+		$title = $article->getTitle();
+		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
+			$commentsIndex = F::build( 'CommentsIndex' );
+			$commentsIndex->createTableCommentsIndex();
+		}
+
+		return true;
+	}
+
 }
