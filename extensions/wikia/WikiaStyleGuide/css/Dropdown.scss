@@ -19,7 +19,6 @@
 		display: none;
 		margin: 0;
 		margin-bottom: 10px;
-		max-height: 390px;
 		min-width: 200px;
 		overflow-x: hidden;
 		overflow-y: auto;
@@ -33,11 +32,11 @@
 			padding: 0 10px;
 	
 			&:hover {
-				background: $Dropdown-color-hover-background;
+				background-color: $Dropdown-color-hover-background;
 			}
 	
 			&.selected {
-				background: $Dropdown-color-selected-background;
+				background-color: $Dropdown-color-selected-background;
 			}
 		}
 	}
@@ -78,7 +77,7 @@
 			position: relative;
 
 			&:hover {
-				background: $Dropdown-color-hover-background;
+				background-color: $Dropdown-color-hover-background;
 			}
 
 			.arrow {

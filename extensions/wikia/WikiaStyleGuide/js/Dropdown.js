@@ -2,6 +2,11 @@
 
 Wikia = Wikia || {};
 
+/**
+ * An unordered list dropdown menu.
+ *
+ * @author Kyle Florence
+ */
 Wikia.Dropdown = $.createClass(Observable, {
 	settings: {
 		closeOnEscape: true,
@@ -110,19 +115,37 @@ Wikia.Dropdown = $.createClass(Observable, {
 	}
 });
 
+/**
+ * A dropdown list with checkboxes.
+ * See: https://internal.wikia-inc.com/wiki/File:Recent_changes_filter_redlines-01.png
+ *
+ * @author Kyle Florence
+ */
 Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 	constructor: function() {
-		this.settings.eventNamespace = 'WikiaMultiSelectDropdown';
+		$.extend(this.settings, {
+			eventNamespace: 'WikiaMultiSelectDropdown',
+			maxHeight: 390,
+			minHeight: 30
+		});
 
 		Wikia.MultiSelectDropdown.superclass.constructor.apply(this, arguments);
 
+		this.dropdownMarginBottom = parseFloat(this.$dropdown.css('marginBottom')) || 10;
+		this.dropdownItemHeight = parseFloat(this.getItems().eq(0).css('lineHeight')) || 30;
+
 		this.$checkboxes = this.getItems().find(':checkbox');
+		this.$footerToolbar = $('.WikiaFooter .toolbar');
 		this.$selectedItems = this.$wrapper.find('.selected-items');
 		this.$selectedItemsList = this.$selectedItems.find('.list');
 
 		this.$checkboxes.on('change.' + this.settings.eventNamespace, this.proxy(this.onChange));
+		this.$window.on(
+			'resize.' + this.settings.eventNamespace + ' ' +
+			'scroll.' + this.settings.eventNamespace, this.proxy(this.updateDropdownHeight));
 
-		this.update();
+		this.updateDropdownHeight();
+		this.updateSelectedItemsList();
 	},
 
 	/**
@@ -130,11 +153,29 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 	 */
 
 	close: function() {
-		Wikia.MultiSelectDropdown.superclass.open.apply(this, arguments);
-		this.update();
+		Wikia.MultiSelectDropdown.superclass.close.apply(this, arguments);
+		this.updateSelectedItemsList();
 	},
 
-	update: function() {
+	open: function() {
+		Wikia.MultiSelectDropdown.superclass.open.apply(this, arguments);
+		this.updateDropdownHeight();
+	},
+
+	// Change the height of the dropdown between a minimum and maximum height
+	// to make sure it doesn't overlap the footer toolbar.
+	updateDropdownHeight: function() {
+		var dropdownOffset = this.$dropdown.offset().top,
+			footerToolbarOffset = this.$footerToolbar.offset().top,
+			dropdownHeight = Math.min(this.settings.maxHeight, footerToolbarOffset - dropdownOffset - this.dropdownMarginBottom);
+
+		// Filter the new height through the dropdown minimum height and item height
+		dropdownHeight = Math.max(this.settings.minHeight, Math.floor(dropdownHeight / this.dropdownItemHeight) * this.dropdownItemHeight);
+
+		this.$dropdown.height(dropdownHeight);
+	},
+
+	updateSelectedItemsList: function() {
 		var remaining,
 			maxDisplayed = 3,
 			selected = [];
