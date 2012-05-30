@@ -6,7 +6,7 @@
  */
 class WikiaStyleGuideDropdownController extends WikiaController {
 	public function multiSelect() {
-		F::build('JSMessages')->enqueuePackage('WikiaStyleGuideDropdown', array('wikiastyleguide-dropdown-*'));
+		F::build('JSMessages')->enqueuePackage('WikiaStyleGuideDropdown', JSMessages::EXTERNAL);
 
 		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Dropdown.js');
 		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/css/Dropdown.scss');
