@@ -34,16 +34,22 @@
 }
 
 .ShowContentWarning {
-	&.skin-monobook {
+	&.skin-monobook,
+	&.skin-uncyclopedia {
 		.firstHeading,
 		#siteNotice {
 			display: none;
 		}
+
+		#bodyContent {
+			overflow: hidden;
+			visibility: hidden;
+			width: 0;
+		}
 	}
 
 	.WikiaMainContent,
-	.WikiaRail,
-	&.skin-monobook #bodyContent {
+	.WikiaRail {
 		overflow: hidden;
 		visibility: hidden;
 		width: 0;
