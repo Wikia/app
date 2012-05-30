@@ -10,6 +10,7 @@
 $app = F::app();
 $dir = dirname(__FILE__) . '/';
 
+require_once( $dir . 'SolrPhpClient/Apache/Solr/Service.php' );
 
 /**
  * classes
@@ -24,9 +25,6 @@ $app->registerClass('WikiaSolrClient', $dir . 'WikiaSolrClient.class.php');
 /**
  * special pages
  */
-if ($wgWikiaSearchIsDefault) {
-     $app->registerSpecialPage('Search', 'WikiaSearchController');
-}
 $app->registerSpecialPage('WikiaSearch', 'WikiaSearchController');
 $app->registerSpecialPage('Search', 'WikiaSearchController');
 
@@ -62,6 +60,6 @@ $app->registerHook('GetPreferences', 'WikiaSearch', 'onGetPreferences');
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'Wikia Search V2',
 	'version'     => '2.0.5',
-	'author'      => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]',
+	'author'      => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://wikia.com/wiki/User:Relwell Robert Elwell]',
 	'descriptionmsg' => 'wikia-search-desc',
 );
