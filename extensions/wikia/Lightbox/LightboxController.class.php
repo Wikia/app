@@ -18,7 +18,7 @@ class LightboxController extends WikiaController {
 		$mediaTitle = $this->request->getVal('mediaTitle');
 		$articleTitle = $this->request->getVal('articleTitle');
 		$articleId = $this->request->getVal('articleId');
-		$carouselType = $this->request->getVal('carouselType');
+		$carouselType = $this->request->getVal('carouselType', '');
 		
 		switch($carouselType) {
 			case "articleMedia":
@@ -40,23 +40,21 @@ class LightboxController extends WikiaController {
 			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $mediaTitle))->getData();
 			$mediaThumbs = $this->app->sendRequest('Lightbox', $method, array('title' => $articleTitle, 'articleId' => $articleId))->getData();
 			
-			if(empty($mediaThumbs['thumbs'])) {
-				if(empty($initialFileDetail['exists'])) {
-					// both file and carousel is empty, which means the image does not exist on this wiki
-					// set the view template to be error
-					$this->overrideTemplate( 'lightboxModalContentError' );
-				} else {
-					// generate fake thumbnail to always have a single item in the carousel
-					$fakeThumb = self::createCarouselThumb(array(
-						'title' => $initialFileDetail['fileTitle'],
-						'type' => $initialFileDetail['mediaType']
-					));
-					if(!empty($fakeThumb)) {
-						$mediaThumbs['thumbs'] = array($fakeThumb);
-					}
-					
+			if(empty($initialFileDetail['exists'])) {
+				// both file and carousel is empty, which means the image does not exist on this wiki
+				// set the view template to be error
+				$this->overrideTemplate( 'lightboxModalContentError' );
+			} else if(empty($mediaThumbs['thumbs'])) {
+				// generate fake thumbnail to always have a single item in the carousel
+				$fakeThumb = self::createCarouselThumb(array(
+					'title' => $initialFileDetail['fileTitle'],
+					'type' => $initialFileDetail['mediaType']
+				));
+				if(!empty($fakeThumb)) {
+					$mediaThumbs['thumbs'] = array($fakeThumb);
 				}
 			}
+			
 		}
 
 		$this->initialFileDetail = $initialFileDetail;
