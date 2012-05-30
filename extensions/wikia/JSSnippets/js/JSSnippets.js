@@ -1,12 +1,12 @@
 /**
  * JSSnippets client-side API
- * 
+ *
  * @author Maciej Brencz (Macbre) <macbre(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
- * 
+ *
  * WARNING: This code is shared between Oasis/Monobook and WikiaMobile, please don't introduce library-specific code
  * (e.g jQuery, the $ calls in this file have been checked)
- * 
+ *
  * TODO: remove any $ reference when we complete the transition to the Wikia namespace
  */
 
@@ -58,7 +58,7 @@ var JSSnippets = (function(){
 	function init(){
 		if(window.JSSnippetsStack && window.JSSnippetsStack.length > 0){
 			stack = window.JSSnippetsStack;
-	
+
 			// create unique list of dependencies (both static files and libraries loader functions) and callbacks
 			var dependencies = [],
 				callbacks = {},
@@ -75,7 +75,7 @@ var JSSnippets = (function(){
 					// get list of JS/CSS files to load
 					for(y = 0, l2 = entry.dependencies.length; y < l2; y++){
 						dependency = entry.dependencies[y];
-	
+
 						if(typeof dependency === 'string' && dependency !== ''){
 							if(!fullUrlRegex.test(dependency) && !cacheBusterRegex.test(dependency)){
 								ext = dependency.match(extensionRegex);
@@ -90,7 +90,7 @@ var JSSnippets = (function(){
 										 * use AssetsManager to get minified CSS and JS files (when relative path is provided)
 										 * for instance: /extensions/wikia/FooFeature/js/Foo.js
 										 */
-										dependency = wgAssetsManagerQuery.
+										dependency = wgCdnRootUrl + wgAssetsManagerQuery.
 											replace('%1$s', 'one').
 											replace('%2$s', dependency.replace(slashRegex, '')). // remove first slash
 											replace('%3$s', '-').
@@ -99,11 +99,11 @@ var JSSnippets = (function(){
 								}
 							}
 						}
-		
+
 						dependencies.push(dependency);
 					}
 				}
-	
+
 				// get "loader" JS functions
 				if(typeof entry.getLoaders == 'function'){
 					var loaders = entry.getLoaders(),
@@ -123,10 +123,10 @@ var JSSnippets = (function(){
 				if(typeof entry.callback == 'function'){
 					// register unique callback for each "type" of the code using JS snippets
 					callbacks[entry.id] = entry.callback;
-	
+
 					// create a stack of options passed to each type of callback
 					options[entry.id] = options[entry.id] || [];
-	
+
 					// push options to it
 					options[entry.id].push(entry.options);
 				}
@@ -137,7 +137,7 @@ var JSSnippets = (function(){
 
 			// remove duplicated dependencies
 			dependencies = unique(dependencies);
- 
+
 			// load all dependencies in parallel and then fire all callbacks
 			$.getResources(dependencies, function(){
 				try{
