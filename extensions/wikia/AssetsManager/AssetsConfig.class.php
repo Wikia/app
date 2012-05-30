@@ -30,10 +30,12 @@ class AssetsConfig {
 			'ctype' => 'text/css',
 			'smaxage' => $wgSquidMaxage
 		) + $siteargs );
-		$siteargs['gen'] = 'css';
-		$siteargs['useskin'] = $skinname;
 
 		$srcs[] = Title::newFromText( $articleName, NS_MEDIAWIKI)->getFullURL( $query );
+
+		// user specific CSS based on user preferences (if logged-in)
+		$siteargs['gen'] = 'css';
+		$siteargs['useskin'] = $skinname;
 		$srcs[] = Title::newFromText( '-' )->getFullURL( wfArrayToCGI( $siteargs ) );
 
 		wfProfileOut(__METHOD__);
