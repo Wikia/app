@@ -138,7 +138,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 		fllScrImg.innerHTML = '';
 		loader.show(fllScrImg, {center: true});
 
-		if(image[2] == true) {// video
+		if(image[2]) {// video
 			fllScrImg.style.backgroundImage = 'none';
 			$.ajax({
 				url: wgScript,
@@ -165,8 +165,8 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 			fllStyle.backgroundImage = 'none';
 			resetZoom();
 			img.onload = function() {
-				fllStyle.backgroundImage = 'url("' + img.src + '")';
 				loader.hide(fllScrImg);
+				fllStyle.backgroundImage = 'url("' + img.src + '")';
 			};
 		}
 
