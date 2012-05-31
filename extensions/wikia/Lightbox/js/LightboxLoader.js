@@ -78,14 +78,14 @@ var LightboxLoader = {
         }
 
 		/* handle click ignore cases */
-
+		
 		// handle clicks on links only
 		if (!target.is('a')) {
 			return;
 		}
 		
 		// handle clicks on "a.lightbox, a.image" only
-		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
+		if (!target.hasClass('lightbox') && !target.hasClass('image') && !target.hasClass('activityfeed-video-thumbnail')) {
 			return;
 		}
 
