@@ -168,11 +168,13 @@
 		}
 
 		function setAsActive(idx) {
-			// add an active class to the item that is selected (i.e. to show a larger view of it)
-			dom.items.removeClass('active');
-			dom.items.eq(idx).addClass('active');
-
-			moveToIndex(idx);
+			if(idx > -1) {
+				// add an active class to the item that is selected (i.e. to show a larger view of it)
+				dom.items.removeClass('active');
+				dom.items.eq(idx).addClass('active');
+	
+				moveToIndex(idx);
+			}
 		}
 
 		function trackProgress(callback) {
