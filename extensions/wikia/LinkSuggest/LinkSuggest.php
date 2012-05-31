@@ -190,7 +190,6 @@ function getLinkSuggest() {
 		$namespaces = array($namespace);
 	}
 
-	$query = mb_strtolower($query);
 	$query = addslashes($query);
 
 	$db = wfGetDB(DB_SLAVE, 'search');
