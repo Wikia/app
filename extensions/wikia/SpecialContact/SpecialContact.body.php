@@ -18,7 +18,7 @@ class ContactForm extends SpecialPage {
 	function execute() {
 		global $wgLang, $wgAllowRealName, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		global $wgUser, $wgCaptchaClass;
+		global $wgUser, $wgCaptchaClass, $wgJsMimeType;
 
 		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact/SpecialContact.scss'));
@@ -325,7 +325,7 @@ class ContactForm extends SpecialPage {
 		# add the javascript which enhances the form if possible (should degrade gracefully if user has no js).
 		# NOTE: This code is already in the new version's JS so it doesn't need to be merged over.
 		$src = AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/SpecialContact/SpecialContact.js' );
-		$this->wg->Out->addScript( "<script type=\"{$this->app->wg->JsMimeType}\" src=\"{$src}\"></script>" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
 
 		return;
 	}
