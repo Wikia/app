@@ -465,6 +465,15 @@ var Lightbox = {
 		}
 	},
 	setUpCarousel: function() {
+		$(window).on('keydown.Lightbox', function(e) {
+			if(e.keyCode == 37) {
+				$('#LightboxPrevious').click();
+			} else if(e.keyCode == 39) {
+				$('#LightboxNext').click();
+			}
+		});
+	
+		// Pass control functions to jquery.wikia.carousel.js
 		var itemClick = function(e) {
 			var idx = $(this).index();
 

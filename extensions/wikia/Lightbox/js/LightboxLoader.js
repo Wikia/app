@@ -17,7 +17,10 @@ var LightboxLoader = {
 			width: 970, // modal adds 30px of padding to width
 			noHeadline: true,
 			topOffset: 25,
-			height: 628
+			height: 628,
+			onClose: function() {
+				$(window).off('.Lightbox');
+			}
 		}
 	},
 	videoThumbWidthThreshold: 320,
