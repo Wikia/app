@@ -24,7 +24,8 @@
 		opacity: .2;
 	}
 
-	div{
+	&::after{
+		content: '';
 		bottom: 50%;
     	border-width: 10px;
     	border-style: solid;
@@ -34,7 +35,7 @@
 
 #nxtImg {
 	right: 0;
-	div {
+	&::after{
 		border-color: transparent transparent transparent rgb(157,157,157);
 		right: 10px;
 	}
@@ -42,7 +43,7 @@
 
 #prvImg {
 	left: 0;
-	div {
+	&::after{
 		border-color: transparent rgb(157,157,157) transparent transparent;
 		left: 10px;
 	}

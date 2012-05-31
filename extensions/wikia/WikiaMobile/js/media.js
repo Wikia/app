@@ -101,14 +101,13 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 			} else {
 				img = element.getElementsByClassName('image')[0];
 				if(img){
-					href = img.href;
-					name = img.id;
-					var videoattr = $('a', element).attr('data-video-name');
-					var isvideo = videoattr ? true : false;
-					if(isvideo) name = videoattr;
+					var videoattr = img.getAttribute('data-video-name'),
+						isvideo = videoattr ? true : false;
+
+					name = isvideo ? videoattr : img.id;
 					if(name === shrImg) shrImg = number;
 					images.push([
-						href, name, isvideo,
+						img.href, name, isvideo,
 						(cap = element.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:''
 					]);
 					element.setAttribute('data-num', number++);
@@ -118,7 +117,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 
 		imagesLength = images.length;
 
-		if(imagesLength > 1) content = '<div class=chnImg id=prvImg><div></div></div>' + content + '<div class=chnImg id=nxtImg><div></div></div>';
+		if(imagesLength > 1) content = '<div class=chnImg id=prvImg></div>' + content + '<div class=chnImg id=nxtImg></div>';
 
 		//if url contains image=imageName - open modal with this image
 		if(shrImg > -1) setTimeout(function(){openModal(shrImg)}, 2000);
@@ -146,8 +145,8 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 					'action': 'ajax',
 					'method': 'ajax',
 					'rs': 'ImageLightboxAjax',
-					'maxheight': $(window).height(),
-					'maxwidth': $(window).width() - 100,
+					'maxheight': window.innerHeight,
+					'maxwidth': window.innerWidth - 100,
 					'pageName': wgPageName,
 					'share': 0,
 					'title': image[1],
@@ -156,16 +155,16 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 				dataType: 'json',
 				success: function(res) {
 					loader.hide(fllScrImg);
-					$('#fllScrImg').html('<table id="wkVi"><tr><td>'+res.html+'</td></tr></table>');
+					fllScrImg.innerHTML = '<table id="wkVi"><tr><td>'+res.html+'</td></tr></table>';
 				}
 			});
 		} else {
-			$('#fllScrImg').html('');
+			fllScrImg.innerHTML = '';
 			img.src = image[0];
-		fllStyle.backgroundImage = 'none';
-		resetZoom();
-			img.onload =  function() {
-			fllStyle.backgroundImage = 'url("' + img.src + '")';
+			fllStyle.backgroundImage = 'none';
+			resetZoom();
+			img.onload = function() {
+				fllStyle.backgroundImage = 'url("' + img.src + '")';
 				loader.hide(fllScrImg);
 			};
 		}
