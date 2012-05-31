@@ -38,6 +38,12 @@
 	<?php } //marketing ?>
 <?php } //isMonobook ?>
 	<div class="form-container">
+	<?php
+		// 3rd party providers buttons
+		if (!$isMonobook) {
+			echo $app->renderView('UserLoginSpecial', 'ProvidersTop', array('context' => 'signup') );
+		}
+	?>
 <?php
 	$form = array(
 		'id' => 'WikiaSignupForm',
@@ -130,10 +136,4 @@
 	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
 ?>
 	</div>
-<?php
-	// 3rd party providers buttons
-	if (!$isMonobook) {
-		echo $app->renderView('UserLoginSpecial', 'Providers', array('context' => 'signup') );
-	}
-?>
 </section>

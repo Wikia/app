@@ -320,7 +320,7 @@ a.wikia-button-facebook {
 	color: #fff;
 	font-weight: bold;
 	height: 21px;
-	padding: 0 6px;
+	padding: 0 6px 0 3px;
 	&,
 	&:active,
 	&:hover {
@@ -328,6 +328,6 @@ a.wikia-button-facebook {
 	}
 	> img {
 		border-right: solid 1px #6381b4;
-		margin-right: 6px;
+		margin-right: 3px;
 	}
 }

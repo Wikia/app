@@ -12,6 +12,7 @@
 		font-size: 32px;
 		line-height: 38px;
 		margin: 0;
+		font-weight: bold;
 	}
 	>.subheading {
 		font-weight: normal;
@@ -120,12 +121,12 @@
 		@include wordmark;
 	}
 
-	> .sso-login {
+	.sso-login {
 		margin: 0 auto;
 		text-align: center;
 		width: 270px;
 
-		> .sso-login-divider {
+		.sso-login-divider {
 			@include divider;
 		}
 	}
