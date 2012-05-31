@@ -399,27 +399,20 @@ var Lightbox = {
 		return modalOptions;
 	},
 	updateMedia: function() {
-		// update image/video based on whatever the current index is now
-		var carouselType = Lightbox.current.carouselType,
-			mediaArr = LightboxLoader.cache[carouselType],
-			idx = Lightbox.current.index;
-		
 		Lightbox.openModal.find('.media').html("").startThrobbing();
 	
-		if(idx > -1 && idx < mediaArr.length) {
-			
-			var title = Lightbox.current.title = mediaArr[idx].title;
-			var type = Lightbox.current.type = mediaArr[idx].type;
-			
-			LightboxLoader.getMediaDetail({
-				title: title,
-				type: type
-			}, function(data) {
-				Lightbox[type].updateLightbox(data);		
-				Lightbox.showOverlay();
-				Lightbox.hideOverlay();
-			});
-		}
+		var title = Lightbox.current.title;
+		var type = Lightbox.current.type;
+		
+		LightboxLoader.getMediaDetail({
+			title: title,
+			type: type
+		}, function(data) {
+			Lightbox[type].updateLightbox(data);		
+			Lightbox.showOverlay();
+			Lightbox.hideOverlay();
+		});
+		
 	},
 	updateArrows: function() {		
 		var carouselType = Lightbox.current.carouselType,
@@ -469,9 +462,15 @@ var Lightbox = {
 	
 		// Pass control functions to jquery.wikia.carousel.js
 		var itemClick = function(e) {
-			var idx = $(this).index();
+			var idx = $(this).index(),
+				carouselType = Lightbox.current.carouselType,
+				mediaArr = LightboxLoader.cache[carouselType];
 
 			Lightbox.current.index = idx;
+			if(idx > -1 && idx < mediaArr.length) {
+				Lightbox.current.title = mediaArr[idx].title;
+				Lightbox.current.type = mediaArr[idx].type;
+			}
 			
 			Lightbox.updateMedia();	
 		}
