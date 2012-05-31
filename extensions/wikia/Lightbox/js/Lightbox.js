@@ -220,7 +220,7 @@ var Lightbox = {
 					.removeClass('video-media')
 					.css({
 						'margin-top': '',
-						'line-height': dimensions.imageContainerHeight+'px'
+						'line-height': (dimensions.imageContainerHeight-2) + 'px' // -2 hack to remove white line in chrome
 					}).html(renderedResult);
 				
 				Lightbox.updateArrows();
