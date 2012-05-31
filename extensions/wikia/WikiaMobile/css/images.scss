@@ -1,22 +1,21 @@
 #wkMainCnt{
 	.thumb {
 		text-align: center;
-		margin: 5px;
-		border: 1px solid $border-color;
-		padding: 3px;
-		background: #F2F2F2;
-
-		.thumbcaption {
-			font-size: 90%;
-			padding: 3px;
-			margin-bottom: -3px;
-			line-height: 20px;
-		}
+		margin: 10px 0;
+		padding: 5px;
+		border-top: 1px solid $border-color;
+		border-bottom: 1px solid $border-color;
 		
 		.image {
 			display: block;
-			margin-bottom: -4px; 
+			margin-bottom: -7px;
 		}
+	}
+
+	.thumbcaption {
+		font-size: 90%;
+		line-height: 20px;
+		color: rgb(125,125,125);
 	}
 }
 
