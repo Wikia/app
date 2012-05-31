@@ -31,6 +31,8 @@
 
 	</form>
 
+	<div id="SearchAdsTop" class="SearchAds"></div>
+
 		<?php if(!empty($results)): ?>
 		<?php if( $resultsFound > 0 ): ?>
 			<p class="result-count subtle">
@@ -83,6 +85,8 @@
 				?>
 			<?php endforeach; ?>
 			</ul>
+
+	<div id="SearchAdsBottom" class="SearchAds"></div>
 			
 			<?= $paginationLinks; ?>
 		<?php else:  ?>

@@ -21,6 +21,7 @@ $app->registerClass('WikiaSearchController', $dir . 'WikiaSearchController.class
 $app->registerClass('WikiaSearchResult', $dir . 'WikiaSearchResult.class.php');
 $app->registerClass('WikiaSearchResultSet', $dir . 'WikiaSearchResultSet.class.php');
 $app->registerClass('WikiaSolrClient', $dir . 'WikiaSolrClient.class.php');
+$app->registerClass('WikiaSearchAdsController', $dir . 'WikiaSearchAdsController.class.php');
 
 /**
  * special pages
