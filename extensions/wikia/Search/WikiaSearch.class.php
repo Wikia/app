@@ -284,6 +284,7 @@ class WikiaSearch extends WikiaObject {
 
 		$result['wid'] = (int) $this->wg->CityId;
 		$result['pageid'] = $page->getId();
+		$result['id'] = $result['wid'] . '_' . $result['pageid'];
 		$result['sitename'] = $this->wg->Sitename;
 		$result['title'] = $page->getTitle()->getText();
 		$result['canonical'] = $canonical;
