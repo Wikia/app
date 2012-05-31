@@ -281,12 +281,6 @@ $color-shadow: #3a3a3a;
 		height: 110px;
 		position: absolute;
 		width: 100%;
-		.content {
-			border-right: 1px solid $color-page-border;
-			padding: 10px 20px;
-			width: 625px;
-		}
-		
 		.progress {
 			margin-left: 22px;
 			b {
@@ -305,7 +299,7 @@ $color-shadow: #3a3a3a;
 			overflow: hidden;
 			padding: 3px 0px;
 			position: relative;
-			width: 588px;
+			width: 920px;
 			& > div {
 				position: relative;
 			}
@@ -347,7 +341,22 @@ $color-shadow: #3a3a3a;
 				cursor: default;
 			}
 		}
+		.content {
+			padding: 10px 20px;
+		}
+		
 	}
+	
+	&.show-ads .LightboxCarousel {
+		.LightboxCarouselContainer {
+			width: 588px;			
+		}
+		.content{
+			border-right: 1px solid $color-page-border;
+			width: 625px;		
+		}
+	}
+	
 	.LightboxHeader {
 		@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
 		@include opacity(100);
