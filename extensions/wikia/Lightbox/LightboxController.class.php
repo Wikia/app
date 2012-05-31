@@ -153,7 +153,6 @@ class LightboxController extends WikiaController {
 	 * @responseParam string imageUrl - thumb image url that is hard scaled
 	 * @responseParam string fileUrl - url to file page
 	 * @responseParam string caption - video caption
-	 * @responseParam string description - video description (apparantly, this is just file page content, look in spec or ask Yoko)
 	 * @responseParam string userThumbUrl - user avatar thumbUrl scaled to 30x30
 	 * @responseParam string userName - user name
 	 * @responseParam string userPageUrl - url to user profile page
@@ -190,7 +189,6 @@ class LightboxController extends WikiaController {
 		$this->imageUrl = $data['imageUrl'];
 		$this->fileUrl = $data['fileUrl'];
 		$this->rawImageUrl = $data['rawImageUrl'];
-		$this->description = $data['description'];
 		$this->userThumbUrl = $data['userThumbUrl'];
 		$this->userName = $data['userName'];
 		$this->userPageUrl = $data['userPageUrl'];
