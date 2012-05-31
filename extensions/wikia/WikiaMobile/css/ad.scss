@@ -43,7 +43,8 @@
 	top: -20px;
 	display: none;
 
-	div {
+	&:after {
+		content: '';
 		position: absolute;
 		bottom: 0;
 		left: 0;
