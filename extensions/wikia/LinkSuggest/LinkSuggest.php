@@ -207,7 +207,7 @@ function getLinkSuggest() {
 
 			LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
 
-			WHERE LOWER(page_title) LIKE '{$query}%' {$pageNamespaceClause}
+			WHERE page_title LIKE '{$query}%' {$pageNamespaceClause}
 
 			LIMIT 20
 			";

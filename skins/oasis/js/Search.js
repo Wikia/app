@@ -71,7 +71,7 @@ var WikiaSearchApp = {
 						window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_'))).replace(encodeURIComponent('/'), '/');
 					},
 					appendTo: '#WikiaSearch',
-					deferRequestBy: 2000,
+					deferRequestBy: 400,
 					minLength: 3,
 					maxHeight: 1000,
 					selectedClass: 'selected',
