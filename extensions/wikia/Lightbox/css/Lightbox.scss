@@ -183,7 +183,7 @@ $color-shadow: #3a3a3a;
 	.video-media {
 		height: auto;
 		margin-top: 130px;
-		embed, object {
+		embed, object, div {
 			display: block;
 			margin: 0 auto;
 		}
