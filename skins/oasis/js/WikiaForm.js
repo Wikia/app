@@ -16,6 +16,16 @@ var WikiaForm = function(el) {
 		this.genericErrorMsg = this.genericError.find('.error-msg');
 	}
 
+	// initialize genericSuccess field
+	this.genericSuccess = this.el.find('.general-success');
+	if(this.genericSuccess.length == 0) {
+		this.el.find('fieldset').prepend('<div class="input-group general-success success"><div class="success-msg"></div></div>');
+		this.genericSuccess = this.el.find('.general-success');
+		this.genericSuccess.hide();
+		this.genericSuccessMsg = this.genericSuccess.find('.success-msg');
+	}
+
+
 	// pre-cache known inputs by name (this could potentially cause a bug if the input is dynamic)
 	this.inputs = {};
 	var inputs = this.el.find('input, select, textarea');
@@ -44,6 +54,11 @@ var WikiaForm = function(el) {
 WikiaForm.prototype.showGenericError = function(msg) {
 	this.genericError.show();
 	this.showErrorMsg(this.genericError, msg);
+};
+
+WikiaForm.prototype.showGenericSuccess = function(msg) {
+	this.genericSuccess.show();
+	this.showSuccessMsg(this.genericSuccess, msg);
 };
 
 WikiaForm.prototype.getInputGroup = function(paramName) {
@@ -97,6 +112,27 @@ WikiaForm.prototype.showErrorMsg = function(inputGroup, msg) {
 	errorMsg.text(msg);
 };
 
+WikiaForm.prototype.showSuccessMsg = function(inputGroup, msg) {
+	var successMsg = inputGroup.find('.success-msg');
+	if(!successMsg.length) {
+		successMsg = '<div class="success-msg"></div>';
+		inputGroup.append(successMsg);
+		successMsg = inputGroup.find('.success-msg');
+	}
+	successMsg.text(msg);
+};
+
+
 WikiaForm.prototype.clearErrorMsg = function(inputGroup) {
 	inputGroup.find('.error-msg').remove();
 };
+WikiaForm.prototype.clearSuccessMsg = function(inputGroup) {
+	inputGroup.find('.success-msg').remove();
+};
+
+WikiaForm.prototype.clearGenericError = function(inputGroup) {
+	inputGroup.hide().find('.error-msg').remove();	
+}
+WikiaForm.prototype.clearGenericSuccess = function(inputGroup) {
+	inputGroup.hide().find('.success-msg').remove();	
+}

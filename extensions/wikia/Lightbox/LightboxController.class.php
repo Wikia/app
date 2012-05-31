@@ -363,13 +363,14 @@ class LightboxController extends WikiaController {
 					}
 				}
 			} else {
-				$errors[] = 'need to define addresses and shareUrl';
+				$errors[] = wfMsg('lightbox-share-email-error-noaddress');
 			}
 		}
 		
 		$this->errors = $errors;
 		$this->sent = $sent;
 		$this->notsent = $notsent;
+		$this->successMsg = wfMsgExt('lightbox-share-email-ok-content', array('parsemag'), count($sent));
 	}
 
 }
