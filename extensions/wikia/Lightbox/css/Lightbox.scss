@@ -220,6 +220,9 @@ $color-shadow: #3a3a3a;
 			height: 15px;
 			width: 22px;
 		}
+		&.pin.active:after {
+			@include sprite-Lightbox('filmstrip_close'+$sprite-normal);
+		}
 	}
 	.lightbox-arrows {
 		span {
