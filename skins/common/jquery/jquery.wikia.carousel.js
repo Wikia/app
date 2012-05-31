@@ -122,6 +122,7 @@
 				}
 
 				var left = constants.itemWidth * idx * -1;
+				
 				states.currIndex = idx;
 
 				doMove(left);
@@ -177,9 +178,9 @@
 		function trackProgress(callback) {
 			// get values needed
 			var total = dom.items.length,
-				idx1 = states.currIndex + 1, // make index base 1
-				idx2 = states.currIndex + options.itemsShown;
-				
+				idx1 = Math.floor(states.currIndex) + 1, // make index base 1
+				idx2 = Math.floor(states.currIndex) + options.itemsShown;
+			
 			// callback will handle inserting values into the dom
 			callback(idx1, idx2, total);
 		}

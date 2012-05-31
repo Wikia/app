@@ -24,15 +24,13 @@ var Lightbox = {
 	},
 	openModal: false, // gets replaced with dom object of open modal
 	shortScreen: false, // flag if the screen is shorter than modal.defaults.height
+	showAds: false, // when we enable adds, set this to actually check if use should see ads
 	templates: {},
 	
 	makeLightbox: function(params) {
 		Lightbox.openModal = params.modal;
 		Lightbox.current.title = params.title;
 		Lightbox.current.carouselType = params.carouselType;
-		
-		
-		Lightbox.shortScreen = $(window).height() < Lightbox.modal.defaults.height + Lightbox.modal.defaults.topOffset ? true : false;
 		
 		$.nirvana.sendRequest({
 			controller:	'Lightbox',
@@ -46,7 +44,15 @@ var Lightbox = {
 				articleId: wgArticleId,
 				cb: Lightbox.getCacheId() /* not really required, just for caching */
 			},
-			callback: function(html) {
+			callback: function(html) {		
+				// Check screen height for future interactions
+				Lightbox.shortScreen = $(window).height() < Lightbox.modal.defaults.height + Lightbox.modal.defaults.topOffset ? true : false;
+				
+				// Set ads class if we're showing ads
+				if(Lightbox.showAds) {
+					Lightbox.openModal.addClass('show-ads');
+				}
+				
 				// Add template to modal
 				Lightbox.openModal.find(".modalContent").html(html); // adds initialFileDetail js to DOM
 				
@@ -489,9 +495,11 @@ var Lightbox = {
 		var afterMove = function() {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').show();
 		}
+		
+		var itemsShown = Lightbox.showAds ? 6 : 9;
 
 		$('#LightboxCarouselContainer').carousel({
-			itemsShown: 6,
+			itemsShown: itemsShown,
 			itemSpacing: 8,
 			transitionSpeed: 1000,
 			itemClick: itemClick,
