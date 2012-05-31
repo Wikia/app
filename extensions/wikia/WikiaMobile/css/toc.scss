@@ -6,7 +6,6 @@
 	width: 100%;
 	border: 1px solid $border-color;
 	border-radius: 0 0 5px 5px;
-	-webkit-transition: -webkit-box-shadow .2s;
 	@include box-shadow(0 0 15px $shadow-color);
 
 	.chev{
