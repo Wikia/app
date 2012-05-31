@@ -422,7 +422,10 @@ var Lightbox = {
 		var next = $('#LightboxNext'),
 			previous = $('#LightboxPrevious');
 			
-		if(idx == (mediaArr.length - 1)) {
+		if(mediaArr.length < 2) {
+			next.addClass('disabled');
+			previous.addClass('disabled');
+		}else if(idx == (mediaArr.length - 1)) {
 			next.addClass('disabled');
 			previous.removeClass('disabled');
 		} else if(idx == 0) {
