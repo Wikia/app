@@ -200,6 +200,19 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
+	public function providersTop() {
+		$this->context = $this->getVal( 'context', '' );
+
+		// don't render FBconnect button when the extension is disabled
+		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
+			$this->skipRendering();
+		}
+
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->overrideTemplate( 'WikiaMobileProviders' );
+		}
+	}
+
 	public function modal() {
 		$this->loginToken = UserLoginHelper::getLoginToken();
 		$this->signupUrl = Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl();

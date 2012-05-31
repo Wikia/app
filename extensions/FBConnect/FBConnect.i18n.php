@@ -172,7 +172,8 @@ The Wikia Community Team',
 	'fbconnect-msg-for-existing-users' => "<p>Already a Wikia user?</p><br/><br/>If you would like to connect this facebook account to an existing Wikia account, please <a class='loginAndConnect' href='$1'>login</a> first.",
 	
 	'fbconnect-invalid-email' => "Please provide a valid email address.",
-	'fbconnect-wikia-login-w-facebook' => 'Log in / Sign Up with Facebook Connect',
+	'fbconnect-wikia-login-w-facebook' => 'Log in / Sign up with Facebook Connect',
+	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
 	'fbconnect-wikia-login-or-create' => 'Log in / Create an account',
 	'fbconnect-wikia-login-bullets' => '<ul><li>Sign up in just a few clicks</li><li>You have control of what goes to your feed</li></ul>',
 	
