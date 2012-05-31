@@ -96,7 +96,8 @@ window.Wikia.getMultiTypePackage = function(options) {
 		// add a cache buster
 		request.cb = wgStyleVersion;
 
-		$.nirvana.getJson('AssetsManagerController', 'getMultiTypePackage', request, function(resources) {
+		// return promise
+		return $.nirvana.getJson('AssetsManagerController', 'getMultiTypePackage', request, function(resources) {
 			// "register" JS messages
 			if (resources.messages) {
 				wgMessages = $.extend(wgMessages, resources.messages);
