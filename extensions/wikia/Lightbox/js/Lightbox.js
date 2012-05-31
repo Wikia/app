@@ -325,15 +325,10 @@ var Lightbox = {
 			// Resize modal
 			Lightbox.openModal.css({
 				top: dimensions.topOffset,
-				height: dimensions.modalHeight
+				height: Lightbox.modal.defaults.height
 			});
 	
 			Lightbox.video.renderVideo(data);
-			// Hack to vertically align video
-			Lightbox.openModal.media.css({
-				'margin-top': dimensions.videoTopMargin,
-				'line-height': 'auto'
-			});
 			
 			Lightbox.updateArrows();
 			
@@ -345,22 +340,15 @@ var Lightbox = {
 			Lightbox.renderHeader();
 		},
 		getDimensions: function() {
-			// TODO: if the lightbox is already as big as the window, don't shrink it. 
-			// if window is larger than min modal height, update modal height
-			var topOffset = Lightbox.modal.defaults.topOffset,
-				modalMinHeight = Lightbox.modal.defaults.height,
+			// Videos should always load at the same height
+			var modalHeight = Lightbox.modal.defaults.height,
 				windowHeight = $(window).height(),
-				currentModalHeight = Lightbox.openModal.height(),
-				modalHeight = windowHeight - topOffset*2 - 10, // 5px modal border
-				modalHeight = modalHeight < modalMinHeight ? modalMinHeight : modalHeight,
-				videoTopMargin = (modalHeight - Lightbox.modal.defaults.videoHeight) / 2;
+				topOffset = (windowHeight - modalHeight - 10)/2;
 			
 				topOffset = topOffset + $(window).scrollTop();
 
 				var dimensions = {
-					modalHeight: modalHeight,
-					topOffset: topOffset,
-					videoTopMargin: videoTopMargin
+					topOffset: topOffset
 				}
 				
 				return dimensions;
