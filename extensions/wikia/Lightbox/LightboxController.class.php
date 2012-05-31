@@ -9,6 +9,7 @@ class LightboxController extends WikiaController {
 	
 	const THUMBNAIL_WIDTH = 90;
 	const THUMBNAIL_HEIGHT = 55;
+	static $imageserving;
 	
 	public function __construct() {
 	}
@@ -44,7 +45,7 @@ class LightboxController extends WikiaController {
 				// both file and carousel is empty, which means the image does not exist on this wiki
 				// set the view template to be error
 				$this->overrideTemplate( 'lightboxModalContentError' );
-			} else if(empty($mediaThumbs['thumbs'])) {
+			} else if(empty($mediaThumbs) || empty($mediaThumbs['thumbs'])) {
 				// generate fake thumbnail to always have a single item in the carousel
 				$fakeThumb = self::createCarouselThumb(array(
 					'title' => $initialFileDetail['fileTitle'],
@@ -318,10 +319,10 @@ class LightboxController extends WikiaController {
 	 * instance method to treat image serving for carousel thumb as a singleton bound to this controller instance
 	 */
 	private function carouselImageServingInstance() {
-		if(empty($this->imageserving)) {
-			$this->imageserving = new ImageServing(null, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT);
+		if(empty(self::$imageserving)) {
+			self::$imageserving = new ImageServing(null, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT);
 		}
-		return $this->imageserving;
+		return self::$imageserving;
 	}
 	
 	/**

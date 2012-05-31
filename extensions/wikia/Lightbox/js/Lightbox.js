@@ -226,7 +226,7 @@ var Lightbox = {
 					.removeClass('video-media')
 					.css({
 						'margin-top': '',
-						'line-height': (dimensions.imageContainerHeight-2) + 'px' // -2 hack to remove white line in chrome
+						'line-height': (dimensions.imageContainerHeight) + 'px' // -2 hack to remove white line in chrome
 					}).html(renderedResult);
 				
 				Lightbox.updateArrows();
@@ -290,8 +290,8 @@ var Lightbox = {
 				var imageContainerHeight = modalHeight;
 				if(Lightbox.openModal.hasClass('pinned-mode')) {
 					imageContainerHeight -= 220;
-					if(imageHeight > (modalHeight - 220) ) {
-						imageHeight -= 220;
+					if(imageHeight > imageContainerHeight ) {
+						imageHeight = imageContainerHeight;
 					}
 				}
 				
@@ -301,7 +301,7 @@ var Lightbox = {
 					imageHeight: imageHeight,
 					imageContainerHeight: imageContainerHeight
 				}
-				
+
 				// remove preloader image
 				$(this).remove();
 				
