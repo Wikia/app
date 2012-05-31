@@ -89,10 +89,6 @@
 						<?= wfMsg('lightbox-header-posted-in', '{{#articles}}<span class="posted-in-article"><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></span>{{/articles}}') ?>
 					</span>
 				</div>
-				{{#description}}
-					<h2><?= wfMsg('lightbox-more-info-description-heading') ?></h2>
-					<p class="more-info-description">{{description}}</p>
-				{{/description}}
 				<h2><?= wfMsg('lightbox-more-info-filelinks-heading') ?></h2>
 				<ul>
 				{{#articles}}
