@@ -133,8 +133,9 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 
 	function loadImage(){
 		var image = images[current],
-			img = new Image();
+			img;
 
+		fllScrImg.innerHTML = '';
 		loader.show(fllScrImg, {center: true});
 
 		if(image[2] == true) {// video
@@ -142,15 +143,15 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 			$.ajax({
 				url: wgScript,
 				data: {
-					'action': 'ajax',
-					'method': 'ajax',
-					'rs': 'ImageLightboxAjax',
-					'maxheight': window.innerHeight,
-					'maxwidth': window.innerWidth - 100,
-					'pageName': wgPageName,
-					'share': 0,
-					'title': image[1],
-					'showEmbedCodeInstantly': true
+					action: 'ajax',
+					method: 'ajax',
+					rs: 'ImageLightboxAjax',
+					maxheight: window.innerHeight,
+					maxwidth: window.innerWidth - 100,
+					pageName: wgPageName,
+					share: 0,
+					title: image[1],
+					showEmbedCodeInstantly: true
 				},
 				dataType: 'json',
 				success: function(res) {
@@ -159,7 +160,7 @@ define('media', ['modal', 'loader','querystring', 'popover', 'track', 'events', 
 				}
 			});
 		} else {
-			fllScrImg.innerHTML = '';
+			img = new Image();
 			img.src = image[0];
 			fllStyle.backgroundImage = 'none';
 			resetZoom();
