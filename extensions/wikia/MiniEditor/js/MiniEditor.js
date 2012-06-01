@@ -1,10 +1,5 @@
 (function(window, $, undefined) {
 
-	// Private helper function for element loading status indicators
-	function loading($element) {
-		$element.css('visibility', 'hidden').closest(MiniEditor.wrapperSelector).find('.loading-indicator').show();
-	}
-
 	// This object handles the bootstrapping of MiniEditor for on-demand loading
 	// As well as creating new wikiaEditor instances
 	var MiniEditor = {
@@ -138,8 +133,18 @@
 			});
 		},
 
-		initEditor: function(element, options) {
-			var $element = $(element);
+		loading: function(element, wrapper, preloading) {
+			$(wrapper).addClass(preloading ? 'preloading' : 'loading');
+
+			this.editorIsLoading = true;
+		},
+
+		initEditor: function(element, options, event) {
+			var $element = $(element),
+				$wrapper = $element.closest(this.wrapperSelector),
+				// If the element that triggered this initialization is not the editor
+				// element itself, then we are just preloading the editor.
+				preloading = event && event.target && event.target != $element.get(0);
 
 			// If assets are loading, disregard this call
 			if (this.loadingAssets) {
@@ -148,7 +153,7 @@
 
 			// Assets haven't been loaded yet, load them now
 			if (!this.assetsLoaded) {
-				loading($element);
+				this.loading($element, $wrapper, preloading);
 
 				// Load all the required assets then call this method again
 				return this.loadAssets($.proxy(function() {
@@ -160,11 +165,12 @@
 
 			// Already exists
 			if (wikiaEditor && wikiaEditor.ready) {
-				wikiaEditor.fire('editorActivated');
+				wikiaEditor.fire('editorActivated', (wikiaEditor.event = event));
 
 			// Current instance is not done initializing
 			} else if ((wikiaEditor || (wikiaEditor = WikiaEditor.getInstance())) && !wikiaEditor.ready) {
-				wikiaEditor.fire('editorBeforeReady');
+				this.loading($element, $wrapper, preloading);
+				wikiaEditor.fire('editorBeforeReady', (wikiaEditor.event = event));
 
 			// Current instance does not exist or is done initializing, we can initialize
 			// another instance at this point.
@@ -178,8 +184,9 @@
 				options = $.extend(true, {}, $.fn.miniEditor.options, options);
 
 				var self = this,
-					$wrapper = $element.closest(this.wrapperSelector),
 					events = $.extend({}, options.events);
+
+				this.loading($element, $wrapper, preloading);
 
 				// Wrap existing editorReady function with our own
 				events.editorReady = function() {
@@ -198,10 +205,6 @@
 					$element.html(options.content);
 				}
 
-				// An editor instance is loading
-				loading($element);
-				this.editorIsLoading = true;
-
 				// Create the instance for this element
 				wikiaEditor = WikiaEditor.create(this.plugins, $.extend(true, {}, this.config, {
 					body: $element,
@@ -210,11 +213,11 @@
 
 					// Force source mode if edge cases were found (BugId:24375)
 					mode: $.isArray(options.edgeCases) && options.edgeCases.length ? 'source' : this.config.mode,
-					maxHeight: $element.data('max-height') || 400
-				}, options.config));
+					maxHeight: $element.data('max-height') || 400,
+					startupFocus: !preloading
+				}, options.config), event);
 
-				// Store a reference to wikiaEditor in element
-				$element.addClass('wikiaEditor').triggerHandler('editorInit', [wikiaEditor]);
+				$element.addClass('wikiaEditor').triggerHandler('editorInit', [wikiaEditor, event]);
 			}
 		},
 
@@ -247,9 +250,9 @@
 	};
 
 	// jQuery fn bridge for use like $(...).miniEditor();
-	$.fn.miniEditor = function(options) {
+	$.fn.miniEditor = function(options, event) {
 		return this.each(function() {
-			MiniEditor.initEditor(this, options);
+			MiniEditor.initEditor(this, options, event);
 		});
 	};
 

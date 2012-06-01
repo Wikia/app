@@ -168,8 +168,12 @@
 				RTE.config.height = editor.config.minHeight;
 			}
 
-			if (typeof editor.config.tabIndex != "undefined") {
+			if (typeof editor.config.tabIndex != 'undefined') {
 				RTE.config.tabIndex = editor.config.tabIndex;
+			}
+
+			if (typeof editor.config.startupFocus != 'undefined') {
+				RTE.config.startupFocus = editor.config.startupFocus;
 			}
 
 			RTE.config.startupMode = editor.config.mode;

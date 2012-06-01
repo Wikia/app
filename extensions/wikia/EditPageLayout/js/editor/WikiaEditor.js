@@ -14,8 +14,13 @@
 	WE.instanceCount = 0;
 
 	// Update the current instance
-	WE.setInstanceId = function(instanceId, forceEvents) {
+	WE.setInstanceId = function(instanceId, event, forceEvents) {
 		var editor;
+
+		if (typeof event == 'boolean') {
+			forceEvents = event;
+			event = undefined;
+		}
 
 		if (instanceId == WE.instanceId) {
 			if (!forceEvents) {
@@ -25,7 +30,7 @@
 
 		} else {
 			if ((editor = WE.instances[WE.instanceId])) {
-				editor.fire('editorDeactivated');
+				editor.fire('editorDeactivated', event);
 				$().log('instance "' + WE.instanceId + '" deactivated', 'WikiaEditor');
 			}
 
@@ -33,7 +38,7 @@
 		}
 
 		if ((editor = WE.instances[instanceId])) {
-			editor.fire('editorActivated');
+			editor.fire('editorActivated', event);
 			$().log('instance "' + WE.instanceId + '" activated', 'WikiaEditor');
 		}
 	};
@@ -54,7 +59,7 @@
 	};
 
 	// Constructor
-	WE.create = function(plugins, config) {
+	WE.create = function(plugins, config, event) {
 		var instance = new WE.Editor(plugins, config),
 			instanceId = config.body.attr('id');
 
@@ -65,12 +70,15 @@
 			config.body.attr('id', instanceId);
 		}
 
+		instance.event = event;
+		instance.instanceId = instanceId;
+
 		WE.instances[instanceId] = instance;
-		WE.setInstanceId(instance.instanceId = instanceId);
+		WE.setInstanceId(instanceId, event);
 		WE.instanceCount++;
 
 		config.body.data('wikiaEditor', instance);
-		instance.fire('instanceCreated');
+		instance.fire('instanceCreated', event);
 		instance.show();
 
 		return instance;
@@ -202,7 +210,7 @@
 			if (!this.ready) {
 				this.ready = true;
 				this.setState(this.states.IDLE);
-				this.fire('editorReady', this);
+				this.fire('editorReady', this.event);
 
 				GlobalTriggers.fire('WikiaEditorReady', this);
 				$().log('Editor is ready!', 'WikiaEditor');
@@ -223,8 +231,13 @@
 			this.fire('mode', this, mode);
 		},
 
-		setAsActiveInstance: function(forceEvents) {
-			WE.setInstanceId(this.instanceId, forceEvents);
+		setAsActiveInstance: function(event, forceEvents) {
+			if (typeof event == 'boolean') {
+				forceEvents = event;
+				event = undefined;
+			}
+
+			WE.setInstanceId(this.instanceId, event, forceEvents);
 		},
 
 		show: function() {
