@@ -1,13 +1,14 @@
 <div class="WikiaLightbox">
+	<!-- Keep media at the top so everything stacks on top of this, without the need to mess with z-index -->
+	<div class="media">
+	</div>
+
 	<header class="LightboxHeader hidden">
 	</header>
 
 	<div class="lightbox-arrows">
 		<span id="LightboxNext" class="arrow next"></span>
 		<span id="LightboxPrevious" class="arrow previous"></span>
-	</div>
-	
-	<div class="media">
 	</div>
 	
 	<div id="LightboxCarousel" class="LightboxCarousel hidden">

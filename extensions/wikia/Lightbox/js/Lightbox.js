@@ -401,7 +401,7 @@ var Lightbox = {
 		return modalOptions;
 	},
 	updateMedia: function() {
-		Lightbox.openModal.find('.media').html("").startThrobbing();
+		Lightbox.openModal.media.html("").startThrobbing();
 	
 		var title = Lightbox.current.title;
 		var type = Lightbox.current.type;
