@@ -10,12 +10,17 @@ jQuery(function($) {
 
 			this.dropdown = new Wikia.MultiSelectDropdown(this.$dropdown);
 			this.dropdown.on('change', $.proxy(this.onChange, this));
+
+			this.$selectAll.prop('checked', this.everythingSelected());
+		},
+		everythingSelected: function() {
+			return this.dropdown.getItems().length == this.dropdown.getSelectedItems().length;
 		},
 		onChange: function(event) {
 			var $checkbox = $(event.target);
 
 			if (this.$selectAll.is(':checked')) {
-				this.$selectAll.toggleClass('modified', this.dropdown.getItems().length != this.dropdown.getSelectedItems().length);
+				this.$selectAll.toggleClass('modified', this.everythingSelected());
 			}	
 		},
 		saveFilters: function(event) {
@@ -43,7 +48,7 @@ jQuery(function($) {
 				.getItems()
 				.toggleClass('selected', checked)
 				.find(':checkbox').prop('checked', checked);
-		},
+		}
 	};
 
 	RecentChanges.init();
