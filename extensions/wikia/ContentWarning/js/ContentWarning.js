@@ -1,4 +1,4 @@
-(function(window) {
+jQuery(function($) {
 
 	// Hide content warning, show content
 	function afterApproved() {
@@ -50,4 +50,4 @@
 			}
 		});
 	}
-})(this);
+});
