@@ -88,15 +88,17 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	function getAspectRatio(){
+		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		$metadata = $this->getMetadata(true);
+		$ratio = static::$aspectRatio;
 		if (!empty($metadata['aspectRatio'])) {
-			$ratio = $metadata['aspectRatio'];
-		} else {
-			$ratio = static::$aspectRatio;
-		}
-		if(floatval($ratio) == 0) {
-			$ratio = 1;
+			if (floatval($metadata['aspectRatio']) == 0) {
+				error_log("VideoHandler aspectRatio warning: ". $wgCityId . ", ". $this->title);
+			} else {
+				$ratio = $metadata['aspectRatio'];
+			}
+			
 		}
 		wfProfileOut( __METHOD__ );
 		return $ratio;
