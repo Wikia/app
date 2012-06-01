@@ -44,28 +44,24 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		io.transports = globalTransports ;
 		if(! this.socket ) {
 		this.authRequestWithMW(function(data){
-			this.socket = io.connect(url, {
+			var socket = io.connect(url, {
 				'force new connection' : true,
 				'try multiple transports': true,
 				'connect timeout': false,
 				'query':data,
 				'reconnect':false
 			});
-	                this.socket.on('error', this.proxy( this.onError, this ) );
-        	        this.socket.on('message', this.proxy( this.onMsgReceived, this ) );	
-			this.socket.on('connect', this.proxy( this.onConnect, this ) );
-			this.socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
+
+var tra = globalTransports[0];
+        	        socket.on('message', this.proxy( this.onMsgReceived, this ) );	
+			socket.on('connect', this.proxy( function(){this.onConnect(socket, tra); }, this ) );
 		});
 		} else {
 			$("reconecte");
 			this.socket.socket.connect();
 		}
 	},
-	
-	onError: function(){
-		 //this.onDisconnect();
-	},
-	
+		
 	connect: function() {
 		this.baseconnect();
 		if(!this.firstConnected) {
@@ -73,15 +69,22 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			$().log("timeout try without socket connection");
 			
 			globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling' ];
-				if(this.connected == false) {
-					this.socket = false;
-					this.baseconnect();
-				}
-			}, this), 6000 );
+			io.transports = globalTransports;
+			if(this.connected == false) {
+				delete this.socket;
+				this.baseconnect();
+			}
+			}, this), 8000 );
 		}
 	},
-	
-	onConnect: function() {
+
+	onConnect: function(socket, transports) {
+		$().log(transports);
+		if(this.socket) {
+			this.socket.removeAllListeners('disconnect');
+		}
+		this.socket = socket;
+		socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
 		clearTimeout(this.connectTimeoutTimer);
 		clearTimeout(this.tryconnect);
 		if(this.announceConnection){
