@@ -202,6 +202,9 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			margin: 0 auto;
 		}
 	}
+	#wikiaThrobber {
+		z-index: 0;	/* resetting throbber mask */	
+	}
 	#LightboxPreload {
 		position: absolute;
 		top: -99999999px;
