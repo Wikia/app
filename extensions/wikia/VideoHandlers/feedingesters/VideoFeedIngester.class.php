@@ -3,7 +3,9 @@
 abstract class VideoFeedIngester {
 	const PROVIDER_SCREENPLAY = 'screenplay';
 	const PROVIDER_REALGRAVITY = 'realgravity';
-	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY);	// 2012/5/18: disabling realgravity for now
+	const PROVIDER_IGN = 'ign';
+	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
+	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY);	// 2012/5/18: disabling realgravity for now
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
@@ -53,12 +55,14 @@ abstract class VideoFeedIngester {
 
 		wfProfileIn( __METHOD__ );
 		$debug = !empty($params['debug']);
+		if($debug) var_dump($data);
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 		
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
 		$metadata = $this->generateMetadata($data, $msg);
 		if (!empty($msg)) {
+			var_dump($msg);
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -74,7 +78,7 @@ abstract class VideoFeedIngester {
 			// if there are duplicates use name of one of them as reference
 			// instead of generating new one
 			$name = $duplicates[0]['img_name'];
-			echo "Video already exists, using it's old name: $name";
+			echo "Video already exists, using it's old name: $name\n";
 		}
 
 		if (!$this->validateTitle($id, $name, $msg, $debug)) {
@@ -111,7 +115,8 @@ abstract class VideoFeedIngester {
 			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata);
 			$uploadedTitle = null;
 			$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
-			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription(), false);
+			$body = $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription();
+			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $body );
 			if ($result->ok) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";

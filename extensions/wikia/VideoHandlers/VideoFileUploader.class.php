@@ -68,8 +68,8 @@ class VideoFileUploader {
 		wfProfileIn(__METHOD__);
 		if( !$this->getApiWrapper() ) {
 			/* can't upload without proper ApiWrapper */
-			wfProfileOut();
-			return Status::newFatal('');
+			wfProfileOut(__METHOD__);
+			return Status::newFatal("Can't get ApiWrapper");
 		}
 		$retries = 3;
 
@@ -104,7 +104,13 @@ class VideoFileUploader {
 		if ( $oTitle->exists() ) {
 			// @TODO
 			// if video already exists make sure that we are in fact changing something
-			// before generating upload
+			// before generating upload (for now this only works for edits)
+			$article = Article::newFromID( $oTitle->getArticleID() );
+			$content = $article->getContent();
+			$newcontent = $this->getDescription();
+			if( $content != $newcontent ) {
+				$article->doEdit( $newcontent, 'update' );
+			}
 		}
 
 		$file = F::build(
@@ -199,6 +205,7 @@ class VideoFileUploader {
 			$this->sDescription = $this->getCategoryVideosWikitext() . $this->getApiWrapper()->getDescription();
 		}
 		wfProfileOut( __METHOD__ );
+
 		return $this->sDescription;
 	}
 	
