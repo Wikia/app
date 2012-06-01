@@ -229,6 +229,11 @@ body {
 		textarea {
 			color: $color-text;
 			background-color: $color-page;
+
+			// hide when replaced by ckeditor
+			&.replaced {
+				display: none;
+			}
 		}
 
 		.cke_browser_ie7 iframe {

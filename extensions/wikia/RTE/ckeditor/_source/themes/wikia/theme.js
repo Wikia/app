@@ -15,10 +15,8 @@ CKEDITOR.themes.add( 'wikia', (function()
 			if ( !element || elementMode == CKEDITOR.ELEMENT_MODE_NONE )
 				return;
 
-			// wikia change - start
-			if ( elementMode == CKEDITOR.ELEMENT_MODE_REPLACE && !editor.config.isMiniEditor )
-				element.hide();
-			// wikia change - end
+			if ( elementMode == CKEDITOR.ELEMENT_MODE_REPLACE )
+				element.addClass('replaced'); // wikia change
 
 			var contentsHtml	= editor.fire( 'themeSpace', { space : 'contents', html : '', elements: [] } ).html;
 
