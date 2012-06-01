@@ -131,7 +131,7 @@ var Lightbox = {
 					}
 				// Hide Lightbox header and footer on mouse leave. 
 				}).on('mouseleave.Lightbox', function(evt) {
-					Lightbox.hideOverlay();
+					Lightbox.hideOverlay(10);
 				// Show more info screen on button click
 				}).on('click.Lightbox', '.LightboxHeader .more-info-button', function(evt) {
 					if(Lightbox.current.type === 'video') {
@@ -371,7 +371,6 @@ var Lightbox = {
 	},
 	showOverlay: function() {
 		clearTimeout(Lightbox.eventTimers.overlay);
-		Lightbox.eventTimers.overlay = 0;
 		var overlay = Lightbox.openModal;
 		if(overlay.hasClass('overlay-hidden') && overlay.data('overlayactive')) {
 			overlay.removeClass('overlay-hidden');
@@ -379,7 +378,8 @@ var Lightbox = {
 	},
 	hideOverlay: function(delay) {
 		var overlay = Lightbox.openModal;
-		if(!overlay.hasClass('overlay-hidden') && !Lightbox.eventTimers.overlay && overlay.data('overlayactive')) {
+		if(!overlay.hasClass('overlay-hidden') && overlay.data('overlayactive')) {
+			clearTimeout(Lightbox.eventTimers.overlay);
 			Lightbox.eventTimers.overlay = setTimeout(
 				function() {
 					overlay.addClass('overlay-hidden');
