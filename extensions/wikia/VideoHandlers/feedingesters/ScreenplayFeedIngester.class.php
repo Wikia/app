@@ -171,7 +171,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$i = 2;
 		// is this name available?
 		$title = Title::newFromText($name_final, NS_FILE);
-		while ( $title->exists() ) {
+		while ( $title && $title->exists() ) {
 			$name_final = $name . ' ' . $i;
 			$i++;
 			$title = Title::newFromText($name_final, NS_FILE);

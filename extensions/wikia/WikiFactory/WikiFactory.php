@@ -1008,12 +1008,15 @@ class WikiFactory {
 		// put the address back into shape and return
 		if(empty($_SERVER['SERVER_NAME'])) {
 			// maintenance script
-			global $wgDevelEnvironment, $wgDBname;
+			global $wgDevelEnvironment, $wgCityId;
+			$domains = WikiFactory::getDomains($wgCityId);
+			$domains[] = "localhost";
 			if(empty($wgDevelEnvironment)) {
-				return 'http://' . $wgDBname . '.wikia.com/'.$address;
+				return 'http://' . $domains[0] . '/'.$address;
 			} else {
-				$hostname = str_replace('dev-','',gethostname());
-				return 'http://' . $wgDBname . '.' . $hostname . '.wikia-dev.com/'.$address;
+				$hostname = str_replace('dev-','',gethostname()) . '.wikia-dev.com';
+				$domain = str_replace( 'wikia.com', $hostname, $domains[0] );
+				return 'http://' . $domain .  '/'.$address;
 			}
 		}
 

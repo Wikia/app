@@ -126,6 +126,10 @@ $app->registerClass('ScreenplayVideoHandler', $dir . '/handlers/ScreenplayVideoH
 $app->registerClass('ScreenplayApiWrapper', $dir . '/apiwrappers/ScreenplayApiWrapper.class.php');
 $wgMediaHandlers['video/screenplay'] = 'ScreenplayVideoHandler';
 
+$app->registerClass('IgnVideoHandler', $dir . '/handlers/IgnVideoHandler.class.php');
+$app->registerClass('IgnApiWrapper', $dir . '/apiwrappers/IgnApiWrapper.class.php');
+$wgMediaHandlers['video/ign'] = 'IgnVideoHandler';
+
 $app->registerClass('SevenloadVideoHandler', $dir . '/handlers/SevenloadVideoHandler.class.php');
 $app->registerClass('SevenloadApiWrapper', $dir . '/apiwrappers/SevenloadApiWrapper.class.php');
 $wgMediaHandlers['video/sevenload'] = 'SevenloadVideoHandler';
@@ -152,6 +156,7 @@ $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 $app->registerClass('VideoFeedIngester', $dir . '/feedingesters/VideoFeedIngester.class.php');
 $app->registerClass('RealgravityFeedIngester', $dir . '/feedingesters/RealgravityFeedIngester.class.php');
 $app->registerClass('ScreenplayFeedIngester', $dir . '/feedingesters/ScreenplayFeedIngester.class.php');
+$app->registerClass('IgnFeedIngester', $dir . '/feedingesters/IgnFeedIngester.class.php');
 
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',

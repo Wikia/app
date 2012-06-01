@@ -58,7 +58,7 @@ if ( $wgUser->isAnon() ) {
 $providersVideoFeed = array();
 $provider = !empty($args[0]) ? strtolower($args[0]) : '';
 if (empty($provider)) {
-	$providersVideoFeed = VideoFeedIngester::$PROVIDERS;
+	$providersVideoFeed = VideoFeedIngester::$PROVIDERS_DEFAULT;
 }
 elseif (array_search($provider, VideoFeedIngester::$PROVIDERS) !== false) {
 	$providersVideoFeed = array( $provider );
@@ -89,6 +89,11 @@ foreach ($providersVideoFeed as $provider) {
 		case VideoFeedIngester::PROVIDER_SCREENPLAY:
 			$startDate = date('m/d/y', $startDateTS);
 			$endDate = date('m/d/y', $endDateTS);
+			$file = $feedIngester->downloadFeed($startDate, $endDate);
+			break;
+		case VideoFeedIngester::PROVIDER_IGN:
+			$startDate = date('Y-m-d', $startDateTS).'T00:00:00-0800';
+			$endDate = date('Y-m-d', $endDateTS).'T00:00:00-0800';
 			$file = $feedIngester->downloadFeed($startDate, $endDate);
 			break;
 		case VideoFeedIngester::PROVIDER_REALGRAVITY:
