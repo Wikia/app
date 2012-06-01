@@ -342,9 +342,8 @@ class EditAccount extends SpecialPage {
 
 		// Remove e-mail address
 		$this->mUser->setEmail( '' );
-		$this->mUser->invalidateEmail();
 
-		if ( $this->mUser->setPassword( $this->generateRandomScrambledPassword() ) ) {
+		if ( $this->mUser->getEmail() == '' && $this->mUser->invalidateEmail() && $this->mUser->setPassword( $this->generateRandomScrambledPassword() ) ) {
 			global $wgUser, $wgTitle;
 
 			// Mark as disabled in a more real way, that doesnt depend on the real_name text
