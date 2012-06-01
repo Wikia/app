@@ -170,10 +170,12 @@ var Lightbox = {
 					var target = $(evt.target);
 					var overlayActive = Lightbox.openModal.data('overlayactive');
 					if(overlayActive) {
-						target.addClass('active');	// add active state to button when carousel overlay is active
+						var pinnedTitle = target.data('pinned-title')
+						target.addClass('active').attr('title', pinnedTitle);	// add active state to button when carousel overlay is active
 						Lightbox.openModal.addClass('pinned-mode');
 					} else {
-						target.removeClass('active');
+						var pinTitle = target.data('pin-title')
+						target.removeClass('active').attr('title', pinTitle);
 						Lightbox.openModal.removeClass('pinned-mode');
 					}
 					Lightbox.openModal.data('overlayactive', !overlayActive);	// flip overlayactive state
