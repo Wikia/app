@@ -133,6 +133,10 @@
 					<?php 
 						$form = array (
 						    'inputs' => array (
+						    	array(
+						    		'type' => 'custom',
+						    		'output' => '<h2>'. wfMsg('lightbox-urls-form-header') .'</h2>',
+						    	),
 						        array(
 						            'label' => wfMsg('lightbox-embed-url'),
 						            'type' => 'text',
@@ -155,6 +159,10 @@
 						$form = array (
 							'id' => 'shareEmailForm',
 						    'inputs' => array (
+						    	array(
+						    		'type' => 'custom',
+						    		'output' => '<h2>'.wfMsg('lightbox-email-form-header').'</h2>',
+						    	),
 						        array(
 						            // Main input attributes
 						            'label' => wfMsg('lightbox-email-label'),
