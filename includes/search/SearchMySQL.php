@@ -289,6 +289,7 @@ class SearchMySQL extends SearchEngine {
 	 * @param $text String
 	 */
 	function update( $id, $title, $text ) {
+		return;
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->replace( 'searchindex',
 			array( 'si_page' ),

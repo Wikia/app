@@ -6,6 +6,10 @@ class IgnFeedIngester extends VideoFeedIngester {
 	protected static $FEED_URL = 'http://apis.ign.com/partners/wikia/video/v3/videos?fromDate=$1&toDate=$2';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 
+	/*
+	 * Public functions
+	*/
+
 	public function downloadFeed($startDate, $endDate) {
 
 		wfProfileIn( __METHOD__ );
@@ -23,35 +27,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		wfProfileOut( __METHOD__ );
 		return $content;
-	}
-
-	protected function getUrlContent($url) {
-		$options = array(
-			'timeout'=>'default'
-		);
-		echo("Creating request\n");
-		$req = HttpRequest::factory( $url, $options );
-		$req->setHeader('X-App-Id','94bd2de3');
-		$req->setHeader('X-App-Key','f3c3c1ccc56991a1aefe42262188f620');
-		echo("Executing\n");
-		$status = $req->execute();
-		if ( $status->isOK() ) {
-			echo("Got content\n");
-			$ret = $req->getContent();
-		} else {
-			$errMsg = "Requested URL was: " . $req->getFinalUrl();
-			$errMsg .= " (err: " . json_encode($req->status->errors) . ')';
-			Wikia::log(__METHOD__, 'error', $errMsg);
-			echo("No content\n".$errMsg);
-			$ret = false;
-		}
-		return $ret;
-	}
-
-	private function initFeedUrl($startDate, $endDate) {
-		$url = str_replace('$1', $startDate, static::$FEED_URL);
-		$url = str_replace('$2', $endDate, $url);
-		return $url;
 	}
 
 	public function import($content='', $params=array()) {
@@ -104,15 +79,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		return 0;
 	}
 
-	protected function generateName(array $data) {
-
-		wfProfileIn( __METHOD__ );
-		$name = $data['titleName'];
-
-		wfProfileOut( __METHOD__ );
-		return $name;
-	}
-
 	public function generateTitleName(array $data) {
 		$name = $data['titleName'];
 
@@ -130,6 +96,20 @@ class IgnFeedIngester extends VideoFeedIngester {
 		wfProfileOut( __METHOD__ );
 
 		return $categories;
+	}
+
+	/*
+	 * Protected functions
+	*/
+
+
+	protected function generateName(array $data) {
+
+		wfProfileIn( __METHOD__ );
+		$name = $data['titleName'];
+
+		wfProfileOut( __METHOD__ );
+		return $name;
 	}
 
 	protected function generateMetadata(array $data, &$errorMsg) {
@@ -154,4 +134,41 @@ class IgnFeedIngester extends VideoFeedIngester {
 			);
 		return $metadata;
 	}
+
+	protected function getUrlContent($url) {
+		global $wgIgnApiConfig;
+		$options = array(
+			'timeout'=>'default'
+		);
+		echo("Creating request\n");
+		$req = HttpRequest::factory( $url, $options );
+		$req->setHeader('X-App-Id',$wgIgnApiConfig['AppId']);
+		$req->setHeader('X-App-Key', $wgIgnApiConfig['AppKey']);
+		echo("Executing\n");
+		$status = $req->execute();
+		if ( $status->isOK() ) {
+			echo("Got content\n");
+			$ret = $req->getContent();
+		} else {
+			$errMsg = "Requested URL was: " . $req->getFinalUrl();
+			$errMsg .= " (err: " . json_encode($req->status->errors) . ')';
+			Wikia::log(__METHOD__, 'error', $errMsg);
+			echo("No content\n".$errMsg);
+			$ret = false;
+		}
+		return $ret;
+	}
+
+	/*
+	 * Private functions
+	*/
+
+
+	private function initFeedUrl($startDate, $endDate) {
+		$url = str_replace('$1', $startDate, static::$FEED_URL);
+		$url = str_replace('$2', $endDate, $url);
+		return $url;
+	}
+
+
 }
