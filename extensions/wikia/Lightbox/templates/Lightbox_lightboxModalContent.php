@@ -50,7 +50,7 @@
 		<div class="ad"></div>
 		<div class="content">
 			<ul class="toolbar">
-				<li><span class="icon pin button secondary"></span></li>
+				<li><span class="icon pin button secondary" title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" data-pinned-title="<?= wfMsg('lightbox-unpin-carousel-tooltip') ?>" data-pin-title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" ></span></li>
 			</ul>
 			<p id="LightboxCarouselProgress" class="progress"></p>
 			<span class="carousel-arrow next"></span>

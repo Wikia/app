@@ -24,6 +24,8 @@ $messages['en'] = array(
 	'lightbox-no-media-error-close' => 'Ok',
 	'lightbox-urls-form-header' => 'Urls',
 	'lightbox-email-form-header' => 'Email',
+	'lightbox-pin-carousel-tooltip' => 'Pin the carousel in place',
+	'lightbox-unpin-carousel-tooltip' => 'Unpin the carousel',
 	
 	/* /new stuff */
 
