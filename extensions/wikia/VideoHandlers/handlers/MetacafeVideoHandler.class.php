@@ -18,8 +18,4 @@ EOT;
 		return $embedCode;
 	}
 
-	function getAspectRatio(){
-		$metadata = $this->getMetadata( true );
-		return $metadata['aspectRatio'];
-	}
 }

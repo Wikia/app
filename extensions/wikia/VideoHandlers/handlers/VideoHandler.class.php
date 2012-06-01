@@ -91,11 +91,15 @@ abstract class VideoHandler extends BitmapHandler {
 		wfProfileIn( __METHOD__ );
 		$metadata = $this->getMetadata(true);
 		if (!empty($metadata['aspectRatio'])) {
-			wfProfileOut( __METHOD__ );
-			return $metadata['aspectRatio'];
+			$ratio = $metadata['aspectRatio'];
+		} else {
+			$ratio = static::$aspectRatio;
+		}
+		if(floatval($ratio) == 0) {
+			$ratio = 1;
 		}
 		wfProfileOut( __METHOD__ );
-		return static::$aspectRatio;
+		return $ratio;
 	}
 
 	function getHeight( $width ){
