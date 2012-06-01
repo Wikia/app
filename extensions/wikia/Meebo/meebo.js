@@ -12,7 +12,6 @@ var MeeboBar = {
 			default:
 				MeeboBar.network = 'wikia_lifestyles';
 		}
-		
 window.Meebo||function(c){function p(){return["<",i,' onload="var d=',g,";d.getElementsByTagName('head')[0].",
 j,"(d.",h,"('script')).",k,"='//cim.meebo.com/cim?iv=",a.v,"&",q,"=",c[q],c[l]?
 "&"+l+"="+c[l]:"",c[e]?"&"+e+"="+c[e]:"","'\"></",i,">"].join("")}var f=window,
@@ -29,6 +28,22 @@ b.contentWindow[g];t.write(p());t.close()}catch(x){b[k]=o+'d.write("'+p().replac
 '\\"')+'");d.close();'}a.T(1)}({network:MeeboBar.network});
 Meebo.disableSharePageButton=true;
 Meebo('domReady');
+
+		Meebo(function() {
+			$('body').trigger('meebo-load').on('click', $('#meebo'), function() {
+				$(this).trigger('meebo-click');
+				setTimeout(MeeboBar.checkVisibility, 1000);
+			});
+			MeeboBar.checkVisibility();
+		});	
+	},
+
+	checkVisibility: function() {
+		if ($('#meebo').children().eq(0).css('overflow') == 'visible') {
+			$('body').trigger('meebo-visible');
+		} else {
+			$('body').trigger('meebo-hidden');
+		}
 	}
 };
 

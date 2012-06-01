@@ -1,3 +1,16 @@
+$(function() {
+	WikiaNotificationsApp.init();
+	
+	$('body').on({
+		'meebo-visible': function() {
+			$('#WikiaNotifications').addClass('meebo');
+		},
+		'meebo-hidden': function() {
+			$('#WikiaNotifications').removeClass('meebo');
+		}
+	});
+});
+
 var WikiaNotificationsApp = {
 
 	purgeCurrentPage: function() {
@@ -6,7 +19,7 @@ var WikiaNotificationsApp = {
 
 	init: function() {
 		var notifications = $('#WikiaNotifications');
-
+		
 		// handle clicks on dismiss icons
 		notifications.find('.close-notification').click(function(ev) {
 			// find notification to be removed
@@ -102,6 +115,3 @@ var WikiaNotificationsApp = {
 	}
 };
 
-$(function() {
-	WikiaNotificationsApp.init();
-});
