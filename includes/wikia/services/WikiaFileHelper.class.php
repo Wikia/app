@@ -259,7 +259,7 @@ class WikiaFileHelper extends Service {
 			$data['rawImageUrl'] = $file->getUrl();
 			$data['userId'] = $user->getId();
 			$data['userName'] = $user->getName();
-			$data['userThumbUrl'] = F::build( 'AvatarService', array($user->getId() , $config['userAvatarWidth'] ), 'getAvatarUrl' );
+			$data['userThumbUrl'] = F::build( 'AvatarService', array($user, $config['userAvatarWidth'] ), 'getAvatarUrl' );
 			$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 			$data['description']  = $mediaPage->getContent();
 

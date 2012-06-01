@@ -222,7 +222,7 @@ var LightboxLoader = {
 			$.nirvana.sendRequest({
 				controller: 'Lightbox',
 				method: 'getMediaDetail',
-				type: 'POST',	/* TODO (hyun) - might change to get */
+				type: 'get',
 				format: 'json',
 				data: mediaParams,
 				callback: function(json) {
