@@ -16,6 +16,9 @@ class WikiaTrackerController extends WikiaController {
 		// There are a few usages around the code-base that would need to be removed if they really aren't needed & migrated otherwise.
 		$vars['_gaq'] = array();
 		$vars['_wtq'] = array();
+		
+		$app = F::app();
+		$vars['wgIsGASpecialWiki'] = (bool) $app->wg->IsGASpecialWiki;
 
 		return true;
 	}
