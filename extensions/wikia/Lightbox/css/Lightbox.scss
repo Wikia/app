@@ -158,6 +158,11 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			}
 		}
 	}
+	.share h2 {
+		font-size: 14px;
+		font-weight: bold;
+		margin-top: 0;
+	}
 	.modalContent {
 		margin: 0;
 		height: 100%;
@@ -208,7 +213,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	.icon {
 		display: block;
 		height: 20px;
-		margin-right: 18px;
+		margin-right: 42px;
 		padding: 0;
 		width: 28px;
 		&:after {
@@ -293,7 +298,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		position: absolute;
 		width: 100%;
 		.progress {
-			margin-left: 22px;
+			margin-left: 41px;
+			min-height: 21px;
 			b {
 				font-weight: bold;
 			}
@@ -305,12 +311,12 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			}
 		}		
 		.LightboxCarouselContainer {
-			margin-left: 20px;
+			margin-left: 40px;
 			height: 55px;
 			overflow: hidden;
 			padding: 3px 0px;
 			position: relative;
-			width: 920px;
+			width: 880px;
 			& > div {
 				position: relative;
 			}
@@ -360,11 +366,18 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	
 	&.show-ads .LightboxCarousel {
 		.LightboxCarouselContainer {
-			width: 588px;			
+			margin-left: 40px;
+			width: 588px;
 		}
 		.content{
 			border-right: 1px solid $color-page-border;
 			width: 625px;		
+		}
+		.icon {
+			margin-right: 18px;			
+		}
+		.progress {
+			margin-left: 22px;
 		}
 	}
 	

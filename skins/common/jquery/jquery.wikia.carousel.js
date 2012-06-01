@@ -174,6 +174,8 @@
 				dom.items.eq(idx).addClass('active');
 	
 				moveToIndex(idx);
+			} else {
+				updateArrows();
 			}
 		}
 
@@ -188,7 +190,6 @@
 		}
 		
 		function updateArrows() {
-
 			// If we don't have enough items to fill the viewport, disable both arrows
 			if(dom.items.length <= options.itemsShown) {
 				disableNext();
