@@ -215,8 +215,13 @@ class RelatedVideosService {
 			unset( $videos[ $key ] );
 		}
 
-		uasort( $videos, array( $this, 'sortByDate') );
-		return array_reverse( $videos, true );
+		//uasort( $videos, array( $this, 'sortByDate') );
+		//return array_reverse( $videos, true );
+
+		// some magic to preserve keys (shuffle does not preserve them)
+		$keys = array_keys( $videos );
+		shuffle( $keys );
+		return array_merge( array_flip( $keys ) , $videos );
 	}
 
 }
