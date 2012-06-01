@@ -21,7 +21,7 @@ Wikia.Dropdown = $.createClass(Observable, {
 
 		this.$window = $(window);
 		this.$wrapper = $(element).addClass('closed');
-		this.$dropdown = this.$wrapper.children('ul').eq(0);
+		this.$dropdown = this.$wrapper.find('.dropdown');
 
 		this.bindEvents();
 	},
@@ -65,7 +65,7 @@ Wikia.Dropdown = $.createClass(Observable, {
 	 */
 
 	getItems: function() {
-		return this.$dropdown.children('li');
+		return this.$dropdown.find('.dropdown-item');
 	},
 
 	getSelectedItems: function() {
@@ -137,7 +137,7 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 		this.$checkboxes = this.getItems().find(':checkbox');
 		this.$footerToolbar = $('.WikiaFooter .toolbar');
 		this.$selectedItems = this.$wrapper.find('.selected-items');
-		this.$selectedItemsList = this.$selectedItems.find('.list');
+		this.$selectedItemsList = this.$selectedItems.find('.selected-items-list');
 
 		this.$checkboxes.on('change.' + this.settings.eventNamespace, this.proxy(this.onChange));
 		this.$window.on(
@@ -227,7 +227,7 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 		var $checkbox = $(event.target);
 
 		if (!this.settings.onChange || this.settings.onChange() !== false) {
-			$checkbox.closest('li').toggleClass('selected');
+			$checkbox.closest('.dropdown-item').toggleClass('selected');
 		}
 
 		this.fire('change', event);

@@ -5,32 +5,18 @@ jQuery(function($) {
 			this.$dropdown = this.$table.find('.WikiaDropdown');
 			this.$submit = this.$table.find('input[type="submit"]');
 			this.$submit.on('click.RecentChangesDropdown', $.proxy(this.saveFilters, this));
+			this.$selectAll = this.$dropdown.find('.select-all');
+			this.$selectAll.on('change', $.proxy(this.selectAll, this));
+
 			this.dropdown = new Wikia.MultiSelectDropdown(this.$dropdown);
 			this.dropdown.on('change', $.proxy(this.onChange, this));
 		},
 		onChange: function(event) {
 			var $checkbox = $(event.target);
 
-			// Clear the list if 'all' is selected
-			if ($checkbox.val() === 'all') {
-				this.dropdown.getSelectedItems().filter(function(i, element) {
-					var $element = $(element),
-						$checkbox = $element.find(':checkbox');
-
-					if ($checkbox.val() !== 'all') {
-						$checkbox.removeAttr('checked');
-						$element.removeClass('selected');
-					}
-				});
-
-			// Otherwise, clear 'all'
-			} else {
-				this.$dropdown
-					.find(':checkbox[value="all"]')
-					.removeAttr('checked')
-					.closest('li')
-					.removeClass('selected');
-			}
+			if (this.$selectAll.is(':checked')) {
+				this.$selectAll.toggleClass('modified', this.dropdown.getItems().length != this.dropdown.getSelectedItems().length);
+			}	
 		},
 		saveFilters: function(event) {
 			var self = this;
@@ -49,7 +35,15 @@ jQuery(function($) {
 					window.location.reload();
 				}
 			});
-		}
+		},
+		selectAll: function(event) {
+			var checked = this.$selectAll.removeClass('modified').is(':checked');
+
+			this.dropdown
+				.getItems()
+				.toggleClass('selected', checked)
+				.find(':checkbox').prop('checked', checked);
+		},
 	};
 
 	RecentChanges.init();

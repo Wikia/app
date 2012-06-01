@@ -41,6 +41,10 @@ class RecentChangesController extends WikiaController {
 
 		$rcfs = new RecentChangesFiltersStorage($this->wg->User);
 		$selected = array_flip($rcfs->get());
-		$this->html = $this->app->renderView( 'WikiaStyleGuideDropdownController', 'multiSelect', array( 'options' => $options, 'selected' => $selected ) );		
+		$this->html = $this->app->renderView( 'WikiaStyleGuideDropdownController', 'multiSelect', array(
+			'options' => $options,
+			'selected' => $selected,
+			'toolbar' => $this->app->getView( 'RecentChangesController', 'dropdown_toolbar' )->render()
+		));		
 	}
 }
