@@ -427,7 +427,7 @@ var Lightbox = {
 		if(mediaArr.length < 2) {
 			next.addClass('disabled');
 			previous.addClass('disabled');
-		}else if(idx == (mediaArr.length - 1)) {
+		} else if(idx == (mediaArr.length - 1)) {
 			next.addClass('disabled');
 			previous.removeClass('disabled');
 		} else if(idx == 0) {
@@ -439,7 +439,7 @@ var Lightbox = {
 		}
 	},
 	getShareCodes: function(mediaParams, callback) {
-		var title = mediaParams['title'];
+		var title = mediaParams['fileTitle'];
 		if(LightboxLoader.cache.share[title]) {
 			callback(LightboxLoader.cache.share[title]);
 		} else {
