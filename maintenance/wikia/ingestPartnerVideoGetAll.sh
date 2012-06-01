@@ -9,32 +9,38 @@ echo "+====================================+"
 echo "|      Mass ingestion script         |"
 echo "+------------------------------------+"
 echo "| ingestion of historic data from    |"
-echo "| 2001 up to the current date        |"
+echo "| selected date up to current        |"
 echo "+------------------------------------+"
 echo ""
 echo "Running as $user"
 
-if [ $user != "www-data" ]
+if [ $user != "release" ]
 then
-	echo "This script needs to be run as www-data user"
-	exit
+	if [ $user != "www-data" ]
+	then
+		echo "This script needs to be run as 'www-data' or 'release' user"
+		exit
+	fi
 fi
 
 nowunix=`date '+%s'`
+startdate='2008-11-25'
+provider='ign'
+logfile='/tmp/ingestion.log'
 
 while [ 1 ]
 do
 	endtime=$(( $counter + 60 * 60 * 24 * 7 - 1 ))
 
-	echo ">>> From: `date -d "2001-01-01 $counter sec"`	To:   `date -d "2001-01-01 $endtime sec"`" | tee -a /tmp/ingestion.log
+	echo ">>> From: `date -d "$startdate $counter sec"`     To:   `date -d "$startdate $endtime sec"`" | tee -a /tmp/ingestion.log
 	sleep 1
-	from=`date -d "2001-01-01 $counter sec" '+%s'`
-	to=`date -d "2001-01-01 $endtime sec" '+%s'`
+	from=`date -d "$startdate $counter sec" '+%s'`
+	to=`date -d "$startdate $endtime sec" '+%s'`
 
-	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -e $to -s $from -r | tee -a /tmp/ingestion.log || exit
+	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -e $to -s $from -r $provider | tee -a $logfile || exit
 
 	counter=$(( $counter + 60 * 60 * 24 * 7 ))
-	from=`date -d "2001-01-01 $counter sec" '+%s'`
+	from=`date -d "$startdate $counter sec" '+%s'`
 	if [ $from -gt $nowunix ]
 	then
 		echo "Finished ingesting videos"
