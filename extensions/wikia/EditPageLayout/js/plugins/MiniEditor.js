@@ -3,6 +3,8 @@
 
 	WE.plugins.MiniEditor = $.createClass(WE.plugin, {
 
+		isReady: false,
+
 		proxyEvents: [
 			'ck-instanceReady', 'ck-wysiwygModeReady', 'editorActivated',
 			'editorBeforeReady', 'editorBlur', 'editorClear',
@@ -59,7 +61,7 @@
 			this.editor.getEditbox().bind('keyup.MiniEditor', this.proxy(this.editorResize)).keyup();		
 		},
 
-		editorActivated: function(isFirstActivation) {
+		editorActivated: function(event) {
 			var self = this,
 				wikiaEditor = this.editor,
 				element = wikiaEditor.getEditorElement(),
@@ -69,9 +71,21 @@
 					this.showButtons();
 					this.showToolbar();
 					wikiaEditor.element.addClass('editor-open').removeClass('editor-closed');
+
+					if (!this.isReady) {
+						this.isReady = true;
+					}
 				};
 
-			if (!wikiaEditor.element.hasClass('active')) {
+			// Don't activate if target is not body. Basically, this means the editor
+			// was focused by something other than its editbox. If the body has been focused
+			// since editor initialization began, ignore the event.
+			if (event && event.target != wikiaEditor.config.body.get(0)) {
+				return;
+
+			} else if (!wikiaEditor.element.hasClass('active')) {
+				wikiaEditor.element.removeClass('preloading');
+
 				if (wikiaEditor.ck) {
 					var hasContent = wikiaEditor.getContent();
 
@@ -79,7 +93,7 @@
 					// wrapper height to match the element height would result in the
 					// wrapper shrinking then expanding again. Also don't need to
 					// animate if there is content, it will already be the proper height.
-					if (!isFirstActivation && !hasContent) {
+					if (this.isReady && !hasContent) {
 						wrapper.height(element.height()).show();
 					}
 
@@ -108,7 +122,7 @@
 						element.hide();
 
 						// Only animate on first time showing the edit instance
-						if (isFirstActivation) {
+						if (!this.isReady) {
 							// Temporary solution to show scrollbar in the textarea 
 							// until we enable autoresizing when RTE is disabled. 
 							textarea.css('overflow', 'auto').animate(animation, this.proxy(afterAnimation));
@@ -194,14 +208,16 @@
 		},
 
 		editorFocus: function() {
-			if (this.editor.instanceId != WikiaEditor.instanceId) {
-				this.editor.setAsActiveInstance();
+			var wikiaEditor = this.editor;
+
+			if (wikiaEditor.instanceId != WikiaEditor.instanceId) {
+				wikiaEditor.setAsActiveInstance();
 			}
 
 			this.editor.element.addClass('focused');
 		},
 
-		editorReady: function() {
+		editorReady: function(event) {
 			var wikiaEditor = this.editor,
 				ckeditor = wikiaEditor.ck;
 
@@ -210,11 +226,11 @@
 			$().log('End initialization (' + MiniEditor.initTime + 'ms)', 'MiniEditor');
 			$().log('Time consumed until ready: ' + ((MiniEditor.loadTime + MiniEditor.initTime) / 1000) + 's', 'MiniEditor');
 
-			// Remove visibility styles that we added for the loading status indicator
-			wikiaEditor.config.body.css('visibility', '');
+			// Remove loading class from wrapper
+			wikiaEditor.element.removeClass('loading');
 
 			// Trigger editorActivated
-			wikiaEditor.fire('editorActivated', true);
+			wikiaEditor.fire('editorActivated', event);
 		},
 
 		editorReset: function() {

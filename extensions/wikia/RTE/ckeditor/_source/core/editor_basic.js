@@ -119,7 +119,9 @@ if ( !CKEDITOR.editor )
 
 		// Do not replace the textarea right now, just hide it. The effective
 		// replacement will be done by the _init function.
-		element.style.visibility = 'hidden';
+		// wikia change - start: we can handle this ourselves thank you very much!
+		//element.style.visibility = 'hidden';
+		// wikia change - end
 
 		// Create the editor instance.
 		return new CKEDITOR.editor( config, element, CKEDITOR.ELEMENT_MODE_REPLACE );

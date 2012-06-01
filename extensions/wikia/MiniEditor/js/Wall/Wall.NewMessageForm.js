@@ -6,34 +6,32 @@
 			var self = this;
 
 			if (this.WallMessageBody.is(':focus')) {
-				self.initEditor(this.WallMessageBody);	
+				self.initEditor();	
 			}
 
-			this.WallMessageBody.focus(function() {
-				self.initEditor(this);
+			this.WallMessageBody.add(this.WallMessageTitle).focus(function(event) {
+				self.initEditor(event);
 			});
 		},
-		
-		initEditor: function(element) {
+
+		initEditor: function(event) {
 			var self = this;
 
-			element = $(element);
-
-			if (!element.data('wikiaEditor')) {
-				element.unbind('.placeholder');
+			if (!this.WallMessageBody.data('wikiaEditor')) {
+				this.WallMessageBody.unbind('.placeholder');
 			}
 
-			element.miniEditor({
+			this.WallMessageBody.miniEditor({
 				events: {
 					editorReady: function(event, wikiaEditor) {
-						if(!MiniEditor.ckeditorEnabled) {
+						if (!MiniEditor.ckeditorEnabled) {
 							wikiaEditor.getEditbox()
 								.placeholder()
 								.triggerHandler('focus.placeholder');
 						}
-						if(!$.browser.webkit) {
+						if (!$.browser.webkit) {
 							self.WallMessageTitle.keydown(function(e) {
-								if( e.keyCode == 9 ) {
+								if ( e.keyCode == 9 ) {
 									e.preventDefault();
 									wikiaEditor.editorFocus();
 								}
@@ -41,7 +39,7 @@
 						}
 					}
 				}
-			});
+			}, event);
 		},
 
 		getMessageBody: function() {

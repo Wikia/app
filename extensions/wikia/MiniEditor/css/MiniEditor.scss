@@ -15,6 +15,22 @@
 .MiniEditorWrapper {
 	@include clearfix;
 
+	&.loading {
+		.loading-indicator {
+			display: block;
+		}
+
+		.wikiaEditor {
+			visibility: hidden;
+		}
+	}
+
+	&.preloading {
+		.editarea > .cke_skin_wikia {
+			display: none;
+		}
+	}
+
 	.editarea {
 		// Needed for loading status indicator positioning
 		position: relative;
