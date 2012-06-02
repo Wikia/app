@@ -239,6 +239,10 @@ $.fn.extend({
 
 
 	closeModal: function() {
+		var onClose = $(this).data('onClose');
+		if(typeof onClose === 'function') {
+			onClose();
+		}
 		$(window).unbind(".modal" + this.attr('id'));
 
 		this.animate({
@@ -261,7 +265,7 @@ $.fn.extend({
 	},
 
 	// just hide the modal - don't remove DOM node
-	hideModal: function() {
+	hideModal: function() {	
 		// hide associated blackout
 		var blackout = $(this).data('blackout');
 		blackout.fadeOut("fast").addClass('blackoutHidden');
