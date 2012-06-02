@@ -844,6 +844,11 @@ $wgDisabledActionsWithViewFallback = array();
 $wgEnableApiExplorerExt = true;
 
 /**
+ * Disable the slow updating of MySQL search index. We use Lucene/Solr.
+ */
+$wgDisableSearchUpdate = true;
+
+/**
  * Default settings used by wiki navigation
  */
 $wgMaxLevelOneNavElements = 4;
