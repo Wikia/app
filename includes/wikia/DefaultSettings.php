@@ -849,6 +849,11 @@ $wgEnableApiExplorerExt = true;
 $wgDisableSearchUpdate = true;
 
 /**
+ * New search code needs a default type to avoid falling back to SearchMySQL.
+ */
+$wgSearchType = 'SearchEngineDummy';
+
+/**
  * Default settings used by wiki navigation
  */
 $wgMaxLevelOneNavElements = 4;
