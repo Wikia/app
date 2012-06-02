@@ -32,6 +32,13 @@ var Lightbox = {
 		Lightbox.current.title = params.title;
 		Lightbox.current.carouselType = params.carouselType;
 		
+		// setup tracking
+		Lightbox.openModal.tracking = {
+			aggregateViewCount: 0,
+			uniqueViewCount: 0,
+			visitedFiles: {}	// contains title history of visited files as key.  value will just default to true
+		};
+		
 		$.nirvana.sendRequest({
 			controller:	'Lightbox',
 			method:		'lightboxModalContent',
@@ -62,8 +69,6 @@ var Lightbox = {
 					return;
 				}
 				
-				Lightbox.openModal.WikiaLightbox = Lightbox.openModal.find('.WikiaLightbox');
-				
 				LightboxLoader.cache[Lightbox.current.carouselType] = Lightbox.mediaThumbs.thumbs;
 				
 				// Set up carousel
@@ -78,9 +83,10 @@ var Lightbox = {
 					}
 				}
 				
+				// render carousel
 				var carousel = $(carouselTemplate).mustache({
 					thumbs: Lightbox.mediaThumbs.thumbs,
-					progress: "1-6 of 24" // TODO: calculate progress and i18n "of"
+					progress: ""
 				});
 				
 				// pre-cache known doms
@@ -94,20 +100,31 @@ var Lightbox = {
 				Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
 				Lightbox.current.type = Lightbox.initialFileDetail.mediaType;
 				
+				// attach carousel
 				Lightbox.openModal.carousel.append(carousel);
 				Lightbox.openModal.data('overlayactive', true);
-				
 				Lightbox.setUpCarousel();
 				
+				// callback to finish lighbox loading
 				var updateCallback = function(json) {
 					LightboxLoader.cache.details[Lightbox.current.title] = json;
-					Lightbox[Lightbox.current.type].updateLightbox(json);
+					Lightbox.updateMedia();
 					Lightbox.showOverlay();
 					Lightbox.hideOverlay(3000);
 					
 					LightboxLoader.lightboxLoading = false;
 					Lightbox.log("Lightbox modal loaded");
 					/* lightbox loading ends here */
+					
+					/* tracking after lightbox has fully loaded */
+					LightboxLoader.track(WikiaTracker.ACTIONS.IMPRESSION);
+					Lightbox.openModal.data('onClose', function() {
+						LightboxLoader.track(
+							WikiaTracker.ACTIONS.CLICK, 
+							'close-modal', 
+							Math.round(100 * Lightbox.openModal.tracking.uniqueViewCount/Lightbox.mediaThumbs.thumbs.length)
+						);
+					});
 				};
 
 				// Update modal with main image/video content								
@@ -415,6 +432,14 @@ var Lightbox = {
 			Lightbox.hideOverlay();
 		});
 		
+		// update tracking paramenter
+		var tracking = Lightbox.openModal.tracking;
+		tracking.aggregateViewCount++;
+		if(!(title in tracking.visitedFiles)) {
+			tracking.visitedFiles[title] = true;
+			tracking.uniqueViewCount++;
+		}
+		LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, type, tracking.aggregateViewCount);
 	},
 	updateArrows: function() {		
 		var carouselType = Lightbox.current.carouselType,

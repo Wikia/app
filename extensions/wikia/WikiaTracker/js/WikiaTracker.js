@@ -114,7 +114,7 @@ window.WikiaTracker = (function(){
 			gaqArgs.push(ga_value);
 
 		if(trackingMethod == 'internal' || trackingMethod == 'both') {
-			Wikia.log(eventName + ' [internal track]', 'info', logGroup);
+			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [internal track]', 'info', logGroup);
 			internalTrack(eventName, data);
 		}
 

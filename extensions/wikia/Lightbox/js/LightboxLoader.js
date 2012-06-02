@@ -27,6 +27,14 @@ var LightboxLoader = {
 	log: function(content) {
 		$().log(content, "LightboxLoader");
 	},
+	track: function(action, label, value) {
+		WikiaTracker.trackEvent(null, {
+			ga_category: 'lightbox',
+			ga_action: action,
+			ga_label: label || '',
+			ga_value: value || 0
+		}, 'internal');
+	},
 	init: function() {
 		var article;
 
@@ -208,6 +216,8 @@ var LightboxLoader = {
 			// save references for inline video removal later
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
 			LightboxLoader.inlineVideos = videoReference.add(LightboxLoader.inlineVideos);
+			
+			LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video-inline');
 		});
 	},
 	removeInlineVideos: function() {
