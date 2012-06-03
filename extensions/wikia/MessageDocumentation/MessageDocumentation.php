@@ -22,11 +22,8 @@ function efDisplayMessageDocumentation( $editPage ) {
 	$wikitext = $docArticle->getContent();
 
 	if ( !empty( $wikitext ) ) {
-		$parser = new Parser();
-		$html = $parser->parse( $wikitext, $docTitle, new ParserOptions() )->getText();
-
 		$editPage->editFormTextBeforeContent .= Xml::openElement( 'div', array( 'class' => 'i18ndoc' ) );
-		$editPage->editFormTextBeforeContent .= $html;
+		$editPage->editFormTextBeforeContent .= htmlspecialchars( $wikitext );
 		$editPage->editFormTextBeforeContent .= Xml::closeElement( 'div' );
 	}
 
