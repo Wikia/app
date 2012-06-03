@@ -184,6 +184,9 @@
 			var total = dom.items.length,
 				idx1 = Math.floor(states.currIndex) + 1, // make index base 1
 				idx2 = Math.floor(states.currIndex) + (options.itemsShown > total ? total : options.itemsShown);
+			if (idx2 > total) {
+				idx2 = total;
+			}
 			
 			// callback will handle inserting values into the dom
 			callback(idx1, idx2, total);
