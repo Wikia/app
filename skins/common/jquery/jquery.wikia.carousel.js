@@ -106,7 +106,7 @@
 				} else {
 					states.currIndex = states.currIndex - options.itemsShown;
 				}
-				
+
 				doMove(left);
 
 			}
@@ -121,8 +121,16 @@
 					idx = dom.items.length - options.itemsShown;
 				}
 
+				if(states.currIndex > idx) {
+					// moving to the left
+					// instead of just moving one element at a time
+					// move the whole page
+					var leftmost = idx - options.itemsShown + 1;
+					if(leftmost < 0) leftmost = 0;
+					idx = leftmost;
+				}
 				var left = constants.itemWidth * idx * -1;
-				
+
 				states.currIndex = idx;
 
 				doMove(left);
@@ -136,7 +144,7 @@
 			if(states.noScrolling) {
 				return;
 			}
-			
+
 			states.left = left;
 
 			if(typeof options.beforeMove == 'function') {
