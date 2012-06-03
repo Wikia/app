@@ -21,7 +21,7 @@ var RelatedVideos = {
 		this.rvModule = $(relatedVideosModule);
 		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
 			this.onRightRail = true;
-			this.videosPerPage = 4;
+			this.videosPerPage = 3;
 		}
 		
 		if( this.rvModule.hasClass('RelatedHubsVideos') ) {
@@ -197,7 +197,7 @@ var RelatedVideos = {
 
 		var group = null;
 		$('.container > .item',this.rvModule).each( function(i) {
-			if( i % 4 == 0 ) {
+			if( i % RelatedVideos.videosPerPage == 0 ) {
 				if(group) { group.appendTo( container ); }
 				group = $('<div class="group"></div>');
 			}
