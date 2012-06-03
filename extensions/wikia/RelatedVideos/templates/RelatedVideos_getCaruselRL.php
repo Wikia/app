@@ -1,4 +1,4 @@
-<? $pageCount = ceil((count($videos))/4); ?>
+<? $pageCount = ceil((count($videos))/3); ?>
 <div class="RelatedVideos RelatedVideosHidden noprint" id="RelatedVideosRL" data-count="<?=$pageCount;?>">
 	<div class="RVTitle"><?= wfMsg('related-videos-tally'); ?></div>
 	<div class="deleteConfirm messageHolder"><?=wfMsg('related-videos-remove-confirm');?></div>
@@ -22,7 +22,7 @@
 					$videosGrouped = array();
 					$j = -1;
 					foreach( $videos as $id => $video ){
-						if( $i % 4 == 0 ) {
+						if( $i % 3 == 0 ) {
 							$j++;
 							$videosGrouped[$j] = array();
 						}

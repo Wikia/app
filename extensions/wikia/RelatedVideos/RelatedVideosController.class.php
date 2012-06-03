@@ -7,7 +7,7 @@ class RelatedVideosController extends WikiaController {
 		global $wgRelatedVideosOnRail;
 		$this->app = $app;
 		if( !empty( $wgRelatedVideosOnRail ) ) {
-			RelatedVideosService::$width = 110;
+			RelatedVideosService::$width = 150;
 		}
 	}
 
