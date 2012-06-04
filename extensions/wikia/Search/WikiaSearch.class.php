@@ -293,8 +293,11 @@ class WikiaSearch extends WikiaObject {
 		$result['ns'] = $page->getTitle()->getNamespace();
 		$result['host'] = substr($this->wg->Server, 7);
 		$result['lang'] = $this->wg->Lang->mCode;
-		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces );
-		$result['is_main_page'] = ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0);
+		
+		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
+		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
+		$result['is_main_page'] = ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) ? 'true' : 'false';
+		$result['is_redirect'] = ($canonical == '') ? 'false' : 'true';
 
 		if( $withMetaData ) {
 			$result = array_merge($result, $this->getPageMetaData($page));
@@ -331,7 +334,7 @@ class WikiaSearch extends WikiaObject {
 		$data = $this->callMediaWikiAPI( array(
 			'pageids' => $page->getId(),
 			'action' => 'query',
-			'prop' => 'info',
+			'prop' => 'info|categories',
 			'inprop' => 'url|created|views|revcount',
 			'meta' => 'siteinfo',
 			'siprop' => 'statistics|wikidesc|variables|namespaces|category'
@@ -343,6 +346,14 @@ class WikiaSearch extends WikiaObject {
 			$result['revcount'] = $pageData['revcount'];
 			$result['created'] = $pageData['created'];
 			$result['touched'] = $pageData['touched'];
+		}
+
+		$result['categories'] = array();
+
+		foreach ($pageData['categories'] as $category) {
+
+			$result['categories'][] = implode(':', array_slice(explode(':', $category['title']), 1));
+
 		}
 
 		$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
