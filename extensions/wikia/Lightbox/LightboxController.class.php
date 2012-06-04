@@ -4,6 +4,7 @@
  * Lightbox controller
  * @author Hyun
  * @author Liz
+ * @author Piotr Bablok
  */
 class LightboxController extends WikiaController {
 	
