@@ -41,51 +41,65 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		}
 		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
 		$().log(url, 'Chat server');
-		io.transports = globalTransports ;
-		if(! this.socket ) {
-		this.authRequestWithMW(function(data){
-			var socket = io.connect(url, {
-				'force new connection' : true,
-				'try multiple transports': true,
-				'connect timeout': false,
-				'query':data,
-				'reconnect':false
-			});
-
-var tra = globalTransports[0];
-        	        socket.on('message', this.proxy( this.onMsgReceived, this ) );	
-			socket.on('connect', this.proxy( function(){this.onConnect(socket, tra); }, this ) );
-		});
-		} else {
-			$("reconecte");
-			this.socket.socket.connect();
+	//	io.transports = globalTransports ;
+		if( this.socket ) {
+			this.socket.removeAllListeners('message');
+			this.socket.removeAllListeners('connect');
 		}
+
+			this.authRequestWithMW(function(data){
+				var socket = io.connect(url, {
+					'force new connection' : true,
+					'try multiple transports': true,
+					'connect timeout': false,
+					'query':data,
+					'reconnect':false
+				});
+				var transport = globalTransports[0];
+				socket.on('message', this.proxy( this.onMsgReceived, this ) );	
+				socket.on('connect', this.proxy( function(){this.onConnect(socket, transport); }, this ) );
+			});
+	//	} else {
+	//		$("reconecte");
+	//		this.socket.socket.disconnect();
+	//		this.socket.socket.connect();
+	//	}
 	},
 		
 	connect: function() {
 		this.baseconnect();
+		
 		if(!this.firstConnected) {
 			this.connectTimeoutTimer = setTimeout($.proxy(function() {
-			$().log("timeout try without socket connection");
-			
-			globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling' ];
-			io.transports = globalTransports;
-			if(this.connected == false) {
-				delete this.socket;
+				$().log("timeout try without socket connection");
+				globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling' ];
+				io.transports = globalTransports;
+				
+				if(this.socket) {
+					this.socket.removeAllListeners('disconnect');
+					this.socket.socket.disconnect();
+					delete this.socket;
+					this.connected = false;
+					this.announceConnection = true;
+				}
 				this.baseconnect();
-			}
-			}, this), 8000 );
+			}, this), 15000 );
 		}
 	},
 
-	onConnect: function(socket, transports) {
-		$().log(transports);
-		if(this.socket) {
-			this.socket.removeAllListeners('disconnect');
-		}
+	onConnect: function(socket, transport) {
 		this.socket = socket;
+		this.reConnectCount = 0;
+		
+		if(!this.firstConnected) {
+			var InitqueryCommand = new models.InitqueryCommand();
+		//	if(transport != 'websocket') {
+				this.socket.send(InitqueryCommand.xport());
+		//	}
+		}
+		
 		socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
-		clearTimeout(this.connectTimeoutTimer);
+		
 		clearTimeout(this.tryconnect);
 		if(this.announceConnection){
 			$().log("Reconnected.");
@@ -95,13 +109,15 @@ var tra = globalTransports[0];
 	},
 	
 	onDisconnect: function(){
+
 		//problem with first connection (for example fire wall)
 		if(!this.firstConnected) {
-			globalTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling' ]
-			this.socket = false;
+			//TODO: call connectTimeoutTimer
+			return true;
 		}
+	
 		$().log("Node-server connection needs to be refreshed...");
-	        this.connected = false;
+		this.connected = false;
 		this.announceConnection = true;
 
 		// Sometimes the view is in a state where it shouldn't reconnected (eg: user has entered the same room from another computer and wants to kick this instance off w/o it reconnecting).
@@ -110,7 +126,7 @@ var tra = globalTransports[0];
 			this.trying = setTimeout(this.proxy(this.tryconnect, this),2500);
 		}
 	},
-	
+
 	authRequestWithMW: function(callback) {
 		//hacky fix of fb#19714
 		//it seems socket.io decodes it -- that's why I double encoded it
@@ -133,9 +149,6 @@ var tra = globalTransports[0];
     },
     
     onMsgReceived: function(message) {
-	this.firstConnected = true; //we are 100% sure about conenction
-
-    	$().log(message.event);
     	switch(message.event) {
 			case 'disableReconnect':
 				this.autoReconnect = false;
@@ -144,9 +157,12 @@ var tra = globalTransports[0];
 				this.forceReconnect();
 				break;
 			case 'initial':
-				this.reConnectCount = 0;
+				clearTimeout(this.connectTimeoutTimer); 
+				this.firstConnected = true; //we are 100% sure about conenction
 			default:
-				this.fire( message.event, message );
+				if(this.firstConnected) { 
+					this.fire( message.event, message );
+				}
 			break;
     	}
     },
@@ -156,26 +172,25 @@ var tra = globalTransports[0];
     },
     
     tryconnect: function (){
-   	$().log('tryconnect');
-//        debugger;
-	if(this.connected) {
-		return false;
-	}
-	$().log("Trying to re-connect to node-server:" + this.reConnectCount);
+    	$().log('tryconnect');
+
+   		if(this.connected) {
+   			return false;
+   		}
+		$().log("Trying to re-connect to node-server:" + this.reConnectCount);
         clearTimeout(this.trying);
         this.reConnectCount++;
             
         if(this.reConnectCount == 8) {
             	this.fire( "reConnectFail", {} );
         } else {
-            var time = 5000;
-            if(this.reConnectCount > 3) {
-           	time = 5000 + this.reConnectCount * 300; 
+            var time = 10000;
+            if(this.reConnectCount > 2) {
+            	time = 10000 + this.reConnectCount * 300; 
             }
-            if(this.reConnectCount < 9) {
-		if(this.reConnectCount != 0) this.connect();
-            	this.trying = setTimeout(this.proxy(this.tryconnect, this), time);	
-	    }
+            
+			this.connect();
+			this.trying = setTimeout(this.proxy(this.tryconnect, this), time);	
         }
         
     }
@@ -276,6 +291,8 @@ var NodeRoomController = $.createClass(Observable,{
 				var newChatEntry = new models.InlineAlert({text: $.msg('chat-welcome-message', wgSiteName ) });
 				this.model.chats.add(newChatEntry);				
 			}
+			
+			this.userMain = this.model.users.findByName(wgUserName);				
 		} else {
 			// If this is a reconnect... go through the model that was given and selectively, only add ChatEntries that were not already in the collection of chats.
 			var jsonObj = JSON.parse(message.data);
@@ -373,14 +390,14 @@ var NodeRoomController = $.createClass(Observable,{
 		var joinedUser = new models.User();
 		joinedUser.mport(message.joinData);
 
+		if(joinedUser.get('name') == wgUserName) {
+			this.userMain = joinedUser;			
+		}
+		
 		if(this.partTimeOuts[joinedUser.get('name')]) {
 			clearTimeout(this.partTimeOuts[joinedUser.get('name')]);
 			this.partTimeOuts[joinedUser.get('name')] = null;
 			$().log('user rejoined clear partTimeOut');
-		}
-
-		if(joinedUser.get('name') == wgUserName) {
-			this.userMain = joinedUser;			
 		}
 
 		var connectedUser = this.model.users.findByName(joinedUser.get('name'));
