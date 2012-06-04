@@ -57,7 +57,7 @@ $messages['diq'] = array(
 	'places-geolocation-modal-error-title' => 'Xelato',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bea.miau
  * @author Benfutbol10
  * @author VegaDark
@@ -87,7 +87,7 @@ $messages['es'] = array(
 	'places-category-switch-off' => 'Activar las geoetiquetas',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Wyz
  */
@@ -144,7 +144,7 @@ $messages['gl'] = array(
 	'places-category-switch-off' => 'Activar as etiquetas xeográficas',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -172,7 +172,7 @@ $messages['ia'] = array(
 	'places-category-switch-off' => 'Activar geo-etiquettage',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -228,7 +228,7 @@ $messages['ms'] = array(
 	'places-category-switch-off' => 'Hidupkan ciri geotag',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -291,7 +291,7 @@ $messages['pfl'] = array(
 	'places-geolocation-modal-error-title' => 'Fehla',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -320,14 +320,14 @@ $messages['pl'] = array(
 	'places-category-switch-off' => 'Włącz geotagowanie',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'places-geolocation-modal-error-title' => 'Erro',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -355,14 +355,14 @@ $messages['ru'] = array(
 	'places-category-switch-off' => 'Включить геотеги',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'places-geolocation-modal-error-title' => 'Грешка',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -407,17 +407,18 @@ $messages['te'] = array(
 	'places-geolocation-modal-error-title' => 'లోపం',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
 	'places' => 'Місця на цій wiki',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
+	'places' => '本维基上的地点',
 	'places-editor-search' => '搜索',
 	'places-editor-geoposition' => '当前地理位置：',
 	'places-geolocation-button-label' => '添加位置',

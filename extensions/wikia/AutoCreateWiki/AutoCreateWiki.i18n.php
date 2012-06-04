@@ -236,6 +236,7 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author ترجمان05
  */
 $messages['ar'] = array(
 	'autocreatewiki' => 'أنشئ ويكي جديدة',
@@ -279,6 +280,7 @@ $messages['ar'] = array(
 	'autocreatewiki-invalid-wikiname' => 'الإسم لا يمكن أن يحتوي على أحرف خاصة (مثل  $ أو @) و لا يمكن أن يكون فارغا',
 	'autocreatewiki-log-title' => 'يتم الآن إنشاء الويكي',
 	'autocreatewiki-step0' => 'تهيئة العملية ...',
+	'autocreatewiki-congratulation' => 'مبروك!',
 	'autocreatewiki-welcometalk-log' => 'رسالة ترحيب',
 	'autocreatewiki-welcometalk' => "== أهلا و سهلا ! ==
 <div style=\"font-size:120%; line-height:1.2em;\"> مرحبا  \$1 -- نحن متحمسون جدا لوجود  '''\$4''' كجزء من مجتمع ويكيا العربية!
@@ -298,7 +300,7 @@ $messages['ar'] = array(
 	'autocreatewiki-subname-answers' => 'إجابات',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -322,7 +324,7 @@ $messages['be-tarask'] = array(
 	'autocreatewiki-language-all' => 'Усе мовы',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  * @author Spiritia
  */
@@ -366,7 +368,7 @@ $messages['bg'] = array(
 	'autocreatewiki-subname-answers' => 'Отговори',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -509,7 +511,7 @@ Ur raktres nevez-flamm an hini eo. Skrivit dimp, mar plij, m'hoc'h eus tra goule
 	'autocreatewiki-subname-answers' => 'Respontoù',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'autocreatewiki' => 'ویکییەکی نوێ دروست بکە',
 	'autocreatewiki-page-title-default' => 'دروستکردنی ویکییەکی نوێ',
@@ -521,7 +523,7 @@ $messages['ckb'] = array(
 	'autocreatewiki-welcometalk-log' => 'پەیامی بەخێرھاتن',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Jezevec
  * @author Jkjk
  * @author Reaperman
@@ -846,7 +848,7 @@ $messages['diq'] = array(
 	'autocreatewiki-subname-answers' => 'cewab',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'autocreatewiki-create-account' => 'Ŋlɔ ŋkɔ daɖi',
 );
@@ -924,7 +926,7 @@ Teamo de Wikia
 <http://www.wikia.com/wiki/User:$4>',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author Bola
  * @author Crazymadlover
@@ -1076,7 +1078,7 @@ Esto es un nuevo proyecto de wiki, así que por favor, ¡escríbenos si tienes c
 	'autocreatewiki-subname-answers' => 'Respuestas',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -1215,7 +1217,7 @@ $3
 	'autocreatewiki-subname-answers' => 'پاسخ‌ها',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Nike
@@ -1242,8 +1244,8 @@ $messages['fi'] = array(
 	'autocreatewiki-success-title-default' => 'Wikisi on luotu!',
 	'autocreatewiki-success-subtitle' => 'Nyt voit aloittaa työsi wikissäsi osoitteessa:',
 	'autocreatewiki-success-has-been-created' => 'on luotu!',
-	'autocreatewiki-info-domain' => 'On parasta käyttää sanaa, jolla aihettasi todennäköisesti haetaan.',
-	'autocreatewiki-info-topic' => 'Lisää lyhyt kuvaus, kuten "Tähtien sota" tai "TV-ohjelmat".',
+	'autocreatewiki-info-domain' => 'Kannattaa käyttää sanaa, jolla aihettasi todennäköisesti haetaan.',
+	'autocreatewiki-info-topic' => 'Lisää lyhyt kuvaus, kuten ”Tähtien sota” tai ”TV-ohjelmat”.',
 	'autocreatewiki-info-category-default' => 'Tämä auttaa kävijöitä löytämään wikisi.',
 	'autocreatewiki-info-language' => 'Tämä tulee olemaan wikisi kävijöiden oletuskieli.',
 	'autocreatewiki-info-email-address' => 'Sähköpostiosoitettasi ei koskaan näytetä kenellekään Wikiassa.',
@@ -1280,7 +1282,7 @@ $messages['fi'] = array(
 	'newwikis' => 'Uudet wikit',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Iluvalar
  * @author Jean-Frédéric
@@ -1604,7 +1606,7 @@ $messages['he'] = array(
 	'newwikisstart' => 'הצג אתרי וויקי המתחילים ב:',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  * @author TK-999
@@ -1702,7 +1704,7 @@ Kérünk, válassz egy megfelelőt a legördülő listából.',
 	'autocreatewiki-subname-answers' => 'Válaszok',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -2011,7 +2013,7 @@ $messages['inh'] = array(
 	'autocreatewiki-subname-answers' => 'Жопдалараш',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gifh
  * @author Minerva Titani
  * @author Ximo17
@@ -2270,7 +2272,7 @@ $3
 
 そして、これらをどんどん続けて言ってください！人々は、読んだり見たりするものがたくさんウィキを訪問し好きになります。ですから、内容を追加し続けていれば、読者あるいは編集者を惹きつけることができるでしょう。やるべきことはたくさんありますが、心配しないでください -- 今日は初日で、これから十分な時間があります。どのウィキも同じ方法ではじまったのです -- 一度に少しずつ、最初は少ないページではじまり、そのウィキは巨大で忙しいサイトになったのです。
 
-もし質問がありましたら、[[Special:Contact|連絡フォーム]]から電子メールをお使いください。では、楽しんでください！
+もし質問がありましたら、[[Special:Contact|連絡フォーム]]からメールをお使いください。では、楽しんでください！
 
 -- [[User:\$2|\$3]] <staff /></div>",
 	'newwikis' => '新しいウィキ',
@@ -2497,7 +2499,7 @@ $messages['lez'] = array(
 	'autocreatewiki-page-title-default' => 'Туькlурун цlийи вики',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -2538,7 +2540,7 @@ $messages['lt'] = array(
 	'autocreatewiki-subname-answers' => 'Atsakymai',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -2862,7 +2864,7 @@ $messages['mzn'] = array(
 	'autocreatewiki-page-title-default' => 'اتا نو ویکی درس هکردن',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3242,13 +3244,13 @@ $messages['pfl'] = array(
 	'autocreatewiki-empty-language' => 'Wehlda ä Schbrooch fa doi Wiki.',
 	'autocreatewiki-invalid-birthday' => 'Ugilidische Gbuadsdaach',
 	'autocreatewiki-congratulation' => 'Gliggwinsch',
-	'autocreatewiki-welcomebody' => 'Hey $2!
+	'autocreatewiki-welcomebody' => "Hei $2!
 
-Doi Wiki isch eazaischd worre! Guug do: <$1>
+Doi Wiki isch eazaischd worre! Gugg do: <$1>
 
-Ferdisch fas loschlesche? S\'sin ä paa Ling\'gs uff doi Dischbediersaid (<5 $>) domid laischda de Oischdiesch in die viele B\'raisch vun Wikia finne dudsch. Wonn Frooche hoschd, doan oandword uff die Mail oda guggda die Hilfsaid <http://help.wikia.com> oa.
+Ferdisch fas loschlesche? S'sin ä paa Ling'gs uff doi Dischbediersaid (<$5>) kumme, domid laischda de Oischdiesch in die B'raisch vun Wikia finne duschd. Wonn Frooche hoschd, doan oandwoad uff die Mail oda guggda die Hilfsaid <http://help.wikia.com> oa.
 
-Du konschd a noch die Said <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> un <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> oagugge, wus a Hilf un Naijischkaide gibd.
+Du konschd a die Said <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> un <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> oagugge, wus a Hilf un Naijischkaide gewe dud.
 
 Alla hob!
 
@@ -3257,10 +3259,10 @@ Wikia Community Support
 <http://community.wikia.com/wiki/User:$4>
 
 ___________________________________________
-* Wilschd wenischa Nochrischde krische? Konschd disch ausschraiwe oda doi doi E-Mail Oischdellunge änare: http://community.wikia.com/Special:Preferences',
+* Wilschd wenischa Nochrischde krische? Konschd disch ausschraiwe oda doi doi E-Mail Oischdellunge änare: http://community.wikia.com/Special:Preferences",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Sp5uhe
@@ -3297,8 +3299,8 @@ $messages['pl'] = array(
 	'autocreatewiki-info-email-address' => 'Twój adres e-mail będzie niewidoczny dla innych użytkowników.',
 	'autocreatewiki-info-realname' => 'Jeśli zdecydujesz się je podać, zostaną użyte, by udokumentować Twoje autorstwo.',
 	'autocreatewiki-info-birthdate' => 'Wikia wymaga od wszystkich użytkowników podania przez nich rzeczywistej daty urodzenia zarówno ze względów bezpieczeństwa jak i ze względu na konieczność zapewnienia zgodności z przepisami federalnymi.',
-	'autocreatewiki-info-blurry-word' => 'Ze względu na ochronę przed automatycznym tworzeniem kont, przepisz rozmazane słowo, które widać w tym polu.',
-	'autocreatewiki-info-terms-agree' => 'Tworząc wiki i konto użytkownika, tym samym użytkownik wyraża zgodę <a href="http://www.wikia.com/wiki/Terms_of_use">na warunki użytkowania Wikii</a>',
+	'autocreatewiki-info-blurry-word' => 'Ze względu na ochronę przed automatycznym tworzeniem kont, przepisz zamazane słowo, które widać w tym polu.',
+	'autocreatewiki-info-terms-agree' => 'Tworząc wiki i konto użytkownika, zgadzasz się na <a href="http://www.wikia.com/wiki/Terms_of_use">Zasady Użytkowania Wikii</a>',
 	'autocreatewiki-info-staff-username' => '<b>Wyłącznie personel –</b> określony użytkownik zostanie wyświetlony jako założyciel.',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-limit-day' => 'Utworzono dziś w Wikii maksymalną liczbę wiki ($1).',
@@ -3330,7 +3332,7 @@ Wybierz prawidłową z listy rozwijanej.',
 Wybierz prawidłowy z listy rozwijanej.',
 	'autocreatewiki-invalid-retype-passwd' => 'Przepisz hasło tak aby było identyczne z powyższym',
 	'autocreatewiki-invalid-birthday' => 'Nieprawidłowa data urodzenia',
-	'autocreatewiki-limit-birthday' => 'Nie można przeprowadzić rejestracji.',
+	'autocreatewiki-limit-birthday' => 'Nie można dokończyć rejestracji.',
 	'autocreatewiki-log-title' => 'Twoja wiki jest w trakcie tworzenia',
 	'autocreatewiki-step0' => 'Trwa inicjowanie procesu...',
 	'autocreatewiki-stepdefault' => 'Proces trwa, proszę czekać...',
@@ -3400,20 +3402,20 @@ Powodzenia!
 	'newwikis' => 'Nowe wiki',
 	'newwikisstart' => 'Wyświetl wiki rozpoczynając od:',
 	'autocreatewiki-reminder-subject' => '{{SITENAME}}',
-	'autocreatewiki-reminder-body' => 'Szanowny $1!
+	'autocreatewiki-reminder-body' => 'Drogi $1!
 
 Gratulujemy utworzenia „{{SITENAME}}”! Możesz teraz wejść na swoją wiki odwiedzając $2 i dodać informacje.
 
 Jest to zupełnie nowy projekt, więc napisz do nas, jeżeli masz jakiekolwiek pytania!
 
--- Zespół Społeczności Wikii',
-	'autocreatewiki-reminder-body-HTML' => '<p>Szanowny $1,</p>
+-- Zespół Wikii',
+	'autocreatewiki-reminder-body-HTML' => '<p>Drogi $1,</p>
 
 <p>Gratulujemy Ci utworzenia „{{SITENAME}}”! Możesz teraz wejść na swoją wiki odwiedzając <a href="$2">$2</a> i dodać nowe informacje..</p>
 
 <p>Jest to zupełnie nowy projekt, więc napisz do nas jeśli masz jakieś pytania!</p>
 
-<p>–– Zespół Społeczności Wikii</p>',
+<p>–– Zespół Wikii</p>',
 	'autocreatewiki-subname-answers' => 'Zapytaj',
 );
 
@@ -3601,7 +3603,7 @@ $messages['ps'] = array(
 	'autocreatewiki-subname-answers' => 'ځوابونه',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -3750,7 +3752,7 @@ Este é um projecto acabado de estrear, por isso contacte-nos se tiver qualquer 
 	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
@@ -3900,7 +3902,7 @@ Esse é um projeto novo, então, por favor, nos escreva caso você tenha alguma 
 	'autocreatewiki-subname-answers' => 'Respostas',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  * @author Misterr
  * @author Stelistcristi
@@ -3953,7 +3955,7 @@ $messages['ro'] = array(
 	'autocreatewiki-subname-answers' => 'Răspunsuri',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -3961,7 +3963,7 @@ $messages['roa-tara'] = array(
 	'autocreatewiki-error' => 'errore',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Grigol
  * @author Kuzura
@@ -4110,7 +4112,7 @@ ___________________________________________
 	'autocreatewiki-subname-answers' => 'Ответы',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Nikola Smolenski
  * @author Rancher
  * @author Verlor
@@ -4187,7 +4189,7 @@ $messages['sr-ec'] = array(
 	'autocreatewiki-subname-answers' => 'Одговори',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -4370,9 +4372,11 @@ $messages['ta'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'autocreatewiki-required' => '$1 = తప్పనిసరి',
 	'autocreatewiki-web-address' => 'జాల చిరునామా:',
 	'autocreatewiki-language-all' => 'అన్ని భాషలు',
 	'autocreatewiki-birthdate' => 'పుట్టిన రోజు:',
+	'autocreatewiki-remember' => 'నన్ను గుర్తుంచుకో',
 	'autocreatewiki-title-template' => '$1 వికీ',
 	'autocreatewiki-category-label' => 'వర్గం:',
 	'autocreatewiki-category-other' => 'ఇతర',
@@ -4495,7 +4499,7 @@ $messages['tr'] = array(
 	'autocreatewiki-congratulation' => 'Tebrikler!',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -4582,7 +4586,7 @@ $messages['tt-cyrl'] = array(
 	'autocreatewiki-subname-answers' => 'Җаваплар',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author AS
  * @author Ahonc
@@ -4752,13 +4756,13 @@ $messages['zh'] = array(
 Wikia 社群團隊',
 );
 
-/** Chinese (China) (‪中文(中国大陆)‬) */
+/** Chinese (China) (‪中文（中国大陆）‬) */
 $messages['zh-cn'] = array(
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hydra
  * @author Yfdyh000
@@ -4843,6 +4847,7 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-protect-reason' => '官方界面的一部分',
 	'autocreatewiki-welcomesubject' => '$1 已创建！',
 	'newwikis' => '新的维基',
+	'newwikisstart' => '以此页面打开维基：',
 	'autocreatewiki-reminder-body' => '亲爱的$1:
 
 恭喜您创建了自己的维基，{{SITENAME}}! 您可以访问$2返回并为您的维基添加更多信息。
@@ -4862,7 +4867,7 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-subname-answers' => '问答网站',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  * @author Oapbtommy
  */
@@ -4958,19 +4963,19 @@ $messages['zh-hant'] = array(
 	'autocreatewiki-subname-answers' => '問答網站',
 );
 
-/** Chinese (Hong Kong) (‪中文(香港)‬) */
+/** Chinese (Hong Kong) (‪中文（香港）‬) */
 $messages['zh-hk'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 );
 
-/** Chinese (Singapore) (‪中文(新加坡)‬) */
+/** Chinese (Singapore) (‪中文（新加坡）‬) */
 $messages['zh-sg'] = array(
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬) */
+/** Chinese (Taiwan) (‪中文（台灣）‬) */
 $messages['zh-tw'] = array(
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',

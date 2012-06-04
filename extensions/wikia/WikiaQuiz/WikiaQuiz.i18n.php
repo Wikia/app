@@ -112,7 +112,7 @@ $messages['qqq'] = array(
 	'wikiaquiz-game-email-error' => 'Message shown when there was an error when sending an email. $1 is an error message.',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -125,7 +125,7 @@ $messages['az'] = array(
 	'wikiaquiz-game-finish-button' => 'Son',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -143,7 +143,7 @@ $messages['bg'] = array(
 	'wikiaquiz-game-continue-button' => 'Продължаване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -170,7 +170,7 @@ $messages['br'] = array(
 	'wikiaquiz-game-continue-button' => "Kenderc'hel",
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -236,6 +236,7 @@ $messages['ca'] = array(
 
 /** German (Deutsch)
  * @author Avatar
+ * @author Dennis07
  * @author LWChris
  * @author Sebastian Wallroth
  */
@@ -247,6 +248,7 @@ $messages['de'] = array(
 	'wikiaquiz-editquizarticle-headline' => 'Quiz-Frage und Antworten bearbeiten',
 	'wikiaquiz-title-label' => 'Titel',
 	'wikiaquiz-titlescreentext-label' => 'Titel-Bildschirmtext',
+	'wikiaquiz-fbrecommendationtext-label' => 'Facebook-Empfelungsbeschreibung',
 	'wikiaquiz-titlescreenimages-label' => 'Titel-Bildschirm Bilder',
 	'wikiaquiz-moreinfoheading-label' => 'Mehr Infos Überschrift',
 	'wikiaquiz-requireemail-label' => 'Der Spieler muss am Ende des Spiels eine E-Mail-Adresse angeben',
@@ -311,7 +313,9 @@ $messages['diq'] = array(
 	'wikiaquiz-title-label' => 'Sername',
 	'wikiaquiz-titlescreentext-label' => 'Sernameyê nuştede asenge',
 	'wikiaquiz-moreinfoarticle-label' => 'Wesiqe',
+	'wikiaquiz-moreinfolinktext-label' => 'Metnê linki',
 	'wikiaquiz-question-label' => 'Pers',
+	'wikiaquiz-image-label' => 'Resim (opsiyonel)',
 	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Persi',
 	'wikiaquiz-answers-label' => 'Cıwab',
@@ -326,10 +330,12 @@ $messages['diq'] = array(
 	'wikiaquiz-game-question-label' => 'PERS',
 	'wikiaquiz-game-next-button' => 'Perso Bahdoyên',
 	'wikiaquiz-game-finish-button' => 'Qedyin',
+	'wikiaquiz-game-your-score' => 'SKORÊ ŞIMA',
 	'wikiaquiz-game-continue-button' => 'Dewam ke',
+	'wikiaquiz-game-mute' => 'Bêveng',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author VegaDark
  */
@@ -407,7 +413,7 @@ $messages['fa'] = array(
 	'wikiaquiz-game-finish-button' => 'پایان',
 );
 
-/** French (Français)
+/** French (français)
  * @author Cmarget
  * @author Crochet.david
  * @author Gomoko
@@ -542,7 +548,7 @@ $messages['gl'] = array(
 	'wikiaquiz-game-mute' => 'Silenciar',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -659,7 +665,7 @@ $messages['id'] = array(
 	'wikiaquiz-game-mute' => 'Diam',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -894,7 +900,7 @@ $messages['mai'] = array(
 	'wikiaquiz-game-mute' => 'चुप',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1026,7 +1032,7 @@ $messages['ms'] = array(
 	'wikiaquiz-game-mute' => 'Bisu',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1159,7 +1165,7 @@ $messages['nl'] = array(
 	'wikiaquiz-game-mute' => 'Dempen',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -1245,7 +1251,7 @@ $messages['ps'] = array(
 	'wikiaquiz-game-mute' => 'ټپول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Caio1478
  * @author Hamilton Abreu
  */
@@ -1300,7 +1306,7 @@ $messages['pt'] = array(
 	'wikiaquiz-game-mute' => 'Mudo',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -1324,7 +1330,7 @@ $messages['roa-tara'] = array(
 	'wikiaquiz-game-continue-button' => 'Condinue',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -1391,7 +1397,7 @@ $messages['ru'] = array(
 	'wikiaquiz-game-mute' => 'Без звука',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1456,7 +1462,7 @@ $messages['sr-ec'] = array(
 	'wikiaquiz-game-mute' => 'Искључи звук',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1558,7 +1564,7 @@ $messages['te'] = array(
 	'wikiaquiz-game-continue-button' => 'కొనసాగించు',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -1569,7 +1575,7 @@ $messages['uk'] = array(
 	'wikiaquiz-game-incorrect-label' => 'Невірно.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hzy980512
  * @author Yanmiao liu
  */

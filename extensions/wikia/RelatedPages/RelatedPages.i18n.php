@@ -29,7 +29,7 @@ $messages['ar'] = array(
 	'wikiarelatedpages-heading' => 'اقرأ المزيد',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Sortilegus
  */
 $messages['az'] = array(
@@ -45,7 +45,7 @@ $messages['be-tarask'] = array(
 	'wikiarelatedpages-heading' => 'Даведацца болей',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -53,7 +53,7 @@ $messages['br'] = array(
 	'wikiarelatedpages-heading' => "Lenn muioc'h",
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -61,7 +61,7 @@ $messages['bs'] = array(
 	'wikiarelatedpages-heading' => 'Pročitaj više',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -84,7 +84,7 @@ $messages['el'] = array(
 	'wikiarelatedpages-heading' => 'Διαβάστε περισσότερα',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Danke7
  */
@@ -93,7 +93,7 @@ $messages['es'] = array(
 	'wikiarelatedpages-heading' => 'Leer más',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -101,7 +101,7 @@ $messages['fi'] = array(
 	'wikiarelatedpages-heading' => 'Lue lisää',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  */
 $messages['fr'] = array(
@@ -117,7 +117,7 @@ $messages['gl'] = array(
 	'wikiarelatedpages-heading' => 'Ler máis',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  */
 $messages['hu'] = array(
@@ -125,7 +125,7 @@ $messages['hu'] = array(
 	'wikiarelatedpages-heading' => 'Továbbiak',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -141,7 +141,7 @@ $messages['id'] = array(
 	'wikiarelatedpages-heading' => 'Baca lebih lanjut',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -179,7 +179,7 @@ $messages['lb'] = array(
 	'wikiarelatedpages-heading' => 'Liest méi',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -202,7 +202,7 @@ $messages['ms'] = array(
 	'wikiarelatedpages-heading' => 'Bacaan lanjut',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -218,7 +218,7 @@ $messages['nl'] = array(
 	'wikiarelatedpages-heading' => 'Meer lezen',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  * @author TOR
  */
@@ -244,7 +244,7 @@ $messages['ps'] = array(
 	'wikiarelatedpages-heading' => 'نور لوستل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -252,7 +252,7 @@ $messages['pt'] = array(
 	'wikiarelatedpages-heading' => 'Ler mais',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -260,7 +260,7 @@ $messages['pt-br'] = array(
 	'wikiarelatedpages-heading' => 'Leia mais',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Exlex
  * @author Александр Сигачёв
@@ -270,7 +270,7 @@ $messages['ru'] = array(
 	'wikiarelatedpages-heading' => 'Читать больше',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Lesko987
  */
 $messages['sl'] = array(
@@ -278,14 +278,14 @@ $messages['sl'] = array(
 	'wikiarelatedpages-heading' => 'Preberite več',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'wikiarelatedpages-heading' => 'Прочитајте више',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -301,7 +301,7 @@ $messages['tl'] = array(
 	'wikiarelatedpages-heading' => 'Magbasa pa ng iba',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -309,7 +309,7 @@ $messages['tt-cyrl'] = array(
 	'wikiarelatedpages-heading' => 'Күбрәк уку',
 );
 
-/** Ukrainian (Українська) */
+/** Ukrainian (українська) */
 $messages['uk'] = array(
 	'wikiarelatedpages-heading' => 'Читати далі',
 );
@@ -323,7 +323,7 @@ $messages['vi'] = array(
 	'wikiarelatedpages-heading' => 'Đọc nhiều hơn',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hydra
  */
@@ -332,7 +332,7 @@ $messages['zh-hans'] = array(
 	'wikiarelatedpages-heading' => '读更多',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

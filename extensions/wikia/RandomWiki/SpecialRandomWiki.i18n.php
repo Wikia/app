@@ -38,14 +38,14 @@ $messages['be-tarask'] = array(
 	'randomwiki' => 'Выпадковыя вікі',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'randomwiki' => 'Случайно уики',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwendal
  */
@@ -54,7 +54,7 @@ $messages['br'] = array(
 	'randomwiki' => 'Wiki dre zegouezh',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -62,7 +62,7 @@ $messages['ca'] = array(
 	'randomwiki' => "Wiki a l'atzar",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -85,7 +85,7 @@ $messages['diq'] = array(
 	'randomwiki' => 'Azat Wiki',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  */
 $messages['es'] = array(
@@ -101,7 +101,7 @@ $messages['fa'] = array(
 	'randomwiki' => 'ویکی تصادفی',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -109,7 +109,7 @@ $messages['fi'] = array(
 	'randomwiki' => 'Satunnainen wiki',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  */
 $messages['fr'] = array(
@@ -125,7 +125,7 @@ $messages['gl'] = array(
 	'randomwiki' => 'Wiki ao chou',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Misibacsi
  */
 $messages['hu'] = array(
@@ -133,7 +133,7 @@ $messages['hu'] = array(
 	'randomwiki' => 'Wiki véletlenszerű kiválasztása',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -149,7 +149,7 @@ $messages['id'] = array(
 	'randomwiki' => 'Wiki Acak',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gianfranco
  */
 $messages['it'] = array(
@@ -188,7 +188,7 @@ $messages['lb'] = array(
 	'randomwiki' => 'Zoufälleg Wiki',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -218,7 +218,7 @@ $messages['my'] = array(
 	'randomwiki' => 'ကျပန်း ဝီကီ',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -241,7 +241,7 @@ $messages['pdc'] = array(
 	'randomwiki' => 'Ennich Wiki',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -257,7 +257,7 @@ $messages['pms'] = array(
 	'randomwiki' => "Wiki a l'asar",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -265,7 +265,7 @@ $messages['pt'] = array(
 	'randomwiki' => 'Wiki Aleatória',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -273,7 +273,7 @@ $messages['pt-br'] = array(
 	'randomwiki' => 'Wiki Aleatória',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  */
@@ -282,21 +282,21 @@ $messages['ru'] = array(
 	'randomwiki' => 'Случайная вики',
 );
 
-/** Sakha (Саха тыла)
+/** Sakha (саха тыла)
  * @author Kyraha
  */
 $messages['sah'] = array(
 	'randomwiki' => 'Үлүбээй биики',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'randomwiki' => 'Насумична викија',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -319,7 +319,7 @@ $messages['tl'] = array(
 	'randomwiki' => 'Alinmang Wiki',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Zahidulla
  * @author Ильнар
  */
@@ -328,7 +328,7 @@ $messages['tt-cyrl'] = array(
 	'randomwiki' => 'Очраклы  Wiki',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -344,7 +344,7 @@ $messages['vi'] = array(
 	'randomwiki' => 'Wiki ngẫu nhiên',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -352,7 +352,7 @@ $messages['zh-hans'] = array(
 	'randomwiki' => '随机维基',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Horacewai2
  * @author Waihorace
  */

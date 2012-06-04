@@ -59,7 +59,7 @@ $messages['ar'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'إبذأ &raquo',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -94,7 +94,7 @@ Téntalo otra vuelta o [[Special:Contact|informa d'ello]].",
 	'comboajaxlogin-ajaxerror' => 'Wikia nun ta respondiendo. Por favor, comprueba la to conexón.',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -103,7 +103,7 @@ $messages['bg'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Връщане',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -134,7 +134,7 @@ Ur wezh graet e c'hallot kevreañ aes en ur ober gant ne vern pe vouton Facebook
 Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -216,7 +216,7 @@ $messages['diq'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Peyd bê',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Crazymadlover
  * @author VegaDark
@@ -253,7 +253,7 @@ Por favor intenta de nuevo o [[Special:Contact|reporta esto]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia no responde. Por favor, comprueba tu conexión.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tofu II
  * @author VezonThunder
@@ -290,7 +290,7 @@ Yritä uudelleen tai [[Special:Contact|tee tästä ilmoitus]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia ei vastaa. Tarkista verkkoyhteytesi.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author IAlex
  * @author Peter17
@@ -364,7 +364,7 @@ Inténteo de novo ou [[Special:Contact|informe do problema]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia non responde. Comprobe a súa conexión.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -372,7 +372,7 @@ $messages['hu'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Első lépések &raquo;',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -418,7 +418,7 @@ $messages['id'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Persiapan &raquo;',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Ximo17
  */
 $messages['it'] = array(
@@ -477,7 +477,7 @@ $messages['lb'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Ufänken &raquo;',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -547,7 +547,7 @@ Sila cuba lagi atau [[Special:Contact|laporkannya kepada kami]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia tidak bertindak balas. Sila periksa sambungan rangkaian anda.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -644,7 +644,7 @@ Nadat je dit hebt uitgevoerd, kan je eenvoudig aanmelden met de knop Facebook Co
 Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maar bewerken is op het moment niet mogelijk.</p>',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -724,7 +724,7 @@ $messages['ps'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'پيلول &raquo;',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
  */
@@ -760,7 +760,7 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 	'comboajaxlogin-ajaxerror' => 'A Wikia não está a responder. Verifique a sua ligação de rede, por favor.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -794,7 +794,7 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 (Se já tem uma conta, pode <a href="#">autenticar-se</a> normalmente, mas não poderá editar.)</p>',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -804,7 +804,7 @@ $messages['ro'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Începeţi &raquo;',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author G0rn
  * @author Kuzura
@@ -843,7 +843,7 @@ $messages['ru'] = array(
 	'comboajaxlogin-ajaxerror' => 'Викия не отвечает. Пожалуйста, проверьте подключение к сети.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -851,7 +851,7 @@ $messages['sr-ec'] = array(
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Назад',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -924,7 +924,7 @@ Kapag natapos ka na, maginhawa kang makakalagda na ginagamit ang anumang pinduta
 Pakisubukan uli o [[Special:Contact|iulat ito]].',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -948,7 +948,7 @@ $messages['tt-cyrl'] = array(
 	'comboajaxlogin-ajaxerror' => 'Викия җавап бирми. Зинһар, пәрәвезгә керү мөмкинлеген тикшерегез.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -996,7 +996,7 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 	'comboajaxlogin-ajaxerror' => 'Wikia chưa trả lời. Xin vui lòng kiểm tra lại kết nối mạng của bạn.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hzy980512
  * @author Wilsonmess

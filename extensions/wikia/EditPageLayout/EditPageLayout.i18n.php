@@ -118,7 +118,7 @@ The first parameter is a placeholder for the license logo/image. The third param
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -209,7 +209,7 @@ $messages['bar'] = array(
 	'tog-forceeditsummary' => "Wornen, wånn beim Speichern d' Zåmmenfossung föd",
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -221,7 +221,7 @@ $messages['bg'] = array(
 	'wikia-editor-modules-categories-title' => 'Категории',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -273,7 +273,7 @@ $messages['br'] = array(
 	'prefs-editing-experience' => 'O kemmañ an arnod',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -352,7 +352,7 @@ $messages['ca'] = array(
 	'tog-forceeditsummary' => "Pregunta'm si deixo en blanc el resum d'edició",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -455,7 +455,7 @@ $messages['de-formal'] = array(
 	'restore-edits-diff-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die Sie nicht veröffentlicht hatten. Allerdings ist seitdem die Seite aktualisiert worden. Was möchten Sie tun?: <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und mit der aktuellen Textversion beginnen</a> oder <a class='notice-action difflink'>einen Vergleich der Änderungen mit der aktuellen Seite ansehen.</a>",
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author Ciencia Al Poder
  * @author DJ Nietzsche
@@ -554,7 +554,7 @@ $messages['fa'] = array(
 	'wikia-editor-edittools-caption' => 'بیشتر',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  */
 $messages['fi'] = array(
@@ -597,7 +597,7 @@ $messages['fi'] = array(
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Luo malli tästä sivusta',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Verdy p
  * @author Wyz
@@ -824,7 +824,7 @@ $messages['he'] = array(
 	'tog-forceeditsummary' => 'הצגת אזהרה בהכנסת תקציר עריכה ריק',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -914,7 +914,7 @@ $messages['inh'] = array(
 	'wikia-editor-modules-categories-title' => 'Цатегаш',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -1110,7 +1110,7 @@ $messages['lb'] = array(
 	'tog-forceeditsummary' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1268,7 +1268,7 @@ $messages['ms'] = array(
 	'tog-forceeditsummary' => 'Ingatkan saya jika ringkasan suntingan kosong',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1444,7 +1444,7 @@ $messages['nl-informal'] = array(
 	'recreate-moveddeleted-warn-notice' => "'''Let op:''' Je maakt een pagina opnieuw aan die voorheen is verwijderd. [Meer info]",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Cloudissimo
  * @author Sovq
@@ -1544,7 +1544,7 @@ $messages['ps'] = array(
 	'prefs-general' => 'ټولګړی',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -1613,7 +1613,7 @@ $messages['pt'] = array(
 	'tog-forceeditsummary' => 'Avisar-me se deixar o resumo da edição vazio',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Caio1478
  */
@@ -1622,7 +1622,7 @@ $messages['pt-br'] = array(
 	'restore-edits-notice' => "Bem-vindo(a) de volta! Nós restauramos algumas alterações que você ainda não tinha publicado. <a class='notice-action restoreeditlink'>Excluir minhas alterações e iniciar uma nova edição</a>",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Express2000
  * @author Kuzura
  */
@@ -1702,7 +1702,7 @@ $messages['ru'] = array(
 	'tog-forceeditsummary' => 'Предупреждать, когда не заполнено поле описания правки',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1799,7 +1799,7 @@ $messages['tr'] = array(
 	'prefs-general' => 'Genel',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -1900,7 +1900,7 @@ $messages['vi'] = array(
 	'tog-forceeditsummary' => 'Nhắc tôi khi tôi quên điền tóm lược sửa đổi',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hzy980512
@@ -1908,12 +1908,19 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'editpagelayout-more' => '更多',
 	'editpagelayout-less' => '更少',
+	'editpagelayout-helpLink-url' => 'Help:编辑',
+	'editpagelayout-helpLink' => '需要[[{{MediaWiki:Editpagelayout-helpLink-url}}|帮助？]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span>条{{PLURAL:$1|通知|通知}}',
 	'editpagelayout-edit-title' => '编辑标题',
 	'editpagelayout-edit-info' => '编辑信息',
+	'editpagelayout-myedit-header' => '以下是您的编辑。将您的更改复制到上面的编辑框中！',
 	'editpagelayout-captcha-title' => '验证码',
 	'editpagelayout-pageControls-pageLink' => '返回页面',
+	'editpagelayout-pageControls-minorEdit' => '小编辑',
 	'editpagelayout-pageControls-summaryLabel' => '简要概括您的编辑',
+	'editpagelayout-pageControls-newSectionLabel' => '添加段落标题',
 	'editpagelayout-pageControls-back' => '返回编辑器',
+	'editpagelayout-pageControls-changes' => '更改',
 	'editpagelayout-blocked-user' => '您的用户名或IP地址已被封禁',
 	'editpagelayout-subject-headline-label' => '标题：',
 	'wikia-editor-media-image' => '照片',
@@ -1935,7 +1942,9 @@ $messages['zh-hans'] = array(
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => '使用过的模板 列表',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => '创建基于此页面的布局',
 	'wikia-editor-modules-categories-title' => '分类',
+	'wikia-editor-loadingStates-loading' => '正在载入编辑器',
 	'wikia-editor-loadingStates-toSource' => '切换到源模式...',
+	'wikia-editor-loadingStates-toVisual' => '切换到预览模式...',
 	'wikia-editor-loadingStates-saving' => '发布您的编辑',
 	'wikia-editor-edittools-caption' => '更多',
 	'rev-deleted-text-notice' => "警告：本项页面修订已被'''删除'''。[详细内容]",

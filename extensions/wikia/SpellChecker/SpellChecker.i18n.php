@@ -39,21 +39,21 @@ $messages['af'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Spelvoorstelle vir "$1": $2',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Dil',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Език',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -70,7 +70,7 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -113,7 +113,7 @@ $messages['diq'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Zıwan',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -130,14 +130,14 @@ $messages['es'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Sugerencias de ortografía para "$1": $2',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'spellchecker-info-languages' => 'Saatavilla olevat kielet ($1)',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Wyz
  */
@@ -172,7 +172,7 @@ $messages['gl'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Suxestións de ortografía para "$1": $2',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Misibacsi
  */
@@ -187,7 +187,7 @@ $messages['hu'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Helyesírási javaslat "$1" számára: $2',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -224,7 +224,7 @@ $messages['lb'] = array(
 	'spellchecker-info-spellcheck-is-correct' => 'D\'Wuert "$1" ass net richteg geschriwwen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -267,7 +267,7 @@ $messages['my'] = array(
 	'spellchecker-info-spellcheck-languages' => 'ဘာသာ',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -302,7 +302,7 @@ $messages['nl'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Spellingsuggesties voor "$1": $2',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -326,7 +326,7 @@ $messages['ps'] = array(
 	'spellchecker-info-spellcheck-languages' => 'ژبه',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -344,7 +344,7 @@ $messages['pt'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -361,7 +361,7 @@ $messages['pt-br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Sugestões de ortografia para "$1": $2',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -379,7 +379,7 @@ $messages['ru'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Варианты правописания для "$1": $2',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -432,7 +432,7 @@ $messages['tl'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Mga mungkahing pagbabaybay para sa "$1": $2',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -457,7 +457,7 @@ $messages['vi'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Gợi ý chính tả cho "$1": $2',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

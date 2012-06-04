@@ -72,7 +72,7 @@ $messages['ar'] = array(
 	'whereisextension-filter' => 'مُرشِّح',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -97,7 +97,7 @@ $messages['be-tarask'] = array(
 	'whereisextension-search-type-full' => 'Падобна',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -106,7 +106,7 @@ $messages['bg'] = array(
 	'whereisextension-search-type' => 'Тип:',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -125,7 +125,7 @@ $messages['br'] = array(
 	'whereisextension-search-type-full' => 'Evel',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  * @author Paucabot
  */
@@ -143,12 +143,12 @@ $messages['ca'] = array(
 	'whereisextension-search-type-full' => 'Com',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'whereisextension-submit' => 'گەڕان',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -197,12 +197,12 @@ $messages['diq'] = array(
 	'whereisextension-search-type-full' => 'Rındeni',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'whereisextension-submit' => 'Dii',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Crazymadlover
  * @author Pertile
@@ -222,7 +222,7 @@ $messages['es'] = array(
 	'whereisextension-search-type-full' => 'Semejante a',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -239,7 +239,7 @@ $messages['eu'] = array(
 	'whereisextension-search-type-full' => 'Honen antzekoa:',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Ilkea
@@ -258,7 +258,7 @@ $messages['fi'] = array(
 	'whereisextension-search-type-full' => 'Kuten',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Peter17
  * @author Slamduck
@@ -299,7 +299,7 @@ $messages['ha'] = array(
 	'whereisextension-submit' => 'Nema',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -315,7 +315,7 @@ $messages['hu'] = array(
 	'whereisextension-search-type-bool' => 'Logikai érték',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -358,7 +358,7 @@ $messages['ig'] = array(
 	'whereisextension-submit' => 'Chọwa',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'whereisextension-submit' => 'Ricerca',
 	'whereisextension-all-groups' => 'Tutti i gruppi',
@@ -383,7 +383,7 @@ $messages['ja'] = array(
 	'whereisextension-search-type-full' => 'Like演算子:',
 );
 
-/** Kalaallisut (Kalaallisut)
+/** Kalaallisut (kalaallisut)
  * @author Qaqqalik
  */
 $messages['kl'] = array(
@@ -422,7 +422,7 @@ $messages['lb'] = array(
 	'whereisextension-all-groups' => 'All Gruppen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -465,7 +465,7 @@ $messages['my'] = array(
 	'whereisextension-search-type' => 'အမျိုးအစား :',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -506,7 +506,7 @@ $messages['nl'] = array(
 	'whereisextension-search-type-full' => 'Zoals',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -526,7 +526,7 @@ $messages['pdc'] = array(
 	'whereisextension-submit' => 'Uffgucke',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sp5uhe
  */
@@ -571,7 +571,7 @@ $messages['ps'] = array(
 	'whereisextension-all-groups' => 'ټولې ډلې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -588,7 +588,7 @@ $messages['pt'] = array(
 	'whereisextension-search-type-full' => 'Semelhante a',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  * @author Giro720
  * @author McDutchie
@@ -607,7 +607,7 @@ $messages['pt-br'] = array(
 	'whereisextension-search-type-full' => 'Semelhante a',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
@@ -631,7 +631,7 @@ $messages['si'] = array(
 	'whereisextension-submit' => 'සොයන්න',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -648,7 +648,7 @@ $messages['sl'] = array(
 	'whereisextension-search-type-full' => 'Kot',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -667,7 +667,7 @@ $messages['sr-ec'] = array(
 	'whereisextension-search-type-full' => 'Како',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -710,7 +710,7 @@ $messages['tl'] = array(
 	'whereisextension-search-type-full' => 'Wangis',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -738,7 +738,7 @@ $messages['vi'] = array(
 	'whereisextension-search-type-full' => 'Giống như',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

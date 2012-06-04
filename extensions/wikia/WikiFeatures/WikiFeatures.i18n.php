@@ -105,7 +105,7 @@ $messages['ar'] = array(
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'مدونات',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -142,14 +142,14 @@ A wengerl experimentiern - du kauhst dert jeederzeid d' Tools deaktiviern, dé d
 	'wikifeatures-promotion-new' => 'Neich',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'wikifeatures-deactivate-cancel-button' => 'Отказване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -175,7 +175,7 @@ $messages['br'] = array(
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogoù',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author CuBaN VeRcEttI
  * @author Gemmaa
  */
@@ -236,7 +236,7 @@ $messages['ca'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Els nostres tècnics estan treballant dur per crear noves funcionalitats que podràs provar aviat. Visita aquesta pàgina aviat per trobar més novetats!',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -392,7 +392,7 @@ $messages['diq'] = array(
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mesacê Dêsi',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author Bola
  * @author VegaDark
@@ -459,7 +459,7 @@ $messages['es'] = array(
 	'wikifeatures-log-header' => 'A continuación hay una lista con los cambios realizados en las funcionalidades del wiki.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Od1n
  * @author Wyz
@@ -589,7 +589,7 @@ $messages['gl'] = array(
 	'wikifeatures-log-header' => 'A continuación hai unha lista cos cambios feitos nas características do wiki.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -653,7 +653,7 @@ $messages['ia'] = array(
 	'wikifeatures-log-header' => 'Ecce un lista de cambios de configuration in le functionalitate wiki.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -758,7 +758,7 @@ $messages['ku-latn'] = array(
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Şîroveyên gotarê',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -886,7 +886,7 @@ $messages['ms'] = array(
 	'wikifeatures-log-header' => 'Berikut ialah senarai perubahan tetapan Ciri-Ciri Wiki.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1017,7 +1017,7 @@ $messages['nl'] = array(
 	'wikifeatures-log-header' => 'Hieronder staat een lijst met wijzigingen aan wikifuncties.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Wladekb
@@ -1058,7 +1058,7 @@ $messages['pl'] = array(
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Listy Top 10',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Listy Top 10 pozwalają każdemu edytorowi na Twojej wiki utworzyć ranking. Jeśli szukasz sposobu aby zaangażować innych użytkowników, oto on! Włączenie tego rozszerzenia doda opcję "Lista Top 10" przy tworzeniu nowego artykułu.',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Odznaczenia',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Odznaczenie pomogą Twojej wiki rosnąć poprzez motywowanie użytkowników do edycji różnego typu artykułów. Możesz tworzyć własne, unikatowe odznaki, a nawet modyfikować obrazy dla poszczególnych odznaczeń.',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Odznaczenia pomogą Twojej wiki rosnąć poprzez motywowanie użytkowników do edycji na rozmaite sposoby. Możesz tworzyć własne, unikatowe odznaczenia, a nawet modyfikować obrazy dla poszczególnych odznaczeń.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Komentarze',
 	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'To rozszerzenie pozwoli użytkownikom dodawać komentarze na dole strony. Inni mogą na nie odpowiadać, a podpisy i daty zostają dodane automatycznie. To rozszerzenie zastąpi strony dyskusji na Twojej wiki.',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Galeria Kategorii',
@@ -1096,7 +1096,7 @@ $messages['ps'] = array(
 	'wikifeatures-feature-heading-wgEnableChat' => 'بانډار',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  * @author Pedroca cerebral
  */
@@ -1142,7 +1142,7 @@ $messages['pt-br'] = array(
 	'wikifeatures-log-name' => 'Registro Recursos da Wiki',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Lvova
  */
@@ -1205,7 +1205,7 @@ $messages['ru'] = array(
 	'wikifeatures-log-header' => 'Ниже приводится список изменений параметров Wiki Features.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author VickyC
  * @author WikiPhoenix
  */
@@ -1322,15 +1322,30 @@ $messages['vi'] = array(
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Mở rộng Danh mục Wiki',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
+ * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'wikifeatures' => 'Wikia功能',
 	'wikifeatures-title' => 'Wikia功能',
+	'wikifeatures-feedback' => '做出反馈',
+	'wikifeatures-error-message' => '您的评论是过短或过长。',
+	'wikifeatures-error-spam-attempt' => '请等待60秒钟后提交更多的反馈。',
+	'wikifeatures-love-this-project' => '我喜欢这项功能',
+	'wikifeatures-hate-this-project' => '我讨厌这项功能',
+	'wikifeatures-an-idea-for-project' => '我对这项功能有一个构想',
+	'wikifeatures-feedback-comment-label' => '给我们留言',
+	'wikifeatures-feedback-success' => '感谢您的反馈！',
+	'wikifeatures-deactivate-heading' => '禁用$1？',
+	'wikifeatures-feature-heading-wgEnableAchievementsExt' => '成就',
+	'wikifeatures-feature-heading-wgEnableChat' => '聊天',
+	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => '编辑是一个维基的核心。拥有一个好的编辑器能在添加内容时带来轻松和愉悦的体验。为了改善您的体验，我们重新设计了编辑页面。',
+	'wikifeatures-feature-heading-wgEnableBlogArticles' => '博客',
+	'wikifeatures-feature-heading-wgEnableWallExt' => '信息墙',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

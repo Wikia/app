@@ -25,13 +25,13 @@ $messages['af'] = array(
 	'piggyback-itisyou' => 'U kan nie piggyback op uself gebruik nie.',
 );
 
-/** Breton (Brezhoneg) */
+/** Breton (brezhoneg) */
 $messages['br'] = array(
 	'piggyback-otherusername' => 'Anv implijer all',
 	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -65,7 +65,7 @@ Bitte Schreibweise überprüfen.',
 	'piggyback-issysopto' => 'Du kannst keinen Benutzer mit dem Huckepack-Recht Huckepack nehmen.',
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $messages['es'] = array(
 	'piggybac-desc' => 'Permite iniciar sesión con la cuenta de otro usuario',
 	'piggyback' => 'Personificar',
@@ -80,14 +80,14 @@ Verifica tu escritura.',
 	'piggyback-issysopto' => 'No puedes personificar a un usuario con el derecho de personificar.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'piggyback-wronguser' => '$1 ei ole sinun käyttäjätunnuksesi',
 );
 
-/** French (Français) */
+/** French (français) */
 $messages['fr'] = array(
 	'piggybac-desc' => 'Permet de s’identifier avec le compte d’un autre utilisateur',
 	'piggyback' => 'Accès superposé',
@@ -119,7 +119,7 @@ Comprobe a ortografía.',
 	'piggyback-issysopto' => 'Non pode acceder sen autorización á conta dun usuario con dereitos de acceso sen autorización.',
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (interlingua) */
 $messages['ia'] = array(
 	'piggybac-desc' => 'Permitte aperir session como altere usator',
 	'piggyback' => 'Portacontos',
@@ -157,7 +157,7 @@ $messages['lb'] = array(
 	'piggyback-otherusername' => 'Anere Benotzernumm:',
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $messages['mk'] = array(
 	'piggybac-desc' => 'Овозможува да се најавите како друг корисник („на ушка“)',
 	'piggyback' => 'На ушка',
@@ -197,7 +197,7 @@ Sila semak ejaan anda.',
 	'piggyback-issysopto' => 'Anda tidak boleh menggendong pengguna dengan hak menggendong.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'piggybac-desc' => 'Tillater å logge på som en annen bruker',
 	'piggyback' => 'Operer som annen bruker',
@@ -243,7 +243,7 @@ Controleer je schrijfwijze.',
 	'piggyback-issysopto' => 'Je kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -278,7 +278,7 @@ Ch\'a contròla l\'ortografìa.',
 	'piggyback-issysopto' => "A peul pa fé na conession mùltipla ansima al cont ëd n'utent con ël drit ëd fé dle conession mùltiple.",
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $messages['pt'] = array(
 	'piggybac-desc' => 'Permite a autenticação em nome de outro utilizador',
 	'piggyback' => 'Personificação',
@@ -293,7 +293,7 @@ Verifique a soletração.',
 	'piggyback-issysopto' => 'Não pode personificar um utilizador que tem o direito de personificação.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -310,7 +310,7 @@ Verifique a ortografia.',
 	'piggyback-issysopto' => 'Não pode personificar um utilizador que tem o direito de personificação.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  * @author MaxSem
@@ -328,7 +328,7 @@ $messages['ru'] = array(
 	'piggyback-issysopto' => 'Вы не можете использовать piggyback на участниках с доступом к piggyback.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -349,7 +349,7 @@ $messages['te'] = array(
 	'piggyback-wronguser' => '$1 అన్నది మీ వాడుకరి పేరు కాదు',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

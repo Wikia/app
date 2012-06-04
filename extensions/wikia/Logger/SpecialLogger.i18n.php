@@ -29,21 +29,21 @@ $messages['af'] = array(
 	'loggernoresult' => 'Geen resultate gevind nie',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
 	'loggergo' => 'Göstər',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'loggergo' => 'Показване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
  */
@@ -53,7 +53,7 @@ $messages['br'] = array(
 	'loggernoresult' => "N'eus bet kavet disoc'h ebet",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -90,7 +90,7 @@ $messages['diq'] = array(
 	'loggergo' => 'Bımocne',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  */
 $messages['es'] = array(
@@ -104,14 +104,14 @@ $messages['es'] = array(
 	'loggernoresult' => 'No se encontraron resultados',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
 	'loggergo' => 'Erakutsi',
 );
 
-/** French (Français)
+/** French (français)
  * @author Balzac 40
  * @author Iketsi
  * @author Verdy p
@@ -141,7 +141,7 @@ $messages['gl'] = array(
 	'loggernoresult' => 'Non se atopou ningún resultado',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Dj
  */
@@ -156,7 +156,7 @@ $messages['hu'] = array(
 	'loggernoresult' => 'Nincs találat',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -194,7 +194,7 @@ $messages['lb'] = array(
 	'loggergo' => 'Weisen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -205,7 +205,7 @@ $messages['mk'] = array(
 	'loggerrecordswithpercent' => "'''$1''' записи (потполност: '''$2''' %)",
 	'loggerrecords' => '$1 записи',
 	'loggergo' => 'Покажи',
-	'loggernoresult' => 'Нема пронајдено резултати',
+	'loggernoresult' => 'Не пронајдов ништо',
 );
 
 /** Malayalam (മലയാളം)
@@ -229,7 +229,7 @@ $messages['ms'] = array(
 	'loggernoresult' => 'Tiada hasil carian',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -264,7 +264,7 @@ $messages['pfl'] = array(
 	'loggergo' => 'Zaische',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -301,7 +301,7 @@ $messages['ps'] = array(
 	'loggernoresult' => 'پايلې و  نه موندل شوې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -316,7 +316,7 @@ $messages['pt'] = array(
 	'loggernoresult' => 'Não foi encontrado nenhum resultado',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Hamilton Abreu
  */
@@ -331,14 +331,14 @@ $messages['pt-br'] = array(
 	'loggernoresult' => 'Nenhum resultado encontrado',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'loggernoresult' => 'Niciun rezultat găsit',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Ole Yves
  */
@@ -351,14 +351,14 @@ $messages['ru'] = array(
 	'loggernoresult' => 'Ничего не найдено',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'loggerrecords' => '$1 белешки',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -381,6 +381,13 @@ $messages['ta'] = array(
 	'loggernoresult' => 'முடிவுகள் எதுவும் காணப்படவில்லை',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'loggernoresult' => 'ఫలితాలేమీ దొరకలేదు',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -395,7 +402,7 @@ $messages['tl'] = array(
 	'loggernoresult' => 'Walang natagpuang mga kinalabasan',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Yanmiao liu
  */

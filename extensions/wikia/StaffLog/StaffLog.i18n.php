@@ -50,7 +50,7 @@ $messages['qqq'] = array(
 	'stafflog-filter-user' => '',
 );
 
-/** Bosnian (Bosanski) */
+/** Bosnian (bosanski) */
 $messages['bs'] = array(
 	'stafflog-desc' => 'Centralizirani zapisnik za osoblje',
 	'stafflog' => 'ZapisnikOsoblja',
@@ -59,7 +59,7 @@ $messages['bs'] = array(
 	'stafflog-piggybacklogoutmsg' => '$1 nosilac - korisnik $2 odjava sa $3 računa',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -101,7 +101,7 @@ $messages['diq'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wiki weziyet',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -122,7 +122,7 @@ $messages['es'] = array(
 	'stafflog-filter-type-wikifactory' => 'Estado del wiki',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Wyz
  */
@@ -165,7 +165,7 @@ $messages['gl'] = array(
 	'stafflog-filter-type-wikifactory' => 'Estado do wiki',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -204,7 +204,7 @@ $messages['lb'] = array(
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -246,7 +246,7 @@ $messages['ms'] = array(
 	'stafflog-filter-type-wikifactory' => 'Status wiki',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -289,7 +289,7 @@ $messages['nl'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wikistatus',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Nandy
  * @author Odder
@@ -341,7 +341,7 @@ $messages['ps'] = array(
 	'stafflog-filter-user' => 'کارن:',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -355,7 +355,7 @@ $messages['pt'] = array(
 	'stafflog-filter-user' => 'Utilizador:',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (português do Brasil) */
 $messages['pt-br'] = array(
 	'stafflog-desc' => 'Registro centralizado para a equipe',
 	'stafflog' => 'Registro da Equipe',
@@ -364,7 +364,7 @@ $messages['pt-br'] = array(
 	'stafflog-piggybacklogoutmsg' => 'Personificação $1 - usuário $2 saiu da conta $3',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Eleferen
  * @author Kuzura
@@ -386,7 +386,7 @@ $messages['ru'] = array(
 	'stafflog-filter-type-wikifactory' => 'Статус вики',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -417,10 +417,17 @@ $messages['tl'] = array(
 	'right-stafflog' => 'Maaaring tingnan ang talaan ng tauhan',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
 	'stafflog-blockmsg' => '$1 $2 спробував заблокувати користувача-співробітника $3 у вікі $4. Причина: $5',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'stafflog-filter-user' => '用户：',
 );
 

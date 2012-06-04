@@ -419,7 +419,7 @@ $messages['ar'] = array(
 	'closed-reason' => 'السبب:',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
  */
@@ -517,7 +517,7 @@ $messages['bar'] = array(
 	'closed-wiki-create-wiki' => 'A neichs Wiki erstejn',
 );
 
-/** Belarusian (Беларуская)
+/** Belarusian (беларуская)
  * @author Тест
  */
 $messages['be'] = array(
@@ -644,7 +644,7 @@ $messages['be-tarask'] = array(
 	'closed-reason' => 'Прычына:',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  * @author Spiritia
  * @author Stanqo
@@ -724,7 +724,7 @@ $messages['bjn'] = array(
 	'wikifactory-label-actions' => 'Tindakan',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -849,7 +849,7 @@ $messages['br'] = array(
 	'closed-reason' => 'Abeg :',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -888,7 +888,7 @@ $messages['bs'] = array(
 	'awc-metrics-close' => 'Zatvori',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  * @author Paucabot
  * @author SMP
@@ -1027,13 +1027,13 @@ $messages['ce'] = array(
 	'closed-reason' => 'Бахьан:',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'wf_cc_name' => 'پۆل',
 	'closed-reason' => 'هۆکار:',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  * @author Mr. Richard Bolla
@@ -1202,7 +1202,7 @@ $messages['cy'] = array(
 	'closed-reason' => 'Rheswm',
 );
 
-/** Danish (Dansk)
+/** Danish (dansk)
  * @author Emilkris33
  */
 $messages['da'] = array(
@@ -1487,7 +1487,7 @@ $messages['el'] = array(
 	'awc-metrics-images' => 'Εικόνες',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Bola
  * @author Locos epraix
@@ -1622,7 +1622,7 @@ $messages['es'] = array(
 	'newwikisgraph-param-other' => 'Otro',
 );
 
-/** Estonian (Eesti)
+/** Estonian (eesti)
  * @author Hendrik
  */
 $messages['et'] = array(
@@ -1635,7 +1635,7 @@ $messages['et'] = array(
 	'awc-metrics-exact-match' => 'täpne vaste',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -1699,7 +1699,7 @@ $messages['fa'] = array(
 	'closed-wiki' => 'ویکی بسته شده',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Ilkea
@@ -1760,7 +1760,7 @@ $messages['fi'] = array(
 	'closed-reason' => 'Syy:',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Gomoko
  * @author IAlex
@@ -2075,7 +2075,7 @@ $messages['he'] = array(
 	'closed-wiki-create-wiki' => 'צור אתר ויקי חדש',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -2178,7 +2178,7 @@ $messages['hy'] = array(
 	'awc-metrics-by-domains' => 'և դոմենը բովանդակում է՝',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -2454,7 +2454,7 @@ $messages['ig'] = array(
 	'closed-reason' => 'Mgbághapụtà:',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gifh
  * @author HalphaZ
  */
@@ -2811,7 +2811,7 @@ $messages['lb'] = array(
 	'closed-reason' => 'Grond:',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -2959,7 +2959,7 @@ $messages['ml'] = array(
 	'closewiki-unknown' => 'അജ്ഞാതം',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -3143,7 +3143,7 @@ $messages['mzn'] = array(
 	'wikifactory-label-actions' => 'عملکاردون',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3417,14 +3417,14 @@ $messages['nl-informal'] = array(
 	'closed-wiki-dump-exists' => 'Wil je [$1 de inhoud van je wiki downloaden]?',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Harald Khan
  */
 $messages['nn'] = array(
 	'closewiki-images-url' => 'Biletarkiv: $1',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -3479,7 +3479,7 @@ $messages['pdc'] = array(
 	'closed-reason' => 'Grund:',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Marcin Łukasz Kiejzik
  * @author Sovq
@@ -3810,11 +3810,12 @@ $messages['ps'] = array(
 	'newwikisgraph-param-other' => 'نور',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
  * @author Masked Rogue
+ * @author Rhaijin
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -3871,7 +3872,7 @@ $messages['pt'] = array(
 	'awc-metrics-by-language' => 'por língua:',
 	'awc-metrics-category' => 'e categoria:',
 	'awc-metrics-all' => 'todas as wikis',
-	'awc-metrics-all-languages' => 'todas as línguas',
+	'awc-metrics-all-languages' => 'Todas as línguas',
 	'awc-metrics-search' => 'Opções de pesquisa:',
 	'awc-metrics-one-week' => 'criadas há menos de uma semana',
 	'awc-metrics-two-weeks' => 'criadas há menos de duas semanas',
@@ -3923,7 +3924,7 @@ regist.',
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Esta wiki foi fechada',
 	'disabled-wiki-info' => 'Esta wiki foi desactivada',
-	'closed-wiki-dump-exists' => 'Clique [$1 aqui] para importar o conteúdo, por favor.<br />(Se a sua wiki foi encerrada recentemente, a geração dos ficheiros pode demorar um pouco)',
+	'closed-wiki-dump-exists' => 'Por favor, clique em [$1 aqui] se você quiser recuperar o seu conteúdo. <br /> (Se você wiki foi recentemente fechado, fazer exame curto período de tempo para os arquivos a serem gerados)',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. A cópia do conteúdo em ficheiro estará disponível nas próximas 24 horas. Verifique novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Criar uma wiki nova',
 	'closed-wiki-policy' => 'Consulte as Normas de Fecho da Wikia',
@@ -3939,7 +3940,7 @@ regist.',
 	'closed-reason' => 'Motivo:',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Aristóbulo
  * @author Caio1478
@@ -4072,7 +4073,7 @@ $messages['pt-br'] = array(
 	'newwikisgraph-param-other' => 'Outra',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Cin
  * @author Minisarm
  * @author Stelistcristi
@@ -4134,7 +4135,7 @@ $messages['ro'] = array(
 	'closed-reason' => 'Motivul:',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Exlex
  * @author Kuzura
@@ -4276,14 +4277,14 @@ $messages['si'] = array(
 	'wikifactory-label-close' => 'වසන්න',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'closed-reason' => 'Razlog:',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -4408,7 +4409,7 @@ $messages['sr-ec'] = array(
 	'closed-reason' => 'Разлог:',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Dafer45
  * @author Per
  * @author Tobulos1
@@ -4593,7 +4594,7 @@ $messages['te'] = array(
 	'closed-reason' => 'కారణం:',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -4722,7 +4723,7 @@ $messages['tl'] = array(
 	'closed-reason' => 'Dahilan:',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  * @author Ильнар
  */
@@ -4802,7 +4803,7 @@ $messages['tt-cyrl'] = array(
 	'awc-metrics-close' => 'Ябу',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author NickK
  * @author Prima klasy4na
  * @author Тест
@@ -4868,7 +4869,7 @@ $messages['yi'] = array(
 	'closed-reason' => 'אורזאַך:',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Hydra
  */
@@ -4891,7 +4892,7 @@ $messages['zh-hans'] = array(
 	'closed-reason' => '原因：',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  * @author Wrightbus
  */
@@ -4972,7 +4973,7 @@ $messages['zh-hant'] = array(
 	'newwikisgraph-param-other' => '其他',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

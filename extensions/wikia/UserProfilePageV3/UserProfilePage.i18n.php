@@ -157,7 +157,7 @@ $messages['ar'] = array(
 	'blog-avatar-changed-log' => 'أضاف أو غير الصورة الرمزية',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -182,7 +182,7 @@ $messages['bg'] = array(
 	'user-action-menu-history' => 'История',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -202,7 +202,7 @@ $messages['br'] = array(
 	'blog-avatar-alt' => 'Marilh ouzhpennadennoù pe dilammadennoù avataroù an implijerien',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  * @author CuBaN VeRcEttI
  * @author Gemmaa
@@ -311,7 +311,7 @@ $messages['ca'] = array(
 	'blog-avatar-alt' => "Registre d'addicions o esborrats d'avatars d'usuari",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -470,7 +470,7 @@ $messages['diq'] = array(
 	'user-action-menu-history' => 'Tarix',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
@@ -588,7 +588,7 @@ $messages['es'] = array(
 	'user-identity-remove-fail' => '¡Hubo un problema al eliminar el avatar!',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Tm T
  */
@@ -702,7 +702,7 @@ $messages['fi'] = array(
 	'user-identity-remove-fail' => 'Ongelma poistaessa avataria!',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Wyz
  */
@@ -929,7 +929,7 @@ $messages['gl'] = array(
 	'user-identity-remove-fail' => 'Houbo un problema ao eliminar o avatar!',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -941,7 +941,7 @@ $messages['hy'] = array(
 	'blog-avatar-changed-log' => 'ավելացրել է կամ փոխել է ավատարը',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1054,7 +1054,7 @@ $messages['ia'] = array(
 	'user-identity-remove-fail' => 'Un problema occurreva con le remotion del avatar!',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -1154,7 +1154,7 @@ $messages['lez'] = array(
 	'usermasthead-log' => 'Уртахдикай малумат',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1380,7 +1380,7 @@ $messages['ms'] = array(
 	'user-identity-remove-fail' => 'Ada sedikit masalah ketika menggugurkan avatar!',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1620,7 +1620,7 @@ $messages['pfl'] = array(
 	'user-action-menu-delete' => 'Lesche',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Cloudissimo
  * @author Sovq
@@ -1767,7 +1767,7 @@ $messages['ps'] = array(
 	'user-action-menu-history' => 'پېښليک',
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $messages['pt'] = array(
 	'useravatar-log' => 'Registo de avatares dos utilizadores',
 	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
@@ -1775,7 +1775,7 @@ $messages['pt'] = array(
 	'blog-avatar-alt' => 'Registos de adições e remoções de avatares',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (português do Brasil) */
 $messages['pt-br'] = array(
 	'useravatar-log' => 'Registro de avatares dos usuários',
 	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
@@ -1783,7 +1783,7 @@ $messages['pt-br'] = array(
 	'blog-avatar-alt' => 'Registros de adições e remoções de avatares',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kaganer
  * @author Kuzura
  */
@@ -1896,7 +1896,7 @@ $messages['ru'] = array(
 	'user-identity-remove-fail' => 'Возникли некоторые проблемы при удалении аватара!',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1917,7 +1917,7 @@ $messages['sr-ec'] = array(
 	'userprofilepage-invalid-user' => 'Неисправан корисник. Нисте пријављени или немате права да наставите',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author VickyC
  * @author WikiPhoenix
  */
@@ -1950,6 +1950,7 @@ $messages['sv'] = array(
 	'user-identity-box-avatar-cancel' => 'Avbryt',
 	'user-identity-box-avatar-anon-user-error' => 'Du måste logga in innan du ändrar något',
 	'user-identity-box-hide-edits-wikis' => 'Dölj alla',
+	'user-identity-box-banned-from-chat' => 'Avstängd från chatten',
 	'user-identity-box-aka-label' => '<span>också känd som</span> $1',
 	'user-identity-box-my-twitter' => 'Min Twitter',
 	'user-identity-box-my-website' => 'Min webbplats',
@@ -1970,6 +1971,7 @@ $messages['sv'] = array(
 	'user-identity-box-group-staff' => 'Personal',
 	'user-identity-box-group-helper' => 'Hjälpare',
 	'user-identity-box-group-authenticated' => 'Autentiserad',
+	'user-identity-box-group-council' => 'Rådgivare',
 	'user-identity-box-zero-state-location' => 'Plats',
 	'user-identity-box-zero-state-birthday' => 'Födelsedag',
 	'user-identity-box-zero-state-gender' => 'Kön',
@@ -2033,7 +2035,7 @@ $messages['tr'] = array(
 	'userprofilepage-closing-popup-cancel' => 'İptal',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -2178,7 +2180,7 @@ $messages['vi'] = array(
 	'usermasthead-log-message' => 'bổ sung thông tin hồ sơ',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Hzy980512
  */
@@ -2212,7 +2214,7 @@ $messages['zh-hans'] = array(
 	'user-action-menu-protect' => '保护',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

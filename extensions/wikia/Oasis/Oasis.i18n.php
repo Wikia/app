@@ -308,9 +308,15 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author OsamaK
+ * @author ترجمان05
  */
 $messages['ar'] = array(
-	'oasis-page-header-subtitle-mediawiki' => 'صحفة ميدياويكي',
+	'oasis-home' => 'الرئيسية',
+	'oasis-more' => 'شاهد المزيد >',
+	'oasis-mytools' => 'أدواتي',
+	'oasis-follow' => 'اتبع',
+	'oasis-share' => 'شارك',
+	'oasis-page-header-subtitle-mediawiki' => 'صفحة ميدياويكي',
 	'oasis-page-header-subtitle-template' => 'صفحة قالب',
 	'oasis-page-header-subtitle-category' => 'صفحة تصنيف',
 	'oasis-page-header-subtitle-forum' => 'صفحة منتدى',
@@ -318,7 +324,7 @@ $messages['ar'] = array(
 	'imageseo-featured-more' => 'المزيد...',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -344,7 +350,7 @@ $messages['be-tarask'] = array(
 	'themedesigner' => 'Канструктар тэмаў',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -388,7 +394,7 @@ $messages['bg'] = array(
 	'oasis-navigation-v2-add-photo' => 'Добавяне на снимка',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  * @author Fulup
  * @author TOR
@@ -511,14 +517,14 @@ $messages['br'] = array(
 	'oasis-navigation-v2-validation-next' => "War-lerc'h",
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'themedesigner' => 'Dizajner tema',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'oasis-home' => 'ماڵەوە',
 	'oasis-more' => 'زۆرتر ببینە >',
@@ -529,7 +535,7 @@ $messages['ckb'] = array(
 	'oasis-button-random-wiki' => 'ویکیی ھەرەمەکی',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  * @author Mormegil
@@ -874,7 +880,7 @@ $messages['diq'] = array(
 	'oasis-home' => 'Keye',
 	'oasis-page-header-comments-k' => '$1k',
 	'oasis-page-header-comments-m' => '$1M',
-	'oasis-page-header-talk' => 'Werênayış',
+	'oasis-page-header-talk' => 'Persiyey',
 	'oasis-page-header-edited-by' => 'Pela $1 $2i vurne',
 	'oasis-page-header-edited' => 'Pela $1 bıvurne',
 );
@@ -890,7 +896,7 @@ $messages['eo'] = array(
 	'oasis-user-page-change-avatar' => 'Ŝanĝi profilbildon',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Armando-Martin
  * @author Benfutbol10
@@ -1181,7 +1187,7 @@ $messages['fa'] = array(
 	'oasis-modal-error-headline' => 'لطفاً خطای ذیل را تصحیح کنید',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Nike
  * @author Tm T
@@ -1342,7 +1348,7 @@ Nauti!
 - Wikia tiimi',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author DavidL
  * @author Gomoko
@@ -1799,7 +1805,7 @@ $messages['he'] = array(
 	'oasis-modal-error-headline' => 'נא לתקן את השגיאות הבאות',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -1863,7 +1869,7 @@ $messages['hu'] = array(
 	'oasis-modal-error-headline' => 'Javítsd a következő hibákat',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -2054,7 +2060,7 @@ $messages['id'] = array(
 	'oasis-page-header-edit-profile' => 'Sunting profil',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  * @author Minerva Titani
  * @author TOR
@@ -2378,7 +2384,7 @@ $messages['lb'] = array(
 	'oasis-upload-photos-force' => 'Trotzdem eroplueden',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author TOR
  * @author Vpovilaitis
  */
@@ -2500,7 +2506,7 @@ $messages['lt'] = array(
 	'oasis-modal-error-headline' => 'Ištaisykite šias klaidas',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -2906,7 +2912,7 @@ $messages['mzn'] = array(
 	'oasis-page-header-subtitle-mediawiki' => 'مدیاویکی صفحه',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -3270,7 +3276,7 @@ $messages['pfl'] = array(
 	'imageseo-featured-more' => 'waidari...',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Anoon6
  * @author BeginaFelicysym
  * @author Cloudissimo
@@ -3375,7 +3381,7 @@ $messages['pl'] = array(
 	'oasis-toolbar-customize' => 'Dostosuj',
 	'oasis-toolbar-devinfo' => 'Informacje dla Developerów',
 	'oasis-comments-header' => '$1 {{PLURAL:$1|komentarz|komentarze|komentarzy}}',
-	'oasis-comments-showing-most-recent' => 'Wyświetlono $1 {{PLURAL:$1|najnowszą|najnowsze|najnowszych}}',
+	'oasis-comments-showing-most-recent' => 'Wyświetlono $1 {{PLURAL:$1|najnowszy|najnowsze|najnowszych}}',
 	'oasis-comments-anonymous-prompt' => 'Użytkownik anonimowy<br /> <a href="#">Chcesz się zalogować?</a>',
 	'oasis-comments-show-all' => 'Pokaż wszystkie',
 	'oasis-comments-added-by' => '$1 przez $2',
@@ -3483,8 +3489,9 @@ $messages['ps'] = array(
 	'oasis-navigation-v2-add-photo' => 'يو انځور ورګډول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Rhaijin
  * @author TOR
  */
 $messages['pt'] = array(
@@ -3505,7 +3512,7 @@ $messages['pt'] = array(
 	'oasis-activity-header' => 'Actividade Recente na Wiki',
 	'oasis-related-video-header' => 'Vídeos Relacionados',
 	'oasis-related-video-by-5min' => 'pelo 5min Video',
-	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|página|páginas}}<br /> nesta wiki</span>',
+	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM: $1 }}</em><span> {{PLURAL:$1| página sobre<br>Esta wiki|pages em<br>Este wiki}}</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|foto|fotos}} nesta wiki</span>',
 	'oasis-latest-photos-more' => 'Ver mais >',
 	'oasis-latest-photos-inner-message' => 'Ver todas as fotos',
@@ -3547,6 +3554,7 @@ $messages['pt'] = array(
 	'oasis-page-header-subtitle-forum' => 'Página de fórum',
 	'oasis-page-header-subtitle-special-wikiactivity' => 'Ver toda a actividade >',
 	'oasis-search-results-from' => 'A mostrar os resultados de: $1',
+	'oasis-search-results-from-all-wikis' => 'Os resultados de toda a Wikia',
 	'oasis-user-page-change-avatar' => 'Mudar o avatar',
 	'oasis-content-picture-added-by' => 'Adicionada por $1',
 	'oasis-confirmation-page-deleted' => '"$1" foi eliminada. ([[Special:Undelete/$1|restaurar]])',
@@ -3556,6 +3564,8 @@ $messages['pt'] = array(
 	'oasis-notification-youhavenewmessages' => 'Tem $1.',
 	'oasis-member-since' => 'Membro desde $1',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edição feita|edições feitas}}</sup>',
+	'oasis-edit-saved' => 'Ele já gravou a sua edição!',
+	'oasis-button-contribute-tooltip' => 'Contribuir',
 	'oasis-toolbar-edit-title' => 'Personalizar a Barra de Ferramentas',
 	'oasis-toolbar-edit-toolbar-list' => 'Lista de Ferramentas',
 	'oasis-toolbar-edit-reset-defaults' => 'repor valores padrão',
@@ -3613,11 +3623,12 @@ $messages['pt'] = array(
 	'oasis-related-categories' => 'Categorias Relacionadas',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Aristóbulo
  * @author Caio1478
  * @author Giro720
+ * @author Rhaijin
  * @author TOR
  */
 $messages['pt-br'] = array(
@@ -3637,7 +3648,7 @@ $messages['pt-br'] = array(
 	'oasis-activity-header' => 'Wiki Atividade recente',
 	'oasis-related-video-header' => 'Vídeos relacionados',
 	'oasis-related-video-by-5min' => 'por 5min Video',
-	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|página<br /> nessa wiki|páginas<br /> nessa wiki}}</span>',
+	'oasis-total-articles-mainpage' => '! FUZZY FORMATNUM <em> {{$ 1}} </ em> <span> {{PLURAL: $ 1 | página <br /> este wiki | <br /> páginas neste wiki}} </! span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|foto nessa wiki|fotos nessa wiki}}</span>',
 	'oasis-latest-photos-more' => 'Ver mais >',
 	'oasis-latest-photos-inner-message' => 'Ver todas as fotos',
@@ -3739,7 +3750,7 @@ $messages['pt-br'] = array(
 	'oasis-on-the-wiki' => 'Pelo Wiki',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Exlex
  * @author Kaganer
@@ -3903,7 +3914,7 @@ $3
 -Команда Викия',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -4000,7 +4011,7 @@ $messages['sr-ec'] = array(
 	'oasis-modal-error-headline' => 'Исправите следеће грешке',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Avatar
  * @author Lokal Profil
  * @author TOR
@@ -4185,6 +4196,8 @@ $messages['ta'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'oasis-home' => 'ముంగిలి',
+	'oasis-mytools' => 'నా పనిముట్లు',
 	'oasis-page-header-subtitle-special' => 'ప్రత్యేక పుట',
 	'oasis-toolbar-edit-save' => 'భద్రపరచు',
 	'oasis-toolbar-edit-cancel' => 'రద్దుచేయి',
@@ -4252,7 +4265,7 @@ $messages['tl'] = array(
 	'oasis-modal-error-headline' => 'Pakitama ang sumusunod na mga kamalian',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -4358,7 +4371,7 @@ $messages['tt-cyrl'] = array(
 	'oasis-on-the-wiki' => 'Бу викида',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author NickK
  * @author TOR
@@ -4595,45 +4608,69 @@ Thưởng thức!
 - Wikia Team',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Breawycker
+ * @author Dimension
  * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
 	'oasis-home' => '主页',
+	'oasis-more' => '查看更多>',
+	'oasis-mytools' => '我的工具',
 	'oasis-share' => '分享',
 	'oasis-like' => '喜欢',
 	'oasis-signup' => '创建新账户',
 	'oasis-edit-protected-article' => '登录',
 	'oasis-button-random-page' => '随机页面',
 	'oasis-button-random-wiki' => '随机进入维基',
+	'oasis-button-wiki-activity' => '维基动态',
+	'oasis-button-wiki-activity-feed' => '查看全部动态〉',
+	'oasis-button-wiki-activity-watchlist' => ' 仅包括关注的页面',
+	'oasis-activity-header' => '近期维基动态',
 	'oasis-latest-photos-inner-message' => '查看全部照片',
 	'oasis-latest-photos-more-dotdotdot' => '更多...',
 	'oasis-global-nav-create-wiki' => '开始一个维基',
 	'oasis-page-header-talk' => '讨论',
+	'oasis-page-header-edited' => '$1编辑',
 	'oasis-page-header-history-link' => '查看全部历史',
 	'oasis-page-header-back-to-article' => '回到页面',
+	'oasis-page-header-back-to-template' => '返回模板',
 	'oasis-page-header-add-topic' => '添加话题',
 	'oasis-page-header-edit-profile' => '编辑档案页',
+	'oasis-anon-header' => '未注册编辑者<small>$1</small>',
+	'oasis-badge-notification' => '您刚刚获得了"$2"徽章，因为您$3',
+	'oasis-badge-notification-see-more' => '查看更多您可以赢得的徽章！',
 	'oasis-page-header-subtitle-special' => '特别页面',
 	'oasis-page-header-subtitle-category' => '类别页面',
+	'oasis-page-header-subtitle-special-wikiactivity' => '查看全部动态〉',
+	'oasis-user-page-change-avatar' => '更改头像',
 	'oasis-notification-youhavenewmessages' => '您有 $1 。',
+	'oasis-button-contribute-tooltip' => '投稿',
+	'oasis-button-create-page' => '添加页面',
+	'oasis-toolbar-edit-title' => '自定义工具栏',
 	'oasis-toolbar-edit-save' => '保存',
 	'oasis-toolbar-edit-cancel' => '取消',
 	'oasis-toolbar-edit-rename-item' => '重命名项目',
+	'oasis-comments-showing-most-recent' => '显示最新$1',
 	'oasis-comments-show-all' => '显示全部',
+	'oasis-random-wiki' => '进入随机维基',
 	'oasis-create-page' => '在这个维基上创造一个新页面',
 	'oasis-add-page' => '添加一个页面',
+	'oasis-section-edit' => '编辑',
 	'oasis-spotlights-footer-title' => 'Wikia里...',
+	'oasis-interlang-show-all' => '...查看全部>',
 	'oasis-interlang-languages' => '语言：',
 	'oasis-upload-photos-more-options' => '更多选择',
 	'oasis-upload-photos-fewer-options' => '更少选择',
+	'oasis-navigation-v2-create-page' => '添加页面',
+	'oasis-navigation-v2-edit-page' => '编辑此页',
+	'oasis-navigation-v2-add-photo' => '添加图片',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -4756,7 +4793,7 @@ $messages['zh-hant'] = array(
 	'oasis-on-the-wiki' => '在這個wiki上',
 );
 
-/** Chinese (Hong Kong) (‪中文(香港)‬)
+/** Chinese (Hong Kong) (‪中文（香港）‬)
  * @author Ffaarr
  */
 $messages['zh-hk'] = array(
@@ -4832,7 +4869,7 @@ $messages['zh-hk'] = array(
 	'oasis-interlang-languages' => '其他語言',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  * @author Mark85296341
  */

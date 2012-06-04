@@ -40,14 +40,14 @@ $messages['be-tarask'] = array(
 	'sitemap-desc' => 'Стварэньне файлаў Sitemap для {{GRAMMAR:родны|{{SITENAME}}}} не спыняючыся',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
 	'sitemap-desc' => 'Genel steuñvennoù eus ar wiki war ar prim.',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -62,14 +62,14 @@ $messages['de'] = array(
 	'sitemap-desc' => 'Generiert im Handumdrehen Sitemaps für das Wiki',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Crazymadlover
  */
 $messages['es'] = array(
 	'sitemap-desc' => 'Generar mapas del sitio sobre la marcha',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  */
 $messages['fr'] = array(
@@ -88,14 +88,14 @@ $messages['he'] = array(
 	'sitemap-desc' => 'יצירת מפות אתרים לאתר הוויקי בו במקום',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  */
 $messages['hu'] = array(
 	'sitemap-desc' => 'Oldaltérképet generál a wikihez menet közben',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -116,7 +116,7 @@ $messages['ig'] = array(
 	'sitemap-desc' => 'Ké okịkẹ Ọtúzọámá màkà wiki nọr na ijí',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gianfranco
  */
 $messages['it'] = array(
@@ -151,7 +151,7 @@ $messages['li'] = array(
 	'sitemap-desc' => 'Maak wikiziejkaarte aan',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -165,7 +165,7 @@ $messages['ms'] = array(
 	'sitemap-desc' => 'Segera menjana Peta Tapak untuk wiki ini',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -186,14 +186,14 @@ $messages['nl'] = array(
 	'sitemap-desc' => 'Sitemaps voor de wiki aanmaken',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Jfblanc
  */
 $messages['oc'] = array(
 	'sitemap-desc' => 'Generar dinamicament de mapas del site wiki',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -207,35 +207,42 @@ $messages['pms'] = array(
 	'sitemap-desc' => 'Generé al vòl dle carte del Sit për la wiki',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
 	'sitemap-desc' => 'Geração dinâmica de mapas do site, para a wiki',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
 	'sitemap-desc' => 'Geração dinâmica de mapas do site, para a wiki',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'sitemap-desc' => "Genere le mappe d'u site pe le uicchi a vole",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author G0rn
  */
 $messages['ru'] = array(
 	'sitemap-desc' => 'Создание файлов Sitemap для вики на лету',
 );
 
-/** Swedish (Svenska)
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'sitemap-desc' => 'Generiert in Hounduumetraalen Sitemaps foar dät Wiki',
+);
+
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -249,21 +256,21 @@ $messages['tl'] = array(
 	'sitemap-desc' => 'Gumawa ng mga Sityo ng mapa para sa wiki sa ibabaw ng salimbayan',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'sitemap-desc' => 'Sitemap файлларын викида җитез генә ясау',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Alex Khimich
  */
 $messages['uk'] = array(
 	'sitemap-desc' => 'Створює мапу сайту вікі на льоту',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

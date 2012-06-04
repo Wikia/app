@@ -385,7 +385,7 @@ $messages['af'] = array(
 	'founderemails-email-3-day-heading' => 'Hallo $USERNAME!',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -402,7 +402,7 @@ $messages['bg'] = array(
 	'founderemails-email-3-day-addphotos-button' => 'Добавяне на снимки',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -580,7 +580,7 @@ Ur bern traoù a c\'hoarvez war ho wiki hiziv ! Kit war $MYHOMEURL da welet pena
 	'founderemails-pref-views-digest' => 'Kas din ur postel bemdez evit lavaret din pet gwech eo bet gweladennet $1',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  * @author CuBaN VeRcEttI
  */
@@ -1290,7 +1290,7 @@ $messages['diq'] = array(
 	'founderemails-email-views-digest-greeting' => 'selam bırayo delal $USERNAME,',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Armando-Martin
  * @author Benfutbol10
@@ -1635,7 +1635,7 @@ $messages['fa'] = array(
 	'founderemails-email-views-digest-signature' => 'تیم ویکیا',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tofu II
  */
@@ -1660,7 +1660,7 @@ Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut w
 -- Wikia Team',
 );
 
-/** French (Français)
+/** French (français)
  * @author Balzac 40
  * @author Crochet.david
  * @author Gomoko
@@ -2494,7 +2494,7 @@ Sempre pode pasar pola actividade do wiki para ollar todos os cambios que se est
 	'founderemails-pref-complete-digest-v2' => '...un resumo diario das incorporacións, edicións e visitas',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -2523,7 +2523,7 @@ $messages['hu'] = array(
 	'founderemails-email-3-day-explore-button' => 'Felfedezés',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -2861,7 +2861,7 @@ $messages['id'] = array(
 	'founderemails-email-user-registered-button' => 'Sambut mereka',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -3247,7 +3247,7 @@ $messages['map-bms'] = array(
 <div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -3926,7 +3926,7 @@ Anda boleh sentiasa pergi ke Kegiatan Wiki untuk melihat semua perubahan yang di
 	'founderemails-pref-complete-digest-v2' => '...tersedianya Ikhtisar Harian penyertaan, suntingan dan kunjungan',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -4744,7 +4744,7 @@ $messages['pfl'] = array(
 	'founderemails-email-anon-edit-greeting' => 'Hey $USERNAME,',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Bartek50003
  * @author BeginaFelicysym
  * @author Sovq
@@ -5247,7 +5247,7 @@ $messages['ps'] = array(
 	'founderemails-email-complete-digest-signature' => 'د ويکيا ډله',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
@@ -5430,7 +5430,7 @@ Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o 
 	'founderemails-email-complete-digest-greeting' => 'Olá, $USERNAME,',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  * @author Stelistcristi
  */
@@ -5445,7 +5445,7 @@ $messages['ro'] = array(
 	'founderemails-email-3-day-explore-button' => 'Exploră',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Александр Сигачёв
  */
@@ -5781,7 +5781,7 @@ $3 {{PLURAL:$3|участник присоединился|участника п
 	'founderemails-pref-complete-digest-v2' => '...ежедневный дайджест новых редакторов, правок и просмотров страницы',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
@@ -6123,6 +6123,7 @@ $messages['te'] = array(
 	'founderemails-email-user-registered-subject' => '$WIKINAME లో ఎవరో చేరారు',
 	'founderemails-email-10-days-passed-subject' => 'మీ వికీలో ఏమి జరుగుతూంది?',
 	'founderemails-answers-email-10-days-passed-subject' => 'మీ వికీలో ఏమి జరుగుతూంది?',
+	'founderemails-email-views-digest-signature' => 'వికియా జట్టు',
 );
 
 /** Tagalog (Tagalog)
@@ -6174,7 +6175,7 @@ Matagal-tagal na rin magmula noong magsimula ka ng isang wiki sa Wikia - umaasa 
 	'founderemails-lot-happening-subject' => 'Maraming nagaganap sa sityo mo ngayong araw na ito!',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -6183,7 +6184,7 @@ $messages['tt-cyrl'] = array(
 	'founderemails-email-0-day-customizetheme-button' => 'Көйләү',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -6515,27 +6516,36 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
 	'founderemails-pref-complete-digest' => 'Gửi cho tôi một bản tóm tắt hàng ngày về hoạt động trên $1',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'founderemails-email-user-registered-subject' => '有新用户加入$WIKINAME',
+	'founderemails-email-user-registered-body' => '嗨！$USERNAME，
+祝贺！$EDITORNAME刚刚加入了$WIKINAME。
+利用这个机会欢迎他们加入，鼓励他们协助编辑吧。多多益善，您的维基也会更快的成长。
+$EDITORPAGEURL
+
+Wikia团队',
+	'founderemails-email-user-registered-greeting' => '嗨！$USERNAME，',
+	'founderemails-email-0-days-passed-subject' => '欢迎来到Wikia！',
 	'founderemails-email-10-days-passed-subject' => '“10天纪念日”快乐！',
 	'founderemails-email-10-days-passed-body' => '$USERNAME，最近如何？
 
-喔，时光飞逝！您建立$WIKINAME已有10日了。
+喔，时光飞逝！您建立$WIKINAME，$WIKIURL已有10日了。
 
 让其他人参与到你的项目中来，炫耀你一直以来辛勤耕耘的杰出作品吧！这里有一些广而告之的手段：
 
-母亲难道没告诉过你要分享吗？使用工具栏中的“分享”按钮，条目页面和图片会在Facebook、Twitter和其他人气站点上展示给你的朋友和追随者。
+母亲难道没告诉过你要分享吗？使用主页中的“分享”按钮，条目页面和图片会在Facebook、Twitter和其他人气站点上展示给你的朋友和追随者。
 
 利用电子邮件的力量。邮件告知那些可能对你的主题感兴趣或愿意帮助你的人（比如同学或同事）。你也可以使用“邮件”发送维基里的指定图片。
 
 链接相似站点。在其他与你的主题有关的论坛或网站发帖求助。如果可能的话，联络管理员看看他们是否对分享链接有兴趣——若你把他们的链接放在你的维基上，他们也会将你的维基链接放到自己的网站上。
 
-你同样可以在community.wikia.com上发帖寻求其他维基用户的帮助。
+你同样可以在http://community.wikia.com上发帖寻求其他维基用户的帮助。
 
 继续努力哦！
 
@@ -6555,8 +6565,18 @@ ___________________________________________
 	'founderemails-email-general-edit-signature' => 'Wikia团队',
 	'founderemails-email-anon-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-anon-edit-signature' => 'Wikia团队',
+	'founderemails-answers-email-user-registered-body' => '嘿！$USERNAME，
+
+看来$EDITORNAME已经在你的维基上注册了！何不踩踩他们的讨论页$EDITORTALKPAGEURL，和他们打个招呼呢？
+
+-- Wikia团队',
 	'founderemails-answers-email-0-days-passed-body' => '祝贺创建$WIKINAME——您现在是Wikia社区的一部分了！',
 	'founderemails-answers-email-10-days-passed-subject' => '您的wiki最近如何？',
+	'founderemails-answers-email-page-edited-reg-user-body' => '嘿！$USERNAME，
+
+看来$EDITORNAME已经在你的维基上做出编辑了！何不踩踩他们的讨论页($EDITORTALKPAGEURL)，和他们打个招呼呢？
+
+-- Wikia团队',
 	'founderemails-answers-email-page-edited-anon-subject' => '您的站点被人修改过了！',
 	'founderemails-email-lot-happening-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-lot-happening-signature' => 'Wikia团队',
@@ -6572,6 +6592,7 @@ ___________________________________________
 	'founderemails-email-3-day-heading' => '你好，$USERNAME，',
 	'founderemails-email-3-day-addphotos-heading' => '添加更多图片。',
 	'founderemails-email-3-day-addphotos-button' => '添加照片',
+	'founderemails-email-3-day-explore-heading' => '寻找灵感。',
 	'founderemails-email-3-day-wikiahelps-signature' => '继续努力吧！<br />Wikia团队',
 	'founderemails-email-10-day-congratulations' => '哇哦，时光飞逝！您建立$HDWIKINAME已逾10日。',
 	'founderemails-email-10-day-join-heading' => '链接同类网站。',
@@ -6580,12 +6601,13 @@ ___________________________________________
 	'founderemails-email-complete-digest-subject' => '$WIKINAME上的最新活动',
 	'founderemails-email-complete-digest-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-complete-digest-content-heading2' => '已做出$1 {{PLURAL:$1|处编辑|处编辑}}。',
+	'founderemails-email-complete-digest-content-heading3' => '$1人加入了你的维基。',
 	'founderemails-email-complete-digest-button' => '前往 维基活动',
 	'founderemails-pref-joins' => '有人加入$1时邮件通知我。',
 	'founderemails-pref-edits' => '有人编辑$1时邮件通知我。',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

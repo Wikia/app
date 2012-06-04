@@ -109,19 +109,76 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
+ * @author DRIHEM
  * @author OsamaK
+ * @author ترجمان05
  */
 $messages['ar'] = array(
 	'article-comments-anonymous' => 'مستخدم مجهول',
 	'article-comments-comments' => 'التعليقات ($1)',
 	'article-comments-post' => 'أرسل تعليقا',
+	'article-comments-cancel' => 'إلغاء',
 	'article-comments-delete' => 'احذف',
 	'article-comments-edit' => 'عدّل',
 	'article-comments-history' => 'التاريخ',
 	'article-comments-error' => 'تعذّر حفظ التعليق',
+	'article-comments-undeleted-comment' => 'تعليق غير محذوف من المدونة $1',
+	'article-comments-rc-comment' => 'تعليق المقال (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'تعليقات المقال ([[$1]])',
+	'article-comments-fblogin' => 'الرجاء <a href="$1" rel="nofollow">تسجيل الدخول عن طريق Facebook</a> لإضافة تعليق على هذا الويكي!',
+	'article-comments-fbconnect' => 'الرجاء <a href="$1">ربط هذا الحساب مع Facebook</a> من أجل التعليق!',
+	'article-comments-rc-blog-comment' => 'تعليق المدونة (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'تعليقات المدونة ([[$1]])',
+	'article-comments-login' => 'الرجاء <a href="$1">تسجيل الدخول</a> لإضافة تعليق على هذا الويكي.',
+	'article-comments-toc-item' => 'تعليقات',
+	'article-comments-comment-cannot-add' => 'لا يمكنك إضافة تعليق إلى هذا المقال.',
+	'article-comments-vote' => 'التصويت حتى',
+	'article-comments-reply' => 'الرد',
+	'article-comments-show-all' => 'إظهار كافة التعليقات',
+	'article-comments-prev-page' => 'سابق',
+	'article-comments-next-page' => 'تالي',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'تم حذف المقالة الأصلية / التعليق الأصلي.',
+	'article-comments-empty-comment' => "لا يمكنك إضافة تعليق فارغ. <a href='$1'>هل تريد حذفه بدلا من ذلك؟</a>",
+	'wikiamobile-article-comments-header' => 'تعليقات <span class=cnt id=wkArtCnt>$1</span>',
+	'wikiamobile-article-comments-more' => 'تحميل المزيد',
+	'wikiamobile-article-comments-prev' => 'تحميل السابقة',
+	'wikiamobile-article-comments-none' => 'لا تعليقات',
+	'wikiamobile-article-comments-view' => 'عرض الردود',
+	'wikiamobile-article-comments-replies' => 'الردود',
+	'wikiamobile-article-comments-post-reply' => 'نشر الرد',
+	'wikiamobile-article-comments-post' => 'عرض',
+	'wikiamobile-article-comments-placeholder' => 'أرسل تعليقا',
+	'wikiamobile-article-comments-show' => 'أظهر',
+	'wikiamobile-article-comments-login-post' => 'الرجاء تسجيل الدخول لإضافة تعليق.',
+	'enotif_subject_article_comment' => '$PAGEEDITOR قام بالتعليق على "$PAGETITLE" على {{SITENAME}}',
+	'enotif_body_article_comment' => 'عزيزي $WATCHINGUSERNAME،
+
+$PAGEEDITOR قدم تعليقا على "$PAGETITLE".
+
+لمشاهدة موضوع التعليق، أتبع الرابط أدناه:
+$PAGETITLE_URL
+
+الرجاء قم بزيارتنا والتعديل غالبا...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>عزيزي $WATCHINGUSERNAME،
+<br /><br />
+$PAGEEDITOR قدم تعليقا على "$PAGETITLE".
+<br /><br />
+لمشاهدة موضوع التعليق، أتبع الرابط التالي: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+الرجاء قم بزيارتنا والتعديل غالبا...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>هل تريد التحكم في رسائل البريد المرسلة إليك؟ <a href="{{fullurl:Special:Preferences}}">قم بتحديث التفضيلات الخاصة بك<a>.</li>
+</ul>
+</p>',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -191,7 +248,7 @@ Wikia
 </p>',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -206,7 +263,7 @@ $messages['bg'] = array(
 	'article-comments-show-all' => 'Показване на всички коментари',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -268,7 +325,7 @@ Wikia
 </p>',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Jezevec
  * @author Jkjk
@@ -332,7 +389,7 @@ Wikia
 </p>',
 );
 
-/** Danish (Dansk)
+/** Danish (dansk)
  * @author Sarrus
  */
 $messages['da'] = array(
@@ -477,7 +534,7 @@ $messages['eo'] = array(
 	'article-comments-toc-item' => 'Komentoj',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author DJ Nietzsche
@@ -547,7 +604,7 @@ Wikia
 </p>',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -594,7 +651,7 @@ $messages['fa'] = array(
 	'article-comments-empty-comment' => "شما نمی‌توانید یک نظر خالی بفرستید. <a href='$1'>به‌جایش حذف شود؟</a>",
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Tm T
  * @author Tofu II
@@ -627,7 +684,7 @@ $messages['fi'] = array(
 	'wikiamobile-article-comments-none' => 'Ei kommentteja',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Gomoko
  * @author Verdy p
@@ -766,7 +823,7 @@ Wikia
 </p>',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author TK-999
  */
@@ -835,7 +892,7 @@ Wikia
 </p>',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -935,7 +992,7 @@ $messages['inh'] = array(
 	'article-comments-history' => 'искар',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Geitost
  * @author Leviathan 89
@@ -1173,7 +1230,7 @@ $PAGEEDITOR къейд ттуна "$PAGETITLE".
 </p>',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -1217,7 +1274,7 @@ $messages['lus'] = array(
 	'article-comments-rc-comments' => 'Thuziak tuihnihna ([[$1]])',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1382,7 +1439,7 @@ $messages['mzn'] = array(
 	'article-comments-undeleted-comment' => 'نظر صفحۀ وبلاگ $1 وسّه احیاء بیّه',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1555,7 +1612,7 @@ $messages['pfl'] = array(
 	'wikiamobile-article-comments-show' => 'Zaische',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Woytecr
@@ -1569,7 +1626,7 @@ $messages['pl'] = array(
 	'article-comments-edit' => 'edytuj',
 	'article-comments-history' => 'historia',
 	'article-comments-error' => 'Komentarz nie mógł zostać zapisany.',
-	'article-comments-undeleted-comment' => 'Usunięcie komentarza na stronie $1 blogu.',
+	'article-comments-undeleted-comment' => 'Przywrócony komentarz na blogu $1',
 	'article-comments-rc-comment' => 'Komentarz  (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Komentarze ([[$1]])',
 	'article-comments-fblogin' => '<a href="$1" rel="nofollow">Zaloguj się i połącz przez Facebook</a> aby zostawić komentarz na tej wiki',
@@ -1587,7 +1644,7 @@ $messages['pl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Główny artykuł / komentarz został usunięty',
 	'article-comments-empty-comment' => "Nie możesz zapisać pustego komentarza <a href='$1'>Usunąć?</a>",
-	'wikiamobile-article-comments-header' => 'komentarze (<span id=wkArtCnt>$1</span>)',
+	'wikiamobile-article-comments-header' => 'komentarze <span class=cnt id=wkArtCnt>$1</span>',
 	'wikiamobile-article-comments-more' => 'Załaduj więcej',
 	'wikiamobile-article-comments-prev' => 'Załaduj poprzednie',
 	'wikiamobile-article-comments-none' => 'Brak komentarzy',
@@ -1642,7 +1699,7 @@ $messages['ps'] = array(
 	'article-comments-next-page' => 'راتلونکی',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  * @author SandroHc
@@ -1702,7 +1759,7 @@ Wikia
 </p>',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  */
@@ -1761,7 +1818,7 @@ $messages['pt-br'] = array(
 </p>',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -1778,14 +1835,14 @@ $messages['ro'] = array(
 	'article-comments-empty-comment' => "Nu poţi posta un comentariu gol. <a href='$1'>Îl ştergi, în schimb?</a>",
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'article-comments-reply' => 'Respunne',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Express2000
  * @author Kuzura
  */
@@ -1850,7 +1907,7 @@ $PAGEEDITOR оставил комментарий "$PAGETITLE".
 </p>',
 );
 
-/** Serbo-Croatian (Srpskohrvatski)
+/** Serbo-Croatian (srpskohrvatski / српскохрватски)
  * @author OC Ripper
  */
 $messages['sh'] = array(
@@ -1915,7 +1972,7 @@ $messages['si'] = array(
 	'article-comments-history' => 'ඉතිහාසය',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1934,7 +1991,7 @@ $messages['sr-ec'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Постави коментар',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Geitost
  * @author WikiPhoenix
  */
@@ -2019,6 +2076,8 @@ $messages['te'] = array(
 	'article-comments-toc-item' => 'వ్యాఖ్యలు',
 	'article-comments-comment-cannot-add' => 'ఈ వ్యాసానికి మీరు వ్యాఖ్యని చేర్చలేరు.',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-none' => 'వ్యాఖ్యలు లేవు',
+	'wikiamobile-article-comments-show' => 'చూపించు',
 );
 
 /** Tagalog (Tagalog)
@@ -2076,7 +2135,7 @@ Wikia
 </p>',
 );
 
-/** Толышә зывон (Толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -2108,7 +2167,7 @@ $messages['tr'] = array(
 	'article-comments-next-page' => 'Sonraki',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -2148,7 +2207,7 @@ Wikia
 </p>',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -2233,7 +2292,7 @@ Wikia
 </p>',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -2247,22 +2306,36 @@ $messages['zh-hans'] = array(
 	'article-comments-edit' => '编辑',
 	'article-comments-history' => '历史',
 	'article-comments-error' => '无法保存注释',
+	'article-comments-undeleted-comment' => '博客页$1被撤消删除的评论',
+	'article-comments-rc-comment' => '条目评论(<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '文章评论([[$1]])',
+	'article-comments-fblogin' => '请<a href="$1" rel="nofollow">登陆并连接到Facebook</a>以在本维基上发表评论！',
 	'article-comments-fbconnect' => '请<a href="$1">将该账户联结到Facebook</a>进行评论！',
+	'article-comments-rc-blog-comment' => '博客评论(<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => '博客评论([[$1]])',
+	'article-comments-login' => '请<a href="$1">登陆</a>以在本维基上发表评论 ^_^',
 	'article-comments-toc-item' => '评论',
 	'article-comments-comment-cannot-add' => '不能将注释添加到文章中。',
+	'article-comments-vote' => '投票',
 	'article-comments-reply' => '答复',
 	'article-comments-show-all' => '显示所有注释',
 	'article-comments-prev-page' => '上一页',
 	'article-comments-next-page' => '下一页',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => '源条目/源评论已被删除。',
 	'article-comments-empty-comment' => "您不能发布空白评论。<a href='$1'>是否删除它？</a>",
 	'wikiamobile-article-comments-header' => '<span class=cnt id=wkArtCnt>$1</span>条评论',
+	'wikiamobile-article-comments-more' => '加载更多',
 	'wikiamobile-article-comments-prev' => '加载前项',
 	'wikiamobile-article-comments-none' => '暂无评论',
+	'wikiamobile-article-comments-view' => '查看回复',
 	'wikiamobile-article-comments-replies' => '回复',
+	'wikiamobile-article-comments-post-reply' => '发表回复',
 	'wikiamobile-article-comments-post' => '发布',
+	'wikiamobile-article-comments-placeholder' => '发表评论',
 	'wikiamobile-article-comments-show' => '展开',
+	'wikiamobile-article-comments-login-post' => '请登录以发表评论。',
+	'enotif_subject_article_comment' => '$PAGEEDITOR在{{SITENAME}}上对"$PAGETITLE"发表了评论',
 	'enotif_body_article_comment' => '亲爱的$WATCHINGUSERNAME，
 
 $PAGEEDITOR对"$PAGETITLE"做出了评论。
@@ -2273,9 +2346,23 @@ $PAGETITLE_URL
 请常来访问和编辑……
 
 Wikia',
+	'enotif_body_article_comment-HTML' => '<p>亲爱的$WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR在"$PAGETITLE"上做出了评论。
+<br /><br />
+依如下链接查看评论：<a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+敬请常来访编辑……
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>想管理你将收到何种邮件？ <a href="{{fullurl:Special:Preferences}}">更新偏好设置<a>.</li>
+</ul>
+</p>',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

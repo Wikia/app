@@ -31,7 +31,7 @@ $messages['be-tarask'] = array(
 	'tog-watchlistsubpages' => 'Пераходзіць на падстаронкі',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -39,7 +39,7 @@ $messages['br'] = array(
 	'tog-watchlistsubpages' => 'Heuliañ ispajennoù',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -47,7 +47,7 @@ $messages['ca'] = array(
 	'tog-watchlistsubpages' => 'Seguir subpàgines',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -63,7 +63,7 @@ $messages['de'] = array(
 	'tog-watchlistsubpages' => 'Unterseiten beobachten',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Danke7
  */
@@ -72,7 +72,7 @@ $messages['es'] = array(
 	'tog-watchlistsubpages' => 'Seguir subpáginas',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  */
 $messages['fi'] = array(
@@ -80,7 +80,7 @@ $messages['fi'] = array(
 	'tog-watchlistsubpages' => 'Seuraa alasivuja',
 );
 
-/** French (Français)
+/** French (français)
  * @author Sherbrooke
  */
 $messages['fr'] = array(
@@ -96,7 +96,7 @@ $messages['gl'] = array(
 	'tog-watchlistsubpages' => 'Seguir as subpáxinas',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -112,7 +112,7 @@ $messages['id'] = array(
 	'tog-watchlistsubpages' => 'Ikuti subhalaman',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gianfranco
  */
 $messages['it'] = array(
@@ -144,7 +144,7 @@ $messages['lb'] = array(
 	'tog-watchlistsubpages' => 'Ënnersäiten iwwerwaachen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -160,7 +160,7 @@ $messages['ms'] = array(
 	'tog-watchlistsubpages' => 'Pantau sublaman',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -176,7 +176,7 @@ $messages['nl'] = array(
 	'tog-watchlistsubpages' => "Subpagina's volgen",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -192,7 +192,7 @@ $messages['pms'] = array(
 	'tog-watchlistsubpages' => 'Ten sot euj dle sotpàgine',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -200,7 +200,7 @@ $messages['pt'] = array(
 	'tog-watchlistsubpages' => 'Seguir subpáginas',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -208,7 +208,7 @@ $messages['pt-br'] = array(
 	'tog-watchlistsubpages' => 'Seguir subpáginas',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -216,7 +216,7 @@ $messages['ru'] = array(
 	'tog-watchlistsubpages' => 'Переход на подстраницы',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -224,7 +224,7 @@ $messages['sl'] = array(
 	'tog-watchlistsubpages' => 'Sledi podstranem',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -232,7 +232,7 @@ $messages['sr-ec'] = array(
 	'tog-watchlistsubpages' => 'Надгледај подстранице',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -248,7 +248,7 @@ $messages['tl'] = array(
 	'tog-watchlistsubpages' => 'Sundan ang kabahaging mga pahina',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

@@ -126,7 +126,7 @@ $messages['ar'] = array(
 	'editaccount-log-entry-close' => 'الحساب معطّل $2',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -145,7 +145,7 @@ $messages['be-tarask'] = array(
 	'editaccount-submit-realname' => 'Захаваць сапраўднае імя',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -168,7 +168,7 @@ $messages['bho'] = array(
 	'editaccount-title' => 'विशेष: खाता सम्पादन',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -218,7 +218,7 @@ $messages['br'] = array(
 	'right-editaccount' => 'Kemmañ penndibaboù implijerien all',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Davidpar
  */
 $messages['ca'] = array(
@@ -229,7 +229,7 @@ $messages['ca'] = array(
 	'right-editaccount' => 'Edita les preferències dels altres usuaris',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -384,7 +384,7 @@ $messages['el'] = array(
 	'editaccount-log-entry-pass' => 'Έγινε αλλαγή στον κωδικό πρόσβασης του χρήστη $2',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Crazymadlover
@@ -462,7 +462,7 @@ $messages['fa'] = array(
 	'editaccount-submit-close' => 'بستن حساب کاربری',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Jack Phoenix <jack@countervandalism.net>
@@ -512,7 +512,7 @@ $messages['fi'] = array(
 	'right-editaccount' => 'Muokata toisten käyttäjien asetuksia',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author IAlex
  * @author Peter17
@@ -647,7 +647,7 @@ $messages['he'] = array(
 	'right-editaccount' => 'עריכת מידע של משתמשים אחרים',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  * @author Misibacsi
@@ -691,7 +691,7 @@ $messages['hu'] = array(
 	'right-editaccount' => 'más felhasználók beállításainak szerkesztése',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -805,7 +805,7 @@ $messages['id'] = array(
 	'right-editaccount' => 'Menyunting informasi pengguna lain',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author HalphaZ
  * @author Leviathan 89
  * @author Pietrodn
@@ -920,7 +920,7 @@ $messages['lb'] = array(
 	'right-editaccount' => 'Aner Benotzerastellungen änneren',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1044,7 +1044,7 @@ $messages['ms'] = array(
 	'right-editaccount' => 'Sunting keutamaan pengguna lain',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1148,7 +1148,7 @@ Weet u zeker dat u dit wilt doen?',
 	'editaccount-success-realname' => 'De echte naam voor gebruiker $1 is gewijzigd.',
 	'editaccount-success-unsub' => 'De gebruiker $1 is niet langer uitgeschreven.',
 	'editaccount-success-disable' => 'De gebruiker $1 is weer vrijgegeven.',
-	'editaccount-success-toggleadopt' => '$1 kan nu een wiki adopteren.',
+	'editaccount-success-toggleadopt' => '$1 kan nu wel/niet een wiki adopteren.',
 	'editaccount-success-close' => 'De gebruiker $1 is uitgeschakeld.',
 	'editaccount-error-email' => 'Het e-mailadres is niet gewijzigd.
 Probeer het opnieuw of neem contact op het met Tech Team.',
@@ -1215,7 +1215,7 @@ $messages['pa'] = array(
 	'editaccount-submit-realname' => 'ਅਸਲੀ ਨਾਂ ਸੰਭਾਲੋ',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Woytecr
@@ -1349,7 +1349,7 @@ $messages['ps'] = array(
 	'editaccount-labal-account-status' => 'د ګڼون دريځ',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -1397,7 +1397,7 @@ $messages['pt'] = array(
 	'right-editaccount' => 'Editar as preferências de outros utilizadores',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  * @author Jesielt
  */
@@ -1443,7 +1443,7 @@ $messages['pt-br'] = array(
 	'right-editaccount' => 'Editar outras preferências de usuário',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -1457,7 +1457,7 @@ $messages['ro'] = array(
 	'editaccount-status' => 'Mesaj de stare',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -1521,7 +1521,7 @@ $messages['ru'] = array(
 	'right-editaccount' => 'Редактировать настройки других участников',
 );
 
-/** Sakha (Саха тыла)
+/** Sakha (саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1576,7 +1576,7 @@ $messages['si'] = array(
 	'editaccount-submit-pass' => 'මුර පදය සුරකින්න',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -1607,7 +1607,7 @@ $messages['sr-ec'] = array(
 	'editaccount-log-entry-close' => '$2 налог је затворен',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Lokal Profil
  * @author Tobulos1
  * @author VickyC
@@ -1719,6 +1719,7 @@ $messages['te'] = array(
 	'editaccount-status' => 'స్థితి సందేశం',
 	'editaccount-invalid-email' => '"$1" అనేది సరైన ఈ-మెయిలు చిరునామా కాదు!',
 	'editaccount-nouser' => '"$1" అనే ఖాతా లేనే లేదు!',
+	'editaccount-labal-account-status' => 'ఖాతా స్థితి',
 	'editaccount-log' => 'వాడుకరి ఖాతాల చిట్టా',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">ఈ ఖాతాని అచేతనం చేసారు.</div>',
 );
@@ -1776,14 +1777,14 @@ $messages['tr'] = array(
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Bu hesap devre dışı bırakıldı.</div>',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'editaccount' => 'Хисап язмасын төзәтү',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Prima klasy4na
  */
@@ -1882,7 +1883,7 @@ $messages['vi'] = array(
 	'right-editaccount' => 'Sửa đổi thông tin người dùng khác',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -1899,6 +1900,7 @@ $messages['zh-hans'] = array(
 	'editaccount-label-select' => '选择一个用户',
 	'editaccount-submit-account' => '管理用户',
 	'editaccount-frame-account' => '编辑用户帐户:$1',
+	'editaccount-frame-close' => '禁用用户帐户：$1',
 	'editaccount-label-email' => '设置新电子邮件地址',
 	'editaccount-label-pass' => '设置新密码',
 	'editaccount-label-realname' => '设置新真实姓名',
@@ -1922,7 +1924,7 @@ $messages['zh-hans'] = array(
 	'right-editaccount' => '编辑其他用户的信息',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Dream
  * @author Horacewai2
  * @author Waihorace

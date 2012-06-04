@@ -55,7 +55,7 @@ $messages['qqq'] = array(
 	'related-videos-embed-text' => 'This is a label for an input field holding the embed (HTML) code for the currently displayed video.',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -108,7 +108,7 @@ $messages['diq'] = array(
 	'related-videos-video-is-new' => 'Newe',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Bernardom
@@ -160,7 +160,7 @@ $messages['es'] = array(
 	'related-videos-requesttext' => '¿Qué más te gustaría ver?',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Wyz
  */
@@ -259,7 +259,7 @@ $messages['gl'] = array(
 	'related-videos-requesttext' => 'Que máis quere ver?',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -308,7 +308,7 @@ $messages['ia'] = array(
 	'related-videos-requesttext' => 'Que altere vole tu vider?',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -406,7 +406,7 @@ $messages['ms'] = array(
 	'related-videos-requesttext' => 'Apakah lagi yang ingin anda lihat?',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -513,7 +513,7 @@ $messages['pfl'] = array(
 	'related-videos-video-is-new' => 'Nai',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -563,14 +563,14 @@ $messages['pl'] = array(
 	'related-videos-requesttext' => 'Chcesz obejrzeć coś innego?',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'related-videos-pagination' => '$1 de $2',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -620,7 +620,7 @@ $messages['ru'] = array(
 	'related-videos-requesttext' => 'Что ещё вы хотели бы увидеть?',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -629,7 +629,7 @@ $messages['sr-ec'] = array(
 	'related-videos-video-is-new' => 'Ново',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -686,5 +686,16 @@ $messages['ta'] = array(
 	'related-videod-add-video-ok' => 'முடிந்தது',
 	'related-videod-add-video-label-all' => 'எல்லாவற்றையும் பார்க்கவும்',
 	'related-videos-video-is-new' => 'புதிய',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'related-videos-tally' => '相关视频',
+	'related-videos-added-by' => '添加自',
+	'related-videos-remove' => '移除',
+	'related-videod-add-video-label-all' => '查看全部',
+	'related-videos-remove-call' => '请稍候，我们正在移除视频',
 );
 

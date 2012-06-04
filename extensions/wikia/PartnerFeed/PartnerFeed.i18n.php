@@ -47,7 +47,7 @@ $messages['qqq'] = array(
 * $1 is a blog post title.',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -56,7 +56,7 @@ $messages['bg'] = array(
 	'feed-title-recentchanges' => 'Последни промени',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -96,7 +96,7 @@ $messages['de'] = array(
 	'feed-title-recentchanges' => 'Letzte Änderungen',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -129,7 +129,7 @@ $messages['fa'] = array(
 	'feed-title-recent-images' => 'تصاویر اخیر',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  */
 $messages['fi'] = array(
@@ -137,7 +137,7 @@ $messages['fi'] = array(
 	'all-blog-posts' => 'kaikki kategoriat',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Verdy p
  * @author Wyz
@@ -190,7 +190,7 @@ $messages['gl'] = array(
 	'feed-title-recentchanges' => 'Cambios recentes',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -201,7 +201,7 @@ $messages['hu'] = array(
 	'feed-title-recentchanges' => 'Friss változtatások',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -256,7 +256,7 @@ $messages['lb'] = array(
 	'feed-title-recentchanges' => 'Rezent Ännerungen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -315,7 +315,7 @@ $messages['ms'] = array(
 	'feed-title-recentchanges' => 'Perubahan terkini',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -366,7 +366,7 @@ $messages['nl'] = array(
 	'feed-title-recentchanges' => 'Recente wijzigingen',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -424,7 +424,7 @@ $messages['ps'] = array(
 	'all-blog-posts' => 'ټولې وېشنيزې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -449,7 +449,7 @@ $messages['pt'] = array(
 	'feed-title-recentchanges' => 'Mudanças recentes',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  */
@@ -475,7 +475,7 @@ $messages['pt-br'] = array(
 	'feed-title-recentchanges' => 'Mudanças recentes',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  */
@@ -499,7 +499,7 @@ $messages['ru'] = array(
 	'feed-title-recentchanges' => 'Свежие правки',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -508,7 +508,7 @@ $messages['sr-ec'] = array(
 	'feed-title-recent-images' => 'Скорашње слике',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -574,7 +574,7 @@ $messages['tl'] = array(
 	'feed-title-recentchanges' => 'Kamakailang mga pagbabago',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Тест
  */
@@ -597,7 +597,7 @@ $messages['uk'] = array(
 	'feed-title-recentchanges' => 'Нові редагування',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

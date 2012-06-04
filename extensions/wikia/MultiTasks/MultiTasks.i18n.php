@@ -223,7 +223,7 @@ $messages['af'] = array(
 	'multiwikirecords' => "Gevind op $1 wiki's",
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -261,7 +261,7 @@ $messages['be-tarask'] = array(
 	'multidelete_button' => 'ВЫДАЛІЦЬ',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -283,7 +283,7 @@ $messages['bg'] = array(
 	'multidelete_success_subtitle' => 'за $1',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -345,7 +345,7 @@ $messages['br'] = array(
 	'multidelete_title' => 'Dilemel Lies',
 	'multidelete_both_modes' => 'Dibabit, mar plij, pe ur bajenn zibar pe ur roll pajennoù roet.',
 	'multidelete_or' => '<b>PE</b>',
-	'multidelete_reason' => 'Abeg an dilamidigezh',
+	'multidelete_reason' => 'Abeg diverkañ',
 	'multidelete_error_empty_selection' => 'Roit, mar plij, roll ar wikioù dibabet',
 	'multidelete_error_empty_pages' => 'Mar plij dibabit pe ur bajenn roet pe ur roll roet a bajennoù',
 	'multidelete_error_multi_page' => 'Ne vez aotreet nemet un titl en un taol evit dilemel lies Wiki.',
@@ -395,7 +395,7 @@ $messages['br'] = array(
 	'multiwikirecords' => '$1 wiki bet kavet',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -409,12 +409,12 @@ $messages['ce'] = array(
 	'multidelete_title' => 'Дуккха дIадайар',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'multidelete_button' => 'سڕینەوە',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -680,7 +680,7 @@ $messages['diq'] = array(
 	'multidelete_button' => 'BESTERE',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'multidelete_button' => 'Tutui',
 );
@@ -692,7 +692,7 @@ $messages['eo'] = array(
 	'multidelete_czech_wikis' => 'ĉiuj Ĉeĥaj vikioj',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author Crazymadlover
  * @author Locos epraix
@@ -812,7 +812,7 @@ $messages['fa'] = array(
 	'multidelete_select_all' => 'انتخاب همه',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Nike
@@ -854,7 +854,7 @@ $messages['fi'] = array(
 	'multiwikirecords' => '$1 wiki löytyi',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author McDutchie
  * @author Peter17
@@ -1081,7 +1081,7 @@ $messages['ha'] = array(
 	'multidelete_button' => 'SOKE',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -1130,7 +1130,7 @@ $messages['hu'] = array(
 	'multiwikirecords' => '$1 wiki található',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1285,7 +1285,7 @@ $messages['ig'] = array(
 	'multidelete_button' => 'Kàcha',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'multitasks-link-back-label' => 'qui',
 	'multiwikiedit_button' => 'MODIFICA',
@@ -1556,7 +1556,7 @@ $messages['lb'] = array(
 	'multiwikirecords' => '$1 Wikie fonnt',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1792,7 +1792,7 @@ $messages['ms'] = array(
 	'multiwikirecords' => '$1 wiki ditemui',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2100,7 +2100,7 @@ $messages['pfl'] = array(
 	'multidelete_german_wikis' => 'alli daidschi Wikis',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Anoon6
  * @author BeginaFelicysym
  * @author Sovq
@@ -2351,7 +2351,7 @@ $messages['ps'] = array(
 	'multiwikifindpagenames' => 'د مخ نوم موندل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -2461,7 +2461,7 @@ $messages['pt'] = array(
 	'multiwikirecords' => '$1 wiki(s) encontrada(s)',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Jesielt
  * @author Luckas Blade
@@ -2573,14 +2573,14 @@ $messages['pt-br'] = array(
 	'multiwikirecords' => '$1 wiki(s) encontrada(s)',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'multidelete_success_subtitle' => 'pe $1',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -2691,7 +2691,7 @@ $messages['ru'] = array(
 	'multiwikirecords' => 'найдено $1 вики',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Sasa Stefanovic
  * @author Verlor
@@ -2798,7 +2798,7 @@ $messages['sr-ec'] = array(
 	'multiwikirecords' => '{{PLURAL:$1|пронађен је $1 вики|пронађена су $1 викија|пронађено је $1 викија}}',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Per
  * @author Tobulos1
  * @author WikiPhoenix
@@ -2922,21 +2922,21 @@ $messages['tr'] = array(
 	'multidelete_button' => 'SİL',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
 	'multidelete_title' => 'Күпләп бетерү',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
 	'multidelete_button' => 'ВИЛУЧИТИ',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hydra
  */
@@ -2947,8 +2947,10 @@ $messages['zh-hans'] = array(
 	'multiwikiedit_confirm' => '确定',
 	'multiwikiedit_caption' => '页面列表',
 	'multiwikiedit_on' => '在',
+	'multiwikiedit_page' => '待撰页面',
 	'multiwikiedit_reason' => '编辑原因',
 	'multiwikiedit_list_caption' => '维基列表',
+	'multiwikiedit_minoredit_caption' => '小编辑',
 	'multiwikiedit_botedit_caption' => '机器人(隐藏)编辑',
 	'multiwikiedit_autosummary_caption' => '启用自动概要功能',
 	'multiwikiedit_this_wiki' => '这个维基',
@@ -2971,6 +2973,7 @@ $messages['zh-hans'] = array(
 	'multidelete_all_wikis' => '所有维基',
 	'multidelete_chinese_wikis' => '所有华文维基',
 	'multidelete_czech_wikis' => '所有捷克文维基',
+	'multidelete_dutch_wikis' => '所有荷兰文维基',
 	'multidelete_italian_wikis' => '所有意大利文维基',
 	'multidelete_english_wikis' => '所有英文维基',
 	'multidelete_japanese_wikis' => '所有日文维基',
@@ -2979,7 +2982,7 @@ $messages['zh-hans'] = array(
 	'multiwikirecords' => '找到了$1个维基',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -3002,7 +3005,7 @@ $messages['zh-hant'] = array(
 	'multidelete_german_wikis' => '所有的德語wiki',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

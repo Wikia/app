@@ -109,7 +109,7 @@ $messages['as'] = array(
 	'categoryselect-button-cancel' => 'বাতিল কৰক',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -151,7 +151,7 @@ $messages['be-tarask'] = array(
 	'categoryselect-button-cancel' => 'Адмяніць',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -161,7 +161,7 @@ $messages['bg'] = array(
 	'categoryselect-button-cancel' => 'Отказване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -189,19 +189,19 @@ $messages['br'] = array(
 	'tog-disablecategoryselect' => 'Diweredekaat balizadur ar rummadoù',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
 	'categoryselect-code-view-placeholder' => 'Afegeix categories aquí, p.e. [[Categoria:Nom]]',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'categoryselect-button-save' => 'پاشەکەوت',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -285,7 +285,7 @@ $messages['el'] = array(
 	'categoryselect-button-cancel' => 'Ακύρωση',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Pertile
@@ -317,7 +317,7 @@ $messages['es'] = array(
 	'tog-disablecategoryselect-v2' => 'Desactivar módulo de Categorías en el modo fuente',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -334,7 +334,7 @@ $messages['fa'] = array(
 	'categoryselect-button-cancel' => 'لغو',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Crt
  * @author Ilkea
  * @author Tm T
@@ -366,7 +366,7 @@ $messages['fi'] = array(
 	'tog-disablecategoryselect-v2' => 'Poista luokkamoduuli käytöstä (koskee vain jos visuaalinen muokkaus on poistettu käytöstä)',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author IAlex
  * @author Peter17
@@ -437,7 +437,7 @@ $messages['ha'] = array(
 	'categoryselect-button-cancel' => 'Soke',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -456,7 +456,7 @@ $messages['hu'] = array(
 	'tog-disablecategoryselect' => 'Kategóriacímkézés letiltása',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -520,9 +520,11 @@ $messages['ig'] = array(
 	'categoryselect-button-cancel' => 'Emekwàlà',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
+ * @author Beta16
  * @author Leviathan 89
  * @author Minerva Titani
+ * @author Ximo17
  */
 $messages['it'] = array(
 	'categoryselect-desc' => "Fornisce un'interfaccia per la gestione delle categorie negli articoli senza modificare l'intera pagina",
@@ -545,7 +547,8 @@ $messages['it'] = array(
 	'categoryselect-error-user-rights' => "Errore nei diritti dell'utente.",
 	'categoryselect-error-db-locked' => 'Database bloccato.',
 	'categoryselect-edit-abort' => "La modifica che si sta tentando di fare è stata interrotta da un problema dell'estensione",
-	'tog-disablecategoryselect' => 'Disabilita il modulo Categoria (si applica solo se la modalità visuale è stata disabilitata)',
+	'tog-disablecategoryselect' => 'Disabilita il modulo Categoria (si applica solo se la modifica in modalità visuale è stata disabilitata)',
+	'tog-disablecategoryselect-v2' => 'Disabilita il modulo Categoria (si applica solo se la modifica in modalità visuale è disabilitata)',
 );
 
 /** Japanese (日本語)
@@ -602,7 +605,7 @@ $messages['lb'] = array(
 	'categoryselect-error-db-locked' => "D'Datebank ass gespaart.",
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -619,7 +622,7 @@ $messages['lt'] = array(
 	'categoryselect-error-db-locked' => 'Duomenų bazė užrakinta.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -659,7 +662,7 @@ $messages['ml'] = array(
 	'categoryselect-error-not-exist' => 'ലേഖനം [id=$1] നിലവിലില്ല.',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -694,7 +697,7 @@ $messages['ms'] = array(
 	'tog-disablecategoryselect-v2' => 'Matikan modul Kategori (hanya jika mod penyuntingan visual dimatikan)',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -784,7 +787,7 @@ $messages['pfl'] = array(
 	'categoryselect-button-cancel' => 'Uffhere',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -851,7 +854,7 @@ $messages['ps'] = array(
 	'categoryselect-button-cancel' => 'ناګارل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -879,7 +882,7 @@ $messages['pt'] = array(
 	'tog-disablecategoryselect-v2' => 'Desligar o módulo de Categorias (aplica-se apenas se a edição em modo visual estiver desativada)',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Aristóbulo
  * @author Giro720
@@ -908,7 +911,7 @@ $messages['pt-br'] = array(
 	'tog-disablecategoryselect' => 'Desabilitar os botões de aplicação de categoria',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -923,7 +926,7 @@ $messages['ro'] = array(
 	'categoryselect-error-db-locked' => 'Baza de date este blocată.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  * @author Lockal
@@ -954,14 +957,14 @@ $messages['ru'] = array(
 	'tog-disablecategoryselect-v2' => 'Отключить модуль Категорий (активно только при редактировании в режиме Исходного кода)',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'categoryselect-button-save' => 'Shrani',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -980,7 +983,7 @@ $messages['sr-ec'] = array(
 	'categoryselect-error-db-locked' => 'База података је закључана.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -1063,7 +1066,7 @@ $messages['tr'] = array(
 	'categoryselect-button-cancel' => 'İptal',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(
@@ -1079,7 +1082,7 @@ $messages['tt-cyrl'] = array(
 	'categoryselect-error-db-locked' => 'Мәгълүматлар базасы тыелган',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
@@ -1153,12 +1156,15 @@ $messages['zh'] = array(
 	'categoryselect-button-cancel' => '取消',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'categoryselect-code-view' => '代码视图',
+	'categoryselect-code-view-placeholder' => '在此添加分类，例如[[Category:名称]]',
+	'categoryselect-visual-view' => '预览视图',
 	'categoryselect-addcategory-button' => '添加分类',
 	'categoryselect-addcategory-edit' => '添加分类',
 	'categoryselect-edit-summary' => '添加分类',
@@ -1169,7 +1175,7 @@ $messages['zh-hans'] = array(
 	'categoryselect-error-db-locked' => '数据库已锁定。',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

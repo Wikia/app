@@ -281,7 +281,7 @@ $messages['ar'] = array(
 	'swm-lang-other' => 'جميع اللغات المتبقية',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
  */
@@ -389,7 +389,7 @@ $messages['be-tarask'] = array(
 	'swm-lang-other' => 'усе астатнія мовы',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -414,7 +414,7 @@ $messages['bg'] = array(
 	'swm-error-no-such-user' => 'Посоченият потребител не съществува.',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -484,7 +484,7 @@ $messages['br'] = array(
 	'swm-lang-other' => 'an holl yezhoù a chom',
 );
 
-/** Bosnian (Bosanski) */
+/** Bosnian (bosanski) */
 $messages['bs'] = array(
 	'swm-yes' => 'Da',
 	'swm-no' => 'Ne',
@@ -497,7 +497,7 @@ $messages['ce'] = array(
 	'swm-label-mode-users-active' => 'Жигар декъашхой',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -700,7 +700,7 @@ $messages['diq'] = array(
 	'swm-no' => 'Nê',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'swm-label-edit' => 'Trɔ asi le eŋu',
 );
@@ -734,7 +734,7 @@ $messages['el'] = array(
 	'swm-lang-other' => 'όλες οι υπόλοιπες γλώσσες',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
@@ -817,7 +817,7 @@ $messages['es'] = array(
 	'swm-lang-other' => 'Todos los idiomas restantes',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -839,7 +839,7 @@ $messages['fa'] = array(
 	'swm-list-table-content' => 'محتوا',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Nike
@@ -911,7 +911,7 @@ $messages['fi'] = array(
 	'swm-lang-other' => 'kaikki jäljellä olevat kielet',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Gomoko
  * @author IAlex
@@ -1079,7 +1079,7 @@ $messages['ha'] = array(
 	'swm-label-comment' => 'Bahasi',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -1125,7 +1125,7 @@ $messages['hu'] = array(
 	'swm-no' => 'nem',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1286,7 +1286,7 @@ $messages['inh'] = array(
 	'swm-no' => 'A',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gifh
  */
 $messages['it'] = array(
@@ -1383,7 +1383,7 @@ $messages['ksh'] = array(
  */
 $messages['ku-latn'] = array(
 	'swm-label-list' => 'Lîste',
-	'swm-label-content' => 'Naverrok',
+	'swm-label-content' => 'Naverok',
 	'swm-label-language' => 'Ziman',
 	'swm-list-no-messages' => 'Mesaj tune ne.',
 	'swm-list-table-group' => 'Grûp',
@@ -1420,7 +1420,7 @@ $messages['lb'] = array(
 	'swm-lang-other' => 'all weider Sproochen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1496,7 +1496,7 @@ $messages['mk'] = array(
 	'swm-lang-other' => 'сите преостанати јазици',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -1617,7 +1617,7 @@ $messages['mzn'] = array(
 	'swm-list-table-lang' => 'زوون',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1819,7 +1819,7 @@ $messages['pfl'] = array(
 	'swm-label-edit' => 'Bearwaide',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -2000,7 +2000,7 @@ $messages['ps'] = array(
 	'swm-no' => 'نه',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -2070,7 +2070,7 @@ $messages['pt'] = array(
 	'swm-lang-other' => 'todas as línguas restantes',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  * @author Jesielt
@@ -2141,7 +2141,7 @@ $messages['pt-br'] = array(
 	'swm-lang-other' => 'todas as línguas restantes',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -2155,7 +2155,7 @@ $messages['ro'] = array(
 	'swm-error-empty-group' => 'Introdu numele grupului.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -2234,7 +2234,7 @@ $messages['ru'] = array(
 	'swm-lang-other' => 'все остальные языки',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -2243,7 +2243,7 @@ $messages['sl'] = array(
 	'swm-no' => 'Ne',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Nikola Smolenski
  * @author Rancher
  * @author Verlor
@@ -2299,7 +2299,7 @@ $messages['sr-ec'] = array(
 	'swm-lang-other' => 'сви преостали језици',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
@@ -2323,6 +2323,7 @@ $messages['sv'] = array(
 	'swm-label-mode-users-group-hint' => '<i>Välj en grupp från rullgardinsmenyn eller skriv namnet för hand för att skriva över valet i rullgardinsmenyn.</i>',
 	'swm-label-mode-users-user' => 'Vald användare',
 	'swm-label-mode-users-user-hint' => '<i>Det här alternativet ignorerar markeringen i gruppen "Wikis".</i>',
+	'swm-label-mode-users-user-multi' => 'Lista över användare',
 	'swm-label-content' => 'Innehåll',
 	'swm-label-comment' => 'Kommentera',
 	'swm-label-dismissed' => 'Avvisad',
@@ -2407,7 +2408,7 @@ $messages['te'] = array(
 	'swm-no' => 'కాదు',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -2487,7 +2488,7 @@ $messages['tl'] = array(
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
@@ -2554,7 +2555,7 @@ $messages['tt-cyrl'] = array(
 	'swm-lang-other' => 'башка телләр',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -2601,7 +2602,7 @@ $messages['yi'] = array(
 	'swm-yes' => 'יא',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Xiaomingyan
  */

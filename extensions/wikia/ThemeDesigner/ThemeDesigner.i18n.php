@@ -142,7 +142,7 @@ $messages['ar'] = array(
 	'themedesigner-button-save' => 'احفظ',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vugar 1981
  */
@@ -181,7 +181,7 @@ $messages['be-tarask'] = array(
 	'themedesigner-tab-theme' => 'Афармленьне',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -199,7 +199,7 @@ $messages['bg'] = array(
 	'themedesigner-button-save' => 'Съхраняване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -249,7 +249,7 @@ $messages['br'] = array(
 	'themedesigner-button-change-text' => 'Kemmañ an destenn',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -268,7 +268,7 @@ $messages['bs'] = array(
 	'themedesigner-large' => 'Veliko',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  * @author CuBaN VeRcEttI
  */
@@ -324,7 +324,7 @@ $messages['ca'] = array(
 	'themedesigner-manual-upload-error' => 'Utilitza el Dissenyador de Temes per a pujar un logo o uns fons per al teu wiki',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Reaperman
  * @author Utar
@@ -474,7 +474,7 @@ $messages['en-gb'] = array(
 	'themedesigner-color-name-or-hex-code' => 'Colour name or hex code',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Bola
  * @author Ciencia Al Poder
@@ -572,7 +572,7 @@ $messages['fa'] = array(
 	'themedesigner-button-change-text' => 'تغییر متن',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Nike
  * @author VezonThunder
@@ -627,7 +627,7 @@ $messages['fi'] = array(
 	'themedesigner-wodmark-preview' => 'Esikatselu',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Iluvalar
  * @author Peter17
@@ -752,7 +752,7 @@ $messages['gl'] = array(
 	'themedesigner-wodmark-preview' => 'Vista previa',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -792,7 +792,7 @@ $messages['hu'] = array(
 	'themedesigner-upload-a-graphic' => 'ábra feltöltése',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -983,7 +983,7 @@ $messages['lb'] = array(
 	'themedesigner-button-save' => 'Späicheren',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1043,7 +1043,7 @@ $messages['mk'] = array(
 	'themedesigner-wodmark-preview' => 'Преглед',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -1140,7 +1140,7 @@ $messages['mzn'] = array(
 	'themedesigner-button-upload' => 'باربی‌یشتن',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1269,7 +1269,7 @@ $messages['pdc'] = array(
 	'themedesigner-small' => 'Glee',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Cloudissimo
  * @author Sovq
@@ -1407,7 +1407,7 @@ $messages['ps'] = array(
 	'themedesigner-button-save' => 'خوندي کول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
@@ -1462,7 +1462,7 @@ $messages['pt'] = array(
 	'themedesigner-manual-upload-error' => 'Use o Compositor de Variantes do Tema para colocar o símbolo da wiki e definir o fundo',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  */
@@ -1514,7 +1514,7 @@ $messages['pt-br'] = array(
 	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -1524,7 +1524,7 @@ $messages['ro'] = array(
 	'themedesigner-size' => 'mărime',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Eleferen
  * @author Kaganer
@@ -1587,7 +1587,7 @@ $messages['ru'] = array(
 	'themedesigner-wodmark-preview' => 'Предпросмотр',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1630,7 +1630,7 @@ $messages['sr-ec'] = array(
 	'themedesigner-type-error' => 'Неисправна врста датотеке',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -1709,7 +1709,7 @@ $messages['te'] = array(
 	'themedesigner-button-save' => 'భద్రపరచు',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -1767,7 +1767,7 @@ $messages['tl'] = array(
 	'themedesigner-unknown-error' => 'Naganap ang isang kamalian, sa kasamaang-palad hindi namin nagawang kilalanin ito, mangyaring subukan muli',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -1850,7 +1850,7 @@ $messages['vi'] = array(
 	'themedesigner-wodmark-preview' => 'Xem thử',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -1867,7 +1867,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-button-save' => '保存',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

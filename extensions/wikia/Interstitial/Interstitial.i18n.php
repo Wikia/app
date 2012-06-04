@@ -32,21 +32,21 @@ $messages['qqq'] = array(
 	'interstitial-disabled-no-link' => "''On the World Wide Web, interstitials are web page advertisements that are displayed before or after an expected content page, often to display advertisements or confirm the user's age.''",
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'interstitial-default-campaign-code' => 'Wikia те обича!',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  */
 $messages['br'] = array(
 	'interstitial-default-campaign-code' => "Wikia a gar ac'hanoc'h !",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -72,7 +72,7 @@ $messages['de'] = array(
 	'exitstitial-button' => 'Diese Anzeige Überspringen',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  */
 $messages['es'] = array(
@@ -85,14 +85,14 @@ $messages['es'] = array(
 	'exitstitial-button' => 'Omitir este anuncio',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'interstitial-default-campaign-code' => 'Wikia rakastaa sinua!',
 );
 
-/** French (Français)
+/** French (français)
  * @author Brunoperel
  * @author Crochet.david
  * @author Iketsi
@@ -121,14 +121,14 @@ $messages['gl'] = array(
 	'exitstitial-button' => 'Saltar este anuncio',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
 	'interstitial-skip-ad' => 'Hirdetés átugrása',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -141,7 +141,7 @@ $messages['ia'] = array(
 	'exitstitial-button' => 'Saltar iste annuncio',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -174,7 +174,7 @@ $messages['ms'] = array(
 	'exitstitial-button' => 'Langkau Iklan Ini',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -209,7 +209,7 @@ $messages['nl-informal'] = array(
 	'interstitial-link-away' => 'Er is hier niets te zien!<br /><br />Wil je naar de [[{{MediaWiki:Mainpage}}|Hoofdpagina]] of misschien naar een [[Special:Random|willekeurige pagina]]?',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Cloudissimo
  * @author Sovq
  */
@@ -247,7 +247,7 @@ $messages['ps'] = array(
 	'exitstitial-button' => 'له دې خبرتيا تېرېدل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -261,7 +261,7 @@ $messages['pt'] = array(
 	'exitstitial-button' => 'Ignorar este anúncio',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -274,7 +274,7 @@ $messages['pt-br'] = array(
 	'exitstitial-button' => 'Ignore este anúncio',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Ole Yves
  */
@@ -288,7 +288,7 @@ $messages['ru'] = array(
 	'exitstitial-button' => 'Пропустить эту рекламу',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -297,7 +297,7 @@ $messages['sr-ec'] = array(
 	'exitstitial-button' => 'Прескочи оглас',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -323,7 +323,7 @@ $messages['tl'] = array(
 	'exitstitial-button' => 'Laktawan ang Patalastas na Ito',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -336,7 +336,7 @@ $messages['tt-cyrl'] = array(
 	'exitstitial-button' => 'Бу рекламаны калдырырга',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

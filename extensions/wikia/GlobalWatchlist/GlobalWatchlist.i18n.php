@@ -47,7 +47,7 @@ $messages['af'] = array(
 	'globalwatchlist-no-blog-page-found' => 'Geen blog-bladsy gevind nie.',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -55,7 +55,7 @@ $messages['bg'] = array(
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментара}})',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -87,7 +87,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -174,7 +174,7 @@ Wikia
 * Um alle Seiten dieses wöchentlichen Überblicks als besucht zu markieren, verwenden Sie die Option unter „Beobachtungsliste“ in Ihren Einstellungen',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Translationista
  */
 $messages['es'] = array(
@@ -204,7 +204,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'No se encontró ninguna página de blog.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author VezonThunder
@@ -237,7 +237,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Blogisivua ei löytynyt.',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Peter17
  * @author Urhixidur
@@ -302,7 +302,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Non se atopou ningunha páxina de blogue.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  * @author Misibacsi
  */
@@ -333,7 +333,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Nincs blog-találat.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -364,7 +364,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Nulle pagina de blog trovate.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  */
 $messages['it'] = array(
@@ -428,7 +428,7 @@ $messages['lb'] = array(
 	'globalwatchlist-no-blog-page-found' => 'Keng Blogsäit fonnt.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -497,7 +497,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Tiada laman blog dijumpai.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -589,7 +589,7 @@ $messages['pfl'] = array(
 	'globalwatchlist-digest-email-subject' => 'Weschndlischi Iwasischd',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -662,7 +662,7 @@ $messages['ps'] = array(
 	'globalwatchlist-no-blog-page-found' => 'د بلاګ دا مخ و نه موندل شو.',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -693,7 +693,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Não foi encontrada nenhuma página de blogues.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  * @author Jesielt
  */
@@ -725,7 +725,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Nenhuma página de blog encontrada.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -733,7 +733,7 @@ $messages['ro'] = array(
 	'globalwatchlist-no-blog-page-found' => 'Nicio postare pe blog găsită.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Lockal
  * @author Александр Сигачёв
@@ -766,7 +766,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Не найдено страниц блогов.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -798,7 +798,7 @@ $3
 	'globalwatchlist-no-blog-page-found' => 'Страница на блогу није пронађена.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -860,10 +860,11 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Walang natagpuang pahina ng blog.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'globalwatchlist-digest-email-subject' => '每周文摘',
+	'globalwatchlist-no-page-found' => '未找到页面。',
 );
 

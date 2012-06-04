@@ -17,7 +17,7 @@ $messages['af'] = array(
 	'imgplc-image' => 'Beeld',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -37,7 +37,7 @@ $messages['be-tarask'] = array(
 	'imgplc-notinhistory' => 'Вы ня можаце дадаць выяву ў рэжыме гісторыі.',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -45,7 +45,7 @@ $messages['bg'] = array(
 	'imgplc-image' => 'Изображение',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -55,7 +55,7 @@ $messages['br'] = array(
 	'imgplc-notinhistory' => "Ne c'helloc'h ket ouzhpennañ poltriji er mod istor.",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -82,7 +82,7 @@ $messages['de-formal'] = array(
 	'imgplc-notinhistory' => 'Sie können keine Bilder im Verlaufsmodus hinzufügen.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Translationista
  */
 $messages['es'] = array(
@@ -92,7 +92,7 @@ $messages['es'] = array(
 	'imgplc-notinhistory' => 'No puedes añadir una imagen en modo historial',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -108,7 +108,7 @@ $messages['fa'] = array(
 	'imgplc-notinhistory' => 'شما نمی‌توانید در حالت تاریخچه تصویر اضافه کنید.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  */
@@ -119,7 +119,7 @@ $messages['fi'] = array(
 	'imgplc-notinhistory' => 'Et voi lisätä kuvaa historiatilassa.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Wyz
  */
@@ -161,7 +161,7 @@ $messages['hsb'] = array(
 	'imgplc-notinhistory' => 'W stawizniskim modusu njemóžeš wobraz přidać.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -171,7 +171,7 @@ $messages['hu'] = array(
 	'imgplc-notinhistory' => 'Nem adhatsz hozzá képet történet módban.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -181,7 +181,7 @@ $messages['ia'] = array(
 	'imgplc-notinhistory' => 'Non es possibile adder imagines in modo de historia.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -235,7 +235,7 @@ $messages['lb'] = array(
 	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -263,7 +263,7 @@ $messages['ms'] = array(
 	'imgplc-notinhistory' => 'Anda tidak boleh membubuh gambar dalam mod sejarah.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -290,7 +290,7 @@ $messages['nl-informal'] = array(
 	'imgplc-notinhistory' => 'Je kunt geen afbeelding toevoegen in geschiedenismodus.',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -300,7 +300,7 @@ $messages['nn'] = array(
 	'imgplc-notinhistory' => 'Du kan ikkje leggja til bilete i historikkmodus.',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -310,7 +310,7 @@ $messages['oc'] = array(
 	'imgplc-notinhistory' => "Podètz pas apondre cap d'imatge en mòde istoric.",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -339,7 +339,7 @@ $messages['ps'] = array(
 	'imgplc-image' => 'انځور',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -349,7 +349,7 @@ $messages['pt'] = array(
 	'imgplc-notinhistory' => 'Não pode adicionar uma imagem no modo histórico.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  */
 $messages['pt-br'] = array(
@@ -359,7 +359,7 @@ $messages['pt-br'] = array(
 	'imgplc-notinhistory' => 'Você não pode adicionar uma imagem no modo de histórico',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -369,7 +369,7 @@ $messages['ru'] = array(
 	'imgplc-notinhistory' => 'Вы не можете добавить изображение в режиме истории.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -381,7 +381,7 @@ $messages['sr-ec'] = array(
 	'imgplc-notinhistory' => 'Не можете додати слику у историјат.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Sertion
  */
 $messages['sv'] = array(
@@ -401,7 +401,7 @@ $messages['tl'] = array(
 	'imgplc-notinhistory' => 'Hindi ka makapagdaragdag ng larawan habang nasa modalidad na pangkasaysayan.',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -411,7 +411,7 @@ $messages['tt-cyrl'] = array(
 	'imgplc-notinhistory' => 'Сез тарих режимыда сурәтләр өсти алмыйсыз.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
@@ -419,7 +419,7 @@ $messages['uk'] = array(
 	'imgplc-image' => 'Зображення',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

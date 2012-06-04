@@ -26,7 +26,7 @@ $messages['ar'] = array(
 	'wikiawidget' => 'خاصيات ويكيا',
 );
 
-/** Araucanian (Mapudungun)
+/** Araucanian (mapudungun)
  * @author Kaniw
  */
 $messages['arn'] = array(
@@ -47,7 +47,7 @@ $messages['be-tarask'] = array(
 	'wikiawidget' => 'Прылады Wikia',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -55,21 +55,21 @@ $messages['br'] = array(
 	'wikiawidget' => 'Widgetoù wikia',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author Palapa
  */
 $messages['bs'] = array(
 	'wikiawidget' => 'Wikia kontrole',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Paucabot
  */
 $messages['ca'] = array(
 	'wikiawidget' => 'Ginys de Wikia',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -97,7 +97,7 @@ $messages['diq'] = array(
 	'wikiawidget' => 'Doreke wikia',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Peter17
  * @author Translationista
  */
@@ -105,14 +105,14 @@ $messages['es'] = array(
 	'wikiawidget' => 'Wikia widgets',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  */
 $messages['fi'] = array(
 	'wikiawidget' => 'Wikia-käyttöliittymäelementit',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Peter17
  */
@@ -139,14 +139,14 @@ $messages['hsb'] = array(
 	'wikiawidget' => 'Wikija woknowe elementy',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'wikiawidget' => 'Wikia widgetek',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -167,7 +167,7 @@ $messages['ig'] = array(
 	'wikiawidget' => 'Wijet Wikia',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Civvì
  */
 $messages['it'] = array(
@@ -224,7 +224,7 @@ $messages['li'] = array(
 	'wikiawidget' => 'Wikia-widgets',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -238,7 +238,7 @@ $messages['ms'] = array(
 	'wikiawidget' => 'Widget Wikia',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -260,7 +260,7 @@ $messages['nl'] = array(
 	'wikiawidget' => 'Wikia-widgets',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -281,7 +281,7 @@ $messages['pdc'] = array(
 	'wikiawidget' => 'Wikia Widgets',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -295,14 +295,14 @@ $messages['pms'] = array(
 	'wikiawidget' => 'Widget ëd Wikia',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
 	'wikiawidget' => 'Widgets Wikia',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  * @author Giro720
  */
@@ -310,28 +310,28 @@ $messages['pt-br'] = array(
 	'wikiawidget' => 'Widgets Wikia',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  */
 $messages['ro'] = array(
 	'wikiawidget' => 'Gadgeturi Wikia',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'wikiawidget' => 'Uicchi gingille',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'wikiawidget' => 'Виджеты Wikia',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -339,7 +339,7 @@ $messages['sr-ec'] = array(
 	'wikiawidget' => 'Елементи Викија',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Sertion
  */
 $messages['sv'] = array(
@@ -360,28 +360,28 @@ $messages['tl'] = array(
 	'wikiawidget' => 'Mga widyet ng Wikia',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
 	'wikiawidget' => 'Wikia виджетлвры',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Ast
  */
 $messages['uk'] = array(
 	'wikiawidget' => 'Віджети Wikia',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'wikiawidget' => 'Wikia 窗口小部件',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Horacewai2
  */
 $messages['zh-hant'] = array(

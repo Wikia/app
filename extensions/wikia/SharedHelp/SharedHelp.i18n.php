@@ -37,7 +37,7 @@ $messages['be-tarask'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Старонка абмеркаваньня створаная аўтаматычна',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwendal
  * @author Y-M D
  */
@@ -46,7 +46,7 @@ $messages['br'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Pajenn gaozeal krouet ent emgefreek',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -71,7 +71,7 @@ $messages['dsb'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Awtomatiski napórany diskusijny bok',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Crazymadlover
  */
 $messages['es'] = array(
@@ -79,7 +79,7 @@ $messages['es'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Página de discusión creada automáticamente',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  */
 $messages['fi'] = array(
@@ -87,7 +87,7 @@ $messages['fi'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Keskustelusivu luotiin automaattisesti',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Yumeki
  */
@@ -112,7 +112,7 @@ $messages['hsb'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Awtomatisce wutworjena diskusijna strona',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -128,7 +128,7 @@ $messages['id'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Halaman pembicaraan dibuat secara otomatis',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -152,7 +152,7 @@ $messages['ksh'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Klaafsigg automattesch aanjelaat',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -168,7 +168,7 @@ $messages['ms'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Laman perbincangan dicipta secara automatik',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -185,7 +185,7 @@ $messages['nl'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Overlegpagina automatisch aangemaakt',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -209,7 +209,7 @@ $messages['ps'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'د خبرو اترو مخ په خپلکاره توګه جوړ شو',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -217,7 +217,7 @@ $messages['pt'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -225,7 +225,7 @@ $messages['pt-br'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Página de discussão criada automaticamente',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Ytsukeng Fyvaprol
  */
@@ -234,7 +234,7 @@ $messages['ru'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Страница обсуждения создана автоматически',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -251,7 +251,7 @@ $messages['tl'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Kusang nilikha ang pahina ng usapan',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -259,7 +259,7 @@ $messages['uk'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Сторінку обговорення створено автоматично',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

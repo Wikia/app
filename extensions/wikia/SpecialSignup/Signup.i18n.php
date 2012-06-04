@@ -27,18 +27,18 @@ $messages['bn'] = array(
 	'signup' => 'নিবন্ধিত হউন',
 );
 
-/** Breton (Brezhoneg) */
+/** Breton (brezhoneg) */
 $messages['br'] = array(
 	'signup' => 'En em enskrivañ',
 );
 
-/** Bosnian (Bosanski) */
+/** Bosnian (bosanski) */
 $messages['bs'] = array(
 	'signup-desc' => 'Dodaje nadimak [[{{#Special:Signup}}]] za [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Prijava',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -60,7 +60,7 @@ $messages['el'] = array(
 	'signup' => 'Εγγραφή',
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $messages['es'] = array(
 	'signup-desc' => 'Añade el alias [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registrarse',
@@ -75,7 +75,7 @@ $messages['fa'] = array(
 	'signup' => 'ثبت‌نام',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -91,20 +91,20 @@ $messages['gl'] = array(
 	'signup' => 'Crear unha conta',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
 	'signup' => 'Regisztráció',
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (interlingua) */
 $messages['ia'] = array(
 	'signup-desc' => 'Adde le alias [[{{#Special:Signup}}]] pro [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Crear conto',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -120,7 +120,7 @@ $messages['ja'] = array(
 	'signup' => 'Signup',
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $messages['mk'] = array(
 	'signup-desc' => 'Додава алијас на [[{{#Special:Signup}}]] за [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Зачленување',
@@ -134,7 +134,7 @@ $messages['ms'] = array(
 	'signup' => 'Daftar Diri',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'signup-desc' => 'Legger til aliaset [[{{#Special:Signup}}]] for [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registrer',
@@ -155,7 +155,7 @@ $messages['or'] = array(
 	'signup' => 'ଯୋଗ ଦେବା',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -179,19 +179,19 @@ $messages['ps'] = array(
 	'signup' => 'نومليکل',
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $messages['pt'] = array(
 	'signup-desc' => 'Acrescenta o nome alternativo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registar-se',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (português do Brasil) */
 $messages['pt-br'] = array(
 	'signup-desc' => 'Acrescenta o nome alternativo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Registar-se',
 );
 
-/** Russian (Русский) */
+/** Russian (русский) */
 $messages['ru'] = array(
 	'signup-desc' => 'Добавляет псевдоним [[{{#Special:Signup}}]] для  [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Регистрация',
@@ -203,7 +203,7 @@ $messages['shi'] = array(
 	'signup' => 'Aqqiyd (akcum)',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -232,7 +232,7 @@ $messages['tl'] = array(
 	'signup' => 'Magpatala',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Zahidulla
  */
 $messages['tt-cyrl'] = array(
@@ -249,7 +249,7 @@ $messages['vi'] = array(
 	'signup' => 'Đăng ký',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Liangent
  */

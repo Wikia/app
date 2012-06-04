@@ -35,7 +35,7 @@ $messages['be-tarask'] = array(
 	'taskmanager_tasklist' => 'Вярнуцца да сьпісу заданьняў',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -44,7 +44,7 @@ $messages['br'] = array(
 	'taskmanager_tasklist' => 'Distreiñ da roll an trevelloù',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Paucabot
  * @author SMP
  */
@@ -56,7 +56,7 @@ $messages['ca'] = array(
 	'right-taskmanager-action' => 'Poder gestionar les tasques en segon pla',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -78,7 +78,7 @@ $messages['de'] = array(
 	'right-taskmanager-action' => 'Darf Hintergrund-Tasks verwalten',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Translationista
  * @author VegaDark
@@ -92,7 +92,7 @@ $messages['es'] = array(
 	'taskmanager-invert' => 'Invertir',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  */
 $messages['fi'] = array(
@@ -101,7 +101,7 @@ $messages['fi'] = array(
 	'taskmanager_tasklist' => 'Palaa tehtäväluetteloon',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Peter17
  * @author Wyz
@@ -143,7 +143,7 @@ $messages['hsb'] = array(
 	'taskmanager_tasklist' => 'Wróćo k lisćinje nadawkow',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -152,7 +152,7 @@ $messages['hu'] = array(
 	'taskmanager_tasklist' => 'Vissza a feladatlistához',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -176,7 +176,7 @@ $messages['id'] = array(
 	'right-taskmanager-action' => 'Dapat mengatur latar belakang tugas',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author HalphaZ
  * @author Pietrodn
  */
@@ -207,7 +207,7 @@ $messages['lb'] = array(
 	'taskmanager_tasklist' => "Zréck op d'Lëscht vun den Aufgaben",
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -231,7 +231,7 @@ $messages['ms'] = array(
 	'taskmanager-invert' => 'Songsangkan pilihan',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -256,7 +256,7 @@ $messages['nl'] = array(
 	'taskmanager-invert' => 'Selectie omkeren',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -265,7 +265,7 @@ $messages['oc'] = array(
 	'taskmanager_tasklist' => 'Tornar a la lista dels prètzfaches',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -290,7 +290,7 @@ $messages['pms'] = array(
 	'right-taskmanager-action' => "A peul gestì j'operassion an slë sfond",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -301,7 +301,7 @@ $messages['pt'] = array(
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  */
@@ -313,7 +313,7 @@ $messages['pt-br'] = array(
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  * @author Александр Сигачёв
@@ -336,7 +336,7 @@ $messages['si'] = array(
 	'taskmanager_tasklist' => 'කාර්යයන් නාමාවලිය වෙත නැවත යන්න',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -347,7 +347,7 @@ $messages['sr-ec'] = array(
 	'taskmanager_tasklist' => 'Назад на списак задатака',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Per
  * @author Tobulos1
  * @author WikiPhoenix

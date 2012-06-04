@@ -55,7 +55,7 @@ $messages['ar'] = array(
 	'wva-protected' => 'هذا الفيديو. محمي',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -79,7 +79,7 @@ $messages['be-tarask'] = array(
 	'wva-protected' => 'Гэтае відэа абароненае.',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -93,7 +93,7 @@ $messages['bjn'] = array(
 	'wva-add' => 'Tambahakan',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -111,7 +111,7 @@ $messages['br'] = array(
 	'wva-protected' => 'Gwarezet eo ar video-mañ',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  * @author Paucabot
  */
@@ -128,7 +128,7 @@ $messages['ca'] = array(
 	'wva-protected' => 'Aquest vídeo està protegit.',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mormegil
  * @author Mr. Richard Bolla
  */
@@ -181,8 +181,10 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'wva-success' => 'Vidyo pelaya $1  vıraziyaya',
+	'wva-success-replaced' => 'Vidyo pelaya $1  re ca deya.',
 	'wva-name' => 'Name deke:',
-	'wva-url' => 'GRE deke:',
+	'wva-url' => 'URL deke:',
 	'wva-add' => 'Deke',
 );
 
@@ -193,7 +195,7 @@ $messages['eo'] = array(
 	'wva-add' => 'Aldoni',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Danke7
  * @author Translationista
  * @author VegaDark
@@ -212,7 +214,7 @@ $messages['es'] = array(
 	'wva-thumbnail-upload-failed' => 'Error al añadir el vídeo, no se pudo obtener una miniatura adecuada',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -237,7 +239,7 @@ $messages['fa'] = array(
 	'wva-protected' => 'این ویدیو محافظت شده است.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Silvonen
@@ -256,7 +258,7 @@ $messages['fi'] = array(
 	'wva-protected' => 'Tämä video on suojattu.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Iluvalar
  */
@@ -308,7 +310,7 @@ $messages['he'] = array(
 	'wva-protected' => 'סרטון זה מוגן.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -318,7 +320,7 @@ $messages['hu'] = array(
 	'wva-title' => 'Videó gyors hozzáadása URL alapján',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -360,7 +362,7 @@ $messages['ig'] = array(
 	'wva-add' => 'Tinyé',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author HalphaZ
  * @author Pietrodn
  */
@@ -439,7 +441,7 @@ $messages['lb'] = array(
 	'wva-add' => 'Derbäisetzen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -456,7 +458,7 @@ $messages['mk'] = array(
 	'wva-thumbnail-upload-failed' => 'Вметнувањето на видеото не успеа. Не можев да добијам правилна минијатура',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -487,7 +489,7 @@ $messages['my'] = array(
 	'wva-add' => 'ပေါင်းထည့်ရန်',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -530,7 +532,7 @@ $messages['nl-informal'] = array(
 	'wva-notallowed' => "Je kunt geen video's toevoegen in deze wiki.",
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -553,7 +555,7 @@ $messages['pap'] = array(
 	'wva-notallowed' => 'Bo no por hinka vidio den e wiki aki.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Marcin Łukasz Kiejzik
  * @author Sovq
  * @author Sp5uhe
@@ -605,7 +607,7 @@ $messages['ps'] = array(
 	'wva-protected' => 'دا ويډيو ژغورل شوې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
@@ -623,7 +625,7 @@ $messages['pt'] = array(
 	'wva-protected' => 'Este vídeo está protegido.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  * @author Giro720
  */
@@ -640,7 +642,7 @@ $messages['pt-br'] = array(
 	'wva-protected' => 'Este vídeo está protegido.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  * @author Misterr
  * @author Stelistcristi
@@ -655,7 +657,7 @@ $messages['ro'] = array(
 	'wva-protected' => 'Acest clip este protejat.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -683,7 +685,7 @@ $messages['si'] = array(
 	'wva-protected' => 'මෙම වීඩියෝව ආරක්‍ෂිතය',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -701,7 +703,7 @@ $messages['sr-ec'] = array(
 	'wva-protected' => 'Овај видео-снимак је заштићен.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -742,14 +744,14 @@ $messages['tl'] = array(
 	'wva-protected' => 'Ang bidyo ay nakaprutekta.',
 );
 
-/** Толышә зывон (Толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
 	'wva-add' => 'Зијод кардеј',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Ast
  * @author Prima klasy4na
  * @author Тест
@@ -767,7 +769,7 @@ $messages['uk'] = array(
 	'wva-protected' => 'Це відео захищено.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Hydra
  */

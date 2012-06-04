@@ -133,7 +133,7 @@ $messages['qqq'] = array(
 	'founderprogressbar-category-add3-label' => 'Needs plural.',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -322,7 +322,14 @@ $messages['de-formal'] = array(
 	'founderprogressbar-bonus-edit50-label' => 'Bearbeiten Sie {{PLURAL:$1|eine weitere Seite|$1 weitere Seiten}}.',
 );
 
-/** Spanish (Español)
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'founderprogressbar-fb-likes3-action' => 'Şo Pela Seri',
+);
+
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
@@ -448,7 +455,7 @@ $messages['es'] = array(
 	'founderprogressbar-browse-page-name' => 'Navegador',
 );
 
-/** French (Français)
+/** French (français)
  * @author Balzac 40
  * @author Gomoko
  * @author Verdy p
@@ -695,7 +702,7 @@ $messages['gl'] = array(
 	'founderprogressbar-browse-page-name' => 'Navegar',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -841,7 +848,7 @@ $messages['lb'] = array(
 	'founderprogressbar-bonus-page-add5-action' => 'Eng Säit derbäisetzen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1088,7 +1095,7 @@ $messages['ms'] = array(
 	'founderprogressbar-browse-page-name' => 'Semak seimbas',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1337,7 +1344,7 @@ $messages['nl'] = array(
 	'founderprogressbar-browse-page-name' => 'Bladeren',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  * @author TOR
  */
@@ -1481,14 +1488,17 @@ $messages['ps'] = array(
 	'founderprogressbar-browse-page-name' => 'سپړل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Malafaya
+ * @author Rhaijin
  */
 $messages['pt'] = array(
 	'founderprogressbar-category-add3-action' => 'Adicionar uma categoria',
+	'founderprogressbar-recentchanges-visit-description' => 'Mudanças recentes é uma versão mais avançada de atividade wiki. Você pode ver "diffs" que detalhe a mudança exata que foi feita para uma página, verifique reversions para alterações e ver mais detalhes do que você pode ver na atividade do wiki. É uma ferramenta de gerenciamento grande quando você precisa de mais informações.',
+	'founderprogressbar-wordmark-edit-label' => 'Fazer upload de uma marca',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Ignatus
  * @author Kuzura
  */
@@ -1610,7 +1620,7 @@ $messages['ru'] = array(
 	'founderprogressbar-browse-page-name' => 'Обзор',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1619,7 +1629,7 @@ $messages['sr-ec'] = array(
 	'founderprogressbar-user-add5-url' => 'http://help.wikia.com/wiki/Advice:Building_a_Community?uselang=sr-ec',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Geitost
  * @author WikiPhoenix
  */
@@ -1742,7 +1752,7 @@ $messages['tr'] = array(
 	'founderprogressbar-fb-likes3-action' => 'Ana Sayfaya git',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -1753,7 +1763,7 @@ $messages['tt-cyrl'] = array(
 	'founderprogressbar-user-add5-url' => 'http://help.wikia.com/wiki/Advice:Building_a_Community',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -1771,7 +1781,7 @@ $messages['uk'] = array(
 	'founderprogressbar-browse-page-name' => 'Огляд',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hzy980512
  */
@@ -1780,25 +1790,33 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-list-bonus-task-label' => '奖励任务',
 	'founderprogressbar-page-add10-action' => '添加一个页面',
 	'founderprogressbar-themedesigner-visit-label' => '自定义您的主题',
+	'founderprogressbar-mainpage-edit-action' => '编辑主页',
 	'founderprogressbar-photo-add10-action' => '添加一张图片',
 	'founderprogressbar-category-add3-action' => '添加一个分类',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
 	'founderprogressbar-profile-edit-action' => '到达您的档案页',
+	'founderprogressbar-photo-add20-action' => '添加图片',
 	'founderprogressbar-total-edit75-label' => '编辑数达到 75 次',
 	'founderprogressbar-total-edit75-action' => '添加一个页面',
 	'founderprogressbar-page-add20-action' => '添加一个页面',
 	'founderprogressbar-category-add5-action' => '添加一个分类',
+	'founderprogressbar-gallery-add-label' => '添加图片库',
 	'founderprogressbar-gallery-add-action' => '转到帮助页',
 	'founderprogressbar-topnav-edit-action' => '编辑导航',
 	'founderprogressbar-video-add-label' => '添加一段视频',
 	'founderprogressbar-user-add5-label' => '查看5个用户的档案',
+	'founderprogressbar-user-add5-action' => '转到帮助页',
 	'founderprogressbar-recentchanges-visit-label' => '查看最近更改',
+	'founderprogressbar-recentchanges-visit-action' => '转到 Special:RecentChanges',
 	'founderprogressbar-wordmark-edit-action' => '转到 Special:ThemeDesigner',
 	'founderprogressbar-blogpost-add-label' => '撰写一篇博客',
 	'founderprogressbar-fb-likes3-action' => '转到主页',
+	'founderprogressbar-total-edit300-action' => '添加页面',
+	'founderprogressbar-bonus-page-add5-action' => '添加页面',
+	'founderprogressbar-browse-page-name' => '浏览',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

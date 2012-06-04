@@ -220,7 +220,7 @@ $messages['ar'] = array(
 	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -233,7 +233,7 @@ $messages['az'] = array(
 	'scavengerhunt-entry-form-email' => 'Sizin e-poçt ünvanınız:',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -243,7 +243,7 @@ $messages['bg'] = array(
 	'scavengerhunt-button-delete' => 'Изтриване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -379,7 +379,7 @@ $messages['diq'] = array(
 	'scavengerhunt-entry-form-name' => 'Namey şıma',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Hellatainer
@@ -534,14 +534,14 @@ $messages['es'] = array(
 	'scavengerhunt-facebook-description' => 'Texto compartido de Facebook',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'scavengerhunt-label-image-check' => '(näytä kuva)',
 );
 
-/** French (Français)
+/** French (français)
  * @author Balzac 40
  * @author Brunoperel
  * @author Gomoko
@@ -849,7 +849,7 @@ $messages['gl'] = array(
 	'scavengerhunt-facebook-description' => 'Texto de compartir no Facebook',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -870,7 +870,7 @@ $messages['hu'] = array(
 	'scavengerhunt-button-export' => 'Kimentés CSV-be',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1021,7 +1021,7 @@ $messages['ia'] = array(
 	'scavengerhunt-facebook-description' => 'Texto de Facebook pro divider',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Lexaeus 94
  */
 $messages['it'] = array(
@@ -1062,7 +1062,7 @@ $messages['lb'] = array(
 	'scavengerhunt-entry-form-email' => 'Är Mailadress:',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1366,7 +1366,7 @@ Perhatian: Ruangan ini tidak wajib; jika dibiarkan kosong, ia tidak akan dipapar
 	'scavengerhunt-facebook-description' => 'Teks kongsian Facebook',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1677,7 +1677,7 @@ $messages['nl-informal'] = array(
 	'scavengerhunt-entry-form-email' => 'Je e-mailadres:',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -1844,7 +1844,7 @@ $messages['ps'] = array(
 	'scavengerhunt-label-entry-form-username' => 'د کارن نوم',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  * @author SandroHc
@@ -1914,7 +1914,7 @@ $messages['pt'] = array(
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  * @author Stelistcristi
  */
@@ -1928,7 +1928,7 @@ $messages['ro'] = array(
 	'scavengerhunt-entry-form-email' => 'Adresa ta de e-mail:',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  * @author Lvova
@@ -1978,7 +1978,7 @@ $messages['ru'] = array(
 	'scavengerhunt-facebook-description' => 'Facebook, поделиться текстом',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2003,7 +2003,7 @@ $messages['sr-ec'] = array(
 	'scavengerhunt-button-remove-section' => 'Уклони овај корак',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -2201,7 +2201,7 @@ $messages['tl'] = array(
 	'scavengerhunt-entry-form-submit' => 'Ipasa ang ipinasok',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -2215,7 +2215,7 @@ $messages['uk'] = array(
 	'scavengerhunt-label-name' => 'Назва:',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

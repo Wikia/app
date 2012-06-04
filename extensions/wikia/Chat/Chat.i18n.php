@@ -219,7 +219,7 @@ $messages['ar'] = array(
 	'chat-user-was-kickbanned' => 'SAR4 تم ركلة وحظره',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -275,14 +275,14 @@ Ponte'n contautu con ellos pa más info.",
 	'group-bannedfromchat-member' => 'Bloquiáu de la charra',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'chat-desc' => '[[Special:Chat|Чат]]',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -318,7 +318,7 @@ Kit e darempred ganto da c'houzout hiroc'h.",
 	'chat-user-manu-private-allow' => "Aotren ar c'hemennadennoù prevez",
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -333,7 +333,7 @@ Ako mislite da je to greška ili želite da se ponovo razmotri, molimo kontaktir
 Molimo kontaktirajte ga za više podataka.',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -388,7 +388,7 @@ $messages['ca'] = array(
 	'group-bannedfromchat-member' => 'BannedFromChat',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -475,7 +475,7 @@ $messages['diq'] = array(
 	'chat-live' => 'Dare',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author Geitost
  * @author VegaDark
@@ -536,7 +536,7 @@ Por favor, contáctalo para más información.',
 	'grouppage-bannedfromchat' => 'w:c:ayuda:Ayuda:Chat',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Nike
  * @author VezonThunder
@@ -593,7 +593,7 @@ $messages['fi'] = array(
 	'group-bannedfromchat-member' => 'chatista estetty',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author IAlex
  * @author McDutchie
@@ -709,7 +709,7 @@ $messages['gl'] = array(
 	'group-bannedfromchat-member' => 'Expulsado do chat',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Dj
  */
@@ -751,7 +751,7 @@ $messages['hu'] = array(
 	'group-bannedfromchat-member' => 'Beszélgetésből kitiltva',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -829,7 +829,7 @@ $messages['id'] = array(
 	'chat-ban-you-need-permission' => 'Anda tidak memiliki  $1  izin yang diperlukan untuk menendang/ban pengguna.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  * @author Minerva Titani
  */
@@ -989,7 +989,7 @@ $messages['lb'] = array(
 	'chat-user-manu-private' => 'Private Message',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -1013,7 +1013,7 @@ $messages['lt'] = array(
 	'chat-err-already-chatmod' => 'Klaida: "$1" jau yra "$2" grupėje.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1136,7 +1136,7 @@ Sila hubungi mereka untuk penjelasan lanjut.',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1265,7 +1265,7 @@ $messages['nl-informal'] = array(
 	'chat-room-is-not-on-this-wiki' => 'De chatroom waar je probeert binnen te komen bestaat niet op deze wiki.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Anoon6
  * @author BeginaFelicysym
  * @author Cloudissimo
@@ -1341,7 +1341,7 @@ $messages['ps'] = array(
 	'chat-user-manu-contribs' => 'ونډې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -1388,7 +1388,7 @@ $messages['pt'] = array(
 	'chat-private-headline' => 'Conversa privada com $1',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Aristóbulo
  * @author Caio1478
@@ -1446,7 +1446,7 @@ $messages['pt-br'] = array(
 	'group-bannedfromchat-member' => 'Banido do chat',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -1459,7 +1459,7 @@ $messages['ro'] = array(
 	'chat-member-since' => 'Membru din $1',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -1474,7 +1474,7 @@ $messages['roa-tara'] = array(
 	'group-bannedfromchat-member' => "Mise fore da 'a ciat",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -1529,7 +1529,7 @@ $messages['ru'] = array(
 	'group-bannedfromchat-member' => 'Забанен в чате',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1545,7 +1545,7 @@ $messages['sr-ec'] = array(
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Geitost
  * @author Lokal Profil
  * @author WikiPhoenix
@@ -1683,7 +1683,7 @@ $messages['tr'] = array(
 	'chat-user-manu-contribs' => 'Katkılar',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -1765,7 +1765,7 @@ $messages['vi'] = array(
 	'group-bannedfromchat-member' => 'Bị cấm tán gẫu',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Liangent
  * @author Yanmiao liu
@@ -1794,6 +1794,7 @@ $messages['zh-hans'] = array(
 	'chat-err-already-chatmod' => '错误："$1" 已经在 "$2" 组。',
 	'chat-err-no-permission-to-add-chatmod' => '错误：您不具备给此用户添加 "$1" 组的权限。',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 推举 $2 为本维基上的聊天主持人。',
+	'chat-err-invalid-username-chatmod' => '错误：找不到用户"$1"',
 	'chat-you-are-banned' => '权限错误。',
 	'chat-you-are-banned-text' => '对不起，您没有权限在本维基上聊天。如果您觉得这是一个错误，或想重新考虑，请联系管理员。',
 	'chat-room-is-not-on-this-wiki' => '您正试图进入的聊天室似乎在本维基上并不存在。',
@@ -1822,7 +1823,7 @@ $messages['zh-hans'] = array(
 	'group-bannedfromchat-member' => '从聊天中禁止',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

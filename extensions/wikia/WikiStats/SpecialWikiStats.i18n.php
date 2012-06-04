@@ -536,7 +536,7 @@ $messages['ar'] = array(
 	'wikistats_error_malformed_date' => 'خطأ: التاريخ المعطى تالف',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
  * @author Vugar 1981
@@ -778,7 +778,7 @@ $messages['be-tarask'] = array(
 	'wikistats_nbr_format' => 'Фармат лікаў:',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -953,7 +953,7 @@ $messages['bn'] = array(
 	'wikistats_error_malformed_date' => 'ভুল: প্রদত্ত তারিখ ঠিক হয়নি',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author McDutchie
@@ -1166,7 +1166,7 @@ $messages['br'] = array(
 	'wikistats_error_malformed_date' => 'Fazi : Direizh eo an deiziad merket',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  * @author Paucabot
  */
@@ -1414,14 +1414,14 @@ $messages['ce'] = array(
 	'wikistats_username' => 'Декъашхо',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'wikistats_wikicategory' => 'پۆل:',
 	'wikistats_username' => 'بەکارهێنەر',
 	'wikistats_search_text' => 'گەڕان',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  * @author Mr. Richard Bolla
@@ -1826,7 +1826,7 @@ $messages['diq'] = array(
 	'wikistats_select_btn' => 'Weçine',
 	'wikistats_dbdump_generated' => 'Vurnayış:',
 	'wikistats_records' => 'Qeydi',
-	'wikistats_generate_stats_msg' => 'Kerem ke pıpawê ... vırazêno ...',
+	'wikistats_generate_stats_msg' => 'Şıma ra reca pıpawê ... vırazêno ...',
 	'wikistats_language_stats' => 'İstatistike zıwani',
 	'wikistats_main_statistics_legend' => 'İstatistikê serêni',
 	'wikistats_ns_statistics_legend' => 'Cayê namey',
@@ -1872,7 +1872,7 @@ $messages['el'] = array(
 	'wikistats_xls_cancel' => 'Ακύρωση',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
@@ -2120,7 +2120,7 @@ Por favor [[Special:UserLogin|inicia sesión o crea una cuenta]] si todavía no 
 	'wikistats_error_malformed_date' => 'Error: La fecha dada es incorrecta',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -2229,7 +2229,7 @@ $messages['fa'] = array(
 	'wikistats_namespaces_top10list' => '۱۰ فهرست برتر',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Nike
@@ -2333,7 +2333,7 @@ $messages['fi'] = array(
 	'wikistats_namespaces_top10list' => 'Top 10-lista',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author IAlex
  * @author McDutchie
@@ -2834,6 +2834,7 @@ $messages['ha'] = array(
 
 /** Hebrew (עברית)
  * @author 0ftal
+ * @author Amire80
  * @author Deror avi
  * @author שומבלע
  */
@@ -2852,7 +2853,7 @@ $messages['he'] = array(
 	'wikistats_panel_close_btn' => 'סגירה',
 	'wikistats_daterange_from' => 'מאת:',
 	'wikistats_daterange_to' => 'אל:',
-	'wikistats_nostats_found' => 'לא נמצאה סטטיסטיקה על הויקיה הנבחרת',
+	'wikistats_nostats_found' => 'לא נמצאה סטטיסטיקה על הוויקיה הנבחרת',
 	'wikistats_invalid_date' => 'טווח התאריכים אינו חוקי',
 	'wikistats_distrib_article' => 'תפוצת פעילות העורכים',
 	'wikistats_breakdown_editors' => 'פעילות העורכים',
@@ -2870,7 +2871,7 @@ $messages['he'] = array(
 	'wikistats_nbr_giga' => 'G = M x 1000',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Enbéká
  * @author Glanthor Reviol
@@ -3007,7 +3008,7 @@ $messages['hu'] = array(
 	'wikistats_namespace_top' => 'Előre definiált névterek',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -3523,7 +3524,7 @@ $messages['inh'] = array(
 	'wikistats_image_namespace' => 'сурт',
 );
 
-/** Icelandic (Íslenska)
+/** Icelandic (íslenska)
  * @author S.Örvarr.S
  */
 $messages['is'] = array(
@@ -3586,7 +3587,7 @@ $messages['is'] = array(
 	'wikistats_title' => 'Titill',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  * @author Rippitippi
  */
@@ -3868,7 +3869,7 @@ $messages['khw'] = array(
 	'wikistats_active_year' => 'سال',
 );
 
-/** Kalaallisut (Kalaallisut)
+/** Kalaallisut (kalaallisut)
  * @author Qaqqalik
  */
 $messages['kl'] = array(
@@ -4589,7 +4590,7 @@ $messages['li'] = array(
 	'wikistats_new_per_day' => 'nuuj<br />edaag',
 );
 
-/** Latgalian (Latgaļu)
+/** Latgalian (latgaļu)
  * @author Dark Eagle
  */
 $messages['ltg'] = array(
@@ -4772,7 +4773,7 @@ $messages['map-bms'] = array(
 	'wikistats_article_one_link' => 'Artikel yang berisi setidaknya satu pranala internal',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  * @author McDutchie
  */
@@ -5015,7 +5016,7 @@ $messages['mk'] = array(
 	'wikistats_error_malformed_date' => 'Грешка: Зададениот датум е грешно обликуван',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -5295,7 +5296,7 @@ $messages['mzn'] = array(
 	'wikistats_hide' => 'فه‌رو  بـور',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -5788,7 +5789,7 @@ Je moet aangemeld zijn om de Wikia-statistieken in te zien.
 [[Special:UserLogin|Registreer een nieuwe gebruiker of meld je aan]] als je nog geen gebruiker hebt.',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Boulaur
  * @author Cedric31
  */
@@ -5891,7 +5892,7 @@ $messages['pfl'] = array(
 	'wikistats_title' => 'Tidl',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Deejay1
  * @author Marcin Łukasz Kiejzik
@@ -6411,7 +6412,7 @@ $messages['ps'] = array(
 	'wikistats_namespaces_top10list' => 'د سر 10 لړليکونه',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Geitost
  * @author Giro720
@@ -6656,7 +6657,7 @@ Precisa de estar autenticado para ver as Estatísticas da Wikia.
 	'wikistats_error_malformed_date' => 'Erro: A data fornecida está incorrecta',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Aristóbulo
  * @author Caio1478
@@ -6769,7 +6770,7 @@ $messages['pt-br'] = array(
 	'wikistats_namespaces_top10list' => 'Lista Top 10',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author KlaudiuMihaila
  * @author Minisarm
  * @author Stelistcristi
@@ -6859,7 +6860,7 @@ $messages['ro'] = array(
 	'wikistats_namespaces_top10list' => 'Lista top 10',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -6872,7 +6873,7 @@ $messages['roa-tara'] = array(
 	'wikistats_daterange_to' => 'A:',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author G0rn
  * @author Kuzura
@@ -7149,7 +7150,7 @@ $messages['si'] = array(
 	'wikistats_now' => 'දැන්',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -7157,14 +7158,14 @@ $messages['sl'] = array(
 	'wikistats_back_to_prevpage' => 'Nazaj',
 );
 
-/** Albanian (Shqip)
+/** Albanian (shqip)
  * @author Euriditi
  */
 $messages['sq'] = array(
 	'wikistats_active_year' => 'vit',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Nikola Smolenski
  * @author Rancher
  * @author Verlor
@@ -7402,7 +7403,7 @@ $messages['sr-ec'] = array(
 	'wikistats_error_malformed_date' => 'Грешка: датум је неисправан',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Geitost
  * @author Per
  * @author Tobulos1
@@ -8069,7 +8070,7 @@ $messages['tr'] = array(
 	'wikistats_select_statistics' => 'İstatistikleri seç',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  * @author Ильнар
  */
@@ -8097,7 +8098,7 @@ $messages['tyv'] = array(
 	'wikistats_show' => 'Көргүзери',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author NickK
  * @author Prima klasy4na
@@ -8189,10 +8190,14 @@ $messages['wuu'] = array(
 	'wikistats_xls_cancel' => '取消',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'wikistats' => 'Wikia统计',
+	'wikistats_wikia' => 'Wikia',
+	'wikiastast_refresh_data' => '刷新数据',
 	'wikistats_panel_close_btn' => '关闭',
 	'wikistats_daterange_from' => '从：',
 	'wikistats_daterange_to' => '至：',
@@ -8202,6 +8207,7 @@ $messages['zh-hans'] = array(
 	'wikistats_active_months' => '月',
 	'wikistats_articles_text' => '条目',
 	'wikistats_other' => '其他',
+	'wikistats_database' => '数据库',
 	'wikistats_images' => '照片',
 	'wikistats_uploaded_images' => '已上载',
 	'wikistats_date' => '日期',
@@ -8218,7 +8224,7 @@ $messages['zh-hans'] = array(
 	'wikistats_photo_new' => '新照片',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  * @author Horacewai2
  * @author Oapbtommy
@@ -8351,7 +8357,7 @@ $messages['zh-hant'] = array(
 	'wikistats_language_all' => '所有語言',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

@@ -93,7 +93,7 @@ Probeer asseblief weer.",
 	'textregex-return-mainpage' => '[{{SERVER}}$1 terug na die lys]',
 );
 
-/** Belarusian (Беларуская)
+/** Belarusian (беларуская)
  * @author Тест
  */
 $messages['be'] = array(
@@ -136,14 +136,14 @@ $messages['be-tarask'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 вярнуцца да сьпісу]',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'textregex-select-default' => '-- избиране --',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -178,7 +178,7 @@ $messages['br'] = array(
 	'textregex-return-mainpage' => "[{{SERVIJER}}$1 distreiñ d'ar roll.]",
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Paucabot
  */
 $messages['ca'] = array(
@@ -247,7 +247,7 @@ $messages['diq'] = array(
 	'textregex-select-default' => '-- weçine --',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Crazymadlover
  * @author Locos epraix
  * @author Mor
@@ -284,7 +284,7 @@ Por favor intente nuevamente.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 regresar a la lista]',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Silvonen
  */
@@ -299,7 +299,7 @@ $messages['fi'] = array(
 	'textregex-invalid-regexid' => 'Virheellinen fraasi.',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  */
 $messages['fr'] = array(
@@ -365,7 +365,7 @@ $messages['gl'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 volver á lista]',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -388,7 +388,7 @@ $messages['hu'] = array(
 	'textregex-invalid-regexid' => 'Érvénytelen reguláris kifejezés azonosító',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -462,7 +462,7 @@ $messages['lb'] = array(
 	'textregex-select-default' => '-- eraussichen --',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -529,7 +529,7 @@ Sila cuba lagi.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 kembali ke senarai]',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -598,7 +598,7 @@ Probeer het opnieuw.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 terug naar de lijst]',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -673,7 +673,7 @@ $messages['ps'] = array(
 	'textregex-select-default' => '-- ټاکل --',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -707,7 +707,7 @@ Tente outra vez.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 voltar à lista]',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Jesielt
  * @author Luckas Blade
  */
@@ -742,7 +742,7 @@ Tente novamente.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 retornar à lista]',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Lockal
  */
 $messages['ru'] = array(
@@ -775,7 +775,7 @@ $messages['ru'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 Возврат к списку]',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -803,7 +803,7 @@ $messages['sr-ec'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 назад на списак]',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -838,7 +838,7 @@ Försök igen.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 gå tillbaka till listan]',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -879,7 +879,7 @@ Subukan uli.',
 	'textregex-return-mainpage' => '[{{SERVER}}$1 bumalik sa talaan]',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -895,5 +895,12 @@ $messages['uk'] = array(
  */
 $messages['yi'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 סטאַטיסטיק]',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'textregex-select-default' => '-- 选择 --',
 );
 

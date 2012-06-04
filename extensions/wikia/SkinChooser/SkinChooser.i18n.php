@@ -22,14 +22,14 @@ $messages['ar'] = array(
 	'site-layout' => 'موقع تخطيطات',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
 	'new-look' => 'Neuz nevez Wikia',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -49,7 +49,7 @@ $messages['de'] = array(
 	'site-layout' => 'Seitenlayouts',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  */
 $messages['es'] = array(
@@ -59,7 +59,7 @@ $messages['es'] = array(
 	'site-layout' => 'Diseños del sitio',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Crt
  * @author Tm T
  * @author VezonThunder
@@ -71,7 +71,7 @@ $messages['fi'] = array(
 	'site-layout' => 'Sivuston ulkoasut',
 );
 
-/** French (Français)
+/** French (français)
  * @author Iketsi
  * @author Verdy p
  * @author Wyz
@@ -93,7 +93,7 @@ $messages['gl'] = array(
 	'site-layout' => 'Deseño do sitio',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -103,7 +103,7 @@ $messages['ia'] = array(
 	'site-layout' => 'Designos del sito',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -124,7 +124,7 @@ $messages['ja'] = array(
 	'site-layout' => 'サイトの外装',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -144,7 +144,7 @@ $messages['ms'] = array(
 	'site-layout' => 'Tataletak Tapak',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -164,7 +164,7 @@ $messages['nl'] = array(
 	'site-layout' => 'Sitevormgevingen',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Cloudissimo
  * @author Sovq
  */
@@ -186,7 +186,7 @@ $messages['pms'] = array(
 	'site-layout' => 'Presentassion dël sit',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -196,7 +196,7 @@ $messages['pt'] = array(
 	'site-layout' => 'Composições do Site',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -206,7 +206,7 @@ $messages['pt-br'] = array(
 	'site-layout' => 'Composições do Site',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -217,14 +217,14 @@ $messages['ru'] = array(
 	'site-layout' => 'Оформления сайта',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'site-layout' => 'Изглед',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -242,5 +242,14 @@ $messages['tl'] = array(
 	'skinchooser-customcss' => 'Para sa pasadyang mga tema, piliin ang pasadyang pilian sa loob ng menung nasa itaas at tukuyin ang pasadyang CSS sa loob ng [[MediaWiki:Monaco.css]].',
 	'new-look' => 'Bagong Wangis ng Wikia',
 	'site-layout' => 'Mga Latag ng Pook',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'skinchooser-desc' => '用户可依自身偏好选择皮肤',
+	'new-look' => '新Wikia外观',
+	'site-layout' => '网站布局',
 );
 

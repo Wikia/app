@@ -184,14 +184,14 @@ $messages['ar'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'معاينة',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
 	'rte-ck-media-edit' => 'camudar',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -206,7 +206,7 @@ $messages['az'] = array(
 	'rte-ck-templateEditor-dialog-insert' => 'Yerləşdirmək',
 );
 
-/** Belarusian (Беларуская)
+/** Belarusian (беларуская)
  * @author Тест
  */
 $messages['be'] = array(
@@ -299,7 +299,7 @@ $messages['be-tarask'] = array(
 	'rte-ck-widescreen-toggle' => 'Поўнаэкранны рэжым',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -320,7 +320,7 @@ $messages['bg'] = array(
 	'rte-ck-templateDropDown-title' => 'Избиране на шаблон',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -408,7 +408,7 @@ $messages['br'] = array(
 	'rte-ck-format-tag_p' => 'Testenn normal',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -529,7 +529,7 @@ $messages['ce'] = array(
 	'rte-ck-templateDropDown-label' => 'Куцкеп',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Mormegil
  */
@@ -782,7 +782,7 @@ $messages['diq'] = array(
 	'rte-ck-templateDropDown-label' => 'Tewre',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Benfutbol10
  * @author Bola
@@ -913,7 +913,7 @@ $messages['fa'] = array(
 	'rte-ck-templateDropDown-label' => 'الگو',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  */
 $messages['fi'] = array(
@@ -926,7 +926,7 @@ $messages['fi'] = array(
 	'rte-ck-video-add' => 'Lisää video',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Iluvalar
  * @author JonathanBoyer
@@ -1160,7 +1160,7 @@ $messages['gl'] = array(
 	'rte-ck-format-tag_h5' => 'Cabeceira 5',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -1213,7 +1213,7 @@ $messages['hu'] = array(
 	'rte-ck-video-add' => 'Videó hozzáadása',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1334,7 +1334,7 @@ $messages['inh'] = array(
 	'rte-ck-link-error-title' => 'ГӀалат',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Minerva Titani
  */
@@ -1536,7 +1536,7 @@ $messages['lb'] = array(
 	'rte-ck-unlink' => 'Link ewechhuelen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1822,7 +1822,7 @@ $messages['mzn'] = array(
 	'rte-ck-hoverPreview-edit' => 'دچی‌ین',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2092,7 +2092,7 @@ $messages['pfl'] = array(
 	'rte-ck-link-error-badPageTitle' => 'Geb bidde än Saidetidl oi.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Holek
  * @author Sovq
@@ -2329,7 +2329,7 @@ $messages['ps'] = array(
 	'rte-ck-video-video' => 'ويډيو',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
@@ -2423,7 +2423,7 @@ $messages['pt'] = array(
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  * @author Giro720
@@ -2519,7 +2519,7 @@ $messages['pt-br'] = array(
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  * @author Stelistcristi
  */
@@ -2537,7 +2537,7 @@ $messages['ro'] = array(
 	'rte-ck-video-add' => 'Adaugă un videoclip',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -2654,7 +2654,7 @@ $messages['ru'] = array(
 	'rte-ck-format-tag_h5' => 'Заголовок 5',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2728,7 +2728,7 @@ $messages['sr-ec'] = array(
 	'rte-ck-format-tag_h5' => 'Наслов 5',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -2872,7 +2872,7 @@ $messages['te'] = array(
 	'rte-ck-spellchecker-moreSuggestions' => 'మరిన్ని సూచనలు',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -3056,14 +3056,14 @@ $messages['tr'] = array(
 	'rte-ck-widescreen-toggle' => 'Geniş ekran',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'rte-ck-errorPopupTitle' => 'Хата!',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Тест
  */
@@ -3234,7 +3234,7 @@ $messages['vi'] = array(
 	'rte-ck-format-tag_h5' => 'Đề mục cấp 5',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -3252,7 +3252,7 @@ $messages['zh-hans'] = array(
 	'rte-ck-signature-label' => '签名',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

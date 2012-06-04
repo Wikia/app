@@ -33,7 +33,7 @@ $messages['af'] = array(
 	'mostvisitedpagessearchbtn' => 'soek',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -45,7 +45,7 @@ $messages['ast'] = array(
 	'mostvisitedpagesalllink' => 'Ver les páxines más vistes',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Sortilegus
  */
 $messages['az'] = array(
@@ -64,14 +64,14 @@ $messages['be-tarask'] = array(
 	'mostvisitedpagessearchtext' => 'Назва артыкула:',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'mostvisitedpagessearchbtn' => 'търсене',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -84,7 +84,7 @@ $messages['br'] = array(
 	'mostvisitedpagesalllink' => 'Gwelet ar pajennoù bet gweladennet ar muiañ',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -96,7 +96,7 @@ $messages['ca'] = array(
 	'mostvisitedpagesalllink' => 'Veure les pàgines més visitades',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Reaperman
  */
@@ -141,7 +141,7 @@ $messages['dsb'] = array(
 	'mostvisitedpagesalllink' => 'Nejcesćej woglědane boki se woglědaś',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Locos epraix
  * @author McDutchie
  * @author Translationista
@@ -155,7 +155,7 @@ $messages['es'] = array(
 	'mostvisitedpagesalllink' => 'Ver páginas más visitadas',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  */
@@ -168,7 +168,7 @@ $messages['fi'] = array(
 	'mostvisitedpagesalllink' => 'Katso useimmin vierailtuja sivuja',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Peter17
  */
@@ -218,7 +218,7 @@ $messages['hsb'] = array(
 	'mostvisitedpagesalllink' => 'Najhusćišo wopytane strony sej wobhladać',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -230,7 +230,7 @@ $messages['hu'] = array(
 	'mostvisitedpagesalllink' => 'Leglátogatottabb lapok',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -254,7 +254,7 @@ $messages['id'] = array(
 	'mostvisitedpagesalllink' => 'Lihat halaman yang tersering dikunjungi',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gianfranco
  */
 $messages['it'] = array(
@@ -323,7 +323,7 @@ $messages['lb'] = array(
 	'mostvisitedpagesalllink' => 'Déi am dackste besichte Säite kucken',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -354,7 +354,7 @@ $messages['ms'] = array(
 	'mostvisitedpagesalllink' => 'Lihat laman yang paling kerap dikunjungi',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -379,7 +379,7 @@ $messages['nl'] = array(
 	'mostvisitedpagesalllink' => "Meest bezochte pagina's bekijken",
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -388,7 +388,7 @@ $messages['nn'] = array(
 	'mostvisitedpagessearchbtn' => 'søk',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -400,7 +400,7 @@ $messages['oc'] = array(
 	'mostvisitedpagesalllink' => 'Veire las paginas mai visitadas',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -436,7 +436,7 @@ $messages['ps'] = array(
 	'mostvisitedpagesalllink' => 'ډېر ليدلي مخونه کتل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -448,7 +448,7 @@ $messages['pt'] = array(
 	'mostvisitedpagesalllink' => 'Ver as páginas mais visitadas',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  * @author Giro720
  * @author Jesielt
@@ -462,7 +462,7 @@ $messages['pt-br'] = array(
 	'mostvisitedpagesalllink' => 'Ver as páginas mais visitadas',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -475,7 +475,7 @@ $messages['ru'] = array(
 	'mostvisitedpagesalllink' => 'Просмотреть наиболее посещаемые страницы',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -487,7 +487,7 @@ $messages['sl'] = array(
 	'mostvisitedpagesalllink' => 'Ogled najbolj obiskanih strani',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -501,7 +501,7 @@ $messages['sr-ec'] = array(
 	'mostvisitedpagesalllink' => 'Најпосећеније странице',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Sertion
  * @author WikiPhoenix
  */
@@ -568,7 +568,7 @@ $messages['tyv'] = array(
 	'mostvisitedpagessearchbtn' => 'дилээри',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  * @author Тест
  */
@@ -595,16 +595,18 @@ $messages['vi'] = array(
 	'mostvisitedpagesalllink' => 'Xem trang được truy cập nhiều nhất',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'mostvisitedpages' => '浏览最多的页面',
 	'mostvisitedpagessearchbtn' => '搜寻',
 	'mostvisitedpageslatest' => '在最近$1分钟内',
+	'mostvisitedpageslatestlink' => '查看最近访问的页面',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -616,7 +618,7 @@ $messages['zh-hant'] = array(
 	'mostvisitedpagesalllink' => '查詢訪問數最多的頁面',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  */
 $messages['zh-tw'] = array(

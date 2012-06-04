@@ -50,7 +50,7 @@ $messages['ar'] = array(
 	'iwedit-update' => 'حدّث',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -84,7 +84,7 @@ $messages['be-tarask'] = array(
 	'iwedit-success' => '<p>Спасылка створаная пасьпяхова.</p>',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -92,7 +92,7 @@ $messages['bg'] = array(
 	'iwedit-update' => 'Обновяване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -105,7 +105,7 @@ $messages['br'] = array(
 	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Utar
  */
@@ -140,10 +140,10 @@ $messages['diq'] = array(
 	'interwikiedit' => 'Vurnkarê interwiki',
 	'iwedit-title' => 'Vurnkarê interwiki',
 	'iwedit-all-interwikis' => 'interwikiy pêro',
-	'iwedit-update' => 'Newekerdış',
+	'iwedit-update' => 'Newen ke',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Translationista
  * @author VegaDark
  */
@@ -170,7 +170,7 @@ $messages['fa'] = array(
 	'iwedit-success' => '<p>ایجاد پیوند موفق بود.</p>',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  */
 $messages['fi'] = array(
@@ -180,7 +180,7 @@ $messages['fi'] = array(
 	'iwedit-success' => '<p>Linkin luominen onnistui.</p>',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Wyz
  */
@@ -207,7 +207,7 @@ $messages['gl'] = array(
 	'iwedit-success' => '<p>A ligazón creouse con éxito.</p>',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  * @author Glanthor Reviol
  */
@@ -233,7 +233,7 @@ $messages['hy'] = array(
 	'iwedit-success' => '<p>Հղումը հաջողությամբ ստեղծված է</p>',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -260,7 +260,7 @@ $messages['id'] = array(
 	'iwedit-success' => '<p>Membuat pranala berhasil. </p>',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'iwedit-update' => 'Aggiorna',
 );
@@ -300,14 +300,14 @@ $messages['lb'] = array(
 	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
 );
 
-/** Latgalian (Latgaļu)
+/** Latgalian (latgaļu)
  * @author Dark Eagle
  */
 $messages['ltg'] = array(
 	'iwedit-update' => 'Atjaunynuot',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -333,7 +333,7 @@ $messages['ms'] = array(
 	'iwedit-success' => '<p>Pautan berjaya dicipta.</p>',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -359,7 +359,7 @@ $messages['nl'] = array(
 	'iwedit-success' => '<p>De verwijzing is aangemaakt.</p>',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -371,7 +371,7 @@ $messages['oc'] = array(
 	'iwedit-success' => '<p>Lo ligam es estat creat amb succès.</p>',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
  */
@@ -406,7 +406,7 @@ $messages['ps'] = array(
 	'iwedit-update' => 'اوسمهالول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -419,7 +419,7 @@ $messages['pt'] = array(
 	'iwedit-success' => '<p>Os links foram criados correctamente.</p>',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  * @author Luckas Blade
  */
@@ -432,7 +432,7 @@ $messages['pt-br'] = array(
 	'iwedit-success' => '<p>Criação de link com sucesso.</p>',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Lockal
  */
@@ -456,7 +456,7 @@ $messages['si'] = array(
 	'iwedit-update' => 'යාවත්කාලීන',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -470,7 +470,7 @@ $messages['sr-ec'] = array(
 	'iwedit-success' => '<p>Стварање везе је успело.</p>',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Sertion
  * @author WikiPhoenix
  */
@@ -514,5 +514,13 @@ $messages['tr'] = array(
 	'iwedit-update' => 'Güncelle',
 	'iwedit-error' => '<p>Bir hata oluştu.</p>',
 	'iwedit-success' => '<p>Bağlantı yaratımı başarılı</p>',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'iwedit-update' => '更新',
+	'iwedit-error' => '<p>发生错误。</p>',
 );
 

@@ -14,14 +14,15 @@ $messages['en'] = array(
 );
 
 /** German (Deutsch)
+ * @author PtM
  * @author Quedel
  */
 $messages['de'] = array(
 	'centralhelpsearch-desc' => 'Ermöglicht das Hinzufügen eines Suchfeldes für die Community-Hilfe',
-	'centralhelpsearch-placeholder' => 'Suchhilfe...',
+	'centralhelpsearch-placeholder' => 'Durchsuche die Hilfe...',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -29,7 +30,7 @@ $messages['es'] = array(
 	'centralhelpsearch-placeholder' => 'Buscar en Ayuda...',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  */
 $messages['fi'] = array(
@@ -37,7 +38,7 @@ $messages['fi'] = array(
 	'centralhelpsearch-placeholder' => 'Etsi ohjeita...',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  */
 $messages['fr'] = array(
@@ -53,7 +54,7 @@ $messages['gl'] = array(
 	'centralhelpsearch-placeholder' => 'Procurar na axuda&hellip;',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -69,7 +70,7 @@ $messages['id'] = array(
 	'centralhelpsearch-placeholder' => 'Cari Bantuan ...',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  */
 $messages['it'] = array(
@@ -84,14 +85,14 @@ $messages['lb'] = array(
 	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
 	'centralhelpsearch-placeholder' => 'Ieškoti Pagalbos...',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -107,7 +108,7 @@ $messages['ms'] = array(
 	'centralhelpsearch-placeholder' => 'Cari Bantuan&hellip;',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -123,7 +124,7 @@ $messages['nl'] = array(
 	'centralhelpsearch-placeholder' => 'Zoek in Help &hellip;',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -139,7 +140,7 @@ $messages['pms'] = array(
 	'centralhelpsearch-placeholder' => "Arserché ant l'Agiut...",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -147,7 +148,7 @@ $messages['ru'] = array(
 	'centralhelpsearch-placeholder' => 'Поиск по Справке&hellip;',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -155,7 +156,7 @@ $messages['sv'] = array(
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -163,7 +164,7 @@ $messages['tt-cyrl'] = array(
 	'centralhelpsearch-placeholder' => 'Белешмәлек буенча эзләү ...',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

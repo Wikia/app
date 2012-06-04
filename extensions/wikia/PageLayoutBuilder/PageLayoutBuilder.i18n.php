@@ -238,7 +238,7 @@ $messages['ar'] = array(
 	'plb-copy-submit-link' => 'احفظ',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -267,7 +267,7 @@ $messages['az'] = array(
 	'plb-copy-submit-link' => 'Qeyd et',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -300,7 +300,7 @@ $messages['bg'] = array(
 	'plb-copy-submit-link' => 'Съхраняване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  * @author Fulup
  * @author Y-M D
@@ -579,7 +579,7 @@ $messages['diq'] = array(
 	'plb-copy-cat-add' => 'Deqı',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Bola
@@ -760,7 +760,7 @@ $messages['es'] = array(
 	'wikia-editor-plb-show-static-buttons' => 'Restaurar más botones  de elementos multimedia <i>estáticos</i>',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tofu II
  */
@@ -775,7 +775,7 @@ $messages['fi'] = array(
 	'plb-helpbox-checkboxinfo1' => 'Älä näytä tätä harjoitusta uudelleen.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Peter17
  * @author Verdy p
@@ -1133,7 +1133,7 @@ $messages['gl'] = array(
 	'wikia-editor-plb-show-static-buttons' => 'Restaurar máis botóns <i>estáticos</i>',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -1216,7 +1216,7 @@ $messages['hu'] = array(
 	'plb-copy-submit-link' => 'Mentés',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1435,7 +1435,7 @@ $messages['lb'] = array(
 	'plb-copy-cat-add' => 'Derbäisetzen:',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1831,7 +1831,7 @@ $messages['ms'] = array(
 	'wikia-editor-plb-show-static-buttons' => 'Pulihkan banyak lagi butang media <i>statik</i>',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -2239,15 +2239,16 @@ $messages['pfl'] = array(
 	'plb-copy-submit-link' => 'Schbaischare',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Anoon6
  * @author BeginaFelicysym
+ * @author Sovq
  * @author Sp5uhe
  * @author Wladekb
  */
 $messages['pl'] = array(
-	'pagelayoutbuilder' => 'Kreator kompozycji strony',
-	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Kreator tworzenia kompozycji strony]]',
+	'pagelayoutbuilder' => 'Kreator układu strony',
+	'pagelayoutbuilder-desc' => '[[Special:LayoutBuilder|Kreator układu strony]]',
 	'plb-special-form-article-name' => 'Jak będzie nazywać się ta strona?',
 	'plb-special-form-title-empty' => 'Podaj tytuł tej strony.',
 	'plb-special-form-invalid-title-error' => 'Tytuł jest nieprawidłowy.',
@@ -2335,7 +2336,7 @@ $messages['pl'] = array(
 	'plb-parser-preview-input' => 'Tekst użytkownika pojawi się tutaj.',
 	'plb-parser-preview-mlinput' => 'To jest pole wielowierszowe. Gdy użytkownik będzie wypełniał formularz tworzenia nowej strony na bazie tej kompozycji, zobaczy duże pole tekstowe. Po wypełnieniu i wygenerowaniu strony, tekst pojawi się w miejscu tego pola. Łączenie tego z innymi zmiennymi pozwoli Ci na utworzenie pięknej i kompletnej kompozycji. Użytkownicy wszystko co będą musieli zrobić to skorzystać z formularza – co pozwoli Ci uzyskać wiele świetnych stron, tak szybko jak to tylko możliwe.',
 	'plb-parser-preview-sinput' => 'Wybór użytkownika pojawi się tutaj.',
-	'plb-create-from-article-new' => '<span style="color:red">Nowy!</span> kreator kompozycji',
+	'plb-create-from-article-new' => '<span style="color:red">Nowy!</span> Kreator układu',
 	'plb-create-from-article-button' => 'Utwórz kompozycję na bazie tej strony',
 	'plb-create-from-article-button-title' => 'Utwórz kompozycję na bazie tej strony',
 	'plb-create-from-article-button-desc' => 'Użyj tej strony jako bazę dla kompozycji. <a href="#">Więcej informacji ></a>',
@@ -2343,7 +2344,7 @@ $messages['pl'] = array(
 	'plb-editor-elements-in-the-editor' => '<span>ELEMENTY</span> FORMULARZA',
 	'plb-editor-add-element' => 'Dodaj nowy element',
 	'plb-editor-edit' => 'Edytuj',
-	'plb-editor-toolbar-caption' => 'Kreator kompozycji strony',
+	'plb-editor-toolbar-caption' => 'Kreator układu strony',
 	'plb-editor-toolbar-formatting' => 'Formatowanie',
 	'plb-editor-toolbar-static' => 'Statyczny',
 	'plb-editor-rte-caption' => 'Dodaj element',
@@ -2378,7 +2379,7 @@ $messages['pl'] = array(
 	'plb-property-editor-choices' => 'Wybór (jeden element w linii)',
 	'plb-property-editor-save' => 'Zapisz',
 	'plb-property-editor-cancel' => 'Anuluj',
-	'plb-mytools-link' => 'Kreator kompozycji',
+	'plb-mytools-link' => 'Kreator układu',
 	'plb-parser-gallery-size-not-int' => 'Rozmiar galerii musi być liczbą. Sprawdź na stronach pomocy poprawne opcje.',
 	'plb-parser-gallery-size-too-small' => 'Rozmiar galerii jest za mały. Sprawdź na stronach pomocy poprawne opcje.',
 	'plb-parser-gallery-size-too-big' => 'Rozmiar galerii jest zbyt duży. Sprawdź na stronach pomocy poprawne opcje.',
@@ -2452,7 +2453,7 @@ $messages['ps'] = array(
 	'plb-copy-submit-link' => 'خوندي کول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  * @author SandroHc
@@ -2622,7 +2623,7 @@ $messages['pt'] = array(
 	'plb-copy-submit-link' => 'Gravar',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Pedroca cerebral
  */
 $messages['pt-br'] = array(
@@ -2674,7 +2675,7 @@ $messages['pt-br'] = array(
 	'plb-create-invalid-title-error' => 'O título deste design é inválido. Tente colocar um título diferente.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Engineering
  * @author Kuzura
  */
@@ -2852,14 +2853,14 @@ $messages['ru'] = array(
 	'wikia-editor-plb-show-static-buttons' => 'Вернуть остальные <i>стандартные</i> кнопки',
 );
 
-/** Sakha (Саха тыла)
+/** Sakha (саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
 	'plb-special-form-create-new' => 'Саҥа "$1" сирэйи айыы',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2926,7 +2927,7 @@ $messages['sr-ec'] = array(
 	'plb-helpbox-help-link-title' => 'Распоређивач',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -3273,14 +3274,14 @@ $messages['tl'] = array(
 	'plb-copy-submit-link' => 'Sagipin',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'plb-helpbox-help-link-title' => 'Layout_builder',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Тест
  */
@@ -3314,7 +3315,7 @@ $messages['uk'] = array(
 	'wikia-editor-plb-show-static-buttons' => 'Повернути інші <i>стандартні</i> кнопки',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hydra
  */
@@ -3356,7 +3357,7 @@ $messages['zh-hans'] = array(
 	'wikia-editor-modules-plb-list-title' => '正在加载列表...',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

@@ -40,7 +40,7 @@ $messages['af'] = array(
 	'tagsreportgenerated' => 'Gegenereer op $1 om $2',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -65,14 +65,14 @@ $messages['be-tarask'] = array(
 	'tagsreportgenerated' => 'Створаная $1 $2',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'tagsreportgo' => 'Показване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -90,7 +90,7 @@ $messages['br'] = array(
 	'tagsreportgenerated' => "Krouet d'an $1 $2",
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Paucabot
  */
 $messages['ca'] = array(
@@ -99,7 +99,7 @@ $messages['ca'] = array(
 	'tagsreportgenerated' => 'Generat el $1 $2',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -152,7 +152,7 @@ $messages['diq'] = array(
 	'tagsreportgenerated' => "$1'i $2 vıraşt",
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Translationista
  * @author VegaDark
  */
@@ -169,7 +169,7 @@ $messages['es'] = array(
 	'tagsreportgenerated' => 'Generado el $1 a $2',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Nike
@@ -182,7 +182,7 @@ $messages['fi'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|sivu|sivua}})',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  */
 $messages['fr'] = array(
@@ -235,7 +235,7 @@ $messages['he'] = array(
 	'tagsreportgenerated' => 'נוצר ב־$1 $2',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -246,7 +246,7 @@ $messages['hu'] = array(
 	'tagsreportgenerated' => 'Készült: $1 $2',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -284,7 +284,7 @@ $messages['ig'] = array(
 	'tagsreportgo' => 'Zi',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'tagsreportgo' => 'Mostra',
 	'tagsreportnoresults' => 'Nessun risultato',
@@ -323,14 +323,14 @@ $messages['lb'] = array(
 	'tagsreportpages' => '(<strong>$1</strong>  {{PLURAL:$1|Säit|Säiten}})',
 );
 
-/** Latgalian (Latgaļu)
+/** Latgalian (latgaļu)
  * @author Dark Eagle
  */
 $messages['ltg'] = array(
 	'tagsreportgo' => 'Paruodeit',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -339,14 +339,14 @@ $messages['mk'] = array(
 	'tagsreportselecttag' => 'Одберете ознака:',
 	'tagsreportgo' => 'Прикажи',
 	'tagsreportnotspecify' => 'Засега немате избрано ниедна специјална ознака',
-	'tagsreportnoresults' => 'Нема пронајдено резултати',
+	'tagsreportnoresults' => 'Не пронајдов ништо',
 	'tagsreportmainnspace' => 'Главна',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страници}})',
 	'tagsreportpagesfound' => '{{PLURAL:$1|Пронајдена е|Пронајдени се}} <strong>$1</strong> {{PLURAL:$1|страница што содржи|страници што содржат}} специјална ознака (DPL, YouTube и тн.)',
 	'tagsreportgenerated' => 'Создадено на $1 во $2 ч.',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -377,7 +377,7 @@ $messages['my'] = array(
 	'tagsreportgenerated' => '$1 ရက် $2 အချိန်တွင် ဖန်တီးခဲ့သည်',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -417,7 +417,7 @@ $messages['nl-informal'] = array(
 	'tagsreportnotspecify' => 'Je hebt nog geen special label geselecteerd.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -459,7 +459,7 @@ $messages['ps'] = array(
 	'tagsreportmainnspace' => 'آرنی',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
  */
@@ -476,7 +476,7 @@ $messages['pt'] = array(
 	'tagsreportgenerated' => 'Gerado a $1 às $2',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Aristóbulo
  * @author Giro720
@@ -495,7 +495,7 @@ $messages['pt-br'] = array(
 	'tagsreportgenerated' => 'Gerado a $1 às $2',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Lockal
  * @author Александр Сигачёв
@@ -513,7 +513,7 @@ $messages['ru'] = array(
 	'tagsreportgenerated' => 'Создана $1 в $2',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -531,7 +531,7 @@ $messages['sr-ec'] = array(
 	'tagsreportgenerated' => 'Створено $1 у $2',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -563,7 +563,7 @@ $messages['sw'] = array(
  */
 $messages['te'] = array(
 	'tagsreportnotspecify' => 'మీరు ఎలాంటి ప్రత్యేకమైన టాగునీ ఏంచుకోలేదు',
-	'tagsreportnoresults' => 'ఫలితాలేమీ లభించలేదు',
+	'tagsreportnoresults' => 'ఫలితాలేమీ దొరకలేదు',
 );
 
 /** Tagalog (Tagalog)
@@ -582,7 +582,7 @@ $messages['tl'] = array(
 	'tagsreportgenerated' => 'Nalikha noong $1 sa ganap na $2',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  * @author Тест
  */
@@ -615,7 +615,7 @@ $messages['vep'] = array(
 	'tagsreportgenerated' => 'Om sätud $1 aigal $2',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -623,7 +623,7 @@ $messages['zh-hans'] = array(
 	'tagsreportmainnspace' => '主要',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Horacewai2
  */
 $messages['zh-hant'] = array(

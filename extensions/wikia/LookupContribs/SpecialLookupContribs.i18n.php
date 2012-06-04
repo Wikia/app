@@ -107,7 +107,15 @@ $messages['af'] = array(
 	'lookupcontribsall' => 'alle',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Arabic (العربية)
+ * @author ترجمان05
+ */
+$messages['ar'] = array(
+	'lookupcontribsselectuser' => 'اختر مستخدما:',
+	'lookupcontribsall' => 'الكل',
+);
+
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -126,7 +134,7 @@ $messages['be-tarask'] = array(
 	'lookupcontribscontent' => 'зьмест',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -135,7 +143,7 @@ $messages['bg'] = array(
 	'lookupcontribsall' => 'всички',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -275,7 +283,7 @@ $messages['diq'] = array(
 	'lookupcontribsrecordspager' => "'''$1''' , '''$2''' u '''$3''' basnı",
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Peter17
  * @author Translationista
  */
@@ -329,7 +337,7 @@ $messages['es'] = array(
 	'lookupcontribsall' => 'todo',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -347,7 +355,7 @@ $messages['fa'] = array(
 	'lookupcontribsall' => 'همه',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Tofu II
@@ -365,7 +373,7 @@ $messages['fi'] = array(
 	'lookupcontribscontent' => 'sisältö',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author IAlex
  * @author Peter17
@@ -473,7 +481,7 @@ $messages['gl'] = array(
 	'lookupcontribsall' => 'todas',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -501,7 +509,7 @@ $messages['hu'] = array(
 	'lookupcontribsshowpages' => 'Összes lap ($1 névter)',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -572,7 +580,7 @@ $messages['inh'] = array(
 	'lookupcontribswiki' => 'ВIикIи',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'lookupcontribsgo' => 'Vai',
 	'lookupcontribswikiurl' => 'URL',
@@ -650,7 +658,7 @@ Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'lookupcontribscontent' => 'Inhalt',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -674,7 +682,7 @@ $messages['mk'] = array(
 	'lookupcontribsinvalidmode' => '<p class="error">„<b>$1</b>“ не е важечки режим.</p>',
 	'lookupcontribsselectwikis' => 'Одберете викија:',
 	'lookupcontribslistwikiainfo' => 'Список на викија со статии уредувани од <b>$1</b>',
-	'lookupcontribsnoresultfound' => 'Нема пронајдено резултати!',
+	'lookupcontribsnoresultfound' => 'Не пронајдов ништо!',
 	'lookupcontribsinvalidresults' => 'Неважечки резултати!',
 	'lookupcontribswiki' => 'Вики',
 	'lookupcontribswikidbname' => 'Име на база на податоци',
@@ -810,7 +818,7 @@ $messages['my'] = array(
 	'lookupcontribsall' => 'အားလုံး',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -928,7 +936,7 @@ $messages['nl-informal'] = array(
 	'lookupcontribusernotspecify' => 'Je hebt nog geen gebruiker opgegeven',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -967,7 +975,7 @@ $messages['pfl'] = array(
 	'lookupcontribsall' => 'alle',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1097,7 +1105,7 @@ $messages['ps'] = array(
 	'lookupcontribsall' => 'ټول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -1152,7 +1160,7 @@ Verifique se se enganou no nome do utilizador.</p>',
 	'lookupcontribsall' => 'todas',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Luckas Blade
  */
@@ -1208,7 +1216,7 @@ Verifique se se enganou com o nome do utilizador.</p>',
 	'lookupcontribsall' => 'todas',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -1223,7 +1231,7 @@ $messages['ro'] = array(
 	'lookupcontribscontent' => 'conţinut',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -1231,7 +1239,7 @@ $messages['roa-tara'] = array(
 	'lookupcontribspageremoved' => 'Luate:',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -1288,7 +1296,7 @@ $messages['ru'] = array(
 	'lookupcontribsall' => 'все',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -1314,7 +1322,7 @@ $messages['sr-ec'] = array(
 	'lookupcontribscontent' => 'садржај',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Lokal Profil
  * @author Per
  * @author WikiPhoenix
@@ -1455,7 +1463,7 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribsall' => 'lahat',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -1465,7 +1473,7 @@ $messages['tt-cyrl'] = array(
 	'lookupcontribsnormal' => 'соңгы',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -1483,14 +1491,17 @@ $messages['yi'] = array(
 	'lookupcontribscontent' => 'אינהאַלט',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
  * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'lookupcontribsselectuser' => '选择用户：',
 	'lookupcontribsgo' => '去',
 	'lookupcontribsselectwikis' => '选择维基：',
+	'lookupcontribsnoresultfound' => '未找到结果！',
 	'lookupcontribswiki' => '维基',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => '标题',
 	'lookupcontribswikioptions' => '选择',
 	'lookupcontribscontribs' => '贡献',

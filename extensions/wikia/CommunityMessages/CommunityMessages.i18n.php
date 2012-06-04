@@ -37,7 +37,7 @@ $messages['aeb'] = array(
 	'communitymessages-notice-msg' => "[[Special:WikiActivity|el Messages mte3 el communauté ss'artelhom mise-à-jour]].",
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -53,7 +53,7 @@ $messages['bar'] = array(
 	'communitymessages-notice-msg' => 'De Gmoahschoftsnoochrichten san aktualisierd worn.',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -61,14 +61,14 @@ $messages['br'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Hizivaet eo bet kemennadennoù ar gumuniezh]].',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Ciencia Al Poder
  */
 $messages['ca'] = array(
 	'communitymessages-notice-msg' => "[[Special:WikiActivity|S'han actualitzat els Missatges de la Comunitat]].",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Jezevec
  */
@@ -86,7 +86,7 @@ $messages['de'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Community-Nachrichten wurden aktualisiert]].',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Ciencia Al Poder
  * @author Crazymadlover
  */
@@ -95,7 +95,7 @@ $messages['es'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Se han actualizado los mensajes de la comunidad]].',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -111,7 +111,7 @@ $messages['fa'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|پیغام‌های جامعه به روز شده‌است]].',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  * @author VezonThunder
  */
@@ -120,7 +120,7 @@ $messages['fi'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Yhteisöviestejä on päivitetty]].',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Wyz
  */
@@ -151,7 +151,7 @@ $messages['hsb'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Powěsće zhromadźenstwa su so zaktualizowali]].',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  * @author Misibacsi
  */
@@ -160,7 +160,7 @@ $messages['hu'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|A közösségi üzenetek módosultak]].',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -176,13 +176,14 @@ $messages['id'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Community Messages has been updated]].',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
+ * @author Beta16
  * @author Minerva Titani
  * @author Pietrodn
  */
 $messages['it'] = array(
 	'communitymessages-desc' => 'Estensione di supporto per i messaggi della comunità',
-	'communitymessages-notice-msg' => '[[Speciale:WikiActivity|I messaggi della community sono stati aggiornati]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|I messaggi della community sono stati aggiornati]].',
 );
 
 /** Colognian (Ripoarisch)
@@ -193,7 +194,7 @@ $messages['ksh'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Gemeinschafs_Nohreeshte sinn_er om neuere Shtand]]',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -209,7 +210,7 @@ $messages['ms'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Pesanan Komuniti telah dikemaskinikan]].',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -225,7 +226,7 @@ $messages['nl'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Gemeenschapsberichten is bijgewerkt]].',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Boulaur
  * @author Cedric31
  */
@@ -234,7 +235,7 @@ $messages['oc'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Los messatges a la comunautat son estats meses a jorn]].',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
  */
@@ -258,7 +259,7 @@ $messages['ps'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|ټولنيز پيغامونه اوسمهاله شوي]].',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -267,7 +268,7 @@ $messages['pt'] = array(
 	'communitymessages-notice-msg' => 'As [[Special:WikiActivity|Mensagens da Comunidade foram acualizadas]].',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Giro720
  */
@@ -276,7 +277,7 @@ $messages['pt-br'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|As Mensagens Comunitárias foram atualizadas]].',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -284,7 +285,7 @@ $messages['roa-tara'] = array(
 	'communitymessages-notice-msg' => "[[Special:WikiActivity|Le Messagge d'a Comunitate onne state aggiornate]].",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Александр Сигачёв
  */
@@ -293,7 +294,7 @@ $messages['ru'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Сообщения сообщества были обновлены]].',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -310,12 +311,20 @@ $messages['tl'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Naisapanahon na ang mga Mensahe ng Pamayanan]].',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'communitymessages-desc' => 'Җәмгыять яңалыклары өчен ярдәмче-өстәлмә',
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Җәмгыять хәбәрләре яңартылды]].',
+);
+
+/** Ukrainian (українська)
+ * @author A1
+ */
+$messages['uk'] = array(
+	'communitymessages-desc' => 'Допоміжні розширення спільноти повідомлень',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Повідомлення спільноти були оновлені]].',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -325,5 +334,12 @@ $messages['tt-cyrl'] = array(
 $messages['vi'] = array(
 	'communitymessages-desc' => 'Người trợ giúp mở rộng những tin nhắn cộng đồng',
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Thông điệp cộng đồng đã được cập nhật]].',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|社区信息已更新]]。',
 );
 

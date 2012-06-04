@@ -236,7 +236,7 @@ $messages['ar'] = array(
 	'vet-supported' => 'مواقع الفيديو المدعومة:',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -249,7 +249,7 @@ $messages['az'] = array(
 	'vet-gallery' => 'Qalereya',
 );
 
-/** Belarusian (Беларуская)
+/** Belarusian (беларуская)
  * @author Тест
  */
 $messages['be'] = array(
@@ -336,7 +336,7 @@ $messages['be-tarask'] = array(
 	'vet-protected' => 'Гэтае відэа было абароненае',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -364,7 +364,7 @@ $messages['bg'] = array(
 	'vet-gallery' => 'Галерия',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -444,7 +444,7 @@ $messages['br'] = array(
 	'vet-protected' => 'Gwarezet eo ar video-mañ',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Paucabot
  */
 $messages['ca'] = array(
@@ -465,7 +465,7 @@ $messages['ca'] = array(
 	'vet-protected' => 'Aquest vídeo està protegit',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'vet-upload-btn' => 'بڕۆ',
 	'vet-find-btn' => 'گەڕان',
@@ -613,13 +613,13 @@ $messages['diq'] = array(
 	'vet-gallery' => 'Galeri',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'vet-upload-btn' => 'Yi',
 	'vet-find-btn' => 'Dii',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author McDutchie
  * @author Peter17
@@ -701,7 +701,7 @@ $messages['es'] = array(
 	'vet-protected' => 'Este video está protegido',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -713,7 +713,7 @@ $messages['eu'] = array(
 	'vet-license' => 'Lizentzia',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Crt
  * @author Silvonen
  * @author Tofu II
@@ -740,7 +740,7 @@ $messages['fi'] = array(
 	'vet-protected' => 'Tämä video on suojattu',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Dodoïste
  * @author Gomoko
@@ -988,14 +988,14 @@ $messages['he'] = array(
 	'vet-protected' => 'סרטון זה מוגן.',
 );
 
-/** Croatian (Hrvatski)
+/** Croatian (hrvatski)
  * @author Anton008
  */
 $messages['hr'] = array(
 	'vet-left' => 'Lijevo',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -1043,7 +1043,7 @@ $messages['hu'] = array(
 	'vet-protected' => 'Ez a videó védett',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1198,7 +1198,7 @@ $messages['inh'] = array(
 	'vet-gallery' => 'Суртанче',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author HalphaZ
  */
@@ -1323,7 +1323,7 @@ $messages['ja'] = array(
 	'vet-protected' => 'この動画は保護されています',
 );
 
-/** Kalaallisut (Kalaallisut)
+/** Kalaallisut (kalaallisut)
  * @author Qaqqalik
  */
 $messages['kl'] = array(
@@ -1407,7 +1407,7 @@ $messages['li'] = array(
 	'vet-upload' => 'Gansen URL',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1486,7 +1486,7 @@ $messages['mk'] = array(
 	'vet-protected' => 'Оваа видеоснимка е заштитена',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -1597,7 +1597,7 @@ $messages['my'] = array(
 	'vet-see-all' => 'ဆက်လက်ကြည့်ရန်',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1786,7 +1786,7 @@ Wellicht moet je de videopagina opschonen om de wijzigingen te zien.',
 	'vet-no-preview' => 'Je kunt geen video uit een pagina toevoegen in de voorvertoning',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -1837,7 +1837,7 @@ $messages['pfl'] = array(
 	'vet-gallery' => 'Galarie',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sp5uhe
  */
@@ -2027,7 +2027,7 @@ $messages['ps'] = array(
 	'vet-protected' => 'دا ويډيو ژغورل شوې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
  */
@@ -2107,7 +2107,7 @@ $messages['pt'] = array(
 	'vet-protected' => 'Este vídeo está protegido.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  * @author Luckas Blade
  * @author Pedroca cerebral
@@ -2188,7 +2188,7 @@ $messages['pt-br'] = array(
 	'vet-protected' => 'Este vídeo está protegido.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -2197,7 +2197,7 @@ $messages['ro'] = array(
 	'vet-license' => 'Licenţă',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kaganer
  * @author Kuzura
@@ -2280,14 +2280,14 @@ $messages['ru'] = array(
 	'vet-protected' => 'Это видео защищено',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'vet-back' => 'Nazaj',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -2347,7 +2347,7 @@ $messages['sr-ec'] = array(
 	'vet-protected' => 'Овај видео-снимак је заштићен.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Jopparn
  * @author Lokal Profil
  * @author Tobulos1
@@ -2470,7 +2470,7 @@ $messages['te'] = array(
 	'vet-close' => 'మూసివేయి',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -2570,7 +2570,7 @@ $messages['tl'] = array(
 	'vet-protected' => 'Pinuprutektahan ang bidyong ito.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  * @author Тест
  */
@@ -2595,7 +2595,7 @@ $messages['yi'] = array(
 	'vet-caption' => 'באשרייבונג',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Hydra
  * @author Xiaomingyan

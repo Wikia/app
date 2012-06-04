@@ -18,24 +18,24 @@ $messages['qqq'] = array(
 	'imageserving-desc' => '{{desc}}',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
 	'imageserving-desc' => "Esbilla imaxes d'un conxuntu de páxines conseñáu basándose nos requisitos visuales",
 );
 
-/** Breton (Brezhoneg) */
+/** Breton (brezhoneg) */
 $messages['br'] = array(
 	'imageserving-desc' => 'Dibab a ra ar skeudennoù en un hollad termenet a bajennoù, hervez an ezhommoù gwelet',
 );
 
-/** Bosnian (Bosanski) */
+/** Bosnian (bosanski) */
 $messages['bs'] = array(
 	'imageserving-desc' => 'Odabira slike iz određenog niza stranica zasnovanog na vizuelnim zahtjevima',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -49,19 +49,19 @@ $messages['de'] = array(
 	'imageserving-desc' => 'Wählt Bilder von einer Auswahl von Seiten entsprechend der visuellen Anforderungen aus',
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $messages['es'] = array(
 	'imageserving-desc' => 'Selecciona las imágenes de un conjunto especificado de páginas basados en necesidades visuales',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author VezonThunder
  */
 $messages['fi'] = array(
 	'imageserving-desc' => 'Valitsee kuvia määrätystä sivujoukosta visuaalisten vaatimusten perusteella',
 );
 
-/** French (Français) */
+/** French (français) */
 $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
 );
@@ -78,12 +78,12 @@ $messages['he'] = array(
 	'imageserving-desc' => 'בחירת תמונות ממערך מסוים של דפים בהתאם לדרישות החזותיות',
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (interlingua) */
 $messages['ia'] = array(
 	'imageserving-desc' => 'Selige imagines ex un collection specific de paginas a base de criterios visual',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -104,7 +104,7 @@ $messages['ksh'] = array(
 	'imageserving-desc' => 'Söhk Bellder us enem aanjajovve Saz vun Sigge uß, opjrond vun Aanforderunge aan et Ußsinn.',
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $messages['mk'] = array(
 	'imageserving-desc' => 'Одбира слики од назначена низа страници зависно од визуелните потреби',
 );
@@ -116,7 +116,7 @@ $messages['ms'] = array(
 	'imageserving-desc' => 'Memilih gambar daripada tatasusunan laman yang terpilih berasaskan keperluan visual',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'imageserving-desc' => 'Velger ut bilder fra en angitt rekke sider basert på visuelle krav',
 );
@@ -126,7 +126,7 @@ $messages['nl'] = array(
 	'imageserving-desc' => "Selecteert afbeeldingen uit een aangegeven verzameling pagina's gebaseerd op visuele eisen",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -140,27 +140,27 @@ $messages['pms'] = array(
 	'imageserving-desc' => "A selession-a le figure da n'ansem specificà ëd pàgine basandse ëdzora a jë bzògn visuaj",
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $messages['pt'] = array(
 	'imageserving-desc' => 'Escolhe imagens de um conjunto especificado de páginas com base em requisitos visuais',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (português do Brasil) */
 $messages['pt-br'] = array(
 	'imageserving-desc' => 'Escolhe imagens de um conjunto especificado de páginas com base em requisitos visuais',
 );
 
-/** Tarandíne (Tarandíne) */
+/** tarandíne (tarandíne) */
 $messages['roa-tara'] = array(
 	'imageserving-desc' => "Scacchie le immaggine da 'na collezziona specifeche de pàggene ca se basabe sus a requisite visuale",
 );
 
-/** Russian (Русский) */
+/** Russian (русский) */
 $messages['ru'] = array(
 	'imageserving-desc' => 'Выбирает изображений из указанного массива страниц на основе визуальных требований',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -181,14 +181,14 @@ $messages['tl'] = array(
 	'imageserving-desc' => 'Pumipili ng mga larawan mula sa isang tinukoy na hilera ng mga pahina batay sa mga pangangailangang pangmata',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'imageserving-desc' => 'Күрсәтелгән мәкаләләр массивыннан визуаль таләпләр нигезендә сурәтләр сайлый.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

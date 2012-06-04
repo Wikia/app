@@ -32,7 +32,7 @@ $messages['en'] = array(
 	'browser-loading-message' => 'Loading...'
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -42,7 +42,7 @@ $messages['az'] = array(
 	'browser-loading-message' => 'Yüklənir…',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -53,7 +53,7 @@ $messages['bg'] = array(
 	'browser-loading-message' => 'Зареждане...',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -97,7 +97,7 @@ $messages['diq'] = array(
 	'browser-loading-message' => 'Bar beno...',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Fitoschido
  * @author VegaDark
  */
@@ -114,7 +114,7 @@ $messages['es'] = array(
 	'browser-loading-message' => 'Cargando...',
 );
 
-/** French (Français)
+/** French (français)
  * @author Verdy p
  * @author Wyz
  */
@@ -147,7 +147,7 @@ $messages['gl'] = array(
 	'browser-loading-message' => 'Cargando...',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -170,7 +170,7 @@ $messages['inh'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'ХӀаа',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'main-tab-discover' => 'Scopri',
 	'main-tab-personal' => 'My Wikia',
@@ -198,7 +198,7 @@ $messages['lb'] = array(
 	'main-tab-search' => 'Sichen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -230,7 +230,7 @@ $messages['ms'] = array(
 	'browser-loading-message' => 'Memuatkan...',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -263,7 +263,7 @@ $messages['nl'] = array(
 	'browser-loading-message' => 'Bezig met laden…',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -292,7 +292,7 @@ $messages['ps'] = array(
 	'browser-loading-message' => 'د برسېرېدو په حال کې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -308,7 +308,7 @@ $messages['pt'] = array(
 	'browser-loading-message' => 'A carregar…',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -324,7 +324,7 @@ $messages['ru'] = array(
 	'browser-loading-message' => 'Загрузка...',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(

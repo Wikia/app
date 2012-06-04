@@ -153,7 +153,7 @@ $messages['ar'] = array(
 	'phalanx-stats-table-reason' => 'السبب',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -170,7 +170,7 @@ $messages['az'] = array(
 	'phalanx-stats-table-wiki-url' => 'Viki URL',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -180,7 +180,7 @@ $messages['bg'] = array(
 	'phalanx-stats-table-reason' => 'Причина',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -337,7 +337,7 @@ $messages['diq'] = array(
 	'phalanx-stats-table-text' => 'nuşte',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Mor
  * @author VegaDark
  */
@@ -451,7 +451,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'right-phalanxemailblock' => 'Crear, ver y administrar bloqueos de correos',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tofu II
  */
@@ -460,7 +460,7 @@ $messages['fi'] = array(
 Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wikiaan]].',
 );
 
-/** French (Français)
+/** French (français)
  * @author Balzac 40
  * @author Brunoperel
  * @author Crochet.david
@@ -697,7 +697,7 @@ Se pensa que se trata dun erro, [[Special:Contact|póñase en contacto con Wikia
 	'right-phalanxemailblock' => 'Pode arquivar, ollar e xestionar os bloqueos baseados en correos electrónicos',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -747,7 +747,7 @@ $messages['hu'] = array(
 	'phalanx-stats-table-wiki-last-edited' => 'Utolsó szerkesztés',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -918,7 +918,7 @@ $messages['lb'] = array(
 	'phalanx-stats-table-wiki-name' => 'Numm vun der Wiki',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1171,7 +1171,7 @@ Sila [[Special:Contact|hubungi Wikia]] tentang masalah ini.<br />Penyekat juga m
 	'right-phalanxemailblock' => 'Boleh memfailkan, melihat dan mengurus sekatan berasaskan e-mel',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1436,7 +1436,7 @@ $messages['pfl'] = array(
 	'phalanx-stats-table-wiki-last-edited' => "Z'ledsch g'änad",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Odder
  * @author Sovq
@@ -1576,7 +1576,7 @@ $messages['ps'] = array(
 	'phalanx-stats-table-wiki-name' => 'ويکي نوم',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author SandroHc
  */
@@ -1685,7 +1685,7 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 	'right-phalanxexempt' => 'Isento da regras do Phalanx',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Byulent
  * @author DCamer
  * @author Engineering
@@ -1802,7 +1802,7 @@ $messages['ru'] = array(
 	'right-phalanxemailblock' => 'Можно обратиться, просмотреть и управлять e-mail на основе блоков',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1828,7 +1828,7 @@ $messages['sr-ec'] = array(
 	'phalanx-stats-table-reason' => 'Разлог',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author VickyC
  * @author WikiPhoenix
  */
@@ -2027,7 +2027,7 @@ Mangyaring lumikha ng kahaliling pangalan ng tagagamit o [[Special:Contact|makip
 	'phalanx-stats-table-wiki-last-edited' => 'Huling binago',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -2035,7 +2035,7 @@ $messages['tt-cyrl'] = array(
 	'phalanx-stats-table-wiki-name' => 'Wiki исеме',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Тест
  */
@@ -2092,7 +2092,7 @@ $messages['uk'] = array(
 Якщо Ви вважаєте, що сталася помилка, будь ласка,[[Special:Contact|зверніться до адміністраторів Вікіа]].<br />Блокувач так пояснив свій крок: $1.",
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

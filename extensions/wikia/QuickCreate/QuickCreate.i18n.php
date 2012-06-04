@@ -39,7 +39,7 @@ $messages['be-tarask'] = array(
 	'quickcreate' => 'даслаць свой рэцэпт',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -55,7 +55,7 @@ $messages['ce'] = array(
 	'quickcreate' => 'дlадахьийта хьай дарб',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -79,7 +79,7 @@ $messages['de-formal'] = array(
 	'quickcreate' => 'Senden Sie Ihr Rezept',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Translationista
  */
 $messages['es'] = array(
@@ -87,7 +87,7 @@ $messages['es'] = array(
 	'quickcreate' => 'envía tu receta',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Nike
  */
@@ -96,7 +96,7 @@ $messages['fi'] = array(
 	'quickcreate' => 'reseptin lähetys',
 );
 
-/** French (Français)
+/** French (français)
  * @author Cywil
  * @author IAlex
  */
@@ -127,7 +127,7 @@ $messages['hsb'] = array(
 	'quickcreate' => 'pósćel swój recept',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -135,7 +135,7 @@ $messages['hu'] = array(
 	'quickcreate' => 'recept elküldése',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -151,7 +151,7 @@ $messages['id'] = array(
 	'quickcreate' => 'kirimkan resep Anda',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author HalphaZ
  */
 $messages['it'] = array(
@@ -175,7 +175,7 @@ $messages['ksh'] = array(
 	'quickcreate' => 'Donn Ding Rezäpp enjävve',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -191,7 +191,7 @@ $messages['ms'] = array(
 	'quickcreate' => 'serahkan resipi anda',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -207,7 +207,7 @@ $messages['nl'] = array(
 	'quickcreate' => 'recept toevoegen',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -215,7 +215,7 @@ $messages['oc'] = array(
 	'quickcreate' => 'Prepausatz vòstra recèpta',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -232,7 +232,7 @@ $messages['pms'] = array(
 	'quickcreate' => "ch'a manda soa arseta",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -240,7 +240,7 @@ $messages['pt'] = array(
 	'quickcreate' => 'envie a sua receita',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -248,7 +248,7 @@ $messages['pt-br'] = array(
 	'quickcreate' => 'envie a sua receita',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -256,7 +256,7 @@ $messages['roa-tara'] = array(
 	'quickcreate' => "conferme 'a ricetta toje",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -264,7 +264,7 @@ $messages['ru'] = array(
 	'quickcreate' => 'отправить свой рецепт',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -274,7 +274,7 @@ $messages['sr-ec'] = array(
 	'quickcreate' => 'пошаљите свој рецепт',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -290,7 +290,7 @@ $messages['tl'] = array(
 	'quickcreate' => 'ipasa ang iyong reseta',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
@@ -298,14 +298,14 @@ $messages['tt-cyrl'] = array(
 	'quickcreate' => 'үземнең рецептны җибәрү',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
 	'quickcreate-desc' => 'Додає кнопку створення нової сторінки з можливістю увійти в систему для анонімних користувачів',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

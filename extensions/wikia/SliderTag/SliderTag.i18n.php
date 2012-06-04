@@ -22,7 +22,7 @@ $messages['be-tarask'] = array(
 	'slidertag-featured-wikis' => 'Абраныя вікі',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -30,7 +30,7 @@ $messages['br'] = array(
 	'slidertag-featured-wikis' => 'Wikioù dibar',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -47,7 +47,7 @@ $messages['de'] = array(
 	'slidertag-featured-wikis' => 'Empfohlene Wikis',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Crazymadlover
  */
 $messages['es'] = array(
@@ -55,7 +55,7 @@ $messages['es'] = array(
 	'slidertag-featured-wikis' => 'Wikis destacados',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  */
 $messages['fr'] = array(
@@ -71,7 +71,7 @@ $messages['gl'] = array(
 	'slidertag-featured-wikis' => 'Wikis destacados',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -94,7 +94,7 @@ $messages['ig'] = array(
 	'slidertag-featured-wikis' => 'Wiki nke di na íhú',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  * @author Pietrodn
  */
@@ -111,7 +111,7 @@ $messages['ksh'] = array(
 	'slidertag-featured-wikis' => 'Ämfohle Wikis',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -127,7 +127,7 @@ $messages['ms'] = array(
 	'slidertag-featured-wikis' => 'Wiki pilihan',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -143,7 +143,7 @@ $messages['nl'] = array(
 	'slidertag-featured-wikis' => "Aanbevolen wiki's",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -160,7 +160,7 @@ $messages['pms'] = array(
 	'slidertag-featured-wikis' => 'Wiki an giojera',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -168,7 +168,7 @@ $messages['pt'] = array(
 	'slidertag-featured-wikis' => 'Wikis destacadas',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -176,7 +176,7 @@ $messages['pt-br'] = array(
 	'slidertag-featured-wikis' => 'Wikis destacadas',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -184,7 +184,7 @@ $messages['ru'] = array(
 	'slidertag-featured-wikis' => 'Избранные вики',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -200,11 +200,18 @@ $messages['tl'] = array(
 	'slidertag-featured-wikis' => 'Tampok na mga wiki',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'slidertag-desc' => 'Катнашучыларга сайланма слайдерлар өстәргә мөмкинлек бирә',
 	'slidertag-featured-wikis' => 'Сайланган викилар',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'slidertag-featured-wikis' => '特色维基',
 );
 

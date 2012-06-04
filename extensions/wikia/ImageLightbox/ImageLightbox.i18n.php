@@ -48,7 +48,7 @@ $messages['qqq'] = array(
 * $2 is are the error details.',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -112,7 +112,7 @@ $messages['diq'] = array(
 	'lightbox-share-button-embed' => 'Embed',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
@@ -149,7 +149,7 @@ Detalles: $2',
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Nike
  * @author VezonThunder
@@ -185,7 +185,7 @@ Tiedot: $2',
 	'lightbox-visit-the-wiki' => 'Siirry wikiin:',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Wyz
  */
@@ -254,7 +254,7 @@ Detalles: $2',
 	'lightbox-visit-the-wiki' => 'Visite o wiki:',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -323,7 +323,7 @@ $1
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -391,7 +391,7 @@ Butiran: $2',
 	'lightbox-visit-the-wiki' => 'Lawati wiki:',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -470,7 +470,7 @@ $messages['pfl'] = array(
 	'lightbox-share-email-error-caption' => 'Fehla',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -516,7 +516,7 @@ $messages['ps'] = array(
 	'lightbox-share-email-error-caption' => 'تېروتنه',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -550,7 +550,7 @@ $1
 	'lightbox-visit-the-wiki' => 'Посетите вики:',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -584,6 +584,13 @@ Detaljer: $2',
 	'lightbox-visit-the-wiki' => 'Besök wikin:',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'lightbox-share-email-page-label-address' => 'ఈమెయిలు చిరునామా',
+);
+
 /** Turkish (Türkçe)
  * @author Suelnur
  */
@@ -591,11 +598,12 @@ $messages['tr'] = array(
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'lightbox_details_tooltip' => '查看图片细节',
+	'lightbox-forum' => '论坛',
 	'lightbox-share-button-www' => '分享',
 );
 

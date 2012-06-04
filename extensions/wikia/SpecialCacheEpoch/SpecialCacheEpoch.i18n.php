@@ -20,14 +20,14 @@ $messages['qqq'] = array(
 	'cacheepoch-wf-reason' => 'Log message for administrators only. Do not change "Special:CacheEpoch"',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
 	'cacheepoch-submit' => 'Hizivaat an talvoudenn',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -57,7 +57,7 @@ $messages['de'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory ist in diesem Wiki nicht aktiviert. Kann wgCacheEpoch nicht verändern.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -72,7 +72,7 @@ $messages['es'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory no está habilitado en esta wiki. No se puede alterar wgCacheEpoch.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Brunoperel
  * @author Od1n
  * @author Wyz
@@ -104,7 +104,7 @@ $messages['gl'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory non está activado neste wiki. Non se pode de cambiar wgCacheEpoch.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -126,7 +126,7 @@ $messages['lb'] = array(
 	'cacheepoch-submit' => 'De Wäert aktualiséieren',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -156,7 +156,7 @@ $messages['ms'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory (Kilang Wiki) tidak dihidupkan di wiki ini, maka wgCacheEpoch tidak dapat diubah.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -186,7 +186,7 @@ $messages['nl'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgCacheEpoch aan te passen.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -217,7 +217,7 @@ $messages['pms'] = array(
 	'cacheepoch-no-wf' => "WikiFactory a l'é pa abilità dzora a sta wiki-sì. As peul pa modifiché wgCacheEpoch.",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -233,7 +233,7 @@ $messages['pt'] = array(
 	'cacheepoch-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar a wgCacheEpoch.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -248,14 +248,14 @@ $messages['pt-br'] = array(
 	'cacheepoch-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar a wgCacheEpoch.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'cacheepoch-submit' => 'Обновить значение',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -277,7 +277,7 @@ $messages['tl'] = array(
 	'cacheepoch-submit' => 'Isapanahon ang halaga',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(

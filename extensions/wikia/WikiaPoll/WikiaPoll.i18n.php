@@ -81,7 +81,7 @@ $messages['ar'] = array(
 	'wikiapoll-error-invalid-title' => 'نص السؤال غير صالح.',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
  */
@@ -113,7 +113,7 @@ $messages['bar'] = array(
 	'wikiapoll-error-invalid-title' => 'Da Text vah da Frog is néd gijtig.',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -129,7 +129,7 @@ $messages['bg'] = array(
 	'wikiapoll-publish-label' => 'Публикуване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -147,7 +147,7 @@ $messages['br'] = array(
 	'wikiapoll-publish-label' => 'Embann',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -167,7 +167,7 @@ $messages['ca'] = array(
 	'wikiapoll-error-invalid-title' => 'Text de la pregunta no és vàlid.',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Reaperman
  */
@@ -224,7 +224,8 @@ $messages['diq'] = array(
 	'wikiapoll-publish-label' => 'Vıla ke',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
+ * @author Ciencia Al Poder
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -234,6 +235,8 @@ $messages['es'] = array(
 	'wikiapoll-thanks-for-vote' => '¡Gracias!',
 	'wikiapoll-vote' => '¡Vota!',
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 voto|$1 votos}}',
+	'wikiapoll-question-mark-after' => '?',
+	'wikiapoll-question-mark-before' => '¿',
 	'wikiapoll-createpoll-headline' => 'Crear encuesta',
 	'wikiapoll-editpoll-headline' => 'Editar encuesta',
 	'wikiapoll-question-label' => 'Pregunta',
@@ -244,7 +247,7 @@ $messages['es'] = array(
 	'wikiapoll-error-invalid-title' => 'El texto de la pregunta es inválido.',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -264,7 +267,7 @@ $messages['eu'] = array(
 	'wikiapoll-error-invalid-title' => 'Galderaren testua ez da onartzen.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  * @author VezonThunder
  */
@@ -285,7 +288,7 @@ $messages['fi'] = array(
 	'wikiapoll-error-invalid-title' => 'Kysymyksen teksti ei kelpaa.',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Verdy p
  * @author Wyz
@@ -328,7 +331,7 @@ $messages['gl'] = array(
 	'wikiapoll-error-invalid-title' => 'O texto da pregunta non é válido.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -338,7 +341,7 @@ $messages['hu'] = array(
 	'wikiapoll-publish-label' => 'Közzététel',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -358,7 +361,7 @@ $messages['ia'] = array(
 	'wikiapoll-error-invalid-title' => 'Le texto del question es invalide.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  */
 $messages['it'] = array(
@@ -397,7 +400,7 @@ $messages['lb'] = array(
 	'wikiapoll-question-label' => 'Fro',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -406,7 +409,7 @@ $messages['mk'] = array(
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Благодариме!',
 	'wikiapoll-vote' => 'Гласај!',
-	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласа}}',
+	'wikiapoll-votes' => '{{PLURAL:$1|$1 глас|$1 гласови}}',
 	'wikiapoll-question-mark-after' => '?',
 	'wikiapoll-createpoll-headline' => 'Создај анкета',
 	'wikiapoll-editpoll-headline' => 'Уреди анкета',
@@ -450,7 +453,7 @@ $messages['my'] = array(
 	'wikiapoll-error-invalid-title' => 'မေးခွန်း သည် တရားမဝင်ပါ။',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -490,7 +493,7 @@ $messages['nl'] = array(
 	'wikiapoll-error-invalid-title' => 'De vraagtekst is ongeldig.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  * @author Woytecr
  */
@@ -531,7 +534,7 @@ $messages['ps'] = array(
 	'wikiapoll-error-invalid-title' => 'د پوښتنې متن سم نه دی.',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -552,7 +555,7 @@ $messages['pt'] = array(
 	'wikiapoll-error-invalid-title' => 'O texto da pergunta é inválido.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -572,7 +575,7 @@ $messages['pt-br'] = array(
 	'wikiapoll-error-invalid-title' => 'Pergunta inválida.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -589,7 +592,7 @@ $messages['ro'] = array(
 	'wikiapoll-error-invalid-title' => 'Textul întrebării este invalid.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  */
 $messages['ru'] = array(
@@ -609,7 +612,7 @@ $messages['ru'] = array(
 	'wikiapoll-error-invalid-title' => 'Текст вопроса является недопустимым.',
 );
 
-/** Slovak (Slovenčina)
+/** Slovak (slovenčina)
  * @author Pitr2311
  */
 $messages['sk'] = array(
@@ -629,7 +632,7 @@ $messages['sk'] = array(
 	'wikiapoll-error-invalid-title' => 'Text otázky nie je správny.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -648,7 +651,7 @@ $messages['sr-ec'] = array(
 	'wikiapoll-publish-label' => 'Објави',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -717,14 +720,14 @@ $messages['tl'] = array(
 	'wikiapoll-error-invalid-title' => 'Hindi katanggap-tanggap ang teksto ng katanungan.',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'wikiapoll-question-mark-after' => '?',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -733,7 +736,7 @@ $messages['uk'] = array(
 	'wikiapoll-error-duplicate' => 'Опитування з такою назвою вже існує.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Hydra
  * @author Hzy980512
@@ -753,7 +756,7 @@ $messages['zh-hans'] = array(
 	'wikiapoll-error-invalid-title' => '问题文本无效。',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

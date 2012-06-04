@@ -83,7 +83,7 @@ $messages['qqq'] = array(
 	'photopop-game-date' => '{{Identical|Date}}',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -158,7 +158,14 @@ $messages['de'] = array(
 	'photopop-game-download-error-text' => 'Fehler beim Herunterladen der Spieldaten, bitte erneut versuchen.',
 );
 
-/** Spanish (Español)
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'photopop-setup-submit-label' => 'Newen ke',
+);
+
+/** Spanish (español)
  * @author Benfutbol10
  * @author Bernardom
  * @author VegaDark
@@ -227,7 +234,7 @@ $messages['es'] = array(
 	'photopop-game-download-error-text' => 'Un error ha ocurrido mientras se descargaban los datos del juego, intenta nuevamente.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Wyz
  */
@@ -360,7 +367,7 @@ $messages['gl'] = array(
 	'photopop-game-download-error-text' => 'Houbo un erro ao descargar os datos do xogo; inténteo de novo.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -426,7 +433,7 @@ $messages['ia'] = array(
 	'photopop-game-download-error-text' => 'Un error ha occurrite durante le discarga del datos del joco. Per favor reproba.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -558,7 +565,7 @@ $messages['ms'] = array(
 	'photopop-game-download-error-text' => 'Berlakunya ralat ketika memuat turun data permainan, sila cuba lagi.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -699,7 +706,7 @@ $messages['pfl'] = array(
 	'photopop-game-finished' => 'Ferdisch!',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -791,14 +798,14 @@ $messages['ps'] = array(
 	'photopop-game-month-11' => 'ډيسمبر',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'photopop-setup-category-label' => 'Categoria',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -864,7 +871,7 @@ $messages['ru'] = array(
 	'photopop-game-download-error-text' => 'Произошла ошибка при загрузке данных игры, пожалуйста, попробуйте еще раз.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -882,7 +889,7 @@ $messages['sr-ec'] = array(
 	'photopop-game-month-11' => 'дец',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -948,7 +955,7 @@ $messages['sv'] = array(
 	'photopop-game-download-error-text' => 'Ett fel uppstod när speldata skulle laddas ned, var god försök igen.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -976,7 +983,7 @@ $messages['uk'] = array(
 	'photopop-game-image-load-error' => 'Зображення неможливо завантажити. Перепрошуємо, спробуйте ще раз.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  */
 $messages['zh-hans'] = array(
