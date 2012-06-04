@@ -174,6 +174,9 @@ function messageDispatcher(client, socket, data){
 				break;
 			case 'command':
 				switch(dataObj.attrs.command){ // all commands should be in lowercase
+					case 'initquery':
+						sendRoomDataToClient(client);
+						break;
 					case 'logout':
 						logger.debug("Loging out user: " + client.myUser.get('name'));
 						logout(client, socket, data);
@@ -351,6 +354,20 @@ function clearChatBuffer(client) {
 	});	
 }
 
+
+function sendRoomDataToClient(client) {
+        storage.getRoomState(client.roomId, function(nodeChatModel) {
+                // this is called after getUsersInRoom callback
+                // Send this whole model to the newly-connected user.
+                logger.debug("SENDING INITIAL STATE...");
+                logger.debug(nodeChatModel.xport());
+                client.json.send({
+                        event: 'initial',
+                        data: nodeChatModel.xport()
+                });
+	});
+}
+
 /**
  * This is called after the result from the MediaWiki server has set up this client's user-info.
  * This adds the user to the room in redis and sends the initial state to the client.
@@ -358,16 +375,7 @@ function clearChatBuffer(client) {
 function finishConnectingUser(client, socket ){
 	logger.debug( 'finishConnectingUser:' + (new Date().getTime()));
 	
-	storage.getRoomState(client.roomId, function(nodeChatModel) {
-		// this is called after getUsersInRoom callback
-		// Send this whole model to the newly-connected user.
-		logger.debug("SENDING INITIAL STATE...");
-		logger.debug(nodeChatModel.xport());
-		client.json.send({
-			event: 'initial',
-			data: nodeChatModel.xport()
-		});
-		
+	storage.getRoomState(client.roomId, function(nodeChatModel) {	
 		// Initial connection of the user (unless they're already connected).
 		var connectedUser = nodeChatModel.users.find(function(user){return user.get('name') == client.username;});
 		if(!connectedUser) {
@@ -407,7 +415,7 @@ function finishConnectingUser(client, socket ){
 				// this will only kick the other instance of this same user connected to the room.
 				logger.debug('kickUserFromRoom');
 					kickUserFromRoom(oldClient, socket, client.myUser, client.roomId, function(){
-						logger.debug('kickUserFromRoom call back');	
+					logger.debug('kickUserFromRoom call back');	
 					// This needs to be done after the user is removed from the room.  Since clientDisconnect() is called asynchronously,
 					// the user is explicitly removed from the room first, then clientDisconnect() is prevented from attempting to remove
 					// the user (since that may get called at some point after formallyAddClient() adds the user intentionally).
@@ -424,7 +432,6 @@ function finishConnectingUser(client, socket ){
 			// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
 			formallyAddClient(client, socket, connectedUser);
 		}
-
 	});
 } // end finishConnectingUser()
 
@@ -506,11 +513,10 @@ function broadcastDisconnectionInfo(client, socket){
  * Given a roomId, returns a list of the usernames of all users in the room (as JSON).
  */
 function broadcastUserListToMediaWiki(client){
-       if(client.donotBroadcastUserList) {
+	if(client.donotBroadcastUserList) {
                 return true;
         }
 
-	monitoring.incrEventCounter('broadcastUserList');
 	storage.getUsersInRoom(client.roomId, function(users) {
 		if(!users){users = {};} // if the key doesn't exist, return an empty userlist
 		logger.debug("Sending status update to media wiki")
