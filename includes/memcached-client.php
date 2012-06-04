@@ -266,8 +266,8 @@ class MWMemcached {
 		$this->_timeout_seconds = 0;
 		$this->_timeout_microseconds = $wgMemCachedTimeout;
 
-		$this->_connect_timeout = 0.01;
-		$this->_connect_attempts = 2;
+		$this->_connect_timeout = 0.02;
+		$this->_connect_attempts = 1;
 	}
 
 	// }}}
