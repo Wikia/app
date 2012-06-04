@@ -176,13 +176,15 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 	},
 
 	updateSelectedItemsList: function() {
-		var remaining,
+		var all,
+			remaining,
+			items = this.getItems(),
 			maxDisplayed = 3,
 			selected = [];
 
 		this.$selectedItemsList.empty();
 
-		this.getItems().each(this.proxy(function(i, element) {
+		items.each(this.proxy(function(i, element) {
 			var $element = $(element),
 				$checkbox = $element.find(':checkbox');
 
@@ -195,11 +197,13 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 			}
 		}));
 
-		// Display up to first three items in list
-		this.$selectedItemsList.append($('<strong>').text(selected.slice(0, maxDisplayed).join(', ')));
+		all = (items.length == selected.length);
+
+		// Display first three items in list, or 'All' if everything is selected
+		this.$selectedItemsList.append($('<strong>').text(all ? $.msg('wikiastyleguide-dropdown-all') : selected.slice(0, maxDisplayed).join(', ')));
 
 		// Display "and X more" if there are more items leftover
-		if ((remaining = selected.length - maxDisplayed) > 0) {
+		if (!all && (remaining = selected.length - maxDisplayed) > 0) {
 			this.$selectedItemsList.html($.msg('wikiastyleguide-dropdown-selected-items-list', this.$selectedItemsList.html(), remaining));
 		}
 
