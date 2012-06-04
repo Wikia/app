@@ -207,14 +207,14 @@ var Lightbox = {
 					if(target.is('.disabled')) {
 						return false;
 					}
-					
+
 					if(target.is("#LightboxNext")) {
 						Lightbox.current.index++;
 					} else {
 						Lightbox.current.index--;
 					}
-					
-					Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
+
+						Lightbox.openModal.find('.carousel li').eq(Lightbox.current.index).trigger('click');
 				});
 			}
 		});
