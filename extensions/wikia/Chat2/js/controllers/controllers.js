@@ -35,7 +35,6 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	},
 	
 	baseconnect: function() {
-		console.trace();
 		if(this.connected) {
 			$().log("already connected");
 			return true;
