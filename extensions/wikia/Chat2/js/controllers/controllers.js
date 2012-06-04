@@ -35,6 +35,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	},
 	
 	baseconnect: function() {
+		console.trace();
 		if(this.connected) {
 			$().log("already connected");
 			return true;
@@ -94,7 +95,10 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		if(!this.firstConnected) {
 			var InitqueryCommand = new models.InitqueryCommand();
 		//	if(transport != 'websocket') {
-				this.socket.send(InitqueryCommand.xport());
+				//Wait for session propagation
+				setTimeout($.proxy(function() {
+					this.socket.send(InitqueryCommand.xport());
+				}, this ), 500); 
 		//	}
 		}
 		
