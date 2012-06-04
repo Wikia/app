@@ -572,7 +572,6 @@ EOF;
 $wgAdCalled = array();
 
 require_once dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
-require_once dirname(__FILE__) . "/../extensions/wikia/AdsenseForSearch/AdsenseForSearch.php";
 
 
 class LyricsMinimalTemplate extends QuickTemplate {
@@ -826,13 +825,6 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 					<?php if($this->data['newtalk'] ) { ?><div class="usermessage noprint"><?php $this->html('newtalk')  ?></div><?php } ?>
 					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
 					<?php echo $this->getTopAdCode(); ?>
-					<?
-					// Adsense for search
-					global $wgAFSEnabled;
-					if ($wgAFSEnabled && $wgTitle->getLocalURL() == $this->data['searchaction'] && !$wgUser->isLoggedIn() ) {
-						renderAdsenseForSearch('w2n8', '2226605464');
-					}
-					?>
 
 					<!-- start content -->
 					<?php
