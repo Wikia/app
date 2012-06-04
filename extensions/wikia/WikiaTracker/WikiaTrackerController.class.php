@@ -18,7 +18,9 @@ class WikiaTrackerController extends WikiaController {
 		$vars['_wtq'] = array();
 		
 		$app = F::app();
-		$vars['wgIsGASpecialWiki'] = (bool) $app->wg->IsGASpecialWiki;
+		if (!empty($app->wg->IsGASpecialWiki)) {
+			$vars['wgIsGASpecialWiki'] = true;
+		}
 
 		return true;
 	}
