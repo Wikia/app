@@ -59,7 +59,7 @@ Please leave me a message if I can help with anything!",
 If you need help, and there are no local admins here, you may want to visit the [[wikia:Forum:Community Central Forum|forums on the Community Central Wiki]]. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia.
 
 Happy editing!",
-	'welcome-message-wall-anon' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the $1 page.
+	'welcome-message-wall-anon' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
 
 '''[[Special:Userlogin|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
