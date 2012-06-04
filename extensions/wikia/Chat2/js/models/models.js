@@ -44,6 +44,14 @@ var STATUS_STATE_AWAY = 'away';
 		}
 	});
 	
+	models.InitqueryCommand = models.Command.extend({
+		initialize: function(){
+			this.set({
+				command: 'initquery'
+			});
+		}
+	});
+	
 	models.LogoutCommand = models.Command.extend({
 		initialize: function(){
 			this.set({
