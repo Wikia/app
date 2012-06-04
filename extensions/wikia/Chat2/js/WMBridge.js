@@ -116,21 +116,53 @@ var WMBridge = function() {
 //	var GIVECHATMOD_URL = "/?action=ajax&rs=ChatAjax&method=giveChatMod";
 }
 
+                                
+var authenticateUserCache = {};
 
-WMBridge.prototype.authenticateUser = function(roomId, name, key, address, success, error) {
-	var requestUrl = getUrl( 'getUserInfo', {
-		roomId: roomId,
-		name: urlencode(name),
-		key: key,
-		address: urlencode(address)
-	});
-	
-	logger.debug(requestUrl);
-	
-	requestMW('GET', roomId, {}, requestUrl, success, error);
+var clearAuthenticateCache = function(roomId, name) {
+	var cacheKey = name + "_" + roomId;
+        if(authenticateUserCache[cacheKey]) {
+		delete authenticateUserCache[cacheKey];
+	}
 }
 
+WMBridge.prototype.authenticateUser = function(roomId, name, key, address, success, error) {
+        var cacheKey = name + "_" + roomId;  
+        if(authenticateUserCache[cacheKey] && authenticateUserCache[cacheKey] == key ) {
+                return success(authenticateUserCache[cacheKey].data);
+        }
+
+        var requestUrl = getUrl( 'getUserInfo', {
+                roomId: roomId,
+                name: urlencode(name),
+                key: key,
+                address: urlencode(address)
+        });
+        
+        logger.debug(requestUrl);
+	var ts = Math.round((new Date()).getTime() / 1000);                                                                
+
+        requestMW('GET', roomId, {}, requestUrl, function(data){ 
+		authenticateUserCache[cacheKey] = {
+			data: data, 
+			key: key, 
+			ts: ts
+		};
+                success(data);
+        }, error);
+}       
+
+setInterval(function() {
+	var ts = Math.round((new Date()).getTime() / 1000);
+	for (i in authenticateUserCache){
+		if((ts - authenticateUserCache[i].ts) > 60*15) {
+			delete authenticateUserCache[i];
+		}
+	}
+}, 5000);
+
 WMBridge.prototype.ban = function(roomId, name, time, reason, key, success, error) {
+	clearAuthenticateCache(roomId, name);
 	var requestUrl = getUrl('blockOrBanChat', {
 		roomId: roomId,
 		userToBan: urlencode(name),
@@ -152,6 +184,7 @@ WMBridge.prototype.ban = function(roomId, name, time, reason, key, success, erro
 
 
 WMBridge.prototype.giveChatMod = function(roomId, name, key, success, error) {
+	clearAuthenticateCache(roomId, name);
 	var requestUrl = getUrl('giveChatMod', {
 		roomId: roomId,
 		userToPromote: urlencode(name),
@@ -168,21 +201,37 @@ WMBridge.prototype.giveChatMod = function(roomId, name, key, success, error) {
 	});
 };
 
-WMBridge.prototype.setUsersList = function(roomId, users) {
-	var requestUrl = getUrl('setUsersList', {
-		roomId: roomId,
-		token: config.TOKEN
-	});
+var setUsersList = function(roomId, users) {
+	monitoring.incrEventCounter('broadcastUserList');
+        var requestUrl = getUrl('setUsersList', {
+                roomId: roomId,
+                token: config.TOKEN
+        });
 
-	var userToSend = [];
-	
-	for(var userName in users) {
-		userToSend.push(userName);
-	}
-	
-	requestMW('POST', roomId, {users: userToSend}, requestUrl, function(data){
+        var userToSend = [];
 
-	});	
+        for(var userName in users) {
+                userToSend.push(userName);
+        }
+
+        requestMW('POST', roomId, {users: userToSend}, requestUrl, function(data){
+
+        });
 }
+
+var setUsersListQueue = {};
+
+WMBridge.prototype.setUsersList = function(roomId, users) {
+	setUsersListQueue[roomId] = users;
+}
+
+
+setInterval(function() {
+	logger.info("setUsersList")
+        for (i in setUsersListQueue){
+	        setUsersList(i, setUsersListQueue[i]);
+        }
+}, 10000);
+
 
 exports.WMBridge = new WMBridge();
