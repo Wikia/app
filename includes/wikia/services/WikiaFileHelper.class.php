@@ -199,6 +199,7 @@ class WikiaFileHelper extends Service {
 	 * @static
 	 * @param Title $fileTitle
 	 * @param array $config ( contextWidth, contextHeight, imageMaxWidth, userAvatarWidth )
+	 * TODO - this method is very specific to lightbox.  This needs to be refactored back out to lightbox, and return just the basic objects (file, user, tect)
 	 */
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
 
