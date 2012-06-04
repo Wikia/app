@@ -20,6 +20,7 @@ var LightboxLoader = {
 			height: 628,
 			onClose: function() {
 				$(window).off('.Lightbox');
+				LightboxLoader.lightboxLoading = false;
 			}
 		}
 	},
