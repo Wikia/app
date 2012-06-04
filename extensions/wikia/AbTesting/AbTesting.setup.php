@@ -23,3 +23,10 @@ $wgExtensionCredits['other'][] = array(
 
 // Embed the experiment/treatment config in the head scripts.
 $wgHooks['SkinGetHeadScripts'][] = 'AbTesting::onSkinGetHeadScripts';
+
+$app = F::app();
+$app->registerClass('SpecialAbTestingController', $dir . '/SpecialAbTestingController.class.php' );
+$app->registerSpecialPage('AbTesting', 'SpecialAbTestingController');
+$wgAvailableRights[] = 'abtestpanel';
+$wgGroupPermissions['staff']['abtestpanel'] = true;
+
