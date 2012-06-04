@@ -17,10 +17,8 @@ jQuery(function($) {
 			return this.dropdown.getItems().length == this.dropdown.getSelectedItems().length;
 		},
 		onChange: function(event) {
-			var $checkbox = $(event.target);
-
 			if (this.$selectAll.is(':checked')) {
-				this.$selectAll.toggleClass('modified', this.everythingSelected());
+				this.$selectAll.toggleClass('modified', !this.everythingSelected());
 			}	
 		},
 		saveFilters: function(event) {
