@@ -1,5 +1,5 @@
 <?	$elementHeight = 90;
-	$maxDescriptionLength = 80;
+	$maxDescriptionLength = 70;
 ?>
 <div class="item">
 	<a class="video-thumbnail <?= $videoPlay; ?>" style="height:<?=$elementHeight; ?>px" href="<?=$video['fullUrl'];?>" data-ref="<?=$video['prefixedUrl'];?>" data-external="<?=$video['external'];?>" data-video-name="<?=htmlspecialchars($video['title']);?>" >
