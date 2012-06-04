@@ -266,7 +266,7 @@ $messages['as'] = array(
 	'myhome-feed-new-article-comment-details' => 'মন্তব্য',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -337,7 +337,7 @@ $messages['be-tarask'] = array(
 	'myhome-community-corner-edit' => 'рэдагаваць паведамленьне',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -389,7 +389,7 @@ $messages['bo'] = array(
 	'myhome-feed-inserted-image-details' => 'འདྲ་པར་$1 བསྣན་པ།',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -476,7 +476,7 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 	'activityfeed' => 'Gwazh obererezh',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -494,7 +494,7 @@ $messages['ce'] = array(
 	'myhome-user-contributions-feed' => 'Къинхьегам',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -832,7 +832,7 @@ $messages['el'] = array(
 	'activityfeed' => 'πρόσφατη δραστηριότητα',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Benfutbol10
  * @author Bola
@@ -1008,7 +1008,7 @@ $messages['fa'] = array(
 	'activityfeed' => 'اشتراک فعالیت',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Ilkea
@@ -1101,7 +1101,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|viesti|$1 viestiä}}',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author IAlex
  * @author Peter17
@@ -1361,7 +1361,7 @@ $messages['he'] = array(
 	'activityfeed' => 'הזנת פעילות',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  * @author Misibacsi
@@ -1408,7 +1408,7 @@ $messages['hu'] = array(
 	'myhome-default-view-success' => 'Rendben, most már ez az alapértelmezés',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1582,7 +1582,7 @@ $messages['ig'] = array(
 	'myhome-feed-created-by' => 'onyé kéré ya bu $1',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  * @author McDutchie
  * @author Minerva Titani
@@ -1802,7 +1802,7 @@ $messages['lb'] = array(
 	'tooltip-pt-myhome' => 'Op meng Haaptsäit goen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -2039,7 +2039,7 @@ $messages['mzn'] = array(
 	'myhome-feed-edit' => 'دچی‌ین',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2256,7 +2256,7 @@ Als je de oprichter of een beheerder van deze wiki bent, kan je dit bericht gebr
 * Of gewoon wat schrijven om mensen aan te moedigen!",
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -2337,7 +2337,7 @@ $messages['pfl'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kadegorie dzugfieschd|Kadegorije dzugfieschd}}',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
  * @author Wyvek
@@ -2568,7 +2568,7 @@ $messages['ps'] = array(
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|يو پيغام|$1 پيغامونه}}',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -2657,7 +2657,7 @@ Pode, por exemplo:
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  * @author Giro720
@@ -2744,7 +2744,7 @@ Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem 
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -2778,7 +2778,7 @@ $messages['roa-tara'] = array(
 	'myhome-community-corner-edit' => "cange 'u messagge",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author G0rn
  * @author Kuzura
@@ -2900,14 +2900,14 @@ $messages['si'] = array(
 	'tooltip-pt-myhome' => 'මගේ ප්‍රධාන පිටුවට යන්න',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'myhome-feed-summary-details' => 'Povzetek',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -2989,7 +2989,7 @@ $messages['sr-ec'] = array(
 	'activityfeed' => 'Активности',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Diupwijk
  * @author Lokal Profil
  * @author McDutchie
@@ -3118,10 +3118,11 @@ $messages['te'] = array(
 	'myhome-feed-summary-details' => 'సారాంశం',
 	'myhome-feed-new-blog-comment-details' => 'వ్యాఖ్య',
 	'myhome-feed-new-article-comment-details' => 'వ్యాఖ్య',
+	'myhome-feed-redirect-details' => 'దారిమార్పు',
 	'myhome-namespace-blog' => 'బ్లాగు',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -3215,7 +3216,7 @@ Halimbawa, maaari kang:
 	'activityfeed' => 'Pakain ng paggalaw',
 );
 
-/** Толышә зывон (Толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -3278,7 +3279,7 @@ $messages['tr'] = array(
 	'tooltip-pt-myhome' => 'Evime git',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  * @author Ильнар
  */
@@ -3358,7 +3359,7 @@ $messages['tt-cyrl'] = array(
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|бер хәбәр|$1 хәбәр}}',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  * @author Тест
  */
@@ -3471,7 +3472,7 @@ $messages['zh'] = array(
 	'myhome' => '我的首页',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Liangent
  * @author Yanmiao liu
@@ -3561,7 +3562,7 @@ $messages['zh-hans'] = array(
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|一条信息|$1 条信息}}',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -3619,7 +3620,7 @@ $messages['zh-hant'] = array(
 	'tooltip-pt-myhome' => '轉到我的首頁',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  * @author Yyaootw
  */

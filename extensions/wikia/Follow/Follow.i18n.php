@@ -236,7 +236,7 @@ ___________________________________________
 </p>',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -250,7 +250,7 @@ $messages['az'] = array(
 	'wikiafollowedpages-userpage-hide' => 'gizlət',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -271,7 +271,7 @@ $messages['bg'] = array(
 	'wikiafollowedpages-userpage-hide' => 'скриване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -320,7 +320,7 @@ Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur
 	'enotif_subject_blogpost' => 'Ar bajenn $PAGETITLE eus al lec\'hienn {{SITENAME}} a zo bet postet war $BLOGLISTINGNAME gant $PAGEEDITOR',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -373,7 +373,7 @@ $messages['ce'] = array(
 	'wikiafollowedpages-userpage-more' => 'Кхин',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  * @author Utar
@@ -464,6 +464,7 @@ Viz <a href="$PAGETITLE_URL">$PAGETITLE</a>.<br /><br />
  * @author Kjell
  * @author LWChris
  * @author Lyzzy
+ * @author PtM
  * @author Quedel
  * @author The Evil IP address
  */
@@ -480,6 +481,7 @@ $messages['de'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki-Seiten ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Bilder und Videos ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 Seite)',
+	'wikiafollowedpages-special-heading-wall' => 'Nachrichtenseiten ($1)',
 	'wikiafollowedpages-special-empty' => 'Die Liste deiner beobachteten Seiten ist leer.
 Füge Seiten zu dieser Liste hinzu indem du auf "{{int:watch}}" klickst.',
 	'wikiafollowedpages-special-anon' => 'Bitte [[Special:Signup|anmelden]] um deine Beobachtungsliste zu erstellen oder betrachten.',
@@ -666,7 +668,7 @@ $messages['el'] = array(
 	'wikiafollowedpages-userpage-hide' => 'απόκρυψη',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author Bola
  * @author Ciencia Al Poder
@@ -784,7 +786,7 @@ Por favor visita y edita frecuentemente...
 </p>',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -807,7 +809,7 @@ $messages['fa'] = array(
 	'wikiafollowedpages-userpage-hide' => 'پنهان کردن',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tm T
  * @author Tofu II
@@ -824,7 +826,7 @@ $messages['fi'] = array(
 	'follow-categoryadd-summary' => 'Sivu lisätty luokkaan',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Sherbrooke
  * @author Urhixidur
@@ -1164,7 +1166,7 @@ ___________________________________________
 </p>',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -1193,7 +1195,7 @@ $messages['hu'] = array(
 	'wikiafollowedpages-userpage-hide' => 'elrejtés',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1343,7 +1345,7 @@ $messages['inh'] = array(
 	'wikiafollowedpages-special-heading-category' => '($1) цатегаш',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  * @author Nemo bis
  */
@@ -1501,7 +1503,7 @@ $messages['lb'] = array(
 	'wikiafollowedpages-userpage-hide' => 'verstoppen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1745,7 +1747,7 @@ Sila datang selalu untuk menyunting...
 </p>',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2052,7 +2054,7 @@ $messages['pfl'] = array(
 	'wikiafollowedpages-userpage-hide' => 'vaschdegle',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Sp5uhe
@@ -2303,7 +2305,7 @@ $messages['ps'] = array(
 	'wikiafollowedpages-userpage-hide' => 'پټول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
  * @author Luckas Blade
@@ -2415,7 +2417,7 @@ Visite-nos sempre e edite muito...
 </p>',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  * @author Luckas Blade
@@ -2528,7 +2530,7 @@ Visite-nos sempre e edite muito...
 </p>',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -2543,7 +2545,7 @@ $messages['ro'] = array(
 	'wikiafollowedpages-userpage-hide' => 'ascunde',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author G0rn
  * @author Kuzura
@@ -2656,7 +2658,7 @@ ___________________________________________
 </p>',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2688,7 +2690,7 @@ $messages['sr-ec'] = array(
 	'wikiafollowedpages-userpage-hide' => 'сакриј',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -2936,7 +2938,7 @@ Mangyaring bumisita at mamatnugot ng madalas...
 </p>',
 );
 
-/** Толышә зывон (Толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -2957,7 +2959,7 @@ $messages['tr'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki sayfaları ( $1 )',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -2977,7 +2979,7 @@ $messages['tt-cyrl'] = array(
 	'wikiafollowedpages-userpage-hide' => 'яшерү',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Ast
  * @author Тест
  */
@@ -3206,7 +3208,7 @@ Xin vui lòng truy cập và sửa đổi thường xuyên...
 </p>',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -3217,16 +3219,26 @@ $messages['zh-hans'] = array(
 	'wikiafollowedpages-special-heading-category' => '分类（$1）',
 	'wikiafollowedpages-special-heading-article' => '条目（$1）',
 	'wikiafollowedpages-special-heading-user' => '用户页面 ( $1 )',
+	'wikiafollowedpages-special-heading-templates' => '模板页($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki页($1)',
+	'wikiafollowedpages-special-namespace' => '($1页面)',
+	'wikiafollowedpages-special-heading-wall' => '信息墙($1)',
 	'oasis-wikiafollowedpages-special-seeall' => '显示全部 》',
 	'wikiafollowedpages-special-seeall' => '显示全部 》',
 	'wikiafollowedpages-special-showall' => ' 显示全部 >',
 	'wikiafollowedpages-special-showmore' => '显示更多',
+	'wikiafollowedpages-special-title' => '关注的页面',
 	'wikiafollowedpages-special-delete-tooltip' => '移除该页',
 	'wikiafollowedpages-special-hidden-unhide' => '显示该列表',
 	'wikiafollowedpages-masthead' => '关注页面',
+	'wikiafollowedpages-following' => '关注的',
 	'wikiafollowedpages-special-title-userbar' => '关注的页面',
+	'tog-enotiffollowedpages' => '当我的关注的页面被更改时邮件通知我',
+	'tog-enotiffollowedminoredits' => '有人对我关注的页面进行了小编辑时邮件通知我',
 	'prefs-wikiafollowedpages-prefs-advanced' => '高级选项',
 	'prefs-wikiafollowedpages-prefs-watchlist' => '仅监视列表',
+	'tog-hidefollowedpages' => '对所有人隐藏我关注的页面',
+	'follow-categoryadd-summary' => '页面添加至分类',
 	'wikiafollowedpages-userpage-heading' => '我在关注的页面',
 	'wikiafollowedpages-userpage-more' => '更多',
 	'wikiafollowedpages-userpage-hide' => '隐瞒',
@@ -3265,7 +3277,7 @@ ___________________________________________
 </p>',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

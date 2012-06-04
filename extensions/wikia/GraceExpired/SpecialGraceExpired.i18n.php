@@ -24,7 +24,7 @@ $messages['af'] = array(
 	'graceexpired-row' => '$1 (in $2, laas gewysig op $3)',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -35,7 +35,7 @@ $messages['br'] = array(
 Ne vez ''ket'' kemeret e kont an oberezhioù war ar pajennoù priziañ gant ar pajenn-mañ.",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -57,7 +57,7 @@ $messages['de'] = array(
 Aktivitäten bei der Bewertung von Seiten werden hier ''nicht'' berücksichtigt.",
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Translationista
  */
 $messages['es'] = array(
@@ -66,7 +66,7 @@ $messages['es'] = array(
 	'graceexpired-header' => "Esta página lista todas las versiones que o bien están [[:Category:Abandoned|abandonadas]], bien en la [[:Category:Trash_builds|basura]], son [[:Category:Build stubs|borradores]] o bien están en [[:Category:Trial Builds|pruebas]], y que no han sido editadas en, al menos, dos semanas. La actividad en las páginas de calificación '''no''' se tiene en cuenta aquí.",
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Peter17
  * @author Slamduck
@@ -90,7 +90,7 @@ $messages['gl'] = array(
 A actividade nas páxinas de avaliación '''non''' se ten en conta aquí.",
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -101,7 +101,7 @@ $messages['hu'] = array(
 A szavazási lapokon való aktivitás itt ''nem'' számít.",
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -127,7 +127,7 @@ $messages['lb'] = array(
 	'graceexpired-row' => '$1 (an $2, lescht Ännerung de(n) $3)',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -149,7 +149,7 @@ $messages['ms'] = array(
 Kegiatan menilai laman ''tidak'' diambil kira di sini.",
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -171,7 +171,7 @@ $messages['nl'] = array(
 Er wordt ''geen rekening gehouden'' met beoordelingen van pagina's.",
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -182,7 +182,7 @@ $messages['oc'] = array(
 Aquesta pagina prend ''pas'' en compte l'activitat sus las paginas d'avaloracion.",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -205,7 +205,7 @@ $messages['pms'] = array(
 L'atività an sle pàgine ëd vot a l'é ''pa'' pijà an cont ambelessì.",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -216,7 +216,7 @@ $messages['pt'] = array(
 Não é tomada em consideração qualquer actividade nas páginas de avaliação.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  */
 $messages['pt-br'] = array(
@@ -227,7 +227,7 @@ $messages['pt-br'] = array(
 Atividade nas páginas de avaliação ''não'' são levadas em consideração aqui.",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -238,7 +238,7 @@ $messages['ru'] = array(
 Действия на страницах оценки '''не''' учитываются.",
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -251,7 +251,7 @@ $messages['sr-ec'] = array(
 Активност на страницама за оцењивање ''није'' урачунато у налог.",
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author VickyC
  * @author WikiPhoenix
  */
@@ -273,7 +273,7 @@ $messages['tl'] = array(
 Activity on rating pages is ''not'' taken into account here.",
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

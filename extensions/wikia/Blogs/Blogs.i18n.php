@@ -390,7 +390,7 @@ $messages['as'] = array(
 	'blogs-reportproblem' => 'সমস্যা জনাওঁক',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -407,7 +407,7 @@ $messages['az'] = array(
 	'blog-by' => '$1 tərəfindən $2',
 );
 
-/** Belarusian (Беларуская)
+/** Belarusian (беларуская)
  * @author Тест
  */
 $messages['be'] = array(
@@ -427,7 +427,7 @@ $messages['be-tarask'] = array(
 	'blog-comment-history' => 'гісторыя',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -465,7 +465,7 @@ $messages['bg'] = array(
 	'blog-by' => '$1 от $2',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwendal
  * @author Y-M D
@@ -585,7 +585,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'blog-by' => '$1 gant $2',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  * @author SMP
  */
@@ -600,12 +600,12 @@ $messages['ca'] = array(
 	'right-blog-articles-move' => 'Moure articles del bloc',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'blog-comment-delete' => 'سڕینەوە',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -793,13 +793,14 @@ $messages['diq'] = array(
 	'blog-comment-edit' => 'bıvurne',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-refresh-label' => 'Newe ke',
+	'blog-listing-created' => 'Listeyê blog de pela vıraziya',
 	'blog-userblog' => "Blogê $1'i",
 	'blog-fromsitename' => '$1 ra',
 	'blogs-comment-hidden' => 'Vatışi bınımne',
 	'blog-comment-sending' => 'Oyo Rısêno',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'blog-comment-delete' => 'tutui',
 );
@@ -822,7 +823,7 @@ $messages['el'] = array(
 	'create-blog-updated' => 'Η καταχώρηση blog δημιουργήθηκε ή ενημερώθηκε.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Crazymadlover
@@ -948,7 +949,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-by' => '$1 por $2',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -1024,7 +1025,7 @@ $messages['fa'] = array(
 	'blog-by' => '$1 توسط $2',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Ilkea
@@ -1147,7 +1148,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fan Fiction" tai voit 
 	'blog-by' => '$1, kirjoittanut $2',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Peter17
  * @author Urhixidur
@@ -1512,7 +1513,7 @@ $messages['he'] = array(
 	'blog-by' => '$1 על ידי $2',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  * @author TK-999
@@ -1600,7 +1601,7 @@ $messages['hu'] = array(
 	'blog-by' => '$1, írta: $2',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1856,7 +1857,7 @@ $messages['inh'] = array(
 	'blog-comment-history' => 'искар',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Leviathan 89
  * @author Minerva Titani
@@ -1958,6 +1959,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'blog-create-next-label' => 'Crea un nuovo articolo',
 	'blog-create-listing-label' => 'Crea una lista di blog',
 	'blog-refresh-label' => 'Aggiorna',
+	'blog-widgets-label' => 'Cruscotto widget',
 	'blog-listing-zero-other' => 'Questo utente non ancora ha scritto nessun post!',
 	'blog-listing-created' => 'Lista blog creata',
 	'blog-userblog' => 'Blog di $1',
@@ -2194,7 +2196,7 @@ $messages['lb'] = array(
 	'blogs-comment-hidden' => 'Bemierkung verstoppt.',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -2264,14 +2266,14 @@ $messages['lt'] = array(
 	'blog-comment-sending' => 'Siunčiama...',
 );
 
-/** Latgalian (Latgaļu)
+/** Latgalian (latgaļu)
  * @author Dark Eagle
  */
 $messages['ltg'] = array(
 	'blog-comment-history' => 'viesture',
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author Papuass
  */
 $messages['lv'] = array(
@@ -2327,7 +2329,7 @@ $messages['mai'] = array(
 	'blog-refresh-label' => 'रिफ्रेश करू',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -2588,7 +2590,7 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'blog-by' => '$1 daripada $2',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2845,7 +2847,7 @@ $messages['nl-informal'] = array(
 	'blog-comment-cannot-add' => 'Je kunt geen opmerkingen bij blogberichten plaatsen',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -2890,7 +2892,7 @@ $messages['pfl'] = array(
 	'blog-comment-sending' => 'Sende...',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
  * @author Woytecr
@@ -3165,12 +3167,13 @@ $messages['ps'] = array(
 	'blog-comment-sending' => 'د لېږلو په حال کې ...',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
  * @author Luckas Blade
  * @author McDutchie
+ * @author Rhaijin
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -3185,6 +3188,7 @@ $messages['pt'] = array(
 	'create-blog-post-recent-listing-title' => 'Entradas recentes',
 	'create-blog-post-recent-listing-log' => 'Criou artigo para as entradas de blogue recentes',
 	'create-blog-post-title' => 'Criar uma entrada nova num blogue',
+	'create-blog-post-title-edit' => 'Editar uma entrada de blog',
 	'create-blog-form-title' => 'O que é uma entrada de um blogue?',
 	'create-blog-form-post-text' => 'Texto do blogue',
 	'create-blog-form-info' => 'As entradas num blogue são uma forma óptima de partilhar novidades, opiniões e obras criativas com a comunidade. Não podem ser editadas pelos restantes utilizadores. Podem ser agregadas numa página de listagem de entradas, baseada nas categorias das entradas. Pode decidir se permite que os utilizadores votem ou comentem a sua entrada.',
@@ -3288,7 +3292,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-by' => '$1 de $2',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author 555
  * @author Aristóbulo
  * @author Giro720
@@ -3409,7 +3413,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'blog-by' => '$1 de $2',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  * @author Stelistcristi
  */
@@ -3454,7 +3458,7 @@ $messages['ro'] = array(
 	'blog-comment-sending' => 'Se trimite...',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author G0rn
  * @author Kuzura
@@ -3577,14 +3581,14 @@ $messages['ru'] = array(
 	'blog-by' => '$1 от $2',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'blog-comment-history' => 'zgodovina',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -3655,7 +3659,7 @@ $messages['sr-ec'] = array(
 	'blog-by' => '$1 од $2',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -3949,7 +3953,7 @@ $messages['te'] = array(
 	'blog-comment-sending' => 'పంపిస్తున్నాం...',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -4085,7 +4089,7 @@ $messages['tr'] = array(
 	'blog-refresh-label' => 'Yenile',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -4136,7 +4140,7 @@ $messages['tt-cyrl'] = array(
 	'blogs-comment-hidden' => 'Фикер яшерелгән',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  * @author Тест
  */
@@ -4307,7 +4311,8 @@ Tạo trang danh sách blog cho thể loại chẳng hạn như "Fan tưởng t�
 	'blog-by' => '$1 bởi $2',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
  * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
@@ -4337,6 +4342,7 @@ $messages['zh-hans'] = array(
 	'create-blog-invalid-title-error' => '无效的标题',
 	'create-listing-confirm-info' => '复制并粘贴以下代码：',
 	'create-blog-no-login' => '未登录',
+	'create-blog-login-required' => '您必须[{{fullurl:Special:Signup|$1}} 登录]以创建博客或列表。',
 	'create-blog-categories-title' => '将这篇文章添加到这些类别（单击可选择）',
 	'create-blog-categories-textinput' => '添加新的类别',
 	'create-blog-categories-submit' => '提交',
@@ -4347,8 +4353,11 @@ $messages['zh-hans'] = array(
 	'create-blog-article-already-exists' => '博客张贴内容具有该名称已存在，请选择不同的名称',
 	'create-blog-listing-title' => '创建新的博客列表页面',
 	'create-blog-listing-form-title' => '什么是博客列表页面？',
+	'create-blog-listing-form-info' => '博客列表页面用于将不同作者创建的博客列表汇集到在一个页面上。
+例如为"贝拉克·奥巴马"，"同人小说"等分类创建博客列表页面，或合并多个类别。',
 	'create-blog-listing-page-title' => '博客列表页面标题',
 	'create-blog-listing-preview' => '预览',
+	'create-blog-listing-authors' => '获取以下作者（以逗号分隔）创建的博客',
 	'create-blog-listing-blog-post-categories-title' => '从这些类别中获得的博客文章',
 	'create-blog-listing-page-categories-title' => '将此博客列表页添加到这些类别',
 	'create-blog-listing-matches' => '匹配',
@@ -4427,7 +4436,7 @@ $messages['zh-hans'] = array(
 	'blog-by' => '$1由$2',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

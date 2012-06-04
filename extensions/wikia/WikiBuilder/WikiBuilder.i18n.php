@@ -101,7 +101,7 @@ $messages['ar'] = array(
 	'owb-status-saving' => 'يحفظ',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
  */
@@ -117,7 +117,7 @@ $messages['az'] = array(
 	'owb-step4-error-caption' => 'Xəta',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -132,7 +132,7 @@ $messages['bg'] = array(
 	'owb-status-saving' => 'Съхраняване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -162,7 +162,7 @@ $messages['br'] = array(
 	'owb-status-saving' => "Oc'h enrollañ",
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -241,7 +241,7 @@ Escriure la primera secció de la seva pàgina aquí. Recordeu incloure enllaço
 Escriure la segona secció de la seva pàgina aquí. No us oblideu d'afegir una categoria per ajudar la gent a trobar la pàgina.",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -434,7 +434,7 @@ $messages['diq'] = array(
 	'owb-status-saving' => 'Starêno',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Fitoschido
  * @author VegaDark
  */
@@ -514,7 +514,7 @@ Escribe la primera sección de tu página aquí. Recuerda incluir enlaces a otra
 Escribe la segunda sección de tu página aquí. No olvides añadir una categoría para ayudar a las personas a encontrar la página.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tofu II
  */
@@ -524,7 +524,7 @@ $messages['fi'] = array(
 	'owb-button-save-pages' => 'Tallenna sivut',
 );
 
-/** French (Français)
+/** French (français)
  * @author Od1n
  * @author Wyz
  */
@@ -685,7 +685,7 @@ Escriba a primeira sección da súa páxina aquí. Lembre incluír ligazóns car
 Escriba a segunda sección da súa páxina aquí. Non esqueza engadir unha categoría para axudar á xente a atopar a páxina.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -700,7 +700,7 @@ $messages['hu'] = array(
 	'owb-status-saving' => 'Mentés',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -817,7 +817,7 @@ $messages['lez'] = array(
 	'owb-headline' => 'Ассаламу алейкум,  $1',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -985,7 +985,7 @@ $messages['my'] = array(
 	'owb-status-saving' => 'သိမ်းနေသည်',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1167,7 +1167,7 @@ Schrijf hier het eerste deel van uw pagina. Denk eraan dat je verwijzingen naar 
 Schrijf hier het tweede deel van je pagina. Vergeet niet een categorie toe te voegen zodat andere gebruikers de pagina kunnen vinden.",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1263,7 +1263,7 @@ $messages['ps'] = array(
 	'owb-status-saving' => 'د خوندي کېدلو په حال کې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author SandroHc
  */
@@ -1344,7 +1344,7 @@ Escreva aqui a primeira secção da sua página. Lembre-se de incluir links para
 Escreva aqui a segunda secção da sua página. Não se esqueça de acrescentar uma categoria, para ajudar os outros a encontrar a página.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -1361,7 +1361,7 @@ $messages['ro'] = array(
 	'owb-step4' => 'Pasul 4',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  */
 $messages['ru'] = array(
@@ -1441,7 +1441,7 @@ $messages['ru'] = array(
 Напишите второй раздел вашей страницы. Не забудьте добавить категорию, чтобы помочь людям найти эту страницу.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1495,7 +1495,7 @@ $messages['sr-ec'] = array(
 Овде напишите други одељак странице. Додајте и категорије да бисте олакшали корисницима да пронађу страницу.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -1654,7 +1654,7 @@ Isulat dito ang unang bahagi ng pahina mo. Huwag kalimutang isama ang mga kawing
 Isulat dito ang pangalawang bahagi ng pahina mo. Huwag kalimutang magdagdag ng isang kategorya upang tulungan ang mga tao na matagpuan ang pahina.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -1662,7 +1662,7 @@ $messages['uk'] = array(
 	'owb-step4-error-caption' => 'Помилка',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Hydra
  * @author Hzy980512
@@ -1682,7 +1682,7 @@ $messages['zh-hans'] = array(
 	'owb-api-error-title' => '提交请求错误',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(

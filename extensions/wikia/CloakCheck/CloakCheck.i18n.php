@@ -58,7 +58,7 @@ $messages['ar'] = array(
 	'cloakcheck-process-edits-no' => 'ليس لدى المستخدم ما يكفي من التغييرات.',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -66,7 +66,7 @@ $messages['az'] = array(
 	'cloakcheck-process-username' => 'İstifadəçi adı: $1',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -80,7 +80,7 @@ $messages['bg'] = array(
 	'cloakcheck-process-edits-no' => 'Потребителят няма достатъчно редакции.',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -125,10 +125,10 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
-	'cloakcheck-form-username' => 'Namey Qarberi',
+	'cloakcheck-form-username' => 'Namey Karberi:',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Locos epraix
  * @author VegaDark
@@ -151,7 +151,7 @@ $messages['es'] = array(
 	'cloakcheck-process-edits-no' => 'El usuario no tiene suficiente ediciones.',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -178,7 +178,7 @@ $messages['fa'] = array(
 	'cloakcheck-process-edits-no' => 'کاربر به اندازهٔ کافی ویرایش ندارد.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tofu II
  */
@@ -190,7 +190,7 @@ $messages['fi'] = array(
 	'cloakcheck-process-emailconf-no' => 'Sähköpostiosoitetta ei ole vahvistettu.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Wyz
  */
@@ -233,7 +233,7 @@ $messages['gl'] = array(
 	'cloakcheck-process-edits-no' => 'O usuario non ten suficientes edicións.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -246,7 +246,7 @@ $messages['hu'] = array(
 	'cloakcheck-process-emailconf-no' => 'E-mail cím nincs megerősítve.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -267,7 +267,7 @@ $messages['ia'] = array(
 	'cloakcheck-process-edits-no' => 'Le usator non ha facite satis de modificationes.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Lexaeus 94
  * @author Minerva Titani
  */
@@ -321,7 +321,7 @@ $messages['lb'] = array(
 	'cloakcheck-process-edits-yes' => 'De Benotzer huet genuch Ännerungen.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -376,7 +376,7 @@ $messages['ms'] = array(
 	'cloakcheck-process-edits-no' => 'Jumlah suntingan pengguna tidak memadai.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -419,7 +419,7 @@ $messages['nl'] = array(
 	'cloakcheck-process-edits-no' => 'De gebruiker heeft onvoldoende bewerkingen gemaakt.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -470,7 +470,7 @@ $messages['ps'] = array(
 	'cloakcheck-process-username' => 'کارن-نوم: $1',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -492,7 +492,7 @@ $messages['pt'] = array(
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -512,7 +512,7 @@ $messages['pt-br'] = array(
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -528,7 +528,7 @@ $messages['ro'] = array(
 	'cloakcheck-process-edits-yes' => 'Utilizatorul are suficiente modificări.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  */
@@ -546,7 +546,7 @@ $messages['ru'] = array(
 	'cloakcheck-process-edits-no' => 'Участником не сделано необходимого числа правок.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -563,7 +563,7 @@ $messages['sr-ec'] = array(
 	'cloakcheck-process-edits-no' => 'Корисник нема довољно измена.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -626,7 +626,7 @@ $messages['tr'] = array(
 	'cloakcheck-process-username' => 'Kullanıcı adı: $1',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -643,7 +643,7 @@ $messages['tt-cyrl'] = array(
 	'cloakcheck-process-edits-no' => 'Кулланучы тарафыннан тиешле күләмдә төзәтмәләр эшләнмәгән.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hydra
  */

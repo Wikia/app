@@ -93,7 +93,7 @@ $messages['af'] = array(
 	'wikiamobile-explore' => 'Verken',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -105,7 +105,7 @@ $messages['az'] = array(
 	'wikiamobile-login-submit' => 'Loqin',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  * @author Ivanko
  */
@@ -122,7 +122,7 @@ $messages['bg'] = array(
 	'wikiamobile-hide-section' => 'скриване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -136,7 +136,7 @@ $messages['br'] = array(
 	'wikiamobile-explore' => 'Ergerzhout',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -198,6 +198,7 @@ $1',
  */
 $messages['diq'] = array(
 	'wikiamobile-search' => 'Cı geyre',
+	'wikiamobile-search-this-wiki' => 'Ena viki de bıvin',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Dekewtış',
@@ -228,7 +229,7 @@ $1',
 	'wikiamobile-ad-close' => 'racnê',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
@@ -280,7 +281,7 @@ $messages['fa'] = array(
 	'wikiamobile-password' => 'رمز عبور',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -299,7 +300,7 @@ $messages['fi'] = array(
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Pelaaminen]]',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author DavidL
  * @author Gomoko
@@ -409,7 +410,7 @@ $messages['he'] = array(
 	'wikiamobile-ad-close' => 'סגור',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -490,7 +491,7 @@ $messages['lb'] = array(
 	'wikiamobile-menu' => 'Menü',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -531,6 +532,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'wikiamobile-search' => 'Cari',
+	'wikiamobile-search-this-wiki' => 'Cari dalam wiki ini',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Log masuk',
@@ -561,11 +563,12 @@ apa kata anda tengok yang ini pula:
 	'wikiamobile-ad-close' => 'tutup',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
 	'wikiamobile-search' => 'Søk',
+	'wikiamobile-search-this-wiki' => 'Søk i denne wikien',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Logg inn',
@@ -636,13 +639,14 @@ $1',
 	'wikiamobile-ad-close' => 'sluiten',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
 	'wikiamobile-search' => 'Szukaj',
+	'wikiamobile-search-this-wiki' => 'Przeszukaj wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Login',
@@ -694,7 +698,7 @@ $messages['ps'] = array(
 	'wikiamobile-ad-close' => 'تړل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -703,7 +707,7 @@ $messages['pt'] = array(
 	'wikiamobile-ad-close' => 'fechar',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  * @author Pedroca cerebral
  */
@@ -735,7 +739,7 @@ você deve definitivamente verificar isso:
 	'wikiamobile-ad-close' => 'fechar',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Express2000
  * @author Kuzura
  * @author Lvova
@@ -773,14 +777,14 @@ $messages['ru'] = array(
 	'wikiamobile-ad-close' => 'закрыть',
 );
 
-/** Sakha (Саха тыла)
+/** Sakha (саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
 	'wikiamobile-login-submit' => 'Киир',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -800,11 +804,12 @@ $messages['sr-ec'] = array(
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Игре]]',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikiamobile-search' => 'Sök',
+	'wikiamobile-search-this-wiki' => 'Sök på denna wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Logga in',
@@ -895,7 +900,7 @@ $messages['tr'] = array(
 	'wikiamobile-search-wiki' => 'Viki',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  */
 $messages['zh-hans'] = array(
@@ -914,7 +919,7 @@ $messages['zh-hans'] = array(
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|电玩游戏]]',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(

@@ -79,7 +79,7 @@ $messages['ar'] = array(
 	'wikiavideo-create' => 'أضف فيديو',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Sortilegus
  * @author Vago
  */
@@ -110,7 +110,7 @@ $messages['be-tarask'] = array(
 	'wikiavideo-intro-old' => "Вы выдаляеце вэрсію '''[$1 $5]''' ад [$4 $3, $2].",
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -127,7 +127,7 @@ $messages['bjn'] = array(
 	'wikiavideo-links' => 'Tautan',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -147,7 +147,7 @@ $messages['br'] = array(
 	'wikiavideo-intro-old' => "!Emaoc'h o tilemel an doare '''[$1 $5]''' eus ($4 $3, $2).",
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author Palapa
  */
 $messages['bs'] = array(
@@ -160,7 +160,7 @@ $messages['bs'] = array(
 	'wikiavideo-placeholder' => 'Rezervirano mjesto',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  * @author Paucabot
  */
@@ -182,7 +182,7 @@ $messages['ca'] = array(
 	'wikiavideo-details' => '$1( $2  {{PLURAL:$2| pixel|pixels}}, proveïdor: <a href="<span class=" notranslate"="">$3 "class ="extern"target ="_ blank"> $4 </a>)',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -273,10 +273,11 @@ $messages['diq'] = array(
 	'wikiavideo-replace' => 'Vidyoy cı sero bınusnê',
 	'wikiavideo-category' => 'Vidyoy',
 	'wikiavideo-links' => 'Gırey',
+	'wikiavideo-placeholder' => 'Cayê tepıstışi',
 	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|piksel|pikseli}}, Heruna cı: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author Ciencia Al Poder
  * @author Fitoschido
@@ -301,7 +302,7 @@ $messages['es'] = array(
 	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pixel|píxeles}}, proveedor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -318,7 +319,7 @@ $messages['fa'] = array(
 	'wikiavideo-category' => 'ویدیو‌ها',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  */
@@ -331,7 +332,7 @@ $messages['fi'] = array(
 	'wikiavideo-links' => 'Linkit',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Wyz
  */
@@ -393,7 +394,7 @@ $messages['he'] = array(
 	'wikiavideo-intro-old' => "אתם מוחקים את הגרסה  '''[$1 $5]''' מתאריך [$4 $3, $2].",
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -416,7 +417,7 @@ $messages['hy'] = array(
 	'wikiavideo-placeholder' => 'Լցնիչ',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -465,7 +466,7 @@ $messages['ig'] = array(
 	'wikiavideo-links' => 'Jikodo',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author HalphaZ
  */
 $messages['it'] = array(
@@ -551,12 +552,12 @@ $messages['lb'] = array(
 	'wikiavideo-intro-old' => "Dir läscht  d'Versioun vum '''[$1 $5]''' vum [$4 $3, $2].",
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'wikiavideo-reverted' => 'Видеоснимката $1 е успешно вратена. Вратете се на $2.',
-	'wikiavideo-unreverted' => 'Немате дозвола да ја вратите видеоснимката $1.',
+	'wikiavideo-unreverted' => 'Немате дозвола да ја отповикате видеоснимката $1.',
 	'wikiavideo-added' => 'додадена видеоснимката $1',
 	'wikiavideo-updated' => 'Сменето ведео [[$1]]',
 	'wikiavideo-back' => 'назад',
@@ -601,7 +602,7 @@ $messages['my'] = array(
 	'wikiavideo-links' => 'လင့်',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -672,7 +673,7 @@ $messages['pdc'] = array(
 	'wikiavideo-back' => 'zerrick',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Marcin Łukasz Kiejzik
  * @author Sovq
  * @author Sp5uhe
@@ -730,7 +731,7 @@ $messages['ps'] = array(
 	'wikiavideo-links' => 'تړنې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Hamilton Abreu
  * @author Malafaya
@@ -753,7 +754,7 @@ $messages['pt'] = array(
 	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|pixel|pixels}}, fornecedor: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  */
 $messages['pt-br'] = array(
@@ -772,7 +773,7 @@ $messages['pt-br'] = array(
 	'wikiavideo-intro-old' => "Você está eliminando a versão de '''[$1 $5]''' de [$4 $3, $2]",
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -783,7 +784,7 @@ $messages['ro'] = array(
 	'wikiavideo-links' => 'Legături',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -816,7 +817,7 @@ $messages['si'] = array(
 	'wikiavideo-links' => 'සබැඳි',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -837,7 +838,7 @@ $messages['sl'] = array(
 	'wikiavideo-details' => '$1 ($2 {{PLURAL:$2|slikovna pika|slikovni piki|slikovne pike|slikovnih pik}}, ponudnik: <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -860,7 +861,7 @@ $messages['sr-ec'] = array(
 	'wikiavideo-intro-old' => "Бришете верзију датотеке '''[$1 $5]''' од [$4 $3, $2].",
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -923,7 +924,7 @@ $messages['tr'] = array(
 	'wikiavideo-links' => 'Bağlantılar',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Prima klasy4na
  * @author Тест
@@ -941,7 +942,7 @@ $messages['uk'] = array(
 	'wikiavideo-intro-old' => "Ви вилучаєте версію '''[$1 $5]''' від [$4 $3, $2].",
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Yanmiao liu
  */

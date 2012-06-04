@@ -34,7 +34,7 @@ $messages['ar'] = array(
 	'ajaxpoll-submitting' => 'يرجى الانتظار ، يتم تقديم صوتك...',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -47,7 +47,7 @@ $messages['ast'] = array(
 	'ajaxpoll-submitting' => "Aguarda, por favor, ta unviandose'l to votu...",
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -68,7 +68,7 @@ $messages['be-tarask'] = array(
 	'ajaxpoll-submitting' => 'Калі ласка, пачакайце, пакуль захоўваецца Ваш голас…',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -77,7 +77,7 @@ $messages['bg'] = array(
 	'ajaxpoll-submit' => 'Гласуване!',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -90,7 +90,7 @@ $messages['br'] = array(
 	'ajaxpoll-submitting' => 'Gortozit mar plij, emeur o kas ho vot...',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -159,7 +159,7 @@ $messages['el'] = array(
 	'ajaxpoll-submitting' => 'Παρακαλώ περιμένετε, υποβάλλοντας την ψήφο σας...',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  */
 $messages['es'] = array(
@@ -172,7 +172,7 @@ $messages['es'] = array(
 	'ajaxpoll-submitting' => 'Por favor, espera, procesando tu voto...',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -192,7 +192,7 @@ $messages['fa'] = array(
 	'ajaxpoll-submitting' => 'لطفاً صبر کنید، درحال ثبت رای شما...',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Crt
  * @author Ilkea
  */
@@ -206,7 +206,7 @@ $messages['fi'] = array(
 	'ajaxpoll-submitting' => 'Odota, vastaustasi lähetetään...',
 );
 
-/** French (Français)
+/** French (français)
  * @author Jean-Frédéric
  * @author Wyz
  */
@@ -259,7 +259,7 @@ $messages['he'] = array(
 	'ajaxpoll-submitting' => 'אנא המתן, טוען את ההצבעה שלך...',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -273,7 +273,7 @@ $messages['hu'] = array(
 	'ajaxpoll-submitting' => 'A szavazat elküldése, kérlek várj…',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -299,7 +299,7 @@ $messages['id'] = array(
 	'ajaxpoll-submitting' => 'Silakan tunggu, pengiriman suara Anda ...',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Gifh
  * @author Minerva Titani
@@ -351,7 +351,7 @@ $messages['lb'] = array(
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -364,7 +364,7 @@ $messages['lt'] = array(
 	'ajaxpoll-submitting' => 'Prašome palaukti, siunčiame jūsų balsą ...',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -399,7 +399,7 @@ $messages['ms'] = array(
 	'ajaxpoll-submitting' => 'Sila tunggu, undian anda sedang diserahkan...',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -439,7 +439,7 @@ Probeer het nog een keer.',
 Bezig met het opslaan van je stem...',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -452,7 +452,7 @@ $messages['nn'] = array(
 	'ajaxpoll-submitting' => 'Vent, røysta di vert lagt til…',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -478,7 +478,7 @@ $messages['pfl'] = array(
 	'ajaxpoll-submitting' => 'Mugschd korz waade, doi Schdimm werd abgewe.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
  * @author Vae
@@ -516,7 +516,7 @@ $messages['ps'] = array(
 	'ajaxpoll-submit' => 'رايه ورکول!',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -529,7 +529,7 @@ $messages['pt'] = array(
 	'ajaxpoll-submitting' => 'Espere, por favor. A submeter o seu voto...',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Jesielt
  */
 $messages['pt-br'] = array(
@@ -542,7 +542,7 @@ $messages['pt-br'] = array(
 	'ajaxpoll-submitting' => 'Por favor, aguarde. Estamos enviando o seu voto...',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -552,7 +552,7 @@ $messages['ro'] = array(
 	'ajaxpoll-closed' => 'Sondajul este închis acum. Bucuraţi-vă de rezultate.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Lockal
  * @author Александр Сигачёв
  */
@@ -575,7 +575,7 @@ $messages['si'] = array(
 	'ajaxpoll-submit' => 'ඡන්දය දෙන්න!',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -588,7 +588,7 @@ $messages['sr-ec'] = array(
 	'ajaxpoll-submitting' => 'Бележење вашег гласа...',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -646,7 +646,7 @@ $messages['tr'] = array(
 	'ajaxpoll-submitting' => 'Lütfen bekleyin, oyunuz kaydediliyor...',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -659,7 +659,7 @@ $messages['tt-cyrl'] = array(
 	'ajaxpoll-submitting' => 'Зинһар өчен, сезнең тавыш турында мәгълүмат тапшырылганын көтегез...',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Alex Khimich
  */
 $messages['uk'] = array(
@@ -686,7 +686,7 @@ $messages['vi'] = array(
 	'ajaxpoll-submitting' => 'Xin vui lòng chờ, đang gửi bình chọn của bạn...',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Wilsonmess
  */
@@ -700,7 +700,7 @@ $messages['zh-hans'] = array(
 	'ajaxpoll-submitting' => '请稍候，正在递交您的投票……',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

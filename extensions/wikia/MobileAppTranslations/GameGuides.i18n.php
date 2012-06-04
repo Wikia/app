@@ -48,7 +48,7 @@ $messages['en'] = array(
 	'error-json-parse' => 'There was a problem with the data returned from our servers, sorry.\\nPlease try again.'
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -59,7 +59,7 @@ $messages['az'] = array(
 	'alert-download-updated-wikis-button-ok' => 'Ok',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -78,7 +78,7 @@ $messages['br'] = array(
 	'alert-download-updated-wikis-button-ok' => 'Mat eo',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Reaperman
  */
 $messages['cs'] = array(
@@ -129,7 +129,7 @@ $messages['de'] = array(
 	'error-json-parse' => 'Es gab ein Problem mit den Daten von unseren Servern, sorry.\\nBitte versuche es erneut.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -154,7 +154,7 @@ $messages['es'] = array(
 	'error-json-parse' => 'Hubo un problema con los datos devueltos desde nuestros servidores, lo sentimos.\\nInténtalo de nuevo.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -204,7 +204,7 @@ $messages['gl'] = array(
 	'error-json-parse' => 'Houbo un problema cos datos obtidos dos nosos servidores, sentímolo.\\nInténteo de novo.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  */
 $messages['hu'] = array(
@@ -229,7 +229,7 @@ $messages['hu'] = array(
 	'error-json-parse' => 'Elnézést, gond volt a szerverünk által visszaküldött adattal.\\nPróbáld meg újra!',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -254,8 +254,10 @@ $messages['ia'] = array(
 	'error-json-parse' => 'Un problema occurreva con le datos retornate ab nostre servitores.\\nPer favor reproba.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
+ * @author Beta16
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
+ * @author Ximo17
  */
 $messages['it'] = array(
 	'activityindicator-message' => 'Caricamento...',
@@ -273,10 +275,10 @@ $messages['it'] = array(
 	'searchbar-hint' => 'Cerca in %s...',
 	'alert-download-updated-wikis-message' => 'La lista dei giochi disponibili verrá aggiornata.',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
-	'error-update-required' => "Un aggiornamento per questa applicazione e' disponibile e necessario per continuare.\\n%s",
-	'error-no-connection' => 'Nessuna connessione ad internet.\\n%s',
-	'error-server' => 'Spiacenti, I nostri server hanno risposto con un errore.\\n%s',
-	'error-json-parse' => "Spiacenti, E' stato riscontrato un problema con i dati inviati dai nostri server.\\n%s",
+	'error-update-required' => 'È disponibile un aggiornamento obbligatorio per questa applicazione.',
+	'error-no-connection' => 'Nessuna connessione internet disponibile.\\nSi prega di riprovare.',
+	'error-server' => 'Spiacenti, i nostri server hanno risposto con un errore.\\nSi prega di riprovare.',
+	'error-json-parse' => 'Spiacenti, è stato riscontrato un problema con i dati inviati dai nostri server.\\nSi prega di riprovare.',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -286,9 +288,11 @@ $messages['km'] = array(
 	'activityindicator-message' => 'កំពុងផ្ទុក​...',
 );
 
-/** Korean (한국어) */
+/** Korean (한국어)
+ * @author 아라
+ */
 $messages['ko'] = array(
-	'activityindicator-message' => '로딩...',
+	'activityindicator-message' => '로드 중...',
 	'window-wikis-title' => 'Wikia 게임 가이드',
 	'window-wikis-wikilist-search-hint' => '찾기 우리의 탑 게임들',
 	'window-category-load-batch' => '더',
@@ -309,7 +313,7 @@ $messages['ko'] = array(
 	'error-json-parse' => '죄송합니다. 저희 서버로 돌아오는 자료에 문제가 생겼으니.\\n나중에 다시 시도하시기 바랍니다.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -359,7 +363,7 @@ $messages['ms'] = array(
 	'error-json-parse' => 'Maaf, ada masalah dengan data yang dipulangkan dari pelayan kami.\\nSila cuba lagi.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -422,7 +426,7 @@ $messages['pfl'] = array(
 	'window-article-menu-search-label' => 'Suche',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @author Sp5uhe
  */
@@ -461,7 +465,7 @@ $messages['ps'] = array(
 	'alert-download-updated-wikis-button-ok' => 'ښه',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -486,7 +490,7 @@ $messages['pt'] = array(
 	'error-json-parse' => 'Desculpe, houve um problema com os dados recebidos dos nossos servidores.\\nTente novamente, por favor.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Byulent
  * @author Kuzura
  */
@@ -512,7 +516,7 @@ $messages['ru'] = array(
 	'error-json-parse' => 'Существует проблема с отправкой данных на наши сервера, извините. \\nПожалуйста, попытайтесь снова.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Vicky Carlsson <vicky(at)wikia-inc.com>
  * @author WikiPhoenix
  */
@@ -542,15 +546,20 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'window-article-menu-search-label' => 'వెతుకు',
 	'window-article-menu-cancel-label' => 'రద్దుచేయి',
+	'searchview-no-results' => '"%s"కి ఫలితాలేమీ లేవు',
 	'alert-download-updated-wikis-button-ok' => 'సరే',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'activityindicator-message' => '载入中……',
+	'window-category-load-batch' => '更多',
+	'window-article-button-close' => '关闭',
 	'window-article-button-back' => '返回',
+	'searchview-button-back-article' => '返回条目',
 );
 

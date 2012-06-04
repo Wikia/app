@@ -43,7 +43,7 @@ $messages['ar'] = array(
 	'category-exhibition-media-header' => 'الوسائل في الفئة "$1"',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -51,7 +51,7 @@ $messages['bg'] = array(
 	'category-exhibition-subcategories-header' => 'Подкатегории',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -67,7 +67,7 @@ $messages['br'] = array(
 	'category-exhibition-display-new' => 'Gwel diskouez ar rummad',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -123,7 +123,7 @@ $messages['diq'] = array(
 	'category-exhibition-subcategories-header' => 'Kategoriyê bınêni',
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $messages['es'] = array(
 	'category-exhibition-sorttype' => 'Clasificando tipo:',
 	'category-exhibition-alphabetical' => 'Alfabético',
@@ -137,7 +137,7 @@ $messages['es'] = array(
 	'category-exhibition-display-new' => 'Vista de exposición de la categoría',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tofu II
  */
@@ -145,7 +145,7 @@ $messages['fi'] = array(
 	'category-exhibition-page-header' => 'Sivut luokassa $1',
 );
 
-/** French (Français) */
+/** French (français) */
 $messages['fr'] = array(
 	'category-exhibition-sorttype' => 'Type de tri :',
 	'category-exhibition-alphabetical' => 'Alphabétique',
@@ -175,7 +175,7 @@ $messages['gl'] = array(
 	'category-exhibition-display-new' => 'Vista da exhibición da categoría',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Dj
  */
@@ -192,7 +192,7 @@ $messages['hu'] = array(
 	'category-exhibition-display-new' => 'Kategória bemutatás nézet',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -224,7 +224,7 @@ $messages['id'] = array(
 	'category-exhibition-display-new' => 'Pameran tampilan Kategori',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  * @author Minerva Titani
  */
@@ -275,7 +275,7 @@ $messages['lb'] = array(
 	'category-exhibition-media-header' => 'Medien an der Kategorie "$1"',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -288,7 +288,7 @@ $messages['lt'] = array(
 	'category-exhibition-blogs-header' => 'Dienoraščio įrašai',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -330,7 +330,7 @@ $messages['ms'] = array(
 	'category-exhibition-display-new' => 'Paparan Pameran Kategori',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -363,7 +363,7 @@ $messages['nl'] = array(
 	'category-exhibition-display-new' => 'Categoriepresentatieweergave',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -379,7 +379,7 @@ $messages['pl'] = array(
 	'category-exhibition-display-new' => 'Widok - galeria',
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $messages['pt'] = array(
 	'category-exhibition-sorttype' => 'Tipo de ordenação:',
 	'category-exhibition-alphabetical' => 'Alfabética',
@@ -393,7 +393,7 @@ $messages['pt'] = array(
 	'category-exhibition-display-new' => 'Vista de Exibição de Categorias',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -409,7 +409,7 @@ $messages['pt-br'] = array(
 	'category-exhibition-display-new' => 'Vista de Exibição de Categorias',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -422,7 +422,7 @@ $messages['ro'] = array(
 	'category-exhibition-blogs-header' => 'Postări pe blog',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -438,7 +438,7 @@ $messages['ru'] = array(
 	'category-exhibition-display-new' => 'Просмотр категории-выставки',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -448,7 +448,7 @@ $messages['sr-ec'] = array(
 	'category-exhibition-blogs-header' => 'Поруке на блогу',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -491,7 +491,7 @@ $messages['tr'] = array(
 	'category-exhibition-subcategories-header' => 'Alt kategoriler',
 );
 
-/** Ukrainian (Українська) */
+/** Ukrainian (українська) */
 $messages['uk'] = array(
 	'category-exhibition-sorttype' => 'Тип сортування:',
 	'category-exhibition-alphabetical' => 'Алфавітний',
@@ -499,7 +499,7 @@ $messages['uk'] = array(
 	'category-exhibition-subcategories-header' => 'Підкатегорії',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hzy980512
  */

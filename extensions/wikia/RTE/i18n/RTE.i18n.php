@@ -68,14 +68,14 @@ $messages['be-tarask'] = array(
 	'rte-first-run-notice' => 'Мы зрабілі некаторыя паляпшэньні ў рэдактары. Каб даведацца болей, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news пачытайце апісаньне зьменаў].',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author Stanqo
  */
 $messages['bg'] = array(
 	'enablerichtexteditor' => 'Възможно е ползването на Rich Text редактор',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -100,7 +100,7 @@ $messages['br'] = array(
 	'rte-first-run-notice' => "Degaset hon eus un nebeut gwelladennoù d'an embanner. Evit gouzout hiroc'h, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lennit ar c'hemenn].",
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -124,7 +124,7 @@ $messages['ca'] = array(
 	'prefs-rte' => 'Editor de text enriquit',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -184,7 +184,7 @@ $messages['el'] = array(
 	'enablerichtexteditor' => 'Ενεργοποίηση εμπλουτισμένου συντάκτη κειμένου',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author Crazymadlover
  * @author VegaDark
@@ -224,7 +224,7 @@ $messages['fa'] = array(
 	'enablerichtexteditor' => 'فعال‌کردن ویرایش در حالت بصری (علاوه بر حالت مبدأ)',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Wyz
  */
@@ -273,7 +273,7 @@ $messages['gl'] = array(
 	'prefs-rte' => 'Editor de texto enriquecido',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -329,7 +329,7 @@ $messages['ksh'] = array(
 	'rte-edgecase-redirect' => 'en Ömleidung',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -386,7 +386,7 @@ $messages['ms'] = array(
 	'prefs-rte' => 'Alat Penyunting Teks Beraneka',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -443,7 +443,7 @@ $messages['nl-informal'] = array(
 	'rte-no-js-fallback' => 'De uitgebreide tekstverwerker werkt niet als JavaScript is uitgeschakeld. Schakel JavaScript in in je browser of schakel in je [[Special:Preferences| voorkeuren]] terug naar de oude tekstverwerker voor MediaWiki.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Holek
  * @author Sovq
  * @author Sp5uhe
@@ -494,7 +494,7 @@ $messages['pms'] = array(
 	'prefs-rte' => 'Editor ëd Test Anrichì',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
  */
@@ -519,7 +519,7 @@ $messages['pt'] = array(
 	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Daemorris
  * @author Giro720
@@ -545,7 +545,7 @@ $messages['pt-br'] = array(
 	'prefs-rte' => 'Editor de Texto Enriquecido',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -573,7 +573,7 @@ $messages['ru'] = array(
 	'prefs-rte' => 'Визуальный текстовый редактор (RTE)',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -586,7 +586,7 @@ $messages['sr-ec'] = array(
 	'rte-edgecase-unclosed-tags' => 'отворене HTML ознаке',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -654,7 +654,7 @@ $messages['tr'] = array(
 	'rte-first-run-notice' => 'Düzenleyicide birkaç geliştirme yaptık.Daha fazlasını öğrenmek için, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author NickK
  * @author Тест
  */
@@ -676,7 +676,7 @@ $messages['zh'] = array(
 	'rte-edgecase-image-with-link' => '圖像描述中有連結',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  */
 $messages['zh-hans'] = array(

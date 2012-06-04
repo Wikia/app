@@ -65,7 +65,7 @@ $messages['ar'] = array(
 	'protectsite-unprotect' => 'أزل الحماية',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -102,7 +102,7 @@ $messages['be-tarask'] = array(
 	'protectsite-unprotect' => 'Зьняць абарону',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -131,7 +131,7 @@ $messages['br'] = array(
 	'protectsite-unprotect' => 'Diwareziñ',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -197,7 +197,7 @@ $messages['diq'] = array(
 	'protectsite-maxtimeout' => 'Maximum:',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Crazymadlover
  * @author Peter17
  * @author Translationista
@@ -228,7 +228,7 @@ $messages['es'] = array(
 	'protectsite-nologs' => 'no mostrar en los registros',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Tofu II
@@ -251,7 +251,7 @@ $messages['fi'] = array(
 	'protectsite-unprotect' => 'Poista suojaus',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Peter17
  * @author Slamduck
@@ -315,7 +315,7 @@ $messages['ha'] = array(
 	'protectsite-comment' => 'Bahasi:',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -331,7 +331,7 @@ $messages['hu'] = array(
 	'protectsite-unprotect' => 'Védelem feloldása',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -367,7 +367,7 @@ $messages['id'] = array(
 	'protectsite-protect' => 'Lindungi',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'protectsite-allowall' => 'Tutti gli utenti',
 	'protectsite-maxtimeout' => 'Massimo:',
@@ -441,7 +441,7 @@ $messages['lb'] = array(
 	'protectsite-unprotect' => 'Spär ophiewen',
 );
 
-/** Latgalian (Latgaļu)
+/** Latgalian (latgaļu)
  * @author Dark Eagle
  */
 $messages['ltg'] = array(
@@ -449,7 +449,7 @@ $messages['ltg'] = array(
 	'protectsite-unprotect' => 'Nūjimt apsardzeibu',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -515,7 +515,7 @@ $messages['my'] = array(
 	'protectsite-unprotect' => 'မကာကွယ်တော့ရန်',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -581,7 +581,7 @@ $messages['pdc'] = array(
 	'protectsite-protect' => 'Schitze',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Sp5uhe
@@ -651,7 +651,7 @@ $messages['ps'] = array(
 	'protectsite-unprotect' => 'نه ژغورل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -680,7 +680,7 @@ $messages['pt'] = array(
 	'protectsite-nologs' => 'não mostrar nos registos',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
@@ -710,7 +710,7 @@ $messages['pt-br'] = array(
 	'protectsite-nologs' => 'não mostrar nos registos',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -721,7 +721,7 @@ $messages['ro'] = array(
 	'protectsite-unprotect' => 'Deprotejează',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -751,7 +751,7 @@ $messages['ru'] = array(
 	'protectsite-nologs' => 'не записывать в журнал',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -773,7 +773,7 @@ $messages['sr-ec'] = array(
 	'protectsite-unprotect' => 'Скини заштиту',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -851,7 +851,7 @@ $messages['tl'] = array(
 	'protectsite-nologs' => 'huwag ipakita sa loob ng mga talaan',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  * @author Тест
  */
@@ -879,7 +879,7 @@ $messages['uk'] = array(
 	'protectsite-unprotect' => 'Зняти захист',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

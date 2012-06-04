@@ -270,7 +270,7 @@ $messages['ar'] = array(
 	'wmu-gallery-btn1' => 'أضف صورة أخرى',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -356,7 +356,7 @@ $messages['be-tarask'] = array(
 	'wmu-no-rights' => 'Вам не дазволена дадаваць выявы на гэту старонку',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -391,7 +391,7 @@ $messages['bjn'] = array(
 	'wmu-back' => 'mantuk',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -470,7 +470,7 @@ $messages['br'] = array(
 	'wmu-alignment' => 'Linennadur',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  * @author Gemmaa
  * @author Paucabot
@@ -558,7 +558,7 @@ $messages['ce'] = array(
 	'wmu-find' => 'Лаха',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
@@ -902,7 +902,7 @@ $messages['eo'] = array(
 	'wmu-imagebutton' => ' Aldoni bildojn',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Crazymadlover
  * @author McDutchie
@@ -986,7 +986,7 @@ $messages['es'] = array(
 	'wmu-file-error' => 'Hubo un error durante el proceso de carga. Inténtelo de nuevo.',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -1029,7 +1029,7 @@ $messages['fa'] = array(
 	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Silvonen
  * @author Tofu II
@@ -1060,7 +1060,7 @@ $messages['fi'] = array(
 	'wmu-show-license-msg' => 'näytä lisenssiteksti',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author McDutchie
  * @author Peter17
@@ -1299,7 +1299,7 @@ $messages['he'] = array(
 	'wmu-alignment' => 'יישור',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -1344,7 +1344,7 @@ $messages['hu'] = array(
 	'wmu-gallery-btn1' => 'Másik kép hozzáadása',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1501,7 +1501,7 @@ $messages['inh'] = array(
 	'wmu-gallery' => 'Суртанче',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Minerva Titani
  */
@@ -1674,14 +1674,14 @@ $messages['lb'] = array(
 	'wmu-file-protected' => 'Dëst Bild ass gespaart',
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author GreenZeb
  */
 $messages['lv'] = array(
 	'wmu-show-license-msg' => 'rādīt licences tekstu',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1875,7 +1875,7 @@ $messages['mzn'] = array(
 	'wmu-upload-btn' => 'باربی‌یشتن',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -2079,7 +2079,7 @@ $messages['pfl'] = array(
 	'wmu-next' => 'Negschte 8',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -2267,7 +2267,7 @@ $messages['ps'] = array(
 	'wmu-fewer-options' => 'لږې خوښنې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Giro720
  * @author Hamilton Abreu
  * @author Malafaya
@@ -2347,7 +2347,7 @@ $messages['pt'] = array(
 	'wmu-file-protected' => 'Esta imagem está protegida',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  * @author Giro720
@@ -2427,7 +2427,7 @@ $messages['pt-br'] = array(
 	'wmu-alignment' => 'Alinhamento',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Eleferen
  * @author Kuzura
@@ -2510,7 +2510,7 @@ $messages['ru'] = array(
 	'wmu-file-error' => 'Произошла ошибка в процессе загрузки, извините. Пожалуйста, попробуйте снова.',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -2521,7 +2521,7 @@ $messages['sl'] = array(
 	'wmu-close' => 'zapri',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -2596,7 +2596,7 @@ $messages['sr-ec'] = array(
 	'wmu-alignment' => 'Поравнање',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
@@ -2710,7 +2710,7 @@ $messages['te'] = array(
 	'wmu-close' => 'మూసివేయి',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -2800,7 +2800,7 @@ $messages['tr'] = array(
 	'wmu-alignment' => 'Hiza fi',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Prima klasy4na
  * @author Тест
@@ -2850,7 +2850,7 @@ $messages['yi'] = array(
 	'wmu-caption' => 'באשרייבונג',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Gaoxuewei
  * @author Hydra
@@ -2931,7 +2931,7 @@ $messages['zh-hans'] = array(
 	'wmu-file-error' => '抱歉，上传过程中出错了。请再试一次。',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

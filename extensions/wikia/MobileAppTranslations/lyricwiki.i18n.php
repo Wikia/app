@@ -67,7 +67,7 @@ $messages['qqq'] = array(
 	'app-tab-sotd' => 'SotD = Song of the Day',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -81,7 +81,7 @@ $messages['az'] = array(
 	'login-submit-button' => 'Loqin',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -93,7 +93,7 @@ $messages['bg'] = array(
 	'login-submit-button' => 'Влизане',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -129,7 +129,7 @@ $messages['br'] = array(
 	'lyrics-artist-byline' => 'gant %s',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Reaperman
  */
 $messages['cs'] = array(
@@ -228,7 +228,7 @@ $messages['diq'] = array(
 	'about-heading-tips' => 'Geyreno cı',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Fitoschido
  * @author VegaDark
  */
@@ -269,7 +269,7 @@ $messages['es'] = array(
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
 );
 
-/** Finnish (Suomi) */
+/** Finnish (suomi) */
 $messages['fi'] = array(
 	'app-loading' => 'Ladataan...',
 	'app-tab-search' => 'Haku',
@@ -301,7 +301,7 @@ $messages['fi'] = array(
 	'ringtone-matcher-by-song' => 'Lähetä %s soittoäänenä puhelimeesi!',
 );
 
-/** French (Français)
+/** French (français)
  * @author Verdy p
  * @author Wyz
  */
@@ -382,7 +382,7 @@ $messages['gl'] = array(
 	'ringtone-matcher-by-song' => 'Enviar o ton %s ao seu móbil',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  */
 $messages['hu'] = array(
@@ -422,7 +422,7 @@ $messages['hu'] = array(
 	'ringtone-matcher-by-song' => 'Küldd a %s csengőhangot a telcsidre',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -469,7 +469,7 @@ $messages['inh'] = array(
 	'app-tab-browse' => 'А...I',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'app-loading' => 'Caricamento..',
 	'app-tab-search' => 'Cerca',
@@ -543,9 +543,10 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Youree Jin
+ * @author 아라
  */
 $messages['ko'] = array(
-	'app-loading' => '로딩…',
+	'app-loading' => '로드 중...',
 	'app-tab-search' => '찾기',
 	'app-tab-about' => '대해서',
 	'app-tab-browse' => 'A..Z',
@@ -594,7 +595,7 @@ $messages['lb'] = array(
 	'login-password-hint' => 'Passwuert',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -674,7 +675,7 @@ $messages['ms'] = array(
 	'ringtone-matcher-by-song' => 'Hantar Nada Dering %s Kepada Telefon Bimbit Anda',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -772,7 +773,7 @@ $messages['pfl'] = array(
 	'app-nonetwork-dialog-close-button' => 'Ok',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -829,7 +830,7 @@ $messages['ps'] = array(
 	'lyrics-artist-byline' => 'د %s لخوا',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -840,7 +841,7 @@ $messages['pt'] = array(
 	'lyrics-artist-byline' => 'por %s',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  */
 $messages['pt-br'] = array(
@@ -852,7 +853,7 @@ $messages['pt-br'] = array(
 	'about-heading-tips' => 'Procurando',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Byulent
  * @author Kuzura
  * @author Lvova
@@ -892,7 +893,7 @@ $messages['ru'] = array(
 	'ringtone-matcher-by-song' => 'Отправить  %s  рингтон для вашей группы',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Nghtwlkr
  * @author WikiPhoenix
  */
@@ -940,6 +941,7 @@ $messages['te'] = array(
 	'app-tab-about' => 'గురించి',
 	'app-nonetwork-dialog-close-button' => 'సరే',
 	'search-go' => 'వెళ్ళు!',
+	'login-username-hint' => 'వాడుకరి పేరు',
 	'login-password-hint' => 'సంకేతపదం',
 	'about-heading-licensing' => 'కాపీహక్కులు',
 );
@@ -953,7 +955,7 @@ $messages['tr'] = array(
 	'about-heading-licensing' => 'Telif hakları',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  */
 $messages['zh-hans'] = array(

@@ -13,7 +13,7 @@ $messages['qqq'] = array(
 	'healthcheck-desc' => '{{desc}}',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -34,14 +34,14 @@ $messages['be-tarask'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Спэцыяльная старонка]] для праверкі стану сэрвэра',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
 	'healthcheck-desc' => 'Ur [[Special:HealthCheck|bajenn dibar]] evit gwiriañ stad ar servijerien',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -62,28 +62,28 @@ $messages['dsb'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Specialny bok]] za kontrolěrowanje serwerowego statusa',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Crazymadlover
  */
 $messages['es'] = array(
 	'healthcheck-desc' => 'Una [[Special:HealthCheck|página especial]] para verificación del estado del servidor',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Orrialde berezia]] zerbitzariaren egoera egiaztatzeko',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  */
 $messages['fi'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Toimintosivu]] palvelimen tilan tarkastukseen',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  */
 $messages['fr'] = array(
@@ -109,14 +109,14 @@ $messages['hsb'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Specialna strona]] za kontrolowanje serweroweho statusa',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Misibacsi
  */
 $messages['hu'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Speciális oldal]] a szerver állapotának ellenőrzéséhez',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -130,7 +130,7 @@ $messages['id'] = array(
 	'healthcheck-desc' => 'Sebuah [[Special:HealthCheck|halaman khusus]] untuk mengecek kondisi server',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gianfranco
  */
 $messages['it'] = array(
@@ -158,7 +158,7 @@ $messages['lb'] = array(
 	'healthcheck-desc' => "[[Special:HealthCheck|Spezialsäit]] fir d'Nokucke vum Statut vum Server",
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -172,7 +172,7 @@ $messages['ms'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Laman khas]] untuk memeriksa keadaan pelayan',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -186,7 +186,7 @@ $messages['nl'] = array(
 	'healthcheck-desc' => 'Een [[Special:HealthCheck|speciale pagina]] voor de controle van de serverstatus',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -200,42 +200,42 @@ $messages['pms'] = array(
 	'healthcheck-desc' => 'Na [[Special:HealthCheck|pàgina special]] për controlé lë stat dël servent',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
 	'healthcheck-desc' => 'Uma [[Special:HealthCheck|página especial]] para verificar o estado do servidor',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
 	'healthcheck-desc' => 'Uma [[Special:HealthCheck|página especial]] para verificar o estado do servidor',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'healthcheck-desc' => "'Na [[Special:HealthCheck|pàgene speciale]] pe verifeche d'u state d'u server",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  */
 $messages['ru'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Специальная страница]] для проверки состояния сервера.',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Posebna stran]] za preverjanje stanja strežnika',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -256,21 +256,21 @@ $messages['tl'] = array(
 	'healthcheck-desc' => 'Isang [[Special:HealthCheck|natatanging pahina]] para sa pagsusuri ng katayuan ng panghain',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'healthcheck-desc' => 'Серверның халәтен тикшерү өчен A [[Special:HealthCheck|махсус бит]].',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
 	'healthcheck-desc' => '[[Special:HealthCheck|Спеціальна сторінка]] для перевірки стану сервера',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

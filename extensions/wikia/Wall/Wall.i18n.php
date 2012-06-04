@@ -664,7 +664,7 @@ $messages['qqq'] = array(
 	'walldelete-toggle' => 'Preferences checkbox.',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -685,33 +685,68 @@ $messages['bg'] = array(
 );
 
 /** German (Deutsch)
+ * @author Dennis07
  * @author Geitost
  * @author Inkowik
  * @author MtaÄ
+ * @author PtM
  */
 $messages['de'] = array(
 	'wall-no-title' => 'Kein Titel',
 	'wall-message-loadmore' => 'Zeige alle $1 {{PLURAL:$1|Antwort|Antworten}}',
+	'wall-message-wall' => 'Nachrichtenwand',
+	'wall-message-wall-shorten' => 'Wand',
+	'wall-message-unfollow' => 'Nicht mehr folgen',
 	'wall-message-undoremove' => 'Rückgängig',
+	'wall-message-edited' => '<a href="$3" >Bearbeitet von</a> <a class="username" href="$1">$2</a>',
+	'wall-message-mywall' => 'Meine Wand',
+	'wall-toolbar-history' => 'Verlauf',
 	'wall-message-notify' => 'Admin benachrichtigen',
 	'wall-message-remove' => 'Entfernen',
 	'wall-message-rev-delete' => 'Version löschen',
+	'wall-message-elseswall' => '$1s Wand',
+	'wall-message-no-permission' => 'Du verfügst nicht über die ausreichenden Rechte, um diese Aktion auf die Nachricht ausführen zu können',
 	'wall-thread-removed' => 'Entfernt',
 	'wall-thread-deleted' => 'Gelöscht',
 	'wall-default-title' => 'Nachricht von $1',
+	'wall-no-title-warning' => 'Du hast keinen Titel angegeben',
+	'wall-desc' => 'Benutzerdiskussionsseiten-Ersetzung',
+	'wall-disabled-desc' => 'Nachrichten-Wand Funktionalität für wikis, die nicht die Wand-Erweiterung verwenden',
+	'wall-placeholder-topic' => 'Worüber handelt dies?',
+	'wall-placeholder-message' => 'Schreibe eine neue Nachricht an $1s Wand',
+	'wall-placeholder-message-anon' => 'Schreibe eine neue Nachricht an diese Wand',
 	'wall-placeholder-reply' => 'Antworten',
 	'wall-button-to-preview-comment' => 'Vorschau',
+	'wall-button-to-cancel-preview' => 'Bearbeiten',
+	'wall-button-to-submit-comment' => 'Abschicken',
 	'wall-button-to-submit-reply' => 'Antwort',
+	'wall-button-to-submit-comment-no-topic' => 'Beitrag ohne Titel',
 	'wall-button-save-changes' => 'Änderungen speichern',
 	'wall-button-cancel-changes' => 'Abbrechen',
 	'wall-button-done-source' => 'Fertig',
+	'wall-message-edit' => 'Bearbeiten',
 	'wall-message-more' => 'Mehr',
 	'wall-message-delete' => 'Löschen',
+	'wall-message-removed-thread-because' => '$1 entfernte diesen Thread, weil:',
+	'wall-message-deleted-thread-because' => '$1 löschte diesen Thread, weil:',
+	'wall-message-restore-thread' => 'Thread wiederherstellen',
+	'wall-message-removed-reply-because' => '$1 entfernte diese Antwort, weil:',
+	'wall-message-deleted-reply-because' => '$1 löschte diese Antwort, weil:',
 	'wall-message-restore-reply' => 'Antwort wiederherstellen',
+	'wall-delete-reason' => 'Benutzer/Admin-Aktion',
+	'wall-user-talk-page-archive-anchor' => 'Archivierte Diskussionsseite ansehen',
+	'wall-user-talk-archive-page-title' => 'Benutzer_Diskussionsarchiv',
 	'wall-action-all-confirm-cancel' => 'Abbrechen',
+	'wall-action-all-confirm-notify' => 'Einen Admin informieren',
 	'wall-action-remove-reply-title' => 'Diese Antwort entfernen',
+	'wall-action-remove-thread-title' => 'Diesen Thread entfernen',
+	'wall-confirm-monobook-restore' => 'Bitte teile uns mit, warum du dies wiederherstellen willst',
 	'wall-delete-error-title' => 'Fehler',
+	'wall-delete-error-content' => 'Diese Nachricht wurde zu einem früheren Zeitpunkt gelöscht und existiert nicht mehr.',
+	'wall-confirm-monobook-lack-of-reason' => 'Bitte einen Grund für das löschen dieses Threads angeben.',
+	'wall-action-remove-confirm' => 'Bitte teile uns mit, warum du dies entfernen willst:',
 	'wall-action-remove-confirm-ok' => 'Entfernen',
+	'wall-action-admin-thread-title' => 'Diesen Thread löschen',
 	'wall-action-admin-reply-title' => 'Diese Antwort löschen',
 	'wall-action-admin-confirm-ok' => 'Löschen',
 	'wall-action-restore-reply-title' => 'Diese Antwort wiederherstellen',
@@ -731,6 +766,7 @@ $messages['de'] = array(
 	'wall-history-rail-block' => 'sperren',
 	'wall-history-action-view' => 'ansehen',
 	'wall-history-action-restore' => 'wiederherstellen',
+	'tog-enotifmywall-noemail' => 'niemals. Sende mir keine Nachrichtenseiten-Mails.',
 );
 
 /** Zazaki (Zazaki)
@@ -738,8 +774,10 @@ $messages['de'] = array(
  */
 $messages['diq'] = array(
 	'wall-no-title' => 'Sername çıno',
+	'wall-message-loadmore' => "{{PLURAL:$1|Cıwab|Cıwabanê}} $1'i pêron bıvin",
 	'wall-message-wall' => 'Mesacê Dêsi',
 	'wall-message-wall-shorten' => 'dês',
+	'wall-message-unfollow' => 'Mepaw',
 	'wall-message-undoremove' => 'peyser bia',
 	'wall-message-mywall' => 'Dêsê me',
 	'wall-toolbar-history' => 'Tarix',
@@ -747,6 +785,7 @@ $messages['diq'] = array(
 	'wall-message-elseswall' => "Dêsê $1'i",
 	'wall-thread-removed' => 'Hewadeya',
 	'wall-thread-deleted' => 'Besterneya',
+	'wall-default-title' => "$1'i ra mesac",
 	'wall-button-to-preview-comment' => 'Verqayt',
 	'wall-button-to-cancel-preview' => 'Timar ke',
 	'wall-button-to-submit-comment' => 'Nusne',
@@ -766,7 +805,10 @@ $messages['diq'] = array(
 	'wall-notifications-all' => 'Xeberdareni pêro',
 	'wall-notifications-markasread-all-wikis' => 'Wikiy pêro',
 	'wall-notifications-markasread-this-wiki' => 'E na wiki',
+	'wall-sorting-archived' => 'Arşivya',
+	'wall-recentchanges-new-message' => '<a href="$1">dêsê $2\'i deyo</a>',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mesacê Dêsi',
+	'wall-recentchanges-thread-group' => '$1\'i dês dê<a href="$2"> ra kewt dês dê $3\'i</a>',
 	'wall-recentchanges-history-link' => 'tarixê dêsi',
 	'wall-wiki-activity-on' => '$1 ra',
 	'wall-wiki-activity-wall-owner' => "Dêsê $1'i",
@@ -783,7 +825,7 @@ $messages['diq'] = array(
 	'tog-enotifwallthread-v2' => 'E-postay me...',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author VegaDark
  */
@@ -1041,7 +1083,7 @@ ___________________________________________<br />
 	'walldelete-toggle' => 'Activar el borrado de revisiones en publicaciones en el Muro de Mensajes',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  */
 $messages['fi'] = array(
@@ -1187,7 +1229,7 @@ Tätä ei voi peruuttaa.',
 	'wall-recentchanges-deleted-reply' => 'poistettiin keskustelun "[[$1|$2]]" vastaus [[$3|$4 seinältä]]',
 );
 
-/** French (Français)
+/** French (français)
  * @author McDutchie
  * @author Wyz
  */
@@ -1703,7 +1745,7 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'walldelete-toggle' => 'Activar o borrado de revisións nas mensaxes do muro',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -2083,8 +2125,8 @@ $messages['ja'] = array(
 	'wall-deleted-msg-view' => '(閲覧/復帰)',
 	'wall-recentchanges-new-message' => '-- <a href="$1">$2 のウォール</a>',
 	'wall-recentchanges-edit' => '(メッセージを編集)',
-	'wall-recentchanges-removed-thread' => 'が [[$3|$4 のウォール]]からスレッド「[[$1|$2]]」を削除しました',
-	'wall-recentchanges-removed-reply' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」から返信を削除しました',
+	'wall-recentchanges-removed-thread' => 'が [[$3|$4 のウォール]]からスレッド「[[$1|$2]]」を除去しました',
+	'wall-recentchanges-removed-reply' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」から返信を除去しました',
 	'wall-recentchanges-restored-thread' => 'が [[$3|$4 のウォール]]にスレッド「[[$1|$2]]」を復帰しました',
 	'wall-recentchanges-restored-reply' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」に返信を復帰しました',
 	'wall-recentchanges-deleted-thread' => 'が [[$3|$4 のウォール]]からスレッド「[[$1|$2]]」を削除しました',
@@ -2184,7 +2226,7 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 	'walldelete-toggle' => 'メッセージウォール上のメッセージに対する版指定削除を有効にする',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -2702,7 +2744,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada pos-pos Papan Pesanan',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -3211,7 +3253,7 @@ $messages['pfl'] = array(
 	'wall-notifications-markasread-this-wiki' => 'Des Wiki',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -3518,15 +3560,16 @@ $messages['ps'] = array(
 	'prefs-email-wall-v2' => 'پيغام دېوال',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'wall-delete-error-title' => 'Erro',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'wall-no-title' => 'Sem título',
@@ -3607,6 +3650,8 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-action-rev-confirm-ok' => 'Sim, excluir',
 	'wall-notifications' => 'Notificações',
 	'wall-notifications-all' => 'Todas as Notificações',
+	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} {{PLURAL:$1|não lida|não lidas}}',
+	'wall-notifications-wall-disabled' => 'O Mural de mensagens foi desativado nesta wiki. Impossível carregar notificações.',
 	'wall-sorting-archived' => 'Arquivado',
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
 	'wall-recentchanges-edit' => '(mensagem editada)',
@@ -3656,7 +3701,7 @@ ___________________________________________
 * Procure ajuda e conselho na Wikia Português do Brasil: http://pt-br.wikia.com
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências',
-	'mail-notification-body-HTML' => 'Oi $WATCHER,
+	'mail-notification-body-HTML' => 'Olá $WATCHER,
 <p>$SUBJECT.</p> 
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
@@ -3668,9 +3713,10 @@ ___________________________________________<br>
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências',
 	'prefs-email-wall-v2' => 'Mural de Mensagens',
+	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Express2000
  * @author Kuzura
  */
@@ -3926,7 +3972,7 @@ ___________________________________________<br />
 	'walldelete-toggle' => 'Включить просмотр постов, удалённых со Стены обсуждения',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -4208,7 +4254,7 @@ $messages['ta'] = array(
 	'wall-action-remove-confirm-ok' => 'நீக்குக',
 );
 
-/** Толышә зывон (Толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -4219,7 +4265,7 @@ $messages['tly'] = array(
 	'wall-history-action-view' => 'тәмшо кардеј',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -4485,5 +4531,41 @@ ___________________________________________<br />
 	'tog-enotifmywall-noemail' => 'Không. Đừng gửi cho tôi bất kỳ email nào về Tường tin nhắn',
 	'wallshowsource-toggle-v2' => 'Kích hoạt {{int:user-action-menu-view-source}} tùy chọn trên những bài viết Tường tin nhắn',
 	'wallshowsource-toggle' => 'Kích hoạt {{int:user-action-menu-view-source}} trên những bài viết Tường tin nhắn',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'wall-no-title' => '无标题',
+	'wall-message-loadmore' => '查看所有$1条{{PLURAL:$1|回复|回复}}',
+	'wall-message-wall' => '信息墙',
+	'wall-message-unfollow' => '取消关注',
+	'wall-message-undoremove' => '撤销',
+	'wall-toolbar-history' => '历史',
+	'wall-button-to-preview-comment' => '预览',
+	'wall-button-to-cancel-preview' => '编辑',
+	'wall-button-to-submit-comment' => '发布',
+	'wall-button-to-submit-reply' => '回复',
+	'wall-button-save-changes' => '保存更改',
+	'wall-button-cancel-changes' => '取消',
+	'wall-button-done-source' => '完成',
+	'wall-message-delete' => '删除',
+	'wall-action-all-confirm-cancel' => '取消',
+	'wall-action-admin-confirm-ok' => '删除',
+	'wall-notifications' => '通知',
+	'wall-notifications-markasread-all-wikis' => '全部维基',
+	'wall-notifications-reminder' => '您有<span>$1</span>条未读消息 {{PLURAL:$1|消息|消息}}',
+	'wn-user1-reply-you-your-wall' => '$1在您的信息墙上回复了您',
+	'wn-user2-reply-you-your-wall' => '$1和$2在您的信息墙上回复了您',
+	'wn-user3-reply-you-your-wall' => '$1等人在您的信息墙上回复了您',
+	'wn-user2-reply-other-your-wall' => '$1和$2在您的信息墙上回复了$3',
+	'wn-user1-reply-you-other-wall' => '$1在$2的信息墙上回复了您',
+	'wn-user1-reply-self-other-wall' => '$1在$2的信息墙上做出了回复',
+	'wn-user2-reply-other-other-wall' => '$1和$2在$4的信息墙上回复了$3',
+	'wall-sorting-most-active' => '最活跃',
+	'wall-recentchanges-new-message' => '在<a href="$1">$2的信息墙上</a>',
+	'mail-notification-html-greeting' => '嗨！$1,',
+	'prefs-email-wall-v2' => '信息墙',
 );
 

@@ -198,6 +198,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author OsamaK
+ * @author ترجمان05
  */
 $messages['ar'] = array(
 	'cnw-next' => 'التالي',
@@ -205,7 +206,13 @@ $messages['ar'] = array(
 	'cnw-or' => 'أو',
 	'cnw-title' => 'إنشاء ويكي جديدة',
 	'cnw-name-wiki-headline' => 'بدء ويكي',
+	'cnw-login' => 'لُج',
 	'cnw-signup' => 'أنشئ حسابا',
+	'cnw-call-to-login' => 'لج هنا',
+	'cnw-auth-headline' => 'لج',
+	'cnw-auth-headline2' => 'أنشئ حسابًا',
+	'cnw-userauth-creative' => 'لُج',
+	'cnw-userauth-marketing-heading' => 'ألا تملك حساباً؟',
 	'cnw-desc-lang' => 'اللغة',
 );
 
@@ -272,7 +279,7 @@ $messages['avk'] = array(
 	'cnw-error-bot-header' => 'Wetce stiernik su zo karavotal',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -300,7 +307,7 @@ $messages['bar'] = array(
 	'cnw-name-wiki-domain-label' => 'Gib deim Wiki a Adress',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -365,7 +372,7 @@ $messages['bg'] = array(
 	'cnw-error-torblock' => 'Създаването на укита чрез Tor мрежа не е позволено.',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  * @author Fulup
  * @author Y-M D
@@ -435,7 +442,7 @@ Hizivait dre PayPal evit kaout ur wiki nevez ouzhpenn evit $4.95 ar miz nemetken
 	'cnw-error-wiki-limit' => "Ac'hanta, bevennet eo ar c'hrouiñ wikioù da $1 wiki dre zen ha dre zevezh. Gortozit 24 eurvezh a-benn gellout krouiñ unan all.",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Jezevec
  * @author Reaperman
  */
@@ -564,7 +571,7 @@ $messages['diq'] = array(
 	'cnw-error-database' => 'Datay $1 qedya',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author Ciencia Al Poder
  * @author Geitost
@@ -647,7 +654,7 @@ Actualizar a través de PayPal para conseguir una wiki sin publicidad ¡por solo
 	'cnw-error-bot-header' => 'Has sido detectado como un bot',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -669,7 +676,7 @@ $messages['fa'] = array(
 	'cnw-desc-tip1' => 'راهنمایی',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Tofu II
  * @author VezonThunder
@@ -751,7 +758,7 @@ Päivitä PayPal avulla saadaksesi mainoksettoman wikin ainoastaan $4.95 kuukaud
 	'cnw-error-bot-header' => 'Sinut on havaittu botiksi',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Od1n
  * @author Peter17
@@ -979,7 +986,7 @@ $messages['he'] = array(
 	'cnw-welcome-help' => 'מצאו תשובות, עצות ועוד ב־<a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Dj
  */
@@ -1033,7 +1040,7 @@ $messages['hu'] = array(
 	'cnw-error-bot-header' => 'Botként azonosítva',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1120,7 +1127,7 @@ $messages['inh'] = array(
 	'cnw-name-wiki-wiki' => 'ВIикIи',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Lexaeus 94
  */
 $messages['it'] = array(
@@ -1273,14 +1280,14 @@ $messages['lb'] = array(
 	'cnw-upgrade-now' => 'Elo aktualiséieren',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Vpovilaitis
  */
 $messages['lt'] = array(
 	'cnw-name-wiki-headline' => 'Sukurti naują Wiki',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  * @author Rancher
  */
@@ -1471,7 +1478,7 @@ Naik taraf wiki anda kepada wiki tanpa iklan dengan membayar $4.95 (USD) sebulan
 	'cnw-error-bot-header' => 'Anda telah dikesan sebagai bot',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1667,7 +1674,7 @@ $messages['pfl'] = array(
 	'cnw-badword-header' => 'Imma longsoam',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Woytecr
@@ -1788,7 +1795,7 @@ $messages['ps'] = array(
 	'cnw-welcome-headline' => 'بختور مو شه، د $1 ويکي جوړ شو',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Geitost
  * @author Hamilton Abreu
  * @author Malafaya
@@ -1860,7 +1867,7 @@ Adopte esta versão através do PayPal para ter uma wiki livre de anúncios por 
 	'cnw-error-wiki-limit' => 'Olá, está limitado à criação de $1 {{PLURAL:$1|wiki|wikis}} por dia. Aguarde 24 horas antes de criar outra wiki.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  */
@@ -1928,7 +1935,7 @@ Adote esta versão através do PayPal para ter uma wiki livre de anúncios por a
 	'cnw-badword-msg' => 'Não use palavras impróprias ou proibidas na Descrição da Wiki, por favor',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -1973,7 +1980,7 @@ Actualizează prin PayPal pentru a obţine un wiki cu reclame gratis pentru doar
 	'cnw-welcome-instruction1' => 'Apasă pe butonul de mai jos pentru a începe să adaugi pagini wiki-ului tău.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -2054,7 +2061,7 @@ $messages['ru'] = array(
 	'cnw-error-bot-header' => 'Вы были определены как бот',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -2129,7 +2136,7 @@ $messages['sr-ec'] = array(
 	'cnw-error-bot-header' => 'Препознати сте као бот',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Geitost
  * @author Lokal Profil
  * @author McDutchie
@@ -2314,7 +2321,7 @@ $messages['tr'] = array(
 	'cnw-desc-lang' => 'Dil',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -2370,7 +2377,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-upgrade-now' => 'Хәзер яңартырга',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -2588,7 +2595,7 @@ Upgrade through PayPal to get an ad-free wiki for only $4.95 per month!',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -2619,6 +2626,7 @@ $messages['zh-hans'] = array(
 	'cnw-desc-tip2' => '喂',
 	'cnw-desc-choose' => '选择一个分类',
 	'cnw-desc-select-one' => '选一',
+	'cnw-desc-default-lang' => '您的维基将位于$1',
 	'cnw-desc-change-lang' => '改变',
 	'cnw-desc-lang' => '语言',
 	'cnw-desc-wiki-submit-error' => '请选一个分类',
@@ -2632,7 +2640,7 @@ $messages['zh-hans'] = array(
 	'cnw-error-bot-header' => '您已被识别为机器人',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  * @author Oapbtommy
  * @author Wrightbus

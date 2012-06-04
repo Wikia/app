@@ -43,7 +43,7 @@ $messages['be-tarask'] = array(
 	'interwikidispatcher-desc' => 'Вырашае інтэрвікі-спасылкі для зьмяншэньня перанакіраваньняў Apache',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -52,7 +52,7 @@ $messages['br'] = array(
 	'interwikidispatcher-desc' => 'Diskoulmañ a ra al liammoù etrewiki evit bihanaat an adkasoù Apache',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -68,7 +68,7 @@ $messages['de'] = array(
 	'interwikidispatcher-desc' => 'Löst Interwiki-Links auf um Apache-redirects zu reduzieren',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Translationista
  */
 $messages['es'] = array(
@@ -76,7 +76,7 @@ $messages['es'] = array(
 	'interwikidispatcher-desc' => 'Resuelve los vínculos interwiki para reducir las redirecciones Apache',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Od1n
  * @author Peter17
@@ -102,7 +102,7 @@ $messages['hsb'] = array(
 	'interwikidispatcher-desc' => 'Rozpušća mjezyrěčne wotkazy, zo bychu so dalesposrědkowanja Apache redukowali',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -110,7 +110,7 @@ $messages['hu'] = array(
 	'interwikidispatcher-desc' => 'Feloldja a wikiközi hivatkozásokat, hogy csökkentse az Apache átirányítások számát',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -126,7 +126,7 @@ $messages['id'] = array(
 	'interwikidispatcher-desc' => 'Mampu membenahi pranala interwiki link untuk mengurangi pengalihan Apache',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author HalphaZ
  */
 $messages['it'] = array(
@@ -158,7 +158,7 @@ $messages['lb'] = array(
 	'interwikidispatcher-desc' => 'Léist interwiki-Linke fir Apache-Viruleedungen ze reduzéieren',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -174,7 +174,7 @@ $messages['ms'] = array(
 	'interwikidispatcher-desc' => 'Membaiki pautan antara wiki untuk mengurangkan pelencongan Apache',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -190,7 +190,7 @@ $messages['nl'] = array(
 	'interwikidispatcher-desc' => 'Lost interwikiverwijzingen op om Apachedoorverwijzingen te verminderen',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -198,7 +198,7 @@ $messages['oc'] = array(
 	'interwikidispatcher-desc' => 'Resòlv los ligams interwiki per redusir las redireccions Apache',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -214,7 +214,7 @@ $messages['pms'] = array(
 	'interwikidispatcher-desc' => "A arzòlv j'anliure antërwiki për arduve le ridiression d'Apache",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -222,7 +222,7 @@ $messages['pt'] = array(
 	'interwikidispatcher-desc' => 'Resolve os links interwikis para reduzir os reencaminhamentos do servidor Apache',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  * @author Giro720
  * @author Jesielt
@@ -232,7 +232,7 @@ $messages['pt-br'] = array(
 	'interwikidispatcher-desc' => 'Resolve os links interwikis para reduzir os reencaminhamentos do servidor Apache',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -240,7 +240,7 @@ $messages['ru'] = array(
 	'interwikidispatcher-desc' => 'Разрешает интервики ссылки для сокращения перенаправлений Apache',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -250,7 +250,7 @@ $messages['sr-ec'] = array(
 	'interwikidispatcher-desc' => 'Решава међувики везе да би се смањио број Апаш преусмерења',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author VickyC
  * @author WikiPhoenix
  */
@@ -267,7 +267,7 @@ $messages['tl'] = array(
 	'interwikidispatcher-desc' => 'Naglulutas ng mga kawing na pang-interwiki upang mabawasan ang mga panlipat na Apache',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

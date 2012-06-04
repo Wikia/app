@@ -18,7 +18,7 @@ $messages['ar'] = array(
 	'outbound-screen-you-are-leaving' => 'أنت الآن تغادر ويكيا',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -30,7 +30,7 @@ Ha fellout a rafe deoc'h mont da welet ar [[{{MediaWiki:Mainpage}}|bajenn degeme
 	'outbound-screen-you-are-leaving' => "Emaoc'h o kuitaat Wikia.",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -65,7 +65,7 @@ Möchten Sie zur [[{{MediaWiki:Mainpage}}|Hauptseite]] oder vielleicht auf eine 
 	'outbound-screen-you-are-leaving' => 'Sie verlassen jetzt Wikia.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Crazymadlover
  */
 $messages['es'] = array(
@@ -77,7 +77,7 @@ Desearías ir a la [[{{MediaWiki:Mainpage}}|Página principal]] o tal vez a una 
 	'outbound-screen-you-are-leaving' => 'Estás ahora saliendo de Wikia',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Nike
  * @author Tofu II
@@ -91,7 +91,7 @@ Haluaisitko mennä [[{{MediaWiki:Mainpage}}|etusivulle]] tai kenties [[Special:R
 	'outbound-screen-you-are-leaving' => 'Olet poistumassa Wikiasta.',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Peter17
  * @author Slamduck
@@ -129,7 +129,7 @@ Chceće k [[{{MediaWiki:Mainpage}}|hłownej stronje]] abo snano k [[Special:Rand
 	'outbound-screen-you-are-leaving' => 'Wopušćeće nětko Wikiju.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -141,7 +141,7 @@ Szeretnél a [[{{MediaWiki:Mainpage}}|kezdőlapra]] vagy [[Special:Random|egy la
 	'outbound-screen-you-are-leaving' => 'Épp elhagyod a Wikia oldalait.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -160,7 +160,7 @@ $messages['id'] = array(
 	'outbound-screen-you-are-leaving' => 'Anda sekarang meninggalkan Wikia.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -183,7 +183,7 @@ $messages['ja'] = array(
 	'outbound-screen-you-are-leaving' => 'ウィキアを離れようとしています。',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -214,7 +214,7 @@ Adakah anda ingin ke [[{{MediaWiki:Mainpage}}|Laman utama]] ataupun [[Special:Ra
 	'outbound-screen-you-are-leaving' => 'Anda sekarang meninggalkan Wikia.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -251,7 +251,7 @@ Wil je naar de [[{{MediaWiki:Mainpage}}|hoofdpagina]] gaan, of wellicht naar een
 	'outbound-screen-you-are-leaving' => 'Je verlaat nu Wikia.',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -263,7 +263,7 @@ Anatz a la [[{{MediaWiki:Mainpage}}|pagina d'acuèlh]] o benlèu a [[Special:Ran
 	'outbound-screen-you-are-leaving' => 'Ara, sètz a quitar Wikia.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Cloudissimo
  */
@@ -289,7 +289,7 @@ Veul-lo andé a la [[{{MediaWiki:Mainpage}}|Pàgina prinsipal]] o miraco a na [[
 	'outbound-screen-you-are-leaving' => "A l'é an camin ch'a chita Wikia.",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -301,7 +301,7 @@ Deseja ir para a [[{{MediaWiki:Mainpage}}|Página principal]] ou talvez para uma
 	'outbound-screen-you-are-leaving' => 'Está agora a sair da Wikia.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  * @author Giro720
  */
@@ -314,7 +314,7 @@ Você deseja ir para a [[{{MediaWiki:Mainpage}}|Página principal]] ou talvez pa
 	'outbound-screen-you-are-leaving' => 'Você está agora saindo da Wikia.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -326,7 +326,7 @@ $messages['ru'] = array(
 	'outbound-screen-you-are-leaving' => 'Вы покидаете Wikia.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -340,7 +340,7 @@ $messages['sr-ec'] = array(
 	'outbound-screen-you-are-leaving' => 'Напуштате Викију.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -364,7 +364,7 @@ Nais mo bang pumunta sa [[{{MediaWiki:Mainpage}}|Unang pahina]] o kaya sa [[Spec
 	'outbound-screen-you-are-leaving' => 'Umaalis ka na sa Wikia.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Prima klasy4na
  */
 $messages['uk'] = array(

@@ -23,7 +23,7 @@ $messages['ar'] = array(
 	'paginator-back' => 'السابق',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -31,13 +31,13 @@ $messages['ast'] = array(
 	'paginator-back' => 'Anterior',
 );
 
-/** Azerbaijani (Azərbaycanca) */
+/** Azerbaijani (azərbaycanca) */
 $messages['az'] = array(
 	'paginator-next' => 'Sonrakı',
 	'paginator-back' => 'Əvvəlki',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -45,7 +45,7 @@ $messages['br'] = array(
 	'paginator-back' => 'Distreiñ',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -53,7 +53,7 @@ $messages['ca'] = array(
 	'paginator-back' => 'Enrere',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -73,13 +73,13 @@ $messages['de'] = array(
 	'paginator-back' => 'Zurück',
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $messages['es'] = array(
 	'paginator-next' => 'Siguiente',
 	'paginator-back' => 'Atrás',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -101,7 +101,7 @@ $messages['he'] = array(
 	'paginator-back' => 'הקודם',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -109,7 +109,7 @@ $messages['hu'] = array(
 	'paginator-back' => 'Vissza',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -117,7 +117,7 @@ $messages['ia'] = array(
 	'paginator-back' => 'Retornar',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -139,7 +139,7 @@ $messages['lb'] = array(
 	'paginator-back' => 'Zréck',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -162,7 +162,7 @@ $messages['ms'] = array(
 	'paginator-back' => 'Kembali',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -195,7 +195,7 @@ $messages['pfl'] = array(
 	'paginator-back' => 'Zrigg',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Shareif
  */
 $messages['pl'] = array(
@@ -209,25 +209,25 @@ $messages['pms'] = array(
 	'paginator-back' => 'André',
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $messages['pt'] = array(
 	'paginator-next' => 'Seguinte',
 	'paginator-back' => 'Voltar',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (português do Brasil) */
 $messages['pt-br'] = array(
 	'paginator-next' => 'Seguinte',
 	'paginator-back' => 'Voltar',
 );
 
-/** Russian (Русский) */
+/** Russian (русский) */
 $messages['ru'] = array(
 	'paginator-next' => 'Далее',
 	'paginator-back' => 'Назад',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -235,7 +235,7 @@ $messages['sr-ec'] = array(
 	'paginator-back' => 'Назад',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -265,7 +265,7 @@ $messages['tl'] = array(
 	'paginator-back' => 'Bumalik',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -273,7 +273,7 @@ $messages['tt-cyrl'] = array(
 	'paginator-back' => 'Артка',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
@@ -289,7 +289,7 @@ $messages['vi'] = array(
 	'paginator-back' => 'Quay lại',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -297,7 +297,7 @@ $messages['zh-hans'] = array(
 	'paginator-back' => '前一步',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(

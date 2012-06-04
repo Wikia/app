@@ -17,7 +17,7 @@ $messages['qqq'] = array(
 	'performancestat-cpu' => 'CPU time (in seconds).',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -25,14 +25,14 @@ $messages['az'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'performancestat-total' => 'Общо: $1s',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -41,7 +41,7 @@ $messages['br'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -61,7 +61,7 @@ $messages['de'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author VegaDark
  */
@@ -72,14 +72,14 @@ $messages['es'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  */
 $messages['fi'] = array(
 	'performancestat-total' => 'Yhteensä: $1 s',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -99,7 +99,7 @@ $messages['gl'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author TK-999
  */
@@ -110,7 +110,7 @@ $messages['hu'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -120,7 +120,7 @@ $messages['ia'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -145,7 +145,7 @@ $messages['lb'] = array(
 	'performancestat-cpu' => 'CPU: $1 s',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -165,7 +165,7 @@ $messages['ms'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -185,7 +185,7 @@ $messages['nl'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -213,7 +213,7 @@ $messages['ps'] = array(
 	'performancestat-total' => 'ټولټال: $1s',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -223,7 +223,7 @@ $messages['pt'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -233,7 +233,7 @@ $messages['pt-br'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -244,7 +244,7 @@ $messages['ru'] = array(
 	'performancestat-cpu' => 'ЦП: $1s',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -253,7 +253,7 @@ $messages['sr-ec'] = array(
 	'performancestat-cpu' => 'Процесор: $1s',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -279,5 +279,12 @@ $messages['tl'] = array(
 	'performancestat-total' => 'Kabuuan: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'CPU: $1s',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'performancestat-cpu' => 'CPU: $1秒',
 );
 

@@ -43,6 +43,7 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author DRIHEM
  */
 $messages['ar'] = array(
 	'dump-database' => 'مقالب قاعدة البيانات',
@@ -54,6 +55,7 @@ $messages['ar'] = array(
 	'dump-database-request' => 'طلب تحديث',
 	'dump-database-request-info' => '(يتم التحديث أسبوعيا عادة)',
 	'dump-database-request-submit' => 'إرسال طلب',
+	'dump-database-request-already-submitted' => 'تم طلب المقلب مؤخرا (منذ 7 أيام على الأقل)',
 	'dump-database-request-requested' => 'طلب بعث قاعدة البيانات',
 	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
 );
@@ -77,7 +79,7 @@ $messages['be-tarask'] = array(
 	'dump-database-info-more' => 'Калі ласка, глядзіце дадатковую інфармацыю <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -98,7 +100,7 @@ $messages['bjn'] = array(
 	'dump-database-request-submit' => 'Kirim parmintaan',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -117,7 +119,7 @@ $messages['br'] = array(
 	'dump-database-info-more' => 'Mar plij lennit <a href="http://community.wikia.com/wiki/Help:Database_download">amañ</a> evit muioc\'h a ditouroù',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -126,7 +128,7 @@ $messages['bs'] = array(
 	'dump-database-request-submit' => 'Pošalji zahtjev',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -144,7 +146,7 @@ $messages['ca'] = array(
 	'dump-database-info-more' => 'Si us plau, <a href="http://community.wikia.com/wiki/Help:Database_download">veure</a> per a més informació',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
@@ -163,7 +165,7 @@ $messages['cs'] = array(
 	'dump-database-info-more' => 'Více informací <a href="http://community.wikia.com/wiki/Help:Database_download">zde</a>',
 );
 
-/** Danish (Dansk)
+/** Danish (dansk)
  * @author Emilkris33
  */
 $messages['da'] = array(
@@ -208,7 +210,7 @@ $messages['diq'] = array(
 	'dump-database-curr-pages' => 'Pelê tedeestey',
 	'dump-database-request' => 'Wastışi neweke',
 	'dump-database-request-submit' => 'Wastış bırşê',
-	'dump-database-info-more' => 'Kerem ke, şırê melumati <a href="http://community.wikia.com/wiki/Help:Database_download">bıvinê</a>',
+	'dump-database-info-more' => 'Şıma ra reca, şırê melumati <a href="http://community.wikia.com/wiki/Help:Database_download">bıvinê</a>',
 );
 
 /** Greek (Ελληνικά)
@@ -224,7 +226,7 @@ $messages['el'] = array(
 	'dump-database-info-more' => 'Παρακαλώ να <a href="http://community.wikia.com/wiki/Help:Database_download">δείτε</a>  για περισσότερες πληροφορίες',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author Locos epraix
  * @author Translationista
@@ -244,7 +246,7 @@ $messages['es'] = array(
 	'dump-database-info-more' => 'Por favor, <a href="http://community.wikia.com/wiki/Help:Database_download">ver esto</a> para más información',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -254,7 +256,7 @@ $messages['eu'] = array(
 	'dump-database-info-more' => 'Mesedez <a href="http://community.wikia.com/wiki/Help:Database_download">ikusi</a> informazio gehiagorako',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author VezonThunder
@@ -274,7 +276,7 @@ $messages['fi'] = array(
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Katso lisätietoja</a>',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Jean-Frédéric
  * @author Peter17
@@ -314,13 +316,14 @@ $messages['gl'] = array(
 
 /** Hebrew (עברית)
  * @author 0ftal
+ * @author Amire80
  */
 $messages['he'] = array(
 	'dump-database' => 'גיבויי מסד הנתונים',
-	'dump-database-info' => 'מגבה מסד נתונים יכול לשמש כגיבוי אישי (ויקיה מייצרת גיבויים נפרדים של כל הויקי באופן אוטומטי) או עבור רובוטי התחזוקה',
+	'dump-database-info' => 'מגבה מסד נתונים יכול לשמש כגיבוי אישי (ויקיה מייצרת גיבויים נפרדים של כל הוויקי באופן אוטומטי) או עבור רובוטי התחזוקה',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  * @author Glanthor Reviol
  */
@@ -339,7 +342,7 @@ $messages['hu'] = array(
 	'dump-database-info-more' => 'További információkat <a href="http://community.wikia.com/wiki/Help:Database_download">itt</a> találsz',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -374,7 +377,7 @@ $messages['id'] = array(
 	'dump-database-info-more' => 'Silakan <a href="http://community.wikia.com/wiki/Help:Database_download">lihat ini</a> untuk informasi lebih lanjut',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  * @author Nemo bis
  * @author OrbiliusMagister
@@ -451,7 +454,7 @@ $messages['lb'] = array(
 	'dump-database-request' => 'Eng Aktualisatioun ufroen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -494,7 +497,7 @@ $messages['my'] = array(
 	'dump-database-curr-pages' => 'ယခုစာမျက်နှာများ',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -532,7 +535,7 @@ Wikia maakt automatisch back-ups van alle wiki's.",
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Meer informatie</a>.',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -543,7 +546,7 @@ $messages['oc'] = array(
 	'dump-database-request-submit' => 'Mandar la requèsta',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Marcin Łukasz Kiejzik
  * @author Sovq
  * @author Sp5uhe
@@ -590,7 +593,7 @@ $messages['ps'] = array(
 	'dump-database-request-submit' => 'غوښتنه ورلېږل',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Hamilton Abreu
  */
@@ -609,7 +612,7 @@ $messages['pt'] = array(
 	'dump-database-info-more' => 'Consulte <a href="http://community.wikia.com/wiki/Help:Database_download">download da base de dados</a> para mais informação, por favor',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  * @author Giro720
  */
@@ -628,7 +631,7 @@ $messages['pt-br'] = array(
 	'dump-database-info-more' => 'Por favor <a href="http://community.wikia.com/wiki/Help:Database_download">veja isto</a> para mais informações',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -636,7 +639,7 @@ $messages['ro'] = array(
 	'dump-database-request' => 'Solicită o actualizare',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Lockal
  * @author MaxSem
  * @author Александр Сигачёв
@@ -663,7 +666,7 @@ $messages['si'] = array(
 	'dump-database-request-submit' => 'ඉල්ලීම යවන්න',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -683,7 +686,7 @@ $messages['sr-ec'] = array(
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте ово</a> за више информација',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Per
  * @author Tobulos1
  */
@@ -738,7 +741,7 @@ $messages['tl'] = array(
 	'dump-database-info-more' => 'Paki <a href="http://community.wikia.com/wiki/Help:Database_download">tingnan</a> para sa iba pang kabatiran',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Alex Khimich
  * @author Prima klasy4na
  * @author Тест
@@ -758,7 +761,7 @@ $messages['uk'] = array(
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(

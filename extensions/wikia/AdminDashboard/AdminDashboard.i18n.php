@@ -104,6 +104,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author ترجمان05
  */
 $messages['ar'] = array(
 	'admindashboard-title' => 'لوحة إدارة {{SITENAME}}',
@@ -135,9 +136,16 @@ $messages['ar'] = array(
 	'admindashboard-control-help-tooltip' => 'البحث عن مساعدة',
 	'admindashboard-control-community-corner-label' => 'ركن المجتمع',
 	'admindashboard-controls-content-header' => 'المحتوى',
+	'admindashboard-control-categories-list-label' => 'كل التصنيفات',
+	'admindashboard-control-add-page-label' => 'أضف صفحة',
+	'admindashboard-control-add-page-tooltip' => 'أضف صفحة إلى الويكي الخاص بك.',
+	'admindashboard-control-add-photo-label' => 'أضف صورة',
+	'admindashboard-control-add-photo-tooltip' => 'أضف صورا جديدة إلى الويكي الخاص بك.',
+	'admindashboard-control-multiple-upload-label' => 'أضف صورا متعددة',
+	'admindashboard-back-to-dashboard' => 'العودة إلى لوحة التحكم',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Melikov Memmed
  */
@@ -175,7 +183,7 @@ $messages['bar'] = array(
 	'admindashboard-control-page-layout-builder-label' => 'Seiten-Layout-Erstejer',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -191,7 +199,7 @@ $messages['bg'] = array(
 	'admindashboard-control-add-page-label' => 'Добавяне на страница',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -225,7 +233,7 @@ $messages['br'] = array(
 	'admindashboard-back-to-dashboard' => "Distreiñ d'an daolenn-stur",
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -240,7 +248,7 @@ $messages['ca'] = array(
 	'admindashboard-control-recent-changes-label' => 'Canvis Recents',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Jezevec
  * @author Mr. Richard Bolla
  */
@@ -272,6 +280,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author PtM
  * @author SVG
  */
 $messages['de'] = array(
@@ -302,6 +311,7 @@ $messages['de'] = array(
 	'admindashboard-control-invite-tooltip' => 'Lade andere Personen ein dieses Wiki zu verwenden.',
 	'admindashboard-control-help-label' => 'Hilfe',
 	'admindashboard-control-help-tooltip' => 'Hilfe finden.',
+	'admindashboard-control-help-url' => 'http://de.community.wikia.com/wiki/Hilfe:Übersicht',
 	'admindashboard-control-community-corner-label' => 'Gemeinschafts-Ecke',
 	'admindashboard-control-community-corner-tooltip' => 'Bearbeite den Abschnitt Gemeinschafts-Ecke deines Wikis und benachrichtige deine Benutzer.',
 	'admindashboard-controls-content-header' => 'Inhalt',
@@ -341,7 +351,7 @@ $messages['el'] = array(
 	'admindashboard-control-invite-label' => 'Πρόσκληση',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Benfutbol10
  * @author Bola
  * @author DJ Nietzsche
@@ -409,7 +419,7 @@ $messages['fa'] = array(
 	'admindashboard-control-categories-list-label' => 'همهٔ رده‌ها',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author VezonThunder
  */
@@ -457,7 +467,7 @@ $messages['fi'] = array(
 	'admindashboard-back-to-dashboard' => 'Takaisin kojelautaan',
 );
 
-/** Faroese (Føroyskt)
+/** Faroese (føroyskt)
  * @author EileenSanda
  */
 $messages['fo'] = array(
@@ -471,7 +481,7 @@ $messages['fo'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Legg fleiri myndir her',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -566,13 +576,14 @@ $messages['gl'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Deror avi
  */
 $messages['he'] = array(
 	'admindashboard-control-help-label' => 'עזרה',
 	'admindashboard-control-help-tooltip' => 'למציאת עזרה.',
 	'admindashboard-control-community-corner-label' => 'שער הקהילה',
-	'admindashboard-control-community-corner-tooltip' => 'לעריכת איזור שערה הקהילה של הויקי שלךת ודווח למשתמשים.',
+	'admindashboard-control-community-corner-tooltip' => 'לעריכת איזור שערה הקהילה של הוויקי שלךת ודווח למשתמשים.',
 	'admindashboard-controls-content-header' => 'תוכן',
 	'admindashboard-control-categories-list-label' => 'כל הקטגוריות',
 	'admindashboard-control-categories-list-tooltip' => 'לצפייה בכל הקטגוריות המפורטות כעת בוויקי שלך.',
@@ -586,7 +597,7 @@ $messages['he'] = array(
 	'admindashboard-control-multiple-upload-tooltip' => 'להוספת יותר מתמונה אחת בו זמניתת באמצעות כלי העלאת תמונות מרובות.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author TK-999
  */
 $messages['hu'] = array(
@@ -630,7 +641,7 @@ $messages['hu'] = array(
 	'admindashboard-back-to-dashboard' => 'Vissza a műszerfalhoz',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -725,7 +736,7 @@ $messages['id'] = array(
 	'admindashboard-back-to-dashboard' => 'Kembali ke Dashboard',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Karika
  * @author Lexaeus 94
@@ -821,6 +832,7 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Excalibur777
+ * @author 아라
  */
 $messages['ko'] = array(
 	'admindashboard-title' => '{{SITENAME}} 대시보드',
@@ -831,7 +843,7 @@ $messages['ko'] = array(
 	'admindashboard-controls-wiki-header' => '위키',
 	'admindashboard-control-theme-designer-label' => '비주얼 디자이너',
 	'admindashboard-control-theme-designer-tooltip' => '비주얼 디자이너를 사용 하면 위키 색상, 배경 및, 더 많은 사용자 정의할 수 있습니다.',
-	'admindashboard-control-recent-changes-label' => '최근 변경',
+	'admindashboard-control-recent-changes-label' => '최근 바뀜',
 	'admindashboard-control-recent-changes-tooltip' => '최근 변경을 모든 단일 타임 라인에서 변경한 표시 합니다.',
 	'admindashboard-control-top-navigation-label' => '상단 메뉴',
 	'admindashboard-control-top-navigation-tooltip' => '상단 메뉴을 사용 하면 위키의 상단 메뉴를 사용자 지정할 수 있습니다.',
@@ -896,7 +908,7 @@ $messages['lb'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Méi Fotoen derbäisetzen',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -926,7 +938,7 @@ $messages['lt'] = array(
 	'admindashboard-control-multiple-upload-tooltip' => 'Įkelkite daugiau nei vieną nuotrauką iš karto su "the multiple photo upload tool".',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1021,7 +1033,7 @@ $messages['ms'] = array(
 	'admindashboard-back-to-dashboard' => 'Kembali ke Papan Pemuka',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -1125,7 +1137,7 @@ $messages['pfl'] = array(
 	'admindashboard-controls-wiki-header' => 'Wiki',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Cloudissimo
  * @author Sovq
  * @author Woytecr
@@ -1140,18 +1152,18 @@ $messages['pl'] = array(
 	'admindashboard-control-theme-designer-label' => 'Kreator motywu',
 	'admindashboard-control-theme-designer-tooltip' => 'Kreator motywu pozwala dostosować kolorystykę wiki, tło i więcej.',
 	'admindashboard-control-recent-changes-label' => 'Ostatnie zmiany',
-	'admindashboard-control-recent-changes-tooltip' => 'Ostatnie zmiany wyświetlają wszystkie edycje dokonane na Twojej wiki w pewnym odstępie czasu.',
+	'admindashboard-control-recent-changes-tooltip' => 'Ostatnie zmiany pokazują wszystkie edycje dokonane na Twojej wiki w określonym czasie.',
 	'admindashboard-control-top-navigation-label' => 'Główna nawigacja',
 	'admindashboard-control-top-navigation-tooltip' => 'Główna nawigacja pozwala dostosować menu na górze Twojej wiki.',
 	'admindashboard-control-wiki-features-label' => 'Rozszerzenia Wiki',
 	'admindashboard-control-wiki-features-tooltip' => 'Rozszerzenia Wiki pozwalają na włączenie dodatkowych opcji na Twojej wiki.',
-	'admindashboard-control-page-layout-builder-label' => 'Kreator kompozycji strony',
-	'admindashboard-control-page-layout-builder-tooltip' => 'Kreator kompozycji strony pozwala stworzyć szablonowy układ stron dla użytkowników tworzących nowy artykuł.',
+	'admindashboard-control-page-layout-builder-label' => 'Kreator układu strony',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Kreator układu strony pozwala stworzyć szablonowy układ stron dla użytkowników tworzących nowy artykuł.',
 	'admindashboard-controls-community-header' => 'Społeczność',
 	'admindashboard-control-user-list-label' => 'Lista użytkowników',
-	'admindashboard-control-user-list-tooltip' => 'Pokazuje listę użytkowników, którzy uczestniczą na twojej wiki.',
+	'admindashboard-control-user-list-tooltip' => 'Pokazuje listę użytkowników, którzy edytują na Twojej wiki.',
 	'admindashboard-control-user-rights-label' => 'Uprawnienia użytkowników',
-	'admindashboard-control-user-rights-tooltip' => 'Zarządza grupami i uprawnieniami użytkowników na Twojej wiki.',
+	'admindashboard-control-user-rights-tooltip' => 'Zarządzanie grupami i uprawnieniami użytkowników na Twojej wiki.',
 	'admindashboard-control-group-rights-label' => 'Uprawnienia grup',
 	'admindashboard-control-group-rights-tooltip' => 'Przegląd uprawnień dla różnych grup użytkowników.',
 	'admindashboard-control-invite-label' => 'Zaproś',
@@ -1160,7 +1172,7 @@ $messages['pl'] = array(
 	'admindashboard-control-help-tooltip' => 'Uzyskaj pomoc.',
 	'admindashboard-control-help-url' => 'http://spolecznosc.wikia.com/wiki/Help:Zawartość',
 	'admindashboard-control-community-corner-label' => 'Zakątek społeczności',
-	'admindashboard-control-community-corner-tooltip' => 'Edytuj Zakątek społeczności Twojej wiki i powiadom użytkowników.',
+	'admindashboard-control-community-corner-tooltip' => 'Edytuj Zakątek społeczności Twojej wiki i powiadom użytkowników o nowościach.',
 	'admindashboard-controls-content-header' => 'Zawartość',
 	'admindashboard-control-categories-list-label' => 'Wszystkie kategorie',
 	'admindashboard-control-categories-list-tooltip' => 'Wyświetla wszystkie kategorie użyte na Twojej wiki.',
@@ -1200,11 +1212,13 @@ $messages['ps'] = array(
 	'admindashboard-control-multiple-upload-label' => 'ګڼ انځورونه ورډېرول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Andresilvazito
  * @author Malafaya
+ * @author Rhaijin
  */
 $messages['pt'] = array(
+	'admindashboard-header' => 'Painel de administração',
 	'admindashboard-toolbar-link' => 'Administrador',
 	'admindashboard-tab-advanced' => '↓Avançado',
 	'admindashboard-tab-general' => 'Geral',
@@ -1215,9 +1229,10 @@ $messages['pt'] = array(
 	'admindashboard-control-user-rights-label' => 'Direitos de Usuário',
 	'admindashboard-control-user-rights-tooltip' => 'Adicionar e remover os direitos de grupos e permissões para usuários no seu wiki.',
 	'admindashboard-control-help-label' => 'Ajuda',
+	'admindashboard-control-add-photo-tooltip' => 'Adicione novas fotos ao seu wiki.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  */
@@ -1261,7 +1276,7 @@ $messages['pt-br'] = array(
 	'admindashboard-control-multiple-upload-label' => 'Adicionar várias imagens',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -1271,7 +1286,7 @@ $messages['roa-tara'] = array(
 	'admindashboard-controls-content-header' => 'Condenute',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Askarmuk
  * @author Kuzura
  */
@@ -1329,7 +1344,7 @@ $messages['si'] = array(
 	'admindashboard-controls-wiki-header' => 'විකි',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1365,7 +1380,7 @@ $messages['sr-ec'] = array(
 	'admindashboard-back-to-dashboard' => 'Назад на Таблу',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1435,12 +1450,14 @@ $messages['ta'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'admindashboard-tab-advanced' => 'ఉన్నతం',
+	'admindashboard-tab-general' => 'సాధారణం',
 	'admindashboard-controls-wiki-header' => 'వికీ',
 	'admindashboard-control-help-label' => 'సహాయం',
 	'admindashboard-control-categories-list-label' => 'అన్ని వర్గాలు',
 );
 
-/** Толышә зывон (Толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -1464,7 +1481,7 @@ $messages['tr'] = array(
 	'admindashboard-control-categories-list-label' => 'Tüm Kategoriler',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -1511,7 +1528,7 @@ $messages['tt-cyrl'] = array(
 	'admindashboard-control-multiple-upload-tooltip' => 'Махсус корал ярдәмендә бер юлы берничә сурәт  өстәргә.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Vox
  */
@@ -1619,7 +1636,7 @@ $messages['vi'] = array(
 	'admindashboard-back-to-dashboard' => 'Trở về Bảng điều khiển',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hzy980512
@@ -1662,7 +1679,7 @@ $messages['zh-hans'] = array(
 	'admindashboard-back-to-dashboard' => '返回面板',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

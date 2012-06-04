@@ -139,7 +139,7 @@ $messages['ar'] = array(
 كتابة عنوان المقطع الثاني من مقالك هنا.',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -154,7 +154,7 @@ $messages['ba'] = array(
 	'createpage_enter_text' => 'Текст:',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -174,7 +174,7 @@ $messages['bg'] = array(
 	'tog-createpagedefaultblank' => 'По подразбиране използване на празна страница при създаване на нова страница',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -219,7 +219,7 @@ Skrivit amañ rannskrid kentañ ho pennad.
 Skrivit amañ eil rannskrid ho pennad.',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  * @author Ciencia Al Poder
  */
@@ -264,7 +264,7 @@ Escriu la primera secció de la pàgina aquí.
 Escriu la segona secció de la pàgina aquí.',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -399,7 +399,7 @@ $messages['el'] = array(
 	'createpage-dialog-blank' => 'Κενή σελίδα',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Ciencia Al Poder
  * @author Crazymadlover
@@ -443,7 +443,7 @@ Escribe aquí la primera sección de tu artículo.
 Escribe aquí la segunda sección de tu artículo.',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -503,7 +503,7 @@ $messages['fa'] = array(
 	'createpage-error-empty-title' => 'لطفاً برای صفحهٔ خود عنوانی بنویسید',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Ilkea
@@ -549,7 +549,7 @@ Kirjoita sivusi ensimmäinen osio tähän.
 Kirjoita sivusi toinen osio tähän.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author IAlex
  * @author Wyz
@@ -679,7 +679,7 @@ $messages['he'] = array(
 כתוב את הקטע השני במאמר שלך כאן.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Enbéká
  * @author Glanthor Reviol
@@ -704,7 +704,7 @@ Válassz másikat!',
 	'createpage-error-empty-title' => 'Adj címet a lapnak',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -793,9 +793,10 @@ Tulis bagian pertama dari halaman Anda di sini.
 Tulis bagian kedua dari halaman Anda di sini.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author HalphaZ
  * @author Leviathan 89
+ * @author Ximo17
  */
 $messages['it'] = array(
 	'createpage-desc' => "Permette di creare una nuova pagina utilizzando l'editor WYSIWYG di Wikia",
@@ -825,7 +826,7 @@ Puoi andare a <a href="$1">$2</a> , o rinominare la tua pagina',
 Usa un titolo diverso.",
 	'createpage-error-article-blocked' => 'Spiacente, non puoi creare questo articolo in questo momento.',
 	'tog-createpagedefaultblank' => 'Utilizza una pagina vuota come default per la creazione di una nuova pagina',
-	'tog-createpagepopupdisabled' => 'Disabilita la finestra pop-up "Crea nuova pagina"',
+	'tog-createpagepopupdisabled' => 'Disabilita il flusso "Crea nuovo articolo" (Non Raccomandato)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Scrivi qui il primo paragrafo del tuo articolo.
 
@@ -1051,7 +1052,7 @@ Soraty eto ny fizarana voalohan'ny pejinao.
 Soraty eto ny fizarana faharoan'ny pejinao.",
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1144,7 +1145,7 @@ Isikan bahagian pertama laman anda di sini.
 Isikan bahagian kedua laman anda di sini.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1288,7 +1289,7 @@ $messages['pfl'] = array(
 	'createpage_title_caption' => 'Tidl',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Cloudissimo
  * @author Sovq
  * @author Sp5uhe
@@ -1404,7 +1405,7 @@ $messages['ps'] = array(
 د خپل د مخ دويمه برخه دلته وليکۍ.',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -1449,15 +1450,16 @@ Escreva aqui a primeira secção da sua página.
 Escreva aqui a segunda secção da sua página.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  * @author Jesielt
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
 	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG da Wikia',
 	'createpage-sp-title' => 'Crie um novo artigo',
 	'createpage_title' => 'Crie um novo artigo',
-	'createpage_title_caption' => 'Título:',
+	'createpage_title_caption' => 'Título',
 	'createpage_enter_text' => 'Texto:',
 	'createpage_empty_title_error' => 'Título requerido',
 	'createpage_empty_article_body_error' => 'Texto de artigo requerido',
@@ -1481,7 +1483,7 @@ Você pode ir a <a href="$1">$2</a>, ou renomear a sua página.',
 Por favor, use um título diferente.',
 	'createpage-error-article-blocked' => 'Desculpe-nos, você está impossibilitado de criar aquele artigo agora.',
 	'tog-createpagedefaultblank' => 'Usar uma página em branco como padrão para criar uma nova página',
-	'tog-createpagepopupdisabled' => 'Desativar a janela flutuante Criar Página',
+	'tog-createpagepopupdisabled' => 'Desativar o processo "Criar uma nova página" (Não recomendado)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Escreva o primeiro parágrafo do seu artigo aqui.
 
@@ -1494,7 +1496,7 @@ Escreva a primeira seção do seu artigo aqui.
 Escreva a segunda seção do seu artigo aqui.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  * @author Stelistcristi
  */
@@ -1512,7 +1514,7 @@ $messages['ro'] = array(
 	'createpage-dialog-blank' => 'Pagină necompletată',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -1558,7 +1560,7 @@ $messages['ru'] = array(
 Напишите здесь вторую секцию вашей статьи.',
 );
 
-/** Sakha (Саха тыла)
+/** Sakha (саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1602,7 +1604,7 @@ $messages['sah'] = array(
 Манна ыстатыйаҥ иккис салаатын суруй.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
@@ -1633,7 +1635,7 @@ $messages['sr-ec'] = array(
 	'createpage-error-article-blocked' => 'Не можете да направите страницу.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Per
  * @author Tobulos1
  * @author WikiPhoenix
@@ -1760,7 +1762,7 @@ $messages['tr'] = array(
 	'createpage-dialog-blank' => 'Boş sayfa',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -1804,7 +1806,7 @@ $messages['tt-cyrl'] = array(
 Монда мәкаләнең киләсе бүлеген языгыз.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Prima klasy4na
  * @author Тест
@@ -1910,7 +1912,7 @@ $messages['zh'] = array(
 	'createpage_enter_text' => '輸入文字',
 );
 
-/** Chinese (China) (‪中文(中国大陆)‬) */
+/** Chinese (China) (‪中文（中国大陆）‬) */
 $messages['zh-cn'] = array(
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '发表新文章',
@@ -1918,7 +1920,7 @@ $messages['zh-cn'] = array(
 	'createpage_enter_text' => '输入文字',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -1928,10 +1930,17 @@ $messages['zh-hans'] = array(
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '标题',
 	'createpage_enter_text' => '输入文字',
+	'createpage_invalid_title_error' => '标题无效',
+	'createpage_spam' => '抱歉，无法保存您的编辑',
 	'createpage_cant_edit' => '无法执行编辑',
 	'createpage-dialog-title' => '创造一个新页面',
 	'createpage-dialog-message1' => '喔~ 您将创建一个新页面！',
+	'createpage-dialog-message2' => '您希望将其命名为何？',
+	'createpage-dialog-format' => '标准布局',
 	'createpage-dialog-blank' => '空白页面',
+	'createpage-error-empty-title' => '请为您的页面添加标题',
+	'createpage-error-article-exists' => '已存在同名页面。
+您可以访问<a href="$1">$2</a>，或重命名您的页面。',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 在这里撰写第一段落。
 
@@ -1944,7 +1953,7 @@ $messages['zh-hans'] = array(
 在这里撰写第二项。',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Anakmalaysia
  * @author Ffaarr
  * @author Oapbtommy
@@ -1967,7 +1976,7 @@ $messages['zh-hant'] = array(
 	'tog-createpagedefaultblank' => '使用空白頁作為預設創建新頁面',
 );
 
-/** Chinese (Hong Kong) (‪中文(香港)‬)
+/** Chinese (Hong Kong) (‪中文（香港）‬)
  * @author Anakmalaysia
  */
 $messages['zh-hk'] = array(
@@ -1977,14 +1986,14 @@ $messages['zh-hk'] = array(
 	'createpage_enter_text' => '輸入文字',
 );
 
-/** Chinese (Singapore) (‪中文(新加坡)‬) */
+/** Chinese (Singapore) (‪中文（新加坡）‬) */
 $messages['zh-sg'] = array(
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '文章标题',
 	'createpage_enter_text' => '输入文字',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬) */
+/** Chinese (Taiwan) (‪中文（台灣）‬) */
 $messages['zh-tw'] = array(
 	'createpage-sp-title' => '新增文章',
 	'createpage_title' => '發表新文章',

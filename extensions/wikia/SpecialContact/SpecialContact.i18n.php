@@ -61,7 +61,7 @@ $messages['ar'] = array(
 	'specialcontact-ccme' => 'أرسل لي نسخة من هذه الرسالة',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -75,7 +75,7 @@ $messages['az'] = array(
 	'specialcontact-problemdesc' => 'Mesaj',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -84,7 +84,7 @@ $messages['bg'] = array(
 	'specialcontact-problemdesc' => 'Съобщение',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -100,7 +100,7 @@ $messages['br'] = array(
 	'specialcontact-mail' => 'Kas da Wikia',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -177,14 +177,14 @@ $messages['diq'] = array(
 	'contact' => 'Wikia İrtibat',
 	'specialcontact-wikia' => 'Wikia İrtibat',
 	'specialcontact-pagetitle' => 'Wikia İrtibat',
-	'specialcontact-username' => 'Namey Qarberi',
+	'specialcontact-username' => 'Namey Karberi',
 	'specialcontact-realname' => 'Namey şıma',
 	'specialcontact-yourmail' => 'Adresê e-posta',
 	'specialcontact-problem' => 'Mesela',
 	'specialcontact-problemdesc' => 'Mesac',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -253,7 +253,7 @@ $messages['fa'] = array(
 	'specialcontact-submitcomplete' => 'متشکر از تماس شما با ویکیا.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Olli
  * @author Tofu II
  */
@@ -288,7 +288,7 @@ Jos haluat käyttää tavallista sähköpostia tai sinulla on lähetettäviä li
 	'specialcontact-submitcomplete' => 'Kiitos yhteydenotostasi.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -356,7 +356,7 @@ Se prefire usar o correo electrónico ou necesita enviar ficheiros adxuntos, pod
 	'specialcontact-submitcomplete' => 'Grazas por poñerse en contacto con Wikia.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -371,7 +371,7 @@ $messages['hu'] = array(
 	'specialcontact-captchatitle' => 'Elmosott szó',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -434,7 +434,7 @@ $messages['ja'] = array(
 	'specialcontact-mail' => '送信',
 	'specialcontact-filledin' => 'この情報はアカウントの設定をもとに入力されています',
 	'specialcontact-ccme' => '自分宛に控えを送信する',
-	'specialcontact-ccdisabled' => '無効: この機能を利用するには有効な電子メールアドレスを登録する必要があります',
+	'specialcontact-ccdisabled' => '無効: この機能を利用するには有効なメールアドレスを登録する必要があります',
 	'specialcontact-notyou' => '身に覚えのない利用者名ですか？',
 	'specialcontact-captchainfo' => '画像に表示されている文字を入力してください',
 	'specialcontact-captchatitle' => '画像認証',
@@ -443,7 +443,7 @@ $messages['ja'] = array(
 	'specialcontact-captchafail' => '認証コードが間違っているか入力されていません',
 	'specialcontact-mailsub' => 'ウィキアの連絡用メール',
 	'specialcontact-mailsubcc' => 'ウィキアへの連絡メールの控え',
-	'specialcontact-ccheader' => 'この電子メールはあなたがウィキアのサポートに送信した連絡メッセージの控えです',
+	'specialcontact-ccheader' => 'このメールはあなたがウィキアのサポートに送信した連絡メッセージの控えです',
 	'specialcontact-submitcomplete' => 'ウィキアへご連絡いただきありがとうございます。',
 );
 
@@ -459,7 +459,7 @@ $messages['lb'] = array(
 	'specialcontact-submitcomplete' => 'Merci datt dir Wikia kontaktéiert hutt.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -537,7 +537,7 @@ $messages['my'] = array(
 	'specialcontact-problemdesc' => 'စာသား',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -622,7 +622,7 @@ Als je liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een
 	'specialcontact-submitcomplete' => 'Dank je wel voor het contact opnemen met Wikia.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Cloudissimo
  * @author Woytecr
  */
@@ -667,7 +667,7 @@ $messages['ps'] = array(
 	'specialcontact-problemdesc' => 'پيغام',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -701,7 +701,7 @@ Se prefere usar o correio electrónico ou precisa de enviar ficheiros anexos, po
 	'specialcontact-submitcomplete' => 'Obrigado por ter contactado a Wikia.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -735,7 +735,7 @@ Se você preferir utilizar o correio electrónico regular ou anexos, você pode 
 	'specialcontact-submitcomplete' => 'Obrigado por contactar a Wikia.',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -750,7 +750,7 @@ $messages['ro'] = array(
 	'specialcontact-nomessage' => 'Vă rugăm completaţi mesajul',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -784,7 +784,7 @@ $messages['ru'] = array(
 	'specialcontact-submitcomplete' => 'Благодарим Вас за письмо к Викия.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -799,7 +799,7 @@ $messages['sr-ec'] = array(
 	'specialcontact-submitcomplete' => 'Хвала вам што сте контактирали Викију.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -840,7 +840,7 @@ $messages['te'] = array(
 	'contact' => 'వికియాని సంప్రదించండి',
 	'specialcontact-wikia' => 'వికియాను సంప్రదించండి',
 	'specialcontact-pagetitle' => 'వికియాను సంప్రదించండి',
-	'specialcontact-username' => 'వాడుకరిపేరు',
+	'specialcontact-username' => 'వాడుకరి పేరు',
 	'specialcontact-wikiname' => 'ఏ వికీ',
 	'specialcontact-realname' => 'మీ పేరు',
 	'specialcontact-yourmail' => 'ఈ-మెయిల్ చిరునామా',
@@ -887,7 +887,7 @@ Kung mas nais mong gamitin ang pangkaraniwang e-liham o maglagay ng mga kalakip,
 	'specialcontact-submitcomplete' => 'Salamat sa pakikipag-ugnayan mo sa Wikia.',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -931,7 +931,7 @@ Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có t�
 	'specialcontact-submitcomplete' => 'Cảm ơn bạn đã liên hệ Wikia',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -946,7 +946,7 @@ $messages['zh-hans'] = array(
 	'specialcontact-notyou' => '不是您？',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

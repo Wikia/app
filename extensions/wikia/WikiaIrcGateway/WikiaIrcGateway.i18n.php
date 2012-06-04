@@ -52,7 +52,7 @@ $messages['ar'] = array(
 	'ircgate-channel' => 'لقناة :',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -83,7 +83,7 @@ $messages['be-tarask'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -98,7 +98,7 @@ $messages['bjn'] = array(
 	'ircgate-username' => 'Ngaran pamuruk:',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -106,7 +106,7 @@ $messages['br'] = array(
 	'ircgate-channel' => 'Kanol :',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Paucabot
  */
 $messages['ca'] = array(
@@ -114,7 +114,7 @@ $messages['ca'] = array(
 	'ircgate-channel' => 'Canal:',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -147,7 +147,7 @@ $messages['diq'] = array(
 	'ircgate-channel' => 'Kenal:',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -155,7 +155,7 @@ $messages['es'] = array(
 	'ircgate-channel' => 'Canal:',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -171,7 +171,7 @@ $messages['fa'] = array(
 	'ircgate-channel' => 'کانال:',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Silvonen
  */
@@ -180,7 +180,7 @@ $messages['fi'] = array(
 	'ircgate-channel' => 'Kanava:',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  */
 $messages['fr'] = array(
@@ -212,7 +212,7 @@ $messages['hsb'] = array(
 	'ircgate-channel' => 'Kanal:',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -220,7 +220,7 @@ $messages['hu'] = array(
 	'ircgate-channel' => 'Csatorna:',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -244,7 +244,7 @@ $messages['ig'] = array(
 	'ircgate-channel' => 'Nchȯúzọr:',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Civvì
  */
 $messages['it'] = array(
@@ -292,7 +292,7 @@ $messages['lb'] = array(
 	'ircgate-username' => 'Benotzernumm:',
 );
 
-/** Lingala (Lingála)
+/** Lingala (lingála)
  * @author Eruedin
  * @author Moyogo
  */
@@ -301,7 +301,7 @@ $messages['ln'] = array(
 	'ircgate-channel' => 'Lileko:',
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author Xil
  */
 $messages['lv'] = array(
@@ -309,7 +309,7 @@ $messages['lv'] = array(
 	'ircgate-channel' => 'Kanāls:',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -317,7 +317,7 @@ $messages['mk'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
-/** Mongolian (Монгол)
+/** Mongolian (монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
@@ -339,7 +339,7 @@ $messages['my'] = array(
 	'ircgate-username' => 'အသုံးပြုသူအမည် :',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -363,7 +363,7 @@ $messages['nl'] = array(
 	'ircgate-channel' => 'Kanaal:',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -379,7 +379,7 @@ $messages['pdc'] = array(
 	'ircgate-channel' => 'Channel:',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -403,7 +403,7 @@ $messages['ps'] = array(
 	'ircgate-channel' => 'کانال:',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -411,7 +411,7 @@ $messages['pt'] = array(
 	'ircgate-channel' => 'Canal:',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  */
 $messages['pt-br'] = array(
@@ -419,7 +419,7 @@ $messages['pt-br'] = array(
 	'ircgate-channel' => 'Canal:',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
@@ -427,7 +427,7 @@ $messages['roa-tara'] = array(
 	'ircgate-channel' => 'Canale:',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Lockal
  */
 $messages['ru'] = array(
@@ -441,7 +441,7 @@ $messages['si'] = array(
 	'ircgate-channel' => 'චැනලය:',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -450,7 +450,7 @@ $messages['sr-ec'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -465,7 +465,7 @@ $messages['te'] = array(
 	'ircgate-username' => 'వాడుకరి పేరు:',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
@@ -488,7 +488,7 @@ $messages['tr'] = array(
 	'ircgate-channel' => 'Kanal:',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -496,7 +496,7 @@ $messages['tt-cyrl'] = array(
 	'ircgate-channel' => 'Канал:',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -513,7 +513,7 @@ $messages['vi'] = array(
 	'ircgate-channel' => 'Kênh:',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Gaoxuewei
  */
 $messages['zh-hans'] = array(

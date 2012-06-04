@@ -36,14 +36,14 @@ $messages['af'] = array(
 	'batchuserrights-userload-error' => "Die gebruiker \"'''\$1'''\" kon nie gelaai word nie.",
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'batchuserrights-add-groups' => 'Добавяне на {{PLURAL:$1|един потребител|$1 потребителя}} в {{PLURAL:$2|следната група|следните групи}}: <strong>$3</strong>.',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
  */
@@ -56,7 +56,7 @@ $messages['br'] = array(
 	'batchuserrights-userload-error' => "Dibosupl eo kargañ an implijer \"'''\$1'''\".",
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -64,7 +64,7 @@ $messages['bs'] = array(
 	'batchuserrights-userload-error' => "Nisam mogao učitati korisnika \"'''\$1'''\".",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Reaperman
  */
@@ -104,14 +104,14 @@ Dies wird nichts verändern.
 Der Rest der Seite wird nur geladen, sodass du einfach sehen kannst ob einer der Benutzer nicht geladen werden konnte.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Bola
  * @author Sanbec
  */
 $messages['es'] = array(
 	'batchuserrights' => 'Derechos de usuarios por lotes',
-	'batchuserrights-desc' => 'Permite añadir uno o más usuarios a un grupo en una sola acción',
+	'batchuserrights-desc' => 'Permite agregar uno o más usuarios a un grupo en una sola acción',
 	'batchuserrights-names' => 'Nombres de usuario para añadir a este grupo (uno por línea):',
 	'batchuserrights-intro' => 'Esta página te permitirá añadir a un grupo múltiples usuarios a la vez.
 Por razones de seguridad, la lista de grupos agregables se cambia en la configuración de la extensión y no puede ser cambiada desde dentro del wiki.
@@ -124,7 +124,7 @@ De esta forma no ocurrirá nada.
 El resto de la página será ejecutada solo para que puedas ver fácilmente si algún nombre de usuario no se puede cargar.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Peter17
  */
@@ -161,7 +161,7 @@ Deste modo, non ocorrerá nada.
 Que apareza o resto da páxina só serve para que poida ollar facilmente se non se puido cargar algún dos nomes de usuario.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author TK-999
  */
 $messages['hu'] = array(
@@ -179,7 +179,7 @@ Ez nem fog megváltoztatni semmit.
 A lap többi részének engedélyezve lesz a futás, hogy ellenőrizhesd az esetlegesen betölthetetlen felhasználóneveket.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -207,7 +207,7 @@ $messages['lb'] = array(
 	'batchuserrights-userload-error' => "De Benotzer \"'''\$1'''\" konnt net geluede ginn.",
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -215,7 +215,7 @@ $messages['lt'] = array(
 	'batchuserrights-userload-error' => "Nepavyko įkelti naudotojo \"''' \$1 '''\".",
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -251,7 +251,7 @@ Ini tidak akan mendatangkan sebarang hasil.
 Yang selebihnya dalam laman ini akan dibenarkan berjalan supaya anda mudah melihat sama ada terdapat nama pengguna yang tidak dapat dimuatkan.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -301,23 +301,23 @@ Nu wordt er niets uitgevoerd.
 De rest van de pagina kan uitgevoerd worden zodat je eenvoudig kunt zien of een van de gebruikersnamen niet geladen kon worden.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
 $messages['pl'] = array(
 	'batchuserrights' => 'Masowe zarządzanie uprawnieniami',
-	'batchuserrights-desc' => 'Umożliwia dodawanie jednego lub większej liczby użytkowników do grupy w jednym ruchu',
+	'batchuserrights-desc' => 'Umożliwia dodawanie jednego lub większej liczby użytkowników do grupy w jednej edycji',
 	'batchuserrights-names' => 'Nazwy użytkowników do dodania do tej grupy (po jednej w wierszu):',
-	'batchuserrights-intro' => 'Ta strona pozwoli Ci dodać grupę do wielu użytkowników naraz.
-Ze względów bezpieczeństwa lista możliwych do dodania grup jest ustawiona w konfiguracji rozszerzenia i nie można jej zmieniać w wiki.
-Poproś administratora systemu jeśli należy zezwolić na dodawanie wsadowe innych grup.',
+	'batchuserrights-intro' => 'Ta strona pozwoli Ci dodać grupę uprawnień do wielu użytkowników naraz.
+Ze względów bezpieczeństwa lista możliwych do dodania grup jest ustawiona w konfiguracji rozszerzenia i nie można jej zmieniać na wiki.
+Poproś administratora systemu jeśli chcesz dodawać inne grupy.',
 	'batchuserrights-single-progress-update' => 'Dodano {{PLURAL:$1| grupę|grupy|grupy}} do <strong>$2</strong>.',
 	'batchuserrights-add-groups' => 'Dodawanie {{PLURAL:$1|jednego użytkownika|$1 użytkowników}} do {{PLURAL:$2|następującej grupy|następujących grup}}: <strong>$3</strong>.',
 	'batchuserrights-userload-error' => "Nie można wczytać użytkownika \"'''\$1'''\".",
 	'batchuserrights-no-groups' => 'Nie wybrano żadnych grup.
 Wykonanie nie spowoduje żadnych zmian.
-Pozostałą część strony będzie można uruchomić tylko po to, by dało się zobaczyć, czy wszystkie nazwy uzytkownikow mogą być załadowane.',
+Pozostałą część strony zostanie załadowana, aby dało się zobaczyć, czy wszystkie nazwy użytkowników zostały załadowane.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -339,7 +339,7 @@ A sarà fàit gnente.
 Ël rest ëd la pàgina a podrà giré mach an manera ch'a vëdda facilment se quaidun djë stranòm d'utent a peulo pa esse carià.",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -358,7 +358,7 @@ Isto não terá qualquer efeito.
 Será permitida a execução do resto da página apenas para que possa verificar se não foi possível carregar algum dos utilizadores.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -376,7 +376,7 @@ Isto não terá qualquer efeito.
 Será permitida a execução do resto da página apenas para que você possa verificar se não foi possível carregar algum dos usuários.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Александр Сигачёв
  */
@@ -395,7 +395,7 @@ $messages['ru'] = array(
 Оставшаяся часть страницы будет обработана, чтобы показать какие учётные записи не могут быть загружены.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -427,7 +427,7 @@ Hindi ito makagagawa ng anumang bagay.
 Ang natitirang bahagi ng pahina ay papahintulutang tumakbo upang maginhawa mong makita kung ang alin man sa mga pangalan ng tagagamit ay hindi maikakarga.',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -435,14 +435,14 @@ $messages['tt-cyrl'] = array(
 	'batchuserrights-desc' => 'Берничә катнашучыны төркемгә бер гамәл белән өстәргә мөмкинлек бирә',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
 	'batchuserrights-desc' => 'Дозволяє додавання одного або кількох користувачів до групи в одну дію',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -450,6 +450,7 @@ $messages['uk'] = array(
 $messages['zh-hans'] = array(
 	'batchuserrights' => '批处理的用户权限',
 	'batchuserrights-desc' => '允许在一次操作中将一个或多个用户添加到一个组',
+	'batchuserrights-names' => '添加至该组的用户（每行一个）：',
 	'batchuserrights-userload-error' => "无法加载用户\"'''\$1'''\"。",
 );
 

@@ -18,7 +18,7 @@ $messages['qqq'] = array(
 	'globalnotification-general-ajax-failure' => 'General message for AJAX failure to be put on global notification',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -35,7 +35,7 @@ $messages['de'] = array(
 	'globalnotification-general-ajax-failure' => 'Der Browser konnte keine Verbindung mit Wikia herstellen. Bitte versuche es später erneut.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -43,7 +43,7 @@ $messages['es'] = array(
 	'globalnotification-general-ajax-failure' => 'El navegador no pudo conectarse a Wikia. Inténtalo más tarde.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -59,14 +59,14 @@ $messages['gl'] = array(
 	'globalnotification-general-ajax-failure' => 'O navegador non puido conectar con Wikia. Inténteo máis tarde.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Misibacsi
  */
 $messages['hu'] = array(
 	'globalnotification-general-ajax-failure' => 'A böngésző nem tud kapcsolódni ide: Wikia.  Próbálkozzon később.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -74,7 +74,7 @@ $messages['ia'] = array(
 	'globalnotification-general-ajax-failure' => 'Le navigator non poteva connecter a Wikia. Reproba plus tarde.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  */
 $messages['it'] = array(
@@ -82,7 +82,7 @@ $messages['it'] = array(
 	'globalnotification-general-ajax-failure' => 'Il browser non riesce a connettersi a Wikia. Riprovare più tardi.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -98,7 +98,7 @@ $messages['ms'] = array(
 	'globalnotification-general-ajax-failure' => 'Pelayar tidak dapat bersambung ke Wikia. Cuba lagi nanti.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -115,7 +115,7 @@ $messages['nl'] = array(
 	'globalnotification-general-ajax-failure' => 'De browser kon geen verbinding maken met de Wikia. Probeer het later nog opnieuw.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -131,7 +131,7 @@ $messages['pms'] = array(
 	'globalnotification-general-ajax-failure' => "Ël navigador a l'ha pa podù coleghesse a la Wikia.  Ch'a preuva torna pi tard.",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -139,7 +139,7 @@ $messages['pt'] = array(
 	'globalnotification-general-ajax-failure' => 'O browser não se conseguiu ligar à Wikia. Tente novamente mais tarde.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -148,7 +148,7 @@ $messages['ru'] = array(
 	'globalnotification-general-ajax-failure' => 'Браузер не смог подключиться к Викия. Попробуйте еще раз позже.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -156,7 +156,7 @@ $messages['sv'] = array(
 	'globalnotification-general-ajax-failure' => 'Webbläsaren kunde inte ansluta till Wikia. Försök igen senare.',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -164,7 +164,14 @@ $messages['tt-cyrl'] = array(
 	'globalnotification-general-ajax-failure' => 'Браузер Викия белән тоташа алмады. Соңрак кереп карагыз.',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'globalnotification-general-ajax-failure' => '浏览器无法连接到Wikia。请稍后再试。',
+);
+
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

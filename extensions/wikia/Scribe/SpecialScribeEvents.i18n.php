@@ -21,14 +21,14 @@ $messages['qqq'] = array(
 	'scribe-desc' => '{{desc}}',
 );
 
-/** Breton (Brezhoneg) */
+/** Breton (brezhoneg) */
 $messages['br'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ostilh]] da glask titl ur bajenn resis e-touez wikioù',
 	'scribeevents' => 'Darvoudoù diwezhañ',
 	'scribeeventsrecords' => 'Enrolladennoù',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -46,7 +46,7 @@ $messages['de'] = array(
 	'scribeeventsrecords' => 'Datensätze',
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $messages['es'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Herramienta]] para buscar el título de una página específica a través de las wikis',
 	'scribeevents' => 'Eventos recientes',
@@ -58,7 +58,7 @@ $messages['fa'] = array(
 	'scribeevents' => 'رویدادهای اخیر',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  */
 $messages['fi'] = array(
@@ -67,7 +67,7 @@ $messages['fi'] = array(
 	'scribeeventsrecords' => 'Tiedotteet',
 );
 
-/** French (Français) */
+/** French (français) */
 $messages['fr'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Outil]] pour chercher un titre de page spécifique à travers les wikis',
 	'scribeevents' => 'Événements récents',
@@ -83,14 +83,14 @@ $messages['gl'] = array(
 	'scribeeventsrecords' => 'Rexistros',
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (interlingua) */
 $messages['ia'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Instrumento]] pro cerar un titulo de pagina specific trans wikis',
 	'scribeevents' => 'Eventos recente',
 	'scribeeventsrecords' => 'Registros',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -117,7 +117,7 @@ $messages['ksh'] = array(
 	'scribeeventsrecords' => 'Daatesäz',
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $messages['mk'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Алатка]] за пребарување на поединечен наслов на страница по повеќе викија',
 	'scribeevents' => 'Скорешни настани',
@@ -133,7 +133,7 @@ $messages['ms'] = array(
 	'scribeeventsrecords' => 'Rekod',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Verktøyl]] for å søke etter en bestemt sidetittel på tvers av wikier',
 	'scribeevents' => 'Nylige hendelser',
@@ -147,7 +147,7 @@ $messages['nl'] = array(
 	'scribeeventsrecords' => 'Regels',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -165,28 +165,28 @@ $messages['pms'] = array(
 	'scribeeventsrecords' => 'Argistrassion',
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $messages['pt'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ferramenta]] para procurar um título específico de página em todas as wikis',
 	'scribeevents' => 'Acontecimentos recentes',
 	'scribeeventsrecords' => 'Registos',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (português do Brasil) */
 $messages['pt-br'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ferramenta]] para procurar um título específico de página em todas as wikis',
 	'scribeevents' => 'Acontecimentos recentes',
 	'scribeeventsrecords' => 'Registros',
 );
 
-/** Russian (Русский) */
+/** Russian (русский) */
 $messages['ru'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Инструмент]] для поиска определённых страниц по заголовку в вики',
 	'scribeevents' => 'Недавние события',
 	'scribeeventsrecords' => 'Записи',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -194,7 +194,7 @@ $messages['sr-ec'] = array(
 	'scribeeventsrecords' => 'Белешке',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -219,7 +219,7 @@ $messages['tl'] = array(
 	'scribeeventsrecords' => 'Mga rekord',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

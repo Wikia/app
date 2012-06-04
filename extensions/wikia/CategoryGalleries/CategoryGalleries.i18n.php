@@ -23,7 +23,7 @@ $messages['af'] = array(
 	'categorygalleries-desc' => "Wys 'n galery met bladsye op kategoriebladsye",
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -37,21 +37,21 @@ $messages['bar'] = array(
 	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  */
 $messages['br'] = array(
 	'categorygalleries-desc' => 'Diskouez ur palier pajennoù war bajennoù ar rummadoù',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'categorygalleries-desc' => 'Prikazuje galeriju na stranici kategorije',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -65,28 +65,28 @@ $messages['de'] = array(
 	'categorygalleries-desc' => 'Zeigt eine Seiten-Galerie auf Kategorieseiten',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  */
 $messages['es'] = array(
 	'categorygalleries-desc' => 'Muestra una galería de páginas encima de las páginas de la categoría',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author VezonThunder
  */
 $messages['fi'] = array(
 	'categorygalleries-desc' => 'Näyttää sivugallerian luokkasivuilla',
 );
 
-/** Faroese (Føroyskt)
+/** Faroese (føroyskt)
  * @author EileenSanda
  */
 $messages['fo'] = array(
 	'categorygalleries-desc' => 'Vísur eitt myndasavn hjá einari síðu á bólka síðunum',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -100,21 +100,21 @@ $messages['gl'] = array(
 	'categorygalleries-desc' => 'Mostrar unha galería de páxinas nas páxinas das categorías',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  */
 $messages['hu'] = array(
 	'categorygalleries-desc' => 'Lap-galériák megjelenítése a kategória lapokon',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'categorygalleries-desc' => 'Monstra un galeria de paginas in paginas de categoria',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -142,14 +142,14 @@ $messages['lb'] = array(
 	'categorygalleries-desc' => 'Weist eng Galerie vu Säiten op de Kategoriesäiten',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
 	'categorygalleries-desc' => 'Rodyti kategorijos puslapiuose galeriją',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -163,7 +163,7 @@ $messages['ms'] = array(
 	'categorygalleries-desc' => 'Menunjukkan galeri laman di laman kategori',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -177,7 +177,7 @@ $messages['nl'] = array(
 	'categorygalleries-desc' => "Geeft een galerij met pagina's weer op categoriepagina's",
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -199,35 +199,35 @@ $messages['ps'] = array(
 	'categorygalleries-desc' => 'د يوه مخ انځورتون د وېشنيزې په مخونو ښکاره کوي',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
 	'categorygalleries-desc' => 'Mostra uma galeria de páginas nas páginas das categorias',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
 	'categorygalleries-desc' => 'Mostra uma galeria de páginas nas páginas das categorias',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'categorygalleries-desc' => "Face vedè 'na pàgene de gallerie sus a le pàggene de le categorije",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'categorygalleries-desc' => 'Показывает галерею страниц на странице категории',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -241,14 +241,14 @@ $messages['tl'] = array(
 	'categorygalleries-desc' => 'Nagpapakita ng isang tanghalan ng mga pahina sa mga pahina ng kategorya',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'categorygalleries-desc' => 'Мәкаәләр галереясын төркем сәхифәсендә күрсәтә',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -262,7 +262,7 @@ $messages['vi'] = array(
 	'categorygalleries-desc' => 'Hiển thị một trang thư viện ảnh trên các trang thể loại',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

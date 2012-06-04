@@ -28,7 +28,7 @@ $messages['ar'] = array(
 	'userdata' => 'احصل على بيانات المستخدم',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -59,7 +59,7 @@ $messages['diq'] = array(
 	'userdata-submit' => 'Şo melumat',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -75,7 +75,7 @@ $messages['es'] = array(
 	'userdata-no-wf' => 'WikiFactory no está habilitado en esta wiki. No se puede alterar wgUserData.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Iketsi
  * @author Od1n
  * @author Wyz
@@ -109,7 +109,7 @@ $messages['gl'] = array(
 	'userdata-no-wf' => 'WikiFactory non está activado neste wiki. Non se pode de cambiar wgUserData.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -118,7 +118,7 @@ $messages['hu'] = array(
 	'userdata-submit' => 'Adatok lekérése',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -141,7 +141,7 @@ $messages['lb'] = array(
 	'userdata-updated' => 'wgUserData aktualiséiert op "$1".',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -173,7 +173,7 @@ $messages['ms'] = array(
 	'userdata-no-wf' => 'WikiFactory (Kilang Wiki) tidak dihidupkan di wiki ini, maka wgUserData tidak dapat diubah.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -205,7 +205,7 @@ $messages['nl'] = array(
 	'userdata-no-wf' => 'WikiFactory is niet ingeschakeld voor deze wiki. Het is niet mogelijk wgUserData aan te passen.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -221,7 +221,7 @@ $messages['pl'] = array(
 	'userdata-no-wf' => 'WikiFactory nie jest włączony na tej wiki. Nie można zmienić wgUserData.',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
@@ -238,7 +238,7 @@ $messages['pt'] = array(
 	'userdata-no-wf' => 'O WikiFactory não está ativado nesta wiki. Não é possível alterar o wgUserData.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -254,7 +254,7 @@ $messages['pt-br'] = array(
 	'userdata-no-wf' => 'WikiFactory não é permitido nesta wiki. Não é possível alterar wgUserData.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -263,7 +263,7 @@ $messages['ru'] = array(
 	'userdata-submit' => 'Получить данные',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author VickyC
  * @author WikiPhoenix
@@ -297,10 +297,12 @@ $messages['tl'] = array(
 	'userdata-no-wf' => 'Hindi pinagagana ang WikiFactory sa wiking ito.  Hindi nabago ang wgUserData.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(
 	'userdata' => '获取用户档案',
+	'userdata-userid-label' => '提供用户ID：',
+	'userdata-submit' => '获取数据',
 );
 

@@ -46,21 +46,21 @@ $messages['qqq'] = array(
 	'unsubscribe-preferences-toggle' => 'zugehörige Adresse: http://de.wikia.com/Spezial:Einstellungen',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
 	'unsubscribe-confirm-legend' => 'Təsdiq et',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'unsubscribe-confirm-legend' => 'Потвърждаване',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -70,7 +70,7 @@ $messages['br'] = array(
 	'unsubscribe-working-done' => 'Graet.',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -120,7 +120,7 @@ $messages['diq'] = array(
 	'unsubscribe-working-done' => 'Temamyayo',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author VegaDark
  */
@@ -150,14 +150,14 @@ $messages['fa'] = array(
 	'unsubscribe-working-done' => 'کامل.',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'unsubscribe-working-done' => 'Valmis.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -199,7 +199,7 @@ $messages['gl'] = array(
 	'unsubscribe-preferences-notice' => 'Os correos electrónicos desactiváronse para a súa conta. Visite a lapela de perfil de usuario para reactivalos.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -209,7 +209,7 @@ $messages['hu'] = array(
 	'unsubscribe-working-done' => 'Kész!',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -231,7 +231,7 @@ Per favor seque le ligamine ab tu e-mail.',
 	'unsubscribe-preferences-notice' => 'Le invio de e-mail ha essite disactivate pro tu conto. Visita le scheda "Profilo de usator" pro reactivar lo.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -275,7 +275,7 @@ $messages['lb'] = array(
 	'unsubscribe-working-done' => 'Fäerdeg.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -324,7 +324,7 @@ $messages['my'] = array(
 	'unsubscribe-confirm-legend' => 'အတည်ပြု',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -373,7 +373,7 @@ $messages['nl-informal'] = array(
 	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alsjeblieft de verwijzing in je e-mail.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -401,7 +401,7 @@ $messages['ps'] = array(
 	'unsubscribe-working-done' => 'بشپړ.',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -420,7 +420,7 @@ $messages['pt'] = array(
 	'unsubscribe-working-done' => 'Terminado.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -439,7 +439,7 @@ $messages['pt-br'] = array(
 	'unsubscribe-working-done' => 'Completo.',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -461,7 +461,7 @@ $messages['ru'] = array(
 	'unsubscribe-preferences-notice' => 'Получение писем было отключено для вашей учётной записи. Посетите вкладку Личные данные, чтобы снова включить это.',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -472,7 +472,7 @@ $messages['sr-ec'] = array(
 	'unsubscribe-working-done' => 'Завршено.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -524,7 +524,7 @@ $messages['tl'] = array(
 	'unsubscribe-working-done' => 'Buo na.',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -550,7 +550,7 @@ $messages['vi'] = array(
 	'unsubscribe-working-done' => 'Hoàn thành.',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Hzy980512
  */

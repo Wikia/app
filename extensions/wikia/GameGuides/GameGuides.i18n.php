@@ -11,28 +11,28 @@ $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
 	'wikiagameguides-desc' => "Guíes de Xuegu Wikia pa módulos d'aplicaciones móviles",
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides evit modulennoù arloadoù pellgomzerioù hezoug',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author SMP
  */
 $messages['ca'] = array(
 	'wikiagameguides-desc' => "Mòduls de l'aplicació mòbil de Wikia Game Guides",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -46,28 +46,28 @@ $messages['de'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides Mobile App Module',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author VegaDark
  */
 $messages['es'] = array(
 	'wikiagameguides-desc' => 'Guías de Juego de Wikia para módulos de aplicaciones móviles',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides mugikorrerako app modukuak',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  */
 $messages['fi'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides mobiilisovellus moduulit',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -81,21 +81,21 @@ $messages['gl'] = array(
 	'wikiagameguides-desc' => 'Módulos de aplicacións móbiles Wikia Game Guides',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  */
 $messages['hu'] = array(
 	'wikiagameguides-desc' => 'Wikia játék útmutató mobil alkalmazás modulok',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
 	'wikiagameguides-desc' => 'Modulos de application mobile pro Wikia Game Guides',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 $messages['it'] = array(
@@ -109,7 +109,7 @@ $messages['ksh'] = array(
 	'wikiagameguides-desc' => 'Module för de Wikia Spellaanleidonge (<i lang="en">Wikia Game Guides</i>) ier mobile Aanwändong.',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -123,7 +123,7 @@ $messages['ms'] = array(
 	'wikiagameguides-desc' => 'Modul aplikasi mudah alih Panduan Permainan Wikia',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -137,7 +137,7 @@ $messages['nl'] = array(
 	'wikiagameguides-desc' => 'Applicatiemodules voor mobiel voor Wikia Game Guides',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -152,42 +152,42 @@ $messages['pms'] = array(
 	'wikiagameguides-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
 	'wikiagameguides-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
 	'wikiagameguides-desc' => 'Módulos de aplicações móveis dos Guias de Jogos da Wikia',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'wikiagameguides-desc' => "Module de l'applicazione mobile Wikia Game Guides",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  */
 $messages['ru'] = array(
 	'wikiagameguides-desc' => 'Модули мобильного приложения Wikia Game Guides',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Yerpo
  */
 $messages['sl'] = array(
 	'wikiagameguides-desc' => 'Moduli za mobilno aplikacijo Wikia Game Guides',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -201,7 +201,7 @@ $messages['tl'] = array(
 	'wikiagameguides-desc' => 'Mga modyul ng aplikasyong naililipat-lipat ng Mga Gabay sa Laro ng Wikia',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

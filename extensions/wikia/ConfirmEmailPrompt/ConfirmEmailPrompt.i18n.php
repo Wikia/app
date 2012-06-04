@@ -18,7 +18,7 @@ $messages['qqq'] = array(
 * $3 is a link to the e-mail address change form',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -34,7 +34,7 @@ $messages['de'] = array(
 	'confirmemailprompt-error' => 'Ist das deine E-Mail-Adresse: <strong>$1</strong>? [[$2|Bestätige sie]] oder [[$3|ändere sie]].',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author DJ Nietzsche
  */
 $messages['es'] = array(
@@ -42,7 +42,7 @@ $messages['es'] = array(
 	'confirmemailprompt-error' => '¿Es esta su dirección de correo electrónico?: <strong>$1</strong> ? [[$2| Confirmarla]] o [[$3|cambiarla]].',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -50,7 +50,7 @@ $messages['fi'] = array(
 	'confirmemailprompt-error' => 'Onko tämä sähköpostiosoitteesi: <strong>$1</strong>? [[$2|Vahvista se]] tai [[$3|muuta sitä]].',
 );
 
-/** French (Français)
+/** French (français)
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -66,7 +66,7 @@ $messages['gl'] = array(
 	'confirmemailprompt-error' => 'É este o seu enderezo de correo electrónico: <strong>$1</strong>? [[$2|Confírmeo]] ou [[$3|modifíqueo]].',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  */
 $messages['hu'] = array(
@@ -74,7 +74,7 @@ $messages['hu'] = array(
 	'confirmemailprompt-error' => 'Ez az email címed? <strong>$1</strong>? [[$2Erősítsed meg]] vagy [[$3|változtasd meg!]].',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -82,7 +82,7 @@ $messages['ia'] = array(
 	'confirmemailprompt-error' => 'Es iste le adresse de e-mail tue: <strong>$1</strong>? [[$2|Confirma lo]] o [[$3|cambia lo]].',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  */
 $messages['it'] = array(
@@ -98,7 +98,7 @@ $messages['map-bms'] = array(
 	'confirmemailprompt-error' => 'Apa kiye alamat imele Rika: <strong>$1</strong>? [[$2|Konfirmasi kiye]] utawa [[$3|ganti kiye]].',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -114,7 +114,7 @@ $messages['ms'] = array(
 	'confirmemailprompt-error' => 'Adakah ini alamat e-mel anda: <strong>$1</strong>? [[$2|Sahkan]] atau [[$3|tukar]].',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -130,7 +130,7 @@ $messages['nl'] = array(
 	'confirmemailprompt-error' => 'Is dit uw e-mailadres: <strong>$1</strong>? [[$2|Bevestig het]] of [[$3|wijzig het]].',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Woytecr
  */
 $messages['pl'] = array(
@@ -146,7 +146,7 @@ $messages['pms'] = array(
 	'confirmemailprompt-error' => "É-lo costa soa adrëssa ëd pòsta eletrònica: <strong>$1</strong>? [[$2|Ch'a la confirma]] o [[$3|ch'a la cangia]].",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -155,7 +155,7 @@ $messages['ru'] = array(
 	'confirmemailprompt-error' => 'Это ваш адрес электронной почты: <strong>$1</strong>? [[$2|подтвердить его]] или [[$3|изменить его]].',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -163,7 +163,7 @@ $messages['sv'] = array(
 	'confirmemailprompt-error' => 'Är detta din e-postadress: <strong>$1</strong>? [[$2|Bekräfta den]] eller [[$3|ändra den]].',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(

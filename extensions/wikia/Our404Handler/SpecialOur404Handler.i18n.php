@@ -39,7 +39,7 @@ Artikel '''$1''' kon nie gevind word nie.
 * Om na die tuisblad van hierdie webwerf te gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -54,7 +54,7 @@ Nun se pudo alcontrar l'artículu \"'''\$1'''\".
 * Pa dir a la páxina principal d'esti sitiu web, calca nel enllaz: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -85,14 +85,14 @@ $messages['be-tarask'] = array(
 * перайсьці да галоўнай старонкі сайту: [{{SERVER}} {{SITENAME}}].",
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'our404handler' => 'Грешка 404: Страницата не беше намерена!',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -108,7 +108,7 @@ N'eo ket bet kavet ar pennad '''$1'''.
 * Evit distreiñ da bajenn degemer al lec'hienn, klikit amañ : [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -170,7 +170,7 @@ $messages['el'] = array(
 *Για την κύρια σελίδα του ιστότοπου, πατήστε στο σύνδεσμο: [{{SERVER}}{{SITENAME}}]",
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author Fitoschido
  */
@@ -186,7 +186,7 @@ El artículo '''$1''' no pudo ser encontrado.
 * Para ir a la portada de este sitio, haz clic en el vínculo: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Estonian (Eesti)
+/** Estonian (eesti)
  * @author Pikne
  */
 $messages['et'] = array(
@@ -209,7 +209,7 @@ $messages['fa'] = array(
 *برای رفتن به صفحهٔ اصلی این سایت، بر این پیوندها کلیک کنید: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Crt
  * @author Jack Phoenix <jack@countervandalism.net>
  */
@@ -225,7 +225,7 @@ Artikkelia '''$1''' ei löytynyt.
 * Mennäksesi tämän sivuston etusivulle, napsauta linkkiä: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Polytherion
  */
@@ -271,7 +271,7 @@ $messages['he'] = array(
 * נסה את העמוד הראשי של הוויקי הזאת, לחץ על הקישור: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Croatian (Hrvatski)
+/** Croatian (hrvatski)
  * @author SpeedyGonsales
  */
 $messages['hr'] = array(
@@ -301,7 +301,7 @@ Nastawk '''$1''' njeda so namakać.
 * Zo by dale k hłownej stronje tutoho sydła šoł, klikń na wotkaz: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Blogadmin
  * @author Glanthor Reviol
  */
@@ -317,7 +317,7 @@ A(z) '''$1''' szócikk nem található.
 * A kezdőoldalra ugráshoz kattints a következő hivatkozásra: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -349,7 +349,7 @@ Artikel '''$1''' tidak dapat ditemukan.
 * Untuk kembali ke halaman utama situs ini, klik pranala: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Gianfranco
  * @author HalphaZ
  */
@@ -417,21 +417,21 @@ Den Artikel '''$1''' konnt net fonnt ginn.
 * Fir op d'haaptsäit vun dësem Site ze goen, klickt op de Link:  [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Lingala (Lingála)
+/** Lingala (lingála)
  * @author Eruedin
  */
 $messages['ln'] = array(
 	'our404handler' => 'Zíko 404: Lonkásá ezalí tɛ́.',
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author Xil
  */
 $messages['lv'] = array(
 	'our404handler' => 'Kļūda 404: Lapa nav atrasta!',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -476,7 +476,7 @@ Rencana '''$1''' tidak dapat dijumpai.
 * Untuk ke laman utama tapak ini, klik pautan ini: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -523,7 +523,7 @@ Pagina \"'''\$1'''\" is niet aangetroffen.
 * Je kunt naar de hoofdpagina van deze site gaan: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -538,7 +538,7 @@ Artikkelen '''$1''' kunne ikkje verta funnen.
 * For å gå til hovudsida på denne nettstaden, trykk på lenkja: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -568,7 +568,7 @@ $messages['pdc'] = array(
 	'our404handler' => 'Error 404: Ken Blatt gfunne!',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @author Sp5uhe
  */
@@ -598,7 +598,7 @@ L'artìcol '''$1''' a peul pa esse trovà.
 * Për andé a la pàgina prinsipal dë sto sit-sì, ch'a sgnaca an sl'anliura: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -614,7 +614,7 @@ Não foi possível encontrar o artigo '''$1'''.
 * Para visitar a página principal deste site, clique o link: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  */
 $messages['pt-br'] = array(
@@ -630,14 +630,14 @@ O artigo '''$1''' não pode ser encontrado.
 * Ir até a página principal do sítio, clique na ligação: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Romansh (Rumantsch)
+/** Romansh (rumantsch)
  * @author Kazu89
  */
 $messages['rm'] = array(
 	'our404handler' => 'Errur 404: Pagina betg chattada!',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -668,7 +668,7 @@ $messages['si'] = array(
 * මෙම අඩවියෙහි මුල් පිටුව වෙත යාම සඳහා, මෙම සබැදිය ඔබන්න: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -683,7 +683,7 @@ $messages['sl'] = array(
 * Za obisk glavne strani tega mesta kliknite povezavo: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -700,7 +700,7 @@ $messages['sr-ec'] = array(
 * Да бисте прешли на насловну страну, кликните на везу: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Per
  */
 $messages['sv'] = array(
@@ -737,7 +737,7 @@ Hindi matagpuan ang artikulong '''$1'''.
 * Upang makapunta sa pangunahing pahina ng sityong ito, pindutin ang kawing na: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
@@ -752,7 +752,7 @@ $messages['tt-cyrl'] = array(
 * Баш биткә күчү өчен [{{SERVER}} {{SITENAME}}] төймәсенә басыгыз.",
 );
 
-/** Ukrainian (Українська) */
+/** Ukrainian (українська) */
 $messages['uk'] = array(
 	'our404handler' => 'Помилка 404: Сторінку не знайдено!',
 );
@@ -773,7 +773,7 @@ Bài viết '''$1''' không tìm thấy.
 * Để tiếp tục đến trang chính của website này, nhấn vào liên kết: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(

@@ -29,7 +29,7 @@ $messages['af'] = array(
 	'timeago-second' => "'n minuut gelede",
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -39,7 +39,7 @@ $messages['bg'] = array(
 	'timeago-second' => 'преди една минута',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
@@ -49,7 +49,7 @@ $messages['br'] = array(
 	'timeago-second' => 'ur vunutenn zo',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  */
 $messages['ca'] = array(
@@ -61,7 +61,7 @@ $messages['ca'] = array(
 	'timeago-second' => 'fa un minut',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Mormegil
  * @author Reaperman
@@ -97,7 +97,7 @@ $messages['diq'] = array(
 	'timeago-second' => 'verdê dekana',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Bola
  */
@@ -110,7 +110,7 @@ $messages['es'] = array(
 	'timeago-second' => 'hace un minuto',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  * @author Tofu II
  */
@@ -123,7 +123,7 @@ $messages['fi'] = array(
 	'timeago-second' => 'minuutti sitten',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Wyz
  */
@@ -148,7 +148,7 @@ $messages['gl'] = array(
 	'timeago-second' => 'hai un minuto',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author TK-999
  */
@@ -161,7 +161,7 @@ $messages['hu'] = array(
 	'timeago-second' => 'egy perccel ezelőtt',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -173,7 +173,7 @@ $messages['ia'] = array(
 	'timeago-second' => 'un minuta retro',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Leviathan 89
  */
 $messages['it'] = array(
@@ -194,7 +194,7 @@ $messages['ja'] = array(
 	'timeago-second' => '1分前',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -218,7 +218,7 @@ $messages['ms'] = array(
 	'timeago-second' => 'seminit lalu',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -242,7 +242,7 @@ $messages['nl'] = array(
 	'timeago-second' => 'een minuut geleden',
 );
 
-/** Polish (Polski) */
+/** Polish (polski) */
 $messages['pl'] = array(
 	'timeagomessaging-desc' => 'Umozliwia lokalizowanie wtyczki jquery.timeago.js',
 	'timeago-day' => '{{PLURAL:$1|dzień|$1 dni}} temu',
@@ -275,7 +275,7 @@ $messages['ps'] = array(
 	'timeago-second' => 'يوه دقيقه دمخه',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -288,7 +288,7 @@ $messages['pt'] = array(
 	'timeago-second' => 'há um minuto',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -299,14 +299,14 @@ $messages['pt-br'] = array(
 	'timeago-second' => 'há um minuto',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'timeago-second' => 'un minut în urmă',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Kuzura
  */
@@ -319,7 +319,7 @@ $messages['ru'] = array(
 	'timeago-second' => 'минуту назад',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -329,7 +329,7 @@ $messages['sr-ec'] = array(
 	'timeago-second' => 'пре минут',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -363,7 +363,7 @@ $messages['tl'] = array(
 	'timeago-second' => 'isang minuto na ang nakalipas',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -385,7 +385,7 @@ $messages['vi'] = array(
 	'timeago-second' => '1 phút trước',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

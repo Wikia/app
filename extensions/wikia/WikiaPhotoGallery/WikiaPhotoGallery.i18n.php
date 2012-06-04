@@ -435,7 +435,7 @@ $messages['ar'] = array(
 	'wikiaPhotoGallery-photooptions-description' => 'تفاصيل الصورة.',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
  */
@@ -645,7 +645,7 @@ $messages['be-tarask'] = array(
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Спасылаецца на (устаўце назву старонкі альбо URL-адрас).',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -715,7 +715,7 @@ $messages['bjn'] = array(
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'Tungkaran ini',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -881,7 +881,7 @@ Deskrivit ar skeudenn-mañ.",
 	'galery-slider-read-more' => "Lenn muioc'h >",
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author BroOk
  * @author Gemmaa
  */
@@ -1061,12 +1061,12 @@ Alternativament, pot fer clic " $2 " per veure la pàgina en la seva forma d\'ac
 	'galery-slider-read-more' => 'Llegir més',
 );
 
-/** Sorani (کوردی) */
+/** Sorani Kurdish (کوردی) */
 $messages['ckb'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'سڕینەوە',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -1513,7 +1513,7 @@ $messages['diq'] = array(
 	'galery-slider-read-more' => 'Dehana vêşi >',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (eʋegbe) */
 $messages['ee'] = array(
 	'wikiaPhotoGallery-error-caption' => 'Vodada',
 	'wikiaPhotoGallery-preview-hover-delete' => 'tutui',
@@ -1566,7 +1566,7 @@ $messages['eo'] = array(
 	'wikiaPhotoGallery-preview-position-right' => 'Dekstre',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
@@ -1763,7 +1763,7 @@ $messages['fa'] = array(
 	'wikiaPhotoGallery-lightbox-caption' => 'توسط $1',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Nike
@@ -1850,7 +1850,7 @@ Kuvaile tämä kuva.",
 	'galery-slider-read-more' => 'Lue lisää >',
 );
 
-/** French (Français)
+/** French (français)
  * @author Crochet.david
  * @author Gomoko
  * @author IAlex
@@ -2401,7 +2401,7 @@ $messages['he'] = array(
 	'galery-slider-read-more' => 'קריאה נוספת >',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Alquen
  * @author Dani
  * @author Glanthor Reviol
@@ -2483,7 +2483,7 @@ $messages['hu'] = array(
 	'wikiaPhotoGallery-photooptions-description' => 'Kép adatai.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -2724,7 +2724,7 @@ $messages['inh'] = array(
 	'wikiaPhotoGallery-error-caption' => 'ГӀалат',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Gifh
  * @author HalphaZ
@@ -3145,7 +3145,7 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Eng Säit verlinken',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Vpovilaitis
  */
 $messages['lt'] = array(
@@ -3269,7 +3269,7 @@ $messages['mai'] = array(
 	'wikiaPhotoGallery-upload-page-prev' => 'पहिलुका',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -3643,7 +3643,7 @@ $messages['my'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'ဖျက်​ပါ',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -4053,7 +4053,7 @@ $messages['pfl'] = array(
 	'wikiaPhotoGallery-preview-bordersize-none' => 'Kään',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
  * @author Woytecr
@@ -4459,7 +4459,7 @@ $messages['ps'] = array(
 	'galery-slider-read-more' => ' نور لوستل >',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
@@ -4642,7 +4642,7 @@ Em alternativa, pode clicar "$2" para ver a página na forma actualizada.',
 	'galery-slider-read-more' => ' Leia mais >',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Luckas Blade
  */
@@ -4753,7 +4753,7 @@ O que pretende fazer?',
 	'wikiaPhotoGallery-quit-savequit' => 'Salvar e sair',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  * @author Stelistcristi
  */
@@ -4782,7 +4782,7 @@ $messages['ro'] = array(
 	'wikiaPhotoGallery-not-displayed' => 'Neafişată',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Eleferen
  * @author G0rn
@@ -4996,14 +4996,14 @@ $messages['si'] = array(
 	'wikiaPhotoGallery-preview-bordersize-large' => 'විශාල',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'wikiaPhotoGallery-back' => 'Nazaj',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -5166,7 +5166,7 @@ $messages['sr-ec'] = array(
 	'galery-slider-read-more' => ' Прочитајте више >',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -5581,7 +5581,7 @@ $messages['tr'] = array(
 	'wikiaPhotoGallery-feed-caption' => '$1, sera <a href="$2">$3</a>',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author KEL
  * @author Тест
  */
@@ -5849,7 +5849,7 @@ $messages['yi'] = array(
 	'wikiaPhotoGallery-preview-bordersize-none' => 'קיין',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Hydra
  * @author Hzy980512
@@ -5933,7 +5933,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索图片',
 );
 
-/** Chinese (Taiwan) (‪中文(台灣)‬) */
+/** Chinese (Taiwan) (‪中文（台灣）‬) */
 $messages['zh-tw'] = array(
 	'wikiaphotogallery-desc' => '提供一個界面以管理頁面中的圖片集與幻燈片',
 	'wikiaPhotoGallery-back' => '返回',

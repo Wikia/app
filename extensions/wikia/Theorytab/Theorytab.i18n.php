@@ -32,7 +32,7 @@ $messages['be-tarask'] = array(
 	'theorytab-parent-title' => 'Бацькоўскі артыкул',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -41,7 +41,7 @@ $messages['br'] = array(
 	'theorytab-parent-title' => '',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Paucabot
  * @author SMP
  */
@@ -58,7 +58,7 @@ $messages['ce'] = array(
 	'theorytab-parent-title' => 'Коьртехь йолу яззам',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -82,13 +82,13 @@ $messages['diq'] = array(
 	'theorytab-parent-title' => 'Wesiqeyo serên',
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $messages['es'] = array(
 	'theorytab-title' => 'Teorias',
 	'theorytab-parent-title' => 'Articulo Principal',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  */
 $messages['fi'] = array(
@@ -96,7 +96,7 @@ $messages['fi'] = array(
 	'theorytab-parent-title' => 'Ylimmän tason artikkeli',
 );
 
-/** French (Français)
+/** French (français)
  * @author Slamduck
  */
 $messages['fr'] = array(
@@ -126,7 +126,7 @@ $messages['hsb'] = array(
 	'theorytab-parent-title' => 'Přiwuzny nastawk',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -134,7 +134,7 @@ $messages['hu'] = array(
 	'theorytab-parent-title' => 'Fő szócikk',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -158,7 +158,7 @@ $messages['ig'] = array(
 	'theorytab-parent-title' => 'Nke mụrụ édémédé',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'theorytab-title' => 'Teorie',
 	'theorytab-parent-title' => 'Articolo principale',
@@ -203,7 +203,7 @@ $messages['lb'] = array(
 	'theorytab-parent-title' => 'Haaptartikel',
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author Xil
  */
 $messages['lv'] = array(
@@ -211,7 +211,7 @@ $messages['lv'] = array(
 	'theorytab-parent-title' => 'Galvenais raksts',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -227,7 +227,7 @@ $messages['ms'] = array(
 	'theorytab-parent-title' => 'Rencana induk',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -252,7 +252,7 @@ $messages['nl'] = array(
 	'theorytab-parent-title' => 'Bovenliggende pagina',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -260,7 +260,7 @@ $messages['oc'] = array(
 	'theorytab-parent-title' => 'Article Principal',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -276,7 +276,7 @@ $messages['pms'] = array(
 	'theorytab-parent-title' => 'Artìcol pare',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -284,13 +284,13 @@ $messages['pt'] = array(
 	'theorytab-parent-title' => 'Artigo principal',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (português do Brasil) */
 $messages['pt-br'] = array(
 	'theorytab-title' => 'Teorias',
 	'theorytab-parent-title' => 'Artigo Princdipal',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -303,7 +303,7 @@ $messages['si'] = array(
 	'theorytab-parent-title' => 'මවු ලිපිය',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -311,7 +311,7 @@ $messages['sl'] = array(
 	'theorytab-parent-title' => 'Starševski članek',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -321,7 +321,7 @@ $messages['sr-ec'] = array(
 	'theorytab-parent-title' => 'Матични чланак',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Per
  */
 $messages['sv'] = array(
@@ -353,7 +353,7 @@ $messages['tr'] = array(
 	'theorytab-parent-title' => 'Ana madde',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -361,7 +361,14 @@ $messages['uk'] = array(
 	'theorytab-parent-title' => 'Батьківська стаття',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'theorytab-parent-title' => '父条目',
+);
+
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Frankou
  */
 $messages['zh-hant'] = array(

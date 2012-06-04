@@ -130,12 +130,12 @@ $messages['af'] = array(
 	'wikiadoption-know-more-header' => 'Wil u meer weet?',
 );
 
-/** Bulgarian (Български) */
+/** Bulgarian (български) */
 $messages['bg'] = array(
 	'wikiadoption-adoption-successed' => 'Поздравления! Вече сте администратор на това уики!',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
  */
@@ -161,7 +161,7 @@ $messages['br'] = array(
 	'wikiadoption-welcome-header' => "Gourc'hemennoù ! Degemeret ho peus {{SITENAME}} !",
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -171,7 +171,7 @@ $messages['bs'] = array(
 	'wikiadoption-adoption-successed' => 'Čestitke! Sada ste administator na ovoj wiki!',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -287,7 +287,7 @@ $messages['de-formal'] = array(
 	'wikiadoption-notification' => '{{SITENAME}} kann adoptiert werden. Möchten Sie hier Leiter werden? Adoptieren Sie dieses Wiki, um anzufangen! $2',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author VegaDark
  */
@@ -397,7 +397,7 @@ $messages['fa'] = array(
 	'wikiadoption-know-more-header' => 'چگونه بیشتر بدانیم؟',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nike
  * @author Tofu II
  */
@@ -409,7 +409,7 @@ $messages['fi'] = array(
 	'wikiadoption-notification' => "$1 on adoptoitavana! Sinusta voi tulla uusi omistaja. '''Adoptoi nyt!'''",
 );
 
-/** French (Français)
+/** French (français)
  * @author Balzac 40
  * @author Notafish
  * @author Urhixidur
@@ -617,7 +617,7 @@ Ferramentas de axuda:
 [[Special:UserRights|Xestionar os dereitos]]',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author TK-999
  */
@@ -645,7 +645,7 @@ $messages['hu'] = array(
 	'wikiadoption-welcome-header' => 'Gratulálunk! Örökbefogadtad a {{SITENAME}}-t!',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -748,7 +748,7 @@ Instrumentos utile:
 [[Special:UserRights|Gestion de derectos]]',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  * @author Ximo17
  */
@@ -778,7 +778,7 @@ $messages['lb'] = array(
 	'wikiadoption-mail-first-subject' => 'Mir hunn Iech schonn eng Zäit net méi gesinn.',
 );
 
-/** Lithuanian (Lietuvių)
+/** Lithuanian (lietuvių)
  * @author Eitvys200
  */
 $messages['lt'] = array(
@@ -791,7 +791,7 @@ $messages['lt'] = array(
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME buvo priimta',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1006,7 +1006,7 @@ Alatan yang Berguna:
 [[Special:UserRights|Uruskan Hak]]',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1287,14 +1287,14 @@ Handige hulpmiddelen:<br /><br />
 [[Special:UserRights|Rechten beheren]]',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'wikiadoption' => 'Automatyczna adopcja wiki',
-	'wikiadoption-desc' => 'Rozszerzenie AutomaticWikiAdoption do MediaWiki',
+	'wikiadoption-desc' => 'Rozszerzenie AutomaticWikiAdoption dla MediaWiki',
 	'wikiadoption-header' => 'Adoptuj tę wiki',
 	'wikiadoption-button-adopt' => 'Tak, chcę adoptować {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Dowiedz się więcej!',
@@ -1308,7 +1308,7 @@ Czy jesteś gotów aby pomóc {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Chcesz wiedzieć więcej?',
 	'wikiadoption-know-more-description' => 'Sprawdź te łącza, aby uzyskać więcej informacji. I oczywiście, prosimy o kontakt, jeśli masz jakieś pytania!',
 	'wikiadoption-adoption-successed' => 'Gratulacje! Jesteś teraz administratorem na tej wiki!',
-	'wikiadoption-adoption-failed' => 'Przepraszamy. Próbowaliśmy uczynić cię administratorem, ale się nie udało. Prosimy [http://community.wikia.com/Special:Contact skontaktuj się z nami], a będziemy próbować ci pomóc.',
+	'wikiadoption-adoption-failed' => 'Przepraszamy. Próbowaliśmy dać Ci uprawnienia administratora, ale coś poszło nie tak. Prosimy [http://community.wikia.com/Special:Contact skontaktuj się z nami], a spróbujemy Ci pomóc.',
 	'wikiadoption-not-allowed' => 'Przepraszamy. Nie możesz teraz adoptować tej wiki.',
 	'wikiadoption-not-enough-edits' => 'Potrzebujesz więcej niż 10 edycji aby adoptować tą wiki.',
 	'wikiadoption-adopted-recently' => 'Ostatnio adoptowałeś inną wiki. Będziesz musiał poczekać, zanim możliwa będzie adopcja kolejnej.',
@@ -1392,8 +1392,9 @@ Pomocne narzędzia:
 [[Special:UserRights|Uprawnienia użytkowników]]',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Rhaijin
  */
 $messages['pt'] = array(
 	'wikiadoption' => 'Adopção automática de wikis',
@@ -1464,14 +1465,15 @@ O utilizador que adoptou a #WIKINAME terá agora o estatuto de burocrata e admin
 A Equipa da Wikia
 
 Para cancelar a subscrição de alterações a esta lista, clique o seguinte link: $3',
-	'wikiadoption-mail-adoption-content-HTML' => 'Olá $1,<br /><br />
-A #WIKINAME foi adoptada. As wikis ficam disponíveis para adopção que nenhum dos administradores está activo durante 30 ou mais dias.<br /><br />
+	'wikiadoption-mail-adoption-content-HTML' => 'Oi $ 1, <br /> <br />
 
-O utilizador que adoptou a #WIKINAME terá agora o estatuto de burocrata e administrador. Não se preocupe; manterá o seu estatuto de administrador nesta wiki e esperamos que regresse e continue a sua colaboração quando puder!<br /><br />
+# WIKINAME foi adotado. Wikis estão disponíveis para ser adotado quando nenhum dos actuais administradores estão ativas por 60 dias ou mais. <br /> <br />
 
-A Equipa da Wikia<br /><br />
+O usuário adoção de # WIKINAME terá agora burocrata e status de administrador. Não se preocupe, você também vai manter seu status de administrador nesta wiki e são bem-vindos para voltar e continuar a contribuir a qualquer momento! <br /> <br />
 
-Pode <a href="$3">cancelar a subscrição</a> de alterações a esta lista.',
+O <br Equipe Wikia /> <br />
+
+Você pode <a href="$3"> unsubscribe </ a> de alterações a esta lista.',
 	'tog-adoptionmails' => 'Notificar-me por correio electrónico se a $1 ficar disponível para adopção por outros utilizadores',
 	'wikiadoption-pref-label' => 'Alterar estas preferências só afectará as mensagens por correio electrónico vindas da $1.',
 	'wikiadoption-welcome-header' => 'Parabéns! Adoptou a {{SITENAME}}!',
@@ -1492,7 +1494,7 @@ Ferramentas Úteis:
 [[Special:UserRights|Gerir Privilégios]]',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
  */
@@ -1593,7 +1595,7 @@ Ferramentas Úteis:
 [[Special:UserRights|Gerir Privilégios]]',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Minisarm
  */
 $messages['ro'] = array(
@@ -1603,7 +1605,7 @@ $messages['ro'] = array(
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME a fost adoptat',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -1705,7 +1707,7 @@ $messages['ru'] = array(
 [[Special:UserRights|Управление правами участников]]',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1717,7 +1719,7 @@ $messages['sr-ec'] = array(
 	'wikiadoption-adoption-successed' => 'Честитамо! Постали сте администратор овог викија!',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -1828,14 +1830,14 @@ $messages['te'] = array(
 	'wikiadoption-know-more-header' => 'మరింత తెలుసుకోవాలనుకుంటున్నారా?',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
@@ -1848,6 +1850,7 @@ $messages['zh-hans'] = array(
 	'wikiadoption-know-more-header' => '想知道更多吗？',
 	'wikiadoption-know-more-description' => '查询这些链接获取更多信息。当然，如果您遇到任何问题，请随时和我们联系！',
 	'wikiadoption-adoption-successed' => '恭喜！您现在是这个维基的管理员！',
+	'wikiadoption-adoption-failed' => '很抱歉。我们曾试图使您成为管理员，但失败了。请[http://community.wikia.com/Special:Contact 联系我们]，我们会努力帮助您解决。',
 	'wikiadoption-not-allowed' => '我们很抱歉。您现在不能认领此维基。',
 	'wikiadoption-not-enough-edits' => '糟糕！您需要编辑10次以上方能领养此维基。',
 	'wikiadoption-adopted-recently' => '糟糕！您最近已认领了一个维基。您需要等待一段时间之后再认领一个新的维基。',
@@ -1868,7 +1871,7 @@ Wikia小组
 	'wikiadoption-welcome-header' => '恭喜！你已认领了{{SITENAME}}！',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

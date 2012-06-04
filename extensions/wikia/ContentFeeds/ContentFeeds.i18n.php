@@ -32,14 +32,14 @@ $messages['af'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fout: Bladsyinhoud benodig',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Növbəti',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
  */
@@ -53,7 +53,7 @@ $messages['br'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fazi : rekis eo korf ar bajenn',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -94,7 +94,7 @@ $messages['de'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fehler: Seiteninhalt ist erforderlich',
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $messages['es'] = array(
 	'contentfeeds-desc' => 'Proporciona información enriquecida y actualizada a través de varias etiquetas o "feeds"',
 	'contentfeeds-newimages-rss-title' => 'Fuente RSS para {{#Special:NewFiles}}',
@@ -106,7 +106,7 @@ $messages['es'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error: Se requiere el cuerpo de la página',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
@@ -114,7 +114,7 @@ $messages['eu'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Hurrengoa',
 );
 
-/** French (Français) */
+/** French (français) */
 $messages['fr'] = array(
 	'contentfeeds-desc' => 'Fournit de l’information riche et à jour grâce à de nombreuses balises ou « flux ».',
 	'contentfeeds-newimages-rss-title' => 'Flux RSS pour {{#Special:NewFiles}}',
@@ -140,7 +140,7 @@ $messages['gl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erro: O corpo da páxina é necesario',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
@@ -151,7 +151,7 @@ $messages['hu'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Hiba: a lap szövegét kötelező megadni',
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (interlingua) */
 $messages['ia'] = array(
 	'contentfeeds-desc' => 'Forni informationes ric e actual per medio de varie etiquettas o "syndicationes"',
 	'contentfeeds-newimages-rss-title' => 'Syndication RSS pro {{#Special:NewFiles}}',
@@ -194,7 +194,7 @@ $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $messages['mk'] = array(
 	'contentfeeds-desc' => 'Овозможува богати тековни информации преку разни ознаки или „канали“',
 	'contentfeeds-newimages-rss-title' => 'RSS-канал за {{#Special:NewFiles}}',
@@ -228,7 +228,7 @@ $messages['ms'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Perhatian: Isi kandungan laman diperlukan',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'contentfeeds-desc' => 'Gir utdypende og oppdatert informasjon gjennom ulike tagger eller «feeds»',
 	'contentfeeds-newimages-rss-title' => 'RSS Feed for {{#Special:NewFiles}}',
@@ -266,7 +266,7 @@ $messages['pfl'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Tidl',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -302,7 +302,7 @@ $messages['ps'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'راتلونکی',
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $messages['pt'] = array(
 	'contentfeeds-desc' => 'Fornece informação actualizada através de vários elementos ou "feeds"',
 	'contentfeeds-newimages-rss-title' => 'Feed RSS para {{#Special:NewFiles}}',
@@ -314,7 +314,7 @@ $messages['pt'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erro: O corpo da página é necessário',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  */
 $messages['pt-br'] = array(
@@ -328,14 +328,14 @@ $messages['pt-br'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erro: O conteúdo da página é necessário',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titlu',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Express2000
  * @author Kuzura
  */
@@ -350,7 +350,7 @@ $messages['ru'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Ошибка: Требуется тело страницы',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -359,7 +359,7 @@ $messages['sr-ec'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => 'Следеће',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  */
 $messages['sv'] = array(
@@ -397,7 +397,7 @@ $messages['tl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang  isang pamagat ng pahina',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -430,7 +430,7 @@ $messages['vi'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Lỗi: Nội dung trang là bắt buộc',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Hzy980512
  */

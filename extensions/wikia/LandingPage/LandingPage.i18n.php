@@ -37,14 +37,14 @@ $messages['ar'] = array(
 	'landingpage-buttons-learn-more' => 'معرفة المزيد &gt;',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'landingpage' => 'Добре дошли в Wikia',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -55,7 +55,7 @@ $messages['br'] = array(
 	'landingpage-buttons-learn-more' => "Gouzout hiroc'h &gt;",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -80,7 +80,7 @@ $messages['de'] = array(
 	'landingpage-buttons-learn-more' => 'Mehr erfahren &gt;',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Absay
  * @author Benfutbol10
  * @author Peter17
@@ -106,7 +106,7 @@ $messages['fa'] = array(
 	'landingpage' => 'به ویکیا خوش آمدید',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Ilkea
  */
 $messages['fi'] = array(
@@ -118,7 +118,7 @@ $messages['fi'] = array(
 	'landingpage-buttons-learn-more' => 'Lue lisää &gt;',
 );
 
-/** French (Français)
+/** French (français)
  * @author Peter17
  * @author Verdy p
  * @author Wyz
@@ -165,7 +165,7 @@ $messages['gl'] = array(
 	'landingpage-buttons-learn-more' => 'Máis información &gt;',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author TK-999
  */
@@ -178,7 +178,7 @@ $messages['hu'] = array(
 	'landingpage-buttons-learn-more' => 'Tudj meg többet &gt;',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -236,7 +236,7 @@ $messages['lb'] = array(
 	'landingpage' => 'Wëllkomm op Wikia',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -272,7 +272,7 @@ $messages['ms'] = array(
 	'landingpage-buttons-learn-more' => 'Ketahui lebih lanjut &gt;',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -311,7 +311,7 @@ $messages['nl-informal'] = array(
 	'landingpage-text' => 'Bij Wikia kan je <strong>verbinden met mensen</strong> die je <strong>passies en interesses</strong> delen. Vind je groep, maak opmerkingen en bewerkingen, of begin zelfs <strong>je eigen website</strong> en gemeenschap.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -347,7 +347,7 @@ $messages['ps'] = array(
 	'landingpage-buttons-learn-more' => 'نور مالومات &gt;',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -359,7 +359,7 @@ $messages['pt'] = array(
 	'landingpage-buttons-learn-more' => 'Saiba mais &gt;',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  */
@@ -372,7 +372,7 @@ $messages['pt-br'] = array(
 	'landingpage-buttons-learn-more' => 'Saiba mais &gt;',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Александр Сигачёв
@@ -386,7 +386,7 @@ $messages['ru'] = array(
 	'landingpage-buttons-learn-more' => 'Подробнее &gt;',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -398,7 +398,7 @@ $messages['sr-ec'] = array(
 	'landingpage-buttons-about-wikia-url' => 'http://community.wikia.com/wiki/About_Wikia?uselang=sr-ec',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -418,7 +418,7 @@ $messages['tl'] = array(
 	'landingpage-buttons-learn-more' => 'Umalam ng marami pa &gt;',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
@@ -435,26 +435,27 @@ $messages['tt-cyrl'] = array(
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia',
 );
 
-/** Ukrainian (Українська) */
+/** Ukrainian (українська) */
 $messages['uk'] = array(
 	'landingpage' => 'Ласкаво просимо у Wikia',
 	'landingpage-readfaq' => 'Є запитання? Читайте наші FAQ &gt;',
 	'landingpage-buttons-learn-more' => 'Дізнатись більше &gt;',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Liangent
  */
 $messages['zh-hans'] = array(
 	'landingpage' => '欢迎光临Wikia',
 	'landingpage-start-exploring' => '准备好开始探索了？',
+	'landingpage-start-exploring-text' => '搜索你最喜欢的主题或浏览社区收藏。',
 	'landingpage-readfaq' => '有问题？阅读我们的常见问题 &gt;',
 	'landingpage-text' => '在Wikia，你可以 <strong>与人们联系</strong>，分享你的<strong>兴趣与爱好</strong>，寻找到你的集体，做出注释和编辑，甚至 <strong>建立你自己的网站</strong>和社区。',
 	'landingpage-buttons-learn-more' => '了解更多 &gt;',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(

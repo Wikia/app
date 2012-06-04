@@ -83,7 +83,7 @@ $messages['ar'] = array(
 	'multilookupwikititle' => 'العنوان',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -116,7 +116,7 @@ $messages['be-tarask'] = array(
 	'right-multilookup' => 'прагляд інфармацыі пра ўдзельнікаў у некалькіх вікі',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -148,7 +148,7 @@ $messages['br'] = array(
 	'right-multilookup' => 'Klask titouroù diwar-benn implijerien e meur a wiki.',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  * @author Palapa
  */
@@ -173,7 +173,7 @@ $messages['bs'] = array(
 	'right-multilookup' => 'Potraži informacije o korisnicima na više wikija',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author SMP
  */
 $messages['ca'] = array(
@@ -240,7 +240,8 @@ $messages['diq'] = array(
 	'multilookupwikititle' => 'Sername',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
+ * @author Ciencia Al Poder
  * @author Crazymadlover
  * @author Translationista
  */
@@ -255,7 +256,7 @@ $messages['es'] = array(
 	'multilookupprevious' => 'anterior',
 	'multilookupnbrresult' => 'Número de resultados:',
 	'multilookupinvalidresults' => '¡Resultados inválidos!',
-	'multilookupnoresultfound' => '¡No se ha encontrado resultados!',
+	'multilookupnoresultfound' => 'No se han encontrado resultados',
 	'multilookupwiki' => 'Wiki',
 	'multilookuplink' => 'Vínculo a contribuciones',
 	'multilookupdetails' => 'Ver detalles',
@@ -271,7 +272,7 @@ $messages['es'] = array(
 	'right-multilookup' => 'Información de búsqueda de usuarios en múltiples wikis',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  */
@@ -288,7 +289,7 @@ $messages['fi'] = array(
 	'multilookuplastedit' => 'Viimeisin muokkaus tästä IP-osoitteesta:',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Slamduck
  * @author Verdy p
@@ -350,7 +351,7 @@ $messages['gl'] = array(
 	'right-multilookup' => 'Procurar información sobre usuarios en varios wikis',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
  */
@@ -370,7 +371,7 @@ $messages['hu'] = array(
 	'multilookuplastedithdr' => 'Legutolsó szerkesztés',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -407,7 +408,7 @@ $messages['inh'] = array(
 	'multilookupwiki' => 'ВIикIи',
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $messages['it'] = array(
 	'multilookupgo' => 'Vai',
 	'multilookupnext' => 'succ',
@@ -462,7 +463,7 @@ $messages['lb'] = array(
 	'multilookupwikititle' => 'Titel',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -476,7 +477,7 @@ $messages['mk'] = array(
 	'multilookupprevious' => 'претходно',
 	'multilookupnbrresult' => 'Број на резултати:',
 	'multilookupinvalidresults' => 'Неважечки резултати!',
-	'multilookupnoresultfound' => 'Нема пронајдено резултат!',
+	'multilookupnoresultfound' => 'Не пронајдов ништо!',
 	'multilookupwiki' => 'Вики',
 	'multilookuplink' => 'Придонеси-врска',
 	'multilookupdetails' => 'Подробности',
@@ -535,7 +536,7 @@ $messages['my'] = array(
 	'multilookupwikioptions' => 'ရွေးပိုင်ခွင့်',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -618,7 +619,7 @@ $messages['pfl'] = array(
 	'multilookupwikititle' => 'Tidl',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sp5uhe
  */
@@ -693,7 +694,7 @@ $messages['ps'] = array(
 	'multilookupwikioptions' => 'خوښنې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -723,7 +724,7 @@ $messages['pt'] = array(
 	'right-multilookup' => 'Procure informação de utilizadores em várias wikis',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
@@ -755,7 +756,7 @@ $messages['pt-br'] = array(
 	'right-multilookup' => 'Procure informação de usuários em várias wikis',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -766,7 +767,7 @@ $messages['ro'] = array(
 	'multilookuplastedithdr' => 'Ultima modificare',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -799,7 +800,7 @@ $messages['ru'] = array(
 	'right-multilookup' => 'просмотр сведений об участниках в нескольких вики',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
@@ -821,7 +822,7 @@ $messages['sr-ec'] = array(
 	'multilookuplastedithdr' => 'Последња измена',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -901,14 +902,14 @@ $messages['tl'] = array(
 	'right-multilookup' => 'Kabatirang panghanap sa mga tagagamit na nasa maramihang mga wiki',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
 	'multilookupwiki' => 'Вики',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Тест
  */
 $messages['uk'] = array(
@@ -929,7 +930,7 @@ $messages['yi'] = array(
 	'multilookupprevious' => 'פֿריערדיקער',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
 $messages['zh-hans'] = array(

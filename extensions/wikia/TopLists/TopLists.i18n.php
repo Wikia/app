@@ -190,7 +190,7 @@ $messages['ar'] = array(
 	'toplists-create-button-msg' => 'إنشاء قائمة',
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
 $messages['az'] = array(
@@ -203,7 +203,7 @@ $messages['az'] = array(
 	'toplists-weeks' => '$1 {{PLURAL:$1|həftə|həftə}}',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -224,7 +224,7 @@ $messages['bg'] = array(
 	'toplists-create-button-msg' => 'Създаване на списък',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -307,7 +307,7 @@ Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 	'toplists-create-button-msg' => 'Sevel ur roll',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -495,7 +495,7 @@ $messages['diq'] = array(
 	'toplists-create-button-msg' => 'Liste vırazê',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author Peter17
  * @author VegaDark
@@ -596,7 +596,7 @@ $messages['fa'] = array(
 	'toplists-image-browser-upload-btn' => 'انتخاب',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Ilkea
  * @author Nike
@@ -683,7 +683,7 @@ Voit <a href="$4">perua päivitykset</a> luettelon muutoksista.',
 	'toplists-create-button-msg' => 'Luo lista',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Jean-Frédéric
  * @author McDutchie
@@ -863,7 +863,7 @@ Pode <a href="$4">cancelar a subscrición</a> dos cambios feitos na lista.',
 	'toplists-create-button-msg' => 'Crear unha lista',
 );
 
-/** Hungarian (Magyar) */
+/** Hungarian (magyar) */
 $messages['hu'] = array(
 	'toplists-desc' => 'Top 10-es lista',
 	'right-toplists-create-edit-list' => 'Top 10-es lista létrehozása és szerkesztése',
@@ -923,7 +923,7 @@ $messages['hu'] = array(
 	'toplists-create-button-msg' => 'Lista létrehozása',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -1010,7 +1010,7 @@ Tu pote <a href="$4">cancellar le subscription</a> al cambios in iste lista.',
 	'toplists-create-button-msg' => 'Crear un lista',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -1131,7 +1131,7 @@ $messages['lb'] = array(
 	'toplists-weeks' => '$1 {{PLURAL: $1|Woch|Wochen}}',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -1316,7 +1316,7 @@ $messages['my'] = array(
 	'toplists-days' => '$1 {{PLURAL:$1|ရက်|ရက်}}',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
@@ -1514,7 +1514,7 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-create-heading' => '<em>Nieuw!</em> Maak je eigen Top 10 aan',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  */
@@ -1716,7 +1716,7 @@ $messages['ps'] = array(
 	'toplists-create-button-msg' => 'يو لړليک جوړول',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author GTNS
  * @author Hamilton Abreu
  * @author Waldir
@@ -1803,7 +1803,7 @@ Pode <a href="$4">cancelar a subscrição</a> de alterações à lista.',
 	'toplists-create-button-msg' => 'Criar uma lista',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -1813,7 +1813,7 @@ $messages['ro'] = array(
 	'toplists-cancel-button' => 'Renunţă',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author DCamer
  * @author Eleferen
  * @author Kuzura
@@ -1902,7 +1902,7 @@ $messages['ru'] = array(
 	'toplists-create-button-msg' => 'Создать список',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -1955,7 +1955,7 @@ $messages['sr-ec'] = array(
 	'toplists-create-button-msg' => 'Направи списак',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -2139,7 +2139,7 @@ Tumungo sa Wikia upang suriin ang mga pagbabago! $1
 	'toplists-create-button-msg' => 'Lumikha ng isang talaan',
 );
 
-/** Ukrainian (Українська) */
+/** Ukrainian (українська) */
 $messages['uk'] = array(
 	'toplists-seconds' => '$1 {{PLURAL:$1|секунда|секунди|секунд}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|хвилина|хвилини|хвилин}}',
@@ -2148,7 +2148,7 @@ $messages['uk'] = array(
 	'toplists-weeks' => '$1 {{PLURAL:$1|тиждень|тижня|тижнів}}',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
@@ -2180,7 +2180,7 @@ $messages['zh-hans'] = array(
 	'toplists-create-button-msg' => '创建列表',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(

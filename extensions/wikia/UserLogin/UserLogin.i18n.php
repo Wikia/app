@@ -272,7 +272,7 @@ $messages['diq'] = array(
 	'userlogin-loginreqlink' => 'Deqewtış',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  * @author Invadinado
  * @author VegaDark
@@ -348,7 +348,7 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://es.wik
 	'wikiamobile-facebook-connect-fail' => 'Lo sentimos, pero tu cuenta en Facebook no está actualmente vinculada con una cuenta Wikia.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  * @author Wyz
  */
@@ -497,7 +497,7 @@ Quere controlar os correos electrónicos que recibe? Vaia a {{fullurl:{{ns:speci
 	'wikiamobile-facebook-connect-fail' => 'Sentímolo, a súa conta do Facebook non está ligada con ningunha de Wikia.',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -515,7 +515,7 @@ $messages['it'] = array(
 	'userlogin-error-invalid-username' => 'Username non valido',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -663,7 +663,7 @@ Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Prefer
 	'wikiamobile-facebook-connect-fail' => 'Maaf, akaun Facebook anda sekarang tidak berpautan dengan sebarang akaun Wikia.',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -807,7 +807,7 @@ Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:spec
 	'wikiamobile-facebook-connect-fail' => 'Uw Facebookgebruiker is op het moment niet gekoppeld met uw Wikiagebruiker.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Nandy
  * @author Sovq
  */
@@ -882,7 +882,7 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'wikiamobile-facebook-connect-fail' => 'Przepraszamy, Twoje konto na Facebooku nie jest obecnie połączone z kontem na Wikii.',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  */
 $messages['pt-br'] = array(
@@ -919,7 +919,7 @@ $messages['pt-br'] = array(
 	'userlogin-password-page-title' => 'Mude sua senha',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Kuzura
  */
 $messages['ru'] = array(
@@ -993,7 +993,7 @@ ___________________________________________
 	'wikiamobile-facebook-connect-fail' => 'К сожалению, ваш аккаунт на Facebook в настоящее время не связан с учётной записью Викия.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1065,5 +1065,39 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'userlogin-changepassword-needlogin' => 'Du måste $1 för att ändra ditt lösenord.',
 	'wikiamobile-sendpassword-label' => 'Skicka nytt lösenord',
 	'wikiamobile-facebook-connect-fail' => 'Tyvärr, ditt Facebook-konto är för tillfället inte är länkat med ett Wikia-konto.',
+);
+
+/** Ukrainian (українська)
+ * @author A1
+ */
+$messages['uk'] = array(
+	'userlogin-login-heading' => 'Увійти',
+	'userlogin-forgot-password' => 'Забули пароль?',
+	'userlogin-remembermypassword' => 'Залишатися в системі',
+	'userlogin-error-noname' => "Просимо заповнити ім'я користувача",
+	'userlogin-error-sessionfailure' => 'Час сеансу вичерпано. Увійдіть ще раз.',
+	'userlogin-error-nosuchuser' => "Таке ім'я не зареєстроване. Не забувайте, імена чутливі до регістру.",
+	'userlogin-loginreqlink' => 'увійти',
+	'userlogin-changepassword-needlogin' => 'Вам необхідно  $1  щоб змінити свій пароль.',
+	'wikiamobile-sendpassword-label' => 'Надіслати новий пароль',
+);
+
+/** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
+ */
+$messages['zh-hans'] = array(
+	'userlogin-login-heading' => '登录',
+	'userlogin-forgot-password' => '忘记密码？',
+	'userlogin-remembermypassword' => '保持登录状态',
+	'userlogin-error-login-throttled' => '密码输入错误次数过多。请稍后再试。',
+	'userlogin-error-edit-account-closed-flag' => '您的帐户已被Wikia禁用。',
+	'userlogin-error-invalidemailaddress' => '请输入有效的电子邮件地址。',
+	'userlogin-error-invalid-username' => '用户名无效',
+	'userlogin-error-user-not-allowed' => '该用户名禁用。',
+	'userlogin-error-resetpass_forbidden' => '无法更改密码',
+	'userlogin-password-email-sent' => '我们已将新密码寄至该邮箱$1。',
+	'userlogin-oldpassword' => '旧密码',
+	'userlogin-password-email-greeting' => '嗨！$USERNAME，',
+	'userlogin-loginreqlink' => '登录',
 );
 
