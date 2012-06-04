@@ -12,7 +12,7 @@ $messages = array();
  /*   Begin V2 Messages          */
 /********************************/
 
-$messages['en'] += array(
+$messages['en'] = array(
 	'wikiasearch2-page-title-with-query' => "Search results for '$1' - $2",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Search Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Search $1',
