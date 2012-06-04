@@ -243,14 +243,13 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	}
 	.lightbox-arrows {
 		span {
-			@include border-radius(4px);
-			@include opacity(80); 
+			@include sprite-Lightbox-base;
+			@include opacity(65); 
 			@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
-			background: $color-buttons;
 			cursor: pointer;
 			display: block;
-			height: 50px;
-			margin-top: -25px;
+			height: 60px;
+			margin-top: -30px;
 			position: absolute;
 			top: 50%;
 			width: 50px;
@@ -258,30 +257,16 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				@include opacity(100);
 			}
 			&.disabled {
-				@include opacity(40);
-				cursor: default;
-				&:hover {
-					@include opacity(40);			
-				}
+				display: none;
 			}
 		}
 		.next {
+			@include sprite-Lightbox('arrow_large_next');
 			right: 20px;
-			&:before {
-				@include arrow(15px, $color-button-text, 'right');
-				content: "";
-				display: block;
-				margin: 10px auto 10px 19px;
-			}
 		}
 		.previous {
+			@include sprite-Lightbox('arrow_large_previous');
 			left: 20px;
-			&:before {
-				@include arrow(15px, $color-button-text, 'left');
-				content: "";
-				display: block;
-				margin: 10px 19px 10px auto;
-			}
 		}
 	}
 	.LightboxHeader,
