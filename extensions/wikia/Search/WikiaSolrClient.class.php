@@ -66,6 +66,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 				'qf' => 'title^5 html',
 				'hl' => 'true',
 				'hl.fl' => 'html,title', // highlight field
+				'hl.requireFieldMatch' => 'true',
 				'hl.snippets' => '1', // number of snippets per field
 				'hl.fragsize' => '150', // snippet size in characters
 				'hl.simple.pre' => '<span class="searchmatch">',
