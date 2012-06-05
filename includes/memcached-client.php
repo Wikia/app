@@ -340,6 +340,9 @@ class MWMemcached {
 		}
 
 		if ( $res == "DELETED" ) {
+			$extra = $this->_debugkey($key);
+			wfProfileIn ( __METHOD__ . "::$key $extra");
+			wfProfileOut ( __METHOD__ . "::$key $extra");
 			return true;
 		}
 		return false;
@@ -421,8 +424,9 @@ class MWMemcached {
 
         // Memoize duplicate memcache requests for the same key in the same request
 		if (isset($this->_dupe_cache[$key])) {
-			wfProfileIn ( __METHOD__ . "::$key !DUPE");
-			wfProfileOut ( __METHOD__ . "::$key !DUPE");
+			$extra = $this->_debugkey($key);
+			wfProfileIn ( __METHOD__ . "::$key !DUPE $extra");
+			wfProfileOut ( __METHOD__ . "::$key !DUPE $extra");
 			wfProfileOut( __METHOD__ );
 			return $this->_dupe_cache[$key];
 		}
@@ -446,12 +450,14 @@ class MWMemcached {
 		// Owen wants to get more detailed profiling info
 		if (isset ($val[$key])) {
 			$this->_dupe_cache[$key] = $val[$key];
-			wfProfileIn ( __METHOD__ . "::$key !HIT");
-			wfProfileOut ( __METHOD__ . "::$key !HIT");
+			$extra = $this->_debugkey($key);
+			wfProfileIn ( __METHOD__ . "::$key !HIT $extra");
+			wfProfileOut ( __METHOD__ . "::$key !HIT $extra");
 		} else {
 			$this->_dupe_cache[$key] = null;
-			wfProfileIn ( __METHOD__ . "::$key !MISS");
-			wfProfileOut ( __METHOD__ . "::$key !MISS");
+			$extra = $this->_debugkey($key);
+			wfProfileIn ( __METHOD__ . "::$key !MISS $extra");
+			wfProfileOut ( __METHOD__ . "::$key !MISS $extra");
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -986,6 +992,9 @@ class MWMemcached {
 			$this->_debugprint( sprintf( "%s %s (%s)\n", $cmd, $key, $line ), 3 );
 		}
 		if ( $line == "STORED" ) {
+			$extra = $this->_debugkey($key);
+			wfProfileIn ( __METHOD__ . "::$key $extra");
+			wfProfileOut ( __METHOD__ . "::$key $extra");
 			return true;
 		}
 		return false;
@@ -1030,6 +1039,32 @@ class MWMemcached {
 
 	function _debugprint( $str, $level = 1 ) {
 		print( $str );
+	}
+
+	function _debugkey($key) {
+		global $wgCityId;
+		global $wgDBname;
+		global $wgUserName;
+
+		$normalized = str_replace(
+			array(
+				$wgCityId,
+				$wgDBname,
+				$wgUserName
+			), array(
+				'CityId',
+				'DBname',
+				'UserName'
+			),
+			$key
+		);
+		$exp = explode(":",$normalized);
+		foreach($exp as &$e) {
+			if(is_numeric($e)) {
+				$e = 'NUM';
+			}
+		}
+		return '#@'.implode(':',$exp);
 	}
 
 	/**
@@ -1113,5 +1148,6 @@ class MemCachedClientforWiki extends MWMemcached {
 		}
 		return parent::delete($key, $time);
 	}
+
 	/* Wikia change end */
 }
