@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'abtesting-create-experiment-heading' => 'Create Experiment',
 	'abtesting-create-experiment-submit' => 'Create',
 	'abtesting-create-experiment-exp-name' => 'Experiment name (this will become a varaible so make it short but descriptive)',
-	
+	'abtesting-create-experiment-treatment-groups' => 'Treatment Groups',
 
 );
 

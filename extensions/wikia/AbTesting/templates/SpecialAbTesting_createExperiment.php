@@ -9,6 +9,12 @@
 		</label><br/>
 		<input type='text' name='expName' value='<?= $expName; ?>'/><br/>
 		
+		<fieldset>
+			<legend><?= wfMsg('abtesting-create-experiment-treatment-groups'); ?></legend>
+			
+			TODO: Rows for a number of Treatment Groups (with a radio button for which one is the control group).
+			
+		</fieldset>
 		
 		
 
