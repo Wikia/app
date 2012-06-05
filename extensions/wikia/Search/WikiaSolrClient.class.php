@@ -176,14 +176,14 @@ class WikiaSolrClient extends WikiaSearchClient {
 					      );
 		} 
 
-
 		if ( $response instanceOf Apache_Solr_Response &&
 		     empty($response->response->docs)) {
 
 			if ($spellCheck && 
+				! empty($this->articleMatch) &&
 				! $spellCheckHappened &&
-				!empty($response->spellcheck->suggestions) && 
-				!empty($response->spellcheck->suggestions->collation)
+				! empty($response->spellcheck->suggestions) && 
+				! empty($response->spellcheck->suggestions->collation)
 				) {
 
 				$newQuery = $response->spellcheck->suggestions->collation;
@@ -192,7 +192,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 				$methodOptions['spellCheckHappened'] = true;
 
 				return $this->search($newQuery, $methodOptions);
-			} else if (!$spellCheck) {
+			} else if (!$spellCheck && empty($this->articleMatch)) {
 				#research with spellcheck @todo spellcheck request handler
 				$methodOptions['spellCheck'] = true;
 				return $this->search($query, $methodOptions);
