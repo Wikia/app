@@ -59,7 +59,7 @@ class WikiaSearchResult {
 				if ($val == $parsed['scheme'].':' || $val == $parsed['host']) {
 					continue;
 				}
-				$exploded[$key] = urlencode($val);
+				$exploded[$key] = Parser::replaceUnusualEscapes(urlencode($val));
 			}
 			$this->linkUrl = implode('/', $exploded);
 		}
