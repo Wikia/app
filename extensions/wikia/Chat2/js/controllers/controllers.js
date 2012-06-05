@@ -208,6 +208,7 @@ var NodeRoomController = $.createClass(Observable,{
 	afterInitQueue: [],
 	banned: {},
 	userMain: null,
+	maxCharacterLimit: 1000,
 	constructor: function(roomId) {
 		
 		NodeRoomController.superclass.constructor.apply(this,arguments);
@@ -257,6 +258,7 @@ var NodeRoomController = $.createClass(Observable,{
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
 		this.viewDiscussion.bind('clickAnchor', $.proxy(this.clickAnchor, this) );
 		this.viewDiscussion.bind('sendMessage', $.proxy(this.sendMessage, this) );
+		this.viewDiscussion.bind('updateCharacterCount', $.proxy(this.updateCharacterCount, this) );
 		
 		//TODO: move to view ??
 		$(window).focus($.proxy(function(e) {// set focus on the text input
@@ -338,18 +340,24 @@ var NodeRoomController = $.createClass(Observable,{
 		this.viewDiscussion.getTextInput().focus();
 	},
 	
-	sendMessage: function(event){
-		if(!this.active) {
-			return true;
-		}
-		
-		if (event.which == 13 && !event.shiftKey) {
-			event.preventDefault();
-			var inputField = this.viewDiscussion.getTextInput();
+	sendMessage: function(event) {
+		if (this.active && event.which == 13 && !event.shiftKey) {
+			var inputField = $(event.target),
+				inputValue = inputField.val(),
+				inputValueLength = inputValue.length;
 
-			if (inputField.val()) {
-				var chatEntry = new models.ChatEntry({roomId: this.roomId, name: wgUserName, text: inputField.val()});
-				if( !this.isMain() ) { //is prive
+			event.preventDefault();
+
+			// Prevent empty messages or messages with too many characters
+			if (inputValue.length && inputValueLength <= this.maxCharacterLimit) {
+				var chatEntry = new models.ChatEntry({
+					roomId: this.roomId,
+					name: wgUserName,
+					text: inputValue
+				});
+	
+				// Private message
+				if( !this.isMain() ) {
 					if( this.afterInitQueue.length < 1 || this.model.users.length < 2 ){
 						this.mainController.socket.send( this.model.privateRoom.xport() );		
 					}
@@ -364,15 +372,27 @@ var NodeRoomController = $.createClass(Observable,{
 				} else {
 					this.socket.send(chatEntry.xport());
 				}
-				
-				inputField.val('');
-				event.preventDefault();
+	
+				inputField.val('').focus();
+				$('body').removeClass('warn limit-near limit-reached');
 			}
-			$().log('submitting form');
-			inputField.focus();
 		}
 	},
-	
+
+	updateCharacterCount: function(event) {
+		var inputField = $(event.target),
+			inputValue = inputField.val(),
+			currentLength = inputValue.length,
+			remaining = this.maxCharacterLimit - currentLength;
+
+		// display character count if nearing limit
+		$('.remaining').text(remaining);
+		$('body')
+			.toggleClass('warn', remaining <= 200)
+			.toggleClass('limit-near', remaining <= 100)
+			.toggleClass('limit-reached', remaining <= 0);
+	},
+
 	onChatAdd: function(message) {
 		var newChatEntry;
 		var dataObj = JSON.parse(message.data);

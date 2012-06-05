@@ -1,21 +1,23 @@
+@import "../../../../skins/oasis/css/mixins/bodytext";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/border-opacity";
-@import "../../../../skins/oasis/css/mixins/bodytext";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/forms";
 @import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/core/reset";
-@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/core/buttons";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/core/modal";
+@import "../../../../skins/oasis/css/core/reset";
 @import "../../../../skins/oasis/css/core/typography";
 @import "../../../../skins/oasis/css/core/WikiaForm";
 
 @import "ChatColor";
-@import "ChatSprite";
 @import "ChatModal";
+@import "ChatSprite";
 @import "UserStatsMenu";
 
 ._avatar {
@@ -28,6 +30,27 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 13px;
 	margin: 0;
+	&.warn {
+		.Chat {
+			bottom: 70px;
+		}
+		.remaining {
+			display: block;
+		}
+	}
+	&.limit-near .remaining {
+		color: mix($color-text, $color-error, 60%);
+	}
+	&.limit-reached .remaining {
+		color: $color-error;
+	}
+	.remaining {
+		display: none;
+		line-height: 25px;
+		position: absolute;
+		top: -25px;
+		right: 5px;
+	}
 }
 
 textarea {
@@ -254,28 +277,36 @@ a {
 	padding-left: 55px;
 	position: absolute;
 	right: 150px;
+	&.blocked {
+	   opacity: 0.3;
+	}
 	img {
 		@extend ._avatar;
 		left: 7px;
 		position: absolute;
 	}
 	[name="message"] {
-		border: 1px solid $color-page-border;
-		-moz-box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		box-sizing: border-box;
-		height: 3.3em;
+		background-color: transparent;
+		border: 0;
+		color: $color-text;
+		height: 100%;
 		line-height: 1.4em;
 		margin: 0;
-		padding: 2px;
+		outline: none;
+		padding: 0;
 		resize: none;
 		width: 100%;
 	}
+	.message {
+		@include box-sizing();
+		background-color: lighten($color-page, 5%);
+		border: 1px solid $color-page-border;
+		height: 3.3em;
+		padding: 2px;
+		position: relative;
+	}
 	input[type="submit"] {
 		display: none;
-	}
-	&.blocked {
-	   opacity: 0.3;
 	}
 }
 
