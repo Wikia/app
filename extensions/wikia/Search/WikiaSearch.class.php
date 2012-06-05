@@ -268,6 +268,7 @@ class WikiaSearch extends WikiaObject {
 
 		$html = $this->wg->Out->getHTML();
 
+		$isVideo = false;
 		if (($file = $this->wf->findFile( $this->wg->Title->getText() ))
 			&& WikiaFileHelper::isVideoFile( $file )) {
 			$metadata = $file->getMetadata();
@@ -277,6 +278,7 @@ class WikiaSearch extends WikiaObject {
 				$html .= isset( $metadata[$datum] ) ? ' ' . $metadata[$datum] : '';
 			}
 
+			$isVideo = true;
 		}
 
 		// clear output buffer in case we want get more pages
@@ -298,6 +300,7 @@ class WikiaSearch extends WikiaObject {
 		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
 		$result['is_main_page'] = ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) ? 'true' : 'false';
 		$result['is_redirect'] = ($canonical == '') ? 'false' : 'true';
+		$result['is_video'] = $isVideo ? 'true' : 'false';
 
 		if( $withMetaData ) {
 			$result = array_merge($result, $this->getPageMetaData($page));
