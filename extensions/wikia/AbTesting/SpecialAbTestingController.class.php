@@ -18,4 +18,11 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		// TODO: Set up other variables for the template.
 		
 	}
+	
+	function createExperiment() {
+	
+		$this->expName = 'test name';
+		
+	
+	}
 }
