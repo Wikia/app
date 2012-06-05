@@ -316,7 +316,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		($('#PrivateChatList .User:visible').length) ? privateHeader.show() : privateHeader.hide();
 		
 	},
-	
+
 	getTextInput: function() {
 		return $('#Write [name="message"]');
 	},
@@ -331,7 +331,9 @@ var NodeChatDiscussion = Backbone.View.extend({
 	},
 	
 	triggerEvents: {
-			"keypress #Write": "sendMessage"
+		"keyup #Write [name='message']": "updateCharacterCount",
+		"keydown #Write [name='message']": "updateCharacterCount",
+		"keypress #Write [name='message']": "sendMessage"
 	},
 	
 	clear: function(chat) {

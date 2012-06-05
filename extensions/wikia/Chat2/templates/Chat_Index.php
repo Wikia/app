@@ -51,8 +51,11 @@
 		</div>
 
 		<form id="Write" class="Write" onsubmit="return false">
+			<div class="remaining"></div>
 			<img width="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatController::CHAT_AVATAR_DIMENSION ?>" src="<?= $avatarUrl ?>">
-			<textarea name="message"></textarea>
+			<div class="message">
+				<textarea name="message"></textarea>
+			</div>
 			<input type="submit">
 		</form>
 
