@@ -132,18 +132,30 @@
 			<div class="bottom-forms">
 				<div class="more-links">
 					<?php 
-						$form = array (
+						$formHeader = array (
 						    'inputs' => array (
 						    	array(
 						    		'type' => 'custom',
 						    		'output' => '<h2>'. wfMsg('lightbox-urls-form-header') .'</h2>',
 						    	),
+						    ),
+						);
+					?>
+					<?php 
+						$formEmbed = array (
+							'inputs' => array (
 						        array(
 						            'label' => wfMsg('lightbox-embed-url'),
 						            'type' => 'text',
 						            'name' => 'lightbox-embed-url',
 					                'value' => "{{embedMarkup}}",
 						        ),
+						    ),
+						);
+					?>
+					<?php 
+						$formFilePage = array (
+							'inputs' => array (
 						        array(
 						            'label' => wfMsg('lightbox-file-page-url'),
 						            'type' => 'text',
@@ -153,7 +165,11 @@
 						    )
 						);
 					?>
-					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $form)); ?>								
+					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formHeader)); ?>								
+					{{#embedMarkup}}
+						<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formEmbed)); ?>								
+					{{/embedMarkup}}
+					<?= wfRenderModule('WikiaForm', 'Index', array('form' => $formFilePage)); ?>								
 				</div>
 				<div class="email">
 					<?php 
