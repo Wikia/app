@@ -350,10 +350,12 @@ class WikiaSearch extends WikiaObject {
 
 		$result['categories'] = array();
 
-		foreach ($pageData['categories'] as $category) {
+		if (isset($pageData['categories'])) {
+			foreach ($pageData['categories'] as $category) {
 
-			$result['categories'][] = implode(':', array_slice(explode(':', $category['title']), 1));
+				$result['categories'][] = implode(':', array_slice(explode(':', $category['title']), 1));
 
+			}
 		}
 
 		$result['hub'] = isset($data['query']['category']['catname']) ? $data['query']['category']['catname'] : '';
