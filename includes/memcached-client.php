@@ -992,9 +992,12 @@ class MWMemcached {
 			$this->_debugprint( sprintf( "%s %s (%s)\n", $cmd, $key, $line ), 3 );
 		}
 		if ( $line == "STORED" ) {
-			$extra = $this->_debugkey($key);
-			wfProfileIn ( __METHOD__ . "::$key $extra");
-			wfProfileOut ( __METHOD__ . "::$key $extra");
+			global $wgProfile;
+			if($wgProfile) { // there are cases of _set's outside of MediaWiki PHP stack
+				$extra = $this->_debugkey($key);
+				wfProfileIn ( __METHOD__ . "::$key $extra");
+				wfProfileOut ( __METHOD__ . "::$key $extra");
+			}
 			return true;
 		}
 		return false;
