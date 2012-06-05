@@ -103,7 +103,9 @@
 		<button class="more-info-close secondary"><?= wfMsg('lightbox-more-info-back-button') ?></button>
 		<div class="content">
 			<div class="hero">
-				<img src="{{imageUrl}}">
+				<div class="hero-inner">
+					<img src="{{imageUrl}}">
+				</div>
 			</div>
 			<div class="share-form">
 				<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
