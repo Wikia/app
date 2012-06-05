@@ -339,6 +339,11 @@ var Lightbox = {
 			Lightbox.openModal.media
 				.addClass('video-media')
 				.html(renderedResult);
+
+			if(data.playerScript) {
+				$('body').append('<script>' + data.playerScript + '</script>');
+			}
+
 		},
 		destroyVideo: function() {
 			Lightbox.openModal.media.html('');
@@ -356,12 +361,7 @@ var Lightbox = {
 			Lightbox.video.renderVideo(data);
 			
 			Lightbox.updateArrows();
-			
-			// if player script exists, run it
-			if(data.playerScript) {
-				$('body').append('<script>' + data.playerScript + '</script>');
-			}
-			
+
 			Lightbox.renderHeader();
 		},
 		getDimensions: function() {
