@@ -294,15 +294,32 @@ WikiaTracker._track = function(page, profile, sample, events) {
 
 		// test account for ads
 		if (page.indexOf('/999') != -1) {
-			// sample @ 1%
+			// track errors in full
+			if (page.indexOf('/999/error') != -1) {
+				_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
+				return true;
+			}
+
+			// sample slots @ 10%
+			if (page.indexOf('/999/slot') != -1) {
+				if (Math.floor(Math.random()*10) != 7) {
+					return false;
+				}
+				_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
+				return true;
+			}
+
+			// sample the rest (init, beacon, hop) @ 1%
 			if (Math.floor(Math.random()*100) != 7) {
 				return false;
 			}
-			_gaq.push(['Ads._trackEvent', 'fakeurl2', page]);
+			_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
 			return true;
 		}
 
-		_gaq.push(['_trackEvent', 'fakeurl', page]);
+		// don't track other fakeurls
+		return false;
+		//_gaq.push(['_trackEvent', 'fakeurl', page]);
 	}
 
 	return true;
