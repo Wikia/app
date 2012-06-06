@@ -117,7 +117,7 @@ var Lightbox = {
 					/* lightbox loading ends here */
 					
 					/* tracking after lightbox has fully loaded */
-					LightboxLoader.track(WikiaTracker.ACTIONS.IMPRESSION);
+					LightboxLoader.track(WikiaTracker.ACTIONS.IMPRESSION, '', Lightbox.mediaThumbs.thumbs.length);
 					Lightbox.openModal.data('onClose', function() {
 						LightboxLoader.track(
 							WikiaTracker.ACTIONS.CLICK, 
