@@ -73,8 +73,8 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 	global $wgOut, $wgLanguageNames, $wgExternalSharedDB;
 
 	if (!$wikia && !$wikiaID ){
-	        $wgOut->addHTML("No wikia specified <br />\n<br />\n");
-	        return false;
+		$wgOut->addHTML("No wikia specified <br />\n<br />\n");
+		return false;
 	}
 
 	$wikiaDB = null;
@@ -90,7 +90,7 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 		# (b) there's one dot in cityname and the first part is a language code
 		$domain = explode('.', $wikia);
 		if ( count($domain) == 1 || ( count($domain) == 2 && array_key_exists($domain[0], $wgLanguageNames) ) ) {
-        	    $wikia = $wikia.".wikia.com";
+			$wikia = $wikia.".wikia.com";
 		}
 
 		$oRes = $db->select( "city_domains", "city_id, city_domain",
@@ -105,17 +105,16 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
         $result = $db->select('city_list', 'city_id,city_dbname,city_url,city_umbrella,city_lang', "city_id = ". $db->addQuotes($wikiaID));
 
 	if ($dbobject = $db->fetchObject($result)){
-	        return array(
-	        	$dbobject->city_id,
-	        	$dbobject->city_dbname,
-	        	$dbobject->city_url,
-	        	$dbobject->city_umbrella,
-	        	$dbobject->city_lang
-	        );
-
+		return array(
+			$dbobject->city_id,
+			$dbobject->city_dbname,
+			$dbobject->city_url,
+			$dbobject->city_umbrella,
+			$dbobject->city_lang
+		);
 	}else{
-	        $wgOut->addHTML("Didn't manage to find wikia for url with: '". htmlspecialchars($wikia). "'<br />\n<br />\n");
-	        return false;
+		$wgOut->addHTML("Didn't manage to find wikia for url with: '". htmlspecialchars($wikia). "'<br />\n<br />\n");
+		return false;
 	}
 }
 
@@ -163,13 +162,13 @@ function wfSIWEChangeUmbrella(){
 
 	} else {
 
-	$ret.= "<form id='edit_form' action='' method='POST'>
-		<p>Change umbrella for ". htmlspecialchars($wikiaURL). " from '". htmlspecialchars($wikiaUmbrella). "' to: </p>\n
-		<input type='text' name='wikiaUmbrella' />
-		<input type='hidden' name='action' value='change_umbrella_commit' />
-		<input type='hidden' name='wikia_id' value='". htmlspecialchars($wikiaID). "' />
-		<input type='submit' value='Change' />
-	</form>";
+		$ret.= "<form id='edit_form' action='' method='POST'>
+			<p>Change umbrella for ". htmlspecialchars($wikiaURL). " from '". htmlspecialchars($wikiaUmbrella). "' to: </p>\n
+			<input type='text' name='wikiaUmbrella' />
+			<input type='hidden' name='action' value='change_umbrella_commit' />
+			<input type='hidden' name='wikia_id' value='". htmlspecialchars($wikiaID). "' />
+			<input type='submit' value='Change' />
+		</form>";
 	}
 
 	return $ret;

@@ -69,7 +69,13 @@ class DevBoxPanel extends SpecialPage {
 	 * to the wgOut global.
 	 */
 	function execute() {
-		global $wgOut,$wgHooks,$wgDevelEnvironment;
+		global $wgOut,$wgHooks,$wgDevelEnvironment,$wgUser;
+		
+		if( !$wgUser->isAllowed( 'devboxpanel' ) ) { 
+			$wgOut->permissionRequired( 'devboxpanel' );
+			return;
+		}
+		
 		$wgHooks['BeforePageDisplay'][] = 'devBoxPanelAdditionalScripts';
 
 		wfLoadExtensionMessages('DevBoxPanel');
