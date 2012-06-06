@@ -114,6 +114,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			img {
 				max-height: 150px;
 				max-width: 250px;
+				display: block;
+				margin: auto;
 			}
 		}
 		.content {
