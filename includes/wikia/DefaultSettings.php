@@ -890,14 +890,6 @@ if( in_array( 'user_properties', $wgSharedTables ) ) {
 }
 
 /**
- * predis client initialization and redis initialization
- */
-include "$IP/lib/predis/Predis.php";
-$wgRedis = new Predis_Client( array(
-	array( 'host' => '127.0.0.1', 'port' => 6379 ),
-));
-
-/**
  * Media
  */
 $wgAutoloadClasses['WikiaFileHelper'] = $IP.'/includes/wikia/services/WikiaFileHelper.class.php';
