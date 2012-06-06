@@ -31,7 +31,6 @@ class SpecialApiGate extends SpecialPage {
 	const SUBPAGE_AGGREGATE_STATS = "aggregateStats";
 	const SUBPAGE_USER_KEYS = "userKeys";
 	const SUBPAGE_KEY = "key";
-	const API_WIKI_CITYID = "97439";
 
 	public function __construct() {
 		parent::__construct( 'ApiGate' );
@@ -480,10 +479,11 @@ class SpecialApiGate extends SpecialPage {
 	 */
 	public static function shouldShowUserLink(){
 		global $wgCityId, $wgUser;
+		global $WIKIA_CITYID_APIWIKI;
 		wfProfileIn( __METHOD__ );
 		
 		$showLink = false;
-		if($wgCityId == self::API_WIKI_CITYID){
+		if($wgCityId == $WIKIA_CITYID_APIWIKI){
 			$showLink = true;
 		} else {
 			$apiKeys = ApiGate::getKeysByUserId( $wgUser->getId() );
