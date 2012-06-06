@@ -44,7 +44,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wg->Out->setPageTitle($this->wf->Msg('usersignup-page-title'));
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
-		$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
+
+		if ( F::app()->checkSkin( 'oasis' )) {
+			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
+		}
+
 		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
 		}
