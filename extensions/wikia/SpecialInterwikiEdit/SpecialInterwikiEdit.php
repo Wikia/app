@@ -34,12 +34,12 @@ class InterwikiEdit extends SpecialPage {
 	}
 	
 	function execute(){
-                global $wgOut, $wgUser, $wgRequest;
+		global $wgOut, $wgUser, $wgRequest;
 
-		               if( !$wgUser->isAllowed( 'InterwikiEdit' ) ) {
-	                        $wgOut->permissionRequired( 'InterwikiEdit' );
-	                        return;
-	                }
+		if( !$wgUser->isAllowed( 'InterwikiEdit' ) ) {
+			$wgOut->permissionRequired( 'InterwikiEdit' );
+			return;
+		}
 
 		$action = $wgRequest->getVal('action', 'choose');
 		//$lang_only = $wgRequest->getVal('lang_only', 1);
