@@ -45,7 +45,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle($this->wf->Msg('usersignup-page-title'));
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 		$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
-		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
+		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
+			$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
+		}
 
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = true;
