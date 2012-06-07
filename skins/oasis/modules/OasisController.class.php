@@ -349,7 +349,7 @@ class OasisController extends WikiaController {
 EOT;
 		if ($this->jsAtBottom) {
 			$jsLoader .= <<<EOT
-	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
+	var tgId = EXP_AD_LOAD_TIMING && getTreatmentGroup(EXP_AD_LOAD_TIMING);
 	if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { var toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); }
 	else { var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); }
 EOT;
@@ -377,7 +377,7 @@ EOT;
 			}
 
 			$jquery_ads = Wikia::json_encode($jquery_ads);
-			$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING); if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { wsl.loadScript({$jquery_ads}); } })(); /*]]>*/</script>";
+			$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ var tgId = EXP_AD_LOAD_TIMING && getTreatmentGroup(EXP_AD_LOAD_TIMING); if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { wsl.loadScript({$jquery_ads}); } })(); /*]]>*/</script>";
 		}
 
 		wfProfileOut(__METHOD__);
