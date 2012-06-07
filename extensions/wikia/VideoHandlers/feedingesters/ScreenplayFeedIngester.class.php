@@ -95,6 +95,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$clipData['ageGate'] = $ageGate && strtolower($ageGate) == "true";
 				$clipData['language'] = $clip->getElementsByTagName('Language')->item(0)->textContent;
 				$clipData['jpegBitrateCode'] = ScreenplayApiWrapper::MEDIUM_JPEG_BITRATE_ID;
+				$clipData['stdMp4Url'] = '';
+				$clipData['hdMp4Url'] = '';
 
 				$encodes = $clip->getElementsByTagName('Encode');
 				$numEncodes = $encodes->length;
@@ -117,6 +119,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 							switch ($bitrateCode) {
 								case ScreenplayApiWrapper::STANDARD_BITRATE_ID:
 								case ScreenplayApiWrapper::STANDARD_43_BITRATE_ID:
+								case ScreenplayApiWrapper::STANDARD2_BITRATE_ID:
 									$clipData['stdBitrateCode'] = $bitrateCode;
 									$clipData['stdMp4Url'] = $url;
 									break;
@@ -241,7 +244,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			    'trailerRating'	=>	$data['trailerRating'],
 			    'industryRating'	=>	$data['industryRating'],
 			    'ageGate'		=>	(int) $data['ageGate'],
-			    'language'		=>	$data['language']
+			    'language'		=>	$data['language'],
+				'streamUrl'		=>	$data['stdMp4Url'],
+				'streamHdUrl'	=>	$data['hdMp4Url']
 			    );
 		return $metadata;
 	}

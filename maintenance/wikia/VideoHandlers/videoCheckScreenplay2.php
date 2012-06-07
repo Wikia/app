@@ -19,27 +19,60 @@ $rows = $dbw->select('image',
 	array('img_media_type'=>'VIDEO','img_minor_mime'=>'screenplay')
 );
 
+
+$urlTemplate = 'http://www.totaleclips.com/Player/Bounce.aspx?';
+
+function getFileUrl($type, $bitrateid, $videoId) {
+	global $urlTemplate;
+	$fileParams = array(
+		'eclipid' => $videoId,
+		'vendorid' => ScreenplayApiWrapper::VENDOR_ID
+	);
+
+	$urlCommonPart = $urlTemplate . http_build_query($fileParams);
+	return $urlCommonPart . '&type=' . $type . '&bitrateid=' . $bitrateid;
+}
+
+function getStandardBitrateCode($h) {
+	if ($metadata = $h->getMetadata(true)) {
+		if (!empty($metadata['stdBitrateCode'])) {
+			return $metadata['stdBitrateCode'];
+		}
+	}
+
+	return $h->getAspectRatio() <= (4/3) ? ScreenplayApiWrapper::STANDARD_43_BITRATE_ID : ScreenplayApiWrapper::STANDARD_BITRATE_ID;
+}
+
+
 $count = 0;
+
+$updatethose = array();
 
 while($row = $dbw->fetchObject($rows)) {
 	$name = $row->img_name;
 	$title = Title::newFromText($name, NS_FILE);
 	$wgTitle = $title;
-	$new_name = VideoFileUploader::sanitizeTitle( $name );
-	$new_title = Title::newFromText($new_name, NS_FILE);
-	if( $new_name != $name ) {
-		$exists = $new_title->exists() ? '+++' : "---";
-		echo "$exists $name is illegal name\n";
-		echo "    Incorrect URL: " . WikiFactory::getLocalEnvURL( $title->getFullURL()) ."\n";
-		if( $new_title->exists() ) {
-			echo "    Correct   URL: " . WikiFactory::getLocalEnvURL( $new_title->getFullURL()) ."\n";
-			// only remove if there is a copy under "correct" name
-			$file = wfFindFile( $name );
-			$article = Article::newFromID( $title->getArticleID() );
-			$article->doDelete('Duplicated file, Illegal characters in name', true);
-			$file->delete('Duplicated file, Illegal characters in name');
-			$count += 1;
-		}
+	$file = wfFindFile( $name );
+	if( $file->exists() ) {
+		echo "working on $name\n";
+		$handler = $file->getHandler();
+		$videoid = $handler->getVideoId();
+		$urlfile = getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, getStandardBitrateCode($handler), $videoid);
+		$urlhdfile = getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, ScreenplayApiWrapper::HIGHDEF_BITRATE_ID, $videoid);
+		$meta = $row->img_metadata;
+		$metaU = unserialize($meta);
+		$metaU['streamUrl'] = $urlfile;
+		$metaU['streamHdUrl'] = $urlhdfile;
+		$meta = serialize($metaU);
+		$updatethose[$name] = $meta;
 	}
 }
-echo "Removed $count\n";
+
+foreach($updatethose as $name => $meta) {
+	$dbw->update(
+		'image',
+		array('img_metadata'=>$meta),
+		array('img_name'=>$name)
+	);
+	echo "Updated $name\n";
+}

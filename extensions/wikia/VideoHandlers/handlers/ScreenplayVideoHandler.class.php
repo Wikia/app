@@ -13,10 +13,20 @@ class ScreenplayVideoHandler extends VideoHandler {
 	
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 		$height =  $this->getHeight( $width );
-				
-		$file = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, $this->getStandardBitrateCode());
-		$hdfile = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, ScreenplayApiWrapper::HIGHDEF_BITRATE_ID);
-		
+
+		$metadata = $this->getMetadata(true);
+		if(isset($metadata['streamUrl'])) {
+			$file = $metadata['streamUrl'];
+		} else {
+			$file = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, $this->getStandardBitrateCode());
+		}
+
+		if(isset($metadata['streamHdUrl'])) {
+			$hdfile = $metadata['streamHdUrl'];
+		} else {
+			$hdfile = $this->getFileUrl(ScreenplayApiWrapper::VIDEO_TYPE, ScreenplayApiWrapper::HIGHDEF_BITRATE_ID);
+		}
+
 		$jwplayer = new JWPlayer($this->getVideoId());
 		$jwplayer->setArticleId($articleId);
 		$jwplayer->setUrl($file);

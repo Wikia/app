@@ -9,6 +9,7 @@ class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
 	const HIGHDEF_BITRATE_ID = 449;	// 720p
 	const STANDARD_43_BITRATE_ID = 455;	// 360, 4:3
 	const STANDARD_BITRATE_ID = 461;	// 360, 16:9
+	const STANDARD2_BITRATE_ID = 472;	// 360, 16:9
 	const ENCODEFORMATCODE_JPEG = 9;
 	const ENCODEFORMATCODE_MP4 = 20;
 
