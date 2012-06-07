@@ -31,9 +31,12 @@
 
 	</form>
 
-	<div id="SearchAdsTop" class="SearchAds"></div>
+	<div id="SearchAdsTop" class="SearchAdsTop SearchAds">
+		<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
+		<ul class="list loading"></ul>
+	</div>
 
-		<?php if(!empty($results)): ?>
+	<?php if(!empty($results)): ?>
 		<?php if( $resultsFound > 0 ): ?>
 			<p class="result-count subtle">
 				<?php if( empty( $isOneResultsPageOnly ) ): ?>
@@ -86,7 +89,10 @@
 			<?php endforeach; ?>
 			</ul>
 
-	<div id="SearchAdsBottom" class="SearchAds"></div>
+		<div id="SearchAdsBottom" class="SearchAdsBottom SearchAds">
+			<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
+			<ul class="list loading"></ul>
+		</div>
 			
 			<?= $paginationLinks; ?>
 		<?php else:  ?>
