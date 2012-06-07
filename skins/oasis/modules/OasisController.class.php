@@ -344,24 +344,27 @@ class OasisController extends WikiaController {
 		// generate code to load JS files
 		$assets = Wikia::json_encode($assets);
 		$jsLoader = <<<EOT
-<script type="text/javascript">
-	var wsl_assets = {$assets};
+			<script type="text/javascript">
+				var wsl_assets = {$assets};
+				var toload;
 EOT;
 		if ($this->jsAtBottom) {
 			$jsLoader .= <<<EOT
-	var tgId = EXP_AD_LOAD_TIMING && getTreatmentGroup(EXP_AD_LOAD_TIMING);
-	if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { var toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); }
-	else { var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); }
+				if ( typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) { 
+					toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); 
+				} else { 
+					toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); 
+				}
 EOT;
 		}
 		else {
 			$jsLoader .= <<<EOT
-	var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
+				toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
 EOT;
 		}
 		$jsLoader .= <<<EOT
-	(function(){ wsl.loadScript(toload); })();
-</script>
+			(function(){ wsl.loadScript(toload); })();
+		</script>
 EOT;
 
 		// use loader script instead of separate JS files
@@ -377,10 +380,16 @@ EOT;
 			}
 
 			$jquery_ads = Wikia::json_encode($jquery_ads);
-			$this->adsABtesting = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ var tgId = EXP_AD_LOAD_TIMING && getTreatmentGroup(EXP_AD_LOAD_TIMING); if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) { wsl.loadScript({$jquery_ads}); } })(); /*]]>*/</script>";
+			$this->adsABtesting = <<<EOT
+				<script type=\"text/javascript\">/*<![CDATA[*/ 
+					(function(){ 
+						if (typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) { 
+							wsl.loadScript({$jquery_ads}); 
+						} 
+					})(); 
+				/*]]>*/</script>
+EOT;
 		}
-
 		wfProfileOut(__METHOD__);
 	}
-
 }
