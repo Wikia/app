@@ -57,7 +57,7 @@ EOT;
 		}
 		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}", "DART"));
 EOT;
-			if (strpos($slotname, 'EXIT_STITIAL') !== FALSE) {
+			if (strpos($slotname, 'EXIT_STITIAL') !== FALSE || $slotname == 'MODAL_RECTANGLE') {
 				$out .= <<<EOT
 		if (window.loadAd) {
 			AdDriverDelayedLoader.load();

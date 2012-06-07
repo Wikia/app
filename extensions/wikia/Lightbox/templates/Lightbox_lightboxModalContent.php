@@ -2,6 +2,10 @@
 	<!-- Keep media at the top so everything stacks on top of this, without the need to mess with z-index -->
 	<div class="media">
 	</div>
+	
+	<div id="MODAL_RECTANGLE" class="wikia-ad noprint">
+<?= AdEngine::getInstance()->getAd('MODAL_RECTANGLE', array('ghostwriter'=>true)); ?>
+	</div>
 
 	<header class="LightboxHeader hidden">
 	</header>

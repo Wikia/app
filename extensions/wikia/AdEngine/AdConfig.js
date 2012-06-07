@@ -23,6 +23,7 @@ var AdConfig = {
 			case 'INVISIBLE_TOP':	// skin
 			case 'LEFT_SKYSCRAPER_2':
 			case 'MIDDLE_RIGHT_BOXAD':
+			case 'MODAL_RECTANGLE':
 			case 'MODAL_VERTICAL_BANNER':
 			case 'TEST_HOME_TOP_RIGHT_BOXAD':
 			case 'TEST_TOP_RIGHT_BOXAD':
@@ -128,6 +129,7 @@ AdConfig.DART = {
 	   'LEFT_SKYSCRAPER_2': {'tile': 3, 'loc': "middle"},
 	   'LEFT_SKYSCRAPER_3': {'tile': 6, 'loc': "footer"},
 	   'MIDDLE_RIGHT_BOXAD': {'tile': 1, 'loc': "middle"},
+	   'MODAL_RECTANGLE': {'tile':2, 'loc': "modal"},
 	   'MODAL_VERTICAL_BANNER': {'tile':2, 'loc': "modal"},
 	   'PREFOOTER_BIG': {'tile': 5, 'loc': "footer"},
 	   'PREFOOTER_LEFT_BOXAD': {'tile': 5, 'loc': "footer"},
