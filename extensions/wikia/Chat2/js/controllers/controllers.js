@@ -3,9 +3,9 @@
 //Controllers
 //
 if($.getUrlVar('nosockets', false) == 1 || 'ontouchstart' in document.createElement( 'div' )) {
-	var globalTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling' ];
+	var globalTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling' ];
 } else {
-	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling' ];
+	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling' ];
 }
 
 var NodeChatSocketWrapper = $.createClass(Observable,{
@@ -72,7 +72,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		if(!this.firstConnected) {
 			this.connectTimeoutTimer = setTimeout($.proxy(function() {
 				$().log("timeout try without socket connection");
-				globalTransports = [ 'htmlfile', 'xhr-polling', 'jsonp-polling' ];
+				globalTransports = [ 'htmlfile', 'xhr-polling'];
 				io.transports = globalTransports;
 				
 				if(this.socket) {
@@ -175,6 +175,9 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     },
     
     tryconnect: function (){
+    	if(this.reConnectCount > 8) {
+    		return true;
+    	}
     	$().log('tryconnect');
 
    		if(this.connected) {
