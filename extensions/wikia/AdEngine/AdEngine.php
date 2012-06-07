@@ -806,26 +806,22 @@ class AdEngine {
 		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
 		if (ArticleAdLogic::isSearch() || (!$wgTitle->getNamespace() == NS_SPECIAL && !BodyController::isEditPage())) {
 			$js .= <<<EOT
-	if(typeof EXP_AD_LOAD_TIMING != 'undefined') {
-		var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
-		if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
-			LiftiumOptions['hasMoreCalls'] = true;
-			LiftiumOptions['isCalledAfterOnload'] = true;
-			LiftiumOptions['maxLoadDelay'] = 6000;
-		}
-	}
-	else {
-		LiftiumOptions['autoInit'] = false;
-	}
+				if (typeof EXP_AD_LOAD_TIMING != 'undefined' && !window.wgLoadAdDriverOnLiftiumInit && getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_ONLOAD) {
+					LiftiumOptions['hasMoreCalls'] = true;
+					LiftiumOptions['isCalledAfterOnload'] = true;
+					LiftiumOptions['maxLoadDelay'] = 6000;
+				}
+				else {
+					LiftiumOptions['autoInit'] = false;
+				}
 EOT;
 		}
 		else {
 			$js .= <<<EOT
-	LiftiumOptions['hasMoreCalls'] = true;
-	LiftiumOptions['isCalledAfterOnload'] = true;
-	LiftiumOptions['maxLoadDelay'] = 6000;
+				LiftiumOptions['hasMoreCalls'] = true;
+				LiftiumOptions['isCalledAfterOnload'] = true;
+				LiftiumOptions['maxLoadDelay'] = 6000;
 EOT;
-
 		}
 
 		$js = AssetsManagerBaseBuilder::minifyJs( $js );
