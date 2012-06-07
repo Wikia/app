@@ -806,11 +806,13 @@ class AdEngine {
 		$js = "LiftiumOptions = " . json_encode($options) . ";\n";
 		if (ArticleAdLogic::isSearch() || (!$wgTitle->getNamespace() == NS_SPECIAL && !BodyController::isEditPage())) {
 			$js .= <<<EOT
-	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
-	if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
-		LiftiumOptions['hasMoreCalls'] = true;
-		LiftiumOptions['isCalledAfterOnload'] = true;
-		LiftiumOptions['maxLoadDelay'] = 6000;
+	if(typeof EXP_AD_LOAD_TIMING != 'undefined') {
+		var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
+		if (!window.wgLoadAdDriverOnLiftiumInit && tgId == TG_ONLOAD) {
+			LiftiumOptions['hasMoreCalls'] = true;
+			LiftiumOptions['isCalledAfterOnload'] = true;
+			LiftiumOptions['maxLoadDelay'] = 6000;
+		}
 	}
 	else {
 		LiftiumOptions['autoInit'] = false;
