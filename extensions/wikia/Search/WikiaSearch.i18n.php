@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'wikiasearch2-noresults' => 'No results found.',
 	'wikiasearch2-spellcheck' => 'No results were found for <em>$1</em>. <strong>Showing results for <em>$2</em>.</strong>',
 	'wikiasearch2-search-all-namespaces' => 'Search all namespaces by default',
+	'wikiasearch2-search-ads-header' => 'Advertisements'
 );
 
 /** Message documentation (Message documentation)
@@ -44,6 +45,7 @@ $messages['qqq'] = array(
 	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for.',
 	'wikiasearch2-results-for' => 'Parameter: $1 - a keyword or a search term searched for.',
 	'wikiasearch2-enable-go-search' => 'Preferences setting next to a checkbox which asks you whether you want to enable Go-Search (going directly to a page title match in search) or not. Default = off',
+	'wikiasearch2-search-ads-header' => 'Heading displayed above search advertisements.'
 );
 
 /** Afrikaans (Afrikaans)

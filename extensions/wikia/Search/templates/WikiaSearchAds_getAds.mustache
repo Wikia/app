@@ -1,13 +1,7 @@
-<div style="background: white; border: solid 5px red; width: 100%">
-
-<h3>Ads</h3>
-
 {{#ads}}
-<div>
-<div><a href="{{site-link}}">{{{title}}}</a><div>
-<div>{{{description}}}</div>
-<div>{{display-url}}</div>
-</div>
+	<li class="unit">
+		<a class="link" href="{{site-link}}">{{{title}}}</a>
+		<p class="description">{{{description}}}</p>
+		<span class="result-link">{{display-url}}</span>
+	</li>
 {{/ads}}
-
-</div>
