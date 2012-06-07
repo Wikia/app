@@ -20,7 +20,7 @@ $color-search-form-background: darken($color-page, 5%);
 
 $color-search-ads-background: mix($color-buttons, $color-page, 5%);
 @if $is-dark-wiki {
-	
+	$color-search-ads-background: lighten($color-search-ads-background, 5%);
 }
 
 $form-side-padding: 12px;
@@ -30,9 +30,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 	// Search form
 	.WikiaSearch {
 		background: $color-search-form-background;
+		margin-bottom: 12px;
 		padding: $form-side-padding;
 		padding-bottom: 0;
-		
+
 		input[type="search"], input[type="text"] {
 			height: 24px;
 			margin-right: 12px;
@@ -58,6 +59,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		
 		.tabs {
 			margin: 24px $form-negative-side-padding 0;
+			padding: 0 $form-side-padding - 1px;
 		}
 		
 		.AdvancedSearch {
@@ -170,22 +172,19 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 .SearchAds {
 	background-color: $color-search-ads-background;
+	display: none; // remove when going live
 	padding: $form-side-padding;
-
 	&.SearchAdsBottom {
 		margin-top: 12px;
 	}
-
 	&.SearchAdsTop {
 		margin-bottom: 12px;
 	}
-
 	h3 {
 		font-size: 14px;
 		margin: 0 0 12px 0;
 		padding: 0;
 	}
-
 	.list {
 		list-style: none;
 		margin: 0;
@@ -196,7 +195,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 			background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
 		}
 	}
-
 	.unit {
 		line-height: 16px;
 		margin: 0 0 12px 0;
@@ -205,7 +203,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 			margin: 0;
 		}
 	}
-
 	.link {
 		font-size: 16px;
 	}
