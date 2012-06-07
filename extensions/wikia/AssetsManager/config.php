@@ -623,8 +623,7 @@ $config['relatedvideos_js'] = array(
 	'skin' => array( 'monobook', 'oasis' ),//this package need to be reviewed before inclusion in WikiaMobile, JWplayer is not needed and too big
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js',
-		'//extensions/wikia/JWPlayer/jwplayer.min.js' //@todo post-migration, might be able to remove this
+		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
 	)
 );
 

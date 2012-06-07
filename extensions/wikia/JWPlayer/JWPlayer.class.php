@@ -74,7 +74,7 @@ EOT;
 			
 			$code .= <<<EOT
 		$script
-		$.getScript("$jwplayerjs", loadJWPlayer());
+		$.getScript("$jwplayerjs", loadJWPlayer);
 EOT;
 		
 			if (!$this->postOnload) {
