@@ -4,6 +4,7 @@
 //
 if($.getUrlVar('nosockets', false) == 1 || 'ontouchstart' in document.createElement( 'div' )) {
 	var globalTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling' ];
+	io.transports = globalTransports ;
 } else {
 	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling' ];
 }
@@ -41,7 +42,6 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		}
 		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
 		$().log(url, 'Chat server');
-	//	io.transports = globalTransports ;
 		if( this.socket ) {
 			this.socket.removeAllListeners('message');
 			this.socket.removeAllListeners('connect');
