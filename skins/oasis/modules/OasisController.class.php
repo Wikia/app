@@ -381,7 +381,7 @@ EOT;
 
 			$jquery_ads = Wikia::json_encode($jquery_ads);
 			$this->adsABtesting = <<<EOT
-				<script type=\"text/javascript\">/*<![CDATA[*/ 
+				<script type="text/javascript">/*<![CDATA[*/ 
 					(function(){ 
 						if (typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) { 
 							wsl.loadScript({$jquery_ads}); 
