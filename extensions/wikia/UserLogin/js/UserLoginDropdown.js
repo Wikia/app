@@ -9,12 +9,7 @@ var UserLoginDropdown = {
 			.click($.proxy(function(ev) {
 				ev.preventDefault();
 				ev.stopPropagation(); // BugId:16984
-				if (!this.dropdown.hasClass('show')) {
-					this.show();
-				}
-				else {
-					this.hide();
-				}
+				this.show();
 			}, this))
 			.closest('li').hover(function(e) {
 				e.preventDefault();
