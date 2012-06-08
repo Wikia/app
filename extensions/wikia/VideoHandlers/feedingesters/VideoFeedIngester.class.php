@@ -5,14 +5,14 @@ abstract class VideoFeedIngester {
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
-	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY);	// 2012/5/18: disabling realgravity for now
+	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	private static $instances = array();
 	
-	const CACHE_KEY = 'videofeedingester';
+	const CACHE_KEY = 'videofeedingester-2';
 	const CACHE_EXPIRY = 3600;
 	const THROTTLE_INTERVAL = 1;	// seconds
 
