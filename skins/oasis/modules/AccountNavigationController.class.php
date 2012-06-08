@@ -40,8 +40,13 @@ class AccountNavigationController extends WikiaController {
 				$attributes['accesskey'] = 'o';
 				break;
 		}
-		
-		$ret = Xml::element('a', $attributes, $personalUrl['text']);
+
+		$ret = Xml::openElement('a', $attributes);
+		$ret.= $personalUrl['text'];
+		if(array_key_exists('afterText', $personalUrl)) {
+			$ret.= $personalUrl['afterText'];
+		}
+		$ret.= Xml::closeElement('a');
 		
 		wfProfileOut(__METHOD__);
 		return $ret;
@@ -70,7 +75,13 @@ class AccountNavigationController extends WikiaController {
 			$this->personal_urls['login'] = array(
 				'text' => wfMsg('login'),
 				'href' => $signUpHref . "&type=login",
-				'class' => 'ajaxLogin'
+				'class' => 'ajaxLogin',
+				'afterText' => Xml::element('img', array(
+					'src' => $this->wg->BlankImgUrl,
+					'class' => 'chevron',
+					'width' => '0',
+					'height' => '0', 	
+				), ''),
 			);
 
 			$this->personal_urls['register'] = array(
