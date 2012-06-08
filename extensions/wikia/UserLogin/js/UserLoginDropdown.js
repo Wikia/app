@@ -32,12 +32,12 @@ var UserLoginDropdown = {
 				// lazy load jquery.wikia.tooltip.js (BugId:22143)
 				UserLoginFacebook.init();
 			}
-			this.loginAjaxForm.inputs['username'].focus();
 
 			$('body').
 				unbind('.loginDropdown').
 				bind('click.loginDropdown', $.proxy(this.outsideClickHandler, this));
 		}
+		this.loginAjaxForm.inputs['username'].focus();
 	},
 	hide: function() {
 		this.dropdown.removeClass('show');
