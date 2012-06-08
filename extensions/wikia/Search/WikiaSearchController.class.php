@@ -20,10 +20,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/SearchV2/WikiaSearch.js", "/extensions/wikia/Search/WikiaSearchAds.js" ), array(), 'WikiaSearchV2.init' ) );
+		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/WikiaSearch.js", "/extensions/wikia/Search/WikiaSearchAds.js" ) );
 		
 		if ( $this->wg->User->getSkin() instanceof SkinMonoBook ) {
-			$this->response->addAsset('extensions/wikia/SearchV2/monobook/monobook.scss');
+			$this->response->addAsset('extensions/wikia/Search/monobook/monobook.scss');
 		}
 
 		$query = $this->getVal('query', $this->getVal('search'));

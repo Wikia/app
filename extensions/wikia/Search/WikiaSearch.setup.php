@@ -59,7 +59,7 @@ $app->registerHook('GetPreferences', 'WikiaSearch', 'onGetPreferences');
 
 
 $wgExtensionCredits['other'][] = array(
-	'name'        => 'Wikia Search V2',
+	'name'        => 'Wikia Search',
 	'version'     => '2.0.5',
 	'author'      => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://wikia.com/wiki/User:Relwell Robert Elwell]',
 	'descriptionmsg' => 'wikia-search-desc',
