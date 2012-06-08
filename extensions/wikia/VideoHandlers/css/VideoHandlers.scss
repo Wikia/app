@@ -1,5 +1,5 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
-
+@import "../../../../skins/oasis/css/mixins/border-radius";
 
 .Wikia-video-play-button { 
    background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_100Alpha.png); /* wgCdnStylePath */
@@ -8,13 +8,36 @@
    display:block;
    position:absolute;
    z-index:100;
-   @include opacity(30);
+   @include opacity(65);
    cursor: pointer;
 }
 
-a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
-    @include opacity(70);
+.Wikia-video-play-button.min {
+    background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_35x35.png); /* wgCdnStylePath */
 }
+.Wikia-video-play-button.mid {
+    background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_50x50.png); /* wgCdnStylePath */
+}
+.Wikia-video-play-button.max {
+    background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_85x85.png); /* wgCdnStylePath */
+}
+
+a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
+    @include opacity(95);
+}
+
+.video-thumbnail .timer {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    color: white;
+    font-size: 11px;
+    line-height: 14px;
+    background-color: black;
+    padding: 1px 4px 1px 6px;
+    @include border-radius(4px);
+}
+
 
 .Wikia-video-title-bar {
    background-color:black;

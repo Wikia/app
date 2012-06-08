@@ -8,6 +8,7 @@ class RelatedVideosController extends WikiaController {
 		$this->app = $app;
 		if( !empty( $wgRelatedVideosOnRail ) ) {
 			RelatedVideosService::$width = 150;
+			RelatedVideosService::$height = 90;
 		}
 	}
 
@@ -127,11 +128,31 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCaruselElement(){
+
 		global $wgVideoHandlersVideosMigrated;
 
 		$video = $this->getVal( 'video' );
 		$preloaded = $this->getVal( 'preloaded' );
-		
+
+		$videoFile = wfFindFile($video['id']);
+
+		$videoThumbObj = $videoFile->transform( array('width'=>$video['thumbnailData']['width'],
+		                                              'height'=>$video['thumbnailData']['height']) );
+
+		$videoThumb = $videoThumbObj->toHtml( array('custom-url-link' => $video['fullUrl'],
+			                                    'linkAttribs' => array(
+			                                                        'class' => 'video-thumbnail lightbox',
+			                                                        'data-video-name' => $video['title'],
+			                                                        'data-external' => $video['external'],
+			                                                        'data-ref' => $video['prefixedUrl']
+			                                                       ),
+							    'duration' => true,
+							    'src' => $preloaded ? false : wfBlankImgUrl(),
+							    'constHeight' => RelatedVideosService::$height,
+						      )
+					        );
+
+		$this->setVal( 'videoThumb', $videoThumb );
 		$this->setVal( 'video', $video );
 		$this->setVal( 'preloaded', $preloaded );
 		$this->setVal( 'videoPlay',empty($wgVideoHandlersVideosMigrated) ? 'video-play' : 'lightbox');

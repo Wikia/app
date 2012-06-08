@@ -141,9 +141,13 @@ class ThumbnailVideo extends ThumbnailImage {
 		
 		$linkAttribs['style'] = "display:inline-block;";
 
+		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
+			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
+		}
+
 		$attribs = array(
 			'alt' => $alt,
-			'src' => $this->url,
+			'src' => !empty($options['src']) ? $options['src'] : $this->url,
 			'width' => $this->width,
 			'height' => $this->height,
 			'data-video' => $this->file->getTitle()->getText()
@@ -173,10 +177,32 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['style'] .= 'border-top: 15px solid black; border-bottom: '.$extraBorder.'px solid black;';
 		}
 
+		if ( isset( $options['imgExtraStyle'] ) ) {
+			if ( !isset( $attribs['style'] ) ) $attribs['style'] = '';
+			$attribs['style'] .= $options['imgExtraStyle'];
+		}
+
+		if ( $useThmbnailInfoBar || ( isset( $options['duration'] ) && $options['duration'] == true ) ) {
+			$duration = $this->file->getHandler()->getFormattedDuration();
+		}
+
+
+		if ( isset($options['constHeight']) ) {
+
+			$this->appendHtmlCrop($linkAttribs, $options);
+		}
+
 		$html = ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::openElement( 'a', $linkAttribs ) : '';
-			$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $this->height );
+
+			if ( isset( $duration ) && !empty( $duration ) ) {
+				$html .= Xml::element( 'div', array('class'=>'timer'),  $duration );
+			}
+			$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, isset( $options['constHeight'] ) ? $options['constHeight'] : $this->height );
 			$html .= Xml::element( 'img', $attribs, '', true );
+
 		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';
+
+
 
 		if ( $useThmbnailInfoBar ) {
 
@@ -196,7 +222,6 @@ class ThumbnailVideo extends ThumbnailImage {
 				$infoVars["author"] = "";
 			}
 
-			$duration = $this->file->getHandler()->getFormattedDuration();
 			if (!empty($duration)) {
 				$infoVars["duration"] = '('.$duration.')';
 			} else {
@@ -221,6 +246,24 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
                 wfProfileOut( __METHOD__ );
 		return $html;
+	}
+
+	private function appendHtmlCrop( &$linkAttribs, $options) {
+
+		if ( !isset( $linkAttribs['style'] ) ) $linkAttribs['style'] = '';
+
+		$linkAttribs['style'] .= 'overlay:hidden;';
+
+		if ( $this->height <= $options['constHeight'] ) {
+
+			$linkAttribs['style'] .= "height:{$this->height}px;";
+			$linkAttribs['style'] .= 'margin-bottom:'.( $options['constHeight'] - $this->height )."px;";
+			$linkAttribs['style'] .= 'padding-top:'.floor( ($options['constHeight'] - $this->height)/2 )."px;";
+
+		} else {
+
+			$linkAttribs['style'] .= "height:{$options['constHeight']}px;";
+		}
 	}
 }
 ?>

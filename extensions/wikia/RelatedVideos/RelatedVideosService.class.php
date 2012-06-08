@@ -5,6 +5,7 @@ class RelatedVideosService {
 	const memcKeyPrefix = 'RelatedVideosService';
 	const memcVersion = 19;
 	static public $width = 160;
+	static public $height = 90;
 	const howLongVideoIsNew = 3;
 
 	/**
