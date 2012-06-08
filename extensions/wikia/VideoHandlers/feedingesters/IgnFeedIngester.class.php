@@ -39,10 +39,34 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 
 		$content = json_decode($content, true);
+		if(empty($content)) $content = array();
 
 		$i = 0;
 		foreach($content as $video) {
 			$i++;
+
+			$found = false;
+			if (!empty($params['keyphrasesCategories'])) {
+				foreach( $video['objectRelations'] as $obj ) {
+					foreach ($params['keyphrasesCategories'] as $keyphrase=>$categories) {
+						if( $keyphrase != 'fallout' && $keyphrase != 'starcraft') {
+							// only support those two for now
+							continue;
+						}
+						if ($this->isKeyphraseInString($obj['objectName'], $keyphrase)) {
+							echo "Matched for keywords $keyphrase\n";
+							$addlCategories = array_merge($addlCategories, $categories);
+							$found = true;
+						}
+					}
+				}
+			}
+
+			if($found == false) {
+				// if keywords don't match, skip this video
+				continue;
+			}
+
 
 			$clipData = array();
 
@@ -74,9 +98,10 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 
 		}
+		echo "Feed size: $i\n";
 
 		wfProfileOut( __METHOD__ );
-		return 0;
+		return $articlesCreated;
 	}
 
 	public function generateTitleName(array $data) {

@@ -24,13 +24,13 @@ then
 fi
 
 nowunix=`date '+%s'`
-startdate='2008-11-25'
+startdate='2007-01-01'
 provider='ign'
 logfile='/tmp/ingestion.log'
 
 while [ 1 ]
 do
-	endtime=$(( $counter + 60 * 60 * 24 * 7 - 1 ))
+	endtime=$(( $counter + 60 * 60 * 24 * 28 - 1 ))
 
 	echo ">>> From: `date -d "$startdate $counter sec"`     To:   `date -d "$startdate $endtime sec"`" | tee -a /tmp/ingestion.log
 	sleep 1
@@ -39,7 +39,7 @@ do
 
 	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -e $to -s $from -r $provider | tee -a $logfile || exit
 
-	counter=$(( $counter + 60 * 60 * 24 * 7 ))
+	counter=$(( $counter + 60 * 60 * 24 * 28 ))
 	from=`date -d "$startdate $counter sec" '+%s'`
 	if [ $from -gt $nowunix ]
 	then
