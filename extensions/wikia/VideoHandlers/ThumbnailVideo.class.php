@@ -152,6 +152,10 @@ class ThumbnailVideo extends ThumbnailImage {
 			'height' => $this->height,
 			'data-video' => $this->file->getTitle()->getText()
 		);
+
+		if ( !empty($options['usePreloading']) ) {
+			$attribs['data-src'] = $this->url;
+		}
 		
 		if ( $this->file instanceof OldLocalFile ) {
 			$archive_name = $this->file->getArchiveName();
