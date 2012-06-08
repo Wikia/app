@@ -108,9 +108,18 @@ class WikiaFileHelper extends Service {
 	}
 
 	public static function videoPlayButtonOverlay( $width, $height ) {
+
+		$sizeClass = 'mid';
+		if ( $width <= 170 ) {
+			$sizeClass = 'min';
+		}
+		if ( $width > 360 ) {
+			$sizeClass = 'max';
+		}
+
 		$playButton = array(
-			"class"		=> "Wikia-video-play-button",
-			"style"		=> "width: {$width}px; height: {$height}px;"
+			"class"		=> "Wikia-video-play-button ".$sizeClass,
+			"style"		=> "width: {$width}px; height: ".($height)."px;"
 		);
 		return  Xml::element( 'span', $playButton, '', false );
 	}
