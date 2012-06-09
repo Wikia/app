@@ -3,10 +3,6 @@
 	<div class="media">
 	</div>
 	
-	<div id="MODAL_RECTANGLE" class="wikia-ad noprint">
-<?= AdEngine::getInstance()->getAd('MODAL_RECTANGLE', array('ghostwriter'=>true)); ?>
-	</div>
-
 	<header class="LightboxHeader hidden">
 	</header>
 
@@ -16,6 +12,12 @@
 	</div>
 	
 	<div id="LightboxCarousel" class="LightboxCarousel hidden">
+		<div id="LightboxCarouselInner" class="LightboxCarouselInner">
+		
+		</div>
+		<div id="MODAL_RECTANGLE" class="wikia-ad noprint">Ad goes here
+			<?= AdEngine::getInstance()->getAd('MODAL_RECTANGLE', array('ghostwriter'=>true)); ?>
+		</div>
 	</div>
 	
 	<div class="more-info">
@@ -52,7 +54,6 @@
 	</script>
 	
 	<script id="LightboxCarouselTemplate" type="text/template">
-		<div class="ad"></div>
 		<div class="content">
 			<ul class="toolbar">
 				<li><span class="icon pin button secondary" title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" data-pinned-title="<?= wfMsg('lightbox-unpin-carousel-tooltip') ?>" data-pin-title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" ></span></li>
