@@ -24,7 +24,7 @@ var Lightbox = {
 	},
 	openModal: false, // gets replaced with dom object of open modal
 	shortScreen: false, // flag if the screen is shorter than modal.defaults.height
-	showAds: false, // when we enable adds, set this to actually check if use should see ads
+	showAds: true, // when we enable adds, set this to actually check if use should see ads
 	templates: {},
 	
 	makeLightbox: function(params) {
@@ -90,7 +90,7 @@ var Lightbox = {
 				});
 				
 				// pre-cache known doms
-				Lightbox.openModal.carousel = $('#LightboxCarousel');
+				Lightbox.openModal.carousel = $('#LightboxCarouselInner');
 				Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
 				Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
 				Lightbox.openModal.moreInfo = Lightbox.openModal.find('.more-info');
