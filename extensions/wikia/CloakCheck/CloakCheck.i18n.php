@@ -424,9 +424,9 @@ $messages['nl'] = array(
  */
 $messages['pl'] = array(
 	'cloakcheck' => 'Test dostępności maski IRC',
-	'cloakcheck-desc' => 'Udostępnia interfejs do weryfikacji warunków koniecznych do otrzymania maski IRC',
+	'cloakcheck-desc' => 'Interfejs do weryfikacji warunków koniecznych do otrzymania maski IRC',
 	'right-cloakcheck' => 'Może sprawdzić informacje powiązane z maską IRC dotyczące innych użytkowników',
-	'cloakcheck-form-username' => 'Nazwa użytkownika',
+	'cloakcheck-form-username' => 'Nazwa użytkownika:',
 	'cloakcheck-form-check' => 'Sprawdź nazwę użytkownika',
 	'cloakcheck-form-check-self' => 'Sprawdź dostępność maski IRC',
 	'cloakcheck-process-empty' => 'Nazwa użytkownika nie może być pusta.',
@@ -436,8 +436,8 @@ $messages['pl'] = array(
 	'cloakcheck-process-accountage-no' => 'Konto nie jest aktywne dostatecznie długo.',
 	'cloakcheck-process-emailconf-yes' => 'Adres e-mail potwierdzony.',
 	'cloakcheck-process-emailconf-no' => 'Adres e-mail nie potwierdzony.',
-	'cloakcheck-process-edits-yes' => 'Użytkownik wykonał wystarczającą liczbę zmian.',
-	'cloakcheck-process-edits-no' => 'Użytkownik nie wykonał wystarczającej liczby zmian.',
+	'cloakcheck-process-edits-yes' => 'Użytkownik wykonał wystarczającą liczbę edycji.',
+	'cloakcheck-process-edits-no' => 'Użytkownik nie wykonał wystarczającej liczby edits.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -616,6 +616,13 @@ $messages['tl'] = array(
 	'cloakcheck-process-emailconf-no' => 'Hindi natiyak ang tirahan ng e-liham.',
 	'cloakcheck-process-edits-yes' => 'May sapat na pamamatnugot ang tagagamit.',
 	'cloakcheck-process-edits-no' => 'Walang sapat na mga pamamatnugot ang tagagamit.',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'cloakcheck-form-username' => 'Иштирокәкә ном:',
 );
 
 /** Turkish (Türkçe)

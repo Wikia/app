@@ -257,6 +257,17 @@ Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung der Seite �
 Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3",
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'welcome-message-wall-anon' => "Merheba, Şıma xeyr ameyê {{SITENAME}}! pela [[:$1]] vurnayê deye şıma rê teşekur kemê.
+
+'''[[Special:Userlogin|Şıma ra recay ma dekewe sita yana xorê jew nameyê karberiyo newe  vırazê]]'''. Şıma eno hesaba şenê merdumana irtibat kewê u iştıraxin bıkerê deye tewr rehat ju raya.
+
+Persiyayışa pêron rê ez şımarê peşti dana!",
+);
+
 /** Spanish (español)
  * @author Benfutbol10
  * @author Bola

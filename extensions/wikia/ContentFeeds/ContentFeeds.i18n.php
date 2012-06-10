@@ -268,6 +268,7 @@ $messages['pfl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'contentfeeds-desc' => "Udostępnia bogate i aktualne informacje za pośrednictwem różnych znaczników oraz ''kanałów''",
@@ -277,7 +278,7 @@ $messages['pl'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Tytuł',
 	'contentfeeds-firstfewarticles-tag-next' => 'Dalej',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Błąd: Tytuł strony jest wymagany',
-	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Błąd: Ciało strony jest wymagane',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Błąd: Zawartość strony jest wymagana',
 );
 
 /** Piedmontese (Piemontèis)
@@ -397,6 +398,14 @@ $messages['tl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang  isang pamagat ng pahina',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Сәрловһә',
+	'contentfeeds-firstfewarticles-tag-next' => 'Бәнав',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -431,6 +440,7 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (‪中文（简体）‬)
+ * @author Dimension
  * @author Hydra
  * @author Hzy980512
  */
@@ -438,5 +448,7 @@ $messages['zh-hans'] = array(
 	'contentfeeds-firstfewarticles-tag-header' => '创建您的首批页面！',
 	'contentfeeds-firstfewarticles-tag-title' => '标题',
 	'contentfeeds-firstfewarticles-tag-next' => '下一页',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => '错误：需要页面标题',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => '错误：需要页面内容',
 );
 

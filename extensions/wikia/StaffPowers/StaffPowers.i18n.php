@@ -31,11 +31,12 @@ $messages['es'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Peter17
  * @author Wyz
  */
 $messages['fr'] = array(
-	'staffpowers-ipblock-abort' => 'Bloquer des membres du staff de Wikia, des Assistant ou des membres de l’équipe VSTF n’est pas possible. Veuillez utiliser [[Special:Contact]] pour signaler tout problème avec notre équipe.',
+	'staffpowers-ipblock-abort' => 'Bloquer des membres du staff de Wikia, des Assistant ou des membres de l’équipe VSTF n’est pas possible. Veuillez utiliser le [[Special:Contact|formulaire de contact]] pour signaler tout problème avec notre équipe.',
 );
 
 /** Galician (Galego)
@@ -45,30 +46,32 @@ $messages['gl'] = array(
 	'staffpowers-ipblock-abort' => 'Non é posible bloquear o persoal de Wikia, os axudantes de Wikia ou os nosos voluntarios da forza de loita contra o spam. Utilice o [[Special:Contact|formulario de contacto]] para informar de calquera problema co noso persoal.',
 );
 
-/** Italian (italiano) */
+/** Italian (italiano)
+ * @author Beta16
+ */
 $messages['it'] = array(
-	'staffpowers-ipblock-abort' => 'Non è possibile bloccare gli utenti che appartengono allo staff di Wikia, i collaboratori di Wikia, o i membri volontari della squadra speciale Spam (VSTF). Si prega di utilizzare [[Special:Contact]] per segnalare eventuali problemi con il nostro staff.',
+	'staffpowers-ipblock-abort' => 'Non è possibile bloccare gli utenti che appartengono allo staff di Wikia, i collaboratori di Wikia, o i membri volontari della squadra speciale Spam (VSTF). Si prega di utilizzare il [[Special:Contact|modulo dei contatti]] per segnalare eventuali problemi con il nostro staff.',
 );
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'staffpowers-ipblock-abort' => 'Персоналот и помошниците на Викија, како и доброволната работна група за спам (VSTF) не можат да се блокираат. Доколку имате проблеми со персоналот, пријавете ги на [[Special:Contact]].',
+	'staffpowers-ipblock-abort' => 'Персоналот и помошниците на Викија, како и доброволната работна група за спам (VSTF) не можат да се блокираат. Доколку имате проблеми со персоналот, пријавете ги со [[Special:Contact|образецот за контакт]].',
 );
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
-	'staffpowers-ipblock-abort' => 'Anda tidak boleh menyekat Kakitangan Wikia, Pembantu Wikia, atau para sukarelawan Pasukan Pembasmi Spam (PPS). Sila gunakan [[Special:Contact]] untuk melaporkan sebarang isu atau masalah berkenaan kakitangan kami.',
+	'staffpowers-ipblock-abort' => 'Anda tidak boleh menyekat Kakitangan Wikia, Pembantu Wikia, atau para sukarelawan Pasukan Pembasmi Spam (PPS). Sila gunakan [[Special:Contact|borang ini]] untuk melaporkan sebarang isu atau masalah berkenaan kakitangan kami.',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
-	'staffpowers-ipblock-abort' => 'Å blokkere medlemmer av Wikia-ledelsen, Wikia-hjelpere, eller medlemmer av vår frivillige spambekjempelsesstyrke er ikke mulig. Vennligst bruk [[Special:Contact|Spesial:Kontakt]] for å rapportere problemer med ledelsen vår.',
+	'staffpowers-ipblock-abort' => 'Å blokkere medlemmer av Wikia-ledelsen, Wikia-hjelpere, eller medlemmer av vår frivillige spambekjempelsesstyrke er ikke mulig. Vennligst bruk [[Special:Contact|kontaktskjemaet]] for å rapportere problemer med ledelsen vår.',
 );
 
 /** Dutch (Nederlands)
@@ -83,7 +86,7 @@ $messages['nl'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'staffpowers-ipblock-abort' => 'Blokowanie pracowników, helperów czy członków VSTF nie jest możliwe. Użyj [[Special:Contact|Specjalna:Kontakt]] aby zgłosić problem związany z użytkownikiem posiadającym takie uprawnienia.',
+	'staffpowers-ipblock-abort' => 'Blokowanie pracowników, helperów czy członków VSTF nie jest możliwe. Użyj [[Special:Contact|formularza kontaktowego]] aby zgłosić problem związany z użytkownikiem posiadającym takie uprawnienia.',
 );
 
 /** Russian (русский)

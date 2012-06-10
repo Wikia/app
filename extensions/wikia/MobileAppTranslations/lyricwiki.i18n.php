@@ -555,7 +555,7 @@ $messages['ko'] = array(
 	'app-async-error-message' => '연결에 잠시 문제가 생겼습니다. 다음에 다시 시도하여 주시기 바랍니다.',
 	'app-nonetwork-dialog-title' => '네트워크 연결이 안되어있습니다.',
 	'app-nonetwork-dialog-message' => '네트워크 연결이 감지되지 않았습니다.',
-	'app-nonetwork-dialog-close-button' => '예',
+	'app-nonetwork-dialog-close-button' => '확인',
 	'search-go' => '검색',
 	'search-hint-text' => "예 를 들면: 'John Lennon:Imagine'",
 	'search-no-match-found' => '매치가 없습니다',
@@ -944,6 +944,17 @@ $messages['te'] = array(
 	'login-username-hint' => 'వాడుకరి పేరు',
 	'login-password-hint' => 'సంకేతపదం',
 	'about-heading-licensing' => 'కాపీహక్కులు',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'app-loading' => 'Бо кардә...',
+	'app-tab-search' => 'Нәве',
+	'app-tab-about' => 'Програми бәрәдә',
+	'login-username-hint' => 'Иштирокәкә ном',
+	'login-password-hint' => 'Парол',
 );
 
 /** Turkish (Türkçe)

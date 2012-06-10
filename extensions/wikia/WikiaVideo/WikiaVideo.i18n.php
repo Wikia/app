@@ -537,7 +537,7 @@ $messages['krc'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
-	'wikiavideo-links' => 'Lînkan',
+	'wikiavideo-links' => 'Girêdan',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

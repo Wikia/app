@@ -367,14 +367,14 @@ $messages['nl'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
-	'category-exhibition-sorttype' => 'Sposób sortowania',
+	'category-exhibition-sorttype' => 'Sposób sortowania:',
 	'category-exhibition-alphabetical' => 'Alfabetycznie',
 	'category-exhibition-mostvisited' => 'Najczęściej odwiedzane',
 	'category-exhibition-recentedits' => 'Ostatnio edytowane',
 	'category-exhibition-page-header' => 'Strony w kategorii „$1”',
 	'category-exhibition-subcategories-header' => 'Podkategorie',
 	'category-exhibition-media-header' => 'Pliki w kategorii „$1”',
-	'category-exhibition-blogs-header' => 'Wpisy w blogach',
+	'category-exhibition-blogs-header' => 'Wpisy na blogach',
 	'category-exhibition-display-old' => 'Widok - lista',
 	'category-exhibition-display-new' => 'Widok - galeria',
 );
@@ -504,6 +504,7 @@ $messages['uk'] = array(
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'category-exhibition-sorttype' => '排序方式：',
 	'category-exhibition-alphabetical' => '按首字母顺序排列',
 	'category-exhibition-mostvisited' => '最多访问',
 	'category-exhibition-recentedits' => '最近编辑',

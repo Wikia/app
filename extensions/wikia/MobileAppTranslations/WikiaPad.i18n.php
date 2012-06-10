@@ -349,6 +349,15 @@ $messages['te'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'సరే',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Нәвејдә...',
+	'browser-loading-message' => 'Бо кардә...',
+);
+
 /** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Sahran
  */

@@ -5239,7 +5239,7 @@ $messages['ko'] = array(
 그림의 확장자가 .jpg 또는.png 이어야 합니다. 
 또는 그림이 너무 무겁기 때문일수도 있습니다. 
 다른 그림으로 시도해보세요.',
-	'achievements-upload-not-allowed' => '관리자는 [[특수기능:AchievementsCustomize|배지 설정]] 문서를 통해 이름과 성취 배지의 사진을 변경할 수 있습니다.',
+	'achievements-upload-not-allowed' => '관리자는 [[Special:AchievementsCustomize|배지 설정]] 문서를 통해 이름과 성취 배지의 사진을 변경할 수 있습니다.',
 	'achievements-non-existing-category' => '지정한 분류가 존재하지 않습니다.',
 	'achievements-no-stub-category' => '토막글을 위한 트랙을 생성하지 말아주세요.',
 	'achievements-platinum' => '플래티넘',
@@ -7412,7 +7412,7 @@ Zobacz nowe odznaczenie na <a href="$5">swoim profilu</a>.',
 	'achievements-community-platinum-save' => 'zapisz',
 	'achievements-community-platinum-cancel' => 'anuluj',
 	'achievements-community-platinum-sponsored-label' => 'Odznaczenie sponsorowane',
-	'achievements-community-platinum-sponsored-hover-content-label' => 'Obrazek dla stanu aktywnego <small>(minimalne rozmiary: 270 x 100 pikseli)</small>:',
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Obrazek po najechaniu myszką <small>(minimalne rozmiary: 270 x 100 pikseli)</small>:',
 	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Adres URL prowadzący do wizerunków plakietek:',
 	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Adres URL prowadzący do wizerunków zawieszek:',
 	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Łącze do odznaki <small>(polecenie kliknięcia URL w systemie DART)</small>:',
@@ -8077,7 +8077,7 @@ Pode ver a medalha nova na sua <a href="$5">página de perfil do utilizador</a>.
 	'achievements-badge-name-edit-2' => 'A Deixar a Sua Marca',
 	'achievements-badge-name-edit-3' => 'Amigo da Wiki',
 	'achievements-badge-name-edit-4' => 'Colaborador',
-	'achievements-badge-name-edit-5' => 'Construtor da Wiki',
+	'achievements-badge-name-edit-5' => 'Criador de Wikis',
 	'achievements-badge-name-edit-6' => 'Líder da Wiki',
 	'achievements-badge-name-edit-7' => 'Perito da Wiki',
 	'achievements-badge-name-picture-0' => 'Imagem',
@@ -8172,13 +8172,13 @@ Continue a editar!',
 {{PLURAL:$1|a uma página|de páginas}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'por fazer $1 {{PLURAL:$1|edição|edições}}<br />
 a {{PLURAL:$1|uma página $2|páginas $2}}!',
-	'achievements-badge-hover-desc-picture' => 'por acrescentar $1 {{PLURAL:$1|imagem|imagens}}<br />
-a {{PLURAL:$1|uma página|páginas}}!',
-	'achievements-badge-hover-desc-category' => 'por colocar $1 {{PLURAL:$1|página|páginas}}<br />
-{{PLURAL:$1|numa categoria|em categorias}}!',
-	'achievements-badge-hover-desc-blogpost' => 'por escrever $1 {{PLURAL:$1|entrada|entradas}} de blogue!',
-	'achievements-badge-hover-desc-blogcomment' => 'por escrever um comentário<br />
-{{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
+	'achievements-badge-hover-desc-picture' => 'Concedido para a adição de  $1  {{PLURAL:$1| picture|pictures}} <br>
+ a  {{PLURAL:$1| um article|articles}}!',
+	'achievements-badge-hover-desc-category' => 'Concedido para a adição de  $1  {{PLURAL:$1| article|articles}} <br>
+ a  {{PLURAL:$1| um category|categories}}!',
+	'achievements-badge-hover-desc-blogpost' => 'Concedido para a escrita  $1  {{PLURAL:$1| post|blog no blog}}!',
+	'achievements-badge-hover-desc-blogcomment' => 'Atribuído para escrever um comentário<br>
+ em  $1  diferentes  {{PLURAL:$1| post|blog no blog}}!',
 	'achievements-badge-hover-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
 	'achievements-badge-hover-desc-welcome' => 'Atribuído por se inscrever na wiki!',
 	'achievements-badge-hover-desc-introduction' => 'por acrescentar informação<br />
@@ -8483,7 +8483,7 @@ a {{PLURAL:$1|uma página $2|páginas $2}}!',
 a {{PLURAL:$1|uma página|páginas}}!',
 	'achievements-badge-hover-desc-category' => 'por colocar $1 {{PLURAL:$1|página|páginas}}<br />
 {{PLURAL:$1|numa categoria|em categorias}}!',
-	'achievements-badge-hover-desc-blogpost' => 'por escrever $1 {{PLURAL:$1|entrada|entradas}} de blogue!',
+	'achievements-badge-hover-desc-blogpost' => 'Concedido por escrever $1 {{PLURAL:$1|entrada|entradas}} de blogue!',
 	'achievements-badge-hover-desc-blogcomment' => 'por escrever um comentário<br />
 {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
 	'achievements-badge-hover-desc-love' => 'por colaborar na wiki {{PLURAL:$1|durante um dia|todos os dias durante $1 dias}}!',
@@ -10044,7 +10044,9 @@ Magpatuloy sa pamamatnugot!',
  * @author Гусейн
  */
 $messages['tly'] = array(
+	'achievements-gold' => 'Телы',
 	'achievements-silver' => 'Нығә',
+	'achievements-bronze' => 'Бырынҹ',
 	'achievements-masthead-points' => '',
 	'achievements-viewall' => 'Бә һәммәј дијә кардеј',
 	'achievements-viewless' => 'Жәј',
@@ -10060,9 +10062,12 @@ $messages['tly'] = array(
 	'achievements-community-platinum-enabled' => 'дахыл кардә быә',
 	'achievements-community-platinum-show-recents' => 'нишо дој охонә нышонон сијоһиәдә',
 	'achievements-community-platinum-edit' => 'сәрост кардеј',
-	'achievements-community-platinum-save' => 'огәте',
+	'achievements-community-platinum-save' => 'огәтеј',
 	'achievements-community-platinum-cancel' => 'ләғв кардеј',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Егәтән бо зијодә мәлумоти сәј горнә',
+	'achievements-badge-name-blogpost-0' => 'Чичсә вотеј',
+	'achievements-badge-name-welcome' => 'Бә Вики хәш омәјон',
+	'achievements-badge-name-sayhi' => 'Вәсе "Сәлом" вотеј',
 );
 
 /** Turkish (Türkçe)
@@ -10414,6 +10419,7 @@ $5',
  * @author A1
  * @author AS
  * @author Microcell
+ * @author Olvin
  * @author Тест
  */
 $messages['uk'] = array(
@@ -10446,7 +10452,7 @@ $messages['uk'] = array(
 	'achievements-profile-title-oasis' => 'відзнаки<br>бали',
 	'achievements-ranked-oasis' => '$1Це [[спеціальні: Leaderboard|Займає # $2 ]] місце в рейтингу цієї вікі',
 	'achievements-viewall-oasis' => 'Переглянути всі',
-	'achievements-toggle-hide' => 'Приховати мої досягнення в моєму профілі від всіх',
+	'achievements-toggle-hide' => 'Приховати досягнення в моєму профілі від усіх',
 	'leaderboard-intro-hide' => 'приховати',
 	'leaderboard-intro-open' => 'відкрити',
 	'leaderboard-intro-headline' => 'Що таке відзнаки?',
@@ -10460,12 +10466,12 @@ $messages['uk'] = array(
 	'achievements-leaderboard-rank-label' => 'Рейтинг',
 	'achievements-leaderboard-member-label' => 'Учасник',
 	'achievements-leaderboard-points-label' => 'Балів',
-	'achievements-leaderboard-points' => '{{PLURAL:$1|бал|балів}}',
+	'achievements-leaderboard-points' => '{{PLURAL:$1|бал|бали|балів}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Нещодавно отримав',
 	'achievements-send' => 'Зберегти малюнок',
 	'achievements-save' => 'Зберегти зміни',
 	'achievements-reverted' => 'Відзнаку повернено до первісної версії.',
-	'achievements-customize' => 'Настройка зображення',
+	'achievements-customize' => 'Налаштування зображення',
 	'achievements-customize-new-category-track' => 'Створити новий трек для категорії:',
 	'achievements-enable-track' => 'ввімкнено',
 	'achievements-revert' => 'Відновити за замовченням',

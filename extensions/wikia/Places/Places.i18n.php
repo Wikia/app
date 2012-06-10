@@ -42,8 +42,11 @@ $messages['qqq'] = array(
 
 /** German (Deutsch)
  * @author Alphakilo
+ * @author George Animal
  */
 $messages['de'] = array(
+	'places-editor-search' => 'Suche',
+	'places-geolocation-modal-error-title' => 'Fehler',
 	'places-updated-geolocation' => 'Diese Seite Geotaggen',
 	'places-category-switch' => 'Geotagging deaktivieren',
 	'places-category-switch-off' => 'Geotagging aktivieren',

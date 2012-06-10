@@ -323,6 +323,13 @@ $messages['tl'] = array(
 	'exitstitial-button' => 'Laktawan ang Patalastas na Ito',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'interstitial-default-campaign-code' => 'Викиа пидәше шымәни!',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */

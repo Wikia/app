@@ -140,7 +140,7 @@ $messages['diq'] = array(
 	'interwikiedit' => 'Vurnkarê interwiki',
 	'iwedit-title' => 'Vurnkarê interwiki',
 	'iwedit-all-interwikis' => 'interwikiy pêro',
-	'iwedit-update' => 'Newen ke',
+	'iwedit-update' => 'Anewen ke',
 );
 
 /** Spanish (español)

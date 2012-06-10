@@ -366,10 +366,37 @@ Inténteo de novo ou [[Special:Contact|informe do problema]].',
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'comboajaxlogin-createlog' => 'Bejelentkezés vagy új felhasználói fiók létrehozása',
+	'comboajaxlogin-actionmsg' => 'A művelet végrehajtásához először hozzon létre egy fiókot, vagy jelentkezzen be',
+	'comboajaxlogin-actionmsg-protected' => 'A művelet végrehajtásához először hozzon létre egy fiókot, vagy jelentkezzen be.',
+	'comboajaxlogin-connectmarketing' => '<h1>Felhasználói fiókok összekötése</h1>
+<ul>
+<li>Tartsd meg a jelenlegi felhasználói nevedet, történeted, szerkesztéseid&hellip; semmi sem változik, csak a bejelentkezés módja</li>
+<li>Oszd meg a Wikián folytatott tevékenységedet ismerőseiddel a Facebookon</li>
+<li>Teljes irányítás a kiadott információ felett</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Bejelentkezés a Facebook Connect használatával</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Wikia felhasználói fiókod összekötése a Facebookal</h1>
+<ul>
+<li>Tartsd meg a jelenlegi felhasználói nevedet, történeted, szerkesztéseid&hellip; semmi sem változik, csak a bejelentkezés módja</li>
+<li>Oszd meg a Wikián folytatott tevékenységedet ismerőseiddel a Facebookon, teljes irányítással a kiadott információ felett</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Vissza',
 	'comboajaxlogin-connectmarketing-forward' => 'Első lépések &raquo;',
+	'comboajaxlogin-connectdirections' => 'Add meg a Wikia felhasználónevedet és jelszavadat itt&mdash;mi a háttérben összekötjük a Wikia és a Facebook fiókjaidat.
+
+Miután végeztél, könnyedén bejelentkezhetsz minden Facebook Connect gomb segítségével.',
+	'comboajaxlogin-post-not-understood' => 'Hiba történt az űrlap felépítésében.
+Próbáld újra vagy [[Special:Contact|jelentsd a hibát]].',
+	'comboajaxlogin-readonlytext' => '<h2>Elnézést!</h2>
+<p>Pillanatnyilag nem hozhatsz létre felhasználói fiókot&mdash;hamarosan újra működőképesek leszünk. A probléma leírása a következő:<br /><em>$1</em></p>
+<p>Megtekintheted a Wikia <a href="http://twitter.com/wikia">Twitter</a> vagy <a href="http://facebook.com/wikia">Facebook</a> profiljait további információért.
+<br />
+(Ha már van fiókod, <a href="#">bejelentkezhetsz</a>, de nem fogsz tudni szerkeszteni.)</p>',
+	'comboajaxlogin-ajaxerror' => 'A Wikia nem válaszol. Kérjük, ellenőrizd a hálózati kapcsolatot.',
 );
 
 /** Interlingua (interlingua)
@@ -650,13 +677,13 @@ Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maa
 $messages['pl'] = array(
 	'comboajaxlogin-desc' => 'Dynamiczne okienko, umożliwiające użytkownikom na logowanie, rejestrację i przypomnienie hasła.',
 	'comboajaxlogin-createlog' => 'Zaloguj się lub utwórz konto',
-	'comboajaxlogin-actionmsg' => 'Aby wykonać tę akcję musisz się najpierw zalogować lub utworzyć konto.',
+	'comboajaxlogin-actionmsg' => 'Aby wykonać tę czynność, musisz najpierw zalogować się lub utworzyć konto.',
 	'comboajaxlogin-actionmsg-protected' => 'Aby wykonać tę czynność, musisz najpierw zalogować się lub utworzyć konto.',
 	'comboajaxlogin-connectmarketing' => '<h1>Połącz swoje konta</h1>
 <ul>
 <li>Zachowaj swoją obecną nazwę użytkownika, historię, edycje... Nic się nie zmieni oprócz sposobu logowania.</li>
 <li>Dziel się swoją aktywnością na Wikii z przyjaciółmi na Facebooku.</li>
-<li>Będziesz miał pełną kontrolę nad publikowanymi informacjami.</li>
+<li>Będziesz mieć pełną kontrolę nad publikowanymi informacjami.</li>
 </ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Zaloguj się korzystając z „Facebook Connect”</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Przyłącz swoje konto na Wikii do tego na Facebooku</h1>
@@ -672,7 +699,7 @@ Gdy skończysz, będziesz mógł się łatwo zalogować korzystając z każdego 
 	'comboajaxlogin-post-not-understood' => 'Wystąpił błąd w sposobie, w jaki ten formularz został wypełniony.
 Spróbuj ponownie lub [[Special:Contact|zgłoś problem]].',
 	'comboajaxlogin-readonlytext' => '<h2>Przepraszamy!</h2>
-<p>W tym momencie nie możesz utworzyć konta. Wkrótce wszystko ponownie wrócić do normy. Przyczyna problemów:<br /><em>$1</em></p>
+<p>W tym momencie nie możesz utworzyć konta. Wkrótce wszystko ponownie wrócić do normy. Przyczyna problemu:<br /><em>$1</em></p>
 <p>Więcej informacji odnajdziesz na stronach <a href="http://twitter.com/wikia">Twittera</a> lub <a href="http://facebook.com/wikia">Facebooka</a>.
 <br />
 (Jeśli już masz konto, możesz zwyczajnie <a href="#">zalogować się</a>, ale nie będziesz mógł edytować.)</p>',

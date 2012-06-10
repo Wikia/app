@@ -1158,6 +1158,8 @@ $messages['ia'] = array(
 	'swm-label-mode-users-user-hint' => '<i>Iste option ignora le selection in le gruppo "Wikis".</i>',
 	'swm-label-mode-users-user-multi' => 'Lista de usatores',
 	'swm-label-mode-users-user-multi-hint' => '<i>Specifica un nomine de usator per linea. Iste option ignora le selection in le gruppo "Wikis".</i>',
+	'swm-label-mode-users-anon' => 'Tote le usatores anonyme',
+	'swm-label-mode-users-anon-hint' => '<i>Pro le momento, iste option functiona solmente con le optiones "Tote le wikis" e "Wiki seligite".</i>',
 	'swm-label-content' => 'Contento',
 	'swm-label-comment' => 'Commento',
 	'swm-label-dismissed' => 'Dimittite',
@@ -2486,6 +2488,23 @@ $messages['tl'] = array(
 	'swm-error-long-message' => 'Ang mga mensahe ay may hangganang 500 mga panitik.',
 	'swm-error-empty-group' => 'Ipasok ang pangalan ng pangkat.',
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'swm-label-preview' => 'Сыфтәнә нишо дој',
+	'swm-label-edit' => 'Сәрост кардеј',
+	'swm-label-remove' => 'Рәдд кардеј',
+	'swm-label-sent' => 'Вығандә быә',
+	'swm-label-list' => 'Сијоһи',
+	'swm-label-recipient-users' => 'Иштирокәкон',
+	'swm-list-table-removed' => 'Рәдд кардә быә',
+	'swm-list-table-tools' => 'Диләгон',
+	'swm-list-table-lang' => 'Зывонон',
+	'swm-yes' => 'Бәле',
+	'swm-no' => 'Не',
 );
 
 /** Tatar (Cyrillic script) (татарча)

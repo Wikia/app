@@ -824,6 +824,24 @@ $messages['he'] = array(
 	'tog-forceeditsummary' => 'הצגת אזהרה בהכנסת תקציר עריכה ריק',
 );
 
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'editpagelayout-more' => 'több',
+	'editpagelayout-less' => 'kevesebb',
+	'editpagelayout-helpLink' => 'Szüksége van [[{{MediaWiki:Editpagelayout-helpLink-url}}|segítségre?]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span> értesítés',
+	'editpagelayout-notificationsLink-none' => 'Értesítések',
+	'editpagelayout-edit-title' => 'Cím szerkesztése',
+	'editpagelayout-edit-info' => 'Adatok szerkesztése',
+	'editpagelayout-myedit-header' => 'Ez a szerkesztésed. Másold át változtatásaidat a fenti szövegdobozba!',
+	'editpagelayout-captcha-title' => 'Captcha',
+	'editpagelayout-pageControls-pageLink' => 'Vissza az oldalra',
+	'editpagelayout-pageControls-minorEdit' => 'Apró szerkesztés',
+	'editpagelayout-pageControls-summaryLabel' => 'Szerkesztés összefoglalása',
+);
+
 /** Interlingua (interlingua)
  * @author McDutchie
  */
@@ -1789,6 +1807,21 @@ $messages['te'] = array(
 	'wikia-editor-modules-templates-title' => 'మూసలు',
 	'wikia-editor-modules-categories-title' => 'వర్గాలు',
 	'prefs-general' => 'సాధారణం',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'editpagelayout-edit-title' => 'Номи сәрост кардеј',
+	'editpagelayout-edit-info' => 'Мәлумоти сәрост кардеј',
+	'editpagelayout-pageControls-changes' => 'Дәгишон',
+	'editpagelayout-subject-headline-label' => 'Мывзу/сәрловһә:',
+	'wikia-editor-media-image' => 'Шикил',
+	'wikia-editor-modules-templates-title' => 'Ғәлибон',
+	'wikia-editor-modules-templates-add-tooltip' => "Зијод кардеј ғәлиб '$1'",
+	'wikia-editor-modules-templates-otherTemplates' => 'Ҹо ғәлибон зијод кардеј',
+	'wikia-editor-modules-templates-showUsedList' => 'Нишо дој око доә быә ғәлибон сијоһи',
 );
 
 /** Turkish (Türkçe)

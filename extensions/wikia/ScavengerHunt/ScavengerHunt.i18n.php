@@ -945,7 +945,7 @@ $messages['ia'] = array(
 	'scavengerhunt-form-error-article-spriteInProgressBar-sprite-empty' => 'Per favor selige dimensiones correcte pro le sprite de elemento de barra de progresso de Chassa al tresor',
 	'scavengerhunt-form-error-article-spriteInProgressBarHover-sprite-empty' => 'Per favor selige dimensiones correcte pro le sprite de elemento "hovered" de barra de progresso de Chassa al tresor',
 	'scavengerhunt-form-error-no-sprite-image' => 'Per favor specifica le cammino complete al file de imagine',
-	'scavengerhunt-form-error-article-spriteInProgressBarNotFound-sprite-empty' => 'Per favor selige le dimensiones correcte pro le "progress bar not found item\'s sprite" del Chassa al tresor',
+	'scavengerhunt-form-error-article-spriteInProgressBarNotFound-sprite-empty' => 'Per favor selige le dimensiones correcte pro le barra de progresso del Chassa al tresor, perque illo non esseva trovate in le "sprite" de iste elemento',
 	'scavengerhunt-form-error-no-articles' => 'Le chassa debe haber al minus un indicio/articulo.',
 	'scavengerhunt-form-error-invalid-url' => 'Per favor specifica un URL valide.',
 	'scavengerhunt-form-error-clueColor' => 'Per favor forni un color valide in notation #XXX',
@@ -2199,6 +2199,14 @@ $messages['tl'] = array(
 	'scavengerhunt-entry-form-name' => 'Pangalan mo:',
 	'scavengerhunt-entry-form-email' => 'Tirahan ng e-liham mo:',
 	'scavengerhunt-entry-form-submit' => 'Ipasa ang ipinasok',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'scavengerhunt-label-name' => 'Ном:',
+	'scavengerhunt-button-delete' => 'Рәдд кардеј',
 );
 
 /** Ukrainian (українська)

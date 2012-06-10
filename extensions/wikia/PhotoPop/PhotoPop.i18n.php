@@ -162,7 +162,7 @@ $messages['de'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
-	'photopop-setup-submit-label' => 'Newen ke',
+	'photopop-setup-submit-label' => 'Anewen ke',
 );
 
 /** Spanish (español)
@@ -953,6 +953,24 @@ $messages['sv'] = array(
 	'photopop-game-download-progress-text' => 'Laddar ned spel...',
 	'photopop-game-update-progress-text' => 'Uppdaterar spel...',
 	'photopop-game-download-error-text' => 'Ett fel uppstod när speldata skulle laddas ned, var god försök igen.',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'photopop-game-month-0' => 'Јан',
+	'photopop-game-month-1' => 'Фев',
+	'photopop-game-month-2' => 'Мар',
+	'photopop-game-month-3' => 'Апр',
+	'photopop-game-month-4' => 'Мај',
+	'photopop-game-month-5' => 'Ијун',
+	'photopop-game-month-6' => 'Ијул',
+	'photopop-game-month-7' => 'Авг',
+	'photopop-game-month-8' => 'Сен',
+	'photopop-game-month-9' => 'Окт',
+	'photopop-game-month-10' => 'Ној',
+	'photopop-game-month-11' => 'Дек',
 );
 
 /** Ukrainian (українська)

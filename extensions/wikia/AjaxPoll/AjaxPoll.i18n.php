@@ -316,12 +316,13 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Shirayuki
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'ajaxpoll-percentVotes' => '全投票中 $1%',
 	'ajaxpoll-thankyou' => '投票ありがとうございます！',
-	'ajaxpoll-error' => '投票を処理中に問題が発生しました。再投票してください。',
+	'ajaxpoll-error' => '投票の処理中に問題が発生しました。再投票してください。',
 	'ajaxpoll-summary' => 'この投票は $2 $1 に作成され、これまでに$3人が投票しました。',
 	'ajaxpoll-submit' => '投票',
 	'ajaxpoll-closed' => '投票は既に終了しています。結果をお楽しみください。',

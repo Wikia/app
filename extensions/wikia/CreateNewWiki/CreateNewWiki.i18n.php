@@ -1706,7 +1706,7 @@ $messages['pl'] = array(
 	'cnw-userauth-headline' => 'Posiadasz konto?',
 	'cnw-userauth-creative' => 'Zaloguj się',
 	'cnw-userauth-marketing-heading' => 'Nie masz konta?',
-	'cnw-userauth-marketing-body' => 'Posiadanie konta wymagane jest do tworzenia wiki na Wikia.  Zajmuje tylko minutę do [[Special:UserSignup|zarejestruj się]]!',
+	'cnw-userauth-marketing-body' => 'Posiadanie konta jest wymagane do utworzenia wiki. [[Special:UserSignup|Rejestracja]] zajmuje tylko minutę!',
 	'cnw-userauth-signup-button' => 'Zarejestruj się',
 	'cnw-desc-headline' => 'O czym będzie twoja wiki?',
 	'cnw-desc-creative' => 'Opisz temat swojej wiki',
@@ -1750,7 +1750,7 @@ Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na
 	'cnw-error-wiki-limit-header' => 'Osiągnięto limit wiki',
 	'cnw-error-wiki-limit' => 'Możesz utworzyć tylko {{PLURAL:$1|$1}} wiki dziennie. Zaczekaj 24 godziny aby utworzyć inną wiki.',
 	'cnw-error-blocked-header' => 'Konto zablokowane',
-	'cnw-error-blocked' => 'Użytkownik został zablokowany przez  $1 . Jako przyczynę podano:  $2 . (ID blokady:  $3 )',
+	'cnw-error-blocked' => 'Użytkownik został zablokowany przez  $1. Jako przyczynę podano:  $2. (ID blokady:  $3 )',
 	'cnw-error-torblock' => 'Tworzenie wiki za pośrednictwem Tor Network nie jest dozwolone.',
 	'cnw-error-bot' => 'Wykryto, że to konto może być botem. Jeżeli popełniono błąd, proszę daj nam znać: [http://www.wikia.com/Special:Contact/general Kontakt]',
 	'cnw-error-bot-header' => 'Zostałeś zidentyfikowany jako bot',
@@ -2310,6 +2310,23 @@ Magpataas ng antas sa pamamagitan ng PayPal upang makakuha ng wiking walang anun
 	'cnw-welcome-help' => 'Maghanap ng mga sagot, mga payo, at marami pa sa <a href="http://community.wikia.com">Lunduyan ng Pamayanan</a>.',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'cnw-next' => 'Бәнав',
+	'cnw-or' => 'јаанки',
+	'cnw-name-wiki-wiki' => 'Вики',
+	'cnw-login' => 'Ыштәни едаштеј',
+	'cnw-call-to-signup' => 'Ғејдијот ијо',
+	'cnw-login-prompt' => 'Шымә ыштәни ғејд кардәјоне?',
+	'cnw-auth-headline' => 'Ыштәни едаштеј',
+	'cnw-auth-headline2' => 'Ғејдијот',
+	'cnw-desc-change-lang' => 'дәгиш кардеј',
+	'cnw-desc-lang' => 'Зывон',
+	'cnw-theme-headline' => 'Мывзу сәчын кардеј',
+);
+
 /** Turkish (Türkçe)
  * @author Erdemaslancan
  * @author Suelnur
@@ -2404,6 +2421,10 @@ $messages['uk'] = array(
 	'cnw-auth-signup-creative' => 'Вам потрібен обліковий запис, щоб продовжити створення вікі. <br /> Реєстрація не відніме багато часу!',
 	'cnw-auth-facebook-signup' => 'Зареєструватися через Facebook',
 	'cnw-auth-facebook-login' => 'Увійти з Facebook',
+	'cnw-userauth-creative' => 'Увійти',
+	'cnw-userauth-marketing-heading' => 'Немає облікового запису?',
+	'cnw-userauth-marketing-body' => 'Вам потрібний обліковий запис для створення вікі Wikia. [[Special:UserSignup|Створити]]!',
+	'cnw-userauth-signup-button' => 'Зареєструватися',
 	'cnw-desc-headline' => 'Про що буде ваша вікі?',
 	'cnw-desc-creative' => 'Опишіть вашу тему',
 	'cnw-desc-placeholder' => 'Це відображатиметься на головній сторінці вікі.',

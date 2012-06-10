@@ -548,6 +548,13 @@ $messages['tl'] = array(
 	'mostvisitedpagesalllink' => 'Tingnan ang pinakadinadalaw na mga pahina',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'mostvisitedpagessearchbtn' => 'нәве',
+);
+
 /** Turkish (Türkçe)
  * @author Manco Capac
  */

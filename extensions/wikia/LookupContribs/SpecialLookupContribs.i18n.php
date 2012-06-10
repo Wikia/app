@@ -1463,6 +1463,18 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribsall' => 'lahat',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'lookupcontribswiki' => 'Вики',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Ном',
+	'lookupcontribsnext' => 'думотоно шә',
+	'lookupcontribsprevious' => 'навынәни',
+	'lookupcontribsall' => 'һәммәј',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */

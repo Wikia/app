@@ -17,7 +17,11 @@ $messages['en'] = array(
  * @author Purodha
  */
 $messages['qqq'] = array(
-	'logger-desc' => '{{desc}}',
+	'logger-desc' => '{{desc}}
+
+A "[[:wikipedia:Front and back ends|backend]]" is a system or component that ordinary users don\'t interact with directly and don\'t need to know about, and that is responsible for a distinct task or service - for example, a storage back-end is a generic system for storing data which other applications can use. Possible alternatives for back-end are "system" or "service", or (depending on context and language) even leave it untranslated.',
+	'logger' => 'A "[[:wikipedia:Front and back ends|backend]]" is a system or component that ordinary users don\'t interact with directly and don\'t need to know about, and that is responsible for a distinct task or service - for example, a storage back-end is a generic system for storing data which other applications can use. Possible alternatives for back-end are "system" or "service", or (depending on context and language) even leave it untranslated.',
+	'loggertitle' => 'A "[[:wikipedia:Front and back ends|backend]]" is a system or component that ordinary users don\'t interact with directly and don\'t need to know about, and that is responsible for a distinct task or service - for example, a storage back-end is a generic system for storing data which other applications can use. Possible alternatives for back-end are "system" or "service", or (depending on context and language) even leave it untranslated.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -400,6 +404,14 @@ $messages['tl'] = array(
 	'loggerrecords' => '$1 mga tala',
 	'loggergo' => 'Ipakita',
 	'loggernoresult' => 'Walang natagpuang mga kinalabasan',
+);
+
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'loggerrecords' => '$1 нывыштәјон',
+	'loggergo' => 'Нишо дој',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

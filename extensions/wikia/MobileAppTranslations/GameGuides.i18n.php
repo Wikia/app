@@ -552,6 +552,16 @@ $messages['te'] = array(
 	'alert-download-updated-wikis-button-ok' => 'సరే',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'activityindicator-message' => 'Бо кардә...',
+	'window-article-menu-search-label' => 'Нәве',
+	'window-article-menu-cancel-label' => 'Ләғв кардеј',
+	'alert-download-updated-wikis-button-ok' => 'OK',
+);
+
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */

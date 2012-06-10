@@ -3274,6 +3274,18 @@ $messages['tl'] = array(
 	'plb-copy-submit-link' => 'Sagipin',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'plb-editor-overlay-edit' => 'сәрост кардеј',
+	'plb-widget-name-plb_input' => 'Сәрловһә',
+	'plb-widget-name-plb_image' => 'Шикил',
+	'plb-property-editor-width' => 'Һовужи',
+	'plb-property-editor-spacing-small' => 'Гәдәли',
+	'plb-property-editor-spacing-large' => 'Дыжд',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */

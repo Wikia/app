@@ -2447,6 +2447,7 @@ Dat es e brandneu Projäk, un wann De Froore häß, schriiv ons dovun!
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'autocreatewiki-language-all' => 'Hemû ziman',
 	'autocreatewiki-done' => 'çêbû',
 	'autocreatewiki-category-label' => 'Kategorî:',
 	'autocreatewiki-subname-answers' => 'Bersivan',
@@ -3512,23 +3513,23 @@ $messages['pms'] = array(
 	'autocreatewiki-step7-error' => 'Impossìbil copié la base ëd dàit inissial për la lenga!',
 	'autocreatewiki-protect-reason' => "Part ëd l'antërfacia ufissial",
 	'autocreatewiki-welcomesubject' => "$1 a l'é stàit creà!",
-	'autocreatewiki-welcomebody' => "Cerea, $2,
+	'autocreatewiki-welcomebody' => "Cerea $2!
 
-la Wikia ch'a l'ha ciamà a l'é adess disponìbil a <$1> Noi i speroma ëd vëdde là tòst soe modìfiche!
+Soa wiki a l'é stàita creà! Ch'a-j daga n'ociada: <$1>
 
-Noi i l'oma giontà chèich Anformassion e sugeriment dzora a soa Ciaciarade (<$5>) për giutelo a ancaminé.
+Pront a parte? Noi i l'oma giontà chèiche liure a soa pagina ëd ciaciarade (<$5>) për giutelo a ancaminé e për ancoragelo a esploré le vàire àree ùtij ëd Wikia. S'a l'ha qualsëssìa chestion o s'as sent un pòch pers, ch'a rësponda a 's mëssagi o ch'a lesa nòstre pàgine d'agiut <http://help.wikia.com>.
 
-S'a l'ha qualsëssìa problema, a peule ciamé agiut a la comunità dzora la wiki a <http://www.wikia.com/wiki/Forum:Help_desk>, o për pòsta eletrònica a community@wikia.com. A peul ëdcò visité nòsta canal #wikia IRC ëd ciaciarade dal viv <http://irc.wikia.com>.
-
-Mi i peusso esse contatà diretament për pòsta eletrònica o dzora a mia pàgina ëd discussion, s'a l'ha qualsëssìa chestion o dùbit.
+A peul ëdcò vardé lë scartari dël Fondator e Aministrator <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> e lë scartari dl'Echip Wikia <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> anté a peul trové ëd sugeriment e truch, anformassion dzora neuve funsion e neuve ròbe ch'a càpito an Wikia.
 
 Tant boneur con ël proget!
 
 $3
-
 Echip ëd la Comunità Wikia
+<http://community.wikia.com/wiki/User:$4>
 
-<http://www.wikia.com/wiki/User:$4>",
+___________________________________________
+* Veul-lo arseive meno 'd mëssagi da noi? A peul ësganfé l'anscrission o cangé sò gust ëd pòsta eletrònica ambelessì:
+http://community.wikia.com/Special:Preferences",
 	'autocreatewiki-welcometalk' => "== Bin ëvnù! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Cerea \$1 -- noi i soma content d'avèj '''\$4''' com part ëd la comunità Wikia!
 
@@ -4448,6 +4449,17 @@ $messages['tl'] = array(
 	'autocreatewiki-step2-error' => 'Umiiral ang kalipunan ng dato!',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'autocreatewiki' => 'Тожә вики сохтеј',
+	'autocreatewiki-page-title-default' => 'Тожә вики сохте',
+	'createwiki' => 'Тожә вики сохте',
+	'autocreatewiki-category-select' => 'Бывыжнән',
+	'autocreatewiki-error' => 'сәһв',
+);
+
 /** Turkish (Türkçe)
  * @author Gizemb
  * @author Suelnur
@@ -4840,6 +4852,7 @@ $messages['zh-hans'] = array(
 	'autocreatewiki-redirect' => '将重定向到新的维基： $1...',
 	'autocreatewiki-congratulation' => '恭喜！',
 	'autocreatewiki-welcometalk-log' => '欢迎留言',
+	'autocreatewiki-regex-error-comment' => '在维基$1中被使用（全文：$2）',
 	'autocreatewiki-step2-error' => '数据库存在！',
 	'autocreatewiki-step3-error' => '不能在数据库中设置的默认信息！',
 	'autocreatewiki-step6-error' => '不能在数据库中设置默认表！',

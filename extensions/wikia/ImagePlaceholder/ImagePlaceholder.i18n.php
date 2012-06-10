@@ -401,6 +401,14 @@ $messages['tl'] = array(
 	'imgplc-notinhistory' => 'Hindi ka makapagdaragdag ng larawan habang nasa modalidad na pangkasaysayan.',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'imgplc-create' => 'Шикил зијод кардеј',
+	'imgplc-image' => 'Шикил',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */

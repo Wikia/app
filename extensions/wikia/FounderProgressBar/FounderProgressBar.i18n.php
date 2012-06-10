@@ -1739,6 +1739,15 @@ $messages['sv'] = array(
 	'founderprogressbar-browse-page-name' => 'Bläddra',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'founderprogressbar-photo-add20-action' => 'Шикил зијод карде',
+	'founderprogressbar-total-edit75-action' => 'Сәһифә зијод карде',
+	'founderprogressbar-page-add20-action' => 'Сәһифә зијод карде',
+);
+
 /** Turkish (Türkçe)
  * @author Suelnur
  */
@@ -1786,13 +1795,20 @@ $messages['uk'] = array(
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'founderprogressbar-progress-see-full-list' => '查看完整列表',
+	'founderprogressbar-progress-hide-full-list' => '隐藏完整列表',
 	'founderprogressbar-task-completed' => '已完成',
+	'founderprogressbar-list-description2' => '任务区列出了所有您需要完成的任务。如果您跳过一个任务，它将移动到“已跳过的任务”之中，您仍可以在任何时候完成它们。您是否感到列表上的某些任务永远不适合您的维基吗？别担心--当只有“已跳过任务”仍未完成时我们会解锁您的奖励任务。完成奖励任务来弥补你要永远跳过的任务，让完成率达到梦寐以求的100%吧。',
+	'founderprogressbar-list-task-label' => '任务',
+	'founderprogressbar-list-skipped-task-label' => '已跳过的任务',
+	'founderprogressbar-list-skipped-task-desc' => '您可以随时完成这些任务。',
 	'founderprogressbar-list-bonus-task-label' => '奖励任务',
 	'founderprogressbar-page-add10-action' => '添加一个页面',
 	'founderprogressbar-themedesigner-visit-label' => '自定义您的主题',
 	'founderprogressbar-mainpage-edit-action' => '编辑主页',
 	'founderprogressbar-photo-add10-action' => '添加一张图片',
 	'founderprogressbar-category-add3-action' => '添加一个分类',
+	'founderprogressbar-wikiactivity-visit-label' => '访问维基动态',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
 	'founderprogressbar-profile-edit-action' => '到达您的档案页',
 	'founderprogressbar-photo-add20-action' => '添加图片',
@@ -1813,6 +1829,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-fb-likes3-action' => '转到主页',
 	'founderprogressbar-total-edit300-action' => '添加页面',
 	'founderprogressbar-bonus-page-add5-action' => '添加页面',
+	'founderprogressbar-bonus-edit50-action' => '转到 Special:WikiActivity',
 	'founderprogressbar-browse-page-name' => '浏览',
 );
 

@@ -1056,6 +1056,13 @@ $messages['tl'] = array(
 	'tog-disablecategoryselect' => 'Huwag Paganahin ang Pagtatatak ng Kategorya',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'categoryselect-button-cancel' => 'Ләғв кардеј',
+);
+
 /** Turkish (Türkçe)
  * @author Gizemb
  * @author Suelnur
