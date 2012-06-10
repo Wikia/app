@@ -202,29 +202,30 @@ class WikiFeaturesHelper extends WikiaModel {
 	
 		
 	/**
-	 * Helper that actually saves feedback in fogbugz
+	 * Helper that actually sends the feedback to a specified e-mail address
 	 * 
 	 * @param string $feature name of the feature
 	 * @param string $message feedback message
-	 * @param string $userEmail user's e-mail address
-	 * @param string $userName user's name
+	 * @param User $user user object
 	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property (equals piority in FogBugz: 4-7)
 	 */
-	public function saveFeedbackInFogbugz( $feature, $userEmail, $userName, $message, $category, $priority = 5 ) {
+	public function sendFeedback( $feature, $user, $message, $category, $priority = 5 ) {
 
 		$areaId = self::$feedbackAreaIDs[$feature];
 		$title = self::FOGBUGZ_CASE_TITLE . $feature .' - '.self::$feedbackCategories[$category]['title'];
 		
 		$message = <<<MSG
-User name: $userName
+User name: {$user->getName()}
 Wiki name: {$this->app->getGlobal('wgSitename')}
 Wiki address: {$this->app->getGlobal('wgServer')}
 Feature: $feature
 
 $message
 MSG;
-		
-		return $this->getFogbugzService()->logon()->createCase( $areaId, $title, $priority, $message, array( self::FOGBUGZ_CASE_TAG ), $userEmail, self::FOGBUGZ_PROJECT_ID );
+
+		$message .= $message . "\n\n---\nBrowser data: " . $_SERVER['HTTP_USER_AGENT'];
+
+		return UserMailer::send( $wg->app->EmergencyContact, $user->getEmail(), $title, $message );
 	}	
 	
 }
