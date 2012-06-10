@@ -143,7 +143,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		// Passed validations, actually do something useful
 		if( is_null($this->error) ) {
 			$this->result = 'ok';
-			$bugzdata = WikiFeaturesHelper::getInstance()->saveFeedbackInFogbugz( $feature, $user->getEmail(), $user->getName(), $message, $category );
+			$bugzdata = WikiFeaturesHelper::getInstance()->sendFeedback( $feature, $user, $message, $category );
 			$this->caseId = $bugzdata['caseId'];
 			$this->msg = wfMsg('wikifeatures-feedback-success');
 		}
