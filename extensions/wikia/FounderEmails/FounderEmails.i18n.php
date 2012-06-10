@@ -6208,9 +6208,11 @@ $messages['vi'] = array(
 	'founderemails-email-user-registered-subject' => 'Một ai đó đã tham gia $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Chào $USERNAME,
 
-Chúc mừng! $EDITORNAME mới tham gia $WIKINAME.
+Chúc mừng! $EDITORNAME đã tham gia $WIKINAME.
 
 Hãy nhân cơ hội này để chào đón họ đến wiki của bạn và khuyến khích họ trợ giúp sửa đổi. Càng nhiều càng tốt, wiki của bạn sẽ phát triển nhanh hơn.
+
+$EDITORPAGEURL
 
 Wikia Team',
 	'founderemails-email-user-registered-greeting' => 'Chào $USERNAME,',
@@ -6224,17 +6226,17 @@ Trông giống như $EDITORNAME đã đăng ký tài khoản tại wiki của b�
 	'founderemails-email-0-days-passed-subject' => 'Chào mừng bạn đến với Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Rất vui được gặp bạn $USERNAME,
 
-Chúc mừng bạn đã thành lập $WIKINAME!
+Chúc mừng bạn đã thành lập $WIKINAME, $WIKIURL.
 
 Dưới đây là một số mẹo hữu ích để giúp bạn có một khởi đầu tốt:
 
-Tạo trang. Một wiki là nơi chia sẻ tất cả thông tin về chủ đề của bạn, Tạo trang bằng cách nhấn vào “Add a Page” và điền vào nhiều thông tin cụ thể hơn về chủ đề của bạn.
+Tạo trang. Một wiki là nơi chia sẻ tất cả thông tin về chủ đề của bạn.
 
-Thêm hình ảnh. Các trang luôn tốt hơn khi chúng có hình ảnh! Chèn ảnh vào các trang và trang chính của wiki. Bạn có thể nhấn vào Thêm hình ảnh để chèn ảnh, thư viện ảnh hoặc một khung trình chiếu.
+Thêm hình ảnh. Các trang luôn tốt hơn khi chúng có hình ảnh! Chèn ảnh vào các trang và trang chính của wiki.
 
 Tùy chỉnh chủ đề của bạn. Tùy chỉnh chủ đề và logo để làm cho wiki của bạn nổi bật hơn! Sử dụng Thiết kế chủ đề để thêm màu sắc tùy chỉnh và làm chúng phù hợp với nội dung của wiki.
 
-Chúng tôi sẽ không để lại bạn một mình lạnh lẽo. Chúng tôi ở đây là để giúp bạn thực hiện $WIKINAME thành công trong mọi bước trên con đường. Truy cập community.wikia.com để tham gia diễn đàn, cho lời khuyên và trợ giúp, hoặc gửi thư cho chúng tôi nếu bạn có câu hỏi!
+Chúng tôi sẽ không bỏ lại bạn trong lạnh lẽo. Chúng tôi ở đây là để giúp bạn thực hiện $WIKINAME thành công trong mọi bước trên con đường. Truy cập http://vi.wikia.com để tham gia diễn đàn, cho lời khuyên và trợ giúp, hoặc gửi thư cho chúng tôi nếu bạn có câu hỏi!
 
 Xây dựng wiki vui vẻ! Wikia Team
 ___________________________________________
@@ -6248,7 +6250,7 @@ Nhấn vào liên kết sau để từ chối mọi email từ Wikia: $UNSUBSCRI
 	'founderemails-email-3-days-passed-subject' => 'Wiki bạn tiến triển thế nào rồi',
 	'founderemails-email-3-days-passed-body' => 'Chào $USERNAME,
 
-Chúng tôi muốn kiểm tra và xem thử những tiến triển trên $WIKINAME.
+Chúng tôi muốn kiểm tra và xem thử những tiến triển trên $WIKINAME, $WIKIURL.
 
 Đã 3 ngày kể từ khi bạn bắt đầu và chúng tôi nghĩ nên ghé qua cung cấp một số lời khuyên trong xây dựng wiki:
 
@@ -6259,7 +6261,7 @@ Thêm hình ảnh nhiều hơn. Một trong những cách tốt nhất để là
 Tìm thêm cảm hứng. Đừng ngại khi kiểm tra các wiki khác để xem họ hoạt động như thế nào trên trang chính, bài viết và nhiều hơn.
 
 Cần trợ giúp trong việc tìm kiếm cách hoạt động như thế nào? Chúng tôi luôn ở đây với bạn!
-Đến hỏi chúng tôi cho trợ giúp và lời khuyên tại vi.wikia.com.
+Đến hỏi chúng tôi cho trợ giúp và lời khuyên tại http://vi.wikia.com.
 
 Hãy giữ công việc tuyệt vời này!
 Wikia Team
@@ -6275,17 +6277,17 @@ Bây giờ bạn đã một vài ngày trên wiki, chúng tôi nghĩ rằng bạ
 	'founderemails-email-10-days-passed-subject' => 'Chúc mừng 10 ngày kỷ niệm!',
 	'founderemails-email-10-days-passed-body' => 'Wiki tiến triển thế nào rồi $USERNAME? 
 
-Whoa, thời gian trôi nhanh thật! Đã là 10 ngày kể từ khi bạn khởi động $WIKINAME.
+Whoa, thời gian trôi nhanh thật! Đã là 10 ngày kể từ khi bạn khởi động $WIKINAME, $WIKIURL.
 
 Tìm những người khác tham gia vào dự án của bạn và kể ra tất cả những việc tuyệt vời mà bạn đang làm! Đây là một số cách để thực hiện:
 
-Có bao giờ mẹ bạn đã từng bảo bạn phải Chia sẻ? Sử dụng nút Chia sẻ trên thanh công cụ, bài viết và hình ảnh để chỉ cho bạn bè và những người theo dõi bạn trên Facebook, Twitter và các trang mạng phổ biến khác.
+Có bao giờ mẹ bạn đã từng bảo bạn phải Chia sẻ? Sử dụng nút Chia sẻ trên trang chính của wiki, bài viết và hình ảnh để chỉ cho bạn bè và những người theo dõi bạn trên Facebook, Twitter và các trang mạng phổ biến khác.
 
 Khai thác sức mạnh của thư điện tử. Gửi email đến những người bạn biết rằng họ quan tâm đến nội dung chủ đề của bạn hoặc quan tâm trong việc giúp đỡ bạn, như là một người bạn trong trường hoặc đồng nghiệp. Bạn cũng có thể gửi email những hình ảnh cụ thể từ wiki của mình bằng cách dùng nút email.
 
 Tham gia các trang mạng tương tự. Yêu cầu nhiều người từ các diễn đàn hoặc trang mạng có nội dung chủ đề mà bạn đang xây dựng để trợ giúp bằng cách đăng thông điệp trên diễn đàn của họ. Nếu có thể, liên lạc các quản trị viên và xem nếu họ hứng thú với liên kết-chia sẻ — họ sẽ đặt liên kết đến wiki của bạn trên trang mạng của họ nếu bạn đặt liên kết đến họ trên wiki của bạn.
 
-Bạn cũng có thể yêu cầu những thành viên Wikia đến giúp wiki của bạn bằng cách gửi thông điệp đến diễn đàn tại vi.wikia.com.
+Bạn cũng có thể yêu cầu những thành viên Wikia đến giúp wiki của bạn bằng cách gửi thông điệp đến diễn đàn tại http://vi.wikia.com.
 
 Hãy giữ công việc tuyệt vời này!
 
@@ -6304,6 +6306,8 @@ Tất cả tốt chứ! $EDITORNAME đã có những sửa đổi đầu tiên t
 
 Ghé qua $PAGETITLE để kiểm tra những gì họ thêm vào.
 
+$PAGEURL
+
 Wikia Team',
 	'founderemails-email-first-edit-greeting' => 'Chào $USERNAME,',
 	'founderemails-email-first-edit-headline' => 'Tất cả tốt chứ! $EDITORNAME đã có những sửa đổi đầu tiên trên $WIKINAME.',
@@ -6320,6 +6324,8 @@ $EDITORNAME đã có những sửa đổi khác trên $WIKINAME ở trang $PAGET
 
 Ghé qua $PAGETITLE để xem những gì họ vừa thay đổi.
 
+$PAGEURL
+
 Wikia Team',
 	'founderemails-email-general-edit-greeting' => 'Chào $USERNAME,',
 	'founderemails-email-general-edit-headline' => '$EDITORNAME đã có những sửa đổi khác trên $WIKINAME ở trang $PAGETITLE.',
@@ -6335,6 +6341,8 @@ Trông giống như $EDITORNAME đã đăng ký tài khoản tại wiki của b�
 Một thành viên vô danh đã tạo ra sửa đổi đầu tiên ở trang $PAGETITLE trên $WIKINAME.
 
 Thành viên vô danh là những người dùng tạo ra sửa đổi nhưng không đăng nhập. Đến xem người lạ này đã thêm gì vào!
+
+$PAGEURL
 
 Wikia Team',
 	'founderemails-email-anon-edit-greeting' => 'Chào $USERNAME,',
@@ -6406,9 +6414,9 @@ Trông giống như ai đó đã sửa đổi wiki của bạn! Tại sao bạn 
 Trông giống như ai đó đã sửa đổi wiki của bạn! Tại sao bạn không <a href="$MYHOMEURL">kiểm tra</a> để xem thay đổi thế nào nhỉ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia Team</div>',
 	'founderemails-lot-happening-subject' => '$WIKINAME đang nóng lên!',
-	'founderemails-lot-happening-body' => 'Hi $USERNAME,
+	'founderemails-lot-happening-body' => 'Chào $USERNAME,
 
-Chúc mừng! Có rất nhiều sự kiện đang xảy ra tại $WIKINAME ngày hôm nay!
+Chúc mừng! Có rất nhiều sự kiện đang diễn ra tại $WIKINAME, $WIKIURL.
 
 Nếu chưa rõ, bạn có thể đi đến Hoạt động của Wiki để xem tất cả những việc tuyệt vời vừa xảy ra.
 
@@ -6458,7 +6466,7 @@ Có rất nhiều thay đổi trên wiki của bạn ngày hôm nay! Hãy ghé q
 	'founderemails-email-10-day-congratulations' => 'Whoa, thời gian nhanh thật! Đã được 10 ngày kể từ khi bạn bắt đầu $HDWIKINAME.',
 	'founderemails-email-10-day-tips-heading' => 'Mời những người khác tham gia vào dự án của bạn và thể hiện tất cả công việc tuyệt vời mà bạn đã làm! Sau đây là một số cách để thực hiện:',
 	'founderemails-email-10-day-share-heading' => 'Gia đình của bạn đã không nói bạn chia sẻ?',
-	'founderemails-email-10-day-share-content' => 'Sử dụng nút Thích của Facebook trên trang chính của wiki, bài viết và hình ảnh để chỉ chúng cho bạn bè và những người theo dõi bạn trên Facebook.',
+	'founderemails-email-10-day-share-content' => 'Sử dụng nút Chia sẻ trên trang chính của wiki, bài viết và hình ảnh để chỉ chúng cho bạn bè và những người theo dõi bạn trên Facebook.',
 	'founderemails-email-10-day-email-heading' => 'Khai thác sức mạnh của thư điện tử.',
 	'founderemails-email-10-day-email-content' => 'Gửi email cho người khác bạn biết những người quan tâm đến nội dung chủ đề của bạn hoặc quan tâm trong việc giúp đỡ bạn, giống như một người bạn từ trường học hoặc một đồng nghiệp.  Bạn cũng có thể gửi email hình ảnh cụ thể từ wiki của bạn bằng cách sử dụng nút thư điện tử',
 	'founderemails-email-10-day-join-heading' => 'Tham gia wiki với các trang web tương tự.',
@@ -6472,6 +6480,8 @@ Hôm nay $WIKINAME đã được truy cập bởi $1 {{PLURAL:$1|người|ngư�
 
 Tiếp tục bổ sung nội dung mới và thúc đẩy wiki của bạn để khuyến khích nhiều người đến để đọc, sửa đổi và làm phong phú nội dung.
 
+$WIKIURL
+
 Wikia Team',
 	'founderemails-email-views-digest-greeting' => 'Chào $USERNAME,',
 	'founderemails-email-views-digest-headline' => 'Hôm nay $WIKINAME đã được viếng thăm bởi $UNIQUEVIEWS người.',
@@ -6481,7 +6491,7 @@ Wikia Team',
 	'founderemails-email-complete-digest-subject' => 'Hoạt động mới nhất trên $WIKINAME',
 	'founderemails-email-complete-digest-body' => 'Chào $USERNAME,
 
-Đây là thời gian biểu hàng ngày về các hoạt động từ $WIKINAME.
+Đây là thời gian biểu hàng ngày về các hoạt động từ $WIKINAME, $WIKIURL.
 
 $1 {{PLURAL:$1|người|người}} người xem wiki của bạn.
 
@@ -6514,6 +6524,10 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
 	'founderemails-pref-edits' => 'Gửi email cho tôi khi có ai đó sửa đổi $1',
 	'founderemails-pref-views-digest' => 'Gửi tôi một email hàng ngày cho tôi biết bao nhiêu lần $1 đã được truy cập',
 	'founderemails-pref-complete-digest' => 'Gửi cho tôi một bản tóm tắt hàng ngày về hoạt động trên $1',
+	'founderemails-pref-joins-v2' => '...một ai đó đã tham gia',
+	'founderemails-pref-edits-v2' => '...một ai đó đã tạo sửa đổi',
+	'founderemails-pref-views-digest-v2' => '...bản tóm tắt hàng cho số tổng lượt xem',
+	'founderemails-pref-complete-digest-v2' => '...một bản tóm tắt đầy đủ và ngắn gọn về số người tham gia, số sửa đổi, số lượt xem',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)
@@ -6531,6 +6545,7 @@ $EDITORPAGEURL
 
 Wikia团队',
 	'founderemails-email-user-registered-greeting' => '嗨！$USERNAME，',
+	'founderemails-email-user-registered-signature' => 'Wikia团队',
 	'founderemails-email-0-days-passed-subject' => '欢迎来到Wikia！',
 	'founderemails-email-10-days-passed-subject' => '“10天纪念日”快乐！',
 	'founderemails-email-10-days-passed-body' => '$USERNAME，最近如何？
@@ -6563,6 +6578,15 @@ ___________________________________________
 	'founderemails-email-first-edit-signature' => 'Wikia团队',
 	'founderemails-email-general-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-general-edit-signature' => 'Wikia团队',
+	'founderemails-email-page-edited-anon-body' => 'Hi $USERNAME，
+
+一位Wikia供稿人刚刚在$WIKINAME上对$PAGETITLE进行了编辑。
+
+Wikia供稿人是没有登录Wikia账户的匿名编辑者。去看看这个神秘的朋友添加了什么吧！
+
+$PAGEURL
+
+Wikia团队',
 	'founderemails-email-anon-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-anon-edit-signature' => 'Wikia团队',
 	'founderemails-answers-email-user-registered-body' => '嘿！$USERNAME，
@@ -6572,12 +6596,18 @@ ___________________________________________
 -- Wikia团队',
 	'founderemails-answers-email-0-days-passed-body' => '祝贺创建$WIKINAME——您现在是Wikia社区的一部分了！',
 	'founderemails-answers-email-10-days-passed-subject' => '您的wiki最近如何？',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => '嘿！$USERNAME，
+
+看来注册用户$EDITORNAME已经在你的维基上做出首次编辑了！何不踩踩他们的讨论页($EDITORTALKPAGEURL)，和他们打个招呼呢？
+
+-- Wikia团队',
 	'founderemails-answers-email-page-edited-reg-user-body' => '嘿！$USERNAME，
 
 看来$EDITORNAME已经在你的维基上做出编辑了！何不踩踩他们的讨论页($EDITORTALKPAGEURL)，和他们打个招呼呢？
 
 -- Wikia团队',
 	'founderemails-answers-email-page-edited-anon-subject' => '您的站点被人修改过了！',
+	'founderemails-lot-happening-subject' => '$WIKINAME正在热力升温！',
 	'founderemails-email-lot-happening-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-lot-happening-signature' => 'Wikia团队',
 	'founderemails-email-0-day-heading' => '很高兴认识你，$USERNAME，',
@@ -6589,6 +6619,7 @@ ___________________________________________
 	'founderemails-email-0-day-addphotos-button' => '添加一个照片',
 	'founderemails-email-0-day-customizetheme-heading' => '自定义您的外观。',
 	'founderemails-email-0-day-customizetheme-button' => '自定义',
+	'founderemails-email-0-day-wikiahelps-signature' => '祝维基建设愉快！<br />Wikia团队',
 	'founderemails-email-3-day-heading' => '你好，$USERNAME，',
 	'founderemails-email-3-day-addphotos-heading' => '添加更多图片。',
 	'founderemails-email-3-day-addphotos-button' => '添加照片',

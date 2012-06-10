@@ -2144,6 +2144,7 @@ $messages['tly'] = array(
 	'article-comments-edit' => 'сәрост кардеј',
 	'article-comments-history' => 'тарых',
 	'article-comments-prev-page' => 'Навы.',
+	'wikiamobile-article-comments-show' => 'Нишо дој',
 );
 
 /** Turkish (Türkçe)

@@ -337,7 +337,7 @@ $messages['diq'] = array(
 	'admindashboard-toolbar-link' => 'Admin',
 	'admindashboard-control-theme-designer-label' => 'Tema vıraşter',
 	'admindashboard-controls-community-header' => 'Bol',
-	'admindashboard-control-user-list-label' => 'Lista karberan',
+	'admindashboard-control-user-list-label' => 'Listeyê Karberan',
 	'admindashboard-control-invite-label' => 'Dewam kere',
 	'admindashboard-control-help-tooltip' => 'bewni re wesikey peştiyer',
 	'admindashboard-control-add-page-label' => 'Pele vıraze',
@@ -1457,10 +1457,59 @@ $messages['te'] = array(
 	'admindashboard-control-categories-list-label' => 'అన్ని వర్గాలు',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'admindashboard-title' => 'Tapalodo ng {{SITENAME}}',
+	'admindashboard-header' => 'Tapalodo ng Tagapangasiwa',
+	'admindashboard-toolbar-link' => 'Tagapangasiwa',
+	'admindashboard-tab-advanced' => 'Mas masulong',
+	'admindashboard-tab-general' => 'Pangkalahatan',
+	'admindashboard-controls-wiki-header' => 'Wiki',
+	'admindashboard-control-theme-designer-label' => 'Tagapagdisenyo ng Tema',
+	'admindashboard-control-theme-designer-tooltip' => 'Pinapahintulutan ka ng Tagapagdisenyo ng Tema na sadyain ang mga kulay, likurang tanawin, at iba pa sa wiki mo.',
+	'admindashboard-control-recent-changes-label' => 'Kamakailang mga Pagbabago',
+	'admindashboard-control-recent-changes-tooltip' => 'Ipinapakita ng Kamakailang mga Pagbabago ang lahat ng mga pagbabagong nagawa sa wiki mo na nasa iisang guhit ng panahon.',
+	'admindashboard-control-top-navigation-label' => 'Pang-itaas na Panglibot',
+	'admindashboard-control-top-navigation-tooltip' => 'Pinapahintulutan ng Pang-itaas na Panglibot na sadyain mo ang menu ng libutan na nasa itaas ng wiki mo.',
+	'admindashboard-control-wiki-features-label' => 'Mga Tampok ng Wiki',
+	'admindashboard-control-wiki-features-tooltip' => 'Ang Mga Tampok ng Wiki ay nagpapahintulot sa iyo na magpagana ng karagdagang mga tampok sa wiki mo.',
+	'admindashboard-control-page-layout-builder-label' => 'Tagapagtayo ng Latag ng Pahina',
+	'admindashboard-control-page-layout-builder-tooltip' => 'Pinapahintulutan ka ng Tagapagtayo ng Latag ng Pahina na makalikha ng mga banghay ng pahina na mapagpipilian ng mga tagagamit at magamit upang makalikha ng bagong mga pahina.',
+	'admindashboard-controls-community-header' => 'Pamayanan',
+	'admindashboard-control-user-list-label' => 'Listahan ng Tagagamit',
+	'admindashboard-control-user-list-tooltip' => 'Tingnan ang isang buong listahan ng mga tagagamit na nakilahok sa wiki mo.',
+	'admindashboard-control-user-rights-label' => 'Mga Karapatan ng Tagagamit',
+	'admindashboard-control-user-rights-tooltip' => 'Magdagdag at mag-alis ng mga karapatan at mga kapahintulutan ng pangkat para sa mga tagagamit na nasa wiki mo.',
+	'admindashboard-control-group-rights-label' => 'Mga Karapatan ng Pangkat',
+	'admindashboard-control-group-rights-tooltip' => "Pangkalahatang-ideya sa mga karapatan para sa iba't ibang mga pangkat ng tagagamit.",
+	'admindashboard-control-invite-label' => 'Anyayahan',
+	'admindashboard-control-invite-tooltip' => 'Mag-anyaya ng ibang mga tao na gamitin ang wiking ito.',
+	'admindashboard-control-help-label' => 'Tulong',
+	'admindashboard-control-help-tooltip' => 'Maghanap ng Tulong.',
+	'admindashboard-control-community-corner-label' => 'Sulok ng Pamayanan',
+	'admindashboard-control-community-corner-tooltip' => 'Baguhin ang bahagi ng Sulok ng Pamayanan ng wiki at ipagbigay-alam sa mga tagagamit.',
+	'admindashboard-controls-content-header' => 'Nilalaman',
+	'admindashboard-control-categories-list-label' => 'Lahat ng mga Kategorya',
+	'admindashboard-control-categories-list-tooltip' => 'Tingnan ang lahat ng mga kategoryang kasalukuyang nakalista sa wiki mo.',
+	'admindashboard-control-add-page-label' => 'Magdagdag ng isang Pahina',
+	'admindashboard-control-add-page-tooltip' => 'Magdagdag ng isang bagong pahina sa wiki mo.',
+	'admindashboard-control-add-photo-label' => 'Magdagdag ng isang Larawan',
+	'admindashboard-control-add-photo-tooltip' => 'Magdagdag ng bagong mga pahina sa wiki mo.',
+	'admindashboard-control-add-blog-label' => 'Magdagdag ng isang Paskil sa Blog',
+	'admindashboard-control-add-blog-tooltip' => 'Magdagdag ng isang bagong paskil na pamblog sa wiki mo.',
+	'admindashboard-control-multiple-upload-label' => 'Magdagdag ng Maramihang mga Larawan',
+	'admindashboard-control-multiple-upload-tooltip' => 'Sabay-sabay na magkarga ng mahigit sa isang larawan sa pamamagitan ng kasangkapan na pangmaramihang larawan.',
+	'admindashboard-back-to-dashboard' => 'Magbalik sa Tapalodo',
+);
+
 /** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
+	'admindashboard-controls-wiki-header' => 'Вики',
+	'admindashboard-control-recent-changes-label' => 'Ән нујә дәгишон',
 	'admindashboard-control-add-page-label' => 'Сәһифә зијод карде',
 	'admindashboard-control-add-page-tooltip' => 'Тожә сәһифә зијод карде бә вики.',
 	'admindashboard-control-add-photo-label' => 'Шикил зијод карде',

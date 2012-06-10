@@ -1831,9 +1831,13 @@ $messages['te'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author A1
  * @author Тест
  */
 $messages['uk'] = array(
+	'wikiadoption-header' => 'Прийняти цю wiki',
+	'wikiadoption-button-adopt' => 'Так, я хочу прийняти {{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Дізнайтеся більше!',
 	'wikiadoption-know-more-header' => 'Хочете знати більше?',
 );
 

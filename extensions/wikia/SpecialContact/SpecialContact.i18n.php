@@ -887,6 +887,17 @@ Kung mas nais mong gamitin ang pangkaraniwang e-liham o maglagay ng mga kalakip,
 	'specialcontact-submitcomplete' => 'Salamat sa pakikipag-ugnayan mo sa Wikia.',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'specialcontact-username' => 'Иштирокәкә ном',
+	'specialcontact-wikiname' => 'Вики ном',
+	'specialcontact-yourmail' => 'Е-номә унвон',
+	'specialcontact-problem' => 'Мывзу',
+	'specialcontact-mail' => 'Бә Викиа вығандеј',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */

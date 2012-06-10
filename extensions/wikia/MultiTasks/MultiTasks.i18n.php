@@ -134,11 +134,14 @@ No, the message won\'t be displayed of $1 or $2 was just "1".',
 	'multiwikirecords' => 'If $1 is a number, add plural support',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ * @author Kghbln
+ */
 $messages['qqq'] = array(
 	'multiwikiedit_task_link' => ' "check" as in "verify" or as in "select"?',
 	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...',
 	'multidelete_button' => '{{Identical|Delete}}',
+	'multidelete_reason' => '{{Identical|Reason for deletion}}',
 	'multidelete_task_link' => ' "check" as in "verify" or as in "select"?',
 	'multidelete_split_results' => 'Needs plural support for $1 and $2.
 No, the message won\'t be displayed of $1 or $2 was just "1".',
@@ -585,7 +588,7 @@ $messages['de'] = array(
 	'multidelete_title' => 'Multi Delete',
 	'multidelete_both_modes' => 'Bitte wähle entweder eine bestimmte Seite oder eine vorgegebene Liste von Seiten.',
 	'multidelete_or' => '<b>ODER</b>',
-	'multidelete_reason' => 'Löschgrund',
+	'multidelete_reason' => 'Grund für die Löschung',
 	'multidelete_error_empty_selection' => 'Bitte gib die Liste der ausgewählten Wikis an',
 	'multidelete_error_empty_pages' => 'Bitte wähle entweder eine bestimmte Seite oder eine vorgegebene Liste von Seiten.',
 	'multidelete_error_multi_page' => 'Nur ein Titel pro Multi-Wiki-Löschung erlaubt.',

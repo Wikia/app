@@ -275,3 +275,11 @@ $messages['tt-cyrl'] = array(
 	'interwikidispatcher-desc' => 'Apache күчерүләрен кыскарту өчен интервики сылтамаларын рөхсәт итә',
 );
 
+/** Ukrainian (українська)
+ * @author A1
+ */
+$messages['uk'] = array(
+	'interwikidispatcher' => 'Диспетчер інтервікі',
+	'interwikidispatcher-desc' => 'Виправлення інтервікі з метою зменшення посилань на перенаправлення',
+);
+

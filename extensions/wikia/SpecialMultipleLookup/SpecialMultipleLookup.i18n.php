@@ -902,6 +902,14 @@ $messages['tl'] = array(
 	'right-multilookup' => 'Kabatirang panghanap sa mga tagagamit na nasa maramihang mga wiki',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Сәрловһә',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */

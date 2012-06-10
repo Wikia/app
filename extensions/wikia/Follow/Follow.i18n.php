@@ -2942,6 +2942,11 @@ Mangyaring bumisita at mamatnugot ng madalas...
  * @author Гусейн
  */
 $messages['tly'] = array(
+	'wikiafollowedpages-special-heading-project' => 'Нәхшон сәһифон ($1)',
+	'wikiafollowedpages-special-heading-user' => 'Иштирокәкон сәһифон ($1)',
+	'wikiafollowedpages-special-heading-templates' => 'Ғәлибон ($1)',
+	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki сәһифон ($1)',
+	'wikiafollowedpages-special-namespace' => '($1 сәһифә)',
 	'oasis-wikiafollowedpages-special-seeall' => 'Һәммәј нишо дој >',
 	'wikiafollowedpages-special-seeall' => 'Һәммәј нишо дој >',
 	'wikiafollowedpages-special-delete-tooltip' => 'Ым сәһифә рәдд кәрдеј',
@@ -3260,19 +3265,19 @@ ___________________________________________
 * 希望管理您收到何种邮件?
 访问:{{fullurl:{{ns:special}}:Preferences}}。',
 	'enotif_body_categoryadd-html' => '<p>
-亲爱的$WATCHINGUSERNAME,
+亲爱的$WATCHINGUSERNAME，
 <br/><br/>
 您在{{SITENAME}}上关注的一个页面已被添加至一个分类之中。
 <br/><br/>
 点击<a href="$PAGETITLE_URL">$PAGETITLE</a>查看新页面。
 <br/><br/>
-请您更多的访问和编辑……
+请常来访问和编辑……
 <br/><br/>
 {{SITENAME}}
 <br/><hr/>
 <ul>
-<li><a href="http://www.wikia.com">查看我们的特色条目！</a></li>
-<li>希望管理您收到何种邮件? 访问<a href="{{fullurl:{{ns:special}}:Preferences}}">用户偏好</a></li>
+<li><a href="http://www.wikia.com">查看我们的特色维基！</a></li>
+<li>希望管理您收到何种邮件? 访问<a href="{{fullurl:{{ns:special}}:Preferences}}">用户首选项</a></li>
 </ul>
 </p>',
 );

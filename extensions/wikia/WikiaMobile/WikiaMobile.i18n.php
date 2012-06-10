@@ -784,6 +784,24 @@ $messages['sah'] = array(
 	'wikiamobile-login-submit' => 'Киир',
 );
 
+/** Slovak (slovenčina)
+ * @author Kusavica
+ */
+$messages['sk'] = array(
+	'wikiamobile-login' => 'Prihlásiť sa',
+	'wikiamobile-password' => 'Heslo',
+	'wikiamobile-login-submit' => 'Prihlasovacie meno',
+	'wikiamobile-menu' => 'Ponuka',
+	'wikiamobile-explore' => 'Skúmať',
+	'wikiamobile-feedback' => 'Spätná väzba',
+	'wikiamobile-back' => 'Späť',
+	'wikiamobile-category-items-more' => 'Načítať viac',
+	'wikiamobile-category-items-prev' => 'Načítať predchádzajúce',
+	'wikiamobile-categories-expand' => 'Zobraziť všetko',
+	'wikiamobile-categories-collapse' => 'Skryť všetko',
+	'wikiamobile-sharing-media-image' => 'Obrázok',
+);
+
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */

@@ -2018,7 +2018,7 @@ $messages['ia'] = array(
 	'oasis-navigation-v2-level1-validation' => 'Le menu del nivello 1 es troppo large. Per favor accurta le elementos. Gratias!',
 	'oasis-navigation-v2-level2-validation' => 'Le menu del nivello 2 es troppo large. Per favor accurta le elementos. Gratias!',
 	'oasis-navigation-v2-level12-validation' => 'Le menus del nivellos 1 e 2 es troppo large. Per favor accurta le elementos in illos.',
-	'oasis-navigation-v2-magic-word-validation' => 'Le parolas magic pote solmente esser monstrate in menus de nivello 3. Per favor include los solmente in wikitexto de nivello 2.',
+	'oasis-navigation-v2-magic-word-validation' => 'Le parolas magic pote solmente esser monstrate in menus de nivello 2. Per favor include los solmente in wikitexto de nivello 2.',
 	'oasis-navigation-v2-validation-next' => 'Sequente',
 	'oasis-navigation-v2-validation-caption' => 'Le previsualisation verificara le presentia de errores de menu. Si es correcte, tu pote publicar desde le schermo Previsualisation. Si non, un button Retornar permittera continuar le modification.',
 	'oasis-navigation-v2-new-photos' => 'Nove photos',
@@ -2351,6 +2351,8 @@ $messages['ku-latn'] = array(
 	'oasis-page-header-talk' => 'Nîqaş',
 	'oasis-page-header-subtitle-special' => 'Rûpela taybet',
 	'oasis-page-header-subtitle-category' => 'Rûpela kategoriyê',
+	'oasis-toolbar-edit-cancel' => 'Betal bike',
+	'oasis-section-edit' => 'Biguherîne',
 	'oasis-interlang-languages' => 'Zimanan:',
 );
 
@@ -4595,7 +4597,7 @@ $messages['vi'] = array(
 	'oasis-navigation-v2-level1-validation' => 'Rất tiếc! Menu cấp 1 của bạn quá rộng. Xin rút ngắn lại các mục để cho vừa vặn. Cảm ơn!',
 	'oasis-navigation-v2-level2-validation' => 'Rất tiếc! Menu cấp 2 của bạn quá rộng. Xin rút ngắn lại các mục để cho vừa vặn. Cảm ơn!',
 	'oasis-navigation-v2-level12-validation' => 'Rất tiếc! Menu cấp 1 và cấp 2 của bạn quá rộng. Xin sửa lại để cho vừa vặn. Cảm ơn!',
-	'oasis-navigation-v2-magic-word-validation' => 'Những từ ma thuật chỉ được ở Menu cấp 3. Xin vui lòng dùng văn bản wiki tại menu cấp 2.',
+	'oasis-navigation-v2-magic-word-validation' => 'Những từ ma thuật chỉ được ở Menu cấp 2. Xin vui lòng dùng văn bản wiki tại menu cấp 2.',
 	'oasis-navigation-v2-validation-next' => 'Tiếp theo',
 	'oasis-navigation-v2-validation-caption' => 'Xem trước sẽ kiểm tra lỗi của menu. Nếu ổn, bạn có thể lưu nó từ màn hình xem trước. Nếu không, một nút Trở lại sẽ cho phép bạn tiếp tục chỉnh sửa.',
 	'oasis-navigation-v2-new-photos' => 'Hình ảnh mới',

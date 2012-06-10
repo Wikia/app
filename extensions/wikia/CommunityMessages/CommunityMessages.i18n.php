@@ -240,8 +240,8 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'communitymessages-desc' => 'Pomocnicze rozszerzenie dla komunikatów społecznościowych.',
-	'communitymessages-notice-msg' => '[[Special:WikiActivity|Komunikaty społecznościowe zostały zaktualizowane]].',
+	'communitymessages-desc' => 'Rozszerzenie służące do tworzenia komunikatów społecznościowych.',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Zakątek Społeczności został zaktualizowany]].',
 );
 
 /** Piedmontese (Piemontèis)

@@ -2232,6 +2232,7 @@ Bes esu joot un versöök et noch ens.',
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
+ * @author Ghybu
  */
 $messages['ku-latn'] = array(
 	'userrenametool' => 'Navê bikarhênerekî biguherîne',
@@ -2247,7 +2248,7 @@ $messages['ku-latn'] = array(
 	'userrenametool-success' => 'Navî bikarhênerê "<nowiki>$1</nowiki>" bû "<nowiki>$2</nowiki>"',
 	'userrenametool-confirm-yes' => 'Erê',
 	'userrenametool-confirm-no' => 'Na',
-	'userrenametool-logpage' => 'Reşahîya guherandina navên bikarhêneran',
+	'userrenametool-logpage' => 'Guhertina navê bikarhêner',
 	'userrenametool-log' => 'yê $1 beşdarîyên xwe hebû. $2',
 );
 

@@ -3140,7 +3140,7 @@ $messages['tl'] = array(
 	'myhome-activity-feed' => 'Pakain ng paggalaw',
 	'myhome-activity-feed-empty' => "Naghihintay ang wiking ito na makilahok ka.
 Pindutin ang '''[[Special:CreatePage|Bagong pahina]]''' upang magsimulang magsulat!",
-	'myhome-watchlist-feed' => 'Bantayan Ko',
+	'myhome-watchlist-feed' => 'Bantayan ko',
 	'myhome-watchlist-feed-empty' => 'Makapagdaragdag ka ng mga pahina sa bantayan mo sa pamamagitan ng pagpindot sa kawing na "{{int:watch}}" na nasa loob ng baretang nasa itaas ng pahina.
 Magagamit mo ang talaan ng binabantayan upang masubaybayan ang pinakabagong mga pagbabago sa mga pahinang pinangangalagaan mo.',
 	'myhome-user-contributions-feed' => 'Mga ambag',

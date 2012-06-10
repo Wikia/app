@@ -114,9 +114,11 @@ $messages['hsb'] = array(
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
-	'tog-disablelinksuggest' => 'Ne jelenítse meg a hivatkozás-javaslatot',
+	'tog-disablelinksuggest' => 'Ne jelenítse meg a hivatkozás-javaslatot forráskódndash;nézetben',
+	'tog-redirected-from' => '&ndash; Az $1 szócikkből átirányítva',
 );
 
 /** Interlingua (interlingua)
@@ -124,6 +126,7 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'tog-disablelinksuggest' => 'Non monstrar suggestiones de ligamines in modo codice-fonte',
+	'tog-redirected-from' => '&ndash; redirigite ab $1',
 );
 
 /** Indonesian (Bahasa Indonesia)

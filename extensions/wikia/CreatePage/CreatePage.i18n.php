@@ -1298,13 +1298,13 @@ $messages['pfl'] = array(
 $messages['pl'] = array(
 	'createpage-desc' => 'Pozwala na utworzenie nowej strony za pomocą edytora WYSIWYG',
 	'createpage-sp-title' => 'Utwórz nową stronę',
-	'createpage_title' => 'Stwórz Stronę',
+	'createpage_title' => 'Utwórz nową stronę',
 	'createpage_title_caption' => 'Tytuł',
 	'createpage_enter_text' => 'Tekst:',
-	'createpage_empty_title_error' => 'Wymagany tytuł',
+	'createpage_empty_title_error' => 'Tytuł jest wymagany',
 	'createpage_empty_article_body_error' => 'Wymagane podanie treści strony',
 	'createpage_invalid_title_error' => 'Nieprawidłowy tytuł',
-	'createpage_article_already_exists' => 'Strona o zadanej nazwie już istnieje.
+	'createpage_article_already_exists' => 'Strona o żądanej nazwie już istnieje.
 Wybierz inną nazwę.',
 	'createpage_spam' => 'Niestety zmiany nie mogą zostać zapisane',
 	'createpage_cant_edit' => 'Nie można wykonać edycji',

@@ -54,6 +54,14 @@ $messages['gl'] = array(
 	'centralhelpsearch-placeholder' => 'Procurar na axuda&hellip;',
 );
 
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'centralhelpsearch-desc' => 'Lehetővé teszi egy, a Community Central dokumentációján kereső űrlap beillesztését',
+	'centralhelpsearch-placeholder' => 'Keresési segítség...',
+);
+
 /** Interlingua (interlingua)
  * @author McDutchie
  */
@@ -126,10 +134,11 @@ $messages['nl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
-	'centralhelpsearch-desc' => 'Umożliwia włączenie formularza wyszukiwania do Centralnej Pomocy Wspólnoty',
-	'centralhelpsearch-placeholder' => 'Wyszukiwanie w pomocy...',
+	'centralhelpsearch-desc' => 'Umożliwia włączenie formularza służącego do wyszukiwania w Centrum Pomocy',
+	'centralhelpsearch-placeholder' => 'Wyszukiwanie w Centrum Pomocy...',
 );
 
 /** Piedmontese (Piemontèis)
