@@ -106,7 +106,7 @@
 						callback(info);
 					}
 					else if (data.error) {
-						throw 'Error while editing: ' + data.error.info;
+						throw 'Error returned by API: ' + data.error.info;
 					}
 				});
 			});
