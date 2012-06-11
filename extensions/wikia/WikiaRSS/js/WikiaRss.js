@@ -7,6 +7,7 @@ var WikiaRss = WikiaRss || (function(){
 			$.nirvana.sendRequest({
 				controller: 'WikiaRssExternalController',
 				method: 'getRssFeeds',
+				type: 'GET',
 				format: 'json',
 				data: {
 					options: options
