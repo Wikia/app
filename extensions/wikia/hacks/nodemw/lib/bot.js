@@ -86,8 +86,8 @@
 
 			this.api.call(params, function(data) {
 				var page = getFirstItem(data.pages),
-					revision = page.revisions.shift(),
-					content = revision['*'];
+					revision = page.revisions && page.revisions.shift(),
+					content = revision && revision['*'];
 
 				callback(content);
 			})
