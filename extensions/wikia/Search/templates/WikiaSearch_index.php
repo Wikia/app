@@ -31,7 +31,7 @@
 
 	</form>
 
-	<div id="SearchAdsTop" class="SearchAdsTop SearchAds">
+	<div id="SearchAdsTop" class="SearchAdsTop SearchAds disabled">
 		<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
 		<ul class="list loading"></ul>
 	</div>
@@ -89,7 +89,7 @@
 			<?php endforeach; ?>
 			</ul>
 
-		<div id="SearchAdsBottom" class="SearchAdsBottom SearchAds">
+		<div id="SearchAdsBottom" class="SearchAdsBottom SearchAds disabled">
 			<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
 			<ul class="list loading"></ul>
 		</div>
