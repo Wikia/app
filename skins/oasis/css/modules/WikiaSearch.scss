@@ -173,6 +173,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 .SearchAds {
 	background-color: $color-search-ads-background;
 	padding: $form-side-padding;
+	&.disabled {
+		display: none;
+	}
 	&.SearchAdsBottom {
 		margin-top: 12px;
 	}
