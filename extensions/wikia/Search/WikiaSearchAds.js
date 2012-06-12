@@ -1,10 +1,10 @@
 jQuery(function($) {
-	$().log('start', 'WikiaSearchAds');
+	//$().log('start', 'WikiaSearchAds');
 
 	// In the case that there aren't enough ad units to fill the ad space
 	// this function will shrink the ad wrapper to the proper height.
 	function shrinkWrap(element) {
-		$().log(element, 'WikiaSearchAds');
+		//$().log(element, 'WikiaSearchAds');
 		var originalHeight = element.height();
 		var shrinkToHeight = element.css('min-height', 0).height();
 
@@ -15,7 +15,7 @@ jQuery(function($) {
 		return element.removeClass('loading');
 	}
 
-	$().log([$('#search-v2-input').val(), null, window.navigator.userAgent], 'WikiaSearchAds');
+	//$().log([$('#search-v2-input').val(), null, window.navigator.userAgent], 'WikiaSearchAds');
 	$.when(
 		$.loadMustache(),
 		$.nirvana.sendRequest({
@@ -36,7 +36,7 @@ jQuery(function($) {
 		//$().log([libData, resourceData, packagesData], 'WikiaSearchAds');
 		var template = packagesData[0].mustache[0];
 		var data = resourceData[0].ads;
-		$().log([template, data], 'WikiaSearchAds');
+		//$().log([template, data], 'WikiaSearchAds');
 
 		shrinkWrap($('#SearchAdsTop ul').html($.mustache(template, {
 			ads: data.slice(0, 3)
