@@ -66,6 +66,7 @@ class AbTesting {
 						'name' => $row->expName,
 						'begin_time' => $row->expBeginTime,
 						'end_time' => $row->expEndTime,
+						'ga_slot' => 46, // TODO: FIXME: HARDCODING TEMPORARILY. THIS SHOULD END UP IN THE EXPERIMENT TABLE SCHEMA SOON.
 						'groups' => array()
 					);
 				}
