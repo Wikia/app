@@ -96,7 +96,9 @@ class WikiaSearchAdsTest extends WikiaBaseTest {
 		F::unsetInstance('WikiaSearchAdsController');
 	}
 
-	public function FIXME_testBackend() {
+	public function _testBackend() {
+		$this->markTestSkipped('FIXME: mock post data');
+
 		$this->mockApp();
 
 		$response = $this->app->sendRequest('WikiaSearchAdsController', 'getAds');
