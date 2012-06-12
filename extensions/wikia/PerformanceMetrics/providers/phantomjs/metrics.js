@@ -172,6 +172,12 @@ page.onInitialized = function () {
         	window.timingOnLoad = Date.now();
         }, false);
     });
+
+	// AB testing setup
+	// @see /extensions/wikia/AbTesting/js/AbTesting.js
+	if (abGroup) {
+    	page.evaluate(new Function("window.abTreatments = {'" + abGroup + "': 1};"));
+	}
 };
 
 // monitor requests made (BugId:26332)
@@ -310,8 +316,10 @@ page.onResourceReceived = function(res) {
 	}
 };
 
+page.logLines = [];
 page.onConsoleMessage = function (msg) {
 	console.log('log: ' + msg);
+	page.logLines.push(msg);
 };
 
 page.onLoadFinished = function(status) {
@@ -386,6 +394,18 @@ page.onLoadFinished = function(status) {
 				return window.wgUserName !== null ? window.wgUserName : '<anon>';
 			}));
 
+			notices.push('A/B testing group: ' + (abGroup !== false ? abGroup : '<none>'));
+
+			// add log lines to notices
+			page.logLines.forEach(function(msg) {
+				notices.push('Console: ' + msg);
+			});
+
+			// add AB testing debug
+			notices.push('AB testing: ' + page.evaluate(function() {
+				return JSON.stringify(window.abTreatments);
+			}));
+
 			// emit the results
 			var report = {
 				url: url,
@@ -409,7 +429,8 @@ var args = parseArgs(system.args);
 
 var address = system.args[1],
 	username = args.username || false,
-	password = args.password || false;
+	password = args.password || false,
+	abGroup = args.abGroup || false; // A/B testing group ID
 
 // log me in
 if (username !== false && password !== false) {
