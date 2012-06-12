@@ -19,7 +19,7 @@ function printHelp() {
 		echo <<<HELP
 Returns performance metrics for a given page
 
-USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia --ganglia-group=Mobile performance] [--verbose]
+USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexternals] [--providers=PerformanceMetricsPhantom,PerformanceMetricsGooglePageSpeed] [--csv] [--ganglia --ganglia-group=Mobile performance] [----abtest-group=1] [--verbose]
 
 	--url
 		Page to be checked
@@ -45,6 +45,9 @@ USAGE: php getPerformanceMetrics.php --url=http://foo.bar [--cacti] [--noexterna
 	--ganglia-group
 		Name of Ganglia graph group to report metrics to
 
+	--abtest-group
+		ID of A/B testing group
+
 	--verbose
 		Be noisy :)
 HELP;
@@ -68,7 +71,10 @@ $params = array(
 	'providers' => isset($options['providers']) ? explode(',', $options['providers']) : array(),
 
 	// support --logged-in option
-	'loggedIn' => isset($options['logged-in'])
+	'loggedIn' => isset($options['logged-in']),
+
+	// support --abtest-group option
+	'abGroup' => isset($options['abtest-group']) ? $options['abtest-group'] : false
 );
 
 $beVerbose = isset($options['verbose']);

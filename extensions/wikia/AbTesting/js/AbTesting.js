@@ -1,4 +1,4 @@
-/** 
+/**
  * @author Sean Colombo
  *
  * These functions are loaded very early in page-execution so that A/B tests can be run at various
@@ -7,7 +7,7 @@
  */
 
 // Caches already-assigned treatments to make sure any re-treatments are consistent and to avoid sending the treatment event multiple times for the same treatment on a page-load.
-var abTreatments = {};
+abTreatments = window.abTreatments || {};
 
 // Key is experiment id, value is true if this user is recieving a treatment that
 // will be tracked for the experiment. This is a way to differentiate users being
@@ -32,7 +32,7 @@ while((matches = reg.exec(window.location.href)) != null){
 function getTreatmentGroup( expId ){
 	var hasLogging = (typeof console != 'undefined');
 	var treatmentGroup = "";
-	
+
 	if(typeof abTreatments[expId] !== 'undefined'){
 		// If we've already determined the treatment on this page-load, then return it right away (and don't send an extra treatment event).
 		treatmentGroup = abTreatments[expId];
@@ -87,7 +87,7 @@ function getTreatmentGroup( expId ){
 						},
 						'internal'
 					);
-					
+
 					// Cache the treatment grouup so that we know not to send the treatment event again on this page.
 					abTreatments[ expId ] = treatmentGroup;
 					abBeingTracked[expId] = true;

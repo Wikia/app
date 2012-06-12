@@ -34,6 +34,11 @@ class PerformanceMetricsPhantom extends PerformanceMetricsProvider {
 			$cmd .= ' --password=' . escapeshellcmd($account['password']);
 		}
 
+		// support for A/B testing
+		if (!empty($options['abGroup'])) {
+			$cmd .= ' --abGroup=' . $options['abGroup'];
+		}
+
 		exec($cmd, $output, $retVal);
 
 		// decode the last line
