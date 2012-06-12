@@ -771,17 +771,20 @@ AdDriverDelayedLoader.getNextSlotFromBuffer = function(loadPriorityFloor) {
 	
 	return null;
 }
-
+AdDriverDelayedLoader.startCalled = false;
 AdDriverDelayedLoader.load = function() {
 	AdDriverDelayedLoader.started = true;
 
 	// Temporary AdDriver tracking by Inez
 	if((typeof abBeingTracked != "undefined") && (typeof abBeingTracked[EXP_AD_LOAD_TIMING] != "undefined") && abBeingTracked[EXP_AD_LOAD_TIMING]){
-		WikiaTracker.trackEvent(
-			'AdDriver',
-			{ pos: 'start' },
-			'internal'
-		);
+		if ( AdDriverDelayedLoader.startCalled === false ) {
+			AdDriverDelayedLoader.startCalled = true;
+			WikiaTracker.trackEvent(
+				'AdDriver',
+				{ pos: 'start' },
+				'internal'
+			);
+		}
 	}
 
 	if (typeof wgNow != 'undefined' && AdDriverDelayedLoader.adDriverItems.length) {
