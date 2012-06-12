@@ -3,18 +3,22 @@
 class WikiaSearchAdsController extends WikiaController {
 
 	public function getAds() {
-		$this->response->setVal('ads', $this->getParsedSearchResults());
+		$query = $this->request->getVal('query');
+		$ip = $this->request->getVal('ip');
+		$header = $this->request->getVal('header');
+		
+		$url = $this->getUrl($query, $ip, $header);
+		$xml = $this->getSearchResults($url);
+		$ads = $this->parseXml($xml);
+
+		$this->response->setVal('ads', $ads);
 	}
 	
-	private function getParsedSearchResults() {
-		return $this->parseSearchResults($this->getSearchResults());
-	}
-
-	protected function getSearchResults() {
+	protected function getSearchResults($url) {
 		$xml = '';
 		
 		try {
-			if (($xml = Http::get($this->getURL())) !== false) {
+			if (($xml = Http::get($url)) !== false) {
 				return $xml;
 			}
 		} catch (Exception $e) {}
@@ -22,7 +26,7 @@ class WikiaSearchAdsController extends WikiaController {
 		return $xml;
 	}
 
-	private function parseSearchResults($xml) {
+	private function parseXml($xml) {
 		$results = array();
 
 		try {
@@ -36,15 +40,23 @@ class WikiaSearchAdsController extends WikiaController {
 		return $results;
 	}
 	
-	private function getURL() {
-		return 'http://wikia.infospace.com/wikiagy/wsapi/results' .
-				'?query=camera' .
-				'&category=web' .
-				'&resultsBy=relevance' .
-				'&enduserip=10.10.10.10' .
-				'&X-Insp-User-Headers=User-Agent%3aMozilla%2F4.0' .
-				'&family-friendly=off' .
-				'&bold=on' .
-				'&qi=1';
+	public function getURL($query = null, $ip = null, $header = null) {
+		$ip = wfGetIp();
+
+		$url = '';
+
+		if (!empty($query) && !empty($ip) && !empty($header)) {
+			$url = 'http://wikia.infospace.com/wikiagy/wsapi/results' .
+					'?query=' . urlencode($query) .
+					'&category=web' .
+					'&resultsBy=relevance' .
+					'&enduserip=' . urlencode($ip) .
+					'&X-Insp-User-Headers=' . urlencode("User-Agent:{$header}") .
+					'&family-friendly=on' .
+					'&bold=on' .
+					'&qi=1';
+		}
+
+		return $url;
 	}
 }
