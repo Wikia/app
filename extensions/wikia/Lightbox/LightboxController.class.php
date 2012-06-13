@@ -162,6 +162,8 @@ class LightboxController extends WikiaController {
 	 */
 	public function getMediaDetail() {
 		$fileTitle = $this->request->getVal('title', '');
+
+		$fileTitle = urldecode($fileTitle);
 		$title = F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
 		
 		$data = WikiaFileHelper::getMediaDetail($title, array('imageMaxWidth'  => 1000,
@@ -216,6 +218,8 @@ class LightboxController extends WikiaController {
 		
 		$shareUrl = '';
 		$articleUrl = '';
+		$articleNS = '';
+		$articleTitleText = '';
 		$embedMarkup = '';
 		$fileUrl = '';
 		$thumbUrl = '';
@@ -225,11 +229,15 @@ class LightboxController extends WikiaController {
 			$fileTitleObj =  F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
 			$articleTitle = $this->request->getVal('articleTitle');
 			$articleTitleObj = F::build('Title', array($articleTitle), 'newFromText');
-			
+
 			if(!empty($articleTitleObj) && $articleTitleObj->exists()) {
+
 				$fileParam = $fileTitleObj->getDBKey();
 				$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
+				$articleNS = $articleTitleObj->getNamespace();
+				$articleTitleText = $articleTitleObj->getText();
 			}
+
 			$fileUrl = $fileTitleObj->getFullURL();
 			
 			// determine share url
@@ -237,11 +245,11 @@ class LightboxController extends WikiaController {
 				NS_MAIN,
 				NS_CATEGORY,
 			);
-			$shareUrl = !empty($articleUrl) && in_array($articleTitleObj->getNamespace(), $sharingNamespaces) ? $articleUrl : $fileUrl;
+			$shareUrl = !empty($articleUrl) && in_array($articleNS, $sharingNamespaces) ? $articleUrl : $fileUrl;
 			
 			$thumb = $file->getThumbnail(300, 250);
 			$thumbUrl = $thumb->getUrl();
-			$linkDescription = wfMsg('lightbox-share-description', empty($articleUrl) ? $fileTitleObj->getText() : $articleTitleObj->getText(), $this->wg->Sitename);
+			$linkDescription = wfMsg('lightbox-share-description', empty($articleUrl) ? $fileTitleObj->getText() : $articleTitleText, $this->wg->Sitename);
 			if(WikiaFileHelper::isFileTypeVideo( $file )) {
 				$embedMarkup = $file->getEmbedCode(300, true, false);
 			} else {
