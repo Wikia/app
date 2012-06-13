@@ -5,7 +5,7 @@ abstract class VideoFeedIngester {
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	public static $PROVIDERS = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
-	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY, self::PROVIDER_IGN);
+	public static $PROVIDERS_DEFAULT = array(self::PROVIDER_SCREENPLAY);
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
@@ -104,7 +104,7 @@ abstract class VideoFeedIngester {
 			return 1;
 		}
 		else {
-			if (is_subclass_of(static::$API_WRAPPER, 'WikiaVideoApiWrapper')) {
+			if (is_subclass_of(static::$API_WRAPPER, 'PseudoApiWrapper')) {
 				$videoId = $name;
 			}
 			else {
