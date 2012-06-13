@@ -54,7 +54,7 @@ If you need help, and there are no local admins here, you may want to visit the 
 	'welcome-message-wall-user' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
 
 Please leave me a message if I can help with anything!",
-	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the $1 page.
+	'welcome-message-wall-user-staff' => "Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
 
 If you need help, and there are no local admins here, you may want to visit the [[wikia:Forum:Community Central Forum|forums on the Community Central Wiki]]. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia.
 
