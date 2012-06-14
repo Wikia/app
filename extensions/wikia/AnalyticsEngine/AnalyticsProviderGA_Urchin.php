@@ -51,7 +51,7 @@ SCRIPT2;
         }
       }
     } catch(e) {
-      console.log(e);
+      //console.log(e);
     }
 
     return ab.shift() || 'none';
