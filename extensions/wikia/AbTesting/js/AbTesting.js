@@ -21,6 +21,7 @@ var reg = /[?&]+ab\[([^&]+)\]=([^&]*)/gi;
 var matches;
 while((matches = reg.exec(window.location.href)) != null){
 	abTreatments[ matches[1] ] = matches[2];
+	abBeingTracked[ matches[1] ] = true;
 }
 
 /**
