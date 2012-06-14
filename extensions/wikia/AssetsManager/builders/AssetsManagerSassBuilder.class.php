@@ -35,7 +35,10 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent = $obj;
 		} else {
 			$this->processContent();
-			$memc->set( $cacheId, $this->mContent );
+			// Prevent cache poisoning if we are serving sass from preview server
+			if (getHostPrefix() == null) {
+				$memc->set( $cacheId, $this->mContent );
+			}
 		}
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
