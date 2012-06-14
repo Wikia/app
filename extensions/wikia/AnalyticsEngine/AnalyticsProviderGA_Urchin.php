@@ -41,6 +41,21 @@ SCRIPT2;
 
     return 'other';
   }
+  
+  function getCustomVarAB() {
+    var ab = [];
+    try {
+      for (var expId in abBeingTracked) {
+        if (abBeingTracked[expId]) {
+          ab.push('e' + expId + ' g' + abTreatments[expId]);
+        }
+      }
+    } catch(e) {
+      console.log(e);
+    }
+
+    return ab.shift() || 'none';
+  }
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-30014103-1']);
@@ -48,7 +63,7 @@ SCRIPT2;
 
   _gaq.push(['_setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
-  _gaq.push(['_setCustomVar', 3, 'AB',   'unknown', 3]);
+  _gaq.push(['_setCustomVar', 3, 'AB',   (getCustomVarAB() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['_setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
@@ -61,7 +76,7 @@ SCRIPT2;
 
   _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
-  _gaq.push(['Ads._setCustomVar', 3, 'AB',   'unknown', 3]);
+  _gaq.push(['Ads._setCustomVar', 3, 'AB',   (getCustomVarAB() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['Ads._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
