@@ -17,9 +17,10 @@ $aRequiredBinaries = array(
 foreach ( $aRequiredBinaries as $sBinary ) {
 	// Terminate once the first unmet dependance is found.
 	if ( !file_exists( $sBinary ) || !is_executable( $sBinary ) ) {
-		echo "Oh, no! {$sBinary} is inaccessible!\n"
+		echo "Oh, no! {$sBinary} is inaccessible!\n";
 		exit( 1 );
 	}
 }
 
+echo "No unmet dependencies.\n";
 exit( 0 );
