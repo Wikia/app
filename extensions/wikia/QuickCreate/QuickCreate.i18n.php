@@ -11,7 +11,7 @@ $messages = array();
  * @author Bartek Lapinski
  */
 $messages['en'] = array(
-	'quickcreate-desc' => 'Adds a create new page button with ability to log in for anonymous users',
+	'quickcreate-desc' => 'Adds a create-new-page button with login request to anonymous users',
 	'quickcreate' => 'submit your recipe',
 );
 
